@@ -5,14 +5,18 @@ summary.mlm <- function(object, ...)
     ny <- ncol(coef)
     effects <- object$effects
     resid <- object$residuals
-    fitted <- object$fitted
+    fitted <- object$fitted.values
     ynames <- colnames(coef)
     if(is.null(ynames)) {
 	lhs <- object$terms[[2]]
 	if(mode(lhs) == "call" && lhs[[1]] == "cbind")
 	    ynames <- as.character(lhs)[-1]
-	else ynames <- paste("Y", seq(ny), sep = "")
+	else ynames <- paste("Y", seq_len(ny), sep = "")
     }
+    ## we need to ensure that _all_ responses are named
+    ind <- ynames == ""
+    if(any(ind)) ynames[ind] <-  paste("Y", seq_len(ny), sep = "")[ind]
+
     value <- vector("list", ny)
     names(value) <- paste("Response", ynames)
     cl <- oldClass(object)
@@ -146,7 +150,7 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
           )
 
     retval <- list(statistic=c(W=exp(logW)),p.value=pval,
-                   method=c("Mauchley's test of sphericity", transformnote),
+                   method=c("Mauchly's test of sphericity", transformnote),
                    data.name=paste("SSD matrix from",
                    deparse(object$call), collapse=" "))
     class(retval) <- "htest"

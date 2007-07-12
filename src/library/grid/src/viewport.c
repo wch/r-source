@@ -88,7 +88,7 @@ SEXP viewportgpar(SEXP vp) {
     return VECTOR_ELT(vp, PVP_GPAR);
 }
 
-char* viewportFontFamily(SEXP vp) {
+const char* viewportFontFamily(SEXP vp) {
     return CHAR(STRING_ELT(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONTFAMILY),
 			   0));
 }
@@ -353,12 +353,9 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
     /* Record all of the answers in the viewport
      * (the layout calculations are done within calcViewportLayout)
      */
-    PROTECT(currentWidthCM = allocVector(REALSXP, 1));
-    REAL(currentWidthCM)[0] = vpWidthCM;
-    PROTECT(currentHeightCM = allocVector(REALSXP, 1));
-    REAL(currentHeightCM)[0] = vpHeightCM;
-    PROTECT(currentRotation = allocVector(REALSXP, 1));
-    REAL(currentRotation)[0] = rotationAngle;
+    PROTECT(currentWidthCM = ScalarReal(vpWidthCM));
+    PROTECT(currentHeightCM = ScalarReal(vpHeightCM));
+    PROTECT(currentRotation = ScalarReal(rotationAngle));
     PROTECT(currentTransform = allocMatrix(REALSXP, 3, 3));
     for (i=0; i<3; i++)
 	for (j=0; j<3; j++)

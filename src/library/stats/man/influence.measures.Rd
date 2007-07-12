@@ -83,7 +83,7 @@ hat(x, intercept = TRUE)
   \item{hat}{hat values \eqn{H_{ii}}{H[i,i]}, see default.}
 
   \item{x}{the \eqn{X} or design matrix.}
-  \item{intercept}{should an intercept column be pre-prended to \code{x}?}
+  \item{intercept}{should an intercept column be prepended to \code{x}?}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
@@ -157,6 +157,8 @@ hat(x, intercept = TRUE)
 \seealso{\code{\link{influence}} (containing \code{\link{lm.influence}}).
 }
 \examples{
+require(graphics)
+
 ## Analysis of the life-cycle savings data
 ## given in Belsley, Kuh and Welsch.
 lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)

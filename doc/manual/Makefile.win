@@ -3,6 +3,17 @@
 # ${R_HOME}/doc/manual/Makefile.win
 
 include ../../src/gnuwin32/MkRules
+## this was in MkRules, but throws errors unless latex is in the path.
+ifneq ($(strip $(BUILD)),CROSS)
+ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
+# MiKTeX
+R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+else
+R_TEXOPTS=
+endif
+else # cross-builds
+R_TEXOPTS=
+endif
 include ../../share/make/vars.mk
 
 srcdir = .
@@ -29,10 +40,10 @@ TEXINDEX = LC_ALL=C texindex
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
 else
-RHOME=$(shell perl ../../src/gnuwin32/pwd.pl ../..)
+RHOME=$(shell $(PERL) ../../src/gnuwin32/pwd.pl ../..)
 endif
 
-MAKEINFO_HTML_OPTS = --html --no-split
+MAKEINFO_HTML_OPTS = --html --no-split --css-include=Rman.css
 TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
@@ -181,17 +192,19 @@ R-intro.dvi: R-intro.texi $(texiincludes)
 	$(TEX) R-intro.texi
 
 html: $(OBJECTS_HTML)
-R-admin.html: $(texiincludes)
-R-data.html: $(texiincludes)
-R-exts.html: $(texiincludes)
-R-intro.html: $(texiincludes)
-R-lang.html: $(texiincludes)
+R-admin.html: $(texiincludes) Rman.css
+R-data.html: $(texiincludes) Rman.css
+R-exts.html: $(texiincludes) Rman.css
+R-intro.html: $(texiincludes) Rman.css
+R-ints.html: $(texiincludes) Rman.css
+R-lang.html: $(texiincludes) Rman.css
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)
 R-data.info: $(texiincludes)
 R-exts.info: $(texiincludes)
 R-intro.info: $(texiincludes)
+R-ints.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
@@ -278,16 +291,16 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 %-pkg.tex: FORCE
 	@echo "collecting LaTeX docs for package \`$*' ..."
 	@if test -f "$(top_srcdir)/library/$*/latex/Rhelp.zip" ; then \
-	  PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	  PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
 	else \
 	  if test -d "$(top_srcdir)/src/library/$*" ; then \
-	    if perl ../../tools/Rdnewer.pl \
+	    if $(PERL) ../../tools/Rdnewer.pl \
 		"$(top_srcdir)/src/library/$*" "$@"; then \
 	      (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
-	      PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	      PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
 	    fi \
 	  else \
-	    PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	    PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
 	  fi \
 	fi
 FORCE:
@@ -310,6 +323,12 @@ R-exts.pdf: R-exts.texi $(texiincludes)
 	$(PDFTEX) R-exts.texi
 	$(PDFTEX) R-exts.texi
 
+R-ints.pdf: R-ints.texi $(texiincludes) 
+	$(PDFTEX) R-ints.texi
+	$(TEXINDEX) R-ints.cp R-ints.fn R-ints.vr
+	$(PDFTEX) R-ints.texi
+	$(PDFTEX) R-ints.texi
+
 R-lang.pdf: R-lang.texi $(texiincludes) 
 	$(PDFTEX) R-lang.texi
 	$(TEXINDEX) R-lang.cp R-lang.fn R-lang.vr
@@ -328,7 +347,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	  echo "@set VERSIONno $${v}" > $@; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  echo "@set VERSION $${v}" >> $@; \
-	  rwv=$(shell perl $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
+	  rwv=$(shell $(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
@@ -338,7 +357,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 mostlyclean: clean
 clean:
 	@-rm -f *.aux *.toc *refman.i?? *.out *.log
-	@-rm -f *.cp *.cps *.fn *.fns *.ky *.kys \
+	@-rm -f *.cp *.cps *.en *.fn *.fns *.ky *.kys \
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex fullrefman.tex *-pkg.tex 
 distclean: clean

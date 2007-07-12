@@ -22,8 +22,7 @@ aggregate(x, \dots)
   \item{x}{an R object.}
   \item{by}{a list of grouping elements, each as long as the variables
     in \code{x}.  Names for the grouping variables are provided if
-    they are not given.  The elements of the list will be coerced to
-    factors (if they are not already factors).}
+    they are not given.}
   \item{FUN}{a scalar function to compute the summary statistics which
     can be applied to all data subsets.}
   \item{nfrequency}{new number of observations per unit of time; must
@@ -67,6 +66,17 @@ aggregate(x, \dots)
   it.  The result returned is a time series with frequency
   \code{nfrequency} holding the aggregated values.
 }
+\value{
+  For the time series method, a time series of class \code{"ts"} or
+  class \code{c("mts", "ts")}.
+
+  For the data frame method, a data frame with columns
+  corresponding to the grouping variables in \code{by} followed by
+  aggregated columns from \code{x}.  \strong{Note:} prior to \R 2.6.0
+  the grouping variables were reported as factors with levels in
+  alphabetical order in the current locale.  Now the variable in the
+  result is found by subsetting the original variable.
+}
 \author{Kurt Hornik}
 \seealso{
   \code{\link{apply}}, \code{\link{lapply}}, \code{\link{tapply}}.
@@ -91,9 +101,10 @@ aggregate(state.x77,
 ## (Note that no state in 'South' is THAT cold.)
 
 ## Compute the average annual approval ratings for American presidents.
-aggregate(presidents, nf = 1, FUN = mean)
+aggregate(presidents, nfrequency = 1, FUN = mean)
 ## Give the summer less weight.
-aggregate(presidents, nf = 1, FUN = weighted.mean, w = c(1, 1, 0.5, 1))
+aggregate(presidents, nfrequency = 1,
+          FUN = weighted.mean, w = c(1, 1, 0.5, 1))
 }
 \keyword{category}
 \keyword{array}

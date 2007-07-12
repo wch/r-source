@@ -18,20 +18,25 @@
 
   \code{\link{file.remove}} can only remove files, but gives more
   detailed error information.
+
+  Wildcard expansion is done by the internal code of
+  \code{\link{Sys.glob}}.
+#ifdef unix
+  Wildcards will only be expanded if the system supports it.
+
+  \code{recursive = TRUE} is not supported on all platforms, and may be
+  ignored, with a warning.
+#endif
+#ifdef Windows
+
+  Windows cannot remove the current working directory, nor any file
+  which is open nor any directory containing such a file.
+#endif
 }
 \value{
-#ifdef unix
-  The return value of the corresponding system command, \code{rm -f},
-  normally \code{0} for success, \code{1} for failure.
-#endif
-#ifdef windows
   \code{0} for success, \code{1} for failure.
-#endif
-  Not deleting a non-existent file is not a failure.
-}
-\note{
-  Prior to \R version 1.2.0 the default on Unix was \code{recursive =
-    TRUE}, and on Windows empty directories could be deleted.
+  Not deleting a non-existent file is not a failure, nor is being unable
+  to delete a directory if \code{recursive = FALSE}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

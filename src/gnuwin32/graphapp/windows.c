@@ -185,7 +185,7 @@ static void make_client_window(HWND hwnd)
  */
 
 
-static char *register_new_class(char *extra, WNDPROC proc)
+static char *register_new_class(const char *extra, WNDPROC proc)
 {
 	WNDCLASS wndclass;
 	int length;
@@ -217,7 +217,7 @@ static char *register_new_class(char *extra, WNDPROC proc)
 	return new_class_name;
 }
 
-static HWND new_mdi_window(char *name, rect r, unsigned long sty)
+static HWND new_mdi_window(const char *name, rect r, unsigned long sty)
 {
 	HWND hwnd;
 	MDICREATESTRUCT mdi;
@@ -392,7 +392,7 @@ static void private_delwindow(window obj)
 /*
  *  Private object constructor.
  */
-static object new_window_object(HWND hwnd, char *name, rect r,
+static object new_window_object(HWND hwnd, const char *name, rect r,
 				long flags, long state)
 {
 	object obj;
@@ -421,7 +421,7 @@ static object new_window_object(HWND hwnd, char *name, rect r,
  *  Create and return a new window.
  */
 static int MDIsizeSet=0;
-window newwindow(char *name, rect r, long flags)
+window newwindow(const char *name, rect r, long flags)
 {
 	object obj;
 	HWND hwnd;
@@ -632,12 +632,12 @@ void show_window(object obj)
 		}
 	}
 	obj->state |= Visible;
-        if (hwndClient && (hwnd==hwndFrame) && (MDIFrameFirstTime)) {
+        if (hwndClient && (hwnd == hwndFrame) && (MDIFrameFirstTime)) {
 	    ShowWindow(hwnd, MDIsizeSet ? SW_SHOWNORMAL : SW_SHOWMAXIMIZED);
 	    MDIFrameFirstTime = 0;
         }
         else
-	    ShowWindow(hwnd, SW_SHOWNORMAL);
+	    ShowWindow(hwnd, SW_SHOW /* SW_SHOWNORMAL */);
 
 	/* workaround for Show bug */
 	if (incremented_aw && !IsWindowVisible(hwnd) ) active_windows -- ;
@@ -653,11 +653,13 @@ void show_window(object obj)
           else
 	    DrawMenuBar(hwnd);
         }
+#if 0
         if (obj->toolbar) {
             if (MDIToolbar) hide(MDIToolbar);
             MDIToolbar = obj->toolbar;
             SendMessage(hwndFrame,WM_PAINT,(WPARAM) 0,(LPARAM) 0);
         }
+#endif
         SetFocus(hwnd);
 	UpdateWindow(hwnd);
 	select_sibling(obj->child);

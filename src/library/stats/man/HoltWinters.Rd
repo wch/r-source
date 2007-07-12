@@ -110,6 +110,8 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 }
 
 \examples{
+require(graphics)
+
 ## Seasonal Holt-Winters
 (m <- HoltWinters(co2))
 plot(m)

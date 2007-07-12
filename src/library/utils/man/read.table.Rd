@@ -17,7 +17,8 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
            comment.char = "#", allowEscapes = FALSE, flush = FALSE,
-           stringsAsFactors = default.stringsAsFactors())
+           stringsAsFactors = default.stringsAsFactors(),
+           encoding = "unknown")
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, comment.char="", \dots)
@@ -38,12 +39,14 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     \emph{relative} to the current working directory,
     \code{\link{getwd}()}. Tilde-expansion is performed where supported.
 
-    Alternatively, \code{file} can be a \code{\link{connection}}, which
-    will be opened if necessary, and if so closed at the end of the
-    function call.  (If \code{stdin()} is used, the prompts for lines
-    may be somewhat confusing.  Terminate input with a blank line or an EOF
-    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.  Any
-    pushback on \code{stdin()} will be cleared before return.)
+    Alternatively, \code{file} can be a readable
+    \code{\link{connection}} (which will be opened for reading if
+    necessary, and if so \code{\link{close}}d (and hence destroyed) at
+    the end of the function call).  (If \code{\link{stdin}()} is used,
+    the prompts for lines may be somewhat confusing.  Terminate input
+    with a blank line or an EOF signal, \code{Ctrl-D} on Unix and
+    \code{Ctrl-Z} on Windows.  Any pushback on \code{stdin()} will be
+    cleared before return.)
 
     \code{file} can also be a complete URL.
 
@@ -65,7 +68,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{quote}{the set of quoting characters. To disable quoting
     altogether, use \code{quote = ""}.  See \code{\link{scan}} for the
-    behaviour on quotes embedded in quotes.}
+    behaviour on quotes embedded in quotes.  Quoting is only considered
+    for columns read as character, which is all of them unless
+    \code{colClasses} is specified.}
 
   \item{dec}{the character used in the file for decimal points.}
 
@@ -79,7 +84,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     row names.  Otherwise if \code{row.names} is missing, the rows are
     numbered.
 
-    Using \code{row.names = NULL} forces row numbering.
+    Using \code{row.names = NULL} forces row numbering. Missing or
+    \code{NULL} \code{row.names} generate row names that are considered
+    to be \sQuote{automatic} (and not preserved by \code{\link{as.matrix}}).
   }
 
   \item{col.names}{a vector of optional names for the variables.
@@ -122,10 +129,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     variable) and so includes the column of row names (if any).
   }
 
-  \item{nrows}{the maximum number of rows to read in.  Negative values
-    are ignored.}
+  \item{nrows}{integer: the maximum number of rows to read in.  Negative
+    and other invalid values are ignored.}
 
-  \item{skip}{the number of lines of the data file to skip before
+  \item{skip}{integer: the number of lines of the data file to skip before
     beginning to read data.}
 
   \item{check.names}{logical.  If \code{TRUE} then the names of the
@@ -162,17 +169,29 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?}
 
-  \item{\dots}{Further arguments to \code{read.table}.}
+  \item{encoding}{encoding to be assumed for input strings.  It is
+    used to mark character strings as known to be in
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
+
+  \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
 \value{
   A data frame (\code{\link{data.frame}}) containing a representation of
-  the data in the file.  Empty input is an error unless \code{col.names}
-  is specified, when a 0-row data frame is returned: similarly giving
-  just a header line if \code{header = TRUE} results in a 0-row data frame.
+  the data in the file.
 
-  This function is the principal means of reading tabular data into \R.
+  Empty input is an error unless \code{col.names} is specified, when a
+  0-row data frame is returned: similarly giving just a header line if
+  \code{header = TRUE} results in a 0-row data frame.  Note that
+  in either case tthe columns will logical unless \code{colClasses} was
+  supplied.
+
+  Character strings in the result (including factor levels) will have a
+  declared encoding if \code{encoding} is \code{"latin1"} or
+  \code{"UTF-8"}.
 }
 \details{
+  This function is the principal means of reading tabular data into \R.
+
   A field or line is \sQuote{blank} if it contains nothing (except
   whitespace if no separator is specified) before a comment character or
   the end of the field or line.
@@ -208,6 +227,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   Quoted fields with embedded newlines are supported except after a
   comment character.
+
+  Note that unless \code{colClasses} is specified, all columns are read
+  as character columns and then converted.  This means that quotes are
+  interpreted in all fields and that a column of values like \code{"42"}
+  will result in an integer column.
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
@@ -225,13 +249,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   especially those with many columns: it is designed to read
   \emph{data frames} which may have columns of very different classes.
   Use \code{\link{scan}} instead.
-
-  Prior to version 1.9.0, underscores were not valid in variable names,
-  and code that relies on them being converted to dots will no longer
-  work. The simplest workaround is to use
-   \code{names(d) <- gsub("_", ".", names(d))},
-  or, avoiding the (small) risk of creating duplicate names,
-   \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}.
+%
+%   Prior to version 1.9.0, underscores were not valid in variable names,
+%   and code that relies on them being converted to dots will no longer
+%   work. The simplest workaround is to use
+%    \code{names(d) <- gsub("_", ".", names(d))},
+%   or, avoiding the (small) risk of creating duplicate names,
+%    \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}.
 }
 
 \seealso{

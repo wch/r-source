@@ -92,7 +92,7 @@ function(pattern, fields = c("alias", "concept", "title"),
             rebuild <- TRUE
     }
     if(rebuild) {
-	if(verbose) cat("Rebuilding the data base ...\n")
+	if(verbose) message("Rebuilding the data base ...")
 	## Check whether we can save the hsearch db lateron.
 	if(all(is.na(mem.limits()))) {
 	    save_db <- save_db_to_memory <- TRUE
@@ -117,7 +117,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    c("Entry", "Aliases", "Description", "Keywords")
 	np <- 0
 	if(verbose)
-	    cat("Packages {.readRDS() sequentially}:\n")
+	    message("Packages {.readRDS() sequentially}:")
 
 	## Starting with R 1.8.0, prebuilt hsearch indices are available
 	## in Meta/hsearch.rds, and the code to build this from the Rd
@@ -139,7 +139,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	for(p in packages_in_hsearch_db) {
 	    np <- np + 1
 	    if(verbose)
-		cat("", p, if((np %% 5) == 0) "\n")
+		message(" ", p, appendLF = ((np %% 5) == 0), domain=NA)
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
 		stop(gettextf("could not find package '%s'", p), domain = NA)
@@ -158,14 +158,15 @@ function(pattern, fields = c("alias", "concept", "title"),
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
 		} else if(verbose)
-		    cat("package", p, "has empty hsearch data - strangely\n")
+		    message(gettextf("package '%s' has empty hsearch data - strangely", p), domain=NA)
 	    }
 	    else warning("no hsearch.rds meta data for package ", p)
 	}
 
 	if(verbose)  {
-	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"),
-		sprintf("Built dbMat[%d,%d]\n", nrow(dbMat), ncol(dbMat)))
+	    message(ifelse(np %% 5 == 0, "\n", "\n\n"),
+                    sprintf("Built dbMat[%d,%d]", nrow(dbMat), ncol(dbMat)),
+                    domain = NA)
             ## DEBUG save(dbMat, file="~/R/hsearch_dbMat.rda", compress=TRUE)
         }
 
@@ -184,7 +185,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		   Concepts = do.call("rbind", dbMat[, 4]))
 	if(is.null(db$Concepts))
 	    db$Concepts <-
-		matrix(character(), nc = 3,
+		matrix(character(), ncol = 3,
 		       dimnames = list(NULL,
 		       c("Concepts", "ID", "Package")))
 	## Make the IDs globally unique by prefixing them with the
@@ -198,7 +199,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	}
 	## And maybe re-encode ...
 	if(!identical(Sys.getlocale("LC_CTYPE"), "C") && capabilities("iconv")) {
-	    if(verbose) cat("reencoding ...")
+	    if(verbose) message("reencoding ...", appendLF=FALSE)
 	    encoding <- db$Base[, "Encoding"]
 	    IDs_to_iconv <- db$Base[encoding != "", "ID"]
 	    encoding <- encoding[encoding != ""]
@@ -211,7 +212,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
 		}
 	    }
-	    if(verbose) cat(" done\n")
+	    if(verbose) message(" done")
 	}
 	## Let us be defensive about invalid multi-byte character data
 	## here.  We simple remove all Rd objects with at least one
@@ -219,7 +220,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	bad_IDs <-
 	    unlist(sapply(db,
 			  function(u)
-			  u[rowSums(is.na(nchar(u, "c"))) > 0, "ID"]))
+			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
 	if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
 	    for(i in seq_along(db)) {
@@ -229,7 +230,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	}
 
 	if(save_db) {
-	    if(verbose) cat("saving the database ...")
+	    if(verbose) message("saving the database ...", appendLF=FALSE)
 	    attr(db, "LibPaths") <- lib.loc
 	    attr(db, "mtime") <- Sys.time()
 	    attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
@@ -242,18 +243,18 @@ function(pattern, fields = c("alias", "concept", "title"),
 		.hsearch_db(substitute(.readRDS(con),
 				       list(con = db_file)))
 	    }
-	    if(verbose) cat(" done\n")
+	    if(verbose) message(" done")
 	}
     }
 
     ### Matching.
     if(verbose)
-	cat("Database of ",
-	    NROW(db$Base), " Rd objects (",
-	    NROW(db$Aliases), " aliases, ",
-	    NROW(db$Concepts), " concepts, ",
-	    NROW(db$Keywords), " keywords),\n",
-	    sep = "")
+	message("Database of ",
+                NROW(db$Base), " Rd objects (",
+                NROW(db$Aliases), " aliases, ",
+                NROW(db$Concepts), " concepts, ",
+                NROW(db$Keywords), " keywords)",
+                domain = NA)
     if(!is.null(package)) {
 	## Argument 'package' was given.  Need to check that all given
 	## packages exist in the db, and only search the given ones.
@@ -334,7 +335,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     db <- dbBase[sort(unique(i)),
 		 c("topic", "title", "Package", "LibPath"),
 		 drop = FALSE]
-    if(verbose) cat("matched", NROW(db), "objects.\n")
+    if(verbose) message(gettextf("matched %d objects.", NROW(db)), domain=NA)
 
     ## Retval.
     y <- list(pattern = pattern, fields = fields,

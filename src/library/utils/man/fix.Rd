@@ -16,6 +16,9 @@ fix(x, \dots)
   The name supplied as \code{x} need not exist as an \R object, in 
   which case a function with no arguments and an empty body is supplied 
   for editing.
+
+  Editing an \R object may change it in ways other than are obvious: see
+  the comment under \code{\link{edit}}.
 }
 \seealso{
   \code{\link{edit}},

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  R Development Core Team
+ *  Copyright (C) 1998--2007  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -148,7 +148,7 @@ typedef struct colorDataBaseEntry ColorDataBaseEntry;
 extern int R_ColorTableSize;
 extern unsigned int R_ColorTable[];
 extern ColorDataBaseEntry ColorDataBase[];
-extern char *DefaultPalette[];
+extern const char *DefaultPalette[];
 
 /* Graphics State:
  *
@@ -170,8 +170,6 @@ int dummy;
 #define curDevice		Rf_curDevice
 #define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
-#define doKeybd			Rf_doKeybd
-#define doMouseEvent		Rf_doMouseEvent
 #define GArrow			Rf_GArrow
 #define GBox			Rf_GBox
 #define GCheckState		Rf_GCheckState
@@ -313,12 +311,12 @@ void GPolyline(int, double*, double*, int, DevDesc*);
 /* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, DevDesc*);
 /* Return the height of the specified string in the specified units: */
-double GStrHeight(char*, GUnit, DevDesc*);
+double GStrHeight(const char *, GUnit, DevDesc*);
 /* Return the width of the specified string in the specified units */
-double GStrWidth(char*, GUnit, DevDesc*);
+double GStrWidth(const char *, GUnit, DevDesc*);
 /* Draw the specified text at location (x,y) with the specified
  * rotation and justification: */
-void GText(double, double, int, char*, double, double, double, DevDesc*);
+void GText(double, double, int, const char *, double, double, double, DevDesc*);
 
 
 void GStartPath(DevDesc*);
@@ -328,20 +326,12 @@ void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
-typedef void (*GVTextRoutine)(double x, double y, int unit, char* s, int typeface, int fontindex,
-	                      double xadj, double yadj, double rot, DevDesc *dd);
-typedef double (*GVStrWidthRoutine)(const unsigned char *s, int typeface, int fontindex,
-		                    int unit, DevDesc *dd);
-typedef double (*GVStrHeightRoutine)(const unsigned char *s, int typeface, int fontindex,
-   	   	                     int unit, DevDesc *dd);
-void R_setVFontRoutines(GVStrWidthRoutine vwidth, GVStrHeightRoutine vheight, GVTextRoutine vtext);
-
-void GVText(double x, double y, int unit, char* s, int typeface, int fontindex,
-	    double xadj, double yadj, double rot, DevDesc *dd);
-double GVStrWidth(const unsigned char *s, int typeface, int fontindex,
-		  int unit, DevDesc *dd);
-double GVStrHeight(const unsigned char *s, int typeface, int fontindex,
-		   int unit, DevDesc *dd);
+/* Called from do_text and do_contour */
+void GVText(double, double, int, const char *, int, int, double, double,
+	    double, DevDesc *);
+/* Called only from do_contour */
+double GVStrWidth(const char *, int, int, int, DevDesc *);
+double GVStrHeight(const char *, int, int, int, DevDesc *);
 
 /*-------------------------------------------------------------------
  *
@@ -362,7 +352,7 @@ void GBox(int, DevDesc*);
 void GPretty(double*, double*, int*);
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
-void GMtext(char*, int, double, int, double, int, double, DevDesc*);
+void GMtext(const char *, int, double, int, double, int, double, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 
@@ -381,7 +371,7 @@ double GExpressionWidth(SEXP, GUnit, DevDesc*);
 /* a string) into an internal colour specification. */
 unsigned int RGBpar(SEXP, int);
     /* Convert an internal colour specification into a colour name */
-char *col2name(unsigned int col);
+const char *col2name(unsigned int col); /* used in grid */
 
 
 /*-------------------------------------------------------------------
@@ -439,15 +429,6 @@ double xDevtoUsr(double, DevDesc*);
 double yDevtoUsr(double, DevDesc*);
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
-
-
-/* Vector fonts */
-
-double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
-double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
-void GVText (double, double, int, char *, int, int,
-	     double, double, double, DevDesc *);
-
 
 /* Devices */
 

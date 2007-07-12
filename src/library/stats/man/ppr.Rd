@@ -168,6 +168,8 @@ method functions.
   \code{\link{plot.ppr}}, \code{\link{supsmu}}, \code{\link{smooth.spline}}
 }
 \examples{
+require(graphics)
+
 # Note: your numerical values may differ
 attach(rock)
 area1 <- area/10000; peri1 <- peri/10000

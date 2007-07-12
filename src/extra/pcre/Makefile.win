@@ -1,31 +1,27 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS=-I../../include -I. -DWIN32 $(OPTFLAGS)
+DEFS=-DWIN32 -DPCRE_STATIC
+ifdef LEA_MALLOC
+DEFS+=-DLEA_MALLOC
+endif
+
+CFLAGS=-I../../include -I. $(DEFS) $(OPTFLAGS)
 
 ## done this way for parallel make
 all:
-	$(MAKE) -f Makefile.win chartables.h
 	$(MAKE) -f Makefile.win makeMakedeps
 	$(MAKE) -f Makefile.win libpcre.a
 
-CSOURCES = pcre_compile.c pcre_config.c pcre_exec.c \
+## we do not have UTF-8 and so do not compile in UCP support
+## nor pcre_valid_utf.c
+CSOURCES = pcre_chartables.c pcre_compile.c pcre_config.c pcre_exec.c \
 	pcre_fullinfo.c pcre_get.c pcre_globals.c pcre_info.c \
-	pcre_maketables.c pcre_ord2utf8.c pcre_refcount.c \
+	pcre_maketables.c pcre_newline.c pcre_ord2utf8.c pcre_refcount.c \
 	pcre_study.c pcre_tables.c pcre_try_flipped.c \
-	pcre_valid_utf8.c pcre_version.c pcre_xclass.c
+	pcre_version.c pcre_xclass.c
 OBJS=$(CSOURCES:.c=.o)
 libpcre.a: $(OBJS)
-
-## this can't be used if cross-building, so ship the file
-ifneq ($(strip $(BUILD)),CROSS)
-dftables.exe: dftables.o
-chartables.h: dftables.exe
-	./dftables chartables.h
-else
-chartables.h: chartables.h.win 
-	$(CP) chartables.h.win chartables.h
-endif
 
 clean:
 	@$(RM) *.o *~ *.d Makedeps

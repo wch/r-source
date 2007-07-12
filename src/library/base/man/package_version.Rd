@@ -52,5 +52,12 @@ c(min(x), max(x))
 x[2, 2]
 x$major
 x$minor
+
+if(getRversion() <= "2.5.0") { # work around missing feature
+  cat("your version of R, ", as.character(getRversion()),
+      ", is outdated.\n",
+      "Now trying to work around that ..\n", sep='')
+}
+
 }
 \keyword{utilities}

@@ -43,11 +43,8 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
 #endif
 #ifdef unix
   Note that the timing interval cannot be too small: once the timer goes
-  off, the information is not recorded until the next clock tick
-  (probably every 10msecs).  Thus the interval is rounded to the nearest
-  integer number of clock ticks, and is made to be at least one clock
-  tick (at which resolution the total time spent is liable to be
-  underestimated).
+  off, the information is not recorded until the timing click.
+  (probably every in the range 1--10msecs).
 #endif
 }
 \note{

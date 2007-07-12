@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -19,6 +19,9 @@ msgstr "'at'가 NULL인경우 axis labels를 지정하는 것은 부적절합니
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels' 그리고 위치'at'는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "logical 'label' supplied on length 0"
+msgstr ""
 
 msgid "End points must not be identical"
 msgstr ""
@@ -295,7 +298,7 @@ msgstr "'x' 그리고 'y'는 길이 1이 아니면 안됩니다"
 msgid "invalid 'arrow' argument"
 msgstr "부적절한 'rot' 값입니다"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr "'id' 그리고 'id.lengths'의 양쪽 모두를 지정할수 없지 않습니다"
 
 msgid "'x' and 'y' must be same length"
@@ -359,9 +362,6 @@ msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr ""
 "'x', 'y', 'width' 그리고 'height'는 모두 길이 1의 units가 나오지 않으면 되지 "
 "않습니다"
-
-msgid "'x' must be numeric"
-msgstr "'x'는 수치가 아니면 되지 않습니다"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'  그리고 'units'는 0보다 큰 길이가 나오지 않으면 되지 않습니다"
@@ -479,3 +479,6 @@ msgstr "'x' 또는 'xscale' 중 적어도 하나를 지정하지 않으면 되�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' 또는 'yscale' 중 적어도 하나를 지정하지 않으면 되지 않습니다"
+
+#~ msgid "'x' must be numeric"
+#~ msgstr "'x'는 수치가 아니면 되지 않습니다"

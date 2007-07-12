@@ -52,13 +52,13 @@ parent.frame(n = 1)
   the frame number of the current evaluation, nor is it the environment
   within which the function was defined.  \code{sys.parent} returns the
   number of the parent frame if \code{n} is 1 (the default), the
-  grandparent if \code{n} is 2, and so on.
+  grandparent if \code{n} is 2, and so on.  See also the Note.
 
   \code{sys.nframe} returns an integer, the number of the current frame
   as described in the first paragraph.
 
   \code{sys.calls} and \code{sys.frames} give a pairlist of all the
-  active calls and frames, repectively, and \code{sys.parents} returns
+  active calls and frames, respectively, and \code{sys.parents} returns
   an integer vector of indices of the parent frames of each of those
   frames.
 
@@ -79,10 +79,17 @@ parent.frame(n = 1)
   \code{parent.frame(n)} is a convenient shorthand for
   \code{sys.frame(sys.parent(n))} (implemented slightly more efficiently).
 }
+\note{
+  Strictly, \code{sys.parent} and \code{parent.frame} refer to the
+  \emph{context} of the parent interpreted function.  So internal
+  functions (which may or may not set contexts and so may or may not
+  appear on the call stack) are not counted, and S3 methods can also do
+  suprising things.
+}
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function
-  definition, and \code{sys.frame}, \code{sys.parent} and
-  \code{parent.frame} return an environment.
+  definition, and \code{sys.frame} and \code{parent.frame} return an
+  environment.
 
   For the other functions, see the Details section.
 }
@@ -96,6 +103,8 @@ parent.frame(n = 1)
   \code{\link{eval}} for a usage of \code{sys.frame} and \code{parent.frame}.
 }
 \examples{
+require(utils)
+
 ## Note: the first two examples will give different results
 ## if run by example().
 ff <- function(x) gg(x)

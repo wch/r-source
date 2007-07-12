@@ -113,7 +113,7 @@ static void private_delmenu(menu m)
  */
 char *Rf_strchr(const char *s, int c); /* from util.c, MBCS-aware */
 
-static int find_char(int ch, char *str)
+static int find_char(int ch, const char *str)
 {
 	char *p;
 	p = Rf_strchr(str, ch);
@@ -127,7 +127,7 @@ static int find_char(int ch, char *str)
  *  then the digits, and finally the lowercase letters.
  *  It ignores spaces.
  */
-static void set_search_string(char *search, char *name, int key)
+static void set_search_string(char *search, const char *name, int key)
 {
 	int source;
 	int dest = 0;
@@ -223,7 +223,7 @@ static int find_shortcut(object me, char *search)
  *  This function also sets an object's shortcut key, which is the
  *  underlined letter in a menu item in Windows or X-Windows.
  */
-static void setmenustring(object obj, char *buf, char *name, int key)
+static void setmenustring(object obj, char *buf, const char *name, int key)
 {
 	char search[256];
 	int ch, where, source, dest = 0;
@@ -310,7 +310,7 @@ BOOL myAppendMenu(HMENU h, UINT flags, UINT id, LPCTSTR name)
 }
 
 
-menu newsubmenu(menu parent, char *name)
+menu newsubmenu(menu parent, const char *name)
 {
 	object obj;
 	HMENU hm;
@@ -352,13 +352,13 @@ menu newsubmenu(menu parent, char *name)
 	return (menu) obj;
 }
 
-menu newmenu(char *name)
+menu newmenu(const char *name)
 {
 	return newsubmenu(current_menubar, name);
 }
 
 
-menuitem newmenuitem(char *name, int key, menufn fn)
+menuitem newmenuitem(const char *name, int key, menufn fn)
 {
 	object obj;
 	UINT flags;

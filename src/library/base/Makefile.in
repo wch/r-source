@@ -11,7 +11,8 @@ subdir = src/library/base
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION.in Makefile.in baseloader.R makebasedb.R
+DISTFILES = DESCRIPTION.in Makefile.in baseloader.R \
+  makebasedb.R cross-makebasedb.R
 
 pkg = base
 

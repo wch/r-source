@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
 "PO-Revision-Date: 2005-05-26 16:24+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -22,6 +22,72 @@ msgstr "Tcl 배열의 길이를 세트할 수가 없습니다"
 
 msgid "Tcl package '%s' not found"
 msgstr "Tcl 패키지 '%s'는 검색되지 않습니다"
+
+msgid "The tkGUI is not available under Windows"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Demos"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Source R code"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "Save workspace"
+msgstr ""
+
+msgid "Don't save workspace"
+msgstr ""
+
+msgid "t test"
+msgstr ""
+
+msgid "Density"
+msgstr ""
+
+msgid "R FAQ"
+msgstr ""
+
+msgid "Load"
+msgstr ""
+
+msgid "Go get them!"
+msgstr ""
+
+msgid "Load packages"
+msgstr ""
+
+msgid "Install packages from CRAN"
+msgstr ""
+
+msgid "Help topic:"
+msgstr ""
+
+msgid "Manuals in PDF format"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
 
 #, fuzzy
 msgid "Tcl/Tk support is not available on this system"

@@ -85,6 +85,8 @@ t.test(x, \dots)
   \code{\link{prop.test}}
 }
 \examples{
+require(graphics)
+
 t.test(1:10,y=c(7:20))      # P = .00001855
 t.test(1:10,y=c(7:20, 200)) # P = .1245    -- NOT significant anymore
 

@@ -137,7 +137,7 @@ step(object, scope, scale = 0,
   Pregibon (1992); but the implementation in \R is more general.
 }
 \examples{
-example(lm)
+utils::example(lm)
 step(lm.D9)  
 
 summary(lm1 <- lm(Fertility ~ ., data = swiss))

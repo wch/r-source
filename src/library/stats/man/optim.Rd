@@ -9,10 +9,10 @@
   box-constrained optimization and simulated annealing.
 }
 \usage{
-optim(par, fn, gr = NULL,
+optim(par, fn, gr = NULL, \dots,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
       lower = -Inf, upper = Inf,
-      control = list(), hessian = FALSE, \dots)
+      control = list(), hessian = FALSE)
 }
 \arguments{
  \item{par}{Initial values for the parameters to be optimized over.}
@@ -25,17 +25,17 @@ optim(par, fn, gr = NULL,
 
    For the \code{"SANN"} method it specifies a function to generate a new
    candidate point.  If it is \code{NULL} a default Gaussian Markov
-   kernel is used.
- }
+   kernel is used.}
+ \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
  \item{method}{The method to be used. See \bold{Details}.}
  \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
  \item{control}{A list of control parameters. See \bold{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
- \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.
-   Beware of partial matching to earlier arguments.}
 }
 \details{
+  Note that arguments after \code{\dots} must be matched exactly.
+  
   By default this function performs minimization, but it will maximize
   if \code{control$fnscale} is negative.
 
@@ -227,6 +227,8 @@ optim(par, fn, gr = NULL,
 }
 
 \examples{
+require(graphics)
+
 fr <- function(x) {   ## Rosenbrock Banana function
     x1 <- x[1]
     x2 <- x[2]
@@ -248,7 +250,7 @@ optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
 flb <- function(x)
     { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
 ## 25-dimensional box constrained
-optim(rep(3, 25), flb, NULL, "L-BFGS-B",
+optim(rep(3, 25), flb, NULL, method = "L-BFGS-B",
       lower=rep(2, 25), upper=rep(4, 25)) # par[24] is *not* at boundary
 
 ## "wild" function , global minimum at about -15.81515
@@ -261,7 +263,7 @@ res <- optim(50, fw, method="SANN",
 res
 ## Now improve locally
 (r2 <- optim(res$par, fw, method="BFGS"))
-points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
+points(r2$par, r2$value, pch = 8, col = "red", cex = 2)
 
 ## Combinatorial optimization: Traveling salesman problem
 library(stats) # normally loaded

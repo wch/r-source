@@ -1600,7 +1600,7 @@ set elements to @code{NA} using @code{is.na<-}.
 
 As from @R{} 2.5.0 there are constants @code{NA_integer_},
 @code{NA_real_}, @code{NA_complex_} and @code{NA_character_} which will
-generate (in the parser) an @code{NA} value of the approrpriate type,
+generate (in the parser) an @code{NA} value of the appropriate type,
 and will be used in deparsing when it is not otherwise possible to
 identify the type of an @code{NA} (and the @code{control} options ask
 for this to be done).
@@ -1657,7 +1657,7 @@ pairlists.  It allows only a literal character string or a symbol as the
 index.  That is, the index is not computable: for cases where you need
 to evaluate an expression to find the index, use @code{x[[expr]]}.  When
 @code{$} is applied to a non-recursive object the result is always
-@code{NULL}.
+@code{NULL}: as from @R{} 2.5.0 this is deprecated and will give a warning.
 
 @menu
 * Indexing by vectors::         
@@ -1710,8 +1710,13 @@ selected values of @code{x} are those for which @code{i} is @code{TRUE}.
 names attribute of @code{x} and the resulting integers are used.  For
 @code{[[} and @code{$} partial matching is used if exact matching fails,
 so @code{x$aa} will match @code{x$aabb} if @code{x} does not a component
-named @code{"aa"} and @code{"aabb"} is the first name which has prefix
-@code{"aa"}.  However, @code{[} requires an exact match.  The string
+named @code{"aa"} and @code{"aabb"} is the only name which has prefix
+@code{"aa"}.  For @code{[[}, partial matching can be controlled via the
+@code{exact} argument which defaults to @code{NA} indicating that
+partial matching is allowed, but should result in a warning when it
+occurs.  Setting @code{exact} to @code{TRUE} prevents partial matching
+from occuring, a @code{FALSE} value allows it and does not issue any
+warnings.  Note that @code{[} always requires an exact match.  The string
 @code{""} is treated specially: it indicates `no name' and matches no
 element (not even those without a name).  Note that partial matching is
 only used when extracting and not when replacing.
@@ -2018,7 +2023,7 @@ superassignment.  As this case was handled incorrectly in versions
 @cindex name
 Almost every programming language has a set of scoping rules, allowing
 the same name to be used for different objects.  This allows, e.g., a
-local variable in a function to have the same name a global object.
+local variable in a function to have the same name as a global object.
 
 @R{} uses a @emph{lexical scoping} model, similar to languages like
 Pascal.  However, @R{} is a @emph{functional programming language} and
@@ -2513,10 +2518,10 @@ functions can be
 returned as values from other functions then some rather nice, but at
 first glance peculiar, properties obtain.
 
-A simple example,
+A simple example:
 
 @example
-f <- function(x) @{
+f <- function() @{
     y <- 10
     g <- function(x) x + y
     return(g)
@@ -2533,17 +2538,18 @@ function body variables can be bound, local or unbound.  The bound
 variables are those that match the formal arguments to the function.
 The local variables are those that were created or defined within the
 function body.  The unbound variables are those that are neither local
-or bound.  When a function body is evaluated there is no problem
+nor bound.  When a function body is evaluated there is no problem
 determining values for local variables or for bound variables.  Scoping
 rules determine how the language will find values for the unbound
 variables.
 
-When @code{h(3)} is evaluated we see that its body is that of @code{g}.
-Within that body @code{x} and @code{y} are unbound.  In a language with
-@cindex scope
-lexical scope @code{x} will be associated with the value 3 and @code{y}
-with the value 10 so @code{h()} should return the value 13.  In @R{}
-this is indeed what happens.
+When @code{h(3)} is evaluated we see that its body is that of
+@code{g}. Within that body @code{x} is bound to the formal argument
+and @code{y} is unbound.  In a language with
+@cindex scope 
+lexical scope @code{x} will be associated with the value 3 and
+@code{y} with the value 10 local to @code{f} so @code{h(3)} should return the value 13.
+In @R{} this is indeed what happens.
 
 In @Sl{}, because of the different scoping rules one will get an error
 indicating that @code{y} is not found, unless there is a variable
@@ -3826,7 +3832,7 @@ FORTRAN code respectively, but the @code{.C} function can be used with
 other languages which can generate C interfaces, for example C++.
 
 Functions @code{.Call} and @code{.External} provide interfaces which allow
-compiled code (primarily compiled @C{} code) to mainipulate @R{} objects.
+compiled code (primarily compiled @C{} code) to manipulate @R{} objects.
 
 @node .Internal and .Primitive,  , Foreign language interfaces, System and foreign language interfaces
 @section .Internal and .Primitive
@@ -4380,7 +4386,7 @@ are generally accessed via @code{get} and @code{assign}, although they
 can also be represented by text strings in some limited circumstances
 when there is no ambiguity (e.g.@: @code{"x" <- 1}). As @code{get} and
 @code{assign} are not restricted to names that are identifiers they do
-not recognise subscripting operators or assigment functions. The
+not recognise subscripting operators or assignment functions. The
 following pairs are @emph{not} equivalent
 @findex get
 @findex assign

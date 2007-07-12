@@ -29,7 +29,7 @@ diffinv.default <- function (x, lag = 1, differences = 1, xi, ...)
     if (is.matrix(x)) {
         n <- nrow(x)
         m <- ncol(x)
-        y <- matrix(0, nr=n+lag*differences, nc=m)
+        y <- matrix(0, nrow = n+lag*differences, ncol = m)
         if(m >= 1) {
             if(missing(xi)) xi <- matrix(0.0, lag*differences, m)
             if(NROW(xi) != lag*differences || NCOL(xi) != m)

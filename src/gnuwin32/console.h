@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.h
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004-6      The R Foundation
+ *  Copyright (C) 2004-7      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ typedef window pager;
 typedef window dataeditor;
 typedef window editor;
 
+
+
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
 		  int rows, int cols, int consx, int consy,
@@ -34,7 +36,7 @@ pager newpager(char *title, char *filename, char *header, int unlinkonexit);
 console newconsole(char *name, int flags);
 int  consolereads(console c, char *prompt, char *buf, int len,
 		  int addtohistory);
-int  consolewrites(console c, char *s);
+int  consolewrites(console c, const char *s);
 int  consolecancopy(console c);
 int  consolecanpaste(console c);
 void consolecopy(console c);

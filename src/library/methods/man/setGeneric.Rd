@@ -156,7 +156,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   specification of methods, etc.
 }
 \section{Generic Functions and Primitive Functions}{
-  A number of the basic R functions are specially implemented as
+  A number of the basic \R functions are specially implemented as
   primitive functions, to be evaluated directly in the underlying C
   code rather than by evaluating an S language definition.  Primitive
   functions are eligible to have methods, but are handled differently
@@ -168,7 +168,8 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   A call to \code{setGeneric} for a primitive causes the evaluator to
   look for methods for that generic; a call to \code{setGroupGeneric}
   for any of the groups that include primitives (\code{"Arith", "Logic",
-  "Compare", "Ops", "Math", "Math2", "Summary",} and \code{"Complex"})
+    "Compare", "Ops", "Math", "Math2", "Summary",} and \code{"Complex"},
+  see \code{\link{S4groupGeneric}})
   does the same for each of the functions in that group.
 
   You usually only need to use either function if the methods are
@@ -252,7 +253,7 @@ setMethod("Arith", c("numeric", "track"),
 
 ## now arithmetic operators  will dispatch methods:
 
-t1 <- new("track", x=1:10, y=sort(rnorm(10)))
+t1 <- new("track", x=1:10, y=sort(stats::rnorm(10)))
 
 t1 - 100
 1/t1

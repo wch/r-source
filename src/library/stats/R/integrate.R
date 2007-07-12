@@ -1,7 +1,7 @@
-integrate<- function(f, lower, upper, subdivisions=100,
+integrate<- function(f, lower, upper, ..., subdivisions=100,
 		     rel.tol = .Machine$double.eps^.25,
 		     abs.tol = rel.tol, stop.on.error = TRUE,
-		     keep.xy = FALSE, aux = NULL, ...)
+		     keep.xy = FALSE, aux = NULL)
 {
     f <- match.fun(f)
     ff <- function(x) f(x, ...)

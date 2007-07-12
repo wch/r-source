@@ -158,6 +158,13 @@ void attribute_hidden R_restore_globals(RCNTXT *cptr)
     R_interrupts_suspended = cptr->intsusp;
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
+    while (R_PendingPromises != cptr->prstack) {
+	/* The value installed in PRSSN 2 allows forcePromise in
+	   eval.c to signal a warning when asked to evaluate a promise
+	   whose evaluation has been interrupted by a jump. */
+	SET_PRSEEN(R_PendingPromises->promise, 2);
+	R_PendingPromises = R_PendingPromises->next;
+    }
 #ifdef BYTECODE
     R_BCNodeStackTop = cptr->nodestack;
 # ifdef BC_INT_STACK
@@ -217,6 +224,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->intsusp = R_interrupts_suspended;
     cptr->handlerstack = R_HandlerStack;
     cptr->restartstack = R_RestartStack;
+    cptr->prstack = R_PendingPromises;
 #ifdef BYTECODE
     cptr->nodestack = R_BCNodeStackTop;
 # ifdef BC_INT_STACK
@@ -443,7 +451,7 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     if( cptr == R_ToplevelContext )
-	errorcall(call, _("no function to restart"));
+	error(_("no function to restart"));
     return(R_NilValue);
 }
 
@@ -475,28 +483,23 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (PRIMVAL(op)) {
     case 1: /* parent */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "n");
-	nframe = framedepth(cptr);
-	rval = allocVector(INTSXP,1);
-	i = nframe;
+	    error(_("invalid value for '%s'"), "n");
+	i = nframe = framedepth(cptr);
 	/* This is a pretty awful kludge, but the alternative would be
 	   a major redesign of everything... -pd */
 	while (n-- > 0)
 	    i = R_sysparent(nframe - i + 1, cptr);
-	INTEGER(rval)[0] = i;
-	return rval;
+	return ScalarInteger(i);
     case 2: /* call */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "which");
+	    error(_("invalid value for '%s'"), "which");
 	return R_syscall(n, cptr);
     case 3: /* frame */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "which");
+	    error(_("invalid value for '%s'"), "which");
 	return R_sysframe(n, cptr);
     case 4: /* sys.nframe */
-	rval = allocVector(INTSXP, 1);
-	INTEGER(rval)[0] = framedepth(cptr);
-	return rval;
+	return ScalarInteger(framedepth(cptr));
     case 5: /* sys.calls */
 	nframe = framedepth(cptr);
 	PROTECT(rval = allocList(nframe));
@@ -526,7 +529,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return rval;
     case 9: /* sys.function */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for 'which'"));
+	    error(_("invalid value for 'which'"));
 	return(R_sysfunction(n, cptr));
     default:
 	error(_("internal error in 'do_sys'"));
@@ -545,7 +548,7 @@ SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = asInteger(t);
 
     if(n == NA_INTEGER || n < 1 )
-	errorcall(call, _("invalid value for 'n'"));
+	error(_("invalid value for 'n'"));
 
     cptr = R_GlobalContext;
     t = cptr->sysparent;
@@ -604,7 +607,8 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 /*
   This is a simple interface for evaluating R expressions
   from C with a guarantee that one will return to the 
-  point in the code from which the call was made.
+  point in the code from which the call was made (if it does
+  return at all).
   This uses R_TopleveExec to do this.  It is important
   in applications that embed R or wish to make general 
   callbacks to R with error handling.
@@ -613,6 +617,8 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
   and C routine visible only here. The R_tryEval() is the
   only visible aspect. This can be lifted into the header
   files if necessary. (DTL)
+
+  R_tryEval is in Rinternals.h (so public), but not in the API.
  */
 typedef struct {
     SEXP expression;

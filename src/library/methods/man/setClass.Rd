@@ -44,11 +44,11 @@ sealClass(Class, where)
     environment in which to store or remove the
     definition.  Defaults to the top-level environment of the calling function
     (the global environment for ordinary computations, but the
-    environment or namespace of a package when loading that package).
+    environment or name space of a package when loading that package).
 
     For other functions, \code{where} defines where to do the search
     for the class definition, and the default is to search from the top-level
-    environment or namespace of the caller to this function.
+    environment or name space of the caller to this function.
   }
   \item{unique}{if \code{findClass} expects a unique location for the
     class, \code{unique} is a character string explaining the purpose
@@ -122,7 +122,7 @@ sealClass(Class, where)
     \item{\code{findClass}:}{
       The list of environments or positions on the search list in
       which a class definition of \code{Class} is found.  If
-      \code{where} is supplied, this is an environment (or namespace)
+      \code{where} is supplied, this is an environment (or name space)
       from which the search takes place; otherwise the top-level
       environment of the caller is used.  If \code{unique} is supplied
       as a character string, \code{findClass} returns a single
@@ -168,7 +168,7 @@ sealClass(Class, where)
   Then extensions will add some new slots and new behavior.
 
   Another variety of extension starts with one of the built-in data types,
-  perhaps with the intension of modifying R's standard behavior for that
+  perhaps with the intention of modifying R's standard behavior for that
   class.  In this case, the new class inherits the built-in data type
   as its \dQuote{data} part.  See the \dQuote{numWithId} example below.
 
@@ -308,7 +308,7 @@ setClass("myMatrix", "matrix", prototype = matrix(0,0,0))
 nrow(new("myMatrix")) # 0
 nrow(new("matrix")) # 1
 ## simple test of prototype data
-xxx <- rnorm(3)
+xxx <- stats::rnorm(3)
 setClass("xNum", representation(x = "numeric"), prototype = list(x = xxx))
 stopifnot(identical(new("xNum")@x, xxx))
 ### tests of the C macros MAKE_CLASS and NEW

@@ -10,7 +10,7 @@ export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        plot.design, plot.new, plot.window, plot.xy, points, polygon,
        rect, rug, screen, segments, "spineplot", split.screen, stars,
        stem, strheight, stripchart, strwidth, sunflowerplot, symbols,
-       text, title, xinch, xyinch, yinch)
+       text, title, xinch, xspline, xyinch, yinch)
 
 # leave most of the default methods visible as people seem to call them.
 export(barplot.default, boxplot.default, contour.default, image.default,

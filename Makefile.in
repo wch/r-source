@@ -74,15 +74,15 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
 
-install: installdirs svnonly
+install install-strip: installdirs svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)"; \
 	done
 	@for f in $(NON_SVN_INSTFILES); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)"; \
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
@@ -91,8 +91,7 @@ install: installdirs svnonly
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
 @WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
-@WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
-@WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
+@WANT_R_FRAMEWORK_TRUE@		@(chmod a+x $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(chmod -R g+w $(R_FRAMEWORK_DIR))
 
 svnonly:
@@ -116,23 +115,21 @@ libR_la = lib/libR$(DYLIB_EXT)
 install-libR:
 	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
 install-libR-exists:
-	@$(MKINSTALLDIRS) "${libdir}"
-	@$(INSTALL_DATA) -m755 $(libR_la) "${libdir}"
+	@$(MKINSTALLDIRS) "$(DESTDIR)${libdir}"
+	@$(INSTALL_DATA) -m755 $(libR_la) "$(DESTDIR)${libdir}"
 
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)"
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
-	  rm -f "$(rhome)/$${f}"; \
+	  rm -f "$(DESTDIR)$(rhome)/$${f}"; \
 	done
-	@rm -rf "$(Rexecbindir)" "$(rhome)/lib"
-	@rmdir "$(rhome)" 2>/dev/null \
-          || echo "  dir $(rhome) not removed"
-	@rm -f "${libdir}/libR$(DYLIB_EXT)"
+	@rm -rf "$(DESTDIR)$(Rexecbindir)" "$(DESTDIR)$(rhome)/lib"
+	@rmdir "$(DESTDIR)$(rhome)" 2>/dev/null \
+          || echo "  dir $(DESTDIR)$(rhome) not removed"
+	@rm -f "$(DESTDIR)${libdir}/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:
@@ -230,11 +227,12 @@ install-R-framework:
 	@## the resulting libR will point dyld to the fat libR regardless of its origin
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
-	@(for lib in Rlapack Rblas R; do \
+	@( otool=otool ; if otool -D "$(Rexeclibdir)/libR.dylib"|grep 'not an object'>/dev/null; then otool=otool64; fi; \
+	   for lib in Rlapack Rblas R; do \
 	   if test -e "$(Rexeclibdir)/lib$${lib}.dylib"; then echo "  lib$${lib}"; \
 	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
 	    xargs -n 1 install_name_tool -change \
-	    `otool -L $(Rexeclibdir)/lib$${lib}.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
+	    `$${otool} -L $(Rexeclibdir)/lib$${lib}.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
 	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
 	    xargs -n 1 install_name_tool -change lib$${lib}.dylib \
@@ -259,6 +257,10 @@ install-R-framework:
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
 	    $(Rexecbindir2)/R)
 	@(if [ -n "${R_ARCH}" ]; then \
+	  sed -e "s|R_ARCH=${R_ARCH}|R_ARCH=/\`arch\`|" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R" \
+	  > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
+	  chmod a+x "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
+	  mv "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R"; \
 	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 ]; then \
 	    echo "\
 	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
@@ -268,6 +270,8 @@ install-R-framework:
 	    done; \
 	  fi; \
 	fi )
+	@( rm -f "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" && \
+	   ln -s bin/R "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" )
 	@( echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist)
 
 TAGS:

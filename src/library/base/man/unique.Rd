@@ -12,15 +12,21 @@
 \usage{
 unique(x, incomparables = FALSE, \dots)
 
-\method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1, \dots)
+\method{unique}{default}(x, incomparables = FALSE, fromLast = FALSE, \dots)
 
-\method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, \dots)
+\method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
+
+\method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
 }
 \arguments{
   \item{x}{a vector or a data frame or an array or \code{NULL}.}
   \item{incomparables}{a vector of values that cannot be compared.
     Currently, \code{FALSE} is the only possible value, meaning that all
     values can be compared.}
+  \item{fromLast}{logical indicating if duplication should be considered
+    from the last, i.e., the last (or rightmost) of identical elements will
+    be kept.  This only matters for \code{\link{names}} or
+    \code{\link{dimnames}}.}
   \item{\dots}{arguments for particular methods.}
   \item{MARGIN}{the array margin to be held fixed: a single integer.}
 }
@@ -42,7 +48,7 @@ unique(x, incomparables = FALSE, \dots)
   For a data frame, a data frame is returned with the same columns but
   possibly fewer rows (and with row names from the first occurrences of
   the unique rows).
-  
+
   A matrix or array is subsetted by \code{[, drop = FALSE]}, so
   dimensions and dimnames are copied appropriately, and the result
   always has the same number of dimensions as \code{x}.
@@ -62,7 +68,11 @@ unique(x, incomparables = FALSE, \dots)
   elements.
 }
 \examples{
-unique(c(3:5, 11:8, 8 + 0:5))
+x <- c(3:5, 11:8, 8 + 0:5)
+(ux <- unique(x))
+(u2 <- unique(x, fromLast = TRUE)) # different order
+stopifnot(identical(sort(ux), sort(u2)))
+
 length(unique(sample(100, 100, replace=TRUE)))
 ## approximately 100(1 - 1/e) = 63.21
 

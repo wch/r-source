@@ -14,8 +14,12 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
   \item{gamma}{a \dQuote{gamma correction} exponent, \eqn{\gamma}}
-  \item{alpha}{numeric value in the range \code{[0,1]} for
+  \item{alpha}{numeric vector of values in the range \code{[0,1]} for
     alpha transparency channel (0 means transparent and 1 means opaque).}
+}
+\details{
+  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
+  some devices: see \code{\link{rgb}}.
 }
 \value{
   This function creates a vector of \dQuote{colors} corresponding to the
@@ -34,6 +38,8 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   \code{\link{gray}}.
 }
 \examples{
+require(graphics)
+
 hsv(.5,.5,.5)
 
 ## Look at gamma effect:

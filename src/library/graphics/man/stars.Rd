@@ -77,7 +77,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{xpd}{logical or NA indicating if clipping should be done, see
     \code{\link{par}(xpd = .)}.}
   \item{mar}{argument to \code{\link{par}(mar = *)}, typically choosing
-    smaller margings than by default.}
+    smaller margins than by default.}
   \item{\dots}{further arguments, passed to the first call of
     \code{plot()}, see \code{\link{plot.default}} and to
     \code{\link{box}()} if \code{frame.plot} is true.}
@@ -96,6 +96,9 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   Only one page of output is produced.
 }
 \author{Thomas S. Dye}
+\seealso{
+  \code{\link{symbols}} for another way to draw stars and other symbols.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -109,6 +112,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   documented as here.
 }
 \examples{
+require(grDevices)
 stars(mtcars[, 1:7], key.loc = c(14, 2),
       main = "Motor Trend Cars : stars(*, full = F)", full = FALSE)
 stars(mtcars[, 1:7], key.loc = c(14, 1.5),

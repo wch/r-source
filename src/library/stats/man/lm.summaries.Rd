@@ -63,6 +63,10 @@ weights(object, \dots)
   \code{\link{weighted.residuals}},
   \code{\link{residuals}}, \code{\link{residuals.glm}},
   \code{\link{summary.lm}}.
+
+  \link{influence.measures} for deletion diagnostics, including
+  standardized (\code{\link{rstandard}})
+  and studentized (\code{\link{rstudent}}) residuals.
 }
 \references{
   Chambers, J. M. (1992)
@@ -71,7 +75,7 @@ weights(object, \dots)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
-\dontshow{example("lm", echo = FALSE)}
+\dontshow{utils::example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:
 coef(lm.D90)# the bare coefficients
 

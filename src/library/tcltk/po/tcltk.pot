@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2007-06-12 18:53+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tcltk.c:65
+msgid "parse error in R expression"
+msgstr ""
+
+#: tcltk.c:165 tcltk.c:247
+msgid "tcl error.\n"
+msgstr ""
+
+#: tcltk.c:201 tcltk.c:830
+msgid "invalid argument"
+msgstr ""
+
+#: tcltk.c:604
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr ""
+
+#: tcltk.c:635
+msgid "argument is not of correct type"
+msgstr ""
+
+#: tcltk.c:682
+msgid "Tcl already loaded"
+msgstr ""
+
+#: tcltk.c:700
+msgid "Tcl is not loaded"
+msgstr ""
+
+#: tcltk.c:706
+msgid "Tcl is not last loaded handler"
+msgstr ""
+
+#: tcltk.c:785
+msgid "no DISPLAY variable so Tk is not available"
+msgstr ""

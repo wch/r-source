@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
-"PO-Revision-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-06-06 11:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -57,6 +57,9 @@ msgstr "Undocumented S4 classes:"
 msgid "Undocumented S4 methods:"
 msgstr "Undocumented S4 methods:"
 
+msgid "Prototyped non-primitives:"
+msgstr "Prototyped non-primitives:"
+
 msgid "Undocumented %s:"
 msgstr "Undocumented %s:"
 
@@ -70,6 +73,9 @@ msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
 msgstr ""
 "Functions/methods with usage in documentation object ‘%s’ but not in code:"
+
+msgid "Data sets with usage in documentation object '%s' but not in code:"
+msgstr "Data sets with usage in documentation object ‘%s’ but not in code:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Argument names in code not in docs:"
@@ -344,6 +350,12 @@ msgstr ""
 "See the information on DESCRIPTION files in section ‘Creating R packages’ of "
 "the ‘Writing R Extensions’ manual."
 
+msgid "Encoding '%s' is not portable"
+msgstr "Encoding ‘%s’ is not portable"
+
+msgid "Unknown encoding with non-ASCII data"
+msgstr "Unknown encoding with non-ASCII data"
+
 msgid "Non-portable flags in variable '%s':"
 msgstr "Non-portable flags in variable '%s':"
 
@@ -361,12 +373,6 @@ msgstr "‘::’ or ‘:::’ imports not declared from:"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "‘library’ or ‘require’ calls not declared from:"
-
-msgid "Found possibly global T or F in the following functions:"
-msgstr "Found possibly global T or F in the following functions:"
-
-msgid "Found possibly global T or F in the following Rd example files:"
-msgstr "Found possibly global T or F in the following Rd example files:"
 
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
@@ -438,6 +444,13 @@ msgstr "missing/empty \\name field in Rd file(s)"
 msgid "unable to create temp directory"
 msgstr "unable to create temp directory"
 
+msgid ""
+"processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"processing vignette ‘%s’ failed with diagnostics:\n"
+"%s"
+
 msgid "running make failed"
 msgstr "running make failed"
 
@@ -473,6 +486,9 @@ msgstr "files in ‘%s’ missing from ‘%s’ field:"
 
 msgid "unable to create '%s'"
 msgstr "unable to create ‘%s’"
+
+msgid "unable to re-encode '%s'"
+msgstr "unable to re-encode ‘%s’"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "unable to copy INDEX to ‘%s’"
@@ -584,3 +600,19 @@ msgstr "done"
 
 msgid "parsing '%s'"
 msgstr "parsing ‘%s’"
+
+msgid "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] "Warning in file '%s':"
+msgstr[1] "Warnings in file '%s':"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following function:"
+msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following functions:"
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following Rd example file:"
+msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following Rd example files:"

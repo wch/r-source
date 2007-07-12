@@ -36,7 +36,7 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_GLIBC2
+#if defined(HAVE_GLIBC2) && !defined(_GNU_SOURCE)
 # define _GNU_SOURCE /* iswblank is a GNU extension, also in C99 */
 #endif
 
@@ -191,14 +191,6 @@ static int wcsearch(int wint, const struct interval *table, int max)
 }
 #endif
 
-/* what was this for ?
-#ifdef Win32
-# include <windows.h>
-# include <winnls.h>
-#else
-# include <langinfo.h>
-#endif
-*/
 
 /*********************************************************************
  *  There is MacOS with a CSI(CodeSet Independence) system.
@@ -212,7 +204,6 @@ static const char UNICODE[] = "UCS-4BE";
 #else
 static const char UNICODE[] = "UCS-4LE";
 #endif
-char *locale2charset(const char *locale);
 
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {	                                                             \
@@ -232,7 +223,7 @@ char *locale2charset(const char *locale);
   memset(mb_buf, 0, sizeof(mb_buf));				     \
   memset(ucs4_buf, 0, sizeof(ucs4_buf));			     \
   wcrtomb( mb_buf, wc, NULL);					     \
-  if((void *)(-1) != (cd = Riconv_open((char*)UNICODE, fromcode))) { \
+  if((void *)(-1) != (cd = Riconv_open(UNICODE, fromcode))) {	     \
       wc_len = sizeof(ucs4_buf);		                     \
       _wc_buf = (char *)ucs4_buf;		       		     \
       mb_len = strlen(mb_buf);					     \

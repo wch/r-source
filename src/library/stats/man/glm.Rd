@@ -27,8 +27,10 @@ glm.fit(x, y, weights = rep(1, nobs),
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
 \arguments{
-  \item{formula}{a symbolic description of the model to be fit.
-    The details of model specification are given below.}
+  \item{formula}{an object of class \code{"\link{formula}"} (or one that
+    can be coerced to that class): a symbolic description of the
+    model to be fitted.  The details of model specification are given
+    under Details.}
 
   \item{family}{a description of the error distribution and link
     function to be used in the model. This can be a character string
@@ -210,7 +212,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   \code{\link{residuals}} and \code{weights} do \bold{not} just pick out
   the component of the fit with the same name.
 
-  If a \code{\link{binomial}} \code{glm} model is specified by giving a
+  If a \code{\link{binomial}} \code{glm} model was specified by giving a
   two-column response, the weights returned by \code{prior.weights} are
   the total numbers of cases (factored by the supplied case weights) and
   the component \code{y} of the result is the proportion of successes.
@@ -220,9 +222,18 @@ glm.fit(x, y, weights = rep(1, nobs),
   \code{glm} methods,
   and the generic functions \code{\link{anova}}, \code{\link{summary}},
   \code{\link{effects}}, \code{\link{fitted.values}},
-  and \code{\link{residuals}}. Further, \code{\link{lm}} for
-  non-generalized \emph{linear} models.
+  and \code{\link{residuals}}.
 
+  \code{\link{lm}} for non-generalized \emph{linear} models (which SAS
+  calls GLMs, for \sQuote{general} linear models).
+  
+  \code{\link{loglin}} and \code{\link[MASS]{loglm}} for fitting
+  log-linear models (which binomial and Poisson GLMs are) to contingency
+  tables.
+
+  \code{bigglm} in package \pkg{biglm} for an alternative
+  way to fit GLMs to large datasets (especially those with many cases).
+ 
   \code{\link[datasets]{esoph}}, \code{\link[datasets]{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
@@ -264,7 +275,7 @@ anova(glm.D93)
 summary(glm.D93)
 
 ## an example with offsets from Venables & Ripley (2002, p.189)
-data(anorexia, package="MASS")
+utils::data(anorexia, package="MASS")
 
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
                 family = gaussian, data = anorexia)

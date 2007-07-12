@@ -1,15 +1,16 @@
 \name{charmatch}
 \title{Partial String Matching}
 \usage{
-charmatch(x, table, nomatch = NA)
+charmatch(x, table, nomatch = NA_integer_)
 }
 \alias{charmatch}
 \arguments{
-  \item{x}{the values to be matched: converte to a character vector by
+  \item{x}{the values to be matched: converted to a character vector by
     \code{\link{as.character}}.}
   \item{table}{the values to be matched against: converted to a character
     vector.}
-  \item{nomatch}{the value to be returned at non-matching positions.}
+  \item{nomatch}{the (integer) value to be returned at non-matching
+    positions.}
 }
 \description{
   \code{charmatch} seeks matches for the elements of its first argument
@@ -26,6 +27,10 @@ charmatch(x, table, nomatch = NA)
   returned and if no match is found then \code{nomatch} is returned.
 
   \code{NA} values are treated as the string constant \code{"NA"}.
+}
+\value{
+  An integer vector of the same length as \code{x}, giving the
+  indices of the elements in \code{table} which matched, or \code{nomatch}.
 }
 \author{
   This function is based on a C function written by Terry Therneau.

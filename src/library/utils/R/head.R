@@ -44,7 +44,7 @@ tail.default <- function(x, n = 6, ...)
     stopifnot(length(n) == 1)
     xlen <- length(x)
     n <- if (n < 0) max(xlen + n, 0) else min(n, xlen)
-    x[seq.int(to = xlen, length = n)]
+    x[seq.int(to = xlen, length.out = n)]
 }
 
 tail.data.frame <- function(x, n = 6, ...)
@@ -52,7 +52,7 @@ tail.data.frame <- function(x, n = 6, ...)
     stopifnot(length(n) == 1)
     nrx <- nrow(x)
     n <- if (n < 0) max(nrx + n, 0) else min(n, nrx)
-    x[seq.int(to = nrx, length = n), , drop = FALSE]
+    x[seq.int(to = nrx, length.out = n), , drop = FALSE]
 }
 
 tail.matrix <- function(x, n = 6, addrownums = TRUE, ...)
@@ -60,7 +60,7 @@ tail.matrix <- function(x, n = 6, addrownums = TRUE, ...)
     stopifnot(length(n) == 1)
     nrx <- nrow(x)
     n <- if (n < 0) max(nrx + n, 0) else min(n, nrx)
-    sel <- seq.int(to = nrx, length = n)
+    sel <- seq.int(to = nrx, length.out = n)
     ans <- x[sel, , drop = FALSE]
     if (addrownums && is.null(rownames(x)))
     	rownames(ans) <- paste("[", sel, ",]", sep="")

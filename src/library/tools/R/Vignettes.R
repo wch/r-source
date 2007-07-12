@@ -4,8 +4,8 @@
 
 checkVignettes <-
 function(package, dir, lib.loc = NULL,
-         tangle=TRUE, weave=TRUE,
-         workdir=c("tmp", "src", "cur"),
+         tangle = TRUE, weave = TRUE, latex = FALSE,
+         workdir = c("tmp", "src", "cur"),
          keepfiles = FALSE)
 {
     vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
@@ -15,8 +15,7 @@ function(package, dir, lib.loc = NULL,
     wd <- getwd()
     if(workdir == "tmp") {
         tmpd <- tempfile("Sweave")
-        if(!dir.create(tmpd))
-            stop("unable to create temp directory ", tmpd)
+        if(!dir.create(tmpd)) stop("unable to create temp directory ", tmpd)
         setwd(tmpd)
     }
     else {
@@ -32,10 +31,10 @@ function(package, dir, lib.loc = NULL,
         sink(type = "output")
         sink(type = "message")
         setwd(wd)
-        if(!keepfiles) unlink(tmpd, recursive=TRUE)
+        if(!keepfiles) unlink(tmpd, recursive = TRUE)
     })
 
-    result <- list(tangle=list(), weave=list(), source=list())
+    result <- list(tangle = list(), weave = list(), source = list())
 
     for(f in vigns$docs) {
         if(tangle) {
@@ -57,6 +56,25 @@ function(package, dir, lib.loc = NULL,
             yy <- try(source(f))
             if(inherits(yy, "try-error"))
                 result$source[[f]] <- yy
+        }
+    }
+    if(tangle && weave && latex) {
+        have.makefile <- "makefile" %in% tolower(list.files(vigns$dir))
+        if(!have.makefile) {
+            on.exit()
+            sink(type = "output")
+            sink(type = "message")
+            on.exit({
+                setwd(wd)
+                if(!keepfiles) unlink(tmpd, recursive = TRUE)
+            })
+            message("--- running texi2dvi on vignettes")
+            for(f in vigns$docs) {
+                f <- basename(f)
+                bf <- sub("\\..[^\\.]*$", "", f)
+                bft <- paste(bf, ".tex", sep="")
+                texi2dvi(file = bft, pdf = TRUE, clean = FALSE, quiet = TRUE)
+            }
         }
     }
 
@@ -126,38 +144,38 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
 
 buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
 {
-    vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
+    vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(NULL)
 
     wd <- getwd()
-    setwd(vigns$dir)
-
     on.exit(setwd(wd))
+    setwd(vigns$dir)
 
     origfiles <- list.files()
     have.makefile <- "makefile" %in% tolower(origfiles)
 
     pdfs <- character(0)
-    for(f in vigns$docs){
-
+    for(f in vigns$docs) {
         f <- basename(f)
         bf <- sub("\\..[^\\.]*$", "", f)
         bft <- paste(bf, ".tex", sep="")
         pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
 
-        yy <- try(utils::Sweave(f, quiet=quiet))
-        if(inherits(yy, "try-error")) stop(yy)
-        if(!have.makefile){
-            texi2dvi(file=bft, pdf=TRUE, clean=FALSE, quiet=quiet)
-        }
+        tryCatch(utils::Sweave(f, quiet = quiet),
+                 error = function(e) {
+                     stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
+                                   f, conditionMessage(e)),
+                          domain = NA, call. = FALSE)
+                 })
+        if(!have.makefile)
+            texi2dvi(file = bft, pdf = TRUE, clean = FALSE, quiet = quiet)
     }
 
     if(have.makefile) {
     	make <- Sys.getenv("MAKE")
         yy <- system(make)
-        if(make == "" || yy>0) stop("running make failed")
-    }
-    else {
+        if(make == "" || yy > 0) stop("running 'make' failed")
+    } else {
         f <- list.files()
         f <- f %w/o% c(pdfs, origfiles)
         file.remove(f)
@@ -176,7 +194,7 @@ vignetteInfo <- function(file) {
     ## <FIXME>
     ## Can only proceed with lines with are valid in the current
     ## locale ... (or should we try to iconv() from latin1?)
-    lines[is.na(nchar(lines, "c"))] <- ""
+    lines[is.na(nchar(lines, "c", TRUE))] <- ""
     ## </FIXME>
     ## \VignetteIndexEntry
     vignetteIndexEntryRE <- vignetteMetaRE("IndexEntry")

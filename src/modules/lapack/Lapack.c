@@ -35,7 +35,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     int *xdims, n, p, lwork, info = 0;
     double *work, *xvals, tmp;
     SEXP val, nm;
-    char *meth;
+    const char *meth;
 
     if (!(isString(jobu) && isString(jobv)))
 	error(_("'jobu' and 'jobv' must be character strings"));
@@ -334,8 +334,7 @@ static SEXP modLa_zgeqp3(SEXP Ain)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgeqp3");
     val = PROTECT(allocVector(VECSXP, 4));
     nm = PROTECT(allocVector(STRSXP, 4));
-    rank = PROTECT(allocVector(INTSXP, 1));
-    INTEGER(rank)[0] = m < n ? m : n;
+    rank = PROTECT(ScalarInteger(m < n ? m : n));
     SET_STRING_ELT(nm, 0, mkChar("qr"));
     SET_STRING_ELT(nm, 1, mkChar("rank"));
     SET_STRING_ELT(nm, 2, mkChar("qraux"));
@@ -750,8 +749,7 @@ static SEXP modLa_dgeqp3(SEXP Ain)
 	error(_("error code %d from Lapack routine '%s'"), info, "dgeqp3");
     val = PROTECT(allocVector(VECSXP, 4));
     nm = PROTECT(allocVector(STRSXP, 4));
-    rank = PROTECT(allocVector(INTSXP, 1));
-    INTEGER(rank)[0] = m < n ? m : n;
+    rank = PROTECT(ScalarInteger(m < n ? m : n));
     SET_STRING_ELT(nm, 0, mkChar("qr"));
     SET_STRING_ELT(nm, 1, mkChar("rank"));
     SET_STRING_ELT(nm, 2, mkChar("qraux"));

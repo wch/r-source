@@ -26,7 +26,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \item{\dots}{further arguments to be passed to the next method.}
 }
 \details{
-  An \R \dQuote{object} is a data object which has a \code{class} attribute.
+  An \R \dQuote{object} is a data object which has a \code{class}
+  attribute (and this can be tested by \code{\link{is.object}}).
   A class attribute is a character vector giving the names of
   the classes which the object \dQuote{inherits} from.
   If the object does not have a class attribute, it has an implicit
@@ -50,7 +51,9 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \code{UseMethod} is a primitive function so positional matching is
   used and names of supplied arguments are ignored.  It is not the only
   means of dispatch of methods, for there are \link{internal generic}
-  functions.
+  and \link{group generic} functions.  \code{UseMethod} currently
+  dispatches on the implicit class even for arguments that are not
+  objects, but the other means of dispatch do not.
 
   \code{NextMethod} invokes the next method (determined by the
   class vector, either of the object supplied to the generic, or of
@@ -166,7 +169,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \seealso{
   The draft \sQuote{R Language Definition}.
 
-  \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}.
+  \code{\link{methods}}, \code{\link[base]{class}},
+  \code{\link{getS3method}}, \code{\link{is.object}}.
 }
 \references{
   Chambers, J. M. (1992)

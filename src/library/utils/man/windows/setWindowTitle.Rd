@@ -2,9 +2,11 @@
 \alias{setWindowTitle}
 \alias{getWindowTitle}
 \alias{getIdentification}
-\title{Set or get the Window Title}
+\alias{setStatusBar}
+\title{Set or get the Window Title, or Set the Statusbar}
 \description{
-  Set the title of the R window which will appear in the task bar.
+  Set the title of the R window which will appear in the task bar, or of
+  the statusbar (if in use).
 }
 \usage{
 setWindowTitle(suffix, title = paste(getIdentification(), suffix))
@@ -12,10 +14,14 @@ setWindowTitle(suffix, title = paste(getIdentification(), suffix))
 getWindowTitle()
 
 getIdentification()
+
+setStatusBar(text)
 }
 \arguments{
   \item{suffix}{a character string to form part of the title}
   \item{title}{a character string forming the complete new title}
+  \item{text}{a character string of up to 255 characters, to be
+    displayed in the status bar.}
 }
 \details{
   \code{setWindowTitle} appends \code{suffix} to the normal window
@@ -30,9 +36,12 @@ getIdentification()
   It has no effect in embedded uses of \R.
   
   \code{getIdentification} returns the normal window identification.
+
+  \code{setStatusBar} sets the text in the statusbar of an MDI
+  frame: if this is not currently shown it is selected and shown.
 }
 \value{
-  All three functions return a length 1 character vector.
+  The first three functions return a length 1 character vector.
   
   \code{setWindowTitle} returns the previous window title (invisibly).  
   

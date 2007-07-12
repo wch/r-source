@@ -270,7 +270,7 @@ stopifnot(
 em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
 print(i <- rev(order(lam2)))
-stopifnot(abs(lam - lam2[i]) < 60 * Meps)
+stopifnot(abs(lam - lam2[i]) < 100 * Meps) # comparing two solns
 
 zapsmall(Diag <- t(V2) %*% V2)
 stopifnot( abs(1- diag(Diag)) < 60*Meps)
@@ -4518,6 +4518,16 @@ stopifnot(inherits(z, "try-error"))
 ### end of tests added in 2.4.1 ###
 
 
+## translation error in optimize (PR#9438)
+ex2 <- function(x) log((18/41) * x - 2 * x^2) +
+    16 * log(4 * x^2 - (36/41) * x + (9/41)) +
+    24 * log((23/82) + (18/41) * x - 2 * x^2)
+opt <- optimise(ex2, lower = 0, upper = 9/41, maximum = TRUE)$maximum
+# there are two global maxima
+stopifnot(abs(opt - 0.187) < 0.01 || abs(opt - 0.033) < 0.01)
+## changed both ends of interval at the first step, gave opt = 0.136
+
+
 ## Needlessly failing subassignments
 e <- 1:10
 e[2] <- expression(e)
@@ -4543,3 +4553,297 @@ acf(1, lag.max=0, plot=FALSE)
 ## gave an error in 2.4.0
 stopifnot( all.equal(ccf(1:3,-(1:3))$acf[2,1,1], -1) )
 ## gave positive lag 0 cross-correlation after patching PR#9360
+
+
+## regression tests for complex sum/prod (briefly broken in Jan 2007)
+z <- rnorm(10) + rnorm(10)*(0+1i)
+sum(z)
+(x <- sum(pi, z))
+stopifnot(all.equal(x, sum(pi,Re(z)) + sum(Im(z))*(0+1i)))
+prod(z)
+##
+
+
+## problems with 0-row data frames created by read.table
+x <- structure(list(one = NULL, two = NULL, three = NULL),
+               .Names = c("one", "two", "three"), class = "data.frame")
+y <- data.frame(one=1,two=2,three=3)
+(z <- rbind(x,y))
+stopifnot(dim(z) == c(1, 3))
+(z <- rbind(y,x))
+stopifnot(dim(z) == c(1, 3))
+(z <- rbind(x,x))
+stopifnot(dim(z) == c(0, 3))
+## variously failed or gave zero-column data frame in 2.4.1
+
+
+## tests of partial matching of attributes
+x <- 1:4
+attr(x, "ab") <- 1
+for(y in c("abc", "abcd", "abcde")) {
+    attr(x, y) <- 1
+    stopifnot(is.null(attr(x, "a")))
+}
+# second was '1' on 2.4.1.
+x <- 1:4
+names(x) <- letters[x]
+stopifnot(identical(attr(x, "n"), names(x)))
+x <- as.pairlist(x)
+stopifnot(identical(attr(x, "n"), names(x)))
+## worked for pairlists but not vectors in 2.4.1
+
+
+## which(arr.ind = TRUE) failed to give matrix on a 0-length input
+C <- matrix(1:16, 4)
+(ind <- which(C < 0, arr.ind = TRUE))
+stopifnot(is.matrix(ind))
+## gave integer(0) in 2.4.1
+
+
+## plnorm wrong for out-of-range values (PR#9520)
+stopifnot(plnorm(0, lower.tail=FALSE) == 1, plnorm(0, lower.tail=TRUE) == 0)
+## both lower tail in  R < 2.5.0
+
+
+## supsmu with all NA values (PR#9519)
+x <- seq(0, 1, len = 100)
+y <- x + NA
+try(supsmu(x,y))
+## segfaulted < 2.5.0
+
+
+## which.max when max is Inf (PR#9522)
+which.min(c(NA, NA, Inf))
+which.max(c(NA, NA, -Inf, -Inf))
+## were integer(0) in < 2.5.0
+
+
+## str.dendrogram did not work with 'max.level=NA'
+## which has become default when called from str.default():
+cm <- cor(USJudgeRatings)
+hm <- heatmap(cm, symm = TRUE, keep.dendro = TRUE)
+str(hm, max=2) # reasonable
+str(hm)        # gave error (less reasonable than above)
+
+
+## [<-.data.frame did not allow deleting the last column (PR#9565)
+DF <- data.frame(x = 1:3, y = 4:6, z = 7:9)
+DF[, "z"] <- NULL
+stopifnot(identical(dim(DF), c(3L, 2L)))
+## 'subscript out of bounds' in 2.4.1.
+
+## new tryCatch() based try()  with anonymous function
+v <- try(do.call(function(x) stop("died"), list(1)), silent=TRUE)
+stopifnot(inherits(v, "try-error"))
+## failed in some version of R-devel (2.5.0)
+
+
+## choose(n,k) should be integer if n is
+stopifnot(choose(11,6) == 462)
+## was < 462 on some AMD64 Linux
+
+
+## fix up use of %j" format in strptime (PR#9577)
+x <- strptime(31:33, "%j")
+x
+stopifnot(!is.na(x))
+## day 32 was NA in R < 2.5.0
+
+
+## mosaicplot() broken by undocumented 'bug fix' r39655
+x <- matrix(1:4,2,2)
+mosaicplot(x, sort = seq_len(dim(x)))
+## failed in 2.4.1, fixed in 2.5.0
+
+
+## jitter failed in wierd case (PR#9580)
+stopifnot(is.finite( jitter(c(-1, 3)) ))
+## was repeated NaN in 2.4.1
+
+
+## max.col() problems (PR#9542)
+x <- rep(0, 10)
+dim(x) <- c(1, 10)
+# max.col(x) should be random.
+ans <- numeric(100)
+for(i in 1:100) ans[i] <- max.col(x)
+table(ans)
+stopifnot(any(ans != 10))
+## always gave last in 2.4.1
+
+
+## rep could segfault: Hiroyuki Kawakatsu, R-help, 2007-03-30
+try(rep(each = 0, length.out = 1))
+# segfaulted in 2.4.1
+
+
+## readBin could read beyond the end of a raw vector.
+# Henrik Bengtsson, Rdevel, 2007-04-07
+bfr <- as.raw(1:12)
+(x <- readBin(con=bfr, what="raw", n=20))
+stopifnot(length(x) == 12)
+(x <- readBin(con=bfr, what="integer", n=20))
+stopifnot(length(x) == 3)
+(x <- readBin(con=bfr, what="integer", size=4, n=20))
+stopifnot(length(x) == 3)
+(x <- readBin(con=bfr, what="integer", size=2, n=20))
+stopifnot(length(x) == 6)
+(x <- readBin(con=bfr, what="integer", size=1, n=20))
+stopifnot(length(x) == 12)
+## read too far where size-changing was involved in 2.4.x
+
+
+## density() could give negative values by rounding error (PR#8876)
+x <- c(0.006, 0.002, 0.024, 0.02, 0.034, 0.09, 0.074, 0.072, 0.122,
+       0.048, 0.044, 0.168)
+result <- density(x, n = 20, from = -1, to = 1)
+stopifnot(result$y >= 0)
+## slightly negative < 2.5.0
+
+
+## bw.SJ() used too small search interval in rare cases:
+bw.SJ(1:20) # error: "no solution in the specified range of bandwidths" in < 2.5.1
+## this is not ok when called as  density(1:20, bw = "SJ")
+## [that's a matter of opinion, since the example is ridiculous.]
+
+
+## hexadecimal integer constants failed on some platforms (PR#9648)
+stopifnot(identical(0x10L, 16L))
+## first was 0L on Windows in 2.5.0
+
+
+## rbind failed if the only data frame had 0 rows (PR#9657)
+A <- data.frame(foo=character(0), bar=character(0))
+rbind(A, c(foo="a", bar="b"))
+## failed in 2.5.0
+
+
+## factor() with NA in dimnames():
+x <- matrix(1:2, 2)
+rownames(x) <- factor(c("A", NA))
+## segfaulted <= 2.5.0
+
+
+## return value of median.
+z <- median(integer(0))
+stopifnot(identical(z, NA_integer_))
+z <- median(numeric(0))
+stopifnot(identical(z, NA_real_))
+## returned logical NA in 2.5.0
+
+
+## seq.int on small reversed 'by'
+stopifnot(inherits(try(seq.int(1.2, 1, by=1)), "try-error"))
+## was '1.2' in 2.5.0
+
+
+## subassignment on pairlists: Uwe Ligges on R-help, 2007-05-29
+Call <- call("round", 10.5)
+try({Call[] <- NULL; Call})
+## seqgfaulted in 2.5.0
+
+
+## Bessel bugs for nu < 0:
+x <- seq(0., 3, length = 101)
+nu <- -0.4
+stopifnot(all.equal(besselI(x,nu, TRUE),
+		    exp(-x)*besselI(x,nu, FALSE), tol = 1e-13))
+## wrong in 2.5.0
+stopifnot(all.equal(besselY(seq(0.5, 3, 0.5), nu),
+		    c(0.309568577942, 0.568866844337, 0.626095631907,
+		      0.544013906248, 0.366321150943, 0.141533189246),
+		    tol = 1e-11))
+## wrong numbers in 2.5.0
+
+### end of tests added in 2.5.1 ###
+
+
+## regression tests for unlink and wildcards
+owd <- setwd(tempdir())
+f <- c("ftest1", "ftest2", "ftestmore", "ftest&more")
+file.create(f)
+stopifnot(file.exists(f))
+unlink("ftest?")
+stopifnot(file.exists(f) == c(FALSE, FALSE, TRUE, TRUE))
+unlink("ftest*", recursive = TRUE)
+stopifnot(!file.exists(f))
+
+stopifnot(unlink("no_such_file") == 0) # not an error
+
+dd <- c("dir1", "dir2", "dirs", "moredirs")
+for(d in dd) dir.create(d)
+dir(".")
+file.create(file.path(dd, "somefile"))
+dir(".", recursive=TRUE)
+stopifnot(unlink("dir?") == 1) # not an error
+unlink("dir?", recursive = TRUE)
+stopifnot(file.exists(dd) == c(FALSE, FALSE, FALSE, TRUE))
+unlink("*dir*", recursive = TRUE)
+stopifnot(!file.exists(dd))
+
+# Windows needs short path names for leading spaces
+dir.create(" test")
+dir(".", recursive=TRUE)
+unlink(" test", recursive = TRUE)
+stopifnot(!file.exists(" test"))
+setwd(owd)
+## wildcards were broken in 2.5.0 on Unix, and always on Windows
+
+
+## duplicated columns in a data frame
+x <- matrix(seq(1:12),ncol=3)
+colnames(x) <- c("A","B","A")   #a redundant name for column 2
+x.df <- as.data.frame(x)
+stopifnot(x.df[4,3] == x[4,3])
+## wrong column in 2.5.0
+
+
+## it really is unclear if this should work as the fit is to a
+## numeric variable with levels, and the prediction does not have
+## levels.  But some people expected it to.
+worms <- data.frame(sex=gl(2,6), Dose=factor(rep(2^(0:5),2)),
+                    deaths=c(1,4,9,13,18,20,0,2,6,10,12,16))
+worms$doselin <- unclass(worms$Dose)
+worms.glm <- glm(cbind(deaths, (20-deaths)) ~ sex+ doselin,
+                 data=worms, family=binomial)
+predict(worms.glm, new=data.frame(sex="1", doselin=6))
+## failed < 2.6.0
+
+
+## regression test for changes in aggregate.data.frame
+z <- aggregate(state.x77,
+               list(Region = state.region,
+                    Cold = state.x77[,"Frost"] > 130),
+               mean)
+stopifnot(sapply(z, class)[1:2] == c("factor", "logical"),
+          identical(levels(z[[1]]), levels(state.region)) )
+f1 <- c("a","b","a","b")
+f2 <- factor(f1, levels=c("b","c","a"), ordered=TRUE)
+z <- aggregate(1:4, list(groups=f1), sum)
+stopifnot(sapply(z, class) == c("character", "integer"))
+z <- aggregate(1:4, list(groups=f2), sum)
+stopifnot(identical(sapply(z, class), list(groups=class(f2), x="integer")),
+          identical(levels(z[[1]]), levels(f2)),
+          is.ordered(z[[1]]) )
+## converted to factors < 2.6.0
+
+
+## formals<- on function with NULL body (PR#9758)
+f <- function() NULL
+g <- alist(a=, b=4, c=)
+formals(f) <- g
+# identical(formals(f), g) is false as g has .Names attribute
+stopifnot(is.null(body(f)), identical(names(formals(f)), names(g)))
+## was function(a, b=4)  before 2.6.0
+
+
+## subsetting R.version
+stopifnot(identical("simple.list", class(R.version[1:7])))
+
+
+## <data frame>[[<character>, j]]
+swiss[["Broye", "Agriculture"]]
+swiss[[7, "Agriculture"]]
+swiss[["Broye", 2]]
+swiss[[7, 2]]
+## first and third failed < 2.6.0

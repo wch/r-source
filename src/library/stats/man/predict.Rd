@@ -56,6 +56,8 @@ predict (object, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(utils)
+
 ## All the "predict" methods found
 ## NB most of the methods in the standard packages are hidden.
 for(fn in methods("predict"))

@@ -29,6 +29,10 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
     if(k%%2 == 0)
         warning("'k' must be odd!  Changing 'k' to ",
                 k <- as.integer(1+ 2*(k %/% 2)))
+    if(n == 0) {
+	x <- double(); attr(x, "k") <- k
+	return(x)
+    }
     if (k > n)
         warning("'k' is bigger than 'n'!  Changing 'k' to ",
                 k <- as.integer(1+ 2*((n - 1)%/% 2)))

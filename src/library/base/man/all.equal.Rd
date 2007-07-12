@@ -8,6 +8,7 @@
 \alias{all.equal.formula}
 \alias{all.equal.list}
 \alias{all.equal.language}
+\alias{all.equal.raw}
 \alias{attr.all.equal}
 \concept{numerical equality}
 \concept{approximately equal}
@@ -65,7 +66,8 @@ attr.all.equal(target, current,
     \code{tolerance} and \code{scale} are available.
 
     \code{attr.all.equal} is used for comparing
-    \code{\link{attributes}}, returning \code{NULL} or \code{character}.
+    \code{\link{attributes}}, returning \code{NULL} or a
+    \code{character} vector.
 }
 \value{
   Either \code{TRUE} or a vector of \code{\link{mode}}

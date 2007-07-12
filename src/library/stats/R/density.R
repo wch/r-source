@@ -119,7 +119,7 @@ density.default <-
 	    y = double(2 * n),
 	    ny = as.integer(n),
             PACKAGE = "base" )$y * totMass
-    kords <- seq(0, 2*(up-lo), length = 2 * n)
+    kords <- seq.int(0, 2*(up-lo), length.out = 2 * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
 		    gaussian = dnorm(kords, sd = bw),
@@ -144,11 +144,11 @@ density.default <-
                         a <- bw/sqrt(1-8/pi^2)
                         ifelse(abs(kords) < a, pi/4*cos(pi*kords/(2*a))/a, 0)}
                     )
-    kords <- fft( fft(y)* Conj(fft(kords)), inv=TRUE)
-    kords <- Re(kords)[1:n]/length(y)
-    xords <- seq(lo, up, length = n)
+    kords <- fft( fft(y)* Conj(fft(kords)), inverse=TRUE)
+    kords <- pmax.int(0, Re(kords)[1:n]/length(y))
+    xords <- seq.int(lo, up, length.out = n)
 #    keep <- (xords >= from) & (xords <= to)
-    x <- seq(from, to, length = n.user)
+    x <- seq.int(from, to, length.out = n.user)
     structure(list(x = x, y = approx(xords, kords, x)$y, bw = bw, n = N,
 		   call=match.call(), data.name=name, has.na = FALSE),
 	      class="density")

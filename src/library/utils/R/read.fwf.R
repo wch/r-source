@@ -4,7 +4,7 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
 {
     doone <- function(x) {
         x <- substring(x, first, last)
-        x[nchar(x) == 0] <- as.character(NA)
+        x[!nzchar(x)] <- NA_character_
         x
     }
 

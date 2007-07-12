@@ -203,8 +203,7 @@ par(\dots, no.readonly = FALSE)
       annotation relative to the current setting of \code{cex}.
       (Some functions such as \code{\link{points}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.)
-    }
+      a vector of length greater than one is supplied.)}
     \item{\code{cex.lab}}{The magnification to be used for x and y
       labels relative to the current setting of \code{cex}.}
     \item{\code{cex.main}}{The magnification to be used for main titles
@@ -224,7 +223,9 @@ par(\dots, no.readonly = FALSE)
     \item{\code{col.main}}{The color to be used for plot main titles.}
     \item{\code{col.sub}}{The color to be used for plot sub-titles.}
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
-      \code{(width, height)} in \dQuote{rasters} (pixels).}
+      \code{(width, height)} in \dQuote{rasters} (pixels).  Some devices
+      have no concept of pixels and so assume an arbitrary pixel size,
+      usually 1/72 inch.}
     \item{\code{crt}}{A numerical value specifying (in degrees) how
       single characters should be rotated.  It is unwise to expect
       values other than multiples of 90 to work.  Compare with
@@ -337,7 +338,7 @@ par(\dots, no.readonly = FALSE)
       as one of the character strings \code{"blank"}, \code{"solid"},
       \code{"dashed"}, \code{"dotted"}, \code{"dotdash"},
       \code{"longdash"}, or \code{"twodash"}, where \code{"blank"} uses
-      \sQuote{invisible lines} (i.e., doesn't draw them).
+      \sQuote{invisible lines} (i.e., does not draw them).
 
       Alternatively, a string of up to 8 characters (from \code{c(1:9,
 	"A":"F")}) may be given, giving the length of line segments
@@ -351,9 +352,11 @@ par(\dots, no.readonly = FALSE)
     \item{\code{lwd}}{The line width, a \emph{positive} number,
       defaulting to \code{1}.  The interpretation is device-specific,
       and some devices do not implement line widths less than one.
-      (Some functions such as \code{\link{lines}} accept a vector of values
+      (See the help on the device for details of the interpretation.)
+      
+      Some functions such as \code{\link{lines}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.)
+      a vector of length greater than one is supplied.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
 	left, top, right)} which gives the margin size specified in
@@ -526,7 +529,7 @@ par(\dots, no.readonly = FALSE)
   Colors can be specified in several different ways. The simplest way is
   with a character string giving the color name (e.g., \code{"red"}).  A
   list of the possible colors can be obtained with the function
-  \code{\link{colors}}. Alternatively, colors can be specified directly in
+  \code{\link{colors}}.  Alternatively, colors can be specified directly in
   terms of their RGB components with a string of the form \code{"#RRGGBB"}
   where each of the pairs \code{RR}, \code{GG}, \code{BB} consist of two
   hexadecimal digits giving a value in the range \code{00} to \code{FF}.
@@ -536,11 +539,13 @@ par(\dots, no.readonly = FALSE)
 
   Additionally, \code{"transparent"} or (integer) \code{NA} is
   \emph{transparent}, useful for filled areas (such as the background!),
-  and just invisible for things like lines or text.
+  and just invisible for things like lines or text.  Semi-transparent
+  colors are available for use on devices that support them.
 
   The functions \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{hcl}},
   \code{\link{gray}} and \code{\link{rainbow}}
-  provide additional ways of generating colors.}
+  provide additional ways of generating colors.
+}
 
 \section{Line Type Specification}{
   Line types can either be specified by giving an index into a small
@@ -553,7 +558,8 @@ par(\dots, no.readonly = FALSE)
   units on followed by three off and \code{"3313"} specifies three units
   on followed by three off followed by one on and finally three off.
   The \sQuote{units} here are (on most devices) proportional to
-  \code{lwd}, and with \code{lwd = 1} are in pixels or points.
+  \code{lwd}, and with \code{lwd = 1} are in pixels or points or 1/96
+  inch.
 
   The five standard dash-dot line types (\code{lty = 2:6}) correspond to
   \code{c("44", "13", "1343", "73", "2262")}.
@@ -620,6 +626,7 @@ par(las = 3)
 barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
 par(las = 0)# reset to default
 
+require(grDevices) # for gray
 ## 'fg' use:
 plot(1:12, type = "b", main="'fg' : axes, ticks and box in gray",
      fg = gray(0.7), bty="7" , sub=R.version.string)

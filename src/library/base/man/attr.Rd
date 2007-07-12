@@ -6,13 +6,14 @@
   Get or set specific attributes of an object.
 }
 \usage{
-attr(x, which)
+attr(x, which, exact = FALSE)
 attr(x, which) <- value
 }
 \arguments{
   \item{x}{an object whose attributes are to be accessed.}
   \item{which}{a non-empty character string specifying which attribute
     is to be accessed.}
+  \item{exact}{logical: should \code{which} be matched exactly?}
   \item{value}{an object, the new value of the attribute, or \code{NULL}
     to remove the attribute.}
 }
@@ -22,8 +23,12 @@ attr(x, which) <- value
   specified (or create a new attribute with the value given).
 
   The extraction function first looks for an exact match to \code{which}
-  amongst the attributes of \code{x}, then a unique partial match.  The
-  replacement function only uses exact matches.
+  amongst the attributes of \code{x}, then (unless \code{exact = TRUE})
+  a unique partial match.
+  (Setting \code{\link{options}(warnPartialMatchAttr=TRUE)} causes
+  partial matches to give warnings.)
+
+  The replacement function only uses exact matches.
 
   Note that some attributes (namely \code{\link{class}},
   \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
@@ -31,11 +36,11 @@ attr(x, which) <- value
   \code{\link{tsp}}) are treated specially and have restrictions on
   the values which can be set.
 
-  Specifying \code{which} as a character \code{NA} is interpreted as
-  \code{"NA"} and not as a missing value.
+  The extractor allows (and does not match) empty and missing values of
+  \code{which}: the replacement function does not.
 }
 \value{
-  For the first form, the value of the attribute matched, or \code{NULL}
+  For the extractor, the value of the attribute matched, or \code{NULL}
   if no exact match is found and no or more than one partial match is found.
 }
 \references{

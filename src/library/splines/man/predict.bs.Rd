@@ -30,6 +30,7 @@
   \code{\link{bs}}, \code{\link{ns}}, \code{\link{poly}}.
 }
 \examples{
+require(stats)
 basis <- ns(women$height, df = 5)
 newX <- seq(58, 72, len = 51)
 # evaluate the basis at the new data

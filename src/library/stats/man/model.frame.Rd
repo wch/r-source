@@ -4,6 +4,7 @@
 \alias{model.frame.lm}
 \alias{model.frame.glm}
 \alias{model.frame.aovlist}
+\alias{get_all_vars}
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
 model.frame(formula, \dots)
@@ -17,6 +18,8 @@ model.frame(formula, \dots)
 \method{model.frame}{glm}(formula, \dots)
 
 \method{model.frame}{lm}(formula, \dots)
+
+get_all_vars(formula, data, \dots)
 }
 \arguments{
   \item{formula}{a model \code{\link{formula}} or \code{\link{terms}}
@@ -62,18 +65,18 @@ model.frame(formula, \dots)
   used when fitting the model (if any, often selected by argument
   \code{model = TRUE}) or pass the call used when fitting on to the
   default method.  The default method itself can cope with rather
-  standard model objects such as those of classes
-  \code{"\link[MASS]{lqs}"} and \code{"\link[ppr]{ppr}"} from
-  package \pkg{MASS} if no other arguments are supplied.
+  standard model objects such as those of class
+  \code{"\link[MASS]{lqs}"} from package \pkg{MASS} if no other
+  arguments are supplied.
   
   The rest of this section applies only to the default method.
 
   If either \code{formula} or \code{data} is already a model frame (a
   data frame with a \code{"terms"} attribute and the other is missing,
   the model frame is returned.  Unless \code{formula} is a terms object,
-  \code{terms} is called on it.  (If you wish to use the
-  \code{keep.order} argument of \code{terms.formula}, pass a terms
-  object rather than a formula.)
+  \code{as.formula} and then \code{terms} is called on it.  (If you wish
+  to use the \code{keep.order} argument of \code{terms.formula}, pass a
+  terms object rather than a formula.)
 
   Row names for the model frame are taken from the \code{data} argument
   if present, then from the names of the response in the formula (or
@@ -100,6 +103,11 @@ model.frame(formula, \dots)
   character can be included in a model frame: this includes classed
   variables such as factors (whose underlying type is integer), but
   excludes lists.
+
+  \code{get_all_vars} returns a code{\link{data.frame}} containing the
+  variables used in \code{formula} plus those specified \code{\dots}.
+  Unlike \code{model.frame.default}, it returns the input variables and
+  not those resulting from function calls in \code{formula}.
 }
 \value{
   A \code{\link{data.frame}} containing the variables used in

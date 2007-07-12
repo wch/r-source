@@ -7,28 +7,23 @@
 # below to add these and can use a different prefix.
 
 useDynLib(grDevices, R_chull,
-          PicTeX, PostScript, XFig, PDF, 
+          PicTeX, PostScript, XFig, PDF,
           Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 
-export(Hershey, boxplot.stats, check.options, chull,
-       CIDFont, 
-       col2rgb, colors, colours, cm, colorRamp,
-       colorRampPalette, contourLines,
-       convertColor, colorConverter, colorspaces,
-       cm.colors, dev.control, dev.copy, dev.copy2eps, dev.cur,
-       dev.interactive, dev.list, dev.next, dev.off, dev.prev,
-       dev.print, dev.set, embedFonts, extendrange,
-       getGraphicsEvent, graphics.off, gray, grey,
-       gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb, n2mfrow,
-       nclass.Sturges, nclass.FD, nclass.scott,
-       palette,
-       pdf, pdfFonts,
-       pictex,
-       postscript, postscriptFont, postscriptFonts, 
-       ps.options, rainbow, recordGraphics, recordPlot,
-       replayPlot, rgb, rgb2hsv, terrain.colors, topo.colors, trans3d,
-       Type1Font, 
-       xfig, xy.coords, xyz.coords)
+export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
+       CIDFont, col2rgb, colors, colours, cm, colorRamp,
+       colorRampPalette, contourLines, convertColor, colorConverter,
+       colorspaces, cm.colors, dev.control, dev.copy, dev.copy2eps,
+       dev.cur, dev.interactive, dev.list, dev.next, dev.off,
+       dev.prev, dev.print, dev.set, deviceIsInteractive, embedFonts,
+       extendrange, getGraphicsEvent, graphics.off, gray, grey,
+       gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb,
+       n2mfrow, nclass.Sturges, nclass.FD, nclass.scott, palette, pdf,
+       pdfFonts, pictex, postscript, postscriptFont, postscriptFonts,
+       ps.options, rainbow, recordGraphics, recordPlot, replayPlot,
+       rgb, rgb2hsv, sunflowerTable, terrain.colors, topo.colors,
+       trans3d, Type1Font, xfig, xy.coords, xyz.coords)
+
 export(X11, x11, bitmap, dev2bitmap, jpeg, png)
 
 S3method(print, recordedplot)

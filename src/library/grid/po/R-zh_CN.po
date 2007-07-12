@@ -1,0 +1,469 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Invalid 'at' location in 'axis'"
+msgstr "'axis'里的'at'位置不对"
+
+msgid "Invalid to specify axis labels when 'at' is NULL"
+msgstr "'at'是NULL的话不能设定轴标签"
+
+msgid "'labels' and 'at' locations must have same length"
+msgstr "'labels'和'at'的位置量必需有相同的长度"
+
+msgid "logical 'label' supplied on length 0"
+msgstr "提供的逻辑'label'的长度为零"
+
+msgid "End points must not be identical"
+msgstr "端点两头的值是不能相等的"
+
+msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+msgstr "'x1', 'y1' ,'x2'和'y2'必需是单元"
+
+msgid "'shape' must be between -1 and 1"
+msgstr "'shape'的值必需在-1和1之间"
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr "'squareShape'的值必需在-1和1之间"
+
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "'arrow' 要么是箭头对象，要么是NULL值"
+
+msgid "Invalid 'edit' information"
+msgstr "'edit'信息不对"
+
+msgid "'gEditList' can only contain 'gEdit' objects"
+msgstr "'gEditList'只能包含'gEdit'对象"
+
+msgid "Invalid 'frame'"
+msgstr "'frame'的值不对"
+
+msgid "Invalid 'grob'"
+msgstr "'grob'的值不对"
+
+msgid "Invalid 'row' and/or 'col' (no such cell in frame layout)"
+msgstr "'row'或者是'col'的值不对(没有在框布局里有这样的单元)"
+
+msgid "'col' can only be a range of existing columns"
+msgstr "'col'的值只能在已存在列的范围之内"
+
+msgid "Invalid 'col' specification"
+msgstr "'col'设定得不对"
+
+msgid "'row' can only be a range of existing rows"
+msgstr "'row'的值只能在已存在行的范围之内"
+
+msgid "Invalid 'row' specification"
+msgstr "'row'设定得不对"
+
+msgid ""
+"Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
+"before', or 'col.after'"
+msgstr ""
+"只能设定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col.after'中的一"
+"个"
+
+msgid ""
+"Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
+"before', or 'row.after'"
+msgstr ""
+"只能设定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row.after'中的一"
+"个"
+
+msgid "gpar element '%s' must not be length 0"
+msgstr "gpar成分'%s'的长度不能为零"
+
+msgid "'gamma' gpar is deprecated"
+msgstr "'gamma'gpar已经不再有用"
+
+msgid "Invalid 'linemitre' value"
+msgstr "'linemitre'的值不对"
+
+msgid "Invalid 'alpha' value"
+msgstr "'alpha'的值不对"
+
+msgid "Must specify only one of 'font' and 'fontface'"
+msgstr "'font'和'fontface'两个量只能设定一个"
+
+msgid "Invalid font face"
+msgstr "字体面设定不对"
+
+msgid "Argument must be a 'gpar' object"
+msgstr "变元必需是'gpar'对象"
+
+msgid "Must specify only valid 'gpar' names"
+msgstr "只能用正确的'gpar'名字"
+
+msgid "Invalid display list element"
+msgstr "显示列成分不对"
+
+msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+msgstr "grob被覆盖(grab不会保持原状态；用'wrap=TRUE'试一试)"
+
+msgid "viewport overwritten (grab MAY not be faithful)"
+msgstr "视口被覆盖(grab有可能不保持原状态)"
+
+msgid ""
+"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob推了视口，但没有将它弹起来(grab有可能不保持原状态)"
+
+msgid "Only valid to push viewports"
+msgstr "只能推视口"
+
+msgid "Must specify at least one viewport"
+msgstr "至少必需设定一个视口"
+
+msgid "Viewport '%s' was not found"
+msgstr "找不到视口'%s'"
+
+msgid "Must pop at least one viewport"
+msgstr "至少需要弹起一个视口"
+
+msgid "Must navigate up at least one viewport"
+msgstr "至少需要往上驾一个视口"
+
+msgid "The vp argument is deprecated"
+msgstr "vp变元已经不再有用"
+
+msgid "Invalid 'ask' value"
+msgstr "'ask'的值不对"
+
+msgid "Invalid object inserted on the display list"
+msgstr "显示列里所插入的对象不对"
+
+msgid "Invalid 'grob' argument"
+msgstr "'grob'变元值不对"
+
+msgid "Invalid 'vp' slot"
+msgstr "'vp'槽的值不对"
+
+msgid "Invalid 'gp' slot"
+msgstr "'gp'槽的值不对"
+
+msgid "Invalid 'grob' class"
+msgstr "'grob'的类别不对"
+
+msgid "grid.grob() is deprecated; please use grob() instead"
+msgstr "grid.grob()已经不再有用; 请用grob()"
+
+msgid "A 'grob' path must contain at least one 'grob' name"
+msgstr "'grob'的路径至少要包含一个'grob'名字"
+
+msgid "Invalid 'grob' name(s)"
+msgstr "'grob'名字不对"
+
+msgid "Unable to coerce to gList"
+msgstr "无法转换成gList"
+
+msgid "Only 'grobs' allowed in 'gList'"
+msgstr "'gList'只许用'grobs'"
+
+msgid "Invalid element to add to 'gList'"
+msgstr "'gList'加的成分不对"
+
+msgid "Can only set 'children' for a 'gTree'"
+msgstr "'gTree'只能给'children'设定值"
+
+msgid "'children' must be a 'gList'"
+msgstr "'children'必需是'gList'这种对象"
+
+msgid "It is only valid to get 'children' from a 'gTree'"
+msgstr "只能从'gTree'那儿得到'children'的值"
+
+msgid "Invalid 'gTree' class"
+msgstr "'gTree'的类别不对"
+
+msgid "'allDevices' not yet implemented"
+msgstr "'allDevices'还没有被实现"
+
+msgid "Invalid 'gPath'"
+msgstr "'gPath'的值不对"
+
+msgid "Invalid 'grep' value"
+msgstr "'grep'的值不对"
+
+msgid "It is only valid to get a child from a 'gTree'"
+msgstr "只能从'gTree'那儿取得子树"
+
+msgid "'gPath' does not specify a valid child"
+msgstr "'gPath'没有设定正确的子值"
+
+msgid "It is only valid to set a child of a 'gTree'"
+msgstr "只能给'gTree'设子值"
+
+msgid "It is only valid to set a 'grob' as child of a 'gTree'"
+msgstr "'gTree'的子值只能设成'grob'"
+
+msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
+msgstr "新的'grob'名(%s) 与原来的'gPath'(%s) 名不相配"
+
+msgid "It is only valid to add a 'grob' to a 'gTree'"
+msgstr "对'gTree'只能加'grob'这样的值数"
+
+msgid "It is only valid to add a child to a 'gTree'"
+msgstr "给'gTree'只能加子值"
+
+msgid "It is only valid to remove a child from a 'gTree'"
+msgstr "只能从'gTree'那儿删除子值"
+
+msgid "It is only valid to edit a child of a 'gTree'"
+msgstr "只能对'gTree'的子值进行修改"
+
+msgid "It is invalid to directly edit the 'children' or 'childrenOrder' slot"
+msgstr "不能直接对'children'或'childrenOrder'这样的槽进行修改"
+
+msgid "Invalid 'result'"
+msgstr "'result'的值不对"
+
+msgid "The new 'grob' must have the same name as the old 'grob'"
+msgstr "新的'grob'值必需等于旧的'grob'值"
+
+msgid "Slot '%s' not found"
+msgstr "没有'%s'这样的槽"
+
+msgid "'gPath' (%s) not found"
+msgstr "不存在'gPath'(%s)"
+
+msgid "gPath (%s) not found"
+msgstr "gPath(%s)不存在"
+
+msgid "Grob '%s' not found"
+msgstr "不存在Grob'%s'这个值"
+
+msgid "Invalid element in the display list"
+msgstr "显示单里的成分不对"
+
+msgid "This function is redundant and will disappear in future versions."
+msgstr "这个函数多余，因此在新的版本里将被删除。"
+
+msgid "'l' must be a layout"
+msgstr "'l'必需为布局"
+
+msgid "'pch' and 'labels' not the same length"
+msgstr "'pch'和'labels'的长度不一样"
+
+msgid "'hgap' must be single unit"
+msgstr "'hgap'的值必需是单元"
+
+msgid "'vgap' must be single unit"
+msgstr "'vgap'的值必需是单元"
+
+msgid "Invalid justification"
+msgstr "定位不对"
+
+msgid "Invalid horizontal justification"
+msgstr "水平定位不对"
+
+msgid "Invalid vertical justification"
+msgstr "垂直定位不对"
+
+msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+msgstr "'respect'的值要么是逻辑值，要么是一个'nrow'乘'ncol'大小的矩阵"
+
+msgid "Invalid 'origin'"
+msgstr "'origin'的值不对"
+
+msgid "'length' must be a unit object"
+msgstr "'length'的值必需是单元对象"
+
+msgid "Invalid 'ends' or 'type' argument"
+msgstr "'ends'或'type'变元的值不对"
+
+msgid "'x' and 'y' must be units"
+msgstr "'x'和'y'必需为单元值"
+
+msgid "'x' and 'y' must have length 1"
+msgstr "'x'和'y'的长度必需为一"
+
+msgid "invalid 'arrow' argument"
+msgstr "'arrow'变元不对"
+
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
+msgstr "不能同时对'id'和'id.lengths'进行设定"
+
+msgid "'x' and 'y' must be same length"
+msgstr "'x'和'y'的长度必需相同"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "'x'，'y'和'id'的长度必需相同"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr "'x'，'y'和'id.lengths'必需设定整体长度"
+
+msgid "'x0', 'y0', 'x1', and 'y1' must be units"
+msgstr "'x0', 'y0', 'x1'和'y1'必需为单元值"
+
+msgid "'x' and 'y' must be units or NULL"
+msgstr "'x'和'y'要么是单元值，要么是NULL"
+
+msgid "Corrupt 'arrows' object"
+msgstr "'arrows'对象出了错"
+
+msgid ""
+"grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
+"functions."
+msgstr "grid.arrows()不再有用；请用画线函数中'arrow'这一变元。"
+
+msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+msgstr "'grob'变元需要有'line.to', 'lines'或'segments'这三个grob中的一个"
+
+msgid "x and y must be units"
+msgstr "x和y必需为单元值"
+
+msgid "shape must be between -1 and 1"
+msgstr "形状的值必需在-1和1之间"
+
+msgid "'x', 'y', and 'r' must be units"
+msgstr "'x', 'y'和'r'必需为单元值"
+
+msgid "'x', 'y', 'width', and 'height' must be units"
+msgstr "'x', 'y', 'width'和'height'必需为单元值"
+
+msgid "Invalid 'rot' value"
+msgstr "'rot'的值不对"
+
+msgid "zero-length 'pch'"
+msgstr "'pch'的长度不能为零"
+
+msgid "'x', 'y' and 'size' must be units"
+msgstr "'x', 'y'和'size'必需为单元值"
+
+msgid "'x' and 'y' must be unit objects and have the same length"
+msgstr "'x'和'y'必需为单元对象，而且它们的长度必需相同"
+
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr "'x', 'y', 'width'和'height'都应该是长度为一的单元值"
+
+msgid "'x' and 'units' must have length > 0"
+msgstr "'x'和'unit'的长度必需大于零"
+
+msgid "'x' argument must be a unit object"
+msgstr "'x'变元必需是单元对象"
+
+msgid "Invalid 'axis' or 'type'"
+msgstr "'axis'或'type'的值不对"
+
+msgid "No string supplied for 'strwidth/height' unit"
+msgstr "'strwidth/height'单元值缺少字符串"
+
+msgid "No 'grob' supplied for 'grobwidth/height' unit"
+msgstr "'grobwidth/height'单元值缺少'grob'的值"
+
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+msgstr "'grobwidth/height'单元值里的'gPath'其深度必需为一"
+
+msgid "Non-NULL value supplied for plain unit"
+msgstr "简单单元里不能有非NULL值"
+
+msgid "Operator '%s' not meaningful for units"
+msgstr "运算符号'%s'对这个单元没有意义"
+
+msgid "Only one operand may be a unit"
+msgstr "只能有一个单元运算对象"
+
+msgid "Non-unit operand must be numeric"
+msgstr "非单元运算对象必需为数字"
+
+msgid "Both operands must be units"
+msgstr "两个运算对象都必需为单元"
+
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "'Summary'函数'%s'对这个单元没有意义"
+
+msgid "Zero arguments where at least one expected"
+msgstr "不能没有变元，至少需要有一个"
+
+msgid "Index out of bounds (unit subsetting)"
+msgstr "索引值出界(取单元子集时)"
+
+msgid "Index out of bounds (unit arithmetic subsetting)"
+msgstr "索引值出界(取单元数字子集时)"
+
+msgid "Index out of bounds (unit list subsetting)"
+msgstr "索引值出界(取单元串子集时)"
+
+msgid "It is invalid to combine unit objects with other types"
+msgstr "不能将单元对象同其它类别的对象相结合"
+
+msgid ""
+"unit.rep has been deprecated in favour of a unit method for the generic rep "
+"function"
+msgstr "unit.rep不再有用，取而代之的是一个同属rep函数的单元方法"
+
+msgid ""
+"unit.length has been deprecated in favour of a unit method for the generic "
+"length function"
+msgstr "unit.length不再有用，取而代之的是一个同属length函数的单元方法"
+
+msgid "Invalid theta"
+msgstr "theta值不对"
+
+msgid "'range' must be numeric"
+msgstr "'range'必需为数字"
+
+msgid "Invalid graphics parameters"
+msgstr "图形参数值不对"
+
+msgid "Invalid 'clip' value"
+msgstr "'clip'值不对"
+
+msgid "Invalid 'xscale' in viewport"
+msgstr "视口里的'xscale'值不对"
+
+msgid "Invalid 'yscale' in viewport"
+msgstr "视口里的'yscale'值不对"
+
+msgid "Invalid 'angle' in viewport"
+msgstr "视口里的'angle'值不对"
+
+msgid "Invalid 'layout' in viewport"
+msgstr "视口里的'layout'值不对"
+
+msgid "Invalid 'layout.pos.row' in viewport"
+msgstr "视口里的'layout.pos.row'值不对"
+
+msgid "Invalid 'layout.pos.col' in viewport"
+msgstr "视口里的'layout.pos.col'值不对"
+
+msgid "Only viewports allowed in 'vpList'"
+msgstr "'vpList'里的值只能是视口"
+
+msgid "Only viewports allowed in 'vpStack'"
+msgstr "'vpStack'里的值只能是视口"
+
+msgid ""
+"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent'的值必需为视口，'children'的值必需是'vpTree'里的'vpList'"
+
+msgid "A viewport path must contain at least one viewport name"
+msgstr "视口路径至少要有一个视口的名字"
+
+msgid "Invalid viewport name(s)"
+msgstr "视口名字不对"
+
+msgid "Must specify at least one of 'x' or 'xscale'"
+msgstr "至少要设定'x'或'xscale'两个中的一个"
+
+msgid "Must specify at least one of 'y' or 'yscale'"
+msgstr "至少要设定'y'或'yscale'两个中的一个"
+
+#~ msgid "It is invalid to specify both 'id' and 'id.lengths"
+#~ msgstr "不能同时对'id'和'id.lengths'进行设定"
+
+#~ msgid "'x' must be numeric"
+#~ msgstr "'x'必需是数字"
+

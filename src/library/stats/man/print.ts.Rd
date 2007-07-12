@@ -23,6 +23,6 @@
   \code{\link{ts}}.
 }
 \examples{
-print(ts(1:10, freq = 7, start = c(12, 2)), calendar = TRUE)
+print(ts(1:10, frequency = 7, start = c(12, 2)), calendar = TRUE)
 }
 \keyword{ts}

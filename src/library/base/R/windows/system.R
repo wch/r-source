@@ -1,12 +1,13 @@
-system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
-                   show.output.on.console = FALSE, minimized = FALSE,
-                   invisible = FALSE)
+system <- function(command, intern = FALSE, ignore.stderr = FALSE,
+                   wait = TRUE, input = NULL,
+                   show.output.on.console = TRUE, minimized = FALSE,
+                   invisible = TRUE)
 {
     f <- ""
     if (!is.null(input)) {
         f <- tempfile()
         on.exit(unlink(f))
-        cat(input,file=f,sep="\n")
+        cat(input, file = f, sep="\n")
     }
     if (intern)
         flag <- 3
@@ -18,25 +19,17 @@ system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
     }
     if (invisible) flag <- 20 + flag
     else if (minimized) flag <- 10 + flag
+    if(ignore.stderr) flag <- flag + 100
     .Internal(system(command, as.integer(flag), f))
 }
-
-unix <- function(call, intern = FALSE)
-{
-    .Deprecated("system")
-    system(call, intern)
-}
-
-unlink <- function(x, recursive=FALSE)
-    invisible(.Internal(unlink(x, recursive)))
 
 shell <- function(cmd, shell, flag="/c", intern=FALSE,
                   wait=TRUE, translate=FALSE, mustWork=FALSE, ...)
 {
     if(missing(shell)) {
         shell <- Sys.getenv("R_SHELL")
-        if(!nchar(shell)) shell <- Sys.getenv("SHELL")
-        if(!nchar(shell)) shell <- Sys.getenv("COMSPEC")
+        if(!nzchar(shell)) shell <- Sys.getenv("SHELL")
+        if(!nzchar(shell)) shell <- Sys.getenv("COMSPEC")
     }
     if(missing(flag) && any(!is.na(pmatch(c("bash", "tcsh"), basename(shell)))))
         flag <- "-c"

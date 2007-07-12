@@ -49,7 +49,7 @@ distclean:
 $(R_HOME)/doc/html/search/SearchEngine.html: $(R_HOME)/doc/html/search/SearchEngine-head.html $(R_HOME)/doc/html/search/SearchEngine-foot.html $(R_HOME)/doc/KEYWORDS.db
 	(cd $(R_HOME)/doc; \
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
-	perl ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
+	$(PERL) ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
 	cat html/search/SearchEngine-foot.html >> html/search/SearchEngine.html)
 ../XINSTALL: bin/INSTALL
 ifeq ($(strip $(BUILD)),CROSS)

@@ -1084,7 +1084,7 @@ c Var
       do 20 i=1,it
          j=i
          if (jper.eq.2) j=i-ibw-1
-         xti=x(j)
+         if (j.ge.1) xti=x(j)
          if (j.ge.1) go to 10
          j=n+j
          xti=x(j)-1d0

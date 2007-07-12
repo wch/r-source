@@ -73,7 +73,7 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@echo "dumping R code in package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@echo "loadNamespace(\"$(pkg)\")" | \
+	@echo "invisible(loadNamespace(\"$(pkg)\"))" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)

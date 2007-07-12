@@ -130,3 +130,11 @@ symbol.For <- function(name)
     name
 }
 ## </entry>
+
+## <entry>
+## Deprecated in 1999
+## Defunct in 2.5.0
+unix <- function(call, intern = FALSE) .Defunct("system")
+## </entry>
+
+

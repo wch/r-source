@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:50\n"
-"PO-Revision-Date: 2006-12-11 10:50\n"
+"POT-Creation-Date: 2007-06-12 18:53\n"
+"PO-Revision-Date: 2007-06-12 18:53\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -33,24 +33,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+
 msgid "no documentation for '%s' found in package '%s'"
 msgstr "no documentation for ‘%s’ found in package ‘%s’"
 
 msgid "document not found"
 msgstr "document not found"
-
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr "‘format’ must be “normal” or “short”. Using “normal”"
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "wrong ‘sortby’ specified. Using sortby=“score”"
-
-msgid ""
-"wrong restriction specified.\n"
-"Using '%s'"
-msgstr ""
-"wrong restriction specified.\n"
-"Using ‘%s’"
 
 msgid "A search query has been submitted to"
 msgstr "A search query has been submitted to"
@@ -226,6 +220,9 @@ msgstr "invalid ‘data’ argument"
 msgid "invalid 'modes' argument"
 msgstr "invalid ‘modes’ argument"
 
+msgid "invalid 'x' argument"
+msgstr "invalid ‘x’ argument"
+
 msgid "can only handle vector and factor elements"
 msgstr "can only handle vector and factor elements"
 
@@ -264,6 +261,9 @@ msgstr "too many list items (at most up to number 3899)"
 
 msgid "'form' must be a two-sided formula"
 msgstr "‘form’ must be a two-sided formula"
+
+msgid "'form' must be a two-sided formula with one term on each side"
+msgstr "‘form’ must be a two-sided formula with one term on each side"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "No documentation for ‘%s’ in specified packages and libraries:"
@@ -345,14 +345,32 @@ msgstr "do not know what to search"
 msgid "argument 'help.db' is deprecated"
 msgstr "argument ‘help.db’ is deprecated"
 
+msgid "Rebuilding the data base ..."
+msgstr "Rebuilding the data base ..."
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr "Packages {.readRDS() sequentially}:"
+
 msgid "could not find package '%s'"
 msgstr "could not find package ‘%s’"
+
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr "package ‘%s’ has empty hsearch data - strangely"
 
 msgid "no hsearch.rds meta data for package"
 msgstr "no hsearch.rds meta data for package"
 
+msgid "reencoding ..."
+msgstr "reencoding ..."
+
+msgid "done"
+msgstr "done"
+
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "removing all entries with invalid multi-byte character data"
+
+msgid "saving the database ..."
+msgstr "saving the database ..."
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
@@ -361,6 +379,9 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "incorrect ‘agrep’ specification"
+
+msgid "matched %d objects."
+msgstr "matched %d objects."
 
 msgid "no package '%s' was found"
 msgstr "no package ‘%s’ was found"
@@ -516,6 +537,27 @@ msgstr "packages %s are mutually dependent"
 msgid "no packages were specified"
 msgstr "no packages were specified"
 
+msgid "argument 'lib' is missing: using '%s'"
+msgstr "argument ‘lib’ is missing: using ‘%s’"
+
+msgid "'lib = \"%s\"' is not writable"
+msgstr "‘lib = “%s”’ is not writable"
+
+msgid ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+msgstr ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+
+msgid "unable to install packages"
+msgstr "unable to install packages"
+
+msgid "unable to create"
+msgstr "unable to create"
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "cannot install MacOS X binary packages on Windows"
 
@@ -535,8 +577,8 @@ msgstr ""
 msgid "installation of package '%s' had non-zero exit status"
 msgstr "installation of package ‘%s’ had non-zero exit status"
 
-msgid "Unable to create temporary directory '%s'"
-msgstr "Unable to create temporary directory ‘%s’"
+msgid "unable to create temporary directory '%s'"
+msgstr "unable to create temporary directory ‘%s’"
 
 msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
@@ -669,6 +711,15 @@ msgstr "‘as.is’ has the wrong length %d  != cols = %d"
 msgid "invalid 'row.names' specification"
 msgstr "invalid ‘row.names’ specification"
 
+msgid "invalid 'row.names' length"
+msgstr "invalid ‘row.names’ length"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "duplicate ‘row.names’ are not allowed"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "missing values in ‘row.names’ are not allowed"
+
 msgid "missing lengths for some fields"
 msgstr "missing lengths for some fields"
 
@@ -695,6 +746,19 @@ msgstr "empty beginning of file"
 
 msgid "first five rows are empty: giving up"
 msgstr "first five rows are empty: giving up"
+
+msgid "relist() requires recursively unlisted objects."
+msgstr "relist() requires recursively unlisted objects."
+
+msgid "The flesh argument does not contain a skeleton attribute."
+msgstr "The flesh argument does not contain a skeleton attribute."
+
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
 
 msgid "cannot coerce 'x' to roman"
 msgstr "cannot coerce ‘x’ to roman"
@@ -778,6 +842,9 @@ msgstr "appending column names to file"
 msgid "attempt to change '%s' ignored"
 msgstr "attempt to change ‘%s’ ignored"
 
+msgid "'unzip' must be a single character string"
+msgstr "‘unzip’ must be a single character string"
+
 msgid "'subject' missing"
 msgstr "‘subject’ missing"
 
@@ -843,9 +910,6 @@ msgstr "fixing URLs in non-standard libraries"
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "If nothing happens, you should open ‘%s’ yourself"
 
-msgid "unable to create temporary directory '%s'"
-msgstr "unable to create temporary directory ‘%s’"
-
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "package ‘%s’ successfully unpacked and MD5 sums checked"
 
@@ -870,12 +934,6 @@ msgstr "zipfile ‘%s’ not found"
 msgid "updating HTML package descriptions"
 msgstr "updating HTML package descriptions"
 
-msgid "cannot update HTML package index"
-msgstr "cannot update HTML package index"
-
-msgid "cannot update HTML search index"
-msgstr "cannot update HTML search index"
-
 msgid "cannot update '%s'"
 msgstr "cannot update ‘%s’"
 
@@ -893,15 +951,25 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "object ‘%s’ not found"
 msgstr[1] "objects ‘%s’ not found"
 
-msgid "dependency '%s' is not available"
-msgid_plural "dependencies '%s' are not available"
-msgstr[0] "dependency ‘%s’ is not available"
-msgstr[1] "dependencies ‘%s’ are not available"
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] "‘lib’ element ‘%s’  is not a writable directory"
+msgstr[1] "‘lib’ elements ‘%s’ are not writable directories"
 
-msgid "also installing the dependency "
-msgid_plural "also installing the dependencies "
-msgstr[0] "also installing the dependency "
-msgstr[1] "also installing the dependencies "
+msgid "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0] "package %s is not available"
+msgstr[1] "packages %s are not available"
+
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0] "dependency %s is not available"
+msgstr[1] "dependencies %s are not available"
+
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] "also installing the dependency %s"
+msgstr[1] "also installing the dependencies %s"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"

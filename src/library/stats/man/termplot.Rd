@@ -6,16 +6,15 @@
   standard errors and partial residuals added.
 }
 \usage{
-termplot(model, data=NULL, envir=environment(formula(model)),
-         partial.resid=FALSE, rug=FALSE,
-         terms=NULL, se=FALSE, xlabs=NULL, ylabs=NULL, main = NULL,
+termplot(model, data = NULL, envir = environment(formula(model)),
+         partial.resid = FALSE, rug = FALSE,
+         terms = NULL, se = FALSE, xlabs = NULL, ylabs = NULL, main = NULL,
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 1,
          col.res = "gray", cex = 1, pch = par("pch"),
          col.smth = "darkred", lty.smth = 2, span.smth = 2/3,
-         ask = interactive() && nb.fig < n.tms &&
-               .Device != "postscript",
-         use.factor.levels = TRUE, smooth = NULL, \dots)
+         ask = dev.interactive() && nb.fig < n.tms,
+         use.factor.levels = TRUE, smooth = NULL, ylim = "common", \dots)
 }
 \arguments{
   \item{model}{fitted model object}
@@ -45,8 +44,11 @@ termplot(model, data=NULL, envir=environment(formula(model)),
    \item{smooth}{\code{NULL} or a function with the same arguments as
      \code{\link{panel.smooth}} to draw a smooth through the partial
      residuals for non-factor terms}
-   \item{lty.smth,col.smth, span.smth}{Passed to \code{smooth}}
-  \item{\dots}{other graphical parameters}
+   \item{lty.smth, col.smth, span.smth}{Passed to \code{smooth}}
+   \item{ylim}{an optional range for the y axis, or \code{"common"} when
+     a range sufficient for all the plot will be computed, or
+     \code{"free"} when limits are computed for each plot.}
+   \item{\dots}{other graphical parameters.}
 }
 \details{
   The model object must have a \code{predict} method that accepts
@@ -67,18 +69,20 @@ termplot(model, data=NULL, envir=environment(formula(model)),
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}
 \examples{
+require(graphics)
+
 had.splines <- "package:splines" \%in\% search()
 if(!had.splines) rs <- require(splines)
 x <- 1:100
 z <- factor(rep(LETTERS[1:4],25))
-y <- rnorm(100,sin(x/10)+as.numeric(z))
+y <- rnorm(100, sin(x/10)+as.numeric(z))
 model <- glm(y ~ ns(x,6) + z)
 
 par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ...)"))
 termplot(model, rug=TRUE)
-termplot(model, partial=TRUE, se = TRUE, main = TRUE)
-termplot(model, partial=TRUE, smooth=panel.smooth,span.smth=1/4)
+termplot(model, partial.resid=TRUE, se = TRUE, main = TRUE)
+termplot(model, partial.resid=TRUE, smooth=panel.smooth, span.smth=1/4)
 if(!had.splines && rs) detach("package:splines")
 }
 \keyword{hplot}

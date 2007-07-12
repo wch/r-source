@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-23 r36429)
+R version 2.6.0 Under development (unstable) (2007-06-27 r42086)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ####=== Numerical / Arithmetic Tests
@@ -99,7 +99,7 @@ Type 'q()' to quit R.
 > is.nan(log(-1))# TRUE and warning
 [1] TRUE
 Warning message:
-NaNs produced in: log(x) 
+In log(-1) : NaNs produced
 > 
 > rp <- c(1:2,Inf); rn <- rev(- rp)
 > r <- c(rn, 0, rp)
@@ -171,7 +171,7 @@ NaNs produced in: log(x)
 > all(is.nan(gamma(0:-47))) # + warn.
 [1] TRUE
 Warning message:
-NaNs produced in: gamma(x) 
+In gamma(0:-47) : NaNs produced
 > 
 > ## choose() {and lchoose}:
 > n51 <- c(196793068630200, 229591913401900, 247959266474052)
@@ -204,8 +204,8 @@ NaNs produced in: gamma(x)
 > stopifnot(all.equal( digamma(x), psigamma(x,0), 2*Meps),
 +           all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
 Warning messages:
-1: NaNs produced in: digamma(x) 
-2: NaNs produced in: psigamma(x, deriv) 
+1: In digamma(x) : NaNs produced
+2: In psigamma(x, deriv) : NaNs produced
 > 
 > ## fft():
 > ok <- TRUE
@@ -299,10 +299,13 @@ Warning messages:
 [1] TRUE
 > 
 > 
-> is.na(mean(c(1,NA,NA)[-1], trim = .1, na.rm = TRUE))
+> ## not sure what the point of this is: it gives mean(numeric(0)), that is NaN
+> (z <- mean(rep(NA_real_, 2), trim = .1, na.rm = TRUE))
+[1] NaN
+> is.na(z)
 [1] TRUE
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.05 0 1.06 NA NA 
+Time elapsed:  0.86 0 0.88 NA NA 
 > 

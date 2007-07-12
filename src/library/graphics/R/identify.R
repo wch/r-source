@@ -1,7 +1,7 @@
 identify <- function(x, ...) UseMethod("identify")
 
 identify.default <-
-    function(x, y = NULL, labels = seq(along = x), pos = FALSE,
+    function(x, y = NULL, labels = seq_along(x), pos = FALSE,
              n = length(x), plot = TRUE, atpen = FALSE,
              offset = 0.5, tolerance = 0.25, ...)
 {

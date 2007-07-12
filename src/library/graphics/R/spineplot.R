@@ -7,7 +7,7 @@ spineplot <- function(x, ...) {
 
 spineplot.formula <-
 function(formula, data = list(),
-         breaks = NULL, tol.ylab = 0.05, off = NULL,
+         breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
          col = NULL, main = "", xlab = NULL, ylab = NULL,
          xaxlabels = NULL, yaxlabels = NULL,
          xlim = NULL, ylim = c(0, 1), ...,
@@ -16,6 +16,7 @@ function(formula, data = list(),
     ## extract x, y from formula
     m <- match.call(expand.dots = FALSE)
     m <- m[c(1, match(c("formula", "data", "subset"), names(m), 0))]
+    require(stats, quietly=TRUE)
     m[[1]] <- as.name("model.frame")
     mf <- eval.parent(m)
     if(NCOL(mf) != 2)
@@ -23,13 +24,16 @@ function(formula, data = list(),
     y <- mf[,1]
     if(!is.factor(y))
         stop("dependent variable should be a factor")
+    if(!is.null(ylevels))
+      y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
     x <- mf[,2]
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2]
     if(is.null(ylab)) ylab <- names(mf)[1]
 
-    spineplot(x, y, breaks = breaks, tol.ylab = tol.ylab, off = off,
+    ## call default interface
+    spineplot(x, y, breaks = breaks, tol.ylab = tol.ylab, off = off, ylevels = NULL,
               col = col, main = main, xlab = xlab, ylab = ylab,
               xaxlabels = xaxlabels, yaxlabels = yaxlabels,
               xlim = xlim, ylim = ylim, ...)
@@ -37,7 +41,7 @@ function(formula, data = list(),
 
 spineplot.default <-
 function(x, y = NULL,
-         breaks = NULL, tol.ylab = 0.05, off = NULL,
+         breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
          col = NULL, main = "", xlab = NULL, ylab = NULL,
          xaxlabels = NULL, yaxlabels = NULL,
          xlim = NULL, ylim = c(0, 1), ...)
@@ -57,8 +61,9 @@ function(x, y = NULL,
         ny <- NCOL(tab)
         nx <- NROW(tab)
     } else {
-        if(!is.factor(y))
-            stop("dependent variable should be a factor")
+        if(!is.factor(y)) stop("dependent variable should be a factor")
+	if(!is.null(ylevels))
+          y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
         x.categorical <- is.factor(x)
         if(!x.categorical) stopifnot(is.numeric(x), is.vector(x))
         if(is.null(xlab)) xlab <- deparse(substitute(x))

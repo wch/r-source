@@ -18,6 +18,7 @@
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
 \alias{as.data.frame.array}
+\alias{as.data.frame.difftime}
 
 \title{
   Coerce to a Data Frame
@@ -29,8 +30,8 @@
 as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 \method{as.data.frame}{character}(x, \dots,
               stringsAsFactors = default.stringsAsFactors())
-\method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, ..., 
-                                 stringsAsFactors = default.stringsAsFactors())              
+\method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots, 
+              stringsAsFactors = default.stringsAsFactors())
 
 is.data.frame(x)
 }

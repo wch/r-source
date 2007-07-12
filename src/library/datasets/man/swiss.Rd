@@ -67,6 +67,7 @@
   are averages for 1887, 1888 and 1889.
 }
 \examples{
+require(stats); require(graphics)
 pairs(swiss, panel = panel.smooth, main = "swiss data",
       col = 3 + (swiss$Catholic > 50))
 summary(lm(Fertility ~ . , data = swiss))

@@ -1,21 +1,17 @@
 \name{levels}
 \alias{levels}
+\alias{levels.default}
 \alias{levels<-}
-\alias{levels<-.default}
 \alias{levels<-.factor}
 \title{Levels Attributes}
-\usage{
-levels(x)
-levels(x) <- value
-}
 \description{
   \code{levels} provides access to the levels attribute of a variable.
   The first form returns the value of the levels of its argument
   and the second sets the attribute.
-
-  The replacement form (\code{"levels<-"}) of \code{levels} is a generic
-  function and new methods can be written for it.
-  The most important method is that for \code{\link{factor}}s:
+}
+\usage{
+levels(x)
+levels(x) <- value
 }
 \arguments{
   \item{x}{an object, for example a factor.}
@@ -26,6 +22,10 @@ levels(x) <- value
     rename the levels.}
 }
 \details{
+  Both the extractor and replacement forms are generic and new methods
+  can be written for them. The most important method for the replacment
+  function is that for \code{\link{factor}}s.
+  
   For the factor replacement method, a \code{NA} in \code{value}
   causes that level to be removed from the levels and the elements
   formerly with that level to be replaced by \code{NA}.

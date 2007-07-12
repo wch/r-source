@@ -4,7 +4,7 @@
 \alias{toLatex.sessionInfo}
 \alias{print.sessionInfo}
 \description{
-  Print version information about \R and attached packages.
+  Print version information about \R and attached or loaded packages.
 }
 \usage{
 sessionInfo(package=NULL)

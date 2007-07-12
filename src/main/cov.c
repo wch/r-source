@@ -410,13 +410,13 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	y = SETCAR(args, coerceVector(CAR(args), REALSXP));
 	if (isMatrix(y)) {
 	    if (nrows(y) != n)
-		errorcall(call, _("incompatible dimensions"));
+		error(_("incompatible dimensions"));
 	    ncy = ncols(y);
 	    ansmat = (1);
 	}
 	else {
 	    if (length(y) != n)
-		errorcall(call, _("incompatible dimensions"));
+		error(_("incompatible dimensions"));
 	    ncy = 1;
 	}
     }
@@ -441,7 +441,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	pair = TRUE;
 	break;
     default:
-	errorcall(call, _("invalid 'use' (computational method)"));
+	error(_("invalid 'use' (computational method)"));
     }
     if (ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
     else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
@@ -501,7 +501,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if(sd_0)/* only in cor() */
-	warningcall(call, _("the standard deviation is zero"));
+	warning(_("the standard deviation is zero"));
     UNPROTECT(1);
     return ans;
 }

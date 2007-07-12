@@ -13,6 +13,6 @@
         x <- edit(function(){}, title = subx, ...)
         environment(x) <- .GlobalEnv
     }
-    assign(subx, x, env = .GlobalEnv)
+    assign(subx, x, envir = .GlobalEnv)
 }
 

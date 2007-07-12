@@ -44,7 +44,7 @@ function(x, g, ...)
     STATISTIC <- sum(tapply(a, g, "sum")^2 / tapply(a, g, "length"))
     STATISTIC <- (STATISTIC - n * mean(a)^2) / var(a)
     PARAMETER <- k - 1
-    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
     names(STATISTIC) <- "Fligner-Killeen:med chi-squared"
     names(PARAMETER) <- "df"
     METHOD <- "Fligner-Killeen test of homogeneity of variances"

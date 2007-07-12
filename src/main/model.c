@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2006   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-2007   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,24 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+
+/* inline-able versions */
+static R_INLINE Rboolean isUnordered_int(SEXP s)
+{
+    return (TYPEOF(s) == INTSXP
+	    && inherits(s, "factor")
+	    && !inherits(s, "ordered"));
+}
+
+static R_INLINE Rboolean isOrdered_int(SEXP s)
+{
+    return (TYPEOF(s) == INTSXP
+	    && inherits(s, "factor")
+	    && inherits(s, "ordered"));
+}
+
+
 
 #define WORDSIZE (8*sizeof(int))
 
@@ -108,8 +125,8 @@ static int MatchVar(SEXP var1, SEXP var2)
 	return (asReal(var1) == asReal(var2));
     /* Literal Strings */
     if (isString(var1) && isString(var2))
-	return (strcmp(CHAR(STRING_ELT(var1, 0)),
-		       CHAR(STRING_ELT(var2, 0))) == 0);
+	return (strcmp(translateChar(STRING_ELT(var1, 0)),
+		       translateChar(STRING_ELT(var2, 0))) == 0);
     /* Nothing else matches */
     return 0;
 }
@@ -152,9 +169,9 @@ static void CheckRHS(SEXP v)
     }
     if (isSymbol(v)) {
 	for (i = 0; i < length(framenames); i++) {
-	    s = install(CHAR(STRING_ELT(framenames, i)));
+	    s = install(translateChar(STRING_ELT(framenames, i)));
 	    if (v == s) {
-		t=allocVector(STRSXP, length(framenames)-1);
+		t = allocVector(STRSXP, length(framenames)-1);
 		for (j = 0; j < length(t); j++) {
 		    if (j < i)
 			SET_STRING_ELT(t, j, STRING_ELT(framenames, j));
@@ -187,7 +204,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 	    if (formula == dotSymbol && framenames != R_NilValue) {
 		haveDot = TRUE;
 		for (i = 0; i < length(framenames); i++) {
-		    v = install(CHAR(STRING_ELT(framenames, i)));
+		    v = install(translateChar(STRING_ELT(framenames, i)));
 		    if (!MatchVar(v, CADR(varlist))) InstallVar(v);
 		}
 	    } else
@@ -583,14 +600,14 @@ static SEXP EncodeVars(SEXP formula)
 	if (formula == dotSymbol && framenames != R_NilValue) {
 	    /* prior to 1.7.0 this made term.labels in reverse order. */
 	    SEXP r = R_NilValue, v = R_NilValue; /* -Wall */
-	    int i, j; char *c;
+	    int i, j; const char *c;
 
 	    if (!LENGTH(framenames)) return r;
 	    for (i = 0; i < LENGTH(framenames); i++) {
 		/* change in 1.6.0 do not use duplicated names */
-		c = CHAR(STRING_ELT(framenames, i));
+		c = translateChar(STRING_ELT(framenames, i));
 		for(j = 0; j < i; j++)
-		    if(!strcmp(c, CHAR(STRING_ELT(framenames, j))))
+		    if(!strcmp(c, translateChar(STRING_ELT(framenames, j))))
 			error(_("duplicated name '%s' in data frame using '.'"), 
 			      c);
 		term = AllocTerm();
@@ -711,6 +728,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs, ord;
     SEXP specials, t, data, rhs;
     int i, j, k, l, n, keepOrder, allowDot;
+    char *cbuf;
 
     Rboolean hadFrameNames = FALSE;
 
@@ -760,7 +778,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (isFrame(data))
 	framenames = getAttrib(data, R_NamesSymbol);
     else
-	errorcall(call, _("'data' argument is of the wrong type"));
+	error(_("'data' argument is of the wrong type"));
 
     if (framenames != R_NilValue) {
 	if(length(framenames)) hadFrameNames = TRUE;
@@ -946,18 +964,18 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		l += strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
-	SET_STRING_ELT(termlabs, n, allocString(l));
-	CHAR(STRING_ELT(termlabs, n))[0] = '\0';
+        cbuf = (char *) alloca(l+1);
+        cbuf[0] = '\0';
 	l = 0;
 	for (i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
 		if (l > 0)
-		    strcat(CHAR(STRING_ELT(termlabs, n)), ":");
-		strcat(CHAR(STRING_ELT(termlabs, n)), 
-		       CHAR(STRING_ELT(varnames, i - 1)));
+		    strcat(cbuf, ":");
+                strcat(cbuf, CHAR(STRING_ELT(varnames, i - 1)));
 		l++;
 	    }
 	}
+        SET_STRING_ELT(termlabs, n, mkChar(cbuf));
 	n++;
     }
     PROTECT(v = allocVector(VECSXP, 2));
@@ -976,13 +994,13 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	i = length(specials);
 	PROTECT(v = allocList(i));
 	for (j = 0, t = v; j < i; j++, t = CDR(t)) {
-	    SET_TAG(t, install(CHAR(STRING_ELT(specials, j))));
-	    n = strlen(CHAR(STRING_ELT(specials, j)));
+	    const char *ss = translateChar(STRING_ELT(specials, j));
+	    SET_TAG(t, install(ss));
+	    n = strlen(ss);
 	    SETCAR(t, allocVector(INTSXP, 0));
 	    k = 0;
 	    for (l = 0; l < nvar; l++) {
-		if (!strncmp(CHAR(STRING_ELT(varnames, l)),
-			    CHAR(STRING_ELT(specials, j)), n))
+		if (!strncmp(CHAR(STRING_ELT(varnames, l)), ss, n))
 		    if (CHAR(STRING_ELT(varnames, l))[n] == '(')
 			k++;
 	    }
@@ -990,8 +1008,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SETCAR(t, allocVector(INTSXP, k));
 		k = 0;
 		for (l = 0; l < nvar; l++) {
-		    if (!strncmp(CHAR(STRING_ELT(varnames, l)),
-				CHAR(STRING_ELT(specials, j)), n))
+		    if (!strncmp(CHAR(STRING_ELT(varnames, l)), ss, n))
 			if (CHAR(STRING_ELT(varnames, l))[n] == '('){
 			    INTEGER(CAR(t))[k++] = l+1;
 			}
@@ -1013,11 +1030,11 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (haveDot) {
 	if(length(framenames)) {
 	    PROTECT_INDEX ind;
-	    PROTECT_WITH_INDEX(rhs = install(CHAR(STRING_ELT(framenames, 0))), 
+	    PROTECT_WITH_INDEX(rhs = install(translateChar(STRING_ELT(framenames, 0))), 
 			       &ind);
 	    for (i = 1; i < LENGTH(framenames); i++) {
 		REPROTECT(rhs = lang3(plusSymbol, rhs, 
-				      install(CHAR(STRING_ELT(framenames, i)))),
+				      install(translateChar(STRING_ELT(framenames, i)))),
 			  ind);
 	    }
 	    if (!isNull(CADDR(ans)))
@@ -1041,13 +1058,11 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(a, install("order"));
     a = CDR(a);
 
-    SETCAR(a, allocVector(INTSXP, 1));
-    INTEGER(CAR(a))[0] = (intercept != 0);
+    SETCAR(a, ScalarInteger(intercept != 0));
     SET_TAG(a, install("intercept"));
     a = CDR(a);
 
-    SETCAR(a, allocVector(INTSXP, 1));
-    INTEGER(CAR(a))[0] = (response != 0);
+    SETCAR(a, ScalarInteger(response != 0));
     SET_TAG(a, install("response"));
     a = CDR(a);
 
@@ -1214,7 +1229,7 @@ SEXP attribute_hidden do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(old) != LANGSXP ||
        (TYPEOF(_new) != LANGSXP && CAR(old) != tildeSymbol) ||
        CAR(_new) != tildeSymbol)
-	errorcall(call, _("formula expected"));
+	error(_("formula expected"));
 
     if (length(old) == 3) {
 	lhs = CADR(old);
@@ -1305,18 +1320,18 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Argument Sanity Checks */
 
     if (!isNewList(variables))
-	errorcall(call, _("invalid variables"));
+	error(_("invalid variables"));
     if (!isString(varnames))
-	errorcall(call, _("invalid variable names"));
+	error(_("invalid variable names"));
     if ((nvars = length(variables)) != length(varnames))
-	errorcall(call, _("number of variables != number of variable names"));
+	error(_("number of variables != number of variable names"));
 
     if (!isNewList(dots))
-	errorcall(call, _("invalid extra variables"));
+	error(_("invalid extra variables"));
     if ((ndots = length(dots)) != length(dotnames))
-	errorcall(call, _("number of variables != number of variable names"));
+	error(_("number of variables != number of variable names"));
     if ( ndots && !isString(dotnames))
-	errorcall(call, _("invalid extra variable names"));
+	error(_("invalid extra variable names"));
 
     /*  check for NULL extra arguments -- moved from interpreted code */
 
@@ -1334,11 +1349,11 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_STRING_ELT(names, i, STRING_ELT(varnames, i));
     }
     for (i = 0,j = 0; i < ndots; i++) {
-	if (VECTOR_ELT(dots, i) == R_NilValue)
-	    continue;
-	if(strlen(CHAR(STRING_ELT(dotnames, i))) + 3 > 256)
-	    error(_("overlong names in '%s'"), CHAR(STRING_ELT(dotnames, i)));
-	sprintf(buf, "(%s)", CHAR(STRING_ELT(dotnames, i)));
+	const char *ss;
+	if (VECTOR_ELT(dots, i) == R_NilValue) continue;
+	ss = translateChar(STRING_ELT(dotnames, i));
+	if(strlen(ss) + 3 > 256) error(_("overlong names in '%s'"), ss);
+	sprintf(buf, "(%s)", ss);
 	SET_VECTOR_ELT(data, nvars + j, VECTOR_ELT(dots, i));
 	SET_STRING_ELT(names, nvars + j,  mkChar(buf));
 	j++;
@@ -1364,14 +1379,13 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    case RAWSXP:
 		break;
 	    default:
-		errorcall(call, 
-			  _("invalid type (%s) for variable '%s'"),
-			  type2char(TYPEOF(ans)),
-			  CHAR(STRING_ELT(names, i)));
+		error(_("invalid type (%s) for variable '%s'"),
+		      type2char(TYPEOF(ans)),
+		      translateChar(STRING_ELT(names, i)));
 	    }
 	    if (nrows(ans) != nr)
-		errorcall(call, _("variable lengths differ (found for '%s')"),
-			  CHAR(STRING_ELT(names, i)));
+		error(_("variable lengths differ (found for '%s')"),
+		      translateChar(STRING_ELT(names, i)));
 	}
     } else nr = length(row_names);
 
@@ -1389,8 +1403,12 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(row_names) == nr) {
 	setAttrib(data, R_RowNamesSymbol, row_names);
     } else {
+	/*
 	PROTECT(row_names = allocVector(INTSXP, nr));
-	for (i = 0; i < nr; i++) INTEGER(row_names)[i] = i+1;
+	for (i = 0; i < nr; i++) INTEGER(row_names)[i] = i+1; */
+	PROTECT(row_names = allocVector(INTSXP, 2));
+	INTEGER(row_names)[0] = NA_INTEGER;
+	INTEGER(row_names)[1] = nr;
 	setAttrib(data, R_RowNamesSymbol, row_names);
 	UNPROTECT(1);
     }
@@ -1415,12 +1433,12 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   explanatory variables */
 	setAttrib(data, install("terms"), terms);
 	if (isString(na_action) && length(na_action) > 0)
-	    na_action = install(CHAR(STRING_ELT(na_action, 0)));
+	    na_action = install(translateChar(STRING_ELT(na_action, 0)));
 	PROTECT(na_action);
 	PROTECT(tmp = lang2(na_action, data));
 	PROTECT(ans = eval(tmp, rho));
 	if (!isNewList(ans) || length(ans) != length(data))
-	    errorcall(call, _("invalid result from na.action"));
+	    error(_("invalid result from na.action"));
 	/* need to transfer _all but tsp and dim_ attributes, possibly lost
 	   by subsetting in na.action.  */
 	for ( i = length(ans) ; i-- ; )
@@ -1450,8 +1468,7 @@ SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
         SEXP klass;
         PROTECT(call = duplicate(call));
-        PROTECT(klass = allocVector(STRSXP, 1));
-        SET_STRING_ELT(klass, 0, mkChar("formula"));
+        PROTECT(klass = mkString("formula"));
         setAttrib(call, R_ClassSymbol, klass);
         setAttrib(call, R_DotEnvSymbol, rho);
         UNPROTECT(2);
@@ -1527,7 +1544,7 @@ static void addvar(double *x, int nrx, int ncx, double *c, int nrc, int ncc)
 
 #define BUFSIZE 4096
 
-static char *AppendString(char *buf, char *str)
+static char *AppendString(char *buf, const char *str)
 {
     while (*str)
 	*buf++ = *str++;
@@ -1559,8 +1576,9 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP variable, var_i;
     int fik, first, i, j, k, kk, ll, n, nc, nterms, nVar;
     int intrcept, jstart, jnext, risponse, indx, rhs_response;
-    char buf[BUFSIZE]="\0", *bufp, *addp;
-    
+    char buf[BUFSIZE]="\0";
+    char *bufp;
+    const char *addp;
 
     checkArity(op, args);
 
@@ -1586,7 +1604,7 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(factors = duplicate(getAttrib(terms, install("factors"))));
     if (length(factors) == 0) {
 	/* if (intrcept == 0)
-	   errorcall(call, "invalid model (zero parameters).");*/
+	   error("invalid model (zero parameters).");*/
 	nVar = 1;
 	nterms = 0;
     }
@@ -1594,7 +1612,7 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nVar = nrows(factors);
 	nterms = ncols(factors);
     }
-    else errorcall(call, _("invalid '%s' argument"), "terms");
+    else error(_("invalid '%s' argument"), "terms");
 
     /* Get the variable names from the factor matrix */
 
@@ -1602,7 +1620,7 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(factors) > 0) {
 	if (length(vnames) < 1 ||
 	    (nVar - intrcept > 0 && !isString(VECTOR_ELT(vnames, 0))))
-	    errorcall(call, _("invalid '%s' argument"), "terms");
+	    error(_("invalid '%s' argument"), "terms");
 	vnames = VECTOR_ELT(vnames, 0);
     }
 
@@ -1613,9 +1631,9 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     vars = CADR(args);
     if (!isNewList(vars) || length(vars) < nVar)
-	errorcall(call, _("invalid model frame"));
+	error(_("invalid model frame"));
     if (length(vars) == 0)
-	errorcall(call, _("do not know how many cases"));
+	error(_("do not know how many cases"));
     n = nrows(VECTOR_ELT(vars, 0));
     /* This could be generated, so need to protect it */
     PROTECT(rnames = getAttrib(vars, R_RowNamesSymbol));
@@ -1638,18 +1656,18 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < nVar; i++) {
 	var_i = SET_VECTOR_ELT(variable, i, VECTOR_ELT(vars, i));
 	if (nrows(var_i) != n)
-	    errorcall(call, _("variable lengths differ (found for variable %d)"), i);
-	if (isOrdered(var_i)) {
+	    error(_("variable lengths differ (found for variable %d)"), i);
+	if (isOrdered_int(var_i)) {
 	    LOGICAL(ordered)[i] = 1;
 	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
-		errorcall(call, _("variable %d has no levels"), i+1);
+		error(_("variable %d has no levels"), i+1);
 	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
-	else if (isUnordered(var_i)) {
+	else if (isUnordered_int(var_i)) {
 	    LOGICAL(ordered)[i] = 0;
 	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
-		errorcall(call, _("variable %d has no levels"), i+1);
+		error(_("variable %d has no levels"), i+1);
 	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
@@ -1671,7 +1689,7 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 /*	else
-	    errorcall(call, _("invalid variable type for '%s'"),
+	    error(_("invalid variable type for '%s'"),
 	    CHAR(STRING_ELT(vnames, i))); */
     }
 
@@ -1838,51 +1856,50 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    x = ColumnNames(VECTOR_ELT(contr2, i));
 			    ll = ncols(VECTOR_ELT(contr2, i));
 			}
-			addp = CHAR(STRING_ELT(vnames, i));
+			addp = translateChar(STRING_ELT(vnames, i));
 			if(strlen(buf) + strlen(addp) < BUFSIZE)
 			    bufp = AppendString(bufp, addp);
 			else
-			    warningcall(call, _("term names will be truncated"));
+			    warning(_("term names will be truncated"));
 			if (x == R_NilValue) {
 			    if(strlen(buf) + 10 < BUFSIZE)
 				bufp = AppendInteger(bufp, indx % ll + 1);
 			    else
-				warningcall(call, _("term names will be truncated"));
+				warning(_("term names will be truncated"));
 			} else {
-			    addp = CHAR(STRING_ELT(x, indx % ll));
+			    addp = translateChar(STRING_ELT(x, indx % ll));
 			    if(strlen(buf) + strlen(addp) < BUFSIZE)
 				bufp = AppendString(bufp, addp);
 			    else
-				warningcall(call, _("term names will be truncated"));
+				warning(_("term names will be truncated"));
 			}
 		    } else if (isComplex(var_i)) {
-			errorcall(call, _("complex variables are not currently allowed in model matrices"));
+			error(_("complex variables are not currently allowed in model matrices"));
 		    } else if(isNumeric(var_i)) { /* numeric */
 			x = ColumnNames(var_i);
 			ll = ncols(var_i);
-			addp = CHAR(STRING_ELT(vnames, i));
+			addp = translateChar(STRING_ELT(vnames, i));
 			if(strlen(buf) + strlen(addp) < BUFSIZE)
 			    bufp = AppendString(bufp, addp);
 			else
-			    warningcall(call, _("term names will be truncated"));
+			    warning(_("term names will be truncated"));
 			if (ll > 1) {
 			    if (x == R_NilValue) {
 				if(strlen(buf) + 10 < BUFSIZE)
 				    bufp = AppendInteger(bufp, indx % ll + 1);
 				else
-				    warningcall(call, _("term names will be truncated"));
+				    warning(_("term names will be truncated"));
 			    } else {
-				addp = CHAR(STRING_ELT(x, indx % ll));
+				addp = translateChar(STRING_ELT(x, indx % ll));
 				if(strlen(buf) + strlen(addp) < BUFSIZE)
 				    bufp = AppendString(bufp, addp);
 				else
-				    warningcall(call, _("term names will be truncated"));
+				    warning(_("term names will be truncated"));
 			    }
 			}
 		    } else
-			errorcall(call, 
-				  _("variables of type '%s' are not allowed in model matrices"),
-				  type2char(TYPEOF(var_i)));
+			error(_("variables of type '%s' are not allowed in model matrices"),
+			      type2char(TYPEOF(var_i)));
 		    indx /= ll;
 		}
 	    }

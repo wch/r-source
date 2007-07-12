@@ -6,7 +6,7 @@
 \alias{as.POSIXct.dates}
 \alias{as.POSIXct.Date}
 \alias{as.POSIXlt}
-\alias{as.numeric.POSIXlt}
+\alias{as.double.POSIXlt}
 
 \title{Date-time Conversion Functions}
 \description{
@@ -17,7 +17,7 @@
 as.POSIXct(x, tz = "")
 as.POSIXlt(x, tz = "")
 
-\method{as.numeric}{POSIXlt}(x)
+\method{as.double}{POSIXlt}(x, \dots)
 }
 \arguments{
   \item{x}{An object to be converted.}
@@ -25,6 +25,7 @@ as.POSIXlt(x, tz = "")
     \emph{if one is required}.  System-specific, but \code{""}
     is the current timezone, and \code{"GMT"} is UTC
     (Coordinated Universal Time, in French).}
+  \item{\dots}{further arguments to be passed to or from other methods.}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
@@ -47,7 +48,7 @@ as.POSIXlt(x, tz = "")
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.
 
-  The \code{as.numeric} method converts \code{"POSIXlt"} objects to
+  The \code{as.double} method converts \code{"POSIXlt"} objects to
   \code{"POSIXct"}.
 
   If you are given a numeric time as the number of seconds since an
@@ -55,7 +56,7 @@ as.POSIXlt(x, tz = "")
 
   Where OSes describe their valid timezones can be obscure.  The help
   for \code{tzset} (or \code{_tzset} on Windows) can be helpful, but it
-  can also be inaccurate.  There is a cumbersome POSIX specification,
+  can also be inaccurate.  There is a cumbersome POSIX specification
   (listed under environment variable \code{TZ} at
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html}),
   which is often at least partially supported, but there may be other more

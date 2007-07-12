@@ -43,6 +43,7 @@ interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
   \code{\link{periodicSpline}}.
 }
 \examples{
+require(graphics); require(stats)
 ispl <- interpSpline( women$height, women$weight )
 ispl2 <- interpSpline( weight ~ height,  women )
 # ispl and ispl2 should be the same

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004-6      The R Foundation
+ *  Copyright (C) 2004-7      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,10 +29,8 @@ extern Rboolean mbcslocale;
 
 /* Use of strchr here is MBCS-safe */
 
-#ifdef Win32
 #define USE_MDI 1
 extern void R_ProcessEvents(void);
-#endif
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
@@ -50,10 +48,13 @@ extern void R_ProcessEvents(void);
 #include "rui.h"
 #include "getline/getline.h"
 #include "Startup.h" /* for UImode */
+#include <Fileio.h>
 
 extern char *alloca(size_t);
 
 extern UImode  CharacterMode;
+
+static void performCompletion(control c);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 
@@ -278,9 +279,9 @@ void xbufaddc(xbuf p, char c)
     *p->free = '\0';
 }
 
-static void xbufadds(xbuf p, char *s, int user)
+static void xbufadds(xbuf p, const char *s, int user)
 {
-    char *ps;
+    const char *ps;
     int   l;
 
     l = user ? strlen(p->s[p->ns - 1]) : -1;
@@ -355,6 +356,7 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     p->overwrite = 0;
     p->lazyupdate = 1;
     p->needredraw = 0;
+    p->wipe_completion = 0;
     p->my0 = p->my1 = -1;
     p->mx0 = 5;
     p->mx1 = 14;
@@ -362,6 +364,58 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     p->input = 0;
     p->lazyupdate = buffered;
     return (p);
+}
+
+static int col_to_byte(ConsoleData p, int x)
+{
+    int w0 = 0 /* -Wall */;
+    wchar_t wc;
+    char *P;
+    if(mbcslocale) {
+	P = LINE(CURROW);
+	mbs_init(&mb_st);
+	for (w0 = 0; w0 < x && *P && P - LINE(CURROW) <= max_byte + prompt_len; ) {
+	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    w0 += Ri18n_wcwidth(wc);
+	}
+	return(P - LINE(CURROW) - prompt_len );
+    } else {
+	return(min(x - prompt_len, max_byte));
+    }
+    
+}
+
+static int within_input(ConsoleData p, int mx, int my)
+{
+    return(my == CURROW && mx >= prompt_wid && col_to_byte(p, mx) < max_byte);
+}  
+
+/* Intersect the mouse selection with the input region. If no overlap or !apply, do nothing*/
+static int intersect_input(ConsoleData p, int apply)
+{
+    int my0 = p->my0, my1 = p->my1, mx0 = p->mx0, mx1 = p->mx1, temp;
+    if (my0 > my1 || (my0 == my1 && mx0 > my1)) { /* put them in order */
+    	temp = my0;
+    	my0 = my1;
+    	my1 = temp;
+    	temp = mx0;
+    	mx0 = mx1;
+    	mx1 = temp;
+    }
+    
+    if (my1 < CURROW || my0 > CURROW) return(0);
+    if (my0 < CURROW) mx0 = 0;
+    if (my1 > CURROW) mx1 = COLS;
+    if (mx1 < CURCOL || col_to_byte(p, mx0) >= max_byte) return(0);
+    mx0 = max(mx0, prompt_wid);
+    while (col_to_byte(p, mx1) >= max_byte) mx1--;
+    if (apply) {
+	p->mx0 = mx0;
+	p->mx1 = mx1;
+	p->my0 = my0;
+	p->my1 = my1;
+    }
+    return(1);
 }
 
 /* Here fch and lch are columns, and we have to cope with both MBCS
@@ -492,8 +546,11 @@ static int writeline(ConsoleData p, int i, int j)
 	WLHELPER(0, col1, p->fg, p->bg);
     /* This is the cursor, and it may need to be variable-width */
     if ((p->r >= 0) && (CURCOL >= FC) && (CURCOL < FC + COLS) &&
-	(i == NUMLINES - 1)) {
-	if(mbcslocale) { /* determine the width of the current char */
+	(i == NUMLINES - 1) && (p->sel == 0 || !intersect_input(p, 0))) {
+	if (!p->overwrite) {
+	    r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, FW/4, FH);
+	    gfillrect(p->bm, p->ufg, r);
+	} else if(mbcslocale) { /* determine the width of the current char */
 	    int w0, used = 0, ii;
 	    wchar_t wc;
 	    char *P = s, nn[10];
@@ -569,7 +626,7 @@ static int writeline(ConsoleData p, int i, int j)
     return len;
 }
 
-void drawconsole(control c, rect r)
+void drawconsole(control c, rect r) /* r is unused here */
 {
     ConsoleData p = getdata(c);
 
@@ -678,8 +735,12 @@ void console_mousedrag(control c, int button, point pt)
 	p->my1 = FV + r;
 	p->mx1 = FC + s;
 	p->needredraw = 1;
-	if ((p->mx1 != p->mx0) || (p->my1 != p->my0))
-	   p->sel = 1;
+	p->sel = 1;
+	   
+	if (within_input(p, p->mx1, p->my1)) {
+	    cur_byte = col_to_byte(p, p->mx1);
+	    setCURCOL(p);
+	}
 	if (pt.y <= 0) setfirstvisible(c, FV - 3);
 	else if (pt.y >= ROWS*FH) setfirstvisible(c, FV+3);
 	if (pt.x <= 0) setfirstcol(c, FC - 3);
@@ -703,13 +764,18 @@ void console_mousedown(control c, int button, point pt)
     pt.y -= BORDERY;
     if (p->sel) {
         p->sel = 0;
-        p->needredraw = 1;  /* FIXME */
-        REDRAW;
+        p->needredraw = 1; 
     }
     if (button & LeftButton) {
 	p->my0 = FV + pt.y/FH;
 	p->mx0 = FC + pt.x/FW;
+	if (within_input(p, p->mx0, p->my0) || (p->my0 == CURROW && p->mx0 > prompt_wid)) {
+	    cur_byte = col_to_byte(p, p->mx0);
+	    setCURCOL(p);
+	    p->needredraw = 1;
+	}
     }
+    if (p->needredraw) REDRAW;
 }
 
 void consoletogglelazy(control c)
@@ -751,20 +817,185 @@ void consoleflush(control c)
 #define CHARTRANS 20
 #define OVERWRITE 15
 #define EOFKEY 26
-/* free ^G ^Q ^R ^S, perhaps ^I ^J */
+
+/* ^I for completion */
+
+#define TABKEY 9
+
+/* free ^G ^Q ^R ^S, perhaps ^J */
+
+static void checkpointpos(xbuf p, int save)
+{
+    static int ns, av;
+    static char *free;
+    if(save) {
+	ns = p->ns;
+	av = p->av;
+	free = p->free;
+    } else {
+	p->ns = ns;
+	p->av = av;
+	p->free = free;
+    }
+}
 
 static void storekey(control c,int k)
 {
     ConsoleData p = getdata(c);
 
+    if (p->wipe_completion) {
+	p->wipe_completion = 0;
+	checkpointpos(p->lbuf, 0);
+	p->needredraw = 1;
+	REDRAW;
+    }
     if (p->kind == PAGER) return;
     if (k == BKSP) k = BACKCHAR;
+    if (k == TABKEY) {
+        performCompletion(c); 
+	return;
+    }
     if (p->numkeys >= NKEYS) {
 	gabeep();
 	return;;
      }
      p->kbuf[(p->firstkey + p->numkeys) % NKEYS] = k;
      p->numkeys++;
+}
+
+
+#include <Rinternals.h>
+#include <R_ext/Parse.h>
+
+static int rcompgen_available = -1;
+
+void set_rcompgen_available(int x)
+{
+    rcompgen_available = x;
+}
+    
+
+static void performCompletion(control c)
+{
+    ConsoleData p = getdata(c);
+    int i, alen, alen2, max_show = 10, cursor_position = p->c - prompt_wid;
+    char *partial_line = LINE(NUMLINES - 1) + prompt_wid;
+    const char *additional_text;
+    char *pline, *cmd;
+    SEXP cmdSexp, cmdexpr, ans = R_NilValue;
+    ParseStatus status;
+
+    if(!rcompgen_available) return;
+    
+    if(rcompgen_available < 0) {
+	char *p = getenv("R_COMPLETION");
+	if(p && strcmp(p, "FALSE") == 0) {
+	    rcompgen_available = 0;
+	    return;	    
+	}
+	/* First check if namespace is loaded */
+	if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))
+	   != R_UnboundValue) rcompgen_available = 1;
+	else { /* Then try to load it */
+	    char *p = "try(loadNamespace('rcompgen'), silent=TRUE)";
+	    PROTECT(cmdSexp = mkString(p));
+	    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
+	    if(status == PARSE_OK) {
+		for(i = 0; i < length(cmdexpr); i++)
+		    eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
+	    }
+	    UNPROTECT(2);
+	    if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))
+	       != R_UnboundValue) rcompgen_available = 1;
+	    else {
+		rcompgen_available = 0;
+		return;
+	    }
+	}
+    }
+
+    /* FIXME: need to escape quotes properly */
+    pline = alloca(strlen(partial_line) + 1);
+    strcpy(pline, partial_line);
+    /* poor attempt at escaping quotes that sort of works */
+    alen = strlen(pline);
+    for (i = 0; i < alen; i++)
+        if (pline[i] == '"') pline[i] = '\'';
+
+    cmd = alloca(strlen(pline) + 100);
+    sprintf(cmd, "rcompgen:::.win32consoleCompletion(\"%s\", %d)",
+	    pline, cursor_position);
+    PROTECT(cmdSexp = mkString(cmd));
+    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
+    if (status != PARSE_OK) {
+	UNPROTECT(2);
+	/* Uncomment next line to debug */
+	/* Rprintf("failed: %s \n", cmd); */
+	/* otherwise pretend that nothing happened and return */
+	return;
+    }
+    /* Loop is needed here as EXPSEXP will be of length > 1 */
+    for(i = 0; i < length(cmdexpr); i++)
+	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
+    UNPROTECT(2);
+
+    /* ans has the form list(addition, possible), where 'addition' is
+       unique additional text if any, and 'possible' is a character
+       vector holding possible completions if any (already formatted
+       for linewise printing in the current implementation).  If
+       'possible' has any content, we want to print those (or show in
+       status bar or whatever).  Otherwise add the 'additional' text
+       at the cursor */
+
+#define ADDITION 0
+#define POSSIBLE 1
+
+    alen = length(VECTOR_ELT(ans, POSSIBLE));
+    additional_text = CHAR(STRING_ELT( VECTOR_ELT(ans, ADDITION), 0 ));
+    alen2 = strlen(additional_text);
+    if (alen) {
+        /* make a copy of the current string first */
+	char *buf1, *p1 = LINE(NUMLINES - 1);
+	checkpointpos(p->lbuf, 1);
+	buf1 = alloca(strlen(p1) + 1);
+	sprintf(buf1,"%s\n", p1); 
+	consolewrites(c, buf1);
+
+	for (i = 0; i < min(alen, max_show); i++) {
+	    consolewrites(c, CHAR(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
+	    consolewrites(c, "\n");
+	}
+	if (alen > max_show)
+	    consolewrites(c, "\n[...truncated]\n");
+	p->wipe_completion = 1;
+    }
+
+    if (alen2) 
+	for (i = 0; i < alen2; i++) storekey(c, additional_text[i]);
+    return;
+}
+
+/* deletes that part of the selection which is on the input line */
+static void deleteselected(ConsoleData p)
+{
+    if (p->sel) {
+    	int s0, s1;
+    	char *cur_line;
+    	if (intersect_input(p, 1)) {
+	    /* convert to bytes after the prompt */
+	    s0 = col_to_byte(p, p->mx0);
+	    s1 = col_to_byte(p, p->mx1);
+	    cur_line = LINE(CURROW) + prompt_len;
+	    for(int i = s0; i <= max_byte; i++)
+		cur_line[i] = cur_line[i + s1 - s0 + 1];
+	    max_byte -= s1 - s0 + 1;
+	    cur_line[max_byte] = '\0';
+	    if (cur_byte > s0) 
+		cur_byte = cur_byte > s1 ? cur_byte - (s1 - s0 + 1) : s0;
+	    setCURCOL(p);
+	    p->needredraw = 1;
+	}
+    }
 }
 
 void consolecmd(control c, char *cmd)
@@ -774,6 +1005,7 @@ void consolecmd(control c, char *cmd)
     char *ch;
     int i;
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	REDRAW;
@@ -797,19 +1029,22 @@ static int CleanTranscript(char *tscpt, char *cmds)
      * Filter R commands out of a string that contains
      * prompts, commands, and output.
      * Uses a simple algorithm that just looks for '>'
-     * prompts and '+' continuation -- won't work when
-     * other prompts are used (e.g., as in a debugging
-     * session.)
+     * prompts and '+' continuation following a simple prompt prefix.
      * Always return the length of the string required
      * to hold the filtered commands.
      * If cmds is a non-null pointer, write the commands
      * to cmds & terminate with null.
      */
     int incommand = 0, startofline = 1, len = 0;
+    char nonprefix[] = ">+ \t\n\r";
     while (*tscpt) {
 	if (startofline) {
+	    /* skip initial whitespace */
 	    while (*tscpt==' ' || *tscpt=='\t')
 		tscpt++;
+	    /* skip over the prompt prefix */
+	    while (*tscpt && !strchr(nonprefix, *tscpt))
+	    	tscpt++;
 	    if (*tscpt=='>' || (incommand && *tscpt=='+')) {
 		tscpt++;
 		if (*tscpt==' ' || *tscpt=='\t') tscpt++;
@@ -853,6 +1088,7 @@ void consolepaste(control c)
     HGLOBAL hglb;
     char *pc, *new = NULL;
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	REDRAW;
@@ -890,6 +1126,7 @@ void consolepastecmds(control c)
     HGLOBAL hglb;
     char *pc, *new = NULL;
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	REDRAW;
@@ -1067,7 +1304,6 @@ void consolecopy(control c)
 	   x1 = p->mx0; y1 = p->my0;
 	}
 	consoletoclipboardHelper(c, x0, y0, x1, y1);
-	p->sel = 0;
 	REDRAW;
     }
 }
@@ -1128,14 +1364,16 @@ void console_normalkeyin(control c, int k)
 	    break;
 	case 'O':
 	    p->overwrite = !p->overwrite;
+	    p->needredraw = 1;
 	    st = -1;
 	    break;
 	}
     if (p->sel) {
-	p->sel = 0;
+        if (st != -1) deleteselected(p);
 	p->needredraw = 1;
-	REDRAW;
+	p->sel = 0;
     }
+    if (p->needredraw) REDRAW;
     if (st == -1) return;
     if (p->kind == PAGER) {
 	if(k == 'q' || k == 'Q') pagerbclose(c);
@@ -1204,30 +1442,38 @@ void console_ctrlkeyin(control c, int key)
 	     storekey(c, CHARRIGHT);
 	 break;
      case DEL:
-	 if (st == CtrlKey)
+     	 if (p->sel) {
+     	     if (st == ShiftKey) consolecopy(c);
+     	     deleteselected(p);
+     	     p->sel = 0;
+     	 } else  if (st == CtrlKey)
 	     storekey(c, KILLRESTOFLINE);
-	 else if (st  ==  ShiftKey)
-	     consolecopy(c);
 	 else
 	     storekey(c, DELETECHAR);
 	 break;
      case ENTER:
+     	 deleteselected(p);
 	 storekey(c, '\n');
 	 break;
      case INS:
-	 if (st == ShiftKey)
+	 if (st == ShiftKey) {
+	     deleteselected(p);
 	     consolepaste(c);
+	 } else {
+	     p->overwrite = !p->overwrite;
+	     p->needredraw = 1;
+	 }
 	 break;
     }
     if (p->sel) {
 	p->sel = 0;
 	p->needredraw = 1;
-	REDRAW;
     }
+    if (p->needredraw) REDRAW;
 }
 
 static Rboolean incomplete = FALSE;
-int consolewrites(control c, char *s)
+int consolewrites(control c, const char *s)
 {
     ConsoleData p = getdata(c);
 
@@ -1293,6 +1539,7 @@ static char consolegetc(control c)
 	R_ProcessEvents();
     }
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	setCURCOL(p); /* Needed? */
@@ -1831,7 +2078,7 @@ void consolesavefile(console c, int pager)
         fn = askfilesave(G_("Save console contents to"), "lastsave.txt");
     show(c);
     if (fn) {
-	fp = fopen(fn, "wt");
+	fp = R_fopen(fn, "wt");
 	if (!fp) return;
 	cur = currentcursor();
 	setcursor(WatchCursor);
@@ -1937,7 +2184,7 @@ void  consolehelp()
     strcat(s,G_("     End or Ctrl+E: go to end of line;\n"));
     strcat(s,G_("  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"));
     strcat(s,G_("  Deleting:\n"));
-    strcat(s,G_("     Del or Ctrl+D: delete current character;\n"));
+    strcat(s,G_("     Del or Ctrl+D: delete current character or selection;\n"));
     strcat(s,G_("     Backspace: delete preceding character;\n"));
     strcat(s,G_("     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"));
     strcat(s,G_("     Ctrl+U: delete all text from current line.\n"));
@@ -1948,11 +2195,12 @@ void  consolehelp()
     strcat(s,G_("     to the console, Ctrl+X first copy then paste\n"));
     strcat(s,G_("  Misc:\n"));
     strcat(s,G_("     Ctrl+L: Clear the console.\n"));
-    strcat(s,G_("     Ctrl+O: Toggle overwrite mode: initially off.\n"));
+    strcat(s,G_("     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"));
     strcat(s,G_("     Ctrl+T: Interchange current char with one to the left.\n"));
     strcat(s,G_("\nNote: Console is updated only when some input is required.\n"));
     strcat(s,G_("  Use Ctrl+W to toggle this feature off/on.\n\n"));
     strcat(s,G_("Use ESC to stop the interpreter.\n\n"));
+    strcat(s,G_("TAB starts completion of the current word.\n\n"));
     strcat(s,G_("Standard Windows hotkeys can be used to switch to the\n"));
     strcat(s,G_("graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"));
     askok(s);

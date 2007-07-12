@@ -29,10 +29,9 @@ colnames(x) <- value
   The extractor functions try to do something sensible for any
   matrix-like object \code{x}.  If the object has \code{\link{dimnames}}
   the first component is used as the row names, and the second component
-  (if any) is used for the col names.  For a data frame, \code{rownames}
-  and \code{colnames} are equivalent to \code{\link{row.names}} and
-  \code{\link{names}} respectively, but the latter are preferred (and
-  can be much faster).
+  (if any) is used for the column names.  For a data frame, \code{rownames}
+  and \code{colnames} are calls to \code{\link{row.names}} and
+  \code{\link{names}} respectively, but the latter are preferred.
 
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
   \code{\link{NROW}(x)} or \code{\link{NCOL}(x)}) is returned in any
@@ -47,7 +46,8 @@ colnames(x) <- value
   character vector of non-duplicated and non-missing names (this is
   enforced), and for \code{colnames} a character vector of (preferably)
   unique syntactically-valid names.  In both cases, \code{value} will be
-  coerced by \code{\link{as.character}}.
+  coerced by \code{\link{as.character}}, and setting \code{colnames}
+  will convert the row names to character.
 }
 \seealso{
   \code{\link{dimnames}},

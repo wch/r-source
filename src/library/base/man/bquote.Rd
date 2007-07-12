@@ -21,6 +21,8 @@ bquote(expr, where = parent.frame())
   \code{\link{quote}}, \code{\link{substitute}}
 }
 \examples{
+require(graphics)
+
 a <- 2
 
 bquote(a == a)

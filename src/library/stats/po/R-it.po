@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -94,6 +94,9 @@ msgstr "scope senza termini"
 msgid "no terms in scope for adding to object"
 msgstr "scope senza termini da aggiungere all'oggetto"
 
+msgid "trying +"
+msgstr ""
+
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "il numero di righe in uso è cambiato: elimino i missing value?"
 
@@ -108,6 +111,9 @@ msgstr "nessun metodo 'add1' implementato per modelli \"mlm\""
 
 msgid "scope is not a subset of term labels"
 msgstr "scope non è un sottoinsieme delle etichette dei termini"
+
+msgid "trying -"
+msgstr ""
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "nessun metodo 'drop1' per modelli \"mlm\""
@@ -126,6 +132,12 @@ msgstr "scope superiore non include il modello"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "l'AIC non è definito per questo modello, quindi 'step' non può procedere"
+
+msgid "Start:  AIC="
+msgstr ""
+
+msgid "Step:  AIC="
+msgstr ""
 
 #, fuzzy
 msgid "'A' must be an array or table"
@@ -231,6 +243,9 @@ msgstr "residui senza gradi di libertà"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object' non contiene una componente di errore 'qr'"
+
+msgid "Refitting model to allow projection"
+msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
@@ -360,6 +375,9 @@ msgstr "campione troppo sparso per trovare alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "non ci sono soluzioni nel range di badwidth specificato"
+
+msgid "increasing bw.SJ() search interval (%d)"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr "minimo realizzato in uno degli estremi del range"
@@ -505,14 +523,11 @@ msgstr "matrice di contrasto singolare"
 msgid "numeric contrasts or contrast name expected"
 msgstr "richiesti contrasti numerici o nomi contrasto"
 
-msgid "contrasts not defined for 0 degrees of freedom"
-msgstr "contrasti non definiti per 0 gradi di libertà"
+msgid "not enough degrees of freedom to define contrasts"
+msgstr "numero di gradi di libertà insufficiente per definire i contrasti"
 
 msgid "baseline group number out of range"
 msgstr "numero gruppo di base fuori range"
-
-msgid "not enough degrees of freedom to define contrasts"
-msgstr "numero di gradi di libertà insufficiente per definire i contrasti"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "fornire sia 'x' che 'y' o una 'x' in forma matriciale"
@@ -1468,13 +1483,22 @@ msgstr "eff.aovlist: contrasti non ortogonali forniranno una risposta errata"
 msgid "no terms component"
 msgstr "manca compoenente terms"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+#, fuzzy
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'ColSideColors' deve essere un vettore carattere di lunghezza ncol(x)"
+
+#, fuzzy
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "'centers' deve essere un numero o una matrice"
+
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr ""
 "variabile '%s' stimata con classe \"%s\" ma è stata specificata la classe \"%"
 "s\""
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr ""
 "le variabili %s sono state specificate diversamente dal modello stimato"
 
@@ -1588,6 +1612,10 @@ msgid "'data' must be a list or an environment"
 msgstr "'newdata' deve essere una matrice o un data frame"
 
 #, fuzzy
+msgid "no parameters to fit"
+msgstr "specificati tutti i parametri"
+
+#, fuzzy
 msgid "No starting values specified"
 msgstr "valori iniziali non specificati"
 
@@ -1624,6 +1652,9 @@ msgstr "formula '%s' deve essere della forma '~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
 msgstr "'%s' non può essere in modalità '%s'"
+
+msgid "a two-sided formula is required"
+msgstr ""
 
 msgid "not enough groups"
 msgstr "gruppi insufficienti"
@@ -1927,6 +1958,10 @@ msgstr "'span' deve essere tra 0 e 1"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "'x' deve essere tra 0 e 1 per smooth periodici"
+
+#, fuzzy
+msgid "no finite observations"
+msgstr "non ci sono abbastanza osservazioni finite"
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "osservazioni con NA, NaN e/o Inf eliminate"
@@ -2239,6 +2274,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "contrasts not defined for 0 degrees of freedom"
+#~ msgstr "contrasti non definiti per 0 gradi di libertà"
 
 #~ msgid ""
 #~ "link \"%s\" not available for binomial family, available links are \"logit"

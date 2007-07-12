@@ -18,7 +18,7 @@ stack(x, \dots)
 
 unstack(x, \dots)
 \method{unstack}{default}(x, form, \dots)
-\method{unstack}{data.frame}(x, form = formula(x), \dots)
+\method{unstack}{data.frame}(x, form, \dots)
 }
 \arguments{
   \item{x}{object to be stacked or unstacked}

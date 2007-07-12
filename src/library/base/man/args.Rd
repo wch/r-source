@@ -3,20 +3,26 @@
 \title{Argument List of a Function}
 \description{
   Displays the argument names and corresponding default values of a
-  function.
+  function or primitive.
 }
 \usage{
 args(name)
 }
 \arguments{
-  \item{name}{an interpreted function.
+  \item{name}{a function (a closure or a primitive).
     If \code{name} is a character string then the function with that
     name is found and used.}
 }
 \value{
   A function with identical formal argument list but an empty body if
-  given an interpreted function; \code{NULL} in case of a variable or
-  primitive (non-interpreted) function.
+  given a closure.
+
+  A function with the documented usage for a primitive: note that in
+  almost all cases primitives do not make use of named arguments and
+  match by position rather than name.  (\code{rep} and \code{seq.int}
+  are exceptions.)
+
+  \code{NULL} in case of a non-function.
 }
 \details{
   This function is mainly used interactively.
@@ -32,7 +38,7 @@ args(name)
   \code{\link{help}}.
 }
 \examples{
-args(c)            # -> NULL (c is a 'primitive' function)
+args(c)
 args(graphics::plot.default)
 }
 \keyword{documentation}

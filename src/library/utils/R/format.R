@@ -16,10 +16,10 @@ function(x, type = "arabic", offset = 0, start = 1,
     type_tokens <- c("1", "A", "a", "I", "i")
     type_full_names <- c("arabic", "Alph", "alph", "Roman", "roman")
     type <- match.arg(type, c(type_tokens, type_full_names))
-    if(nchar(type) > 1)
+    if(nchar(type, "b") > 1)
         type <- type_tokens[match(type, type_full_names)]
     len <- length(x)
-    labels <- seq.int(start[1], length = len)
+    labels <- seq.int(start[1], length.out = len)
     upper <- labels[len]
     if(type %in% c("A", "a")) {
         if(upper > 26)
@@ -38,7 +38,7 @@ function(x, type = "arabic", offset = 0, start = 1,
     }
     .format_rl_table(sprintf("%s.", labels), x, offset, width)
 }
-         
+
 .format_rl_table <-
 function(labels, x, offset = 0, width = 0.9 * getOption("width"),
          sep = " ")

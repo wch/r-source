@@ -13,7 +13,7 @@ predict.glm <-
 	if(missing(newdata)) {
 	    pred <- switch(type,
 			   link = object$linear.predictors,
-			   response = object$fitted,
+			   response = object$fitted.values,
                            terms = predict.lm(object,  se.fit=se.fit,
                                scale = 1, type="terms", terms=terms)
                            )

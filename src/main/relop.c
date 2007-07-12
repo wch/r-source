@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  R Development Core Team
+ *  Copyright (C) 1997--2007  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,17 +69,18 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	if (nx > 0 && ny > 0)
 	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	if (mismatch)
-	    warningcall(call, _("longer object length\n\
- \tis not a multiple of shorter object length"));
+	    warningcall(call, _("longer object length is not a multiple of shorter object length"));
 	UNPROTECT(2);
 	return ans;
     }
 
+    /* That symbols and calls were allowwed was undocumented prior to
+       R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(x) :
-		       STRING_ELT(deparse1(x, 0, SIMPLEDEPARSE), 0));
+		       STRING_ELT(deparse1(x, 0, DEFAULTDEPARSE), 0));
 	REPROTECT(x = tmp, xpi);
 	UNPROTECT(1);
     }
@@ -87,7 +88,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(y) :
-		       STRING_ELT(deparse1(y, 0, SIMPLEDEPARSE), 0));
+		       STRING_ELT(deparse1(y, 0, DEFAULTDEPARSE), 0));
 	REPROTECT(y = tmp, ypi);
 	UNPROTECT(1);
     }
@@ -161,7 +162,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	}
     }
     if (mismatch)
-	warningcall(call, _("longer object length\n\tis not a multiple of shorter object length"));
+	warningcall(call, _("longer object length is not a multiple of shorter object length"));
 
     if (isString(x) || isString(y)) {
 	REPROTECT(x = coerceVector(x, STRSXP), xpi);
@@ -468,8 +469,8 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		(STRING_ELT(s2, i % n2) == NA_STRING))
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else
-	    if (strcmp(CHAR(STRING_ELT(s1, i % n1)),
-		       CHAR(STRING_ELT(s2, i % n2))) == 0)
+	    if (strcmp(translateChar(STRING_ELT(s1, i % n1)),
+		       translateChar(STRING_ELT(s2, i % n2))) == 0)
 		LOGICAL(ans)[i] = 1;
 	    else
 		LOGICAL(ans)[i] = 0;
@@ -481,8 +482,8 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		(STRING_ELT(s2, i % n2) == NA_STRING))
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else
-	    if (streql(CHAR(STRING_ELT(s1, i % n1)),
-		       CHAR(STRING_ELT(s2, i % n2))) != 0)
+	    if (streql(translateChar(STRING_ELT(s1, i % n1)),
+		       translateChar(STRING_ELT(s2, i % n2))) != 0)
 		LOGICAL(ans)[i] = 0;
 	    else
 		LOGICAL(ans)[i] = 1;
@@ -495,8 +496,8 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else {
 		errno = 0;
-		res = STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
-			      CHAR(STRING_ELT(s2, i % n2)));
+		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
+			      translateChar(STRING_ELT(s2, i % n2)));
 		if(errno)  
 		    LOGICAL(ans)[i] = NA_LOGICAL;
 		else
@@ -511,8 +512,8 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else {
 		errno = 0;
-		res = STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
-			      CHAR(STRING_ELT(s2, i % n2)));
+		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
+			      translateChar(STRING_ELT(s2, i % n2)));
 		if(errno)  
 		    LOGICAL(ans)[i] = NA_LOGICAL;
 		else
@@ -527,8 +528,8 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else {
 		errno = 0;
-		res = STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
-			      CHAR(STRING_ELT(s2, i % n2)));
+		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
+			      translateChar(STRING_ELT(s2, i % n2)));
 		if(errno)  
 		    LOGICAL(ans)[i] = NA_LOGICAL;
 		else
@@ -543,8 +544,8 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = NA_LOGICAL;
   	    else {
 		errno = 0;
-		res = STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
-			      CHAR(STRING_ELT(s2, i % n2)));
+		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
+			      translateChar(STRING_ELT(s2, i % n2)));
 		if(errno)  
 		    LOGICAL(ans)[i] = NA_LOGICAL;
 		else

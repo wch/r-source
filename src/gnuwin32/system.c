@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -56,11 +56,12 @@ void editorcleanall();                  /* from editor.c */
 
 int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
 
-R_size_t R_max_memory = INT_MAX;
+R_size_t R_max_memory = INT_MAX;\
 Rboolean UseInternet2 = FALSE;
 
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
+static FILE *ifp = NULL;
 
 /* used in devWindows.c */
 int RbitmapAlreadyLoaded = 0;
@@ -78,7 +79,7 @@ void set_workspace_name(char *fn); /* ../main/startup.c */
 
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
-int (*R_YesNoCancel)(char *s);
+static int (*R_YesNoCancel)(char *s);
 
 static DWORD mainThreadId;
 
@@ -158,6 +159,7 @@ void R_Suicide(char *s)
 static int (*TrueReadConsole) (char *, char *, int, int);
 static int (*InThreadReadConsole) (char *, char *, int, int);
 static void (*TrueWriteConsole) (char *, int);
+static void (*TrueWriteConsoleEx) (char *, int, int);
 HANDLE EhiWakeUp;
 static char *tprompt, *tbuf;
 static  int tlen, thist, lineavailable;
@@ -176,7 +178,16 @@ R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 void R_WriteConsole(char *buf, int len)
 {
     R_ProcessEvents();
-    TrueWriteConsole(buf, len);
+    if (TrueWriteConsole) TrueWriteConsole(buf, len);
+    else TrueWriteConsoleEx(buf, len, 0);
+}
+
+
+void R_WriteConsoleEx(char *buf, int len, int otype)
+{
+    R_ProcessEvents();
+    if (TrueWriteConsole) TrueWriteConsole(buf, len);
+    else TrueWriteConsoleEx(buf, len, otype);
 }
 
 
@@ -194,8 +205,8 @@ static int
 GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     int res;
-    char *NormalPrompt =
-	(char *) CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
+    const char *NormalPrompt =
+	CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
 
     if(!R_is_running) {
 	R_is_running = 1;
@@ -275,11 +286,11 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (fgets(buf, len, stdin) == NULL) return 0;
+    if (fgets(buf, len, ifp ? ifp : stdin) == NULL) return 0;
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
 	size_t res, inb = strlen(buf), onb = len;
-	char *ib = buf, *ob, *obuf;
+	const char *ib = buf; char *ob, *obuf;
 	ob = obuf = alloca(len+1);
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
@@ -290,13 +301,13 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	err = (res == (size_t)(-1));
 	/* errors lead to part of the input line being ignored */
 	if(err) fputs(_("<ERROR: invalid input in encoding>\n"), stdout);
-	strncpy((char *)buf, obuf, len);
+	strncpy(buf, obuf, len);
     }
 
 /* according to system.txt, should be terminated in \n, so check this
    at eof or error */
-    ll = strlen((char *)buf);
-    if ((err || feof(stdin))
+    ll = strlen(buf);
+    if ((err || feof(ifp ? ifp: stdin))
 	&& buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
@@ -443,6 +454,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 	PrintWarnings();
     app_cleanup();
     RConsole = NULL;
+    if(ifp) fclose(ifp);
     exit(status);
 }
 
@@ -481,7 +493,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    newpager(wtitle, file[i], headers[i], del);
 		} else if (!strcmp(pager, "console")) {
 		    size_t len;
-		    FILE *f = fopen(file[i], "rt");
+		    FILE *f = R_fopen(file[i], "rt");
 		    if(f) {
 			while((len = fread(buf, 1, 1023, f))) {
 			    buf[len] = '\0';
@@ -643,6 +655,11 @@ void R_SetWin32(Rstart Rp)
     strcat(UserRHome, Rp->home);
     putenv(UserRHome);
 
+    /* Rterm and Rgui set CharacterMode during startup, then set Rp->CharacterMode
+       from it in cmdlineoptions().  Rproxy never calls cmdlineoptions, so we need the 
+       line below */
+       
+    CharacterMode = Rp->CharacterMode;
     switch(CharacterMode) {
     case RGui:
 	R_GUIType = "Rgui";
@@ -655,6 +672,7 @@ void R_SetWin32(Rstart Rp)
     }
     TrueReadConsole = Rp->ReadConsole;
     TrueWriteConsole = Rp->WriteConsole;
+    TrueWriteConsoleEx = Rp->WriteConsoleEx;
     R_CallBackHook = Rp->CallBack;
     pR_ShowMessage = Rp->ShowMessage;
     R_YesNoCancel = Rp->YesNoCancel;
@@ -712,7 +730,7 @@ char *PrintUsage(void)
 	msg3[] =
 "  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
 	msg4[] =
-"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use";
+"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file";
     if(CharacterMode == RTerm)
 	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
     else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
@@ -722,6 +740,7 @@ char *PrintUsage(void)
     strcat(msg, msg2b);
     strcat(msg, msg3);
     if(CharacterMode == RTerm) strcat(msg, msg4);
+    strcat(msg, "\n");
     return msg;
 }
 
@@ -742,12 +761,23 @@ void R_setupHistory()
     }
 }
 
+static void wrap_askok(char *info)
+{
+    askok(info);
+}
+
+static int wrap_askyesnocancel(char *question)
+{
+    return askyesnocancel(question);    
+}
+
+
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
     R_size_t value;
     char *p;
-    char  s[1024];
+    char  s[1024], cmdlines[10000];
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
@@ -833,13 +863,14 @@ int cmdlineoptions(int ac, char **av)
 	Rp->R_Interactive = TRUE;
 	Rp->ReadConsole = GuiReadConsole;
 	Rp->WriteConsole = GuiWriteConsole;
-	Rp->ShowMessage = askok;
-	Rp->YesNoCancel = askyesnocancel;
+	Rp->ShowMessage = wrap_askok;
+	Rp->YesNoCancel = wrap_askyesnocancel;
 	Rp->Busy = GuiBusy;
     }
 
     pR_ShowMessage = Rp->ShowMessage; /* used here */
     TrueWriteConsole = Rp->WriteConsole;
+    /* Rp->WriteConsole is guaranteed to be set above, so we WriteConsoleEx is not used */
     R_CallBackHook = Rp->CallBack;
 
     /* process environment variables
@@ -855,6 +886,7 @@ int cmdlineoptions(int ac, char **av)
 
     R_common_command_line(&ac, av, Rp);
 
+    cmdlines[0] = '\0';
     while (--ac) {
 	if (processing && **++av == '-') {
 	    if (!strcmp(*av, "--help") || !strcmp(*av, "-h")) {
@@ -905,6 +937,36 @@ int cmdlineoptions(int ac, char **av)
 		breaktodebugger();
 	    } else if(!strcmp(*av, "--args")) {
 		break;
+	    } else if(CharacterMode == RTerm && !strcmp(*av, "-f")) {
+		ac--; av++;
+		Rp->R_Interactive = FALSE;
+		Rp->ReadConsole = FileReadConsole;
+		if(strcmp(*av, "-")) {
+		    ifp = R_fopen(*av, "r");
+		    if(!ifp) {
+			snprintf(s, 1024, _("cannot open file '%s'"), *av);
+			R_Suicide(s);
+		    }
+		}
+	    } else if(CharacterMode == RTerm && !strncmp(*av, "--file=", 7)) {
+		Rp->R_Interactive = FALSE;
+		Rp->ReadConsole = FileReadConsole;
+		if(strcmp((*av)+7, "-")) {
+		    ifp = R_fopen( (*av)+7, "r");
+		    if(!ifp) {
+			snprintf(s, 1024, _("cannot open file '%s'"), (*av)+7);
+			R_Suicide(s);
+		    }
+		}
+	    } else if(CharacterMode == RTerm && !strcmp(*av, "-e")) {
+		ac--; av++;
+		if(strlen(cmdlines) + strlen(*av) + 2 <= 10000) {
+		    strcat(cmdlines, *av);
+		    strcat(cmdlines, "\n");
+		} else {
+		    snprintf(s, 1024, _("WARNING: '-e %s' omitted as input is too long\n"), *av);
+		    R_ShowMessage(s);
+		}   
 	    } else {
 		snprintf(s, 1024, _("WARNING: unknown option '%s'\n"), *av);
 		R_ShowMessage(s);
@@ -937,6 +999,17 @@ int cmdlineoptions(int ac, char **av)
 	    if(res != INVALID_HANDLE_VALUE) FindClose(res);
 	}
     }
+    if(strlen(cmdlines)) {
+	if(ifp) R_Suicide(_("cannot use -e with -f or --file"));
+	Rp->R_Interactive = FALSE;
+	Rp->ReadConsole = FileReadConsole;
+	ifp = tmpfile();
+	fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
+	fflush(ifp);
+	rewind(ifp);
+    }
+    if (ifp && Rp->SaveAction != SA_SAVE) Rp->SaveAction = SA_NOSAVE;
+
     Rp->rhome = R_Home;
 
     Rp->home = getRUser();

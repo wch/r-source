@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file consolestructs.h
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004-7      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ struct structConsoleData {
     int  pclp;
 
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
+    int   wipe_completion;
     bitmap bm;
 
     int   input, cur_pos, cur_byte, max_pos, max_byte, 
@@ -96,6 +97,7 @@ typedef struct structConsoleData *ConsoleData;
 #define cur_pos (p->cur_pos)
 #define prompt_len (p->prompt_len)
 #define prompt_wid (p->prompt_wid)
+#define CURROW  (p->r)  /* row of cursor */
 #define CURCOL  (p->c)  /* column of cursor on whole line */
 
 #define WRITELINE(i, j) writeline(p, i, j)

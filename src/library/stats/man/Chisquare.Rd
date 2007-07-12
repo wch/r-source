@@ -99,6 +99,8 @@ rchisq(n, df, ncp=0)
   \code{\link{dgamma}} for the Gamma distribution.
 }
 \examples{
+require(graphics)
+
 dchisq(1, df=1:3)
 pchisq(1, df= 3)
 pchisq(1, df= 3, ncp = 0:4)# includes the above

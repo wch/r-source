@@ -32,7 +32,7 @@
   \emph{Mixed-effects Models in S and S-PLUS}, Springer.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 plot(height ~ age, data = Loblolly, subset = Seed == 329,
      xlab = "Tree age (yr)", las = 1,
      ylab = "Tree height (ft)",

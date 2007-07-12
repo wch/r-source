@@ -43,6 +43,10 @@
   \code{\link{df.residual}},
   \code{\link{effects}}, \code{\link{fitted}},
   \code{\link{residuals}}.
+
+  \link{influence.measures} for deletion diagnostics, including
+  standardized (\code{\link{rstandard}})
+  and studentized (\code{\link{rstudent}}) residuals.
 }
 \references{
   Davison, A. C. and Snell, E. J. (1991)

@@ -20,7 +20,7 @@
     initMethodDispatch(where)
     ## temporary empty reference to the package's own namespace
     assign(".methodsNamespace", new.env(), envir = where)
-    useTables <-  (nchar(Sys.getenv("R_NO_METHODS_TABLES")) == 0)
+    useTables <-  !nzchar(Sys.getenv("R_NO_METHODS_TABLES"))
     .UsingMethodsTables(useTables) ## turn it on (or off)
     .Call("R_set_method_dispatch", useTables, PACKAGE = "methods")
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
@@ -28,7 +28,7 @@
               else
               NA)
     if(identical(saved, FALSE)) {
-        cat("initializing class and method definitions now ...")
+        cat("initializing class and method definitions ...")
         on.exit(assign(".saveImage", NA, envir = where))
         ## set up default prototype (uses .Call so has be at load time)
         assign(".defaultPrototype",
@@ -127,7 +127,7 @@
     ## following  has to be on attach , not on load, but why???
     if(.UsingMethodsTables()) {
       cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
-      result <- try(cacheMetaData(.GlobalEnv, TRUE)) 
+      result <- try(cacheMetaData(.GlobalEnv, TRUE))
       ## still attach  methods package if global env has bad objets
       if(is(result, "try-error"))
         warning("apparently bad method or class metadata in saved environment; move the file or remove the class/method")
@@ -142,4 +142,4 @@
 .Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
-message("Saving namespace image ...", domain = NA)
+## cat("Saving namespace image ...\n")

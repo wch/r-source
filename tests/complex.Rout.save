@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-11 r35246)
+R version 2.6.0 Under development (unstable) (2007-06-23 r42031)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ### Tests of complex arithemetic.
@@ -132,7 +132,7 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 [1] TRUE
 > 
 > 
-> .Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
+> set.seed(123) # want reproducible output
 > Isi <- Im(sin(asin(1i + rnorm(100))))
 > all(abs(Isi-1) < 100* Meps)
 [1] TRUE

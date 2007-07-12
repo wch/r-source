@@ -1,5 +1,6 @@
 \name{grid.get}
 \alias{grid.get}
+\alias{grid.gget}
 \alias{getGrob}
 \title{Get a Grid Graphical Object}
 \description{
@@ -8,6 +9,8 @@
 \usage{
 grid.get(gPath, strict = FALSE, grep = FALSE, global = FALSE,
          allDevices = FALSE)
+
+grid.gget <- function(..., grep = TRUE, global = TRUE)
 
 getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE) 
 }
@@ -33,6 +36,10 @@ getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE)
     be searched for matches, or just the current device.
     NOT YET IMPLEMENTED.
   }
+}
+\details{
+  \code{grid.gget} (\code{g} for global) is just a convenience wrapper for
+  \code{grid.get} with different defaults.
 }
 \value{
   A grob object.

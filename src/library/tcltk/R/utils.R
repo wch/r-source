@@ -8,7 +8,7 @@ tk_select.list <-
     tkwm.deiconify(dlg)
     tkgrab.set(dlg)
     tkfocus(dlg)
-    if(!is.null(title) && nchar(title)) {
+    if(!is.null(title) && nzchar(title)) {
         lab <- tklabel(dlg, text = title, fg = "blue")
         tkpack(lab, side="top")
     }
@@ -24,8 +24,8 @@ tk_select.list <-
     }
     buttons <- tkframe(dlg)
     tkpack(buttons, side="bottom")
-    OK <- tkbutton(buttons, text = "OK", width = 6, command = onOK)
-    Cancel <- tkbutton(buttons, text = "Cancel", command = onCancel)
+    OK <- tkbutton(buttons, text = gettext("OK"), width = 6, command = onOK)
+    Cancel <- tkbutton(buttons, text = gettext("Cancel"), command = onCancel)
     tkpack(OK, Cancel, side="left", fill="x", padx="2m")
 
     scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 200

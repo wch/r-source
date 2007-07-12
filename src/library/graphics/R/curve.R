@@ -27,8 +27,8 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
 	    ## unneeded now: rm(list="log",envir=sys.frame(1))# else: warning
 	    if(any(c(from,to) <= 0))
 		stop("'from' and 'to' must be > 0 with log=\"x\"")
-	    exp(seq.int(log(from), log(to), length=n))
-	} else seq.int(from,to,length=n)
+	    exp(seq.int(log(from), log(to), length.out=n))
+	} else seq.int(from, to, length.out=n)
     y <- eval(expr, envir=list(x = x), enclos=parent.frame())
     if(add)
 	lines(x, y, type=type, ...)

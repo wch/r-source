@@ -48,7 +48,10 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   biased cross-validation respectively.
 
   \code{bw.SJ} implements the methods of Sheather & Jones (1991)
-  to select the bandwidth using pilot estimation of derivatives.
+  to select the bandwidth using pilot estimation of derivatives.\cr
+  The algorithm solves an equation (via \code{\link{uniroot}}) and
+  because of that, enlarges the interval \code{c(lower,upper)} when
+  the boundaries were not user-specified and do not bracket the root.
 }
 \value{
   A bandwidth on a scale suitable for the \code{bw} argument
@@ -83,6 +86,8 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   Springer.
 }
 \examples{
+require(graphics)
+
 plot(density(precip, n = 1000))
 rug(precip)
 lines(density(precip, bw="nrd"), col = 2)

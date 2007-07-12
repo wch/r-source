@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team
+ *  Copyright (C) 1998-2007   The R Development Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -132,12 +132,12 @@ char *R_PromptString(int browselevel, int type)
 		sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
 		return BrowsePrompt;
 	    }
-	    return (char*)CHAR(STRING_ELT(GetOption(install("prompt"),
-						    R_BaseEnv), 0));
+	    return (char *)CHAR(STRING_ELT(GetOption(install("prompt"),
+						     R_BaseEnv), 0));
 	}
 	else {
-	    return (char*)CHAR(STRING_ELT(GetOption(install("continue"),
-						    R_BaseEnv), 0));
+	    return (char *)CHAR(STRING_ELT(GetOption(install("continue"),
+						     R_BaseEnv), 0));
 	}
     }
 }
@@ -387,11 +387,6 @@ int R_ReplDLLdo1()
 /* We can now print a greeting, run the .First function and then enter */
 /* the read-eval-print loop. */
 
-
-FILE* R_OpenSysInitFile(void);
-FILE* R_OpenSiteFile(void);
-FILE* R_OpenInitFile(void);
-
 static RETSIGTYPE handleInterrupt(int dummy)
 {
     R_interrupts_pending = 1;
@@ -430,7 +425,7 @@ static void win32_segv(int signum)
 }
 #endif
 
-#if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
+#if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_WORKING_SIGACTION) && defined(HAVE_SIGEMPTYSET)
 
 /* NB: this really isn't safe, but suffices for experimentation for now.
    In due course just set a flag and do this after the return.  OTOH,
@@ -558,7 +553,7 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     }
     if(R_Interactive) {
 	REprintf("\nPossible actions:\n1: %s\n2: %s\n3: %s\n4: %s\n", 
-		 "abort (with core dump)", 
+		 "abort (with core dump, if enabled)", 
 		 "normal R exit", 
 		 "exit R without saving workspace",
 		 "exit R saving workspace");
@@ -663,7 +658,6 @@ void setup_Rmainloop(void)
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
-
     InitConnections(); /* needed to get any output at all */
 
     /* Initialize the interpreter's internal structures. */
@@ -722,8 +716,10 @@ void setup_Rmainloop(void)
 #endif
 #endif
 
+    InitRand();
     InitTempDir(); /* must be before InitEd */
     InitMemory();
+    InitStringHash(); /* must be before InitNames */
     InitNames();
     InitBaseEnv();
     InitGlobalEnv();
@@ -735,7 +731,12 @@ void setup_Rmainloop(void)
     InitGraphics();
     R_Is_Running = 1;
 #ifdef HAVE_LANGINFO_CODESET
-    utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+    {
+	char  *p = nl_langinfo(CODESET);
+	if(streql(p, "UTF-8")) known_to_be_utf8 = utf8locale =TRUE;
+	if(streql(p, "ISO-8859-1")) known_to_be_latin1 = latin1locale =TRUE;
+	/* fprintf(stderr, "using %s\n", p); */
+    }
 #endif
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
@@ -745,6 +746,8 @@ void setup_Rmainloop(void)
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
 	p = strrchr(ctype, '.');
 	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
+	/* Not 100% correct */
+	known_to_be_latin1 = latin1locale = (localeCP == 1252);
     }
 #endif
 #if defined(Win32) && defined(SUPPORT_UTF8)
@@ -822,6 +825,7 @@ void setup_Rmainloop(void)
     /* At least temporarily unlock some bindings uses in graphics */
     R_unLockBinding(install(".Device"), R_BaseEnv);
     R_unLockBinding(install(".Devices"), R_BaseEnv);
+    R_unLockBinding(install(".Library.site"), R_BaseEnv);
 
     /* require(methods) if it is in the default packages */
     doneit = 0;
@@ -859,6 +863,7 @@ void setup_Rmainloop(void)
     }
 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
+    R_LockBinding(install(".Library.site"), R_BaseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.
@@ -975,7 +980,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
     int rval = 0;
     if (isSymbol(CExpr)) {
-	char *expr = CHAR(PRINTNAME(CExpr));
+	const char *expr = CHAR(PRINTNAME(CExpr));
 	if (!strcmp(expr, "n")) {
 	    SET_DEBUG(rho, 1);
 	    rval = 1;
@@ -1105,11 +1110,19 @@ void R_dot_Last(void)
 	UNPROTECT(1);
     }
     UNPROTECT(1);
+    PROTECT(cmd = install(".Last.sys"));
+    R_CurrentExpr = findVar(cmd, R_BaseNamespace);
+    if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
+	PROTECT(R_CurrentExpr = lang1(cmd));
+	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+	UNPROTECT(1);
+    }
+    UNPROTECT(1);
 }
 
 SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    char *tmp;
+    const char *tmp;
     SA_TYPE ask=SA_DEFAULT;
     int status, runLast;
 
@@ -1119,11 +1132,11 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if( !isString(CAR(args)) )
 	errorcall(call, _("one of \"yes\", \"no\", \"ask\" or \"default\" expected."));
-    tmp = CHAR(STRING_ELT(CAR(args), 0));
+    tmp = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
 	if(!R_Interactive)
-	    warningcall(call, _("save=\"ask\" in non-interactive use: command-line default will be used"));
+	    warning(_("save=\"ask\" in non-interactive use: command-line default will be used"));
     } else if( !strcmp(tmp, "no") )
 	ask = SA_NOSAVE;
     else if( !strcmp(tmp, "yes") )
@@ -1134,12 +1147,12 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("unrecognized value of 'save'"));
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
-        warningcall(call, _("invalid 'status', 0 assumed"));
+        warning(_("invalid 'status', 0 assumed"));
 	runLast = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
-        warningcall(call, _("invalid 'runLast', FALSE assumed"));
+        warning(_("invalid 'runLast', FALSE assumed"));
 	runLast = 0;
     }
     /* run the .Last function. If it gives an error, will drop back to main
@@ -1293,7 +1306,6 @@ R_removeTaskCallback(SEXP which)
 {
     int id;
     Rboolean val;
-    SEXP status;
 
     if(TYPEOF(which) == STRSXP) {
 	val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
@@ -1301,10 +1313,7 @@ R_removeTaskCallback(SEXP which)
 	id = asInteger(which) - 1;
 	val = Rf_removeTaskCallbackByIndex(id);
     }
-    status = allocVector(LGLSXP, 1);
-    LOGICAL(status)[0] = val;
-
-    return(status);
+    return ScalarLogical(val);
 }
 
 SEXP
@@ -1323,8 +1332,7 @@ R_getTaskCallbackNames()
     n = 0;
     el = Rf_ToplevelTaskHandlers;
     while(el) {
-	SET_STRING_ELT(ans, n, allocString(strlen(el->name)));
-	strcpy(CHAR(STRING_ELT(ans, n)), el->name);
+	SET_STRING_ELT(ans, n, mkChar(el->name));
 	n++;
 	el = el->next;
     }
@@ -1406,11 +1414,9 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     cur = CDR(cur);
     SETCAR(cur, value);
     cur = CDR(cur);
-    SETCAR(cur, tmp = allocVector(LGLSXP, 1));
-    LOGICAL(tmp)[0] = succeeded;
+    SETCAR(cur, ScalarLogical(succeeded));
     cur = CDR(cur);
-    SETCAR(cur, tmp = allocVector(LGLSXP, 1));
-    LOGICAL(tmp)[0] = visible;
+    SETCAR(cur, tmp = ScalarLogical(visible));
     if(useData) {
 	cur = CDR(cur);
 	SETCAR(cur, VECTOR_ELT(f, 1));
@@ -1438,7 +1444,7 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
     SEXP internalData;
     SEXP index;
     R_ToplevelCallbackEl *el;
-    char *tmpName = NULL;
+    const char *tmpName = NULL;
 
     internalData = allocVector(VECSXP, 3);
     R_PreserveObject(internalData);
@@ -1455,10 +1461,7 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 			    INTEGER(index));
 
     if(length(name) == 0) {
-	PROTECT(name = allocVector(STRSXP, 1));
-        SET_STRING_ELT(name, 0, allocString(strlen(el->name)));
-	strcpy(CHAR(STRING_ELT(name, 0)), el->name);
-
+	PROTECT(name = mkString(el->name));
         setAttrib(index, R_NamesSymbol, name);
 	UNPROTECT(1);
     } else {

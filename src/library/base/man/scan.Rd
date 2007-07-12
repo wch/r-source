@@ -10,12 +10,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
-     comment.char = "", allowEscapes = FALSE)
+     comment.char = "", allowEscapes = FALSE, encoding = "unknown")
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
     specified file is \code{""}, then input is taken from the keyboard
-    (or \code{stdin} if input is redirected).
+    (or whatever \code{\link{stdin}()} reads if input is redirected or
+    \R is embedded).
     (In this case input can be terminated by a blank line or an EOF
     signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.)
 
@@ -23,6 +24,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     current working directory (given by \code{\link{getwd}()}),
     unless it specifies an \emph{absolute} path.
     Tilde-expansion is performed where supported.
+    When running \R from a script, \code{file="stdin"} can be used to
+    refer to the process's \code{stdin} file stream.
 
     Alternatively, \code{file} can be a \code{\link{connection}},
     which will be opened if necessary, and if so closed at the end of
@@ -46,13 +49,14 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     are one of the first six types listed or \code{NULL}, see section
     \sQuote{Details} below.}
 
-  \item{nmax}{the maximum number of data values to be read, or if
+  \item{nmax}{integer: the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
-    omitted or not positive (and \code{nlines} is not set to a
-    positive value), \code{scan} will read to the end of \code{file}.}
+    omitted or not positive or an invalid value for an integer
+    (and \code{nlines} is not set to a positive value), \code{scan} will
+    read to the end of \code{file}.}
 
-  \item{n}{the maximum number of data values to be read, defaulting to
-    no limit.}
+  \item{n}{integer: the maximum number of data values to be read, defaulting to
+    no limit.  Invalid values will be ignored.}
 
   \item{sep}{by default, scan expects to read white-space delimited
     input fields.  Alternatively, \code{sep} can be used to specify a
@@ -127,9 +131,12 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
     The escapes which are interpreted are the control characters
     \code{\a, \b, \f, \n, \r, \t, \v} and octal and
-    hexadecimal representatons like \code{\040} and \code{\0x2A}.  Any
+    hexadecimal representations like \code{\040} and \code{\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
   }
+  \item{encoding}{encoding to be assumed for input strings.  It is
+    used to mark character strings as known to be in
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
 }
 \details{
   The value of \code{what} can be a list of types, in which case
@@ -189,6 +196,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   any) as \code{what}.
 
   Otherwise, a vector of the type of \code{what}.
+
+  Character strings in the result will have a declared encoding if
+  \code{encoding} is \code{"latin1"} or \code{"UTF-8"}.
 }
 \note{
   The default for \code{multi.line} differs from S.  To read one record

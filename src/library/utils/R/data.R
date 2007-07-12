@@ -20,7 +20,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
     paths <- .find.package(package, lib.loc, verbose = verbose)
     if(is.null(lib.loc))
         paths <- c(.path.package(package, TRUE),
-                   if(is.null(package)) getwd(),
+                   if(!length(package)) getwd(),
                    paths)
     paths <- unique(paths[file.exists(paths)])
 
@@ -33,7 +33,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         ## List all possible data sets.
 
         ## Build the data db.
-        db <- matrix(character(0), nr = 0, nc = 4)
+        db <- matrix(character(0), nrow = 0, ncol = 4)
         for(path in paths) {
             entries <- NULL
             ## Use "." as the 'package name' of the working directory.
@@ -90,7 +90,8 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     ## found it, so copy objects from database
                     found <- TRUE
                     if(verbose)
-                        cat("name=", name, ":\t found in Rdata.rdb\n")
+                        message(sprintf("name=%s:\t found in Rdata.rdb", name),
+                                domain=NA)
                     thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
                     thispkg <- paste("package:", thispkg, sep="")
@@ -109,7 +110,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     next
                 }
             } else {
-                files <- list.files(p, full = TRUE)
+                files <- list.files(p, full.names = TRUE)
             }
             files <- files[grep(name, files, fixed = TRUE)]
             if(length(files) > 1) {
@@ -123,9 +124,9 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                 ## have a plausible candidate (or more)
                 for(file in files) {
                     if(verbose)
-                        cat("name=", name, ":\t file= ...",
-                            .Platform$file.sep, basename(file), "::\t",
-                            sep = "")
+                        message("name=", name, ":\t file= ...",
+                                .Platform$file.sep, basename(file), "::\t",
+                                appendLF = FALSE, domain = NA)
                     ext <- fileExt(file)
                     ## make sure the match is really for 'name.ext'
                     if(basename(file) != paste(name, ".", ext, sep = ""))
@@ -137,7 +138,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                         switch(ext,
                                R = , r = {
                                    ## ensure utils is visible
-                                   library(utils)
+                                   library("utils")
                                    sys.source(zfile, chdir = TRUE,
                                               envir = envir)
                                },
@@ -159,7 +160,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     }
                     if (found) break # from files
                 }
-                if(verbose) cat(if(!found) "*NOT* ", "found\n")
+                if(verbose) message(if(!found) "*NOT* ", "found", domain = NA)
             }
             if (found) break # from paths
         }

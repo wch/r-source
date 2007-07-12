@@ -47,7 +47,7 @@ stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
   Box, Hunter and Hunter or Seber and Wild.
 }
 \examples{
-x <- rnorm(50)
+x <- stats::rnorm(50)
 xr <- round(x, 1)
 stripchart(x) ; m <- mean(par("usr")[1:2])
 text(m, 1.04, "stripchart(x, \"overplot\")")

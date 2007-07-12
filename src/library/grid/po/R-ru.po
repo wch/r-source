@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
-"PO-Revision-Date: 2006-09-25 04:09-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
+"PO-Revision-Date: 2007-04-07 01:42-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -27,6 +27,9 @@ msgstr "Не могу определить метки осей, если 'at' NULL"
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "положения 'labels' и 'at' должны иметь одинаковую длину"
+
+msgid "logical 'label' supplied on length 0"
+msgstr "логическая 'label' нулевой длины"
 
 msgid "End points must not be identical"
 msgstr "Конечные точки не должны быть одинаковы"
@@ -283,8 +286,8 @@ msgstr "'x' и 'y' должны иметь длину 1"
 msgid "invalid 'arrow' argument"
 msgstr "неправильный аргумент 'arrow'"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
-msgstr "Нельзя устанавливать одновременно и 'id', и 'id.lenghts'"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
+msgstr "Нельзя устанавливать одновременно и 'id', и 'id.lengths'"
 
 msgid "'x' and 'y' must be same length"
 msgstr "'x' и 'y' должны быть одной длины"
@@ -336,9 +339,6 @@ msgstr "'x' и 'y'  должны быть единицами и иметь одну длину"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr "'x', 'y', 'width', и 'height' -- все должны быть единицами длиной 1"
-
-msgid "'x' must be numeric"
-msgstr "'x' должен быть числом"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' и 'units' должен иметь длину > 0"
@@ -447,4 +447,7 @@ msgstr "Надо задать по крайней мере одно из 'x' или 'xscale'"
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Надо задать по крайней мере одно из 'y' или 'yscale'"
+
+#~ msgid "'x' must be numeric"
+#~ msgstr "'x' должен быть числом"
 

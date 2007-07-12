@@ -4,7 +4,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Encapsulate calculations and drawing }
 \description{
-  Evaluates an expression that includes both calculatons
+  Evaluates an expression that includes both calculations
   and drawing that depends on the calculations so that
   both the calculations and the drawing will be rerun when
   the scene is redrawn (e.g., device resize or editing).

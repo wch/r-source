@@ -33,7 +33,7 @@ checkTnF(package, dir, file, lib.loc = NULL)
 }
 \value{
   An object of class \code{"checkTnF"} which is a list containing, for
-  each file where occurences of \code{T} or \code{F} were found, a list
+  each file where occurrences of \code{T} or \code{F} were found, a list
   with the expressions containing these occurrences.  The names of the
   list are the corresponding file names.
 

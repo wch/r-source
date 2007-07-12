@@ -49,7 +49,7 @@ lineToGrob(x = 1, y = 1, default.units = "npc", arrow = NULL,
 \seealso{
   \link{Grid},
   \code{\link{viewport}},
-  \code{\link{arrow}}}
+  \code{\link{arrow}}
 }
 
 \examples{

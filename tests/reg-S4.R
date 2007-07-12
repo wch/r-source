@@ -164,6 +164,7 @@ setClass("C", contains = c("A", "B"), representation(z = "logical"),
 (cc <- new("C"))
 ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 
+
 ## "Logic" group -- was missing in R <= 2.4.0
 stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 	  any(getGroupMembers("Ops") == "Logic"))
@@ -180,3 +181,99 @@ assertError <- function(expr)
 assertError(b & b)
 assertError(b | 1)
 assertError(TRUE & b)
+
+
+## methods' hidden cbind() / rbind:
+cBind <- methods:::cbind
+setClass("myMat", representation(x = "numeric"))
+setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
+m <- new("myMat", x = c(1, pi))
+stopifnot(identical(m, cBind(m)))
+
+
+## explicit print or show on a basic class with an S4 bit
+## caused infinite recursion
+setClass("Foo", representation(name="character"), contains="matrix")
+(f <- new("Foo", name="Sam", matrix()))
+(m <- as(f, "matrix"))
+show(m)
+print(m)
+## fixed in 2.5.0 patched
+
+## callGeneric inside a method with new arguments {hence using .local()}:
+setGeneric("Gfun", function(x, ...) standardGeneric("Gfun"),
+	   useAsDefault = function(x, ...) sum(x, ...))
+setClass("myMat", contains="matrix")
+setClass("mmat2", contains="matrix")
+setClass("mmat3", contains="mmat2")
+setMethod(Gfun, signature(x = "myMat"),
+	  function(x, extrarg = TRUE) {
+	      cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
+	      Gfun(unclass(x))
+	  })
+setMethod(Gfun, signature(x = "mmat2"),
+	  function(x, extrarg = TRUE) {
+	      cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
+	      x <- unclass(x)
+	      callGeneric()
+	  })
+setMethod(Gfun, signature(x = "mmat3"),
+	  function(x, extrarg = TRUE) {
+	      cat("in 'mmat3' method for 'Gfun() : extrarg=", extrarg, "\n")
+	      x <- as(x, "mmat2")
+	      callGeneric()
+	  })
+(mm <- new("myMat", diag(3)))
+Gfun(mm)
+Gfun(mm, extrarg = FALSE)
+m2 <- new("mmat2", diag(3))
+Gfun(m2)
+Gfun(m2, extrarg = FALSE)
+## The last two gave Error ...... variable ".local" was not found
+(m3 <- new("mmat3", diag(3)))
+Gfun(m3)
+Gfun(m3, extrarg = FALSE) # used to not pass 'extrarg'
+
+
+## regression tests of dispatch: most of these became primitive in 2.6.0
+setClass("c1", "numeric")
+setClass("c2", "numeric")
+x_c1 <- new("c1")
+# the next failed < 2.5.0 as the signature in .BasicFunsList was wrong
+setMethod("as.character", "c1", function(x, ...) "fn test")
+as.character(x_c1)
+
+setMethod("as.integer", "c1", function(x, ...) 42)
+as.integer(x_c1)
+
+setMethod("as.logical", "c1", function(x, ...) NA)
+as.logical(x_c1)
+
+setMethod("as.complex", "c1", function(x, ...) pi+0i)
+as.complex(x_c1)
+
+setMethod("as.raw", "c1", function(x) as.raw(10))
+as.raw(x_c1)
+
+# as.numeric sets methods on all the equivalent functions
+setMethod("as.numeric", "c1", function(x, ...) 42+pi)
+as.numeric(x_c1)
+as.double(x_c1)
+as.real(x_c1)
+showMethods(as.numeric)
+showMethods(as.double)
+showMethods(as.real)
+
+setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
+x_c2 <- new("c2", pi)
+as.numeric(x_c2)
+showMethods(as.numeric)
+
+promptClass("c1", stdout())# want all methods
+
+## '!' changed signature from 'e1' to 'x' in 2.6.0
+setClass("foo", "logical")
+setMethod("!", "foo", function(e1) e1+NA)
+selectMethod("!", "foo")
+xx <- new("foo", FALSE)
+!xx

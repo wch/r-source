@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:17\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -71,6 +71,10 @@ msgstr "'to.ref.white'가 이하의 정의와 일치하지 않습니다"
 msgid "color spaces use different reference whites."
 msgstr "color spaves는 다른 기준 백색이 사용되고 있습니다"
 
+#, fuzzy
+msgid "'name'must be a character vector"
+msgstr "'file'는 비어 있지 않은 문자열이 아니면 되지 않습니다"
+
 msgid "cannot shut down device 1 (the null device)"
 msgstr "디바이스 1를 shut down 할수가 없습니다(NULL 디바이스 입니다)"
 
@@ -105,6 +109,11 @@ msgstr ""
 
 msgid "argument is missing with no default"
 msgstr "인수는 default 없음으로 결손이 되고 있습니다"
+
+#, fuzzy
+msgid "dev.displaylist() called without an open graphics device"
+msgstr ""
+"dev.control()는 graphics 디바이스가 아무것도 열려 있지 않은데 호출되었습니다"
 
 #, fuzzy
 msgid "invalid arguments in '%s' (need named args)"
@@ -241,6 +250,9 @@ msgstr "quartzFonts에서 부적절한 인수입니다(font명이 필요합니�
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "quartFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "부적절한 X11 폰트의 지정방법입니다"

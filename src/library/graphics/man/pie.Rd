@@ -14,8 +14,10 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   \item{x}{a vector of non-negative numerical quantities.
     The values in \code{x} are displayed as the areas of pie slices.}
   \item{labels}{one or more expressions or character strings giving
-    names for the slices.  For empty or \code{NA} (after coercion to
-    character) labels, no label and pointing line is drawn.}
+    names for the slices.  Other objects are coerced by
+    \code{\link{as.graphicsAnnot}}.  For empty or \code{NA}
+    (after coercion to character) labels, no label nor pointing line
+    is drawn.}
   \item{edges}{the circular outline of the pie is approximated by a
     polygon with this many edges.}
   \item{radius}{the pie is drawn centered in a square box whose sides
@@ -69,6 +71,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   \code{\link{dotchart}}.
 }
 \examples{
+require(grDevices)
 pie(rep(1, 24), col = rainbow(24), radius = 0.9)
 
 pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)

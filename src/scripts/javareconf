@@ -15,9 +15,12 @@ Usage: R CMD javareconf [options]
 Detect current Java setup and update the corresponding configuration in R.
 
 Options:
-  -h, --help     print short help message and exit
+  -h, --help     print this help message and exit
   -n, --dry-run  perform Java detection, but don't touch any
                  configurations files
+  -e <prog>      same as -n but exports all detected variables
+                 and runs <prog>. If -e is the last argument
+                 or <prog> is '' then a shell is used instead
   xxx=yyy        evaluate the corresponding expression
                  (e.g. JAVA_HOME=/usr/lib/java)
 
@@ -32,14 +35,24 @@ Environment variables that can be used to influence the detection:
   JAVAH          path to a Java header/stub generator
   JAR            path to a Java archive tool
 
+The following variables should be used with extreme caution. They
+must all match, so use only if you have a very special setup that
+javareconf cannot detect automatically:
+  JAVA_LD_LIBRARY_PATH library path necessary at run-time
+  JAVA_CPPFLAGS  C preprocessor flags necessary to compile JNI programs
+  JAVA_LIBS      libraries (as linker flags) necessary to compile
+                 JNI programs
+
 Report bugs to <r-bugs@r-project.org>."
 
 
 dry_run=no
+export_vars=no
 while test -n "${1}"; do
     case ${1} in
 	-help | --help | -h) echo "${usage}"; exit 0 ;;
 	-n | --dry-run) dry_run=yes ;;
+	-e) dry_run=yes; export_vars=yes; run_prog=${2}; shift ;;
 	*=*) eval ${1} ;;
     esac
     shift
@@ -55,7 +68,7 @@ else
     fi
 
     ## try jre/bin first just in case we don't have full JDK
-    JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${PATH}
+    JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${JAVA_HOME}/../bin:${PATH}
 fi
 ## if 'java' is not on the PATH or JAVA_HOME, add some guesses as of
 ## where java could live
@@ -155,6 +168,13 @@ if test -z "$JAR"; then
 fi
 echo "Java archive tool: ${JAR}"
 
+: ${JAVA_LIBS=~autodetect~}
+: ${JAVA_CPPFLAGS=~autodetect~}
+: ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+custom_JAVA_LIBS="${JAVA_LIBS}"
+custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
+custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
+
 
 # sys-dependent tweaks to JNI flags
 hostos=`uname 2>/dev/null`
@@ -162,6 +182,7 @@ case "$hostos" in
     Darwin*)
 	JAVA_LD_LIBRARY_PATH=
 	JAVA_LIBS="-framework JavaVM"
+	JAVA_CPPFLAGS='-I$(JAVA_HOME)/include'
 	;;
     *)
 	## we need to reset LD_LIBRARY_PATH, because Java automatically
@@ -180,21 +201,102 @@ case "$hostos" in
 	JAVA_LIBS="${JAVA_LIBS} -ljvm"
 	# create shell-version to be used in scripts
 	JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
+
+        ## includes consist of two parts - jni.h and machine-dependent jni_md.h
+        jinc=''
+        for pinc in include ../include jre/include; do
+          if test -e "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
+        done
+        ## only if we get jni.h we can try to find jni_md.h
+        if test -n "${jinc}"; then
+           JAVA_CPPFLAGS="-I${jinc}"
+           mdinc=''
+           jmdirs=''
+	   ## we are not in configure, so we need to find the OS from R
+	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
+           ## put the most probable locations for each system in the first place
+           case "${host_os}" in
+             linux*)   jmdirs=linux;;
+             bsdi*)    jmdirs=bsdos;;
+             osf*)     jmdirs=alpha;;
+             solaris*) jmdirs=solaris;;
+             freebsd*) jmdirs=freebsd; add_java_libs='-lpthread';;
+           esac
+	   ## in case host_os detection failed, add all candidates
+	   if test -z "${jmdirs}"; then jmdirs='linux solaris freebsd alpha bsdos'; fi
+           ## prepend . and append less-likely ones
+           jmdirs=". ${jmdirs} genunix ppc x86 iris hp-ux aix win32 cygwin openbsd"
+           for pimd in ${jmdirs}; do
+             if test -e "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
+           done
+           if test -z "${jmdinc}"; then
+             # ultima-ratio: use find and pray that it works
+             jmdinc=`find "${jinc}/" -name jni_md.h 2>dev/null |head -n 1 2>/dev/null`
+             if test -n "${jmdinc}"; then jmdinc=`dirname "${jmdinc}"`; fi
+           fi
+           if test -n "${jmdinc}"; then
+             if test "${jmdinc}" != "${jinc}/."; then
+               JAVA_CPPFLAGS="${JAVA_CPPFLAGS} -I${jmdinc}"
+             fi
+           fi
+        fi
 	;;
 esac
 
+if test -n "${add_java_libs}"; then JAVA_LIBS="${JAVA_LIBS} ${add_java_libs}"; fi
+
+## honor user overrides
+acx_custom_java_libs=no
+if test "${custom_JAVA_LIBS}" != '~autodetect~'; then
+  JAVA_LIBS="${custom_JAVA_LIBS}"
+  JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+  acx_custom_java_libs=yes
+fi
+if test "${custom_JAVA_CPPFLAGS}" != '~autodetect~'; then
+  JAVA_CPPFLAGS="${custom_JAVA_CPPFLAGS}"
+fi
+if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then
+  JAVA_LD_LIBRARY_PATH="${custom_JAVA_LD_LIBRARY_PATH}"
+  JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
+  if test "${acx_custom_java_libs}" != yes; then
+    echo ''
+    echo ' ** Warning: you are using custom JAVA_LD_LIBRARY_PATH without' >&2
+    echo '    custom JAVA_LIBS. We cannot guarantee that this will work,' >&2
+    echo '    both settings must match for a proper Java operation!' >&2
+  fi
+else
+  if test "${acx_custom_java_libs}" = yes; then
+    echo ''
+    echo ' ** Warning: you are using custom JAVA_LIBS setting without' >&2
+    echo '    specifying JAVA_LD_LIBRARY_PATH. We cannot gearantee that' >&2
+    echo '    this will work, both must match for a proper Java operation!' >&2
+  fi
+fi
+
 echo "Java library path: ${JAVA_LD_LIBRARY_PATH}"
 echo "JNI linker flags : ${JAVA_LIBS}"
+echo "JNI cpp flags    : ${JAVA_CPPFLAGS}"
 
 echo ""
 
-if test "${dry_run}" = yes; then exit 0; fi
+if test "${export_vars}" = yes; then
+    export JAVA_HOME JAVA JAVAC JAVAH JAR JAVA_LIBS JAVA_CPPFLAGS JAVA_LD_LIBRARY_PATH
+    echo "The following Java variables have been exported:"
+    echo "JAVA_HOME JAVA JAVAC JAVAH JAR JAVA_LIBS JAVA_CPPFLAGS JAVA_LD_LIBRARY_PATH"
+    test -z "${run_prog}" && test -n "${SHELL}" && run_prog="${SHELL}"
+    test -z "${run_prog}" && run_prog=/bin/sh
+    echo "Runnig: ${run_prog}"
+    ${run_prog}
+    exit 0
+fi
+
+test "${dry_run}" = yes && exit 0
 
 echo "Updating Java configuration in ${R_HOME}"
 
 files="${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
 for file in $files; do
-    ${SED} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" -e "s|JAVAC =.\{0,\}|JAVAC = $JAVAC|" -e "s|JAVAH =.\{0,\}|JAVAH = $JAVAH|" -e "s|JAR =.\{0,\}|JAR = $JAR|" "${file}" > "${file}.new"
+    ${SED} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" -e "s|JAVAC =.\{0,\}|JAVAC = $JAVAC|" -e "s|JAVAH =.\{0,\}|JAVAH = $JAVAH|" -e "s|JAR =.\{0,\}|JAR = $JAR|" "${file}" -e "s|JAVA_CPPFLAGS =.\{0,\}|JAVA_CPPFLAGS = ${JAVA_CPPFLAGS}|g"> "${file}.new"
     if test -f "${file}.new"; then
 	mv "${file}" "${file}.old"
 	mv "${file}.new" "${file}"
@@ -205,3 +307,4 @@ for file in $files; do
 done
 
 echo "Done."
+echo ''

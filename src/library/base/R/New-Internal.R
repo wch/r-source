@@ -1,45 +1,49 @@
 geterrmessage <- function() .Internal(geterrmessage())
 
-try <- function(expr, silent = FALSE)
-{
-    if (! exists("first", inherits = FALSE)) {
-        first <- FALSE
-        # turn on the restart bit of the current context, push an
-        # error handler on the condition handler stack, and push
-        # a tryRestart restart on the restart stack
-        .Internal(.addTryHandlers())
-        if (silent) {
-            op <- options("show.error.messages")
-            on.exit(options(op))
-            options(show.error.messages = FALSE)
+try <- function(expr, silent = FALSE) {
+    tryCatch(expr, error = function(e) {
+        call <- conditionCall(e)
+        if (! is.null(call)) {
+            ## Patch up the call to produce nicer result for testing as
+            ## try(stop(...)).  This will need adjusting if the
+            ## implementation of tryCatch changes.
+            ## Use identical() since call[[1]] can be non-atomic.
+            if (identical(call[[1]], quote(doTryCatch)))
+                call <- sys.call(-4)
+            dcall <- deparse(call)[1]
+            prefix <- paste("Error in", dcall, ": ")
+            LONG <- 75 # to match value in errors.c
+            msg <- conditionMessage(e)
+            sm <- strsplit(msg, "\n")[[1]]
+            if (14 + nchar(dcall, type="w") + nchar(sm[1], type="w") > LONG)
+                prefix <- paste(prefix, "\n  ", sep = "")
         }
-        expr
-    }
-    else invisible(structure(.Internal(geterrmessage()), class = "try-error"))
+        else prefix <- "Error : "
+        msg <- paste(prefix, conditionMessage(e), "\n", sep="")
+        ## Store the error message for legacy uses of try() with
+        ## geterrmessage().
+        .Internal(seterrmessage(msg[1]))
+        if (! silent && identical(getOption("show.error.messages"), TRUE)) {
+            cat(msg, file = stderr())
+            .Internal(printDeferredWarnings())
+        }
+        invisible(structure(msg, class = "try-error"))
+    })
 }
-
 
 comment <- function(x).Internal(comment(x))
 "comment<-" <- function(x,value).Internal("comment<-"(x,value))
 
 round <- function(x, digits = 0).Internal(round(x,digits))
 signif <- function(x, digits = 6).Internal(signif(x,digits))
-logb <- log <- function(x, base=exp(1))
-    if(missing(base)).Internal(log(x)) else .Internal(log(x,base))
-log1p <- function(x).Internal(log1p(x))
-expm1 <- function(x).Internal(expm1(x))
+logb <- function(x, base=exp(1)) if(missing(base)) log(x) else log(x,base)
 
 atan2 <- function(y, x).Internal(atan2(y, x))
 
 beta <- function(a, b).Internal( beta(a, b))
 lbeta <- function(a, b).Internal(lbeta(a, b))
 
-gamma <- function(x).Internal( gamma(x))
-lgamma <- function(x).Internal(lgamma(x))
-digamma <- function(x).Internal(   digamma(x))
-trigamma <- function(x).Internal(  trigamma(x))
-psigamma <- function(x, deriv=0) .Internal(psigamma(x, deriv))
-## tetragamma, pentagamma : deprecated in 1.9.0
+psigamma <- function(x, deriv = 0) .Internal(psigamma(x, deriv))
 
 factorial <- function(x) gamma(x + 1)
 lfactorial <- function(x) lgamma(x + 1)
@@ -48,15 +52,17 @@ choose <- function(n,k).Internal(choose(n,k))
 lchoose <- function(n,k).Internal(lchoose(n,k))
 
 ##-- 2nd part --
-# Machine <- function().Internal(Machine())
 R.Version <- function().Internal(Version())
-commandArgs <- function() .Internal(commandArgs())
+
+commandArgs <- function(trailingOnly = FALSE) {
+    args <- .Internal(commandArgs())
+    if(trailingOnly) {
+        m <- match("--args", args, 0)
+        if(m) args[-(1:m)] else character(0)
+    } else args
+}
 
 args <- function(name).Internal(args(name))
-
-##=== Problems here [[	attr(f, "class") <- "factor"  fails in factor(..)  ]]:
-##- attr <- function(x, which).Internal(attr(x, which))
-##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
 
 cbind <- function(..., deparse.level = 1)
     .Internal(cbind(deparse.level, ...))
@@ -73,6 +79,8 @@ rbind <- function(..., deparse.level = 1)
 
 .deparseOpts <- function(control) {
     opts <- pmatch(as.character(control),
+                   ## the exact order of these is determined by the integer codes in
+                   ## ../../../include/Defn.h
                    c("all",
                      "keepInteger", "quoteExpressions", "showAttributes",
                      "useSource", "warnIncomplete", "delayPromises",
@@ -84,14 +92,14 @@ rbind <- function(..., deparse.level = 1)
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
     if (any(opts == 1))
-        opts <- unique(c(opts[opts != 1],2,3,4,5,6,8))
+        opts <- unique(c(opts[opts != 1], 2,3,4,5,6,8))# not (7,9)
     return(sum(2^(opts-2)))
 }
 
 deparse <-
     function(expr, width.cutoff = 60,
 	     backtick = mode(expr) %in% c("call", "expression", "("),
-	     control = "showAttributes")
+	     control = c("keepInteger", "showAttributes", "keepNA"))
     .Internal(deparse(expr, width.cutoff, backtick, .deparseOpts(control)))
 
 do.call <- function(what, args, quote = FALSE, envir = parent.frame())
@@ -134,13 +142,11 @@ is.unsorted <- function(x, na.rm = FALSE) {
 }
 
 mem.limits <- function(nsize=NA, vsize=NA)
-{
     structure(.Internal(mem.limits(as.integer(nsize), as.integer(vsize))),
               names=c("nsize", "vsize"))
-}
 
-nchar <- function(x, type = "bytes")
-    .Internal(nchar(x, type))
+nchar <- function(x, type = "chars", allowNA = FALSE)
+    .Internal(nchar(x, type, allowNA))
 
 polyroot <- function(z).Internal(polyroot(z))
 
@@ -194,8 +200,8 @@ data.class <- function(x) {
     }
 }
 
-is.numeric.factor <- function(x) FALSE
-is.integer.factor <- function(x) FALSE
+## is.numeric.factor <- function(x) FALSE # internal in 2.5.0
+## is.integer.factor <- function(x) FALSE # internal in 2.5.0
 
 encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
                          justify = c("left", "right", "centre", "none"))
@@ -211,7 +217,7 @@ encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
 
 l10n_info <- function() .Internal(l10n_info())
 
-iconv <- function(x, from, to, sub = NA) {
+iconv <- function(x, from = "", to = "", sub = NA) {
     if(!is.character(x)) x <- as.character(x)
     .Internal(iconv(x, from, to, as.character(sub)))
 }
@@ -221,7 +227,8 @@ iconvlist <- function()
     int <- .Internal(iconv(NULL, "", "", ""))
     if(length(int)) return(sort.int(int))
     icfile <- system.file("iconvlist", package="utils")
-    if(!nchar(icfile)) stop("'iconvlist' is not available on this system")
+    if(!nchar(icfile, type="bytes"))
+        stop("'iconvlist' is not available on this system")
     ext <- readLines(icfile)
     if(!length(ext)) stop("'iconvlist' is not available on this system")
     ## glibc has lines ending //, some versions with a header and some without.
@@ -238,6 +245,9 @@ Cstack_info <- function() .Internal(Cstack_info())
 
 reg.finalizer <- function(e, f, onexit = FALSE)
     .Internal(reg.finalizer(e, f, onexit))
+
+Encoding <- function(x) .Internal(Encoding(x))
+`Encoding<-` <- function(x, value) .Internal(setEncoding(x, value))
 
 ## base has no S4 generics
 .noGenerics <- TRUE

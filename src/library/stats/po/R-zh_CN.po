@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -23,7 +23,7 @@ msgid "'acf' must be of length two or more"
 msgstr "'acf'的长度必需是一或二"
 
 msgid "object not interpretable as a factor"
-msgstr "不能把目标对象解释成因子"
+msgstr "不能把对象解释成因子"
 
 msgid "cannot fit models without level ('alpha' must not be 0)."
 msgstr "无法拟合没有层次的模型('alpha'不能为0) 。"
@@ -32,7 +32,7 @@ msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta'和'gamma'必需在单位区间内。"
 
 msgid "data must be strictly non-negative for multiplicative Holt-Winters"
-msgstr "乘法Holt-Winters所用的数据不能有负值"
+msgstr "乘法Holt-Winters的数据不能有负值"
 
 msgid "need at least 3 periods to compute seasonal start values"
 msgstr "计算季節性初始值至少需要三个周期的数据"
@@ -44,7 +44,7 @@ msgid "the series is entirely NA"
 msgstr "时间序列里所有的值都是NA"
 
 msgid "frequency must be a positive integer for BSM"
-msgstr "用BSM时頻率必需正整数"
+msgstr "用BSM时頻率必需是正整数"
 
 msgid "only implemented for univariate time series"
 msgstr "只适用于单变量时间序列"
@@ -53,13 +53,13 @@ msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
 msgid "the first value of the time series must not be missing"
-msgstr "时间序列的第一个数值不能遺漏"
+msgstr "时间序列的第一个数值不能是遺漏值"
 
 msgid "all parameters were fixed"
 msgstr "所有参数值都是固定的"
 
 msgid "possible convergence problem: optim gave code="
-msgstr "可能遇到了收斂问题：optim给了code="
+msgstr "可能遇到了收斂问题：optim信息code="
 
 msgid "no factors in the fitted model"
 msgstr "拟合模型里没有因子"
@@ -71,16 +71,16 @@ msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which'内的非因子略过不用"
 
 msgid "'lag.max' must be at least 0"
-msgstr "'lag.max'至少必需为0"
+msgstr "'lag.max'至少必需为零"
 
 msgid "'lag.max' must be at least 1"
-msgstr "'lag.max'至少必需为1"
+msgstr "'lag.max'至少必需为一"
 
 msgid "NAs in 'x'"
 msgstr "'x'里不能有NA"
 
 msgid "x$lag must have at least 1 column"
-msgstr "x$lag至少需要有1列"
+msgstr "x$lag至少需要有一列"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "只有在第一个滯後为0时才能用ci.type=\"ma\" "
@@ -92,7 +92,10 @@ msgid "no terms in scope"
 msgstr "範疇里没有项"
 
 msgid "no terms in scope for adding to object"
-msgstr "加入目标对象时的範疇内没有项"
+msgstr "加入对象时範疇内没有项"
+
+msgid "trying +"
+msgstr "试用+号"
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "行数有变化：是不是删除了遺漏值?"
@@ -109,6 +112,9 @@ msgstr "\"mlm\"模型还没有实现'add1'方法"
 msgid "scope is not a subset of term labels"
 msgstr "範疇不是项标记集的子集"
 
+msgid "trying -"
+msgstr "试用-号"
+
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "\"mlm\" 模型没有'drop1'方法"
 
@@ -124,6 +130,12 @@ msgstr "模型上範疇里没有这些词条%s "
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
 
+msgid "Start:  AIC="
+msgstr "开始：AIC="
+
+msgid "Step:  AIC="
+msgstr "步：AIC="
+
 msgid "'A' must be an array or table"
 msgstr "'A'必需是矩阵或是数据框"
 
@@ -135,7 +147,7 @@ msgstr ""
 "与边缘的长度, %d不相符"
 
 msgid "'by' must be a list"
-msgstr "'by' 必需是串列"
+msgstr "'by'必需是串列"
 
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN'必需回覆纯量"
@@ -153,16 +165,16 @@ msgid "'P.values' is TRUE, but 'has.Pvalue' is not"
 msgstr "'P.values'值是TRUE, 但'has.Pvalue'不是"
 
 msgid "wrong k / cs.ind"
-msgstr "k / cs.ind有错"
+msgstr "k/cs.ind有错"
 
 msgid "option \"show.signif.stars\" is invalid: assuming TRUE"
 msgstr "選項\"show.signif.stars\"不对: 假设成TRUE"
 
 msgid "'anova' object must have colnames"
-msgstr "'anova'目标对象必需有列名"
+msgstr "'anova'对象必需有列名"
 
 msgid "'conf.level' must be a single number between 0 and 1"
-msgstr "'conf.level'必需是一个数值在0到1之间的数字"
+msgstr "'conf.level'必需是一个数值在零到一之间的数字"
 
 msgid "not enough 'x' observations"
 msgstr "'x'观察值数量不够"
@@ -183,13 +195,13 @@ msgid "cannot compute estimate, returning NA"
 msgstr "无法計算估计量, 回覆NA"
 
 msgid "cannot compute exact p-value with ties"
-msgstr "无法精確計算有连结的p-值"
+msgstr "无法精確計算带连结的p值"
 
 msgid "cannot compute exact confidence intervals with ties"
-msgstr "无法精確計算有连结的置信区间"
+msgstr "无法精確計算带连结的置信区间"
 
 msgid "'formula' missing or incorrect"
-msgstr "'formula'遺漏或有错"
+msgstr "没有'formula'或有错"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "分组因子只能有两层"
@@ -198,13 +210,13 @@ msgid "Error() model is singular"
 msgstr "Error()模型奇异"
 
 msgid "the 'split' argument must be a list"
-msgstr "'split' 变元必需是串列"
+msgstr "'split'变元必需是串列"
 
 msgid "unknown name(s) in the 'split' list"
 msgstr "'split'串列里的名字不对"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
-msgstr "'coef'必需设定对比, 如, 总和为0"
+msgstr "'coef'必需设定对比, 如, 总和为零"
 
 msgid "'coef' must have same length as 'contrast.obj'"
 msgstr "'coef'的长度必需同'contrast.obj'长度一样"
@@ -216,7 +228,7 @@ msgid "the contrast defined is empty (has no TRUE elements)"
 msgstr "设定的对比是空的(不含任何TRUE值)"
 
 msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
-msgstr "'contrast.obj'的列必需设定成对比(总和为0)"
+msgstr "'contrast.obj'的列必需设定成对比(总和为零)"
 
 msgid "no degrees of freedom for residuals"
 msgstr "残差没有自由度"
@@ -224,8 +236,11 @@ msgstr "残差没有自由度"
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object'不包含误差'qr'组件"
 
+msgid "Refitting model to allow projection"
+msgstr "重新拟合模型以提供射影"
+
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
-msgstr "'contrast.obj'的列必需设定对比(总和为0)"
+msgstr "'contrast.obj'列必需设定对比(总和为零)"
 
 msgid "invalid interpolation method"
 msgstr "内插方法不对"
@@ -237,10 +252,10 @@ msgid "need at least two non-NA values to interpolate"
 msgstr "调用内插至少需要两个非NA值的数据"
 
 msgid "zero non-NA points"
-msgstr "无非NA数据点"
+msgstr "没有非NA数据点"
 
 msgid "'approx' requires n >= 1"
-msgstr "'approx'需要n >= 1"
+msgstr "'approx'需要n大于等于一"
 
 msgid "'vec' contains NAs"
 msgstr "'vec'含NA"
@@ -249,7 +264,7 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'必需由小到大排序"
 
 msgid "'order.max' must be >= 1"
-msgstr "'order.max'必需 >= 1"
+msgstr "'order.max'必需大于等于一"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "'object'和'newdata'里的序列数目不同"
@@ -264,7 +279,7 @@ msgid "MLE only implemented for univariate series"
 msgstr "MLE只为单变量序列实现"
 
 msgid "'order.max' must be >= 0"
-msgstr "'order.max'必需 >= 0"
+msgstr "'order.max'必需大于等于零"
 
 msgid "model order:"
 msgstr "模型顺序:"
@@ -330,7 +345,7 @@ msgid "'xreg' is collinear"
 msgstr "'xreg'是同線的"
 
 msgid "NAs present: setting 'delta' to -1"
-msgstr "有NA：把'delta'设成-1"
+msgstr "出现了NA：请把'delta'设成-1"
 
 msgid "transformed ARMA parameters were fixed"
 msgstr "变换过的ARMA参数是固定的"
@@ -349,6 +364,9 @@ msgstr "样本太稀疏，找不到alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "在设定的頻寬值域内找不到解答"
+
+msgid "increasing bw.SJ() search interval (%d)"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr "最小值存在于值域的边界上"
@@ -369,22 +387,22 @@ msgid "'x' must be nonnegative and integer"
 msgstr "'x'必需是非负的整数"
 
 msgid "'n' must be a positive integer >= 'x'"
-msgstr "'n'必需是 >= 'x'的正整数"
+msgstr "'n'必需是大于等于'x'的正整数"
 
 msgid "incorrect length of 'x'"
 msgstr "'x'长度不对"
 
 msgid "'p' must be a single number between 0 and 1"
-msgstr "'p'必需是在0到1之间的数值"
+msgstr "'p'必需是在零到一之间的数值"
 
 msgid "length of choices must be 2"
 msgstr "选择长度必需为二"
 
 msgid "object '%s' has no scores"
-msgstr "目标对象'%s'没有分数"
+msgstr "对象'%s'没有分数"
 
 msgid "'scale' is outside [0, 1]"
-msgstr "'scale'在[0, 1] 值域外"
+msgstr "'scale'在[0, 1]值域外"
 
 msgid "biplots are not defined for complex PCA"
 msgstr "复数的PCA画不出biplot"
@@ -393,13 +411,13 @@ msgid "unequal number of rows in 'cancor'"
 msgstr "'cancor'里的行数不一样"
 
 msgid "dimension 0 in 'x' or 'y'"
-msgstr "'x'或'y'的维度为0"
+msgstr "'x'或'y'的维度为零"
 
 msgid "'x' has rank 0"
-msgstr "'x'的秩为0"
+msgstr "'x'的秩为零"
 
 msgid "'y' has rank 0"
-msgstr "'y'的秩为0"
+msgstr "'y'的秩为零"
 
 msgid "'x' and 'y' must have the same length"
 msgstr "'x'和'y'的长度必需相同"
@@ -408,13 +426,13 @@ msgid "'x' and 'y' must have at least 2 levels"
 msgstr "'x'和'y'至少有两个层次"
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr "'x'的所有值都必需是非负的有限值"
+msgstr "'x'所有的值都必需是非负的有限值"
 
 msgid "at least one entry of 'x' must be positive"
 msgstr "'x'里至少要包含一个正值"
 
 msgid "cannot compute simulated p-value with zero marginals"
-msgstr "无法用0邊緣計算模拟p-值"
+msgstr "无法用零邊緣計算模拟p值"
 
 msgid "'x' must at least have 2 elements"
 msgstr "'x'至少有两个单元"
@@ -426,7 +444,7 @@ msgid "probabilities must be non-negative."
 msgstr "機率必需为非负值。"
 
 msgid "probabilities must sum to 1."
-msgstr "機率总和必需为1。"
+msgstr "機率总和必需为一。"
 
 msgid "Chi-squared approximation may be incorrect"
 msgstr "Chi-squared近似算法有可能不准"
@@ -435,13 +453,13 @@ msgid "NA values not allowed in 'd'"
 msgstr "'d'里不允许有NA值"
 
 msgid "distances must be result of 'dist' or a square matrix"
-msgstr "距离必需是'dist'计算的结果或是正方形矩阵"
+msgstr "距离必需是'dist'计算出结果或是正方形矩阵"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k'必需是{1, 2, ..  n - 1}中的一个"
 
 msgid "some of the first %d eigenvalues are < 0"
-msgstr "%d个特征值小于0"
+msgstr "%d个特征值小于零"
 
 msgid "initial value not feasible"
 msgstr "初始值不可用"
@@ -461,7 +479,7 @@ msgid "'scores' must all be different numbers"
 msgstr "'scores'内包含的数值不能都是相同的"
 
 msgid "'degree' must be at least 1"
-msgstr "'degree'至少为1"
+msgstr "'degree'至少为一"
 
 msgid "missing values are not allowed in 'poly'"
 msgstr "'poly'里不能有遺漏值"
@@ -490,14 +508,11 @@ msgstr "奇异对比矩阵"
 msgid "numeric contrasts or contrast name expected"
 msgstr "需要数值对比或对比的名字"
 
-msgid "contrasts not defined for 0 degrees of freedom"
-msgstr "0自由度不能设对比"
+msgid "not enough degrees of freedom to define contrasts"
+msgstr "设定对比的自由度不够"
 
 msgid "baseline group number out of range"
 msgstr "基線组在值域外"
-
-msgid "not enough degrees of freedom to define contrasts"
-msgstr "设定对比的自由度不够"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "要么同时设定'x'和'y'，要么只设定矩阵式的'x'"
@@ -515,10 +530,10 @@ msgid "not enough finite observations"
 msgstr "有限值的观察量不够"
 
 msgid "Cannot compute exact p-value with ties"
-msgstr "无法给连结計算精確的p值"
+msgstr "无法给连结计算精確p值"
 
 msgid "Cannot compute exact p-values with ties"
-msgstr "无法给连结計算精確的p值"
+msgstr "无法给连结計算精確p值"
 
 msgid "'formula' missing or invalid"
 msgstr "'formula'遺漏或有错"
@@ -536,7 +551,7 @@ msgid "length of 'wt' must equal the number of rows in 'x'"
 msgstr "'wt'的长度必需同'x'的行数相同"
 
 msgid "weights must be non-negative and not all zero"
-msgstr "重量必需为非负值，而且不能全部都为0"
+msgstr "权数必需为非负值，而且不能全部都为零"
 
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr "'center'的长度必需同'x'的列数相同"
@@ -555,7 +570,7 @@ msgstr ""
 "由小到大；应该先用as.hclust()"
 
 msgid "elements of 'k' must be between 1 and %d"
-msgstr "'k'的单元必需在1和%d之间"
+msgstr "'k'的单元必需在一和%d之间"
 
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge'和'height'不合!"
@@ -570,13 +585,13 @@ msgid "midcache() of non-binary dendrograms only partly implemented"
 msgstr "非二分系統樹圖的midcache()只实现了一部分"
 
 msgid "non-leaf subtree of length 0"
-msgstr "长度为0的非叶子树"
+msgstr "长度为零的非叶子树"
 
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram'必需用在系統樹圖上"
 
 msgid "invalid (length 0) node in dendrogram"
-msgstr "系統樹圖里的节点不对(长度为0)"
+msgstr "系統樹圖里的节点不对(长度为零)"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr "系統樹圖里有非正#{分支}的非叶節點"
@@ -627,7 +642,7 @@ msgid "'weights' must not be negative"
 msgstr "'weights'不能是负数的"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr " sum(weights) != 1，因此无法取得真正的密度函数"
+msgstr " sum(weights) != 1，因此无法取得真密度函数"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自动选择頻寬至少需要两个数据点"
@@ -678,7 +693,7 @@ msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[]和prob[]必需是长度相等的向量。"
 
 msgid "probabilities cannot be negative nor all 0."
-msgstr "機率不能是负数，也不能全都是0。"
+msgstr "機率不能是负数，也不能全都是零。"
 
 msgid "'x' must be non-negative"
 msgstr "'x'必需为非负数"
@@ -693,7 +708,7 @@ msgid "some terms will have NAs due to the limits of the method"
 msgstr "因为这个方法的限制，有些项的值为NA"
 
 msgid "'x' must have 1 or more non-missing values"
-msgstr "'x'必需含一或多个非遺漏值"
+msgstr "'x'必需含一个或多个非遺漏值"
 
 msgid "wrong embedding dimension"
 msgstr "嵌入维度不对"
@@ -757,19 +772,19 @@ msgid "cannot find valid starting values: please specify some"
 msgstr "找不到有效的初始值: 请设定"
 
 msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "二项分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y值必需满足0 <= y <= 1"
 
 msgid "non-integer #successes in a binomial glm!"
-msgstr "binomial通用线性模型里出现了非整数的#成功!"
+msgstr "二项通用线性模型里出现了非整数的#成功!"
 
 msgid "non-integer counts in a binomial glm!"
-msgstr "binomial通用线性模型里出现了非整数的计数!"
+msgstr "二项通用线性模型里出现了非整数的计数!"
 
 msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr "binomial分布族中的y必需是由0和1组成的向量"
+msgstr "二项分布族中的y必需是由0和1组成的向量"
 
 msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
@@ -780,7 +795,7 @@ msgid ""
 msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr "quasibinomial分布族中的y必需由0和1组成的向量"
+msgstr "quasibinomial分布族中的y必需由零和一组成的向量"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
@@ -812,13 +827,13 @@ msgid "'filter' is longer than time series"
 msgstr "'filter'的长度比时间序列的长度要长"
 
 msgid "argument 'sides' must be 1 or 2"
-msgstr "变元'sides'必需是1或2"
+msgstr "变元'sides'必需是一或二"
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init'的长度必需等于'filter'的长度"
 
 msgid "'init'; must have 1 or %d cols"
-msgstr "'init'; 必需有1或%d个列"
+msgstr "'init'; 必需有一个或%d个列"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x'至少必需有两行和两列"
@@ -833,13 +848,13 @@ msgid "if 'x' is not a matrix, 'y' must be given"
 msgstr "如果'x'不是矩阵的话, 一定得有'y'值"
 
 msgid "'mult' must be integer >= 2, typically = 30"
-msgstr "'mult'必需是 >= 2的正数，一般等于30"
+msgstr "'mult'必需是大于等于二的正数，一般等于30"
 
 msgid "alternative must be \"two.sided\", \"less\" or \"greater\""
 msgstr "必需在\"two.sided\", \"less\"或\"greater\"中选一个"
 
 msgid "'or' must be a single number between 0 and Inf"
-msgstr "'or'必需是在0和Inf之间的一个数值"
+msgstr "'or'必需是在零和Inf之间的一个数值"
 
 msgid "need 2 or more non-zero row marginals"
 msgstr "至少需要多于两个非零行边"
@@ -902,16 +917,16 @@ msgid "cannot use dots in formula with given data"
 msgstr "按照所提供的数据无法在公式里用点符号"
 
 msgid "'x' must be an \"ftable\" object"
-msgstr "'x'必需是\"ftable\"目标对象"
+msgstr "'x'必需是\"ftable\"对象"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file'必需是字符串或链结"
 
 msgid "'row.var.names' missing"
-msgstr "'row.var.names'有遺漏"
+msgstr "没有'row.var.names'值"
 
 msgid "'col.vars' missing or incorrect"
-msgstr "'col.vars'有遺漏或设定得不对"
+msgstr "没有'col.vars'值或它设定得不对"
 
 msgid "'family' not recognized"
 msgstr "'family'设定得不对"
@@ -923,19 +938,19 @@ msgid "'weights' must be a numeric vector"
 msgstr "'weights'必需是数值向量"
 
 msgid "negative weights not allowed"
-msgstr "不能有负重量"
+msgstr "权数不能是负的"
 
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "偏置的个数是%d，应该同观察量的个数%d相等"
 
 msgid "value of 'epsilon' must be > 0"
-msgstr "'epsilon'的值必需 > 0"
+msgstr "'epsilon'的值必需大于零"
 
 msgid "maximum number of iterations must be > 0"
-msgstr "迭代的最高值数目必需 > 0"
+msgstr "迭代的最高值数目必需大于零"
 
 msgid "'family' argument seems not to be a valid family object"
-msgstr "'family'变元的值不是正确的分布族目标对象"
+msgstr "'family'变元的值不是正确的分布族对象"
 
 msgid "invalid linear predictor values in empty model"
 msgstr "空模型里的线形従属変数值不对"
@@ -951,16 +966,16 @@ msgid "NAs in V(mu)"
 msgstr "V(mu) 里有NA"
 
 msgid "0s in V(mu)"
-msgstr "V(mu) 里有0"
+msgstr "V(mu) 里有零"
 
 msgid "NAs in d(mu)/d(eta)"
 msgstr "d(mu)/d(eta) 里有NA"
 
 msgid "no observations informative at iteration"
-msgstr "观察量不含信息于迭代"
+msgstr "观察量不含信息，于迭代"
 
 msgid "non-finite coefficients at iteration"
-msgstr "係數值无限大于迭代"
+msgstr "係數值无限大，于迭代"
 
 msgid "X matrix has rank %d, but only %d observations"
 msgstr "X矩阵的秩为%d, 但只有%d个观察量"
@@ -973,13 +988,13 @@ msgid "step size truncated due to divergence"
 msgstr "因为算法分歧将步驟大小縮短"
 
 msgid "inner loop 1; cannot correct step size"
-msgstr "内循環1; 无法校正步驟大小"
+msgstr "内循環一; 无法校正步驟大小"
 
 msgid "step size truncated: out of bounds"
 msgstr "縮短了步驟大小：在值域外"
 
 msgid "inner loop 2; cannot correct step size"
-msgstr "内循環2; 无法校正步驟大小"
+msgstr "内循環二; 无法校正步驟大小"
 
 msgid "algorithm did not converge"
 msgstr "算法没有聚合"
@@ -988,10 +1003,10 @@ msgid "algorithm stopped at boundary value"
 msgstr "算法在边界值停止"
 
 msgid "fitted probabilities numerically 0 or 1 occurred"
-msgstr "拟合機率算出来是数值0或1"
+msgstr "拟合機率算出来是数值零或一"
 
 msgid "fitted rates numerically 0 occurred"
-msgstr "拟合速率算出来是数值0"
+msgstr "拟合速率算出来是数值零"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "以下'anova.glm'的变元不对因此略过不用:"
@@ -1000,7 +1015,7 @@ msgid ","
 msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
-msgstr "将F检验用于%s 分布族是不对的"
+msgstr "将F检验用在%s分布族上是不对的"
 
 msgid "using F test with a fixed dispersion is inappropriate"
 msgstr "将F检验用于固定疏散的分布是不对的"
@@ -1009,7 +1024,7 @@ msgid "models with response"
 msgstr "带反应的模型"
 
 msgid "removed because response differs from model 1"
-msgstr "被删除了，因为反应同模型1不相对"
+msgstr "被删除了，因为反应同第一个模型不相对"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "模型拟合时没有用同样大小的数据集"
@@ -1018,7 +1033,7 @@ msgid "using F test with a '%s' family is inappropriate"
 msgstr "将F检验用于%s分布族是不对的"
 
 msgid "observations with zero weight not used for calculating dispersion"
-msgstr "计算离散度时0重量的观察量略过不用"
+msgstr "计算离散度时零权数的观察量略过不用"
 
 msgid "invalid clustering method"
 msgstr "群集方法不对"
@@ -1030,7 +1045,7 @@ msgid "invalid dissimilarities"
 msgstr "dissimilarities不对"
 
 msgid "must have n >= 2 objects to cluster"
-msgstr "用群集时必需有n >= 2的目标对象"
+msgstr "用群集时必需有n >= 2的对象"
 
 msgid "invalid length of members"
 msgstr "成员长度不对"
@@ -1057,13 +1072,13 @@ msgid "specify exactly one of 'k' and 'h'"
 msgstr "'k'和'h'两者只能设定一个"
 
 msgid "k must be between 2 and %d"
-msgstr "k必需在2和%d之间"
+msgstr "k必需在二和%d之间"
 
 msgid "specify exactly one of 'which' and 'x'"
 msgstr "'which'和'x'两者只能设定一个"
 
 msgid "all elements of 'which' must be between 1 and %d"
-msgstr "'which'的所有单元值都必需在1和%d之间"
+msgstr "'which'的所有单元值都必需在一和%d之间"
 
 msgid "invalid parameter values"
 msgstr "参数值不对"
@@ -1072,13 +1087,13 @@ msgid "a limit is missing"
 msgstr "極限有遺漏"
 
 msgid "'r' is less than 1"
-msgstr "'r'小于1"
+msgstr "'r'小于一"
 
 msgid "'m' is less than 1"
-msgstr "'m'小于1"
+msgstr "'m'小于一"
 
 msgid "'r' is less than 0"
-msgstr "'r'小于0"
+msgstr "'r'小于零"
 
 msgid "'m' must be numeric with non-negative integers"
 msgstr "'m'必需是非负的整数"
@@ -1093,7 +1108,7 @@ msgid "'coef' does not have the correct length"
 msgstr "'coef'的长度不对"
 
 msgid "coefficients do not add to 1"
-msgstr "係數总和不是1"
+msgstr "係數总和不是一"
 
 msgid "'k' is not a kernel"
 msgstr "'k'不是内核"
@@ -1102,7 +1117,7 @@ msgid "'x' is shorter than kernel 'k'"
 msgstr "'x'比内核'k'要短"
 
 msgid "'kernapply' is not available for object 'x'"
-msgstr "'kernapply'不适用于目标对象 'x'"
+msgstr "'kernapply'不适用于对象'x'"
 
 msgid "'x' is not a kernel"
 msgstr "'x'不是内核"
@@ -1114,7 +1129,7 @@ msgid "did not converge in %d iterations"
 msgstr "%d迭代没有聚合"
 
 msgid "number of cluster centres must lie between 1 and nrow(x)"
-msgstr "群集中心数目必需在1和nrow(x) 这间"
+msgstr "群集中心数目必需在一和nrow(x) 这间"
 
 msgid "did not converge in"
 msgstr "没有聚合于"
@@ -1147,10 +1162,10 @@ msgid "not enough 'y' data"
 msgstr "'y'数据不够"
 
 msgid "cannot compute correct p-values with ties"
-msgstr "在有连结的情况下无法正确計算p-值"
+msgstr "在有连结的情况下无法正确計算p值"
 
 msgid "'y' must be numeric or a string naming a valid function"
-msgstr "'y'必需是数值，否则的话请用字符串指名正确的函数"
+msgstr "'y'必需是数值，否则的话请用字符串指定适当的函数"
 
 msgid ""
 "y must be supplied.\n"
@@ -1187,19 +1202,19 @@ msgid "singular fit encountered"
 msgstr "遇到了奇异拟合"
 
 msgid "missing or negative weights not allowed"
-msgstr "重量不允许是遺漏值或负值"
+msgstr "权数不允许是遺漏值或负值"
 
 msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
-msgstr "'lm'目标对象不对: 不包含'terms'或'qr'组件"
+msgstr "'lm'对象不对: 不包含'terms'或'qr'组件"
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
-msgstr "目标对象的残差自由度表明这不是\"lm\" 拟合"
+msgstr "对象的残差自由度表明这不是\"lm\" 拟合"
 
 msgid "removed because response differs from"
 msgstr "删除了，因为反应不同与"
 
 msgid "model 1"
-msgstr "模型1"
+msgstr "第一模型"
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
@@ -1216,19 +1231,19 @@ msgid "Assuming constant prediction variance even though model fit is weighted"
 msgstr "虽然模型在拟和时用了衡量，但在预测时仍假定方差不变"
 
 msgid "'weights' as formula should be one-sided"
-msgstr "'weights'作为公式能在公式一边"
+msgstr "'weights'作为公式来用只能在公式的一边"
 
 msgid "'object' has no 'effects' component"
 msgstr "'object'没有'effects'组件"
 
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
-msgstr "'se.fit'变元还没有为\"mlm\"目标对象实现"
+msgstr "'se.fit'变元还没有为\"mlm\"对象实现"
 
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "非NA残差的长度与拟合时所用的案例不相符"
 
 msgid "too few cases, n < k"
-msgstr "案例不够, n < k"
+msgstr "案例不够, n小于k"
 
 msgid "predictors must all be numeric"
 msgstr "従属変数必需都是数值"
@@ -1243,7 +1258,7 @@ msgid "invalid 'control' argument"
 msgstr "'control'变元不对"
 
 msgid "only 1-4 predictors are allowed"
-msgstr "只允许有1到4个従属変数"
+msgstr "只允许有一到四个従属変数"
 
 msgid "invalid 'y'"
 msgstr "'y'不对"
@@ -1261,7 +1276,7 @@ msgid "specified parametric for all predictors"
 msgstr "所有従属変数都被设定为参数"
 
 msgid "first argument must be a \"loess\" object"
-msgstr "第一个变元必需为\"loess\"目标对象"
+msgstr "第一个变元必需为\"loess\"对象"
 
 msgid "'newdata' does not contain the variables needed"
 msgstr "'newdata'不包含需要的变量"
@@ -1288,13 +1303,13 @@ msgid "%d missing values deleted"
 msgstr "删除了%d个遺漏值"
 
 msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr "'X'矩阵有%d个反应, 而'Y'有%d个"
+msgstr "'X'矩阵有%d个反应, 而'Y'有%d个反应"
 
 msgid "%d responses, but only %d variables"
 msgstr "%d个反应, 但只有%d个变量"
 
 msgid "number of weights = %d should equal %d (number of responses)"
-msgstr "weights = %d但应等于%d (反应数目)"
+msgstr "权数的数目 = %d但应等于%d (反应数目)"
 
 msgid "'X' matrix was collinear"
 msgstr "'X'是同線矩阵"
@@ -1303,10 +1318,10 @@ msgid "missing observations deleted"
 msgstr "删除了遺漏观察量"
 
 msgid "observations with 0 weight not used in calculating standard deviation"
-msgstr "计算标准差时不用0重量的观察量"
+msgstr "计算标准差时不用零权数的观察量"
 
 msgid "observations with 0 weights not used"
-msgstr "不用0重量的观察量"
+msgstr "权数为零的观察量略过不用"
 
 msgid "'low' and 'high' cannot be both TRUE"
 msgstr "'low'和'high'不能同时都为TRUE"
@@ -1315,7 +1330,7 @@ msgid "need multiple response"
 msgstr "需要多个反应"
 
 msgid "object must be of class \"manova\" or \"maov\""
-msgstr "目标对象必需是\"manova\"或\"maov\"的类别"
+msgstr "对象必需是\"manova\"或\"maov\"的类别"
 
 msgid "residuals have rank %d < %d"
 msgstr "残差的秩 %d < %d"
@@ -1327,7 +1342,7 @@ msgid "each dimension in table must be >= 2"
 msgstr "表的每个维度都必需 >= 2"
 
 msgid "'x' must be a 3-dimensional array"
-msgstr "'x'必需是3维陣列"
+msgstr "'x'必需是三维陣列"
 
 msgid "if 'x' is not an array, 'y' must be given"
 msgstr "如果'x'不是陣列的话, 必需提供'y'值"
@@ -1336,10 +1351,10 @@ msgid "if 'x' is not an array, 'z' must be given"
 msgstr "如果'x'不是陣列的话, 必需提供'z'值"
 
 msgid "'x', 'y', and 'z' must have the same length"
-msgstr "'x', 'y',和'z'的长度必需相等"
+msgstr "'x', 'y'和'z'的长度必需相等"
 
 msgid "sample size in each stratum must be > 1"
-msgstr "每个阶层里的样本大小都必需 > 1"
+msgstr "每个阶层里的样本大小都必需大于一"
 
 msgid "'x' must be square with at least two rows and columns"
 msgstr "'x'必需是正方形的至少有两列和两行的矩阵"
@@ -1354,7 +1369,7 @@ msgid "medpolish() did not converge in %d iterations"
 msgstr "medpolish()经过%d个迭代仍没有聚合"
 
 msgid "'mlm' objects with weights are not supported"
-msgstr "目前不支持带重量的'mlm'目标对象"
+msgstr "目前不支持带权数的'mlm'对象"
 
 msgid "X does not define a subspace of M"
 msgstr "X不设定M的子空间"
@@ -1375,7 +1390,7 @@ msgid "this fit does not inherit from \"lm\""
 msgstr "这拟和值不是由\"lm\"继承来的"
 
 msgid "'cterms' argument must match terms in model object"
-msgstr "'cterms'变元必需同模型目标对象里的项相配"
+msgstr "'cterms'变元必需同模型对象里的项相配"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
 msgstr "设计不平衡 - 用se.contrast()算标准误"
@@ -1402,11 +1417,18 @@ msgstr "eff.aovlist: 用非正交对比来算的结果会出错"
 msgid "no terms component"
 msgstr "没有项组件"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'termlabels'必需是长度至少为一的字节向量"
+
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "'termobj'必需是类别为个\"terms\"的对象"
+
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "变量'%s'是由\"%s\"类别拟合而成，与提供的类别\"%s\"不相配"
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr "设定的变量%s的类别同拟合的类别不相符"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
@@ -1437,7 +1459,7 @@ msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "没有变量'%s'，因此它的对比略过不用"
 
 msgid "using type=\"numeric\" with a factor response will be ignored"
-msgstr ""
+msgstr "在因子反应上用type=\"numeric\"的这一选项没有效果"
 
 msgid "invalid response type"
 msgstr "反应种类不对"
@@ -1446,10 +1468,10 @@ msgid "invalid 'data' argument"
 msgstr "'data'变元不对"
 
 msgid "all times contain an NA"
-msgstr "所有的时间都包含NA"
+msgstr "所有时间都含NA"
 
 msgid "missing values in object"
-msgstr "目标对象里有遺漏值"
+msgstr "对象里有遺漏值"
 
 msgid "invalid argument 'omit'"
 msgstr "变元'omit'不对"
@@ -1457,18 +1479,17 @@ msgstr "变元'omit'不对"
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level'必需是{0,1,2}"
 
-#, fuzzy
 msgid "'interval' must be a vector of length 2"
-msgstr "'margins'必需是长度为二的数值向量"
+msgstr "'interval'必需是长度为二的数值向量"
 
 msgid "lower < upper  is not fulfilled"
-msgstr "没有满足lower < upper这个条件"
+msgstr "没有满足lower小于upper这个条件"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "位于极点边的f()值之正负号不相反"
 
 msgid "_NOT_ converged in"
-msgstr "没有聚合于"
+msgstr "_没有_聚合于"
 
 msgid "control argument must be a named list"
 msgstr "控制变元必需是串列"
@@ -1480,7 +1501,7 @@ msgid "' ignored"
 msgstr "' 略过不用"
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
-msgstr "不能有逻辑值的`hessian变元。请参考说明书。' "
+msgstr "不能有逻辑值的`hessian'变元。请参考说明书。' "
 
 msgid "'params' has wrong length"
 msgstr "'params'的长度不对"
@@ -1504,13 +1525,16 @@ msgid "levels truncated to positive values only"
 msgstr "层次被縮短成正值"
 
 msgid "setVarying : 'vary' length must match length of parameters"
-msgstr "setVarying : vary的长度必需同参数的长度相符"
+msgstr "setVarying : 'vary'的长度必需同参数的长度相符"
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
 msgid "'data' must be a list or an environment"
 msgstr "'data'必需是串列或是环境"
+
+msgid "no parameters to fit"
+msgstr "没有可用来拟合的参数值"
 
 msgid "No starting values specified"
 msgstr "没有设定初始值"
@@ -1534,19 +1558,22 @@ msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
-msgstr "无法为\"nls\"目标对象计算REML log-likelihood"
+msgstr "无法为\"nls\"对象计算REML log-likelihood"
 
 msgid "anova is only defined for sequences of \"nls\" objects"
-msgstr "anova只适用于\"nls\"目标对象序列"
+msgstr "anova只适用于\"nls\"对象序列"
 
 msgid "'anova' is only defined for sequences of \"nls\" objects"
-msgstr "'anova'只适用于\"nls\"目标对象序列"
+msgstr "'anova'只适用于\"nls\"对象序列"
 
 msgid "formula '%s' must be of the form '~expr'"
 msgstr "公式'%s'的形式必需是'~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
 msgstr "'%s'不可能有'%s'状态"
+
+msgid "a two-sided formula is required"
+msgstr "需要双边公式"
 
 msgid "not enough groups"
 msgstr "组个数不够"
@@ -1562,7 +1589,7 @@ msgid ""
 msgstr "L-BFGS-B方法用'factr'(和'pgtol') ，而不是'reltol'和'abstol'"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
-msgstr "用Nelder-Mead方法来算1维优化不很可靠，用optimize"
+msgstr "用Nelder-Mead方法来算一维优化不很可靠，用optimize"
 
 msgid "'x' must have 2 columns"
 msgstr "'x'必需有两列"
@@ -1574,7 +1601,7 @@ msgid "too few groups"
 msgstr "组数不够"
 
 msgid "use only with \"lm\" objects"
-msgstr "只对\"lm\"目标对象适用"
+msgstr "只对\"lm\"对象适用"
 
 msgid "'which' must be in 1:6"
 msgstr "'which'必需在1:6之间"
@@ -1641,7 +1668,7 @@ msgstr "'newdata'必需是矩阵或是数据框"
 msgid ""
 "'newdata' does not have named columns matching one or more of the original "
 "columns"
-msgstr "'newdata'同原始数据没有相同的列名"
+msgstr "'newdata'的列名同原始数据的列名没有任何相同的"
 
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata'列的数目不对"
@@ -1689,7 +1716,7 @@ msgid "'p' must have the same length as 'x' and 'n'"
 msgstr "'p'的长度必需同'x'和'n'的相等"
 
 msgid "elements of 'p' must be in (0,1)"
-msgstr "'p'的单元必需在(0,1) 里"
+msgstr "'p'的单元必需在(0,1)里"
 
 msgid "y is empty or has only NAs"
 msgstr "y是空的或只含NA"
@@ -1707,7 +1734,7 @@ msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "'na.rm'如果设为FALSE的话不允许有遺漏值和NaN"
 
 msgid "'probs' outside [0,1]"
-msgstr "'probs'在[0,1] 外"
+msgstr "'probs'在[0,1]外"
 
 msgid "invalid argument 'n'"
 msgstr "变元'n'不对"
@@ -1740,7 +1767,7 @@ msgid "there are records with missing times, which will be dropped."
 msgstr "含遺漏时间的记录略过不用。"
 
 msgid "some constant variables (%s) are really varying"
-msgstr "某些恆量变量(%s) 其实在变动"
+msgstr "某些恆量变量(%s)其实在变动"
 
 msgid "no 'time' or 'id' specified"
 msgstr "没有设定'time'或'id'"
@@ -1755,13 +1782,13 @@ msgid "'k' is bigger than 'n'!  Changing 'k' to"
 msgstr "'k'比'n'大! 把'k'改成"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
-msgstr "頻寬'k'必需 >= 1而且还是奇数!"
+msgstr "頻寬'k'必需大于等于一而且还必需是奇数!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "变元'object'的长度不可能取这个值"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
-msgstr "找不到\"%s\" 目标对象的'getInitial'方法"
+msgstr "找不到\"%s\" 对象的'getInitial'方法"
 
 msgid "sample size must be between 3 and 5000"
 msgstr "样本大小必需在3和5000之间"
@@ -1779,10 +1806,10 @@ msgid "attempt to smooth NA values"
 msgstr "不能平滑NA值"
 
 msgid "wrong endrule"
-msgstr "endrule不对"
+msgstr "尺尾不对"
 
 msgid "'nknots' must be numeric <= n"
-msgstr "'nknots'必需是 <= n的数值"
+msgstr "'nknots'必需是小于等于n的数值"
 
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr "内部结点数止比相互不同的'x'数目要多"
@@ -1794,10 +1821,10 @@ msgid "lengths of 'x' and 'w' must match"
 msgstr "'x'和'w'的长度必需相等"
 
 msgid "all weights should be non-negative"
-msgstr "所有的重量都必需是非负值"
+msgstr "所有的权数都必需是非负值"
 
 msgid "some weights should be positive"
-msgstr "至少有一些重量应该是正的"
+msgstr "至少有一些权数应该是正的"
 
 msgid "need at least four unique 'x' values"
 msgstr "至少需要四个相互不同的'x'值"
@@ -1812,7 +1839,7 @@ msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
 msgstr "NA lev[];很可能平滑参数'spar'的值太大了!"
 
 msgid "setting df = 1  __use with care!__"
-msgstr "设定df = 1  小心使用!"
+msgstr "设定df = 1， _小心使用!_"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr "需要的是.spline(*, keep.data=TRUE) 的运算结果"
@@ -1821,7 +1848,7 @@ msgid "type = \"partial\" is not yet implemented"
 msgstr "还没有实现type=\"partial\"的算法"
 
 msgid "not a valid \"smooth.spline\" object"
-msgstr " \"smooth.spline\"目标对象不对"
+msgstr " \"smooth.spline\"对象不对"
 
 msgid "'y' must be numeric vector"
 msgstr "'y'必需是数值向量"
@@ -1830,13 +1857,16 @@ msgid "number of observations in 'x' and 'y' must match."
 msgstr " 'x'和'y'里的观察量数目必需相等。"
 
 msgid "number of weights must match number of observations."
-msgstr "重量数目必需和观察量数目相同。"
+msgstr "权数数目必需和观察量数目相同。"
 
 msgid "'span' must be between 0 and 1."
-msgstr "'span'必需在0和1之间。"
+msgstr "'span'必需在零和一之间。"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
-msgstr "做周期平滑时'x'必需在0和1之间"
+msgstr "做周期平滑时'x'必需在零和一之间"
+
+msgid "no finite observations"
+msgstr "没有有限观察量"
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "删除了含NA, NaN或Inf的观察量"
@@ -1845,7 +1875,7 @@ msgid "'p' must be between 0 and 0.5"
 msgstr "'p'必需在0和0.5之间"
 
 msgid "length of 'p' must be 1 or equal the number of columns of 'x'"
-msgstr "'p'的长度必需是1或等于'x'的列数"
+msgstr "'p'的长度必需是零或等于'x'的列数"
 
 msgid "'x' must be a time series or an ar() fit"
 msgstr "'x'必需是时间序列或ar()拟合"
@@ -1854,19 +1884,19 @@ msgid "must specify 'spans' or a valid kernel"
 msgstr "必需设定'spans'或正确的内核"
 
 msgid "coverage probability out of range [0,1)"
-msgstr "覆蓋機率在值域 0,1) 外"
+msgstr "覆蓋機率在值域[0,1) 外"
 
 msgid "spline: first and last y values differ - using y[1] for both"
-msgstr "spline: 第一个和最后一个y的值不相等 -用y[1]"
+msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
 
 msgid "'deriv' must be between 0 and 3"
-msgstr "'deriv'必需在0和3之间"
+msgstr "'deriv'必需在零和三之间"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x'必需从小到大排序"
 
 msgid "'x' must have length >= 1"
-msgstr "'x'的长度必需 >= 1"
+msgstr "'x'的长度必需大于等于一"
 
 msgid "'y' must be one longer than 'x'"
 msgstr "'y'必需比'x'长"
@@ -1881,7 +1911,7 @@ msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr "調用'plot.stepfun'时变元'x'的种类不对"
 
 msgid "must be 0 or 1"
-msgstr "必需是0或1"
+msgstr "必需是零或一"
 
 msgid "only univariate series are allowed"
 msgstr "只允许单变量序列"
@@ -1935,7 +1965,7 @@ msgid "singularities in regression"
 msgstr "迴歸产生了奇异"
 
 msgid "'ts' object must have one or more observations"
-msgstr "'ts'目标对象至少必需有一个或多个观察量"
+msgstr "'ts'对象至少必需有一个或多个观察量"
 
 msgid "'start' cannot be after 'end'"
 msgstr "'start'不能大于'end'"
@@ -1989,7 +2019,7 @@ msgid "'end' value not changed"
 msgstr "'end'值没有变化"
 
 msgid "'start' > 'end'"
-msgstr "'start' > 'end'"
+msgstr "'start'大于'end'"
 
 msgid "extending time series when replacing values"
 msgstr "替換时将时间序列延长"
@@ -2039,7 +2069,7 @@ msgid "insufficient observations"
 msgstr "观察量数目不够"
 
 msgid "need an object with call component"
-msgstr "需要一个有調用组件的目标对象"
+msgstr "需要一个有調用组件的对象"
 
 msgid "'ratio' must be a single positive number"
 msgstr "'ratio'必需是单一的正数"
@@ -2063,7 +2093,7 @@ msgid "cannot compute exact p-value with zeroes"
 msgstr "有0时无法計算精確的p值"
 
 msgid "cannot compute exact confidence interval with zeroes"
-msgstr "有0时无法計算精確的置信区间"
+msgstr "有零时无法計算精確的置信区间"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "至少要提供'formula'和'data'中间的一个"
@@ -2090,7 +2120,7 @@ msgid "must have length of response = length of second argument to 'SSfol'"
 msgstr "反应的长度必需同'SSfol'的第二个变元的长度相同"
 
 msgid "must have at least 4 observations to fit an 'SSfol' model"
-msgstr "至少有4个观察量才能拟合'SSfol'模型"
+msgstr "至少要有四个观察量才能拟合'SSfol'模型"
 
 msgid "too few distinct input values to fit a four-parameter logistic"
 msgstr "因为相互不同的输入值太少，无法拟合四个参数的逻辑斯特模型"
@@ -2112,18 +2142,21 @@ msgstr "所有'x'的值都必需是非负的才能拟合Weibull成长模型"
 
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
-msgstr[0] "有%d个Error项，但最多只允许有1个"
+msgstr[0] "有%d个错误项，但最多只允许有一个"
 msgstr[1] ""
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] "因为不存在%d个观察量被删除了"
+msgstr[0] "因为不存在，%d个观察量被删除了"
 msgstr[1] ""
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "contrasts not defined for 0 degrees of freedom"
+#~ msgstr "零自由度不能设对比"
 
 #~ msgid "Convergence failure:"
 #~ msgstr "没有收斂："

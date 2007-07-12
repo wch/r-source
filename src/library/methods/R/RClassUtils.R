@@ -562,6 +562,7 @@ reconcilePropertiesAndPrototype <-
       StandardPrototype <- defaultPrototype()
       slots <-  validSlotNames(allNames(properties))
       dataPartClass <- elNamed(properties, ".Data")
+      dataPartValue <- FALSE
       if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, name)))
           stop(gettextf("in defining class \"%s\", the supplied data part class, \"%s\" is not valid (must be a basic class or a virtual class combining basic classes)", name, dataPartClass), domain = NA)
       prototypeClass <- getClass(class(prototype), where = where)
@@ -577,8 +578,13 @@ reconcilePropertiesAndPrototype <-
                       if(!is.na(match(thisDataPart, c("NULL", "environment"))))
                           warning(gettextf("class \"%s\" cannot be used as the data part of another class",
                                            thisDataPart), domain = NA)
-                      else
+                      else {
                           dataPartClass <- thisDataPart
+                          if(!is.null(clDef@prototype)) {
+                            newObject <- clDef@prototype
+                            dataPartValue <- TRUE
+                          }
+                      }
                   }
                   else if(!extends(dataPartClass, thisDataPart) &&
                           !isVirtualClass(thisDataPart, where = where))
@@ -598,7 +604,9 @@ reconcilePropertiesAndPrototype <-
                        domain = NA)
               pslots <- NULL
               if(is.null(prototype)) {
-                  if(isVirtualClass(dataPartClass, where = where))
+                  if(dataPartValue)
+                      prototype <- newObject
+                  else if(isVirtualClass(dataPartClass, where = where))
                       ## the equivalent of new("vector")
                       prototype <- newBasic("logical")
                   else
@@ -609,7 +617,8 @@ reconcilePropertiesAndPrototype <-
                   if(extends(prototypeClass, "classPrototypeDef")) {
                       hasDataPart <- identical(prototype@dataPart, TRUE)
                       if(!hasDataPart) {
-                          newObject <- new(dataPartClass)
+                          if(!dataPartValue) # didn't get a .Data object
+                            newObject <- new(dataPartClass)
                           pobject <- prototype@object
                           ## small amount of head-standing to preserve
                           ## any attributes in newObject & not in pobject
@@ -700,10 +709,11 @@ reconcilePropertiesAndPrototype <-
       what <- seq_along(properties)
       props <- properties[what]
       what <- slots[what]
+      nm <- names(attributes(prototype))
       for(i in seq_along(what)) {
           propName <- el(what, i)
-          if(!identical(propName, ".Data") &&
-             is.null(attr(prototype, propName)))
+          if(!identical(propName, ".Data") && !propName %in% nm)
+#             is.null(attr(prototype, propName)))
               slot(prototype, propName, FALSE) <- tryNew(el(props, i), where)
       }
       list(properties = properties, prototype = prototype)
@@ -801,7 +811,7 @@ showExtends <-
     }
     if(identical(printTo, FALSE))
         list(what = what, how = how)
-    else if(all(nchar(how)==0)|| all(how == "directly")) {
+    else if(all(!nzchar(how)) ||  all(how == "directly")) {
         what <- paste('"', what, '"', sep="")
         if(length(what)>1)
             what <- c(paste(what[-length(what)], ",", sep=""), what[[length(what)]])
@@ -1038,7 +1048,7 @@ requireMethods <-
 
 ## Construct an error message for an unsatisfied required method.
 .missingMethod <- function(f, message = "", method) {
-    if(nchar(message)>0)
+    if(nzchar(message))
         message <- paste("(", message, ")", sep="")
     message <- paste("for function", f, message)
     if(is(method, "MethodDefinition")) {
@@ -1134,15 +1144,14 @@ setDataPart <- function(object, value) {
     else
         ClassDef <- getClass(cl, TRUE)
 
-    value <- elNamed(ClassDef@slots, ".Data")
+    switch(cl, ts =, matrix = , array = value <- cl,
+           value <- elNamed(ClassDef@slots, ".Data"))
     if(is.null(value)) {
         if(.identC(cl, "structure"))
             value <- "vector"
         else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
             value <- cl
         else if(extends(cl, "oldClass") && isVirtualClass(cl)) {
-            if(.identC(cl, "ts"))
-                value <- cl
             ## The following warning is obsolete if S3 classes can be
             ## non-virtual--the subclass can have a prototype
 
@@ -1380,19 +1389,23 @@ newClassRepresentation <- function(...) {
         cl
 }
 
-substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent = FALSE) {
+substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent = FALSE, functionName = "a function") {
     if(!identical(args, newArgs)) {
+        if( !missing(functionName) )
+            functionName = paste("for", functionName)
+        
         n <- length(args)
         if(n != length(newArgs))
-            stop(gettextf("trying to change the argument list of a function with %d arguments to have arguments (%s)",
-                          n, paste(newArgs, collapse = ", ")),
+            stop(gettextf("trying to change the argument list of %s with %d arguments to have arguments (%s)",
+                          functionName, n, paste(newArgs, collapse = ", ")),
                  domain = NA)
         bdy <- body(def)
         ## check for other uses of newArgs
         checkFor <- newArgs[is.na(match(newArgs, args))]
         locals <- all.vars(bdy)
         if(length(checkFor) > 0 && any(!is.na(match(checkFor, locals))))
-            stop(gettextf("get rid of variables in definition (%s); they conflict with the needed change to argument names (%s)",
+            stop(gettextf("get rid of variables in definition %s (%s); they conflict with the needed change to argument names (%s)",
+                          functionName,
                           paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
                           paste(newArgs, collapse = ", ")), domain = NA)
         ll <- vector("list", 2*n)
@@ -1404,7 +1417,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         body(def, envir = environment(def)) <- substituteDirect(bdy, ll)
         if(!silent) {
             msg <-
-                gettextf("arguments in definition changed from (%s) to (%s)",
+                gettextf("arguments in definition %s changed from (%s) to (%s)",
+                         functionName,
                          paste(args, collapse = ", "),
                          paste(newArgs, collapse = ", "))
             message(strwrap(msg), domain = NA)
@@ -1414,12 +1428,10 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 }
 
 .makeValidityMethod <- function(Class, validity) {
-    if(is.null(validity)) {
-    }
-    else {
+    if(!is.null(validity)) {
         if(!is(validity, "function"))
             stop(gettextf("a validity method must be a function of one argument, got an object of class \"%s\"", class(validity)), domain = NA)
-        validity <- substituteFunctionArgs(validity, "object")
+        validity <- substituteFunctionArgs(validity, "object", functionName = paste("validity method for class", Class))
     }
     validity
 }
@@ -1559,31 +1571,32 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## they use getClassDef and .getGeneric resp.  Also, .getEnv returns baseenv() rather
 ## than generating an error if no generic found (so getGeneric can return gen'c for prim'ves)
 
-.genEnv <-  function(f, default = .requirePackage("methods"), package = "") {
-        if(nchar(package) == 0)
-          package <- packageSlot(f)
-        if(is.null(package)) {
-            ## use the default, but check that the object is there, and if not
-            ## try a couple of other heuristics
-            value <- default
+.genEnv <-  function(f, default = .requirePackage("methods"), package = "")
+{
+    if(!nzchar(package))
+        package <- packageSlot(f)
+    if(is.null(package)) {
+        ## use the default, but check that the object is there, and if not
+        ## try a couple of other heuristics
+        value <- default
+        def <- .getGeneric(f, value)
+        if(is.null(def)) {
+            value <- .GlobalEnv
             def <- .getGeneric(f, value)
             if(is.null(def)) {
-                value <- .GlobalEnv
-                def <- .getGeneric(f, value)
-                if(is.null(def)) {
-                    value <- .requirePackage("methods")
-                    if(!identical(default, value)) # user supplied default
-                        def <- .getGeneric(f, value)
-                }
+                value <- .requirePackage("methods")
+                if(!identical(default, value)) # user supplied default
+                    def <- .getGeneric(f, value)
             }
-            if(is.null(def))
-                baseenv()
-            else
-                value
         }
+        if(is.null(def))
+            baseenv()
         else
-            .requirePackage(package)
+            value
     }
+    else
+        .requirePackage(package)
+}
 
 ## cache and retrieve class definitions  If there is a conflict with
 ## packages a list of  classes will be cached
@@ -1669,7 +1682,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
       subclasses <- class
     subs <- def@subclasses
     subNames <- names(subs)
-    for(i in seq(along = subs)) {
+    for(i in seq_along(subs)) {
         what <- subNames[[i]]
         subDef <- getClassDef(what)
         if(is.null(subDef))
@@ -1691,18 +1704,25 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## alternative to .recacheSubclasses, only needed for non-unions
 ## Inferior in that nonlocal subclasses will not be updated, hence the
 ## warning when the subclass is not in where
-.checkSubclasses <- function(class, def, class2, def2, where) {
+.checkSubclasses <- function(class, def, class2, def2, where, where2) {
     where <- as.environment(where)
+    where2 <- as.environment(where2)
    subs <- def@subclasses
     subNames <- names(subs)
     extDefs <- def2@subclasses
-    for(i in seq(along = subs)) {
+    for(i in seq_along(subs)) {
         what <- subNames[[i]]
         if(.identC(what, class2))
           next # catch recursive relations
         cname <- classMetaName(what)
-        if(exists(cname, envir = where, inherits = FALSE))
-          subDef <- get(cname, where)
+        if(exists(cname, envir = where, inherits = FALSE)) {
+            subDef <- get(cname, envir = where)
+            cwhere <- where
+        }
+        else if(exists(cname, envir = where2, inherits = FALSE)) {
+            subDef <- get(cname, envir = where2)
+            cwhere <- where2
+        }
         else {
           warning(
              gettextf("Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new inheritance information; consider setClassUnion()",
@@ -1716,7 +1736,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                        what, def2@className, class))
         else if(is.na(match(class2, names(subDef@contains)))) {
             subDef@contains[[class2]] <- extension
-            assignClassDef(what, subDef, where, TRUE)
+            assignClassDef(what, subDef, cwhere, TRUE)
         }
     }
 }
@@ -1736,8 +1756,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         }
     }
 }
-      
-    
+
+
 ## remove subclass from the known subclasses of class
 ## both in the package environment and in the cache
 .removeSubClass <- function(class, subclass, where) {
@@ -1748,7 +1768,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         newdef <- .deleteSubClass(cdef, subclass)
         if(!is.null(newdef))
           assignClassDef(class, newdef,  where, TRUE)
-        else { # check the cache 
+        else { # check the cache
             cdef <- .getClassFromCache(cdef@className, where)
             if(is.null(cdef)) {}
             else {

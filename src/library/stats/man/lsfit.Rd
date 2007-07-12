@@ -50,7 +50,7 @@ A list with the following named components:
 \code{\link{ls.print}}, \code{\link{ls.diag}}.
 }
 \examples{
-\dontshow{example("lm", echo = FALSE)}
+\dontshow{utils::example("lm", echo = FALSE)}
 ##-- Using the same data as the lm(.) example:
 lsD9 <- lsfit(x = unclass(gl(2,10)), y = weight)
 ls.print(lsD9)

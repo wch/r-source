@@ -1,9 +1,12 @@
 oneway.test <-
-function(formula, data, subset, na.action, var.equal = FALSE) {
+function(formula, data, subset, na.action, var.equal = FALSE)
+{
     if(missing(formula) || (length(formula) != 3))
         stop("'formula' missing or incorrect")
-    DNAME <- paste(deparse(substitute(formula)[[2]]), "and",
-                   deparse(substitute(formula)[[3]]))
+    dp <- as.character(formula)
+    if(length(dp) != 3)
+        stop("a two-sided formula is required")
+    DNAME <- paste(dp[[2]], "and", dp[[3]])
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
@@ -33,7 +36,7 @@ function(formula, data, subset, na.action, var.equal = FALSE) {
         STATISTIC <- ((sum(n.i * (m.i - mean(y))^2) / (k - 1)) /
                       (sum((n.i - 1) * v.i) / (n - k)))
         PARAMETER <- c(k - 1, n - k)
-        PVAL <- pf(STATISTIC, k - 1, n - k, lower = FALSE)
+        PVAL <- pf(STATISTIC, k - 1, n - k, lower.tail = FALSE)
     }
     else {
         ## STATISTIC <- sum(w.i * (m.i - mean(y))^2) /
@@ -42,7 +45,7 @@ function(formula, data, subset, na.action, var.equal = FALSE) {
         STATISTIC <- sum(w.i * (m.i - m)^2) /
             ((k - 1) * (1 + 2 * (k - 2) * tmp))
         PARAMETER <- c(k - 1, 1 / (3 * tmp))
-        PVAL <- pf(STATISTIC, k - 1, 1 / (3 * tmp), lower = FALSE)
+        PVAL <- pf(STATISTIC, k - 1, 1 / (3 * tmp), lower.tail = FALSE)
         METHOD <- paste(METHOD, "(not assuming equal variances)")
     }
     names(STATISTIC) <- "F"

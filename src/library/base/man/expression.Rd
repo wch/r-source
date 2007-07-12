@@ -14,18 +14,20 @@ is.expression(x)
 as.expression(x, \dots)
 }
 \arguments{
-  \item{\dots}{valid \R calls, symbols or constants.}
+  \item{\dots}{\code{expression}: \R objects, typically calls, symbols
+    or constants.\cr
+    \code{as.expression}: arguments to be passed to methods.}
   \item{x}{an arbitrary \R object.}
 }
 \details{
   \sQuote{Expression} here is not being used in its colloquial sense,
   that of mathematical expressions.  Those are calls (see
   \code{\link{call}}) in \R, and an \R expression vector is a list of
-  calls etc, typically as returned by \code{\link{parse}}.
+  calls, symbols etc, typically as returned by \code{\link{parse}}.
 
   As an object of mode \code{"expression"} is a list, it can be
   subsetted by both \code{[} and by \code{[[}, the latter extracting
-  individual calls.
+  individual calls etc.
 }
 \value{
   \code{expression} returns a vector of type \code{"expression"}
@@ -35,7 +37,12 @@ as.expression(x, \dots)
   expression object and \code{FALSE} otherwise.
 
   \code{as.expression} attempts to coerce its argument into an
-  expression object.
+  expression object.  It is generic, and only the default method is
+  described here.  \code{NULL}, calls, symbols (see
+  \code{\link{as.symbol}}) and pairlists are returned as the element of
+  a length-one expression vector.  Vectors (including lists) are placed
+  element-by-element into an expression vector.  Other types are not
+  currently supported.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

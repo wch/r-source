@@ -1,8 +1,5 @@
-## till R 1.1.1:
-match <- function(x, table, nomatch=NA)
-    .Internal(match(as.character(x), as.character(table), nomatch))
-## New:
-match <- function(x, table, nomatch=NA, incomparables = FALSE) {
+match <- function(x, table, nomatch = NA_integer_, incomparables = FALSE)
+{
     if(!is.logical(incomparables) || incomparables)
         .NotYetUsed("incomparables != FALSE")
     .Internal(match(if(is.factor(x)) as.character(x) else x,
@@ -14,13 +11,9 @@ match.call <-
     function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)
     .Internal(match.call(definition,call,expand.dots))
 
-pmatch <-
-    function(x, table, nomatch=NA, duplicates.ok=FALSE)
-{
-    y <- .Internal(pmatch(as.character(x), as.character(table), duplicates.ok))
-    y[y == 0] <- nomatch
-    y
-}
+pmatch <- function(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
+    .Internal(pmatch(as.character(x), as.character(table), nomatch,
+                     duplicates.ok))
 
 "%in%" <- function(x, table) match(x, table, nomatch = 0) > 0
 
@@ -47,22 +40,16 @@ match.arg <- function (arg, choices, several.ok = FALSE)
     choices[i]
 }
 
-charmatch <-
-    function(x, table, nomatch=NA)
-{
-    y <- .Internal(charmatch(as.character(x), as.character(table)))
-    y[is.na(y)] <- nomatch
-    y
-}
+charmatch <- function(x, table, nomatch = NA_integer_)
+    y <- .Internal(charmatch(as.character(x), as.character(table), nomatch))
 
-char.expand <-
-    function(input, target, nomatch = stop("no match"))
+char.expand <- function(input, target, nomatch = stop("no match"))
 {
     if(length(input) != 1)
 	stop("'input' must have length 1")
     if(!(is.character(input) && is.character(target)))
 	stop("'input' and 'target' must be character vectors")
-    y <- .Internal(charmatch(input,target))
+    y <- .Internal(charmatch(input, target, NA_integer_))
     if(any(is.na(y))) eval(nomatch)
     target[y]
 }

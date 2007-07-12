@@ -6,7 +6,8 @@
   list.
 }
 \usage{
-parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile)
+parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
+      encoding = "unknown")
 }
 \arguments{
   \item{file}{a connection, or a character string giving the name of a
@@ -21,7 +22,11 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile)
     to character (without method dispatch) if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-  \item{srcfile}{\code{NULL}, or a \code{\link{srcfile}} object.  See the Details.}
+  \item{srcfile}{\code{NULL}, or a \code{\link{srcfile}} object.  See
+    the Details section.}
+  \item{encoding}{encoding to be assumed for input strings.  It is
+    used to mark character strings as known to be in
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -64,9 +69,13 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile)
 
   When \code{srcfile} is non-\code{NULL}, a \code{"srcref"} attribute
   will be attached to the result containing a list of \code{\link{srcref}}
-  records corresponding to each element.
+  records corresponding to each element, and a \code{"srcfile"} attribute
+  will be attached containing a copy of \code{srcfile}.
   
   A syntax error (including an incomplete expression) will throw an error.
+
+  Character strings in the result will have a declared encoding if
+  \code{encoding} is \code{"latin1"} or \code{"UTF-8"}.
 }
 \examples{
 cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")

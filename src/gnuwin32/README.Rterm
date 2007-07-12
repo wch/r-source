@@ -63,7 +63,9 @@ ESC-B   : Move cursor backward one word.
 ^W      : Deletes the previous word
 ^Y	: Yank previously killed text back at current location.  Note that
 	  this will overwrite or insert, depending on the current mode.
-TAB	: Adds spaces to buffer to get to next TAB stop (just after 
-          every 8th column).
+TAB	: Within quotes, completes the current word as a file name,
+	  otherwise as an R object name.  Completion is does as far as 
+	  can be done unambiguously.  A second press shows alternative 
+	  completions.
 NL, CR  : returns current buffer to the program.
 

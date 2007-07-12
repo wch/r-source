@@ -65,33 +65,29 @@ void 	gchangepopup(window w, popup p);
 /* next is limited to current window... */
 void 	gchangemenubar(menubar mb);
 
-/* winalloc.c */
-#include <stddef.h> /* for size_t */
-void 	*winmalloc(size_t size);
-void  	winfree(void *block);
-void 	*winrealloc(void *block, size_t newsize);
-char 	*winstrdup(char *s);
 
 /* tooltips.c */
-int 	addtooltip(control c, char *tp);
+int 	addtooltip(control c, const char *tp);
 
 /* status.c */
 int 	addstatusbar();
-void 	setstatus(char *text);
+int 	delstatusbar();
+void 	setstatus(const char *text);
 
 /* dialogs.c */
-void 	setuserfilter(char *);
+void 	setuserfilter(const char *);
 void    askchangedir();
-char *	askcdstring(char *question, char *default_string);
-char *	askfilesavewithdir(char *title, char *default_name, char *dir);
-char *  askfilenames(char *title, char *default_name, int multi,
-			       char *filters, int filterindex, char *strbuf, int bufsize,
-			       char *dir);
-int	    countFilenames(char *strbuf); /* Note that first name is path when there are multiple names */
+char *	askcdstring(const char *question, const char *default_string);
+char *	askfilesavewithdir(const char *title, const char *default_name, 
+			   const char *dir);
+char *  askfilenames(const char *title, const char *default_name, int multi,
+		     const char *filters, int filterindex, char *strbuf,
+		     int bufsize, const char *dir);
+int     countFilenames(const char *strbuf); /* Note that first name is path when there are multiple names */
 
 /*  rgb.c */
-rgb     nametorgb(char *colourname);
-char *  rgbtoname(rgb in);
+rgb     nametorgb(const char *colourname);
+const char *  rgbtoname(rgb in);
 int     rgbtonum(rgb in);
 rgb     myGetSysColor(int);
 rgb 	dialog_bg();
@@ -99,7 +95,7 @@ rgb 	dialog_bg();
 
 /* clipboard.c */
 void    copytoclipboard(drawing src);
-int     copystringtoclipboard(char *str);
+int     copystringtoclipboard(const char *str);
 int     getstringfromclipboard(char * str, int n);
 int     clipboardhastext();
 
@@ -108,12 +104,12 @@ image  bitmaptoimage(bitmap bm);
 
 /* printer.c  */
 typedef objptr printer;
-printer newprinter(double w,  double h, char *name);
+printer newprinter(double w,  double h, const char *name);
 void    nextpage();
 
 /* metafile.c */
 typedef objptr metafile;
-metafile newmetafile(char *name, double width, double height);
+metafile newmetafile(const char *name, double width, double height);
 
 
 /* thread safe and extended  drawing functions (gdraw.c) */
@@ -141,6 +137,8 @@ void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
 void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast,
 		int lend, int ljoin, float lmitre);
 void  gfillrect(drawing d, rgb fill, rect r);
+void  gcopy(drawing d, drawing d2, rect r);
+void  gcopyalpha(drawing d, drawing d2, rect r, int alpha);
 void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
 		   int lend, int ljoin, float lmitre);
 void  gfillellipse(drawing d, rgb fill, rect r);
@@ -149,24 +147,24 @@ void  gdrawpolyline(drawing d, int width, int style, rgb c,
 		    int lend, int ljoin, float lmitre);
 #define gdrawpolygon(d,w,s,c,p,n,f,e,j,m) gdrawpolyline(d,w,s,c,p,n,1,f,e,j,m)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
-int   gdrawstr(drawing d, font f, rgb c, point p, char *s);
-void  gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
-rect  gstrrect(drawing d, font f, char *s);
-point gstrsize(drawing d, font f, char *s);
-int   gstrwidth(drawing d ,font f, char *s);
+int   gdrawstr(drawing d, font f, rgb c, point p, const char *s);
+void  gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj);
+rect  gstrrect(drawing d, font f, const char *s);
+point gstrsize(drawing d, font f, const char *s);
+int   gstrwidth(drawing d ,font f, const char *s);
 void  gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-font  gnewfont(drawing d,char *face, int style, int size, double rot);
+font  gnewfont(drawing d, const char *face, int style, int size, double rot);
 int   ghasfixedwidth(font f);
-field newfield_no_border(char *text, rect r);
+field newfield_no_border(const char *text, rect r);
 
 #ifdef SUPPORT_UTF8
-void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj);
-int gwstrwidth(drawing d, font f, char *s);
+void gwdrawstr(drawing d, font f, rgb c, point p, const char *s, double hadj);
+int gwstrwidth(drawing d, font f, const char *s);
 #endif
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
+void gwdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj);
 
 
 /* pixels */
@@ -214,8 +212,12 @@ void replacedialog(textbox t);
 int modeless_active();
 
 
-/* menus.h */
+/* menus.c */
 void 	remove_menu_item(menuitem obj);
+
+/* events.c */
+void toolbar_show();
+void toolbar_hide();
 
 #endif /* __GA__VERSION */
 

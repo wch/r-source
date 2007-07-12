@@ -19,8 +19,8 @@ write.csv2(\dots)
 \arguments{
   \item{x}{the object to be written, preferably a matrix or data frame.
     If not, it is attempted to coerce \code{x} to a data frame.}
-  \item{file}{either a character string naming a file or a connection.
-    \code{""} indicates output to the console.}
+  \item{file}{either a character string naming a file or a connection
+    open for writing.  \code{""} indicates output to the console.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
     file.  If \code{FALSE}, any existing file of the name is destroyed.}
   \item{quote}{a logical value (\code{TRUE} or \code{FALSE}) or a
@@ -80,12 +80,15 @@ write.csv2(\dots)
   such conversions.
 
   In almost all cases the conversion of numeric quantities is governed
-  by the options in force, in particular by \code{"digits"} and
-  \code{"scipen"} (see \code{\link{options}}).  For finer control, use
+  by the option \code{"scipen"} (see \code{\link{options}}), but with
+  the internal equivalent of \code{digits=15}.  For finer control, use
   \code{\link{format}} to make a character matrix/data frame, and call
   \code{write.table} on that.
 
   These functions check for a user interrupt every 1000 lines of output.
+
+  If \code{file} is not open for writing, an attempt is made to open it
+  and then close it after use. 
 }
 \section{CSV files}{
   By default there is no column name for a column of row names.  If

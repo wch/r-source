@@ -71,7 +71,8 @@ oldClass(x) <- value
   \code{\link{UseMethod}} dispatches on the class as returned by
   \code{class} (with some interpolated classes: see the link) rather
   than \code{oldClass}.  \emph{However}, \link{group generic}s dispatch
-  on the \code{oldClass} for efficiency.
+  on the \code{oldClass} for efficiency, and \link{internal generic}s
+  only dispatch on objects for which \code{\link{is.object}} is true.
 }
 
 \section{Formal classes}{
@@ -85,7 +86,10 @@ oldClass(x) <- value
   replacing the class this way is strongly deprecated.  The expression
   \code{\link[methods]{as}(object, value)} is the way to coerce an object to a
   particular class.
+
+  The analogue of \code{inherits} for formal classes is \code{\link{is}}.
 }
+
 \seealso{
   \code{\link{UseMethod}}, \code{\link{NextMethod}},
   \code{\link{group generic}}.

@@ -19,6 +19,8 @@ n2mfrow(nr.plots)
 \author{Martin Maechler}
 \seealso{\code{\link{par}}, \code{\link{layout}}.}
 \examples{
+require(graphics)
+
 n2mfrow(8) # 3 x 3
 
 n <- 5 ; x <- seq(-2,2, len=51)

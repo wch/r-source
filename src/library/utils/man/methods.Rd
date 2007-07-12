@@ -58,6 +58,8 @@ methods(generic.function, class)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
+
 methods(summary)
 methods(class = "aov")
 methods("[[")    # uses C-internal dispatching
@@ -65,6 +67,7 @@ methods("$")
 methods("$<-")   # replacement function
 methods("+")     # binary operator
 methods("Math")  # group generic
+require(graphics)
 methods("axis")  # looks like it has methods, but not generic
 \dontrun{methods(print)   # over 100
 }}

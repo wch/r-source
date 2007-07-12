@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2004  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2005-6      The R Development Core Team
+ *  Copyright (C) 2005-7      The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,37 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 #define alloca(x) __builtin_alloca((x)) /* always GNUC */
 
 static int getcharset(void);
+
+/* Some of the ideas in haveAlpha are borrowed from Cairo */
+typedef BOOL 
+(WINAPI *alpha_blend_t) (HDC, int, int, int, int, HDC, int, int, int, int,
+			 BLENDFUNCTION);
+
+static alpha_blend_t AlphaBlend;
+
+static int haveAlpha()
+{
+    static int haveAlphaBlend = -1;
+
+    if(haveAlphaBlend < 0) {    
+	/* AlphaBlend is in msimg32.dll.  
+	   It is apparently is broken on Win 98, so we require NT >= 5 */
+	OSVERSIONINFO os;
+	os.dwOSVersionInfoSize = sizeof(os);
+        GetVersionEx (&os);
+	if (os.dwPlatformId == VER_PLATFORM_WIN32_NT && os.dwMajorVersion >= 5)
+	{
+            HMODULE msimg32 = LoadLibrary("msimg32");
+            if (msimg32) {
+                AlphaBlend = 
+		    (alpha_blend_t) GetProcAddress(msimg32, "AlphaBlend");
+		haveAlphaBlend = 1;
+		/* printf("loaded AlphaBlend %p\n", (void *) AlphaBlend); */
+	    } else haveAlphaBlend = 0;
+	}
+    }
+    return haveAlphaBlend;
+}
 
 static HDC GETHDC(drawing d)
 {
@@ -316,6 +347,28 @@ void gfillrect(drawing d, rgb fill, rect r)
     DeleteObject(br);
 }
 
+void gcopy(drawing d, drawing d2, rect r)
+{
+    HDC dc = GETHDC(d), sdc = GETHDC(d2);
+    BitBlt(dc, r.x, r.y, r.width, r.height, sdc, r.x, r.y, SRCCOPY);
+}
+
+void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
+{
+    if(alpha <= 0 || !haveAlpha()) return;
+    {
+	HDC dc = GETHDC(d), sdc = GETHDC(d2);
+	BLENDFUNCTION bl;
+	bl.BlendOp = AC_SRC_OVER;
+	bl.BlendFlags = 0;
+	bl.SourceConstantAlpha = alpha;
+	bl.AlphaFormat = 0;
+	AlphaBlend(dc, r.x, r.y, r.width, r.height,
+		   sdc, r.x, r.y, r.width, r.height,
+		   bl);
+    }
+}
+
 void gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
 		  int lend, int ljoin, float lmitre)
 {
@@ -466,7 +519,7 @@ void gfillpolygon(drawing d, rgb fill, point *p, int n)
 }
 
 /* For ordinary text, e.g. in console */
-int gdrawstr(drawing d, font f, rgb c, point p, char *s)
+int gdrawstr(drawing d, font f, rgb c, point p, const char *s)
 {
     POINT curr_pos;
     int width;
@@ -496,7 +549,7 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
 }
 
 /* This version aligns on baseline, and allows hadj = 0, 0.5, 1 */
-void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
+void gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
@@ -515,7 +568,7 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 }
 
 /* This version interprets 's' as MBCS in the current locale */
-void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
+void gwdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
@@ -540,7 +593,7 @@ void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 #include <wchar.h>
 size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 
-void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj)
+void gwdrawstr(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
@@ -561,7 +614,7 @@ void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj)
 }
 #endif
 
-rect gstrrect(drawing d, font f, char *s)
+rect gstrrect(drawing d, font f, const char *s)
 {
     SIZE size;
     HFONT old;
@@ -579,20 +632,20 @@ rect gstrrect(drawing d, font f, char *s)
     return rect(0, 0, size.cx, size.cy);
 }
 
-point gstrsize(drawing d, font f, char *s)
+point gstrsize(drawing d, font f, const char *s)
 {
     rect r = gstrrect(d, f, s);
     return pt(r.width, r.height);
 }
 
-int gstrwidth(drawing d, font f, char *s)
+int gstrwidth(drawing d, font f, const char *s)
 {
     rect r = gstrrect(d, f ,s);
     return r.width;
 }
 
 #ifdef SUPPORT_UTF8
-static rect gwstrrect(drawing d, font f, char *s)
+static rect gwstrrect(drawing d, font f, const char *s)
 {
     SIZE size;
     HFONT old;
@@ -613,7 +666,7 @@ static rect gwstrrect(drawing d, font f, char *s)
     return rect(0, 0, size.cx, size.cy);
 }
 
-int gwstrwidth(drawing d, font f, char *s)
+int gwstrwidth(drawing d, font f, const char *s)
 {
     rect r = gwstrrect(d,f,s);
     return r.width;
@@ -774,7 +827,7 @@ void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     }
 }
 
-font gnewfont(drawing d, char *face, int style, int size, double rot)
+font gnewfont(drawing d, const char *face, int style, int size, double rot)
 {
     font obj;
     HFONT hf;
@@ -797,7 +850,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
     if ((strlen(face) > 1) && (face[0] == 'T') && (face[1] == 'T')) {
-        char *pf;
+        const char *pf;
         lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
         for (pf = &face[2]; isspace(*pf) ; pf++);
         strncpy(lf.lfFaceName, pf, LF_FACESIZE-1);

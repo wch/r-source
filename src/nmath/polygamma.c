@@ -168,8 +168,6 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	 4.88332318973593167e+14,
 	-1.92965793419400681e+16
     };
-    const static double *b = (double *)&bvalues -1; /* ==> b[1] = bvalues[0], etc */
-    const int nmax = n_max;
 
     int i, j, k, mm, mx, nn, np, nx, fn;
     double arg, den, elim, eps, fln, fx, rln, rxsq,
@@ -363,12 +361,12 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     rxsq = 1.0 / (xdmy * xdmy);
     ta = 0.5 * rxsq;
     t = (fn + 1) * ta;
-    s = t * b[3];
+    s = t * bvalues[2];
     if (fabs(s) >= tst) {
 	tk = 2.0;
 	for(k = 4; k <= 22; k++) {
 	    t = t * ((tk + fn + 1)/(tk + 1.0))*((tk + fn)/(tk + 2.0)) * rxsq;
-	    trm[k] = t * b[k];
+	    trm[k] = t * bvalues[k-1];
 	    if (fabs(trm[k]) < tst)
 		break;
 	    s += trm[k];
@@ -382,7 +380,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 
 	nx = (int)xinc;
 	np = nn + 1;
-	if (nx > nmax) {
+	if (nx > n_max) {
 	    *nz = 0;
 	    *ierr = 3;
 	    return;
@@ -415,7 +413,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	if (fn!=0)
 	    t1 = tt + 1.0 / fn;
 	t = (fn + 1) * ta;
-	s = t * b[3];
+	s = t * bvalues[2];
 	if (fabs(s) >= tst) {
 	    tk = 4 + fn;
 	    for(k=4; k <= 22; k++) {

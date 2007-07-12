@@ -87,7 +87,7 @@ plot.isoreg <-
 	plot (x0, cy, type = "n", xlab = xlab,
 	      ylab = paste("cumsum(", ylab, ")", sep=""), ylim = range(cy, cf),
               ...)
-        i <- 1:1 + x$iKnots
+        i <- 1L + x$iKnots
         lines(x0, cf, col = par.fit$col, lwd = par.fit$lwd)
         points(x0[i], cy[i], col = par.fit$col, cex = par.fit$cex,
                pch = par.fit$pch)

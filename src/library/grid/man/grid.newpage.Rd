@@ -16,7 +16,7 @@ grid.newpage(recording = TRUE)
   which is used in the testing code to annotate the new page.  The hook
   function(s) are called with no argument.  (If the value is a character
   string, \code{get} is called on it from within the \pkg{grid}
-  namespace.)
+  name space.)
 }
 \value{
   None.

@@ -177,7 +177,7 @@ void textRect(double x, double y, SEXP text, int i,
 	h = fromDeviceHeight(GEExpressionHeight(expr, gc, dd),
 			     GE_INCHES, dd);
     } else {
-	char* string = CHAR(STRING_ELT(text, i % LENGTH(text)));
+	const char* string = translateChar(STRING_ELT(text, i % LENGTH(text)));
 	w = fromDeviceWidth(GEStrWidth(string, gc, dd),
 			    GE_INCHES, dd);
 	h = fromDeviceHeight(GEStrHeight(string, gc, dd),

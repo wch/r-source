@@ -13,6 +13,8 @@ exitstatus=${3}
 ## sed scripts to get rid of the startup message
 scriptold='/^R : Copyright /,/quit R.$/{d;}'
 scriptnew='/^R version /,/quit R.$/{d;}'
+s1="s/‘/'/g"
+s2="s/’/'/g"
 
 ## egrep pattern to get rid of some more
 ## <= 2.2.x was pattern='(^Number of.*:|^Time |^Loading required package.*'
@@ -40,8 +42,9 @@ fi
 
 tmpfile=${TMPDIR-/tmp}/${bfile}-d.${$}
 
-sed -e "${scriptold}" -e "${scriptnew}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
-(sed -e "${scriptold}" -e "${scriptnew}" ${tfile} | \
+sed -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
+## some packages ship .Rout.save with CRLF endings
+(tr -d '\r' <  ${tfile} | sed -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" | \
   ${EGREP} -v "${pattern}" | \
   diff -bw ${tmpfile} - ) && exitstatus=0
 

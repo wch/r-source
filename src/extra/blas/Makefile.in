@@ -36,9 +36,16 @@ R:
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
 
 Rblas_install: $(Rblas_la)
-	@$(MKINSTALLDIRS) $(Rexeclibdir)
+	@$(MKINSTALLDIRS) $(DESTDIR)$(Rexeclibdir)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rblas_la) \
-	  $(Rexeclibdir)/$(Rblas_la)
+	  $(DESTDIR)$(Rexeclibdir)/$(Rblas_la)
+
+Rblas_install-strip: $(Rblas_la)
+	@$(MKINSTALLDIRS) $(DESTDIR)$(Rexeclibdir)
+	@$(INSTALL) $(Rblas_la) $(DESTDIR)$(Rexeclibdir)/$(Rblas_la)
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)" ;\
+	fi
 
 mostlyclean: clean
 clean:
@@ -48,7 +55,9 @@ distclean: clean
 maintainer-clean: distclean
 
 install: @BLAS_SHLIB_TRUE@ Rblas_install
-install-strip uninstall TAGS info dvi check:
+install-strip: @BLAS_SHLIB_TRUE@ Rblas_install-strip
+
+uninstall TAGS info dvi check:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win Rblas.def \

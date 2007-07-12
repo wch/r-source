@@ -2,7 +2,6 @@
 \title{Loading and Listing of Packages}
 \alias{library}
 \alias{require}
-\alias{R_LIBS}
 \alias{.First.lib}
 \alias{.Last.lib}
 \alias{.noGenerics}
@@ -59,7 +58,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   \item{keep.source}{logical.  If \code{TRUE}, functions
     \dQuote{keep their source} including comments, see argument
     \code{keep.source} to \code{\link{options}}.  This applies only to
-    the named package, and not to any packages or namespaces which might be
+    the named package, and not to any packages or name spaces which might be
     loaded to satisfy dependencies or imports.
 
     This argument does not apply to packages using lazy-loading or saved
@@ -90,8 +89,17 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   (rather than an error as \code{library()} does by default) if the
   package does not exist.  Both functions check and update the list of
   currently loaded packages and do not reload a package which is already
-  loaded.
+  loaded.  (Furthermore, if the package has a name space and a name
+  space of that name is already loaded, they work from the existing
+  name space rather than reloading from the file system.  If you want to
+  reload a package, call \code{\link{detach}} or
+  \code{\link{unloadNamespace}} first.)
 
+  To suppress messages during the loading of packages use
+  \code{\link{suppressPackageStartupMessages}}: this will suppress all
+  messages from \R itself but not necessarily all those from package
+  authors.
+  
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified
   by \code{lib.loc}, and returns the corresponding information in an
@@ -108,8 +116,8 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   future versions.  When used with the default value (\code{NULL}) for
   \code{lib.loc}, the loaded packages are searched before the libraries.
 
-  \code{.First.lib} is called when a package without a namespace is
-  loaded by \code{library}.  (For packages with namespaces see
+  \code{.First.lib} is called when a package without a name space is
+  loaded by \code{library}.  (For packages with name spaces see
   \code{\link{.onLoad}}.)  It is called with two arguments, the name of
   the library directory where the package was found (i.e., the
   corresponding element of \code{lib.loc}), and the name of the package
@@ -139,7 +147,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   \code{library} returns the list of loaded (or available) packages
   (or \code{TRUE} if \code{logical.return} is \code{TRUE}).
   \code{require} returns a logical indicating whether the required
-  package is available.
+  package is available, invisibly
 }
 \section{Packages that require other packages}{
   \bold{NB:} This mechanism has been almost entirely superseded by
@@ -227,7 +235,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 }
 \examples{
 library()                   # list all available packages
-library(lib = .Library)     # list all packages in the default library
+library(lib.loc = .Library) # list all packages in the default library
 library(help = splines)     # documentation on package 'splines'
 library(splines)            # load package 'splines'
 require(splines)            # the same

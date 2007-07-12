@@ -8,9 +8,9 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...) {
     if(d[1] != d[2]) return(FALSE)
     test <-
         if(is.complex(object))
-            all.equal.numeric(object, Conj(t(object)), tol = tol, ...)
+            all.equal.numeric(object, Conj(t(object)), tolerance = tol, ...)
         else # numeric, character, ..
-            all.equal(object, t(object), tol = tol, ...)
+            all.equal(object, t(object), tolerance = tol, ...)
     isTRUE(test)
 }
 
@@ -72,8 +72,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 		stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
                      domain = NA)
 	    if(!only.values)
-		z$vectors <- matrix(complex(re=z$vectors,
-					    im=z$ivectors), nc=n)
+		z$vectors <- matrix(complex(real=z$vectors,
+					    imaginary=z$ivectors), ncol=n)
 	}
 	else {
 	    z <- .Fortran("rs",
@@ -115,10 +115,10 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 	    if (z$ierr)
 		stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
                      domain = NA)
-	    z$values <- complex(re=z$values,im=z$ivalues)
+	    z$values <- complex(real=z$values,imaginary=z$ivalues)
 	    if(!only.values)
-		z$vectors <- matrix(complex(re=z$vectors,
-					    im=z$ivectors), nc=n)
+		z$vectors <- matrix(complex(real=z$vectors,
+					    imaginary=z$ivectors), ncol=n)
 	}
 	else {
 	    z <- .Fortran("rg",
@@ -139,10 +139,10 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 	    ind <- z$ivalues > 0
 	    if(any(ind)) {#- have complex (conjugated) values
 		ind <- seq.int(n)[ind]
-		z$values <- complex(re=z$values,im=z$ivalues)
+		z$values <- complex(real=z$values,imaginary=z$ivalues)
 		if(!only.values) {
-		    z$vectors[, ind] <- complex(re=z$vectors[,ind],
-						im=z$vectors[,ind+1])
+		    z$vectors[, ind] <- complex(real=z$vectors[,ind],
+						imaginary=z$vectors[,ind+1])
 		    z$vectors[, ind+1] <- Conj(z$vectors[,ind])
 		}
 	    }

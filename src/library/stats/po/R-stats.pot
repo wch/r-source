@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,6 +89,9 @@ msgstr ""
 msgid "no terms in scope for adding to object"
 msgstr ""
 
+msgid "trying +"
+msgstr ""
+
 msgid "number of rows in use has changed: remove missing values?"
 msgstr ""
 
@@ -104,6 +107,9 @@ msgstr ""
 msgid "scope is not a subset of term labels"
 msgstr ""
 
+msgid "trying -"
+msgstr ""
+
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr ""
 
@@ -117,6 +123,12 @@ msgid "upper scope does not include model term(s) %s"
 msgstr ""
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+
+msgid "Start:  AIC="
+msgstr ""
+
+msgid "Step:  AIC="
 msgstr ""
 
 msgid "'A' must be an array or table"
@@ -213,6 +225,9 @@ msgid "no degrees of freedom for residuals"
 msgstr ""
 
 msgid "'object' does not include an error 'qr' component"
+msgstr ""
+
+msgid "Refitting model to allow projection"
 msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
@@ -339,6 +354,9 @@ msgid "sample is too sparse to find alph2"
 msgstr ""
 
 msgid "no solution in the specified range of bandwidths"
+msgstr ""
+
+msgid "increasing bw.SJ() search interval (%d)"
 msgstr ""
 
 msgid "minimum occurred at one end of the range"
@@ -479,13 +497,10 @@ msgstr ""
 msgid "numeric contrasts or contrast name expected"
 msgstr ""
 
-msgid "contrasts not defined for 0 degrees of freedom"
+msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
 
 msgid "baseline group number out of range"
-msgstr ""
-
-msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
@@ -1364,10 +1379,16 @@ msgstr ""
 msgid "no terms component"
 msgstr ""
 
-msgid "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+msgid "'termlabels' must be a character vector of length at least one"
 msgstr ""
 
-msgid "variables %s were specified with different classes from the fit"
+msgid "'termobj' must be a object of class \"terms\""
+msgstr ""
+
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
+msgstr ""
+
+msgid "variables %s were specified with different types from the fit"
 msgstr ""
 
 msgid "'data' must be a data.frame, not a matrix or an array"
@@ -1472,6 +1493,9 @@ msgstr ""
 msgid "'data' must be a list or an environment"
 msgstr ""
 
+msgid "no parameters to fit"
+msgstr ""
+
 msgid "No starting values specified"
 msgstr ""
 
@@ -1506,6 +1530,9 @@ msgid "formula '%s' must be of the form '~expr'"
 msgstr ""
 
 msgid "'%s' cannot be of mode '%s'"
+msgstr ""
+
+msgid "a two-sided formula is required"
 msgstr ""
 
 msgid "not enough groups"
@@ -1788,6 +1815,9 @@ msgid "'span' must be between 0 and 1."
 msgstr ""
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
+msgstr ""
+
+msgid "no finite observations"
 msgstr ""
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"

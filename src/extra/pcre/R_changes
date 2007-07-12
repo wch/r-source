@@ -1,85 +1,12 @@
-We make chartables.h rather than pcre_chartables.c, and include in 
-pcre_compile.c.  This makes the standard dependency mechanism work.
-
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
-In pcre.h, we don't want to make a DLL on Windows.
+SUPPORT_UCP is only used for UTF-8 locales, so only built on Unix-alikes.
 
-There are a few -Wall changes.
-
-We do not define SUPPORT_UCP and so leave out the files it needs.
-
-diff -u ./dftables.c /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/dftables.c
---- ./dftables.c	2006-07-05 12:28:01.000000000 +0100
-+++ /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/dftables.c	2006-08-01 16:08:04.064916000 +0100
-@@ -52,6 +52,7 @@
- #define DFTABLES          /* pcre_maketables.c notices this */
- #include "pcre_maketables.c"
- 
-+#undef fprintf /* remapped on Windows */
- 
- int main(int argc, char **argv)
- {
-diff -u ./pcre.h /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre.h
---- ./pcre.h	2006-07-05 12:28:01.000000000 +0100
-+++ /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre.h	2006-08-01 16:08:02.674922000 +0100
-@@ -57,9 +57,9 @@
- #define PCRE_PRERELEASE
- #define PCRE_DATE           04-Jul-2006
- 
--/* Win32 uses DLL by default; it needs special stuff for exported functions
--when building PCRE. */
-+/* Win32 uses DLL by default, but not for R */
- 
-+/*
- #ifdef _WIN32
- #  ifdef PCRE_DEFINITION
- #    ifdef DLL_EXPORT
-@@ -71,6 +71,7 @@
- #    endif
- #  endif
- #endif
-+*/
- 
- /* Otherwise, we use the standard "extern". */
- 
-diff -u ./pcre_compile.c /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre_compile.c
---- ./pcre_compile.c	2006-07-05 12:28:01.000000000 +0100
-+++ /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre_compile.c	2006-08-07 13:48:14.543971000 +0100
-@@ -805,7 +805,8 @@
-   ptr += 4;
-   thisname = ptr;
-   while (*ptr != '>') ptr++;
--  if (namelen == ptr - thisname && strncmp(name, thisname, namelen) == 0)
-+  if (namelen == ptr - thisname && 
-+      strncmp((char *)name, (char *)thisname, namelen) == 0)
-     return count;
-   }
- return -1;
-@@ -4004,6 +4005,9 @@
-                 with errorptr and erroroffset set
- */
- 
-+
-+#include "chartables.h"
-+
- PCRE_DATA_SCOPE pcre *
- pcre_compile(const char *pattern, int options, const char **errorptr,
-   int *erroroffset, const unsigned char *tables)
-@@ -4146,7 +4150,7 @@
- ptr = (const uschar *)(pattern - 1);
- while ((c = *(++ptr)) != 0)
-   {
--  int min, max;
-+  int min = 0, max = 0 /* -Wall */;
-   int class_optcount;
-   int bracket_length;
-   int duplength;
-diff -u ./pcre_internal.h /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre_internal.h
---- ./pcre_internal.h	2006-07-05 12:28:01.000000000 +0100
-+++ /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre_internal.h	2006-08-01 16:08:04.364915000 +0100
-@@ -65,7 +65,18 @@
+diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
+--- pcre-7.2/pcre_internal.h    2007-06-12 14:39:55.000000000 +0100
++++ ../extra/pcre/pcre_internal.h       2007-07-01 12:22:07.000000000 +0100
+@@ -69,7 +69,18 @@
  
  /* Get the definitions provided by running "configure" */
  
@@ -89,12 +16,15 @@ diff -u ./pcre_internal.h /data/gannet/ripley/R/svn/R-devel/src/extra/pcre/pcre_
 +#ifndef NEWLINE
 +#define NEWLINE '\n'
 +#define LINK_SIZE 2
-+#define POSIX_MALLOC_THRESHOLD 10
 +#define MATCH_LIMIT 10000000
-+#define MAX_NAME_SIZE 32
-+#define MAX_NAME_COUNT 10000
-+#define MAX_DUPLENGTH 30000
 +#define MATCH_LIMIT_RECURSION MATCH_LIMIT
++#define MAX_DUPLENGTH 30000
++#define MAX_NAME_COUNT 10000
++#define MAX_NAME_SIZE 32
++#define POSIX_MALLOC_THRESHOLD 10
++#ifdef SUPPORT_UTF8
++#define SUPPORT_UCP
++#endif
 +#endif
  
  /* Standard C headers plus the external interface definition. The only time

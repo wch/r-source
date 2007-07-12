@@ -22,7 +22,7 @@ mem.limits(nsize = NA, vsize = NA)
   \item{N}{Number of nested \code{PROTECT} calls.}.
 }
 \details{
-  \R has a variable-sized workspace. There is
+  \R has a variable-sized workspace.  There is
   much less need to set memory options than prior to \R 1.2.0, and most
   users will never need to set these.  They are provided both as a way
   to control the overall memory usage (which can also be done
@@ -30,7 +30,7 @@ mem.limits(nsize = NA, vsize = NA)
   by operating-system facilities such as \code{limit} on Unix),
 #endif
 #ifdef windows
-  using the option \option{--max-mem-size} on Windows),
+  using the command-line option \option{--max-mem-size} on Windows),
 #endif
   and since setting larger values of the minima will make \R slightly
   more efficient on large tasks.
@@ -40,7 +40,8 @@ mem.limits(nsize = NA, vsize = NA)
   allocation: it has a minimum allowed value of 32M.  This is intended
   to catch attempts to allocate excessive amounts of memory which may
   cause other processes to run out of resources.  The default is the
-  smaller of the amount of physical RAM in the machine and 1024Mb.
+  smaller of the amount of physical RAM in the machine and 1.5Gb (or
+  2.5Gb if the version of Windows in use allows 3Gb per user process).
   See also \code{\link{memory.limit}}.)
 #endif
 
@@ -84,13 +85,13 @@ mem.limits(nsize = NA, vsize = NA)
   never be reduced below the current values for triggering garbage
   collection, and attempts to do so will be silently ignored.
 
-  The option \option{--max-ppsize} controls the maximum size of the
-  pointer protection stack.  This defaults to 50000, but can be
-  increased to allow deep recursion or large and complicated
+  The command-line option \option{--max-ppsize} controls the maximum
+  size of the pointer protection stack.  This defaults to 50000, but can
+  be increased to allow deep recursion or large and complicated
   calculations to be done. \emph{Note} that parts of the garbage
-  collection process goes through the full reserved pointer protection stack
-  and hence becomes slower when the size is increased.
-  Currently the maximum value accepted is 500000.
+  collection process goes through the full reserved pointer protection
+  stack and hence becomes slower when the size is increased.  Currently
+  the maximum value accepted is 500000.
 }
 
 \value{

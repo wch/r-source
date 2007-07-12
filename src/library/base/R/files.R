@@ -1,41 +1,53 @@
-#Platform <- function()
-#.Internal(Platform())
-
 R.home <- function(component="home")
 {
     rh <- .Internal(R.home())
     switch(component,
            "home" = rh,
-           "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p else file.path(rh, component),
-	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p else file.path(rh, component),
+           "share"= if(nzchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p
+           else file.path(rh, component),
+	   "doc"=if(nzchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
+           else file.path(rh, component),
            file.path(rh, component))
 }
 file.show <-
-function (..., header=rep("", nfiles), title="R Information",
-          delete.file=FALSE, pager=getOption("pager"))
+    function (..., header = rep("", nfiles), title = "R Information",
+              delete.file = FALSE, pager = getOption("pager"), encoding = "")
 {
-    file <- c(...)
-    nfiles <- length(file)
+    files <- c(...)
+    nfiles <- length(files)
     if(nfiles == 0)
         return(invisible(NULL))
+    if(!is.na(encoding) && encoding != "" && capabilities("iconv")) {
+        for(i in seq_along(files)) {
+            f <- files[i]
+            tf <- tempfile()
+            tmp <- readLines(f)
+            tmp2 <- try(iconv(tmp, encoding, "", "byte"))
+            if(inherits(tmp2, "try-error")) file.copy(f, tf)
+            else writeLines(tmp2, tf)
+            files[i] <- tf
+            if(delete.file) unlink(f)
+        }
+        delete.file <- TRUE
+    }
     if(is.function(pager))
-	pager(file, header, title, delete.file)
+	pager(files, header, title, delete.file)
     else
-        .Internal(file.show(file, header, title, delete.file, pager))
+        .Internal(file.show(files, header, title, delete.file, pager))
 }
 
 file.append <- function(file1, file2)
-.Internal(file.append(file1, file2))
+    .Internal(file.append(file1, file2))
 
 file.remove <- function(...)
-.Internal(file.remove(c(...)))
+    .Internal(file.remove(c(...)))
 
 file.rename <- function(from, to)
-.Internal(file.rename(from, to))
+    .Internal(file.rename(from, to))
 
 list.files <- function(path=".", pattern=NULL, all.files=FALSE,
                        full.names=FALSE, recursive=FALSE)
-.Internal(list.files(path, pattern, all.files, full.names, recursive))
+    .Internal(list.files(path, pattern, all.files, full.names, recursive))
 
 dir <- list.files
 
@@ -47,25 +59,24 @@ function(..., fsep=.Platform$file.sep)
 }
 
 
-file.exists <- function(...)
-.Internal(file.exists(c(...)))
+file.exists <- function(...) .Internal(file.exists(c(...)))
 
 file.create <- function(...)
-.Internal(file.create(c(...)))
+    .Internal(file.create(c(...)))
 
-file.choose <- function(new=FALSE)
-.Internal(file.choose(new))
+file.choose <- function(new=FALSE) .Internal(file.choose(new))
 
 file.copy <- function(from, to, overwrite=FALSE)
 {
     if (!(nf <- length(from))) stop("no files to copy from")
     if (!(nt <- length(to)))   stop("no files to copy to")
+    ## we don't use file_test as that is in utils.
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, basename(from))
     else if (nf > nt) stop("more 'from' files than 'to' files")
     if(nt > nf) from <- rep(from, length.out = nt)
-    if (!overwrite) okay <- !file.exists(to)
-    else okay <- rep.int(TRUE, length(to))
+    okay <- file.exists(from)
+    if (!overwrite) okay[file.exists(to)] <- FALSE
     if (any(from[okay] %in% to[okay]))
         stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { ## care: create could fail but append work.
@@ -89,7 +100,7 @@ file.info <- function(...)
     class(res$mtime) <- class(res$ctime) <- class(res$atime) <-
         c("POSIXt", "POSIXct")
     class(res) <- "data.frame"
-    row.names(res) <- fn
+    attr(res, "row.names") <- fn # not row.names<- as that does a length check
     res
 }
 
@@ -115,7 +126,7 @@ format.octmode <- function(x, ...)
         y <- floor(y/8)
         ans0 <- paste(z, ans0, sep="")
     }
-    ans <- rep.int(as.character(NA), length(x))
+    ans <- rep.int(NA_character_, length(x))
     ans[!isna] <- ans0
     ans
 }
@@ -147,7 +158,7 @@ format.hexmode <- function(x, ...)
         y <- floor(y/16)
         ans0 <- paste(c(0:9, letters)[1+z], ans0, sep="")
     }
-    ans <- rep.int(as.character(NA), length(x))
+    ans <- rep.int(NA_character_, length(x))
     ans[!isna] <- ans0
     dim(ans) <- dim(x)
     dimnames(ans) <- dimnames(x)
@@ -171,7 +182,7 @@ print.hexmode <- function(x, ...)
 }
 
 system.file <-
-function(..., package = "base", lib.loc = NULL)
+    function(..., package = "base", lib.loc = NULL)
 {
     if(nargs() == 0)
         return(file.path(.Library, "base"))
@@ -204,3 +215,10 @@ Sys.sleep <- function(time)
 
 path.expand <- function(path)
     .Internal(path.expand(path))
+
+Sys.glob <- function(paths, dirmark = FALSE)
+    .Internal(Sys.glob(paths, dirmark))
+
+unlink <- function(x, recursive = FALSE)
+    .Internal(unlink(as.character(x), recursive))
+

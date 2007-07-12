@@ -9,7 +9,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 }
 \arguments{
   \item{file}{character.  Name of TeX source file.}
-  \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced insted of
+  \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced instead of
     the default dvi file (texi2dvi command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files are removed
     (texi2dvi command line option \option{--clean}). Does not work on

@@ -5,10 +5,10 @@ Notes for Windows Maintainers
 achieved by overrides in the configure script.
 
 You will need a copy of sh.exe in /bin.  Then with the R sources in
-/R/R-2.3.0, I used in /TEMP/R (any other directory will do, except the
+/R/R-2.6.0, I used in /TEMP/R (any other directory will do, except the
 sources)
 
-sh /R/R-2.3.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no
+sh /R/R-2.6.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no --without-iconv
 
 This ran fairly slowly, currently producing a src/include/config.h
 that differs only in that
@@ -40,25 +40,7 @@ DJM 2003-02-25
 
 3) Making Tcl/Tk.
 
-Get the Tcl/Tk sources (I used 8.4.13 when testing this).
-You need VC++6 and a Windows command-line window.
-
-Run "\Program Files\Microsoft Visual Studio\VC98\Bin\VCVARS32.BAT"
-
-cd tcl8.4.x\win
-nmake -nologo -f makefile.vc release winhelp
-nmake -f makefile.vc install
-cd ..\..\tk8.4.x\win
-nmake -nologo -f makefile.vc TCLDIR=..\..\tcl8.4.x release winhelp
-nmake -f makefile.vc install
-
-Now copy /Program Files/Tcl to say /R/Tcl and (in any reasonable shell)
-cd /R/Tcl
-rm bin/tclpip84.dll bin/tclsh84.exe bin/wish84.exe
-rm -rf lib/*.lib lib/tk8.4/demos lib/tk8.4/images
-cp .../tcl8.4.x/license.terms .
-
-BDR 2004-01-09
+See the directory R-Tcl-win in the R-packages SVN repository.
 
 
 4) Linking to DLLs.
@@ -110,3 +92,18 @@ not to be required for ld.exe.  So the %.dll rule in MkRules as from
 most one dot' rule.
 
 BDR 2006-02-15, 2006-02-24
+
+
+5) Moving to gcc 4.x
+
+It looks like just two things are needed:
+
+- change to BUILD=GCC4 in MkRules.
+
+- in fixed/h/config.h, comment out
+#define HAVE_F77_EXTRA_UNDERSCORE 1
+and change to one underscore in
+#define F77_FUNC_(name,NAME) name ## __
+
+
+BDR 2007-04-06

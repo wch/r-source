@@ -9,6 +9,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
     m$... <- NULL
     m$na.action <- na.action # force in even if  default
     m[[1]] <- as.name("model.frame")
+    require(stats, quietly=TRUE)
     mf <- eval(m, parent.frame())
     pairs(mf, ...)
 }
@@ -51,7 +52,7 @@ function (x, labels, panel = points, ...,
     dots <- list(...); nmdots <- names(dots)
     if (!is.matrix(x)) {
         x <- as.data.frame(x)
-        for(i in seq(along=names(x))) {
+        for(i in seq_along(names(x))) {
             if(is.factor(x[[i]]) || is.logical(x[[i]]))
                x[[i]] <- as.numeric(x[[i]])
             if(!is.numeric(unclass(x[[i]])))

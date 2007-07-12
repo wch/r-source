@@ -35,11 +35,11 @@ browseURL <- function(url, browser = getOption("browser"))
     shQuote <- function(string)
         paste('"', gsub("\\$", "\\\\$", string), '"', sep="")
 
-    if(!is.character(url) || !(length(url) == 1) || (nchar(url) == 0))
+    if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
         stop("'url' must be a non-empty character string")
     if(!is.character(browser)
        || !(length(browser) == 1)
-       || (nchar(browser) == 0))
+       || !nzchar(browser))
         stop("'browser' must be a non-empty character string")
 
     if (.Platform$GUI == "AQUA" ||
@@ -61,7 +61,7 @@ browseURL <- function(url, browser = getOption("browser"))
                          sep = "")
                }, quotedUrl)
     else quotedUrl
-    system(paste(browser, remoteCmd, "2>&1 >/dev/null ||",
+    system(paste(browser, remoteCmd, "> /dev/null 2>&1 ||",
                  browser, quotedUrl, "&"))
 }
 
@@ -80,12 +80,9 @@ make.packages.html <- function(lib.loc=.libPaths())
     ## First we need to fathom out what encoding to use.
     ## For now we assume that if we have iconv then UTF-8 is OK.
     useUTF8 <- capabilities("iconv")
-    if(useUTF8)
-        file.append(f.tg, file.path(R.home("doc"), "html",
-                                    "packages-head-utf8.html"))
-    else
-        file.append(f.tg, file.path(R.home("doc"), "html",
-                                    "packages-head.html"))
+    file.append(f.tg, file.path(R.home("doc"), "html",
+				if(useUTF8) "packages-head-utf8.html"
+				else "packages-head.html"))
     out <- file(f.tg, open="a")
     search <- file(searchindex, open="w")
     known <- character(0)

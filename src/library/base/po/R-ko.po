@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -106,6 +106,10 @@ msgstr "이하에 의해 요구되었습니다 :"
 
 msgid "(still attached)"
 msgstr "(아직 attached되어 있습니다)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "name space '%s'가 적재 되었습니다"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -250,6 +254,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "사용되어 않는 row.names"
 
+msgid "row names contain missing values"
+msgstr "이름은 결측값를 포함하고 있습니다"
+
+msgid "duplicate row.names:"
+msgstr "row.names가 중복하고 있습니다"
+
 msgid "arguments imply differing number of rows:"
 msgstr "인수는 다른 열수를 의미합니다"
 
@@ -261,12 +271,6 @@ msgstr "주어진 열명은 잘못한 길이입니다"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "열명은 짧은 변수로부터 검색할수 있어 버리고 갔습니다"
-
-msgid "row names contain missing values"
-msgstr "이름은 결측값를 포함하고 있습니다"
-
-msgid "duplicate row.names:"
-msgstr "row.names가 중복하고 있습니다"
 
 msgid "drop argument will be ignored"
 msgstr "drop인수는 무시됩니다"
@@ -467,6 +471,17 @@ msgstr "\"POSTIXct\" 오브젝트에 대해서는 정의 되어 있지 않습니
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s'는 함수, 문자, 또는 심벌이 아닙니다"
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "무효인 'quote' 지정입니다"
+
 msgid "not defined for \"difftime\" objects"
 msgstr "\"difftime\"오브젝트에 대해서는 정의 되어 있지 않습니다"
 
@@ -499,6 +514,9 @@ msgstr "행렬의 대각성분만을 옮겨놓을수가 있습니다"
 
 msgid "replacement diagonal has wrong length"
 msgstr "치환대각 성분의 길이가 잘못되어 있습니다"
+
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr ""
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -608,6 +626,9 @@ msgstr ""
 "'format'는 {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\"}의 중에서만 되지 않습"
 "니다"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag'는 '0+- #'만을 포함합니다"
 
@@ -635,8 +656,16 @@ msgstr "이하에 대한 값 :"
 msgid "' not found"
 msgstr "(을)를 찾아낼수가 없습니다"
 
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "모든 인수는 동일 길이가 나오지 않으면 되지 않습니다"
+
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "invalid multibyte string for 'pattern'"
+msgstr "'by'에 대한 무효인 문자열입니다"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance'는 non-negative이 나오지 않으면 되지 않습니다"
@@ -722,6 +751,10 @@ msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 
 
 msgid "package/namespace load failed for '%s'"
 msgstr "'%s'에 대한 패키지 또는 이름 공간의 적재가 실패했습니다"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
 msgid "unable to load R code in package '%s'"
 msgstr "패키지 '%s'에서의 R 코드를 적재할수가 없습니다"
@@ -851,6 +884,10 @@ msgstr "무효인 'category' 인수입니다"
 msgid "must specify formal argument names to vectorize"
 msgstr ""
 
+#, fuzzy
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
 msgid "'arg' should be one of"
 msgstr "'arg'는 이하의 하나가 아니면 되지 않습니다"
 
@@ -881,6 +918,10 @@ msgstr "차원이 2 미만의 오브젝트의 열명을 설정 하려고 했습�
 msgid "argument is not numeric or logical: returning NA"
 msgstr "인수가 수치이거나 논리값이 아닙니다. NA값을 돌려줍니다"
 
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin'는 길이 1이 나오지 않으면 되지 않습니다"
+
 msgid "trimmed means are not defined for complex data"
 msgstr "복소수 데이터에 대해서 절사 평균은 정의 되지 않았습니다"
 
@@ -899,6 +940,9 @@ msgstr "'by'는 유효한 colums(s)를 지정하지 않으면 되지 않습니�
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' 그리고 'by.y'는 다른 열수를 지정하고 있습니다"
+
+msgid "additional arguments ignored in message()"
+msgstr ""
 
 msgid "(loaded the methods namespace)"
 msgstr ""
@@ -1001,7 +1045,7 @@ msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
 
 #, fuzzy
-msgid "name space '%s' is still used by: '%s'"
+msgid "name space '%s' is still used by: %s"
 msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
 
 msgid "imperative name space directives are disabled"
@@ -1094,6 +1138,10 @@ msgstr "잘못된 인수입니다"
 
 msgid "not defined for package_version objects"
 msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "잘못된 인수입니다"
 
 msgid "invalid 'n' value"
 msgstr "무효인 'n'값입니다"
@@ -1275,6 +1323,9 @@ msgstr ""
 msgid "' has changed"
 msgstr ""
 
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
 #, fuzzy
 msgid "is not"
 msgstr "(은)는 TRUE가 아닙니다"
@@ -1283,6 +1334,9 @@ msgid "all"
 msgstr ""
 
 msgid "TRUE"
+msgstr ""
+
+msgid "additional arguments ignored in warning()"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1360,8 +1414,14 @@ msgstr "'which'에서 인수는 논리값이 아닙니다"
 msgid "invalid 'digits'"
 msgstr "무효인 'digits'입니다"
 
-msgid "argument must be character"
-msgstr "인수는 문자가 아니면 되지 않습니다"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
 
 msgid "'cmd' could not be run"
 msgstr "'cmd'는 실행할수가 없었습니다"
@@ -1400,14 +1460,16 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "'%s'라는 이름의 패키지는 없습니다"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] ""
 "오브젝트%s는 'namespace:%s'에 의해 export되지 않습니다 \n"
 "오브젝트(복수)%s는 'namespace:%s'에 의해 export되지 않습니다"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] ""
 "이전의 export %s는 옮겨 놓을수 있습니다 \n"
 "이전의 exports %s는 옮겨 놓을수 있습니다"
@@ -1423,6 +1485,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "인수는 문자가 아니면 되지 않습니다"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
@@ -1468,9 +1533,6 @@ msgstr[0] ""
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "'quote'에서 무효인 수치가 있습니다"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "무효인 'quote' 지정입니다"
 
 #~ msgid "invalid 'col.names' specification"
 #~ msgstr "무효인 'col.names' 지정입니다"

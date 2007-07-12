@@ -17,10 +17,6 @@ is.recursive(x)
   \item{x}{object to be tested.}
 }
 \details{
-  These are generic: you can write methods to handle specific classes
-  of objects, see \link{InternalMethods}.  The description here applies
-  only to the default method.
-
   \code{is.atomic} is true for the atomic vector types
   (\code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}) and \code{NULL}.
@@ -40,6 +36,8 @@ is.recursive(x)
   and the \code{demo("is.things")}.
 }
 \examples{
+require(stats)
+
 is.a.r <- function(x) c(is.atomic(x), is.recursive(x))
 
 is.a.r(c(a=1,b=3))      # TRUE FALSE

@@ -33,12 +33,12 @@ split.screen <-
 	    stop("'figs' must be a vector or a matrix with 4 columns")
 	nr <- figs[1]
 	nc <- figs[2]
-	x <- seq.int(0, 1, len=nc+1)
-	y <- seq.int(1, 0, len=nr+1)
+	x <- seq.int(0, 1, length.out=nc+1)
+	y <- seq.int(1, 0, length.out=nr+1)
 	figs <- matrix(c(rep.int(x[-(nc+1)], nr), rep.int(x[-1], nr),
 			 rep.int(y[-1], rep.int(nc, nr)),
 			 rep.int(y[-(nr+1)], rep.int(nc, nr))),
-		       nc = 4)
+		       ncol = 4)
     }
     num.screens <- nrow(figs)
     if (num.screens < 1)

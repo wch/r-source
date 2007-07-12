@@ -62,18 +62,18 @@ struct structPkgMenuItems {
 typedef struct structPkgMenuItems *PkgMenuItems;
 
 #include <R_ext/Error.h> /* for R_ShowMessage */
-int check_doc_file(char *);
-void internal_shellexec(char *);
+int check_doc_file(const char *);
+void internal_shellexec(const char *);
 
-int winaddmenu(char * name, char *errmsg);
-int winaddmenuitem(char * item, char * menu, char * action, char *errmsg);
-int windelmenu(char * menu, char *errmsg); /* delete one menu and its items and submenus */
-void windelmenus(char * prefix); /* delete all menus which start with a certain prefix */
-int windelmenuitem(char * item, char * menu, char *errmsg);
+int winaddmenu(const char * name, char *errmsg);
+int winaddmenuitem(const char * item, const char * menu, const char * action, char *errmsg);
+int windelmenu(const char * menu, char *errmsg); /* delete one menu and its items and submenus */
+void windelmenus(const char * prefix); /* delete all menus which start with a certain prefix */
+int windelmenuitem(const char * item,const  char * menu, char *errmsg);
 
 int numwinmenus(void);
 char *getusermenuname(int pos);
-menuItems *wingetmenuitems(char *mname, char *errmsg);
+menuItems *wingetmenuitems(const char *mname, char *errmsg);
 void freemenuitems(menuItems *items);
 
 void Rwin_fpset();
@@ -96,3 +96,6 @@ void pkgmenuact(PkgMenuItems pmenu);
 int RguiCommonHelp();
 void helpmenuact(HelpMenuItems hmenu);
 void closeconsole(control m);
+void showstatusbar();
+
+menu getGraphMenu(const char *); /* from extra.c */

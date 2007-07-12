@@ -17,7 +17,7 @@ euro.cross
   currencies participating in the European monetary union (Austrian
   Schilling ATS, Belgian Franc BEF, German Mark DEM, Spanish Peseta ESP,
   Finnish Markka FIM, French Franc FRF, Irish Punt IEP, Italian Lira
-  ITL, Luxembourg Franc LUF, Dutch Guilder NLG and Portugese Escudo
+  ITL, Luxembourg Franc LUF, Dutch Guilder NLG and Portuguese Escudo
   PTE).  These conversion rates were fixed by the European Union on
   December 31, 1998.  To convert old prices to Euro prices, divide by
   the respective rate and round to 2 digits.

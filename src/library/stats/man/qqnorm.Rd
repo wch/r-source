@@ -52,6 +52,8 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
   approximations to expected order statistics for a normal distribution.
 }
 \examples{
+require(graphics)
+
 y <- rt(200, df = 5)
 qqnorm(y); qqline(y, col = 2)
 qqplot(y, rt(300, df = 5))

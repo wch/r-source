@@ -26,7 +26,7 @@ smooth.spline <-
         else if(!is.numeric(nk)) stop("'nknots' must be numeric <= n")
         else if(nk > n)
             stop("cannot use more inner knots than unique 'x' values")
-	c(rep(x[1], 3), x[seq(1,n, len= nk)], rep(x[n], 3))
+	c(rep(x[1], 3), x[seq.int(1,n, length.out= nk)], rep(x[n], 3))
     }
     contr.sp <- list(low = -1.5,## low = 0.      was default till R 1.3.x
                      high = 1.5,
@@ -232,8 +232,8 @@ predict.smooth.spline <- function(object, x, deriv = 0, ...)
 predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 {
     if(missing(x))
-	x <- seq(from = object$min, to = object$min + object$range,
-		 length = length(object$coef) - 4)
+	x <- seq.int(from = object$min, to = object$min + object$range,
+                     length.out = length(object$coef) - 4)
     xs <- (x - object$min)/object$range # x scaled to [0,1]
     extrap.left <- xs < 0
     extrap.right <- xs > 1
@@ -294,6 +294,8 @@ supsmu <-
     ord <- cumsum(!okay)[okay][ord] + ord
     xo <- x[ord]
     leno <- length(ord)
+    if(leno == 0)
+        stop("no finite observations")
     if(diff <- n - leno)
 	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
     .Fortran(R_setsmu)

@@ -43,16 +43,16 @@ else
   DEBUGFLAG=-Wall
 endif
 
-COPTFLAG=-O2
+COPTFLAG=-O3
 CXXOPTFLAG=-O2
-FOPTFLAG=-O2
+FOPTFLAG=-O3
 
 CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include $(CLINK_CPPFLAGS)
-CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(COPTFLAG) -std=gnu99 $(PKG_CFLAGS)
+CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(COPTFLAG) $(C99FLAG) $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(CXXOPTFLAG) $(PKG_CXXFLAGS)
 FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) $(PKG_FFLAGS)
 DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(PKG_LIBS2) $(EXTRA_LIBS) -lR
-RESFLAGS=--include-dir $(RHOME)/include
+RESFLAGS=-I $(RHOME)/include
 # for use by Makevars.win
 R_HOME=$(RHOME)
 
@@ -70,7 +70,7 @@ else
 endif
 
 $(DLLNAME)_res.rc:
-	@PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
@@ -80,6 +80,9 @@ $(DLLNAME).dll : $(DLLNAME)-win.def $(OBJS) $(RCOBJ)
 else
 $(DLLNAME).dll : $(OBJS) $(RCOBJ)
 endif
+
+shlib-clean:
+	@$(RM) -f $(DLLNAME)_res.rc $(OBJS) $(RCOBJ) *.d Makedeps
 
 # Dependencies
 CXXSOURCES1=$(wildcard -f *.cc)

@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
-"PO-Revision-Date: 2006-12-10 00:35-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-04-07 01:35-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -33,10 +33,10 @@ msgid "See help(\"Defunct\")"
 msgstr "См. help(\"Defunct\")"
 
 msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.C' не нужен: удалите его"
 
 msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.For' не нужен: удалите его"
 
 msgid "'%s' is deprecated."
 msgstr "'%s' не одобряется."
@@ -115,6 +115,9 @@ msgstr "требуется для"
 
 msgid "(still attached)"
 msgstr "(по-прежнему присоединен)"
+
+msgid "namespace cannot be unloaded"
+msgstr "пространство имен  нельзя выгрузить"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "образец регулярного выражения '[' заменен на  '\\\\['"
@@ -254,6 +257,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> 'row.names' НЕ использованы"
 
+msgid "row names contain missing values"
+msgstr "имена строк содержат пропущенные значения"
+
+msgid "duplicate row.names:"
+msgstr "одинаковые имена строк:"
+
 msgid "arguments imply differing number of rows:"
 msgstr "аргументы подразумевают разные количества строк:"
 
@@ -265,12 +274,6 @@ msgstr "предложенные имена строк неправильной длины"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "имена строк взяты из короткой переменной и поэтому сброшены"
-
-msgid "row names contain missing values"
-msgstr "имена строк содержат пропущенные значения"
-
-msgid "duplicate row.names:"
-msgstr "одинаковые имена строк:"
 
 msgid "drop argument will be ignored"
 msgstr "аргумент 'drop' не будет учтен"
@@ -471,6 +474,15 @@ msgstr "не определен для объектов \"POSIXct\""
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "не определен для объектов \"POSIXlt\""
 
+msgid "'tim' is not character or numeric"
+msgstr "'tim' не является функцией или буквой"
+
+msgid "need explicit units for numeric conversion"
+msgstr "для числовой конверсии нужно прямо указать единицы"
+
+msgid "invalid units specified"
+msgstr "неправильное указание единиц"
+
 msgid "not defined for \"difftime\" objects"
 msgstr "не определен для объектов \"difftime\""
 
@@ -503,6 +515,10 @@ msgstr "только диагонали матрицы могут быть заменены"
 
 msgid "replacement diagonal has wrong length"
 msgstr "у замены диагонали -- неправильная длина"
+
+#, fuzzy
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr "'quote' должен быть 'TRUE', 'FALSE' или числом"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -606,6 +622,9 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' может содержать лишь '0+- #'"
 
@@ -630,8 +649,15 @@ msgstr "значение для '"
 msgid "' not found"
 msgstr "' не найдено"
 
+msgid "all arguments must be named"
+msgstr "все аргументы должны быть именованы"
+
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"
+
+#, fuzzy
+msgid "invalid multibyte string for 'pattern'"
+msgstr "неправильная строка для 'by'"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance' должна быть неотрицательной"
@@ -714,6 +740,11 @@ msgstr "'%s' не найден в пути поиска, использую pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "не удалась загрузка пакета/пространства имен для '%s'"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr ""
+"пакет '%s' был скомпилирован до R 2.0.0: пожалуйста, инсталлируйте его заново"
 
 msgid "unable to load R code in package '%s'"
 msgstr "не могу загрузить код R пакета '%s'"
@@ -842,6 +873,9 @@ msgstr "неправильный аргумент 'category'"
 msgid "must specify formal argument names to vectorize"
 msgstr "для векторизации надо указать формальные имена аргументов"
 
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'arg' должен быть NULL либо текстовой строкой длиной не меньше 1"
+
 msgid "'arg' should be one of"
 msgstr "'arg' должен быть одним из"
 
@@ -873,6 +907,9 @@ msgstr ""
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
 
+msgid "'trim' must be numeric of length one"
+msgstr "'trim' должен быть числовым объектом длины 1"
+
 msgid "trimmed means are not defined for complex data"
 msgstr "обрезанные средние не определены для комплексных данных"
 
@@ -892,6 +929,9 @@ msgstr "'by' должен определять правильные колонк(и)"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
 
+msgid "additional arguments ignored in message()"
+msgstr "дополнительные аргументы пропущены в message()"
+
 msgid "(loaded the methods namespace)"
 msgstr "(загружено пространство имен методов)"
 
@@ -906,7 +946,7 @@ msgid "Expected a single logical value for the S4 object state"
 msgstr "Для состояния \"объект S4\" ожидается простое логическое значение "
 
 msgid "invalid to change the storage mode of a factor"
-msgstr ""
+msgstr "неправильно менять тип хранения фактора"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
@@ -986,8 +1026,8 @@ msgstr "пространство имен '%s' загружено"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s не удалось в unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by: '%s'"
-msgstr "пространство имен '%s' еще используется по: '%s'"
+msgid "name space '%s' is still used by: %s"
+msgstr "пространство имен '%s' еще используется в: '%s'"
 
 msgid "imperative name space directives are disabled"
 msgstr "императивные директивы пространства имен отменены"
@@ -1076,6 +1116,9 @@ msgstr "неправильный аргумент"
 msgid "not defined for package_version objects"
 msgstr "не определено для объектов package_version"
 
+msgid "no arguments"
+msgstr "нет аргументов"
+
 msgid "invalid 'n' value"
 msgstr "неправильное значение 'n'"
 
@@ -1125,9 +1168,8 @@ msgstr "'x' должен быть вектором"
 msgid "invalid 'rle' structure"
 msgstr "неправильная структура 'rle'"
 
-#, fuzzy
 msgid "... must contain names or character strings"
-msgstr "'file' должен быть NULL, соединением или текстовой строкой"
+msgstr "... должен содержать имена или текстовые строки"
 
 msgid "incorrect length for 'group'"
 msgstr "неправильная длина 'group'"
@@ -1253,10 +1295,13 @@ msgid "'%s' is not an existing file"
 msgstr "'%s' не является существующим файлом"
 
 msgid "Timestamp of '"
-msgstr ""
+msgstr "ВременнАя маска '"
 
 msgid "' has changed"
-msgstr ""
+msgstr "' сменилась"
+
+msgid "additional arguments ignored in stop()"
+msgstr "дополнительные аргументы пропущены в stop()"
 
 msgid "is not"
 msgstr "не является"
@@ -1266,6 +1311,9 @@ msgstr "все"
 
 msgid "TRUE"
 msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr "дополнительные аргументы пропущены в warning()"
 
 msgid "incorrect value for 'x'"
 msgstr "неправильное значение для 'x'"
@@ -1322,13 +1370,13 @@ msgid "Registering evaluate as low-level callback"
 msgstr "Регистрация подсчитывает низкоуровневый обратный вызов"
 
 msgid "user"
-msgstr ""
+msgstr "пользователь"
 
 msgid "system"
-msgstr ""
+msgstr "система"
 
 msgid "elapsed"
-msgstr ""
+msgstr "прошло"
 
 msgid "'width' must be positive"
 msgstr "'width' должна быть положительной"
@@ -1342,8 +1390,15 @@ msgstr "аргумент 'which' не является логическим"
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
 
-msgid "argument must be character"
-msgstr "аргумент должен быть буквой"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
+"Windows"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' должен быть текстовым вектором либо 'NULL'"
 
 msgid "'cmd' could not be run"
 msgstr "'cmd' не запускается"
@@ -1381,14 +1436,16 @@ msgstr[0] "нет пакета под названием"
 msgstr[1] "нет пакетов под названиями"
 msgstr[2] "нет пакетов под названиями"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "объект %s не экспортирован 'namespace:%s'"
 msgstr[1] "объекты %s не экспортированы 'namespace:%s'"
 msgstr[2] "объекты %s не экспортированы 'namespace:%s'"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "предыдущий экспорт %s заменяется"
 msgstr[1] "предыдущие экспорты %s заменяются"
 msgstr[2] "предыдущие экспорты %s заменяются"
@@ -1404,6 +1461,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "аргумент должен быть буквой"
+
+#~ msgid "zero imputs"
+#~ msgstr "нулевые вводы"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "'all' нельзя использовать с другими опциями разбора"
@@ -1450,14 +1513,8 @@ msgstr[2] "Предупреждения:\n"
 #~ msgid "conversion to factor is deprecated"
 #~ msgstr "преобразование в фактор не одобряется"
 
-#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-#~ msgstr "'quote' должен быть 'TRUE', 'FALSE' или числом"
-
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "неправильные числа в 'quote'"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "неправильное указание 'quote'"
 
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
 #~ msgstr "col.names = NA не имеет смысла, если row.names = FALSE"

@@ -167,7 +167,7 @@ data.entry <- function(..., Modes=NULL, Names=NULL)
     j <- 1
     nn <- names(tmp1)
     for(i in nn) {
-	assign(i, tmp1[[j]], env=.GlobalEnv)
+	assign(i, tmp1[[j]], envir=.GlobalEnv)
 	j <- j+1
     }
     if(j==1) warning("did not assign() anything")

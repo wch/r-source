@@ -54,7 +54,7 @@ double bessel_i(double x, double alpha, double expo)
 	/* Using Abramowitz & Stegun  9.6.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_i(x, -alpha, expo) +
-	       bessel_k(x, -alpha, expo) * ((ize == 1)? 2. : 2.*exp(-x))/M_PI
+	       bessel_k(x, -alpha, expo) * ((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI
 	       * sin(-M_PI * alpha));
     }
     nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */

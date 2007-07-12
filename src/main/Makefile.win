@@ -22,7 +22,7 @@ CSOURCES=\
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c graphics.c \
-	identical.c internet.c iosupport.c \
+	identical.c inlined.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c mkdtemp.c model.c \
 	names.c \
@@ -46,8 +46,9 @@ gram.c: gram.y
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../extra/zlib -I../extra/bzip2
 dounzip-CFLAGS=-I../extra/zlib
-character-CFLAGS=-I../extra/pcre -DSTATIC
-pcre-CFLAGS=-I../extra/pcre -DSTATIC
+character-CFLAGS=-I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
+pcre-CFLAGS=-I../extra/pcre -DPCRE_STATIC
+platform-CFLAGS=-I../gnuwin32
 
 libmain.a: $(OBJS)
 

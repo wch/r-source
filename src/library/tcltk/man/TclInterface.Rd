@@ -90,7 +90,7 @@ tclObj(x) <- value
 as.tclObj(x, drop=FALSE)
 is.tclObj(x)
 
-\method{as.character}{tclObj}(x. ...)
+\method{as.character}{tclObj}(x, ...)
 \method{as.integer}{tclObj}(x, ...)
 \method{as.double}{tclObj}(x, ...)
 \method{tclvalue}{tclObj}(x)
@@ -124,7 +124,7 @@ tclRequire(package, warn = TRUE)
   internally by the commands that create and manipulate Tk widgets and
   Tcl objects.  At the lowest level \code{.Tcl} sends a command as a text
   string to the Tcl interpreter and returns the result as an object of
-  class \code{tclObj} (see below). A newer variant \code{.Tcl.objv}
+  class \code{tclObj} (see below).  A newer variant \code{.Tcl.objv}
   accepts arguments in the form of a named list of \code{tclObj}
   objects. 
 
@@ -168,7 +168,7 @@ tclRequire(package, warn = TRUE)
   an \R environments, enclosed in the global environment.  The value of
   the \code{ID} field is identical to the Tk window name. The \code{env}
   environment contains a \code{parent} variable and a \code{num.subwin}
-  variable.  If the   window obtains subwindows and  callbacks, they are
+  variable.  If the window obtains sub-windows and  callbacks, they are
   added as variables to the environment.   \code{.TkRoot} is the top
   window with ID "."; this window is not  displayed in order to avoid
   ill effects of closing it via window  manager controls. The
@@ -176,7 +176,7 @@ tclRequire(package, warn = TRUE)
 
   \code{.Tk.ID} extracts the \code{ID} of a window,
   \code{.Tk.newwin} creates a new window environment with a given ID and
-  \code{.Tk.subwin} creates a new window which is a subwindow of a given
+  \code{.Tk.subwin} creates a new window which is a sub-window of a given
   parent window.
 
   \code{tkdestroy} destroys a window and also removes the reference to a
@@ -186,25 +186,25 @@ tclRequire(package, warn = TRUE)
   environment.
 
   \code{tclVar} creates a new Tcl variable and initializes it to
-  \code{init}. An R object of class \code{tclVar} is created to
-  represent it. Using \code{as.character} on the object returns the Tcl
-  variable name. Accessing the Tcl variable from R is done using the 
-  \code{tclvalue} function, which can also occur on the left sie of
-  assignments. If \code{tclvalue} is passed an argument which is not a
+  \code{init}.  An R object of class \code{tclVar} is created to
+  represent it.  Using \code{as.character} on the object returns the Tcl
+  variable name.  Accessing the Tcl variable from R is done using the 
+  \code{tclvalue} function, which can also occur on the left-hand side of
+  assignments.  If \code{tclvalue} is passed an argument which is not a
   \code{tclVar} object, then it will assume that it is a character string
   explicitly naming global Tcl variable. Tcl variables created by 
-  \code{tclVar}  are  uniquely named and automatically unset by the 
+  \code{tclVar} are uniquely named and automatically unset by the
   garbage collector when the representing object is no longer in use. 
 
-  \code{tclArray} creates a new Tcl array and initalizes it to the empty
-  array. An R object of class \code{tclArray} and inheriting from class
+  \code{tclArray} creates a new Tcl array and initializes it to the empty
+  array.  An R object of class \code{tclArray} and inheriting from class
   \code{tclVar} is created to represent it. You can access elements of
   the Tcl array using indexing with \code{[[} or \code{$}, which also
-  allow replacement forms. Notice that Tcl arrays are associative by
+  allow replacement forms.  Notice that Tcl arrays are associative by
   nature and hence unordered; indexing with a numeric index \code{i}
   refers to the element with the \emph{name}
-  \code{as.character(i)}. Multiple indices are pasted together separated
-  by commas to form a single name. You can query the
+  \code{as.character(i)}.  Multiple indices are pasted together separated
+  by commas to form a single name.  You can query the
   length and the set of names in an array using methods for
   \code{length} and \code{names}, respectively; these cannot
   meaningfully be set so assignment forms exist only to print an error
@@ -215,11 +215,11 @@ tclRequire(package, warn = TRUE)
   This works by using objects of class \code{tclObj}.  The string
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
-  \code{"double"}, or \code{"integer"}. Conversely, such vectors can be
-  converted using \code{as.tclObj}. There is an ambiguity as to what
+  \code{"double"}, or \code{"integer"}.  Conversely, such vectors can be
+  converted using \code{as.tclObj}.  There is an ambiguity as to what
   should happen for length one vectors, controlled by the \code{drop}
-  argument; there are cases where the distiction matters to Tcl,
-  although mostly it treats them equivalently. Notice that
+  argument; there are cases where the distinction matters to Tcl,
+  although mostly it treats them equivalently.  Notice that
   \code{tclvalue} and \code{as.character} differ on an object whose
   string representation has embedded spaces, the former is sometimes to
   be preferred, in particular when applied to the result of
@@ -228,9 +228,9 @@ tclRequire(package, warn = TRUE)
   The object behind a \code{tclVar} object
   is extracted using \code{tclObj(x)} which also allows an assignment
   form, in which the right hand side of the assignment is automatically
-  converted using \code{as.tclObj}. There is a print method for
+  converted using \code{as.tclObj}.  There is a print method for
   \code{tclObj} objects; it prints \code{<Tcl>} followed by the string
-  representation of the object. Notice that \code{as.character} on a
+  representation of the object.  Notice that \code{as.character} on a
   \code{tclVar} object is the \emph{name} of the corresponding Tcl
   variable and not the value. 
   
@@ -248,10 +248,6 @@ tclRequire(package, warn = TRUE)
 
   \code{\link{capabilities}("tcltk")} to see if Tcl/Tk support was
   compiled into this build of \R.
-#ifdef windows
-  (It is possible to build with Tcl/Tk support but not be able to run it,
-  if the DLLs are not available or \code{TCL_LIBRARY} is not set.)
-#endif
 }
 \examples{
 \dontrun{

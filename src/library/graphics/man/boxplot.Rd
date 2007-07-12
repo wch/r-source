@@ -154,10 +154,10 @@ arrows(xi, mn.t - sd.t, xi, mn.t + sd.t,
 
 ## boxplot on a matrix:
 mat <- cbind(Uni05 = (1:100)/21, Norm = rnorm(100),
-             T5 = rt(100, df = 5), Gam2 = rgamma(100, shape = 2))
-boxplot(data.frame(mat), main = "boxplot(data.frame(mat), main = ...)")
+             `5T` = rt(100, df = 5), Gam2 = rgamma(100, shape = 2))
+boxplot(as.data.frame(mat), main = "boxplot(as.data.frame(mat), main = ...)")
 par(las=1)# all axis labels horizontal
-boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
+boxplot(as.data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
         horizontal = TRUE)
 
 ## Using 'at = ' and adding boxplots -- example idea by Roger Bivand :
@@ -167,7 +167,8 @@ boxplot(len ~ dose, data = ToothGrowth,
         subset = supp == "VC", col = "yellow",
         main = "Guinea Pigs' Tooth Growth",
         xlab = "Vitamin C dose mg",
-        ylab = "tooth length", ylim = c(0, 35), yaxs = "i")
+        ylab = "tooth length",
+        xlim = c(0.5, 3.5), ylim = c(0, 35), yaxs = "i")
 boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         boxwex = 0.25, at = 1:3 + 0.2,
         subset = supp == "OJ", col = "orange")

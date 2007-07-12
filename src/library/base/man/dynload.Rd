@@ -69,7 +69,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 #ifdef unix
   The \code{local} argument allows one to control whether the symbols in
   the DLL being attached are visible to other DLLs.  While maintaining
-  the symbols in their own namespace is good practice, the ability to
+  the symbols in their own name space is good practice, the ability to
   share symbols across related \dQuote{chapters} is useful in many
   cases.  Additionally, on certain platforms and versions of an
   operating system, certain libraries must have their symbols loaded
@@ -133,13 +133,12 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   \code{is.loaded} checks if the symbol name is loaded and hence
   available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
-  \code{.Exernal}: it requires the name you would give to \code{.C} etc
-  and \strong{not} (as in S) that remapped by deprecated functions
+  \code{.External}: it requires the name you would give to \code{.C} etc
+  and \strong{not} (as in S) that remapped by defunct functions
   \code{\link{symbol.C}} or \code{\link{symbol.For}}.  It will succeed
   if any one of the four calling functions would succeed in using the
-  entry point unless \code{type} is specified: for Fortran entry points
-  \code{is.loaded(symbol.For("symbol"))} will also succeed \emph{unless}
-  the registration mechanism has been used.
+  entry point unless \code{type} is specified.  (See
+  \code{\link{.Fortran}} for how Fortran symbols are mapped.)
 }
 \note{
   The creation of shared libraries and the runtime linking of them into

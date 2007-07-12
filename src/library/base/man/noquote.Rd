@@ -51,7 +51,7 @@ cmp.logical <- function(log.v)
   log.v <- as.logical(log.v)
   noquote(if(length(log.v)==0)"()" else c(".","|")[1+log.v])
 }
-cmp.logical(runif(20) > 0.8)
+cmp.logical(stats::runif(20) > 0.8)
 }
 \keyword{print}
 \keyword{methods}

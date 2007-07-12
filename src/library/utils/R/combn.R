@@ -66,25 +66,24 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 	out[[1]] <- r
     }
 
-    i <- 2
-    ._1 <- 1:1 # to keep integer arithmetic
-    nmmp1 <- n - m + ._1
+    i <- 2L
+    nmmp1 <- n - m + 1L # using 1L to keep integer arithmetic
     while(a[1] != nmmp1) {
 	if(e < n - h) {
-	    h <- ._1
+	    h <- 1L
 	    e <- a[m]
-	    j <- ._1
+	    j <- 1L
 	}
 	else {
 	    e <- a[m - h]
-	    h <- h + ._1
+	    h <- h + 1L
 	    j <- 1:h
 	}
 	a[m - h + j] <- e + j
 	r <- if(nofun) x[a] else FUN(x[a], ...)
 	if(simplify) ##S if(use.arr)
 	    out[,i] <- r else out[[i]] <- r
-	i <- i + 1
+	i <- i + 1L
     }
     if(simplify) ##S if(use.arr)
 	array(out, dim.use) else out

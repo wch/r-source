@@ -678,7 +678,7 @@ void *_getextradata(control obj)
  *  in a window's title bar, a button, checkbox or radio button,
  *  or the value in a textbox or a text field.
  */
-void settext(control obj, char *text)
+void settext(control obj, const char *text)
 {
 	if (! obj)
 		return;

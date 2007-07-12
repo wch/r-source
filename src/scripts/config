@@ -29,7 +29,7 @@ version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script ${version}
 
 Copyright (C) 2002-6 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
+This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD config [options] [VAR]
@@ -73,9 +73,11 @@ Variables:
   JAVA          Java interpreter command
   JAVAC         Java compiler command
   JAVAH         Java header and stub generator command
-  JAVA_HOME     path to the root of Java distribution
+  JAVA_HOME     path to the home of Java distribution
   JAVA_LIBS     flags needed for linking against Java libraries
+  JAVA_CPPFLAGS C preprocessor flags needed for compiling JNI programs
   LAPACK_LIBS   flags needed for linking against external LAPACK libraries
+  LIBnn         location for libraries, e.g. 'lib' or 'lib64' on this platform
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
                 nonstandard directory <dir> 
   OBJC          Objective C compiler command
@@ -164,12 +166,12 @@ ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
-ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS"
+ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
-ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE"
+ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn"
 
 ## Can we do this elegantly using case?
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2003   The R Development Core Team.
+ *  Copyright (C) 1998-2007   The R Development Core Team.
  *  Copyright (C) 2004-5        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -89,9 +89,7 @@ static void InitDerivSymbols()
 
 static SEXP Constant(double x)
 {
-    SEXP s = allocVector(REALSXP, 1);
-    REAL(s)[0] = x;
-    return s;
+    return ScalarReal(x);
 }
 
 static int isZero(SEXP s)
@@ -482,7 +480,7 @@ static SEXP D(SEXP expr, SEXP var)
 	else {
 	    SEXP u = deparse1(CAR(expr), 0, SIMPLEDEPARSE);
 	    error(_("Function '%s' is not in the derivatives table"),
-		  CHAR(STRING_ELT(u, 0)));
+		  translateChar(STRING_ELT(u, 0)));
 	}
 
 	break;
@@ -588,11 +586,10 @@ SEXP attribute_hidden do_D(SEXP call, SEXP op, SEXP args, SEXP env)
     else expr = CAR(args);
     var = CADR(args);
     if (!isString(var) || length(var) < 1)
-	errorcall(call, _("variable must be a character string"));
+	error(_("variable must be a character string"));
     if (length(var) > 1)
-	warningcall(call,
-		    _("only the first element is used as variable name"));
-    var = install(CHAR(STRING_ELT(var, 0)));
+	warning(_("only the first element is used as variable name"));
+    var = install(translateChar(STRING_ELT(var, 0)));
     InitDerivSymbols();
     PROTECT(expr = D(expr, var));
     expr = AddParens(expr);
@@ -667,7 +664,7 @@ static int Accumulate2(SEXP expr, SEXP exprlist)
 static SEXP MakeVariable(int k, SEXP tag)
 {
     char buf[64];
-    snprintf(buf, 64, "%s%d", CHAR(STRING_ELT(tag, 0)), k);
+    snprintf(buf, 64, "%s%d", translateChar(STRING_ELT(tag, 0)), k);
     return install(buf);
 }
 
@@ -749,18 +746,15 @@ static SEXP CreateGrad(SEXP names)
     PROTECT(q = allocList(n));
     SETCADDR(dimnames, LCONS(p, q));
     UNPROTECT(1);
-    for(i=0 ; i<n ; i++) {
-	SETCAR(q, allocVector(STRSXP, 1));
-	SET_STRING_ELT(CAR(q), 0, STRING_ELT(names, i));
+    for(i = 0 ; i < n ; i++) {
+	SETCAR(q, ScalarString(STRING_ELT(names, i)));
 	q = CDR(q);
     }
     PROTECT(dim = lang3(R_NilValue, R_NilValue, R_NilValue));
     SETCAR(dim, install("c"));
     SETCADR(dim, lang2(install("length"), install(".value")));
-    SETCADDR(dim, allocVector(REALSXP, 1));
-    REAL(CADDR(dim))[0] = length(names);
-    PROTECT(data = allocVector(REALSXP, 1));
-    REAL(data)[0] = 0;
+    SETCADDR(dim, ScalarInteger(length(names))); /* was real? */
+    PROTECT(data = ScalarReal(0.));
     PROTECT(p = lang4(install("array"), data, dim, dimnames));
     p = lang3(install("<-"), install(".grad"), p);
     UNPROTECT(4);
@@ -778,21 +772,17 @@ static SEXP CreateHess(SEXP names)
     PROTECT(q = allocList(n));
     SETCADDR(dimnames, LCONS(p, q));
     UNPROTECT(1);
-    for(i=0 ; i<n ; i++) {
-	SETCAR(q, allocVector(STRSXP, 1));
-	SET_STRING_ELT(CAR(q), 0, STRING_ELT(names, i));
+    for(i = 0 ; i < n ; i++) {
+	SETCAR(q, ScalarString(STRING_ELT(names, i)));
 	q = CDR(q);
     }
     SETCADDDR(dimnames, duplicate(CADDR(dimnames)));
     PROTECT(dim = lang4(R_NilValue, R_NilValue, R_NilValue,R_NilValue));
     SETCAR(dim, install("c"));
     SETCADR(dim, lang2(install("length"), install(".value")));
-    SETCADDR(dim, allocVector(REALSXP, 1));
-    REAL(CADDR(dim))[0] = length(names);
-    SETCADDDR(dim, allocVector(REALSXP, 1));
-    REAL(CADDDR(dim))[0] = length(names);
-    PROTECT(data = allocVector(REALSXP, 1));
-    REAL(data)[0] = 0;
+    SETCADDR(dim, ScalarInteger(length(names)));
+    SETCADDDR(dim, ScalarInteger(length(names)));
+    PROTECT(data = ScalarReal(0.));
     PROTECT(p = lang4(install("array"), data, dim, dimnames));
     p = lang3(install("<-"), install(".hessian"), p);
     UNPROTECT(4);
@@ -803,8 +793,7 @@ static SEXP DerivAssign(SEXP name, SEXP expr)
 {
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
-    PROTECT(newname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(newname, 0, name);
+    PROTECT(newname = ScalarString(name));
     SETCADR(ans, lang4(install("["), install(".grad"), R_MissingArg, newname));
     UNPROTECT(2);
     return ans;
@@ -822,8 +811,7 @@ static SEXP HessAssign1(SEXP name, SEXP expr)
 {
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
-    PROTECT(newname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(newname, 0, name);
+    PROTECT(newname = ScalarString(name));
     SETCADR(ans, lang5(install("["), install(".hessian"), R_MissingArg,
 		       newname, newname));
     UNPROTECT(2);
@@ -833,10 +821,8 @@ static SEXP HessAssign1(SEXP name, SEXP expr)
 static SEXP HessAssign2(SEXP name1, SEXP name2, SEXP expr)
 {
     SEXP ans, newname1, newname2;
-    PROTECT(newname1 = allocVector(STRSXP, 1));
-    PROTECT(newname2 = allocVector(STRSXP, 1));
-    SET_STRING_ELT(newname1, 0, name1);
-    SET_STRING_ELT(newname2, 0, name2);
+    PROTECT(newname1 = ScalarString(name1));
+    PROTECT(newname2 = ScalarString(name2));
     ans = lang3(install("<-"),
 		lang5(install("["), install(".hessian"), R_MissingArg,
 		      newname1, newname2),
@@ -886,10 +872,8 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, ans2, expr, funarg, names, s;
     int f_index, *d_index, *d2_index;
     int i, j, k, nexpr, nderiv=0, hessian;
-    char *vmax;
     SEXP exprlist, tag;
     checkArity(op, args);
-    vmax = vmaxget();
     InitDerivSymbols();
     PROTECT(exprlist = LCONS(install("{"), R_NilValue));
     /* expr: */
@@ -900,7 +884,7 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     /* namevec: */
     names = CAR(args);
     if (!isString(names) || (nderiv = length(names)) < 1)
-	errorcall(call, _("invalid variable names"));
+	error(_("invalid variable names"));
     args = CDR(args);
     /* function.arg: */
     funarg = CAR(args);
@@ -909,7 +893,7 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     tag = CAR(args);
     if (!isString(tag) || length(tag) < 1
 	|| length(STRING_ELT(tag, 0)) < 1 || length(STRING_ELT(tag, 0)) > 60)
-	errorcall(call, _("invalid tag"));
+	error(_("invalid tag"));
     args = CDR(args);
     /* hessian: */
     hessian = asLogical(CAR(args));
@@ -923,14 +907,14 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     for(i=0, k=0; i<nderiv ; i++) {
 	PROTECT(ans = duplicate(expr));
-	PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
+	PROTECT(ans = D(ans, install(translateChar(STRING_ELT(names, i)))));
 	ans2 = duplicate(ans);	/* keep a temporary copy */
 	d_index[i] = FindSubexprs(ans, exprlist, tag); /* examine the derivative first */
 	ans = duplicate(ans2);	/* restore the copy */
 	if (hessian) {
 	    for(j = i; j < nderiv; j++) {
 		PROTECT(ans2 = duplicate(ans));
-		PROTECT(ans2 = D(ans2, install(CHAR(STRING_ELT(names, j)))));
+		PROTECT(ans2 = D(ans2, install(translateChar(STRING_ELT(names, j)))));
 		d2_index[k] = FindSubexprs(ans2, exprlist, tag);
 		k++;
 		UNPROTECT(2);
@@ -954,14 +938,13 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Accumulate2(MakeVariable(d_index[i], tag), exprlist);
 	    if (hessian) {
 		PROTECT(ans = duplicate(expr));
-		PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
+		PROTECT(ans = D(ans, install(translateChar(STRING_ELT(names, i)))));
 		for (j = i; j < nderiv; j++) {
 		    if (d2_index[k]) {
 			Accumulate2(MakeVariable(d2_index[k], tag), exprlist);
 		    } else {
 			PROTECT(ans2 = duplicate(ans));
-			PROTECT(ans2 = D(ans2,
-					 install(CHAR(STRING_ELT(names, j)))));
+			PROTECT(ans2 = D(ans2, install(translateChar(STRING_ELT(names, j)))));
 			Accumulate2(ans2, exprlist);
 			UNPROTECT(2);
 		    }
@@ -971,7 +954,7 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	} else { /* the first derivative is constant or simple variable */
 	    PROTECT(ans = duplicate(expr));
-	    PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
+	    PROTECT(ans = D(ans, install(translateChar(STRING_ELT(names, i)))));
 	    Accumulate2(ans, exprlist);
 	    UNPROTECT(2);
 	    if (hessian) {
@@ -980,8 +963,7 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 			Accumulate2(MakeVariable(d2_index[k], tag), exprlist);
 		    } else {
 			PROTECT(ans2 = duplicate(ans));
-			PROTECT(ans2 = D(ans2,
-					 install(CHAR(STRING_ELT(names, j)))));
+			PROTECT(ans2 = D(ans2, install(translateChar(STRING_ELT(names, j)))));
 			if(isZero(ans2)) Accumulate2(R_MissingArg, exprlist);
 			else Accumulate2(ans2, exprlist);
 			UNPROTECT(2);
@@ -1061,7 +1043,7 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocList(length(names)));
 	SET_FORMALS(funarg, ans);
 	for(i = 0; i < length(names); i++) {
-	    SET_TAG(ans, install(CHAR(STRING_ELT(names, i))));
+	    SET_TAG(ans, install(translateChar(STRING_ELT(names, i))));
 	    SETCAR(ans, R_MissingArg);
 	    ans = CDR(ans);
 	}
@@ -1075,6 +1057,5 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* funarg = lang2(install("expression"), exprlist); */
     }
     UNPROTECT(2);
-    vmaxset(vmax);
     return funarg;
 }

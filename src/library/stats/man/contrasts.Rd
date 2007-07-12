@@ -40,7 +40,7 @@ contrasts(x, how.many) <- value
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{C}},
+  \code{\link{C}},% ./zC.Rd
   \code{\link{contr.helmert}},
   \code{\link{contr.poly}},
   \code{\link{contr.sum}},
@@ -50,7 +50,7 @@ contrasts(x, how.many) <- value
   \code{\link{lm}}.
 }
 \examples{
-example(factor)
+utils::example(factor)
 fff <- ff[, drop=TRUE]  # reduce to 5 levels.
 contrasts(fff) # treatment contrasts by default
 contrasts(C(fff, sum))

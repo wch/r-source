@@ -162,7 +162,7 @@
     }
 
     if(is.null(contriburl)) {
-        for(i in seq(along=pkgs))
+        for(i in seq_along(pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
         link.html.help(verbose=TRUE)
         return(invisible())
@@ -177,8 +177,6 @@
                  domain = NA)
     }
 
-    for(bundle in names(bundles))
-        pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
     depends <- is.character(dependencies) ||
     (is.logical(dependencies) && dependencies)
     if(depends && is.logical(dependencies))
@@ -187,42 +185,68 @@
         warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
         depends <- FALSE
     }
+    if(is.null(available))
+        available <- available.packages(contriburl = contriburl,
+                                        method = method)
+    bundles <- .find_bundles(available)
+    for(bundle in names(bundles))
+        pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
+    p0 <- unique(pkgs)
+    miss <-  !p0 %in% row.names(available)
+    if(sum(miss)) {
+        warning(sprintf(ngettext(sum(miss),
+                                 "package %s is not available",
+                                 "packages %s are not available"),
+                        paste(sQuote(p0[miss]), collapse=", ")),
+                domain = NA, call. = FALSE)
+        flush.console()
+    }
+    p0 <- p0[!miss]
+
     if(depends) { # check for dependencies, recursively
-        p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
+        p1 <- p0 # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
-        repeat {
-            if(any(miss <- ! p1 %in% row.names(available))) {
-                cat(sprintf(ngettext(sum(miss),
-                                     "dependency '%s' is not available",
-                                     "dependencies '%s' are not available"),
-                    paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
-                flush.console()
-            }
-            p1 <- p1[!miss]
-            deps <- as.vector(available[p1, dependencies])
-            deps <- .clean_up_dependencies(deps, available)
-            if(!length(deps)) break
-            toadd <- deps[! deps %in% c("R", have, pkgs)]
-            if(length(toadd) == 0) break
-            pkgs <- c(toadd, pkgs)
-            p1 <- toadd
+        not_avail <- character(0)
+	repeat {
+	    if(any(miss <- ! p1 %in% row.names(available))) {
+                not_avail <- c(not_avail, p1[miss])
+                p1 <- p1[!miss]
+	    }
+	    deps <- as.vector(available[p1, dependencies])
+	    deps <- .clean_up_dependencies(deps, available)
+	    if(!length(deps)) break
+	    toadd <- deps[! deps %in% c("R", have, pkgs)]
+	    if(length(toadd) == 0) break
+	    pkgs <- c(toadd, pkgs)
+	    p1 <- toadd
+	}
+        if(length(not_avail)) {
+            warning(sprintf(ngettext(length(not_avail),
+                                     "dependency %s is not available",
+                                     "dependencies %s are not available"),
+                            paste(sQuote(not_avail), collapse=", ")),
+                    domain = NA, call. = FALSE)
+            flush.console()
         }
+
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat(ngettext(length(added),
-                         "also installing the dependency ",
-                         "also installing the dependencies "),
-                paste(sQuote(added), collapse=", "), "\n\n", sep="")
+            message(sprintf(ngettext(length(added),
+                                     "also installing the dependency %s",
+                                     "also installing the dependencies %s"),
+                            paste(sQuote(added), collapse=", ")),
+                    "\n", domain = NA)
             flush.console()
             pkgnames <- pkgs # not zips, now
         }
+        p0 <- pkgs
     }
 
-    foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
+    foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
                                    type = "win.binary")
 
@@ -251,7 +275,7 @@
 
 menuInstallPkgs <- function(type = getOption("pkgType"))
 {
-    install.packages(NULL, .libPaths()[1], dependencies=TRUE, type = type)
+    install.packages(NULL, .libPaths()[1], dependencies=NA, type = type)
 }
 
 menuInstallLocal <- function()

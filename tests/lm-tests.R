@@ -44,19 +44,19 @@ all.equal(unname(im.lm0 $ infmat),
                  ))
 
 all.equal(rstandard(roller.lm9),
-          rstandard(roller.lm0),tol=1e-15)
+          rstandard(roller.lm0),tol=1e-14)
 all.equal(rstudent(roller.lm9),
-          rstudent(roller.lm0),tol=1e-15)
+          rstudent(roller.lm0),tol=1e-14)
 all.equal(rstudent(roller.lm),
           rstudent(roller.glm))
 all.equal(cooks.distance(roller.lm),
           cooks.distance(roller.glm))
 
 
-all.equal(summary(roller.lm0)$coef,
-          summary(roller.lm9)$coef, tol=1e-15)
+all.equal(summary(roller.lm0)$coefficients,
+          summary(roller.lm9)$coefficients, tol=1e-14)
 all.equal(print(anova(roller.lm0), signif.st=FALSE),
-                anova(roller.lm9), tol=1e-15)
+                anova(roller.lm9), tol=1e-14)
 
 
 ###  more regression tests for lm(), glm(), etc :
@@ -74,5 +74,5 @@ covratio (lm.SR)
 
 ## predict.lm(.)
 
-all.equal(predict(roller.lm,                 se=TRUE)$se,
-          predict(roller.lm, newdata=roller, se=TRUE)$se, tol= 1e-14)
+all.equal(predict(roller.lm,                 se.fit=TRUE)$se.fit,
+          predict(roller.lm, newdata=roller, se.fit=TRUE)$se.fit, tol= 1e-14)

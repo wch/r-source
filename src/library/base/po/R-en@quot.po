@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
-"PO-Revision-Date: 2006-12-11 10:49\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-06-06 11:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -128,6 +128,9 @@ msgstr "is required by"
 
 msgid "(still attached)"
 msgstr "(still attached)"
+
+msgid "namespace cannot be unloaded"
+msgstr "namespace cannot be unloaded"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "replaced regular expression pattern ‘[’ by  ‘\\\\[’"
@@ -267,6 +270,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> row.names NOT used"
 
+msgid "row names contain missing values"
+msgstr "row names contain missing values"
+
+msgid "duplicate row.names:"
+msgstr "duplicate row.names:"
+
 msgid "arguments imply differing number of rows:"
 msgstr "arguments imply differing number of rows:"
 
@@ -278,12 +287,6 @@ msgstr "row names supplied are of the wrong length"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "row names were found from a short variable and have been discarded"
-
-msgid "row names contain missing values"
-msgstr "row names contain missing values"
-
-msgid "duplicate row.names:"
-msgstr "duplicate row.names:"
 
 msgid "drop argument will be ignored"
 msgstr "drop argument will be ignored"
@@ -481,6 +484,15 @@ msgstr "not defined for “POSIXct” objects"
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "not defined for “POSIXlt” objects"
 
+msgid "'tim' is not character or numeric"
+msgstr "‘tim’ is not character or numeric"
+
+msgid "need explicit units for numeric conversion"
+msgstr "need explicit units for numeric conversion"
+
+msgid "invalid units specified"
+msgstr "invalid units specified"
+
 msgid "not defined for \"difftime\" objects"
 msgstr "not defined for “difftime” objects"
 
@@ -513,6 +525,9 @@ msgstr "only matrix diagonals can be replaced"
 
 msgid "replacement diagonal has wrong length"
 msgstr "replacement diagonal has wrong length"
+
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr "‘fromLast’ must be TRUE or FALSE"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -615,6 +630,9 @@ msgstr "coercing argument to “character” for format=“s”"
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr "‘format’ must be one of {“f”,“e”,“E”,“g”,“G”, “fg”, “s”}"
 
+msgid "'digits' reduced to 50"
+msgstr "‘digits’ reduced to 50"
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "‘flag’ can contain only ‘0+- #’"
 
@@ -639,8 +657,14 @@ msgstr "value for '"
 msgid "' not found"
 msgstr "' not found"
 
+msgid "all arguments must be named"
+msgstr "all arguments must be named"
+
 msgid "'pattern' must be a non-empty character string"
 msgstr "‘pattern’ must be a non-empty character string"
+
+msgid "invalid multibyte string for 'pattern'"
+msgstr "invalid multibyte string for ‘pattern’"
 
 msgid "'max.distance' must be non-negative"
 msgstr "‘max.distance’ must be non-negative"
@@ -722,6 +746,9 @@ msgstr "‘%s’ not found on search path, using pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "package/namespace load failed for ‘%s’"
+
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr "package was installed prior to 2.4.0 and must be re-installed"
 
 msgid "unable to load R code in package '%s'"
 msgstr "unable to load R code in package ‘%s’"
@@ -852,6 +879,9 @@ msgstr "invalid ‘category’ argument"
 msgid "must specify formal argument names to vectorize"
 msgstr "must specify formal argument names to vectorize"
 
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "‘arg’ must be NULL or a character vector of length >= 1"
+
 msgid "'arg' should be one of"
 msgstr "‘arg’ should be one of"
 
@@ -882,6 +912,9 @@ msgstr "attempt to set colnames on object with less than two dimensions"
 msgid "argument is not numeric or logical: returning NA"
 msgstr "argument is not numeric or logical: returning NA"
 
+msgid "'trim' must be numeric of length one"
+msgstr "‘trim’ must be numeric of length one"
+
 msgid "trimmed means are not defined for complex data"
 msgstr "trimmed means are not defined for complex data"
 
@@ -899,6 +932,9 @@ msgstr "‘by’ must specify valid column(s)"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "‘by.x’ and ‘by.y’ specify different numbers of columns"
+
+msgid "additional arguments ignored in message()"
+msgstr "additional arguments ignored in message()"
 
 msgid "(loaded the methods namespace)"
 msgstr "(loaded the methods namespace)"
@@ -994,8 +1030,8 @@ msgstr "name space ‘%s’ is loaded"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s failed in unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by: '%s'"
-msgstr "name space ‘%s’ is still used by: ‘%s’"
+msgid "name space '%s' is still used by: %s"
+msgstr "name space ‘%s’ is still used by: %s"
 
 msgid "imperative name space directives are disabled"
 msgstr "imperative name space directives are disabled"
@@ -1083,6 +1119,9 @@ msgstr "wrong argument"
 
 msgid "not defined for package_version objects"
 msgstr "not defined for package_version objects"
+
+msgid "no arguments"
+msgstr "no arguments"
 
 msgid "invalid 'n' value"
 msgstr "invalid ‘n’ value"
@@ -1263,6 +1302,9 @@ msgstr "Timestamp of '"
 msgid "' has changed"
 msgstr "' has changed"
 
+msgid "additional arguments ignored in stop()"
+msgstr "additional arguments ignored in stop()"
+
 msgid "is not"
 msgstr "is not"
 
@@ -1271,6 +1313,9 @@ msgstr "all"
 
 msgid "TRUE"
 msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr "additional arguments ignored in warning()"
 
 msgid "incorrect value for 'x'"
 msgstr "incorrect value for ‘x’"
@@ -1347,8 +1392,15 @@ msgstr "argument to ‘which’ is not logical"
 msgid "invalid 'digits'"
 msgstr "invalid ‘digits’"
 
-msgid "argument must be character"
-msgstr "argument must be character"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"arguments 'show.output.on.console', ‘minimized’ and ‘invisible’ are for "
+"Windows only"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "‘input’ must be a character vector or ‘NULL’"
 
 msgid "'cmd' could not be run"
 msgstr "‘cmd’ could not be run"
@@ -1382,15 +1434,15 @@ msgid_plural "there are no packages called"
 msgstr[0] "there is no package called"
 msgstr[1] "there are no packages called"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
-msgstr[0] "object %s is not exported by ‘namespace:%s’"
-msgstr[1] "objects %s are not exported by ‘namespace:%s’"
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
+msgstr[0] "object ‘%s’ is not exported by ‘namespace:%s’"
+msgstr[1] "objects ‘%s’ are not exported by ‘namespace:%s’"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
-msgstr[0] "previous export %s is being replaced"
-msgstr[1] "previous exports %s are being replaced"
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
+msgstr[0] "previous export ‘%s’ is being replaced"
+msgstr[1] "previous exports ‘%s’ are being replaced"
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"

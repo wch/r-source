@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
-"PO-Revision-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
+"PO-Revision-Date: 2007-02-24 16:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,9 @@ msgstr "Invalid to specify axis labels when ‘at’ is NULL"
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "‘labels’ and ‘at’ locations must have same length"
+
+msgid "logical 'label' supplied on length 0"
+msgstr "logical ‘label’ supplied on length 0"
 
 msgid "End points must not be identical"
 msgstr "End points must not be identical"
@@ -307,8 +310,8 @@ msgstr "‘x’ and ‘y’ must have length 1"
 msgid "invalid 'arrow' argument"
 msgstr "invalid ‘arrow’ argument"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
-msgstr "It is invalid to specify both ‘id’ and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
+msgstr "It is invalid to specify both ‘id’ and ‘id.lengths’"
 
 msgid "'x' and 'y' must be same length"
 msgstr "‘x’ and ‘y’ must be same length"
@@ -364,9 +367,6 @@ msgstr "‘x’ and ‘y’ must be unit objects and have the same length"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr "'x', 'y', 'width', and ‘height’ must all be units of length 1"
-
-msgid "'x' must be numeric"
-msgstr "‘x’ must be numeric"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "‘x’ and ‘units’ must have length > 0"

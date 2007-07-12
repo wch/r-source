@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2003  The R Development Core Team
+ *  Copyright (C) 1999-2007  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ static int allocated_n;
 
 /* The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
    to reallocate only for n > SIGNRANK_MAX, although for some reason
-   realloc is not used */
+   realloc is not used (possibly as it does not zero?) */
 
 static void
 w_free(int n)
@@ -71,10 +71,12 @@ w_init_maybe(int n)
 	w_free(allocated_n);
 
     if (!w) {
-	allocated_n = n = imax2(n, SIGNRANK_MAX);
+	n = imax2(n, SIGNRANK_MAX);
 	w = (double **) calloc(n + 1, sizeof(double *));
-	if (!w)
-	    MATHLIB_ERROR("%s", _("signrank allocation error"));
+#ifdef MATHLIB_STANDALONE
+	if (!w) MATHLIB_ERROR("%s", _("signrank allocation error"));
+#endif
+	allocated_n = n;
     }
 }
 
@@ -96,9 +98,9 @@ csignrank(int k, int n)
 	k = u - k;
     if (w[n] == 0) {
 	w[n] = (double *) calloc(c + 1, sizeof(double));
-	if (!w[n]) {
-	    MATHLIB_ERROR("%s", _("signrank allocation error"));
-	}
+#ifdef MATHLIB_STANDALONE
+	if (!w[n]) MATHLIB_ERROR("%s", _("signrank allocation error"));
+#endif
 	for (i = 0; i <= c; i++)
 	    w[n][i] = -1;
     }

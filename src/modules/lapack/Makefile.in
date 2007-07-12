@@ -19,7 +19,7 @@ SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = Lapack.h
 
-LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
+LIBSOURCES = dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
 LIBOBJECTS = $(LIBSOURCES:.f=.o)
 
@@ -30,7 +30,7 @@ DISTFILES = \
 	$(HEADERS) Lapack.c \
 	vecLibg95c.c vecLibg95f.f \
 	cmplx.f \
-	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f
+	dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f
 
 lapack_la = lapack$(SHLIB_EXT)
 Rlapack_la = libRlapack$(DYLIB_EXT)
@@ -60,7 +60,7 @@ Makedeps: Makefile $(DEPENDS)
 ## treated separately: e.g. we need to force stores with 
 ## gcc >= 3.4.0 at least on i686
 DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
-dlamc.o: dlamc.f
+dlamch.o: dlamch.f
 	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
 R: Makefile
@@ -78,7 +78,7 @@ $(lapack_la): $(lapack_la_OBJECTS)
 ## Include BLAS here, as with (static) ATLAS that pulls all the
 ## BLAS routines into one place.
 $(Rlapack_la): $(LIBOBJECTS)
-	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @BLAS_LIBS@ $(Rlapack_la_LIBADD)
+	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
@@ -86,12 +86,20 @@ Rlapack_install: $(Rlapack_la)
 	  $(Rexeclibdir)/$(Rlapack_la)
 
 install: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
-@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"
+@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"
 installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
+install-strip-Rlapack:
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"; \
+	fi
+install-strip: @USE_EXTERNAL_LAPACK_FALSE@ install-strip-Rlapack
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"; \
+	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/$(lapack_la)"
 

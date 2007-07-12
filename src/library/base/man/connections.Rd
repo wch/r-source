@@ -30,21 +30,21 @@
 file(description = "", open = "", blocking = TRUE,
      encoding = getOption("encoding"))
 
-pipe(description, open = "", encoding = getOption("encoding"))
-
-fifo(description = "", open = "", blocking = FALSE,
-     encoding = getOption("encoding"))
+url(description, open = "", blocking = TRUE,
+    encoding = getOption("encoding"))
 
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 
+bzfile(description, open = "", encoding = getOption("encoding"))
+
 unz(description, filename, open = "",
     encoding = getOption("encoding"))
 
-bzfile(description, open = "", encoding = getOption("encoding"))
+pipe(description, open = "", encoding = getOption("encoding"))
 
-url(description, open = "", blocking = TRUE,
-    encoding = getOption("encoding"))
+fifo(description, open = "", blocking = FALSE,
+     encoding = getOption("encoding"))
 
 socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
@@ -62,17 +62,8 @@ isOpen(con, rw = "")
 isIncomplete(con)
 }
 \arguments{
-  \item{description}{character. A description of the connection. For
-    \code{file} and \code{pipe} this is a path to the file to be opened.
-    For \code{url} it is a complete URL, including schemes
-    (\code{http://}, \code{ftp://} or \code{file://} -- see Details).
-    \code{file} also accepts complete URLs.
-  }
-  \item{filename}{a filename within a zip file.}
-  \item{con}{a connection.}
-  \item{host}{character.  Host name for port.}
-  \item{port}{integer.  The TCP port number.}
-  \item{server}{logical.  Should the socket be a client or a server?}
+  \item{description}{character string. A description of the connection:
+    see Details.}
   \item{open}{character.  A description of how to open the connection
     (if at all).  See Details for possible values.}
   \item{blocking}{logical.  See the \sQuote{Blocking} section below.}
@@ -81,6 +72,11 @@ isIncomplete(con)
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal.  The default is a good
     space/time compromise.}
+  \item{filename}{a filename within a zip file.}
+  \item{host}{character.  Host name for port.}
+  \item{port}{integer.  The TCP port number.}
+  \item{server}{logical.  Should the socket be a client or a server?}
+  \item{con}{a connection.}
   \item{type}{character. Currently ignored.}
   \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
@@ -91,15 +87,47 @@ isIncomplete(con)
   connection is not opened (except for \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
-  \code{gzfile} applies to files compressed by \file{gzip}, and
-  \code{bzfile} to those compressed by \file{bzip2}.  \code{gzfile} can
-  also open uncompressed files.  In each case the actual file is opened
-  in binary mode and so no translations are done if the original file
-  was a text file.
-  
-  \code{unz} reads (only) single files within zip files, in binary mode.
-  The description is the full path, with \file{.zip} extension if required.
+  For \code{file} the description is either a path to the file to be
+  opened or a complete URL, or \code{""} (the default) or \code{"stdin"}
+  or \code{"clipboard"} (see below).
 
+  For \code{url} the description is a complete URL, including scheme
+  (such as \code{http://}, \code{ftp://} or \code{file://}).
+
+  For \code{gzfile} the description is the path to a file that is
+  compressed by \code{gzip}: it can also opened uncompressed files.
+
+  For \code{bzfile} the description is the path to a file that is
+  compressed by \code{bzip2}.
+
+  \code{unz} reads (only) single files within zip files, in binary mode.
+  The description is the full path to the zip file, with \file{.zip}
+  extension if required.
+
+  For \code{pipe} the description is the command line to be piped to or
+  from (see the Examples).
+
+  For \code{fifo} the description is the path of the fifo.
+#ifdef windows
+  (Windows does not have fifos, so attempts to use this function are an
+  error.)
+#endif
+
+  \code{file} allows \code{description="stdin"} to refer to the C-level
+  \code{stdin} of the process (which need not be connected to anything
+#ifdef unix
+  in a console version or embedded version of \R), provided the C99 function
+  \code{fdopen} is supported on the platform.
+#endif
+#ifdef windows
+  in a console version or embedded version of \R, and is not in \code{RGui}).
+#endif
+
+  \code{gzfile} and \code{bzfile} open the actual file in binary mode
+  and so no translations are done if the original file was a text file.
+  (See \code{\link{gzcon}} for a way to add compression to non-file
+  connections.)
+  
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
   \code{unz} and \code{url("file://")} connections.  The other types may
   be partially implemented or not implemented at all.  (They do work on
@@ -130,21 +158,24 @@ isIncomplete(con)
   }
   Not all modes are applicable to all connections: for example URLs can
   only be opened for reading.  Only file and socket connections can be
-  opened for reading and writing/appending.
-  For many connections there is little or no
-  difference between text and binary modes, but there is for file-like
-  connections on Windows, and \code{\link{pushBack}} is text-oriented and
-  is only allowed on connections open for reading in text mode.
+  opened for reading and writing/appending. For many connections there
+  is little or no difference between text and binary modes, but there is
+  for file-like connections on Windows, and \code{\link{pushBack}} is
+  text-oriented and is only allowed on connections open for reading in
+  text mode.
 
-  \code{close} closes and destroys a connection.
+  \code{close} closes and destroys a connection.  Note that this will
+  happen automatically in due course if there is no \R object referring
+  to the connection.
 
   \code{flush} flushes the output stream of a connection open for
   write/append (where implemented).
 
-  If for a \code{file} connection the description is \code{""}, the file
-  is immediately opened (in \code{"w+"} mode unless \code{open="w+b"} is
-  specified) and unlinked from the file system.  This provides a
-  temporary file to write to and then read from.
+  If for a \code{file} or \code{fifo} connection the description is
+  \code{""}, the file/fifo is immediately opened (in \code{"w+"} mode
+  unless \code{open="w+b"} is specified) and unlinked from the file
+  system.  This provides a temporary file/fifo to write to and then read
+  from.
 
   A note on \code{file://} URLs.  The most general form (from RFC1738) is
   \code{file://host/path/to/file}, but \R only accepts the form with an
@@ -166,6 +197,16 @@ isIncomplete(con)
 #endif
   Also, no attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
+
+  Note that \code{https://} connections are
+#ifdef unix
+  not supported.
+#endif
+#ifdef windows
+  only supported if \code{--internet2} was used (to make use of Internet
+  Explorer internals), and then only if the certificate is considered to
+  be valid.
+#endif
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
@@ -215,9 +256,6 @@ isIncomplete(con)
   result is likely to be that up to the error, with a warning.  On
   input, it will most likely be all or some of the input up to the
   error.
-
-  The encoding for \code{\link{stdin}} when redirected from a file can
-  be set by the command-line flag \code{--encoding}.
 }
 \section{Blocking}{
   The default condition for all but fifo and socket connections is to be in
@@ -237,10 +275,13 @@ isIncomplete(con)
 
   Most blocking operations on URLs and sockets are subject to the
   timeout set by \code{options("timeout")}.  Note that this is a timeout
-  for no response at all, not for the whole operation.
+  for no response at all, not for the whole operation.  The timeout is
+  set at the time the connection is opened (more precisely, when the
+  last connection of that type -- \code{http:}, \code{ftp:} or socket --
+  was opened).
 }
 \section{Fifos}{
-  Fifos default to non-blocking.  That follows Svr4 and it probably most
+  Fifos default to non-blocking.  That follows Svr4 and is probably most
   natural, but it does have some implications.
   In particular, opening a non-blocking fifo connection for writing
   (only) will fail unless some other process is reading on the fifo.
@@ -305,7 +346,7 @@ isIncomplete(con)
 }
 \references{
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language.} Springer.
+  \emph{Programming with Data.  A Guide to the S Language.} Springer.
 }
 
 \seealso{
@@ -315,6 +356,8 @@ isIncomplete(con)
 
   \code{\link{capabilities}} to see if \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
+
+  \code{\link{gzcon}} to wrap gzip (de)compression around a connection.
 
 #ifdef windows
   To flush output to the console, see \code{\link{flush.console}}.
@@ -385,7 +428,7 @@ scan(pipe("sed -e s/,$// data2"), sep=",")
 # convert decimal point to comma in output
 # both R strings and (probably) the shell need \ doubled
 zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
-cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
+cat(format(round(stats::rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 file.show("outfile", delete.file=TRUE)}
 
@@ -395,6 +438,14 @@ con <- socketConnection(port = 79, blocking = TRUE)
 writeLines(paste(system("whoami", intern=TRUE), "\r", sep=""), con)
 gsub(" *$", "", readLines(con))
 close(con)}
+
+\dontrun{## Unix examples of use of anonymous fifo
+con <- fifo("")  # file("") would also work
+writeLines(letters, con)
+readLines(con, n=3)
+readLines(con, n=5)
+close(con)
+}
 
 \dontrun{## two R processes communicating via non-blocking sockets
 # R process 1

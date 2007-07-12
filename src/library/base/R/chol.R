@@ -47,7 +47,7 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
                       x = x,
                       n,
                       n,
-                      v = matrix(0, nr=n, nc=n),
+                      v = matrix(0, nrow=n, ncol=n),
                       info = integer(1),
                       DUP = FALSE, PACKAGE = "base")
         if(z$info)
@@ -78,7 +78,7 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 		  x=x,
 		  nr,
 		  size,
-		  v=matrix(0, nr=size, nc=size),
+		  v=matrix(0, nrow=size, ncol=size),
 		  info=integer(1),
 		  DUP=FALSE, PACKAGE="base")
     if(z$info)

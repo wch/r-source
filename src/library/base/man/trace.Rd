@@ -59,17 +59,17 @@ tracingState(on = NULL)
     \code{trace}.
 
     An important use of this argument is to trace a function when it
-  is called from a package with a namespace.  The current namespace mechanism
+  is called from a package with a name space.  The current name space mechanism
   imports the functions to be called (with the exception of functions
   in the base package).  The functions being called are \emph{not} the
   same objects seen from the top-level (in general, the imported
   packages may not even be attached).  Therefore, you must ensure that
   the correct versions are being traced.  The way to do this is to set
-  argument \code{where} to a function in the namespace.  The tracing
+  argument \code{where} to a function in the name space.  The tracing
   computations will then start looking in the environment of that
-  function (which will be the namespace of the corresponding package).
+  function (which will be the name space of the corresponding package).
   (Yes, it's subtle, but the semantics here are central to how
-  namespaces work in R.)
+  name spaces work in R.)
   }
   \item{on}{logical; a call to  the support function \code{tracingState} returns \code{TRUE}
     if tracing is globally turned on, \code{FALSE} otherwise.  An
@@ -182,7 +182,7 @@ tracingState(on = NULL)
   versions of the traced functions).
 
   If methods dispatch is not currently on, \code{trace} will load the
-  methods namespace, but will not put the methods package on the search
+  methods name space, but will not put the methods package on the search
   list.
 }
 \value{
@@ -202,9 +202,11 @@ tracingState(on = NULL)
   constructing general expressions.
 }
 \examples{
+require(graphics)
+
 ##  Very simple use
 trace(sum)
-hist(rnorm(100)) # shows about 3-4 calls to sum()
+hist(stats::rnorm(100)) # shows about 3-4 calls to sum()
 untrace(sum)
 
 if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
@@ -236,7 +238,7 @@ if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
 
  \dontrun{
  ## trace calls to the function lm() that come from the nlme package
- ## (The function nlme is in that package, and the package has a namespace,
+ ## (The function nlme is in that package, and the package has a name space,
  ## so the where= argument must be used to get the right version of lm)
 
  trace(lm, exit = recover, where = nlme)

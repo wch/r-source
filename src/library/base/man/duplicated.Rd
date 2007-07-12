@@ -13,13 +13,18 @@
 \usage{
 duplicated(x, incomparables = FALSE, \dots)
 
-\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, \dots)
+\method{duplicated}{default}(x, incomparables = FALSE, fromLast = FALSE, \dots)
+
+\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
 }
 \arguments{
   \item{x}{a vector or a data frame or an array or \code{NULL}.}
   \item{incomparables}{a vector of values that cannot be compared.
     Currently, \code{FALSE} is the only possible value, meaning that all
     values can be compared.}
+  \item{fromLast}{logical indicating if duplication should be considered
+    from the reverse side, i.e., the last (or rightmost) of identical
+    elements would correspond to \code{duplicated=FALSE}.}
   \item{\dots}{arguments for particular methods.}
   \item{MARGIN}{the array margin to be held fixed: see
     \code{\link{apply}}.}
@@ -28,6 +33,9 @@ duplicated(x, incomparables = FALSE, \dots)
   This is a generic function with methods for vectors (including lists),
   data frames and arrays (including matrices).
 
+  \code{duplicated(x, fromLast=TRUE)} is equivalent to but faster than
+  \code{rev(duplicated(rev(x)))}.
+
   The data frame method works by pasting together a character
   representation of the rows separated by \code{\\r}, so may be imperfect
   if the data frame has characters with embedded carriage returns or
@@ -35,7 +43,8 @@ duplicated(x, incomparables = FALSE, \dots)
 
   The array method calculates for each element of the sub-array
   specified by \code{MARGIN} if the remaining dimensions are identical
-  to those for an earlier element (in row-major order).  This would most
+  to those for an earlier (or later, when \code{fromLast=TRUE}) element
+  (in row-major order).  This would most
   commonly be used to find duplicated rows (the default) or columns
   (with \code{MARGIN = 2}).
 }
@@ -54,7 +63,12 @@ duplicated(x, incomparables = FALSE, \dots)
 x <- c(9:20, 1:5, 3:7, 0:8)
 ## extract unique elements
 (xu <- x[!duplicated(x)])
+## similar, but not the same:
+(xu2 <- x[!duplicated(x, fromLast = TRUE)])
+
 ## xu == unique(x) but unique(x) is more efficient
+stopifnot(identical(xu,  unique(x)),
+          identical(xu2, unique(x, fromLast = TRUE)))
 
 duplicated(iris)[140:143]
 

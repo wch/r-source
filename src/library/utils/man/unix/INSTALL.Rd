@@ -21,12 +21,14 @@
 
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
-  first directory given in the environment variable \env{R\_LIBS} if
-  this is set and non-null, and to the default library tree (which is
-  rooted at \file{\$R\_HOME/library}) otherwise.
+  first directory in the library path which would be used by \R run in
+  the current environment.
 
   To install into the library tree \code{lib}, use
-  \code{R CMD INSTALL -l lib pkgs}.
+  \code{R CMD INSTALL -l lib pkgs}.  This prepends \code{lib} to
+  \env{R\_LIBS} for duration of the install, so required packages in the
+  installation directory will be found (and used in preference to those
+  in other libraries).
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
@@ -62,11 +64,11 @@
 }
 
 \section{Packages using the methods package}{
-  Packages that require the methods package, and that use functions such
-  as \code{\link{setMethod}} or \code{\link{setClass}},
-  should be installed either (preferably) using lazy-loading or by
-  creating a binary image: use the flags \code{LazyLoad} and
-  \code{SaveImage} in the \file{DESCRIPTION} file to ensure this.
+  Packages that require the methods package and make use functions such
+  as \code{\link{setMethod}} or \code{\link{setClass}}, should be
+  installed using lazy-loading (or, deprecated, by creating a binary
+  image): use the field \code{LazyLoad} in the \file{DESCRIPTION} file
+  to ensure this.
 }
 
 \seealso{
@@ -74,12 +76,11 @@
   using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
   the internet (or other \R level installation of packages, such as by
-  \code{install.packages});
+  \code{install.packages}).
 
-  the section on \dQuote{Add-on packages} in \dQuote{R Installation and
-    Administration} and
-  the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
-    Extensions}
-  (see the \file{doc/manual} subdirectory of the \R source tree).
+  The section on \dQuote{Add-on packages} in \dQuote{R Installation and
+    Administration} and the chapter on \dQuote{Creating R packages} in
+  \dQuote{Writing \R Extensions} (see \code{\link{RShowDoc}} and the
+  \file{doc/manual} subdirectory of the \R source tree).
 }
 \keyword{utilities}

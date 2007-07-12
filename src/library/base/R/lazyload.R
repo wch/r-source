@@ -1,7 +1,9 @@
+## note that there is a version in ../baseloader.R that should be kept in step
 lazyLoad <- function(filebase, envir = parent.frame(), filter)
 {
     ##
     ## bootstrapping definitions so we can load base
+    ## - not that this version is actually used to load base
     ##
     glue <- function (..., sep = " ", collapse = NULL)
         .Internal(paste(list(...), sep, collapse))
@@ -15,17 +17,13 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
         on.exit(close(con))
         .Internal(unserializeFromConn(con, baseenv()))
     }
-    "parent.env<-" <-
-        function (env, value) .Internal("parent.env<-"(env, value))
-    along <- function(x) { n <- length(x); if (n) 1 : n else NULL }
+    `parent.env<-` <-
+        function (env, value) .Internal(`parent.env<-`(env, value))
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
     environment <- function () .Internal(environment(NULL))
-    mkenv <- function() .Internal(new.env(TRUE, baseenv()))
-    # names <- function(x) .Internal(names(x))
-    lazyLoadDBfetch <- function(key, file, compressed, hook)
-        .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
+    mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
 
     ##
     ## main body
@@ -37,7 +35,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     vars <- names(map$variables)
     rvars <- names(map$references)
     compressed <- map$compressed
-    for (i in along(rvars))
+    for (i in seq_along(rvars))
         set(rvars[i], map$references[[i]], env)
     envenv <- mkenv()
     envhook <- function(n) {
@@ -48,30 +46,38 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             set(n, e, envenv)           # MUST do this immediately
             key <- getFromFrame(n, env)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
-            parent.env(e) <- data$enclos
+            ## comment from r41494
+            ## modified the loading of old environments, so that those
+            ## serialized with parent.env NULL are loaded with the
+            ## parent.env=emptyenv(); and yes an alternative would have been
+            ## baseenv(), but that was seldom the intention of folks that
+            ## set the environment to NULL.
+            if (is.null(data$enclos))
+                parent.env(e) <- emptyenv()
+            else
+                parent.env(e) <- data$enclos
             vars <- names(data$bindings)
-            for (i in along(vars))
+            for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
             e
         }
     }
-    expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
-    setWrapped <- function(x, value, env) {
-    	key <- value			# force evaluation
-    	.Internal(delayedAssign(x, expr, environment(), env))
-    }
-    if (! missing(filter)) {
-        for (i in along(vars))
-            if (filter(vars[i]))
-		setWrapped(vars[i], map$variables[[i]], envir)
-    } else {
-        for (i in along(vars))
-	    setWrapped(vars[i], map$variables[[i]], envir)
-    }
+    if (!missing(filter)) {
+        use <- filter(vars)
+        vars <- vars[use]
+        vals <- map$variables[use]
+        use <- NULL
+    } else
+        vals <-  map$variables
 
-    ## reduce memory use **** try some more trimming
+    expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
+    this <- environment()
+    .Internal(makeLazy(vars, vals, expr, this, envir))
+
+    ## reduce memory use
     map <- NULL
     vars <- NULL
+    vals <- NULL
     rvars <- NULL
     mapfile <- NULL
     readRDS <- NULL

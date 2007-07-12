@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001-2005 the R Development Core Team
+ *  Copyright (C) 2001-2007 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -88,8 +88,8 @@
    casting in the code itself.  However, it does mean that we cannot
    use the argument type matching
  */
-void str_signif(char *x, int *n, char **type, int *width, int *digits,
-		char **format, char **flag, char **result)
+void str_signif(char *x, int *n, const char **type, int *width, int *digits,
+		const char **format, const char **flag, char **result)
 {
     int wid = *width;
     int dig = *digits;

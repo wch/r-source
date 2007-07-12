@@ -25,6 +25,7 @@
   New York: Wiley.
 }
 \examples{
+require(graphics)
 plot(pressure, xlab = "Temperature (deg C)",
      ylab = "Pressure (mm of Hg)",
      main = "pressure data: Vapor Pressure of Mercury")

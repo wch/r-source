@@ -82,7 +82,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	cint <- c(-Inf, tstat + qt(conf.level, df) )
     }
     else if (alternative == "greater") {
-	pval <- pt(tstat, df, lower = FALSE)
+	pval <- pt(tstat, df, lower.tail = FALSE)
 	cint <- c(tstat - qt(conf.level, df), Inf)
     }
     else {

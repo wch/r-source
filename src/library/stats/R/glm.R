@@ -305,7 +305,7 @@ glm.fit <-
         ## hence we need to re-label the names ...
         ## Original code changed as suggested by BDR---give NA rather
         ## than 0 for non-estimable parameters
-        if (fit$rank < nvars) coef[fit$pivot][seq(fit$rank+1, nvars)] <- NA
+        if (fit$rank < nvars) coef[fit$pivot][seq.int(fit$rank+1, nvars)] <- NA
         xxnames <- xnames[fit$pivot]
         ## update by accurate calculation, including 0-weight cases.
         residuals <-  (y - mu)/mu.eta(eta)
@@ -374,7 +374,7 @@ print.glm <- function(x, digits= max(3, getOption("digits") - 3), ...)
     } else cat("No coefficients\n\n")
     cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
         x$df.residual, "Residual\n")
-    if(nchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     cat("Null Deviance:	   ",	format(signif(x$null.deviance, digits)),
 	"\nResidual Deviance:", format(signif(x$deviance, digits)),
 	"\tAIC:", format(signif(x$aic, digits)), "\n")
@@ -604,9 +604,11 @@ summary.glm <- function(object, dispersion = NULL,
     }
     ## return answer
 
-    ans <- c(object[c("call","terms","family","deviance", "aic",
+    ## these need not all exist, e.g. na.action.
+    keep <- match(c("call","terms","family","deviance", "aic",
 		      "contrasts", "df.residual","null.deviance","df.null",
-                      "iter", "na.action")],
+                      "iter", "na.action"), names(object), 0)
+    ans <- c(object[keep],
 	     list(deviance.resid = residuals(object, type = "deviance"),
 		  coefficients = coef.table,
                   aliased = aliased,
@@ -637,13 +639,16 @@ print.summary.glm <-
 	x$deviance.resid <- quantile(x$deviance.resid,na.rm=TRUE)
 	names(x$deviance.resid) <- c("Min", "1Q", "Median", "3Q", "Max")
     }
-    print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
+    print.default(x$deviance.resid, digits=digits, na.print = "",
+                  print.gap = 2)
 
     if(length(x$aliased) == 0) {
         cat("\nNo Coefficients\n")
     } else {
         ## df component added in 1.8.0
-        if (!is.null(df<- x$df) && (nsingular <- df[3] - df[1]))
+        ## partial matching problem here.
+        df <- if ("df" %in% names(x)) x[["df"]] else NULL
+        if (!is.null(df) && (nsingular <- df[3] - df[1]))
             cat("\nCoefficients: (", nsingular,
                 " not defined because of singularities)\n", sep = "")
         else cat("\nCoefficients:\n")
@@ -667,7 +672,7 @@ print.summary.glm <-
 		    format(unlist(x[c("df.null","df.residual")])),
 		    " degrees of freedom\n"),
 	      1, paste, collapse=" "), sep="")
-    if(nchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     cat("AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
 	"Number of Fisher Scoring iterations: ", x$iter,
 	"\n", sep="")
@@ -684,7 +689,7 @@ print.summary.glm <-
 	if(p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
 	    if(is.logical(symbolic.cor) && symbolic.cor) {# NULL < 1.7.0 objects
-		print(symnum(correl, abbr.col = NULL))
+		print(symnum(correl, abbr.colnames = NULL))
 	    } else {
 		correl <- format(round(correl, 2), nsmall = 2, digits = digits)
 		correl[!lower.tri(correl)] <- ""
@@ -722,7 +727,7 @@ residuals.glm <-
                y <-  mu + r * mu.eta(eta)
            })
     res <- switch(type,
-		  deviance = if(object$df.res > 0) {
+		  deviance = if(object$df.residual > 0) {
 		      d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))
 		      ifelse(y > mu, d.res, -d.res)
 		  } else rep.int(0, length(mu)),

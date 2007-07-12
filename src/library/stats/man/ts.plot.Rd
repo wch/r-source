@@ -26,6 +26,8 @@ ts.plot(\dots, gpars = list())
 \seealso{\code{\link{plot.ts}}}
 
 \examples{
+require(graphics)
+
 ts.plot(ldeaths, mdeaths, fdeaths,
         gpars=list(xlab="year", ylab="deaths", lty=c(1:3)))
 }

@@ -28,7 +28,10 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     (\code{format = "g"}, \code{= "e"} or \code{= "fg"}).
 
     Default: 2 for integer, 4 for real numbers.  If less than 0,
-    the C default of 6 digits is used.}
+    the C default of 6 digits is used.  If specified as more than 50, 50
+    will be used with a warning.  (Not more than about 15 digits will be
+    significant, and this limit is just a precaution against segfaults
+    in the underlying C runtime.)}
 
   \item{width}{the total field width; if both \code{digits} and
     \code{width} are unspecified, \code{width} defaults to 1,
@@ -131,18 +134,18 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 \examples{
 xx  <- pi * 10^(-5:4)
 cbind(format(xx, digits=4), formatC(xx))
-cbind(formatC(xx, wid = 9, flag = "-"))
-cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
-cbind(format(xx, digits=4), formatC(xx, dig = 4, format = "fg"))
+cbind(formatC(xx, width = 9, flag = "-"))
+cbind(formatC(xx, digits = 5, width = 8, format = "f", flag = "0"))
+cbind(format(xx, digits=4), formatC(xx, digits = 4, format = "fg"))
 
-formatC(    c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
-formatC(c((-1:1)/0,c(1,100)*pi), wid=8, dig=1)
+formatC(    c("a", "Abc", "no way"), width = -7)  # <=> flag = "-"
+formatC(c((-1:1)/0,c(1,100)*pi), width=8, digits=1)
 
 xx <- c(1e-12,-3.98765e-10,1.45645e-69,1e-70,pi*1e37,3.44e4)
 ##       1        2             3        4      5       6
 formatC(xx)
 formatC(xx, format="fg")       # special "fixed" format.
-formatC(xx, format="f", dig=80)#>> also long strings
+formatC(xx, format="f", digits=80) #>> also long strings
 
 r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
 ## American:
@@ -154,7 +157,7 @@ prettyNum(r, big.mark = "'", decimal.mark = ",")
 prettyNum(dd, big.mark="'")
 
 ## examples of 'small.mark'
-pN <- stats::pnorm(1:7, lower=FALSE)
+pN <- stats::pnorm(1:7, lower.tail = FALSE)
 cbind(format (pN, small.mark = " ", digits = 15))
 cbind(formatC(pN, small.mark = " ", digits = 17, format = "f"))
 

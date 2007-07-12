@@ -181,7 +181,7 @@ function (x,
                        trend  = if (beta > 0) final.fit$trend[-len-1],
                        season = if (gamma > 0) final.fit$seasonal[1:len]),
                  start = start(lag(x, k = 1 - start.time)),
-                 freq  = frequency(x)
+                 frequency  = frequency(x)
                  )
     if (beta > 0) fitted[,1] <- fitted[,1] + fitted[,"trend"]
     if (gamma > 0)
@@ -196,7 +196,7 @@ function (x,
                    gamma     = gamma,
                    coefficients = c(a = final.fit$level[len + 1],
                                     b = if (beta > 0) final.fit$trend[len + 1],
-                                    s = if (gamma > 0) final.fit$season[len + 1:f]),
+                                    s = if (gamma > 0) final.fit$seasonal[len + 1:f]),
                    seasonal  = seasonal,
                    SSE       = final.fit$SSE,
                    call      = match.call()
@@ -248,7 +248,7 @@ predict.HoltWinters <-
              lwr = if(prediction.interval) fit - int
              ),
        start = end(lag(fitted(object)[,1], k = -1)),
-       freq  = frequency(fitted(object)[,1])
+       frequency  = frequency(fitted(object)[,1])
        )
 }
 
@@ -349,9 +349,10 @@ decompose <- function (x, type = c("additive", "multiplicative"), filter = NULL)
     structure(
               list(seasonal = seasonal,
                    trend    = trend,
-                   random   = x -
-                   if (type == "additive") seasonal + trend
-                   else seasonal * trend,
+                   random   = if (type == "additive")
+                      x - seasonal - trend
+                   else
+                      x / seasonal / trend,
                    figure   = figure,
                    type     = type
                    ),

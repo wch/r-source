@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,9 @@ msgstr ""
 msgid "color spaces use different reference whites."
 msgstr ""
 
+msgid "'name'must be a character vector"
+msgstr ""
+
 msgid "cannot shut down device 1 (the null device)"
 msgstr ""
 
@@ -99,6 +102,9 @@ msgid "dev.control() called without an open graphics device"
 msgstr ""
 
 msgid "argument is missing with no default"
+msgstr ""
+
+msgid "dev.displaylist() called without an open graphics device"
 msgstr ""
 
 msgid "invalid arguments in '%s' (need named args)"
@@ -225,6 +231,9 @@ msgid "invalid arguments in quartzFonts (must be font names)"
 msgstr ""
 
 msgid "invalid arguments in quartzFonts (need named args)"
+msgstr ""
+
+msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr ""
 
 msgid "invalid X11 font specification:"

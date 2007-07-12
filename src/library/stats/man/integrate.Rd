@@ -7,15 +7,16 @@
   infinite interval.
 }
 \usage{
-integrate(f, lower, upper, subdivisions=100,
+integrate(f, lower, upper, \dots, subdivisions=100,
           rel.tol = .Machine$double.eps^0.25, abs.tol = rel.tol,
-          stop.on.error = TRUE, keep.xy = FALSE, aux = NULL, \dots)
+          stop.on.error = TRUE, keep.xy = FALSE, aux = NULL)
 }
 \arguments{
   \item{f}{an \R function taking a numeric first argument and returning
     a numeric vector of the same length.  Returning a non-finite element will
     generate an error.}
   \item{lower, upper}{the limits of integration.  Can be infinite.}
+  \item{\dots}{additional arguments to be passed to \code{f}.}
   \item{subdivisions}{the maximum number of subintervals.}
   \item{rel.tol}{relative accuracy requested.}
   \item{abs.tol}{absolute accuracy requested.}
@@ -24,10 +25,10 @@ integrate(f, lower, upper, subdivisions=100,
     the \code{message} component.}
   \item{keep.xy}{unused.  For compatibility with S.}
   \item{aux}{unused.  For compatibility with S.}
-  \item{\dots}{additional arguments to be passed to \code{f}.  Remember
-    to use argument names \emph{not} matching those of \code{integrate(.)}!}
 }
 \details{
+  Note that arguments after \code{\dots} must be matched exactly.
+  
   If one or both limits are infinite, the
   infinite range is mapped onto a finite interval.
 

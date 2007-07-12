@@ -27,19 +27,23 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
     }
 }
 
-"rownames<-" <- function(x, value)
+`rownames<-` <- function(x, value)
 {
-    dn <- dimnames(x)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(x))) < 1)
+    if(is.data.frame(x)) {
+        row.names(x) <- value
+    } else {
+        dn <- dimnames(x)
+        if(is.null(dn)) {
+            if(is.null(value)) return(x)
+            if((nd <- length(dim(x))) < 1)
+                stop("attempt to set rownames on object with no dimensions")
+            dn <- vector("list", nd)
+        }
+        if(length(dn) < 1)
             stop("attempt to set rownames on object with no dimensions")
-        dn <- vector("list", nd)
+        if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
+        dimnames(x) <- dn
     }
-    if(length(dn) < 1)
-        stop("attempt to set rownames on object with no dimensions")
-    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
-    dimnames(x) <- dn
     x
 }
 
@@ -56,30 +60,34 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
     }
 }
 
-"colnames<-" <- function(x, value)
+`colnames<-` <- function(x, value)
 {
-    dn <- dimnames(x)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(x))) < 2)
+    if(is.data.frame(x)) {
+        names(x) <- value
+    } else {
+        dn <- dimnames(x)
+        if(is.null(dn)) {
+            if(is.null(value)) return(x)
+            if((nd <- length(dim(x))) < 2)
+                stop("attempt to set colnames on object with less than two dimensions")
+            dn <- vector("list", nd)
+        }
+        if(length(dn) < 2)
             stop("attempt to set colnames on object with less than two dimensions")
-        dn <- vector("list", nd)
+        if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
+        dimnames(x) <- dn
     }
-    if(length(dn) < 2)
-        stop("attempt to set colnames on object with less than two dimensions")
-    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
-    dimnames(x) <- dn
     x
 }
 
 row <- function(x, as.factor=FALSE) {
-    if(as.factor) factor(.Internal(row(x)), labels=rownames(x))
-    else .Internal(row(x))
+    if(as.factor) factor(.Internal(row(dim(x))), labels=rownames(x))
+    else .Internal(row(dim(x)))
 }
 
 col <- function(x, as.factor=FALSE) {
-    if(as.factor) factor(.Internal(col(x)), labels=colnames(x))
-    else .Internal(col(x))
+    if(as.factor) factor(.Internal(col(dim(x))), labels=colnames(x))
+    else .Internal(col(dim(x)))
 }
 
 crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))

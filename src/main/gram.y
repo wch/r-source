@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -68,16 +68,16 @@ static void	CheckFormalArgs(SEXP, SEXP);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
 static void	IfPush(void);
-static int	KeywordLookup(char*);
+static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP);
 
 /* These routines allocate constants */
 
-static SEXP	mkComplex(char *);
+static SEXP	mkComplex(const char *);
 SEXP		mkFalse(void);
-static SEXP     mkFloat(char *);
+static SEXP     mkFloat(const char *);
 static SEXP	mkNA(void);
 SEXP		mkTrue(void);
 
@@ -119,13 +119,13 @@ static const char UNICODE[] = "UCS-4LE";
 #endif
 #include <errno.h>
 
-static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
+static size_t ucstomb(char *s, const wchar_t wc, mbstate_t *ps)
 {
     char     tocode[128];
     char     buf[16];
     void    *cd = NULL ;
     wchar_t  wcs[2];
-    char    *inbuf = (char *) wcs;
+    const char *inbuf = (const char *) wcs;
     size_t   inbytesleft = sizeof(wchar_t);
     char    *outbuf = buf;
     size_t   outbytesleft = sizeof(buf);
@@ -141,11 +141,11 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     memset(wcs, 0, sizeof(wcs));
     wcs[0] = wc;
 
-    if((void *)(-1) == (cd = Riconv_open("", (char *)UNICODE))) {
+    if((void *)(-1) == (cd = Riconv_open("", UNICODE))) {
 #ifndef  Win32
         /* locale set fuzzy case */
     	strncpy(tocode, locale2charset(NULL), sizeof(tocode));
-	if((void *)(-1) == (cd = Riconv_open(tocode, (char *)UNICODE)))
+	if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
             return (size_t)(-1); 
 #else
         return (size_t)(-1);
@@ -491,7 +491,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     return val;
 }
 
-static SEXP attachSrcrefs(SEXP val)
+static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
 {
     SEXP t, srval;
     int n;
@@ -502,6 +502,7 @@ static SEXP attachSrcrefs(SEXP val)
     for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
     	SET_VECTOR_ELT(srval, n, CAR(t));
     setAttrib(val, R_SrcrefSymbol, srval);
+    setAttrib(val, R_SrcfileSymbol, srcfile);
     UNPROTECT(1);
     SrcRefs = NULL;
     return val;
@@ -833,6 +834,26 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     return ans;
 }
 
+
+static SEXP mkChar2(const char *name)
+{
+    if(!utf8strIsASCII(name)) {
+	if(known_to_be_latin1) return mkCharEnc(name, LATIN1_MASK);
+	else if(known_to_be_utf8) return mkCharEnc(name, UTF8_MASK);
+    }
+    return mkChar(name);
+}
+
+static SEXP mkString2(const char *s)
+{
+    SEXP t;
+
+    PROTECT(t = allocVector(STRSXP, 1));
+    SET_STRING_ELT(t, 0, mkChar2(s));
+    UNPROTECT(1);
+    return t;
+}
+
 static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 {
 
@@ -881,7 +902,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 			strncpy((char *)SourceLine, (char *)p0, nc);
 			SourceLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
-				       mkChar((char *)SourceLine));
+				       mkChar2((char *)SourceLine));
 		    } else { /* over-long line */
 			char *LongLine = (char *) malloc(nc);
 			if(!LongLine) 
@@ -889,7 +910,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 			strncpy(LongLine, (char *)p0, nc);
 			LongLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
-				       mkChar((char *)LongLine));
+				       mkChar2((char *)LongLine));
 			free(LongLine);
 		    }
 		    p0 = p + 1;
@@ -969,7 +990,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 	SETCAR(a2, a1);
 	if (SrcFile) {
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
-	    PROTECT(ans = attachSrcrefs(a2));
+	    PROTECT(ans = attachSrcrefs(a2, SrcFile));
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
 	    /* SrcRefs got NAMED by being an attribute... */
 	    SET_NAMED(SrcRefs, 0);
@@ -990,7 +1011,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
 {
     switch (TYPEOF(tag)) {
     case STRSXP:
-    	tag = install(CHAR(STRING_ELT(tag, 0)));
+    	tag = install(translateChar(STRING_ELT(tag, 0)));
     case NILSXP:
     case SYMSXP:
 	return lang2(arg, tag);
@@ -1147,9 +1168,10 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *  for some reason.
  */
 
+#define CONTEXTSTACK_SIZE 50
 static int	SavedToken;
 static SEXP	SavedLval;
-static char	contextstack[50], *contextp;
+static char	contextstack[CONTEXTSTACK_SIZE], *contextp;
 
 static void ParseInit()
 {
@@ -1319,7 +1341,7 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
-    	rval = attachSrcrefs(rval);
+    	rval = attachSrcrefs(rval, SrcFile);
         SrcFile = NULL;    
     }
     R_PPStackTop = savestack;
@@ -1386,19 +1408,19 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
 }
 #endif
 
-static char *Prompt(SEXP prompt, int type)
+static const char *Prompt(SEXP prompt, int type)
 {
     if(type == 1) {
 	if(length(prompt) <= 0) {
-	    return (char*)CHAR(STRING_ELT(GetOption(install("prompt"),
-						    R_BaseEnv), 0));
+	    return CHAR(STRING_ELT(GetOption(install("prompt"),
+					     R_BaseEnv), 0));
 	}
 	else
 	    return CHAR(STRING_ELT(prompt, 0));
     }
     else {
-	return (char*)CHAR(STRING_ELT(GetOption(install("continue"),
-						R_BaseEnv), 0));
+	return CHAR(STRING_ELT(GetOption(install("continue"),
+					 R_BaseEnv), 0));
     }
 }
 
@@ -1428,7 +1450,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	if (!*bufp) {
-	    if(R_ReadConsole(Prompt(prompt, prompt_type),
+	    if(R_ReadConsole((char *) Prompt(prompt, prompt_type),
 			     (unsigned char *)buf, 1024, 1) == 0)
 		goto finish;
 	    bufp = buf;
@@ -1465,7 +1487,7 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
-    	rval = attachSrcrefs(rval);
+    	rval = attachSrcrefs(rval, SrcFile);
         SrcFile = NULL;    
     }	
     R_PPStackTop = savestack;
@@ -1503,7 +1525,8 @@ static void IfPush(void)
 	*contextp=='['    ||
 	*contextp=='('    ||
 	*contextp == 'i') {
-	if(contextp - contextstack >=50) error("contextstack overflow");
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
+	    error("contextstack overflow");
 	*++contextp = 'i';
     }
     
@@ -1570,7 +1593,7 @@ static keywords[] = {
 
 /* KeywordLookup has side effects, it sets yylval */
 
-static int KeywordLookup(char *s)
+static int KeywordLookup(const char *s)
 {
     int i;
     for (i = 0; keywords[i].name; i++) {
@@ -1642,12 +1665,11 @@ static int KeywordLookup(char *s)
 }
 
 
-static SEXP mkFloat(char *s)
+static SEXP mkFloat(const char *s)
 {
-    SEXP t = R_NilValue;
     double f;
     if(strlen(s) > 2 && (s[1] == 'x' || s[1] == 'X')) {
-	double ret = 0; char *p = s + 2;
+	double ret = 0; const char *p = s + 2;
 	for(; p; p++) {
 	    if('0' <= *p && *p <= '9') ret = 16*ret + (*p -'0');
 	    else if('a' <= *p && *p <= 'f') ret = 16*ret + (*p -'a' + 10);
@@ -1656,14 +1678,26 @@ static SEXP mkFloat(char *s)
 	}	
 	f = ret;
     } else f = atof(s);
-    if(GenerateCode) {
-        t = allocVector(REALSXP, 1);
-        REAL(t)[0] = f;
-    }
-    return t;
+    return ScalarReal(f);
 }
 
-static SEXP mkComplex(char *s)
+static SEXP mkInt(const char *s)
+{
+    double f;
+    if(strlen(s) > 2 && (s[1] == 'x' || s[1] == 'X')) {
+	double ret = 0; const char *p = s + 2;
+	for(; p; p++) {
+	    if('0' <= *p && *p <= '9') ret = 16*ret + (*p -'0');
+	    else if('a' <= *p && *p <= 'f') ret = 16*ret + (*p -'a' + 10);
+	    else if('A' <= *p && *p <= 'F') ret = 16*ret + (*p -'A' + 10);
+	    else break;
+	}	
+	f = ret;
+    } else f = atof(s);
+    return ScalarInteger((int) f);
+}
+
+static SEXP mkComplex(const char *s)
 {
     SEXP t = R_NilValue;
     double f;
@@ -1802,42 +1836,38 @@ static int NumericValue(int c)
 	last = c;
     }
     YYTEXT_PUSH('\0', yyp);
-    if(1 || GenerateCode) {
-        /* Make certain that things are okay. */
-        if(c == 'L') {
-            double a = atof(yytext);
-            int b = (int) atof(yytext); 
-            /* We are asked to create an integer via the L, so we check that the 
-               double and int values are the same. If not, this is a problem and we
-               will not lose information and so use the numeric value.
-             */
-            if(a != (double) b) {
-                if(GenerateCode) {
-                    if(seendot == 1 && seenexp == 0)
-                        warning(_("integer literal %sL contains decimal; using numeric value"), yytext);
-                    else 
-                        warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
-		}
-                asNumeric = 1;
-                seenexp = 1;
-            }
-        }
-
-	if(c == 'i') {
-	    yylval = GenerateCode ? mkComplex(yytext) : R_NilValue;
-	} else if(c == 'L' && asNumeric == 0) {
-	    if(GenerateCode && seendot == 1 && seenexp == 0) 
-		warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
-	    yylval = GenerateCode ? ScalarInteger((int) atof(yytext)) : R_NilValue;
+    /* Make certain that things are okay. */
+    if(c == 'L') {
+	double a = atof(yytext);
+	int b = (int) atof(yytext); 
+	/* We are asked to create an integer via the L, so we check that the 
+	   double and int values are the same. If not, this is a problem and we
+	   will not lose information and so use the numeric value.
+	*/
+	if(a != (double) b) {
+	    if(GenerateCode) {
+		if(seendot == 1 && seenexp == 0)
+		    warning(_("integer literal %sL contains decimal; using numeric value"), yytext);
+		else 
+		    warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
+	    }
+	    asNumeric = 1;
+	    seenexp = 1;
 	}
-	else {
-            if(c != 'L')
-                xxungetc(c);
-	    yylval = GenerateCode ? mkFloat(yytext) : R_NilValue;
-	}
-    } else
-	yylval = R_NilValue;
-
+    }
+    
+    if(c == 'i') {
+	yylval = GenerateCode ? mkComplex(yytext) : R_NilValue;
+    } else if(c == 'L' && asNumeric == 0) {
+	if(GenerateCode && seendot == 1 && seenexp == 0) 
+	    warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
+	yylval = GenerateCode ? mkInt(yytext) : R_NilValue;
+    }
+    else {
+	if(c != 'L')
+	    xxungetc(c);
+	yylval = GenerateCode ? mkFloat(yytext) : R_NilValue;
+    }
 
     PROTECT(yylval);
     return NUM_CONST;
@@ -2001,16 +2031,10 @@ static int StringValue(int c)
 		case ' ':
 		case '\n':
 		    break;
-		case '%':
-		    if(GenerateCode) {
-			have_warned++;
-			warning(_("'\\%%%%' is an unrecognized escape in a character string"));
-		    }
-		    break;
 		default:
-		    if(GenerateCode) {
+		    if(GenerateCode && R_WarnEscapes) {
 			have_warned++;
-			warning(_("'\\%c' is an unrecognized escape in a character string"), c);
+			warningcall(R_NilValue, _("'\\%c' is an unrecognized escape in a character string"), c);
 		    }
 		    break;
 		}
@@ -2034,20 +2058,21 @@ static int StringValue(int c)
            if (c == R_EOF) break;
        }
 #endif /* SUPPORT_MBCS */
-	if(c == '%') *ct++ = c;
 	YYTEXT_PUSH(c, yyp);
     }
     YYTEXT_PUSH('\0', yyp);
-    PROTECT(yylval = mkString(yytext));
+    PROTECT(yylval = mkString2(yytext));
     if(have_warned) {
 	*ct = '\0';
 #ifdef ENABLE_NLS
-	warning(ngettext("unrecognized escape removed from \"%s\"",
-			 "unrecognized escapes removed from \"%s\"",
-			 have_warned),
-		currtext);
+	warningcall(R_NilValue,
+		    ngettext("unrecognized escape removed from \"%s\"",
+			     "unrecognized escapes removed from \"%s\"",
+			     have_warned),
+		    currtext);
 #else
-	warning("unrecognized escape(s) removed from \"%s\"", currtext);
+	warningcall(R_NilValue,
+		    "unrecognized escape(s) removed from \"%s\"", currtext);
 #endif
     }
     return STR_CONST;
@@ -2080,9 +2105,9 @@ static int SpecialValue(int c)
 }
 
 /* return 1 if name is a valid name 0 otherwise */
-int isValidName(char *name)
+int isValidName(const char *name)
 {
-    char *p = name;
+    const char *p = name;
     int i;
 
 #ifdef SUPPORT_MBCS
@@ -2543,24 +2568,28 @@ static int yylex(void)
 	/* Handle brackets, braces and parentheses */
 
     case LBB:
-	if(contextp - contextstack >=49) error("contextstack overflow");
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
+	    error("contextstack overflow");
 	*++contextp = '[';
 	*++contextp = '[';
 	break;
 
     case '[':
-	if(contextp - contextstack >=50) error("contextstack overflow");
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	    error("contextstack overflow");
 	*++contextp = tok;
 	break;
 
     case LBRACE:
-	if(contextp - contextstack >=50) error("contextstack overflow");
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	    error("contextstack overflow");
 	*++contextp = tok;
 	EatLines = 1;
 	break;
 
     case '(':
-	if(contextp - contextstack >=50) error("contextstack overflow");
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
+	    error("contextstack overflow");
 	*++contextp = tok;
 	break;
 

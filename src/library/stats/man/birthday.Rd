@@ -41,6 +41,8 @@ pbirthday(n, classes = 365, coincident = 2)
   Diaconis P, Mosteller F., \dQuote{Methods for studying coincidences}.
   JASA 84:853-861}
 \examples{
+require(graphics)
+
  ## the standard version
 qbirthday()
  ## same 4-digit PIN number

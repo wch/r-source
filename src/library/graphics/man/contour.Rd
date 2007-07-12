@@ -8,8 +8,8 @@
 \usage{
 contour(x, \dots)
 
-\method{contour}{default}(x = seq(0, 1, len = nrow(z)),
-        y = seq(0, 1, len = ncol(z)),
+\method{contour}{default}(x = seq(0, 1, length.out = nrow(z)),
+        y = seq(0, 1, length.out = ncol(z)),
         z,
         nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
         xlim = range(x, finite = TRUE),
@@ -36,7 +36,8 @@ contour(x, \dots)
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
   \item{labels}{a vector giving the labels for the contour lines.  If
-    \code{NULL} then the levels are used as labels.}
+    \code{NULL} then the levels are used as labels, otherwise this is
+    coerced by \code{\link{as.character}}.}
   \item{labcex}{\code{cex} for contour labelling.  This is an absolute
     size, not a multiple of \code{par("cex")}.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
@@ -55,8 +56,9 @@ contour(x, \dots)
   \item{lty}{line type for the lines drawn.}
   \item{lwd}{line width for the lines drawn.}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
-  \item{\dots}{additional arguments to \code{\link{plot.window}} and
-    \code{\link{title}}.}
+  \item{\dots}{additional arguments to \code{\link{plot.window}},
+    \code{\link{title}}, \code{\link{Axis}} and \code{\link{box}},
+    typically graphical parameters such as \code{cex.axis}.}
 }
 \details{
   \code{contour} is a generic function with only a default method in
@@ -82,6 +84,11 @@ contour(x, \dots)
   Alternatively, use \code{\link[lattice]{contourplot}} from the
   \pkg{lattice} package where the \code{\link{formula}} notation allows
   to use vectors \code{x,y,z} of the same length.
+
+  There is limited control over the axes and frame as arguments
+  \code{col}, \code{lwd} and \code{lty} refer to the contour lines
+  (rather than being general graphical parameters).  For more control,
+  add contours to a plot, or add axes and frame to a contour plot.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -99,6 +106,7 @@ contour(x, \dots)
   graphics demo which can be invoked as \code{demo(graphics)}.
 }
 \examples{
+require(grDevices) # for colours
 x <- -6:16
 op <- par(mfrow = c(2, 2))
 contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))

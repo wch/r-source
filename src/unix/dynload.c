@@ -58,7 +58,7 @@ static void *loadLibrary(const char *path, int asLocal, int now);
 static void closeLibrary(void *handle);
 static void deleteCachedSymbols(DllInfo *);
 static DL_FUNC R_local_dlsym(DllInfo *info, char const *name);
-static void getFullDLLPath(SEXP call, char *buf, char *path);
+static void getFullDLLPath(SEXP call, char *buf, const char *path);
 static void getSystemError(char *buf, int len);
 
 static int computeDLOpenFlag(int asLocal, int now);
@@ -216,7 +216,7 @@ static DL_FUNC R_local_dlsym(DllInfo *info, char const *name)
 
 
 
-static void getFullDLLPath(SEXP call, char *buf, char *path)
+static void getFullDLLPath(SEXP call, char *buf, const char *path)
 {
     if(path[0] == '~')
 	strcpy(buf, R_ExpandFileName(path));

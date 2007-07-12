@@ -10,16 +10,19 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 }
 \alias{unlist}
 \arguments{
-  \item{x}{An \R object, typically a list or vector.}
+  \item{x}{an \R object, typically a list or vector.}
   \item{recursive}{logical.  Should unlisting be applied to list
     components of \code{x}?}
   \item{use.names}{logical.  Should names be preserved?}
 }
 \details{
   \code{unlist} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods},
+  and note, e.g., \code{\link[utils]{relist}} with the \code{unlist} method
+  for \code{relistable} objects.
 
-  If \code{x} has length zero the result is \code{NULL}.
+%never true
+%  If \code{x} has length zero the result is \code{NULL}.
 
   If \code{recursive = FALSE}, the function will not recurse beyond the
   first level items in \code{x}.
@@ -56,7 +59,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   hold the list components.
 
   The output type is determined from the highest type
-  of the components in the hierarchy raw < logical < integer < real <
+  of the components in the hierarchy NULL < raw < logical < integer < real <
   complex < character < list < expression, after coercion of pairlists
   to lists.
 }
@@ -66,7 +69,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{c}}, \code{\link{as.list}}.
+  \code{\link{c}}, \code{\link{as.list}}, \code{\link{relist}}.
 }
 \examples{
 unlist(options())

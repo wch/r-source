@@ -7,7 +7,7 @@ version=`set - ${revision}; echo ${2}`
 version="R batch front end ${version}
 
 Copyright (C) 2000--2006 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
+This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
 opts="--restore --save --no-readline"
@@ -27,7 +27,7 @@ Options:
 Further arguments starting with a '-' are considered as options as long
 as '--' was not encountered, and are passed on to the R process, which
 by default is started with '$opts'.
-See also help(BATCH) inside R.
+See also help('BATCH') inside R.
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -46,10 +46,13 @@ done
 in=${1}
 out=${2-`basename ${1} .R`.Rout}
 
-(echo "invisible(options(echo = TRUE))"
-  cat ${in}
-  echo ''; echo "proc.time()"
-) | ${R_HOME}/bin/R ${opts} ${R_BATCH_OPTIONS} >${out} 2>&1
+R_BATCH=${$}
+export R_BATCH
+## this used to set options(echo=TRUE), but that is the default
+## except for --slave, and why inhibit the latter?
+
+## need to put -f first in case user does --args
+${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} >${out} 2>&1
 
 ### Local Variables: ***
 ### mode: sh ***

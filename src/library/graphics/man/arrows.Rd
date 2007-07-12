@@ -53,7 +53,7 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   \code{x1,y1,x2,y2}.
 }
 \examples{
-x <- runif(12); y <- rnorm(12)
+x <- stats::runif(12); y <- stats::rnorm(12)
 i <- order(x,y); x <- x[i]; y <- y[i]
 plot(x,y, main="arrows(.) and segments(.)")
 ## draw arrows from point to point :

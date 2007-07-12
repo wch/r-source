@@ -87,7 +87,7 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4)
   \code{\link{summary}}, \code{\link{args}}.
 }
 \examples{
-require(stats)
+require(stats); require(grDevices); require(graphics)
 ## The following examples show some of 'str' capabilities
 str(1:12)
 str(ls)

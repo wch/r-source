@@ -53,7 +53,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 
     Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
       boxplot}, i.e., vertically, when \code{horizontal} is
-    false.  \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
+    false, and \code{xlim} horizontally.
+    \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
     \code{col.axis} are passed to \code{\link{axis}}, and \code{main},
     \code{cex.main}, \code{col.main}, \code{sub}, \code{cex.sub},
     \code{col.sub}, \code{xlab}, \code{ylab}, \code{cex.lab}, and
@@ -93,12 +94,19 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     }
   }%.../pars
 }
+\note{
+  if \code{add = FALSE}, the default is \code{xlim = c(0.5, n +0.5)}.
+  It will usually be a good idea to specify the latter if the "x" axis
+  has a log scale or \code{at} is specified or \code{width} is far from
+  uniform.
+}
 \value{
   An invisible vector, actually identical to the \code{at} argument,
   with the coordinates ("x" if horizontal is false, "y" otherwise) of
   box centers, useful for adding to the plot.
 }
-\author{The R Core development team and Arni Magnusson
+\author{
+  The R Core development team and Arni Magnusson
   \email{arnima@u.washington.edu} who has provided most changes for the
   box*, med*, whisk*, staple*, and out* arguments.
 }
@@ -108,6 +116,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
 set.seed(753)
 (bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
 op <- par(mfrow= c(2,2))

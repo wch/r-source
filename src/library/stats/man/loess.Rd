@@ -10,9 +10,10 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
       control = loess.control(\dots), \dots)
 }
 \arguments{
-  \item{formula}{a formula specifying the numeric response and one to four
-    numeric predictors (best specified via an interaction, but can also
-    be specified additively).}
+  \item{formula}{a \link{formula} specifying the numeric response and
+    one to four numeric predictors (best specified via an interaction,
+    but can also be specified additively). Will be coerced to a formula
+    if necessary.}
   \item{data}{an optional data frame, list or environment (or object
     coercible by \code{\link{as.data.frame}} to a data frame) containing
     the variables in the model.  If not found in \code{data}, the
@@ -84,7 +85,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 }
 \author{
   B.D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu avaliable at \url{http://www.netlib.org/a/}.
+  Grosse and Shyu available at \url{http://www.netlib.org/a/}.
 }
 \note{
   As this is based on the \code{cloess} package available at

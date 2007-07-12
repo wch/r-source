@@ -84,7 +84,7 @@
   with standard errors, t-statistics and p-values.
 }
 \examples{
-\dontshow{example("lm", echo = FALSE)}
+\dontshow{utils::example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:
 coef(lm.D90)# the bare coefficients
 sld90 <- summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept

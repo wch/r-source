@@ -17,4 +17,4 @@ msgstr ""
 
 #: splines.c:154
 msgid "'ord' must be a positive integer"
-msgstr "'ord' は正の値でなければいけません"
+msgstr " 'ord' は正の値でなければいけません"

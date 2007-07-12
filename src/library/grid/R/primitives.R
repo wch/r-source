@@ -8,7 +8,8 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
         stop("'length' must be a unit object")
     ends <- as.integer(match(ends, c("first", "last", "both")))
     type <- as.integer(match(type, c("open", "closed")))
-    if (any(is.na(ends)) || any(is.na(type)))
+    if (any(is.na(ends)) || any(is.na(type)) ||
+        length(ends) == 0 || length(type) == 0)
         stop("Invalid 'ends' or 'type' argument")
     a <- list(angle=angle, length=length,
               ends=ends, type=type)
@@ -74,7 +75,7 @@ validDetails.line.to <- function(x) {
   # Make sure that x and y are of length 1
   if (length(x$x) > 1 | length(x$y) > 1)
     stop("'x' and 'y' must have length 1")
-  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+  if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
   x
 }
@@ -113,7 +114,7 @@ validDetails.lines <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
-  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+  if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
   x
 }
@@ -194,7 +195,7 @@ validDetails.polyline <- function(x) {
       !is.unit(x$y))
       stop("'x' and 'y' must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-      stop("It is invalid to specify both 'id' and 'id.lengths")
+      stop("It is invalid to specify both 'id' and 'id.lengths'")
   if (length(x$x) != length(x$y))
       stop("'x' and 'y' must be same length")
   if (!is.null(x$id) && (length(x$id) != length(x$x)))
@@ -205,7 +206,7 @@ validDetails.polyline <- function(x) {
       stop("'x' and 'y' and 'id.lengths' must specify same overall length")
   if (!is.null(x$id.lengths))
       x$id.lengths <- as.integer(x$id.lengths)
-  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+  if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
   x
 }
@@ -223,12 +224,7 @@ drawDetails.polyline <- function(x, recording=TRUE) {
             n <- length(unique(x$id))
             id <- x$id
         }
-        index <- vector("list", n)
-        count <- 1
-        for (i in unique(id)) {
-            index[[count]] <- as.integer((1:length(x$x))[id == i])
-            count <- count + 1
-        }
+        index <- split(as.integer(1:length(x$x)), id)
         grid.Call.graphics("L_lines", x$x, x$y, index, x$arrow)
     }
 }
@@ -291,7 +287,7 @@ validDetails.segments <- function(x) {
   if (!is.unit(x$x0) || !is.unit(x$x1) ||
       !is.unit(x$y0) || !is.unit(x$y1))
     stop("'x0', 'y0', 'x1', and 'y1' must be units")
-  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+  if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
   x
 }
@@ -549,7 +545,7 @@ validDetails.polygon <- function(x) {
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-    stop("It is invalid to specify both 'id' and 'id.lengths")
+    stop("It is invalid to specify both 'id' and 'id.lengths'")
   if (length(x$x) != length(x$y))
     stop("'x' and 'y' must be same length")
   if (!is.null(x$id) && (length(x$id) != length(x$x)))
@@ -575,12 +571,7 @@ drawDetails.polygon <- function(x, recording=TRUE) {
       n <- length(unique(x$id))
       id <- x$id
     }
-    index <- vector("list", n)
-    count <- 1
-    for (i in unique(id)) {
-      index[[count]] <- as.integer((1:length(x$x))[id == i])
-      count <- count + 1
-    }
+    index <- split(as.integer(1:length(x$x)), id)
     grid.Call.graphics("L_polygon", x$x, x$y, index)
   }
 }
@@ -651,7 +642,7 @@ validDetails.xspline <- function(x) {
       !is.unit(x$y))
     stop("x and y must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-    stop("It is invalid to specify both 'id' and 'id.lengths")
+    stop("It is invalid to specify both 'id' and 'id.lengths'")
   nx <- length(x$x)
   ny <- length(x$y)
   if (nx != ny)
@@ -664,7 +655,7 @@ validDetails.xspline <- function(x) {
     stop("'x' and 'y' and 'id.lengths' must specify same overall length")
   if (!is.null(x$id.lengths))
     x$id.lengths <- as.integer(x$id.lengths)
-  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+  if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
   if (any(x$shape < -1 || x$shape > 1))
     stop("shape must be between -1 and 1")
@@ -690,13 +681,7 @@ xsplineIndex <- function(x) {
       n <- length(unique(x$id))
       id <- x$id
     }
-    index <- vector("list", n)
-    count <- 1
-    for (i in unique(id)) {
-      index[[count]] <- as.integer((1:length(x$x))[id == i])
-      count <- count + 1
-    }
-    index
+    split(as.integer(1:length(x$x)), id)
   }
 }
 
@@ -951,14 +936,16 @@ validDetails.text <- function(x) {
 }
 
 drawDetails.text <- function(x, recording=TRUE) {
-  grid.Call.graphics("L_text", x$label, x$x, x$y,
+  grid.Call.graphics("L_text", as.graphicsAnnot(x$label),
+                     x$x, x$y,
                      resolveHJust(x$just, x$hjust),
                      resolveVJust(x$just, x$vjust),
                      x$rot, x$check.overlap)
 }
 
 xDetails.text <- function(x, theta) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, theta)
@@ -969,7 +956,8 @@ xDetails.text <- function(x, theta) {
 }
 
 yDetails.text <- function(x, theta) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, theta)
@@ -980,7 +968,8 @@ yDetails.text <- function(x, theta) {
 }
 
 widthDetails.text <- function(x) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, 0)
@@ -991,7 +980,8 @@ widthDetails.text <- function(x) {
 }
 
 heightDetails.text <- function(x) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, 0)

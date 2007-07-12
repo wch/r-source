@@ -8,8 +8,8 @@ all(\dots, na.rm = FALSE)
   Given a set of logical vectors, are all of the values true?
 }
 \arguments{
-  \item{\dots}{one or more logical vectors.  Other objects are coerced in
-    a similar way as \code{as.logical.default}.}
+  \item{\dots}{zero or more logical vectors.  Other objects are coerced in
+    a similar way to \code{as.logical.default}.}
   \item{na.rm}{logical.  If true \code{NA} values are removed before
     the result is computed.}
 }
@@ -20,15 +20,26 @@ all(\dots, na.rm = FALSE)
   unnamed, and dispatch is on the first argument.
 }
 \value{
-  Given a sequence of logical arguments, a logical value indicating
-  whether or not all of the elements of \code{x} are \code{TRUE}.
-
-  The value returned is \code{TRUE} if all of the values in \code{x}
-  are \code{TRUE}, and \code{FALSE} if any of the values in \code{x}
-  are \code{FALSE}.
-
-  If \code{na.rm = FALSE} and \code{x} consists of a mix of \code{TRUE}
-  and \code{NA} values, the value is \code{NA}.
+  The value is a logical vector of length one.
+  
+  Let \code{x} denote the concatenation of all the logical vectors in
+  \code{...} (after coercion), after removing \code{NA}s if requested by
+  \code{na.rm = TRUE}.
+  
+  The value returned is \code{TRUE} if all of the values in \code{x} are
+  \code{TRUE} (including if there are no values), and \code{FALSE} if at
+  least one of the values in \code{x} is \code{FALSE}.  Otherwise the
+  value is \code{NA} (which can only occur if \code{na.rm = FALSE} and
+  \code{\dots} contains no \code{FALSE} values and at least one
+  \code{NA} value).
+}
+\note{
+  That \code{all(logical(0))} is true is a useful convention:
+  it ensures that
+  \preformatted{
+  all(all(x), all(y)) == all(x,y)
+  }
+  even if \code{x} has length zero.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -41,7 +52,9 @@ all(\dots, na.rm = FALSE)
   \dQuote{insurance}.
 }
 \examples{
-range(x <- sort(round(rnorm(10) - 1.2, 1)))
+range(x <- sort(round(stats::rnorm(10) - 1.2, 1)))
 if(all(x < 0)) cat("all x values are negative\n")
+
+all(logical(0))  # true, as all zero of the elements are true.
 }
 \keyword{logic}

@@ -47,24 +47,24 @@ extern "C" {
 #endif
 
 /* Computation of printing formats */
-void formatLogical(int*,int,int*);
-void formatInteger(int*,int,int*);
-void formatReal(double*, int, int*, int*, int*, int);
-void formatComplex(Rcomplex*, int, int*, int*, int*, int*, int*, int*, int);
+void formatLogical(int *, int, int *);
+void formatInteger(int *, int, int *);
+void formatReal(double *, int, int *, int *, int *, int);
+void formatComplex(Rcomplex *, int, int *, int *, int *, int *, int *, int *, int);
 
 /* Formating of values */
-char *EncodeLogical(int, int);
-char *EncodeInteger(int, int);
-char *EncodeReal(double, int, int, int, char);
-char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
+const char *EncodeLogical(int, int);
+const char *EncodeInteger(int, int);
+const char *EncodeReal(double, int, int, int, char);
+const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
 
 /* Printing */
 void VectorIndex(int, int);
 
-void printLogicalVector(int *x,	   int n, int indx);
-void printIntegerVector(int *x,	   int n, int indx);
-void printRealVector   (double *x, int n, int indx);
-void printComplexVector(Rcomplex *x,int n, int indx);
+void printLogicalVector(int *, int, int);
+void printIntegerVector(int *, int, int);
+void printRealVector   (double *, int, int);
+void printComplexVector(Rcomplex *,int, int);
 
 /* char *Rsprintf(char*, ...); */
 #ifdef  __cplusplus

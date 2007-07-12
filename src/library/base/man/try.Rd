@@ -14,17 +14,19 @@ try(expr, silent = FALSE)
 }
 \details{
   \code{try} evaluates an expression and traps any errors that occur
-  during the evaluation.  \code{try} establishes a handler for
-  errors that uses the default error handling protocol. It also
-  establishes a \code{tryRestart} restart that can be used by
-  \code{invokeRestart}.
+  during the evaluation. If an error occurs then the error
+  message is printed to the \code{stderr} connection unless
+  \code{options("show.error.messages")} is false or
+  the call includes \code{silent = TRUE}.  The error message is also
+  stored in a buffer where it can be retrieved by
+  \code{geterrmessage}. (This should not be needed as the value returned
+  in case of an error contains the error message.)  \code{try} is
+  implemented using \code{tryCatch}.  
 }
 \value{
   The value of the expression if \code{expr} is evaluated without error,
   but an invisible object of class \code{"try-error"} containing the
-  error message if it fails. The normal error handling will print the
-  same message unless \code{options("show.error.messages")} is false or
-  the call includes \code{silent = TRUE}.
+  error message if it fails.
 }
 \seealso{
   \code{\link{options}} for setting error handlers and suppressing the
@@ -46,7 +48,7 @@ print(try(log("a"), TRUE))
 
 ## run a simulation, keep only the results that worked.
 set.seed(123)
-x <- rnorm(50)
+x <- stats::rnorm(50)
 doit <- function(x)
 {
     x <- sample(x, replace=TRUE)

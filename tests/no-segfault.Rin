@@ -38,11 +38,11 @@ socket.fun <- apropos("socket")
 ## "Interactive" ones:
 dev.int <- c("X11", "x11", "pdf", "postscript",
              "xfig", "jpeg", "png", "pictex", "quartz")
-misc.2 <- c("help.start", "browseEnv",
+misc.2 <- c("asS4", "help.start", "browseEnv",
             "gctorture", "q", "quit", "restart", "try",
             "read.fwf", "source",## << MM thinks "FIXME"
             "data.entry", "dataentry", "de", apropos("^de\\."),
-            "chooseCRANmirror", "setRepositories", "select.list")
+            "chooseCRANmirror", "setRepositories", "select.list", "View")
 if(.Platform$OS.type == "windows") {
     dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
                 "win.metafile")

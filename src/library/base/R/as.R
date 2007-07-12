@@ -1,20 +1,6 @@
-as.logical <- function(x,...) UseMethod("as.logical")
-as.logical.default<-function(x,...) .Internal(as.vector(x,"logical"))
-
-as.integer <- function(x,...) UseMethod("as.integer")
-as.integer.default <- function(x,...) .Internal(as.vector(x,"integer"))
-
-as.double <- function(x,...) UseMethod("as.double")
-as.double.default <- function(x,...) .Internal(as.vector(x,"double"))
-as.real <- as.double
-
-as.complex <- function(x,...) UseMethod("as.complex")
-as.complex.default <- function(x,...) .Internal(as.vector(x, "complex"))
-
 as.single <- function(x,...) UseMethod("as.single")
-as.single.default <- function(x,...) {
+as.single.default <- function(x,...)
     structure(.Internal(as.vector(x,"double")), Csingle=TRUE)
-}
 
 # as.character is now internal.  The default method remains here to
 # preserve the semantics that for a call with an object argument
@@ -45,8 +31,8 @@ as.list.environment <- function(x, all.names=FALSE, ...)
 ##as.vector dispatches internally so no need for a generic
 as.vector <- function(x, mode = "any") .Internal(as.vector(x, mode))
 
-as.matrix <- function(x) UseMethod("as.matrix")
-as.matrix.default <- function(x) {
+as.matrix <- function(x, ...) UseMethod("as.matrix")
+as.matrix.default <- function(x, ...) {
     if (is.matrix(x))
 	x
     else
@@ -75,6 +61,4 @@ as.name <- as.symbol
 ## would work too: as.name <- function(x) .Internal(as.vector(x, "name"))
 
 ## as.call <- function(x) stop("type call cannot be assigned")
-as.numeric <- as.double
 as.qr <- function(x) stop("you cannot be serious")
-## as.ts <- function(x) if(is.ts(x)) x else ts(x) # in ts.R

@@ -103,7 +103,8 @@ density(x, \dots)
   underlying structure is a list containing the following components.
   \item{x}{the \code{n} coordinates of the points where the density is
     estimated.}
-  \item{y}{the estimated density values.}
+  \item{y}{the estimated density values.  These will be non-negative,
+    but can be zero.}
   \item{bw}{the bandwidth used.}
   \item{n}{the sample size after elimination of missing values.}
   \item{call}{the call which produced the result.}
@@ -137,6 +138,8 @@ density(x, \dots)
   \code{\link{plot.density}}, \code{\link{hist}}.
 }
 \examples{
+require(graphics)
+
 plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
 
 # The Old Faithful geyser data
@@ -158,8 +161,17 @@ points(xx[i.out], rep(0.01, 10))
 fe <- sort(faithful$eruptions) # has quite a few non-unique values
 ## use 'counts / n' as weights:
 dw <- density(unique(fe), weights = table(fe)/length(fe), bw = d$bw)
-str(dw) ## smaller n: only 126, but identical estimate:
+utils::str(dw) ## smaller n: only 126, but identical estimate:
 stopifnot(all.equal(d[1:3], dw[1:3]))
+
+## simulation from a density() fit:
+# a kernel density fit is an equally-weighted mixture.
+fit <- density(xx)
+N <- 1e6
+x.new <- rnorm(N, sample(xx, size = N, replace = TRUE), fit$bw)
+plot(fit)
+lines(density(x.new), col="blue")
+
 
 (kernels <- eval(formals(density.default)$kernel))
 
@@ -167,38 +179,38 @@ stopifnot(all.equal(d[1:3], dw[1:3]))
 plot (density(0, bw = 1), xlab = "",
       main="R's density() kernels with bw = 1")
 for(i in 2:length(kernels))
-   lines(density(0, bw = 1, kern =  kernels[i]), col = i)
+   lines(density(0, bw = 1, kernel =  kernels[i]), col = i)
 legend(1.5,.4, legend = kernels, col = seq(kernels),
-       lty = 1, cex = .8, y.int = 1)
+       lty = 1, cex = .8, y.intersp = 1)
 
 ## show the kernels in the S parametrization
-plot(density(0, from=-1.2, to=1.2, width=2, kern="gaussian"), type="l",
+plot(density(0, from=-1.2, to=1.2, width=2, kernel="gaussian"), type="l",
      ylim = c(0, 1), xlab="", main="R's density() kernels with width = 1")
 for(i in 2:length(kernels))
-   lines(density(0, width=2, kern =  kernels[i]), col = i)
+   lines(density(0, width = 2, kernel =  kernels[i]), col = i)
 legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 
 ##-------- Semi-advanced theoretic from here on ---------------------------
 %% i.e. "secondary example" in a new help system ...
 
-(RKs <- cbind(sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))))
+(RKs <- cbind(sapply(kernels, function(k)density(kernel = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
 bw <- bw.SJ(precip) ## sensible automatic choice
 plot(density(precip, bw = bw),
      main = "same sd bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, kern =  kernels[i]), col = i)
+   lines(density(precip, bw = bw, kerniel =  kernels[i]), col = i)
 
 ## Bandwidth Adjustment for "Exactly Equivalent Kernels"
-h.f <- sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))
+h.f <- sapply(kernels, function(k)density(kernel = k, give.Rkern = TRUE))
 (h.f <- (h.f["gaussian"] / h.f)^ .2)
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
 
 plot(density(precip, bw = bw),
      main = "equivalent bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, adjust = h.f[i], kern = kernels[i]),
+   lines(density(precip, bw = bw, adjust = h.f[i], kernel = kernels[i]),
          col = i)
 legend(55, 0.035, legend = kernels, col = seq(kernels), lty = 1)
 }

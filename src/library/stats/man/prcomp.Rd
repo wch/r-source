@@ -114,11 +114,13 @@ prcomp(x, \dots)
   \emph{Modern Applied Statistics with S}, Springer-Verlag.
 }
 \seealso{
-  \code{\link{biplot.prcomp}},
+  \code{\link{biplot.prcomp}}, \code{\link{screeplot}},
   \code{\link{princomp}}, \code{\link{cor}}, \code{\link{cov}},
   \code{\link{svd}}, \code{\link{eigen}}.
 }
 \examples{
+require(graphics)
+
 ## the variances of the variables in the
 ## USArrests data vary by orders of magnitude, so scaling is appropriate
 prcomp(USArrests)  # inappropriate

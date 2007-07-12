@@ -97,13 +97,13 @@ chisq.test(x, y = NULL, correct = TRUE,
 ## Not really a good example
 chisq.test(InsectSprays$count > 7, InsectSprays$spray)
 				# Prints test summary
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$obs
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$observed
 				# Counts observed
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$exp
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$expected
 				# Counts expected under the null
 
 ## Effect of simulating p-values
-x <- matrix(c(12, 5, 7, 7), nc = 2)
+x <- matrix(c(12, 5, 7, 7), ncol = 2)
 chisq.test(x)$p.value		# 0.4233
 chisq.test(x, simulate.p.value = TRUE, B = 10000)$p.value
 				# around 0.29!

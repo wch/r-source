@@ -62,6 +62,7 @@ package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
 }
 
 \examples{
+require(stats)
 ## two functions and two "data sets" :
 f <- function(x,y) x+y
 g <- function(x,y) x-y

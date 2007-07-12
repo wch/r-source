@@ -16,7 +16,7 @@
     \code{NULL}, uses \code{\link{getOption}(digits)}.  (For the
     interpretation for complex numbers see \code{\link{signif}}.)
     Non-integer values will be rounded down, and only values
-    greater than or equal to one are accepted.
+    greater than or equal to 1 and no greater than 22 are accepted.
   }
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
@@ -42,7 +42,7 @@
   quotes) unless this is a character \code{NA} \emph{and} \code{quote =
     FALSE}, when \code{<NA>} is printed.
 
-  The same number of decimal places is used throughout a vector,  This
+  The same number of decimal places is used throughout a vector.  This
   means that \code{digits} specifies the minimum number of significant
   digits to be used, and that at least one entry will be encoded with
   that minimum number.  However, if all the encoded elements then have
@@ -57,6 +57,16 @@
   When the \pkg{methods} package is attached, \code{print} will call
   \code{\link{show}} for \R objects with formal classes if called
   with no optional arguments.
+}
+\section{Warning}{
+  Using too large a value of \code{digits} may lead to representation
+  errors in the calculation of the number of significant digits and the
+  decimal representation: these are likely for \code{digits >= 16}, and
+  as from \R 2.5.0 these possible errors are taken into account in
+  assessing the numher of significant digits to be printed in that case.
+
+  Whereas earlier versions of \R might have printed further digits for
+  \code{digits >= 16} on some platforms, they were not necessarily reliable.
 }
 \section{Single-byte locales}{
   If a non-printable character is encountered during output, it is
@@ -104,7 +114,7 @@
   It is possible to have a character string in a character vector that
   is not valid in the current locale.  If a byte is encountered that is
   not part of a valid character it is printed in hex in the form
-  \code{<xx>} and this is repeated until the start of a valid character.
+  \code{\xab} and this is repeated until the start of a valid character.
 #ifdef unix
   (This will rapidly recover from minor errors in UTF-8.)
 #endif
@@ -122,8 +132,8 @@ print(pi, digits = 16)
 LETTERS[1:16]
 print(LETTERS, quote = FALSE)
 
-M <- cbind(I=1, matrix(1:10000, nc=10, dimnames=list(NULL, LETTERS[1:10])))
-head(M) # makes more sense than
+M <- cbind(I=1, matrix(1:10000, ncol=10, dimnames=list(NULL, LETTERS[1:10])))
+utils::head(M) # makes more sense than
 print(M, max= 1000)# prints 90 rows and a message about omitting 910
 }
 \keyword{print}

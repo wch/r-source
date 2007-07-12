@@ -18,7 +18,7 @@ gammaCody(x)
   Bessel Functions of integer and fractional order, of first
   and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
   Modified Bessel functions (of first and third kind),
-  \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}. 
+  \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}.
 
   \code{gammaCody} is the \eqn{(\Gamma)} function as from the Specfun
   package and originally used in the Bessel code.
@@ -51,7 +51,7 @@ gammaCody(x)
 
   For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from the
   reference below are applied (which is probably suboptimal), unless for
-  \code{besselK} which is symmetric in \code{nu}.  
+  \code{besselK} which is symmetric in \code{nu}.
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)
@@ -70,6 +70,8 @@ gammaCody(x)
   Martin Maechler \email{maechler@stat.math.ethz.ch.}
 }
 \examples{
+require(graphics)
+
 nus <- c(0:5, 10, 20)
 
 x <- seq(0, 4, len = 501)
@@ -125,6 +127,12 @@ for(nu in nus){
     lines(xx, besselY(xx, nu=nu), col = nu+2)
 }
 legend(25, -.5, legend = paste("nu=", nus), col = nus+2, lwd = 1)
+
+## negative nu in bessel_Y -- was bogous for a long time
+curve(besselY(x, -0.1), 0, 10, ylim = c(-3,1), ylab = '')
+for(nu in c(seq(-0.2, -2, by = -0.1)))
+  curve(besselY(x, nu), add = TRUE)
+title(expression(besselY(x, nu) *"   "* {nu == list(-0.1, -0.2, ..., -2)}))
 }
 \keyword{math}
 

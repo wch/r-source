@@ -20,7 +20,7 @@
   \item{xlab, ylab}{x- and y-axis labels.}
   \item{frame.plot}{logical indicating if a frame (\code{\link{box}})
     should be drawn in the 1D case.  Defaults to true when \code{x} has
-    \code{\link{dimnames}} coerceable to numbers.}
+    \code{\link{dimnames}} coerce-able to numbers.}
   \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.}
 }
 \details{
@@ -31,8 +31,8 @@
 
 \examples{
 ## 1-d tables
-(Poiss.tab <- table(N = rpois(200, lam= 5)))
-plot(Poiss.tab, main = "plot(table(rpois(200, lam=5)))")
+(Poiss.tab <- table(N = stats::rpois(200, lambda = 5)))
+plot(Poiss.tab, main = "plot(table(rpois(200, lambda = 5)))")
 
 plot(table(state.division))
 

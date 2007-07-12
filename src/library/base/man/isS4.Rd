@@ -10,21 +10,29 @@ isS4(object)
 
 asS4(object, value = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{ Any R object. }
 
-    \item{value}{A single logical value; not \code{NA}.}
+  \item{value}{A single logical value; not \code{NA}.}
 }
 \value{
-  \code{isS4} always returns \code{TRUE} or \code{FALSE} according to whether the internal flag marking an S4 object has been turned on for this object.
+  \code{isS4} always returns \code{TRUE} or \code{FALSE} according to
+  whether the internal flag marking an S4 object has been turned on for
+  this object.
 
-\code{asS4} will turn this flag on or off. But see the details.
+  \code{asS4} will turn this flag on or off. But see the details.
 }
-\details{ Note that this function does not rely on the \code{\link{methods}} package, so in particular it can be used to detect the need to \code{\link{require}()} that package.
+\details{
+  Note that \code{isS4} does not rely on the \pkg{methods}
+  package, so in particular it can be used to detect the need to
+  \code{\link{require}} that package.  (But \code{asS4} does depend on
+  \pkg{methods}.)
 
-  You should not set the flag directly unless you really know why.  In the future, S4 methods may be restricted S4 objects, for primitive functions; then \code{asS4} would allow method dispatch of S4 methods for S3 classes.
-For all other purposes, an object will satisfy \code{isS4(x)} if and only if it should.
+  You should not set the flag directly unless you really know why.  As
+  from \R 2.6.0, S4 methods are restricted to S4 objects for primitive
+  functions; \code{asS4} allows method dispatch of S4 methods on
+  primitives for S3 classes. For all other purposes, an object will
+  satisfy \code{isS4(x)} if and only if it should.
 }
 \examples{
 \dontshow{require(methods)}

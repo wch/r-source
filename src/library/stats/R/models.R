@@ -1,14 +1,18 @@
 formula <- function(x, ...) UseMethod("formula")
-formula.default <- function (x,env=parent.frame(), ...)
+formula.default <- function (x, env = parent.frame(), ...)
 {
-    if (!is.null(x$formula))		eval(x$formula)
-    else if (!is.null(x$terms))		{z <- x$terms; oldClass(z) <- "formula"; z}
-    else if (!is.null(x$call$formula))	eval(x$call$formula)
+    notAtomic <- !is.atomic(x)
+    notnull <- function(z) notAtomic && !is.null(z)
+
+    if (notnull(x$formula)) eval(x$formula)
+    else if (notnull(x$terms)) {z <- x$terms; oldClass(z) <- "formula"; z}
+    else if (notnull(x$call$formula))	eval(x$call$formula)
     else if (!is.null(attr(x, "formula"))) attr(x, "formula")
-    else {form<-switch(mode(x),
-		NULL = structure(NULL, class = "formula"),
-		character = formula(eval(parse(text = x)[[1]])),
-		call = eval(x), stop("invalid formula"))
+    else {
+        form <- switch(mode(x),
+                       NULL = structure(NULL, class = "formula"),
+                       character = formula(eval(parse(text = x)[[1]])),
+                       call = eval(x), stop("invalid formula"))
         environment(form)<-env
         form
     }
@@ -29,15 +33,22 @@ formula.data.frame <- function (x, ...)
     nm <- sapply(names(x), as.name)
     lhs <- nm[1]
     if (length(nm) > 1) {
-       rhs <- nm[-1]
+        rhs <- nm[-1]
     }
     else {
-       rhs <- nm[1]
-       lhs <- NULL
+        rhs <- nm[1]
+        lhs <- NULL
     }
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
     ff<-eval(ff)
     environment(ff)<-parent.frame()
+    ff
+}
+
+formula.character <- function(x, env = parent.frame(), ...)
+{
+    ff <- formula(eval(parse(text=x)[[1]]))
+    environment(ff) <- env
     ff
 }
 
@@ -49,17 +60,18 @@ print.formula <- function(x, ...) {
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")
     ## as.character gives a vector.
-    if(as.character(ans[[1]])[1] == "~"){
+    if(as.character(ans[[1]])[1] == "~") {
 	class(ans) <- "formula"
         environment(ans)<-environment(x)
     }
     ans
 }
 
-as.formula <- function(object,env=parent.frame()){
+as.formula <- function(object, env = parent.frame())
+{
     if(inherits(object, "formula"))
-           object
-    else{
+        object
+    else {
         rval<-formula(object,env=baseenv())
         if (identical(environment(rval), baseenv()) || !missing(env))
             environment(rval)<-env
@@ -107,8 +119,10 @@ delete.response <- function (termobj)
 
 reformulate <- function (termlabels, response=NULL)
 {
+    if(!is.character(termlabels) || !length(termlabels))
+        stop("'termlabels' must be a character vector of length at least one")
     has.resp <- !is.null(response)
-    termtext <- paste(if(has.resp)"response", "~",
+    termtext <- paste(if(has.resp) "response", "~",
 		      paste(termlabels, collapse = "+"),
 		      collapse = "")
     rval <- eval(parse(text = termtext)[[1]])
@@ -119,29 +133,29 @@ reformulate <- function (termlabels, response=NULL)
     rval
 }
 
-drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
+drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 {
     if (is.null(dropx))
 	termobj
     else {
+        if(!inherits(termobj, "terms"))
+            stop("'termobj' must be a object of class \"terms\"")
 	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
 				  if (keep.response) termobj[[2]] else NULL)
-        environment(newformula)<-environment(termobj)
+        environment(newformula) <- environment(termobj)
 	terms(newformula, specials=names(attr(termobj, "specials")))
     }
 }
 
 
-"[.terms" <-function (termobj, i) {
-        resp <- if (attr(termobj, "response"))
-                termobj[[2]]
-        else NULL
-        newformula <- attr(termobj, "term.labels")[i]
-        if (length(newformula) == 0)
-                newformula <- 1
-        newformula <- reformulate(newformula, resp)
-        environment(newformula)<-environment(termobj)
-        terms(newformula, specials = names(attr(termobj, "specials")))
+"[.terms" <-function (termobj, i)
+{
+    resp <- if (attr(termobj, "response")) termobj[[2]] else NULL
+    newformula <- attr(termobj, "term.labels")[i]
+    if (length(newformula) == 0) newformula <- "1"
+    newformula <- reformulate(newformula, resp)
+    environment(newformula)<-environment(termobj)
+    terms(newformula, specials = names(attr(termobj, "specials")))
 
 }
 
@@ -163,7 +177,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
             tmp <- c(tmp, tmp2[ind])
         }
 	form <- formula(object)
-	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
+	lhs <- if(length(form) == 2) NULL else
+          paste(deparse(form[[2]]), collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
 	formula(paste(lhs, "~", rhs))
@@ -197,8 +212,15 @@ deviance <- function(object, ...) UseMethod("deviance")
 deviance.default <- function(object, ...) object$deviance
 
 fitted <- function(object, ...) UseMethod("fitted")
+## we really do need partial matching here
 fitted.default <- function(object, ...)
     napredict(object$na.action, object$fitted)
+fitted.default <- function(object, ...)
+{
+    xx <- if("fitted.values" %in% names(object))
+        object$fitted.values else object$fitted
+    napredict(object$na.action, xx)
+}
 fitted.values <- fitted
 
 anova <- function(object, ...)UseMethod("anova")
@@ -223,8 +245,10 @@ offset <- function(object) object
 
 .checkMFClasses <- function(cl, m, ordNotOK = FALSE)
 {
+    ## when called from predict.nls, vars not match.
     new <- sapply(m, .MFclass)
-    if(length(new) == 0) return()
+    new <- new[names(new) %in% names(cl)]
+     if(length(new) == 0) return()
     old <- cl[names(new)]
     if(!ordNotOK) {
         old[old == "ordered"] <- "factor"
@@ -236,12 +260,12 @@ offset <- function(object) object
         wrong <- old != new
         if(sum(wrong) == 1)
             stop(gettextf(
-    "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied",
+    "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied",
                           names(old)[wrong], old[wrong], new[wrong]),
                  call. = FALSE, domain = NA)
         else
             stop(gettextf(
-    "variables %s were specified with different classes from the fit",
+    "variables %s were specified with different types from the fit",
                  paste(sQuote(names(old)[wrong]), collapse=", ")),
                  call. = FALSE, domain = NA)
     }
@@ -257,7 +281,11 @@ offset <- function(object) object
     if(is.factor(x))  return("factor")
     if(is.matrix(x) && is.numeric(x))
         return(paste("nmatrix", ncol(x), sep="."))
-    if(is.vector(x) && is.numeric(x)) return("numeric")
+    ## this is unclear.  Prior to 2.6.0 we assumed numeric with attributes
+    ## meant something, but at least for now model.matrix does not
+    ## treat it differently.
+##    if(is.vector(x) && is.numeric(x)) return("numeric")
+    if(is.numeric(x)) return("numeric")
     return("other")
 }
 
@@ -270,8 +298,8 @@ model.frame.default <-
     ## and note the number of rows.
     possible_newdata <-
         !missing(data) && is.data.frame(data) &&
-    identical(deparse(substitute(data)), "newdata") &&
-    (nr <- nrow(data)) > 0
+        identical(deparse(substitute(data)), "newdata") &&
+        (nr <- nrow(data)) > 0
 
     ## were we passed just a fitted model object?
     ## the fit might have a saved model object
@@ -301,6 +329,7 @@ model.frame.default <-
 	data <- formula
 	formula <- as.formula(data)
     }
+    formula <- as.formula(formula)
     if(missing(na.action)) {
 	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
 	    na.action <- naa
@@ -317,7 +346,7 @@ model.frame.default <-
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     env <- environment(formula)
-    rownames <- attr(data, "row.names")
+    rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars
@@ -333,7 +362,7 @@ model.frame.default <-
         nr2 <- max(sapply(variables, NROW))
         if(nr2 != nr)
             warning(gettextf(
-                   "'newdata' had %d rows but variable(s) found have %d rows",
+                    "'newdata' had %d rows but variable(s) found have %d rows",
                              nr, nr2), call.=FALSE)
     }
     if(is.null(attr(formula, "predvars"))) {
@@ -352,7 +381,7 @@ model.frame.default <-
 	for(nm in names(xlev))
 	    if(!is.null(xl <- xlev[[nm]])) {
 		xi <- data[[nm]]
-		if(is.null(nxl <- levels(xi)))
+		if(!is.factor(xi) || is.null(nxl <- levels(xi)))
 		    warning(gettextf("variable '%s' is not a factor", nm),
                             domain = NA)
 		else {
@@ -414,7 +443,7 @@ model.matrix.default <- function(object, data = environment(object),
 	    data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
-    if(length(data)) { # otherwise no rhs terms, so skip all this
+    if(length(data)) {      # otherwise no rhs terms, so skip all this
         contr.funs <- as.character(getOption("contrasts"))
         namD <- names(data)
         ## turn any character columns into factors
@@ -446,7 +475,7 @@ model.matrix.default <- function(object, data = environment(object),
                 }
             }
         }
-    } else { # internal model.matrix needs some variable
+    } else {               # internal model.matrix needs some variable
         isF <-  FALSE
         data <- list(x=rep(0, nrow(data)))
     }
@@ -521,10 +550,53 @@ makepredictcall.default  <- function(var, call)
 
 .getXlevels <- function(Terms, m)
 {
-    xvars <- sapply(attr(Terms, "variables"),deparse,width.cutoff=500)[-1]
+    xvars <- sapply(attr(Terms, "variables"), deparse, width.cutoff=500)[-1]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars) > 0) {
-        xlev <- lapply(m[xvars], levels)
+        xlev <- lapply(m[xvars], function(x) if(is.factor(x)) levels(x) else NULL)
         xlev[!sapply(xlev, is.null)]
     } else NULL
+}
+
+get_all_vars <- function(formula, data = NULL, ...)
+{
+    if(missing(formula)) {
+	if(!missing(data) && inherits(data, "data.frame") &&
+	   length(attr(data, "terms")) > 0)
+	    return(data)
+	formula <- as.formula(data)
+    }
+    else if(missing(data) && inherits(formula, "data.frame")) {
+	if(length(attr(formula, "terms")))
+	    return(formula)
+	data <- formula
+	formula <- as.formula(data)
+    }
+    formula <- as.formula(formula)
+    if(missing(data))
+	data <- environment(formula)
+    else if (!is.data.frame(data) && !is.environment(data)
+             && !is.null(attr(data, "class")))
+        data <- as.data.frame(data)
+    else if (is.array(data))
+        stop("'data' must be a data.frame, not a matrix or an array")
+    if(!inherits(formula, "terms"))
+	formula <- terms(formula, data = data)
+    env <- environment(formula)
+    rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
+    varnames <- all.vars(formula)
+    inp <- parse(text=paste("list(", paste(varnames, collapse=","), ")"))
+    variables <- eval(inp, data, env)
+    if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
+        ## see if we can get rownames from the response
+        lhs <- variables[[resp]]
+        rownames <- if(is.matrix(lhs)) rownames(lhs) else names(lhs)
+    }
+    extras <- substitute(list(...))
+    extranames <- names(extras[-1])
+    extras <- eval(extras, data, env)
+    x <- as.data.frame(c(variables, extras), optional=TRUE)
+    names(x) <- c(varnames, extranames)
+    attr(x, "row.names") <- rownames # might be short form
+    x
 }

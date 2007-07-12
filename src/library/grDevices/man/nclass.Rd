@@ -25,12 +25,15 @@ nclass.FD(x)
 \details{
   \code{nclass.Sturges} uses Sturges' formula, implicitly basing bin
   sizes on the range of the data.
-  
-  \code{nclass.scott} uses Scott's choice for a normal distribution based on
-  the estimate of the standard error.
 
-  \code{nclass.FD} uses the
-  Freedman-Diaconis choice based on the inter-quartile range.
+  \code{nclass.scott} uses Scott's choice for a normal distribution based on
+  the estimate of the standard error, unless that is zero where it
+  returns \code{1}.
+
+  \code{nclass.FD} uses the Freedman-Diaconis choice based on the
+  inter-quartile range (\code{\link{IQR}}) unless that's zero where it
+  reverts to \code{\link{mad}(x, constant=2)} and when that is \eqn{0}
+  as well, returns \code{1}.
 }
 \references{
   Venables, W. N. and Ripley, B. D. (2002)
@@ -50,6 +53,19 @@ nclass.FD(x)
     Visualization}. Wiley.
 }
 \seealso{
-  \code{\link{hist}}
+  \code{\link{hist}} and \code{\link[MASS]{truehist}} (which use
+  a different default).
+}
+\examples{
+set.seed(1)
+x <- stats::rnorm(1111)
+nclass.Sturges(x)
+
+## Compare them:
+NC <- function(x)
+    c(Sturges = nclass.Sturges(x), Scott = nclass.scott(x), FD = nclass.FD(x))
+NC(x)
+onePt <- rep(1, 11)
+NC(onePt) # no longer gives NaN
 }
 \keyword{univar}

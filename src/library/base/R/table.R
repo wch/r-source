@@ -30,10 +30,11 @@ table <- function (..., exclude = c(NA, NaN),
 	    else
 		 paste(dnn[1], 1:length(args), sep = '.')
     }
-    bin <- 0
+    # 0L, 1L, etc: keep 'bin' and 'pd' integer - as long as tabulate() requires it
+    bin <- 0L
     lens <- NULL
     dims <- integer(0)
-    pd <- 1
+    pd <- 1L
     dn <- NULL
     for (a in args) {
 	if (is.null(lens)) lens <- length(a)
@@ -52,12 +53,12 @@ table <- function (..., exclude = c(NA, NaN),
 	dims <- c(dims, nl)
 	dn <- c(dn, list(ll))
 	## requiring   all(unique(as.integer(cat)) == 1:nlevels(cat))  :
-	bin <- bin + pd * (as.integer(cat) - 1)
+	bin <- bin + pd * (as.integer(cat) - 1L)
 	pd <- pd * nl
     }
     names(dn) <- dnn
     bin <- bin[!is.na(bin)]
-    if (length(bin)) bin <- bin + 1 # otherwise, that makes bin NA
+    if (length(bin)) bin <- bin + 1L # otherwise, that makes bin NA
     y <- array(tabulate(bin, pd), dims, dimnames = dn)
     class(y) <- "table"
     y
@@ -173,7 +174,7 @@ as.table.default <- function(x, ...)
 	    dnx <- vector("list", length(dim(x)))
 	for(i in which(sapply(dnx, is.null)))
 	    dnx[[i]] <-
-                make.unique(LETTERS[seq.int(from=0, length = dim(x)[i]) %% 26 + 1],
+                make.unique(LETTERS[seq.int(from=0, length.out = dim(x)[i]) %% 26 + 1],
                             sep = "")
 	dimnames(x) <- dnx
 	class(x) <- c("table", oldClass(x))

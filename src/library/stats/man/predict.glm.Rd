@@ -66,6 +66,8 @@
 }
 
 \examples{
+require(graphics)
+
 ## example from Venables and Ripley (2002, pp. 190-2.)
 ldose <- rep(0:5, 2)
 numdead <- c(1, 4, 9, 13, 18, 20, 0, 2, 6, 10, 12, 16)

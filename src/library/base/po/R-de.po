@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -111,6 +111,10 @@ msgstr "wird benötigt von"
 
 msgid "(still attached)"
 msgstr "(noch eingebunden)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "Namensraum '%s' ist geladen"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -253,6 +257,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> row.names NICHT genutzt"
 
+msgid "row names contain missing values"
+msgstr "Zeilennamen enthalten fehlende Werte"
+
+msgid "duplicate row.names:"
+msgstr "doppelte row.names:"
+
 msgid "arguments imply differing number of rows:"
 msgstr "Argumente implizieren unterschiedliche Anzahl Zeilen:"
 
@@ -265,12 +275,6 @@ msgstr "angegebene Zeilennamen haben falsche Länge"
 msgid "row names were found from a short variable and have been discarded"
 msgstr ""
 "Zeilennamen wurden in einer short Variablen gefunden und wurden verworfen"
-
-msgid "row names contain missing values"
-msgstr "Zeilennamen enthalten fehlende Werte"
-
-msgid "duplicate row.names:"
-msgstr "doppelte row.names:"
 
 msgid "drop argument will be ignored"
 msgstr "drop Argument wird ignoriert"
@@ -476,6 +480,17 @@ msgstr "nicht definiert für \"POSIXct\" Objekte"
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "nicht definiert für \"POSIXlt\" Objekte"
 
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s' ist nicht Funktion, Zeichen oder Symbol"
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "ungültige 'quote' Spezifikation"
+
 msgid "not defined for \"difftime\" objects"
 msgstr "nicht definiert für \"difftime\" Objekte"
 
@@ -508,6 +523,9 @@ msgstr "nur Matrixdiagonalen können ersetzt werden"
 
 msgid "replacement diagonal has wrong length"
 msgstr "Ersatzdiagonale hat falsche Länge"
+
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr ""
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -613,6 +631,9 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' muss eins aus {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"} sein"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' kann nur '0+- #' enthalten"
 
@@ -638,8 +659,16 @@ msgstr "Wert für '"
 msgid "' not found"
 msgstr "' nicht gefunden"
 
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "alle Argumente müssen die selbe Länge haben"
+
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' muss nichtleere Zeichenkette sein"
+
+#, fuzzy
+msgid "invalid multibyte string for 'pattern'"
+msgstr "ungültige Zeichenkette für 'by'"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance' darf nicht negativ sein"
@@ -723,6 +752,10 @@ msgstr "'%s' nicht im Suchpfad gefunden, nutze pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "Laden von Paket/Namensraum für '%s' fehlgeschlagen"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr "Paket '%s' wurde vor R 2.0.0 gebaut: bitte Paket neu installieren"
 
 msgid "unable to load R code in package '%s'"
 msgstr "kann R Kode in Paket '%s' nicht laden"
@@ -851,6 +884,10 @@ msgstr "ungültiges Argument für 'category'"
 msgid "must specify formal argument names to vectorize"
 msgstr ""
 
+#, fuzzy
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'normal.kind' muss eine Zeichenkette der Länge 1 sein."
+
 msgid "'arg' should be one of"
 msgstr "'arg' sollte eines sein von"
 
@@ -883,6 +920,10 @@ msgstr ""
 msgid "argument is not numeric or logical: returning NA"
 msgstr "Argument ist weder numerisch noch boolesch: gebe NA zurück"
 
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin' muss Länge 1 haben"
+
 msgid "trimmed means are not defined for complex data"
 msgstr "getrimmte Mittelwerte sind für komplexe Daten nicht definiert"
 
@@ -901,6 +942,9 @@ msgstr "'by' muss gültige Spalte(n) spezifizieren"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' und 'by.y' geben unterschiedliche Zahlen von Spalten an"
+
+msgid "additional arguments ignored in message()"
+msgstr ""
 
 msgid "(loaded the methods namespace)"
 msgstr ""
@@ -1000,7 +1044,7 @@ msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s in unloadNamespace(%s) fehlgeschlagen"
 
 #, fuzzy
-msgid "name space '%s' is still used by: '%s'"
+msgid "name space '%s' is still used by: %s"
 msgstr "Namensraum '%s' wird noch benutzt durch:"
 
 msgid "imperative name space directives are disabled"
@@ -1091,6 +1135,10 @@ msgstr "falsches Argument"
 
 msgid "not defined for package_version objects"
 msgstr "für package_version Objekte nicht definiert"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "falsches Argument"
 
 msgid "invalid 'n' value"
 msgstr "ungültiger Wert für 'n'"
@@ -1269,6 +1317,9 @@ msgstr ""
 msgid "' has changed"
 msgstr ""
 
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
 msgid "is not"
 msgstr "ist nicht"
 
@@ -1276,6 +1327,9 @@ msgid "all"
 msgstr ""
 
 msgid "TRUE"
+msgstr ""
+
+msgid "additional arguments ignored in warning()"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1353,8 +1407,14 @@ msgstr "Argument zu 'which' ist nicht boolesch"
 msgid "invalid 'digits'"
 msgstr "ungültige 'digits'"
 
-msgid "argument must be character"
-msgstr "Argument muss eine Zeichenkette sein"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' und 'target' müssen Zeichenkettenvektoren sein"
 
 msgid "'cmd' could not be run"
 msgstr "'cmd' konnte nicht ausgeführt werden"
@@ -1389,13 +1449,15 @@ msgid_plural "there are no packages called"
 msgstr[0] "es gibt kein Paket '%s'"
 msgstr[1] "es gibt kein Paket '%s'"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "Objekt %s wird nicht von 'namespace:%s' exportiert"
 msgstr[1] "Objekte %s werden nicht von 'namespace:%s' exportiert"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "vorhergehender Export %s wird ersetzt"
 msgstr[1] "vorhergehende Exporte %s werden ersetzt"
 
@@ -1408,6 +1470,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "Argument muss eine Zeichenkette sein"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr ""
@@ -1454,9 +1519,6 @@ msgstr[1] "Warnmeldungen:\n"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "ungültige Zahlen in 'quote'"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "ungültige 'quote' Spezifikation"
 
 #~ msgid "invalid 'col.names' specification"
 #~ msgstr "ungültige 'col.names' Spezifikation"

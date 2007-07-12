@@ -76,6 +76,7 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
   \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
 }
 \examples{
+require(stats)
 x <- c(1:100, 1000)
 (b1 <- boxplot.stats(x))
 (b2 <- boxplot.stats(x, do.conf=FALSE, do.out=FALSE))

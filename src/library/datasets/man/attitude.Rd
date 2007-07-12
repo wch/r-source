@@ -29,7 +29,7 @@
   (Section 3.7, p.68ff of 2nd ed.(1991).)
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 pairs(attitude, main = "attitude data")
 summary(attitude)
 summary(fm1 <- lm(rating ~ ., data = attitude))

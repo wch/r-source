@@ -13,7 +13,7 @@ version
 \description{
   \code{R.Version()} provides detailed information about the version of
   \R running.
-    
+
   \code{R.version} is a variable (a \code{\link{list}}) holding this
   information (and \code{version} is a copy of it for S compatibility).
 }
@@ -57,9 +57,12 @@ version
 \seealso{
   \code{\link[utils]{sessionInfo}} which provides additional
   information;
-  \code{\link{getRversion}}, \code{\link{.Platform}}
+  \code{\link{getRversion}} typically used inside R code,
+  \code{\link{.Platform}}.
 }
 \examples{
+require(graphics)
+
 R.version$os # to check how lucky you are ...
 plot(0) # any plot
 mtext(R.version.string, side=1,line=4,adj=1)# a useful bottom-right note

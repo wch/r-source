@@ -98,7 +98,7 @@ setClass("track", representation(x="numeric", y="numeric"))
 myTrack <- new("track", x = -4:4, y = exp(-4:4))
 slot(myTrack, "x")
 slot(myTrack, "y") <- log(slot(myTrack, "y"))
-str(myTrack)
+utils::str(myTrack)
 
 slotNames("track") # is the same as
 slotNames(myTrack)

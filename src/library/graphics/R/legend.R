@@ -17,7 +17,9 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
     }
     mfill <- !missing(fill) || !missing(density)
 
+    title <- as.graphicsAnnot(title)
     if(length(title) > 1) stop("invalid title")
+    legend <- as.graphicsAnnot(legend)
     n.leg <- if(is.call(legend)) 1 else length(legend)
     if(n.leg == 0) stop("'legend' is of length 0")
     auto <-

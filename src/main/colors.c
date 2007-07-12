@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2007  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *  Copyright (C) 2003	     The R Foundation
  *
@@ -28,7 +28,7 @@
 #include <Graphics.h>
 #include <Rmath.h>
 
-unsigned int char2col(char *s)
+unsigned int char2col(const char *s)
 {
     if (s[0] == '#') return rgb2col(s);
     else return name2col(s);
@@ -62,7 +62,7 @@ static unsigned int CheckAlpha(int x)
     return (unsigned int)x;
 }
 
-static void setpalette(char **palette)
+static void setpalette(const char **palette)
 {
     int i;
     for (i = 0; (i<COLOR_TABLE_SIZE) && palette[i]; i++)
@@ -81,15 +81,15 @@ SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < R_ColorTableSize; i++)
 	SET_STRING_ELT(ans, i, mkChar(col2name(R_ColorTable[i])));
     val = CAR(args);
-    if (!isString(val)) errorcall(call, _("invalid argument type"));
+    if (!isString(val)) error(_("invalid argument type"));
     if ((n=length(val)) == 1) {
-	if (StrMatch("default", CHAR(STRING_ELT(val, 0))))
+	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) /* ASCII */
 	    setpalette(DefaultPalette);
-	else errorcall(call, _("unknown palette (need >= 2 colors)"));
+	else error(_("unknown palette (need >= 2 colors)"));
     }
     else if (n > 1) {
 	if (n > COLOR_TABLE_SIZE)
-	     errorcall(call, _("maximum number of colors exceeded"));
+	     error(_("maximum number of colors exceeded"));
 	for (i = 0; i < n; i++)
 	    color[i] = char2col(CHAR(STRING_ELT(val, i)));
 	for (i = 0; i < n; i++)
@@ -156,7 +156,7 @@ SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	aa = REAL(a)[i % na];
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1 ||
 	    aa < 0 || aa > 1)
-	    errorcall(call, _("invalid HSV color"));
+	    error(_("invalid HSV color"));
 	hsv2rgb(hh, ss, vv, &r, &g, &b);
 	r = pow(r, gg);
 	g = pow(g, gg);
@@ -268,7 +268,7 @@ SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
         A = REAL(a)[i % na];
         if (!R_FINITE(A)) A = 1;
         if (L < 0 || L > WHITE_Y || C < 0 || A < 0 || A > 1)
-            errorcall(call, _("invalid hcl color"));
+            error(_("invalid hcl color"));
         hcl2rgb(H, C, L, &r, &g, &b);
         ir = 255 * r + .5;
         ig = 255 * g + .5;
@@ -319,7 +319,7 @@ SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(nam = coerceVector(CAR(args), STRSXP)); args = CDR(args);
     if (length(nam) != 0 && length(nam) != l_max)
-	errorcall(call, _("invalid names vector"));
+	error(_("invalid names vector"));
     PROTECT(c = allocVector(STRSXP, l_max));
 
 #define _R_set_c_RGBA(_R,_G,_B,_A)				\
@@ -364,7 +364,7 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlev; i++) {
 	level = REAL(lev)[i];
 	if (ISNAN(level) || level < 0 || level > 1)
-	    errorcall(call, _("invalid gray level, must be in [0,1]."));
+	    error(_("invalid gray level, must be in [0,1]."));
 	ilevel = 255 * level + 0.5;
 	SET_STRING_ELT(ans, i, mkChar(RGB2rgb(ilevel, ilevel, ilevel)));
     }
@@ -417,10 +417,10 @@ SEXP attribute_hidden do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(rgb = coerceVector(CAR(args),REALSXP)); args = CDR(args);
     if(!isMatrix(rgb))
-	errorcall(call, _("rgb is not a matrix (internally)"));
+	error(_("rgb is not a matrix (internally)"));
     dd = getAttrib(rgb, R_DimSymbol);
     if(INTEGER(dd)[0] != 3)
-	errorcall(call, _("rgb must have 3 rows (internally)"));
+	error(_("rgb must have 3 rows (internally)"));
     n = INTEGER(dd)[1];
 
     PROTECT(ans = allocMatrix(REALSXP, 3, n));

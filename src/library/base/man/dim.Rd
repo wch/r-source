@@ -26,6 +26,10 @@ dim(x) <- value
   For an array (and hence in particular, for a matrix) \code{dim} retrieves
   the \code{dim} attribute of the object.  It is \code{NULL} or a vector
   of mode \code{\link{integer}}.
+
+  The replacemnt method changes the \code{"dim"} attribute (provided the
+  new value is compatible) and removes any \code{"dimnames"} \emph{and}
+  \code{"names"} attributes.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -43,7 +43,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   The model is specified as a list with at least components
   \describe{
     \item{\code{T}}{the transition matrix}
-    \item{\code{Z}}{the observation coeficients}
+    \item{\code{Z}}{the observation coefficients}
     \item{\code{h}}{the observation variance}
     \item{\code{V}}{\code{RQR'}}
     \item{\code{a}}{the current state estimate}
@@ -75,7 +75,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   For \code{KalmanForecast}, a list with components \code{pred}, the
   predictions, and \code{var}, the unscaled variances of the prediction
-  errors (to be muliplied by \code{s2}).
+  errors (to be multiplied by \code{s2}).
 
   For \code{makeARIMA}, a model list including components for
   its arguments.

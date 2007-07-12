@@ -38,8 +38,8 @@ is.array(x)
   \code{dim}[names] attribute at a later time.
 
   \code{is.array} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is an array (i.e., has a \code{dim} attribute)
-  or not. It is generic: you can write methods to handle
+  whether its argument is an array (i.e., has a \code{dim} attribute of
+  positive length) or not.  It is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 }
 \references{

@@ -86,6 +86,8 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   \code{\link{plot.spec}}.
 }
 \examples{
+require(graphics)
+
 ## Examples from Venables & Ripley
 ## spec.pgram
 par(mfrow=c(2,2))

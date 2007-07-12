@@ -13,8 +13,8 @@
 }
 \details{
   Three types of quote are part of the syntax of \R: single and double
-  quotation marks and the backtick (or back quote, \code{`}).
-  In addition, backslash is used for quoting the following character(s)
+  quotation marks and the backtick (or back quote, \code{`}).  In
+  addition, backslash is used for quoting the following characters
   inside character constants.
 }
 \section{Character constants}{
@@ -26,7 +26,11 @@
 
   Backslash is used to start an escape sequence inside character constants.
   Unless specified in the following table, an escaped character is
-  interpreted as the character itself.
+  interpreted as the character itself.  (Note that the parser will warn
+  about most such uses as from \R 2.5.0, as they are most often
+% pace R-exts, we do need to double these.
+  erroneous, e.g. using \code{\\.} where \code{\\\\.} was intended.)
+  
   Single quotes need to be escaped by backslash in single-quoted
   strings, and double quotes in double-quoted strings.
 
@@ -47,8 +51,9 @@
   The last two are only supported on versions of \R built with MBCS
   support, and the last is not supported on Windows.  (They are an error
   if used where not supported.)  All except the Unicode escape sequences
-  are also supported when reading character strings from a connection by
-  \code{\link{scan}}.
+  are also supported when reading character strings by
+  \code{\link{scan}} and \code{\link{read.table}} if
+  \code{allowEscapes = TRUE}.
 
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).

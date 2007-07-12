@@ -27,7 +27,9 @@ system.file(\dots, package = "base", lib.loc = NULL)
   As a special case, \code{system.file()} gives the root of the
   \pkg{base} package only.
 }
-\seealso{\code{\link{list.files}}}
+\seealso{\code{\link{R.home}} for the \dQuote{root} directory of the \R
+  installation, \code{\link{list.files}}
+}
 \examples{
 system.file()                  # The root of the 'base' package
 system.file(package = "stats") # The root of package 'stats'

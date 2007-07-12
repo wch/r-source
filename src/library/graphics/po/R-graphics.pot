@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,6 +10,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+
+msgid "'a' is overridden by 'reg'"
+msgstr ""
+
+msgid "only using the first two of"
+msgstr ""
+
+msgid "regression coefficients"
+msgstr ""
+
+msgid "'a' and 'b' are overridden by 'coef'"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr ""
@@ -200,7 +212,7 @@ msgstr ""
 msgid "breaks must all be finite"
 msgstr ""
 
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr ""
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"

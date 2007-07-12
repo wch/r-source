@@ -90,7 +90,7 @@ barplot(height, \dots)
   \item{inside}{logical.  If \code{TRUE}, the lines which divide
     adjacent (non-stacked!) bars will be drawn.  Only applies when
     \code{space = 0} (which it partly is when \code{beside = TRUE}).}
-%MM: we still have "NotYetUsed" -- the above describe's S-plus 6.1 (not
+%MM: we still have "NotYetUsed" -- the above describes S-plus 6.1 (not
 % precisely documented!) behavior!
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{axis.lty}{the graphics parameter \code{lty} applied to the axis
@@ -131,7 +131,8 @@ barplot(height, \dots)
   \code{\link{hist}}.
 }
 \examples{
-tN <- table(Ni <- rpois(100, lambda=5))
+require(grDevices) # for colours
+tN <- table(Ni <- stats::rpois(100, lambda=5))
 r <- barplot(tN, col=rainbow(20))
 #- type = "h" plotting *is* 'bar'plot
 lines(r, tN, type='h', col='red', lwd=2)

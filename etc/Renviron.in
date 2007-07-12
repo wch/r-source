@@ -35,6 +35,8 @@ PERL=${PERL-'@PERL@'}
 TAR=${TAR-'@TAR@'}
 LN_S='@LN_S@'
 
+R_LIBS_USER=${R_LIBS_USER-'~/R/@R_PLATFORM@-library/@MAJ_MIN_VERSION@'}
+
 ## Aqua subdirs
 R_USE_AQUA_SUBDIRS='@use_aqua@'
 

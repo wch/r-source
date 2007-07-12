@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-28 r40045)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.6.0 Under development (unstable) (2007-04-16 r41175)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -138,10 +138,10 @@ Achieved convergence tolerance: 2.74e-06
 > cf1 <- coef(summary(fit))[, 1:2]
 > fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +             weights = wts, trace = TRUE, algorithm = "port")
-  0      56.0706: 0.123450 0.543210
-  1      6.39646:  1.34546 0.700840
-  2  0.000606391: 0.00517053 0.999153
-  3  0.000606391: 0.00517052 0.999153
+  0:     56.070572: 0.123450 0.543210
+  1:     6.3964587:  1.34546 0.700840
+  2: 0.00060639084: 0.00517053 0.999153
+  3: 0.00060639084: 0.00517052 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -426,7 +426,7 @@ Nonlinear regression model
  residual sum-of-squares: 2.44
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 2.97e-06 
+Achieved convergence tolerance: 3.43e-06 
 Waiting for profiling to be done...
          2.5%   97.5%
 a     0.35005 0.66045
@@ -453,7 +453,7 @@ logc -0.64620 0.40950
 > fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 > confint(profile(fm))
          2.5%   97.5%
-b     0.45121 0.91488
+b     0.45121 0.91489
 logc -0.64628 0.40953
 > 
 > 
@@ -612,6 +612,62 @@ Achieved convergence tolerance: 7.45e-07
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
 > 
+> 
+> ## list 'start'
+> getExpmat <- function(theta, t)
++ {
++         conc <- matrix(nrow = length(t), ncol = length(theta))
++         for(i in 1:length(theta)) conc[, i] <- exp(-theta[i] * t)
++         conc
++ }
+> 
+> expsum <- as.vector(getExpmat(c(.05,.005), 1:100) %*% c(1,1))
+> expsumNoisy <- expsum + max(expsum) *.001 * rnorm(100)
+> expsum.df <-data.frame(expsumNoisy)
+> 
+> ## estimate decay rates, amplitudes with default Gauss-Newton
+> summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
++              start = list(k = c(.6,.02), sp = c(1,2))))
+
+Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
+
+Parameters:
+    Estimate Std. Error t value Pr(>|t|)    
+k1  5.00e-02   3.07e-04   162.5   <2e-16 ***
+k2  4.99e-03   5.38e-05    92.8   <2e-16 ***
+sp1 1.00e+00   4.47e-03   224.0   <2e-16 ***
+sp2 9.99e-01   5.00e-03   199.8   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.00205 on 96 degrees of freedom
+
+Number of iterations to convergence: 7 
+Achieved convergence tolerance: 1.98e-06 
+
+> 
+> ## didn't work with port in 2.4.1
+> summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
++              start = list(k = c(.6,.02), sp = c(1,2)),
++              algorithm = "port"))
+
+Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
+
+Parameters:
+    Estimate Std. Error t value Pr(>|t|)    
+k1  5.00e-02   3.07e-04   162.5   <2e-16 ***
+k2  4.99e-03   5.38e-05    92.8   <2e-16 ***
+sp1 1.00e+00   4.47e-03   224.0   <2e-16 ***
+sp2 9.99e-01   5.00e-03   199.8   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.00205 on 96 degrees of freedom
+
+Algorithm "port", convergence message: both X-convergence and relative convergence (5) 
+
+> 
+> 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  7.25 0.05 7.34 NA NA 
+Time elapsed:  7.453 0.057 7.515 0 0 
 > 

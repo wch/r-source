@@ -10,7 +10,7 @@ available.packages <-
 	stopifnot(is.character(fields))
 	fields <- unique(c(requiredFields, fields))
     }
-    res <- matrix(as.character(NA), 0, length(fields) + 1,
+    res <- matrix(NA_character_, 0, length(fields) + 1,
 		  dimnames = list(NULL, c(fields, "Repository")))
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0
@@ -66,7 +66,7 @@ available.packages <-
         if (length(res0)) {
             missingFields <- fields[!(fields %in% colnames(res0))]
             if (length(missingFields)) {
-                toadd <- matrix(as.character(NA), nrow=nrow(res0),
+                toadd <- matrix(NA_character_, nrow=nrow(res0),
                                 ncol=length(missingFields),
                                 dimnames=list(NULL, missingFields))
                 res0 <- cbind(res0, toadd)
@@ -78,11 +78,11 @@ available.packages <-
     }
     ## ignore packages which don't fit our version of R
     if(length(res)) {
-        currentR <- getRversion()        
+        currentR <- getRversion()
         .checkRversion <- function(x) {
             if(is.na(xx <- x["Depends"])) return(TRUE)
             xx <- tools:::.split_dependencies(xx)
-            if(length(z <- xx[["R"]]) > 1)
+            if(length(z <- xx[["R", exact=TRUE]]) > 1)
                 eval(parse(text=paste("currentR", z$op, "z$version")))
             else TRUE
         }
@@ -162,11 +162,12 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     if(!is.null(update)) {
         if(is.null(instlib)) instlib <-  update[,"LibPath"]
-
-        install.packages(update[,"Package"], instlib,
-                         contriburl = contriburl,
-                         method = method,
-                         available = available, ..., type = type)
+        ## do this a library at a time, to handle dependencies correctly.
+        libs <- unique(instlib)
+        for(l in libs)
+            install.packages(update[instlib == l ,"Package"], l,
+                             contriburl = contriburl, method = method,
+                             available = available, ..., type = type)
     }
 }
 
@@ -217,7 +218,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
            package_version(instp[k, "Version"])) next
         deps <- onRepos["Depends"]
         if(!is.na(deps)) {
-            Rdeps <- tools:::.split_dependencies(deps)[["R"]]
+            Rdeps <- tools:::.split_dependencies(deps)[["R", exact=TRUE]]
             if(length(Rdeps) > 1) {
                 target <- Rdeps$version
                 res <- eval(parse(text=paste("currentR", Rdeps$op, "target")))
@@ -351,11 +352,11 @@ installed.packages <-
             ## this excludes packages without DESCRIPTION files
             pkgs <- .packages(all.available = TRUE, lib.loc = lib)
             for(p in pkgs){
-                desc <- packageDescription(p, lib = lib, fields = fields,
+                desc <- packageDescription(p, lib.loc = lib, fields = fields,
                                            encoding = NA)
                 ## this gives NA if the package has no Version field
                 if (is.logical(desc)) {
-                    desc <- rep(as.character(NA), length(fields))
+                    desc <- rep(NA_character_, length(fields))
                     names(desc) <- fields
                 } else {
                     desc <- unlist(desc)
@@ -524,13 +525,35 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 }
 
 
+getCRANmirrors <- function(all=FALSE, local.only=FALSE)
+{
+    m <- NULL
+    if(!local.only){
+        m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
+                          as.is=TRUE))
+    }
+    
+    if(is.null(m) || inherits(m, "try-error")){
+        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
+                      as.is=TRUE)
+    }
+    
+    if(!is.null(m$OK)){
+        m$OK <- as.logical(m$OK)
+
+        if(!all){
+            m <- m[m$OK,]
+        }
+    }
+    m
+}
+
+
+
 chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
-    m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
-                      as.is=TRUE))
-    if(inherits(m, "try-error"))
-        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
+    m <- getCRANmirrors(all=FALSE, local.only=FALSE)
     res <- menu(m[,1], graphics, "CRAN mirror")
     if(res > 0) {
         URL <- m[res, "URL"]
@@ -541,7 +564,8 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
     invisible()
 }
 
-setRepositories <- function(graphics = getOption("menu.graphics"))
+setRepositories <-
+    function(graphics = getOption("menu.graphics"), ind = NULL)
 {
     if(!interactive()) stop("cannot set repositories non-interactively")
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
@@ -569,30 +593,33 @@ setRepositories <- function(graphics = getOption("menu.graphics"))
 
     default <- a[["default"]]
 
-    res <- integer(0)
-    if(graphics) {
-        ## return a list of row numbers.
-        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-            res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
-                                     "Repositories"), a[, 1])
-        else if(.Platform$OS.type == "unix" &&
-                capabilities("tcltk") && capabilities("X11"))
-            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
-                                            multiple = TRUE, "Repositories"),
-                         a[, 1])
-    }
-    if(!length(res)) {
-        ## text-mode fallback
-        cat(gettext("--- Please select repositories for use in this session ---\n"))
-        nc <- length(default)
-        cat("", paste(seq_len(nc), ": ",
-                      ifelse(default, "+", " "), " ", a[, 1],
-                      sep=""),
-            "", sep="\n")
-        cat(gettext("Enter one or more numbers separated by spaces\n"))
-        res <- scan("", what=0, quiet=TRUE, nlines=1)
-        if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
-        res <- res[1 <= res && res <= nc]
+    if(length(ind)) res <- as.integer(ind)
+    else {
+        res <- integer(0)
+        if(graphics) {
+            ## return a list of row numbers.
+            if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+                res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
+                                         "Repositories"), a[, 1])
+            else if(.Platform$OS.type == "unix" &&
+                    capabilities("tcltk") && capabilities("X11"))
+                res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
+                                                   multiple = TRUE, "Repositories"),
+                             a[, 1])
+        }
+        if(!length(res)) {
+            ## text-mode fallback
+            cat(gettext("--- Please select repositories for use in this session ---\n"))
+            nc <- length(default)
+            cat("", paste(seq_len(nc), ": ",
+                          ifelse(default, "+", " "), " ", a[, 1],
+                          sep=""),
+                "", sep="\n")
+            cat(gettext("Enter one or more numbers separated by spaces\n"))
+            res <- scan("", what=0, quiet=TRUE, nlines=1)
+            if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
+            res <- res[1 <= res && res <= nc]
+        }
     }
     if(length(res)) {
         repos <- a[["URL"]]

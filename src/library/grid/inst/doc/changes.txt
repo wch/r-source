@@ -1,3 +1,45 @@
+Changes from grid_2.5.0 to grid_2.6.0:
+------------------------------------
+
+1.  Added grid.gedit() as convenience wrapper for grid.edit()
+    based on usage patterns of Hadley Wickham when working with
+    'ggplot' package.
+
+    Ditto, grid.gget() and grid.gremove().
+
+2.  Improved implementation of 'id' and 'id.lengths' arguments
+    for drawing multiple polygons/polylines/xsplines to gain 
+    order 2 speed improvement.  
+
+    Problem independently reported by Luke Tierney, Deepayan Sarkar and
+    Vilmos Prokaj.
+
+3.  Bug fixes for grid.remove(), especially for grep=TRUE and global=TRUE
+    (i.e., removing all grobs from DL where the name matches a pattern).
+
+    Also some fixes to grid.remove() error messages when no match found.
+
+    Bug reports from Hadley Wickham.
+
+4.  New function grid.ls() for listing grob trees and viewport trees
+    (including both grob trees and viewport trees interlaced).
+
+    Useful for exploring current grob/viewport tree, explaining
+    grob/viewport trees, and programming on or debugging 
+    grob/viewport trees.
+
+
+Changes from grid_2.4.0 to grid_2.5.0:
+------------------------------------
+
+1.  Added 'open' argument to grid.curve().  This allows, for example,
+    filling the segment of a circle.
+
+2.  Fixed bug in arrow() function:  segfault produced if either 
+    'ends' or 'type' argument are given as NULL.  Thanks to
+    Sebastien Luque for the report.
+
+
 Changes from grid_2.3.0 to grid_2.4.0:
 ------------------------------------
 

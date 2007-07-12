@@ -1,4 +1,5 @@
-load <- function (file, envir = parent.frame())
+load <-
+    function (file, envir = parent.frame())
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
@@ -104,7 +105,7 @@ sys.load.image <- function(name, quiet) {
     if (file.exists(name)) {
         load(name, envir = .GlobalEnv)
         if (! quiet)
-	    cat(gettext("[Previously saved workspace restored]\n\n"))
+	    message("[Previously saved workspace restored]", "\n")
     }
 }
 
@@ -114,4 +115,16 @@ sys.save.image <- function(name)
     ## connection.
     closeAllConnections()
     save.image(name)
+}
+
+findPackageEnv <- function(info)
+{
+    if(info %in% search()) return(as.environment(info))
+    message(gettextf("Attempting to load the environment '%s'", info),
+            domain = NA)
+    pkg <- substr(info, 9, 1000)
+    if(require(pkg, character.only=TRUE, quietly = TRUE))
+        return(as.environment(info))
+    message("not found: using .GlobalEnv instead")
+    return(.GlobalEnv)
 }

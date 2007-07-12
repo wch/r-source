@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
 "PO-Revision-Date: 2005-11-05 16:50-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -27,6 +27,72 @@ msgstr "não é possível especificar o comprimento de array Tcl"
 
 msgid "Tcl package '%s' not found"
 msgstr "pacote Tcl '%s' não encontrado"
+
+msgid "The tkGUI is not available under Windows"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Demos"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Source R code"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "Save workspace"
+msgstr ""
+
+msgid "Don't save workspace"
+msgstr ""
+
+msgid "t test"
+msgstr ""
+
+msgid "Density"
+msgstr ""
+
+msgid "R FAQ"
+msgstr ""
+
+msgid "Load"
+msgstr ""
+
+msgid "Go get them!"
+msgstr ""
+
+msgid "Load packages"
+msgstr ""
+
+msgid "Install packages from CRAN"
+msgstr ""
+
+msgid "Help topic:"
+msgstr ""
+
+msgid "Manuals in PDF format"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
 
 #, fuzzy
 msgid "Tcl/Tk support is not available on this system"

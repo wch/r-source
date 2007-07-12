@@ -22,7 +22,7 @@ convolve <- function(x, y, conj=TRUE, type=c("circular","open","filter")) {
         x <- c(rep.int(0, n1), x)
         n <- length(y <- c(y, rep.int(0, n - 1)))# n = nx+ny-1
     }
-    x <- fft(fft(x)* (if(conj)Conj(fft(y)) else fft(y)), inv=TRUE)
+    x <- fft(fft(x)* (if(conj)Conj(fft(y)) else fft(y)), inverse=TRUE)
     if(type == "filter")
         (if(Real) Re(x) else x)[-c(1:n1, (n-n1+1):n)]/n
     else

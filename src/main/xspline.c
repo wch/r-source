@@ -439,7 +439,7 @@ compute_open_spline(int n, double *x, double *y, double *s,
 		    GEDevDesc *dd)
 {
   int       k;
-  float     step;
+  float     step = 0.0 /* -Wall */;
   double px[4];
   double py[4];
   double ps[4]={0.,0.,0.,0.};

@@ -206,8 +206,8 @@ Ops.unit <- function(e1, e2) {
          domain = NA)
   if (.Generic == "*")
     # can only multiply a unit by a scalar
-    if (nchar(.Method[1])) {
-      if (nchar(.Method[2]))
+    if (nzchar(.Method[1])) {
+      if (nzchar(.Method[2]))
         stop("Only one operand may be a unit")
       else if (is.numeric(e2))
         # NOTE that we always put the scalar first
@@ -224,7 +224,7 @@ Ops.unit <- function(e1, e2) {
     }
   else
     # Check that both arguments are units
-    if (nchar(.Method[1]) && nchar(.Method[2]))
+    if (nzchar(.Method[1]) && nzchar(.Method[2]))
       unit.arithmetic(.Generic, e1, e2)
     else
       stop("Both operands must be units")

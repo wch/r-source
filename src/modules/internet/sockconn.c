@@ -166,7 +166,8 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
     return R_SockWrite(this->fd, ptr, size * nitems)/size;
 }
 
-Rconnection in_R_newsock(char *host, int port, int server, char *mode)
+Rconnection in_R_newsock(const char *host, int port, int server, 
+			 const char * const mode)
 {
     Rconnection new;
 

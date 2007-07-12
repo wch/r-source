@@ -226,8 +226,8 @@ static R_CallMethodDef callMethods [] = {
      * using Patefield's algorithm.
      */
     CALLDEF(R_r2dtable, 3),
-
-    CALLDEF(R_shortRowNames, 1),
+    CALLDEF(R_shortRowNames, 2),
+    CALLDEF(R_copyDFattr, 2),
 
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
@@ -247,7 +247,6 @@ static R_CallMethodDef callMethods [] = {
     /* lazy loading support */
     CALLDEF(R_getVarsFromFrame, 3),
     CALLDEF(R_lazyLoadDBinsertValue, 5),
-    CALLDEF(R_lazyLoadDBfetch, 4),
     CALLDEF(R_lazyLoadDBflush, 1),
 
 #ifdef BYTECODE

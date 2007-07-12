@@ -2,14 +2,15 @@
 \alias{col}
 \title{Column Indexes}
 \description{
-  Returns a matrix of integers indicating their column number in the
-  matrix.
+  Returns a matrix of integers indicating their column number in a
+  matrix-like object.
 }
 \usage{
 col(x, as.factor = FALSE)
 }
 \arguments{
-  \item{x}{a matrix.}
+  \item{x}{a matrix-like object, that is one with a two-dimensional
+    \code{dim}.} 
   \item{as.factor}{a logical value indicating whether the value should
     be returned as a factor rather than as numeric.}
 }
@@ -31,7 +32,7 @@ ma <- matrix(1:12, 3, 4)
 ma[row(ma) == col(ma) + 1]
 
 # create an identity 5-by-5 matrix
-x <- matrix(0, nr = 5, nc = 5)
+x <- matrix(0, nrow = 5, ncol = 5)
 x[row(x) == col(x)] <- 1
 }
 \keyword{array}

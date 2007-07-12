@@ -2,11 +2,11 @@ print <- function(x, ...) UseMethod("print")
 
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
-                          print.gap = NULL, right = FALSE, max = NULL, 
+                          print.gap = NULL, right = FALSE, max = NULL,
                           useSource = TRUE, ...)
 {
     noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
-	missing(print.gap) && missing(right) && missing(max) && 
+	missing(print.gap) && missing(right) && missing(max) &&
 	missing(useSource) && length(list(...)) == 0
     .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
 			    useSource, noOpt))
@@ -28,8 +28,9 @@ noquote <- function(obj) {
     obj
 }
 
-as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
-c.noquote <- function(..., recursive = FALSE) structure(NextMethod(...), class = "noquote")
+as.matrix.noquote <- function(x, ...) noquote(NextMethod("as.matrix", x))
+c.noquote <- function(..., recursive = FALSE)
+    structure(NextMethod(...), class = "noquote")
 
 "[.noquote" <- function (x, ...) {
     attr <- attributes(x)
@@ -61,7 +62,10 @@ print.listof <- function(x, ...)
     invisible(x)
 }
 
+`[.listof` <- `[.AsIs`
+
 ## used for version:
 print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
 
+`[.simple.list` <- `[.listof`

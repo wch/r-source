@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
-"PO-Revision-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2007-05-25 12:19\n"
+"PO-Revision-Date: 2007-05-25 12:19\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -166,6 +166,9 @@ msgstr ""
 "the method for function “%s” and signature %s is sealed and cannot be re-"
 "defined"
 
+msgid "argument in method definition changed from (%s) to (%s)"
+msgstr "argument in method definition changed from (%s) to (%s)"
+
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
 "function"
@@ -213,11 +216,11 @@ msgstr "no method defined for function “%s” and signature %s"
 msgid "No method found for signature %s"
 msgstr "No method found for signature %s"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "signature must be a vector of classes or an environment"
-
 msgid "\"%s\" has no methods defined"
 msgstr "“%s” has no methods defined"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr "signature must be a vector of classes or an environment"
 
 msgid "no unique method corresponding to this signature"
 msgstr "no unique method corresponding to this signature"
@@ -236,13 +239,6 @@ msgid ""
 msgstr ""
 "first argument should be the name(s) of generic functions (got object of "
 "class “%s”)"
-
-msgid ""
-"The special case of printTo=FALSE only works when a single generic function "
-"is specified"
-msgstr ""
-"The special case of printTo=FALSE only works when a single generic function "
-"is specified"
 
 msgid ""
 "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -1090,6 +1086,15 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr "invalid index for function argument"
 
+msgid "Need a definition for the method here"
+msgstr "Need a definition for the method here"
+
+msgid "Skeleton of method written to"
+msgstr "Skeleton of method written to"
+
+msgid "connection"
+msgstr "connection"
+
 msgid ""
 "Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
 "\"%s\""
@@ -1120,13 +1125,14 @@ msgstr "Invalid or unset methods table in generic function \""
 msgid "Trying to find a methods table in a non-generic function"
 msgstr "Trying to find a methods table in a non-generic function"
 
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr "Ambiguous method selection for “%s”, target “%s”"
+
 msgid ""
-"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
-"signatures shown will be used)\n"
+"(the first of the signatures shown will be used)\n"
 "%s"
 msgstr ""
-"Ambiguous method selection for “%s”, target “%s” (the first of the "
-"signatures shown will be used)\n"
+"(the first of the signatures shown will be used)\n"
 "%s"
 
 msgid "found"
@@ -1156,8 +1162,8 @@ msgstr "Methods list for generic \""
 msgid "\" not found"
 msgstr "\" not found"
 
-msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
-msgstr "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+msgstr ".UsingMethodsTables: ‘onOff’ is not TRUE or FALSE"
 
 msgid "Failed to find expected group generic function:"
 msgstr "Failed to find expected group generic function:"
@@ -1233,6 +1239,9 @@ msgstr ""
 
 msgid "argument 'what' should be the name of a function"
 msgstr "argument ‘what’ should be the name of a function"
+
+msgid "Tracing the internal function \"%s\" is not allowed"
+msgstr "Tracing the internal function “%s” is not allowed"
 
 msgid ".TraceWithMethods: after computing what, whereF"
 msgstr ".TraceWithMethods: after computing what, whereF"

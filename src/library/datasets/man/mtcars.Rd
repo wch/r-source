@@ -31,6 +31,7 @@
   \emph{Biometrics}, \bold{37}, 391--411.
 }
 \examples{
+require(graphics)
 pairs(mtcars, main = "mtcars data")
 coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
        panel = panel.smooth, rows = 1)

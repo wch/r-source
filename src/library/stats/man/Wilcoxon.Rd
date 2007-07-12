@@ -75,11 +75,13 @@ rwilcox(nn, m, n)
   \emph{one-sample} Wilcoxon signed rank statistic.
 }
 \examples{
+require(graphics)
+
 x <- -1:(4*6 + 1)
 fx <- dwilcox(x, 4, 6)
 Fx <- pwilcox(x, 4, 6)
 
-layout(rbind(1,2),width=1,heights=c(3,2))
+layout(rbind(1,2), widths=1, heights=c(3,2))
 plot(x, fx,type='h', col="violet",
      main= "Probabilities (density) of Wilcoxon-Statist.(n=6,m=4)")
 plot(x, Fx,type="s", col="blue",

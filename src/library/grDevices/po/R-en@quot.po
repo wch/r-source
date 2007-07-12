@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:17\n"
+"PO-Revision-Date: 2007-05-25 12:17\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -90,6 +90,9 @@ msgstr "‘to.ref.white’ disagrees with definition of"
 msgid "color spaces use different reference whites."
 msgstr "color spaces use different reference whites."
 
+msgid "'name'must be a character vector"
+msgstr "'name'must be a character vector"
+
 msgid "cannot shut down device 1 (the null device)"
 msgstr "cannot shut down device 1 (the null device)"
 
@@ -122,6 +125,9 @@ msgstr "dev.control() called without an open graphics device"
 
 msgid "argument is missing with no default"
 msgstr "argument is missing with no default"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() called without an open graphics device"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "invalid arguments in ‘%s’ (need named args)"
@@ -248,6 +254,9 @@ msgstr "invalid arguments in quartzFonts (must be font names)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "invalid arguments in quartzFonts (need named args)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "‘res’ must be specified unless ‘units = “px”’"
 
 msgid "invalid X11 font specification:"
 msgstr "invalid X11 font specification:"

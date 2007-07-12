@@ -7,8 +7,9 @@ geterrmessage()
 \alias{stop}
 \alias{geterrmessage}
 \arguments{
-  \item{\dots}{character vectors (which are pasted together with no
-    separator), a condition object, or \code{NULL}.}
+  \item{\dots}{zero or more objects which can be coerced to character
+    (and which are pasted together with no separator) or a single
+    condition object.}
   \item{call.}{logical, indicating if the call should become part of the
     error message.}
   \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
@@ -38,7 +39,8 @@ geterrmessage()
   Errors will be truncated to \code{getOption("warning.length")}
   characters, default 1000.
 
-  An attempt is made to coerce other types of inputs to character vectors.
+  If a condition object is supplied it should be the only argument, and
+  further arguments will be ignored, with a warning.
 }
 \value{
   \code{geterrmessage} gives the last error message, as a character string

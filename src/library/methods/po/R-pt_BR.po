@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2007-05-25 12:19\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -164,6 +164,10 @@ msgstr ""
 "o método para a função '%s' e assinatura %s está selado e não pode ser "
 "redefinido"
 
+#, fuzzy
+msgid "argument in method definition changed from (%s) to (%s)"
+msgstr "argumentos nã definição mudaram de (%s) para (%s)"
+
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
 "function"
@@ -220,12 +224,12 @@ msgstr "nenhum método definido para a função '%s' e assinatura %s"
 msgid "No method found for signature %s"
 msgstr "nenhum método encontrado para a genérica '%s'"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "assinatura deve ser um vetor de classes ou um ambiente"
-
 #, fuzzy
 msgid "\"%s\" has no methods defined"
 msgstr "'%s' não tem métodos definidos"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr "assinatura deve ser um vetor de classes ou um ambiente"
 
 msgid "no unique method corresponding to this signature"
 msgstr "nenhum método único correspondente a essa assinatura"
@@ -245,11 +249,6 @@ msgid ""
 msgstr ""
 "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
 "especificado objeto de classe \"%s\""
-
-msgid ""
-"The special case of printTo=FALSE only works when a single generic function "
-"is specified"
-msgstr ""
 
 msgid ""
 "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -1054,6 +1053,15 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr ""
 
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
+
 msgid ""
 "Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
 "\"%s\""
@@ -1091,9 +1099,11 @@ msgstr ""
 "tentando parear com uma assinatura de método um objeto (de classe \"%s\") "
 "que não é uma função genérica"
 
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr ""
+
 msgid ""
-"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
-"signatures shown will be used)\n"
+"(the first of the signatures shown will be used)\n"
 "%s"
 msgstr ""
 
@@ -1125,7 +1135,7 @@ msgstr "nenhum método encontrado para a genérica '%s'"
 msgid "\" not found"
 msgstr ""
 
-msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
 msgstr ""
 
 msgid "Failed to find expected group generic function:"
@@ -1193,6 +1203,9 @@ msgid ""
 msgstr ""
 
 msgid "argument 'what' should be the name of a function"
+msgstr ""
+
+msgid "Tracing the internal function \"%s\" is not allowed"
 msgstr ""
 
 msgid ".TraceWithMethods: after computing what, whereF"

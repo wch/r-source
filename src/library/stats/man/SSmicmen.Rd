@@ -41,6 +41,8 @@ fm2 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
            subset = state == "treated")
 summary(fm2)
 \dontshow{
+require(graphics)
+
   xx <- seq(0, 5, len = 101)
   yy <- 5 * xx/(1+xx)
   par(mar = c(0, 0, 3.5, 0))

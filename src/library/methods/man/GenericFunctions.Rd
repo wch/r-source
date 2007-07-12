@@ -263,6 +263,7 @@ callGeneric(\dots)
   \code{\link{showMethods}}
 }
 \examples{
+require(stats) # for lm
 
 ## get the function "myFun" -- throw an error if 0 or > 1 versions visible:
 findFuncStrict <- function(fName) {

@@ -186,7 +186,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             PVAL <-
                 switch(alternative,
                        less = pnhyper(x, or),
-                       greater = pnhyper(x, or, upper = TRUE),
+                       greater = pnhyper(x, or, upper.tail = TRUE),
                        two.sided = {
                            if(or == 0)
                                as.numeric(x == lo)
@@ -240,14 +240,14 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                 if(x == lo)
                     return(0)
 
-                p <- pnhyper(x, 1, upper = TRUE)
+                p <- pnhyper(x, 1, upper.tail = TRUE)
                 if(p > alpha)
                     uniroot(function(t)
-                            pnhyper(x, t, upper = TRUE) - alpha,
+                            pnhyper(x, t, upper.tail = TRUE) - alpha,
                             c(0, 1))$root
                 else if(p < alpha)
                     1 / uniroot(function(t)
-                                pnhyper(x, 1/t, upper = TRUE) - alpha,
+                                pnhyper(x, 1/t, upper.tail = TRUE) - alpha,
                                 c(.Machine$double.eps, 1))$root
                 else
                     1

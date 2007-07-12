@@ -65,13 +65,13 @@ quantile.default <-
                          ifelse(h == 1, x[j+3], (1-h)*x[j+2] + h*x[j+3]))
         }
     } else {
-	qs <- rep(as.numeric(NA), np)
+	qs <- rep(NA_real_, np)
     }
     if(names && np > 0) {
 	dig <- max(2, getOption("digits"))
 	names(qs) <- paste(## formatC is slow for long probs
 			   if(np < 100)
-			   formatC(100*probs, format="fg", wid = 1, digits=dig)
+			   formatC(100*probs, format="fg", width = 1, digits=dig)
 			   else format(100 * probs, trim=TRUE, digits=dig),
 			   "%", sep = "")
     }

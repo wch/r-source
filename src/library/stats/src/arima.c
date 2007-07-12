@@ -42,7 +42,7 @@ extern double atanh(double x);
 /* y vector length n of observations
    Z vector length p for observation equation y_t = Za_t +  eps_t
    a vector length p of initial state
-   P p x p matrix for initial state uncertainty (contempareneous)
+   P p x p matrix for initial state uncertainty (contemparaneous)
    T  p x p transition matrix
    V  p x p = RQR'
    h = var(eps_t)
@@ -715,7 +715,7 @@ SEXP
 ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
 	  SEXP sncond, SEXP giveResid)
 {
-    SEXP res, nres, sResid = R_NilValue;
+    SEXP res, sResid = R_NilValue;
     double ssq = 0.0, *y = REAL(sy), tmp;
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *w, *resid;
     int n = LENGTH(sy), *arma = INTEGER(sarma), p = LENGTH(sPhi), 
@@ -748,16 +748,13 @@ ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
     }
     if (useResid) {
 	PROTECT(res = allocVector(VECSXP, 2));
-	SET_VECTOR_ELT(res, 0, nres = allocVector(REALSXP, 1));
-	REAL(nres)[0] = ssq / (double) (nu);
+	SET_VECTOR_ELT(res, 0, ScalarReal(ssq / (double) (nu)));
 	SET_VECTOR_ELT(res, 1, sResid);
 	UNPROTECT(2);
 	return res;
     } else {
-	nres = allocVector(REALSXP, 1);
-	REAL(nres)[0] = ssq / (double) (nu);
 	UNPROTECT(1);
-	return nres;
+	return ScalarReal(ssq / (double) (nu));
     }
 }
 

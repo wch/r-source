@@ -3,7 +3,7 @@ dput <-
              control = c("keepNA", "keepInteger", "showAttributes"))
 {
     if(is.character(file))
-        if(nchar(file) > 0) {
+        if(nzchar(file)) {
             file <- file(file, "wt")
             on.exit(close(file))
         } else file <- stdout()

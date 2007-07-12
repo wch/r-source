@@ -54,7 +54,7 @@ power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
 \examples{
  power.t.test(n = 20, delta = 1)
  power.t.test(power = .90, delta = 1)
- power.t.test(power = .90, delta = 1, alt = "one.sided")
+ power.t.test(power = .90, delta = 1, alternative = "one.sided")
 }
 \keyword{htest}
 

@@ -2,6 +2,7 @@
 \alias{quit}
 \alias{q}
 \alias{.Last}
+\alias{.Last.sys}
 \title{Terminate an R Session}
 \usage{
 quit(save = "default", status = 0, runLast = TRUE)
@@ -33,10 +34,12 @@ quit(save = "default", status = 0, runLast = TRUE)
     is executed if it exists and \code{runLast} is true. If in
     interactive use there are errors in
     the \code{.Last} function, control will be returned to the command
-    prompt, so do test the function thoroughly.
+    prompt, so do test the function thoroughly.  There is a system
+    analogue, \code{.Last.sys()}, which is run after \code{.Last()}
+    if \code{runLast} is true.
 
     Some error statuses are used by \R itself.  The default error
-    handler for non-interactive effectively calls \code{q("no", 1,
+    handler for non-interactive use effectively calls \code{q("no", 1,
       FALSE)} and returns error code 1.  Error status 2 is used for \R
     \sQuote{suicide}, that is a catastrophic failure, and other small
     numbers are used by specific ports for initialization failures.  It

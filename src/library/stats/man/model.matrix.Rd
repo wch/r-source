@@ -80,7 +80,7 @@ model.matrix(object, \dots)
 }
 \examples{
 ff <- log(Volume) ~ log(Height) + log(Girth)
-str(m <- model.frame(ff, trees))
+utils::str(m <- model.frame(ff, trees))
 mat <- model.matrix(ff, m)
 
 dd <- data.frame(a = gl(3,4), b = gl(4,1,12))# balanced 2-way

@@ -6,4 +6,4 @@ stackloss <- data.frame(
 )
 ##- These are for S compatibility:
 stack.loss <- stackloss[["stack.loss"]]
-stack.x    <- as.matrix(stackloss[,-4])
+stack.x    <- as.matrix(stackloss[-4])

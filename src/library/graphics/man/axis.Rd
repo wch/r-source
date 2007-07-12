@@ -20,9 +20,10 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a
     character or expression vector of labels to be placed at the
-    tickpoints. If this is specified as a character or expression
-    vector, \code{at} should be supplied and they should be the same
-    length.}
+    tickpoints.  (Other objects are coerced by \code{\link{as.graphicsAnnot}}.)
+    If this is not logical, \code{at} should also be supplied and of the
+    same length.  If \code{labels} is of length zero after coercion,
+    it has the same effect as supplying \code{TRUE}.}
   \item{tick}{a logical value specifying whether tickmarks and an axis line
     should be drawn}.
   \item{line}{the number of lines into the margin which the axis will
@@ -129,6 +130,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats) # for rnorm
 plot(1:4, rnorm(4), axes = FALSE)
 axis(1, 1:4, LETTERS[1:4])
 axis(2)

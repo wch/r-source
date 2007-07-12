@@ -43,6 +43,8 @@ getInitial(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
 fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
 summary(fm1)
 \dontshow{
+  require(graphics)
+
   xx <- seq(0, 5, len = 101)
   y1 <- 3.5 * exp(-4*xx)
   y2 <- 1.5 * exp(-xx)

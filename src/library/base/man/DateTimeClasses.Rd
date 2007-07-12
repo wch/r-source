@@ -58,7 +58,7 @@
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{time}{date-time objects}
   \item{time1, time2}{date-time objects or character vectors.  (Character
-    vectors are converted by \code{\link{as.POSIXct}}.}
+    vectors are converted by \code{\link{as.POSIXct}}.)}
   \item{z}{a numeric vector (in seconds) \emph{or} an object of class
     \code{"\link{difftime}"}.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
@@ -78,7 +78,7 @@
     \item{\code{year}}{Years since 1900.}
     \item{\code{wday}}{0--6 day of the week, starting on Sunday.}
     \item{\code{yday}}{0--365: day of the year.}
-    \item{\code{isdst}}{Daylight savings time flag. Positive if in
+    \item{\code{isdst}}{Daylight savings time flag.  Positive if in
       force, zero if not, negative if unknown.}
   }
   The classes correspond to the ANSI C constructs of \dQuote{calendar
@@ -92,8 +92,9 @@
   is used to allow operations such as subtraction to mix the two classes.
 
   Logical comparisons and limited arithmetic are available for both classes.
-  One can add or subtract a number of seconds or a
-  \code{\link{difftime}} object from a date-time object,
+  One can add or subtract a number of seconds
+  %or a \code{\link{difftime}} object
+  from a date-time object,
   but not add two date-time objects.  Subtraction of two date-time objects
   is equivalent to using \code{\link{difftime}}.  Be aware
   that \code{"POSIXlt"} objects will be interpreted as being in the
@@ -123,7 +124,10 @@
   ranges we use our own C code.  This uses the offset from GMT in use
   in the timezone in one of 1970 to 1978 (chosen so that the likely DST
   transition days are Sundays), and uses the alternate (daylight-saving)
-  timezone only if \code{isdst} is positive.
+  timezone only if \code{isdst} is positive.  (There is no reason to
+  suppose that the DST rules will remain the same in the future, and
+  indeed the US legislated in 2005 to change its rules as from 2007, with a
+  possible future reversion.)
 
   It seems that some systems use leap seconds but most do not. This is
   detected and corrected for at build time, so all \code{"POSIXct"}

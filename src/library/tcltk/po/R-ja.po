@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-22 12:35\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
 "PO-Revision-Date: 2006-09-22 00:41+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -22,6 +22,72 @@ msgstr "Tcl array の長さを設定することは出来ません"
 
 msgid "Tcl package '%s' not found"
 msgstr "Tcl パッケージ '%s' が見つかりません"
+
+msgid "The tkGUI is not available under Windows"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Demos"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Source R code"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "Save workspace"
+msgstr ""
+
+msgid "Don't save workspace"
+msgstr ""
+
+msgid "t test"
+msgstr ""
+
+msgid "Density"
+msgstr ""
+
+msgid "R FAQ"
+msgstr ""
+
+msgid "Load"
+msgstr ""
+
+msgid "Go get them!"
+msgstr ""
+
+msgid "Load packages"
+msgstr ""
+
+msgid "Install packages from CRAN"
+msgstr ""
+
+msgid "Help topic:"
+msgstr ""
+
+msgid "Manuals in PDF format"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Tcl/Tk サポートファイルはこのシステムでは利用できません"

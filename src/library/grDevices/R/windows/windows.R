@@ -53,25 +53,51 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                         restoreConsole, PACKAGE = "grDevices"))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
+                units = "px",
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
+{
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    if(units != "px" && is.na(res))
+        stop("'res' must be specified unless 'units = \"px\"'")
+    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     invisible(.External("devga", paste("png:", filename, sep=""),
                         width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
                         as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
                         restoreConsole, PACKAGE = "grDevices"))
+}
 
 bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
+                units = "px",
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
+{
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    if(units != "px" && is.na(res))
+        stop("'res' must be specified unless 'units = \"px\"'")
+    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     invisible(.External("devga", paste("bmp:", filename, sep=""),
                         width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
                         as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
                         restoreConsole, PACKAGE = "grDevices"))
+}
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
-                 pointsize = 12, quality=75, bg = "white", res = NA, restoreConsole = TRUE)
+                 units = "px",
+                 pointsize = 12, quality=75, bg = "white", res = NA,
+                 restoreConsole = TRUE)
+{
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    if(units != "px" && is.na(res))
+        stop("'res' must be specified unless 'units = \"px\"'")
+    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     invisible(.External("devga", paste("jpeg:", quality, ":",filename, sep=""),
                         width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA, restoreConsole,
+                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
+                        restoreConsole,
                         PACKAGE = "grDevices"))
+}
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)
 {
@@ -96,7 +122,7 @@ savePlot <- function(filename = "Rplot",
     devname <- names(devlist)[devcur]
     if(devname != "windows") stop("can only copy from 'windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
-    if(nchar(filename) > 0) filename <- paste(filename, type, sep=".")
+    if(nzchar(filename)) filename <- paste(filename, type, sep=".")
     invisible(.External("savePlot", device, filename, type, restoreConsole,
                         PACKAGE = "grDevices"))
 }

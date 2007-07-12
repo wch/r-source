@@ -26,7 +26,7 @@ cutree(tree, k = NULL, h = NULL)
 }
 \value{
   \code{cutree} returns a vector with group memberships if \code{k} or
-  \code{h} are scalar, otherwise a matrix with group meberships is returned
+  \code{h} are scalar, otherwise a matrix with group memberships is returned
   where each column corresponds to the elements of \code{k} or \code{h},
   respectively (which are also used as column names).
 }

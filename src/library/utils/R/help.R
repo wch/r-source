@@ -111,14 +111,15 @@ function(x, ...)
                             indent = 22)
             writeLines(c(strwrap(msg), "", paste(" ", txt), ""))
             if(interactive()) {
-                fp <- file.path(paths, "Meta", "hsearch.rds")
+                fp <- file.path(paths, "Meta", "Rd.rds")
                 tp <- basename(p)
                 titles <- tp
-                for (i in seq(along = fp)) {
-                    tmp <- try(.readRDS(fp[i])[[1]])
+                if(type == "html") tp <- tools::file_path_sans_ext(tp)
+                for (i in seq_along(fp)) {
+                    tmp <- try(.readRDS(fp[i]))
                     titles[i] <- if(inherits(tmp, "try-error"))
                         "unknown title" else
-                    tmp[tmp[,"name"] == tp[i], "title"]
+                    tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
                 }
                 txt <- paste(titles, " {", basename(paths), "}", sep="")
                 ## FIXME: use html page for HTML help.
@@ -163,12 +164,16 @@ function(x, ...)
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
-            if(file.exists(zfile))
+            if(file.exists(zfile)) {
+                first <- readLines(zfile, n = 1)
+                enc <- if(length(grep("\\(.*\\)$", first)) > 0)
+                    sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
+                if(enc == "utf8") enc <- "UTF-8"
                 file.show(zfile,
                           title = gettextf("R Help on '%s'", topic),
                           delete.file = (zfile != file),
-                          pager = attr(x, "pager"))
-            else
+                          pager = attr(x, "pager"), encoding = enc)
+            } else
                 stop(gettextf("No text help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
         }
         else if(type == "latex") {

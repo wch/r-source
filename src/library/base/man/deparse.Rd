@@ -7,7 +7,7 @@
 \usage{
 deparse(expr, width.cutoff = 60,
         backtick = mode(expr) \%in\% c("call", "expression", "("),
-        control = "showAttributes")
+        control = c("keepInteger", "showAttributes", "keepNA") )
 }
 \arguments{
   \item{expr}{any \R expression.}
@@ -36,8 +36,16 @@ deparse(expr, width.cutoff = 60,
 
   Using \code{control = "all"} comes closest to making \code{deparse()}
   an inverse of \code{parse()}.  However, not all objects are
-  deparseable even with this option and a warning will be issued if the
+  deparse-able even with this option and a warning will be issued if the
   function recognizes that it is being asked to do the impossible.
+
+  Numeric and complex vectors are converted using 15 significant digits:
+  see \code{\link{as.character}} for more details.
+
+  \code{width.cutoff} is a lower bound for the line lengths: deparsing a
+  line proceeds until at least \code{width.cutoff} \emph{bytes} have
+  been output and e.g. \code{arg = value} expressions will not be split
+  across lines.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
@@ -57,7 +65,8 @@ deparse(expr, width.cutoff = 60,
   \code{Quotes} for quoting conventions, including backticks.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
+
 deparse(args(lm))
 deparse(args(lm), width = 500)
 myplot <-

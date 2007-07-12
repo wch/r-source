@@ -8,15 +8,23 @@ warnings <- function(...)
 
 print.warnings <- function(x, ...)
 {
-    if(n<- length(x)) {
+    if(n <- length(x)) {
         cat(ngettext(n, "Warning message:\n", "Warning messages:\n"))
-        names <- names(x)
-        for(i in 1:n) {
-            out <- if(n == 1) names[i] else paste(i,": ", names[i], sep="")
-            if(length(x[[i]])) {
-                temp <- deparse(x[[i]])
-                out <- paste(out, "in:", temp[1], if(length(temp) > 1) " ...")
-            }
+        msgs <- names(x)
+        for(i in seq_len(n)) {
+            ind <- if(n == 1) "" else paste(i, ": ", sep="")
+            out <- if(length(x[[i]])) {
+                ## deparse can overshoot cutoff
+                temp <- deparse(x[[i]], width.cutoff = 50)
+                ## Put on one line if narrow enough.
+                sm <- strsplit(msgs[i], "\n")[[1]]
+                nl <- if(nchar(ind, "w") + nchar(temp[1], "w") +
+                         nchar(sm[1], "w") <= 75)
+                    " " else "\n  "
+                paste(ind, "In ",
+                      temp[1], if(length(temp) > 1) " ...",
+                      " :", nl, msgs[i], sep = "")
+            } else paste(ind, msgs[i], sep = "")
             do.call("cat", c(list(out), attr(x, "dots"), fill=TRUE))
         }
     }

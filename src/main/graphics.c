@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *  Copyright (C) 2002--2005  The R Foundation
  *
@@ -299,7 +299,7 @@ static double yDevtoCharUnits(double y, DevDesc *dd)
     return yDevtoNDCUnits(y, dd)/(Rf_gpptr(dd)->cex * Rf_gpptr(dd)->yNDCPerChar);
 }
 
-static void BadUnitsError(char *where)
+static void BadUnitsError(const char *where)
 {
     error(_("bad units specified in %s, please report!"), where);
 }
@@ -1741,7 +1741,7 @@ static Rboolean validFigureMargins(DevDesc *dd)
 	    (Rf_gpptr(dd)->plt[2] < Rf_gpptr(dd)->plt[3]));
 }
 
-static void invalidError(char* message, DevDesc *dd)
+static void invalidError(const char *message, DevDesc *dd)
 {
     Rf_dpptr(dd)->currentFigure -= 1;
     if (Rf_dpptr(dd)->currentFigure < 1)
@@ -2811,7 +2811,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     int i;
     double *xx;
     double *yy;
-    char *vmaxsave = vmaxget();
+    void *vmaxsave = vmaxget();
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
@@ -2850,7 +2850,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
     int i;
     double *xx;
     double *yy;
-    char *vmaxsave = vmaxget();
+    void *vmaxsave = vmaxget();
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
     /*
@@ -2935,7 +2935,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 }
 
 /* Compute string width. */
-double GStrWidth(char *str, GUnit units, DevDesc *dd)
+double GStrWidth(const char *str, GUnit units, DevDesc *dd)
 {
     double w;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -2948,7 +2948,7 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
 
 /* Compute string height. */
 
-double GStrHeight(char *str, GUnit units, DevDesc *dd)
+double GStrHeight(const char *str, GUnit units, DevDesc *dd)
 {
     double h;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -2961,7 +2961,7 @@ double GStrHeight(char *str, GUnit units, DevDesc *dd)
 /* Draw text in a plot. */
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
-void GText(double x, double y, int coords, char *str,
+void GText(double x, double y, int coords, const char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -3199,8 +3199,8 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 
 
 /* Draw text in plot margins. */
-void GMtext(char *str, int side, double line, int outer, double at, int las,
-	    double yadj, DevDesc *dd)
+void GMtext(const char *str, int side, double line, int outer, double at,
+	    int las, double yadj, DevDesc *dd)
 {
 /* "las" gives the style of axis labels:
 	 0 = always parallel to the axis [= default],
@@ -3390,7 +3390,7 @@ void rgb2hsv(double r, double g, double b,
  */
 
 attribute_hidden
-char *DefaultPalette[] = {
+const char *DefaultPalette[] = {
     "black",
     "red",
     "green3",
@@ -4099,7 +4099,7 @@ static unsigned int digithex(int digit)
 
 
 /* String Comparison Ignoring Case and Squeezing Out Blanks */
-int StrMatch(char *s, char *t)
+int StrMatch(const char *s, const char *t)
 {
     for(;;) {
 	if(*s == '\0' && *t == '\0') {
@@ -4121,7 +4121,7 @@ int StrMatch(char *s, char *t)
 /*
  * Paul:  Add ability to handle #RRGGBBAA
  */
-unsigned int rgb2col(char *rgb)
+unsigned int rgb2col(const char *rgb)
 {
     unsigned int r=0, g=0, b=0, a=0; /* -Wall */
     if(rgb[0] != '#')
@@ -4145,7 +4145,7 @@ unsigned int rgb2col(char *rgb)
 
 /* External Color Name to Internal Color Code */
 
-unsigned int attribute_hidden name2col(char *nm)
+unsigned int attribute_hidden name2col(const char *nm)
 {
     int i;
     if(strcmp(nm, "NA") == 0 || strcmp(nm, "transparent") == 0)
@@ -4174,7 +4174,7 @@ unsigned int attribute_hidden name2col(char *nm)
 
 /* Index (as string) to Internal Color Code */
 
-unsigned int attribute_hidden number2col(char *nm)
+unsigned int attribute_hidden number2col(const char *nm)
 {
     int indx;
     char *ptr;
@@ -4222,7 +4222,7 @@ attribute_hidden char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
 /* If this fails, create an #RRGGBB string */
 
 /* used in grid */
-char *col2name(unsigned int col)
+const char *col2name(unsigned int col)
 {
     int i;
 
@@ -4262,7 +4262,7 @@ char *col2name(unsigned int col)
 /* assumes that `s' is a name */
 
 /* used in grDevices */
-unsigned int str2col(char *s)
+unsigned int str2col(const char *s)
 {
     if(s[0] == '#') return rgb2col(s);
     else if(isdigit((int)s[0])) return number2col(s);
@@ -4391,7 +4391,7 @@ static int nlinetype = (sizeof(linetype)/sizeof(LineTYPE)-2);
 
 unsigned int LTYpar(SEXP value, int ind)
 {
-    char *p;
+    const char *p;
     int i, code, shift, digit, len;
     double rcode;
 
@@ -4441,29 +4441,21 @@ unsigned int LTYpar(SEXP value, int ind)
 
 SEXP LTYget(unsigned int lty)
 {
-    SEXP ans;
     int i, ndash;
     unsigned char dash[8];
     unsigned int l;
+    char cbuf[17]; /* 8 hex digits plus nul */
 
-    for (i = 0; linetype[i].name; i++) {
-	if(linetype[i].pattern == lty)
-	    return mkString(linetype[i].name);
-    }
+    for (i = 0; linetype[i].name; i++)
+	if(linetype[i].pattern == lty) return mkString(linetype[i].name);
 
     l = lty; ndash = 0;
     for (i = 0; i < 8 && l & 15; i++) {
-	dash[ndash++] = l&15;
+	dash[ndash++] = l & 15;
 	l = l >> 4;
     }
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, allocString(ndash));
-    for(i=0 ; i<ndash ; i++) {
-	CHAR(STRING_ELT(ans, 0))[i] = HexDigits[dash[i]];
-    }
-    CHAR(STRING_ELT(ans,0))[ndash] = '\0';
-    UNPROTECT(1);
-    return ans;
+    for(i = 0 ; i < ndash ; i++) cbuf[i] = HexDigits[dash[i]];
+    return mkString(cbuf);
 }
 
 /*
@@ -4505,24 +4497,34 @@ void DevNull(void) {}
 
 static int R_CurrentDevice = 0;
 static int R_NumDevices = 1;
+/* 
+   R_MaxDevices is defined in Rgraphics.h to be 64.  Slots are
+   initiialized to be NULL, and returned to NULL when a device is
+   removed.
+
+   Slot 0 is the null device, and slot 63 is keep empty as a sentinel
+   for over-allocation: if a driver fails to call
+   R_CheckDeviceAvailable and uses this slot the device it allocated
+   will be killed.
+
+   'active' means has been successfully opened and is not in the
+   process of being closed and destroyed.  We do this to allow for GUI
+   callbacks starting to kill a device whilst another is being killed.
+ */
 static DevDesc* R_Devices[R_MaxDevices];
-static int R_LastDeviceEntry = R_MaxDevices - 1;  /* used to catch creation
-						     of too many devices */
-static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
-						       LastDeivceEntry */
+static Rboolean active[R_MaxDevices];
 
 /* a dummy description to point to when there are no active devices */
 
 static DevDesc nullDevice;
 
-/* unused
-void devError(void)
-{
-    error("No graphics device is active -- "
-	  "SHOULDN'T happen anymore -- please report");
-}
-*/
+/* In many cases this is used to mean that the current device is
+   the null device, and in others to mean that there is no open device.
+   The two condiions are currently the same, as no way is provided to
+   select the null device (selectDevice(0) immediately opens a device).
 
+   But watch out if you intend to change the logic of any of this.
+*/
 int NoDevices(void)
 {
     return (R_NumDevices == 1 || R_CurrentDevice == 0);
@@ -4542,14 +4544,38 @@ DevDesc* CurrentDevice(void)
      * If there is one, start it up. */
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_BaseEnv);
-	if (isString(defdev) && length(defdev) > 0)
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	else if(TYPEOF(defdev) == CLOSXP) 
+	if (isString(defdev) && length(defdev) > 0) {
+	    SEXP devName = install(CHAR(STRING_ELT(defdev, 0)));
+	    /*  not clear where this should be evaluated, since
+		grDevices need not be in the search path.
+		So we look for it first.
+	    */
+	    defdev = findVar(devName, R_GlobalEnv);
+	    if(defdev != R_UnboundValue) {
+		PROTECT(defdev = lang1(devName));
+		eval(defdev, R_GlobalEnv);
+		UNPROTECT(1);
+	    } else {
+		/* Not globally visible: 
+		   try grDevices namespace if loaded.
+		   The option is unlikely to be set if it is not loaded.
+		*/
+		SEXP ns = findVarInFrame(R_NamespaceRegistry, 
+					 install("grDevices"));
+		if(ns != R_UnboundValue && 
+		   findVar(devName, ns) != R_UnboundValue) {
+		    PROTECT(defdev = lang1(devName));
+		    eval(defdev, ns);
+		    UNPROTECT(1);
+		} else
+		    error(_("no active or default device"));
+	    }
+	} else if(TYPEOF(defdev) == CLOSXP) {
 	    PROTECT(defdev = lang1(defdev));
-	else
+	    eval(defdev, R_GlobalEnv);
+	    UNPROTECT(1);
+	} else
 	    error(_("no active or default device"));
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
     }
     return R_Devices[R_CurrentDevice];
 }
@@ -4563,13 +4589,13 @@ DevDesc* GetDevice(int i)
 
 void R_CheckDeviceAvailable(void)
 {
-    if (R_NumDevices >= R_MaxRegularDevices)
+    if (R_NumDevices >= R_MaxDevices - 1)
 	error(_("too many open devices"));
 }
 
 Rboolean R_CheckDeviceAvailableBool(void)
 {
-    if (R_NumDevices >= R_MaxRegularDevices) return FALSE;
+    if (R_NumDevices >= R_MaxDevices - 1) return FALSE;
     else return TRUE;
 }
 
@@ -4579,8 +4605,11 @@ void attribute_hidden InitGraphics(void)
     SEXP s, t;
 
     R_Devices[0] = &nullDevice;
-    for (i = 1; i < R_MaxDevices; i++)
+    active[0] = TRUE;
+    for (i = 1; i < R_MaxDevices; i++) {
 	R_Devices[i] = NULL;
+	active[i] = FALSE;
+    }
 
     /* init .Device and .Devices */
     PROTECT(s = mkString("null device"));
@@ -4617,14 +4646,12 @@ int nextDevice(int from)
 	int i = from;
 	int nextDev = 0;
 	while ((i < (R_MaxDevices-1)) && (nextDev == 0))
-	    if (R_Devices[++i] != NULL)
-		nextDev = i;
+	    if (active[++i]) nextDev = i;
 	if (nextDev == 0) {
 	    /* start again from 1 */
 	    i = 0;
-	    while (nextDev == 0)
-		if (R_Devices[++i] != NULL)
-		    nextDev = i;
+	    while ((i < (R_MaxDevices-1)) && (nextDev == 0))
+		if (active[++i]) nextDev = i;
 	}
 	return nextDev;
     }
@@ -4639,14 +4666,12 @@ int prevDevice(int from)
 	int i = from;
 	int prevDev = 0;
 	while ((i > 1) && (prevDev == 0))
-	    if (R_Devices[--i] != NULL)
-		prevDev = i;
+	    if (active[--i]) prevDev = i;
 	if (prevDev == 0) {
 	    /* start again from R_MaxDevices */
 	    i = R_MaxDevices;
-	    while (prevDev == 0)
-		if (R_Devices[--i] != NULL)
-		    prevDev = i;
+	    while ((i > 1) && (prevDev == 0))
+		if (active[--i]) prevDev = i;
 	}
 	return prevDev;
     }
@@ -4682,14 +4707,15 @@ void addDevice(DevDesc *dd)
 	    s = CDR(s);
     }
     R_CurrentDevice = i;
-    R_NumDevices += 1;
+    R_NumDevices++;
     R_Devices[i] = dd;
+    active[i] = TRUE;
 
     GEregisterWithDevice((GEDevDesc*) dd);
     ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
 
     /* maintain .Devices (.Device has already been set) */
-    PROTECT(t = mkString(CHAR(STRING_ELT(getSymbolValue(".Device"), 0))));
+    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(".Device"), 0)));
     if (appnd)
 	SETCDR(s, CONS(t, R_NilValue));
     else
@@ -4705,7 +4731,7 @@ void addDevice(DevDesc *dd)
        then call killDevice here.  This ensures that the device gets a
        chance to deallocate its resources and the current active
        device is restored to a sane value. */
-    if (i == R_LastDeviceEntry) {
+    if (i == R_MaxDevices - 1) {
         killDevice(i);
         error(_("too many open devices"));
     }
@@ -4738,15 +4764,17 @@ int devNumber(DevDesc *dd)
 
 int selectDevice(int devNum)
 {
-    /* valid to select nullDevice */
-    if ((devNum >= 0) &&
-	(devNum < R_MaxDevices) &&
-	(R_Devices[devNum] != NULL)) {
-	DevDesc *oldd, *dd;
+    /* Valid to select nullDevice, but that will open a new device.
+       See ?dev.set.
+     */
+    if((devNum >= 0) && (devNum < R_MaxDevices) && 
+       (R_Devices[devNum] != NULL) && active[devNum]) 
+    {
+	DevDesc *dd;
 
 	if (!NoDevices()) {
-	    oldd = CurrentDevice();
-	    ((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc *) oldd)->dev);
+	    GEDevDesc *oldd = (GEDevDesc*) CurrentDevice();
+	    oldd->dev->deactivate(oldd->dev);
 	}
 
 	R_CurrentDevice = devNum;
@@ -4756,87 +4784,87 @@ int selectDevice(int devNum)
 		elt(getSymbolValue(".Devices"), devNum),
 		R_BaseEnv);
 
-	dd = CurrentDevice();
-	if (!NoDevices()) {
+	dd = CurrentDevice(); /* will start a device if current is null */
+	if (!NoDevices()) /* which it always will be */
 	    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-	}
 	return devNum;
     }
     else
 	return selectDevice(nextDevice(devNum));
 }
 
+/* historically the close was in the [kK]illDevices.
+   only use findNext= TRUE when shutting R dowm, and .Device[s] are not
+   updated.
+*/
 static
-void removeDevice(int devNum)
+void removeDevice(int devNum, Rboolean findNext)
 {
-    if ((devNum > 0) &&
-	(devNum < R_MaxDevices) &&
-	(R_Devices[devNum] != NULL)) {
+    /* Not vaild to remove nullDevice */
+    if((devNum > 0) && (devNum < R_MaxDevices) && 
+       (R_Devices[devNum] != NULL) && active[devNum]) 
+    {
 	int i;
 	SEXP s;
+	GEDevDesc *g = (GEDevDesc*) R_Devices[devNum];
 
-	GEdestroyDevDesc((GEDevDesc*) R_Devices[devNum]);
+	active[devNum] = FALSE; /* stops it being selected again */
+	R_NumDevices--;
 
-	R_Devices[devNum] = NULL;
-	R_NumDevices -= 1;
+	if(findNext) {
+	    /* maintain .Devices */
+	    PROTECT(s = getSymbolValue(".Devices"));
+	    for (i = 0; i < devNum; i++) s = CDR(s);
+	    SETCAR(s, mkString(""));
+	    UNPROTECT(1);
 
-	/* maintain .Devices */
-	PROTECT(s = getSymbolValue(".Devices"));
-	for (i=0; i<devNum; i++)
-	    s = CDR(s);
-	SETCAR(s, mkString(""));
-	UNPROTECT(1);
+	    /* determine new current device */
+	    if (devNum == R_CurrentDevice) {
+		R_CurrentDevice = nextDevice(R_CurrentDevice);
+		/* maintain .Device */
+		gsetVar(install(".Device"),
+			elt(getSymbolValue(".Devices"), R_CurrentDevice),
+			R_BaseEnv);
 
-	/* determine new current device */
-	if (devNum == R_CurrentDevice) {
-	    DevDesc *dd;
-
-	    R_CurrentDevice = nextDevice(R_CurrentDevice);
-
-	    /* maintain .Device */
-	    gsetVar(install(".Device"),
-		    elt(getSymbolValue(".Devices"),
-			R_CurrentDevice),
-		    R_BaseEnv);
-
-	    if (!NoDevices()) {
-		dd = CurrentDevice();
-		((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-		copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-		GReset(dd);
+		/* activate new current device */
+		if (R_CurrentDevice) {
+		    DevDesc *dd = CurrentDevice();
+		    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
+		    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
+		    GReset(dd);
+		}
 	    }
 	}
+	g->dev->close(g->dev);
+	GEdestroyDevDesc(g);
+	R_Devices[devNum] = NULL;
     }
 }
 
-
-
 void KillDevice(DevDesc *dd)
 {
-    ((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
-    removeDevice(deviceNumber(dd));
+    removeDevice(deviceNumber(dd), TRUE);
 }
 
 
 void killDevice(int devNum)
 {
-    if (!NoDevices() &&
-	(devNum > 0) &&
-	(devNum < R_MaxDevices)) {
-	DevDesc *dd = R_Devices[devNum];
-	if (dd != NULL) {
-	    ((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
-	    removeDevice(devNum);
-	}
-    }
+    removeDevice(devNum, TRUE);
 }
 
 
+/* Used by front-ends via R_CleanUp to shutdown all graphics devices
+   at the end of a session. Not the same as graphics.off(), and leaves
+   .Devices and .Device in an invalid state. */
 void KillAllDevices(void)
 {
-    /* don't try to close or remove the null device ! */
-    while (R_NumDevices > 1)
-	killDevice(R_CurrentDevice);
+    /* Avoid lots of activation followed by removal of devices
+       while (R_NumDevices > 1) killDevice(R_CurrentDevice);
+    */
+    int i;
+    for(i = R_MaxDevices-1; i > 0; i--) removeDevice(i, FALSE);
+    R_CurrentDevice = 0;  /* the null device, for tidyness */
+
     /* <FIXME> Disable this for now */
     /*
      * Free the font and encoding structures used by
@@ -4844,6 +4872,7 @@ void KillAllDevices(void)
      */
     /* freeType1Fonts();
        </FIXME>*/
+
     /* FIXME: There should really be a formal graphics finaliser
      * but this is a good proxy for now.
      */

@@ -2,6 +2,7 @@
 \title{General Tree Structures}
 \alias{dendrogram}% the class
 \alias{as.dendrogram}
+\alias{as.dendrogram.dendrogram}
 \alias{as.dendrogram.hclust}
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
@@ -41,7 +42,7 @@ as.dendrogram(object, \dots)
 
 \method{rev}{dendrogram}(x)
 
-\method{str}{dendrogram}(object, max.level = 0, digits.d = 3,
+\method{str}{dendrogram}(object, max.level = NA, digits.d = 3,
     give.attr = FALSE, wid = getOption("width"),
     nest.lev = 0, indent.str = "", stem = "--", \dots)
 
@@ -88,7 +89,7 @@ is.leaf(object)
   \item{h}{height at which the tree is cut.}
   \item{\dots, xlab, ylab, xaxt, yaxt}{graphical parameters, or arguments for
     other methods.}
-  \item{digits}{integer specifiying the precision for printing, see
+  \item{digits}{integer specifying the precision for printing, see
     \code{\link{print.default}}.}
   \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
     arguments to \code{str}, see \code{\link{str.default}()}.  Note that
@@ -168,6 +169,8 @@ is.leaf(object)
   for dendrograms.
 }
 \examples{
+require(graphics); require(utils)
+
 hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
 str(dend1)          # "str()" method

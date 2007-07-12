@@ -58,34 +58,28 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
-	@$(MAKE) Rfiles
+	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
+	$(MAKE) Rfiles
+
+
+Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES="methods,graphics,stats" LC_ALL=C $(R_EXE) --slave > /dev/null
+
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
-  $(top_builddir)/library/$(pkg)/R/all.rda
-
-$(top_builddir)/library/$(pkg)/R/$(pkg):
-	@touch $@
-
-$(top_builddir)/library/$(pkg)/R/all.rda: all.R
-# remove possibly outdated namespace metainfo.
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@echo "dumping R code in package '$(pkg)'"
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@echo "saveNamespaceImage(\"$(pkg)\", \"$@\")" | \
-	  R_DEFAULT_PACKAGES="graphics,stats,methods" LC_ALL=C \
-	  $(top_builddir)/bin/R --vanilla --slave
-	@$(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	-@rm -f all.R .RData
+	-@rm -f all.R 
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
-"PO-Revision-Date: 2006-12-05 20:21+0100\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-04-13 12:13+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,10 +29,10 @@ msgid "See help(\"Defunct\")"
 msgstr "Voir help(\"Defunct\")"
 
 msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.C' n'est pas nécessaire : veuillez l'éliminer"
 
 msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.For' n'est pas nécessaire : veuillez l'éliminer"
 
 msgid "'%s' is deprecated."
 msgstr "'%s' est obsolète."
@@ -113,6 +113,9 @@ msgstr "est requis par"
 
 msgid "(still attached)"
 msgstr "(toujours attaché)"
+
+msgid "namespace cannot be unloaded"
+msgstr "l'espace de noms e peut pas être déchargé"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "le motif d'expression régulière '[' est remplacé par '\\\\['"
@@ -258,6 +261,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> 'row.names' n'est PAS utilisé"
 
+msgid "row names contain missing values"
+msgstr "les noms de lignes contiennent des valeurs manquantes"
+
+msgid "duplicate row.names:"
+msgstr "'row.names' dupliqués :"
+
 msgid "arguments imply differing number of rows:"
 msgstr "les arguments impliquent des nombres de lignes différents :"
 
@@ -270,12 +279,6 @@ msgstr "les noms de lignes donnés ne sont pas de la bonne longueur"
 msgid "row names were found from a short variable and have been discarded"
 msgstr ""
 "les noms de lignes sont trouvés dans une variable courte et ont été éliminés"
-
-msgid "row names contain missing values"
-msgstr "les noms de lignes contiennent des valeurs manquantes"
-
-msgid "duplicate row.names:"
-msgstr "'row.names' dupliqués :"
 
 msgid "drop argument will be ignored"
 msgstr "l'argument 'drop' sera ignoré"
@@ -488,6 +491,15 @@ msgstr "non defini pour des objets \"POSIXct\""
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "non defini pour des objets \"POSIXlt\""
 
+msgid "'tim' is not character or numeric"
+msgstr "tim' n'est pas une chaîne de caractères ou une valeur numérique"
+
+msgid "need explicit units for numeric conversion"
+msgstr "unités explicites requises pour la conversion en valeur numérique"
+
+msgid "invalid units specified"
+msgstr "unités incorrectes"
+
 msgid "not defined for \"difftime\" objects"
 msgstr "non defini pour des objets \"difftime\""
 
@@ -522,6 +534,10 @@ msgstr "seules les diagonales des matrices peuvent être remplacées"
 
 msgid "replacement diagonal has wrong length"
 msgstr "la diagonale a une mauvaise longueur pour le remplacement"
+
+#, fuzzy
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr "'quote' doit être 'TRUE', 'FALSE' ou numérique"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -630,6 +646,9 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' doit être un de {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' ne peut contenir que des '0+- #'"
 
@@ -657,8 +676,15 @@ msgstr "valeur pour '"
 msgid "' not found"
 msgstr "' non trouvée"
 
+msgid "all arguments must be named"
+msgstr "tous les arguments doivent être nommés"
+
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' doit être une chaîne de caractères non vide"
+
+#, fuzzy
+msgid "invalid multibyte string for 'pattern'"
+msgstr "chaîne de caractères incorrecte pour 'by'"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance' ne peut être négatif"
@@ -743,6 +769,12 @@ msgstr ""
 
 msgid "package/namespace load failed for '%s'"
 msgstr "le chargement du package / espace de noms a échoué pour '%s'"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr ""
+"le package '%s' a été compilé avant R 2.0.0 : veuillez réinstaller une "
+"version plus récente, s'il-vous-plait"
 
 msgid "unable to load R code in package '%s'"
 msgstr "impossible de charger le code R depuis le package '%s'"
@@ -874,6 +906,9 @@ msgstr "argument 'category' incorrect"
 msgid "must specify formal argument names to vectorize"
 msgstr "les noms d'arguments formels doivent être spécifiés pour vectoriser"
 
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'arg' doit être NULL ou une chaîne de caractères de longueur >= 1"
+
 msgid "'arg' should be one of"
 msgstr "'arg' doit être un de"
 
@@ -906,6 +941,9 @@ msgstr ""
 msgid "argument is not numeric or logical: returning NA"
 msgstr "l'argument n'est ni numérique, ni logique : renvoi de NA"
 
+msgid "'trim' must be numeric of length one"
+msgstr "'trim' doit être une valeur numérique de longueur un"
+
 msgid "trimmed means are not defined for complex data"
 msgstr "les moyennes tronquées ne sont pas définies pour des données complexes"
 
@@ -926,6 +964,9 @@ msgstr "'by' doit spécifier une / des colonne(s) correcte(s)"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' et 'by.y' spécifient des nombres différents de colonnes"
 
+msgid "additional arguments ignored in message()"
+msgstr "arguments supplémentaires ignorés dans message()"
+
 msgid "(loaded the methods namespace)"
 msgstr "(espace de noms des méthodes chargé)"
 
@@ -940,7 +981,7 @@ msgid "Expected a single logical value for the S4 object state"
 msgstr "Une valeur logique unique est attendue pour l'état de l'objet S4"
 
 msgid "invalid to change the storage mode of a factor"
-msgstr ""
+msgstr "le mode de stockage d'un objet \"factor\" ne peut être modifié"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' n'est pas un objet exporté depuis 'namespace:%s'"
@@ -1022,8 +1063,8 @@ msgstr "l'espace de noms '%s' est chargé"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s a échoué dans unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by: '%s'"
-msgstr "l'espace de noms '%s' est encore utilisé par : '%s'"
+msgid "name space '%s' is still used by: %s"
+msgstr "l'espace de noms '%s' est encore utilisé par : %s"
 
 msgid "imperative name space directives are disabled"
 msgstr "les directives impératives d'espaces de noms sont désactivées"
@@ -1118,6 +1159,9 @@ msgstr "mauvais argument"
 msgid "not defined for package_version objects"
 msgstr "non défini pour des objets package_version"
 
+msgid "no arguments"
+msgstr "pas d'arguments"
+
 msgid "invalid 'n' value"
 msgstr "valeur 'n' incorrecte"
 
@@ -1168,9 +1212,8 @@ msgstr "'x' doit être un vecteur"
 msgid "invalid 'rle' structure"
 msgstr "structure 'rle' incorrecte"
 
-#, fuzzy
 msgid "... must contain names or character strings"
-msgstr "'file' doit être NULL, une connexion ou une chaîne de caractères"
+msgstr "... doit contenir des noms ou des chaînes de caractères"
 
 msgid "incorrect length for 'group'"
 msgstr "longueur de 'group' incorrecte"
@@ -1296,10 +1339,13 @@ msgid "'%s' is not an existing file"
 msgstr "'%s' n'est pas un fichier existant"
 
 msgid "Timestamp of '"
-msgstr ""
+msgstr "La date d'enregistrement de '"
 
 msgid "' has changed"
-msgstr ""
+msgstr "' a été modifiée"
+
+msgid "additional arguments ignored in stop()"
+msgstr "arguments supplémentaires ignorés dans stop()"
 
 msgid "is not"
 msgstr "n'est pas"
@@ -1309,6 +1355,9 @@ msgstr "tout"
 
 msgid "TRUE"
 msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr "arguments supplémentaires ignorés dans warning()"
 
 msgid "incorrect value for 'x'"
 msgstr "valeur de 'x' incorrecte"
@@ -1365,13 +1414,13 @@ msgid "Registering evaluate as low-level callback"
 msgstr "Enregistrement de l'évaluation comme rappel de bas niveau"
 
 msgid "user"
-msgstr ""
+msgstr "utilisateur"
 
 msgid "system"
-msgstr ""
+msgstr "système"
 
 msgid "elapsed"
-msgstr ""
+msgstr "écoulé"
 
 msgid "'width' must be positive"
 msgstr "'width' doit être postif"
@@ -1385,8 +1434,15 @@ msgstr "l'argument pour 'which' n'est pas une valeur logique"
 msgid "invalid 'digits'"
 msgstr "'digits' incorrect"
 
-msgid "argument must be character"
-msgstr "l'argument doit être de mode caractère"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"les arguments 'show.output.on.console', 'minimized' et 'invisible' sont "
+"seulement pour Windows"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' doit être un vecteur de chaînes de caractères ou 'NULL'"
 
 msgid "'cmd' could not be run"
 msgstr "'cmd' ne peut être exécuté"
@@ -1421,13 +1477,15 @@ msgid_plural "there are no packages called"
 msgstr[0] "aucun package nommé '%s' n'est trouvé"
 msgstr[1] "aucun packages nommé '%s' n'est trouvé"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "l'objet %s n'est pas exporté par 'namespace:%s'"
 msgstr[1] "les objets %s ne sont pas exportés par 'namespace:%s'"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "l'exportation précédente %s a été remplacée"
 msgstr[1] "les exportations précédentes %s ont été remplacées"
 
@@ -1441,6 +1499,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "l'argument doit être de mode caractère"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "'all' ne peut être utilisé avec d'autres options de 'deparse'"
@@ -1487,14 +1548,8 @@ msgstr[1] "Messages d'avis :\n"
 #~ msgid "conversion to factor is deprecated"
 #~ msgstr "la conversion en facteur est obsolète"
 
-#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-#~ msgstr "'quote' doit être 'TRUE', 'FALSE' ou numérique"
-
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "nombres incorrects dans 'quote'"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "spécification de 'quote' incorrecte"
 
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
 #~ msgstr "col.names = NA n'a pas de sens lorsque row.names = FALSE"

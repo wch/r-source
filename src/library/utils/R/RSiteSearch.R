@@ -1,55 +1,35 @@
-RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
-                        format = "normal", sortby = "score",
-                        matchesPerPage = 20)
+RSiteSearch <- function(string, restrict = c("Rhelp02a", "functions", "docs"),
+			format = c("normal", "short"),
+			sortby = c("score", "date:late", "date:early",
+			"subject", "subject:descending",
+			"from", "from:descending", "size", "size:descending"),
+			matchesPerPage = 20)
 {
-    string <- paste("http://search.r-project.org/cgi-bin/namazu.cgi?query=",
-                    gsub(" ", "+", string), sep = "")
-    mpp <- paste("max=", matchesPerPage, sep = "")
+    paste0 <- function(...) paste(..., sep = "")
+    string <- paste0("http://search.r-project.org/cgi-bin/namazu.cgi?query=",
+		     gsub(" ", "+", string))
+    mpp <- paste0("max=", matchesPerPage)
+    format <- paste0("result=", match.arg(format))
 
-    format <- charmatch(format, c("normal", "short"), nomatch = 0)
-    if (format == 0) {
-        warning("'format' must be \"normal\" or \"short\". Using \"normal\"",
-                call. = FALSE, immediate. = TRUE)
-        format <- 1
-    }
-    format <- paste("result=", switch(format, "normal", "short"), sep = "")
+    restrictVALS <- c("Rhelp02a", "Rhelp01", "functions", "docs", "R-devel")
+    restr <- match.arg(restrict, choices = restrictVALS, several.ok = TRUE)
+    restr <- paste(paste0("idxname=", restr), collapse = "&")
 
-    sortby <- charmatch(sortby, c("score", "date:late", "date:early",
-                                  "subject", "subject:decending",
-                                  "from", "from:decending",
-                                  "size", "size:decending"),
-                        nomatch = 0)
-    if (sortby == 0) {
-        warning("wrong 'sortby' specified. Using sortby=\"score\"",
-                call. = FALSE, immediate. = TRUE)
-        sortby <- 1
-    }
-    sortby <- paste("sort=",
-                    switch(sortby, "score", "date:late", "date:early",
-                           "field:subject:ascending",
-                           "field:subject:decending",
-                           "field:from:ascending",
-                           "field:from:decending",
-                           "field:size:ascending",
-                           "field:size:decending"),
-                    sep = "")
+    sortby <- match.arg(sortby)
+    sortby <- paste0("sort=",
+		     switch(sortby,
+			    "score"=, "date:late"=, "date:early" = sortby,
+			    "subject"		 = "field:subject:ascending",
+			    "subject:descending" = "field:subject:descending",
+			    "from"		 = "field:from:ascending",
+			    "from:descending"	 = "field:from:descending",
+			    "size"		 = "field:size:ascending",
+			    "size:descending"	 = "field:size:descending"))
 
-    res <- pmatch(restrict, c("Rhelp02a", "Rhelp01", "functions","docs"),
-                  nomatch = 0)
-    if (all(res) == 0) {
-        warning(gettextf("wrong restriction specified.\nUsing '%s'",
-                         'c("Rhelp02a", "functions", "docs")'),
-                call. = FALSE, immediate. = TRUE, domain = NA)
-        res <- c(1, 3, 4)
-    }
-    res <- paste(c("idxname=Rhelp02a", "idxname=Rhelp01",
-                   "idxname=functions", "idxname=docs")[res],
-                 collapse = "&")
-
-    qstring <- paste(string, mpp, format, sortby, res, sep = "&")
+    qstring <- paste(string, mpp, format, sortby, restr, sep = "&")
     browseURL(qstring)
     cat(gettext("A search query has been submitted to"),
-        "http://search.r-project.org\n")
+	"http://search.r-project.org\n")
     cat(gettext("The results page should open in your browser shortly\n"))
     invisible(qstring)
 }

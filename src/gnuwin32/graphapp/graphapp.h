@@ -271,6 +271,7 @@ typedef void (*dropfn)(control c, char *data);
 #define deletion_traversal		GA_deletion_traversal
 #define delimage		GA_delimage
 #define delobj		GA_delobj
+#define delstatusbar		GA_delstatusbar
 #define deviceheight		GA_deviceheight
 #define deviceheightmm		GA_deviceheightmm
 #define devicepixelsx		GA_devicepixelsx
@@ -500,8 +501,6 @@ typedef void (*dropfn)(control c, char *data);
 #define restoredrawstate		GA_restoredrawstate
 #define rgbtoname		GA_rgbtoname
 #define rgbtonum		GA_rgbtonum
-#define richeditfind		GA_richeditfind
-#define richeditreplace		GA_richeditreplace
 #define rinr		GA_rinr
 #define rmove		GA_rmove
 #define rmul		GA_rmul
@@ -575,7 +574,8 @@ typedef void (*dropfn)(control c, char *data);
 #define texturerect		GA_texturerect
 #define to_c_string		GA_to_c_string
 #define to_dos_string		GA_to_dos_string
-#define topleft		GA_topleft
+#define toolbar_hide		GA_toolbar_hide
+#define toolbar_show		GA_toolbar_show
 #define topright		GA_topright
 #define tree_search		GA_tree_search
 #define uncheck		GA_uncheck
@@ -819,7 +819,7 @@ void	fillpolygon(point *p, int n);
  *  Drawing text, selecting fonts.
  */
 
-font	newfont(char *name, int style, int size);
+font	newfont(const char *name, int style, int size);
 void	setfont(font f);
 
 int 	fontwidth(font f);
@@ -830,14 +830,14 @@ int 	fontdescent(font f);
 #define	getascent(f)	fontascent(f)
 #define	getdescent(f)	fontdescent(f)
 
-int	strwidth(font f, char *s);
-point	strsize(font f, char *s);
-rect	strrect(font f, char *s);
+int	strwidth(font f, const char *s);
+point	strsize(font f, const char *s);
+rect	strrect(font f, const char *s);
 
-int 	drawstr(point p, char *str);
-int	textheight(int width, char *text);
-char *	drawtext(rect r, int alignment, char *text);
-int 	gprintf(char *fmt, ...);
+int 	drawstr(point p, const char *str);
+int	textheight(int width, const char *text);
+const char *drawtext(rect r, int alignment, const char *text);
+int 	gprintf(const char *fmt, ...);
 
 /*
  *  Text styles and alignments.
@@ -897,7 +897,7 @@ int 	getkeystate(void);
  */
 
 bitmap	newbitmap(int width, int height, int depth);
-bitmap	loadbitmap(char *name);
+bitmap	loadbitmap(const char *name);
 bitmap	imagetobitmap(image img);
 bitmap	createbitmap(int width, int height, int depth, byte *data);
 void	setbitmapdata(bitmap b, byte data[]);
@@ -924,8 +924,8 @@ image	convert32to8(image img);
 image	convert8to32(image img);
 void	sortpalette(image img);
 
-image	loadimage(char *filename);
-void	saveimage(image img, char *filename);
+image	loadimage(const char *filename);
+void	saveimage(image img, const char *filename);
 
 void	drawimage(image img, rect dr, rect sr);
 void	drawmonochrome(image img, rect dr, rect sr);
@@ -938,7 +938,7 @@ void	drawbrighter(image img, rect dr, rect sr);
  *  Windows.
  */
 
-window	newwindow(char *name, rect r, long flags);
+window	newwindow(const char *name, rect r, long flags);
 void	show(window w);
 void	hide(window w);
 rect    GetCurrentWinPos(window obj);
@@ -1046,7 +1046,7 @@ void	activatecontrol(control c);
  *  Changing the state of a control.
  */
 
-void	settext(control c, char *newtext);
+void	settext(control c, const char *newtext);
 char *	GA_gettext(control c);
 #define setname(c,newname) settext(c,newname)
 #define getname(c) GA_gettext(c)
@@ -1081,39 +1081,39 @@ window	parentwindow(control c);
  *  Create buttons, scrollbars, controls etc on the current window.
  */
 
-control	  newcontrol(char *text, rect r);
+control	  newcontrol(const char *text, rect r);
 
 drawing	  newdrawing(rect r, drawfn fn);
 drawing	  newpicture(image img, rect r);
 
-button	  newbutton(char *text, rect r, actionfn fn);
+button	  newbutton(const char *text, rect r, actionfn fn);
 button	  newimagebutton(image img, rect r, actionfn fn);
 void	  setimage(control c, image img);
 
-checkbox  newcheckbox(char *text, rect r, actionfn fn);
+checkbox  newcheckbox(const char *text, rect r, actionfn fn);
 checkbox  newimagecheckbox(image img, rect r, actionfn fn);
 
-radiobutton newradiobutton(char *text, rect r, actionfn fn);
+radiobutton newradiobutton(const char *text, rect r, actionfn fn);
 radiogroup  newradiogroup(void);
 
 scrollbar newscrollbar(rect r, int max, int pagesize, scrollfn fn);
 void	  changescrollbar(scrollbar s, int where, int max, int size);
 
-label	  newlabel(char *text, rect r, int alignment);
-field	  newfield(char *text, rect r);
-field	  newpassword(char *text, rect r);
-textbox	  newtextbox(char *text, rect r);
-textbox	  newtextarea(char *text, rect r);
-textbox	  newrichtextarea(char *text, rect r);
+label	  newlabel(const char *text, rect r, int alignment);
+field	  newfield(const char *text, rect r);
+field	  newpassword(const char *text, rect r);
+textbox	  newtextbox(const char *text, rect r);
+textbox	  newtextarea(const char *text, rect r);
+textbox	  newrichtextarea(const char *text, rect r);
 
-listbox	  newlistbox(char *list[], rect r, scrollfn fn);
-listbox	  newdroplist(char *list[], rect r, scrollfn fn);
-listbox	  newdropfield(char *list[], rect r, scrollfn fn);
-listbox	  newmultilist(char *list[], rect r, scrollfn fn);
+listbox	  newlistbox(const char *list[], rect r, scrollfn fn);
+listbox	  newdroplist(const char *list[], rect r, scrollfn fn);
+listbox	  newdropfield(const char *list[], rect r, scrollfn fn);
+listbox	  newmultilist(const char *list[], rect r, scrollfn fn);
 int 	  isselected(listbox b, int index);
 void	  setlistitem(listbox b, int index);
 int 	  getlistitem(listbox b);
-void	  changelistbox(listbox b, char *new_list[]);
+void	  changelistbox(listbox b, const char *new_list[]);
 
 progressbar newprogressbar(rect r, int pmin, int pmax, int incr, int smooth);
 void setprogressbar(progressbar obj, int n);
@@ -1122,9 +1122,9 @@ void setprogressbarrange(progressbar obj, int pbmin, int pbmax);
 
 
 menubar	  newmenubar(actionfn adjust_menus);
-menu	  newsubmenu(menu parent, char *name);
-menu	  newmenu(char *name);
-menuitem  newmenuitem(char *name, int key, menufn fn);
+menu	  newsubmenu(menu parent, const char *name);
+menu	  newmenu(const char *name);
+menuitem  newmenuitem(const char *name, int key, menufn fn);
 
 /*
  *  Text editing functions.
@@ -1135,7 +1135,7 @@ void  cuttext(textbox t);
 void  copytext(textbox t);
 void  cleartext(textbox t);
 void  pastetext(textbox t);
-void  inserttext(textbox t, char *text);
+void  inserttext(textbox t, const char *text);
 void  selecttext(textbox t, long start, long end);
 void  textselection(textbox t, long *start, long *end);
 
@@ -1147,17 +1147,17 @@ void  textselection(textbox t, long *start, long *end);
 #define NO    -1
 #define CANCEL 0
 
-void	apperror(char *errstr);
-void	askok(char *info);
-int 	askokcancel(char *question);
-int 	askyesno(char *question);
-int 	askyesnocancel(char *question);
-char *	askstring(char *question, char *default_string);
-char *	askpassword(char *question, char *default_string);
-char *	askfilename(char *title, char *default_name);
-char *  askfilenamewithdir(char *title, char *default_name, char *dir);
-char *	askfilesave(char *title, char *default_name);
-char *	askUserPass(char *title);
+void	apperror(const char *errstr);
+void	askok(const char *info);
+int 	askokcancel(const char *question);
+int 	askyesno(const char *question);
+int 	askyesnocancel(const char *question);
+char *	askstring(const char *question, const char *default_string);
+char *	askpassword(const char *question, const char *default_string);
+char *	askfilename(const char *title, const char *default_name);
+char *  askfilenamewithdir(const char *title, const char *default_name, const char *dir);
+char *	askfilesave(const char *title, const char *default_name);
+char *	askUserPass(const char *title);
 
 /*
  *  Time functions.
@@ -1175,7 +1175,7 @@ long	currenttime(void);
 
 cursor	newcursor(point hotspot, image img);
 cursor	createcursor(point offset, byte *white_mask, byte *black_shape);
-cursor	loadcursor(char *name);
+cursor	loadcursor(const char *name);
 void	setcursor(cursor c);
 
 /*

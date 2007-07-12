@@ -13,7 +13,7 @@ cutree <- function(tree, k=NULL, h=NULL)
         ## S+6 help(cutree) says k(h) = k(h+), but does k(h-) [continuity]
         ## h < min() should give k = n;
         k <- n+1 - apply(outer(c(tree$height,Inf), h, ">"), 2, which.max)
-        if(getOption("verbose")) cat("cutree(): k(h) = ",k,"\n")
+        if(getOption("verbose")) message("cutree(): k(h) = ", k, domain = NA)
     }
     else {
         k <- as.integer(k)

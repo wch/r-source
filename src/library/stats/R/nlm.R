@@ -1,7 +1,7 @@
-nlm <- function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
+nlm <- function(f, p, ..., hessian=FALSE, typsize=rep(1,length(p)),
 		fscale=1, print.level=0, ndigit=12, gradtol=1e-6,
 		stepmax=max(1000 * sqrt(sum((p/typsize)^2)), 1000),
-		steptol=1e-6, iterlim=100, check.analyticals=TRUE, ...)
+		steptol=1e-6, iterlim=100, check.analyticals=TRUE)
 {
 
     print.level <- as.integer(print.level)
@@ -14,8 +14,9 @@ nlm <- function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
                   msg, ndigit, gradtol, stepmax, steptol, iterlim))
 }
 
-optimize <- function(f, interval, lower=min(interval), upper=max(interval),
-		     maximum=FALSE, tol=.Machine$double.eps^0.25, ...)
+optimize <- function(f, interval, ...,
+		     lower=min(interval), upper=max(interval),
+		     maximum=FALSE, tol=.Machine$double.eps^0.25)
 {
     if(maximum) {
 	val <- .Internal(fmin(function(arg) -f(arg, ...), lower, upper, tol))
@@ -29,8 +30,9 @@ optimize <- function(f, interval, lower=min(interval), upper=max(interval),
 ##nice to the English (or rather the Scots)
 optimise <- optimize
 
-uniroot <- function(f, interval, lower = min(interval), upper = max(interval),
-		    tol = .Machine$double.eps^0.25, maxiter = 1000, ...)
+uniroot <- function(f, interval, ...,
+                    lower = min(interval), upper = max(interval),
+		    tol = .Machine$double.eps^0.25, maxiter = 1000)
 {
     if(!missing(interval) && length(interval) != 2)
         stop("'interval' must be a vector of length 2")

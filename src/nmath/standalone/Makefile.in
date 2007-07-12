@@ -50,7 +50,7 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in test.c sunif.c
+DISTFILES = Makefile.in test.c sunif.c libRmath.pc.in
 
 Rexeclibdir_LIBRARIES = libRmath.a
 libRmath_a_SOURCES = $(SOURCES)
@@ -122,20 +122,29 @@ test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
 	  -L. -lRmath $(LIBM)
 
-install: installdirs install-header
-@WANT_R_FRAMEWORK_FALSE@	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
-@WANT_R_FRAMEWORK_FALSE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(libdir)/libRmath.a
+install: installdirs install-header @WANT_R_FRAMEWORK_FALSE@ install-pc
+@WANT_R_FRAMEWORK_FALSE@	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(DESTDIR)$(libdir)/$(libRmath_la)
+@WANT_R_FRAMEWORK_FALSE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(DESTDIR)$(libdir)/libRmath.a
 @WANT_R_FRAMEWORK_TRUE@	@!(test -f $(libRmath_la)) || cp $(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la) && install_name_tool -id $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la)
 @WANT_R_FRAMEWORK_TRUE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRmath.a
 
+install-strip: installdirs install-header install-pc
+	@if test -f $(libRmath_la); then \
+	  $(INSTALL) $(libRmath_la) "$(libdir)/$(libRmath_la)"; \
+	  if test -n "$(STRIP_LIBS)"; then \
+	    $(STRIP_LIBS) "$(DESTDIR)$(libdir)/$(libRmath_la)"; \
+	  fi; \
+	fi
+	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(DESTDIR)$(libdir)/libRmath.a
+
 install-header:
 	@(cd ../../include; $(MAKE) Rmath.h)
-@WANT_R_FRAMEWORK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(includedir)/Rmath.h
+@WANT_R_FRAMEWORK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(DESTDIR)$(includedir)/Rmath.h
 @WANT_R_FRAMEWORK_TRUE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include/Rmath.h
 
 installdirs:
-@WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(includedir)
-@WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(libdir)
+@WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(DESTDIR)$(includedir)
+@WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(DESTDIR)$(libdir)
 @WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include
 @WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib
 
@@ -152,8 +161,14 @@ install-Rmath-framework: $(libRmath_la)
 	@ln -sf Versions/Current/Headers $(RMATH_FRAMEWORK_DIR)/Headers
 	@ln -sf Versions/Current/Rmath $(RMATH_FRAMEWORK_DIR)/Rmath
 
+install-pc:
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
+	@$(SED) -e "s:@libdir:$(libdir):" -e "s:@includedir:$(includedir):" \
+	  -e 's/@VERSION/$(VERSION)/' -e 's/@libm/$(LIBM)/' $(srcdir)/libRmath.pc.in \
+	  > "$(DESTDIR)$(libdir)/pkgconfig/libRmath.pc"
+
 uninstall:
-	@rm -f $(includedir)/Rmath.h $(libdir)/$(libRmath_la) $(libdir)/libRmath.a
+	@rm -f $(DESTDIR)$(includedir)/Rmath.h $(DESTDIR)$(libdir)/$(libRmath_la) $(DESTDIR)$(libdir)/libRmath.a "$(DESTDIR)$(libdir)/pkgconfig/libRmath.pc"
 @WANT_R_FRAMEWORK_TRUE@	@rm -f $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libRmath.a $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/$(libRmath_la)
 
 mostlyclean: clean

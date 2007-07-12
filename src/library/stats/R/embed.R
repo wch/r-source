@@ -25,7 +25,7 @@ embed <- function (x, dimension = 1)
             stop ("wrong embedding dimension")
         y <- matrix(0.0, n - dimension + 1, dimension * m)
         for (i in (1:m))
-            y[, seq(i, by = m,length = dimension)] <-
+            y[, seq.int(i, by = m, length.out = dimension)] <-
                 Recall (as.vector(x[,i]), dimension)
         return (y)
     } else if (is.vector(x) || is.ts(x)) {

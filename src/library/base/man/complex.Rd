@@ -59,13 +59,19 @@ Conj(z)
   \eqn{\phi = \code{Arg}(z)}, \eqn{x = r*\cos(\phi)} and
   \eqn{y = r*\sin(\phi)}.
   They are all generic functions: methods can be defined
-  for them individually or via the \code{\link{Complex}} group generic.
+  for them individually or via the
+  \code{\link[base:groupGeneric]{Complex}} group generic.
 
   In addition, the elementary trigonometric, logarithmic and exponential
   functions are available for complex values.
+}
+\section{S4 methods}{
+  \code{as.complex} is primitive and can have S4 methods set.
 
-  \code{is.complex} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
+  \code{Re}, \code{Im}, \code{Mod}, \code{Arg} and \code{Conj}
+  constitute the S4 group generic
+  \code{\link[methods:S4groupGeneric]{Complex}} and so S4 methods can be
+  set for them individually or via the group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -73,13 +79,15 @@ Conj(z)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(graphics)
+
 0i ^ (-3:3)
 
-matrix(1i^ (-6:5), nr=4)#- all columns are the same
+matrix(1i^ (-6:5), nrow=4) #- all columns are the same
 0 ^ 1i # a complex NaN
 
 ## create a complex normal vector
-z <- complex(real = rnorm(100), imag = rnorm(100))
+z <- complex(real = stats::rnorm(100), imaginary = stats::rnorm(100))
 ## or also (less efficiently):
 z2 <- 1:2 + 1i*(8:9)
 

@@ -69,10 +69,10 @@ library.dynam.unload(chname, libpath,
   object of class \code{"DLLInfoList"} corresponding to the shared
   libraries loaded by packages.
 
-  If \code{chname} is specifed, an object of class \code{"DLLInfo"} that
+  If \code{chname} is specified, an object of class \code{"DLLInfo"} that
   identifies the DLL and can be used in future calls is returned
-  invisibly.  For packages that have namespaces, a list of these objects
-  is stored in the namespace's environment for use at run-time.
+  invisibly.  For packages that have name spaces, a list of these objects
+  is stored in the name space's environment for use at run-time.
 
   Note that the class \code{DLLInfo} has an overloaded method for
   \code{$} which can be used to resolve native symbols within that

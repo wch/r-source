@@ -27,6 +27,14 @@ undoc(package, dir, lib.loc = NULL)
   \emph{all} user level \R objects should be documented; note however
   that the precise rules for documenting methods of generic functions
   are still under discussion.
+
+  The \pkg{base} package is special as it contains the primitives and
+  these do not have definitions available at code level.  We provide
+  equivalent closures in environments \code{\link{.ArgsEnv}} and
+  \code{\link{.GenericArgsEnv}} in the \pkg{base} package that are used
+  for various purposes: \code{undoc("base")} checks that that all the
+  primitive that are not language constructs are prototyped in those
+  environments and no others.
 }
 \value{
   An object of class \code{"undoc"} which is a list of character vectors

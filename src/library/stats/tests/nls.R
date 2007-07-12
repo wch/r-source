@@ -200,4 +200,27 @@ test()
 ## found wrong n in 2.3.x
 ## finally worked in 2.4.0
 
+
+## list 'start'
+getExpmat <- function(theta, t)
+{
+        conc <- matrix(nrow = length(t), ncol = length(theta))
+        for(i in 1:length(theta)) conc[, i] <- exp(-theta[i] * t)
+        conc
+}
+
+expsum <- as.vector(getExpmat(c(.05,.005), 1:100) %*% c(1,1))
+expsumNoisy <- expsum + max(expsum) *.001 * rnorm(100)
+expsum.df <-data.frame(expsumNoisy)
+
+## estimate decay rates, amplitudes with default Gauss-Newton
+summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
+             start = list(k = c(.6,.02), sp = c(1,2))))
+
+## didn't work with port in 2.4.1
+summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
+             start = list(k = c(.6,.02), sp = c(1,2)),
+             algorithm = "port"))
+
+
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

@@ -1,0 +1,640 @@
+
+R version 2.6.0 Under development (unstable) (2007-05-26 r41715)
+Copyright (C) 2007 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### This file has two purposes:
+> 
+> # 1) to provide a check that these errors/warnings get a sensible context.
+> # 2) to allow translators to see their work in action.
+> 
+> ### Initially it is concentrating on primitives.
+> ### There are error messages that cannot nowadays be invoked or
+> ### could only be invoked by calling .Internals directly.
+> 
+> options(error=expression())
+> 
+> ## arithmetic.c
+> `+`(1,2,3)
+Error in "+"(1, 2, 3) : operator needs one or two arguments
+> pi + "foo"
+Error in pi + "foo" : non-numeric argument to binary operator
+> matrix(1:6,2,3) + matrix(1:6,3,2)
+Error in matrix(1:6, 2, 3) + matrix(1:6, 3, 2) : non-conformable arrays
+> !"foo"
+Error in !"foo" : invalid argument type
+> `/`(1L)
+Error in "/"(1L) : invalid unary operator
+> `/`(pi)
+Error in "/"(pi) : invalid unary operator
+> `/`(pi+1i)
+Error in "/"(pi + (0+1i)) : invalid complex unary operator
+> sin("foo")
+Error in sin("foo") : Non-numeric argument to mathematical function
+> trunc(pi+1i)
+Error in trunc(pi + (0+1i)) : unimplemented complex function
+> atan(2,3)
+Error in atan(2, 3) : 2 arguments passed to 'atan' which requires 1
+> round(pi, integer(0))
+Error in round(x, digits) : invalid second argument of length 0
+> log(pi, integer(0))
+Error in log(x, base) : invalid argument 'base' of length 0
+> log(pi, 10, 1)
+Error in log(pi, 10, 1) : unused argument(s) (1)
+> 1:3+1:4
+[1] 2 4 6 5
+Warning message:
+In 1:3 + 1:4 :
+  longer object length is not a multiple of shorter object length
+> 1e9L*1e9L
+[1] NA
+Warning message:
+In 1000000000L * 1000000000L : NAs produced by integer overflow
+> 
+> ## array.c
+> matrix(1:6,2,3, byrow="foo")
+Error in matrix(1:6, 2, 3, byrow = "foo") : invalid 'byrow' value
+> matrix(1:6,NA,3)
+Error in matrix(1:6, NA, 3) : invalid 'nrow' value (too large or NA)
+> matrix(1:6,2,NA)
+Error in matrix(1:6, 2, NA) : invalid 'ncol' value (too large or NA)
+> matrix(1:6,-1,3)
+Error in matrix(1:6, -1, 3) : invalid 'nrow' value (< 0)
+> matrix(1:6,2,-1)
+Error in matrix(1:6, 2, -1) : invalid 'ncol' value (< 0)
+> matrix(NA_real_, 2^17, 2^16)
+Error in matrix(NA_real_, 2^17, 2^16) : too many elements specified
+> row(1)
+Error in row(1) : a matrix is required as argument to 'row/col'
+> "foo" %*% pi
+Error in "foo" %*% pi : requires numeric matrix/vector arguments
+> aperm(pi)
+Error in aperm(pi) : invalid first argument, must be an array
+> aperm(matrix(1:6,3.2), 3:1)
+Error in aperm(matrix(1:6, 3.2), 3:1) : 'perm' is of wrong length
+> aperm(matrix(1:6,3.2), 3:2)
+Error in aperm(matrix(1:6, 3.2), 3:2) : value out of range in 'perm'
+> aperm(matrix(1:6,3.2), rep(1,1))
+Error in aperm(matrix(1:6, 3.2), rep(1, 1)) : 'perm' is of wrong length
+> colSums(as.matrix(letters))
+Error in colSums(as.matrix(letters)) : 'x' must be numeric
+> colSums(matrix(1:6,3.2), na.rm = NA)
+Error in colSums(matrix(1:6, 3.2), na.rm = NA) : invalid value of 'na.rm'
+> 
+> ## attrib.c
+> attr(NULL, "foo") <- pi
+Error in attr(NULL, "foo") <- pi : invalid (NULL) left side of assignment
+> attr(pi, "tsp") <- 1
+Error in attr(pi, "tsp") <- 1 : 
+  'tsp' attribute must be numeric of length three
+> x <- numeric(0)
+> attr(x, "tsp") <- 1:3
+Error in attr(x, "tsp") <- 1:3 : 
+  cannot assign 'tsp' to zero-length vector
+> comment(x) <- pi
+Error in `comment<-`(`*tmp*`, value = 3.14159265358979) : 
+  attempt to set invalid 'comment' attribute
+> oldClass(pi) <- "factor"
+Error in oldClass(pi) <- "factor" : 
+  adding class "factor" to an invalid object
+> dimnames(pi) <- 1:3
+Error in dimnames(pi) <- 1:3 : 'dimnames' applied to non-array
+> A <- matrix(1:6, 2, 3)
+> dimnames(A) <- list(letters)
+Error in dimnames(A) <- list(letters) : 
+  length of 'dimnames' [1] must match that of 'dims' [2]
+> dimnames(A) <- list(letters, NULL)
+Error in dimnames(A) <- list(letters, NULL) : 
+  length of 'dimnames' [1] not equal to array extent
+> dim(A) <- pi
+Error in dim(A) <- pi : 
+  dims [product 3] do not match the length of object [6]
+> dim(A) <- character(0)
+Error in dim(A) <- character(0) : length-0 dimension vector is invalid
+> dim(A) <- y ~ x
+Error in dim(A) <- y ~ x : invalid second argument
+> attr(A, 1, 2, 3)
+Error in attr(A, 1, 2, 3) : either 2 or 3 arguments are required
+> attr(A, pi)
+Error in attr(A, pi) : 'which' must be of mode character
+> attr(A, letters)
+Error in attr(A, letters) : exactly one attribute 'which' must be given
+> attr(A, pi) <- pi
+Error in attr(A, pi) <- pi : 'name' must be non-null character string
+> attr(A, NA_character_) <- pi
+Error in attr(A, NA_character_) <- pi : 
+  'name' must be non-null character string
+> 
+> ## bind.c
+> unlist(y ~ x)
+Error in unlist(y ~ x) : argument not a list
+> c(pi, recursive=TRUE, recursive=FALSE)
+Error in c(pi, recursive = TRUE, recursive = FALSE) : 
+  repeated formal argument 'recursive'
+> c(list(), use.names=FALSE, use.names=TRUE)
+Error in c(list(), use.names = FALSE, use.names = TRUE) : 
+  repeated formal argument 'use.names'
+> cbind(expression(pi), pi)
+Error in cbind(expression(pi), pi) : 
+  cannot create a matrix from these types
+> cbind(1:3, 1:4)
+     [,1] [,2]
+[1,]    1    1
+[2,]    2    2
+[3,]    3    3
+[4,]    1    4
+Warning message:
+In cbind(1:3, 1:4) :
+  number of rows of result is not a multiple of vector length (arg 1)
+> rbind(1:3, 1:4)
+     [,1] [,2] [,3] [,4]
+[1,]    1    2    3    1
+[2,]    1    2    3    4
+Warning message:
+In rbind(1:3, 1:4) :
+  number of columns of result is not a multiple of vector length (arg 1)
+> cbind(matrix(1:6,2,3), matrix(1:6,3,2))
+Error in cbind(matrix(1:6, 2, 3), matrix(1:6, 3, 2)) : 
+  number of rows of matrices must match (see arg 2)
+> rbind(matrix(1:6,2,3), matrix(1:6,3,2))
+Error in rbind(matrix(1:6, 2, 3), matrix(1:6, 3, 2)) : 
+  number of columns of matrices must match (see arg 2)
+> 
+> ## builtin.c
+> cat(letters, fill = -3)
+a b c d e f g h i j k l m n o p q r s t u v w x y zWarning message:
+In cat(letters, fill = -3) : non-positive 'fill' argument will be ignored
+> cat(letters, sep=pi)
+Error in cat(letters, sep = pi) : invalid 'sep' specification
+> cat(letters, fill=3, labels=1:10)
+Error in cat(letters, fill = 3, labels = 1:10) : 
+  invalid 'labels' argument
+> cat(letters, append=NA)
+Error in cat(letters, append = NA) : invalid 'append' specification
+> cat(y ~ x)
+Error in cat(list(...), file, sep, fill, labels, append) : 
+  argument 1 (type 'language') cannot be handled by 'cat'
+> vector(character(0), 0)
+Error in vector(character(0), 0) : vector: zero-length 'type' argument
+> vector("language", 0)
+Error in vector("language", 0) : 
+  vector: cannot make a vector of mode "language".
+> a <- y ~ x
+> length(a) <- 5
+Error in length(a) <- 5 : invalid argument
+> x <- pi
+> length(x) <- 1:3
+Error in length(x) <- 1:3 : invalid value
+> length(x) <- NA
+Error in length(x) <- NA : vector size cannot be NA
+> switch(1:3)
+Error in switch(1:3) : switch: EXPR must return a length 1 vector
+> delayedAssign(pi, "foo")
+Error in delayedAssign(pi, "foo") : invalid first argument
+> on.exit(ls(), add=NA_real_)
+Error in on.exit(ls(), add = NA_real_) : invalid 'add' argument
+> on.exit(ls(), add=NA)
+Error in on.exit(ls(), add = NA) : invalid 'add' argument
+> on.exit(1,2,3)
+Error in on.exit(1, 2, 3) : invalid number of arguments
+> x <- new.env()
+> parent.env(x) <- emptyenv()
+> parent.env(x) <- pi
+Error in `parent.env<-`(`*tmp*`, value = 3.14159265358979) : 
+  'parent' is not an environment
+> parent.env(pi) <- pi
+Error in `parent.env<-`(`*tmp*`, value = 3.14159265358979) : 
+  argument is not an environment
+> 
+> ## character.c
+> nchar(letters, type="")
+Error in nchar(letters, type = "") : invalid 'type' argument
+> nchar(letters, type=pi)
+Error in nchar(letters, type = pi) : invalid 'type' argument
+> substr("foo", integer(0), 1)
+Error in substr("foo", integer(0), 1) : invalid substring argument(s)
+> x <- pi
+> substr(x, integer(0), 1) <- pi
+Error in `substr<-`(`*tmp*`, integer(0), 1, value = 3.14159265358979) : 
+  replacing substrings in a non-character object
+> x <- "foo"
+> substr(x, integer(0), 1) <- pi
+Error in `substr<-`(`*tmp*`, integer(0), 1, value = 3.14159265358979) : 
+  invalid substring argument(s)
+> substr(x, 1, 1) <- pi
+Error in `substr<-`(`*tmp*`, 1, 1, value = 3.14159265358979) : 
+  invalid value
+> unlist(strsplit("a.b.c", "[.", perl = TRUE))
+Error in strsplit("a.b.c", "[.", perl = TRUE) : 
+  invalid split pattern '[.'
+> make.names("pi", allow_ = NA)
+Error in make.names("pi", allow_ = NA) : invalid value of 'allow_'
+> grep(character(0), letters)
+Error in grep(character(0), letters) : invalid argument
+> grep("[.", letters)
+Error in grep("[.", letters) : invalid regular expression '[.'
+> grep("[.", letters, perl = TRUE)
+Error in grep("[.", letters, perl = TRUE) : 
+  invalid regular expression '[.'
+> sub("ab", "\\1", "abc")
+Error in sub("ab", "\\1", "abc") : 
+  invalid backreference 1 in regular expression
+> sub("", "aa", "abc", fixed=TRUE)
+Error in sub("", "aa", "abc", fixed = TRUE) : zero-length pattern
+> x <- "MiXeD cAsE 123"
+> chartr("c-aX", "D-Fw", x)
+Error in chartr("c-aX", "D-Fw", x) : 
+  decreasing range specification ('c-a')
+> chartr(NA_character_, "D-Fw", x)
+Error in chartr(NA_character_, "D-Fw", x) : invalid (NA) arguments.
+> chartr("ab", "c", x)
+Error in chartr("ab", "c", x) : 'old' is longer than 'new'
+> charToRaw(pi)
+Error in charToRaw(pi) : argument must be a character vector of length 1
+> charToRaw(letters)
+[1] 61
+Warning message:
+In charToRaw(letters) :
+  argument should be a character vector of length 1
+all but the first element will be ignored
+> rawToChar(pi)
+Error in rawToChar(pi) : argument 'x' must be a raw vector
+> rawToChar(as.raw(10), multiple=NA)
+Error in rawToChar(as.raw(10), multiple = NA) : 
+  argument 'multiple' must be TRUE or FALSE
+> rawShift(pi, 1)
+Error in rawShift(pi, 1) : argument 'x' must be a raw vector
+> rawShift(as.raw(10), -20)
+Error in rawShift(as.raw(10), -20) : 
+  argument 'shift' must be a small integer
+> rawToBits(pi)
+Error in rawToBits(pi) : argument 'x' must be a raw vector
+> intToBits(pi)
+Error in intToBits(pi) : argument 'x' must be a integer vector
+> strtrim(paste(letters, collapse="+"), width = -10)
+Error in strtrim(paste(letters, collapse = "+"), width = -10) : 
+  invalid 'width' argument
+> 
+> ## coerce.c
+> as.vector(pi, pi)
+Error in as.vector(x, mode) : invalid argument 'mode'
+> as.function(pi)
+Error in as.function.default(x, envir) : list argument expected
+> as.function(list(), NULL)
+Error in as.function.default(list(), NULL) : 
+  use of NULL environment is defunct
+> as.function(list(), pi)
+Error in as.function.default(x, envir) : invalid environment
+> as.function(list(a=1, ls))
+Error in as.function.default(x, envir) : invalid body for function
+> as.call(NULL)
+Error in as.call(NULL) : invalid argument list
+> as.call(expression())
+Error in as.call(expression()) : invalid length 0 argument
+> is.na(y ~ x)
+[1] FALSE FALSE FALSE
+Warning message:
+In is.na(y ~ x) :
+  is.na() applied to non-(list or vector) of type 'language'
+> is.nan(y ~ x)
+[1] FALSE FALSE FALSE
+Warning message:
+In is.nan(y ~ x) :
+  is.nan() applied to non-(list or vector) of type 'language'
+> call(ls)
+Error in call(ls) : first argument must be a character string
+> do.call("ls", pi)
+Error in do.call("ls", pi) : second argument must be a list
+> do.call(y~x, list())
+Error in do.call(y ~ x, list()) : 
+  first argument must be a character string or a function
+> do.call("ls", list(), envir=pi)
+Error in do.call("ls", list(), envir = pi) : 
+  'envir' must be an environment
+> substitute(2+4, pi)
+Error in substitute(2 + 4, pi) : invalid environment specified
+> x <- pi
+> storage.mode(x) <- pi
+Error in storage.mode(x) <- pi : 
+  'value' must be non-null character string
+> storage.mode(x) <- "real"
+Warning message:
+In storage.mode(x) <- "real" :
+  use of 'real' is deprecated: use 'double' instead
+> storage.mode(x) <- "single"
+Warning message:
+In storage.mode(x) <- "single" :
+  use of 'single' is deprecated: use mode<- instead
+> storage.mode(factor(letters)) <- "double"
+Error in storage.mode(factor(letters)) <- "double" : 
+  invalid to change the storage mode of a factor
+> as.raw(1777)
+[1] 00
+Warning message:
+out-of-range values treated as 0 in coercion to raw 
+> as.integer(baseenv())
+Error in as.integer(baseenv()) : cannot coerce to vector
+> as.integer(pi+1i)
+[1] 3
+Warning message:
+imaginary parts discarded in coercion 
+> 
+> ## complex.c
+> gamma(1+1i)
+Error in gamma(1 + (0+1i)) : unimplemented complex function
+> complex(-1)
+Error in complex(-1) : invalid length
+> polyroot(1:50)
+Error in polyroot(1:50) : polynomial degree too high (49 max)
+> polyroot(c(1,2,NA))
+Error in polyroot(c(1, 2, NA)) : invalid polynomial coefficient
+> 
+> ## cum.c
+> cummin(1+1i)
+Error in cummin(1 + (0+1i)) : min/max not defined for complex numbers
+> cummax(1+1i)
+Error in cummax(1 + (0+1i)) : min/max not defined for complex numbers
+> 
+> ## debug.c
+> debug(is.na)
+Error in debug(is.na) : argument must be a closure
+> undebug(ls)
+Warning message:
+In undebug(ls) : argument is not being debugged
+> trace(y ~ x)
+Error in .primTrace(what) : argument must be a function
+> tracemem(ls)
+Error in tracemem(ls) : argument must not be a function
+> tracemem(NULL)
+Error in tracemem(NULL) : cannot trace NULL
+> tracemem(baseenv())
+Error in tracemem(baseenv()) : 
+  'tracemem' is not useful for promise and environment objects
+> untracemem(ls)
+Error in untracemem(ls) : argument must not be a function
+> retracemem()
+Error in retracemem() : invalid number of arguments
+> retracemem(ls)
+Error in retracemem(ls) : argument must not be a function
+> retracemem(pi, 1, 2)
+Error in retracemem(pi, 1, 2) : invalid number of arguments
+> retracemem(pi, pi)
+Error in retracemem(pi, pi) : invalid 'origin' argument
+> 
+> ## envir.c
+> as.environment(NULL)
+Error in as.environment(NULL) : using 'as.environment(NULL)' is defunct
+> as.environment(y ~ x)
+Error in as.environment(y ~ x) : invalid object for 'as.environment'
+> as.environment("foo")
+Error in as.environment("foo") : no item called "foo" on the search list
+> assign(pi, pi)
+Error in assign(pi, pi) : invalid first argument
+> assign("pi", pi)
+> assign("pi", pi, envir=list())
+Error in assign("pi", pi, envir = list()) : invalid 'envir' argument
+> assign("pi", pi, inherits=NA_real_)
+Error in assign("pi", pi, inherits = NA_real_) : 
+  invalid 'inherits' argument
+> remove("x", envir=list())
+Error in remove("x", envir = list()) : invalid 'envir' argument
+> remove("x", inherits=NA_real_)
+Error in remove("x", inherits = NA_real_) : invalid 'inherits' argument
+> remove("xxx")
+Warning message:
+In remove("xxx") : variable "xxx" was not found
+> get(pi)
+Error in get(pi) : invalid first argument
+> get("")
+Error in get("") : invalid first argument
+> get("pi", envir=list())
+Error in get("pi", envir = list()) : invalid 'envir' argument
+> get("pi", inherits=NA_real_)
+Error in get("pi", inherits = NA_real_) : invalid 'inherits' argument
+> get("pi", mode=pi)
+Error in get("pi", mode = pi) : invalid 'mode' argument
+> get("pi", mode="foo")
+Error in get("pi", mode = "foo") : 
+  variable "pi" of mode "foo" was not found
+> get("xxx", mode="any")
+Error in get("xxx", mode = "any") : variable "xxx" was not found
+> mget(pi)
+Error in mget(pi) : argument "envir" is missing, with no default
+> mget(letters, envir=list())
+Error in mget(letters, envir = list()) : 
+  second argument must be an environment
+> mget(letters, baseenv(), inherits=NA)
+Error in mget(letters, baseenv(), inherits = NA) : 
+  invalid 'inherits' argument
+> mget("pi", baseenv(), mode=pi)
+Error in mget("pi", baseenv(), mode = pi) : invalid 'mode' argument
+> mget("pi", baseenv(), mode="foo")
+Error in mget("pi", baseenv(), mode = "foo") : invalid 'mode' argument
+> missing(3)
+Error in missing(3) : invalid use of 'missing'
+> attach(list(), pos="foo")
+Error in attach(list(), pos = "foo") : 'pos' must be an integer
+In addition: Warning message:
+In attach(list(), pos = "foo") : NAs introduced by coercion
+> attach(list(), name=pi)
+Error in attach(list(), name = pi) : invalid value for 'name'
+> attach(list(pi))
+Error in attach(list(pi)) : all elements of a list must be named
+> attach(pi)
+Error in attach(pi) : 
+  'attach' only works for lists, data frames and environments
+> detach("package:base")
+Error in detach("package:base") : detaching "package:base" is not allowed
+> detach(pi)
+Error in detach(pi) : invalid name
+> ls(envir = y ~ x)
+Error in ls(envir = y ~ x) : invalid 'envir' argument
+> pos.to.env(integer(0))
+Error in pos.to.env(integer(0)) : invalid 'pos' argument
+> pos.to.env(0)
+Error in pos.to.env(0) : invalid argument
+> as.list.environment(pi)
+Error in as.list.environment(pi) : argument must be an environment
+> 
+> ## eval.c
+> if(rep(TRUE, 10)) "foo"
+[1] "foo"
+Warning message:
+In if (rep(TRUE, 10)) "foo" :
+  the condition has length > 1 and only the first element will be used
+> f <- function() return(1,2,3)
+> x <- f()
+Warning message:
+In return(1, 2, 3) : multi-argument returns are deprecated
+> f <- function() return(1,,3)
+> x <- f()
+Error in return(1, , 3) : empty expression in return value
+In addition: Warning message:
+In return(1, , 3) : multi-argument returns are deprecated
+> 
+> ## main.c
+> q(pi)
+Error in quit(save, status, runLast) : 
+  one of "yes", "no", "ask" or "default" expected.
+> q("foo")
+Error in quit(save, status, runLast) : unrecognized value of 'save'
+> 
+> ## names.c
+> .Primitive(pi)
+Error in .Primitive(pi) : string argument required
+> .Primitive("foo")
+Error in .Primitive("foo") : no such primitive function
+> .Internal(pi)
+Error in .Internal(pi) : invalid .Internal() argument
+> .Internal(pairlist(list))
+Error in .Internal(pairlist(list)) : no internal function "pairlist"
+> 
+> ## objects.c
+> UseMethod()
+Error in UseMethod() : 'UseMethod' used in an inappropriate fashion
+> f <- function(x) UseMethod(); f(pi)
+Error in UseMethod() : there must be a first argument
+> f <- function(x) UseMethod(ls); f(pi)
+Error in UseMethod(ls) : first argument must be a character string
+> f <- function(x) UseMethod("coef"); f(list(coefficients=pi))
+[1] 3.141593
+> f <- function(x) UseMethod("coef", x); f(list(coefficients=pi))
+[1] 3.141593
+> f <- function(x) UseMethod("coef", x, pi); f(list(coefficients=pi))
+[1] 3.141593
+Warning message:
+In UseMethod("coef", x, pi) : arguments after the first two are ignored
+> f <- function(x) UseMethod("cc"); f(list(coefficients=pi))
+Error in UseMethod("cc") : no applicable method for "cc"
+> unclass(baseenv())
+Error in unclass(baseenv()) : cannot unclass an environment
+> inherits(pi, pi)
+Error in inherits(pi, pi) : 'what' must be a character vector
+> inherits(pi, "factor", pi)
+Error in inherits(pi, "factor", pi) : 
+  'which' must be a length 1 logical vector
+> standardGeneric(pi)
+Error in standardGeneric(pi) : 
+  argument to standardGeneric must be a non-empty character string
+> 
+> ## random.c
+> runif(-1, 0, 1)
+Error in runif(-1, 0, 1) : invalid arguments
+> sample(10, replace=logical(0))
+Error in sample(10, replace = logical(0)) : invalid 'replace' argument
+> sample(10, replace=NA)
+Error in sample(10, replace = NA) : invalid 'replace' argument
+> sample(1:10, -1)
+Error in sample(1:10, -1) : invalid 'size' argument
+> sample(1:10, 20, replace=FALSE)
+Error in sample(1:10, 20, replace = FALSE) : 
+  cannot take a sample larger than the population when 'replace = FALSE'
+> sample(1:10, 3, prob=rep(0.2,5))
+Error in sample(1:10, 3, prob = rep(0.2, 5)) : 
+  incorrect number of probabilities
+> rmultinom(-1, 1, rep(0.2, 5))
+Error in rmultinom(-1, 1, rep(0.2, 5)) : invalid first argument 'n'
+> rmultinom(1, -1, rep(0.2, 5))
+Error in rmultinom(1, -1, rep(0.2, 5)) : invalid second argument 'size'
+> 
+> ## seq.c
+> factor(1:3) : factor(1:4)
+Error in factor(1:3):factor(1:4) : unequal factor lengths
+> 1:1e20
+Error in 1:1e+20 : result would be too long a vector
+> x <- 2:3
+> x:1
+[1] 2 1
+Warning message:
+In x:1 : numerical expression has 2 elements: only the first used
+> 1:x
+[1] 1 2
+Warning message:
+In 1:x : numerical expression has 2 elements: only the first used
+> 1:NA
+Error in 1:NA : NA/NaN argument
+> rep.int(pi, -1)
+Error in rep.int(pi, -1) : invalid 'times' value
+> rep.int(c(pi,pi), c(-1,-2))
+Error in rep.int(c(pi, pi), c(-1, -2)) : invalid 'times' value
+> rep.int(y ~ x, 2)
+Error in rep.int(y ~ x, 2) : attempt to replicate non-vector
+> rep.int(2, y ~ x)
+Error in rep.int(2, y ~ x) : incorrect type for second argument
+> rep.int(1:3, 1:2)
+Error in rep.int(1:3, 1:2) : invalid 'times' value
+> rep(pi, length.out = -1)
+Error in rep(pi, length.out = -1) : invalid 'length.out' argument
+> rep(pi, each = -1)
+Error in rep(pi, each = -1) : invalid 'each' argument
+> rep(pi, times=NA)
+Error in rep(pi, times = NA) : invalid 'times' argument
+> seq.int(1, length.out=-3)
+Error in seq.int(1, length.out = -3) : 
+  'length.out' must be a non-negative number
+> seq.int(1, length.out=NA)
+Error in seq.int(1, length.out = NA) : 
+  'length.out' must be a non-negative number
+> seq.int(Inf, 1, 2)
+Error in seq.int(Inf, 1, 2) : 'from' must be finite
+> seq.int(1, Inf, 2)
+Error in seq.int(1, Inf, 2) : 'to' must be finite
+> seq.int(1, 2, NA)
+Error in seq.int(1, 2, NA) : invalid '(to - from)/by' in 'seq'
+> seq.int(1.2, 1, by=1)
+Error in seq.int(1.2, 1, by = 1) : wrong sign in 'by' argument
+> seq.int(1, 2, 3, 4, 5)
+Error in seq.int(1, 2, 3, 4, 5) : too many arguments
+> seq_len(-1)
+Error in seq_len(-1) : argument must be non-negative
+> 
+> ## util.c
+> # arity checks
+> sin(1,2)
+Error in sin(1, 2) : 2 arguments passed to 'sin' which requires 1
+> .Internal(unique(pi))
+Error: 1 argument passed to .Internal(unique) which requires 2
+> setwd(pi)
+Error in setwd(pi) : character argument expected
+> setwd("/non-existent")
+Error in setwd("/non-existent") : cannot change working directory
+> basename(pi)
+Error in basename(pi) : a character vector argument expected
+> dirname(pi)
+Error in dirname(pi) : a character vector argument expected
+> encodeString(pi, -1)
+Error in encodeString(pi, -1) : invalid 'width' value
+> encodeString(pi, 10, quote=pi)
+Error in encodeString(pi, 10, quote = pi) : invalid 'quote' value
+> encodeString(pi, 10, quote="abc")
+[1] "a3.14159265358979a"
+Warning message:
+In encodeString(pi, 10, quote = "abc") :
+  only the first character of 'quote' will be used
+> encodeString(pi, 10, na.encode=NA)
+Error in encodeString(pi, 10, na.encode = NA) : invalid 'na.encode' value
+> Encoding(pi)
+Error in Encoding(pi) : a character vector argument expected
+> Encoding(pi) <- pi
+Error in `Encoding<-`(`*tmp*`, value = 3.14159265358979) : 
+  a character vector argument expected
+> x <- "foo"
+> Encoding(x) <- pi
+Error in `Encoding<-`(`*tmp*`, value = 3.14159265358979) : 
+  a character vector 'value' expected
+> Encoding(x) <- character(0)
+Error in `Encoding<-`(`*tmp*`, value = character(0)) : 
+  'value' must be of positive length
+> 

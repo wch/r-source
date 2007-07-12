@@ -9,7 +9,7 @@ ksmooth <-
     krn <- switch(kernel, "box" = 1, "normal" = 2)
     x.points <-
 	if(missing(x.points))
-	    seq(range.x[1], range.x[2], len=n.points)
+	    seq.int(range.x[1], range.x[2], length.out = n.points)
 	else {
 	    n.points <- length(x.points)
 	    sort(x.points)

@@ -36,7 +36,6 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, inv, maxf, maxmaxf, maxmaxp, maxp, n, ndims, nseg, nspn;
     double *work;
     int *iwork;
-    char *vmax;
 
     checkArity(op, args);
 
@@ -52,7 +51,7 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (NAMED(z)) z = duplicate(z);
 	break;
     default:
-	errorcall(call, _("non-numeric argument"));
+	error(_("non-numeric argument"));
     }
     PROTECT(z);
 
@@ -66,12 +65,11 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	inv = 2;
 
     if (LENGTH(z) > 1) {
-	vmax = vmaxget();
 	if (isNull(d = getAttrib(z, R_DimSymbol))) {  /* temporal transform */
 	    n = length(z);
 	    fft_factor(n, &maxf, &maxp);
 	    if (maxf == 0)
-		errorcall(call, _("fft factorization error"));
+		error(_("fft factorization error"));
 	    work = (double*)R_alloc(4 * maxf, sizeof(double));
 	    iwork = (int*)R_alloc(maxp, sizeof(int));
 	    fft_work(&(COMPLEX(z)[0].r), &(COMPLEX(z)[0].i),
@@ -86,7 +84,7 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (INTEGER(d)[i] > 1) {
 		    fft_factor(INTEGER(d)[i], &maxf, &maxp);
 		    if (maxf == 0)
-			errorcall(call, _("fft factorization error"));
+			error(_("fft factorization error"));
 		    if (maxf > maxmaxf)
 			maxmaxf = maxf;
 		    if (maxp > maxmaxp)
@@ -109,7 +107,6 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
-	vmaxset(vmax);
     }
     UNPROTECT(1);
     return z;
@@ -124,7 +121,6 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, inv, maxf, maxp, n, p;
     double *work;
     int *iwork;
-    char *vmax;
 
     checkArity(op, args);
 
@@ -132,7 +128,7 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 
     d = getAttrib(z, R_DimSymbol);
     if (d == R_NilValue || length(d) > 2)
-	errorcall(call, _("vector-valued (multivariate) series required"));
+	error(_("vector-valued (multivariate) series required"));
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];
 
@@ -146,7 +142,7 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (NAMED(z)) z = duplicate(z);
 	break;
     default:
-	errorcall(call, _("non-numeric argument"));
+	error(_("non-numeric argument"));
     }
     PROTECT(z);
 
@@ -158,10 +154,9 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     else inv = 2;
 
     if (n > 1) {
-	vmax = vmaxget();
 	fft_factor(n, &maxf, &maxp);
 	if (maxf == 0)
-	    errorcall(call, _("fft factorization error"));
+	    error(_("fft factorization error"));
 	work = (double*)R_alloc(4 * maxf, sizeof(double));
 	iwork = (int*)R_alloc(maxp, sizeof(int));
 	for (i = 0; i < p; i++) {
@@ -169,7 +164,6 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fft_work(&(COMPLEX(z)[i*n].r), &(COMPLEX(z)[i*n].i),
 		     1, n, 1, inv, work, iwork);
 	}
-	vmaxset(vmax);
     }
     UNPROTECT(1);
     return z;
@@ -206,10 +200,10 @@ SEXP attribute_hidden do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* check the factors */
 
-    if (nf == 0) errorcall(call, _("no factors"));
+    if (nf == 0) error(_("no factors"));
     for (i = 0; i < nf; i++)
 	if (INTEGER(f)[i] == NA_INTEGER || INTEGER(f)[i] <= 1)
-	    errorcall(call, _("invalid factors"));
+	    error(_("invalid factors"));
 
     ans = allocVector(INTSXP, nn);
     for (i = 0; i < nn; i++) {

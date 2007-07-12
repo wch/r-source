@@ -1,10 +1,30 @@
-dataentry <- function (data, modes) {
+dataentry <- function (data, modes)
+{
     if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
         stop("invalid 'data' argument")
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
         stop("invalid 'modes' argument")
     .Internal(dataentry(data, modes))
+}
+
+View <- function (x, title)
+{
+    if(missing(title)) title <- paste("Data:", deparse(substitute(x)))
+    as.num.or.char <- function(x)
+    {
+        if (is.character(x)) x
+        else if(is.numeric(x)) {storage.mode(x) <- "double"; x}
+        else as.character(x)
+    }
+    x0 <- as.data.frame(x)
+    x <- lapply(x0, as.num.or.char)
+    rn <- row.names(x0)
+    if(any(rn != seq_along(rn))) x <- c(list(row.names = rn), x)
+    if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
+       !max(sapply(x, length)))
+        stop("invalid 'x' argument")
+    .Internal(dataviewer(x, title))
 }
 
 edit <- function(name,...)UseMethod("edit")
@@ -72,7 +92,7 @@ edit.data.frame <-
         out <- out[-1]
         if((ln <- length(rn)) < maxlength)
             rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
-    } else if(length(rn) != maxlength) rn <- seq(len=maxlength)
+    } else if(length(rn) != maxlength) rn <- seq_len(maxlength)
     for (i in factors) {
         if(factor.mode != mode(out[[i]])) next # user might have switched mode
         a <- attrlist[[i]]
@@ -106,7 +126,7 @@ edit.data.frame <-
     if (edit.row.names) {
         if(any(duplicated(rn))) {
             warning("edited row names contain duplicates and will be ignored")
-            attr(out, "row.names") <- seq(len=maxlength)
+            attr(out, "row.names") <- seq_len(maxlength)
         }
     }
     out

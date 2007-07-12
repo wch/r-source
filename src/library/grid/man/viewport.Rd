@@ -34,7 +34,7 @@ vpTree(parent, children)
   \item{just}{A string or numeric
     vector specifying the justification of the viewport
     relative to its (x, y) location.  If there are two values, the first
-    value specifes horizontal justification and the second value specifies
+    value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
     and \code{"top"}.  For numeric values, 0 means left alignment
@@ -55,7 +55,7 @@ vpTree(parent, children)
     and maximum on the y-scale.}
   \item{angle}{A numeric value indicating the angle of rotation of the
     viewport.  Positive values indicate the amount of rotation, in
-    degrees, anitclockwise from the positive x-axis.}
+    degrees, anticlockwise from the positive x-axis.}
   \item{layout}{A Grid layout object which splits the viewport into
     subregions.}
   \item{layout.pos.row}{A numeric vector giving the

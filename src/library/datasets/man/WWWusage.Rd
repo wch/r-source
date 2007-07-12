@@ -20,6 +20,7 @@
   \emph{Forecasting: Methods and Applications.} Wiley.
 }
 \examples{
+require(graphics)
 work <- diff(WWWusage)
 par(mfrow = c(2,1)); plot(WWWusage); plot(work)
 \dontrun{

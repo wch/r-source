@@ -55,7 +55,7 @@ logLik(object, \dots)
 \value{
   Returns an object, say \code{r}, of class \code{logLik} which is a
   number with attributes, \code{attr(r, "df")} (\bold{d}egrees of
-  \bold{f}reedom) giving the number of (esimated) parameters in the model.
+  \bold{f}reedom) giving the number of (estimated) parameters in the model.
   There is a simple \code{print} method for \code{logLik} objects.
 
   The details depend on the method function used; see the appropriate
@@ -77,14 +77,14 @@ logLik(object, \dots)
 x <- 1:5
 lmx <- lm(x ~ 1)
 logLik(lmx) # using print.logLik() method
-str(logLik(lmx))
+utils::str(logLik(lmx))
 
 ## lm method
 (fm1 <- lm(rating ~ ., data = attitude))
 logLik(fm1)
 logLik(fm1, REML = TRUE)
 
-res <- try(data(Orthodont, package="nlme"))
+res <- try(utils::data(Orthodont, package="nlme"))
 if(!inherits(res, "try-error")) {
   fm1 <- lm(distance ~ Sex * age, Orthodont)
   print(logLik(fm1))

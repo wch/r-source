@@ -17,9 +17,9 @@ dump(list, file = "dumpdata.R", append = FALSE,
   \item{file}{either a character string naming a file or a
     connection.  \code{""} indicates output to the console.}
 
-  \item{append}{if \code{TRUE}, output will be appended to
-    \code{file}; otherwise, it will overwrite the contents of
-    \code{file}.}
+  \item{append}{if \code{TRUE} and \code{file} is a character string,
+    output will be appended to \code{file}; otherwise, it will overwrite
+    the contents of \code{file}.}
     
   \item{control}{character vector indicating deparsing options.
     See \code{\link{.deparseOpts}} for their description.}
@@ -33,10 +33,10 @@ dump(list, file = "dumpdata.R", append = FALSE,
   omitted, with a warning.  If \code{file} is a file and no objects
   exist then no file is created.
   
-  At present \code{source}ing may not produce an identical copy of
-  \code{dump}ed objects. A warning is issued if it is likely that
-  problems will arise, for example when dumping exotic objects such
-  as \link{environment}s and external pointers.
+  \code{source}ing may not produce an identical copy of
+  \code{dump}ed objects.  A warning is issued if it is likely that
+  problems will arise, for example when dumping exotic or complex
+  objects (see the Note).
 
   \code{dump} will also warn if fewer characters were written to a file
   than expected, which may indicate a full or corrupt file system.
@@ -51,11 +51,11 @@ dump(list, file = "dumpdata.R", append = FALSE,
   simplifications that make \code{source} less likely to produce an
   identical copy.  See \code{\link{deparse}} for details.
   
-  To deparse the internal function representation rather than displaying
-  the saved source, use \code{control = c("keepInteger", "quoteExpressions", 
-  "showAttributes", "warnIncomplete")}.  This will lose all
-  formatting and comments, but may be useful in those cases where
-  the saved source is no longer correct.
+  To deparse the internal representation of a function rather than
+  displaying the saved source, use \code{control = c("keepInteger",
+    "warnIncomplete", "keepNA")}.  This will lose all formatting and
+  comments, but may be useful in those cases where the saved source is
+  no longer correct.
 
   Promises will normally only be encountered by users as a result of
   lazy-loading (when the default \code{evaluate = TRUE} is essential)
@@ -67,14 +67,20 @@ dump(list, file = "dumpdata.R", append = FALSE,
   which were dumped.
 }
 \note{
-  As \code{dump} is defined in the base namespace, the \pkg{base}
+  As \code{dump} is defined in the base name space, the \pkg{base}
   package will be searched \emph{before} the global environment unless
-  \code{dump} is called from the top level or the \code{envir} argument
-  is given explicitly.
+  \code{dump} is called from the top level prompt or the \code{envir}
+  argument is given explicitly.
   
-  To avoid the risk of a source attribute out of sync with the actual
-  function definition, the source attribute of a function will never 
-  be dumped as an attribute.
+  To avoid the risk of a source attribute becoming out of sync with the
+  actual function definition, the source attribute of a function will
+  never be dumped as an attribute.
+
+  Currently environments, external pointers, weak references and objects
+  of type \code{S4} are not deparsed in a way that can be
+  \code{source}d.  In addition, language objects are deparsed in a
+  simple way whatever the value of \code{control}, and this includes not
+  dumping their attributes (which will result in a warning).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -88,7 +94,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
 }
 \examples{
 x <- 1; y <- 1:10
-dump(ls(patt='^[xyz]'), "xyz.Rdmped")
+dump(ls(pattern = '^[xyz]'), "xyz.Rdmped")
 print(.Last.value)
 unlink("xyz.Rdmped")
 }

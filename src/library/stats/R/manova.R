@@ -32,7 +32,7 @@ summary.manova <-
     effects <- object$effects
     if (!is.null(effects))
         effects <- as.matrix(effects)[seq_along(asgn), , drop = FALSE]
-    rdf <- object$df.resid
+    rdf <- object$df.residual
     nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
     resid <- as.matrix(object$residuals)
     wt <- object$weights

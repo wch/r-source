@@ -22,7 +22,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
 \method{print}{dist}(x, diag = NULL, upper = NULL,
       digits = getOption("digits"), justify = "none", right = TRUE, \dots)
 
-\method{as.matrix}{dist}(x)
+\method{as.matrix}{dist}(x, \dots)
 }
 \arguments{
   \item{x}{a numeric matrix, data frame or \code{"dist"} object.}
@@ -42,8 +42,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
     triangle of the matrix is used, the rest is ignored).}
   \item{digits, justify}{passed to \code{\link{format}} inside of
     \code{print()}.}
-  \item{right, \dots}{further arguments, passed to the (next)
-    \code{print} method.}
+  \item{right, \dots}{further arguments, passed to other methods.}
 }
 \details{
   Available distance measures are (written for two vectors \eqn{x} and
@@ -137,6 +136,8 @@ as.dist(m, diag = FALSE, upper = FALSE)
   \code{\link{hclust}}.
 }
 \examples{
+require(graphics)
+
 x <- matrix(rnorm(100), nrow=5)
 dist(x)
 dist(x, diag = TRUE)

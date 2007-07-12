@@ -16,8 +16,10 @@ lm(formula, data, subset, weights, na.action,
    singular.ok = TRUE, contrasts = NULL, offset, \dots)
 }
 \arguments{
-  \item{formula}{a symbolic description of the model to be fit.
-    The details of model specification are given below.}
+  \item{formula}{an object of class \code{"\link{formula}"} (or one that
+    can be coerced to that class): a symbolic description of the
+    model to be fitted.  The details of model specification are given
+    under Details.}
 
   \item{data}{an optional data frame, list or environment (or object
     coercible by \code{\link{as.data.frame}} to a data frame) containing
@@ -181,6 +183,10 @@ lm(formula, data, subset, weights, na.action,
   \code{\link[datasets]{longley}},
   \code{\link[datasets]{stackloss}},
   \code{\link[datasets]{swiss}}.
+
+  \code{biglm} in package \pkg{biglm} for an alternative
+  way to fit linear models to large datasets (especially those with many
+  cases).
 }
 \references{
   Chambers, J. M. (1992)
@@ -204,6 +210,8 @@ lm(formula, data, subset, weights, na.action,
   in the formula will be.
 }
 \examples{
+require(graphics)
+
 ## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
 ## Page 9: Plant Weight Data.
 ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)

@@ -60,13 +60,17 @@ Complex(z)
       contrary to Chambers(1998), on purpose.
     }
     \item{\code{Ops}}{\code{"Arith"}, \code{"Compare"}, \code{"Logic"}}
-    \item{\code{Math}}{\code{"log"}, \code{"sqrt"}, \code{"log10"},
-      \code{"cumprod"}, \code{"abs"}, \code{"acos"}, \code{"acosh"},
+    \item{\code{Math}}{\code{"abs"}, \code{"sign"}, \code{"sqrt"},
+      \code{"ceiling"}, \code{"floor"}, \code{"trunc"},
+      \code{"cummax"}, \code{"cummin"}, \code{"cumprod"}, \code{"cumsum"},
+      \code{"log"}, \code{"log10"}, \code{"log2"}, \code{"log1p"},
+      \code{"acos"}, \code{"acosh"},
       \code{"asin"}, \code{"asinh"}, \code{"atan"}, \code{"atanh"},
-      \code{"ceiling"}, \code{"cos"}, \code{"cosh"}, \code{"cumsum"},
-      \code{"exp"}, \code{"floor"}, \code{"gamma"}, \code{"lgamma"},
+      \code{"exp"}, \code{"expm1"}, \code{"cos"}, \code{"cosh"},
       \code{"sin"}, \code{"sinh"}, \code{"tan"}, \code{"tanh"},
-      \code{"trunc"}}
+      \code{"gamma"}, \code{"lgamma"}, \code{"digamma"},
+      \code{"trigamma"}
+    }
     \item{\code{Math2}}{\code{"round"}, \code{"signif"}}
     \item{\code{Summary}}{\code{"max"}, \code{"min"}, \code{"range"},
       \code{"prod"}, \code{"sum"}, \code{"any"}, \code{"all"}}
@@ -91,6 +95,8 @@ Complex(z)
   \emph{before} setting an S4 group generic method) as it only sets
   methods for known S4 generics.  This can be done by a call to
   \code{setGeneric}, for example \code{setGeneric("round", group="Math2")}.
+  These are currently all the members of the \code{Math2} and
+  \code{Summary} groups.
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr

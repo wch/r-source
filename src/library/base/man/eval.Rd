@@ -59,8 +59,12 @@ local(expr, envir = new.env())
   \code{local} evaluates an expression in a local environment.  It is
   equivalent to \code{evalq} except that its default argument creates a
   new, empty environment.  This is useful to create anonymous recursive
-  functions and as a kind of limited namespace feature since variables
+  functions and as a kind of limited name space feature since variables
   defined in the environment are not visible from the outside.
+}
+\value{
+  The result of evaluating the object: for an expression vector this it
+  the result of evaluating the last elements.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -128,7 +132,7 @@ get("N", envir=env)
 ## Uses of local()
 ##
 
-# Mutual recursives.
+# Mutually recursive.
 # gg gets value of last assignment, an anonymous version of f.
 
 gg <- local({

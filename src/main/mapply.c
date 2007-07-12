@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003   The R Development Core Team
+ *  Copyright (C) 2003-7   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@
 #include <Defn.h>
 
 
-SEXP attribute_hidden do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
+SEXP attribute_hidden 
+do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 {
 
     int i, j, m,nc, *lengths, *counters, named, longest=0;
@@ -60,25 +61,24 @@ SEXP attribute_hidden do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEX
     else
 	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
 
-    for(j = m-1; j >= 0;j--) {
-	SET_VECTOR_ELT(mindex,j, allocVector(INTSXP,1));
-	SET_VECTOR_ELT(nindex,j, allocVector(INTSXP,1));
-	INTEGER(VECTOR_ELT(mindex,j))[0] = j+1;
+    for(j = m-1; j >= 0; j--) {
+	SET_VECTOR_ELT(mindex, j, ScalarInteger(j+1));
+	SET_VECTOR_ELT(nindex, j, allocVector(INTSXP, 1));
 
 	PROTECT(tmp1=lang3(R_Bracket2Symbol,
 			   install("dots"),
-			   VECTOR_ELT(mindex,j)));
+			   VECTOR_ELT(mindex, j)));
 
 	PROTECT(tmp2=lang3(R_Bracket2Symbol,
 			   tmp1,
-			   VECTOR_ELT(nindex,j)));
+			   VECTOR_ELT(nindex, j)));
 
 
 	UNPROTECT(3);
 	PROTECT(fcall=LCONS(tmp2, fcall));
 
 	if (named && CHAR(STRING_ELT(vnames,j))[0]!='\0')
-	    SET_TAG(fcall, install(CHAR(STRING_ELT(vnames,j))));
+	    SET_TAG(fcall, install(translateChar(STRING_ELT(vnames,j))));
 
     }
     UNPROTECT(1);

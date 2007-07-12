@@ -3,7 +3,6 @@
 \alias{as.integer}
 \alias{as.integer.default}
 \alias{is.integer}
-\alias{is.integer.factor}
 \title{Integer Vectors}
 \description{
   Creates or tests for objects of type \code{"integer"}.
@@ -40,15 +39,15 @@ is.integer(x)
   \code{as.integer(x)} equals \code{\link{trunc}(x)} there), and
   imaginary parts of complex numbers are discarded (with a warning).
   Character strings containing either a decimal representation or a
-  heaxadecimal representation (starting with \code{0x} or \code{0X}) can
+  hexadecimal representation (starting with \code{0x} or \code{0X}) can
   be converted, as well as any allowed by the platform for real numbers.
   Like \code{\link{as.vector}} it strips attributes including names.
+  (To ensure that an object is of integer type without stripping
+  attributes, use \code{\link{storage.mode}}.)
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of integer \link{type} or not.
-  \code{is.integer} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-  There is a method for factors which returns \code{FALSE}.
+  whether its argument is of integer \link{type} or not, unless it is a
+  factor when it returns \code{FALSE}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -56,6 +55,8 @@ is.integer(x)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{numeric}}, \code{\link{storage.mode}}.
+
   \code{\link{round}} (and \code{ceiling} and \code{floor} on that help
   page) to convert to integral values.
 }

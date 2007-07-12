@@ -46,9 +46,11 @@ print.summary.princomp <-
 }
 
 plot.princomp <- function(x, main = deparse(substitute(x)), ...)
-    screeplot(x, main = main, ...)
+  screeplot.default(x, main = main, ...)
 
-screeplot <-
+screeplot <- function(x, ...) UseMethod("screeplot")
+
+screeplot.default <-
 function(x, npcs = min(10, length(x$sdev)),
          type = c("barplot", "lines"),
          main = deparse(substitute(x)), ...)
@@ -58,7 +60,7 @@ function(x, npcs = min(10, length(x$sdev)),
     pcs <- x$sdev^2
     xp <- seq_len(npcs)
     if(type=="barplot")
-        barplot(pcs[xp], names = names(pcs[xp]), main = main,
+        barplot(pcs[xp], names.arg = names(pcs[xp]), main = main,
                 ylab = "Variances", ...)
     else {
         plot(xp, pcs[xp], type = "b", axes = FALSE, main = main,

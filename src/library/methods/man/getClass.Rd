@@ -63,7 +63,7 @@ getClass("numeric") ## a built in class
 cld <- getClass("thisIsAnUndefinedClass", .Force = TRUE)
 cld ## a NULL prototype
 ## If you are really curious:
-str(cld)
+utils::str(cld)
 ## Whereas these generate errors:
 try(getClass("thisIsAnUndefinedClass"))
 try(getClassDef("thisIsAnUndefinedClass"))

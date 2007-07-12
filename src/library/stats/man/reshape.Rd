@@ -10,9 +10,9 @@
 \usage{
 reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 	idvar = "id", ids = 1:NROW(data),
-	times = seq(length = length(varying[[1]])),
+	times = seq_along(varying[[1]]),
 	drop = NULL, direction, new.row.names = NULL,
-	split = list(regexp="\\.", include=FALSE))
+	split = list(regexp="\\\\.", include=FALSE))
 }
 \arguments{
   \item{data}{a data frame}
@@ -67,7 +67,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   of column names or column numbers (converted to column names). The
   function will attempt to guess the \code{v.names} and \code{times} from
   these names.  The default is variable names like \code{x.1},
-  \code{x.2},where \code{split=list(regexp="\\.",include=FALSE)} to
+  \code{x.2}, where \code{split=list(regexp="\\.",include=FALSE)}
   specifies to split at the dot and drop it from the name. To have alphabetic
   followed by numeric times use
   \code{split=list(regexp="[A-Za-z][0-9]",include=TRUE)}. This splits

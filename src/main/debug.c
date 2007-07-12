@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team.
+ *  Copyright (C) 1998-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,14 +30,14 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define find_char_fun \
     if (isValidString(CAR(args))) {				\
 	SEXP s;							\
-	PROTECT(s = install(CHAR(STRING_ELT(CAR(args), 0))));	\
+	PROTECT(s = install(translateChar(STRING_ELT(CAR(args), 0))));	\
 	SETCAR(args, findFun(s, rho));				\
 	UNPROTECT(1);						\
     }
     find_char_fun
 
     if (TYPEOF(CAR(args)) != CLOSXP)
-	errorcall(call, _("argument must be a function"));
+	errorcall(call, _("argument must be a closure"));
     switch(PRIMVAL(op)) {
     case 0:
 	SET_DEBUG(CAR(args), 1);
@@ -80,8 +80,8 @@ static Rboolean tracing_state = TRUE;
 #define GET_TRACE_STATE tracing_state
 #define SET_TRACE_STATE(value) tracing_state = value
 
-SEXP R_traceOnOff(SEXP onOff) {
-    SEXP value;
+SEXP R_traceOnOff(SEXP onOff)
+{
     Rboolean prev = GET_TRACE_STATE;
     if(length(onOff) > 0) {
         Rboolean _new = asLogical(onOff);
@@ -90,9 +90,7 @@ SEXP R_traceOnOff(SEXP onOff) {
         else
             error("Value for tracingState must be TRUE or FALSE");
     }
-    value = allocVector(LGLSXP, 1);
-    LOGICAL(value)[0] = prev;
-    return value;
+    return ScalarLogical(prev);
 }
 
 Rboolean attribute_hidden
@@ -172,7 +170,7 @@ static void memtrace_stack_dump(void)
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
 	    Rprintf("%s ",
-		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
+		    TYPEOF(fun) == SYMSXP ? translateChar(PRINTNAME(fun)) :
 		    "<Anonymous>");
 	}
     }
@@ -204,7 +202,11 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 	TYPEOF(object) == SPECIALSXP)
 	errorcall(call, _("argument must not be a function"));
 
-    if(length(args) >= 2) origin = CADR(args); else origin = R_NilValue;
+    if(length(args) >= 2) {
+	origin = CADR(args);
+	if(!isString(origin))
+	    errorcall(call, _("invalid '%s' argument"), "origin");
+    } else origin = R_NilValue;
 
     if (TRACE(object)){
 	snprintf(buffer, 20, "<%p>", (void *) object);
@@ -215,7 +217,7 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_TRACE(object, 1);
 	if (R_current_trace_state()) {
 	    Rprintf("tracemem[%s -> %p]: ", 
-		    CHAR(STRING_ELT(origin, 0)), (void *) object);
+		    translateChar(STRING_ELT(origin, 0)), (void *) object);
 	    memtrace_stack_dump();
 	}
     }

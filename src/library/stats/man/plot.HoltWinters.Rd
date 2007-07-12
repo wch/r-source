@@ -31,7 +31,7 @@
   \item{ylim}{Limits of the y-axis. If \code{NULL}, the range is chosen
     such that the plot contains the original series, the fitted values,
     and the predicted values if any.}
-  \item{\dots}{Other graphics parametes.}
+  \item{\dots}{Other graphics parameters.}
 }
 \references{
   C. C. Holt (1957)

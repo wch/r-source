@@ -1,9 +1,8 @@
       SUBROUTINE DGESC2( N, A, LDA, RHS, IPIV, JPIV, SCALE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, N
@@ -41,11 +40,11 @@
 *          On entry, the right hand side vector b.
 *          On exit, the solution vector X.
 *
-*  IPIV    (iput) INTEGER array, dimension (N).
+*  IPIV    (input) INTEGER array, dimension (N).
 *          The pivot indices; for 1 <= i <= N, row i of the
 *          matrix has been interchanged with row IPIV(i).
 *
-*  JPIV    (iput) INTEGER array, dimension (N).
+*  JPIV    (input) INTEGER array, dimension (N).
 *          The pivot indices; for 1 <= j <= N, column j of the
 *          matrix has been interchanged with column JPIV(j).
 *
@@ -133,10 +132,9 @@
       END
       SUBROUTINE DGETC2( N, A, LDA, IPIV, JPIV, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, N
@@ -280,10 +278,9 @@
       END
       SUBROUTINE DGTTS2( ITRANS, N, NRHS, DL, D, DU, DU2, IPIV, B, LDB )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            ITRANS, LDB, N, NRHS
@@ -477,10 +474,9 @@
       END
       SUBROUTINE DLABAD( SMALL, LARGE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   LARGE, SMALL
@@ -534,10 +530,9 @@
       SUBROUTINE DLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,
      $                   LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDX, LDY, M, N, NB
@@ -620,7 +615,7 @@
 *          The n-by-nb matrix Y required to update the unreduced part
 *          of A.
 *
-*  LDY     (output) INTEGER
+*  LDY     (input) INTEGER
 *          The leading dimension of the array Y. LDY >= N.
 *
 *  Further Details
@@ -824,10 +819,9 @@
       END
       SUBROUTINE DLACON( N, V, X, ISGN, EST, KASE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            KASE, N
@@ -863,8 +857,10 @@
 *
 *  ISGN   (workspace) INTEGER array, dimension (N)
 *
-*  EST    (output) DOUBLE PRECISION
-*         An estimate (a lower bound) for norm(A).
+*  EST    (input/output) DOUBLE PRECISION
+*         On entry with KASE = 1 or 2 and JUMP = 3, EST should be
+*         unchanged from the previous call to DLACON.
+*         On exit, EST is an estimate (a lower bound) for norm(A). 
 *
 *  KASE   (input/output) INTEGER
 *         On the initial call to DLACON, KASE should be 0.
@@ -942,7 +938,7 @@
       RETURN
 *
 *     ................ ENTRY   (JUMP = 2)
-*     FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY TRANDPOSE(A)*X.
+*     FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X.
 *
    40 CONTINUE
       J = IDAMAX( N, X, 1 )
@@ -987,7 +983,7 @@
       RETURN
 *
 *     ................ ENTRY   (JUMP = 4)
-*     X HAS BEEN OVERWRITTEN BY TRANDPOSE(A)*X.
+*     X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X.
 *
   110 CONTINUE
       JLAST = J
@@ -1028,10 +1024,9 @@
       END
       SUBROUTINE DLACPY( UPLO, M, N, A, LDA, B, LDB )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -1116,10 +1111,9 @@
       END
       SUBROUTINE DLADIV( A, B, C, D, P, Q )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   A, B, C, D, P, Q
@@ -1179,10 +1173,9 @@
       END
       SUBROUTINE DLAE2( A, B, C, RT1, RT2 )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   A, B, C, RT1, RT2
@@ -1305,10 +1298,9 @@
      $                   RELTOL, PIVMIN, D, E, E2, NVAL, AB, C, MOUT,
      $                   NAB, WORK, IWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            IJOB, INFO, MINP, MMAX, MOUT, N, NBMIN, NITMAX
@@ -1856,10 +1848,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAEIN( RIGHTV, NOINIT, N, H, LDH, WR, WI, VR, VI, B,
      $                   LDB, WORK, EPS3, SMLNUM, BIGNUM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            NOINIT, RIGHTV
@@ -2387,10 +2378,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAEV2( A, B, C, RT1, RT2, CS1, SN1 )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   A, B, C, CS1, RT1, RT2, SN1
@@ -2558,10 +2548,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAEXC( WANTQ, N, T, LDT, Q, LDQ, J1, N1, N2, WORK,
      $                   INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ
@@ -2913,10 +2902,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAG2( A, LDA, B, LDB, SAFMIN, SCALE1, SCALE2, WR1,
      $                  WR2, WI )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDB
@@ -3214,10 +3202,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAGS2( UPPER, A1, A2, A3, B1, B2, B3, CSU, SNU, CSV,
      $                   SNV, CSQ, SNQ )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            UPPER
@@ -3484,10 +3471,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAGTM( TRANS, N, NRHS, ALPHA, DL, D, DU, X, LDX, BETA,
      $                   B, LDB )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -3513,7 +3499,7 @@ CIBM           PREFER SCALAR
 *  Arguments
 *  =========
 *
-*  TRANS   (input) CHARACTER
+*  TRANS   (input) CHARACTER*1
 *          Specifies the operation applied to A.
 *          = 'N':  No transpose, B := alpha * A * X + beta * B
 *          = 'T':  Transpose,    B := alpha * A'* X + beta * B
@@ -3674,10 +3660,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAGTS( JOB, N, A, B, C, D, IN, Y, TOL, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, JOB, N
@@ -3980,10 +3965,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAGV2( A, LDA, B, LDB, ALPHAR, ALPHAI, BETA, CSL, SNL,
      $                   CSR, SNR )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDB
@@ -4260,8 +4244,6 @@ CIBM           PREFER SCALAR
          BETA( 2 ) = ONE
       END IF
 *
-   10 CONTINUE
-*
       RETURN
 *
 *     End of DLAGV2
@@ -4270,42 +4252,42 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAHQR( WANTT, WANTZ, N, ILO, IHI, H, LDH, WR, WI,
      $                   ILOZ, IHIZ, Z, LDZ, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
-      LOGICAL            WANTT, WANTZ
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, N
+      LOGICAL            WANTT, WANTZ
 *     ..
 *     .. Array Arguments ..
       DOUBLE PRECISION   H( LDH, * ), WI( * ), WR( * ), Z( LDZ, * )
 *     ..
 *
-*  Purpose
-*  =======
+*     Purpose
+*     =======
 *
-*  DLAHQR is an auxiliary routine called by DHSEQR to update the
-*  eigenvalues and Schur decomposition already computed by DHSEQR, by
-*  dealing with the Hessenberg submatrix in rows and columns ILO to IHI.
+*     DLAHQR is an auxiliary routine called by DHSEQR to update the
+*     eigenvalues and Schur decomposition already computed by DHSEQR, by
+*     dealing with the Hessenberg submatrix in rows and columns ILO to
+*     IHI.
 *
-*  Arguments
-*  =========
+*     Arguments
+*     =========
 *
-*  WANTT   (input) LOGICAL
+*     WANTT   (input) LOGICAL
 *          = .TRUE. : the full Schur form T is required;
 *          = .FALSE.: only eigenvalues are required.
 *
-*  WANTZ   (input) LOGICAL
+*     WANTZ   (input) LOGICAL
 *          = .TRUE. : the matrix of Schur vectors Z is required;
 *          = .FALSE.: Schur vectors are not required.
 *
-*  N       (input) INTEGER
+*     N       (input) INTEGER
 *          The order of the matrix H.  N >= 0.
 *
-*  ILO     (input) INTEGER
-*  IHI     (input) INTEGER
+*     ILO     (input) INTEGER
+*     IHI     (input) INTEGER
 *          It is assumed that H is already upper quasi-triangular in
 *          rows and columns IHI+1:N, and that H(ILO,ILO-1) = 0 (unless
 *          ILO = 1). DLAHQR works primarily with the Hessenberg
@@ -4313,18 +4295,20 @@ CIBM           PREFER SCALAR
 *          transformations to all of H if WANTT is .TRUE..
 *          1 <= ILO <= max(1,IHI); IHI <= N.
 *
-*  H       (input/output) DOUBLE PRECISION array, dimension (LDH,N)
+*     H       (input/output) DOUBLE PRECISION array, dimension (LDH,N)
 *          On entry, the upper Hessenberg matrix H.
-*          On exit, if WANTT is .TRUE., H is upper quasi-triangular in
-*          rows and columns ILO:IHI, with any 2-by-2 diagonal blocks in
-*          standard form. If WANTT is .FALSE., the contents of H are
-*          unspecified on exit.
+*          On exit, if INFO is zero and if WANTT is .TRUE., H is upper
+*          quasi-triangular in rows and columns ILO:IHI, with any
+*          2-by-2 diagonal blocks in standard form. If INFO is zero
+*          and WANTT is .FALSE., the contents of H are unspecified on
+*          exit.  The output state of H if INFO is nonzero is given
+*          below under the description of INFO.
 *
-*  LDH     (input) INTEGER
+*     LDH     (input) INTEGER
 *          The leading dimension of the array H. LDH >= max(1,N).
 *
-*  WR      (output) DOUBLE PRECISION array, dimension (N)
-*  WI      (output) DOUBLE PRECISION array, dimension (N)
+*     WR      (output) DOUBLE PRECISION array, dimension (N)
+*     WI      (output) DOUBLE PRECISION array, dimension (N)
 *          The real and imaginary parts, respectively, of the computed
 *          eigenvalues ILO to IHI are stored in the corresponding
 *          elements of WR and WI. If two eigenvalues are computed as a
@@ -4336,62 +4320,90 @@ CIBM           PREFER SCALAR
 *          H(i:i+1,i:i+1) is a 2-by-2 diagonal block,
 *          WI(i) = sqrt(H(i+1,i)*H(i,i+1)) and WI(i+1) = -WI(i).
 *
-*  ILOZ    (input) INTEGER
-*  IHIZ    (input) INTEGER
+*     ILOZ    (input) INTEGER
+*     IHIZ    (input) INTEGER
 *          Specify the rows of Z to which transformations must be
 *          applied if WANTZ is .TRUE..
 *          1 <= ILOZ <= ILO; IHI <= IHIZ <= N.
 *
-*  Z       (input/output) DOUBLE PRECISION array, dimension (LDZ,N)
+*     Z       (input/output) DOUBLE PRECISION array, dimension (LDZ,N)
 *          If WANTZ is .TRUE., on entry Z must contain the current
 *          matrix Z of transformations accumulated by DHSEQR, and on
 *          exit Z has been updated; transformations are applied only to
 *          the submatrix Z(ILOZ:IHIZ,ILO:IHI).
 *          If WANTZ is .FALSE., Z is not referenced.
 *
-*  LDZ     (input) INTEGER
+*     LDZ     (input) INTEGER
 *          The leading dimension of the array Z. LDZ >= max(1,N).
 *
-*  INFO    (output) INTEGER
-*          = 0: successful exit
-*          > 0: DLAHQR failed to compute all the eigenvalues ILO to IHI
-*               in a total of 30*(IHI-ILO+1) iterations; if INFO = i,
-*               elements i+1:ihi of WR and WI contain those eigenvalues
-*               which have been successfully computed.
+*     INFO    (output) INTEGER
+*           =   0: successful exit
+*          .GT. 0: If INFO = i, DLAHQR failed to compute all the
+*                  eigenvalues ILO to IHI in a total of 30 iterations
+*                  per eigenvalue; elements i+1:ihi of WR and WI
+*                  contain those eigenvalues which have been
+*                  successfully computed.
 *
-*  Further Details
-*  ===============
+*                  If INFO .GT. 0 and WANTT is .FALSE., then on exit,
+*                  the remaining unconverged eigenvalues are the
+*                  eigenvalues of the upper Hessenberg matrix rows
+*                  and columns ILO thorugh INFO of the final, output
+*                  value of H.
 *
-*  2-96 Based on modifications by
+*                  If INFO .GT. 0 and WANTT is .TRUE., then on exit
+*          (*)       (initial value of H)*U  = U*(final value of H)
+*                  where U is an orthognal matrix.    The final
+*                  value of H is upper Hessenberg and triangular in
+*                  rows and columns INFO+1 through IHI.
+*
+*                  If INFO .GT. 0 and WANTZ is .TRUE., then on exit
+*                      (final value of Z)  = (initial value of Z)*U
+*                  where U is the orthogonal matrix in (*)
+*                  (regardless of the value of WANTT.)
+*
+*     Further Details
+*     ===============
+*
+*     02-96 Based on modifications by
 *     David Day, Sandia National Laboratory, USA
 *
-*  =====================================================================
+*     12-04 Further modifications by
+*     Ralph Byers, University of Kansas, USA
+*
+*       This is a modified version of DLAHQR from LAPACK version 3.0.
+*       It is (1) more robust against overflow and underflow and
+*       (2) adopts the more conservative Ahues & Tisseur stopping
+*       criterion (LAWN 122, 1997).
+*
+*     =========================================================
 *
 *     .. Parameters ..
-      DOUBLE PRECISION   ZERO, ONE, HALF
-      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0, HALF = 0.5D0 )
+      INTEGER            ITMAX
+      PARAMETER          ( ITMAX = 30 )
+      DOUBLE PRECISION   ZERO, ONE, TWO
+      PARAMETER          ( ZERO = 0.0d0, ONE = 1.0d0, TWO = 2.0d0 )
       DOUBLE PRECISION   DAT1, DAT2
-      PARAMETER          ( DAT1 = 0.75D+0, DAT2 = -0.4375D+0 )
+      PARAMETER          ( DAT1 = 3.0d0 / 4.0d0, DAT2 = -0.4375d0 )
 *     ..
 *     .. Local Scalars ..
-      INTEGER            I, I1, I2, ITN, ITS, J, K, L, M, NH, NR, NZ
-      DOUBLE PRECISION   AVE, CS, DISC, H00, H10, H11, H12, H21, H22,
-     $                   H33, H33S, H43H34, H44, H44S, OVFL, S, SMLNUM,
-     $                   SN, SUM, T1, T2, T3, TST1, ULP, UNFL, V1, V2,
-     $                   V3
+      DOUBLE PRECISION   AA, AB, BA, BB, CS, DET, H11, H12, H21, H21S,
+     $                   H22, RT1I, RT1R, RT2I, RT2R, RTDISC, S, SAFMAX,
+     $                   SAFMIN, SMLNUM, SN, SUM, T1, T2, T3, TR, TST,
+     $                   ULP, V2, V3
+      INTEGER            I, I1, I2, ITS, J, K, L, M, NH, NR, NZ
 *     ..
 *     .. Local Arrays ..
-      DOUBLE PRECISION   V( 3 ), WORK( 1 )
+      DOUBLE PRECISION   V( 3 )
 *     ..
 *     .. External Functions ..
-      DOUBLE PRECISION   DLAMCH, DLANHS
-      EXTERNAL           DLAMCH, DLANHS
+      DOUBLE PRECISION   DLAMCH
+      EXTERNAL           DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DLANV2, DLARFG, DROT
+      EXTERNAL           DCOPY, DLABAD, DLANV2, DLARFG, DROT
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MAX, MIN, SIGN, SQRT
+      INTRINSIC          ABS, DBLE, MAX, MIN, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -4407,17 +4419,24 @@ CIBM           PREFER SCALAR
          RETURN
       END IF
 *
+*     ==== clear out the trash ====
+      DO 10 J = ILO, IHI - 3
+         H( J+2, J ) = ZERO
+         H( J+3, J ) = ZERO
+   10 CONTINUE
+      IF( ILO.LE.IHI-2 )
+     $   H( IHI, IHI-2 ) = ZERO
+*
       NH = IHI - ILO + 1
       NZ = IHIZ - ILOZ + 1
 *
 *     Set machine-dependent constants for the stopping criterion.
-*     If norm(H) <= sqrt(OVFL), overflow should not occur.
 *
-      UNFL = DLAMCH( 'Safe minimum' )
-      OVFL = ONE / UNFL
-      CALL DLABAD( UNFL, OVFL )
-      ULP = DLAMCH( 'Precision' )
-      SMLNUM = UNFL*( NH / ULP )
+      SAFMIN = DLAMCH( 'SAFE MINIMUM' )
+      SAFMAX = ONE / SAFMIN
+      CALL DLABAD( SAFMIN, SAFMAX )
+      ULP = DLAMCH( 'PRECISION' )
+      SMLNUM = SAFMIN*( DBLE( NH ) / ULP )
 *
 *     I1 and I2 are the indices of the first row and last column of H
 *     to which transformations must be applied. If eigenvalues only are
@@ -4428,10 +4447,6 @@ CIBM           PREFER SCALAR
          I2 = N
       END IF
 *
-*     ITN is the total number of QR iterations allowed.
-*
-      ITN = 30*NH
-*
 *     The main loop begins here. I is the loop index and decreases from
 *     IHI to ILO in steps of 1 or 2. Each iteration of the loop works
 *     with the active submatrix in rows and columns L to I.
@@ -4439,27 +4454,46 @@ CIBM           PREFER SCALAR
 *     H(L,L-1) is negligible so that the matrix splits.
 *
       I = IHI
-   10 CONTINUE
+   20 CONTINUE
       L = ILO
       IF( I.LT.ILO )
-     $   GO TO 150
+     $   GO TO 160
 *
 *     Perform QR iterations on rows and columns ILO to I until a
 *     submatrix of order 1 or 2 splits off at the bottom because a
 *     subdiagonal element has become negligible.
 *
-      DO 130 ITS = 0, ITN
+      DO 140 ITS = 0, ITMAX
 *
 *        Look for a single small subdiagonal element.
 *
-         DO 20 K = I, L + 1, -1
-            TST1 = ABS( H( K-1, K-1 ) ) + ABS( H( K, K ) )
-            IF( TST1.EQ.ZERO )
-     $         TST1 = DLANHS( '1', I-L+1, H( L, L ), LDH, WORK )
-            IF( ABS( H( K, K-1 ) ).LE.MAX( ULP*TST1, SMLNUM ) )
-     $         GO TO 30
-   20    CONTINUE
+         DO 30 K = I, L + 1, -1
+            IF( ABS( H( K, K-1 ) ).LE.SMLNUM )
+     $         GO TO 40
+            TST = ABS( H( K-1, K-1 ) ) + ABS( H( K, K ) )
+            IF( TST.EQ.ZERO ) THEN
+               IF( K-2.GE.ILO )
+     $            TST = TST + ABS( H( K-1, K-2 ) )
+               IF( K+1.LE.IHI )
+     $            TST = TST + ABS( H( K+1, K ) )
+            END IF
+*           ==== The following is a conservative small subdiagonal
+*           .    deflation  criterion due to Ahues & Tisseur (LAWN 122,
+*           .    1997). It has better mathematical foundation and
+*           .    improves accuracy in some cases.  ====
+            IF( ABS( H( K, K-1 ) ).LE.ULP*TST ) THEN
+               AB = MAX( ABS( H( K, K-1 ) ), ABS( H( K-1, K ) ) )
+               BA = MIN( ABS( H( K, K-1 ) ), ABS( H( K-1, K ) ) )
+               AA = MAX( ABS( H( K, K ) ),
+     $              ABS( H( K-1, K-1 )-H( K, K ) ) )
+               BB = MIN( ABS( H( K, K ) ),
+     $              ABS( H( K-1, K-1 )-H( K, K ) ) )
+               S = AA + AB
+               IF( BA*( AB / S ).LE.MAX( SMLNUM,
+     $             ULP*( BB*( AA / S ) ) ) )GO TO 40
+            END IF
    30    CONTINUE
+   40    CONTINUE
          L = K
          IF( L.GT.ILO ) THEN
 *
@@ -4471,7 +4505,7 @@ CIBM           PREFER SCALAR
 *        Exit from loop if a submatrix of order 1 or 2 has split off.
 *
          IF( L.GE.I-1 )
-     $      GO TO 140
+     $      GO TO 150
 *
 *        Now the active submatrix is in rows and columns L to I. If
 *        eigenvalues only are being computed, only the active submatrix
@@ -4486,74 +4520,90 @@ CIBM           PREFER SCALAR
 *
 *           Exceptional shift.
 *
-            S = ABS( H( I, I-1 ) ) + ABS( H( I-1, I-2 ) )
-            H44 = DAT1*S + H( I, I )
-            H33 = H44
-            H43H34 = DAT2*S*S
+            H11 = DAT1*S + H( I, I )
+            H12 = DAT2*S
+            H21 = S
+            H22 = H11
          ELSE
 *
 *           Prepare to use Francis' double shift
 *           (i.e. 2nd degree generalized Rayleigh quotient)
 *
-            H44 = H( I, I )
-            H33 = H( I-1, I-1 )
-            H43H34 = H( I, I-1 )*H( I-1, I )
-            S = H( I-1, I-2 )*H( I-1, I-2 )
-            DISC = ( H33-H44 )*HALF
-            DISC = DISC*DISC + H43H34
-            IF( DISC.GT.ZERO ) THEN
+            H11 = H( I-1, I-1 )
+            H21 = H( I, I-1 )
+            H12 = H( I-1, I )
+            H22 = H( I, I )
+         END IF
+         S = ABS( H11 ) + ABS( H12 ) + ABS( H21 ) + ABS( H22 )
+         IF( S.EQ.ZERO ) THEN
+            RT1R = ZERO
+            RT1I = ZERO
+            RT2R = ZERO
+            RT2I = ZERO
+         ELSE
+            H11 = H11 / S
+            H21 = H21 / S
+            H12 = H12 / S
+            H22 = H22 / S
+            TR = ( H11+H22 ) / TWO
+            DET = ( H11-TR )*( H22-TR ) - H12*H21
+            RTDISC = SQRT( ABS( DET ) )
+            IF( DET.GE.ZERO ) THEN
 *
-*              Real roots: use Wilkinson's shift twice
+*              ==== complex conjugate shifts ====
 *
-               DISC = SQRT( DISC )
-               AVE = HALF*( H33+H44 )
-               IF( ABS( H33 )-ABS( H44 ).GT.ZERO ) THEN
-                  H33 = H33*H44 - H43H34
-                  H44 = H33 / ( SIGN( DISC, AVE )+AVE )
+               RT1R = TR*S
+               RT2R = RT1R
+               RT1I = RTDISC*S
+               RT2I = -RT1I
+            ELSE
+*
+*              ==== real shifts (use only one of them)  ====
+*
+               RT1R = TR + RTDISC
+               RT2R = TR - RTDISC
+               IF( ABS( RT1R-H22 ).LE.ABS( RT2R-H22 ) ) THEN
+                  RT1R = RT1R*S
+                  RT2R = RT1R
                ELSE
-                  H44 = SIGN( DISC, AVE ) + AVE
+                  RT2R = RT2R*S
+                  RT1R = RT2R
                END IF
-               H33 = H44
-               H43H34 = ZERO
+               RT1I = ZERO
+               RT2I = ZERO
             END IF
          END IF
 *
 *        Look for two consecutive small subdiagonal elements.
 *
-         DO 40 M = I - 2, L, -1
+         DO 50 M = I - 2, L, -1
 *           Determine the effect of starting the double-shift QR
 *           iteration at row M, and see if this would make H(M,M-1)
-*           negligible.
+*           negligible.  (The following uses scaling to avoid
+*           overflows and most underflows.)
 *
-            H11 = H( M, M )
-            H22 = H( M+1, M+1 )
-            H21 = H( M+1, M )
-            H12 = H( M, M+1 )
-            H44S = H44 - H11
-            H33S = H33 - H11
-            V1 = ( H33S*H44S-H43H34 ) / H21 + H12
-            V2 = H22 - H11 - H33S - H44S
-            V3 = H( M+2, M+1 )
-            S = ABS( V1 ) + ABS( V2 ) + ABS( V3 )
-            V1 = V1 / S
-            V2 = V2 / S
-            V3 = V3 / S
-            V( 1 ) = V1
-            V( 2 ) = V2
-            V( 3 ) = V3
+            H21S = H( M+1, M )
+            S = ABS( H( M, M )-RT2R ) + ABS( RT2I ) + ABS( H21S )
+            H21S = H( M+1, M ) / S
+            V( 1 ) = H21S*H( M, M+1 ) + ( H( M, M )-RT1R )*
+     $               ( ( H( M, M )-RT2R ) / S ) - RT1I*( RT2I / S )
+            V( 2 ) = H21S*( H( M, M )+H( M+1, M+1 )-RT1R-RT2R )
+            V( 3 ) = H21S*H( M+2, M+1 )
+            S = ABS( V( 1 ) ) + ABS( V( 2 ) ) + ABS( V( 3 ) )
+            V( 1 ) = V( 1 ) / S
+            V( 2 ) = V( 2 ) / S
+            V( 3 ) = V( 3 ) / S
             IF( M.EQ.L )
-     $         GO TO 50
-            H00 = H( M-1, M-1 )
-            H10 = H( M, M-1 )
-            TST1 = ABS( V1 )*( ABS( H00 )+ABS( H11 )+ABS( H22 ) )
-            IF( ABS( H10 )*( ABS( V2 )+ABS( V3 ) ).LE.ULP*TST1 )
-     $         GO TO 50
-   40    CONTINUE
+     $         GO TO 60
+            IF( ABS( H( M, M-1 ) )*( ABS( V( 2 ) )+ABS( V( 3 ) ) ).LE.
+     $          ULP*ABS( V( 1 ) )*( ABS( H( M-1, M-1 ) )+ABS( H( M,
+     $          M ) )+ABS( H( M+1, M+1 ) ) ) )GO TO 60
    50    CONTINUE
+   60    CONTINUE
 *
 *        Double-shift QR step
 *
-         DO 120 K = M, I - 1
+         DO 130 K = M, I - 1
 *
 *           The first iteration of this loop determines a reflection G
 *           from the vector V and applies it from left and right to H,
@@ -4585,75 +4635,75 @@ CIBM           PREFER SCALAR
 *              Apply G from the left to transform the rows of the matrix
 *              in columns K to I2.
 *
-               DO 60 J = K, I2
+               DO 70 J = K, I2
                   SUM = H( K, J ) + V2*H( K+1, J ) + V3*H( K+2, J )
                   H( K, J ) = H( K, J ) - SUM*T1
                   H( K+1, J ) = H( K+1, J ) - SUM*T2
                   H( K+2, J ) = H( K+2, J ) - SUM*T3
-   60          CONTINUE
+   70          CONTINUE
 *
 *              Apply G from the right to transform the columns of the
 *              matrix in rows I1 to min(K+3,I).
 *
-               DO 70 J = I1, MIN( K+3, I )
+               DO 80 J = I1, MIN( K+3, I )
                   SUM = H( J, K ) + V2*H( J, K+1 ) + V3*H( J, K+2 )
                   H( J, K ) = H( J, K ) - SUM*T1
                   H( J, K+1 ) = H( J, K+1 ) - SUM*T2
                   H( J, K+2 ) = H( J, K+2 ) - SUM*T3
-   70          CONTINUE
+   80          CONTINUE
 *
                IF( WANTZ ) THEN
 *
 *                 Accumulate transformations in the matrix Z
 *
-                  DO 80 J = ILOZ, IHIZ
+                  DO 90 J = ILOZ, IHIZ
                      SUM = Z( J, K ) + V2*Z( J, K+1 ) + V3*Z( J, K+2 )
                      Z( J, K ) = Z( J, K ) - SUM*T1
                      Z( J, K+1 ) = Z( J, K+1 ) - SUM*T2
                      Z( J, K+2 ) = Z( J, K+2 ) - SUM*T3
-   80             CONTINUE
+   90             CONTINUE
                END IF
             ELSE IF( NR.EQ.2 ) THEN
 *
 *              Apply G from the left to transform the rows of the matrix
 *              in columns K to I2.
 *
-               DO 90 J = K, I2
+               DO 100 J = K, I2
                   SUM = H( K, J ) + V2*H( K+1, J )
                   H( K, J ) = H( K, J ) - SUM*T1
                   H( K+1, J ) = H( K+1, J ) - SUM*T2
-   90          CONTINUE
+  100          CONTINUE
 *
 *              Apply G from the right to transform the columns of the
 *              matrix in rows I1 to min(K+3,I).
 *
-               DO 100 J = I1, I
+               DO 110 J = I1, I
                   SUM = H( J, K ) + V2*H( J, K+1 )
                   H( J, K ) = H( J, K ) - SUM*T1
                   H( J, K+1 ) = H( J, K+1 ) - SUM*T2
-  100          CONTINUE
+  110          CONTINUE
 *
                IF( WANTZ ) THEN
 *
 *                 Accumulate transformations in the matrix Z
 *
-                  DO 110 J = ILOZ, IHIZ
+                  DO 120 J = ILOZ, IHIZ
                      SUM = Z( J, K ) + V2*Z( J, K+1 )
                      Z( J, K ) = Z( J, K ) - SUM*T1
                      Z( J, K+1 ) = Z( J, K+1 ) - SUM*T2
-  110             CONTINUE
+  120             CONTINUE
                END IF
             END IF
-  120    CONTINUE
+  130    CONTINUE
 *
-  130 CONTINUE
+  140 CONTINUE
 *
 *     Failure to converge in remaining number of iterations
 *
       INFO = I
       RETURN
 *
-  140 CONTINUE
+  150 CONTINUE
 *
       IF( L.EQ.I ) THEN
 *
@@ -4689,14 +4739,12 @@ CIBM           PREFER SCALAR
          END IF
       END IF
 *
-*     Decrement number of remaining iterations, and return to start of
-*     the main loop with new value of I.
+*     return to start of the main loop with new value of I.
 *
-      ITN = ITN - ITS
       I = L - 1
-      GO TO 10
+      GO TO 20
 *
-  150 CONTINUE
+  160 CONTINUE
       RETURN
 *
 *     End of DLAHQR
@@ -4704,10 +4752,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAHRD( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            K, LDA, LDT, LDY, N, NB
@@ -4726,7 +4773,9 @@ CIBM           PREFER SCALAR
 *  Q' * A * Q. The routine returns the matrices V and T which determine
 *  Q as a block reflector I - V*T*V', and also the matrix Y = A * V * T.
 *
-*  This is an auxiliary routine called by DGEHRD.
+*  This is an OBSOLETE auxiliary routine. 
+*  This routine will be 'deprecated' in a  future release.
+*  Please use the new routine DLAHR2 instead.
 *
 *  Arguments
 *  =========
@@ -4910,10 +4959,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAIC1( JOB, J, X, SEST, W, GAMMA, SESTPR, S, C )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            J, JOB
@@ -4974,7 +5022,7 @@ CIBM           PREFER SCALAR
 *  GAMMA   (input) DOUBLE PRECISION
 *          The diagonal element gamma.
 *
-*  SEDTPR  (output) DOUBLE PRECISION
+*  SESTPR  (output) DOUBLE PRECISION
 *          Estimated singular value of (j+1) by (j+1) matrix Lhat.
 *
 *  S       (output) DOUBLE PRECISION
@@ -5204,10 +5252,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLALN2( LTRANS, NA, NW, SMIN, CA, A, LDA, D1, D2, B,
      $                   LDB, WR, WI, X, LDX, SCALE, XNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            LTRANS
@@ -5712,10 +5759,9 @@ CIBM           PREFER SCALAR
       DOUBLE PRECISION FUNCTION DLANGB( NORM, N, KL, KU, AB, LDAB,
      $                 WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -5748,7 +5794,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -5776,7 +5822,7 @@ CIBM           PREFER SCALAR
 *  LDAB    (input) INTEGER
 *          The leading dimension of the array AB.  LDAB >= KL+KU+1.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I'; otherwise, WORK is not
 *          referenced.
 *
@@ -5866,10 +5912,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANGE( NORM, M, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -5902,7 +5947,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -5925,7 +5970,7 @@ CIBM           PREFER SCALAR
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A.  LDA >= max(M,1).
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= M when NORM = 'I'; otherwise, WORK is not
 *          referenced.
 *
@@ -6011,10 +6056,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANGT( NORM, N, DL, D, DU )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -6047,7 +6091,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -6153,10 +6197,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANHS( NORM, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -6189,7 +6232,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -6209,7 +6252,7 @@ CIBM           PREFER SCALAR
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A.  LDA >= max(N,1).
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I'; otherwise, WORK is not
 *          referenced.
 *
@@ -6296,10 +6339,9 @@ CIBM           PREFER SCALAR
       DOUBLE PRECISION FUNCTION DLANSB( NORM, UPLO, N, K, AB, LDAB,
      $                 WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
@@ -6332,7 +6374,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -6365,7 +6407,7 @@ CIBM           PREFER SCALAR
 *  LDAB    (input) INTEGER
 *          The leading dimension of the array AB.  LDAB >= K+1.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
 *          WORK is not referenced.
 *
@@ -6482,10 +6524,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANSP( NORM, UPLO, N, AP, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
@@ -6518,7 +6559,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -6544,7 +6585,7 @@ CIBM           PREFER SCALAR
 *          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
 *          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
 *          WORK is not referenced.
 *
@@ -6679,10 +6720,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANST( NORM, N, D, E )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -6715,7 +6755,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -6804,10 +6844,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANSY( NORM, UPLO, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
@@ -6840,7 +6879,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -6871,7 +6910,7 @@ CIBM           PREFER SCALAR
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A.  LDA >= max(N,1).
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
 *          WORK is not referenced.
 *
@@ -6979,10 +7018,9 @@ CIBM           PREFER SCALAR
       DOUBLE PRECISION FUNCTION DLANTB( NORM, UPLO, DIAG, N, K, AB,
      $                 LDAB, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -7015,7 +7053,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -7056,7 +7094,7 @@ CIBM           PREFER SCALAR
 *  LDAB    (input) INTEGER
 *          The leading dimension of the array AB.  LDAB >= K+1.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I'; otherwise, WORK is not
 *          referenced.
 *
@@ -7263,10 +7301,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLANTP( NORM, UPLO, DIAG, N, AP, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -7299,7 +7336,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -7332,7 +7369,7 @@ CIBM           PREFER SCALAR
 *          corresponding to the diagonal elements of the matrix A are
 *          not referenced, but are assumed to be one.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= N when NORM = 'I'; otherwise, WORK is not
 *          referenced.
 *
@@ -7550,10 +7587,9 @@ CIBM           PREFER SCALAR
       DOUBLE PRECISION FUNCTION DLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
      $                 WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -7586,7 +7622,7 @@ CIBM           PREFER SCALAR
 *  where  norm1  denotes the  one norm of a matrix (maximum column sum),
 *  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
 *  normF  denotes the  Frobenius norm of a matrix (square root of sum of
-*  squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
 *
 *  Arguments
 *  =========
@@ -7628,7 +7664,7 @@ CIBM           PREFER SCALAR
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A.  LDA >= max(M,1).
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK),
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
 *          where LWORK >= M when NORM = 'I'; otherwise, WORK is not
 *          referenced.
 *
@@ -7826,10 +7862,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAPLL( N, X, INCX, Y, INCY, SSMIN )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, INCY, N
@@ -7926,10 +7961,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAPMT( FORWRD, M, N, X, LDX, K )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            FORWRD
@@ -7973,8 +8007,10 @@ CIBM           PREFER SCALAR
 *  LDX     (input) INTEGER
 *          The leading dimension of the array X, LDX >= MAX(1,M).
 *
-*  K       (input) INTEGER array, dimension (N)
-*          On entry, K contains the permutation vector.
+*  K       (input/output) INTEGER array, dimension (N)
+*          On entry, K contains the permutation vector. K is used as
+*          internal workspace, but reset to its original value on
+*          output.
 *
 *  =====================================================================
 *
@@ -8061,10 +8097,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLAPY2( X, Y )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   X, Y
@@ -8115,10 +8150,9 @@ CIBM           PREFER SCALAR
       END
       DOUBLE PRECISION FUNCTION DLAPY3( X, Y, Z )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   X, Y, Z
@@ -8157,7 +8191,10 @@ CIBM           PREFER SCALAR
       ZABS = ABS( Z )
       W = MAX( XABS, YABS, ZABS )
       IF( W.EQ.ZERO ) THEN
-         DLAPY3 = ZERO
+*     W can be zero for max(0,nan,0)
+*     adding all three entries together will make sure
+*     NaN will not disappear.
+         DLAPY3 =  XABS + YABS + ZABS
       ELSE
          DLAPY3 = W*SQRT( ( XABS / W )**2+( YABS / W )**2+
      $            ( ZABS / W )**2 )
@@ -8170,10 +8207,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAQGB( M, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,
      $                   AMAX, EQUED )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED
@@ -8218,16 +8254,16 @@ CIBM           PREFER SCALAR
 *  LDAB    (input) INTEGER
 *          The leading dimension of the array AB.  LDA >= KL+KU+1.
 *
-*  R       (output) DOUBLE PRECISION array, dimension (M)
+*  R       (input) DOUBLE PRECISION array, dimension (M)
 *          The row scale factors for A.
 *
-*  C       (output) DOUBLE PRECISION array, dimension (N)
+*  C       (input) DOUBLE PRECISION array, dimension (N)
 *          The column scale factors for A.
 *
-*  ROWCND  (output) DOUBLE PRECISION
+*  ROWCND  (input) DOUBLE PRECISION
 *          Ratio of the smallest R(i) to the largest R(i).
 *
-*  COLCND  (output) DOUBLE PRECISION
+*  COLCND  (input) DOUBLE PRECISION
 *          Ratio of the smallest C(i) to the largest C(i).
 *
 *  AMAX    (input) DOUBLE PRECISION
@@ -8339,10 +8375,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAQGE( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
      $                   EQUED )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED
@@ -8357,7 +8392,7 @@ CIBM           PREFER SCALAR
 *  =======
 *
 *  DLAQGE equilibrates a general M by N matrix A using the row and
-*  scaling factors in the vectors R and C.
+*  column scaling factors in the vectors R and C.
 *
 *  Arguments
 *  =========
@@ -8494,10 +8529,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAQP2( M, N, OFFSET, A, LDA, JPVT, TAU, VN1, VN2,
      $                   WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, M, N, OFFSET
@@ -8530,7 +8564,7 @@ CIBM           PREFER SCALAR
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA,N)
 *          On entry, the M-by-N matrix A.
-*          On exit, the upper triangle of block A(OFFSET+1:M,1:N) is
+*          On exit, the upper triangle of block A(OFFSET+1:M,1:N) is 
 *          the triangular factor obtained; the elements in block
 *          A(OFFSET+1:M,1:N) below the diagonal, together with the
 *          array TAU, represent the orthogonal matrix Q as a product of
@@ -8565,6 +8599,11 @@ CIBM           PREFER SCALAR
 *    G. Quintana-Orti, Depto. de Informatica, Universidad Jaime I, Spain
 *    X. Sun, Computer Science Dept., Duke University, USA
 *
+*  Partial column norm updating strategy modified by
+*    Z. Drmac and Z. Bujanovic, Dept. of Mathematics,
+*    University of Zagreb, Croatia.
+*    June 2006.
+*  For more details see LAPACK Working Note 176.
 *  =====================================================================
 *
 *     .. Parameters ..
@@ -8573,7 +8612,7 @@ CIBM           PREFER SCALAR
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, ITEMP, J, MN, OFFPI, PVT
-      DOUBLE PRECISION   AII, TEMP, TEMP2
+      DOUBLE PRECISION   AII, TEMP, TEMP2, TOL3Z
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DLARF, DLARFG, DSWAP
@@ -8583,12 +8622,13 @@ CIBM           PREFER SCALAR
 *     ..
 *     .. External Functions ..
       INTEGER            IDAMAX
-      DOUBLE PRECISION   DNRM2
-      EXTERNAL           IDAMAX, DNRM2
+      DOUBLE PRECISION   DLAMCH, DNRM2
+      EXTERNAL           IDAMAX, DLAMCH, DNRM2
 *     ..
 *     .. Executable Statements ..
 *
       MN = MIN( M-OFFSET, N )
+      TOL3Z = SQRT(DLAMCH('Epsilon'))
 *
 *     Compute factorization.
 *
@@ -8633,10 +8673,14 @@ CIBM           PREFER SCALAR
 *
          DO 10 J = I + 1, N
             IF( VN1( J ).NE.ZERO ) THEN
+*
+*              NOTE: The following 4 lines follow from the analysis in
+*              Lapack Working Note 176.
+*
                TEMP = ONE - ( ABS( A( OFFPI, J ) ) / VN1( J ) )**2
                TEMP = MAX( TEMP, ZERO )
-               TEMP2 = ONE + 0.05D0*TEMP*( VN1( J ) / VN2( J ) )**2
-               IF( TEMP2.EQ.ONE ) THEN
+               TEMP2 = TEMP*( VN1( J ) / VN2( J ) )**2
+               IF( TEMP2 .LE. TOL3Z ) THEN
                   IF( OFFPI.LT.M ) THEN
                      VN1( J ) = DNRM2( M-OFFPI, A( OFFPI+1, J ), 1 )
                      VN2( J ) = VN1( J )
@@ -8660,10 +8704,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1,
      $                   VN2, AUXV, F, LDF )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            KB, LDA, LDF, M, N, NB, OFFSET
@@ -8747,6 +8790,11 @@ CIBM           PREFER SCALAR
 *    G. Quintana-Orti, Depto. de Informatica, Universidad Jaime I, Spain
 *    X. Sun, Computer Science Dept., Duke University, USA
 *
+*  Partial column norm updating strategy modified by
+*    Z. Drmac and Z. Bujanovic, Dept. of Mathematics,
+*    University of Zagreb, Croatia.
+*    June 2006.
+*  For more details see LAPACK Working Note 176.
 *  =====================================================================
 *
 *     .. Parameters ..
@@ -8755,7 +8803,7 @@ CIBM           PREFER SCALAR
 *     ..
 *     .. Local Scalars ..
       INTEGER            ITEMP, J, K, LASTRK, LSTICC, PVT, RK
-      DOUBLE PRECISION   AKK, TEMP, TEMP2
+      DOUBLE PRECISION   AKK, TEMP, TEMP2, TOL3Z
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DGEMM, DGEMV, DLARFG, DSWAP
@@ -8765,14 +8813,15 @@ CIBM           PREFER SCALAR
 *     ..
 *     .. External Functions ..
       INTEGER            IDAMAX
-      DOUBLE PRECISION   DNRM2
-      EXTERNAL           IDAMAX, DNRM2
+      DOUBLE PRECISION   DLAMCH, DNRM2
+      EXTERNAL           IDAMAX, DLAMCH, DNRM2
 *     ..
 *     .. Executable Statements ..
 *
       LASTRK = MIN( M, N+OFFSET )
       LSTICC = 0
       K = 0
+      TOL3Z = SQRT(DLAMCH('Epsilon'))
 *
 *     Beginning of while loop.
 *
@@ -8854,10 +8903,14 @@ CIBM           PREFER SCALAR
          IF( RK.LT.LASTRK ) THEN
             DO 30 J = K + 1, N
                IF( VN1( J ).NE.ZERO ) THEN
+*
+*                 NOTE: The following 4 lines follow from the analysis in
+*                 Lapack Working Note 176.
+*
                   TEMP = ABS( A( RK, J ) ) / VN1( J )
                   TEMP = MAX( ZERO, ( ONE+TEMP )*( ONE-TEMP ) )
-                  TEMP2 = ONE + 0.05D0*TEMP*( VN1( J ) / VN2( J ) )**2
-                  IF( TEMP2.EQ.ONE ) THEN
+                  TEMP2 = TEMP*( VN1( J ) / VN2( J ) )**2
+                  IF( TEMP2 .LE. TOL3Z ) THEN
                      VN2( J ) = DBLE( LSTICC )
                      LSTICC = J
                   ELSE
@@ -8892,6 +8945,11 @@ CIBM           PREFER SCALAR
       IF( LSTICC.GT.0 ) THEN
          ITEMP = NINT( VN2( LSTICC ) )
          VN1( LSTICC ) = DNRM2( M-RK, A( RK+1, LSTICC ), 1 )
+*
+*        NOTE: The computation of VN1( LSTICC ) relies on the fact that 
+*        SNRM2 does not fail on vectors with norm below the value of
+*        SQRT(DLAMCH('S')) 
+*
          VN2( LSTICC ) = VN1( LSTICC )
          LSTICC = ITEMP
          GO TO 40
@@ -8904,10 +8962,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAQSB( UPLO, N, KD, AB, LDAB, S, SCOND, AMAX, EQUED )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, UPLO
@@ -8955,7 +9012,7 @@ CIBM           PREFER SCALAR
 *  LDAB    (input) INTEGER
 *          The leading dimension of the array AB.  LDAB >= KD+1.
 *
-*  S       (output) DOUBLE PRECISION array, dimension (N)
+*  S       (input) DOUBLE PRECISION array, dimension (N)
 *          The scale factors for A.
 *
 *  SCOND   (input) DOUBLE PRECISION
@@ -9053,10 +9110,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAQSP( UPLO, N, AP, S, SCOND, AMAX, EQUED )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, UPLO
@@ -9194,10 +9250,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAQSY( UPLO, N, A, LDA, S, SCOND, AMAX, EQUED )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, UPLO
@@ -9337,10 +9392,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLAQTR( LTRAN, LREAL, N, T, LDT, B, W, SCALE, X, WORK,
      $                   INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            LREAL, LTRAN
@@ -10000,22 +10054,25 @@ CIBM           PREFER SCALAR
 *     End of DLAQTR
 *
       END
-      SUBROUTINE DLAR1V( N, B1, BN, SIGMA, D, L, LD, LLD, GERSCH, Z,
-     $                   ZTZ, MINGMA, R, ISUPPZ, WORK )
+      SUBROUTINE DLAR1V( N, B1, BN, LAMBDA, D, L, LD, LLD,
+     $           PIVMIN, GAPTOL, Z, WANTNC, NEGCNT, ZTZ, MINGMA,
+     $           R, ISUPPZ, NRMINV, RESID, RQCORR, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
-      INTEGER            B1, BN, N, R
-      DOUBLE PRECISION   MINGMA, SIGMA, ZTZ
+      LOGICAL            WANTNC
+      INTEGER   B1, BN, N, NEGCNT, R
+      DOUBLE PRECISION   GAPTOL, LAMBDA, MINGMA, NRMINV, PIVMIN, RESID,
+     $                   RQCORR, ZTZ
 *     ..
 *     .. Array Arguments ..
       INTEGER            ISUPPZ( * )
-      DOUBLE PRECISION   D( * ), GERSCH( * ), L( * ), LD( * ), LLD( * ),
-     $                   WORK( * ), Z( * )
+      DOUBLE PRECISION   D( * ), L( * ), LD( * ), LLD( * ),
+     $                  WORK( * )
+      DOUBLE PRECISION Z( * )
 *     ..
 *
 *  Purpose
@@ -10023,7 +10080,10 @@ CIBM           PREFER SCALAR
 *
 *  DLAR1V computes the (scaled) r-th column of the inverse of
 *  the sumbmatrix in rows B1 through BN of the tridiagonal matrix
-*  L D L^T - sigma I. The following steps accomplish this computation :
+*  L D L^T - sigma I. When sigma is close to an eigenvalue, the
+*  computed vector is an accurate eigenvector. Usually, r corresponds
+*  to the index where the eigenvector is largest in magnitude.
+*  The following steps accomplish this computation :
 *  (a) Stationary qd transform,  L D L^T - sigma I = L(+) D(+) L(+)^T,
 *  (b) Progressive qd transform, L D L^T - sigma I = U(-) D(-) U(-)^T,
 *  (c) Computation of the diagonal elements of the inverse of
@@ -10046,9 +10106,10 @@ CIBM           PREFER SCALAR
 *  BN       (input) INTEGER
 *           Last index of the submatrix of L D L^T.
 *
-*  SIGMA    (input) DOUBLE PRECISION
-*           The shift. Initially, when R = 0, SIGMA should be a good
-*           approximation to an eigenvalue of L D L^T.
+*  LAMBDA    (input) DOUBLE PRECISION
+*           The shift. In order to compute an accurate eigenvector,
+*           LAMBDA should be a good approximation to an eigenvalue
+*           of L D L^T.
 *
 *  L        (input) DOUBLE PRECISION array, dimension (N-1)
 *           The (n-1) subdiagonal elements of the unit bidiagonal matrix
@@ -10063,30 +10124,56 @@ CIBM           PREFER SCALAR
 *  LLD      (input) DOUBLE PRECISION array, dimension (N-1)
 *           The n-1 elements L(i)*L(i)*D(i).
 *
-*  GERSCH   (input) DOUBLE PRECISION array, dimension (2*N)
-*           The n Gerschgorin intervals. These are used to restrict
-*           the initial search for R, when R is input as 0.
+*  PIVMIN   (input) DOUBLE PRECISION
+*           The minimum pivot in the Sturm sequence.
 *
-*  Z        (output) DOUBLE PRECISION array, dimension (N)
-*           The (scaled) r-th column of the inverse. Z(R) is returned
-*           to be 1.
+*  GAPTOL   (input) DOUBLE PRECISION
+*           Tolerance that indicates when eigenvector entries are negligible
+*           w.r.t. their contribution to the residual.
+*
+*  Z        (input/output) DOUBLE PRECISION array, dimension (N)
+*           On input, all entries of Z must be set to 0.
+*           On output, Z contains the (scaled) r-th column of the
+*           inverse. The scaling is such that Z(R) equals 1.
+*
+*  WANTNC   (input) LOGICAL
+*           Specifies whether NEGCNT has to be computed.
+*
+*  NEGCNT   (output) INTEGER
+*           If WANTNC is .TRUE. then NEGCNT = the number of pivots < pivmin
+*           in the  matrix factorization L D L^T, and NEGCNT = -1 otherwise.
 *
 *  ZTZ      (output) DOUBLE PRECISION
-*           The square of the norm of Z.
+*           The square of the 2-norm of Z.
 *
 *  MINGMA   (output) DOUBLE PRECISION
 *           The reciprocal of the largest (in magnitude) diagonal
 *           element of the inverse of L D L^T - sigma I.
 *
 *  R        (input/output) INTEGER
-*           Initially, R should be input to be 0 and is then output as
-*           the index where the diagonal element of the inverse is
-*           largest in magnitude. In later iterations, this same value
-*           of R should be input.
+*           The twist index for the twisted factorization used to
+*           compute Z.
+*           On input, 0 <= R <= N. If R is input as 0, R is set to
+*           the index where (L D L^T - sigma I)^{-1} is largest
+*           in magnitude. If 1 <= R <= N, R is unchanged.
+*           On output, R contains the twist index used to compute Z.
+*           Ideally, R designates the position of the maximum entry in the
+*           eigenvector.
 *
 *  ISUPPZ   (output) INTEGER array, dimension (2)
 *           The support of the vector in Z, i.e., the vector Z is
 *           nonzero only in elements ISUPPZ(1) through ISUPPZ( 2 ).
+*
+*  NRMINV   (output) DOUBLE PRECISION
+*           NRMINV = 1/SQRT( ZTZ )
+*
+*  RESID    (output) DOUBLE PRECISION
+*           The residual of the FP vector.
+*           RESID = ABS( MINGMA )/SQRT( ZTZ )
+*
+*  RQCORR   (output) DOUBLE PRECISION
+*           The Rayleigh Quotient correction to LAMBDA.
+*           RQCORR = MINGMA*TMP
 *
 *  WORK     (workspace) DOUBLE PRECISION array, dimension (4*N)
 *
@@ -10094,229 +10181,242 @@ CIBM           PREFER SCALAR
 *  ===============
 *
 *  Based on contributions by
-*     Inderjit Dhillon, IBM Almaden, USA
+*     Beresford Parlett, University of California, Berkeley, USA
+*     Jim Demmel, University of California, Berkeley, USA
+*     Inderjit Dhillon, University of Texas, Austin, USA
 *     Osni Marques, LBNL/NERSC, USA
+*     Christof Voemel, University of California, Berkeley, USA
 *
 *  =====================================================================
 *
 *     .. Parameters ..
-      INTEGER            BLKSIZ
-      PARAMETER          ( BLKSIZ = 32 )
       DOUBLE PRECISION   ZERO, ONE
       PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0 )
+
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            SAWNAN
-      INTEGER            FROM, I, INDP, INDS, INDUMN, J, R1, R2, TO
+      LOGICAL            SAWNAN1, SAWNAN2
+      INTEGER            I, INDLPL, INDP, INDS, INDUMN, NEG1, NEG2, R1,
+     $                   R2
       DOUBLE PRECISION   DMINUS, DPLUS, EPS, S, TMP
 *     ..
 *     .. External Functions ..
+      LOGICAL DISNAN
       DOUBLE PRECISION   DLAMCH
-      EXTERNAL           DLAMCH
+      EXTERNAL           DISNAN, DLAMCH
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MAX, MIN
+      INTRINSIC          ABS
 *     ..
 *     .. Executable Statements ..
 *
       EPS = DLAMCH( 'Precision' )
+
+
       IF( R.EQ.0 ) THEN
-*
-*        Eliminate the top and bottom indices from the possible values
-*        of R where the desired eigenvector is largest in magnitude.
-*
          R1 = B1
-         DO 10 I = B1, BN
-            IF( SIGMA.GE.GERSCH( 2*I-1 ) .OR. SIGMA.LE.GERSCH( 2*I ) )
-     $           THEN
-               R1 = I
-               GO TO 20
-            END IF
-   10    CONTINUE
-   20    CONTINUE
          R2 = BN
-         DO 30 I = BN, B1, -1
-            IF( SIGMA.GE.GERSCH( 2*I-1 ) .OR. SIGMA.LE.GERSCH( 2*I ) )
-     $           THEN
-               R2 = I
-               GO TO 40
-            END IF
-   30    CONTINUE
-   40    CONTINUE
       ELSE
          R1 = R
          R2 = R
       END IF
-*
+
+*     Storage for LPLUS
+      INDLPL = 0
+*     Storage for UMINUS
       INDUMN = N
       INDS = 2*N + 1
       INDP = 3*N + 1
-      SAWNAN = .FALSE.
-*
-*     Compute the stationary transform (using the differential form)
-*     untill the index R2
-*
+
       IF( B1.EQ.1 ) THEN
          WORK( INDS ) = ZERO
       ELSE
-         WORK( INDS ) = LLD( B1-1 )
+         WORK( INDS+B1-1 ) = LLD( B1-1 )
       END IF
-      S = WORK( INDS ) - SIGMA
-      DO 50 I = B1, R2 - 1
+
+*
+*     Compute the stationary transform (using the differential form)
+*     until the index R2.
+*
+      SAWNAN1 = .FALSE.
+      NEG1 = 0
+      S = WORK( INDS+B1-1 ) - LAMBDA
+      DO 50 I = B1, R1 - 1
          DPLUS = D( I ) + S
-         WORK( I ) = LD( I ) / DPLUS
-         WORK( INDS+I ) = S*WORK( I )*L( I )
-         S = WORK( INDS+I ) - SIGMA
-   50 CONTINUE
+         WORK( INDLPL+I ) = LD( I ) / DPLUS
+         IF(DPLUS.LT.ZERO) NEG1 = NEG1 + 1
+         WORK( INDS+I ) = S*WORK( INDLPL+I )*L( I )
+         S = WORK( INDS+I ) - LAMBDA
+ 50   CONTINUE
+      SAWNAN1 = DISNAN( S )
+      IF( SAWNAN1 ) GOTO 60
+      DO 51 I = R1, R2 - 1
+         DPLUS = D( I ) + S
+         WORK( INDLPL+I ) = LD( I ) / DPLUS
+         WORK( INDS+I ) = S*WORK( INDLPL+I )*L( I )
+         S = WORK( INDS+I ) - LAMBDA
+ 51   CONTINUE
+      SAWNAN1 = DISNAN( S )
 *
-      IF( .NOT.( S.GT.ZERO .OR. S.LT.ONE ) ) THEN
-*
-*        Run a slower version of the above loop if a NaN is detected
-*
-         SAWNAN = .TRUE.
-         J = B1 + 1
-   60    CONTINUE
-         IF( WORK( INDS+J ).GT.ZERO .OR. WORK( INDS+J ).LT.ONE ) THEN
-            J = J + 1
-            GO TO 60
-         END IF
-         WORK( INDS+J ) = LLD( J )
-         S = WORK( INDS+J ) - SIGMA
-         DO 70 I = J + 1, R2 - 1
+ 60   CONTINUE
+      IF( SAWNAN1 ) THEN
+*        Runs a slower version of the above loop if a NaN is detected
+         NEG1 = 0
+         S = WORK( INDS+B1-1 ) - LAMBDA
+         DO 70 I = B1, R1 - 1
             DPLUS = D( I ) + S
-            WORK( I ) = LD( I ) / DPLUS
-            IF( WORK( I ).EQ.ZERO ) THEN
-               WORK( INDS+I ) = LLD( I )
-            ELSE
-               WORK( INDS+I ) = S*WORK( I )*L( I )
-            END IF
-            S = WORK( INDS+I ) - SIGMA
-   70    CONTINUE
+            IF(ABS(DPLUS).LT.PIVMIN) DPLUS = -PIVMIN
+            WORK( INDLPL+I ) = LD( I ) / DPLUS
+            IF(DPLUS.LT.ZERO) NEG1 = NEG1 + 1
+            WORK( INDS+I ) = S*WORK( INDLPL+I )*L( I )
+            IF( WORK( INDLPL+I ).EQ.ZERO )
+     $                      WORK( INDS+I ) = LLD( I )
+            S = WORK( INDS+I ) - LAMBDA
+ 70      CONTINUE
+         DO 71 I = R1, R2 - 1
+            DPLUS = D( I ) + S
+            IF(ABS(DPLUS).LT.PIVMIN) DPLUS = -PIVMIN
+            WORK( INDLPL+I ) = LD( I ) / DPLUS
+            WORK( INDS+I ) = S*WORK( INDLPL+I )*L( I )
+            IF( WORK( INDLPL+I ).EQ.ZERO )
+     $                      WORK( INDS+I ) = LLD( I )
+            S = WORK( INDS+I ) - LAMBDA
+ 71      CONTINUE
       END IF
-      WORK( INDP+BN-1 ) = D( BN ) - SIGMA
+*
+*     Compute the progressive transform (using the differential form)
+*     until the index R1
+*
+      SAWNAN2 = .FALSE.
+      NEG2 = 0
+      WORK( INDP+BN-1 ) = D( BN ) - LAMBDA
       DO 80 I = BN - 1, R1, -1
          DMINUS = LLD( I ) + WORK( INDP+I )
          TMP = D( I ) / DMINUS
+         IF(DMINUS.LT.ZERO) NEG2 = NEG2 + 1
          WORK( INDUMN+I ) = L( I )*TMP
-         WORK( INDP+I-1 ) = WORK( INDP+I )*TMP - SIGMA
-   80 CONTINUE
+         WORK( INDP+I-1 ) = WORK( INDP+I )*TMP - LAMBDA
+ 80   CONTINUE
       TMP = WORK( INDP+R1-1 )
-      IF( .NOT.( TMP.GT.ZERO .OR. TMP.LT.ONE ) ) THEN
-*
-*        Run a slower version of the above loop if a NaN is detected
-*
-         SAWNAN = .TRUE.
-         J = BN - 3
-   90    CONTINUE
-         IF( WORK( INDP+J ).GT.ZERO .OR. WORK( INDP+J ).LT.ONE ) THEN
-            J = J - 1
-            GO TO 90
-         END IF
-         WORK( INDP+J ) = D( J+1 ) - SIGMA
-         DO 100 I = J, R1, -1
+      SAWNAN2 = DISNAN( TMP )
+
+      IF( SAWNAN2 ) THEN
+*        Runs a slower version of the above loop if a NaN is detected
+         NEG2 = 0
+         DO 100 I = BN-1, R1, -1
             DMINUS = LLD( I ) + WORK( INDP+I )
+            IF(ABS(DMINUS).LT.PIVMIN) DMINUS = -PIVMIN
             TMP = D( I ) / DMINUS
+            IF(DMINUS.LT.ZERO) NEG2 = NEG2 + 1
             WORK( INDUMN+I ) = L( I )*TMP
-            IF( TMP.EQ.ZERO ) THEN
-               WORK( INDP+I-1 ) = D( I ) - SIGMA
-            ELSE
-               WORK( INDP+I-1 ) = WORK( INDP+I )*TMP - SIGMA
-            END IF
-  100    CONTINUE
+            WORK( INDP+I-1 ) = WORK( INDP+I )*TMP - LAMBDA
+            IF( TMP.EQ.ZERO )
+     $          WORK( INDP+I-1 ) = D( I ) - LAMBDA
+ 100     CONTINUE
       END IF
 *
 *     Find the index (from R1 to R2) of the largest (in magnitude)
 *     diagonal element of the inverse
 *
       MINGMA = WORK( INDS+R1-1 ) + WORK( INDP+R1-1 )
-      IF( MINGMA.EQ.ZERO )
+      IF( MINGMA.LT.ZERO ) NEG1 = NEG1 + 1
+      IF( WANTNC ) THEN
+         NEGCNT = NEG1 + NEG2
+      ELSE
+         NEGCNT = -1
+      ENDIF
+      IF( ABS(MINGMA).EQ.ZERO )
      $   MINGMA = EPS*WORK( INDS+R1-1 )
       R = R1
       DO 110 I = R1, R2 - 1
          TMP = WORK( INDS+I ) + WORK( INDP+I )
          IF( TMP.EQ.ZERO )
      $      TMP = EPS*WORK( INDS+I )
-         IF( ABS( TMP ).LT.ABS( MINGMA ) ) THEN
+         IF( ABS( TMP ).LE.ABS( MINGMA ) ) THEN
             MINGMA = TMP
             R = I + 1
          END IF
-  110 CONTINUE
+ 110  CONTINUE
 *
-*     Compute the (scaled) r-th column of the inverse
+*     Compute the FP vector: solve N^T v = e_r
 *
       ISUPPZ( 1 ) = B1
       ISUPPZ( 2 ) = BN
       Z( R ) = ONE
       ZTZ = ONE
-      IF( .NOT.SAWNAN ) THEN
-         FROM = R - 1
-         TO = MAX( R-BLKSIZ, B1 )
-  120    CONTINUE
-         IF( FROM.GE.B1 ) THEN
-            DO 130 I = FROM, TO, -1
-               Z( I ) = -( WORK( I )*Z( I+1 ) )
-               ZTZ = ZTZ + Z( I )*Z( I )
-  130       CONTINUE
-            IF( ABS( Z( TO ) ).LE.EPS .AND. ABS( Z( TO+1 ) ).LE.EPS )
+*
+*     Compute the FP vector upwards from R
+*
+      IF( .NOT.SAWNAN1 .AND. .NOT.SAWNAN2 ) THEN
+         DO 210 I = R-1, B1, -1
+            Z( I ) = -( WORK( INDLPL+I )*Z( I+1 ) )
+            IF( (ABS(Z(I))+ABS(Z(I+1)))* ABS(LD(I)).LT.GAPTOL )
      $           THEN
-               ISUPPZ( 1 ) = TO + 2
-            ELSE
-               FROM = TO - 1
-               TO = MAX( TO-BLKSIZ, B1 )
-               GO TO 120
-            END IF
-         END IF
-         FROM = R + 1
-         TO = MIN( R+BLKSIZ, BN )
-  140    CONTINUE
-         IF( FROM.LE.BN ) THEN
-            DO 150 I = FROM, TO
-               Z( I ) = -( WORK( INDUMN+I-1 )*Z( I-1 ) )
-               ZTZ = ZTZ + Z( I )*Z( I )
-  150       CONTINUE
-            IF( ABS( Z( TO ) ).LE.EPS .AND. ABS( Z( TO-1 ) ).LE.EPS )
-     $           THEN
-               ISUPPZ( 2 ) = TO - 2
-            ELSE
-               FROM = TO + 1
-               TO = MIN( TO+BLKSIZ, BN )
-               GO TO 140
-            END IF
-         END IF
+               Z( I ) = ZERO
+               ISUPPZ( 1 ) = I + 1
+               GOTO 220
+            ENDIF
+            ZTZ = ZTZ + Z( I )*Z( I )
+ 210     CONTINUE
+ 220     CONTINUE
       ELSE
-         DO 160 I = R - 1, B1, -1
+*        Run slower loop if NaN occurred.
+         DO 230 I = R - 1, B1, -1
             IF( Z( I+1 ).EQ.ZERO ) THEN
                Z( I ) = -( LD( I+1 ) / LD( I ) )*Z( I+2 )
-            ELSE IF( ABS( Z( I+1 ) ).LE.EPS .AND. ABS( Z( I+2 ) ).LE.
-     $               EPS ) THEN
-               ISUPPZ( 1 ) = I + 3
-               GO TO 170
             ELSE
-               Z( I ) = -( WORK( I )*Z( I+1 ) )
+               Z( I ) = -( WORK( INDLPL+I )*Z( I+1 ) )
+            END IF
+            IF( (ABS(Z(I))+ABS(Z(I+1)))* ABS(LD(I)).LT.GAPTOL )
+     $           THEN
+               Z( I ) = ZERO
+               ISUPPZ( 1 ) = I + 1
+               GO TO 240
             END IF
             ZTZ = ZTZ + Z( I )*Z( I )
-  160    CONTINUE
-  170    CONTINUE
-         DO 180 I = R, BN - 1
+ 230     CONTINUE
+ 240     CONTINUE
+      ENDIF
+
+*     Compute the FP vector downwards from R in blocks of size BLKSIZ
+      IF( .NOT.SAWNAN1 .AND. .NOT.SAWNAN2 ) THEN
+         DO 250 I = R, BN-1
+            Z( I+1 ) = -( WORK( INDUMN+I )*Z( I ) )
+            IF( (ABS(Z(I))+ABS(Z(I+1)))* ABS(LD(I)).LT.GAPTOL )
+     $         THEN
+               Z( I+1 ) = ZERO
+               ISUPPZ( 2 ) = I
+               GO TO 260
+            END IF
+            ZTZ = ZTZ + Z( I+1 )*Z( I+1 )
+ 250     CONTINUE
+ 260     CONTINUE
+      ELSE
+*        Run slower loop if NaN occurred.
+         DO 270 I = R, BN - 1
             IF( Z( I ).EQ.ZERO ) THEN
                Z( I+1 ) = -( LD( I-1 ) / LD( I ) )*Z( I-1 )
-            ELSE IF( ABS( Z( I ) ).LE.EPS .AND. ABS( Z( I-1 ) ).LE.EPS )
-     $                THEN
-               ISUPPZ( 2 ) = I - 2
-               GO TO 190
             ELSE
                Z( I+1 ) = -( WORK( INDUMN+I )*Z( I ) )
             END IF
+            IF( (ABS(Z(I))+ABS(Z(I+1)))* ABS(LD(I)).LT.GAPTOL )
+     $           THEN
+               Z( I+1 ) = ZERO
+               ISUPPZ( 2 ) = I
+               GO TO 280
+            END IF
             ZTZ = ZTZ + Z( I+1 )*Z( I+1 )
-  180    CONTINUE
-  190    CONTINUE
+ 270     CONTINUE
+ 280     CONTINUE
       END IF
-      DO 200 I = B1, ISUPPZ( 1 ) - 3
-         Z( I ) = ZERO
-  200 CONTINUE
-      DO 210 I = ISUPPZ( 2 ) + 3, BN
-         Z( I ) = ZERO
-  210 CONTINUE
+*
+*     Compute quantities for convergence test
+*
+      TMP = ONE / ZTZ
+      NRMINV = SQRT( TMP )
+      RESID = ABS( MINGMA )*NRMINV
+      RQCORR = MINGMA*TMP
+*
 *
       RETURN
 *
@@ -10325,10 +10425,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAR2V( N, X, Y, Z, INCX, C, S, INCC )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCC, INCX, N
@@ -10412,10 +10511,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARF( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE
@@ -10529,10 +10627,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V, LDV,
      $                   T, LDT, C, LDC, WORK, LDWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, SIDE, STOREV, TRANS
@@ -11116,10 +11213,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARFG( N, ALPHA, X, INCX, TAU )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -11254,10 +11350,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, STOREV
@@ -11472,10 +11567,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARFX( SIDE, M, N, V, TAU, C, LDC, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE
@@ -12111,10 +12205,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARGV( N, X, INCX, Y, INCY, C, INCC )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCC, INCX, INCY, N
@@ -12211,10 +12304,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARNV( IDIST, ISEED, N, X )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            IDIST, N
@@ -12325,21 +12417,21 @@ CIBM           PREFER SCALAR
 *     End of DLARNV
 *
       END
-      SUBROUTINE DLARRB( N, D, L, LD, LLD, IFIRST, ILAST, SIGMA, RELTOL,
-     $                   W, WGAP, WERR, WORK, IWORK, INFO )
+      SUBROUTINE DLARRB( N, D, LLD, IFIRST, ILAST, RTOL1,
+     $                   RTOL2, OFFSET, W, WGAP, WERR, WORK, IWORK,
+     $                   PIVMIN, SPDIAM, TWIST, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
-      INTEGER            IFIRST, ILAST, INFO, N
-      DOUBLE PRECISION   RELTOL, SIGMA
+      INTEGER            IFIRST, ILAST, INFO, N, OFFSET, TWIST
+      DOUBLE PRECISION   PIVMIN, RTOL1, RTOL2, SPDIAM
 *     ..
 *     .. Array Arguments ..
       INTEGER            IWORK( * )
-      DOUBLE PRECISION   D( * ), L( * ), LD( * ), LLD( * ), W( * ),
+      DOUBLE PRECISION   D( * ), LLD( * ), W( * ),
      $                   WERR( * ), WGAP( * ), WORK( * )
 *     ..
 *
@@ -12347,8 +12439,11 @@ CIBM           PREFER SCALAR
 *  =======
 *
 *  Given the relatively robust representation(RRR) L D L^T, DLARRB
-*  does ``limited'' bisection to locate the eigenvalues of L D L^T,
-*  W( IFIRST ) thru' W( ILAST ), to more accuracy. Intervals
+*  does "limited" bisection to refine the eigenvalues of L D L^T,
+*  W( IFIRST-OFFSET ) through W( ILAST-OFFSET ), to more accuracy. Initial
+*  guesses for these eigenvalues are input in W, the corresponding estimate
+*  of the error in these guesses and their gaps are input in WERR
+*  and WGAP, respectively. During bisection, intervals
 *  [left, right] are maintained by storing their mid-points and
 *  semi-widths in the arrays W and WERR respectively.
 *
@@ -12359,51 +12454,66 @@ CIBM           PREFER SCALAR
 *          The order of the matrix.
 *
 *  D       (input) DOUBLE PRECISION array, dimension (N)
-*          The n diagonal elements of the diagonal matrix D.
-*
-*  L       (input) DOUBLE PRECISION array, dimension (N-1)
-*          The n-1 subdiagonal elements of the unit bidiagonal matrix L.
-*
-*  LD      (input) DOUBLE PRECISION array, dimension (N-1)
-*          The n-1 elements L(i)*D(i).
+*          The N diagonal elements of the diagonal matrix D.
 *
 *  LLD     (input) DOUBLE PRECISION array, dimension (N-1)
-*          The n-1 elements L(i)*L(i)*D(i).
+*          The (N-1) elements L(i)*L(i)*D(i).
 *
 *  IFIRST  (input) INTEGER
-*          The index of the first eigenvalue in the cluster.
+*          The index of the first eigenvalue to be computed.
 *
 *  ILAST   (input) INTEGER
-*          The index of the last eigenvalue in the cluster.
+*          The index of the last eigenvalue to be computed.
 *
-*  SIGMA   (input) DOUBLE PRECISION
-*          The shift used to form L D L^T (see DLARRF).
+*  RTOL1   (input) DOUBLE PRECISION
+*  RTOL2   (input) DOUBLE PRECISION
+*          Tolerance for the convergence of the bisection intervals.
+*          An interval [LEFT,RIGHT] has converged if
+*          RIGHT-LEFT.LT.MAX( RTOL1*GAP, RTOL2*MAX(|LEFT|,|RIGHT|) )
+*          where GAP is the (estimated) distance to the nearest
+*          eigenvalue.
 *
-*  RELTOL  (input) DOUBLE PRECISION
-*          The relative tolerance.
+*  OFFSET  (input) INTEGER
+*          Offset for the arrays W, WGAP and WERR, i.e., the IFIRST-OFFSET
+*          through ILAST-OFFSET elements of these arrays are to be used.
 *
 *  W       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On input, W( IFIRST ) thru' W( ILAST ) are estimates of the
-*          corresponding eigenvalues of L D L^T.
-*          On output, these estimates are ``refined''.
+*          On input, W( IFIRST-OFFSET ) through W( ILAST-OFFSET ) are
+*          estimates of the eigenvalues of L D L^T indexed IFIRST throug
+*          ILAST.
+*          On output, these estimates are refined.
 *
-*  WGAP    (input/output) DOUBLE PRECISION array, dimension (N)
-*          The gaps between the eigenvalues of L D L^T. Very small
-*          gaps are changed on output.
+*  WGAP    (input/output) DOUBLE PRECISION array, dimension (N-1)
+*          On input, the (estimated) gaps between consecutive
+*          eigenvalues of L D L^T, i.e., WGAP(I-OFFSET) is the gap between
+*          eigenvalues I and I+1. Note that if IFIRST.EQ.ILAST
+*          then WGAP(IFIRST-OFFSET) must be set to ZERO.
+*          On output, these gaps are refined.
 *
 *  WERR    (input/output) DOUBLE PRECISION array, dimension (N)
-*          On input, WERR( IFIRST ) thru' WERR( ILAST ) are the errors
-*          in the estimates W( IFIRST ) thru' W( ILAST ).
-*          On output, these are the ``refined'' errors.
+*          On input, WERR( IFIRST-OFFSET ) through WERR( ILAST-OFFSET ) are
+*          the errors in the estimates of the corresponding elements in W.
+*          On output, these errors are refined.
 *
-*****Reminder to Inder --- WORK is never used in this subroutine *****
-*  WORK    (input) DOUBLE PRECISION array, dimension (???)
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (2*N)
 *          Workspace.
 *
-*  IWORK   (input) INTEGER array, dimension (2*N)
+*  IWORK   (workspace) INTEGER array, dimension (2*N)
 *          Workspace.
 *
-*****Reminder to Inder --- INFO is never set in this subroutine ******
+*  PIVMIN  (input) DOUBLE PRECISION
+*          The minimum pivot in the Sturm sequence.
+*
+*  SPDIAM  (input) DOUBLE PRECISION
+*          The spectral diameter of the matrix.
+*
+*  TWIST   (input) INTEGER
+*          The twist index for the twisted factorization that is used
+*          for the negcount.
+*          TWIST = N: Compute negcount from L D L^T - LAMBDA I = L+ D+ L+^T
+*          TWIST = 1: Compute negcount from L D L^T - LAMBDA I = U- D- U-^T
+*          TWIST = R: Compute negcount from L D L^T - LAMBDA I = N(r) D(r) N(r)
+*
 *  INFO    (output) INTEGER
 *          Error flag.
 *
@@ -12411,314 +12521,30 @@ CIBM           PREFER SCALAR
 *  ===============
 *
 *  Based on contributions by
-*     Inderjit Dhillon, IBM Almaden, USA
+*     Beresford Parlett, University of California, Berkeley, USA
+*     Jim Demmel, University of California, Berkeley, USA
+*     Inderjit Dhillon, University of Texas, Austin, USA
 *     Osni Marques, LBNL/NERSC, USA
+*     Christof Voemel, University of California, Berkeley, USA
 *
 *  =====================================================================
 *
 *     .. Parameters ..
       DOUBLE PRECISION   ZERO, TWO, HALF
-      PARAMETER          ( ZERO = 0.0D0, TWO = 2.0D0, HALF = 0.5D0 )
+      PARAMETER        ( ZERO = 0.0D0, TWO = 2.0D0,
+     $                   HALF = 0.5D0 )
+      INTEGER   MAXITR
 *     ..
 *     .. Local Scalars ..
-      INTEGER            CNT, I, I1, I2, INITI1, INITI2, J, K, NCNVRG,
-     $                   NEIG, NINT, NRIGHT, OLNINT
-      DOUBLE PRECISION   DELTA, EPS, GAP, LEFT, MID, PERT, RIGHT, S,
-     $                   THRESH, TMP, WIDTH
+      INTEGER            I, I1, II, IP, ITER, K, NEGCNT, NEXT, NINT,
+     $                   OLNINT, PREV, R
+      DOUBLE PRECISION   BACK, CVRGD, GAP, LEFT, LGAP, MID, MNWDTH,
+     $                   RGAP, RIGHT, TMP, WIDTH
 *     ..
 *     .. External Functions ..
-      DOUBLE PRECISION   DLAMCH
-      EXTERNAL           DLAMCH
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MAX, MIN
-*     ..
-*     .. Executable Statements ..
+      INTEGER            DLANEG
+      EXTERNAL           DLANEG
 *
-      EPS = DLAMCH( 'Precision' )
-      I1 = IFIRST
-      I2 = IFIRST
-      NEIG = ILAST - IFIRST + 1
-      NCNVRG = 0
-      THRESH = RELTOL
-      DO 10 I = IFIRST, ILAST
-         IWORK( I ) = 0
-         PERT = EPS*( ABS( SIGMA )+ABS( W( I ) ) )
-         WERR( I ) = WERR( I ) + PERT
-         IF( WGAP( I ).LT.PERT )
-     $      WGAP( I ) = PERT
-   10 CONTINUE
-      DO 20 I = I1, ILAST
-         IF( I.EQ.1 ) THEN
-            GAP = WGAP( I )
-         ELSE IF( I.EQ.N ) THEN
-            GAP = WGAP( I-1 )
-         ELSE
-            GAP = MIN( WGAP( I-1 ), WGAP( I ) )
-         END IF
-         IF( WERR( I ).LT.THRESH*GAP ) THEN
-            NCNVRG = NCNVRG + 1
-            IWORK( I ) = 1
-            IF( I1.EQ.I )
-     $         I1 = I1 + 1
-         ELSE
-            I2 = I
-         END IF
-   20 CONTINUE
-*
-*     Initialize the unconverged intervals.
-*
-      I = I1
-      NINT = 0
-      RIGHT = ZERO
-   30 CONTINUE
-      IF( I.LE.I2 ) THEN
-         IF( IWORK( I ).EQ.0 ) THEN
-            DELTA = EPS
-            LEFT = W( I ) - WERR( I )
-*
-*           Do while( CNT(LEFT).GT.I-1 )
-*
-   40       CONTINUE
-            IF( I.GT.I1 .AND. LEFT.LE.RIGHT ) THEN
-               LEFT = RIGHT
-               CNT = I - 1
-            ELSE
-               S = -LEFT
-               CNT = 0
-               DO 50 J = 1, N - 1
-                  TMP = D( J ) + S
-                  S = S*( LD( J ) / TMP )*L( J ) - LEFT
-                  IF( TMP.LT.ZERO )
-     $               CNT = CNT + 1
-   50          CONTINUE
-               TMP = D( N ) + S
-               IF( TMP.LT.ZERO )
-     $            CNT = CNT + 1
-               IF( CNT.GT.I-1 ) THEN
-                  DELTA = TWO*DELTA
-                  LEFT = LEFT - ( ABS( SIGMA )+ABS( LEFT ) )*DELTA
-                  GO TO 40
-               END IF
-            END IF
-            DELTA = EPS
-            RIGHT = W( I ) + WERR( I )
-*
-*           Do while( CNT(RIGHT).LT.I )
-*
-   60       CONTINUE
-            S = -RIGHT
-            CNT = 0
-            DO 70 J = 1, N - 1
-               TMP = D( J ) + S
-               S = S*( LD( J ) / TMP )*L( J ) - RIGHT
-               IF( TMP.LT.ZERO )
-     $            CNT = CNT + 1
-   70       CONTINUE
-            TMP = D( N ) + S
-            IF( TMP.LT.ZERO )
-     $         CNT = CNT + 1
-            IF( CNT.LT.I ) THEN
-               DELTA = TWO*DELTA
-               RIGHT = RIGHT + ( ABS( SIGMA )+ABS( RIGHT ) )*DELTA
-               GO TO 60
-            END IF
-            WERR( I ) = LEFT
-            W( I ) = RIGHT
-            IWORK( N+I ) = CNT
-            NINT = NINT + 1
-            I = CNT + 1
-         ELSE
-            I = I + 1
-         END IF
-         GO TO 30
-      END IF
-*
-*     While( NCNVRG.LT.NEIG )
-*
-      INITI1 = I1
-      INITI2 = I2
-   80 CONTINUE
-      IF( NCNVRG.LT.NEIG ) THEN
-         OLNINT = NINT
-         I = I1
-         DO 100 K = 1, OLNINT
-            NRIGHT = IWORK( N+I )
-            IF( IWORK( I ).EQ.0 ) THEN
-               MID = HALF*( WERR( I )+W( I ) )
-               S = -MID
-               CNT = 0
-               DO 90 J = 1, N - 1
-                  TMP = D( J ) + S
-                  S = S*( LD( J ) / TMP )*L( J ) - MID
-                  IF( TMP.LT.ZERO )
-     $               CNT = CNT + 1
-   90          CONTINUE
-               TMP = D( N ) + S
-               IF( TMP.LT.ZERO )
-     $            CNT = CNT + 1
-               CNT = MAX( I-1, MIN( NRIGHT, CNT ) )
-               IF( I.EQ.NRIGHT ) THEN
-                  IF( I.EQ.IFIRST ) THEN
-                     GAP = WERR( I+1 ) - W( I )
-                  ELSE IF( I.EQ.ILAST ) THEN
-                     GAP = WERR( I ) - W( I-1 )
-                  ELSE
-                     GAP = MIN( WERR( I+1 )-W( I ), WERR( I )-W( I-1 ) )
-                  END IF
-                  WIDTH = W( I ) - MID
-                  IF( WIDTH.LT.THRESH*GAP ) THEN
-                     NCNVRG = NCNVRG + 1
-                     IWORK( I ) = 1
-                     IF( I1.EQ.I ) THEN
-                        I1 = I1 + 1
-                        NINT = NINT - 1
-                     END IF
-                  END IF
-               END IF
-               IF( IWORK( I ).EQ.0 )
-     $            I2 = K
-               IF( CNT.EQ.I-1 ) THEN
-                  WERR( I ) = MID
-               ELSE IF( CNT.EQ.NRIGHT ) THEN
-                  W( I ) = MID
-               ELSE
-                  IWORK( N+I ) = CNT
-                  NINT = NINT + 1
-                  WERR( CNT+1 ) = MID
-                  W( CNT+1 ) = W( I )
-                  W( I ) = MID
-                  I = CNT + 1
-                  IWORK( N+I ) = NRIGHT
-               END IF
-            END IF
-            I = NRIGHT + 1
-  100    CONTINUE
-         NINT = NINT - OLNINT + I2
-         GO TO 80
-      END IF
-      DO 110 I = INITI1, INITI2
-         W( I ) = HALF*( WERR( I )+W( I ) )
-         WERR( I ) = W( I ) - WERR( I )
-  110 CONTINUE
-*
-      RETURN
-*
-*     End of DLARRB
-*
-      END
-      SUBROUTINE DLARRE( N, D, E, TOL, NSPLIT, ISPLIT, M, W, WOFF,
-     $                   GERSCH, WORK, INFO )
-*
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, M, N, NSPLIT
-      DOUBLE PRECISION   TOL
-*     ..
-*     .. Array Arguments ..
-      INTEGER            ISPLIT( * )
-      DOUBLE PRECISION   D( * ), E( * ), GERSCH( * ), W( * ), WOFF( * ),
-     $                   WORK( * )
-*     ..
-*
-*  Purpose
-*  =======
-*
-*  Given the tridiagonal matrix T, DLARRE sets "small" off-diagonal
-*  elements to zero, and for each unreduced block T_i, it finds
-*  (i) the numbers sigma_i
-*  (ii) the base T_i - sigma_i I = L_i D_i L_i^T representations and
-*  (iii) eigenvalues of each L_i D_i L_i^T.
-*  The representations and eigenvalues found are then used by
-*  DSTEGR to compute the eigenvectors of a symmetric tridiagonal
-*  matrix. Currently, the base representations are limited to being
-*  positive or negative definite, and the eigenvalues of the definite
-*  matrices are found by the dqds algorithm (subroutine DLASQ2). As
-*  an added benefit, DLARRE also outputs the n Gerschgorin
-*  intervals for each L_i D_i L_i^T.
-*
-*  Arguments
-*  =========
-*
-*  N       (input) INTEGER
-*          The order of the matrix.
-*
-*  D       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On entry, the n diagonal elements of the tridiagonal
-*          matrix T.
-*          On exit, the n diagonal elements of the diagonal
-*          matrices D_i.
-*
-*  E       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On entry, the (n-1) subdiagonal elements of the tridiagonal
-*          matrix T; E(N) need not be set.
-*          On exit, the subdiagonal elements of the unit bidiagonal
-*          matrices L_i.
-*
-*  TOL     (input) DOUBLE PRECISION
-*          The threshold for splitting. If on input |E(i)| < TOL, then
-*          the matrix T is split into smaller blocks.
-*
-*  NSPLIT  (input) INTEGER
-*          The number of blocks T splits into. 1 <= NSPLIT <= N.
-*
-*  ISPLIT  (output) INTEGER array, dimension (2*N)
-*          The splitting points, at which T breaks up into submatrices.
-*          The first submatrix consists of rows/columns 1 to ISPLIT(1),
-*          the second of rows/columns ISPLIT(1)+1 through ISPLIT(2),
-*          etc., and the NSPLIT-th consists of rows/columns
-*          ISPLIT(NSPLIT-1)+1 through ISPLIT(NSPLIT)=N.
-*
-*  M       (output) INTEGER
-*          The total number of eigenvalues (of all the L_i D_i L_i^T)
-*          found.
-*
-*  W       (output) DOUBLE PRECISION array, dimension (N)
-*          The first M elements contain the eigenvalues. The
-*          eigenvalues of each of the blocks, L_i D_i L_i^T, are
-*          sorted in ascending order.
-*
-*  WOFF    (output) DOUBLE PRECISION array, dimension (N)
-*          The NSPLIT base points sigma_i.
-*
-*  GERSCH  (output) DOUBLE PRECISION array, dimension (2*N)
-*          The n Gerschgorin intervals.
-*
-*  WORK    (input) DOUBLE PRECISION array, dimension (4*N???)
-*          Workspace.
-*
-*  INFO    (output) INTEGER
-*          Output error code from DLASQ2
-*
-*  Further Details
-*  ===============
-*
-*  Based on contributions by
-*     Inderjit Dhillon, IBM Almaden, USA
-*     Osni Marques, LBNL/NERSC, USA
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      DOUBLE PRECISION   ZERO, ONE, TWO, FOUR, FOURTH
-      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0, TWO = 2.0D0,
-     $                   FOUR = 4.0D0, FOURTH = ONE / FOUR )
-*     ..
-*     .. Local Scalars ..
-      INTEGER            CNT, I, IBEGIN, IEND, IN, J, JBLK, MAXCNT
-      DOUBLE PRECISION   DELTA, EPS, GL, GU, NRM, OFFD, S, SGNDEF,
-     $                   SIGMA, TAU, TMP1, WIDTH
-*     ..
-*     .. External Functions ..
-      DOUBLE PRECISION   DLAMCH
-      EXTERNAL           DLAMCH
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           DCOPY, DLASQ2
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, MIN
@@ -12726,228 +12552,941 @@ CIBM           PREFER SCALAR
 *     .. Executable Statements ..
 *
       INFO = 0
-      EPS = DLAMCH( 'Precision' )
 *
-*     Compute Splitting Points
+      MAXITR = INT( ( LOG( SPDIAM+PIVMIN )-LOG( PIVMIN ) ) /
+     $           LOG( TWO ) ) + 2
+      MNWDTH = TWO * PIVMIN
 *
-      NSPLIT = 1
-      DO 10 I = 1, N - 1
-         IF( ABS( E( I ) ).LE.TOL ) THEN
-            ISPLIT( NSPLIT ) = I
-            NSPLIT = NSPLIT + 1
+      R = TWIST
+      IF((R.LT.1).OR.(R.GT.N)) R = N
+*
+*     Initialize unconverged intervals in [ WORK(2*I-1), WORK(2*I) ].
+*     The Sturm Count, Count( WORK(2*I-1) ) is arranged to be I-1, while
+*     Count( WORK(2*I) ) is stored in IWORK( 2*I ). The integer IWORK( 2*I-1 )
+*     for an unconverged interval is set to the index of the next unconverged
+*     interval, and is -1 or 0 for a converged interval. Thus a linked
+*     list of unconverged intervals is set up.
+*
+      I1 = IFIRST
+*     The number of unconverged intervals
+      NINT = 0
+*     The last unconverged interval found
+      PREV = 0
+
+      RGAP = WGAP( I1-OFFSET )
+      DO 75 I = I1, ILAST
+         K = 2*I
+         II = I - OFFSET
+         LEFT = W( II ) - WERR( II )
+         RIGHT = W( II ) + WERR( II )
+         LGAP = RGAP
+         RGAP = WGAP( II )
+         GAP = MIN( LGAP, RGAP )
+
+*        Make sure that [LEFT,RIGHT] contains the desired eigenvalue
+*        Compute negcount from dstqds facto L+D+L+^T = L D L^T - LEFT
+*
+*        Do while( NEGCNT(LEFT).GT.I-1 )
+*
+         BACK = WERR( II )
+ 20      CONTINUE
+         NEGCNT = DLANEG( N, D, LLD, LEFT, PIVMIN, R )
+         IF( NEGCNT.GT.I-1 ) THEN
+            LEFT = LEFT - BACK
+            BACK = TWO*BACK
+            GO TO 20
          END IF
-   10 CONTINUE
-      ISPLIT( NSPLIT ) = N
 *
+*        Do while( NEGCNT(RIGHT).LT.I )
+*        Compute negcount from dstqds facto L+D+L+^T = L D L^T - RIGHT
+*
+         BACK = WERR( II )
+ 50      CONTINUE
+
+         NEGCNT = DLANEG( N, D, LLD, RIGHT, PIVMIN, R )
+          IF( NEGCNT.LT.I ) THEN
+             RIGHT = RIGHT + BACK
+             BACK = TWO*BACK
+             GO TO 50
+          END IF
+         WIDTH = HALF*ABS( LEFT - RIGHT )
+         TMP = MAX( ABS( LEFT ), ABS( RIGHT ) )
+         CVRGD = MAX(RTOL1*GAP,RTOL2*TMP)
+         IF( WIDTH.LE.CVRGD .OR. WIDTH.LE.MNWDTH ) THEN
+*           This interval has already converged and does not need refinement.
+*           (Note that the gaps might change through refining the
+*            eigenvalues, however, they can only get bigger.)
+*           Remove it from the list.
+            IWORK( K-1 ) = -1
+*           Make sure that I1 always points to the first unconverged interval
+            IF((I.EQ.I1).AND.(I.LT.ILAST)) I1 = I + 1
+            IF((PREV.GE.I1).AND.(I.LE.ILAST)) IWORK( 2*PREV-1 ) = I + 1
+         ELSE
+*           unconverged interval found
+            PREV = I
+            NINT = NINT + 1
+            IWORK( K-1 ) = I + 1
+            IWORK( K ) = NEGCNT
+         END IF
+         WORK( K-1 ) = LEFT
+         WORK( K ) = RIGHT
+ 75   CONTINUE
+
+*
+*     Do while( NINT.GT.0 ), i.e. there are still unconverged intervals
+*     and while (ITER.LT.MAXITR)
+*
+      ITER = 0
+ 80   CONTINUE
+      PREV = I1 - 1
+      I = I1
+      OLNINT = NINT
+
+      DO 100 IP = 1, OLNINT
+         K = 2*I
+         II = I - OFFSET
+         RGAP = WGAP( II )
+         LGAP = RGAP
+         IF(II.GT.1) LGAP = WGAP( II-1 )
+         GAP = MIN( LGAP, RGAP )
+         NEXT = IWORK( K-1 )
+         LEFT = WORK( K-1 )
+         RIGHT = WORK( K )
+         MID = HALF*( LEFT + RIGHT )
+
+*        semiwidth of interval
+         WIDTH = RIGHT - MID
+         TMP = MAX( ABS( LEFT ), ABS( RIGHT ) )
+         CVRGD = MAX(RTOL1*GAP,RTOL2*TMP)
+         IF( ( WIDTH.LE.CVRGD ) .OR. ( WIDTH.LE.MNWDTH ).OR.
+     $       ( ITER.EQ.MAXITR ) )THEN
+*           reduce number of unconverged intervals
+            NINT = NINT - 1
+*           Mark interval as converged.
+            IWORK( K-1 ) = 0
+            IF( I1.EQ.I ) THEN
+               I1 = NEXT
+            ELSE
+*              Prev holds the last unconverged interval previously examined
+               IF(PREV.GE.I1) IWORK( 2*PREV-1 ) = NEXT
+            END IF
+            I = NEXT
+            GO TO 100
+         END IF
+         PREV = I
+*
+*        Perform one bisection step
+*
+         NEGCNT = DLANEG( N, D, LLD, MID, PIVMIN, R )
+         IF( NEGCNT.LE.I-1 ) THEN
+            WORK( K-1 ) = MID
+         ELSE
+            WORK( K ) = MID
+         END IF
+         I = NEXT
+ 100  CONTINUE
+      ITER = ITER + 1
+*     do another loop if there are still unconverged intervals
+*     However, in the last iteration, all intervals are accepted
+*     since this is the best we can do.
+      IF( ( NINT.GT.0 ).AND.(ITER.LE.MAXITR) ) GO TO 80
+*
+*
+*     At this point, all the intervals have converged
+      DO 110 I = IFIRST, ILAST
+         K = 2*I
+         II = I - OFFSET
+*        All intervals marked by '0' have been refined.
+         IF( IWORK( K-1 ).EQ.0 ) THEN
+            W( II ) = HALF*( WORK( K-1 )+WORK( K ) )
+            WERR( II ) = WORK( K ) - W( II )
+         END IF
+ 110  CONTINUE
+*
+      DO 111 I = IFIRST+1, ILAST
+         K = 2*I
+         II = I - OFFSET
+         WGAP( II-1 ) = MAX( ZERO,
+     $                     W(II) - WERR (II) - W( II-1 ) - WERR( II-1 ))
+ 111  CONTINUE
+
+      RETURN
+*
+*     End of DLARRB
+*
+      END
+      SUBROUTINE DLARRE( RANGE, N, VL, VU, IL, IU, D, E, E2,
+     $                    RTOL1, RTOL2, SPLTOL, NSPLIT, ISPLIT, M,
+     $                    W, WERR, WGAP, IBLOCK, INDEXW, GERS, PIVMIN,
+     $                    WORK, IWORK, INFO )
+      IMPLICIT NONE
+*
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     .. Scalar Arguments ..
+      CHARACTER          RANGE
+      INTEGER            IL, INFO, IU, M, N, NSPLIT
+      DOUBLE PRECISION  PIVMIN, RTOL1, RTOL2, SPLTOL, VL, VU
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IBLOCK( * ), ISPLIT( * ), IWORK( * ),
+     $                   INDEXW( * )
+      DOUBLE PRECISION   D( * ), E( * ), E2( * ), GERS( * ),
+     $                   W( * ),WERR( * ), WGAP( * ), WORK( * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  To find the desired eigenvalues of a given real symmetric
+*  tridiagonal matrix T, DLARRE sets any "small" off-diagonal
+*  elements to zero, and for each unreduced block T_i, it finds
+*  (a) a suitable shift at one end of the block's spectrum,
+*  (b) the base representation, T_i - sigma_i I = L_i D_i L_i^T, and
+*  (c) eigenvalues of each L_i D_i L_i^T.
+*  The representations and eigenvalues found are then used by
+*  DSTEMR to compute the eigenvectors of T.
+*  The accuracy varies depending on whether bisection is used to
+*  find a few eigenvalues or the dqds algorithm (subroutine DLASQ2) to
+*  conpute all and then discard any unwanted one.
+*  As an added benefit, DLARRE also outputs the n
+*  Gerschgorin intervals for the matrices L_i D_i L_i^T.
+*
+*  Arguments
+*  =========
+*
+*  RANGE   (input) CHARACTER
+*          = 'A': ("All")   all eigenvalues will be found.
+*          = 'V': ("Value") all eigenvalues in the half-open interval
+*                           (VL, VU] will be found.
+*          = 'I': ("Index") the IL-th through IU-th eigenvalues (of the
+*                           entire matrix) will be found.
+*
+*  N       (input) INTEGER
+*          The order of the matrix. N > 0.
+*
+*  VL      (input/output) DOUBLE PRECISION
+*  VU      (input/output) DOUBLE PRECISION
+*          If RANGE='V', the lower and upper bounds for the eigenvalues.
+*          Eigenvalues less than or equal to VL, or greater than VU,
+*          will not be returned.  VL < VU.
+*          If RANGE='I' or ='A', DLARRE computes bounds on the desired
+*          part of the spectrum.
+*
+*  IL      (input) INTEGER
+*  IU      (input) INTEGER
+*          If RANGE='I', the indices (in ascending order) of the
+*          smallest and largest eigenvalues to be returned.
+*          1 <= IL <= IU <= N.
+*
+*  D       (input/output) DOUBLE PRECISION array, dimension (N)
+*          On entry, the N diagonal elements of the tridiagonal
+*          matrix T.
+*          On exit, the N diagonal elements of the diagonal
+*          matrices D_i.
+*
+*  E       (input/output) DOUBLE PRECISION array, dimension (N)
+*          On entry, the first (N-1) entries contain the subdiagonal
+*          elements of the tridiagonal matrix T; E(N) need not be set.
+*          On exit, E contains the subdiagonal elements of the unit
+*          bidiagonal matrices L_i. The entries E( ISPLIT( I ) ),
+*          1 <= I <= NSPLIT, contain the base points sigma_i on output.
+*
+*  E2      (input/output) DOUBLE PRECISION array, dimension (N)
+*          On entry, the first (N-1) entries contain the SQUARES of the
+*          subdiagonal elements of the tridiagonal matrix T;
+*          E2(N) need not be set.
+*          On exit, the entries E2( ISPLIT( I ) ),
+*          1 <= I <= NSPLIT, have been set to zero
+*
+*  RTOL1   (input) DOUBLE PRECISION
+*  RTOL2   (input) DOUBLE PRECISION
+*           Parameters for bisection.
+*           An interval [LEFT,RIGHT] has converged if
+*           RIGHT-LEFT.LT.MAX( RTOL1*GAP, RTOL2*MAX(|LEFT|,|RIGHT|) )
+*
+*  SPLTOL (input) DOUBLE PRECISION
+*          The threshold for splitting.
+*
+*  NSPLIT  (output) INTEGER
+*          The number of blocks T splits into. 1 <= NSPLIT <= N.
+*
+*  ISPLIT  (output) INTEGER array, dimension (N)
+*          The splitting points, at which T breaks up into blocks.
+*          The first block consists of rows/columns 1 to ISPLIT(1),
+*          the second of rows/columns ISPLIT(1)+1 through ISPLIT(2),
+*          etc., and the NSPLIT-th consists of rows/columns
+*          ISPLIT(NSPLIT-1)+1 through ISPLIT(NSPLIT)=N.
+*
+*  M       (output) INTEGER
+*          The total number of eigenvalues (of all L_i D_i L_i^T)
+*          found.
+*
+*  W       (output) DOUBLE PRECISION array, dimension (N)
+*          The first M elements contain the eigenvalues. The
+*          eigenvalues of each of the blocks, L_i D_i L_i^T, are
+*          sorted in ascending order ( DLARRE may use the
+*          remaining N-M elements as workspace).
+*
+*  WERR    (output) DOUBLE PRECISION array, dimension (N)
+*          The error bound on the corresponding eigenvalue in W.
+*
+*  WGAP    (output) DOUBLE PRECISION array, dimension (N)
+*          The separation from the right neighbor eigenvalue in W.
+*          The gap is only with respect to the eigenvalues of the same block
+*          as each block has its own representation tree.
+*          Exception: at the right end of a block we store the left gap
+*
+*  IBLOCK  (output) INTEGER array, dimension (N)
+*          The indices of the blocks (submatrices) associated with the
+*          corresponding eigenvalues in W; IBLOCK(i)=1 if eigenvalue
+*          W(i) belongs to the first block from the top, =2 if W(i)
+*          belongs to the second block, etc.
+*
+*  INDEXW  (output) INTEGER array, dimension (N)
+*          The indices of the eigenvalues within each block (submatrix);
+*          for example, INDEXW(i)= 10 and IBLOCK(i)=2 imply that the
+*          i-th eigenvalue W(i) is the 10-th eigenvalue in block 2
+*
+*  GERS    (output) DOUBLE PRECISION array, dimension (2*N)
+*          The N Gerschgorin intervals (the i-th Gerschgorin interval
+*          is (GERS(2*i-1), GERS(2*i)).
+*
+*  PIVMIN  (output) DOUBLE PRECISION
+*          The minimum pivot in the Sturm sequence for T.
+*
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (6*N)
+*          Workspace.
+*
+*  IWORK   (workspace) INTEGER array, dimension (5*N)
+*          Workspace.
+*
+*  INFO    (output) INTEGER
+*          = 0:  successful exit
+*          > 0:  A problem occured in DLARRE.
+*          < 0:  One of the called subroutines signaled an internal problem.
+*                Needs inspection of the corresponding parameter IINFO
+*                for further information.
+*
+*          =-1:  Problem in DLARRD.
+*          = 2:  No base representation could be found in MAXTRY iterations.
+*                Increasing MAXTRY and recompilation might be a remedy.
+*          =-3:  Problem in DLARRB when computing the refined root
+*                representation for DLASQ2.
+*          =-4:  Problem in DLARRB when preforming bisection on the
+*                desired part of the spectrum.
+*          =-5:  Problem in DLASQ2.
+*          =-6:  Problem in DLASQ2.
+*
+*  Further Details
+*  The base representations are required to suffer very little
+*  element growth and consequently define all their eigenvalues to
+*  high relative accuracy.
+*  ===============
+*
+*  Based on contributions by
+*     Beresford Parlett, University of California, Berkeley, USA
+*     Jim Demmel, University of California, Berkeley, USA
+*     Inderjit Dhillon, University of Texas, Austin, USA
+*     Osni Marques, LBNL/NERSC, USA
+*     Christof Voemel, University of California, Berkeley, USA
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   FAC, FOUR, FOURTH, FUDGE, HALF, HNDRD,
+     $                   MAXGROWTH, ONE, PERT, TWO, ZERO
+      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0,
+     $                     TWO = 2.0D0, FOUR=4.0D0,
+     $                     HNDRD = 100.0D0,
+     $                     PERT = 8.0D0,
+     $                     HALF = ONE/TWO, FOURTH = ONE/FOUR, FAC= HALF,
+     $                     MAXGROWTH = 64.0D0, FUDGE = 2.0D0 )
+      INTEGER            MAXTRY, ALLRNG, INDRNG, VALRNG
+      PARAMETER          ( MAXTRY = 6, ALLRNG = 1, INDRNG = 2,
+     $                     VALRNG = 3 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            FORCEB, NOREP, USEDQD
+      INTEGER            CNT, CNT1, CNT2, I, IBEGIN, IDUM, IEND, IINFO,
+     $                   IN, INDL, INDU, IRANGE, J, JBLK, MB, MM,
+     $                   WBEGIN, WEND
+      DOUBLE PRECISION   AVGAP, BSRTOL, CLWDTH, DMAX, DPIVOT, EABS,
+     $                   EMAX, EOLD, EPS, GL, GU, ISLEFT, ISRGHT, RTL,
+     $                   RTOL, S1, S2, SAFMIN, SGNDEF, SIGMA, SPDIAM,
+     $                   TAU, TMP, TMP1
+
+
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISEED( 4 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      DOUBLE PRECISION            DLAMCH
+      EXTERNAL           DLAMCH, LSAME
+
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DCOPY, DLARNV, DLARRA, DLARRB, DLARRC, DLARRD,
+     $                   DLASQ2
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, MAX, MIN
+
+*     ..
+*     .. Executable Statements ..
+*
+
+      INFO = 0
+
+*
+*     Decode RANGE
+*
+      IF( LSAME( RANGE, 'A' ) ) THEN
+         IRANGE = ALLRNG
+      ELSE IF( LSAME( RANGE, 'V' ) ) THEN
+         IRANGE = VALRNG
+      ELSE IF( LSAME( RANGE, 'I' ) ) THEN
+         IRANGE = INDRNG
+      END IF
+
+      M = 0
+
+*     Get machine constants
+      SAFMIN = DLAMCH( 'S' )
+      EPS = DLAMCH( 'P' )
+
+*     Set parameters
+      RTL = SQRT(EPS)
+      BSRTOL = SQRT(EPS)
+
+*     Treat case of 1x1 matrix for quick return
+      IF( N.EQ.1 ) THEN
+         IF( (IRANGE.EQ.ALLRNG).OR.
+     $       ((IRANGE.EQ.VALRNG).AND.(D(1).GT.VL).AND.(D(1).LE.VU)).OR.
+     $       ((IRANGE.EQ.INDRNG).AND.(IL.EQ.1).AND.(IU.EQ.1)) ) THEN
+            M = 1
+            W(1) = D(1)
+*           The computation error of the eigenvalue is zero
+            WERR(1) = ZERO
+            WGAP(1) = ZERO
+            IBLOCK( 1 ) = 1
+            INDEXW( 1 ) = 1
+            GERS(1) = D( 1 )
+            GERS(2) = D( 1 )
+         ENDIF
+*        store the shift for the initial RRR, which is zero in this case
+         E(1) = ZERO
+         RETURN
+      END IF
+
+*     General case: tridiagonal matrix of order > 1
+*
+*     Init WERR, WGAP. Compute Gerschgorin intervals and spectral diameter.
+*     Compute maximum off-diagonal entry and pivmin.
+      GL = D(1)
+      GU = D(1)
+      EOLD = ZERO
+      EMAX = ZERO
+      E(N) = ZERO
+      DO 5 I = 1,N
+         WERR(I) = ZERO
+         WGAP(I) = ZERO
+         EABS = ABS( E(I) )
+         IF( EABS .GE. EMAX ) THEN
+            EMAX = EABS
+         END IF
+         TMP1 = EABS + EOLD
+         GERS( 2*I-1) = D(I) - TMP1
+         GL =  MIN( GL, GERS( 2*I - 1))
+         GERS( 2*I ) = D(I) + TMP1
+         GU = MAX( GU, GERS(2*I) )
+         EOLD  = EABS
+ 5    CONTINUE
+*     The minimum pivot allowed in the Sturm sequence for T
+      PIVMIN = SAFMIN * MAX( ONE, EMAX**2 )
+*     Compute spectral diameter. The Gerschgorin bounds give an
+*     estimate that is wrong by at most a factor of SQRT(2)
+      SPDIAM = GU - GL
+
+*     Compute splitting points
+      CALL DLARRA( N, D, E, E2, SPLTOL, SPDIAM,
+     $                    NSPLIT, ISPLIT, IINFO )
+
+*     Can force use of bisection instead of faster DQDS.
+*     Option left in the code for future multisection work.
+      FORCEB = .FALSE.
+
+      IF( (IRANGE.EQ.ALLRNG) .AND. (.NOT. FORCEB) ) THEN
+*        Set interval [VL,VU] that contains all eigenvalues
+         VL = GL
+         VU = GU
+      ELSE
+*        We call DLARRD to find crude approximations to the eigenvalues
+*        in the desired range. In case IRANGE = INDRNG, we also obtain the
+*        interval (VL,VU] that contains all the wanted eigenvalues.
+*        An interval [LEFT,RIGHT] has converged if
+*        RIGHT-LEFT.LT.RTOL*MAX(ABS(LEFT),ABS(RIGHT))
+*        DLARRD needs a WORK of size 4*N, IWORK of size 3*N
+         CALL DLARRD( RANGE, 'B', N, VL, VU, IL, IU, GERS,
+     $                    BSRTOL, D, E, E2, PIVMIN, NSPLIT, ISPLIT,
+     $                    MM, W, WERR, VL, VU, IBLOCK, INDEXW,
+     $                    WORK, IWORK, IINFO )
+         IF( IINFO.NE.0 ) THEN
+            INFO = -1
+            RETURN
+         ENDIF
+*        Make sure that the entries M+1 to N in W, WERR, IBLOCK, INDEXW are 0
+         DO 14 I = MM+1,N
+            W( I ) = ZERO
+            WERR( I ) = ZERO
+            IBLOCK( I ) = 0
+            INDEXW( I ) = 0
+ 14      CONTINUE
+      END IF
+
+
+***
+*     Loop over unreduced blocks
       IBEGIN = 1
+      WBEGIN = 1
       DO 170 JBLK = 1, NSPLIT
          IEND = ISPLIT( JBLK )
-         IF( IBEGIN.EQ.IEND ) THEN
-            W( IBEGIN ) = D( IBEGIN )
-            WOFF( JBLK ) = ZERO
+         IN = IEND - IBEGIN + 1
+
+*        1 X 1 block
+         IF( IN.EQ.1 ) THEN
+            IF( (IRANGE.EQ.ALLRNG).OR.( (IRANGE.EQ.VALRNG).AND.
+     $         ( D( IBEGIN ).GT.VL ).AND.( D( IBEGIN ).LE.VU ) )
+     $        .OR. ( (IRANGE.EQ.INDRNG).AND.(IBLOCK(WBEGIN).EQ.JBLK))
+     $        ) THEN
+               M = M + 1
+               W( M ) = D( IBEGIN )
+               WERR(M) = ZERO
+*              The gap for a single block doesn't matter for the later
+*              algorithm and is assigned an arbitrary large value
+               WGAP(M) = ZERO
+               IBLOCK( M ) = JBLK
+               INDEXW( M ) = 1
+               WBEGIN = WBEGIN + 1
+            ENDIF
+*           E( IEND ) holds the shift for the initial RRR
+            E( IEND ) = ZERO
             IBEGIN = IEND + 1
             GO TO 170
          END IF
-         IN = IEND - IBEGIN + 1
 *
-*        Form the n Gerschgorin intervals
+*        Blocks of size larger than 1x1
 *
-         GL = D( IBEGIN ) - ABS( E( IBEGIN ) )
-         GU = D( IBEGIN ) + ABS( E( IBEGIN ) )
-         GERSCH( 2*IBEGIN-1 ) = GL
-         GERSCH( 2*IBEGIN ) = GU
-         GERSCH( 2*IEND-1 ) = D( IEND ) - ABS( E( IEND-1 ) )
-         GERSCH( 2*IEND ) = D( IEND ) + ABS( E( IEND-1 ) )
-         GL = MIN( GERSCH( 2*IEND-1 ), GL )
-         GU = MAX( GERSCH( 2*IEND ), GU )
-         DO 20 I = IBEGIN + 1, IEND - 1
-            OFFD = ABS( E( I-1 ) ) + ABS( E( I ) )
-            GERSCH( 2*I-1 ) = D( I ) - OFFD
-            GL = MIN( GERSCH( 2*I-1 ), GL )
-            GERSCH( 2*I ) = D( I ) + OFFD
-            GU = MAX( GERSCH( 2*I ), GU )
-   20    CONTINUE
-         NRM = MAX( ABS( GL ), ABS( GU ) )
+*        E( IEND ) will hold the shift for the initial RRR, for now set it =0
+         E( IEND ) = ZERO
 *
-*        Find the number SIGMA where the base representation
-*        T - sigma I = L D L^T is to be formed.
-*
-         WIDTH = GU - GL
-         DO 30 I = IBEGIN, IEND - 1
-            WORK( I ) = E( I )*E( I )
-   30    CONTINUE
-         DO 50 J = 1, 2
-            IF( J.EQ.1 ) THEN
-               TAU = GL + FOURTH*WIDTH
+*        Find local outer bounds GL,GU for the block
+         GL = D(IBEGIN)
+         GU = D(IBEGIN)
+         DO 15 I = IBEGIN , IEND
+            GL = MIN( GERS( 2*I-1 ), GL )
+            GU = MAX( GERS( 2*I ), GU )
+ 15      CONTINUE
+         SPDIAM = GU - GL
+
+         IF(.NOT. ((IRANGE.EQ.ALLRNG).AND.(.NOT.FORCEB)) ) THEN
+*           Count the number of eigenvalues in the current block.
+            MB = 0
+            DO 20 I = WBEGIN,MM
+               IF( IBLOCK(I).EQ.JBLK ) THEN
+                  MB = MB+1
+               ELSE
+                  GOTO 21
+               ENDIF
+ 20         CONTINUE
+ 21         CONTINUE
+
+            IF( MB.EQ.0) THEN
+*              No eigenvalue in the current block lies in the desired range
+*              E( IEND ) holds the shift for the initial RRR
+               E( IEND ) = ZERO
+               IBEGIN = IEND + 1
+               GO TO 170
             ELSE
-               TAU = GU - FOURTH*WIDTH
-            END IF
-            TMP1 = D( IBEGIN ) - TAU
-            IF( TMP1.LT.ZERO ) THEN
-               CNT = 1
+
+*              Decide whether dqds or bisection is more efficient
+               USEDQD = ( (MB .GT. FAC*IN) .AND. (.NOT.FORCEB) )
+               WEND = WBEGIN + MB - 1
+*              Calculate gaps for the current block
+*              In later stages, when representations for individual
+*              eigenvalues are different, we use SIGMA = E( IEND ).
+               SIGMA = ZERO
+               DO 30 I = WBEGIN, WEND - 1
+                  WGAP( I ) = MAX( ZERO,
+     $                        W(I+1)-WERR(I+1) - (W(I)+WERR(I)) )
+ 30            CONTINUE
+               WGAP( WEND ) = MAX( ZERO,
+     $                     VU - SIGMA - (W( WEND )+WERR( WEND )))
+*              Find local index of the first and last desired evalue.
+               INDL = INDEXW(WBEGIN)
+               INDU = INDEXW( WEND )
+            ENDIF
+         ENDIF
+         IF(( (IRANGE.EQ.ALLRNG) .AND. (.NOT. FORCEB) ).OR.USEDQD) THEN
+*           Case of DQDS
+*           Find approximations to the extremal eigenvalues of the block
+            CALL DLARRK( IN, 1, GL, GU, D(IBEGIN),
+     $               E2(IBEGIN), PIVMIN, RTL, TMP, TMP1, IINFO )
+            IF( IINFO.NE.0 ) THEN
+               INFO = -1
+               RETURN
+            ENDIF
+            ISLEFT = MAX(GL, TMP - TMP1
+     $               - HNDRD * EPS* ABS(TMP - TMP1))
+
+            CALL DLARRK( IN, IN, GL, GU, D(IBEGIN),
+     $               E2(IBEGIN), PIVMIN, RTL, TMP, TMP1, IINFO )
+            IF( IINFO.NE.0 ) THEN
+               INFO = -1
+               RETURN
+            ENDIF
+            ISRGHT = MIN(GU, TMP + TMP1
+     $                 + HNDRD * EPS * ABS(TMP + TMP1))
+*           Improve the estimate of the spectral diameter
+            SPDIAM = ISRGHT - ISLEFT
+         ELSE
+*           Case of bisection
+*           Find approximations to the wanted extremal eigenvalues
+            ISLEFT = MAX(GL, W(WBEGIN) - WERR(WBEGIN)
+     $                  - HNDRD * EPS*ABS(W(WBEGIN)- WERR(WBEGIN) ))
+            ISRGHT = MIN(GU,W(WEND) + WERR(WEND)
+     $                  + HNDRD * EPS * ABS(W(WEND)+ WERR(WEND)))
+         ENDIF
+
+
+*        Decide whether the base representation for the current block
+*        L_JBLK D_JBLK L_JBLK^T = T_JBLK - sigma_JBLK I
+*        should be on the left or the right end of the current block.
+*        The strategy is to shift to the end which is "more populated"
+*        Furthermore, decide whether to use DQDS for the computation of
+*        the eigenvalue approximations at the end of DLARRE or bisection.
+*        dqds is chosen if all eigenvalues are desired or the number of
+*        eigenvalues to be computed is large compared to the blocksize.
+         IF( ( IRANGE.EQ.ALLRNG ) .AND. (.NOT.FORCEB) ) THEN
+*           If all the eigenvalues have to be computed, we use dqd
+            USEDQD = .TRUE.
+*           INDL is the local index of the first eigenvalue to compute
+            INDL = 1
+            INDU = IN
+*           MB =  number of eigenvalues to compute
+            MB = IN
+            WEND = WBEGIN + MB - 1
+*           Define 1/4 and 3/4 points of the spectrum
+            S1 = ISLEFT + FOURTH * SPDIAM
+            S2 = ISRGHT - FOURTH * SPDIAM
+         ELSE
+*           DLARRD has computed IBLOCK and INDEXW for each eigenvalue
+*           approximation.
+*           choose sigma
+            IF( USEDQD ) THEN
+               S1 = ISLEFT + FOURTH * SPDIAM
+               S2 = ISRGHT - FOURTH * SPDIAM
             ELSE
-               CNT = 0
-            END IF
-            DO 40 I = IBEGIN + 1, IEND
-               TMP1 = D( I ) - TAU - WORK( I-1 ) / TMP1
-               IF( TMP1.LT.ZERO )
-     $            CNT = CNT + 1
-   40       CONTINUE
-            IF( CNT.EQ.0 ) THEN
-               GL = TAU
-            ELSE IF( CNT.EQ.IN ) THEN
-               GU = TAU
-            END IF
-            IF( J.EQ.1 ) THEN
-               MAXCNT = CNT
-               SIGMA = GL
-               SGNDEF = ONE
+               TMP = MIN(ISRGHT,VU) -  MAX(ISLEFT,VL)
+               S1 =  MAX(ISLEFT,VL) + FOURTH * TMP
+               S2 =  MIN(ISRGHT,VU) - FOURTH * TMP
+            ENDIF
+         ENDIF
+
+*        Compute the negcount at the 1/4 and 3/4 points
+         IF(MB.GT.1) THEN
+            CALL DLARRC( 'T', IN, S1, S2, D(IBEGIN),
+     $                    E(IBEGIN), PIVMIN, CNT, CNT1, CNT2, IINFO)
+         ENDIF
+
+         IF(MB.EQ.1) THEN
+            SIGMA = GL
+            SGNDEF = ONE
+         ELSEIF( CNT1 - INDL .GE. INDU - CNT2 ) THEN
+            IF( ( IRANGE.EQ.ALLRNG ) .AND. (.NOT.FORCEB) ) THEN
+               SIGMA = MAX(ISLEFT,GL)
+            ELSEIF( USEDQD ) THEN
+*              use Gerschgorin bound as shift to get pos def matrix
+*              for dqds
+               SIGMA = ISLEFT
             ELSE
-               IF( IN-CNT.GT.MAXCNT ) THEN
-                  SIGMA = GU
-                  SGNDEF = -ONE
+*              use approximation of the first desired eigenvalue of the
+*              block as shift
+               SIGMA = MAX(ISLEFT,VL)
+            ENDIF
+            SGNDEF = ONE
+         ELSE
+            IF( ( IRANGE.EQ.ALLRNG ) .AND. (.NOT.FORCEB) ) THEN
+               SIGMA = MIN(ISRGHT,GU)
+            ELSEIF( USEDQD ) THEN
+*              use Gerschgorin bound as shift to get neg def matrix
+*              for dqds
+               SIGMA = ISRGHT
+            ELSE
+*              use approximation of the first desired eigenvalue of the
+*              block as shift
+               SIGMA = MIN(ISRGHT,VU)
+            ENDIF
+            SGNDEF = -ONE
+         ENDIF
+
+
+*        An initial SIGMA has been chosen that will be used for computing
+*        T - SIGMA I = L D L^T
+*        Define the increment TAU of the shift in case the initial shift
+*        needs to be refined to obtain a factorization with not too much
+*        element growth.
+         IF( USEDQD ) THEN
+*           The initial SIGMA was to the outer end of the spectrum
+*           the matrix is definite and we need not retreat.
+            TAU = SPDIAM*EPS*N + TWO*PIVMIN
+         ELSE
+            IF(MB.GT.1) THEN
+               CLWDTH = W(WEND) + WERR(WEND) - W(WBEGIN) - WERR(WBEGIN)
+               AVGAP = ABS(CLWDTH / DBLE(WEND-WBEGIN))
+               IF( SGNDEF.EQ.ONE ) THEN
+                  TAU = HALF*MAX(WGAP(WBEGIN),AVGAP)
+                  TAU = MAX(TAU,WERR(WBEGIN))
+               ELSE
+                  TAU = HALF*MAX(WGAP(WEND-1),AVGAP)
+                  TAU = MAX(TAU,WERR(WEND))
+               ENDIF
+            ELSE
+               TAU = WERR(WBEGIN)
+            ENDIF
+         ENDIF
+*
+         DO 80 IDUM = 1, MAXTRY
+*           Compute L D L^T factorization of tridiagonal matrix T - sigma I.
+*           Store D in WORK(1:IN), L in WORK(IN+1:2*IN), and reciprocals of
+*           pivots in WORK(2*IN+1:3*IN)
+            DPIVOT = D( IBEGIN ) - SIGMA
+            WORK( 1 ) = DPIVOT
+            DMAX = ABS( WORK(1) )
+            J = IBEGIN
+            DO 70 I = 1, IN - 1
+               WORK( 2*IN+I ) = ONE / WORK( I )
+               TMP = E( J )*WORK( 2*IN+I )
+               WORK( IN+I ) = TMP
+               DPIVOT = ( D( J+1 )-SIGMA ) - TMP*E( J )
+               WORK( I+1 ) = DPIVOT
+               DMAX = MAX( DMAX, ABS(DPIVOT) )
+               J = J + 1
+ 70         CONTINUE
+*           check for element growth
+            IF( DMAX .GT. MAXGROWTH*SPDIAM ) THEN
+               NOREP = .TRUE.
+            ELSE
+               NOREP = .FALSE.
+            ENDIF
+            IF( USEDQD .AND. .NOT.NOREP ) THEN
+*              Ensure the definiteness of the representation
+*              All entries of D (of L D L^T) must have the same sign
+               DO 71 I = 1, IN
+                  TMP = SGNDEF*WORK( I )
+                  IF( TMP.LT.ZERO ) NOREP = .TRUE.
+ 71            CONTINUE
+            ENDIF
+            IF(NOREP) THEN
+*              Note that in the case of IRANGE=ALLRNG, we use the Gerschgorin
+*              shift which makes the matrix definite. So we should end up
+*              here really only in the case of IRANGE = VALRNG or INDRNG.
+               IF( IDUM.EQ.MAXTRY-1 ) THEN
+                  IF( SGNDEF.EQ.ONE ) THEN
+*                    The fudged Gerschgorin shift should succeed
+                     SIGMA =
+     $                    GL - FUDGE*SPDIAM*EPS*N - FUDGE*TWO*PIVMIN
+                  ELSE
+                     SIGMA =
+     $                    GU + FUDGE*SPDIAM*EPS*N + FUDGE*TWO*PIVMIN
+                  END IF
+               ELSE
+                  SIGMA = SIGMA - SGNDEF * TAU
+                  TAU = TWO * TAU
                END IF
+            ELSE
+*              an initial RRR is found
+               GO TO 83
             END IF
-   50    CONTINUE
-*
-*        Find the base L D L^T representation
-*
-         WORK( 3*IN ) = ONE
-         DELTA = EPS
-         TAU = SGNDEF*NRM
-   60    CONTINUE
-         SIGMA = SIGMA - DELTA*TAU
-         WORK( 1 ) = D( IBEGIN ) - SIGMA
-         J = IBEGIN
-         DO 70 I = 1, IN - 1
-            WORK( 2*IN+I ) = ONE / WORK( 2*I-1 )
-            TMP1 = E( J )*WORK( 2*IN+I )
-            WORK( 2*I+1 ) = ( D( J+1 )-SIGMA ) - TMP1*E( J )
-            WORK( 2*I ) = TMP1
-            J = J + 1
-   70    CONTINUE
-         DO 80 I = IN, 1, -1
-            TMP1 = SGNDEF*WORK( 2*I-1 )
-            IF( TMP1.LT.ZERO .OR. WORK( 2*IN+I ).EQ.ZERO .OR. .NOT.
-     $          ( TMP1.GT.ZERO .OR. TMP1.LT.ONE ) ) THEN
-               DELTA = TWO*DELTA
-               GO TO 60
-            END IF
-            J = J - 1
-   80    CONTINUE
-*
-         J = IBEGIN
-         D( IBEGIN ) = WORK( 1 )
-         WORK( 1 ) = ABS( WORK( 1 ) )
-         DO 90 I = 1, IN - 1
-            TMP1 = E( J )
-            E( J ) = WORK( 2*I )
-            WORK( 2*I ) = ABS( TMP1*WORK( 2*I ) )
-            J = J + 1
-            D( J ) = WORK( 2*I+1 )
-            WORK( 2*I+1 ) = ABS( WORK( 2*I+1 ) )
-   90    CONTINUE
-*
-         CALL DLASQ2( IN, WORK, INFO )
-*
-         TAU = SGNDEF*WORK( IN )
-         WORK( 3*IN ) = ONE
-         DELTA = TWO*EPS
-  100    CONTINUE
-         TAU = TAU*( ONE-DELTA )
-*
-         S = -TAU
-         J = IBEGIN
-         DO 110 I = 1, IN - 1
-            WORK( I ) = D( J ) + S
-            WORK( 2*IN+I ) = ONE / WORK( I )
-*           WORK( N+I ) = ( E( I ) * D( I ) ) / WORK( I )
-            WORK( IN+I ) = ( E( J )*D( J ) )*WORK( 2*IN+I )
-            S = S*WORK( IN+I )*E( J ) - TAU
-            J = J + 1
-  110    CONTINUE
-         WORK( IN ) = D( IEND ) + S
-*
-*        Checking to see if all the diagonal elements of the new
-*        L D L^T representation have the same sign
-*
-         DO 120 I = IN, 1, -1
-            TMP1 = SGNDEF*WORK( I )
-            IF( TMP1.LT.ZERO .OR. WORK( 2*IN+I ).EQ.ZERO .OR. .NOT.
-     $          ( TMP1.GT.ZERO .OR. TMP1.LT.ONE ) ) THEN
-               DELTA = TWO*DELTA
-               GO TO 100
-            END IF
-  120    CONTINUE
-*
-         SIGMA = SIGMA + TAU
+ 80      CONTINUE
+*        if the program reaches this point, no base representation could be
+*        found in MAXTRY iterations.
+         INFO = 2
+         RETURN
+
+ 83      CONTINUE
+*        At this point, we have found an initial base representation
+*        T - SIGMA I = L D L^T with not too much element growth.
+*        Store the shift.
+         E( IEND ) = SIGMA
+*        Store D and L.
          CALL DCOPY( IN, WORK, 1, D( IBEGIN ), 1 )
          CALL DCOPY( IN-1, WORK( IN+1 ), 1, E( IBEGIN ), 1 )
-         WOFF( JBLK ) = SIGMA
+
+
+         IF(MB.GT.1 ) THEN
 *
-*        Update the n Gerschgorin intervals
+*           Perturb each entry of the base representation by a small
+*           (but random) relative amount to overcome difficulties with
+*           glued matrices.
 *
-         DO 130 I = IBEGIN, IEND
-            GERSCH( 2*I-1 ) = GERSCH( 2*I-1 ) - SIGMA
-            GERSCH( 2*I ) = GERSCH( 2*I ) - SIGMA
-  130    CONTINUE
+            DO 122 I = 1, 4
+               ISEED( I ) = 1
+ 122        CONTINUE
+
+            CALL DLARNV(2, ISEED, 2*IN-1, WORK(1))
+            DO 125 I = 1,IN-1
+               D(IBEGIN+I-1) = D(IBEGIN+I-1)*(ONE+EPS*PERT*WORK(I))
+               E(IBEGIN+I-1) = E(IBEGIN+I-1)*(ONE+EPS*PERT*WORK(IN+I))
+ 125        CONTINUE
+            D(IEND) = D(IEND)*(ONE+EPS*FOUR*WORK(IN))
 *
-*        Compute the eigenvalues of L D L^T.
+         ENDIF
 *
-         J = IBEGIN
-         DO 140 I = 1, IN - 1
-            WORK( 2*I-1 ) = ABS( D( J ) )
-            WORK( 2*I ) = E( J )*E( J )*WORK( 2*I-1 )
-            J = J + 1
-  140    CONTINUE
-         WORK( 2*IN-1 ) = ABS( D( IEND ) )
-*
-         CALL DLASQ2( IN, WORK, INFO )
-*
-         J = IBEGIN
-         IF( SGNDEF.GT.ZERO ) THEN
-            DO 150 I = 1, IN
-               W( J ) = WORK( IN-I+1 )
-               J = J + 1
-  150       CONTINUE
+*        Don't update the Gerschgorin intervals because keeping track
+*        of the updates would be too much work in DLARRV.
+*        We update W instead and use it to locate the proper Gerschgorin
+*        intervals.
+
+*        Compute the required eigenvalues of L D L' by bisection or dqds
+         IF ( .NOT.USEDQD ) THEN
+*           If DLARRD has been used, shift the eigenvalue approximations
+*           according to their representation. This is necessary for
+*           a uniform DLARRV since dqds computes eigenvalues of the
+*           shifted representation. In DLARRV, W will always hold the
+*           UNshifted eigenvalue approximation.
+            DO 134 J=WBEGIN,WEND
+               W(J) = W(J) - SIGMA
+               WERR(J) = WERR(J) + ABS(W(J)) * EPS
+ 134        CONTINUE
+*           call DLARRB to reduce eigenvalue error of the approximations
+*           from DLARRD
+            DO 135 I = IBEGIN, IEND-1
+               WORK( I ) = D( I ) * E( I )**2
+ 135        CONTINUE
+*           use bisection to find EV from INDL to INDU
+            CALL DLARRB(IN, D(IBEGIN), WORK(IBEGIN),
+     $                  INDL, INDU, RTOL1, RTOL2, INDL-1,
+     $                  W(WBEGIN), WGAP(WBEGIN), WERR(WBEGIN),
+     $                  WORK( 2*N+1 ), IWORK, PIVMIN, SPDIAM,
+     $                  IN, IINFO )
+            IF( IINFO .NE. 0 ) THEN
+               INFO = -4
+               RETURN
+            END IF
+*           DLARRB computes all gaps correctly except for the last one
+*           Record distance to VU/GU
+            WGAP( WEND ) = MAX( ZERO,
+     $           ( VU-SIGMA ) - ( W( WEND ) + WERR( WEND ) ) )
+            DO 138 I = INDL, INDU
+               M = M + 1
+               IBLOCK(M) = JBLK
+               INDEXW(M) = I
+ 138        CONTINUE
          ELSE
-            DO 160 I = 1, IN
-               W( J ) = -WORK( I )
+*           Call dqds to get all eigs (and then possibly delete unwanted
+*           eigenvalues).
+*           Note that dqds finds the eigenvalues of the L D L^T representation
+*           of T to high relative accuracy. High relative accuracy
+*           might be lost when the shift of the RRR is subtracted to obtain
+*           the eigenvalues of T. However, T is not guaranteed to define its
+*           eigenvalues to high relative accuracy anyway.
+*           Set RTOL to the order of the tolerance used in DLASQ2
+*           This is an ESTIMATED error, the worst case bound is 4*N*EPS
+*           which is usually too large and requires unnecessary work to be
+*           done by bisection when computing the eigenvectors
+            RTOL = LOG(DBLE(IN)) * FOUR * EPS
+            J = IBEGIN
+            DO 140 I = 1, IN - 1
+               WORK( 2*I-1 ) = ABS( D( J ) )
+               WORK( 2*I ) = E( J )*E( J )*WORK( 2*I-1 )
                J = J + 1
-  160       CONTINUE
+  140       CONTINUE
+            WORK( 2*IN-1 ) = ABS( D( IEND ) )
+            WORK( 2*IN ) = ZERO
+            CALL DLASQ2( IN, WORK, IINFO )
+            IF( IINFO .NE. 0 ) THEN
+*              If IINFO = -5 then an index is part of a tight cluster
+*              and should be changed. The index is in IWORK(1) and the
+*              gap is in WORK(N+1)
+               INFO = -5
+               RETURN
+            ELSE
+*              Test that all eigenvalues are positive as expected
+               DO 149 I = 1, IN
+                  IF( WORK( I ).LT.ZERO ) THEN
+                     INFO = -6
+                     RETURN
+                  ENDIF
+ 149           CONTINUE
+            END IF
+            IF( SGNDEF.GT.ZERO ) THEN
+               DO 150 I = INDL, INDU
+                  M = M + 1
+                  W( M ) = WORK( IN-I+1 )
+                  IBLOCK( M ) = JBLK
+                  INDEXW( M ) = I
+ 150           CONTINUE
+            ELSE
+               DO 160 I = INDL, INDU
+                  M = M + 1
+                  W( M ) = -WORK( I )
+                  IBLOCK( M ) = JBLK
+                  INDEXW( M ) = I
+ 160           CONTINUE
+            END IF
+
+            DO 165 I = M - MB + 1, M
+*              the value of RTOL below should be the tolerance in DLASQ2
+               WERR( I ) = RTOL * ABS( W(I) )
+ 165        CONTINUE
+            DO 166 I = M - MB + 1, M - 1
+*              compute the right gap between the intervals
+               WGAP( I ) = MAX( ZERO,
+     $                          W(I+1)-WERR(I+1) - (W(I)+WERR(I)) )
+ 166        CONTINUE
+            WGAP( M ) = MAX( ZERO,
+     $           ( VU-SIGMA ) - ( W( M ) + WERR( M ) ) )
          END IF
+*        proceed with next block
          IBEGIN = IEND + 1
-  170 CONTINUE
-      M = N
+         WBEGIN = WEND + 1
+ 170  CONTINUE
 *
+
       RETURN
 *
-*     End of DLARRE
+*     end of DLARRE
 *
       END
-      SUBROUTINE DLARRF( N, D, L, LD, LLD, IFIRST, ILAST, W, DPLUS,
-     $                   LPLUS, WORK, IWORK, INFO )
+      SUBROUTINE DLARRF( N, D, L, LD, CLSTRT, CLEND,
+     $                   W, WGAP, WERR,
+     $                   SPDIAM, CLGAPL, CLGAPR, PIVMIN, SIGMA,
+     $                   DPLUS, LPLUS, WORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
-*
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+**
 *     .. Scalar Arguments ..
-      INTEGER            IFIRST, ILAST, INFO, N
+      INTEGER            CLSTRT, CLEND, INFO, N
+      DOUBLE PRECISION   CLGAPL, CLGAPR, PIVMIN, SIGMA, SPDIAM
 *     ..
 *     .. Array Arguments ..
-      INTEGER            IWORK( * )
-      DOUBLE PRECISION   D( * ), DPLUS( * ), L( * ), LD( * ), LLD( * ),
-     $                   LPLUS( * ), W( * ), WORK( * )
+      DOUBLE PRECISION   D( * ), DPLUS( * ), L( * ), LD( * ),
+     $          LPLUS( * ), W( * ), WGAP( * ), WERR( * ), WORK( * )
 *     ..
 *
 *  Purpose
 *  =======
 *
 *  Given the initial representation L D L^T and its cluster of close
-*  eigenvalues (in a relative measure), W( IFIRST ), W( IFIRST+1 ), ...
-*  W( ILAST ), DLARRF finds a new relatively robust representation
+*  eigenvalues (in a relative measure), W( CLSTRT ), W( CLSTRT+1 ), ...
+*  W( CLEND ), DLARRF finds a new relatively robust representation
 *  L D L^T - SIGMA I = L(+) D(+) L(+)^T such that at least one of the
 *  eigenvalues of L(+) D(+) L(+)^T is relatively isolated.
 *
@@ -12955,68 +13494,95 @@ CIBM           PREFER SCALAR
 *  =========
 *
 *  N       (input) INTEGER
-*          The order of the matrix.
+*          The order of the matrix (subblock, if the matrix splitted).
 *
 *  D       (input) DOUBLE PRECISION array, dimension (N)
-*          The n diagonal elements of the diagonal matrix D.
+*          The N diagonal elements of the diagonal matrix D.
 *
 *  L       (input) DOUBLE PRECISION array, dimension (N-1)
-*          The (n-1) subdiagonal elements of the unit bidiagonal
+*          The (N-1) subdiagonal elements of the unit bidiagonal
 *          matrix L.
 *
 *  LD      (input) DOUBLE PRECISION array, dimension (N-1)
-*          The n-1 elements L(i)*D(i).
+*          The (N-1) elements L(i)*D(i).
 *
-*  LLD     (input) DOUBLE PRECISION array, dimension (N-1)
-*          The n-1 elements L(i)*L(i)*D(i).
-*
-*  IFIRST  (input) INTEGER
+*  CLSTRT  (input) INTEGER
 *          The index of the first eigenvalue in the cluster.
 *
-*  ILAST   (input) INTEGER
+*  CLEND   (input) INTEGER
 *          The index of the last eigenvalue in the cluster.
 *
-*  W       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On input, the eigenvalues of L D L^T in ascending order.
-*          W( IFIRST ) through W( ILAST ) form the cluster of relatively
+*  W       (input) DOUBLE PRECISION array, dimension >=  (CLEND-CLSTRT+1)
+*          The eigenvalue APPROXIMATIONS of L D L^T in ascending order.
+*          W( CLSTRT ) through W( CLEND ) form the cluster of relatively
 *          close eigenalues.
-*          On output, W( IFIRST ) thru' W( ILAST ) are estimates of the
-*          corresponding eigenvalues of L(+) D(+) L(+)^T.
 *
-*  SIGMA   (input) DOUBLE PRECISION
+*  WGAP    (input/output) DOUBLE PRECISION array, dimension >=  (CLEND-CLSTRT+1)
+*          The separation from the right neighbor eigenvalue in W.
+*
+*  WERR    (input) DOUBLE PRECISION array, dimension >=  (CLEND-CLSTRT+1)
+*          WERR contain the semiwidth of the uncertainty
+*          interval of the corresponding eigenvalue APPROXIMATION in W
+*
+*  SPDIAM (input) estimate of the spectral diameter obtained from the
+*          Gerschgorin intervals
+*
+*  CLGAPL, CLGAPR (input) absolute gap on each end of the cluster.
+*          Set by the calling routine to protect against shifts too close
+*          to eigenvalues outside the cluster.
+*
+*  PIVMIN  (input) DOUBLE PRECISION
+*          The minimum pivot allowed in the Sturm sequence.
+*
+*  SIGMA   (output) DOUBLE PRECISION
 *          The shift used to form L(+) D(+) L(+)^T.
 *
 *  DPLUS   (output) DOUBLE PRECISION array, dimension (N)
-*          The n diagonal elements of the diagonal matrix D(+).
+*          The N diagonal elements of the diagonal matrix D(+).
 *
-*  LPLUS   (output) DOUBLE PRECISION array, dimension (N)
-*          The first (n-1) elements of LPLUS contain the subdiagonal
-*          elements of the unit bidiagonal matrix L(+). LPLUS( N ) is
-*          set to SIGMA.
+*  LPLUS   (output) DOUBLE PRECISION array, dimension (N-1)
+*          The first (N-1) elements of LPLUS contain the subdiagonal
+*          elements of the unit bidiagonal matrix L(+).
 *
-*  WORK    (input) DOUBLE PRECISION array, dimension (???)
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (2*N)
 *          Workspace.
 *
 *  Further Details
 *  ===============
 *
 *  Based on contributions by
-*     Inderjit Dhillon, IBM Almaden, USA
+*     Beresford Parlett, University of California, Berkeley, USA
+*     Jim Demmel, University of California, Berkeley, USA
+*     Inderjit Dhillon, University of Texas, Austin, USA
 *     Osni Marques, LBNL/NERSC, USA
+*     Christof Voemel, University of California, Berkeley, USA
 *
 *  =====================================================================
 *
 *     .. Parameters ..
-      DOUBLE PRECISION   ZERO, TWO
-      PARAMETER          ( ZERO = 0.0D0, TWO = 2.0D0 )
+      DOUBLE PRECISION   FOUR, MAXGROWTH1, MAXGROWTH2, ONE, QUART, TWO,
+     $                   ZERO
+      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0, TWO = 2.0D0,
+     $                     FOUR = 4.0D0, QUART = 0.25D0,
+     $                     MAXGROWTH1 = 8.D0,
+     $                     MAXGROWTH2 = 8.D0 )
 *     ..
 *     .. Local Scalars ..
-      INTEGER            I
-      DOUBLE PRECISION   DELTA, EPS, S, SIGMA
+      LOGICAL   DORRR1, FORCER, NOFAIL, SAWNAN1, SAWNAN2, TRYRRR1
+      INTEGER            I, INDX, KTRY, KTRYMAX, SLEFT, SRIGHT, SHIFT
+      PARAMETER          ( KTRYMAX = 1, SLEFT = 1, SRIGHT = 2 )
+      DOUBLE PRECISION   AVGAP, BESTSHIFT, CLWDTH, EPS, FACT, FAIL,
+     $                   FAIL2, GROWTHBOUND, LDELTA, LDMAX, LSIGMA,
+     $                   MAX1, MAX2, MINGAP, OLDP, PROD, RDELTA, RDMAX,
+     $                   RRR1, RRR2, RSIGMA, S, SMLGROWTH, TMP, ZNM2
 *     ..
 *     .. External Functions ..
+      LOGICAL DISNAN
       DOUBLE PRECISION   DLAMCH
-      EXTERNAL           DLAMCH
+      EXTERNAL           DISNAN, DLAMCH
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DCOPY
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS
@@ -13024,84 +13590,280 @@ CIBM           PREFER SCALAR
 *     .. Executable Statements ..
 *
       INFO = 0
+      FACT = DBLE(2**KTRYMAX)
       EPS = DLAMCH( 'Precision' )
-      IF( IFIRST.EQ.1 ) THEN
-         SIGMA = W( IFIRST )
-      ELSE IF( ILAST.EQ.N ) THEN
-         SIGMA = W( ILAST )
-      ELSE
-         INFO = 1
-         RETURN
-      END IF
+      SHIFT = 0
+      FORCER = .FALSE.
+
+
+*     Note that we cannot guarantee that for any of the shifts tried,
+*     the factorization has a small or even moderate element growth.
+*     There could be Ritz values at both ends of the cluster and despite
+*     backing off, there are examples where all factorizations tried
+*     (in IEEE mode, allowing zero pivots & infinities) have INFINITE
+*     element growth.
+*     For this reason, we should use PIVMIN in this subroutine so that at
+*     least the L D L^T factorization exists. It can be checked afterwards
+*     whether the element growth caused bad residuals/orthogonality.
+
+*     Decide whether the code should accept the best among all
+*     representations despite large element growth or signal INFO=1
+      NOFAIL = .TRUE.
 *
-*     Compute the new relatively robust representation (RRR)
+
+*     Compute the average gap length of the cluster
+      CLWDTH = ABS(W(CLEND)-W(CLSTRT)) + WERR(CLEND) + WERR(CLSTRT)
+      AVGAP = CLWDTH / DBLE(CLEND-CLSTRT)
+      MINGAP = MIN(CLGAPL, CLGAPR)
+*     Initial values for shifts to both ends of cluster
+      LSIGMA = MIN(W( CLSTRT ),W( CLEND )) - WERR( CLSTRT )
+      RSIGMA = MAX(W( CLSTRT ),W( CLEND )) + WERR( CLEND )
+
+*     Use a small fudge to make sure that we really shift to the outside
+      LSIGMA = LSIGMA - ABS(LSIGMA)* FOUR * EPS
+      RSIGMA = RSIGMA + ABS(RSIGMA)* FOUR * EPS
+
+*     Compute upper bounds for how much to back off the initial shifts
+      LDMAX = QUART * MINGAP + TWO * PIVMIN
+      RDMAX = QUART * MINGAP + TWO * PIVMIN
+
+      LDELTA = MAX(AVGAP,WGAP( CLSTRT ))/FACT
+      RDELTA = MAX(AVGAP,WGAP( CLEND-1 ))/FACT
 *
-      DELTA = TWO*EPS
-   10 CONTINUE
-      IF( IFIRST.EQ.1 ) THEN
-         SIGMA = SIGMA - ABS( SIGMA )*DELTA
-      ELSE
-         SIGMA = SIGMA + ABS( SIGMA )*DELTA
-      END IF
-      S = -SIGMA
-      DO 20 I = 1, N - 1
-         DPLUS( I ) = D( I ) + S
+*     Initialize the record of the best representation found
+*
+      S = DLAMCH( 'S' )
+      SMLGROWTH = ONE / S
+      FAIL = DBLE(N-1)*MINGAP/(SPDIAM*EPS)
+      FAIL2 = DBLE(N-1)*MINGAP/(SPDIAM*SQRT(EPS))
+      BESTSHIFT = LSIGMA
+*
+*     while (KTRY <= KTRYMAX)
+      KTRY = 0
+      GROWTHBOUND = MAXGROWTH1*SPDIAM
+
+ 5    CONTINUE
+      SAWNAN1 = .FALSE.
+      SAWNAN2 = .FALSE.
+*     Ensure that we do not back off too much of the initial shifts
+      LDELTA = MIN(LDMAX,LDELTA)
+      RDELTA = MIN(RDMAX,RDELTA)
+
+*     Compute the element growth when shifting to both ends of the cluster
+*     accept the shift if there is no element growth at one of the two ends
+
+*     Left end
+      S = -LSIGMA
+      DPLUS( 1 ) = D( 1 ) + S
+      IF(ABS(DPLUS(1)).LT.PIVMIN) THEN
+         DPLUS(1) = -PIVMIN
+*        Need to set SAWNAN1 because refined RRR test should not be used
+*        in this case
+         SAWNAN1 = .TRUE.
+      ENDIF
+      MAX1 = ABS( DPLUS( 1 ) )
+      DO 6 I = 1, N - 1
          LPLUS( I ) = LD( I ) / DPLUS( I )
-         S = S*LPLUS( I )*L( I ) - SIGMA
-   20 CONTINUE
-      DPLUS( N ) = D( N ) + S
-      IF( IFIRST.EQ.1 ) THEN
-         DO 30 I = 1, N
-            IF( DPLUS( I ).LT.ZERO ) THEN
-               DELTA = TWO*DELTA
-               GO TO 10
-            END IF
-   30    CONTINUE
+         S = S*LPLUS( I )*L( I ) - LSIGMA
+         DPLUS( I+1 ) = D( I+1 ) + S
+         IF(ABS(DPLUS(I+1)).LT.PIVMIN) THEN
+            DPLUS(I+1) = -PIVMIN
+*           Need to set SAWNAN1 because refined RRR test should not be used
+*           in this case
+            SAWNAN1 = .TRUE.
+         ENDIF
+         MAX1 = MAX( MAX1,ABS(DPLUS(I+1)) )
+ 6    CONTINUE
+      SAWNAN1 = SAWNAN1 .OR.  DISNAN( MAX1 )
+
+      IF( FORCER .OR.
+     $   (MAX1.LE.GROWTHBOUND .AND. .NOT.SAWNAN1 ) ) THEN
+         SIGMA = LSIGMA
+         SHIFT = SLEFT
+         GOTO 100
+      ENDIF
+
+*     Right end
+      S = -RSIGMA
+      WORK( 1 ) = D( 1 ) + S
+      IF(ABS(WORK(1)).LT.PIVMIN) THEN
+         WORK(1) = -PIVMIN
+*        Need to set SAWNAN2 because refined RRR test should not be used
+*        in this case
+         SAWNAN2 = .TRUE.
+      ENDIF
+      MAX2 = ABS( WORK( 1 ) )
+      DO 7 I = 1, N - 1
+         WORK( N+I ) = LD( I ) / WORK( I )
+         S = S*WORK( N+I )*L( I ) - RSIGMA
+         WORK( I+1 ) = D( I+1 ) + S
+         IF(ABS(WORK(I+1)).LT.PIVMIN) THEN
+            WORK(I+1) = -PIVMIN
+*           Need to set SAWNAN2 because refined RRR test should not be used
+*           in this case
+            SAWNAN2 = .TRUE.
+         ENDIF
+         MAX2 = MAX( MAX2,ABS(WORK(I+1)) )
+ 7    CONTINUE
+      SAWNAN2 = SAWNAN2 .OR.  DISNAN( MAX2 )
+
+      IF( FORCER .OR.
+     $   (MAX2.LE.GROWTHBOUND .AND. .NOT.SAWNAN2 ) ) THEN
+         SIGMA = RSIGMA
+         SHIFT = SRIGHT
+         GOTO 100
+      ENDIF
+*     If we are at this point, both shifts led to too much element growth
+
+*     Record the better of the two shifts (provided it didn't lead to NaN)
+      IF(SAWNAN1.AND.SAWNAN2) THEN
+*        both MAX1 and MAX2 are NaN
+         GOTO 50
       ELSE
-         DO 40 I = 1, N
-            IF( DPLUS( I ).GT.ZERO ) THEN
-               DELTA = TWO*DELTA
-               GO TO 10
+         IF( .NOT.SAWNAN1 ) THEN
+            INDX = 1
+            IF(MAX1.LE.SMLGROWTH) THEN
+               SMLGROWTH = MAX1
+               BESTSHIFT = LSIGMA
+            ENDIF
+         ENDIF
+         IF( .NOT.SAWNAN2 ) THEN
+            IF(SAWNAN1 .OR. MAX2.LE.MAX1) INDX = 2
+            IF(MAX2.LE.SMLGROWTH) THEN
+               SMLGROWTH = MAX2
+               BESTSHIFT = RSIGMA
+            ENDIF
+         ENDIF
+      ENDIF
+
+*     If we are here, both the left and the right shift led to
+*     element growth. If the element growth is moderate, then
+*     we may still accept the representation, if it passes a
+*     refined test for RRR. This test supposes that no NaN occurred.
+*     Moreover, we use the refined RRR test only for isolated clusters.
+      IF((CLWDTH.LT.MINGAP/DBLE(128)) .AND.
+     $   (MIN(MAX1,MAX2).LT.FAIL2)
+     $  .AND.(.NOT.SAWNAN1).AND.(.NOT.SAWNAN2)) THEN
+         DORRR1 = .TRUE.
+      ELSE
+         DORRR1 = .FALSE.
+      ENDIF
+      TRYRRR1 = .TRUE.
+      IF( TRYRRR1 .AND. DORRR1 ) THEN
+      IF(INDX.EQ.1) THEN
+         TMP = ABS( DPLUS( N ) )
+         ZNM2 = ONE
+         PROD = ONE
+         OLDP = ONE
+         DO 15 I = N-1, 1, -1
+            IF( PROD .LE. EPS ) THEN
+               PROD =
+     $         ((DPLUS(I+1)*WORK(N+I+1))/(DPLUS(I)*WORK(N+I)))*OLDP
+            ELSE
+               PROD = PROD*ABS(WORK(N+I))
             END IF
-   40    CONTINUE
+            OLDP = PROD
+            ZNM2 = ZNM2 + PROD**2
+            TMP = MAX( TMP, ABS( DPLUS( I ) * PROD ))
+ 15      CONTINUE
+         RRR1 = TMP/( SPDIAM * SQRT( ZNM2 ) )
+         IF (RRR1.LE.MAXGROWTH2) THEN
+            SIGMA = LSIGMA
+            SHIFT = SLEFT
+            GOTO 100
+         ENDIF
+      ELSE IF(INDX.EQ.2) THEN
+         TMP = ABS( WORK( N ) )
+         ZNM2 = ONE
+         PROD = ONE
+         OLDP = ONE
+         DO 16 I = N-1, 1, -1
+            IF( PROD .LE. EPS ) THEN
+               PROD = ((WORK(I+1)*LPLUS(I+1))/(WORK(I)*LPLUS(I)))*OLDP
+            ELSE
+               PROD = PROD*ABS(LPLUS(I))
+            END IF
+            OLDP = PROD
+            ZNM2 = ZNM2 + PROD**2
+            TMP = MAX( TMP, ABS( WORK( I ) * PROD ))
+ 16      CONTINUE
+         RRR2 = TMP/( SPDIAM * SQRT( ZNM2 ) )
+         IF (RRR2.LE.MAXGROWTH2) THEN
+            SIGMA = RSIGMA
+            SHIFT = SRIGHT
+            GOTO 100
+         ENDIF
       END IF
-      DO 50 I = IFIRST, ILAST
-         W( I ) = W( I ) - SIGMA
-   50 CONTINUE
-      LPLUS( N ) = SIGMA
-*
+      ENDIF
+
+ 50   CONTINUE
+
+      IF (KTRY.LT.KTRYMAX) THEN
+*        If we are here, both shifts failed also the RRR test.
+*        Back off to the outside
+         LSIGMA = MAX( LSIGMA - LDELTA,
+     $     LSIGMA - LDMAX)
+         RSIGMA = MIN( RSIGMA + RDELTA,
+     $     RSIGMA + RDMAX )
+         LDELTA = TWO * LDELTA
+         RDELTA = TWO * RDELTA
+         KTRY = KTRY + 1
+         GOTO 5
+      ELSE
+*        None of the representations investigated satisfied our
+*        criteria. Take the best one we found.
+         IF((SMLGROWTH.LT.FAIL).OR.NOFAIL) THEN
+            LSIGMA = BESTSHIFT
+            RSIGMA = BESTSHIFT
+            FORCER = .TRUE.
+            GOTO 5
+         ELSE
+            INFO = 1
+            RETURN
+         ENDIF
+      END IF
+
+ 100  CONTINUE
+      IF (SHIFT.EQ.SLEFT) THEN
+      ELSEIF (SHIFT.EQ.SRIGHT) THEN
+*        store new L and D back into DPLUS, LPLUS
+         CALL DCOPY( N, WORK, 1, DPLUS, 1 )
+         CALL DCOPY( N-1, WORK(N+1), 1, LPLUS, 1 )
+      ENDIF
+
       RETURN
 *
 *     End of DLARRF
 *
       END
-      SUBROUTINE DLARRV( N, D, L, ISPLIT, M, W, IBLOCK, GERSCH, TOL, Z,
-     $                   LDZ, ISUPPZ, WORK, IWORK, INFO )
+      SUBROUTINE DLARRV( N, VL, VU, D, L, PIVMIN,
+     $                   ISPLIT, M, DOL, DOU, MINRGP,
+     $                   RTOL1, RTOL2, W, WERR, WGAP,
+     $                   IBLOCK, INDEXW, GERS, Z, LDZ, ISUPPZ,
+     $                   WORK, IWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
-      INTEGER            INFO, LDZ, M, N
-      DOUBLE PRECISION   TOL
+      INTEGER            DOL, DOU, INFO, LDZ, M, N
+      DOUBLE PRECISION   MINRGP, PIVMIN, RTOL1, RTOL2, VL, VU
 *     ..
 *     .. Array Arguments ..
-      INTEGER            IBLOCK( * ), ISPLIT( * ), ISUPPZ( * ),
-     $                   IWORK( * )
-      DOUBLE PRECISION   D( * ), GERSCH( * ), L( * ), W( * ), WORK( * ),
-     $                   Z( LDZ, * )
+      INTEGER            IBLOCK( * ), INDEXW( * ), ISPLIT( * ),
+     $                   ISUPPZ( * ), IWORK( * )
+      DOUBLE PRECISION   D( * ), GERS( * ), L( * ), W( * ), WERR( * ),
+     $                   WGAP( * ), WORK( * )
+      DOUBLE PRECISION  Z( LDZ, * )
 *     ..
 *
 *  Purpose
 *  =======
 *
 *  DLARRV computes the eigenvectors of the tridiagonal matrix
-*  T = L D L^T given L, D and the eigenvalues of L D L^T.
-*  The input eigenvalues should have high relative accuracy with
-*  respect to the entries of L and D. The desired accuracy of the
-*  output can be specified by the input parameter TOL.
+*  T = L D L^T given L, D and APPROXIMATIONS to the eigenvalues of L D L^T.
+*  The input eigenvalues should have been computed by DLARRE.
 *
 *  Arguments
 *  =========
@@ -13109,386 +13871,862 @@ CIBM           PREFER SCALAR
 *  N       (input) INTEGER
 *          The order of the matrix.  N >= 0.
 *
+*  VL      (input) DOUBLE PRECISION
+*  VU      (input) DOUBLE PRECISION
+*          Lower and upper bounds of the interval that contains the desired
+*          eigenvalues. VL < VU. Needed to compute gaps on the left or right
+*          end of the extremal eigenvalues in the desired RANGE.
+*
 *  D       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On entry, the n diagonal elements of the diagonal matrix D.
+*          On entry, the N diagonal elements of the diagonal matrix D.
 *          On exit, D may be overwritten.
 *
-*  L       (input/output) DOUBLE PRECISION array, dimension (N-1)
-*          On entry, the (n-1) subdiagonal elements of the unit
-*          bidiagonal matrix L in elements 1 to N-1 of L. L(N) need
-*          not be set. On exit, L is overwritten.
+*  L       (input/output) DOUBLE PRECISION array, dimension (N)
+*          On entry, the (N-1) subdiagonal elements of the unit
+*          bidiagonal matrix L are in elements 1 to N-1 of L
+*          (if the matrix is not splitted.) At the end of each block
+*          is stored the corresponding shift as given by DLARRE.
+*          On exit, L is overwritten.
+*
+*  PIVMIN  (in) DOUBLE PRECISION
+*          The minimum pivot allowed in the Sturm sequence.
 *
 *  ISPLIT  (input) INTEGER array, dimension (N)
-*          The splitting points, at which T breaks up into submatrices.
-*          The first submatrix consists of rows/columns 1 to
+*          The splitting points, at which T breaks up into blocks.
+*          The first block consists of rows/columns 1 to
 *          ISPLIT( 1 ), the second of rows/columns ISPLIT( 1 )+1
 *          through ISPLIT( 2 ), etc.
 *
-*  TOL     (input) DOUBLE PRECISION
-*          The absolute error tolerance for the
-*          eigenvalues/eigenvectors.
-*          Errors in the input eigenvalues must be bounded by TOL.
-*          The eigenvectors output have residual norms
-*          bounded by TOL, and the dot products between different
-*          eigenvectors are bounded by TOL. TOL must be at least
-*          N*EPS*|T|, where EPS is the machine precision and |T| is
-*          the 1-norm of the tridiagonal matrix.
-*
 *  M       (input) INTEGER
-*          The total number of eigenvalues found.  0 <= M <= N.
-*          If RANGE = 'A', M = N, and if RANGE = 'I', M = IU-IL+1.
+*          The total number of input eigenvalues.  0 <= M <= N.
 *
-*  W       (input) DOUBLE PRECISION array, dimension (N)
-*          The first M elements of W contain the eigenvalues for
+*  DOL     (input) INTEGER
+*  DOU     (input) INTEGER
+*          If the user wants to compute only selected eigenvectors from all
+*          the eigenvalues supplied, he can specify an index range DOL:DOU.
+*          Or else the setting DOL=1, DOU=M should be applied.
+*          Note that DOL and DOU refer to the order in which the eigenvalues
+*          are stored in W.
+*          If the user wants to compute only selected eigenpairs, then
+*          the columns DOL-1 to DOU+1 of the eigenvector space Z contain the
+*          computed eigenvectors. All other columns of Z are set to zero.
+*
+*  MINRGP  (input) DOUBLE PRECISION
+*
+*  RTOL1   (input) DOUBLE PRECISION
+*  RTOL2   (input) DOUBLE PRECISION
+*           Parameters for bisection.
+*           An interval [LEFT,RIGHT] has converged if
+*           RIGHT-LEFT.LT.MAX( RTOL1*GAP, RTOL2*MAX(|LEFT|,|RIGHT|) )
+*
+*  W       (input/output) DOUBLE PRECISION array, dimension (N)
+*          The first M elements of W contain the APPROXIMATE eigenvalues for
 *          which eigenvectors are to be computed.  The eigenvalues
 *          should be grouped by split-off block and ordered from
 *          smallest to largest within the block ( The output array
-*          W from DLARRE is expected here ).
-*          Errors in W must be bounded by TOL (see above).
+*          W from DLARRE is expected here ). Furthermore, they are with
+*          respect to the shift of the corresponding root representation
+*          for their block. On exit, W holds the eigenvalues of the
+*          UNshifted matrix.
+*
+*  WERR    (input/output) DOUBLE PRECISION array, dimension (N)
+*          The first M elements contain the semiwidth of the uncertainty
+*          interval of the corresponding eigenvalue in W
+*
+*  WGAP    (input/output) DOUBLE PRECISION array, dimension (N)
+*          The separation from the right neighbor eigenvalue in W.
 *
 *  IBLOCK  (input) INTEGER array, dimension (N)
-*          The submatrix indices associated with the corresponding
-*          eigenvalues in W; IBLOCK(i)=1 if eigenvalue W(i) belongs to
-*          the first submatrix from the top, =2 if W(i) belongs to
-*          the second submatrix, etc.
+*          The indices of the blocks (submatrices) associated with the
+*          corresponding eigenvalues in W; IBLOCK(i)=1 if eigenvalue
+*          W(i) belongs to the first block from the top, =2 if W(i)
+*          belongs to the second block, etc.
+*
+*  INDEXW  (input) INTEGER array, dimension (N)
+*          The indices of the eigenvalues within each block (submatrix);
+*          for example, INDEXW(i)= 10 and IBLOCK(i)=2 imply that the
+*          i-th eigenvalue W(i) is the 10-th eigenvalue in the second block.
+*
+*  GERS    (input) DOUBLE PRECISION array, dimension (2*N)
+*          The N Gerschgorin intervals (the i-th Gerschgorin interval
+*          is (GERS(2*i-1), GERS(2*i)). The Gerschgorin intervals should
+*          be computed from the original UNshifted matrix.
 *
 *  Z       (output) DOUBLE PRECISION array, dimension (LDZ, max(1,M) )
-*          If JOBZ = 'V', then if INFO = 0, the first M columns of Z
-*          contain the orthonormal eigenvectors of the matrix T
-*          corresponding to the selected eigenvalues, with the i-th
+*          If INFO = 0, the first M columns of Z contain the
+*          orthonormal eigenvectors of the matrix T
+*          corresponding to the input eigenvalues, with the i-th
 *          column of Z holding the eigenvector associated with W(i).
-*          If JOBZ = 'N', then Z is not referenced.
 *          Note: the user must ensure that at least max(1,M) columns are
-*          supplied in the array Z; if RANGE = 'V', the exact value of M
-*          is not known in advance and an upper bound must be used.
+*          supplied in the array Z.
 *
 *  LDZ     (input) INTEGER
 *          The leading dimension of the array Z.  LDZ >= 1, and if
 *          JOBZ = 'V', LDZ >= max(1,N).
 *
-*  ISUPPZ  (output) INTEGER ARRAY, dimension ( 2*max(1,M) )
+*  ISUPPZ  (output) INTEGER array, dimension ( 2*max(1,M) )
 *          The support of the eigenvectors in Z, i.e., the indices
-*          indicating the nonzero elements in Z. The i-th eigenvector
-*          is nonzero only in elements ISUPPZ( 2*i-1 ) through
-*          ISUPPZ( 2*i ).
+*          indicating the nonzero elements in Z. The I-th eigenvector
+*          is nonzero only in elements ISUPPZ( 2*I-1 ) through
+*          ISUPPZ( 2*I ).
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (13*N)
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (12*N)
 *
-*  IWORK   (workspace) INTEGER array, dimension (6*N)
+*  IWORK   (workspace) INTEGER array, dimension (7*N)
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
-*          < 0:  if INFO = -i, the i-th argument had an illegal value
-*          > 0:  if INFO = 1, internal error in DLARRB
-*                if INFO = 2, internal error in DSTEIN
+*
+*          > 0:  A problem occured in DLARRV.
+*          < 0:  One of the called subroutines signaled an internal problem.
+*                Needs inspection of the corresponding parameter IINFO
+*                for further information.
+*
+*          =-1:  Problem in DLARRB when refining a child's eigenvalues.
+*          =-2:  Problem in DLARRF when computing the RRR of a child.
+*                When a child is inside a tight cluster, it can be difficult
+*                to find an RRR. A partial remedy from the user's point of
+*                view is to make the parameter MINRGP smaller and recompile.
+*                However, as the orthogonality of the computed vectors is
+*                proportional to 1/MINRGP, the user should be aware that
+*                he might be trading in precision when he decreases MINRGP.
+*          =-3:  Problem in DLARRB when refining a single eigenvalue
+*                after the Rayleigh correction was rejected.
+*          = 5:  The Rayleigh Quotient Iteration failed to converge to
+*                full accuracy in MAXITR steps.
 *
 *  Further Details
 *  ===============
 *
 *  Based on contributions by
-*     Inderjit Dhillon, IBM Almaden, USA
+*     Beresford Parlett, University of California, Berkeley, USA
+*     Jim Demmel, University of California, Berkeley, USA
+*     Inderjit Dhillon, University of Texas, Austin, USA
 *     Osni Marques, LBNL/NERSC, USA
+*     Christof Voemel, University of California, Berkeley, USA
 *
 *  =====================================================================
 *
 *     .. Parameters ..
-      INTEGER            MGSSIZ
-      PARAMETER          ( MGSSIZ = 20 )
-      DOUBLE PRECISION   ZERO, ONE, FOUR
-      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0, FOUR = 4.0D0 )
+      INTEGER            MAXITR
+      PARAMETER          ( MAXITR = 10 )
+      DOUBLE PRECISION   ZERO, ONE, TWO, THREE, FOUR, HALF
+      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0,
+     $                     TWO = 2.0D0, THREE = 3.0D0,
+     $                     FOUR = 4.0D0, HALF = 0.5D0)
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            MGSCLS
-      INTEGER            I, IBEGIN, IEND, IINDC1, IINDC2, IINDR, IINDWK,
-     $                   IINFO, IM, IN, INDERR, INDGAP, INDLD, INDLLD,
-     $                   INDWRK, ITER, ITMP1, ITMP2, J, JBLK, K, KTOT,
-     $                   LSBDPT, MAXITR, NCLUS, NDEPTH, NDONE, NEWCLS,
-     $                   NEWFRS, NEWFTT, NEWLST, NEWSIZ, NSPLIT, OLDCLS,
-     $                   OLDFST, OLDIEN, OLDLST, OLDNCL, P, Q
-      DOUBLE PRECISION   EPS, GAP, LAMBDA, MGSTOL, MINGMA, MINRGP,
-     $                   NRMINV, RELGAP, RELTOL, RESID, RQCORR, SIGMA,
-     $                   TMP1, ZTZ
+      LOGICAL            ESKIP, NEEDBS, STP2II, TRYRQC, USEDBS, USEDRQ
+      INTEGER            DONE, I, IBEGIN, IDONE, IEND, II, IINDC1,
+     $                   IINDC2, IINDR, IINDWK, IINFO, IM, IN, INDEIG,
+     $                   INDLD, INDLLD, INDWRK, ISUPMN, ISUPMX, ITER,
+     $                   ITMP1, J, JBLK, K, MINIWSIZE, MINWSIZE, NCLUS,
+     $                   NDEPTH, NEGCNT, NEWCLS, NEWFST, NEWFTT, NEWLST,
+     $                   NEWSIZ, OFFSET, OLDCLS, OLDFST, OLDIEN, OLDLST,
+     $                   OLDNCL, P, PARITY, Q, WBEGIN, WEND, WINDEX,
+     $                   WINDMN, WINDPL, ZFROM, ZTO, ZUSEDL, ZUSEDU,
+     $                   ZUSEDW
+      DOUBLE PRECISION   BSTRES, BSTW, EPS, FUDGE, GAP, GAPTOL, GL, GU,
+     $                   LAMBDA, LEFT, LGAP, MINGMA, NRMINV, RESID,
+     $                   RGAP, RIGHT, RQCORR, RQTOL, SAVGAP, SGNDEF,
+     $                   SIGMA, SPDIAM, SSIGMA, TAU, TMP, TOL, ZTZ
 *     ..
 *     .. External Functions ..
-      DOUBLE PRECISION   DDOT, DLAMCH, DNRM2
+      DOUBLE PRECISION  DLAMCH
+      DOUBLE PRECISION   DDOT, DNRM2
       EXTERNAL           DDOT, DLAMCH, DNRM2
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DAXPY, DCOPY, DLAR1V, DLARRB, DLARRF, DLASET,
-     $                   DSCAL, DSTEIN
+     $                   DSCAL
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, DBLE, MAX, MIN, SQRT
-*     ..
-*     .. Local Arrays ..
-      INTEGER            TEMP( 1 )
+      INTRINSIC ABS, DBLE, MAX, MIN
 *     ..
 *     .. Executable Statements ..
-*
-*     Test the input parameters.
-*
-      INDERR = N + 1
-      INDLD = 2*N
-      INDLLD = 3*N
-      INDGAP = 4*N
-      INDWRK = 5*N + 1
-*
-      IINDR = N
-      IINDC1 = 2*N
-      IINDC2 = 3*N
-      IINDWK = 4*N + 1
-*
-      EPS = DLAMCH( 'Precision' )
-*
-      DO 10 I = 1, 2*N
+*     ..
+
+*     The first N entries of WORK are reserved for the eigenvalues
+      INDLD = N+1
+      INDLLD= 2*N+1
+      INDWRK= 3*N+1
+      MINWSIZE = 12 * N
+
+      DO 5 I= 1,MINWSIZE
+         WORK( I ) = ZERO
+ 5    CONTINUE
+
+*     IWORK(IINDR+1:IINDR+N) hold the twist indices R for the
+*     factorization used to compute the FP vector
+      IINDR = 0
+*     IWORK(IINDC1+1:IINC2+N) are used to store the clusters of the current
+*     layer and the one above.
+      IINDC1 = N
+      IINDC2 = 2*N
+      IINDWK = 3*N + 1
+
+      MINIWSIZE = 7 * N
+      DO 10 I= 1,MINIWSIZE
          IWORK( I ) = 0
-   10 CONTINUE
-      DO 20 I = 1, M
-         WORK( INDERR+I-1 ) = EPS*ABS( W( I ) )
-   20 CONTINUE
-      CALL DLASET( 'Full', N, N, ZERO, ZERO, Z, LDZ )
-      MGSTOL = 5.0D0*EPS
+ 10   CONTINUE
+
+      ZUSEDL = 1
+      IF(DOL.GT.1) THEN
+*        Set lower bound for use of Z
+         ZUSEDL = DOL-1
+      ENDIF
+      ZUSEDU = M
+      IF(DOU.LT.M) THEN
+*        Set lower bound for use of Z
+         ZUSEDU = DOU+1
+      ENDIF
+*     The width of the part of Z that is used
+      ZUSEDW = ZUSEDU - ZUSEDL + 1
+
+
+      CALL DLASET( 'Full', N, ZUSEDW, ZERO, ZERO,
+     $                    Z(1,ZUSEDL), LDZ )
+
+      EPS = DLAMCH( 'Precision' )
+      RQTOL = TWO * EPS
 *
-      NSPLIT = IBLOCK( M )
+*     Set expert flags for standard code.
+      TRYRQC = .TRUE.
+
+      IF((DOL.EQ.1).AND.(DOU.EQ.M)) THEN
+      ELSE
+*        Only selected eigenpairs are computed. Since the other evalues
+*        are not refined by RQ iteration, bisection has to compute to full
+*        accuracy.
+         RTOL1 = FOUR * EPS
+         RTOL2 = FOUR * EPS
+      ENDIF
+
+*     The entries WBEGIN:WEND in W, WERR, WGAP correspond to the
+*     desired eigenvalues. The support of the nonzero eigenvector
+*     entries is contained in the interval IBEGIN:IEND.
+*     Remark that if k eigenpairs are desired, then the eigenvectors
+*     are stored in k contiguous columns of Z.
+
+*     DONE is the number of eigenvectors already computed
+      DONE = 0
       IBEGIN = 1
-      DO 170 JBLK = 1, NSPLIT
+      WBEGIN = 1
+      DO 170 JBLK = 1, IBLOCK( M )
          IEND = ISPLIT( JBLK )
-*
+         SIGMA = L( IEND )
 *        Find the eigenvectors of the submatrix indexed IBEGIN
 *        through IEND.
-*
-         IF( IBEGIN.EQ.IEND ) THEN
-            Z( IBEGIN, IBEGIN ) = ONE
-            ISUPPZ( 2*IBEGIN-1 ) = IBEGIN
-            ISUPPZ( 2*IBEGIN ) = IBEGIN
+         WEND = WBEGIN - 1
+ 15      CONTINUE
+         IF( WEND.LT.M ) THEN
+            IF( IBLOCK( WEND+1 ).EQ.JBLK ) THEN
+               WEND = WEND + 1
+               GO TO 15
+            END IF
+         END IF
+         IF( WEND.LT.WBEGIN ) THEN
             IBEGIN = IEND + 1
             GO TO 170
+         ELSEIF( (WEND.LT.DOL).OR.(WBEGIN.GT.DOU) ) THEN
+            IBEGIN = IEND + 1
+            WBEGIN = WEND + 1
+            GO TO 170
          END IF
+
+*        Find local spectral diameter of the block
+         GL = GERS( 2*IBEGIN-1 )
+         GU = GERS( 2*IBEGIN )
+         DO 20 I = IBEGIN+1 , IEND
+            GL = MIN( GERS( 2*I-1 ), GL )
+            GU = MAX( GERS( 2*I ), GU )
+ 20      CONTINUE
+         SPDIAM = GU - GL
+
+*        OLDIEN is the last index of the previous block
          OLDIEN = IBEGIN - 1
-         IN = IEND - OLDIEN
-         RELTOL = MIN( 1.0D-2, ONE / DBLE( IN ) )
-         IM = IN
-         CALL DCOPY( IM, W( IBEGIN ), 1, WORK, 1 )
-         DO 30 I = 1, IN - 1
-            WORK( INDGAP+I ) = WORK( I+1 ) - WORK( I )
-   30    CONTINUE
-         WORK( INDGAP+IN ) = MAX( ABS( WORK( IN ) ), EPS )
-         NDONE = 0
-*
+*        Calculate the size of the current block
+         IN = IEND - IBEGIN + 1
+*        The number of eigenvalues in the current block
+         IM = WEND - WBEGIN + 1
+
+*        This is for a 1x1 block
+         IF( IBEGIN.EQ.IEND ) THEN
+            DONE = DONE+1
+            Z( IBEGIN, WBEGIN ) = ONE
+            ISUPPZ( 2*WBEGIN-1 ) = IBEGIN
+            ISUPPZ( 2*WBEGIN ) = IBEGIN
+            W( WBEGIN ) = W( WBEGIN ) + SIGMA
+            WORK( WBEGIN ) = W( WBEGIN )
+            IBEGIN = IEND + 1
+            WBEGIN = WBEGIN + 1
+            GO TO 170
+         END IF
+
+*        The desired (shifted) eigenvalues are stored in W(WBEGIN:WEND)
+*        Note that these can be approximations, in this case, the corresp.
+*        entries of WERR give the size of the uncertainty interval.
+*        The eigenvalue approximations will be refined when necessary as
+*        high relative accuracy is required for the computation of the
+*        corresponding eigenvectors.
+         CALL DCOPY( IM, W( WBEGIN ), 1,
+     &                   WORK( WBEGIN ), 1 )
+
+*        We store in W the eigenvalue approximations w.r.t. the original
+*        matrix T.
+         DO 30 I=1,IM
+            W(WBEGIN+I-1) = W(WBEGIN+I-1)+SIGMA
+ 30      CONTINUE
+
+
+*        NDEPTH is the current depth of the representation tree
          NDEPTH = 0
-         LSBDPT = 1
+*        PARITY is either 1 or 0
+         PARITY = 1
+*        NCLUS is the number of clusters for the next level of the
+*        representation tree, we start with NCLUS = 1 for the root
          NCLUS = 1
          IWORK( IINDC1+1 ) = 1
-         IWORK( IINDC1+2 ) = IN
-*
-*        While( NDONE.LT.IM ) do
-*
+         IWORK( IINDC1+2 ) = IM
+
+*        IDONE is the number of eigenvectors already computed in the current
+*        block
+         IDONE = 0
+*        loop while( IDONE.LT.IM )
+*        generate the representation tree for the current block and
+*        compute the eigenvectors
    40    CONTINUE
-         IF( NDONE.LT.IM ) THEN
+         IF( IDONE.LT.IM ) THEN
+*           This is a crude protection against infinitely deep trees
+            IF( NDEPTH.GT.M ) THEN
+               INFO = -2
+               RETURN
+            ENDIF
+*           breadth first processing of the current level of the representation
+*           tree: OLDNCL = number of clusters on current level
             OLDNCL = NCLUS
+*           reset NCLUS to count the number of child clusters
             NCLUS = 0
-            LSBDPT = 1 - LSBDPT
+*
+            PARITY = 1 - PARITY
+            IF( PARITY.EQ.0 ) THEN
+               OLDCLS = IINDC1
+               NEWCLS = IINDC2
+            ELSE
+               OLDCLS = IINDC2
+               NEWCLS = IINDC1
+            END IF
+*           Process the clusters on the current level
             DO 150 I = 1, OLDNCL
-               IF( LSBDPT.EQ.0 ) THEN
-                  OLDCLS = IINDC1
-                  NEWCLS = IINDC2
-               ELSE
-                  OLDCLS = IINDC2
-                  NEWCLS = IINDC1
-               END IF
-*
-*              If NDEPTH > 1, retrieve the relatively robust
-*              representation (RRR) and perform limited bisection
-*              (if necessary) to get approximate eigenvalues.
-*
                J = OLDCLS + 2*I
+*              OLDFST, OLDLST = first, last index of current cluster.
+*                               cluster indices start with 1 and are relative
+*                               to WBEGIN when accessing W, WGAP, WERR, Z
                OLDFST = IWORK( J-1 )
                OLDLST = IWORK( J )
                IF( NDEPTH.GT.0 ) THEN
-                  J = OLDIEN + OLDFST
-                  CALL DCOPY( IN, Z( IBEGIN, J ), 1, D( IBEGIN ), 1 )
-                  CALL DCOPY( IN, Z( IBEGIN, J+1 ), 1, L( IBEGIN ), 1 )
-                  SIGMA = L( IEND )
-               END IF
-               K = IBEGIN
-               DO 50 J = 1, IN - 1
-                  WORK( INDLD+J ) = D( K )*L( K )
-                  WORK( INDLLD+J ) = WORK( INDLD+J )*L( K )
-                  K = K + 1
-   50          CONTINUE
-               IF( NDEPTH.GT.0 ) THEN
-                  CALL DLARRB( IN, D( IBEGIN ), L( IBEGIN ),
-     $                         WORK( INDLD+1 ), WORK( INDLLD+1 ),
-     $                         OLDFST, OLDLST, SIGMA, RELTOL, WORK,
-     $                         WORK( INDGAP+1 ), WORK( INDERR ),
-     $                         WORK( INDWRK ), IWORK( IINDWK ), IINFO )
-                  IF( IINFO.NE.0 ) THEN
-                     INFO = 1
-                     RETURN
-                  END IF
-               END IF
-*
-*              Classify eigenvalues of the current representation (RRR)
-*              as (i) isolated, (ii) loosely clustered or (iii) tightly
-*              clustered
-*
-               NEWFRS = OLDFST
-               DO 140 J = OLDFST, OLDLST
-                  IF( J.EQ.OLDLST .OR. WORK( INDGAP+J ).GE.RELTOL*
-     $                ABS( WORK( J ) ) ) THEN
-                     NEWLST = J
+*                 Retrieve relatively robust representation (RRR) of cluster
+*                 that has been computed at the previous level
+*                 The RRR is stored in Z and overwritten once the eigenvectors
+*                 have been computed or when the cluster is refined
+
+                  IF((DOL.EQ.1).AND.(DOU.EQ.M)) THEN
+*                    Get representation from location of the leftmost evalue
+*                    of the cluster
+                     J = WBEGIN + OLDFST - 1
                   ELSE
-*
-*                    continue (to the next loop)
-*
-                     RELGAP = WORK( INDGAP+J ) / ABS( WORK( J ) )
-                     IF( J.EQ.NEWFRS ) THEN
-                        MINRGP = RELGAP
+                     IF(WBEGIN+OLDFST-1.LT.DOL) THEN
+*                       Get representation from the left end of Z array
+                        J = DOL - 1
+                     ELSEIF(WBEGIN+OLDFST-1.GT.DOU) THEN
+*                       Get representation from the right end of Z array
+                        J = DOU
                      ELSE
-                        MINRGP = MIN( MINRGP, RELGAP )
-                     END IF
-                     GO TO 140
+                        J = WBEGIN + OLDFST - 1
+                     ENDIF
+                  ENDIF
+                  CALL DCOPY( IN, Z( IBEGIN, J ), 1, D( IBEGIN ), 1 )
+                  CALL DCOPY( IN-1, Z( IBEGIN, J+1 ), 1, L( IBEGIN ),
+     $               1 )
+                  SIGMA = Z( IEND, J+1 )
+
+*                 Set the corresponding entries in Z to zero
+                  CALL DLASET( 'Full', IN, 2, ZERO, ZERO,
+     $                         Z( IBEGIN, J), LDZ )
+               END IF
+
+*              Compute DL and DLL of current RRR
+               DO 50 J = IBEGIN, IEND-1
+                  TMP = D( J )*L( J )
+                  WORK( INDLD-1+J ) = TMP
+                  WORK( INDLLD-1+J ) = TMP*L( J )
+   50          CONTINUE
+
+               IF( NDEPTH.GT.0 ) THEN
+*                 P and Q are index of the first and last eigenvalue to compute
+*                 within the current block
+                  P = INDEXW( WBEGIN-1+OLDFST )
+                  Q = INDEXW( WBEGIN-1+OLDLST )
+*                 Offset for the arrays WORK, WGAP and WERR, i.e., th P-OFFSET
+*                 thru' Q-OFFSET elements of these arrays are to be used.
+C                  OFFSET = P-OLDFST
+                  OFFSET = INDEXW( WBEGIN ) - 1
+*                 perform limited bisection (if necessary) to get approximate
+*                 eigenvalues to the precision needed.
+                  CALL DLARRB( IN, D( IBEGIN ),
+     $                         WORK(INDLLD+IBEGIN-1),
+     $                         P, Q, RTOL1, RTOL2, OFFSET,
+     $                         WORK(WBEGIN),WGAP(WBEGIN),WERR(WBEGIN),
+     $                         WORK( INDWRK ), IWORK( IINDWK ),
+     $                         PIVMIN, SPDIAM, IN, IINFO )
+                  IF( IINFO.NE.0 ) THEN
+                     INFO = -1
+                     RETURN
+                  ENDIF
+*                 We also recompute the extremal gaps. W holds all eigenvalues
+*                 of the unshifted matrix and must be used for computation
+*                 of WGAP, the entries of WORK might stem from RRRs with
+*                 different shifts. The gaps from WBEGIN-1+OLDFST to
+*                 WBEGIN-1+OLDLST are correctly computed in DLARRB.
+*                 However, we only allow the gaps to become greater since
+*                 this is what should happen when we decrease WERR
+                  IF( OLDFST.GT.1) THEN
+                     WGAP( WBEGIN+OLDFST-2 ) =
+     $             MAX(WGAP(WBEGIN+OLDFST-2),
+     $                 W(WBEGIN+OLDFST-1)-WERR(WBEGIN+OLDFST-1)
+     $                 - W(WBEGIN+OLDFST-2)-WERR(WBEGIN+OLDFST-2) )
+                  ENDIF
+                  IF( WBEGIN + OLDLST -1 .LT. WEND ) THEN
+                     WGAP( WBEGIN+OLDLST-1 ) =
+     $               MAX(WGAP(WBEGIN+OLDLST-1),
+     $                   W(WBEGIN+OLDLST)-WERR(WBEGIN+OLDLST)
+     $                   - W(WBEGIN+OLDLST-1)-WERR(WBEGIN+OLDLST-1) )
+                  ENDIF
+*                 Each time the eigenvalues in WORK get refined, we store
+*                 the newly found approximation with all shifts applied in W
+                  DO 53 J=OLDFST,OLDLST
+                     W(WBEGIN+J-1) = WORK(WBEGIN+J-1)+SIGMA
+ 53               CONTINUE
+               END IF
+
+*              Process the current node.
+               NEWFST = OLDFST
+               DO 140 J = OLDFST, OLDLST
+                  IF( J.EQ.OLDLST ) THEN
+*                    we are at the right end of the cluster, this is also the
+*                    boundary of the child cluster
+                     NEWLST = J
+                  ELSE IF ( WGAP( WBEGIN + J -1).GE.
+     $                    MINRGP* ABS( WORK(WBEGIN + J -1) ) ) THEN
+*                    the right relative gap is big enough, the child cluster
+*                    (NEWFST,..,NEWLST) is well separated from the following
+                     NEWLST = J
+                   ELSE
+*                    inside a child cluster, the relative gap is not
+*                    big enough.
+                     GOTO 140
                   END IF
-                  NEWSIZ = NEWLST - NEWFRS + 1
-                  MAXITR = 10
-                  NEWFTT = OLDIEN + NEWFRS
-                  IF( NEWSIZ.GT.1 ) THEN
-                     MGSCLS = NEWSIZ.LE.MGSSIZ .AND. MINRGP.GE.MGSTOL
-                     IF( .NOT.MGSCLS ) THEN
-                        CALL DLARRF( IN, D( IBEGIN ), L( IBEGIN ),
-     $                               WORK( INDLD+1 ), WORK( INDLLD+1 ),
-     $                               NEWFRS, NEWLST, WORK,
-     $                               Z( IBEGIN, NEWFTT ),
-     $                               Z( IBEGIN, NEWFTT+1 ),
-     $                               WORK( INDWRK ), IWORK( IINDWK ),
-     $                               INFO )
-                        IF( INFO.EQ.0 ) THEN
-                           NCLUS = NCLUS + 1
-                           K = NEWCLS + 2*NCLUS
-                           IWORK( K-1 ) = NEWFRS
-                           IWORK( K ) = NEWLST
-                        ELSE
-                           INFO = 0
-                           IF( MINRGP.GE.MGSTOL ) THEN
-                              MGSCLS = .TRUE.
-                           ELSE
-*
-*                             Call DSTEIN to process this tight cluster.
-*                             This happens only if MINRGP <= MGSTOL
-*                             and DLARRF returns INFO = 1. The latter
-*                             means that a new RRR to "break" the
-*                             cluster could not be found.
-*
-                              WORK( INDWRK ) = D( IBEGIN )
-                              DO 60 K = 1, IN - 1
-                                 WORK( INDWRK+K ) = D( IBEGIN+K ) +
-     $                                              WORK( INDLLD+K )
-   60                         CONTINUE
-                              DO 70 K = 1, NEWSIZ
-                                 IWORK( IINDWK+K-1 ) = 1
-   70                         CONTINUE
-                              DO 80 K = NEWFRS, NEWLST
-                                 ISUPPZ( 2*( IBEGIN+K )-3 ) = 1
-                                 ISUPPZ( 2*( IBEGIN+K )-2 ) = IN
-   80                         CONTINUE
-                              TEMP( 1 ) = IN
-                              CALL DSTEIN( IN, WORK( INDWRK ),
-     $                                     WORK( INDLD+1 ), NEWSIZ,
-     $                                     WORK( NEWFRS ),
-     $                                     IWORK( IINDWK ), TEMP( 1 ),
-     $                                     Z( IBEGIN, NEWFTT ), LDZ,
-     $                                     WORK( INDWRK+IN ),
-     $                                     IWORK( IINDWK+IN ),
-     $                                     IWORK( IINDWK+2*IN ), IINFO )
-                              IF( IINFO.NE.0 ) THEN
-                                 INFO = 2
-                                 RETURN
-                              END IF
-                              NDONE = NDONE + NEWSIZ
-                           END IF
-                        END IF
-                     END IF
+
+*                 Compute size of child cluster found
+                  NEWSIZ = NEWLST - NEWFST + 1
+
+*                 NEWFTT is the place in Z where the new RRR or the computed
+*                 eigenvector is to be stored
+                  IF((DOL.EQ.1).AND.(DOU.EQ.M)) THEN
+*                    Store representation at location of the leftmost evalue
+*                    of the cluster
+                     NEWFTT = WBEGIN + NEWFST - 1
                   ELSE
-                     MGSCLS = .FALSE.
-                  END IF
-                  IF( NEWSIZ.EQ.1 .OR. MGSCLS ) THEN
-                     KTOT = NEWFTT
-                     DO 100 K = NEWFRS, NEWLST
-                        ITER = 0
-   90                   CONTINUE
-                        LAMBDA = WORK( K )
-                        CALL DLAR1V( IN, 1, IN, LAMBDA, D( IBEGIN ),
-     $                               L( IBEGIN ), WORK( INDLD+1 ),
-     $                               WORK( INDLLD+1 ),
-     $                               GERSCH( 2*OLDIEN+1 ),
-     $                               Z( IBEGIN, KTOT ), ZTZ, MINGMA,
-     $                               IWORK( IINDR+KTOT ),
-     $                               ISUPPZ( 2*KTOT-1 ),
-     $                               WORK( INDWRK ) )
-                        TMP1 = ONE / ZTZ
-                        NRMINV = SQRT( TMP1 )
-                        RESID = ABS( MINGMA )*NRMINV
-                        RQCORR = MINGMA*TMP1
-                        IF( K.EQ.IN ) THEN
-                           GAP = WORK( INDGAP+K-1 )
-                        ELSE IF( K.EQ.1 ) THEN
-                           GAP = WORK( INDGAP+K )
+                     IF(WBEGIN+NEWFST-1.LT.DOL) THEN
+*                       Store representation at the left end of Z array
+                        NEWFTT = DOL - 1
+                     ELSEIF(WBEGIN+NEWFST-1.GT.DOU) THEN
+*                       Store representation at the right end of Z array
+                        NEWFTT = DOU
+                     ELSE
+                        NEWFTT = WBEGIN + NEWFST - 1
+                     ENDIF
+                  ENDIF
+
+                  IF( NEWSIZ.GT.1) THEN
+*
+*                    Current child is not a singleton but a cluster.
+*                    Compute and store new representation of child.
+*
+*
+*                    Compute left and right cluster gap.
+*
+*                    LGAP and RGAP are not computed from WORK because
+*                    the eigenvalue approximations may stem from RRRs
+*                    different shifts. However, W hold all eigenvalues
+*                    of the unshifted matrix. Still, the entries in WGAP
+*                    have to be computed from WORK since the entries
+*                    in W might be of the same order so that gaps are not
+*                    exhibited correctly for very close eigenvalues.
+                     IF( NEWFST.EQ.1 ) THEN
+                        LGAP = MAX( ZERO,
+     $                       W(WBEGIN)-WERR(WBEGIN) - VL )
+                    ELSE
+                        LGAP = WGAP( WBEGIN+NEWFST-2 )
+                     ENDIF
+                     RGAP = WGAP( WBEGIN+NEWLST-1 )
+*
+*                    Compute left- and rightmost eigenvalue of child
+*                    to high precision in order to shift as close
+*                    as possible and obtain as large relative gaps
+*                    as possible
+*
+                     DO 55 K =1,2
+                        IF(K.EQ.1) THEN
+                           P = INDEXW( WBEGIN-1+NEWFST )
                         ELSE
-                           GAP = MIN( WORK( INDGAP+K-1 ),
-     $                           WORK( INDGAP+K ) )
+                           P = INDEXW( WBEGIN-1+NEWLST )
+                        ENDIF
+                        OFFSET = INDEXW( WBEGIN ) - 1
+                        CALL DLARRB( IN, D(IBEGIN),
+     $                       WORK( INDLLD+IBEGIN-1 ),P,P,
+     $                       RQTOL, RQTOL, OFFSET,
+     $                       WORK(WBEGIN),WGAP(WBEGIN),
+     $                       WERR(WBEGIN),WORK( INDWRK ),
+     $                       IWORK( IINDWK ), PIVMIN, SPDIAM,
+     $                       IN, IINFO )
+ 55                  CONTINUE
+*
+                     IF((WBEGIN+NEWLST-1.LT.DOL).OR.
+     $                  (WBEGIN+NEWFST-1.GT.DOU)) THEN
+*                       if the cluster contains no desired eigenvalues
+*                       skip the computation of that branch of the rep. tree
+*
+*                       We could skip before the refinement of the extremal
+*                       eigenvalues of the child, but then the representation
+*                       tree could be different from the one when nothing is
+*                       skipped. For this reason we skip at this place.
+                        IDONE = IDONE + NEWLST - NEWFST + 1
+                        GOTO 139
+                     ENDIF
+*
+*                    Compute RRR of child cluster.
+*                    Note that the new RRR is stored in Z
+*
+C                    DLARRF needs LWORK = 2*N
+                     CALL DLARRF( IN, D( IBEGIN ), L( IBEGIN ),
+     $                         WORK(INDLD+IBEGIN-1),
+     $                         NEWFST, NEWLST, WORK(WBEGIN),
+     $                         WGAP(WBEGIN), WERR(WBEGIN),
+     $                         SPDIAM, LGAP, RGAP, PIVMIN, TAU,
+     $                         Z(IBEGIN, NEWFTT),Z(IBEGIN, NEWFTT+1),
+     $                         WORK( INDWRK ), IINFO )
+                     IF( IINFO.EQ.0 ) THEN
+*                       a new RRR for the cluster was found by DLARRF
+*                       update shift and store it
+                        SSIGMA = SIGMA + TAU
+                        Z( IEND, NEWFTT+1 ) = SSIGMA
+*                       WORK() are the midpoints and WERR() the semi-width
+*                       Note that the entries in W are unchanged.
+                        DO 116 K = NEWFST, NEWLST
+                           FUDGE =
+     $                          THREE*EPS*ABS(WORK(WBEGIN+K-1))
+                           WORK( WBEGIN + K - 1 ) =
+     $                          WORK( WBEGIN + K - 1) - TAU
+                           FUDGE = FUDGE +
+     $                          FOUR*EPS*ABS(WORK(WBEGIN+K-1))
+*                          Fudge errors
+                           WERR( WBEGIN + K - 1 ) =
+     $                          WERR( WBEGIN + K - 1 ) + FUDGE
+*                          Gaps are not fudged. Provided that WERR is small
+*                          when eigenvalues are close, a zero gap indicates
+*                          that a new representation is needed for resolving
+*                          the cluster. A fudge could lead to a wrong decision
+*                          of judging eigenvalues 'separated' which in
+*                          reality are not. This could have a negative impact
+*                          on the orthogonality of the computed eigenvectors.
+ 116                    CONTINUE
+
+                        NCLUS = NCLUS + 1
+                        K = NEWCLS + 2*NCLUS
+                        IWORK( K-1 ) = NEWFST
+                        IWORK( K ) = NEWLST
+                     ELSE
+                        INFO = -2
+                        RETURN
+                     ENDIF
+                  ELSE
+*
+*                    Compute eigenvector of singleton
+*
+                     ITER = 0
+*
+                     TOL = FOUR * LOG(DBLE(IN)) * EPS
+*
+                     K = NEWFST
+                     WINDEX = WBEGIN + K - 1
+                     WINDMN = MAX(WINDEX - 1,1)
+                     WINDPL = MIN(WINDEX + 1,M)
+                     LAMBDA = WORK( WINDEX )
+                     DONE = DONE + 1
+*                    Check if eigenvector computation is to be skipped
+                     IF((WINDEX.LT.DOL).OR.
+     $                  (WINDEX.GT.DOU)) THEN
+                        ESKIP = .TRUE.
+                        GOTO 125
+                     ELSE
+                        ESKIP = .FALSE.
+                     ENDIF
+                     LEFT = WORK( WINDEX ) - WERR( WINDEX )
+                     RIGHT = WORK( WINDEX ) + WERR( WINDEX )
+                     INDEIG = INDEXW( WINDEX )
+*                    Note that since we compute the eigenpairs for a child,
+*                    all eigenvalue approximations are w.r.t the same shift.
+*                    In this case, the entries in WORK should be used for
+*                    computing the gaps since they exhibit even very small
+*                    differences in the eigenvalues, as opposed to the
+*                    entries in W which might "look" the same.
+
+                     IF( K .EQ. 1) THEN
+*                       In the case RANGE='I' and with not much initial
+*                       accuracy in LAMBDA and VL, the formula
+*                       LGAP = MAX( ZERO, (SIGMA - VL) + LAMBDA )
+*                       can lead to an overestimation of the left gap and
+*                       thus to inadequately early RQI 'convergence'.
+*                       Prevent this by forcing a small left gap.
+                        LGAP = EPS*MAX(ABS(LEFT),ABS(RIGHT))
+                     ELSE
+                        LGAP = WGAP(WINDMN)
+                     ENDIF
+                     IF( K .EQ. IM) THEN
+*                       In the case RANGE='I' and with not much initial
+*                       accuracy in LAMBDA and VU, the formula
+*                       can lead to an overestimation of the right gap and
+*                       thus to inadequately early RQI 'convergence'.
+*                       Prevent this by forcing a small right gap.
+                        RGAP = EPS*MAX(ABS(LEFT),ABS(RIGHT))
+                     ELSE
+                        RGAP = WGAP(WINDEX)
+                     ENDIF
+                     GAP = MIN( LGAP, RGAP )
+                     IF(( K .EQ. 1).OR.(K .EQ. IM)) THEN
+*                       The eigenvector support can become wrong
+*                       because significant entries could be cut off due to a
+*                       large GAPTOL parameter in LAR1V. Prevent this.
+                        GAPTOL = ZERO
+                     ELSE
+                        GAPTOL = GAP * EPS
+                     ENDIF
+                     ISUPMN = IN
+                     ISUPMX = 1
+*                    Update WGAP so that it holds the minimum gap
+*                    to the left or the right. This is crucial in the
+*                    case where bisection is used to ensure that the
+*                    eigenvalue is refined up to the required precision.
+*                    The correct value is restored afterwards.
+                     SAVGAP = WGAP(WINDEX)
+                     WGAP(WINDEX) = GAP
+*                    We want to use the Rayleigh Quotient Correction
+*                    as often as possible since it converges quadratically
+*                    when we are close enough to the desired eigenvalue.
+*                    However, the Rayleigh Quotient can have the wrong sign
+*                    and lead us away from the desired eigenvalue. In this
+*                    case, the best we can do is to use bisection.
+                     USEDBS = .FALSE.
+                     USEDRQ = .FALSE.
+*                    Bisection is initially turned off unless it is forced
+                     NEEDBS =  .NOT.TRYRQC
+ 120                 CONTINUE
+*                    Check if bisection should be used to refine eigenvalue
+                     IF(NEEDBS) THEN
+*                       Take the bisection as new iterate
+                        USEDBS = .TRUE.
+                        ITMP1 = IWORK( IINDR+WINDEX )
+                        OFFSET = INDEXW( WBEGIN ) - 1
+                        CALL DLARRB( IN, D(IBEGIN),
+     $                       WORK(INDLLD+IBEGIN-1),INDEIG,INDEIG,
+     $                       ZERO, TWO*EPS, OFFSET,
+     $                       WORK(WBEGIN),WGAP(WBEGIN),
+     $                       WERR(WBEGIN),WORK( INDWRK ),
+     $                       IWORK( IINDWK ), PIVMIN, SPDIAM,
+     $                       ITMP1, IINFO )
+                        IF( IINFO.NE.0 ) THEN
+                           INFO = -3
+                           RETURN
+                        ENDIF
+                        LAMBDA = WORK( WINDEX )
+*                       Reset twist index from inaccurate LAMBDA to
+*                       force computation of true MINGMA
+                        IWORK( IINDR+WINDEX ) = 0
+                     ENDIF
+*                    Given LAMBDA, compute the eigenvector.
+                     CALL DLAR1V( IN, 1, IN, LAMBDA, D( IBEGIN ),
+     $                    L( IBEGIN ), WORK(INDLD+IBEGIN-1),
+     $                    WORK(INDLLD+IBEGIN-1),
+     $                    PIVMIN, GAPTOL, Z( IBEGIN, WINDEX ),
+     $                    .NOT.USEDBS, NEGCNT, ZTZ, MINGMA,
+     $                    IWORK( IINDR+WINDEX ), ISUPPZ( 2*WINDEX-1 ),
+     $                    NRMINV, RESID, RQCORR, WORK( INDWRK ) )
+                     IF(ITER .EQ. 0) THEN
+                        BSTRES = RESID
+                        BSTW = LAMBDA
+                     ELSEIF(RESID.LT.BSTRES) THEN
+                        BSTRES = RESID
+                        BSTW = LAMBDA
+                     ENDIF
+                     ISUPMN = MIN(ISUPMN,ISUPPZ( 2*WINDEX-1 ))
+                     ISUPMX = MAX(ISUPMX,ISUPPZ( 2*WINDEX ))
+                     ITER = ITER + 1
+
+*                    sin alpha <= |resid|/gap
+*                    Note that both the residual and the gap are
+*                    proportional to the matrix, so ||T|| doesn't play
+*                    a role in the quotient
+
+*
+*                    Convergence test for Rayleigh-Quotient iteration
+*                    (omitted when Bisection has been used)
+*
+                     IF( RESID.GT.TOL*GAP .AND. ABS( RQCORR ).GT.
+     $                    RQTOL*ABS( LAMBDA ) .AND. .NOT. USEDBS)
+     $                    THEN
+*                       We need to check that the RQCORR update doesn't
+*                       move the eigenvalue away from the desired one and
+*                       towards a neighbor. -> protection with bisection
+                        IF(INDEIG.LE.NEGCNT) THEN
+*                          The wanted eigenvalue lies to the left
+                           SGNDEF = -ONE
+                        ELSE
+*                          The wanted eigenvalue lies to the right
+                           SGNDEF = ONE
+                        ENDIF
+*                       We only use the RQCORR if it improves the
+*                       the iterate reasonably.
+                        IF( ( RQCORR*SGNDEF.GE.ZERO )
+     $                       .AND.( LAMBDA + RQCORR.LE. RIGHT)
+     $                       .AND.( LAMBDA + RQCORR.GE. LEFT)
+     $                       ) THEN
+                           USEDRQ = .TRUE.
+*                          Store new midpoint of bisection interval in WORK
+                           IF(SGNDEF.EQ.ONE) THEN
+*                             The current LAMBDA is on the left of the true
+*                             eigenvalue
+                              LEFT = LAMBDA
+*                             We prefer to assume that the error estimate
+*                             is correct. We could make the interval not
+*                             as a bracket but to be modified if the RQCORR
+*                             chooses to. In this case, the RIGHT side should
+*                             be modified as follows:
+*                              RIGHT = MAX(RIGHT, LAMBDA + RQCORR)
+                           ELSE
+*                             The current LAMBDA is on the right of the true
+*                             eigenvalue
+                              RIGHT = LAMBDA
+*                             See comment about assuming the error estimate is
+*                             correct above.
+*                              LEFT = MIN(LEFT, LAMBDA + RQCORR)
+                           ENDIF
+                           WORK( WINDEX ) =
+     $                       HALF * (RIGHT + LEFT)
+*                          Take RQCORR since it has the correct sign and
+*                          improves the iterate reasonably
+                           LAMBDA = LAMBDA + RQCORR
+*                          Update width of error interval
+                           WERR( WINDEX ) =
+     $                             HALF * (RIGHT-LEFT)
+                        ELSE
+                           NEEDBS = .TRUE.
+                        ENDIF
+                        IF(RIGHT-LEFT.LT.RQTOL*ABS(LAMBDA)) THEN
+*                             The eigenvalue is computed to bisection accuracy
+*                             compute eigenvector and stop
+                           USEDBS = .TRUE.
+                           GOTO 120
+                        ELSEIF( ITER.LT.MAXITR ) THEN
+                           GOTO 120
+                        ELSEIF( ITER.EQ.MAXITR ) THEN
+                           NEEDBS = .TRUE.
+                           GOTO 120
+                        ELSE
+                           INFO = 5
+                           RETURN
                         END IF
-                        ITER = ITER + 1
-                        IF( RESID.GT.TOL*GAP .AND. ABS( RQCORR ).GT.
-     $                      FOUR*EPS*ABS( LAMBDA ) ) THEN
-                           WORK( K ) = LAMBDA + RQCORR
-                           IF( ITER.LT.MAXITR ) THEN
-                              GO TO 90
-                           END IF
-                        END IF
-                        IWORK( KTOT ) = 1
-                        IF( NEWSIZ.EQ.1 )
-     $                     NDONE = NDONE + 1
-                        CALL DSCAL( IN, NRMINV, Z( IBEGIN, KTOT ), 1 )
-                        KTOT = KTOT + 1
-  100                CONTINUE
-                     IF( NEWSIZ.GT.1 ) THEN
-                        ITMP1 = ISUPPZ( 2*NEWFTT-1 )
-                        ITMP2 = ISUPPZ( 2*NEWFTT )
-                        KTOT = OLDIEN + NEWLST
-                        DO 120 P = NEWFTT + 1, KTOT
-                           DO 110 Q = NEWFTT, P - 1
-                              TMP1 = -DDOT( IN, Z( IBEGIN, P ), 1,
-     $                               Z( IBEGIN, Q ), 1 )
-                              CALL DAXPY( IN, TMP1, Z( IBEGIN, Q ), 1,
-     $                                    Z( IBEGIN, P ), 1 )
-  110                      CONTINUE
-                           TMP1 = ONE / DNRM2( IN, Z( IBEGIN, P ), 1 )
-                           CALL DSCAL( IN, TMP1, Z( IBEGIN, P ), 1 )
-                           ITMP1 = MIN( ITMP1, ISUPPZ( 2*P-1 ) )
-                           ITMP2 = MAX( ITMP2, ISUPPZ( 2*P ) )
-  120                   CONTINUE
-                        DO 130 P = NEWFTT, KTOT
-                           ISUPPZ( 2*P-1 ) = ITMP1
-                           ISUPPZ( 2*P ) = ITMP2
-  130                   CONTINUE
-                        NDONE = NDONE + NEWSIZ
+                     ELSE
+                        STP2II = .FALSE.
+        IF(USEDRQ .AND. USEDBS .AND.
+     $                     BSTRES.LE.RESID) THEN
+                           LAMBDA = BSTW
+                           STP2II = .TRUE.
+                        ENDIF
+                        IF (STP2II) THEN
+*                          improve error angle by second step
+                           CALL DLAR1V( IN, 1, IN, LAMBDA,
+     $                          D( IBEGIN ), L( IBEGIN ),
+     $                          WORK(INDLD+IBEGIN-1),
+     $                          WORK(INDLLD+IBEGIN-1),
+     $                          PIVMIN, GAPTOL, Z( IBEGIN, WINDEX ),
+     $                          .NOT.USEDBS, NEGCNT, ZTZ, MINGMA,
+     $                          IWORK( IINDR+WINDEX ),
+     $                          ISUPPZ( 2*WINDEX-1 ),
+     $                          NRMINV, RESID, RQCORR, WORK( INDWRK ) )
+                        ENDIF
+                        WORK( WINDEX ) = LAMBDA
                      END IF
-                  END IF
-                  NEWFRS = J + 1
-  140          CONTINUE
-  150       CONTINUE
+*
+*                    Compute FP-vector support w.r.t. whole matrix
+*
+                     ISUPPZ( 2*WINDEX-1 ) = ISUPPZ( 2*WINDEX-1 )+OLDIEN
+                     ISUPPZ( 2*WINDEX ) = ISUPPZ( 2*WINDEX )+OLDIEN
+                     ZFROM = ISUPPZ( 2*WINDEX-1 )
+                     ZTO = ISUPPZ( 2*WINDEX )
+                     ISUPMN = ISUPMN + OLDIEN
+                     ISUPMX = ISUPMX + OLDIEN
+*                    Ensure vector is ok if support in the RQI has changed
+                     IF(ISUPMN.LT.ZFROM) THEN
+                        DO 122 II = ISUPMN,ZFROM-1
+                           Z( II, WINDEX ) = ZERO
+ 122                    CONTINUE
+                     ENDIF
+                     IF(ISUPMX.GT.ZTO) THEN
+                        DO 123 II = ZTO+1,ISUPMX
+                           Z( II, WINDEX ) = ZERO
+ 123                    CONTINUE
+                     ENDIF
+                     CALL DSCAL( ZTO-ZFROM+1, NRMINV,
+     $                       Z( ZFROM, WINDEX ), 1 )
+ 125                 CONTINUE
+*                    Update W
+                     W( WINDEX ) = LAMBDA+SIGMA
+*                    Recompute the gaps on the left and right
+*                    But only allow them to become larger and not
+*                    smaller (which can only happen through "bad"
+*                    cancellation and doesn't reflect the theory
+*                    where the initial gaps are underestimated due
+*                    to WERR being too crude.)
+                     IF(.NOT.ESKIP) THEN
+                        IF( K.GT.1) THEN
+                           WGAP( WINDMN ) = MAX( WGAP(WINDMN),
+     $                          W(WINDEX)-WERR(WINDEX)
+     $                          - W(WINDMN)-WERR(WINDMN) )
+                        ENDIF
+                        IF( WINDEX.LT.WEND ) THEN
+                           WGAP( WINDEX ) = MAX( SAVGAP,
+     $                          W( WINDPL )-WERR( WINDPL )
+     $                          - W( WINDEX )-WERR( WINDEX) )
+                        ENDIF
+                     ENDIF
+                     IDONE = IDONE + 1
+                  ENDIF
+*                 here ends the code for the current child
+*
+ 139              CONTINUE
+*                 Proceed to any remaining child nodes
+                  NEWFST = J + 1
+ 140           CONTINUE
+ 150        CONTINUE
             NDEPTH = NDEPTH + 1
             GO TO 40
          END IF
-         J = 2*IBEGIN
-         DO 160 I = IBEGIN, IEND
-            ISUPPZ( J-1 ) = ISUPPZ( J-1 ) + OLDIEN
-            ISUPPZ( J ) = ISUPPZ( J ) + OLDIEN
-            J = J + 2
-  160    CONTINUE
          IBEGIN = IEND + 1
-  170 CONTINUE
+         WBEGIN = WEND + 1
+ 170  CONTINUE
 *
+
       RETURN
 *
 *     End of DLARRV
@@ -13496,10 +14734,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARTG( F, G, CS, SN, R )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   CS, F, G, R, SN
@@ -13541,6 +14778,9 @@ CIBM           PREFER SCALAR
 *  R       (output) DOUBLE PRECISION
 *          The nonzero component of the rotated vector.
 *
+*  This version has a few statements commented out for thread safety
+*  (machine parameters are computed on each entry). 10 feb 03, SJH.
+*
 *  =====================================================================
 *
 *     .. Parameters ..
@@ -13552,7 +14792,7 @@ CIBM           PREFER SCALAR
       PARAMETER          ( TWO = 2.0D0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            FIRST
+*     LOGICAL            FIRST
       INTEGER            COUNT, I
       DOUBLE PRECISION   EPS, F1, G1, SAFMIN, SAFMN2, SAFMX2, SCALE
 *     ..
@@ -13564,21 +14804,21 @@ CIBM           PREFER SCALAR
       INTRINSIC          ABS, INT, LOG, MAX, SQRT
 *     ..
 *     .. Save statement ..
-      SAVE               FIRST, SAFMX2, SAFMIN, SAFMN2
+*     SAVE               FIRST, SAFMX2, SAFMIN, SAFMN2
 *     ..
 *     .. Data statements ..
-      DATA               FIRST / .TRUE. /
+*     DATA               FIRST / .TRUE. /
 *     ..
 *     .. Executable Statements ..
 *
-      IF( FIRST ) THEN
-         FIRST = .FALSE.
+*     IF( FIRST ) THEN
          SAFMIN = DLAMCH( 'S' )
          EPS = DLAMCH( 'E' )
          SAFMN2 = DLAMCH( 'B' )**INT( LOG( SAFMIN / EPS ) /
      $            LOG( DLAMCH( 'B' ) ) / TWO )
          SAFMX2 = ONE / SAFMN2
-      END IF
+*        FIRST = .FALSE.
+*     END IF
       IF( G.EQ.ZERO ) THEN
          CS = ONE
          SN = ZERO
@@ -13639,10 +14879,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARTV( N, X, INCX, Y, INCY, C, S, INCC )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCC, INCX, INCY, N
@@ -13716,10 +14955,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLARUV( ISEED, N, X )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            N
@@ -14049,6 +15287,8 @@ CIBM           PREFER SCALAR
       I4 = ISEED( 4 )
 *
       DO 10 I = 1, MIN( N, LV )
+*	  
+  20     CONTINUE
 *
 *        Multiply the seed by i-th power of the multiplier modulo 2**48
 *
@@ -14069,6 +15309,23 @@ CIBM           PREFER SCALAR
 *
          X( I ) = R*( DBLE( IT1 )+R*( DBLE( IT2 )+R*( DBLE( IT3 )+R*
      $            DBLE( IT4 ) ) ) )
+*
+         IF (X( I ).EQ.1.0D0) THEN
+*           If a real number has n bits of precision, and the first
+*           n bits of the 48-bit integer above happen to be all 1 (which
+*           will occur about once every 2**n calls), then X( I ) will
+*           be rounded to exactly 1.0. 
+*           Since X( I ) is not supposed to return exactly 0.0 or 1.0,
+*           the statistically correct thing to do in this situation is
+*           simply to iterate again.
+*           N.B. the case X( I ) = 0.0 should not be possible.	
+            I1 = I1 + 2
+            I2 = I2 + 2
+            I3 = I3 + 2
+            I4 = I4 + 2
+            GOTO 20
+         END IF
+*
    10 CONTINUE
 *
 *     Return final value of seed
@@ -14084,10 +15341,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAS2( F, G, H, SSMIN, SSMAX )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   F, G, H, SSMAX, SSMIN
@@ -14206,10 +15462,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          TYPE
@@ -14268,7 +15523,7 @@ CIBM           PREFER SCALAR
 *  N       (input) INTEGER
 *          The number of columns of the matrix A.  N >= 0.
 *
-*  A       (input/output) DOUBLE PRECISION array, dimension (LDA,M)
+*  A       (input/output) DOUBLE PRECISION array, dimension (LDA,N)
 *          The matrix to be multiplied by CTO/CFROM.  See TYPE for the
 *          storage type.
 *
@@ -14475,10 +15730,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASD0( N, SQRE, D, E, U, LDU, VT, LDVT, SMLSIZ, IWORK,
      $                   WORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDU, LDVT, N, SMLSIZ, SQRE
@@ -14538,10 +15792,10 @@ CIBM           PREFER SCALAR
 *         On entry, maximum size of the subproblems at the
 *         bottom of the computation tree.
 *
-*  IWORK  INTEGER work array.
+*  IWORK  (workspace) INTEGER work array.
 *         Dimension must be at least (8 * N)
 *
-*  WORK   DOUBLE PRECISION work array.
+*  WORK   (workspace) DOUBLE PRECISION work array.
 *         Dimension must be at least (3 * M**2 + 2 * M)
 *
 *  INFO   (output) INTEGER
@@ -14706,10 +15960,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASD1( NL, NR, SQRE, D, ALPHA, BETA, U, LDU, VT, LDVT,
      $                   IDXQ, IWORK, WORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDU, LDVT, NL, NR, SQRE
@@ -14785,10 +16038,10 @@ CIBM           PREFER SCALAR
 *         the lower block. On exit D(1:N) contains the singular values
 *         of the modified matrix.
 *
-*  ALPHA  (input) DOUBLE PRECISION
+*  ALPHA  (input/output) DOUBLE PRECISION
 *         Contains the diagonal element associated with the added row.
 *
-*  BETA   (input) DOUBLE PRECISION
+*  BETA   (input/output) DOUBLE PRECISION
 *         Contains the off-diagonal element associated with the added
 *         row.
 *
@@ -14940,10 +16193,9 @@ CIBM           PREFER SCALAR
      $                   LDVT, DSIGMA, U2, LDU2, VT2, LDVT2, IDXP, IDX,
      $                   IDXC, IDXQ, COLTYP, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Oak Ridge National Lab, Argonne National Lab,
-*     Courant Institute, NAG Ltd., and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDU, LDU2, LDVT, LDVT2, NL, NR, SQRE
@@ -14995,6 +16247,10 @@ CIBM           PREFER SCALAR
 *         singular values (those which were deflated) sorted into
 *         increasing order.
 *
+*  Z      (output) DOUBLE PRECISION array, dimension(N)
+*         On exit Z contains the updating row vector in the secular
+*         equation.
+*
 *  ALPHA  (input) DOUBLE PRECISION
 *         Contains the diagonal element associated with the added row.
 *
@@ -15012,9 +16268,17 @@ CIBM           PREFER SCALAR
 *  LDU    (input) INTEGER
 *         The leading dimension of the array U.  LDU >= N.
 *
-*  Z      (output) DOUBLE PRECISION array, dimension(N)
-*         On exit Z contains the updating row vector in the secular
-*         equation.
+*  VT     (input/output) DOUBLE PRECISION array, dimension(LDVT,M)
+*         On entry VT' contains the right singular vectors of two
+*         submatrices in the two square blocks with corners at (1,1),
+*         (NL+1, NL+1), and (NL+2, NL+2), (M,M).
+*         On exit VT' contains the trailing (N-K) updated right singular
+*         vectors (those which were deflated) in its last N-K columns.
+*         In case SQRE =1, the last row of VT spans the right null
+*         space.
+*
+*  LDVT   (input) INTEGER
+*         The leading dimension of the array VT.  LDVT >= M.
 *
 *  DSIGMA (output) DOUBLE PRECISION array, dimension (N)
 *         Contains a copy of the diagonal elements (K-1 singular values
@@ -15032,18 +16296,6 @@ CIBM           PREFER SCALAR
 *  LDU2   (input) INTEGER
 *         The leading dimension of the array U2.  LDU2 >= N.
 *
-*  VT     (input/output) DOUBLE PRECISION array, dimension(LDVT,M)
-*         On entry VT' contains the right singular vectors of two
-*         submatrices in the two square blocks with corners at (1,1),
-*         (NL+1, NL+1), and (NL+2, NL+2), (M,M).
-*         On exit VT' contains the trailing (N-K) updated right singular
-*         vectors (those which were deflated) in its last N-K columns.
-*         In case SQRE =1, the last row of VT spans the right null
-*         space.
-*
-*  LDVT   (input) INTEGER
-*         The leading dimension of the array VT.  LDVT >= M.
-*
 *  VT2    (output) DOUBLE PRECISION array, dimension(LDVT2,N)
 *         VT2' contains a copy of the first K right singular vectors
 *         which will be used by DLASD3 in a matrix multiply (DGEMM) to
@@ -15056,24 +16308,31 @@ CIBM           PREFER SCALAR
 *  LDVT2  (input) INTEGER
 *         The leading dimension of the array VT2.  LDVT2 >= M.
 *
-*  IDXP   (workspace) INTEGER array, dimension(N)
+*  IDXP   (workspace) INTEGER array dimension(N)
 *         This will contain the permutation used to place deflated
 *         values of D at the end of the array. On output IDXP(2:K)
 *         points to the nondeflated D-values and IDXP(K+1:N)
 *         points to the deflated singular values.
 *
-*  IDX    (workspace) INTEGER array, dimension(N)
+*  IDX    (workspace) INTEGER array dimension(N)
 *         This will contain the permutation used to sort the contents of
 *         D into ascending order.
 *
-*  IDXC   (output) INTEGER array, dimension(N)
+*  IDXC   (output) INTEGER array dimension(N)
 *         This will contain the permutation used to arrange the columns
 *         of the deflated U matrix into three groups:  the first group
 *         contains non-zero entries only at and above NL, the second
 *         contains non-zero entries only below NL+2, and the third is
 *         dense.
 *
-*  COLTYP (workspace/output) INTEGER array, dimension(N)
+*  IDXQ   (input/output) INTEGER array dimension(N)
+*         This contains the permutation which separately sorts the two
+*         sub-problems in D into ascending order.  Note that entries in
+*         the first hlaf of this permutation must first be moved one
+*         position backward; and entries in the second half
+*         must first have NL+1 added to their values.
+*
+*  COLTYP (workspace/output) INTEGER array dimension(N)
 *         As workspace, this will contain a label which will indicate
 *         which of the following types a column in the U2 matrix or a
 *         row in the VT2 matrix is:
@@ -15084,13 +16343,6 @@ CIBM           PREFER SCALAR
 *
 *         On exit, it is an array of dimension 4, with COLTYP(I) being
 *         the dimension of the I-th type columns.
-*
-*  IDXQ   (input) INTEGER array, dimension(N)
-*         This contains the permutation which separately sorts the two
-*         sub-problems in D into ascending order.  Note that entries in
-*         the first hlaf of this permutation must first be moved one
-*         position backward; and entries in the second half
-*         must first have NL+1 added to their values.
 *
 *  INFO   (output) INTEGER
 *          = 0:  successful exit.
@@ -15453,10 +16705,9 @@ CIBM           PREFER SCALAR
      $                   LDU2, VT, LDVT, VT2, LDVT2, IDXC, CTOT, Z,
      $                   INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Oak Ridge National Lab, Argonne National Lab,
-*     Courant Institute, NAG Ltd., and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDQ, LDU, LDU2, LDVT, LDVT2, NL, NR,
@@ -15520,28 +16771,28 @@ CIBM           PREFER SCALAR
 *         of the deflated updating problem.  These are the poles
 *         of the secular equation.
 *
-*  U      (input) DOUBLE PRECISION array, dimension (LDU, N)
+*  U      (output) DOUBLE PRECISION array, dimension (LDU, N)
 *         The last N - K columns of this matrix contain the deflated
 *         left singular vectors.
 *
 *  LDU    (input) INTEGER
 *         The leading dimension of the array U.  LDU >= N.
 *
-*  U2     (input) DOUBLE PRECISION array, dimension (LDU2, N)
+*  U2     (input/output) DOUBLE PRECISION array, dimension (LDU2, N)
 *         The first K columns of this matrix contain the non-deflated
 *         left singular vectors for the split problem.
 *
 *  LDU2   (input) INTEGER
 *         The leading dimension of the array U2.  LDU2 >= N.
 *
-*  VT     (input) DOUBLE PRECISION array, dimension (LDVT, M)
+*  VT     (output) DOUBLE PRECISION array, dimension (LDVT, M)
 *         The last M - K columns of VT' contain the deflated
 *         right singular vectors.
 *
 *  LDVT   (input) INTEGER
 *         The leading dimension of the array VT.  LDVT >= N.
 *
-*  VT2    (input) DOUBLE PRECISION array, dimension (LDVT2, N)
+*  VT2    (input/output) DOUBLE PRECISION array, dimension (LDVT2, N)
 *         The first K columns of VT2' contain the non-deflated
 *         right singular vectors for the split problem.
 *
@@ -15668,7 +16919,7 @@ CIBM           PREFER SCALAR
 *     changes the bottommost bits of DSIGMA(I). It does not account
 *     for hexadecimal or decimal machines without guard digits
 *     (we know of none). We use a subroutine call to compute
-*     2*DLAMBDA(I) to prevent optimizing compilers from eliminating
+*     2*DSIGMA(I) to prevent optimizing compilers from eliminating
 *     this code.
 *
       DO 20 I = 1, K
@@ -15810,10 +17061,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASD4( N, I, D, Z, DELTA, RHO, SIGMA, WORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Oak Ridge National Lab, Argonne National Lab,
-*     Courant Institute, NAG Ltd., and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            I, INFO, N
@@ -15869,7 +17119,7 @@ CIBM           PREFER SCALAR
 *         The scalar in the symmetric updating formula.
 *
 *  SIGMA  (output) DOUBLE PRECISION
-*         The computed lambda_I, the I-th updated eigenvalue.
+*         The computed sigma_I, the I-th updated eigenvalue.
 *
 *  WORK   (workspace) DOUBLE PRECISION array, dimension ( N )
 *         If N .ne. 1, WORK contains (D(j) + sigma_I) in its  j-th
@@ -16701,10 +17951,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASD5( I, D, Z, DELTA, RHO, DSIGMA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Oak Ridge National Lab, Argonne National Lab,
-*     Courant Institute, NAG Ltd., and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            I
@@ -16743,7 +17992,7 @@ CIBM           PREFER SCALAR
 *         The components of the updating vector.
 *
 *  DELTA  (output) DOUBLE PRECISION array, dimension ( 2 )
-*         Contains (D(j) - lambda_I) in its  j-th component.
+*         Contains (D(j) - sigma_I) in its  j-th component.
 *         The vector DELTA contains the information necessary
 *         to construct the eigenvectors.
 *
@@ -16751,7 +18000,7 @@ CIBM           PREFER SCALAR
 *         The scalar in the symmetric updating formula.
 *
 *  DSIGMA (output) DOUBLE PRECISION
-*         The computed lambda_I, the I-th updated eigenvalue.
+*         The computed sigma_I, the I-th updated eigenvalue.
 *
 *  WORK   (workspace) DOUBLE PRECISION array, dimension ( 2 )
 *         WORK contains (D(j) + sigma_I) in its  j-th component.
@@ -16868,10 +18117,9 @@ CIBM           PREFER SCALAR
      $                   LDGNUM, POLES, DIFL, DIFR, Z, K, C, S, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            GIVPTR, ICOMPQ, INFO, K, LDGCOL, LDGNUM, NL,
@@ -16976,10 +18224,10 @@ CIBM           PREFER SCALAR
 *         the lower block. On exit, VL contains the last components of
 *         all right singular vectors of the bidiagonal matrix.
 *
-*  ALPHA  (input) DOUBLE PRECISION
+*  ALPHA  (input/output) DOUBLE PRECISION
 *         Contains the diagonal element associated with the added row.
 *
-*  BETA   (input) DOUBLE PRECISION
+*  BETA   (input/output) DOUBLE PRECISION
 *         Contains the off-diagonal element associated with the added
 *         row.
 *
@@ -17174,10 +18422,9 @@ CIBM           PREFER SCALAR
      $                   PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM,
      $                   C, S, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Oak Ridge National Lab, Argonne National Lab,
-*     Courant Institute, NAG Ltd., and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            GIVPTR, ICOMPQ, INFO, K, LDGCOL, LDGNUM, NL,
@@ -17617,10 +18864,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASD8( ICOMPQ, K, D, Z, VF, VL, DIFL, DIFR, LDDIFR,
      $                   DSIGMA, WORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Oak Ridge National Lab, Argonne National Lab,
-*     Courant Institute, NAG Ltd., and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            ICOMPQ, INFO, K, LDDIFR
@@ -17773,7 +19019,7 @@ CIBM           PREFER SCALAR
 *     changes the bottommost bits of DSIGMA(I). It does not account
 *     for hexadecimal or decimal machines without guard digits
 *     (we know of none). We use a subroutine call to compute
-*     2*DLAMBDA(I) to prevent optimizing compilers from eliminating
+*     2*DSIGMA(I) to prevent optimizing compilers from eliminating
 *     this code.
 *
       DO 10 I = 1, K
@@ -18128,10 +19374,9 @@ CIBM           PREFER SCALAR
      $                   DIFL, DIFR, Z, POLES, GIVPTR, GIVCOL, LDGCOL,
      $                   PERM, GIVNUM, C, S, WORK, IWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            ICOMPQ, INFO, LDGCOL, LDU, N, SMLSIZ, SQRE
@@ -18518,10 +19763,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASDQ( UPLO, SQRE, N, NCVT, NRU, NCC, D, E, VT, LDVT,
      $                   U, LDU, C, LDC, WORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -18834,10 +20078,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASDT( N, LVL, ND, INODE, NDIML, NDIMR, MSUB )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LVL, MSUB, N, ND
@@ -18940,10 +20183,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASET( UPLO, M, N, ALPHA, BETA, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -19056,10 +20298,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASQ3( I0, N0, Z, PP, DMIN, SIGMA, DESIG, QMAX, NFAIL,
      $                   ITER, NDIV, IEEE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     May 17, 2000
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            IEEE
@@ -19141,7 +20382,7 @@ CIBM           PREFER SCALAR
       EXTERNAL           DLAMCH
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MIN, SQRT
+      INTRINSIC          ABS, MAX, MIN, SQRT
 *     ..
 *     .. Save statement ..
       SAVE               TTYPE
@@ -19252,8 +20493,6 @@ CIBM           PREFER SCALAR
          END IF
       END IF
 *
-   70 CONTINUE
-*
       IF( DMIN.LT.ZERO .OR. SAFMIN*QMAX.LT.MIN( Z( 4*N0+PP-1 ),
      $    Z( 4*N0+PP-9 ), DMIN2+Z( 4*N0-PP ) ) ) THEN
 *
@@ -19354,10 +20593,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASQ4( I0, N0, Z, PP, N0IN, DMIN, DMIN1, DMIN2, DN,
      $                   DN1, DN2, TAU, TTYPE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            I0, N0, N0IN, PP, TTYPE
@@ -19385,7 +20623,7 @@ CIBM           PREFER SCALAR
 *  PP    (input) INTEGER
 *        PP=0 for ping, PP=1 for pong.
 *
-*  NOIN  (input) INTEGER
+*  N0IN  (input) INTEGER
 *        The value of N0 at start of EIGTEST.
 *
 *  DMIN  (input) DOUBLE PRECISION
@@ -19684,10 +20922,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASQ5( I0, N0, Z, PP, TAU, DMIN, DMIN1, DMIN2, DN,
      $                   DNM1, DNM2, IEEE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     May 17, 2000
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            IEEE
@@ -19880,10 +21117,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASQ6( I0, N0, Z, PP, DMIN, DMIN1, DMIN2, DN,
      $                   DNM1, DNM2 )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            I0, N0, PP
@@ -20055,10 +21291,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASR( SIDE, PIVOT, DIRECT, M, N, C, S, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, PIVOT, SIDE
@@ -20071,44 +21306,77 @@ CIBM           PREFER SCALAR
 *  Purpose
 *  =======
 *
-*  DLASR   performs the transformation
-*
-*     A := P*A,   when SIDE = 'L' or 'l'  (  Left-hand side )
-*
-*     A := A*P',  when SIDE = 'R' or 'r'  ( Right-hand side )
-*
-*  where A is an m by n real matrix and P is an orthogonal matrix,
-*  consisting of a sequence of plane rotations determined by the
-*  parameters PIVOT and DIRECT as follows ( z = m when SIDE = 'L' or 'l'
-*  and z = n when SIDE = 'R' or 'r' ):
-*
-*  When  DIRECT = 'F' or 'f'  ( Forward sequence ) then
-*
-*     P = P( z - 1 )*...*P( 2 )*P( 1 ),
-*
-*  and when DIRECT = 'B' or 'b'  ( Backward sequence ) then
-*
-*     P = P( 1 )*P( 2 )*...*P( z - 1 ),
-*
-*  where  P( k ) is a plane rotation matrix for the following planes:
-*
-*     when  PIVOT = 'V' or 'v'  ( Variable pivot ),
-*        the plane ( k, k + 1 )
-*
-*     when  PIVOT = 'T' or 't'  ( Top pivot ),
-*        the plane ( 1, k + 1 )
-*
-*     when  PIVOT = 'B' or 'b'  ( Bottom pivot ),
-*        the plane ( k, z )
-*
-*  c( k ) and s( k )  must contain the  cosine and sine that define the
-*  matrix  P( k ).  The two by two plane rotation part of the matrix
-*  P( k ), R( k ), is assumed to be of the form
-*
-*     R( k ) = (  c( k )  s( k ) ).
-*              ( -s( k )  c( k ) )
-*
-*  This version vectorises across rows of the array A when SIDE = 'L'.
+*  DLASR applies a sequence of plane rotations to a real matrix A,
+*  from either the left or the right.
+*  
+*  When SIDE = 'L', the transformation takes the form
+*  
+*     A := P*A
+*  
+*  and when SIDE = 'R', the transformation takes the form
+*  
+*     A := A*P**T
+*  
+*  where P is an orthogonal matrix consisting of a sequence of z plane
+*  rotations, with z = M when SIDE = 'L' and z = N when SIDE = 'R',
+*  and P**T is the transpose of P.
+*  
+*  When DIRECT = 'F' (Forward sequence), then
+*  
+*     P = P(z-1) * ... * P(2) * P(1)
+*  
+*  and when DIRECT = 'B' (Backward sequence), then
+*  
+*     P = P(1) * P(2) * ... * P(z-1)
+*  
+*  where P(k) is a plane rotation matrix defined by the 2-by-2 rotation
+*  
+*     R(k) = (  c(k)  s(k) )
+*          = ( -s(k)  c(k) ).
+*  
+*  When PIVOT = 'V' (Variable pivot), the rotation is performed
+*  for the plane (k,k+1), i.e., P(k) has the form
+*  
+*     P(k) = (  1                                            )
+*            (       ...                                     )
+*            (              1                                )
+*            (                   c(k)  s(k)                  )
+*            (                  -s(k)  c(k)                  )
+*            (                                1              )
+*            (                                     ...       )
+*            (                                            1  )
+*  
+*  where R(k) appears as a rank-2 modification to the identity matrix in
+*  rows and columns k and k+1.
+*  
+*  When PIVOT = 'T' (Top pivot), the rotation is performed for the
+*  plane (1,k+1), so P(k) has the form
+*  
+*     P(k) = (  c(k)                    s(k)                 )
+*            (         1                                     )
+*            (              ...                              )
+*            (                     1                         )
+*            ( -s(k)                    c(k)                 )
+*            (                                 1             )
+*            (                                      ...      )
+*            (                                             1 )
+*  
+*  where R(k) appears in rows and columns 1 and k+1.
+*  
+*  Similarly, when PIVOT = 'B' (Bottom pivot), the rotation is
+*  performed for the plane (k,z), giving P(k) the form
+*  
+*     P(k) = ( 1                                             )
+*            (      ...                                      )
+*            (             1                                 )
+*            (                  c(k)                    s(k) )
+*            (                         1                     )
+*            (                              ...              )
+*            (                                     1         )
+*            (                 -s(k)                    c(k) )
+*  
+*  where R(k) appears in rows and columns k and z.  The rotations are
+*  performed without ever forming P(k) explicitly.
 *
 *  Arguments
 *  =========
@@ -20117,13 +21385,7 @@ CIBM           PREFER SCALAR
 *          Specifies whether the plane rotation matrix P is applied to
 *          A on the left or the right.
 *          = 'L':  Left, compute A := P*A
-*          = 'R':  Right, compute A:= A*P'
-*
-*  DIRECT  (input) CHARACTER*1
-*          Specifies whether P is a forward or backward sequence of
-*          plane rotations.
-*          = 'F':  Forward, P = P( z - 1 )*...*P( 2 )*P( 1 )
-*          = 'B':  Backward, P = P( 1 )*P( 2 )*...*P( z - 1 )
+*          = 'R':  Right, compute A:= A*P**T
 *
 *  PIVOT   (input) CHARACTER*1
 *          Specifies the plane for which P(k) is a plane rotation
@@ -20131,6 +21393,12 @@ CIBM           PREFER SCALAR
 *          = 'V':  Variable pivot, the plane (k,k+1)
 *          = 'T':  Top pivot, the plane (1,k+1)
 *          = 'B':  Bottom pivot, the plane (k,z)
+*
+*  DIRECT  (input) CHARACTER*1
+*          Specifies whether P is a forward or backward sequence of
+*          plane rotations.
+*          = 'F':  Forward, P = P(z-1)*...*P(2)*P(1)
+*          = 'B':  Backward, P = P(1)*P(2)*...*P(z-1)
 *
 *  M       (input) INTEGER
 *          The number of rows of the matrix A.  If m <= 1, an immediate
@@ -20140,18 +21408,22 @@ CIBM           PREFER SCALAR
 *          The number of columns of the matrix A.  If n <= 1, an
 *          immediate return is effected.
 *
-*  C, S    (input) DOUBLE PRECISION arrays, dimension
+*  C       (input) DOUBLE PRECISION array, dimension
 *                  (M-1) if SIDE = 'L'
 *                  (N-1) if SIDE = 'R'
-*          c(k) and s(k) contain the cosine and sine that define the
-*          matrix P(k).  The two by two plane rotation part of the
-*          matrix P(k), R(k), is assumed to be of the form
-*          R( k ) = (  c( k )  s( k ) ).
-*                   ( -s( k )  c( k ) )
+*          The cosines c(k) of the plane rotations.
+*
+*  S       (input) DOUBLE PRECISION array, dimension
+*                  (M-1) if SIDE = 'L'
+*                  (N-1) if SIDE = 'R'
+*          The sines s(k) of the plane rotations.  The 2-by-2 plane
+*          rotation part of the matrix P(k), R(k), has the form
+*          R(k) = (  c(k)  s(k) )
+*                 ( -s(k)  c(k) ).
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA,N)
-*          The m by n matrix A.  On exit, A is overwritten by P*A if
-*          SIDE = 'R' or by A*P' if SIDE = 'L'.
+*          The M-by-N matrix A.  On exit, A is overwritten by P*A if
+*          SIDE = 'R' or by A*P**T if SIDE = 'L'.
 *
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A.  LDA >= max(1,M).
@@ -20380,10 +21652,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASSQ( N, X, INCX, SCALE, SUMSQ )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -20469,10 +21740,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASV2( F, G, H, SSMIN, SSMAX, SNR, CSR, SNL, CSL )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   CSL, CSR, F, G, H, SNL, SNR, SSMAX, SSMIN
@@ -20719,10 +21989,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASWP( N, A, LDA, K1, K2, IPIV, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, K1, K2, LDA, N
@@ -20760,7 +22029,7 @@ CIBM           PREFER SCALAR
 *          The last element of IPIV for which a row interchange will
 *          be done.
 *
-*  IPIV    (input) INTEGER array, dimension (M*abs(INCX))
+*  IPIV    (input) INTEGER array, dimension (K2*abs(INCX))
 *          The vector of pivot indices.  Only the elements in positions
 *          K1 through K2 of IPIV are accessed.
 *          IPIV(K) = L implies rows K and L are to be interchanged.
@@ -20840,10 +22109,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLASY2( LTRANL, LTRANR, ISGN, N1, N2, TL, LDTL, TR,
      $                   LDTR, B, LDB, SCALE, X, LDX, XNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            LTRANL, LTRANR
@@ -21221,10 +22489,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLASYF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -21810,10 +23077,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLATBS( UPLO, TRANS, DIAG, NORMIN, N, KD, AB, LDAB, X,
      $                   SCALE, CNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORMIN, TRANS, UPLO
@@ -22534,10 +23800,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLATDF( IJOB, N, Z, LDZ, RHS, RDSUM, RDSCAL, IPIV,
      $                   JPIV )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            IJOB, LDZ, N
@@ -22772,10 +24037,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLATPS( UPLO, TRANS, DIAG, NORMIN, N, AP, X, SCALE,
      $                   CNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORMIN, TRANS, UPLO
@@ -23484,10 +24748,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLATRD( UPLO, N, NB, A, LDA, E, TAU, W, LDW )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -23515,7 +24778,7 @@ CIBM           PREFER SCALAR
 *  Arguments
 *  =========
 *
-*  UPLO    (input) CHARACTER
+*  UPLO    (input) CHARACTER*1
 *          Specifies whether the upper or lower triangular part of the
 *          symmetric matrix A is stored:
 *          = 'U': Upper triangular
@@ -23744,10 +25007,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X, SCALE,
      $                   CNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORMIN, TRANS, UPLO
@@ -24445,10 +25707,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAUU2( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -24581,10 +25842,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DLAUUM( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -24737,10 +25997,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DRSCL( N, SA, SX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -24853,10 +26112,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
      $                   LDZ, J1, N1, N2, WORK, LWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -24940,11 +26198,11 @@ CIBM           PREFER SCALAR
 *  N2      (input) INTEGER
 *          The order of the second block (A22, B22). N2 = 0, 1 or 2.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LWORK).
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)).
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK.
-*          LWORK >=  MAX( N*(N2+N1), (N2+N1)*(N2+N1)*2 )
+*          LWORK >=  MAX( 1, N*(N2+N1), (N2+N1)*(N2+N1)*2 )
 *
 *  INFO    (output) INTEGER
 *            =0: Successful exit
@@ -24980,6 +26238,8 @@ CIBM           PREFER SCALAR
 *      Note 87. To appear in Numerical Algorithms, 1996.
 *
 *  =====================================================================
+*  Replaced various illegal calls to DCOPY by calls to DLASET, or by DO
+*  loops. Sven Hammarling, 1/5/02.
 *
 *     .. Parameters ..
       DOUBLE PRECISION   ZERO, ONE
@@ -25010,8 +26270,8 @@ CIBM           PREFER SCALAR
       EXTERNAL           DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DGEMM, DGEQR2, DGERQ2, DLACPY, DLAGV2,
-     $                   DLARTG, DLASSQ, DORG2R, DORGR2, DORM2R, DORMR2,
+      EXTERNAL           DGEMM, DGEQR2, DGERQ2, DLACPY, DLAGV2, DLARTG,
+     $                   DLASET, DLASSQ, DORG2R, DORGR2, DORM2R, DORMR2,
      $                   DROT, DSCAL, DTGSY2
 *     ..
 *     .. Intrinsic Functions ..
@@ -25028,9 +26288,9 @@ CIBM           PREFER SCALAR
       IF( N1.GT.N .OR. ( J1+N1 ).GT.N )
      $   RETURN
       M = N1 + N2
-      IF( LWORK.LT.MAX( N*M, M*M*2 ) ) THEN
+      IF( LWORK.LT.MAX( 1, N*M, M*M*2 ) ) THEN
          INFO = -16
-         WORK( 1 ) = MAX( N*M, M*M*2 )
+         WORK( 1 ) = MAX( 1, N*M, M*M*2 )
          RETURN
       END IF
 *
@@ -25039,8 +26299,8 @@ CIBM           PREFER SCALAR
 *
 *     Make a local copy of selected block
 *
-      CALL DCOPY( LDST*LDST, ZERO, 0, LI, 1 )
-      CALL DCOPY( LDST*LDST, ZERO, 0, IR, 1 )
+      CALL DLASET( 'Full', LDST, LDST, ZERO, ZERO, LI, LDST )
+      CALL DLASET( 'Full', LDST, LDST, ZERO, ZERO, IR, LDST )
       CALL DLACPY( 'Full', M, M, A( J1, J1 ), LDA, S, LDST )
       CALL DLACPY( 'Full', M, M, B( J1, J1 ), LDB, T, LDST )
 *
@@ -25284,9 +26544,7 @@ CIBM           PREFER SCALAR
 *
 *        Set lower triangle of B-part to zero
 *
-         DO 50 I = 2, M
-            CALL DCOPY( M-I+1, ZERO, 0, T( I, I-1 ), 1 )
-   50    CONTINUE
+         CALL DLASET( 'Lower', M-1, M-1, ZERO, ZERO, T(2,1), LDST )
 *
          IF( WANDS ) THEN
 *
@@ -25320,19 +26578,19 @@ CIBM           PREFER SCALAR
 *        If the swap is accepted ("weakly" and "strongly"), apply the
 *        transformations and set N1-by-N2 (2,1)-block to zero.
 *
-         DO 60 I = 1, N2
-            CALL DCOPY( N1, ZERO, 0, S( N2+1, I ), 1 )
-   60    CONTINUE
+         CALL DLASET( 'Full', N1, N2, ZERO, ZERO, S(N2+1,1), LDST )
 *
 *        copy back M-by-M diagonal block starting at index J1 of (A, B)
 *
          CALL DLACPY( 'F', M, M, S, LDST, A( J1, J1 ), LDA )
          CALL DLACPY( 'F', M, M, T, LDST, B( J1, J1 ), LDB )
-         CALL DCOPY( LDST*LDST, ZERO, 0, T, 1 )
+         CALL DLASET( 'Full', LDST, LDST, ZERO, ZERO, T, LDST )
 *
 *        Standardize existing 2-by-2 blocks.
 *
-         CALL DCOPY( M*M, ZERO, 0, WORK, 1 )
+         DO 50 I = 1, M*M
+            WORK(I) = ZERO
+   50    CONTINUE
          WORK( 1 ) = ONE
          T( 1, 1 ) = ONE
          IDUM = LWORK - M*M - 2
@@ -25371,7 +26629,7 @@ CIBM           PREFER SCALAR
          CALL DGEMM( 'N', 'N', N2, N1, N1, ONE, A( J1, J1+N2 ), LDA,
      $               T( N2+1, N2+1 ), LDST, ZERO, WORK, N2 )
          CALL DLACPY( 'Full', N2, N1, WORK, N2, A( J1, J1+N2 ), LDA )
-         CALL DGEMM( 'N', 'N', N2, N1, N1, ONE, B( J1, J1+N2 ), LDA,
+         CALL DGEMM( 'N', 'N', N2, N1, N1, ONE, B( J1, J1+N2 ), LDB,
      $               T( N2+1, N2+1 ), LDST, ZERO, WORK, N2 )
          CALL DLACPY( 'Full', N2, N1, WORK, N2, B( J1, J1+N2 ), LDB )
          CALL DGEMM( 'T', 'N', M, M, M, ONE, IR, LDST, T, LDST, ZERO,
@@ -25404,7 +26662,7 @@ CIBM           PREFER SCALAR
             CALL DLACPY( 'Full', M, N-I+1, WORK, M, A( J1, I ), LDA )
             CALL DGEMM( 'T', 'N', M, N-I+1, M, ONE, LI, LDST,
      $                  B( J1, I ), LDA, ZERO, WORK, M )
-            CALL DLACPY( 'Full', M, N-I+1, WORK, M, B( J1, I ), LDA )
+            CALL DLACPY( 'Full', M, N-I+1, WORK, M, B( J1, I ), LDB )
          END IF
          I = J1 - 1
          IF( I.GT.0 ) THEN
@@ -25436,10 +26694,9 @@ CIBM           PREFER SCALAR
      $                   LDD, E, LDE, F, LDF, SCALE, RDSUM, RDSCAL,
      $                   IWORK, PQ, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -25497,7 +26754,7 @@ CIBM           PREFER SCALAR
 *  Arguments
 *  =========
 *
-*  TRANS   (input) CHARACTER
+*  TRANS   (input) CHARACTER*1
 *          = 'N', solve the generalized Sylvester equation (1).
 *          = 'T': solve the 'transposed' system (3).
 *
@@ -25532,7 +26789,7 @@ CIBM           PREFER SCALAR
 *  LDB     (input) INTEGER
 *          The leading dimension of the matrix B. LDB >= max(1, N).
 *
-*  C       (input/ output) DOUBLE PRECISION array, dimension (LDC, N)
+*  C       (input/output) DOUBLE PRECISION array, dimension (LDC, N)
 *          On entry, C contains the right-hand-side of the first matrix
 *          equation in (1).
 *          On exit, if IJOB = 0, C has been overwritten by the
@@ -25553,7 +26810,7 @@ CIBM           PREFER SCALAR
 *  LDE     (input) INTEGER
 *          The leading dimension of the matrix E. LDE >= max(1, N).
 *
-*  F       (input/ output) DOUBLE PRECISION array, dimension (LDF, N)
+*  F       (input/output) DOUBLE PRECISION array, dimension (LDF, N)
 *          On entry, F contains the right-hand-side of the second matrix
 *          equation in (1).
 *          On exit, if IJOB = 0, F has been overwritten by the
@@ -25608,6 +26865,8 @@ CIBM           PREFER SCALAR
 *     Umea University, S-901 87 Umea, Sweden.
 *
 *  =====================================================================
+*  Replaced various illegal calls to DCOPY by calls to DLASET.
+*  Sven Hammarling, 27/5/02.
 *
 *     .. Parameters ..
       INTEGER            LDZ
@@ -25631,7 +26890,7 @@ CIBM           PREFER SCALAR
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DAXPY, DCOPY, DGEMM, DGEMV, DGER, DGESC2,
-     $                   DGETC2, DLATDF, DSCAL, XERBLA
+     $                   DGETC2, DLASET, DLATDF, DSCAL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX
@@ -25645,24 +26904,29 @@ CIBM           PREFER SCALAR
       NOTRAN = LSAME( TRANS, 'N' )
       IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' ) ) THEN
          INFO = -1
-      ELSE IF( ( IJOB.LT.0 ) .OR. ( IJOB.GT.2 ) ) THEN
-         INFO = -2
-      ELSE IF( M.LE.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LE.0 ) THEN
-         INFO = -4
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
-         INFO = -8
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      ELSE IF( LDD.LT.MAX( 1, M ) ) THEN
-         INFO = -12
-      ELSE IF( LDE.LT.MAX( 1, N ) ) THEN
-         INFO = -14
-      ELSE IF( LDF.LT.MAX( 1, M ) ) THEN
-         INFO = -16
+      ELSE IF( NOTRAN ) THEN
+         IF( ( IJOB.LT.0 ) .OR. ( IJOB.GT.2 ) ) THEN
+            INFO = -2
+         END IF
+      END IF
+      IF( INFO.EQ.0 ) THEN
+         IF( M.LE.0 ) THEN
+            INFO = -3
+         ELSE IF( N.LE.0 ) THEN
+            INFO = -4
+         ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+            INFO = -5
+         ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+            INFO = -8
+         ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+            INFO = -10
+         ELSE IF( LDD.LT.MAX( 1, M ) ) THEN
+            INFO = -12
+         ELSE IF( LDE.LT.MAX( 1, N ) ) THEN
+            INFO = -14
+         ELSE IF( LDF.LT.MAX( 1, M ) ) THEN
+            INFO = -16
+         END IF
       END IF
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DTGSY2', -INFO )
@@ -25947,7 +27211,7 @@ CIBM           PREFER SCALAR
 *
 *                 Build an 8-by-8 system Z * x = RHS
 *
-                  CALL DCOPY( LDZ*LDZ, ZERO, 0, Z, 1 )
+                  CALL DLASET( 'F', LDZ, LDZ, ZERO, ZERO, Z, LDZ )
 *
                   Z( 1, 1 ) = A( IS, IS )
                   Z( 2, 1 ) = A( ISP1, IS )
@@ -26065,7 +27329,7 @@ CIBM           PREFER SCALAR
 *
             IS = IWORK( I )
             ISP1 = IS + 1
-            IE = IWORK( I+1 ) - 1
+            IE = ( I+1 ) - 1
             MB = IE - IS + 1
             DO 190 J = Q, P + 2, -1
 *
@@ -26275,7 +27539,7 @@ CIBM           PREFER SCALAR
 *
 *                 Build an 8-by-8 system Z' * x = RHS
 *
-                  CALL DCOPY( LDZ*LDZ, ZERO, 0, Z, 1 )
+                  CALL DLASET( 'F', LDZ, LDZ, ZERO, ZERO, Z, LDZ )
 *
                   Z( 1, 1 ) = A( IS, IS )
                   Z( 2, 1 ) = A( IS, ISP1 )
@@ -26384,10 +27648,9 @@ CIBM           PREFER SCALAR
       END
       INTEGER          FUNCTION IEEECK( ISPEC, ZERO, ONE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1998
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            ISPEC
@@ -26530,13 +27793,11 @@ CIBM           PREFER SCALAR
 *
       RETURN
       END
-      INTEGER          FUNCTION ILAENV( ISPEC, NAME, OPTS, N1, N2, N3,
-     $                 N4 )
+      INTEGER FUNCTION ILAENV( ISPEC, NAME, OPTS, N1, N2, N3, N4 )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER*( * )    NAME, OPTS
@@ -26573,7 +27834,7 @@ CIBM           PREFER SCALAR
 *          = 3: the crossover point (in a block routine, for N less
 *               than this value, an unblocked routine should be used)
 *          = 4: the number of shifts, used in the nonsymmetric
-*               eigenvalue routines
+*               eigenvalue routines (DEPRECATED)
 *          = 5: the minimum column dimension for blocking to be used;
 *               rectangular blocks must have dimension at least k by m,
 *               where k is given by ILAENV(2,...) and m by ILAENV(5,...)
@@ -26582,13 +27843,16 @@ CIBM           PREFER SCALAR
 *               this value, a QR factorization is used first to reduce
 *               the matrix to a triangular form.)
 *          = 7: the number of processors
-*          = 8: the crossover point for the multishift QR and QZ methods
-*               for nonsymmetric eigenvalue problems.
+*          = 8: the crossover point for the multishift QR method
+*               for nonsymmetric eigenvalue problems (DEPRECATED)
 *          = 9: maximum size of the subproblems at the bottom of the
 *               computation tree in the divide-and-conquer algorithm
 *               (used by xGELSD and xGESDD)
 *          =10: ieee NaN arithmetic can be trusted not to trap
 *          =11: infinity arithmetic can be trusted not to trap
+*          12 <= ISPEC <= 16:
+*               xHSEQR or one of its subroutines,
+*               see IPARMQ for detailed explanation
 *
 *  NAME    (input) CHARACTER*(*)
 *          The name of the calling subroutine, in either upper case or
@@ -26634,49 +27898,46 @@ CIBM           PREFER SCALAR
 *  =====================================================================
 *
 *     .. Local Scalars ..
-      LOGICAL            CNAME, SNAME
-      CHARACTER*1        C1
-      CHARACTER*2        C2, C4
-      CHARACTER*3        C3
-      CHARACTER*6        SUBNAM
       INTEGER            I, IC, IZ, NB, NBMIN, NX
+      LOGICAL            CNAME, SNAME
+      CHARACTER          C1*1, C2*2, C4*2, C3*3, SUBNAM*6
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          CHAR, ICHAR, INT, MIN, REAL
 *     ..
 *     .. External Functions ..
-      INTEGER            IEEECK
-      EXTERNAL           IEEECK
+      INTEGER            IEEECK, IPARMQ
+      EXTERNAL           IEEECK, IPARMQ
 *     ..
 *     .. Executable Statements ..
 *
-      GO TO ( 100, 100, 100, 400, 500, 600, 700, 800, 900, 1000,
-     $        1100 ) ISPEC
+      GO TO ( 10, 10, 10, 80, 90, 100, 110, 120,
+     $        130, 140, 150, 160, 160, 160, 160, 160 )ISPEC
 *
 *     Invalid value for ISPEC
 *
       ILAENV = -1
       RETURN
 *
-  100 CONTINUE
+   10 CONTINUE
 *
 *     Convert NAME to upper case if the first character is lower case.
 *
       ILAENV = 1
       SUBNAM = NAME
-      IC = ICHAR( SUBNAM( 1:1 ) )
+      IC = ICHAR( SUBNAM( 1: 1 ) )
       IZ = ICHAR( 'Z' )
       IF( IZ.EQ.90 .OR. IZ.EQ.122 ) THEN
 *
 *        ASCII character set
 *
          IF( IC.GE.97 .AND. IC.LE.122 ) THEN
-            SUBNAM( 1:1 ) = CHAR( IC-32 )
-            DO 10 I = 2, 6
-               IC = ICHAR( SUBNAM( I:I ) )
+            SUBNAM( 1: 1 ) = CHAR( IC-32 )
+            DO 20 I = 2, 6
+               IC = ICHAR( SUBNAM( I: I ) )
                IF( IC.GE.97 .AND. IC.LE.122 )
-     $            SUBNAM( I:I ) = CHAR( IC-32 )
-   10       CONTINUE
+     $            SUBNAM( I: I ) = CHAR( IC-32 )
+   20       CONTINUE
          END IF
 *
       ELSE IF( IZ.EQ.233 .OR. IZ.EQ.169 ) THEN
@@ -26686,14 +27947,14 @@ CIBM           PREFER SCALAR
          IF( ( IC.GE.129 .AND. IC.LE.137 ) .OR.
      $       ( IC.GE.145 .AND. IC.LE.153 ) .OR.
      $       ( IC.GE.162 .AND. IC.LE.169 ) ) THEN
-            SUBNAM( 1:1 ) = CHAR( IC+64 )
-            DO 20 I = 2, 6
-               IC = ICHAR( SUBNAM( I:I ) )
+            SUBNAM( 1: 1 ) = CHAR( IC+64 )
+            DO 30 I = 2, 6
+               IC = ICHAR( SUBNAM( I: I ) )
                IF( ( IC.GE.129 .AND. IC.LE.137 ) .OR.
      $             ( IC.GE.145 .AND. IC.LE.153 ) .OR.
-     $             ( IC.GE.162 .AND. IC.LE.169 ) )
-     $            SUBNAM( I:I ) = CHAR( IC+64 )
-   20       CONTINUE
+     $             ( IC.GE.162 .AND. IC.LE.169 ) )SUBNAM( I:
+     $             I ) = CHAR( IC+64 )
+   30       CONTINUE
          END IF
 *
       ELSE IF( IZ.EQ.218 .OR. IZ.EQ.250 ) THEN
@@ -26701,27 +27962,27 @@ CIBM           PREFER SCALAR
 *        Prime machines:  ASCII+128
 *
          IF( IC.GE.225 .AND. IC.LE.250 ) THEN
-            SUBNAM( 1:1 ) = CHAR( IC-32 )
-            DO 30 I = 2, 6
-               IC = ICHAR( SUBNAM( I:I ) )
+            SUBNAM( 1: 1 ) = CHAR( IC-32 )
+            DO 40 I = 2, 6
+               IC = ICHAR( SUBNAM( I: I ) )
                IF( IC.GE.225 .AND. IC.LE.250 )
-     $            SUBNAM( I:I ) = CHAR( IC-32 )
-   30       CONTINUE
+     $            SUBNAM( I: I ) = CHAR( IC-32 )
+   40       CONTINUE
          END IF
       END IF
 *
-      C1 = SUBNAM( 1:1 )
+      C1 = SUBNAM( 1: 1 )
       SNAME = C1.EQ.'S' .OR. C1.EQ.'D'
       CNAME = C1.EQ.'C' .OR. C1.EQ.'Z'
       IF( .NOT.( CNAME .OR. SNAME ) )
      $   RETURN
-      C2 = SUBNAM( 2:3 )
-      C3 = SUBNAM( 4:6 )
-      C4 = C3( 2:3 )
+      C2 = SUBNAM( 2: 3 )
+      C3 = SUBNAM( 4: 6 )
+      C4 = C3( 2: 3 )
 *
-      GO TO ( 110, 200, 300 ) ISPEC
+      GO TO ( 50, 60, 70 )ISPEC
 *
-  110 CONTINUE
+   50 CONTINUE
 *
 *     ISPEC = 1:  block size
 *
@@ -26793,30 +28054,30 @@ CIBM           PREFER SCALAR
             NB = 64
          END IF
       ELSE IF( SNAME .AND. C2.EQ.'OR' ) THEN
-         IF( C3( 1:1 ).EQ.'G' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         IF( C3( 1: 1 ).EQ.'G' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NB = 32
             END IF
-         ELSE IF( C3( 1:1 ).EQ.'M' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         ELSE IF( C3( 1: 1 ).EQ.'M' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NB = 32
             END IF
          END IF
       ELSE IF( CNAME .AND. C2.EQ.'UN' ) THEN
-         IF( C3( 1:1 ).EQ.'G' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         IF( C3( 1: 1 ).EQ.'G' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NB = 32
             END IF
-         ELSE IF( C3( 1:1 ).EQ.'M' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         ELSE IF( C3( 1: 1 ).EQ.'M' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NB = 32
             END IF
          END IF
@@ -26876,14 +28137,14 @@ CIBM           PREFER SCALAR
       ILAENV = NB
       RETURN
 *
-  200 CONTINUE
+   60 CONTINUE
 *
 *     ISPEC = 2:  minimum block size
 *
       NBMIN = 2
       IF( C2.EQ.'GE' ) THEN
-         IF( C3.EQ.'QRF' .OR. C3.EQ.'RQF' .OR. C3.EQ.'LQF' .OR.
-     $       C3.EQ.'QLF' ) THEN
+         IF( C3.EQ.'QRF' .OR. C3.EQ.'RQF' .OR. C3.EQ.'LQF' .OR. C3.EQ.
+     $       'QLF' ) THEN
             IF( SNAME ) THEN
                NBMIN = 2
             ELSE
@@ -26923,30 +28184,30 @@ CIBM           PREFER SCALAR
             NBMIN = 2
          END IF
       ELSE IF( SNAME .AND. C2.EQ.'OR' ) THEN
-         IF( C3( 1:1 ).EQ.'G' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         IF( C3( 1: 1 ).EQ.'G' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NBMIN = 2
             END IF
-         ELSE IF( C3( 1:1 ).EQ.'M' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         ELSE IF( C3( 1: 1 ).EQ.'M' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NBMIN = 2
             END IF
          END IF
       ELSE IF( CNAME .AND. C2.EQ.'UN' ) THEN
-         IF( C3( 1:1 ).EQ.'G' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         IF( C3( 1: 1 ).EQ.'G' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NBMIN = 2
             END IF
-         ELSE IF( C3( 1:1 ).EQ.'M' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         ELSE IF( C3( 1: 1 ).EQ.'M' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NBMIN = 2
             END IF
          END IF
@@ -26954,14 +28215,14 @@ CIBM           PREFER SCALAR
       ILAENV = NBMIN
       RETURN
 *
-  300 CONTINUE
+   70 CONTINUE
 *
 *     ISPEC = 3:  crossover point
 *
       NX = 0
       IF( C2.EQ.'GE' ) THEN
-         IF( C3.EQ.'QRF' .OR. C3.EQ.'RQF' .OR. C3.EQ.'LQF' .OR.
-     $       C3.EQ.'QLF' ) THEN
+         IF( C3.EQ.'QRF' .OR. C3.EQ.'RQF' .OR. C3.EQ.'LQF' .OR. C3.EQ.
+     $       'QLF' ) THEN
             IF( SNAME ) THEN
                NX = 128
             ELSE
@@ -26989,18 +28250,18 @@ CIBM           PREFER SCALAR
             NX = 32
          END IF
       ELSE IF( SNAME .AND. C2.EQ.'OR' ) THEN
-         IF( C3( 1:1 ).EQ.'G' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         IF( C3( 1: 1 ).EQ.'G' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NX = 128
             END IF
          END IF
       ELSE IF( CNAME .AND. C2.EQ.'UN' ) THEN
-         IF( C3( 1:1 ).EQ.'G' ) THEN
-            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR.
-     $          C4.EQ.'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR.
-     $          C4.EQ.'BR' ) THEN
+         IF( C3( 1: 1 ).EQ.'G' ) THEN
+            IF( C4.EQ.'QR' .OR. C4.EQ.'RQ' .OR. C4.EQ.'LQ' .OR. C4.EQ.
+     $          'QL' .OR. C4.EQ.'HR' .OR. C4.EQ.'TR' .OR. C4.EQ.'BR' )
+     $           THEN
                NX = 128
             END IF
          END IF
@@ -27008,42 +28269,42 @@ CIBM           PREFER SCALAR
       ILAENV = NX
       RETURN
 *
-  400 CONTINUE
+   80 CONTINUE
 *
 *     ISPEC = 4:  number of shifts (used by xHSEQR)
 *
       ILAENV = 6
       RETURN
 *
-  500 CONTINUE
+   90 CONTINUE
 *
 *     ISPEC = 5:  minimum column dimension (not used)
 *
       ILAENV = 2
       RETURN
 *
-  600 CONTINUE 
+  100 CONTINUE
 *
 *     ISPEC = 6:  crossover point for SVD (used by xGELSS and xGESVD)
 *
       ILAENV = INT( REAL( MIN( N1, N2 ) )*1.6E0 )
       RETURN
 *
-  700 CONTINUE
+  110 CONTINUE
 *
 *     ISPEC = 7:  number of processors (not used)
 *
       ILAENV = 1
       RETURN
 *
-  800 CONTINUE
+  120 CONTINUE
 *
 *     ISPEC = 8:  crossover point for multishift (used by xHSEQR)
 *
       ILAENV = 50
       RETURN
 *
-  900 CONTINUE
+  130 CONTINUE
 *
 *     ISPEC = 9:  maximum size of the subproblems at the bottom of the
 *                 computation tree in the divide-and-conquer algorithm
@@ -27052,183 +28313,35 @@ CIBM           PREFER SCALAR
       ILAENV = 25
       RETURN
 *
- 1000 CONTINUE
+  140 CONTINUE
 *
 *     ISPEC = 10: ieee NaN arithmetic can be trusted not to trap
 *
-C     ILAENV = 0
+*     ILAENV = 0
       ILAENV = 1
       IF( ILAENV.EQ.1 ) THEN
-         ILAENV = IEEECK( 0, 0.0, 1.0 ) 
+         ILAENV = IEEECK( 0, 0.0, 1.0 )
       END IF
       RETURN
 *
- 1100 CONTINUE
+  150 CONTINUE
 *
 *     ISPEC = 11: infinity arithmetic can be trusted not to trap
 *
-C     ILAENV = 0
+*     ILAENV = 0
       ILAENV = 1
       IF( ILAENV.EQ.1 ) THEN
-         ILAENV = IEEECK( 1, 0.0, 1.0 ) 
+         ILAENV = IEEECK( 1, 0.0, 1.0 )
       END IF
       RETURN
 *
-*     End of ILAENV
+  160 CONTINUE
 *
-      END
-C       LOGICAL          FUNCTION LSAME( CA, CB )
-C *
-C *  -- LAPACK auxiliary routine (version 3.0) --
-C *     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-C *     Courant Institute, Argonne National Lab, and Rice University
-C *     September 30, 1994
-C *
-C *     .. Scalar Arguments ..
-C       CHARACTER          CA, CB
-C *     ..
-C *
-C *  Purpose
-C *  =======
-C *
-C *  LSAME returns .TRUE. if CA is the same letter as CB regardless of
-C *  case.
-C *
-C *  Arguments
-C *  =========
-C *
-C *  CA      (input) CHARACTER*1
-C *  CB      (input) CHARACTER*1
-C *          CA and CB specify the single characters to be compared.
-C *
-C * =====================================================================
-C *
-C *     .. Intrinsic Functions ..
-C       INTRINSIC          ICHAR
-C *     ..
-C *     .. Local Scalars ..
-C       INTEGER            INTA, INTB, ZCODE
-C *     ..
-C *     .. Executable Statements ..
-C *
-C *     Test if the characters are equal
-C *
-C       LSAME = CA.EQ.CB
-C       IF( LSAME )
-C      $   RETURN
-C *
-C *     Now test for equivalence if both characters are alphabetic.
-C *
-C       ZCODE = ICHAR( 'Z' )
-C *
-C *     Use 'Z' rather than 'A' so that ASCII can be detected on Prime
-C *     machines, on which ICHAR returns a value with bit 8 set.
-C *     ICHAR('A') on Prime machines returns 193 which is the same as
-C *     ICHAR('A') on an EBCDIC machine.
-C *
-C       INTA = ICHAR( CA )
-C       INTB = ICHAR( CB )
-C *
-C       IF( ZCODE.EQ.90 .OR. ZCODE.EQ.122 ) THEN
-C *
-C *        ASCII is assumed - ZCODE is the ASCII code of either lower or
-C *        upper case 'Z'.
-C *
-C          IF( INTA.GE.97 .AND. INTA.LE.122 ) INTA = INTA - 32
-C          IF( INTB.GE.97 .AND. INTB.LE.122 ) INTB = INTB - 32
-C *
-C       ELSE IF( ZCODE.EQ.233 .OR. ZCODE.EQ.169 ) THEN
-C *
-C *        EBCDIC is assumed - ZCODE is the EBCDIC code of either lower or
-C *        upper case 'Z'.
-C *
-C          IF( INTA.GE.129 .AND. INTA.LE.137 .OR.
-C      $       INTA.GE.145 .AND. INTA.LE.153 .OR.
-C      $       INTA.GE.162 .AND. INTA.LE.169 ) INTA = INTA + 64
-C          IF( INTB.GE.129 .AND. INTB.LE.137 .OR.
-C      $       INTB.GE.145 .AND. INTB.LE.153 .OR.
-C      $       INTB.GE.162 .AND. INTB.LE.169 ) INTB = INTB + 64
-C *
-C       ELSE IF( ZCODE.EQ.218 .OR. ZCODE.EQ.250 ) THEN
-C *
-C *        ASCII is assumed, on Prime machines - ZCODE is the ASCII code
-C *        plus 128 of either lower or upper case 'Z'.
-C *
-C          IF( INTA.GE.225 .AND. INTA.LE.250 ) INTA = INTA - 32
-C          IF( INTB.GE.225 .AND. INTB.LE.250 ) INTB = INTB - 32
-C       END IF
-C       LSAME = INTA.EQ.INTB
-C *
-C *     RETURN
-C *
-C *     End of LSAME
-C *
-C       END
-      LOGICAL          FUNCTION LSAMEN( N, CA, CB )
+*     12 <= ISPEC <= 16: xHSEQR or one of its subroutines. 
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
-*
-*     .. Scalar Arguments ..
-      CHARACTER*( * )    CA, CB
-      INTEGER            N
-*     ..
-*
-*  Purpose
-*  =======
-*
-*  LSAMEN  tests if the first N letters of CA are the same as the
-*  first N letters of CB, regardless of case.
-*  LSAMEN returns .TRUE. if CA and CB are equivalent except for case
-*  and .FALSE. otherwise.  LSAMEN also returns .FALSE. if LEN( CA )
-*  or LEN( CB ) is less than N.
-*
-*  Arguments
-*  =========
-*
-*  N       (input) INTEGER
-*          The number of characters in CA and CB to be compared.
-*
-*  CA      (input) CHARACTER*(*)
-*  CB      (input) CHARACTER*(*)
-*          CA and CB specify two character strings of length at least N.
-*          Only the first N characters of each string will be accessed.
-*
-* =====================================================================
-*
-*     .. Local Scalars ..
-      INTEGER            I
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          LEN
-*     ..
-*     .. Executable Statements ..
-*
-      LSAMEN = .FALSE.
-      IF( LEN( CA ).LT.N .OR. LEN( CB ).LT.N )
-     $   GO TO 20
-*
-*     Do for each character in the two strings.
-*
-      DO 10 I = 1, N
-*
-*        Test if the characters are equal using LSAME.
-*
-         IF( .NOT.LSAME( CA( I: I ), CB( I: I ) ) )
-     $      GO TO 20
-*
-   10 CONTINUE
-      LSAMEN = .TRUE.
-*
-   20 CONTINUE
+      ILAENV = IPARMQ( ISPEC, NAME, OPTS, N1, N2, N3, N4 )
       RETURN
 *
-*     End of LSAMEN
+*     End of ILAENV
 *
       END

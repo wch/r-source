@@ -14,10 +14,10 @@ typedef size_t (*gl_strwidth_proc)(char *);
 int             getline(char *prompt, char *buf, int maxlen);  
 
 void            gl_setwidth(int);		/* specify width of screen */
-void            gl_histadd(char *);		/* adds entries to hist */
+void            gl_histadd(const char *);	/* adds entries to hist */
 void		gl_strwidth(gl_strwidth_proc);	/* to bind gl_strlen */
-void		gl_loadhistory(char *);
-void		gl_savehistory(char *, int size);
+void		gl_loadhistory(const char *);
+void		gl_savehistory(const char *, int size);
 void            gl_hist_init(int, int);		/* set up history buffer */
 char    	*gl_hist_next(void);	/* return ptr to next item */
 char    	*gl_hist_prev(void);	/* return ptr to prev item */

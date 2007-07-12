@@ -52,6 +52,8 @@ reorder(x, \dots)
 }
 
 \examples{
+require(graphics)
+
 bymedian <- with(InsectSprays, reorder(spray, count, median))
 boxplot(count ~ bymedian, data = InsectSprays,
         xlab = "Type of spray", ylab = "Insect count",

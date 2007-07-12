@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.3.0} or later).
+(@samp{2.5.0} or later).
 
 
 @newchap{}
@@ -112,6 +112,7 @@ The information here applies only to recent versions of R for Windows,
 * What does 'DLL attempted to change FPU control word' mean?::  
 * Other strange crashes.::      
 * Why does R never use more than 50% of my CPU?::  
+* Does R run under Windows Vista?::  
 @end menu
 
 
@@ -121,7 +122,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win32.exe} of about 28Mb.  This contains all the
+installer @samp{@RWVER@-win32.exe} of about 30Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
@@ -137,8 +138,9 @@ release.
 You need Windows 95 or later.  There is no specific version for Windows
 64, but the standard 32-bit version has been proven to work.  Some
 features only work on an NT-based version of Windows (and some work
-better on such an OS).  We do minimally test releases on Windows 98 and
-occasionally on NT4, but only test thoroughly on XP and later.
+better on such an OS).  We do minimally test most releases on Windows 98
+(2.5.0 was tested, for example) and sometimes on NT4, but only test
+thoroughly on XP.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -146,29 +148,43 @@ takes up about 60Mb of disk space and a minimal one less than 20Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
-with spaces in will probably work, but is little-tested.)
+with spaces in will probably work, but is little-tested.)  Users of
+Vista installing for a single user using an account with administrator
+rights@footnote{Non-administrator accounts will automatically be offered
+a default installation directory in the user area.} should consider
+installing into a non-system area (such as @file{C:\R}).  If you are
+installing to a network drive, you should consider changing the default
+form of help during the install @strong{not} to be Compiled HTML help:
+@xref{Help is not shown for some of the packages}.  Installing to a
+network share (a filepath starting with @code{\\machine\...}) is not
+supported: such paths will need to mapped to a network drive.
 
-To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon and
-follow the instructions.  If you installed R this way you can uninstall
-it from the Control Panel or Start Menu (unless you suppressed making a
-group for R).
+To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
+icon and follow the instructions.  If you installed R this way you can
+uninstall it from the Control Panel or Start Menu (unless you
+suppressed making a group for R).  If you have an account with
+Administrator privileges you will be able to install R in the @file{Program
+Files} area and to set all the optional registry entries; otherwise
+you will only be able to install R in your own file area.  On Windows
+Vista you may need to confirm that you want to proceed with
+installing a program from an `unidentified publisher'.
 
-Choose a working directory for R.  You will have a shortcut to
-@file{@RWVER@\bin\Rgui.exe} on your desktop and/or somewhere on the
-Start menu file tree, and perhaps also in the Quick Launch bar.
-Right-click each shortcut, select Properties... and change the `Start
-in' field to your working directory.
+After installation you should choose a working directory for R.  You
+will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
+and/or somewhere on the Start menu file tree, and perhaps also in the
+Quick Launch part of the taskbar.  Right-click each shortcut, select
+Properties... and change the `Start in' field to your working directory.
 
-You may also want to add command-line arguments at the end of the Target
-field (@emph{after} any final double quote), for example @code{--sdi
---max-mem-size=1Gb}.  You can also set environment variables at the end
-of the Target field, for example @code{R_LIBS=p:/myRlib}, and if you
-want to ensure that menus and messages are in (American) English,
-@code{LANGUAGE=en}.
+You may also want to add command-line arguments at the end of the
+Target field (@emph{after} any final double quote, and separated by a
+space), for example @code{--sdi --max-mem-size=1Gb}.  You can also set
+environment variables at the end of the Target field, for example
+@code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
+messages are in (American) English, @code{LANGUAGE=en}.
 
-It is also possible to install from an MSI file, which will be of interest
-only for sysadmins.  For how to build an MSI file, see the `R
-Installation and Administration Manual'.
+It is also possible to install from an MSI file, which will be of
+interest only for system administrators.  For how to build an MSI file,
+see the `R Installation and Administration Manual'.
 
 
 @node How do I check an installation?, Can I customize the installation?, How do I install R for Windows?, Installation and Usage
@@ -200,7 +216,7 @@ set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
 @samp{chtml}, @samp{html}, @samp{latex}, @samp{manuals}, @samp{refman},
-@samp{libdocs}, @samp{devel}, @samp{tcl}, @samp{mbcs}, @samp{Rd} and
+@samp{libdocs}, @samp{devel}, @samp{tcl}, @samp{Rd}, @samp{latex} and
 @samp{trans}.
 @end table
 
@@ -260,10 +276,13 @@ to run R without creating a shortcut in a writable folder.
 @section How do I UNinstall R?
 
 Normally you can do this from the R group on the Start Menu or from the
-@samp{Add/Remove Programs} in the Control Panel.  If it does not appear
-there or if you want to remove an old version, run @file{unins000.exe}
-in the top-level installation directory.  (There should be a separate
-uninstall item in the R group for each installed version of R.)
+@samp{Add/Remove Programs}@footnote{@samp{Programs and Features} under
+Vista} in the Control Panel.  If it does not appear there or if you want
+to remove an old version, run @file{unins000.exe} in the top-level
+installation directory.  (There should be a separate uninstall item in
+the R group for each installed version of R. On Windows Vista, you may
+well be asked to confirm that you wish to run a program from an
+`unidentified publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -309,8 +328,8 @@ several times slower on some tasks).
 
 The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
 per process under suitably enabled versions of Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}:
-even where this is supported it has to be specifically enabled).
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
+: even where this is supported it has to be specifically enabled).
 On such systems, the default for @code{--max-mem-size} is the smaller of
 the amount of RAM and 2.5Gb.
 
@@ -377,9 +396,9 @@ errors to the normal output file on such systems.)
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
 @section Can I use @RWVER@ with ESS and (X)emacs?
 
-Yes.  Recent versions of ESS (e.g. 5.2.x) come with support for this
-version of R, and there is support for interrupting the R process from
-ESS (by @code{C-c C-c}).
+Yes.  All recent versions of ESS come with support for this version of
+R, and there is support for interrupting the R process from ESS (by
+@code{C-c C-c}).
 
 For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
@@ -436,8 +455,7 @@ the same way.  This is useful for variables which should be set for all
 users and all usages of this R installation.  (Their values can be
 overridden in a @file{.Renviron} file or on the command line.)
 
-See @code{?Startup} for more details of environment files, include
-the site-wide environment file @file{Renviron.site}.
+See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
@@ -475,9 +493,9 @@ Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but many people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @samp{PROGRA~1}; you can get it as the
-`MS-DOS name' from the Properties of the file on most versions of
+`MS-DOS name' from the Properties of the file on some versions of
 Windows, and from @command{dir /X} in a @samp{Command Prompt} window on
-2000/XP/2003).
+2000 and later).
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -563,22 +581,28 @@ available locally) of a command-line in a short cut:
 The second version will prompt the user for the proxy username and
 password when HTTP downloads are first used.
 
+Another possibility is that firewall settings are blocking the R
+executables from contacting the Internet, but this should result in
+informative error messages from the firewall program (and it does from
+the Windows XP firewall).
+
 
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
-This used to happen occasionally, and all the occurrences we have solved
-have been traced to faulty versions of @samp{msvcrt.dll}.  We have
-installed a workaround that seems to avoid this.  A few other people
-have discovered this was caused by desktop switcher and keyboard macro
-programs, for example `Macro Magic' and `JS Pager'.
+This has not been reported for a couple of years, but used to happen
+regularly.  All the occurrences we have solved have been traced to
+faulty versions of @samp{msvcrt.dll}: we have installed a workaround
+that seems to avoid this.  A few other people have discovered this was
+caused by desktop switcher and keyboard macro programs, for example
+`Macro Magic' and `JS Pager'.
 
 If it still happens, try extracting the @samp{msvcrt.dll} to be found in
 the self-extracting archive
 @uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
 the @file{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
 directory reverts to the standard behaviour.  It seems that on some
-versions of Windows (but not 2000/XP/2003) you also need to put the
+versions of Windows (but not 2000 or later) you also need to put the
 @file{@RWVER@\bin} directory early in your path.
 
 This fix has solved other problems too, for example incorrect results in
@@ -620,7 +644,7 @@ The only solution we know of is for the user to replace the buggy system
 component that is causing the error.
 
 
-@node Why does R never use more than 50% of my CPU?,  , Other strange crashes., Installation and Usage
+@node Why does R never use more than 50% of my CPU?, Does R run under Windows Vista?, Other strange crashes., Installation and Usage
 @section Why does R never use more than 50% of my CPU?
 
 This is a misreading of Windows' confusing Task Manager.  R's
@@ -633,6 +657,111 @@ will also show as two CPUs (which they genuinely are).
 
 Many benchmarks show hyperthreading reduces the overall workload, so you
 may want to experiment with disabling it.
+
+
+@node Does R run under Windows Vista?,  , Why does R never use more than 50% of my CPU?, Installation and Usage
+@section Does R run under Windows Vista?
+
+It does.  Vista was launched in January 2007 and experience with it is
+still limited.  A few issues have been reported that related to the way
+accounts and file permissions work.  (These are not specifically R
+issues, but changes in user experiences.)  As there are many settings that
+system administrators can change, it is clear that only a tiny fraction
+of possibilities will have been explored.
+
+Earlier versions of Windows had user and Administrator accounts, and
+user accounts could be give administrative privileges (by being added to
+the local Administrators group) and so write permission over system
+areas such as @file{c:\Program Files}.  R would be installed either by a
+user in his own file space or by an account with administrator
+privileges into a system area.  Sysadmins could set policies for user
+accounts, and you might for example have needed to be a `Power User' to
+install software at all.
+
+Vista normally disables the Administrator account and expects software
+installation to done by an account which is in the local Administrator
+group with `admin approval mode' turned on.  (The Administrator
+account by default has it turned off.)  Unlike (say) Windows XP, such
+accounts do not run programs with full administrator privileges, and
+this is where the issues arise.  (For background information consult
+@url{http://technet.microsoft.com/en-us/windowsvista/aa906021.aspx}
+and
+@url{http://windowsvistablog.com/blogs/windowsvista/archive/2007/01/23/security-features-vs-convenience.aspx}.)
+Vista has the concept of `over-the-shoulder' credentials: if you are
+running without full administrator privileges and do something which
+needs them you may be prompted with one or more security-check dialog
+boxes, and may be required to provide administrator credentials or
+confirm that you really want to take that action.
+
+Vista will report that the R installer has an `unidentified publisher'
+and ask if it should be run.  System administrators can disable
+installing applications from non-trusted sources, in which case you
+will have to persuade them that R is trustworthy, or digitally sign the
+R installer yourself, or (unless this is also disabled) run the
+installer from a standard account and install into your own file area.
+(The same issues apply to the @file{.msi} version of the installer.)
+
+If you install R as a standard user into your own file space and use it
+under the same account, there are no known permission issues.
+
+If you use the default Administrator account (without `admin approval
+mode' being turned on) and install/update packages (in the system area
+or elsewhere), no issues are known.
+
+If you use an account in the local Administrators group in `admin
+approval mode' (which is the intended norm under Vista), installation
+will make use of `over-the-shoulder' credentials.  You will run into
+problems if you try installing (including updating) packages in the
+main R library.  (It would be nice if at that point R used
+over-the-shoulder credentials, but they apply to processes as a
+whole.  Vista disallows creating @code{.chm} and @code{.dll} files in
+the system area without credentials.)  There are several ways around
+this.
+
+@itemize
+@item
+Run R with Administrator privileges in sessions where you want to
+install packages.  (Do so by right-clicking on the R shortcut and
+selecting 'Run as Administrator'.)
+
+@item
+Transfer ownership of the R installation to the user which installed R.
+To do so, use the security tab on the @samp{Properties} of the top-level
+R folder and give `Full Control' over this directory to the user (not
+just the Administrator group).
+
+@item
+Install packages into a different library tree owned by the account used to
+install R.
+
+For an installation to be used by a single user, the simplest way is to
+make use of the `personal library' introduced in R 2.5.0: @xref{I don't
+have permission to write to the @RWVER@\library directory}.
+
+For a site installation, you can create a site-wide library directory
+anywhere convenient, and add it to the default package search path for
+all users via @env{R_LIBS_SITE} in @file{etc\Renviron.site}.  @xref{What
+are HOME and working directories?}.  There is a standard location for a
+site library, the @file{site-library} directory in the top-level R
+folder (which you would need to create with full control for the R
+installation account).  This will be used for installation in preference
+to the main library folder if it exists.
+
+This approach will not allow you to update the recommended packages.
+@end itemize
+
+
+Another issue with Vista is that the standard POSIX ways that R uses
+(e.g. in @code{file.info} and @code{file.access}) to look at file
+permissions no longer work reliably.  @code{file.access} has been
+re-written for R 2.5.1 to work with Windows NT-based security and
+seems much more reliable with Vista.
+
+On suitably recent hardware Vista can prevent the execution of code
+from data areas via `Data Execution Prevention' (from a tab in
+System Properties -> Advanced -> Performance), and sysadmins can turn
+this on for all programs.  R runs correctly with DEP enabled.
+
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -781,19 +910,21 @@ Czech characters displayed correctly.
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated.
 
-In most cases they actually are, but by Windows.  Setting the locale or
-the @code{LANGUAGE} environment variable does not change the Windows
-setting of its `UI language'.  Under (international) Windows XP there
-are three tabs on the @emph{Regional and Language Options} applet in the
-Control Panel.  The first tab controls the locale, the second the UI and
-the third the fonts used for `non-Unicode' programs (but apparently also
-for Unicode ones in many cases): see Q3.3.
+In most cases they actually are, but by Windows.  Setting the locale
+or the @code{LANGUAGE} environment variable does not change the
+Windows setting of its `UI language'.  Under (international) Windows
+XP there are three tabs on the @emph{Regional and Language Options}
+applet in the Control Panel.  The first tab controls the locale, the
+second the UI and the third the fonts used for `non-Unicode' programs
+(but apparently also for Unicode ones in many cases): see Q3.3.  Vista
+talks about the ' UI language', and the 'system locale' for setting
+the fonts used for `non-Unicode' programs.
 
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
-Windows in one language and R in another, you may find the way Windows
+Windows XP in one language and R in another, you may find the way Windows
 handles internationalization slightly odd.  For further details see
-@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}
+@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}.
 
 @newchap{}
 @node Packages, Windows Features, Languages and Internationalization, Top
@@ -810,6 +941,7 @@ handles internationalization slightly odd.  For further details see
 * Hyperlinks in HTML do not work.::  
 * update.packages() fails::     
 * How do I add to the list of repositories?::  
+* Help is not shown for some of the packages::  
 @end menu
 
 
@@ -826,7 +958,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.4.? the files are in @file{bin/windows/contrib/2.4}.  You can try
+2.5.? the files are in @file{bin/windows/contrib/2.5}.  You can try
 those compiled for earlier versions (but not before 2.0.0), at your own
 risk.
 
@@ -870,6 +1002,28 @@ OR use a package by, e.g.
 library(mypkg, lib.loc="p:/myRlib")
 @end example
 
+You can also have you a personal library, which defaults to the
+directory @file{R\win-library\@var{x.y}} of your home directory for
+versions @var{x.y.z} of R.  This location can be changed by setting
+the environment variable @env{R_LIBS_USER}, and can be found from inside
+R by running @code{Sys.getenv("R_LIBS_USER")}.  This will only be
+used if it exists so you may need to create it: you can use
+
+@example
+dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)
+@end example
+
+@noindent
+to do so.  If you use @code{install.packages} and do not have permission
+to write to the main or site library, it should offer to create a personal
+library for you and install the packages there.  This will also happen
+if @code{update.packages} offers to update packages for you in a library
+where you do not have write permission.
+
+There can be additional security issues under Windows Vista: @xref{Does
+R run under Windows Vista?}.  In particular, the detection that a
+standard user has suitable permissions appears to be unreliable under
+Vista, so we recommend that you do create a personal directory yourself.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
@@ -944,8 +1098,8 @@ to a non-empty value, it is assumed that you want to use a different
 Tcl/Tk 8.4.x installation, and that this is set up correctly (with the
 DLLs in your path and @env{TCL_LIBRARY} set).  In that case you do not
 need the Tcl/Tk support files installed (but they can be).  Note that
-you do need 8.4.x and not 8.3.x.  (If you build R from the sources
-yourself you can configure it to use 8.3.x.)
+you do need 8.4.x and not 8.5.x.  (If you build R from the sources
+yourself you can configure it to use 8.5.x.)
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
@@ -981,15 +1135,25 @@ installation process by preventing the renaming of temporary files,
 @emph{Google Desktop} being a known example.
 
 
-@node How do I add to the list of repositories?,  , update.packages() fails, Packages
+@node How do I add to the list of repositories?, Help is not shown for some of the packages, update.packages() fails, Packages
 @section How do I add to the list of repositories?
 
 as shown in the @code{Select repositories...} item on the
 @code{Packages} menu?
 
-This reads from the tab-delimited file @file{R_HOME/etc/repositories},
-which you can edit, or put a modified copy at @file{.R/repositories}
+This reads from the tab-delimited file @file{R_HOME\etc\repositories},
+which you can edit, or put a modified copy at @file{.R\repositories}
 in your HOME directory (@pxref{What are HOME and working directories?}).
+
+@node Help is not shown for some of the packages,  , How do I add to the list of repositories?, Packages
+@section Help is not shown for some of the packages
+
+Is this for Compiled HTML help (the default)?  If a help viewer appears
+but says the page cannot be displayed, this may be due to a 2006 Windows
+security patch (@url{http://support.microsoft.com/kb/896358}).  Either
+apply the workarounds given at that URL or choose another form of help
+as the default (on installation or by editing
+@file{R_HOME\etc\Rprofile.site}).
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
@@ -1000,6 +1164,7 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 * I hear about some nifty features.::  
 * Circles appear as ovals on screen::  
 * How do I move focus to a graphics window or the console?::  
+* What does TAB completion do?::  
 @end menu
 
 
@@ -1083,7 +1248,7 @@ On one of our systems, the screen height was reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
-@node How do I move focus to a graphics window or the console?,  , Circles appear as ovals on screen, Windows Features
+@node How do I move focus to a graphics window or the console?, What does TAB completion do?, Circles appear as ovals on screen, Windows Features
 @section How do I move focus to a graphics window or the console?
 
 You may want to do this from within a function, for example when calling
@@ -1095,6 +1260,46 @@ it brings the console to the top and gives it focus.
 This works for @command{Rgui.exe} in MDI and SDI modes, and can be used for
 graphics windows from @command{Rterm.exe} (although Windows may not always
 act on it).
+
+
+@node What does TAB completion do?,  , How do I move focus to a graphics window or the console?, Windows Features
+@section What does TAB completion do?
+
+R 2.5.0 introduced @kbd{TAB} completion in both @command{Rgui} and
+@command{Rterm}.  Hitting @kbd{TAB} whilst entering a command line
+completes the current `word' as far as is unambiguously possible.
+Hitting @kbd{TAB} a second time then shows a list of possible
+completions (or the first few if there are many): the user can then
+enter one or more characters and hit @kbd{TAB} again.
+
+What is it `completing'?  There are two modes: within an unterminated
+(single- or double-) quoted expression it completes file paths.
+Otherwise, it is completing R expressions: most obviously it will match
+visible R object names and keywords, so @kbd{apr} folloed by @kbd{TAB}
+will (in a vanilla session) complete to @code{apropos}.  After a
+function name and paranthesis (e.g. @kbd{apropos(}) it will complete
+argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it will
+complete list components or slot names respectively.
+
+This feature can be turned off: @command{Rgui} has two menu items to do
+so, and setting the environment variable @env{R_COMPLETION} to
+@code{FALSE} turns it off completely for both @command{Rgui} and
+@command{Rterm}.  Further, the behaviour can be fine-tuned: to see the
+settings available use
+
+@example
+library(rcompgen)
+?rc.settings
+@end example
+
+@noindent
+which also explains how the various types of completion work.  (Note
+that comtrary to the documentation in @code{rcompgen 0.1-10}, file
+completion is turned on by default on Windows.)
+
+This feature is quite similar to the completion available in the
+@code{readline}-based command line interface on Unix-alikes: the MacOS X
+Gui has a different completion scheme.
 
 @newchap{}
 @node Workspaces, The R Console, Windows Features, Top
@@ -1190,12 +1395,12 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 See the `R Installation and Administration' manual.
 
-Note that building under Windows 64 is not supported as no suitable
+Note that building for Windows 64 is not supported as no suitable
 non-commercial compiler is yet available.  There is a glimmer of hope
 that this will change in the not too far distance future: see
-@url{http://sourceforge.net/mailarchive/forum.php?thread_id=30624855&forum_id=5119}.
+@url{http://sourceforge.net/mailarchive/forum.php?thread_name=460D8FC1.64E689DB%40dessent.net&forum_name=mingw-users}
 You are of course welcome to try a commercial compiler, but we will not
-be distributing a port for which users cannot easily add packages.
+be distributing a port to which users cannot easily add packages.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
@@ -1433,19 +1638,19 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2006 April 03
+@set LASTEDIT 2007-04-13
 @ifhtml
 @html
 <hr WIDTH="100%">
 <address>
 Last edited @value{LASTEDIT}: comments to
-<code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
+<code><a href="mailto:R-windows@@R-project.org">R-windows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited @value{LASTEDIT}: comments to <Rwindows@@r-project.org>
+Last edited @value{LASTEDIT}: comments to <R-windows@@r-project.org>
 @end ifinfo
 
 @bye

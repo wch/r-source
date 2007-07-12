@@ -58,7 +58,8 @@ typedef enum {
 
 
 
-Rboolean newX11DeviceDriver(DevDesc*, char*, double, double, double, double, 
+Rboolean newX11DeviceDriver(DevDesc*, const char*, double, double, double,
+			    double, 
 			    X_COLORTYPE, int, int, int, SEXP, int, int, int);
 
 
@@ -132,6 +133,7 @@ typedef struct {
     Rboolean handleOwnEvents;           /* Flag indicating whether events will be handled externally from R (TRUE),
                                            or whether R is to handle the events (FALSE) */
     int res_dpi;			/* used for png/jpeg */
+    Rboolean warn_trans;		/* have we warned about translucent cols? */
 } newX11Desc;
 
 
@@ -140,7 +142,7 @@ newX11Desc *Rf_allocNewX11DeviceDesc(double ps);
 int      Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel, int maxcube, Rboolean setHandlers);
 int      Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd);
 Rboolean newX11_Open(NewDevDesc *dd, newX11Desc *xd, 
-		     char *dsp, double w, double h, 
+		     const char *dsp, double w, double h, 
 		     double gamma_fac, X_COLORTYPE colormodel, 
 		     int maxcube, int bgcolor, int canvascolor, 
 		     int res, int xpos, int ypos);

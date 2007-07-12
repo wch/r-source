@@ -88,7 +88,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             for(f in files) {
                 utils::data(list = f, package = package, lib.loc = lib.loc,
                             envir = dataEnv)
-                ans[[f]] <- ls(envir = dataEnv, all = TRUE)
+                ans[[f]] <- ls(envir = dataEnv, all.names = TRUE)
                 rm(list = ans[[f]], envir = dataEnv)
             }
         }
@@ -104,6 +104,9 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         stop(gettextf("there is no package called '%s'", package),
              domain = NA)
     dataDir <- file.path(pkgpath, "data")
+    ## set the encoding for text files to be read, if specified
+    enc <- .read_description(file.path(pkgpath, "DESCRIPTION"))["Encoding"]
+    if(!is.na(enc)) options(encoding=enc)
     if(file_test("-d", dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")) &&
 	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
@@ -153,7 +156,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                            variables)
 {
     envlist <- function(e) {
-        names <- ls(e, all=TRUE)
+        names <- ls(e, all.names=TRUE)
         .Call("R_getVarsFromFrame", names, e, FALSE, PACKAGE="base")
     }
 
@@ -207,7 +210,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                              enclos = parent.env(e))
                 key <- lazyLoadDBinsertValue(data, datafile, ascii,
                                              compress, envhook)
-                assign(name, key, env = envenv)
+                assign(name, key, envir = envenv)
             }
             name
         }
@@ -216,11 +219,11 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     if (is.null(from) || is.environment(from)) {
         if (! missing(variables))
             vars <- variables
-        else vars <- ls(from, all = TRUE)
+        else vars <- ls(from, all.names = TRUE)
     }
     else if (is.list(from)) {
         vars <- names(from)
-        if (length(vars) != length(from) || any(nchar(vars) == 0))
+        if (length(vars) != length(from) || any(!nzchar(vars)))
             stop("source list must have names for all elements")
     }
     else stop("source must be an environment or a list")
@@ -231,14 +234,14 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                                      ascii, compress,  envhook)
         else lazyLoadDBinsertListElement(from, i, datafile, ascii,
                                          compress, envhook)
-        assign(vars[i], key, env = varenv)
+        assign(vars[i], key, envir = varenv)
     }
 
-    vals <- lapply(vars, get, env = varenv, inherits = FALSE)
+    vals <- lapply(vars, get, envir = varenv, inherits = FALSE)
     names(vals) <- vars
 
-    rvars <- ls(envenv, all = TRUE)
-    rvals <- lapply(rvars, get, env = envenv, inherits = FALSE)
+    rvars <- ls(envenv, all.names = TRUE)
+    rvals <- lapply(rvars, get, envir = envenv, inherits = FALSE)
     names(rvals) <- rvars
 
     val <- list(variables = vals, references = rvals,

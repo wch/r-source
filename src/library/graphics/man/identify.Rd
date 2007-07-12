@@ -5,7 +5,7 @@
 \usage{
 identify(x, \dots)
 
-\method{identify}{default}(x, y = NULL, labels = seq(along = x), pos = FALSE,
+\method{identify}{default}(x, y = NULL, labels = seq_along(x), pos = FALSE,
          n = length(x), plot = TRUE, atpen = FALSE, offset = 0.5,
          tolerance = 0.25, \dots)
 }
@@ -75,6 +75,14 @@ identify(x, \dots)
   This is because the labels drawn by \code{identify} are not
   recorded in the device's display list until the identification process has
   terminated.
+
+  If you interrupt the \code{identify} call this leaves the graphics
+  device in an undefined state, with points labelled but labels not
+  recorded in the display list.  Copying a device in that state
+#ifdef windows
+  (e.g. saving the plot from the window's menu)
+#endif
+  will give unpredictable results.
 }
 \value{
   If \code{pos} is \code{FALSE}, an integer

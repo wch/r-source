@@ -29,6 +29,8 @@ packBits(x, type = c("raw", "integer"))
 }
 \value{
   \code{charToRaw} converts a length-one character string to raw bytes.
+  It does so without taking into account any declared encoding (see
+  \code{\link{Encoding}}).
 
   \code{rawToChar} converts raw bytes either to a single character
   string or a character vector of single bytes.  (Note that a single

@@ -55,6 +55,8 @@ rsignrank(nn, n)
   Wilcoxon rank sum statistic.
 }
 \examples{
+require(graphics)
+
 par(mfrow=c(2,2))
 for(n in c(4:5,10,40)) {
   x <- seq(0, n*(n+1)/2, length=501)

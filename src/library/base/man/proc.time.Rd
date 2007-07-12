@@ -45,8 +45,8 @@ proc.time()
 #endif
 #ifdef windows
   CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
-  are genuine times on NT4/2000/XP systems.  Times of child processes are
-  not available and will always be given as \code{NA}.
+  are genuine times on NT4/2000/XP/2003/Vista systems.  Times of child
+  processes are not available and will always be given as \code{NA}.
 #endif
 }
 \references{
@@ -62,7 +62,7 @@ proc.time()
 \examples{\dontrun{
 ## a way to time an R expression: system.time is preferred
 ptm <- proc.time()
-for (i in 1:50) mad(runif(500))
+for (i in 1:50) mad(stats::runif(500))
 proc.time() - ptm
 }}
 \keyword{utilities}

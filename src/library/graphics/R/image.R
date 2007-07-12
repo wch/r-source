@@ -1,7 +1,7 @@
 image <- function(x, ...) UseMethod("image")
 
-image.default <- function (x = seq(0, 1, len = nrow(z)),
-		   y = seq(0, 1, len = ncol(z)),
+image.default <- function (x = seq(0, 1, length.out = nrow(z)),
+		   y = seq(0, 1, length.out = ncol(z)),
 		   z,
 		   zlim = range(z[is.finite(z)]),
 		   xlim = range(x),
@@ -18,7 +18,7 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 		if(is.null(dim(x)))
 		   stop("argument must be matrix-like")
 		z <- x
-		x <- seq(0, 1, len = nrow(z))
+		x <- seq.int(0, 1, length.out = nrow(z))
 	    }
 	    if (missing(xlab)) xlab <- ""
 	    if (missing(ylab)) ylab <- ""
@@ -80,6 +80,6 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
     if (length(x) <= 1) x <- par("usr")[1:2]
     if (length(y) <= 1) y <- par("usr")[3:4]
     if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
-        stop("dimensions of z are not length(x)(+1) times length(y)(+1)")
+        stop("dimensions of z are not length(x)(-1) times length(y)(-1)")
     .Internal(image(as.double(x), as.double(y), as.integer(zi), col))
 }

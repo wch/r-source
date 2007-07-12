@@ -15,7 +15,7 @@ sink.number(type = c("output", "message"))
   \item{append}{logical. If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
-  \item{type}{character. Either the output stream or the messages
+  \item{type}{character.  Either the output stream or the messages
     stream.}
   \item{split}{logical: if \code{TRUE}, output will be sent to the new
     sink and to the current output stream, like the Unix program \code{tee}.}
@@ -29,13 +29,16 @@ sink.number(type = c("output", "message"))
   connection currently being used for error messages.
 }
 \details{
-  \code{sink} diverts \R output to a connection. If \code{file} is a
+  \code{sink} diverts \R output to a connection.  If \code{file} is a
   character string, a file connection with that name will be established
   for the duration of the diversion.
 
-  Normal \R output is diverted by the default \code{type = "output"}.
-  Only prompts and warning/error messages continue to appear on the terminal.
-  The latter can diverted by \code{type = "message"} (see below).
+  Normal \R output (to connection \code{\link{stdout}))} is diverted by
+  the default \code{type = "output"}.  Only prompts and (most)
+  messages continue to appear on the console.  Messages sent to
+  \code{\link{stdout}()} (including those from \code{\link{message}},
+  \code{\link{warning}} and \code{\link{stop}}) can be diverted by
+  \code{sink(type = "message")} (see below).
 
   \code{sink()} or \code{sink(file=NULL)} ends the last diversion (of
   the specified type).  There is a stack of diversions for normal

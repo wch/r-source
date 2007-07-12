@@ -54,6 +54,6 @@ lines(x, \dots)
 \examples{
 # draw a smooth line through a scatter plot
 plot(cars, main="Stopping Distance versus Speed")
-lines(lowess(cars))
+lines(stats::lowess(cars))
 }
 \keyword{aplot}

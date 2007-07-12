@@ -441,9 +441,9 @@ matchSignature <-
     if(is.null(names(signature))) {
         which <- seq_along(signature)
         if(length(which) > length(anames))
-          stop(gettextf("more elements in the method signature (%s) than in the generic  %s(%s)",
-               paste(signature, collapse=", "), fun@generic,
-               paste(anames, collapse=", ")))
+          stop(gettextf("more elements in the method signature (%d) than in the generic  signature (%d)",
+               length(which),
+               length(anames)), domain = NA)
     }
     else {
     ## construct a function call with the same naming pattern  &
@@ -585,14 +585,14 @@ promptMethods <- function(f, filename = NULL, methods)
     signatures <- object@classes
     labels <- character(n)
     aliases <- character(n)
-    fullName <- utils::topicName("methods", f)
+    fullName <- utils:::topicName("methods", f)
     for(i in seq_len(n)) {
         sigi <- paste("\"", signatures[[i]], "\"", sep ="")
         labels[[i]] <-
             paste(args[[i]], sigi, collapse = ", ", sep = " = ")
         aliases[[i]] <-
             paste0("\\alias{",
-                   utils::topicName("method", c(f, signatures[[i]])),
+                   utils:::topicName("method", c(f, signatures[[i]])),
                    "}")
     }
     text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
@@ -680,7 +680,7 @@ listFromMlist <-
   ## signature (a named list of classes) to be prepended to the signatures in this object.
   ##
   ## A utility function used to iterate over all the individual methods in the object.
-  function(mlist, prefix = list())
+  function(mlist, prefix = list(), sigs. = TRUE, methods. = TRUE)
 {
     methodSlot <- slot(mlist, "methods")
     mnames <- names(methodSlot)
@@ -692,13 +692,13 @@ listFromMlist <-
         thisClass <- el(mnames, i)
         elNamed(prefix, argName) <- thisClass
         if(is.function(thisMethod)) {
-            sigs <- c(sigs, list(prefix))
-            methods <- c(methods, list(thisMethod))
+            if(sigs.) sigs <- c(sigs, list(prefix))
+            if(methods.) methods <- c(methods, list(thisMethod))
         }
         else {
             more <- Recall(thisMethod, prefix)
-            sigs <- c(sigs, el(more, 1))
-            methods <- c(methods, el(more, 2))
+            if(sigs.) sigs <- c(sigs, el(more, 1))
+            if(methods.) methods <- c(methods, el(more, 2))
         }
     }
     list(sigs, methods)
@@ -734,7 +734,7 @@ listFromMlist <-
 ## Define a trivial version of asMethodDefinition for bootstrapping.
 ## The real version requires several class definitions as well as
 ## methods for as<-
-asMethodDefinition <- function(def, signature = list(), sealed = FALSE) {
+asMethodDefinition <- function(def, signature = list(), sealed = FALSE, functionName = character()) {
   if(is.primitive(def))
     def
   else {

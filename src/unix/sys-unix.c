@@ -56,6 +56,7 @@ extern Rboolean LoadInitFile;
  *  4) INITIALIZATION AND TERMINATION ACTIONS
  */
 
+attribute_hidden
 FILE *R_OpenInitFile(void)
 {
     char buf[256], *home;
@@ -90,14 +91,14 @@ FILE *R_OpenInitFile(void)
      *   R_ChooseFile is interface-specific
      */
 
-char *R_ExpandFileName_readline(char *s, char *buff);  /* sys-std.c */
+char *R_ExpandFileName_readline(const char *s, char *buff);  /* sys-std.c */
 
 static char newFileName[PATH_MAX];
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
 
 /* Only interpret inputs of the form ~ and ~/... */
-static char *R_ExpandFileName_unix(char *s, char *buff)
+static const char *R_ExpandFileName_unix(const char *s, char *buff)
 {
     char *p;
 
@@ -131,11 +132,11 @@ static char *R_ExpandFileName_unix(char *s, char *buff)
 
 extern Rboolean UsingReadline;
 
-char *R_ExpandFileName(char *s)
+const char *R_ExpandFileName(const char *s)
 {
 #ifdef HAVE_LIBREADLINE
     if(UsingReadline) {
-        char * c = R_ExpandFileName_readline(s, newFileName);
+        const char * c = R_ExpandFileName_readline(s, newFileName);
 	/* we can return the result only if tilde_expand is not broken */
 	if (!c || c[0]!='~' || (c[1]!='\0' && c[1]!='/'))
 	    return c;
@@ -266,9 +267,11 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP tchar, rval;
 
 	PROTECT(tlist);
-	fp = R_popen(CHAR(STRING_ELT(CAR(args), 0)), x);
+	fp = R_popen(translateChar(STRING_ELT(CAR(args), 0)), x);
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
+	    if(read >= INTERN_BUFSIZE - 1) 
+		warning(_("line %d may be truncated in call to system(, intern = TRUE)"), i + 1);
 	    if (read > 0 && buf[read-1] == '\n') 
 		buf[read - 1] = '\0'; /* chop final CR */
 	    tchar = mkChar(buf);
@@ -294,7 +297,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	tlist = allocVector(INTSXP, 1);
 	fflush(stdout);
-	INTEGER(tlist)[0] = R_system(CHAR(STRING_ELT(CAR(args), 0)));
+	INTEGER(tlist)[0] = R_system(translateChar(STRING_ELT(CAR(args), 0)));
 #ifdef HAVE_AQUA
     	R_Busy(0);
 #endif

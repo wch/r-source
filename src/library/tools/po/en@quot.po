@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2006.
+# Automatically generated, 2007.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:36+0000\n"
-"PO-Revision-Date: 2005-11-28 07:36+0000\n"
+"POT-Creation-Date: 2007-06-06 11:24+0100\n"
+"PO-Revision-Date: 2007-06-06 11:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -38,15 +38,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: Rmd5.c:35
+#: Rmd5.c:36
 msgid "argument 'files' must be character"
 msgstr "argument ‘files’ must be character"
 
-#: Rmd5.c:49
+#: Rmd5.c:50
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 failed on file ‘%s’"
 
-#: text.c:47
+#: text.c:67
 msgid "invalid argument type"
 msgstr "invalid argument type"

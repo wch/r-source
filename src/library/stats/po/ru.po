@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:21+0100\n"
-"PO-Revision-Date: 2006-09-26 01:05-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"PO-Revision-Date: 2007-04-07 01:47-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -32,12 +32,13 @@ msgstr "вероятности вне [0,1] в qansari()"
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "могу трансформировать только 100 пар в arima0"
 
 #: distance.c:151
-msgid "dist(.,\"binary\"): treating non-finite values as NA"
+#, fuzzy
+msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"): обрабатываю не-конечные значения как NA"
 
 #: distance.c:220
@@ -117,13 +118,13 @@ msgstr "число итераций превысило максимум = %d"
 
 #: nls.c:274
 msgid "converged"
-msgstr ""
+msgstr "сошлось"
 
 #: nls.c:295
 msgid "'theta' should be of type character"
 msgstr "'theta' должна быть текстового типа"
 
-#: nls.c:297 port.c:379
+#: nls.c:297 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL больше не работает"
 
@@ -154,17 +155,17 @@ msgstr "переменная '%s' не является числовой"
 msgid "bad Starma struct"
 msgstr "неправильная структура 'Starma'"
 
-#: pacf.c:228
+#: pacf.c:227
 #, c-format
 msgid "starma error code %d"
 msgstr "ошибка 'starma' с кодом %d"
 
-#: pacf.c:293
+#: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
 msgstr "ошибка 'forkal' с кодом %d"
 
-#: pacf.c:457
+#: pacf.c:451
 msgid "invalid value of lag.max"
 msgstr "неправильное значение 'lag.max'"
 
@@ -173,67 +174,67 @@ msgstr "неправильное значение 'lag.max'"
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d должен быть 1, 2, 3 или 4"
 
-#: port.c:323
+#: port.c:324
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "градиентная функция должна возвращать числовой вектор длины %d"
 
-#: port.c:333
+#: port.c:334
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessian-функция должна возвращать квадратную числовую матрицу порядка %d"
 
-#: port.c:383
+#: port.c:384
 msgid "'rho' must be an environment"
 msgstr "'rho' должно быть окружением"
 
-#: port.c:385 port.c:533
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' должен быть непустым числовым вектором"
 
-#: port.c:387
+#: port.c:388
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Когда определяется Hessian-функция, должен быть определен и градиент"
 
-#: port.c:390
+#: port.c:391
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "окружение 'rho' должно содержать числовой вектор '.par' длины %d"
 
-#: port.c:401
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' и 'upper' должны быть числовыми векторами"
 
-#: port.c:447
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' применяется лишь к именованным спискам"
 
-#: port.c:468
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() не найден"
 
-#: port.c:481
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
 
-#: port.c:502
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn выдала моду %d, длину %d - нужна мода %d, длина %d"
 
-#: port.c:515
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr "неправильный тип 'eval_check_store'"
 
-#: port.c:534
+#: port.c:538
 msgid "m must be a list"
 msgstr "m должен быть списком"
 
-#: port.c:554
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' и 'upperb' должны быть числовыми векторами"
 
@@ -246,11 +247,11 @@ msgstr "неправильное конечное правило для бегущей медианы 3: %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "ошибка размещения в smooth(*, '3RSR')."
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "ошибка размещения в smooth(*, '3RSS')."
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr "ошибка размещения в smooth(*, '3R')."
 

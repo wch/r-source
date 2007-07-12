@@ -199,7 +199,9 @@ all((c(NA || TRUE,  TRUE || NA,
     !c(NA && FALSE,FALSE && NA))))
 
 
-is.na(mean(c(1,NA,NA)[-1], trim = .1, na.rm = TRUE))
+## not sure what the point of this is: it gives mean(numeric(0)), that is NaN
+(z <- mean(rep(NA_real_, 2), trim = .1, na.rm = TRUE))
+is.na(z)
 
 ## Last Line:
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

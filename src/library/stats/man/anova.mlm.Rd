@@ -33,7 +33,7 @@
   For the multivariate test, Wilks' statistic is most popular in the
   literature, but the default Pillai--Bartlett statistic is
   recommended by Hand and Taylor (1987).  See
-  \code{\link{summary.manova}} for futher details.
+  \code{\link{summary.manova}} for further details.
 
   For the \code{"Spherical"} test, proportionality is usually with the
   identity matrix but a different matrix can be specified using \code{Sigma}).
@@ -80,7 +80,8 @@
   \code{\link{summary.manova}}
 }
 \examples{
-example(SSD) # Brings in the mlmfit and reacttime objects
+require(graphics)
+utils::example(SSD) # Brings in the mlmfit and reacttime objects
 
 mlmfit0 <- update(mlmfit, ~0)
 

@@ -112,9 +112,10 @@ double choose(double n, double k)
 	if (k == 0) return 1.;
 	/* else: k >= 1 */
 	r = n;
-	for(j=2; j <= k; j++)
+	for(j = 2; j <= k; j++)
 	    r *= (n-j+1)/j;
-	return r;
+	return R_IS_INT(n) ? floor(r + 0.5) : r;
+	/* might have got rounding errors */
     }
     /* else: k >= k_small_max */
     if (n < 0) {

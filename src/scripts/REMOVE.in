@@ -6,17 +6,16 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package remover ${version}
 
-Copyright (C) 2000-2005 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
+Copyright (C) 2000-2006 The R Core Development Team.
+This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD REMOVE [options] pkgs
 
 Remove the add-on packages specified by pkgs.  The library tree to
 remove from can be specified via '--library'.  By default, packages are
-removed from the library tree rooted at the first directory given in the
-environment variable R_LIBS if this is set and non-null, and from the
-default R library tree (${R_HOME}/library) otherwise.
+removed from the library tree rooted at the first directory in
+.libPaths() for an R session run in the current environment.
 
 Options:
   -h, --help		print short help message and exit
@@ -26,13 +25,9 @@ Options:
 Report bugs to <r-bugs@r-project.org>."
 
 GETWD='@GETWD@'
+R_EXE="${R_HOME}/bin/R"
 
-if test -n "${R_LIBS}"; then
-  lib=`echo "${R_LIBS}" | cut -f1 -d:`
-else
-  lib="${R_HOME}/library"
-fi
-
+lib=
 pkgs=
 
 while test -n "${1}"; do
@@ -55,6 +50,13 @@ if test -z "${pkgs}"; then
   echo "ERROR: no packages specified"
   exit 1
 fi
+
+if test -z "${lib}"; then
+  lib=`echo "cat(.libPaths()[1])" | \
+    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave`
+  echo "Removing from library '$lib'"
+fi
+
 
 if test -d "${lib}" -a -w "${lib}"; then
   lib=`cd "${lib}" && ${GETWD}`

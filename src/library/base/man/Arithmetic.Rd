@@ -83,6 +83,12 @@ x \%/\% y
   accuracy if \code{x} is much larger than \code{y}, and a warning is
   given if this is detected.
 }
+\section{S4 methods}{
+  These operators are members of the S4 \code{\link{Arith}} group generic,
+  and so methods can be written for them individually as well as for the
+  group generic (or the \code{Ops} group generic), with arguments
+  \code{c(e1, e2)}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

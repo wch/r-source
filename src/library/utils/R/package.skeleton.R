@@ -20,7 +20,7 @@ package.skeleton <-
             for(cf in code_files)
                 sys.source(cf, envir = environment)
         }
-        list <- ls(env = environment)
+        list <- ls(environment)
     }
 
     if(!is.character(list))
@@ -48,7 +48,7 @@ package.skeleton <-
 
     message("Creating directories ...")
     ## Make the directories
-    dir <- file.path(path, name)    
+    dir <- file.path(path, name)
     if(file.exists(dir) && !force)
 	stop(gettextf("directory '%s' already exists", dir), domain = NA)
 

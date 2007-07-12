@@ -2,13 +2,14 @@ stdin <- function() .Internal(stdin())
 stdout <- function() .Internal(stdout())
 stderr <- function() .Internal(stderr())
 
-readLines <- function(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
+readLines <- function(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
+                      encoding = "unknown")
 {
     if(is.character(con)) {
         con <- file(con, "r")
         on.exit(close(con))
     }
-    .Internal(readLines(con, n, ok, warn))
+    .Internal(readLines(con, n, ok, warn, encoding))
 }
 
 
@@ -59,7 +60,7 @@ file <- function(description = "", open = "", blocking = TRUE,
 pipe <- function(description, open = "", encoding = getOption("encoding"))
     .Internal(pipe(description, open, encoding))
 
-fifo <- function(description = "", open = "", blocking = FALSE,
+fifo <- function(description, open = "", blocking = FALSE,
                  encoding = getOption("encoding"))
     .Internal(fifo(description, open, blocking, encoding))
 
@@ -142,12 +143,7 @@ showConnections <- function(all = FALSE)
 getAllConnections <- function()
     .Internal(getAllConnections())
 
-getConnection <- function(what)
-{
-    set <- getAllConnections()
-    if(what %in% set) structure(what, class="connection")
-    else NULL
-}
+getConnection <- function(what) .Internal(getConnection(what))
 
 closeAllConnections <- function()
 {

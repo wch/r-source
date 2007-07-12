@@ -43,6 +43,7 @@
  DefaultPalette
  DialogSelectFile
  EhiWakeUp
+ EncodeReal2
  GA_MDIFrame
  GA_MDIStatus
  GA_MDIToolbar
@@ -80,6 +81,7 @@
  GA_decrease_refcount
  GA_del_all_contexts
  GA_del_context
+ GA_del_statusbar
  GA_del_string
  GA_deletion_traversal
  GA_erase_image
@@ -159,24 +161,40 @@
  GA_this_instance
  GA_to_c_string
  GA_to_dos_string
+ GA_toolbar_show
  GA_tree_search
  GA_updatestatus
  GA_win_rgb
  GRecording
  GetCurrentWinPos
+ INTERNAL
  IS_ACTIVE_BINDING
+ IS_LATIN1
+ IS_UTF8
  InitDynload
  Init_R_Variables
  LOCK_BINDING
- LeftMatrixColumnLabel
+ La_chol
+ La_chol2inv
+ La_dgeqp3
+ La_dgesv
+ La_rg
+ La_rg_cmplx
+ La_rs
+ La_rs_cmplx
+ La_svd_cmplx
+ La_zgeqp3
+ La_zgesv
  LoadInitFile
  MDIset
  MDIsize
  MainThread
- MatrixColumnLabel
- MatrixRowLabel
- NextConnection
  OutDec
+ PRCODE
+ PRENV
+ PRIMOFFSET
+ PRSEEN
+ PRVALUE
  PrintUsage
  ProfileEvent
  R_AllocStringBuffer
@@ -191,16 +209,23 @@
  R_CollectWarnings
  R_Collected
  R_CommentSxp
+ R_CommentSymbol
  R_ConsoleIob
+ R_DotEnvSymbol
  R_EditFiles
  R_ErrorCon
+ R_ExactSymbol
  R_Expressions
  R_Expressions_keep
  R_FileExists
  R_FileMtime
  R_FreeSEXP
  R_FreeStringBuffer
+ R_FreeStringBufferL
  R_FunTab
+ R_GE_VStrHeight
+ R_GE_VStrWidth
+ R_GE_VText
  R_GetMaxNSize
  R_GetMaxVSize
  R_HandlerStack
@@ -212,12 +237,24 @@
  R_IoBufferPutc
  R_IoBufferWriteReset
  R_JumpToContext
+ R_KT_ran_arr_buf
+ R_KT_ran_arr_cycle
+ R_KT_ran_arr_ptr
+ R_KT_ran_arr_sentinel
  R_KeepSource
+ R_LastvalueSymbol
+ R_LibraryFileName
  R_LoadFromFile
  R_Log10
  R_NHeap
+ R_NShowCalls
  R_NSize
+ R_NaRmSymbol
  R_Newhashpjw
+ R_OpenInitFile
+ R_OpenLibraryFile
+ R_OpenSiteFile
+ R_OpenSysInitFile
  R_OutputCon
  R_PPStack
  R_PPStackSize
@@ -229,7 +266,9 @@
  R_ParseContextLast
  R_ParseError
  R_ParseFile
+ R_PromiseExpr
  R_Quiet
+ R_RecursiveSymbol
  R_RestartStack
  R_RestartToken
  R_ReturnedValue
@@ -240,17 +279,26 @@
  R_SetOptionWarn
  R_SetOptionWidth
  R_SetWin32
+ R_ShowErrorCalls
  R_ShowErrorMessages
+ R_ShowWarnCalls
  R_ShowFiles
+ R_SourceSymbol
+ R_SrcfileSymbol
+ R_SrcrefSymbol
  R_StdinEnc
+ R_StringHash
  R_SymbolTable
  R_TextBufferFree
  R_TextBufferGetc
  R_TextBufferInit
+ R_TmpvalSymbol
  R_ToplevelExec
+ R_UseNamesSymbol
  R_VSize
  R_Verbose
  R_Visible
+ R_WarnEscapes
  R_WarnLength
  R_Warnings
  R_XDRDecodeDouble
@@ -262,9 +310,12 @@
  R_binary
  R_compress1
  R_current_trace_state
+ R_data_class2
  R_dec_min_exponent
  R_decompress1
  R_dlsym
+ R_do_data_class
+ R_do_set_class
  R_fixbackslash
  R_fixslash
  R_getClockIncrement
@@ -281,6 +332,7 @@
  R_lazyLoadDBinsertValue
  R_max_memory
  R_moduleCdynload
+ R_newsock
  R_newunz
  R_newurl
  R_osDynSymbol
@@ -288,6 +340,7 @@
  R_print
  R_restore_globals
  R_run_onexits
+ R_seemsOldStyleS4Object
  R_serializeb
  R_signgam
  R_subset3_dflt
@@ -296,7 +349,10 @@
  R_sysfunction
  R_sysparent
  R_unary
+ R_warn_partial_match_args
+ R_warn_partial_match_dollar
  Rconsolesetwidth
+ Rf_CheckFormals
  Rf_CoercionWarning
  Rf_ComplexFromInteger
  Rf_ComplexFromLogical
@@ -314,6 +370,9 @@
  Rf_FixupPch
  Rf_FixupVFont
  Rf_GInit
+ Rf_GVStrHeight
+ Rf_GVStrWidth
+ Rf_GVText
  Rf_GetOptionParAsk
  Rf_IndexWidth
  Rf_InitArithmetic
@@ -326,6 +385,8 @@
  Rf_InitGraphics
  Rf_InitMemory
  Rf_InitOptions
+ Rf_InitRand
+ Rf_InitStringHash
  Rf_InitTempDir
  Rf_IntegerFromComplex
  Rf_IntegerFromLogical
@@ -382,6 +443,7 @@
  Rf_lgammacor
  Rf_lookupCachedSymbol
  Rf_makeSubscript
+ Rf_markKnown
  Rf_mat2indsub
  Rf_matchArg
  Rf_matchArgExact
@@ -419,7 +481,6 @@
  Ri18n_iswctype
  Ri18n_wcswidth
  Ri18n_wctype
- RightMatrixColumnLabel
  Rm_calloc
  Rm_cfree
  Rm_free
@@ -432,9 +493,21 @@
  Rregexec
  Rrowsum_df
  Rrowsum_matrix
+ Rsockclose
+ Rsockconnect
+ Rsocklisten
+ Rsockopen
+ Rsockread
+ Rsockselect
+ Rsockwrite
  Rwin_rename
  SET_ACTIVE_BINDING_BIT
+ SET_LATIN1
+ SET_UTF8
+ Sys_TempDir
  UNLOCK_BINDING
+ UNSET_LATIN1
+ UNSET_UTF8
  UseInternet2
  WrongArgCount
  _dist_code
@@ -457,6 +530,7 @@
  _nl_normalize_codeset
  _pcre_OP_lengths
  _pcre_default_tables
+ _pcre_is_newline
  _pcre_ord2utf8
  _pcre_try_flipped
  _pcre_ucp_findchar
@@ -468,6 +542,7 @@
  _pcre_utt
  _pcre_utt_size
  _pcre_valid_utf8
+ _pcre_was_newline
  _pcre_xclass
  _setextradata
  _tr_align
@@ -558,6 +633,7 @@
  deflateTune
  deflate_copyright
  deleditordata
+ det_ge_real
  do_AT
  do_Cstack_info
  do_D
@@ -632,6 +708,7 @@
  do_close
  do_cmathfuns
  do_col2RGB
+ do_colon
  do_colors
  do_colsum
  do_commandArgs
@@ -645,9 +722,9 @@
  do_cov
  do_cum
  do_dataentry
+ do_dataviewer
  do_date
  do_debug
- do_delay
  do_delayed
  do_dend
  do_dendwindow
@@ -686,10 +763,13 @@
  do_edit
  do_emptyenv
  do_encodeString
+ do_encoding
  do_env2list
  do_envIsLocked
  do_envir
+ do_envirName
  do_envirgets
+ do_envprofile
  do_erase
  do_eval
  do_expression
@@ -707,7 +787,6 @@
  do_fileshow
  do_filesymlink
  do_filledcontour
- do_first_max
  do_first_min
  do_flush
  do_flushconsole
@@ -736,11 +815,13 @@
  do_getWindowHandle
  do_getWindowTitle
  do_getallconnections
+ do_getconnection
  do_getenv
  do_geterrmessage
  do_getlocale
  do_gettext
  do_getwd
+ do_glob
  do_globalenv
  do_gpregexpr
  do_gray
@@ -752,7 +833,7 @@
  do_hcl
  do_hsv
  do_iconv
- do_ident
+ do_identical
  do_identify
  do_if
  do_image
@@ -785,6 +866,7 @@
  do_layout
  do_length
  do_lengthgets
+ do_levelsgets
  do_libfixup
  do_listfiles
  do_load
@@ -803,6 +885,7 @@
  do_logic3
  do_ls
  do_machine
+ do_makelazy
  do_makelist
  do_makenames
  do_makeunique
@@ -844,6 +927,7 @@
  do_nlm
  do_normalizepath
  do_nsl
+ do_nzchar
  do_objectsize
  do_onexit
  do_open
@@ -871,11 +955,13 @@
  do_plot_window
  do_plot_xy
  do_pmatch
+ do_pmin
  do_polygon
  do_polyroot
  do_pos2env
  do_pregexpr
  do_primitive
+ do_printDeferredWarnings
  do_printdefault
  do_prmatrix
  do_proctime
@@ -915,6 +1001,7 @@
  do_relop_dflt
  do_remove
  do_rep
+ do_rep_int
  do_repeat
  do_replay
  do_resetCondHands
@@ -934,11 +1021,17 @@
  do_segments
  do_selectlist
  do_seq
+ do_seq_along
+ do_seq_len
  do_serializeToConn
  do_set
  do_setGPar
+ do_setStatusBar
  do_setTitle
  do_setToCConverterActiveStatus
+ do_setencoding
+ do_setenv
+ do_seterrmessage
  do_setlocale
  do_setseed
  do_setwd
@@ -957,6 +1050,7 @@
  do_stdin
  do_stdout
  do_stop
+ do_storage_mode
  do_strheight
  do_strptime
  do_strsplit
@@ -991,11 +1085,13 @@
  do_termsform
  do_text
  do_textconnection
+ do_textconvalue
  do_tilde
  do_title
  do_tolower
  do_trace
  do_transpose
+ do_trunc
  do_truncate
  do_typecvt
  do_typeof
@@ -1004,6 +1100,7 @@
  do_unlist
  do_unregNS
  do_unserializeFromConn
+ do_unsetenv
  do_unz
  do_updateform
  do_url
@@ -1024,7 +1121,10 @@
  do_writechar
  do_writelines
  do_writetable
+ do_xspline
  do_zeroin
+ dos_glob
+ dos_globfree
  dpois_raw
  drawconsole
  editorchecksave
@@ -1046,6 +1146,7 @@
  getGraphMenu
  getIdentification
  getParseContext
+ getParseFilename
  getWindowTitle
  get_crc_table
  get_current_mem
@@ -1102,6 +1203,9 @@
  internal_shellexec
  intpr0_
  isMethodsDispatchOn
+ known_to_be_latin1
+ known_to_be_utf8
+ latin1locale
  libintl_bind_textdomain_codeset
  libintl_bindtextdomain
  libintl_dcigettext
@@ -1137,12 +1241,16 @@
  localeCP
  locale_charset
  mallinfo
+ malloc_footprint
+ malloc_max_footprint
  malloc_stats
  malloc_trim
  malloc_usable_size
  mallopt
+ max_contour_segments
  mb_char_len
  mbswidth
+ memalign
  memtrace_report
  menuclear
  menuconfig
@@ -1196,7 +1304,14 @@
  pkgmenuact
  pnchisq_raw
  pointsize
+ process_site_Renviron
+ process_system_Renviron
+ process_user_Renviron
  pythag_
+ qr_coef_cmplx
+ qr_coef_real
+ qr_qy_cmplx
+ qr_qy_real
  raise
  realp0_
  reset_duplicate_counter
@@ -1209,10 +1324,12 @@
  setCURCOL
  setTitle
  setWidthOnResize
+ set_rcompgen_available
  set_workspace_name
  setconsoleoptions
  setfirstcol
  setfirstvisible
+ showstatusbar
  sigaction
  sigaddset
  sigblock
@@ -1334,11 +1451,9 @@
  trio_set_upper
  trio_set_width
  trio_signbit
- trio_snprintf
  trio_snprintfcat
  trio_snprintfv
  trio_span_function
- trio_sprintf
  trio_sprintfv
  trio_sscanf
  trio_sscanfv
@@ -1388,9 +1503,7 @@
  trio_vprint_ref
  trio_vprintf
  trio_vscanf
- trio_vsnprintf
  trio_vsnprintfcat
- trio_vsprintf
  trio_vsscanf
  trio_xstring_append
  trio_xstring_append_char
@@ -1407,7 +1520,7 @@
  trio_xstring_substring
  uncompress
  utf8clen
- wcrtomb
+ winAccess
  winNewFrameConfirm
  winaddmenu
  winaddmenuitem
@@ -1437,6 +1550,7 @@
  xdr_void
  xdr_wrapstring
  xdrstdio_create
+ yylloc
  zError
  z_errmsg
  z_prec_r

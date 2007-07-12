@@ -11,7 +11,7 @@
   \code{rep} replicates the values in \code{x}.  It is a generic
   function, and the (internal) default method is described here.
 
-  \code{rep.int} is a faster simplified version for the commonest case.
+  \code{rep.int} is a faster simplified version for the most common case.
 }
 \usage{
 rep(x, \dots)

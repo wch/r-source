@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000, 2004 R Development Core Team
+# Copyright (C) 2000-2006 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,8 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
 # General Public License for more details.
 #
-# A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# A copy of the GNU General Public License can be obtained by
 # writing to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301  USA.
 
@@ -46,16 +45,14 @@ usage() if $opt_help;
 my $startdir = cwd();
 if($opt_library){
     chdir($opt_library) ||
-	die "Error: cannot change to directory \`$opt_library'\n";
+	die "Error: cannot change to library directory '$opt_library'\n";
     $library = cwd();
     chdir($startdir);
 } else {
-    if (defined $ENV{'R_LIBS'}) {
-	$library = $ENV{'R_LIBS'};
-	$library =~ s/\s*;.*$//;
-    } else {
-	$library = $R_HOME . "/library";
-    }
+    my @out = R_runR("cat(.libPaths()[1])", "--slave");
+    $library = @out[0];
+    $library = Win32::GetShortPathName($library) if $library =~ / /;
+    print "removing from '$library'\n";
 }
 
 ## this is the main loop over all packages to be installed
@@ -64,7 +61,7 @@ foreach $pkg (@ARGV) {
       if (-d "$library/$pkg") {
   	rmtree("$library/$pkg");
       } else {
-  	print "WARNING: there is no pkg \`${pkg}' in lib \`${library}'\n";
+  	print "WARNING: there is no pkg '${pkg}' in lib '${library}'\n";
       }
 }
 

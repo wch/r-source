@@ -67,9 +67,19 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
         alph2 <- 1.357*(SDh(cnt, a, n, d)/TD)^(1/7)
         if(!is.finite(alph2))
             stop("sample is too sparse to find alph2")
-        if (fSD(lower, cnt, alph2, c1, n, d) *
-            fSD(upper, cnt, alph2, c1, n, d) > 0)
-            stop("no solution in the specified range of bandwidths")
+        itry <- 1
+	while (fSD(lower, cnt, alph2, c1, n, d) *
+	       fSD(upper, cnt, alph2, c1, n, d) > 0) {
+	    if(itry > 20 || !(missing(lower) && missing(upper)))
+		stop("no solution in the specified range of bandwidths")
+	    if(itry %% 2)
+		upper <- upper * 1.2
+	    else lower <- lower / 1.2
+	    if(getOption("verbose"))
+		message(gettextf("increasing bw.SJ() search interval (%d)",
+                        itry), sep='', domain = NA)
+	    itry <- itry + 1
+	}
         res <- uniroot(fSD, c(lower, upper), tol=0.1*lower,
                        x=cnt, alph2=alph2, c1=c1, n=n, d=d)$root
     }

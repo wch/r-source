@@ -27,6 +27,19 @@
                   extras, device=device)
     toset <- !(names(op.utils) %in% names(op))
     if(any(toset)) options(op.utils[toset])
-
-    initPSandPDFfonts()
 }
+
+### Used by text, mtext, strwidth, strheight, title, axis,
+### L_text and L_textBounds, all of which
+### coerce SYMSXPs and LANGSXPs to EXPRSXPs
+### We don't want to use as.expression here as that is generic
+### even though is.language no longer is
+
+### Possibly later have
+### if (is.language(x)) x
+### else if(isS4(x)) methods::as(x, "character")
+### else if(is.object(x)) as.character(x)
+### else x
+
+as.graphicsAnnot <- function(x)
+    if(is.language(x) || !is.object(x)) x else as.character(x)

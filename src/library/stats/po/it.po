@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:21+0100\n"
+"POT-Creation-Date: 2007-06-12 18:52+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -28,12 +28,13 @@ msgstr "probabilità esterne a [0,1] in qansari()"
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
 
-#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "posso trasformare al più 100 parametri in arima0"
 
 #: distance.c:151
-msgid "dist(.,\"binary\"): treating non-finite values as NA"
+#, fuzzy
+msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"): valori infiniti trattati come NA"
 
 #: distance.c:220
@@ -119,7 +120,7 @@ msgstr ""
 msgid "'theta' should be of type character"
 msgstr "'theta' deve essere di tipo character"
 
-#: nls.c:297 port.c:379
+#: nls.c:297 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -149,17 +150,17 @@ msgstr ""
 msgid "bad Starma struct"
 msgstr "struttura Starma errata"
 
-#: pacf.c:228
+#: pacf.c:227
 #, c-format
 msgid "starma error code %d"
 msgstr "codice di errore starma %d"
 
-#: pacf.c:293
+#: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
 msgstr "codei di errore forkal %d"
 
-#: pacf.c:457
+#: pacf.c:451
 msgid "invalid value of lag.max"
 msgstr "valore di lag.max non valido"
 
@@ -168,65 +169,65 @@ msgstr "valore di lag.max non valido"
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""
 
-#: port.c:323
+#: port.c:324
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 
-#: port.c:333
+#: port.c:334
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:383
+#: port.c:384
 msgid "'rho' must be an environment"
 msgstr "'rho' deve essere un environment"
 
-#: port.c:385 port.c:533
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:387
+#: port.c:388
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:390
+#: port.c:391
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:401
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:447
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:468
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:481
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:502
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:515
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:534
+#: port.c:538
 msgid "m must be a list"
 msgstr "m deve essere di tipo list"
 
-#: port.c:554
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
@@ -239,11 +240,11 @@ msgstr ""
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "errore allocazione memoria in smooth(*, '3RSR')."
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "errore allocazione memoria in smooth(*, '3RSS')."
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr "errore allocazione memoria in smooth(*, '3R')."
 

@@ -161,7 +161,7 @@ static Rboolean sm_split3(double *x, double *y, int n, Rboolean do_ends)
     return(chg);
 }
 
-static int sm_3RS3R(double *x, double *y, double *z, int n,
+static int sm_3RS3R(double *x, double *y, double *z, double *w, int n,
 	     int end_rule, Rboolean split_ends)
 {
     /* y[1:n] := "3R S 3R"(x[1:n]);  z = "work"; */
@@ -171,7 +171,7 @@ static int sm_3RS3R(double *x, double *y, double *z, int n,
     iter =  sm_3R    (x, y, z, n, end_rule);
     chg  =  sm_split3(y, z, n, split_ends);
     if(chg)
-	iter += sm_3R(z, y, x, n, end_rule);
+	iter += sm_3R(z, y, w, n, end_rule);
     /* else y == z already */
     return(iter + (int)chg);
 }
@@ -238,9 +238,11 @@ void Rsm_3RSR(double *x, double *y, int *n, int *end_rule, int *iter)
 void Rsm_3RS3R(double *x, double *y, int *n, int *end_rule, int *changed)
 {
     double *z = (double *) R_alloc(*n, sizeof(double));
+    double *w = (double *) R_alloc(*n, sizeof(double));
+    if(!z || !w)
     if(!z)
 	error(_("allocation error in smooth(*, '3RSS')."));
-    *changed = sm_3RS3R(x, y, z, *n, abs(*end_rule),
+    *changed = sm_3RS3R(x, y, z, w, *n, abs(*end_rule),
 			/* split_ends = */(*end_rule < 0)? TRUE : FALSE);
     return;
 }

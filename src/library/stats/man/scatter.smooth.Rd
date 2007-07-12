@@ -45,8 +45,8 @@ loess.smooth(x, y, span = 2/3, degree = 1,
 }
 \seealso{\code{\link{loess}}}
 \examples{
-attach(cars)
-scatter.smooth(speed, dist)
-detach()
+require(graphics)
+
+with(cars, scatter.smooth(speed, dist))
 }
 \keyword{smooth}

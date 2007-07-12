@@ -1,7 +1,7 @@
 \name{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, version)
+detach(name, pos = 2, version, unload = FALSE)
 }
 \alias{detach}
 \arguments{
@@ -17,7 +17,16 @@ detach(name, pos = 2, version)
   }
   \item{version}{A character string denoting a version number of the
     package to be removed.  This should be used only with a versioned
-    installation of the package: see \code{\link{library}}.}
+    installation of the package: see \code{\link{library}}.
+  }
+  \item{unload}{A logical value indicating whether or not to attempt to
+    unload the namespace and S4 methods when a package is being
+    detached.  If the package has a namespace and \code{unload} is
+    \code{TRUE}, then \code{detach} will attempt to unload the
+    namespace and remove any S4 methods defined by the package.  If
+    the namespace is in use or \code{unload} is \code{FALSE}, no
+    unloading will occur.
+  }
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()} path
@@ -33,6 +42,15 @@ detach(name, pos = 2, version)
   When a package have been loaded with an explicit version number it can
   be detached using the name shown by \code{\link{search}} or by
   supplying \code{name} and \code{version}: see the examples.
+
+  If a package has a namespace, detaching it does not by default unload
+  the namespace (and may not even with \code{unload=TRUE}), and
+  detaching will not in general unload any dynamically loaded compiled
+  code.  Further, registered S3 methods from the namespace will not be
+  removed.  If you use \code{\link{library}} on a package whose name
+  space is loaded, it attaches the exports of the loaded name space.
+  So detaching and re-attaching a package may not refresh some
+  or all components of the package, and is inadvisable.
 }
 \value{
   The attached database is returned invisibly, either as
@@ -49,10 +67,11 @@ detach(name, pos = 2, version)
 }
 \seealso{
   \code{\link{attach}}, \code{\link{library}}, \code{\link{search}},
-  \code{\link{objects}}.
+  \code{\link{objects}}, \code{\link{unloadNamespace}},
+  \code{\link{library.dynam.unload}} .
 }
 \examples{
-require(splines)#package
+require(splines) # package
 detach(package:splines)
 ## could equally well use detach("package:splines")
 ## but NOT  pkg <- "package:splines"; detach(pkg)
@@ -63,7 +82,7 @@ detach(pos = match(pkg, search()))
 
 ## careful: do not do this unless 'splines' is not already loaded.
 library(splines)
-detach(2)# 'pos' used for 'name'
+detach(2) # 'pos' used for 'name'
 
 ## an example of the name argument to attach
 ## and of detaching a database named by a character vector

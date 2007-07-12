@@ -84,7 +84,7 @@ void F77_NAME(ditsum)(const double d[], const double g[],
     int *ivm = iv - 1; double *vm = v - 1; /* offsets for 1-based indices */
     if (!ivm[OUTLEV]) return;	/* no iteration output */
     if (!(ivm[NITER] % ivm[OUTLEV])) { /* output every ivm[OUTLEV] iterations */
-	Rprintf("%3d %#12g:", ivm[NITER], vm[F]);
+	Rprintf("%3d:%#14.8g:", ivm[NITER], vm[F]);
 	for (i = 0; i < nn; i++) Rprintf(" %#8g", x[i]);
 	Rprintf("\n");
     }
@@ -185,7 +185,8 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
 }
 
 /* divset.... supply default values for elements of the iv and v arrays */
-void F77_NAME(divset)(const int *Alg, int iv[], const int *Liv, const int *Lv, double v[])
+void F77_NAME(divset)(const int *Alg, int iv[], const int *Liv,
+		      const int *Lv, double v[])
 {
     Rf_divset(*Alg, iv, *Liv, *Lv, v);
 }
@@ -340,9 +341,9 @@ double* check_gv(SEXP gr, SEXP hs, SEXP rho, int n, double *gv, double *hv)
     return gv;
 }
 
-static
-void nlminb_iterate(double b[], double d[], double fx, double g[], double h[],
-	     int iv[], int liv, int lv, int n, double v[], double x[])
+void
+nlminb_iterate(double b[], double d[], double fx, double g[], double h[],
+	       int iv[], int liv, int lv, int n, double v[], double x[])
 {
     int lh = (n * (n + 1))/2;
     if (b) {
@@ -385,10 +386,13 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	error(_("'d' must be a nonempty numeric vector"));
     if (hs != R_NilValue && gr == R_NilValue)
 	error(_("When Hessian defined must also have gradient defined"));
-    if (R_NilValue == PROTECT(xpt = findVarInFrame(rho, install(".par"))) ||
+    if (R_NilValue == (xpt = findVarInFrame(rho, install(".par"))) ||
 	!isReal(xpt) || LENGTH(xpt) != n)
 	error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
 	      n);
+    /* We are going to alter .par, so must duplicate it */
+    defineVar(install(".par"), duplicate(xpt), rho);
+    PROTECT(xpt = findVarInFrame(rho, install(".par")));
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
@@ -417,7 +421,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
     return R_NilValue;
 }
 
-static void
+void
 nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
 	     int lv, int n, int nd, int p, double r[], double rd[],
 	     double v[], double x[])
@@ -446,7 +450,7 @@ static R_INLINE SEXP getElement(SEXP list, char *nm)
     if (!isNewList(list) || LENGTH(names) != LENGTH(list))
 	error(_("'getElement' applies only to named lists"));
     for (i = 0; i < LENGTH(list); i++)
-	if (!strcmp(CHAR(STRING_ELT(names, i)), nm))
+	if (!strcmp(CHAR(STRING_ELT(names, i)), nm)) /* ASCII only */
 	    return(VECTOR_ELT(list, i));
     return R_NilValue;
 }

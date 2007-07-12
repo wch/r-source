@@ -48,14 +48,15 @@ typedef struct int_struct
 /* This is *the* ``integr_fn f'' used when called from R : */
 static void Rintfn(double *x, int n, void *ex)
 {
-    SEXP args, resultsxp;
+    SEXP args, resultsxp, tmp;
     int i;
     IntStruct IS = (IntStruct) ex;
 
     PROTECT(args = allocVector(REALSXP, n));
     for(i = 0; i < n; i++) REAL(args)[i] = x[i];
 
-    PROTECT(resultsxp = eval(lang2(IS->f , args), IS->env));
+    PROTECT(tmp = lang2(IS->f , args));
+    PROTECT(resultsxp = eval(tmp, IS->env));
 
     if(length(resultsxp) != n)
 	error("evaluation of function gave a result of wrong length");
@@ -64,7 +65,7 @@ static void Rintfn(double *x, int n, void *ex)
 	if(!R_FINITE(x[i]))
 	    error("non-finite function value");
     }
-    UNPROTECT(2);
+    UNPROTECT(3);
     return;
 }
 

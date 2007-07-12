@@ -21,8 +21,8 @@ HEADERS = Runix.h hpdlfcn.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-  Makefile.in $(SOURCES_C_BASE) Rembedded.c \
-  $(HEADERS) hpdlfcn.c system.txt
+  Makefile.in $(SOURCES_C_BASE) Rembedded.c Rscript.c \
+  $(HEADERS) hpdlfcn.c libR.pc.in system.txt
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
@@ -42,6 +42,7 @@ R: Makefile
 	@$(MAKE) Makedeps
 @WANT_R_SHLIB_FALSE@	@$(MAKE) libunix.a
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+	@$(MAKE) rhome=$(abs_top_builddir) install-Rscript
 
 ## is this portable?
 ../include/Rversion.h:
@@ -60,10 +61,32 @@ clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
-	@-rm -f Makefile
+	@-rm -f Makefile Rscript
 maintainer-clean: distclean
 
-install install-strip uninstall TAGS info dvi check:
+## we need to build at install time to capture the correct 'rhome'
+install-Rscript:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -DR_HOME='"$(rhome)"' -o Rscript \
+	  $(srcdir)/Rscript.c
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
+	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(Rexecbindir)/Rscript"
+## substitute at install time to allow 'prefix' to be overridden
+install-pc:
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
+	@$(SED) -e "s:@rhome:$(rhome):" -e "s:@rincludedir:$(rincludedir):" \
+	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
+	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
+install: install-Rscript @WANT_R_SHLIB_TRUE@ install-pc
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(bindir)"
+	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(bindir)/Rscript"
+uninstall:
+	@rm -f "$(DESTDIR)$(bindir)/Rscript" "$(DESTDIR)$(Rexecbindir)/Rscript" \
+	  "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
+
+install-strip:
+	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

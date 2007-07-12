@@ -1,4 +1,4 @@
- # Refer to all C/Fortran routines by their name prefixed by R_
+# Refer to all C/Fortran routines by their name prefixed by R_
 useDynLib(stats, .registration = TRUE, .fixes = "R_")
 
 # exportPattern("^[^\\.]")
@@ -22,37 +22,38 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        dunif, dweibull, dwilcox, eff.aovlist, effects, estVar, end,
        expand.model.frame, extractAIC, factor.scope, family, fft,
        fitted, fitted.values, fivenum, formula, frequency, ftable,
-       Gamma, gaussian, glm, glm.control, glm.fit, hasTsp, hat,
-       hatvalues, hatvalues.lm, influence, influence.measures,
-       integrate, interaction.plot, inverse.gaussian, IQR,
-       is.empty.model, is.mts, is.ts, lines.ts, lm, lm.fit,
-       lm.influence, lm.wfit, logLik, loglin, lowess, ls.diag,
-       ls.print, lsfit, mad, mahalanobis, make.link, makepredictcall,
-       manova, mauchly.test, median, model.extract, model.frame,
-       model.frame.aovlist, model.frame.default, model.frame.glm,
-       model.frame.lm, model.matrix, model.matrix.default,
-       model.matrix.lm, model.offset, model.response, model.tables,
-       model.weights, mvfft, na.action, na.exclude, na.fail, na.omit,
-       na.pass, napredict, naprint, naresid, nextn, nlm, nlminb,
-       offset, optim, optimise, optimize, p.adjust, p.adjust.methods,
-       pbeta, pbinom, pcauchy, pchisq, pexp, pf, pgamma, pgeom,
-       phyper, plnorm, plogis, plot.density, plot.lm, plot.mlm,
-       plot.ts, plot.TukeyHSD, pnbinom, pnorm, poisson, poly, polym,
-       power, ppoints, ppois, predict, predict.glm, predict.lm,
-       predict.mlm, predict.poly, preplot, printCoefmat, print.anova,
-       print.density, print.family, print.formula, print.ftable,
-       print.glm, print.infl, print.integrate, print.lm, print.logLik,
-       print.terms, print.ts, profile, proj, psignrank, pt, ptukey,
-       punif, pweibull, pwilcox, qbeta, qbinom, qcauchy, qchisq, qexp,
-       qf, qgamma, qgeom, qhyper, qlnorm, qlogis, qnbinom, qnorm,
-       qpois, qqline, qqnorm, qqnorm.default, qqplot, qsignrank, qt,
-       qtukey, quantile, quantile.default, quasi, quasibinomial,
-       quasipoisson, qunif, qweibull, qwilcox, r2dtable, rbeta,
-       rbinom, rcauchy, rchisq, read.ftable, reformulate, relevel,
-       replications, reshape, resid, residuals, residuals.default,
-       residuals.glm, residuals.lm, rexp, rf, rgamma, rgeom, rhyper,
-       rlnorm, rlogis, rmultinom, rnbinom, rnorm, rpois, rsignrank,
-       rstandard, rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
+       Gamma, gaussian, get_all_vars, glm, glm.control, glm.fit,
+       hasTsp, hat, hatvalues, hatvalues.lm, influence,
+       influence.measures, integrate, interaction.plot,
+       inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
+       lm, lm.fit, lm.influence, lm.wfit, logLik, loglin, lowess,
+       ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
+       makepredictcall, manova, mauchly.test, median, model.extract,
+       model.frame, model.frame.aovlist, model.frame.default,
+       model.frame.glm, model.frame.lm, model.matrix,
+       model.matrix.default, model.matrix.lm, model.offset,
+       model.response, model.tables, model.weights, mvfft, na.action,
+       na.exclude, na.fail, na.omit, na.pass, napredict, naprint,
+       naresid, nextn, nlm, nlminb, offset, optim, optimise, optimize,
+       p.adjust, p.adjust.methods, pbeta, pbinom, pcauchy, pchisq,
+       pexp, pf, pgamma, pgeom, phyper, plnorm, plogis, plot.density,
+       plot.lm, plot.mlm, plot.ts, plot.TukeyHSD, pnbinom, pnorm,
+       poisson, poly, polym, power, ppoints, ppois, predict,
+       predict.glm, predict.lm, predict.mlm, predict.poly, preplot,
+       printCoefmat, print.anova, print.density, print.family,
+       print.formula, print.ftable, print.glm, print.infl,
+       print.integrate, print.lm, print.logLik, print.terms, print.ts,
+       profile, proj, psignrank, pt, ptukey, punif, pweibull, pwilcox,
+       qbeta, qbinom, qcauchy, qchisq, qexp, qf, qgamma, qgeom,
+       qhyper, qlnorm, qlogis, qnbinom, qnorm, qpois, qqline, qqnorm,
+       qqnorm.default, qqplot, qsignrank, qt, qtukey, quantile,
+       quantile.default, quasi, quasibinomial, quasipoisson, qunif,
+       qweibull, qwilcox, r2dtable, rbeta, rbinom, rcauchy, rchisq,
+       read.ftable, reformulate, relevel, replications, reshape,
+       resid, residuals, residuals.default, residuals.glm,
+       residuals.lm, rexp, rf, rgamma, rgeom, rhyper, rlnorm, rlogis,
+       rmultinom, rnbinom, rnorm, rpois, rsignrank, rstandard,
+       rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
        rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.contrast,
        simulate, spline, splinefun, SSD, start, stat.anova, step,
        summary.aov, summary.aovlist, summary.glm, summary.infl,
@@ -142,6 +143,7 @@ S3method(family, glm)
 S3method(family, lm)
 S3method(fitted, default)
 S3method(format, ftable)
+S3method(formula, character)
 S3method(formula, data.frame)
 S3method(formula, default)
 S3method(formula, formula)
@@ -251,10 +253,10 @@ S3method(update, formula)
 S3method(variable.names, default)
 S3method(variable.names, lm)
 S3method(vcov, glm)
-S3method(vcov, gls)
+#S3method(vcov, gls)
 S3method(vcov, lm)
 S3method(vcov, mlm)
-S3method(vcov, lme)
+#S3method(vcov, lme)
 S3method(weights, default)
 S3method(weights, glm)
 S3method(window, default)
@@ -386,6 +388,7 @@ S3method(print, summary.prcomp)
 S3method(print, summary.princomp)
 S3method(reorder, dendrogram)
 S3method(rev, dendrogram)
+S3method(screeplot, default)
 S3method(str, dendrogram)
 S3method(summary, prcomp)
 S3method(summary, princomp)
@@ -518,6 +521,6 @@ S3method(summary, stepfun)
 
 ## Added after the merge
 
-S3method("as.dist", "default")
-S3method("cophenetic", "default")
-S3method("cophenetic", "dendrogram")
+S3method(as.dist, default)
+S3method(cophenetic, default)
+S3method(cophenetic, dendrogram)

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
  *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole or as 
-   a leading portion for partial matching 
+/* <UTF8> char here is either ASCII or handled as a whole or as
+   a leading portion for partial matching
 */
 
 
@@ -52,15 +52,15 @@ struct _HashData {
 };
 
 
-/* 
+/*
    Integer keys are hashed via a random number generator
    based on Knuth's recommendations.  The high order K bits
    are used as the hash code.
-   
+
    NB: lots of this code relies on M being a power of two and
    on silent integer overflow mod 2^32.  It also relies on M < 31.
 
-   <FIXME>  Integer keys are wasteful for logical and raw vectors, 
+   <FIXME>  Integer keys are wasteful for logical and raw vectors,
    but the tables are small in that case.
 */
 
@@ -140,7 +140,7 @@ static int chash(SEXP x, int indx, HashData *d)
 static int shash(SEXP x, int indx, HashData *d)
 {
     unsigned int k;
-    char *p = CHAR(STRING_ELT(x, indx));
+    const char *p = translateChar(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
 	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
@@ -186,14 +186,15 @@ static int cequal(SEXP x, int i, SEXP y, int j)
 
 static int sequal(SEXP x, int i, SEXP y, int j)
 {
-    /* Two strings which have the same address must be the same, 
+    /* Two strings which have the same address must be the same,
        so avoid looking at the contents */
     if (STRING_ELT(x, i) == STRING_ELT(y, j)) return 1;
     /* Then if either is NA the other cannot be */
-    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING) 
+    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING)
 	return 0;
     /* Finally look at the contents if necessary */
-    return !strcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, j)));
+    return !strcmp(translateChar(STRING_ELT(x, i)),
+		   translateChar(STRING_ELT(y, j)));
 }
 
 static int rawhash(SEXP x, int indx, HashData *d)
@@ -211,7 +212,7 @@ static int vhash(SEXP x, int indx, HashData *d)
     int i;
     unsigned int key;
     SEXP _this = VECTOR_ELT(x, indx);
-    
+
     key = OBJECT(_this) + 2*TYPEOF(_this) + 100*length(_this);
     /* maybe we should also look at attributes, but that slows us down */
     switch (TYPEOF(_this)) {
@@ -356,14 +357,14 @@ static int isDuplicated(SEXP x, int indx, HashData *d)
     return 0;
 }
 
-SEXP duplicated(SEXP x)
+SEXP duplicated(SEXP x, Rboolean from_last)
 {
     SEXP ans;
     int *h, *v;
     int i, n;
     HashData data;
 
-    if (!isVector(x)) 
+    if (!isVector(x))
 	error(_("'duplicated' applies only to vectors"));
 
     n = LENGTH(x);
@@ -377,9 +378,13 @@ SEXP duplicated(SEXP x)
     for (i = 0; i < data.M; i++)
 	h[i] = NIL;
 
-    for (i = 0; i < n; i++)
-	v[i] = isDuplicated(x, i, &data);
-
+    if(from_last) {
+	for (i = n-1; i >= 0; i--)
+	    v[i] = isDuplicated(x, i, &data);
+    } else {
+	for (i = 0; i < n; i++)
+	    v[i] = isDuplicated(x, i, &data);
+    }
     return ans;
 }
 
@@ -403,7 +408,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	      (PRIMVAL(op) == 0 ? "duplicated" : "unique"));
     }
 
-    dup = duplicated(x);
+    dup = duplicated(x, asLogical(CADR(args)));
     if (PRIMVAL(op) == 0) /* "duplicated()" : */
 	return dup;
     /*	ELSE
@@ -569,66 +574,115 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
 SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    int i, j, k, mtch, n_input, n_target, mtch_count, temp, dups_ok;
-    int * used;
-    char *vmax;
+    int i, j,  mtch, n_input, n_target, mtch_count, temp, dups_ok, no_match;
+    int nexact = 0;
+    int *used = NULL, *ians;
+    const char **in, **tar;
+    Rboolean no_dups;
 
     checkArity(op, args);
-    vmax = vmaxget();
     input = CAR(args);
     n_input = LENGTH(input);
     target = CADR(args);
     n_target = LENGTH(target);
-    dups_ok = asLogical(CADDR(args));
+    no_match = asInteger(CADDR(args));
+    dups_ok = asLogical(CADDDR(args));
     if (dups_ok == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' argument"), "duplicates.ok");
+	error(_("invalid '%s' argument"), "duplicates.ok");
+    no_dups = !dups_ok;
 
     if (!isString(input) || !isString(target))
-	errorcall(call, _("argument is not of mode character"));
+	error(_("argument is not of mode character"));
 
-    used = (int *) R_alloc(n_target, sizeof(int));
-    for (j = 0; j < n_target; j++) used[j] = 0;
-    ans = allocVector(INTSXP, n_input);
-    for (i = 0; i < n_input; i++) INTEGER(ans)[i] = 0;
+    if(no_dups) {
+	used = (int *) R_alloc(n_target, sizeof(int));
+	for (j = 0; j < n_target; j++) used[j] = 0;
+    }
+
+    in = (const char **) R_alloc(n_input, sizeof(char *));
+    tar = (const char **) R_alloc(n_target, sizeof(char *));
+    PROTECT(ans = allocVector(INTSXP, n_input));
+    ians = INTEGER(ans);
+    for (i = 0; i < n_input; i++) {
+	in[i] = translateChar(STRING_ELT(input, i));
+	ians[i] = 0;
+    }
+    for (j = 0; j < n_target; j++)
+	tar[j] = translateChar(STRING_ELT(target, j));
 
     /* First pass, exact matching */
-    for (i = 0; i < n_input; i++) {
-	temp = strlen(CHAR(STRING_ELT(input, i)));
-	if (temp == 0) continue;
-	for (j = 0; j < n_target; j++) {
-	    if (!dups_ok && used[j]) continue;
-	    k = strcmp(CHAR(STRING_ELT(input, i)),
-		       CHAR(STRING_ELT(target, j)));
-	    if (k == 0) {
-		used[j] = 1;
-		INTEGER(ans)[i] = j + 1;
-		break;
+    if(no_dups) {
+	for (i = 0; i < n_input; i++) {
+	    const char *ss = in[i];
+	    if (strlen(ss) == 0) continue;
+	    for (j = 0; j < n_target; j++) {
+		if (used[j]) continue;
+		if (strcmp(ss, tar[j]) == 0) {
+		    if(no_dups) used[j] = 1;
+		    ians[i] = j + 1;
+		    nexact++;
+		    break;
+		}
 	    }
 	}
-    }
-    /* Second pass, partial matching */
-    for (i = 0; i < n_input; i++) {
-	if (INTEGER(ans)[i]) continue;
-	temp = strlen(CHAR(STRING_ELT(input, i)));
-	if (temp == 0) continue;
-	mtch = 0;
-	mtch_count = 0;
-	for (j = 0; j < n_target; j++) {
-	    if (!dups_ok && used[j]) continue;
-	    k = strncmp(CHAR(STRING_ELT(input, i)),
-			CHAR(STRING_ELT(target, j)), temp);
-	    if (k == 0) {
-		mtch = j + 1;
-		mtch_count++;
+    } else {
+	/* only worth hashing if enough lookups will be done:
+	   since the tradeoff involves memory as well as time
+	   it is not really possible to optimize there.
+	 */
+	if(n_target > 100 && 10*n_input > n_target) {
+	    HashData data;
+	    HashTableSetup(target, &data);
+	    data.nomatch = 0;
+	    DoHashing(target, &data);
+	    for (i = 0; i < n_input; i++) {
+		/* we don't want to lookup "" */
+		if (strlen(in[i]) == 0) continue;
+		ians[i] = Lookup(target, input, i, &data);
+		if(ians[i]) nexact++;
 	    }
-	}
-	if (mtch > 0 && mtch_count == 1) {
-	    used[mtch - 1] = 1;
-	    INTEGER(ans)[i] = mtch;
+	} else {
+	    for (i = 0; i < n_input; i++) {
+		const char *ss = in[i];
+		if (strlen(ss) == 0) continue;
+		for (j = 0; j < n_target; j++)
+		    if (strcmp(ss, tar[j]) == 0) {
+			ians[i] = j + 1;
+			nexact++;
+			break;
+		    }
+	    }
 	}
     }
 
-    vmaxset(vmax);
+    if(nexact < n_input) {
+	/* Second pass, partial matching */
+	for (i = 0; i < n_input; i++) {
+	    const char *ss;
+	    if (ians[i]) continue;
+	    ss = in[i];
+	    temp = strlen(ss);
+	    if (temp == 0) continue;
+	    mtch = 0;
+	    mtch_count = 0;
+	    for (j = 0; j < n_target; j++) {
+		if (no_dups && used[j]) continue;
+		if (strncmp(ss, tar[j], temp) == 0) {
+		    mtch = j + 1;
+		    mtch_count++;
+		}
+	    }
+	    if (mtch > 0 && mtch_count == 1) {
+		if(no_dups) used[mtch - 1] = 1;
+		ians[i] = mtch;
+	    }
+	}
+	/* Third pass, set no matches */
+	for (i = 0; i < n_input; i++)
+	    if(ians[i] == 0) ians[i] = no_match;
+
+    }
+    UNPROTECT(1);
     return ans;
 }
 
@@ -640,7 +694,8 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
     Rboolean perfect;
-    int i, j, k, imatch, n_input, n_target, temp;
+    int i, j, k, imatch, n_input, n_target, temp, no_match, *ians;
+    const char *ss, *st;
 
     checkArity(op, args);
 
@@ -650,19 +705,22 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_target = LENGTH(target);
 
     if (!isString(input) || !isString(target))
-	errorcall(call, _("argument is not of mode character"));
+	error(_("argument is not of mode character"));
+    no_match = asInteger(CADDR(args));
 
-    ans = allocVector(INTSXP, n_input);
+    PROTECT(ans = allocVector(INTSXP, n_input));
+    ians = INTEGER(ans);
 
     for (i = 0; i < n_input; i++) {
-	temp = strlen(CHAR(STRING_ELT(input, i)));
+	ss = translateChar(STRING_ELT(input, i));
+	temp = strlen(ss);
 	imatch = NA_INTEGER;
 	perfect = FALSE;
 	for (j = 0; j < n_target; j++) {
-	    k = strncmp(CHAR(STRING_ELT(input, i)),
-			CHAR(STRING_ELT(target, j)), temp);
+	    st = translateChar(STRING_ELT(target, j));
+	    k = strncmp(ss, st, temp);
 	    if (k == 0) {
-		if (strlen(CHAR(STRING_ELT(target, j))) == temp) {
+		if (strlen(st) == temp) {
 		    if (perfect)
 			imatch = 0;
 		    else {
@@ -678,8 +736,9 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
-	INTEGER(ans)[i] = imatch;
+	INTEGER(ans)[i] = (imatch == NA_INTEGER) ? no_match : imatch;
     }
+    UNPROTECT(1);
     return ans;
 }
 
@@ -775,10 +834,8 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(funcall) == EXPRSXP)
 	funcall = VECTOR_ELT(funcall, 0);
 
-    if (TYPEOF(funcall) != LANGSXP) {
-	b = deparse1(funcall, 1, SIMPLEDEPARSE);
-	errorcall(call, _("'%s' is not a valid call"), CHAR(STRING_ELT(b, 0)));
-    }
+    if (TYPEOF(funcall) != LANGSXP)
+	error(_("invalid '%s' argument"), "call");
 
     /* Get the function definition */
     sysp = R_GlobalContext->sysparent;
@@ -792,9 +849,11 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		break;
 	    cptr = cptr->nextcontext;
 	}
-	if ( cptr == NULL )
+	if ( cptr == NULL ) {
 	    sysp = R_GlobalEnv;
-	else
+	    errorcall(R_NilValue,
+		      "match.call() was called from outside a function");
+	} else
 	    sysp = cptr->sysparent;
 	if (cptr != NULL)
 	    /* Changed to use the function from which match.call was
@@ -827,23 +886,23 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(b = findFun(CAR(funcall), sysp));
 	else
 	    PROTECT(b = eval(CAR(funcall), sysp));
+
+	if (TYPEOF(b) != CLOSXP)
+	    error(_("unable to find a closure from within which 'match.call' was called"));
+
     }
-    else PROTECT(b = CAR(args));
-
-    /* It must be a closure! */
-
-    if (TYPEOF(b) != CLOSXP) {
-	b = deparse1(b, 1, SIMPLEDEPARSE);
-	errorcall(call, _("'%s' is not a function"), CHAR(STRING_ELT(b, 0)));
+    else {
+	/* It must be a closure! */
+	PROTECT(b = CAR(args));
+	if (TYPEOF(b) != CLOSXP)
+	    error(_("invalid '%s' argument"), "definition");
     }
 
     /* Do we expand ... ? */
 
     expdots = asLogical(CAR(CDDR(args)));
-    if (expdots == NA_LOGICAL) {
-	b = deparse1(CADDR(args), 1, SIMPLEDEPARSE);
-	errorcall(call, _("'%s' is not a logical"), CHAR(STRING_ELT(b, 0)));
-    }
+    if (expdots == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "expand.dots");
 
     /* Get the formals and match the actual args */
 
@@ -894,7 +953,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    rlist = matchArgs(formals, actuals);
+    rlist = matchArgs(formals, actuals, call);
 
     /* Attach the argument names as tags */
 
@@ -933,7 +992,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 #  define ZERODBL(X,N,I) for(I=0;I<N;I++) REAL(X)[I]=0
 #endif
 
-SEXP attribute_hidden 
+SEXP attribute_hidden
 Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 {
     SEXP matches,ans;
@@ -962,7 +1021,7 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 	for(i = 0; i < p; i++) {
 	    for(j = 0; j < n; j++)
 		if(!narm || !ISNAN(REAL(x)[j+offset]))
-		    REAL(ans)[INTEGER(matches)[j]-1+offsetg] 
+		    REAL(ans)[INTEGER(matches)[j]-1+offsetg]
 			+= REAL(x)[j+offset];
 	    offset += n;
 	    offsetg += ng;
@@ -974,11 +1033,11 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 	    for(j = 0; j < n; j++) {
 		if (INTEGER(x)[j+offset] == NA_INTEGER) {
 		    if(!narm)
-			INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] 
+			INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			    = NA_INTEGER;
-		} else if (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] 
+		} else if (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			 != NA_INTEGER)
-		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] 
+		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			+= INTEGER(x)[j+offset];
 	    }
 	    offset += n;
@@ -1095,23 +1154,21 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP names, sep, ans, dup, newx;
     int i, n, cnt, len, maxlen = 0, *cnts, dp;
     HashData data;
-    char *csep, *buf;
-    char *vmax;
+    const char *csep, *ss; char *buf;
 
     checkArity(op, args);
-    vmax = vmaxget();
     names = CAR(args);
     if(!isString(names))
-	errorcall(call, _("'names' must be a character vector"));
+	error(_("'names' must be a character vector"));
     n = LENGTH(names);
     sep = CADR(args);
     if(!isString(sep) || LENGTH(sep) != 1)
-	errorcall(call, _("'sep' must be a character string"));
-    csep = CHAR(STRING_ELT(sep, 0));
+	error(_("'sep' must be a character string"));
+    csep = translateChar(STRING_ELT(sep, 0));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
 	SET_STRING_ELT(ans, i, STRING_ELT(names, i));
-	len = strlen(CHAR(STRING_ELT(names, i)));
+	len = strlen(translateChar(STRING_ELT(names, i)));
 	if(len > maxlen) maxlen = len;
     }
     if(n > 1) {
@@ -1133,9 +1190,10 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
 	    dp = INTEGER(dup)[i]; /* 1-based number of first occurrence */
 	    if(dp == 0) continue;
+	    ss = translateChar(STRING_ELT(names, i));
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
 	    for(cnt = cnts[dp-1]; cnt < n; cnt++) {
-		sprintf(buf, "%s%s%d", CHAR(STRING_ELT(names, i)), csep, cnt);
+		sprintf(buf, "%s%s%d", ss, csep, cnt);
 		SET_STRING_ELT(newx, 0, mkChar(buf));
 		if(Lookup(ans, newx, 0, &data) == data.nomatch) break;
 	    }
@@ -1146,12 +1204,11 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(3);
     }
     UNPROTECT(1);
-    vmaxset(vmax);
     return ans;
 }
 
-/* Use hashing to improve object.size. Here we want equal CHARSXPs, 
-   not equal contents.  This only uses the bottom 32 bits of the pointer, 
+/* Use hashing to improve object.size. Here we want equal CHARSXPs,
+   not equal contents.  This only uses the bottom 32 bits of the pointer,
    but for now that's almost certainly OK */
 
 static int cshash(SEXP x, int indx, HashData *d)

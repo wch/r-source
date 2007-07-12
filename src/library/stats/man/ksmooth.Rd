@@ -30,6 +30,8 @@ ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
   although it is nowhere near as slow as the S function. Better kernel
   smoothers are available in other packages.}
 \examples{
+require(graphics)
+
 with(cars, {
     plot(speed, dist)
     lines(ksmooth(speed, dist, "normal", bandwidth=2), col=2)

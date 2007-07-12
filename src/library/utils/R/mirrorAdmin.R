@@ -1,13 +1,9 @@
-getCRANmirrors <- function()
-    read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
-
-
 mirror2html <- function(mirrors = NULL, file="mirrors.html",
                         head = "mirrors-head.html",
                         foot = "mirrors-foot.html")
 {
     if(is.null(mirrors)){
-        mirrors <- getCRANmirrors()
+        mirrors <- getCRANmirrors(all=FALSE, local.only=TRUE)
     }
 
     z <- NULL

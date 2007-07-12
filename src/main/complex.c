@@ -27,6 +27,14 @@
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
 
+static R_INLINE double fsign_int(double x, double y)
+{
+    if (ISNAN(x) || ISNAN(y))
+	return x + y;
+    return ((y >= 0) ? fabs(x) : -fabs(x));
+}
+
+
 #include "arithmetic.h"		/* complex_*  */
 
 #ifdef HAVE_C99_COMPLEX
@@ -42,7 +50,7 @@
 # define hypot pythag
 #endif
 
-SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1)
+SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
     int i, n;
 #ifndef HAVE_C99_COMPLEX
@@ -68,8 +76,9 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1)
 	}
 	return ans;
     default:
-	error_return(_("invalid complex unary operator"));
+	errorcall(call, _("invalid complex unary operator"));
     }
+    return R_NilValue; /* -Wall */
 }
 
 #ifndef HAVE_C99_COMPLEX
@@ -393,8 +402,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     else errorcall(call, _("non-numeric argument to function"));
     PROTECT(x);
     PROTECT(y);
-    SET_ATTRIB(y, duplicate(ATTRIB(x)));
-    SET_OBJECT(y, OBJECT(x));
+    DUPLICATE_ATTRIB(y, x);
     UNPROTECT(2);
     return y;
 }
@@ -540,7 +548,7 @@ static void z_atan2(double complex *r, double complex *csn,
 	    *r = NA_REAL + NA_REAL * I;
 #endif
 	} else
-	    *r = fsign(M_PI_2, creal(*csn));
+	    *r = fsign_int(M_PI_2, creal(*csn));
     } else {
 	*r = catan(*csn / *ccs);
 	if(creal(*ccs) < 0) *r += M_PI;
@@ -708,7 +716,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 	    r->i = NA_REAL;
 	}
 	else {
-	    r->r = fsign(M_PI_2, csn->r);
+	    r->r = fsign_int(M_PI_2, csn->r);
 	    r->i = 0;
 	}
     }
@@ -830,12 +838,12 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     default:
+	/* such as sign, gamma */
 	errorcall(call, _("unimplemented complex function"));
     }
     if (naflag)
-	warning("NAs produced in function \"%s\"", PRIMNAME(op));
-    SET_ATTRIB(y, duplicate(ATTRIB(x)));
-    SET_OBJECT(y, OBJECT(x));
+	warningcall(call, "NAs produced in function \"%s\"", PRIMNAME(op));
+    DUPLICATE_ATTRIB(y, x);
     UNPROTECT(2);
     return y;
 }
@@ -872,15 +880,14 @@ static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
 	    f(&y[i], &ai, &bi);
 	}
     }
+    /* should really be warningcall */
     if (naflag)
 	warning("NAs produced in function \"%s\"", PRIMNAME(op));
     if(n == na) {
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));
-	SET_OBJECT(sy, OBJECT(sa));
+	DUPLICATE_ATTRIB(sy, sa);
     }
     else if(n == nb) {
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));
-	SET_OBJECT(sy, OBJECT(sb));
+	DUPLICATE_ATTRIB(sy, sb);
     }
     UNPROTECT(3);
     return sy;
@@ -913,7 +920,7 @@ SEXP attribute_hidden do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, na, nr, ni;
     na = asInteger(CAR(args));
     if(na == NA_INTEGER || na < 0)
-	errorcall(call, _("invalid length"));
+	error(_("invalid length"));
     PROTECT(re = coerceVector(CADR(args), REALSXP));
     PROTECT(im = coerceVector(CADDR(args), REALSXP));
     nr = length(re);
@@ -967,11 +974,11 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     n = degree + 1; /* omit trailing zeroes */
     if(degree >= 1) {
-	if(n > 49) errorcall(call, _("polynomial degree too high (49 max)"));
+	if(n > 49) error(_("polynomial degree too high (49 max)"));
 	/* <==>	 #define NMAX 50  in  ../appl/cpoly.c */
 
 	/* if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
-	   errorcall(call, "highest power has coefficient 0");*/
+	   error("highest power has coefficient 0");*/
 
 	PROTECT(rr = allocVector(REALSXP, n));
 	PROTECT(ri = allocVector(REALSXP, n));
@@ -980,12 +987,12 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	for(i=0 ; i<n ; i++) {
 	    if(!R_FINITE(COMPLEX(z)[i].r) || !R_FINITE(COMPLEX(z)[i].i))
-		errorcall(call, _("invalid polynomial coefficient"));
+		error(_("invalid polynomial coefficient"));
 	    REAL(zr)[degree-i] = COMPLEX(z)[i].r;
 	    REAL(zi)[degree-i] = COMPLEX(z)[i].i;
 	}
 	R_cpolyroot(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
-	if(fail) errorcall(call, _("root finding code failed"));
+	if(fail) error(_("root finding code failed"));
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);
 	for(i=0 ; i<degree ; i++) {

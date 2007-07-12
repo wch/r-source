@@ -49,8 +49,8 @@ qr.R(qr, complete = FALSE)
   multiplied by the corresponding value in \code{Dvec}.
 
   \code{qr.R} returns \bold{R}.  The number of rows of \bold{R} is
-  \code{nrow(X)} or \code{ncol(X)}, depending on whether \code{complete}
-  is \code{TRUE} or \code{FALSE}.
+  either \code{nrow(X)} or \code{ncol(X)} (and may depend on whether
+  \code{complete} is \code{TRUE} or \code{FALSE}.
 }
 \seealso{
   \code{\link{qr}},

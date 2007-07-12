@@ -9,7 +9,8 @@
 \usage{
 persp(x, \dots)
 
-\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+\method{persp}{default}(x = seq(0, 1, length.out = nrow(z)),
+      y = seq(0, 1, length.out = ncol(z)),
       z, xlim = range(x), ylim = range(y),
       zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
@@ -82,7 +83,7 @@ persp(x, \dots)
 \value{
   \code{persp()} returns the \emph{viewing transformation matrix}, say
   \code{VT}, a \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D coordinates
-  \eqn{(x,y,z)} into the 2D plane using homogenous 4D coordinates
+  \eqn{(x,y,z)} into the 2D plane using homogeneous 4D coordinates
   \eqn{(x,y,z,t)}.
   It can be used to superimpose additional graphical elements on the 3D
   plot, by \code{\link{lines}()} or \code{\link{points}()},
@@ -107,6 +108,12 @@ persp(x, \dots)
   number and the y axis to column number, with column 1 at the bottom,
   so that with the standard rotation angles, the top left corner of the
   matrix is displayed at the left hand side, closest to the user.
+
+  The sizes and fonts of the axis labels and the annotations for
+  \code{ticktype="detailed"} are controlled by graphics parameters
+  \code{"cex.lab"}/\code{"font.lab"} and
+  \code{"cex.axis"}/\code{"font.axis"} respectively.  (This changed in
+  \R 2.5.0.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -117,6 +124,7 @@ persp(x, \dots)
   \code{\link{contour}} and \code{\link{image}}; \code{\link{trans3d}}.
 }
 \examples{
+require(grDevices) # for trans3d
 ## More examples in  demo(persp) !!
 ##                   -----------
 
@@ -139,8 +147,8 @@ round(res, 3)
 # (2) Add to existing persp plot - using trans3d() :
 
 xE <- c(-10,10); xy <- expand.grid(xE, xE)
-points(trans3d(xy[,1], xy[,2], 6, pm = res), col = 2, pch =16)
-lines (trans3d(x, y=10, z= 6 + sin(x), pm = res), col = 3)
+points(trans3d(xy[,1], xy[,2], 6, pmat = res), col = 2, pch =16)
+lines (trans3d(x, y=10, z= 6 + sin(x), pmat = res), col = 3)
 
 phi <- seq(0, 2*pi, len = 201)
 r1 <- 7.725 # radius of 2nd maximum

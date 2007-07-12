@@ -60,7 +60,7 @@ void copytoclipboard(drawing sb)
     return;
 }
 
-int copystringtoclipboard(char *str)
+int copystringtoclipboard(const char *str)
 {
     HGLOBAL hglb;
     char *s;

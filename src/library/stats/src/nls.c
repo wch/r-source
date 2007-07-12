@@ -5,7 +5,7 @@
  *  Copyright 1999-2001 Douglas M. Bates <bates@stat.wisc.edu>,
  *                      Saikat DebRoy <saikat@stat.wisc.edu>
  *
- *  Copyright 2005--2006  The R Development Core Team
+ *  Copyright 2005--2007  The R Development Core Team
  *  Copyright 2006	  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -40,14 +40,14 @@
  */
 
 static SEXP
-getListElement(SEXP list, SEXP names, char *str)
+getListElement(SEXP list, SEXP names, const char *str)
 {
     SEXP elmt = (SEXP) NULL;
-    char *tempChar;
+    const char *tempChar;
     int i;
 
     for (i = 0; i < length(list); i++) {
-	tempChar = CHAR(STRING_ELT(names, i));
+	tempChar = CHAR(STRING_ELT(names, i)); /* ASCII only */
 	if( strcmp(tempChar,str) == 0) {
 	    elmt = VECTOR_ELT(list, i);
 	    break;
@@ -320,7 +320,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 	    error(_("Missing value or an infinity produced when evaluating the model"));
     }
     for(i = 0; i < LENGTH(theta); i++) {
-	char *name = CHAR(STRING_ELT(theta, i));
+	const char *name = translateChar(STRING_ELT(theta, i));
 	SEXP temp = findVar(install(name), rho);
 	if(isInteger(temp))
 	    error(_("variable '%s' is integer, not numeric"), name);

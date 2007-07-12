@@ -31,7 +31,7 @@ cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
 abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
 
 
-.Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
+set.seed(123) # want reproducible output
 Isi <- Im(sin(asin(1i + rnorm(100))))
 all(abs(Isi-1) < 100* Meps)
 ##P table(2*abs(Isi-1)	/ Meps)

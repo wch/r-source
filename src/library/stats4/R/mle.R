@@ -184,7 +184,7 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     nm <- names(obj)
     opar <- par(mar = c(5, 4, 1, 1) + 0.1)
     if (absVal) {
-        for (i in seq(along = nm)) {
+        for (i in seq_along(nm)) {
             ## <FIXME> This does not need to be monotonic
             sp <- splines::interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
@@ -217,7 +217,7 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
         }
     }
     else {
-        for (i in seq(along = nm)) {
+        for (i in seq_along(nm)) {
             ## <FIXME> This does not need to be monotonic
             sp <- splines::interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
@@ -254,7 +254,7 @@ function (object, parm, level = 0.95, ...)
     of <- object@summary
     pnames <- rownames(of@coef)
     if (missing(parm))
-        parm <- seq(along=pnames)
+        parm <- seq_along(pnames)
     if (is.character(parm))
         parm <- match(parm, pnames, nomatch = 0)
     a <- (1 - level)/2

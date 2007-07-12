@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-12-05 20:46+0100\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
+"PO-Revision-Date: 2007-04-13 12:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -99,6 +99,9 @@ msgstr "aucun terme dans la formule cible"
 msgid "no terms in scope for adding to object"
 msgstr "aucun terme dans la formule cible à rajouter à l'objet"
 
+msgid "trying +"
+msgstr "essai de +"
+
 msgid "number of rows in use has changed: remove missing values?"
 msgstr ""
 "le nombre de lignes utilisées a changé : supprimer les valeurs manquantes ?"
@@ -117,6 +120,9 @@ msgstr ""
 "la formule cible n'est pas un sous-ensemble des étiquettes de termes du "
 "modèle"
 
+msgid "trying -"
+msgstr "essai de -"
+
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "aucune méhode 'drop1' pour les modèles \"mlm\""
 
@@ -131,6 +137,12 @@ msgstr "la formule supérieure n'inclus pas le ou les termes %s du modèle"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC n'est pas défini pour ce modèle, donc 'step' ne peut poursuivre"
+
+msgid "Start:  AIC="
+msgstr "Départ : AIC ="
+
+msgid "Step:  AIC="
+msgstr "Etape : AIC ="
 
 msgid "'A' must be an array or table"
 msgstr "'A' doit être une matrice (array) ou un tableau de données (table)"
@@ -237,6 +249,9 @@ msgstr "les résidus n'ont aucun degré de liberté"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object' ne contient pas de composante d'erreur 'qr'"
+
+msgid "Refitting model to allow projection"
+msgstr "Réajustement du modèle pour permettre la projection"
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
@@ -365,6 +380,9 @@ msgstr "l'échantillon est trop clairsemé pour estimer alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "pas de solution dans l'intervalle de largeur de fenêtre"
+
+msgid "increasing bw.SJ() search interval (%d)"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr "le minimum se trouve à une des extrémités de l'intervalle"
@@ -510,14 +528,11 @@ msgstr "matrice de contrastes singulière"
 msgid "numeric contrasts or contrast name expected"
 msgstr "contrastes numérique ou nom de contraste attendu"
 
-msgid "contrasts not defined for 0 degrees of freedom"
-msgstr "les contrastes ne sont pas définis pour 0 degrés de liberté"
+msgid "not enough degrees of freedom to define contrasts"
+msgstr "nombre de degrés de liberté insuffisant pour définir des contrastes"
 
 msgid "baseline group number out of range"
 msgstr "nombre de groupe de base en dehors de l'intervalle"
-
-msgid "not enough degrees of freedom to define contrasts"
-msgstr "nombre de degrés de liberté insuffisant pour définir des contrastes"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "fournir 'x' et 'y' ou bien 'x' en matrice"
@@ -1485,13 +1500,20 @@ msgstr ""
 msgid "no terms component"
 msgstr "pas de composante terms"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'termlabels' doit être un vecteur de caractères de longueur >= 1"
+
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "'termobj' doit être un objet de classe \"terms\""
+
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr ""
 "la variable '%s' a été ajustée avec la classe \"%s\" mais la classe \"%s\" a "
 "été fournie"
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr ""
 "les variables %s ont été spécifiées avec des classes différentes de celles "
 "de l'ajustement"
@@ -1527,6 +1549,8 @@ msgstr "la variable %s est absente, son contraste sera ignoré"
 
 msgid "using type=\"numeric\" with a factor response will be ignored"
 msgstr ""
+"l'utilisation de type=\"numeric\" avec une réponse de type facteur sera "
+"ignorée"
 
 msgid "invalid response type"
 msgstr "type de réponse incorrecte"
@@ -1546,9 +1570,8 @@ msgstr "argument 'omit' incorrect"
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' doit appartenir à {0,1,2}"
 
-#, fuzzy
 msgid "'interval' must be a vector of length 2"
-msgstr "'margins' doit être un vecteur numérique de longueur 2"
+msgstr "'interval' doit être un vecteur de longueur 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper n'est pas vérifié"
@@ -1604,6 +1627,9 @@ msgstr ""
 msgid "'data' must be a list or an environment"
 msgstr "'data' doit être une liste ou un environnement"
 
+msgid "no parameters to fit"
+msgstr "aucun paramètre à ajuster"
+
 msgid "No starting values specified"
 msgstr "Pas de valeurs initiales fournies"
 
@@ -1641,6 +1667,9 @@ msgstr "la formule '%s' doit être de la forme '~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
 msgstr "'%s' ne peut être de mode '%s'"
+
+msgid "a two-sided formula is required"
+msgstr "Une formule à deux membres est requise"
 
 msgid "not enough groups"
 msgstr "pas assez de groupes"
@@ -1948,6 +1977,9 @@ msgstr "'span' doit être compris entre 0 et 1."
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "'x' doit être compris entre 0 et 1 pour un lissage périodique"
+
+msgid "no finite observations"
+msgstr "aucune observation finie"
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "suppression d'observation(s) avec des NA, des NaN, et/ou des Infs"
@@ -2263,6 +2295,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#~ msgid "contrasts not defined for 0 degrees of freedom"
+#~ msgstr "les contrastes ne sont pas définis pour 0 degrés de liberté"
 
 #~ msgid "Convergence failure:"
 #~ msgstr "Convergence non atteinte :"

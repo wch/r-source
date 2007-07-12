@@ -3,7 +3,7 @@
 \usage{
 ceiling(x)
 floor(x)
-trunc(x)
+trunc(x, \dots)
 
 round(x, digits = 0)
 signif(x, digits = 6)
@@ -43,6 +43,7 @@ zapsmall(x, digits = getOption("digits"))
   \item{x}{a numeric vector.  A complex vector is allowed for
     \code{round}, \code{signif} and \code{zapsmall}.}
   \item{digits}{integer indicating the precision to be used.}
+  \item{\dots}{arguments to be passed to methods.}
 }
 \details{
   All but \code{zapsmall} are generic functions: methods can be
@@ -62,6 +63,14 @@ zapsmall(x, digits = getOption("digits"))
   \code{1...22}.  Complex numbers are rounded to retain
   the specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
+}
+\section{S4 methods}{
+  \code{ceiling}, \code{floor} and \code{trunc} are S4 generic and
+  members of the \code{\link[methods:S4groupGeneric]{Math}} group
+  generic.  As an S4 generic, \code{trunc} has only one argument.
+
+  \code{round} and \code{signif} are S4 generic and members of the
+  \code{\link[methods:S4groupGeneric]{Math2}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

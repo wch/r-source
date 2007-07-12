@@ -11,8 +11,8 @@
   Functions to make calls to compiled code that has been loaded into \R.
 }
 \usage{
-                .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
-          .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
+                .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
+          .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
          .External(name, \dots, PACKAGE)
              .Call(name, \dots, PACKAGE)
 .External.graphics(name, \dots, PACKAGE)
@@ -36,6 +36,8 @@
     add safety for packages, which can ensure by using this argument
     that no other package can override their external symbols.  Use
     \code{PACKAGE="base"} for symbols linked in to \R.}
+  \item{ENCODING}{optional name for an encoding to be assumed for
+    character vectors.}
 }
 \value{
   The functions \code{.C} and \code{.Fortran} return a list similar to
@@ -95,7 +97,7 @@
 
   Numeric vectors in \R will be passed as type \code{double *} to C (and
   as \code{double precision} to Fortran) unless (i) \code{.C} or
-  \code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the
+  \code{.Fortran} is used, (ii) \code{DUP} is true and (iii) the
   argument has attribute \code{Csingle} set to \code{TRUE} (use
   \code{\link{as.single}} or \code{\link{single}}).  This mechanism is
   only intended to be used to facilitate the interfacing of existing C
@@ -192,6 +194,11 @@
   work if the Fortran 9x compiler used differs from the Fortran compiler
   used when configuring \R, especially if the subroutine name is not
   lower-case or includes an underscore.
+#ifdef windows
+  This \emph{is} the case under Windows, where \code{gfortran} and
+  \code{g95} treat underscores differently from \code{g77} with which \R
+  is compiled. 
+#endif
 }
 
 \section{Header files for external code}{

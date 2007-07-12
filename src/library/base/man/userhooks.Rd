@@ -6,7 +6,7 @@
 \title{Functions to Get and Set Hooks for Load, Attach, Detach and Unload}
 \description{
   These functions allow users to set actions to be taken before packages
-  are attached/detached and namespaces are (un)loaded.
+  are attached/detached and name spaces are (un)loaded.
 }
 \usage{
 getHook(hookName)
@@ -17,7 +17,7 @@ packageEvent(pkgname,
 }
 \arguments{
   \item{hookName}{character string: the hook name}
-  \item{pkgname}{character string: the package/namespace name.
+  \item{pkgname}{character string: the package/name space name.
     If versioned install has been used, \code{pkgname} should be
     the unversioned name of the package (but any version information
     will be stripped).}
@@ -30,7 +30,7 @@ packageEvent(pkgname,
   \code{setHook} provides a general mechanism for users to register
   hooks, a list of functions to be called from system (or user)
   functions.  The initial set of hooks is associated with events on
-  packages/namespaces: these hooks are named via calls to \code{packageEvent}.
+  packages/name spaces: these hooks are named via calls to \code{packageEvent}.
 
   To remove a hook completely, call \code{setHook(hookName, NULL, "replace")}.
   
@@ -43,8 +43,8 @@ packageEvent(pkgname,
   call.  (The attach hook is called after \code{.First.lib} and the detach
   hook before \code{.Last.lib}.)
 
-  If a package has a namespace, there are two further actions, when the
-  namespace is loaded (before being attached and after \code{.onLoad} is
+  If a package has a name space, there are two further actions, when the
+  name space is loaded (before being attached and after \code{.onLoad} is
   called ) and when it is unloaded (after being detached and before
   \code{.onUnload}).  Note that code in these hooks is run without the
   package being on the search path, so objects in the package need to be
@@ -58,7 +58,7 @@ packageEvent(pkgname,
   \sQuote{inside} existing ones.
   
   Note that when an \R session is finished, packages are not detached and
-  namespaces are not unloaded, so the corresponding hooks will not be
+  name spaces are not unloaded, so the corresponding hooks will not be
   run.
 
   The hooks are stored in the environment \code{.userHooksEnv} in the

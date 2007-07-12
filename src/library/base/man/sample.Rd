@@ -17,7 +17,8 @@ sample(x, size, replace = FALSE, prob = NULL)
     of the vector being sampled.}
 }
 \details{
-  If \code{x} has length 1 and \code{x >= 1}, sampling takes place from
+  If \code{x} has length 1, is numeric (in the sense of
+  \code{\link{is.numeric}}) and \code{x >= 1}, sampling takes place from
   \code{1:x}.  \emph{Note} that this convenience feature may lead to
   undesired behaviour when \code{x} is of varying length
   \code{sample(x)}.  See the \code{resample()} example below.

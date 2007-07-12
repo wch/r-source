@@ -5,16 +5,16 @@ $(DPKG)/R:
 	@$(MKDIR) -p $(DPKG)/R
 
 $(DPKG)/R/methods.rdb: all.R
-	@$(ECHO)  "preparing package $(PKG) for lazy loading"
+	@$(ECHO) "  preparing package $(PKG) for lazy loading"
 	@$(ECHO) "  dumping R code in package \`$(PKG)'"
 	@cp all.R $(RHOME)/library/methods/R/methods
 ifeq ($(strip $(BUILD)),CROSS)
-	@ cp `$(R_EXE) RHOME`/library/methods/libs/methods.so $(RHOME)/library/methods/libs
-	@$(ECHO) "loadNamespace(\"methods\", \"$(RHOME)/library\")" | \
-          R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave
-	@ rm $(RHOME)/library/methods/libs/methods.so
+	@cp `$(R_EXE) RHOME`/library/methods/libs/methods.so $(RHOME)/library/methods/libs
+	@$(ECHO) "invisible(loadNamespace(\"methods\", \"$(RHOME)/library\"))" | \
+          R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave
+	@rm $(RHOME)/library/methods/libs/methods.so
 else
-	@$(ECHO) "loadNamespace(\"methods\")" | \
+	@$(ECHO) "invisible(loadNamespace(\"methods\"))" | \
           $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL
 endif
 	@$(CP) -p $(RHOME)/share/R/nspackloader.R $(DPKG)/R/$(PKG)

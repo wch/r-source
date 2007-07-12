@@ -92,6 +92,15 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       generated. Ignored if \code{fig = FALSE}.}
     \item{width:}{numeric (6), width of figures in inch.}
     \item{height:}{numeric (6), height of figures in inch.}
+    \item{expand:}{logical (\code{TRUE}).  Expand references to other chunks
+      so that only R code appears in the output file.  If \code{FALSE}, the
+      chunk reference (e.g. \code{<<chunkname>>}) will appear.  The 
+      \code{expand=FALSE} option requires \code{keep.source = TRUE} or it 
+      will have no effect.}
+    \item{concordance:}{logical (\code{FALSE}).  Write a concordance file
+      to link the input line numbers to the output line numbers.  This is
+      an experimental feature; see the source code for the output format,
+      which is subject to change in future releases.}
   }
 }
 \author{Friedrich Leisch}

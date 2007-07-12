@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -92,6 +92,9 @@ msgstr "scope에 항이 없습니다"
 msgid "no terms in scope for adding to object"
 msgstr "오브젝트에 첨가해야 할 항이 scope중에 있지 않습니다"
 
+msgid "trying +"
+msgstr ""
+
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "사용중의 행수가 변했습니다: 결손값을 제거합니까?"
 
@@ -106,6 +109,9 @@ msgstr "\"mlm\" 모델에서 'add1'메소드는 실제 적용되지 않습니다
 
 msgid "scope is not a subset of term labels"
 msgstr "scope는 label항의 부분 집합이 아닙니다"
+
+msgid "trying -"
+msgstr ""
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "메소드 'drop1'는 mlm 모델에서 실제 적용되어 있지 않습니다"
@@ -125,6 +131,12 @@ msgstr "상위의 scope는 모델을 포함하고 있지 않습니다"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC는 이 모델에서 정의 되지 않습니다, 따라서 'step'를 진행시킬 수가 없습니다"
+
+msgid "Start:  AIC="
+msgstr ""
+
+msgid "Step:  AIC="
+msgstr ""
 
 #, fuzzy
 msgid "'A' must be an array or table"
@@ -227,6 +239,9 @@ msgstr "residuals에 자유도가 없습니다"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object'는 에러'qr'요소를 포함하고는 있지 않습니다"
+
+msgid "Refitting model to allow projection"
+msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "'contrast.obj'의 열은 대비(총계가 0)를 정의하지 않으면 되지 않습니다"
@@ -356,6 +371,9 @@ msgstr "sample이 너무 부족하기 때문에 alph2를 검색해낼 수가 없
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "지정된 bandwidth의 범위내에서 해법은 없습니다"
+
+msgid "increasing bw.SJ() search interval (%d)"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr "최소치가 범위의 끝점에 있었습니다"
@@ -497,14 +515,11 @@ msgstr "특이한 대비 행렬입니다"
 msgid "numeric contrasts or contrast name expected"
 msgstr "수치 대비이거나 대비명이 예측되어 있습니다"
 
-msgid "contrasts not defined for 0 degrees of freedom"
-msgstr "대비는 자유도 0에서는 정의 되지 않습니다"
+msgid "not enough degrees of freedom to define contrasts"
+msgstr "대비를 정의 하기 위해서 충분한 자유도가 아닙니다"
 
 msgid "baseline group number out of range"
 msgstr "baseline의 그룹수가 범위를 넘어가고 있습니다"
-
-msgid "not enough degrees of freedom to define contrasts"
-msgstr "대비를 정의 하기 위해서 충분한 자유도가 아닙니다"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "'x' 그리고 'y'의 양쪽 모두를 주어지거나, 행렬형태의 'x'를 주어집니다"
@@ -1470,11 +1485,20 @@ msgstr "eff.aovlist: non-orthogonal의 차이는 올바르지 않게 반응할�
 msgid "no terms component"
 msgstr "terms 요소가 없습니다"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+#, fuzzy
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'ColSideColors'는 길이가 ncol(x)의 문자 벡터가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "중심('centers')은 수치 또는 행렬이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "변수 '%s'에 클래스 \"%s\" 이지만, 클래스 \"%s\"가 주어졌습니다"
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr "변수 %s는 적용시키기 위한 것과는 다른 클래스로서 지정되었습니다"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
@@ -1588,6 +1612,10 @@ msgid "'data' must be a list or an environment"
 msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
 
 #, fuzzy
+msgid "no parameters to fit"
+msgstr "모든 파라미터가 고정되어 있었습니다"
+
+#, fuzzy
 msgid "No starting values specified"
 msgstr "초기값이 주어지고 있지 않습니다"
 
@@ -1624,6 +1652,9 @@ msgstr "식 '%s'는 '~expr'가 나오지 않으면 되지 않습니다"
 
 msgid "'%s' cannot be of mode '%s'"
 msgstr "'%s'는 모드 '%s'로는 될 수 없습니다"
+
+msgid "a two-sided formula is required"
+msgstr ""
 
 msgid "not enough groups"
 msgstr "충분하지 않는 group입니다"
@@ -1934,6 +1965,10 @@ msgstr "'span'는 0 과 1의 사이에 없으면 되지 않습니다"
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "periodic smooth를 위해서 'x'는 0과 1사이에 있을 필요가 있습니다"
 
+#, fuzzy
+msgid "no finite observations"
+msgstr "유한한 관측값이 충분히 없습니다"
+
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
 
@@ -2230,6 +2265,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "contrasts not defined for 0 degrees of freedom"
+#~ msgstr "대비는 자유도 0에서는 정의 되지 않습니다"
 
 #~ msgid ""
 #~ "link \"%s\" not available for binomial family, available links are \"logit"

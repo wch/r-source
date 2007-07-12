@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2006   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-2007   Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #endif
 
 #include <Defn.h>
-#include <Rmath.h>
+#define imax2(x, y) ((x < y) ? y : x)
 
 #define R_INT_MIN	(1+INT_MIN)
 	/* since INT_MIN is the NA_INTEGER value ! */
@@ -58,7 +58,7 @@ static Rboolean isum(int *x, int n, int *value, Rboolean narm)
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
-	warning(_("Integer overflow in sum(.); use sum(as.numeric(.))"));
+	warning(_("Integer overflow - use sum(as.numeric(.))"));
 	*value = NA_INTEGER;
     }
     else *value = s;
@@ -149,6 +149,41 @@ static Rboolean rmin(double *x, int n, double *value, Rboolean narm)
     return(updated);
 }
 
+#if defined(Win32) && defined(SUPPORT_UTF8)
+# define STRCOLL Rstrcoll
+#else
+# ifdef HAVE_STRCOLL
+#  define STRCOLL strcoll
+# else
+#  define STRCOLL strcmp
+# endif
+#endif
+
+static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
+{
+    int i;
+    SEXP s = NA_STRING; /* -Wall */
+    Rboolean updated = FALSE;
+
+    for (i = 0; i < length(x); i++) {
+	if (STRING_ELT(x, i) != NA_STRING) {
+	    if (!updated || 
+		STRCOLL(translateChar(s), 
+			translateChar(STRING_ELT(x, i))) > 0) {
+		s = STRING_ELT(x, i);
+		if(!updated) updated = TRUE;
+	    }
+	}
+	else if (!narm) {
+	    *value = NA_STRING;
+	    return(TRUE);
+	}
+    }
+    *value = s;
+
+    return(updated);
+}
+
 static Rboolean imax(int *x, int n, int *value, Rboolean narm)
 {
     int i, s = 0 /* -Wall */;
@@ -186,6 +221,30 @@ static Rboolean rmax(double *x, int n, double *value, Rboolean narm)
 	else if (!updated || x[i] > s) {  /* Never true if s is NA/NaN */
 	    s = x[i];
 	    if(!updated) updated = TRUE;
+	}
+    }
+    *value = s;
+
+    return(updated);
+}
+static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
+{
+    int i;
+    SEXP s = NA_STRING; /* -Wall */
+    Rboolean updated = FALSE;
+
+    for (i = 0; i < length(x); i++) {
+	if (STRING_ELT(x, i) != NA_STRING) {
+	    if (!updated || 
+		STRCOLL(translateChar(s),
+			translateChar(STRING_ELT(x, i))) < 0) {
+		s = STRING_ELT(x, i);
+		if(!updated) updated = TRUE;
+	    }
+	}
+	else if (!narm) {
+	    *value = NA_STRING;
+	    return(TRUE);
 	}
     }
     *value = s;
@@ -270,12 +329,12 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, a;
+    SEXP ans, a, stmp = NA_STRING /* -Wall */, scum = NA_STRING;
     double tmp = 0.0, s;
     Rcomplex z, ztmp, zcum={0.0, 0.0} /* -Wall */;
-    int itmp = 0, icum=0, int_a, empty;
+    int itmp = 0, icum=0, int_a, real_a, empty, warn = 0 /* dummy */;
     short iop;
-    SEXPTYPE ans_type;/* only INTEGER, REAL, or COMPLEX here */
+    SEXPTYPE ans_type;/* only INTEGER, REAL, COMPLEX or STRSXP here */
 
     Rboolean narm;
     int updated;
@@ -328,7 +387,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    COMPLEX(ans)[0].i = si;
 	    break;
 	default:
-	    errorcall(call, R_MSG_type, type2str(TYPEOF(x)));
+	    error(R_MSG_type, type2str(TYPEOF(x)));
 	}
 	UNPROTECT(1);
 	return ans;
@@ -398,7 +457,8 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     while (args != R_NilValue) {
 	a = CAR(args);
 	int_a = 0;/* int_a = 1	<-->	a is INTEGER */
-
+	real_a = 0;
+	
 	if(length(a) > 0) {
 	    updated = 0;/*- GLOBAL -*/
 
@@ -408,17 +468,28 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		switch(TYPEOF(a)) {
 		case LGLSXP:
-		case INTSXP: int_a = 1;
+		case INTSXP: 
+		    int_a = 1;
 		    if (iop == 2) updated = imin(INTEGER(a), length(a), &itmp, narm);
 		    else	  updated = imax(INTEGER(a), length(a), &itmp, narm);
 		    break;
 		case REALSXP:
+		    real_a = 1;
 		    if(ans_type == INTSXP) {/* change to REAL */
 			ans_type = REALSXP;
 			if(!empty) zcum.r = Int2Real(icum);
 		    }
 		    if (iop == 2) updated = rmin(REAL(a), length(a), &tmp, narm);
 		    else	  updated = rmax(REAL(a), length(a), &tmp, narm);
+		    break;
+		case STRSXP:
+		    if(!empty && ans_type == INTSXP)
+			scum = StringFromInteger(icum, &warn);
+		    else if(!empty && ans_type == REALSXP)
+			scum = StringFromReal(zcum.r, &warn);
+		    ans_type = STRSXP;
+		    if (iop == 2) updated = smin(a, &stmp, narm);
+		    else updated = smax(a, &stmp, narm);
 		    break;
 		default:
 		    goto invalid_type;
@@ -432,7 +503,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			if ((iop == 2 && itmp < icum) || /* min */
 			    (iop == 3 && itmp > icum))   /* max */
 			    icum = itmp;
-		    } else { /* real */
+		    } else if(ans_type == REALSXP) {
 			if (int_a) tmp = Int2Real(itmp);
 			DbgP3(" REAL: (old)cum= %g, tmp=%g\n", zcum.r,tmp);
 			if (ISNAN(tmp)) {
@@ -440,6 +511,19 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			} else if(
 			    (iop == 2 && tmp < zcum.r) ||
 			    (iop == 3 && tmp > zcum.r))	zcum.r = tmp;
+		    } else if(ans_type == STRSXP) {
+			if(empty) scum = stmp;
+			else {
+			    if(int_a)
+				stmp = StringFromInteger(itmp, &warn);
+			    if(real_a)
+				stmp = StringFromReal(tmp, &warn);
+			    if(((iop == 2 && 
+				 STRCOLL(translateChar(stmp), translateChar(scum)) < 0)) ||
+			       (iop == 3 && 
+				STRCOLL(translateChar(stmp), translateChar(scum)) > 0) )
+				scum = stmp;
+			}
 		    }
 		}/*updated*/ else {
 		    /*-- in what cases does this happen here at all?
@@ -463,7 +547,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(ans_type == INTSXP) {
 			    s = (double) icum + (double) itmp;
 			    if(s > INT_MAX || s < R_INT_MIN){
-				warning(_("Integer overflow in sum(.); use sum(as.numeric(.))"));
+				warning(_("Integer overflow - use sum(as.numeric(.))"));
 				goto na_answer;
 			    }
 			    else icum += itmp;
@@ -544,6 +628,15 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case CPLXSXP:
 		if (iop == 2 || iop == 3) goto invalid_type;
 		break;
+	    case STRSXP:
+		if (iop == 2 || iop == 3) {
+		    if(!empty && ans_type == INTSXP)
+			scum = StringFromInteger(icum, &warn);
+		    else if(!empty && ans_type == REALSXP)
+			scum = StringFromReal(zcum.r, &warn);
+		    ans_type = STRSXP;
+		    break;
+		}
 	    default:
 		goto invalid_type;
 	    }
@@ -561,20 +654,23 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /*-------------------------------------------------------*/
     if(empty && (iop == 2 || iop == 3)) {
-	if(iop == 2)
-	    warning(_("no non-missing arguments to min; returning Inf"));
-	else
-	    warning(_("no non-missing arguments to max; returning -Inf"));
-	ans_type = REALSXP;
+	if(ans_type == STRSXP) {
+	    warning(_("no non-missing arguments, returning NA"));
+	} else {
+	    if(iop == 2)
+		warning(_("no non-missing arguments to min; returning Inf"));
+	    else
+		warning(_("no non-missing arguments to max; returning -Inf"));
+	    ans_type = REALSXP;
+	}
     }
 
     ans = allocVector(ans_type, 1);
     switch(ans_type) {
-    case INTSXP:	INTEGER(ans)[0] = icum;break;
-    case REALSXP:	REAL(ans)[0] = zcum.r; break;
-    case CPLXSXP:
-	COMPLEX(ans)[0].r = zcum.r;
-	COMPLEX(ans)[0].i = zcum.i;
+    case INTSXP:   INTEGER(ans)[0] = icum;break;
+    case REALSXP:  REAL(ans)[0] = zcum.r; break;
+    case CPLXSXP:  COMPLEX(ans)[0].r = zcum.r; COMPLEX(ans)[0].i = zcum.i;break;
+    case STRSXP:   SET_STRING_ELT(ans, 0, scum); break;
     }
     return ans;
 
@@ -583,12 +679,13 @@ na_answer: /* only INTSXP case curently used */
     switch(ans_type) {
     case INTSXP:	INTEGER(ans)[0] = NA_INTEGER; break;
     case REALSXP:	REAL(ans)[0] = NA_REAL; break;
-    case CPLXSXP:	COMPLEX(ans)[0].r = COMPLEX(ans)[0].i = NA_REAL;
+    case CPLXSXP:	COMPLEX(ans)[0].r = COMPLEX(ans)[0].i = NA_REAL; break;
+    case STRSXP:        SET_STRING_ELT(ans, 0, NA_STRING); break;
     }
     return ans;
 
 invalid_type:
-    errorcall(call, R_MSG_type, type2char(TYPEOF(a)));
+    error(R_MSG_type, type2char(TYPEOF(a)));
     return R_NilValue;
 }/* do_summary */
 
@@ -610,62 +707,47 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 /* which.min(x) : The index (starting at 1), of the first min(x) in x */
 SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-#define Beg_do_first					\
-    SEXP sx, ans;					\
-    double s;						\
-    int i, n, indx;					\
-							\
-    checkArity(op, args);				\
-							\
-    PROTECT(sx = coerceVector(CAR(args), REALSXP));	\
-    if (!isNumeric(sx))					\
-      errorcall(call, _("non-numeric argument"));	\
-    n = LENGTH(sx);					\
+    SEXP sx, ans;
+    double s, *r;
+    int i, n, indx;
+
+    checkArity(op, args);
+    PROTECT(sx = coerceVector(CAR(args), REALSXP));
+    if (!isNumeric(sx))
+	error(_("non-numeric argument"));
+    r = REAL(sx);
+    n = LENGTH(sx);
     indx = NA_INTEGER;
 
-    Beg_do_first
+    if(PRIMVAL(op) == 0) { /* which.min */
+	s = R_PosInf;
+	for (i = 0; i < n; i++)
+	    if ( !ISNAN(r[i]) && (r[i] < s || indx == NA_INTEGER) ) {
+		s = r[i]; indx = i;
+	    }
+    } else { /* which.max */
+	s = R_NegInf;
+	for (i = 0; i < n; i++)
+	    if ( !ISNAN(r[i]) && (r[i] > s || indx == NA_INTEGER) ) {
+		s = r[i]; indx = i;
+	    }
+    }
 
-    s = R_PosInf;
-    for (i = 0; i < n; i++)
-	if (!ISNAN(REAL(sx)[i]) && REAL(sx)[i] < s) {
-	    s = REAL(sx)[i]; indx = i;
+    i = (indx != NA_INTEGER);
+    PROTECT(ans = allocVector(INTSXP, i ? 1 : 0));
+    if (i) {
+	INTEGER(ans)[0] = indx + 1;
+	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* preserve names */
+	    SEXP ansnam;
+	    PROTECT(ansnam = 
+		    ScalarString(STRING_ELT(getAttrib(sx, R_NamesSymbol), indx)));
+	    setAttrib(ans, R_NamesSymbol, ansnam);
+	    UNPROTECT(1);
 	}
-
-#define End_do_first							\
-    i = (indx != NA_INTEGER);						\
-    PROTECT(ans = allocVector(INTSXP, i ? 1 : 0));			\
-    if (i) {								\
-	INTEGER(ans)[0] = indx + 1;					\
-	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* keep name */\
-	    SEXP ansnam;						\
-	    PROTECT(ansnam = allocVector(STRSXP, 1));			\
-	    SET_STRING_ELT(ansnam, 0,					\
-			   STRING_ELT(getAttrib(sx, R_NamesSymbol), indx));\
-	    setAttrib(ans, R_NamesSymbol, ansnam);			\
-	    UNPROTECT(1);						\
-	}								\
-    }									\
-    UNPROTECT(2);							\
+    }
+    UNPROTECT(2);
     return ans;
-
-    End_do_first
 }
-
-/* which.max(x) : The index (starting at 1), of the first max(x) in x */
-SEXP attribute_hidden do_first_max(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    Beg_do_first
-
-    s = R_NegInf;
-    for (i = 0; i < n; i++)
-	if (!ISNAN(REAL(sx)[i]) && REAL(sx)[i] > s) {
-	    s = REAL(sx)[i]; indx = i;
-	}
-
-    End_do_first
-}
-#undef Beg_do_first
-#undef End_do_first
 
 
 /* complete.cases(.) */
@@ -694,7 +776,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			goto bad;
 		}
 		else
-		    errorcall(call, R_MSG_type, type2char(TYPEOF(CAR(t))));
+		    error(R_MSG_type, type2char(TYPEOF(CAR(t))));
 	}
 	/* FIXME : Need to be careful with the use of isVector() */
 	/* since this includes the new list structure and expressions. */
@@ -717,7 +799,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			goto bad;
 		}
 		else
-		    errorcall(call, R_MSG_type, "unknown");
+		    error(R_MSG_type, "unknown");
 	    }
 
 	}
@@ -735,7 +817,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		goto bad;
 	}
 	else
-	    errorcall(call, R_MSG_type, type2char(TYPEOF(CAR(s))));
+	    error(R_MSG_type, type2char(TYPEOF(CAR(s))));
     }
     PROTECT(rval = allocVector(LGLSXP, len));
     for (i = 0; i < len; i++)
@@ -771,7 +853,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			break;
 		    default:
 			UNPROTECT(1);
-			errorcall(call, R_MSG_type, type2char(TYPEOF(u)));
+			error(R_MSG_type, type2char(TYPEOF(u)));
 		    }
 		}
 	    }
@@ -803,7 +885,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			break;
 		    default:
 			UNPROTECT(1);
-			errorcall(call, R_MSG_type, type2char(TYPEOF(u)));
+			error(R_MSG_type, type2char(TYPEOF(u)));
 		    }
 		}
 	    }
@@ -831,7 +913,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    break;
 		default:
 		    UNPROTECT(1);
-		    errorcall(call, R_MSG_type, type2char(TYPEOF(u)));
+		    error(R_MSG_type, type2char(TYPEOF(u)));
 		}
 	    }
 	}
@@ -840,6 +922,163 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
     return rval;
 
  bad:
-    errorcall(call, _("not all arguments have the same length"));
+    error(_("not all arguments have the same length"));
     return R_NilValue; /* -Wall */
+}
+
+/* op = 0 is pmin.int, op = 1 is pmax.int
+   It seems that NULL and logicals are supposed to be handled as 
+   if they have been coerced to integer. 
+ */
+SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP a, x, ans;
+    int i, n, len, narm;
+    SEXPTYPE type, anstype;
+    
+    narm = asLogical(CAR(args));
+    if(narm == NA_LOGICAL)
+	error(_("invalid '%s' value"), "na.rm");
+    args = CDR(args);
+    x = CAR(args);
+    if(args == R_NilValue) error(_("no arguments"));
+
+    anstype = TYPEOF(x);
+    switch(anstype) {
+    case NILSXP:
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case STRSXP:
+	break;
+    default:
+	error(_("invalid input type"));	
+    }
+    a = CDR(args);
+    if(a == R_NilValue) return x; /* one input */
+
+    len = length(x); /* not LENGTH, as NULL is allowed */
+    for(; a != R_NilValue; a = CDR(a)) {
+	x = CAR(a);
+	type = TYPEOF(x);
+	switch(type) {
+	case NILSXP:
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case STRSXP:
+	    break;
+	default:
+	    error(_("invalid input type"));
+	}
+	if(type > anstype) anstype = type;
+	n = length(x);
+	if ((len > 0) ^ (n > 0))
+	    error(_("cannot mix 0-length vectors with others"));
+	len = imax2(len, n);
+    }
+    if(anstype < INTSXP) anstype = INTSXP;
+    if(len == 0) return allocVector(anstype, 0);
+
+    PROTECT(ans = allocVector(anstype, len));
+    switch(anstype) {
+    case INTSXP:
+    {
+	int *r,  *ra = INTEGER(ans), tmp;
+	PROTECT(x = coerceVector(CAR(args), anstype));
+	r = INTEGER(x);
+	n = LENGTH(x);
+	for(i = 0; i < len; i++) ra[i] = r[i % n];
+	UNPROTECT(1);
+	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	    x = CAR(a);
+	    PROTECT(x = coerceVector(CAR(a), anstype));
+	    n = length(x);
+	    r = INTEGER(x);
+	    for(i = 0; i < len; i++) {
+		tmp = r[i % n];
+		if(PRIMVAL(op) == 1) {
+		    if( (narm && ra[i] == NA_INTEGER) ||
+			(ra[i] != NA_INTEGER && tmp != NA_INTEGER 
+			 && tmp > ra[i]) ||
+			(!narm && tmp == NA_INTEGER) )
+			ra[i] = tmp;
+		} else {
+		    if( (narm && ra[i] == NA_INTEGER) ||
+			(ra[i] != NA_INTEGER && tmp != NA_INTEGER 
+			 && tmp < ra[i]) ||
+			(!narm && tmp == NA_INTEGER) )
+			ra[i] = tmp;
+		}
+	    }
+	    UNPROTECT(1);
+	}
+    }
+	break;
+    case REALSXP:
+    {
+	double *r, *ra = REAL(ans), tmp;
+	PROTECT(x = coerceVector(CAR(args), anstype));
+	r = REAL(x);
+	n = LENGTH(x);
+	for(i = 0; i < len; i++) ra[i] = r[i % n];
+	UNPROTECT(1);
+	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	    PROTECT(x = coerceVector(CAR(a), anstype));
+	    n = length(x);
+	    r = REAL(x);
+	    for(i = 0; i < len; i++) {
+		tmp = r[i % n];
+		if(PRIMVAL(op) == 1) {
+		    if( (narm && ISNAN(ra[i])) ||
+			(!ISNAN(ra[i]) && !ISNAN(tmp) && tmp > ra[i]) ||
+			(!narm && ISNAN(tmp)) )
+			ra[i] = tmp;
+		} else {
+		    if( (narm && ISNAN(ra[i])) ||
+			(!ISNAN(ra[i]) && !ISNAN(tmp) && tmp < ra[i]) ||
+			(!narm && ISNAN(tmp)) )
+			ra[i] = tmp;
+		}
+	    }
+	    UNPROTECT(1);
+	}
+    }
+	break;
+    case STRSXP:
+    {
+	PROTECT(x = coerceVector(CAR(args), anstype));
+	n = LENGTH(x);
+	for(i = 0; i < len; i++) SET_STRING_ELT(ans, i, STRING_ELT(x, i % n));
+	UNPROTECT(1);
+	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	    SEXP tmp, t2;
+	    PROTECT(x = coerceVector(CAR(a), anstype));
+	    n = length(x);
+	    for(i = 0; i < len; i++) {
+		tmp = STRING_ELT(x, i % n);
+		t2 = STRING_ELT(ans, i);
+		if(PRIMVAL(op) == 1) {
+		    if( (narm && t2 == NA_STRING) ||
+			(t2 != NA_STRING && tmp != NA_STRING 
+			 && STRCOLL(translateChar(tmp), translateChar(t2)) > 0) ||
+			(!narm && tmp == NA_STRING) )
+			SET_STRING_ELT(ans, i, tmp);
+		} else {
+		    if( (narm && t2 == NA_STRING) ||
+			(t2 != NA_STRING && tmp != NA_STRING 
+			 && STRCOLL(translateChar(tmp), translateChar(t2)) < 0) ||
+			(!narm && tmp == NA_STRING) )
+			SET_STRING_ELT(ans, i, tmp);
+		}
+	    }
+	    UNPROTECT(1);
+	}
+    }
+	break;
+    default:
+	break;
+    }
+    UNPROTECT(1);
+    return ans;
 }

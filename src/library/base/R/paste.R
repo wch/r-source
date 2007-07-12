@@ -4,10 +4,13 @@ paste <- function (..., sep = " ", collapse = NULL)
     if(length(args) == 0)
         if(length(collapse) == 0) character(0) else ""
     else {
-	for(i in seq_along(args)) args[[i]] <- as.character(args[[i]])
-	.Internal(paste(args, sep, collapse))
+	## using as.character() here {not in C} for method dispatch
+	.Internal(paste(lapply(args, as.character), sep, collapse))
     }
 }
+
+##=== Could we consider a  .Primitive  *fast*
+##  paste2 <- function(x,y)  paste(x,y, sep='')
 
 ##=== Could we extend  paste(.) to (optionally) accept a
 ##    2-vector for collapse ?	 With the following functionality

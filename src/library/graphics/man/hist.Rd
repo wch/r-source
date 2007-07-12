@@ -30,7 +30,7 @@ hist(x, \dots)
     representation of frequencies, the \code{counts} component of
     the result; if \code{FALSE}, probability densities, component
     \code{density}, are plotted (so that the histogram has a total area
-    of one).  Defaults to \code{TRUE} \emph{iff} \code{breaks} are
+    of one).  Defaults to \code{TRUE} \emph{if and only if} \code{breaks} are
     equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
   \item{include.lowest}{logical; if \code{TRUE}, an \code{x[i]} equal to
@@ -160,21 +160,22 @@ op <- par(mfrow=c(2, 2))
 hist(islands)
 utils::str(hist(islands, col="gray", labels = TRUE))
 
-hist(sqrt(islands), br = 12, col="lightblue", border="pink")
+hist(sqrt(islands), breaks = 12, col="lightblue", border="pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
-r <- hist(sqrt(islands), br = c(4*0:5, 10*3:5, 70, 100, 140), col='blue1')
+r <- hist(sqrt(islands), breaks = c(4*0:5, 10*3:5, 70, 100, 140), col='blue1')
 text(r$mids, r$density, r$counts, adj=c(.5, -.5), col='blue3')
 sapply(r[2:3], sum)
 sum(r$density * diff(r$breaks)) # == 1
 lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
 par(op)
 
-utils::str(hist(islands, br=12, plot= FALSE)) #-> 10 (~= 12) breaks
-utils::str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
+utils::str(hist(islands, breaks=12, plot= FALSE)) #-> 10 (~= 12) breaks
+utils::str(hist(islands, breaks=c(12,20,36,80,200,1000,17000), plot = FALSE))
 
-hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE,
+hist(islands, breaks=c(12,20,36,80,200,1000,17000), freq = TRUE,
      main = "WRONG histogram") # and warning
 
+require(stats)
 set.seed(14)
 x <- rchisq(100, df = 4)
 \dontshow{op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))}

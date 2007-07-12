@@ -1,8 +1,8 @@
 vignette <-
-function(topic, package = NULL, lib.loc = NULL)
+function(topic, package = NULL, lib.loc = NULL, all = TRUE)
 {
     if(is.null(package))
-        package <- .packages(all.available = TRUE, lib.loc)
+        package <- .packages(all.available = all, lib.loc)
     paths <- .find.package(package, lib.loc)
 
     ## Find the directories with a 'doc' subdirectory *possibly*
@@ -54,7 +54,7 @@ function(topic, package = NULL, lib.loc = NULL)
     if(missing(topic)) {
         ## List all possible vignettes.
 
-        vDB <- matrix(character(0), nr = 0, nc = 4)
+        vDB <- matrix(character(0), nrow = 0, ncol = 4)
         colnames(vDB) <- c("Dir", "File", "Title", "PDF")
 
         for(db in vignettes[sapply(vignettes, length) > 0]) {
@@ -87,9 +87,15 @@ function(topic, package = NULL, lib.loc = NULL)
                     LibPath = dirname(vDB[, "Dir"]),
                     Item = tools::file_path_sans_ext(basename(vDB[, "File"])),
                     Title = title)
+	footer <- if (all) NULL else
+		  paste("Use ",
+	                sQuote("vignette(all = TRUE)"),
+	                "\n",
+	                "to list the vignettes in all *available* packages.",
+                  	sep = "")
 
         y <- list(type = "vignette", title = "Vignettes", header = NULL,
-                  results = db, footer = NULL)
+                  results = db, footer = footer)
         class(y) <- "packageIQR"
         return(y)
     }
@@ -104,7 +110,8 @@ print.vignette <- function(x, ...){
         if(.Platform$OS.type == "windows")
             shell.exec(x$pdf)
         else
-            system(paste(getOption("pdfviewer"), x$pdf, "&"))
+            system(paste(shQuote(getOption("pdfviewer")), shQuote(x$pdf)),
+                   wait = FALSE)
         ## </FIXME>
     } else {
         warning(gettextf("vignette '%s' has no PDF", x$topic),

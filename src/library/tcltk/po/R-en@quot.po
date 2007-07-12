@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
-"PO-Revision-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
+"PO-Revision-Date: 2007-01-10 22:38\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,72 @@ msgstr "cannot set length of Tcl array"
 
 msgid "Tcl package '%s' not found"
 msgstr "Tcl package ‘%s’ not found"
+
+msgid "The tkGUI is not available under Windows"
+msgstr "The tkGUI is not available under Windows"
+
+msgid "File"
+msgstr "File"
+
+msgid "Demos"
+msgstr "Demos"
+
+msgid "Packages"
+msgstr "Packages"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Source R code"
+msgstr "Source R code"
+
+msgid "Quit"
+msgstr "Quit"
+
+msgid "Save workspace"
+msgstr "Save workspace"
+
+msgid "Don't save workspace"
+msgstr "Don't save workspace"
+
+msgid "t test"
+msgstr "t test"
+
+msgid "Density"
+msgstr "Density"
+
+msgid "R FAQ"
+msgstr "R FAQ"
+
+msgid "Load"
+msgstr "Load"
+
+msgid "Go get them!"
+msgstr "Go get them!"
+
+msgid "Load packages"
+msgstr "Load packages"
+
+msgid "Install packages from CRAN"
+msgstr "Install packages from CRAN"
+
+msgid "Help topic:"
+msgstr "Help topic:"
+
+msgid "Manuals in PDF format"
+msgstr "Manuals in PDF format"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr "Loading Tcl/Tk interface ..."
+
+msgid "done"
+msgstr "done"
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Tcl/Tk support is not available on this system"

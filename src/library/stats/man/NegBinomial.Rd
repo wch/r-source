@@ -91,6 +91,7 @@ rnbinom(n, size, prob, mu)
   is a special case of the negative binomial.
 }
 \examples{
+require(graphics)
 x <- 0:11
 dnbinom(x, size = 1, prob = 1/2) * 2^(1 + x) # == 1
 126 /  dnbinom(0:8, size  = 2, prob  = 1/2) #- theoretically integer
@@ -101,7 +102,7 @@ summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
 
 x <- 0:15
 size <- (1:20)/4
-persp(x,size, dnb <- outer(x,size,function(x,s)dnbinom(x,s, pr= 0.4)),
+persp(x,size, dnb <- outer(x, size, function(x,s) dnbinom(x,s, prob= 0.4)),
       xlab = "x", ylab = "s", zlab="density", theta = 150)
 title(tit <- "negative binomial density(x,s, pr = 0.4)  vs.  x & s")
 

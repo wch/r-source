@@ -14,7 +14,7 @@ trans3d(x,y,z, pmat)
     3D space.}
   \item{pmat}{a \eqn{4 \times 4}{4 x 4} \emph{viewing transformation matrix},
     suitable for projecting the 3D coordinates \eqn{(x,y,z)} into the 2D
-    plane using homogenous 4D coordinates \eqn{(x,y,z,t)};
+    plane using homogeneous 4D coordinates \eqn{(x,y,z,t)};
     such matrices are returned by \code{\link{persp}()}.}
 }
 \value{

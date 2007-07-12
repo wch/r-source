@@ -44,7 +44,7 @@
   Register an old-style (a.k.a. `S3') class as a formally defined
   class. The \code{Classes} argument is the character vector used as the
   \code{class} attribute; in particular, if there is more than one
-  string,  old-style class inheritance is mimiced.  Registering via
+  string,  old-style class inheritance is mimicked.  Registering via
   \code{setOldClass} allows S3 classes to appear  in method
   signatures, and as a slot in an S4 class if a prototype is included.
 }
@@ -58,7 +58,9 @@ setOldClass(Classes, prototype, where, test = FALSE)
     the \code{class} attribute.
   }
 \item{prototype}{
-    An optional object to use as the prototype.  This should be provided as the default S3 object for the class, if you plan to use the class as a slot  in an S4 class.  See the details section.
+    An optional object to use as the prototype.  This should be provided
+    as the default S3 object for the class, if you plan to use the class as
+    a slot in an S4 class.  See the details section.
   }
   \item{where}{
     Where to store the class definitions, the global or top-level
@@ -177,6 +179,7 @@ The slots would  not be interpreted by S3 code written for \code{lm} objects.
 ## VOODO Why is this needed?
 removeMethods("length")
 }
+require(stats)
 setOldClass(c("mlm", "lm"))
 setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
 setMethod("dfResidual", "lm", function(model)model$df.residual)

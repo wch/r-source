@@ -1,6 +1,6 @@
 /*************************************************************************
  *
- * $Id: triodef.h,v 1.28 2005/12/30 16:15:33 breese Exp $
+ * $Id: triodef.h,v 1.31 2006/08/18 11:34:19 breese Exp $
  *
  * Copyright (C) 2001 Bjorn Reese <breese@users.sourceforge.net>
  *
@@ -54,6 +54,10 @@
 # define TRIO_COMPILER_HP
 #endif
 
+#if defined(sgi) || defined(__sgi)
+# define TRIO_COMPILER_MIPSPRO
+#endif
+
 #if defined(_MSC_VER)
 # define TRIO_COMPILER_MSVC
 #endif
@@ -86,6 +90,11 @@
 
 #if defined(__NetBSD__)
 # define TRIO_PLATFORM_UNIX
+#endif
+
+#if defined(__Lynx__)
+# define TRIO_PLATFORM_UNIX
+# define TRIO_PLATFORM_LYNX
 #endif
 
 #if defined(__APPLE__) && defined(__MACH__)
@@ -162,6 +171,13 @@
 
 #if defined(TRIO_PLATFORM_UNIX)
 # include <unistd.h>
+#endif
+
+#if defined(_POSIX_VERSION)
+# define PREDEF_STANDARD_POSIX _POSIX_VERSION
+# if (_POSIX_VERSION >= 199506L)
+#  define PREDEF_STANDARD_POSIX_1996
+# endif
 #endif
 
 #if (_XOPEN_VERSION - 0 >= 3) || defined(_XOPEN_XPG3)
@@ -270,14 +286,10 @@ typedef void * trio_pointer_t;
  */
 # pragma message disable (UNDERFLOW, FLOATOVERFL)
 
-# if (__CRTL_VER < 80000000)
+# if (__CRTL_VER < 80210001)
 /*
  * Although the compiler supports C99 language constructs, the C
  * run-time library does not contain all C99 functions.
- *
- * This was the case for 70300022. Update the 80000000 value when
- * it has been accurately determined what version of the library
- * supports C99.
  */
 #  if defined(PREDEF_STANDARD_C99)
 #   undef PREDEF_STANDARD_C99

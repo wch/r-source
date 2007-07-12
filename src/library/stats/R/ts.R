@@ -170,7 +170,7 @@ as.ts.default <- function(x, ...)
         else x[, (1+cs[i]):cs[i+1]] <- xx
     }
     if(dframe) as.data.frame(x)
-    else ts(x, start=st, freq=freq)
+    else ts(x, start=st, frequency=freq)
 }
 
 .makeNamesTs <- function(...)
@@ -195,7 +195,7 @@ Ops.ts <- function(e1, e2)
     if(missing(e2)) {
         ## univariate operator
         NextMethod(.Generic)
-    } else if(any(nchar(.Method) == 0)) {
+    } else if(any(!nzchar(.Method))) {
         ## one operand is not a ts
         NextMethod(.Generic)
     } else {
@@ -243,7 +243,7 @@ diff.ts <- function (x, lag = 1, differences = 1, ...)
     }
     xtsp <- attr(x, "tsp")
     if(is.matrix(x)) colnames(r) <- colnames(x)
-    ts(r, end = xtsp[2], freq = xtsp[3])
+    ts(r, end = xtsp[2], frequency = xtsp[3])
 }
 
 na.omit.ts <- function(object, ...)
@@ -313,7 +313,7 @@ time.default <- function (x, offset = 0, ...)
 {
     n <- if(is.matrix(x)) nrow(x) else length(x)
     xtsp <- attr(hasTsp(x), "tsp")
-    y <- seq(xtsp[1], xtsp[2], length = n) + offset/xtsp[3]
+    y <- seq.int(xtsp[1], xtsp[2], length.out = n) + offset/xtsp[3]
     tsp(y) <- xtsp
     y
 }
@@ -381,8 +381,8 @@ print.ts <- function(x, calendar, ...)
                     end.pad <- fr.x - end(x)[2]
                     dn1 <- start(x)[1]:end(x)[1]
                     x <- matrix(c(rep.int("", start.pad), format(x, ...),
-                                  rep.int("", end.pad)), nc =  fr.x, byrow = TRUE,
-                                dimnames = list(dn1, dn2))
+                                  rep.int("", end.pad)), ncol =  fr.x,
+                                byrow = TRUE, dimnames = list(dn1, dn2))
                 }
             } else { ## fr.x == 1
                 tx <- time(x)
@@ -513,7 +513,7 @@ plot.ts <-
 	    if(do.lab)
 		text(xy, labels =
 		     if(is.character(xy.labels)) xy.labels
-		     else if(all(tsp(x) == tsp(y))) formatC(time(x), wid = 1)
+		     else if(all(tsp(x) == tsp(y))) formatC(time(x), width = 1)
 		     else seq_along(x),
 		     col = col, cex = cex)
 	    if(xy.lines)
@@ -631,8 +631,8 @@ window.default <- function(x, start = NULL, end = NULL,
         if(all(abs(end - xtime) > ts.eps/xfreq))
             end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
 
-        i <- seq(trunc((start - xtsp[1]) * xfreq + 1.5),
-                 trunc((end - xtsp[1]) * xfreq + 1.5), by = thin)
+        i <- seq.int(trunc((start - xtsp[1]) * xfreq + 1.5),
+                     trunc((end - xtsp[1]) * xfreq + 1.5), by = thin)
         y <- if(is.matrix(x)) x[i, , drop = FALSE] else x[i]
         ystart <- xtime[i[1]]
         yend <- xtime[i[length(i)]]
@@ -700,7 +700,7 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
 "[.ts" <- function (x, i, j, drop = TRUE) {
     y <- NextMethod("[")
     if (missing(i))
-	ts(y, start = start(x), freq = frequency(x))
+	ts(y, start = start(x), frequency = frequency(x))
 #     else {
 #         if(is.matrix(i)) return(y)
 # 	n <- if (is.matrix(x)) nrow(x) else length(x)

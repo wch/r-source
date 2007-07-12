@@ -85,7 +85,7 @@ y <- matrix(c( 5,  4,  7, 10, 12,
               10,  9,  7, 13, 10,
               19, 18, 28, 37, 58,
               10,  7,  6,  8,  7),
-            nr = 7, byrow = TRUE,
+            nrow = 7, byrow = TRUE,
             dimnames =
             list(Store = as.character(1:7),
                  Brand = LETTERS[1:5]))

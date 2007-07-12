@@ -2,8 +2,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
                    high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
                    eps.correct = 0)
 {
-    if(!is.numeric(x))
-	stop("'x' must be numeric")
+    x <- as.numeric(x)
     if(length(x)==0)
 	return(x)
     x <- x[is.finite(x)]
@@ -26,7 +25,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
             high.u.fact = as.double(c(high.u.bias, u5.bias)),
             eps.correct,
             DUP = FALSE, PACKAGE = "base")
-    s <- seq.int(z$l, z$u, length = z$n+1)
+    s <- seq.int(z$l, z$u, length.out = z$n+1)
     if(!eps.correct && z$n) { # maybe zap smalls from seq() rounding errors
         ## better than zapsmall(s, digits = 14) :
         delta <- diff(range(z$l, z$u)) / z$n

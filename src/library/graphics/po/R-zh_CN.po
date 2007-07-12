@@ -1,0 +1,399 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2007.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'a' is overridden by 'reg'"
+msgstr "'a'被'reg'覆盖"
+
+msgid "only using the first two of"
+msgstr "只用第一和第二个"
+
+msgid "regression coefficients"
+msgstr "回归系数"
+
+msgid "'a' and 'b' are overridden by 'coef'"
+msgstr "'a'和'b'被' coef'覆盖"
+
+msgid "'x' must be a 2-d contingency table"
+msgstr "'x'必需是二维列联表"
+
+msgid "all entries of 'x' must be nonnegative and finite"
+msgstr "'x'包含的所有值都必需为非负的有限数"
+
+msgid "at least one entry of 'x' must be positive"
+msgstr "'x'里至少要有一个值是正数"
+
+msgid "incorrect 'col': must be length 2"
+msgstr "'col'不对: 长度必需为二"
+
+msgid "'side' must be in {1:4}"
+msgstr "'side'的值必需在{1:4}中"
+
+msgid "invalid 'axp'"
+msgstr "'axp'不对"
+
+msgid "invalid 'log'"
+msgstr "'log'不对"
+
+msgid "invalid positive 'axp[3]'"
+msgstr "正数'axp[3]'不对"
+
+msgid "invalid 'usr'"
+msgstr "'usr'不对"
+
+msgid "'height' must be a vector or a matrix"
+msgstr "'height'要么是向量，要么是矩阵"
+
+msgid "Cannot use shading lines in bars when log scale is used"
+msgstr "用对数尺度时条里不能用带阻影的线条"
+
+msgid "log scale error: at least one 'height + offset' value <= 0"
+msgstr "对数尺度错误: 'height + offset'中至少要有一个值小于等于零"
+
+msgid "log scale error: 'xlim' <= 0"
+msgstr "对数尺度错误: 'xlim'小于等于零"
+
+msgid "log scale error: 'ylim' <= 0"
+msgstr "对数尺度错误: 'ylim'小于等于零"
+
+msgid "incorrect number of names"
+msgstr "名字数目不对"
+
+msgid "invalid first argument"
+msgstr "第一个变元不对"
+
+msgid "'formula' missing or incorrect"
+msgstr "要么是缺少'formula'，要么是它的设定不对"
+
+msgid "'at' must have same length as 'z$n', i.e."
+msgstr "'at'同'z$n'的长度必需相等, 如"
+
+msgid "invalid boxplot widths"
+msgstr "boxplot宽度不对"
+
+msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
+msgstr "一些槽在折叶点外('box'): 可能是因为notch=FALSE"
+
+msgid "'formula' should specify exactly two variables"
+msgstr "'formula'只能设定两个变量"
+
+msgid "dependent variable should be a factor"
+msgstr "因变量应当为因子"
+
+msgid "explanatory variable should be numeric"
+msgstr "说明变量应当为数值"
+
+msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
+msgstr "因为y轴的尺度为累计概率, 'ylim'的值必需在[0,1] 之间"
+
+msgid "no 'z' matrix specified"
+msgstr "没有设定'z'矩阵"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "需要递增的'x'和'y'值"
+
+msgid "no proper 'z' matrix specified"
+msgstr "没有设定正确的'z'矩阵"
+
+msgid "invalid conditioning formula"
+msgstr "条件公式不对"
+
+msgid "incompatible variable lengths"
+msgstr "变量长度不匹配"
+
+msgid "'number' must be integer >= 1"
+msgstr "'number'必需为大于等于一的整数"
+
+msgid "'overlap' must be < 1 (and typically >= 0)."
+msgstr "'overlap'必需小于一(其典型值则大于等于零)."
+
+msgid "invalid 'given.values'"
+msgstr "'given.values'值不对"
+
+msgid "rows * columns too small"
+msgstr "行 * 列的结果太小"
+
+msgid "Missing rows"
+msgstr "缺少行"
+
+msgid "'expr' must be a function or an expression containing 'x'"
+msgstr "'expr'要么是函数，要么是包含'x'的表达式"
+
+msgid "'from' and 'to' must be > 0 with log=\"x\""
+msgstr "log=\"x\"意味着'from'和'to'的值必需大于零"
+
+msgid "wrong method"
+msgstr "方法不对"
+
+msgid "invalid specification of 'breaks'"
+msgstr "'breaks'定义不对"
+
+msgid "'x' must be a numeric vector or matrix"
+msgstr "'x'要么是数值向量，要么是矩阵"
+
+msgid "'x' must be an array"
+msgstr "'x'必需为排列"
+
+msgid "'x' must be 2- or 3-dimensional"
+msgstr "'x'必需是二维或三维"
+
+msgid "table for each stratum must be 2 by 2"
+msgstr "每阶层的表的大小都应该是二乘二"
+
+msgid "'conf.level' must be a single number between 0 and 1"
+msgstr "'conf.level'必需是在零和一之间的单个数字"
+
+msgid "incorrect 'margin' specification"
+msgstr "'margin'定义不对"
+
+msgid "incorrect geometry specification"
+msgstr "几何定义不对"
+
+msgid "'x' must be numeric"
+msgstr "'x'必需为数值"
+
+msgid "'nclass' not used when 'breaks' is specified"
+msgstr "'breaks'设定了的话'nclass'就不能用了"
+
+msgid "'include.lowest' ignored as 'breaks' is not a vector"
+msgstr "因为'breaks'不对向量，'include.lowest'略过不用"
+
+msgid "unknown 'breaks' algorithm"
+msgstr "没有'breaks'这样的算法"
+
+msgid "invalid number of 'breaks'"
+msgstr "'breaks'数目不对"
+
+msgid "hist.default: pretty() error, breaks="
+msgstr "hist.default: pretty()错误, breaks="
+
+msgid "'breaks' are not strictly increasing"
+msgstr "'breaks'必需严格递增"
+
+msgid "'probability' is an alias for '!freq', however they differ."
+msgstr "'probability'是'!freq'的化名，因此它们应该是一样的。"
+
+msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
+msgstr "负的'counts'。\"bincount\"的C码里出现了内部错误"
+
+msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
+msgstr "有些'x'值没有被计数；有可能是因为'breaks'没有跨距整个'x'的范围"
+
+msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+msgstr "图形的面积不对 -- 用freq=FALSE"
+
+msgid "'x' is wrongly structured"
+msgstr "'x'的结构不对"
+
+msgid "argument must be matrix-like"
+msgstr "变元必需类似于矩阵"
+
+msgid "'x' and 'y' values must be finite and non-missing"
+msgstr "'x'和'y'的值不能是无限的，而且不能有缺少"
+
+msgid "'z' must be a matrix"
+msgstr "'z'必需是矩阵"
+
+msgid "invalid z limits"
+msgstr "z的限制不对"
+
+msgid "must have one more break than colour"
+msgstr "数据间隔的数目必需比颜色要多一个"
+
+msgid "breaks must all be finite"
+msgstr "数据间隔值不能有无限的"
+
+#, fuzzy
+msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
+msgstr "z的大小应该等于length(x)(+1)乘length(y)(+1)"
+
+msgid "'respect' must be logical or matrix with same dimension as 'mat'"
+msgstr "'respect'要么是逻辑值，要么是同'mat'大小一样的矩阵"
+
+msgid ""
+"layout matrix must contain at least one reference\n"
+"to each of the values {1..n}; here  n ="
+msgstr "格式矩阵至少要有对{1..n}里每一个值的参考值；但这里n ="
+
+msgid "invalid title"
+msgstr "标题不对"
+
+msgid "'legend' is of length 0"
+msgstr "'legend'长度为零"
+
+msgid "invalid coordinate lengths"
+msgstr "座标长度不对"
+
+msgid "'text.width' must be numeric, >= 0"
+msgstr "'text.width'必需为大于等于零的数值"
+
+msgid "horizontal specification overrides: Number of columns :="
+msgstr "水平定义超越其它的定义： 列的数目为 :="
+
+msgid "not using pch[2..] since pch[1] has multiple chars"
+msgstr "pch[2..] 没用，因为pch[1] 包含多个字符"
+
+msgid "must specify at least one of 'x' and 'y'"
+msgstr "必需设定'x'和'y'中的一个"
+
+msgid "'x' and 'y' must have same number of rows"
+msgstr "'x'和'y'的行数必需相等"
+
+msgid "'x' and 'y' must have only 1 or the same number of columns"
+msgstr "'x'和'y'要么是一，要么有相等的列数"
+
+msgid "missing values in contingency table"
+msgstr "列联表里有缺少值"
+
+msgid "'x' must not have 0 dimensionality"
+msgstr "'x'不能为零维数"
+
+msgid "extra argument(s) %s will be disregarded"
+msgstr "多余的变元%s略过不用"
+
+msgid "invalid 'shade' specification"
+msgstr "'shade'定义不对"
+
+msgid "length of 'sort' does not conform to 'dim(x)'"
+msgstr "'sort'的长度同'dim(x)'不相匹配"
+
+msgid "non-numeric argument to 'pairs'"
+msgstr "非数值变元不能适用于'pairs'"
+
+msgid "only one column in the argument to 'pairs'"
+msgstr "变元里只有一个列用在'pairs'上"
+
+msgid "the 'panel' function made a new plot"
+msgstr "'panel'函数画了一个新的图"
+
+msgid "'x' values must be positive."
+msgstr "'x'必需是正数."
+
+msgid "invalid table 'x'"
+msgstr "'x'表不对"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "不能处理多个'x'座标"
+
+msgid "must have a response variable"
+msgstr "必需有响应变量"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame'不能用在非数据框上"
+
+msgid "'y' must be a numeric vector"
+msgstr "'y'必需为数值向量"
+
+msgid "'x' must be a data frame"
+msgstr "'x'必需为数据框"
+
+msgid "all columns/components of 'x' must be factors"
+msgstr "所有'x'的列/元件都必需是因子"
+
+msgid "some levels of the factors are empty"
+msgstr "因子的有些阶层是空的"
+
+msgid "'x' must be a dataframe or a formula"
+msgstr "'x'要么是数据框，要么是公式"
+
+msgid "a variable in 'y' is not numeric"
+msgstr "'y'里有个非数值的变量"
+
+msgid "there must be at least one numeric variable!"
+msgstr "至少要有一个数值变量!"
+
+msgid "cannot hatch with logarithmic scale active"
+msgstr "对数尺度设定时不能进行策劃"
+
+msgid "invalid rectangle specification"
+msgstr "长方形定义不对"
+
+msgid "some values will be clipped"
+msgstr "有些值不能被修整"
+
+msgid "invalid screen number"
+msgstr "屏幕数字不对"
+
+msgid "'figs' must be a vector or a matrix with 4 columns"
+msgstr "'figs'要么是向量，要么是有四条列的矩阵"
+
+msgid "'figs' must specify at least one screen"
+msgstr "'figs'至少要设定一个屏幕"
+
+msgid "a 2-way table has to be specified"
+msgstr "没有设定二维表"
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr "因为x轴的尺度为累计概率, 'xlim'的值必需在[0,1]"
+
+msgid "'x' must be a matrix or a data frame"
+msgstr "'x'要么是矩阵，要么是数据框"
+
+msgid "data in 'x' must be numeric"
+msgstr "'x'里的数据必需为数值"
+
+msgid "nrow * ncol <  number of observations"
+msgstr "nrow乘ncol不能小于观测量的数目"
+
+msgid "labels do not make sense for a single location"
+msgstr "单一位置的标签没有意义"
+
+msgid "'locations' must be a 2-column matrix."
+msgstr "'locations'必需是含两条列的矩阵."
+
+msgid "number of rows of 'locations' and 'x' must be equal."
+msgstr "'locations'和'x'的行数必需相等。"
+
+msgid "length of 'angles' must equal 'ncol(x)'"
+msgstr "'angles'的长度必需同'ncol(x)'相等"
+
+msgid "no non-missing values"
+msgstr "所有的值都是缺少值"
+
+msgid "'scale' must be positive"
+msgstr "'scale'必需为正数"
+
+msgid "invalid plotting method"
+msgstr "画图方法不对"
+
+msgid "'at' must have length equal to the number %d of groups"
+msgstr "'at'的长度必需同组数目%d相等"
+
+msgid "'number' must have same length as 'x' and 'y'"
+msgstr "'number'的长度必需同'x'和'y'的长度相同"
+
+msgid "exactly one symbol type must be specified"
+msgstr "只能设定一个符号种类"
+
+msgid "x log scale:  xinch() is non-sense"
+msgstr "x对数尺度：xinch()没有意义"
+
+msgid "y log scale:  yinch() is non-sense"
+msgstr "y对数尺度：yinch()没有意义"
+
+msgid "log scale:  xyinch() is non-sense"
+msgstr "对数尺度：xyinch()没有意义"
+
+msgid "Outlier (%s) in boxplot %d is not drawn"
+msgid_plural "Outliers (%s) in boxplot %d are not drawn"
+msgstr[0] "boxplot%2$d里没有画离群值(%1$s)"
+msgstr[1] "boxplot%2$d里没有画离群值(%1$s)"
+
+msgid "argument %s is not made use of"
+msgid_plural "arguments %s are not made use of"
+msgstr[0] "没有用%s这个变元"
+msgstr[1] "没有用%s这个变元"

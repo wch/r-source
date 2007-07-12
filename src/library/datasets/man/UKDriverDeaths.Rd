@@ -47,7 +47,7 @@ Seatbelts
   series B, \bold{149}, 187--227.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 ## work with pre-seatbelt period to identify a model, use logs
 work <- window(log10(UKDriverDeaths), end = 1982+11/12)
 par(mfrow = c(3,1))

@@ -59,7 +59,7 @@ timestamp(stamp = date(),
   large file is actually generated.
 
   These variables are read at the time of saving, so can be altered
-  within a session by the use of \code{\link{Sys.putenv}}.
+  within a session by the use of \code{\link{Sys.setenv}}.
 
   \code{history} shows only unique matching lines if \code{pattern} is
   supplied.

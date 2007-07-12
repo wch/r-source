@@ -1,12 +1,12 @@
 \name{optimize}
 \title{One Dimensional Optimization}
 \usage{
-optimize(f = , interval = , lower = min(interval),
+optimize(f = , interval = ,  \dots, lower = min(interval),
          upper = max(interval), maximum = FALSE,
-         tol = .Machine$double.eps^0.25, \dots)
-optimise(f = , interval = , lower = min(interval),
+         tol = .Machine$double.eps^0.25)
+optimise(f = , interval = ,  \dots, lower = min(interval),
          upper = max(interval), maximum = FALSE,
-         tol = .Machine$double.eps^0.25, \dots)
+         tol = .Machine$double.eps^0.25)
 }
 \alias{optimize}
 \alias{optimise}
@@ -16,14 +16,14 @@ optimise(f = , interval = , lower = min(interval),
     depending on the value of \code{maximum}.}
   \item{interval}{a vector containing the end-points of the interval
     to be searched for the minimum.}
+  \item{\dots}{additional named or unnamed arguments to be passed
+    to \code{f}.}
   \item{lower}{the lower end point of the interval
     to be searched.}
   \item{upper}{the upper end point of the interval
     to be searched.}
   \item{maximum}{logical. Should we maximize or minimize (the default)?}
   \item{tol}{the desired accuracy.}
-  \item{\dots}{additional named or unnamed arguments to be passed
-    to \code{f} (but beware of partial matching to other arguments).}
 }
 \description{
   The function \code{optimize} searches the interval from
@@ -33,6 +33,8 @@ optimise(f = , interval = , lower = min(interval),
   \code{optimise} is an alias for \code{optimize}.
 }
 \details{
+  Note that arguments after \code{\dots} must be matched exactly.
+  
   The method used is a combination of golden section search and
   successive parabolic interpolation.  Convergence is never much slower
   than that for a Fibonacci search.  If \code{f} has a continuous second
@@ -81,12 +83,14 @@ optimise(f = , interval = , lower = min(interval),
   \code{\link{nlm}}, \code{\link{uniroot}}.
 }
 \examples{
+require(graphics)
+
 f <- function (x,a) (x-a)^2
 xmin <- optimize(f, c(0, 1), tol = 0.0001, a = 1/3)
 xmin
 
 ## See where the function is evaluated:
-optimize(function(x) x^2*(print(x)-1), l=0, u=10)
+optimize(function(x) x^2*(print(x)-1), lower=0, upper=10)
 
 ## "wrong" solution with unlucky interval and piecewise constant f():
 f  <- function(x) ifelse(x > -1, ifelse(x < 4, exp(-1/abs(x - 1)), 10), 10)

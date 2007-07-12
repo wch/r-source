@@ -31,6 +31,12 @@ cummin(x)
   elements of the return value to be \code{NA}, as does integer overflow
   in \code{cumsum} (with a warning).
 }
+\section{S4 methods}{
+  \code{cumsum} and \code{cumprod} are S4 generic functions:
+  methods can be defined for them individually or via the
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{cummax} and \code{cummin} are individually S4 generic functions.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

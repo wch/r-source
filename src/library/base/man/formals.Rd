@@ -19,12 +19,15 @@ formals(fun, envir = environment(fun)) <- value
   naming the function to be manipulated, which is searched for from the
   parent environment.
   If it is not specified, the function calling \code{formals} is used.
+
+  Only \emph{closures} have formals, not primitive functions.
 }
 \value{
   \code{formals} returns the formal argument list of the function
-  specified, as a \code{\link{pairlist}}.
+  specified, as a \code{\link{pairlist}}, or \code{NULL} for a
+  non-function or primitive.
 
-  The replacment form sets the formals of a function to the
+  The replacement form sets the formals of a function to the
   list/pairlist on the right hand side, and (potentially) resets the
   environment of the function.
 }
@@ -35,6 +38,7 @@ formals(fun, envir = environment(fun)) <- value
   \code{\link{function}}.
 }
 \examples{
+require(stats); require(graphics)
 length(formals(lm))      # the number of formal arguments
 names(formals(boxplot))  # formal arguments names
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:21+0100\n"
-"PO-Revision-Date: 2006-04-18 08:56+0100\n"
+"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"PO-Revision-Date: 2007-04-13 12:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,12 +28,13 @@ msgstr "probabilités en dehors de [0,1] dans qansari()"
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
 
-#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "impossible de transformer plus de 100 pars dans arima0"
 
 #: distance.c:151
-msgid "dist(.,\"binary\"): treating non-finite values as NA"
+#, fuzzy
+msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\") : valeurs infinies traitées comme NA"
 
 #: distance.c:220
@@ -113,13 +114,13 @@ msgstr "le nombre d'itérations a dépassé le maximum de %d"
 
 #: nls.c:274
 msgid "converged"
-msgstr ""
+msgstr "convergence obtenue"
 
 #: nls.c:295
 msgid "'theta' should be of type character"
 msgstr "'theta' doit être de type caractère"
 
-#: nls.c:297 port.c:379
+#: nls.c:297 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
@@ -150,17 +151,17 @@ msgstr "la variable '%s' n'est pas numérique"
 msgid "bad Starma struct"
 msgstr "Starma struct incorrecte"
 
-#: pacf.c:228
+#: pacf.c:227
 #, c-format
 msgid "starma error code %d"
 msgstr "code d'erreur starma %d"
 
-#: pacf.c:293
+#: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
 msgstr "code d'erreur forkal %d"
 
-#: pacf.c:457
+#: pacf.c:451
 msgid "invalid value of lag.max"
 msgstr "valeur incorrecte de 'lag.max'"
 
@@ -169,71 +170,71 @@ msgstr "valeur incorrecte de 'lag.max'"
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset : alg = %d doit être 1, 2, 3, ou 4"
 
-#: port.c:323
+#: port.c:324
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 "la fonction de gradient doit renvoyer un vecteur numérique de longueur %d"
 
-#: port.c:333
+#: port.c:334
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "la function Hessian doit renvoyer une matrice carrée numérique d'ordre %d"
 
-#: port.c:383
+#: port.c:384
 msgid "'rho' must be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: port.c:385 port.c:533
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' doit être un vecteur numérique non vide"
 
-#: port.c:387
+#: port.c:388
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Qaund Hessian est défini, un gradient doit l'être aussi"
 
-#: port.c:390
+#: port.c:391
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "l'environnement 'rho' doit contenir un vecteur numérique '.par' de longueur %"
 "d"
 
-#: port.c:401
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' et 'upper' doivent tous deux être des vecteurs numériques"
 
-#: port.c:447
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' n'est applicable que pour des listes nommées"
 
-#: port.c:468
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() introuvable"
 
-#: port.c:481
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' doit être une matrice numérique de dimension (%d, %d)"
 
-#: port.c:502
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de "
 "longueur %d"
 
-#: port.c:515
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr "type incorrect pour 'eval_check_store'"
 
-#: port.c:534
+#: port.c:538
 msgid "m must be a list"
 msgstr "'m' doit être une liste"
 
-#: port.c:554
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
 
@@ -246,11 +247,11 @@ msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "erreur d'allocation dans smooth(*, '3RSR')."
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "erreur d'allocation dans smooth(*, '3RSS')."
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr "erreur d'allocation dans smooth(*, '3R')."
 

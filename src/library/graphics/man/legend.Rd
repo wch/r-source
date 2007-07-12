@@ -22,9 +22,9 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{x, y}{the x and y co-ordinates to be used to position the legend.
     They can be specified by keyword or in any way which is accepted by
     \code{\link{xy.coords}}: See Details.}
-  \item{legend}{a character vector or language object (a name, call or
-    \code{\link{expression}} vector)
-    of length \eqn{\ge 1}{>= 1} to appear in the legend.}
+  \item{legend}{a character or \link{expression} vector.
+    of length \eqn{\ge 1}{>= 1} to appear in the legend.  Other
+    objects will be coerced by \code{\link{as.graphicsAnnot}}.}
   \item{fill}{if specified, this argument will cause boxes filled
     with the specified colors (or shaded in the specified colors)
     to appear beside the legend text.}
@@ -74,8 +74,9 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{horiz}{logical; if \code{TRUE}, set the legend horizontally
     rather than vertically (specifying \code{horiz} overrides the \code{ncol}
     specification).}
-  \item{title}{a text value giving a title to be placed at the top of the
-    legend.}
+  \item{title}{a character string or length-one expression giving a
+    title to be placed at the top of the legend.  Other objects will be
+    coerced by \code{\link{as.graphicsAnnot}}.}
   \item{inset}{inset distance(s) from the margins as a fraction of the
     plot region when legend is placed by keyword.}
 
@@ -206,6 +207,7 @@ utils::str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE,
            adj = c(0, .6)))# adj y !
 legend(-3, .9, ex.cs1, lty=1:2, col=2:3,    adj = c(0, .6))
 
+require(stats)
 x <- rexp(100, rate = .5)
 hist(x, main = "Mean and Median of a Skewed Distribution")
 abline(v = mean(x),   col=2, lty=2, lwd=2)

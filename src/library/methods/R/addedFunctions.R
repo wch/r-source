@@ -120,9 +120,9 @@ Quote <- get("quote" , mode = "function")
       ## the junk below is just til cat honors fill=TRUE on a single string.
       text <- paste(..., collapse="", sep="")
       pos <- max(2 * getOption("width") %/% 3, 20)
-      while(nchar(text) > pos) {
+      while(nchar(text, "c") > pos) {
           line <- substr(text, 1, pos)
-          text <- substr(text, pos+1, nchar(text))
+          text <- substr(text, pos+1, nchar(text, "c"))
           word <- regexpr(" ", text)
           if(word < 0) {
               line <- paste(line, text, sep="")
@@ -130,11 +130,11 @@ Quote <- get("quote" , mode = "function")
           }
           else {
               line <- paste(line, substr(text, 1, word -1), sep="")
-              text <- substr(text, word+1, nchar(text))
+              text <- substr(text, word+1, nchar(text, "c"))
           }
           cat(line, "\n")
       }
-      if(nchar(text) > 0)
+      if(nzchar(text))
           cat(text, "\n")
   }
 

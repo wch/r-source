@@ -11,9 +11,6 @@ is.primitive(x)
   \item{x}{an \R object.}
 }
 \details{
-  \code{is.function} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-
   \code{is.primitive(x)} tests if \code{x} is a primitive function
   (either a \code{"builtin"} or \code{"special"} as from \code{\link{typeof}})?
 }

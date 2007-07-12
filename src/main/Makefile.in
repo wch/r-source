@@ -24,7 +24,7 @@ SOURCES_C = \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c graphics.c \
-	identical.c internet.c iosupport.c \
+	identical.c inlined.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
 	names.c \
@@ -149,11 +149,14 @@ R: Makefile
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
-$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
+$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 	$(MAIN_LINK) -o $@ $(R_bin_OBJECTS) $(R_bin_LDADD)
 
 install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
+
+$(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
 
 ## is this portable?  Documented as GNU extension.
 $(RLIBS):
@@ -183,20 +186,25 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecbindir2)"
-	@$(MKINSTALLDIRS) "$(Rexeclibdir)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir2)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 install-bin: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir2)/R"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 install-lib: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"
+install-strip: installdirs
+	@${INSTALL_PROGRAM} -s $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
+	@if test -f $(libR_la); then $(MAKE) install-lib; fi
+	@if test -n "$(STRIP_LIBS)"; then \
+	  if test -f $(libR_la); then $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"; fi; \
+	fi
 uninstall:
-	@rm -f "$(Rexecbindir)/exec/$(R_ARCH)/R" "$(Rexecbindir)/R.bin"
-	@rm -f "$(Rexeclibdir)/libR$(DYLIB_EXT)"
+	@rm -f "$(DESTDIR)$(Rexecbindir)/exec/$(R_ARCH)/R" "$(DESTDIR)$(Rexecbindir)/R.bin"
+	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:
+	@-rm -f $(top_builddir)/etc/R.exp
 	@-rm -rf .libs _libs
 	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
 	  $(R_binary)

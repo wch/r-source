@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-5  R Development Core Team
+ *  Copyright (C) 2004-7  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-#include <R.h>
+#define ROL_UNUSED
 #include "md5.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,8 +42,8 @@ void read_unist_file(char* fname)
     }
     fseek(fp, 320, SEEK_SET);
     fread(&Version, 4, 1, fp);
-    /* 4.2.x is 15, 5.0.6 is 33 5.1.3 is 42*/
-    if(Version > 42)
+    /* 4.2.x is 15, 5.0.6 is 33 5.1.3 is 42 5.1.11 is 46 */
+    if(Version > 46)
 	fprintf(stderr, "Version %d of the uninst format is new and may not be supported\n", Version);
     fread(&NumRecs, 4, 1, fp);
     fread(&EndOffset, 4, 1, fp);
@@ -135,6 +135,9 @@ int main (int argc, char **argv)
 #ifdef DEBUG
 	printf("%s: ", line+34);
 #endif
+	/* the next two files get altered during installation */
+	if(strcmp(line+34, "etc/Rconsole") == 0) continue;
+	if(strcmp(line+34, "etc/Rprofile.site") == 0) continue;	
 	if(line[33] == '*')
 	    fp2 = fopen(line+34, "rb");
 	else
@@ -166,6 +169,7 @@ int main (int argc, char **argv)
 	    continue;
 	} else {
 	    for(j = 0; j < 16; j++) snprintf (out+2*j, 2, "%02x", resblock[j]);
+	    out[32] = '\0';
 	    if(strcmp(onfile, out) == 0) {
 #ifdef DEBUG
 		printf("OK\n");

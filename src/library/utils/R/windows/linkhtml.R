@@ -16,7 +16,7 @@ make.packages.html <- function(lib.loc=.libPaths())
     f.tg <- file.path(R.home("doc"), "html", "packages.html")
     f.hd <- file.path(R.home("doc"), "html", "packages-head-utf8.html")
     if(!file.create(f.tg)) {
-        warning("cannot update HTML package index")
+        # warning("cannot update HTML package index")
         return(FALSE)
     }
     file.append(f.tg, f.hd)
@@ -43,7 +43,7 @@ make.packages.html <- function(lib.loc=.libPaths())
         cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
             file = out)
         for (i in  pg) {
-            title <- packageDescription(i, lib.loc = lib, field = "Title",
+            title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                         encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
@@ -61,14 +61,15 @@ make.packages.html <- function(lib.loc=.libPaths())
 make.search.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home("doc"), "html", "search", "index.txt")
-    if(file.access(f.tg, mode=2) == -1) {
-        warning("cannot update HTML search index")
+    ## file.access seems rarely to work as expected.
+    if(file.access(f.tg, mode = 2) == -1) {
+        # warning("cannot update HTML search index")
         return()
     }
     ## next ought to succeed, but be cautious.
-    out <- try(file(f.tg, open = "w"), silent = TRUE)
+    out <- try(suppressWarnings(file(f.tg, open = "w")), silent = TRUE)
     if(inherits(out, "try-error")) {
-        warning("cannot update HTML search index")
+        # warning("cannot update HTML search index")
         return()
     }
     for (lib in lib.loc) {
@@ -141,15 +142,14 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     meth <- paste(top, "/library/methods", sep="")
     for(f in files) {
         page <- readLines(f)
-        ## <FIXME> use useBytes=TRUE later
-        page <- gsub(olddoc, doc, page, fixed = TRUE)
-        page <- gsub(oldbase, base, page, fixed = TRUE)
-        page <- gsub(oldutils, utils, page, fixed = TRUE)
-        page <- gsub(oldgraphics, graphics, page, fixed = TRUE)
-        page <- gsub(oldstats, stats, page, fixed = TRUE)
-        page <- gsub(olddata, datasets, page, fixed = TRUE)
-        page <- gsub(oldgrD, grD, page, fixed = TRUE)
-        page <- gsub(oldmeth, meth, page, fixed = TRUE)
+        page <- gsub(olddoc, doc, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldbase, base, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldutils, utils, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldgraphics, graphics, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldstats, stats, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(olddata, datasets, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldgrD, grD, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldmeth, meth, page, fixed = TRUE, useBytes=TRUE)
         ## only do this if the substitutions worked
         out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
@@ -167,6 +167,7 @@ fixup.libraries.URLs <- function(lib.loc = .libPaths())
     for (lib in lib.loc) {
         if(lib == .Library) next
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
-        for(pkg in pg) try(fixup.package.URLs(file.path(lib,pkg)))
+        for(pkg in pg)
+            try(fixup.package.URLs(file.path(lib,pkg)), silent = TRUE)
     }
 }

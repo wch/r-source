@@ -4,43 +4,69 @@
 ## uses the primitive list and the function .addBasicGeneric
 ## defined (earlier) in BasicFunsList.R
 
-.makeBasicFuns<- function(where)
+.makeBasicFuns <- function(where)
 {
-    env <- new.env(hash=TRUE, parent=as.environment(where))
     funs <- get(".BasicFunsList", envir=where)
+
     ## First, set up the existing functions in the list as valid generics.
+    ## This will override anything except the S4 group generics.
     curNames <- names(funs)
-    for(i in seq(along=funs)) {
+    for(i in seq_along(funs)) {
 	val <- funs[[i]]
-	if(is.function(val))
-	    funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
+        if (is.function(val))
+            funs <- .addBasicGeneric(funs, curNames[[i]], val, "")
     }
+
+    ## Next, add the remaining primitive generics
+    prims <- ls(.GenericArgsEnv, all.names=TRUE)
+    new_prims <- prims[!prims %in% names(funs)]
+    for(nm in new_prims) {
+        f <- get(nm, envir = .GenericArgsEnv)
+        body(f) <- substitute(standardGeneric(ff), list(ff=val))
+        funs <- .addBasicGeneric(funs, nm, f, "")
+    }
+
+    ## Then add all the primitives that are not already there.
+    ff <- ls("package:base", all.names=TRUE)
+    prims <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
+    new_prims <- prims[!prims %in% names(funs)]
+    add <- rep(list(FALSE), length(new_prims))
+    names(add) <- new_prims
+    funs <- c(funs, add)
+
     ## the Math group.
-    members <- c("log", "sqrt", "log10", "cumprod", "abs", "acos",
-		 "acosh", "asin", "asinh", "atan", "atanh",
-		 "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
-		 "gamma", "lgamma", "sin", "sinh", "tan", "tanh")
-    for(f in members)
-	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),
-				 "Math", env)
+    members <- c("abs", "sign", "sqrt",
+                 "ceiling", "floor", "trunc",
+                 "cummax", "cummin", "cumprod", "cumsum",
+		 "exp", "expm1",
+		 "log", "log10", "log2", "log1p",
+                 "cos", "cosh", "sin", "sinh", "tan", "tanh",
+                 "acos", "acosh", "asin", "asinh", "atan", "atanh",
+                 "gamma", "lgamma", "digamma", "trigamma"
+                 )
+     for(f in members) {
+         funs <-
+             if(f %in% c("log", "trunc"))
+                 .addBasicGeneric(funs, f,
+                                  function(x, ...) standardGeneric(""),
+                                  "Math")
+
+             else
+                 .addBasicGeneric(funs, f,
+                                  function(x) standardGeneric(""),
+                                  "Math")
+    }
 
     setGroupGeneric(where=where,"Math", function(x)NULL,
 		    knownMembers = members, package = "base")
 
-    ## The Math2 group.  In spite of the documented behavior, there
-    ## is an S3 method for trunc with a SECOND argument.  Until we get
-    ## a better solution, we have to put trunc in the Math2 group.
-
-    funs <- .addBasicGeneric(funs, "trunc",
-			     function(x, digits = 0) standardGeneric(""),
-			     "Math2", env)
-
+    ## The Math2 group.
     funs <- .addBasicGeneric(funs, "round",
 			     function(x, digits = 0) standardGeneric(""),
-			     "Math2", env)
+			     "Math2")
     funs <- .addBasicGeneric(funs, "signif",
 			     function(x, digits = 6) standardGeneric(""),
-			     "Math2", env)
+			     "Math2")
 
     setGroupGeneric(where = where, "Math2", function(x, digits) NULL,
 		    knownMembers = c("round", "signif"), package = "methods")
@@ -49,32 +75,27 @@
     members <- c("+", "-", "*", "^", "%%", "%/%", "/")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Arith", env)
+				 "Arith")
 
     setGroupGeneric(where = where, "Arith", function(e1, e2)NULL,
-		    group = "Ops", knownMembers = members, package = "base")
-
-    ## The Logic group
-    members <- c("&", "|") ## *not*  "!" since that has only one argument
-    for(f in members)
-	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Logic", env)
-    setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
 		    group = "Ops", knownMembers = members, package = "base")
 
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Compare", env)
+				 "Compare")
 
     setGroupGeneric(where = where, "Compare", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "methods")
 
-    ## R does not currently do the Logic group (! & |)
-    ## A strange group, since the argument lists are different.	 But
-    ## perhaps we'll add it sometime.
-
+    ## The Logic group
+    members <- c("&", "|") ## *not*  "!" since that has only one argument
+    for(f in members)
+	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
+				 "Logic")
+    setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
+		    group = "Ops", knownMembers = members, package = "base")
 
     ## the Ops group generic
 
@@ -97,7 +118,7 @@
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function (x, ..., na.rm = FALSE)
 				 standardGeneric(""),
-				 "Summary", env)
+				 "Summary")
 
     setGroupGeneric(where = where, "Summary",
 		    function(x, ..., na.rm = FALSE) NULL,
@@ -115,13 +136,12 @@
     members <- c("Arg", "Conj", "Im", "Mod", "Re")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(z) standardGeneric(""),
-				 "Complex", env)
+				 "Complex")
 
     setGroupGeneric(where=where,"Complex", function(z)NULL,
 		    knownMembers = members, package = "base")
 
     assign(".BasicFunsList", funs, envir=where)
-    assign(".BasicFunsEnv", env, envir=where)
     rm(.addBasicGeneric, envir=where)
 }
 

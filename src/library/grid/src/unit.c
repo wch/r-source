@@ -35,15 +35,12 @@ int isUnitList(SEXP ul) {
 SEXP unit(double value, int unit) 
 {
     SEXP u, units, classname;
-    PROTECT(u = allocVector(REALSXP, 1));
-    REAL(u)[0] = value;
-    PROTECT(units = allocVector(INTSXP, 1));
-    INTEGER(units)[0] = unit;
+    PROTECT(u = ScalarReal(value));
+    PROTECT(units = ScalarInteger(unit));
     /* NOTE that we do not set the "unit" attribute */
     setAttrib(u, install("valid.unit"), units);
     setAttrib(u, install("data"), R_NilValue);
-    PROTECT(classname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(classname, 0, mkChar("unit"));
+    PROTECT(classname = mkString("unit"));
     classgets(u, classname);
     UNPROTECT(3);
     return u;
@@ -91,7 +88,7 @@ SEXP unitData(SEXP unit, int index) {
 
 /* Accessor functions for unit arithmetic object
  */
-char* fName(SEXP ua) {
+const char* fName(SEXP ua) {
     return CHAR(STRING_ELT(getListElement(ua, "fname"), 0));
 }
 
@@ -560,8 +557,7 @@ double evaluateGrobUnit(double value, SEXP grob,
 	 */
 	{
 	    SEXP val;
-	    PROTECT(val = allocVector(REALSXP, 1));
-	    REAL(val)[0] = value;
+	    PROTECT(val = ScalarReal(value));
 	    PROTECT(R_fcall2x = lang3(evalFnx, grob, val));
 	    PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
 	    PROTECT(R_fcall2y = lang3(evalFny, grob, val));

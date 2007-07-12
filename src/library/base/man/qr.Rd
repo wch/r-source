@@ -51,6 +51,7 @@ as.qr(x)
   The functions \code{qr.coef}, \code{qr.resid}, and \code{qr.fitted}
   return the coefficients, residuals and fitted values obtained when
   fitting \code{y} to the matrix with QR decomposition \code{qr}.
+  (If pivoting is used, some of the coefficients will be \code{NA}.)
   \code{qr.qy} and \code{qr.qty} return \code{Q \%*\% y} and
   \code{t(Q) \%*\% y}, where \code{Q} is the (complete) \eqn{\bold{Q}} matrix.
 
@@ -62,8 +63,7 @@ as.qr(x)
   if \code{a} is a QR decomposition it is the same as \code{solve.qr},
   but if \code{a} is a rectangular matrix the QR decomposition is
   computed first.  Either will handle over- and under-determined
-  systems, providing a minimal-length solution or a least-squares fit
-  if appropriate.
+  systems, providing a least-squares fit if appropriate.
 
   \code{is.qr} returns \code{TRUE} if \code{x} is a \code{\link{list}}
   with components named \code{qr}, \code{rank} and \code{qraux} and
@@ -132,6 +132,21 @@ x <- qr.solve(h9, y, tol = 1e-10) # or equivalently :
 x <- qr.coef(qrh9, y) #-- is == but much better than
                       #-- solve(h9) \%*\% y
 h9 \%*\% x              # = y
+
+
+## overdetermined system
+A <- matrix(runif(12), 4)
+b <- 1:4
+qr.solve(A, b) # or solve(qr(A), b)
+solve(qr(A, LAPACK=TRUE), b)
+# this is a least-squares solution, cf. lm(b ~ 0 + A)
+
+## underdetermined system
+A <- matrix(runif(12), 3)
+b <- 1:3
+qr.solve(A, b)
+solve(qr(A, LAPACK=TRUE), b)
+# solutions will have one zero, not necessarily the same one
 }
 \keyword{algebra}
 \keyword{array}

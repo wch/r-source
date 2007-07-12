@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 
 # Makefile for PO directory in any package using GNU gettext.
-# Copyright (C) 1995-1997, 2000-2004 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
+# Copyright (C) 1995-1997, 2000-2006 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
 #
 # This file can be copied and used freely without restrictions.  It can
 # be used in projects which are not available under the GNU General Public
@@ -10,7 +10,7 @@
 # Please note that the actual code of GNU gettext is covered by the GNU
 # General Public License and is *not* in the public domain.
 #
-# Origin: gettext-0.14
+# Origin: gettext-0.16
 ## Much modified by the R-core team for use in the R project.
 
 ## add other languages for the R domain to LINGUAS
@@ -35,7 +35,7 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
-Rsharedir = ${rsharedir}
+Rsharedir = $(DESTDIR)${rsharedir}
 Rlocaledir = $(Rsharedir)/locale
 
 mkinstalldirs = $(MKINSTALLDIRS)
@@ -100,10 +100,13 @@ all-no:
 # $(POFILES) has been designed to not touch files that don't need to be
 # changed.
 stamp-po: $(srcdir)/$(DOMAIN).pot
-	@test -z "$(GMOFILES)" || $(MAKE) $(GMOFILES)
-	@echo "touch stamp-po"
-	@echo timestamp > stamp-poT
-	@mv stamp-poT stamp-po
+	@test ! -f $(srcdir)/$(DOMAIN).pot || \
+	  test -z "$(GMOFILES)" || $(MAKE) $(GMOFILES)
+	@test ! -f $(srcdir)/$(DOMAIN).pot || { \
+	  echo "touch stamp-po" && \
+	  echo timestamp > stamp-poT && \
+	  mv stamp-poT stamp-po; \
+	}
 
 # Note: Target 'all' must not depend on target '$(DOMAIN).pot-update',
 # otherwise packages like GCC can not be built if only parts of the source
@@ -112,11 +115,16 @@ stamp-po: $(srcdir)/$(DOMAIN).pot
 # This target rebuilds $(DOMAIN).pot; it is an expensive operation.
 # Note that $(DOMAIN).pot is not touched if it doesn't need to be changed.
 $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
+	if test -n '$(MSGID_BUGS_ADDRESS)' || test '$(PACKAGE_BUGREPORT)' = '@'PACKAGE_BUGREPORT'@'; then \
+	  msgid_bugs_address='$(MSGID_BUGS_ADDRESS)'; \
+	else \
+	  msgid_bugs_address='$(PACKAGE_BUGREPORT)'; \
+	fi; \
 	$(XGETTEXT) --default-domain=$(DOMAIN) --directory=$(top_srcdir) \
 	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	  --files-from=$(srcdir)/POTFILES.in \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)'
+	  --msgid-bugs-address="$$msgid_bugs_address"
 	test ! -f $(DOMAIN).po || { \
 	  if test -f $(srcdir)/$(DOMAIN).pot; then \
 	    sed -f remove-potcdate.sed < $(srcdir)/$(DOMAIN).pot > $(DOMAIN).1po && \
@@ -310,9 +318,9 @@ dist2: # $(DISTFILES)
 	if test -f $(srcdir)/LINGUAS; then dists="$$dists LINGUAS"; fi; \
 	for file in $$dists; do \
 	  if test -f $$file; then \
-	    cp -p $$file $(distdir); \
+	    cp -p $$file $(distdir) || exit 1; \
 	  else \
-	    cp -p $(srcdir)/$$file $(distdir); \
+	    cp -p $(srcdir)/$$file $(distdir) || exit 1; \
 	  fi; \
 	done
 
@@ -335,7 +343,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	@pkg=`echo $@ | sed -e 's/\.pkg-update$$//'`; \
 	tmpdir=`pwd`; \
 	src=$(top_srcdir)/src/library/$${pkg}; \
-	test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
+	test "$(srcdir)" = . && cdcmd="cd ../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
 	if test -f $${src}/po/$${pkg}.pot; then \
 	  echo $(ECHO_N) "updating $${pkg}.pot "$(ECHO_C); \
 	  (cd $${src}/src; $(XGETTEXT) \

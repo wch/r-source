@@ -11,12 +11,13 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
       exclude = c(NA, NaN), drop.unused.levels = FALSE)
 }
 \arguments{
-  \item{formula}{a formula object with the cross-classifying variables,
-    separated by \code{+}, on the right hand side.  Interactions are not
-    allowed.  On the left hand side, one may optionally give a vector or
-    a matrix of counts; in the latter case, the columns are interpreted
-    as corresponding to the levels of a variable.  This is useful if the
-    data has already been tabulated, see the examples below.}
+  \item{formula}{a \link{formula} object with the cross-classifying variables
+    (separated by \code{+}) on the right hand side (or an object which
+    can be coerced to a formula).  Interactions are not allowed.  On the
+    left hand side, one may optionally give a vector or a matrix of
+    counts; in the latter case, the columns are interpreted as
+    corresponding to the levels of a variable.  This is useful if the
+    data have already been tabulated, see the examples below.}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from

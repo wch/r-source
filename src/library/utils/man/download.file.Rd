@@ -55,6 +55,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The remaining details apply to method \code{"internal"} only.
 
+  Note that \code{https://} connections are
+#ifdef unix
+  not supported.
+#endif
+#ifdef windows
+  only supported if \code{--internet2} was used (to make use of Internet
+  Explorer internals), and then only if the certificate is considered to
+  be valid.
+#endif
+
   See \code{\link{url}} for how \code{"file://"} URLs are interpreted,
   especially on Windows.  This function does decode encoded URLs.
 
@@ -102,7 +112,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   This applies to the internal code only.
 
   Proxies can be specified via environment variables.
-  Setting \code{"no_proxy"} stops any proxy being tried.
+  Setting \code{"no_proxy"} to \code{"*"} stops any proxy being tried.
   Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
   (or failing that, the all upper-case version) is consulted and if
   non-empty used as a proxy site.  For FTP transfers, the username
@@ -114,7 +124,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"ftp_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
   where the default port is \code{21}.  These environment variables
   must be set before the download code is first used: they cannot be
-  altered later by calling \code{Sys.putenv}.
+  altered later by calling \code{\link{Sys.setenv}}.
 
   Usernames and passwords can be set for HTTP proxy transfers via
   environment variable \env{http\_proxy\_user} in the form

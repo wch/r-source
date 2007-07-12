@@ -76,6 +76,8 @@ fligner.test(x, \dots)
   tests for the homogeneity of variances.
 }
 \examples{
+require(graphics)
+
 % FIXME: could use something more interesting here
 plot(count ~ spray, data = InsectSprays)
 fligner.test(InsectSprays$count, InsectSprays$spray)

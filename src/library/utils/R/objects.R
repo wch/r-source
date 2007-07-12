@@ -13,14 +13,14 @@ findGeneric <- function(fname, envir)
     }
     isUMEbrace <- function(e) {
         for (ee in as.list(e[-1]))
-            if (nchar(res <- isUME(ee))) return(res)
+            if (nzchar(res <- isUME(ee))) return(res)
         ""
     }
     isUMEif <- function(e) {
         if (length(e) == 3) isUME(e[[3]])
         else {
-            if (nchar(res <- isUME(e[[3]]))) res
-            else if (nchar(res <- isUME(e[[4]]))) res
+            if (nzchar(res <- isUME(e[[3]]))) res
+            else if (nzchar(res <- isUME(e[[4]]))) res
             else ""
         }
     }
@@ -69,7 +69,8 @@ methods <- function (generic.function, class)
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
         else if(!exists(generic.function, mode = "function",
-                        envir = parent.frame()))
+                        envir = parent.frame()) &&
+                !generic.function %in% c("Math", "Ops", "Complex", "Summary"))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         if(!any(generic.function == knownGenerics)) {
@@ -77,7 +78,7 @@ methods <- function (generic.function, class)
             if(truegf == "")
                 warning(gettextf("function '%s' appears not to be generic",
                                  generic.function), domain = NA)
-            if(nchar(truegf) && truegf != generic.function) {
+            if(nzchar(truegf) && truegf != generic.function) {
                 warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
                         generic.function, truegf), domain = NA)
                 generic.function <- truegf
@@ -133,7 +134,7 @@ methods <- function (generic.function, class)
                 where <- find(nm, mode = "function")
                 if(!length(where)) return(FALSE)
                 any(sapply(where, function(w)
-                           nchar(findGeneric(nm, envir=as.environment(w))) > 0))
+                           nzchar(findGeneric(nm, envir=as.environment(w)))))
             })
             info <- info[keep, ]
         }
@@ -179,7 +180,7 @@ getS3method <-  function(f, class, optional = FALSE)
                        names(.knownS3Generics))
     if(!any(f == knownGenerics)) {
         truegf <- findGeneric(f, parent.frame())
-        if(nchar(truegf)) f <- truegf
+        if(nzchar(truegf)) f <- truegf
         else {
             if(optional) return(NULL)
             else stop(gettextf("no function '%s' could be found", f), domain = NA)
@@ -209,7 +210,7 @@ getS3method <-  function(f, class, optional = FALSE)
 getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
-        nm <- attr(envir, "name")
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9))
@@ -221,7 +222,7 @@ assignInNamespace <-
     function(x, value, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
-        nm <- attr(envir, "name")
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9))
@@ -265,7 +266,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
     if (!is.character(subx) || length(subx) != 1)
         stop("'fixInNamespace' requires a name")
     if(missing(ns)) {
-        nm <- attr(envir, "name")
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9))
@@ -279,7 +280,7 @@ getAnywhere <- function(x)
     x <- as.character(substitute(x))
     objs <- list(); where <- character(0); visible <- logical(0)
     ## first look on search path
-    if(length(pos <- find(x, numeric=TRUE))) {
+    if(length(pos <- find(x, numeric = TRUE))) {
         objs <- lapply(pos, function(pos, x) get(x, pos=pos), x=x)
         where <- names(pos)
         visible <- rep.int(TRUE, length(pos))

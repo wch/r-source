@@ -27,7 +27,8 @@ test-src-strict-auto =
 test-src-sloppy-1 = \
 	complex.R \
 	print-tests.R \
-	datasets.R
+	datasets.R \
+	lapack.R
 test-src-sloppy-auto =
 
 test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
@@ -38,10 +39,12 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-demo = demos.R demos2.R
+test-src-errmsgs = errormsgs.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
-test-src-lapack = lapack.R
+test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
+test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
 test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
@@ -56,21 +59,26 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-demo) demos.Rout.save \
 	$(test-src-internet) internet.Rout.save \
-	$(test-src-lapack) \
+	$(test-src-primitive) \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
-	  reg-win.R encodings.R \
+	  reg-win.R encodings.R utf8-regex.R \
+	  errormsgs.R errormsgs.Rout.save \
 	gct-foot.R \
 	nanbug.rda \
 	WinUnicode.dat \
+	testit.Rd testit.txt.save testit.html.save \
+	testit.tex.save testit-Ex.R.save \
 	R-intro.Rout.save
 SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
+R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
+RDCONV = $(top_builddir)/bin/R CMD Rdconv
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -79,17 +87,19 @@ test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
+test-out-errmsgs = $(test-src-errmsgs:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
-test-out-lapack = $(test-src-lapack:.R=.Rout)
+test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 
 ## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
-	$(test-out-internet) $(test-out-lapack) \
+	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas)
 
@@ -97,7 +107,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Lapack Random Demo Segfault \
+all-devel-tests = Docs IsAs Random Demo Rd Primitive Regexp Segfault \
    Standalone Packages
 
 all check: Makefile test-all-basics
@@ -240,6 +250,10 @@ test-Demo:
 	@echo "running demos from base and stats"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 
+test-Errormsgs:
+	@echo "running tests of error messages"
+	@$(MAKE) $(test-out-errmsgs) RVAL_IF_DIFF=0
+
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
 ## So allow this to fail: it may be slow doing so.
@@ -253,9 +267,9 @@ test-IsAs:
 	@echo "running tests of consistency of as/is.*"
 	@$(MAKE) $(test-out-isas) RVAL_IF_DIFF=1
 
-test-Lapack:
-	@echo "running tests of LAPACK-based functions"
-	@$(MAKE) $(test-out-lapack) RVAL_IF_DIFF=0
+test-Primitive:
+	@echo "running tests of primitives"
+	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=0
 
 test-Random:
 	@echo "running tests of random deviate generation"
@@ -265,6 +279,10 @@ test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=1
 	@$(MAKE) $(test-out-reg3) RVAL_IF_DIFF=0
+
+test-Regexp:
+	@echo "running regexp regression tests"
+	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
 
 test-Segfault:
 	@echo "running tests to possibly trigger segfaults"
@@ -278,6 +296,17 @@ test-Standalone:
 	@echo "testing building standalone Rmath"
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 ## </NOTE>
+
+test-Rd: $(srcdir)/testit.Rd
+	@echo "testing Rd conversion"
+	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
+	@diff -bw testit.txt $(srcdir)/testit.txt.save
+	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
+	@diff -bw testit.html $(srcdir)/testit.html.save
+	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
+	@diff -bw testit.tex $(srcdir)/testit.tex.save
+	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
+	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
 
 test-DocFiles:
 	@echo "checking Rd usage sections"
@@ -396,6 +425,7 @@ clean:
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
 	  reg-plot.ps reg-tests-?.ps R-exts.* R-intro.R R-intro.Rout \
 	  FALSE.R FALSE.tex mirrors.html
+	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -rf anRpackage
 distclean: clean
 	-@for d in $(SUBDIRS); do \

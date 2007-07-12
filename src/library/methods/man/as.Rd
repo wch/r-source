@@ -127,7 +127,7 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   classes and methods, but in a somewhat special way.  Keep in mind
   that objects from one class can turn into objects from another class
   either automatically or by an explicit call to the \code{as}
-  function. Automatic conversion is special, and comes from the
+  function.  Automatic conversion is special, and comes from the
   designer of one class of objects asserting that this class extends
   another class (see \code{\link{setClass}} and \code{\link{setIs}}).
 
@@ -159,12 +159,14 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
     Class)}.
 
   Method selection is used in the \code{as} function in two special
-  ways.
-  First,  inheritance is
-  applied for the argument \code{from} but not for the argument
-  \code{to} (if you think about it, you'll probably agree that you
-  wouldn't want the result to be from some class other than the
-  \code{Class} specified).
+  ways.\cr
+  First, inheritance is applied for the argument \code{from} but not for
+  the argument \code{to} (if you think about it, you'll probably agree
+  that you wouldn't want the result to be from some class other than the
+  \code{Class} specified).  Hence, you would typically use
+  \code{selectMethod("coerce", sig, useInherited= c(from=TRUE, to= FALSE))}
+  for inspection of method selection of \code{as()}.
+  \cr
   Second, the function tries to use inheritance information to convert
   the object indirectly, by first converting it to an inherited class.
   It does this by examining the classes that the \code{from} class
@@ -185,13 +187,12 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   second argument is provided so the method can know the intended
   \code{to} class.
 
-  The function \code{coerce}
-  exists almost entirely as a repository for such methods, to be
-  selected as described above by the \code{as} function.
-  In fact, it
-  would usually be a bad idea to call \code{coerce} directly, since then
-  you would get inheritance on the \code{to} argument; as mentioned,
-  this is not likely to be what you want.
+  The function \code{coerce} exists almost entirely as a repository for
+  such methods, to be selected as described above by the \code{as}
+  function.  In fact, it would usually be a bad idea to call
+  \code{coerce} directly, since then you would get inheritance on the
+  \code{to} argument; as mentioned, this is not likely to be what you
+  want.
 }
 
 %% <FIXME>

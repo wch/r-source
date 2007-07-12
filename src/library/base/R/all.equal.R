@@ -1,7 +1,7 @@
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
 all.equal.default <-
-    function(target, current, check.attributes = TRUE, ...)
+    function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
     ## use data.class as unlike class it does not give "Integer"
@@ -9,19 +9,18 @@ all.equal.default <-
 	return(all.equal.language(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
-    msg <- c(if(check.attributes) attr.all.equal(target, current, ...),
-	     if(is.numeric(target)) {
-		 all.equal.numeric(target, current, check.attributes = check.attributes, ...)
-	     } else
-	     switch (mode(target),
-		     logical = ,
-		     complex = ,
-		     numeric = all.equal.numeric(target, current, check.attributes = check.attributes, ...),
-		     character = all.equal.character(target, current, check.attributes = check.attributes, ...),
-		      if(data.class(target) != data.class(current)) {
-		 paste("target is ", data.class(target), ", current is ",
-		       data.class(current), sep = "")
-	     } else NULL))
+    msg <- switch (mode(target),
+                   integer = ,
+                   complex = ,
+                   numeric = all.equal.numeric(target, current, ...),
+                   character = all.equal.character(target, current, ...),
+                   logical = ,
+                   raw = all.equal.raw(target, current, ...),
+		   S4 = attr.all.equal(target, current, ...),
+                   if(data.class(target) != data.class(current)) {
+                       paste("target is ", data.class(target), ", current is ",
+                             data.class(current), sep = "")
+                   } else NULL)
     if(is.null(msg)) TRUE else msg
 }
 
@@ -50,8 +49,8 @@ all.equal.numeric <-
     current <- as.vector(current)
     out <- is.na(target)
     if(any(out != is.na(current))) {
-	msg <- c(msg, paste("'is.NA' value mismatches:", sum(is.na(current)),
-			    "in current,", sum(out), " in target"))
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(is.na(current)),
+			    "in current", sum(out), "in target"))
 	return(msg)
     }
     out <- out | target == current
@@ -74,7 +73,8 @@ all.equal.numeric <-
 	}
 
     if(is.na(xy) || xy > tolerance)
-       msg <- c(msg, paste("Mean", what, if(cplx)"Mod", "difference:", format(xy)))
+       msg <- c(msg, paste("Mean", what, if(cplx)"Mod", "difference:",
+                           format(xy)))
 
     if(is.null(msg)) TRUE else msg
 }
@@ -99,15 +99,16 @@ all.equal.character <-
 	target <- target[ll]
 	current <- current[ll]
     }
-    nas <- is.na(target)
-    if (any(nas != is.na(current))) {
-	msg <- c(msg, paste("'is.NA' value mismatches:", sum(is.na(current)),
-		     "in current,", sum(nas), " in target"))
+    nas <- is.na(target); nasc <- is.na(current)
+    if (any(nas != nasc)) {
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(nasc),
+                            "in current", sum(nas), "in target"))
 	return(msg)
     }
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
-    else if(any(ne)) c(msg, paste(sum(ne), "string mismatches"))
+    else if(sum(ne) == 1) c(msg, paste("1 string mismatch"))
+    else if(sum(ne) > 1) c(msg, paste(sum(ne), "string mismatches"))
     else msg
 }
 
@@ -115,17 +116,21 @@ all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
 {
     if(!inherits(current, "factor"))
 	return("'current' is not a factor")
-    msg <-  if(check.attributes) attr.all.equal(target, current)
+    msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     class(target) <- class(current) <- NULL
     nax <- is.na(target)
     nay <- is.na(current)
-    if(n <- sum(nax != nay))
-	msg <- c(msg, paste("NA mismatches:", n))
+    n <- sum(nax != nay)
+    if(n > 1)
+	msg <- c(msg, paste(n, "NA mismatches"))
+    else if (n == 1)
+        msg <- c(msg, paste("1, NA mismatch"))
     else {
 	target <- levels(target)[target[!nax]]
 	current <- levels(current)[current[!nay]]
-	if(is.character(n <- all.equal(target, current, check.attributes = check.attributes)))
-	    msg <- c(msg, n)
+        n <- all.equal(target, current, check.attributes = check.attributes,
+                       ...)
+	if(is.character(n)) msg <- c(msg, n)
     }
     if(is.null(msg)) TRUE else msg
 }
@@ -134,28 +139,28 @@ all.equal.formula <- function(target, current, ...)
 {
     if(length(target) != length(current))
 	return(paste("target, current differ in having response: ",
-		     length(target) == 3, ", ", length(current) == 3))
+		     length(target) == 3, ", ", length(current) == 3, sep=""))
     if(all(deparse(target) != deparse(current)))
 	"formulas differ in contents"
     else TRUE
 }
 
-all.equal.language <- function(target, current, check.attributes = TRUE, ...)
+all.equal.language <- function(target, current, ...)
 {
     mt <- mode(target)
     mc <- mode(current)
     if(mt == "expression" && mc == "expression")
-	return(all.equal.list(target, current, check.attributes = check.attributes, ...))
+	return(all.equal.list(target, current, ...))
     ttxt <- paste(deparse(target), collapse = "\n")
     ctxt <- paste(deparse(current), collapse = "\n")
     msg <- c(if(mt != mc)
 	     paste("Modes of target, current: ", mt, ", ", mc, sep = ""),
 	     if(ttxt != ctxt) {
 		 if(pmatch(ttxt, ctxt, FALSE))
-		     "target a subset of current"
+		     "target is a subset of current"
 		 else if(pmatch(ctxt, ttxt, FALSE))
-		     "current a subset of target"
-		 else	"target, current don't match when deparsed"
+		     "current is a subset of target"
+		 else "target, current do not match when deparsed"
 	     })
     if(is.null(msg)) TRUE else msg
 }
@@ -195,6 +200,40 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
 	    msg <- c(msg, paste("Component ", i, ": ", mi, sep=""))
     }
     if(is.null(msg)) TRUE else msg
+}
+
+all.equal.raw <-
+    function(target, current, check.attributes = TRUE, ...)
+{
+    msg <-  if(check.attributes) attr.all.equal(target, current, ...)
+    if(data.class(target) != data.class(current)) {
+	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
+			    data.class(current), sep = ""))
+	return(msg)
+    }
+    lt <- length(target)
+    lc <- length(current)
+    if(lt != lc) {
+	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
+	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
+		     ") differ (comparison on first ", ll <- min(lt, lc),
+		     " components)", sep = ""))
+	ll <- seq_len(ll)
+	target <- target[ll]
+	current <- current[ll]
+    }
+    # raws do not have NAs, but logicals do
+    nas <- is.na(target); nasc <- is.na(current)
+    if (any(nas != nasc)) {
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(nasc),
+                            "in current", sum(nas), "in target"))
+	return(msg)
+    }
+    ne <- !nas & (target != current)
+    if(!any(ne) && is.null(msg)) TRUE
+    else if(sum(ne) == 1) c(msg, paste("1 element mismatch"))
+    else if(sum(ne) > 1) c(msg, paste(sum(ne), "element mismatches"))
+    else msg
 }
 
 

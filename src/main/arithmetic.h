@@ -9,6 +9,6 @@ SEXP do_cmathfuns(SEXP, SEXP, SEXP, SEXP);
 
 SEXP complex_math1(SEXP, SEXP, SEXP, SEXP);
 SEXP complex_math2(SEXP, SEXP, SEXP, SEXP);
-SEXP complex_unary(ARITHOP_TYPE, SEXP);
+SEXP complex_unary(ARITHOP_TYPE, SEXP, SEXP);
 SEXP complex_binary(ARITHOP_TYPE, SEXP, SEXP);
 

@@ -1,13 +1,18 @@
 dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
-                       pointsize, ...)
+                       units = "in", pointsize, ...,
+                       method = c("postscript", "pdf"))
 {
     if(missing(file)) stop("'file' is missing with no default")
-    if(!is.character(file) || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || !nzchar(file))
         stop("'file' must be a non-empty character string")
+    method <- match.arg(method)
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
+    width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
     gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || nchar(gsexe) == 0) {
+    if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- "gs"
-        rc <- system(paste(gsexe, "-help > /dev/null"))
+        rc <- system(paste(shQuote(gsexe), "-help > /dev/null"))
         if(rc != 0) stop("sorry, 'gs' cannot be found")
     }
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE)
@@ -28,27 +33,35 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     if(missing(height) && !missing(width)) height <- h/w * width
 
     current.device <- dev.cur()
-    dev.off(dev.copy(device = postscript, file=tmp, width=width,
-                     height=height,
-                     pointsize=pointsize, paper="special",
-                     horizontal=FALSE, ...))
+    if(method == "pdf")
+        dev.off(dev.copy(device = pdf, file=tmp, width=width,
+                         height=height,
+                         pointsize=pointsize, paper="special", ...))
+    else
+        dev.off(dev.copy(device = postscript, file=tmp, width=width,
+                         height=height,
+                         pointsize=pointsize, paper="special",
+                         horizontal=FALSE, ...))
     dev.set(current.device)
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+    cmd <- paste(shQuote(gsexe), " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  " -g", ceiling(res*width), "x", ceiling(res*height),
-                 " -sOutputFile=", file, " ", tmp, sep="")
+                 " -sOutputFile=", shQuote(file), " ", tmp, sep="")
     system(cmd)
     invisible()
 }
 
 bitmap <- function(file, type="png256", height=6, width=6, res=72,
-                   pointsize, ...)
+                   units = "in", pointsize, ...)
 {
     if(missing(file)) stop("'file' is missing with no default")
-    if(!is.character(file) || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || !nzchar(file))
         stop("'file' must be a non-empty character string")
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
+    width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
     gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || nchar(gsexe) == 0) {
+    if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- "gs"
         rc <- system(paste(gsexe, "-help > /dev/null"))
         if(rc != 0) stop("sorry, 'gs' cannot be found")
@@ -64,10 +77,11 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
                       paste(gsdevs, collapse="\n")),
              domain = NA)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
-    cmd <- paste("|", gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+    cmd <- paste("|", shQuote(gsexe),
+                 " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  " -g", ceiling(res*width), "x", ceiling(res*height),
-                 " -sOutputFile=", file, " -", sep="")
+                 " -sOutputFile=", shQuote(file), " -", sep="")
     postscript(file=cmd, width=width, height=height,
                pointsize=pointsize, paper="special", horizontal=FALSE, ...)
     invisible()

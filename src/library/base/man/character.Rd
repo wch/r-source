@@ -25,12 +25,12 @@ is.character(x)
   default method calls \code{\link{as.vector}}, so dispatch is first on
   methods for \code{as.character} and then for methods for \code{as.vector}.
 
-  \code{as.character} represents real and complex numbers to 15 decimal
-  places (technically the compiler's setting of the ISO C constant
+  \code{as.character} represents real and complex numbers to 15 significant
+  digits (technically the compiler's setting of the ISO C constant
   \code{DBL_DIG}, which will be 15 on machines supporting IEC60559
   arithmetic according to the C99 standard).  This ensures that all the
   digits in the result will be reliable (and not the result of
-  representation error), but does mean that coversion to character and
+  representation error), but does mean that conversion to character and
   back to numeric may change the number.  If you want to convert numbers
   to character with the maximum possible precision, use
   \code{\link{format}}.
@@ -45,10 +45,7 @@ is.character(x)
   extracts the first element of length-one character vectors.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of character type or not.  (Methods should
-  always return \code{FALSE} for classes which are not based on a
-  character vector, but can return \code{FALSE} even for those which
-  are.)
+  whether its argument is of character type or not.
 }
 \note{
   \code{as.character} truncates components of language objects to 500

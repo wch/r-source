@@ -78,7 +78,8 @@ getOption(x)
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
-      are 1\dots22 with default 7.  See \code{\link{print.default}}.}
+      are 1\dots22 with default 7.  See the warning in
+      \code{\link{print.default}} about values greater than 15.}
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to
       print when formatting time values in seconds.  Valid values
@@ -93,7 +94,8 @@ getOption(x)
     % note use of \code as otherwise -- is an en-dash.
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
       when it controls whether input is echoed.  Command-line option
-      \code{--slave} sets this initially to \code{FALSE}.}
+      \code{--slave} sets this to \code{FALSE}, but otherwise
+      it starts the session as \code{TRUE}.}
 
     \item{\code{encoding}:}{The name of an encoding, default
       \code{"native.enc"}).  See \code{\link{connections}}.}
@@ -152,17 +154,21 @@ getOption(x)
       used as the decimal point in output conversions, that is in
       printing, plotting and \code{as.character} but not deparsing.}
 
-    \item{\code{pager}:}{the (stand-alone) program used for displaying
-      text files on \R's console, also used by \code{\link{file.show}} and
-      sometimes \code{\link{help}}.
+    \item{\code{pager}:}{the command used for displaying text files by
+      \code{\link{file.show}}.
 #ifdef unix
-      Defaults to \file{\$R\_HOME/bin/pager}.}
+      Defaults to \file{\$R\_HOME/bin/pager}, which selects a pager via
+      the \env{PAGER} environment variable (and that usually defaults to
+      \code{less}).
 #endif
 #ifdef windows
       Defaults to \code{"internal"}, which uses a pager similar to the
       GUI console.  Another possibility is \code{"console"} to use the
-      console itself.}
+      console itself.
 #endif
+      Can be a character string or an \R function, in which case it
+      needs to accept the same first four arguments as
+      \code{\link{file.show}}.}
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
@@ -185,6 +191,18 @@ getOption(x)
     \item{\code{prompt}:}{a non-empty string to be used for \R's prompt;
       should usually end in a blank (\code{" "}).}
 
+#ifdef unix
+    \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
+      % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
+      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
+      This is the set of characters use to break the input line up into
+      tokens for object- and file-name completion.  Those who do not use
+      spaces around operators may prefer
+      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&\{()\}"}.%"
+      which was the default in \R 2.5.0.  (The default in pre-2.5.0
+      versions of \R was \code{" \\t\\n\\"\\\\'`@$><=;|&\{("}.)}%"
+#endif
+
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
       see \code{\link{save}}.}
 
@@ -194,6 +212,15 @@ getOption(x)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
+    \item{\code{showWarnCalls}, \code{showErrorCalls}:}{a logical.
+      Should warning and error messages show a summary of the call
+      stack?  By default error calls are shown in non-interactive
+      sessions.}
+
+    \item{\code{showNCalls}:}{a integer.  Controls how long the sequence
+      of calls must be (in bytes) before ellipses are used.  Defaults to
+      40 and should be at least 30 and no more than 500.}
+
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
@@ -202,7 +229,7 @@ getOption(x)
       \code{\link{data.frame}} and \code{\link{read.table}}.}
 
     \item{\code{texi2dvi}:}{used by the unexported function
-      \code{texi2dvi} in namespace \pkg{tools}.}
+      \code{texi2dvi} in name space \pkg{tools}.}
 
     \item{\code{timeout}:}{integer.  The timeout for some Internet
       operations, in seconds.  Default 60 seconds.  See
@@ -226,6 +253,16 @@ getOption(x)
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
+    \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
+      partial matching is used in argument matching.}
+
+    \item{\code{warnPartialMatchAttr}:}{logical.  If true, warns if
+      partial matching is used in extracting attributes via
+      \code{\link{attr}}.}
+
+    \item{\code{warnPartialMatchDollar}:}{logical.  If true, warns if
+      partial matching is used for extraction by \code{$}.}
+
     \item{\code{warning.expression}:}{an \R code expression to be called
       if a warning is generated, replacing the standard message.  If
       non-null it is called irrespective of the value of option
@@ -233,13 +270,20 @@ getOption(x)
 
     \item{\code{warnings.length}:}{sets the truncation limit for error
       and warning messages.  A non-negative integer, with allowed values
-      100\dots8192, default 1000.}
+      100\dots8170, default 1000.}
 
-    \item{\code{width}:}{controls the number of characters on a line.
+    \item{\code{width}:}{controls the maximum number of columns on a
+      line used in printing vectors, matrices and arrays, and when
+      filling by \code{\link{cat}}.
+
+      Columns are normally the same as characters except in CJK languages.
+
       You may want to change this if you re-size the window that \R is
       running in.  Valid values are 10\dots10000 with default normally
       80.  (The limits on valid values are in file \file{Print.h} and can be
-      changed by re-compiling \R.)}
+      changed by re-compiling \R.)  Some \R consoles automatically change
+      the value when they are resized.
+    }
  }
 
   The \sQuote{factory-fresh} default settings of some of these options are
@@ -277,10 +321,12 @@ getOption(x)
       type for that session.  The value of this option defaults to the
       normal screen device (e.g., \code{x11}, \code{windows} or
       \code{quartz}) for an interactive session, and \code{postscript}
-      in batch use or if a screen is not available.}
+      in batch use or if a screen is not available.  If named, it is
+      looked for first from the global environment and then in the
+      \pkg{grDevices} namespace.}
 
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
-      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
+      and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
     \item{\code{par.ask.default}:}{logical.  The default for
@@ -318,7 +364,8 @@ getOption(x)
       continuous plotting (default 500).}
 
     \item{\code{xpinch, ypinch}:}{double.  Pixels per inch, horizontally and
-      vertically.  If unset (the default), taken from Windows.}
+      vertically, for the \code{\link{windows}} device.  If unset
+      (the default), taken from Windows.}
 #endif
   }
 }
@@ -413,7 +460,8 @@ getOption(x)
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
-    \item{\code{unzip}:}{the command used for unzipping help files.
+    \item{\code{unzip}:}{a character string, the path of the command
+      used for unzipping help files, or \code{"internal"}.
 #ifdef unix
       Defaults to the value of \env{R\_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
@@ -454,10 +502,10 @@ getOption(x)
 }
 \examples{
 options() # printing all current options
-op <- options(); str(op) # nicer printing
+op <- options(); utils::str(op) # nicer printing
 
-options('width')[[1]] == options()$width # the latter needs more memory
-options(digits = 20)
+getOption("width") == options()$width # the latter needs more memory
+options(digits = 15)
 pi
 
 # set the editor, and save previous value
@@ -472,15 +520,17 @@ print(1e5)
 options(scipen=3); print(1e5)
 
 options(op)     # reset (all) initial options
-options('digits')
+options("digits")
 
 \dontrun{## set contrast handling to be like S
 options(contrasts = c("contr.helmert", "contr.poly"))
 }
+
 \dontrun{## on error, terminate the R session with error status 66
 options(error = quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
 }
+
 \dontrun{## Set error actions for debugging:
 ## enter browser on error, see ?recover:
 options(error = recover)

@@ -17,14 +17,14 @@ HelpStyle = 1
 Internet = 0
 
 FULLVERSION=`cat ../../../VERSION`
-RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
+RPREFIX = $(shell $(PERL) ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
 INFO_FILES = COPYING NEWS README
 DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS
 GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
-ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories
+ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf
 
 GW32_FILES = MkRules MakePkg MakeDll Rpwd.exe pwd.pl makeDllRes.pl install-save.sh
 
@@ -93,7 +93,7 @@ endif
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #
-	find $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
+	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 
 md5sums:
 	@echo "adding MD5 checksums"
@@ -106,12 +106,14 @@ fixups:
 	  $(RPREFIX)/doc/html/search/index.txt
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
+	$(RM) -f $(RPREFIX)/Tcl/doc/*.cnt $(RPREFIX)/Tcl/doc/*.HLP
 
 
 ## for Inno Setup installer
 
-R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums
-	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)
+R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums \
+  ../../../VERSION ../../../SVN-REVISION
+	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)
 
 $(RPREFIX)-win32.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
@@ -130,7 +132,7 @@ files.wxs: imagedir fixups md5sums
 	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
 
 R.wxs: WIXins.pl uuids files.wxs
-	perl WIXins.pl $(RPREFIX) $(RPREFIX)
+	$(PERL) WIXins.pl $(RPREFIX) $(RPREFIX)
 
 $(RPREFIX)-win32.msi: R.wxs License.rtf
 	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
@@ -154,5 +156,5 @@ myR:
 	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  bin/Rterm.exe --vanilla --slave)
-	perl JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet)
+	$(PERL) JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet)
 	"$(ISDIR)/iscc" R.iss > myR.log

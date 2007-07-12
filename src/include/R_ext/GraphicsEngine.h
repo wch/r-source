@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-5 The R Development Core Team.
+ *  Copyright (C) 2001-7 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,8 @@
 #ifndef R_GRAPHICSENGINE_H_
 #define R_GRAPHICSENGINE_H_
 
+#include <R_ext/GraphicsDevice.h> /* needed for NewDevDesc */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -38,9 +40,10 @@ extern "C" {
  *
  * Version 1:  Introduction of the version number.
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
+ * Version 3:  R_GE_str2col() added to API.
  */
 
-#define R_GE_version 2
+#define R_GE_version 3
 
 int R_GE_getVersion();
 
@@ -295,6 +298,8 @@ SEXP LENDget(R_GE_lineend lend);
 R_GE_linejoin LJOINpar(SEXP value, int ind);
 SEXP LJOINget(R_GE_linejoin ljoin);
 
+unsigned int R_GE_str2col(const char *s);
+
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
 void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);
 void GELine(double x1, double y1, double x2, double y2, 
@@ -320,9 +325,9 @@ void GEPretty(double *lo, double *up, int *ndiv);
 void GEMetricInfo(int c, R_GE_gcontext *gc, 
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd);
-double GEStrWidth(char *str, 
+double GEStrWidth(const char *str, 
 		  R_GE_gcontext *gc, GEDevDesc *dd);
-double GEStrHeight(char *str, 
+double GEStrHeight(const char *str, 
 		  R_GE_gcontext *gc, GEDevDesc *dd);
 
 /* 
@@ -351,26 +356,9 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 /* 
  * From vfonts.c
  */
-typedef void (*R_GE_VTextRoutine)(double x, double y, const char * const s, 
-				  double x_justify, double y_justify, 
-				  double rotation,
-				  R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd);
 
-typedef double (*R_GE_VStrWidthRoutine)(const unsigned char *s, 
-					R_GE_gcontext *gc, GEDevDesc *dd);
-
-typedef double (*R_GE_VStrHeightRoutine)(const unsigned char *s, 
-					 R_GE_gcontext *gc, GEDevDesc *dd);
-
-void R_GE_setVFontRoutines(R_GE_VStrWidthRoutine vwidth, 
-			   R_GE_VStrHeightRoutine vheight, 
-			   R_GE_VTextRoutine vtext);
-
-double R_GE_VStrWidth(const unsigned char *s, 
-		      R_GE_gcontext *gc, GEDevDesc *dd);
-
-double R_GE_VStrHeight(const unsigned char *s, 
-		       R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrHeight(const char *s, R_GE_gcontext *gc, GEDevDesc *dd);
 
 void R_GE_VText(double x, double y, const char * const s, 
 		double x_justify, double y_justify, double rotation,

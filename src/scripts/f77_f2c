@@ -28,7 +28,7 @@ version=`set - ${revision}; echo ${2}`
 version="R front-end script to f2c ${version}
 
 Copyright (C) 2002-5 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
+This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD f77 [options] files [objs]

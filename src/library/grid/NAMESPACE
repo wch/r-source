@@ -55,12 +55,18 @@ export(
        "grob", "gList", "gTree", "gPath",
        "grobName",
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
+       "grid.gedit", "grid.gremove", "grid.gget",
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
-       "getNames", "childNames",
        "grid.grab", "grid.grabExpr",
        "setChildren",
 
+       # Listing grobs and viewports
+       "grid.ls",
+       "nestedListing", "pathListing", "grobPathListing",
+       # Deprecated
+       "getNames", "childNames", 
+       
        # Creating and drawing predefined grobs and gTrees
        "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
        "grid.line.to", "grid.lines", "grid.move.to",
@@ -121,18 +127,12 @@ S3method("print", "unit")
 S3method("print", "viewport")
 S3method("print", "path")
 S3method("print", "gpar")
+S3method("print", "flatGridListing")
 
 ## S3 methods for exported generics in grid
 S3method("downViewport", "default")
 S3method("downViewport", "vpPath")
 
-S3method("grid.draw", "grob")
-S3method("grid.draw", "gList")
-S3method("grid.draw", "gTree")
-S3method("grid.draw", "viewport")
-S3method("grid.draw", "vpPath")
-S3method("grid.draw", "pop")
-S3method("grid.draw", "up")
 S3method("drawDetails", "arrows")
 S3method("drawDetails", "circle")
 S3method("drawDetails", "curve")
@@ -149,9 +149,31 @@ S3method("drawDetails", "segments")
 S3method("drawDetails", "text")
 S3method("drawDetails", "xaxis")
 S3method("drawDetails", "yaxis")
+
 S3method("editDetails", "default")
 S3method("editDetails", "xaxis")
 S3method("editDetails", "yaxis")
+
+S3method("grid.draw", "grob")
+S3method("grid.draw", "gList")
+S3method("grid.draw", "gTree")
+S3method("grid.draw", "viewport")
+S3method("grid.draw", "vpPath")
+S3method("grid.draw", "pop")
+S3method("grid.draw", "up")
+
+S3method("gridList", "default")
+S3method("gridList", "grob")
+S3method("gridList", "gList")
+S3method("gridList", "gTree")
+S3method("gridList", "viewport")
+S3method("gridList", "vpList")
+S3method("gridList", "vpStack")
+S3method("gridList", "vpTree")
+S3method("gridList", "vpPath")
+S3method("gridList", "pop")
+S3method("gridList", "up")
+
 S3method("grobHeight", "grob")
 S3method("grobHeight", "gList")
 S3method("grobHeight", "gPath")
@@ -160,6 +182,7 @@ S3method("grobWidth", "grob")
 S3method("grobWidth", "gList")
 S3method("grobWidth", "gPath")
 S3method("grobWidth", "default")
+
 S3method("grobX", "grob")
 S3method("grobX", "gList")
 S3method("grobX", "gPath")
@@ -168,6 +191,7 @@ S3method("grobY", "grob")
 S3method("grobY", "gList")
 S3method("grobY", "gPath")
 S3method("grobY", "default")
+
 S3method("heightDetails", "arrows")
 S3method("heightDetails", "circle")
 S3method("heightDetails", "curve")
@@ -182,15 +206,20 @@ S3method("heightDetails", "segments")
 S3method("heightDetails", "text")
 S3method("heightDetails", "xspline")
 #S3method("height.details", "viewport")
+
 S3method("postDraw", "grob")
 S3method("preDraw", "grob")
 S3method("preDraw", "gTree")
+
 S3method("preDrawDetails", "grob")
+
 S3method("postDrawDetails", "grob")
+
 S3method("record", "default")
 S3method("record", "grob")
 S3method("record", "viewport")
 S3method("record", "vpPath")
+
 S3method("validDetails", "arrows")
 S3method("validDetails", "circle")
 S3method("validDetails", "clip")
@@ -205,6 +234,7 @@ S3method("validDetails", "points")
 S3method("validDetails", "rect")
 S3method("validDetails", "segments")
 S3method("validDetails", "text")
+
 S3method("widthDetails", "arrows")
 S3method("widthDetails", "circle")
 S3method("widthDetails", "curve")
@@ -219,6 +249,7 @@ S3method("widthDetails", "segments")
 S3method("widthDetails", "text")
 S3method("widthDetails", "xspline")
 #S3method("width.details", "viewport")
+
 S3method("xDetails", "circle")
 S3method("xDetails", "curve")
 S3method("xDetails", "lines")
@@ -229,6 +260,7 @@ S3method("xDetails", "rect")
 S3method("xDetails", "segments")
 S3method("xDetails", "text")
 S3method("xDetails", "xspline")
+
 S3method("yDetails", "circle")
 S3method("yDetails", "curve")
 S3method("yDetails", "lines")

@@ -1,0 +1,623 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-04-04 14:08+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1\n"
+
+msgid "argument 'package' must be of length 1"
+msgstr " 引数 'package' は 長さ 1 でなければならない"
+
+msgid "you must specify 'package' or 'dir'"
+msgstr " 'package' 又は 'dir' を指定する必要があります"
+
+msgid "directory '%s' does not exist"
+msgstr " ディレクトリ '%s' が存在しません"
+
+msgid "neither code nor data objects found"
+msgstr " コードもデータオブジェクトも見つかりませんでした"
+
+msgid "Undocumented code objects:"
+msgstr " ドキュメント化されてないコードオブジェクト:"
+
+msgid "Undocumented data sets:"
+msgstr " ドキュメント化されてないデータセット:"
+
+msgid "Undocumented S4 classes:"
+msgstr " ドキュメント化されてない S4 クラス:"
+
+msgid "Undocumented S4 methods:"
+msgstr " ドキュメント化されてない S4 メソッド:"
+
+msgid "Prototyped non-primitives:"
+msgstr " プロトタイプ化された非プリミティブ："
+
+msgid "Undocumented %s:"
+msgstr " ドキュメント化されてない %s:"
+
+msgid "directory '%s' does not contain R code"
+msgstr " ディレクトリ '%s' は R コードを含んでいません"
+
+msgid "directory '%s' does not contain Rd sources"
+msgstr " ディレクトリ '%s' は Rd ソースを含んでいません"
+
+msgid ""
+"Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+" ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはない関数もしく"
+"はメソッド:"
+
+msgid "Data sets with usage in documentation object '%s' but not in code:"
+msgstr ""
+" ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセッ"
+"ト:"
+
+msgid "Argument names in code not in docs:"
+msgstr " コード中にはあるがドキュメント中には無い引数名:"
+
+msgid "Argument names in docs not in code:"
+msgstr " ドキュメント中にはあるがコード中には無い引数名:"
+
+msgid "Mismatches in argument names (first 3):"
+msgstr " 引数名のミスマッチ（最初の三つ）:"
+
+msgid "Mismatches in argument names:"
+msgstr " 引数名のミスマッチ:"
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr " 引数名既定値のミスマッチ（最初の三つ）:"
+
+msgid "Mismatches in argument default values:"
+msgstr " 引数名既定値のミスマッチ:"
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr " ドキュメントオブジェクト '%s' からの Codoc ミスマッチ:"
+
+msgid "Code: %s"
+msgstr " コード: %s"
+
+msgid "Docs: %s"
+msgstr " ドキュメント: %s"
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr " S4 クラス codoc はドキュメントオブジェクト '%s' とマッチしません："
+
+msgid "Slots for class '%s'"
+msgstr " クラス '%s' のためのスロット"
+
+msgid "name"
+msgstr " 名前"
+
+msgid "code"
+msgstr " コード"
+
+msgid "docs"
+msgstr " ドキュメント"
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr " データ codoc はドキュメントオブジェクト '%s' とマッチしません:"
+
+msgid "Variables in data frame '%s'"
+msgstr " データ・フレーム '%s' 中の変数"
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr " ドキュメントオブジェクト '%s' 中にドキュメントの無い引数"
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr " ドキュメントオブジェクト '%s' 中に重複した \\argument 項目："
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr ""
+" ドキュメントオブジェクト '%s' 中の \\usage 中に存在しないドキュメントを持つ"
+"引数："
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr ""
+" ドキュメンテーションオブジェクト'%s' 中の\\alias がオブジェクト内の \\usage "
+"に存在しません:"
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr ""
+" 不正な \\usage 行がドキュメントオブジェクト            '%s' 中に見つかりまし"
+"た:"
+
+msgid "S3 methods shown with full name in documentation object '%s':"
+msgstr ""
+" ドキュメンテーション・オブジェクト '%s' 中にフルネームで示されたS3メソッド："
+
+msgid "unable to create"
+msgstr " 生成出来ません"
+
+msgid "unable to write code files"
+msgstr " コードファイルを書き込めません"
+
+msgid "you must specify 'package', 'dir' or 'file'"
+msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりません"
+
+msgid "file '%s' does not exist"
+msgstr " ファイル '%s' が存在しません"
+
+msgid "parse error in file '%s'"
+msgstr " ファイル '%s' 中に構文解析エラー"
+
+msgid "Foreign function calls without 'PACKAGE' argument:"
+msgstr " 'PACKAGE' 引数のない外部言語関数コール:"
+
+msgid "declared S3 method '%s' not found"
+msgstr " 宣言された S3 メソッド '%s' が見付かりません"
+
+msgid "cannot check R code installed as image"
+msgstr " イメージとしてインストールされた R コードはチェックできません"
+
+msgid "parse error in examples from file '%s'"
+msgstr " ファイル '%s' の例中に構文解析エラー"
+
+msgid "File '%s':"
+msgstr " ファイル '%s'："
+
+msgid "found T/F in %s"
+msgstr " %s 中に T/F が見つかりました"
+
+msgid "Packages required but not available:"
+msgstr " パッケージが必要ですが，利用可能ではありません"
+
+msgid "Former standard packages required but now defunct:"
+msgstr " 以前の標準パッケージが必要ですが，このパッケージは現存しません："
+
+msgid "Vignette dependencies not required:"
+msgstr " ビニエットの依存性は不要です:"
+
+msgid ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+" ビニエット依存性(\\VignetteDepends{} 項目)は　DESCRIPTION の Depends/"
+"Suggests/Imports 項目に含まれなければなりません"
+
+msgid "Namespace dependencies not required:"
+msgstr " Namespaceの依存性は必要ありません："
+
+msgid "Package Rd sources were installed without preserving Rd file names."
+msgstr ""
+" パッケージの Rd ソースファイルが Rd ファイル名を保存せずにインストールされま"
+"した"
+
+msgid "Please reinstall using a current version of R."
+msgstr " 現在のバージョンの R を使って再インストールしてください"
+
+msgid "Rd files with syntax errors:"
+msgstr " 構文エラーを含む Rd ファイル："
+
+msgid "Rd files with likely Rd problems:"
+msgstr " おそらく Rd 固有の問題を含む Rd ファイル："
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr " ファイル '%s' 中のトップレベルの文字列は意味が通りません"
+
+msgid "Following section '%s'"
+msgstr " 以下のセクション '%s' "
+
+msgid "Rd files with unknown encoding:"
+msgstr " 未知のエンコーディングを含む Rd ファイル："
+
+msgid "Rd files with invalid non-ASCII metadata:"
+msgstr " 不正な非 ASCII メタデータを持つ Rd ファイル："
+
+msgid "Rd files with non-ASCII section titles:"
+msgstr " 非 ASCII セクションタイトルを持つ Rd ファイル："
+
+msgid "Rd files with missing or empty '\\name':"
+msgstr ""
+" '\n"
+"ame' を持たないか空である Rd ファイル:"
+
+msgid "Rd files with missing or empty '\\title':"
+msgstr " '\\title' を持たないか空である Rd ファイル:"
+
+msgid "Rd files without '%s':"
+msgstr " '%s' を持たない Rd ファイル:"
+
+msgid "These entries are required in an Rd file."
+msgstr " Rd ファイルにはこれらの項目が必要です。"
+
+msgid "Rd files with duplicate '%s':"
+msgstr " '%s' が重複する Rd ファイル:"
+
+msgid "These entries must be unique in an Rd file."
+msgstr " Rd ファイルではこれらの項目は重複してはなりません。"
+
+msgid "Rd files with unknown sections:"
+msgstr " 未知のセクションを含む Rd ファイル："
+
+msgid "Rd files with non-standard keywords:"
+msgstr " 非標準的なキーワードを持つ Rd ファイル："
+
+msgid ""
+"Each '\\keyword' entry should specify one of the standard keywords (as "
+"listed in file 'KEYWORDS' in the R documentation directory)."
+msgstr ""
+" 各 'keyword' エントリーは、標準のキーワード（R ホームディレクトリの 'doc' サ"
+"ブディレクトリのファイル 'KEYWORDS' にリストされているように）のうちの1つを指"
+"定しなければなりません"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr " 重複するエイリアス '%s' を持ったRdファイル："
+
+msgid "Found invalid multi-byte character data."
+msgstr " 不正なマルチバイト文字データが見つかりました"
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr " iconvは利用出来ませんので再びエンコードすることは出来ません．"
+
+msgid "Try running R in a single-byte locale."
+msgstr " 単バイトロケール中でRを動作させてみてください"
+
+msgid "Malformed package name"
+msgstr " 奇矯なパッケージ名です"
+
+msgid "Invalid package name."
+msgstr " 不正なパッケージ名です"
+
+msgid "This is the name of a base package."
+msgstr " これはbaseパッケージの名前です"
+
+msgid "This name was used for a base package and is remapped by library()."
+msgstr ""
+" この名前は既にbaseパッケージで使われていますので，library()により再配置され"
+"ました．"
+
+msgid "Unknown encoding"
+msgstr " 未知のエンコードです"
+
+msgid "Fields with non-ASCII tags:"
+msgstr " ASCIIタグのないフィールドです："
+
+msgid "All field tags must be ASCII."
+msgstr " 全てのフィールドタグはASCIIでなければなりません"
+
+msgid "Fields with non-ASCII values:"
+msgstr " ASCII値でないフィールドです："
+
+msgid "These fields must have ASCII values."
+msgstr " これらのフィールドはASCII値でなければなりません"
+
+msgid "Required fields missing:"
+msgstr " 必要なフィールドは見当たりません．"
+
+msgid "Malformed package version."
+msgstr " 不正なパッケージのバージョンです．"
+
+msgid "Malformed maintainer field."
+msgstr " 不正な　maintainer field　です．"
+
+msgid "Malformed Depends or Suggests or Imports or Enhances field."
+msgstr " 不備な Depends, Suggests, Imports, Enhanced 欄。"
+
+msgid "Offending entries:"
+msgstr " 好ましくないエントリー："
+
+msgid ""
+"Entries must be names of packages optionally followed by '<=' or '>=', white "
+"space, and a valid version number in parentheses."
+msgstr ""
+" 項目はパッケージの名前(オプションで '<=' か '>=', 空白、そして括弧にはさまれ"
+"た適正なバージョン番号、が続く)でなければなりません."
+
+msgid "Entries with infeasible comparison operator:"
+msgstr " 実行不可能な比較演算子によるエントリ："
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr " 演算子 '<=' 及び '>=' のみ有効です."
+
+msgid "Entries with infeasible version number:"
+msgstr " 実行不可能なバージョン番号がついたエントリーです："
+
+msgid ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single '.' or '-'."
+msgstr ""
+" バージョン番号は少なくとも2つの非負の整数列で，'.' または '-' で区切られてい"
+"なければいけません．"
+
+msgid "Package name and namespace differ."
+msgstr " パッケージ名と namespace とが異なっています．"
+
+msgid "Invalid Priority field."
+msgstr " 不正な優先フィールドです．"
+
+msgid ""
+"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
+"already be known to R."
+msgstr ""
+" パッケージが必要とする優先順位 'base' 'recommended' 'defunct-base' は、Rが既"
+"に知らなければならない."
+
+msgid ""
+"See the information on DESCRIPTION files in section 'Creating R packages' of "
+"the 'Writing R Extensions' manual."
+msgstr ""
+" マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
+"ファイルにある情報を参照してください．"
+
+#, fuzzy
+msgid "Encoding '%s' is not portable"
+msgstr " テスト '%s' は利用出来ません"
+
+#, fuzzy
+msgid "Unknown encoding with non-ASCII data"
+msgstr " ASCIIタグのないフィールドです："
+
+msgid "Non-portable flags in variable '%s':"
+msgstr " 変数 '%s' 中に non-portable なフラグ:"
+
+msgid "Missing link(s) in documentation object '%s':"
+msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました:"
+
+msgid "found %s"
+msgstr " %s が見つかりました"
+
+msgid "package 'methods' is used but not declared"
+msgstr " パッケージ \"methods\" が使われていますが、宣言されていません"
+
+msgid "'::' or ':::' imports not declared from:"
+msgstr " '::' もしくは ':::'　によるインポートが以下から宣言されていません:"
+
+msgid "'library' or 'require' calls not declared from:"
+msgstr ""
+" 'library' もしくは 'requires'　による呼出しが以下から宣言されていません:"
+
+msgid "argument 'lines' must be a character vector"
+msgstr " 引数 'lines' は文字列ベクトルでなければなりません"
+
+msgid "argument 'file' must be a character string or connection"
+msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません"
+
+msgid "missing/empty \\name field in '%s'"
+msgstr ""
+" '%s' 中に欠如もしくは空の \n"
+"ame 欄があります"
+
+msgid "Rd files must have a non-empty \\name."
+msgstr ""
+" Rdファイルは空でない \n"
+"ame を持たなければなりません"
+
+msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
+msgstr ""
+" マニュアル 'Writing R Extensions' 中の章 'Writing R documentation' を参照し"
+"てください．"
+
+msgid "missing/empty \\title field in '%s'"
+msgstr " '%s' 中に欠如もしくは空の \title 欄があります"
+
+msgid "Rd files must have a non-empty \\title."
+msgstr " Rdファイルには、空でない \title がなければならなりません"
+
+msgid "argument 'outFile' must be a character string or connection"
+msgstr " 引数 'outFile' は文字列ベクトルかコネクションでなければなりません"
+
+msgid "directory '%s' does not contain Rd objects"
+msgstr " ディレクトリ '%s' は Rd オブジェクトを含んでいません"
+
+msgid "unterminated section '%s'"
+msgstr " セクション '%s' は未完です"
+
+msgid "incomplete section 'section{%s}'"
+msgstr " 完結しないセクション 'section{%s}'"
+
+msgid "unterminated section 'section{%s}'"
+msgstr " 終了しないセクション 'section{%s}'"
+
+msgid "argument 'txt' must be a character string"
+msgstr " 引数 'txt' は文字列でなければなりません"
+
+msgid "unmatched \\item name in '\\item{%s'"
+msgstr " マッチしない \\item 名が以下にあります '\\item{%s'"
+
+msgid "no \\item description for item '%s'"
+msgstr " 項目 '%s' に対する \\item 記述がありません"
+
+msgid "unmatched \\item description for item '%s'"
+msgstr " 項目 '%s' に対するマッチしない \\item   記述"
+
+msgid "unclosed \\link"
+msgstr " 閉じられていない \\link"
+
+msgid "unclosed \\%s"
+msgstr " 閉じられていない \\%s"
+
+msgid "Rd syntax errors found"
+msgstr " Rd 構文エラーが見つかりました"
+
+msgid "Syntax error in documentation object '%s':"
+msgstr " ドキュメンテーション・オブジェクト '%s' 中の構文エラー："
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr " 欠損もしくは空の名前を持つ Rd オブジェクトは扱えません"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr ""
+" Rd ファイル中に欠損もしくは空の \n"
+"ame 欄"
+
+msgid "unable to create temp directory"
+msgstr " 仮ディレクトリを生成することが出来ません"
+
+msgid ""
+"processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです:\n"
+"%s"
+
+msgid "running make failed"
+msgstr " make の実行が失敗しました"
+
+msgid "cannot read index information in file '%s'"
+msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません"
+
+msgid "argument 'vignette' must be of length 1"
+msgstr " 引数 'vignette' は長さ1でなければなりません"
+
+msgid "file '%s' not found"
+msgstr " ファイル '%s' が見つかりません"
+
+msgid "Invalid DESCRIPTION file"
+msgstr " 不正な DESCRIPTION ファイルです"
+
+msgid "*** someone has corrupted the Built field in package '%s' ***"
+msgstr " *** パッケージ '%s' 中の Built 欄が改ざんされています ***"
+
+msgid "cannot open directory '%s'"
+msgstr " ディレクトリ '%s' を開くことが出来ません"
+
+msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr " LC_LOCALE によるロケール依存のソーティングを終了できません "
+
+msgid "duplicated files in '%s' field:"
+msgstr " '%s' フィールド中に重複したファイルがあります："
+
+msgid "files in '%s' field missing from '%s':"
+msgstr " '%s' 欄のファイルが '%s' から欠損しています:"
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr " '%s' 中のファイルが '%s' 欄から欠損しています:"
+
+msgid "unable to create '%s'"
+msgstr " '%s' を生成することが出来ません"
+
+msgid "unable to re-encode '%s'"
+msgstr " '%s' 再エンコード出来ません"
+
+msgid "unable to copy INDEX to '%s'"
+msgstr " INDEX を '%s' にコピーすることが出来ません"
+
+msgid "cannot create directory '%s'"
+msgstr " ディレクトリ '%s' を生成することが出来ません"
+
+msgid "unable to run pdflatex on '%s'"
+msgstr " pdflatex を '%s' に対して実行出来ません"
+
+msgid "unable to run bibtex on '%s'"
+msgstr " bibtex を '%s' に対して実行出来ません"
+
+msgid "file '%s' was not created"
+msgstr " ファイル '%s' は生成されませんでした"
+
+msgid "cannot copy '%s' to '%s'"
+msgstr " '%s' を '%s' にコピーすることが出来ません"
+
+msgid "there is no package called '%s'"
+msgstr " '%s' というパッケージが見当たりません"
+
+msgid "name space must not be loaded."
+msgstr " 名前空間がロードされなければなりません"
+
+msgid "package '%s' has no .rda file"
+msgstr " パッケージ '%s' は .rda ファイルを含みません"
+
+msgid "package seems to be using lazy loading for data already"
+msgstr ""
+" パッケージは既にデータに対する遅延読み込みを使用しているように見えます"
+
+msgid "object(s) %s are created by more than one data call"
+msgstr " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました"
+
+msgid "source list must have names for all elements"
+msgstr " ソースリストには全ての要素の名前が含まれていなければなりません"
+
+msgid "source must be an environment or a list"
+msgstr " ソースは環境またはリストでなければなりません"
+
+msgid "this cannot be used for package 'base'"
+msgstr " これはパッケージ 'base' に使用することが出来ません"
+
+msgid "package contains no R code"
+msgstr " パッケージにRコードが含まれていません"
+
+msgid "package seems to be using lazy loading already"
+msgstr " パッケージは既に遅延読み込みを使用しているように見えます"
+
+msgid "cannot update HTML package index"
+msgstr " HTMLパッケージのインデックスをアップデートすることが出来ません"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr " 'DESCRIPTION' は 'Encoding' 欄を持ち、再エンコーディングは不可能です"
+
+msgid "cannot create HTML package index"
+msgstr " HTMLパッケージのインデックスを生成することが出来ません"
+
+msgid "argument 'pkg' must be of length 1"
+msgstr " 引数 'pkg' は長さ1でなければなりません"
+
+msgid "package '%s' was not found"
+msgstr " パッケージ '%s' は見つかりませんでした"
+
+msgid "bad operand"
+msgstr " 誤ったオペランド"
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr " パッケージ '%s' は最小のセットに縮小された依存関係を持ちます"
+
+msgid "argument '%s' must be a character string or connection"
+msgstr " 引数 '%s' は文字列かコネクションでなければなりません"
+
+msgid "unimplemented encoding"
+msgstr " 実装されていないエンコード"
+
+msgid "test '%s' is not available"
+msgstr " テスト '%s' は利用出来ません"
+
+msgid "no or more than one match"
+msgstr " 0か複数のマッチ"
+
+msgid "argument 'x' must be a character vector"
+msgstr " 引数 'x' は文字型ベクトルでなければいけません"
+
+msgid "argument 'delim' must specify two characters"
+msgstr " 引数 'delim' は2つの文字を特定しなければいけません"
+
+msgid "only Rd syntax is currently supported"
+msgstr " 現在はRd構文のみがサポートされています"
+
+msgid "running texi2dvi on '%s' failed"
+msgstr " texi2dvi を '%s' に対して実行できませんでした"
+
+msgid "file '%s' is not in valid DCF format"
+msgstr " ファイル '%s' は有効な DCF フォーマットではありません"
+
+msgid "cannot source package code"
+msgstr " パッケージコードを読み込めません"
+
+msgid "Call sequence:"
+msgstr " 呼び出しシーケンス："
+
+msgid "Processing packages:"
+msgstr " パッケージを処理中："
+
+msgid "done"
+msgstr " 完了"
+
+msgid "parsing '%s'"
+msgstr " '%s' を構文解析中"
+
+msgid "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] " ファイル '%s' 中に警告:"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] " 以下の関数中に大局的かもしれない 'T' もしくは 'F' がありました:"
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] ""
+" 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました:"

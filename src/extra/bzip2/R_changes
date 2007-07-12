@@ -1,16 +1,20 @@
-*** further changes made in November 2006 ***
-
 The changes for R are all to do with portability:
 
-__inline__ is not portable.
+__inline__ is not portable.  We make use of static inlining in the 
+file bzlib.c and decompress.c to avoid issues with semantics of 
+'extern inline'.
+
 fdopen is POSIX but not C89
 Solaris' cc objects to inlining functions with names starting with 'main'.
-C character strings are limited for ca 500 chars.
+C character strings are limited to ca 500 chars.
+Various casts were missing.
 
-diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocksort.c
---- ./blocksort.c	2005-02-15 16:19:38.000000000 +0000
-+++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocksort.c	2006-09-04 15:41:36.488779000 +0100
-@@ -75,7 +75,7 @@
+*** further changes made in November 2006 were not documented ***
+
+diff -u bzip2-1.0.4/blocksort.c bzip2/blocksort.c
+--- bzip2-1.0.4/blocksort.c	2007-01-03 02:00:55.000000000 +0000
++++ bzip2/blocksort.c	2007-05-07 12:56:52.000000000 +0100
+@@ -28,7 +28,7 @@
  
  /*---------------------------------------------*/
  static 
@@ -19,7 +23,7 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
  void fallbackSimpleSort ( UInt32* fmap, 
                            UInt32* eclass, 
                            Int32   lo, 
-@@ -389,9 +389,10 @@
+@@ -342,9 +342,10 @@
  /*---------------------------------------------*/
  
  /*---------------------------------------------*/
@@ -32,7 +36,7 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
                 UInt32  i2,
                 UChar*  block, 
                 UInt16* quadrant,
-@@ -402,7 +403,7 @@
+@@ -355,7 +356,7 @@
     UChar  c1, c2;
     UInt16 s1, s2;
  
@@ -41,7 +45,7 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
     /* 1 */
     c1 = block[i1]; c2 = block[i2];
     if (c1 != c2) return (c1 > c2);
-@@ -558,7 +559,7 @@
+@@ -511,7 +512,7 @@
           if (i > hi) break;
           v = ptr[i];
           j = i;
@@ -50,7 +54,7 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
                      ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
                   ) ) {
              ptr[j] = ptr[j-h];
-@@ -572,7 +573,7 @@
+@@ -525,7 +526,7 @@
           if (i > hi) break;
           v = ptr[i];
           j = i;
@@ -59,7 +63,7 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
                      ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
                   ) ) {
              ptr[j] = ptr[j-h];
-@@ -586,7 +587,7 @@
+@@ -539,7 +540,7 @@
           if (i > hi) break;
           v = ptr[i];
           j = i;
@@ -68,7 +72,7 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
                      ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
                   ) ) {
              ptr[j] = ptr[j-h];
-@@ -626,7 +627,7 @@
+@@ -579,7 +580,7 @@
  }
  
  static 
@@ -77,10 +81,10 @@ diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocks
  UChar mmed3 ( UChar a, UChar b, UChar c )
  {
     UChar t;
-diff -u ./bzlib.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c
---- ./bzlib.c	2005-02-15 16:24:58.000000000 +0000
-+++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c	2006-09-04 15:41:36.538746000 +0100
-@@ -98,8 +98,9 @@
+diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
+--- bzip2-1.0.4/bzlib.c	2007-01-03 02:00:55.000000000 +0000
++++ bzip2/bzlib.c	2007-05-07 12:56:52.000000000 +0100
+@@ -53,8 +53,9 @@
        BZ2_bzlibVersion()
     );
  
@@ -91,7 +95,7 @@ diff -u ./bzlib.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c
        "\n*** A special note about internal error number 1007 ***\n"
        "\n"
        "Experience suggests that a common cause of i.e. 1007\n"
-@@ -107,7 +108,7 @@
+@@ -62,7 +63,7 @@
        "just happens to cross-check the results of huge numbers of\n"
        "memory reads/writes, and so acts (unintendedly) as a stress\n"
        "test of your memory system.\n"
@@ -100,7 +104,7 @@ diff -u ./bzlib.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c
        "I suggest the following: try compressing the file again,\n"
        "possibly monitoring progress in detail with the -vv flag.\n"
        "\n"
-@@ -117,7 +118,7 @@
+@@ -72,7 +73,7 @@
        "  (www.memtest86.com).  At the time of writing it is free (GPLd).\n"
        "  Memtest86 tests memory much more thorougly than your BIOSs\n"
        "  power-on test, and may find failures that the BIOS doesn't.\n"
@@ -109,28 +113,147 @@ diff -u ./bzlib.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c
        "* If the error can be repeatably reproduced, this is a bug in\n"
        "  bzip2, and I would very much like to hear about it.  Please\n"
        "  let me know, and, ideally, save a copy of the file causing the\n"
-@@ -728,7 +729,7 @@
+@@ -165,7 +166,7 @@
+    if (strm->bzalloc == NULL) strm->bzalloc = default_bzalloc;
+    if (strm->bzfree == NULL) strm->bzfree = default_bzfree;
+ 
+-   s = BZALLOC( sizeof(EState) );
++   s = (EState *) BZALLOC( sizeof(EState) );
+    if (s == NULL) return BZ_MEM_ERROR;
+    s->strm = strm;
+ 
+@@ -174,9 +175,9 @@
+    s->ftab = NULL;
+ 
+    n       = 100000 * blockSize100k;
+-   s->arr1 = BZALLOC( n                  * sizeof(UInt32) );
+-   s->arr2 = BZALLOC( (n+BZ_N_OVERSHOOT) * sizeof(UInt32) );
+-   s->ftab = BZALLOC( 65537              * sizeof(UInt32) );
++   s->arr1 = (UInt32 *) BZALLOC( n                  * sizeof(UInt32) );
++   s->arr2 = (UInt32 *) BZALLOC( (n+BZ_N_OVERSHOOT) * sizeof(UInt32) );
++   s->ftab = (UInt32 *) BZALLOC( 65537              * sizeof(UInt32) );
+ 
+    if (s->arr1 == NULL || s->arr2 == NULL || s->ftab == NULL) {
+       if (s->arr1 != NULL) BZFREE(s->arr1);
+@@ -362,7 +363,7 @@
+ {
+    Bool progress_in  = False;
+    Bool progress_out = False;
+-   EState* s = strm->state;
++   EState* s = (EState *) strm->state;
+    
+    while (True) {
+ 
+@@ -409,7 +410,7 @@
+    Bool progress;
+    EState* s;
+    if (strm == NULL) return BZ_PARAM_ERROR;
+-   s = strm->state;
++   s = (EState *) strm->state;
+    if (s == NULL) return BZ_PARAM_ERROR;
+    if (s->strm != strm) return BZ_PARAM_ERROR;
+ 
+@@ -469,7 +470,7 @@
+ {
+    EState* s;
+    if (strm == NULL) return BZ_PARAM_ERROR;
+-   s = strm->state;
++   s = (EState *) strm->state;
+    if (s == NULL) return BZ_PARAM_ERROR;
+    if (s->strm != strm) return BZ_PARAM_ERROR;
+ 
+@@ -505,7 +506,7 @@
+    if (strm->bzalloc == NULL) strm->bzalloc = default_bzalloc;
+    if (strm->bzfree == NULL) strm->bzfree = default_bzfree;
+ 
+-   s = BZALLOC( sizeof(DState) );
++   s = (DState *) BZALLOC( sizeof(DState) );
+    if (s == NULL) return BZ_MEM_ERROR;
+    s->strm                  = strm;
+    strm->state              = s;
+@@ -683,7 +684,10 @@
  
  
  /*---------------------------------------------------*/
 -__inline__ Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
-+R_INLINE Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
++#ifndef __cplusplus
++R_INLINE 
++#endif
++Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
  {
     Int32 nb, na, mid;
     nb = 0;
-@@ -1424,6 +1425,11 @@
+@@ -809,7 +813,7 @@
+    Bool    corrupt;
+    DState* s;
+    if (strm == NULL) return BZ_PARAM_ERROR;
+-   s = strm->state;
++   s = (DState *) strm->state;
+    if (s == NULL) return BZ_PARAM_ERROR;
+    if (s->strm != strm) return BZ_PARAM_ERROR;
+ 
+@@ -862,7 +866,7 @@
+ {
+    DState* s;
+    if (strm == NULL) return BZ_PARAM_ERROR;
+-   s = strm->state;
++   s = (DState *) strm->state;
+    if (s == NULL) return BZ_PARAM_ERROR;
+    if (s->strm != strm) return BZ_PARAM_ERROR;
+ 
+@@ -933,7 +937,7 @@
+    if (ferror(f))
+       { BZ_SETERR(BZ_IO_ERROR); return NULL; };
+ 
+-   bzf = malloc ( sizeof(bzFile) );
++   bzf = (bzFile *) malloc ( sizeof(bzFile) );
+    if (bzf == NULL)
+       { BZ_SETERR(BZ_MEM_ERROR); return NULL; };
+ 
+@@ -981,7 +985,7 @@
+       { BZ_SETERR(BZ_OK); return; };
+ 
+    bzf->strm.avail_in = len;
+-   bzf->strm.next_in  = buf;
++   bzf->strm.next_in  = (char *) buf;
+ 
+    while (True) {
+       bzf->strm.avail_out = BZ_MAX_UNUSED;
+@@ -1106,7 +1110,7 @@
+    if (ferror(f))
+       { BZ_SETERR(BZ_IO_ERROR); return NULL; };
+ 
+-   bzf = malloc ( sizeof(bzFile) );
++   bzf = (bzFile *) malloc ( sizeof(bzFile) );
+    if (bzf == NULL) 
+       { BZ_SETERR(BZ_MEM_ERROR); return NULL; };
+ 
+@@ -1178,7 +1182,7 @@
+       { BZ_SETERR(BZ_OK); return 0; };
+ 
+    bzf->strm.avail_out = len;
+-   bzf->strm.next_out = buf;
++   bzf->strm.next_out = (char *) buf;
+ 
+    while (True) {
+ 
+@@ -1378,6 +1382,15 @@
  #else
  #   define SET_BINARY_MODE(file)
  #endif
 +
 +#if !defined(fdopen) && defined(HAVE_FDOPEN)
-+  FILE *fdopen(int fildes, const char *mode);
++  FILE *fdopen(int fildes, const char *mode)
++#ifdef __cplusplus
++	throw ()
++#endif
++ ;
 +#endif
 +
  static
  BZFILE * bzopen_or_bzdopen
                 ( const char *path,   /* no use when bzdopen */
-@@ -1470,7 +1476,7 @@
+@@ -1424,7 +1437,7 @@
          fp = fopen(path,mode2);
        }
     } else {
@@ -139,10 +262,22 @@ diff -u ./bzlib.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c
        fp = NULL;
  #else
        fp = fdopen(fd,mode2);
-diff -u ./bzlib_private.h /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib_private.h
---- ./bzlib_private.h	2005-02-15 16:24:27.000000000 +0000
-+++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib_private.h	2006-09-04 15:41:36.438748000 +0100
-@@ -62,6 +62,7 @@
+@@ -1513,10 +1526,9 @@
+ void BZ_API(BZ2_bzclose) (BZFILE* b)
+ {
+    int bzerr;
+-   FILE *fp;
++   FILE *fp = ((bzFile *)b)->handle;
+    
+    if (b==NULL) {return;}
+-   fp = ((bzFile *)b)->handle;
+    if(((bzFile*)b)->writing){
+       BZ2_bzWriteClose(&bzerr,b,0,NULL,NULL);
+       if(bzerr != BZ_OK){
+diff -u bzip2-1.0.4/bzlib_private.h bzip2/bzlib_private.h
+--- bzip2-1.0.4/bzlib_private.h	2007-01-03 02:00:55.000000000 +0000
++++ bzip2/bzlib_private.h	2007-05-07 12:56:51.000000000 +0100
+@@ -22,6 +22,7 @@
  #ifndef _BZLIB_PRIVATE_H
  #define _BZLIB_PRIVATE_H
  
@@ -150,12 +285,10 @@ diff -u ./bzlib_private.h /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bz
  #include <stdlib.h>
  
  #ifndef BZ_NO_STDIO
-Only in .: bzmore
-Only in .: bzmore.1
-diff -u ./compress.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/compress.c
---- ./compress.c	2005-02-15 16:23:23.000000000 +0000
-+++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/compress.c	2006-09-04 15:41:36.768745000 +0100
-@@ -113,7 +113,7 @@
+diff -u bzip2-1.0.4/compress.c bzip2/compress.c
+--- bzip2-1.0.4/compress.c	2007-01-03 02:00:55.000000000 +0000
++++ bzip2/compress.c	2007-05-07 12:56:50.000000000 +0100
+@@ -69,7 +69,7 @@
  
  /*---------------------------------------------------*/
  static
@@ -164,3 +297,25 @@ diff -u ./compress.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/compres
  void bsW ( EState* s, Int32 n, UInt32 v )
  {
     bsNEEDW ( n );
+diff -u bzip2-1.0.4/decompress.c bzip2/decompress.c
+--- bzip2-1.0.4/decompress.c	2007-01-03 02:00:55.000000000 +0000
++++ bzip2/decompress.c	2007-05-07 12:56:50.000000000 +0100
+@@ -209,13 +209,13 @@
+       s->blockSize100k -= BZ_HDR_0;
+ 
+       if (s->smallDecompress) {
+-         s->ll16 = BZALLOC( s->blockSize100k * 100000 * sizeof(UInt16) );
+-         s->ll4  = BZALLOC( 
+-                      ((1 + s->blockSize100k * 100000) >> 1) * sizeof(UChar) 
+-                   );
++         s->ll16 = (UInt16*) BZALLOC( s->blockSize100k * 100000 * sizeof(UInt16) );
++         s->ll4  = (UChar *) BZALLOC( 
++		               ((1 + s->blockSize100k * 100000) >> 1) * sizeof(UChar) 
++		             );
+          if (s->ll16 == NULL || s->ll4 == NULL) RETURN(BZ_MEM_ERROR);
+       } else {
+-         s->tt  = BZALLOC( s->blockSize100k * 100000 * sizeof(Int32) );
++         s->tt  = (UInt32 *) BZALLOC( s->blockSize100k * 100000 * sizeof(Int32) );
+          if (s->tt == NULL) RETURN(BZ_MEM_ERROR);
+       }
+ 

@@ -1,13 +1,16 @@
 # a srcfile is a file with a timestamp
 
-srcfile <- function(filename) {
+srcfile <- function(filename, encoding = getOption("encoding")) {
     stopifnot(is.character(filename), length(filename) == 1)
 
     e <- new.env(parent=emptyenv())
 
     e$wd <- getwd()
     e$filename <- filename
+    
+    # If filename is a URL, this will return NA
     e$timestamp <- file.info(filename)[1,"mtime"]
+    e$encoding <- encoding
 
     class(e) <- "srcfile"
     return(e)
@@ -30,8 +33,9 @@ open.srcfile <- function(con, line, ...) {
 	olddir <- setwd(srcfile$wd)
 	on.exit(setwd(olddir))
 	timestamp <- file.info(srcfile$filename)[1,"mtime"]
-	if (timestamp != srcfile$timestamp) warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
-	srcfile$conn <- conn <- file(srcfile$filename, open="rt")
+	if (!is.na(srcfile$timestamp) && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
+	    warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
+	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=srcfile$encoding)
 	srcfile$line <- 1
 	oldline <- 1
     } else if (!isOpen(conn)) {
@@ -125,6 +129,8 @@ as.character.srcref <- function(x, useSource = TRUE, ...)
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
                        x[1],":",x[2], " to ",x[3],":",x[4], ">", sep="")
     else {
+        if (length(lines) < x[3] - x[1] + 1) 
+            x[4] <- .Machine$integer.max
     	lines[length(lines)] <- substring(lines[length(lines)], 1, x[4])
     	lines[1] <- substring(lines[1], x[2])
     }

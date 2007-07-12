@@ -25,6 +25,8 @@ mahalanobis(x, center, cov, inverted=FALSE, ...)
 }
 \seealso{\code{\link{cov}}, \code{\link{var}}}
 \examples{
+require(graphics)
+
 ma <- cbind(1:6, 1:3)
 (S <-  var(ma))
 mahalanobis(c(0,0), 1:2, S)

@@ -20,7 +20,7 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{\dots}{arguments to vectorise over (list or vector).}
+  \item{\dots}{arguments to vectorize over (list or vector).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{SIMPLIFY}{logical; attempt to reduce the result to a vector or matrix?}
   \item{USE.NAMES}{logical; use names if the first \dots argument has
@@ -49,6 +49,8 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
   \code{\link{outer}}
 }
 \examples{
+require(graphics)
+
 mapply(rep, 1:4, 4:1)
 
 mapply(rep, times=1:4, x=4:1)
@@ -68,7 +70,7 @@ mapply(function(x,y) seq_len(x) + y,
        c(A=10, B=0, C=-10))
 
 word <- function(C,k) paste(rep.int(C,k), collapse='')
-str(mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
+utils::str(mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
 
 f <- function(x=1:3, y) c(x,y)
 vf <- Vectorize(f, SIMPLIFY = FALSE)

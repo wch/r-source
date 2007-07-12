@@ -56,7 +56,7 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
 op <- par(mfrow = c(3,1))
 for(x in 9999*c(1,2,8)) {
     plot(x,9, log = "x")
-    cat(formatC(par("xaxp"),wid=5),";",T <- axTicks(1),"\n")
+    cat(formatC(par("xaxp"), width=5),";", T <- axTicks(1),"\n")
     rug(T, col="red")
 }
 par(op)

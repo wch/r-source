@@ -4,12 +4,12 @@
 
 ### Notice that it is a bad idea to use this file as a template for
 ### personal startup files, since things will be executed twice and in
-### the wrong environment since user profiles are run in .GlobalEnv.
+### the wrong environment (user profiles are run in .GlobalEnv).
 
 .GlobalEnv <- globalenv()
 attach(NULL, name = "Autoloads")
 .AutoloadEnv <- as.environment(2)
-assign(".Autoloaded", NULL, env = .AutoloadEnv)
+assign(".Autoloaded", NULL, envir = .AutoloadEnv)
 T <- TRUE
 F <- FALSE
 R.version <- structure(R.Version(), class = "simple.list")
@@ -34,6 +34,8 @@ options(scipen = 0)
 options(max.print = 99999)# max. #{entries} in internal printMatrix()
 options(add.smooth = TRUE)# currently only used in 'plot.lm'
 options(stringsAsFactors = TRUE)
+if(!interactive() && is.null(getOption("showErrorCalls")))
+    options(showErrorCalls = TRUE)
 
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last
@@ -44,6 +46,12 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        dp <- sub("[[:blank:]]*([[:alnum:]]+)", "\\1", dp) # strip whitespace
        options(defaultPackages = dp)
     })
+
+## Expand R_LIBS_* environment variables.
+Sys.setenv(R_LIBS_SITE =
+           .expand_R_libs_env_var(Sys.getenv("R_LIBS_SITE")))
+Sys.setenv(R_LIBS_USER =
+           .expand_R_libs_env_var(Sys.getenv("R_LIBS_USER")))
 
 .First.sys <- function()
 {
@@ -65,4 +73,15 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
             warning("package \"methods\"",
                     ' in options("defaultPackages") was not found', call.=FALSE)
     }
+}
+
+if(Sys.getenv("R_BATCH") != "") {
+    .Last.sys <- function()
+    {
+        cat("> proc.time()\n")
+        print(proc.time())
+    }
+    ## avoid passing on to spawned R processes
+    ## A system has been reported without Sys.unsetenv, so try this
+    try(Sys.setenv(R_BATCH=""))
 }

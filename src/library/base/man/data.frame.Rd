@@ -38,7 +38,15 @@ default.stringsAsFactors()
 }
 \details{
   A data frame is a list of variables of the same length with unique row
-  names, given class \code{"data.frame"}.
+  names, given class \code{"data.frame"}.  If there are zero variables,
+  the row names determine the number of rows.
+
+
+  Duplicate column names are allowed, but you need to use
+  \code{check.names=FALSE} for \code{data.frame} to generate such a data
+  frame.  However, not all operations on data frames will preserve
+  duplicated column names: for example matrix-like subsetting will force
+  column names in the result to be unique.
 
   \code{data.frame} converts each of its arguments to a data frame by
   calling \code{\link{as.data.frame}(optional=TRUE)}.  As that is a
@@ -59,7 +67,8 @@ default.stringsAsFactors()
   (If that component is subsequently recycled, the names are discarded
   with a warning.)  If \code{row.names} was supplied as \code{NULL} or no
   suitable component was found the row names are the integer sequence
-  starting at one.
+  starting at one (and such row names are considered to be
+  \sQuote{automatic}, and not preserved by \code{\link{as.matrix}}).
 
   If row names are supplied of length one and the data frame has a
   single row, the \code{row.names} is taken to specify the row names and
@@ -95,10 +104,10 @@ default.stringsAsFactors()
 }
 \examples{
 L3 <- LETTERS[1:3]
-(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
+(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, replace=TRUE)))
 
 ## The same with automatic column names:
-data.frame(cbind(  1,   1:10),     sample(L3, 10, repl=TRUE))
+data.frame(cbind(  1,   1:10),     sample(L3, 10, replace=TRUE))
 
 is.data.frame(d)
 

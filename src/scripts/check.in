@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-## Copyright (C) 2000-2006 R Development Core Team
+## Copyright (C) 2000-2007 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 use Cwd;
 use File::Basename;
 use File::Copy;
+use File::Copy::Recursive qw(dircopy);
 use File::Find;
 use File::Path;
 use Getopt::Long;
@@ -108,12 +109,25 @@ my $R_check_all_non_ISO_C =
     &R_getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE");
 my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
+
+## This needs texi2dvi.  We provide a script for Unix-alikes, but it
+## does not work under Windows.  MiKTeX has a binary texi2dvi, but other
+## Windows' LaTeX distributions do not.
+my $check_latex_vignettes_default;
+if($WINDOWS) { 
+    $check_latex_vignettes_default = "FALSE"; 
+} else { 
+    $check_latex_vignettes_default = "TRUE"; 
+}
+my $R_check_latex_vignettes =
+    &R_getenv("_R_CHECK_LATEX_VIGNETTES_", $check_latex_vignettes_default);
+
 my $R_check_subdirs_strict =
     &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
 my $R_check_Rd_xrefs =
     &R_getenv("_R_CHECK_RD_XREFS_", "TRUE");
 my $R_check_use_codetools =
-    &R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
+    &R_getenv("_R_CHECK_USE_CODETOOLS_", "TRUE");
 my $R_check_force_suggests =
     &R_getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE");
 my $R_check_Rd_style =
@@ -150,6 +164,8 @@ $R_check_all_non_ISO_C =
     &config_val_to_logical($R_check_all_non_ISO_C);
 $R_check_weave_vignettes =
     &config_val_to_logical($R_check_weave_vignettes);
+$R_check_latex_vignettes =
+    &config_val_to_logical($R_check_latex_vignettes);
 $R_check_Rd_xrefs =
     &config_val_to_logical($R_check_Rd_xrefs);
 $R_check_use_codetools =
@@ -381,6 +397,40 @@ foreach my $pkg (@ARGV) {
 	    ## friends, and `Writing R Extensions' requires this.
 	    ## </NOTE>
 
+	    ## <NOTE>
+	    ## If a package has a namespace, checking dependencies will
+	    ## try making use of it without the NAMESPACE file ever
+	    ## being validated.  Uncaught errors can lead to messages
+	    ## like
+	    ##   * checking package dependencies ... ERROR
+	    ##   Error in e[[1]] : object is not subsettable
+	    ##   Execution halted
+	    ## which are not too helpful :-(
+	    ## Hence, we try to intercept this here.
+	    ## Note that for *bundles*, the respective namespaces are not
+	    ## checked this way (and perhaps should be lateron when the
+	    ## per-package checks are performed).
+	    if(-f &file_path($pkgdir, "NAMESPACE")) {
+		$log->checking("package name space information");
+
+		my @msg_NAMESPACE =
+		    ("See section 'Package name spaces'",
+		     "of the 'Writing R Extensions' manual.\n");
+		
+		my $Rcmd = "tools:::.check_namespace(\"${pkgdir}\")";
+		my @out = R_runR($Rcmd, "${R_opts} --quiet",
+				 "R_DEFAULT_PACKAGES=NULL");
+		@out = grep(!/^\>/, @out);
+		if(scalar(@out) > 0) {
+		    $log->error();
+		    $log->print(join("\n", @out) . "\n");	    
+		    $log->print(wrap("", "", @msg_NAMESPACE));
+		    exit(1);
+		} else {
+		    $log->result("OK");
+		}
+	    }
+
 	    $log->checking("package dependencies");
 	    ## Everything listed in Depends or Suggests or Imports
 	    ## should be available for successfully running R CMD check.
@@ -389,26 +439,15 @@ foreach my $pkg (@ARGV) {
 	    ## package vignette must require its own package, which OTOH is
 	    ## not required in the package DESCRIPTION file.
 	    ## Namespace imports must really be in Depends.
-	    my $Rcmd = "options(warn=1);tools:::.check_package_depends(\"${pkgdir}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE); tools:::.check_package_depends(\"${pkgdir}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->error();
 		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_DESCRIPTION));
 		exit(1);
-	    }
-	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
-	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
-	    if(scalar(@out) > 0) {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg_DESCRIPTION));
 	    } else {
 		$log->result("OK");
 	    }
@@ -558,6 +597,7 @@ foreach my $pkg (@ARGV) {
 			## in (Unix) R CMD INSTALL?
 			$install_error =
 			    (scalar(grep(/^\* DONE/, @lines)) == 0);
+			## </NOTE>
 		    }
 		    else {
 			$cmd .= " >" .
@@ -587,9 +627,11 @@ foreach my $pkg (@ARGV) {
 		    }
 		    ## There could still be some important warnings that
 		    ## we'd like to report.  For the time being, start
-		    ## with compiler warnings about non ISO C code (Or
-		    ## at least, what looks like it.)  In theory, we
-		    ## should only do this when using GCC ...
+		    ## with compiler warnings about non ISO C code (or
+		    ## at least, what looks like it), and also include
+		    ## warnings resulting from the const char * CHAR()
+		    ## change in R 2.6.0.  (In theory, we should only do
+		    ## this when using GCC ...)
 		    @lines = &read_lines($out)
 			unless($opt_install eq "check");
 		    my $warn_re =
@@ -597,6 +639,7 @@ foreach my $pkg (@ARGV) {
 					 "^Warning:",
 					 ": warning: .*ISO C",
 					 ": warning: implicit declaration of function",
+					 ": warning: .* discards qualifiers from pointer target type",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
 
@@ -659,7 +702,9 @@ foreach my $pkg (@ARGV) {
 				  "Line truncated at \\(1\\)",
 				  "ASSIGN statement at \\(1\\)",
 				  "Assigned GOTO statement at \\(1\\)",
-				  "arithmetic IF statement at \\(1\\)")) .
+				  "arithmetic IF statement at \\(1\\)",
+				  "Nonconforming tab character (in|at)"
+				 )) .
 			    ")";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
@@ -682,6 +727,24 @@ foreach my $pkg (@ARGV) {
 
     if($is_bundle) {
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	if(! $opt_install) {
+	    ## Since we are not installing, we have to use the source
+	    ## directories.  Quite a bit of the R code needs to read the
+	    ## DESCRIPTION files for each package, so we do that bit
+	    ## of the install in Perl.
+	    my @lines0 = &read_lines(&file_path($pkgdir, "DESCRIPTION"));
+	    foreach my $ppkg (@bundlepkgs) {
+		$dfile = &file_path($pkgdir, $ppkg, "DESCRIPTION");
+		my $fh = new IO::File($dfile, "w")
+		    or die "Error: cannot open file '$dpath' for writing\n";
+		my @lines = (@lines0, 
+			     &read_lines(&file_path($pkgdir, $ppkg, 
+						    "DESCRIPTION.in")));
+		@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+		$fh->print(join("\n", @lines), "\n");
+		$fh->close();
+	    }
+	}
 	foreach my $ppkg (@bundlepkgs) {
 	    $log->message("checking '$ppkg' in bundle '$pkgname'");
 	    $log->setstars("**");
@@ -770,28 +833,26 @@ sub check_pkg {
     ## Based on information by Uwe Ligges, Duncan Murdoch, and Brian
     ## Ripley.
 
-    ## Furthermore, Uwe Ligges says that Windows still does not allow
-    ## the following DOS device names (by themselves or with possible
-    ## extensions):
+    ## In addition, Windows does not allow the following DOS type device
+    ## names (by themselves or with possible extensions), see e.g.
+    ## http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
+    ## and http://en.wikipedia.org/wiki/Filename (which as of 2007-04-22
+    ## is wrong about claiming that COM0 and LPT0 are disallowed):
     ##
-    ## Name    Function
-    ## ----    --------
-    ## CON     Keyboard and display
-    ## PRN     System list device, usually a parallel port
-    ## AUX     Auxiliary device, usually a serial port
-    ## CLOCK$  System real-time clock
-    ## NUL     Bit-bucket device
-    ## COM1    First serial communications port
-    ## COM2    Second serial communications port
-    ## COM3    Third serial communications port
-    ## COM4    Fourth serial communications port
-    ## LPT1    First parallel printer port
-    ## LPT2    Second parallel printer port
-    ## LPT3    Third parallel printer port
+    ## CON: Keyboard and display
+    ## PRN: System list device, usually a parallel port
+    ## AUX: Auxiliary device, usually a serial port
+    ## NUL: Bit-bucket device    
+    ## CLOCK$: System real-time clock
+    ## COM1, COM2, COM3, COM4, COM5, COM6, COM7, COM8, COM9:
+    ##   Serial communications ports 1-9
+    ## LPT1, LPT2, LPT3, LPT4, LPT5, LPT6, LPT7, LPT8, LPT9:
+    ##   parallel printer ports 1-9
 
-    ## In addition, the names of help files get converted to HTML
-    ## file names and so should be valid in URLs.  We check that they are
-    ## ASCII and do not contain %, which is what is known to cause troubles.
+    ## In addition, the names of help files get converted to HTML file
+    ## names and so should be valid in URLs.  We check that they are
+    ## ASCII and do not contain %, which is what is known to cause
+    ## troubles.
 
     $log->checking("for portable file names");
     my @bad_files = ();
@@ -824,12 +885,12 @@ sub check_pkg {
 	    $file_name =~ tr/A-Z/a-z/;
 	    $file_name =~ s/\..*//;
 	    push(@bad_files, $file_path)
-	      if(grep(/^(con|prn|aux|clock\$|nul|lpt[1-3]|com[1-4])$/,
+	      if(grep(/^(con|prn|aux|clock\$|nul|lpt[1-9]|com[1-9])$/,
 		     $file_name));
 	}
     }
     if($in_bundle) {
-	chdir(dirname($pkgdir)); # more portable than '..'?
+	chdir(dirname($pkgdir));
 	find(\&find_wrong_names, $pkgname);
 	chdir($pkgname);
     }
@@ -850,7 +911,7 @@ sub check_pkg {
 	exit(1);
     }
 
-    ## next check for name clashes on case-insensitive file systems
+    ## Next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
     %seen = ();
     my @duplicated = ();
@@ -860,7 +921,7 @@ sub check_pkg {
 	$seen{$file_path}  = 1;
     }
     if($in_bundle) {
-	chdir(dirname($pkgdir)); # more portable than '..'?
+	chdir(dirname($pkgdir));
 	find(\&check_case_names, $pkgname);
 	chdir($pkgname);
     }
@@ -916,7 +977,7 @@ sub check_pkg {
 	    }
 	}
 	if($in_bundle) {
-	    chdir(dirname($pkgdir)); # more portable than '..'?
+	    chdir(dirname($pkgdir));
 	    find(\&find_wrong_perms_A, $pkgname);
 	    chdir($pkgname);
 	}
@@ -1058,8 +1119,14 @@ sub check_pkg {
     my $any;
     if($R_check_subdirs_nocase) {
 	## Argh.  We often get submissions where 'R' comes out as 'r',
-	## or 'man' comes out as 'MAN'.  Maybe we should warn about this
-	## unconditionally ...
+	## or 'man' comes out as 'MAN', and we've just ran into 'DATA'
+	## instead of 'data' (2007-03-31).  Maybe we should warn about
+	## this unconditionally ...
+	## <FIXME>
+	## Actually, what we should really do is check whether there is
+	## any directory with lower-cased name matching a lower-cased
+	## name of a standard directory, while differing in name.
+	## </FIXME>
 	if((-d "r")) {
 	    $log->warning() unless $any;
 	    $any++;
@@ -1071,6 +1138,12 @@ sub check_pkg {
 	    $any++;
 	    $log->print("Found subdirectory 'MAN'.\n");
 	    $log->print("Most likely, this should be 'man'.\n")
+	}
+	if((-d "DATA")) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Found subdirectory 'DATA'.\n");
+	    $log->print("Most likely, this should be 'data'.\n")
 	}
     }
     sub check_subdirs {
@@ -1173,15 +1246,38 @@ sub check_pkg {
 
     ## Check R code for syntax errors and for non-ASCII chars which
     ## might be syntax errors in some locales.
+    ## We need to do the non-ASCII check first to get the more
+    ## specific warning message before an error.
 
     if(!$is_base_pkg && (-d "R")) {
+	$log->checking("R files for non-ASCII characters");
+	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
+			 "${R_opts} --slave");
+	if(scalar(@out) > 0) {
+	    if(defined($description->{"Encoding"})) {
+		$log->note();
+	    } else {
+		$log->warning();
+	    }
+	    $log->print(wrap("", "",
+			     ("Found the following files with",
+			      "non-ASCII characters:\n")));
+	    $log->print("  " . join("\n  ", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("Portable packages must use only ASCII",
+			      "characters in their R code,\n",
+			      "except perhaps in comments.\n")));
+	} else {
+	    $log->result("OK");
+	}
+
 	$log->checking("R files for syntax errors");
+	## we do want to warn on unrecognized escapes here
 	my $Rcmd = "options(warn=1);tools:::.check_package_code_syntax(\"R\")";
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
-	my @out2 = grep(!/^Warning:.*unrecognized escape/, @out);
-	if(scalar(@out2) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
 	    exit(1);
@@ -1191,26 +1287,7 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	
-	$log->checking("R files for non-ASCII characters");
-	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
-			 "${R_opts} --slave");
-	if(scalar(@out) > 0) {
-	    $log->warning();
-	    $log->print(wrap("", "",
-			     ("Found the following files with",
-			      "non-ASCII characters:\n")));
-	    $log->print("  " . join("\n  ", @out) . "\n");
-	    $log->print(wrap("", "",
-			     ("Portable packages must use only ASCII",
-			      "characters in their R code,\n",
-			      "except perhaps in comments.\n")));
-	}	
-	else {
-	    $log->result("OK");
-	}
     }
-
     
     ## Check we can actually load the package
 
@@ -1219,7 +1296,7 @@ sub check_pkg {
 	my $Rcmd = "library(${pkgname})";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
@@ -1235,7 +1312,7 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
@@ -1258,7 +1335,7 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
@@ -1274,6 +1351,39 @@ sub check_pkg {
 	}
     }
 
+    if(!$is_base_pkg && (-d "R")) {
+	if($opt_install) {
+	    $log->checking("for unstated dependencies in R code");
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_packages_used(package=\"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
+	    } else {
+		$log->result("OK");
+	    }
+	} else {
+	    ## this needs to read the package code, and will fail on
+	    ## syntax errors such as non-ASCII code.
+	    $log->checking("for unstated dependencies in R code");
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
+	    } else {
+		$log->result("OK");
+	    }
+	}
+    }
+
+
     ## Check whether methods have all arguments of the corresponding
     ## generic.
 
@@ -1284,7 +1394,7 @@ sub check_pkg {
 	  ("See section 'Generic functions and methods'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd = "options(warn=1)\n";
+	my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	$Rcmd .= "options(expressions=1000)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkS3methods(package = \"${pkgname}\")\n";
@@ -1317,7 +1427,7 @@ sub check_pkg {
 	   "which corresponds to the right hand side",
 	   "must be named 'value'.\n");
 
-	my $Rcmd = "options(warn=1)\n";
+	my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
@@ -1352,7 +1462,7 @@ sub check_pkg {
 	  ("See the chapter 'System and foreign language interfaces'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd = "options(warn=1)\n";
+	my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkFF(package = \"${pkgname}\")\n";
 	}
@@ -1374,9 +1484,6 @@ sub check_pkg {
     }
 
     ## Check R code for possible problems using LT's codetools package
-    ## available from http://www.stat.uiowa.edu/~luke/R/codetools, and
-    ## scheduled for integration into base R eventually).
-
     ## Activated only via setting the internal environment variable
     ## _R_CHECK_USE_CODETOOLS_ to something "true".
 
@@ -1388,11 +1495,10 @@ sub check_pkg {
 	my $any;
 
 	if(!$is_base_pkg) {
-	    my $Rcmd = "options(warn=1);tools:::.check_package_code_shlib(\"R\")";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_package_code_shlib(\"R\")";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->error();
 		$log->print(wrap("", "",
@@ -1409,21 +1515,20 @@ sub check_pkg {
 	}
 
 	if($R_check_use_codetools && $opt_install) {
-	    my $Rcmd = "options(warn=1)\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    $Rcmd .= "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
+			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless $any;
+		$log->note() unless $any;
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 	    }
 	}
 
 	if($R_check_use_codetools) {
-	    my $Rcmd = "options(warn=1)\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    if($opt_install) {
 		$Rcmd .= "tools:::.check_T_and_F(package = \"${pkgname}\")\n";
 	    }
@@ -1431,11 +1536,10 @@ sub check_pkg {
 		$Rcmd .= "tools:::.check_T_and_F(dir = \"${pkgdir}\")\n";
 	    }
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
+			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless $any;
+		$log->note() unless $any;
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 	    }
@@ -1452,8 +1556,10 @@ sub check_pkg {
 
     if(-d "man") {
 	$log->checking("Rd files");
+	my $def_enc = 0;
+	$def_enc = 1 if defined($description->{"Encoding"});
 
-	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\")\n";
+	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\",$def_enc)\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
@@ -1520,7 +1626,7 @@ sub check_pkg {
     if(((-d "R") || (-d "data"))) {
 	$log->checking("for missing documentation entries");
 
-	my $Rcmd= "options(warn=1)\n";
+	my $Rcmd= "options(warn=1,warnEscapes=FALSE)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::undoc(package = \"${pkgname}\")\n";
 	}
@@ -1562,7 +1668,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in functions.
 	if(-d "R") {
-	    my $Rcmd = "options(warn=1)\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    if($opt_install) {
 		$Rcmd .= "tools::codoc(package = \"${pkgname}\")\n";
 	    }
@@ -1582,7 +1688,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "options(warn=1)\ntools::codocData(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
@@ -1595,7 +1701,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "options(warn=1)\ntools::codocClasses(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
@@ -1663,7 +1769,7 @@ sub check_pkg {
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless($any);
+		$log->note() unless($any);
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_doc_style));
@@ -1672,6 +1778,27 @@ sub check_pkg {
 	}
 
 	$log->result("OK") unless($any);
+    }
+
+    if(!$is_base_pkg && (-d "data")) {
+	$log->checking("data for non-ASCII characters");
+	my @out = R_runR("tools:::.check_package_datasets('.')",
+			 "${R_opts} --slave");
+	@out = grep(!/Loading required package/, @out);
+	my @bad = grep(/^Warning:/, @out);
+	if(scalar(@out) > 0) {
+	    if(scalar(@bad)) {
+		$log->warning();
+	    } else {
+		$log->note();
+	    }
+	    $log->print("  " . join("\n  ", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("Portable packages use only ASCII",
+			      "characters in their datasets.\n")));
+	} else {
+	    $log->result("OK");
+	}
     }
 
     ## Check C/C++/Fortran sources/headers for CRLF line endings.
@@ -1932,9 +2059,7 @@ sub check_pkg {
 	      or die "Error: cannot create directory '$testdir'\n";
         }
         chdir($testdir);
-	foreach my $file (&list_files($testsrcdir)) {
-	    copy($file, basename($file));
-	}
+	dircopy($testsrcdir, ".");
         my $makefiles = "-f " .
 	    &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
 					      "make", "tests.mk"));
@@ -1956,10 +2081,12 @@ sub check_pkg {
         else {
             open(MAKEVARS, "> Makevars");
             print MAKEVARS "makevars = -f Makevars\n";
-            print MAKEVARS "srcdir = $testsrcdir\n";
             ## at least windows does not pass env correctly to make
             print MAKEVARS "R_LIBS = $ENV{'R_LIBS'}\n";
-            print MAKEVARS "VPATH = \$(srcdir)\n\n";
+	    ## No longer needed now that we dircopy() all of
+	    ## $testsrcdir:
+            ##   print MAKEVARS "srcdir = $testsrcdir\n";
+            ##   print MAKEVARS "VPATH = \$(srcdir)\n\n";
             print MAKEVARS "test-src-1 =";
 	    foreach my $file (sort &list_files_with_exts($testdir, "R")) {
                 print MAKEVARS "\\\n " . basename($file);
@@ -2037,20 +2164,18 @@ sub check_pkg {
 	}
 
 	## Can we run the code in the vignettes?
-	if($opt_install && $opt_vignettes) {
+	if($opt_install && $opt_vignettes && -d "$pkgdir/inst/doc") {
+	    ## copy the inst directory to check directory
+	    ## so we can work in place.
+	    mkpath("inst/doc");
+	    dircopy("$pkgdir/inst/doc", "inst/doc");
+
+	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
-	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
-            ## A base package does not get installed during check.
-	    if(!$is_base_pkg && $opt_install) {
-		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
-		         "lib.loc = \"${library}\", " .
-		         "workdir = \"src\"";
-	    }
-	    else {
-		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\"";
-	    }
-	    $Rcmd .= ", weave = FALSE" if(!$R_check_weave_vignettes);
+	    $Rcmd .= "checkVignettes(dir = '$pkgoutdir', workdir='src'";
+	    $Rcmd .= ", weave = FALSE" unless $R_check_weave_vignettes;
+	    $Rcmd .= ", latex = TRUE" if $R_check_latex_vignettes;
 	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
@@ -2059,9 +2184,18 @@ sub check_pkg {
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless($any);
-		$any++;
-		$log->print(join("\n", @out) . "\n");
+		if($out[0] =~ /^--- running/) {
+		    @out = grep(!/\.(jpg|pdf|png)$/, @out);
+		    if (scalar(@out) > 1) {
+			$log->note() unless($any);
+			$any++;
+			$log->print(join("\n", @out) . "\n");
+		    }
+		} else {
+		    $log->warning() unless($any);
+		    $any++;
+		    $log->print(join("\n", @out) . "\n");
+		}
 	    }
 	}
 

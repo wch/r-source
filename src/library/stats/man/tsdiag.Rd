@@ -18,7 +18,7 @@ tsdiag(object, gof.lag, \dots)
 }
 \details{
   This is a generic function. It will generally plot the residuals,
-  often standadized, the autocorrelation function of the residuals, and
+  often standardized, the autocorrelation function of the residuals, and
   the p-values of a Portmanteau test for all lags up to \code{gof.lag}.
 
   The methods for \code{\link{arima}} and \code{\link{StructTS}} objects
@@ -34,7 +34,9 @@ tsdiag(object, gof.lag, \dots)
 }
 
 \examples{
-\dontrun{fit <- arima(lh, c(1,0,0))
+\dontrun{require(graphics)
+
+fit <- arima(lh, c(1,0,0))
 tsdiag(fit)
 
 ## see also examples(arima)

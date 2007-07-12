@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-03-02 r37458)
+R version 2.5.0 Under development (unstable) (2007-01-15 r40489)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -601,4 +601,10 @@ time ~ 0 + dist + climb
 dist    1 339.78
 climb   1 320.99
 > ## wrong AIC() and drop1 prior to 2.3.0.
+> 
+> ## calculating no of signif digits
+> print(1.001, digits=16)
+[1] 1.001
+> ## 2.4.1 gave  1.001000000000000
+> ## 2.5.0 errs on the side of caution.
 > 

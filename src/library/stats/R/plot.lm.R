@@ -84,7 +84,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    names(cal)[2] <- "" # drop	" formula = "
 	}
 	cc <- deparse(cal, 80) # (80, 75) are ``parameters''
-	nc <- nchar(cc[1])
+	nc <- nchar(cc[1], "c")
 	abbr <- length(cc) > 1 || nc > 75
 	sub.caption <-
 	    if(abbr) paste(substr(cc[1], 1, min(75,nc)), "...") else cc[1]
@@ -216,7 +216,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 dispersion <- if(isGlm) summary(x)$dispersion else 1
                 p <- length(coef(x))
                 usr <- par("usr")
-                hh <- seq(min(r.hat[1], r.hat[2]/100), usr[2], length = 101)
+                hh <- seq.int(min(r.hat[1], r.hat[2]/100), usr[2],
+                              length.out = 101)
                 for(crit in cook.levels) {
                     cl.h <- sqrt(crit*p*(1-hh)/hh * dispersion)
                     lines(hh, cl.h, lty = 2, col = 2)

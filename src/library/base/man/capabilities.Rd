@@ -40,6 +40,7 @@ capabilities(what = NULL)
     \item{iconv}{is internationalization conversion via
       \code{\link{iconv}} supported?}
     \item{NLS}{is there Natural Language Support (for message translations)?}
+    \item{profmem}{is there support for memory profiling?}
 }
 \seealso{\code{\link{.Platform}}}
 

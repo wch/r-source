@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-05-25 12:17\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -74,6 +74,10 @@ msgstr "'to.refwhite' non in accordo con la definizione di"
 msgid "color spaces use different reference whites."
 msgstr "spazi colori usano binachi di riferimento differenti."
 
+#, fuzzy
+msgid "'name'must be a character vector"
+msgstr "'file' deve essere una stringa carattere non vuota"
+
 msgid "cannot shut down device 1 (the null device)"
 msgstr "non posso chiudere il dispositivo 1 (dispositivo null)"
 
@@ -106,6 +110,10 @@ msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 
 msgid "argument is missing with no default"
 msgstr "argomento mancante senza valore di default"
+
+#, fuzzy
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
@@ -239,6 +247,9 @@ msgstr "argomenti non validi in quartzFonts (deve essere 'font names')"
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "argomenti non validi in quartzFonts (necessita argomenti con nome)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "specificazione font X11 non valida"

@@ -13,44 +13,48 @@
   A list with at least the following components:
   
   \item{OS.type}{
-    character, giving the \bold{O}perating \bold{S}ystem
+    character string, giving the \bold{O}perating \bold{S}ystem
     (family) of the computer.  One of \code{"unix"} or \code{"windows"}.
   }
   \item{file.sep}{
-    character, giving the \bold{file} \bold{sep}arator used on your
+    character string, giving the \bold{file} \bold{sep}arator used on your
     platform: \code{"/"} on both Unix-alikes \emph{and} on Windows (but
     not on the now abandoned port to Classic MacOS).
   }
   \item{dynlib.ext}{
-    character, giving the file name \bold{ext}ension of
+    character string, giving the file name \bold{ext}ension of
     \bold{dyn}amically loadable \bold{lib}raries, e.g., \code{".dll"} on
     Windows and \code{".so"} or \code{".sl"} on Unix-alikes.  (Note for
     MacOS X users: these are shared objects as loaded by
     \code{\link{dyn.load}} and not dylibs.)
   }
   \item{GUI}{
-    character, giving the type of GUI in use, or
-    \code{"unknown"} if no GUI can be assumed.
+    character string, giving the type of GUI in use, or \code{"unknown"}
+    if no GUI can be assumed.  Possible values are for Unix-alikes the
+    values given via the \option{-g} command-line flag (\code{"X11"},
+    \code{"Tk"}, \code{"none"} and perhaps others under alternative
+    front-ends or embedded \R), \code{"AQUA"} (running under
+    \code{R.app} on MacOS X), \code{"RGui"} and \code{"RTerm"} (Windows).
   }
   \item{endian}{
-    character, \code{"big"} or \code{"little"}, giving the
+    character string, \code{"big"} or \code{"little"}, giving the
     endianness of the processor in use.  This is relevant when it is
     necessary to know the order to read/write bytes of e.g. an integer or
     double from/to a connection: see \code{\link{readBin}}. 
   }
   \item{pkgType}{
-    character, the preferred setting for \code{\link{options}("pkgType")}.
-    Values \code{"source"}, \code{"mac.binary"} and \code{"win.binary"}
-    are currently in use.
+    character string, the preferred setting for
+    \code{\link{options}("pkgType")}. Values \code{"source"},
+    \code{"mac.binary"} and \code{"win.binary"} are currently in use.
   }
   \item{path.sep}{
-    character, giving the \bold{path} \bold{sep}arator,
+    character string, giving the \bold{path} \bold{sep}arator,
     used on your platform, e.g., \code{":"} on Unix-alikes and
     \code{";"} on Windows.  Used to separate paths in variables
     such as \code{PATH} and \code{TEXINPUTS}.
   }
   \item{r_arch}{
-    character, posssibly \code{""}.  The name of the
+    character string, possibly \code{""}.  The name of the
     architecture-specific directories used in this build of \R.
   }
 }

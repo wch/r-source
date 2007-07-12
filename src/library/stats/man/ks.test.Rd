@@ -54,7 +54,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   
   Exact p-values are not available for the one-sided two-sample case, or
   in the case of ties.  If \code{exact = NULL} (the default), an exact
-  p-value is computed if the sample size if less than 100 in the
+  p-value is computed if the sample size is less than 100 in the
   one-sample case, and if the product of the sample sizes is less than
   10000 in the two-sample case.  Otherwise, asymptotic distributions are
   used whose approximations may be inaccurate in small samples.  In the
@@ -104,6 +104,8 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   normality.
 }
 \examples{
+require(graphics)
+
 x <- rnorm(50)
 y <- runif(30)
 # Do x and y come from the same distribution?

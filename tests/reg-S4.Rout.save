@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-10-18 r39668)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.6.0 Under development (unstable) (2007-06-06 r41860)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -264,6 +264,7 @@ Slot "y":
 
 > ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 > 
+> 
 > ## "Logic" group -- was missing in R <= 2.4.0
 > stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 + 	  any(getGroupMembers("Ops") == "Logic"))
@@ -285,7 +286,253 @@ Warning message:
 Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
     brob#ANY
     ANY#brob
- in: .findInheritedMethods(classes, fdef, mtable) 
+ 
 > assertError(b | 1)
 > assertError(TRUE & b)
+> 
+> 
+> ## methods' hidden cbind() / rbind:
+> cBind <- methods:::cbind
+> setClass("myMat", representation(x = "numeric"))
+[1] "myMat"
+> setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
+[1] "cbind2"
+> m <- new("myMat", x = c(1, pi))
+> stopifnot(identical(m, cBind(m)))
+> 
+> 
+> ## explicit print or show on a basic class with an S4 bit
+> ## caused infinite recursion
+> setClass("Foo", representation(name="character"), contains="matrix")
+[1] "Foo"
+> (f <- new("Foo", name="Sam", matrix()))
+An object of class "Foo"
+     [,1]
+[1,]   NA
+Slot "name":
+[1] "Sam"
+
+> (m <- as(f, "matrix"))
+     [,1]
+[1,]   NA
+> show(m)
+     [,1]
+[1,]   NA
+> print(m)
+     [,1]
+[1,]   NA
+> ## fixed in 2.5.0 patched
+> 
+> ## callGeneric inside a method with new arguments {hence using .local()}:
+> setGeneric("Gfun", function(x, ...) standardGeneric("Gfun"),
++ 	   useAsDefault = function(x, ...) sum(x, ...))
+[1] "Gfun"
+> setClass("myMat", contains="matrix")
+[1] "myMat"
+> setClass("mmat2", contains="matrix")
+[1] "mmat2"
+> setClass("mmat3", contains="mmat2")
+[1] "mmat3"
+> setMethod(Gfun, signature(x = "myMat"),
++ 	  function(x, extrarg = TRUE) {
++ 	      cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
++ 	      Gfun(unclass(x))
++ 	  })
+[1] "Gfun"
+attr(,"package")
+[1] ".GlobalEnv"
+> setMethod(Gfun, signature(x = "mmat2"),
++ 	  function(x, extrarg = TRUE) {
++ 	      cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
++ 	      x <- unclass(x)
++ 	      callGeneric()
++ 	  })
+[1] "Gfun"
+attr(,"package")
+[1] ".GlobalEnv"
+> setMethod(Gfun, signature(x = "mmat3"),
++ 	  function(x, extrarg = TRUE) {
++ 	      cat("in 'mmat3' method for 'Gfun() : extrarg=", extrarg, "\n")
++ 	      x <- as(x, "mmat2")
++ 	      callGeneric()
++ 	  })
+[1] "Gfun"
+attr(,"package")
+[1] ".GlobalEnv"
+> (mm <- new("myMat", diag(3)))
+An object of class "myMat"
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+> Gfun(mm)
+in 'myMat' method for 'Gfun() : extrarg= TRUE 
+[1] 3
+> Gfun(mm, extrarg = FALSE)
+in 'myMat' method for 'Gfun() : extrarg= FALSE 
+[1] 3
+> m2 <- new("mmat2", diag(3))
+> Gfun(m2)
+in 'mmat2' method for 'Gfun() : extrarg= TRUE 
+[1] 3
+> Gfun(m2, extrarg = FALSE)
+in 'mmat2' method for 'Gfun() : extrarg= FALSE 
+[1] 3
+> ## The last two gave Error ...... variable ".local" was not found
+> (m3 <- new("mmat3", diag(3)))
+An object of class "mmat3"
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+> Gfun(m3)
+in 'mmat3' method for 'Gfun() : extrarg= TRUE 
+in 'mmat2' method for 'Gfun() : extrarg= TRUE 
+[1] 3
+> Gfun(m3, extrarg = FALSE) # used to not pass 'extrarg'
+in 'mmat3' method for 'Gfun() : extrarg= FALSE 
+in 'mmat2' method for 'Gfun() : extrarg= FALSE 
+[1] 3
+> 
+> 
+> ## regression tests of dispatch: most of these became primitive in 2.6.0
+> setClass("c1", "numeric")
+[1] "c1"
+> setClass("c2", "numeric")
+[1] "c2"
+> x_c1 <- new("c1")
+> # the next failed < 2.5.0 as the signature in .BasicFunsList was wrong
+> setMethod("as.character", "c1", function(x, ...) "fn test")
+[1] "as.character"
+> as.character(x_c1)
+[1] "fn test"
+> 
+> setMethod("as.integer", "c1", function(x, ...) 42)
+[1] "as.integer"
+> as.integer(x_c1)
+[1] 42
+> 
+> setMethod("as.logical", "c1", function(x, ...) NA)
+[1] "as.logical"
+> as.logical(x_c1)
+[1] NA
+> 
+> setMethod("as.complex", "c1", function(x, ...) pi+0i)
+[1] "as.complex"
+> as.complex(x_c1)
+[1] 3.141593+0i
+> 
+> setMethod("as.raw", "c1", function(x) as.raw(10))
+[1] "as.raw"
+> as.raw(x_c1)
+[1] 0a
+> 
+> # as.numeric sets methods on all the equivalent functions
+> setMethod("as.numeric", "c1", function(x, ...) 42+pi)
+[1] "as.numeric"
+> as.numeric(x_c1)
+[1] 45.14159
+> as.double(x_c1)
+[1] 45.14159
+> as.real(x_c1)
+[1] 45.14159
+> showMethods(as.numeric)
+Function: as.numeric (package base)
+x="c1"
+
+> showMethods(as.double)
+Function: as.numeric (package base)
+x="c1"
+
+> showMethods(as.real)
+Function: as.numeric (package base)
+x="c1"
+
+> 
+> setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
+[1] "as.numeric"
+> x_c2 <- new("c2", pi)
+> as.numeric(x_c2)
+[1] 6.283185
+> showMethods(as.numeric)
+Function: as.numeric (package base)
+x="c1"
+x="c2"
+
+> 
+> promptClass("c1", stdout())# want all methods
+\name{c1-class}
+\docType{class}
+\alias{c1-class}
+\alias{as.character,c1-method}
+\alias{as.complex,c1-method}
+\alias{as.integer,c1-method}
+\alias{as.logical,c1-method}
+\alias{as.numeric,c1-method}
+\alias{as.raw,c1-method}
+
+\title{Class "c1" ~~~ }
+\description{	 ~~ A concise (1-5 lines) description of what the class is.  ~~}
+\section{Objects from the Class}{
+Objects can be created by calls of the form \code{new("c1", ...)}.
+	 ~~ describe objects here ~~ 
+}
+\section{Slots}{
+	 \describe{
+    \item{\code{.Data}:}{Object of class \code{"numeric"} ~~ }
+  }
+}
+\section{Extends}{
+Class \code{"\linkS4class{numeric}"}, from data part.
+Class \code{"\linkS4class{vector}"}, by class "numeric", distance 2.
+}
+\section{Methods}{
+  \describe{
+    \item{as.character}{\code{signature(x = "c1")}: ... }
+    \item{as.complex}{\code{signature(x = "c1")}: ... }
+    \item{as.integer}{\code{signature(x = "c1")}: ... }
+    \item{as.logical}{\code{signature(x = "c1")}: ... }
+    \item{as.numeric}{\code{signature(x = "c1")}: ... }
+    \item{as.raw}{\code{signature(x = "c1")}: ... }
+	 }
+}
+\references{ ~put references to the literature/web site here ~ }
+\author{ ~~who you are~~ }
+\note{ ~~further notes~~ }
+
+ ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+	~~objects to See Also as \code{\link{~~fun~~}}, ~~~
+	or \code{\linkS4class{CLASSNAME}} for links to other classes
+}
+\examples{
+showClass("c1")
+}
+\keyword{classes}
+A shell of class documentation has been written to the 
+connection 'stdout'.
+ 
+> 
+> ## '!' changed signature from 'e1' to 'x' in 2.6.0
+> setClass("foo", "logical")
+[1] "foo"
+> setMethod("!", "foo", function(e1) e1+NA)
+[1] "!"
+Warning message:
+argument in method definition changed from (e1) to (x) 
+> selectMethod("!", "foo")
+Method Definition:
+
+function (x) 
+x + NA
+
+Signatures:
+        x    
+target  "foo"
+defined "foo"
+> xx <- new("foo", FALSE)
+> !xx
+An object of class "foo"
+[1] NA
 > 

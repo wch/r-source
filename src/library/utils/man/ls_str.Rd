@@ -46,6 +46,8 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
   \code{\link{str}}, \code{\link{summary}}, \code{\link{args}}.
 }
 \examples{
+require(stats)
+
 lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list") #- what are the structured objects I have defined?
 

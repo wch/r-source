@@ -8,7 +8,7 @@
 }
 \usage{
 browseEnv(envir = .GlobalEnv, pattern,
-          excludepatt = "^last\\.warning",
+          excludepatt = "^last\\\\.warning",
           html = .Platform$OS.type != "mac",
           expanded = TRUE, properties = NULL,
           main = NULL, debugMe = FALSE)
@@ -58,7 +58,7 @@ if(interactive()) {
    example(factor, echo = FALSE)
    example(table, echo = FALSE)
    example(ftable, echo = FALSE)
-   example(lm, echo = FALSE)
+   example(lm, echo = FALSE, ask = FALSE)
    example(str, echo = FALSE)
 
    ## and browse them:

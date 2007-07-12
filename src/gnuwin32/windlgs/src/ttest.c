@@ -1,7 +1,9 @@
-#include <windows.h>
+#include <R.h> /* for R_ProcessEvents */
 #include "ga.h"
 #include <stdlib.h> /* atof */
 #include <ctype.h> /* tolower */
+#define WIN32_LEAN_AND_MEAN 1
+#include <windows.h> /* for Sleep */
 
 
 static window win;
@@ -11,13 +13,11 @@ static field var1, var2, lvl;
 static checkbox paired, varequal;
 static listbox alt;
 
-extern void R_ProcessEvents();
-
 static int done = 0;
 static char *v[2];
 
 
-static char *alts[] = {"two.sided", "greater", "less", NULL};
+static const char *alts[] = {"two.sided", "greater", "less", NULL};
 
 /* keyboard shortcuts: CR or A/a accepts, ESC or C/c cancels */
 static void hit_key(window w, int key)
@@ -81,6 +81,7 @@ void menu_ttest(char **vars, int ints[], double level[])
     for(;;) {
 	R_ProcessEvents();
 	if(done > 0) break;
+	Sleep(100);
     }
     vars[0] = v[0]; vars[1] = v[1];
     ints[0] =  getlistitem(alt);
@@ -94,7 +95,7 @@ void menu_ttest(char **vars, int ints[], double level[])
 }
 
 
-extern void Rconsolecmd(window c, char *cmd);
+extern void Rconsolecmd(char *cmd);
 extern __declspec(dllimport) window RConsole;
 
 
@@ -115,6 +116,7 @@ void menu_ttest2()
     for(;;) {
 	R_ProcessEvents();
 	if(done > 0) break;
+	Sleep(100);
     }
     if(done == 1){
 	sprintf(cmd, "t.test(x=%s, y=%s, alternative=\"%s\",\n      paired=%s, var.equal=%s, conf.level=%s)\n", v[0], v[1],
@@ -122,7 +124,7 @@ void menu_ttest2()
 		ischecked(paired) ? "TRUE" : "FALSE",
 		ischecked(varequal) ? "TRUE" : "FALSE",
 		GA_gettext(lvl));
-	Rconsolecmd(RConsole, cmd);
+	Rconsolecmd(cmd);
     }    
     hide(win);
     delobj(bApply);
@@ -148,6 +150,7 @@ SEXP menu_ttest3()
     for(;;) {
 	R_ProcessEvents();
 	if(done > 0) break;
+	Sleep(100);
     }
     if(done == 1) {
 	sprintf(cmd, "t.test(x=%s, y=%s, alternative=\"%s\",\n      paired=%s, var.equal=%s, conf.level=%s)\n", v[0], v[1],

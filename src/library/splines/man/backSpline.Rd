@@ -32,6 +32,7 @@ backSpline(object)
   \code{\link{interpSpline}}
 }
 \examples{
+require(graphics)
 ispl <- interpSpline( women$height, women$weight )
 bspl <- backSpline( ispl )
 plot( bspl )                   # plots over the range of the knots

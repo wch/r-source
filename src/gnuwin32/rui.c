@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2006  The R Foundation
+ *  Copyright (C) 2004--2007  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,8 +64,8 @@ extern Rboolean DebugMenuitem;
 static menubar RMenuBar;
 static popup RConsolePopup;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
-    msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
-    mls, mrm, msearch, mde;
+    msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mcomplete, 
+    mfncomplete, mconfig, mls, mrm, msearch, mde, mtools, mstatus;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanint, lmanadmin;
 static menu m;
 static char cmd[1024];
@@ -310,10 +310,83 @@ void menuconfig(control m)
 /*    show(RConsole); */
 }
 
+static void menutools(control m) 
+{
+    if(ischecked(mtools)) {
+	toolbar_hide();
+	uncheck(mtools);
+    } else {
+	toolbar_show();
+	check(mtools);
+    }
+}
+
+void showstatusbar()
+{
+    if(ismdi() && !ischecked(mstatus)) {
+	addstatusbar();
+	check(mstatus);
+    }
+}
+
+
+static void menustatus(control m)
+{
+    if(ischecked(mstatus)) {
+	delstatusbar();
+	uncheck(mstatus);
+    } else {
+	addstatusbar();
+	check(mstatus);
+    }
+}
+
+
 static void menulazy(control m)
 {
     consoletogglelazy(RConsole);
 /*    show(RConsole); */
+}
+
+extern void set_rcompgen_available(int x);
+
+static int filename_completion_on = 1;
+
+static int check_file_completion(void)
+{
+    /* ought really to ask rcompgen, but that means loading it */
+    return filename_completion_on;
+}
+
+static void menucomplete(control m)
+{
+    if(ischecked(mcomplete)) {
+	set_rcompgen_available(0);
+	uncheck(mcomplete);
+	uncheck(mfncomplete);
+    } else {
+	set_rcompgen_available(-1);
+	check(mcomplete);
+	if(check_file_completion()) check(mfncomplete);
+	else uncheck(mfncomplete);
+    }
+}
+
+static void menufncomplete(control m)
+{
+    char cmd[200], *c0;
+    if(ischecked(mfncomplete)) {
+	c0 = "FALSE";
+	uncheck(mfncomplete);
+	filename_completion_on = 0;
+    } else {
+	c0 = "TRUE";	
+	check(mfncomplete);
+	filename_completion_on = 1;
+    }
+    sprintf(cmd, "rcompgen::rc.settings(files=%s)", c0);
+    consolecmd(RConsole, cmd);
+    
 }
 
 static void menuconsolestayontop(control m)
@@ -555,12 +628,14 @@ static void menurwFAQ(control m)
 
 static void menuabout(control m)
 {
-    char  s[256];
+    char  s[256], s2[256];
 
-    sprintf(s, "%s %s.%s %s\n%s, %s\n\n%s",
-	    "R", R_MAJOR, R_MINOR, "- A Language and Environment",
-	    "              Copyright ", R_YEAR,
-	    "    The R Development Core Team");
+    
+    PrintVersionString(s2);
+    sprintf(s, "%s\n%s %s %s",
+	    s2,
+	    "Copyright (C)", R_YEAR,
+	    "The R Foundation for Statistical Computing");
     askok(s);
 /*    show(RConsole); */
 }
@@ -957,7 +1032,7 @@ int setupui()
 	return 0;
     TRACERUI("Console done");
 #ifdef USE_MDI
-    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
+    if (ismdi()) {
           int btsize = 24;
           rect r = rect(2, 2, btsize, btsize);
           control tb, bt;
@@ -997,15 +1072,15 @@ int setupui()
           MCHECK(addtooltip(bt, G_("Print")));
     }
     if (ismdi() && (RguiMDI & RW_STATUSBAR)) {
-	char  s[256];
-
 	TRACERUI("status bar");
 	addstatusbar();
-	sprintf(s, "%s %s.%s %s",
-		"R", R_MAJOR, R_MINOR, "- A Language and Environment");
 	addto(RConsole);
-	setstatus(s);
 	TRACERUI("status bar done");
+    }
+    if (ismdi()) {
+	char s[256];
+	PrintVersionString(s);
+	setstatus(s);
     }
 #endif
     addto(RConsole);
@@ -1046,7 +1121,15 @@ int setupui()
     MCHECK(mde = newmenuitem(G_("Data editor..."), 0, menude));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mconfig = newmenuitem(G_("GUI preferences..."), 0, menuconfig));
-
+#ifdef USE_MDI
+    if (ismdi()) {
+	MCHECK(newmenu(G_("View")));
+	MCHECK(mtools = newmenuitem(G_("Toolbar"), 0, menutools));
+	MCHECK(mstatus = newmenuitem(G_("Statusbar"), 0, menustatus));
+	if(RguiMDI & RW_TOOLBAR) check(mtools);
+	if(RguiMDI & RW_STATUSBAR) check(mstatus);
+    }
+#endif
     MCHECK(newmenu(G_("Misc")));
     MCHECK(newmenuitem(G_("Stop current computation           \tESC"), 0, 
 		       menukill));
@@ -1055,6 +1138,14 @@ int setupui()
 	MCHECK(newmenuitem(G_("Break to debugger"), 0, menudebug));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mlazy = newmenuitem(G_("Buffered output"), 'W', menulazy));
+    MCHECK(mcomplete = newmenuitem(G_("Word completion"), 0, menucomplete));
+    check(mcomplete);
+    MCHECK(mfncomplete = newmenuitem(G_("Filename completion"), 0, 
+				     menufncomplete));
+    if(check_file_completion())
+	check(mfncomplete);
+    else 
+	uncheck(mfncomplete);
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mls = newmenuitem(G_("List objects"), 0, menuls));
     MCHECK(mrm = newmenuitem(G_("Remove all objects"), 0, menurm));
@@ -1074,6 +1165,7 @@ int setupui()
     consolesetbrk(RConsole, menukill, ESC, 0);
     gl_hist_init(R_HistorySize, 0);
     if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
+    if (ismdi() && !(RguiMDI & RW_TOOLBAR)) toolbar_hide();
     show(RConsole);
     return 1;
 }
@@ -1137,7 +1229,7 @@ char *getusermenuname(int pos) {
     return(usermenunames[pos]);
 }
 
-menuItems *wingetmenuitems(char *mname, char *errmsg) {
+menuItems *wingetmenuitems(const char *mname, char *errmsg) {
     menuItems *items;
     char mitem[1002], *p, *q, *r;
     int i,j=0;
@@ -1157,7 +1249,7 @@ menuItems *wingetmenuitems(char *mname, char *errmsg) {
     strcpy(mitem, mname); strcat(mitem, "/");
 
     for (i = 0; i < nitems; i++) {
-	p = (char *)strstr(umitems[i]->name, mitem);
+	p = strstr(umitems[i]->name, mitem);
 
 	if (p == NULL)
 	    continue;
@@ -1205,9 +1297,7 @@ void freemenuitems(menuItems *items) {
     free(items);
 }
 
-extern menu getGraphMenu(char *); /* from devga.c */
-
-static menu getMenu(char * name)
+static menu getMenu(const char * name)
 {
     int i;
     for (i = 0; i < nmenus; i++)
@@ -1221,9 +1311,10 @@ static menu getMenu(char * name)
     else return(NULL);
 }
 
-int winaddmenu(char * name, char *errmsg)
+int winaddmenu(const char *name, char *errmsg)
 {
-    char *p, *submenu = name, start[501];
+    const char *submenu = name;
+    char *p, start[501];
     menu parent;
 
     if (getMenu(name))
@@ -1262,7 +1353,7 @@ int winaddmenu(char * name, char *errmsg)
     }
     if (m) {
 	usermenus[nmenus] = m;
-	usermenunames[nmenus]= strdup(name);
+	usermenunames[nmenus] = strdup(name);
 	nmenus++;
 	show(RConsole);
 	return 0;
@@ -1272,7 +1363,8 @@ int winaddmenu(char * name, char *errmsg)
     }
 }
 
-int winaddmenuitem(char * item, char * menu, char * action, char *errmsg)
+int winaddmenuitem(const char * item, const char * menu, 
+		   const char * action, char *errmsg)
 {
     int i, im;
     menuitem m;
@@ -1353,14 +1445,15 @@ int winaddmenuitem(char * item, char * menu, char * action, char *errmsg)
     return 0;
 }
 
-int windelmenu(char * menu, char *errmsg)
+int windelmenu(const char * menu, char *errmsg)
 {
     int i, j, count = 0, len = strlen(menu);
 
     j = 0;
     for (i = 0; i < nmenus; i++) {
 	if (strcmp(menu, usermenunames[i]) == 0
-	  || (strncmp(menu, usermenunames[i], len) && usermenunames[i][len] == '/')) {
+	  || (strncmp(menu, usermenunames[i], len) == 0 && 
+	      usermenunames[i][len] == '/')) {
 	    remove_menu_item(usermenus[i]);
 	    count++;
 	} else {
@@ -1379,16 +1472,18 @@ int windelmenu(char * menu, char *errmsg)
 
     /* Delete any menu items in this menu */
 
-    for (j = nitems-1; j >= 0; j--) {
-	if (strncmp(menu, umitems[j]->name, len) == 0 && umitems[j]->name[len] == '/')
+    for (j = nitems - 1; j >= 0; j--) {
+	if (strncmp(menu, umitems[j]->name, len) == 0 && 
+	    umitems[j]->name[len] == '/')
 	    windelmenuitem(umitems[j]->name + len + 1, menu, errmsg);
     }
+
 
     show(RConsole);
     return 0;
 }
 
-void windelmenus(char * prefix)
+void windelmenus(const char * prefix)
 {
     int i, len = strlen(prefix);
 
@@ -1398,7 +1493,7 @@ void windelmenus(char * prefix)
     }
 }
 
-int windelmenuitem(char * item, char * menu, char *errmsg)
+int windelmenuitem(const char * item, const char * menu, char *errmsg)
 {
     int i;
     char mitem[1002];
@@ -1421,3 +1516,4 @@ int windelmenuitem(char * item, char * menu, char *errmsg)
     show(RConsole);
     return 0;
 }
+

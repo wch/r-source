@@ -43,6 +43,7 @@ spline.des(knots, x, ord = 4, derivs, outer.ok = FALSE)
 }
 \author{Douglas Bates and Bill Venables}
 \examples{
+require(graphics)
 splineDesign(knots = 1:10, x = 4:7)
 
 knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)# 10 => 10-4 = 6 Basis splines

@@ -42,7 +42,7 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
   call and then closed again.  The connection must be open or open-able
   in binary mode.
 
-  If \code{readBin} is called \code{con} with a raw vector, the data in
+  If \code{readBin} is called with \code{con} a raw vector, the data in
   the vector is used as input.  If \code{writeBin} is called with
   \code{con} a raw vector, it is just an indication that a raw vector
   should be returned.

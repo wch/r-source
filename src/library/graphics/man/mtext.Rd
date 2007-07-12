@@ -11,8 +11,9 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
 }
 \alias{mtext}
 \arguments{
-  \item{text}{one or more character strings or language objects (names,
-    calls or expressions).}
+  \item{text}{a character or \link{expression} vector specifying
+    the \emph{text} to be written.  Other objects are coerced by
+    \code{\link{as.graphicsAnnot}}.}
   \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
   \item{line}{on which MARgin line, starting at 0 counting outwards.}
   \item{outer}{use outer margins if available.}

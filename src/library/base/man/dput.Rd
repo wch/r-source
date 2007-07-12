@@ -42,7 +42,7 @@ dget(file)
 \value{
   For \code{dput}, the first argument invisibly.
 
-  FOr \code{dget}, the object created.
+  For \code{dget}, the object created.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual

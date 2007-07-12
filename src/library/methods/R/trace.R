@@ -178,6 +178,16 @@
             .assignOverBinding(what, newFun, whereF, global)
         else
             assign(what, newFun, whereF)
+        if(length(grep("[^.]+[.][^.]+", what)) > 0) { #possible S3 method
+            ## check for a registered version of the object
+            S3MTableName <- ".__S3MethodsTable__."
+            tracedFun <- get(what, envir = whereF, inherits = TRUE)
+            if(exists(S3MTableName, envir = whereF, inherits = FALSE)) {
+                tbl <- get(S3MTableName, envir = whereF, inherits = FALSE)
+                if(exists(what, envir = tbl, inherits = FALSE))
+                  assign(what, tracedFun, envir = tbl)
+            }
+        }
     }
     else {
         if(untrace && is(newFun, "MethodDefinition") &&
@@ -437,7 +447,7 @@ trySilent <- function(expr) {
 ### a table in this direction anywhere?
 .searchNamespaceNames <- function(env) {
     namespaces <- .Internal(getNamespaceRegistry())
-    names <- objects(namespaces, all = TRUE)
+    names <- objects(namespaces, all.names = TRUE)
     for(what in names)
         if(identical(get(what, envir=namespaces), env))
             return(paste("namespace", what, sep=":"))
@@ -451,15 +461,15 @@ trySilent <- function(expr) {
         if(length(whereF)>0)
             whereF <- whereF[[1]]
         else return(list(pname = pname, whereF = baseenv()))
-    }
-    else {
+    } else
         whereF <- .genEnv(what, where)
-    }
-    if(!is.null(attr(whereF, "name")))
+
+    ## avoid partial matches to "names"
+    if("name" %in% names(attributes(whereF)))
         pname <- gsub("^.*:", "", attr(whereF, "name"))
     else if(isNamespace(whereF))
         pname <- .searchNamespaceNames(whereF)
-    list(pname=pname, whereF = whereF)
+    list(pname = pname, whereF = whereF)
 }
 
 .makeTraceClass <- function(traceClassName, className, verbose = TRUE) {

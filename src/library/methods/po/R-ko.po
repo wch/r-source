@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2007-05-25 12:19\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -157,6 +157,10 @@ msgid ""
 "defined"
 msgstr "함수'%s' 또는 기호 %s의 메소드는 밀폐되어 다시 정의할수가 없습니다"
 
+#, fuzzy
+msgid "argument in method definition changed from (%s) to (%s)"
+msgstr "(%s)에서(%s)부터 변경되어진 정의 인수입니다"
+
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
 "function"
@@ -214,12 +218,12 @@ msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙�
 msgid "No method found for signature %s"
 msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
-
 #, fuzzy
 msgid "\"%s\" has no methods defined"
 msgstr "'%s'는 메소드를 정해두지 않습니다"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
 
 msgid "no unique method corresponding to this signature"
 msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
@@ -240,11 +244,6 @@ msgstr ""
 "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 이름"
 "이어야만\n"
 "합니다"
-
-msgid ""
-"The special case of printTo=FALSE only works when a single generic function "
-"is specified"
-msgstr ""
 
 msgid ""
 "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -1162,6 +1161,15 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr "함수 인수를 위한 무효의 인덱스"
 
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
+
 msgid ""
 "Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
 "\"%s\""
@@ -1196,9 +1204,11 @@ msgstr ""
 "generic 함수가 아닌 오브젝트(클래스 \"%s\"의 것)에 메소드 기호를 match시키려"
 "고 합니다"
 
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr ""
+
 msgid ""
-"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
-"signatures shown will be used)\n"
+"(the first of the signatures shown will be used)\n"
 "%s"
 msgstr ""
 
@@ -1231,7 +1241,7 @@ msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
 msgid "\" not found"
 msgstr "검색되지 않는 오브젝트 '%s' 입니다"
 
-msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
 msgstr ""
 
 msgid "Failed to find expected group generic function:"
@@ -1307,6 +1317,9 @@ msgstr ""
 
 msgid "argument 'what' should be the name of a function"
 msgstr "인수'what' 함수의 이름이어야 합니다"
+
+msgid "Tracing the internal function \"%s\" is not allowed"
+msgstr ""
 
 msgid ".TraceWithMethods: after computing what, whereF"
 msgstr ""

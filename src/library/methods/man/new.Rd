@@ -71,11 +71,11 @@ setClass("track",
 setClass("trackCurve",
          representation("track", smooth = "numeric"))
 
-ydata <- rnorm(10); ysmooth <- 1:10
+ydata <- stats::rnorm(10); ysmooth <- 1:10
 }
 
 ## a new object with two slots specified
-t1 <- new("track", x = seq(along=ydata), y = ydata)
+t1 <- new("track", x = seq_along(ydata), y = ydata)
 
 # a new object including an object from a superclass, plus a slot
 t2 <- new("trackCurve", t1, smooth = ysmooth)
@@ -99,14 +99,14 @@ setMethod("initialize",
 ### because we didn't build in defaults for x,
 ### although we could with a more elaborate method for initialize
 
-try(new("track", y = sort(rnorm(10))))
+try(new("track", y = sort(stats::rnorm(10))))
 
 ## a better way to implement the previous initialize method.
 ## Why?  By using callNextMethod to call the default initialize method
 ## we don't inhibit classes that extend "track" from using the general
 ## form of the new() function.  In the previous version, they could only
 ## use x and y as arguments to new, unless they wrote their own
-## intialize method.
+## initialize method.
 
 setMethod("initialize", "track", function(.Object, ...) {
     .Object <- callNextMethod()

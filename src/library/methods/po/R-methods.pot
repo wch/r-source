@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2007-05-25 12:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,6 +89,9 @@ msgstr ""
 msgid "the method for function \"%s\" and signature %s is sealed and cannot be re-defined"
 msgstr ""
 
+msgid "argument in method definition changed from (%s) to (%s)"
+msgstr ""
+
 msgid "primitive functions cannot be methods; they must be enclosed in a regular function"
 msgstr ""
 
@@ -122,10 +125,10 @@ msgstr ""
 msgid "No method found for signature %s"
 msgstr ""
 
-msgid "signature must be a vector of classes or an environment"
+msgid "\"%s\" has no methods defined"
 msgstr ""
 
-msgid "\"%s\" has no methods defined"
+msgid "signature must be a vector of classes or an environment"
 msgstr ""
 
 msgid "no unique method corresponding to this signature"
@@ -138,9 +141,6 @@ msgid "bad class specified for element %d (should be a single character string)"
 msgstr ""
 
 msgid "first argument should be the name(s) of generic functions (got object of class \"%s\")"
-msgstr ""
-
-msgid "The special case of printTo=FALSE only works when a single generic function is specified"
 msgstr ""
 
 msgid "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -668,6 +668,15 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr ""
 
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
+
 msgid "Invalid object in meta table of methods for \"%s\", label \"%s\", had class \"%s\""
 msgstr ""
 
@@ -695,7 +704,10 @@ msgstr ""
 msgid "Trying to find a methods table in a non-generic function"
 msgstr ""
 
-msgid "Ambiguous method selection for \"%s\", target \"%s\" (the first of the signatures shown will be used)\n%s"
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr ""
+
+msgid "(the first of the signatures shown will be used)\n%s"
 msgstr ""
 
 msgid "found"
@@ -722,7 +734,7 @@ msgstr ""
 msgid "\" not found"
 msgstr ""
 
-msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
 msgstr ""
 
 msgid "Failed to find expected group generic function:"
@@ -777,6 +789,9 @@ msgid "invalid call to 'classLabel': expected a name or a class definition, got 
 msgstr ""
 
 msgid "argument 'what' should be the name of a function"
+msgstr ""
+
+msgid "Tracing the internal function \"%s\" is not allowed"
 msgstr ""
 
 msgid ".TraceWithMethods: after computing what, whereF"

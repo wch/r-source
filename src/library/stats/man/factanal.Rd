@@ -189,6 +189,6 @@ factanal(~v1+v2+v3+v4+v5+v6, factors = 3,
          scores = "Bartlett")$scores
 
 ## a realistic example from Barthlomew (1987, pp. 61-65)
-example(ability.cov)
+utils::example(ability.cov)
 }
 \keyword{multivariate}

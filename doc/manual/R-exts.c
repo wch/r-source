@@ -39,7 +39,7 @@ SEXP out(SEXP x, SEXP y)
 
 /* get the list element named str, or return NULL */
 
-SEXP getListElement(SEXP list, char *str)
+SEXP getListElement(SEXP list, const char *str)
 {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
@@ -135,7 +135,7 @@ SEXP showArgs(SEXP args)
 {
     int i;
     Rcomplex cpl;
-    char *name;
+    const char *name;
     SEXP el;
 
     args = CDR(args); /* skip 'name' */
@@ -170,7 +170,7 @@ SEXP showArgs1(SEXP largs)
     int i, nargs = LENGTH(largs);
     Rcomplex cpl;
     SEXP el, names = getAttrib(largs, R_NamesSymbol);
-    char *name;
+    const char *name;
 
     for(i = 0; i < nargs; i++) {
 	el = VECTOR_ELT(largs, i);

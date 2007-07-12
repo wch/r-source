@@ -14,9 +14,9 @@ predict.default <- function (object, ...) {
 	X <- cbind(rep(1, NROW(X)), X)
     k <- NCOL(X)
     n <- NROW(X)
-    if (length(object$coef) != k)
+    if (length(object$coefficients) != k)
 	stop("wrong number of predictors")
-    predictor <- X %*% object$coef
+    predictor <- X %*% object$coefficients
     ip <- numeric(n)
     names(ip) <- paste("P", 1:n, sep = "")
     for (i in 1:n)

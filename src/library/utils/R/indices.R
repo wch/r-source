@@ -99,6 +99,8 @@ function(x, ...)
         close(outConn)
         unlink(outFile)
         writeLines(paste("no", tolower(x$title), "found"))
+        if(!is.null(x$footer))
+            writeLines(c("", x$footer))
     }
     else {
         if(!is.null(x$footer))

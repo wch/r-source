@@ -53,13 +53,14 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(file == "") file <- stdin()
         else {
-            srcfile <- srcfile(file)
+            srcfile <- srcfile(file, encoding = encoding)
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE
 	}
     }
-    Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile)))
+    exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
+    Ne <- length(exprs)
     if (from_file) { # we are done with the file now
         close(file)
         on.exit()
@@ -107,7 +108,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             	dep <- paste(prompt.echo,
             		     gsub("\n", paste("\n", continue.echo, sep=""), dep),
             		     sep="")
-		nd <- nchar(dep, "chars") - 1
+		nd <- nchar(dep, "c") - 1
 	    } else {
 	    	if (i == 1) lastshown <- min(skip.echo, srcref[3]-1)
 	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
@@ -119,7 +120,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	}
 	    	dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
 	    		     dep, sep="", collapse="\n")
-	    	nd <- nchar(dep, "chars")
+	    	nd <- nchar(dep, "c")
 	    }
 	    if (nd) {
 		do.trunc <- nd > max.deparse.length

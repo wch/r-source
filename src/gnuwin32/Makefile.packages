@@ -11,8 +11,8 @@ RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
 else
-RHOME = $(shell perl pwd.pl ../..)
-PKGD = $(shell perl pwd.pl $(PKGDIR))
+RHOME = $(shell $(PERL) pwd.pl ../..)
+PKGD = $(shell $(PERL) pwd.pl $(PKGDIR))
 endif
 
 REXE = $(R_EXE) --vanilla --slave
@@ -62,7 +62,7 @@ pkgfake-%:
 
 
 pkgclean-%:
-	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:

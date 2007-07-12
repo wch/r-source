@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2006 R Development Core Team
+# Copyright (C) 1997-2007 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ use Getopt::Long;
 use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
+use R::Dcf;
 
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
@@ -64,11 +65,19 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
 
 ($pkg, $version, $lib, @mandir) = buildinit();
 $dest = $ARGV[2];
-if (!$dest) {
-    $dest = file_path($lib, $pkg);
-}
+if (!$dest) {$dest = file_path($lib, $pkg);}
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
+
+my $def_encoding = "unknown";
+if(-r &file_path($dest, "DESCRIPTION")) {
+    my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
+    if($rdcf->{"Encoding"}) {
+	    $def_encoding = $rdcf->{"Encoding"};
+	    chomp $def_encoding;
+	    # print "Using $def_encoding as the default encoding\n";
+	}
+}
 
 if($opt_chm) {
     $chmdir = "../chm";
@@ -77,6 +86,7 @@ if($opt_chm) {
     }
     open_hhp($pkg);
 }
+
 build_index($lib, $dest, $version, $chmdir);
 if($opt_index){
     exit 0;
@@ -155,13 +165,15 @@ foreach $manfile (@mandir) {
 	$manfiles{$manfilebase} = $manfile;
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = $chmflag = "";
+	$types = "";
+	undef $do_example;
 
 	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
+		$types .= "txt,";
 	    }
 	}
 
@@ -172,9 +184,32 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
+		$types .= "html,";
 	    }
 	}
+
+	if($opt_latex){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = file_path($dest, "latex", $targetfile.".tex");
+	    if(fileolder($destfile, $manage)) {
+		$latexflag = "latex";
+		$types .= "latex,";
+	    }
+	}
+
+	if($opt_example){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
+	    if(fileolder($destfile, $manage)) {
+		if(-f $destfile) {unlink $destfile;}
+		$types .= "example,";
+		$do_example = "yes";
+	    }
+	}
+
+	Rdconv($manfile, $types, "", "$dest", $pkg, $version, 
+	       $def_encoding) if $types ne "";
+	if($do_example && -f $destfile) {$exampleflag = "example";}
 
 	if($opt_chm){
 	    my $targetfile = $filenm{$manfilebase};
@@ -185,25 +220,6 @@ foreach $manfile (@mandir) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
 		Rdconv($manfile, "chm", "", "$destfile", $pkg, $version);
-	    }
-	}
-
-	if($opt_latex){
-	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = file_path($dest, "latex", $targetfile.".tex");
-	    if(fileolder($destfile, $manage)) {
-		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile", $version);
-	    }
-	}
-
-	if($opt_example){
-	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
-	    if(fileolder($destfile, $manage)) {
-		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile", $version);
-		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
 

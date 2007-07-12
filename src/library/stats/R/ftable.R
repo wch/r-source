@@ -145,8 +145,8 @@ as.table.ftable <- function(x, ...)
                dimnames = c(xrv, xcv))
     nrv <- length(xrv)
     ncv <- length(xcv)
-    x <- aperm(x, c(seq(from = nrv, to = 1),
-                    seq(from = nrv + ncv, to = nrv + 1)))
+    x <- aperm(x, c(seq.int(from = nrv, to = 1),
+                    seq.int(from = nrv + ncv, to = nrv + 1)))
     class(x) <- "table"
     x
 }
@@ -163,7 +163,7 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
         cplensD <- rev(c(1, cumprod(rev(lens))))
         y <- NULL
         for (i in rev(seq_along(lst))) {
-            ind <- 1 + seq(from = 0, to = lens[i] - 1) * cplensD[i + 1]
+            ind <- 1 + seq.int(from = 0, to = lens[i] - 1) * cplensD[i + 1]
             tmp <- character(length = cplensD[i])
             tmp[ind] <- charQuote(lst[[i]])
             y <- cbind(rep(tmp, times = cplensU[i]), y)
@@ -179,7 +179,7 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
 
     xrv <- attr(x, "row.vars")
     xcv <- attr(x, "col.vars")
-    LABS <- cbind(rbind(matrix("", nr = length(xcv), nc = length(xrv)),
+    LABS <- cbind(rbind(matrix("", nrow = length(xcv), ncol = length(xrv)),
                         charQuote(makeNames(xrv)),
                         makeLabels(xrv)),
                   c(charQuote(makeNames(xcv)),
@@ -216,9 +216,9 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         ## We really need something seekable, see below.  If it is not,
         ## the best we can do is write everything to a tempfile.
         tmpf <- tempfile()
-        cat(file, file = tmpf)
-        file <- tmpf
-        on.exit(unlink(file))
+        cat(readLines(file), file = tmpf, sep="\n")
+        file <- file(tmpf, "r")
+        on.exit({close(file);unlink(tmpf)}, add=TRUE)
     }
 
     z <- utils::count.fields(file, sep, quote, skip)
@@ -245,7 +245,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         n.col.vars <- j - 1
         col.vars <- vector("list", length = n.col.vars)
         n <- c(1, z[1 : n.col.vars] - 1)
-        for(k in seq(from = 1, to = n.col.vars)) {
+        for(k in seq.int(from = 1, to = n.col.vars)) {
             s <- scan(file, what = "", sep = sep, quote = quote,
                       nlines = 1, quiet = TRUE)
             col.vars[[k]] <- s[-1]
@@ -300,7 +300,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                     paste("Factor", seq_along(col.vars), sep = ".")
             else {
                 nam <- names(col.vars)
-                ind <- which(nchar(nam) == 0)
+                ind <- which(!nzchar(nam))
                 names(col.vars)[ind] <-
                     paste("Factor", ind, sep = ".")
             }
@@ -309,7 +309,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
 
     p <- 1
     n <- integer(n.row.vars)
-    for(k in seq(from = 1, to = n.row.vars)) {
+    for(k in seq.int(from = 1, to = n.row.vars)) {
         n[k] <- sum(z >= max(z) - k + 1) / p
         p <- p * n[k]
     }
@@ -319,15 +319,15 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
     values <- as.numeric(s[!is.row.lab])
     tmp <- s[is.row.lab]
     len <- length(tmp)
-    for(k in seq(from = 1, to = n.row.vars)) {
-        i <- seq(from = 1, to = len, by = len / n[k])
+    for(k in seq.int(from = 1, to = n.row.vars)) {
+        i <- seq.int(from = 1, to = len, by = len / n[k])
         row.vars[[k]] <- unique(tmp[i])
-        tmp <- tmp[seq(from = 2, to = len / n[k])]
+        tmp <- tmp[seq.int(from = 2, to = len / n[k])]
         len <- length(tmp)
     }
     values <- matrix(values,
-                     nr = prod(sapply(row.vars, length)),
-                     nc = prod(sapply(col.vars, length)),
+                     nrow = prod(sapply(row.vars, length)),
+                     ncol = prod(sapply(col.vars, length)),
                      byrow = TRUE)
     structure(values,
               row.vars = row.vars,

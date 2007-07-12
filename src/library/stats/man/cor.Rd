@@ -64,7 +64,7 @@ cov2cor(V)
   each pair of variables is computed using all complete pairs
   of observations on those variables.
   This can result in covariance or correlation matrices which are not
-  positive semidefinite. \code{"pairwise.complete.obs"} only works with
+  positive semi-definite. \code{"pairwise.complete.obs"} only works with
   the \code{"pearson"} method for \code{cov} and \code{var}.
 
 
@@ -136,14 +136,14 @@ stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 
 ##--- Missing value treatment:
 C1 <- cov(swiss)
-range(eigen(C1, only=TRUE)$val) # 6.19	1921
+range(eigen(C1, only.values=TRUE)$values) # 6.19	1921
 swM <- swiss
 swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 try(cov(swM)) # Error: missing obs...
 C2 <- cov(swM, use = "complete")
-range(eigen(C2, only=TRUE)$val) # 6.46	1930
+range(eigen(C2, only.values=TRUE)$values) # 6.46	1930
 C3 <- cov(swM, use = "pairwise")
-range(eigen(C3, only=TRUE)$val) # 6.19	1938
+range(eigen(C3, only.values=TRUE)$values) # 6.19	1938
 
 symnum(cor(swM, method = "kendall", use = "complete"))
 ## Kendall's tau doesn't change much:

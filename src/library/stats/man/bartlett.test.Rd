@@ -67,10 +67,12 @@ bartlett.test(x, \dots)
 \references{
   Bartlett, M. S. (1937).
   Properties of sufficiency and statistical tests.
-  \emph{Proceedings of the Royal Statistical Society Series A}
+  \emph{Proceedings of the Royal Society of London Series A}
   \bold{160}, 268--282.
 }
 \examples{
+require(graphics)
+
 % FIXME: could use something more interesting here
 plot(count ~ spray, data = InsectSprays)
 bartlett.test(InsectSprays$count, InsectSprays$spray)

@@ -54,7 +54,7 @@ function(file, topic)
     ## We now have help-print.sh in share/sh but we do not use the
     ## .Script mechanism because we play with the TEXINPUTS environment
     ## variable and the code goes back to a time when not all systems
-    ## could be assumed to support Sys.putenv().
+    ## could be assumed to support Sys.setenv().
     ## Seems that now we can---rewrite this along the lines of
     ## tools:::.install_package_vignettes().
     system(paste(paste("TEXINPUTS=",

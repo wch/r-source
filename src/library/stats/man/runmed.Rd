@@ -30,7 +30,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
       \item{\code{"constant"}}{copies \code{median(y[1:k2])} to the first
 	values and analogously for the last ones making the smoothed ends
 	\emph{constant};}
-      \item{\code{"median"}}{the default, smoothes the ends by using
+      \item{\code{"median"}}{the default, smooths the ends by using
 	symmetrical medians of subsequently smaller bandwidth, but for
 	the very first and last value where Tukey's robust end-point
 	rule is applied, see \code{\link{smoothEnds}}.}
@@ -90,7 +90,9 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   medians of 3 for its compound smoothers.
 }
 \examples{
-example(nhtemp)
+require(graphics)
+
+utils::example(nhtemp)
 myNHT <- as.vector(nhtemp)
 myNHT[20] <- 2 * nhtemp[20]
 plot(myNHT, type="b", ylim = c(48,60), main = "Running Medians Example")
@@ -105,7 +107,7 @@ with(cars, lines(speed, runmed(dist, k = 3), col = 2))
 ## nice quadratic with a few outliers
 y <- ys <- (-20:20)^2
 y [c(1,10,21,41)] <- c(150, 30, 400, 450)
-all(y == runmed(y, 1)) # 1-neigborhood <==> interpolation
+all(y == runmed(y, 1)) # 1-neighbourhood <==> interpolation
 plot(y) ## lines(y, lwd=.1, col="light gray")
 lines(lowess(seq(y),y, f = .3), col = "brown")
 lines(runmed(y, 7), lwd=2, col = "blue")

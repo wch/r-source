@@ -9,6 +9,7 @@ void Rstd_ShowMessage(char *s);
 int  Rstd_ReadConsole(char *prompt, unsigned char *buf, int len, 
 		      int addtohistory);
 void Rstd_WriteConsole(char *buf, int len);
+void Rstd_WriteConsoleEx(char *buf, int len, int otype);
 void Rstd_ResetConsole(void);
 void Rstd_FlushConsole(void);
 void Rstd_ClearerrConsole(void);

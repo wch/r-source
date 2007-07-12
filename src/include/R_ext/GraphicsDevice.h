@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-5 The R Development Core Team.
+ *  Copyright (C) 2001-7 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -332,7 +332,7 @@ typedef struct {
      * lists, corresponding to different device-specific preferences.
      * An example is ...
      *
-     * Rboolean X11_Open(NewDevDesc *dd, char *dsp, double w, double h, 
+     * Rboolean X11_Open(NewDevDesc *dd, const char *dsp, double w, double h, 
      *                   double gamma_fac, X_COLORTYPE colormodel, 
      *                   int maxcube, int canvascolor);
      *
@@ -410,7 +410,7 @@ typedef struct {
      * string in DEVICE units.				
      * An example is ...
      *
-     * static double X11_StrWidth(char *str, 
+     * static double X11_StrWidth(const char *str, 
      *                            R_GE_gcontext *gc,
      *                            NewDevDesc *dd)
      *
@@ -424,7 +424,7 @@ typedef struct {
      * The text should be rotated according to rot (degrees)
      * An example is ...
      *
-     * static void X11_Text(double x, double y, char *str, 
+     * static void X11_Text(double x, double y, const char *str, 
      *                      double rot, double hadj, 
      *                      R_GE_gcontext *gc,
      * 	                    NewDevDesc *dd);
@@ -450,7 +450,7 @@ typedef struct {
      * and then return it
      * An example is ...
      *
-     * static SEXP GA_getEvent(SEXP eventRho, char *prompt);
+     * static SEXP GA_getEvent(SEXP eventRho, const char *prompt);
      */
     SEXP (*getEvent)();
     
@@ -485,6 +485,35 @@ typedef struct {
 	/* but if the device driver freaks out it needs to do	*/
 	/* the clean-up itself					*/
 	/********************************************************/
+
+
+/* Graphics events */
+
+/* These give the indices of some known keys */    
+
+typedef enum {knUNKNOWN = -1,
+              knLEFT = 0, knUP, knRIGHT, knDOWN,
+              knF1, knF2, knF3, knF4, knF5, knF6, knF7, knF8, knF9, knF10,
+              knF11, knF12,
+              knPGUP, knPGDN, knEND, knHOME, knINS, knDEL} R_KeyName;
+              
+/* These are the three possible mouse events */
+
+typedef enum {meMouseDown = 0,
+	      meMouseUp,
+	      meMouseMove} R_MouseEvent;
+
+#define leftButton   1
+#define middleButton 2
+#define rightButton  4
+
+#define doKeybd			Rf_doKeybd
+#define doMouseEvent		Rf_doMouseEvent
+
+SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event, 
+                  int buttons, double x, double y);
+SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, 
+	     const char *keyname);
 
 
 #ifdef __cplusplus

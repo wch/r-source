@@ -7,9 +7,8 @@ dump.frames <- function(dumpto = "last.dump", to.file = FALSE)
     attr(last.dump, "error.message") <- geterrmessage()
     class(last.dump) <- "dump.frames"
     if(dumpto != "last.dump") assign(dumpto, last.dump)
-    if (to.file)
-        save(list=dumpto, file = paste(dumpto, "rda", sep="."),
-             compress = TRUE)
+    if (to.file) # compress=TRUE is now the default.
+        save(list=dumpto, file = paste(dumpto, "rda", sep="."))
     else assign(dumpto, last.dump, envir=.GlobalEnv)
     invisible()
 }
@@ -102,12 +101,12 @@ recover <-
             cat(gettext("recover called non-interactively; frames dumped, use debugger() to view\n"))
             return(NULL)
         }
-        else if(identical(options()$show.error.messages, FALSE)) { # from try(silent=TRUE)?
+        else if(identical(getOption("show.error.messages"), FALSE)) # from try(silent=TRUE)?
             return(NULL)
-        }
         calls <- limitedLabels(calls[1:from])
         repeat {
-            which <- menu(calls, title="\nEnter a frame number, or 0 to exit  ")
+            which <- menu(calls,
+                          title="\nEnter a frame number, or 0 to exit  ")
             if(which > 0)
                 eval(quote(browser()), envir = sys.frame(which))
             else

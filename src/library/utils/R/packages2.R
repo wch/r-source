@@ -2,13 +2,15 @@ install.packages <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
              method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = FALSE,
+             installWithVers = FALSE, dependencies = NA,
              type = getOption("pkgType"), configure.args = character(0),
              clean = FALSE)
 {
-
     if (is.logical(clean) && clean)
         clean <- "--clean"
+    if(is.logical(dependencies) && is.na(dependencies))
+        dependencies <- if(!missing(lib) && length(lib) > 1) FALSE
+        else c("Depends", "Imports")
 
     explode_bundles <- function(a)
     {
@@ -88,8 +90,45 @@ install.packages <-
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning(gettextf("argument 'lib' is missing: using %s", lib),
+            warning(gettextf("argument 'lib' is missing: using '%s'", lib),
                     immediate. = TRUE, domain = NA)
+    }
+
+    ## check for writability by user
+    ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0)
+    if(length(lib) > 1 && any(!ok))
+        stop(sprintf(ngettext(sum(!ok),
+                              "'lib' element '%s'  is not a writable directory",
+                              "'lib' elements '%s' are not writable directories"),
+                     paste(lib[!ok], collapse=", ")), domain = NA)
+    if(length(lib) == 1 && ok && .Platform$OS.type == "windows") {
+        ## file.access is unreliable on Windows, especially Vista.
+        ## the only known reliable way is to try it
+        fn <- file.path(lib, "_test_dir_")
+        unlink(fn, recursive = TRUE) # precaution
+        res <- try(dir.create(fn, showWarnings = FALSE))
+        if(inherits(res, "try-error") || !res) ok <- FALSE
+        else unlink(fn, recursive = TRUE)
+    }
+    if(length(lib) == 1 && !ok) {
+        warning(gettextf("'lib = \"%s\"' is not writable", lib),
+                domain = NA, immediate. = TRUE)
+        userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"),
+                                   .Platform$path.sep))[1]
+        if(interactive() && !file.exists(userdir)) {
+            msg <- gettext("Would you like to create a personal library\n'%s'\nto install packages into?")
+            if(.Platform$OS.type == "windows") {
+                ans <- winDialog("yesno", sprintf(msg, userdir))
+                if(ans != "YES") stop("unable to install packages")
+            } else {
+                ans <- readline(paste(sprintf(msg, userdir), " (y/n) "))
+                if(substr(ans, 1, 1) == "n") stop("unable to install packages")
+            }
+            if(!dir.create(userdir, recursive = TRUE))
+                stop("unable to create ", sQuote(userdir))
+            lib <- userdir
+            .libPaths(c(userdir, .libPaths()))
+        } else stop("unable to install packages")
     }
 
     if(.Platform$OS.type == "windows") {
@@ -123,16 +162,31 @@ install.packages <-
             stop("This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM")
     }
 
+    ## we need to ensure that R CMD INSTALL runs with the same
+    ## library trees as this session.
+    libpath <- .libPaths()
+    libpath <- libpath[! libpath %in% .Library]
+    if(length(libpath)) libpath <- paste(libpath, collapse=.Platform$path.sep)
+    cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
+    if(length(libpath))
+        if(.Platform$OS.type == "windows") {
+            ## We don't have a way to set an environment variable for
+            ## a single command, as we do not spawn a shell.
+            oldrlibs <- Sys.getenv("R_LIBS")
+            Sys.setenv(R_LIBS = libpath)
+            on.exit(Sys.setenv(R_LIBS = oldrlibs))
+        } else
+            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep="="), cmd0)
+
     if(is.null(repos) & missing(contriburl)) {
+        ## install from local source tarballs
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
-        cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 
         for(i in 1:nrow(update)) {
-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
                           getConfigureArgs(update[i, 1]),
                          shQuote(update[i, 1]))
@@ -150,7 +204,7 @@ install.packages <-
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+            stop(gettextf("unable to create temporary directory '%s'", tmpd),
                  domain = NA)
     }
 
@@ -168,8 +222,20 @@ install.packages <-
     bundles <- .find_bundles(available)
     for(bundle in names(bundles))
         pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
+    p0 <- unique(pkgs)
+    miss <-  !p0 %in% row.names(available)
+    if(sum(miss)) {
+        warning(sprintf(ngettext(sum(miss),
+                                 "package %s is not available",
+                                 "packages %s are not available"),
+                        paste(sQuote(p0[miss]), collapse=", ")),
+                domain = NA)
+        flush.console()
+    }
+    p0 <- p0[!miss]
+
     if(depends) { # check for dependencies, recursively
-        p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
+        p1 <- p0 # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
         not_avail <- character(0)
 	repeat {
@@ -186,11 +252,11 @@ install.packages <-
 	    p1 <- toadd
 	}
         if(length(not_avail)) {
-            cat(sprintf(ngettext(sum(miss),
-                                 "dependency '%s' is not available",
-                                 "dependencies '%s' are not available"),
-                        paste(sQuote(not_avail), collapse=", ")),
-                "\n\n", sep ="")
+            warning(sprintf(ngettext(length(not_avail),
+                                     "dependency %s is not available",
+                                     "dependencies %s are not available"),
+                            paste(sQuote(not_avail), collapse=", ")),
+                    domain = NA)
             flush.console()
         }
 
@@ -200,16 +266,17 @@ install.packages <-
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat(ngettext(length(added),
-                         "also installing the dependency ",
-                         "also installing the dependencies "),
-                paste(sQuote(added), collapse=", "), "\n\n", sep="")
+            message(sprintf(ngettext(length(added),
+                                     "also installing the dependency %s",
+                                     "also installing the dependencies %s"),
+                            paste(sQuote(added), collapse=", ")),
+                    "\n", domain = NA)
             flush.console()
         }
+        p0 <- pkgs
     }
 
-    foundpkgs <- download.packages(unique(pkgs), destdir = tmpd,
-                                   available = available,
+    foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
                                    type = "source")
 
@@ -228,11 +295,6 @@ install.packages <-
             ## can't use update[p0, ] due to possible multiple matches
             update <- update[sort.list(match(pkgs, p0)), ]
         }
-        cmd0 <- file.path(R.home("bin"),"R")
-	## setting R_ARCH obviates the need for this
-        ## if(nchar(r_arch <- .Platform$r_arch))
-        ##     cmd0 <- paste(cmd0, "--arch", r_arch)
-        cmd0 <- paste(cmd0, "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         if (is.character(clean))
@@ -250,7 +312,10 @@ install.packages <-
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                normalizePath(tmpd)), "\n", sep = "")
-        link.html.help(verbose = TRUE)
+        ## update packages.html on Unix only if .Library was installed into
+        libs_used <- unique(update[, 2])
+        if(.Platform$OS.type == "unix" && .Library %in% libs_used)
+            link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()

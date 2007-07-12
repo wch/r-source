@@ -11,7 +11,7 @@ asOneSidedFormula(object)
 }
 \description{
   Names, expressions, numeric values, and character strings are converted to
-  one-sided formulas. If \code{object} is a formula, it must be
+  one-sided formulae. If \code{object} is a formula, it must be
   one-sided, in which case it is returned unaltered.
 }
 \value{

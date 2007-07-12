@@ -6,7 +6,7 @@
   These data are from a chemical experiment to prepare a standard curve
   for the determination of formaldehyde by the addition of chromatropic
   acid and concentrated sulpuric acid and the reading of the resulting
-  purple color on a spectophotometer.
+  purple color on a spectrophotometer.
 }
 \usage{Formaldehyde}
 \format{
@@ -26,7 +26,7 @@
   New York: Wiley.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 plot(optden ~ carb, data = Formaldehyde,
      xlab = "Carbohydrate (ml)", ylab = "Optical Density",
      main = "Formaldehyde data", col = 4, las = 1)

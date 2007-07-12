@@ -50,11 +50,14 @@ $(vfonts_la): $(OBJECTS)
 ## </FIXME>
 
 install: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(vfonts_la) "$(Rexecmodulesdir)/$(vfonts_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(vfonts_la) "$(DESTDIR)$(Rexecmodulesdir)/$(vfonts_la)"
 installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
+install-strip: installdirs
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(vfonts_la) "$(DESTDIR)$(Rexecmodulesdir)/$(vfonts_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(vfonts_la)" ;\
+	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/vfonts$(SHLIB_EXT)"
 

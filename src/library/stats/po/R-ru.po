@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-12-10 00:36-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
+"PO-Revision-Date: 2007-04-07 01:47-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -101,6 +101,9 @@ msgstr "в области действия нет выражений"
 msgid "no terms in scope for adding to object"
 msgstr "в области действия нет выражений для добавления к объекту"
 
+msgid "trying +"
+msgstr "пробую +"
+
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "количество используемых строк изменилось: убраны пропущенные значения?"
 
@@ -116,6 +119,9 @@ msgstr "'add1'-метод для моделей \"mlm\" не разработан"
 msgid "scope is not a subset of term labels"
 msgstr "область действия не является подмножеством меток выражений"
 
+msgid "trying -"
+msgstr "пробую -"
+
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "'drop1'-метод для моделей \"mlm\" отсутствует"
 
@@ -130,6 +136,12 @@ msgstr "верхняя область действия не включает выражени(я) модели %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC для этой модели не определена, поэтому 'step' не работает"
+
+msgid "Start:  AIC="
+msgstr "Старт:  AIC="
+
+msgid "Step:  AIC="
+msgstr "Ступень:  AIC="
 
 msgid "'A' must be an array or table"
 msgstr "'A' должен быть матрицей или таблицей"
@@ -232,6 +244,9 @@ msgstr "для остатков не степеней свободы"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object' не включает ошибку 'qr'-компонента"
+
+msgid "Refitting model to allow projection"
+msgstr "Подгонка модели для того чтобы сделать возможной проекцию"
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "колонки 'контраст.obj' должны определять контраст (с нулевой суммой)"
@@ -360,6 +375,9 @@ msgstr "выборка слишком редка, чтобы найти alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "в указанном диапазоне решений нет"
+
+msgid "increasing bw.SJ() search interval (%d)"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr "минимум оказался в конце интервала"
@@ -503,14 +521,11 @@ msgstr "сингулярная матрица контрастов"
 msgid "numeric contrasts or contrast name expected"
 msgstr "ожидаются числовые контрасты или имя контраста"
 
-msgid "contrasts not defined for 0 degrees of freedom"
-msgstr "контрасты для 0 степеней свободы не определены"
+msgid "not enough degrees of freedom to define contrasts"
+msgstr "недостаточно степеней свободы, чтобы определить контрасты"
 
 msgid "baseline group number out of range"
 msgstr "номер базовой группы -- вне диапазона"
-
-msgid "not enough degrees of freedom to define contrasts"
-msgstr "недостаточно степеней свободы, чтобы определить контрасты"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "укажите и 'x', и 'y' или матрице-подобный 'x'"
@@ -1441,11 +1456,18 @@ msgstr "eff.aovlist: не-ортогональные контрасты могут дать неправильный ответ"
 msgid "no terms component"
 msgstr "нет компонента выражений"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
+
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "'termobj' должен быть объектом класса \"terms\""
+
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "переменная '%s' была подогнана с классом \"%s\", а указан класс \"%s\""
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr "переменные %s указаны с другим классом, чем в подгонке"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
@@ -1477,6 +1499,8 @@ msgstr "переменная '%s' отсутствует, ее контраст будет проигнорирован"
 
 msgid "using type=\"numeric\" with a factor response will be ignored"
 msgstr ""
+"использование type=\"numeric\" с зависимой переменной-фактором будет "
+"пропущено"
 
 msgid "invalid response type"
 msgstr "неправильный тип отклика"
@@ -1496,9 +1520,8 @@ msgstr "недопустимый аргумент 'omit'"
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' должен быть в {0,1,2}"
 
-#, fuzzy
 msgid "'interval' must be a vector of length 2"
-msgstr "'margins' должен быть числовым вектором длины 2"
+msgstr "'interval' должен быть вектором длины 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper не выполнено"
@@ -1551,6 +1574,9 @@ msgstr "сингулярная градиентная матрица в оценке начальных параметров"
 msgid "'data' must be a list or an environment"
 msgstr "'data' должны быть списком либо окружением"
 
+msgid "no parameters to fit"
+msgstr "нет параметров для подгонки"
+
 msgid "No starting values specified"
 msgstr "Не заданы стартовые значения"
 
@@ -1586,6 +1612,9 @@ msgstr "формула '%s' должна быть в виде '~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
 msgstr "'%s' не может быть моды '%s'"
+
+msgid "a two-sided formula is required"
+msgstr "нужна двусторонняя формула"
 
 msgid "not enough groups"
 msgstr "недостаточно групп"
@@ -1884,6 +1913,9 @@ msgstr "'span' должен быть между 0 и 1."
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "'x' должен быть между 0 и 1 для периодического сглаживания"
+
+msgid "no finite observations"
+msgstr "нет конечных наблюдений"
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "наблюдени(я) с NAs, NaNs и/или Infs удалены"
@@ -2195,6 +2227,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "contrasts not defined for 0 degrees of freedom"
+#~ msgstr "контрасты для 0 степеней свободы не определены"
 
 #~ msgid "Convergence failure:"
 #~ msgstr "Ошибка схождения:"

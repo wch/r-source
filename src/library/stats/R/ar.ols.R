@@ -107,7 +107,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     var.pred <- varE[[m - order.min + 1]]
     if(nser > 1) {
         snames <- colnames(x)
-        dimnames(ses) <- dimnames(ar) <- list(seq(length=m), snames, snames)
+        dimnames(ses) <- dimnames(ar) <- list(seq_len(m), snames, snames)
         dimnames(var.pred) <- list(snames, snames)
         names(sem) <- colnames(E) <- snames
     }

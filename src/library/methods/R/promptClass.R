@@ -32,27 +32,6 @@ function (clName, filename = NULL, type = "class",
 	genl
     }
 
-    sigsMatrix <- function (g, where)
-    ## given a generic g, obtain matrix
-    ## with one row per signature
-    ## it assumes at present that signatures for a given generic
-    ## are all of the same length.
-    ##
-    ## it would be simple to jettison the matrix construct
-    ## replace it by a list
-    {
-	tmp <- listFromMlist(getMethods(g, where))
-	if (length(tmp[[1]]) == 0)
-	    NULL
-	else if ((lt <- length(tmp[[1]])) == 1)
-	    matrix(unlist(tmp[[1]]), nr = 1)
-	else {
-	    o <- matrix(" ", nc = length(tmp[[1]][[1]]), nr = length(tmp[[1]]))
-	    for (i in 1:lt) o[i, ] <- unlist(tmp[[1]][[i]])
-	    o
-	}
-    }
-
     sigsList <- function (g, where)
     ## given a generic g, obtain list with one element per signature
     {
@@ -85,7 +64,7 @@ function (clName, filename = NULL, type = "class",
     escape <- function(txt) gsub("%", "\\\\%", txt)
 
     if(is.null(filename))
-	filename <- paste0(utils::topicName(type, clName), ".Rd")
+	filename <- paste0(utils:::topicName(type, clName), ".Rd")
     whereClass <- find(classMetaName(clName))
     if(length(whereClass) == 0)
 	stop(gettextf("no definition of class \"%s\" found", clName),
@@ -93,7 +72,8 @@ function (clName, filename = NULL, type = "class",
     else if(length(whereClass) > 1) {
 	if(identical(where, topenv(parent.frame()))) {
 	    whereClass <- whereClass[[1]]
-	    warning(gettextf("multiple definitions of \"%s\" found; using the one on %s", clName, whereClass), domain = NA)
+	    warning(gettextf("multiple definitions of \"%s\" found; using the one on %s",
+                             clName, whereClass), domain = NA)
 	}
 	else {
 	    if(exists(classMetaName(clName), where, inherits = FALSE))
@@ -105,7 +85,7 @@ function (clName, filename = NULL, type = "class",
 		     domain = NA)
 	}
     }
-    fullName <- utils::topicName("class", clName)
+    fullName <- utils:::topicName("class", clName)
     clDef <- getClass(clName)
     .name <- paste0("\\name{", fullName, "}")
     .type <- paste0("\\docType{", type, "}")
@@ -118,6 +98,7 @@ function (clName, filename = NULL, type = "class",
     slotclasses <- as.character(slotclasses)
     nslots <- length(slotclasses)
     .usage <- "\\section{Objects from the Class}"
+    clNameQ <- paste0('"', clName, '"')
     if(isVirtualClass(clName)) {
 	.usage <- paste0(.usage, "{A virtual Class: No objects may be created from it.}")
     }
@@ -125,9 +106,10 @@ function (clName, filename = NULL, type = "class",
 	initMethod <- unRematchDefinition(selectMethod("initialize", clName))
 	argNames <- formalArgs(initMethod)
 	## but for new() the first argument is the class name
-	argNames[[1]] <- paste0('"', clName, '"')
+	argNames[[1]] <- clNameQ
 	.usage <- c(paste0(.usage,"{"),
-		    paste0("Objects can be created by calls of the form \\code{", .makeCallString(initMethod, "new", argNames), "}."),
+		    paste0("Objects can be created by calls of the form \\code{",
+                           .makeCallString(initMethod, "new", argNames), "}."),
 		    "	 ~~ describe objects here ~~ ", "}")
     }
     if (nslots > 0) {
@@ -143,7 +125,7 @@ function (clName, filename = NULL, type = "class",
 	.slots <- character()
     .extends <- clDef@contains
     if(length(.extends) > 0) {
-	.extends <- showExtends(.extends, print = FALSE)
+	.extends <- showExtends(.extends, printTo = FALSE)
 	.extends <-
 	    c("\\section{Extends}{",
 	      paste0("Class \\code{\"\\linkS4class{",
@@ -163,17 +145,17 @@ function (clName, filename = NULL, type = "class",
     if (nmeths > 0) {
 	.meths.body <- "  \\describe{"
 	for (i in 1:nmeths) {
-	    .sigmat <- sigsList(methnms[i], where)
-	    for (j in seq_along(.sigmat)) {
-		if (!all(is.na(match(.sigmat[[j]],clName)))) {
+	    .sig <- sigsList(methnms[i], where = whereClass)
+	    for (j in seq_along(.sig)) {
+		if (!all(is.na(match(.sig[[j]],clName)))) {
 		    methn.i <- escape(methnms[i])
 		    .meths.body <-
 			c(.meths.body,
 			  paste0("    \\item{",
 				 methn.i, "}{\\code{signature",
-				 pastePar(.sigmat[[j]]), "}: ... }"))
+				 pastePar(.sig[[j]]), "}: ... }"))
 
-		    cur <- paste(.sigmat[[j]], collapse = ",")
+		    cur <- paste(.sig[[j]], collapse = ",")
 		    .methAliases <- paste0(.methAliases, "\\alias{",
 					   methn.i, ",", cur, "-method}\n")
 		}
@@ -183,8 +165,8 @@ function (clName, filename = NULL, type = "class",
     }
     else {
 	.meths.head <- "\\section{Methods}{"
-	.meths.body <- paste0("No methods defined with class \"", clName,
-			      "\" in the signature.")
+	.meths.body <- paste("No methods defined with class", clNameQ,
+                             "in the signature.")
     }
     .meths.tail <- "}"
     .keywords <- paste0("\\keyword{", keywords, "}")
@@ -218,7 +200,7 @@ function (clName, filename = NULL, type = "class",
 		     "for links to other classes"),
 	       "}"),
 	     examples = c("\\examples{",
-	     "##---- Should be DIRECTLY executable !! ----",
+	     paste0("showClass(", clNameQ, ")"),
 	     "}"),
 	     keywords = .keywords)
 
@@ -233,7 +215,7 @@ function (clName, filename = NULL, type = "class",
 ## used in promptClass() above and in promptMethods() :
 .fileDesc <- function(file) {
     if(is.character(file)) {
-	if(nchar(file))
+	if(nzchar(file))
 	    paste(" to the file", sQuote(file))
 	else
 	    " to the standard output connection"

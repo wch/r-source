@@ -88,10 +88,10 @@ printCoefmat <-
         }
     }
     if(length(tst.ind)>0)
-	Cf[, tst.ind]<- format(round(xm[, tst.ind], dig = dig.tst),
+	Cf[, tst.ind]<- format(round(xm[, tst.ind], digits = dig.tst),
                                digits = digits)
     if(length(zap.ind)>0)
-	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], dig = digits),
+	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], digits = digits),
                                digits = digits)
     if(any(r.ind <- !((1:nc) %in%
                       c(cs.ind, tst.ind, zap.ind, if(has.Pvalue)nc))))

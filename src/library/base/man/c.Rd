@@ -31,6 +31,10 @@ c(\dots, recursive=FALSE)
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode.
 }
+\section{S4 Methods}{
+  This function is S4 generic, but with argument list
+  \code{(x, ..., recursive = FALSE)}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

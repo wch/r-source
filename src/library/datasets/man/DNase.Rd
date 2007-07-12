@@ -34,11 +34,11 @@
     S and S-PLUS}, Springer.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 coplot(density ~ conc | Run, data = DNase,
-    show = FALSE, type = "b")
+       show.given = FALSE, type = "b")
 coplot(density ~ log(conc) | Run, data = DNase,
-    show = FALSE, type = "b")
+       show.given = FALSE, type = "b")
 ## fit a representative run
 fm1 <- nls(density ~ SSlogis( log(conc), Asym, xmid, scal ),
     data = DNase, subset = Run == 1)

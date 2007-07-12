@@ -7,6 +7,10 @@ Development Core Team.
 See the file COPYING for the exact conditions under which you may
 redistribute it.
 
+The status of files used only in the Windows port is in file
+src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
+Wndows distributions.
+
 	---------------------------------------------------
 
 The some of the public header files are distributed under the more
@@ -202,7 +206,7 @@ src/main/vsnprintf.c
 
 
 src/main/regex.c
-   Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 src/main/Rregex.h
    Copyright (C) 1985,1989-93,1995-98,2000,2001,2002,2003
    Free Software Foundation, Inc.
@@ -244,7 +248,7 @@ src/main/apse.h
 src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
 
-   Copyright (c) 1997-2006 University of Cambridge
+   Copyright (c) 1997-2007 University of Cambridge
    All rights reserved.
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires
@@ -289,7 +293,7 @@ src/extra/bzip2/decompress.c
 src/extra/bzip2/huffman.c
 src/extra/bzip2/randtable.c
 
-   copyright (C) 1996-2005 Julian R Seward.
+   copyright (C) 1996-2006 Julian R Seward.
 
 
 src/library/tools/src/md5.[ch]
@@ -317,3 +321,18 @@ From glibc via
 http://lists.gnu.org/archive/html/bug-gnulib/2003-02/msg00019.html
 
    Copyright (C) 1999, 2001-2003 Free Software Foundation, Inc.
+
+
+share/perl/File/Copy/Recursive.pm
+
+   Copyright 2004 by Daniel Muey
+
+   This library is free software; you can redistribute it and/or modify
+   it under the same terms as Perl itself.
+
+
+share/perl/Text/Delimiter.pm
+
+   Copyright (C) Small Planet Software and Norman Walsh.
+   All rights reserved.  This program is free software; you can
+   redistribute it and/or modify it under the same terms as Perl itself.

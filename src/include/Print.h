@@ -24,10 +24,8 @@
 #include <R_ext/PrtUtil.h>
 #include "Defn.h"
 
-#define formatFactor        Rf_formatFactor
 #define formatRaw           Rf_formatRaw
 #define formatString        Rf_formatString
-#define EncodeFactor        Rf_EncodeFactor
 #define EncodeElement       Rf_EncodeElement
 #define printArray          Rf_printArray
 #define printMatrix         Rf_printMatrix
@@ -51,31 +49,25 @@ typedef struct {
 extern R_print_par_t R_print;
 
 /* Computation of printing formats */
-void formatFactor(int *, int, int *, SEXP, int);
 void formatRaw(Rbyte *, int, int *);
 void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
-char *EncodeFactor(int, int, int, SEXP);
-char *EncodeElement(SEXP, int, int, char);
+const char *EncodeElement(SEXP, int, int, char);
 
-/* Printing */
-void MatrixColumnLabel(SEXP, int, int);
-void RightMatrixColumnLabel(SEXP, int, int);
-void LeftMatrixColumnLabel(SEXP, int, int);
-void MatrixRowLabel(SEXP, int, int, int);
 
 /* In Rinternals.h (and MUST be there):
    CustomPrintValue,  PrintValue, PrintValueRec */
 void printArray(SEXP, SEXP, int, int, SEXP);
-void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP, char*, char*);
-void printNamedVector(SEXP, SEXP, int, char*);
+void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP,
+		 const char*, const char*);
+void printNamedVector(SEXP, SEXP, int, const char*);
 void printVector(SEXP, int, int);
 
 /* Utilities for S compatibility and debuggging */
-int F77_SYMBOL(dblepr0)(char *, int *, double *, int *);
-int F77_SYMBOL(intpr0) (char *, int *, int *, int *);
-int F77_SYMBOL(realpr0)(char *, int *, float *, int *);
+int F77_SYMBOL(dblepr0)(const char *, int *, double *, int *);
+int F77_SYMBOL(intpr0) (const char *, int *, int *, int *);
+int F77_SYMBOL(realpr0)(const char *, int *, float *, int *);
 void R_PV(SEXP s);
 
 /* Offset for rowlabels if there are named dimnames */

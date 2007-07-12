@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: </title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../R.css">
+</head><body>
+
+<table width="100%" summary="page for testit {unknown}"><tr><td>testit {unknown}</td><td align="right">R Documentation</td></tr></table>
+<h2></h2>
+
+
+<h3>Usage</h3>
+
+<pre>
+\x \y %{}
+
+foo(<VAR>x</VAR>, <VAR>y</VAR>)
+<a href="../../../doc/html/search/SearchObject.html?a link">a link</a>
+</pre>
+
+
+<h3>Details</h3>
+
+<p>
+Escaped backslash <code>\x</code>.
+Unescaped backslash <code>\y</code>.
+</p>
+<p>
+<code>%{}</code>
+</p>
+<p>
+var in <VAR>text</VAR>.
+</p>
+<p>
+<code>foo(<VAR>x</VAR>, <VAR>y</VAR>)</code>.
+<pre>
+  Escaped backslash \x.
+  Unescaped backslash \y.
+
+  %{}
+
+  var in <VAR>text</VAR>.
+  
+  foo(<VAR>x</VAR>, <VAR>y</VAR>).
+</pre>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+\x
+\y
+%{}
+<a href="../../../doc/html/search/SearchObject.html?a link">a link</a>
+foo(<VAR>x</VAR>, <VAR>y</VAR>)
+</pre>
+
+
+
+<hr><div align="center">[Package <a href="00Index.html">Index]</a></div>
+
+</body></html>

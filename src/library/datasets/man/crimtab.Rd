@@ -1,6 +1,7 @@
 \name{crimtab}
 \alias{crimtab}
 \docType{data}
+\encoding{latin1}
 \title{Student's 3000 Criminals Data}
 \description{
   Data of 3000 male criminals over 20 years old undergoing their
@@ -54,7 +55,7 @@
 }
 \source{
   \url{http://pbil.univ-lyon1.fr/R/donnees/criminals1902.txt}
-  thanks to Jean R. Lobry and Anne-Béatrice Dufour.
+  thanks to Jean R. Lobry and \enc{Anne-Béatrice}{Anne-Beatrice} Dufour.
 }
 \references{
   Garson, J.G. (1900)
@@ -71,13 +72,13 @@
   \emph{Biometrika} \bold{6}, 1--25.
 }
 \examples{
-data(crimtab)
+require(stats)
 dim(crimtab)
-str(crimtab)
+utils::str(crimtab)
 ## for nicer printing:
 local({cT <- crimtab
        colnames(cT) <- substring(colnames(cT), 2,3)
-       print(cT, zero = " ")
+       print(cT, zero.print = " ")
 })
 
 ## Repeat Student's experiment:
@@ -116,7 +117,8 @@ zobs[infZ] <- 6 * sign(zobs[infZ])
 
 # 7) Plot the distribution:
 
-hist(x = zobs, probab = TRUE, xlab = "Student's z",
+require(grDevices); require(graphics)
+hist(x = zobs, probability = TRUE, xlab = "Student's z",
      col = grey(0.8), border = grey(0.5),
      main = "Distribution of Student's z score  for 'crimtab' data")
 }

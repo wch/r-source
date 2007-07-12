@@ -32,11 +32,11 @@ bindingIsActive(sym, env)
 \details{
   The function \code{lockEnvironment} locks its environment argument,
   which must be a normal environment (not base).  (Locking the base
-  environment and namespace may be supported later.)  Locking the
+  environment and name space may be supported later.)  Locking the
   environment prevents adding or removing variable bindings from the
   environment. Changing the value of a variable is still possible unless
-  the binding has been locked.  The namespace environments of packages
-  with namespaces are locked when loaded.
+  the binding has been locked.  The name space environments of packages
+  with name spaces are locked when loaded.
 
   \code{lockBinding} locks individual bindings in the specified
   environment.  The value of a locked binding cannot be changed. Locked
@@ -53,22 +53,22 @@ bindingIsActive(sym, env)
 \examples{
 # locking environments
 e <- new.env()
-assign("x", 1, env = e)
-get("x", env = e)
+assign("x", 1, envir = e)
+get("x", envir = e)
 lockEnvironment(e)
-get("x", env = e)
-assign("x", 2, env = e)
-try(assign("y", 2, env = e)) # error
+get("x", envir = e)
+assign("x", 2, envir = e)
+try(assign("y", 2, envir = e)) # error
 
 # locking bindings
 e <- new.env()
-assign("x", 1, env = e)
-get("x", env = e)
+assign("x", 1, envir = e)
+get("x", envir = e)
 lockBinding("x", e)
-try(assign("x", 2, env = e)) # error
+try(assign("x", 2, envir = e)) # error
 unlockBinding("x", e)
-assign("x", 2, env = e)
-get("x", env = e)
+assign("x", 2, envir = e)
+get("x", envir = e)
 
 # active bindings
 f <- local( {

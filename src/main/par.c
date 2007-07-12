@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2006 Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2007 Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -145,7 +145,7 @@ ParTable  [] = {
 };
 
 
-static int ParCode(char *what)
+static int ParCode(const char *what)
 {
     int i;
     for (i = 0; ParTable[i].name; i++)
@@ -165,66 +165,66 @@ void RecordGraphicsCall(SEXP call)
 }
 #endif
 
-static void par_error(char *what)
+static void par_error(const char *what)
 {
     error(_("invalid value specified for graphical parameter \"%s\""),  what);
 }
 
 
-static void lengthCheck(char *what, SEXP v, int n, SEXP call)
+static void lengthCheck(const char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
-	errorcall(call, _("graphical parameter \"%s\" has the wrong length"),
+	error(_("graphical parameter \"%s\" has the wrong length"),
 		  what);
 }
 
 
-static void nonnegIntCheck(int x, char *s)
+static void nonnegIntCheck(int x, const char *s)
 {
     if (x == NA_INTEGER || x < 0)
 	par_error(s);
 }
 
-static void posIntCheck(int x, char *s)
+static void posIntCheck(int x, const char *s)
 {
     if (x == NA_INTEGER || x <= 0)
 	par_error(s);
 }
 
 #ifdef UNUSED
-static void naIntCheck(int x, char *s)
+static void naIntCheck(int x, const char *s)
 {
     if (x == NA_INTEGER)
 	par_error(s);
 }
 #endif
 
-static void posRealCheck(double x, char *s)
+static void posRealCheck(double x, const char *s)
 {
     if (!R_FINITE(x) || x <= 0)
 	par_error(s);
 }
 
-static void nonnegRealCheck(double x, char *s)
+static void nonnegRealCheck(double x, const char *s)
 {
     if (!R_FINITE(x) || x < 0)
 	par_error(s);
 }
 
-static void naRealCheck(double x, char *s)
+static void naRealCheck(double x, const char *s)
 {
     if (!R_FINITE(x))
 	par_error(s);
 }
 
-static void logAxpCheck(int x, char *s)
+static void logAxpCheck(int x, const char *s)
 {
     if (x == NA_INTEGER || x == 0 || x > 4)
 	par_error(s);
 }
 
 
-static void BoundsCheck(double x, double a, double b, char *s)
+static void BoundsCheck(double x, double a, double b, const char *s)
 {
 /* Check if   a <= x <= b */
     if (!R_FINITE(x) || (R_FINITE(a) && x < a) || (R_FINITE(b) && x > b))
@@ -250,7 +250,7 @@ static void BoundsCheck(double x, double a, double b, char *s)
      "R_DEV_2(\\1)" nil nil nil)
 */
 
-static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
+static void Specify(const char *what, SEXP value, DevDesc *dd, SEXP call)
 {
 /* If you ADD a NEW par, then do NOT forget to update the code in
  *			 ../library/base/R/par.R
@@ -338,12 +338,14 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	else par_error(what);
     }
     else if (streql(what, "family")) {
+	const char *ss;
 	value = coerceVector(value, STRSXP);
 	lengthCheck(what, value, 1, call);
-	if(strlen(CHAR(STRING_ELT(value, 0))) > 200)
+	ss = translateChar(STRING_ELT(value, 0));
+	if(strlen(ss) > 200)
 	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
-	strncpy(Rf_dpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
-	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+	strncpy(Rf_dpptr(dd)->family, ss, 201);
+	strncpy(Rf_gpptr(dd)->family, ss, 201);
     }
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
@@ -470,7 +472,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	value = coerceVector(value, INTSXP);
 	np = length(value);
 	if(np != 2 && np != 4)
-	    errorcall(call, _("parameter \"mfg\" has the wrong length"));
+	    error(_("parameter \"mfg\" has the wrong length"));
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
 	row = INTEGER(value)[0];
@@ -478,9 +480,9 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	nrow = Rf_dpptr(dd)->numrows;
 	ncol = Rf_dpptr(dd)->numcols;
 	if(row <= 0 || row > nrow)
-	    errorcall(call, _("parameter \"i\" in \"mfg\" is out of range"));
+	    error(_("parameter \"i\" in \"mfg\" is out of range"));
 	if(col <= 0 || col > ncol)
-	    errorcall(call, _("parameter \"j\" in \"mfg\" is out of range"));
+	    error(_("parameter \"j\" in \"mfg\" is out of range"));
 	if(np == 4) {
 	    posIntCheck(INTEGER(value)[2], what);
 	    posIntCheck(INTEGER(value)[3], what);
@@ -681,7 +683,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 /* Now defined differently in Specify2() : */
 #define R_DEV__(_P_) Rf_gpptr(dd)->_P_
 
-void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
+void attribute_hidden Specify2(const char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
     int ix = 0, ptype = ParCode(what);
@@ -693,15 +695,15 @@ void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	return;
     }
     if (ptype == -2) {
-	warningcall(call, _("graphical parameter \"%s\" is obsolete"), what);
+	warning(_("graphical parameter \"%s\" is obsolete"), what);
 	return;
     }
     if (ptype < 0) {
-	warningcall(call, _("\"%s\" is not a graphical parameter"), what);
+	warning(_("\"%s\" is not a graphical parameter"), what);
 	return;
     }
     if (ptype == 2) {
-	warningcall(call, _("graphical parameter \"%s\" cannot be set"), what);
+	warning(_("graphical parameter \"%s\" cannot be set"), what);
 	return;
     }
 
@@ -724,11 +726,13 @@ void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	/* not setting cexbase here (but in Specify()) */
     }
     else if (streql(what, "family")) {
+	const char *ss;
 	value = coerceVector(value, STRSXP);
 	lengthCheck(what, value, 1, call);
-	if(strlen(CHAR(STRING_ELT(value, 0))) > 200)
+	ss = translateChar(STRING_ELT(value, 0));
+	if(strlen(ss) > 200)
 	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
-	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+	strncpy(Rf_gpptr(dd)->family, ss, 201);
     }
     else if (streql(what, "fg")) {
 	/* highlevel arg `fg = ' does *not* set `col' (as par(fg=.) does!*/
@@ -742,7 +746,7 @@ void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 /* Do NOT forget to update  ../library/base/R/par.R */
 /* if you  ADD a NEW  par !! */
 
-static SEXP Query(char *what, DevDesc *dd)
+static SEXP Query(const char *what, DevDesc *dd)
 {
     SEXP value;
 
@@ -759,17 +763,13 @@ static SEXP Query(char *what, DevDesc *dd)
 	LOGICAL(value)[0] = Rf_dpptr(dd)->ask;
     }
     else if (streql(what, "bg")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->bg)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->bg));
     }
     else if (streql(what, "bty")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->bty;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "cex")) {
 	value = allocVector(REALSXP, 1);
@@ -797,29 +797,19 @@ static SEXP Query(char *what, DevDesc *dd)
 	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*Rf_dpptr(dd)->ipr[1];
     }
     else if (streql(what, "col")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->col)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->col));
     }
     else if (streql(what, "col.main")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colmain)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->colmain));
     }
     else if (streql(what, "col.lab")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->collab)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->collab));
     }
     else if (streql(what, "col.sub")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colsub)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->colsub));
     }
     else if (streql(what, "col.axis")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colaxis)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->colaxis));
     }
     else if (streql(what, "cra")) {
 	value = allocVector(REALSXP, 2);
@@ -852,14 +842,10 @@ static SEXP Query(char *what, DevDesc *dd)
 	INTEGER(value)[0] = Rf_dpptr(dd)->err;
     }
     else if (streql(what, "family")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(Rf_dpptr(dd)->family));
-	UNPROTECT(1);
+	value = mkString(Rf_dpptr(dd)->family);
     }
     else if (streql(what, "fg")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->fg)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->fg));
     }
     else if (streql(what, "fig")) {
 	value = allocVector(REALSXP, 4);
@@ -998,18 +984,14 @@ static SEXP Query(char *what, DevDesc *dd)
 	REAL(value)[3] = Rf_dpptr(dd)->omi[3];
     }
     else if (streql(what, "pch")) {
-	char buf[2];
 	if(Rf_dpptr(dd)->pch < ' ' || Rf_dpptr(dd)->pch > 255) {
-	    PROTECT(value = allocVector(INTSXP, 1));
-	    INTEGER(value)[0] = Rf_dpptr(dd)->pch;
-	}
-	else {
-	    PROTECT(value = allocVector(STRSXP, 1));
+	    value = ScalarInteger(Rf_dpptr(dd)->pch);
+	} else {
+	    char buf[2];
 	    buf[0] = Rf_dpptr(dd)->pch;
 	    buf[1] = '\0';
-	    SET_STRING_ELT(value, 0, mkChar(buf));
+	    value = mkString(buf);
 	}
-	UNPROTECT(1);
     }
     else if (streql(what, "pin")) {
 	value = allocVector(REALSXP, 2);
@@ -1029,11 +1011,9 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "pty")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->pty;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "smo")) {
 	value = allocVector(REALSXP, 1);
@@ -1078,19 +1058,15 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "xaxs")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->xaxs;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "xaxt")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->xaxt;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "xlog")) {
 	value = allocVector(LGLSXP, 1);
@@ -1111,19 +1087,15 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "yaxs")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->yaxs;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "yaxt")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->yaxt;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "ylog")) {
 	value = allocVector(LGLSXP, 1);
@@ -1165,6 +1137,7 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		tag = R_NilValue;
 	    val = VECTOR_ELT(args, i);
+	    /* tags are all ASCII */
 	    if (tag != R_NilValue && CHAR(tag)[0]) {
 		new_spec = 1;
 		SET_VECTOR_ELT(value, i, Query(CHAR(tag), dd));

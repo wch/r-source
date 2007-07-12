@@ -13,7 +13,7 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
     Daniell smoothers to be used to smooth the periodogram.}
   \item{kernel}{alternatively, a kernel smoother of class
     \code{"tskernel"}.}
-  \item{taper}{specifies theproportion of data to taper.  A split
+  \item{taper}{specifies the proportion of data to taper.  A split
     cosine bell taper is applied to this proportion of the data at the
     beginning and end of the series.}
   \item{pad}{proportion of data to pad. Zeros are added to the end of
@@ -87,6 +87,8 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   \code{\link{plot.spec}}, \code{\link{fft}}}
 
 \examples{
+require(graphics)
+
 ## Examples from Venables & Ripley
 spectrum(ldeaths)
 spectrum(ldeaths, spans = c(3,5))

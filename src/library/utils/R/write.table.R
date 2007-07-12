@@ -38,6 +38,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
             }
         }
         d <- dimnames(x)
+        if(is.null(d[[1]])) d[[1]] <- seq_len(nrow(x))
         p <- ncol(x)
     }
     nocols <- p==0
@@ -78,6 +79,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         file <- stdout()
     else if(is.character(file)) {
         file <- file(file, ifelse(append, "a", "w"))
+        on.exit(close(file))
+    } else if(!isOpen(file, "w")) {
+        open(file, "w")
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))

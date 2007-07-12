@@ -12,8 +12,9 @@
 grid.curve(...)
 curveGrob(x1, y1, x2, y2, default.units = "npc",
           curvature = 1, angle = 90, ncp = 1, shape = 0.5,
-          square = TRUE, squareShape = 1,
-          inflect = FALSE, arrow = NULL, debug = FALSE,
+          square = TRUE, squareShape = 1, 
+          inflect = FALSE, arrow = NULL, open = TRUE,
+          debug = FALSE,
           name = NULL, gp = gpar(), vp = NULL)
 arcCurvature(theta)
 }
@@ -54,6 +55,8 @@ arcCurvature(theta)
     should be cut in half and inverted (see Examples below).}
   \item{arrow}{A list describing arrow heads to place at either end
     of the curve, as produced by the \code{arrow} function.}
+  \item{open}{A logical value indicating whether to close the curve
+    (connect the start and end points).}
   \item{debug}{A logical value indicating whether debugging
     information should be drawn.}
   \item{name}{ A character identifier. }
@@ -82,7 +85,7 @@ arcCurvature(theta)
   \link{Grid},
   \code{\link{viewport}},
   \code{\link{grid.xspline}},
-  \code{\link{arrow}}}
+  \code{\link{arrow}}
 }
 \examples{
 curveTest <- function(i, j, ...) {

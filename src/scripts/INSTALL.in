@@ -11,8 +11,8 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2006 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
+Copyright (C) 2000-2007 The R Core Development Team.
+This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD INSTALL [options] pkgs
@@ -21,9 +21,8 @@ Install the add-on packages specified by pkgs.  The elements of pkgs can
 be relative or absolute paths to directories with the package (bundle)
 sources, or to gzipped package 'tar' archives.  The library tree to
 install to can be specified via '--library'.  By default, packages are
-installed in the library tree rooted at the first directory given in the
-environment variable R_LIBS if this is set and non-null, and into the
-default R library tree (${R_HOME}/library) otherwise.
+installed in the library tree rooted at the first directory in
+.libPaths() for an R session run in the current environment
 
 Options:
   -h, --help		print short help message and exit
@@ -33,7 +32,8 @@ Options:
 			(if any)
       --configure-vars=VARS
                         set variables for the configure script (if any)
-  -c, --clean		remove all files created during installation
+  -c, --clean		remove files created during installation
+  --preclean		remove files created during a previous run
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -72,7 +72,8 @@ NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
 *** does not seem to be installed on your system or is not in your path.
 *** Please install either Perl 5 on your system and re-configure R or
-*** get the PDF reference manual from the nearest CRAN server.
+*** (for a CRAN package) get the PDF reference manual from the nearest
+*** CRAN mirror.
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
 
@@ -104,6 +105,9 @@ tmpdir=`cd "${tmpdir}" && ${GETWD}`
 ## Unix only ... but Windows has INSTALL as a Perl script.
 R_EXE="${R_HOME}/bin/R"
 ## </NOTE>
+
+## record R_LIBS at this point
+R_LIBS0=${R_LIBS}
 
 ## <NOTE>
 ## This could be made a bit more general: if R CMD INSTALL is run by
@@ -173,14 +177,10 @@ do_cleanup_tmpdir () {
 ### 
 ### Setup and command line processing.
 
-if test -n "${R_LIBS}"; then
-  lib=`echo "${R_LIBS}" | cut -f1 -d:`
-else
-  lib="${R_HOME}/library"
-fi
-
 pkgs=
+lib=
 clean=false
+preclean=false
 debug=false
 build_text=true
 build_html=true
@@ -202,6 +202,7 @@ lazy_data=false
 lock=true
 libs_only=false
 tar_up=false
+shargs=
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -211,7 +212,13 @@ while test -n "${1}"; do
     -v|--version)
       echo "${version}"; do_cleanup_tmpdir; exit 0 ;;
     -c|--clean)
-      clean=true ;;
+      clean=true
+      shargs="${shargs} ${1}"
+      ;;
+    --preclean)
+      preclean=true 
+      shargs="${shargs} --preclean"
+      ;;
     -d|--debug)
       debug=true ;;
     --with-package-versions)
@@ -297,6 +304,31 @@ while test -n "${1}"; do
   shift
 done
 
+lib=`tilde_expand "${lib}"`
+if test -z "${lib}"; then
+  lib=`echo "cat('\n~~~', .libPaths()[1], '\n', sep = '')" | \
+    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
+    grep '^~~~' | sed 's/.*~~~//'`
+  message "Installing to library '$lib'"
+  ## $lib gets checked later.
+else
+  lib0=${lib}
+  if test ! -d "${lib}"; then
+    error "-l or --library value '${lib}' does not exist or is not a directory"
+    do_cleanup_tmpdir;
+    exit 2
+  fi
+  if test ! -w "${lib}"; then
+    error "-l  or --library value '${lib}' does not have write access"
+    do_cleanup_tmpdir;
+    exit 2
+  fi
+  cd ${lib}
+  lib=`${GETWD}`
+  cd ${startdir}
+fi
+
+
 if (${tar_up} && ${fake}); then
   error "building a fake installation is disallowed"
   do_cleanup_tmpdir;
@@ -322,7 +354,6 @@ if test -z "${pkgs}"; then
   exit 1
 fi
 
-lib=`tilde_expand "${lib}"`
 if (test -d "${lib}" && test -w "${lib}") || \
     ${MKDIR_P} "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
@@ -431,9 +462,23 @@ do_install_source () {
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
+  if test -n "${lib0}" ; then
+    ## set R_LIBS to include the current installation directory
+    if test -n "${R_LIBS}"; then
+      R_LIBS="${lib}:${R_LIBS}"
+    else
+      R_LIBS="${lib}"
+    fi
+    export R_LIBS
+  fi
+  
+
   Type=`get_dcf_field Type DESCRIPTION`
   if test "$Type" = "Frontend" ; then
     message "Installing *Frontend* package '${pkg_name}' ..."
+    if ${preclean}; then
+      ${MAKE} clean
+    fi
     if ${use_configure} && test -x ./configure ; then
       eval ${configure_vars} ./configure ${configure_args}
       if test ${?} -ne 0; then
@@ -503,6 +548,22 @@ do_install_source () {
     fi
   fi
 
+  if ${preclean}; then
+    if test -d src; then
+      cd src
+      if test -f Makefile; then
+        ${MAKE} clean
+      else
+	## we will be using SHLIB --preclean
+        rm -f *@SHLIB_EXT@
+      fi
+      cd ..
+    fi
+    if test -x ./cleanup ; then
+      ./cleanup
+    fi
+  fi
+
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
     if test ${?} -ne 0; then
@@ -550,7 +611,7 @@ do_install_source () {
       if test -r Makevars; then
 	makefiles="-f Makevars ${makefiles}"
       fi
-      eval ${MAKE} ${makefiles} \
+      eval ${MAKE} ${makefiles} all \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
         || has_error=true; \
       cd ..
@@ -567,7 +628,7 @@ do_install_source () {
 	    arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
 	    message "arch - ${arch}"
 	  fi
-	  sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+	  sh "${R_HOME}/bin/SHLIB" ${shargs} -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
 	    && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
 	    || has_error=true;
 	  chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
@@ -613,8 +674,9 @@ do_install_source () {
     message "R"
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
+      ## this uses the locale to find a suitable charset
       echo "tools:::.install_package_code_files(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
@@ -726,6 +788,9 @@ do_install_source () {
     R_SAVE_IMAGE=${save}
   fi
   export R_SAVE_IMAGE
+  if ${R_SAVE_IMAGE}; then
+    warning "true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'"
+  fi
 
   if ${R_SAVE_IMAGE}; then
     message "save image"
@@ -878,8 +943,8 @@ do_install_source () {
       if test -f Makefile; then
         ${MAKE} clean
       else
-        rm -rf .libs _libs
-        rm -f *.o *@SHLIB_EXT@
+	## we used SHLIB --clean
+        rm -f *@SHLIB_EXT@
       fi
       cd ..
     fi

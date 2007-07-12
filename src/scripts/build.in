@@ -1,6 +1,6 @@
 #! @PERL@
 #-*- perl -*-
-# Copyright (C) 2000-2006 R Development Core Team
+# Copyright (C) 2000-2007 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -99,17 +99,26 @@ if(!$opt_binary && $INSTALL_opts ne "") {
 ## This is the main loop over all packages to be packaged.
 foreach my $pkg (@ARGV) {
     my $is_bundle = 0;
+
     $pkg =~ s/\/$//;
-    my $pkgname = basename($pkg);
-    my $intname;
+    ## Older versions used $pkg as absolute or relative to $startdir.
+    ## This does not easily work if $pkg is a symbolic link.
+    ## Hence, we now convert to absolute paths.
     chdir($startdir);
+    chdir($pkg) or die "Error: cannot change to directory '$pkg'\n";
+    ## (We could be nicer ...)
+    my $pkgdir = R_cwd();
+    my $pkgname = basename($pkgdir);
+    my $intname;
+    ## chdir($startdir);
+    ## (Does not hurt, but should no longer be necessary.)
 
     my $log = new R::Logfile();
 
     my $description;
     $log->checking("for file '$pkg/DESCRIPTION'");
-    if(-r &file_path($pkg, "DESCRIPTION")) {
-	$description = new R::Dcf(&file_path($pkg, "DESCRIPTION"));
+    if(-r &file_path($pkgdir, "DESCRIPTION")) {
+	$description = new R::Dcf(&file_path($pkgdir, "DESCRIPTION"));
 	$log->result("OK");
     }
     else {
@@ -119,45 +128,45 @@ foreach my $pkg (@ARGV) {
 
     my @bundlepkgs;
     if($description->{"Contains"}) {
-	$log->message("looks like '${pkg}' is a package bundle");
+	$log->message("looks like '${pkgname}' is a package bundle");
 	$is_bundle = 1;
 	$intname = $description->{"Bundle"};
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
+	    $log->message("cleaning '$ppkg' in bundle '$pkgname'");
 	    $log->setstars("**");
-	    chdir($startdir);
-	    cleanup_pkg(&file_path("$pkg", "$ppkg"), $log);
+	    ## chdir($startdir);
+	    cleanup_pkg(&file_path("$pkgdir", "$ppkg"), $log);
 	    $log->setstars("*");
 	}
 	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("preparing '$ppkg' in bundle '$pkg':");
+	    $log->message("preparing '$ppkg' in bundle '$pkgname':");
 	    $log->setstars("**");
-	    chdir($startdir);
-	    prepare_pkg(&file_path("$pkg", "$ppkg"), $is_bundle,
+	    ## chdir($startdir);
+	    prepare_pkg(&file_path("$pkgdir", "$ppkg"), $is_bundle,
 			$description, $log);
 	    $log->setstars("*");
 	}
 	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
+	    $log->message("cleaning '$ppkg' in bundle '$pkgname'");
 	    $log->setstars("**");
-	    chdir($startdir);
-	    cleanup_pkg(&file_path("$pkg", "$ppkg"), $log);
+	    ## chdir($startdir);
+	    cleanup_pkg(&file_path("$pkgdir", "$ppkg"), $log);
 	    $log->setstars("*");
 	}
 	rmtree("$libdir") if (-d "$libdir");
     } else {
 	$is_bundle = 0;
-	chdir($startdir);
+	## chdir($startdir);
 	$log->message("preparing '$pkg':");
 	$intname = $description->{"Package"};
-	prepare_pkg("$pkg", $is_bundle, $description, $log);
+	prepare_pkg($pkgdir, $is_bundle, $description, $log);
     }
 
-    chdir($startdir);
+    ## chdir($startdir);
 
     $log->message("removing junk files");
-    find(\&unlink_junk_files, $pkg);
+    find(\&unlink_junk_files, $pkgdir);
 
     my $exclude = R_tempfile("Rbuild-exclude");
     open(EXCLUDE, "> $exclude")
@@ -167,8 +176,8 @@ foreach my $pkg (@ARGV) {
     ## For bundles, the .Rbuildignore mechanism is not consistent
     ## between build and check: the latter always works on a per
     ## package basis.
-    if(-f &file_path($pkg, ".Rbuildignore")) {
-	open(RBUILDIGNORE, &file_path($pkg, ".Rbuildignore"));
+    if(-f &file_path($pkgdir, ".Rbuildignore")) {
+	open(RBUILDIGNORE, &file_path($pkgdir, ".Rbuildignore"));
 	while(<RBUILDIGNORE>) {
 	    chop;
 	    push(@exclude_patterns, $_) if $_;
@@ -214,7 +223,7 @@ foreach my $pkg (@ARGV) {
 	    }
 	}
     }
-    chdir(&file_path("$pkg", ".."));
+    chdir(dirname($pkgdir));
     find(\&find_exclude_files, "$pkgname");
     close(EXCLUDE);
 
@@ -269,7 +278,7 @@ foreach my $pkg (@ARGV) {
     }
     if($is_bundle) {
 	foreach $ppkg (@bundlepkgs) {
-	    &find_invalid_files("$pkgname/$ppkg");
+	    &find_invalid_files(&file_path($pkgname, $ppkg));
 	    chdir($tmpdir);
 	}
     } else {
@@ -373,8 +382,7 @@ foreach my $pkg (@ARGV) {
 			 &shell_quote_file_path($srcdir)));
 	    if(R_system($cmd)) { $log->error("installation failed"); }
 	    chdir("$libdir");
-	    copy(&file_path($startdir, $pkg, "DESCRIPTION"),
-		 "DESCRIPTION");
+	    copy(&file_path($pkgdir, "DESCRIPTION"), "DESCRIPTION");
 	    R_system(join(" ",
 			  ("$tar chf ",
 			   &shell_quote_file_path($filepath),
@@ -435,10 +443,8 @@ sub add_build_stamp_to_description_file {
 
 
 sub prepare_pkg {
-    my ($pkg, $in_bundle, $description, $log) = @_;
+    my ($pkgdir, $in_bundle, $description, $log) = @_;
 
-    chdir($pkg);
-    my $pkgdir = R_cwd();
     my $pkgname = basename($pkgdir);
 
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
@@ -498,12 +504,11 @@ sub prepare_pkg {
 	    $log->creating("vignettes");
 	    my $Rcmd = "library(tools)\n";
 	    $Rcmd .= "buildVignettes(dir = '.')\n";
-	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
+	    my %result = R_run_R($Rcmd, "--vanilla --no-save --quiet");
 	    rmtree("$libdir") unless $in_bundle;
 	    $ENV{'R_LIBS'} = $R_LIBS;
-	    my @err = grep(/^Error/, @out);
-	    if(scalar(@err) > 0) {
-		@out = grep(!/^\>/, @out);
+	    if($result{"status"}) {
+		my @out = grep(!/^\>/, @{$result{"out"}});
 		$log->error();
 		$log->print(join("\n", @out) . "\n");
 		exit(1);
@@ -521,10 +526,8 @@ sub prepare_pkg {
 }
 
 sub cleanup_pkg {
-    my ($pkg, $log) = @_;
+    my ($pkgdir, $log) = @_;
 
-    chdir($pkg);
-    my $pkgdir = R_cwd();
     my $pkgname = basename($pkgdir);
 
     if(-d "src") {

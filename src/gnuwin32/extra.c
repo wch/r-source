@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2006  The R Development Core Team
+ *  Copyright (C) 2005--2007  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,96 +38,6 @@
 #include "graphapp/ga.h"
 #include "rui.h"
 
-
-#include <sys/types.h>
-#include <sys/stat.h>
-
-static int R_unlink(char *names, int recursive);
-
-static int R_unlink_one(char *dir, char *name, int recursive)
-{
-    char tmp[MAX_PATH];
-
-    if(strcmp(name, ".") == 0) return 0;
-    if(strcmp(name, "..") == 0) return 0;
-    if(strlen(dir)) {
-	strcpy(tmp, dir);
-	if(*(dir + strlen(dir) - 1) != '\\') strcat(tmp, "\\");
-	strcat(tmp, name);
-    } else strcpy(tmp, name);
-    return (recursive ? R_unlink(tmp, 1): unlink(tmp)) !=0;
-}
-
-static int R_unlink(char *names, int recursive)
-{
-    int failures = 0;
-    char *p, tmp[MAX_PATH], dir[MAX_PATH+2];
-    WIN32_FIND_DATA find_data;
-    HANDLE fh;
-    struct stat sb;
-
-    if(strlen(names) >= MAX_PATH) error(_("invalid 'names' in 'R_unlink'"));
-    strcpy(tmp, names);
-    for(p = tmp; *p != '\0'; p++) if(*p == '/') *p = '\\';
-    if(stat(tmp, &sb) == 0) {
-	/* Is this a directory? */
-	if(sb.st_mode & _S_IFDIR) {
-	    if(recursive) {
-		strcpy(dir, tmp); strcat(tmp, "\\*");
-		fh = FindFirstFile(tmp, &find_data);
-		if (fh != INVALID_HANDLE_VALUE) {
-		    failures += R_unlink_one(dir, find_data.cFileName, 1);
-		    while(FindNextFile(fh, &find_data))
-			failures += R_unlink_one(dir, find_data.cFileName, 1);
-		    FindClose(fh);
-		}
-		/* Use short path as e.g. ' test' fails */
-		GetShortPathName(dir, tmp, MAX_PATH);
-		if(rmdir(tmp)) failures++;
-	    } else failures++; /* don't try to delete dirs */
-	} else {/* Regular file (or several) */
-	    strcpy(dir, tmp);
-	    if ((p = Rf_strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
-	    /* check for wildcard matches */
-	    fh = FindFirstFile(tmp, &find_data);
-	    if (fh != INVALID_HANDLE_VALUE) {
-		failures += R_unlink_one(dir, find_data.cFileName, 0);
-		while(FindNextFile(fh, &find_data))
-		    failures += R_unlink_one(dir, find_data.cFileName, 0);
-		FindClose(fh);
-	    }
-	}
-    }
-    return failures;
-}
-
-
-SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP  fn, ans;
-    int i, nfiles, failures = 0, recursive;
-
-    checkArity(op, args);
-    fn = CAR(args);
-    nfiles = length(fn);
-    if (nfiles > 0) {
-    	if (!isString(fn))
-	    errorcall(call, _("invalid '%s' argument"), "x");
-	recursive = asLogical(CADR(args));
-    	if (recursive == NA_LOGICAL)
-	    errorcall(call, _("invalid '%s' argument"), "recursive");
-    	for(i = 0; i < nfiles; i++)
-	    failures += R_unlink(CHAR(STRING_ELT(fn, i)), recursive);
-    }
-    PROTECT(ans = allocVector(INTSXP, 1));
-    if (!failures)
-	INTEGER(ans)[0] = 0;
-    else
-	INTEGER(ans)[0] = 1;
-    UNPROTECT(1);
-    return (ans);
-}
-
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     R_FlushConsole();
@@ -147,7 +57,6 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char isNT[8]="??", ver[256];
-    SEXP ans;
     OSVERSIONINFO verinfo;
 
     checkArity(op, args);
@@ -187,31 +96,32 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	if(GetVersionEx((OSVERSIONINFO *)&osvi)) {
 	    char tmp[]="", *desc= tmp, *type = tmp;
+	    if(osvi.dwMajorVersion == 6)
+		desc = "Vista";
 	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
 		desc = "2000";
 	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
 		desc = "XP";
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2)
+		desc = "Sever 2003";
             if ( osvi.wProductType == VER_NT_WORKSTATION ) {
-               if( osvi.wSuiteMask & VER_SUITE_PERSONAL )
-                  type = "Home Edition";
-               else
-                  type = "Professional";
+               if( osvi.wSuiteMask & VER_SUITE_PERSONAL ) type = " Home";
             } else if ( osvi.wProductType == VER_NT_SERVER )
             {
                if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
-                  desc = ".NET";
+		   desc = " .NET";
                if( osvi.wSuiteMask & VER_SUITE_DATACENTER )
-                  type = "DataCenter Server";
+		   type = " DataCenter Server";
                else if( osvi.wSuiteMask & VER_SUITE_ENTERPRISE )
-                  type = "Advanced Server";
+		   type = " Advanced Server";
                else if ( osvi.wSuiteMask == VER_SUITE_BLADE )
-                  type = "Web Server";
+		   type = " Web Server";
                else
-		   type = "Server";
+		   type = " Server";
             }
 
 	    sprintf(ver,
-		    "Windows %s %s (build %d) Service Pack %d.%d",
+		    "Windows %s%s (build %d) Service Pack %d.%d",
 		    desc, type,
 		    LOWORD(osvi.dwBuildNumber),
 		    (int)osvi.wServicePackMajor,
@@ -227,16 +137,13 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 		LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
     }
 
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkChar(ver));
-    UNPROTECT(1);
-    return (ans);
+    return mkString(ver);
 }
 
 /* also used in rui.c */
-void internal_shellexec(char * file)
+void internal_shellexec(const char * file)
 {
-    char *home;
+    const char *home;
     unsigned int ret;
 
     home = getenv("R_HOME");
@@ -268,10 +175,12 @@ SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-int check_doc_file(char * file)
+int winAccess(const char *path, int mode);
+
+int check_doc_file(const char * file)
 {
-    char *home, path[MAX_PATH];
-    struct stat sb;
+    const char *home;
+    char path[MAX_PATH];
 
     home = getenv("R_HOME");
     if (home == NULL)
@@ -280,13 +189,13 @@ int check_doc_file(char * file)
     strcpy(path, home);
     strcat(path, "/");
     strcat(path, file);
-    return stat(path, &sb) == 0;
+    return winAccess(path, 4) == 0;
 }
 
 SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP message, ans;
-    char * type;
+    SEXP message;
+    const char * type;
     int res=YES;
 
     checkArity(op, args);
@@ -307,15 +216,13 @@ SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
 	res = askyesnocancel(CHAR(STRING_ELT(message, 0)));
     } else
 	errorcall(call, _("unknown type"));
-    ans = allocVector(INTSXP, 1);
-    INTEGER(ans)[0] = res;
-    return (ans);
+    return ScalarInteger(res);
 }
 
 SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  message, def, ans;
-    char *string;
+    SEXP  message, def;
+    const char *string;
 
     checkArity(op, args);
     message = CAR(args);
@@ -326,12 +233,8 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(def) || length(def) != 1)
 	error(_("invalid '%s' argument"), "default");
     string = askstring(CHAR(STRING_ELT(message, 0)), CHAR(STRING_ELT(def, 0)));
-    if (string) {
-	ans = allocVector(STRSXP, 1);
-	SET_STRING_ELT(ans, 0, mkChar(string));
-	return (ans);
-    } else
-	return (R_NilValue);
+    if (string) return mkString(string);
+    else return R_NilValue;
 }
 
 #include "Startup.h"
@@ -677,7 +580,7 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP path=R_NilValue, ans;
-    char *dll;
+    const char *dll;
     DWORD dwVerInfoSize;
     DWORD dwVerHnd;
 
@@ -761,7 +664,7 @@ RECT *RgetMDIsize(); /* in rui.c */
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP list, preselect, ans = R_NilValue;
-    char **clist;
+    const char **clist;
     int i, j = -1, n, mw = 0, multiple, nsel = 0;
     int xmax, ymax, ylist, fht, h0;
     Rboolean haveTitle;
@@ -779,7 +682,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "preselect");
 
     n = LENGTH(list);
-    clist = (char **) R_alloc(n + 1, sizeof(char *));
+    clist = (const char **) R_alloc(n + 1, sizeof(char *));
     for(i = 0; i < n; i++) {
 	clist[i] = CHAR(STRING_ELT(list, i));
 	mw = max(mw, gstrwidth(NULL, SystemFont, clist[i]));
@@ -800,7 +703,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
 			(multiple ? _("Select one or more") : _("Select one")),
 			rect(0, 0, xmax, ymax),
-			Titlebar | Centered | Modal);
+			Titlebar | Centered | Modal | Floating);
     setbackground(wselect, dialog_bg());
     if(multiple)
 	f_list = newmultilist(clist, rect(10, 10, xmax-25, ylist), NULL);
@@ -834,17 +737,16 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else { /* cancel */
 	    PROTECT(ans = allocVector(STRSXP, 0));
 	}
-    } else {
-	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkChar(selected));
-    }
+    } else
+	PROTECT(ans = mkString(selected));
+
     cleanup();
     show(RConsole);
     UNPROTECT(1);
     return ans;
 }
 
-int Rwin_rename(char *from, char *to)
+int Rwin_rename(const char *from, const char *to)
 {
     int res = 0;
     OSVERSIONINFO verinfo;
@@ -863,23 +765,17 @@ int Rwin_rename(char *from, char *to)
     return res;
 }
 
-
-void R_CleanTempDir()
-{
-    if(Sys_TempDir) R_unlink(Sys_TempDir, 1);
-}
-
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue;
-    int size, format = 0;
+    int j, size, format = 0;
     
     checkArity(op, args);
     
     if(OpenClipboard(NULL)) {
     	size = CountClipboardFormats();
     	PROTECT(ans = allocVector(INTSXP, size));
-    	for (int j=0; j<size; j++) {
+    	for (j = 0; j < size; j++) {
     	    format = EnumClipboardFormats(format);
     	    INTEGER(ans)[j] = format;
     	}
@@ -893,8 +789,8 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue;
     HGLOBAL hglb;
-    char *pc;
-    int format, raw, size;
+    const char *pc;
+    int j, format, raw, size;
 
     checkArity(op, args);
     format = asInteger(CAR(args));
@@ -903,14 +799,13 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(OpenClipboard(NULL)) {
     	if(IsClipboardFormatAvailable(format) &&
     	   	(hglb = GetClipboardData(format)) &&
-    	   	(pc = (char *)GlobalLock(hglb))) {
+    	   	(pc = (const char *)GlobalLock(hglb))) {
 	    if(!raw) {
-		PROTECT(ans = allocVector(STRSXP, 1));
-		SET_STRING_ELT(ans, 0, mkChar(pc));
+		PROTECT(ans = mkString(pc));
 	    } else {
 		size = GlobalSize(hglb);
 		PROTECT(ans = allocVector(RAWSXP, size));
-		for (int j=0; j<size; j++) RAW(ans)[j] = *pc++;
+		for (j = 0; j < size; j++) RAW(ans)[j] = *pc++;
 	    }
 	    GlobalUnlock(hglb);
 	    UNPROTECT(1);	
@@ -922,10 +817,11 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, text;
+    SEXP text;
     int i, n, format;
     HGLOBAL hglb;
-    char *s, *p;
+    char *s;
+    const char *p;
     Rboolean success = FALSE, raw = FALSE;
 
     checkArity(op, args);
@@ -968,10 +864,7 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = success;
-    UNPROTECT(1);
-    return ans;
+    return ScalarLogical(success);
 }
 
 /* We cannot use GetLongPathName (missing on W95/NT4) so write our own
@@ -1098,7 +991,8 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, def, caption, filters;
-    char *temp, *cfilters, list[65520],*p;
+    char *temp, *cfilters, list[65520];
+    const char *p;
     char path[MAX_PATH], filename[MAX_PATH];
     int multi, filterindex, i, count, lfilters, pathlen;
 
@@ -1181,7 +1075,8 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, def, caption;
-    char *p, path[MAX_PATH];
+    const char *p;
+    char path[MAX_PATH];
 
     checkArity(op, args);
     def = CAR(args);
@@ -1206,53 +1101,46 @@ extern window RFrame; /* from rui.c */
 
 SEXP getIdentification()
 {
-    SEXP result;
+    const char *res = "" /* -Wall */;
 
-    PROTECT(result = allocVector(STRSXP, 1));
     switch(CharacterMode) {
     case RGui:
-	if(RguiMDI & RW_MDI) SET_STRING_ELT(result, 0, mkChar("RGui"));
-	else SET_STRING_ELT(result, 0, mkChar("R Console"));
+	if(RguiMDI & RW_MDI) res = "RGui"; else res = "R Console";
 	break;
     case RTerm:
-	SET_STRING_ELT(result, 0, mkChar("Rterm"));
+	res = "Rterm";
+	break;
     default:
 	/* do nothing */
 	break; /* -Wall */
     }
-    UNPROTECT(1);
-    return result;
+    return mkString(res);
 }
 
 SEXP getWindowTitle()
 {
-    SEXP result;
-    char buf[512];
+    char buf[512], *res = "";
 
-    PROTECT(result = allocVector(STRSXP, 1));
     switch(CharacterMode) {
     case RGui:
-	if(RguiMDI & RW_MDI) SET_STRING_ELT(result, 0, 
-					    mkChar(GA_gettext(RFrame)));
-	else SET_STRING_ELT(result, 0, mkChar(GA_gettext(RConsole)));
+	if(RguiMDI & RW_MDI) res = GA_gettext(RFrame);
+	else res = GA_gettext(RConsole);
 	break;
     case RTerm:
     	GetConsoleTitle(buf, 512);
     	buf[511] = '\0';
-	SET_STRING_ELT(result, 0, mkChar(buf));
+	res = buf;
+	break;
     default:
 	/* do nothing */
-	break; /* -Wall */
+	break;
     }
-    UNPROTECT(1);
-    return result;
+    return mkString(res);
 }
 
-SEXP setTitle(char *title)
+SEXP setTitle(const char *title)
 {
-    SEXP result;
-
-    PROTECT(result = getWindowTitle());
+    SEXP result = getWindowTitle();
 
     switch(CharacterMode) {
     case RGui:
@@ -1266,7 +1154,6 @@ SEXP setTitle(char *title)
 	/* do nothing */
 	break; /* -Wall */
     }
-    UNPROTECT(1);
     return result;
 }
 
@@ -1281,7 +1168,8 @@ SEXP do_setTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP title = CAR(args);
 
     checkArity(op, args);
-    if(!isString(title)  || LENGTH(title) != 1)
+    if(!isString(title)  || LENGTH(title) != 1 || 
+       STRING_ELT(title, 0) == NA_STRING)
 	errorcall(call, _("'title' must be a character string"));
     return setTitle(CHAR(STRING_ELT(title, 0)));
 }
@@ -1292,25 +1180,40 @@ SEXP do_getWindowTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
     return getWindowTitle();
 }
 
-int getConsoleHandle(char *which)
+SEXP do_setStatusBar(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP text = CAR(args);
+
+    checkArity(op, args);
+    if(!isString(text)  || LENGTH(text) != 1 || 
+       STRING_ELT(text, 0) == NA_STRING)
+	errorcall(call, _("'text' must be a character string"));
+    showstatusbar();
+    setstatus(CHAR(STRING_ELT(text, 0)));
+    return R_NilValue;
+}
+
+
+int getConsoleHandle(const char *which)
 {
     if (CharacterMode != RGui) return(0);
-    else if (strcmp(which, "Console") == 0 && RConsole) return(getHandle(RConsole));
-    else if (strcmp(which, "Frame") == 0 && RFrame) return(getHandle(RFrame));
-    else if (strcmp(which, "Process") == 0) return((int)GetCurrentProcess());
-    else if (strcmp(which, "ProcessId") == 0) return((int)GetCurrentProcessId());
-    else return(0);
+    else if (strcmp(which, "Console") == 0 && RConsole) 
+	return getHandle(RConsole);
+    else if (strcmp(which, "Frame") == 0 && RFrame) 
+	return getHandle(RFrame);
+    else if (strcmp(which, "Process") == 0) 
+	return (int)GetCurrentProcess();
+    else if (strcmp(which, "ProcessId") == 0) 
+	return (int)GetCurrentProcessId();
+    else return 0;
 }
 
 static int getDeviceHandle(int);
 
 SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP result;
     int handle;
     SEXP which = CAR(args);
-
-    result = R_NilValue; /* to avoid warnings */
 
     checkArity(op, args);
     if(LENGTH(which) != 1)
@@ -1319,11 +1222,7 @@ SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (isInteger(which)) handle = getDeviceHandle(INTEGER(which)[0]);
     else handle = 0;
 
-    PROTECT(result = allocVector(INTSXP, 1));
-    INTEGER(result)[0] = handle;
-    UNPROTECT(1);
-
-    return result;
+    return ScalarInteger(handle);
 }
 
 #include "devWindows.h"
@@ -1373,7 +1272,7 @@ static int getDeviceHandle(int dev)
    or $Graph<nn>LocPopup where <nn> is the
    device number.  We've already checked the $Graph prefix. */
 
-menu getGraphMenu(char* menuname)
+menu getGraphMenu(const char* menuname)
 {
     int devnum;
     GEDevDesc *gdd;
@@ -1405,6 +1304,88 @@ Rboolean winNewFrameConfirm(void)
     gadesc *xd = gdd->dev->deviceSpecific;
     return xd->newFrameConfirm();
 }
+
+/* 
+   Replacement for MSVCRT's access.
+   Coded looking at tcl's tclWinFile.c
+*/
+
+extern int GA_isNT;
+
+int winAccess(const char *path, int mode)
+{
+    DWORD attr = GetFileAttributes(path);
+    
+    if(attr == 0xffffffff) return -1;
+    if(mode == F_OK) return 0;
+
+    if(mode & X_OK)
+	if(!(attr & FILE_ATTRIBUTE_DIRECTORY)) { /* Directory, so OK */
+	    /* Look at extension for executables */
+	    char *p = strrchr(path, '.');
+	    if(p == NULL || 
+	       !((stricmp(p, ".exe") == 0) || (stricmp(p, ".com") == 0) ||
+		 (stricmp(p, ".bat") == 0) || (stricmp(p, ".cmd") == 0)) )
+		return -1;
+	}
+    if(GA_isNT) {
+	/* Now look for file security info, which is NT only */
+	SECURITY_DESCRIPTOR *sdPtr = NULL;
+	unsigned long size = 0;
+	GENERIC_MAPPING genMap;
+	HANDLE hToken = NULL;
+	DWORD desiredAccess = 0;
+	DWORD grantedAccess = 0;
+	BOOL accessYesNo = FALSE;
+	PRIVILEGE_SET privSet;
+	DWORD privSetSize = sizeof(PRIVILEGE_SET);
+	int error;
+
+	/* get size */
+	GetFileSecurity(path, 
+			OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
+			| DACL_SECURITY_INFORMATION, 0, 0, &size);
+	error = GetLastError();
+	if (error != ERROR_INSUFFICIENT_BUFFER) return -1;
+	sdPtr = (SECURITY_DESCRIPTOR *) alloca(size);
+	if(!GetFileSecurity(path, 
+			    OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
+			    | DACL_SECURITY_INFORMATION, sdPtr, size, &size))
+	    return -1;
+	/*
+	 * Perform security impersonation of the user and open the
+	 * resulting thread token.
+	 */
+	if(!ImpersonateSelf(SecurityImpersonation)) return -1;
+	if(!OpenThreadToken(GetCurrentThread (),
+			    TOKEN_DUPLICATE | TOKEN_QUERY, FALSE,
+			    &hToken)) return -1;
+	if (mode & R_OK) desiredAccess |= FILE_GENERIC_READ;
+	if (mode & W_OK) desiredAccess |= FILE_GENERIC_WRITE;
+	if (mode & X_OK) desiredAccess |= FILE_GENERIC_EXECUTE;
+
+	memset(&genMap, 0x0, sizeof (GENERIC_MAPPING));
+	genMap.GenericRead = FILE_GENERIC_READ;
+	genMap.GenericWrite = FILE_GENERIC_WRITE;
+	genMap.GenericExecute = FILE_GENERIC_EXECUTE;
+	genMap.GenericAll = FILE_ALL_ACCESS;
+	if(!AccessCheck(sdPtr, hToken, desiredAccess, &genMap, &privSet,
+			&privSetSize, &grantedAccess, &accessYesNo)) {
+	    CloseHandle(hToken);
+	    return -1;
+	}
+	CloseHandle(hToken);
+	if (!accessYesNo) return -1;
+
+	if ((mode & W_OK)
+	    && !(attr & FILE_ATTRIBUTE_DIRECTORY)
+	    && (attr & FILE_ATTRIBUTE_READONLY)) return -1;
+    } else {
+	if((mode & W_OK) && (attr & FILE_ATTRIBUTE_READONLY)) return -1;
+    }
+    return 0;
+}
+
 
 
 /* UTF-8 support ----------------------------------------------- */

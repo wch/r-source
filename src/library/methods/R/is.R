@@ -23,15 +23,14 @@ extends <-
   ## Returns `maybe' if the extension includes a non-trivial test.
   function(class1, class2, maybe = TRUE, fullInfo = FALSE)
 {
-    if(is(class1, "classRepresentation")) {
-        classDef1 <- class1
-        class1 <- classDef1@className
-    }
-    else if(is.character(class1)){
-        classDef1 <- getClassDef(class1)
+    if(is.character(class1)) {
+	classDef1 <- getClassDef(class1)
+    } else if(is(class1, "classRepresentation")) {
+	classDef1 <- class1
+	class1 <- classDef1@className
     }
     else
-        stop("'class1' must be the name of a class or a class definition")
+	stop("'class1' must be the name of a class or a class definition")
     if(missing(class2)) {
         if(is.null(classDef1))
             return(class1)
@@ -48,18 +47,22 @@ extends <-
         else
             return(c(class1,names(ext)))
     }
-    ## the [[1]] below handles old-style classes & throws away package attributes
-    ## A cleaner version needed, to also ignore attr's of class2
-    if(.identC(class1[[1]], class2) || .identC(class2, "ANY"))
-            return(TRUE)
-    if(is(class2, "classRepresentation")){
-        classDef2 <- class2
-        class2 <- class2@className
+
+    if(is.character(class2) && length(class2) == 1) { ## fast first checks
+	## the [[1]] below handles old-style classes & throws away package attributes
+	## {Really? :} A cleaner version needed, to also ignore attr's of class2
+	if(.identC(class1[[1]], class2) || .identC(class2, "ANY") ||
+	   (!is.null(classDef1) && class2 %in% names(classDef1@contains)))
+	    return(TRUE)
+	else
+	    classDef2 <- getClassDef(class2)
     }
-    else if(!(is.character(class2) && length(class2) == 1))
-        stop("'class2' must be the name of a class or a class definition")
+    else if(is(class2, "classRepresentation")) {
+	classDef2 <- class2
+	class2 <- class2@className
+    }
     else
-        classDef2 <- getClassDef(class2)
+	stop("'class2' must be the name of a class or a class definition")
     value <- possibleExtends(class1, class2, classDef1, classDef2)
     if(fullInfo)
         value
@@ -133,7 +136,7 @@ setIs <-
     if(doComplete) {
       classDef@contains <- completeExtends(classDef, class2, obj, where = where)
       if(!is(classDef, "ClassUnionRepresentation")) #unions are handled in assignClassDef
-        .checkSubclasses(class1, classDef, class2, classDef2, where1)
+        .checkSubclasses(class1, classDef, class2, classDef2, where1, where2)
     }
     assignClassDef(class1, classDef, where1, TRUE)
     invisible(classDef)

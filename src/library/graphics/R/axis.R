@@ -8,8 +8,11 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
         ## help(par) 'fg' says this should work
         col <- fg
     }
-    .Internal(axis(side, at, labels, tick, line, pos, outer, font,
-                   lty, lwd, col, hadj, padj, ...))
+    ## watch out: some people do things like
+    ## axis(1, at = my.at <- 10^(1:5), labels = formatC(my.at, format="fg"))
+    ## which depends on the order of evaluation of the args.
+    .Internal(axis(side, at, as.graphicsAnnot(labels),
+                   tick, line, pos, outer, font, lty, lwd, col, hadj, padj, ...))
 }
 
 
@@ -27,7 +30,8 @@ Axis.default <- function(x=NULL, at=NULL, ..., side, labels=NULL)
 ## Note that axTicks() can be used without any graphics device
 ## when (axp, usr, log) are specified.  However, axTicks() should
 ## *really* just call .Internal(createAtVector(axp,usr,nint,log))
-axTicks <- function(side, axp=NULL, usr=NULL, log=NULL) {
+axTicks <- function(side, axp = NULL, usr = NULL, log = NULL)
+{
     ## Compute tickmark "at" values which axis(side) would use by default;
     ## using par("Xaxp") , par("usr") & par("Xlog") where X = x|y
     ## an R version of internal CreateAtVector()
@@ -54,6 +58,6 @@ axTicks <- function(side, axp=NULL, usr=NULL, log=NULL) {
                     c(outer(c(1,2,5), x10))[-1])## 3
         r[usr[1] <= log10(r) & log10(r) <= usr[2]]
     } else { # linear
-        seq.int(axp[1], axp[2], length = 1 + abs(axp[3]))
+        seq.int(axp[1], axp[2], length.out = 1 + abs(axp[3]))
     }
 }

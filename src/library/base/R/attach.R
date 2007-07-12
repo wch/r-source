@@ -14,9 +14,9 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
                 break
             }
         }
-        ob <- objects(db.pos, all = TRUE)
+        ob <- objects(db.pos, all.names = TRUE)
         if(.isMethodsDispatchOn()) {
-            these <- objects(db.pos, all = TRUE)
+            these <- objects(db.pos, all.names = TRUE)
             these <- these[substr(these, 1, 6) == ".__M__"]
             gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
@@ -25,7 +25,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
         }
         ipos <- seq_along(sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
-            obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
+            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
@@ -68,13 +68,13 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
        !exists(".conflicts.OK", envir = value, inherits = FALSE)) {
         checkConflicts(value)
     }
-    if((length(objects(envir = value, all=TRUE)) > 0)
+    if((length(objects(envir = value, all.names = TRUE)) > 0)
        && .isMethodsDispatchOn())
       methods:::cacheMetaData(value, TRUE)
     invisible(value)
 }
 
-detach <- function(name, pos=2, version)
+detach <- function(name, pos=2, version, unload=FALSE)
 {
     if(!missing(name)) {
         name <- substitute(name)# when a name..
@@ -119,8 +119,13 @@ detach <- function(name, pos=2, version)
            packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
             warning(packageName, " is required by ", pkgs, " (still attached)")
     }
-    if(.isMethodsDispatchOn())
-            methods:::cacheMetaData(env, FALSE)
+    if(unload)
+      tryCatch(unloadNamespace(pkgname),
+               error=function(e)
+               warning(pkgname, " namespace cannot be unloaded\n",
+                       conditionMessage(e), call. = FALSE))
+    if(unload && .isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
+        methods:::cacheMetaData(env, FALSE)
 }
 
 ls <- objects <-

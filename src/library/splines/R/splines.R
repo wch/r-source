@@ -24,8 +24,8 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         }
         knots <-
             if(nIknots > 0) {
-                knots <- seq(from = 0, to = 1,
-                             length = nIknots + 2)[-c(1, nIknots + 2)]
+                knots <- seq.int(from = 0, to = 1,
+                                 length.out = nIknots + 2)[-c(1, nIknots + 2)]
                 stats::quantile(x[!outside], knots)
             }
     }
@@ -88,7 +88,8 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
             warning("'df' was too small; have used ", 1 + intercept)
         }
         knots <- if(nIknots > 0) {
-            knots <- seq(0, 1, length = nIknots + 2)[-c(1, nIknots + 2)]
+            knots <- seq.int(0, 1,
+                             length.out = nIknots + 2)[-c(1, nIknots + 2)]
             stats::quantile(x[!outside], knots)
         } ## else  NULL
     } else nIknots <- length(knots)

@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-6  R Development Core Team
+# Copyright (C) 2000-7  R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,8 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
 # General Public License for more details.
 #
-# A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# A copy of the GNU General Public License can be obtained by
 # writing to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301  USA.
 
@@ -24,7 +23,6 @@ use File::Path;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
-
 
 my $revision = ' $Rev$ ';
 my $version;
@@ -75,7 +73,7 @@ sub Cleanup {
 }
 
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
-		    "clean|c", "docs:s",
+		    "clean|c", "preclean", "docs:s",
 		    "with-package-versions",
 		    "use-zip", "use-zip-data", "use-zip-help",
 		    "auto-zip", "build", "fake", "unsafe");
@@ -123,13 +121,26 @@ if($opt_library){
     # remove quotes around the library path
     $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
     chdir($opt_library) ||
-	die "Error: cannot change to directory \`$opt_library'\n";
+	die "Error: cannot change to library directory \$opt_library'\n";
     $library = cwd();
     $library = Win32::GetShortPathName($library) if $library =~ / /;
+    my $R_LIBS = $ENV{'R_LIBS'};
+    $ENV{'R_LIBS'} = join(";", $library, $R_LIBS);
     chdir($startdir);
 } else {
-    $library = $R_HOME . "/library";
+    my @out = R_runR("cat('\n~~~', .libPaths()[1], '\n', sep = '')", "--slave");
+    foreach $f (@out) {
+	if($f =~ /^~~~/) {
+	    $library = $f;
+	    $library =~ s/^~~~//;
+	}
+    }
+    $library = Win32::GetShortPathName($library) if $library =~ / /;
+    print "installing to '$library'\n";
 }
+die "ERROR: a library on a network share is not supported\n" 
+    if $library =~ /^\\\\/;
+$library =~ s+\\+/+g;
 
 my $helpflags = "HELP=YES WINHELP=CHM";
 if($opt_docs) {
@@ -138,7 +149,7 @@ if($opt_docs) {
 	$helpflags = "HELP=NO";
     } elsif ($opt_docs eq "normal") {
 	$helpflags = "HELP=YES WINHELP=NO";
-    } elsif ($opt_docs eq "chm"|| ($opt_docs eq "all")) {
+    } elsif ($opt_docs eq "all") {
 	$helpflags = "HELP=YES WINHELP=CHM";
     } elsif ($opt_docs =~ /,/) {
 	@l = split /, */, $opt_docs;
@@ -151,8 +162,13 @@ if($opt_docs) {
 	    $tmp .= " -$f";
 	}
 	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES='$tmp'";
+    } elsif ($opt_docs eq "txt"|| $opt_docs eq "html"
+	     || $opt_docs eq "latex" || $opt_docs eq "example") {
+	$helpflags = "HELP=YES WINHELP=NO HELPTYPES=-$opt_docs";
+    } elsif ($opt_docs eq "chm") {
+	$helpflags = "HELP=YES WINHELP=CHM HELPTYPES=";
     } else {
-	die "ERROR: invalid --docs value `$opt_docs'\n";
+	die "ERROR: invalid --docs value '$opt_docs'\n";
     }
 }
 
@@ -176,7 +192,13 @@ foreach $pkg (@ARGV){
     $is_bundle = 0;
 
     if (!(-e $pkg)) {
-	warn "`$pkg' does not exist: skipping\n";
+	warn "'$pkg' does not exist: skipping\n";
+	next;
+    }
+
+## is someone trying to install a Windows binary package
+    if($pkgname =~ /\.zip$/) {
+	warn "'$pkg':Windows binary packages in zipfiles are not supported: skipping\n";
 	next;
     }
 
@@ -185,8 +207,9 @@ foreach $pkg (@ARGV){
 	$pkgname =~ s/\.tar\.gz$//;
 	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
-	my $dir = "R.INSTALL";
-	if(! -d $dir) {
+	my $dir = "R.INSTALL.$$";
+	rmtree($dir);  # zap in the likely event it is already there
+	if(! -d $dir) {  # reuse if we failed to zap
 	    mkdir($dir, 0755) or die "Error: cannot create $dir\n";
 	}
 	$tardir = $dir;
@@ -198,7 +221,7 @@ foreach $pkg (@ARGV){
 	$istar = 1;
     }
 
-    chdir($pkg) || die "Error: cannot change to directory \`$pkg'\n";;
+    chdir($pkg) || die "Error: cannot change to directory '$pkg'\n";;
     my $canonpkg = cwd();
     $pkgname = basename($canonpkg);
     chdir("..");
@@ -223,6 +246,7 @@ foreach $pkg (@ARGV){
 	    }
 	    next;
 	}
+	if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	die "cannot install package '${pkgname}' of type '$Type'\n"
     }
  
@@ -239,7 +263,7 @@ foreach $pkg (@ARGV){
     my $zippkgs = $pkgname;
     @bundlepkgs = ($pkgname);
     if($description->{"Contains"}) {
-	print "\nLooks like \`${pkg}' is a package bundle\n";
+	print "\nLooks like '${pkg}' is a package bundle\n";
 	$is_bundle = 1;
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	$zippkgs = join(" ", @bundlepkgs);
@@ -279,11 +303,11 @@ foreach $pkg (@ARGV){
 	    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
 	    if ($op eq ">=" && $ver) {
 		die "This R is version $Rversion\n".
-		    "    package \`$pkgname' requires R $ver or later\n"
+		    "    package '$pkgname' requires R $ver or later\n"
 			unless $Rversion ge $ver;
 	    } elsif ($op eq "<=" && $ver) {
 		die "This R is version $Rversion\n".
-		    "     package \`$pkgname' requires R $ver or earlier\n"
+		    "     package '$pkgname' requires R $ver or earlier\n"
 			unless $Rversion le $ver;
 	    } else {
 		printf "unsupported operator in dependence \"$depends\"\n";
@@ -296,12 +320,14 @@ foreach $pkg (@ARGV){
 	if(-d $lockdir || -f $lockdir) {
 	    print "Failed to lock directory '${library}' for modifying\n";
 	    print "Try removing '${lockdir}'\n";
+	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	    exit 3;
 	}
 	mkpath($lockdir);
 	if(! -d $lockdir) {
 	    print "Failed to lock directory '${library}' for modifying\n";
 	    print "Permission problem?\n";
+	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	    exit 3;
 	}
     }
@@ -317,6 +343,7 @@ foreach $pkg (@ARGV){
 	$dpkg = $library. "/" . $decpkgname;
 	# if exists, move existing installation to $lockdir
 	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
+	system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_preclean);
 
 	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
 
@@ -329,6 +356,7 @@ foreach $pkg (@ARGV){
 	my $lazyload = -1;
 	my $tmp = parse_description_field("LazyLoad");
 	$lazyload = $tmp if($tmp >= 0);
+	warn "WARNING: true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'\n" if ($save eq "true");
 
 	my $lazydata = 0;
 	my $tmp = parse_description_field("LazyData");
@@ -379,9 +407,10 @@ foreach $pkg (@ARGV){
 	}
 	$opt = $opt . " DPKG=$dpkg";
 	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
+	$opt = $opt . " $pkgname-LAZY=true" if $lazyload > 0;
 #	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
     	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname");
-	if($res == 0) {
+	if($res == 0 && $lazyload == -1) {
 	    if(! -f "$library/$decpkgname/R/$pkgname") {$lazyload = 0;}
 	    if($lazyload == -1) { # choose based on code size
 		my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
@@ -402,11 +431,13 @@ foreach $pkg (@ARGV){
 #		print "$cmd\n";
 		$res = system($cmd);
 	    }
+	}
+	if($res == 0) {
 	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
 	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
 #	    print "$cmd\n";
-	    $res = system($cmd) if($res == 0);
+	    $res = system($cmd);
 
 	} # end of if($res)
 	if($res) {
@@ -458,12 +489,10 @@ foreach $pkg (@ARGV){
     }
     # wipe out lockdir
     rmtree($lockdir) if $safe;
+    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
     exit $res if $res;
     print("\* DONE ($intname)\n");
 }
-
-## remove unpack directory
-if ($istar > 0) { chdir($startdir); rmtree("R.INSTALL"); }
 
 sub parse_description_field { # fieldname
     my ($field) = @_;
@@ -490,10 +519,9 @@ Then optionally pack the installed package into a zip file.
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
-  -c, --clean		remove all files created during installation
+  -c, --clean		remove files created during installation
+  --preclean		remove files created during a previous run
 
-  --fake		do minimal install for testing purposes
-  --unsafe		install on top of any existing installation
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
   --docs=TYPE	        type(s) of documentation to build and install
@@ -501,13 +529,15 @@ Options:
 			allow for multiple versions of the same package
   --use-zip-data	collect data files in zip archive
   --use-zip-help	collect help and examples into zip archives
-  --use-zip		combine \'--use-zip-data\' and \'--use-zip-help\'
+  --use-zip		combine '--use-zip-data' and '--use-zip-help'
   --auto-zip	        select whether to zip automatically
+  --fake		do minimal install for testing purposes
+  --unsafe		install on top of any existing installation
   --build		zip-up the installation.  Implies --auto-zip
 
 
-TYPE can be "none" or "normal" or "chm" (the default) or "all", or
-  a comma-separated list of one or more of 
+TYPE can be "none" or "normal" (everything but chm), or "all" (the default),
+  or a comma-separated list of one or more of 
   'txt', 'html', 'latex', "example' and 'chm'.
 
 Report bugs to <r-bugs\@r-project.org>.

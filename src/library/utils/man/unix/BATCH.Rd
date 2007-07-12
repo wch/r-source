@@ -21,12 +21,15 @@
 
   By default, the input commands are printed along with the output.  To
   suppress this behavior, add \code{options(echo = FALSE)} at the
-  beginning of \code{infile}.
+  beginning of \code{infile}, or use option \samp{--slave}.
 
   The \code{infile} can have end of line marked by LF or CRLF (but not
   just CR), and files with an incomplete last line (missing end of line
   (EOL) mark) are processed correctly.
 
+  A final expression \samp{proc.time()} will be executed after the input
+  script unless the latter calls \code{\link{q}(runLast=FALSE)} or is aborted.
+  
   Additional options can be set by the environment variable
   \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save
     --no-readline} and before any options given on the command line.

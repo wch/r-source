@@ -3,7 +3,7 @@
 \alias{textGrob}
 \title{Draw Text}
 \description{
-  These functions create and draw text.
+  These functions create and draw text and \link{plotmath} expressions.
 }
 \usage{
 grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
@@ -17,12 +17,13 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
           name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
-  \item{label}{A vector of strings or expressions to draw.}
+  \item{label}{A character or \link{expression} vector.  Other
+    objects are coerced by \code{\link{as.graphicsAnnot}}.}
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
   \item{just}{The justification of the text 
     relative to its (x, y) location.  If there are two values, the first
-    value specifes horizontal justification and the second value specifies
+    value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
     and \code{"top"}.  For numeric values, 0 means left alignment

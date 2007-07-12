@@ -60,8 +60,8 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
 }
 \examples{
 dir <- file.path(R.home(), "library", "stats")
-file_test("-d", dir)
-file_test("-nt", file.path(dir, "R"), file.path(dir, "demo"))
+utils::file_test("-d", dir)
+utils::file_test("-nt", file.path(dir, "R"), file.path(dir, "demo"))
 list_files_with_exts(file.path(dir, "demo"), "R")
 list_files_with_type(file.path(dir, "demo"), "demo") # the same
 file_path_sans_ext(list.files(file.path(R.home(), "modules")))

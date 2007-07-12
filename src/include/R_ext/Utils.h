@@ -67,12 +67,12 @@ void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 /* ../../main/printutils.c : */
 int	IndexWidth(int);
 /* ../../main/util.c  and others : */
-char*	R_ExpandFileName(char*);
+const char *R_ExpandFileName(const char *);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
-Rboolean StringFalse(char*);
-Rboolean StringTrue(char*);
-Rboolean isBlankString(char *);
+Rboolean StringFalse(const char *);
+Rboolean StringTrue(const char *);
+Rboolean isBlankString(const char *);
 
 double 	R_strtod(const char *c, char **end);
 char *  R_tmpnam(const char *prefix, const char *tempdir);

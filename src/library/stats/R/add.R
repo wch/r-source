@@ -20,9 +20,9 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
-            cat("trying +", tt, "\n")
+	    cat("trying +", tt, "\n", sep='')
 	    utils::flush.console()
-        }
+	}
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
@@ -88,7 +88,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	fob <- list(call = fc, terms = Terms)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
-	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+	x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
         offset <- model.offset(m)
         wt <- model.weights(m)
         oldn <- length(y)
@@ -148,7 +148,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         dev[nas] <- pchisq(dev[nas], df[nas], lower.tail=FALSE)
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
-	rdf <- object$df.resid
+	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1], rdf)
     }
     head <- c("Single term additions", "\nModel:",
@@ -196,7 +196,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	m <- model.frame(fob, xlev = object$xlevels)
         offset <- model.offset(m)
         wt <- model.weights(m)
-	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+	x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
         oldn <- length(y)
         y <- model.response(m, "numeric")
         ## binomial case has adjusted y and weights
@@ -303,7 +303,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
-            cat("trying -", tt, "\n")
+	    cat("trying -", tt, "\n", sep='')
 	    utils::flush.console()
         }
         nfit <- update(object, as.formula(paste("~ . -", tt)),
@@ -351,7 +351,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     }
     ndrop <- match(scope, tl)
     ns <- length(scope)
-    rdf <- object$df.resid
+    rdf <- object$df.residual
     chisq <- deviance.lm(object)
     dfs <- numeric(ns)
     RSS <- numeric(ns)
@@ -393,7 +393,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     } else if(test == "F") {
 	dev <- aod$"Sum of Sq"
 	dfs <- aod$Df
-	rdf <- object$df.resid
+	rdf <- object$df.residual
 	rms <- aod$RSS[1]/rdf
 	Fs <- (dev/dfs)/rms
 	Fs[dfs < 1e-4] <- NA
@@ -430,7 +430,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     }
     ndrop <- match(scope, tl)
     ns <- length(scope)
-    rdf <- object$df.resid
+    rdf <- object$df.residual
     chisq <- object$deviance
     dfs <- numeric(ns)
     dev <- numeric(ns)
@@ -503,16 +503,16 @@ add.scope <- function(terms1, terms2)
 {
     terms1 <- terms(terms1)
     terms2 <- terms(terms2)
-    factor.scope(attr(terms1, "factor"),
-		 list(add = attr(terms2, "factor")))$add
+    factor.scope(attr(terms1, "factors"),
+		 list(add = attr(terms2, "factors")))$add
 }
 
 drop.scope <- function(terms1, terms2)
 {
     terms1 <- terms(terms1)
     f2 <- if(missing(terms2)) numeric(0)
-    else attr(terms(terms2), "factor")
-    factor.scope(attr(terms1, "factor"), list(drop = f2))$drop
+    else attr(terms(terms2), "factors")
+    factor.scope(attr(terms1, "factors"), list(drop = f2))$drop
 }
 
 factor.scope <- function(factor, scope)
@@ -684,7 +684,7 @@ step <- function(object, scope, scale = 0,
     Terms <- fit$terms
     if(trace)
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
-	    cut.string(deparse(as.vector(formula(fit)))), "\n\n")
+	    cut.string(deparse(as.vector(formula(fit)))), "\n\n", sep='')
 
     models[[nm]] <- list(deviance = mydeviance(fit), df.resid = n - edf,
 			 change = "", AIC = bAIC)
@@ -744,7 +744,7 @@ step <- function(object, scope, scale = 0,
 	bAIC <- bAIC[2]
 	if(trace)
 	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
-		cut.string(deparse(as.vector(formula(fit)))), "\n\n")
+		cut.string(deparse(as.vector(formula(fit)))), "\n\n", sep='')
         ## add a tolerance as dropping 0-df terms might increase AIC slightly
 	if(bAIC >= AIC + 1e-7) break
 	nm <- nm + 1

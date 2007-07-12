@@ -167,7 +167,7 @@ typedef struct {
     DL_FUNC (*lookupCachedSymbol)(const char *name, const char *pkg, int all);
 
     void     (*fixPath)(char *path);
-    void     (*getFullDLLPath)(SEXP call, char *buf, char *path);
+    void     (*getFullDLLPath)(SEXP call, char *buf, const char * const path);
 
 } OSDynSymbol;
 

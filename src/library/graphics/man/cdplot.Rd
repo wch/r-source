@@ -12,13 +12,13 @@
 cdplot(x, \dots)
 
 \method{cdplot}{default}(x, y,
-  plot = TRUE, tol.ylab = 0.05,
+  plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
   yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots)
 
 \method{cdplot}{formula}(formula, data = list(),
-  plot = TRUE, tol.ylab = 0.05,
+  plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
   yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots,
@@ -34,6 +34,8 @@ cdplot(x, \dots)
   \item{tol.ylab}{convenience tolerance parameter for y-axis annotation.
     If the distance between two labels drops under this threshold, they are
     plotted equidistantly.}
+  \item{ylevels}{a character or numeric vector specifying in which order
+    the levels of the dependent variable should be plotted.}
   \item{bw, n, from, to, \dots}{arguments passed to \code{\link{density}}}
   \item{col}{a vector of fill colors of the same length as \code{levels(y)}.
     The default is to call \code{\link{gray.colors}}.}  
@@ -52,7 +54,7 @@ cdplot(x, \dots)
 
   This visualization technique is similar to spinograms (see \code{\link{spineplot}})
   and plots \eqn{P(y | x)} against \eqn{x}. The conditional probabilities
-  are not derived by descretization (as in the spinogram), but using a smoothing
+  are not derived by discretization (as in the spinogram), but using a smoothing
   approach via \code{\link{density}}.
   
   Note, that the estimates of the conditional densities are more reliable for 
@@ -87,6 +89,9 @@ cdplot(fail ~ temperature, bw = "SJ")
 
 ## compare with spinogram
 (spineplot(fail ~ temperature, breaks = 3))
+
+## highlighting for failures
+cdplot(fail ~ temperature, ylevels = 2:1)
 
 ## scatter plot with conditional density
 cdens <- cdplot(fail ~ temperature, plot = FALSE)

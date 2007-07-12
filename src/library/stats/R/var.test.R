@@ -17,8 +17,8 @@ function(x, y, ratio = 1,
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
     if (inherits(x, "lm") && inherits(y, "lm")) {
-        DF.x <- x$df.resid
-        DF.y <- y$df.resid
+        DF.x <- x$df.residual
+        DF.y <- y$df.residual
         V.x <- sum(x$residuals^2) / DF.x
         V.y <- sum(y$residuals^2) / DF.y
     } else {

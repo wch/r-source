@@ -5,6 +5,6 @@ Priority: base
 Author: R Development Core Team and contributors worldwide
 Description: Statistical Functions using S4 classes
 Maintainer: R Core Team <R-core@r-project.org>
-Depends: graphics, stats, methods
-SaveImage: yes
+Depends: methods, graphics, stats
+LazyLoad: yes
 License: GPL Version 2 or later.

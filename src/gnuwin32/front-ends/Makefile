@@ -19,7 +19,7 @@ all: makeMakedeps \
      $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
-     $(R_HOME)/bin/md5check.exe
+     $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
@@ -45,6 +45,10 @@ $(R_HOME)/bin/md5check.exe: md5check.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
+$(R_HOME)/bin/Rscript.exe: Rscript.exe
+	$(MKDIR) -p $(R_HOME)/bin
+	$(CP) $^ $@	
+
 graphappmain.o: ../graphapp/graphappmain.c
 	$(CC) -c -o $@ -I../graphapp $(CFLAGS) ../graphapp/graphappmain.c
 
@@ -61,6 +65,8 @@ Rterm-LINKFLAGS+=-Wl,--large-address-aware
 ## Increase stack size to 10Mb
 Rgui-LINKFLAGS+=-Wl,--stack=0xA00000
 Rterm-LINKFLAGS+=-Wl,--stack=0xA00000
+Rscript-LINKFLAGS=-Wl,--large-address-aware -Wl,--stack=0xA00000
+Rscript-LIBS=-luser32 -L../../../bin -lR
 
 Rgui.exe: graphappmain.o  rgui.o rgico.o
 
@@ -75,6 +81,11 @@ RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 md5check-CFLAGS=-I../../../include -I../../library/tools/src
 md5check.exe : md5check.o md5ico.o ../../library/tools/src/md5.o
 
+Rscript.o: ../../unix/Rscript.c
+	$(CC) $(CFLAGS) -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
+
+Rscript.exe: Rscript.o rcico.o
+
 Rpwd:
 	$(MAKE) -C ../../include -f Makefile.win version
 	$(MAKE) Rpwd.exe
@@ -82,6 +93,9 @@ Rpwd:
 Rpwd.exe: rpwd.o rcico.o
 
 rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
+rgico.o: Rgui.exe.manifest
+rtico.o: Rterm.exe.manifest
+rcico.o: Rcmd.exe.manifest
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps

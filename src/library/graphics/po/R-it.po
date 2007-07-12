@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -15,6 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "'a' is overridden by 'reg'"
+msgstr ""
+
+msgid "only using the first two of"
+msgstr ""
+
+msgid "regression coefficients"
+msgstr ""
+
+msgid "'a' and 'b' are overridden by 'coef'"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' deve essere una tabella di contigenza a 2 vie"
@@ -209,7 +221,8 @@ msgstr "deve avere un break in più di colour"
 msgid "breaks must all be finite"
 msgstr "i breaks devono essere tutti finiti"
 
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+#, fuzzy
+msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "le dimensioni di z non sono length(z)(+1) volte length(y)(+1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"

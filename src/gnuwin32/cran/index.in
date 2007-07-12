@@ -10,8 +10,7 @@
 
 <h1>R-@RVER@ for Windows</h1>
 
-<p>This directory contains a binary distribution of R-@RVER@ to run on
-Windows 95, 98, ME, NT4.0, 2000 and XP on Intel/clone chips.</p>
+<p>This directory contains a Windows binary distribution of R-@RVER@.</p>
 
 <p>Patches to this release are incorporated in the <a
 href="rpatched.html">r-patched snapshot build</a>.</p>
@@ -39,14 +38,12 @@ href="rdevel.html">r-devel snapshot build</a>.</p>
   <tr>
     <td width="19%" valign="top"><a
 href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
-    <td width="81%">Setup program (about 28 megabytes). Please download this
-    from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
-    This corresponds to the file named <b>SetupR.exe</b> or
-    <b>rwXXXX.exe</b> in pre-2.2.0 releases.</td>
+    <td width="81%">Setup program (about 29 megabytes). Please download this
+    from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. 
   </tr>
   <tr>
     <td width="19%" valign="top"><a href="old/">old</a></td>
-    <td width="81%">The previous release.</td>
+    <td width="81%">Previous releases.</td>
   </tr>
   <tr>
     <td width="19%" valign="top"><a href="md5sum.txt">md5sum.txt</a></td>

@@ -13,12 +13,18 @@ tkStartGUI()
   pager (as used by \code{help()}) to be the Tk pager. 
 }
 \author{Peter Dalgaard}
-\note{\code{tkStartGUI()} saves its evaluation environment as
+\note{
+#ifdef windows
+  This function is not usable under Windows.
+
+#endif
+  \code{tkStartGUI()} saves its evaluation environment as
   \code{.GUIenv}. This means that the user interface elements can be
   accessed in order to extend the interface. The three main objects are
   named \code{Term}, \code{Menu}, and \code{Toolbar}, and the various
   submenus and callback functions can be seen with
-  \code{ls(envir=.GUIenv)}. }
+  \code{ls(envir=.GUIenv)}.
+}
 
   
 \keyword{misc}

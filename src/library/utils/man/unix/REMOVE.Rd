@@ -14,9 +14,8 @@
 \details{
   If used as \code{R CMD REMOVE pkgs} without explicitly specifying
   \code{lib}, packages are removed from the library tree rooted at the
-  first directory given in the environment variable \env{R\_LIBS} if
-  this is set and non-null, and to the default library tree (which is
-  rooted at \file{\$R\_HOME/library}) otherwise.
+  first directory in the library path which would be used by \R run in
+  the current environment.
 
   To remove from the library tree \code{lib}, use
   \code{R CMD REMOVE -l lib pkgs}.

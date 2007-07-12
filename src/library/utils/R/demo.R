@@ -13,7 +13,7 @@ function(topic, package = NULL, lib.loc = NULL,
 	## List all possible demos.
 
 	## Build the demo db.
-	db <- matrix(character(0), nr = 0, nc = 4)
+	db <- matrix(character(0), nrow = 0, ncol = 4)
 	for(path in paths) {
 	    entries <- NULL
 	    ## Check for new-style 'Meta/demo.rds', then for '00Index'.

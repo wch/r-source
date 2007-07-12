@@ -147,11 +147,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 r <- rle(sort(pmin(r, N - r + 1)))
                 SIGMA <- if(EVEN)
                     sqrt(m * n
-                         * (16 * sum(r$l * r$v^2) - N * (N + 2)^2)
+                         * (16 * sum(r$lengths * r$values^2) - N * (N + 2)^2)
                          / (16 * N * (N - 1)))
                 else
                     sqrt(m * n
-                         * (16 * N * sum(r$l * r$v^2) - (N + 1)^4)
+                         * (16 * N * sum(r$lengths * r$values^2) - (N + 1)^4)
                          / (16 * N^2 * (N - 1)))
             }
             z / SIGMA
@@ -190,15 +190,15 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     ## Check if the statistic exceeds both quantiles
                     ## first.
                     statu <- ab2(srange[1], zq=qnorm(alpha/2))
-                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower=FALSE))
+                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower.tail=FALSE))
                     if (statu > 0 || statl < 0) {
                         warning("samples differ in location: cannot compute confidence set, returning NA")
                         return(c(NA, NA))
                     }
                     u <- uniroot(ab2, srange, tol=1e-4,
                                  zq=qnorm(alpha/2))$root
-                    l <- uniroot(ab, srange, tol=1e-4,
-                                 zq=qnorm(alpha/2, lower=FALSE))$root
+                    l <- uniroot(ab2, srange, tol=1e-4,
+                                 zq=qnorm(alpha/2, lower.tail=FALSE))$root
                     ## The process of the statistics does not need to be
                     ## monotone: sort is ok here.
                     sort(c(u, l))

@@ -21,7 +21,7 @@ debugger(dump = last.dump)
   To use post-mortem debugging, set the option \code{error} to be a call
   to \code{dump.frames}.  By default this dumps to an \R object
   \code{"last.dump"} in the workspace, but it can be set to dump to a
-  file (as dump of the object produced by a call to \code{\link{save}}).
+  file (a dump of the object produced by a call to \code{\link{save}}).
   The dumped object contain the call stack, the active environments and
   the last error message as returned by \code{\link{geterrmessage}}.
 
@@ -39,7 +39,7 @@ debugger(dump = last.dump)
   how to dump and then quit.
 }
 \value{
-  None.
+  Invisible \code{NULL}.
 }
 \note{
   Functions such as \code{\link{sys.parent}} and

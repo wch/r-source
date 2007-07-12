@@ -12,19 +12,20 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win R_changes VERSION \
-  config.charset plural.y $(SOURCES) $(HEADERS)
+  config.charset $(SOURCES) $(HEADERS)
 
 HEADERS = \
   gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h eval-plural.h \
   localcharset.h xsize.h printf-args.h printf-args.c printf-parse.h \
   wprintf-parse.h printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c \
-  libgnuintl.h.in 
+  libgnuintl.h.in lock.h
 
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
  textdomain.c l10nflist.c explodename.c dcigettext.c \
  dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
- localcharset.c localename.c log.c printf.c osdep.c intl-compat.c
+ localcharset.c localename.c log.c printf.c osdep.c intl-compat.c \
+ hash-string.c lock.c
 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
@@ -36,13 +37,13 @@ noinst_LIBRARIES = libintl.a
 
 # LOCALEDIR is the default location for catalogs in dcigettext.c,
 # and unused in R.
-DEFS=-DLOCALEDIR=\"\" -DIN_LIBINTL @DEFS@
+DEFS=-DLOCALEDIR=\"\" -DLOCALEALIAS_PATH=\"\" -DIN_LIBINTL @DEFS@
 
 ALL_CPPFLAGS=$(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
 
 R all: all-@USE_INCLUDED_LIBINTL@
 all-yes: Makefile 
-	@$(MAKE) headers localecharset.h
+	@$(MAKE) headers charsetalias.h
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
 all-no: Makefile
@@ -77,7 +78,7 @@ charset.alias: $(srcdir)/config.charset
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change t-$@ $@
 	@rm t-$@
 
-localecharset.h: charset.alias
+charsetalias.h: charset.alias
 	@echo "cp =" > $@
 	@ @SED@ -e 's/\([^ ]\{1,\}\)/"\1" "\\0"/g' charset.alias >> $@
 	@echo ";" >> $@
@@ -85,7 +86,7 @@ localecharset.h: charset.alias
 mostlyclean: clean
 clean:
 	@-rm -f Makedeps *.d *.o *.lo *.a
-	@rm -f libgnuintl.h libintl.h charset.alias localecharset.h ref-add.sed ref-del.sed
+	@rm -f libgnuintl.h libintl.h charset.alias charsetalias.h ref-add.sed ref-del.sed
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

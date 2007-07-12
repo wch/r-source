@@ -9,11 +9,16 @@
 \alias{.isMethodsDispatchOn}
 \alias{sys.save.image}
 \alias{sys.load.image}
-
+\alias{.row_names_info}
+\alias{.set_row_names}
+\alias{.ArgsEnv}
+\alias{.GenericArgsEnv}
+\alias{findPackageEnv}
+\alias{lazyLoadDBfetch}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
-  because of the special nature of the base namespace.
+  because of the special nature of the base name space.
 }
 \usage{
 .subset(x, \dots)
@@ -35,6 +40,13 @@ testPlatformEquivalence(built, run)
 
 sys.load.image(name, quiet)
 sys.save.image(name)
+
+.row_names_info(x, type = 1L)
+.set_row_names(n)
+
+findPackageEnv(info)
+
+lazyLoadDBfetch(key, file, compressed, hook)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -53,13 +65,27 @@ sys.save.image(name)
     \code{"packageDescription2"}.}
   \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
   \item{name}{name of image file to save or load.}
+  \item{x}{an object with a \code{"row.names"} attribute, typically a
+    data frame.}
+  \item{type}{integer. Currently \code{type = 0} returns the internal
+    \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
+    the number of rows implied by the attribute, and \code{type = 1} the
+    latter with a negative sign for \sQuote{automatic} row names.}
+  \item{n}{integer.  The number of rows.}
+  \item{info}{character string such as \code{"package:MASS"}.}
+  \item{key}{the object name in a lazyload database.}
+  \item{file}{the filepath to a lazyload database.}
+  \item{compressed}{logical: are the values in the database compressed?}
+  \item{refhook}{a load hook: see \code{\link{unserialize}}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
   equivalent to the \code{\link{[}} and \code{\link{[[}} operators,
   except methods that dispatch does not take place.  This is to avoid
   expensive unclassing when applying the default method to an object.  They
-  should not normally be invoked by end users.
+  should not normally be invoked by end users.  Note that unlike the
+  operators they are builtins and not specials and hence do not allow
+  missing values in their arguments.
 
   \code{.find.package} returns the paths to the locations where the
   given packages can be found.  If \code{lib.loc} is \code{NULL}, then
@@ -80,7 +106,7 @@ sys.save.image(name)
   are not loaded, and given an error if none are.  This function is not
   meant to be called by users, and its interface might change in future
   versions.  Note that currently \code{package} must include the
-  version mumber if versioned installs are used.
+  version number if versioned installs are used.
 
   \code{.getRequiredPackages2} attaches all the packages mentioned in the
   \code{Depends} field: failure to find a package is an error.  It also
@@ -93,8 +119,8 @@ sys.save.image(name)
   compiled code can safely be loaded into a build of \R, which it does by
   comparing their \sQuote{canonical} \code{"cpu-vendor-os"} descriptions.
   The default function omits the \code{vendor} part and allows small 
-  mismatches elsewhere.  Cognescenti can replace this function in the
-  \code{base} namespace.
+  mismatches elsewhere.  Cognoscenti can replace this function in the
+  \code{base} name space.
 
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if
   the S4 method dispatch has been turned on in the evaluator (usually by
@@ -108,6 +134,26 @@ sys.save.image(name)
   is able to open a connection to save the image.  This is appropriate
   when called from \code{q()} and allies, but reinforces the warning
   that it should not be called directly.
+
+  \code{\link{row.names}} can be stored internally in compact form.
+  \code{.set_row_names(n)} generates that form for automatic row names
+  of length \code{n}, to be assigned to
+  \code{attr(<a data frame>, "row.names")}.  \code{.row_names_info}
+  gives information on the internal form of the row names for a data
+  frame: for details of what information see the argument \code{type}.
+
+  \code{.GenericArgsEnv} and \code{.ArgsEnv} are environments that
+  contain closures with the argument lists that the primitives would
+  have had had they been closures.  All the primitives that are internal
+  S3 generics have corresponding members of \code{.GenericArgsEnv} and
+  the remaining non-language-element primitives correspond to
+  \code{.ArgsEnv}. See the \sQuote{R Internals} manual for further
+  details.  They are used by \code{\link{args}} and
+  \code{\link{print.default}} and the QC functions \code{\link{codoc}}
+  and \code{\link{checkS3methods}}.
+
+  \code{findPackageEnv} is invoked by the unserialize code to set a
+  saved environment if possible.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character

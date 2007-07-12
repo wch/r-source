@@ -1,8 +1,6 @@
-export(.helpForCall, .tryHelp)
-
 export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
-       URLdecode, URLencode, alarm, apropos, argsAnywhere,
-       assignInNamespace, as.roman, as.person, as.personList,
+       URLdecode, URLencode, View, alarm, apropos, argsAnywhere,
+       assignInNamespace, as.roman, as.person, as.personList, as.relistable,
        available.packages, browseEnv, browseURL, bug.report,
        capture.output, checkCRAN, chooseCRANmirror, citation,
        citEntry, citHeader, citFooter, close.socket, combn,
@@ -10,10 +8,10 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        dataentry, de, de.ncols, de.restore, de.setup, debugger, demo,
        download.file, download.packages, dump.frames, edit, emacs,
        example, file_test, file.edit, find, fix, fixInNamespace,
-       flush.console, formatOL, formatUL, getAnywhere,
+       flush.console, formatOL, formatUL, getAnywhere, getCRANmirrors,
        getFromNamespace, getS3method, glob2rx, head, head.matrix,
        help, help.search, help.start, history, index.search,
-       install.packages, installed.packages, limitedLabels,
+       install.packages, installed.packages, is.relistable, limitedLabels,
        loadhistory, localeToCharset, ls.str, lsf.str,
        make.packages.html, make.socket, memory.limit, memory.size,
        menu, methods, mirror2html, modifyList, new.packages,
@@ -22,13 +20,14 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        person, personList, pico, prompt, promptData, promptPackage,
        readCitationFile, readNEWS, read.DIF, read.csv, read.csv2,
        read.delim, read.delim2, read.fwf, read.fortran, read.socket,
-       read.table, recover, remove.packages, savehistory,
-       select.list, sessionInfo, setRepositories, stack, str,
-       strOptions, summaryRprof, tail, tail.matrix, timestamp,
-       topicName, toBibtex, toLatex, type.convert, unstack,
-       update.packageStatus, update.packages, upgrade,
-       url.show, vi, vignette, withVisible, write.csv, write.csv2,
-       write.socket, write.table, wsbrowser, xedit, xemacs)
+       read.table, recover, relist, remove.packages, savehistory, select.list,
+       sessionInfo, setRepositories, stack, str, strOptions,
+       summaryRprof, tail, tail.matrix, timestamp, toBibtex, toLatex,
+       type.convert, unstack, update.packageStatus, update.packages,
+       upgrade, url.show, vi, vignette, withVisible, write.csv,
+       write.csv2, write.socket, write.table, wsbrowser, xedit,
+       xemacs, zip.file.extract)
+
 
 S3method("[", getAnywhere)
 S3method("[", roman)
@@ -67,6 +66,10 @@ S3method(print, socket)
 S3method(print, vignette)
 S3method(prompt, data.frame)
 S3method(prompt, default)
+S3method(relist, default)
+S3method(relist, factor)
+S3method(relist, list)
+S3method(relist, matrix)
 S3method(stack, data.frame)
 S3method(stack, default)
 S3method(str, POSIXt)
@@ -84,6 +87,7 @@ S3method(toBibtex, citationList)
 S3method(toBibtex, person)
 S3method(toBibtex, personList)
 S3method(toLatex, sessionInfo)
+S3method(unlist, relistable)
 S3method(unstack, data.frame)
 S3method(unstack, default)
 S3method(upgrade, packageStatus)
@@ -106,7 +110,7 @@ export(DLL.version, Filters, choose.dir, choose.files,
        fixup.libraries.URLs, fixup.package.URLs, getClipboardFormats,
        getIdentification, getWindowsHandle, getWindowTitle,
        link.html.help, loadRconsole, make.search.html,
-       readClipboard, setWindowTitle, shortPathName,
+       readClipboard, setStatusBar, setWindowTitle, shortPathName,
        win.version, winDialog, winDialogString, winMenuAdd, winMenuAddItem,
        winMenuDel, winMenuDelItem, winMenuNames, winMenuItems, writeClipboard,
        zip.unpack)

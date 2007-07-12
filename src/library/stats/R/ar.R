@@ -229,7 +229,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
                 psi <- .C(R_artoma,
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1),
-                        as.integer(npsi))$psi[1:npsi]
+                        as.integer(npsi+object$order+1))$psi[1:npsi]
                 vars <- cumsum(c(1, psi^2))
                 se <- sqrt(object$var.pred*vars)[1:n.ahead]
             }

@@ -1,6 +1,6 @@
 /*
   R : A Computer Language for Statistical Data Analysis
-  Copyright (C) 1997-2006   Robert Gentleman, Ross Ihaka
+  Copyright (C) 1997-2007   Robert Gentleman, Ross Ihaka
                             and the R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
@@ -30,13 +30,22 @@
 #endif
 
 #if defined(HAVE_GLIBC2)
-/* for isnan in Rinlinedfuns.h */
-# define _SVID_SOURCE 1
+#include <features.h>
+# ifndef __USE_POSIX
+#  define __USE_POSIX           /* so that we get isnan */
+# endif
+# ifndef __USE_SVID
+#  define __USE_SVID             /* so that we get putenv */
+# endif
+# ifndef __USE_BSD
+#  define __USE_BSD             /* so that we get setenv() */
+# endif
 #endif
 
-#include <stdlib.h> /* for putenv */
+#include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h> /* for PATH_MAX */
 #include <Rinterface.h>
+#include <Fileio.h>
 
 /* remove leading and trailing space */
 static char *rmspace(char *s)
@@ -127,10 +136,16 @@ static void Putenv(char *a, char *b)
     char *buf, *value, *p, *q, quote='\0';
     int inquote = 0;
 
+#ifdef HAVE_SETENV
+    buf = (char *) malloc((strlen(b) + 1) * sizeof(char));
+    if(!buf) R_Suicide("allocation failure in reading Renviron");
+    value = buf;
+#else
     buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
     if(!buf) R_Suicide("allocation failure in reading Renviron");
     strcpy(buf, a); strcat(buf, "=");
     value = buf+strlen(buf);
+#endif
 
     /* now process the value */
     for(p = b, q = value; *p; p++) {
@@ -153,24 +168,32 @@ static void Putenv(char *a, char *b)
 	*q++ = *p;
     }
     *q = '\0';
-#ifdef HAVE_PUTENV
-    putenv(buf);
+#ifdef HAVE_SETENV
+    if(setenv(a, buf, 1))
+	warningcall(R_NilValue, 
+		    _("problem in setting variable '%s' in Renviron"), a);
+    free(buf);
+#elif defined(HAVE_PUTENV)
+    if(putenv(buf))
+	warningcall(R_NilValue, 
+		    _("problem in setting variable '%s' in Renviron"), a);
+    /* no free here: storage remains in use */
 #else
     /* pretty pointless, and was not tested prior to 2.3.0 */
+    free(buf);
 #endif
-    /* no free here: storage remains in use */
 }
 
 
 #define BUF_SIZE 255
 #define MSG_SIZE 2000
-static int process_Renviron(char *filename)
+static int process_Renviron(const char *filename)
 {
     FILE *fp;
     char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
     int errs = 0;
 
-    if (!filename || !(fp = fopen(filename, "r"))) return 0;
+    if (!filename || !(fp = R_fopen(filename, "r"))) return 0;
     snprintf(msg, MSG_SIZE+50,
 	     "\n   File %s contains invalid line(s)", filename);
 
@@ -246,7 +269,7 @@ void process_site_Renviron ()
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
 void process_user_Renviron()
 {
-    char *s;
+    const char *s;
 
     if(process_Renviron(".Renviron")) return;
 #ifdef Unix

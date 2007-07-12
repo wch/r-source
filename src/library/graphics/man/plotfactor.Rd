@@ -26,6 +26,7 @@
     \code{\link{barplot}}, \code{\link{boxplot}}, \code{\link{spineplot}}.
 }
 \examples{
+require(grDevices)
 plot(PlantGrowth)                                # -> plot.data.frame
 plot(weight ~ group, data = PlantGrowth)         # numeric vector ~ factor
 plot(cut(weight, 2) ~ group, data = PlantGrowth) # factor ~ factor
@@ -33,6 +34,6 @@ plot(cut(weight, 2) ~ group, data = PlantGrowth) # factor ~ factor
 plot(cut(weight, 3) ~ group, data = PlantGrowth,
      col = hcl(c(0, 120, 240), 50, 70))
 
-plot(PlantGrowth$group, axes=FALSE, main="no axes")# extremly silly
+plot(PlantGrowth$group, axes=FALSE, main="no axes")# extremely silly
 }
 \keyword{hplot}

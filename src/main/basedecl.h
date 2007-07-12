@@ -71,6 +71,7 @@ SEXP do_mapply(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_r2dtable(SEXP, SEXP, SEXP);
 SEXP R_shortRowNames(SEXP);
+SEXP R_copyDFattr(SEXP, SEXP);
 
 void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);
@@ -88,7 +89,6 @@ SEXP R_unserialize(SEXP, SEXP);
 
 SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP R_lazyLoadDBfetch(SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBflush(SEXP);
 
 SEXP R_get_primname(SEXP op) ;

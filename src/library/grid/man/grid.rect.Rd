@@ -24,7 +24,7 @@ rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{height}{A numeric vector or unit object specifying height.}
   \item{just}{The justification of the rectangle 
     relative to its (x, y) location.  If there are two values, the first
-    value specifes horizontal justification and the second value specifies
+    value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
     and \code{"top"}.  For numeric values, 0 means left alignment

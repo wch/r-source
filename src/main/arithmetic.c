@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2006	    The R Development Core Team.
+ *  Copyright (C) 1998--2007	    The R Development Core Team.
  *  Copyright (C) 2003-4       	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -225,32 +225,31 @@ double R_pow(double x, double y) /* = x ^ y */
 	return(1.);
     if(x == 0.) {
 	if(y > 0.) return(0.);
-	/* y < 0 */return(R_PosInf);
+	/* y < 0 */ return(R_PosInf);
     }
-    if (R_FINITE(x) && R_FINITE(y)){
-      if (y == 2.0)  /* common special case */
-	return x*x;
-      else if (y == 0.5)  /* another common special case */
-	return sqrt(x);
-      else
-	return pow(x,y);
-    }
+    if (R_FINITE(x) && R_FINITE(y))
+/* work around a bug in May 2007 snapshots of gcc pre-4.3.0 */
+#if __GNUC__ == 4 && __GNUC_MINOR__ == 3
+	return (y == 2.0) ? x*x : pow(x, y);
+#else
+	return (y == 2.0) ? x*x : ((y == 0.5) ? sqrt(x) : pow(x, y));
+#endif
     if (ISNAN(x) || ISNAN(y))
 	return(x + y);
     if(!R_FINITE(x)) {
 	if(x > 0)		/* Inf ^ y */
-	    return((y < 0.)? 0. : R_PosInf);
+	    return (y < 0.)? 0. : R_PosInf;
 	else {			/* (-Inf) ^ y */
 	    if(R_FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
-		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
+		return (y < 0.) ? 0. : (myfmod(y, 2.) ? x  : -x);
 	}
     }
     if(!R_FINITE(y)) {
 	if(x >= 0) {
 	    if(y > 0)		/* y == +Inf */
-		return((x >= 1)? R_PosInf : 0.);
+		return (x >= 1) ? R_PosInf : 0.;
 	    else		/* y == -Inf */
-		return((x < 1) ? R_PosInf : 0.);
+		return (x < 1) ? R_PosInf : 0.;
 	}
     }
     return(R_NaN);		/* all other cases: (-Inf)^{+-Inf,
@@ -280,18 +279,20 @@ double R_pow_di(double x, int n)
 
 static double logbase(double x, double base)
 {
-#if defined(HAVE_WORKING_LOG)  && defined(HAVE_LOG10)
-    if(base == 10) return log10(x);
+#ifdef HAVE_LOG10
+    if(base == 10) 
+        return x > 0 ? log10(x) : x < 0 ? R_NaN : R_NegInf;
 #endif
-#if defined(HAVE_WORKING_LOG)  && defined(HAVE_LOG2)
-    if(base == 2) return log2(x);
+#ifdef HAVE_LOG2
+    if(base == 2) 
+        return x > 0 ? log2(x) : x < 0 ? R_NaN : R_NegInf;
 #endif
     return R_log(x) / log(base);
 }
 
 SEXP R_unary(SEXP, SEXP, SEXP);
 SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
-static SEXP integer_unary(ARITHOP_TYPE, SEXP);
+static SEXP integer_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP real_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP real_binary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP integer_binary(ARITHOP_TYPE, SEXP, SEXP, SEXP);
@@ -317,7 +318,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2:
 	return R_binary(call, op, CAR(args), CADR(args));
     default:
-	error(_("operator needs one or two arguments"));
+	errorcall(call,_("operator needs one or two arguments"));
     }
     return ans;			/* never used; to keep -Wall happy */
 }
@@ -458,7 +459,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 
     if (mismatch)
 	warningcall(lcall,
-		    _("longer object length\n\tis not a multiple of shorter object length"));
+		    _("longer object length is not a multiple of shorter object length"));
 
     /* need to preserve object here, as *_binary copies class attributes */
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
@@ -521,18 +522,18 @@ SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
     switch (TYPEOF(s1)) {
     case LGLSXP:
     case INTSXP:
-	return integer_unary(operation, s1);
+	return integer_unary(operation, s1, call);
     case REALSXP:
 	return real_unary(operation, s1, call);
     case CPLXSXP:
-	return complex_unary(operation, s1);
+	return complex_unary(operation, s1, call);
     default:
 	errorcall(call, _("invalid argument to unary operator"));
     }
     return s1;			/* never used; to keep -Wall happy */
 }
 
-static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1)
+static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
     int i, n, x;
     SEXP ans;
@@ -551,7 +552,7 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1)
 	}
 	return ans;
     default:
-	error(_("invalid unary operator"));
+	errorcall(call, _("invalid unary operator"));
     }
     return s1;			/* never used; to keep -Wall happy */
 }
@@ -960,7 +961,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
 {
     SEXP sy;
     double *y, *a;
-    int i, n, sao = OBJECT(sa);
+    int i, n;
     int naflag;
 
     if (!isNumeric(sa))
@@ -990,8 +991,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     if(naflag)
 	warningcall(lcall, R_MSG_NA);
 
-    SET_ATTRIB(sy, duplicate(ATTRIB(sa)));
-    SET_OBJECT(sy, sao);
+    DUPLICATE_ATTRIB(sy, sa);
     UNPROTECT(2);
     return sy;
 }
@@ -1001,13 +1001,13 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
 
-    if (DispatchGroup("Math", call, op, args, env, &s))
-	return s;
-
     checkArity(op, args);
 
-    if (isComplex(CAR(args)))
+    if (PRIMVAL(op) != 46 &&
+	DispatchGroup("Math", call, op, args, env, &s))
+	return s;
 
+    if (isComplex(CAR(args)))
 	return complex_math1(call, op, args, env);
 
 #define MATH1(x) math1(CAR(args), x, call);
@@ -1016,7 +1016,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2: return MATH1(ceil);
     case 3: return MATH1(sqrt);
     case 4: return MATH1(sign);
-    case 5: return MATH1(trunc);
+	/* case 5: return MATH1(trunc); separate from 2.6.0 */
 
     case 10: return MATH1(exp);
     case 11: return MATH1(expm1);
@@ -1052,6 +1052,17 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     return s; /* never used; to keep -Wall happy */
 }
 
+SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP s;
+    if (DispatchGroup("Math", call, op, args, env, &s))
+	return s;
+    checkArity(op, args);
+    if (isComplex(CAR(args)))
+	errorcall(call, _("unimplemented complex function"));
+    return math1(CAR(args), trunc, call);
+}
+
 SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
@@ -1068,8 +1079,7 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
 	for(i = 0 ; i < n ; i++)
 	    INTEGER(s)[i] = abs(INTEGER(x)[i]);
-	SET_ATTRIB(s, duplicate(ATTRIB(x)));
-	SET_OBJECT(s, OBJECT(x));
+	DUPLICATE_ATTRIB(s, x);
 	UNPROTECT(1);
 	return s;
     }
@@ -1085,7 +1095,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 		  SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb, sao = OBJECT(sa), sbo = OBJECT(sb);
+    int i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int naflag;
 
@@ -1100,8 +1110,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
     if ((na == 0) || (nb == 0))	{		\
         PROTECT(sy = allocVector(REALSXP, 0));	\
         if (na == 0) {				\
-	    SET_ATTRIB(sy, duplicate(ATTRIB(sa)));\
-	    SET_OBJECT(sy, sao);		\
+	    DUPLICATE_ATTRIB(sy, sa);\
         }					\
         UNPROTECT(1);				\
 	return(sy);				\
@@ -1147,12 +1156,10 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     UNPROTECT(3)
 
@@ -1165,7 +1172,7 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI,
 		    double (*f)(double, double, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb, sao = OBJECT(sa), sbo = OBJECT(sb);
+    int i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int m_opt;
     int naflag;
@@ -1208,7 +1215,7 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
 		    double (*f)(double, double, int, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb, sao = OBJECT(sa), sbo = OBJECT(sb);
+    int i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int i_1, i_2;
     int naflag;
@@ -1323,7 +1330,7 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
     /* prior to 2.3.0, 2 args were allowed,
        but this was never documented */
     default:
-	error(_("%d arguments passed to 'atan' which requires 1"), n);
+	errorcall(call,_("%d arguments passed to 'atan' which requires 1"), n);
     }
     return s;			/* never used; to keep -Wall happy */
 }
@@ -1332,40 +1339,93 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 /* The S4 Math2 group, round and signif */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a;
-    if (DispatchGroup("Math", call, op, args, env, &a))
-	return a;
+    SEXP res;
+
+    if (! DispatchGroup("Math", call, op, args, env, &res)) {
+	checkArity(op, args);
+	if (length(CADR(args)) == 0)
+	    errorcall(call, _("invalid second argument of length 0"));
+	res = do_math2(call, op, args, env);
+    }
+    return res;
+}
+
+SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP res, Call, tmp = R_NilValue /* -Wall */;
 
     checkArity(op, args);
-    if (length(CADR(args)) == 0)
-	errorcall(call, _("invalid second argument of length 0"));
-    return do_math2(call, op, args, env);
+
+    if (DispatchGroup("Math", call, op, args, env, &res)) return res;
+
+    if(PRIMVAL(op) == 10) tmp = ScalarReal(10.0);
+    if(PRIMVAL(op) == 2)  tmp = ScalarReal(2.0);
+
+    PROTECT(Call = lang3(install("log"), CAR(args), tmp));
+    res = eval(Call, env);
+    UNPROTECT(1);
+    return res;
+
 }
 
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s;
-    int n;
-    if (DispatchGroup("Math", call, op, args, env, &s))
-	return s;
+    SEXP res, ap = args, call2 = call;
+    int n = length(args), nprotect = 0;
 
-    switch (n = length(args)) {
-    case 1:
-	if (isComplex(CAR(args)))
-	    return complex_math1(call, op, args, env);
-	else
-	    return math1(CAR(args), R_log, call);
-    case 2:
-	if (length(CADR(args)) == 0)
-	    errorcall(call, _("invalid second argument of length 0"));
-	if (isComplex(CAR(args)) || isComplex(CDR(args)))
-	    return complex_math2(call, op, args, env);
-	else
-	    return math2(CAR(args), CADR(args), logbase, call);
-    default:
-	error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
+    if (n == 1) {
+	SEXP tag, tmp;
+#ifdef M_E
+	double e = M_E;
+#else
+	double e = exp(1.);
+#endif
+	/* check for match to first arg of (x=, base=) */
+	tag = TAG(args);
+	if(tag != R_NilValue && !streql("x", CHAR(PRINTNAME(tag))) )
+	    errorcall(call, 
+		      _("argument \"%s\" is missing, with no default"), "x");
+
+	/* we need to set a second arg for log(),
+	   since methods may rely on the default from the generic */
+	PROTECT(ap = duplicate(args));
+	PROTECT(call2 = duplicate(call));
+	nprotect += 2;
+	tmp = CONS(ScalarReal(e), R_NilValue);
+	SETCDR(ap, tmp);
+	SETCDR(CDR(call2), tmp);
     }
-    return s;			/* never used; to keep -Wall happy */
+
+    if (! DispatchGroup("Math", call2, op, ap, env, &res)) {
+	switch (n) {
+	case 1:
+	    if (isComplex(CAR(args)))
+		res = complex_math1(call, op, args, env);
+	    else
+		res = math1(CAR(args), R_log, call);
+	    break;
+	case 2:
+	{
+	    /* match argument names if supplied */
+	    PROTECT(ap = list2(R_NilValue, R_NilValue));
+	    SET_TAG(ap, install("x"));
+	    SET_TAG(CDR(ap), install("base"));	
+	    PROTECT(args = matchArgs(ap, args, call));
+	    nprotect += 2;
+	    if (length(CADR(args)) == 0)
+		errorcall(call, _("invalid argument 'base' of length 0"));
+	    if (isComplex(CAR(args)) || isComplex(CADR(args)))
+		res = complex_math2(call, op, args, env);
+	    else
+		res = math2(CAR(args), CADR(args), logbase, call);
+	    break;
+	}
+	default:
+	    error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
+	}
+    }
+    UNPROTECT(nprotect);
+    return res;
 }
 
 
@@ -1385,8 +1445,7 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc,
 		  double (*f)(double, double, double), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
+    int i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *a, *b, *c, *y;
     int naflag;
 
@@ -1442,16 +1501,13 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc,
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     else if (n == nc) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, sco);		\
+	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
     UNPROTECT(4)
 
@@ -1464,8 +1520,7 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
 		    double (*f)(double, double, double, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
+    int i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1;
     int naflag;
@@ -1504,8 +1559,7 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ,
 		    double (*f)(double, double, double, int, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
+    int i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1,i_2;
     int naflag;
@@ -1636,8 +1690,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
 		  double (*f)(double, double, double, double), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
+    int i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int naflag;
 
@@ -1686,20 +1739,16 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     else if (n == nc) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, sco);		\
+	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
     else if (n == nd) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
-	SET_OBJECT(sy, sdo);		\
+	DUPLICATE_ATTRIB(sy, sd);	\
     }						\
     UNPROTECT(5)
 
@@ -1711,8 +1760,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
 static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(double, double, double, double, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
+    int i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1;
     int naflag;
@@ -1739,8 +1787,7 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 		    double (*f)(double, double, double, double, int, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
+    int i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1, i_2;
     int naflag;
@@ -1831,9 +1878,7 @@ SEXP attribute_hidden do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 {
     SEXP sy;
-    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne,
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc),
-	sdo = OBJECT(sd), seo = OBJECT(se);
+    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne;
     double ai, bi, ci, di, ei, *a, *b, *c, *d, *e, *y;
 
 #define SETUP_Math5							\
@@ -1888,24 +1933,19 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     else if (n == nc) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, sco);		\
+	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
     else if (n == nd) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
-	SET_OBJECT(sy, sdo);		\
+	DUPLICATE_ATTRIB(sy, sd);	\
     }						\
     else if (n == ne) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(se)));	\
-	SET_OBJECT(sy, seo);		\
+	DUPLICATE_ATTRIB(sy, se);	\
     }						\
     UNPROTECT(6)
 

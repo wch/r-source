@@ -9,3 +9,5 @@
 
 # to prefer HTML help
 # options(htmlhelp=TRUE)
+
+# .Library.site <- file.path(chartr("\\", "/", R.home()), "site-library")

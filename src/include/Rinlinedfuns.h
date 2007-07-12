@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2006   The R Development Core Team.
+ *  Copyright (C) 1999-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,32 +22,58 @@
    It is only called if COMPILING_R is defined (in util.c) or
    from GNU C systems.
 
-   There are different comventions for inlining across compilation units.
-   We pro tem only use the GCC one.  See
-   http://www.greenend.org.uk/rjk/2003/03/inline.html
+   There are different conventions for inlining across compilation units.
+   See http://www.greenend.org.uk/rjk/2003/03/inline.html
  */
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
-#ifndef COMPILING_R /* defined only in util.c */
-# define INLINE_FUN extern R_INLINE
-#else
-# define INLINE_FUN
+/* Probably not able to use C99 semantics in gcc < 4.3.0 but who knows what
+   unofficial versions Debian or RedHat will distribute */
+#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
+#define C99_INLINE_SEMANTICS 1
 #endif
+
+/* Apple's gcc build >5400 (since Xcode 3.0) doesn't support GNU inline in C99 mode */
+#if __APPLE_CC__ > 5400 && !defined(C99_INLINE_SEMANTICS)
+#define C99_INLINE_SEMANTICS 1
+#endif
+
+#ifdef COMPILING_R
+/* defined only in inlined.c: this emits standalone code there */
+# define INLINE_FUN
+#else
+/* This section is normally only used for versions of gcc which do not
+   support C99 semantics.  __GNUC_STDC_INLINE__ is defined if
+   GCC is following C99 inline semantics by default: we
+   switch R's usage to the older GNU semantics via attributes.
+   Do this even for __GNUC_GNUC_INLINE__ to shut up warnings in 4.2.x.
+   __GNUC_STDC_INLINE__ and __GNUC_GNU_INLINE__ were added in gcc 4.2.0.
+*/
+# if defined(__GNUC_STDC_INLINE__) || defined(__GNUC_GNU_INLINE__)
+#  define INLINE_FUN extern __attribute__((gnu_inline)) inline
+# else
+#  define INLINE_FUN extern R_INLINE
+# endif
+#endif /* ifdef COMPILING_R */
+
+#if C99_INLINE_SEMANTICS
+# undef INLINE_FUN
+# ifdef COMPILING_R
+/* force exported copy */
+#  define INLINE_FUN extern inline
+# else
+/* either inline or link to extern version at compiler's choice */
+#  define INLINE_FUN inline
+# endif /* ifdef COMPILING_R */
+#endif /* C99_INLINE_SEMANTICS */
+
+
 
 /* define inline-able functions */
 
 
 /* from dstruct.c */
-
-/* mkChar - make a character (CHARSXP) variable */
-
-INLINE_FUN SEXP mkChar(const char *name)
-{
-    SEXP c = allocString(strlen(name));
-    strcpy(CHAR(c), name);
-    return c;
-}
 
 /*  length - length of objects  */
 
@@ -228,47 +254,11 @@ INLINE_FUN Rboolean conformable(SEXP x, SEXP y)
     return TRUE;
 }
 
-INLINE_FUN Rboolean isString(SEXP s)
-{
-    return (TYPEOF(s) == STRSXP);
-}
-
-INLINE_FUN Rboolean isNull(SEXP s)
-{
-    return (s == R_NilValue);
-}
-
-INLINE_FUN Rboolean isObject(SEXP s)
-{
-    return OBJECT(s);/* really '1-bit unsigned int' */
-}
-
-/*  The following should work but as of 06/09/04 it generates warnings about 
-    undeclared IS_S4_OBJECT, in spite of being apparently identical to the handling 
-    of isObject() above ------
-INLINE_FUN Rboolean isS4(SEXP s)
-{
-  return IS_S4_OBJECT(s);
-}
-
-INLINE_FUN SEXP asS4(SEXP s, Rboolean flag)
-{
-    if(flag == IS_S4_OBJECT(s))
-        return s;
-    if(NAMED(s) == 2)
-        s = duplicate(s);
-    if(flag) SET_S4_OBJECT(s);
-    else UNSET_S4_OBJECT(s);
-    return s;
-}
-
-*/
-
-INLINE_FUN Rboolean inherits(SEXP s, char *name)
+INLINE_FUN Rboolean inherits(SEXP s, const char *name)
 {
     SEXP klass;
     int i, nclass;
-    if (isObject(s)) {
+    if (OBJECT(s)) {
 	klass = getAttrib(s, R_ClassSymbol);
 	nclass = length(klass);
 	for (i = 0; i < nclass; i++) {
@@ -281,7 +271,7 @@ INLINE_FUN Rboolean inherits(SEXP s, char *name)
 
 INLINE_FUN Rboolean isValidString(SEXP x)
 {
-    return isString(x) && LENGTH(x) > 0 && !isNull(STRING_ELT(x, 0));
+    return TYPEOF(x) == STRSXP && LENGTH(x) > 0 && TYPEOF(STRING_ELT(x, 0)) != NILSXP;
 }
 
 /* non-empty ("") valid string :*/
@@ -290,15 +280,10 @@ INLINE_FUN Rboolean isValidStringF(SEXP x)
     return isValidString(x) && CHAR(STRING_ELT(x, 0))[0];
 }
 
-INLINE_FUN Rboolean isSymbol(SEXP s)
-{
-    return TYPEOF(s) == SYMSXP;
-}
-
 INLINE_FUN Rboolean isUserBinop(SEXP s)
 {
-    if (isSymbol(s)) {
-	char *str = CHAR(PRINTNAME(s));
+    if (TYPEOF(s) == SYMSXP) {
+	const char *str = CHAR(PRINTNAME(s));
 	if (strlen(str) >= 2 && str[0] == '%' && str[strlen(str)-1] == '%')
 	    return TRUE;
     }
@@ -389,17 +374,12 @@ INLINE_FUN Rboolean isFrame(SEXP s)
 {
     SEXP klass;
     int i;
-    if (isObject(s)) {
+    if (OBJECT(s)) {
 	klass = getAttrib(s, R_ClassSymbol);
 	for (i = 0; i < length(klass); i++)
 	    if (!strcmp(CHAR(STRING_ELT(klass, i)), "data.frame")) return TRUE;
     }
     return FALSE;
-}
-
-INLINE_FUN Rboolean isExpression(SEXP s)
-{
-    return TYPEOF(s) == EXPRSXP;
 }
 
 INLINE_FUN Rboolean isLanguage(SEXP s)
@@ -412,6 +392,8 @@ INLINE_FUN Rboolean isMatrix(SEXP s)
     SEXP t;
     if (isVector(s)) {
 	t = getAttrib(s, R_DimSymbol);
+	/* You are not supposed to be able to assign a non-integer dim,
+	   although this might be possible by misuse of ATTRIB. */
 	if (TYPEOF(t) == INTSXP && LENGTH(t) == 2)
 	    return TRUE;
     }
@@ -423,6 +405,8 @@ INLINE_FUN Rboolean isArray(SEXP s)
     SEXP t;
     if (isVector(s)) {
 	t = getAttrib(s, R_DimSymbol);
+	/* You are not supposed to be able to assign a 0-length dim,
+	 nor a non-integer dim */
 	if (TYPEOF(t) == INTSXP && LENGTH(t) > 0)
 	    return TRUE;
     }
@@ -435,48 +419,14 @@ INLINE_FUN Rboolean isTs(SEXP s)
 }
 
 
-INLINE_FUN Rboolean isLogical(SEXP s)
-{
-    return (TYPEOF(s) == LGLSXP);
-}
-
 INLINE_FUN Rboolean isInteger(SEXP s)
 {
     return (TYPEOF(s) == INTSXP && !inherits(s, "factor"));
 }
 
-INLINE_FUN Rboolean isReal(SEXP s)
-{
-    return (TYPEOF(s) == REALSXP);
-}
-
-INLINE_FUN Rboolean isComplex(SEXP s)
-{
-    return (TYPEOF(s) == CPLXSXP);
-}
-
-INLINE_FUN Rboolean isUnordered(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP
-	    && inherits(s, "factor")
-	    && !inherits(s, "ordered"));
-}
-
-INLINE_FUN Rboolean isOrdered(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP
-	    && inherits(s, "factor")
-	    && inherits(s, "ordered"));
-}
-
 INLINE_FUN Rboolean isFactor(SEXP s)
 {
     return (TYPEOF(s) == INTSXP  && inherits(s, "factor"));
-}
-
-INLINE_FUN Rboolean isEnvironment(SEXP s)
-{
-    return (TYPEOF(s) == ENVSXP);
 }
 
 INLINE_FUN int nlevels(SEXP f)
@@ -485,7 +435,6 @@ INLINE_FUN int nlevels(SEXP f)
 	return 0;
     return LENGTH(getAttrib(f, R_LevelsSymbol));
 }
-
 
 /* Is an object of numeric type. */
 /* FIXME:  the LGLSXP case should be excluded here
@@ -558,7 +507,7 @@ INLINE_FUN SEXP ScalarRaw(Rbyte x)
 
 INLINE_FUN Rboolean isVectorizable(SEXP s)
 {
-    if (isNull(s)) return TRUE;
+    if (s == R_NilValue) return TRUE;
     else if (isNewList(s)) {
 	int i, n;
 
@@ -588,45 +537,5 @@ INLINE_FUN SEXP mkString(const char *s)
     UNPROTECT(1);
     return t;
 }
-
-/* from Rmath */
-
-#define Rf_fmin2(x, y) fmin2_int(x, y)
-#define Rf_fmax2(x, y) fmax2_int(x, y)
-#define Rf_imin2(x, y) imin2_int(x, y)
-#define Rf_imax2(x, y) imax2_int(x, y)
-#define Rf_fsign(x, y) fsign_int(x, y)
-
-INLINE_FUN double fmin2_int(double x, double y)
-{
-	if (ISNAN(x) || ISNAN(y))
-		return x + y;
-	return (x < y) ? x : y;
-}
-
-INLINE_FUN double fmax2_int(double x, double y)
-{
-	if (ISNAN(x) || ISNAN(y))
-		return x + y;
-	return (x < y) ? y : x;
-}
-
-INLINE_FUN int imin2_int(int x, int y)
-{
-    return (x < y) ? x : y;
-}
-
-INLINE_FUN int imax2_int(int x, int y)
-{
-    return (x < y) ? y : x;
-}
-
-INLINE_FUN double fsign_int(double x, double y)
-{
-    if (ISNAN(x) || ISNAN(y))
-	return x + y;
-    return ((y >= 0) ? fabs(x) : -fabs(x));
-}
-
 
 #endif /* R_INLINES_H_ */

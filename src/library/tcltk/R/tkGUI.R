@@ -1,4 +1,7 @@
 tkStartGUI <- function() {
+    ## Philippe Grosjean: this is added for more explicit error message under Windows
+    if (.Platform$OS.type == "windows")
+    	stop("The tkGUI is not available under Windows")
     tcl("source", file.path(.Library, "tcltk", "exec", "console.tcl"))
     .C("RTcl_ActivateConsole", PACKAGE = "tcltk")
     Menu <- .Tk.newwin(".menu")
@@ -12,22 +15,27 @@ tkStartGUI <- function() {
     helpMenu <- tkmenu(Menu)
     quitMenu <- tkmenu(fileMenu)
 
-    tkadd(Menu,"cascade",label="File",menu=fileMenu)
-    tkadd(Menu,"cascade",label="Demos",menu=demoMenu)
-    tkadd(Menu,"cascade",label="Packages",menu=packageMenu)
-    tkadd(Menu,"cascade",label="Help",menu=helpMenu)
+    tkadd(Menu,"cascade",label=gettext("File"),menu=fileMenu)
+    tkadd(Menu,"cascade",label=gettext("Demos"),menu=demoMenu)
+    tkadd(Menu,"cascade",label=gettext("Packages"),menu=packageMenu)
+    tkadd(Menu,"cascade",label=gettext("Help"),menu=helpMenu)
 
-    tkadd(fileMenu,"command",label="Source R code",
+    tkadd(fileMenu,"command",label=gettext("Source R code"),
 	  command=function(){f <- as.character(tkgetOpenFile())
                              if (length(f)) source(f)})
-    tkadd(fileMenu,"cascade", label="Quit", menu=quitMenu)
+    tkadd(fileMenu,"cascade", label=gettext("Quit"), menu=quitMenu)
 
-    tkadd(quitMenu,"command",label="Save workspace", command=quote(q("yes")))
-    tkadd(quitMenu,"command",label="Don't save workspace", command=quote(q("no")))
+    tkadd(quitMenu,"command",label=gettext("Save workspace"),
+          command=quote(q("yes")))
+    tkadd(quitMenu,"command",label=gettext("Don't save workspace"),
+          command=quote(q("no")))
 
-    tkadd(demoMenu,"command",label="t test", command=quote(demo(tkttest)))
-    tkadd(demoMenu,"command",label="Density", command=quote(demo(tkdensity)))
-    tkadd(demoMenu,"command",label="R FAQ", command=quote(demo(tkfaq)))
+    tkadd(demoMenu,"command",label=gettext("t test"),
+          command=quote(demo(tkttest)))
+    tkadd(demoMenu,"command",label=gettext("Density"),
+          command=quote(demo(tkdensity)))
+    tkadd(demoMenu,"command",label=gettext("R FAQ"),
+          command=quote(demo(tkfaq)))
 
     loadpackageWidget <- function()
     {
@@ -43,7 +51,7 @@ tkStartGUI <- function() {
 	   tkdestroy(tt)
 	}
 	tkpack(box)
-	tkpack(tkbutton(tt,text="Load",command=load))
+	tkpack(tkbutton(tt,text=gettext("Load"),command=load))
     }
 
     CRANpackageWidget <- function()
@@ -61,17 +69,17 @@ tkStartGUI <- function() {
             tkdestroy(tt)
 	}
 	tkpack(box)
-	tkpack(tkbutton(tt,text="Go get them!",command=gogetem))
+	tkpack(tkbutton(tt,text=gettext("Go get them!"),command=gogetem))
     }
 
-    tkadd(packageMenu,"command",label="Load packages",
+    tkadd(packageMenu,"command",label=gettext("Load packages"),
           command=loadpackageWidget)
-    tkadd(packageMenu,"command",label="Install packages from CRAN",
+    tkadd(packageMenu,"command",label=gettext("Install packages from CRAN"),
           command=CRANpackageWidget)
 
 
     local({
-        label <- tklabel(Toolbar,text="Help topic:")
+        label <- tklabel(Toolbar,text=gettext("Help topic:"))
         txtvar <- tclVar()
         entry <- tkentry(Toolbar,textvariable=txtvar)
         showhelp <-  function() {
@@ -97,14 +105,17 @@ tkStartGUI <- function() {
     ), ncol=2, byrow=TRUE)
 
     helpPDFMenu <- tkmenu(helpMenu)
-    tkadd(helpMenu,"cascade", label="Manuals in PDF format", menu=helpPDFMenu)
+    tkadd(helpMenu,"cascade", label=gettext("Manuals in PDF format"),
+          menu=helpPDFMenu)
     pdfBase <- file.path(R.home("doc"), "manual")
     apply(manuals, 1, function(x) {
 	f <- file.path(pdfBase, paste(x[1], ".pdf", sep="") )
-        cmd <- function() system(paste(getOption("pdfviewer"), f, "&"))
+        cmd <- function() system(paste(shQuote(getOption("pdfviewer")),
+                                       shQuote(f)),
+                                 wait = FALSE)
 	tkadd(helpPDFMenu, "command", label=x[2], command=cmd,
               state=if (file.exists(f)) "normal" else "disabled")
     })
-    #tkadd(helpMenu,"command", label="Help on topic...", command=topicHelp)
+    #tkadd(helpMenu,"command", label=gettext("Help on topic..."), command=topicHelp)
     assign(".GUIenv", environment(), envir=.GlobalEnv)
 }

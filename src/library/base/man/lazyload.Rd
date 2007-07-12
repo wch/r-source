@@ -10,9 +10,9 @@ lazyLoad(filebase, envir = parent.frame(), filter)
 \arguments{
   \item{filebase}{The file path to the database, with no extension.}
   \item{envir}{The environment into which objects are loaded.}
-  \item{filter}{An optional function which when called on an object name
-    returns \code{TRUE} or \code{FALSE}: only objects for which this is
-    true will be loaded.}
+  \item{filter}{An optional function which when called on a a character
+    vector of object names returns a logical vector: only objects for
+    which this is true will be loaded.}
 }
 \details{
   This is the workhorse function called by the package loader to load

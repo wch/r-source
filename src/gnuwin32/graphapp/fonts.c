@@ -145,7 +145,7 @@ void init_fonts(void)
 /*
  *  Load a font by name.
  */
-font newfont(char *name, int style, int size)
+font newfont(const char *name, int style, int size)
 {
 	font obj;
 	HFONT hf;

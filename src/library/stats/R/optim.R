@@ -1,7 +1,7 @@
-optim <- function(par, fn, gr = NULL,
+optim <- function(par, fn, gr = NULL, ...,
                   method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
                   lower = -Inf, upper = Inf,
-                  control = list(), hessian = FALSE, ...)
+                  control = list(), hessian = FALSE)
 {
     fn1 <- function(par) fn(par,...)
     gr1 <- if (!is.null(gr)) function(par) gr(par,...)

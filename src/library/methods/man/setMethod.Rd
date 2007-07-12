@@ -139,6 +139,7 @@ removeMethod(f, signature, where)
   matrix(0,0,0)))
 }
 
+require(graphics)
 ## methods for plotting track objects (see the example for \link{setClass})
 ##
 ## First, with only one object as argument:
@@ -270,13 +271,13 @@ Nrow <- 1000 # at one time, values this large triggered a bug in gc/protect
 ## the loop here was a trigger for the bug
 Niter <- 10
 for(i in 1:Niter)  {
-    yy <- matrix(rnorm(10*Nrow), 10, Nrow)
+    yy <- matrix(stats::rnorm(10*Nrow), 10, Nrow)
     tDF <- as.data.frame(yy)
     testFunc(tDF)
 }
 
 
-tMC <- new("trackMultiCurve", x=seq(length=Nrow), y = yy)
+tMC <- new("trackMultiCurve", x=seq_len(Nrow), y = yy)
 ## not enough functions have methods for this class to use testFunc
 
 stopifnot(identical(tMC[1:10, 1:10]@y, yy[1:10, 1:10]))
@@ -394,8 +395,13 @@ removeGeneric("doubleAnything")
 }
 }
 
-\seealso{ \link{Methods}, \code{\link{MethodsList}} for details of the
-  implementation}
+\seealso{
+
+\link{method.skeleton}, which is the recommended way to generate a skeleton of the call to \code{setMethod}, with the correct formal arguments and other details.
+
+\link{Methods}, \code{\link{MethodsList}} for details of the
+  implementation
+}
 
 \keyword{programming}
 \keyword{classes}

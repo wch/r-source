@@ -45,7 +45,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 \value{
   vector of length \code{length(x)} with values in \code{0:N} (and
   \code{NA}) where \code{N <- length(vec)}, or values coerced to
-  \code{1:(N-1)} iff \code{all.inside = TRUE} (equivalently coercing all
+  \code{1:(N-1)} if and only if \code{all.inside = TRUE} (equivalently coercing all
   x values \emph{inside} the intervals).  Note that \code{\link{NA}}s are
   propagated from \code{x}, and \code{\link{Inf}} values are allowed in
   both \code{x} and \code{vec}.
@@ -58,7 +58,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 }
 \examples{
 N <- 100
-X <- sort(round(rt(N, df=2), 2))
+X <- sort(round(stats::rt(N, df=2), 2))
 tt <- c(-100, seq(-2,2, len=201), +100)
 it <- findInterval(tt, X)
 tt[it < 1 | it >= N] # only first and last are outside range(X)

@@ -80,7 +80,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 }
 \examples{
 ## From Venables and Ripley (2002) p.165.
-data(npk, package="MASS")
+utils::data(npk, package="MASS")
 
 ## Set orthogonal contrasts.
 op <- options(contrasts=c("contr.helmert", "contr.poly"))

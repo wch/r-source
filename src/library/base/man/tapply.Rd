@@ -11,7 +11,8 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \arguments{
   \item{X}{an atomic object, typically a vector.}
-  \item{INDEX}{list of factors, each of same length as \code{X}.}
+  \item{INDEX}{list of factors, each of same length as \code{X}.  The
+    elements are coerced to factors by \code{\link{as.factor}}.}
   \item{FUN}{the function to be applied.  In the case of functions like
     \code{+}, \code{\%*\%}, etc., the function name must be quoted.  If
     \code{FUN} is \code{NULL}, tapply returns a vector which can be used
@@ -40,6 +41,10 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   values of the individual calls to \code{FUN}, i.e., the result is a
   list with a \code{\link{dim}} attribute.
 
+  When there is an array answer, its \code{\link{dimnames}} are named by
+  the names of \code{INDEX} and are based on the levels of the grouping
+  factors (possibly after coercion).
+
   Note that optional arguments to \code{FUN} supplied by the
   \code{...} argument are not divided into cells.  It is therefore
   inappropriate for \code{FUN} to expect additional arguments with
@@ -59,7 +64,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \examples{
 require(stats)
-groups <- as.factor(rbinom(32, n = 5, p = .4))
+groups <- as.factor(rbinom(32, n = 5, prob = 0.4))
 tapply(groups, groups, length) #- is almost the same as
 table(groups)
 
@@ -67,7 +72,7 @@ table(groups)
 tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
 tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
 
-n <- 17; fac <- factor(rep(1:3, len = n), levels = 1:5)
+n <- 17; fac <- factor(rep(1:3, length = n), levels = 1:5)
 table(fac)
 tapply(1:n, fac, sum)
 tapply(1:n, fac, sum, simplify = FALSE)

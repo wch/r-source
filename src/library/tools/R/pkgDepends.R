@@ -231,7 +231,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
 
     pkgList <- split(depMtrx, depMtrx[,1])
     out <- lapply(pkgList, function(x, quietly) {
-        pkgMtrx <- matrix(x,nc=3)
+        pkgMtrx <- matrix(x,ncol=3)
         ## there are no version requirements so just return
         ## the pkg name
         if (all(is.na(pkgMtrx[,2])))
@@ -278,7 +278,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
 	pkgMtrx[outRow,]
     }, quietly)
 
-    matrix(unlist(out), nc=3, byrow=TRUE)
+    matrix(unlist(out), ncol=3, byrow=TRUE)
 }
 
 depMtrxToStrings <- function(depMtrx) {

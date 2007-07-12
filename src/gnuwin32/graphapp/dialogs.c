@@ -45,7 +45,7 @@ InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
 
 /* browse for a folder under the Desktop, return the path in the argument */
 
-static void selectfolder(char *folder, char *title)
+static void selectfolder(char *folder, const char *title)
 {
     char buf[MAX_PATH];
     LPMALLOC g_pMalloc;
@@ -76,7 +76,7 @@ static void selectfolder(char *folder, char *title)
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];
 
-static char *filter[] = {
+static const char *filter[] = {
 	"All Files (*.*)",	"*.*",
 	"Text Files (*.TXT)",	"*.txt",
 	"HTML Files (*.HTM)",	"*.htm",
@@ -88,14 +88,14 @@ static char *filter[] = {
 
 unsigned int TopmostDialogs = 0; /* May be MB_TOPMOST */
 
-static char *userfilter;
-void setuserfilter(char *uf) {
+static const char *userfilter;
+void setuserfilter(const char *uf) {
    userfilter=uf;
 }
 
 static HWND hModelessDlg = NULL;
 
-int myMessageBox(HWND h, char *text, char *caption, UINT type)
+int myMessageBox(HWND h, const char *text, const char *caption, UINT type)
 {
     if(is_NT && (localeCP != GetACP())) {
 	wchar_t wc[1000], wcaption[100];
@@ -109,7 +109,7 @@ int myMessageBox(HWND h, char *text, char *caption, UINT type)
 /*
  *  Error reporting dialog.
  */
-void apperror(char *errstr)
+void apperror(const char *errstr)
 {
 	if (! errstr)
 		errstr = "Unspecified error";
@@ -118,7 +118,7 @@ void apperror(char *errstr)
 	exitapp();
 }
 
-void askok(char *info)
+void askok(const char *info)
 {
 	if (! info)
 		info = "";
@@ -126,7 +126,7 @@ void askok(char *info)
 		MB_TASKMODAL | MB_ICONINFORMATION | MB_OK | TopmostDialogs);
 }
 
-int askokcancel(char *question)
+int askokcancel(const char *question)
 {
 	int result;
 
@@ -143,7 +143,7 @@ int askokcancel(char *question)
 	return result;
 }
 
-int askyesno(char *question)
+int askyesno(const char *question)
 {
 	int result;
 
@@ -160,7 +160,7 @@ int askyesno(char *question)
 	return result;
 }
 
-int askyesnocancel(char *question)
+int askyesnocancel(const char *question)
 {
 	int result;
 
@@ -197,24 +197,24 @@ void askchangedir()
     GetCurrentDirectory(MAX_PATH, cod);
 }
 
-char *askfilename(char *title, char *default_name)
+char *askfilename(const char *title, const char *default_name)
 {
 	if (*askfilenames(title, default_name, 0, userfilter?userfilter:filter[0], 0,
 				          strbuf, BUFSIZE, NULL)) return strbuf;
 	else return NULL;
 }
 
-char *askfilenamewithdir(char *title, char *default_name, char *dir)
+char *askfilenamewithdir(const char *title, const char *default_name, const char *dir)
 {
 	if (*askfilenames(title, default_name, 0, userfilter?userfilter:filter[0], 0,
 				          strbuf, BUFSIZE, dir)) return strbuf;
 	else return NULL;
 }
 
-char *askfilenames(char *title, char *default_name, int multi,
-		   char *filters, int filterindex,
+char *askfilenames(const char *title, const char *default_name, int multi,
+		   const char *filters, int filterindex,
 		   char *strbuf, int bufsize,
-		   char *dir)
+		   const char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
@@ -264,27 +264,31 @@ char *askfilenames(char *title, char *default_name, int multi,
 	}
 }
 
-int countFilenames(char *list)
+int countFilenames(const char *list)
 {
-	char *temp;
+	const char *temp;
 	int count;
 	count = 0;
 	for (temp = list; *temp; temp += strlen(temp)+1) count++;
 	return count;
 }
 
-char *askfilesave(char *title, char *default_name)
+char *askfilesave(const char *title, const char *default_name)
 {
     return askfilesavewithdir(title, default_name, NULL);
 }
 
-char *askfilesavewithdir(char *title, char *default_name, char *dir)
+char *askfilesavewithdir(const char *title, const char *default_name, const char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char *p, cwd[MAX_PATH];
+        char *p, cwd[MAX_PATH], *defext = NULL;
 
 	if (!default_name) default_name = "";
+	else if(default_name[0] == '|') {
+	    defext = (char *)default_name + 2;
+	    default_name = "";
+	}
 	strcpy(strbuf, default_name);
 
 	ofn.lStructSize     = sizeof(OPENFILENAME);
@@ -313,7 +317,7 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
                               OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.nFileOffset     = 0;
 	ofn.nFileExtension  = 0;
-	ofn.lpstrDefExt     = NULL /* "*" */;
+	ofn.lpstrDefExt     = defext;
 	ofn.lCustData       = 0L;
 	ofn.lpfnHook        = NULL;
 	ofn.lpTemplateName  = NULL;
@@ -352,9 +356,9 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 	static char * CANCEL_STRING	= "Cancel";
 	static char * BROWSE_STRING	= "Browse"; */
 
-	static char * QUESTION_TITLE	= "Question";
-	static char * PASSWORD_TITLE	= "Password Entry";
-	static char * FINDDIR_TITLE	= "Choose directory";
+	static const char * QUESTION_TITLE	= "Question";
+	static const char * PASSWORD_TITLE	= "Password Entry";
+	static const char * FINDDIR_TITLE	= "Choose directory";
 
 static void add_data(window w)
 {
@@ -464,8 +468,8 @@ static int handle_message_dialog(window w)
 	return d->hit;
 }
 
-static window init_askstr_dialog(char *title, char *question,
-				 char *default_str)
+static window init_askstr_dialog(const char *title, const char *question,
+				 const char *default_str)
 {
 	window win;
 	dialog_data *d;
@@ -515,7 +519,7 @@ static window init_askstr_dialog(char *title, char *question,
 	return win;
 }
 
-char *askstring(char *question, char *default_str)
+char *askstring(const char *question, const char *default_str)
 {
 	static window win = NULL;
 	window prev = current_window;
@@ -534,7 +538,7 @@ char *askstring(char *question, char *default_str)
 	return get_dialog_string(win);
 }
 
-char *askcdstring(char *question, char *default_str)
+char *askcdstring(const char *question, const char *default_str)
 {
 	static window win = NULL;
 	window prev = current_window;
@@ -553,7 +557,7 @@ char *askcdstring(char *question, char *default_str)
 	return get_dialog_string(win);
 }
 
-char *askpassword(char *question, char *default_str)
+char *askpassword(const char *question, const char *default_str)
 {
 	static window win = NULL;
 	window prev = current_window;
@@ -572,7 +576,7 @@ char *askpassword(char *question, char *default_str)
 	return get_dialog_string(win);
 }
 
-char *askUserPass(char *title)
+char *askUserPass(const char *title)
 {
     static window win = NULL;
     dialog_data *d;
@@ -680,7 +684,8 @@ void replacedialog(textbox t){
 
 /* Find and select a string in a rich edit control */
 
-int richeditfind(HWND hwnd, char *what, int matchcase, int wholeword, int down)
+static int richeditfind(HWND hwnd, char *what, int matchcase,
+			int wholeword, int down)
 {
     long start, end;
     CHARRANGE sel;
@@ -712,7 +717,8 @@ int richeditfind(HWND hwnd, char *what, int matchcase, int wholeword, int down)
     return 1;
 }
 
-int richeditreplace(HWND hwnd, char *what, char *replacewith, int matchcase, int wholeword, int down)
+static int richeditreplace(HWND hwnd, char *what, char *replacewith,
+			   int matchcase, int wholeword, int down)
 {
     /* If current selection is the find string, replace it and find next */
     long start, end;

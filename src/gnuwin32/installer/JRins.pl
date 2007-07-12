@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-5 R Development Core Team
+# Copyright (C) 2001-7 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,8 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
 # General Public License for more details.
 #
-# A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# A copy of the GNU General Public License can be obtained by
 # writing to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301  USA.
 
@@ -23,7 +22,7 @@ use File::Find;
 
 my $fn, $component, $path;
 my $startdir=cwd();
-my $RVER, $RVER0;
+my $RVER, $RVER0, $SVN;
 my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
 my $MDISDI=$ARGV[2];
@@ -41,11 +40,18 @@ $RVER =~ s/\n.*$//;
 $RVER =~ s/Under .*$/Pre-release/;
 $RVER0 = $RVER;
 $RVER0 =~ s/ .*$//;
+## now add SVN revision
+open ver, "< ../../../SVN-REVISION";
+$SVN = <ver>;
+close ver;
+$SVN =~s/Revision: //;
+$RVER0 .= "." . $SVN;
 
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
 [Setup]
 OutputBaseFilename=${RW}-win32
+PrivilegesRequired=none
 END
 
 my $lines=<<END;
@@ -107,7 +113,7 @@ Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
-Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
+Name: "{commondesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 
 
@@ -151,14 +157,18 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
 Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
-Name: "html"; Description: "HTML Help Files"; Types: user full custom
-Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
+Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
+Name: "html/help"; Description: "HTML versions of Help Files"; Types: user full custom; Flags: dontinheritcheck
+Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: user full custom
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
-Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
 Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
-Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
 [Code]
@@ -336,7 +346,8 @@ my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"bin\\Rd2txt" => 1,
 		"bin\\Rdconv" => 1,
 		"bin\\Rdiff.sh" => 1,
-		"bin\\Sd2Rd" => 1);
+		"bin\\Sd2Rd" => 1,
+		"etc\\Makeconf" => 1);
 		
 $path="${SRCDIR}";chdir($path);
 find(\&listFiles, ".");
@@ -363,20 +374,33 @@ sub listFiles {
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
-	} elsif (m/^doc\\html/
-		 || m/^doc\\manual\\[^\\]*\.html/
-		 || m/^library\\[^\\]*\\html/
+	} elsif (m/^library\\[^\\]*\\html/
 		 || m/^library\\[^\\]*\\CONTENTS/
 		 || $_ eq "library\\R.css") {
+	    $component = "html/help";
+	} elsif (m/^doc\\html/
+		 || m/^doc\\manual\\[^\\]*\.html/ ) {
 	    $component = "html";
+	} elsif ($_ eq "doc\\manual\\R-data.pdf"
+		 || $_ eq "doc\\manual\\R-intro.pdf") {
+	    $component = "manuals/basic";
+	} elsif ($_ eq "doc\\manual\\R-admin.pdf" 
+		 || $_ eq "doc\\manual\\R-exts.pdf"
+		 || $_ eq "doc\\manual\\R-ints.pdf"
+		 || $_ eq "doc\\manual\\R-lang.pdf") {
+	    $component = "manuals/technical";
 	} elsif ($_ eq "doc\\manual\\refman.pdf") {
-	    $component = "refman";
+	    $component = "manuals/refman";
 	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
 	    $component = "manuals";
 	} elsif (m/^library\\[^\\]*\\latex/) {
 	    	$component = "latex";
 	} elsif (m/^library\\[^\\]*\\man/) {
 	    	$component = "Rd";
+#	} elsif (m/^Tcl\\doc/) {
+#	    $component = "tcl/docs";
+	} elsif (m/^Tcl\\doc\\.*chm$/) {
+	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	} elsif (exists($develfiles{$_})

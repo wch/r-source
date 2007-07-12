@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:50\n"
-"PO-Revision-Date: 2006-12-05 21:08+0100\n"
+"POT-Creation-Date: 2007-06-12 18:53\n"
+"PO-Revision-Date: 2007-04-13 12:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,26 +16,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#, fuzzy
-msgid "no documentation for '%s' found in package '%s'"
-msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
-
-#, fuzzy
-msgid "document not found"
-msgstr "objet '%s' introuvable"
-
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr "'format' doit être \"normal\" ou \"short\". \"normal\" est utilisé"
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "valeur de 'sortby' incorrect. sortby=\"score\" est utilisé"
-
 msgid ""
-"wrong restriction specified.\n"
-"Using '%s'"
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
 msgstr ""
-"restriction incorrecte.\n"
-"'%s' est utilisé"
+"RShowDoc() doit être utilisé avec un argument de type chaîne de caractères "
+"spécifiant\n"
+"  un fichier de documentation"
+
+msgid "no documentation for '%s' found in package '%s'"
+msgstr "pas de documentation pour '%s' dans le package '%s'"
+
+msgid "document not found"
+msgstr "document introuvable"
 
 msgid "A search query has been submitted to"
 msgstr "Une requête de recherche a été soumise à"
@@ -218,6 +211,9 @@ msgstr "argument 'data' incorrect"
 msgid "invalid 'modes' argument"
 msgstr "argument 'modes' incorrect"
 
+msgid "invalid 'x' argument"
+msgstr "argument 'x' incorrect"
+
 msgid "can only handle vector and factor elements"
 msgstr "seuls les vecteurs et les facteurs peuvent être traîtés"
 
@@ -243,21 +239,24 @@ msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
 msgid "'%s' has a help file but no examples file"
 msgstr "'%s' a un fichier d'aide mais pas de fichier d'exemples"
 
-#, fuzzy
 msgid "test '%s' is not available"
-msgstr "la dépendance '%s' n'est pas disponible"
+msgstr "le test '%s' n'est pas disponible"
 
 msgid "'fix' requires a name"
 msgstr "'fix' necessite un nom"
 
 msgid "too many list items (at most up to number 26)"
-msgstr ""
+msgstr "trop d'entrées de lists (26 maximum)"
 
 msgid "too many list items (at most up to number 3899)"
-msgstr ""
+msgstr "trop d'entrées de liste (3899 maximum)"
 
 msgid "'form' must be a two-sided formula"
-msgstr ""
+msgstr "'form' doit être une formule à deux membres"
+
+#, fuzzy
+msgid "'form' must be a two-sided formula with one term on each side"
+msgstr "'form' doit être une formule à deux membres"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -341,16 +340,34 @@ msgstr "je ne sais pas quoi rechercher"
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
 
+msgid "Rebuilding the data base ..."
+msgstr "Reconstruction de la base de données..."
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr "Packages {.readRDS() séquentiellement} :"
+
 msgid "could not find package '%s'"
 msgstr "impossible de trouver le packages '%s'"
 
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr "le package '%s' a des données hsearch vides - étrangement"
+
 msgid "no hsearch.rds meta data for package"
 msgstr "pas de métadonnées hsearch.rds pour le package"
+
+msgid "reencoding ..."
+msgstr "réencodage ..."
+
+msgid "done"
+msgstr "Terminé."
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
 "suppression de toutes les entrées ayant des données de type caractère multi-"
 "octets incorrectes"
+
+msgid "saving the database ..."
+msgstr "Sauvegarde de la base de données ..."
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
@@ -360,6 +377,9 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "spécification 'agrep' incorrecte"
+
+msgid "matched %d objects."
+msgstr "%d objets correspondent"
 
 msgid "no package '%s' was found"
 msgstr "le package '%s' est introuvable"
@@ -519,6 +539,28 @@ msgstr "les packages %s sont mutuellement dépendants"
 msgid "no packages were specified"
 msgstr "aucun package spécifié"
 
+msgid "argument 'lib' is missing: using '%s'"
+msgstr "l'argument 'lib' manque : '%s' est utilisé"
+
+#, fuzzy
+msgid "'lib = \"%s\"' is not writable"
+msgstr "'lib' ne peut être ouvert en écriture"
+
+msgid ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+msgstr ""
+"Voulez-vous créer une bibliothèque personnelle\n"
+"'%s'\n"
+"pour y installer les packages ?"
+
+msgid "unable to install packages"
+msgstr "impossible d'installer les packages"
+
+msgid "unable to create"
+msgstr "impossible de créer"
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
@@ -540,7 +582,7 @@ msgstr ""
 msgid "installation of package '%s' had non-zero exit status"
 msgstr "l'installation du package '%s' a eu un statut de sortie non nul"
 
-msgid "Unable to create temporary directory '%s'"
+msgid "unable to create temporary directory '%s'"
 msgstr "impossible de créer le répertoire temporaire '%s'"
 
 msgid ""
@@ -682,6 +724,15 @@ msgstr "'as.is' de longueur incorrecte %d != cols = %d"
 msgid "invalid 'row.names' specification"
 msgstr "spécification de 'row.names' incorrecte"
 
+msgid "invalid 'row.names' length"
+msgstr "longueur de 'row.names' incorrecte"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "la duplication de 'row.names' est interdite"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "valeurs manquantes dans 'row.names' non autorisées"
+
 msgid "missing lengths for some fields"
 msgstr "longueur manquante pour certains champs"
 
@@ -704,17 +755,27 @@ msgid "option must be a length one character vector or NULL"
 msgstr "'option' doit être une chaîne de caractères ou NULL"
 
 msgid "empty beginning of file"
+msgstr "début de fichier vide"
+
+msgid "first five rows are empty: giving up"
+msgstr "les premières cinq lignes sont vides : abandon"
+
+msgid "relist() requires recursively unlisted objects."
 msgstr ""
 
-#, fuzzy
-msgid "first five rows are empty: giving up"
-msgstr "les lignes sont vides : abandon"
+msgid "The flesh argument does not contain a skeleton attribute."
+msgstr ""
+
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
 
 msgid "cannot coerce 'x' to roman"
-msgstr ""
+msgstr "impossible de convertir 'x' en roman"
 
 msgid "Invalid roman numeral(s): %s"
-msgstr ""
+msgstr "Nombre(s) roman(s) incorrect(s) : %s"
 
 msgid "invalid 'socket' argument"
 msgstr "argument 'socket' incorrect"
@@ -772,27 +833,28 @@ msgid "Invalid input, please try again"
 msgstr "entrée incorrecte, essayez a nouveau SVP"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
+msgstr "'quote' doit être 'TRUE', 'FALSE' ou une valeur numérique"
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "nombres incorrects dans 'quote'"
 
-#, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "spécification de 'row.names' incorrecte"
+msgstr "spécification de 'quote' incorrecte"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
+msgstr "col.names = NA n'a pas de sens quand row.names = FALSE"
 
-#, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "spécification de 'row.names' incorrecte"
+msgstr "spécification de 'col.names' incorrecte"
 
 msgid "appending column names to file"
-msgstr ""
+msgstr "ajout du nom des colonnes dans le fichier"
 
 msgid "attempt to change '%s' ignored"
-msgstr ""
+msgstr "une tentative de modification de '%s' a échoué"
+
+msgid "'unzip' must be a single character string"
+msgstr "'unzip' doit être une seule chaîne de caractères"
 
 msgid "'subject' missing"
 msgstr "'subject' manquant"
@@ -830,13 +892,11 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr "Sinon, soyez patient..."
 
-#, fuzzy
 msgid "'url' must be a non-empty character string"
-msgstr "url doit être une chaîne de caractères non vide"
+msgstr "'url' doit être une chaîne de caractères non vide"
 
-#, fuzzy
 msgid "'browser' must be a non-empty character string"
-msgstr "browser doit être une chaîne de caractères non vide"
+msgstr "'browser' doit être une chaîne de caractères non vide"
 
 msgid "cannot create HTML package index"
 msgstr "impossible de créer l'index HTML des packages"
@@ -861,9 +921,6 @@ msgstr "correction des URL dans les librairies non standard"
 
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "Si rien ne se passe, vous devrez ouvrir '%s' vous-même"
-
-msgid "unable to create temporary directory '%s'"
-msgstr "impossible de créer le répertoire temporaire '%s'"
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr ""
@@ -893,12 +950,6 @@ msgstr "fichier zip '%s' introuvable"
 msgid "updating HTML package descriptions"
 msgstr "mise à jour des descriptions HTML des packages"
 
-msgid "cannot update HTML package index"
-msgstr "impossible de mettre à jour l'index HTML des packages"
-
-msgid "cannot update HTML search index"
-msgstr "impossible de mettre à jour l'index HTML de recherche"
-
 msgid "cannot update '%s'"
 msgstr "impossible de mettre à jour '%s'"
 
@@ -916,21 +967,60 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "objet '%s' introuvable"
 msgstr[1] "objets '%s' introuvables"
 
-msgid "dependency '%s' is not available"
-msgid_plural "dependencies '%s' are not available"
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] ""
+"l'élément '%s' de 'lib' n'est pas un répertoire ouvrable en écriture"
+msgstr[1] ""
+"les éléments '%s' de 'lib' ne sont pas des répertoires ouvrables en écriture"
+
+msgid "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0] "le package '%s' n'est pas disponible"
+msgstr[1] "les packages '%s' ne sont pas disponibles"
+
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
 msgstr[0] "la dépendance '%s' n'est pas disponible"
 msgstr[1] "les dépendances '%s' ne sont pas disponibles"
 
-msgid "also installing the dependency "
-msgid_plural "also installing the dependencies "
-msgstr[0] "installation de la dépendance "
-msgstr[1] "installation des dépendances "
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] "installation de la dépendance %s"
+msgstr[1] "installation des dépendances %s"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "cannot update HTML package index"
+#~ msgstr "impossible de mettre à jour l'index HTML des packages"
+
+#~ msgid "cannot update HTML search index"
+#~ msgstr "impossible de mettre à jour l'index HTML de recherche"
+
+#~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+#~ msgstr "'format' doit être \"normal\" ou \"short\". \"normal\" est utilisé"
+
+#~ msgid "wrong 'sortby' specified. Using sortby=\"score\""
+#~ msgstr "valeur de 'sortby' incorrect. sortby=\"score\" est utilisé"
+
+#~ msgid ""
+#~ "wrong restriction specified.\n"
+#~ "Using '%s'"
+#~ msgstr ""
+#~ "restriction incorrecte.\n"
+#~ "'%s' est utilisé"
+
+#~ msgid "Unable to create temporary directory '%s'"
+#~ msgstr "impossible de créer le répertoire temporaire '%s'"
+
+#~ msgid "dependency '%s' is not available"
+#~ msgid_plural "dependencies '%s' are not available"
+#~ msgstr[0] "la dépendance '%s' n'est pas disponible"
+#~ msgstr[1] "les dépendances '%s' ne sont pas disponibles"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "Eventuellement d'autres mots clefs de doc/KEYWORDS, un par line"

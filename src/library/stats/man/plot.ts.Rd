@@ -59,11 +59,13 @@
   functionality.
 }
 \examples{
+require(graphics)
+
 ## Multivariate
 z <- ts(matrix(rt(200 * 8, df = 3), 200, 8), start=c(1961, 1), frequency=12)
 plot(z, yax.flip = TRUE)
-plot(z, axes= FALSE, ann= FALSE, frame.plot= TRUE,
-      mar.mult= c(0,0,0,0), oma.mult= c(1,1,5,1))
+plot(z, axes = FALSE, ann = FALSE, frame.plot = TRUE,
+     mar.multi = c(0,0,0,0), oma.multi = c(1,1,5,1))
 title("plot(ts(..), axes=FALSE, ann=FALSE, frame.plot=TRUE, mar..., oma...)")
 
 z <- window(z[,1:3], end = c(1969,12))

@@ -13,6 +13,9 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
+## principle is that we can run all the examples in a package
+## starting with just that package and 'datasets'
+## R = R_DEFAULT_PACKAGES=datasets $(top_builddir)/bin/R --vanilla
 R = $(top_builddir)/bin/R --vanilla
 
 EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
@@ -79,8 +82,8 @@ graphics-Ex.Rout: graphics-Ex.R
 	@if test -f $@; then mv $@ $@.prev; fi
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@echo 'tools:::.convert_examples("graphics-Ex.R", "graphics-Ex.R-locale", "latin1")' | $(R) --slave > /dev/null 2>&1 || exit 1
-	@sed -e 's/grDevices::postscript("graphics-Ex.ps")/grDevices::postscript("graphics-Ex.ps",encoding="ISOlatin1")/' graphics-Ex.R-locale \
-	  | $(R) < graphics-Ex.R-locale  > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@sed -e 's/grDevices::postscript("graphics-Ex.ps")/grDevices::postscript("graphics-Ex.ps",encoding="ISOLatin1")/' graphics-Ex.R-locale \
+	  | $(R) > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@rm graphics-Ex.R-locale
 	@echo "$(ECHO_T) OK"
 	@if test -f $@.prev; then \

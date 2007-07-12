@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006	The R Development Core Team
+ *  Copyright (C) 1998-2007	The R Development Core Team
  *
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
@@ -618,15 +618,15 @@ typedef struct {
 
 /* Determine a match between symbol name and string. */
 
-static int NameMatch(SEXP expr, char *aString)
+static int NameMatch(SEXP expr, const char *aString)
 {
     if (!isSymbol(expr)) return 0;
     return !strcmp(CHAR(PRINTNAME(expr)), aString);
 }
 
-static int StringMatch(SEXP expr, char *aString)
+static int StringMatch(SEXP expr, const char *aString)
 {
-    return !strcmp(CHAR(STRING_ELT(expr, 0)), aString);
+    return !strcmp(translateChar(STRING_ELT(expr, 0)), aString);
 }
 /* Code to determine the ascii code corresponding */
 /* to an element of a mathematical expression. */
@@ -1031,10 +1031,11 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
 /* This code inserts italic corrections after */
 /* every character. */
 
-static BBOX RenderSymbolStr(char *str, int draw, mathContext *mc,
+static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 			    R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    char chr[7] = "", *s = str;
+    char chr[7] = "";
+    const char *s = str;
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
     double lastItalicCorr = 0;
@@ -1150,7 +1151,7 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 }
 
 /* This gets called on strings and PRINTNAMES */
-static BBOX RenderStr(char *str, int draw, mathContext *mc,
+static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 		      R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX glyphBBox;
@@ -1159,7 +1160,7 @@ static BBOX RenderStr(char *str, int draw, mathContext *mc,
 #ifdef SUPPORT_MBCS
 	int n = strlen(str), used;
 	wchar_t wc;
-	char *p = str;
+	const char *p = str;
 	mbstate_t mb_st;
 	mbs_init(&mb_st);
 	while ((used = Mbrtowc(&wc, p, n, &mb_st)) > 0) {
@@ -1168,7 +1169,7 @@ static BBOX RenderStr(char *str, int draw, mathContext *mc,
 	    p += used; n -= used;
 	}
 #else
-	char *s = str;
+	const char *s = str;
 	while (*s) {
 	    glyphBBox = GlyphBBox(*s, gc, dd);
 	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
@@ -1231,7 +1232,7 @@ static BBOX RenderNumber(SEXP expr, int draw, mathContext *mc,
 static BBOX RenderString(SEXP expr, int draw, mathContext *mc,
 			 R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderStr(CHAR(STRING_ELT(expr, 0)), draw, mc, gc, dd);
+    return RenderStr(translateChar(STRING_ELT(expr, 0)), draw, mc, gc, dd);
 }
 
 /* Code for Ellipsis (ldots, cdots, ...) */

@@ -1,7 +1,13 @@
 ###-*- R -*- Unix Specific ----
 
 .Library <- file.path(R.home(), "library")
-invisible(.libPaths(unlist(strsplit(Sys.getenv("R_LIBS"), ":"))))
+.Library.site <- Sys.getenv("R_LIBS_SITE")
+.Library.site <- if(!nchar(.Library.site)) file.path(R.home(), "site-library") else unlist(strsplit(.Library.site, ":"))
+.Library.site <- .Library.site[file.exists(.Library.site)]
+
+invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")),
+                      unlist(strsplit(Sys.getenv("R_LIBS_USER"), ":")
+                      ))))
 
 local({
 ## we distinguish between R_PAPERSIZE as set by the user and by configure
@@ -26,8 +32,8 @@ if(.Platform$GUI == "AQUA") {
     ## this is set to let RAqua use both X11 device and
     ## X11/TclTk
     if (Sys.getenv("DISPLAY") == "")
-	Sys.putenv("DISPLAY" = ":0")
+	Sys.setenv("DISPLAY" = ":0")
 
     ## this is to allow g77 compiler to work
-    Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
+    Sys.setenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
 }## end "Aqua"

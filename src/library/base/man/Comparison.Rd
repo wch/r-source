@@ -19,8 +19,8 @@ x == y
 x != y
 }
 \arguments{
-  \item{x, y}{atomic vectors, or other objects for which methods have
-    been written.}
+  \item{x, y}{atomic vectors, symbols, calls, or other objects for which
+    methods have been written.}
 }
 \details{
   The binary comparison operators are generic functions: methods can be
@@ -54,6 +54,9 @@ x != y
   involving them will always result in \code{NA}.  Missing values can
   also result when character strings are compared and one is not valid
   in the current collation locale. 
+
+  Language objects such as symbols and calls are deparsed to
+  character strings before comparison.
 }
 \value{
   A vector of logicals indicating the result of the element by element
@@ -75,6 +78,12 @@ x != y
   error. Using \code{\link{all.equal}} with \code{identical} is almost
   always preferable.  See the examples.
 }
+\section{S4 methods}{
+  These operators are members of the S4 \code{\link{Compare}} group generic,
+  and so methods can be written for them individually as well as for the
+  group generic (or the \code{Ops} group generic), with arguments
+  \code{c(e1, e2)}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -86,7 +95,7 @@ x != y
   \code{\link{Syntax}} for operator precedence.
 }
 \examples{
-x <- rnorm(20)
+x <- stats::rnorm(20)
 x < 1
 x[x > 0]
 

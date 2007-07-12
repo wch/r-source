@@ -22,7 +22,7 @@ as.POSIXlt <- function(x, tz = "")
 	   !is.na(strptime(xx, f <- "%Y/%m/%d")))
         {
 	    res <- strptime(x, f)
-            if(nchar(tz)) attr(res, "tzone") <- tz
+            if(nzchar(tz)) attr(res, "tzone") <- tz
             return(res)
         }
 	stop("character string is not in a standard unambiguous format")
@@ -90,7 +90,7 @@ as.POSIXct.default <- function(x, tz = "")
                   deparse(substitute(x))))
 }
 
-as.numeric.POSIXlt <- function(x) as.POSIXct(x)
+as.double.POSIXlt <- function(x, ...) as.POSIXct(x)
 
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
@@ -312,9 +312,9 @@ ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 ISOdate <- function(year, month, day, hour=12, min=0, sec=0, tz="GMT")
     ISOdatetime(year, month, day, hour, min, sec, tz)
 
-as.matrix.POSIXlt <- function(x)
+as.matrix.POSIXlt <- function(x, ...)
 {
-    as.matrix(as.data.frame(unclass(x)))
+    as.matrix(as.data.frame(unclass(x)), ...)
 }
 
 mean.POSIXct <- function (x, ...)
@@ -355,22 +355,59 @@ difftime <-
 
 ## "difftime" constructor
 ## Martin Maechler, Date: 16 Sep 2002
-as.difftime <- function(tim, format="%X")
+## Numeric input version Peter Dalgaard, December 2006
+as.difftime <- function(tim, format="%X", units="auto")
 {
-    difftime(strptime(tim, format=format),
-             strptime("0:0:0", format="%X"))
+    if (inherits(tim, "difftime")) return(tim)
+    if (is.character(tim)){
+        difftime(strptime(tim, format=format),
+             strptime("0:0:0", format="%X"), units=units)
+    } else {
+        if (!is.numeric(tim)) stop("'tim' is not character or numeric")
+	if (units=="auto") stop("need explicit units for numeric conversion")
+        if (!(units %in% c("secs", "mins", "hours", "days", "weeks")))
+	    stop("invalid units specified")
+        structure(tim, units=units, class="difftime")
+    }
 }
+
+### For now, these have only difftime methods, but you never know...
+units <- function(x) UseMethod("units")
+
+"units<-" <- function(x, value) UseMethod("units<-")
+
+units.difftime <- function(x) attr(x, "units")
+
+"units<-.difftime" <- function(x, value)
+{
+    from <- units(x)
+    if (from == value) return(x)
+    if (!(value %in% c("secs", "mins", "hours", "days", "weeks")))
+        stop("invalid units specified")
+    sc <- cumprod(c(secs=1, mins=60, hours=60, days=24, weeks=7))
+    newx <- as.vector(x)*sc[from]/sc[value]
+    structure(newx, units=value, class="difftime")
+}
+
+as.double.difftime <- function(x, units="auto", ...) {
+    if (units != "auto")
+        units(x) <- units
+    as.double(as.vector(x))
+}
+
+as.data.frame.difftime <- as.data.frame.vector
+
+format.difftime <- function(x,...) paste(format(unclass(x),...), units(x))
+
+
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
-    if(is.array(x)) {
+    if(is.array(x) || length(x) > 1) {
         cat("Time differences in ", attr(x, "units"), "\n", sep="")
         y <- unclass(x); attr(y, "units") <- NULL
         print(y)
-    } else if(length(x) > 1)
-        cat("Time differences of ",
-            paste(format(unclass(x), digits=digits), collapse = ", "), " ",
-            attr(x, "units"), "\n", sep="")
+    }
     else
         cat("Time difference of ", format(unclass(x), digits=digits), " ",
             attr(x, "units"), "\n", sep="")
@@ -562,7 +599,7 @@ seq.POSIXt <-
         r1 <- as.POSIXlt(from)
         if(valid == 7) {
             if(missing(to)) { # years
-                yr <- seq.int(r1$year, by = by, length = length.out)
+                yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 yr <- seq.int(r1$year, to$year, by)
@@ -572,7 +609,7 @@ seq.POSIXt <-
             res <- as.POSIXct(r1)
         } else if(valid == 6) { # months
             if(missing(to)) {
-                mon <- seq.int(r1$mon, by = by, length = length.out)
+                mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
@@ -586,7 +623,7 @@ seq.POSIXt <-
                 length.out <- 2 + floor((unclass(as.POSIXct(to)) -
                                          unclass(as.POSIXct(from)))/86400)
             }
-            r1$mday <- seq.int(r1$mday, by = by, length = length.out)
+            r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
             r1$isdst <- -1
             res <- as.POSIXct(r1)
             ## now correct if necessary.
@@ -628,7 +665,7 @@ cut.POSIXt <-
 	    incr <- 7*86400
 	}
 	if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
-	if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
+	if(valid == 7) { start$mon <- 0; start$mday <- 1; incr <- 366*86400 }
         if(valid == 8) incr <- 25*3600
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
 	maxx <- max(x, na.rm = TRUE)
@@ -669,7 +706,7 @@ quarters.POSIXt <- function(x, ...)
     paste("Q", x+1, sep = "")
 }
 
-trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
+trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"), ...)
 {
     units <- match.arg(units)
     x <- as.POSIXlt(x)
@@ -769,3 +806,8 @@ unique.POSIXlt <- function(x, incomparables = FALSE, ...)
 
 sort.POSIXlt <- function(x, decreasing = FALSE, na.last = NA, ...)
     x[order(as.POSIXct(x), na.last = na.last, decreasing = decreasing)]
+
+
+# ---- additions in 2.6.0 -----
+
+is.numeric.POSIXt <- function(x) FALSE

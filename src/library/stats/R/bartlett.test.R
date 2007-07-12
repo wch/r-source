@@ -43,7 +43,7 @@ function(x, g, ...)
     STATISTIC <- ((n.total * log(v.total) - sum(n * log(v))) /
                   (1 + (sum(1 / n) - 1 / n.total) / (3 * (k - 1))))
     PARAMETER <- k - 1
-    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
     names(STATISTIC) <- "Bartlett's K-squared"
     names(PARAMETER) <- "df"
 

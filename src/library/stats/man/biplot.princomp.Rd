@@ -61,6 +61,7 @@ Biplot for Principal Components
     \code{\link{princomp}}.
 }
 \examples{
+require(graphics)
 biplot(princomp(USArrests))
 }
 \keyword{multivariate}

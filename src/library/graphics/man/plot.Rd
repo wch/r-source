@@ -60,6 +60,7 @@ plot(x, y, \dots)
   methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
 }
 \examples{
+require(stats)
 plot(cars)
 lines(lowess(cars))
 

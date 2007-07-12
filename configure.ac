@@ -49,6 +49,8 @@ AC_SUBST(PACKAGE)
 VERSION=[${PACKAGE_VERSION}]
 AC_DEFINE_UNQUOTED(VERSION, "${VERSION}", [Version number of package])
 AC_SUBST(VERSION)
+MAJ_MIN_VERSION=`echo ${VERSION} | sed 's/\.[[0-9]]$//'`
+AC_SUBST(MAJ_MIN_VERSION)
 
 ## Autoheader initialization.
 AH_TOP([#ifndef R_CONFIG_H
@@ -117,7 +119,7 @@ libnn=lib
 case "${host_os}" in
   linux*)
     case "${host_cpu}" in
-      x86_64|mips64|ppc64|sparc64|s390x)
+      x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
         libnn=lib64
       ;;
     esac
@@ -188,7 +190,7 @@ fi],
 ## Allow the user to specify support for memory profiling.
 AC_ARG_ENABLE([memory-profiling],
 [AC_HELP_STRING([--enable-memory-profiling],
-                [attempt to compile support for Rmemprof(), tracemem() @<:@yes@:>@])],
+                [attempt to compile support for Rmemprof(), tracemem() @<:@no@:>@])],
 [if test "${enableval}" = no; then
   want_memory_profiling=no
 elif test "${enableval}" = yes; then
@@ -294,7 +296,7 @@ AC_ARG_ENABLE([mbcs],
 ## BLAS.
 AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
-                [use BLAS library, or specify it @<:@no@:>@])],
+                [use system BLAS library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
 # default is "no" except on MacOS X
@@ -302,15 +304,14 @@ AC_ARG_WITH([blas],
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AC_HELP_STRING([--with-lapack],
-                [use LAPACK library, or specify it @<:@no@:>@])],
+                [use system LAPACK library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
 # default is "no" except on MacOS X
 
 ## Readline.
 AC_ARG_WITH([readline],
-[AC_HELP_STRING([--with-readline],
-                [use readline library (if available) @<:@yes@:>@])],
+[AC_HELP_STRING([--with-readline], [use readline library @<:@yes@:>@])],
 [R_ARG_USE(readline)],
 [use_readline=yes])
 
@@ -328,7 +329,7 @@ fi],
 ## Tcl/Tk.
 AC_ARG_WITH([tcltk],
 [AC_HELP_STRING([--with-tcltk],
-                [use Tcl/Tk, or specify its library dir @<:@yes@:>@])],
+                [use Tcl/Tk (if available), or specify its library dir @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_tcltk=no
 elif test "${withval}" = yes; then
@@ -398,10 +399,16 @@ AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 ## Recommended R packages.
 AC_ARG_WITH([recommended-packages],
 [AC_HELP_STRING([--with-recommended-packages],
-                [use/install recommended R packages (if available)
-                 @<:@yes@:>@])],
+                [use/install recommended R packages @<:@yes@:>@])],
 [R_ARG_USE(recommended_packages)],
 [use_recommended_packages=yes])
+
+## Iconv.
+AC_ARG_WITH([iconv],
+[AC_HELP_STRING([--with-iconv],
+                [use iconv library @<:@yes@:>@])],
+[R_ARG_USE(iconv)],
+[use_iconv=yes])
 
 ### ** Precious variables.
 
@@ -472,6 +479,8 @@ AC_ARG_VAR([SAFE_FFLAGS],
 AC_ARG_VAR([r_arch],
            [Use architecture-dependent subdirs with this name])
 AC_ARG_VAR([DEFS], [C defines for use when compiling R])
+AC_ARG_VAR([JAVA_HOME],
+           [Path to the root of the Java environment])
 
 if test -z "${r_arch}"; then
   R_ARCH=
@@ -541,6 +550,7 @@ R_PROG_F77
 AC_PROG_CXX
 AC_PROG_CXXCPP
 R_GCC4_VISIBILITY
+AC_GNU_SOURCE ## needed to libintl
 
 AC_PROG_OBJC
 ## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
@@ -561,6 +571,12 @@ AC_SUBST(R_DEFS)
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
+
+## cross-compiling
+R_CROSS_COMPILING
+AC_SUBST(BUILD_CC)
+AC_SUBST(BUILD_R)
+AM_CONDITIONAL(CROSS_COMPILING, [test "${cross_compiling}" = yes])
 
 ### * Checks for libraries.
 
@@ -607,12 +623,10 @@ else
 fi
 eval "export ${shlibpath_var}"
 
-## Yes, we already need this at configure time ...
-case "${host_os}" in
-  aix*)
-    LIBS="-lc ${LIBS}"
-    ;;
-esac
+## record how to strip shared/dynamic libraries.
+ltout=`./libtool --config | grep '^striplib='`
+eval "${ltout}"
+AC_SUBST(striplib)
 
 ## <NOTE>
 ## This actually comes from libtool.m4.
@@ -667,6 +681,11 @@ if test "${use_readline}" = yes; then
   LIBS="${r_save_LIBS}"
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
+  else
+    R_CHECK_FUNCS([rl_completion_matches], 
+[#include <stdio.h>
+#include <readline/readline.h>]
+                 )
   fi
 fi
 AC_SUBST(READLINE_LIBS)
@@ -681,8 +700,8 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
-  netdb.h netinet/in.h pwd.h strings.h \
+  fpu_control.h glob.h grp.h ieee754.h ieeefp.h limits.h locale.h \
+  netdb.h netinet/in.h pwd.h stdbool.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
   sys/time.h sys/times.h sys/utsname.h time.h unistd.h)
 ## </NOTE>
@@ -733,22 +752,15 @@ AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_INTTYPES_H
 AC_C_BIGENDIAN
 AC_C_CONST
 R_C_INLINE
-if test "${cross_compiling}" = yes; then
-  warn_xcompile_sizeof_int="assuming C ints are 4 byte on ${host}"
-  AC_MSG_WARN([${warn_xcompile_sizeof_int}])
-fi
-AC_CHECK_SIZEOF(int, 4)
+AC_CHECK_SIZEOF(int)
 if test "${ac_cv_sizeof_int}" = 4; then
   AC_DEFINE(INT_32_BITS, 1, [Define if you have 32 bit ints.])
 fi
-if test "${cross_compiling}" = yes; then
-  warn_xcompile_sizeof_long="assuming C longs are 4 byte on ${host}"
-  AC_MSG_WARN([${warn_xcompile_sizeof_long}])
-fi
-AC_CHECK_SIZEOF(long, 4)
-AC_CHECK_SIZEOF(long long, 0)
-AC_CHECK_SIZEOF(double, 8)
-AC_CHECK_SIZEOF(long double, 0)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(double)
+AC_CHECK_SIZEOF(long double)
+AC_CHECK_SIZEOF(size_t)
 
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
@@ -825,14 +837,13 @@ case "${host_os}" in
   aix*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG([-mno-fp-in-toc],
-                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
-    fi
-    ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
-    if test "x${OBJECT_MODE}" = "x64"; then
-       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
-    else
-       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
+      if test "x${OBJECT_MODE}" = "x64"; then
+        R_PROG_CC_FLAG([-mminimal-toc],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mminimal-toc]))
+      else
+        R_PROG_CC_FLAG([-mno-fp-in-toc],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
+      fi
     fi
     ;;
   cygwin*|mingw*|windows*|winnt)
@@ -1103,7 +1114,7 @@ if test "${GCC}" = yes; then
 ## has 32k and so can use -fpic.
 ## However, although the gcc docs do not mention it, it seems s390/s390x
 ## also supports and needs -fPIC
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       cpicflags="-fPIC"
       ;;
     *)
@@ -1114,7 +1125,7 @@ if test "${GCC}" = yes; then
 fi
 if test "${G77}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       fpicflags="-fPIC"
       ;;
     *)
@@ -1124,7 +1135,7 @@ if test "${G77}" = yes; then
 fi
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       cxxpicflags="-fPIC"
       ;;
     *)
@@ -1143,7 +1154,9 @@ case "${host_os}" in
     ;;
   aix*)
     ## now use run-time linking
-    # use_exportfiles=yes
+    if test "${want_R_shlib}" != yes; then
+      use_exportfiles=yes
+    fi
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
@@ -1152,11 +1165,28 @@ case "${host_os}" in
     wl="-Wl,"
     ## libtool suggests that ia64 needs -Bexport and not -brtl
     ## but we have no confirmation.
-    main_ldflags="${wl}-brtl ${wl}-bexpall"
-    shlib_ldflags="${wl}-G ${wl}-bexpall ${wl}-bnoentry"
+    dylib_undefined_allowed=no
+    ##ADD: A symbol of memcpy,memset is exported in libR by expall.
+    ##ADD: However, for example, symbol in libc of memcpy is __memmove,__memmove64.
+    ##ADD: This black magic puts lc before lR and pockets this.
+    if test "x${OBJECT_MODE}" = "x64"; then
+      main_ldflags="${wl}-brtl ${wl}-bexpall ${wl}-bpT:0x100000000 ${wl}-bpD:0x110000000 -lc"
+    else
+      main_ldflags="${wl}-brtl ${wl}-bexpall -lc"
+    fi
+    shlib_ldflags="${wl}-brtl ${wl}-G ${wl}-bexpall ${wl}-bnoentry -lc"
+    if test "${want_R_shlib}" != yes; then
+      ## symbol of an archive(RLIBS and EXTRA_LIBS) is thrown away
+      ## unless export it in a main link when unused.
+      R_SH_VAR_ADD(main_ldflags, [-Wl,-bE:\$(top_builddir)/etc/R.exp])
+      ## Import symbol is IMPid = '.'
+      ## no import symbol is IMPid = '..' (run-time link style)
+      ## R_SH_VAR_ADD(LIBR, [-Wl,-bI:\$(R_HOME)/etc/R.exp])
+    fi
 #    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
 #    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
+    shlib_cxxldflags="${shlib_ldflags}"
     ;;
   darwin*)
     darwin_pic="-fPIC"
@@ -1584,7 +1614,7 @@ R_CHECK_FUNCS([mkfifo stat], [#include <sys/stat.h>])
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
 R_CHECK_FUNCS([time], [#include <time.h>])
-R_CHECK_FUNCS([access chdir ftruncate getcwd getuid symlink sysconf],
+R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])
@@ -1600,6 +1630,18 @@ AC_CHECK_FUNCS(realpath)
 AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 #include <unistd.h>])
 
+R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
+# include <glob.h>
+#endif])
+
+## we can't use dir() or unlink(recursive=TRUE) without these
+if test "${ac_cv_have_decl_stat}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'stat' system call])
+fi
+if test "${ac_cv_search_opendir}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'opendir' system call])
+fi
+
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
@@ -1614,6 +1656,10 @@ fi
 
 ## IEEE 754. We rely on this in e.g. the working log test.
 R_IEEE_754
+
+## check if putenv can substitute for unsetenv
+R_PUTENV_AS_UNSETENV
+
 
 ## check whether nl_langinfo(CODESET) is in langinfo.h
 ## defines HAVE_LANGINFO_CODESET if it's there
@@ -1655,9 +1701,13 @@ fi
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
 fi
+## check value of log(0) and log(-1)
+## Solaris defines log(0) to be -HUGE_VAL, but we want -Inf
 R_FUNC_LOG
+## check accuracy of log1p
 R_FUNC_LOG1P
 R_FUNC_FTELL
+R_FUNC_SIGACTION
 
 R_C99_COMPLEX
 
@@ -1813,7 +1863,14 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 AC_SUBST(R_MODULES)
 
 ## iconv headers and function.
-R_ICONV
+if test "${use_iconv}" = yes; then
+  R_ICONV
+  if test "$r_cv_iconv_latin1" != yes; then
+    AC_MSG_ERROR([--with-iconv=yes (default) and a suitable iconv is not available])
+  fi
+else
+    AC_MSG_WARN([--with-iconv=no is deprecated and will be withdrawn shortly])
+fi
 
 ## support for MBCS
 case "${host_os}" in
@@ -1957,7 +2014,7 @@ AC_SUBST(SHLIB_FCLDFLAGS)
 ## use this to pick out gfortran (even though it is unreliable).
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       fcpicflags="-fPIC"
       ;;
     *)
@@ -2075,37 +2132,35 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
       ;;
   esac
 done
-## Handle JAVA_LIBS specially so that users can conveniently set just
+## Handle JAVA_LD_LIBRARY_PATH specially so that users can conveniently set just
 ## R_JAVA_LD_LIBRARY_PATH in their environment.
-for arg in ${JAVA_LIBS}; do
-  case "${arg}" in
-    -L*)
-      lib=`echo ${arg} | sed "s/^-L//"`
+if test -n "${JAVA_LD_LIBRARY_PATH}"; then
+   args=`echo ${JAVA_LD_LIBRARY_PATH} | sed -e s:\$\(JAVA_HOME\):${JAVA_HOME}:g`
+   r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
+   for lib in ${args}; do
       r_want_lib=true
-      ## don't add anything for Darwin
-      case "${host_os}" in darwin*) r_want_lib=false ;; esac
       ## Do not add non-existent directories.
       test -d "${lib}" || r_want_lib=false
       if test x"${r_want_lib}" = xtrue; then
-        ## Canonicalize (/usr/lib/j2sdk1.5-sun/jre/../lib/i386).
-        lib=`cd "${lib}" && ${GETWD}`
+        ## do NOT Canonicalize (/usr/lib/j2sdk1.5-sun/jre/../lib/i386).
+	## because we may lose the reference to ${JAVA_HOME} if it is a symlink (it often is)
+        ##lib=`cd "${lib}" && ${GETWD}`
         ## Do not add something twice, or something already in
         ## R_LD_LIBRARY_PATH or the defaults.
-        r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
         for dir in ${R_JAVA_LD_LIBRARY_PATH}${IFS}${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
           if test x"${dir}" = x"${lib}"; then
              r_want_lib=false
              break
           fi
         done
-        IFS="${r_save_IFS}"
         if test x"${r_want_lib}" = xtrue; then
+	  lib=`echo ${lib}|sed -e s:${JAVA_HOME}:\$\{JAVA_HOME\}:g`
           R_SH_VAR_ADD(R_JAVA_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
         fi
       fi
-      ;;
-  esac
-done
+   done
+   IFS="${r_save_IFS}"
+fi
 ## </FIXME>
 
 AC_SUBST(R_LD_LIBRARY_PATH)

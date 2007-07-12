@@ -1,9 +1,8 @@
       SUBROUTINE DGBSV( N, KL, KU, NRHS, AB, LDAB, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, KL, KU, LDAB, LDB, N, NRHS
@@ -145,10 +144,9 @@
      $                   LDAFB, IPIV, EQUED, R, C, B, LDB, X, LDX,
      $                   RCOND, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, FACT, TRANS
@@ -561,30 +559,27 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 ) THEN
+         IF( INFO.GT.0 ) THEN
 *
-*              Compute the reciprocal pivot growth factor of the
-*              leading rank-deficient INFO columns of A.
+*           Compute the reciprocal pivot growth factor of the
+*           leading rank-deficient INFO columns of A.
 *
-               ANORM = ZERO
-               DO 90 J = 1, INFO
-                  DO 80 I = MAX( KU+2-J, 1 ),
-     $                    MIN( N+KU+1-J, KL+KU+1 )
-                     ANORM = MAX( ANORM, ABS( AB( I, J ) ) )
-   80             CONTINUE
-   90          CONTINUE
-               RPVGRW = DLANTB( 'M', 'U', 'N', INFO,
-     $                  MIN( INFO-1, KL+KU ), AFB( MAX( 1,
-     $                  KL+KU+2-INFO ), 1 ), LDAFB, WORK )
-               IF( RPVGRW.EQ.ZERO ) THEN
-                  RPVGRW = ONE
-               ELSE
-                  RPVGRW = ANORM / RPVGRW
-               END IF
-               WORK( 1 ) = RPVGRW
-               RCOND = ZERO
+            ANORM = ZERO
+            DO 90 J = 1, INFO
+               DO 80 I = MAX( KU+2-J, 1 ), MIN( N+KU+1-J, KL+KU+1 )
+                  ANORM = MAX( ANORM, ABS( AB( I, J ) ) )
+   80          CONTINUE
+   90       CONTINUE
+            RPVGRW = DLANTB( 'M', 'U', 'N', INFO, MIN( INFO-1, KL+KU ),
+     $                       AFB( MAX( 1, KL+KU+2-INFO ), 1 ), LDAFB,
+     $                       WORK )
+            IF( RPVGRW.EQ.ZERO ) THEN
+               RPVGRW = ONE
+            ELSE
+               RPVGRW = ANORM / RPVGRW
             END IF
+            WORK( 1 ) = RPVGRW
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -609,11 +604,6 @@
 *
       CALL DGBCON( NORM, N, KL, KU, AFB, LDAFB, IPIV, ANORM, RCOND,
      $             WORK, IWORK, INFO )
-*
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
 *
 *     Compute the solution matrix X.
 *
@@ -652,6 +642,11 @@
   150    CONTINUE
       END IF
 *
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
       WORK( 1 ) = RPVGRW
       RETURN
 *
@@ -661,10 +656,9 @@
       SUBROUTINE DGEES( JOBVS, SORT, SELECT, N, A, LDA, SDIM, WR, WI,
      $                  VS, LDVS, WORK, LWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVS, SORT
@@ -713,7 +707,7 @@
 *          = 'N': Eigenvalues are not ordered;
 *          = 'S': Eigenvalues are ordered (see SELECT).
 *
-*  SELECT  (input) LOGICAL FUNCTION of two DOUBLE PRECISION arguments
+*  SELECT  (external procedure) LOGICAL FUNCTION of two DOUBLE PRECISION arguments
 *          SELECT must be declared EXTERNAL in the calling subroutine.
 *          If SORT = 'S', SELECT is used to select eigenvalues to sort
 *          to the top left of the Schur form.
@@ -763,7 +757,7 @@
 *          The leading dimension of the array VS.  LDVS >= 1; if
 *          JOBVS = 'V', LDVS >= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) contains the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -805,8 +799,7 @@
       LOGICAL            CURSL, LASTSL, LQUERY, LST2SL, SCALEA, WANTST,
      $                   WANTVS
       INTEGER            HSWORK, I, I1, I2, IBAL, ICOND, IERR, IEVAL,
-     $                   IHI, ILO, INXT, IP, ITAU, IWRK, K, MAXB,
-     $                   MAXWRK, MINWRK
+     $                   IHI, ILO, INXT, IP, ITAU, IWRK, MAXWRK, MINWRK
       DOUBLE PRECISION   ANRM, BIGNUM, CSCALE, EPS, S, SEP, SMLNUM
 *     ..
 *     .. Local Arrays ..
@@ -815,7 +808,7 @@
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DCOPY, DGEBAK, DGEBAL, DGEHRD, DHSEQR, DLACPY,
-     $                   DLASCL, DORGHR, DSWAP, DTRSEN, XERBLA
+     $                   DLABAD, DLASCL, DORGHR, DSWAP, DTRSEN, XERBLA
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -824,7 +817,7 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, DLANGE
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN, SQRT
+      INTRINSIC          MAX, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -856,30 +849,33 @@
 *       calculated below. HSWORK is computed assuming ILO=1 and IHI=N,
 *       the worst case.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
-         MINWRK = MAX( 1, 3*N )
-         IF( .NOT.WANTVS ) THEN
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'SN', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'SN', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, N+HSWORK, 1 )
+      IF( INFO.EQ.0 ) THEN
+         IF( N.EQ.0 ) THEN
+            MINWRK = 1
+            MAXWRK = 1
          ELSE
-            MAXWRK = MAX( MAXWRK, 2*N+( N-1 )*
-     $               ILAENV( 1, 'DORGHR', ' ', N, 1, N, -1 ) )
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'EN', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'EN', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, N+HSWORK, 1 )
+            MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
+            MINWRK = 3*N
+*
+            CALL DHSEQR( 'S', JOBVS, N, 1, N, A, LDA, WR, WI, VS, LDVS,
+     $             WORK, -1, IEVAL )
+            HSWORK = WORK( 1 )
+*
+            IF( .NOT.WANTVS ) THEN
+               MAXWRK = MAX( MAXWRK, N + HSWORK )
+            ELSE
+               MAXWRK = MAX( MAXWRK, 2*N + ( N - 1 )*ILAENV( 1,
+     $                       'DORGHR', ' ', N, 1, N, -1 ) )
+               MAXWRK = MAX( MAXWRK, N + HSWORK )
+            END IF
          END IF
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
-         INFO = -13
-      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGEES ', -INFO )
          RETURN
@@ -1028,7 +1024,9 @@
                      IF( N.GT.I+1 )
      $                  CALL DSWAP( N-I-1, A( I, I+2 ), LDA,
      $                              A( I+1, I+2 ), LDA )
-                     CALL DSWAP( N, VS( 1, I ), 1, VS( 1, I+1 ), 1 )
+                     IF( WANTVS ) THEN
+                        CALL DSWAP( N, VS( 1, I ), 1, VS( 1, I+1 ), 1 )
+                     END IF
                      A( I, I+1 ) = A( I+1, I )
                      A( I+1, I ) = ZERO
                   END IF
@@ -1093,10 +1091,9 @@
      $                   WR, WI, VS, LDVS, RCONDE, RCONDV, WORK, LWORK,
      $                   IWORK, LIWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVS, SENSE, SORT
@@ -1154,7 +1151,7 @@
 *          = 'N': Eigenvalues are not ordered;
 *          = 'S': Eigenvalues are ordered (see SELECT).
 *
-*  SELECT  (input) LOGICAL FUNCTION of two DOUBLE PRECISION arguments
+*  SELECT  (external procedure) LOGICAL FUNCTION of two DOUBLE PRECISION arguments
 *          SELECT must be declared EXTERNAL in the calling subroutine.
 *          If SORT = 'S', SELECT is used to select eigenvalues to sort
 *          to the top left of the Schur form.
@@ -1220,7 +1217,7 @@
 *          condition number for the selected right invariant subspace.
 *          Not referenced if SENSE = 'N' or 'E'.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -1228,16 +1225,32 @@
 *          Also, if SENSE = 'E' or 'V' or 'B',
 *          LWORK >= N+2*SDIM*(N-SDIM), where SDIM is the number of
 *          selected eigenvalues computed by this routine.  Note that
-*          N+2*SDIM*(N-SDIM) <= N+N*N/2.
+*          N+2*SDIM*(N-SDIM) <= N+N*N/2. Note also that an error is only
+*          returned if LWORK < max(1,3*N), but if SENSE = 'E' or 'V' or
+*          'B' this may not be large enough.
 *          For good performance, LWORK must generally be larger.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
-*          Not referenced if SENSE = 'N' or 'E'.
+*          If LWORK = -1, then a workspace query is assumed; the routine
+*          only calculates upper bounds on the optimal sizes of the
+*          arrays WORK and IWORK, returns these values as the first
+*          entries of the WORK and IWORK arrays, and no error messages
+*          related to LWORK or LIWORK are issued by XERBLA.
+*
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
 *          The dimension of the array IWORK.
 *          LIWORK >= 1; if SENSE = 'V' or 'B', LIWORK >= SDIM*(N-SDIM).
+*          Note that SDIM*(N-SDIM) <= N*N/4. Note also that an error is
+*          only returned if LIWORK < 1, but if SENSE = 'V' or 'B' this
+*          may not be large enough.
+*
+*          If LIWORK = -1, then a workspace query is assumed; the
+*          routine only calculates upper bounds on the optimal sizes of
+*          the arrays WORK and IWORK, returns these values as the first
+*          entries of the WORK and IWORK arrays, and no error messages
+*          related to LWORK or LIWORK are issued by XERBLA.
 *
 *  BWORK   (workspace) LOGICAL array, dimension (N)
 *          Not referenced if SORT = 'N'.
@@ -1266,10 +1279,10 @@
       PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            CURSL, LASTSL, LST2SL, SCALEA, WANTSB, WANTSE,
-     $                   WANTSN, WANTST, WANTSV, WANTVS
+      LOGICAL            CURSL, LASTSL, LQUERY, LST2SL, SCALEA, WANTSB,
+     $                   WANTSE, WANTSN, WANTST, WANTSV, WANTVS
       INTEGER            HSWORK, I, I1, I2, IBAL, ICOND, IERR, IEVAL,
-     $                   IHI, ILO, INXT, IP, ITAU, IWRK, K, MAXB,
+     $                   IHI, ILO, INXT, IP, ITAU, IWRK, LIWRK, LWRK,
      $                   MAXWRK, MINWRK
       DOUBLE PRECISION   ANRM, BIGNUM, CSCALE, EPS, SMLNUM
 *     ..
@@ -1284,10 +1297,10 @@
       LOGICAL            LSAME
       INTEGER            ILAENV
       DOUBLE PRECISION   DLAMCH, DLANGE
-      EXTERNAL           LSAME, ILAENV, DLAMCH, DLANGE
+      EXTERNAL           LSAME, ILAENV, DLABAD, DLAMCH, DLANGE
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN, SQRT
+      INTRINSIC          MAX, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -1300,6 +1313,7 @@
       WANTSE = LSAME( SENSE, 'E' )
       WANTSV = LSAME( SENSE, 'V' )
       WANTSB = LSAME( SENSE, 'B' )
+      LQUERY = ( LWORK.EQ.-1 .OR. LIWORK.EQ.-1 )
       IF( ( .NOT.WANTVS ) .AND. ( .NOT.LSAME( JOBVS, 'N' ) ) ) THEN
          INFO = -1
       ELSE IF( ( .NOT.WANTST ) .AND. ( .NOT.LSAME( SORT, 'N' ) ) ) THEN
@@ -1329,33 +1343,42 @@
 *       depends on SDIM, which is computed by the routine DTRSEN later
 *       in the code.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. LWORK.GE.1 ) THEN
-         MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
-         MINWRK = MAX( 1, 3*N )
-         IF( .NOT.WANTVS ) THEN
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'SN', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'SN', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, N+HSWORK, 1 )
+      IF( INFO.EQ.0 ) THEN
+         LIWRK = 1
+         IF( N.EQ.0 ) THEN
+            MINWRK = 1
+            LWRK = 1
          ELSE
-            MAXWRK = MAX( MAXWRK, 2*N+( N-1 )*
-     $               ILAENV( 1, 'DORGHR', ' ', N, 1, N, -1 ) )
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'SV', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'SV', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, N+HSWORK, 1 )
+            MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
+            MINWRK = 3*N
+*
+            CALL DHSEQR( 'S', JOBVS, N, 1, N, A, LDA, WR, WI, VS, LDVS,
+     $             WORK, -1, IEVAL )
+            HSWORK = WORK( 1 )
+*
+            IF( .NOT.WANTVS ) THEN
+               MAXWRK = MAX( MAXWRK, N + HSWORK )
+            ELSE
+               MAXWRK = MAX( MAXWRK, 2*N + ( N - 1 )*ILAENV( 1,
+     $                       'DORGHR', ' ', N, 1, N, -1 ) )
+               MAXWRK = MAX( MAXWRK, N + HSWORK )
+            END IF
+            LWRK = MAXWRK
+            IF( .NOT.WANTSN )
+     $         LWRK = MAX( LWRK, N + ( N*N )/2 )
+            IF( WANTSV .OR. WANTSB )
+     $         LIWRK = ( N*N )/4
          END IF
-         WORK( 1 ) = MAXWRK
+         IWORK( 1 ) = LIWRK
+         WORK( 1 ) = LWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -16
+         ELSE IF( LIWORK.LT.1 .AND. .NOT.LQUERY ) THEN
+            INFO = -18
+         END IF
       END IF
-      IF( LWORK.LT.MINWRK ) THEN
-         INFO = -16
-      END IF
-      IF( LIWORK.LT.1 ) THEN
-         INFO = -18
-      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGEESX', -INFO )
          RETURN
@@ -1581,7 +1604,7 @@
 *
       WORK( 1 ) = MAXWRK
       IF( WANTSV .OR. WANTSB ) THEN
-         IWORK( 1 ) = SDIM*( N-SDIM )
+         IWORK( 1 ) = MAX( 1, SDIM*( N-SDIM ) )
       ELSE
          IWORK( 1 ) = 1
       END IF
@@ -1594,10 +1617,9 @@
       SUBROUTINE DGEEV( JOBVL, JOBVR, N, A, LDA, WR, WI, VL, LDVL, VR,
      $                  LDVR, WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     December 8, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVL, JOBVR
@@ -1683,7 +1705,7 @@
 *          The leading dimension of the array VR.  LDVR >= 1; if
 *          JOBVR = 'V', LDVR >= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -1714,7 +1736,7 @@
       LOGICAL            LQUERY, SCALEA, WANTVL, WANTVR
       CHARACTER          SIDE
       INTEGER            HSWORK, I, IBAL, IERR, IHI, ILO, ITAU, IWRK, K,
-     $                   MAXB, MAXWRK, MINWRK, NOUT
+     $                   MAXWRK, MINWRK, NOUT
       DOUBLE PRECISION   ANRM, BIGNUM, CS, CSCALE, EPS, R, SCL, SMLNUM,
      $                   SN
 *     ..
@@ -1723,8 +1745,9 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEBAK, DGEBAL, DGEHRD, DHSEQR, DLACPY, DLARTG,
-     $                   DLASCL, DORGHR, DROT, DSCAL, DTREVC, XERBLA
+      EXTERNAL           DGEBAK, DGEBAL, DGEHRD, DHSEQR, DLABAD, DLACPY,
+     $                   DLARTG, DLASCL, DORGHR, DROT, DSCAL, DTREVC,
+     $                   XERBLA
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -1734,7 +1757,7 @@
      $                   DNRM2
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN, SQRT
+      INTRINSIC          MAX, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -1768,32 +1791,46 @@
 *       calculated below. HSWORK is computed assuming ILO=1 and IHI=N,
 *       the worst case.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
-         IF( ( .NOT.WANTVL ) .AND. ( .NOT.WANTVR ) ) THEN
-            MINWRK = MAX( 1, 3*N )
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'EN', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'EN', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, N+1, N+HSWORK )
+      IF( INFO.EQ.0 ) THEN
+         IF( N.EQ.0 ) THEN
+            MINWRK = 1
+            MAXWRK = 1
          ELSE
-            MINWRK = MAX( 1, 4*N )
-            MAXWRK = MAX( MAXWRK, 2*N+( N-1 )*
-     $               ILAENV( 1, 'DORGHR', ' ', N, 1, N, -1 ) )
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'SV', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'SV', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, N+1, N+HSWORK )
-            MAXWRK = MAX( MAXWRK, 4*N )
+            MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
+            IF( WANTVL ) THEN
+               MINWRK = 4*N
+               MAXWRK = MAX( MAXWRK, 2*N + ( N - 1 )*ILAENV( 1,
+     $                       'DORGHR', ' ', N, 1, N, -1 ) )
+               CALL DHSEQR( 'S', 'V', N, 1, N, A, LDA, WR, WI, VL, LDVL,
+     $                WORK, -1, INFO )
+               HSWORK = WORK( 1 )
+               MAXWRK = MAX( MAXWRK, N + 1, N + HSWORK )
+               MAXWRK = MAX( MAXWRK, 4*N )
+            ELSE IF( WANTVR ) THEN
+               MINWRK = 4*N
+               MAXWRK = MAX( MAXWRK, 2*N + ( N - 1 )*ILAENV( 1,
+     $                       'DORGHR', ' ', N, 1, N, -1 ) )
+               CALL DHSEQR( 'S', 'V', N, 1, N, A, LDA, WR, WI, VR, LDVR,
+     $                WORK, -1, INFO )
+               HSWORK = WORK( 1 )
+               MAXWRK = MAX( MAXWRK, N + 1, N + HSWORK )
+               MAXWRK = MAX( MAXWRK, 4*N )
+            ELSE 
+               MINWRK = 3*N
+               CALL DHSEQR( 'E', 'N', N, 1, N, A, LDA, WR, WI, VR, LDVR,
+     $                WORK, -1, INFO )
+               HSWORK = WORK( 1 )
+               MAXWRK = MAX( MAXWRK, N + 1, N + HSWORK )
+            END IF
+            MAXWRK = MAX( MAXWRK, MINWRK )
          END IF
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
-         INFO = -13
-      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGEEV ', -INFO )
          RETURN
@@ -2004,10 +2041,9 @@
      $                   VL, LDVL, VR, LDVR, ILO, IHI, SCALE, ABNRM,
      $                   RCONDE, RCONDV, WORK, LWORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          BALANC, JOBVL, JOBVR, SENSE
@@ -2144,7 +2180,8 @@
 *          The leading dimension of the array VR.  LDVR >= 1, and if
 *          JOBVR = 'V', LDVR >= N.
 *
-*  ILO,IHI (output) INTEGER
+*  ILO     (output) INTEGER
+*  IHI     (output) INTEGER
 *          ILO and IHI are integer values determined when A was
 *          balanced.  The balanced A(i,j) = 0 if I > J and
 *          J = 1,...,ILO-1 or I = IHI+1,...,N.
@@ -2172,7 +2209,7 @@
 *          RCONDV(j) is the reciprocal condition number of the j-th
 *          right eigenvector.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -2207,8 +2244,8 @@
       LOGICAL            LQUERY, SCALEA, WANTVL, WANTVR, WNTSNB, WNTSNE,
      $                   WNTSNN, WNTSNV
       CHARACTER          JOB, SIDE
-      INTEGER            HSWORK, I, ICOND, IERR, ITAU, IWRK, K, MAXB,
-     $                   MAXWRK, MINWRK, NOUT
+      INTEGER            HSWORK, I, ICOND, IERR, ITAU, IWRK, K, MAXWRK,
+     $                   MINWRK, NOUT
       DOUBLE PRECISION   ANRM, BIGNUM, CS, CSCALE, EPS, R, SCL, SMLNUM,
      $                   SN
 *     ..
@@ -2217,9 +2254,9 @@
       DOUBLE PRECISION   DUM( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEBAK, DGEBAL, DGEHRD, DHSEQR, DLACPY, DLARTG,
-     $                   DLASCL, DORGHR, DROT, DSCAL, DTREVC, DTRSNA,
-     $                   XERBLA
+      EXTERNAL           DGEBAK, DGEBAL, DGEHRD, DHSEQR, DLABAD, DLACPY,
+     $                   DLARTG, DLASCL, DORGHR, DROT, DSCAL, DTREVC,
+     $                   DTRSNA, XERBLA
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -2229,7 +2266,7 @@
      $                   DNRM2
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN, SQRT
+      INTRINSIC          MAX, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -2275,45 +2312,57 @@
 *       calculated below. HSWORK is computed assuming ILO=1 and IHI=N,
 *       the worst case.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MAXWRK = N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
-         IF( ( .NOT.WANTVL ) .AND. ( .NOT.WANTVR ) ) THEN
-            MINWRK = MAX( 1, 2*N )
-            IF( .NOT.WNTSNN )
-     $         MINWRK = MAX( MINWRK, N*N+6*N )
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'SN', N, 1, N, -1 ), 2 )
-            IF( WNTSNN ) THEN
-               K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'EN', N,
-     $             1, N, -1 ) ) )
-            ELSE
-               K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'SN', N,
-     $             1, N, -1 ) ) )
-            END IF
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, 1, HSWORK )
-            IF( .NOT.WNTSNN )
-     $         MAXWRK = MAX( MAXWRK, N*N+6*N )
+      IF( INFO.EQ.0 ) THEN
+         IF( N.EQ.0 ) THEN
+            MINWRK = 1
+            MAXWRK = 1
          ELSE
-            MINWRK = MAX( 1, 3*N )
-            IF( ( .NOT.WNTSNN ) .AND. ( .NOT.WNTSNE ) )
-     $         MINWRK = MAX( MINWRK, N*N+6*N )
-            MAXB = MAX( ILAENV( 8, 'DHSEQR', 'SN', N, 1, N, -1 ), 2 )
-            K = MIN( MAXB, N, MAX( 2, ILAENV( 4, 'DHSEQR', 'EN', N, 1,
-     $          N, -1 ) ) )
-            HSWORK = MAX( K*( K+2 ), 2*N )
-            MAXWRK = MAX( MAXWRK, 1, HSWORK )
-            MAXWRK = MAX( MAXWRK, N+( N-1 )*
-     $               ILAENV( 1, 'DORGHR', ' ', N, 1, N, -1 ) )
-            IF( ( .NOT.WNTSNN ) .AND. ( .NOT.WNTSNE ) )
-     $         MAXWRK = MAX( MAXWRK, N*N+6*N )
-            MAXWRK = MAX( MAXWRK, 3*N, 1 )
+            MAXWRK = N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
+*
+            IF( WANTVL ) THEN
+               CALL DHSEQR( 'S', 'V', N, 1, N, A, LDA, WR, WI, VL, LDVL,
+     $                WORK, -1, INFO )
+            ELSE IF( WANTVR ) THEN
+               CALL DHSEQR( 'S', 'V', N, 1, N, A, LDA, WR, WI, VR, LDVR,
+     $                WORK, -1, INFO )
+            ELSE
+               IF( WNTSNN ) THEN
+                  CALL DHSEQR( 'E', 'N', N, 1, N, A, LDA, WR, WI, VR,
+     $                LDVR, WORK, -1, INFO )
+               ELSE
+                  CALL DHSEQR( 'S', 'N', N, 1, N, A, LDA, WR, WI, VR,
+     $                LDVR, WORK, -1, INFO )
+               END IF
+            END IF
+            HSWORK = WORK( 1 )
+*
+            IF( ( .NOT.WANTVL ) .AND. ( .NOT.WANTVR ) ) THEN
+               MINWRK = 2*N
+               IF( .NOT.WNTSNN )
+     $            MINWRK = MAX( MINWRK, N*N+6*N )
+               MAXWRK = MAX( MAXWRK, HSWORK )
+               IF( .NOT.WNTSNN )
+     $            MAXWRK = MAX( MAXWRK, N*N + 6*N )
+            ELSE
+               MINWRK = 3*N
+               IF( ( .NOT.WNTSNN ) .AND. ( .NOT.WNTSNE ) )
+     $            MINWRK = MAX( MINWRK, N*N + 6*N )
+               MAXWRK = MAX( MAXWRK, HSWORK )
+               MAXWRK = MAX( MAXWRK, N + ( N - 1 )*ILAENV( 1, 'DORGHR',
+     $                       ' ', N, 1, N, -1 ) )
+               IF( ( .NOT.WNTSNN ) .AND. ( .NOT.WNTSNE ) )
+     $            MAXWRK = MAX( MAXWRK, N*N + 6*N )
+               MAXWRK = MAX( MAXWRK, 3*N )
+            END IF
+            MAXWRK = MAX( MAXWRK, MINWRK )
          END IF
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -21
+         END IF
       END IF
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
-         INFO = -21
-      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGEEVX', -INFO )
          RETURN
@@ -2548,10 +2597,9 @@
      $                  ALPHAI, BETA, VSL, LDVSL, VSR, LDVSR, WORK,
      $                  LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVSL, JOBVSR
@@ -2568,105 +2616,75 @@
 *
 *  This routine is deprecated and has been replaced by routine DGGES.
 *
-*  DGEGS computes for a pair of N-by-N real nonsymmetric matrices A, B:
-*  the generalized eigenvalues (alphar +/- alphai*i, beta), the real
-*  Schur form (A, B), and optionally left and/or right Schur vectors
-*  (VSL and VSR).
+*  DGEGS computes the eigenvalues, real Schur form, and, optionally,
+*  left and or/right Schur vectors of a real matrix pair (A,B).
+*  Given two square matrices A and B, the generalized real Schur
+*  factorization has the form
 *
-*  (If only the generalized eigenvalues are needed, use the driver DGEGV
-*  instead.)
+*    A = Q*S*Z**T,  B = Q*T*Z**T
 *
-*  A generalized eigenvalue for a pair of matrices (A,B) is, roughly
-*  speaking, a scalar w or a ratio  alpha/beta = w, such that  A - w*B
-*  is singular.  It is usually represented as the pair (alpha,beta),
-*  as there is a reasonable interpretation for beta=0, and even for
-*  both being zero.  A good beginning reference is the book, "Matrix
-*  Computations", by G. Golub & C. van Loan (Johns Hopkins U. Press)
+*  where Q and Z are orthogonal matrices, T is upper triangular, and S
+*  is an upper quasi-triangular matrix with 1-by-1 and 2-by-2 diagonal
+*  blocks, the 2-by-2 blocks corresponding to complex conjugate pairs
+*  of eigenvalues of (A,B).  The columns of Q are the left Schur vectors
+*  and the columns of Z are the right Schur vectors.
 *
-*  The (generalized) Schur form of a pair of matrices is the result of
-*  multiplying both matrices on the left by one orthogonal matrix and
-*  both on the right by another orthogonal matrix, these two orthogonal
-*  matrices being chosen so as to bring the pair of matrices into
-*  (real) Schur form.
-*
-*  A pair of matrices A, B is in generalized real Schur form if B is
-*  upper triangular with non-negative diagonal and A is block upper
-*  triangular with 1-by-1 and 2-by-2 blocks.  1-by-1 blocks correspond
-*  to real generalized eigenvalues, while 2-by-2 blocks of A will be
-*  "standardized" by making the corresponding elements of B have the
-*  form:
-*          [  a  0  ]
-*          [  0  b  ]
-*
-*  and the pair of corresponding 2-by-2 blocks in A and B will
-*  have a complex conjugate pair of generalized eigenvalues.
-*
-*  The left and right Schur vectors are the columns of VSL and VSR,
-*  respectively, where VSL and VSR are the orthogonal matrices
-*  which reduce A and B to Schur form:
-*
-*  Schur form of (A,B) = ( (VSL)**T A (VSR), (VSL)**T B (VSR) )
+*  If only the eigenvalues of (A,B) are needed, the driver routine
+*  DGEGV should be used instead.  See DGEGV for a description of the
+*  eigenvalues of the generalized nonsymmetric eigenvalue problem
+*  (GNEP).
 *
 *  Arguments
 *  =========
 *
 *  JOBVSL  (input) CHARACTER*1
 *          = 'N':  do not compute the left Schur vectors;
-*          = 'V':  compute the left Schur vectors.
+*          = 'V':  compute the left Schur vectors (returned in VSL).
 *
 *  JOBVSR  (input) CHARACTER*1
 *          = 'N':  do not compute the right Schur vectors;
-*          = 'V':  compute the right Schur vectors.
+*          = 'V':  compute the right Schur vectors (returned in VSR).
 *
 *  N       (input) INTEGER
 *          The order of the matrices A, B, VSL, and VSR.  N >= 0.
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA, N)
-*          On entry, the first of the pair of matrices whose generalized
-*          eigenvalues and (optionally) Schur vectors are to be
-*          computed.
-*          On exit, the generalized Schur form of A.
-*          Note: to avoid overflow, the Frobenius norm of the matrix
-*          A should be less than the overflow threshold.
+*          On entry, the matrix A.
+*          On exit, the upper quasi-triangular matrix S from the
+*          generalized real Schur factorization.
 *
 *  LDA     (input) INTEGER
 *          The leading dimension of A.  LDA >= max(1,N).
 *
 *  B       (input/output) DOUBLE PRECISION array, dimension (LDB, N)
-*          On entry, the second of the pair of matrices whose
-*          generalized eigenvalues and (optionally) Schur vectors are
-*          to be computed.
-*          On exit, the generalized Schur form of B.
-*          Note: to avoid overflow, the Frobenius norm of the matrix
-*          B should be less than the overflow threshold.
+*          On entry, the matrix B.
+*          On exit, the upper triangular matrix T from the generalized
+*          real Schur factorization.
 *
 *  LDB     (input) INTEGER
 *          The leading dimension of B.  LDB >= max(1,N).
 *
 *  ALPHAR  (output) DOUBLE PRECISION array, dimension (N)
-*  ALPHAI  (output) DOUBLE PRECISION array, dimension (N)
-*  BETA    (output) DOUBLE PRECISION array, dimension (N)
-*          On exit, (ALPHAR(j) + ALPHAI(j)*i)/BETA(j), j=1,...,N, will
-*          be the generalized eigenvalues.  ALPHAR(j) + ALPHAI(j)*i,
-*          j=1,...,N  and  BETA(j),j=1,...,N  are the diagonals of the
-*          complex Schur form (A,B) that would result if the 2-by-2
-*          diagonal blocks of the real Schur form of (A,B) were further
-*          reduced to triangular form using 2-by-2 complex unitary
-*          transformations.  If ALPHAI(j) is zero, then the j-th
-*          eigenvalue is real; if positive, then the j-th and (j+1)-st
-*          eigenvalues are a complex conjugate pair, with ALPHAI(j+1)
-*          negative.
+*          The real parts of each scalar alpha defining an eigenvalue
+*          of GNEP.
 *
-*          Note: the quotients ALPHAR(j)/BETA(j) and ALPHAI(j)/BETA(j)
-*          may easily over- or underflow, and BETA(j) may even be zero.
-*          Thus, the user should avoid naively computing the ratio
-*          alpha/beta.  However, ALPHAR and ALPHAI will be always less
-*          than and usually comparable with norm(A) in magnitude, and
-*          BETA always less than and usually comparable with norm(B).
+*  ALPHAI  (output) DOUBLE PRECISION array, dimension (N)
+*          The imaginary parts of each scalar alpha defining an
+*          eigenvalue of GNEP.  If ALPHAI(j) is zero, then the j-th
+*          eigenvalue is real; if positive, then the j-th and (j+1)-st
+*          eigenvalues are a complex conjugate pair, with
+*          ALPHAI(j+1) = -ALPHAI(j).
+*
+*  BETA    (output) DOUBLE PRECISION array, dimension (N)
+*          The scalars beta that define the eigenvalues of GNEP.
+*          Together, the quantities alpha = (ALPHAR(j),ALPHAI(j)) and
+*          beta = BETA(j) represent the j-th eigenvalue of the matrix
+*          pair (A,B), in one of the forms lambda = alpha/beta or
+*          mu = beta/alpha.  Since either lambda or mu may overflow,
+*          they should not, in general, be computed.
 *
 *  VSL     (output) DOUBLE PRECISION array, dimension (LDVSL,N)
-*          If JOBVSL = 'V', VSL will contain the left Schur vectors.
-*          (See "Purpose", above.)
+*          If JOBVSL = 'V', the matrix of left Schur vectors Q.
 *          Not referenced if JOBVSL = 'N'.
 *
 *  LDVSL   (input) INTEGER
@@ -2674,15 +2692,14 @@
 *          if JOBVSL = 'V', LDVSL >= N.
 *
 *  VSR     (output) DOUBLE PRECISION array, dimension (LDVSR,N)
-*          If JOBVSR = 'V', VSR will contain the right Schur vectors.
-*          (See "Purpose", above.)
+*          If JOBVSR = 'V', the matrix of right Schur vectors Z.
 *          Not referenced if JOBVSR = 'N'.
 *
 *  LDVSR   (input) INTEGER
 *          The leading dimension of the matrix VSR. LDVSR >= 1, and
 *          if JOBVSR = 'V', LDVSR >= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3017,10 +3034,9 @@
       SUBROUTINE DGEGV( JOBVL, JOBVR, N, A, LDA, B, LDB, ALPHAR, ALPHAI,
      $                  BETA, VL, LDVL, VR, LDVR, WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVL, JOBVR
@@ -3037,23 +3053,32 @@
 *
 *  This routine is deprecated and has been replaced by routine DGGEV.
 *
-*  DGEGV computes for a pair of n-by-n real nonsymmetric matrices A and
-*  B, the generalized eigenvalues (alphar +/- alphai*i, beta), and
-*  optionally, the left and/or right generalized eigenvectors (VL and
-*  VR).
+*  DGEGV computes the eigenvalues and, optionally, the left and/or right
+*  eigenvectors of a real matrix pair (A,B).
+*  Given two square matrices A and B,
+*  the generalized nonsymmetric eigenvalue problem (GNEP) is to find the
+*  eigenvalues lambda and corresponding (non-zero) eigenvectors x such
+*  that
 *
-*  A generalized eigenvalue for a pair of matrices (A,B) is, roughly
-*  speaking, a scalar w or a ratio  alpha/beta = w, such that  A - w*B
-*  is singular.  It is usually represented as the pair (alpha,beta),
-*  as there is a reasonable interpretation for beta=0, and even for
-*  both being zero.  A good beginning reference is the book, "Matrix
-*  Computations", by G. Golub & C. van Loan (Johns Hopkins U. Press)
+*     A*x = lambda*B*x.
 *
-*  A right generalized eigenvector corresponding to a generalized
-*  eigenvalue  w  for a pair of matrices (A,B) is a vector  r  such
-*  that  (A - w B) r = 0 .  A left generalized eigenvector is a vector
-*  l such that l**H * (A - w B) = 0, where l**H is the
-*  conjugate-transpose of l.
+*  An alternate form is to find the eigenvalues mu and corresponding
+*  eigenvectors y such that
+*
+*     mu*A*y = B*y.
+*
+*  These two forms are equivalent with mu = 1/lambda and x = y if
+*  neither lambda nor mu is zero.  In order to deal with the case that
+*  lambda or mu is zero or small, two values alpha and beta are returned
+*  for each eigenvalue, such that lambda = alpha/beta and
+*  mu = beta/alpha.
+*
+*  The vectors x and y in the above equations are right eigenvectors of
+*  the matrix pair (A,B).  Vectors u and v satisfying
+*
+*     u**H*A = lambda*u**H*B  or  mu*v**H*A = v**H*B
+*
+*  are left eigenvectors of (A,B).
 *
 *  Note: this routine performs "full balancing" on A and B -- see
 *  "Further Details", below.
@@ -3063,63 +3088,75 @@
 *
 *  JOBVL   (input) CHARACTER*1
 *          = 'N':  do not compute the left generalized eigenvectors;
-*          = 'V':  compute the left generalized eigenvectors.
+*          = 'V':  compute the left generalized eigenvectors (returned
+*                  in VL).
 *
 *  JOBVR   (input) CHARACTER*1
 *          = 'N':  do not compute the right generalized eigenvectors;
-*          = 'V':  compute the right generalized eigenvectors.
+*          = 'V':  compute the right generalized eigenvectors (returned
+*                  in VR).
 *
 *  N       (input) INTEGER
 *          The order of the matrices A, B, VL, and VR.  N >= 0.
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA, N)
-*          On entry, the first of the pair of matrices whose
-*          generalized eigenvalues and (optionally) generalized
-*          eigenvectors are to be computed.
-*          On exit, the contents will have been destroyed.  (For a
-*          description of the contents of A on exit, see "Further
-*          Details", below.)
+*          On entry, the matrix A.
+*          If JOBVL = 'V' or JOBVR = 'V', then on exit A
+*          contains the real Schur form of A from the generalized Schur
+*          factorization of the pair (A,B) after balancing.
+*          If no eigenvectors were computed, then only the diagonal
+*          blocks from the Schur form will be correct.  See DGGHRD and
+*          DHGEQZ for details.
 *
 *  LDA     (input) INTEGER
 *          The leading dimension of A.  LDA >= max(1,N).
 *
 *  B       (input/output) DOUBLE PRECISION array, dimension (LDB, N)
-*          On entry, the second of the pair of matrices whose
-*          generalized eigenvalues and (optionally) generalized
-*          eigenvectors are to be computed.
-*          On exit, the contents will have been destroyed.  (For a
-*          description of the contents of B on exit, see "Further
-*          Details", below.)
+*          On entry, the matrix B.
+*          If JOBVL = 'V' or JOBVR = 'V', then on exit B contains the
+*          upper triangular matrix obtained from B in the generalized
+*          Schur factorization of the pair (A,B) after balancing.
+*          If no eigenvectors were computed, then only those elements of
+*          B corresponding to the diagonal blocks from the Schur form of
+*          A will be correct.  See DGGHRD and DHGEQZ for details.
 *
 *  LDB     (input) INTEGER
 *          The leading dimension of B.  LDB >= max(1,N).
 *
 *  ALPHAR  (output) DOUBLE PRECISION array, dimension (N)
-*  ALPHAI  (output) DOUBLE PRECISION array, dimension (N)
-*  BETA    (output) DOUBLE PRECISION array, dimension (N)
-*          On exit, (ALPHAR(j) + ALPHAI(j)*i)/BETA(j), j=1,...,N, will
-*          be the generalized eigenvalues.  If ALPHAI(j) is zero, then
-*          the j-th eigenvalue is real; if positive, then the j-th and
-*          (j+1)-st eigenvalues are a complex conjugate pair, with
-*          ALPHAI(j+1) negative.
+*          The real parts of each scalar alpha defining an eigenvalue of
+*          GNEP.
 *
-*          Note: the quotients ALPHAR(j)/BETA(j) and ALPHAI(j)/BETA(j)
-*          may easily over- or underflow, and BETA(j) may even be zero.
-*          Thus, the user should avoid naively computing the ratio
-*          alpha/beta.  However, ALPHAR and ALPHAI will be always less
-*          than and usually comparable with norm(A) in magnitude, and
-*          BETA always less than and usually comparable with norm(B).
+*  ALPHAI  (output) DOUBLE PRECISION array, dimension (N)
+*          The imaginary parts of each scalar alpha defining an
+*          eigenvalue of GNEP.  If ALPHAI(j) is zero, then the j-th
+*          eigenvalue is real; if positive, then the j-th and
+*          (j+1)-st eigenvalues are a complex conjugate pair, with
+*          ALPHAI(j+1) = -ALPHAI(j).
+*
+*  BETA    (output) DOUBLE PRECISION array, dimension (N)
+*          The scalars beta that define the eigenvalues of GNEP.
+*          
+*          Together, the quantities alpha = (ALPHAR(j),ALPHAI(j)) and
+*          beta = BETA(j) represent the j-th eigenvalue of the matrix
+*          pair (A,B), in one of the forms lambda = alpha/beta or
+*          mu = beta/alpha.  Since either lambda or mu may overflow,
+*          they should not, in general, be computed.
 *
 *  VL      (output) DOUBLE PRECISION array, dimension (LDVL,N)
-*          If JOBVL = 'V', the left generalized eigenvectors.  (See
-*          "Purpose", above.)  Real eigenvectors take one column,
-*          complex take two columns, the first for the real part and
-*          the second for the imaginary part.  Complex eigenvectors
-*          correspond to an eigenvalue with positive imaginary part.
-*          Each eigenvector will be scaled so the largest component
-*          will have abs(real part) + abs(imag. part) = 1, *except*
-*          that for eigenvalues with alpha=beta=0, a zero vector will
-*          be returned as the corresponding eigenvector.
+*          If JOBVL = 'V', the left eigenvectors u(j) are stored
+*          in the columns of VL, in the same order as their eigenvalues.
+*          If the j-th eigenvalue is real, then u(j) = VL(:,j).
+*          If the j-th and (j+1)-st eigenvalues form a complex conjugate
+*          pair, then
+*             u(j) = VL(:,j) + i*VL(:,j+1)
+*          and
+*            u(j+1) = VL(:,j) - i*VL(:,j+1).
+*
+*          Each eigenvector is scaled so that its largest component has
+*          abs(real part) + abs(imag. part) = 1, except for eigenvectors
+*          corresponding to an eigenvalue with alpha = beta = 0, which
+*          are set to zero.
 *          Not referenced if JOBVL = 'N'.
 *
 *  LDVL    (input) INTEGER
@@ -3127,22 +3164,26 @@
 *          if JOBVL = 'V', LDVL >= N.
 *
 *  VR      (output) DOUBLE PRECISION array, dimension (LDVR,N)
-*          If JOBVR = 'V', the right generalized eigenvectors.  (See
-*          "Purpose", above.)  Real eigenvectors take one column,
-*          complex take two columns, the first for the real part and
-*          the second for the imaginary part.  Complex eigenvectors
-*          correspond to an eigenvalue with positive imaginary part.
-*          Each eigenvector will be scaled so the largest component
-*          will have abs(real part) + abs(imag. part) = 1, *except*
-*          that for eigenvalues with alpha=beta=0, a zero vector will
-*          be returned as the corresponding eigenvector.
+*          If JOBVR = 'V', the right eigenvectors x(j) are stored
+*          in the columns of VR, in the same order as their eigenvalues.
+*          If the j-th eigenvalue is real, then x(j) = VR(:,j).
+*          If the j-th and (j+1)-st eigenvalues form a complex conjugate
+*          pair, then
+*            x(j) = VR(:,j) + i*VR(:,j+1)
+*          and
+*            x(j+1) = VR(:,j) - i*VR(:,j+1).
+*
+*          Each eigenvector is scaled so that its largest component has
+*          abs(real part) + abs(imag. part) = 1, except for eigenvalues
+*          corresponding to an eigenvalue with alpha = beta = 0, which
+*          are set to zero.
 *          Not referenced if JOBVR = 'N'.
 *
 *  LDVR    (input) INTEGER
 *          The leading dimension of the matrix VR. LDVR >= 1, and
 *          if JOBVR = 'V', LDVR >= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3658,10 +3699,9 @@
       SUBROUTINE DGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK, LWORK,
      $                  INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -3702,7 +3742,7 @@
 *  Arguments
 *  =========
 *
-*  TRANS   (input) CHARACTER
+*  TRANS   (input) CHARACTER*1
 *          = 'N': the linear system involves A;
 *          = 'T': the linear system involves A**T.
 *
@@ -3731,8 +3771,8 @@
 *          On entry, the matrix B of right hand side vectors, stored
 *          columnwise; B is M-by-NRHS if TRANS = 'N', or N-by-NRHS
 *          if TRANS = 'T'.
-*          On exit, B is overwritten by the solution vectors, stored
-*          columnwise:
+*          On exit, if INFO = 0, B is overwritten by the solution
+*          vectors, stored columnwise:
 *          if TRANS = 'N' and m >= n, rows 1 to n of B contain the least
 *          squares solution vectors; the residual sum of squares for the
 *          solution in each column is given by the sum of squares of
@@ -3749,7 +3789,7 @@
 *  LDB     (input) INTEGER
 *          The leading dimension of the array B. LDB >= MAX(1,M,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3767,6 +3807,10 @@
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
 *          < 0:  if INFO = -i, the i-th argument had an illegal value
+*          > 0:  if INFO =  i, the i-th diagonal element of the
+*                triangular factor of A is zero, so that A does not have
+*                full rank; the least squares solution could not be
+*                computed.
 *
 *  =====================================================================
 *
@@ -3786,11 +3830,11 @@
       LOGICAL            LSAME
       INTEGER            ILAENV
       DOUBLE PRECISION   DLAMCH, DLANGE
-      EXTERNAL           LSAME, ILAENV, DLAMCH, DLANGE
+      EXTERNAL           LSAME, ILAENV, DLABAD, DLAMCH, DLANGE
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DGELQF, DGEQRF, DLASCL, DLASET, DORMLQ, DORMQR,
-     $                   DTRSM, XERBLA
+     $                   DTRTRS, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, MAX, MIN
@@ -3940,8 +3984,12 @@
 *
 *           B(1:N,1:NRHS) := inv(R) * B(1:N,1:NRHS)
 *
-            CALL DTRSM( 'Left', 'Upper', 'No transpose', 'Non-unit', N,
-     $                  NRHS, ONE, A, LDA, B, LDB )
+            CALL DTRTRS( 'Upper', 'No transpose', 'Non-unit', N, NRHS,
+     $                   A, LDA, B, LDB, INFO )
+*
+            IF( INFO.GT.0 ) THEN
+               RETURN
+            END IF
 *
             SCLLEN = N
 *
@@ -3951,8 +3999,12 @@
 *
 *           B(1:N,1:NRHS) := inv(R') * B(1:N,1:NRHS)
 *
-            CALL DTRSM( 'Left', 'Upper', 'Transpose', 'Non-unit', N,
-     $                  NRHS, ONE, A, LDA, B, LDB )
+            CALL DTRTRS( 'Upper', 'Transpose', 'Non-unit', N, NRHS,
+     $                   A, LDA, B, LDB, INFO )
+*
+            IF( INFO.GT.0 ) THEN
+               RETURN
+            END IF
 *
 *           B(N+1:M,1:NRHS) = ZERO
 *
@@ -3989,8 +4041,12 @@
 *
 *           B(1:M,1:NRHS) := inv(L) * B(1:M,1:NRHS)
 *
-            CALL DTRSM( 'Left', 'Lower', 'No transpose', 'Non-unit', M,
-     $                  NRHS, ONE, A, LDA, B, LDB )
+            CALL DTRTRS( 'Lower', 'No transpose', 'Non-unit', M, NRHS,
+     $                   A, LDA, B, LDB, INFO )
+*
+            IF( INFO.GT.0 ) THEN
+               RETURN
+            END IF
 *
 *           B(M+1:N,1:NRHS) = 0
 *
@@ -4024,8 +4080,12 @@
 *
 *           B(1:M,1:NRHS) := inv(L') * B(1:M,1:NRHS)
 *
-            CALL DTRSM( 'Left', 'Lower', 'Transpose', 'Non-unit', M,
-     $                  NRHS, ONE, A, LDA, B, LDB )
+            CALL DTRTRS( 'Lower', 'Transpose', 'Non-unit', M, NRHS,
+     $                   A, LDA, B, LDB, INFO )
+*
+            IF( INFO.GT.0 ) THEN
+               RETURN
+            END IF
 *
             SCLLEN = M
 *
@@ -4061,10 +4121,9 @@
       SUBROUTINE DGELSD( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
      $                   WORK, LWORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
@@ -4151,7 +4210,7 @@
 *          The effective rank of A, i.e., the number of singular values
 *          which are greater than RCOND*S(1).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -4173,7 +4232,7 @@
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  IWORK   (workspace) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace) INTEGER array, dimension (MAX(1,LIWORK))
 *          LIWORK >= 3 * MINMN * NLVL + 11 * MINMN,
 *          where MINMN = MIN( M,N ).
 *
@@ -4459,14 +4518,14 @@
      $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
 *
       ELSE IF( N.GE.MNTHR .AND. LWORK.GE.4*M+M*M+
-     $         MAX( M, 2*M-4, NRHS, N-3*M ) ) THEN
+     $         MAX( M, 2*M-4, NRHS, N-3*M, WLALSD ) ) THEN
 *
 *        Path 2a - underdetermined, with many more columns than rows
 *        and sufficient workspace for an efficient algorithm.
 *
          LDWORK = M
          IF( LWORK.GE.MAX( 4*M+M*LDA+MAX( M, 2*M-4, NRHS, N-3*M ),
-     $       M*LDA+M+M*NRHS ) )LDWORK = LDA
+     $       M*LDA+M+M*NRHS, 4*M+M*LDA+WLALSD ) )LDWORK = LDA
          ITAU = 1
          NWORK = M + 1
 *
@@ -4590,10 +4649,9 @@
       SUBROUTINE DGELSS( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
@@ -4667,7 +4725,7 @@
 *          The effective rank of A, i.e., the number of singular values
 *          which are greater than RCOND*S(1).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -4723,7 +4781,6 @@
       INFO = 0
       MINMN = MIN( M, N )
       MAXMN = MAX( M, N )
-      MNTHR = ILAENV( 6, 'DGELSS', ' ', M, N, NRHS, -1 )
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -4744,85 +4801,91 @@
 *       NB refers to the optimal block size for the immediately
 *       following subroutine, as returned by ILAENV.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MAXWRK = 0
-         MM = M
-         IF( M.GE.N .AND. M.GE.MNTHR ) THEN
+      IF( INFO.EQ.0 ) THEN
+         MINWRK = 1
+         MAXWRK = 1
+         IF( MINMN.GT.0 ) THEN
+            MM = M
+            MNTHR = ILAENV( 6, 'DGELSS', ' ', M, N, NRHS, -1 )
+            IF( M.GE.N .AND. M.GE.MNTHR ) THEN
 *
-*           Path 1a - overdetermined, with many more rows than columns
+*              Path 1a - overdetermined, with many more rows than
+*                        columns
 *
-            MM = N
-            MAXWRK = MAX( MAXWRK, N+N*ILAENV( 1, 'DGEQRF', ' ', M, N,
-     $               -1, -1 ) )
-            MAXWRK = MAX( MAXWRK, N+NRHS*
-     $               ILAENV( 1, 'DORMQR', 'LT', M, NRHS, N, -1 ) )
-         END IF
-         IF( M.GE.N ) THEN
+               MM = N
+               MAXWRK = MAX( MAXWRK, N + N*ILAENV( 1, 'DGEQRF', ' ', M,
+     $                       N, -1, -1 ) )
+               MAXWRK = MAX( MAXWRK, N + NRHS*ILAENV( 1, 'DORMQR', 'LT',
+     $                       M, NRHS, N, -1 ) )
+            END IF
+            IF( M.GE.N ) THEN
 *
-*           Path 1 - overdetermined or exactly determined
+*              Path 1 - overdetermined or exactly determined
 *
-*           Compute workspace needed for DBDSQR
+*              Compute workspace needed for DBDSQR
 *
-            BDSPAC = MAX( 1, 5*N )
-            MAXWRK = MAX( MAXWRK, 3*N+( MM+N )*
-     $               ILAENV( 1, 'DGEBRD', ' ', MM, N, -1, -1 ) )
-            MAXWRK = MAX( MAXWRK, 3*N+NRHS*
-     $               ILAENV( 1, 'DORMBR', 'QLT', MM, NRHS, N, -1 ) )
-            MAXWRK = MAX( MAXWRK, 3*N+( N-1 )*
-     $               ILAENV( 1, 'DORGBR', 'P', N, N, N, -1 ) )
-            MAXWRK = MAX( MAXWRK, BDSPAC )
-            MAXWRK = MAX( MAXWRK, N*NRHS )
-            MINWRK = MAX( 3*N+MM, 3*N+NRHS, BDSPAC )
-            MAXWRK = MAX( MINWRK, MAXWRK )
-         END IF
-         IF( N.GT.M ) THEN
-*
-*           Compute workspace needed for DBDSQR
-*
-            BDSPAC = MAX( 1, 5*M )
-            MINWRK = MAX( 3*M+NRHS, 3*M+N, BDSPAC )
-            IF( N.GE.MNTHR ) THEN
-*
-*              Path 2a - underdetermined, with many more columns
-*              than rows
-*
-               MAXWRK = M + M*ILAENV( 1, 'DGELQF', ' ', M, N, -1, -1 )
-               MAXWRK = MAX( MAXWRK, M*M+4*M+2*M*
-     $                  ILAENV( 1, 'DGEBRD', ' ', M, M, -1, -1 ) )
-               MAXWRK = MAX( MAXWRK, M*M+4*M+NRHS*
-     $                  ILAENV( 1, 'DORMBR', 'QLT', M, NRHS, M, -1 ) )
-               MAXWRK = MAX( MAXWRK, M*M+4*M+( M-1 )*
-     $                  ILAENV( 1, 'DORGBR', 'P', M, M, M, -1 ) )
-               MAXWRK = MAX( MAXWRK, M*M+M+BDSPAC )
-               IF( NRHS.GT.1 ) THEN
-                  MAXWRK = MAX( MAXWRK, M*M+M+M*NRHS )
-               ELSE
-                  MAXWRK = MAX( MAXWRK, M*M+2*M )
-               END IF
-               MAXWRK = MAX( MAXWRK, M+NRHS*
-     $                  ILAENV( 1, 'DORMLQ', 'LT', N, NRHS, M, -1 ) )
-            ELSE
-*
-*              Path 2 - underdetermined
-*
-               MAXWRK = 3*M + ( N+M )*ILAENV( 1, 'DGEBRD', ' ', M, N,
-     $                  -1, -1 )
-               MAXWRK = MAX( MAXWRK, 3*M+NRHS*
-     $                  ILAENV( 1, 'DORMBR', 'QLT', M, NRHS, M, -1 ) )
-               MAXWRK = MAX( MAXWRK, 3*M+M*
-     $                  ILAENV( 1, 'DORGBR', 'P', M, N, M, -1 ) )
+               BDSPAC = MAX( 1, 5*N )
+               MAXWRK = MAX( MAXWRK, 3*N + ( MM + N )*ILAENV( 1,
+     $                       'DGEBRD', ' ', MM, N, -1, -1 ) )
+               MAXWRK = MAX( MAXWRK, 3*N + NRHS*ILAENV( 1, 'DORMBR',
+     $                       'QLT', MM, NRHS, N, -1 ) )
+               MAXWRK = MAX( MAXWRK, 3*N + ( N - 1 )*ILAENV( 1,
+     $                       'DORGBR', 'P', N, N, N, -1 ) )
                MAXWRK = MAX( MAXWRK, BDSPAC )
                MAXWRK = MAX( MAXWRK, N*NRHS )
+               MINWRK = MAX( 3*N + MM, 3*N + NRHS, BDSPAC )
+               MAXWRK = MAX( MINWRK, MAXWRK )
             END IF
+            IF( N.GT.M ) THEN
+*
+*              Compute workspace needed for DBDSQR
+*
+               BDSPAC = MAX( 1, 5*M )
+               MINWRK = MAX( 3*M+NRHS, 3*M+N, BDSPAC )
+               IF( N.GE.MNTHR ) THEN
+*
+*                 Path 2a - underdetermined, with many more columns
+*                 than rows
+*
+                  MAXWRK = M + M*ILAENV( 1, 'DGELQF', ' ', M, N, -1,
+     $                                  -1 )
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M + 2*M*ILAENV( 1,
+     $                          'DGEBRD', ' ', M, M, -1, -1 ) )
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M + NRHS*ILAENV( 1,
+     $                          'DORMBR', 'QLT', M, NRHS, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M +
+     $                          ( M - 1 )*ILAENV( 1, 'DORGBR', 'P', M,
+     $                          M, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, M*M + M + BDSPAC )
+                  IF( NRHS.GT.1 ) THEN
+                     MAXWRK = MAX( MAXWRK, M*M + M + M*NRHS )
+                  ELSE
+                     MAXWRK = MAX( MAXWRK, M*M + 2*M )
+                  END IF
+                  MAXWRK = MAX( MAXWRK, M + NRHS*ILAENV( 1, 'DORMLQ',
+     $                          'LT', N, NRHS, M, -1 ) )
+               ELSE
+*
+*                 Path 2 - underdetermined
+*
+                  MAXWRK = 3*M + ( N + M )*ILAENV( 1, 'DGEBRD', ' ', M,
+     $                     N, -1, -1 )
+                  MAXWRK = MAX( MAXWRK, 3*M + NRHS*ILAENV( 1, 'DORMBR',
+     $                          'QLT', M, NRHS, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, 3*M + M*ILAENV( 1, 'DORGBR',
+     $                          'P', M, N, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, BDSPAC )
+                  MAXWRK = MAX( MAXWRK, N*NRHS )
+               END IF
+            END IF
+            MAXWRK = MAX( MINWRK, MAXWRK )
          END IF
-         MAXWRK = MAX( MINWRK, MAXWRK )
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY )
+     $      INFO = -12
       END IF
 *
-      MINWRK = MAX( MINWRK, 1 )
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY )
-     $   INFO = -12
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGELSS', -INFO )
          RETURN
@@ -5080,8 +5143,8 @@
             DO 40 I = 1, NRHS, CHUNK
                BL = MIN( NRHS-I+1, CHUNK )
                CALL DGEMM( 'T', 'N', M, BL, M, ONE, WORK( IL ), LDWORK,
-     $                     B( 1, I ), LDB, ZERO, WORK( IWORK ), N )
-               CALL DLACPY( 'G', M, BL, WORK( IWORK ), N, B( 1, I ),
+     $                     B( 1, I ), LDB, ZERO, WORK( IWORK ), M )
+               CALL DLACPY( 'G', M, BL, WORK( IWORK ), M, B( 1, I ),
      $                      LDB )
    40       CONTINUE
          ELSE
@@ -5203,10 +5266,9 @@
       SUBROUTINE DGELSX( M, N, NRHS, A, LDA, B, LDB, JPVT, RCOND, RANK,
      $                   WORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, M, N, NRHS, RANK
@@ -5553,10 +5615,9 @@
       SUBROUTINE DGELSY( M, N, NRHS, A, LDA, B, LDB, JPVT, RCOND, RANK,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
@@ -5652,7 +5713,7 @@
 *          R11.  This is the same as the order of the submatrix T11
 *          in the complete orthogonal factorization of A.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -5693,8 +5754,8 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            LQUERY
-      INTEGER            I, IASCL, IBSCL, ISMAX, ISMIN, J, LWKOPT, MN,
-     $                   NB, NB1, NB2, NB3, NB4
+      INTEGER            I, IASCL, IBSCL, ISMAX, ISMIN, J, LWKMIN,
+     $                   LWKOPT, MN, NB, NB1, NB2, NB3, NB4
       DOUBLE PRECISION   ANRM, BIGNUM, BNRM, C1, C2, S1, S2, SMAX,
      $                   SMAXPR, SMIN, SMINPR, SMLNUM, WSIZE
 *     ..
@@ -5708,7 +5769,7 @@
      $                   DORMQR, DORMRZ, DTRSM, DTZRZF, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, DBLE, MAX, MIN
+      INTRINSIC          ABS, MAX, MIN
 *     ..
 *     .. Executable Statements ..
 *
@@ -5719,13 +5780,6 @@
 *     Test the input arguments.
 *
       INFO = 0
-      NB1 = ILAENV( 1, 'DGEQRF', ' ', M, N, -1, -1 )
-      NB2 = ILAENV( 1, 'DGERQF', ' ', M, N, -1, -1 )
-      NB3 = ILAENV( 1, 'DORMQR', ' ', M, N, NRHS, -1 )
-      NB4 = ILAENV( 1, 'DORMRQ', ' ', M, N, NRHS, -1 )
-      NB = MAX( NB1, NB2, NB3, NB4 )
-      LWKOPT = MAX( 1, MN+2*N+NB*( N+1 ), 2*MN+NB*NRHS )
-      WORK( 1 ) = DBLE( LWKOPT )
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -5737,9 +5791,29 @@
          INFO = -5
       ELSE IF( LDB.LT.MAX( 1, M, N ) ) THEN
          INFO = -7
-      ELSE IF( LWORK.LT.MAX( 1, MN+3*N+1, 2*MN+NRHS ) .AND. .NOT.
-     $         LQUERY ) THEN
-         INFO = -12
+      END IF
+*
+*     Figure out optimal block size
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( MN.EQ.0 .OR. NRHS.EQ.0 ) THEN
+            LWKMIN = 1
+            LWKOPT = 1
+         ELSE
+            NB1 = ILAENV( 1, 'DGEQRF', ' ', M, N, -1, -1 )
+            NB2 = ILAENV( 1, 'DGERQF', ' ', M, N, -1, -1 )
+            NB3 = ILAENV( 1, 'DORMQR', ' ', M, N, NRHS, -1 )
+            NB4 = ILAENV( 1, 'DORMRQ', ' ', M, N, NRHS, -1 )
+            NB = MAX( NB1, NB2, NB3, NB4 )
+            LWKMIN = MN + MAX( 2*MN, N + 1, MN + NRHS )
+            LWKOPT = MAX( LWKMIN,
+     $                    MN + 2*N + NB*( N + 1 ), 2*MN + NB*NRHS )
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -5751,7 +5825,7 @@
 *
 *     Quick return if possible
 *
-      IF( MIN( M, N, NRHS ).EQ.0 ) THEN
+      IF( MN.EQ.0 .OR. NRHS.EQ.0 ) THEN
          RANK = 0
          RETURN
       END IF
@@ -5922,7 +5996,7 @@
       END IF
 *
    70 CONTINUE
-      WORK( 1 ) = DBLE( LWKOPT )
+      WORK( 1 ) = LWKOPT
 *
       RETURN
 *
@@ -5932,10 +6006,9 @@
       SUBROUTINE DGESDD( JOBZ, M, N, A, LDA, S, U, LDU, VT, LDVT, WORK,
      $                   LWORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ
@@ -5990,7 +6063,7 @@
 *                  the array VT;
 *                  otherwise, all columns of U are returned in the
 *                  array U and the first M rows of V**T are overwritten
-*                  in the array VT;
+*                  in the array A;
 *          = 'N':  no columns of U or rows of V**T are computed.
 *
 *  M       (input) INTEGER
@@ -6041,13 +6114,13 @@
 *          JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;
 *          if JOBZ = 'S', LDVT >= min(M,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK;
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK. LWORK >= 1.
 *          If JOBZ = 'N',
-*            LWORK >= 3*min(M,N) + max(max(M,N),6*min(M,N)).
+*            LWORK >= 3*min(M,N) + max(max(M,N),7*min(M,N)).
 *          If JOBZ = 'O',
 *            LWORK >= 3*min(M,N)*min(M,N) + 
 *                     max(max(M,N),5*min(M,N)*min(M,N)+4*min(M,N)).
@@ -6055,7 +6128,7 @@
 *            LWORK >= 3*min(M,N)*min(M,N) +
 *                     max(max(M,N),4*min(M,N)*min(M,N)+4*min(M,N)).
 *          For good performance, LWORK should generally be larger.
-*          If LWORK < 0 but other input arguments are legal, WORK(1)
+*          If LWORK = -1 but other input arguments are legal, WORK(1)
 *          returns the optimal LWORK.
 *
 *  IWORK   (workspace) INTEGER array, dimension (8*min(M,N))
@@ -6102,7 +6175,7 @@
       EXTERNAL           DLAMCH, DLANGE, ILAENV, LSAME
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          DBLE, INT, MAX, MIN, SQRT
+      INTRINSIC          INT, MAX, MIN, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -6110,14 +6183,11 @@
 *
       INFO = 0
       MINMN = MIN( M, N )
-      MNTHR = INT( MINMN*11.0D0 / 6.0D0 )
       WNTQA = LSAME( JOBZ, 'A' )
       WNTQS = LSAME( JOBZ, 'S' )
       WNTQAS = WNTQA .OR. WNTQS
       WNTQO = LSAME( JOBZ, 'O' )
       WNTQN = LSAME( JOBZ, 'N' )
-      MINWRK = 1
-      MAXWRK = 1
       LQUERY = ( LWORK.EQ.-1 )
 *
       IF( .NOT.( WNTQA .OR. WNTQS .OR. WNTQO .OR. WNTQN ) ) THEN
@@ -6144,11 +6214,14 @@
 *       NB refers to the optimal block size for the immediately
 *       following subroutine, as returned by ILAENV.)
 *
-      IF( INFO.EQ.0 .AND. M.GT.0 .AND. N.GT.0 ) THEN
-         IF( M.GE.N ) THEN
+      IF( INFO.EQ.0 ) THEN
+         MINWRK = 1
+         MAXWRK = 1
+         IF( M.GE.N .AND. MINMN.GT.0 ) THEN
 *
 *           Compute space needed for DBDSDC
 *
+            MNTHR = INT( MINMN*11.0D0 / 6.0D0 )
             IF( WNTQN ) THEN
                BDSPAC = 7*N
             ELSE
@@ -6247,10 +6320,11 @@
                   MINWRK = 3*N + MAX( M, BDSPAC )
                END IF
             END IF
-         ELSE
+         ELSE IF( MINMN.GT.0 ) THEN
 *
 *           Compute space needed for DBDSDC
 *
+            MNTHR = INT( MINMN*11.0D0 / 6.0D0 )
             IF( WNTQN ) THEN
                BDSPAC = 7*M
             ELSE
@@ -6350,12 +6424,14 @@
                END IF
             END IF
          END IF
+         MAXWRK = MAX( MAXWRK, MINWRK )
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
       END IF
 *
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
-         INFO = -12
-      END IF
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGESDD', -INFO )
          RETURN
@@ -6366,8 +6442,6 @@
 *     Quick return if possible
 *
       IF( M.EQ.0 .OR. N.EQ.0 ) THEN
-         IF( LWORK.GE.1 )
-     $      WORK( 1 ) = ONE
          RETURN
       END IF
 *
@@ -6800,8 +6874,10 @@
 *
 *              Set the right corner of U to identity matrix
 *
-               CALL DLASET( 'F', M-N, M-N, ZERO, ONE, U( N+1, N+1 ),
-     $                      LDU )
+               IF( M.GT.N ) THEN
+                  CALL DLASET( 'F', M-N, M-N, ZERO, ONE, U( N+1, N+1 ),
+     $                         LDU )
+               END IF
 *
 *              Overwrite U by left singular vectors of A and VT
 *              by right singular vectors of A
@@ -7225,8 +7301,10 @@
 *
 *              Set the right corner of VT to identity matrix
 *
-               CALL DLASET( 'F', N-M, N-M, ZERO, ONE, VT( M+1, M+1 ),
-     $                      LDVT )
+               IF( N.GT.M ) THEN
+                  CALL DLASET( 'F', N-M, N-M, ZERO, ONE, VT( M+1, M+1 ),
+     $                         LDVT )
+               END IF
 *
 *              Overwrite U by left singular vectors of A and VT
 *              by right singular vectors of A
@@ -7257,7 +7335,7 @@
 *
 *     Return optimal workspace in WORK(1)
 *
-      WORK( 1 ) = DBLE( MAXWRK )
+      WORK( 1 ) = MAXWRK
 *
       RETURN
 *
@@ -7266,10 +7344,9 @@
       END
       SUBROUTINE DGESV( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, N, NRHS
@@ -7375,10 +7452,9 @@
       SUBROUTINE DGESVD( JOBU, JOBVT, M, N, A, LDA, S, U, LDU, VT, LDVT,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBU, JOBVT
@@ -7479,7 +7555,7 @@
 *          The leading dimension of the array VT.  LDVT >= 1; if
 *          JOBVT = 'A', LDVT >= N; if JOBVT = 'S', LDVT >= min(M,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK;
 *          if INFO > 0, WORK(2:MIN(M,N)) contains the unconverged
 *          superdiagonal elements of an upper bidiagonal matrix B
@@ -7488,8 +7564,8 @@
 *          as A, and singular vectors related by U and VT.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK. LWORK >= 1.
-*          LWORK >= MAX(3*MIN(M,N)+MAX(M,N),5*MIN(M,N)).
+*          The dimension of the array WORK.
+*          LWORK >= MAX(1,3*MIN(M,N)+MAX(M,N),5*MIN(M,N)).
 *          For good performance, LWORK should generally be larger.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
@@ -7543,7 +7619,6 @@
 *
       INFO = 0
       MINMN = MIN( M, N )
-      MNTHR = ILAENV( 6, 'DGESVD', JOBU // JOBVT, M, N, 0, 0 )
       WNTUA = LSAME( JOBU, 'A' )
       WNTUS = LSAME( JOBU, 'S' )
       WNTUAS = WNTUA .OR. WNTUS
@@ -7554,7 +7629,6 @@
       WNTVAS = WNTVA .OR. WNTVS
       WNTVO = LSAME( JOBVT, 'O' )
       WNTVN = LSAME( JOBVT, 'N' )
-      MINWRK = 1
       LQUERY = ( LWORK.EQ.-1 )
 *
       IF( .NOT.( WNTUA .OR. WNTUS .OR. WNTUO .OR. WNTUN ) ) THEN
@@ -7582,12 +7656,14 @@
 *       NB refers to the optimal block size for the immediately
 *       following subroutine, as returned by ILAENV.)
 *
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) .AND. M.GT.0 .AND.
-     $    N.GT.0 ) THEN
-         IF( M.GE.N ) THEN
+      IF( INFO.EQ.0 ) THEN
+         MINWRK = 1
+         MAXWRK = 1
+         IF( M.GE.N .AND. MINMN.GT.0 ) THEN
 *
 *           Compute space needed for DBDSQR
 *
+            MNTHR = ILAENV( 6, 'DGESVD', JOBU // JOBVT, M, N, 0, 0 )
             BDSPAC = 5*N
             IF( M.GE.MNTHR ) THEN
                IF( WNTUN ) THEN
@@ -7603,7 +7679,6 @@
      $                        ILAENV( 1, 'DORGBR', 'P', N, N, N, -1 ) )
                   MAXWRK = MAX( MAXWRK, BDSPAC )
                   MINWRK = MAX( 4*N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUO .AND. WNTVN ) THEN
 *
 *                 Path 2 (M much larger than N, JOBU='O', JOBVT='N')
@@ -7618,7 +7693,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = MAX( N*N+WRKBL, N*N+M*N+N )
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUO .AND. WNTVAS ) THEN
 *
 *                 Path 3 (M much larger than N, JOBU='O', JOBVT='S' or
@@ -7636,7 +7710,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = MAX( N*N+WRKBL, N*N+M*N+N )
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUS .AND. WNTVN ) THEN
 *
 *                 Path 4 (M much larger than N, JOBU='S', JOBVT='N')
@@ -7651,7 +7724,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = N*N + WRKBL
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUS .AND. WNTVO ) THEN
 *
 *                 Path 5 (M much larger than N, JOBU='S', JOBVT='O')
@@ -7668,7 +7740,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = 2*N*N + WRKBL
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUS .AND. WNTVAS ) THEN
 *
 *                 Path 6 (M much larger than N, JOBU='S', JOBVT='S' or
@@ -7686,7 +7757,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = N*N + WRKBL
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUA .AND. WNTVN ) THEN
 *
 *                 Path 7 (M much larger than N, JOBU='A', JOBVT='N')
@@ -7701,7 +7771,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = N*N + WRKBL
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUA .AND. WNTVO ) THEN
 *
 *                 Path 8 (M much larger than N, JOBU='A', JOBVT='O')
@@ -7718,7 +7787,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = 2*N*N + WRKBL
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTUA .AND. WNTVAS ) THEN
 *
 *                 Path 9 (M much larger than N, JOBU='A', JOBVT='S' or
@@ -7736,7 +7804,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = N*N + WRKBL
                   MINWRK = MAX( 3*N+M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                END IF
             ELSE
 *
@@ -7755,12 +7822,12 @@
      $                     ILAENV( 1, 'DORGBR', 'P', N, N, N, -1 ) )
                MAXWRK = MAX( MAXWRK, BDSPAC )
                MINWRK = MAX( 3*N+M, BDSPAC )
-               MAXWRK = MAX( MAXWRK, MINWRK )
             END IF
-         ELSE
+         ELSE IF( MINMN.GT.0 ) THEN
 *
 *           Compute space needed for DBDSQR
 *
+            MNTHR = ILAENV( 6, 'DGESVD', JOBU // JOBVT, M, N, 0, 0 )
             BDSPAC = 5*M
             IF( N.GE.MNTHR ) THEN
                IF( WNTVN ) THEN
@@ -7776,7 +7843,6 @@
      $                        ILAENV( 1, 'DORGBR', 'Q', M, M, M, -1 ) )
                   MAXWRK = MAX( MAXWRK, BDSPAC )
                   MINWRK = MAX( 4*M, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVO .AND. WNTUN ) THEN
 *
 *                 Path 2t(N much larger than M, JOBU='N', JOBVT='O')
@@ -7791,7 +7857,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = MAX( M*M+WRKBL, M*M+M*N+M )
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVO .AND. WNTUAS ) THEN
 *
 *                 Path 3t(N much larger than M, JOBU='S' or 'A',
@@ -7809,7 +7874,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = MAX( M*M+WRKBL, M*M+M*N+M )
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVS .AND. WNTUN ) THEN
 *
 *                 Path 4t(N much larger than M, JOBU='N', JOBVT='S')
@@ -7824,7 +7888,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = M*M + WRKBL
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVS .AND. WNTUO ) THEN
 *
 *                 Path 5t(N much larger than M, JOBU='O', JOBVT='S')
@@ -7841,7 +7904,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = 2*M*M + WRKBL
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVS .AND. WNTUAS ) THEN
 *
 *                 Path 6t(N much larger than M, JOBU='S' or 'A',
@@ -7859,7 +7921,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = M*M + WRKBL
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVA .AND. WNTUN ) THEN
 *
 *                 Path 7t(N much larger than M, JOBU='N', JOBVT='A')
@@ -7874,7 +7935,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = M*M + WRKBL
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVA .AND. WNTUO ) THEN
 *
 *                 Path 8t(N much larger than M, JOBU='O', JOBVT='A')
@@ -7891,7 +7951,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = 2*M*M + WRKBL
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                ELSE IF( WNTVA .AND. WNTUAS ) THEN
 *
 *                 Path 9t(N much larger than M, JOBU='S' or 'A',
@@ -7909,7 +7968,6 @@
                   WRKBL = MAX( WRKBL, BDSPAC )
                   MAXWRK = M*M + WRKBL
                   MINWRK = MAX( 3*M+N, BDSPAC )
-                  MAXWRK = MAX( MAXWRK, MINWRK )
                END IF
             ELSE
 *
@@ -7928,15 +7986,16 @@
      $                     ILAENV( 1, 'DORGBR', 'Q', M, M, M, -1 ) )
                MAXWRK = MAX( MAXWRK, BDSPAC )
                MINWRK = MAX( 3*M+N, BDSPAC )
-               MAXWRK = MAX( MAXWRK, MINWRK )
             END IF
          END IF
+         MAXWRK = MAX( MAXWRK, MINWRK )
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
 *
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
-         INFO = -13
-      END IF
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGESVD', -INFO )
          RETURN
@@ -7947,8 +8006,6 @@
 *     Quick return if possible
 *
       IF( M.EQ.0 .OR. N.EQ.0 ) THEN
-         IF( LWORK.GE.1 )
-     $      WORK( 1 ) = ONE
          RETURN
       END IF
 *
@@ -8196,8 +8253,9 @@
 *                 Copy R to VT, zeroing out below it
 *
                   CALL DLACPY( 'U', N, N, A, LDA, VT, LDVT )
-                  CALL DLASET( 'L', N-1, N-1, ZERO, ZERO, VT( 2, 1 ),
-     $                         LDVT )
+                  IF( N.GT.1 )
+     $               CALL DLASET( 'L', N-1, N-1, ZERO, ZERO,
+     $                            VT( 2, 1 ), LDVT )
 *
 *                 Generate Q in A
 *                 (Workspace: need N*N+2*N, prefer N*N+N+N*NB)
@@ -8270,8 +8328,9 @@
 *                 Copy R to VT, zeroing out below it
 *
                   CALL DLACPY( 'U', N, N, A, LDA, VT, LDVT )
-                  CALL DLASET( 'L', N-1, N-1, ZERO, ZERO, VT( 2, 1 ),
-     $                         LDVT )
+                  IF( N.GT.1 )
+     $               CALL DLASET( 'L', N-1, N-1, ZERO, ZERO,
+     $                            VT( 2, 1 ), LDVT )
 *
 *                 Generate Q in A
 *                 (Workspace: need 2*N, prefer N+N*NB)
@@ -8732,8 +8791,9 @@
 *                    Copy R to VT, zeroing out below it
 *
                      CALL DLACPY( 'U', N, N, A, LDA, VT, LDVT )
-                     CALL DLASET( 'L', N-1, N-1, ZERO, ZERO, VT( 2, 1 ),
-     $                            LDVT )
+                     IF( N.GT.1 )
+     $                  CALL DLASET( 'L', N-1, N-1, ZERO, ZERO,
+     $                               VT( 2, 1 ), LDVT )
                      IE = ITAU
                      ITAUQ = IE + N
                      ITAUP = ITAUQ + N
@@ -9208,8 +9268,9 @@
 *                    Copy R from A to VT, zeroing out below it
 *
                      CALL DLACPY( 'U', N, N, A, LDA, VT, LDVT )
-                     CALL DLASET( 'L', N-1, N-1, ZERO, ZERO, VT( 2, 1 ),
-     $                            LDVT )
+                     IF( N.GT.1 )
+     $                  CALL DLASET( 'L', N-1, N-1, ZERO, ZERO,
+     $                               VT( 2, 1 ), LDVT )
                      IE = ITAU
                      ITAUQ = IE + N
                      ITAUP = ITAUQ + N
@@ -10793,10 +10854,9 @@
      $                   EQUED, R, C, B, LDB, X, LDX, RCOND, FERR, BERR,
      $                   WORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, FACT, TRANS
@@ -11184,22 +11244,20 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 ) THEN
+         IF( INFO.GT.0 ) THEN
 *
-*              Compute the reciprocal pivot growth factor of the
-*              leading rank-deficient INFO columns of A.
+*           Compute the reciprocal pivot growth factor of the
+*           leading rank-deficient INFO columns of A.
 *
-               RPVGRW = DLANTR( 'M', 'U', 'N', INFO, INFO, AF, LDAF,
-     $                  WORK )
-               IF( RPVGRW.EQ.ZERO ) THEN
-                  RPVGRW = ONE
-               ELSE
-                  RPVGRW = DLANGE( 'M', N, INFO, A, LDA, WORK ) / RPVGRW
-               END IF
-               WORK( 1 ) = RPVGRW
-               RCOND = ZERO
+            RPVGRW = DLANTR( 'M', 'U', 'N', INFO, INFO, AF, LDAF,
+     $               WORK )
+            IF( RPVGRW.EQ.ZERO ) THEN
+               RPVGRW = ONE
+            ELSE
+               RPVGRW = DLANGE( 'M', N, INFO, A, LDA, WORK ) / RPVGRW
             END IF
+            WORK( 1 ) = RPVGRW
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -11223,11 +11281,6 @@
 *     Compute the reciprocal of the condition number of A.
 *
       CALL DGECON( NORM, N, AF, LDAF, ANORM, RCOND, WORK, IWORK, INFO )
-*
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
 *
 *     Compute the solution matrix X.
 *
@@ -11266,19 +11319,23 @@
       END IF
 *
       WORK( 1 ) = RPVGRW
+*
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
       RETURN
 *
 *     End of DGESVX
 *
       END
-      SUBROUTINE DGGES( JOBVSL, JOBVSR, SORT, DELCTG, N, A, LDA, B, LDB,
+      SUBROUTINE DGGES( JOBVSL, JOBVSR, SORT, SELCTG, N, A, LDA, B, LDB,
      $                  SDIM, ALPHAR, ALPHAI, BETA, VSL, LDVSL, VSR,
      $                  LDVSR, WORK, LWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVSL, JOBVSR, SORT
@@ -11291,8 +11348,8 @@
      $                   VSR( LDVSR, * ), WORK( * )
 *     ..
 *     .. Function Arguments ..
-      LOGICAL            DELCTG
-      EXTERNAL           DELCTG
+      LOGICAL            SELCTG
+      EXTERNAL           SELCTG
 *     ..
 *
 *  Purpose
@@ -11347,20 +11404,20 @@
 *          Specifies whether or not to order the eigenvalues on the
 *          diagonal of the generalized Schur form.
 *          = 'N':  Eigenvalues are not ordered;
-*          = 'S':  Eigenvalues are ordered (see DELZTG);
+*          = 'S':  Eigenvalues are ordered (see SELCTG);
 *
-*  DELZTG  (input) LOGICAL FUNCTION of three DOUBLE PRECISION arguments
-*          DELZTG must be declared EXTERNAL in the calling subroutine.
-*          If SORT = 'N', DELZTG is not referenced.
-*          If SORT = 'S', DELZTG is used to select eigenvalues to sort
+*  SELCTG  (external procedure) LOGICAL FUNCTION of three DOUBLE PRECISION arguments
+*          SELCTG must be declared EXTERNAL in the calling subroutine.
+*          If SORT = 'N', SELCTG is not referenced.
+*          If SORT = 'S', SELCTG is used to select eigenvalues to sort
 *          to the top left of the Schur form.
 *          An eigenvalue (ALPHAR(j)+ALPHAI(j))/BETA(j) is selected if
-*          DELZTG(ALPHAR(j),ALPHAI(j),BETA(j)) is true; i.e. if either
+*          SELCTG(ALPHAR(j),ALPHAI(j),BETA(j)) is true; i.e. if either
 *          one of a complex conjugate pair of eigenvalues is selected,
 *          then both complex eigenvalues are selected.
 *
 *          Note that in the ill-conditioned case, a selected complex
-*          eigenvalue may no longer satisfy DELZTG(ALPHAR(j),ALPHAI(j),
+*          eigenvalue may no longer satisfy SELCTG(ALPHAR(j),ALPHAI(j),
 *          BETA(j)) = .TRUE. after ordering. INFO is to be set to N+2
 *          in this case.
 *
@@ -11386,8 +11443,8 @@
 *  SDIM    (output) INTEGER
 *          If SORT = 'N', SDIM = 0.
 *          If SORT = 'S', SDIM = number of eigenvalues (after sorting)
-*          for which DELZTG is true.  (Complex conjugate pairs for which
-*          DELZTG is true for either eigenvalue count as 2.)
+*          for which SELCTG is true.  (Complex conjugate pairs for which
+*          SELCTG is true for either eigenvalue count as 2.)
 *
 *  ALPHAR  (output) DOUBLE PRECISION array, dimension (N)
 *  ALPHAI  (output) DOUBLE PRECISION array, dimension (N)
@@ -11425,11 +11482,13 @@
 *          The leading dimension of the matrix VSR. LDVSR >= 1, and
 *          if JOBVSR = 'V', LDVSR >= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK.  LWORK >= 8*N+16.
+*          The dimension of the array WORK.
+*          If N = 0, LWORK >= 1, else LWORK >= 8*N+16.
+*          For good performance , LWORK must generally be larger.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
@@ -11450,7 +11509,7 @@
 *                =N+2: after reordering, roundoff changed values of
 *                      some complex eigenvalues so that leading
 *                      eigenvalues in the Generalized Schur form no
-*                      longer satisfy DELZTG=.TRUE.  This could also
+*                      longer satisfy SELCTG=.TRUE.  This could also
 *                      be caused due to scaling.
 *                =N+3: reordering failed in DTGSEN.
 *
@@ -11544,20 +11603,27 @@
 *       NB refers to the optimal block size for the immediately
 *       following subroutine, as returned by ILAENV.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MINWRK = 7*( N+1 ) + 16
-         MAXWRK = 7*( N+1 ) + N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 ) +
-     $            16
-         IF( ILVSL ) THEN
-            MAXWRK = MAX( MAXWRK, 7*( N+1 )+N*
-     $               ILAENV( 1, 'DORGQR', ' ', N, 1, N, -1 ) )
+      IF( INFO.EQ.0 ) THEN
+         IF( N.GT.0 )THEN
+            MINWRK = MAX( 8*N, 6*N + 16 )
+            MAXWRK = MINWRK - N +
+     $               N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 )
+            MAXWRK = MAX( MAXWRK, MINWRK - N +
+     $                    N*ILAENV( 1, 'DORMQR', ' ', N, 1, N, -1 ) )
+            IF( ILVSL ) THEN
+               MAXWRK = MAX( MAXWRK, MINWRK - N +
+     $                       N*ILAENV( 1, 'DORGQR', ' ', N, 1, N, -1 ) )
+            END IF
+         ELSE
+            MINWRK = 1
+            MAXWRK = 1
          END IF
          WORK( 1 ) = MAXWRK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY )
+     $      INFO = -19
       END IF
 *
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY )
-     $   INFO = -19
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGGES ', -INFO )
          RETURN
@@ -11640,8 +11706,10 @@
 *
       IF( ILVSL ) THEN
          CALL DLASET( 'Full', N, N, ZERO, ONE, VSL, LDVSL )
-         CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
-     $                VSL( ILO+1, ILO ), LDVSL )
+         IF( IROWS.GT.1 ) THEN
+            CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
+     $                   VSL( ILO+1, ILO ), LDVSL )
+         END IF
          CALL DORGQR( IROWS, IROWS, IROWS, VSL( ILO, ILO ), LDVSL,
      $                WORK( ITAU ), WORK( IWRK ), LWORK+1-IWRK, IERR )
       END IF
@@ -11681,7 +11749,7 @@
       SDIM = 0
       IF( WANTST ) THEN
 *
-*        Undo scaling on eigenvalues before DELZTGing
+*        Undo scaling on eigenvalues before SELCTGing
 *
          IF( ILASCL ) THEN
             CALL DLASCL( 'G', 0, 0, ANRMTO, ANRM, N, 1, ALPHAR, N,
@@ -11695,7 +11763,7 @@
 *        Select eigenvalues
 *
          DO 10 I = 1, N
-            BWORK( I ) = DELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
+            BWORK( I ) = SELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
    10    CONTINUE
 *
          CALL DTGSEN( 0, ILVSL, ILVSR, BWORK, N, A, LDA, B, LDB, ALPHAR,
@@ -11780,7 +11848,7 @@
          SDIM = 0
          IP = 0
          DO 40 I = 1, N
-            CURSL = DELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
+            CURSL = SELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
             IF( ALPHAI( I ).EQ.ZERO ) THEN
                IF( CURSL )
      $            SDIM = SDIM + 1
@@ -11821,15 +11889,14 @@
 *     End of DGGES
 *
       END
-      SUBROUTINE DGGESX( JOBVSL, JOBVSR, SORT, DELCTG, SENSE, N, A, LDA,
+      SUBROUTINE DGGESX( JOBVSL, JOBVSR, SORT, SELCTG, SENSE, N, A, LDA,
      $                   B, LDB, SDIM, ALPHAR, ALPHAI, BETA, VSL, LDVSL,
      $                   VSR, LDVSR, RCONDE, RCONDV, WORK, LWORK, IWORK,
      $                   LIWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVSL, JOBVSR, SENSE, SORT
@@ -11845,8 +11912,8 @@
      $                   WORK( * )
 *     ..
 *     .. Function Arguments ..
-      LOGICAL            DELCTG
-      EXTERNAL           DELCTG
+      LOGICAL            SELCTG
+      EXTERNAL           SELCTG
 *     ..
 *
 *  Purpose
@@ -11902,24 +11969,24 @@
 *          Specifies whether or not to order the eigenvalues on the
 *          diagonal of the generalized Schur form.
 *          = 'N':  Eigenvalues are not ordered;
-*          = 'S':  Eigenvalues are ordered (see DELZTG).
+*          = 'S':  Eigenvalues are ordered (see SELCTG).
 *
-*  DELZTG  (input) LOGICAL FUNCTION of three DOUBLE PRECISION arguments
-*          DELZTG must be declared EXTERNAL in the calling subroutine.
-*          If SORT = 'N', DELZTG is not referenced.
-*          If SORT = 'S', DELZTG is used to select eigenvalues to sort
+*  SELCTG  (external procedure) LOGICAL FUNCTION of three DOUBLE PRECISION arguments
+*          SELCTG must be declared EXTERNAL in the calling subroutine.
+*          If SORT = 'N', SELCTG is not referenced.
+*          If SORT = 'S', SELCTG is used to select eigenvalues to sort
 *          to the top left of the Schur form.
 *          An eigenvalue (ALPHAR(j)+ALPHAI(j))/BETA(j) is selected if
-*          DELZTG(ALPHAR(j),ALPHAI(j),BETA(j)) is true; i.e. if either
+*          SELCTG(ALPHAR(j),ALPHAI(j),BETA(j)) is true; i.e. if either
 *          one of a complex conjugate pair of eigenvalues is selected,
 *          then both complex eigenvalues are selected.
 *          Note that a selected complex eigenvalue may no longer satisfy
-*          DELZTG(ALPHAR(j),ALPHAI(j),BETA(j)) = .TRUE. after ordering,
+*          SELCTG(ALPHAR(j),ALPHAI(j),BETA(j)) = .TRUE. after ordering,
 *          since ordering may change the value of complex eigenvalues
 *          (especially if the eigenvalue is ill-conditioned), in this
 *          case INFO is set to N+3.
 *
-*  SENSE   (input) CHARACTER
+*  SENSE   (input) CHARACTER*1
 *          Determines which reciprocal condition numbers are computed.
 *          = 'N' : None are computed;
 *          = 'E' : Computed for average of selected eigenvalues only;
@@ -11949,8 +12016,8 @@
 *  SDIM    (output) INTEGER
 *          If SORT = 'N', SDIM = 0.
 *          If SORT = 'S', SDIM = number of eigenvalues (after sorting)
-*          for which DELZTG is true.  (Complex conjugate pairs for which
-*          DELZTG is true for either eigenvalue count as 2.)
+*          for which SELCTG is true.  (Complex conjugate pairs for which
+*          SELCTG is true for either eigenvalue count as 2.)
 *
 *  ALPHAR  (output) DOUBLE PRECISION array, dimension (N)
 *  ALPHAI  (output) DOUBLE PRECISION array, dimension (N)
@@ -12000,19 +12067,40 @@
 *          subspaces.
 *          Not referenced if SENSE = 'N' or 'E'.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK.  LWORK >= 8*(N+1)+16.
-*          If SENSE = 'E', 'V', or 'B',
-*          LWORK >= MAX( 8*(N+1)+16, 2*SDIM*(N-SDIM) ).
+*          The dimension of the array WORK.
+*          If N = 0, LWORK >= 1, else if SENSE = 'E', 'V', or 'B',
+*          LWORK >= max( 8*N, 6*N+16, 2*SDIM*(N-SDIM) ), else
+*          LWORK >= max( 8*N, 6*N+16 ).
+*          Note that 2*SDIM*(N-SDIM) <= N*N/2.
+*          Note also that an error is only returned if
+*          LWORK < max( 8*N, 6*N+16), but if SENSE = 'E' or 'V' or 'B'
+*          this may not be large enough.
 *
-*  IWORK   (workspace) INTEGER array, dimension (LIWORK)
-*          Not referenced if SENSE = 'N'.
+*          If LWORK = -1, then a workspace query is assumed; the routine
+*          only calculates the bound on the optimal size of the WORK
+*          array and the minimum size of the IWORK array, returns these
+*          values as the first entries of the WORK and IWORK arrays, and
+*          no error message related to LWORK or LIWORK is issued by
+*          XERBLA.
+*
+*  IWORK   (workspace) INTEGER array, dimension (MAX(1,LIWORK))
+*          On exit, if INFO = 0, IWORK(1) returns the minimum LIWORK.
 *
 *  LIWORK  (input) INTEGER
-*          The dimension of the array WORK.  LIWORK >= N+6.
+*          The dimension of the array IWORK.
+*          If SENSE = 'N' or N = 0, LIWORK >= 1, otherwise
+*          LIWORK >= N+6.
+*
+*          If LIWORK = -1, then a workspace query is assumed; the
+*          routine only calculates the bound on the optimal size of the
+*          WORK array and the minimum size of the IWORK array, returns
+*          these values as the first entries of the WORK and IWORK
+*          arrays, and no error message related to LWORK or LIWORK is
+*          issued by XERBLA.
 *
 *  BWORK   (workspace) LOGICAL array, dimension (N)
 *          Not referenced if SORT = 'N'.
@@ -12028,7 +12116,7 @@
 *                =N+2: after reordering, roundoff changed values of
 *                      some complex eigenvalues so that leading
 *                      eigenvalues in the Generalized Schur form no
-*                      longer satisfy DELZTG=.TRUE.  This could also
+*                      longer satisfy SELCTG=.TRUE.  This could also
 *                      be caused due to scaling.
 *                =N+3: reordering failed in DTGSEN.
 *
@@ -12055,10 +12143,11 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            CURSL, ILASCL, ILBSCL, ILVSL, ILVSR, LASTSL,
-     $                   LST2SL, WANTSB, WANTSE, WANTSN, WANTST, WANTSV
+     $                   LQUERY, LST2SL, WANTSB, WANTSE, WANTSN, WANTST,
+     $                   WANTSV
       INTEGER            I, ICOLS, IERR, IHI, IJOB, IJOBVL, IJOBVR,
      $                   ILEFT, ILO, IP, IRIGHT, IROWS, ITAU, IWRK,
-     $                   LIWMIN, MAXWRK, MINWRK
+     $                   LIWMIN, LWRK, MAXWRK, MINWRK
       DOUBLE PRECISION   ANRM, ANRMTO, BIGNUM, BNRM, BNRMTO, EPS, PL,
      $                   PR, SAFMAX, SAFMIN, SMLNUM
 *     ..
@@ -12110,9 +12199,9 @@
       WANTSE = LSAME( SENSE, 'E' )
       WANTSV = LSAME( SENSE, 'V' )
       WANTSB = LSAME( SENSE, 'B' )
+      LQUERY = ( LWORK.EQ.-1 .OR. LIWORK.EQ.-1 )
       IF( WANTSN ) THEN
          IJOB = 0
-         IWORK( 1 ) = 1
       ELSE IF( WANTSE ) THEN
          IJOB = 1
       ELSE IF( WANTSV ) THEN
@@ -12152,33 +12241,44 @@
 *       NB refers to the optimal block size for the immediately
 *       following subroutine, as returned by ILAENV.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. LWORK.GE.1 ) THEN
-         MINWRK = 8*( N+1 ) + 16
-         MAXWRK = 7*( N+1 ) + N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 ) +
-     $            16
-         IF( ILVSL ) THEN
-            MAXWRK = MAX( MAXWRK, 8*( N+1 )+N*
-     $               ILAENV( 1, 'DORGQR', ' ', N, 1, N, -1 )+16 )
+      IF( INFO.EQ.0 ) THEN
+         IF( N.GT.0) THEN
+            MINWRK = MAX( 8*N, 6*N + 16 )
+            MAXWRK = MINWRK - N +
+     $               N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 )
+            MAXWRK = MAX( MAXWRK, MINWRK - N +
+     $               N*ILAENV( 1, 'DORMQR', ' ', N, 1, N, -1 ) )
+            IF( ILVSL ) THEN
+               MAXWRK = MAX( MAXWRK, MINWRK - N +
+     $                  N*ILAENV( 1, 'DORGQR', ' ', N, 1, N, -1 ) )
+            END IF
+            LWRK = MAXWRK
+            IF( IJOB.GE.1 )
+     $         LWRK = MAX( LWRK, N*N/2 )
+         ELSE
+            MINWRK = 1
+            MAXWRK = 1
+            LWRK   = 1
          END IF
-         WORK( 1 ) = MAXWRK
-      END IF
-      IF( .NOT.WANTSN ) THEN
-         LIWMIN = 1
-      ELSE
-         LIWMIN = N + 6
-      END IF
-      IWORK( 1 ) = LIWMIN
+         WORK( 1 ) = LWRK
+         IF( WANTSN .OR. N.EQ.0 ) THEN
+            LIWMIN = 1
+         ELSE
+            LIWMIN = N + 6
+         END IF
+         IWORK( 1 ) = LIWMIN
 *
-      IF( INFO.EQ.0 .AND. LWORK.LT.MINWRK ) THEN
-         INFO = -22
-      ELSE IF( INFO.EQ.0 .AND. IJOB.GE.1 ) THEN
-         IF( LIWORK.LT.LIWMIN )
-     $      INFO = -24
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -22
+         ELSE IF( LIWORK.LT.LIWMIN  .AND. .NOT.LQUERY ) THEN
+            INFO = -24
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGGESX', -INFO )
+         RETURN
+      ELSE IF (LQUERY) THEN
          RETURN
       END IF
 *
@@ -12257,8 +12357,10 @@
 *
       IF( ILVSL ) THEN
          CALL DLASET( 'Full', N, N, ZERO, ONE, VSL, LDVSL )
-         CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
-     $                VSL( ILO+1, ILO ), LDVSL )
+         IF( IROWS.GT.1 ) THEN
+            CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
+     $                   VSL( ILO+1, ILO ), LDVSL )
+         END IF
          CALL DORGQR( IROWS, IROWS, IROWS, VSL( ILO, ILO ), LDVSL,
      $                WORK( ITAU ), WORK( IWRK ), LWORK+1-IWRK, IERR )
       END IF
@@ -12301,7 +12403,7 @@
 *
       IF( WANTST ) THEN
 *
-*        Undo scaling on eigenvalues before DELZTGing
+*        Undo scaling on eigenvalues before SELCTGing
 *
          IF( ILASCL ) THEN
             CALL DLASCL( 'G', 0, 0, ANRMTO, ANRM, N, 1, ALPHAR, N,
@@ -12315,7 +12417,7 @@
 *        Select eigenvalues
 *
          DO 10 I = 1, N
-            BWORK( I ) = DELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
+            BWORK( I ) = SELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
    10    CONTINUE
 *
 *        Reorder eigenvalues, transform Generalized Schur vectors, and
@@ -12334,10 +12436,14 @@
 *
             INFO = -22
          ELSE
-            RCONDE( 1 ) = PL
-            RCONDE( 2 ) = PR
-            RCONDV( 1 ) = DIF( 1 )
-            RCONDV( 2 ) = DIF( 2 )
+            IF( IJOB.EQ.1 .OR. IJOB.EQ.4 ) THEN
+               RCONDE( 1 ) = PL
+               RCONDE( 2 ) = PR
+            END IF
+            IF( IJOB.EQ.2 .OR. IJOB.EQ.4 ) THEN
+               RCONDV( 1 ) = DIF( 1 )
+               RCONDV( 2 ) = DIF( 2 )
+            END IF
             IF( IERR.EQ.1 )
      $         INFO = N + 3
          END IF
@@ -12408,8 +12514,6 @@
          CALL DLASCL( 'G', 0, 0, BNRMTO, BNRM, N, 1, BETA, N, IERR )
       END IF
 *
-   40 CONTINUE
-*
       IF( WANTST ) THEN
 *
 *        Check if reordering is correct
@@ -12419,7 +12523,7 @@
          SDIM = 0
          IP = 0
          DO 50 I = 1, N
-            CURSL = DELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
+            CURSL = SELCTG( ALPHAR( I ), ALPHAI( I ), BETA( I ) )
             IF( ALPHAI( I ).EQ.ZERO ) THEN
                IF( CURSL )
      $            SDIM = SDIM + 1
@@ -12464,10 +12568,9 @@
       SUBROUTINE DGGEV( JOBVL, JOBVR, N, A, LDA, B, LDB, ALPHAR, ALPHAI,
      $                  BETA, VL, LDVL, VR, LDVR, WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVL, JOBVR
@@ -12556,7 +12659,7 @@
 *          u(j) = VL(:,j), the j-th column of VL. If the j-th and
 *          (j+1)-th eigenvalues form a complex conjugate pair, then
 *          u(j) = VL(:,j)+i*VL(:,j+1) and u(j+1) = VL(:,j)-i*VL(:,j+1).
-*          Each eigenvector will be scaled so the largest component have
+*          Each eigenvector is scaled so the largest component has
 *          abs(real part)+abs(imag. part)=1.
 *          Not referenced if JOBVL = 'N'.
 *
@@ -12571,7 +12674,7 @@
 *          v(j) = VR(:,j), the j-th column of VR. If the j-th and
 *          (j+1)-th eigenvalues form a complex conjugate pair, then
 *          v(j) = VR(:,j)+i*VR(:,j+1) and v(j+1) = VR(:,j)-i*VR(:,j+1).
-*          Each eigenvector will be scaled so the largest component have
+*          Each eigenvector is scaled so the largest component has
 *          abs(real part)+abs(imag. part)=1.
 *          Not referenced if JOBVR = 'N'.
 *
@@ -12579,7 +12682,7 @@
 *          The leading dimension of the matrix VR. LDVR >= 1, and
 *          if JOBVR = 'V', LDVR >= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -12620,8 +12723,9 @@
       LOGICAL            LDUMMA( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEQRF, DGGBAK, DGGBAL, DGGHRD, DHGEQZ, DLACPY,
-     $                   DLASCL, DLASET, DORGQR, DORMQR, DTGEVC, XERBLA
+      EXTERNAL           DGEQRF, DGGBAK, DGGBAL, DGGHRD, DHGEQZ, DLABAD,
+     $                   DLACPY,DLASCL, DLASET, DORGQR, DORMQR, DTGEVC,
+     $                   XERBLA
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -12687,15 +12791,21 @@
 *       following subroutine, as returned by ILAENV. The workspace is
 *       computed assuming ILO = 1 and IHI = N, the worst case.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MAXWRK = 7*N + N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 )
+      IF( INFO.EQ.0 ) THEN
          MINWRK = MAX( 1, 8*N )
+         MAXWRK = MAX( 1, N*( 7 +
+     $                 ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 ) ) )
+         MAXWRK = MAX( MAXWRK, N*( 7 +
+     $                 ILAENV( 1, 'DORMQR', ' ', N, 1, N, 0 ) ) )
+         IF( ILVL ) THEN
+            MAXWRK = MAX( MAXWRK, N*( 7 +
+     $                 ILAENV( 1, 'DORGQR', ' ', N, 1, N, -1 ) ) )
+         END IF
          WORK( 1 ) = MAXWRK
-      END IF
 *
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY )
-     $   INFO = -16
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY )
+     $      INFO = -16
+      END IF
 *
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGGEV ', -INFO )
@@ -12781,8 +12891,10 @@
 *
       IF( ILVL ) THEN
          CALL DLASET( 'Full', N, N, ZERO, ONE, VL, LDVL )
-         CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
-     $                VL( ILO+1, ILO ), LDVL )
+         IF( IROWS.GT.1 ) THEN
+            CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
+     $                   VL( ILO+1, ILO ), LDVL )
+         END IF
          CALL DORGQR( IROWS, IROWS, IROWS, VL( ILO, ILO ), LDVL,
      $                WORK( ITAU ), WORK( IWRK ), LWORK+1-IWRK, IERR )
       END IF
@@ -12947,10 +13059,9 @@
      $                   IHI, LSCALE, RSCALE, ABNRM, BBNRM, RCONDE,
      $                   RCONDV, WORK, LWORK, IWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          BALANC, JOBVL, JOBVR, SENSE
@@ -13094,7 +13205,8 @@
 *          The leading dimension of the matrix VR. LDVR >= 1, and
 *          if JOBVR = 'V', LDVR >= N.
 *
-*  ILO,IHI (output) INTEGER
+*  ILO     (output) INTEGER
+*  IHI     (output) INTEGER
 *          ILO and IHI are integer values such that on exit
 *          A(i,j) = 0 and B(i,j) = 0 if i > j and
 *          j = 1,...,ILO-1 or i = IHI+1,...,N.
@@ -13130,31 +13242,32 @@
 *
 *  RCONDE  (output) DOUBLE PRECISION array, dimension (N)
 *          If SENSE = 'E' or 'B', the reciprocal condition numbers of
-*          the selected eigenvalues, stored in consecutive elements of
-*          the array. For a complex conjugate pair of eigenvalues two
-*          consecutive elements of RCONDE are set to the same value.
-*          Thus RCONDE(j), RCONDV(j), and the j-th columns of VL and VR
-*          all correspond to the same eigenpair (but not in general the
-*          j-th eigenpair, unless all eigenpairs are selected).
-*          If SENSE = 'V', RCONDE is not referenced.
+*          the eigenvalues, stored in consecutive elements of the array.
+*          For a complex conjugate pair of eigenvalues two consecutive
+*          elements of RCONDE are set to the same value. Thus RCONDE(j),
+*          RCONDV(j), and the j-th columns of VL and VR all correspond
+*          to the j-th eigenpair.
+*          If SENSE = 'N or 'V', RCONDE is not referenced.
 *
 *  RCONDV  (output) DOUBLE PRECISION array, dimension (N)
 *          If SENSE = 'V' or 'B', the estimated reciprocal condition
-*          numbers of the selected eigenvectors, stored in consecutive
-*          elements of the array. For a complex eigenvector two
-*          consecutive elements of RCONDV are set to the same value. If
-*          the eigenvalues cannot be reordered to compute RCONDV(j),
+*          numbers of the eigenvectors, stored in consecutive elements
+*          of the array. For a complex eigenvector two consecutive
+*          elements of RCONDV are set to the same value. If the
+*          eigenvalues cannot be reordered to compute RCONDV(j),
 *          RCONDV(j) is set to 0; this can only occur when the true
 *          value would be very small anyway.
-*          If SENSE = 'E', RCONDV is not referenced.
+*          If SENSE = 'N' or 'E', RCONDV is not referenced.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK. LWORK >= max(1,6*N).
-*          If SENSE = 'E', LWORK >= 12*N.
-*          If SENSE = 'V' or 'B', LWORK >= 2*N*N+12*N+16.
+*          The dimension of the array WORK. LWORK >= max(1,2*N).
+*          If BALANC = 'S' or 'B', or JOBVL = 'V', or JOBVR = 'V',
+*          LWORK >= max(1,6*N).
+*          If SENSE = 'E' or 'B', LWORK >= max(1,10*N).
+*          If SENSE = 'V' or 'B', LWORK >= 2*N*N+8*N+16.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
@@ -13210,8 +13323,8 @@
       PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ILASCL, ILBSCL, ILV, ILVL, ILVR, LQUERY, PAIR,
-     $                   WANTSB, WANTSE, WANTSN, WANTSV
+      LOGICAL            ILASCL, ILBSCL, ILV, ILVL, ILVR, LQUERY, NOSCL,
+     $                   PAIR, WANTSB, WANTSE, WANTSN, WANTSV
       CHARACTER          CHTEMP
       INTEGER            I, ICOLS, IERR, IJOBVL, IJOBVR, IN, IROWS,
      $                   ITAU, IWRK, IWRK1, J, JC, JR, M, MAXWRK,
@@ -13223,9 +13336,9 @@
       LOGICAL            LDUMMA( 1 )
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEQRF, DGGBAK, DGGBAL, DGGHRD, DHGEQZ, DLACPY,
-     $                   DLASCL, DLASET, DORGQR, DORMQR, DTGEVC, DTGSNA,
-     $                   XERBLA
+      EXTERNAL           DGEQRF, DGGBAK, DGGBAL, DGGHRD, DHGEQZ, DLABAD,
+     $                   DLACPY, DLASCL, DLASET, DORGQR, DORMQR, DTGEVC,
+     $                   DTGSNA, XERBLA 
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -13263,6 +13376,7 @@
       END IF
       ILV = ILVL .OR. ILVR
 *
+      NOSCL  = LSAME( BALANC, 'N' ) .OR. LSAME( BALANC, 'P' )
       WANTSN = LSAME( SENSE, 'N' )
       WANTSE = LSAME( SENSE, 'E' )
       WANTSV = LSAME( SENSE, 'V' )
@@ -13303,21 +13417,37 @@
 *       following subroutine, as returned by ILAENV. The workspace is
 *       computed assuming ILO = 1 and IHI = N, the worst case.)
 *
-      MINWRK = 1
-      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
-         MAXWRK = 5*N + N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 )
-         MINWRK = MAX( 1, 6*N )
-         IF( WANTSE ) THEN
-            MINWRK = MAX( 1, 12*N )
-         ELSE IF( WANTSV .OR. WANTSB ) THEN
-            MINWRK = 2*N*N + 12*N + 16
-            MAXWRK = MAX( MAXWRK, 2*N*N+12*N+16 )
+      IF( INFO.EQ.0 ) THEN
+         IF( N.EQ.0 ) THEN
+            MINWRK = 1
+            MAXWRK = 1
+         ELSE
+            IF( NOSCL .AND. .NOT.ILV ) THEN
+               MINWRK = 2*N
+            ELSE
+               MINWRK = 6*N
+            END IF
+            IF( WANTSE .OR. WANTSB ) THEN
+               MINWRK = 10*N
+            END IF
+            IF( WANTSV .OR. WANTSB ) THEN
+               MINWRK = MAX( MINWRK, 2*N*( N + 4 ) + 16 )
+            END IF
+            MAXWRK = MINWRK
+            MAXWRK = MAX( MAXWRK,
+     $                    N + N*ILAENV( 1, 'DGEQRF', ' ', N, 1, N, 0 ) )
+            MAXWRK = MAX( MAXWRK,
+     $                    N + N*ILAENV( 1, 'DORMQR', ' ', N, 1, N, 0 ) )
+            IF( ILVL ) THEN
+               MAXWRK = MAX( MAXWRK, N +
+     $                       N*ILAENV( 1, 'DORGQR', ' ', N, 1, N, 0 ) )
+            END IF
          END IF
          WORK( 1 ) = MAXWRK
-      END IF
 *
-      IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
-         INFO = -26
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -26
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -13371,7 +13501,7 @@
      $   CALL DLASCL( 'G', 0, 0, BNRM, BNRMTO, N, N, B, LDB, IERR )
 *
 *     Permute and/or balance the matrix pair (A,B)
-*     (Workspace: need 6*N)
+*     (Workspace: need 6*N if BALANC = 'S' or 'B', 1 otherwise)
 *
       CALL DGGBAL( BALANC, N, A, LDA, B, LDB, ILO, IHI, LSCALE, RSCALE,
      $             WORK, IERR )
@@ -13420,8 +13550,10 @@
 *
       IF( ILVL ) THEN
          CALL DLASET( 'Full', N, N, ZERO, ONE, VL, LDVL )
-         CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
-     $                VL( ILO+1, ILO ), LDVL )
+         IF( IROWS.GT.1 ) THEN
+            CALL DLACPY( 'L', IROWS-1, IROWS-1, B( ILO+1, ILO ), LDB,
+     $                   VL( ILO+1, ILO ), LDVL )
+         END IF
          CALL DORGQR( IROWS, IROWS, IROWS, VL( ILO, ILO ), LDVL,
      $                WORK( ITAU ), WORK( IWRK ), LWORK+1-IWRK, IERR )
       END IF
@@ -13643,10 +13775,9 @@
       SUBROUTINE DGGGLM( N, M, P, A, LDA, B, LDB, D, X, Y, WORK, LWORK,
      $                   INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, P
@@ -13672,7 +13803,10 @@
 *  Under these assumptions, the constrained equation is always
 *  consistent, and there is a unique solution x and a minimal 2-norm
 *  solution y, which is obtained using a generalized QR factorization
-*  of A and B.
+*  of the matrices (A, B) given by
+*
+*     A = Q*(R),   B = Q*T*Z.
+*           (0)
 *
 *  In particular, if matrix B is square nonsingular, then the problem
 *  GLM is equivalent to the following weighted linear least squares
@@ -13697,14 +13831,18 @@
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA,M)
 *          On entry, the N-by-M matrix A.
-*          On exit, A is destroyed.
+*          On exit, the upper triangular part of the array A contains
+*          the M-by-M upper triangular matrix R.
 *
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A. LDA >= max(1,N).
 *
 *  B       (input/output) DOUBLE PRECISION array, dimension (LDB,P)
 *          On entry, the N-by-P matrix B.
-*          On exit, B is destroyed.
+*          On exit, if N <= P, the upper triangle of the subarray
+*          B(1:N,P-N+1:P) contains the N-by-N upper triangular matrix T;
+*          if N > P, the elements on and above the (N-P)th subdiagonal
+*          contain the N-by-P upper trapezoidal matrix T.
 *
 *  LDB     (input) INTEGER
 *          The leading dimension of the array B. LDB >= max(1,N).
@@ -13717,7 +13855,7 @@
 *  Y       (output) DOUBLE PRECISION array, dimension (P)
 *          On exit, X and Y are the solutions of the GLM problem.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -13734,6 +13872,15 @@
 *  INFO    (output) INTEGER
 *          = 0:  successful exit.
 *          < 0:  if INFO = -i, the i-th argument had an illegal value.
+*          = 1:  the upper triangular factor R associated with A in the
+*                generalized QR factorization of the pair (A, B) is
+*                singular, so that rank(A) < M; the least squares
+*                solution could not be computed.
+*          = 2:  the bottom (N-M) by (N-M) part of the upper trapezoidal
+*                factor T associated with B in the generalized QR
+*                factorization of the pair (A, B) is singular, so that
+*                rank( A B ) < N; the least squares solution could not
+*                be computed.
 *
 *  ===================================================================
 *
@@ -13743,10 +13890,11 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            LQUERY
-      INTEGER            I, LOPT, LWKOPT, NB, NB1, NB2, NB3, NB4, NP
+      INTEGER            I, LOPT, LWKMIN, LWKOPT, NB, NB1, NB2, NB3,
+     $                   NB4, NP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DGEMV, DGGQRF, DORMQR, DORMRQ, DTRSV,
+      EXTERNAL           DCOPY, DGEMV, DGGQRF, DORMQR, DORMRQ, DTRTRS,
      $                   XERBLA
 *     ..
 *     .. External Functions ..
@@ -13762,13 +13910,6 @@
 *
       INFO = 0
       NP = MIN( N, P )
-      NB1 = ILAENV( 1, 'DGEQRF', ' ', N, M, -1, -1 )
-      NB2 = ILAENV( 1, 'DGERQF', ' ', N, M, -1, -1 )
-      NB3 = ILAENV( 1, 'DORMQR', ' ', N, M, P, -1 )
-      NB4 = ILAENV( 1, 'DORMRQ', ' ', N, M, P, -1 )
-      NB = MAX( NB1, NB2, NB3, NB4 )
-      LWKOPT = M + NP + MAX( N, P )*NB
-      WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( N.LT.0 ) THEN
          INFO = -1
@@ -13780,9 +13921,30 @@
          INFO = -5
       ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
          INFO = -7
-      ELSE IF( LWORK.LT.MAX( 1, N+M+P ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
       END IF
+*
+*     Calculate workspace
+*
+      IF( INFO.EQ.0) THEN
+         IF( N.EQ.0 ) THEN
+            LWKMIN = 1
+            LWKOPT = 1
+         ELSE
+            NB1 = ILAENV( 1, 'DGEQRF', ' ', N, M, -1, -1 )
+            NB2 = ILAENV( 1, 'DGERQF', ' ', N, M, -1, -1 )
+            NB3 = ILAENV( 1, 'DORMQR', ' ', N, M, P, -1 )
+            NB4 = ILAENV( 1, 'DORMRQ', ' ', N, M, P, -1 )
+            NB = MAX( NB1, NB2, NB3, NB4 )
+            LWKMIN = M + N + P
+            LWKOPT = M + NP + MAX( N, P )*NB
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
+      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGGGLM', -INFO )
          RETURN
@@ -13817,9 +13979,17 @@
 *
 *     Solve T22*y2 = d2 for y2
 *
-      CALL DTRSV( 'Upper', 'No transpose', 'Non unit', N-M,
-     $            B( M+1, M+P-N+1 ), LDB, D( M+1 ), 1 )
-      CALL DCOPY( N-M, D( M+1 ), 1, Y( M+P-N+1 ), 1 )
+      IF( N.GT.M ) THEN
+         CALL DTRTRS( 'Upper', 'No transpose', 'Non unit', N-M, 1,
+     $                B( M+1, M+P-N+1 ), LDB, D( M+1 ), N-M, INFO )
+*
+         IF( INFO.GT.0 ) THEN
+            INFO = 1
+            RETURN
+         END IF
+*
+         CALL DCOPY( N-M, D( M+1 ), 1, Y( M+P-N+1 ), 1 )
+      END IF
 *
 *     Set y1 = 0
 *
@@ -13834,11 +14004,19 @@
 *
 *     Solve triangular system: R11*x = d1
 *
-      CALL DTRSV( 'Upper', 'No Transpose', 'Non unit', M, A, LDA, D, 1 )
+      IF( M.GT.0 ) THEN
+         CALL DTRTRS( 'Upper', 'No Transpose', 'Non unit', M, 1, A, LDA,
+     $                D, M, INFO )
 *
-*     Copy D to X
+         IF( INFO.GT.0 ) THEN
+            INFO = 2
+            RETURN
+         END IF
 *
-      CALL DCOPY( M, D, 1, X, 1 )
+*        Copy D to X
+*
+         CALL DCOPY( M, D, 1, X, 1 )
+      END IF
 *
 *     Backward transformation y = Z'*y
 *
@@ -13855,10 +14033,9 @@
       SUBROUTINE DGGLSE( M, N, P, A, LDA, B, LDB, C, D, X, WORK, LWORK,
      $                   INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, P
@@ -13880,11 +14057,14 @@
 *  M-vector, and d is a given P-vector. It is assumed that
 *  P <= N <= M+P, and
 *
-*           rank(B) = P and  rank( ( A ) ) = N.
-*                                ( ( B ) )
+*           rank(B) = P and  rank( (A) ) = N.
+*                                ( (B) )
 *
 *  These conditions ensure that the LSE problem has a unique solution,
-*  which is obtained using a GRQ factorization of the matrices B and A.
+*  which is obtained using a generalized RQ factorization of the
+*  matrices (B, A) given by
+*
+*     B = (0 R)*Q,   A = Z*T*Q.
 *
 *  Arguments
 *  =========
@@ -13900,14 +14080,16 @@
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA,N)
 *          On entry, the M-by-N matrix A.
-*          On exit, A is destroyed.
+*          On exit, the elements on and above the diagonal of the array
+*          contain the min(M,N)-by-N upper trapezoidal matrix T.
 *
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A. LDA >= max(1,M).
 *
 *  B       (input/output) DOUBLE PRECISION array, dimension (LDB,N)
 *          On entry, the P-by-N matrix B.
-*          On exit, B is destroyed.
+*          On exit, the upper triangle of the subarray B(1:P,N-P+1:N)
+*          contains the P-by-P upper triangular matrix R.
 *
 *  LDB     (input) INTEGER
 *          The leading dimension of the array B. LDB >= max(1,P).
@@ -13927,7 +14109,7 @@
 *  X       (output) DOUBLE PRECISION array, dimension (N)
 *          On exit, X is the solution of the LSE problem.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -13944,6 +14126,16 @@
 *  INFO    (output) INTEGER
 *          = 0:  successful exit.
 *          < 0:  if INFO = -i, the i-th argument had an illegal value.
+*          = 1:  the upper triangular factor R associated with B in the
+*                generalized RQ factorization of the pair (B, A) is
+*                singular, so that rank(B) < P; the least squares
+*                solution could not be computed.
+*          = 2:  the (N-P) by (N-P) part of the upper trapezoidal factor
+*                T associated with A in the generalized RQ factorization
+*                of the pair (B, A) is singular, so that
+*                rank( (A) ) < N; the least squares solution could not
+*                    ( (B) )
+*                be computed.
 *
 *  =====================================================================
 *
@@ -13953,11 +14145,12 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            LQUERY
-      INTEGER            LOPT, LWKOPT, MN, NB, NB1, NB2, NB3, NB4, NR
+      INTEGER            LOPT, LWKMIN, LWKOPT, MN, NB, NB1, NB2, NB3,
+     $                   NB4, NR
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DAXPY, DCOPY, DGEMV, DGGRQF, DORMQR, DORMRQ,
-     $                   DTRMV, DTRSV, XERBLA
+     $                   DTRMV, DTRTRS, XERBLA
 *     ..
 *     .. External Functions ..
       INTEGER            ILAENV
@@ -13972,13 +14165,6 @@
 *
       INFO = 0
       MN = MIN( M, N )
-      NB1 = ILAENV( 1, 'DGEQRF', ' ', M, N, -1, -1 )
-      NB2 = ILAENV( 1, 'DGERQF', ' ', M, N, -1, -1 )
-      NB3 = ILAENV( 1, 'DORMQR', ' ', M, N, P, -1 )
-      NB4 = ILAENV( 1, 'DORMRQ', ' ', M, N, P, -1 )
-      NB = MAX( NB1, NB2, NB3, NB4 )
-      LWKOPT = P + MN + MAX( M, N )*NB
-      WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -13990,9 +14176,30 @@
          INFO = -5
       ELSE IF( LDB.LT.MAX( 1, P ) ) THEN
          INFO = -7
-      ELSE IF( LWORK.LT.MAX( 1, M+N+P ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
       END IF
+*
+*     Calculate workspace
+*
+      IF( INFO.EQ.0) THEN
+         IF( N.EQ.0 ) THEN
+            LWKMIN = 1
+            LWKOPT = 1
+         ELSE
+            NB1 = ILAENV( 1, 'DGEQRF', ' ', M, N, -1, -1 )
+            NB2 = ILAENV( 1, 'DGERQF', ' ', M, N, -1, -1 )
+            NB3 = ILAENV( 1, 'DORMQR', ' ', M, N, P, -1 )
+            NB4 = ILAENV( 1, 'DORMRQ', ' ', M, N, P, -1 )
+            NB = MAX( NB1, NB2, NB3, NB4 )
+            LWKMIN = M + N + P
+            LWKOPT = P + MN + MAX( M, N )*NB
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
+      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DGGLSE', -INFO )
          RETURN
@@ -14027,36 +14234,56 @@
 *
 *     Solve T12*x2 = d for x2
 *
-      CALL DTRSV( 'Upper', 'No transpose', 'Non unit', P, B( 1, N-P+1 ),
-     $            LDB, D, 1 )
+      IF( P.GT.0 ) THEN
+         CALL DTRTRS( 'Upper', 'No transpose', 'Non-unit', P, 1,
+     $                B( 1, N-P+1 ), LDB, D, P, INFO )
 *
-*     Update c1
+         IF( INFO.GT.0 ) THEN
+            INFO = 1
+            RETURN
+         END IF
 *
-      CALL DGEMV( 'No transpose', N-P, P, -ONE, A( 1, N-P+1 ), LDA, D,
-     $            1, ONE, C, 1 )
+*        Put the solution in X
 *
-*     Sovle R11*x1 = c1 for x1
+         CALL DCOPY( P, D, 1, X( N-P+1 ), 1 )
 *
-      CALL DTRSV( 'Upper', 'No transpose', 'Non unit', N-P, A, LDA, C,
-     $            1 )
+*        Update c1
 *
-*     Put the solutions in X
+         CALL DGEMV( 'No transpose', N-P, P, -ONE, A( 1, N-P+1 ), LDA,
+     $               D, 1, ONE, C, 1 )
+      END IF
 *
-      CALL DCOPY( N-P, C, 1, X, 1 )
-      CALL DCOPY( P, D, 1, X( N-P+1 ), 1 )
+*     Solve R11*x1 = c1 for x1
+*
+      IF( N.GT.P ) THEN
+         CALL DTRTRS( 'Upper', 'No transpose', 'Non-unit', N-P, 1,
+     $                A, LDA, C, N-P, INFO )
+*
+         IF( INFO.GT.0 ) THEN
+            INFO = 2
+            RETURN
+         END IF
+*
+*        Put the solutions in X
+*
+         CALL DCOPY( N-P, C, 1, X, 1 )
+      END IF
 *
 *     Compute the residual vector:
 *
       IF( M.LT.N ) THEN
          NR = M + P - N
-         CALL DGEMV( 'No transpose', NR, N-M, -ONE, A( N-P+1, M+1 ),
-     $               LDA, D( NR+1 ), 1, ONE, C( N-P+1 ), 1 )
+         IF( NR.GT.0 )
+     $      CALL DGEMV( 'No transpose', NR, N-M, -ONE, A( N-P+1, M+1 ),
+     $                  LDA, D( NR+1 ), 1, ONE, C( N-P+1 ), 1 )
       ELSE
          NR = P
       END IF
-      CALL DTRMV( 'Upper', 'No transpose', 'Non unit', NR,
-     $            A( N-P+1, N-P+1 ), LDA, D, 1 )
-      CALL DAXPY( NR, -ONE, D, 1, C( N-P+1 ), 1 )
+      IF( NR.GT.0 ) THEN
+         CALL DTRMV( 'Upper', 'No transpose', 'Non unit', NR,
+     $               A( N-P+1, N-P+1 ), LDA, D, 1 )
+         CALL DAXPY( NR, -ONE, D, 1, C( N-P+1 ), 1 )
+      END IF
 *
 *     Backward transformation x = Q'*x
 *
@@ -14073,10 +14300,9 @@
      $                   LDB, ALPHA, BETA, U, LDU, V, LDV, Q, LDQ, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBQ, JOBU, JOBV
@@ -14215,7 +14441,7 @@
 *          See Purpose for details.
 *
 *  LDB     (input) INTEGER
-*          The leading dimension of the array B. LDA >= max(1,P).
+*          The leading dimension of the array B. LDB >= max(1,P).
 *
 *  ALPHA   (output) DOUBLE PRECISION array, dimension (N)
 *  BETA    (output) DOUBLE PRECISION array, dimension (N)
@@ -14268,7 +14494,7 @@
 *             endfor
 *          such that ALPHA(1) >= ALPHA(2) >= ... >= ALPHA(N).
 *
-*  INFO    (output)INTEGER
+*  INFO    (output) INTEGER
 *          = 0:  successful exit
 *          < 0:  if INFO = -i, the i-th argument had an illegal value.
 *          > 0:  if INFO = 1, the Jacobi-type procedure failed to
@@ -14407,10 +14633,9 @@
       END
       SUBROUTINE DLANV2( A, B, C, D, RT1R, RT1I, RT2R, RT2I, CS, SN )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   A, B, C, CS, D, RT1I, RT1R, RT2I, RT2R, SN
@@ -14613,10 +14838,9 @@
       END
       SUBROUTINE DPBSV( UPLO, N, KD, NRHS, AB, LDAB, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -14767,10 +14991,9 @@
      $                   EQUED, S, B, LDB, X, LDX, RCOND, FERR, BERR,
      $                   WORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, FACT, UPLO
@@ -15136,9 +15359,8 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 )
-     $         RCOND = ZERO
+         IF( INFO.GT.0 )THEN
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -15151,11 +15373,6 @@
 *
       CALL DPBCON( UPLO, N, KD, AFB, LDAFB, ANORM, RCOND, WORK, IWORK,
      $             INFO )
-*
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
 *
 *     Compute the solution matrix X.
 *
@@ -15182,6 +15399,11 @@
    80    CONTINUE
       END IF
 *
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
       RETURN
 *
 *     End of DPBSVX
@@ -15189,10 +15411,9 @@
       END
       SUBROUTINE DPOSV( UPLO, N, NRHS, A, LDA, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -15313,10 +15534,9 @@
      $                   S, B, LDB, X, LDX, RCOND, FERR, BERR, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, FACT, UPLO
@@ -15638,9 +15858,8 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 )
-     $         RCOND = ZERO
+         IF( INFO.GT.0 )THEN
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -15652,11 +15871,6 @@
 *     Compute the reciprocal of the condition number of A.
 *
       CALL DPOCON( UPLO, N, AF, LDAF, ANORM, RCOND, WORK, IWORK, INFO )
-*
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
 *
 *     Compute the solution matrix X.
 *
@@ -15683,6 +15897,11 @@
    60    CONTINUE
       END IF
 *
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
       RETURN
 *
 *     End of DPOSVX
@@ -15690,10 +15909,9 @@
       END
       SUBROUTINE DPPSV( UPLO, N, NRHS, AP, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -15825,10 +16043,9 @@
       SUBROUTINE DPPSVX( FACT, UPLO, N, NRHS, AP, AFP, EQUED, S, B, LDB,
      $                   X, LDX, RCOND, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED, FACT, UPLO
@@ -16155,9 +16372,8 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 )
-     $         RCOND = ZERO
+         IF( INFO.GT.0 )THEN
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -16169,11 +16385,6 @@
 *     Compute the reciprocal of the condition number of A.
 *
       CALL DPPCON( UPLO, N, AFP, ANORM, RCOND, WORK, IWORK, INFO )
-*
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
 *
 *     Compute the solution matrix X.
 *
@@ -16200,6 +16411,11 @@
    60    CONTINUE
       END IF
 *
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
       RETURN
 *
 *     End of DPPSVX
@@ -16208,10 +16424,9 @@
       SUBROUTINE DSBEV( JOBZ, UPLO, N, KD, AB, LDAB, W, Z, LDZ, WORK,
      $                  INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -16414,10 +16629,9 @@
       SUBROUTINE DSBEVD( JOBZ, UPLO, N, KD, AB, LDAB, W, Z, LDZ, WORK,
      $                   LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -16503,11 +16717,12 @@
 *                         ( 1 + 5*N + 2*N**2 ).
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the optimal sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -16516,9 +16731,10 @@
 *          If JOBZ  = 'V' and N > 2, LIWORK must be at least 3 + 5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the optimal sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
@@ -16585,15 +16801,17 @@
          INFO = -6
       ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
          INFO = -9
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -11
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -13
       END IF
 *
       IF( INFO.EQ.0 ) THEN
          WORK( 1 ) = LWMIN
          IWORK( 1 ) = LIWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -11
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -16680,10 +16898,9 @@
      $                   VU, IL, IU, ABSTOL, M, W, Z, LDZ, WORK, IWORK,
      $                   IFAIL, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -16839,7 +17056,7 @@
       PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, LOWER, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, LOWER, TEST, VALEIG, WANTZ
       CHARACTER          ORDER
       INTEGER            I, IINFO, IMAX, INDD, INDE, INDEE, INDIBL,
      $                   INDISP, INDIWO, INDWRK, ISCALE, ITMP1, J, JJ,
@@ -16985,8 +17202,13 @@
 *     to zero, then call DSTERF or SSTEQR.  If this fails for some
 *     eigenvalue, then try DSTEBZ.
 *
-      IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
-     $    ( ABSTOL.LE.ZERO ) ) THEN
+      TEST = .FALSE.
+      IF (INDEIG) THEN
+         IF (IL.EQ.1 .AND. IU.EQ.N) THEN
+            TEST = .TRUE.
+         END IF
+      END IF
+      IF ((ALLEIG .OR. TEST) .AND. (ABSTOL.LE.ZERO)) THEN
          CALL DCOPY( N, WORK( INDD ), 1, W, 1 )
          INDEE = INDWRK + 2*N
          IF( .NOT.WANTZ ) THEN
@@ -17090,10 +17312,9 @@
       SUBROUTINE DSBGV( JOBZ, UPLO, N, KA, KB, AB, LDAB, BB, LDBB, W, Z,
      $                  LDZ, WORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -17279,10 +17500,9 @@
       SUBROUTINE DSBGVD( JOBZ, UPLO, N, KA, KB, AB, LDAB, BB, LDBB, W,
      $                   Z, LDZ, WORK, LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -17373,7 +17593,7 @@
 *          The leading dimension of the array Z.  LDZ >= 1, and if
 *          JOBZ = 'V', LDZ >= max(1,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -17383,11 +17603,12 @@
 *          If JOBZ = 'V' and N > 1, LWORK >= 1 + 5*N + 2*N**2.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the optimal sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if LIWORK > 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -17396,9 +17617,10 @@
 *          If JOBZ  = 'V' and N > 1, LIWORK >= 3 + 5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the optimal sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
@@ -17450,14 +17672,12 @@
       IF( N.LE.1 ) THEN
          LIWMIN = 1
          LWMIN = 1
+      ELSE IF( WANTZ ) THEN
+         LIWMIN = 3 + 5*N
+         LWMIN = 1 + 5*N + 2*N**2
       ELSE
-         IF( WANTZ ) THEN
-            LIWMIN = 3 + 5*N
-            LWMIN = 1 + 5*N + 2*N**2
-         ELSE
-            LIWMIN = 1
-            LWMIN = 2*N
-         END IF
+         LIWMIN = 1
+         LWMIN = 2*N
       END IF
 *
       IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
@@ -17476,15 +17696,17 @@
          INFO = -9
       ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
          INFO = -12
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -14
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -16
       END IF
 *
       IF( INFO.EQ.0 ) THEN
          WORK( 1 ) = LWMIN
          IWORK( 1 ) = LIWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -14
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -16
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -17550,10 +17772,9 @@
      $                   LDBB, Q, LDQ, VL, VU, IL, IU, ABSTOL, M, W, Z,
      $                   LDZ, WORK, IWORK, IFAIL, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -17692,11 +17913,11 @@
 *          The leading dimension of the array Z.  LDZ >= 1, and if
 *          JOBZ = 'V', LDZ >= max(1,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (7N)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (7*N)
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (5N)
+*  IWORK   (workspace/output) INTEGER array, dimension (5*N)
 *
-*  IFAIL   (input) INTEGER array, dimension (M)
+*  IFAIL   (output) INTEGER array, dimension (M)
 *          If JOBZ = 'V', then if INFO = 0, the first M elements of
 *          IFAIL are zero.  If INFO > 0, then IFAIL contains the
 *          indices of the eigenvalues that failed to converge.
@@ -17726,7 +17947,7 @@
       PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, UPPER, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, TEST, UPPER, VALEIG, WANTZ
       CHARACTER          ORDER, VECT
       INTEGER            I, IINFO, INDD, INDE, INDEE, INDIBL, INDISP,
      $                   INDIWO, INDWRK, ITMP1, J, JJ, NSPLIT
@@ -17770,16 +17991,24 @@
          INFO = -8
       ELSE IF( LDBB.LT.KB+1 ) THEN
          INFO = -10
-      ELSE IF( LDQ.LT.1 ) THEN
+      ELSE IF( LDQ.LT.1 .OR. ( WANTZ .AND. LDQ.LT.N ) ) THEN
          INFO = -12
-      ELSE IF( VALEIG .AND. N.GT.0 .AND. VU.LE.VL ) THEN
-         INFO = -14
-      ELSE IF( INDEIG .AND. IL.LT.1 ) THEN
-         INFO = -15
-      ELSE IF( INDEIG .AND. ( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) ) THEN
-         INFO = -16
-      ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
-         INFO = -21
+      ELSE
+         IF( VALEIG ) THEN
+            IF( N.GT.0 .AND. VU.LE.VL )
+     $         INFO = -14
+         ELSE IF( INDEIG ) THEN
+            IF( IL.LT.1 .OR. IL.GT.MAX( 1, N ) ) THEN
+               INFO = -15
+            ELSE IF ( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) THEN
+               INFO = -16
+            END IF
+         END IF
+      END IF
+      IF( INFO.EQ.0) THEN
+         IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
+            INFO = -21
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -17790,10 +18019,8 @@
 *     Quick return if possible
 *
       M = 0
-      IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
+      IF( N.EQ.0 )
+     $   RETURN
 *
 *     Form a split Cholesky factorization of B.
 *
@@ -17825,8 +18052,13 @@
 *     to zero, then call DSTERF or SSTEQR.  If this fails for some
 *     eigenvalue, then try DSTEBZ.
 *
-      IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
-     $    ( ABSTOL.LE.ZERO ) ) THEN
+      TEST = .FALSE.
+      IF( INDEIG ) THEN
+         IF( IL.EQ.1 .AND. IU.EQ.N ) THEN
+            TEST = .TRUE.
+         END IF
+      END IF
+      IF( ( ALLEIG .OR. TEST ) .AND. ( ABSTOL.LE.ZERO ) ) THEN
          CALL DCOPY( N, WORK( INDD ), 1, W, 1 )
          INDEE = INDWRK + 2*N
          CALL DCOPY( N-1, WORK( INDE ), 1, WORK( INDEE ), 1 )
@@ -17919,10 +18151,9 @@
       END
       SUBROUTINE DSPEV( JOBZ, UPLO, N, AP, W, Z, LDZ, WORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -18108,10 +18339,9 @@
       SUBROUTINE DSPEVD( JOBZ, UPLO, N, AP, W, Z, LDZ, WORK, LWORK,
      $                   IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -18179,7 +18409,7 @@
 *
 *  WORK    (workspace/output) DOUBLE PRECISION array,
 *                                         dimension (LWORK)
-*          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*          On exit, if INFO = 0, WORK(1) returns the required LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK.
@@ -18189,12 +18419,13 @@
 *                                                 1 + 6*N + N**2.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the required sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
-*          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
+*          On exit, if INFO = 0, IWORK(1) returns the required LIWORK.
 *
 *  LIWORK  (input) INTEGER
 *          The dimension of the array IWORK.
@@ -18202,9 +18433,10 @@
 *          If JOBZ  = 'V' and N > 1, LIWORK must be at least 3 + 5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the required sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
@@ -18245,18 +18477,6 @@
       LQUERY = ( LWORK.EQ.-1 .OR. LIWORK.EQ.-1 )
 *
       INFO = 0
-      IF( N.LE.1 ) THEN
-         LIWMIN = 1
-         LWMIN = 1
-      ELSE
-         IF( WANTZ ) THEN
-            LIWMIN = 3 + 5*N
-            LWMIN = 1 + 6*N + N**2
-         ELSE
-            LIWMIN = 1
-            LWMIN = 2*N
-         END IF
-      END IF
       IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -1
       ELSE IF( .NOT.( LSAME( UPLO, 'U' ) .OR. LSAME( UPLO, 'L' ) ) )
@@ -18266,15 +18486,29 @@
          INFO = -3
       ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
          INFO = -7
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -9
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -11
       END IF
 *
       IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = LWMIN
+         IF( N.LE.1 ) THEN
+            LIWMIN = 1
+            LWMIN = 1
+         ELSE
+            IF( WANTZ ) THEN
+               LIWMIN = 3 + 5*N
+               LWMIN = 1 + 6*N + N**2
+            ELSE
+               LIWMIN = 1
+               LWMIN = 2*N
+            END IF
+         END IF
          IWORK( 1 ) = LIWMIN
+         WORK( 1 ) = LWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -9
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -11
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -18358,10 +18592,9 @@
      $                   ABSTOL, M, W, Z, LDZ, WORK, IWORK, IFAIL,
      $                   INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -18498,7 +18731,7 @@
       PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, TEST, VALEIG, WANTZ
       CHARACTER          ORDER
       INTEGER            I, IINFO, IMAX, INDD, INDE, INDEE, INDIBL,
      $                   INDISP, INDIWO, INDTAU, INDWRK, ISCALE, ITMP1,
@@ -18631,8 +18864,13 @@
 *     to zero, then call DSTERF or DOPGTR and SSTEQR.  If this fails
 *     for some eigenvalue, then try DSTEBZ.
 *
-      IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
-     $    ( ABSTOL.LE.ZERO ) ) THEN
+      TEST = .FALSE.
+      IF (INDEIG) THEN
+         IF (IL.EQ.1 .AND. IU.EQ.N) THEN
+            TEST = .TRUE.
+         END IF
+      END IF
+      IF ((ALLEIG .OR. TEST) .AND. (ABSTOL.LE.ZERO)) THEN
          CALL DCOPY( N, WORK( INDD ), 1, W, 1 )
          INDEE = INDWRK + 2*N
          IF( .NOT.WANTZ ) THEN
@@ -18734,10 +18972,9 @@
       SUBROUTINE DSPGV( ITYPE, JOBZ, UPLO, N, AP, BP, W, Z, LDZ, WORK,
      $                  INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -18848,7 +19085,7 @@
       UPPER = LSAME( UPLO, 'U' )
 *
       INFO = 0
-      IF( ITYPE.LT.0 .OR. ITYPE.GT.3 ) THEN
+      IF( ITYPE.LT.1 .OR. ITYPE.GT.3 ) THEN
          INFO = -1
       ELSE IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -2
@@ -18930,10 +19167,9 @@
       SUBROUTINE DSPGVD( ITYPE, JOBZ, UPLO, N, AP, BP, W, Z, LDZ, WORK,
      $                   LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -19016,8 +19252,8 @@
 *          The leading dimension of the array Z.  LDZ >= 1, and if
 *          JOBZ = 'V', LDZ >= max(1,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
-*          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
+*          On exit, if INFO = 0, WORK(1) returns the required LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK.
@@ -19026,12 +19262,13 @@
 *          If JOBZ = 'V' and N > 1, LWORK >= 1 + 6*N + 2*N**2.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the required sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
-*          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
+*          On exit, if INFO = 0, IWORK(1) returns the required LIWORK.
 *
 *  LIWORK  (input) INTEGER
 *          The dimension of the array IWORK.
@@ -19039,9 +19276,10 @@
 *          If JOBZ  = 'V' and N > 1, LIWORK >= 3 + 5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the required sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
@@ -19070,7 +19308,7 @@
 *     .. Local Scalars ..
       LOGICAL            LQUERY, UPPER, WANTZ
       CHARACTER          TRANS
-      INTEGER            J, LGN, LIWMIN, LWMIN, NEIG
+      INTEGER            J, LIWMIN, LWMIN, NEIG
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -19080,7 +19318,7 @@
       EXTERNAL           DPPTRF, DSPEVD, DSPGST, DTPMV, DTPSV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          DBLE, INT, LOG, MAX
+      INTRINSIC          DBLE, MAX
 *     ..
 *     .. Executable Statements ..
 *
@@ -19091,26 +19329,7 @@
       LQUERY = ( LWORK.EQ.-1 .OR. LIWORK.EQ.-1 )
 *
       INFO = 0
-      IF( N.LE.1 ) THEN
-         LGN = 0
-         LIWMIN = 1
-         LWMIN = 1
-      ELSE
-         LGN = INT( LOG( DBLE( N ) ) / LOG( TWO ) )
-         IF( 2**LGN.LT.N )
-     $      LGN = LGN + 1
-         IF( 2**LGN.LT.N )
-     $      LGN = LGN + 1
-         IF( WANTZ ) THEN
-            LIWMIN = 3 + 5*N
-            LWMIN = 1 + 5*N + 2*N*LGN + 2*N**2
-         ELSE
-            LIWMIN = 1
-            LWMIN = 2*N
-         END IF
-      END IF
-*
-      IF( ITYPE.LT.0 .OR. ITYPE.GT.3 ) THEN
+      IF( ITYPE.LT.1 .OR. ITYPE.GT.3 ) THEN
          INFO = -1
       ELSE IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -2
@@ -19118,17 +19337,31 @@
          INFO = -3
       ELSE IF( N.LT.0 ) THEN
          INFO = -4
-      ELSE IF( LDZ.LT.MAX( 1, N ) ) THEN
+      ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
          INFO = -9
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -11
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -13
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( N.LE.1 ) THEN
+            LIWMIN = 1
+            LWMIN = 1
+         ELSE
+            IF( WANTZ ) THEN
+               LIWMIN = 3 + 5*N
+               LWMIN = 1 + 6*N + 2*N**2
+            ELSE
+               LIWMIN = 1
+               LWMIN = 2*N
+            END IF
+         END IF
          WORK( 1 ) = LWMIN
          IWORK( 1 ) = LIWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -11
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -19212,10 +19445,9 @@
      $                   IL, IU, ABSTOL, M, W, Z, LDZ, WORK, IWORK,
      $                   IFAIL, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -19402,7 +19634,7 @@
       INDEIG = LSAME( RANGE, 'I' )
 *
       INFO = 0
-      IF( ITYPE.LT.0 .OR. ITYPE.GT.3 ) THEN
+      IF( ITYPE.LT.1 .OR. ITYPE.GT.3 ) THEN
          INFO = -1
       ELSE IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -2
@@ -19412,14 +19644,23 @@
          INFO = -4
       ELSE IF( N.LT.0 ) THEN
          INFO = -5
-      ELSE IF( VALEIG .AND. N.GT.0 .AND. VU.LE.VL ) THEN
-         INFO = -9
-      ELSE IF( INDEIG .AND. IL.LT.1 ) THEN
-         INFO = -10
-      ELSE IF( INDEIG .AND. ( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) ) THEN
-         INFO = -11
-      ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
-         INFO = -16
+      ELSE
+         IF( VALEIG ) THEN
+            IF( N.GT.0 .AND. VU.LE.VL ) THEN
+               INFO = -9
+            END IF
+         ELSE IF( INDEIG ) THEN
+            IF( IL.LT.1 ) THEN
+               INFO = -10
+            ELSE IF( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) THEN
+               INFO = -11
+            END IF
+         END IF
+      END IF
+      IF( INFO.EQ.0 ) THEN
+         IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
+            INFO = -16
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -19430,10 +19671,8 @@
 *     Quick return if possible
 *
       M = 0
-      IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
+      IF( N.EQ.0 )
+     $   RETURN
 *
 *     Form a Cholesky factorization of B.
 *
@@ -19496,10 +19735,9 @@
       END
       SUBROUTINE DSPSV( UPLO, N, NRHS, AP, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -19646,10 +19884,9 @@
       SUBROUTINE DSPSVX( FACT, UPLO, N, NRHS, AP, AFP, IPIV, B, LDB, X,
      $                   LDX, RCOND, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          FACT, UPLO
@@ -19886,9 +20123,8 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 )
-     $         RCOND = ZERO
+         IF( INFO.GT.0 )THEN
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -19901,11 +20137,6 @@
 *
       CALL DSPCON( UPLO, N, AFP, IPIV, ANORM, RCOND, WORK, IWORK, INFO )
 *
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
-*
 *     Compute the solution vectors X.
 *
       CALL DLACPY( 'Full', N, NRHS, B, LDB, X, LDX )
@@ -19917,6 +20148,11 @@
       CALL DSPRFS( UPLO, N, NRHS, AP, AFP, IPIV, B, LDB, X, LDX, FERR,
      $             BERR, WORK, IWORK, INFO )
 *
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
       RETURN
 *
 *     End of DSPSVX
@@ -19925,10 +20161,9 @@
       SUBROUTINE DSTEDC( COMPZ, N, D, E, Z, LDZ, WORK, LWORK, IWORK,
      $                   LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPZ
@@ -20003,13 +20238,16 @@
 *                         that 2**k >= N.
 *          If COMPZ = 'I' and N > 1 then LWORK must be at least
 *                         ( 1 + 4*N + N**2 ).
+*          Note that for COMPZ = 'I' or 'V', then if N is less than or
+*          equal to the minimum divide size, usually 25, then LWORK need
+*          only be max(1,2*(N-1)).
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -20019,6 +20257,9 @@
 *                         ( 6 + 6*N + 5*N*lg N ).
 *          If COMPZ = 'I' and N > 1 then LIWORK must be at least
 *                         ( 3 + 5*N ).
+*          Note that for COMPZ = 'I' or 'V', then if N is less than or
+*          equal to the minimum divide size, usually 25, then LIWORK
+*          need only be 1.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
 *          routine only calculates the optimal size of the IWORK array,
@@ -20048,8 +20289,8 @@
 *     ..
 *     .. Local Scalars ..
       LOGICAL            LQUERY
-      INTEGER            DTRTRW, END, I, ICOMPZ, II, J, K, LGN, LIWMIN,
-     $                   LWMIN, M, SMLSIZ, START, STOREZ
+      INTEGER            FINISH, I, ICOMPZ, II, J, K, LGN, LIWMIN,
+     $                   LWMIN, M, SMLSIZ, START, STOREZ, STRTRW
       DOUBLE PRECISION   EPS, ORGNRM, P, TINY
 *     ..
 *     .. External Functions ..
@@ -20081,45 +20322,54 @@
       ELSE
          ICOMPZ = -1
       END IF
-      IF( N.LE.1 .OR. ICOMPZ.LE.0 ) THEN
-         LIWMIN = 1
-         LWMIN = 1
-      ELSE
-         LGN = INT( LOG( DBLE( N ) ) / LOG( TWO ) )
-         IF( 2**LGN.LT.N )
-     $      LGN = LGN + 1
-         IF( 2**LGN.LT.N )
-     $      LGN = LGN + 1
-         IF( ICOMPZ.EQ.1 ) THEN
-            LWMIN = 1 + 3*N + 2*N*LGN + 3*N**2
-            LIWMIN = 6 + 6*N + 5*N*LGN
-         ELSE IF( ICOMPZ.EQ.2 ) THEN
-            LWMIN = 1 + 4*N + N**2
-            LIWMIN = 3 + 5*N
-         END IF
-      END IF
       IF( ICOMPZ.LT.0 ) THEN
          INFO = -1
       ELSE IF( N.LT.0 ) THEN
          INFO = -2
-      ELSE IF( ( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1,
-     $         N ) ) ) THEN
+      ELSE IF( ( LDZ.LT.1 ) .OR.
+     $         ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) ) ) THEN
          INFO = -6
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -8
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -10
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+*
+*        Compute the workspace requirements
+*
+         SMLSIZ = ILAENV( 9, 'DSTEDC', ' ', 0, 0, 0, 0 )
+         IF( N.LE.1 .OR. ICOMPZ.EQ.0 ) THEN
+            LIWMIN = 1
+            LWMIN = 1
+         ELSE IF( N.LE.SMLSIZ ) THEN
+            LIWMIN = 1
+            LWMIN = 2*( N - 1 )
+         ELSE
+            LGN = INT( LOG( DBLE( N ) )/LOG( TWO ) )
+            IF( 2**LGN.LT.N )
+     $         LGN = LGN + 1
+            IF( 2**LGN.LT.N )
+     $         LGN = LGN + 1
+            IF( ICOMPZ.EQ.1 ) THEN
+               LWMIN = 1 + 3*N + 2*N*LGN + 3*N**2
+               LIWMIN = 6 + 6*N + 5*N*LGN
+            ELSE IF( ICOMPZ.EQ.2 ) THEN
+               LWMIN = 1 + 4*N + N**2
+               LIWMIN = 3 + 5*N
+            END IF
+         END IF
          WORK( 1 ) = LWMIN
          IWORK( 1 ) = LIWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT. LQUERY ) THEN
+            INFO = -8
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT. LQUERY ) THEN
+            INFO = -10
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DSTEDC', -INFO )
          RETURN
-      ELSE IF( LQUERY ) THEN
+      ELSE IF (LQUERY) THEN
          RETURN
       END IF
 *
@@ -20133,184 +20383,180 @@
          RETURN
       END IF
 *
-      SMLSIZ = ILAENV( 9, 'DSTEDC', ' ', 0, 0, 0, 0 )
-*
 *     If the following conditional clause is removed, then the routine
 *     will use the Divide and Conquer routine to compute only the
 *     eigenvalues, which requires (3N + 3N**2) real workspace and
 *     (2 + 5N + 2N lg(N)) integer workspace.
 *     Since on many architectures DSTERF is much faster than any other
 *     algorithm for finding eigenvalues only, it is used here
-*     as the default.
+*     as the default. If the conditional clause is removed, then
+*     information on the size of workspace needs to be changed.
 *
 *     If COMPZ = 'N', use DSTERF to compute the eigenvalues.
 *
       IF( ICOMPZ.EQ.0 ) THEN
          CALL DSTERF( N, D, E, INFO )
-         RETURN
+         GO TO 50
       END IF
 *
 *     If N is smaller than the minimum divide size (SMLSIZ+1), then
 *     solve the problem with another solver.
 *
       IF( N.LE.SMLSIZ ) THEN
-         IF( ICOMPZ.EQ.0 ) THEN
-            CALL DSTERF( N, D, E, INFO )
-            RETURN
-         ELSE IF( ICOMPZ.EQ.2 ) THEN
-            CALL DSTEQR( 'I', N, D, E, Z, LDZ, WORK, INFO )
-            RETURN
-         ELSE
-            CALL DSTEQR( 'V', N, D, E, Z, LDZ, WORK, INFO )
-            RETURN
-         END IF
-      END IF
 *
-*     If COMPZ = 'V', the Z matrix must be stored elsewhere for later
-*     use.
+         CALL DSTEQR( COMPZ, N, D, E, Z, LDZ, WORK, INFO )
 *
-      IF( ICOMPZ.EQ.1 ) THEN
-         STOREZ = 1 + N*N
       ELSE
-         STOREZ = 1
-      END IF
 *
-      IF( ICOMPZ.EQ.2 ) THEN
-         CALL DLASET( 'Full', N, N, ZERO, ONE, Z, LDZ )
-      END IF
+*        If COMPZ = 'V', the Z matrix must be stored elsewhere for later
+*        use.
 *
-*     Scale.
-*
-      ORGNRM = DLANST( 'M', N, D, E )
-      IF( ORGNRM.EQ.ZERO )
-     $   RETURN
-*
-      EPS = DLAMCH( 'Epsilon' )
-*
-      START = 1
-*
-*     while ( START <= N )
-*
-   10 CONTINUE
-      IF( START.LE.N ) THEN
-*
-*     Let END be the position of the next subdiagonal entry such that
-*     E( END ) <= TINY or END = N if no such subdiagonal exists.  The
-*     matrix identified by the elements between START and END
-*     constitutes an independent sub-problem.
-*
-         END = START
-   20    CONTINUE
-         IF( END.LT.N ) THEN
-            TINY = EPS*SQRT( ABS( D( END ) ) )*SQRT( ABS( D( END+1 ) ) )
-            IF( ABS( E( END ) ).GT.TINY ) THEN
-               END = END + 1
-               GO TO 20
-            END IF
+         IF( ICOMPZ.EQ.1 ) THEN
+            STOREZ = 1 + N*N
+         ELSE
+            STOREZ = 1
          END IF
 *
-*        (Sub) Problem determined.  Compute its size and solve it.
+         IF( ICOMPZ.EQ.2 ) THEN
+            CALL DLASET( 'Full', N, N, ZERO, ONE, Z, LDZ )
+         END IF
 *
-         M = END - START + 1
-         IF( M.EQ.1 ) THEN
-            START = END + 1
+*        Scale.
+*
+         ORGNRM = DLANST( 'M', N, D, E )
+         IF( ORGNRM.EQ.ZERO )
+     $      GO TO 50
+*
+         EPS = DLAMCH( 'Epsilon' )
+*
+         START = 1
+*
+*        while ( START <= N )
+*
+   10    CONTINUE
+         IF( START.LE.N ) THEN
+*
+*           Let FINISH be the position of the next subdiagonal entry
+*           such that E( FINISH ) <= TINY or FINISH = N if no such
+*           subdiagonal exists.  The matrix identified by the elements
+*           between START and FINISH constitutes an independent
+*           sub-problem.
+*
+            FINISH = START
+   20       CONTINUE
+            IF( FINISH.LT.N ) THEN
+               TINY = EPS*SQRT( ABS( D( FINISH ) ) )*
+     $                    SQRT( ABS( D( FINISH+1 ) ) )
+               IF( ABS( E( FINISH ) ).GT.TINY ) THEN
+                  FINISH = FINISH + 1
+                  GO TO 20
+               END IF
+            END IF
+*
+*           (Sub) Problem determined.  Compute its size and solve it.
+*
+            M = FINISH - START + 1
+            IF( M.EQ.1 ) THEN
+               START = FINISH + 1
+               GO TO 10
+            END IF
+            IF( M.GT.SMLSIZ ) THEN
+*
+*              Scale.
+*
+               ORGNRM = DLANST( 'M', M, D( START ), E( START ) )
+               CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M, 1, D( START ), M,
+     $                      INFO )
+               CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M-1, 1, E( START ),
+     $                      M-1, INFO )
+*
+               IF( ICOMPZ.EQ.1 ) THEN
+                  STRTRW = 1
+               ELSE
+                  STRTRW = START
+               END IF
+               CALL DLAED0( ICOMPZ, N, M, D( START ), E( START ),
+     $                      Z( STRTRW, START ), LDZ, WORK( 1 ), N,
+     $                      WORK( STOREZ ), IWORK, INFO )
+               IF( INFO.NE.0 ) THEN
+                  INFO = ( INFO / ( M+1 )+START-1 )*( N+1 ) +
+     $                   MOD( INFO, ( M+1 ) ) + START - 1
+                  GO TO 50
+               END IF
+*
+*              Scale back.
+*
+               CALL DLASCL( 'G', 0, 0, ONE, ORGNRM, M, 1, D( START ), M,
+     $                      INFO )
+*
+            ELSE
+               IF( ICOMPZ.EQ.1 ) THEN
+*
+*                 Since QR won't update a Z matrix which is larger than
+*                 the length of D, we must solve the sub-problem in a
+*                 workspace and then multiply back into Z.
+*
+                  CALL DSTEQR( 'I', M, D( START ), E( START ), WORK, M,
+     $                         WORK( M*M+1 ), INFO )
+                  CALL DLACPY( 'A', N, M, Z( 1, START ), LDZ,
+     $                         WORK( STOREZ ), N )
+                  CALL DGEMM( 'N', 'N', N, M, M, ONE,
+     $                        WORK( STOREZ ), N, WORK, M, ZERO,
+     $                        Z( 1, START ), LDZ )
+               ELSE IF( ICOMPZ.EQ.2 ) THEN
+                  CALL DSTEQR( 'I', M, D( START ), E( START ),
+     $                         Z( START, START ), LDZ, WORK, INFO )
+               ELSE
+                  CALL DSTERF( M, D( START ), E( START ), INFO )
+               END IF
+               IF( INFO.NE.0 ) THEN
+                  INFO = START*( N+1 ) + FINISH
+                  GO TO 50
+               END IF
+            END IF
+*
+            START = FINISH + 1
             GO TO 10
          END IF
-         IF( M.GT.SMLSIZ ) THEN
-            INFO = SMLSIZ
 *
-*           Scale.
+*        endwhile
 *
-            ORGNRM = DLANST( 'M', M, D( START ), E( START ) )
-            CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M, 1, D( START ), M,
-     $                   INFO )
-            CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, M-1, 1, E( START ),
-     $                   M-1, INFO )
+*        If the problem split any number of times, then the eigenvalues
+*        will not be properly ordered.  Here we permute the eigenvalues
+*        (and the associated eigenvectors) into ascending order.
 *
-            IF( ICOMPZ.EQ.1 ) THEN
-               DTRTRW = 1
+         IF( M.NE.N ) THEN
+            IF( ICOMPZ.EQ.0 ) THEN
+*
+*              Use Quick Sort
+*
+               CALL DLASRT( 'I', N, D, INFO )
+*
             ELSE
-               DTRTRW = START
-            END IF
-            CALL DLAED0( ICOMPZ, N, M, D( START ), E( START ),
-     $                   Z( DTRTRW, START ), LDZ, WORK( 1 ), N,
-     $                   WORK( STOREZ ), IWORK, INFO )
-            IF( INFO.NE.0 ) THEN
-               INFO = ( INFO / ( M+1 )+START-1 )*( N+1 ) +
-     $                MOD( INFO, ( M+1 ) ) + START - 1
-               RETURN
-            END IF
 *
-*           Scale back.
+*              Use Selection Sort to minimize swaps of eigenvectors
 *
-            CALL DLASCL( 'G', 0, 0, ONE, ORGNRM, M, 1, D( START ), M,
-     $                   INFO )
-*
-         ELSE
-            IF( ICOMPZ.EQ.1 ) THEN
-*
-*     Since QR won't update a Z matrix which is larger than the
-*     length of D, we must solve the sub-problem in a workspace and
-*     then multiply back into Z.
-*
-               CALL DSTEQR( 'I', M, D( START ), E( START ), WORK, M,
-     $                      WORK( M*M+1 ), INFO )
-               CALL DLACPY( 'A', N, M, Z( 1, START ), LDZ,
-     $                      WORK( STOREZ ), N )
-               CALL DGEMM( 'N', 'N', N, M, M, ONE, WORK( STOREZ ), LDZ,
-     $                     WORK, M, ZERO, Z( 1, START ), LDZ )
-            ELSE IF( ICOMPZ.EQ.2 ) THEN
-               CALL DSTEQR( 'I', M, D( START ), E( START ),
-     $                      Z( START, START ), LDZ, WORK, INFO )
-            ELSE
-               CALL DSTERF( M, D( START ), E( START ), INFO )
-            END IF
-            IF( INFO.NE.0 ) THEN
-               INFO = START*( N+1 ) + END
-               RETURN
-            END IF
-         END IF
-*
-         START = END + 1
-         GO TO 10
-      END IF
-*
-*     endwhile
-*
-*     If the problem split any number of times, then the eigenvalues
-*     will not be properly ordered.  Here we permute the eigenvalues
-*     (and the associated eigenvectors) into ascending order.
-*
-      IF( M.NE.N ) THEN
-         IF( ICOMPZ.EQ.0 ) THEN
-*
-*        Use Quick Sort
-*
-            CALL DLASRT( 'I', N, D, INFO )
-*
-         ELSE
-*
-*        Use Selection Sort to minimize swaps of eigenvectors
-*
-            DO 40 II = 2, N
-               I = II - 1
-               K = I
-               P = D( I )
-               DO 30 J = II, N
-                  IF( D( J ).LT.P ) THEN
-                     K = J
-                     P = D( J )
+               DO 40 II = 2, N
+                  I = II - 1
+                  K = I
+                  P = D( I )
+                  DO 30 J = II, N
+                     IF( D( J ).LT.P ) THEN
+                        K = J
+                        P = D( J )
+                     END IF
+   30             CONTINUE
+                  IF( K.NE.I ) THEN
+                     D( K ) = D( I )
+                     D( I ) = P
+                     CALL DSWAP( N, Z( 1, I ), 1, Z( 1, K ), 1 )
                   END IF
-   30          CONTINUE
-               IF( K.NE.I ) THEN
-                  D( K ) = D( I )
-                  D( I ) = P
-                  CALL DSWAP( N, Z( 1, I ), 1, Z( 1, K ), 1 )
-               END IF
-   40       CONTINUE
+   40          CONTINUE
+            END IF
          END IF
       END IF
 *
+   50 CONTINUE
       WORK( 1 ) = LWMIN
       IWORK( 1 ) = LIWMIN
 *
@@ -20321,10 +20567,9 @@
       END
       SUBROUTINE DSTEV( JOBZ, N, D, E, Z, LDZ, WORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ
@@ -20355,10 +20600,9 @@
 *          A.
 *          On exit, if INFO = 0, the eigenvalues in ascending order.
 *
-*  E       (input/output) DOUBLE PRECISION array, dimension (N)
+*  E       (input/output) DOUBLE PRECISION array, dimension (N-1)
 *          On entry, the (n-1) subdiagonal elements of the tridiagonal
-*          matrix A, stored in elements 1 to N-1 of E; E(N) need not
-*          be set, but is used by the routine.
+*          matrix A, stored in elements 1 to N-1 of E.
 *          On exit, the contents of E are destroyed.
 *
 *  Z       (output) DOUBLE PRECISION array, dimension (LDZ, N)
@@ -20487,10 +20731,9 @@
       SUBROUTINE DSTEVD( JOBZ, N, D, E, Z, LDZ, WORK, LWORK, IWORK,
      $                   LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ
@@ -20530,10 +20773,9 @@
 *          A.
 *          On exit, if INFO = 0, the eigenvalues in ascending order.
 *
-*  E       (input/output) DOUBLE PRECISION array, dimension (N)
+*  E       (input/output) DOUBLE PRECISION array, dimension (N-1)
 *          On entry, the (n-1) subdiagonal elements of the tridiagonal
-*          matrix A, stored in elements 1 to N-1 of E; E(N) need not
-*          be set, but is used by the routine.
+*          matrix A, stored in elements 1 to N-1 of E.
 *          On exit, the contents of E are destroyed.
 *
 *  Z       (output) DOUBLE PRECISION array, dimension (LDZ, N)
@@ -20557,11 +20799,12 @@
 *                         ( 1 + 4*N + N**2 ).
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the optimal sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -20570,9 +20813,10 @@
 *          If JOBZ  = 'V' and N > 1 then LIWORK must be at least 3+5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the optimal sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
@@ -20624,15 +20868,17 @@
          INFO = -2
       ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
          INFO = -6
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -8
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -10
       END IF
 *
       IF( INFO.EQ.0 ) THEN
          WORK( 1 ) = LWMIN
          IWORK( 1 ) = LIWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -8
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -10
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -20705,10 +20951,9 @@
      $                   M, W, Z, LDZ, ISUPPZ, WORK, LWORK, IWORK,
      $                   LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 20, 2000
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE
@@ -20728,8 +20973,8 @@
 *  eigenvectors can be selected by specifying either a range of values
 *  or a range of indices for the desired eigenvalues.
 *
-*  Whenever possible, DSTEVR calls SSTEGR to compute the
-*  eigenspectrum using Relatively Robust Representations.  DSTEGR
+*  Whenever possible, DSTEVR calls DSTEMR to compute the
+*  eigenspectrum using Relatively Robust Representations.  DSTEMR
 *  computes eigenvalues by the dqds algorithm, while orthogonal
 *  eigenvectors are computed from various "good" L D L^T representations
 *  (also known as Relatively Robust Representations). Gram-Schmidt
@@ -20754,12 +20999,12 @@
 *  UC Berkeley, May 1997.
 *
 *
-*  Note 1 : DSTEVR calls SSTEGR when the full spectrum is requested
+*  Note 1 : DSTEVR calls DSTEMR when the full spectrum is requested
 *  on machines which conform to the ieee-754 floating point standard.
-*  DSTEVR calls SSTEBZ and SSTEIN on non-ieee machines and
+*  DSTEVR calls DSTEBZ and DSTEIN on non-ieee machines and
 *  when partial spectrum requests are made.
 *
-*  Normal execution of DSTEGR may create NaNs and infinities and
+*  Normal execution of DSTEMR may create NaNs and infinities and
 *  hence may abort due to a floating point exception in environments
 *  which do not handle NaNs and infinities in the ieee standard default
 *  manner.
@@ -20788,9 +21033,9 @@
 *          On exit, D may be multiplied by a constant factor chosen
 *          to avoid over/underflow in computing the eigenvalues.
 *
-*  E       (input/output) DOUBLE PRECISION array, dimension (N)
+*  E       (input/output) DOUBLE PRECISION array, dimension (max(1,N-1))
 *          On entry, the (n-1) subdiagonal elements of the tridiagonal
-*          matrix A in elements 1 to N-1 of E; E(N) need not be set.
+*          matrix A in elements 1 to N-1 of E.
 *          On exit, E may be multiplied by a constant factor chosen
 *          to avoid over/underflow in computing the eigenvalues.
 *
@@ -20863,29 +21108,31 @@
 *          ISUPPZ( 2*i ).
 ********** Implemented only for RANGE = 'A' or 'I' and IU - IL = N - 1
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal (and
 *          minimal) LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK.  LWORK >= 20*N.
+*          The dimension of the array WORK.  LWORK >= max(1,20*N).
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the optimal sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal (and
 *          minimal) LIWORK.
 *
 *  LIWORK  (input) INTEGER
-*          The dimension of the array IWORK.  LIWORK >= 10*N.
+*          The dimension of the array IWORK.  LIWORK >= max(1,10*N).
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the optimal sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
@@ -20904,11 +21151,12 @@
 *  =====================================================================
 *
 *     .. Parameters ..
-      DOUBLE PRECISION   ZERO, ONE
-      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+      DOUBLE PRECISION   ZERO, ONE, TWO
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0, TWO = 2.0D+0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, LQUERY, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, TEST, LQUERY, VALEIG, WANTZ,
+     $                   TRYRAC
       CHARACTER          ORDER
       INTEGER            I, IEEEOK, IMAX, INDIBL, INDIFL, INDISP,
      $                   INDIWO, ISCALE, ITMP1, J, JJ, LIWMIN, LWMIN,
@@ -20923,7 +21171,7 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, DLANST
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DSCAL, DSTEBZ, DSTEGR, DSTEIN, DSTERF,
+      EXTERNAL           DCOPY, DSCAL, DSTEBZ, DSTEMR, DSTEIN, DSTERF,
      $                   DSWAP, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
@@ -20942,8 +21190,8 @@
       INDEIG = LSAME( RANGE, 'I' )
 *
       LQUERY = ( ( LWORK.EQ.-1 ) .OR. ( LIWORK.EQ.-1 ) )
-      LWMIN = 20*N
-      LIWMIN = 10*N
+      LWMIN = MAX( 1, 20*N )
+      LIWMIN = MAX( 1, 10*N )
 *
 *
       INFO = 0
@@ -20968,16 +21216,18 @@
       IF( INFO.EQ.0 ) THEN
          IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
             INFO = -14
-         ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-            INFO = -17
-         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-            INFO = -19
          END IF
       END IF
 *
       IF( INFO.EQ.0 ) THEN
          WORK( 1 ) = LWMIN
          IWORK( 1 ) = LIWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -17
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -19
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -21040,22 +21290,49 @@
             VUU = VU*SIGMA
          END IF
       END IF
+
+*     Initialize indices into workspaces.  Note: These indices are used only
+*     if DSTERF or DSTEMR fail.
+
+*     IWORK(INDIBL:INDIBL+M-1) corresponds to IBLOCK in DSTEBZ and
+*     stores the block indices of each of the M<=N eigenvalues.
+      INDIBL = 1
+*     IWORK(INDISP:INDISP+NSPLIT-1) corresponds to ISPLIT in DSTEBZ and
+*     stores the starting and finishing indices of each block.
+      INDISP = INDIBL + N
+*     IWORK(INDIFL:INDIFL+N-1) stores the indices of eigenvectors
+*     that corresponding to eigenvectors that fail to converge in
+*     DSTEIN.  This information is discarded; if any fail, the driver
+*     returns INFO > 0.
+      INDIFL = INDISP + N
+*     INDIWO is the offset of the remaining integer workspace.
+      INDIWO = INDISP + N
 *
 *     If all eigenvalues are desired, then
-*     call DSTERF or SSTEGR.  If this fails for some eigenvalue, then
+*     call DSTERF or DSTEMR.  If this fails for some eigenvalue, then
 *     try DSTEBZ.
 *
 *
-      IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
-     $    IEEEOK.EQ.1 ) THEN
+      TEST = .FALSE.
+      IF( INDEIG ) THEN
+         IF( IL.EQ.1 .AND. IU.EQ.N ) THEN
+            TEST = .TRUE.
+         END IF
+      END IF
+      IF( ( ALLEIG .OR. TEST ) .AND. IEEEOK.EQ.1 ) THEN
          CALL DCOPY( N-1, E( 1 ), 1, WORK( 1 ), 1 )
          IF( .NOT.WANTZ ) THEN
             CALL DCOPY( N, D, 1, W, 1 )
             CALL DSTERF( N, W, WORK, INFO )
          ELSE
             CALL DCOPY( N, D, 1, WORK( N+1 ), 1 )
-            CALL DSTEGR( JOBZ, 'A', N, WORK( N+1 ), WORK, VL, VU, IL,
-     $                   IU, ABSTOL, M, W, Z, LDZ, ISUPPZ,
+            IF (ABSTOL .LE. TWO*N*EPS) THEN
+               TRYRAC = .TRUE.
+            ELSE
+               TRYRAC = .FALSE.
+            END IF
+            CALL DSTEMR( JOBZ, 'A', N, WORK( N+1 ), WORK, VL, VU, IL,
+     $                   IU, M, W, Z, LDZ, N, ISUPPZ, TRYRAC,
      $                   WORK( 2*N+1 ), LWORK-2*N, IWORK, LIWORK, INFO )
 *
          END IF
@@ -21066,17 +21343,14 @@
          INFO = 0
       END IF
 *
-*     Otherwise, call DSTEBZ and, if eigenvectors are desired, SSTEIN.
+*     Otherwise, call DSTEBZ and, if eigenvectors are desired, DSTEIN.
 *
       IF( WANTZ ) THEN
          ORDER = 'B'
       ELSE
          ORDER = 'E'
       END IF
-      INDIBL = 1
-      INDISP = INDIBL + N
-      INDIFL = INDISP + N
-      INDIWO = INDIFL + N
+
       CALL DSTEBZ( RANGE, ORDER, N, VLL, VUU, IL, IU, ABSTOL, D, E, M,
      $             NSPLIT, W, IWORK( INDIBL ), IWORK( INDISP ), WORK,
      $             IWORK( INDIWO ), INFO )
@@ -21138,10 +21412,9 @@
       SUBROUTINE DSTEVX( JOBZ, RANGE, N, D, E, VL, VU, IL, IU, ABSTOL,
      $                   M, W, Z, LDZ, WORK, IWORK, IFAIL, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE
@@ -21183,9 +21456,9 @@
 *          On exit, D may be multiplied by a constant factor chosen
 *          to avoid over/underflow in computing the eigenvalues.
 *
-*  E       (input/output) DOUBLE PRECISION array, dimension (N)
+*  E       (input/output) DOUBLE PRECISION array, dimension (max(1,N-1))
 *          On entry, the (n-1) subdiagonal elements of the tridiagonal
-*          matrix A in elements 1 to N-1 of E; E(N) need not be set.
+*          matrix A in elements 1 to N-1 of E.
 *          On exit, E may be multiplied by a constant factor chosen
 *          to avoid over/underflow in computing the eigenvalues.
 *
@@ -21273,7 +21546,7 @@
       PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, TEST, VALEIG, WANTZ
       CHARACTER          ORDER
       INTEGER            I, IMAX, INDIBL, INDISP, INDIWO, INDWRK,
      $                   ISCALE, ITMP1, J, JJ, NSPLIT
@@ -21391,8 +21664,13 @@
 *     call DSTERF or SSTEQR.  If this fails for some eigenvalue, then
 *     try DSTEBZ.
 *
-      IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
-     $    ( ABSTOL.LE.ZERO ) ) THEN
+      TEST = .FALSE.
+      IF( INDEIG ) THEN
+         IF( IL.EQ.1 .AND. IU.EQ.N ) THEN
+            TEST = .TRUE.
+         END IF
+      END IF
+      IF( ( ALLEIG .OR. TEST ) .AND. ( ABSTOL.LE.ZERO ) ) THEN
          CALL DCOPY( N, D, 1, W, 1 )
          CALL DCOPY( N-1, E( 1 ), 1, WORK( 1 ), 1 )
          INDWRK = N + 1
@@ -21483,10 +21761,9 @@
       END
       SUBROUTINE DSYEV( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -21534,7 +21811,7 @@
 *  W       (output) DOUBLE PRECISION array, dimension (N)
 *          If INFO = 0, the eigenvalues in ascending order.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -21563,7 +21840,7 @@
 *     .. Local Scalars ..
       LOGICAL            LOWER, LQUERY, WANTZ
       INTEGER            IINFO, IMAX, INDE, INDTAU, INDWRK, ISCALE,
-     $                   LLWORK, LOPT, LWKOPT, NB
+     $                   LLWORK, LWKOPT, NB
       DOUBLE PRECISION   ANRM, BIGNUM, EPS, RMAX, RMIN, SAFMIN, SIGMA,
      $                   SMLNUM
 *     ..
@@ -21597,14 +21874,15 @@
          INFO = -3
       ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
          INFO = -5
-      ELSE IF( LWORK.LT.MAX( 1, 3*N-1 ) .AND. .NOT.LQUERY ) THEN
-         INFO = -8
       END IF
 *
       IF( INFO.EQ.0 ) THEN
          NB = ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 )
          LWKOPT = MAX( 1, ( NB+2 )*N )
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, 3*N-1 ) .AND. .NOT.LQUERY )
+     $      INFO = -8
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -21617,13 +21895,12 @@
 *     Quick return if possible
 *
       IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
          RETURN
       END IF
 *
       IF( N.EQ.1 ) THEN
          W( 1 ) = A( 1, 1 )
-         WORK( 1 ) = 3
+         WORK( 1 ) = 2
          IF( WANTZ )
      $      A( 1, 1 ) = ONE
          RETURN
@@ -21660,7 +21937,6 @@
       LLWORK = LWORK - INDWRK + 1
       CALL DSYTRD( UPLO, N, A, LDA, W, WORK( INDE ), WORK( INDTAU ),
      $             WORK( INDWRK ), LLWORK, IINFO )
-      LOPT = 2*N + WORK( INDWRK )
 *
 *     For eigenvalues only, call DSTERF.  For eigenvectors, first call
 *     DORGTR to generate the orthogonal matrix, then call DSTEQR.
@@ -21697,10 +21973,9 @@
       SUBROUTINE DSYEVD( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, IWORK,
      $                   LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -21772,11 +22047,12 @@
 *                                                1 + 6*N + 2*N**2.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the optimal sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -21786,16 +22062,21 @@
 *          If JOBZ  = 'V' and N > 1, LIWORK must be at least 3 + 5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the optimal sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
 *          < 0:  if INFO = -i, the i-th argument had an illegal value
-*          > 0:  if INFO = i, the algorithm failed to converge; i
-*                off-diagonal elements of an intermediate tridiagonal
-*                form did not converge to zero.
+*          > 0:  if INFO = i and JOBZ = 'N', then the algorithm failed
+*                to converge; i off-diagonal elements of an intermediate
+*                tridiagonal form did not converge to zero;
+*                if INFO = i and JOBZ = 'V', then the algorithm failed
+*                to compute an eigenvalue while working on the submatrix
+*                lying in rows and columns INFO/(N+1) through
+*                mod(INFO,N+1).
 *
 *  Further Details
 *  ===============
@@ -21805,6 +22086,7 @@
 *     at Berkeley, USA
 *  Modified by Francoise Tisseur, University of Tennessee.
 *
+*  Modified description of INFO. Sven, 16 Feb 05.
 *  =====================================================================
 *
 *     .. Parameters ..
@@ -21821,8 +22103,9 @@
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
+      INTEGER            ILAENV
       DOUBLE PRECISION   DLAMCH, DLANSY
-      EXTERNAL           LSAME, DLAMCH, DLANSY
+      EXTERNAL           LSAME, DLAMCH, DLANSY, ILAENV
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DLACPY, DLASCL, DORMTR, DSCAL, DSTEDC, DSTERF,
@@ -21840,22 +22123,6 @@
       LQUERY = ( LWORK.EQ.-1 .OR. LIWORK.EQ.-1 )
 *
       INFO = 0
-      IF( N.LE.1 ) THEN
-         LIWMIN = 1
-         LWMIN = 1
-         LOPT = LWMIN
-         LIOPT = LIWMIN
-      ELSE
-         IF( WANTZ ) THEN
-            LIWMIN = 3 + 5*N
-            LWMIN = 1 + 6*N + 2*N**2
-         ELSE
-            LIWMIN = 1
-            LWMIN = 2*N + 1
-         END IF
-         LOPT = LWMIN
-         LIOPT = LIWMIN
-      END IF
       IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -1
       ELSE IF( .NOT.( LOWER .OR. LSAME( UPLO, 'U' ) ) ) THEN
@@ -21864,15 +22131,34 @@
          INFO = -3
       ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
          INFO = -5
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -8
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -10
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( N.LE.1 ) THEN
+            LIWMIN = 1
+            LWMIN = 1
+            LOPT = LWMIN
+            LIOPT = LIWMIN
+         ELSE
+            IF( WANTZ ) THEN
+               LIWMIN = 3 + 5*N
+               LWMIN = 1 + 6*N + 2*N**2
+            ELSE
+               LIWMIN = 1
+               LWMIN = 2*N + 1
+            END IF
+            LOPT = MAX( LWMIN, 2*N +
+     $                  ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 ) )
+            LIOPT = LIWMIN
+         END IF
          WORK( 1 ) = LOPT
          IWORK( 1 ) = LIOPT
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -8
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -10
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -21963,10 +22249,9 @@
      $                   ABSTOL, M, W, Z, LDZ, ISUPPZ, WORK, LWORK,
      $                   IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 20, 2000
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -21982,42 +22267,59 @@
 *  =======
 *
 *  DSYEVR computes selected eigenvalues and, optionally, eigenvectors
-*  of a real symmetric matrix T.  Eigenvalues and eigenvectors can be
+*  of a real symmetric matrix A.  Eigenvalues and eigenvectors can be
 *  selected by specifying either a range of values or a range of
 *  indices for the desired eigenvalues.
 *
-*  Whenever possible, DSYEVR calls DSTEGR to compute the
-*  eigenspectrum using Relatively Robust Representations.  DSTEGR
+*  DSYEVR first reduces the matrix A to tridiagonal form T with a call
+*  to DSYTRD.  Then, whenever possible, DSYEVR calls DSTEMR to compute
+*  the eigenspectrum using Relatively Robust Representations.  DSTEMR
 *  computes eigenvalues by the dqds algorithm, while orthogonal
 *  eigenvectors are computed from various "good" L D L^T representations
 *  (also known as Relatively Robust Representations). Gram-Schmidt
 *  orthogonalization is avoided as far as possible. More specifically,
-*  the various steps of the algorithm are as follows. For the i-th
-*  unreduced block of T,
-*     (a) Compute T - sigma_i = L_i D_i L_i^T, such that L_i D_i L_i^T
-*          is a relatively robust representation,
-*     (b) Compute the eigenvalues, lambda_j, of L_i D_i L_i^T to high
-*         relative accuracy by the dqds algorithm,
-*     (c) If there is a cluster of close eigenvalues, "choose" sigma_i
-*         close to the cluster, and go to step (a),
-*     (d) Given the approximate eigenvalue lambda_j of L_i D_i L_i^T,
-*         compute the corresponding eigenvector by forming a
-*         rank-revealing twisted factorization.
+*  the various steps of the algorithm are as follows.
+*
+*  For each unreduced block (submatrix) of T,
+*     (a) Compute T - sigma I  = L D L^T, so that L and D
+*         define all the wanted eigenvalues to high relative accuracy.
+*         This means that small relative changes in the entries of D and L
+*         cause only small relative changes in the eigenvalues and
+*         eigenvectors. The standard (unfactored) representation of the
+*         tridiagonal matrix T does not have this property in general.
+*     (b) Compute the eigenvalues to suitable accuracy.
+*         If the eigenvectors are desired, the algorithm attains full
+*         accuracy of the computed eigenvalues only right before
+*         the corresponding vectors have to be computed, see steps c) and d).
+*     (c) For each cluster of close eigenvalues, select a new
+*         shift close to the cluster, find a new factorization, and refine
+*         the shifted eigenvalues to suitable accuracy.
+*     (d) For each eigenvalue with a large enough relative separation compute
+*         the corresponding eigenvector by forming a rank revealing twisted
+*         factorization. Go back to (c) for any clusters that remain.
+*
 *  The desired accuracy of the output can be specified by the input
 *  parameter ABSTOL.
 *
-*  For more details, see "A new O(n^2) algorithm for the symmetric
-*  tridiagonal eigenvalue/eigenvector problem", by Inderjit Dhillon,
-*  Computer Science Division Technical Report No. UCB//CSD-97-971,
-*  UC Berkeley, May 1997.
+*  For more details, see DSTEMR's documentation and:
+*  - Inderjit S. Dhillon and Beresford N. Parlett: "Multiple representations
+*    to compute orthogonal eigenvectors of symmetric tridiagonal matrices,"
+*    Linear Algebra and its Applications, 387(1), pp. 1-28, August 2004.
+*  - Inderjit Dhillon and Beresford Parlett: "Orthogonal Eigenvectors and
+*    Relative Gaps," SIAM Journal on Matrix Analysis and Applications, Vol. 25,
+*    2004.  Also LAPACK Working Note 154.
+*  - Inderjit Dhillon: "A new O(n^2) algorithm for the symmetric
+*    tridiagonal eigenvalue/eigenvector problem",
+*    Computer Science Division Technical Report No. UCB/CSD-97-971,
+*    UC Berkeley, May 1997.
 *
 *
-*  Note 1 : DSYEVR calls DSTEGR when the full spectrum is requested
+*  Note 1 : DSYEVR calls DSTEMR when the full spectrum is requested
 *  on machines which conform to the ieee-754 floating point standard.
 *  DSYEVR calls DSTEBZ and SSTEIN on non-ieee machines and
 *  when partial spectrum requests are made.
 *
-*  Normal execution of DSTEGR may create NaNs and infinities and
+*  Normal execution of DSTEMR may create NaNs and infinities and
 *  hence may abort due to a floating point exception in environments
 *  which do not handle NaNs and infinities in the ieee standard default
 *  manner.
@@ -22092,7 +22394,7 @@
 *          eigenvalues are computed to high relative accuracy when
 *          possible in future releases.  The current code does not
 *          make any guarantees about high relative accuracy, but
-*          furutre releases will. See J. Barlow and J. Demmel,
+*          future releases will. See J. Barlow and J. Demmel,
 *          "Computing Accurate Eigensystems of Scaled Diagonally
 *          Dominant Matrices", LAPACK Working Note #7, for a discussion
 *          of which matrices define their eigenvalues to high relative
@@ -22115,6 +22417,7 @@
 *          Note: the user must ensure that at least max(1,M) columns are
 *          supplied in the array Z; if RANGE = 'V', the exact value of M
 *          is not known in advance and an upper bound must be used.
+*          Supplying N columns is always safe.
 *
 *  LDZ     (input) INTEGER
 *          The leading dimension of the array Z.  LDZ >= 1, and if
@@ -22127,7 +22430,7 @@
 *          ISUPPZ( 2*i ).
 ********** Implemented only for RANGE = 'A' or 'I' and IU - IL = N - 1
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -22141,7 +22444,7 @@
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -22165,19 +22468,22 @@
 *     Osni Marques, LBNL/NERSC, USA
 *     Ken Stanley, Computer Science Division, University of
 *       California at Berkeley, USA
+*     Jason Riedy, Computer Science Division, University of
+*       California at Berkeley, USA
 *
 * =====================================================================
 *
 *     .. Parameters ..
-      DOUBLE PRECISION   ZERO, ONE
-      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+      DOUBLE PRECISION   ZERO, ONE, TWO
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0, TWO = 0.0D+0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, LOWER, LQUERY, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, LOWER, LQUERY, VALEIG, WANTZ,
+     $                   TRYRAC
       CHARACTER          ORDER
       INTEGER            I, IEEEOK, IINFO, IMAX, INDD, INDDD, INDE,
      $                   INDEE, INDIBL, INDIFL, INDISP, INDIWO, INDTAU,
-     $                   INDWK, INDWKN, ISCALE, ITMP1, J, JJ, LIWMIN,
+     $                   INDWK, INDWKN, ISCALE, J, JJ, LIWMIN,
      $                   LLWORK, LLWRKN, LWKOPT, LWMIN, NB, NSPLIT
       DOUBLE PRECISION   ABSTLL, ANRM, BIGNUM, EPS, RMAX, RMIN, SAFMIN,
      $                   SIGMA, SMLNUM, TMP1, VLL, VUU
@@ -22189,7 +22495,7 @@
       EXTERNAL           LSAME, ILAENV, DLAMCH, DLANSY
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DORMTR, DSCAL, DSTEBZ, DSTEGR, DSTEIN,
+      EXTERNAL           DCOPY, DORMTR, DSCAL, DSTEBZ, DSTEMR, DSTEIN,
      $                   DSTERF, DSWAP, DSYTRD, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
@@ -22246,8 +22552,8 @@
       END IF
 *
       IF( INFO.EQ.0 ) THEN
-         NB = ILAENV( 1, 'ZHETRD', UPLO, N, -1, -1, -1 )
-         NB = MAX( NB, ILAENV( 1, 'ZUNMTR', UPLO, N, -1, -1, -1 ) )
+         NB = ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 )
+         NB = MAX( NB, ILAENV( 1, 'DORMTR', UPLO, N, -1, -1, -1 ) )
          LWKOPT = MAX( ( NB+1 )*N, LWMIN )
          WORK( 1 ) = LWKOPT
          IWORK( 1 ) = LIWMIN
@@ -22324,22 +22630,51 @@
             VUU = VU*SIGMA
          END IF
       END IF
+
+*     Initialize indices into workspaces.  Note: The IWORK indices are
+*     used only if DSTERF or DSTEMR fail.
+
+*     WORK(INDTAU:INDTAU+N-1) stores the scalar factors of the
+*     elementary reflectors used in DSYTRD.
+      INDTAU = 1
+*     WORK(INDD:INDD+N-1) stores the tridiagonal's diagonal entries.
+      INDD = INDTAU + N
+*     WORK(INDE:INDE+N-1) stores the off-diagonal entries of the
+*     tridiagonal matrix from DSYTRD.
+      INDE = INDD + N
+*     WORK(INDDD:INDDD+N-1) is a copy of the diagonal entries over
+*     -written by DSTEMR (the DSTERF path copies the diagonal to W).
+      INDDD = INDE + N
+*     WORK(INDEE:INDEE+N-1) is a copy of the off-diagonal entries over
+*     -written while computing the eigenvalues in DSTERF and DSTEMR.
+      INDEE = INDDD + N
+*     INDWK is the starting offset of the left-over workspace, and
+*     LLWORK is the remaining workspace size.
+      INDWK = INDEE + N
+      LLWORK = LWORK - INDWK + 1
+
+*     IWORK(INDIBL:INDIBL+M-1) corresponds to IBLOCK in DSTEBZ and
+*     stores the block indices of each of the M<=N eigenvalues.
+      INDIBL = 1
+*     IWORK(INDISP:INDISP+NSPLIT-1) corresponds to ISPLIT in DSTEBZ and
+*     stores the starting and finishing indices of each block.
+      INDISP = INDIBL + N
+*     IWORK(INDIFL:INDIFL+N-1) stores the indices of eigenvectors
+*     that corresponding to eigenvectors that fail to converge in
+*     DSTEIN.  This information is discarded; if any fail, the driver
+*     returns INFO > 0.
+      INDIFL = INDISP + N
+*     INDIWO is the offset of the remaining integer workspace.
+      INDIWO = INDISP + N
+
 *
 *     Call DSYTRD to reduce symmetric matrix to tridiagonal form.
 *
-      INDTAU = 1
-      INDE = INDTAU + N
-      INDD = INDE + N
-      INDEE = INDD + N
-      INDDD = INDEE + N
-      INDIFL = INDDD + N
-      INDWK = INDIFL + N
-      LLWORK = LWORK - INDWK + 1
       CALL DSYTRD( UPLO, N, A, LDA, WORK( INDD ), WORK( INDE ),
      $             WORK( INDTAU ), WORK( INDWK ), LLWORK, IINFO )
 *
 *     If all eigenvalues are desired
-*     then call DSTERF or SSTEGR and DORMTR.
+*     then call DSTERF or DSTEMR and DORMTR.
 *
       IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
      $    IEEEOK.EQ.1 ) THEN
@@ -22351,9 +22686,15 @@
             CALL DCOPY( N-1, WORK( INDE ), 1, WORK( INDEE ), 1 )
             CALL DCOPY( N, WORK( INDD ), 1, WORK( INDDD ), 1 )
 *
-            CALL DSTEGR( JOBZ, 'A', N, WORK( INDDD ), WORK( INDEE ),
-     $                   VL, VU, IL, IU, ABSTOL, M, W, Z, LDZ, ISUPPZ,
-     $                   WORK( INDWK ), LWORK, IWORK, LIWORK, INFO )
+            IF (ABSTOL .LE. TWO*N*EPS) THEN
+               TRYRAC = .TRUE.
+            ELSE
+               TRYRAC = .FALSE.
+            END IF
+            CALL DSTEMR( JOBZ, 'A', N, WORK( INDDD ), WORK( INDEE ),
+     $                   VL, VU, IL, IU, M, W, Z, LDZ, N, ISUPPZ,
+     $                   TRYRAC, WORK( INDWK ), LWORK, IWORK, LIWORK,
+     $                   INFO )
 *
 *
 *
@@ -22371,24 +22712,23 @@
 *
 *
          IF( INFO.EQ.0 ) THEN
+*           Everything worked.  Skip DSTEBZ/DSTEIN.  IWORK(:) are
+*           undefined.
             M = N
             GO TO 30
          END IF
          INFO = 0
       END IF
 *
-*     Otherwise, call DSTEBZ and, if eigenvectors are desired, SSTEIN.
-*     Also call DSTEBZ and SSTEIN if SSTEGR fails.
+*     Otherwise, call DSTEBZ and, if eigenvectors are desired, DSTEIN.
+*     Also call DSTEBZ and DSTEIN if DSTEMR fails.
 *
       IF( WANTZ ) THEN
          ORDER = 'B'
       ELSE
          ORDER = 'E'
       END IF
-      INDIFL = 1
-      INDIBL = INDIFL + N
-      INDISP = INDIBL + N
-      INDIWO = INDISP + N
+
       CALL DSTEBZ( RANGE, ORDER, N, VLL, VUU, IL, IU, ABSTLL,
      $             WORK( INDD ), WORK( INDE ), M, NSPLIT, W,
      $             IWORK( INDIBL ), IWORK( INDISP ), WORK( INDWK ),
@@ -22411,6 +22751,7 @@
 *
 *     If matrix was scaled, then rescale eigenvalues appropriately.
 *
+*  Jump here if DSTEMR/DSTEIN succeeded.
    30 CONTINUE
       IF( ISCALE.EQ.1 ) THEN
          IF( INFO.EQ.0 ) THEN
@@ -22422,7 +22763,9 @@
       END IF
 *
 *     If eigenvalues are not in order, then sort them, along with
-*     eigenvectors.
+*     eigenvectors.  Note: We do not sort the IFAIL portion of IWORK.
+*     It may not be initialized (if DSTEMR/DSTEIN succeeded), and we do
+*     not return this detailed information to the user.
 *
       IF( WANTZ ) THEN
          DO 50 J = 1, M - 1
@@ -22436,11 +22779,8 @@
    40       CONTINUE
 *
             IF( I.NE.0 ) THEN
-               ITMP1 = IWORK( INDIBL+I-1 )
                W( I ) = W( J )
-               IWORK( INDIBL+I-1 ) = IWORK( INDIBL+J-1 )
                W( J ) = TMP1
-               IWORK( INDIBL+J-1 ) = ITMP1
                CALL DSWAP( N, Z( 1, I ), 1, Z( 1, J ), 1 )
             END IF
    50    CONTINUE
@@ -22460,10 +22800,9 @@
      $                   ABSTOL, M, W, Z, LDZ, WORK, LWORK, IWORK,
      $                   IFAIL, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -22577,11 +22916,12 @@
 *          The leading dimension of the array Z.  LDZ >= 1, and if
 *          JOBZ = 'V', LDZ >= max(1,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The length of the array WORK.  LWORK >= max(1,8*N).
+*          The length of the array WORK.  LWORK >= 1, when N <= 1;
+*          otherwise 8*N.
 *          For optimal efficiency, LWORK >= (NB+3)*N,
 *          where NB is the max of the blocksize for DSYTRD and DORMTR
 *          returned by ILAENV.
@@ -22612,12 +22952,13 @@
       PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, LOWER, LQUERY, VALEIG, WANTZ
+      LOGICAL            ALLEIG, INDEIG, LOWER, LQUERY, TEST, VALEIG,
+     $                   WANTZ
       CHARACTER          ORDER
       INTEGER            I, IINFO, IMAX, INDD, INDE, INDEE, INDIBL,
      $                   INDISP, INDIWO, INDTAU, INDWKN, INDWRK, ISCALE,
-     $                   ITMP1, J, JJ, LLWORK, LLWRKN, LOPT, LWKOPT, NB,
-     $                   NSPLIT
+     $                   ITMP1, J, JJ, LLWORK, LLWRKN, LWKMIN,
+     $                   LWKOPT, NB, NSPLIT
       DOUBLE PRECISION   ABSTLL, ANRM, BIGNUM, EPS, RMAX, RMIN, SAFMIN,
      $                   SIGMA, SMLNUM, TMP1, VLL, VUU
 *     ..
@@ -22671,16 +23012,23 @@
       IF( INFO.EQ.0 ) THEN
          IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
             INFO = -15
-         ELSE IF( LWORK.LT.MAX( 1, 8*N ) .AND. .NOT.LQUERY ) THEN
-            INFO = -17
          END IF
       END IF
 *
       IF( INFO.EQ.0 ) THEN
-         NB = ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 )
-         NB = MAX( NB, ILAENV( 1, 'DORMTR', UPLO, N, -1, -1, -1 ) )
-         LWKOPT = ( NB+3 )*N
-         WORK( 1 ) = LWKOPT
+         IF( N.LE.1 ) THEN
+            LWKMIN = 1
+            WORK( 1 ) = LWKMIN
+         ELSE
+            LWKMIN = 8*N
+            NB = ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 )
+            NB = MAX( NB, ILAENV( 1, 'DORMTR', UPLO, N, -1, -1, -1 ) )
+            LWKOPT = MAX( LWKMIN, ( NB + 3 )*N )
+            WORK( 1 ) = LWKOPT
+         END IF
+*
+         IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY )
+     $      INFO = -17
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -22694,12 +23042,10 @@
 *
       M = 0
       IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
          RETURN
       END IF
 *
       IF( N.EQ.1 ) THEN
-         WORK( 1 ) = 7
          IF( ALLEIG .OR. INDEIG ) THEN
             M = 1
             W( 1 ) = A( 1, 1 )
@@ -22727,8 +23073,10 @@
 *
       ISCALE = 0
       ABSTLL = ABSTOL
-      VLL = VL
-      VUU = VU
+      IF( VALEIG ) THEN
+         VLL = VL
+         VUU = VU
+      END IF
       ANRM = DLANSY( 'M', UPLO, N, A, LDA, WORK )
       IF( ANRM.GT.ZERO .AND. ANRM.LT.RMIN ) THEN
          ISCALE = 1
@@ -22764,14 +23112,18 @@
       LLWORK = LWORK - INDWRK + 1
       CALL DSYTRD( UPLO, N, A, LDA, WORK( INDD ), WORK( INDE ),
      $             WORK( INDTAU ), WORK( INDWRK ), LLWORK, IINFO )
-      LOPT = 3*N + WORK( INDWRK )
 *
 *     If all eigenvalues are desired and ABSTOL is less than or equal to
 *     zero, then call DSTERF or DORGTR and SSTEQR.  If this fails for
 *     some eigenvalue, then try DSTEBZ.
 *
-      IF( ( ALLEIG .OR. ( INDEIG .AND. IL.EQ.1 .AND. IU.EQ.N ) ) .AND.
-     $    ( ABSTOL.LE.ZERO ) ) THEN
+      TEST = .FALSE.
+      IF( INDEIG ) THEN
+         IF( IL.EQ.1 .AND. IU.EQ.N ) THEN
+            TEST = .TRUE.
+         END IF
+      END IF
+      IF( ( ALLEIG .OR. TEST ) .AND. ( ABSTOL.LE.ZERO ) ) THEN
          CALL DCOPY( N, WORK( INDD ), 1, W, 1 )
          INDEE = INDWRK + 2*N
          IF( .NOT.WANTZ ) THEN
@@ -22880,10 +23232,9 @@
       SUBROUTINE DSYGV( ITYPE, JOBZ, UPLO, N, A, LDA, B, LDB, W, WORK,
      $                  LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -22958,7 +23309,7 @@
 *  W       (output) DOUBLE PRECISION array, dimension (N)
 *          If INFO = 0, the eigenvalues in ascending order.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -22992,7 +23343,7 @@
 *     .. Local Scalars ..
       LOGICAL            LQUERY, UPPER, WANTZ
       CHARACTER          TRANS
-      INTEGER            LWKOPT, NB, NEIG
+      INTEGER            LWKMIN, LWKOPT, NB, NEIG
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -23026,14 +23377,17 @@
          INFO = -6
       ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
          INFO = -8
-      ELSE IF( LWORK.LT.MAX( 1, 3*N-1 ) .AND. .NOT.LQUERY ) THEN
-         INFO = -11
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         LWKMIN = MAX( 1, 3*N - 1 )
          NB = ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 )
-         LWKOPT = ( NB+2 )*N
+         LWKOPT = MAX( LWKMIN, ( NB + 2 )*N )
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -11
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -23107,10 +23461,9 @@
       SUBROUTINE DSYGVD( ITYPE, JOBZ, UPLO, N, A, LDA, B, LDB, W, WORK,
      $                   LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -23193,7 +23546,7 @@
 *  W       (output) DOUBLE PRECISION array, dimension (N)
 *          If INFO = 0, the eigenvalues in ascending order.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -23203,11 +23556,12 @@
 *          If JOBZ = 'V' and N > 1, LWORK >= 1 + 6*N + 2*N**2.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
-*          only calculates the optimal size of the WORK array, returns
-*          this value as the first entry of the WORK array, and no error
-*          message related to LWORK is issued by XERBLA.
+*          only calculates the optimal sizes of the WORK and IWORK
+*          arrays, returns these values as the first entries of the WORK
+*          and IWORK arrays, and no error message related to LWORK or
+*          LIWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
@@ -23217,17 +23571,23 @@
 *          If JOBZ  = 'V' and N > 1, LIWORK >= 3 + 5*N.
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
-*          routine only calculates the optimal size of the IWORK array,
-*          returns this value as the first entry of the IWORK array, and
-*          no error message related to LIWORK is issued by XERBLA.
+*          routine only calculates the optimal sizes of the WORK and
+*          IWORK arrays, returns these values as the first entries of
+*          the WORK and IWORK arrays, and no error message related to
+*          LWORK or LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit
 *          < 0:  if INFO = -i, the i-th argument had an illegal value
 *          > 0:  DPOTRF or DSYEVD returned an error code:
-*             <= N:  if INFO = i, DSYEVD failed to converge;
-*                    i off-diagonal elements of an intermediate
-*                    tridiagonal form did not converge to zero;
+*             <= N:  if INFO = i and JOBZ = 'N', then the algorithm
+*                    failed to converge; i off-diagonal elements of an
+*                    intermediate tridiagonal form did not converge to
+*                    zero;
+*                    if INFO = i and JOBZ = 'V', then the algorithm
+*                    failed to compute an eigenvalue while working on
+*                    the submatrix lying in rows and columns INFO/(N+1)
+*                    through mod(INFO,N+1);
 *             > N:   if INFO = N + i, for 1 <= i <= N, then the leading
 *                    minor of order i of B is not positive definite.
 *                    The factorization of B could not be completed and
@@ -23239,6 +23599,10 @@
 *  Based on contributions by
 *     Mark Fahey, Department of Mathematics, Univ. of Kentucky, USA
 *
+*  Modified so that no backsubstitution is performed if DSYEVD fails to
+*  converge (NEIG in old code could be greater than N causing out of
+*  bounds reference to A - reported by Ralf Meyer).  Also corrected the
+*  description of INFO and the test on ITYPE. Sven, 16 Feb 05.
 *  =====================================================================
 *
 *     .. Parameters ..
@@ -23248,7 +23612,7 @@
 *     .. Local Scalars ..
       LOGICAL            LQUERY, UPPER, WANTZ
       CHARACTER          TRANS
-      INTEGER            LIOPT, LIWMIN, LOPT, LWMIN, NEIG
+      INTEGER            LIOPT, LIWMIN, LOPT, LWMIN
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -23272,20 +23636,16 @@
       IF( N.LE.1 ) THEN
          LIWMIN = 1
          LWMIN = 1
-         LOPT = LWMIN
-         LIOPT = LIWMIN
+      ELSE IF( WANTZ ) THEN
+         LIWMIN = 3 + 5*N
+         LWMIN = 1 + 6*N + 2*N**2
       ELSE
-         IF( WANTZ ) THEN
-            LIWMIN = 3 + 5*N
-            LWMIN = 1 + 6*N + 2*N**2
-         ELSE
-            LIWMIN = 1
-            LWMIN = 2*N + 1
-         END IF
-         LOPT = LWMIN
-         LIOPT = LIWMIN
+         LIWMIN = 1
+         LWMIN = 2*N + 1
       END IF
-      IF( ITYPE.LT.0 .OR. ITYPE.GT.3 ) THEN
+      LOPT = LWMIN
+      LIOPT = LIWMIN
+      IF( ITYPE.LT.1 .OR. ITYPE.GT.3 ) THEN
          INFO = -1
       ELSE IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -2
@@ -23297,15 +23657,17 @@
          INFO = -6
       ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
          INFO = -8
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -11
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -13
       END IF
 *
       IF( INFO.EQ.0 ) THEN
          WORK( 1 ) = LOPT
          IWORK( 1 ) = LIOPT
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -11
+         ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -23336,13 +23698,10 @@
       LOPT = MAX( DBLE( LOPT ), DBLE( WORK( 1 ) ) )
       LIOPT = MAX( DBLE( LIOPT ), DBLE( IWORK( 1 ) ) )
 *
-      IF( WANTZ ) THEN
+      IF( WANTZ .AND. INFO.EQ.0 ) THEN
 *
 *        Backtransform eigenvectors to the original problem.
 *
-         NEIG = N
-         IF( INFO.GT.0 )
-     $      NEIG = INFO - 1
          IF( ITYPE.EQ.1 .OR. ITYPE.EQ.2 ) THEN
 *
 *           For A*x=(lambda)*B*x and A*B*x=(lambda)*x;
@@ -23354,7 +23713,7 @@
                TRANS = 'T'
             END IF
 *
-            CALL DTRSM( 'Left', UPLO, TRANS, 'Non-unit', N, NEIG, ONE,
+            CALL DTRSM( 'Left', UPLO, TRANS, 'Non-unit', N, N, ONE,
      $                  B, LDB, A, LDA )
 *
          ELSE IF( ITYPE.EQ.3 ) THEN
@@ -23368,7 +23727,7 @@
                TRANS = 'N'
             END IF
 *
-            CALL DTRMM( 'Left', UPLO, TRANS, 'Non-unit', N, NEIG, ONE,
+            CALL DTRMM( 'Left', UPLO, TRANS, 'Non-unit', N, N, ONE,
      $                  B, LDB, A, LDA )
          END IF
       END IF
@@ -23385,10 +23744,9 @@
      $                   VL, VU, IL, IU, ABSTOL, M, W, Z, LDZ, WORK,
      $                   LWORK, IWORK, IFAIL, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE, UPLO
@@ -23526,7 +23884,7 @@
 *          The leading dimension of the array Z.  LDZ >= 1, and if
 *          JOBZ = 'V', LDZ >= max(1,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -23574,7 +23932,7 @@
 *     .. Local Scalars ..
       LOGICAL            ALLEIG, INDEIG, LQUERY, UPPER, VALEIG, WANTZ
       CHARACTER          TRANS
-      INTEGER            LOPT, LWKOPT, NB
+      INTEGER            LWKMIN, LWKOPT, NB
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -23599,7 +23957,7 @@
       LQUERY = ( LWORK.EQ.-1 )
 *
       INFO = 0
-      IF( ITYPE.LT.0 .OR. ITYPE.GT.3 ) THEN
+      IF( ITYPE.LT.1 .OR. ITYPE.GT.3 ) THEN
          INFO = -1
       ELSE IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
          INFO = -2
@@ -23613,23 +23971,33 @@
          INFO = -7
       ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
          INFO = -9
-      ELSE IF( VALEIG .AND. N.GT.0 ) THEN
-         IF( VU.LE.VL )
-     $      INFO = -11
-      ELSE IF( INDEIG .AND. IL.LT.1 ) THEN
-         INFO = -12
-      ELSE IF( INDEIG .AND. ( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) ) THEN
-         INFO = -13
-      ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
-         INFO = -18
-      ELSE IF( LWORK.LT.MAX( 1, 8*N ) .AND. .NOT.LQUERY ) THEN
-         INFO = -20
+      ELSE
+         IF( VALEIG ) THEN
+            IF( N.GT.0 .AND. VU.LE.VL )
+     $         INFO = -11
+         ELSE IF( INDEIG ) THEN
+            IF( IL.LT.1 .OR. IL.GT.MAX( 1, N ) ) THEN
+               INFO = -12
+            ELSE IF( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) THEN
+               INFO = -13
+            END IF
+         END IF
+      END IF
+      IF (INFO.EQ.0) THEN
+         IF (LDZ.LT.1 .OR. (WANTZ .AND. LDZ.LT.N)) THEN
+            INFO = -18
+         END IF
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         LWKMIN = MAX( 1, 8*N )
          NB = ILAENV( 1, 'DSYTRD', UPLO, N, -1, -1, -1 )
-         LWKOPT = ( NB+3 )*N
+         LWKOPT = MAX( LWKMIN, ( NB + 3 )*N )
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.LWKMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -20
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -23643,7 +24011,6 @@
 *
       M = 0
       IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
          RETURN
       END IF
 *
@@ -23660,7 +24027,6 @@
       CALL DSYGST( ITYPE, UPLO, N, A, LDA, B, LDB, INFO )
       CALL DSYEVX( JOBZ, RANGE, UPLO, N, A, LDA, VL, VU, IL, IU, ABSTOL,
      $             M, W, Z, LDZ, WORK, LWORK, IWORK, IFAIL, INFO )
-      LOPT = WORK( 1 )
 *
       IF( WANTZ ) THEN
 *
@@ -23710,10 +24076,9 @@
       SUBROUTINE DSYSV( UPLO, N, NRHS, A, LDA, IPIV, B, LDB, WORK,
      $                  LWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -23790,12 +24155,12 @@
 *  LDB     (input) INTEGER
 *          The leading dimension of the array B.  LDB >= max(1,N).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The length of WORK.  LWORK >= 1, and for best performance
-*          LWORK >= N*NB, where NB is the optimal blocksize for
+*          LWORK >= max(1,N*NB), where NB is the optimal blocksize for
 *          DSYTRF.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
@@ -23848,8 +24213,12 @@
       END IF
 *
       IF( INFO.EQ.0 ) THEN
-         NB = ILAENV( 1, 'DSYTRF', UPLO, N, -1, -1, -1 )
-         LWKOPT = N*NB
+         IF( N.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = ILAENV( 1, 'DSYTRF', UPLO, N, -1, -1, -1 )
+            LWKOPT = N*NB
+         END IF
          WORK( 1 ) = LWKOPT
       END IF
 *
@@ -23882,10 +24251,9 @@
      $                   LDB, X, LDX, RCOND, FERR, BERR, WORK, LWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK driver routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          FACT, UPLO
@@ -24034,13 +24402,13 @@
 *          vector X(j) (i.e., the smallest relative change in
 *          any element of A or B that makes X(j) an exact solution).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The length of WORK.  LWORK >= 3*N, and for best performance
-*          LWORK >= N*NB, where NB is the optimal blocksize for
-*          DSYTRF.
+*          The length of WORK.  LWORK >= max(1,3*N), and for best
+*          performance, when FACT = 'N', LWORK >= max(1,3*N,N*NB), where
+*          NB is the optimal blocksize for DSYTRF.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
@@ -24117,8 +24485,11 @@
       END IF
 *
       IF( INFO.EQ.0 ) THEN
-         NB = ILAENV( 1, 'DSYTRF', UPLO, N, -1, -1, -1 )
-         LWKOPT = N*NB
+         LWKOPT = MAX( 1, 3*N )
+         IF( NOFACT ) THEN
+            NB = ILAENV( 1, 'DSYTRF', UPLO, N, -1, -1, -1 )
+            LWKOPT = MAX( LWKOPT, N*NB )
+         END IF
          WORK( 1 ) = LWKOPT
       END IF
 *
@@ -24138,9 +24509,8 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 )
-     $         RCOND = ZERO
+         IF( INFO.GT.0 )THEN
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -24154,11 +24524,6 @@
       CALL DSYCON( UPLO, N, AF, LDAF, IPIV, ANORM, RCOND, WORK, IWORK,
      $             INFO )
 *
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
-*
 *     Compute the solution vectors X.
 *
       CALL DLACPY( 'Full', N, NRHS, B, LDB, X, LDX )
@@ -24169,6 +24534,13 @@
 *
       CALL DSYRFS( UPLO, N, NRHS, A, LDA, AF, LDAF, IPIV, B, LDB, X,
      $             LDX, FERR, BERR, WORK, IWORK, INFO )
+*
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
+      WORK( 1 ) = LWKOPT
 *
       RETURN
 *

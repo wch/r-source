@@ -19,8 +19,8 @@
 % FIXME: missing \references{}
 \seealso{\code{\link{filled.contour}} for a nice plot.}
 \examples{
-require(graphics)
-filled.contour(volcano, color = terrain.colors, asp = 1)
+require(grDevices); require(graphics)
+filled.contour(volcano, color.palette = terrain.colors, asp = 1)
 title(main = "volcano data: filled contour map")
 }
 \keyword{datasets}

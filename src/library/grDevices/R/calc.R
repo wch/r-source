@@ -25,7 +25,8 @@ boxplot.stats <- function(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
 
 ## Contour lines
 contourLines <-
-function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+function (x = seq(0, 1, length.out = nrow(z)),
+          y = seq(0, 1, length.out = ncol(z)),
 	  z, nlevels = 10, levels = pretty(range(z, na.rm = TRUE), nlevels))
 {
     ## FIXME: This "validation" code for the x, y, z values
@@ -39,7 +40,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		z <- x$z; y <- x$y; x <- x$x
 	    } else {
 		z <- x
-		x <- seq(0, 1, len = nrow(z))
+		x <- seq.int(0, 1, length.out = nrow(z))
 	    }
 	} else stop("no 'z' matrix specified")
     } else if (is.list(x)) {
@@ -80,14 +81,39 @@ nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
 nclass.scott <- function(x)
 {
     h <- 3.5 * sqrt(stats::var(x)) * length(x)^(-1/3)
-    ceiling(diff(range(x))/h)
+    if(h > 0) ceiling(diff(range(x))/h) else 1L
 }
 
 nclass.FD <- function(x)
 {
-    r <- as.vector(stats::quantile(x, c(0.25, 0.75)))
-    h <- 2 * (r[2] - r[1]) * length(x)^(-1/3)
-    ceiling(diff(range(x))/h)
+    h <- stats::IQR(x)
+    if(h == 0) h <- stats::mad(x, constant = 2) # c=2: consistent with IQR
+    if (h > 0) ceiling(diff(range(x))/(2 * h * length(x)^(-1/3))) else 1L
 }
 
 
+## Sunflower Plot computation:
+## Used to be part of ../../graphics/R/sunflowerplot.R :
+sunflowerTable <- function(x, y = NULL, digits)
+{
+    ## Compute number := multiplicities of (x[i], y[i])
+
+    x <- xy.coords(x, y)
+    ##     if(!is.null(y))
+    ##         x <- xy.coords(x, y)
+    ##     else ## assume 'x' is already xy.coords()-like ;  cheap check only:
+    ##         stopifnot(is.list(x), all(c("x","y") %in% names(x)))
+
+    ## must get rid of rounding fuzz:
+    y <- signif(x$y, digits=digits)
+    x <- signif(x$x, digits=digits)
+    n <- length(x)
+    orderxy <- order(x, y)
+    x <- x[orderxy]
+    y <- y[orderxy]
+    first <- c(TRUE, (x[-1] != x[-n]) | (y[-1] != y[-n]))
+    x <- x[first]
+    y <- y[first]
+    number <- diff(c((1:n)[first], n + 1))
+    list(x = x, y = y, number = number)
+}

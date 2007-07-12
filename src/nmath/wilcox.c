@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2005  The R Development Core Team
+  Copyright (C) 1999-2007  The R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,12 @@
 
  */
 
-/* Note: the checks here for R_CheckInterrupt also do stack checking */
+/* 
+   Note: the checks here for R_CheckInterrupt also do stack checking.
+
+   calloc/free are remapped for use in R, so allocation checks are done there.
+   freeing is completed by an on.exit action in the R wrappers.
+*/
 
 #include "nmath.h"
 #include "dpq.h"
@@ -66,26 +71,30 @@ w_init_maybe(int m, int n)
 {
     int i;
 
-    if (w) {
-	if (m > allocated_m || n > allocated_n)
-	    w_free(allocated_m, allocated_n); /* zeroes w */
+    if (m > n) {
+	i = n; n = m; m = i;
     }
+    if (w && (m > allocated_m || n > allocated_n))
+	w_free(allocated_m, allocated_n); /* zeroes w */
+
     if (!w) { /* initialize w[][] */
-	if (m > n) {
-	    i = n; n = m; m = i;
-	}
 	m = imax2(m, WILCOX_MAX);
 	n = imax2(n, WILCOX_MAX);
 	w = (double ***) calloc(m + 1, sizeof(double **));
-	if (!w)
-	    MATHLIB_ERROR(_("wilcox allocation error %d"), 1);
+#ifdef MATHLIB_STANDALONE
+	if (!w) MATHLIB_ERROR(_("wilcox allocation error %d"), 1);
+#endif
 	for (i = 0; i <= m; i++) {
 	    w[i] = (double **) calloc(n + 1, sizeof(double *));
+#ifdef MATHLIB_STANDALONE
+	    /* the apparent leak here in the in-R case should be
+	       swept up by the on.exit action */
 	    if (!w[i]) {
 		/* first free all earlier allocations */
 		w_free(i-1, n);
 		MATHLIB_ERROR(_("wilcox allocation error %d"), 2);
 	    }
+#endif
 	}
 	allocated_m = m; allocated_n = n;
     }
@@ -135,8 +144,9 @@ cwilcox(int k, int m, int n)
     
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
-	if (!w[i][j])
-	    MATHLIB_ERROR(_("wilcox allocation error %d"), 3);
+#ifdef MATHLIB_STANDALONE
+	if (!w[i][j]) MATHLIB_ERROR(_("wilcox allocation error %d"), 3);
+#endif
 	for (l = 0; l <= c; l++)
 	    w[i][j][l] = -1;
     }
@@ -296,8 +306,9 @@ double rwilcox(double m, double n)
     r = 0.0;
     k = (int) (m + n);
     x = (int *) calloc(k, sizeof(int));
-    if (!x)
-	MATHLIB_ERROR(_("wilcox allocation error %d"), 4);
+#ifdef MATHLIB_STANDALONE
+    if (!x) MATHLIB_ERROR(_("wilcox allocation error %d"), 4);
+#endif
     for (i = 0; i < k; i++)
 	x[i] = i;
     for (i = 0; i < n; i++) {

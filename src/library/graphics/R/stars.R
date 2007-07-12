@@ -66,11 +66,11 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     ## clock-wise in equal increments.
     angles <-
 	if(full)
-	    seq.int(0, 2*pi, length=n.seg+1)[-(n.seg+1)]
+	    seq.int(0, 2*pi, length.out=n.seg+1)[-(n.seg+1)]
 	else if (draw.segments)
-	    seq.int(0, pi, length=n.seg+1)[-(n.seg+1)]
+	    seq.int(0, pi, length.out=n.seg+1)[-(n.seg+1)]
 	else
-	    seq.int(0, pi, length=n.seg)
+	    seq.int(0, pi, length.out=n.seg)
 
     if (length(angles) != n.seg)
 	stop("length of 'angles' must equal 'ncol(x)'")

@@ -30,6 +30,7 @@
   Oxford University Press.
 }
 \examples{
+require(stats); require(graphics)
 pairs(trees, panel = panel.smooth, main = "trees data")
 plot(Volume ~ Girth, data = trees, log = "xy")
 coplot(log(Volume) ~ log(Girth) | Height, data = trees,

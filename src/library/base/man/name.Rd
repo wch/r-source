@@ -23,15 +23,11 @@ as.name(x)
 is.name(x)
 }
 \arguments{
-  \item{x}{object to be coerced or tested.} 
+  \item{x}{object to be coerced or tested.}
 }
 \note{
   The term \dQuote{symbol} is from the LISP background of \R, whereas
   \dQuote{name} has been the standard S term for this.
-}
-\details{
-  \code{is.symbol} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

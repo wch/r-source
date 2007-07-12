@@ -1,15 +1,33 @@
+
+.known_interactive.devices <-
+    c("X11", "GTK", "quartz", "windows", "JavaGD", "CairoWin", "CairoX11")
 dev.interactive <- function(orNone = FALSE) {
-    iDevs <- c("X11", "GTK", "gnome", "quartz", "windows", "JavaGD")
+    iDevs <- .known_interactive.devices
     interactive() &&
     (.Device %in% iDevs ||
-     (orNone && .Device == "null device" && getOption("device") %in% iDevs))
+     (dev.cur() > 1 && dev.displaylist()) ||
+     (orNone && .Device == "null device" &&
+      is.character(newdev <- getOption("device")) &&
+      newdev %in% iDevs))
 }
+
+deviceIsInteractive <- function(name)
+{
+    if(length(name)) {
+        if(!is.character(name)) stop("'name'must be a character vector")
+        unlockBinding(".known_interactive.devices", asNamespace("grDevices"))
+        .known_interactive.devices <<- c(.known_interactive.devices, name)
+        lockBinding(".known_interactive.devices", asNamespace("grDevices"))
+    }
+    invisible(.known_interactive.devices)
+}
+
 
 dev.list <- function()
 {
     n <- if(exists(".Devices")) get(".Devices") else list("null device")
     n <- unlist(n)
-    i <- seq(along = n)[n != ""]
+    i <- seq_along(n)[n != ""]
     names(i) <- n[i]
     i <- i[-1]
     if(length(i) == 0) NULL else i
@@ -28,12 +46,6 @@ dev.set <-
     function(which = dev.next())
 {
     which <- .Internal(dev.set(as.integer(which)))
-#     if(exists(".Devices")) {
-# 	assign(".Device", get(".Devices")[[which]])
-#     }
-#     else {
-# 	.Devices <- list("null device")
-#     }
     names(which) <- .Devices[[which]]
     which
 }
@@ -95,7 +107,7 @@ dev.print <- function(device = postscript, ...)
     current.device <- dev.cur()
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
-    if(!(nm %in% c("X11", "GTK", "gnome", "windows","quartz")))
+    if(!dev.displaylist())
         stop("can only print from screen device")
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")
@@ -182,6 +194,13 @@ dev.control <- function(displaylist = c("inhibit", "enable"))
 	.Internal(dev.control(displaylist == "enable"))
     } else stop("argument is missing with no default")
     invisible()
+}
+
+dev.displaylist <- function()
+{
+    if(dev.cur() <= 1)
+        stop("dev.displaylist() called without an open graphics device")
+    .Internal(dev.displaylist())
 }
 
 recordGraphics <- function(expr, list, env) {

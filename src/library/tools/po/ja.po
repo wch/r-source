@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:36+0000\n"
+"POT-Creation-Date: 2007-06-06 11:24+0100\n"
 "PO-Revision-Date: 2006-09-22 10:46+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 0.10.1rc1\n"
 
-#: Rmd5.c:35
+#: Rmd5.c:36
 msgid "argument 'files' must be character"
-msgstr "引数 'files' は文字型でなければなりません"
+msgstr " 引数 'files' は文字型でなければなりません"
 
-#: Rmd5.c:49
+#: Rmd5.c:50
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "md5 はファイル '%s' で失敗しました"
+msgstr " md5 はファイル '%s' で失敗しました"
 
-#: text.c:47
+#: text.c:67
 msgid "invalid argument type"
-msgstr "不正な引数の型です"
+msgstr " 不正な引数の型です"

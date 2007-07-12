@@ -33,7 +33,7 @@ data.class(x)
 \examples{
 x <- LETTERS
 data.class(factor(x))                 # has a class attribute
-data.class(matrix(x, nc = 13))        # has a dim attribute
+data.class(matrix(x, ncol = 13))     # has a dim attribute
 data.class(list(x))                   # the same as mode(x)
 data.class(x)                         # the same as mode(x)
 

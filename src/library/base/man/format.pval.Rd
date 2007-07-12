@@ -25,7 +25,7 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
   stands for \code{format(eps, digits)}).
 }
 \examples{
-format.pval(c(runif(5), pi^-100, NA))
+format.pval(c(stats::runif(5), pi^-100, NA))
 format.pval(c(0.1, 0.0001, 1e-27))
 }
 \keyword{print}

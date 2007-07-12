@@ -6,7 +6,7 @@
     name="Rterm.exe"
     type="win32"
 />
-<description>WindowsExecutable</description>
+<description>R terminal</description>
 <dependency>
     <dependentAssembly>
         <assemblyIdentity
@@ -19,5 +19,14 @@
         />
     </dependentAssembly>
 </dependency>
+<ms_asmv2:trustInfo xmlns:ms_asmv2="urn:schemas-microsoft-com:asm.v2">
+   <ms_asmv2:security>
+      <ms_asmv2:requestedPrivileges>
+         <!-- alternative "highestAvailable" -->
+	 <ms_asmv2:requestedExecutionLevel level="asInvoker">
+	 </ms_asmv2:requestedExecutionLevel>
+      </ms_asmv2:requestedPrivileges>
+   </ms_asmv2:security>
+</ms_asmv2:trustInfo>
 </assembly>
 

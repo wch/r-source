@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-12-05 20:26+0100\n"
+"POT-Creation-Date: 2007-05-25 12:17\n"
+"PO-Revision-Date: 2007-04-13 12:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,9 +31,8 @@ msgstr "la matrice 'z' spécifiée est incorrecte"
 msgid "'bias' must be positive"
 msgstr "'bias' doit être positif"
 
-#, fuzzy
 msgid "at least 3 columns needed"
-msgstr "il faut au moins 2 colonnes"
+msgstr "il faut au moins 3 colonnes"
 
 msgid "rgb matrix must be numeric"
 msgstr "la matrice 'rgb' doit être numérique"
@@ -74,6 +73,10 @@ msgstr "'to.ref.white' en désaccord avec la définition de"
 msgid "color spaces use different reference whites."
 msgstr "les espaces de couleurs utilisent différents blancs de référence."
 
+#, fuzzy
+msgid "'name'must be a character vector"
+msgstr "'file' doit être une chaîne de caractère non vide"
+
 msgid "cannot shut down device 1 (the null device)"
 msgstr "impossible de fermer le périphérique 1 (périphérique null)"
 
@@ -106,6 +109,9 @@ msgstr "dev.control() appelé sans périphérique graphique ouvert"
 
 msgid "argument is missing with no default"
 msgstr "argument manquant sans valeur par défaut"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() appelé sans périphérique graphique ouvert"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
@@ -238,6 +244,9 @@ msgstr "arguments incorrects dans quartzFonts (il faut des noms de police)"
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr ""
 "arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"

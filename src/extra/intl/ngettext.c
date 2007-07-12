@@ -53,6 +53,9 @@
 /* Look up MSGID in the current default message catalog for the current
    LC_MESSAGES locale.  If not found, returns MSGID itself (the default
    text).  */
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
 char *
 NGETTEXT (const char *msgid1, const char *msgid2, unsigned long int n)
 {

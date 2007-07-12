@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,9 @@ msgid "Invalid to specify axis labels when 'at' is NULL"
 msgstr ""
 
 msgid "'labels' and 'at' locations must have same length"
+msgstr ""
+
+msgid "logical 'label' supplied on length 0"
 msgstr ""
 
 msgid "End points must not be identical"
@@ -275,7 +278,7 @@ msgstr ""
 msgid "invalid 'arrow' argument"
 msgstr ""
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr ""
 
 msgid "'x' and 'y' must be same length"
@@ -327,9 +330,6 @@ msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr ""
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-
-msgid "'x' must be numeric"
 msgstr ""
 
 msgid "'x' and 'units' must have length > 0"

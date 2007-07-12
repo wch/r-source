@@ -27,8 +27,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 \arguments{
   \item{x}{An object to be converted.}
   \item{tz}{A timezone specification to be used for the conversion.
-    System-specific, but \code{""} is the current time zone, and
-    \code{"GMT"} is UTC.}
+    System-specific (see \code{\link{as.POSIXlt}}), but \code{""} is the
+    current time zone, and \code{"GMT"} is UTC.}
   \item{format}{A character string.  The default is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
@@ -43,6 +43,15 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     Fractional seconds are allowed.}
 }
 \details{
+  The \code{format} and \code{as.character} methods and \code{strftime}
+  convert objects from the classes \code{"POSIXlt"} and \code{"POSIXct"}
+  (not \code{strftime}) to character vectors.
+  
+  \code{strptime} converts character strings to class \code{"POSIXlt"}:
+  its input \code{x} is first coerced to character if necessary.  Each
+  string is processed as far as necessary for the format specified: any
+  trailing characters are ignored.
+
   \code{strftime} is an alias for \code{format.POSIXlt}, and
   \code{format.POSIXct} first converts to class \code{"POSIXlt"} by
   calling \code{\link{as.POSIXlt}}.  Note that only that conversion
@@ -124,7 +133,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       divided by 100.}
     \item{\code{\%D}}{Locale-specific date format such as
       \code{\%m/\%d/\%y}: ISO C99 says it should be that exact format.}
-    \item{\code{\%e}}{Day of the month as decimal number ( 1--31), with
+    \item{\code{\%e}}{Day of the month as decimal number (1--31), with
       a leading space for a single-digit number.}
     \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date
       format).}
@@ -166,7 +175,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   character sequences commencing with \code{\%} \emph{are} conversion
   specifications) is system-specific.
 #ifdef windows
-  For output on Windows, a coversion specification is \code{\%}
+  For output on Windows, a conversion specification is \code{\%}
   optionally followed by \code{#} and then by a single letter.  Any
   conversion specification which is unimplemented is ignored.
 #endif
@@ -181,11 +190,12 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   representing the time.
 
   \code{strptime} turns character representations into an object of
-  class \code{"POSIXlt"}.  The timezone is used to set the \code{isdst}
-  component.
+  class \code{"\link{POSIXlt}"}.  The timezone is used to set the
+  \code{isdst} component and (as from \R 2.5.0) to set the
+  \code{"tzone"} attribute if \code{tz != ""}.
 
   \code{ISOdatetime} and \code{ISOdate} return an object of class
-  \code{"POSIXct"}.
+  \code{"\link{POSIXct}"}.
 }
 \note{
   The default formats follow the rules of the ISO 8601 international
@@ -231,7 +241,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   (On some systems \code{strptime} is replaced by corrected code from
   \samp{glibc}, when all the conversion specifications described here
   are supported, but with no alternative number representation nor era
-  available in any locale.
+  available in any locale.)
 #endif
 #ifdef windows
   Windows users will find no help page for \code{strptime}: code based
@@ -268,6 +278,11 @@ z # prints without fractional seconds
 op <- options(digits.secs=3)
 z
 options(op)
+
+## timezones are not portable, but 'EST5EDT' comes pretty close.
+(x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
+               "\%Y-\%m-\%d \%H:\%M:\%S", tz="EST5EDT"))
+attr(x, "tzone")
 }
 \keyword{utilities}
 \keyword{chron}

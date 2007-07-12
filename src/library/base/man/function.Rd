@@ -15,8 +15,8 @@ return(value)
     \item{value}{An expression.}
 }
 \details{
-  In \R (unlike S) the names in an argument list cannot be quoted
-  non-standard names.
+  The names in an argument list can be back-quoted non-standard names
+  (see \sQuote{\link{backquote}}).
 
   If \code{value} is missing, \code{NULL} is returned.  If it is a
   single expression, the value of the evaluated expression is returned.
@@ -29,8 +29,8 @@ return(value)
   expressions separated by commas.  In that case the value
   returned is a list of the evaluated expressions, with names set to
   the expressions where these are the names of \R objects. That is,
-  \code{a=foo()} names the list component \code{a} and gives it value
-  the result of evaluating \code{foo()}.
+  \code{a=foo()} names the list component \code{a} and gives it the value
+  which results from evaluating \code{foo()}.
 
   This has been deprecated (and a warning is given), as it was never
   documented in S, and whether or not the list is named differs by S versions.

@@ -7,7 +7,7 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
 }
 \alias{pretty}
 \arguments{
-  \item{x}{numeric vector}
+  \item{x}{an object coercible to numeric by \code{\link{as.numeric}}.}
   \item{n}{integer giving the \emph{desired} number of
     intervals.  Non-integer values are rounded down.}
   \item{min.n}{nonnegative integer giving the \emph{minimal} number of
@@ -28,9 +28,9 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
     \emph{small} case, the correction is only done if \code{eps.correct >=2}.}
 }
 \description{
-    Compute a  sequence of about \code{n+1} equally spaced nice values which
-    cover the range of the values in \code{x}.
-    The values are chosen so that they are 1, 2 or 5 times a power of 10.
+  Compute a  sequence of about \code{n+1} equally spaced \sQuote{round}
+  values which cover the range of the values in \code{x}.
+  The values are chosen so that they are 1, 2 or 5 times a power of 10.
 }
 \details{
   \code{pretty} ignores non-finite values in \code{x}.
@@ -76,15 +76,15 @@ for(k in 5:11) {
 pretty(pi)
 
 add.names <- function(v) { names(v) <- paste(v); v}
-str(lapply(add.names(-10:20), pretty))
-str(lapply(add.names(0:20),   pretty, min = 0))
+utils::str(lapply(add.names(-10:20), pretty))
+utils::str(lapply(add.names(0:20),   pretty, min = 0))
 sapply(    add.names(0:20),   pretty, min = 4)
 
 pretty(1.234e100)
 pretty(1001.1001)
 pretty(1001.1001, shrink = .2)
 for(k in -7:3)
-  cat("shrink=",formatC(2^k,wid=9),":",
-      formatC(pretty(1001.1001, shrink = 2^k), wid=6),"\n")
+  cat("shrink=", formatC(2^k, width=9),":",
+      formatC(pretty(1001.1001, shrink = 2^k), width=6),"\n")
 }
 \keyword{dplot}

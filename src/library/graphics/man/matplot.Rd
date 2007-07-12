@@ -95,6 +95,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
   \code{\link{matrix}}, \code{\link{par}}.
 }
 \examples{
+require(grDevices)
 matplot((-4:5)^2, main = "Quadratic") # almost identical to plot(*)
 sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
 matplot(sines, pch = 1:4, type = "o", col = rainbow(ncol(sines)))

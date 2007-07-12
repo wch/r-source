@@ -25,7 +25,7 @@ rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 }
 \details{
  Value (brightness) gives the amount of light in the color.\cr
- Hue describes the dominant wavelegth.\cr
+ Hue describes the dominant wavelength.\cr
  Saturation is the amount of Hue mixed into the color.
 }
 \value{
@@ -47,11 +47,11 @@ rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 6 * hc["h",] # the hues are equispaced
 
 \testonly{set.seed(151)}
-(rgb3 <- floor(256 * matrix(runif(3*12), 3,12)))
+(rgb3 <- floor(256 * matrix(stats::runif(3*12), 3,12)))
 (hsv3 <- rgb2hsv(rgb3))
 ## Consistency :
 stopifnot(rgb3 == col2rgb(hsv(h=hsv3[1,], s=hsv3[2,], v=hsv3[3,])),
-          all.equal(hsv3, rgb2hsv(rgb3/255, maxC = 1)))
+          all.equal(hsv3, rgb2hsv(rgb3/255, maxColorValue = 1)))
 
 ## A (simplified) pure R version -- originally by Wolfram Fischer --
 ## showing the exact algorithm:

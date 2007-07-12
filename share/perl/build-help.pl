@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2006 R Development Core Team
+# Copyright (C) 1997-2007 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ use Getopt::Long;
 use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
+use R::Dcf;
 
 my $revision = ' $Rev$ ';
 my $version;
@@ -83,11 +84,20 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
 ## !!! of doing this, but trying to do it in a manner which will not
 ## !!! interfere with other things calling this besides INSTALL. JG
 $dest = $ARGV[2];
-if (!$dest) {
-    $dest = file_path($lib, $pkg);
-}
+if (!$dest) {$dest = file_path($lib, $pkg);}
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
+
+my $def_encoding = "unknown";
+if(-r &file_path($dest, "DESCRIPTION")) {
+    my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
+    if($rdcf->{"Encoding"}) {
+	    $def_encoding = $rdcf->{"Encoding"};
+	    chomp $def_encoding;
+	    # print "Using $def_encoding as the default encoding\n";
+	}
+}
+
 
 build_index($lib, $dest, $version, "");
 if($opt_index){
@@ -150,13 +160,15 @@ foreach $manfile (@mandir) {
 	$manfiles{$manfilebase} = $manfile;
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = "";
+	$types = "";
+	undef $do_example;
 
 	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
+		$types .= "txt,";
 	    }
 	}
 
@@ -167,7 +179,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
+		$types .= "html,";
 	    }
 	}
 
@@ -176,7 +188,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile", $version);
+		$types .= "latex,";
 	    }
 	}
 
@@ -185,11 +197,14 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile", $version);
-		if(-f $destfile) {$exampleflag = "example";}
+		$types .= "example,";
+		$do_example = "yes";
 	    }
 	}
 
+	Rdconv($manfile, $types, "", "$dest", $pkg, $version, 
+	       $def_encoding) if $types ne "";
+	if($do_example && -f $destfile) {$exampleflag = "example";}
 	write if ($textflag || $htmlflag || $latexflag || $exampleflag);
 	print "     missing link(s): $misslink\n"
 	    if $htmlflag && length($misslink);

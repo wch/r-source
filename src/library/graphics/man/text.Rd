@@ -4,7 +4,7 @@
 \usage{
 text(x, \dots)
 
-\method{text}{default} (x, y = NULL, labels = seq(along = x), adj = NULL,
+\method{text}{default} (x, y = NULL, labels = seq_along(x), adj = NULL,
      pos = NULL, offset = 0.5, vfont = NULL,
      cex = 1, col = NULL, font = NULL, \dots)
 }
@@ -14,12 +14,12 @@ text(x, \dots)
   \item{x, y}{numeric vectors of coordinates where the text
     \code{labels} should be written.  If the length of \code{x} and
     \code{y} differs, the shorter one is recycled.}
-  \item{labels}{one or more character strings or expressions specifying
+  \item{labels}{a character vector or \link{expression} specifying
     the \emph{text} to be written.  An attempt is made to coerce other
-    vectors (and factors) to character, and other language objects
-    (names and calls) to expressions.  If \code{labels} is longer than
-    \code{x} and \code{y}, the coordinates are recycled to the length of
-    \code{labels}.}
+    language objects (names and calls) to expressions, and vectors and
+    other classed objects to character vectors by \code{\link{as.character}}.
+    If \code{labels} is longer than \code{x} and
+    \code{y}, the coordinates are recycled to the length of \code{labels}.}
   \item{adj}{one or two values in \eqn{[0,1]} which specify the x
     (and optionally y) adjustment of the labels.  On most devices values
     outside that interval will also work.}

@@ -2,7 +2,7 @@
 \alias{update.formula}
 \title{Model Updating}
 \usage{
-\method{update}{formula}(old, new, ...)
+\method{update}{formula}(old, new, \dots)
 }
 \arguments{
   \item{old}{a model formula to be updated.}
@@ -15,16 +15,22 @@
   but updates can be more general.
 }
 \details{
+  Either or both of \code{old} and \code{new} can be objects such as
+  length-one character vectors which can be coerced to a formula via
+  \code{\link{as.formula}}.
+  
   The function works by first identifying the \emph{left-hand side}
   and \emph{right-hand side} of the \code{old} formula.
   It then examines the \code{new} formula and substitutes
-  the \emph{lhs} of the \code{old} formula for any occurence
-  of "\code{.}" on the left of \code{new}, and substitutes
-  the \emph{rhs} of the \code{old} formula for any occurence
-  of "\code{.}" on the right of \code{new}.
+  the \emph{lhs} of the \code{old} formula for any occurrence
+  of \sQuote{.} on the left of \code{new}, and substitutes
+  the \emph{rhs} of the \code{old} formula for any occurrence
+  of \sQuote{.} on the right of \code{new}.  The result is then
+  simplified \emph{via} \code{\link{terms.formula}(simplify = TRUE)}.
 }
 \value{
-  The updated formula is returned.
+  The updated formula is returned.  The environment of the result will
+  that of \code{old}.
 }
 \seealso{
   \code{\link{terms}}, \code{\link{model.matrix}}.

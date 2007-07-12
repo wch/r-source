@@ -216,6 +216,18 @@ static void handle_char(object obj, int ch)
 	}
 }
 
+static int showMDIToolbar = 1;
+void toolbar_show()
+{
+    showMDIToolbar = 1;
+    SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
+}
+void toolbar_hide()
+{
+    showMDIToolbar = 0;
+    SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
+}
+
 static void handle_mdiframesize() {
      HWND tool=NULL ,status=NULL;
      RECT rFrame,rToolbar;
@@ -223,7 +235,7 @@ static void handle_mdiframesize() {
      GetClientRect(hwndFrame,&rFrame);
      fw = rFrame.right-rFrame.left;
      fh = rFrame.bottom-rFrame.top;
-     if (MDIToolbar) {
+     if (showMDIToolbar && MDIToolbar) {
         tool = (HWND)MDIToolbar->handle;
         GetWindowRect(tool,&rToolbar);
         th = rToolbar.bottom-rToolbar.top;
@@ -925,9 +937,12 @@ static int TranslateMenuKeys(MSG *msg)
 		msg->message = WM_KEYDOWN;
 
 	/* Check for menu control keys. */
-	/* disabled : Alt-Gr bug*/ /* Re-enabled for the moment, CJ */
+	/* disabled for R 0.9.1 to 1.9.1. 
+	   Added proper AltGr fix for 2.5.0 */
 
-	if ((GetKeyState(VK_CONTROL) < 0) && (msg->message == WM_KEYDOWN))
+	if ((GetKeyState(VK_CONTROL) & 0x8000)
+	    && (msg->message == WM_KEYDOWN)
+	    && !(GetKeyState(VK_RMENU) & 0x8000))
 	{
 		/* ctrl-letter or ctrl-number is a menu key */
 		if (((key >= 'A') && (key <= 'Z')) ||

@@ -151,7 +151,7 @@ arima <- function(x, order = c(0, 0, 0),
         else ncond + ncond1
     } else ncond <- 0
 
-    if (is.null(fixed)) fixed <- rep(as.numeric(NA), narma + ncxreg)
+    if (is.null(fixed)) fixed <- rep(NA_real_, narma + ncxreg)
     else if(length(fixed) != narma + ncxreg) stop("wrong length for 'fixed'")
     mask <- is.na(fixed)
 ##    if(!any(mask)) stop("all parameters were fixed")
@@ -176,7 +176,7 @@ arima <- function(x, order = c(0, 0, 0),
         fit <- lm(x ~ xreg - 1, na.action = na.omit)
         n.used <- sum(!is.na(resid(fit))) - length(Delta)
         init0 <- c(init0, coef(fit))
-        ses <- summary(fit)$coef[, 2]
+        ses <- summary(fit)$coefficients[, 2]
         parscale <- c(parscale, 10 * ses)
     }
     if (n.used <= 0) stop("too few non-missing observations")
@@ -334,7 +334,7 @@ arima <- function(x, order = c(0, 0, 0),
 print.Arima <-
     function (x, digits = max(3, getOption("digits") - 3), se = TRUE, ...)
 {
-    cat("\nCall:", deparse(x$call, width = 75), "", sep = "\n")
+    cat("\nCall:", deparse(x$call, width.cutoff = 75), "", sep = "\n")
     if (length(x$coef) > 0) {
         cat("Coefficients:\n")
         coef <- round(x$coef, digits = digits)
@@ -396,7 +396,7 @@ predict.Arima <-
         if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
     }
-    z <- KalmanForecast(n.ahead, object$mod)
+    z <- KalmanForecast(n.ahead, object$model)
     pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(rsd),
                frequency = xtsp[3])
     if (se.fit) {

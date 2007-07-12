@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,14 +55,15 @@ Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
     /* "" or NA string matches nothing */
     if (s == NA_STRING || t == NA_STRING) return FALSE;
-    if (CHAR(s)[0] && CHAR(t)[0] && strcmp(CHAR(s), CHAR(t)) == 0)
+    if (CHAR(s)[0] && CHAR(t)[0] && 
+	strcmp(translateChar(s), translateChar(t)) == 0)
 	return TRUE;
     else
 	return FALSE;
 }
 
 /* currently unused outside this file */
-Rboolean psmatch(char *f, char *t, Rboolean exact)
+Rboolean psmatch(const char *f, const char *t, Rboolean exact)
 {
     if (exact)
 	return (Rboolean)!strcmp(f, t);
@@ -82,7 +83,7 @@ Rboolean psmatch(char *f, char *t, Rboolean exact)
 
 Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 {
-    char *f, *t;
+    const char *f, *t;
     switch (TYPEOF(formal)) {
     case SYMSXP:
 	f = CHAR(PRINTNAME(formal));
@@ -91,7 +92,7 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 	f = CHAR(formal);
 	break;
     case STRSXP:
-	f = CHAR(STRING_ELT(formal, 0));
+	f = translateChar(STRING_ELT(formal, 0));
 	break;
     default:
 	goto fail;
@@ -104,7 +105,7 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 	t = CHAR(tag);
 	break;
     case STRSXP:
-	t = CHAR(STRING_ELT(tag, 0));
+	t = translateChar(STRING_ELT(tag, 0));
 	break;
     default:
 	goto fail;
@@ -120,7 +121,7 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 /* Returns the first partially matching tag found. */
 /* Pattern is a C string. */
 
-static SEXP matchPar_int(char *tag, SEXP *list, Rboolean exact)
+static SEXP matchPar_int(const char *tag, SEXP *list, Rboolean exact)
 {
     if (*list == R_NilValue)
 	return R_MissingArg;
@@ -149,7 +150,7 @@ static SEXP matchPar_int(char *tag, SEXP *list, Rboolean exact)
 }
 
 /* unused outside this file */
-SEXP attribute_hidden matchPar(char *tag, SEXP * list)
+SEXP attribute_hidden matchPar(const char *tag, SEXP * list)
 {
     return matchPar_int(tag, list, FALSE);
 }
@@ -186,7 +187,7 @@ SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 /* We need to leave 'supplied' unchanged in case we call UseMethod */
 /* MULTIPLE_MATCHES was added by RI in Jan 2005 but never activated */
 
-SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied)
+SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 {
     int i, seendots;
     SEXP f, a, b, dots, actuals;
@@ -281,6 +282,12 @@ nextarg1:
 #ifdef MULTIPLE_MATCHES
 			}
 #endif
+			if (R_warn_partial_match_args) {
+			    warningcall(call, 
+					_("partial argument match of '%s' to '%s'"),
+					CHAR(PRINTNAME(TAG(b))), 
+					CHAR(PRINTNAME(TAG(f))) );
+			}
 			SETCAR(a, CAR(b));
 			if (CAR(b) != R_MissingArg)
 			    SET_MISSING(a, 0);       /* not missing this arg */

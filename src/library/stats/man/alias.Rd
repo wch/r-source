@@ -64,7 +64,7 @@ alias(object, \dots)
 }
 \examples{
 ## From Venables and Ripley (2002) p.165.
-data(npk, package="MASS")
+utils::data(npk, package="MASS")
 
 op <- options(contrasts=c("contr.helmert", "contr.poly"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)

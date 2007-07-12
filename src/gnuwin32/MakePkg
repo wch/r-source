@@ -74,14 +74,15 @@ all:
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s nmspace
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg Dynlib 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s R
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s $(DPKG)/demo $(DPKG)/exec $(DPKG)/inst $(DATA)
 ifeq ($(strip $(LAZY)),true)
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s lazyload
 endif
-	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s $(DPKG)/demo $(DPKG)/exec $(DPKG)/inst $(DATA)
 ifeq ($(strip $(LAZYDATA)),true)
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s lazydata
 endif
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s mansrcs indices
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzzlast
 
 ## this does not make any DLL, and modifies the NAMESPACE and R code
 ## to try to ensure no attempt is made to load the DLL.
@@ -92,13 +93,21 @@ include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
-	$(RM) $(SDYNLIB) $(LOBJS) $(SSPKG)/$(DLLNAME).a \
-	  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.* \
-	  $(SSPKG)/*.d $(SSPKG)/Makedeps tests/*.Rout
+ifneq ($(strip $(LOBJS)),)
+	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
+	if test -r "${HOME}/.R/Makevars.win"; then \
+	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
+	elif test -r "${HOME}/.R/Makevars"; then \
+	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
+	fi; \
+	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
+	  DLLNAME=$(DLLNAME) $${makefiles} shlib-clean
+	@$(RM) $(SDYNLIB)
+endif
 else
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif
-	$(RM) -rf $(SPKG)/chm $(SPKG)/check
+	@$(RM) -rf $(SPKG)/chm $(SPKG)/check tests/*.Rout
 
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
@@ -156,9 +165,9 @@ $(DPKG)/inst: $(INSTFILES)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
 	-@$(CP) -r inst/* $(DPKG)
-	@find $(DPKG) -name CVS -type d -prune -exec rm -rf {} \;
-	@find $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
-	@find $(DPKG) -name .arch-ids -type d -prune -exec rm -rf {} \;
+	@$(FIND) $(DPKG) -name CVS -type d -prune -exec rm -rf {} \;
+	@$(FIND) $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
+	@$(FIND) $(DPKG) -name .arch-ids -type d -prune -exec rm -rf {} \;
 endif
 
 
@@ -173,6 +182,11 @@ $(DPKG)/zzzz: zzzfirst
 	    $(ECHO) "   **********************************************" ; \
 	    $(ECHO) ; \
 	  fi; \
+	fi
+
+$(DPKG)/zzzzlast:
+	@if test -f ${SPKG}/cleanup.win; then \
+	  sh ${SPKG}/cleanup.win; \
 	fi
 
 zzzfirst:
@@ -347,7 +361,7 @@ lazyload:
 	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy loading" ; \
             (if test -s $(SPKG0)/R_PROFILE.R; then cat $(SPKG0)/R_PROFILE.R; fi; \
-	      $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.putenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
+	      $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.setenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
 	      R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
 	    rm -f $(DPKG)/R/all.rda ; \

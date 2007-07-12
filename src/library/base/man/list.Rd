@@ -51,7 +51,7 @@ alist(\dots)
   \code{as.list} attempts to coerce its argument to a list.  For
   functions, this returns the concatenation of the list of formal
   arguments and the function body.  For expressions, the list of
-  constituent calls is returned.  \code{as.list} is generic, and as the
+  constituent elements is returned.  \code{as.list} is generic, and as the
   default method calls \code{\link{as.vector}(mode="list")} methods for
   \code{as.vector} may be invoked.  As from \R 2.4.0, \code{as.list}
   turns a factor into a list of one-element factors.  All attributes
@@ -59,20 +59,17 @@ alist(\dots)
   inconsistent with functions such as \code{\link{as.character}}, and is
   for efficiency since lists can be expensive to copy.)
 
-  \code{is.list} returns \code{TRUE} iff its argument
+  \code{is.list} returns \code{TRUE} if and only if its argument
   is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0}.
-  \code{is.pairlist} returns \code{TRUE} iff the argument is a pairlist
-  or \code{NULL} (see below).
-
-  \code{is.list} and \code{is.pairlist} are generic: you can write
-  methods to handle specific classes of objects, see \link{InternalMethods}.
+  \code{is.pairlist} returns \code{TRUE} if and only if the argument
+  is a pairlist or \code{NULL} (see below).
 
   The \code{"\link{environment}"} method for \code{as.list} copies the
   name-value pairs (for names not beginning with a dot) from an
   environment to a named list.  The user can request that all named
   objects are copied.  The list is in no particular order (the order
   depends on the order of creation of objects and whether the
-  environmnent is hashed).  No parent environments are searched.  (Objects
+  environment is hashed).  No parent environments are searched.  (Objects
   copied are duplicated so this can be an expensive operation.)
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
@@ -86,8 +83,11 @@ alist(\dots)
 \seealso{
   \code{\link{vector}("list", length)} for creation of a list with empty
   components; \code{\link{c}}, for concatenation; \code{\link{formals}}.
+  \code{\link{unlist}} is an approximate inverse to \code{as.list()}.
 }
 \examples{
+require(graphics)
+
 # create a plotting structure
 pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)

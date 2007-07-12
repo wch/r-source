@@ -18,7 +18,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE)
   A data frame containing one row for each combination of the supplied
   factors.  The first factors vary fastest.  The columns are labelled by
   the factors if these are supplied as named arguments or named
-  components of a list.
+  components of a list.  The row names are \sQuote{automatic}.
 
   Attribute \code{"out.attrs"} is a list which gives the dimension and
   dimnames for use by \code{\link{predict}} methods.
@@ -35,6 +35,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE)
   of all combinations of n elements, taken m at a time.
 }
 \examples{
+require(utils)
+
 expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female"))
 

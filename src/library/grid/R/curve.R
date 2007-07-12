@@ -4,9 +4,9 @@
 ###############################
 
 calcOrigin <- function(x1, y1, x2, y2, origin, hand) {
-    # Positive origin means origin to the "right" 
-    # Negative origin means origin to the "left" 
-    xm <- (x1 + x2)/2 
+    # Positive origin means origin to the "right"
+    # Negative origin means origin to the "left"
+    xm <- (x1 + x2)/2
     ym <- (y1 + y2)/2
     dx <- x2 - x1
     dy <- y2 - y1
@@ -33,7 +33,7 @@ calcOrigin <- function(x1, y1, x2, y2, origin, hand) {
     sintheta <- switch(hand, -1, 1)
     ox <- xm - (tmpoy - ym)*sintheta
     oy <- ym + (tmpox - xm)*sintheta
-    
+
     list(x=ox, y=oy)
 }
 
@@ -41,8 +41,8 @@ calcOrigin <- function(x1, y1, x2, y2, origin, hand) {
 # ncurve vector of end values, ncurve vector of end logicals,
 # combine start or end values with original values based on logicals
 interleave <- function(ncp, ncurve, val, sval, eval, e) {
-    sval <- rep(sval, length=ncurve)
-    eval <- rep(eval, length=ncurve)
+    sval <- rep(sval, length.out=ncurve)
+    eval <- rep(eval, length.out=ncurve)
     result <- matrix(NA, ncol=ncurve, nrow=ncp+1)
     m <- matrix(val, ncol=ncurve)
     for (i in 1:ncurve) {
@@ -57,9 +57,9 @@ interleave <- function(ncp, ncurve, val, sval, eval, e) {
 # Calculate a "square" set of end points to calculate control points from
 # NOTE: end points may be vector
 calcSquareControlPoints <- function(x1, y1, x2, y2,
-                                    curvature, angle, ncp, 
+                                    curvature, angle, ncp,
                                     debug=FALSE) {
-    xm <- (x1 + x2)/2 
+    xm <- (x1 + x2)/2
     ym <- (y1 + y2)/2
     dx <- x2 - x1
     dy <- y2 - y1
@@ -92,9 +92,9 @@ calcSquareControlPoints <- function(x1, y1, x2, y2,
                           newy <- y1 + sign(slope)*dx,
                           newy <- y1 + dy),
                    y2)
-                          
+
     cps <- calcControlPoints(startx, starty, endx, endy,
-                             curvature, angle, ncp, 
+                             curvature, angle, ncp,
                              debug)
 
     # Intereave control points and extra "square" control points
@@ -106,13 +106,13 @@ calcSquareControlPoints <- function(x1, y1, x2, y2,
 }
 
 # Find origin of rotation
-# Rotate around that origin 
-calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp, 
+# Rotate around that origin
+calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp,
                               debug=FALSE) {
     # Negative curvature means curve to the left
     # Positive curvature means curve to the right
     # Special case curvature = 0 (straight line) has been handled
-    xm <- (x1 + x2)/2 
+    xm <- (x1 + x2)/2
     ym <- (y1 + y2)/2
     dx <- x2 - x1
     dy <- y2 - y1
@@ -200,7 +200,7 @@ calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp,
     cosnb <- cos(-beta)
     finalcpx <- x1 + (cpx - x1)*cosnb - (cpy - y1)*sinnb
     finalcpy <- y1 + (cpy - y1)*cosnb + (cpx - x1)*sinnb
-    
+
     # Debugging
     if (debug) {
         ox <- ox/scalex
@@ -213,7 +213,7 @@ calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp,
                     default="inches",
                     gp=gpar(col="grey"))
     }
-    
+
     list(x=as.numeric(t(finalcpx)), y=as.numeric(t(finalcpy)))
 }
 
@@ -239,7 +239,7 @@ straightCurve <- function(x1, y1, x2, y2, arrow, gp, debug) {
         ym <- (y1 + y2)/2
         cbDiagram(x1, y1, x2, y2, list(x=xm, y=ym))
     }
-    
+
     segmentsGrob(x1, y1, x2, y2,
                  default.units="inches",
                  arrow=arrow,
@@ -259,18 +259,19 @@ calcCurveGrob <- function(x, debug) {
     squareShape <- x$squareShape
     inflect <- x$inflect
     arrow <- x$arrow
+    open <- x$open
     gp <- x$gp
-    
+
     # Calculate a set of control points based on:
-    # 'curvature', ' angle', and 'ncp', 
+    # 'curvature', ' angle', and 'ncp',
     # and the start and end point locations.
 
     # The origin is a point along the perpendicular bisector
     # of the line between the end points.
-    
+
     # The control points are found by rotating the end points
     # about the origin.
-    
+
     # Do everything in inches to make things easier.
     # Once this is a drawDetails method, the conversions will not be an
     # issue (in terms of device resizes).
@@ -282,16 +283,16 @@ calcCurveGrob <- function(x, debug) {
     # Outlaw identical end points
     if (any(x1 == x2 & y1 == y2))
         stop("End points must not be identical")
-    
+
     # Rep locations to allow multiple curves from single call
     maxn <- max(length(x1),
                 length(y1),
                 length(x2),
                 length(y2))
-    x1 <- rep(x1, length=maxn)
-    y1 <- rep(y1, length=maxn)
-    x2 <- rep(x2, length=maxn)
-    y2 <- rep(y2, length=maxn)
+    x1 <- rep(x1, length.out=maxn)
+    y1 <- rep(y1, length.out=maxn)
+    x2 <- rep(x2, length.out=maxn)
+    y2 <- rep(y2, length.out=maxn)
 
     if (curvature == 0) {
         straightCurve(x1, y1, x2, y2, arrow, gp, debug)
@@ -324,17 +325,17 @@ calcCurveGrob <- function(x, debug) {
                 if (inflect) {
                     xm <- (x1 + x2)/2
                     ym <- (y1 + y2)/2
-                    shape1 <- rep(rep(shape, length=ncp), ncurve)
+                    shape1 <- rep(rep(shape, length.out=ncp), ncurve)
                     shape2 <- rev(shape1)
                     if (square) {
                       # If 'square' then add an extra control point
                         cps1 <- calcSquareControlPoints(x1, y1, xm, ym,
                                                         curvature, angle,
-                                                        ncp, 
+                                                        ncp,
                                                         debug=debug)
                         cps2 <- calcSquareControlPoints(xm, ym, x2, y2,
                                                         -curvature, angle,
-                                                        ncp, 
+                                                        ncp,
                                                         debug=debug)
                         shape1 <- interleave(ncp, ncurve, shape1,
                                              squareShape, squareShape,
@@ -345,19 +346,19 @@ calcCurveGrob <- function(x, debug) {
                         ncp <- ncp + 1
                     } else {
                         cps1 <- calcControlPoints(x1, y1, xm, ym,
-                                                  curvature, angle, ncp, 
+                                                  curvature, angle, ncp,
                                                   debug=debug)
                         cps2 <- calcControlPoints(xm, ym, x2, y2,
-                                                  -curvature, angle, ncp, 
+                                                  -curvature, angle, ncp,
                                                   debug=debug)
                     }
-                    
+
                     if (debug) {
                         cbDiagram(x1, y1, xm, ym, cps1)
                         cbDiagram(xm, ym, x2, y2, cps2)
                     }
-                    
-                    idset <- 1:ncurve            
+
+                    idset <- 1:ncurve
                     xsplineGrob(c(x1, cps1$x, xm, cps2$x, x2),
                                 c(y1, cps1$y, ym, cps2$y, y2),
                                 id=c(idset, rep(idset, each=ncp),
@@ -367,15 +368,15 @@ calcCurveGrob <- function(x, debug) {
                                 shape=c(rep(0, ncurve), shape1,
                                   rep(0, ncurve), shape2,
                                   rep(0, ncurve)),
-                                arrow=arrow,
+                                arrow=arrow, open=open,
                                 gp=gp)
                 } else {
-                    shape <- rep(rep(shape, length=ncp), ncurve)
+                    shape <- rep(rep(shape, length.out=ncp), ncurve)
                     if (square) {
                       # If 'square' then add an extra control point
                         cps <- calcSquareControlPoints(x1, y1, x2, y2,
                                                        curvature, angle,
-                                                       ncp, 
+                                                       ncp,
                                                        debug=debug)
                         shape <- interleave(ncp, ncurve, shape,
                                             squareShape, squareShape,
@@ -383,13 +384,13 @@ calcCurveGrob <- function(x, debug) {
                         ncp <- ncp + 1
                     } else {
                         cps <- calcControlPoints(x1, y1, x2, y2,
-                                                 curvature, angle, ncp, 
+                                                 curvature, angle, ncp,
                                                  debug=debug)
                     }
                     if (debug) {
                         cbDiagram(x1, y1, x2, y2, cps)
                     }
-                    
+
                     idset <- 1:ncurve
                     xsplineGrob(c(x1, cps$x, x2),
                                 c(y1, cps$y, y2),
@@ -397,7 +398,7 @@ calcCurveGrob <- function(x, debug) {
                                 default.units="inches",
                                 shape=c(rep(0, ncurve), shape,
                                   rep(0, ncurve)),
-                                arrow=arrow,
+                                arrow=arrow, open=open,
                                 gp=gp)
                 }
             }
@@ -420,6 +421,7 @@ validDetails.curve <- function(x) {
     x$inflect <- as.logical(x$inflect)
     if (!is.null(x$arrow) && !inherits(x$arrow, "arrow"))
         stop("'arrow' must be an arrow object or NULL")
+    x$open <- as.logical(x$open)
     x
 }
 
@@ -444,9 +446,10 @@ heightDetails.curve <- function(x) {
 }
 
 curveGrob <- function(x1, y1, x2, y2, default.units="npc",
-                      curvature=1, angle=90, ncp=1, 
+                      curvature=1, angle=90, ncp=1,
                       shape=0.5, square=TRUE, squareShape=1,
-                      inflect=FALSE, arrow=NULL, debug=FALSE,
+                      inflect=FALSE, arrow=NULL, open=TRUE,
+                      debug=FALSE,
                       name=NULL, gp=gpar(), vp=NULL) {
     # FIXME:  add arg checking
     # FIXME:  angle MUST be between 0 and 180
@@ -459,9 +462,9 @@ curveGrob <- function(x1, y1, x2, y2, default.units="npc",
     if (!is.unit(y2))
         y2 <- unit(y2, default.units)
     grob(x1=x1, y1=y1, x2=x2, y2=y2,
-         curvature=curvature, angle=angle, ncp=ncp, 
+         curvature=curvature, angle=angle, ncp=ncp,
          shape=shape, square=square, squareShape=squareShape,
-         inflect=inflect, arrow=arrow, debug=debug,
+         inflect=inflect, arrow=arrow, open=open, debug=debug,
          name=name, gp=gp, vp=vp,
          cl="curve")
 }

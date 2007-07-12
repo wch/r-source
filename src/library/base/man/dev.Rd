@@ -2,10 +2,21 @@
 \alias{.Device}
 \alias{.Devices}
 \title{
-  Lists of Open Graphics Devices
+  Lists of Open/Active Graphics Devices
 }
 \description{
-  A list of the names of the open graphics devices is stored in
-  \code{.Devices}. The name of the active device is stored in \code{.Device}.
+  A pairlist of the names of open graphics devices is stored in
+  \code{.Devices}. The name of the active device (see
+  \code{\link{dev.cur}}) is stored in \code{.Device}.  Both are symbols
+  and so appear in the base name space.
+}
+\value{
+  \code{.Device} is a length-one character vector.
+
+  \code{.Devices} is a \link{pairlist} of length-one character vectors.
+  The first entry is always \code{"null device"}, and there are as many
+  entries as the maximal number of graphics devices which have been
+  simultaneously active.  If a device has been removed, its entry will be
+  \code{""} until the device number is reused.
 }
 \keyword{device}

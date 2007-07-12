@@ -26,7 +26,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          check.names = TRUE, fill = !blank.lines.skip,
          strip.white = FALSE, blank.lines.skip = TRUE,
          comment.char = "#", allowEscapes = FALSE, flush = FALSE,
-         stringsAsFactors = default.stringsAsFactors())
+         stringsAsFactors = default.stringsAsFactors(),
+         encoding = "unknown")
 {
     if(is.character(file)) {
         file <- file(file, "r")
@@ -34,7 +35,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     }
     if(!inherits(file, "connection"))
         stop("'file' must be a character string or connection")
-    if(!isOpen(file)) {
+    if(!isOpen(file, "r")) {
         open(file, "r")
         on.exit(close(file))
     }
@@ -47,63 +48,58 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                                      blank.lines.skip, quote, sep))
     nlines <- length(lines)
     if(!nlines) {
-        if(missing(col.names))
-            stop("no lines available in input")
-        else {
-            tmp <- vector("list", length(col.names))
-            names(tmp) <- col.names
-            class(tmp) <- "data.frame"
-            return(tmp)
-        }
-    }
-    if(all(nchar(lines) == 0)) stop("empty beginning of file")
-    if(nlines < n0lines && file == 0)  {# stdin() has reached EOF
-        pushBack(c(lines, lines, ""), file)
-        on.exit(.Internal(clearPushBack(stdin())))
-    } else
-        pushBack(c(lines, lines), file)
-    first <- scan(file, what = "", sep = sep, quote = quote,
-                  nlines = 1, quiet = TRUE, skip = 0,
-                  strip.white = TRUE,
-                  blank.lines.skip = blank.lines.skip,
-                  comment.char = comment.char, allowEscapes = allowEscapes)
-    col1 <- if(missing(col.names)) length(first) else length(col.names)
-    col <- numeric(nlines - 1)
-    if (nlines > 1)
-        for (i in seq_along(col))
-            col[i] <- length(scan(file, what = "", sep = sep,
-                                  quote = quote,
-                                  nlines = 1, quiet = TRUE, skip = 0,
-                                  strip.white = strip.white,
-                                  blank.lines.skip = blank.lines.skip,
-                                  comment.char = comment.char,
-                                  allowEscapes = allowEscapes))
-    cols <- max(col1, col)
-
-    ##	basic column counting and header determination;
-    ##	rlabp (logical) := it looks like we have column names
-
-    rlabp <- (cols - col1) == 1
-    if(rlabp && missing(header))
-	header <- TRUE
-    if(!header) rlabp <- FALSE
-
-    if (header) {
-        readLines(file, 1) # skip over header
-        if(missing(col.names)) col.names <- first
-        else if(length(first) != length(col.names))
-            warning("header and 'col.names' are of different lengths")
-
-    } else if (missing(col.names))
-	col.names <- paste("V", 1:cols, sep = "")
-    if(length(col.names) + rlabp < cols)
-        stop("more columns than column names")
-    if(fill && length(col.names) > cols)
+        if(missing(col.names)) stop("no lines available in input")
+        rlabp <- FALSE
         cols <- length(col.names)
-    if(!fill && cols > 0 && length(col.names) > cols)
-        stop("more column names than columns")
-    if(cols == 0) stop("first five rows are empty: giving up")
+    } else {
+        if(all(!nzchar(lines))) stop("empty beginning of file")
+        if(nlines < n0lines && file == 0)  { # stdin() has reached EOF
+            pushBack(c(lines, lines, ""), file)
+            on.exit(.Internal(clearPushBack(stdin())))
+        } else pushBack(c(lines, lines), file)
+        first <- scan(file, what = "", sep = sep, quote = quote,
+                      nlines = 1, quiet = TRUE, skip = 0,
+                      strip.white = TRUE,
+                      blank.lines.skip = blank.lines.skip,
+                      comment.char = comment.char, allowEscapes = allowEscapes,
+                      encoding = encoding)
+        col1 <- if(missing(col.names)) length(first) else length(col.names)
+        col <- numeric(nlines - 1)
+        if (nlines > 1)
+            for (i in seq_along(col))
+                col[i] <- length(scan(file, what = "", sep = sep,
+                                      quote = quote,
+                                      nlines = 1, quiet = TRUE, skip = 0,
+                                      strip.white = strip.white,
+                                      blank.lines.skip = blank.lines.skip,
+                                      comment.char = comment.char,
+                                      allowEscapes = allowEscapes))
+        cols <- max(col1, col)
 
+        ##	basic column counting and header determination;
+        ##	rlabp (logical) := it looks like we have column names
+
+        rlabp <- (cols - col1) == 1
+        if(rlabp && missing(header))
+            header <- TRUE
+        if(!header) rlabp <- FALSE
+
+        if (header) {
+            readLines(file, 1)          # skip over header
+            if(missing(col.names)) col.names <- first
+            else if(length(first) != length(col.names))
+                warning("header and 'col.names' are of different lengths")
+
+        } else if (missing(col.names))
+            col.names <- paste("V", 1:cols, sep = "")
+        if(length(col.names) + rlabp < cols)
+            stop("more columns than column names")
+        if(fill && length(col.names) > cols)
+            cols <- length(col.names)
+        if(!fill && cols > 0 && length(col.names) > cols)
+            stop("more column names than columns")
+        if(cols == 0) stop("first five rows are empty: giving up")
+    }
 
     if(check.names) col.names <- make.names(col.names, unique = TRUE)
     if (rlabp) col.names <- c("row.names", col.names)
@@ -113,7 +109,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         if(is.null(nmColClasses)) {
             colClasses <- rep(colClasses, length.out=cols)
         } else {
-            tmp <- rep(as.character(NA), length.out=cols)
+            tmp <- rep(NA_character_, length.out=cols)
             names(tmp) <- col.names
             i <- match(nmColClasses, col.names, 0)
             if(any(i <= 0))
@@ -142,7 +138,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                  strip.white = strip.white,
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE,
                  comment.char = comment.char, allowEscapes = allowEscapes,
-                 flush = flush)
+                 flush = flush, encoding = encoding)
 
     nlines <- length(data[[ which(keep)[1] ]])
 
@@ -191,17 +187,19 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     }
 
     ##	now determine row names
-
+    compactRN <- TRUE
     if (missing(row.names)) {
 	if (rlabp) {
 	    row.names <- data[[1]]
 	    data <- data[-1]
             keep <- keep[-1]
+            compactRN <- FALSE
 	}
-	else row.names <- as.character(seq_len(nlines))
+	else row.names <- .set_row_names(as.integer(nlines))
     } else if (is.null(row.names)) {
-	row.names <- as.character(seq_len(nlines))
+	row.names <- .set_row_names(as.integer(nlines))
     } else if (is.character(row.names)) {
+        compactRN <- FALSE
 	if (length(row.names) == 1) {
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]
 	    row.names <- data[[rowvar]]
@@ -209,6 +207,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             keep <- keep[-rowvar]
 	}
     } else if (is.numeric(row.names) && length(row.names) == 1) {
+        compactRN <- FALSE
 	rlabp <- row.names
 	row.names <- data[[rlabp]]
 	data <- data[-rlabp]
@@ -216,40 +215,52 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     } else stop("invalid 'row.names' specification")
     data <- data[keep]
 
+    ## rownames<- is interpreted, so avoid it for efficiency (it will copy)
+    if(is.object(row.names) || !(is.integer(row.names)) )
+        row.names <- as.character(row.names)
+    if(!compactRN) {
+        if (length(row.names) != nlines)
+            stop("invalid 'row.names' length")
+        if (any(duplicated(row.names)))
+            stop("duplicate 'row.names' are not allowed")
+        if (any(is.na(row.names)))
+            stop("missing values in 'row.names' are not allowed")
+    }
+
     ##	this is extremely underhanded
     ##	we should use the constructor function ...
     ##	don't try this at home kids
 
     class(data) <- "data.frame"
-    row.names(data) <- row.names
+    attr(data, "row.names") <- row.names
     data
 }
 
 read.csv <-
-function (file, header = TRUE, sep = ",", quote="\"", dec=".",
-          fill = TRUE, comment.char="", ...)
+function (file, header = TRUE, sep = ",", quote = "\"", dec = ".",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char,  ...)
+               comment.char = comment.char,  ...)
 
 read.csv2 <-
-function (file, header = TRUE, sep = ";", quote="\"", dec=",",
-          fill = TRUE, comment.char="",...)
+function (file, header = TRUE, sep = ";", quote = "\"", dec = ",",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char, ...)
+               comment.char = comment.char, ...)
 
 read.delim <-
-function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
-          fill = TRUE, comment.char="",...)
+function (file, header = TRUE, sep = "\t", quote = "\"", dec = ".",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char, ...)
+               comment.char = comment.char, ...)
 
 read.delim2 <-
-function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
-          fill = TRUE, comment.char="",...)
+function (file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char, ...)
+               comment.char = comment.char, ...)
 

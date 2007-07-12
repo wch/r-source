@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-6  the R Development Core Team
+ *  Copyright (C) 2000-7  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(XX = eval(CAR(args), rho));
     FUN = CADR(args);  /* must be unevaluated for use in e.g. bquote */
     n = length(XX);
-    if (n == NA_INTEGER) errorcall(call, _("invalid length"));
+    if (n == NA_INTEGER) error(_("invalid length"));
 
     PROTECT(ans = allocVector(VECSXP, n));
     names = getAttrib(XX, R_NamesSymbol);
@@ -92,7 +92,7 @@ SEXP attribute_hidden do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
     if(!isMatrix(X))
-	errorcall(call, _("first argument is not a matrix"));
+	error(_("first argument is not a matrix"));
     Xd = getAttrib(X, R_DimSymbol);
     nr = INTEGER(Xd)[0];
     nc = INTEGER(Xd)[1];
@@ -160,14 +160,15 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	UNPROTECT(1);
 	return ans;
     }
-    if(strcmp(CHAR(STRING_ELT(classes, 0)), "ANY") == 0)
+    if(strcmp(CHAR(STRING_ELT(classes, 0)), "ANY") == 0) /* ASCII */
 	matched = TRUE;
     else {
 	PROTECT(klass = R_data_class(X, FALSE));
 	for(i = 0; i < LENGTH(klass); i++)
 	    for(j = 0; j < length(classes); j++)
-		if(strcmp(CHAR(STRING_ELT(klass, i)),
-		      CHAR(STRING_ELT(classes, j))) == 0) matched = TRUE;
+		if(strcmp(translateChar(STRING_ELT(klass, i)),
+			  translateChar(STRING_ELT(classes, j))) == 0) 
+		    matched = TRUE;
 	UNPROTECT(1);
     }
     if(matched) {
@@ -189,13 +190,13 @@ SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
     FUN = CAR(args); args = CDR(args);
-    if(!isFunction(FUN)) errorcall(call, _("invalid 'f' argument"));
+    if(!isFunction(FUN)) error(_("invalid '%s' argument"), "f");
     classes = CAR(args); args = CDR(args);
-    if(!isString(classes)) errorcall(call, _("invalid 'classes' argument"));
+    if(!isString(classes)) error(_("invalid '%s' argument"), "classes");
     deflt = CAR(args); args = CDR(args);
     how = CAR(args);
-    if(!isString(how)) errorcall(call, _("invalid 'how' argument"));
-    replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0;
+    if(!isString(how)) error(_("invalid '%s' argument"), "how");
+    replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0; /* ASCII */
     n = length(X);
     PROTECT(ans = allocVector(VECSXP, n));
     names = getAttrib(X, R_NamesSymbol);

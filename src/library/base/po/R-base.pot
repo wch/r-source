@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,9 @@ msgid "is required by"
 msgstr ""
 
 msgid "(still attached)"
+msgstr ""
+
+msgid "namespace cannot be unloaded"
 msgstr ""
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -245,6 +248,12 @@ msgstr ""
 msgid "--> row.names NOT used"
 msgstr ""
 
+msgid "row names contain missing values"
+msgstr ""
+
+msgid "duplicate row.names:"
+msgstr ""
+
 msgid "arguments imply differing number of rows:"
 msgstr ""
 
@@ -255,12 +264,6 @@ msgid "row names supplied are of the wrong length"
 msgstr ""
 
 msgid "row names were found from a short variable and have been discarded"
-msgstr ""
-
-msgid "row names contain missing values"
-msgstr ""
-
-msgid "duplicate row.names:"
 msgstr ""
 
 msgid "drop argument will be ignored"
@@ -455,6 +458,15 @@ msgstr ""
 msgid "not defined for \"POSIXlt\" objects"
 msgstr ""
 
+msgid "'tim' is not character or numeric"
+msgstr ""
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+msgid "invalid units specified"
+msgstr ""
+
 msgid "not defined for \"difftime\" objects"
 msgstr ""
 
@@ -486,6 +498,9 @@ msgid "only matrix diagonals can be replaced"
 msgstr ""
 
 msgid "replacement diagonal has wrong length"
+msgstr ""
+
+msgid "'fromLast' must be TRUE or FALSE"
 msgstr ""
 
 msgid "MARGIN ="
@@ -587,6 +602,9 @@ msgstr ""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr ""
 
@@ -611,7 +629,13 @@ msgstr ""
 msgid "' not found"
 msgstr ""
 
+msgid "all arguments must be named"
+msgstr ""
+
 msgid "'pattern' must be a non-empty character string"
+msgstr ""
+
+msgid "invalid multibyte string for 'pattern'"
 msgstr ""
 
 msgid "'max.distance' must be non-negative"
@@ -693,6 +717,9 @@ msgid "'%s' not found on search path, using pos = 2"
 msgstr ""
 
 msgid "package/namespace load failed for '%s'"
+msgstr ""
+
+msgid "package was installed prior to 2.4.0 and must be re-installed"
 msgstr ""
 
 msgid "unable to load R code in package '%s'"
@@ -812,6 +839,9 @@ msgstr ""
 msgid "must specify formal argument names to vectorize"
 msgstr ""
 
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr ""
+
 msgid "'arg' should be one of"
 msgstr ""
 
@@ -842,6 +872,9 @@ msgstr ""
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
 
+msgid "'trim' must be numeric of length one"
+msgstr ""
+
 msgid "trimmed means are not defined for complex data"
 msgstr ""
 
@@ -858,6 +891,9 @@ msgid "'by' must specify valid column(s)"
 msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr ""
+
+msgid "additional arguments ignored in message()"
 msgstr ""
 
 msgid "(loaded the methods namespace)"
@@ -950,7 +986,7 @@ msgstr ""
 msgid "%s failed in unloadNamespace(%s)"
 msgstr ""
 
-msgid "name space '%s' is still used by: '%s'"
+msgid "name space '%s' is still used by: %s"
 msgstr ""
 
 msgid "imperative name space directives are disabled"
@@ -1038,6 +1074,9 @@ msgid "wrong argument"
 msgstr ""
 
 msgid "not defined for package_version objects"
+msgstr ""
+
+msgid "no arguments"
 msgstr ""
 
 msgid "invalid 'n' value"
@@ -1211,6 +1250,9 @@ msgstr ""
 msgid "' has changed"
 msgstr ""
 
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
 msgid "is not"
 msgstr ""
 
@@ -1218,6 +1260,9 @@ msgid "all"
 msgstr ""
 
 msgid "TRUE"
+msgstr ""
+
+msgid "additional arguments ignored in warning()"
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1295,7 +1340,10 @@ msgstr ""
 msgid "invalid 'digits'"
 msgstr ""
 
-msgid "argument must be character"
+msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+
+msgid "'input' must be a character vector or 'NULL'"
 msgstr ""
 
 msgid "'cmd' could not be run"
@@ -1330,13 +1378,13 @@ msgid_plural "there are no packages called"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgid        "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+msgid        "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0]    ""
 msgstr[1]    ""
 

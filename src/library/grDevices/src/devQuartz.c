@@ -366,6 +366,9 @@ typedef struct {
     double	yscale;
     int		where;
 	int		QuartzPos;		 /* Window Pos: TopRight=1, BottomRight, BottomLeft, TopLeft=4 */
+  int inModalLoop;      /* set if the device runs in a modal loop (e.g. locator) */
+  int killOnLoopExit;   /* set for an asynchronous kill request */
+  int hasSavedState;    /* set if there is a saved CG context */
 }
 QuartzDesc;
 
@@ -481,7 +484,7 @@ SEXP Quartz(SEXP args)
     double height, width, ps;
     Rboolean  antialias, autorefresh;
     SInt32 macVer;
-    int quartzpos = 1;
+    int quartzpos = kQuartzCenter;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
@@ -721,6 +724,10 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
     xd->window = NULL;
     xd->context = NULL;
     xd->auxcontext = NULL;
+
+    xd->inModalLoop = 0;
+    xd->killOnLoopExit = 0;
+    xd->hasSavedState = 0;
 	
 	xd->bg = dd->startfill = bg; /* 0xffffffff; transparent */
     dd->startcol = R_RGB(0, 0, 0);
@@ -974,10 +981,11 @@ static void 	Quartz_Clip(double x0, double x1, double y0, double y1,
 	See Apple's Technical Q&A QA1050 "Turn Off Core Graphics Clipping"
 	S.M.I.
 */	   
-	CGContextRestoreGState(GetContext(xd)); 
+    if (xd->hasSavedState) CGContextRestoreGState(GetContext(xd)); 
 	
-	CGContextSaveGState( GetContext(xd) );
-	CGContextClipToRect( GetContext(xd), CGRectMake(x, y, width, height) );
+    CGContextSaveGState( GetContext(xd) );
+    xd->hasSavedState=1;
+    CGContextClipToRect( GetContext(xd), CGRectMake(x, y, width, height) );
 	
 }
 
@@ -1509,38 +1517,46 @@ static Rboolean Quartz_Locator(double *x, double *y, NewDevDesc *dd)
     SetPortWindowPort(xd->window);
     SetThemeCursor(kThemeCrossCursor);
 
+    xd->inModalLoop = 1;
+
     while(!mouseClick) {
-	
-    
-	gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
-
-    CGContextFlush( GetContext(xd) );
+      gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
+      if (xd->killOnLoopExit) break;
+      CGContextFlush( GetContext(xd) );
    
-	if (event.what == mouseDown) {
-	    partCode = FindWindow(event.where, &window);
-	    if ((window == (xd->window)) && (partCode == inContent)) {
-			myPoint = event.where;
-			GlobalToLocal(&myPoint);
-			*x = (double)(myPoint.h);
-			*y = (double)(myPoint.v);
-			if(useBeep)
-			 SysBeep(1);
-			mouseClick = true;
-	    }
+      if (event.what == mouseDown) {
+	partCode = FindWindow(event.where, &window);
+	if ((window == (xd->window)) && (partCode == inContent)) {
+	  myPoint = event.where;
+	  GlobalToLocal(&myPoint);
+	  *x = (double)(myPoint.h);
+	  *y = (double)(myPoint.v);
+	  if(useBeep)
+	    SysBeep(1);
+	  mouseClick = true;
 	}
-
-	if (event.what == keyDown) {
-	    key = (event.message & charCodeMask);
-	    if (key == 0x1b){ /* exits when the esc key is pressed */
-			SetPort(savePort);
-			SetThemeCursor(kThemeIBeamCursor);
-			return FALSE;
-	    }
+      }
+      
+      if (event.what == keyDown) {
+	key = (event.message & charCodeMask);
+	if (key == 0x1b){ /* exits when the esc key is pressed */
+	  SetPort(savePort);
+	  SetThemeCursor(kThemeIBeamCursor);
+	  xd->inModalLoop = 0;
+	  return FALSE;
 	}
+      }
     }
-
+    
     SetPort(savePort);
-	SetThemeCursor(kThemeIBeamCursor);
+    SetThemeCursor(kThemeIBeamCursor);
+    
+    xd->inModalLoop = 0;
+
+    if (xd->killOnLoopExit) {
+      KillDevice((DevDesc*)dd);
+      return FALSE;
+    }
     return TRUE;
 }
 
@@ -1662,9 +1678,15 @@ OSStatus QuartzEventHandler( EventHandlerCallRef inCallRef, EventRef inEvent, vo
         switch(eventKind){
             case kEventWindowClose:
             {
-                KillDevice(GetDevice(devnum));
-                err= noErr; 
-            }
+	      if (dd = ((GEDevDesc*) GetDevice(devnum))->dev) {
+		QuartzDesc *xd = (QuartzDesc *) dd-> deviceSpecific;
+		if (xd->inModalLoop)
+		  xd->killOnLoopExit = 1;
+		else
+		  KillDevice(GetDevice(devnum));
+	      }
+	      err= noErr;
+	    }
             break;
          
             case kEventWindowBoundsChanged:

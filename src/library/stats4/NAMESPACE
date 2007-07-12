@@ -1,7 +1,10 @@
-export(mle)
+export(mle) # exporting methods implicitly exports the generics
 importFrom(graphics, plot)
-importFrom(stats, AIC, coef, confint, logLik, optim, profile, 
+importFrom(stats, AIC, coef, confint, logLik, optim, profile,
 	   qchisq, update, vcov)
+
+## S4
 exportClasses(mle, profile.mle, summary.mle)
-exportMethods(AIC, BIC, coef, confint, logLik, plot, profile, 
+## All methods, for own or "foreign" generics:
+exportMethods(AIC, BIC, coef, confint, logLik, plot, profile,
               summary, show, update, vcov)

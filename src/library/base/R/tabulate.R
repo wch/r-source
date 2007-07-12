@@ -1,4 +1,4 @@
-tabulate <- function(bin, nbins = max(1,bin))
+tabulate <- function(bin, nbins = max(1L, bin))
 {
     if(!is.numeric(bin) && !is.factor(bin))
 	stop("'bin' must be numeric or a factor")

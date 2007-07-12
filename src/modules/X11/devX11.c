@@ -954,6 +954,14 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
     }
 }
 
+static void CheckAlpha(int color, newX11Desc *xd)
+{
+    unsigned int alpha = R_ALPHA(color);
+    if (alpha > 0 && alpha < 255 && !xd->warn_trans) {
+	warning(_("semi-transparency is not supported on this device: reported only once per page"));
+	xd->warn_trans = TRUE;
+    }
+}
 
 static void SetColor(int color, NewDevDesc *dd)
 {
@@ -1124,9 +1132,10 @@ static String x_fallback_resources[] = {
 #endif
 
 Rboolean
-newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
-	 double gamma_fac, X_COLORTYPE colormodel, int maxcube,
-	 int bgcolor, int canvascolor, int res, int xpos, int ypos)
+newX11_Open(NewDevDesc *dd, newX11Desc *xd, const char *dsp,
+	    double w, double h, double gamma_fac, X_COLORTYPE colormodel,
+	    int maxcube, int bgcolor, int canvascolor, int res,
+	    int xpos, int ypos)
 {
     /* if we have to bail out with "error", then must free(dd) and free(xd) */
     /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
@@ -1134,7 +1143,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     XEvent event;
     int iw, ih;
     X_GTYPE type;
-    char *p = dsp;
+    const char *p = dsp;
     XGCValues gcv;
     /* Indicates whether the display is created within this particular call: */
     Rboolean DisplayOpened = FALSE;
@@ -1174,13 +1183,15 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	return FALSE;
 #else
 	char buf[PATH_MAX]; /* allow for pageno formats */
+	char tmp[PATH_MAX], *pp;
 	FILE *fp;
-	p = strchr(dsp+6, ':'); *p='\0';
+	strcpy(tmp, dsp+6);
+	pp = strchr(tmp, ':'); *pp='\0';
 	xd->quality = atoi(dsp+6);
-	if(strlen(p+1) >= PATH_MAX)
+	if(strlen(pp+1) >= PATH_MAX)
 	    error(_("filename too long in jpeg() call"));
-	strcpy(xd->filename, p+1);
-	snprintf(buf, PATH_MAX, p+1, 1); /* page 1 to start */
+	strcpy(xd->filename, pp+1);
+	snprintf(buf, PATH_MAX, pp+1, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open JPEG file '%s'"), buf);
 	    return FALSE;
@@ -1461,7 +1472,7 @@ static char* translateFontFamily(char* family, newX11Desc* xd) {
     if (strlen(family) > 0) {
 	int found = 0;
 	for (i=0; i<nfonts && !found; i++) {
-	    char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	    const char* fontFamily = CHAR(STRING_ELT(fontnames, i));
 	    if (strcmp(family, fontFamily) == 0) {
 		found = 1;
 		result = SaveFontSpec(VECTOR_ELT(fontdb, i), 0);
@@ -1658,6 +1669,7 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 {
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
+    xd->warn_trans = FALSE;
     if (xd->type > WINDOW) {
 	if (xd->npages++) {
 	    /* try to preserve the page we do have */
@@ -1681,6 +1693,7 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 	}
 /* we want to override the default bg="transparent" */
 /*	xd->fill = R_OPAQUE(dd->bg) ? dd->bg : xd->canvas; */
+	CheckAlpha(gc->fill, xd);
 	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
 	SetColor(xd->fill, dd);
 	xd->clip.x = 0; xd->clip.width = xd->windowWidth;
@@ -1879,11 +1892,13 @@ static void newX11_Rect(double x0, double y0, double x1, double y1,
 	y0 = y1;
 	y1 = tmp;
     }
+    CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, dd);
 	XFillRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
+    CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	SetLinetype(gc, dd);
@@ -1906,11 +1921,13 @@ static void newX11_Circle(double x, double y, double r,
 
     ix = (int)x;
     iy = (int)y;
+    CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, dd);
 	XFillArc(display, xd->window, xd->wgc,
 		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
     }
+    CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
 	SetLinetype(gc, dd);
 	SetColor(gc->col, dd);
@@ -1933,6 +1950,7 @@ static void newX11_Line(double x1, double y1, double x2, double y2,
     xx2 = (int) x2;
     yy2 = (int) y2;
 
+    CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	SetLinetype(gc, dd);
@@ -1959,6 +1977,7 @@ static void newX11_Polyline(int n, double *x, double *y,
 	points[i].y = (int)(y[i]);
     }
 
+    CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	SetLinetype(gc, dd);
@@ -1994,6 +2013,7 @@ static void newX11_Polygon(int n, double *x, double *y,
     }
     points[n].x = (int)(x[0]);
     points[n].y = (int)(y[0]);
+    CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, dd);
 	XFillPolygon(display, xd->window, xd->wgc, points, n, Complex, CoordModeOrigin);
@@ -2001,6 +2021,7 @@ static void newX11_Polygon(int n, double *x, double *y,
 	if (xd->type == WINDOW) XSync(display, 0);
 #endif
     }
+    CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	SetLinetype(gc, dd);
@@ -2024,6 +2045,7 @@ static void newX11_Text(double x, double y,
 
     size = gc->cex * gc->ps + 0.5;
     SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
+    CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	XRfRotDrawString(display, xd->font, rot, xd->window,
@@ -2105,7 +2127,7 @@ static void newX11_Hold(NewDevDesc *dd)
 	/*	7) maxcube			*/
 
 Rboolean newX11DeviceDriver(DevDesc *dd,
-			    char *disp_name,
+			    const char *disp_name,
 			    double width,
 			    double height,
 			    double pointsize,
@@ -2119,7 +2141,7 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
 			    int xpos, int ypos)
 {
     newX11Desc *xd;
-    char *fn;
+    const char *fn;
 
     xd = Rf_allocNewX11DeviceDesc(pointsize);
     if(!xd) return FALSE;
@@ -2407,9 +2429,9 @@ static char *SaveString(SEXP sxp, int offset)
 }
 
 static DevDesc*
-Rf_addX11Device(char *display, double width, double height, double ps,
+Rf_addX11Device(const char *display, double width, double height, double ps,
 		double gamma, int colormodel, int maxcubesize,
-		int bgcolor, int canvascolor, char *devname, SEXP sfonts,
+		int bgcolor, int canvascolor, const char *devname, SEXP sfonts,
 		int res, int xpos, int ypos)
 {
     NewDevDesc *dev = NULL;
@@ -2448,7 +2470,8 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 
 SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char *display, *vmax, *cname, *devname;
+    const char *display, *cname, *devname;
+    char *vmax;
     double height, width, ps, gamma;
     int colormodel, maxcubesize, bgcolor, canvascolor, res, xpos, ypos;
     SEXP sc, sfonts;
@@ -2610,6 +2633,8 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     return res;
 }
 
+extern SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
+
 void R_init_R_X11(DllInfo *info)
 {
     R_X11Routines *tmp;
@@ -2623,5 +2648,6 @@ void R_init_R_X11(DllInfo *info)
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
     tmp->readclp = in_R_X11readclp;
-     R_setX11Routines(tmp);
+    tmp->dv = in_R_X11_dataviewer;
+    R_setX11Routines(tmp);
 }

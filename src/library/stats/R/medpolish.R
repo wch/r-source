@@ -10,13 +10,13 @@ medpolish <-
     oldsum <- 0
     for(iter in 1:maxiter) {
 	rdelta <- apply(z, 1, median, na.rm = na.rm)
-	z <- z - matrix(rdelta, nr=nr, nc=nc)
+	z <- z - matrix(rdelta, nrow=nr, ncol=nc)
 	r <- r + rdelta
 	delta <- median(c, na.rm = na.rm)
 	c <- c - delta
 	t <- t + delta
 	cdelta <- apply(z, 2, median, na.rm = na.rm)
-	z <- z - matrix(cdelta, nr=nr, nc=nc, byrow=TRUE)
+	z <- z - matrix(cdelta, nrow=nr, ncol=nc, byrow=TRUE)
 	c <- c + cdelta
 	delta <- median(r, na.rm = na.rm)
 	r <- r - delta

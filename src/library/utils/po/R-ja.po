@@ -1,0 +1,1008 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-06-12 18:53\n"
+"PO-Revision-Date: 2007-04-04 14:23+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
+" RShowDoc() はドキュメントファイルを指定する文字列引数\n"
+"といっしょに使うべきです"
+
+msgid "no documentation for '%s' found in package '%s'"
+msgstr " '%s' に対するドキュメントがパッケージ      '%s' 中に見当たりません"
+
+msgid "document not found"
+msgstr " ドキュメントが見付かりません"
+
+msgid "A search query has been submitted to"
+msgstr " 検索問い合わせが %s に発行されました"
+
+msgid "The results page should open in your browser shortly"
+msgstr " 結果ページはまもなくブラウザーで開かれるでしょう"
+
+msgid "reference to unknown chunk '%s'"
+msgstr " 未知のチャンク '%s' の参照 "
+
+msgid "no Sweave file with name '%s' found"
+msgstr " 名前が '%s' の Sweave ファイルはありません"
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr " %d 個の Sweve ファイルが基本名 '%s' に対して見付かりました"
+
+msgid "Found invalid multi-byte character data."
+msgstr " 不正な多倍長文字データがありました"
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr " 'iconv' が利用できないので再エンコーディング出来ません"
+
+msgid "Try running R in a single-byte locale."
+msgstr " 1 バイトロケールで R を実行します"
+
+msgid "more than one syntax specification found, using the first one"
+msgstr " 複数の構文指定が見付かりました。最初のものを使います"
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr " オブジェクト '%s' はクラス \"SweaveSyntax\" を持ちません"
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr " スタック中に再帰的な Sweave 入力 '%s' "
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr " ターゲットの構文はクラス \"SweaveSyntax\" ではありません"
+
+msgid "target syntax contains no translation table"
+msgstr " ターゲットの構文は変換テーブルを持ちません"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+" 構文解析エラーか空のオプションが以下にあります\n"
+"%s"
+
+msgid "path to '%s' contains spaces,"
+msgstr " '%s' へのパスは空白を含みます、"
+
+msgid "this may cause problems when running LaTeX"
+msgstr " これは LaTeX を実行するとき問題を引き起こすかも知れません"
+
+msgid "You can now run LaTeX on '%s'"
+msgstr " '%s' へは LaTeX を実行できません"
+
+msgid "invalid value for '%s' : %s"
+msgstr " '%s' に対する不正な値: %s"
+
+msgid "elements of 'what' after the first will be ignored"
+msgstr " 'what' の要素の最初のもの以降は無視されます"
+
+msgid "%d occurrences in %s"
+msgstr " %d 回 %s 中に起きました"
+
+msgid "bad argument"
+msgstr " 誤った引数"
+
+msgid "all arguments must be of class \"person\""
+msgstr " 全ての引数がクラス \"person\" でなければなりません"
+
+msgid "broken installation, no CITATION file in the base package."
+msgstr ""
+" インストールが不完全です、base パッケージに  CITATION ファイルがありません"
+
+msgid "package '%s' not found"
+msgstr " パッケージ '%s' が見付かりません"
+
+msgid "no date field in DESCRIPTION file of package '%s'"
+msgstr " パッケージ '%s' の DESCRIPTION ファイルがありません"
+
+msgid "could not determine year for '%s' from package DESCRIPTION file"
+msgstr ""
+" パッケージの DESCRIPTION ファイルから '%s' に対する年度を決定できませんでし"
+"た"
+
+msgid "m < 0"
+msgstr " m < 0"
+
+msgid "n < m"
+msgstr " n < m"
+
+msgid "'FUN' must be a function or NULL"
+msgstr " 'FUN' は文字列か NULL でなければなりません"
+
+msgid "'package' must be a character string or NULL"
+msgstr " 'package' は文字列か NULL でなければなりません"
+
+msgid "datasets have been moved from package 'base' to package 'datasets'"
+msgstr ""
+" データセットはパッケージ 'base' からパッケージ 'datasets' に移されました"
+
+msgid "datasets have been moved from package 'stats' to package 'datasets'"
+msgstr ""
+" データセットはパッケージ 'stats' からパッケージ 'datasets' に移されました"
+
+msgid "data index for package '%s' is invalid and will be ignored"
+msgstr " パッケージ '%s' に対するデータ索引は不正で、無視されます"
+
+msgid "file 'filelist' is missing for directory '%s'"
+msgstr " ディレクトリ '%s' に対するファイル 'filelist' がありません"
+
+msgid "data set '%s' not found"
+msgstr " データセット '%s' がありません"
+
+msgid "kind '%s' not yet implemented"
+msgstr " 種類 '%s' は未だ移植されていません "
+
+msgid "wrong number of table row entries"
+msgstr " テーブルの行項目数が間違っています"
+
+msgid "wrong argument to 'dataentry'"
+msgstr " 'dataentry' に対する誤った引数"
+
+msgid "could not restore type information"
+msgstr " 型情報を再現出来ませんでした"
+
+msgid "modes argument ignored"
+msgstr " モード引数が無視されます"
+
+msgid "'names' argument ignored"
+msgstr " 'names' 引数は無視されます"
+
+msgid "'modes' argument ignored"
+msgstr " 'modes' 引数は無視されます"
+
+msgid "could not restore variables properly"
+msgstr " 変数を正しく再現できません"
+
+msgid "did not assign() anything"
+msgstr " 何も assign() しませんでした"
+
+msgid "Browsing in the environment with call:"
+msgstr " 呼び出しを伴う環境でのブラウジング"
+
+msgid "'dump' is not an object of class 'dump.frames'"
+msgstr " 'dump' はクラス 'dump.frames' のオブジェクトではありません"
+
+msgid "Message:"
+msgstr " メッセージ："
+
+msgid "Available environments had calls:"
+msgstr " 利用可能な環境は以下の呼び出しを含んでいました："
+
+msgid "Enter an environment number, or 0 to exit"
+msgstr " 環境ナンバーを入力してください．0 を入力すると終了します"
+
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+" recover が非対話的に呼び出されました；フレームがダンプされました．debugger"
+"() を使って見て下さい "
+
+msgid "No suitable frames for recover()"
+msgstr " recover() に対する適当なフレームがありません"
+
+msgid "No demo found for topic '%s'"
+msgstr " トピック '%s' に対するデモはありません"
+
+msgid ""
+"Demo for topic '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+" トピッピク '%s' に対するデモが複数ありました．\n"
+"'%s' 中のものを使います"
+
+msgid "invalid 'data' argument"
+msgstr " 不正な 'data' 引数"
+
+msgid "invalid 'modes' argument"
+msgstr " 不正な 'modes' 引数"
+
+msgid "invalid 'x' argument"
+msgstr " 不正な 'x' 引数"
+
+msgid "can only handle vector and factor elements"
+msgstr " ベクトルと因子要素だけを処理できます"
+
+msgid "invalid factor levels in '%s'"
+msgstr " '%s' 中に不正な因子水準"
+
+msgid "added factor levels in '%s'"
+msgstr " '%s' 中に因子水準を加えました"
+
+msgid "edited row names contain duplicates and will be ignored"
+msgstr " 編集された行名は重複しており、無視されます"
+
+msgid "invalid input matrix"
+msgstr " 不正な入力行列"
+
+msgid "no help file found for '%s'"
+msgstr " '%s' に対するヘルプファイルが見つかりません"
+
+msgid "more than one help file found: using package '%s'"
+msgstr " 複数のヘルプファイルが見つかりました：'%s' 中のものを使います"
+
+msgid "'%s' has a help file but no examples file"
+msgstr " '%s' はヘルプファイルを持ちますが、実行例ファイルはありません"
+
+msgid "test '%s' is not available"
+msgstr " テスト '%s' が利用できません"
+
+msgid "'fix' requires a name"
+msgstr " 'fix' は名前を必要とします"
+
+msgid "too many list items (at most up to number 26)"
+msgstr " リストの項目が多すぎます（最大でも26です）"
+
+msgid "too many list items (at most up to number 3899)"
+msgstr " リストの項目が多すぎます（最大でも3899です）"
+
+msgid "'form' must be a two-sided formula"
+msgstr " \"form\" は両辺に項を持つ公式でなければなりません"
+
+#, fuzzy
+msgid "'form' must be a two-sided formula with one term on each side"
+msgstr " \"form\" は両辺に項を持つ公式でなければなりません"
+
+msgid "No documentation for '%s' in specified packages and libraries:"
+msgstr ""
+" 指定されたパッケージやライブラリ中には '%s' に対するドキュメントはありません"
+
+msgid "you could try 'help.search(\"%s\")'"
+msgstr " 'help.search(\"%s\")' を使うべきだったかも知れません"
+
+msgid ""
+"Help for topic '%s' is not in any loaded package but can be found in the "
+"following packages:"
+msgstr ""
+" トピック '%s' に対するヘルプはロード済みのパッケージ中にはありませんが以下の"
+"パッケージ中にあります："
+
+msgid "Package"
+msgstr " パッケージ"
+
+msgid "Library"
+msgstr " ライブラリ"
+
+msgid "Help on topic '%s' was found in the following packages:"
+msgstr " トピック '%s' に対するヘルプが以下のパッケージ中にありました："
+
+msgid "Choose one"
+msgstr " 一つ選んでください"
+
+msgid "Using the first match ..."
+msgstr " 最初にマッチしたものを使っています ..."
+
+msgid ""
+"No HTML help for '%s' is available:\n"
+"corresponding file is missing"
+msgstr ""
+" '%s' に対して利用できる HTML ファイルはありません:\n"
+"  対応するファイルがありません"
+
+msgid "Compiled HTML is not installed"
+msgstr " コンパイルされた HTML がインストールされていません"
+
+msgid "CHM file could not be displayed"
+msgstr " CMH ファイルを表示できませんでした"
+
+msgid ""
+"No CHM help for '%s' in package '%s' is available:\n"
+"the CHM file for the package is missing"
+msgstr ""
+" '%s' に対する CMH ファイルはパッケージ '%s'   中にありません：\n"
+" パッケージに対する CMH ファイルが欠けています"
+
+msgid "R Help on '%s'"
+msgstr " '%s' に対する R ヘルプ"
+
+msgid ""
+"No text help for '%s' is available:\n"
+"corresponding file is missing"
+msgstr ""
+" '%s' に対するテキストヘルプはありません：\n"
+"対応するファイルがありません"
+
+msgid "problems running R CMD Rdconv"
+msgstr " R CMD Rdconv を実行できません"
+
+msgid ""
+"No offline help for '%s' is available:\n"
+"corresponding file is missing"
+msgstr ""
+" '%s' に対するオフラインのヘルプはありません：\n"
+"対応するファイルがありません"
+
+msgid "argument '%s' must be a single character string"
+msgstr " 引数 '%s' は単一の文字列でなければなりません"
+
+msgid "incorrect field specification"
+msgstr " 不正確な欄指定です"
+
+msgid "do not know what to search"
+msgstr " 何を検索すべきか分かりません"
+
+msgid "argument 'help.db' is deprecated"
+msgstr " 引数 'help.db' は廃止されました "
+
+msgid "Rebuilding the data base ..."
+msgstr " データベースを再構築しています ..."
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr " パッケージ {.readRDS() sequentially}:"
+
+msgid "could not find package '%s'"
+msgstr " パッケージ '%s' を見付けることが出来ませんでした"
+
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr " パッケージ '%s' は空の hsearch データを持っています - 奇妙ですが"
+
+msgid "no hsearch.rds meta data for package"
+msgstr " パッケージに対する hsearch.rds メタデータがありません"
+
+msgid "reencoding ..."
+msgstr " エンコーディングし直しています ..."
+
+msgid "done"
+msgstr " 完了"
+
+msgid "removing all entries with invalid multi-byte character data"
+msgstr " 不正な多バイト文字データを持つ全ての項目を取り除いています"
+
+msgid "saving the database ..."
+msgstr " データベースを保存しています ..."
+
+msgid ""
+"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgstr ""
+" パッケージ '%s' に対する情報がデータベース中にありません:  'rebuild = TRUE'?"
+"　が必要かもしれません"
+
+msgid "incorrect 'agrep' specification"
+msgstr " 不正確な 'agrep' 指定"
+
+msgid "matched %d objects."
+msgstr " %d 個のオブジェクトがマッチしました"
+
+msgid "no package '%s' was found"
+msgstr " パッケージ '%s' は見付かりません"
+
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr " パッケージ '%s' に対する DESCRIPTION ファイルは壊れています"
+
+msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+" 'DESCRIPTION' ファイルは 'Encoding' 欄を持ち、再エンコーディングは不可能です"
+
+msgid "DESCRIPTION file of package '%s' is missing or broken"
+msgstr ""
+" パッケージ '%s' に対する DESCRIPTION ファイルは存在しないか壊れています"
+
+msgid "menu() cannot be used non-interactively"
+msgstr " menu() は対話的にしか使用できません"
+
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr " メニューから項目を入力するか、0 を入力して終了して下さい"
+
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
+msgstr " '%s' は形式的な総称的関数です；S3 メソッドは見付かりそうもありません"
+
+msgid "no function '%s' is visible"
+msgstr " 可視的な関数 '%s' はありません "
+
+msgid "function '%s' appears not to be generic"
+msgstr " 関数 '%s' は総称的では無いようです"
+
+msgid "generic function '%s' dispatches methods for generic '%s'"
+msgstr " 総称的関数 '%s' は総称的な '%s' に対するメソッドを提供します"
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr " 'generic.function' か 'class' を与える必要があります"
+
+msgid "no function '%s' could be found"
+msgstr " '%s' という関数は見付けられませんでした"
+
+msgid "S3 method '%s' not found"
+msgstr " S3 メソッド '%s' は見付かりません "
+
+msgid "environment specified is not a package"
+msgstr " 指定された環境はパッケージではありません"
+
+msgid "'fixInNamespace' requires a name"
+msgstr " 'fixInNamespace' は名前を必要とします"
+
+msgid "only numeric indices can be used"
+msgstr " 数値的添字だけが使えます"
+
+msgid "cannot create directory '%s'"
+msgstr " ディレクトリ '%s' を作成できません"
+
+msgid "'code_files' should be a character vector"
+msgstr " 'code_files' は文字ベクトルでなければなりません"
+
+msgid "'list' should be a character vector naming R objects"
+msgstr ""
+" 'list' は R オブジェクトの名前を与える文字ベクトルでなければなりません"
+
+msgid "'namespace' should be a single logical"
+msgstr " 'namespace' は単一の論理値でなければなりません"
+
+msgid "cannot turn off locale-specific chars via LC_CTYPE"
+msgstr " LC_CTYPE 経由でロケール固有の文字を使用停止にできません"
+
+msgid "no R objects specified or available"
+msgstr " 如何なる R オブジェクトも指定されていないか利用可能ではありません"
+
+msgid "Creating directories ..."
+msgstr " ディレクトリを作成中 ..."
+
+msgid "directory '%s' already exists"
+msgstr " ディレクトリ '%s' は既に存在します"
+
+msgid "Creating DESCRIPTION ..."
+msgstr " DESCRIPTION を作成中 ..."
+
+msgid "Creating NAMESPACE ..."
+msgstr " NAMESPACE を作成中 ..."
+
+msgid "Creating Read-and-delete-me ..."
+msgstr " Read-and-delete-me を作成中 ..."
+
+msgid "Saving functions and data ..."
+msgstr " 関数とデータを保存中 ..."
+
+msgid "Copying code files ..."
+msgstr " コードファイルをコピー中 ..."
+
+msgid "Making help files ..."
+msgstr " ヘルプファイルを作成中 ..."
+
+msgid "Done."
+msgstr " 終了。"
+
+msgid "Further steps are described in '%s'."
+msgstr " これ以上のステップが '%s' 中に説明されています"
+
+msgid "unable to access index for repository %s"
+msgstr " リポジトリー %s に対する索引にアクセスできません"
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr ""
+" (不正な？) 'lib.loc=%s' に対するインストール済のパッケージはありません"
+
+msgid "bundle '%s' is incompletely installed"
+msgstr " バンドル '%s' のインストールが不完全です"
+
+msgid "bundle '%s' has extra contents %s"
+msgstr " バンドル '%s' は余計な内容 %s を持ちます"
+
+msgid "'priority' must be character or NULL"
+msgstr " 'priority' は文字か NULL で無ければなりません"
+
+msgid "argument 'lib' is missing: using %s"
+msgstr " 引数 'lib' が欠けています：%s を使います"
+
+msgid "'destdir' is not a directory"
+msgstr " 'destdir' はディレクトリではありません"
+
+msgid "no package '%s' at the repositories"
+msgstr " このリポジトリーには '%s' というパッケージはありません"
+
+msgid "download of package '%s' failed"
+msgstr " パッケージ '%s' のダウンロードに失敗しました"
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr " --- このセッションで使うために、CRANミラーを選んでください ---"
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr " ミラーを設定することなくCRANを使おうとしています"
+
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr " CRANミラーの選択は対話的にしかできません"
+
+msgid "cannot set repositories non-interactively"
+msgstr " リポジトリーの設定は対話的にしかできません"
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr " --- このセッションで使うリポジトリーを選んでください ---"
+
+msgid "Enter one or more numbers separated by spaces"
+msgstr " スペースによって分離された1つ以上の数を入力してください"
+
+msgid "'%s' must be supplied"
+msgstr " '%s' を与えてください"
+
+msgid "every package depends on at least one other"
+msgstr " どのパッケージも少なくとも1つの他のパッケージに依存します"
+
+msgid "packages %s are mutually dependent"
+msgstr " パッケージ %s は相互に依存します"
+
+msgid "no packages were specified"
+msgstr " 如何なるパッケージも指定されませんでした"
+
+msgid "argument 'lib' is missing: using '%s'"
+msgstr " 引数 'lib' が欠けています：%s を使います"
+
+#, fuzzy
+msgid "'lib = \"%s\"' is not writable"
+msgstr " 'lib' は書き込み可能ではありません"
+
+msgid ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+msgstr ""
+" パッケージをインストールするために個人的なライブラリ\n"
+"'%s'\n"
+"を作りたいのですか？"
+
+msgid "unable to install packages"
+msgstr " パッケージをインストール出来ませんでした"
+
+msgid "unable to create"
+msgstr " 生成できませんでした"
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr ""
+" MacOS X バイナリのパッケージをWindows 上にインストールすることはできません"
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr ""
+" MacOS X バイナリのパッケージをこのプラットフォームにインストールすることはで"
+"きません"
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr ""
+" Windows バイナリのパッケージをこのプラットフォームにインストールすることはで"
+"きません"
+
+msgid ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+" R のこのバージョンは、ソースパッケージをインストールするようにセットアップさ"
+"れていません\n"
+"もし RPM からインストールされたのなら R-devel RPM が必要でしょう"
+
+msgid "installation of package '%s' had non-zero exit status"
+msgstr " パッケージ '%s' のインストールは、ゼロでない終了値をもちました"
+
+msgid "unable to create temporary directory '%s'"
+msgstr " 一時的ディレクトリ '%s' を作ることが出来ません"
+
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+" 'lib' のどの要素を依存関係のインストールに使うかわかりません\n"
+"依存関係のインストールをスキップします"
+
+msgid ""
+"The downloaded packages are in\n"
+"\t%s"
+msgstr ""
+" ダウンロードされたパッケージは、以下にあります\n"
+"\t%s"
+
+msgid "no object named '%s' to show"
+msgstr " 表示すべき '%s' という名前のオブジェクトがありません"
+
+msgid "cannot determine a usable name"
+msgstr " 利用可能な名前を決定することができません"
+
+msgid "Created file named '%s'."
+msgstr " 名前 '%s' のファイルを作成しました"
+
+msgid "Edit the file and move it to the appropriate directory."
+msgstr " ファイルを編集してきとうなディレクトリに移動してください"
+
+msgid "Maintainer:"
+msgstr " 管理者:"
+
+msgid "Index:"
+msgstr " 索引:"
+
+msgid "Further information is available in the following vignettes:"
+msgstr " より詳しい情報は以下のビニエットで入手できます:"
+
+msgid "package title"
+msgstr " パッケージのタイトル"
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr " パッケージの簡略(1-5 行)な解説"
+
+msgid ""
+"An overview of how to use the package, including the most important functions"
+msgstr " 最も重要な関数を含む、パッケージの使い方の概略"
+
+msgid "The author and/or maintainer of the package"
+msgstr " パッケージの作者と(もしくは)管理者"
+
+msgid "Literature or other references for background information"
+msgstr " 背景情報の文献もしくはその他の参考文献"
+
+msgid "Optional links to other man pages, e.g."
+msgstr " 他のマニュアルページへのオプションのリンク、例えば"
+
+msgid "simple examples of the most important functions"
+msgstr " 最も重要な関数の簡単な実行例"
+
+msgid ""
+"Optionally other standard keywords, one per line, from file KEYWORDS in the "
+"R documentation directory"
+msgstr ""
+" オプションとして、R ドキュメントのディレクトリ中の KEYWORDS ファイルからの、"
+"一行に一つの他の標準キーワード　"
+
+msgid ""
+"no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgstr ""
+" タイプ '%s' でトピック '%s' のドキュメントはありません(もしかするとヘルプの"
+"処理エラー)"
+
+msgid ""
+"the object of class \"%s\" in the function call '%s' could not be used as a "
+"documentation topic"
+msgstr ""
+" クラス \"%s\" のオブジェクトで関数呼び出し '%s' 中のものはドキュメントのト"
+"ピックとしては使え無いかも知れません"
+
+msgid "no methods for '%s' and no documentation for it as a function"
+msgstr ""
+" '%s' に対するメソッドはありませんし、その関数としてのドキュメントもありませ"
+"ん"
+
+msgid "error in trying to evaluate the expression for argument '%s' (%s)"
+msgstr " 引数 '%s' (%s) に対する表現式を評価試行中にエラー"
+
+msgid "no method defined for function '%s' and signature '%s'"
+msgstr ""
+" 関数 '%s' でシグネチャが '%s' であるものに対して定義されたメソッドはありませ"
+"ん"
+
+msgid "no documentation for function '%s' and signature '%s'"
+msgstr ""
+" 関数 '%s' でシグネチャが '%s' であるものに対するドキュメントはありません"
+
+msgid "No DIF data on clipboard"
+msgstr " クリップボード上には如何なる DIF データもありません"
+
+msgid "row and column counts not found"
+msgstr " 行、列カウントが見付かりません"
+
+msgid "Unrecognized special data value"
+msgstr " 認識不能な特殊データ値です"
+
+msgid "Unrecognized value indicator"
+msgstr " 認識不能な値指示子です"
+
+msgid "no lines available in input"
+msgstr " 入力中には利用可能な行がありません"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr " ヘッダと 'col.names' は異なった長さです"
+
+msgid "more columns than column names"
+msgstr " 列名よりも列数のほうが多いです"
+
+msgid "more column names than columns"
+msgstr " 列数よりも列名のほうが多いです"
+
+msgid "rows are empty: giving up"
+msgstr " 行がありません：お手上げです"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr " 'colClasses' 中に名前がある列に無いものがあります"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr " 不正な数値の 'as.is' 表現式です "
+
+msgid "not all columns named in 'as.is' exist"
+msgstr " 'as.is' 中に名前がある列に無いものがあります"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr " 'as.is' が誤った長さ %d を持ちます。 != cols = %d"
+
+msgid "invalid 'row.names' specification"
+msgstr " 不正な 'row.names' 指定"
+
+msgid "invalid 'row.names' length"
+msgstr " 不正な長さの 'row.names'"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr " 重複した 'row.names' は許されません"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr " 'row.names' 中の欠損値は許されません"
+
+msgid "missing lengths for some fields"
+msgstr " 幾つかの欄が長さを持ちません"
+
+msgid "invalid format"
+msgstr " 不正な書式"
+
+msgid "last record incomplete, %d lines discarded"
+msgstr " 最後の記録が不完全で、%d 行が捨て去られました"
+
+msgid "'file' must be a character string or connection"
+msgstr " 'file' は文字列か NULL でなければなりません"
+
+msgid "transfer failure"
+msgstr " 移行(transfer)の失敗"
+
+msgid "HTTPUserAgent"
+msgstr " HTTPUserAgent"
+
+msgid "option must be a length one character vector or NULL"
+msgstr " オプションは長さ１の文字列か NULL でなければなりません"
+
+msgid "empty beginning of file"
+msgstr " ファイルの先頭が空です"
+
+msgid "first five rows are empty: giving up"
+msgstr " 冒頭の５行が空です： お手上げです"
+
+msgid "relist() requires recursively unlisted objects."
+msgstr ""
+
+msgid "The flesh argument does not contain a skeleton attribute."
+msgstr ""
+
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
+
+msgid "cannot coerce 'x' to roman"
+msgstr " 'x' をローマンに変換できません"
+
+msgid "Invalid roman numeral(s): %s"
+msgstr " 不正なローマ数字です: %s"
+
+msgid "invalid 'socket' argument"
+msgstr " 不正な 'socket' 引数"
+
+msgid "'port' must be integer of length 1"
+msgstr " 'port' は長さ 1 の整数でなければなりません"
+
+msgid "'host' must be character of length 1"
+msgstr " 'host' は長さ 1 の文字でなければなりませ"
+
+msgid "can only receive calls on local machine"
+msgstr " ローカルな機械上でのコールだけを受け取ることが出来ます"
+
+msgid "socket not established"
+msgstr " ソケットを確立できませんでした"
+
+msgid "str.data.frame() called with non-data.frame -- coercing to one."
+msgstr ""
+" str.data.frame() が非データフレームで呼び出されました -- データフレーム強制"
+"変換します."
+
+msgid "invalid options('str') -- using defaults instead"
+msgstr " 不正な options('str') -- 代わりに既定値を使います"
+
+msgid "'object' does not have valid levels()"
+msgstr " 'object' は有効な levels() を持ちません"
+
+msgid "'str.default': 'le' is NA"
+msgstr " 'str.default': 'le' が NA です"
+
+msgid "profile does not contain memory information"
+msgstr " プロファイルはメモリ情報を含んでいません"
+
+msgid "no events were recorded"
+msgstr " 如何なるイベントも記録されませんでした"
+
+msgid ""
+"vignette '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+" ビニエット '%d' が複数見付かりました,\n"
+"'%s' で見つかるものを使います"
+
+msgid "vignette '%s' *not* found"
+msgstr " ビニエット '%s' が見付かりません"
+
+msgid "vignette '%s' has no PDF"
+msgstr " ビニエット '%s' は PDF ファイルを持ちません"
+
+msgid "select.list() cannot be used non-interactively"
+msgstr " select.list() は対話的にしか使えません"
+
+msgid "Enter zero or more numbers separated by space"
+msgstr " 0 を入力するか、空白で区切られたもっと多くの数値を入力して下さい"
+
+msgid "Invalid input, please try again"
+msgstr " 不正な入力です、もう一度試みて下さい"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr " 'quote' は 'TRUE', 'FALSE' もしくは数値でなければなりません"
+
+msgid "invalid numbers in 'quote'"
+msgstr " 'quote' 中に不正な数値があります"
+
+msgid "invalid 'quote' specification"
+msgstr " 不正な 'quote' 指定です"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr " row.names = FALSE の時は col.names = NA は無意味です"
+
+msgid "invalid 'col.names' specification"
+msgstr " 不正な 'col.names' 指定です"
+
+msgid "appending column names to file"
+msgstr " ファイルに列名を加えます"
+
+msgid "attempt to change '%s' ignored"
+msgstr " '%s' への変更の試みは無視されました"
+
+msgid "'unzip' must be a single character string"
+msgstr " 'unzip' は単一の文字列でなければなりません"
+
+msgid "'subject' missing"
+msgstr " 'subject' が欠けています"
+
+msgid "no download method found"
+msgstr " ダウンロードの方法が見付かりません"
+
+msgid "download had nonzero exit status"
+msgstr " ダウンロードはゼロ以外の終了状態を持ちました"
+
+msgid "options(\"browser\") not set"
+msgstr " options(\"browser\") が設定されていません"
+
+msgid "invalid browser name, check options(\"browser\")."
+msgstr " 不正なブラウザー名です、 options(\"browser\") をチェックして下さい"
+
+msgid ""
+"Changing the default browser (as specified by the 'browser' option) to the "
+"given browser so that it gets used for all future help requests."
+msgstr ""
+" 既定('browser' オプションで指定されたような)のブラウザーを指定されたブラウ"
+"ザーに変更しますから、以後全てのヘルプ要求はそれを使って行われます"
+
+msgid "Making links in per-session dir ..."
+msgstr " セッションに伴うディレクトリにリンクを張ります ..."
+
+msgid ""
+"If '%s' is already running, it is *not* restarted, and you must switch to "
+"its window."
+msgstr ""
+" もし '%s' が既に実行中なら、それは再起動されません。そのウィンドウへ切替える"
+"必要があります"
+
+msgid "Otherwise, be patient ..."
+msgstr " さもなければ、じっと待って ..."
+
+msgid "'url' must be a non-empty character string"
+msgstr " 'url' は空でない文字列でなければなりません"
+
+msgid "'browser' must be a non-empty character string"
+msgstr " 'browser' は空でない文字列でなければなりません"
+
+msgid "cannot create HTML package index"
+msgstr " HTML パッケージ索引を生成できません"
+
+msgid "cannot create HTML search index"
+msgstr " HTML 検索索引を生成できません"
+
+msgid "'memory.size()' is Windows-specific"
+msgstr " 'memory.size()' は Windows 固有の関数です"
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr " 'memory.limit()' は Windows 固有の関数です"
+
+msgid "unable to find the HTML help"
+msgstr " HTML によるヘルプを見付けることが出来ません"
+
+msgid "updating HTML package listing"
+msgstr " HTML パッケージのリストを更新します"
+
+msgid "fixing URLs in non-standard libraries"
+msgstr " 非標準的なライブラリ中の URL を補修します"
+
+msgid "If nothing happens, you should open '%s' yourself"
+msgstr " もし何も起きなければ、自分で '%s' をオープンして下さい"
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgstr " パッケージ '%s' は無事に開封され、MD5 サムもチェックされました"
+
+msgid "malformed bundle DESCRIPTION file, no Contains field"
+msgstr " 不備なバンドルの DESCRIPTION ファイルです、Contains 欄がありません"
+
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr " バンドル '%s' は無事に開封され、MD5 サムもチェックされました"
+
+msgid "failed to create '%s'"
+msgstr " '%s' を生成できませんでした"
+
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr " 一時的なインストール '%s' を '%s' へ移動できませんでした"
+
+msgid "cannot remove prior installation of package '%s'"
+msgstr " パッケージ '%s' の前のインストールを取り除くことが出来ませんでした"
+
+msgid "zipfile '%s' not found"
+msgstr " zip ファイル '%s' が見付かりません"
+
+msgid "updating HTML package descriptions"
+msgstr " HTML パッケージ記述を更新"
+
+msgid "cannot update '%s'"
+msgstr " '%s' を更新出来ません"
+
+msgid "this function is intended to work with the Aqua GUI"
+msgstr " この関数は Aqua GUI で使うことを意図しています"
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr " 'tar' がゼロでない終了コード %d を返しました"
+
+msgid "cannot remove prior installation of package"
+msgstr " パッケージの以前のインストールを取り除けません"
+
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "オブジェクト '%s' が見付かりません"
+
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリではありません"
+
+msgid "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0] " パッケージ %s が利用できません"
+
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0] " 依存対象(dependency) %s が利用できません"
+
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] " 依存対象(dependency)　％s もインストールします"
+
+msgid "package '%s' is in use and will not be installed"
+msgid_plural "packages '%s' are in use and will not be installed"
+msgstr[0] "パッケージ '%s' は使用中ですから、インストールされません"
+
+#~ msgid "cannot update HTML package index"
+#~ msgstr " HTML パッケージ索引を更新出来ません"
+
+#~ msgid "cannot update HTML search index"
+#~ msgstr " HTML 検索索引を更新出来ません"
+
+#~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+#~ msgstr ""
+#~ " 'format' は \"normal\" あるいは \"short\" でなければなりません。\"normal"
+#~ "\" を使用します。"
+
+#~ msgid "wrong 'sortby' specified. Using sortby=\"score\""
+#~ msgstr ""
+#~ " 'sortby' パラメータの指定が誤っています。sortby=\"score\"を使用します"
+
+#~ msgid ""
+#~ "wrong restriction specified.\n"
+#~ "Using '%s'"
+#~ msgstr ""
+#~ " 誤った制約が指定されました。\n"
+#~ "'%s' を使います"
+
+#~ msgid "no Rd contents for package '%s' in '%s'"
+#~ msgstr "パッケージ '%s' に対する Rd コンテンツは '%s' にありません"
+
+#~ msgid "Unable to create temporary directory '%s'"
+#~ msgstr "作業用ディレクトリ '%s' をつくることができない"
+
+#~ msgid "'page' requires a name"
+#~ msgstr "'page' は名前を必要とする"
+
+#~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+#~ msgstr "オプションの doc/KEYWORDS からの他のキーワード、一行に一つずつ"

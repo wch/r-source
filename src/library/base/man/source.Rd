@@ -85,6 +85,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \code{\link{demo}} which uses \code{source};
   \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}};
   \code{\link{options}("keep.source")}.
+
+  \code{\link{sys.source}} which is a streamlined version to source a
+  file into an environment.
 }
 \examples{
 ## If you want to source() a bunch of files, something like

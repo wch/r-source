@@ -97,7 +97,7 @@ lm.influence(model, do.coef = TRUE)
 summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
                     data = LifeCycleSavings),
         corr = TRUE)
-str(lmI <- lm.influence(lm.SR))
+utils::str(lmI <- lm.influence(lm.SR))
 
 ## For more "user level" examples, use example(influence.measures)
 }

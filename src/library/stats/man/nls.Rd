@@ -22,8 +22,8 @@ nls(formula, data, start, control, algorithm,
     lower, upper, \dots)
 }
 \arguments{
-  \item{formula}{a nonlinear model formula including variables and
-    parameters.}
+  \item{formula}{a nonlinear model \link{formula} including variables and
+    parameters.  Will be coerced to a formula if necessary.}
   \item{data}{an optional data frame in which to evaluate the variables in
     \code{formula}.  Can also be a list or an environment, but not a matrix.}
   \item{start}{a named list or named numeric vector of starting
@@ -143,6 +143,8 @@ nls(formula, data, start, control, algorithm,
   \code{\link{profile.nls}}.
 }
 \examples{
+require(graphics)
+
 DNase1 <- subset(DNase, Run == 1)
 
 ## using a selfStart model
@@ -157,7 +159,7 @@ coef(summary(fm1DNase1))
 fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
                  data = DNase1,
                  start = list(xmid = 0, scal = 1),
-                 alg = "plinear", trace = TRUE)
+                 algorithm = "plinear", trace = TRUE)
 summary(fm2DNase1)
 
 ## without conditional linearity

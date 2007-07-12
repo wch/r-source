@@ -4,7 +4,7 @@
 ### Copyright 1999-1999 Saikat DebRoy <saikat$stat.wisc.edu>,
 ###                     Douglas M. Bates <bates$stat.wisc.edu>,
 ###                     Jose C. Pinheiro <jcp$research.bell-labs.com>
-### Copyright 2005      The R Development Core Team
+### Copyright 2005-7    The R Development Core Team
 ###
 ### This file is part of the nls library for R and related languages.
 ### It is made available under the terms of the GNU General Public
@@ -58,7 +58,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     rhs <- eval(form[[3]], envir = env)
     storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && (length(wts) != 0))
-        sqrt(wts) else rep(1, length=length(rhs))
+        sqrt(wts) else rep(1, length.out=length(rhs))
     assign(".swts", .swts, envir = env)
     p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
     p <- p1 + p2
@@ -246,7 +246,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     lhs <- eval(form[[2]], envir = env)
     rhs <- eval(form[[3]], envir = env)
     .swts <- if(!missing(wts) && (length(wts) != 0))
-        sqrt(wts) else rep(1, length=length(rhs))
+        sqrt(wts) else rep(1, length.out=length(rhs))
     assign(".swts", .swts, envir = env)
     resid <- .swts * (lhs - rhs)
     dev <- sum(resid^2)
@@ -386,7 +386,7 @@ nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024,
 nls_port_fit <- function(m, start, lower, upper, control, trace)
 {
     ## Establish the working vectors and check and set options
-    p <- length(par <- as.double(start))
+    p <- length(par <- as.double(unlist(start)))
     iv <- integer(4*p + 82)
     v <- double(105 + (p * (2 * p + 20)))
     .Call(R_port_ivset, 1, iv, v)
@@ -415,12 +415,12 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
             v[cpos[pos[!ivpars]]] <- as.double(unlist(control[!ivpars]))
     }
     if (trace)
-        iv[19] <- 1:1
+        iv[19] <- 1L
     scale <- 1
     low <- upp <- NULL
     if (any(lower != -Inf) || any(upper != Inf)) {
-        low <- rep(as.double(lower), length = length(par))
-        upp <- rep(as.double(upper), length = length(par))
+        low <- rep(as.double(lower), length.out = length(par))
+        upp <- rep(as.double(upper), length.out = length(par))
         if(any(start < low || start > upp)) {
             iv[1] <- 300
             return(iv)
@@ -429,7 +429,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
         .Call(R_port_nlsb, m,
-              d = rep(as.double(scale), length = length(par)),
+              d = rep(as.double(scale), length.out = length(par)),
               df = m$gradient(), iv, v, low, upp)
     } else iv[1] <- 6
     iv
@@ -450,6 +450,9 @@ nls <-
 
     mf <- match.call()                  # for creating the model frame
     varNames <- all.vars(formula) # parameter and variable names from formula
+    ## for prediction we will need to know those which are in RHS
+    form2 <- formula; form2[[2]] <- 0
+    varNamesRHS <- all.vars(form2)
     mWeights <- missing(weights)
 
     ## adjust a one-sided model formula by using 0 as the response
@@ -481,6 +484,7 @@ nls <-
     ## If it is a parameter it is not a variable (nothing to guess here :-)
     if(length(pnames))
         varNames <- varNames[is.na(match(varNames, pnames))]
+    if(!length(varNames)) stop("no parameters to fit")
     ## This aux.function needs to be as complicated because
     ## exists(var, data) does not work (with lists or dataframes):
     lenVar <- function(var) tryCatch(length(eval(as.name(var), data, env)),
@@ -514,7 +518,7 @@ nls <-
     respLength <- length(eval(formula[[2]], data, env))
     varIndex <- n %% respLength == 0
 
-    mf$formula <-                # replace RHS by linear model formula
+    mf$formula <-                # replace by one-sided linear model formula
         as.formula(paste("~", paste(varNames[varIndex], collapse = "+")),
                    env = environment(formula))
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
@@ -526,6 +530,7 @@ nls <-
     if (missing(start)) start <- getInitial(formula, mf)
     for(var in varNames[!varIndex])
         mf[[var]] <- eval(as.name(var), data, env)
+    varNamesRHS <- varNamesRHS[ varNamesRHS %in% varNames[varIndex] ]
     wts <- if(!mWeights) model.weights(mf) else rep(1, n)
     if (any(wts < 0 | is.na(wts)))
 	stop("missing or negative weights not allowed")
@@ -592,7 +597,8 @@ nls <-
     nls.out$call$trace <- trace
 
     nls.out$na.action <- attr(mf, "na.action")
-    nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
+    nls.out$dataClasses <-
+        attr(attr(mf, "terms"), "dataClasses")[varNamesRHS]
     if(model)
 	nls.out$model <- mf
     if(!mWeights)
@@ -690,7 +696,7 @@ print.summary.nls <-
         if (p > 1) {
             cat("\nCorrelation of Parameter Estimates:\n")
 	    if(is.logical(symbolic.cor) && symbolic.cor) {
-		print(symnum(correl, abbr.col = NULL))
+		print(symnum(correl, abbr.colnames = NULL))
             } else {
                 correl <- format(round(correl, 2), nsmall = 2, digits = digits)
                 correl[!lower.tri(correl)] <- ""
@@ -701,7 +707,7 @@ print.summary.nls <-
 
     .p.nls.convInfo(x, digits = digits)
 
-    if(nchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep="")
     cat("\n")
     invisible(x)
 }
@@ -811,7 +817,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     df <- c(NA, -diff(df.r))
     ss <- c(NA, -diff(ss.r))
     ms <- ss/df
-    f <- p <- rep(as.numeric(NA), nmodels)
+    f <- p <- rep(NA_real_, nmodels)
     for(i in 2:nmodels) {
 	if(df[i] > 0) {
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])

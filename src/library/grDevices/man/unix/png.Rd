@@ -6,10 +6,10 @@
   A graphics device for JPEG or PNG format bitmap files.
 }
 \usage{
-jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
+jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots)
 
-png(filename = "Rplot\%03d.png", width = 480, height = 480,
+png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots)
 }
 \arguments{
@@ -21,15 +21,20 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
     is performed where supported by the platform.}
   \item{width}{the width of the device in pixels.}
   \item{height}{the height of the device in pixels.}
-  \item{pointsize}{the default pointsize of plotted text.}
+  \item{units}{The units in which \code{height} and \code{width} are
+    given.  Can be \code{in} (inches), \code{px} (pixels), \code{cm} or
+    \code{mm}.}
+  \item{pointsize}{the default pointsize of plotted text, interpreted at
+    72 dpi, so one point is approximately one pixel.}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
   \item{bg}{default background colour.}
- \item{res}{The nominal resolution in dpi which will be recorded in the
-   bitmap file, if a positive integer.}
- \item{\dots}{additional arguments to the underlying
-   \code{\link{X11}} device.}
+  \item{res}{The nominal resolution in dpi which will be recorded in the
+    bitmap file, if a positive integer.  Also used for units other than
+    the default.}
+  \item{\dots}{additional arguments to the underlying
+    \code{\link{X11}} device.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
@@ -50,9 +55,15 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   display is available to the owner of the \R process.
 
   By default no resolution is recorded in the file.  Readers will often
-  assume nominal resolution of 72dpi when none is recorded.  As
+  assume a nominal resolution of 72dpi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the dpi value
   will be changed slightly.
+
+  For graphics parameters that make use of dimensions in inches, a
+  resolution of 96dpi is assumed.
+
+  \code{png} will use a palette if there are less than 256 colours on
+  the page, and record a 24-bit RGB file otherwise.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
@@ -80,16 +91,17 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
 
   \code{\link{bitmap}} provides an alternative way to generate PNG and
   JPEG plots that does not depend on accessing the X11 display but does
-  depend on having GhostScript installed.  (Device \code{GDD} in
-  CRAN package \pkg{GDD} is another alternative using several other
-  additional pieces of software.)
+  depend on having GhostScript installed.  (Devices \code{GDD} in
+  CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
+  package \pkg{Cairo} are alternatives using several other additional
+  pieces of software.)
 }
 \examples{
 ## these examples will work only if the devices are available
 ## and the X11 display is available.
 
-## copy current plot to a PNG file
-\dontrun{dev.print(png, file="myplot.png", width=480, height=480)
+## copy current plot to a (large) PNG file
+\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)
 
 png(file="myplot.png", bg="transparent")
 plot(1:10)

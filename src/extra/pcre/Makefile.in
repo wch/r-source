@@ -14,20 +14,20 @@ include $(top_builddir)/Makeconf
 PCRE_CPPFLAGS = -I$(srcdir)# -DSUPPORT_UTF8
 ALL_CPPFLAGS = $(PCRE_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = pcre_compile.c pcre_config.c pcre_exec.c \
+SOURCES = pcre_chartables.c pcre_compile.c pcre_config.c pcre_exec.c \
 	pcre_fullinfo.c pcre_get.c pcre_globals.c pcre_info.c \
-	pcre_maketables.c pcre_ord2utf8.c pcre_refcount.c \
+	pcre_maketables.c pcre_newline.c pcre_ord2utf8.c pcre_refcount.c \
 	pcre_study.c pcre_tables.c pcre_try_flipped.c \
-	pcre_valid_utf8.c pcre_version.c pcre_xclass.c
+	pcre_ucp_searchfuncs.c pcre_valid_utf8.c pcre_version.c pcre_xclass.c
 
-HEADERS = pcre_internal.h ucp.h ucpinternal.h pcre.h
+HEADERS = pcre_internal.h pcre.h ucp.h ucpinternal.h ucptable.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = LICENCE Makefile.in Makefile.win R_changes dftables.c \
-  chartables.h.win $(SOURCES) $(HEADERS)
+DISTFILES = LICENCE Makefile.in Makefile.win R_changes \
+  $(SOURCES) $(HEADERS)
 noinst_LIBRARIES = @BUILD_PCRE_TRUE@ libpcre.a
 libpcre_a_SOURCES = $(SOURCES)
 libpcre_a_OBJECTS = $(OBJECTS)
@@ -44,22 +44,14 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile chartables.h
+R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
-
-chartables.h: dftables
-	./dftables chartables.h
-
-dftables.o:  pcre_maketables.c pcre_internal.h pcre.h
-dftables: dftables.o
-	$(MAIN_LD) $(LDFLAGS) -o dftables dftables.o
 
 libpcre.a: $(libpcre_a_OBJECTS)
 	rm -f $@
 	$(AR) cr $@ $(libpcre_a_OBJECTS)
 	$(RANLIB) $@
-
 
 mostlyclean: clean
 clean:

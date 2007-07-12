@@ -2,103 +2,61 @@ grep <-
 function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          value = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    pattern <- as.character(pattern)
     ## when value = TRUE we return names
     if(!is.character(x)) x <- structure(as.character(x), names=names(x))
-    ## behaves like == for NA pattern
-    if (is.na(pattern)) {
-        if(value)
-            return(structure(rep.int(as.character(NA), length(x)),
-                             names = names(x)))
-        else
-            return(rep.int(NA, length(x)))
-    }
-
-    if(perl)
-        .Internal(grep.perl(pattern, x, ignore.case, value, useBytes))
-    else
-        .Internal(grep(pattern, x, ignore.case, extended, value, fixed,
-                       useBytes))
+    .Internal(grep(as.character(pattern), x, ignore.case, extended, value,
+                   perl, fixed, useBytes))
 }
 
 sub <-
 function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    pattern <- as.character(pattern)
-    replacement <- as.character(replacement)
-    if(!is.character(x)) x <- as.character(x)
-    if (is.na(pattern))
-        return(rep.int(as.character(NA), length(x)))
-
-    if(perl)
-        .Internal(sub.perl(pattern, replacement, x, ignore.case, useBytes))
-    else
-        .Internal(sub(pattern, replacement, x, ignore.case,
-                      extended, fixed, useBytes))
+    if (!is.character(x)) x <- as.character(x)
+     .Internal(sub(as.character(pattern), as.character(replacement), x,
+                  ignore.case, extended, perl, fixed, useBytes))
 }
 
 gsub <-
 function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    pattern <- as.character(pattern)
-    replacement <- as.character(replacement)
-    if(!is.character(x)) x <- as.character(x)
-    if (is.na(pattern))
-        return(rep.int(as.character(NA), length(x)))
-
-    if(perl)
-        .Internal(gsub.perl(pattern, replacement, x, ignore.case, useBytes))
-    else
-        .Internal(gsub(pattern, replacement, x, ignore.case,
-                       extended, fixed, useBytes))
+    if (!is.character(x)) x <- as.character(x)
+    .Internal(gsub(as.character(pattern), as.character(replacement), x,
+                   ignore.case, extended, perl, fixed, useBytes))
 }
 
 regexpr <-
-function(pattern, text, extended = TRUE, perl = FALSE,
+function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
-{
-    pattern <- as.character(pattern)
-    text <- as.character(text)
-    if(perl)
-        .Internal(regexpr.perl(pattern, text, useBytes))
-    else
-        .Internal(regexpr(pattern, text, extended, fixed, useBytes))
-}
+    .Internal(regexpr(as.character(pattern), as.character(text),
+                      ignore.case, extended, perl, fixed, useBytes))
 
 gregexpr <-
-function(pattern, text, extended = TRUE, perl = FALSE,
+function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
-{
-    pattern <- as.character(pattern)
-    text <- as.character(text)
-    if(perl)
-      .Internal(gregexpr.perl(pattern, text, useBytes))
-    else
-      .Internal(gregexpr(pattern, text, extended, fixed, useBytes))
-}
+    .Internal(gregexpr(as.character(pattern), as.character(text),
+                       ignore.case, extended, perl, fixed, useBytes))
 
 agrep <-
-function(pattern, x, ignore.case = FALSE, value = FALSE,
-         max.distance = 0.1)
+function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
 {
     pattern <- as.character(pattern)
     if(!is.character(x)) x <- as.character(x)
     ## behaves like == for NA pattern
     if (is.na(pattern)){
         if (value)
-            return(structure(rep.int(as.character(NA), length(x)),
+            return(structure(rep.int(NA_character_, length(x)),
                              names = names(x)))
         else
             return(rep.int(NA, length(x)))
     }
 
-    if(!is.character(pattern)
-       || (length(pattern) < 1)
-       || ((n <- nchar(pattern)) == 0))
+    if(!is.character(pattern) || length(pattern) != 1 || !nzchar(pattern))
         stop("'pattern' must be a non-empty character string")
 
+    n <- nchar(pattern, "c")
+    if(is.na(n)) stop("invalid multibyte string for 'pattern'")
     if(!is.list(max.distance)) {
         if(!is.numeric(max.distance) || (max.distance < 0))
             stop("'max.distance' must be non-negative")

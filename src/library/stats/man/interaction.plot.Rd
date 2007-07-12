@@ -54,7 +54,7 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 
   The graphics parameters \code{xlab}, \code{ylab}, \code{ylim},
   \code{lty}, \code{col} and \code{pch} are given suitable defaults
-  (and \code{xlim} and \code{xaxs} are set and cannot be overriden).
+  (and \code{xlim} and \code{xaxs} are set and cannot be overridden).
   The defaults are to cycle through the line types, use the foreground
   colour, and to use the symbols 1:9, 0, and the capital letters to plot
   the traces.
@@ -71,6 +71,8 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 }
 
 \examples{
+require(graphics)
+
 with(ToothGrowth, {
 interaction.plot(dose, supp, len, fixed=TRUE)
 dose <- ordered(dose)

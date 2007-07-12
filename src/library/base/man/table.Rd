@@ -73,6 +73,11 @@ is.table(x)
 
   Only when \code{exclude} is specified (i.e., not by default), will
   \code{table} drop levels of factor arguments potentially.
+
+  Note (again!) that \code{exclude} has no effect on factor arguments;
+  if these contain \code{\link{NA}}'s and you want to tabulate them, use
+  \code{table(factor(., exclude=NULL), ...)}, see the example on
+  \dQuote{NA counting}.
 }
 \seealso{Use \code{\link{ftable}} for printing (and more) of
   multidimensional tables.  \code{\link{margin.table}},
@@ -119,9 +124,10 @@ print(table(b,d), zero.print = ".")
 
 ## NA counting:
 is.na(d) <- 3:4
-d <- factor(d, exclude=NULL)
-d[1:7]
-table(d, exclude = NULL)
-
+d. <- factor(d, exclude=NULL)
+d.[1:7]
+table(d.) # ", exclude = NULL" is not needed
+## i.e., if you want to count the NA's of 'd', use
+table(factor(d, exclude = NULL))
 }
 \keyword{category}

@@ -35,6 +35,7 @@ typedef void (*blah4) (char *);
    symbolic constants in graphapp.h */
 typedef int (*blah5) (char *);
 typedef void (*blah6) (int);
+typedef void (*blah7) (char *, int, int);
 typedef enum {RGui, RTerm, LinkDLL} UImode;
 #endif
 
@@ -77,6 +78,7 @@ typedef struct
     blah5 YesNoCancel;
     blah6 Busy;
     UImode CharacterMode;
+    blah7 WriteConsoleEx; /* used only if WriteConsole is NULL */
 #endif
 } structRstart;
 

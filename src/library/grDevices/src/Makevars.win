@@ -1,6 +1,7 @@
 #-*- Makefile -*-
 ## need config.h and Rgui and GraphApp headers.
-PKG_CFLAGS=-I$(RHOME)/src/include -I$(RHOME)/src/gnuwin32 -DHAVE_CONFIG_H
+PKG_CFLAGS=-I$(RHOME)/src/include -I$(RHOME)/src/extra/zlib -I$(RHOME)/src/gnuwin32 -DHAVE_CONFIG_H
 ifdef SUPPORT_UTF8
 PKG_CFLAGS+=-DSUPPORT_UTF8
 endif
+PKG_LIBS=$(RHOME)/src/extra/zlib/libz.a

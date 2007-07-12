@@ -8,29 +8,37 @@
 shapiro.test(x)
 }
 \arguments{
-  \item{x}{a numeric vector of data values, the number of which must be
-    between 3 and 5000.  Missing values are allowed.}
+  \item{x}{a numeric vector of data values. Missing values are allowed,
+    but the number of non-missing values must be between 3 and 5000.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the Shapiro-Wilk statistic.}
-  \item{p.value}{the p-value for the test.}
+  \item{p.value}{an approximate p-value for the test.  This is
+    said in Royston (1995) to be adequate for \code{p.value < 0.1}.}
   \item{method}{the character string \code{"Shapiro-Wilk normality test"}.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{
   Patrick Royston (1982)
-  An Extension of Shapiro and Wilk's \eqn{W} Test for Normality to Large
-  Samples.
+  An extension of Shapiro and Wilk's \eqn{W} test for normality to large
+  samples.
   \emph{Applied Statistics}, \bold{31}, 115--124.
 
   Patrick Royston (1982)
-  Algorithm AS 181: The \eqn{W} Test for Normality.
+  Algorithm AS 181: The \eqn{W} test for Normality.
   \emph{Applied Statistics}, \bold{31}, 176--180.
 
   Patrick Royston (1995)
-  A Remark on Algorithm AS 181: The \eqn{W} Test for Normality.
+  Remark AS R94: A remark on Algorithm AS 181: The \eqn{W} test for normality.
   \emph{Applied Statistics}, \bold{44}, 547--551.
+}
+\source{
+  The algorithm used is a C translation of the Fortran code described in
+  Royston (1995) and found at \url{http://lib.stat.cmu.edu/apstat/R94}.
+  The calculation of the p value is exact for \eqn{n = 3}, otherwise
+  approximations are used, separately for \eqn{4 \le n \le 11} and
+  \eqn{n \ge 12}.
 }
 \seealso{
   \code{\link[base:qqnorm]{qqnorm}} for producing a normal quantile-quantile plot.

@@ -1,19 +1,27 @@
 \name{nchar}
-\title{Count the Number of Characters (Bytes)}
-\usage{
-nchar(x, type = "bytes")
-}
 \alias{nchar}
+\alias{nzchar}
+\title{Count the Number of Characters (or Bytes or Width)}
+\usage{
+nchar(x, type = "chars", allowNA = FALSE)
+
+nzchar(x)
+}
 \description{
   \code{nchar} takes a character vector as an argument and
   returns a vector whose elements contain the sizes of
   the corresponding elements of \code{x}.
+
+  \code{nzchar} is a fast way to find out if elements of a character
+  vector are non-empty strings.
 }
 \arguments{
   \item{x}{character vector, or a vector to be coerced to a character
     vector.}
   \item{type}{character string: partial matching to one of
     \code{c("bytes", "chars", "width")}.  See Details.}
+  \item{allowNA}{logical: show \code{NA} be returned for invalid
+    multibyte strings (rather than throwing an error)?}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
@@ -40,15 +48,19 @@ nchar(x, type = "bytes")
   passing them through \code{\link{deparse}} first will be required.
 }
 \value{
-  An integer vector giving the sizes of each element,
+  For \code{nchar}, an integer vector giving the sizes of each element,
   currently always \code{2} for missing values (for \code{NA}).
 
-  If an element is invalid in a multi-byte character set such as UTF-8,
-  its number of characters and the width will be \code{NA}.  Otherwise
-  the number of characters will be non-negative, so
-  \code{!is.na(nchar(x, "chars"))} is a test of validity.
+  If \code{allowNA = TRUE} and an element is invalid in a multi-byte
+  character set such as UTF-8, its number of characters and the width
+  will be \code{NA}.  Otherwise the number of characters will be
+  non-negative, so \code{!is.na(nchar(x, "chars", TRUE))} is a test of
+  validity.
 
   Names, dims and dimnames are copied from the input.
+
+  For \code{nzchar}, a logical vector of the same length as \code{x},
+  true if and only if the element has non-zero length.
 }
 \note{
   This does \strong{not} by default give the number of characters that
@@ -69,7 +81,7 @@ nchar(x, type = "bytes")
   \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}
 }
 \examples{
-x <- c("asfef","qwerty","yuiop[","b","stuff.blah.yech")
+x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
 nchar(x)
 # 5  6  6  1 15
 

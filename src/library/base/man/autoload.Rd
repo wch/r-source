@@ -42,7 +42,7 @@ search()
 ls("Autoloads")
 .Autoloaded
 
-x <- sort(rnorm(12))
+x <- sort(stats::rnorm(12))
 y <- x^2
 is <- interpSpline(x,y)
 search() ## now has splines

@@ -4,7 +4,7 @@ Sys.getlocale <- function(category = "LC_ALL")
                                   "LC_MONETARY", "LC_NUMERIC", "LC_TIME",
                                   "LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT"))
     if(is.na(category)) stop("invalid 'category' argument")
-    .Internal(getlocale(category))
+    .Internal(Sys.getlocale(category))
 }
 
 Sys.setlocale <- function(category = "LC_ALL", locale = "")
@@ -13,7 +13,7 @@ Sys.setlocale <- function(category = "LC_ALL", locale = "")
                                   "LC_MONETARY", "LC_NUMERIC", "LC_TIME",
                                   "LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT"))
     if(is.na(category)) stop("invalid 'category' argument")
-    .Internal(setlocale(category, locale))
+    .Internal(Sys.setlocale(category, locale))
 }
 
-Sys.localeconv <- function() .Internal(localeconv())
+Sys.localeconv <- function() .Internal(Sys.localeconv())

@@ -17,7 +17,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
     \file{.Rnw} or \file{.Snw} and to add extension \file{.R}. Any
     directory names in \code{file} are also removed such that the output
     is created in the current working directory.}
-  \item{annotate}{By default, code chunks are seperated by comment
+  \item{annotate}{By default, code chunks are separated by comment
     lines specifying the names and numbers of the code chunks. If
     \code{FALSE}, only the code chunks without any decorating comments
     are extracted.}

@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-02-25 r37440)
+R version 2.6.0 Under development (unstable) (2007-05-17 r41606)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -92,10 +92,10 @@ Influence measures of
 [1] TRUE
 > 
 > all.equal(rstandard(roller.lm9),
-+           rstandard(roller.lm0),tol=1e-15)
++           rstandard(roller.lm0),tol=1e-14)
 [1] TRUE
 > all.equal(rstudent(roller.lm9),
-+           rstudent(roller.lm0),tol=1e-15)
++           rstudent(roller.lm0),tol=1e-14)
 [1] TRUE
 > all.equal(rstudent(roller.lm),
 +           rstudent(roller.glm))
@@ -105,11 +105,11 @@ Influence measures of
 [1] TRUE
 > 
 > 
-> all.equal(summary(roller.lm0)$coef,
-+           summary(roller.lm9)$coef, tol=1e-15)
+> all.equal(summary(roller.lm0)$coefficients,
++           summary(roller.lm9)$coefficients, tol=1e-14)
 [1] TRUE
 > all.equal(print(anova(roller.lm0), signif.st=FALSE),
-+                 anova(roller.lm9), tol=1e-15)
++                 anova(roller.lm9), tol=1e-14)
 Analysis of Variance Table
 
 Response: weight
@@ -324,7 +324,7 @@ Malaysia            0.2720 -8.88e-03  0.03520 -4.63e-05 -1.42e-02
 > 
 > ## predict.lm(.)
 > 
-> all.equal(predict(roller.lm,                 se=TRUE)$se,
-+           predict(roller.lm, newdata=roller, se=TRUE)$se, tol= 1e-14)
+> all.equal(predict(roller.lm,                 se.fit=TRUE)$se.fit,
++           predict(roller.lm, newdata=roller, se.fit=TRUE)$se.fit, tol= 1e-14)
 [1] TRUE
 > 

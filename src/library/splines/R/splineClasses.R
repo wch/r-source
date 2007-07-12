@@ -58,7 +58,7 @@ splineDesign <-
         if(outer.ok) { ## x[] is allowed to be 'anywhere'
             ## extend knots set "temporarily"
             in.x <- knots[1] < x & x < knots[nk]
-	    knots <- knots[c(rep.int(1:1, o1), 1:nk, rep.int(nk, o1))]
+	    knots <- knots[c(rep.int(1L, o1), 1:nk, rep.int(nk, o1))]
             if((x.out <- !all(in.x))) {
                 x <- x[in.x]
                 nnx <- length(x)
@@ -251,7 +251,7 @@ polySpline.bSpline <- function(object, ...)
     coeff[, 1] <- asVector(predict(object, knots))
     if(ord > 1) {
 	for(i in 2:ord) {
-	    coeff[, i] <- asVector(predict(object, knots, der = i - 1))/
+	    coeff[, i] <- asVector(predict(object, knots, deriv = i - 1))/
 		prod(1:(i - 1))
 	}
     }
@@ -327,9 +327,8 @@ predict.polySpline <- function(object, x, nseg = 50, deriv = 0, ...)
     coeff <- coef(object)
     cdim <- dim(coeff)
     ord <- cdim[2]
-    if(missing(x)) {
-	x <- seq(knots[1], knots[cdim[1]], length = nseg + 1)
-    }
+    if(missing(x))
+	x <- seq.int(knots[1], knots[cdim[1]], length.out = nseg + 1)
     i <- as.numeric(cut(x, knots))
     i[x == knots[1]] <- 1
     delx <- x - knots[i]
@@ -361,7 +360,7 @@ predict.bSpline <- function(object, x, nseg = 50, deriv = 0, ...)
              domain = NA)
     ncoeff <- length(coeff <- coef(object))
     if(missing(x)) {
-	x <- seq(knots[ord], knots[ncoeff + 1], length = nseg + 1)
+	x <- seq.int(knots[ord], knots[ncoeff + 1], length.out = nseg + 1)
 	accept <- TRUE
     } else accept <- knots[ord] <= x & x <= knots[ncoeff + 1]
     y <- x
@@ -412,7 +411,7 @@ predict.pbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
     period <- object$period
     ncoeff <- length(coef(object))
     if(missing(x))
-	x <- seq(knots[ord], knots[ord] + period, length = nseg + 1)
+	x <- seq.int(knots[ord], knots[ord] + period, length.out = nseg + 1)
     x.original <- x
     if(any(ind <- x < knots[ord]))
 	x[ind] <- x[ind] + period * (1 + (knots[ord] - x[ind]) %/% period)
@@ -460,7 +459,7 @@ predict.ppolySpline <- function(object, x, nseg = 50, deriv = 0, ...)
     nknot <- length(knots)
     period <- object$period
     if(missing(x))
-	x <- seq(knots[1], knots[1] + period, length = nseg + 1)
+	x <- seq.int(knots[1], knots[1] + period, length.out = nseg + 1)
     x.original <- x
 
     if(any(ind <- x < knots[1]))

@@ -62,7 +62,7 @@ cor.test(x, \dots)
     case that it follows a t distribution.}
   \item{p.value}{the p-value of the test.}
   \item{estimate}{the estimated measure of association, with name
-    \code{"cor"}, \code{"tau"}, or \code{"rho"} correspoding
+    \code{"cor"}, \code{"tau"}, or \code{"rho"} corresponding
     to the method employed.}
   \item{null.value}{the value of the association measure under the
     null hypothesis, always \code{0}.}
@@ -140,6 +140,7 @@ cor.test(x, y, method = "spearm", alternative = "g")
 cor.test(x, y,                    alternative = "g")
 
 ## Formula interface.
+require(graphics)
 pairs(USJudgeRatings)
 cor.test(~ CONT + INTG, data = USJudgeRatings)
 }

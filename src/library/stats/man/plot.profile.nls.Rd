@@ -38,6 +38,8 @@
   \code{\link{profile.nls}}
 }
 \examples{
+require(graphics)
+
 # obtain the fitted object
 fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)
 # get the profile for the fitted model

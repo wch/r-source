@@ -23,7 +23,7 @@ spec.taper <- function (x, p = 0.1)
     for (i in 1:nc) {
         m <- floor(nr * p[i])
         if(m == 0) next
-        w <- 0.5 * (1 - cos(pi * seq(1, 2 * m - 1, by = 2)/(2 * m)))
+        w <- 0.5 * (1 - cos(pi * seq.int(1, 2 * m - 1, by = 2)/(2 * m)))
         x[, i] <- c(w, rep(1, nr - 2 * m), rev(w)) * x[, i]
     }
     attributes(x) <- a
@@ -50,7 +50,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     }
     order <- x$order
     if(missing(n.freq)) n.freq <- 500
-    freq <- seq(0, 0.5, length = n.freq)
+    freq <- seq.int(0, 0.5, length.out = n.freq)
     if (nser == 1) {
         coh <- phase <- NULL
         if(order >= 1) {
@@ -114,7 +114,7 @@ spec.pgram <-
     x <- rbind(x, matrix(0, nrow = (NewN - N), ncol = ncol(x)))
     N <- nrow(x)
     Nspec <- floor(N/2)
-    freq <- seq(from = xfreq/N, by = xfreq/N, length = Nspec)
+    freq <- seq.int(from = xfreq/N, by = xfreq/N, length.out = Nspec)
     xfft <- mvfft(x)
     pgram <- array(NA, dim = c(N, ncol(x), ncol(x)))
     for (i in 1:ncol(x)) {

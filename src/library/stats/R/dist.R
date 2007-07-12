@@ -35,7 +35,7 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
 
 format.dist <- function(x, ...) format(as.vector(x), ...)
 
-as.matrix.dist <- function(x)
+as.matrix.dist <- function(x, ...)
 {
     size <- attr(x, "Size")
     df <- matrix(0, size, size)
