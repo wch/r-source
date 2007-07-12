@@ -611,7 +611,7 @@ do_install_source () {
       if test -r Makevars; then
 	makefiles="-f Makevars ${makefiles}"
       fi
-      eval ${MAKE} ${makefiles} \
+      eval ${MAKE} ${makefiles} all \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
         || has_error=true; \
       cd ..

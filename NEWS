@@ -422,6 +422,9 @@ PACKAGE INSTALLATION
 	previous installation (as if that had used --clean) before
 	attempting to install.
 
+    o	If a package src/Makefile is supplied, it is now required to
+	have a target 'all': previously the first target was used.
+
 
 BUG FIXES
 
