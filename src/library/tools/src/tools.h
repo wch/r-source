@@ -28,7 +28,7 @@
 #define _(String) (String)
 #endif
 
-SEXP delim_match(SEXP x, SEXP delims);
+SEXP delim_match(SEXP x, SEXP delims, SEXP multiline);
 SEXP Rmd5(SEXP files);
 SEXP check_nonASCII(SEXP text, SEXP ignore_quotes);
 

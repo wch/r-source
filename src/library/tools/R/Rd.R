@@ -475,12 +475,11 @@ function(file, text = NULL)
                     sep = ""),
               lines)
     if(any(i)) lines <- lines[-i]
-    ## Collapse into one character string.
-    txt <- paste(lines, collapse = "\n")
+
     ## Initialize for extraction loop.
     tag <- ""
     tags <- list()
-    rest <- vals <- character()
+    rest <- vals <- list()
     ## Note that what we do here is not quite the same as what the code
     ## in R CMD check for checking Rd files does (which e.g. takes all
     ## lines starting with a command tag as top-level).  Also, it is not
@@ -490,36 +489,52 @@ function(file, text = NULL)
     ## We try to catch \non_function{} here, even though it is at least
     ## deprecated.
     ## </NOTE>
-    pattern <- "(^|\n)[[:space:]]*\\\\([[:alpha:]]|non_function)+\\{"
-    while((pos <- regexpr(pattern, txt)) != -1) {
+    pattern <- "^[[:space:]]*\\\\([[:alpha:]]|non_function)+\\{"
+    pos <- regexpr(pattern, lines)
+    match.lengths <- attr(pos, "match.length")    
+    match <- seq_along(pos)[pos > 0]
+    for (i in seq_along(match))
+        j <- match[i]
         otag <- tag
-        start <- substring(txt, 1, pos + attr(pos, "match.length") - 2)
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        pos <- regexpr("\\\\([[:alpha:]]|non_function)+$", start)
-        tag <- substring(start, pos + 1)
-        start <- substring(start, 1, pos - 1)
-        pos <- delimMatch(txt)
-        if(pos == -1)
+        start <- substring(lines[j], 1, pos[j] + match.lengths[j] - 2)
+        txt <- c(substring(lines[j], pos[j] + match.lengths[j] - 1),
+                 lines[-(1:j)])
+        tagpos <- regexpr("\\\\([[:alpha:]]|non_function)+$", start)
+        tag <- substring(start, tagpos + 1)
+        start <- substring(start, 1, tagpos - 1)
+        
+        delims <- delimMatch(txt, multi.line = TRUE)
+        if(delims[1] == -1)
             stop(gettextf("unterminated section '%s'", tag),
                  domain = NA)
         if(tag == "section") {
-            tmp <- substring(txt, 2, attr(pos, "match.length") - 1)
-            txt <- substring(txt, pos + attr(pos, "match.length"))
+            tmp <- txt
+            tmp[delim[3]] <- substring(tmp[delim[3]], 1, delim[4])
+            tmp <- tmp[1:delim[3]]
+            tmp <- substring(tmp, 2)
+            txt <- txt[delim[3]:length(txt)]
+            txt[1] <- substring(txt[1], delim[4]+1)
             ## Should 'txt' now really start with an open brace?
-            if(substring(txt, 1, 1) != "{")
-                stop(gettextf("incomplete section 'section{%s}'", tmp),
+            if(substring(txt[1], 1, 1) != "{")
+                stop(gettextf("incomplete section 'section{%s}'", tmp[1]),
                      domain = NA)
-            pos <- delimMatch(txt)
-            if(pos == -1)
-                stop(gettextf("unterminated section 'section{%s}'", tmp),
+            delim <- delimMatch(txt, multi.line = TRUE)
+            if(delim[1] == -1)
+                stop(gettextf("unterminated section 'section{%s}'", tmp[1]),
                      domain = NA)
             tag <- c(tag, tmp)
         }
-        if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", start) == -1) {
+        if(regexpr("^[[:space:]]*$", start) == -1) {
+            start <- list(start)
             names(start) <- paste(otag, collapse = " ")
             rest <- c(rest, start)
         }
         tags <- c(tags, list(tag))
+        
+        
+        Not done below here 
+        
+        
         vals <- c(vals, substring(txt,
                                   pos + 1,
                                   pos + attr(pos, "match.length") - 2))
@@ -590,7 +605,7 @@ function(package, dir, lib.loc = NULL)
         Rd_db(package, lib.loc = lib.loc)
     else
         Rd_db(dir = dir)
-    db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
+    db <- lapply(db, Rd_pp)
     lapply(db, .get_Rd_xrefs)
 }
 

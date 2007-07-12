@@ -31,17 +31,24 @@ size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 #endif
 
 SEXP
-delim_match(SEXP x, SEXP delims)
+delim_match(SEXP x, SEXP delims, SEXP multiline)
 {
     /*
       Match delimited substrings in a character vector x.
 
+      If multiline is FALSE:
+      
       Returns an integer vector with the same length of x giving the
       starting position of the match (including the start delimiter), or
       -1 if there is none, with attribute "match.length" giving the
       length of the matched text (including the end delimiter), or -1
       for no match.
 
+      If multiline is TRUE:
+      
+      Returns a length 4 integer vector, with entries
+      (line of start, pos of start, line of end, pos of end).
+      
       This is still very experimental.
 
       Currently, the start and end delimiters must be single characters;
@@ -55,35 +62,51 @@ delim_match(SEXP x, SEXP delims)
     */
 
     char c;
-    const char *s, *s0, *delim_start, *delim_end;
-    Sint n, i, pos, start, end, delim_depth;
+    const char *s, *delim_start, *delim_end;
+    Sint n, i, pos, start, end, delim_depth, startline;
     int lstart, lend;
-    Rboolean is_escaped, equal_start_and_end_delims;
+    Rboolean is_escaped, equal_start_and_end_delims, multi;
     SEXP ans, matchlen;
 #ifdef SUPPORT_MBCS
     mbstate_t mb_st; int used;
 #endif
-    if(!isString(x) || !isString(delims) || (length(delims) != 2))
+    if(!isString(x) || !isString(delims) || (length(delims) != 2) || !isLogical(multiline))
 	error(_("invalid argument type"));
 
     delim_start = translateChar(STRING_ELT(delims, 0));
     delim_end = translateChar(STRING_ELT(delims, 1));
     lstart = strlen(delim_start); lend = strlen(delim_end);
     equal_start_and_end_delims = strcmp(delim_start, delim_end) == 0;
+    
+    multi = asLogical(multiline);    
 
     n = length(x);
-    PROTECT(ans = allocVector(INTSXP, n));
-    PROTECT(matchlen = allocVector(INTSXP, n));
-
+    if (multi) {
+    	PROTECT(ans = allocVector(INTSXP, 4));
+    	for (i = 0; i < 4; i++) 
+	    INTEGER(ans)[i] = -1;
+    	matchlen = R_NilValue;
+    }
+    else {
+    	PROTECT(ans = allocVector(INTSXP, n));
+    	PROTECT(matchlen = allocVector(INTSXP, n));
+    }
+    startline = 0; /* to avoid compiler warnings */
     for(i = 0; i < n; i++) {
 #ifdef SUPPORT_MBCS
 	memset(&mb_st, 0, sizeof(mbstate_t));
 #endif
 	start = end = -1;
-	s0 = s = translateChar(STRING_ELT(x, i));
+	s = translateChar(STRING_ELT(x, i));
 	pos = is_escaped = delim_depth = 0;
-	while((c = *s) != '\0') {
-	    if(c == '\n') {
+	while((c = *s) != '\0' || multi) {
+	    if (multi && c == '\0') {
+	    	if (++i >= n) break;
+	    	s = translateChar(STRING_ELT(x, i));
+	    	pos = 0;
+	    	continue;
+	    }
+	    else if(c == '\n') {
 		is_escaped = FALSE;
 	    }
 	    else if(c == '\\') {
@@ -113,11 +136,15 @@ delim_match(SEXP x, SEXP delims)
 		}
 		else if(equal_start_and_end_delims) {
 		    start = pos;
+		    startline = i;
 		    delim_depth++;
 		}
 	    }
 	    else if(strncmp(s, delim_start, lstart) == 0) {
-		if(delim_depth == 0) start = pos;
+		if(delim_depth == 0) {
+		    start = pos;
+		    startline = i;
+		}
 		delim_depth++;
 	    }
 #ifdef SUPPORT_MBCS
@@ -131,15 +158,31 @@ delim_match(SEXP x, SEXP delims)
 	    pos++;
 	}
 	if(end > -1) {
-	    INTEGER(ans)[i] = start + 1; /* index from one */
-	    INTEGER(matchlen)[i] = end - start + 1;
+	    if (multi) {
+	    	/* index from one */
+	    	INTEGER(ans)[0] = startline + 1;
+	    	INTEGER(ans)[1] = start + 1;
+	    	INTEGER(ans)[2] = i + 1;
+	    	INTEGER(ans)[3] = end + 1;
+	    	break;
+	    }
+	    else {
+	    	INTEGER(ans)[i] = start + 1;
+	    	INTEGER(matchlen)[i] = end - start + 1;
+	    }
 	}
 	else {
-	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+	    if (!multi) 
+	    	INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	}
     }
-    setAttrib(ans, install("match.length"), matchlen);
-    UNPROTECT(2);
+    if (multi) {
+    	UNPROTECT(1);
+    }
+    else {
+    	setAttrib(ans, install("match.length"), matchlen);
+    	UNPROTECT(2);
+    }
     return(ans);
 }
 

@@ -152,7 +152,7 @@ function(file, topic)
 ### ** delimMatch
 
 delimMatch <-
-function(x, delim = c("{", "}"), syntax = "Rd")
+function(x, delim = c("{", "}"), syntax = "Rd", multi.line = FALSE)
 {
     if(!is.character(x))
         stop("argument 'x' must be a character vector")
@@ -162,7 +162,7 @@ function(x, delim = c("{", "}"), syntax = "Rd")
     if(syntax != "Rd")
         stop("only Rd syntax is currently supported")
 
-    .Call(delim_match, x, delim)
+    .Call(delim_match, x, delim, multi.line)
 }
 
 

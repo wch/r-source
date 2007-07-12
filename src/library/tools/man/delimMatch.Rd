@@ -5,7 +5,7 @@
   Match delimited substrings in a character vector, with proper nesting.
 }
 \usage{
-delimMatch(x, delim = c("{", "}"), syntax = "Rd")
+delimMatch(x, delim = c("{", "}"), syntax = "Rd", multi.line = FALSE)
 }
 \arguments{
   \item{x}{a character vector.}
@@ -17,12 +17,17 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
     the line, and \samp{\\} escapes).  Future versions might know about
     other syntaxes, perhaps via \dQuote{syntax tables} allowing to
     flexibly specify comment, escape, and quote characters.}
+  \item{multi.line}{if \code{TRUE}, a single multi-line match is attempted.}
 }
 \value{
-  An integer vector of the same length as \code{x} giving the starting
+  By default, an integer vector of the same length as \code{x} giving the starting
   position (in characters) of the first match, or \eqn{-1} if there is
   none, with attribute \code{"match.length"} giving the length (in
   characters) of the matched text (or \eqn{-1} for no match).
+  
+  If \code{multi.line} is \code{TRUE}, the value is a length 4 integer vector
+  giving with entries being the starting line, starting position, ending line, 
+  ending position.
 }
 \seealso{
   \code{\link{regexpr}} for \dQuote{simple} pattern matching.
@@ -31,5 +36,11 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
 x <- c("\\value{foo}", "function(bar)")
 delimMatch(x)
 delimMatch(x, c("(", ")"))
+x <- c("before, { the start,", "the end },", "after.")
+pos <- delimMatch(x, multi.line = TRUE)
+x[pos[3]] <- substring(x[pos[3]], 1, pos[4])
+x <- x[pos[1]:pos[3]]
+x[1] <- substring(x[1], pos[2])
+x
 }
 \keyword{character}

@@ -28,7 +28,7 @@ void Renctest(char **x)
 }
 
 static const R_CallMethodDef callMethods[] = {
-    {"delim_match", (DL_FUNC) &delim_match, 2},
+    {"delim_match", (DL_FUNC) &delim_match, 3},
     {"Rmd5", (DL_FUNC) &Rmd5, 1},
     {"check_nonASCII", (DL_FUNC) &check_nonASCII, 2},
     {NULL, NULL, 0}
