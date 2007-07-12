@@ -18,5 +18,5 @@ licence <- license <- function() {
     cat("http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html,\n")
     cat("or by writing to the address above\n")
     cat("\n")
-    cat("``Share and Enjoy.''\n\n")
+    cat("'Share and Enjoy.'\n\n")
 }
