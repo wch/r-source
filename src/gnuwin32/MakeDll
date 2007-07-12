@@ -1,7 +1,11 @@
 #-*- Makefile -*-
+
+## FIXME:
+# should Makevars[.win] precede the first target?
+
 all:  makeMakedeps $(DLLNAME).dll
 
-.PHONY : all makeMakedeps
+.PHONY: all shlib-clean makeMakedeps
 
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
@@ -56,12 +60,9 @@ RESFLAGS=-I $(RHOME)/include
 # for use by Makevars.win
 R_HOME=$(RHOME)
 
-AA=$(wildcard Makefile)
-ifeq ($(AA),Makefile)
- include Makefile
-else
- OBJS=$(filter-out $(OBJS-NO),$(OBJSA))
-endif
+## can be overridden in Makevars[.win]
+OBJECTS=$(filter-out $(OBJS-NO),$(OBJSA))
+
 AA=$(wildcard Makevars.win)
 ifeq ($(AA),Makevars.win)
  include Makevars.win
@@ -75,14 +76,14 @@ $(DLLNAME)_res.rc:
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
 ifeq ($(wildcard $(DLLNAME)-win.def),$(DLLNAME)-win.def)
-$(DLLNAME).dll : $(DLLNAME)-win.def $(OBJS) $(RCOBJ)
+$(DLLNAME).dll : $(DLLNAME)-win.def $(OBJECTS) $(RCOBJ)
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
 else
-$(DLLNAME).dll : $(OBJS) $(RCOBJ)
+$(DLLNAME).dll : $(OBJECTS) $(RCOBJ)
 endif
 
 shlib-clean:
-	@$(RM) -f $(DLLNAME)_res.rc $(OBJS) $(RCOBJ) *.d Makedeps
+	@$(RM) -f $(DLLNAME)_res.rc $(OBJECTS) $(RCOBJ) *.d Makedeps
 
 # Dependencies
 CXXSOURCES1=$(wildcard -f *.cc)
