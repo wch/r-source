@@ -461,6 +461,8 @@ BUG FIXES
     o	Prototypes are now inherited for the .Data "slot"; i.e., for
 	classes that contain one of the basic data types.
 
+    o	<data frame>[[i, j]] now works if 'i' is character.
+
 
 
 

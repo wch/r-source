@@ -4836,5 +4836,14 @@ formals(f) <- g
 stopifnot(is.null(body(f)), identical(names(formals(f)), names(g)))
 ## was function(a, b=4)  before 2.6.0
 
+
 ## subsetting R.version
 stopifnot(identical("simple.list", class(R.version[1:7])))
+
+
+## <data frame>[[<character>, j]]
+swiss[["Broye", "Agriculture"]]
+swiss[[7, "Agriculture"]]
+swiss[["Broye", 2]]
+swiss[[7, 2]]
+## first and third failed < 2.6.0

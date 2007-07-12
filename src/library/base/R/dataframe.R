@@ -567,8 +567,13 @@ data.frame <-
 	(function(x, i)
 	  if(is.matrix(i)) as.matrix(x)[[i]]
  	  else .subset2(x, i))(x, ...)
-    else
-        .subset2(.subset2(x, ..2), ..1)
+    else {
+        col <- .subset2(x, ..2)
+        i <- if(is.character(..1))
+            pmatch(..1, row.names(x), duplicates.ok = TRUE)
+        else ..1
+        .subset2(col, i)
+    }
 }
 
 "[<-.data.frame" <- function(x, i, j, value)
