@@ -4128,8 +4128,7 @@ function(dir)
     if(!file_test("-d", dir)) return(NULL)
     files <- list_files_with_exts(dir, "R")
     texts <- lapply(files,
-                    function(f) paste(readLines(f, warn = FALSE),
-                                      collapse = "\n"))
+                    function(f) readLines(f, warn = FALSE))
     names(texts) <- files
     texts
 }
@@ -4140,7 +4139,7 @@ function(dir)
     if(!file_test("-d", file.path(dir, "man"))) return(NULL)
     sapply(Rd_db(dir = dir),
            function(s) {
-               .get_Rd_example_code(paste(Rd_pp(s), collapse = "\n"))
+               .get_Rd_example_code(Rd_pp(s))
            })
 }
 

@@ -431,7 +431,7 @@ function(package, dir, lib.loc = NULL)
 ### * Rd_parse
 
 Rd_parse <-
-function(file, text = NULL)
+function(file, text = NULL, collapse = TRUE)
 {
     ## Arguments similar to the ones in parse(), with 'text' a character
     ## vector with the text to parse (elements are treated as if they
@@ -478,7 +478,7 @@ function(file, text = NULL)
 
     ## Initialize for extraction loop.
     tag <- ""
-    tags <- list()
+    tags <- character(0)
     rest <- vals <- list()
     ## Note that what we do here is not quite the same as what the code
     ## in R CMD check for checking Rd files does (which e.g. takes all
@@ -493,12 +493,15 @@ function(file, text = NULL)
     pos <- regexpr(pattern, lines)
     match.lengths <- attr(pos, "match.length")    
     match <- seq_along(pos)[pos > 0]
-    for (i in seq_along(match))
+    delims <- rep(-1, 4)
+    for (i in seq_along(match)) {
         j <- match[i]
+        ## Skip over nested matches
+        if (j < delims[3] || (j == delims[3] && pos[j] < delims[4])) 
+            next
         otag <- tag
         start <- substring(lines[j], 1, pos[j] + match.lengths[j] - 2)
-        txt <- c(substring(lines[j], pos[j] + match.lengths[j] - 1),
-                 lines[-(1:j)])
+        txt <- subRange(lines, c(j, pos[j] + match.lengths[j] - 1, Inf, Inf))
         tagpos <- regexpr("\\\\([[:alpha:]]|non_function)+$", start)
         tag <- substring(start, tagpos + 1)
         start <- substring(start, 1, tagpos - 1)
@@ -508,18 +511,14 @@ function(file, text = NULL)
             stop(gettextf("unterminated section '%s'", tag),
                  domain = NA)
         if(tag == "section") {
-            tmp <- txt
-            tmp[delim[3]] <- substring(tmp[delim[3]], 1, delim[4])
-            tmp <- tmp[1:delim[3]]
-            tmp <- substring(tmp, 2)
-            txt <- txt[delim[3]:length(txt)]
-            txt[1] <- substring(txt[1], delim[4]+1)
+            tmp <- subRange(txt, delims + c(0,1,0,0))
+            txt <- subRange(txt, c(delims[3], delims[4]+1, Inf, Inf))
             ## Should 'txt' now really start with an open brace?
             if(substring(txt[1], 1, 1) != "{")
                 stop(gettextf("incomplete section 'section{%s}'", tmp[1]),
                      domain = NA)
-            delim <- delimMatch(txt, multi.line = TRUE)
-            if(delim[1] == -1)
+            delims <- delimMatch(txt, multi.line = TRUE)
+            if(delims[1] == -1)
                 stop(gettextf("unterminated section 'section{%s}'", tmp[1]),
                      domain = NA)
             tag <- c(tag, tmp)
@@ -529,23 +528,26 @@ function(file, text = NULL)
             names(start) <- paste(otag, collapse = " ")
             rest <- c(rest, start)
         }
-        tags <- c(tags, list(tag))
+        tags <- c(tags, tag)
         
-        
-        Not done below here 
-        
-        
-        vals <- c(vals, substring(txt,
-                                  pos + 1,
-                                  pos + attr(pos, "match.length") - 2))
-        txt <- substring(txt, pos + attr(pos, "match.length"))
+        val <- subRange(txt, delims + c(0, 1, 0, -1))
+        vals <- c(vals, list(val))
     }
+    
+    txt <- subRange(txt, c(delims[3], delims[4]+1, Inf, Inf))
     if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", txt) == -1) {
+        txt <- list(txt)
         names(txt) <- paste(tag, collapse = " ")
         rest <- c(rest, txt)
     }
-    data <- data.frame(vals = vals, stringsAsFactors = FALSE)
-    data$tags <- tags
+    if (collapse) {
+    	data <- data.frame(vals = sapply(vals, function(x) paste(x, collapse="\n")),
+    	                   tags = tags)
+    	rest <- lapply(rest, function(x) paste(x, collapse="\n"))
+    } else {
+    	data <- list(vals = vals)
+    	data$tags <- tags
+    }	
     list(meta = meta, data = data, rest = rest)
 }
 
@@ -605,7 +607,7 @@ function(package, dir, lib.loc = NULL)
         Rd_db(package, lib.loc = lib.loc)
     else
         Rd_db(dir = dir)
-    db <- lapply(db, Rd_pp)
+    db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
     lapply(db, .get_Rd_xrefs)
 }
 
@@ -621,7 +623,7 @@ function(txt, type, predefined = TRUE)
     ## <NOTE>
     ## This is *not* vectorized.  As we try extracting *all* top-level
     ## sections of the given type, computations on a single character
-    ## string can result in a character vector of arbitray length.
+    ## string can result in a character vector of arbitrary length.
     ## Hence, a vectorized version would return its results similar to
     ## e.g. strsplit(), i.e., a list of character vectors.  Worth the
     ## effort?
@@ -820,25 +822,33 @@ function(txt, cmd, FUN)
     ##   replace_command        FUN = function(u) sprintf("Bef%sAft", u)
     ## Currently, optional arguments to \cmd are not supported.
 
-    if(length(txt) != 1) return(character())
+    if(length(txt) < 1) return(character())
 
     ## Vectorized in 'cmd':
-    pattern <- sprintf("\\\\%s\\{", paste(cmd, collapse = "|"))
+    pattern <- sprintf("\\\\(%s)\\{", paste(cmd, collapse = "|"))
 
-    out <- character()
-    while((pos <- regexpr(pattern, txt)) != -1) {
-        out <- c(out, substring(txt, 1, pos - 1))
-        cmd <- substring(txt, pos, pos + attr(pos, "match.length") - 2)
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- delimMatch(txt)) == -1)
+    concat <- function(x, y) {
+    	if (length(y)) {
+	    x[length(x)] <- paste(x[length(x)], y[1], sep="")
+	    c(x, y[-1])
+	} else x
+    }
+    
+    out <- ""
+    sameline <- FALSE
+    while(any((pos <- regexpr(pattern, txt)) != -1)) {
+        match <- seq_along(pos)[pos > 0][1]
+        out <- concat(out, subRange(txt, c(1, 1, match, pos[match] - 1)))
+        cmd <- substring(txt[match], pos[match], pos[match] + attr(pos, "match.length")[match] - 2)
+        txt <- subRange(txt, c(match, pos[match] + attr(pos, "match.length")[match] - 1, Inf, Inf))
+        if((pos <- delimMatch(txt, multi.line = TRUE))[1] == -1)
             stop(sprintf("unclosed \\%s", cmd))
-        out <- c(out,
-                 FUN(substring(txt, 2,
-                               pos + attr(pos, "match.length") - 2)))
-        txt <- substring(txt, pos + attr(pos, "match.length"))
+        out <- concat(out,
+                 FUN(subRange(txt, pos + c(0,1,0,-1))))
+        txt <- subRange(txt, c(pos[3], pos[4]+1, Inf, Inf))
     }
 
-    paste(c(out, txt), collapse = "")
+    concat(out, txt)
 }
 
 ### * .apply_Rd_filter_to_Rd_db
