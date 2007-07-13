@@ -618,9 +618,14 @@ do_install_source () {
     else
       cd src;
       srcs=`ls *.[cfmCM] *.cc *.cpp *.f90 *.f95 *.mm 2>/dev/null`
+      if test -r Makevars; then
+	allfiles="Makevars ${srcs}"
+      else
+        allfiles=${srcs}
+      fi
       archs=`(cd ${R_HOME}/bin/exec; ls)`
       R_ARCH_keep=${R_ARCH}
-      if test -n "${srcs}"; then
+      if test -n "${allfiles}"; then
 	## if there is a configure script we install only the main
 	## sub-architecture
 	if test -x ../configure; then
@@ -638,7 +643,7 @@ do_install_source () {
 	    if test "${arch}" = "R"; then
 	      R_ARCH=${R_ARCH_keep}
 	      export R_ARCH
-	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+	      sh "${R_HOME}/bin/SHLIB" ${shargs} -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
 		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
 		|| has_error=true;
 	    elif test "${arch}" = "Rgnome"; then
@@ -648,7 +653,7 @@ do_install_source () {
 	      R_ARCH="/${arch}"
 	      export R_ARCH
 	      ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
-	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+	      sh "${R_HOME}/bin/SHLIB" ${shargs} -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
 		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
 		|| has_error=true;
 	      chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*

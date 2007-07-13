@@ -415,12 +415,17 @@ PACKAGE INSTALLATION
 	doc/html/packages.html only if packages are installed to
 	.Library (by that exact name).
 
-    o	R CMD INSTALL --clean now cleans up objects in subdirectories
-	of src as well as in source itself.
+    o	R CMD INSTALL --clean now runs SHLIB --clean to do the clean
+	up (unless there is a src/Makefile), and this will remove
+	$(OBJECTS) (which might have been redefined in Makevars).
 
 	R CMD INSTALL --preclean cleans up the sources after a
 	previous installation (as if that had used --clean) before
 	attempting to install.
+
+	R CMD INSTALL will now run R CMD SHLIB in the 'src' directory
+	if src/Makevars is present, even if there are no source files
+	with known extensions.
 
     o	If a package src/Makefile is supplied, it is now required to
 	have a target 'all': previously the first target was used.

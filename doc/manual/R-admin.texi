@@ -1550,9 +1550,6 @@ of @code{$HOME}.)  For the record, the order of precedence is (last wins)
 @file{MakeDll} and @file{MkRules}
 
 @item
-@file{src/Makefile}
-
-@item
 @file{src/Makevars.win} if it exists, otherwise @file{src/Makevars}
 
 @item
@@ -1560,13 +1557,9 @@ of @code{$HOME}.)  For the record, the order of precedence is (last wins)
 @file{$HOME/.R/Makevars}.
 
 @item
-@file{src/Makefile.win} if present causes all of the above to be ignored.
+@file{src/Makefile.win} if present causes all but the last of the above
+to be ignored.
 @end itemize
-
-@strong{Beware}: files @file{src/Makefile} or @file{src/Makevars} will
-be used if they exist and the @file{.win} equivalents do not.  Such
-files included in package sources are usually designed for use under
-Unix and are best removed.
 
 @strong{Beware}: references to variables in @file{R.dll} are converted to the
 right form by using the header files.  You must include them.

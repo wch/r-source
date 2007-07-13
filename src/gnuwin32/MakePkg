@@ -35,9 +35,9 @@ SDYNLIB=$(SSPKG)/$(DLLNAME).dll
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
 	$(SSPKG)/*.cpp $(SSPKG)/*.C $(SSPKG)/*.f90  $(SSPKG)/*.f95)
 ifeq ($(strip $(LSOURCES)),)
-  LOBJS=
+  DO_SRC=$(wildcard $(SSPKG)/Makevars.win $(SSPKG)/Makevars)
 else
-  LOBJS=$(foreach i, $(LSOURCES), $(basename $i).o)
+  DO_SRC=$(foreach i, $(LSOURCES), $(basename $i).o)
 endif
 
 # data
@@ -93,7 +93,7 @@ include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
-ifneq ($(strip $(LOBJS)),)
+ifneq ($(strip $(DO_SRC)),)
 	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
 	if test -r "${HOME}/.R/Makevars.win"; then \
 	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
@@ -245,8 +245,9 @@ Dynlib: srcDynlib
 	  $(CP) $(SDYNLIB) $(DPKG)/libs ; \
 	fi
 
+## for bootstrapping tools, only
 Dynlib0:
-ifneq ($(strip $(LOBJS)),)
+ifneq ($(strip $(DO_SRC)),)
 	@$(ECHO) "  making DLL ..."
 	@$(MAKE) --no-print-directory -C $(SPKG)/src RHOME=$(RHOME) \
 	  DLLNAME=$(DLLNAME) -f $(RHOME)/src/gnuwin32/MakeDll
@@ -260,7 +261,7 @@ endif
 
 srcDynlib:
 ifeq ($(strip $(SRCMAKE)),)
-ifneq ($(strip $(LOBJS)),)
+ifneq ($(strip $(DO_SRC)),)
 ifneq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "  making DLL ..."
 	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
@@ -289,8 +290,14 @@ endif
 endif
 else
 	@$(ECHO) "  running src/Makefile.win ..."
-	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
-	  -f Makefile.win DLLNAME=$(DLLNAME)
+	@makefiles="-f Makefile.win" ; \
+	if test -r "${HOME}/.R/Makevars.win"; then \
+	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
+	elif test -r "${HOME}/.R/Makevars"; then \
+	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
+	fi; \
+	  $(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
+	    DLLNAME=$(DLLNAME) $${makefiles}
 	@$(ECHO) "  ... done"
 endif
 

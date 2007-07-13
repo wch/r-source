@@ -66,6 +66,8 @@ SAFE_FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) -ffloat-store
 ## can be overridden in Makevars[.win]
 OBJECTS=$(filter-out $(OBJS-NO),$(OBJSA))
 
+## these are documented (in R-admin) to come after MakeDll and MkRules,
+## unlike Unix.
 AA=$(wildcard Makevars.win)
 ifeq ($(AA),Makevars.win)
  include Makevars.win
