@@ -27,6 +27,7 @@ Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirr
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info@rakanu.com>",0,de
 "Germany (Nuernberg)",Germany,Nuernberg,http://cran.basemirror.de/,"Baseportal GmbH",mirrors@baseportal.de,1,de
 Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","Laszlo L Tornoci <torlasz@xenia.sote.hu>",0,hu
+Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet, Dublin","Brian McArdle <brian.mcardle@heanet.ie>",1,ie
 Israel,Israel,Tel-Aviv,http://cran.active.co.il/,"Activetech Ltd, Tel-Aviv","""Rami Addady"" <rami@active.co.il>",0,il
 "Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>",1,it
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it,1,it
