@@ -57,8 +57,11 @@ CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(CXXOPTFLAG) $(PKG_CXXFLAGS)
 FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) $(PKG_FFLAGS)
 DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(PKG_LIBS2) $(EXTRA_LIBS) -lR
 RESFLAGS=-I $(RHOME)/include
+
 # for use by Makevars.win
 R_HOME=$(RHOME)
+SHLIB=$(DLLNAME).dll
+SAFE_FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) -ffloat-store
 
 ## can be overridden in Makevars[.win]
 OBJECTS=$(filter-out $(OBJS-NO),$(OBJSA))

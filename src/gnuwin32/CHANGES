@@ -49,9 +49,12 @@ OTHERS
 	removed: use 'OBJECTS' (as documented in 'Writing R
 	Extensions') instead.
 
-    o	src/Makefile in a package will now be ignored: use
+    o	A file src/Makefile in a package will now be ignored: use
 	src/Makefile.win.  (All packages known to build on Windows
 	which have src/Makefile also have src/Makefile.win.)
+
+    o	The Makevars flag SAFE_FFLAGS (documented in 'Writing R
+	Extensions') is now available on Windows.
 
     o	[The default for a build environment is to use gcc >= 4.2.0.
 	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for gcc
