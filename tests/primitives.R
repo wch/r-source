@@ -16,11 +16,10 @@ for(f in ls(.GenericArgsEnv, all.names=TRUE))
             assign(method, function(x, value) xx, .GlobalEnv)
             y <- x
             res <- eval(substitute(ff(y, value=pi), list(ff=as.name(f))))
-        } else if(f == "log") {
-            assign(method, function(x, base) xx, .GlobalEnv)
-            res <- eval(substitute(ff(x), list(ff=as.name(f))))
         } else {
-            assign(method, function(x) xx, .GlobalEnv)
+            ff <- get(f, .GenericArgsEnv)
+            body(ff) <- xx
+            assign(method, ff, .GlobalEnv)
             res <- eval(substitute(ff(x), list(ff=as.name(f))))
         }
     }
@@ -96,20 +95,18 @@ setClass("foo", representation(x="numeric", y="numeric"))
 xx <- new("foo",  x=1, y=2)
 S4gen <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.function(x))]
 for(f in S4gen) {
-    cat("testing '", f, "'  ", sep="")
     g <- get(f)
     if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.
     ff <- args(g)
     body(ff) <- "testit"
     nm <- names(formals(ff))
-    na <- length(nm[nm != "..."])
-    ## only test one or two args for now
-    ## the Math2 and Summary groups give problems
-    if(na < 1 || na > 2 || nm[1] == '...' || f %in% c("round", "signif")) {
-        cat("skipping\n")
+    ## the Summary group gives problems
+    if(nm[1] == '...') {
+        cat("skipping '", f, "'\n", sep="")
         next
     }
+    cat("testing '", f, "'\n", sep="")
     setMethod(f, "foo", ff)
-    stopifnot(identical(g(xx), "testit"))
-    cat("OK\n")
+    ## might have created a generic, so redo 'get'
+    stopifnot(identical(getGeneric(f)(xx), "testit"))
 }
