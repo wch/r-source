@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-07-10
+@set FAQ_DATE @value{FAQ_YEAR}-07-13
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -512,14 +512,14 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   el3     i386   2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.4.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c           x86_64 2.4.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   fc3     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c   fc3     i386   2.4.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c           x86_64 2.4.0  Brian Ripley
-@c   fc4     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c   fc5     i386   2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c   fc6     i386   2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c   fc4     i386   2.4.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.4.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fc5     i386   2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fc6     i386   2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -929,8 +929,8 @@ respective binary package maintainers.
 
 @quotation Note
 It is very important that you indicate the copyright (license)
-information (@acronym{GPL}, @acronym{BSD}, Artistic, @dots{}) in your
-submission.
+information (@acronym{GPL-2}, @acronym{GPL-3}, @acronym{BSD}, Artistic,
+@dots{}) in your submission.
 @end quotation
 
 Please always use the @acronym{URL} of the master site when referring to
@@ -2096,6 +2096,9 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 @emph{Recommended}.
 @item LDheatmap
 Heat maps of linkage disequilibrium measures.
+@item LLAhclust
+Hierarchical clustering of variables or objects based on the likelihood
+linkage analysis method.
 @item LMGene
 Date transformation and identification of differentially expressed genes
 in gene expression arrays.
@@ -3174,6 +3177,8 @@ gWidgets API for building toolkit-independent, interactive
 Toolkit implementation of @strong{gWidgets} for @strong{RGtk2}.
 @item gWidgetsrJava
 Toolkit implementation of @strong{gWidgets} for @strong{rJava}.
+@item gWidgetstcltk
+Toolkit implementation of @strong{gWidgets} for @strong{tcltk}.
 @item gafit
 Genetic algorithm for curve fitting.
 @item gam
@@ -3392,6 +3397,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item hybridHclust
 Hybrid hierarchical clustering via mutual clusters.
+@item hydrosanity
+Graphical user interface for exploring hydrological time series.
 @item ibdreg
 Regression methods for IBD linkage with covariates.
 @item identity
@@ -3409,6 +3416,8 @@ Imputation for microarray data (currently KNN only).
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
+@item inetwork
+Network analysis and plotting.
 @item inline
 Inline C/C++ function calls from R.
 @item intcox
@@ -4062,6 +4071,8 @@ Tests of the proportional hazards assumption in the Cox model.
 @item proto
 An object oriented system using prototype or object-based (rather than
 class-based) object oriented ideas.
+@item proxy
+Distance and similarity measures.
 @item pscl
 R in the Political Science Computational Laboratory, Stanford
 University.
