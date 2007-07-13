@@ -38,9 +38,6 @@ delimMatch(x)
 delimMatch(x, c("(", ")"))
 x <- c("before, { the start,", "the end },", "after.")
 pos <- delimMatch(x, multi.line = TRUE)
-x[pos[3]] <- substring(x[pos[3]], 1, pos[4])
-x <- x[pos[1]:pos[3]]
-x[1] <- substring(x[1], pos[2])
-x
+subRange(x, pos)
 }
 \keyword{character}

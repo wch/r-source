@@ -21,6 +21,17 @@ substring <- function(text,first,last=1000000)
 
 `substring<-` <- function(text, first, last=1000000, value)
     `substr<-`(text, first, last, value)
+    
+subRange <- function(x, range, lineOffset=0) {
+    range <- range - c(lineOffset, 0, lineOffset, 0)
+    if (length(x) < range[3]) 
+    	range[3] <- length(x) 
+    else 
+        x[range[3]] <- substring(x[range[3]], 1, range[4])
+    x <- x[range[1]:range[3]]
+    x[1] <- substring(x[1], range[2])
+    return(x)
+}    
 
 abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE)
