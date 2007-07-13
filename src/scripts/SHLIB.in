@@ -118,9 +118,10 @@ fi
 makeobjs="OBJECTS=\"${objs}\""
 if test -r Makevars; then
   makefiles="-f Makevars ${makefiles}"
-  if grep '^ *OBJS *=' Makevars >/dev/null; then
-    makeobjs="OBJECTS='\$(OBJS)'"
-  fi
+  # use of OBJS was replaced by OBJECTS in Aug 2001
+  #if grep '^ *OBJS *=' Makevars >/dev/null; then
+  #  makeobjs="OBJECTS='\$(OBJS)'"
+  #fi
   if grep '^ *OBJECTS *=' Makevars >/dev/null; then
     makeobjs=
   fi
