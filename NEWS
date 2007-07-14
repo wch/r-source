@@ -427,10 +427,7 @@ PACKAGE INSTALLATION
 	if src/Makevars is present, even if there are no source files
 	with known extensions.
 
-    o	If a package src/Makefile is supplied, it is now required to
-	have a target 'all': previously the first target was used.
-
-	If there is a file src/Makefile, src/Makevars is now ignored
+    o	If there is a file src/Makefile, src/Makevars is now ignored
 	(it could be included by src/Makefile if desired), and it is
 	preceded by etc/Makeconf rather than share/make/shlib.mk.
 	Thus the makefiles read are R_HOME/etc/Makeconf, src/Makefile
