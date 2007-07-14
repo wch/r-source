@@ -5372,9 +5372,8 @@ object files directly from the command line).
 @vindex PKG_LIBS
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
-building the shared object.  (On most systems the @code{PKG_*} flags can
-be set in the environment instead of in @file{Makevars}, and they can
-also be set as part of the command line of @command{R CMD SHLIB}.)
+building the shared object. (Supplying linker commands as arguments to
+@code{R CMD SHLIB} will override @code{PKG_LIBS} in @file{Makevars}.)
 
 @vindex OBJECTS
 It is possible to arrange to include compiled code from other languages
