@@ -590,6 +590,9 @@ do_install_source () {
     fi
   fi
 
+  ## changed in 2.6.0
+  # system_makefile = "${R_SHARE_DIR}/make/shlib.mk"
+  system_makefile="${R_HOME}/etc${R_ARCH}/Makeconf"
   if test -d src && test "${fake}" != "true"; then
     message "libs"
     has_error=false
@@ -602,15 +605,16 @@ do_install_source () {
       arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
       message "arch - ${arch}"
       cd src;
-      makefiles="-f \"${R_SHARE_DIR}\"/make/shlib.mk -f Makefile"
+      makefiles="-f \"${system_makefile}\" -f Makefile"
       if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
 	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars-${R_PLATFORM}\""
       elif test -r "${HOME}/.R/Makevars"; then
 	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars\""
       fi
-      if test -r Makevars; then
-	makefiles="-f Makevars ${makefiles}"
-      fi
+      ## removed in 2.6.0
+#      if test -r Makevars; then
+#	makefiles="-f Makevars ${makefiles}"
+#      fi
       eval ${MAKE} ${makefiles} all \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
         || has_error=true; \
@@ -618,6 +622,7 @@ do_install_source () {
     else
       cd src;
       srcs=`ls *.[cfmCM] *.cc *.cpp *.f90 *.f95 *.mm 2>/dev/null`
+      ## This allows Makevars to set OBJECTS or its own targets.
       if test -r Makevars; then
 	allfiles="Makevars ${srcs}"
       else

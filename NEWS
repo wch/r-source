@@ -430,6 +430,12 @@ PACKAGE INSTALLATION
     o	If a package src/Makefile is supplied, it is now required to
 	have a target 'all': previously the first target was used.
 
+	If there is a file src/Makefile, src/Makevars is now ignored
+	(it could be included by src/Makefile if desired), and it is
+	preceded by etc/Makeconf rather than share/make/shlib.mk.
+	Thus the makefiles read are R_HOME/etc/Makeconf, src/Makefile
+	in the package and then any personal Makevars files.
+
     o	SHLIB used to support the use of 'OBJS' in Makevars, but
 	this was changed to 'OBJECTS' in 2001. The undocumented
 	alternative of 'OBJS' has finally been removed.
