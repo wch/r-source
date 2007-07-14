@@ -565,6 +565,14 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 #  define UNIX_EXTRAS 1
 # endif
 
+#ifdef Win32
+# define WIN32_LEAN_AND_MEAN 1
+# include <windows.h>
+# ifndef SCS_64BIT_BINARY
+#  define SCS_64BIT_BINARY 6
+# endif
+#endif
+
 SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir,
@@ -576,6 +584,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     int i, n;
 #ifdef Win32
+    SEXP exe;
     struct _stati64 sb;
 #else
     struct stat sb;
@@ -589,6 +598,9 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef UNIX_EXTRAS
     PROTECT(ans = allocVector(VECSXP, 10));
     PROTECT(ansnames = allocVector(STRSXP, 10));
+#elif defined(Win32)
+    PROTECT(ans = allocVector(VECSXP, 7));
+    PROTECT(ansnames = allocVector(STRSXP, 7));
 #else
     PROTECT(ans = allocVector(VECSXP, 6));
     PROTECT(ansnames = allocVector(STRSXP, 6));
@@ -615,12 +627,17 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     grname = SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
     SET_STRING_ELT(ansnames, 9, mkChar("grname"));
 #endif
+#ifdef Win32
+    exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
+    SET_STRING_ELT(ansnames, 6, mkChar("exe"));
+#endif
     for (i = 0; i < n; i++) {
+	const char *efn = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
 	if (STRING_ELT(fn, i) != R_NilValue &&
 #ifdef Win32
-	    _stati64(R_ExpandFileName(translateChar(STRING_ELT(fn, i))), &sb)
+	    _stati64(efn, &sb)
 #else
-	    stat(R_ExpandFileName(translateChar(STRING_ELT(fn, i))), &sb)
+	    stat(efn, &sb)
 #endif
 	    == 0) {
 	    REAL(fsize)[i] = (double) sb.st_size;
@@ -639,6 +656,31 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(stgrp) SET_STRING_ELT(grname, i, mkChar(stgrp->gr_name));
 	    else SET_STRING_ELT(grname, i, NA_STRING);
 #endif
+#ifdef Win32
+	    {
+		char *s="no";
+		DWORD type;
+		if(GetBinaryType(efn, &type))
+		    switch(type) {
+		    case SCS_64BIT_BINARY:
+			s = "win64";
+			break;
+		    case SCS_32BIT_BINARY:
+			s = "win32";
+			break;
+		    case SCS_DOS_BINARY:
+		    case SCS_PIF_BINARY:
+			s = "msdos";
+			break;
+		    case SCS_WOW_BINARY:
+			s = "win16";
+			break;
+		    default:
+			s = "unknown";
+		    }
+		SET_STRING_ELT(exe, i, mkChar(s));
+	    }
+#endif
 	} else {
 	    REAL(fsize)[i] = NA_REAL;
 	    LOGICAL(isdir)[i] = NA_INTEGER;
@@ -651,6 +693,9 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(gid)[i] = NA_INTEGER;
 	    SET_STRING_ELT(uname, i, NA_STRING);
 	    SET_STRING_ELT(grname, i, NA_STRING);
+#endif
+#ifdef Win32
+	    SET_STRING_ELT(exe, i, NA_STRING);
 #endif
 	}
     }

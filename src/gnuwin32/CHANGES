@@ -21,6 +21,9 @@ FUNCTION CHANGES
 
     o	embedFonts() now accepts paths in 'GS_CMD' which contain spaces.
 
+    o	file.info() has an additional column 'exe' saying if the file
+	is executable and if so what subsystem would be used to
+	execute it.
 
 INSTALLER
 
@@ -51,7 +54,7 @@ OTHERS
 
     o	A file src/Makefile in a package will now be ignored: use
 	src/Makefile.win.  (All packages known to build on Windows
-	which have src/Makefile also have src/Makefile.win.)
+	which have a src/Makefile also have a src/Makefile.win.)
 
     o	The Makevars flag SAFE_FFLAGS (documented in 'Writing R
 	Extensions') is now available on Windows.
@@ -138,7 +141,7 @@ BUG FIXES
 	doc/manual/Makefile.win.  This avoids error messages if 'latex'
 	is not in the path.
 
-    o	Rcmd INSTALL now sets up lazloading earlier if explicitly
+    o	Rcmd INSTALL now sets up lazyloading earlier if explicitly
 	requested in the DESCRIPTION file.  This is needed for
 	packages that use 'methods' and need to load themselves to
 	process their data.

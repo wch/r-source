@@ -15,17 +15,22 @@ file.info(\dots)
   What is meant by \dQuote{file access} and hence the last access time
   is system-dependent.
 
+  The file \sQuote{mode} follows POSIX conventions, giving three octal
+  digits summarizing the permissions for the file owner, the owner's
+  group and for anyone respectively.  Each digit is the logical
+  \emph{or} of read (4), write (2) and execute/search (1) permissions.
+  
 #ifdef unix
   On most systems symbolic links are followed, so information is given
   about the file to which the link points rather than about the link.
 #endif
 #ifdef windows
-  File modes are probably only useful on Windows NT/2000/XP/2003
-  machines. Windows does not have a concept of \sQuote{executable}, so
-  files are reported as executable based on their type (e.g. \code{.exe}
-  file and directories are regarded as executable).
-  
-  Reported file modes seem to be very unreliable on Windows Vista.
+  File modes are probably only useful on NTFS file systems, and it seems
+  all three digits refer to the file's owner.
+  The execute/search bits are set for directories, and for files based
+  on their extensions (e.g. \code{.exe}, \code{.com}, \code{.cmd}
+  and \code{.bat} files).  \code{\link{file.access}} will give a more
+  reliable view of read/write access availability to the \R process.
 #endif
 }
 \value{
@@ -43,6 +48,13 @@ file.info(\dots)
   \item{grname}{character: \code{gid} interpreted as a group name.}
   Unknown user and group names will be \code{NA}.
 #endif
+#ifdef windows
+  \item{exe}{character: what sort of executable is this?  Possible
+    values are \code{"no"}, \code{"msdos"}, \code{"win16"},
+    \code{"win32"}, \code{"win64"} and \code{"unknown"}.  Note that a
+    file (e.g. a script file) can be executable according to the mode
+    bits but not executable in this sense.}
+#endif
 
   Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
@@ -50,15 +62,14 @@ file.info(\dots)
   may not be supplied on a non-POSIX Unix system.
 #endif
 }
+#ifdef unix
 \note{
-  This function will only be operational on systems with the
-  \code{stat} system call, but that seems very widely available.
-
   Some (broken) systems allow files of more than 2Gb to be created but
   not accessed by the \code{stat} system call.  Such files will show up
   as non-readable (and very likely not be readable by any of \R's input
   functions).
 }
+#endif
 
 \seealso{
   \code{\link{files}}, \code{\link{file.access}},
