@@ -5377,14 +5377,14 @@ be set in the environment instead of in @file{Makevars}, and they can
 also be set as part of the command line of @command{R CMD SHLIB}.)
 
 @vindex OBJECTS
-It is possible (not Windows) to arrange to include compiled code from
-other languages by setting the macro @samp{OBJECTS} in file
-@file{Makevars}, together with suitable rules to make the objects.
+It is possible to arrange to include compiled code from other languages
+by setting the macro @samp{OBJECTS} in file @file{Makevars}, together
+with suitable rules to make the objects.
 
 Flags which are already set (for example in file @file{etc/Makeconf} on
 Unix-alikes) can be overridden by the environment variable
-@env{MAKEFLAGS} (at least for systems using @acronym{GNU} @code{make}),
-as in (Bourne shell syntax)
+@env{MAKEFLAGS} (at least for systems using a POSIX-compliant
+@code{make}), as in (Bourne shell syntax)
 
 @example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
@@ -5415,30 +5415,31 @@ R CMD SHLIB test.f
 will compile @file{test.c}!
 
 
-If an add-on package @var{pkg} contains source code with one of the
-extensions listed above or a @file{Makefile} or a file @file{Makevars}
-in its @file{src} subdirectory, @code{R CMD INSTALL} creates a shared
-object (for loading into @R{} in the @code{.First.lib} or
-@code{.onLoad} function of the package) either automatically using the
-above @code{R CMD SHLIB} mechanism, or using Make if directory
-@file{src} contains a @file{Makefile}.  If there is no
-@file{Makefile}, if @file{Makevars} exists it is read first and in
-both cases if any personal @file{Makevars} are read last when invoking
-@code{make}.  If a @file{Makefile} is really needed or provided, if
-FORTRAN is involved it needs to ensure that the shared object created
-is linked against all FORTRAN 77 intrinsic and run-time libraries that
-@R{} was linked against; Make variable @code{FLIBS} contains this
-information.
+If the @file{src} subdirectory of an add-on package contains source code
+with one of the extensions listed above or a file @file{Makevars} but
+@strong{not} a file @code{Makefile}, @code{R CMD INSTALL} creates a
+shared object (for loading into @R{} in the @code{.First.lib} or
+@code{.onLoad} function of the package) using the @code{R CMD SHLIB}
+mechanism.  If file @file{Makevars} exists it is read first, then the
+system makefile and then any personal @file{Makevars} files.
+
+If the @file{src} subdirectory of package contains a file
+@file{Makefile}, this is used in place of the @code{R CMD SHLIB}
+mechanism.  The file @file{R_HOME/etc/Makeconf}@footnote{or the version
+specific to a sub-architecture} is read first, then @file{src/Makefile}
+and finally any personal @file{Makevars} files.  It is better to make
+use of @code{Makevars} rather than @code{Makefile}: the latter should be
+needed only exceptionally.
 
 Note that whereas @code{R CMD INSTALL} makes use of a @file{Makefile},
 @code{R CMD SHLIB} does not.  The file must be named @file{Makefile},
 not for example @file{makefile} nor @file{GNUmakefile}.
 
-Under Windows@footnote{The files in the @R{} binary Windows
-distribution for installing source packages need to be installed.} the
-same command works, but @file{Makevars.win} is used in preference to
+Under Windows@footnote{The files in the @R{} binary Windows distribution
+for installing source packages need to be installed.} the same commands
+work, but @file{Makevars.win} will be used in preference to
 @file{Makevars}, and only @file{src/Makefile.win} will be used by
-@code{R CMD INSTALL}, with @file{src/Makefile} being ignored.  For
+@code{R CMD INSTALL} with @file{src/Makefile} being ignored.  For
 details of building DLLs with a variety of compilers, see
 @samp{README.packages} and
 @url{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
@@ -5446,8 +5447,8 @@ details of building DLLs with a variety of compilers, see
 
 Under Windows you can supply an exports file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
-not libraries) will be exported from the DLL.  An example is
-@file{stats-win.def} for the @pkg{stats} package.
+not libraries) supplied to @code{R CMD SHLIB} will be exported from the
+DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
 
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
