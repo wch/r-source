@@ -21,9 +21,13 @@ FUNCTION CHANGES
 
     o	embedFonts() now accepts paths in 'GS_CMD' which contain spaces.
 
+    o	The windows() device supports semi-transparent colours under
+	Windows 2000 and later, for lines, fills and text.
+
     o	file.info() has an additional column 'exe' saying if the file
 	is executable and if so what subsystem would be used to
 	execute it.
+
 
 INSTALLER
 
@@ -32,10 +36,24 @@ INSTALLER
 	(since Winhelp does not work on Vista).
 
 
-OTHERS
+PACKAGE INSTALLATION
 
-    o	The windows() device supports semi-transparent colours under
-	Windows 2000 and later, for lines, fills and text.
+    o	The undocumented use of 'OBJS' in src/Makevars.win has been
+	removed: use 'OBJECTS' (as documented in 'Writing R
+	Extensions') instead.
+
+    o	A file src/Makefile will now be ignored: use src/Makefile.win.
+	(All packages known to build on Windows which have a
+	src/Makefile also have a src/Makefile.win.)
+
+    o	The src/Makevars flag SAFE_FFLAGS (documented in 'Writing R
+	Extensions') is now available on Windows.
+
+    o	There are dummy targets 'before' and 'after' in MakeDll which
+	can be overidden in src/Makevars.win.
+
+
+OTHERS
 
     o	Cross-building does now lazy-load the base package.
 
@@ -47,17 +65,6 @@ OTHERS
 
     o	The afm files in library/grDevices/afm are now compressed,
 	which reduces the installation size by ca 2Mb.
-
-    o	The undocumented use of 'OBJS' in src/Makevars.win has been
-	removed: use 'OBJECTS' (as documented in 'Writing R
-	Extensions') instead.
-
-    o	A file src/Makefile in a package will now be ignored: use
-	src/Makefile.win.  (All packages known to build on Windows
-	which have a src/Makefile also have a src/Makefile.win.)
-
-    o	The Makevars flag SAFE_FFLAGS (documented in 'Writing R
-	Extensions') is now available on Windows.
 
     o	[The default for a build environment is to use gcc >= 4.2.0.
 	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for gcc

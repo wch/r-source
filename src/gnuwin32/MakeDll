@@ -1,11 +1,12 @@
 #-*- Makefile -*-
 
-## FIXME:
-# should Makevars[.win] precede the first target?
+all:  before makeMakedeps $(DLLNAME).dll after
 
-all:  makeMakedeps $(DLLNAME).dll
+## these targets are just here to allow packages to add to them.
+before:
+after:
 
-.PHONY: all shlib-clean makeMakedeps
+.PHONY: all before shlib-clean makeMakedeps
 
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
