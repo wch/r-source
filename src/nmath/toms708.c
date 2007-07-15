@@ -7,7 +7,9 @@
 
 #include "nmath.h"
 #include <math.h>
+#undef min
 #define min(a,b) ((a < b)?a:b)
+#undef max
 #define max(a,b) ((a > b)?a:b)
 
 static double bfrac(double, double, double, double, double, double);
