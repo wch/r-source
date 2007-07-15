@@ -162,7 +162,7 @@ void xbufgrow(xbuf p, xlong dim, xint ms)
     if(dim > p->dim) {
 	ret = realloc(p->b, dim + 1);
 	if(ret) {
-	    change = (unsigned long) ret - (unsigned long) p->b;
+	    change = (uintptr_t) ret - (uintptr_t) p->b;
 	    p->b = (char *) ret;
 	    p->av += change;
 	    p->free += change;
