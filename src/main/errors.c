@@ -87,7 +87,7 @@ static void reset_stack_limit(void *data)
 void R_CheckStack(void)
 {
     int dummy;
-    long usage = R_CStackDir * (R_CStackStart - (unsigned long)&dummy);
+    uintptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
 
     /* printf("usage %ld\n", usage); */
     if(R_CStackLimit != -1 && usage > 0.95 * R_CStackLimit) {
