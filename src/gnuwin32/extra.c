@@ -545,7 +545,6 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if(isLogical(CAR(args))) {
 	maxmem = asLogical(CAR(args));
-	/* changed to real in 1.8.1 as might exceed 2G */
 	PROTECT(ans = allocVector(REALSXP, 1));
 #ifdef LEA_MALLOC
 	if(maxmem == NA_LOGICAL)
@@ -554,6 +553,7 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(ans)[0] = mallinfo().usmblks;
 	else
 	    REAL(ans)[0] = mallinfo().uordblks;
+	REAL(ans)[0] /= 1048576.0;
 #else
 	REAL(ans)[0] = NA_REAL;
 #endif
@@ -569,8 +569,9 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, _("don't be silly!: your machine has a 4Gb address limit"));
 	newmax = mem * 1048576.0;
 	if (newmax < R_max_memory)
-	    errorcall(call, _("cannot decrease memory limit"));
-	R_max_memory = newmax;
+	    warningcall(call, _("cannot decrease memory limit: ignored"));
+	else
+	    R_max_memory = newmax;
 #endif
     } else
 	errorcall(call, _("incorrect argument"));

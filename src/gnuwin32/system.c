@@ -815,7 +815,9 @@ int cmdlineoptions(int ac, char **av)
        embedded applications get no limit */
     GlobalMemoryStatus(&ms);
     /* As from 2.4.0, look at the virtual memsize */
-    if((unsigned int) ms.dwTotalVirtual > 2048*Mega)
+    if((unsigned int) ms.dwTotalVirtual > 3072*Mega)
+	R_max_memory = min(3584 * Mega, ms.dwTotalPhys);
+    else if((unsigned int) ms.dwTotalVirtual > 2048*Mega)
 	R_max_memory = min(2560 * Mega, ms.dwTotalPhys);
     else
 	R_max_memory = min(1536 * Mega, ms.dwTotalPhys);

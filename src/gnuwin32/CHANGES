@@ -55,6 +55,11 @@ PACKAGE INSTALLATION
 
 OTHERS
 
+    o	Some 64-bit versions of Windows (e.g. Vista 64) allocate 4GB
+	user address space to each process, and on those systems the
+	default memory limit will be the smaller of the amount of RAM
+	and 3.5GB.
+
     o	Cross-building does now lazy-load the base package.
 
     o	The Lea malloc is now used by regex.c, src/extra/pcre and
