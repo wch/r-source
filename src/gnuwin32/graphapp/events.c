@@ -816,7 +816,7 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
  *  a mouse button down for longer than mouse_msec milliseconds, and
  *  it causes the last mouse event to repeat.
  */
-UINT WINAPI _export
+UINT WINAPI
 app_timer_procedure(HWND hwnd, UINT message, UINT tid, DWORD time)
 {
 	object obj;
