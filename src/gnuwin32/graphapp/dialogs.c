@@ -62,7 +62,7 @@ static void selectfolder(char *folder, const char *title)
     bi.lpszTitle = title;
     bi.ulFlags = BIF_RETURNONLYFSDIRS;
     bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
-    bi.lParam = (int) folder;
+    bi.lParam = (LPARAM) folder;
 
     /* Browse for a folder and return its PIDL. */
     pidlBrowse = SHBrowseForFolder(&bi);

@@ -620,7 +620,7 @@ static long handle_message(HWND hwnd, UINT message,
  *  for a window from just knowing the hwnd (which may or may not
  *  belong to us).
  */
-long FAR PASCAL _export
+long WINAPI
 app_win_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	long result;
@@ -632,7 +632,7 @@ app_win_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return result;
 }
 
-long FAR PASCAL _export
+long WINAPI
 app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	long result;
@@ -662,7 +662,7 @@ app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return result;
 }
 
-long FAR PASCAL _export
+long WINAPI
 app_work_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	long result;
@@ -700,7 +700,7 @@ static void send_char(object obj, int ch)
         keystate = 0;
 }
 
-long FAR PASCAL _export
+long WINAPI
 app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	int prevent_activation = 0;
@@ -816,7 +816,7 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
  *  a mouse button down for longer than mouse_msec milliseconds, and
  *  it causes the last mouse event to repeat.
  */
-UINT FAR PASCAL _export
+UINT WINAPI _export
 app_timer_procedure(HWND hwnd, UINT message, UINT tid, DWORD time)
 {
 	object obj;

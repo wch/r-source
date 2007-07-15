@@ -87,7 +87,9 @@ extern "C" {
 
 #ifdef __MINGW32__
      #define COMPILER 32
+#ifndef WINVER
      #define WINVER 0x0400
+#endif
      #define PASS_ARGS 1
 #ifndef WIN32
  #define WIN32
@@ -132,9 +134,6 @@ extern "C" {
  */
 #ifdef COMPILER
    #ifndef __MINGW32__
-	#ifndef _export
-		#define _export
-	#endif
 	#ifndef _argc
 		#define _argc __argc
 	#endif
@@ -409,12 +408,12 @@ struct callinfo
   extern HANDLE	this_instance;
   extern HANDLE	prev_instance;
 
-  long FAR PASCAL _export app_win_proc (HWND, UINT, UINT, LONG);
-  long FAR PASCAL _export app_doc_proc (HWND, UINT, UINT, LONG);
-  long FAR PASCAL _export app_work_proc (HWND, UINT, UINT, LONG);
-  long FAR PASCAL _export app_control_procedure (HWND, UINT, UINT, LONG);
-  UINT FAR PASCAL _export app_timer_procedure(HWND, UINT, UINT, DWORD);
-  extern WNDPROC	  app_control_proc;
+  long WINAPI app_win_proc (HWND, UINT, WPARAM, LPARAM);
+  long WINAPI app_doc_proc (HWND, UINT, WPARAM, LPARAM);
+  long WINAPI app_work_proc (HWND, UINT, WPARAM, LPARAM);
+  long WINAPI app_control_procedure (HWND, UINT, WPARAM, LPARAM);
+  UINT WINAPI app_timer_procedure(HWND, UINT, UINT, DWORD);
+  extern WNDPROC app_control_proc;
 
   extern int 	menus_active;
   extern int 	active_windows;
