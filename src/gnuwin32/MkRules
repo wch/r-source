@@ -4,9 +4,8 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
+# or f2c (use suitable f2c rather than a Fortran compiler).
 
-## This is temporarily set to GCC3, until after the release of R 2.5.1,
-## when we will change the default to GCC4.
 BUILD=GCC3
 
 ## These are overridden by R CMD INSTALL: they only apply to
@@ -120,11 +119,19 @@ endif
 
 ifeq ($(strip $(BUILD)),CROSS)
 MINGW32CFLAG=-isystem $(HEADER)
+# or perhaps gfortran
 F77=$(BINPREF)g77
 FLIBS=-lg2c
 AWK=awk
 endif
 
+ifeq ($(strip $(BUILD)),F2C)
+BINPREF=
+MINGW32CFLAG=
+F77=sh /R/svn/trunk/src/scripts/f77_f2c
+FLIBS=-lf2c
+AWK=gawk
+endif
 
 
 BLAS_LIBS= -L$(RHOME)/bin -lRblas
@@ -153,7 +160,8 @@ DLLTOOL=$(DLLTOOL_WIN32) -k
 DLL_LDMAIN=gcc
 ECHO=echo
 FIND=find
-LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
+MAIN_LD=gcc
+LINKER=$(BINPREF)$(MAIN_LD) $(MINGW32LDFLAG)
 MKDIR=mkdir
 NM=$(BINPREF)nm
 OBJC=$(BINPREF)gcc $(MINGW32CFLAG)
