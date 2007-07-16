@@ -2,6 +2,10 @@
 #include <config.h>
 #endif
 
+#if SIZEOF_LONG > 4
+#error This XDR implementation assumes 4-byte longs
+#endif
+
 /* Local mod: assumes WIN32 is i386 and little-endian generic is 32-bit */
 #ifdef WIN32
 static unsigned long int
@@ -90,6 +94,9 @@ static char sccsid[] = "@(#)xdr_mem.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 #include <string.h> /* for memcpy */
 #include <rpc/types.h>
 #include <rpc/xdr.h>
+
+/* The use of 'long' here would be problematic if it were ever to be
+   used on a 64-bit system */
 
 static bool_t	xdrmem_getlong();
 static bool_t	xdrmem_putlong();

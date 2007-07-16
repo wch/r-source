@@ -26,3 +26,7 @@ system; generic code for 32-bit systems is provided.
 
 (c) to report errors directly rather than to NT services.
 
+Note that this code assume long is 4 bytes, and also implicitly
+assumes that a pointer can be stored in a long.  Recent R code only
+makes use of in-memory conversions, and we have only even used
+xdr_double, xdr_int and xdr_string.
