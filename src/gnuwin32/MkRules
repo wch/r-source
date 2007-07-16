@@ -4,7 +4,7 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
-# or f2c (use suitable f2c rather than a Fortran compiler).
+# or F2C (use suitable f2c rather than a Fortran compiler).
 
 BUILD=GCC3
 
@@ -128,7 +128,7 @@ endif
 ifeq ($(strip $(BUILD)),F2C)
 BINPREF=
 MINGW32CFLAG=
-F77=sh /R/svn/trunk/src/scripts/f77_f2c
+F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
 AWK=gawk
 endif

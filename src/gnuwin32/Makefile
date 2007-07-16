@@ -170,9 +170,9 @@ endif
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../extra/intl OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../appl OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../appl RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../main OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp OPTFLAGS='$(OPTFLAGS)'
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
 	@for ex in pcre bzip2 zlib xdr trio; do \
@@ -181,7 +181,8 @@ rlibs:
 
 rmodules:
 	$(MAKE) --no-print-directory -C ../modules \
-	  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	  RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
+	  -f Makefile.win
 	$(CP) unicode/iconv.dll ../../modules/
 
 COPYRIGHTS: $(RHOME)/doc/COPYRIGHTS COPYRIGHTS.win
@@ -257,7 +258,7 @@ htmldocs:
 
 Rblas:
 	@$(MAKE) --no-print-directory -C ../extra/blas -f Makefile.win \
-	  FFLAGS='$(FOPTFLAGS)'
+	  RHOME=$(RHOME) FFLAGS='$(FOPTFLAGS)'
 
 Rblas-clean:
 	@$(MAKE) --no-print-directory -C ../extra/blas -f Makefile.win clean

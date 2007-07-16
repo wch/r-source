@@ -53,6 +53,21 @@ PACKAGE INSTALLATION
 	can be overidden in src/Makevars.win.
 
 
+BUILDING R
+
+    o	Cross-building does now lazy-load the base package.
+
+    o	The Lea malloc is now used by regex.c, src/extra/pcre and
+	src/extra/xdr.  (This is for potential performance gains.)
+
+    o	There is an experimental option BUILD=F2C for use when there
+	is no Fortran compiler installed, but there is a compatible
+	f2c installed.  Set CC in the environment to point to the C
+	compiler to be used.  (Some binary builds of gcc omit the
+	Fortran compiler, and commercial C compilers generally do not
+	have matching Fortran compiler.)
+
+
 OTHERS
 
     o	Some 64-bit versions of Windows (e.g. Vista 64) allocate 4GB
@@ -60,16 +75,15 @@ OTHERS
 	default memory limit will be the smaller of the amount of RAM
 	and 3.5GB.
 
-    o	Cross-building does now lazy-load the base package.
-
-    o	The Lea malloc is now used by regex.c, src/extra/pcre and
-	src/extra/xdr.  (This is for potential performance gains.)
-
     o	Rcmd INSTALL --docs=chm now means 'CHM only' and not 'all' as
 	in earlier versions of R.
 
     o	The afm files in library/grDevices/afm are now compressed,
 	which reduces the installation size by ca 2Mb.
+
+    o	Installing a package with 'SaveImage: yes' no longer looks at
+	the .Renviron startup files, and so takes R_LIBS from the
+	environnment.  This is consistent with lazyloading a package.
 
     o	[The default for a build environment is to use gcc >= 4.2.0.
 	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for gcc
