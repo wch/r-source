@@ -19,11 +19,11 @@ fi
 R_DEFAULT_PACKAGES=${R_START_PACKAGES}
 export R_DEFAULT_PACKAGES
 if test "x${BUILD}" = "xCROSS"; then
-R_EXE="${RX_EXE} --slave --no-site-file --no-init-file"
+R_EXE="${RX_EXE} --slave --vanilla"
 ## we have to install into a temporary dir to avoid libpath problems
 lib1=/tmp/RtmpWin
 else
-R_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file"
+R_EXE="${R_HOME}/bin/Rterm --slave --vanilla"
 lib1=${lib}
 fi
 
