@@ -2368,8 +2368,7 @@ function(package, dir, file, lib.loc = NULL)
         }
     }
     for(file in docs_files) {
-        txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
-                     collapse = "\n")
+        txt <- Rd_pp(.read_Rd_lines_quietly(file))
         txt <- .get_Rd_example_code(txt)
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs) > 0) {
@@ -4067,12 +4066,9 @@ function(package, dir, lib.loc = NULL)
         x <- lapply(txts,
                     function(txt) {
                         tryCatch({
-                            eval(parse(text =
-                                       paste("FOO <- function() {",
-                                             paste(txt, collapse = "\n"),
-                                             "}",
-                                             collapse = "\n")),
-                                 env)
+                            eval(parse(text = c("FOO <- function() {", 
+                            	              txt, "}"),
+                                 env))
                             find_bad_closures(env)
                         },
                                  error = function(e) character())

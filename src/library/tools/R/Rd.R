@@ -771,7 +771,7 @@ function(txt)
 function(txt)
 {
     txt <- get_Rd_section(txt, "examples")
-    if(length(txt) != 1) return(character())
+    if(length(txt) < 1) return(character())
 
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
