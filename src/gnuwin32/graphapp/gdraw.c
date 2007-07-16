@@ -923,9 +923,9 @@ static void setMessageBoxTopmost(window obj)
 	TopmostDialogs |= MB_TOPMOST;
 }
 
-int getHandle(window c)
+void * getHandle(window c)
 {
-    return (int)c->handle;
+    return (void *) c->handle;
 }
 
 void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for toggle */

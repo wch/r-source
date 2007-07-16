@@ -3,7 +3,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file ga.h
  *  Copyright (C) 1998--1999  Guido Masarotto
- *  Copyright (C) 2004--2006   The R Foundation
+ *  Copyright (C) 2004--2007   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ int   devicepixelsy(drawing dev);
 
 int  	isTopmost(window w);
 void 	BringToTop(window w, int stay); /* stay=0 for regular, 1 for topmost, 2 for toggle */
-int	getHandle(window w);
+void *	getHandle(window w);
 
 /* gbuttons.c */
 /* horizontal, vertical and control scrollbar */
