@@ -796,6 +796,10 @@ outerLabels <- function(labels, new) {
     }
 }
 
+.removeMethodsMetaTable <- function(generic, where) {
+    rm(list=.TableMetaName(generic@generic, generic@package), pos = where)
+}
+
 .getGenericSigArgs <- function(fdef, env = environment(fdef), check = TRUE) {
     if(check && !exists(".SigLength", envir = env, inherits = FALSE))
       .setupMethodsTables(fdef)

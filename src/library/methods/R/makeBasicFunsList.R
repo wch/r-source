@@ -145,24 +145,14 @@
     rm(.addBasicGeneric, envir=where)
 }
 
-.BasicFunsMethods <- list()
 
-.InitSubsetMethods <- function(where)
+.initImplicitGenerics <- function(where)
 {
-    ## create some methods for the functions in .BasicFunsList.
+    ## create implicit generics & possibly  methods for the functions in .BasicFunsList.
 
-    ## The strategy on initialization is to create the methods list
-    ## objects by setMethod calls, and then move them to the
-    ## .BasicFunsMethods list, from which they will be retrieved when
-    ## the generic is installed; see getGeneric.
+    setGeneric("with", signature = "data", where = where)
+    setGenericImplicit("with", where, FALSE)
+    removeGeneric("with", where)
 
-    ## The mlist objects can not be left in the methods library itself
-    ## after initialization, since the basic functions are not "turned
-    ## on" as generics until some other package or user defines
-    ## methods for them.
-
-    ## This facility is not currently instantiated, though there are
-    ## some desirable changes to the "[" and related functions, to
-    ## untangle the current messing with "drop" and multiple
-    ## subscripts, in the vector case.
+    registerImplicitGenerics(where = where)
 }

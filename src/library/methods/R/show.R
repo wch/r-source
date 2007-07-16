@@ -96,11 +96,20 @@ show <- function(object)
     setMethod("show", "classRepresentation",
               function(object){
                   if(!.identC(class(object), "classRepresentation"))
-                      cat("Extended class definition (", classLabel(class(object)),
-                          ")\n")
+                    cat("Extended class definition (", classLabel(class(object)),
+                        ")\n")
                   print.classRepresentation(object)
               },
-               where = envir)
+              where = envir)
+
+    ## a show() method for the signature class
+    setMethod("show", "signature", function(object) {
+        message("An object of class \"", class(object), "\"")
+        val <- object@.Data
+        names(val) <- object@names
+        callNextMethod(val)
+    } ,
+              where = envir)
 }
 
 ## an informative string label for a class

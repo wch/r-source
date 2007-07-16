@@ -324,3 +324,10 @@ export(.EmptyPrimitiveSkeletons)
 ## to allow "S4-cbind/rbind (./R/cbind-rbind.R)
 export(cbind2)
 export(rbind2)
+
+## implicit generic functionality
+
+export(implicitGeneric)
+export(setGenericImplicit)
+export(prohibitGeneric)
+export(registerImplicitGenerics)

@@ -59,8 +59,12 @@
             sealClass(cl, where)
         assign(".requirePackage", ..requirePackage, envir = where)
         assign(".addToMetaTable", ..addToMetaTable, envir = where)
+        ## initialize implicit generics for base package
+        ## Note that this is done before making a non-vacuous implicitGeneric()
+        ## so that non-default signatures are allowed in setGeneric()
+        .initImplicitGenerics(where)
+        assign("implicitGeneric", .implicitGeneric, envir = where)
         .makeGenericTables(where)
-        ## TO DO: .InitSubsetMethods(where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()
         cat("done\n")

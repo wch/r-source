@@ -99,7 +99,7 @@ sigToEnv(signature, generic)
 rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)
 
-asMethodDefinition(def, signature, sealed = FALSE)
+asMethodDefinition(def, signature, sealed = FALSE, functionName)
 
 addNextMethod(method, f, mlist, optional, envir)
 }

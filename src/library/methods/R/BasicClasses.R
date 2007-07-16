@@ -66,8 +66,7 @@
           }),
           where = envir)
 
-    for(.class in stClasses)
-        setIs(.class, "structure", where = envir)
+    setIs("array", "structure", where = envir)
     setIs("matrix", "array", where = envir)
     setIs("array", "matrix", test = .gblEnv(function(object) length(dim(object)) == 2),
           replace = .gblEnv(function(from, to, value) {
@@ -82,7 +81,7 @@
     ## it can be promoted to an S4 class with metadata, slot checking, etc.
     ## The initialize method uses newBasic(...), so should be consistent with the old code,
     ## (see def'n of BasicClasses above).
-    setClass("ts", representation(.Data = "vector", tsp = "numeric"), contains = "vector",
+    setClass("ts", representation(.Data = "vector", tsp = "numeric"), contains = "structure",
              prototype = newBasic("ts"), where = envir)
 
 

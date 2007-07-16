@@ -292,6 +292,18 @@ NEW FEATURES
 	used (rather than silently treating them as fully
 	transparent).
 
+    o	The "structure" S4 class now has methods that implement the
+        concept of structures as described in the Blue Book--that
+        element-by-element functions and operators leave structure
+        intact unless they change the length.  The informal behavior
+        of R for vectors with attributes was inconsistent.
+
+    o	The implicitGeneric() function and relatives have been added
+        to specify how a function in a package should look when
+        methods are defined for it.  This will be used to ensure that
+        generic versions of functions in R core are consistent. See ?implicitGeneric.
+
+
 
 DEPRECATED & DEFUNCT
 

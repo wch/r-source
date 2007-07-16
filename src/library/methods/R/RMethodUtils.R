@@ -5,8 +5,11 @@
 ## Makes a generic function object corresponding to the given function name.
 ## and definition.
   function(f, fdef,
-           fdefault,
-           group = list(), valueClass = character(), package, signature = NULL,
+           fdefault = fdef,
+           group = list(),
+           valueClass = character(),
+           package = getPackageName(environment(fdef)),
+           signature = NULL,
            genericFunction = NULL) {
       checkTrace <- function(fun, what, f) {
           if(is(fun, "traceable")) {
@@ -16,6 +19,14 @@
           }
           else
               fun
+      }
+      if(missing(fdef)) {
+          if(missing(fdefault))
+            stop(gettextf("Must supply either a generic function or a function as default for \"#s\"",
+                          f),
+                 domain = NA)
+          fdef <- fdefault
+          body(fdef) <- substitute(standardGeneric(NAME), list(NAME = f))
       }
       ## give the function a new environment, to cache methods later
       ev <- new.env()
@@ -479,11 +490,19 @@ getGeneric <-
 ## appears for multiple packages, a named list of the generics is cached.
 .genericTable <- new.env(TRUE, baseenv())
 
-.cacheGeneric <- function(name, def) {
+.implicitTable <- new.env(TRUE, baseenv())
+
+.cacheGeneric <- function(name, def)
+  .cacheGenericTable(name, def, .genericTable)
+
+.cacheImplicitGeneric <- function(name, def)
+   .cacheGenericTable(name, def, .implicitTable)
+
+.cacheGenericTable <- function(name, def, table) {
     fdef <- def
-    if(exists(name, envir = .genericTable, inherits = FALSE)) {
+    if(exists(name, envir = table, inherits = FALSE)) {
         newpkg <- def@package
-        prev <- get(name, envir = .genericTable)
+        prev <- get(name, envir = table)
         if(is.function(prev)) {
             if(identical(prev, def))
                return(fdef)
@@ -491,7 +510,7 @@ getGeneric <-
 ##                   fdef <- def <- .makeGenericForCache(def)
             pkg <- prev@package
             if(identical(pkg, newpkg)) {# redefinition
-                assign(name, def, envir = .genericTable)
+                assign(name, def, envir = table)
                 return(fdef)
             }
             prev <- list(prev) # start a per-package list
@@ -508,32 +527,44 @@ getGeneric <-
     }
     if(.UsingMethodsTables())
       .getMethodsTable(fdef) # force initialization
-    assign(name, def, envir = .genericTable)
+    assign(name, def, envir = table)
     fdef
 }
 
-.uncacheGeneric <- function(name, def) {
-    if(exists(name, envir = .genericTable, inherits = FALSE)) {
+.uncacheGeneric <- function(name, def)
+  .uncacheGenericTable(name, def, .genericTable)
+
+.uncacheImplicitGeneric <- function(name, def)
+  .uncacheGenericTable(name, def, .implicitTable)
+
+.uncacheGenericTable <- function(name, def, table) {
+    if(exists(name, envir = table, inherits = FALSE)) {
         newpkg <- def@package
-        prev <- get(name, envir = .genericTable)
+        prev <- get(name, envir = table)
         if(is.function(prev))  # we might worry if  prev not identical
-            return(remove(list = name, envir = .genericTable))
+            return(remove(list = name, envir = table))
          i <- match(newpkg, names(prev))
         if(!is.na(i))
            prev[[i]] <- NULL
         else # we might warn about unchaching more than once
           return()
         if(length(prev) == 0)
-          return(remove(list = name, envir = .genericTable))
+          return(remove(list = name, envir = table))
         else if(length(prev) == 1)
           prev <- prev[[1]]
-        assign(name, prev, envir  = .genericTable)
+        assign(name, prev, envir  = table)
     }
 }
 
-.getGenericFromCache <- function(name, where, pkg = "") {
-    if(exists(name, envir = .genericTable, inherits = FALSE)) {
-        value <- get(name, envir = .genericTable)
+.getGenericFromCache <- function(name, where,  pkg = "")
+   .getGenericFromCacheTable(name,where, pkg, .genericTable)
+
+.getImplicitGenericFromCache <- function(name, where,  pkg = "")
+   .getGenericFromCacheTable(name,where, pkg, .implicitTable)
+
+.getGenericFromCacheTable <- function(name, where, pkg = "", table) {
+    if(exists(name, envir = table, inherits = FALSE)) {
+        value <- get(name, envir = table)
         if(is.list(value)) { # multiple generics with this name
             ## force a check of package name, even if argument is ""
             if(!nzchar(pkg)) {
@@ -1350,8 +1381,11 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
         members <- f@groupMembers
         if(recursive) {
           where <- f@package
-          if(identical(where, "base"))
+          if(identical(where, "base")) {
             where <- "methods" # no generics actually on base
+            members <- .recMembers(members, .methodsNamespace)
+          }
+          else
             members <- .recMembers(members, .asEnvironmentPackage(where))
         }
         if(character)

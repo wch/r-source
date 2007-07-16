@@ -212,18 +212,62 @@
 	      function(x,y) .Internal(rbind(deparse.level = 0, x,y)))
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(rbind(deparse.level = 0, x)))
-
-    ## a show() method for the signature class
-    setMethod("show", "signature", function(object) {
-      message("An object of class \"", class(object), "\"")
-      val <- object@.Data
-      names(val) <- object@names
-      callNextMethod(val)
-    } )
-
+    .InitStructureMethods(envir)
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }
+
+.InitStructureMethods <- function(where) {
+    setMethod("Ops", c("structure", "vector"), where = where,
+              function(e1, e2) {
+                  value <- callGeneric(e1@.Data, e2)
+                  if(length(value) == length(e1)) {
+                      e1@.Data <- value
+                      e1
+                  }
+                  else
+                    value
+              })
+    setMethod("Ops", c("vector", "structure"), where = where,
+              function(e1, e2) {
+                  value <- callGeneric(e1, e2@.Data)
+                  if(length(value) == length(e2)) {
+                      e2@.Data <- value
+                      e2
+                  }
+                  else
+                    value
+              })
+    setMethod("Ops", c("structure", "structure"), where = where,
+              function(e1, e2)
+                 callGeneric(e1@.Data, e2@.Data)
+              )
+    ## We need some special cases for matrix and array.
+    ## Although they extend "structure", their .Data "slot" is the matrix/array
+    ## So op'ing them with a structure gives the matrix/array:  Not good?
+    ## Following makes them obey the structure rule.
+    setMethod("Ops", c("structure", "array"), where = where,
+              function(e1, e2)
+                 callGeneric(e1@.Data, as.vector(e2))
+              )
+    setMethod("Ops", c("array", "structure"), where = where,
+              function(e1, e2)
+                 callGeneric(as.vector(e1), e2@.Data)
+              )
+    ## but for two array-based strucures, we let the underlying
+    ## code for matrix/array stand.
+    setMethod("Ops", c("array", "array"), where = where,
+              function(e1, e2)
+                 callGeneric(e1@.Data, e2@.Data)
+              )
+    
+    setMethod("Math", "structure", where = where,
+              function(x) {
+                  x@.Data <- callGeneric(x@.Data)
+                  x
+              })
+}
+
 
 .MakeSignature <- function(object, def, signature, functionName = "function") {
     signature <- unlist(signature)
