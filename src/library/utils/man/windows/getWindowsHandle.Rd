@@ -2,18 +2,18 @@
 \alias{getWindowsHandle}
 \title{Get a Windows Handle}
 \description{
-  Get the Windows handle of a window or the R process.
+  Get the Windows handle of a window or of the \R process.
 }
 \usage{
 getWindowsHandle(which = "Console")
 }
 \arguments{
   \item{which}{A string (see below), or the number of a 
-  		graphics device window}
+    graphics device window.}
 }
 \details{
-  \code{getWindowsHandle} gets the Windows handle or process ID.  Possible choices for 
-  \code{which} are:
+  \code{getWindowsHandle} gets the Windows handle or process ID.
+  Possible choices for \code{which} are:
   \tabular{ll}{
   \code{"Console"} \tab The console window handle. \cr
   \code{"Frame"}   \tab The MDI frame window handle. \cr
@@ -22,7 +22,7 @@ getWindowsHandle(which = "Console")
   A device number \tab The window handle of a graphics device 
  }
   These values are not normally useful to users, but may be used by 
-  developers making add-ons to \R{}.
+  developers making add-ons to \R.
   
   A zero is returned for the Frame handle if not running in MDI mode, 
   for the Console handle when running Rterm, for any unrecognized 
@@ -34,7 +34,7 @@ getWindowsHandle(which = "Console")
   later.
 }
 \value{
-A one element integer vector holding the Windows handle. 
+  A one element integer vector holding the Windows handle. 
 }
 \seealso{\code{\link{getIdentification}}}
 \examples{
