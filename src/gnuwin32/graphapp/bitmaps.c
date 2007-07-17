@@ -177,10 +177,17 @@ bitmap imagetobitmap(image img)
 		size = size + (row_bytes * height);
 	}
 
-	/* create the block, align on LONG boundary */
+	/* create the block, align on LONG boundary
 	block = array(size, byte);
 	i = ((long)block) % 4;
 	bmi = (BITMAPINFO *) (block + (4 - i));
+	
+	malloc will have done the alignment, which needs to 
+	be for pointers.
+	*/
+	block = array(size, byte);
+	bmi = (BITMAPINFO *) block;
+	
 
 	/* assign header info */
 	bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
