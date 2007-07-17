@@ -36,8 +36,8 @@ getWindowsHandle <- function(which = "Console") {
     if (is.numeric(which)) {
 	which <- as.integer(which)
         if(!exists(".Devices")) .Devices <- list("null device")
-        if(which > 0 && .Devices[[which]] != "windows")
-            return(0)
+        if(which > 0 && which <= length(.Devices) && .Devices[[which]] != "windows")
+            return(NULL)
     }
     .Internal(getWindowHandle(which))
 }

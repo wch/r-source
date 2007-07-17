@@ -27,6 +27,9 @@ FUNCTION CHANGES
     o	file.info() has an additional column 'exe' saying if the file
 	is executable and if so what subsystem would be used to
 	execute it.
+	
+    o	getWindowsHandle() now returns the handle as an external pointer.
+    	It no longer returns the process ID.
 
 
 INSTALLER
