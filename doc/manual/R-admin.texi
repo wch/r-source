@@ -3319,6 +3319,31 @@ It has been reported that using @command{gcc}@tie{}4.0.3 on
 @cputype{ppc64} needed the compiler flag @option{-mminimal-toc} to avoid
 errors when linking @R{} as a shared library.
 
+To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
+@cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-Ji Nakama used
+
+@example
+CC="gcc -m64"
+CXX="gxx -m64"
+F77="gfortran -m64"
+FC="gfortran -m64"
+CFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
+FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
+@end example
+
+@noindent
+the additional flags being needed to problems linking against
+@file{libnmath.a} and when linking @R{} as a shared library.
+
+@menu
+* Intel compilers::             
+* PGI compilers::               
+* SunPro compilers::            
+@end menu
+
+@node Intel compilers, PGI compilers, Linux, Linux
+@subsection Intel compilers
+
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux and @R{} contains code to set the FPU options suitably.  Brian
 Ripley tried version 9.0 of the compilers for @cputype{ix86} on
@@ -3364,6 +3389,10 @@ system with @command{gcc} or the Intel compilers see
 @url{http://www.nakama.ne.jp/memo/ia64_linux/,
 @code{www.nakama.ne.jp/memo/ia64_linux}}.
 
+
+@node PGI compilers, SunPro compilers, Intel compilers, Linux
+@subsection PGI compilers
+
 Jennifer Lai used the Portland Group compilers on @cputype{x86_64} to
 build pre-2.2.0.  Updated versions of the settings she used are
 
@@ -3390,21 +3419,38 @@ compliance to IEC60659.  Also,
 @url{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
 
-To build a 64-bit version of @R{} on @cputype{powerpc64} with
-@command{gcc 4.1.1}, Ei-Ji Nakama used
+@node SunPro compilers,  , PGI compilers, Linux
+@subsection SunPro compilers
+
+Brian Ripley tested the SunPro Studio 12 compilers
+(@uref{http://developers.sun.com/sunstudio/index.jsp}) on
+@cputype{x86_64} Linux with
 
 @example
-CC="gcc -m64"
-CXX="gxx -m64"
-F77="gfortran -m64"
-FC="gfortran -m64"
-CFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
-FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
+CC=cc
+CFLAGS="-xO5 -xc99 -xlibmil -nofstore"
+CPICFLAGS=-Kpic
+F77=f95
+FFLAGS="-O5 -libmil -nofstore"
+FPICFLAGS=-Kpic
+CXX=CC
+CXXFLAGS="-xO5 -xlibmil -nofstore"
+CXXPICFLAGS=-Kpic
+FC=f95
+FCFLAGS=$FFLAGS
+FCPICFLAGS=-Kpic
+LDFLAGS=-L/opt/sunstudio12/lib
+SHLIB_LDFLAGS=-shared
+SHLIB_CXXLDFLAGS=-shared
+SAFE_FFLAGS="-O5 -libmil"
 @end example
 
 @noindent
-the additional flags being needed to problems linking against
-@file{libnmath.a}.
+@code{-m64} could be added, but was the default.  Do not use
+@code{-fast}: see the warnings under Solaris.
+
+The resulting build of @R{} was not quite as fast as that built with
+@command{gcc}@tie{}4.2.0 at @code{-O3}.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -3535,7 +3581,7 @@ LDFLAGS=-L/opt/csw/lib
 @noindent
 to ensure that the @code{libiconv} version of @file{iconv.h} was found.
 For a 64-bit target add @code{-xarch=v9} (or @code{v9b}) to each of the
-compiler commands.
+compiler commands, or for Sun Studio 12 add @code{-m64}.
 
 @cindex BLAS library
 @cindex LAPACK library
