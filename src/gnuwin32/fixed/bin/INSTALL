@@ -128,7 +128,8 @@ if($opt_library){
     $ENV{'R_LIBS'} = join(";", $library, $R_LIBS);
     chdir($startdir);
 } else {
-    my @out = R_runR("cat('\n~~~', .libPaths()[1], '\n', sep = '')", "--slave");
+    my @out = R_runR("cat('\n~~~', .libPaths()[1], '\n', sep = '')",
+		     "--no-restore --slave");
     foreach $f (@out) {
 	if($f =~ /^~~~/) {
 	    $library = $f;

@@ -307,7 +307,7 @@ done
 lib=`tilde_expand "${lib}"`
 if test -z "${lib}"; then
   lib=`echo "cat('\n~~~', .libPaths()[1], '\n', sep = '')" | \
-    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
+    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-restore --slave | \
     grep '^~~~' | sed 's/.*~~~//'`
   message "Installing to library '$lib'"
   ## $lib gets checked later.
