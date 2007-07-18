@@ -3,7 +3,8 @@ include ../gnuwin32/MkRules
 
 all: makeMakedeps libnmath.a
 
-CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+## there are headers and include files in this directory
+CFLAGS=$(OPTFLAGS) -I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS=$(OPTFLAGS)
 CSOURCES= \
 	mlutils.c \

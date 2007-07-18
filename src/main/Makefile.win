@@ -5,7 +5,8 @@ include ../gnuwin32/MkRules
 
 all: makeMakedeps libmain.a
 
-CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+## there are headers and include files in this directory
+CFLAGS=$(OPTFLAGS) -I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 ifdef SUPPORT_UTF8
 CFLAGS += -DSUPPORT_UTF8
 endif
