@@ -806,7 +806,7 @@ function(txt, cmd, FUN)
     if(length(txt) != 1) return(character())
 
     ## Vectorized in 'cmd':
-    pattern <- sprintf("\\\\%s\\{", paste(cmd, collapse = "|"))
+    pattern <- sprintf("\\\\(%s)\\{", paste(cmd, collapse = "|"))
 
     out <- character()
     while((pos <- regexpr(pattern, txt)) != -1) {
