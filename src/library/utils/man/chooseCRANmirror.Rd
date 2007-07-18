@@ -1,5 +1,6 @@
 \name{chooseCRANmirror}
 \alias{chooseCRANmirror}
+\alias{getCRANmirrors}
 \title{Select a CRAN Mirror}
 \description{
   Interact with the user to choose a CRAN mirror.
@@ -36,11 +37,9 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \value{
   None for \code{chooseCRANmirror()}, this function is invoked for its
-  side effect of updating
-  \code{options("repos")}.
+  side effect of updating \code{options("repos")}.
 
-  \code{getCRANmirrors()} returns a data frame
-  with mirror information.
+  \code{getCRANmirrors()} returns a data frame with mirror information.
 }
 \seealso{
   \code{\link{setRepositories}}, \code{\link{contrib.url}}.
