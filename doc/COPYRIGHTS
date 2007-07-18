@@ -9,7 +9,7 @@ redistribute it.
 
 The status of files used only in the Windows port is in file
 src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
-Wndows distributions.
+Windows distributions.
 
 	---------------------------------------------------
 
@@ -85,8 +85,16 @@ doc/html/search/*.java
 or	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
 
 doc/manual/texinfo.tex
+doc/manual/txi-en.tex
 
 	Copyright (C) various dates Free Software Foundation, Inc.
+
+doc/manual/R-intro.texi
+
+	Copyright (C) 1990 W. N. Venables
+	Copyright (C) 1992 W. N. Venables & D. M. Smith
+	Copyright (C) 1997 R. Gentleman & R. Ihaka
+	Copyright (C) 1997, 1998 M. Maechler
 
 share/texmf/upquote.sty
 
@@ -97,6 +105,13 @@ src/library/graphics/R/mosaicplot.R
 
 	Copyright (C) 1998 John W. Emerson
 
+src/library/graphics/R/pairs.R
+
+	In part, Copyright 1999 Dr. Jens Oehlschlaegel-Akiyoshi
+
+src/library/graphics/R/polygon.R
+
+	Copyright (C) 2001 by Kevin Buhr <buhr@stat.wisc.edu>
 
 src/library/stats/R/aov.R
 src/library/stats/R/bandwidths.R
@@ -136,7 +151,27 @@ src/library/stats/src/carray.c, mburg.c, myw.c, qr.c
 	Copyright (C) 1999 Martyn Plummer
 
 
-src/unix/rotated.[ch]
+src/library/stats/R/nls.R
+
+	In part, Copyright 1999-1999 Saikat DebRoy
+
+
+src/library/stats/R/nlsFunc.R
+src/library/stats/R/selfStart.R
+src/library/stats/R/zzModels.R
+
+	Copyright 1997,1999 Jose C. Pinheiro
+
+src/library/stats/src/Trunmed.c
+
+	In part Copyright (C) 1995 Berwin A. Turlach
+
+src/library/tcltk/exec/*.tcl
+
+	Copyright (c) various dates Jeffrey Hobbs
+
+
+src/modules/X11/rotated.[ch]
 
 	Copyright (c) 1993 Alan Richardson
 
@@ -166,6 +201,7 @@ src/nmath/dpois.c
   are partly based on Clive Loader's (1999) work,
   (C) 1999-2000 Lucent Technologies, Bell Laboratories.
 
+
 src/main/RNG.c
 
   The Mersenne-Twister part is
@@ -178,6 +214,15 @@ src/main/TAOCP1997.c [if included]
 
   and is used unchanged.
 
+src/main/xspline.c
+
+ * Copyright (c) 1985-1988 by Supoj Sutanthavibul
+ * Parts Copyright (c) 1989-2002 by Brian V. Smith
+ * Parts Copyright (c) 1991 by Paul King
+ * Parts Copyright (c) 1992 by James Tough
+ * Parts Copyright (c) 1998 by Georg Stemmer
+ * Parts Copyright (c) 1995 by C. Blanc and C. Schlick
+  
 
 src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc.f
 
@@ -303,8 +348,8 @@ src/library/tools/src/md5.[ch]
 
 src/extra/intl/*
 
-Based on gettextize from gettext 0.14.5
-   Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
+Based on gettextize from gettext 0.16.1
+   Copyright (C) various dates Free Software Foundation, Inc.
 
 
 src/include/memcheck.h
@@ -336,3 +381,36 @@ share/perl/Text/Delimiter.pm
    Copyright (C) Small Planet Software and Norman Walsh.
    All rights reserved.  This program is free software; you can
    redistribute it and/or modify it under the same terms as Perl itself.
+
+po/*.po
+src/library/*/po/*.po
+
+   Some of the translations are (C) the translator as marked in the files.
+
+COPYING
+doc/COPYING
+doc/COPYING.LIB
+m4/codeset.m4
+m4/gettext.m4
+m4/gettext-lib.m4
+share/licenses/GPL-2
+share/licenses/GPL-3
+share/licenses/LGPL-2
+share/licenses/LGPL-2.1
+share/licenses/LGPL-3
+src/main/strdup.c
+tools/config.quess
+tools/config.rpath
+tools/config.sub
+tools/help2man.pl
+tools/ltmain.sh
+tools/mdate-sh
+tools/missing
+
+   Copyright various dates Free Software Foundation
+
+
+tools/install-sh:
+
+   Copyright (C) 1994 X Consortium
+
