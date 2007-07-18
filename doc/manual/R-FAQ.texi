@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-07-13
+@set FAQ_DATE @value{FAQ_YEAR}-07-18
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2056,6 +2056,9 @@ the hyperbolic distribution to data.
 @item ICE
 Iterated Conditional Expectation: kernel estimators for
 interval-censored data.
+@item ICEinfer
+Incremental Cost-Effectiveness (ICE) statistical inference (from
+two unbiased samples).
 @item ICS
 ICS/ICA computation based on two scatter matrices.
 @item ICSNP
@@ -3157,6 +3160,8 @@ Statistics, 1989).
 @item frailtypack
 Fit a shared gamma frailty model and Cox proportional hazards model
 using a Penalized Likelihood on the hazard function.
+@item fso
+Fuzzy set ordination.
 @item ftnonpar
 Features and strings for nonparametric regression.
 @item fuzzyRankTests
@@ -6906,7 +6911,9 @@ where its usual definition ought to be reasonable, it is probably a bug.
 If a command does the wrong thing, that is a bug.  But be sure you know
 for certain what it ought to have done.  If you aren't familiar with the
 command, or don't know for certain how the command is supposed to work,
-then it might actually be working right.  Rather than jumping to
+then it might actually be working right.  For example, people sometimes
+think there is a bug in R's mathematics because they don't understand
+how finite-precision arithmetic works.  Rather than jumping to
 conclusions, show the problem to someone who knows for certain.
 
 Finally, a command's intended definition may not be best for statistical
