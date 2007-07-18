@@ -2203,6 +2203,11 @@ case "${host_os}" in
 esac
 AC_SUBST(OSF_SH_BUG)
 
+## do we have the controversial src/main/TAOCP1997.c?
+AC_CHECK_FILE([$srcdir/src/main/TAOCP1997.c],
+  AC_DEFINE(HAVE_TAOCP_1997, 1, 
+            [Define to 1 if file src/main/TAOCP1997.c is available.]), )
+
 ### * Win32 overrides
 case "${host_os}" in
   mingw*)

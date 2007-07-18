@@ -55575,6 +55575,35 @@ case "${host_os}" in
 esac
 
 
+## do we have the controversial src/main/TAOCP1997.c?
+as_ac_File=`echo "ac_cv_file_$srcdir/src/main/TAOCP1997.c" | $as_tr_sh`
+{ echo "$as_me:$LINENO: checking for $srcdir/src/main/TAOCP1997.c" >&5
+echo $ECHO_N "checking for $srcdir/src/main/TAOCP1997.c... $ECHO_C" >&6; }
+if { as_var=$as_ac_File; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  test "$cross_compiling" = yes &&
+  { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
+echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+if test -r "$srcdir/src/main/TAOCP1997.c"; then
+  eval "$as_ac_File=yes"
+else
+  eval "$as_ac_File=no"
+fi
+fi
+ac_res=`eval echo '${'$as_ac_File'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+if test `eval echo '${'$as_ac_File'}'` = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_TAOCP_1997 1
+_ACEOF
+
+fi
+
+
 ### * Win32 overrides
 case "${host_os}" in
   mingw*)

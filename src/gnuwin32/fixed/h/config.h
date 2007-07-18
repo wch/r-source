@@ -637,6 +637,9 @@
 /* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
 /* #undef HAVE_SYS_WAIT_H */
 
+/* Define to 1 if file src/main/TAOCP1997.c is available. */
+#define HAVE_TAOCP_1997 1
+
 /* Define if you have the Tcl/Tk headers and libraries and want Tcl/Tk support
    to be built. */
 #define HAVE_TCLTK 1

@@ -40,10 +40,10 @@ SOURCES_C = \
 SOURCES_F = \
 	xxxpr.f
 
-## If the substitutes are needed, the corresponding objects are put by
+## If the substitubtes are needed, the corresponding objects are put by
 ## configure in @LIBOBJS@ @ALLOCA@
 EXTRA_SOURCES_C = \
-	Rmain.c \
+	Rmain.c TAOCP1997.c \
 	alloca.c acosh.c asinh.c atanh.c \
 	mkdtemp.c \
 	snprintf.c strdup.c strncasecmp.c \

@@ -86,25 +86,33 @@ set.seed(seed, kind = NULL)
       that set.
     }
 
-    \item{\code{"Knuth-TAOCP":}}{
-      From Knuth (1997).  A GFSR using lagged Fibonacci sequences with
-      subtraction. That is, the recurrence used is
+    \item{\code{"Knuth-TAOCP-2002":}}{
+      A GFSR using lagged Fibonacci sequences with
+      subtraction.  That is, the recurrence used is
       \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
       }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
       and the \dQuote{seed} is the set of the 100 last numbers (actually
       recorded as 101 numbers, the last being a cyclic shift of the
       buffer).  The period is around \eqn{2^{129}}{2^129}.
-      }
-
-    \item{\code{"Knuth-TAOCP-2002":}}{
-      The 2002 version which not backwards compatible with the earlier
+    }
+    
+    \item{\code{"Knuth-TAOCP":}}{
+      An earlier version from Knuth (1997).
+      
+      The 2002 version was not backwards compatible with the earlier
       version: the initialization of the GFSR from the seed was altered.
-      \R did not allow you to choose consecutive
-      seeds, the reported \sQuote{weakness}, and already scrambled the seeds.
+      \R did not allow you to choose consecutive seeds, the reported
+      \sQuote{weakness}, and already scrambled the seeds.
+
+      This version of the generator may not be included in your build of
+      \R: the 2002 version will be and as the difference is only in the
+      initialization, saved \code{.Random.seed} values from this
+      generator will always work.
     }
 
     \item{\code{"user-supplied":}}{
-    Use a user-supplied generator. See \code{\link{Random.user}} for details.
+      Use a user-supplied generator. See \code{\link{Random.user}} for
+      details.
     }
   }
 
@@ -162,26 +170,40 @@ set.seed(seed, kind = NULL)
   \code{set.seed} returns \code{NULL}, invisibly.
 }
 \references{
+  Ahrens, J. H. and Dieter, U. (1973)
+  Extensions of Forsythe's method for random sampling from the normal
+  distribution.
+  \emph{Mathematics of Computation} \bold{27}, 927-937.
+
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole. (\code{set.seed}, storing in \code{.Random.seed}.)
 
-  Wichmann, B. A.  and Hill, I. D. (1982)
-  \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
-    Generator}, Applied Statistics, \bold{31}, 188--190; Remarks:
-  \bold{34}, 198 and \bold{35}, 89.
+  Box, G. E. P. and Muller, M. E. (1958) A note on the generation of normal
+  random deviates. \emph{Annals of Mathmatical Statistics} \bold{29},
+  610--611.
 
   De Matteis, A. and Pagnutti, S. (1993)
   \emph{Long-range Correlation Analysis of the Wichmann-Hill Random
       Number Generator}, Statist. Comput., \bold{3}, 67--70.
 
+  Kinderman, A. J. and Ramage, J. G. (1976)
+  Computer generation of normal random variables.
+  \emph{Journal of the American Statistical Association} \bold{71},
+  893-896.
+
+  Knuth, D. E. (1997)
+  \emph{The Art of Computer Programming.} Volume 2, third edition.\cr
+  Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
+
+  Knuth, D. E. (2002)
+  \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
+  printing.\cr
+  See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
+
   Marsaglia, G. (1997) \emph{A random number generator for C.} Discussion
   paper, posting on Usenet newsgroup \code{sci.stat.math} on
   September 29, 1997.
-
-  Reeds, J., Hubert, S. and Abrahams, M. (1982--4) C implementation of
-  SuperDuper, University of California at Berkeley.  (Personal
-  communication from Jim Reeds to Ross Ihaka.)
 
   Marsaglia, G. and Zaman, A. (1994) Some portable very-long-period
   random number generators. \emph{Computers in Physics}, \bold{8},
@@ -194,29 +216,14 @@ set.seed(seed, kind = NULL)
   \bold{8}, 3--30.\cr
   Source code at \url{http://www.math.keio.ac.jp/~matumoto/emt.html}.
 
-  Knuth, D. E. (1997)
-  \emph{The Art of Computer Programming.} Volume 2, third edition.\cr
-  Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
+  Reeds, J., Hubert, S. and Abrahams, M. (1982--4) C implementation of
+  SuperDuper, University of California at Berkeley.  (Personal
+  communication from Jim Reeds to Ross Ihaka.)
 
-  Knuth, D. E. (2002)
-  \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
-  printing.\cr
-  See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
-
-
-  Kinderman, A. J. and Ramage, J. G. (1976)
-  Computer generation of normal random variables.
-  \emph{Journal of the American Statistical Association} \bold{71},
-  893-896.
-
-  Ahrens, J.H. and Dieter, U. (1973)
-  Extensions of Forsythe's method for random sampling from the normal
-  distribution.
-  \emph{Mathematics of Computation} \bold{27}, 927-937.
-
-  Box, G.E.P. and Muller, M.E. (1958) A note on the generation of normal
-  random deviates. \emph{Annals of Mathmatical Statistics} \bold{29},
-  610--611.
+  Wichmann, B. A.  and Hill, I. D. (1982)
+  \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
+    Generator}, Applied Statistics, \bold{31}, 188--190; Remarks:
+  \bold{34}, 198 and \bold{35}, 89.
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 
