@@ -298,11 +298,10 @@ NEW FEATURES
         intact unless they change the length.  The informal behavior
         of R for vectors with attributes was inconsistent.
 
-    o	The implicitGeneric() function and relatives have been added
-        to specify how a function in a package should look when
-        methods are defined for it.  This will be used to ensure that
-        generic versions of functions in R core are consistent. See ?implicitGeneric.
-
+    o	The implicitGeneric() function and relatives have been added to
+	specify how a function in a package should look when methods are
+	defined for it.  This will be used to ensure that generic versions
+	of functions in R core are consistent.  See ?implicitGeneric.
 
 
 DEPRECATED & DEFUNCT
@@ -397,7 +396,7 @@ C-LEVEL FACILITIES
     o   doKeybd and doMouseevent are now exported in GraphicsDevice.h.
 
     o	R_alloc now has first argument of type 'size_t' to support
-	64-bit platforms with a 32-bit 'long' type.
+	64-bit platforms (e.g. Win64) with a 32-bit 'long' type.
 
     o	The type of the last two arguments of getMatrixDimnames (non-API
 	but mentioned in R-exts.texi and in Rinternals.h) has been
@@ -412,7 +411,7 @@ INSTALLATION
 	(which had long been used but not tested for).  ('make check'
 	would have failed in earlier versions without these calls.)
 
-    o	'evince' is now considered as a PDF viewer.
+    o	'evince' is now considered as a possible PDF viewer.
 
     o	'make install-strip' now also strips the DLLs in the standard
 	packages.
@@ -486,6 +485,9 @@ BUG FIXES
 	classes that contain one of the basic data types.
 
     o	<data frame>[[i, j]] now works if 'i' is character.
+
+    o	write.dcf() no longer writes NA fields (PR#9796), and works
+	correctly on empty descriptions.
 
 
 

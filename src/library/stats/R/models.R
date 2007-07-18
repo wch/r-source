@@ -13,7 +13,7 @@ formula.default <- function (x, env = parent.frame(), ...)
                        NULL = structure(NULL, class = "formula"),
                        character = formula(eval(parse(text = x)[[1]])),
                        call = eval(x), stop("invalid formula"))
-        environment(form)<-env
+        environment(form) <- env
         form
     }
 }
@@ -31,17 +31,16 @@ formula.terms <- function(x, ...) {
 formula.data.frame <- function (x, ...)
 {
     nm <- sapply(names(x), as.name)
-    lhs <- nm[1]
     if (length(nm) > 1) {
         rhs <- nm[-1]
-    }
-    else {
+        lhs <- nm[1]
+    } else if (length(nm) == 1) {
         rhs <- nm[1]
         lhs <- NULL
-    }
+    } else stop("cannot create a formula from a zero-column data frame")
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
-    ff<-eval(ff)
-    environment(ff)<-parent.frame()
+    ff <- eval(ff)
+    environment(ff) <- parent.frame()
     ff
 }
 
@@ -84,7 +83,7 @@ terms.default <- function(x, ...) {
     v <- x$terms
     if(is.null(v))
         stop("no terms component")
-    return(v)
+    v
 }
 
 terms.terms <- function(x, ...) x

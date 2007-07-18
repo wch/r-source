@@ -30,12 +30,14 @@ function(x, file = "", append = FALSE,
 
     nr <- nrow(x)
     nc <- ncol(x)
+    tx <- t(x)
+    not.na <- c(!is.na(tx))  # don't write NA fields
+    eor <- character(sum(not.na))
+    if(sum(not.na))
+        eor[ c(diff(c(col(tx))[not.na]),0) >= 1 ] <- "\n" # newline for end of record
 
-    eor <- character(nr * nc)
-    eor[seq.int(1, nr - 1) * nc] <- "\n"    # newline for end of record
-
-    writeLines(paste(formatDL(rep.int(colnames(x), nr), c(t(x)), style =
-                     "list", width = width, indent = indent),
+    writeLines(paste(formatDL(rep.int(colnames(x), nr), c(tx), style =
+                              "list", width = width, indent = indent)[not.na],
                      eor, sep = ""),
                file)
 }

@@ -18,7 +18,7 @@ as.formula(object, env = parent.frame())
 
   \code{as.formula} is almost identical, additionally preserving
   attributes when \code{object} already inherits from
-  \code{"formula"}. The default value of the \code{env} argument is
+  \code{"formula"}.  The default value of the \code{env} argument is
   used only when the formula would otherwise lack an environment.
 }
 \arguments{
@@ -75,11 +75,16 @@ as.formula(object, env = parent.frame())
   will accept such non-syntactic names.
 
   When \code{formula} is called on a fitted model object, either a
-  specific method is used (such as that for class \code{"nls"}) of the
+  specific method is used (such as that for class \code{"nls"}) or the
   default method.  The default first looks for a \code{"formula"}
   component of the object (and evaluates it), then a \code{"terms"}
   component, then a \code{formula} parameter of the call (and evaluates
   its value) and finally a \code{"formula"} attribute.
+
+  There is a method for data frames.  If there is only one column this
+  forms the RHS with an empty LHS.   For more columns, the first column
+  is the LHS of the formula and the remaining columns separated by
+  \code{+} form the RHS.
 }
 \section{Environments}{
   A formula object has an associated environment, and
@@ -88,9 +93,9 @@ as.formula(object, env = parent.frame())
   that are not found in the supplied \code{data} argument.
 
   Formulas created with the \code{~} operator use the
-  environment in which they were created. Formulas created with
+  environment in which they were created.  Formulas created with
   \code{as.formula} will use the \code{env} argument for their
-  environment. Pre-existing formulas extracted with
+  environment.  Pre-existing formulas extracted with
   \code{as.formula} will only have their environment changed if
   \code{env} is given explicitly.
 }
@@ -119,7 +124,7 @@ terms(fo)
 
 environment(fo)
 environment(as.formula("y ~ x"))
-environment(as.formula("y ~ x",env=new.env()))
+environment(as.formula("y ~ x", env=new.env()))
 
 
 ## Create a formula for a model with a large number of variables:

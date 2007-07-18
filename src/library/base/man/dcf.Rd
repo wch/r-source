@@ -7,6 +7,7 @@
 }
 \usage{
 read.dcf(file, fields=NULL)
+
 write.dcf(x, file = "", append = FALSE,
           indent = 0.1 * getOption("width"),
           width = 0.9 * getOption("width"))
@@ -35,12 +36,12 @@ write.dcf(x, file = "", append = FALSE,
   The DCF rules as implemented in \R are:
   \enumerate{
     \item A database consists of one or more records, each with one or
-    more named fields. Not every record must contain each field, a
+    more named fields.  Not every record must contain each field, a
     field may appear only once in a record.
     \item Regular lines start with a non-whitespace character.
     \item Regular lines are of form \code{tag:value}, i.e.,
     have a name tag and a value for the field, separated
-    by \code{:} (only the first \code{:} counts). The value can be
+    by \code{:} (only the first \code{:} counts).  The value can be
     empty (=whitespace only).
     \item Lines starting with whitespace are continuation lines (to the
     preceding field) if at least one character in the line is non-whitespace.
@@ -56,6 +57,8 @@ write.dcf(x, file = "", append = FALSE,
   returned.  If there are multiple records with the same tag name, the
   last one encountered is returned.  Malformed lines are ignored
   (with a warning).
+
+  \code{write.dcf} does not write \code{NA} fields.
 }    
 \seealso{
   \code{\link{write.table}}.
