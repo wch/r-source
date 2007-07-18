@@ -43,7 +43,7 @@ SOURCES_F = \
 ## If the substitubtes are needed, the corresponding objects are put by
 ## configure in @LIBOBJS@ @ALLOCA@
 EXTRA_SOURCES_C = \
-	Rmain.c TAOCP1997.c \
+	Rmain.c \
 	alloca.c acosh.c asinh.c atanh.c \
 	mkdtemp.c \
 	snprintf.c strdup.c strncasecmp.c \
@@ -228,6 +228,9 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+	@if test -f $(srcdir)/TAOCP1997.c ; then \
+	  cp -p $(srcdir)/TAOCP1997.c $(distdir)/TAOCP1997.c; \
+	fi
 
 ## Automagically generated dependencies:
 
