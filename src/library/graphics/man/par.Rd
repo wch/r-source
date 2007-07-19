@@ -153,7 +153,11 @@ par(\dots, no.readonly = FALSE)
   invisible named list.  Such a list can be passed as an argument to
   \code{par} to restore the parameter values.
   Use \code{par(no.readonly = TRUE)} for the full list of parameters
-  that can be restored.
+  that can be restored.  However, restoring all of these is not wise
+  since they contain several ways to set the same quantities, and these
+  can have conflicting effects if the graphics device has been resized
+  since the parameters were saved.  You will reset all of \code{mfrow},
+  \code{mfcol} and \code{mfg} and will find \code{mfrow} wins.
 
   When just one parameter is queried, the value of that parameter
   is returned as (atomic) vector.  When two or more parameters are
@@ -380,6 +384,9 @@ par(\dots, no.readonly = FALSE)
       In a layout with exactly two rows and columns the base value of
       \code{"cex"} is reduced by a factor of 0.83: if there are three or
       more of either rows or columns, the reduction factor is 0.66.
+
+      If either of these is queried it will give the current layout, so
+      querying cannot tell you the order the array will be filled.
 
       Consider the alternatives, \code{\link{layout}} and
       \code{\link{split.screen}}.
@@ -610,6 +617,7 @@ par(op)
 op <- par(no.readonly = TRUE) # the whole list of settable par's.
 ## do lots of plotting and par(.) calls, then reset:
 par(op)
+## Mote this is not in general good practice
 
 par("ylog") # FALSE
 plot(1 : 12, log = "y")

@@ -21,7 +21,8 @@ write.csv2(\dots)
     If not, it is attempted to coerce \code{x} to a data frame.}
   \item{file}{either a character string naming a file or a connection
     open for writing.  \code{""} indicates output to the console.}
-  \item{append}{logical.  If \code{TRUE}, the output is appended to the
+  \item{append}{logical. Only relevant if \code{file} is a character
+    string.  If \code{TRUE}, the output is appended to the
     file.  If \code{FALSE}, any existing file of the name is destroyed.}
   \item{quote}{a logical value (\code{TRUE} or \code{FALSE}) or a
     numeric vector.  If \code{TRUE}, any character or factor columns
@@ -31,7 +32,10 @@ write.csv2(\dots)
     \code{FALSE}, nothing is quoted.}
   \item{sep}{the field separator string.  Values within each row of
     \code{x} are separated by this string.}
-  \item{eol}{the character(s) to print at the end of each line (row).}
+  \item{eol}{the character(s) to print at the end of each line (row).
+    For example, \code{eol="\r\n"} will produce Windows' line endings on
+    a Unix-alike OS, and \code{eol="\r"} will produce files as expected by
+    MacOS Excel 2004.}
   \item{na}{the string to use for missing values in the data.}
   \item{dec}{the string to use for decimal points in numeric or complex
     columns: must be a single character.}
@@ -88,7 +92,12 @@ write.csv2(\dots)
   These functions check for a user interrupt every 1000 lines of output.
 
   If \code{file} is not open for writing, an attempt is made to open it
-  and then close it after use. 
+  and then close it after use.
+#ifdef windows
+  
+  To write a Unix-style file on Windows, use a binary connection
+  e.g. \code{file = file("fn", "wb")}.
+#endif
 }
 \section{CSV files}{
   By default there is no column name for a column of row names.  If
