@@ -48,7 +48,7 @@
 
   MacDonell credited the source of data (page 178) as follows:
   \emph{The data on which the memoir is based were obtained, through the
-    kindness of Dr Garson, from the Central Metric Office, New Scottland Yard...}
+    kindness of Dr Garson, from the Central Metric Office, New Scotland Yard...}
   He pointed out on page 179 that : \emph{The forms were drawn at random
     from the mass on the office shelves; we are therefore dealing with a
     random sampling.}
