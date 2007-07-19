@@ -1045,6 +1045,7 @@ setGroupGeneric <-
                genericFunction =
                  new("groupGenericFunction", def, groupMembers = knownMembers),
                where = where)
+    .MakeImplicitGroupMembers(name, knownMembers, where)
     name
 }
 
@@ -1172,17 +1173,31 @@ implicitGeneric <- function(...) NULL
 ### by the methods package to establish implicit generics for
 ### functions in the base package, without owning a version of these.
   {
-      createGeneric <- missing(generic) && !isGeneric(name, where)
+      createGeneric <- (missing(generic) || !is(generic, "genericFunction")) && !isGeneric(name, where)
       if(createGeneric) {
           fdefault <- getFunction(name, where = where, mustFind = FALSE)
           if(is.null(fdefault))
             return(NULL)  # no implicit generic
+          fdefault <- .derivedDefaultMethod(fdefault)
           package <- getPackageName(environment(fdefault))
-          generic <- .getImplicitGeneric(name, where, package)
-          if(is.null(generic))
-            generic <- makeGeneric(name, fdefault = fdefault, package = package)
-          else #return value, don't save it again
-            return(generic)
+          ## look for a group
+          if(identical(package,"base"))
+            group <- .getImplicitGroup(name, .methodsNamespace)
+          else
+            group <- .getImplicitGroup(name, environment(fdefault))
+          if(missing(generic)) {
+            generic <- .getImplicitGeneric(name, where, package)
+            if(is.null(generic)) {
+                generic <- makeGeneric(name, fdefault = fdefault, package = package,
+                                     group = group)
+            }
+            else #return value, don't save it again
+              return(generic)
+          }
+          else
+            generic <- makeGeneric(name, generic, fdefault, package = package,
+                                   group = group)
+          
       }
       .saveToImplicitGenerics(name, generic, where)
       generic
@@ -1261,8 +1276,12 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where), where
             return(FALSE)
       }
       genericFunction <- .getImplicitGeneric(name, fwhere)
-      if(is.null(genericFunction))
-        return(FALSE)
+      if(is.null(genericFunction)) {
+          if(OK)  #try to create the default implicit generic
+            genericFunction <- implicitGeneric(name, where)
+          if(is.null(genericFunction)) # usually, a new definition
+            return(FALSE)
+      }
       if(identical(genericFunction, FALSE))
         stop(gettextf("Function \"%s\" may not be used as a generic (implicitly prohibited)", name), domain = NA)
       if(!OK)
@@ -1290,3 +1309,22 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where), where
      identical(f1@generic, f2@generic)
      )
 }
+
+.ImplicitGroupMetaName <- ".__IGM__table"
+.MakeImplicitGroupMembers <- function(group, members, where) {
+    if(!exists(.ImplicitGroupMetaName, where, inherits = FALSE))
+      assign(.ImplicitGroupMetaName, new.env(TRUE), where)
+    tbl <- get(.ImplicitGroupMetaName, where)
+    for(what in members)
+      assign(what, as.list(group), envir = tbl)
+}
+
+.getImplicitGroup <- function(name, where) {
+     if(exists(.ImplicitGroupMetaName, where, inherits = FALSE)) {
+         tbl <- get(.ImplicitGroupMetaName, where)
+         if(exists(name, envir = tbl, inherits = FALSE))
+           return(get(name, envir = tbl))
+     }
+    list()
+ }
+                  
