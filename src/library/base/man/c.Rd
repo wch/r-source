@@ -31,7 +31,7 @@ c(\dots, recursive=FALSE)
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode.
 }
-\section{S4 Methods}{
+\section{S4 methods}{
   This function is S4 generic, but with argument list
   \code{(x, ..., recursive = FALSE)}.
 }

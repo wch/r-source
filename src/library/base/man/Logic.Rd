@@ -80,7 +80,7 @@ isTRUE(x)
 
   For \code{||}, \code{&&} and \code{isTRUE}, a length-one logical vector.
 }
-\section{S4 Methods}{
+\section{S4 methods}{
   \code{!}, \code{&} and \code{|} are S4 generics, the latter two part
   of the \code{Logic} group generic (and hence methods need argument names
   \code{e1, e2}).
