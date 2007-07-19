@@ -34,7 +34,7 @@ function(x, file = "", append = FALSE,
     not.na <- c(!is.na(tx))  # don't write NA fields
     eor <- character(sum(not.na))
     if(sum(not.na))
-        eor[ c(diff(c(col(tx))[not.na]),0) >= 1 ] <- "\n" # newline for end of record
+        eor[ c(diff(c(col(tx))[not.na]),1) >= 1 ] <- "\n" # newline for end of record
 
     writeLines(paste(formatDL(rep.int(colnames(x), nr), c(tx), style =
                               "list", width = width, indent = indent)[not.na],
