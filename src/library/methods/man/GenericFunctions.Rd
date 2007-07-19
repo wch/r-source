@@ -122,7 +122,8 @@ callGeneric(\dots)
       current generic function.  If no arguments are passed to
       \code{callGeneric}, the arguments to the current call are passed
       down; otherwise, the arguments are interpreted as in a call to the
-      generic function.
+      generic function.  If the generic is a primitive then arguments
+      must be supplied.
     }
   }
 }
