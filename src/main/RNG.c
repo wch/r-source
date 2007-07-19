@@ -630,7 +630,7 @@ long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 long ran_arr_cycle()
 {
   ran_array(ran_arr_buf,QUALITY);
-  ran_arr_buf[100]=-1;
+  ran_arr_buf[KK]=-1;
   ran_arr_ptr=ran_arr_buf+1;
   return ran_arr_buf[0];
 }
