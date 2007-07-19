@@ -489,6 +489,10 @@ BUG FIXES
     o	write.dcf() no longer writes NA fields (PR#9796), and works
 	correctly on empty descriptions.
 
+    o	Several functions including those making use of printCoefmat(),
+	layout() and sortedXyData() now work correctly with
+	non-default options("OutDec").
+
 
 
 

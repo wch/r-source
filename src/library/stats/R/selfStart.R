@@ -139,7 +139,7 @@ sortedXyData.default <-
     }
     y <- as.numeric(y)
     y.avg <- tapply(y, x, mean, na.rm = TRUE)
-    xvals <- as.numeric(names(y.avg))
+    xvals <- as.numeric(chartr(getOption("OutDec"), ".", names(y.avg)))
     ord <- order(xvals)
     value <- na.omit(data.frame(x = xvals[ord], y = as.vector(y.avg[ord])))
     class(value) <- c("sortedXyData", "data.frame")
