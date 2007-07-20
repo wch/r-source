@@ -617,7 +617,7 @@ par(op)
 op <- par(no.readonly = TRUE) # the whole list of settable par's.
 ## do lots of plotting and par(.) calls, then reset:
 par(op)
-## Mote this is not in general good practice
+## Note this is not in general good practice
 
 par("ylog") # FALSE
 plot(1 : 12, log = "y")
