@@ -23,7 +23,7 @@ Sweave <- function(file, driver=RweaveLatex(),
     chunk <- NULL
 
     namedchunks <- list()
-    for(linenum in seq(along=text)){
+    for(linenum in seq_along(text)) {
     	line <- text[linenum]
         if(any(grep(syntax$doc, line))){
             if(mode=="doc"){

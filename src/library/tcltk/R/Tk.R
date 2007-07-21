@@ -568,7 +568,7 @@ tkyview.scroll  <- function(widget, ...)tcl(widget, "yview", "scroll", ...)
 tkpager <- function(file, header, title, delete.file)
 {
     title <- paste(title, header)
-    for ( i in seq(along=file) ){
+    for ( i in seq_along(file) ) {
         zfile <- file[[i]]
         tt <- tktoplevel()
         tkwm.title(tt, if (length(title))
