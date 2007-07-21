@@ -20,7 +20,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
     widget, or if under the AQUA interface use a MacOS X widget,
 #endif
     otherwise use \code{\link{menu}}.}
-  \item{call}{Logical, get all known mirrors or only the ones flagged as
+  \item{all}{Logical, get all known mirrors or only the ones flagged as
     OK.}
   \item{local.only}{Logical, try to get most recent list from CRAN or
     use file on local disk only.}
