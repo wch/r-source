@@ -4247,15 +4247,15 @@ function()
     ## for R 2.1, and for S3 methods for binary operators in 2.2.
     ## Markup for the former is a bit controversial, as some legacy docs
     ## have non-synopsis-style \usage entries for these methods.  E.g.,
-    ## as of 2005-05-21, \link[base]{Extract.data.frame} has
+    ## as of 2005-05-21, \link[base]{Extract.data.frame} had
     ##   x[i]
     ##   x[i] <- value
     ##   x[i, j, drop = TRUE]
     ##   x[i, j] <- value
     ## Hence, we provide internal environment variables for controlling
     ## what should be ignored.
-    c(if(!identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
-                    TRUE))
+    c(if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
+                   FALSE))
       c("[", "[[", "$", "[<-", "[[<-", "$<-"),
       if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_BINOPS_")),
                    FALSE))

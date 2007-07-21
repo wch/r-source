@@ -2813,6 +2813,37 @@ value} to indicate the usage of an S3 replacement method for the generic
 replacement function @code{"@var{generic}<-"} for objects inheriting
 from class @code{"@var{class}"}.
 
+Usage for S3 methods for extracting or replacing parts of an object
+follows the above rules.  E.g., @file{Extract.factor.Rd} contains
+
+@example
+@group
+\usage@{
+\method@{[@}@{factor@}(x, \dots, drop = FALSE)
+\method@{[[@}@{factor@}(x, i)
+\method@{[@}@{factor@}(x, \dots) <- value
+@}
+
+@noindent
+which will print as
+
+@example
+@group
+Usage:
+
+     ## S3 method for class 'factor':
+     x[..., drop = FALSE]
+     ## S3 method for class 'factor':
+     x[[i]]
+     ## S3 replacement method for class 'factor':
+     x[...] <- value
+@end group
+@end example
+
+@end group
+@end example
+
+
 @item \arguments@{@dots{}@}
 @findex \arguments
 Description of the function's arguments, using an entry of the form

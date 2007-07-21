@@ -343,6 +343,10 @@ UTILITIES
 	rather than just weave and tangle them: this will give a NOTE
 	if there are latex errors.
 
+    o	R CMD check computations no longer ignore Rd \usage entries for
+    	functions for extracting or replacing parts of an object, so S3
+    	methods should use the appropriate \method{} markup.
+
     o	Rdconv now warns about unmatched braces rather than silently
 	omitting sections containing them.  (Suggestion by Bill
 	Dunlap, PR#9649)

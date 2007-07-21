@@ -9,26 +9,21 @@
   Extract or replace subsets of data frames.
 }
 \usage{
-x[i]
-x[i] <- value
-x[i, j, drop]
-x[i, j] <- value
-
-x[[i]]
-x[[i]] <- value
-x[[i, j]]
-x[[i, j]] <- value
-
-x$name
-x$name <- value
+\method{[}{data.frame}(x, i, j, drop = )
+\method{[}{data.frame}(x, i, j) <- value
+\method{[[}{data.frame}(x, ...)
+\method{[[}{data.frame}(x, i, j) <- value
+\method{$}{data.frame}(x, i) <- value
 }
 \arguments{
   \item{x}{data frame.}
 
-  \item{i, j}{elements to extract or replace. \code{i, j} are
-    \code{numeric} or \code{character} or, for \code{[} only, empty.
-    Numeric values are coerced to integer as if by \code{\link{as.integer}}.
-    For replacement by \code{[}, a logical matrix is allowed.
+  \item{i, j, ...}{elements to extract or replace.  For \code{[} and
+    \code{[[}, these are \code{numeric} or \code{character} or, for
+    \code{[} only, empty.  Numeric values are coerced to integer as if
+    by \code{\link{as.integer}}.  For replacement by \code{[}, a logical
+    matrix is allowed.  For replacement by \code{$}, \code{i} is a name
+    or literal character string.
   }
 
   \item{drop}{logical.  If \code{TRUE} the result is coerced to the
@@ -39,18 +34,17 @@ x$name <- value
     number of times if necessary and it may be coerced: see the
     Coercion section.  If \code{NULL}, deletes the column if a single
     column is selected.}
-
-  \item{name}{name or literal character string.}
 }
 \details{
   Data frames can be indexed in several modes.  When \code{[} and
-  \code{[[} are used with a single index, they index the data frame
-  as if it were a list.  In this usage a \code{drop} argument is
-  ignored, with a warning.  Using \code{$} is equivalent to using
-  \code{[[} with a single index.
+  \code{[[} are used with a single index (\code{x[i]} or \code{x[[i]]}),
+  they index the data frame as if it were a list.  In this usage a
+  \code{drop} argument is ignored, with a warning.  Using \code{$} is
+  equivalent to using \code{[[} with a single index.
 
-  When \code{[} and \code{[[} are used with two indices they act
-  like indexing a matrix:  \code{[[} can only be used to select one element.
+  When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
+  and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can
+  only be used to select one element.
 
   If \code{[} returns a data frame it will have unique (and non-missing)
   row names, if necessary transforming the row names using
@@ -59,7 +53,7 @@ x$name <- value
   more than once, or if more than one column of a given name is selected
   if the data frame has duplicate columns).
 
-  When \code{drop =TRUE}, this is applied to the subsetting of any
+  When \code{drop = TRUE}, this is applied to the subsetting of any
   matrices contained in the data frame as well as to the data frame itself.
 
   The replacement methods can be used to add whole column(s) by specifying
