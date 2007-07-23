@@ -1254,25 +1254,11 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 
 Math.data.frame <- function (x, ...)
 {
-    f <- get(.Generic, mode = "function")
-    if (is.null(formals(f)))
-	f <- function(x, ...) {
-	}
-    call <- match.call(f, sys.call())
-    call[[1L]] <- as.name(.Generic)
-    arg <- names(formals(f))[1L]
-    call[[arg]] <- as.name("xx")
-    encl <- parent.frame()
-    var.f <- function(x) eval(call, list(xx = x), encl)
-    mode.ok <- sapply(x, is.numeric) & !sapply(x, is.factor) |
-	sapply(x, is.complex)
+    mode.ok <- sapply(x, function(x) is.numeric(x) || is.complex(x))
     if (all(mode.ok)) {
-	r <- lapply(x, var.f)
-	class(r) <- oldClass(x)
-	attr(r, "row.names") <- attr(x, "row.names")
-	return(r)
-    }
-    else {
+	x[] <- lapply(x, .Generic, ...)
+	return(x)
+    } else {
 	vnames <- names(x)
 	if (is.null(vnames)) vnames <- seq_along(x)
 	stop("non-numeric variable in data frame: ", vnames[!mode.ok])
@@ -1352,7 +1338,7 @@ Summary.data.frame <- function(..., na.rm)
     args <- lapply(args, function(x) {
         x <- as.matrix(x)
         if(!is.numeric(x) && !is.complex(x))
-            stop("only defined on a data frame with all numeric or complex variables")
+            stop("only defined on a data frame with all numeric variables")
         x
     })
     do.call(.Generic, c(args, na.rm=na.rm))
