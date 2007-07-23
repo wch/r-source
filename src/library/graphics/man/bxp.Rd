@@ -62,7 +62,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 
     In addition, \code{axes} is accepted (see
     \code{\link{plot.window}}), with default \code{TRUE}.
-    
+
     The following arguments (or \code{pars} components) allow further
     customization of the boxplot graphics.  Their defaults are typically
     determined from the non-prefixed version (e.g., \code{boxlty} from
@@ -71,9 +71,10 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     \describe{
       \item{boxwex:}{a scale factor to be applied to all boxes.  When there
 	are only a few groups, the appearance of the plot can be improved by
-	making the boxes narrower.}
+	making the boxes narrower.  The default depends on \code{at} and
+	typically is \eqn{0.8}.}
       \item{staplewex, outwex:}{staple and outlier line width expansion,
-	proportional to box width.}
+	proportional to box width; both default to 0.5.}
       \item{boxlty, boxlwd, boxcol, boxfill:}{box outline type, width,
 	color, and fill color (which currently defaults to \code{col} and will
 	in future default to \code{par("bg")}).}
@@ -83,8 +84,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 	point, and \code{medlty="blank"} does so for the line.
 	Note that\code{medlwd} defaults to
 	\eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
-      \item{whisklty, whisklwd, whiskcol:}{whisker line type, width, and
-	color.}
+      \item{whisklty, whisklwd, whiskcol:}{whisker line type (default:
+	\code{"dashed"}), width, and color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line
 	type, width, and color.}
       \item{outlty, outlwd, outpch, outcex, outcol, outbg:}{outlier line
