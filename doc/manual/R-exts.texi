@@ -6340,11 +6340,12 @@ argument @code{ignore_quotes}: we could use
 @end example
 
 @noindent
-which will do any coercion needed, and return @code{NA_LOGICAL} if the
-value passed was @code{NA} or coercion failed.  There are also
-@code{asInteger}, @code{asReal} and @code{asComplex}.  The function
-@code{asChar} returns a @code{CHARSXP}.  All of these functions ignore
-any elements of an input vector after the first.
+which will do any coercion needed (at least from a vector argument), and
+return @code{NA_LOGICAL} if the value passed was @code{NA} or coercion
+failed.  There are also @code{asInteger}, @code{asReal} and
+@code{asComplex}.  The function @code{asChar} returns a @code{CHARSXP}.
+All of these functions ignore any elements of an input vector after the
+first.
 
 To return a length-one real vector we can use
 

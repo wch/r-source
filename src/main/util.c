@@ -164,8 +164,9 @@ SEXP asChar(SEXP x)
 	    default:
 		return NA_STRING;
 	    }
-	}
-	else if(TYPEOF(x) == SYMSXP)
+	} else if(TYPEOF(x) == CHARSXP) {
+	    return x;
+	} else if(TYPEOF(x) == SYMSXP)
 	    return PRINTNAME(x);
     }
     return NA_STRING;

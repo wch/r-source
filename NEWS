@@ -392,7 +392,7 @@ C-LEVEL FACILITIES
         function that modifies its arguments.
 
     o	asLogical, asInteger, asReal and asComplex now accept STRSXP
-	and CHARSXP arguments.
+	and CHARSXP arguments, and asChar accepts CHARSXP.
 
     o	New R_GE_str2col() exported via R_ext/GraphicsEngine.h for
         external device developers.
