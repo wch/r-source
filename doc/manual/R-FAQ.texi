@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-07-18
+@set FAQ_DATE @value{FAQ_YEAR}-07-23
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1922,6 +1922,8 @@ Semiparametric Bayesian analysis using Dirichlet process priors.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
+@item Defaults
+Create global function defaults.
 @item DescribeDisplay
 R interface to the DescribeDisplay GGobi plugin.
 @item Design
@@ -3709,6 +3711,8 @@ datasets.
 @item mix
 Estimation/multiple imputation programs for mixed categorical and
 continuous data.
+@item mixPHM
+Mixtures of proportional hazard models.
 @item mixreg
 Functions to fit mixtures of regressions.
 @item mixstock
@@ -3863,6 +3867,8 @@ mixed-effects modelling using differential equations.
 @c @item nlrq
 @c Nonlinear quantile regression routines.  @emph{Defunct}.
 @c </COMMENT>
+@item nlstools
+Tools for nonlinear regression diagnostics.
 @item nltm
 NonLinear Transformation Models for survival analysis.
 @item nnet
@@ -4036,6 +4042,8 @@ Polychoric and polyserial correlations.
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
+@item pomp
+Partially-observed Markov processes.
 @item popbio
 Construction and analysis of matrix population models.
 @item popgen
@@ -4499,6 +4507,8 @@ Spatial and space-time point pattern analysis functions.
 @c </COMMENT>
 @item spsurvey
 Spatial survey design and analysis.
+@item sqldf
+Perform @acronym{SQL} selects on R data frames.
 @item ssanv
 Sample Size Adjusted for Nonadherence or Variability of input
 parameters.
