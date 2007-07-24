@@ -1429,6 +1429,10 @@ If true, make use of the @pkg{codetools} package, which provides a
 detailed analysis of visibility of objects (but may give false
 positives).
 Default: true.
+@item $R_check_Rd_style
+If true, check whether Rd usage entries for S3 methods use the full
+function name rather than the appropiate @code{\method} markup.
+Default: true.
 @item $R_check_Rd_xrefs
 If true, check the cross-references in @file{.Rd} files.
 Default: true.
@@ -1449,7 +1453,7 @@ $R_check_weave_vignettes = 0;
 @noindent
 results in using install logs and turning off weaving.
 
-Future versions of @R{} will enhance this customization mechanism, and
+Future versions of @R{} may enhance this customization mechanism, and
 provide a similar scheme for @code{R CMD build}.
 
 There are other internal settings that can be changed via environment
@@ -2291,10 +2295,11 @@ was used to update a @file{.rda} file.
 
 If you want to run @command{R CMD check} on a Unix-alike over a
 package that sets the encoding you may need to specify a suitable
-locale via an environment variable.  The default is equivalent to
+locale via an environment variable.  The default is equivalent setting
+@env{R_ENCODING_LOCALES} to
 
 @example
-R_ENCODING_LOCALES="latin1=en_US:latin2=pl_PL:UTF-8=en_US.utf8:latin9=fr_FR.iso885915@@euro"
+"latin1=en_US:latin2=pl_PL:UTF-8=en_US.utf8:latin9=fr_FR.iso885915@@euro"
 @end example
 
 @noindent
@@ -2813,8 +2818,11 @@ value} to indicate the usage of an S3 replacement method for the generic
 replacement function @code{"@var{generic}<-"} for objects inheriting
 from class @code{"@var{class}"}.
 
-Usage for S3 methods for extracting or replacing parts of an object
-follows the above rules.  E.g., @file{Extract.factor.Rd} contains
+Usage for S3 methods for extracting or replacing parts of an object, S3
+methods for members of the Ops group, and S3 methods for user-defined
+(binary) infix operators (@samp{%@var{xxx}%}) follows the above rules,
+using the appropriate function names.  E.g., @file{Extract.factor.Rd}
+contains
 
 @example
 @group
@@ -2823,6 +2831,8 @@ follows the above rules.  E.g., @file{Extract.factor.Rd} contains
 \method@{[[@}@{factor@}(x, i)
 \method@{[@}@{factor@}(x, \dots) <- value
 @}
+@end group
+@end example
 
 @noindent
 which will print as
@@ -2839,10 +2849,6 @@ Usage:
      x[...] <- value
 @end group
 @end example
-
-@end group
-@end example
-
 
 @item \arguments@{@dots{}@}
 @findex \arguments

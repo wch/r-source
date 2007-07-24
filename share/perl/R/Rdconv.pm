@@ -654,7 +654,7 @@ sub transform_S3method {
 	}
     }
     ## Also try to handle markup for S3 methods for subscripting and
-    ## subassigning.  (Still nothing for S3 Ops group methods.)
+    ## subassigning.
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
 	"\{(\\\$|\\\[\\\[?)\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
     my ($str, $name, @args);
@@ -685,21 +685,33 @@ sub transform_S3method {
 	
 	$text =~ s/$S3method_RE.*/$str$rest/s;
     }
-    ## Also try to handle markup for S3 methods for binary ops.
+    ## Also try to handle markup for S3 methods for binary ops and S3
+    ## Ops group methods.
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
 	"\{(" .
 	join("|",
 	     ("\\\+", "\\\-", "\\\*", "\\\/", "\\\^",
-	      "<=?", ">=?", "!=", "==", "\\\&", "\\\|",
+	      "<=?", ">=?", "!=?", "==", "\\\&", "\\\|",
 	      "\\\%[[:alnum:][:punct:]]*\\\%")) .
 	")\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
     while($text =~ /$S3method_RE/) {
 	$str = "$1\#\# S3 method for class '$4':\n$1";
 	$name = $3;
 	@args = split(/,\s*/, $5);
-	## These are all binary ops, so we should really check on
-	## scalar(@args) to be 2 ...
-	$str .= "$args[0] $name $args[1]";
+	my $nargs = scalar(@args);
+	if(($nargs == 1) && ($name eq "!")) {
+	    ## Unary: !.
+	    $str .= "$name $args[0]";
+	}
+	elsif(($nargs == 2) && ($name ne "!")) {
+	    ## Binary: everything but !.
+	    $str .= "$args[0] $name $args[1]";
+	}
+	else {
+	    ## 
+	    warn "Warning: arity problem for \\$2method{$name}{$4}?\n";
+	    $str .= "`$name`($5)";
+	}
 	$text =~ s/$S3method_RE/$str/s;
     }
     $text;

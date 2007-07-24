@@ -131,7 +131,7 @@ my $R_check_use_codetools =
 my $R_check_force_suggests =
     &R_getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE");
 my $R_check_Rd_style =
-    &R_getenv("_R_CHECK_RD_STYLE_", "FALSE");
+    &R_getenv("_R_CHECK_RD_STYLE_", "TRUE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
