@@ -23,12 +23,15 @@ pkg:::name
 
   If the package \code{pkg} does not have a name space but is on the
   search path then \code{pkg::name} returns the value of \code{name} in
-  the package environent.
+  the package environment.
 }
 \seealso{
-  \code{\link{get}} to access an object masked by another of the same name.       }
+  \code{\link{get}} to access an object masked by another of the same name.
+}
 \examples{
 base::log
 base::"+"
+
+stats:::coef.default
 }
 \keyword{programming}

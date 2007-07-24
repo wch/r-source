@@ -141,7 +141,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   of the pattern specification.
 
   \code{\link{glob2rx}} to turn wildcard matches into regular expressions.
-  
+
   \code{\link{agrep}} for approximate matching.
 
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
@@ -186,7 +186,7 @@ regexpr("en", txt)
 gregexpr("e", txt)
 
 ## trim trailing white space
-str = 'Now is the time      '
+str <- 'Now is the time      '
 sub(' +$', '', str)  ## spaces only
 sub('[[:space:]]+$', '', str) ## white space, POSIX-style
 sub('\\\\s+$', '', str, perl = TRUE) ## Perl-style white space
