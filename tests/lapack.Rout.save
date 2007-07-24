@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-04 r41441)
+R version 2.6.0 Under development (unstable) (2007-07-24 r42292)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -155,7 +155,7 @@ NULL
 > Ceigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 + {
 +     print(fixsign(E$vectors))
-+     print(E$values)
++     print(signif(E$values, 5))
 +     V <- E$vectors; lam <- E$values
 +     stopifnot(Mod(A %*% V - V %*% diag(lam)) < Eps,
 +               Mod(A - V %*% diag(lam) %*% Conj(t(V))) < Eps)
@@ -243,5 +243,5 @@ NULL
 [3,]  0.23232-0.24980i
 [4,]  0.36200-0.10282i
 [5,] -0.08698-0.11804i
-[1] -2.8006+0i  2.4043-0i -1.4050+0i  1.3934+0i  0.7854+0i
+[1] -2.8006+0i  2.4043+0i -1.4050+0i  1.3934+0i  0.7854+0i
 > 

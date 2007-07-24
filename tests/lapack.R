@@ -51,7 +51,7 @@ eigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 Ceigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 {
     print(fixsign(E$vectors))
-    print(E$values)
+    print(signif(E$values, 5))
     V <- E$vectors; lam <- E$values
     stopifnot(Mod(A %*% V - V %*% diag(lam)) < Eps,
               Mod(A - V %*% diag(lam) %*% Conj(t(V))) < Eps)
