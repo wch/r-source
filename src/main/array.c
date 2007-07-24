@@ -553,7 +553,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP s, value;
 	/* Remove argument names to ensure positional matching */
 	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
-	value = R_possible_dispatch(call, op, args, rho);
+	value = R_possible_dispatch(call, op, args, rho, FALSE);
 	if(value) return value;
     }
 

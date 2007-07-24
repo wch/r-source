@@ -1793,14 +1793,16 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
   is a missing argument to the current closure.  rho is the
   environment that missing was called from.
 
-  isMissing is called on the not-yet-evaluated value of an argument,
+  R_isMissing is called on the not-yet-evaluated value of an argument,
   if this is a symbol, as it could be a missing argument that has been
   passed down.  So 'symbol' is the promise value, and 'rho' its
   evaluation argument.
 
+  It is also called in arithmetic.c. for e.g. do_log
 */
 
-static int isMissing(SEXP symbol, SEXP rho)
+int attribute_hidden
+R_isMissing(SEXP symbol, SEXP rho)
 {
     int ddv=0;
     SEXP vl, s;
@@ -1835,7 +1837,7 @@ static int isMissing(SEXP symbol, SEXP rho)
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    PRVALUE(CAR(vl)) == R_UnboundValue &&
 	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
-	    return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+	    return R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
 	else
 	    return 0;
     }
@@ -1889,7 +1891,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
-    else LOGICAL(rval)[0] = isMissing(PREXPR(t), PRENV(t));
+    else LOGICAL(rval)[0] = R_isMissing(PREXPR(t), PRENV(t));
     return rval;
 }
 

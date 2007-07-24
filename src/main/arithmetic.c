@@ -1370,33 +1370,20 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap = args, call2 = call;
-    int n = length(args), nprotect = 0;
+    SEXP res, ap = args;
+    int n = length(args), nprotect = 1;
 
-    if (n == 1) {
-	SEXP tag, tmp;
+    if (n >=2 && R_isMissing(CADR(args), env)) {
 #ifdef M_E
-	double e = M_E;
+        double e = M_E;
 #else
-	double e = exp(1.);
+        double e = exp(1.);
 #endif
-	/* check for match to first arg of (x=, base=) */
-	tag = TAG(args);
-	if(tag != R_NilValue && !streql("x", CHAR(PRINTNAME(tag))) )
-	    errorcall(call, 
-		      _("argument \"%s\" is missing, with no default"), "x");
-
-	/* we need to set a second arg for log(),
-	   since methods may rely on the default from the generic */
-	PROTECT(ap = duplicate(args));
-	PROTECT(call2 = duplicate(call));
-	nprotect += 2;
-	tmp = CONS(ScalarReal(e), R_NilValue);
-	SETCDR(ap, tmp);
-	SETCDR(CDR(call2), tmp);
+	SETCAR(CDR(args), ScalarReal(e));
     }
+    PROTECT(args = evalListKeepMissing(args, env));
 
-    if (! DispatchGroup("Math", call2, op, ap, env, &res)) {
+    if (! DispatchGroup("Math", call, op, args, env, &res)) {
 	switch (n) {
 	case 1:
 	    if (isComplex(CAR(args)))

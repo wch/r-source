@@ -1865,7 +1865,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 	    } else argValue = args;
 	    PROTECT(argValue); nprotect++;
 	    /* This means S4 dispatch */
-	    value = R_possible_dispatch(call, op, argValue, rho);
+	    value = R_possible_dispatch(call, op, argValue, rho, TRUE);
 	    if(value) {
 		*ans = value;
 		UNPROTECT(nprotect);
@@ -1995,7 +1995,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if(isOps)
 	    for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
 
-	value = R_possible_dispatch(call, op, args, rho);
+	value = R_possible_dispatch(call, op, args, rho, FALSE);
 	if(value) {
 	    *ans = value;
 	    return 1;
