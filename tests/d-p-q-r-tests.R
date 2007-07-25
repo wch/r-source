@@ -564,4 +564,10 @@ stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6),# (1.50 | 1.65)e-8
           All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
           )
 
+## qt(p ~ 0, df=1) - PR#9804
+p <- 10^(-10:-20)
+qtp <- qt(p, df = 1)
+## relative error < 10^-14 :
+stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

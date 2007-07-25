@@ -32,6 +32,7 @@ BUG FIXES
 	
     o	Syntax errors would sometimes misreport the error context.
 
+    o	qt(p, df=1) is now also correct for very small p. (PR#9804)
 
 
 		CHANGES IN R VERSION 2.5.1

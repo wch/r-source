@@ -80,7 +80,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
     }
     else if (ndf < 1 + eps) { /* df ~= 1  (df < 1 excluded above): Cauchy */
 	if(P > 0)
-	    q = - tan((P+1) * M_PI_2);
+	    q = 1/tan(P * M_PI_2); /* == - tan((P+1) * M_PI_2) --- suffers for P ~= 0 */
 
 	else { /* P = 0, but maybe p_ = exp(p) ! */
 	    if(log_p) q = M_1_PI * exp(-R_D_Lval(p));/* cot(e) ~ 1/e */
