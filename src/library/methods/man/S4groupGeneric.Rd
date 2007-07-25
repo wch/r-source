@@ -77,7 +77,7 @@ Complex(z)
     \item{\code{Complex}}{\code{"Arg"}, \code{"Conj"}, \code{"Im"},
       \code{"Mod"}, \code{"Re"}}
   }
-  Note that \code{"Ops"} merely consists of three sub groups.
+  Note that \code{Ops} merely consists of three sub groups.
   Functions with the group names exist in the \pkg{methods} package but
   should not be called directly.
 
@@ -90,13 +90,17 @@ Complex(z)
   method definition is to be stored.  It all works more or less as you
   might expect, admittedly via a bit of trickery in the background.
 
-  Note: currently those members which are not primitive functions must
-  have been converted to S4 generic functions (preferably
-  \emph{before} setting an S4 group generic method) as it only sets
-  methods for known S4 generics.  This can be done by a call to
-  \code{setGeneric}, for example \code{setGeneric("round", group="Math2")}.
-  These are currently all the members of the \code{Math2} and
-  \code{Summary} groups.
+  Note: those members which are not primitive functions (currently all
+  the members of the \code{Math2} and \code{Summary} groups) must have
+  been converted to S4 generic functions as group methods are only
+  considered for S4 generics.  This can be done by a call to
+  \code{setGeneric}, for example \code{setGeneric("round")}. (Prior to
+  \R 2.6.0 it was necessary to specify the group, but not currently.)
+
+  Note that two members of the \code{Math} group, \code{\link{log}} and
+  \code{\link{trunc}}, have more than one argument: S4 group dispatch
+  will always pass only one argument to the method so if you want to
+  handle \code{base} in \code{log}, set a specific method as well.
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr

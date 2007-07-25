@@ -79,10 +79,10 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     }
 
   \item{knownMembers}{
-    (For \code{setGroupGeneric} only)  The names of functions that are known to be
-    members of this group.  This information is used to reset cached
-    definitions of the member generics when information about the group
-    generic is changed.
+    (For \code{setGroupGeneric} only.)  The names of functions that are
+    known to be members of this group.  This information is used to
+    reset cached definitions of the member generics when information
+    about the group generic is changed.
     }
 }
 \details{
@@ -158,34 +158,15 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
 \section{Generic Functions and Primitive Functions}{
   A number of the basic \R functions are specially implemented as
   primitive functions, to be evaluated directly in the underlying C
-  code rather than by evaluating an S language definition.  Primitive
-  functions are eligible to have methods, but are handled differently
-  by \code{setGeneric} and \code{setGroupGeneric}.  A call to
-  \code{setGeneric} for a primitive function does not create a new
-  definition of the function, and the call is allowed only to
-  \dQuote{turn on} methods for that function.
+  code rather than by evaluating an \R language definition.  Most have
+  implicit generics (see \code{\link{implicitGeneric}}), and become
+  generic as soon as methods (including group methods) are defined on
+  them.  Others cannot be made generic.
 
-  A call to \code{setGeneric} for a primitive causes the evaluator to
-  look for methods for that generic; a call to \code{setGroupGeneric}
-  for any of the groups that include primitives (\code{"Arith", "Logic",
-    "Compare", "Ops", "Math", "Math2", "Summary",} and \code{"Complex"},
-  see \code{\link{S4groupGeneric}})
-  does the same for each of the functions in that group.
-
-  You usually only need to use either function if the methods are
-  being defined only for the group generic.  Defining a method for a
-  primitive function, say \code{"+"}, by a call to \code{setMethod}
-  turns on method dispatch for that function.  But in \R defining a
-  method for the corresponding group generic, \code{"Arith"}, does not
-  currently turn on method dispatch (for efficiency reasons).  If
-  there are no non-group methods for the functions, you have two
-  choices.
-
-  You can turn on method dispatch for \emph{all} the functions in the
-  group by calling \code{setGroupGeneric("Arith")}, or you can turn on
-  method dispatch for only some of the functions by calling
-  \code{setGeneric("+")}, etc.  Note that in either case you should
-  give the name of the generic function as the only argument.
+  Currently those with implicit generics are those which are
+  \link{internal generic} (which includes all members of the group
+  generics except groups \code{"Math2"} and \code{"Summary"}) and
+  \code{\link{\%*\%}}.
 }
 \value{
   The \code{setGeneric} function exists for its side effect: saving the

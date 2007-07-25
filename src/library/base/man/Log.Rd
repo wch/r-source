@@ -65,10 +65,14 @@ expm1(x)
 \section{S4 methods}{
   \code{exp}, \code{expm1}, \code{log}, \code{log10}, \code{log2} and
   \code{log1p} are S4 generic and are members of the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.  Note that
-  this means that the S4 generic for \code{log} has a signature with
-  only one argument, \code{x}, but that \code{base} can be passed to
-  methods but will not be used for method selection.
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+
+  Note that this means that the S4 generic for \code{log} has a
+  signature with only one argument, \code{x}, but that \code{base} can
+  be passed to methods (but will not be used for method selection).  On
+  the other hand, if you only set a method for the \code{Math} group
+  generic then \code{base} argument of \code{log} will be ignored for
+  your class.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
