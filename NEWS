@@ -379,6 +379,8 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
+    o	New utility function alloc3DArray similar to allocMatrix.
+
     o	The entry point R_seemsS4Object in Rinternals.h has not been
 	needed since R 2.4.0 and has been removed.  Use IS_S4_OBJECT
 	instead.
