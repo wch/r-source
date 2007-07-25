@@ -16,7 +16,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  A copy of the GNU General Public License is available via WWW at
+ *  You should have received a copy of the GNU General Public License
  *  http://www.gnu.org/copyleft/gpl.html.
  *
  *  DESCRIPTION
