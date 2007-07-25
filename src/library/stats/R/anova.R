@@ -97,7 +97,13 @@ printCoefmat <-
                       c(cs.ind, tst.ind, zap.ind, if(has.Pvalue)nc))))
 	Cf[, r.ind] <- format(xm[, r.ind], digits=digits)
     okP <- if(has.Pvalue) ok[, -nc] else ok
-    x0 <- (xm[okP]==0) != (as.numeric(Cf[okP])==0)
+    ## we need to find out where Cf is zero.  We can't use as.numeric
+    ## directly as OutDec could have been set.
+    ## x0 <- (xm[okP]==0) != (as.numeric(Cf[okP])==0)
+    x1 <- Cf[okP]
+    dec <- getOption("OutDec")
+    if(dec != ".") x1 <- chartr(dec, ".", x1)
+    x0 <- (xm[okP] == 0) != (as.numeric(x1) == 0)
     if(length(not.both.0 <- which(x0 & !is.na(x0)))) {
 	## not.both.0==TRUE:  xm !=0, but Cf[] is: --> fix these:
 	Cf[okP][not.both.0] <- format(xm[okP][not.both.0],
