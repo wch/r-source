@@ -7,11 +7,15 @@ sunflowerplot <-
 {
     ## Argument "checking" as plot.default:
 
-### TODO: also allow 'x' to be the result of sunflowerTable() !
-
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
-    xy <- xy.coords(x, y, xlabel, ylabel, log)
+    is.xyn <- (is.list(x) && all(c("x","y","number") %in% names(x)))
+                                        # as, e.g., from grDevices::xyTable(.)
+    xy <-
+        if(is.xyn) {
+            number <- x$number
+            x
+        } else xy.coords(x, y, xlabel, ylabel, log)
     if(!add) {
         xlab <- if (is.null(xlab)) xy$xlab else xlab
         ylab <- if (is.null(ylab)) xy$ylab else ylab
@@ -20,7 +24,7 @@ sunflowerplot <-
     }
     n <- length(xy$x)
     if(missing(number)) {
-	tt <- sunflowerTable(xy, digits = digits)## in ../../grDevices/R/calc.R
+	tt <- xyTable(xy, digits = digits)## in ../../grDevices/R/calc.R
 	x <- tt$x
 	y <- tt$y
 	number <- tt$number

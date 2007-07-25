@@ -1,12 +1,14 @@
-\name{sunflowerTable}
-\alias{sunflowerTable}
+\name{xyTable}
+\alias{xyTable}
 \title{Multiplicities of (x,y) Points, e.g., for a Sunflower Plot}
+\concept{2D binning}
 \description{
   Given (x,y) points, determine their multiplicity -- checking for
   equality only up to some (crude kind of) noise.
+  Note that this is special kind of \dQuote{2D binning}.
 }
 \usage{
-sunflowerTable(x, y = NULL, digits)
+xyTable(x, y = NULL, digits)
 }
 \arguments{
   \item{x,y}{numeric vectors of the same length; alternatively other
@@ -22,16 +24,16 @@ sunflowerTable(x, y = NULL, digits)
   \item{number}{multiplicities (positive integers); i.e.,
     \code{number[i]} is the multiplicity of \code{(x[i],y[i])}.}
 }
-\seealso{\code{\link[graphics]{sunflowerplot}} which uses
-  \code{sunflowerTable()}; \code{\link{signif}}.
+\seealso{\code{\link[graphics]{sunflowerplot}} which typically uses
+  \code{xyTable()}; \code{\link{signif}}.
 }
 \examples{
-sunflowerTable(iris[,3:4], digits = 6)
+xyTable(iris[,3:4], digits = 6)
 
 ## Discretized uncorrelated Gaussian:
 \dontshow{set.seed(1)}
 require(stats)
 xy <- data.frame(x = round(sort(rnorm(100))), y = rnorm(100))
-sunflowerTable(xy, digits = 1)
+xyTable(xy, digits = 1)
 }
 \keyword{dplot}

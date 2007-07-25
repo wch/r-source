@@ -23,7 +23,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     of replicates for \code{(x[i],y[i])}, may be 0.\cr
     Default (\code{missing(number)}): compute the exact multiplicity of
     the points \code{x[],y[]}, via
-    \code{\link[grDevices]{sunflowerTable}()}.}
+    \code{\link[grDevices]{xyTable}()}.}
   \item{log}{character indicating log coordinate scale, see
     \code{\link{plot.default}}.}
   \item{digits}{when \code{number} is computed (i.e., not specified),
@@ -74,7 +74,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   \item{y}{y coordinates}
   \item{number}{number}
 
-  Use \code{\link[grDevices]{sunflowerTable}()} (from package
+  Use \code{\link[grDevices]{xyTable}()} (from package
   \pkg{grDevices}) if you are only interested in this return value.
 }
 \references{
@@ -92,10 +92,12 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   1989--1993.  Port to \R by Martin Maechler
   \email{maechler@stat.math.ethz.ch}.
 }
-\seealso{\code{\link{density}}, \code{\link[grDevices]{sunflowerTable}}
+\seealso{\code{\link{density}}, \code{\link[grDevices]{xyTable}}
 }
 \examples{
 require(stats)
+require(grDevices)
+
 ## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])
 ## Imitating  Chambers et al., p.109, closely:
@@ -103,10 +105,16 @@ sunflowerplot(iris[, 3:4], cex=.2, cex.fact=1, size=.035, seg.lwd=.8)
 
 sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
               main = "Sunflower Plot of Rounded N(0,1)")
+## Similarly using a "xyTable" argument:
+xyT <- xyTable(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
+               digits=3)
+utils::str(xyT, vec.len=20)
+sunflowerplot(xyT, main = "2nd Sunflower Plot of Rounded N(0,1)")
 
-## A 'point process' {explicit 'number' argument}:
+## A 'marked point process' {explicit 'number' argument}:
 sunflowerplot(rnorm(100), rnorm(100), number = rpois(n=100,lambda=2),
-              rotate=TRUE, main="Sunflower plot", col = "blue4")
+              main="Sunflower plot (marked point process)",
+              rotate=TRUE, col = "blue4")
 }
 \keyword{hplot}
 \keyword{smooth}

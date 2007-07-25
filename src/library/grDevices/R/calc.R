@@ -94,26 +94,27 @@ nclass.FD <- function(x)
 
 ## Sunflower Plot computation:
 ## Used to be part of ../../graphics/R/sunflowerplot.R :
-sunflowerTable <- function(x, y = NULL, digits)
+xyTable <- function(x, y = NULL, digits)
 {
     ## Compute number := multiplicities of (x[i], y[i])
 
     x <- xy.coords(x, y)
-    ##     if(!is.null(y))
-    ##         x <- xy.coords(x, y)
-    ##     else ## assume 'x' is already xy.coords()-like ;  cheap check only:
-    ##         stopifnot(is.list(x), all(c("x","y") %in% names(x)))
 
-    ## must get rid of rounding fuzz:
+    ## get rid of rounding fuzz:
     y <- signif(x$y, digits=digits)
     x <- signif(x$x, digits=digits)
     n <- length(x)
-    orderxy <- order(x, y)
-    x <- x[orderxy]
-    y <- y[orderxy]
-    first <- c(TRUE, (x[-1] != x[-n]) | (y[-1] != y[-n]))
-    x <- x[first]
-    y <- y[first]
-    number <- diff(c((1:n)[first], n + 1))
+    number <-
+	if(n > 0) {
+	    orderxy <- order(x, y)
+	    x <- x[orderxy]
+	    y <- y[orderxy]
+	    first <- c(TRUE, (x[-1] != x[-n]) | (y[-1] != y[-n]))
+	    x <- x[first]
+	    y <- y[first]
+	    diff(c((1:n)[first], n + 1L))
+	}
+	else integer(0)
+
     list(x = x, y = y, number = number)
 }
