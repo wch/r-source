@@ -15,8 +15,8 @@
    Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, 
+   License along with the GNU C Library; if not, a copy is available at
+   http://www.r-project.org/Licenses/ 
    MA 02110-1301  USA.  */
 
 #ifndef _REGEX_H

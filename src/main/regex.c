@@ -14,8 +14,8 @@
    Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+   License along with the GNU C Library; if not, a copy is available at
+   http://www.r-project.org/Licenses/ MA
    02111-1301 USA.  */
 
 /* constructed from glibc 2.5/posix via

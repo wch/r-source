@@ -13,9 +13,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
- * The text of the GNU General Public License, version 2, is available
- * as http://www.gnu.org/copyleft or by writing to the Free Software
- * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301   USA.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, a copy is available at
+ *  http://www.r-project.org/Licenses/
  *
  * The routines are loosely based on the pseudo-code in Schumacher (Wiley,
  * 1981) and the CMLIB library DBSPLINES.

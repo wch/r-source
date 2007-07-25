@@ -31,8 +31,7 @@ static void get_locale_w_strings(void);
 
    You should have received a copy of the GNU Library General Public
    License along with the GNU C Library; see the file COPYING.LIB.  If not,
-   write to the Free Software Foundation, Inc., 51 Franklin Street, 
-   Fifth Floor, Boston, MA 02110-1301  USA.   */
+   a copy is available at Foundation, Inc., 51 Franklin Street, 
 
 /* XXX This version of the implementation is not really complete.
    Some of the fields cannot add information alone.  But if seeing
