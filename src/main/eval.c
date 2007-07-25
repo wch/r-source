@@ -1846,7 +1846,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    } else argValue = args;
 	    PROTECT(argValue); nprotect++;
 	    /* This means S4 dispatch */
-	    value = R_possible_dispatch(call, op, argValue, rho);
+	    value = R_possible_dispatch(call, op, argValue, rho, TRUE);
 	    if(value) {
 		*ans = value;
 		UNPROTECT(nprotect);
@@ -1964,7 +1964,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	return 0;
     /* try for formal method */
     if(R_has_methods(op)) {
-	SEXP value = R_possible_dispatch(call, op, args, rho);
+	SEXP value = R_possible_dispatch(call, op, args, rho, FALSE);
 	if(value) {
 	    *ans = value;
 	    return 1;

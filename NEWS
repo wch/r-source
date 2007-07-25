@@ -38,6 +38,11 @@ BUG FIXES
 	layout() and sortedXyData() now work correctly with
 	non-default settings of options("OutDec").
 
+    o	S4 method dispatch for group generics (and %*%) failed to pass
+	arguments to methods as promises and so in some circumstances
+	methods could change their arguments.  (Seen for the 'Math'
+	group with package Matrix.)
+
 
 
 		CHANGES IN R VERSION 2.5.1

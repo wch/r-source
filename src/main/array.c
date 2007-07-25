@@ -560,7 +560,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(R_has_methods(op)) {
       SEXP value;
-      value = R_possible_dispatch(call, op, args, rho);
+      value = R_possible_dispatch(call, op, args, rho, FALSE);
       if(value) return value;
     }
 

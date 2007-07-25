@@ -1230,11 +1230,18 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
    the stored generic function corresponding to the op.	 Requires that
    the methods be set up to return a special object rather than trying
    to evaluate the default (which would get us into a loop). */
+
+/* called from DispatchOrEval, DispatchGroup, do_matprod
+   When called from the first the arguments have been enclosed in
+   promises, but not from the other two: there all the arguments have
+   already been evaluated.
+ */
 SEXP attribute_hidden
-R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
+R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho, 
+		    Rboolean promisedArgs)
 {
-    SEXP fundef, value, mlist=R_NilValue; 
-    int offset; 
+    SEXP fundef, value, mlist=R_NilValue, s, a, b;
+    int offset;
     prim_methods_t current;
     offset = PRIMOFFSET(op);
     if(offset < 0 || offset > curMaxOffset)
@@ -1260,9 +1267,19 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	value = (*quick_method_check_ptr)(args, mlist, op);
 	if(isPrimitive(value))
 	    return(NULL);
-	if(isFunction(value))
-	    /* found a method, call it */
-	    return applyClosure(call, value, args, rho, R_BaseEnv);
+	if(isFunction(value)) {
+	    /* found a method, call it with promised args */
+	    if(!promisedArgs) {
+		PROTECT(s = promiseArgs(CDR(call), rho));
+		if (length(s) != length(args)) error(_("dispatch error"));
+		for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
+		    SET_PRVALUE(CAR(b), CAR(a));
+		value =  applyClosure(call, value, s, rho, R_BaseEnv);
+		UNPROTECT(1);
+		return value;
+	    } else
+		return applyClosure(call, value, args, rho, R_BaseEnv);
+	}
 	/* else, need to perform full method search */
     }
     fundef = prim_generics[offset];
@@ -1270,8 +1287,16 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("primitive function \"%s\" has been set for methods but no generic function supplied"),
 	      PRIMNAME(op));
     /* To do:  arrange for the setting to be restored in case of an
-       error in method search */
-    value = applyClosure(call, fundef, args, rho, R_BaseEnv);
+       error in method search */    
+    if(!promisedArgs) {
+	PROTECT(s = promiseArgs(CDR(call), rho));
+	if (length(s) != length(args)) error(_("dispatch error"));
+	for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
+	    SET_PRVALUE(CAR(b), CAR(a));
+	value = applyClosure(call, fundef, s, rho, R_BaseEnv);
+	UNPROTECT(1);
+    } else
+	value = applyClosure(call, fundef, args, rho, R_BaseEnv);
     prim_methods[offset] = current;
     if(value == deferred_default_object)
 	return NULL;
