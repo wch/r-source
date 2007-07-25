@@ -113,16 +113,8 @@ src/library/graphics/R/polygon.R
 
 	Copyright (C) 2001 by Kevin Buhr <buhr@stat.wisc.edu>
 
-src/library/stats/R/aov.R
 src/library/stats/R/bandwidths.R
-src/library/stats/R/contr.poly.R
-src/library/base/R/expand.grid.R
-src/library/stats/R/predict.glm.R
-src/library/stats/R/update.R
-src/library/stats/*/max.col.R*
-src/library/stats/R/biplot.R
-src/library/stats/R/princomp-add.R
-src/appl/bandwidths.c
+src/library/stats/src//bandwidths.c
 src/appl/maxcol.c
 
 	Copyright (C) various dates W. N. Venables and B. D. Ripley

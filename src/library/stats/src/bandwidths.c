@@ -1,5 +1,6 @@
 /*
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
+ *  This version distributed under GPL (version 2 or later)
  */
 
 #include <math.h>

@@ -1,4 +1,6 @@
-#### copyright (C) 1994-2001 W. N. Venables and B. D. Ripley
+### copyright (C) 1994-2001 W. N. Venables and B. D. Ripley
+### This version distributed under GPL (version 2 or later)
+
 
 #====           bandwidth selection rules              ====
 

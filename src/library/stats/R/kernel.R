@@ -1,6 +1,6 @@
-# Copyright (C) 1997-1999  Adrian Trapletti
-#
-### Copyright (C) 1999-2006  The R Development Core Team
+## Copyright (C) 1997-1999  Adrian Trapletti
+## Copyright (C) 1999-2006  The R Development Core Team
+## This version distributed under LGPL (version 2 or later)
 
 
 kernel <- function (coef, m = length(coef)+1, r, name="unknown")

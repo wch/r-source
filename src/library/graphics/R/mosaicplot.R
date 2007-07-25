@@ -1,4 +1,5 @@
 ## Original code copyright (C) 1998 John W. Emerson
+## This version distributed under GPL (version 2 or later)
 
 mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 

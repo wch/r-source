@@ -18,6 +18,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
 ## some of the changes are from code
 ## Copyright 1999 Dr. Jens Oehlschlaegel-Akiyoshi
 ## Others are by BDR and MM
+## This version distributed under GPL (version 2 or later)
 #################################################
 
 pairs.default <-

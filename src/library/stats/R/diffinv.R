@@ -1,5 +1,6 @@
-# Copyright (C) 1997-1999  Adrian Trapletti
-#
+## Copyright (C) 1997-1999  Adrian Trapletti
+## Cppyright (C) 2003-2007  R Core Development Team
+## This version distributed under GPL (version 2 or later)
 
 diffinv <- function (x, ...) { UseMethod("diffinv") }
 
