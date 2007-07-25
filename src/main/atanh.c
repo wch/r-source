@@ -14,6 +14,11 @@
 /* based on
 Cephes Math Library Release 2.8:  June, 2000
 Copyright (C) 1987, 1995, 2000 by Stephen L. Moshier
+
+According to http://www.netlib.org/cephes/readme
+
+  What you see here may be used freely but it comes with no support or
+  guarantee.
 */
 
 double polevl(double x, double *coef, int N)

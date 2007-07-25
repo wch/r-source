@@ -223,11 +223,20 @@ src/main/xspline.c
  * Parts Copyright (c) 1998 by Georg Stemmer
  * Parts Copyright (c) 1995 by C. Blanc and C. Schlick
   
+ * Any party obtaining a copy of these files is granted, free of charge, a
+ * full and unrestricted irrevocable, world-wide, paid up, royalty-free,
+ * nonexclusive right and license to deal in this software and
+ * documentation files (the "Software"), including without limitation the
+ * rights to use, copy, modify, merge, publish and/or distribute copies of
+ * the Software, and to permit persons who receive copies from any such 
+ * party to do so, with the only requirement being that this copyright 
+ * notice remain intact.
+
 
 src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc.f
 
   Extracted from
-  *  -- LAPACK routine (version 3.0) --
+  *  -- LAPACK routine (version 3.1) --
   *     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
   *     Courant Institute, Argonne National Lab, and Rice University
 
@@ -283,11 +292,26 @@ used as substitution code only.  Based on
   Cephes Math Library Release 2.8:  June, 2000
   Copyright 1984, 1995, 2000 by Stephen L. Moshier
 
+According to http://www.netlib.org/cephes/readme
+
+  What you see here may be used freely but it comes with no support or
+  guarantee.
+
 
 src/main/apse.c
 src/main/apse.h
 
   Copyright (C) Jarkko Hietaniemi, 1998,1999,2000,2001.
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of either:
+
+  a) the GNU Library General Public License as published by the Free
+     Software Foundation; either version 2, or (at your option) any
+     later version, or
+
+  b) the "Artistic License" which comes with Perl source code.
+
 
 
 src/extra/pcre/LICENCE
