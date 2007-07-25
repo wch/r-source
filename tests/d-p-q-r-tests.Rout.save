@@ -1,5 +1,5 @@
 
-R version 2.5.1 Patched (2007-06-28 r42087)
+R version 2.5.1 Patched (2007-07-25 r42315)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1095,6 +1095,12 @@ Warning messages:
 +           All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
 +           )
 > 
+> ## qt(p ~ 0, df=1) - PR#9804
+> p <- 10^(-10:-20)
+> qtp <- qt(p, df = 1)
+> ## relative error < 10^-14 :
+> stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  5.148 0.034 5.203 0 0 
+Time elapsed:  2.467 0.015 2.503 0 0 
 > 
