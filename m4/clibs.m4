@@ -16,9 +16,8 @@
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, you can obtain it via the World Wide Web at
-### `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
-### Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-### Boston, MA 02110-1301, USA
+### along with R; if not, a copy is available at
+### http://www.r-project.org/Licenses/
 
 ## modified version of AC_F77_LIBRARY_LDFLAGS for C libraries
 
