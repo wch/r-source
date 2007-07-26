@@ -71,8 +71,14 @@ double qt(double p, double ndf, int lower_tail, int log_p)
     } /* 0 <= P <= 1 ; P = 2*min(p_, 1 - p_)  in all cases */
 
     if (fabs(ndf - 2) < eps) {	/* df ~= 2 */
-	if(P > 0)
-	    q = sqrt(2 / (P * (2 - P)) - 2);
+	if(P > 0) {
+	    if(3* P < DBL_EPSILON) /* P ~= 0 */
+		q = 1 / sqrt(P);
+	    else if (P > 0.9)	   /* P ~= 1 */
+		q = (1 - P) * sqrt(2 /(P * (2 - P)));
+	    else /* eps/3 <= P <= 0.9 */
+		q = sqrt(2 / (P * (2 - P)) - 2);
+	}
 	else { /* P = 0, but maybe = exp(p) ! */
 	    if(log_p) q = M_SQRT2 * exp(- .5 * R_D_Lval(p));
 	    else q = ML_POSINF;
@@ -80,7 +86,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
     }
     else if (ndf < 1 + eps) { /* df ~= 1  (df < 1 excluded above): Cauchy */
 	if(P > 0)
-	    q = 1/tan(P * M_PI_2); /* == - tan((P+1) * M_PI_2) --- suffers for P ~= 0 */
+	    q = 1/tan(P * M_PI_2);/* == - tan((P+1) * M_PI_2) -- suffers for P ~= 0 */
 
 	else { /* P = 0, but maybe p_ = exp(p) ! */
 	    if(log_p) q = M_1_PI * exp(-R_D_Lval(p));/* cot(e) ~ 1/e */
