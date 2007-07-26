@@ -31,8 +31,8 @@ static void get_locale_w_strings(void);
 
    You should have received a copy of the GNU Library General Public
    License along with the GNU C Library; see the file COPYING.LIB.  If not,
-   a copy is available at Foundation, Inc., 51 Franklin Street, 
-
+   a copy is available at http://www.r-project.org/licenses/ 
+*/
 /* XXX This version of the implementation is not really complete.
    Some of the fields cannot add information alone.  But if seeing
    some of them in the same format (such as year, week and weekday)
