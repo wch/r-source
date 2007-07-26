@@ -29,8 +29,9 @@
  *	( = The incomplete beta ratio I_x(p,q) ).
  *
  *  NOTES
- * 
+ *
  *      As from R 2.3.0, a wrapper for TOMS708
+ *      as from R 2.6.0, 'log_p' partially improved over log(p..)
  */
 
 #include "nmath.h"
@@ -41,7 +42,7 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail, int log_p)
 {
     double x1 = 0.5 - x + 0.5, w, wc;
     int ierr;
-    bratio(pin, qin, x, x1, &w, &wc, &ierr, log_p);
+    bratio(pin, qin, x, x1, &w, &wc, &ierr, log_p); /* -> ./toms708.c */
     if(ierr)
 	MATHLIB_WARNING(_("pbeta_raw() -> bratio() gave error code %d"), ierr);
     return lower_tail ? w : wc;
@@ -59,12 +60,5 @@ double pbeta(double x, double pin, double qin, int lower_tail, int log_p)
 	return R_DT_0;
     if (x >= 1)
 	return R_DT_1;
-    /* <FIXME>
-       We need to consider log return if this can be small. That can happen if
-       1) x is very small and a and b are moderate (but not if 1-x is small)
-       in the left tail.
-       2) a or b is very large for all but a small range of x, in both the 
-       left or right tail. 
-    */
-    return R_D_val(pbeta_raw(x, pin, qin, lower_tail, log_p));
+    return pbeta_raw(x, pin, qin, lower_tail, log_p);
 }

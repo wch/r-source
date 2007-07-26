@@ -506,6 +506,9 @@ BUG FIXES
     o	write.dcf() no longer writes NA fields (PR#9796), and works
 	correctly on empty descriptions.
 
+    o	pbeta(x, log.p = TRUE) is now improved in many cases, and so are
+        functions depending on it, such as pt(), pf() or pbinom().
+
 
 
 

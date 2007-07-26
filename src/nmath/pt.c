@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-2006   The R Development Core Team
+ *  Copyright (C) 2000-2007   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,19 +47,19 @@ double pt(double x, double n, int lower_tail, int log_p)
     }
 
     nx = (1 + (x/n)*x);
+    /* FIXME: This test should be revised now that pbeta(*, log_p = TRUE) is better*/
     if(fabs(x) > 1e30) {
 	/* Danger of underflow. So use Abramowitz & Stegun 26.5.4
-	   pbeta(z, a, b) ~ z^a(1-z)^b/aB(a,b)
-	   ~ nx^(-n/2)/[n/2, B(n/2, 1/2)]
+	   pbeta(z, a, b) ~ z^a(1-z)^b / aB(a,b) ~ z^a / aB(a,b),
+	   with z = 1/nx = 1/(1 + x^2/n),  a = n/2,  b= 1/2 :
 	*/
 	double lval;
-	lval = -0.5*n*(2*log(fabs(x)) - log(n));
-	lval -= lbeta(0.5*n, 0.5) + log(0.5*n);
+	lval = -0.5*n*(2*log(fabs(x)) - log(n))
+	        - lbeta(0.5*n, 0.5) - log(0.5*n);
 	val = log_p ? lval : exp(lval);
     } else {
-	val = pbeta(1.0/nx, n / 2.0, 0.5, /*lower_tail*/1, log_p);
+	val = pbeta(1./nx, n / 2., 0.5, /*lower_tail*/1, log_p);
     }
-    
 
     /* Use "1 - v"  if	lower_tail  and	 x > 0 (but not both):*/
     if(x <= 0.)

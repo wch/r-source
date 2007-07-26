@@ -571,4 +571,30 @@ qtp <- qt(p, df = 1)
 ## relative error < 10^-14 :
 stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
 
+## Similarly for df = 2 --- both for p ~ 0  *and*  p ~ 1
+## P ~ 0
+stopifnot(all.equal(qt(-740, df=2, log=TRUE), -3.450509368257e+160))
+## P ~ 1 (=> p ~ 0.5):
+p.5 <- 0.5 + 2^(-5*(5:8))
+p.5 - .5
+stopifnot(all.equal(qt(p.5, df = 2),
+		    c(8.429369702179e-08, 2.634178031931e-09,
+		      8.231806349784e-11, 2.572439484308e-12)))
+
+
+## pbeta(*, log=TRUE) {toms708} -- now improved tail behavior
+x <- c(.01, .10, .25, .40, .55, .71, .98)
+pbval <- c(-0.04605755624088, -0.3182809860569, -0.7503593555585,
+           -1.241555830932, -1.851527837938, -2.76044482378, -8.149862739881)
+all.equal(pbeta(x, 0.8, 2, lower=FALSE, log=TRUE), pbval)
+all.equal(pbeta(1-x, 2, 0.8, log=TRUE), pbval)
+qq <- 2^(0:1022)
+df.set <- c(0.1, 0.2, 0.5, 1, 1.2, 2.2, 5, 10, 20, 50, 100, 500)
+for(nu in df.set) {
+    pqq <- pt(-qq, df = nu, log=TRUE)
+    stopifnot(is.finite(pqq))
+}
+
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
