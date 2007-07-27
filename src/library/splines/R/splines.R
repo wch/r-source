@@ -1,5 +1,3 @@
-### $Id: splines.R,v 1.6 2002/05/08 17:32:12 ripley Exp $
-
 bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
                Boundary.knots = range(x))
 {

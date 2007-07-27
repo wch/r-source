@@ -1,4 +1,3 @@
-### $Id: nlsFunc.R,v 1.1 2003/12/11 07:16:02 ripley Exp $
 ###
 ###            Utility functions used with nls
 ###
