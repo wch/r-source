@@ -432,6 +432,7 @@ share/licenses/LGPL-2
 share/licenses/LGPL-2.1
 share/licenses/LGPL-3
 src/main/strdup.c
+src/scripts/texi2dvi
 tools/config.quess
 tools/config.rpath
 tools/config.sub
