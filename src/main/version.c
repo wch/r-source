@@ -103,8 +103,9 @@ void attribute_hidden PrintVersion(char *s)
     strcat(s, "ISBN 3-900051-07-0\n\n");
     strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
     strcat(s, "You are welcome to redistribute it under the terms of the\n");
-    strcat(s, "GNU General Public License.  For more information about\n");
-    strcat(s, "these matters, see http://www.gnu.org/copyleft/gpl.html.\n");
+    strcat(s, "GNU General Public License version 2.\n");
+    strcat(s, "For more information about these matters see\n");
+    strcat(s, "http://www.gnu.org/licenses/.\n");
 }
 
 void attribute_hidden PrintVersionString(char *s)
