@@ -1,3 +1,8 @@
+% File src/library/tcltk/man/tcltk-defunct.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{tcltk-defunct}
 %------ NOTE:  ../R/tcltk-defunct.R   must be synchronized with this!
 \alias{tcltk-defunct}

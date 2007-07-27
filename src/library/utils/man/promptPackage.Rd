@@ -1,3 +1,8 @@
+% File src/library/utils/man/promptPackage.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{promptPackage}
 \alias{promptPackage}
 \title{Generate a Shell for Documentation of a Package}

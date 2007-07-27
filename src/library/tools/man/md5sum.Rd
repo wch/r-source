@@ -1,3 +1,8 @@
+% File src/library/tools/man/md5sum.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{md5sum}
 \alias{md5sum}
 \title{Compute MD5 Checksums}

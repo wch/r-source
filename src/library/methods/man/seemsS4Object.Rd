@@ -1,3 +1,8 @@
+% File src/library/methods/man/seemsS4Object.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{seemsS4Object}
 \alias{seemsS4Object}
 \title{Heuristic test for an object from an S4 class}

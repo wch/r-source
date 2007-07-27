@@ -1,3 +1,8 @@
+% File src/library/base/man/taskCallbackNames.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{taskCallbackNames}
 \alias{getTaskCallbackNames}
 \title{Query the names of the current internal top-level task callbacks}

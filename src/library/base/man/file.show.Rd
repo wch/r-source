@@ -1,3 +1,8 @@
+% File src/library/base/man/file.show.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{file.show}
 \alias{file.show}
 \title{Display One or More Files}

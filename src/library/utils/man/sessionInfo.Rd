@@ -1,3 +1,8 @@
+% File src/library/utils/man/sessionInfo.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{sessionInfo}
 \title{Collect Information About the Current R Session}
 \alias{sessionInfo}

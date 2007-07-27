@@ -1,3 +1,8 @@
+% File src/library/utils/man/aqua/Rapp.updates.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{Rapp.updates}
 \alias{Rapp.updates}
 \title{Checks for newer versions of R with Aqua GUI on CRAN}

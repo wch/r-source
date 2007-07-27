@@ -1,3 +1,8 @@
+% File src/library/stats/man/ts-defunct.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{ts-defunct}
 \alias{arima0.diag}
 \title{Defunct functions in Package ts}

@@ -1,3 +1,8 @@
+% File src/library/base/man/chol2inv.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{chol2inv}
 \alias{chol2inv}
 \title{Inverse from Choleski Decomposition}

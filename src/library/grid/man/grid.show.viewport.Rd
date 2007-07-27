@@ -1,3 +1,8 @@
+% File src/library/grid/man/grid.show.viewport.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{grid.show.viewport}
 \alias{grid.show.viewport}
 \title{Draw a Diagram of a Grid Viewport}

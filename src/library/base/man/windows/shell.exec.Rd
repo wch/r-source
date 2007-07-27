@@ -1,3 +1,8 @@
+% File src/library/base/man/windows/shell.exec.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{shell.exec}
 \alias{shell.exec}
 \title{Open a File or URL using Windows File Associations}

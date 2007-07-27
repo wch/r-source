@@ -1,3 +1,8 @@
+% File src/library/base/man/nrow.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{nrow}
 \title{The Number of Rows/Columns of an Array}
 \usage{

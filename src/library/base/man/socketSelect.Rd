@@ -1,3 +1,8 @@
+% File src/library/base/man/socketSelect.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{socketSelect}
 \alias{socketSelect}
 \title{Wait on Socket Connections}

@@ -1,3 +1,8 @@
+% File src/library/stats/man/plot.ppr.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 % file modreg/man/plot.ppr.Rd
 % copyright (C) 1995-8 B. D. Ripley
 %

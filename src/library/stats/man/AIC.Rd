@@ -1,3 +1,8 @@
+% File src/library/stats/man/AIC.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 %% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates
 %% with additional "k = 2" argument (MM)
 \name{AIC}

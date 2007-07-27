@@ -1,3 +1,8 @@
+% File src/library/datasets/man/rock.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 % file MASS/rock.d
 % copyright (C) 1994-8 W. N. Venables and B. D. Ripley
 %

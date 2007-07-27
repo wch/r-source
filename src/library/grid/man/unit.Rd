@@ -1,3 +1,8 @@
+% File src/library/grid/man/unit.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{unit}
 \alias{unit}
 \title{Function to Create a Unit Object}

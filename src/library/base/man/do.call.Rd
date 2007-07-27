@@ -1,3 +1,8 @@
+% File src/library/base/man/do.call.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{do.call}
 \title{Execute a Function Call}
 \usage{

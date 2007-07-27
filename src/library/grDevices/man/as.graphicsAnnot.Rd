@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/as.graphicsAnnot.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{as.graphicsAnnot}
 \alias{as.graphicsAnnot}
 \title{Coerce an Object for Graphics Annotation}

@@ -1,3 +1,8 @@
+% File src/library/stats/man/pp.test.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{PP.test}
 \alias{PP.test}
 \title{Phillips-Perron Test for Unit Roots}

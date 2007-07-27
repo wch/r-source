@@ -1,3 +1,8 @@
+% File src/library/utils/man/glob2rx.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{glob2rx}
 \alias{glob2rx}
 \title{Change Wildcard or Globbing Pattern into Regular Expression}

@@ -1,3 +1,8 @@
+% File src/library/tools/man/tools-defunct.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{tools-defunct}
 % NOTE: ../R/tools-defunct.R must be synchronized with this!
 \alias{tools-defunct}

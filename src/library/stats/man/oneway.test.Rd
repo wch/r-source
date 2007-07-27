@@ -1,3 +1,8 @@
+% File src/library/stats/man/oneway.test.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{oneway.test}
 \alias{oneway.test}
 \title{Test for Equal Means in a One-Way Layout}

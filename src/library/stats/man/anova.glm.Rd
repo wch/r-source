@@ -1,3 +1,8 @@
+% File src/library/stats/man/anova.glm.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{anova.glm}
 \title{Analysis of Deviance for Generalized Linear Model Fits}
 \usage{

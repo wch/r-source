@@ -1,3 +1,8 @@
+% File src/library/tools/man/texi2dvi.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{texi2dvi}
 \alias{texi2dvi}
 \title{Compile LaTeX Files}

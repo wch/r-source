@@ -1,3 +1,8 @@
+% File src/library/grid/man/grid.plot.and.legend.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{grid.plot.and.legend}
 \alias{grid.plot.and.legend}
 \title{ A Simple Plot and Legend Demo }

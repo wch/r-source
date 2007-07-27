@@ -1,3 +1,8 @@
+% File src/library/stats/man/print.power.htest.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{print.power.htest}
 \alias{print.power.htest}
 \title{Print method for power calculation object}

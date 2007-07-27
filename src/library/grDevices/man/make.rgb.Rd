@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/make.rgb.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{make.rgb}
 \alias{make.rgb}
 \alias{colorConverter}

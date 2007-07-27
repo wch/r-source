@@ -1,3 +1,8 @@
+% File src/library/stats/man/pairwise.t.test.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{pairwise.t.test}
 \alias{pairwise.t.test}
 \title{ Pairwise t tests}

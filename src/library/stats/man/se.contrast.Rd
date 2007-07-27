@@ -1,3 +1,8 @@
+% File src/library/stats/man/se.contrast.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{se.contrast}
 \alias{se.contrast}
 \alias{se.contrast.aov}

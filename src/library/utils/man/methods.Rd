@@ -1,3 +1,8 @@
+% File src/library/utils/man/methods.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{methods}
 \title{List Methods for S3 Generic Functions or Classes}
 \alias{methods}

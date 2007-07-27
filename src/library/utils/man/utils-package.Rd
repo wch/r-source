@@ -1,3 +1,8 @@
+% File src/library/utils/man/utils-package.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{utils-package}
 \alias{utils-package}
 \alias{utils}

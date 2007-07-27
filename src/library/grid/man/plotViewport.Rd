@@ -1,3 +1,8 @@
+% File src/library/grid/man/plotViewport.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{plotViewport}
 \alias{plotViewport}
 \title{ Create a Viewport with a Standard Plot Layout }

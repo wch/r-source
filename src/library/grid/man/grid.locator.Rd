@@ -1,3 +1,8 @@
+% File src/library/grid/man/grid.locator.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{grid.locator}
 \alias{grid.locator}
 \title{ Capture a Mouse Click }

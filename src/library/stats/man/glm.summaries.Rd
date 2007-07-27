@@ -1,3 +1,8 @@
+% File src/library/stats/man/glm.summaries.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{glm.summaries}
 \alias{family.glm}
 \alias{residuals.glm}

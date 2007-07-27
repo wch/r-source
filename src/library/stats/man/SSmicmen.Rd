@@ -1,4 +1,8 @@
-% $Id: SSmicmen.Rd,v 1.1 2003/12/11 07:16:06 ripley Exp $
+% File src/library/stats/man/SSmicmen.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{SSmicmen}
 \title{Michaelis-Menten Model}
 \usage{

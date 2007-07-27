@@ -1,3 +1,8 @@
+% File src/library/stats/man/spec.ar.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{spec.ar}
 \alias{spec.ar}
 \title{Estimate Spectral Density of a Time Series from AR Fit}

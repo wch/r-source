@@ -1,3 +1,8 @@
+% File src/library/tools/man/charsets.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{charsets}
 \alias{Adobe_glyphs}
 \alias{charset_to_Unicode}

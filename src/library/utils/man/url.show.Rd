@@ -1,3 +1,8 @@
+% File src/library/utils/man/url.show.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{url.show}
 \alias{url.show}
 \title{Display a text URL}

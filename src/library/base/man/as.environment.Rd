@@ -1,3 +1,8 @@
+% File src/library/base/man/as.environment.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{as.environment}
 \alias{as.environment}
 \title{ Coerce to an Environment Object }

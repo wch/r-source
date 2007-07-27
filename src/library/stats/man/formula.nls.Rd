@@ -1,4 +1,8 @@
-% $Id: formula.nls.Rd,v 1.2 2003/12/11 17:27:18 ripley Exp $
+% File src/library/stats/man/formula.nls.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{formula.nls}
 \alias{formula.nls}
 \title{Extract Model Formula from nls Object}

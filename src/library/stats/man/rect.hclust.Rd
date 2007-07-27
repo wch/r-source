@@ -1,3 +1,8 @@
+% File src/library/stats/man/rect.hclust.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{rect.hclust}
 \alias{rect.hclust}
 \title{Draw Rectangles Around Hierarchical Clusters}

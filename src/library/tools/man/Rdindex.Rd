@@ -1,3 +1,8 @@
+% File src/library/tools/man/Rdindex.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{Rdindex}
 \title{Generate Index from Rd Files}
 \alias{Rdindex}

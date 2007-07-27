@@ -1,3 +1,8 @@
+% File src/library/stats/man/spec.pgram.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{spec.pgram}
 \alias{spec.pgram}
 \title{Estimate Spectral Density of a Time Series by a Smoothed

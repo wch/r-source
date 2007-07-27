@@ -1,3 +1,8 @@
+% File src/library/tcltk/man/tk_select.list.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{tk_select.list}
 \alias{tk_select.list}
 \title{Select Items from a List}

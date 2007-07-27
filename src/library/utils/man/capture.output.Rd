@@ -1,3 +1,8 @@
+% File src/library/utils/man/capture.output.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{capture.output}
 \alias{capture.output}
 \title{Send output to a character string or file}

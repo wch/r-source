@@ -1,3 +1,8 @@
+% File src/library/stats/man/power.t.test.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{power.t.test}
 \alias{power.t.test}
 \encoding{latin1}

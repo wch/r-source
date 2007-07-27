@@ -1,3 +1,8 @@
+% File src/library/utils/man/file.edit.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{file.edit}
 \alias{file.edit}
 \title{Edit One or More Files}

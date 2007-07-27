@@ -1,4 +1,8 @@
-% $Id: getInitial.Rd,v 1.1 2003/12/11 07:16:06 ripley Exp $
+% File src/library/stats/man/getInitial.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{getInitial}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}

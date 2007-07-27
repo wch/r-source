@@ -1,3 +1,8 @@
+% File src/library/grid/man/grid.pretty.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{grid.pretty}
 \alias{grid.pretty}
 \title{ Generate a Sensible Set of Breakpoints }

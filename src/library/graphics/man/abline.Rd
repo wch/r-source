@@ -1,3 +1,8 @@
+% File src/library/graphics/man/abline.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{abline}
 \alias{abline}
 \title{Add Straight Lines to a Plot}

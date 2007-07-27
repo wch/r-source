@@ -1,3 +1,8 @@
+% File src/library/datasets/man/lh.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 % file lh.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %

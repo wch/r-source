@@ -1,4 +1,8 @@
-%% $Id: xyVector.Rd,v 1.8 2003/03/03 18:02:04 ripley Exp $
+% File src/library/splines/man/xyVector.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{xyVector}
 \alias{xyVector}
 %\alias{as.data.frame.xyVector}

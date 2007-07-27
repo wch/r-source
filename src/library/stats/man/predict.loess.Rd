@@ -1,3 +1,8 @@
+% File src/library/stats/man/predict.loess.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{predict.loess}
 \alias{predict.loess}
 \title{Predict Loess Curve or Surface}

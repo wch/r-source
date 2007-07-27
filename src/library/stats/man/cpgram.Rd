@@ -1,3 +1,8 @@
+% File src/library/stats/man/cpgram.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 % file cpgram.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %

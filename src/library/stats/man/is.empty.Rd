@@ -1,3 +1,8 @@
+% File src/library/stats/man/is.empty.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{is.empty.model}
 \alias{is.empty.model}
 \title{Check if a Model is Empty}

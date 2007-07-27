@@ -1,3 +1,8 @@
+% File src/library/datasets/man/Harman23.cor.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{Harman23.cor}
 \docType{data}
 \alias{Harman23.cor}

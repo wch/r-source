@@ -1,3 +1,8 @@
+% File src/library/stats/man/model.extract.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{model.extract}
 \title{Extract Components from a Model Frame}
 \usage{

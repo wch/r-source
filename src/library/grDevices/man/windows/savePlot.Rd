@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/windows/savePlot.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{savePlot}
 \alias{savePlot}
 \title{Save Windows Plot to a File}

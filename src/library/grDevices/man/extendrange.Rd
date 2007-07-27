@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/extendrange.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{extendrange}
 \alias{extendrange}
 \title{Extend a Numerical Range by a Small Percentage}

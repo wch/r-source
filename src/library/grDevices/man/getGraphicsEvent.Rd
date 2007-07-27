@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/getGraphicsEvent.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{getGraphicsEvent}
 \alias{getGraphicsEvent}
 \title{Wait for a mouse or keyboard event from a graphics window}

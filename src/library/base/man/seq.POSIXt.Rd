@@ -1,3 +1,8 @@
+% File src/library/base/man/seq.POSIXt.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{seq.POSIXt}
 \alias{seq.POSIXt}
 \title{Generate Regular Sequences of Dates}

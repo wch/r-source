@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/trans3d.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{trans3d}
 \alias{trans3d}
 \title{3D to 2D Transformation for Perspective Plots}

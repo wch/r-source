@@ -1,3 +1,8 @@
+% File src/library/stats/man/spec.taper.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{spec.taper}
 \alias{spec.taper}
 \title{Taper a Time Series by a Cosine Bell}

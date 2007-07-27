@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/xyTable.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{xyTable}
 \alias{xyTable}
 \title{Multiplicities of (x,y) Points, e.g., for a Sunflower Plot}

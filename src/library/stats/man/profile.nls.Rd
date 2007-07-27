@@ -1,3 +1,8 @@
+% File src/library/stats/man/profile.nls.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{profile.nls}
 \alias{profile.nls}
 \title{Method for Profiling nls Objects}

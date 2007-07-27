@@ -1,3 +1,8 @@
+% File src/library/stats/man/expand.model.frame.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{expand.model.frame}
 \alias{expand.model.frame}
 \title{Add new variables to a model frame}

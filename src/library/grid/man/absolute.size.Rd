@@ -1,3 +1,8 @@
+% File src/library/grid/man/absolute.size.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{absolute.size}
 \alias{absolute.size}
 \title{ Absolute Size of a Grob }

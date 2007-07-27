@@ -1,3 +1,8 @@
+% File src/library/utils/man/download.file.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{download.file}
 \alias{download.file}
 \title{Download File from the Internet}

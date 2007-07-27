@@ -1,3 +1,8 @@
+% File src/library/grDevices/man/Hershey.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 %% NB: Microsoft Help Compiler often crashes on this file
 %% Do not alter unless you have checked on Windows!
 \name{Hershey}

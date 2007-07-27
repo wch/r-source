@@ -1,3 +1,8 @@
+% File src/library/base/man/gc.time.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{gc.time}
 \alias{gc.time}
 \title{Report Time Spent in Garbage Collection}

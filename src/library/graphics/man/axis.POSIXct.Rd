@@ -1,3 +1,8 @@
+% File src/library/graphics/man/axis.POSIXct.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{axis.POSIXct}
 \alias{axis.POSIXct}
 \alias{plot.POSIXct}

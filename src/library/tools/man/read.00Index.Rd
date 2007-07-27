@@ -1,3 +1,8 @@
+% File src/library/tools/man/read.00Index.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{read.00Index}
 \alias{read.00Index}
 \title{Read 00Index-style Files}

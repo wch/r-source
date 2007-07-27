@@ -1,3 +1,8 @@
+% File src/library/methods/man/cbind2.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{cbind2}
 \alias{cbind2}
 \alias{rbind2}
