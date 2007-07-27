@@ -432,6 +432,9 @@ INSTALLATION
     o	'make install-strip' now also strips the DLLs in the standard
 	packages.
 
+    o	Perl 5.8.0 (released in July 2002) or later is now required.
+	(R 2.4.0 and later have in fact required 5.6.1 or later.)
+
 
 PACKAGE INSTALLATION
 

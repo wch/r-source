@@ -1369,7 +1369,7 @@ library paths, separated by colons (semicolons on Windows).
 
 Packages may be distributed in source form or compiled binary form.
 Installing source packages requires that compilers and tools (including
-Perl 5.004 or later) be installed.  Binary packages are
+Perl 5.8.0 or later) be installed.  Binary packages are
 platform-specific and generally need no special tools to install, but
 see the documentation for your platform for details.
 
@@ -2238,7 +2238,7 @@ This is regarded as essential from @R{} 2.5.0: if you do not have it
 will need to configure with @option{--without-iconv} (or equivalent),
 and @command{make check} (and other checks) are likely to fail.
 
-You will need Perl version 5.004 or later, available via
+You will need Perl version 5.8.0 or later, available via
 @url{http://www.perl.com/CPAN/, @code{www.perl.com/CPAN}}, to build any
 of the on-line documentation.
 
