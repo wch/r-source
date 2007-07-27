@@ -573,7 +573,7 @@ stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
 
 ## Similarly for df = 2 --- both for p ~ 0  *and*  p ~ 1
 ## P ~ 0
-stopifnot(all.equal(qt(-740, df=2, log=TRUE), -3.450509368257e+160))
+stopifnot(all.equal(qt(-740, df=2, log=TRUE), -exp(370)/sqrt(2)))
 ## P ~ 1 (=> p ~ 0.5):
 p.5 <- 0.5 + 2^(-5*(5:8))
 p.5 - .5
