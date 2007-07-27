@@ -46,6 +46,7 @@ static double gsumln(double, double);
 /*      ALGORITHM 708, COLLECTED ALGORITHMS FROM ACM.
  *      This work published in  Transactions On Mathematical Software,
  *      vol. 18, no. 3, September 1992, pp. 360-373z.
+ */
 
 /* Changes by R Core Team :
  * add log_p  and work towards gaining precision in that case
@@ -626,10 +627,10 @@ L50:
 static double bfrac(double a, double b, double x, double y, double lambda,
 		    double eps)
 {
-/* -----------------------------------------------------------------------
-/*     Continued fraction expansion for I_x(a,b) when a, b > 1.
-/*     It is assumed that  lambda = (a + b)*y - b.
-/* -----------------------------------------------------------------------
+/* -----------------------------------------------------------------------*/
+/*     Continued fraction expansion for I_x(a,b) when a, b > 1.           */
+/*     It is assumed that  lambda = (a + b)*y - b.                        */
+/* -----------------------------------------------------------------------*/
 
     /* System generated locals */
     double ret_val;
