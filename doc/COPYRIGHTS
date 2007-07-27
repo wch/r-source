@@ -44,10 +44,19 @@ From the announcement of the change (2001-Feb-05)
     To avoid any anomalies, the versions of the same files in R versions
     1.0.0 to 1.2.1 may also be used under LGPL or GPL.
 
+As from R 2.3.0 import libraries are no longer used under Windows, and
+as from R 2.4.0 fewer export files are used under AIX.
+
+
+Some contributed files are also covered by the Library General Public License.
+These include (see also below)
+
+src/library/stats/R/embed.R
+src/library/stats/src/PPsum.c
+
 	---------------------------------------------------
 
-As from R 2.3.0 import libraries are no longer used under Windows, and
-as from R 2.4.0 export files are no longer used under AIX.
+
 
 
 Some of the code contains different copyright statements.  It is used
@@ -366,7 +375,8 @@ src/extra/intl/*
 
 Based on gettextize from gettext 0.16.1
    Copyright (C) various dates Free Software Foundation, Inc.
-
+   Distributed under the GNU Library General Public License
+   version 2 or later.
 
 src/include/memcheck.h
 src/include/valgrind.h
@@ -382,7 +392,14 @@ From glibc via
 http://lists.gnu.org/archive/html/bug-gnulib/2003-02/msg00019.html
 
    Copyright (C) 1999, 2001-2003 Free Software Foundation, Inc.
+   Distributed under the GNU Library General Public License
+   version 2 or later.
 
+src/main/Rstrptime.c
+
+   Copyright (C) 1996, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
+   Distributed under the GNU Library General Public License
+   version 2 or later.
 
 share/perl/File/Copy/Recursive.pm
 
