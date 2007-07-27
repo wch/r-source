@@ -1,11 +1,8 @@
 % File src/library/datasets/man/UKLungDeaths.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright  1994-9 W. N. Venables and B. D. Ripley
 % Distributed under GPL 2 or later
 
-% file UKLungDeaths.Rd
-% copyright (C) 1994-9 W. N. Venables and B. D. Ripley
-%
 \name{UKLungDeaths}
 \docType{data}
 \alias{UKLungDeaths}

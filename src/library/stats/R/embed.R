@@ -1,3 +1,6 @@
+#  File src/library/stats/R/embed.R
+#  Part of the R package, http://www.R-project.org
+#
 # Copyright (C) 1997-1999  Adrian Trapletti
 #
 # Rewritten to use R indexing (C) 1999, 2006 R Core Development Team
