@@ -1053,8 +1053,8 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > y <- 1e9*(pf(1,1,nu) - 0.68268949)
 > stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
 +           diff(y) > 0, # i.e. pf(1,1, *) is monotone increasing
-+           All.eq(y [1], -5.07420372386491),
-+           All.eq(y[19],  2.12300110824515))
++           all.equal(y [1], -5.07420372386491, 1e-6),
++           all.equal(y[19],  2.12300110824515, 1e-6))
 > ## not at all in R 2.1.0 or earlier
 > 
 > stopifnot(pgamma(Inf, 1.1) == 1)
