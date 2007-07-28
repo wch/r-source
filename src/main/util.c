@@ -987,7 +987,7 @@ char *Rf_strrchr(const char *s, int c)
 int utf8clen(char c) { return 1;}
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, void *ps)
 { return (size_t)(-1);}
-Rboolean mbcsValid(const CHAR *str) { return TRUE; }
+Rboolean mbcsValid(const char *str) { return TRUE; }
 void mbcsToLatin1(char *in, char *out) {}
 #undef Rf_strchr
 char *Rf_strchr(const char *s, int c)

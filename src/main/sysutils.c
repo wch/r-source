@@ -652,8 +652,8 @@ void * Riconv_open (const char* tocode, const char* fromcode)
     return (void *)-1;
 }
 
-size_t Riconv (void *cd, const char *domain = "", const char **inbuf,
-               size_t *inbytesleft, char **outbuf, size_t *outbytesleft)
+size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
+               char **outbuf, size_t *outbytesleft)
 {
     error(_("'iconv' is not available on this system"));
     return 0;
