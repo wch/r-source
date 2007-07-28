@@ -521,14 +521,15 @@ cbind(x = sml.x, `dt(x,*)` = dt(sml.x, df = 2, ncp=1))
 ## small 'x' used to suffer from cancellation
 options(oo)
 
-## PR#7099 : pf() with large df1 or df2:
-nu <- 2^seq(25,34, 0.5)
-y <- 1e9*(pf(1,1,nu) - 0.68268949)
-stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
-          diff(y) > 0, # i.e. pf(1,1, *) is monotone increasing
-          all.equal(y [1], -5.07420372386491, 1e-6),
-          all.equal(y[19],  2.12300110824515, 1e-6))
-## not at all in R 2.1.0 or earlier
+## pf() with large df1 or df2
+## (was said to be PR#7099, but that is about non-central pchisq)
+nu <- 2^seq(25, 34, 0.5)
+target <- pchisq(1, 1) # 0.682...
+y <- pf(1, 1, nu)
+stopifnot(All.eq(pf(1, 1, Inf), target),
+          diff(c(y, target)) > 0, # i.e. pf(1, 1, *) is monotone increasing
+          abs(y[1] - (target - 7.21129e-9)) < 1e-11) # computed value
+## non-monotone in R <= 2.1.0
 
 stopifnot(pgamma(Inf, 1.1) == 1)
 ## didn't not terminate in R 2.1.x (only)
@@ -576,7 +577,7 @@ stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
 stopifnot(all.equal(qt(-740, df=2, log=TRUE), -exp(370)/sqrt(2)))
 ## P ~ 1 (=> p ~ 0.5):
 p.5 <- 0.5 + 2^(-5*(5:8))
-p.5 - .5
+p.5 - 0.5
 stopifnot(all.equal(qt(p.5, df = 2),
 		    c(8.429369702179e-08, 2.634178031931e-09,
 		      8.231806349784e-11, 2.572439484308e-12)))
