@@ -33,7 +33,7 @@ Options:
       --configure-vars=VARS
                         set variables for the configure script (if any)
   -c, --clean		remove files created during installation
-  --preclean		remove files created during a previous run
+      --preclean	remove files created during a previous run
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -131,16 +131,22 @@ get_packages () {
   ## get the full path names to all packages contained in $1.
   ## NOTE: modifies pkgs!
   if grep "^Contains:" "${1}/DESCRIPTION" >/dev/null; then
-    bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
-    for p in ${bundlepkg}; do
-      pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
+    contains=`get_dcf_field Contains "${1}/DESCRIPTION"`
+    bundle_name=`get_dcf_field Bundle "${1}/DESCRIPTION"`
+    bundle_pkgs=
+    for p in ${contains}; do
       if test -f "${1}/${p}/DESCRIPTION.in"; then
-        ## Try being defensive about missing final newlines, or extra
-	## empty lines.
-        (cat "${1}/${p}/DESCRIPTION.in" "${1}/DESCRIPTION"
-	 echo) | tr '\r' ' ' | ${SED} '/^ *$/d' > "${1}/${p}/DESCRIPTION"
+	pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
+	bundle_pkgs="${bundle_pkgs} ${p}"
+      else
+        warning "missing 'DESCRIPTION.in' for package '${p}' in bundle '${bundle_name}'"
       fi
     done
+    ## Create the package-level DESCRIPTION files from the bundle-level
+    ## DESCRIPTION and the package-level DESCRIPTION.in ones.
+    echo "tools:::.vcreate_bundle_package_descriptions(\"${1}\", \"${bundle_pkgs}\")" | \
+      R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+    ## Should really check on the exit status ...
   else
     pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
   fi
@@ -344,7 +350,7 @@ else
 fi
 
 if ${debug} ; then
-  echo "'Rcmd INSTALL': in startdir= $startdir with tmpdir= $tmpdir"
+  echo "'R CMD INSTALL': in startdir= $startdir with tmpdir= $tmpdir"
   echo "   lib= '$lib', pkgs= '$pkgs'"
 fi
 
@@ -1009,27 +1015,10 @@ do_install () {
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
-  depends=`get_dcf_field Depends DESCRIPTION`
-  depends=`echo "${depends}" | grep 'R *('`
-  if test "${depends}"; then
-    depends=`echo "${depends}" | ${SED} 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
-    dep_operator=`set - ${depends}; echo ${1}`
-    dep_version=`set - ${depends}; echo ${2}`
-    ## Currently, only operators '<=' and '>=' are supported.  Hence we
-    ## check this, and also whether we found a version string.
-    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
-    if (test "${dep_operator}" = "<=" \
-           || test "${dep_operator}" = ">=") \
-         && test -n "${dep_version}"; then
-      dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
-      if test ${dep_ok} -eq 0; then
-        error "This R is version ${R_VERSION}"
-        echo "       package '${pkg_name}' needs R ${dep_operator} ${dep_version}" >&2
-        do_exit_on_error
-      fi
-    else
-      warning "malformed 'Depends' field in 'DESCRIPTION'"
-    fi
+  echo "options(warn=1); tools:::.test_package_depends_R_version()" | \
+    R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave
+  if test ${?} -ne 0; then
+    do_exit_on_error
   fi
 
   ${MKDIR_P} "${R_PACKAGE_DIR}" || do_exit_on_error no
@@ -1128,7 +1117,7 @@ do_cleanup () {
 ### 
 ### Main loop.
 if ${debug} ; then
-    echo "'Rcmd INSTALL': now doing 'eval ... do_install':"
+    echo "'R CMD INSTALL': now doing 'eval ... do_install':"
 fi
 eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
 do_cleanup

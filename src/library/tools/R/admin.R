@@ -712,6 +712,76 @@ function(dir, packages)
     return(invisible())
 }
 
+### * .vcreate_bundle_package_descriptions
+
+.vcreate_bundle_package_descriptions <-
+function(dir, packages)
+{
+    .canonicalize_metadata <- function(m) {
+        ## Drop entries which are NA or empty.
+        m[!is.na(m) & (regexpr("^[[:space:]]*$", m) < 0)]
+    }
+    
+    dir <- file_path_as_absolute(dir)
+
+    ## Bundle level metadata.
+    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    meta <- .canonicalize_metadata(meta)
+
+    message(packages)
+
+    for(p in unlist(strsplit(.strip_whitespace(packages),
+                             "[[:space:]]+"))) {
+        bmeta <- meta
+        ## Package metadata.
+        pmeta <- .read_description(file.path(dir, p, "DESCRIPTION.in"))
+        pmeta <- .canonicalize_metadata(pmeta)
+        ## Need to merge dependency fields in *both* metadata.
+        fields_to_merge <-
+            c("Depends", "Imports", "Suggests", "Enhances")
+        fields <- intersect(intersect(names(bmeta), fields_to_merge),
+                            intersect(names(pmeta), fields_to_merge))
+        if(length(fields)) {
+            bmeta[fields] <-
+                paste(bmeta[fields], pmeta[fields], sep = ", ")
+            pmeta <- pmeta[!(names(pmeta) %in% fields)]
+        }
+        write.dcf(rbind(c(bmeta, pmeta)),
+                  file.path(dir, p, "DESCRIPTION"))
+    }
+
+    invisible()
+}
+
+### * .test_package_depends_R_version
+
+.test_package_depends_R_version <-
+function()
+{
+    meta <- .read_description("DESCRIPTION")
+    depends <- .split_description(meta)$Rdepends
+    status <- 0
+    if(!is.null(depends)) {
+        if(!depends$op %in% c("<=", ">=", "<", ">", "=="))
+            message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
+        else
+            status <- !do.call(depends$op,
+                               list(R.version, depends$version))
+        if(status != 0) {
+            package <- Sys.getenv("R_PACKAGE_NAME")
+            if(!nchar(package))
+                package <- meta["Package"]
+            msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
+                            getRversion(), package,
+                            depends$op, depends$version)
+            message(strwrap(msg, exdent = 2))
+        }
+    }
+    q(status = status)
+}
+
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
