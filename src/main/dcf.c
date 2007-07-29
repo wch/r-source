@@ -39,11 +39,11 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean blank_skip, field_skip = FALSE;
     int whatlen, dynwhat, buflen = 100;
     char line[MAXELTSIZE], *buf;
-    regex_t blankline, contline, trailblank, regline;
+    regex_t blankline, contline, trailblank, regline, eblankline;
     regmatch_t regmatch[1];
     SEXP file, what, what2, retval, retval2, dims, dimnames;
     Rconnection con = NULL;
-    Rboolean wasopen;
+    Rboolean wasopen, is_eblankline;
 
     checkArity(op, args);
 
@@ -69,6 +69,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     regcomp(&trailblank, "[[:blank:]]+$", REG_EXTENDED);
     regcomp(&contline, "^[[:blank:]]+", REG_EXTENDED);
     regcomp(&regline, "^[^:]+:[[:blank:]]*", REG_EXTENDED);
+    regcomp(&eblankline, "^[[:space:]]+\\.[[:space:]]*$", REG_EXTENDED);
 
     k = 0;
     lastm = -1; /* index of the field currently being recorded */
@@ -100,8 +101,14 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if( (lastm >= 0 || field_skip) &&
 		regexec(&contline, line, 1, regmatch, 0) == 0) {
 		if(lastm >= 0) {
-		    need = strlen(line+regmatch[0].rm_eo) +
-			strlen(CHAR(STRING_ELT(retval, lastm + nwhat*k))) + 2;
+		    need = strlen(CHAR(STRING_ELT(retval,
+						  lastm + nwhat*k))) + 2;
+		    if(regexec(&eblankline, line, 0, NULL, 0) == 0) {
+			is_eblankline = TRUE;
+		    } else {
+			is_eblankline = FALSE;
+			need += strlen(line+regmatch[0].rm_eo);
+		    }
 		    if(buflen < need) {
 			buf = (char *) realloc(buf, need);
 			if(!buf)
@@ -110,7 +117,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    strcpy(buf,CHAR(STRING_ELT(retval, lastm + nwhat*k)));
 		    strcat(buf, "\n");
-		    strcat(buf, line+regmatch[0].rm_eo);
+		    if(!is_eblankline) strcat(buf, line+regmatch[0].rm_eo);
 		    SET_STRING_ELT(retval, lastm + nwhat*k, mkChar(buf));
 		}
 	    } else {
@@ -183,6 +190,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     regfree(&contline);
     regfree(&trailblank);
     regfree(&regline);
+    regfree(&eblankline);
 
     if(!blank_skip) k++;
 
@@ -226,7 +234,3 @@ static void transferVector(SEXP s, SEXP t)
     for (i = 0; i < nt; i++)
 	SET_STRING_ELT(s, i, STRING_ELT(t, i));
 }
-
-
-
-
