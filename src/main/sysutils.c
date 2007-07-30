@@ -784,34 +784,6 @@ void attribute_hidden InitTempDir()
     }
 }
 
-#ifdef HAVE_GETTIMEOFDAY
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# endif
-#else
-# ifdef HAVE_TIME_H
-# include <time.h>
-# endif
-#endif
-
-void attribute_hidden InitRand()
-{
-    unsigned int seed;
-#if HAVE_GETTIMEOFDAY
-  {
-    struct timeval tv;
-    gettimeofday (&tv, NULL);
-    seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
-  }
-#elif HAVE_TIME
-    seed = (unsigned int) time(NULL);
-#else
-    /* unlikely, but use random contents */
-#endif
-    srand(seed);
-}
-
-
 char * R_tmpnam(const char * prefix, const char * tempdir)
 {
     char tm[PATH_MAX], tmp1[PATH_MAX], *res;

@@ -799,7 +799,6 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define InitMemory		Rf_InitMemory
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
-# define InitRand		Rf_InitRand
 # define InitStringHash		Rf_InitStringHash
 # define InitTempDir		Rf_InitTempDir
 # define initStack		Rf_initStack
@@ -975,7 +974,6 @@ void InitNames(void);
 void InitOptions(void);
 void InitStringHash(void);
 void Init_R_Variables(SEXP);
-void InitRand(void);
 void InitTempDir(void);
 void initStack(void);
 void R_InsertRestartHandlers(RCNTXT *, Rboolean);

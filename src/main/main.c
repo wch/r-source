@@ -715,7 +715,6 @@ void setup_Rmainloop(void)
 #endif
 #endif
 
-    InitRand();
     InitTempDir(); /* must be before InitEd */
     InitMemory();
     InitStringHash(); /* must be before InitNames */

@@ -271,11 +271,28 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 }
 
 #include <time.h>
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
+#endif
+
 static void Randomize(RNGtype kind)
 {
-/* Only called by  GetRNGstate() when there's no .Random.seed */
+/* Only called by  GetRNGstate() when there is no .Random.seed */
+    Int32 seed;
+#if HAVE_GETTIMEOFDAY
+  {
+    struct timeval tv;
+    gettimeofday (&tv, NULL);
+    seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
+  }
+#elif HAVE_TIME
+    seed = (Int32) time(NULL);
+#else
+    /* unlikely, but use random contents */
+#endif
+    srand(seed);
 
-    RNG_Init(kind, (Int32) time(NULL));
+    RNG_Init(kind, seed);
 }
 
 
