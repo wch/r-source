@@ -132,21 +132,31 @@ get_packages () {
   ## NOTE: modifies pkgs!
   if grep "^Contains:" "${1}/DESCRIPTION" >/dev/null; then
     contains=`get_dcf_field Contains "${1}/DESCRIPTION"`
+    ## Be careful whether package listed in the Contains field really
+    ## "exist".  Refrain from installing the bundle in case of an entry
+    ## without corresponding package subdirectory, but be nice in case
+    ## of a subdirectorues without DESCRIPTION.in files (handled by the
+    ## R code).
     bundle_name=`get_dcf_field Bundle "${1}/DESCRIPTION"`
     bundle_pkgs=
     for p in ${contains}; do
-      if test -f "${1}/${p}/DESCRIPTION.in"; then
-	pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
-	bundle_pkgs="${bundle_pkgs} ${p}"
+      if test -d "${1}/${p}"; then
+	bundle_pkgs="${bundle_pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
       else
-        warning "missing 'DESCRIPTION.in' for package '${p}' in bundle '${bundle_name}'"
+        warning "incorrect Contains metadata for bundle '${bundle_name}': there is no package '${p}'"
+	warning "skipping installation of bundle '${bundle_name}'"
+	bundle_pkgs=
+	break
       fi
     done
-    ## Create the package-level DESCRIPTION files from the bundle-level
-    ## DESCRIPTION and the package-level DESCRIPTION.in ones.
-    echo "tools:::.vcreate_bundle_package_descriptions(\"${1}\", \"${bundle_pkgs}\")" | \
-      R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
-    ## Should really check on the exit status ...
+    if test -n "${bundle_pkgs}"; then
+      ## Create the package level DESCRIPTION files from the bundle
+      ## level DESCRIPTION and the package level DESCRIPTION.in ones.
+      echo "tools:::.vcreate_bundle_package_descriptions(\"${1}\", \"${contains}\")" | \
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+      ## Should really check on the exit status ...
+      pkgs="${pkgs} ${bundle_pkgs}"
+    fi
   else
     pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
   fi
