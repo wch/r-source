@@ -73,8 +73,21 @@ function(dir, outDir)
               .OStype(),
               sep = "")
 
-    ## we must not split the Built: field across lines
-    writeLines(c(formatDL(names(db), db, style = "list"),
+    ## We must not split the Built: field across lines.
+    ## Now formatDL() cannot escape blank lines, so we either have to
+    ## try this here, or use write.dcf() which wraps and (currently?)
+    ## adds a trailing blank line, along the lines of
+    ##   out <- NULL
+    ##   con <- textConnection("out", "w")
+    ##   on.exit(close(con))
+    ##   write.dcf(rbind(db), con)
+    ##   writeLines(c(out[-length(out)], 
+    ##                paste("Built", Built, sep=": ")),
+    ##              file.path(outDir, "DESCRIPTION"))
+    ## Try escaping blank lines for now:
+    writeLines(c(gsub("\n\n", "\n  .\n  ",
+                      formatDL(names(db), db, style = "list",
+                               indent = 2)),
                  paste("Built", Built, sep=": ")),
                file.path(outDir, "DESCRIPTION"))
     db["Built"] <- Built
@@ -728,8 +741,6 @@ function(dir, packages)
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
     meta <- .canonicalize_metadata(meta)
     if(missing(packages)) packages <- meta[["Contains"]]
-
-    message(packages)
 
     for(p in unlist(strsplit(.strip_whitespace(packages), "[[:space:]]+"))) {
         bmeta <- meta
