@@ -10,8 +10,6 @@
 @c  ~~~~~~~~~~~
 @syncodeindex fn vr
 
-@c for François
-@documentencoding ISO-8859-1
 
 @dircategory Programming
 @direntry
@@ -7128,8 +7126,8 @@ accessible from within the GUI.
 If you just want to run a file @file{foo.R} of @R{} commands, the
 recommended way is to use @command{R CMD BATCH foo.R}.  If you want to
 run this in the background or as a batch job use OS-specific facilities
-to do so: for example in most shells @command{R CMD BATCH foo.R &} runs a
-background job.
+to do so: for example in most shells on Unix-alike OSes @command{R CMD
+BATCH foo.R &} runs a background job.
 
 You can pass parameters to scripts via additional arguments on the
 command line: for example
@@ -7202,7 +7200,7 @@ and @code{stdin()} refers to the script file to allow such traditional
 usage.  If you want to refer to the process's @file{stdin}, use
 @code{"stdin"} as a @code{file} connection, e.g.@: @code{scan("stdin", ...)}.
 
-Another way to write executable script files (suggested by François
+Another way to write executable script files (suggested by Fran@,{c}ois
 Pinard) is to use a @emph{here document} like
 
 @example
