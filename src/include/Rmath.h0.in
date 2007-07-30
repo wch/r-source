@@ -49,10 +49,6 @@ extern "C" {
 @RMATH_HAVE_WORKING_LOG1P@
 #endif
 
-#ifndef HAVE_WORKING_LOG
-@RMATH_HAVE_WORKING_LOG@
-#endif
-
 #include <errno.h>
 #include <limits.h>
 #include <float.h>

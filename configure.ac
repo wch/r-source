@@ -1699,9 +1699,6 @@ fi
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
 fi
-## check value of log(0) and log(-1)
-## Solaris defines log(0) to be -HUGE_VAL, but we want -Inf
-R_FUNC_LOG
 ## check accuracy of log1p
 R_FUNC_LOG1P
 R_FUNC_FTELL

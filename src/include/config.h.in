@@ -741,9 +741,6 @@
 /* Define if isfinite() is correct for -Inf/NaN/Inf. */
 #undef HAVE_WORKING_ISFINITE
 
-/* Define if log() is correct for 0/-1. */
-#undef HAVE_WORKING_LOG
-
 /* Define if log1p() exists and is accurate enough. */
 #undef HAVE_WORKING_LOG1P
 

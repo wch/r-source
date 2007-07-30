@@ -1476,32 +1476,6 @@ if test "x${r_cv_func_isfinite_works}" = xyes; then
 fi
 ])# R_FUNC_ISFINITE
 
-## R_FUNC_LOG
-## ----------
-AC_DEFUN([R_FUNC_LOG],
-[AC_CACHE_CHECK([for working log], [r_cv_func_log_works],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <math.h>
-#include <stdlib.h>
-#include "confdefs.h"
-int main () {
-/* we require isnan as from R 2.0.0 */
-  exit(!(log(0.) == -1. / 0. && isnan(log(-1.))));
-}
-]])],
-               [r_cv_func_log_works=yes],
-               [r_cv_func_log_works=no],
-               [r_cv_func_log_works=no])])
-if test "x${r_cv_func_log_works}" = xyes; then
-  AC_DEFINE(HAVE_WORKING_LOG, 1,
-            [Define if log() is correct for 0/-1.])
-  RMATH_HAVE_WORKING_LOG="# define HAVE_WORKING_LOG 1"
-else
-  RMATH_HAVE_WORKING_LOG="# undef HAVE_WORKING_LOG"
-fi
-AC_SUBST(RMATH_HAVE_WORKING_LOG)
-])# R_FUNC_LOG
-
 ## R_FUNC_LOG1P
 ## ------------
 ## Suggested by Nelson H. F. Beebe <beebe@math.utah.edu> to deal with
