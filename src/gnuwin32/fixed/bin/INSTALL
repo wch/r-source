@@ -266,6 +266,9 @@ foreach $pkg (@ARGV){
 	print "\nLooks like '${pkg}' is a package bundle\n";
 	$is_bundle = 1;
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
+	foreach $ppkg (@bundlepkgs) {
+	    die "ERROR: package $pkg/$ppkg does not exist\n" unless -d "$pkg/$ppkg";
+	}
 	$zippkgs = join(" ", @bundlepkgs);
 	## join up description files
 	R_runR("tools:::.vcreate_bundle_package_descriptions('${pkg}')",
