@@ -206,12 +206,10 @@ static double myfloor(double x1, double x2)
     return floor(q) + floor(tmp/x2);
 }
 
-
-#ifdef HAVE_WORKING_LOG
-# define R_log	log
-#else
-double R_log(double x) { return(x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf); }
-#endif
+/* some systems get this wrong, possibly depend on what libs are loaded */
+static R_INLINE double R_log(double x) { 
+    return x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf; 
+}
 
 #ifdef POW_DIRTY
 
@@ -286,7 +284,7 @@ static double logbase(double x, double base)
     if(base == 2) 
         return x > 0 ? log2(x) : x < 0 ? R_NaN : R_NegInf;
 #endif
-    return R_log(x) / log(base);
+    return R_log(x) / R_log(base);
 }
 
 SEXP R_unary(SEXP, SEXP, SEXP);

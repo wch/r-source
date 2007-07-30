@@ -427,7 +427,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = allocVector(REALSXP, 1);
-#ifdef HAVE_GETTIMEOFDAY
+#if defined(HAVE_GETTIMEOFDAY) && !defined(Win32)
     struct timeval tv;
     int res = gettimeofday(&tv, NULL);
     if(res == 0) {

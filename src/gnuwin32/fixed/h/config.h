@@ -279,7 +279,7 @@
 /* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `gettimeofday' function. */
-/* #undef HAVE_GETTIMEOFDAY */
+#define HAVE_GETTIMEOFDAY 1
 
 /* Define to 1 if you have the `getuid' function. */
 /* #undef HAVE_GETUID */
@@ -740,9 +740,6 @@
 
 /* Define if isfinite() is correct for -Inf/NaN/Inf. */
 #define HAVE_WORKING_ISFINITE 1
-
-/* Define if log() is correct for 0/-1. */
-#define HAVE_WORKING_LOG 1
 
 /* Define if log1p() exists and is accurate enough. */
 #define HAVE_WORKING_LOG1P 1
