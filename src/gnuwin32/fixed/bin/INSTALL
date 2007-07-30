@@ -268,51 +268,22 @@ foreach $pkg (@ARGV){
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	$zippkgs = join(" ", @bundlepkgs);
 	## join up description files
-	foreach $ppkg (@bundlepkgs) {
-	    open pkgdesc, "> $pkg/$ppkg/DESCRIPTION"
-		|| die "cannot write $ppkg/DESCRIPTION";
-	    if (open pkgdescin, "< $pkg/$ppkg/DESCRIPTION.in") {
-		## the Unix version of INSTALL does discard blank lines,
-		## although ?read.dcf does not allow them. 
-		while(<pkgdescin>) {
-		    ## this is to cope with possibly missing final NL
-		    chomp;
-		    print pkgdesc "$_\n" if $_ =~ /\S/; 
-		}
-		close pkgdescin;
-	    } else {
-		print "no DESCRIPTION.in found for package $ppkg\n";
-		print pkgdesc "Package: $ppkg\n";
-	    }
-	    open bundledesc, "< $pkg/DESCRIPTION"
-		|| die "no DESCRIPTION found for bundle";
-	    while(<bundledesc>) {print pkgdesc $_;}
-	    close bundledesc;
-	    close pkgdesc;
-	}
+	R_runR("tools:::.vcreate_bundle_package_descriptions('${pkg}')",
+	       "--vanilla", "R_DEFAULT_PACKAGES=NULL LC_ALL=C");
 	$pkgdir .= "/$pkgname";
 	$intname = $description->{"Bundle"};
     }
     print "\n";
 
     if($description->{"Depends"}) {
-	my $depends = $description->{"Depends"};
-	if($depends =~ /\bR *\(([^\) ]+) *([^\) ]+)\)/) { # regexp from check
-            my $op = $1;
-            my $ver = $2;
-	    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
-	    if ($op eq ">=" && $ver) {
-		die "This R is version $Rversion\n".
-		    "    package '$pkgname' requires R $ver or later\n"
-			unless $Rversion ge $ver;
-	    } elsif ($op eq "<=" && $ver) {
-		die "This R is version $Rversion\n".
-		    "     package '$pkgname' requires R $ver or earlier\n"
-			unless $Rversion le $ver;
-	    } else {
-		printf "unsupported operator in dependence \"$depends\"\n";
-	    }
-        }
+	my %result = R_run_R("options(warn=1); tools:::.test_package_depends_R_version('$pkg')",
+			     "--vanilla --slave",
+			     "R_DEFAULT_PACKAGES=NULL LC_ALL=C");
+	if($result{"status"}) {
+	    my @out = grep(!/^\>/, @{$result{"out"}});
+	    print join("\n", @out) . "\n\n";
+	    next;
+	}
     }
     ## Now we are ready to install
     if($safe) {

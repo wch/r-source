@@ -721,30 +721,39 @@ function(dir, packages)
         ## Drop entries which are NA or empty.
         m[!is.na(m) & (regexpr("^[[:space:]]*$", m) < 0)]
     }
-    
+
     dir <- file_path_as_absolute(dir)
 
     ## Bundle level metadata.
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
     meta <- .canonicalize_metadata(meta)
+    if(missing(packages)) packages <- meta[["Contains"]]
 
     message(packages)
 
-    for(p in unlist(strsplit(.strip_whitespace(packages),
-                             "[[:space:]]+"))) {
+    for(p in unlist(strsplit(.strip_whitespace(packages), "[[:space:]]+"))) {
         bmeta <- meta
         ## Package metadata.
-        pmeta <- .read_description(file.path(dir, p, "DESCRIPTION.in"))
-        pmeta <- .canonicalize_metadata(pmeta)
-        ## Need to merge dependency fields in *both* metadata.
-        fields_to_merge <-
-            c("Depends", "Imports", "Suggests", "Enhances")
-        fields <- intersect(intersect(names(bmeta), fields_to_merge),
-                            intersect(names(pmeta), fields_to_merge))
-        if(length(fields)) {
-            bmeta[fields] <-
-                paste(bmeta[fields], pmeta[fields], sep = ", ")
-            pmeta <- pmeta[!(names(pmeta) %in% fields)]
+        this <- file.path(dir, p, "DESCRIPTION.in")
+        if(file_test("-f", this)) {
+            pmeta <- .read_description(this)
+            pmeta <- .canonicalize_metadata(pmeta)
+            ## Need to merge dependency fields in *both* metadata.
+            fields_to_merge <-
+                c("Depends", "Imports", "Suggests", "Enhances")
+            fields <- intersect(intersect(names(bmeta), fields_to_merge),
+                                intersect(names(pmeta), fields_to_merge))
+            if(length(fields)) {
+                bmeta[fields] <-
+                    paste(bmeta[fields], pmeta[fields], sep = ", ")
+                pmeta <- pmeta[!(names(pmeta) %in% fields)]
+            }
+        } else {
+            warning(gettextf("missing 'DESCRIPTION.in' for package '%s'", p),
+                    domain = NA)
+            d <- sprintf("Package '%s' from bundle '%s'", p, meta[["Bundle"]])
+            pmeta <- c(p, d, d)
+            names(pmeta) <- c("Package", "Description", "Title")
         }
         write.dcf(rbind(c(bmeta, pmeta)),
                   file.path(dir, p, "DESCRIPTION"))
@@ -756,9 +765,10 @@ function(dir, packages)
 ### * .test_package_depends_R_version
 
 .test_package_depends_R_version <-
-function()
+function(dir)
 {
-    meta <- .read_description("DESCRIPTION")
+    if(missing(dir)) dir <- "."
+    meta <- .read_description(file.path(dir, "DESCRIPTION"))
     depends <- .split_description(meta)$Rdepends
     status <- 0
     if(!is.null(depends)) {
@@ -769,11 +779,20 @@ function()
                                list(R.version, depends$version))
         if(status != 0) {
             package <- Sys.getenv("R_PACKAGE_NAME")
-            if(!nchar(package))
+            if(nzchar(package))
                 package <- meta["Package"]
-            msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
-                            getRversion(), package,
-                            depends$op, depends$version)
+            if(nzchar(package))
+                msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
+                                getRversion(), package,
+                                depends$op, depends$version)
+            else if (nzchar(bundle <-  meta["Bundle"]))
+                msg <- gettextf("ERROR: this R is version %s, bundle '%s' requires R %s %s",
+                                getRversion(), bundle,
+                                depends$op, depends$version)
+            else
+                msg <- gettextf("ERROR: this R is version %s, required is R %s %s",
+                                getRversion(),
+                                depends$op, depends$version)
             message(strwrap(msg, exdent = 2))
         }
     }
