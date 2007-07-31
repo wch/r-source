@@ -364,24 +364,20 @@ installed.packages <-
             file.info(dest)$mtime > file.info(lib.loc)$mtime) {
             retval <- rbind(retval, .readRDS(dest))
         } else {
-            ret0 <- character()
-            ## this excludes packages without DESCRIPTION files
-            pkgs <- .packages(all.available = TRUE, lib.loc = lib)
-            for(p in pkgs){
-                desc <- packageDescription(p, lib.loc = lib, fields = fields,
-                                           encoding = NA)
-                ## this gives NA if the package has no Version field
-                if (is.logical(desc)) {
-                    desc <- rep(NA_character_, length(fields))
-                    names(desc) <- fields
-                } else {
-                    desc <- unlist(desc)
-                    Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
+            pkgs <- list.files(lib)
+            ret0 <- matrix(NA_character_, length(pkgs), 2+length(fields))
+            for(i in seq_along(pkgs)) {
+                pkgpath <- file.path(lib, pkgs[i])
+                if(file.access(pkgpath, 5)) next
+                pkgpath <- file.path(pkgpath, "DESCRIPTION")
+                if(file.access(pkgpath, 4)) next
+                desc <- read.dcf(pkgpath, fields = fields)[1,]
+                Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
                                      "[ \t]+")[[1]][2]
-                    desc["Built"] <- Rver
-                }
-                ret0 <- rbind(ret0, c(p, lib, desc))
+                desc["Built"] <- Rver
+                ret0[i, ] <- c(sub("_.*", "", pkgs[i]), lib, desc)
             }
+            ret0 <- ret0[!is.na(ret0[,1]), ]
             if(length(ret0)) {
                 retval <- rbind(retval, ret0)
                 .saveRDS(ret0, dest, compress = TRUE)
@@ -548,12 +544,12 @@ getCRANmirrors <- function(all=FALSE, local.only=FALSE)
         m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
                           as.is=TRUE))
     }
-    
+
     if(is.null(m) || inherits(m, "try-error")){
         m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
                       as.is=TRUE)
     }
-    
+
     if(!is.null(m$OK)){
         m$OK <- as.logical(m$OK)
 

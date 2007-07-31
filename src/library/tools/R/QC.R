@@ -2448,7 +2448,15 @@ function(dir)
                      if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")),
                                    FALSE))
                      suggests))
-    reqs <- reqs %w/o% utils::installed.packages()[ , "Package"]
+    ## installed <-  utils::installed.packages()[ , "Package"]
+    installed <- character(0)
+    for(lib in .libPaths()) {
+        pkgs <- list.files(lib)
+        pkgs <- pkgs[file.access(file.path(lib, pkgs, "DESCRIPTION"), 4) == 0]
+        installed <- c(pkgs, installed)
+    }
+    installed <- sub("_.*", "", installed)
+    reqs <- reqs %w/o% installed
     m <- reqs %in% standard_package_names$stubs
     if(length(reqs[!m]))
         bad_depends$required_but_not_installed <- reqs[!m]

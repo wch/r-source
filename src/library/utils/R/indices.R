@@ -23,12 +23,26 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
         retval[fields] <- NA
     }
 
-    if(system.file(package = pkg, lib.loc = lib.loc) == "") {
-        warning(gettextf("no package '%s' was found", pkg), domain = NA)
-        return(NA)
+    pkgpath <- ""
+    libs <- if(is.null(lib.loc)) .libPaths() else lib.loc
+    for(lib in libs)
+        if(file.access(file.path(lib, pkg), 5) == 0) {
+            pkgpath <- file.path(lib, pkg)
+            break
+        }
+    if(pkgpath == "") {
+        ## This is slow and does a lot of checking we do here,
+        ## but is needed for versioned installs
+        pkgpath <- system.file(package = pkg, lib.loc = lib.loc)
+        if(pkgpath == "") {
+            warning(gettextf("no package '%s' was found", pkg), domain = NA)
+            return(NA)
+        }
     }
 
-    file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
+    file <- file.path(pkgpath,"DESCRIPTION")
+    if(!file.exists(file)) file <- ""
+
 
     if(file != "") {
         dcf <- read.dcf(file=file)
