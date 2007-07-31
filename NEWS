@@ -272,6 +272,8 @@ NEW FEATURES
     o	The initialization of the random-number stream makes use of the
 	sub-second part of the current time where available.
 
+    o	New higher-order functions Reduce(), Filter() and Map().
+
 
 METHODS PACKAGE
 
