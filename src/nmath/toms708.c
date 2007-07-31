@@ -17,7 +17,7 @@
 extern double Rf_d1mach(int i);
 extern int Rf_i1mach(int i);
 
-static double bfrac(double, double, double, double, double, double);
+static double bfrac(double, double, double, double, double, double, int log_p);
 static void bgrat(double, double, double, double, double *, double, int *);
 static void grat1(double, double, double, double *, double *, double);
 static double apser(double, double, double, double);
@@ -32,7 +32,7 @@ static double gamln1(double);
 static double betaln(double, double);
 static double algdiv(double, double);
 static double brcmp1(int, double, double, double, double);
-static double brcomp(double, double, double, double);
+static double brcomp(double, double, double, double, int log_p);
 static double rlog1(double);
 static double bcorr(double, double);
 static double gamln(double);
@@ -251,9 +251,9 @@ L110:
     goto L_end_after_log;
 
 L120:
-    *w = bfrac(a0, b0, x0, y0, lambda, eps * 15.0);
-    *w1 = 0.5 - *w + 0.5;
-    goto L_end;
+    *w = bfrac(a0, b0, x0, y0, lambda, eps * 15.0, log_p);
+    *w1 = log_p ? R_D_LExp(*w) : 0.5 - *w + 0.5;
+    goto L_end_after_log;
 
 L130:
     *w1 = bup(b0, a0, y0, x0, n, eps);
@@ -623,26 +623,21 @@ L50:
     return ret_val;
 } /* bup */
 
-/* FIXME: add   log_p : */
 static double bfrac(double a, double b, double x, double y, double lambda,
-		    double eps)
+		    double eps, int log_p)
 {
-/* -----------------------------------------------------------------------*/
-/*     Continued fraction expansion for I_x(a,b) when a, b > 1.           */
-/*     It is assumed that  lambda = (a + b)*y - b.                        */
+/* -----------------------------------------------------------------------
+/*     Continued fraction expansion for I_x(a,b) when a, b > 1.
+/*     It is assumed that  lambda = (a + b)*y - b.
 /* -----------------------------------------------------------------------*/
 
-    /* System generated locals */
-    double ret_val;
-
-    /* Local variables */
     double c, e, n, p, r, s, t, w, c0, c1, r0, an, bn, yp1, anp1, bnp1,
-	    beta, alpha;
+	beta, alpha;
 
-    ret_val = brcomp(a, b, x, y);
-    if (ret_val == 0.0) { /* already underflowed to 0 */
-	return ret_val;
-    }
+    double brc = brcomp(a, b, x, y, log_p);
+
+    if (!log_p && brc == 0.) /* already underflowed to 0 */
+	return 0.;
 
     c = lambda + 1.0;
     c0 = b / a;
@@ -694,31 +689,25 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 	bnp1 = 1.0;
     } while (1);
 
-    ret_val *= r;
-    return ret_val;
+    return (log_p ? brc + log(r) : brc * r);
 } /* bfrac */
 
-/* FIXME: add   log_p : */
-static double brcomp(double a, double b, double x, double y)
+static double brcomp(double a, double b, double x, double y, int log_p)
 {
 /* -----------------------------------------------------------------------
  *		 Evaluation of x^a * y^b / Beta(a,b)
  * ----------------------------------------------------------------------- */
 
     static double const__ = .398942280401433; /* == 1/sqrt(2*pi); */
+    /* R has  M_1_SQRT_2PI , and M_LN_SQRT_2PI = ln(sqrt(2*pi)) = 0.918938.. */
 
-    /* System generated locals */
-    double ret_val;
-
-    /* Local variables */
-    double c, e, h;
     int i, n;
-    double t, u, v, z, a0, b0, x0, y0, apb, lnx, lny;
+    double c, e, h, t, u, v, z, a0, b0, x0, y0, apb, lnx, lny;
     double lambda;
 
 
     if (x == 0.0 || y == 0.0) {
-	return 0.;
+	return R_D__0;
     }
     a0 = min(a, b);
     if (a0 >= 8.0) {
@@ -742,7 +731,7 @@ static double brcomp(double a, double b, double x, double y)
     z = a * lnx + b * lny;
     if (a0 >= 1.) {
 	z -= betaln(a, b);
-	return exp(z);
+	return R_D_exp(z);
     }
 
 /* ----------------------------------------------------------------------- */
@@ -753,17 +742,16 @@ static double brcomp(double a, double b, double x, double y)
     if (b0 >= 8.0) { /* L80: */
 	u = gamln1(a0) + algdiv(a0, b0);
 
-	return a0 * exp(z - u);
+	return (log_p ? log(a0) + (z - u)  : a0 * exp(z - u));
     }
     /* else : */
 
-    if (b0 <= 1.0) {
-/*		     ALGORITHM FOR b0 <= 1 */
+    if (b0 <= 1.0) { /*		algorithm for max(a,b) = b0 <= 1 */
 
-	ret_val = exp(z);
-	if (ret_val == 0.0) { /* exp() underflow */
-	    return ret_val;
-	}
+	double e_z = R_D_exp(z);
+
+	if (!log_p && e_z == 0.0) /* exp() underflow */
+	    return 0.;
 
 	apb = a + b;
 	if (apb > 1.0) {
@@ -774,7 +762,10 @@ static double brcomp(double a, double b, double x, double y)
 	}
 
 	c = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z;
-	return ret_val * (a0 * c) / (a0 / b0 + 1.0);
+	/* FIXME? log(a0*c)= log(a0)+ log(c) and that is improvable */
+	return (log_p
+		? e_z + log(a0 * c) - log1p(a0/b0)
+		: e_z * (a0 * c) / (a0 / b0 + 1.0));
     }
     /* else : */
 
@@ -800,7 +791,10 @@ static double brcomp(double a, double b, double x, double y)
 	t = gam1(apb) + 1.0;
     }
 
-    return a0 * exp(z) * (gam1(b0) + 1.0) / t;
+    return (log_p
+	    ? log(a0) + z + log1p(gam1(b0))  - log(t)
+	    : a0 * exp(z) * (gam1(b0) + 1.0) / t);
+
 
 
 /* ----------------------------------------------------------------------- */
@@ -831,9 +825,11 @@ L100:
     else
 	v = e - log(y / y0);
 
-    z = exp(-(a * u + b * v));
+    z = log_p ? -(a * u + b * v) : exp(-(a * u + b * v));
 
-    return const__ * sqrt(b * x0) * z * exp(-bcorr(a, b));
+    return(log_p
+	   ? -M_LN_SQRT_2PI + .5*log(b * x0) + z - bcorr(a,b)
+	   : const__ * sqrt(b * x0) * z * exp(-bcorr(a, b)));
 } /* brcomp */
 
 static double brcmp1(int mu, double a, double b, double x, double y)
@@ -843,6 +839,7 @@ static double brcmp1(int mu, double a, double b, double x, double y)
  * ----------------------------------------------------------------------- */
 
     static double const__ = .398942280401433; /* == 1/sqrt(2*pi); */
+    /* R has  M_1_SQRT_2PI */
 
     /* System generated locals */
     double ret_val, r1;
