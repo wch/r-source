@@ -81,7 +81,7 @@ function(dir, outDir)
     ##   con <- textConnection("out", "w")
     ##   on.exit(close(con))
     ##   write.dcf(rbind(db), con)
-    ##   writeLines(c(out[-length(out)], 
+    ##   writeLines(c(out[-length(out)],
     ##                paste("Built", Built, sep=": ")),
     ##              file.path(outDir, "DESCRIPTION"))
     ## Try escaping blank lines for now:
@@ -782,8 +782,9 @@ function(dir)
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
     depends <- .split_description(meta)$Rdepends
     status <- 0
-    if(!is.null(depends)) {
-        if(!depends$op %in% c("<=", ">=", "<", ">", "=="))
+    if(!is.null(depends) && !is.null(depends$op)) {
+        if(!depends$op %in% c("<=", ">=", "<", ">", "==")
+           || is.null(depends$version))
             message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
         else
             status <- !do.call(depends$op,
