@@ -627,9 +627,9 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 		    double eps, int log_p)
 {
 /* -----------------------------------------------------------------------
-/*     Continued fraction expansion for I_x(a,b) when a, b > 1.
-/*     It is assumed that  lambda = (a + b)*y - b.
-/* -----------------------------------------------------------------------*/
+       Continued fraction expansion for I_x(a,b) when a, b > 1.
+       It is assumed that  lambda = (a + b)*y - b.
+   -----------------------------------------------------------------------*/
 
     double c, e, n, p, r, s, t, w, c0, c1, r0, an, bn, yp1, anp1, bnp1,
 	beta, alpha;
