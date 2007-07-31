@@ -554,7 +554,8 @@ BUG FIXES
     o	Syntax errors would sometimes misreport the error context.
 
     o	qt(p, df=1) is now also correct for very small p. (PR#9804)
-	qt(p, df=2) is much more accurate for  0 < |p - 0.5| << 1.
+	qt(p, df=2) ditto; also is more accurate for  0 < |p - 0.5| << 1.
+	qt(*, log.p=TRUE) now is finite and monotone (again!) where possible.
 
     o	Several functions including those making use of printCoefmat(),
 	layout() and sortedXyData() now work correctly with

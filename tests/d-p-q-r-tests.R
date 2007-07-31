@@ -572,7 +572,7 @@ qtp <- qt(p, df = 1)
 ## relative error < 10^-14 :
 stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
 
-## Similarly for df = 2 --- both for p ~ 0  *and*  p ~ 1
+## Similarly for df = 2 --- both for p ~ 0  *and*  p ~ 1/2
 ## P ~ 0
 stopifnot(all.equal(qt(-740, df=2, log=TRUE), -exp(370)/sqrt(2)))
 ## P ~ 1 (=> p ~ 0.5):
@@ -581,7 +581,16 @@ p.5 - 0.5
 stopifnot(all.equal(qt(p.5, df = 2),
 		    c(8.429369702179e-08, 2.634178031931e-09,
 		      8.231806349784e-11, 2.572439484308e-12)))
+## qt(<large>, log = TRUE)  is now more finite and monotone (again!):
+stopifnot(all.equal(qt(-1000, df = 4, log=TRUE),
+                    -4.930611e108, tol = 1e-6))
+qtp <- qt(-(20:850), df=1.2, log=TRUE, lower=FALSE)
+##almost: stopifnot(all(abs(5/6 - diff(log(qtp))) < 1e-11))
+stopifnot(abs(5/6 - quantile(diff(log(qtp)), pr=c(0,0.995))) < 1e-11)
 
+## close to df=1 (where Taylor steps are important!):
+all.equal(-20, pt(qt(-20, df=1.02, log=TRUE),
+                          df=1.02, log=TRUE), tol = 1e-12)
 
 ## pbeta(*, log=TRUE) {toms708} -- now improved tail behavior
 x <- c(.01, .10, .25, .40, .55, .71, .98)
