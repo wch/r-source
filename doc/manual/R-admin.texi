@@ -3603,7 +3603,7 @@ On @cputype{x86} you will get marginally higher performance @emph{via}
 CFLAGS="-xO5 -xc99 -xlibmil -nofstore"
 FFLAGS="-O5 -libmil -nofstore"
 CXXFLAGS="-xO5 -xlibmil -nofstore"
-SAFE_FFLAGS="-O5 -libmil"
+SAFE_FFLAGS="-O5 -libmil -fstore"
 @end example
 
 @cindex BLAS library
@@ -3619,9 +3619,7 @@ LAPACK via
 
 @noindent
 However, our tests were none too successful: Sparc 64-bit builds
-crashed, and Sparc 32-bit builds needed @samp{HAVE_WORKING_LOG} unset in
-@file{config.h} as whereas the @code{log} in Solaris' @code{libm} works
-correctly, that in @code{libsunperf} is found (and does not).
+crashed.
 
 Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
 check} in the complex LAPACK tests: using Sun Studio 11 worked
