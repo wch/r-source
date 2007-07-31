@@ -106,7 +106,7 @@ function(dir, outDir)
 ### * .split_description
 
 .split_description <-
-function(db)
+function(db, verbose = FALSE)
 {
     if(!is.na(Built <- db["Built"])) {
         Built <- as.list(strsplit(Built, "; ")[[1]])
@@ -125,8 +125,21 @@ function(db)
     ## might perhaps have multiple entries
     Depends <- .split_dependencies(db[names(db) %in% "Depends"])
     if("R" %in% names(Depends)) {
-        Rdeps <- Depends[["R"]]
-        Depends <- Depends[-match("R", names(Depends))]
+        if(verbose && sum("R" == names(Depends)) > 1) {
+            entries <- Depends["R" == names(Depends)]
+            entries <- lapply(entries, function(x)
+                paste(lapply(x, as.character), collapse="")
+            )
+            message("WARNING: 'Depends' entry has multiple dependencies: ",
+                    paste(unlist(entries), collapse=', '),
+                    "\n\tonly the first will be used")
+        }
+        Rdeps <- Depends[["R", exact = TRUE]] # the first one
+        Depends <- Depends[names(Depends) != "R"]
+        ## several packages have 'Depends: R', which is a noop.
+        if(verbose && length(Rdeps) == 1)
+             message("WARNING: omitting pointless dependence on 'R' without a version requirement")
+        if(length(Rdeps) <= 1) Rdeps <- NULL
     } else Rdeps <- NULL
     Rdeps <- as.vector(Rdeps)
     Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
@@ -780,11 +793,13 @@ function(dir)
 {
     if(missing(dir)) dir <- "."
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
-    depends <- .split_description(meta)$Rdepends
+    depends <- .split_description(meta, verbose = TRUE)$Rdepends
     status <- 0
-    if(!is.null(depends) && !is.null(depends$op)) {
-        if(!depends$op %in% c("<=", ">=", "<", ">", "==")
-           || is.null(depends$version))
+    ## .split_description will have ensured that this is NULL or
+    ## of length 3.
+    if(length(depends) > 1) {
+        ## .check_package_description will insist on these operators
+        if(!depends$op %in% c("<=", ">="))
             message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
         else
             status <- !do.call(depends$op,

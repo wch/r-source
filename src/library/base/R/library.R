@@ -39,6 +39,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     {
         current <- getRversion()
         ## depends on R version?
+        ## That this is NULL or of length 1 (installed < 2.6.0 only) or
+        ## length 3 with valid components was checked at INSTALL time.
         if(length(Rdeps <- pkgInfo$Rdepends) > 1) {
             target <- Rdeps$version
             res <- eval(parse(text=paste("current", Rdeps$op, "target")))
