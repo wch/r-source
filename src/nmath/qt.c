@@ -43,7 +43,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 {
     const static double eps = 1.e-12;
 
-    double p_, P, q;
+    double P, q;
     Rboolean neg;
 
 #ifdef IEEE_754
@@ -62,15 +62,19 @@ double qt(double p, double ndf, int lower_tail, int log_p)
      */
     if (ndf > 1e20) return qnorm(p, 0., 1., lower_tail, log_p);
 
-    p_ = R_D_qIv(p); /* note: exp(p) may underflow to 0; fix later */
+    P = R_D_qIv(p); /* if exp(p) underflows, we fix below */
 
-    if((lower_tail && p_ > 0.5) || (!lower_tail && p_ < 0.5)) {
-	neg = FALSE; P = 2 * R_D_Cval(p_);
-    } else {
-	neg = TRUE;  P = 2 * R_D_Lval(p_);
-    } /* 0 <= P <= 1 ; P = 2*min(p_, 1 - p_)  in all cases */
+    neg = (!lower_tail || P < 0.5) && (lower_tail || P > 0.5);
+    if(neg)
+	P = 2 * (log_p ? (lower_tail ? P : -expm1(p)) : R_D_Lval(p));
+    else
+	P = 2 * (log_p ? (lower_tail ? -expm1(p) : P) : R_D_Cval(p));
+    /* 0 <= P <= 1 ; P = 2*min(P', 1 - P')  in all cases */
 
-    if (fabs(ndf - 2) < eps) {	/* df ~= 2 */
+/* Use this if(log_p) only : */
+#define P_is_exp_2p (lower_tail == neg) /* both TRUE or FALSE == !xor */
+
+     if (fabs(ndf - 2) < eps) {	/* df ~= 2 */
 	if(P > DBL_MIN) {
 	    if(3* P < DBL_EPSILON) /* P ~= 0 */
 		q = 1 / sqrt(P);
@@ -79,42 +83,48 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    else /* eps/3 <= P <= 0.9 */
 		q = sqrt(2 / (P * (2 - P)) - 2);
 	}
-	else { /* P has underflowed */
-	    if(log_p) q = exp(- 0.5 * p) / M_SQRT2;
-	    else q = ML_POSINF;
+	else { /* P << 1, q = 1/sqrt(P) = ... */
+	    if(log_p)
+		q = P_is_exp_2p ? exp(- p/2) / M_SQRT2 : 1/sqrt(-expm1(p));
+	    else
+		q = ML_POSINF;
 	}
     }
     else if (ndf < 1 + eps) { /* df ~= 1  (df < 1 excluded above): Cauchy */
 	if(P > 0)
 	    q = 1/tan(P * M_PI_2);/* == - tan((P+1) * M_PI_2) -- suffers for P ~= 0 */
 
-	else { /* P = 0, but maybe p_ = exp(p) ! */
-	    if(log_p) q = M_1_PI * exp(-p); /* cot(e) ~ 1/e */
-	    else q = ML_POSINF;
+	else { /* P = 0, but maybe = 2*exp(p) ! */
+	    if(log_p) /* 1/tan(e) ~ 1/e */
+		q = P_is_exp_2p ? M_1_PI * exp(-p) : -1./(M_PI * expm1(p));
+	    else
+		q = ML_POSINF;
 	}
     }
     else {		/*-- usual case;  including, e.g.,  df = 1.1 */
-	double x = 0., y, a = 1 / (ndf - 0.5),
+	double x = 0., y, log_P2 = 0./* -Wall */,
+	    a = 1 / (ndf - 0.5),
 	    b = 48 / (a * a),
 	    c = ((20700 * a / b - 98) * a - 16) * a + 96.36,
 	    d = ((94.5 / (b + c) - 3) / b + 1) * sqrt(a * M_PI_2) * ndf;
 
-	Rboolean P_ok1 = P > DBL_MIN || !log_p, P_ok = P_ok1;
+	Rboolean P_ok1 = P > DBL_MIN || !log_p,  P_ok = P_ok1;
 	if(P_ok1) {
 	    y = pow(d * P, 2 / ndf);
 	    P_ok = (y >= DBL_EPSILON);
 	}
-	if(!P_ok) {/* log_p && P = 2*exp(p) "underflowed" or just quite small */
-	    x = (log(d) + M_LN2 + p) / ndf;
+	if(!P_ok) { /* log_p && P very small */
+	    log_P2 = P_is_exp_2p ? p : R_Log1_Exp(p); /* == log(P / 2) */
+	    x = (log(d) + M_LN2 + log_P2) / ndf;
 	    y = exp(2 * x);
 	}
 
 	if ((ndf < 2.1 && P > 0.5) || y > 0.05 + a) { /* P > P0(df) */
 	    /* Asymptotic inverse expansion about normal */
 	    if(P_ok)
-		x = qnorm(0.5 * P, 0., 1., TRUE,	/*log_p*/FALSE);
+		x = qnorm(0.5 * P, 0., 1., /*lower_tail*/TRUE,  /*log_p*/FALSE);
 	    else /* log_p && P underflowed */
-		x = qnorm( p,	   0., 1., lower_tail,	/*log_p*/TRUE);
+		x = qnorm(log_P2,  0., 1., lower_tail,	        /*log_p*/ TRUE);
 
 	    y = x * x;
 	    if (ndf < 5)

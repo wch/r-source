@@ -591,6 +591,11 @@ stopifnot(abs(5/6 - quantile(diff(log(qtp)), pr=c(0,0.995))) < 1e-11)
 ## close to df=1 (where Taylor steps are important!):
 all.equal(-20, pt(qt(-20, df=1.02, log=TRUE),
                           df=1.02, log=TRUE), tol = 1e-12)
+stopifnot(diff(lq <- log(qt(-2^-(10:600), df=1.1, log=TRUE))) > 0.6)
+lq1 <- log(qt(-2^-(20:600), df=1, log=TRUE))
+lq2 <- log(qt(-2^-(20:600), df=2, log=TRUE))
+stopifnot(mean(abs(diff(lq1) - log(2)      )) < 1e-8,
+	  mean(abs(diff(lq2) - log(sqrt(2)))) < 4e-8)
 
 ## pbeta(*, log=TRUE) {toms708} -- now improved tail behavior
 x <- c(.01, .10, .25, .40, .55, .71, .98)
