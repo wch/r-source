@@ -22,9 +22,8 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
   \item{line}{on which MARgin line, starting at 0 counting outwards.}
   \item{outer}{use outer margins if available.}
-  \item{at}{give location in user-coordinates.  If \code{length(at)==0}
-    (the default), the location will be determined by \code{adj}.
-  }
+  \item{at}{give location in user zcoordinates.  If \code{length(at)==0}
+    (the default), the location will be determined by \code{adj}.}
   \item{adj}{adjustment for each string in reading direction.  For
     strings parallel to the axes, \code{adj = 0} means left or bottom
     alignment, and \code{adj = 1} means right or top alignment.
@@ -49,9 +48,9 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{font}{font for text.  Can be a vector.  \code{NA} values (the
     default) mean use \code{par("font")}.}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}),
-    including \code{family}, \code{las} and \code{xpd}.  (This defaults
-    to the figure region unless \code{outer = TRUE}, otherwise the
-    device region.  It can only be increased.)}
+    including \code{family}, \code{las} and \code{xpd}. (The latter
+    defaults to the figure region unless \code{outer = TRUE}, otherwise
+    the device region.  It can only be increased.)}
 }
 \details{
   The \dQuote{user coordinates} in the outer margins always range from zero to
@@ -69,7 +68,8 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   For strings plotted perpendicular to the axis the default justification
   is to place the end of the string nearest the axis on the specified
   line.  (Note that this differs from S, which uses \code{srt} if
-  \code{at} is supplied and \code{las} if it is not.)
+  \code{at} is supplied and \code{las} if it is not.  Parameter
+  \code{srt} is ignored in \R.)
 
   Note that if the text is to be plotted perpendicular to the axis,
   \code{adj} determines the justification of the string \emph{and} the

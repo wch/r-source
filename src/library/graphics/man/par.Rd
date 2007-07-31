@@ -309,8 +309,9 @@ par(\dots, no.readonly = FALSE)
 	\item{2:}{always perpendicular to the axis,}
 	\item{3:}{always vertical.}
       }
-      Note that other string/character rotation (via argument \code{srt}
-      to \code{par}) does \emph{not} affect the axis labels.
+      Also supported by \code{\link{mtext}}.  Note that other
+      string/character rotation (via argument \code{srt} to \code{par})
+      does \emph{not} affect the axis labels.
     }
     \item{\code{lend}}{The line end style.  This can be specified as an
       integer or string:
@@ -450,7 +451,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{smo}}{(\emph{Unimplemented}) a value which indicates how
       smooth circles and circular arcs should be.}
     \item{\code{srt}}{The string rotation in degrees.  See the comment
-      about \code{crt}.
+      about \code{crt}.  Only supported by \code{\link{text}}.
       %% NOT true for R (but for S): Causes \code{srt} to be set to the
       %% same value. ?? Is `crt' meant here ??
     }

@@ -46,7 +46,7 @@ text(x, \dots)
     These default to the values of the global graphical parameters in
     \code{\link{par}()}.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}),
-    such as \code{family} and \code{xpd}.}
+    such as \code{srt}, \code{family} and \code{xpd}.}
 }
 \description{
   \code{text} draws the strings given in the vector \code{labels} at the
