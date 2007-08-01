@@ -61,7 +61,8 @@ aggregate(x, \dots)
   arising from \code{by} contain the unique combinations of grouping
   values used for determining the subsets, and the ones arising from
   \code{x} the corresponding summary statistics for the subset of the
-  respective variables in \code{x}.
+  respective variables in \code{x}.  Rows with missing values in any of
+  the \code{by} variables will be omitted from the result.
   
   \code{aggregate.ts} is the time series method.  If \code{x} is not a
   time series, it is coerced to one.  Then, the variables in \code{x}
@@ -69,7 +70,11 @@ aggregate(x, \dots)
   \code{frequency(x) / nfrequency}, and \code{FUN} is applied to each
   such block, with further (named) arguments in \code{\dots} passed to
   it.  The result returned is a time series with frequency
-  \code{nfrequency} holding the aggregated values.
+  \code{nfrequency} holding the aggregated values.  Note that this make
+  most sense for a quarterly or yearly result when the original
+  series covers a whole number of quarters or years: in particular
+  aggregating a monthly series to quarters starting in February does not
+  give a conventional quarterly series.
 }
 \value{
   For the time series method, a time series of class \code{"ts"} or
@@ -104,6 +109,20 @@ aggregate(state.x77,
                Cold = state.x77[,"Frost"] > 130),
           mean)
 ## (Note that no state in 'South' is THAT cold.)
+
+
+## example with character variables and NAs
+testDF <- data.frame(v1 = c(1,3,5,7,8,3,5,NA,4,5,7,9),
+                     v2 = c(11,33,55,77,88,33,55,NA,44,55,77,99) )
+by1 <- c("red","blue",1,2,NA,"big",1,2,"red",1,NA,12)
+by2 <- c("wet","dry",99,95,NA,"damp",95,99,"red",99,NA,NA)
+aggregate(x = testDF, by = list(by1, by2), FUN = "mean")
+
+# and if you want to treat NAs as a group
+fby1 <- factor(by1, exclude = "")
+fby2 <- factor(by2, exclude = "")
+aggregate(x = testDF, by = list(fby1, fby2), FUN = "mean")
+
 
 ## Compute the average annual approval ratings for American presidents.
 aggregate(presidents, nfrequency = 1, FUN = mean)
