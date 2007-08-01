@@ -337,7 +337,7 @@ print.ts <- function(x, calendar, ...)
     x <- as.ts(x)
     fr.x <- frequency(x)
     if(missing(calendar))
-	calendar <- any(fr.x == c(4,12))
+	calendar <- any(fr.x == c(4,12)) && length(start(x)) == 2
     ## sanity check
     Tsp <- tsp(x)
     if(is.null(Tsp)) {

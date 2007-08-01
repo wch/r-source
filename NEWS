@@ -44,6 +44,10 @@ BUG FIXES
 	methods could change their arguments.  (Seen for the 'Math'
 	group with package Matrix.)
 
+    o	The print() method for "ts" now handles quarterly and monthly
+	series which do not start at the beginning of a quarter or
+	month respectively.
+
 
 
 		CHANGES IN R VERSION 2.5.1
