@@ -1838,6 +1838,39 @@ sub check_pkg {
 	}
     }
 
+    ## Check src/Make* for LF line endings, as Sun make does not accept CRLF
+
+    if(!$is_base_pkg && (-d "src")) {
+	$log->checking("line endings in Makefiles");
+	## .win files are not checked, as CR/CRLF work there
+	my @src_files = ("src/Makevars", "src/Makevars.in", 
+			 "src/Makefile", "src/Makefile.in");
+	my @bad_files = ();
+	foreach my $file (@src_files) {
+	    open(FILE, "< $file") or next;
+            binmode(FILE);	# for Windows
+	    ## with CR line endings we will just get one incomplete line
+	    ## so all we can do is look for CR.
+	    while(<FILE>) {
+		if($_ =~ /\r/) {
+		    push(@bad_files, $file);
+		    last;
+		}
+	    }
+	    close(FILE);
+	}
+	if(scalar(@bad_files) > 0) {
+	    $log->warning();
+	    $log->print("Found the following Makefiles with " .
+			"CR or CRLF line endings:\n");
+	    $log->print("  " . join("\n  ", @bad_files) . "\n");
+	    $log->print("Some Unix makes require LF line endings.\n");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+
     ## Check src/Makevars[.in] for portable compilation flags.
 
     if((-f &file_path("src", "Makevars.in"))
