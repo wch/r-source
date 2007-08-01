@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
+R version 2.6.0 Under development (unstable) (2007-07-31 r42375)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -65,10 +65,10 @@ Error in read.table("foo1") : no lines available in input
 > # wrong col.names
 > try(read.table("foo3", header=TRUE, col.names=letters[1:4]))
 Error in scan(file, what, nmax, sep, dec, quote, skip, nlines, na.strings,  : 
-	line 1 did not have 4 elements
+  line 1 did not have 4 elements
 In addition: Warning message:
 In read.table("foo3", header = TRUE, col.names = letters[1:4]) :
-	header and 'col.names' are of different lengths 
+  header and 'col.names' are of different lengths
 > unlink("foo3")
 > 
 > # incomplete last line
@@ -79,7 +79,7 @@ In read.table("foo3", header = TRUE, col.names = letters[1:4]) :
 3    4
 Warning message:
 In read.table("foo4", header = TRUE) :
-	incomplete final line found by readTableHeader on 'foo4' 
+  incomplete final line found by readTableHeader on 'foo4'
 > unlink("foo4")
 > 
 > # blank last line
@@ -102,10 +102,10 @@ In read.table("foo4", header = TRUE) :
 > cat("head\n", 1:2, "\n", 3:5, "\n", 6:9, "\n", file = "foo6")
 > try(read.table("foo6", header=TRUE))
 Error in read.table("foo6", header = TRUE) : 
-	more columns than column names
+  more columns than column names
 > try(read.table("foo6", header=TRUE, fill=TRUE))
 Error in read.table("foo6", header = TRUE, fill = TRUE) : 
-	more columns than column names
+  more columns than column names
 > read.table("foo6", header=FALSE, fill=TRUE)
     V1 V2 V3 V4
 1 head NA NA NA
@@ -208,8 +208,10 @@ logical(0)
 > 
 > ## test on Windows Unicode file
 > if(capabilities("iconv")) {
-+     print(scan(file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
-+                     encoding="UCS-2LE"), 0, quiet=TRUE))
++     con <- file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
++                 encoding="UCS-2LE")
++     print(scan(con, 0, quiet=TRUE))
++     close(con)
 + } else print(1:8)
 [1] 1 2 3 4 5 6 7 8
 > 
