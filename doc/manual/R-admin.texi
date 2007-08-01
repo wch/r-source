@@ -3441,7 +3441,8 @@ FCFLAGS=$FFLAGS
 FCPICFLAGS=-Kpic
 LDFLAGS=-L/opt/sunstudio12/lib
 SHLIB_LDFLAGS=-shared
-SHLIB_CXXLDFLAGS=-shared
+SHLIB_CXXLDFLAGS="-G -lCstd"
+SHLIB_FCLDFLAGS=-G
 SAFE_FFLAGS="-O5 -libmil"
 @end example
 
