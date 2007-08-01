@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-07-23
+@set FAQ_DATE @value{FAQ_YEAR}-07-30
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1806,6 +1806,8 @@ binary distributions of R.)
 @table @strong
 @item ADaCGH
 Analysis of data from aCGH experiments.
+@item AIS
+Tools to look at the data (``Ad Inidicia Spectata'').
 @item AMORE
 A MORE flexible neural network package, providing the TAO robust neural
 network algorithm.
@@ -1851,6 +1853,8 @@ Functions for general likelihood exploration (MLE, MCMC, CIs).
 Biased urn model distributions.
 @item Biodem
 A number of functions for biodemographycal analysis.
+@item BiodiversityR
+GUI for biodiversity and community ecology analysis.
 @item Bolstad
 Functions and data sets for the book ``Introduction to Bayesian
 Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
@@ -2143,6 +2147,8 @@ Model Based Functional Data Analysis.
 Maximum kernel likelihood estimation.
 @item MLDS
 Maximum Likelihood Difference Scaling.
+@item MLEcens
+Computation of the MLE for bivariate (interval) censored data.
 @item MNP
 Fitting Bayesian Multinomial Probit models via Markov chain Monte Carlo.
 Along with the standard Multinomial Probit model, it can also fit models
@@ -2353,7 +2359,7 @@ Loglinear models in capture-recapture experiments.
 @item Rcmdr
 A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
-@item Rcmdr.HH
+@item RcmdrPlugin.HH
 Rcmdr support for the introductory course at Temple University.
 @item RcmdrPlugin.TeachingDemos
 Rcmdr Teaching Demos plug-in.
@@ -2495,6 +2501,9 @@ Trees WIth eXtra splits.
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
 the concepts or the programming.
+@item TwslmSpikeWeight
+Normalization of cDNA microarray data with the two-way semilinear model
+(TW-SLM).
 @item TwoWaySurvival
 Additive two-way hazards modeling of right censored survival data.
 @item UNF
@@ -2527,6 +2536,8 @@ Map of weed intensity.
 Software for evaluating counterfactuals.
 @item XML
 Tools for reading @XML{} documents and DTDs.
+@item YaleToolkit
+Data exploration tools from Yale University.
 @item ZIGP
 Zero Inflated Generalized Poisson (ZIGP) regression models.
 @item Zelig
@@ -2710,6 +2721,8 @@ Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
 @item butler
 Unit testing, profiling and benchmarking for R.
+@item ca
+Simple, multiple and joint Correspondence Analysis.
 @item caMassClass
 Processing and Classification of protein mass spectra (SELDI) data.
 @item caTools
@@ -2868,6 +2881,8 @@ Routine for the multivariate nonparametric Cramer test.
 Functions for the construction and randomization of balanced carryover
 balanced designs, to check given designs for balance, and for simulation
 studies on the validity of two randomization procedures.
+@item crosshybDetector
+Detection of cross-hybridization events in microarray experiments.
 @item crq
 Quantile regression for randomly censored data.
 @item cslogistic
@@ -3032,6 +3047,8 @@ distributions, hierarchical clustering by e-distances.
 @item ensembleBMA
 Probabilistic forecasting using Bayesian Model Averaging of ensembles
 using a mixture of normal distributions.
+@item epibasix
+Elementary functions for epidemiological analysis.
 @item epicalc
 Epidemiological calculator.
 @item epitools
@@ -4239,6 +4256,8 @@ Robust Instrumental Variables estimators based on high breakpoint point
 S-estimators of multivariate location and scatter matrices.
 @item rjacobi
 Jacobi polynomials and Gauss-Jacobi quadrature related operations.
+@item rjson
+JSON (JavaScript Object Notation) for R.
 @item rlecuyer
 R interface to RNG with multiple streams.
 @item rmeta
