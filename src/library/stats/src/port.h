@@ -29,7 +29,8 @@
 
 #include <Rinternals.h>
 #include <R_ext/RS.h>
-#include <Rmath.h>  /* for d1mach and i1mach */
+int Rf_i1mach(int); /* from private part of nmath! */
+
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("stats", String)
