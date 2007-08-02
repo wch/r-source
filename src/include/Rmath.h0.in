@@ -49,10 +49,12 @@ extern "C" {
 @RMATH_HAVE_WORKING_LOG1P@
 #endif
 
+/* FIXME not really appropriate */
 #include <errno.h>
 #include <limits.h>
 #include <float.h>
 #include <math.h>
+#include <stdlib.h>
 
 #if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
 /* remap to avoid problems with getting the right entry point */
@@ -60,7 +62,6 @@ double  Rlog1p(double);
 #define log1p Rlog1p
 #endif
 
-#include <stdlib.h>
 
 	/* Undo SGI Madness */
 
@@ -325,10 +326,6 @@ double  Rlog1p(double);
 #undef trunc
 #define	trunc	ftrunc
 
-
-/* log(1 - exp(x))  in stable form: */
-#define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x)))
-
 	/* R's versions with !R_FINITE checks */
 
 double R_pow(double x, double y);
@@ -589,28 +586,29 @@ double  logspace_sub(double logx, double logy);
 #define sunif	unif_rand
 #define sexp	exp_rand
 
+/* next is defined by nmath.h, arithmetic.c, fmin.c and uncmin.c */
 #ifdef MATHLIB_PRIVATE
 #define d1mach		Rf_d1mach
 #define i1mach          Rf_i1mach
 #define gamma_cody	Rf_gamma_cody
 
 double	gamma_cody(double); /* used in arithmetic.c */
+double  d1mach(int);
 
 #endif /* MATHLIB_PRIVATE */
 
-double  Rf_d1mach(int); /* used in port.c in package stats */
 int     Rf_i1mach(int); /* used in port.c in package stats */
 
-#ifdef MATHLIB_STANDALONE
-#ifndef MATHLIB_PRIVATE_H
+#if defined(MATHLIB_STANDALONE) && !defined(MATHLIB_PRIVATE_H)
+/* second is defined by nmath.h */
 
 /* If isnan is a macro, as C99 specifies, the C++
    math header will undefine it. This happens on OS X */
 #ifdef __cplusplus
   int R_isnancpp(double); /* in mlutils.c */
-#  define ISNAN(x)     R_isnancpp(x)
+# define ISNAN(x)     R_isnancpp(x)
 #else
-#  define ISNAN(x)     (isnan(x)!=0)
+# define ISNAN(x)     (isnan(x)!=0)
 #endif
 
 #define R_FINITE(x)    R_finite(x)
@@ -623,7 +621,6 @@ int R_finite(double);
 # define N01_kind (*_imp__N01_kind)
 # endif
 
-#endif /* not MATHLIB_PRIVATE_H */
 #endif /* MATHLIB_STANDALONE */
 
 #ifndef R_EXT_PRINT_H_

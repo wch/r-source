@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2006  R Development Core Team
+ *  Copyright (C) 2000--2007  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@
 #define R_D_exp(x)	(log_p	?  (x)	 : exp(x))	/* exp(x) */
 #define R_D_log(p)	(log_p	?  (p)	 : log(p))	/* log(p) */
 #define R_D_Clog(p)	(log_p	? log1p(-(p)) : (0.5 - (p) + 0.5)) /* [log](1-p) */
+
+/* log(1 - exp(x))  in stable form: */
+#define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x)))
 
 /* log(1-exp(x)):  R_D_LExp(x) == (log1p(- R_D_qIv(x))) but even more stable:*/
 #define R_D_LExp(x)     (log_p ? R_Log1_Exp(x) : log1p(-x))

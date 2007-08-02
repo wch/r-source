@@ -25,11 +25,13 @@
 /* ensure that finite and isnan are declared */
 # define _BSD_SOURCE 1
 #endif
-#include <math.h>
 
 #include <R_ext/libextern.h>
 #ifdef  __cplusplus
 extern "C" {
+#else
+/* needed for isnan and isfinite, neither of which are used under C++ */
+# include <math.h>
 #endif
 
 /* implementation of these : ../../main/arithmetic.c */

@@ -139,6 +139,7 @@
  */
 
 #include "nmath.h"
+#include <errno.h>
 
 #define n_max (100)
 

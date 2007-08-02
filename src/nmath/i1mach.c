@@ -19,6 +19,7 @@
  */
 
 #include "nmath.h"
+#include <limits.h>
 #undef i1mach
 
 /* This is (naughtily) used by port.c in package stats */

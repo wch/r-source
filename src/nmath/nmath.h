@@ -21,7 +21,6 @@
 #ifndef MATHLIB_PRIVATE_H
 #define MATHLIB_PRIVATE_H
 
-
 #ifndef MATHLIB_STANDALONE
 /* Mathlib in R */
 # ifdef HAVE_CONFIG_H
@@ -38,6 +37,9 @@
 #include <Rmath.h>
 #undef  MATHLIB_PRIVATE
 #include <R_ext/RS.h>
+#include <math.h>
+#include <float.h> /* DBL_MIN etc */
+
 
 #ifndef MATHLIB_STANDALONE
 
