@@ -2492,7 +2492,7 @@ C
       J0 = P*PM1/2
       JJ = J0 + P
       IX = MOD(3432*IX, 9973)
-      B = HALF*(ONE + FLOAT(IX)/R9973)
+      B = HALF*(ONE + DBLE(IX)/R9973)
       X(P) = B * L(JJ)
       IF (P .LE. 1) GO TO 40
       DO 10 I = 1, PM1
@@ -2509,7 +2509,7 @@ C     DO J = P-1 TO 1 BY -1...
 C       ***  DETERMINE X(J) IN THIS ITERATION. NOTE FOR I = 1,2,...,J
 C       ***  THAT X(I) HOLDS THE CURRENT PARTIAL SUM FOR ROW I.
          IX = MOD(3432*IX, 9973)
-         B = HALF*(ONE + FLOAT(IX)/R9973)
+         B = HALF*(ONE + DBLE(IX)/R9973)
          JM1 = J - 1
          J0 = J*JM1/2
          SPLUS = ZERO
@@ -2893,7 +2893,7 @@ C
       JJ = J0 + P
       IF (L(JJ) .EQ. ZERO) GO TO 110
       IX = MOD(3432*IX, 9973)
-      B = HALF*(ONE + FLOAT(IX)/R9973)
+      B = HALF*(ONE + DBLE(IX)/R9973)
       XPLUS = B / L(JJ)
       X(P) = XPLUS
       IF (P .LE. 1) GO TO 60
@@ -2913,7 +2913,7 @@ C     DO J = P-1 TO 1 BY -1...
 C       ***  DETERMINE X(J) IN THIS ITERATION. NOTE FOR I = 1,2,...,J
 C       ***  THAT X(I) HOLDS THE CURRENT PARTIAL SUM FOR ROW I.
          IX = MOD(3432*IX, 9973)
-         B = HALF*(ONE + FLOAT(IX)/R9973)
+         B = HALF*(ONE + DBLE(IX)/R9973)
          XPLUS = (B - X(J))
          XMINUS = (-B - X(J))
          SPLUS = DABS(XPLUS)
@@ -4891,7 +4891,7 @@ C
 C *** DETERMINE NUMERICAL RANK OF A ***
 C
       IF (MACHEP .LE. ZERO) MACHEP = DR7MDC(3)
-      SINGTL = SNGFAC * FLOAT(MAX0(L,N)) * MACHEP
+      SINGTL = SNGFAC * DBLE(MAX0(L,N)) * MACHEP
       K = L
       IF (IER .NE. 0) K = IER - 1
  70   IF (K .LE. 0) GO TO 90
@@ -8615,7 +8615,7 @@ C
 C *** DETERMINE NUMERICAL RANK OF A ***
 C
       IF (MACHEP .LE. ZERO) MACHEP = DR7MDC(3)
-      SINGTL = SNGFAC * FLOAT(MAX0(L,N)) * MACHEP
+      SINGTL = SNGFAC * DBLE(MAX0(L,N)) * MACHEP
       K = L
       IF (IER .NE. 0) K = IER - 1
  70   IF (K .LE. 0) GO TO 90
@@ -10353,7 +10353,7 @@ C
          CALL DL7NVR(P, V(COV), L)
          CALL DL7TSQ(P, V(COV), V(COV))
 C
- 10   CALL DV7SCL(LH, V(COV), V(F)/(HALF * FLOAT(MAX0(1,N-P))), V(COV))
+ 10   CALL DV7SCL(LH, V(COV), V(F)/(HALF * DBLE(MAX0(1,N-P))), V(COV))
       IV(COVMAT) = COV
 C
  999  RETURN
@@ -11961,7 +11961,7 @@ C
           TINY = DR7MDC(1)
           BIG = DR7MDC(6)
           IF (TINY*BIG .LT. ONE) TINY = ONE / BIG
- 10   SINGTL = FLOAT(MAX0(N,P)) * MEPS10
+ 10   SINGTL = DBLE(MAX0(N,P)) * MEPS10
 C
 C  ***  INITIALIZE W, IPIVOT, AND DIAG(R)  ***
 C

@@ -161,7 +161,7 @@ C
   170 CONTINUE
       DO 190 J = 1, N
         DO 180 L = 1, K
-  180   C(L,J) = C(L,J) / FLOAT(NC(L))
+  180   C(L,J) = C(L,J) / DBLE(NC(L))
         DO 190 I = 1, M
           II = IC1(I)
           DA = A(I,J) - C(II,J)

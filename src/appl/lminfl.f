@@ -65,12 +65,13 @@ c   This version dated Aug 24, 1996.
 c   Ross Ihaka, University of Auckland.
 c   `docoef' option added Feb 17, 2003;  Martin Maechler ETH Zurich.
 c   Handle hat == 1 case, Nov 2005.
+c   Argument 'tol' was real not double precision, Aug 2007
 
       subroutine lminfl(x, ldx, n, k, docoef, qraux, resid,
      +     hat, coef, sigma, tol)
       integer ldx, n, k, docoef
       double precision x(ldx,k), qraux(k), resid(n),
-     +     hat(n), coef(n,k), sigma(n)
+     +     hat(n), coef(n,k), sigma(n), tol
 c   coef(.,.) can be dummy(1) when docoef is 0(false)
 
       integer i, j, info

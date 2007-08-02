@@ -65,9 +65,9 @@ c     yb is vector of means
       do 261 j=1,n
         do 261 i=1,q
  261       r(i,j)=r(i,j)-yb(i)
-      ys=0.
+      ys=0.d0
       do 281 i=1,q
-         s=0.
+         s=0.d0
          do 291 j=1,n
  291        s=s+w(j)*r(i,j)**2
          ys=ys+ww(i)*s/sw
@@ -78,7 +78,7 @@ c     ys is the overall standard deviation -- quit if zero
 
  311  continue
       ys=sqrt(ys)
-      s=1./ys
+      s=1.d0/ys
       do 331 j=1,n
          do 331 i=1,q
  331        r(i,j)=r(i,j)*s
@@ -91,7 +91,7 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
 C REPEAT
  371  continue
       do 381 l=1,lm
-        sc(l,1)=l+.1
+        sc(l,1)=l+0.1d0
         s=0d0
         do 391 i=1,q
  391       s=s+ww(i)*abs(b(i,l))
@@ -104,7 +104,7 @@ C REPEAT
       do 521 i=1,q
         do 531 j=1,n
            r(i,j)=r(i,j)-yb(i)
-           s=0.
+           s=0.d0
            do 541 l=1,lm
  541          s=s+b(i,l)*f(j,l)
           r(i,j)=r(i,j)/ys-s
@@ -351,13 +351,13 @@ C REPEAT [inner loop] -----
         g(i,2)=a(i)+g(i,1)
         s=s+g(i,2)**2
  70   continue
-      s=1./sqrt(s)
+      s=1.d0/sqrt(s)
       do 80 i=1,p
         g(i,2)=g(i,2)*s
  80   continue
       do 90 j=1,n
-        sc(j,1)=j+.1
-        s=0.
+        sc(j,1)=j+0.1d0
+        s=0.d0
         do 91 i=1,p
           s=s+g(i,2)*x(i,j)
  91     continue
@@ -377,7 +377,7 @@ C REPEAT [inner loop] -----
  120  continue
       s=s/sw
       if(s .lt. asr) goto 140
-      cut=cut*0.5
+      cut=cut*0.5d0
       if(cut.lt.cutmin) goto 199
       do 150 i=1,p
         g(i,1)=g(i,1)*cut
@@ -496,14 +496,14 @@ C REPEAT
         j=1
         goto 11343
 11341   j=j+1
-11343   if((j).gt.(im1)) goto 11342
+11343   if(j.gt.im1) goto 11342
         s=s+g(i*(i-1)/2+j)*x(j)
         goto 11341
 11342   continue
         j=i+1
         goto 11353
 11351   j=j+1
-11353   if((j).gt.(p)) goto 11352
+11353   if(j.gt.p) goto 11352
         s=s+g(j*(j-1)/2+i)*x(j)
         goto 11351
 11352   continue
@@ -522,14 +522,14 @@ C REPEAT
           j=1
           goto 11393
 11391     j=j+1
-11393     if((j).gt.(im1)) goto 11392
+11393     if(j.gt.im1) goto 11392
           s=s+g(i*(i-1)/2+j)*sc(j,2)
           goto 11391
 11392     continue
           j=i+1
           goto 11403
 11401     j=j+1
-11403     if((j).gt.(p)) goto 11402
+11403     if(j.gt.p) goto 11402
           s=s+g(j*(j-1)/2+i)*sc(j,2)
           goto 11401
 11402     continue
@@ -829,7 +829,7 @@ c
 
       do 100 l=1,mu
          do 10 j=1,n
-            sp(j,1)=j+.1
+            sp(j,1)=j+0.1d0
             sp(j,2)=f(j,l)
  10      continue
          call sort(t(1,l),sp,1,n)
@@ -850,11 +850,11 @@ c
      +     inp,ja,jb,jf,jt,jfl,jfh,jtl,jth, mu
       double precision ys, s, t
 
-      m=smod(1)+.1
-      p=smod(2)+.1
-      q=smod(3)+.1
-      n=smod(4)+.1
-      mu=smod(5)+.1
+      m=smod(1)+0.1d0
+      p=smod(2)+0.1d0
+      q=smod(3)+0.1d0
+      n=smod(4)+0.1d0
+      mu=smod(5)+0.1d0
       ys=smod(q+6)
       ja=q+6
       jb=ja+p*m
@@ -1078,7 +1078,7 @@ c Var
       cvar=var
       fbw=cvar
       jper=iabs(iper)
-      ibw=0.5*span*n+0.5
+      ibw=0.5d0*span*n+0.5d0
       if (ibw.lt.2) ibw=2
       it=2*ibw+1
       do 20 i=1,it

@@ -70,7 +70,7 @@ c
 c
          do 30 j = 1, n
             info = j
-            s = 0.0e0
+            s = 0.0d0
             ik = m + 1
             jk = max0(j-m,1)
             mu = max0(m+2-j,1)
@@ -88,7 +88,7 @@ c
 
             s = abd(m+1,j) - s
 c     ......exit
-            if (s .le. 0.0e0) go to 40
+            if (s .le. 0.0d0) go to 40
 
             abd(m+1,j) = sqrt(s)
 

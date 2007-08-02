@@ -76,9 +76,9 @@ c
       jlow = 1
       do 20 i=1,k
          do 19 j=jlow,k
-   19       a(j,i) = 0e0
+   19       a(j,i) = 0d0
          jlow = i
-   20    a(i,i) = 1e0
+   20    a(i,i) = 1d0
 c     at this point, a(.,j) contains the b-coeffs for the j-th of the
 c     k  b-splines of interest here.
 c
@@ -109,7 +109,7 @@ c        of order m there is safe since the remaining b-spline derivat-
 c        ive of the same order do not use this value due to the fact
 c        that  a(j,i) = 0  for j < i .
          do 40 i=1,k
-            sum = 0.
+            sum = 0.d0
             jlow = max0(i,m)
             do 35 j=jlow,k
    35          sum = a(j,i)*dbiatx(j,m) + sum
@@ -202,13 +202,13 @@ C Local Variables
 c
                                         go to (10,20), index
    10 j = 1
-      biatx(1) = 1e0
+      biatx(1) = 1d0
       if (j .ge. jhigh)                 go to 99
 c
    20    jp1 = j + 1
          deltar(j) = t(left+j) - x
          deltal(j) = x - t(left+1-j)
-         saved = 0e0
+         saved = 0d0
          do 26 i=1,j
             term = biatx(i)/(deltar(i) + deltal(jp1-i))
             biatx(i) = saved + deltar(i)*term

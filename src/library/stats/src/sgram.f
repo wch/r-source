@@ -25,10 +25,10 @@ c
       lentb=nb+4
 C Initialise the sigma vectors
       do 1 i=1,nb
-         sg0(i)=0.
-         sg1(i)=0.
-         sg2(i)=0.
-         sg3(i)=0.
+         sg0(i)=0.d0
+         sg1(i)=0.d0
+         sg2(i)=0.d0
+         sg3(i)=0.d0
  1    continue
 
       ileft = 1
@@ -62,28 +62,28 @@ C     Calculate Contributions to the sigma vectors
                jj=ii
                sg0(ileft-4+ii) = sg0(ileft-4+ii) +
      &              wpt*(yw1(ii)*yw1(jj)+
-     &                   (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                  + yw2(ii)*yw2(jj)*.3330)
+     &                   (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                  + yw2(ii)*yw2(jj)*0.3330d0)
                jj=ii+1
                if(jj.le.4)then
                   sg1(ileft+ii-4) = sg1(ileft+ii-4) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                endif
                jj=ii+2
                if(jj.le.4)then
                   sg2(ileft+ii-4) = sg2(ileft+ii-4) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                endif
                jj=ii+3
                if(jj.le.4)then
                   sg3(ileft+ii-4) = sg3(ileft+ii-4) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                endif
  10         continue
 
@@ -92,21 +92,21 @@ C     Calculate Contributions to the sigma vectors
                jj=ii
                sg0(ileft-3+ii) = sg0(ileft-3+ii) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                jj=ii+1
                if(jj.le.3)then
                   sg1(ileft+ii-3) = sg1(ileft+ii-3) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                endif
                jj=ii+2
                if(jj.le.3)then
                   sg2(ileft+ii-3) = sg2(ileft+ii-3) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                endif
  20         continue
 
@@ -115,14 +115,14 @@ C     Calculate Contributions to the sigma vectors
                jj=ii
                sg0(ileft-2+ii) = sg0(ileft-2+ii) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                jj=ii+1
                if(jj.le.2)then
                   sg1(ileft+ii-2) = sg1(ileft+ii-2) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
                endif
  28         continue
 
@@ -131,8 +131,8 @@ C     Calculate Contributions to the sigma vectors
                jj=ii
                sg0(ileft-1+ii) = sg0(ileft-1+ii) +
      &                 wpt* (yw1(ii)*yw1(jj) +
-     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*.50
-     &                       +yw2(ii)*yw2(jj)*.3330 )
+     *                       (yw2(ii)*yw1(jj) + yw2(jj)*yw1(ii))*0.5d0
+     &                       +yw2(ii)*yw2(jj)*0.3330d0 )
  34         continue
 
          endif

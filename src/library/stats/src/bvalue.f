@@ -56,7 +56,7 @@ c  of order  1 , and the coefficient for  b(i,1,t)(x)  must then
 c  be the desired number  (d^j)f(x). (see x.(17)-(19) of text).
 c
 C Arguments
-      integer lent, n,k, jderiv
+      integer n,k, jderiv
       DOUBLE precision t(*),bcoef(n),x
 c     dimension t(n+k)
 c  current fortran standard makes it impossible to specify the length of
@@ -77,7 +77,7 @@ c
 c     initialize
       data i/1/
 
-      bvalue = 0.
+      bvalue = 0.d0
       if (jderiv .ge. k) go to 99
 c
 c  *** find  i	s.t.  1 <= i < n+k  and	 t(i) < t(i+1) and
@@ -88,7 +88,7 @@ c      (the asymmetry in this choice of	 i  makes  f  rightcontinuous)
       if( (x.ne.t(n+1)) .or. (t(n+1).ne.t(n+k)) ) then
          i = interv ( t, n+k, x, 0, 0, i, mflag)
          if (mflag .ne. 0) then
-            call rwarn("bvalue()  mflag != 0: should never happen!")
+            call rwarn('bvalue()  mflag != 0: should never happen!')
             go to 99
          endif
       else
@@ -119,7 +119,7 @@ c     to t(n+k) appropriately.
             dm(j) = x - t(i+1-j)
  5       continue
          do 6 j=i,km1
-            aj(k-j) = 0.
+            aj(k-j) = 0.d0
             dm(j) = dm(i)
  6       continue
       endif
@@ -139,7 +139,7 @@ c     -  9911         format(' i+j, lent ',2(i6,1x))
             dp(j) = t(i+j) - x
  15      continue
          do 16 j=jcmax,km1
-            aj(j+1) = 0.
+            aj(j+1) = 0.d0
             dp(j) = dp(jcmax)
  16      continue
       endif

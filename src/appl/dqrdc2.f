@@ -168,7 +168,7 @@ c  work(j,1) is only updated in one case: looks like a bug -- no longer used
 c
 c                     tt = 1.0d0 + 0.05d0*tt*(qraux(j)/work(j,1))**2
 c                     if (tt .eq. 1.0d0) go to 130
-                     if (dabs(t) .lt. 1e-6) go to 130
+                     if (dabs(t) .lt. 1d-6) go to 130
                         qraux(j) = qraux(j)*dsqrt(t)
                      go to 140
   130                continue

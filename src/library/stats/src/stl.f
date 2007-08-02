@@ -13,7 +13,7 @@ c
       subroutine stl(y,n,np,ns,nt,nl, isdeg,itdeg,ildeg, 
      &     nsjump,ntjump,nljump, ni,no, rw,season,trend,work)
 
-      implicit none
+c     implicit none
 c Arg
       integer n, np, ns,nt,nl, isdeg,itdeg,ildeg, nsjump,ntjump,nljump,
      &     ni, no
@@ -31,7 +31,7 @@ c Var
 
       userw = .false.
       do 1 i = 1,n
-         trend(i) = 0.
+         trend(i) = 0.d0
  1    continue
 c the three spans must be at least three and odd:
       newns = max0(3,ns)
@@ -63,7 +63,7 @@ c --- end Loop
 c     robustness weights when there were no robustness iterations:
       if(no .le. 0) then
          do 15 i = 1,n
-            rw(i) = 1.
+            rw(i) = 1.d0
  15      continue
       endif
       return
@@ -71,7 +71,7 @@ c     robustness weights when there were no robustness iterations:
       
       subroutine stless(y,n,len,ideg,njump,userw,rw,ys,res)
 
-      implicit none
+c     implicit none
 c Arg
       integer n, len, ideg, njump
       double precision y(n), rw(n), ys(n), res(n)
@@ -161,7 +161,7 @@ c Var
       subroutine stlest(y,n,len,ideg,xs,ys,nleft,nright,w,
      &     userw,rw,ok)
 
-      implicit none
+c     implicit none
 c Arg
       integer n, len, ideg, nleft, nright
       double precision y(n), w(n), rw(n), xs, ys
@@ -173,49 +173,49 @@ c Var
       range = dble(n)-dble(1)
       h = max(xs - dble(nleft), dble(nright) - xs)
       if(len .gt. n) h = h + dble((len-n)/2)
-      h9 = .999*h
-      h1 = .001*h
-      a = 0.
+      h9 = 0.999d0*h
+      h1 = 0.001d0*h
+      a = 0.d0
       do 60 j = nleft,nright 
          r = abs(dble(j)-xs)
          if(r .le. h9) then
             if(r .le. h1) then
-               w(j) = 1.
+               w(j) = 1.d0
             else
-               w(j) = (1. - (r/h)**3)**3
+               w(j) = (1.d0 - (r/h)**3)**3
             endif
             if(userw) w(j) = rw(j)*w(j)
             a = a+w(j)
          else
-            w(j) = 0.
+            w(j) = 0.d0
          endif
  60   continue
 
-      if(a .le. 0.) then
+      if(a .le. 0.d0) then
          ok = .false.
       else
          ok = .true.
          do 69 j = nleft,nright
             w(j) = w(j)/a
  69      continue
-         if((h .gt. 0.) .and. (ideg .gt. 0)) then
-            a = 0.
+         if((h .gt. 0.d0) .and. (ideg .gt. 0)) then
+            a = 0.d0
             do 73 j = nleft,nright
                a = a+w(j)*dble(j)
  73         continue
             b = xs-a
-            c = 0.
+            c = 0.d0
             do 75 j = nleft,nright
                c = c+w(j)*(dble(j)-a)**2
  75         continue
-            if(sqrt(c) .gt. .001*range) then
+            if(sqrt(c) .gt. 0.001d0*range) then
                b = b/c
                do 79 j = nleft,nright
-                  w(j) = w(j)*(b*(dble(j)-a)+1.0)
+                  w(j) = w(j)*(b*(dble(j)-a)+1.0d0)
  79            continue
             endif
          endif
-         ys = 0.
+         ys = 0.d0
          do 81 j = nleft,nright
             ys = ys+w(j)*y(j)
  81      continue
@@ -241,7 +241,7 @@ c Moving Average (aka "running mean")
 c ave(i) := mean(x{j}, j = max(1,i-k),..., min(n, i+k))
 c           for i = 1,2,..,n
 
-      implicit none
+c     implicit none
 c Arg
       integer n, len
       double precision x(n), ave(n)
@@ -250,7 +250,7 @@ c Var
       integer i, j, k, m, newn
       newn = n-len+1
       flen = dble(len)
-      v = 0.
+      v = 0.d0
       do 3 i = 1,len
          v = v+x(i)
  3    continue
@@ -272,7 +272,7 @@ c Var
       subroutine stlstp(y,n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,
      &     ntjump,nljump,ni,userw,rw,season,trend,work)
 
-      implicit none
+c     implicit none
 c Arg
       integer n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,ntjump,nljump,ni
       logical userw
@@ -306,7 +306,7 @@ c Robustness Weights
 c	rw_i := B( |y_i - fit_i| / (6 M) ),   i = 1,2,...,n
 c		where B(u) = (1 - u^2)^2  * 1[|u| < 1]   {Tukey's biweight}
 c		and   M := median{ |y_i - fit_i| }
-      implicit none
+c     implicit none
 c Arg
       integer n
       double precision y(n), fit(n), rw(n)
@@ -320,18 +320,18 @@ c Var
       mid(1) = n/2+1
       mid(2) = n-mid(1)+1
       call psort(rw,n,mid,2)
-      cmad = 3.0*(rw(mid(1))+rw(mid(2))) 
+      cmad = 3.0d0*(rw(mid(1))+rw(mid(2))) 
 c     = 6 * MAD      
-      c9 = .999*cmad
-      c1 = .001*cmad
+      c9 = 0.999d0*cmad
+      c1 = 0.001d0*cmad
       do 10 i = 1,n 
          r = abs(y(i)-fit(i))
          if(r .le. c1) then
-            rw(i) = 1.
+            rw(i) = 1.d0
          else if(r .le. c9) then
-            rw(i) = (1. - (r/cmad)**2)**2
+            rw(i) = (1.d0 - (r/cmad)**2)**2
          else
-            rw(i) = 0.
+            rw(i) = 0.d0
          endif
  10   continue
       return
@@ -342,7 +342,7 @@ c     = 6 * MAD
 c
 c	called by stlstp() at the beginning of each (inner) iteration
 c
-      implicit none
+c     implicit none
 c Arg
       integer n, np, ns, isdeg, nsjump
       double precision y(n), rw(n), season(n+2*np), 
@@ -391,7 +391,7 @@ c  STL E_Z_ : "Easy" user interface  -- not called from R
       subroutine stlez(y, n, np, ns, isdeg, itdeg, robust, no, rw, 
      &     season, trend, work)
 
-      implicit none
+c     implicit none
 c Arg
       integer n, np, ns, isdeg, itdeg, no
       logical robust
@@ -405,7 +405,7 @@ c Var
       newns = max0(3,ns)
       if(mod(newns,2) .eq. 0) newns = newns+1
       newnp = max0(2,np)
-      nt = (1.5*newnp)/(1 - 1.5/newns) + 0.5
+      nt = (1.5d0*newnp)/(1.d0 - 1.5d0/newns) + 0.5d0
       nt = max0(3,nt)
       if(mod(nt,2) .eq. 0) nt = nt+1
       nl = newnp
@@ -421,7 +421,7 @@ c Var
       ntjump = max0(1,int(float(nt)/10 + 0.9))
       nljump = max0(1,int(float(nl)/10 + 0.9))
       do 2 i = 1,n
-         trend(i) = 0.
+         trend(i) = 0.d0
  2    continue
       call stlstp(y,n,newnp,newns,nt,nl,isdeg,itdeg,ildeg,nsjump,
      &     ntjump,nljump,ni,.false.,rw,season,trend,work)
@@ -457,8 +457,8 @@ C        Loop  --- 15 robustness iterations
                if(maxds .lt. difs) maxds = difs
                if(maxdt .lt. dift) maxdt = dift
  137        continue
-            if((maxds/(maxs-mins) .lt. .01) .and.
-     &         (maxdt/(maxt-mint) .lt. .01))   goto 300
+            if((maxds/(maxs-mins) .lt. 0.01d0) .and.
+     &         (maxdt/(maxt-mint) .lt. 0.01d0))   goto 300
             continue
             j=j+1
             goto 100
@@ -470,7 +470,7 @@ C        end Loop
 c     	.not. robust
 
          do 150 i = 1,n
-            rw(i) = 1.0
+            rw(i) = 1.0d0
  150     continue
       endif
 
@@ -481,7 +481,7 @@ c     	.not. robust
 c
 c Partial Sorting ; used for Median (MAD) computation only
 c
-      implicit none
+c     implicit none
 c Arg
       integer n,ni
       double precision a(n)
