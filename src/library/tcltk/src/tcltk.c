@@ -10,6 +10,7 @@
 #endif
 
 #include <R.h>
+#include <stdlib.h>
 
 #ifdef ENABLE_NLS
 #include <libintl.h>

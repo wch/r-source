@@ -69,6 +69,7 @@
 #endif /* C99_INLINE_SEMANTICS */
 
 
+#include <string.h> /* for strlen, strcmp */
 
 /* define inline-able functions */
 

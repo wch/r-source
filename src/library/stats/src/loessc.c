@@ -23,7 +23,9 @@
  */
 
 #include <string.h>
+#include <stdio.h>
 #include <R.h>
+
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("stats", String)

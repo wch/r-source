@@ -211,7 +211,10 @@ typedef long R_long_t;
 #define	R_VSIZE		6291456L
 #endif
 
+/* some commonly needed headers */
 #include <math.h>
+#include <float.h>
+#include <ctype.h>
 
 /* declare substitutions */
 #if !defined(acosh) && defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH

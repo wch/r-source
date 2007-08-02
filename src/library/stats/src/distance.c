@@ -28,6 +28,7 @@
 
 #include <R.h>
 #include <Rmath.h>
+#include <float.h>
 #include "mva.h"
 #include "stats.h"
 

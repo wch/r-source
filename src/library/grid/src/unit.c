@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-5 The R Development Core Team
+ *                2003-7 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
  */
 
 #include "grid.h"
+#include <math.h>
+#include <float.h>
+#include <strings.h>
 
 int isUnitArithmetic(SEXP ua) {
     return inherits(ua, "unit.arithmetic");

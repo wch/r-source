@@ -28,6 +28,7 @@
 #include <R_ext/GraphicsEngine.h>
 
 #include "grDevices.h"
+#include <stdlib.h>
 
 static Rboolean nullDeviceDriver(NewDevDesc *dev);
 

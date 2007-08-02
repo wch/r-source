@@ -25,6 +25,7 @@
 #include <config.h>
 #endif
 
+#include <float.h>
 #include <Rinternals.h>
 #include <Rmath.h>
 #include <R_ext/Applic.h> /* exporting the API , particularly */

@@ -25,6 +25,7 @@
 #include "tools.h"
 
 #ifdef SUPPORT_MBCS
+#include <stdlib.h> /* for MB_CUR_MAX */
 #include <wchar.h>
 LibExtern Rboolean mbcslocale;
 size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);

@@ -10,6 +10,8 @@
 /* <UTF8> chars are handled as whole strings */
 
 #include <R.h>
+#include <stdio.h>
+#include <limits.h>
 
 #include "ctest.h"
 

@@ -43,6 +43,8 @@
 # include <langinfo.h>
 #endif
 
+#include <strings.h>
+
 #ifdef ENABLE_NLS
 void attribute_hidden nl_Rdummy()
 {

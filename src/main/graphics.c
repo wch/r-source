@@ -42,7 +42,7 @@
 #include <Rmath.h>		/* eg. fmax2() */
 #include <R_ext/Applic.h>	/* pretty0() */
 
-#include <string.h>
+#include <strings.h>
 #include <stdlib.h>
 
 extern int baseRegisterIndex;

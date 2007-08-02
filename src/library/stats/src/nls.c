@@ -27,6 +27,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <stdlib.h>
+#include <float.h>
 #include "nls.h"
 
 #ifndef MIN
