@@ -38,6 +38,8 @@
 
 int attribute_hidden R_OutputCon; /* used in printutils.c */
 
+#include <errno.h>
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif

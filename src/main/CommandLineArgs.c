@@ -26,6 +26,8 @@
 #include <config.h>
 #endif
 
+#include <string.h>
+
 #include <Defn.h>
 #include <R_ext/RStartup.h>
 

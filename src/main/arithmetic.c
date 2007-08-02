@@ -42,6 +42,8 @@
 #undef MATHLIB_PRIVATE
 #include "arithmetic.h"
 
+#include <errno.h>
+
 #ifdef HAVE_MATHERR
 
 /* Override the SVID matherr function:

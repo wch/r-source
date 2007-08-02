@@ -215,6 +215,8 @@ typedef long R_long_t;
 #include <math.h>
 #include <float.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
 
 /* declare substitutions */
 #if !defined(acosh) && defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH

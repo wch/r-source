@@ -21,7 +21,7 @@
 #include "grid.h"
 #include <math.h>
 #include <float.h>
-#include <strings.h>
+#include <string.h>
 
 int isUnitArithmetic(SEXP ua) {
     return inherits(ua, "unit.arithmetic");

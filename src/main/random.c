@@ -28,6 +28,7 @@
 #include <R_ext/Random.h>
 #include <R_ext/Applic.h>	/* for rcont2() */
 #include <Rmath.h>		/* for rxxx functions */
+#include <errno.h>
 
 static void invalid(SEXP call)
 {

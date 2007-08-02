@@ -29,6 +29,7 @@
 #include <Defn.h>
 #include <R_ext/Riconv.h>
 #include <Rinterface.h>
+#include <errno.h>
 
 /*
   See ../unix/system.txt for a description of some of these functions.

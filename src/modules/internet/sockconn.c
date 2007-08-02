@@ -32,6 +32,7 @@
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
 #include "sock.h"
+#include <errno.h>
 
 static void listencleanup(void *data)
 {

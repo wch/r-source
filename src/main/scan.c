@@ -35,6 +35,7 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
+#include <errno.h>
 
 static R_INLINE int imin2(int x, int y)
 {

@@ -19,6 +19,8 @@
  */
 
 #include "grid.h"
+#include <string.h>
+
 
 extern int gridRegisterIndex;
 

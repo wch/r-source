@@ -31,7 +31,7 @@
 #include <Defn.h>
 
 #include <string.h>
-#include <stdlib.h>
+#include <errno.h>
 
 #include <Rmath.h>
 
