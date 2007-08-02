@@ -613,8 +613,6 @@ int     Rf_i1mach(int); /* used in port.c in package stats */
 #  define ISNAN(x)     (isnan(x)!=0)
 #endif
 
-
-/* We don't have config information available to do anything else */
 #define R_FINITE(x)    R_finite(x)
 int R_finite(double);
 

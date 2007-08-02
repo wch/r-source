@@ -423,6 +423,11 @@ C-LEVEL FACILITIES
 	but mentioned in R-exts.texi and in Rinternals.h) has been
 	changed to 'const char **' (from char **).
 
+    o	R_FINITE now always resolves to the function call R_finite in
+	packages (rather than sometimes substituting isfinite).  This
+	avoids some issues where R headers are called from C++ code
+	using features tested on the C compiler.
+
 
 INSTALLATION
 

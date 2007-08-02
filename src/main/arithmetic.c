@@ -153,8 +153,7 @@ int R_isnancpp(double x)
 }
 
 
-/* <FIXME> Simplify this mess.  Not used inside R
-   if isfinite works, and if finite works only in packages */
+/* <FIXME> Simplify this mess. Mainly for use in packages */
 int R_finite(double x)
 {
 #ifdef HAVE_WORKING_ISFINITE

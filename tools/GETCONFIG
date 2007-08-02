@@ -14,8 +14,6 @@ line=`grep "IEEE_754" config.h`
 echo "${line}"
 line=`grep "WORDS_BIGENDIAN" config.h`
 echo "${line}"
-line=`grep "HAVE_WORKING_ISFINITE" config.h`
-echo "${line}"
 line=`grep "R_INLINE" config.h`
 echo "${line}"
 line=`grep "HAVE_VISIBILITY_ATTRIBUTE" config.h`
