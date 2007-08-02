@@ -405,7 +405,7 @@ c Var
       newns = max0(3,ns)
       if(mod(newns,2) .eq. 0) newns = newns+1
       newnp = max0(2,np)
-      nt = (1.5d0*newnp)/(1.d0 - 1.5d0/newns) + 0.5d0
+      nt = int((1.5d0*newnp)/(1.d0 - 1.5d0/newns) + 0.5d0)
       nt = max0(3,nt)
       if(mod(nt,2) .eq. 0) nt = nt+1
       nl = newnp

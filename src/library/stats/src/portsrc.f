@@ -3062,7 +3062,7 @@ C
 C  ***  BODY  ***
 C
       NP1 = N + 1
-      J0 = N*(NP1)/2
+      J0 = N*NP1/2
       DO 30 II = 1, N
          I = NP1 - II
          LIN(J0) = ONE/L(J0)

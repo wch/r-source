@@ -7,8 +7,7 @@ C Local
       integer i
 
       do 10 i=1,n
-         s(i)=bvalue(knot,n+4,coef,nk,4,x(i),order)
-C                        ----  typo corrected from gamfit
+         s(i)=bvalue(knot,coef,nk,4,x(i),order)
  10   continue
       return
       end

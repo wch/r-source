@@ -1,4 +1,4 @@
-      double precision function bvalue(t,lent,bcoef,n,k,x,jderiv)
+      double precision function bvalue(t,bcoef,n,k,x,jderiv)
 
 c Calculates value at  x  of  jderiv-th derivative of spline from B-repr.
 c The spline is taken to be continuous from the right.

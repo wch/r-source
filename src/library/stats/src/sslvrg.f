@@ -19,7 +19,7 @@ C See comments in ./sbart.f from which this is called
       double precision bvalue
 C local variables
       double precision vnikx(4,1),work(16)
-      integer i,icoef,ileft,j,mflag, lenkno
+      integer i,ileft,j,mflag, lenkno
       double precision b0,b1,b2,b3,eps, xv,rss,df, sumw
 c
       integer interv
@@ -56,10 +56,9 @@ c     solve linear system (from factorize abd):
       call dpbsl(abd,ld4,nk,3,coef)
 
 C     Value of smooth at the data points
-      icoef = 1
       do 12 i=1,n
          xv = x(i)
- 12      sz(i) = bvalue(knot,lenkno,coef, nk,4,xv,0)
+ 12      sz(i) = bvalue(knot,coef,nk,4,xv,0)
 
 C     Compute the criterion function if requested
 
