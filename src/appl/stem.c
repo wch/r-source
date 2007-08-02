@@ -23,6 +23,9 @@
 #include <config.h>
 #endif
 
+#include <math.h>
+#include <limits.h> /* INT_MAX */
+#include <stdlib.h> /* abs */
 #include <Rmath.h> /* for imin2 and imax2 */
 #include <R_ext/Print.h> /* for Rprintf */
 #include <R_ext/Utils.h> /* for R_rsort */

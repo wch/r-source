@@ -53,6 +53,8 @@
 #define _(String) (String)
 #endif
 
+#include <math.h>
+#include <float.h>
 #include <R_ext/Applic.h>
 #include <Rmath.h>
 #include <R_ext/Error.h>

@@ -22,6 +22,8 @@
 #include <config.h>
 #endif
 
+#include <stdlib.h> /* for abs */
+#include <math.h>
 #include <Rmath.h> /* for imax2(.),..*/
 #include <R_ext/Applic.h>
 

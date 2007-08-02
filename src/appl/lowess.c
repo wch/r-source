@@ -23,6 +23,7 @@
 # include <config.h>
 #endif
 
+#include <math.h>
 #include <Rmath.h>		/* fmax2, imin2, imax2 */
 #include <R_ext/Applic.h>	/* prototypes for lowess and clowess */
 #include <R_ext/Boolean.h>
