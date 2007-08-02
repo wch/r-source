@@ -101,27 +101,32 @@ registerImplicitGenerics(what, where)
   Function \code{implicitGeneric()} returns the implicit generic
   definition (and caches that definition the first time if it has to
   construct it).
-  
+
   The other functions exist for their side effect and return nothing
   useful.
 }
 \seealso{\code{\link{setGeneric}}}
 \examples{
-\dontrun{
-### How we would make the function \link{with}() into a generic
-### The second argument is used literally, so we want it to have
-### only "data" in the signature.
-setGeneric("with", signature = "data")
-### Now we could predefine methods for "with" if we wanted to.
 
-### When ready, we store the generic as implicit,
-### and restore the original
+### How we would make the function \link{with}() into a generic:
+
+## Since the second argument, 'expr' is used literally, we want
+## with() to only have "data" in the signature.
+
+## Note that 'methods'-internal code now has already extended  with()
+## to do the equivalent of the following
+\dontrun{
+setGeneric("with", signature = "data")
+## Now we could predefine methods for "with" if we wanted to.
+
+## When ready, we store the generic as implicit, and restore the original
 setGenericImplicit("with")
 
-### (This example would only work if we "owned" function with(),
-### but it is in base.)}
+## (This example would only work if we "owned" function with(),
+##  but it is in base.)}
 
 implicitGeneric("with")
 }
+
 \keyword{programming}
 \keyword{methods}

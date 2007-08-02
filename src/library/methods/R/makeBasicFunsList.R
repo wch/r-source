@@ -169,6 +169,7 @@
     setGeneric("with", signature = "data", where = where)
     setGenericImplicit("with", where, FALSE)
     removeGeneric("with", where)
+    ## not implicitGeneric() which is not yet available "here"
 
     registerImplicitGenerics(where = where)
 }
