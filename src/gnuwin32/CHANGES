@@ -9,6 +9,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.5.1 patched
+		
+BUG FIXES
+
+    o	.Platform$GUI would report "Rgui" when no GUI was present in
+	R(D)COM.
+
+
+
 		CHANGES IN R VERSION 2.5.1
 
 GUI CHANGES
