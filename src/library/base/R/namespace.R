@@ -496,6 +496,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                     pattern <- paste(mlistPattern, mi, ":", sep="")
                     ii <- grep(pattern, allMethodLists, fixed = TRUE)
                     if(length(ii) > 0) {
+			if(length(ii) > 1) {
+			    warning("Multiple methods lists found for '",
+				    mi, "'", call. = FALSE)
+			    ii <- ii[1]
+			}
                         expMethods[[i]] <- allMethodLists[ii]
                         if(exists(allMethodTables[[ii]], envir = ns))
                             expTables <- c(expTables, allMethodTables[[ii]])
