@@ -31,13 +31,12 @@ stamp-src: $(SOURCES_NMATH)
 
 test: test.exe test-static.exe
 
-test-CFLAGS=-I../../include
-## see README for alternatives
-test.exe: test.o
-	$(CC) -o $@ $< -L. Rmath.dll
+## see R-admin for alternatives
+test.exe: test.c
+	$(CC) -I../../include -DRMATH_DLL -o $@ $< -L. Rmath.dll
 	./$@
-test-static.exe: test.o
-	$(CC) -o $@ $< -L. libRmath.a
+test-static.exe: test.c
+	$(CC) -I../../include -o $@ $< -L. libRmath.a
 	./$@
 
 clean:
