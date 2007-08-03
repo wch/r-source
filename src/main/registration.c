@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2006	The R Development Core Team.
+ *  Copyright (C) 2002-2007	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,12 +45,9 @@
 #endif
 
 #include <Defn.h>
-#include <R.h>
-#include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/Applic.h>
 #include <R_ext/Linpack.h>
-#include <Rmodules/Rlapack.h>
 
 
 /*  These get the declarations of some routines refernced here but
