@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2003  The R Development Core Team
+ *  Copyright (C) 1998-2007  The R Development Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -604,8 +604,6 @@ double  d1mach(int);
 
 #endif /* MATHLIB_PRIVATE */
 
-int     Rf_i1mach(int); /* used in port.c in package stats */
-
 #if defined(MATHLIB_STANDALONE) && !defined(MATHLIB_PRIVATE_H)
 /* second is defined by nmath.h */
 
@@ -622,10 +620,22 @@ int     Rf_i1mach(int); /* used in port.c in package stats */
 int R_finite(double);
 
 #ifdef WIN32  /* not Win32 as no config information */
+/* These were not really right as we have both libRmath.a and Rmath.dll
 # define NA_REAL (*_imp__NA_REAL)
 # define R_NegInf (*_imp__R_NegInf)
 # define R_PosInf (*_imp__R_PosInf)
 # define N01_kind (*_imp__N01_kind)
+*/
+#ifdef RMATH_DLL
+#define R_EXTERN extern __declspec(dllimport)
+#else
+#define R_EXTERN extern
+#endif
+R_EXTERN double NA_REAL;
+R_EXTERN double R_PosInf;
+R_EXTERN double R_NegInf;
+R_EXTERN int N01_kind;
+#undef R_EXTERN
 # endif
 
 #endif /* MATHLIB_STANDALONE */
