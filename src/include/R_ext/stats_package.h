@@ -1,6 +1,25 @@
-#ifndef STATS_H
-#define STATS_H
-#include <Rdefines.h>
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2007  The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation; either version 2.1 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, a copy is available at
+ *  http://www.r-project.org/Licenses/
+ */
+
+#ifndef R_STATS_PACKAGE_H
+#define R_STATS_PACKAGE_H
+/* #include <Rdefines.h>  Why was this here?: nothing here depends on it */
 #include <Rconfig.h>
 
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
@@ -49,5 +68,5 @@ static R_INLINE int S_iv_length(int alg, int n)
     return (alg - 1) ? (82 + 4 * n) : (78 + 3 * n);
 }
 
-#endif /* STATS_H */
+#endif /* R_STATS_PACKAGE_H */
 
