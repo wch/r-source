@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001 The R Development Core Team.
+ *  Copyright (C) 2000-2007 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -20,10 +20,10 @@
 #ifndef R_EXT_EVENTLOOP_H
 #define R_EXT_EVENTLOOP_H
 
-/* NOTE:
-   Needed at least on FreeBSD so that fd_set is defined.
-*/
-#include <sys/types.h>
+#ifndef NO_C_HEADERS
+/* NOTE: Needed at least on FreeBSD so that fd_set is defined. */
+# include <sys/types.h>
+#endif
 
 #ifdef  __cplusplus
 extern "C" {

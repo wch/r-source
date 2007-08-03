@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004  The R Development Core Team.
+ *  Copyright (C) 1998--2007  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +29,7 @@
 #include <R_ext/libextern.h>
 #ifdef  __cplusplus
 extern "C" {
-#else
+#elif !defined(NO_C_HEADERS)
 /* needed for isnan and isfinite, neither of which are used under C++ */
 # include <math.h>
 #endif

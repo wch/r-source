@@ -2179,7 +2179,7 @@ If you make use of dynamic linking you should use
 #include <Rmath.h>
 @end example
 
-@onindent
+@noindent
 to ensure that the constant like @code{NA_REAL} are linked correctly.
 (Auto-import will probably work, but it is better to be sure.)
 

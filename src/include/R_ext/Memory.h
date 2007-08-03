@@ -24,7 +24,9 @@
 #ifndef R_EXT_MEMORY_H_
 #define R_EXT_MEMORY_H_
 
-#include <stddef.h> /* for size_t */
+#ifndef NO_C_HEADERS
+# include <stddef.h> /* for size_t */
+#endif
 
 #ifdef  __cplusplus
 extern "C" {

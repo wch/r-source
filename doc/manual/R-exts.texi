@@ -1274,8 +1274,8 @@ sections of Rd files are documented in the corresponding
 C, C++ and FORTRAN source and header files are tested for portable
 (LF-only) line endings.  If there is a @file{Makefile} or
 @file{Makefile.in} or @file{Makevars} or @file{Makevars.in} in the
-@file{src} directory, it is checked for correct use of
-@samp{$(BLAS_LIBS)}.
+@file{src} directory, it is checked for portable line endings and the
+correct use of @samp{$(BLAS_LIBS)}.
 
 @item
 The examples provided by the package's documentation are run.
@@ -2183,6 +2183,10 @@ with options @option{-Wall -pedantic} to alert you to potential
 problems.  Do not be tempted to assume that these are pure pedantry: for
 example @R{} is still used on platforms where the C compiler does not
 accept C++/C99 comments (starting @code{//}).
+
+If you use FORTRAN, @code{ftnchek}
+(@url{http://www.dsm.fordham.edu/~ftnchek/}) provides thorough testing
+of conformance to the standard.
 
 @item
 Do be very careful with passing arguments between @R{}, C and
@@ -5635,7 +5639,11 @@ will not on the @R{} for Windows console.  Use @R{} code or the C entry points
 
 Some @R{} header files are C and not C++ header files and should be
 included within an @code{extern "C"} block: for clarity this is
-advisable for all @R{} header files.
+advisable for all @R{} header files.  It may not be possible to include
+@R{} headers as they in turn include C header files that may cause
+conflicts---if this happens, define @samp{NO_C_HEADERS} before including
+the @R{} headers and be prepared to include headers such as
+@code{<cmath>} and @code{<cstdlib>}.
 
 
 @node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
