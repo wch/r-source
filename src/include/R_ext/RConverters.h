@@ -25,11 +25,11 @@
 #ifndef R_CCONVERTERS_H
 #define R_CCONVERTERS_H
 
+#include <Rinternals.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <Rinternals.h>
 
 #define freeCConverter RC_freeCConverter
 #define R_addToCConverter RC_addToCConverter

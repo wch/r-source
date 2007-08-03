@@ -5637,14 +5637,12 @@ guarantee that the output will appear in the @R{} console, and indeed it
 will not on the @R{} for Windows console.  Use @R{} code or the C entry points
 (@pxref{Printing}) for all I/O if at all possible.
 
-Some @R{} header files are C and not C++ header files and should be
-included within an @code{extern "C"} block: for clarity this is
-advisable for all @R{} header files.  It may not be possible to include
-@R{} headers as they in turn include C header files that may cause
+Most @R{} header files can be included withing C++ programs, and they
+should @strong{not} be included within an @code{extern "C"} block (as
+they include C++ system headers).  It may not be possible to include
+some @R{} headers as they in turn include C header files that may cause
 conflicts---if this happens, define @samp{NO_C_HEADERS} before including
-the @R{} headers and be prepared to include headers such as
-@code{<cmath>} and @code{<cstdlib>}.
-
+the @R{} headers, and include the appropriate headers yourself.
 
 @node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
 @section Handling R objects in C

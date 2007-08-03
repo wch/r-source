@@ -20,11 +20,11 @@
 #ifndef R_EXT_RSTARTUP_H_
 #define R_EXT_RSTARTUP_H_
 
+#include <R_ext/Boolean.h>	/* TRUE/FALSE */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <R_ext/Boolean.h>	/* TRUE/FALSE */
 
 #ifdef Win32
 typedef int (*blah1) (char *, char *, int, int);
