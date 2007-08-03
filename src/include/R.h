@@ -28,13 +28,17 @@
 extern "C" {
 #endif
 
+/*
 #include <stddef.h>
+*/
+#ifndef NO_C_HEADERS
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
 #include <math.h>
-
+#include <errno.h>
+#endif
 
 #include <Rconfig.h>
 #include <R_ext/Arith.h>      /* R_FINITE, ISNAN, ... */

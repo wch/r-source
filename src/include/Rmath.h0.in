@@ -49,12 +49,13 @@ extern "C" {
 @RMATH_HAVE_WORKING_LOG1P@
 #endif
 
-/* FIXME not really appropriate */
+/* not really appropriate
 #include <errno.h>
 #include <limits.h>
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
+*/
 
 #if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
 /* remap to avoid problems with getting the right entry point */
@@ -83,6 +84,12 @@ double  Rlog1p(double);
 
 /* SVID & X/Open Constants */
 /* Names from Solaris math.h */
+
+/* Note that on some systems we need to include math.h before the
+   defines below, to avoid redefining ftrunc */
+#ifndef NO_C_HEADERS
+# include <math.h>
+#endif
 
 #ifndef M_E
 #define M_E		2.718281828459045235360287471353	/* e */

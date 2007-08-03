@@ -33,14 +33,16 @@ extern "C" {
 #include <R_ext/PrtUtil.h>
 #include <R_ext/Utils.h>
 
+#include <stdio.h> /* for FILE */
+/*
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
+*/
 
 #include <R_ext/libextern.h>
 

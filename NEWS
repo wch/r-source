@@ -428,6 +428,15 @@ C-LEVEL FACILITIES
 	avoids some issues where R headers are called from C++ code
 	using features tested on the C compiler.
 
+    o	Rinternals.h no longer includes a substantial set of C headers.
+	All but ctype.h and errno.h are included by R.h which is supposed
+	to be used before R.h.
+
+    o	Including C system headers can be avoided by defining NO_C_HEADERS
+	before including R headers.  This is intended to be used from 
+	C++ code, and you will need to include C++ equivalents such as
+	<cmath> before the R headers.
+
 
 INSTALLATION
 
