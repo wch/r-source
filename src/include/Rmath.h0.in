@@ -28,8 +28,10 @@
 #ifndef RMATH_H
 #define RMATH_H
 
-#ifdef  __cplusplus
-extern "C" {
+/* Note that on some systems we need to include math.h before the
+   defines below, to avoid redefining ftrunc */
+#ifndef NO_C_HEADERS
+# include <math.h>
 #endif
 
 /*-- Mathlib as part of R --  define this for standalone : */
@@ -84,12 +86,6 @@ double  Rlog1p(double);
 
 /* SVID & X/Open Constants */
 /* Names from Solaris math.h */
-
-/* Note that on some systems we need to include math.h before the
-   defines below, to avoid redefining ftrunc */
-#ifndef NO_C_HEADERS
-# include <math.h>
-#endif
 
 #ifndef M_E
 #define M_E		2.718281828459045235360287471353	/* e */
@@ -333,6 +329,9 @@ double  Rlog1p(double);
 #undef trunc
 #define	trunc	ftrunc
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
 	/* R's versions with !R_FINITE checks */
 
 double R_pow(double x, double y);

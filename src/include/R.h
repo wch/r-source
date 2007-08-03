@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001 The R Development Core Team.
+ *  Copyright (C) 2000-2007 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,13 +24,6 @@
 #define USING_R
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/*
-#include <stddef.h>
-*/
 #ifndef NO_C_HEADERS
 #include <stdlib.h>
 #include <stdio.h>
@@ -39,6 +32,10 @@ extern "C" {
 #include <math.h>
 #include <errno.h>
 #endif
+
+/*
+#include <stddef.h>
+*/
 
 #include <Rconfig.h>
 #include <R_ext/Arith.h>      /* R_FINITE, ISNAN, ... */
@@ -58,6 +55,10 @@ typedef double Sfloat;
 typedef int Sint;
 #define SINT_MAX INT_MAX
 #define SINT_MIN INT_MIN
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void R_FlushConsole(void);
 /* always declared, but only usable under Win32 and Aqua */
