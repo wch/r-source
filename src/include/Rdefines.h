@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2005 The R Development Core Team.
+ *  Copyright (C) 1999-2007 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,8 +22,13 @@
 
 #if !defined(R_R_H) && !defined(R_S_H)
 /* user forgot to include R.h or S.h */
-#include <R_ext/Memory.h>
-#include <R_ext/RS.h>
+# include <R_ext/Memory.h>
+# include <R_ext/RS.h>
+# ifndef NO_C_HEDAERS
+/* lme4 relied on these two */
+#  include <stdlib.h>
+#  include <float.h>
+# endif
 #endif
 
 /*
