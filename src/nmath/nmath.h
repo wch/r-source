@@ -78,6 +78,7 @@ void R_CheckUserInterrupt(void);
 /* Mathlib standalone */
 
 #include <stdio.h>
+#include <stdlib.h> /* for exit */
 #define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1); }
 #define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
 #define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
