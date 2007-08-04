@@ -623,8 +623,8 @@ int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 	ans = logicalSubscript(s, ns, nx, stretch, call);
 	break;
     case INTSXP:
-	    ans = integerSubscript(s, ns, nx, stretch, call);
-	    break;
+	ans = integerSubscript(s, ns, nx, stretch, call);
+	break;
     case REALSXP:
 	PROTECT(tmp = coerceVector(s, INTSXP));
 	ans = integerSubscript(tmp, ns, nx, stretch, call);

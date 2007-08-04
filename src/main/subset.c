@@ -832,8 +832,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 			   length(x), pok, i, call);
 	if (offset < 0 || offset >= length(x)) {
-	    /* a bold attempt to get the same */
-	    /* behaviour for $ and [[ */
+	    /* a bold attempt to get the same behaviour for $ and [[ */
 	    if (offset < 0 && (isNewList(x) ||
 			       isExpression(x) ||
 			       isList(x) ||
