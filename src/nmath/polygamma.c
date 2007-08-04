@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 the R Development Core Team
+ *  Copyright (C) 2000-2007 the R Development Core Team
  *  Copyright (C) 2004	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -135,7 +135,7 @@
  *    Derivatives of the Psi Function", Algorithm 610,
  *    TOMS 9(4), pp. 494-502.
  *
- *    Routines called: d1mach, i1mach.
+ *    Routines called: Rf_d1mach, Rf_i1mach.
  */
 
 #include "nmath.h"
@@ -234,9 +234,9 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 
     *nz = 0;
     mm = m;
-    nx = imin2(-i1mach(15), i1mach(16));/* = 1021 */
-    r1m5 = d1mach(5);
-    r1m4 = d1mach(4) * 0.5;
+    nx = imin2(-Rf_i1mach(15), Rf_i1mach(16));/* = 1021 */
+    r1m5 = Rf_d1mach(5);
+    r1m4 = Rf_d1mach(4) * 0.5;
     wdtol = fmax2(r1m4, 0.5e-18); /* 1.11e-16 */
 
     /* elim = approximate exponential over and underflow limit */
@@ -271,7 +271,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 
 	    /* compute xmin and the number of terms of the series,  fln+1 */
 
-	    rln = r1m5 * i1mach(14);
+	    rln = r1m5 * Rf_i1mach(14);
 	    rln = fmin2(rln, 18.06);
 	    fln = fmax2(rln, 3.0) - 3.0;
 	    yint = 3.50 + 0.40 * fln;

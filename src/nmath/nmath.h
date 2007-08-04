@@ -166,8 +166,9 @@ int R_finite(double);
 #define lfastchoose	Rf_lfastchoose
 #define lgammacor	Rf_lgammacor
 #define stirlerr       	Rf_stirlerr
+/* in Rmath.h
 #define gamma_cody      Rf_gamma_cody
-
+*/
 
 	/* Chebyshev Series */
 
@@ -191,7 +192,7 @@ double  attribute_hidden pgamma_raw(double, double, int, int);
 double	attribute_hidden pbeta_raw(double, double, double, int, int);
 double  attribute_hidden qchisq_appr(double, double, double, int, int, double tol);
 
-int	i1mach(int);
+int	Rf_i1mach(int);
 
 /* From toms708.c */
 void attribute_hidden bratio(double a, double b, double x, double y,

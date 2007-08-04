@@ -14,9 +14,6 @@
 #include "nmath.h"
 #include "dpq.h"
 
-extern double Rf_d1mach(int i);
-extern int Rf_i1mach(int i);
-
 static double bfrac(double, double, double, double, double, double, int log_p);
 static void bgrat(double, double, double, double, double *, double, int *);
 static void grat1(double, double, double, double *, double *, double);

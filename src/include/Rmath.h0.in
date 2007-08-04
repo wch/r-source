@@ -594,12 +594,10 @@ double  logspace_sub(double logx, double logy);
 
 /* next is defined by nmath.h, arithmetic.c, fmin.c and uncmin.c */
 #ifdef MATHLIB_PRIVATE
-#define d1mach		Rf_d1mach
-#define i1mach          Rf_i1mach
 #define gamma_cody	Rf_gamma_cody
 
 double	gamma_cody(double); /* used in arithmetic.c */
-double  d1mach(int);
+double  Rf_d1mach(int);
 
 #endif /* MATHLIB_PRIVATE */
 

@@ -1,7 +1,7 @@
 /*
  *  Mathlib - A Mathematical Function Library
  *  Copyright (C) 1998  Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-7 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
  */
 
 #include "nmath.h"
-#undef d1mach
 
 attribute_hidden double Rf_d1mach(int i)
 {
@@ -38,12 +37,13 @@ attribute_hidden double Rf_d1mach(int i)
 
     case 3: /* = FLT_RADIX  ^ - DBL_MANT_DIG
 	      for IEEE:  = 2^-53 = 1.110223e-16 = .5*DBL_EPSILON */
-	return pow((double)i1mach(10), -(double)i1mach(14));
+	return pow((double) Rf_i1mach(10), -(double) Rf_i1mach(14));
 
     case 4: /* = FLT_RADIX  ^ (1- DBL_MANT_DIG) =
 	      for IEEE:  = 2^52 = 4503599627370496 = 1/DBL_EPSILON */
-	return pow((double)i1mach(10), 1-(double)i1mach(14));
+	return pow((double) Rf_i1mach(10), 1 - (double) Rf_i1mach(14));
 
+	/* Hmm, log10 is not mandatory */
     case 5: return log10(2.0);/* = M_LOG10_2 in Rmath.h */
 
 
@@ -54,9 +54,8 @@ attribute_hidden double Rf_d1mach(int i)
 #ifdef __cplusplus
 extern "C" 
 #endif
+
 double F77_NAME(d1mach)(int *i)
 {
     return Rf_d1mach(*i);
 }
-
-
