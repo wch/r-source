@@ -14,18 +14,22 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-method.skeleton <- function (generic, signature, file, external = FALSE) 
+method.skeleton <- function (generic, signature, file, external = FALSE, where = topenv(parent.frame())) 
 {
-    fdef <- getGeneric(generic)
+    fdef <- getGeneric(generic, where = where)
     if (is.null(fdef)) {
-        fdef <- getFunction(generic, where = topenv(parent.frame()))
+        fdef <- implicitGeneric(generic, where = where)
+        if(is.null(fdef))
+          stop(gettextf("No function definition found for \"%s\"", generic))
     }
     else {
         generic <- fdef@generic
-        signature <- matchSignature(signature, fdef)
     }
+    signature <- matchSignature(signature, fdef)
     if (length(signature) == 0) 
         signature <- "ANY"
+    sigNames <- fdef@signature
+    length(sigNames) <- length (signature)
     method <- function() {
     }
     formals(method) <- formals(fdef)
@@ -36,7 +40,7 @@ method.skeleton <- function (generic, signature, file, external = FALSE)
     if (missing(file)) 
         file <- paste(methodName, ".R", sep = "")
     output <- c(paste("setMethod(\"", generic, "\",", sep = ""), 
-        paste("    signature(", paste("\"", signature, "\"", 
+        paste("    signature(", paste(sigNames, " = \"", signature, "\"", 
             sep = "", collapse = ", "), "),", sep = ""))
     method <- deparse(method)
     if (identical(external, FALSE)) 

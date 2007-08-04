@@ -13,7 +13,7 @@
   external function assigned in the same source file.
 }
 \usage{
-method.skeleton(generic, signature, file, external = FALSE)
+method.skeleton(generic, signature, file, external = FALSE, where)
 }
 \arguments{
   \item{generic}{the character string name of the generic function, or
@@ -35,7 +35,9 @@ method.skeleton(generic, signature, file, external = FALSE)
       \code{\link{setMethod}}.
     If supplied as a character string, this will be used as the name
     for the external function; by default the name concatenates the
-    generic and signature names, as in the example below.}
+    generic and signature names, with separating underscores.}
+  \item{where}{The environment in which to look for the function; by default,
+    the top-level environment of the call to \code{method.skeleton}.}
 }
 \value{
   The \code{file} argument, invisibly, but the function is used for its side effect.
