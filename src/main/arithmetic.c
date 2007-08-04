@@ -85,19 +85,8 @@ typedef union
     unsigned int word[2];
 } ieee_double;
 
-/* These variables hw and lw are only used if IEEE_754 is defined.
-   The value of each is fixed once we determine the endianness
-   of the machine, and this can be done via WORDS_BIGENDIAN.
-
-   Earlier code used to use establish_endianness()
-   to compute these, but this is uncessary and makes them
-   non-constant, but initialize once. This would involve
-   a song and dance in a threaded application (e.g pthread_once(),
-   etc.).
- */
-
-/* gcc has problems with static const on AIX and Solaris
-   Solaris is for gcc 3.1 and 3.2 under -O2 32-bit on 64-bit kernel */
+/* gcc had problems with static const on AIX and Solaris
+   Solaris was for gcc 3.1 and 3.2 under -O2 32-bit on 64-bit kernel */
 #ifdef _AIX
 #define CONST
 #elif defined(sparc) && defined (__GNUC__) && __GNUC__ == 3
