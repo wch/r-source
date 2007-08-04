@@ -111,10 +111,16 @@
 \value{
   For \code{[} a data frame, list or a single column (the latter two
   only when dimensions have been dropped).  If matrix indexing is used for
-  extraction a matrix results.
+  extraction a matrix results.  If the result would be a data frame an
+  error results if undefined columns are selected (as there is no general
+  concept of a 'missing' column in a data frame).  Otherwise if a single
+  column is selected and this is undefined the result is \code{NULL}.
 
-  For \code{[[} a column of the data frame (extraction with one index)
+  For \code{[[} a column of the data frame or \code{NULL}
+  (extraction with one index)
   or a length-one vector (extraction with two indices).
+
+  For \code{$}, a column of the data frame (or \code{NULL}).
 
   For \code{[<-}, \code{[[<-} and \code{$<-}, a data frame.
 }
