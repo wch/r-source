@@ -524,7 +524,16 @@ data.frame <-
 
     if(!missing(j)) { # df[i, j]
         x <- x[j]
-        cols <- names(x)  # also needed for 'drop'
+        cols <- names(x)  # needed for 'drop'
+        if(drop && length(x) == 1L) {
+            ## for consistency with [, <length-1>]
+            if(is.character(i)) {
+                rows <- attr(xx, "row.names")
+                i <- pmatch(i, rows, duplicates.ok = TRUE)
+            }
+            xj <- .subset2(xx, j)
+            return(if(length(dim(xj)) != 2L) xj[i] else xj[i, , drop = FALSE])
+        }
         if(any(is.na(cols))) stop("undefined columns selected")
         ## sxx <- match(cols, names(xx)) fails with duplicate names
         nxx <- structure(seq_along(xx), names=names(xx))
