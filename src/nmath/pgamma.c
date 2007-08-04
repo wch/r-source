@@ -55,7 +55,6 @@
  *	make CFLAGS='-DDEBUG_p -g -I/usr/local/include -I../include'
  */
 
-
 /* Scalefactor:= (2^32)^8 = 2^256 = 1.157921e+77 */
 #define SQR(x) ((x)*(x))
 static const double scalefactor = SQR(SQR(SQR(4294967296.0)));
@@ -402,7 +401,8 @@ pd_lower_cf (double i, double d)
 	}
     }
 
-    REprintf(" ** NON-convergence in pgamma()'s pd_lower_cf() f= %g.\n", f);
+    MATHLIB_WARNING(" ** NON-convergence in pgamma()'s pd_lower_cf() f= %g.\n",
+		    f);
     return f;/* should not happen ... */
 } /* pd_lower_cf() */
 #undef NEEDED_SCALE

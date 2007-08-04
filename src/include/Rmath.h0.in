@@ -588,17 +588,17 @@ double  logspace_sub(double logx, double logy);
 
 	/* old-R Compatibility */
 
-#define snorm	norm_rand
-#define sunif	unif_rand
-#define sexp	exp_rand
+#ifdef OLD_RMATH_COMPAT
+# define snorm	norm_rand
+# define sunif	unif_rand
+# define sexp	exp_rand
+#endif
 
 /* next is defined by nmath.h, arithmetic.c, fmin.c and uncmin.c */
 #ifdef MATHLIB_PRIVATE
-#define gamma_cody	Rf_gamma_cody
-
+# define gamma_cody	Rf_gamma_cody
 double	gamma_cody(double); /* used in arithmetic.c */
 double  Rf_d1mach(int);
-
 #endif /* MATHLIB_PRIVATE */
 
 #if defined(MATHLIB_STANDALONE) && !defined(MATHLIB_PRIVATE_H)
@@ -606,40 +606,30 @@ double  Rf_d1mach(int);
 
 /* If isnan is a macro, as C99 specifies, the C++
    math header will undefine it. This happens on OS X */
-#ifdef __cplusplus
+# ifdef __cplusplus
   int R_isnancpp(double); /* in mlutils.c */
-# define ISNAN(x)     R_isnancpp(x)
-#else
-# define ISNAN(x)     (isnan(x)!=0)
-#endif
+#  define ISNAN(x)     R_isnancpp(x)
+# else
+#  define ISNAN(x)     (isnan(x)!=0)
+# endif
 
-#define R_FINITE(x)    R_finite(x)
+# define R_FINITE(x)    R_finite(x)
 int R_finite(double);
 
-#ifdef WIN32  /* not Win32 as no config information */
-/* These were not really right as we have both libRmath.a and Rmath.dll
-# define NA_REAL (*_imp__NA_REAL)
-# define R_NegInf (*_imp__R_NegInf)
-# define R_PosInf (*_imp__R_PosInf)
-# define N01_kind (*_imp__N01_kind)
-*/
-#ifdef RMATH_DLL
-#define R_EXTERN extern __declspec(dllimport)
-#else
-#define R_EXTERN extern
-#endif
+# ifdef WIN32  /* not Win32 as no config information */
+#  ifdef RMATH_DLL
+#   define R_EXTERN extern __declspec(dllimport)
+#  else
+#   define R_EXTERN extern
+#  endif
 R_EXTERN double NA_REAL;
 R_EXTERN double R_PosInf;
 R_EXTERN double R_NegInf;
 R_EXTERN int N01_kind;
-#undef R_EXTERN
+#  undef R_EXTERN
 # endif
 
 #endif /* MATHLIB_STANDALONE */
-
-#ifndef R_EXT_PRINT_H_
-void REprintf(char*, ...);
-#endif
 
 #ifdef  __cplusplus
 }

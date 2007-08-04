@@ -40,6 +40,9 @@
 #include <math.h>
 #include <float.h> /* DBL_MIN etc */
 
+/* possibly needed for debugging */
+#include <R_ext/Print.h>
+
 
 #ifndef MATHLIB_STANDALONE
 
@@ -55,8 +58,9 @@
 #define ML_NEGINF	R_NegInf
 #define ML_NAN		R_NaN
 
+
 void R_CheckUserInterrupt(void);
-/* Ei-ji Nakama reported that AIX 5.2 has calloc as macro and objected
+/* Ei-ji Nakama reported that AIX 5.2 has calloc as a macro and objected
    to redefining it.  Tests added for 2.2.1 */
 #ifdef calloc
 # undef calloc
