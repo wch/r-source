@@ -381,7 +381,7 @@ symbol.  Symbols can be created through the functions @code{as.name} and
 
 @cindex symbol
 @cindex mode
-Symbol have mode @code{"name"}, storage mode @code{"symbol"}, and type
+Symbols have mode @code{"name"}, storage mode @code{"symbol"}, and type
 @code{"symbol"}.  They can be
 @cindex coercion
 coerced to and from character strings
