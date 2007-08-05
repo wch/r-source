@@ -32,13 +32,17 @@
 # endif
 #endif
 
-#include <Rconfig.h>
-#define MATHLIB_PRIVATE
-#include <Rmath.h>
-#undef  MATHLIB_PRIVATE
-#include <R_ext/RS.h>
 #include <math.h>
 #include <float.h> /* DBL_MIN etc */
+
+#include <Rconfig.h>
+#include <Rmath.h>
+
+double  Rf_d1mach(int);
+#define gamma_cody	Rf_gamma_cody
+double	gamma_cody(double);
+
+#include <R_ext/RS.h>
 
 /* possibly needed for debugging */
 #include <R_ext/Print.h>

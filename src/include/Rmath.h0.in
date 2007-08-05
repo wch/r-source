@@ -594,13 +594,6 @@ double  logspace_sub(double logx, double logy);
 # define sexp	exp_rand
 #endif
 
-/* next is defined by nmath.h, arithmetic.c, fmin.c and uncmin.c */
-#ifdef MATHLIB_PRIVATE
-# define gamma_cody	Rf_gamma_cody
-double	gamma_cody(double); /* used in arithmetic.c */
-double  Rf_d1mach(int);
-#endif /* MATHLIB_PRIVATE */
-
 #if defined(MATHLIB_STANDALONE) && !defined(MATHLIB_PRIVATE_H)
 /* second is defined by nmath.h */
 

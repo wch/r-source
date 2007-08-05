@@ -61,10 +61,9 @@
     Minimization without Derivatives, Prentice-Hall, Inc. (1973).
 */
 #include <math.h>
+#include <float.h> /* DBL_EPSILON */
 
-#define MATHLIB_PRIVATE
-#include <Rmath.h> /* for dimach */
-#undef MATHLIB_PRIVATE
+#include <Rmath.h>
 #include <R_ext/Applic.h>
 
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
@@ -78,7 +77,7 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
     double t2, fu, fv, fw, fx, xm, eps, tol1, tol3;
 
 /*  eps is approximately the square root of the relative machine precision. */
-    eps = Rf_d1mach(4);
+    eps = DBL_EPSILON;
     tol1 = eps + 1.;/* the smallest 1.000... > 1 */
     eps = sqrt(eps);
 

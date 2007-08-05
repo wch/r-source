@@ -437,6 +437,7 @@
  Rf_gammalims
  Rf_get1index
  Rf_gpptr
+ Rf_i1mach
  Rf_internalTypeCheck
  Rf_isNAcol
  Rf_labelformat

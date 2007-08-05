@@ -21,8 +21,7 @@
 #include "nmath.h"
 #include <limits.h>
 
-/* This is (naughtily) used by port.c in package stats */
-int Rf_i1mach(int i)
+attribute_hidden int Rf_i1mach(int i)
 {
     switch(i) {
 

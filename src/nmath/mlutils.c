@@ -59,8 +59,7 @@ int R_finite(double x)
    doesn't get C++ headers and so is safe. */
 int R_isnancpp(double x)
 {
-	return (isnan(x) != 0);
-
+    return (isnan(x) != 0);
 }
 
 static double myfmod(double x1, double x2)

@@ -37,15 +37,13 @@ attribute_hidden double Rf_d1mach(int i)
 
     case 3: /* = FLT_RADIX  ^ - DBL_MANT_DIG
 	      for IEEE:  = 2^-53 = 1.110223e-16 = .5*DBL_EPSILON */
-	return pow((double) Rf_i1mach(10), -(double) Rf_i1mach(14));
+	return 0.5*DBL_EPSILON;
 
     case 4: /* = FLT_RADIX  ^ (1- DBL_MANT_DIG) =
-	      for IEEE:  = 2^52 = 4503599627370496 = 1/DBL_EPSILON */
-	return pow((double) Rf_i1mach(10), 1 - (double) Rf_i1mach(14));
+	      for IEEE:  = 2^-52 = DBL_EPSILON */
+	return DBL_EPSILON;
 
-	/* Hmm, log10 is not mandatory */
-    case 5: return log10(2.0);/* = M_LOG10_2 in Rmath.h */
-
+    case 5: return M_LOG10_2;
 
     default: return 0.0;
     }

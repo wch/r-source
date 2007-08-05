@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2006   The R Development Core Team.
+ *  Copyright (C) 2005-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -123,7 +123,6 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
     /* Function Body */
 
 
-/*  iv[PRUNIT] = Rf_i7mdcn(1); */
     if (PRUNIT <= liv) iv[PRUNIT] = 0;	/* suppress all Fortran output */
     if (ALGSAV <= liv) iv[ALGSAV] = alg;
     if (alg < 1 || alg > 4)
@@ -298,6 +297,7 @@ int F77_NAME(stopx)(void)
     return 0;			/* interrupts are caught elsewhere */
 }
 
+#if OLD
 /** 
  * return integer machine-dependent constants
  * 
@@ -314,7 +314,7 @@ int Rf_i7mdcn(int k) {
 }
     
 int F77_NAME(i7mdcn)(const int *k) {return Rf_i7mdcn(*k);}
-
+#endif
 
 static 
 double* check_gv(SEXP gr, SEXP hs, SEXP rho, int n, double *gv, double *hv)
