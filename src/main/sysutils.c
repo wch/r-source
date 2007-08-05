@@ -345,7 +345,11 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_UNSETENV
     for (i = 0; i < n; i++) unsetenv(translateChar(STRING_ELT(vars, i)));
 #elif defined(HAVE_PUTENV_UNSET)
-    for (i = 0; i < n; i++) putenv(translateChar(STRING_ELT(vars, i)));
+    for (i = 0; i < n; i++) {
+	char buf[1000];
+	snprintf(buf, 1000, "%s",  translateChar(STRING_ELT(vars, i)));
+	putenv(buf);
+    }
 #elif defined(HAVE_PUTENV_UNSET2)
     for (i = 0; i < n; i++) {
 	char buf[1000];
