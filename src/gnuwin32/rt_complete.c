@@ -24,7 +24,9 @@
 #endif
 
 #include <getline/getline.h>
-#include <strings.h>
+#include <string.h>
+#include <stdlib.h> /* for getenv */
+
 extern char *alloca(size_t);
 #define min(a, b) (a < b ? a : b)
 
