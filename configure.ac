@@ -698,7 +698,7 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h ieee754.h ieeefp.h limits.h locale.h \
+  fpu_control.h glob.h grp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h stdbool.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
   sys/time.h sys/times.h sys/utsname.h time.h unistd.h)
@@ -1693,9 +1693,6 @@ AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl])
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
-if test "${ac_cv_func_finite}" = "yes"; then
-R_FUNC_FINITE
-fi
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
 fi

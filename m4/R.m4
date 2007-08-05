@@ -1426,30 +1426,6 @@ if test "x${r_cv_func_calloc_works}" = xyes; then
 fi
 ])# R_FUNC_CALLOC
 
-## R_FUNC_FINITE
-## -------------
-AC_DEFUN([R_FUNC_FINITE],
-[AC_CACHE_CHECK([for working finite], [r_cv_func_finite_works],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <math.h>
-#include <stdlib.h>
-#include "confdefs.h"
-int main () {
-#ifdef HAVE_FINITE
-  exit(finite(1./0.) | finite(0./0.) | finite(-1./0.));
-#else
-  exit(1);
-#endif
-}
-]])],
-               [r_cv_func_finite_works=yes],
-               [r_cv_func_finite_works=no],
-               [r_cv_func_finite_works=no])])
-if test "x${r_cv_func_finite_works}" = xyes; then
-  AC_DEFINE(HAVE_WORKING_FINITE, 1,
-            [Define if finite() is correct for -Inf/NaN/Inf.])
-fi
-])# R_FUNC_FINITE
 
 ## R_FUNC_ISFINITE
 ## ---------------
@@ -1899,15 +1875,12 @@ EOF
 ## ----------
 ## According to C99, isnan and isfinite are macros in math.h, 
 ## but some older systems have isnan as a function (possibly as well).
-## On the other hand, finite is a BSD function.
 AC_DEFUN([R_IEEE_754],
-[AC_CHECK_FUNCS([finite isnan])
+[AC_CHECK_FUNCS([isnan])
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
                [r_cv_ieee_754],
-[if (test "${ac_cv_func_finite}" = yes \
-      || test "${ac_cv_have_decl_isfinite}" = yes) \
-    && (test "${ac_cv_func_isnan}" = yes \
+[if (test "${ac_cv_func_isnan}" = yes \
       || test "${ac_cv_have_decl_isnan}" = yes); then
   r_cv_ieee_754=yes
 else

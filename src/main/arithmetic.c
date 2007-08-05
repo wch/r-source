@@ -144,21 +144,13 @@ int R_isnancpp(double x)
 }
 
 
-/* <FIXME> Simplify this mess. Mainly for use in packages */
+/* Mainly for use in packages */
 int R_finite(double x)
 {
 #ifdef HAVE_WORKING_ISFINITE
     return isfinite(x);
-#elif HAVE_WORKING_FINITE
-    return finite(x);
 #else
-/* neither finite nor isfinite work. Do we really need the AIX exception? */
-# ifdef _AIX
-#  include <fp.h>
-     return FINITE(x);
-# else
     return (!isnan(x) & (x != R_PosInf) & (x != R_NegInf));
-# endif
 #endif
 }
 

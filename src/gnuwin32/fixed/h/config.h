@@ -223,9 +223,6 @@
 /* Define to 1 if you have the `fdopen' function. */
 #define HAVE_FDOPEN 1
 
-/* Define to 1 if you have the `finite' function. */
-#define HAVE_FINITE 1
-
 /* Define to 1 if you have the <floatingpoint.h> header file. */
 /* #undef HAVE_FLOATINGPOINT_H */
 
@@ -311,12 +308,6 @@
 
 /* Define to 1 if you have the <iconv.h> header file. */
 #define HAVE_ICONV_H 1
-
-/* Define to 1 if you have the <ieee754.h> header file. */
-/* #undef HAVE_IEEE754_H */
-
-/* Define to 1 if you have the <ieeefp.h> header file. */
-/* #undef HAVE_IEEEFP_H */
 
 /* Define if you have support for ftp/http access. */
 #define HAVE_INTERNET 1
@@ -731,9 +722,6 @@
 
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1
-
-/* Define if finite() is correct for -Inf/NaN/Inf. */
-#define HAVE_WORKING_FINITE 1
 
 /* Define if your ftell works correctly on files opened for append. */
 /* #undef HAVE_WORKING_FTELL */

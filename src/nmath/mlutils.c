@@ -29,29 +29,12 @@
  *  used only in standalone Rmath lib.
  */
 
-/* Include the header file defining finite() */
-#ifdef HAVE_IEEE754_H
-# include <ieee754.h>		/* newer Linuxen */
-#else
-# ifdef HAVE_IEEEFP_H
-#  include <ieeefp.h>		/* others [Solaris], .. */
-# endif
-#endif
-
 int R_finite(double x)
 {
 #ifdef HAVE_WORKING_ISFINITE
     return isfinite(x);
-#elif HAVE_WORKING_FINITE
-    return finite(x);
-# else
-/* neither finite nor isfinite work */
-# ifdef _AIX
-#  include <fp.h>
-     return FINITE(x);
 # else
     return (!isnan(x) & (x != ML_POSINF) & (x != ML_NEGINF));
-# endif
 #endif
 }
 
