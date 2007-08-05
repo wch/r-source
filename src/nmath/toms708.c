@@ -5,7 +5,6 @@
    14 digits accuracy.
 */
 
-#include <math.h>
 #undef min
 #define min(a,b) ((a < b)?a:b)
 #undef max
@@ -13,6 +12,13 @@
 
 #include "nmath.h"
 #include "dpq.h"
+/* <math.h> is included by above, with suitable defines in glibc systems
+   to make log1p and expm1 declared */
+
+/* MM added R_D_LExp, so redefine here in terms of rexpm1 */
+#undef R_Log1_Exp
+#define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-rexpm1(x)) : log1p(-exp(x)))
+
 
 static double bfrac(double, double, double, double, double, double, int log_p);
 static void bgrat(double, double, double, double, double *, double, int *);
