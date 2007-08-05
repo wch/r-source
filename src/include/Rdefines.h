@@ -24,12 +24,9 @@
 /* user forgot to include R.h or S.h */
 # include <R_ext/Memory.h>
 # include <R_ext/RS.h>
-# ifndef NO_C_HEDAERS
-/* lme4 relied on these two */
-#  include <stdlib.h>
-#  include <float.h>
-# endif
 #endif
+
+#include <Rinternals.h>
 
 /*
  *  Much is from John Chambers' "Programming With Data".
@@ -44,7 +41,6 @@
  *  And to hide some internal nastiness.
  */
 
-#include <Rinternals.h>
 
 /*
  *  Added some macros defined in S.h from Splus 5.1
@@ -118,8 +114,8 @@
 #define NUMERIC_VALUE(x)	asReal(x)
 #define CHARACTER_VALUE(x)	CHAR(asChar(x))
 #define STRING_VALUE(x)		CHAR(asChar(x))
-#define LIST_VALUE(x)		error("the `value' of a list object is not defined")
-#define RAW_VALUE(x)		error("the `value' of a raw object is not defined")
+#define LIST_VALUE(x)		error("the 'value' of a list object is not defined")
+#define RAW_VALUE(x)		error("the 'value' of a raw object is not defined")
 
 #define SET_ELEMENT(x, i, val)	SET_VECTOR_ELT(x, i, val)
 #define GET_ATTR(x,what)       	getAttrib(x, what)
@@ -144,7 +140,7 @@
 
 #define MAKE_CLASS(what)	R_do_MAKE_CLASS(what)
 /* NEW_OBJECT is recommended; NEW is for green book compatibility */
-#define NEW_OBJECT(class_def)		R_do_new_object(class_def)
+#define NEW_OBJECT(class_def)	R_do_new_object(class_def)
 #define NEW(class_def)		R_do_new_object(class_def)
 
 #define s_object                SEXPREC
