@@ -7337,7 +7337,7 @@ The only @R{} level function for interacting with external pointers is
 @code{reg.finalizer} which can be used to set a finalizer.
 
 It is probably not a good idea to allow an external pointer to be
-@code{save}d and then reloaded, but it this happens the pointer will be
+@code{save}d and then reloaded, but if this happens the pointer will be
 set to the C @code{NULL} pointer.
 
 
