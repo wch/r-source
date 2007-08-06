@@ -1947,3 +1947,17 @@ SEXP attribute_hidden do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
 } /* do_math5() */
 
 #endif /* Math5 is there */
+
+/* This is used for experimenting with parallelized nmath functions -- LT */
+CCODE R_get_arith_function(int which)
+{
+    switch (which) {
+    case 1: return do_math1;
+    case 2: return do_math2;
+    case 3: return do_math3;
+    case 4: return do_math4;
+    case 11: return complex_math1;
+    case 12: return complex_math2;
+    default: error("bad arith function index"); return NULL;
+    }
+}
