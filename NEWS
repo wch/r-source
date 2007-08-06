@@ -274,6 +274,9 @@ NEW FEATURES
 
     o	New higher-order functions Reduce(), Filter() and Map().
 
+    o   Loading serialized raw objects with load() is now considerably
+        faster.
+
 
 METHODS PACKAGE
 
@@ -540,7 +543,8 @@ BUG FIXES
     o	pbeta(x, log.p = TRUE) is now improved in many cases, and so are
         functions depending on it, such as pt(), pf() or pbinom().
 
-
+    o   Deserializing raw objects saved using save(..., ascii=TRUE)
+        now works.
 
 
 	**************************************************
