@@ -16,7 +16,7 @@ INSTALLATION
 
 BUG FIXES
 
-    o   Attempting to do in-memory serialization of an object requring
+    o   Attempting to do in-memory serialization of an object requiring
 	more than 1Gb might have failed.
 
     o   Using formals<- on a function whose body was NULL worked
@@ -29,11 +29,12 @@ BUG FIXES
 
     o	log(x, base) was intended to handle complex 'base' even for
 	real 'x', but there was a typo in the code to do so.
-	
+
     o	Syntax errors would sometimes misreport the error context.
 
     o	qt(p, df=1) is now also correct for very small p. (PR#9804)
-	qt(p, df=2) is much more accurate for  0 < |p - 0.5| << 1.
+	qt(p, df=2) ditto; also is more accurate for  0 < |p - 0.5| << 1.
+	qt(*, log.p=TRUE) now is finite and monotone (again!) where possible.
 
     o	Several functions including those making use of printCoefmat(),
 	layout() and sortedXyData() now work correctly with
@@ -1053,7 +1054,7 @@ BUG FIXES
 	would not find show() for use on S4 objects, and did not have
 	the same search path (for show(), print() and print() methods)
 	as auto-printing.  Also, auto-printing and print() of S4
-	objects would fail to find 'show' if the methods namespace was
+	objects would fail to find 'show' if the methods name space was
 	loaded but the package was not attached (or otherwise not in
 	the search path).
 
@@ -1262,7 +1263,7 @@ BUG FIXES
 	Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
 	Dunlap).
 
-    o	Namespaces restored via a saved session silently failed to cache
+    o	Name spaces restored via a saved session silently failed to cache
 	their methods because the methods package was not yet
 	attached.  Fixed by attaching methods before restoring data.
 
@@ -1385,7 +1386,7 @@ USER-VISIBLE CHANGES
 	software, which might use the # character inside fields, but
 	are unlikely to use it for comments.)
 
-    o	The bindings in the base environment/namespace (currently the
+    o	The bindings in the base environment/name space (currently the
 	same thing) are now locked.  This means that the values of
 	base functions cannot be changed except via
 	assignInNamespace() and similar tricks.
@@ -1912,7 +1913,7 @@ UTILITIES
 	  (syntactically) valid CITATION metadata.
 
 	- tests that the package can be loaded, and that the package
-	  and namespace (if there is one) can each be loaded in
+	  and name space (if there is one) can each be loaded in
 	  startup code (before the standard packages are loaded).
 
 	- tests for empty 'exec' or 'inst' directories.
@@ -2050,7 +2051,7 @@ BUG FIXES
 	Now window() must be used.
 
     o	Function AIC() in package 'stats4' was not dispatching correctly
-	on S4 classes via logLik() because of namespace issues.
+	on S4 classes via logLik() because of name space issues.
 
     o	Subsetting LANGSXPs could break the call-by-value illusion.
 	(PR#7924) (patch from Kevin Hendricks).
@@ -2947,7 +2948,7 @@ DEPRECATED & DEFUNCT
 	of plot(), points() and lines().
 
     o	nlsMethod() and profiler() are no longer exported from the stats
-	namespace (and nlsMethod.plinear() is no longer registered as
+	name space (and nlsMethod.plinear() is no longer registered as
 	a method, as nlsMethod() was not generic).
 
     o	The re-named tcltk functions tkcmd, tkfile.tail, tkfile.dir,
@@ -3497,7 +3498,7 @@ BUG FIXES
 	to converge in 'maxiter' steps.	 (PR#8751)
 
     o	eapply() (and as.list.environment()) did not work for the base
-	environment/namespace.  (PR#8761)
+	environment/name space.  (PR#8761)
 
     o	Added protection in configure against systems for which using
 	xmkmf fails to report a C or C++ compiler.
@@ -3993,7 +3994,7 @@ NEW FEATURES
     o	library() now explicitly checks for the existence of
 	directories in 'lib.loc': this avoids some warning messages.
 
-    o	loadNamespace(keep.source=) now applies only to that namespace
+    o	loadNamespace(keep.source=) now applies only to that name space
 	and not others it might load to satisfy imports: this is now
 	consistent with library().
 
@@ -4306,12 +4307,12 @@ UTILITIES
 
     o	checkFF() used by R CMD check has since R 2.0.0 not reported
 	missing PACKAGE arguments when testing installed packages with
-	namespaces.  It now
+	name spaces.  It now
 
 	- treats installed and source packages in the same way.
 
 	- reports missing arguments unless they are in a function in
-	  the namespace with a useDynLib declaration (as the
+	  the name space with a useDynLib declaration (as the
 	  appropriate DLL for such calls can be searched for).
 
     o	Rd2dvi sets the encoding(s) used appropriately.	 If UTF-8
@@ -4330,8 +4331,8 @@ C-LEVEL FACILITIES
 	rather than as SEXPs.  (Wish of Keith Frost, PR#7853)
 
     o	The search for symbols in a .C/.Call/... call without a
-	package argument now searches for an enclosing namespace and
-	so finds functions defined within functions in a namespace.
+	package argument now searches for an enclosing name space and
+	so finds functions defined within functions in a name space.
 
     o	R_max_col() has new (5th) argument '*ties_meth' allowing
 	non-random behavior in the case of ties.
@@ -4426,7 +4427,7 @@ BUG FIXES
 	by Berwin Turlach.
 
     o	library(keep.source=) was ignored if the package had a
-	namespace (the setting of options("keep.source.pkgs") was
+	name space (the setting of options("keep.source.pkgs") was
 	always used).
 
     o	hist.POSIXct() and hist.Date() now respect par("xaxt").
@@ -4826,7 +4827,7 @@ BUG FIXES
     o	getCallingDLL()'s default first argument did not correspond to
 	its description and has been changed.  The mismatch caused
 	symbols in .C/.Call/.Fortran calls without a PACKAGE= argument
-	to be potentially looked up in the wrong namespace.
+	to be potentially looked up in the wrong name space.
 
     o	Binary save() of raw vectors was not working correctly on
 	big-endian platforms.  (PR#7812)
@@ -5646,7 +5647,7 @@ BUG FIXES
     o	Collected warnings had messages with unneeded trailing space.
 
     o	S4 methods for primitive functions must be exported from
-	namespaces; this is now done automatically.
+	name spaces; this is now done automatically.
 	Note that is.primitive() is now in "base", not "methods".
 
     o	Package grid:
@@ -6024,7 +6025,7 @@ BUG FIXES
 
     o	dlogis() gave NaN not 0 for large negative arguments.
 
-    o	Importing from another namespace was broken for versioned
+    o	Importing from another name space was broken for versioned
 	installs, incorrectly reporting something like
 	"package 'imported_from' does not have a name space".
 

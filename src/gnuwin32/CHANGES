@@ -76,7 +76,7 @@ BUG FIXES
 	doc/manual/Makefile.win.  This avoids error messages if 'latex'
 	is not in the path.
 
-    o	Rcmd INSTALL now sets up lazloading earlier if explicitly
+    o	Rcmd INSTALL now sets up lazyloading earlier if explicitly
 	requested in the DESCRIPTION file.  This is needed for
 	packages that use 'methods' and need to load themselves to
 	process their data.
