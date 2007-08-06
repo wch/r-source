@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file rt_complete.c
- *  Copyright (C) 2007 The R Core Developmen Team.
+ *  Copyright (C) 2007 The R Core Development Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,8 +78,7 @@ static int rt_completion(char *buf, int offset, int *loc)
     strcpy(pline, partial_line);
     /* poor attempt at escaping quotes that sort of works */
     alen = strlen(pline);
-    for (i = 0; i < alen; i++)
-        if (pline[i] == '"') pline[i] = '\'';
+    for (i = 0; i < alen; i++) if (pline[i] == '"') pline[i] = '\'';
 
     cmd = alloca(strlen(pline) + 100);
     sprintf(cmd, "rcompgen:::.win32consoleCompletion(\"%s\", %d)",
@@ -93,7 +92,7 @@ static int rt_completion(char *buf, int offset, int *loc)
 	/* otherwise pretend that nothing happened and return */
 	return -1; /* no change */
     }
-    /* Loop is needed here as EXPSEXP will be of length > 1 */
+    /* Loop is needed here as EXPRSEXP will be of length > 1 */
     for(i = 0; i < length(cmdexpr); i++)
 	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
     UNPROTECT(2);
