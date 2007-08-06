@@ -739,6 +739,9 @@ the extra files into your intended @R{} source directory, e.g.
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @var{R_HOME} below.
 
+To avoid warnings you may want to set the environment variable
+@env{CYGWIN} to @samp{nodosfilewarning}.
+
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
 
@@ -1331,13 +1334,13 @@ the current collection.
 @cindex Site libraries
 As from @R{} 2.5.0 @R{} will automatically make use of a site-specific
 library @file{R_HOME/site-library} if this exists (it does not in a
-vanilla @R{} installation).  This location cna be overridden by
+vanilla @R{} installation).  This location can be overridden by
 setting@footnote{its binding is looked once that files has been read,
 so users cannot easily change it.} @samp{.Library.site} in
 @file{R_HOME/etc/Rprofile.site}, or (not recommended) by setting the
 @enindex R_LIBS_SITE
 environment variable @env{R_LIBS_SITE}.  Like @samp{.Library}, the
-site libraries are always include by @samp{.libPaths()}.
+site libraries are always included by @samp{.libPaths()}.
 
 @cindex Libraries, user
 @cindex User libraries
@@ -1366,7 +1369,7 @@ library paths, separated by colons (semicolons on Windows).
 
 Packages may be distributed in source form or compiled binary form.
 Installing source packages requires that compilers and tools (including
-Perl 5.004 or later) be installed.  Binary packages are
+Perl 5.6.1 or later) be installed.  Binary packages are
 platform-specific and generally need no special tools to install, but
 see the documentation for your platform for details.
 
@@ -2066,7 +2069,7 @@ This is regarded as essential from @R{} 2.5.0: if you do not have it
 will need to configure with @option{--without-iconv} (or equivalent),
 and @command{make check} (and other checks) are likely to fail.
 
-You will need Perl version 5.004 or later, available via
+You will need Perl version 5.6.1 or later, available via
 @url{http://www.perl.com/CPAN/, @code{www.perl.com/CPAN}}, to build any
 of the on-line documentation.
 
@@ -3294,12 +3297,13 @@ with @command{gcc}@tie{}3.3 and later.
 @node Solaris 10 and Open Solaris, Sparc Solaris 9 and earlier, Solaris, Solaris
 @subsection Solaris 10 and Open Solaris
 
-@R{} has been built successfully on Sparc Solaris 10 using
-@command{gcc}@tie{}3/@command{g77},
-@command{gcc}@tie{}4/@command{gfortran} and the (free) Sun Studio 11
-compilers.  Sun packages are available from
-@uref{http://www.sunfreeware.com/} for both Sparc and
-@cputype{x86} (and for earlier versions of Solaris).
+@R{} has been built successfully on Solaris 10 (both Sparc and
+@cputype{x86}) using @command{gcc}@tie{}3/@command{g77},
+@command{gcc}@tie{}4/@command{gfortran} and the (free) Sun Studio 11/12
+compilers.  Sun packages for @R{} are available from
+@uref{http://www.sunfreeware.com/} for both architectures.  (Recent Sun
+machines are Opterons (@cputype{x86-64}) rather than @cputype{x86}, but
+32-bit @cputype{x86} executables are the default.)
 
 There are also reports of success on OpenSolaris (aka Solaris Express
 Community Edition, and sometimes as Solaris 11) on @cputype{x86}.
@@ -3313,20 +3317,22 @@ Modern Solaris systems allow a large selection of Open Source software
 to be installed via @command{pkg-get}: a Sparc Solaris 10 system came
 with @code{libreadline} and @code{libiconv} and a choice of @code{gcc3}
 and @code{gcc4} compilers, installed under @file{/opt/csw}.  (You will
-need @code{libiconv}: the Solaris version of @code{iconv} is not
+need GNU @code{libiconv}: the Solaris version of @code{iconv} is not
 sufficiently powerful.)
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.
+one version of Solaris on a later version.  A version of @command{gcc}
+optimized for Sparc (using technology from Sun's compilers) is available
+from Sun.@footnote{@url{http://www.sun.com/download/index.jsp?cat=Application%20Development&tab=3&subcat=Development%20Tools}}
 
-When using the Sun compilers do @emph{not} specify @option{-fast}, as
-this disables @acronym{IEEE} arithmetic and @command{make check} will
-fail.
+When using the Sun compilers@footnote{including @command{gcc} for Sparc
+from Sun.} do @emph{not} specify @option{-fast}, as this disables
+@acronym{IEEE} arithmetic and @command{make check} will fail.
 
-To compile for a 64-bit target with @command{gcc}@tie{}4 we used
+To compile for a 64-bit Sparc target with @command{gcc}@tie{}4 we used
 
 @example
 CC="gcc -m64"
@@ -3343,7 +3349,7 @@ be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
-For the Sun Studio 11 compilers a little juggling of paths is needed to
+For the Sun Studio compilers a little juggling of paths is needed to
 ensure GNU @code{libiconv} is used rather than the Solaris @code{iconv}:
 we used
 
@@ -3356,20 +3362,21 @@ FFLAGS=-O4
 CXX=CC
 CXXFLAGS=-O
 FC=f95
-FCFLAGS=-O4
+FCFLAGS=$FFLAGS
 LDFLAGS=-L/opt/csw/lib
 @end example
 
 @noindent
 to ensure that the @code{libiconv} version of @file{iconv.h} was found.
-For a 64-bit target add @code{-xarch=v9} (or @code{v9b}) to each of the
-compiler commands.
+For a 64-bit target add @code{-xarch=v9} (or @code{v9b}, or
+@code{amd64}) to each of the compiler commands, or for Sun Studio 12 add
+@code{-m64}.
 
 @cindex BLAS library
 @cindex LAPACK library
 
 The Sun performance library @code{libsunperf} is available with the Sun
-Studio 11 compilers.  If selected as a BLAS, it must also be selected as
+Studio compilers.  If selected as a BLAS, it must also be selected as
 LAPACK via
 
 @example
@@ -3377,15 +3384,30 @@ LAPACK via
 @end example
 
 @noindent
-However, our tests were none too successful: 64-bit builds crashed, and
-32-bit builds needed @samp{HAVE_WORKING_LOG} unset in @file{config.h} as
-whereas the @code{log} in Solaris' @code{libm} works correctly, that in
-@code{libsunperf} is found (and does not).
+However, our tests were none too successful: Sparc 64-bit builds
+crashed.
+
+Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
+check} in the complex LAPACK tests: using Sun Studio 11 worked
+correctly.
+
+There is limited support for @cputype{x86-64} builds in the pre-built
+GNU software repositories, with 64-bit libraries (which are in
+@file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
+@command{gcc} support libraries).  The Sun Studio compilers do support
+64-bit builds via @code{-xarch=amd64}.
+
 
 @node Sparc Solaris 9 and earlier,  , Solaris 10 and Open Solaris, Solaris
 @subsection Sparc Solaris 9 and earlier
 
-@R{} 2.5.0 was built successfully on Sparc Solaris 8 (aka Solaris 2.8
+These are now obsolete operating systems, so this subsection is largely
+of historical interest and refers to equally old compiler versions.
+
+Sun packages for @R{} are available from
+@uref{http://www.sunfreeware.com/} for both Sparc and @cputype{x86}.
+
+@R{} 2.5.1 was built successfully on Sparc Solaris 8 (aka Solaris 2.8
 aka SunOS 5.8) using @command{gcc}@tie{}3/@command{g77},
 @command{gcc}@tie{}4/@command{gfortran} and the `Sun ONE Studio 7
 Compiler Suite' (aka Forte@tie{}7).
