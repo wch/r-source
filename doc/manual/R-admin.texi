@@ -3366,10 +3366,11 @@ Fedora Core 3 @emph{via}
 @example
 CC=icc
 F77=ifort
-CXX=icc
+CXX=icpc
 ICC_LIBS=/opt/compilers/intel/cc/9.0/lib
 IFC_LIBS=/opt/compilers/intel/fc/9.0/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
+SHLIB_CXXLD=icpc
 @end example
 
 @noindent
@@ -3379,14 +3380,17 @@ optimization.  For @cputype{x86_64} on Fedora Core 5 he used
 
 @example
 CC=icc
-CFLAGS="-g -O3 -wd188"
+CFLAGS="-g -O3 -wd188 -ip"
 F77=ifort
 FLAGS="-g -O3"
-CXX=icc
+CXX=icpc
+CXXFLAGS="-g -O3"
 FC=ifort
+FCFLAGS="-g -O3 -mp"
 ICC_LIBS=/opt/compilers/intel/cce/9.1.039/lib
 IFC_LIBS=/opt/compilers/intel/fce/9.1.033/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib64"
+SHLIB_CXXLD=icpc
 @end example
 
 @noindent
