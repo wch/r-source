@@ -74,7 +74,9 @@ nzchar(x)
   string.
 
   Embedded \code{nul} bytes are included in the byte count (but not the
-  final \code{nul}).
+  final \code{nul}).  In contrast, characters are counted up to the
+  string terminator (the first \code{nul} that is not part of a
+  character representation).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
