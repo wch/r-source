@@ -6,7 +6,12 @@ achieved by overrides in the configure script.
 
 You will need a copy of sh.exe in /bin.  Then with the R sources in
 /R/R-2.6.0, I used in /TEMP/R (any other directory will do, except the
-sources)
+sources).  For MinGW 4.2.1 you will need to set
+
+F77=gfortran-sjlj
+CXX=g++-sjlj
+
+in the environment (or copy the executables to gfortran and g++).
 
 sh /R/R-2.6.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no --without-iconv
 
@@ -20,14 +25,13 @@ that differs only in that
 
  - HAVE_VASPRINTF is true thanks to the trio library.
 
- - In mingw-runtime >= 3.10 it finds gettimeofday, but that is
-   less accurate than the GetSystemTime used already.
+ - MinGW gcc 4.2.1 supports pthreads, but I left that undefined.
 
 Also, watch out for versions of the header files.  For example,
 <strings.h> was in mingw-runtime-1.2 and later, but not in the
-Mingw-1.1 bundle.  These days we tend to insist on a current MinGW.
+Mingw-1.1 bundle.  These days we insist on a current MinGW.
 
-BDR 2002-04-15, 2003-02-10, 2004-06-28, 2005-11-25, 2006-07-06
+BDR 2002-04-15, 2003-02-10, 2004-06-28, 2005-11-25, 2006-07-06, 2007-08-09
 
 
 2) The Makefiles for building a distribution have been reorganized.  Now
