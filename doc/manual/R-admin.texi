@@ -4389,60 +4389,61 @@ are using a Windows shell, type @code{PATH} at the prompt to find out.
 @node The MinGW compilers,  , The command line tools, The Windows toolset
 @section The MinGW compilers
 
-This version of @R{} is set up to use @command{gcc} @code{4.2.0} for
-which MinGW compilers are due to be released in June 2007.  Until then,
-follow the instructions here but set @code{BUILD=GCC3} in file
+This version of @R{} is set up to use @command{gcc} @code{4.2.1} for
+which MinGW compilers were released in August 2007.  For those
+compilers, set @code{BUILD=GCC4} in file @file{src/gnuwin32/MkRules}.
+For earlier MinGW compilers set @code{BUILD=GCC3} in file
 @file{src/gnuwin32/MkRules}.
 
 The @file{Rtools.exe} installer includes the currently used version of
 the MinGW port of @command{gcc} from
-@url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
+@url{http://sourceforge.net/project/showfiles.php?group_id=2435}.
+[It has yet to be updated to @command{gcc} @code{4.2.1}]
 
 If you would like to install your own copy, we recommed downloading from
-the URL above, as the download links from @url{www.mingw.org} currently
+the URL above, as the download links from @url{www.mingw.org} have
 lead to obsolete versions. See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
-There may be an installer in the `Current' section, which can be used
-if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
-using this, select the @samp{Candidate} package and add the @code{g++}
-and @code{g77} compilers to the @samp{MinGW base tools}: components will
-be downloaded from Sourceforge and unpacked.)
+@c There may be an installer in the `Current' section, which can be used
+@c if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
+@c using this, select the @samp{Candidate} package and add the @code{g++}
+@c and @code{g77} compilers to the @samp{MinGW base tools}: components will
+@c be downloaded from Sourceforge and unpacked.)
 
 An alternative is to download the components individually, currently
 
 @example
-mingw-runtime-3.12.tar.gz
-w32api-3.9.tar.gz
+mingw-runtime-3.13.tar.gz
+w32api-3.10.tar.gz
 binutils-2.17.50-20060824-1.tar.gz  
-gcc-core-3.4.5-20060117-1.tar.gz
-gcc-g++-3.4.5-20060117-1.tar.gz
-gcc-g77-3.4.5-20060117-1.tar.gz
+gcc-core-4.2.1-sjlj-1.tar.gz2
+gcc-g++-4.2.1-sjlj-1.tar.gz2
+gcc-g77-4.2.1-sjlj-1.tar.gz
 @end example
 
 @noindent
-(and @code{gcc-objc-3.4.5-20060117-1.tar.gz} if you want Objective C support)
-and unpack these into the same directory (using @command{tar zxf
-tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later is
-required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
-contributed packages, and @code{gcc-3.4.5} is needed to get a correct
-build of @R{} itself.  (The `Snapshot'
-@code{binutils-2.17.50-20070129-1.tar.gz} has also be used.)
+(and @code{gcc-objc-4.2.1-sjlj-1.tar.gz} if you want Objective C
+support) and unpack these into the same directory (using @command{tar
+zxf tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later
+is required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
+contributed packages, and @code{gcc-3.4.5} or later is needed to get a
+correct build of @R{} itself.  (The `Snapshot'
+@code{binutils-2.17.50-20070129-1.tar.gz} has also be tested.)
 
-Note that there are known problems with using this compiler set (and all
-others available at the time of writing) on Windows Vista
+Note that currently you will need to copy @file{bin/gcc-sjlj.exe} to
+@file{bin/gcc.exe} to work around an incompatibility between these
+components.
+
+Note that there are known problems with using other compiler sets on
+Windows Vista
 (@url{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
-and that some updates are needed (see the URL above).
+and that a suitable path needs to be set.
 
-During the lifetime of this release of @R{} it is likely that
-@command{gcc 4.2.0} and an official MinGW build will be released.
-Unofficial builds from the @code{gcc} trunk were working in April 2007,
-provided @code{mingw-runtime-3.12.tar.gz} was used (and
-@code{BUILD=GCC4} is set in @file{MkRules}).  One such build is
-available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}.  An
-unofficial build of @command{gcc 4.2.1} (C, C++ and Fortran) is
-available from @uref{http://www.tdragon.net/recentgcc/}.
+Other builds of @command{gcc} 4 are available from
+@url{http://gcc.gnu.org/wiki/GFortranBinaries} and
+@uref{http://www.tdragon.net/recentgcc/}.
 
 Note that these compilers are not completely compatible with @code{gcc3}
 so mixing them with the previously recommended tools is unsupported.
