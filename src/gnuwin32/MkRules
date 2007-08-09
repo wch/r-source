@@ -73,7 +73,7 @@ WIXDIR=C:/packages/WiX
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  Spaces allowed.
 ifeq ($(strip $(BUILD)),GCC4)
-F95=gfortran
+F95=gfortran$(GCC4_SUFF)
 else
 # needs to be set by user
 F95=
@@ -110,11 +110,13 @@ endif
 ifeq ($(strip $(BUILD)),GCC4)
 BINPREF=
 MINGW32CFLAG=
-F77=gfortran
+F77=gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
 AWK=gawk
 ## for mingw-runtime <= 3.11
 # C99FLAG=-std=gnu99 -fgnu89-inline
+## alternative is -dw2, which currently fails building R
+GCC4_SUFF=-sjlj
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
@@ -149,22 +151,23 @@ endif
 AR=$(BINPREF)ar
 AS=$(BINPREF)as
 CAT=cat
-CC=$(BINPREF)gcc $(MINGW32CFLAG)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
 CP=cp
 CPP=$(CC) -E
-CXX=$(BINPREF)g++ $(MINGW32CFLAG)
-DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
+CXX=$(BINPREF)g++$(GCC4_SUFF) $(MINGW32CFLAG)
+## overridden in some packages
+DLL_LDMAIN=$(CC)
+DLL=$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## formerly used version without -k for front-ends/libproxy.a
 DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
 DLLTOOL=$(DLLTOOL_WIN32) -k
-DLL_LDMAIN=gcc
 ECHO=echo
 FIND=find
-MAIN_LD=gcc
-LINKER=$(BINPREF)$(MAIN_LD) $(MINGW32LDFLAG)
+MAIN_LD=$(CC)
+LINKER=$(MAIN_LD) $(MINGW32LDFLAG)
 MKDIR=mkdir
 NM=$(BINPREF)nm
-OBJC=$(BINPREF)gcc $(MINGW32CFLAG)
+OBJC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
 PERL=perl
 RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres
