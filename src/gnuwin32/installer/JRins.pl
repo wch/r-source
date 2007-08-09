@@ -73,6 +73,7 @@ WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
 Compression=lzma
+SolidCompression=yes
 END
 
 my $lines2=<<END;
@@ -140,7 +141,6 @@ Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; Value
 END
 
 print insfile $lines;
-print insfile "SolidCompression=yes\n";
 print insfile $lines2;
 print insfile <<END;
 
