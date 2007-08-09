@@ -401,6 +401,7 @@ static Rcomplex InComplex(R_inpstream_t stream)
     return c;
 }
 
+#ifdef UNUSED
 static int InByte(R_inpstream_t stream)
 {
     Rbyte rb;
@@ -415,6 +416,7 @@ static int InByte(R_inpstream_t stream)
 	return 0;
     }
 }
+#endif
 
 /* These utilities for reading characters with an unget option are
    defined so the code in InString can match the code in
@@ -1638,16 +1640,17 @@ static void InBytesConn(R_inpstream_t stream, void *buf, int length)
     }
     else {
         if (stream->type == R_pstream_ascii_format) {
-            char linebuf[4], *p;
+            char linebuf[4];
+	    unsigned char *p = buf;
             int i, ncread;
+	    unsigned int res;
             for (i = 0; i < length; i++) {
-                p = linebuf;
-                ncread = Rconn_getline(con, p, 3);
+                ncread = Rconn_getline(con, linebuf, 3);
                 if (ncread != 2)
                     error(_("error reading from ascii connection"));
-                if (!sscanf(p, "%02x", buf))
+                if (!sscanf(linebuf, "%02x", &res))
                     error(_("unexpected format in ascii connection"));
-                buf++;
+                *p++ = (unsigned char)res;
             }
         } else {
             if (length != con->read(buf, 1, length, con))

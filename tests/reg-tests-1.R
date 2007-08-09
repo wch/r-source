@@ -4847,3 +4847,18 @@ swiss[[7, "Agriculture"]]
 swiss[["Broye", 2]]
 swiss[[7, 2]]
 ## first and third failed < 2.6.0
+
+
+## load of raw vector from ASCII save
+s1 <- "this is a test string 123"
+r0 <- r1 <- charToRaw(s1)
+save(r1, file="r1-ascii.rda", ascii=TRUE)
+save(r1, file="r1.rda", ascii=FALSE)
+load("r1.rda")
+unlink("r1.rda")
+stopifnot(identical(r1, r0))
+# was OK, but add regression test
+load("r1-ascii.rda")
+unlink("r1-ascii.rda")
+stopifnot(identical(r1, r0))
+## wrong < 2.5.1 patched
