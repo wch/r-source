@@ -7,6 +7,8 @@
 # or F2C (use suitable f2c rather than a Fortran compiler).
 
 BUILD=GCC3
+## if cross-building, is this gcc3 or gcc4?
+CROSS-GCC=gcc3
 
 ## These are overridden by R CMD INSTALL: they only apply to
 ## standard packages when building R and when using 'make pkg-foo'
@@ -88,7 +90,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 BINPREF=i586-mingw32-
 # Set this to where the mingw32 include files are. It must be accurate.
 # It should contain fcntl.h and windows.h
-HEADER=/home/ripley/R/mingw/include
+HEADER=/home/ripley/R/cross-tools7/include
 # path (possibly full path) to same version of R on the host system
 R_EXE='I failed to read the instructions to set R_EXE in MkRules'
 endif
@@ -122,9 +124,13 @@ endif
 
 ifeq ($(strip $(BUILD)),CROSS)
 MINGW32CFLAG=-isystem $(HEADER)
-# or perhaps gfortran
+ifeq ($(strip $(CROSS-GCC)),gcc4)
+F77=$(BINPREF)gfortran
+FLIBS=-lgfortran
+else
 F77=$(BINPREF)g77
 FLIBS=-lg2c
+endif
 AWK=awk
 endif
 
