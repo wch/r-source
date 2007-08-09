@@ -365,6 +365,11 @@ UTILITIES
     	functions for extracting or replacing parts of an object, so S3
     	methods should use the appropriate \method{} markup.
 
+    o	R CMD check now checks for CR line endings in C/C++/Fortran
+	source files, and for non-LF line endings in makefiles in the
+	package 'src' directory.  R CMD build will correct CRLF line
+	endings in makefiles that would be used on a Unix-alike.
+
     o	Rdconv now warns about unmatched braces rather than silently
 	omitting sections containing them.  (Suggestion by Bill
 	Dunlap, PR#9649)

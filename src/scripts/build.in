@@ -303,13 +303,15 @@ foreach my $pkg (@ARGV) {
     ## Add build stamp to the DESCRIPTION file.
     &add_build_stamp_to_description_file(&file_path($pkgname,
 						    "DESCRIPTION"));
-    $log->message("checking for LF line-endings in source files");
+    $log->message("checking for LF line-endings in source and make files");
     if($is_bundle) {
 	foreach my $ppkg (@bundlepkgs) {
 	    &fix_CRLF_in_source_files(&file_path($pkgname, $ppkg), $log);
+	    &fix_CRLF_in_make_files(&file_path($pkgname, $ppkg), $log);
 	}
     } else {
 	&fix_CRLF_in_source_files($pkgname, $log);
+	&fix_CRLF_in_make_files($pkgname, $log);
     }
 
     sub empty_dir_check {
@@ -659,6 +661,40 @@ sub fix_CRLF_in_source_files {
 	    if ($has_CRLF) {
 		$log->print("    file '$file' had CRLF line endings\n");
 		unlink($file); # should not be necessary, but is on Windows
+		rename("$file.tmp", $file)
+		    or die "Error: cannot rename '$file.tmp'\n";
+	    } else {
+		unlink("$file.tmp");
+	    }
+	}
+    }
+}
+
+
+sub fix_CRLF_in_make_files {
+    my ($pkgname, $log) = @_;
+
+    if(-d "$pkgname/src") {
+	my $file;
+	foreach my $f ("Makefile", "Makefile.in", "Makevars", "Makevars.in")  {
+	    $file = "$pkgname/src/$f";
+	    next unless -f "$file";
+	    my $has_CRLF = 0;
+	    open(FILE, "< $file")
+		or die "Error: cannot open '$file' for reading\n";
+	    open(TFILE, "> $file.tmp")
+		or die "Error: cannot open '$file.tmp' for writing\n";
+            binmode(FILE); binmode(TFILE);	# for Windows
+	    while(<FILE>) {
+		chop;
+		$has_CRLF = 1 if $_ =~ /\r$/;
+		$_ =~ s/\r$//;
+		print TFILE "$_\n";
+	    }
+	    close(TFILE); close(FILE);
+	    if ($has_CRLF) {
+		$log->print("    file '$file' had CRLF line endings\n");
+		unlink("$file"); # should not be necessary, but is on Windows
 		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
 	    } else {
