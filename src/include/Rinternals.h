@@ -333,7 +333,7 @@ typedef struct SEXPREC *SEXP;
 #define CHAR(x)		R_CHAR(x)
 const char *(R_CHAR)(SEXP x);
 
-/* Various tests, with macro versions in Defn.h */
+/* Various tests with macro versions below */
 Rboolean (Rf_isNull)(SEXP s);
 Rboolean (Rf_isSymbol)(SEXP s);
 Rboolean (Rf_isLogical)(SEXP s);
@@ -995,6 +995,30 @@ SEXP	 Rf_ScalarLogical(int);
 SEXP	 Rf_ScalarRaw(Rbyte);
 SEXP	 Rf_ScalarReal(double);
 SEXP	 Rf_ScalarString(SEXP);
+#endif
+
+#ifdef USE_RINTERNALS
+
+/* Test macros with function versions above */
+#undef isNull
+#define isNull(s)	(TYPEOF(s) == NILSXP)
+#undef isSymbol
+#define isSymbol(s)	(TYPEOF(s) == SYMSXP)
+#undef isLogical
+#define isLogical(s)	(TYPEOF(s) == LGLSXP)
+#undef isReal
+#define isReal(s)	(TYPEOF(s) == REALSXP)
+#undef isComplex
+#define isComplex(s)	(TYPEOF(s) == CPLXSXP)
+#undef isExpression
+#define isExpression(s) (TYPEOF(s) == EXPRSXP)
+#undef isEnvironment
+#define isEnvironment(s) (TYPEOF(s) == ENVSXP)
+#undef isString
+#define isString(s)	(TYPEOF(s) == STRSXP)
+#undef isObject
+#define isObject(s)	(OBJECT(s) != 0)
+
 #endif
 
 

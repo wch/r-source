@@ -425,26 +425,6 @@ typedef struct {
 #define LOCK_BINDING(b) ((b)->sxpinfo.gp |= BINDING_LOCK_MASK)
 #define UNLOCK_BINDING(b) ((b)->sxpinfo.gp &= (~BINDING_LOCK_MASK))
 
-/* Test macros with function versions in Rinternals.h */
-#undef isNull
-#define isNull(s)	(TYPEOF(s) == NILSXP)
-#undef isSymbol
-#define isSymbol(s)	(TYPEOF(s) == SYMSXP)
-#undef isLogical
-#define isLogical(s)	(TYPEOF(s) == LGLSXP)
-#undef isReal
-#define isReal(s)	(TYPEOF(s) == REALSXP)
-#undef isComplex
-#define isComplex(s)	(TYPEOF(s) == CPLXSXP)
-#undef isExpression
-#define isExpression(s) (TYPEOF(s) == EXPRSXP)
-#undef isEnvironment
-#define isEnvironment(s) (TYPEOF(s) == ENVSXP)
-#undef isString
-#define isString(s)	(TYPEOF(s) == STRSXP)
-#undef isObject
-#define isObject(s)	(OBJECT(s) != 0)
-
 #else /* USE_RINTERNALS */
 
 typedef struct VECREC *VECP;
