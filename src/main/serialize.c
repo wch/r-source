@@ -400,6 +400,7 @@ static Rcomplex InComplex(R_inpstream_t stream)
     return c;
 }
 
+#ifdef UNUSED
 static int InByte(R_inpstream_t stream)
 {
     char word[128];
@@ -417,6 +418,7 @@ static int InByte(R_inpstream_t stream)
 	return 0;
     }
 }
+#endif
 
 /* These utilities for reading characters with an unget option are
    defined so the code in InString can match the code in
@@ -1372,7 +1374,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case RAWSXP:
 	    length = InInteger(stream);
 	    PROTECT(s = allocVector(type, length));
-	    InVec(stream, s, SET_RAW_ELT, InByte, length);
+            stream->InBytes(stream, RAW(s), length);
 	    break;
 	case S4SXP:
 	    PROTECT(s = allocS4Object());
@@ -1637,8 +1639,23 @@ static void InBytesConn(R_inpstream_t stream, void *buf, int length)
 	    p[i] = Rconn_fgetc(con);
     }
     else {
-	if (length != con->read(buf, 1, length, con))
-	    error(_("error reading from connection"));
+        if (stream->type == R_pstream_ascii_format) {
+            char linebuf[4];
+	    unsigned char *p = buf;
+            int i, ncread;
+	    unsigned int res;
+            for (i = 0; i < length; i++) {
+                ncread = Rconn_getline(con, linebuf, 3);
+                if (ncread != 2)
+                    error(_("error reading from ascii connection"));
+                if (!sscanf(linebuf, "%02x", &res))
+                    error(_("unexpected format in ascii connection"));
+                *p++ = (unsigned char)res;
+            }
+        } else {
+            if (length != con->read(buf, 1, length, con))
+                error(_("error reading from connection"));
+        }
     }
 }
 

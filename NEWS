@@ -49,6 +49,9 @@ BUG FIXES
 	series which do not start at the beginning of a quarter or
 	month respectively.
 
+    o   Deserializing raw objects saved using save(..., ascii=TRUE)
+        now works correctly.
+
 
 
 		CHANGES IN R VERSION 2.5.1
