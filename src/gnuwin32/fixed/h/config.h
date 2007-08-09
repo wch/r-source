@@ -645,7 +645,7 @@
 #define HAVE_TIME_H 1
 
 /* Define to 1 if you have the `tsearch' function. */
-#define HAVE_TSEARCH 1
+/* #define HAVE_TSEARCH 1 */
 
 /* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>. */
 #define HAVE_UINTMAX_T 1
