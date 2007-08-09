@@ -543,8 +543,7 @@ BUG FIXES
     o	pbeta(x, log.p = TRUE) is now improved in many cases, and so are
         functions depending on it, such as pt(), pf() or pbinom().
 
-    o   Deserializing raw objects saved using save(..., ascii=TRUE)
-        now works.
+
 
 
 	**************************************************
@@ -596,6 +595,9 @@ BUG FIXES
     o	The print() method for "ts" now handles quarterly and monthly
 	series which do not start at the beginning of a quarter or
 	month respectively.
+
+    o   Deserializing raw objects saved using save(..., ascii=TRUE)
+        now works correctly.
 
 
 
