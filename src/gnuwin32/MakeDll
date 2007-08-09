@@ -24,7 +24,7 @@ ifneq ($(strip $(FCSOURCES)),)
 else
 
 ifneq ($(strip $(CXXSOURCES)),)
-  DLL_LDMAIN=g++
+  DLL_LDMAIN=$(CXX)
 endif
 ifneq ($(strip $(FSOURCES)),)
   EXTRA_LIBS+=$(FLIBS)

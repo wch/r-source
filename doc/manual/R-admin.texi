@@ -3158,10 +3158,11 @@ Fedora Core 3 @emph{via}
 @example
 CC=icc
 F77=ifort
-CXX=icc
+CXX=icpc
 ICC_LIBS=/opt/compilers/intel/cc/9.0/lib
 IFC_LIBS=/opt/compilers/intel/fc/9.0/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
+SHLIB_CXXLD=icpc
 @end example
 
 @noindent
@@ -3171,14 +3172,17 @@ optimization.  For @cputype{x86_64} on Fedora Core 5 he used
 
 @example
 CC=icc
-CFLAGS="-g -O3 -wd188"
+CFLAGS="-g -O3 -wd188 -ip"
 F77=ifort
 FLAGS="-g -O3"
-CXX=icc
+CXX=icpc
+CXXFLAGS="-g -O3"
 FC=ifort
+FCFLAGS="-g -O3 -mp"
 ICC_LIBS=/opt/compilers/intel/cce/9.1.039/lib
 IFC_LIBS=/opt/compilers/intel/fce/9.1.033/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib64"
+SHLIB_CXXLD=icpc
 @end example
 
 @noindent
@@ -4137,27 +4141,35 @@ are using a Windows shell, type @code{PATH} at the prompt to find out.
 @node The MinGW compilers,  , The command line tools, The Windows toolset
 @section The MinGW compilers
 
+
+
 The @file{Rtools.exe} installer includes the currently used version of
 the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
 
+However, MinGW versions of @command{gcc} @code{4.2.1} for which MinGW
+compilers were released in August 2007.  For those compilers, set
+@code{BUILD=GCC4} in file @file{src/gnuwin32/MkRules}.  For earlier
+MinGW compilers set @code{BUILD=GCC3} (the default) in file
+@file{src/gnuwin32/MkRules}.
+
 If you would like to install your own copy, we recommed downloading from
-the URL above, as the download links from @url{www.mingw.org} currently
-lead to obsolete versions. See the notes on
+the URL above, as the download links from @url{www.mingw.org} have
+led to obsolete versions. See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
-There may be an installer in the `Current' section, which can be used
-if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
-using this, select the @samp{Candidate} package and add the @code{g++}
-and @code{g77} compilers to the @samp{MinGW base tools}: components will
-be downloaded from Sourceforge and unpacked.)
+@c There may be an installer in the `Current' section, which can be used
+@c if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
+@c using this, select the @samp{Candidate} package and add the @code{g++}
+@c and @code{g77} compilers to the @samp{MinGW base tools}: components will
+@c be downloaded from Sourceforge and unpacked.)
 
 An alternative is to download the components individually, currently
 
 @example
-mingw-runtime-3.12.tar.gz
-w32api-3.9.tar.gz
+mingw-runtime-3.13.tar.gz
+w32api-3.10.tar.gz
 binutils-2.17.50-20060824-1.tar.gz  
 gcc-core-3.4.5-20060117-1.tar.gz
 gcc-g++-3.4.5-20060117-1.tar.gz
@@ -4178,18 +4190,31 @@ others available at the time of writing) on Windows Vista
 (@url{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
 and that some updates are needed (see the URL above).
 
-During the lifetime of this release of @R{} it is likely that
-@command{gcc 4.2.0} and an official MinGW build will be released.
-Unofficial builds from the @code{gcc} trunk were working in April 2007,
-provided @code{mingw-runtime-3.12.tar.gz} was used (and
-@code{BUILD=GFORTRAN} is set in @file{MkRules}).  One such build is
-available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can
-be used when a Fortran 90 compiler is required.  (Another
-MinGW-compatible Fortran 90 compiler is available via
-@url{http://www.g95.org, @code{www.g95.org}}.  Note that these compilers
-are not completely compatible with @code{gcc3} so mixing them with the
-recommended tools is unsupported.)
+It is also possible to use @command{gcc} @code{4.2.1} by downloading the
+components 
 
+@example
+mingw-runtime-3.13.tar.gz
+w32api-3.10.tar.gz
+binutils-2.17.50-20060824-1.tar.gz  
+gcc-core-4.2.1-sjlj-1.tar.gz2
+gcc-g++-4.2.1-sjlj-1.tar.gz2
+gcc-g77-4.2.1-sjlj-1.tar.gz
+@end example
+
+@noindent
+(and @code{gcc-objc-4.2.1-sjlj-1.tar.gz} if you want Objective C
+support) and unpack these into the same directory (using @command{tar
+zxf tarball_name}).  (Note that currently you will need to copy
+@file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
+incompatibility between these components.)  Then set @code{BUILD=GCC4}
+in @file{MkRules}.
+
+Other builds of @command{gcc} 4 are available from
+@url{http://gcc.gnu.org/wiki/GFortranBinaries} and
+@uref{http://www.tdragon.net/recentgcc/}.  Any of these can be used to
+provide a Fortran 90 compiler if @code{gcc 3.4.5} is used for the main
+languages. 
 
 
 

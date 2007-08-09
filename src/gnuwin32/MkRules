@@ -3,8 +3,8 @@
 
 ## ===== configuration macros for building packages or R  ===============
 
-# Alternatives MINGW (MinGW gcc3), CROSS (e.g. Linux) GFORTRAN (MinGW gcc4)
-BUILD=MINGW
+# Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
+BUILD=GCC3
 
 ## These are overridden by R CMD INSTALL: they only apply to
 ## standard packages when building R and when using 'make pkg-foo'
@@ -70,7 +70,12 @@ WIXDIR=C:/packages/WiX
 
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  Spaces allowed.
-F95=c:/MinGW/bin/gfortran
+ifeq ($(strip $(BUILD)),GCC4)
+F95=gfortran$(GCC4_SUFF)
+else
+# needs to be set by user
+F95=
+endif
 F95FLAGS=-O3 $(PKG_FCFLAGS)
 
 ## =================== cross-compilation settings  =================
@@ -92,7 +97,7 @@ DEPARG=-MM
 MINGW32LDFLAG=
 C99FLAG=-std=gnu99
 
-ifeq ($(strip $(BUILD)),MINGW)
+ifeq ($(strip $(BUILD)),GCC3)
 BINPREF=
 MINGW32CFLAG=
 F77=g77
@@ -100,18 +105,22 @@ FLIBS=-lg2c
 AWK=gawk
 endif
 
-ifeq ($(strip $(BUILD)),GFORTRAN)
+ifeq ($(strip $(BUILD)),GCC4)
 BINPREF=
 MINGW32CFLAG=
-F77=gfortran
+F77=gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
 AWK=gawk
 ## for mingw-runtime <= 3.11
 # C99FLAG=-std=gnu99 -fgnu89-inline
+## alternative is -dw2, which currently fails building R, or empty
+## for unofficial builds including TDM's and GFortran from the Wiki
+GCC4_SUFF=-sjlj
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
 MINGW32CFLAG=-isystem $(HEADER)
+# or perhaps gfortran
 F77=$(BINPREF)g77
 FLIBS=-lg2c
 AWK=awk
@@ -137,16 +146,17 @@ ECHO=echo
 CP=cp
 MKDIR=mkdir
 CAT=cat
-CC=$(BINPREF)gcc $(MINGW32CFLAG)
-CXX=$(BINPREF)g++ $(MINGW32CFLAG)
-OBJC=$(BINPREF)gcc $(MINGW32CFLAG)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
+CXX=$(BINPREF)g++$(GCC4_SUFF) $(MINGW32CFLAG)
+OBJC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
 AS=$(BINPREF)as
-DLL_LDMAIN=gcc
-DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
+DLL_LDMAIN=$(CC)
+DLL=$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## formerly used version without -k for front-ends/libproxy.a
 DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
 DLLTOOL=$(DLLTOOL_WIN32) -k
-LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
+MAIN_LD=$(CC)
+LINKER=$(MAIN_LD) $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
 RANLIB=$(BINPREF)ranlib
 NM=$(BINPREF)nm
