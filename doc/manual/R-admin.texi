@@ -1106,11 +1106,13 @@ Linux.
 You will need suitable cross-compilers installed and in your path.
 There is currently a complete set of tools at
 @url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
-@code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just
-unpack this somewhere and put its @file{bin} directory in your path.)
-It is also straightforward to build a set of cross-compilers via the
-scripts available at
+@code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just unpack
+this into a directory somewhere and put its @file{bin} directory in your
+path.)  It is also straightforward to build a set of cross-compilers via
+the scripts available at
 @url{http://sourceforge.net/forum/forum.php?forum_id=632611}.
+Cross-compilers based on both @command{gcc 3} and @command{gcc 4} are
+supported: the flavour is selected by the macro @code{CROSS-GCC}.
 
 You will need Perl, @command{zip} and @command{unzip} installed and
 @command{makeinfo} version 4.7 or later (part of GNU @code{texinfo}).
@@ -1123,8 +1125,8 @@ Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, and
 cd /somewhere/R-@value{VERSIONno}/src/gnuwin32
 @end example
 
-Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
-paths (including @code{HEADER}) as needed.
+Edit @file{MkRules} to set @code{BUILD=CROSS}, @code{CROSS-GCC} as
+appropriate and the appropriate paths (including @code{HEADER}).
 
 Edit @file{MkRules} to set the type(s) of help that you want built. (You
 will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
@@ -4402,7 +4404,7 @@ the MinGW port of @command{gcc} from
 
 If you would like to install your own copy, we recommed downloading from
 the URL above, as the download links from @url{www.mingw.org} have
-lead to obsolete versions. See the notes on
+led to obsolete versions. See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
@@ -4426,28 +4428,26 @@ gcc-g77-4.2.1-sjlj-1.tar.gz
 @noindent
 (and @code{gcc-objc-4.2.1-sjlj-1.tar.gz} if you want Objective C
 support) and unpack these into the same directory (using @command{tar
-zxf tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later
-is required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
-contributed packages, and @code{gcc-3.4.5} or later is needed to get a
-correct build of @R{} itself.  (The `Snapshot'
-@code{binutils-2.17.50-20070129-1.tar.gz} has also be tested.)
+zxf tarball_name}).  Note that currently you will need to copy
+@file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
+incompatibility between these components.  This compiler should work
+unchanged on Windows Vista.
 
-Note that currently you will need to copy @file{bin/gcc-sjlj.exe} to
-@file{bin/gcc.exe} to work around an incompatibility between these
-components.
+Note that @code{mingw-runtime-3.11.tar.gz} or later is required to build
+@R{}, @code{gcc-g77-3.4.4} or later to build some contributed packages,
+and @code{gcc-3.4.5} or later is needed to get a correct build of @R{}
+itself.  (The `Snapshot' @code{binutils-2.17.50-20070129-1.tar.gz} has
+also be tested.)
 
 Note that there are known problems with using other compiler sets on
 Windows Vista
 (@url{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
-and that a suitable path needs to be set.
+and that a suitable @code{PATH} needs to be set to include the path to
+@file{cc1}.
 
 Other builds of @command{gcc} 4 are available from
 @url{http://gcc.gnu.org/wiki/GFortranBinaries} and
 @uref{http://www.tdragon.net/recentgcc/}.
-
-Note that these compilers are not completely compatible with @code{gcc3}
-so mixing them with the previously recommended tools is unsupported.
-
 
 @node Function and variable index, Concept index, The Windows toolset, Top
 @unnumbered Function and variable index
