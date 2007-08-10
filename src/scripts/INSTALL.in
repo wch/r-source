@@ -211,7 +211,6 @@ configure_args=
 configure_vars=
 with_package_versions=false
 save=false
-save_args=
 fake=false
 lazy="auto"
 lazy_data=false
@@ -844,7 +843,7 @@ do_install_source () {
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages()"; \
       ${code_cmd}) | \
-        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" ${R_save_args} ${save_args}
+        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" ${R_save_args}
     if test ${?} -ne 0; then
       error "execution of package source for '${pkg_name}' failed"
       do_exit_on_error
