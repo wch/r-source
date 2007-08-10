@@ -2580,7 +2580,7 @@ static int mbrtoint(int *w, const char *s)
             return 5;
         } else return -1;
     }
-    return -2; /* not reached */
+    /* return -2; not reached */
 }
 
 SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
