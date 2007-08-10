@@ -1104,11 +1104,13 @@ Linux.
 You will need suitable cross-compilers installed and in your path.
 There is currently a complete set of tools at
 @url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
-@code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just
-unpack this somewhere and put its @file{bin} directory in your path.)
-It is also straightforward to build a set of cross-compilers via the
-scripts available at
+@code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just unpack
+this into a directory somewhere and put its @file{bin} directory in your
+path.)  It is also straightforward to build a set of cross-compilers via
+the scripts available at
 @url{http://sourceforge.net/forum/forum.php?forum_id=632611}.
+Cross-compilers based on both @command{gcc 3} and @command{gcc 4} are
+supported: the flavour is selected by the macro @code{CROSS-GCC}.
 
 You will need Perl, @command{zip} and @command{unzip} installed and
 @command{makeinfo} version 4.7 or later (part of GNU @code{texinfo}).
@@ -1121,8 +1123,8 @@ Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, and
 cd /somewhere/R-@value{VERSIONno}/src/gnuwin32
 @end example
 
-Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
-paths (including @code{HEADER}) as needed.
+Edit @file{MkRules} to set @code{BUILD=CROSS}, @code{CROSS-GCC} as
+appropriate and the appropriate paths (including @code{HEADER}).
 
 Edit @file{MkRules} to set the type(s) of help that you want built. (You
 will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
@@ -4138,20 +4140,18 @@ frustration, please use our tool set, and make sure it is at the front
 of your path (including before the Windows system directories).  If you
 are using a Windows shell, type @code{PATH} at the prompt to find out.
 
+
 @node The MinGW compilers,  , The command line tools, The Windows toolset
 @section The MinGW compilers
-
-
 
 The @file{Rtools.exe} installer includes the currently used version of
 the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
 
-However, MinGW versions of @command{gcc} @code{4.2.1} for which MinGW
-compilers were released in August 2007.  For those compilers, set
-@code{BUILD=GCC4} in file @file{src/gnuwin32/MkRules}.  For earlier
-MinGW compilers set @code{BUILD=GCC3} (the default) in file
-@file{src/gnuwin32/MkRules}.
+However, MinGW versions of the @command{gcc} @code{4.2.1} compilers were
+released in August 2007.  For those compilers, set @code{BUILD=GCC4} in
+file @file{src/gnuwin32/MkRules}.  For earlier MinGW compilers set
+@code{BUILD=GCC3} (the default) in file @file{src/gnuwin32/MkRules}.
 
 If you would like to install your own copy, we recommed downloading from
 the URL above, as the download links from @url{www.mingw.org} have
@@ -4185,8 +4185,8 @@ contributed packages, and @code{gcc-3.4.5} is needed to get a correct
 build of @R{} itself.  (The `Snapshot'
 @code{binutils-2.17.50-20070129-1.tar.gz} has also be used.)
 
-Note that there are known problems with using this compiler set (and all
-others available at the time of writing) on Windows Vista
+Note that there are known problems with using this compiler set (and many
+others at the time of writing) on Windows Vista
 (@url{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
 and that some updates are needed (see the URL above).
 
@@ -4208,14 +4208,14 @@ support) and unpack these into the same directory (using @command{tar
 zxf tarball_name}).  (Note that currently you will need to copy
 @file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
 incompatibility between these components.)  Then set @code{BUILD=GCC4}
-in @file{MkRules}.
+in @file{MkRules}.  This toolset should work on Windows Vista with just
+its @file{bin} directory in the path.
 
 Other builds of @command{gcc} 4 are available from
 @url{http://gcc.gnu.org/wiki/GFortranBinaries} and
 @uref{http://www.tdragon.net/recentgcc/}.  Any of these can be used to
 provide a Fortran 90 compiler if @code{gcc 3.4.5} is used for the main
 languages. 
-
 
 
 @node Function and variable index, Concept index, The Windows toolset, Top

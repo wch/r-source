@@ -5,6 +5,8 @@
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
 BUILD=GCC3
+## if cross-building, is this gcc3 or gcc4?
+CROSS-GCC=gcc3
 
 ## These are overridden by R CMD INSTALL: they only apply to
 ## standard packages when building R and when using 'make pkg-foo'
@@ -120,9 +122,13 @@ endif
 
 ifeq ($(strip $(BUILD)),CROSS)
 MINGW32CFLAG=-isystem $(HEADER)
-# or perhaps gfortran
+ifeq ($(strip $(CROSS-GCC)),gcc4)
+F77=$(BINPREF)gfortran
+FLIBS=-lgfortran
+else
 F77=$(BINPREF)g77
 FLIBS=-lg2c
+endif
 AWK=awk
 endif
 
