@@ -4430,8 +4430,9 @@ gcc-g77-4.2.1-sjlj-1.tar.gz
 support) and unpack these into the same directory (using @command{tar
 zxf tarball_name}).  Note that currently you will need to copy
 @file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
-incompatibility between these components.  This compiler should work
-unchanged on Windows Vista.
+incompatibility between these components.  (Also, a few badly-written
+packages need @file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)
+This compiler should work on Windows Vista without any workarounds.
 
 Note that @code{mingw-runtime-3.11.tar.gz} or later is required to build
 @R{}, @code{gcc-g77-3.4.4} or later to build some contributed packages,
