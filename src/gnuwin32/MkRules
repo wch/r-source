@@ -166,8 +166,10 @@ CXX=$(BINPREF)g++$(GCC4_SUFF) $(MINGW32CFLAG)
 DLL_LDMAIN=$(CC)
 DLL=$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## formerly used version without -k for front-ends/libproxy.a
-DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
-DLLTOOL=$(DLLTOOL_WIN32) -k
+DLLTOOL=$(BINPREF)dlltool
+## some versions have trouble with paths, so we always need this
+## even for native builds
+DLLTOOLFLAGS=--as $(AS) -k
 ECHO=echo
 FIND=find
 MAIN_LD=$(CC)
@@ -231,11 +233,8 @@ SED=sed
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 
-#lib%.a: %.def
-#	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
-
 lib%.dll.a: %.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --input-def $*.def --output-lib $@
 
 %.a:
 #	@$(ECHO) -------- Building $@ from $^ --------
