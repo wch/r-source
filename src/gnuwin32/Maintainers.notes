@@ -11,7 +11,7 @@ sources).  For MinGW 4.2.1 you will need to set
 F77=gfortran-sjlj
 CXX=g++-sjlj
 
-in the environment (or copy the executables to gfortran and g++).
+in the environment (or copy the executables to gfortran.exe and g++.exe).
 
 sh /R/R-2.6.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no --without-iconv
 
