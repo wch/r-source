@@ -93,6 +93,7 @@ postscript("shared2-%02d.eps", onefile=FALSE, paper="special",
 <<axes2>>
 <<axes3>>
 <<axesedit>>
+dev.off()
 
 pdf("shared2-%02d.pdf", onefile=FALSE,
   width=4, height=2)
@@ -100,6 +101,7 @@ pdf("shared2-%02d.pdf", onefile=FALSE,
 <<axes2>>
 <<axes3>>
 <<axesedit>>
+dev.off()
 
 @
 \begin{center}
