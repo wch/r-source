@@ -277,6 +277,8 @@ NEW FEATURES
     o   Loading serialized raw objects with load() is now considerably
         faster.
 
+    o   New function Sys.which(), an interface to 'which' on Unix-alikes.
+
 
 METHODS PACKAGE
 

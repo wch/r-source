@@ -35,3 +35,13 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
     if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern))
 }
+
+Sys.which <- function(names)
+{
+    res <- character(length(names)); names(res) <- names
+    for(i in names) {
+        ans <- system(paste("which", i), intern=TRUE, ignore.stderr=TRUE)
+        res[i] <- if(length(ans)) ans[1] else ""
+    }
+    res
+}
