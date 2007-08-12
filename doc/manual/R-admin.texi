@@ -421,10 +421,10 @@ make pdf      @r{to create PDF versions}
 make info     @r{to create info files (not @samp{refman}).}
 @end example
 
-You will not be able to build the info files unless you have
-@command{makeinfo} version 4.7 or later installed, and you have
-@file{texinfo.tex} installed (which is part of the GNU @samp{texinfo}
-distribution but is often made part of the TeX package in
+You will not be able to build any of these unless you have
+@command{makeinfo} version 4.7 or later installed, and for DVI or PDF
+you must have @file{texinfo.tex} installed (which is part of the GNU
+@samp{texinfo} distribution but is often made part of the TeX package in
 re-distributions).
 
 The DVI versions can be previewed and printed using standard programs
@@ -1117,9 +1117,9 @@ the scripts available at
 Cross-compilers based on both @command{gcc 3} and @command{gcc 4} are
 supported: the flavour is selected by the macro @code{CROSS-GCC}.
 
-You will need Perl, @command{zip} and @command{unzip} installed and
-@command{makeinfo} version 4.7 or later (part of GNU @code{texinfo}),
-as well as @file{texinfo.tex}.
+You will need Perl, @command{zip} and @command{unzip} installed and (to
+make the manuals) @command{makeinfo} version 4.7 or later (part of GNU
+@code{texinfo}) as well as @file{texinfo.tex}.
 
 You also need the R source (@file{R-@value{VERSIONno}.tar.gz}).
 
@@ -2265,14 +2265,14 @@ of the on-line documentation.
 You will not be able to build the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
-known to create incorrect @HTML{} files.)  You will also need
-@file{texinfo.tex} installed (which is part of the GNU @samp{texinfo}
-distribution but is often made part of the TeX package in
-re-distributions).
+known to create incorrect @HTML{} files.)  To make DVI or PDF versions
+of the manuals you will also need @file{texinfo.tex} installed (which is
+part of the GNU @samp{texinfo} distribution but is often made part of
+the TeX package in re-distributions).
 
 
 @cindex Vignettes
-The typeset documentation and building vignettes needs @command{tex}
+The DVI and PDF documentation and building vignettes needs @command{tex}
 and @command{latex}, or @command{pdftex} and @command{pdflatex}.
 
 If you want to build from the R Subversion repository you need Perl,

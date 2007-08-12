@@ -1870,13 +1870,17 @@ x[3:5] <- 13:15
 The result of this commands is as if the following had been executed
 @example
 `*tmp*` <- x
-x <- "[<-"(`*tmp*`,3:5, value=13:15)
+x <- "[<-"(`*tmp*`, 3:5, value=13:15)
 @end example
 
-The same mechanism can be applied to other functions than @code{[}.  The
-assignment function has the same name with @code{<-} pasted on. Its last
+Note that the index is first converted to a numeric index and then the
+elements are replaced sequentially along the numeric index, as if a
+@code{for} loop had been used.
+
+The same mechanism can be applied to functions other than @code{[}.  The
+replacement function has the same name with @code{<-} pasted on.  Its last
 argument, which must be called @code{value}, is the new value to be
-assigned.
+assigned.  For example,
 @example
 names(x) <- c("a","b")
 @end example
