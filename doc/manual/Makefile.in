@@ -208,7 +208,6 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	@touch stamp-fullrefman-dvi
 stamp-fullrefman-dvi: $(fullrefman_TEXINPUTS)
 
-$(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)
 R-data.dvi: $(texiincludes)
 R-exts.dvi: $(texiincludes)
@@ -324,7 +323,6 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	@touch stamp-fullrefman-pdf
 stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)
 
-$(OBJECTS_PDF): $(srcdir)/texinfo.tex $(srcdir)/pdfcolor.tex
 R-admin.pdf: $(texiincludes)
 R-data.pdf: $(texiincludes)
 R-exts.pdf: $(texiincludes)
