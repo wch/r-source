@@ -306,12 +306,12 @@ foreach my $pkg (@ARGV) {
     $log->message("checking for LF line-endings in source and make files");
     if($is_bundle) {
 	foreach my $ppkg (@bundlepkgs) {
-	    &fix_CRLF_in_source_files(&file_path($pkgname, $ppkg), $log);
-	    &fix_CRLF_in_make_files(&file_path($pkgname, $ppkg), $log);
+	    &fix_nonLF_in_source_files(&file_path($pkgname, $ppkg), $log);
+	    &fix_nonLF_in_make_files(&file_path($pkgname, $ppkg), $log);
 	}
     } else {
-	&fix_CRLF_in_source_files($pkgname, $log);
-	&fix_CRLF_in_make_files($pkgname, $log);
+	&fix_nonLF_in_source_files($pkgname, $log);
+	&fix_nonLF_in_make_files($pkgname, $log);
     }
 
     sub empty_dir_check {
@@ -638,14 +638,14 @@ sub update_Rd_index {
     1;
 }
 
-sub fix_CRLF_in_source_files {
+sub fix_nonLF_in_source_files {
     my ($pkgname, $log) = @_;
 
     if(-d "$pkgname/src") {
 	my @src_files = &list_files_with_type("$pkgname/src",
 					      "src_no_CRLF");
 	foreach my $file (@src_files) {
-	    my $has_CRLF = 0;
+	    my $has_nonLF = 0;
 	    open(FILE, "< $file")
 		or die "Error: cannot open '$file' for reading\n";
 	    open(TFILE, "> $file.tmp")
@@ -653,13 +653,15 @@ sub fix_CRLF_in_source_files {
             binmode(FILE); binmode(TFILE);	# for Windows
 	    while(<FILE>) {
 		chop;
-		$has_CRLF = 1 if $_ =~ /\r$/;
+		$has_nonLF = 1 if $_ =~ /\r/;
 		$_ =~ s/\r$//;
+		# any remaining CRs are internal and so line endings.
+		$_ =~ s/\r/\n/g;
 		print TFILE "$_\n";
 	    }
 	    close(TFILE); close(FILE);
-	    if ($has_CRLF) {
-		$log->print("    file '$file' had CRLF line endings\n");
+	    if ($has_nonLF) {
+		$log->print("    file '$file' had non-LF line endings\n");
 		unlink($file); # should not be necessary, but is on Windows
 		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
@@ -671,7 +673,7 @@ sub fix_CRLF_in_source_files {
 }
 
 
-sub fix_CRLF_in_make_files {
+sub fix_nonLF_in_make_files {
     my ($pkgname, $log) = @_;
 
     if(-d "$pkgname/src") {
@@ -679,7 +681,7 @@ sub fix_CRLF_in_make_files {
 	foreach my $f ("Makefile", "Makefile.in", "Makevars", "Makevars.in")  {
 	    $file = "$pkgname/src/$f";
 	    next unless -f "$file";
-	    my $has_CRLF = 0;
+	    my $has_nonLF = 0;
 	    open(FILE, "< $file")
 		or die "Error: cannot open '$file' for reading\n";
 	    open(TFILE, "> $file.tmp")
@@ -687,13 +689,15 @@ sub fix_CRLF_in_make_files {
             binmode(FILE); binmode(TFILE);	# for Windows
 	    while(<FILE>) {
 		chop;
-		$has_CRLF = 1 if $_ =~ /\r$/;
+		$has_nonLF = 1 if $_ =~ /\r/;
 		$_ =~ s/\r$//;
+		# any remaining CRs are internal and so line endings.
+		$_ =~ s/\r/\n/g;
 		print TFILE "$_\n";
 	    }
 	    close(TFILE); close(FILE);
-	    if ($has_CRLF) {
-		$log->print("    file '$file' had CRLF line endings\n");
+	    if ($has_nonLF) {
+		$log->print("    file '$file' had non-LF line endings\n");
 		unlink("$file"); # should not be necessary, but is on Windows
 		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
