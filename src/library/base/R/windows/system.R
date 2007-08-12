@@ -74,7 +74,4 @@ Sys.timezone <- function()
     if(length(zz) == 3) zz[2 + z$isdst] else zz[1]
 }
 
-Sys.which <- function(names)
-{
-    stop("Not yet implemented")
-}
+Sys.which <- function(names) .Internal(Sys.which(as.character(names)))

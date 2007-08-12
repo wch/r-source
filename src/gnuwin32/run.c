@@ -563,3 +563,25 @@ Rconnection newWpipe(const char *description, const char *mode)
     }
     return new;
 }
+
+
+SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP nm, ans;
+    int i, n;
+
+    checkArity(op, args);
+    nm = CAR(args);
+    if(!isString(nm))
+	error(_("'names' is not a character string"));
+    n = LENGTH(nm);
+    PROTECT(ans = allocVector(STRSXP, n));
+    for(i = 0; i < n; i++) {
+	const char *this = CHAR(STRING_ELT(nm, i)), *that;
+	that = expandcmd(this);
+	SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
+    }
+    setAttrib(ans, R_NamesSymbol, nm);
+    UNPROTECT(1);
+    return ans;
+}

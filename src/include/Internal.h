@@ -65,6 +65,7 @@ SEXP do_setTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setStatusBar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shortpath(SEXP, SEXP, SEXP, SEXP);
+SEXP do_syswhich(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);

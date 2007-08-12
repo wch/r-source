@@ -562,7 +562,7 @@ function(dir, outDir, keep.source = FALSE)
     setwd(buildDir)
 
     ## Argh.  We need to ensure that vignetteDir is in TEXINPUTS and
-    ## BIBINPUTS.
+    ## BIBINPUTS.  Note that this does not work with MiKTeX.
     envSep <- if(.Platform$OS.type == "windows") ";" else ":"
     ## (Yes, it would be nice to have envPath() similar to file.path().)
     texinputs <- Sys.getenv("TEXINPUTS")
