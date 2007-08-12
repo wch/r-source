@@ -20,8 +20,8 @@ ps.options(pointsize=12)
 options(width=60)
 
 @
-This is a general discussion concerning how you might go about 
-creating (and reusing) persistent representations of \grid{} 
+This is a general discussion concerning how you might go about
+creating (and reusing) persistent representations of \grid{}
 graphics, and some of the pitfalls in the various options.
 
 \subsection*{\R{} code}
@@ -59,14 +59,14 @@ grid.draw(gt)
 
 @
 And the representation is editable;  there is an API for interacting
-with \grid{} {\tt grobs}, including adding new elements, removing 
-elements, editing features of a {\tt grob} and so on.  See 
+with \grid{} {\tt grobs}, including adding new elements, removing
+elements, editing features of a {\tt grob} and so on.  See
 {\tt getGrob()}, {\tt addGrob()}, {\tt removeGrob()},
 and {\tt editGrob()}.
 
-The representation is persistent across \R{} sessions, but is 
+The representation is persistent across \R{} sessions, but is
 vulnerable to changes in the internal representation of \grid{}
-{\tt grob}s.  The advantage of this representation is that it is 
+{\tt grob}s.  The advantage of this representation is that it is
 possible to share and edit graphics produced by someone else,
 without seeing the code they used to produce it.
 
@@ -87,7 +87,7 @@ but it cannot be reloaded into \R{}.
 This final option is \emph{not} recommended, but it is possible to do
 so its downsides need to be explained.
 
-What you can do is 
+What you can do is
 ``save'' an \R{} display list using, for example, ...
 
 <<>>=
@@ -98,7 +98,7 @@ save(temp, file="mygridplot")
 @
 This representation is not editable\footnote{Well, there's nothing stopping
 you editing it, but you should take out life insurance first.}, but it can be
-reloaded 
+reloaded
 and rerun to reproduce the output ...
 
 <<>>=
@@ -107,11 +107,11 @@ temp
 
 @
 The representation is persistent across \R{} sessions,
-but the saved information involves non-public interfaces and structures 
+but the saved information involves non-public interfaces and structures
 which may change between \R{} versions.  You also
 have
 to make sure that \grid{} has been reloaded.  Differences between
-\grid{} and/or \R{} 
+\grid{} and/or \R{}
 versions may lead to segmentation faults.
 
 % Start a new page

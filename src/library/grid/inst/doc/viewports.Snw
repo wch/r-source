@@ -30,14 +30,14 @@ to all of the regions created during plotting.
 
 \section*{The viewport tree}
 
-\grid{} maintains a 
+\grid{} maintains a
 tree of pushed viewports on each device.
-When the \verb|upViewport()| 
+When the \verb|upViewport()|
 function is called it works like \verb|popViewport()| except that
 it does not remove viewports from the viewport tree.
 For example, the following code pushes a viewport, then navigates
 back up to the top level viewport and pushes another viewport,
-without removing the first viewport.  
+without removing the first viewport.
 
 <<>>=
 pushViewport(viewport())
@@ -45,17 +45,17 @@ upViewport()
 pushViewport(viewport())
 
 @
-There are now two viewports pushed directly beneath the top-level 
+There are now two viewports pushed directly beneath the top-level
 viewport.  This immediately creates an ambiguity;  if I navigate
-back up to the top-level and attempt to revisit one of the 
+back up to the top-level and attempt to revisit one of the
 viewports, how can I specify which one I want?  The answer is that
 viewports have a \verb|name| argument\footnote{The print method
 for viewports shows the viewport name within square brackets.  Try
 typing {\tt current.viewport()}.}.  This name, combined with
 the \verb|downViewport()| function, makes it possible to
-navigate back down to viewports in the viewport tree.  Consider the 
-following example, which pushes two viewports called \verb|"A"| and 
-\verb|"B"|, then navigates to viewport \verb|"A"| from the 
+navigate back down to viewports in the viewport tree.  Consider the
+following example, which pushes two viewports called \verb|"A"| and
+\verb|"B"|, then navigates to viewport \verb|"A"| from the
 top level.
 
 <<echo=FALSE, results=hide>>=
@@ -72,7 +72,7 @@ downViewport("A")
 The \verb|downViewport()| function searches down the tree from the
 current position in the tree.  The \verb|seekViewport()|
 function is similar, but it always starts searching from the top-level
-viewport.  In the previous example we ended up in viewport 
+viewport.  In the previous example we ended up in viewport
 \verb|"A"|;  the following command navigates from \verb|"A"| to \verb|"B"|
 in a single step.
 
@@ -90,16 +90,16 @@ current.vpTree()
 \section*{Viewport stacks, lists, and trees}
 
 It is possible to create multiple viewport descriptions
-\emph{and their relationships}.  The functions 
+\emph{and their relationships}.  The functions
 \verb|vpStack()|, \verb|vpList()|, and
 \verb|vpTree()| can be used to create a stack, a list, or a tree
 of viewport descriptions, respectively.  It is then possible to
 push these multiple descriptions at once;  viewports in a stack
 are pushed in series, viewports in  a list are pushed in parallel,
 and for a tree of viewports, the parent is pushed then the children
-are pushed in parallel.  The following simple 
+are pushed in parallel.  The following simple
 example demonstrates one usage of this feature;  a \grid{} rectangle
-is drawn \emph{two} viewports below the current level by 
+is drawn \emph{two} viewports below the current level by
 specifying a stack of viewports in its \verb|vp| argument.
 
 
@@ -123,12 +123,12 @@ style plot, each panel could have a viewport called \verb|"strip"|
 to represent the strip region.
 
 This design creates a further ambiguity because there may be
-more than one viewport with the same name within the viewport 
-tree\footnote{{\tt downViewport()} and {\tt seekViewport()} will stop at the 
+more than one viewport with the same name within the viewport
+tree\footnote{{\tt downViewport()} and {\tt seekViewport()} will stop at the
 first match they find (the search is currently depth-first).}.
 This ambiguity can be resolved by using the \verb|vpPath()|
 function to generate a specification of a stack of viewports
-that must be matched by name.  This path can be passed to 
+that must be matched by name.  This path can be passed to
 either \verb|downViewport()| or \verb|seekViewport()| as in the
 following example;  notice that we are calling
 \verb|current.vpTree(FALSE)| in order to see the current viewport
@@ -151,7 +151,7 @@ seekViewport("A")
 current.vpTree(FALSE)
 
 @
-By specifying a \verb|vpPath|, we can get the \verb|"A"| directly 
+By specifying a \verb|vpPath|, we can get the \verb|"A"| directly
 below viewport \verb|"B"|.
 
 <<>>=
@@ -168,7 +168,7 @@ vpPath("A", "B")
 @
 For
 interactive use, it is possible to specify the path as a simple
-string, but this is not recommended otherwise in case 
+string, but this is not recommended otherwise in case
 the path separator changes in future versions of \grid{}.
 As an example, the following two commands are currently
 equivalent.
@@ -200,8 +200,8 @@ yscale <- extendrange(y)
 @
 We now produce a set of viewports that will be useful in creating the
 plot.  The first viewport contains a layout to divide the drawing region
-into several rows and columns.  The left and right columns and top and 
-bottom rows provide room for axes and labels, while the central cell provides 
+into several rows and columns.  The left and right columns and top and
+bottom rows provide room for axes and labels, while the central cell provides
 a region for plotting the data.  The diagram below the code shows
 the layout that we create.
 
@@ -233,9 +233,9 @@ plot <- viewport(layout.pos.col=2, layout.pos.row=2,
 
 @
 Notice that we have not pushed any of these viewports yet so no regions
-exist on the output device.  We first of all arrange the viewports into 
+exist on the output device.  We first of all arrange the viewports into
 a tree structure, with  the {\tt top.vp} as the parent node and
-all of the other viewports as its children.  
+all of the other viewports as its children.
 
 <<>>=
 splot <- vpTree(top.vp, vpList(margin1, margin2, margin3, margin4, plot))
@@ -250,7 +250,7 @@ The result of this push is that we are left in the {\tt plot} viewport.
 pushViewport(splot)
 
 @
-Now we can navigate to whichever viewport we require and draw the 
+Now we can navigate to whichever viewport we require and draw the
 different elements of the plot\footnote{The named viewports that we created
 are drawn as grey rectangles as a guide.}.
 
@@ -303,7 +303,7 @@ pushViewport(viewport(w=0.9, h=0.9))
 <<margin1>>
 <<margin2>>
 
-@ 
+@
 
 As a final step, we navigate back to the top-level viewport
 (i.e., back to the viewport we started in)\footnote{Here we have
@@ -321,7 +321,7 @@ upViewport(depth)}.}.
 upViewport(0)
 
 @
-So far this example has just shown 
+So far this example has just shown
 an alternative way of constructing this sort of plot.  The output we have
 generated so far could have been done using \verb|pushViewport()|
 and \verb|popViewport()|.  The difference is that we still have

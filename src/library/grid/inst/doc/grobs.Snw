@@ -26,15 +26,15 @@ options(width=60)
 
 @
 There is a distinction between \grob{}s which are just stored
-in user-level \R{} objects and \grob{}s which represent 
+in user-level \R{} objects and \grob{}s which represent
 drawn output (i.e., \grob{}s on the \grid{} display list).
 There is a naming convention that {\tt grid.*()}  functions are
 (mainly) used for their side-effect of producing output or
 modifying existing output (they create/affect \grob{}s on the display list).
-Functions of the form {\tt *Grob()} are used for their return value; 
+Functions of the form {\tt *Grob()} are used for their return value;
 the \grob{} that they create/modify.
-For example, the following creates a \grob{} and then modifies it, but 
-performs absolutely no drawing;  this is purely manipulating a 
+For example, the following creates a \grob{} and then modifies it, but
+performs absolutely no drawing;  this is purely manipulating a
 description of a graphical object.
 
 <<>>=
@@ -45,7 +45,7 @@ gl <- editGrob(gl, gp=gpar(col="green"))
 The next example produces output.  A \grob{} is returned,
 but that \grob{} is just a description of the output that was drawn
 and has no direct link to the output.  It is possible to access the
-grob representing the output by 
+grob representing the output by
 using the \grob{}'s {\tt name}.  In order to access a \grob{}
 which represents drawn output (i.e., a \grob{} on the display list),
 you must specify a \gPath{}.  The \gPath{} should be created using the
@@ -63,16 +63,16 @@ grid.edit("lines", gp=gpar(col="red"))
 Complex graphical objects are provided by the \gTree{} class.
 A \gTree{} is a \grob{} which may have other \grob{}s as children.
 The {\tt xaxis} and {\tt yaxis} \grob{}s provided by \grid{} are
-examples of \gTree{}s;  the children of an axis include 
+examples of \gTree{}s;  the children of an axis include
 a lines \grob{} for the tick-marks
-and a text \grob{} for the tick-mark labels.  
+and a text \grob{} for the tick-mark labels.
 The function {\tt childNames()} can be used to list the
 names of the children of a \gTree{}.
 When dealing with these hierarchical
 objects, more complex \gPath{}s can be used to access children
 of a \gTree{}.  In the following example, an x-axis is drawn, then
 the xaxis itself is edited to modify the locations of the tick-marks, then
-the xaxis's text child is edited to modify 
+the xaxis's text child is edited to modify
 the location of the labels on the tick-marks.
 
 <<results=hide>>=
@@ -89,9 +89,9 @@ the child of a child of a \gTree{}.  It also shows the use of
 the \gTree{} function to construct a simple \gTree{}
 (this is just creating an instance of the \gTree{} class -- it is
 also possible to extend the \gTree{} class in order to provide
-specialised behaviour for drawing and other things;  more on this 
+specialised behaviour for drawing and other things;  more on this
 later).  Finally, the example demonstrates how \gPath{}s of depth
-greater than 1 can 
+greater than 1 can
 be specified directly as a string.
 
 <<results=hide>>=
@@ -109,7 +109,7 @@ grid.edit("myplot::xaxis::labels", y=unit(-1, "lines"))
 @
 {\tt "grobwidth"} units require a \grob{} to give the width of.
 There are two ways to specify the \grob{}.
-The following example shows the most obvious method of 
+The following example shows the most obvious method of
 simply supplying a \grob{}.  Notice that if you modify
 {\tt gt} it will have no effect on the width of the drawn rectangle.
 
@@ -124,7 +124,7 @@ in the \grob{},
 it is possible to specify a \gPath{} rather than a \grob{}
 as the data for a {\tt "grobwidth"} unit.  The following example
 modifies the previous example to use a \gPath{}.  Now, the width
-of the rectangle changes when the width of the underlying \grob{} 
+of the rectangle changes when the width of the underlying \grob{}
 changes.
 
 <<results=hide>>=
@@ -150,10 +150,10 @@ pushing and popping of viewports should occur in the {\tt pre} and
 \grob{} width to call the {\tt preDrawDetails()} in order to establish
 the context in which the \grob{} would be drawn before calculating its
 width.  The following example shows a test case;  a \grob{} is created
-(extending to a new class to allow specific methods to be written), 
+(extending to a new class to allow specific methods to be written),
 and methods are provided which establish a particular context
 for drawing the \grob{}.  These methods are used both in the drawing
-of the \grob{} and in the calculation of the \grob{}'s width (when 
+of the \grob{} and in the calculation of the \grob{}'s width (when
 drawing a bounding rectangle).
 
 <<results=hide>>=
@@ -176,10 +176,10 @@ grid.rect(width=unit(1, "grobwidth", mygrob))
 
 @
 This next example shows a slightly different test case where the
-standard {\tt preDrawDetails()} and {\tt postDrawDetails()} methods 
+standard {\tt preDrawDetails()} and {\tt postDrawDetails()} methods
 are used, but the \grob{} does have a {\tt vp} slot so these
 methods do something.  Another interesting feature of this example
-is the slightly more complex \gTree{} that is created.  The 
+is the slightly more complex \gTree{} that is created.  The
 \gTree{} has a {\tt childrenvp} specified.  When the \gTree{} is drawn,
 this viewport
 is pushed and then ``up''ed before the children of the \gTree{} are drawn.
@@ -207,7 +207,7 @@ grid.rect(width=unit(1, "grobwidth", mygtree))
 @
 Constructing a description of a {\tt frame} \grob{} must be
 done via {\tt packGrob()} and {\tt placeGrob()}.  The following example
-shows the construction of a simple frame consisting of two 
+shows the construction of a simple frame consisting of two
 equal-size columns.
 
 <<results=hide>>=
@@ -239,15 +239,15 @@ drawIt(1, 2)
 fg <- packGrob(fg, rectGrob(), side="right", width=unit(1, "null"))
 drawIt(2, 2)
 
-@ 
+@
 In order to allow frames to update when the objects packed within them
 are modified, there is a {\tt dynamic} argument to
-{\tt packGrob()} (and {\tt grid.pack()}).  The following 
+{\tt packGrob()} (and {\tt grid.pack()}).  The following
 extends the previous example to show how this might be used.
 Another feature of this example is the demonstration of
 ``non-strict'' searching that occurs in the {\tt grid.edit()}
 call;  the \grob{} called {\tt "midtext"} is not at the top-level,
-but is still found.  Something like 
+but is still found.  Something like
 {\tt grid.get("midtext", strict=TRUE)} would fail.
 
 <<results=hide>>=
@@ -255,7 +255,7 @@ grid.newpage()
 fg <- frameGrob()
 fg <- packGrob(fg, textGrob("Hi there"))
 fg <- placeGrob(fg, rectGrob())
-fg <- packGrob(fg, textGrob("Hello again", name="midtext"), 
+fg <- packGrob(fg, textGrob("Hello again", name="midtext"),
                side="right", dynamic=TRUE)
 fg <- packGrob(fg, rectGrob(), side="right", width=unit(1, "null"))
 grid.draw(fg)
@@ -266,15 +266,15 @@ There have been a few examples already which have involved creating a \gTree{}.
 This next example explicitly demonstrates this technique.  A \gTree{}
 is created with two important components.  The {\tt childrenvp} is
 a {\tt vpTree} consisting of a {\tt "plotRegion"} viewport to provide
-margins around a plot and a {\tt "dataRegion"} viewport to provide 
-x- and y-scales.  The {\tt "dataRegion"} gets pushed within the 
+margins around a plot and a {\tt "dataRegion"} viewport to provide
+x- and y-scales.  The {\tt "dataRegion"} gets pushed within the
 {\tt "plotRegion"} and both are pushed and then ``up''ed before the
 children are drawn.  The {\tt children} of the \gTree{} are
 an {\tt xaxis} and a {\tt yaxis} both drawn within the {\tt "dataRegion"},
 and a {\tt rect} drawn around the border of the {\tt "plotRegion"}.
 A further feature of this example is the use of the {\tt addGrob()}
-and {\tt removeGrob()} functions to modify the \gTree{}.  The first 
-modification involves adding a new child to the \gTree{} which is a 
+and {\tt removeGrob()} functions to modify the \gTree{}.  The first
+modification involves adding a new child to the \gTree{} which is a
 set of points drawn within the {\tt "dataRegion"}.  The second
 modification involves adding another set of points with a different
 symbol (NOTE that this second set of points is given a name so that
@@ -310,7 +310,7 @@ drawIt(2, 2)
 
 @
 This next example provides a simple
-demonstration of saving and loading \grid{} \grob{}s.  It is also a nice 
+demonstration of saving and loading \grid{} \grob{}s.  It is also a nice
 demonstration that \grob{}s copy like normal
 \R{} objects.
 
@@ -339,14 +339,14 @@ popViewport()
 
 @
 This next example just demonstrates that it is possible to use a
-\gPath{} to access the children of a \gTree{} when editing. 
+\gPath{} to access the children of a \gTree{} when editing.
 This is the {\tt editGrob()} equivalent of an earlier example
 that used {\tt grid.edit()}.  One
-useful application of this API is the ability to modify the 
+useful application of this API is the ability to modify the
 appearance of quite precise elements of a large, complex graphical
 object by editing the {\tt gp} slot of a child (of a child ...) of
 a \gTree{}.
- 
+
 <<results=hide>>=
 myplot <- gTree(name="myplot",
                 children=gList(
@@ -391,7 +391,7 @@ setGrob(<spec>, grob)
 \end{verbatim}
 
 This approach is used in the implementation of packing and placing grobs.
-The following example shows some simple usage of the 
+The following example shows some simple usage of the
 {\tt setGrob()} and {\tt grid.set()} functions to replace
 children of a \gTree{} with different \grob{}s.  NOTE that currently
 such replacement can only occur if the name of the new \grob{}
@@ -419,16 +419,16 @@ grid.draw(myplot)
 This next example just shows more complex use of the add/remove
 facilities for modifying \grob{}s.  Again, {\tt addGrob()} and
 {\tt removeGrob()} are for constructing descriptions of graphical
-objects and {\tt grid.add()} and {\tt grid.remove()} are for 
+objects and {\tt grid.add()} and {\tt grid.remove()} are for
 modifying drawn output.  Of particular note are the last two
 lines involving {\tt grid.remove()}.  The first point is that
 there are multiple \grob{}s on  the display list with the same
 name.  The example only affects the first one it finds;  this could
 easily be extended to affect the display list ``globally'' (for
-children of \gTree{}s, there cannot be multiple children with the 
+children of \gTree{}s, there cannot be multiple children with the
 same name so the issue does not arise).  The last line is interesting
 because it actually erases the \grob{} named {\tt "plot1"} from
-the display list altogether (well, the first instance on the display list of 
+the display list altogether (well, the first instance on the display list of
 a \grob{} called {\tt "plot1"} anyway).
 
 <<results=hide>>=

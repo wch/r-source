@@ -22,30 +22,30 @@ ps.options(pointsize=12)
 options(width=60)
 
 @
-\grid{} makes use of unit objects to express both the locations and 
+\grid{} makes use of unit objects to express both the locations and
 dimensions of graphical components.  For example, the {\tt grid.rect()}
 function treats its x- and y-arguments as locations within the current
-viewport, and its width- and height-arguments as dimensions within the 
-current viewport.  
+viewport, and its width- and height-arguments as dimensions within the
+current viewport.
 
 These different interpretations of units are usually implicit like this;
 if its an x- or y-value then its a location, if its a width- or height-value
 then its a dimension.
 
-The distinction is made at all because, in some coordinate systems, notably 
+The distinction is made at all because, in some coordinate systems, notably
 {\tt "native"} coordinates, the location $x$ can have a very different
 menaing
-from the dimension $x$ -- basically, whenever the minimum value of the 
+from the dimension $x$ -- basically, whenever the minimum value of the
 coordinate system is not zero.
 
 In the specification of simple units, the difference between locations
-and dimensions is often not noticeable.  However, there are a couple 
+and dimensions is often not noticeable.  However, there are a couple
 of tricky areas:
 
 \begin{enumerate}
 \item When adding (or performing any arithmetic operation on) units,
 it is important to keep in mind that locations are added like vectors
-and dimensions are added like lengths.  The following 
+and dimensions are added like lengths.  The following
 diagram demonstrates the difference:
 
 <<fig=TRUE, echo=FALSE, results=hide>>=
@@ -71,9 +71,9 @@ diagram.dimn <- function(i, n, dimn) {
   popViewport()
 }
 pushViewport(viewport(w=.8, y=unit(1.7, "inches"),
-			     h=unit(4, "inches"), 
-			     just=c("centre", "bottom"),
-			     yscale=c(-0.6, 1.3)))
+                             h=unit(4, "inches"),
+                             just=c("centre", "bottom"),
+                             yscale=c(-0.6, 1.3)))
 grid.grill(v=c(0, 1), h=seq(-.5, 1, .5), default.units="native")
 grid.rect()
 grid.yaxis()
@@ -93,7 +93,7 @@ diagram.dimn(10, n, unit(1, "native") - unit(0.4, "native"))
 \item The functions {\tt convertX},
 {\tt convertY}, {\tt convertWidth}, {\tt convertHeight}
   are used to convert from one coordinate system to another.
-Again, it is important whether the conversion is for a location or 
+Again, it is important whether the conversion is for a location or
 for a dimension.
 The following code
 demonstrates some results from these functions based on a similar

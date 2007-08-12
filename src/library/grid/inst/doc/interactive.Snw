@@ -54,7 +54,7 @@ grid.draw(gxa)
 }
 \end{center}
 
-@ 
+@
 
 Now we change just the labels of the x-axis to green.  We use the
 {\tt gPath()} function to concatenate the grob names (we could have used
@@ -77,7 +77,7 @@ grid.draw(gxa)
 }
 \end{center}
 
-@ 
+@
 
 It is also possible to change the number of tick marks.
 Notice that the labels all change back to red;  this happens
@@ -103,7 +103,7 @@ grid.draw(gxa)
 }
 \end{center}
 
-@ 
+@
 
 Finally, we change the labels back to black and rotate them all $30\deg$.
 
@@ -128,7 +128,7 @@ grid.draw(gxa)
 @
 
 The above examples describe how to perform editing on a grid object
-and have the changes updated on screen.  The equivalent can be done 
+and have the changes updated on screen.  The equivalent can be done
 entirely ``off-screen'', by just working with the grid object.
 The off-screen equivalent in this case would look like:
 

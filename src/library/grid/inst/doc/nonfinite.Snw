@@ -20,7 +20,7 @@ ps.options(pointsize=12)
 options(width=60)
 
 @
-It is possible to include non-finite values, 
+It is possible to include non-finite values,
 {\tt NA}, {\tt NaN}, {\tt Inf}, and {\tt -Inf},
 in specifications of locations and sizes in
 \grid{} functions.  This document describes how
@@ -35,11 +35,11 @@ so this is only checked
 when the viewport is pushed.
 Non-finite values result in error messages.
 
-{\bf lines}, 
-{\bf segments}, 
-{\bf rectangles}, 
-{\bf text}, 
-{\bf points}, 
+{\bf lines},
+{\bf segments},
+{\bf rectangles},
+{\bf text},
+{\bf points},
 {\bf circles} {~} \\
 For all of these primitives, non-finite values for locations or
 sizes result in the corresponding primitive not being drawn.
@@ -48,7 +48,7 @@ is drawn at seven x-locations, with the fourth location made non-finite
  (as indicated by a grey {\tt "NA"}).
 
 <<prim1, echo=FALSE, fig=TRUE, results=hide, width=4, height=2, include=FALSE>>=
-pushViewport(viewport(layout=grid.layout(1, 2, 
+pushViewport(viewport(layout=grid.layout(1, 2,
   widths=unit(c(1, 1), c("inches", "null")))))
 grid.rect(gp=gpar(col="grey"))
 pushViewport(viewport(layout.pos.col=1))
@@ -82,15 +82,15 @@ new location are both not non-finite.
 {\bf polygon} {~} \\
 A non-finite value breaks the polygon into two separate polygons.
 NOTE that this break happens within the current polygon as specified
-by the {\tt id} argument.  All polygons with the same {\tt id} 
+by the {\tt id} argument.  All polygons with the same {\tt id}
 receive the same {\tt gp} settings.
 
 {\bf arrows} {~} \\
 An arrow head is only drawn if the first or last line segment is
-drawn.  
+drawn.
 
 The following image demonstrates the behaviour of these primitives
-where x- and y-locations are seven equally-spaced locations around 
+where x- and y-locations are seven equally-spaced locations around
 the perimeter of a circle.  In the top-left figure, all locations
 are not non-finite.  In each of the other figures, two locations have
 been made non-finite (indicated in each case by grey text).
