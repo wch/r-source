@@ -8,11 +8,14 @@ ifneq ($(strip $(BUILD)),CROSS)
 ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
 # MiKTeX
 R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+TEXI2DVI=texi2dvi
 else
 R_TEXOPTS=
+TEXI2DVI=
 endif
 else # cross-builds
 R_TEXOPTS=
+TEXI2DVI=texi2dvi
 endif
 include ../../share/make/vars.mk
 
@@ -72,11 +75,16 @@ texiincludes = version.texi R-defs.texi
 
 all: pdf
 
+ifeq ($(strip $(TEXI2DVI)),)
 .texi.dvi:
 	$(TEX) $<
 	$(TEXINDEX) $*.cp $*.fn $*.vr
 	$(TEX) $<
 	$(TEX) $<
+else
+.texi.dvi:
+	$(TEXI2DVI) $<
+endif
 
 .texi.html:
 	@echo "creating doc/manual/$@"
@@ -85,11 +93,16 @@ all: pdf
 .texi.info:
 	$(MAKEINFO) -D UseExternalXrefs $<
 
+ifeq ($(strip $(TEXI2DVI)),)
 .texi.pdf:
 	$(PDFTEX) $<
 	$(TEXINDEX) $*.cp $*.fn $*.vr
 	$(PDFTEX) $<
 	$(PDFTEX) $<
+else
+.texi.pdf:
+	$(TEXI2DVI) --pdf $<
+endif
 
 ## we have to be careful not to install a local R-admin.html made prior to
 ## texinfo 4.7, as doc/html/SearchEngine.html links to it.

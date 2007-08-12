@@ -556,8 +556,7 @@ function(dir, outDir, keep.source = FALSE)
     cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
     if(!file_test("-d", buildDir) && !dir.create(buildDir))
-        stop(gettextf("cannot create directory '%s'", buildDir),
-             domain = NA)
+        stop(gettextf("cannot create directory '%s'", buildDir), domain = NA)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
@@ -579,16 +578,16 @@ function(dir, outDir, keep.source = FALSE)
         texfile <- paste(base, ".tex", sep = "")
         yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
                                 quiet = TRUE, keep.source = keep.source))
-        if(inherits(yy, "try-error"))
-            stop(yy)
+        if(inherits(yy, "try-error")) stop(yy)
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
-        if(.Platform$OS.type == "windows") {
-            ## may not have texi2dvi
+        ## FIXME: move this to texi2dvi()
+        if(.Platform$OS.type == "windows" &&
+           identical(Sys.which("texi2dvi"), "")) {
+            ## do not have texi2dvi
             res <- system(paste("pdflatex", texfile))
             if(res)
-                stop(gettextf("unable to run pdflatex on '%s'",
-                              texfile),
+                stop(gettextf("unable to run pdflatex on '%s'", texfile),
                      domain = NA)
             if(length(grep("\\bibdata",
                            readLines(paste(base, ".aux", sep = ""))))) {
@@ -598,22 +597,19 @@ function(dir, outDir, keep.source = FALSE)
                          domain = NA)
                 res <- system(paste("pdflatex", texfile))
                 if(res)
-                    stop(gettextf("unable to run pdflatex on '%s'",
-                                  texfile),
+                    stop(gettextf("unable to run pdflatex on '%s'", texfile),
                          domain = NA)
             }
             res <- system(paste("pdflatex", texfile))
             if(res)
-                stop(gettextf("unable to run pdflatex on '%s'",
-                              texfile),
+                stop(gettextf("unable to run pdflatex on '%s'", texfile),
                      domain = NA)
-        } else
+        } else ## this will always work on a Unix-alike
             texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
         if(!file.exists(pdffile))
-            stop(gettextf("file '%s' was not created",
-                          pdffile),
+            stop(gettextf("file '%s' was not created", pdffile),
                  domain = NA)
         if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
             stop(gettextf("cannot copy '%s' to '%s'",
@@ -621,8 +617,8 @@ function(dir, outDir, keep.source = FALSE)
                           outVignetteDir),
                  domain = NA)
     }
-    ## Need to change out of this dir before we delete it, at least on
-    ## Windows.
+    ## Need to change out of this dir before we delete it,
+    ## at least on Windows.
     setwd(cwd)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!

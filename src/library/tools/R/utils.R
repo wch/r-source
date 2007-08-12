@@ -196,18 +196,19 @@ function(file, pdf = FALSE, clean = FALSE,
     if(clean) clean <- "--clean" else clean <- ""
     if(quiet) quiet <- "--quiet" else quiet <- ""
     if(is.null(texi2dvi)) {
-        if(file.exists(file.path(R.home("bin"), "texi2dvi")))
+        texi2dvi <- Sys.which("texi2dvi")
+        if(identical(texi2dvi, "") &&
+           file.exists(file.path(R.home("bin"), "texi2dvi")))
             texi2dvi <- file.path(R.home("bin"), "texi2dvi")
         else
-            texi2dvi <- "texi2dvi"
+            stop("command 'texi2dvi' not found")
     }
 
     yy <- system(paste(shQuote(texi2dvi),
                        quiet, pdf, clean,
                        shQuote(file)))
     if(yy > 0)
-      stop(gettextf("running texi2dvi on '%s' failed", file),
-           domain = NA)
+      stop(gettextf("running 'texi2dvi' on '%s' failed", file), domain = NA)
 }
 
 
