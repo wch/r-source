@@ -16,13 +16,14 @@
 <<echo=FALSE, results=hide>>=
 library(grDevices)
 library(graphics) # for boxplot
+library(stats) # for rnorm
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
 
 @
 It is possible to specify an angle of rotation for a Grid viewport.
-For example, the following code draws the example multipanel plot 
+For example, the following code draws the example multipanel plot
 at an angle of $15^\circ$.
 
 <<fig=TRUE, results=hide>>=
@@ -30,10 +31,10 @@ pushViewport(viewport(h=.8, w=.8, angle=15))
 grid.multipanel(newpage=FALSE)
 popViewport()
 
-@ 
+@
 
 \vspace{.5in}
-A more complicated example is now developed.  First of all we 
+A more complicated example is now developed.  First of all we
 generate some data to plot; an $x$ and a $y$ with an obvious correlation.
 
 <<complex1, results=hide>>=
@@ -52,18 +53,18 @@ extscale <- c(min(scale), max(scale)+diff(scale)*1/3)
 
 @
 \noindent
-Now generate a layout of regions:  a 3" by 3" region for a 
-scatterplot, inside a 4" by 4" region.  
+Now generate a layout of regions:  a 3" by 3" region for a
+scatterplot, inside a 4" by 4" region.
 
 <<complex3, results=hide>>=
-lay <- grid.layout(2, 2, 
+lay <- grid.layout(2, 2,
                    widths=unit(c(3, 1), "inches"),
                    heights=unit(c(1, 3), "inches"))
 vp1 <- viewport(width=unit(4, "inches"), height=unit(4, "inches"),
                 layout=lay,
                 xscale=extscale, yscale=extscale)
 
-@ 
+@
 \noindent
 We draw a box around the outside and axes on the entire region.
 
@@ -93,7 +94,7 @@ popViewport()
 Now we use a rotated viewport to draw a boxplot which indicates
 the distribution of the distances between the points in the scatterplot
 and the line $y = x$\footnote{This may look like a large amount of
-code, but that's mostly because its doing a boxplot by hand 
+code, but that's mostly because its doing a boxplot by hand
 rather than using a predefined high-level function.}.
 
 The final output is shown on the last page.
@@ -123,7 +124,7 @@ width <- .8
 middle <- left + width/2
 grid.rect(x=left, y=unit(bxp$conf[1,1], "native"),
           width=width, height=unit(diff(bxp$conf[,1]), "native"),
-          just=c("left", "bottom"), 
+          just=c("left", "bottom"),
 	  gp=gpar(col=NULL, fill="orange"))
 grid.rect(x=left, y=unit(bxp$stats[4,1], "native"),
           width=width, height=unit(diff(bxp$stats[4:3,1]), "native"),
@@ -153,7 +154,7 @@ popViewport(2)
 \section*{Problems}
 
 \begin{enumerate}
-\item Data symbols will not be affected by the angle of rotation. 
+\item Data symbols will not be affected by the angle of rotation.
 For round data symbols this does not matter, but it will make
 just about everything else look pretty odd.
 \end{enumerate}

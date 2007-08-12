@@ -13,6 +13,7 @@
 <<echo=FALSE, results=hide>>=
 library(grDevices)
 library(graphics)
+library(stats) # for rnorm
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
@@ -20,7 +21,7 @@ options(width=60)
 @
 Suppose that I am drawing two graphs on a page, which are the results
 from two subjects in an experiment.  I want the graphs to have the same
-axes to aid in comparison of the subjects.  
+axes to aid in comparison of the subjects.
 
 First of all, I will split the page up into two bits for the two graphs.
 
@@ -75,7 +76,7 @@ The output looks like the figure below.
 @
 
 Because I have used the same name for the axis objects in both plots,
- I can edit the axes for both plots 
+ I can edit the axes for both plots
 simultaneously rather than having to edit each one in turn.
 For example ...
 
@@ -92,6 +93,7 @@ postscript("shared2-%02d.eps", onefile=FALSE, paper="special",
 <<axes2>>
 <<axes3>>
 <<axesedit>>
+dev.off()
 
 pdf("shared2-%02d.pdf", onefile=FALSE,
   width=4, height=2)
@@ -99,6 +101,7 @@ pdf("shared2-%02d.pdf", onefile=FALSE,
 <<axes2>>
 <<axes3>>
 <<axesedit>>
+dev.off()
 
 @
 \begin{center}
