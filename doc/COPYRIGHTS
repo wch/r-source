@@ -93,11 +93,6 @@ doc/html/search/*.java
 	Copyright (C), 1998 Thomas Baier
 or	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
 
-doc/manual/texinfo.tex
-doc/manual/txi-en.tex
-
-	Copyright (C) various dates Free Software Foundation, Inc.
-
 doc/manual/R-intro.texi
 
 	Copyright (C) 1990 W. N. Venables
