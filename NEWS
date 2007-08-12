@@ -479,6 +479,9 @@ INSTALLATION
 	licence).  You will need to ensure that your texinfo and/or
 	TeX installations supply them.
 
+    o	A system script 'texi2dvi' is now used in preference to that
+	supplied with R.
+
 
 PACKAGE INSTALLATION
 
