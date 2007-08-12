@@ -92,14 +92,16 @@ x$name
   \code{names}, \code{dim} and \code{dimnames}.
 
   Indexing can occur on the right-hand-side of an expression for
-  extraction, or on the left-hand-side for replacement. When an index
+  extraction, or on the left-hand-side for replacement.  When an index
   expression appears on the left side of an assignment (known as
   \emph{subassignment}) then that part of \code{x} is set to the value
   of the right hand side of the assignment.  In this case no partial
   matching of character indices is done, and the left-hand-side is
   coerced as needed to accept the values.  Attributes are preserved
   (although \code{names}, \code{dim} and \code{dimnames} will be
-  adjusted suitably).
+  adjusted suitably).  Subassignment is done sequentially, so if an
+  index is specified more than once the latest assigned value for an
+  index will result.
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
