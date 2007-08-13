@@ -223,22 +223,25 @@ function(file, pdf = FALSE, clean = FALSE,
         if(!nzchar(bibtex)) bibtex <- "bibtex"
         makeindex <- Sys.getenv("MAKEINDEX")
         if(!nzchar(makeindex)) makeindex <- "makeindex"
-        if(system(paste(shQuote(latex), texfile)))
+        if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
             stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
+        nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
+                           readLines(paste(base, ".log", sep = ""))))
         for(iter in 1:10) { ## safety check
-            if(length(grep("\\bibdata",
-                           readLines(paste(base, ".log", sep = "")))))
-                if(system(paste(shQuote(bibtex), shQuote(base))))
+            if(nmiss && system(paste(shQuote(bibtex), shQuote(base))))
                     stop(gettextf("unable to run %s on '%s'", bibtex, base), domain = NA)
+            nmiss_prev <- nmiss
             if(file.exists(idxfile)) {
                 if(system(paste(shQuote(makeindex), shQuote(idxfile))))
                     stop(gettextf("unable to run %s on '%s'", makeindex, idxfile),
                          domain = NA)
             }
-            if(system(paste(shQuote(latex), texfile)))
+            if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
                 stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
-            if(!length(grep("Rerun to get",
-                            readLines(paste(base, ".log", sep = ""))))) break
+            Log <- readLines(paste(base, ".log", sep = ""))
+            nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined", Log))
+            if(nmiss == nmiss_prev &&
+               !length(grep("Rerun to get", Log)) ) break
         }
     }
 }
