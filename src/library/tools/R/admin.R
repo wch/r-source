@@ -522,7 +522,7 @@ function(src_dir, out_dir, packages)
 }
 
 ### * .install_package_vignettes
-
+## this is only used when building R, to build the 'grid' vignettes.
 .install_package_vignettes <-
 function(dir, outDir, keep.source = FALSE)
 {
@@ -575,37 +575,14 @@ function(dir, outDir, keep.source = FALSE)
 
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
+        message("processing '", basename(srcfile), "'")
         texfile <- paste(base, ".tex", sep = "")
         yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
                                 quiet = TRUE, keep.source = keep.source))
         if(inherits(yy, "try-error")) stop(yy)
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
-        ## FIXME: move this to texi2dvi()
-        if(.Platform$OS.type == "windows" &&
-           identical(Sys.which("texi2dvi"), "")) {
-            ## do not have texi2dvi
-            res <- system(paste("pdflatex", texfile))
-            if(res)
-                stop(gettextf("unable to run pdflatex on '%s'", texfile),
-                     domain = NA)
-            if(length(grep("\\bibdata",
-                           readLines(paste(base, ".aux", sep = ""))))) {
-                res <- system(paste("bibtex", base))
-                if(res)
-                    stop(gettextf("unable to run bibtex on '%s'", base),
-                         domain = NA)
-                res <- system(paste("pdflatex", texfile))
-                if(res)
-                    stop(gettextf("unable to run pdflatex on '%s'", texfile),
-                         domain = NA)
-            }
-            res <- system(paste("pdflatex", texfile))
-            if(res)
-                stop(gettextf("unable to run pdflatex on '%s'", texfile),
-                     domain = NA)
-        } else ## this will always work on a Unix-alike
-            texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
+        texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
         if(!file.exists(pdffile))

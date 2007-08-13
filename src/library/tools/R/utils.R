@@ -190,25 +190,57 @@ texi2dvi <-
 function(file, pdf = FALSE, clean = FALSE,
          quiet = TRUE, texi2dvi = getOption("texi2dvi"))
 {
-    ## Run texi2dvi on a file.
+    ## Run texi2dvi on a latex file, or emulate it.
 
-    if(pdf) pdf <- "--pdf" else pdf <- ""
-    if(clean) clean <- "--clean" else clean <- ""
-    if(quiet) quiet <- "--quiet" else quiet <- ""
     if(is.null(texi2dvi)) {
+        ## texi2dvi on PATH has priority over that shipped with R
         texi2dvi <- Sys.which("texi2dvi")
-        if(identical(texi2dvi, "") &&
+        if(!nzchar(texi2dvi) &&
            file.exists(file.path(R.home("bin"), "texi2dvi")))
             texi2dvi <- file.path(R.home("bin"), "texi2dvi")
-        else
-            stop("command 'texi2dvi' not found")
     }
 
-    yy <- system(paste(shQuote(texi2dvi),
-                       quiet, pdf, clean,
-                       shQuote(file)))
-    if(yy > 0)
-      stop(gettextf("running 'texi2dvi' on '%s' failed", file), domain = NA)
+    if(nzchar(texi2dvi)) {
+        if(pdf) pdf <- "--pdf" else pdf <- ""
+        if(clean) clean <- "--clean" else clean <- ""
+        if(quiet) quiet <- "--quiet" else quiet <- ""
+        if(system(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file))))
+            stop(gettextf("running 'texi2dvi' on '%s' failed", file), domain = NA)
+    } else {
+        ## do not have texi2dvi
+        ## needed at least on Windows except for MiKTeX
+        texfile <- shQuote(file)
+        base <- file_path_sans_ext(file)
+        idxfile <- paste(base, ".idx", sep="")
+        if(pdf) {
+            latex <- Sys.getenv("PDFLATEX")
+            if(!nzchar(latex)) latex <- "pdflatex"
+        } else {
+            latex <- Sys.getenv("LATEX")
+            if(!nzchar(latex)) latex <- "latex"
+        }
+        bibtex <- Sys.getenv("BIBTEX")
+        if(!nzchar(bibtex)) bibtex <- "bibtex"
+        makeindex <- Sys.getenv("MAKEINDEX")
+        if(!nzchar(makeindex)) makeindex <- "makeindex"
+        if(system(paste(shQuote(latex), texfile)))
+            stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
+        for(iter in 1:10) { ## safety check
+            if(length(grep("\\bibdata",
+                           readLines(paste(base, ".log", sep = "")))))
+                if(system(paste(shQuote(bibtex), shQuote(base))))
+                    stop(gettextf("unable to run %s on '%s'", bibtex, base), domain = NA)
+            if(file.exists(idxfile)) {
+                if(system(paste(shQuote(makeindex), shQuote(idxfile))))
+                    stop(gettextf("unable to run %s on '%s'", makeindex, idxfile),
+                         domain = NA)
+            }
+            if(system(paste(shQuote(latex), texfile)))
+                stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
+            if(!length(grep("Rerun to get",
+                            readLines(paste(base, ".log", sep = ""))))) break
+        }
+    }
 }
 
 

@@ -29,7 +29,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 #ifdef unix
     then for the script in R's \file{bin} directory
 #endif
-    and otherwise throw an error.}
+    and otherwise emulate the script with \code{system} calls.}
 }
 \details{
   Despite the name, this is used in \R to compile LaTeX files,
@@ -37,7 +37,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 #ifdef windows
   
   Most Windows TeX installations do not have \code{texi2dvi} executable,
-  but MiKTeX does.  At present this \R function is not used on Windows.
+  but MiKTeX does.
 #endif
 }
 \author{Achim Zeileis}
