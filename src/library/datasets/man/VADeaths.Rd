@@ -11,7 +11,7 @@
   Death rates per 1000 in Virginia in 1940.
 }
 \usage{VADeaths}
-\format{A matrix with 5 rows and 5 columns.}
+\format{A matrix with 5 rows and 4 columns.}
 \details{
   The death rates are measured per 1000 population per year.  They
   are cross-classified by age group (rows) and
