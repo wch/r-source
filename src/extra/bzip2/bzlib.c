@@ -855,9 +855,11 @@ int BZ_API(BZ2_bzDecompress) ( bz_stream *strm )
       }
    }
 
+#ifdef UNREACHED
    AssertH ( 0, 6001 );
 
    return 0;  /*NOTREACHED*/
+#endif
 }
 
 
@@ -1216,7 +1218,9 @@ int BZ_API(BZ2_bzRead)
       
    }
 
+#ifdef UNREACHED
    return 0; /*not reached*/
+#endif
 }
 
 
