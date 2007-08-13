@@ -445,7 +445,7 @@ distclean: clean clean-recommended
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(RM) -r cran/*.html cran/*.htm cran/ReadMe cran/README* cran/*.exe \
 		cran/md5sum.txt cran/*.$(RPREFIX) 
-	$(RM) -r .vignettes # it gets left behind sometimes
+	$(RM) -r .vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
@@ -500,7 +500,6 @@ vignettes:
 	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(REXE) > /dev/null; \
 	  fi; \
 	done
-	@rm -rf .vignettes # force cleanup
 
 ## ===================== Maintainer targets ========================
 
