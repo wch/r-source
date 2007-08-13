@@ -101,10 +101,10 @@ ifeq ($(strip $(TEXI2DVI)),)
 	$(PDFTEX) $<
 else
 .texi.pdf:
-	$(TEXI2DVI) --pdf $<
+	$(TEXI2DVI) --pdf --texinfo="@set UseExternalXrefs " $<
 endif
 
-## we have to be careful not to install a local R-admin.html made prior to
+## We have to be careful not to install a local R-admin.html made prior to
 ## texinfo 4.7, as doc/html/SearchEngine.html links to it.
 ## So use that in the sources if we can -- it is not in the svn archive.
 ## There are no cross-references, external or not.
@@ -136,16 +136,16 @@ refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	  $(LATEX) -interaction=nonstopmode refman.tex 
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	  $(LATEX) -interaction=nonstopmode refman.tex 
 else
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	  $(LATEX) -interaction=nonstopmode refman.tex 
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	  $(LATEX) -interaction=nonstopmode refman.tex 
 endif
 
 fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
@@ -166,23 +166,23 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`echo "$${texinputs}" | sed "s/$${f}//"`; \
+	    texinputs=`echo "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
 	  done; \
 	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
 ifeq ($(strip $(BUILD)),CROSS)
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
 else
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
 endif
 
 html: $(OBJECTS_HTML)
@@ -210,20 +210,20 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
 	@$(MAKEINDEX) refman
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
 else
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
 	@$(MAKEINDEX) refman
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
 endif
 
 fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
@@ -243,27 +243,27 @@ fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`echo "$${texinputs}" | sed "s/$${f}//"`; \
+	    texinputs=`echo "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
 	  done; \
 	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
 	  cat refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
 ifeq ($(strip $(BUILD)),CROSS)
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
 	@$(MAKEINDEX) fullrefman
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
 	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
 else
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
 	@$(MAKEINDEX) fullrefman
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
 endif
 
 version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
