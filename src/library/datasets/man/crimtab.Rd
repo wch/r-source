@@ -21,7 +21,7 @@
   The 42 \code{\link{rownames}} (\code{"9.4"}, \code{"9.5"}, \dots)
   correspond to midpoints of intervals of finger lengths
   whereas the 22 column names (\code{\link{colnames}})
-  (code{"142.24"}, \code{"144.78"}, \dots) correspond to (body) heights
+  (\code{"142.24"}, \code{"144.78"}, \dots) correspond to (body) heights
   of 3000 criminals, see also below.
 }
 \details{

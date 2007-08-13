@@ -109,7 +109,7 @@ get_all_vars(formula, data, \dots)
   variables such as factors (whose underlying type is integer), but
   excludes lists.
 
-  \code{get_all_vars} returns a code{\link{data.frame}} containing the
+  \code{get_all_vars} returns a \code{\link{data.frame}} containing the
   variables used in \code{formula} plus those specified \code{\dots}.
   Unlike \code{model.frame.default}, it returns the input variables and
   not those resulting from function calls in \code{formula}.
