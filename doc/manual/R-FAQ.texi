@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-07-30
+@set FAQ_DATE @value{FAQ_YEAR}-08-12
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1877,6 +1877,8 @@ Components of Canadian monetary aggregates.
 Facilities for the use of R to write CGI scripts.
 @item CORREP
 Multivariate correlation estimation.
+@item CPGchron
+Create radiocarbon-dated depth chronologies.
 @item CTFS
 The CTFS large plot forest dynamics analyses.
 @item CVThresh
@@ -2007,6 +2009,8 @@ LOCATION_NAME and MAPSET.  Wrapper and helper functions are provided for
 a range of R functions to match the interface metadata structures.
 @item GSA
 Gene set analysis.
+@item GSM
+Gamma Shape Mixture.
 @item GammaTest
 Gamma Test data analysis.
 @item GenKern
@@ -2277,6 +2281,8 @@ Fetch data from a Bloomberg API using COM.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
+@item RDieHarder
+R interface to the dieharder random number generator test suite.
 @item RFA
 Regional Frequency Analysis.
 @item RGtk2
@@ -2397,6 +2403,8 @@ statistical computing can be carried out.
 @c (@pxref{What documentation exists for R?}).
 @item Rpad
 Utility functions for the Rpad workbook-style interface.
+@item Rsac
+Seismic tools for R.
 @item Rserve
 A socket server (TCP/IP or local sockets) which allows binary requests
 to be sent to R.
@@ -2760,6 +2768,8 @@ Analysis of configuration frequencies.
 @item cgh
 Analysis of microarray comparative genome hybridisation data using the
 Smith-Waterman algorithm.
+@item cghFLasso
+Hot spot detecting for CGH array data with fused lasso regression.
 @item chplot
 Augmented convex hull plots: informative and nice plots for grouped
 bivariate data.
@@ -3218,7 +3228,7 @@ Shape.
 @item gamlss.dist
 Extra distributions for GAMLSS modeling.
 @item gamlss.mx
-A GAMLSS add on package for fitting mixtute distributions.
+A GAMLSS add on package for fitting mixture distributions.
 @item gamlss.nl
 A GAMLSS add on package for fitting non linear parametric models.
 @item gamlss.tr
@@ -3625,9 +3635,9 @@ stepwise least-squares algorithm.
 @item mFilter
 Miscellenous time series filters.
 @item maanova
-Analysis of N-dye Micro Array experiments using mixed model effect.
-Contains anlysis of variance, permutation and bootstrap, cluster and
-consensus tree.
+Analysis of @math{N}-dye Micro Array experiments using mixed model
+effect.  Contains anlysis of variance, permutation and bootstrap,
+cluster and consensus tree.
 @item magic
 A variety of methods for creating magic squares of any order greater
 than 2, and various magic hypercubes.
@@ -3772,6 +3782,8 @@ Estimation of monotone regression and variance functions in
 nonparametric models.
 @item monoProc
 Strictly monotone smoothing procedure.
+@item mota
+Mean Optimal Transformation Approach.
 @item mprobit
 Multivariate probit model for binary/ordinal response.
 @item mratios
@@ -3960,6 +3972,8 @@ Multiple imputation for multivariate panel or clustered data.
 Functions and datasets for fitting models to Panel data.
 @item papply
 Parallel apply function using MPI.
+@item paran
+Horn's test of principal components/factors.
 @item partitions
 Additive partitions of integers.
 @item partsm
@@ -4015,6 +4029,8 @@ Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
 Functions for import, export, plotting and other manipulations of
 bitmapped images.
+@item plRasch
+Log linear by linear asscociation models.
 @item plm
 Linear models for panel data.
 @item plotAndPlayGTK
@@ -4148,6 +4164,8 @@ For solving quadratic programming problems.
 Qualitative methods for the validation of models.
 @item quantchem
 Quantitative chemical analysis: calibration and evaluation of results.
+@item quantmod
+Quantitative financial modelling framework.
 @item quantreg
 Quantile regression and related methods.
 @item quantregForest
