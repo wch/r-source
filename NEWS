@@ -49,8 +49,11 @@ BUG FIXES
 	series which do not start at the beginning of a quarter or
 	month respectively.
 
-    o   Deserializing raw objects saved using save(..., ascii=TRUE)
+    o	Deserializing raw objects saved using save(..., ascii=TRUE)
         now works correctly.
+
+    o	ISOLatin7 encoding for postscript/PDF has been corrected.
+	(PR#9845)
 
 
 
