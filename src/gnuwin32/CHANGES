@@ -89,10 +89,10 @@ OTHERS
 	the .Renviron startup files, and so takes R_LIBS from the
 	environnment.  This is consistent with lazyloading a package.
 
-    o	The preferred build environment is to use gcc >= 4.2.0,
-	specified via BUILD=GCC4 in MkRules.  Set BUILD=GCC3 in
-	MkRules if you have gcc 3.4.5.  There is support for a gcc4
-	cross-compiler via the CROSS-GCC macro in MkRules.
+    o	The preferred build environment is to use gcc >= 4.2.1,
+	specified via BUILD=GCC4 in MkRules (the default).  Set
+	BUILD=GCC3 in MkRules if you have gcc 3.4.5.  There is support
+	for a gcc4 cross-compiler via the CROSS-GCC macro in MkRules.
 
 
 
