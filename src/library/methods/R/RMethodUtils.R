@@ -353,11 +353,9 @@ doPrimitiveMethod <-
 }
 
 conformMethod <-
-  function(signature, mnames, fnames, f = "<unspecified>")
+  function(signature, mnames, fnames, f = "<unspecified>", fdef)
 {
-    ## Desirable, but hard:  arrange for "missing" to be valid for "..." in a signature
-    ## (needs a change to low-level dispatch code).
-    ## Until then, allow an omitted "..." w/o checking
+    fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
     omitted <- is.na(match(fnames, mnames))
@@ -366,7 +364,7 @@ conformMethod <-
     label <- paste("In method for function \"", f,"\": ", sep="")
     if(!all(diff(seq_along(fnames)[!omitted]) > 0))
         stop(label, "formal arguments in method and function do not appear in the same order")
-    signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
+    signature <- c(signature, rep("ANY", length(fsig)-length(signature)))
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
         bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
         stop(label, gettextf("formal arguments omitted in the method definition cannot be in the signature (%s)", paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", ")), domain = NA)
@@ -380,12 +378,15 @@ conformMethod <-
     while(.identC(signature[[n]], "ANY"))
         n <- n - 1
     length(signature) <- n
+    length(fsig) <- n
+    names(signature) <- fsig
     signature
 }
 
 rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
-    added <- is.na(match(mnames, fnames))
-    if(!any(added)) {
+    added <- any(is.na(match(mnames, fnames)))
+    keepsDots <- !is.na(match("...", mnames))
+    if(!added && keepsDots) {
         ## the formal args of the method must be identical to generic
         formals(definition, envir = environment(definition)) <- formals(generic)
         return(definition)
@@ -399,7 +400,7 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     useNames <- !is.na(match(fnames, mnames)) | fnames == "..."
     newCall <- lapply(c(".local", fnames[useNames]), as.name)
     ## leave newCall as a list while checking the trailing args
-    if(dotsPos < length(fnames)) {
+    if(keepsDots && dotsPos < length(fnames)) {
         ## trailing arguments are required to match.  This is a little stronger
         ## than necessary, but this is a dicey case, because the argument-matching
         ## may not be consistent otherwise (in the generic, such arguments have to be

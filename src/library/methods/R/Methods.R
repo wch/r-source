@@ -472,7 +472,7 @@ setMethod <-
                }
                if(!identical(mnames, fnames)) {
                    ## omitted classes in method => "missing"
-                   fullSig <- conformMethod(signature, mnames, fnames, f)
+                   fullSig <- conformMethod(signature, mnames, fnames, f, fdef)
                    if(!identical(fullSig, signature)) {
                        formals(definition, envir = environment(definition)) <- formals(fdef)
                        signature <- fullSig
@@ -1077,13 +1077,16 @@ callGeneric <- function(...)
     envir <- parent.frame()
     call <- sys.call(frame)
 
+    ## localArgs == is the evaluation in a method that adds special arguments
+    ## to the generic.  If so, look back for the call to generic.  Also expand  "..."
+    localArgs <- FALSE
     ## the  lines below this comment do what the previous version
     ## did in the expression fdef <- sys.function(frame)
     if(exists(".Generic", envir = envir, inherits = FALSE))
 	fname <- get(".Generic", envir = envir)
     else { # in a local method (special arguments), or	an error
-	## FIXME:  this depends on the .local mechanism, which should change
-	if(identical(as.character(call[[1]]), ".local"))
+        localArgs <- identical(as.character(call[[1]]), ".local")
+	if(localArgs)
 	    call <- sys.call(sys.parent(2))
 	fname <- as.character(call[[1]])
     }
@@ -1105,7 +1108,10 @@ callGeneric <- function(...)
         fname <- as.name(f)
         if(nargs() == 0) {
             call[[1]] <- as.name(fname) # in case called from .local
-            call <- match.call(fdef, call)
+        ## exapnd the ... if this is  a locally modified argument list.
+        ## This is a somewhat ambiguous case and may not do what the
+        ## user expects.  Not clear there is a single solution.  Should we warn?
+            call <- match.call(fdef, call, expand.dots = localArgs)
             anames <- names(call)
             matched <- !is.na(match(anames, names(formals(fdef))))
             for(i in seq_along(anames))

@@ -563,6 +563,11 @@ BUG FIXES
         and consequentially also when profiling 1-parameter models
         (thanks to Ben Bolker). 
 
+    o  two bugs fixed in methods that in involve the "..." argument in the
+        generic function: previously failed to catch methods that just
+        dropped the "..."; and use of callGeneric() with no arguments
+        failed in the case that "..." was a formal argument.
+
 
 
 	**************************************************
