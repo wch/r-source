@@ -46,12 +46,13 @@ double pt(double x, double n, int lower_tail, int log_p)
 		     lower_tail, log_p);
     }
 
-    nx = (1 + (x/n)*x);
-    /* FIXME: This test should be revised now that pbeta(*, log_p = TRUE) is better*/
-    if(fabs(x) > 1e30) {
+    nx = 1 + (x/n)*x;
+    /* FIXME: This test is probably losing rather than gaining precision,
+     * now that pbeta(*, log_p = TRUE) is much better */
+    if(fabs(nx) > 1e100) {
 	/* Danger of underflow. So use Abramowitz & Stegun 26.5.4
 	   pbeta(z, a, b) ~ z^a(1-z)^b / aB(a,b) ~ z^a / aB(a,b),
-	   with z = 1/nx = 1/(1 + x^2/n),  a = n/2,  b= 1/2 :
+	   with z = 1/nx,  a = n/2,  b= 1/2 :
 	*/
 	double lval;
 	lval = -0.5*n*(2*log(fabs(x)) - log(n))
