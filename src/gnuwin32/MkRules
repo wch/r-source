@@ -4,7 +4,7 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
-BUILD=GCC4
+BUILD=GCC3
 ## if cross-building, is this gcc3 or gcc4?
 CROSS-GCC=gcc3
 
