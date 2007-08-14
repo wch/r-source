@@ -1102,8 +1102,8 @@ cross-compilers have also been used successfully on @cputype{x86_64}
 Linux.
 
 You will need suitable cross-compilers installed and in your path.
-There is currently a complete set of tools at
-@url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
+There is currently a complete set of tools based on @command{gcc} 3.4.5
+at @url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
 @code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just unpack
 this into a directory somewhere and put its @file{bin} directory in your
 path.)  It is also straightforward to build a set of cross-compilers via
@@ -2035,11 +2035,7 @@ suitably.  For recent versions of @command{gcc} with @code{glibc} this
 means including @option{-std=gnu99} (@option{-std=c99} excludes POSIX
 functionality).  If the compiler is detected as @command{gcc},
 @code{-std=gnu99} will be appended to @code{CC} unless it conflicts with
-a setting of @code{CFLAGS}.  (For future versions of @command{gcc} this
-may cause problems with the semantics of @code{inline} for various
-OSes: these may fixed by including in @code{CFLAGS} the flag
-@option{-fgnu89-inline} which will be available as from @command{gcc
-4.2.0}.)
+a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora
@@ -2075,14 +2071,14 @@ You will need Perl version 5.6.1 or later, available via
 @url{http://www.perl.com/CPAN/, @code{www.perl.com/CPAN}}, to build any
 of the on-line documentation.
 
-You will not be able to build the info files unless you have
+You will not be able to build the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
 known to create incorrect @HTML{} files.)
 
 @cindex Vignettes
-The typeset documentation and building vignettes needs @command{tex} and
-@command{latex}, or @command{pdftex} and @command{pdflatex}.
+The DVI and PDF documentation and building vignettes needs @command{tex}
+and @command{latex}, or @command{pdftex} and @command{pdflatex}.
 
 If you want to build from the R Subversion repository you need Perl,
 @command{makeinfo} and @command{pdflatex}.
@@ -2341,13 +2337,13 @@ the AMD Core Math Library (ACML) @url{http://www.amd.com/acml,
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRRARY_PATH
-@file{/opt/acml3.6.1/gfortran64/lib}) is in the
-@env{LD_LIBRRARY_PATH}.  For other compilers, see the ACML
-documentation.  Although the documentation is unclear, 32-bit versions
-of ACML do run on other @cputype{ia32} chips such as AthlonMP and P4.
-There is a multithreaded version of ACML available for
-@command{gfortran} which needs @command{gcc} >= 4.2.0.  To make use of
-this you will need something like
+@file{/opt/acml3.6.1/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
+For other compilers, see the ACML documentation.  Although the
+documentation is unclear, 32-bit versions of ACML do run on other
+@cputype{ia32} chips such as AthlonMP and P4.  There is a multithreaded
+version of ACML available for @command{gfortran} which needs
+@command{gcc} >= 4.2.0 (or possibly some RedHat versions of 4.1.1 or
+4.1.2).  To make use of this you will need something like
 
 @example
 --with-blas="-L/opt/acml3.6.1/gfortran64_mp/lib -lacml_mp"
@@ -4057,7 +4053,9 @@ included in @file{Rtools.exe}.  Alternatives are listed at
 @url{http://win32.perl.org, @code{win32.perl.org}}: we have for example
 built R using Vanilla Perl.
 
-@strong{Beware}: you do need a @emph{Windows} port and not the Cygwin one.
+@strong{Beware}: you do need a @emph{Windows} port and not the Cygwin
+one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
+ActiveState) if they prefer.
 
 @node The Microsoft HTML Help Workshop, LaTeX, Perl, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
@@ -4197,19 +4195,20 @@ components
 mingw-runtime-3.13.tar.gz
 w32api-3.10.tar.gz
 binutils-2.17.50-20060824-1.tar.gz  
-gcc-core-4.2.1-sjlj-1.tar.gz2
-gcc-g++-4.2.1-sjlj-1.tar.gz2
-gcc-g77-4.2.1-sjlj-1.tar.gz
+gcc-core-4.2.1-sjlj-2.tar.gz
+gcc-g++-4.2.1-sjlj-2.tar.gz
+gcc-gfortran-4.2.1-sjlj-2.tar.gz
 @end example
 
 @noindent
-(and @code{gcc-objc-4.2.1-sjlj-1.tar.gz} if you want Objective C
+(and @code{gcc-objc-4.2.1-sjlj-2.tar.gz} if you want Objective C
 support) and unpack these into the same directory (using @command{tar
 zxf tarball_name}).  (Note that currently you will need to copy
 @file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
-incompatibility between these components.)  Then set @code{BUILD=GCC4}
-in @file{MkRules}.  This toolset should work on Windows Vista with just
-its @file{bin} directory in the path.
+incompatibility between these components, and a few badly-written
+packages need @file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)
+Then set @code{BUILD=GCC4} in @file{MkRules}.  This toolset should work
+on Windows Vista with just its @file{bin} directory in the path.
 
 Other builds of @command{gcc} 4 are available from
 @url{http://gcc.gnu.org/wiki/GFortranBinaries} and

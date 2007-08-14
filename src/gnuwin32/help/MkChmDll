@@ -5,12 +5,17 @@ Rchtml-CFLAGS= -I "$(HHWDIR)/include"
 all: ../../../modules/Rchtml.dll
 
 ## need -k as hhctrl exports HtmlHelpA
-libhhctrl.a : MkChmDll
+## don't need to think about cross-compilation, but 
+## some versions of MinGW need --as set here
+libhhctrl.dll.a : MkChmDll
 	$(ECHO) EXPORTS > hhctrl.def
 	$(ECHO) HtmlHelpA@16 >> hhctrl.def
-	$(DLLTOOL) -k --dllname hhctrl.ocx  --def hhctrl.def --output-lib libhhctrl.a
+	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname hhctrl.ocx  --def hhctrl.def --output-lib $@
 	$(RM) hhctrl.def
 
-../../../modules/Rchtml.dll: Rchtml.o libhhctrl.a
+../../../modules/Rchtml.dll: Rchtml.o libhhctrl.dll.a
 	$(MKDIR) -p ../../../modules
 	$(DLL) -shared -s -o $@ Rchtml.o -L. -lhhctrl
+
+clean:
+	$(RM) *.o libhhctrl.dll.a

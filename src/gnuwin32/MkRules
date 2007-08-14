@@ -4,7 +4,7 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
-BUILD=GCC3
+BUILD=GCC4
 ## if cross-building, is this gcc3 or gcc4?
 CROSS-GCC=gcc3
 
@@ -159,8 +159,10 @@ AS=$(BINPREF)as
 DLL_LDMAIN=$(CC)
 DLL=$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## formerly used version without -k for front-ends/libproxy.a
-DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
-DLLTOOL=$(DLLTOOL_WIN32) -k
+DLLTOOL=$(BINPREF)dlltool
+## some versions have trouble with paths, so we always need this
+## even for native builds
+DLLTOOLFLAGS=--as $(AS) -k
 MAIN_LD=$(CC)
 LINKER=$(MAIN_LD) $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
@@ -219,11 +221,8 @@ RESCOMP=$(BINPREF)windres
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 
-#lib%.a: %.def
-#	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
-
 lib%.dll.a: %.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --input-def $*.def --output-lib $@
 
 %.a:
 #	@$(ECHO) -------- Building $@ from $^ --------

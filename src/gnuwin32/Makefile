@@ -254,8 +254,8 @@ Rblas-clean:
 	@$(MAKE) --no-print-directory -C ../extra/blas -f Makefile.win clean
 
 libRblas.dll.a:  ../extra/blas/Rblas.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
-	  --def $< --output-lib $@
+	@$(DLLTOOL) $(DLLTOOLFLAGS) --dllname Rblas.dll \
+	  --input-def $< --output-lib $@
 
 
 #                          ===== Packages ======
