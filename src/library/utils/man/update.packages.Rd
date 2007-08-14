@@ -231,11 +231,11 @@ contrib.url(repos, type = getOption("pkgType"))
   in \code{.libPaths()}, with a warning if there is more than one.)  If
   \code{lib} is omitted or is of length one and is not a (group)
   writeable directory, the code offers to create a personal library tree
-  (the first element of \code{Sys.getenv("R_LIBS_USER")} and install
+  (the first element of \code{Sys.getenv("R_LIBS_USER")}) and install
   there.
 #ifdef windows
   Detection of a writeable directory is problematic on Windows: see the
-  Warning section.
+  Note section.
 #endif
   
 %  The first argument can be an unquoted name, as in
