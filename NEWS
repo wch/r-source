@@ -559,6 +559,9 @@ BUG FIXES
     o	pbeta(x, log.p = TRUE) is now improved in many cases, and so are
         functions depending on it, such as pt(), pf() or pbinom().
 
+    o   mle() had problems with the L-BFGS-B in the no-parameter case
+        and consequentially also when profiling 1-parameter models
+        (thanks to Ben Bolker). 
 
 
 
