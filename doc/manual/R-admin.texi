@@ -365,8 +365,8 @@ pathname of the build directory should not contain spaces.)
 Make will also build plain text help pages as well as @HTML{} and
 @LaTeX{} versions of the @R{} object documentation (the three kinds can
 also be generated separately using @code{make help}, @code{make html}
-and @code{make latex}).  Note that you need Perl version 5: if this is
-not available on your system, you can obtain PDF versions of the
+and @code{make latex}).  Note that you need Perl version 5.8.x: if this
+is not available on your system, you can obtain PDF versions of the
 documentation files via @acronym{CRAN}.
 
 For those obtaining @R{} @emph{via} Subversion, one additional step is
@@ -4313,7 +4313,9 @@ included in @file{Rtools.exe}.  Alternatives are listed at
 @url{http://win32.perl.org, @code{win32.perl.org}}: we have for example
 built R using Vanilla Perl.
 
-@strong{Beware}: you do need a @emph{Windows} port and not the Cygwin one.
+@strong{Beware}: you do need a @emph{Windows} port and not the Cygwin
+one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
+ActiveState) if they prefer.
 
 @node The Microsoft HTML Help Workshop, LaTeX, Perl, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
@@ -4428,13 +4430,13 @@ To download the components individually, currently you need
 mingw-runtime-3.13.tar.gz
 w32api-3.10.tar.gz
 binutils-2.17.50-20060824-1.tar.gz  
-gcc-core-4.2.1-sjlj-1.tar.gz2
-gcc-g++-4.2.1-sjlj-1.tar.gz2
-gcc-gfortran-4.2.1-sjlj-1.tar.gz
+gcc-core-4.2.1-sjlj-2.tar.gz
+gcc-g++-4.2.1-sjlj-2.tar.gz
+gcc-gfortran-4.2.1-sjlj-2.tar.gz
 @end example
 
 @noindent
-(and @code{gcc-objc-4.2.1-sjlj-1.tar.gz} if you want Objective C
+(and @code{gcc-objc-4.2.1-sjlj-2.tar.gz} if you want Objective C
 support).  Unpack these into the same directory (using @command{tar
 zxf tarball_name}).  Note that currently you will need to copy
 @file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
