@@ -392,7 +392,7 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
         return(definition)
     }
     dotsPos <- match("...", fnames)
-    if(is.na(dotsPos))
+    if(added && is.na(dotsPos))
         stop("methods can add arguments to the generic only if '...' is an argument to the generic")
     ## pass down all the names in common between method & generic, plus "..."
     ## even if the method doesn't have it.  But NOT any arguments having class
