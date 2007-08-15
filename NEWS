@@ -561,19 +561,19 @@ BUG FIXES
 	correctly on empty descriptions.
 
     o	pbeta(x, log.p = TRUE) is now improved in many cases, and so are
-        functions depending on it, such as pt(), pf() or pbinom().
+	functions depending on it, such as pt(), pf() or pbinom().
 
-    o   mle() had problems with the L-BFGS-B in the no-parameter case
-        and consequentially also when profiling 1-parameter models
-        (thanks to Ben Bolker).
+    o	mle() had problems with the L-BFGS-B in the no-parameter case
+	and consequentially also when profiling 1-parameter models
+	(thanks to Ben Bolker).
 
-    o   two bugs fixed in methods that in involve the "..." argument in the
-        generic function: previously failed to catch methods that just
-        dropped the "..."; and use of callGeneric() with no arguments
-        failed in the case that "..." was a formal argument.
+    o	Two bugs fixed in methods that in involve the "..." argument in
+	the generic function: previously failed to catch methods that
+	just dropped the "..."; and use of callGeneric() with no
+	arguments failed in the case that "..." was a formal argument.
 
-    o	sequence() now behaves more reasonably, though not back-compatibly
-	for zero or negative input.
+    o	sequence() now behaves more reasonably, although not
+	back-compatibly for zero or negative input.
 
 
 
