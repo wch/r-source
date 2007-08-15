@@ -77,10 +77,5 @@ seq.default <-
     else stop("too many arguments")
 }
 
-sequence <- function(nvec)
-{
-    s <- integer(0)
-    for(i in nvec)
-	s <- c(s, 1:i)
-    return(s)
-}
+## In reverence to the very first versions of R which already had sequence():
+sequence <- function(nvec) unlist(lapply(nvec, seq_len))

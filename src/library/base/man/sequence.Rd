@@ -10,16 +10,19 @@ sequence(nvec)
 }
 \alias{sequence}
 \arguments{
-  \item{nvec}{an integer vector each element of which specifies the end
-    point of a sequence.}
+  \item{nvec}{a non-negative integer vector each element of which
+    specifies the end point of a sequence.}
 }
 \description{
-  For each element of \code{nvec} the sequence \code{seq(nvec[i])}
+  For each element of \code{nvec} the sequence \code{\link{seq_len}(nvec[i])}
   is created.  These are concatenated and the result returned.
 }
 \details{
-  Note that \code{sequence} works for 0 or negative inputs as
+  Earlier versions of \code{sequence} used to work for 0 or negative inputs as
   \code{seq(x) == 1:x}.
+
+  Note that \code{sequence <- function(nvec) unlist(lapply(nvec, seq_len))}
+  and it mainly exists in reverence to the very early history of \R.
 }
 \seealso{
   \code{\link{gl}}, \code{\link{seq}}, \code{\link{rep}}.

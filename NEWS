@@ -453,7 +453,7 @@ C-LEVEL FACILITIES
 	to be used before Rinternals.h.
 
     o	Including C system headers can be avoided by defining NO_C_HEADERS
-	before including R headers.  This is intended to be used from 
+	before including R headers.  This is intended to be used from
 	C++ code, and you will need to include C++ equivalents such as
 	<cmath> before the R headers.
 
@@ -565,12 +565,15 @@ BUG FIXES
 
     o   mle() had problems with the L-BFGS-B in the no-parameter case
         and consequentially also when profiling 1-parameter models
-        (thanks to Ben Bolker). 
+        (thanks to Ben Bolker).
 
-    o  two bugs fixed in methods that in involve the "..." argument in the
+    o   two bugs fixed in methods that in involve the "..." argument in the
         generic function: previously failed to catch methods that just
         dropped the "..."; and use of callGeneric() with no arguments
         failed in the case that "..." was a formal argument.
+
+    o	sequence() now behaves more reasonably, though not back-compatibly
+	for zero or negative input.
 
 
 
