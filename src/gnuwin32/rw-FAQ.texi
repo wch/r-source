@@ -314,7 +314,7 @@ their names and re-install them from CRAN.
 Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
-1.5Gb.  It can be set to any amount between 32Mb and 3Gb.  Be aware though
+1.5Gb.  It can be set to any amount between 32Mb and 4095Mb.  Be aware though
 that Windows has (in most versions) a maximum amount of user virtual
 memory of 2Gb.
 
@@ -329,9 +329,11 @@ several times slower on some tasks).
 The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
 per process under suitably enabled versions of Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
-: even where this is supported it has to be specifically enabled).
-On such systems, the default for @code{--max-mem-size} is the smaller of
-the amount of RAM and 2.5Gb.
+and @uref{http://msdn2.microsoft.com/en-us/library/aa366778.aspx}: where
+this is supported it may need to be specifically enabled).  On such
+systems, the default for @code{--max-mem-size} is the smaller of the
+amount of RAM and 2.5Gb.  On some 64-bit versions of Windows (e.g.@:
+Vista) the limit is 4GB.
 
 It is possible that the Windows API calls used will give misleading
 results on machines with more than 4Gb of physical RAM (and later ones
@@ -481,7 +483,7 @@ strings, so for example one needs
 @samp{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.  You can
 make life easier for yourself by using forward slashes as path
 separators: they do work under Windows.  You should include the file
-extension (e.g. @samp{"xgobi.bat"} rather than just @samp{"xgobi"});
+extension (e.g.@: @samp{"xgobi.bat"} rather than just @samp{"xgobi"});
 sometimes this isn't shown in Windows, but it is necessary in R.
 
 A simple way to avoid these problems is to use the function
@@ -622,7 +624,7 @@ updated.  (It was common with DLLs compiled in early versions of Visual C++.)
 Unfortunately, because DLLs may load other DLLs it is not possible for R
 to track which DLL caused the problem.
 
-See also @code{?dyn.load)}.
+See also @code{?dyn.load}.
 
 @node Other strange crashes., Why does R never use more than 50% of my CPU?, What does 'DLL attempted to change FPU control word' mean?, Installation and Usage
 @section Other strange crashes.
@@ -662,12 +664,11 @@ may want to experiment with disabling it.
 @node Does R run under Windows Vista?,  , Why does R never use more than 50% of my CPU?, Installation and Usage
 @section Does R run under Windows Vista?
 
-It does.  Vista was launched in January 2007 and experience with it is
-still limited.  A few issues have been reported that related to the way
+It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
-issues, but changes in user experiences.)  As there are many settings that
-system administrators can change, it is clear that only a tiny fraction
-of possibilities will have been explored.
+issues, but changes in user experiences.)  As there are many settings
+that system administrators can change, it is clear that only a tiny
+fraction of possibilities will have been explored.
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
@@ -752,7 +753,7 @@ This approach will not allow you to update the recommended packages.
 
 
 Another issue with Vista is that the standard POSIX ways that R uses
-(e.g. in @code{file.info} and @code{file.access}) to look at file
+(e.g.@: in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} has been
 re-written for R 2.5.1 to work with Windows NT-based security and
 seems much more reliable with Vista.
@@ -818,7 +819,7 @@ Q2.15, or in the @file{Rconsole} file.
 @section I want to run R in Chinese/Japanese/Korean.
 
 All recent Windows versions of R support `East Asian' languages
-(with a suitable version of Windows -- e.g. Western installations of
+(with a suitable version of Windows -- e.g.@: Western installations of
 Windows XP do not by default have such support).
 
 Both @command{Rterm.exe} and @command{RGui.exe} support single- and
@@ -996,7 +997,7 @@ EITHER
 set the environment variable R_LIBS to p:\myRlib before starting R
 @end example
 
-OR use a package by, e.g.
+OR use a package by, e.g.@:
 
 @example
 library(mypkg, lib.loc="p:/myRlib")
@@ -1098,8 +1099,8 @@ to a non-empty value, it is assumed that you want to use a different
 Tcl/Tk 8.4.x installation, and that this is set up correctly (with the
 DLLs in your path and @env{TCL_LIBRARY} set).  In that case you do not
 need the Tcl/Tk support files installed (but they can be).  Note that
-you do need 8.4.x and not 8.3.x.  (If you build R from the sources
-yourself you can configure it to use 8.3.x.)
+you do need 8.4.x and not 8.5.x.  (If you build R from the sources
+yourself you can configure it to use 8.5.x.)
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
@@ -1186,7 +1187,7 @@ requests to the browser: use @code{options(htmlhelp=TRUE)} to turn this on.
 
 @item The HTML help system has limitations in supporting cross-library links.
 
-@item Paths to files (e.g. in @code{source()}) can be specified with
+@item Paths to files (e.g.@: in @code{source()}) can be specified with
 either "/" or "\\".
 
 @item @code{system()} is slightly different: see its help page and that
@@ -1277,7 +1278,7 @@ What is it `completing'?  There are two modes: within an unterminated
 Otherwise, it is completing R expressions: most obviously it will match
 visible R object names and keywords, so @kbd{apr} folloed by @kbd{TAB}
 will (in a vanilla session) complete to @code{apropos}.  After a
-function name and paranthesis (e.g. @kbd{apropos(}) it will complete
+function name and parenthesis (e.g.@: @kbd{apropos(}) it will complete
 argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it will
 complete list components or slot names respectively.
 
