@@ -625,7 +625,7 @@ updated.  (It was common with DLLs compiled in early versions of Visual C++.)
 Unfortunately, because DLLs may load other DLLs it is not possible for R
 to track which DLL caused the problem.
 
-See also @code{?dyn.load)}.
+See also @code{?dyn.load}.
 
 @node Other strange crashes., Why does R never use more than 50% of my CPU?, What does 'DLL attempted to change FPU control word' mean?, Installation and Usage
 @section Other strange crashes.
@@ -665,12 +665,11 @@ may want to experiment with disabling it.
 @node Does R run under Windows Vista?,  , Why does R never use more than 50% of my CPU?, Installation and Usage
 @section Does R run under Windows Vista?
 
-It does.  Vista was launched in January 2007 and experience with it is
-still limited.  A few issues have been reported that related to the way
+It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
-issues, but changes in user experiences.)  As there are many settings that
-system administrators can change, it is clear that only a tiny fraction
-of possibilities will have been explored.
+issues, but changes in user experiences.)  As there are many settings
+that system administrators can change, it is clear that only a tiny
+fraction of possibilities will have been explored.
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
