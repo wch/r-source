@@ -182,6 +182,7 @@ RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres
 RM=rm -f
 SED=sed
+SORT=sort
 
 .SUFFIXES:
 .SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95 .m .S

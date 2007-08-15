@@ -4219,7 +4219,7 @@ substituting other tools once you are familiar with the process.
 here as a result of bitter experience.  Please do not report problems
 to R-help unless you have followed all the prescriptions.}
 
-We have collected some of the necessary tools (unfortunately not all,
+We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer named
 @file{Rtools.exe}, available from
 @url{http://www.murdoch-sutherland.com/Rtools}. You should download and
@@ -4231,7 +4231,7 @@ You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
 @itemize
 @item
-Perl
+Perl (in @file{Rtools.exe})
 @item
 The command line tools (in @file{Rtools.exe})
 @item
@@ -4252,7 +4252,9 @@ The Microsoft @HTML{} Help Workshop
 The Inno Setup installer
 @end itemize
 
-It is important to set your @env{PATH} properly.
+It is important to set your @env{PATH} properly.  The @file{Rtools.exe}
+optionally sets the path to components that it installs.
+
 Your @env{PATH} may include @file{.} first, then the @file{bin} directories
 of the tools, Perl, MinGW and @LaTeX{}, as well as the Help Workshop
 directory.  Do not use filepaths containing spaces or on network shares
@@ -4260,7 +4262,7 @@ directory.  Do not use filepaths containing spaces or on network shares
 @code{dir /x} at the Windows command line).  For example, all on one line,
 
 @example
-PATH=c:\Rtools\bin;c:\perl\bin;c:\Rtools\MinGW\bin;c:\texmf\miktex\bin;
+PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\texmf\miktex\bin;
      c:\progra~1\htmhe~1;c:\R\bin;c:\windows;c:\windows\system32
 @end example
 
@@ -4305,13 +4307,13 @@ path.
 @section Perl
 
 You will need a Windows port of @code{perl5} (but only the basic
-functionality, not any of the third-party Win32 extensions).  A package
-containing this is available from
+functionality, not any of the third-party Win32 extensions).  The
+Vanilla Perl package is included in @file{Rtools.exe}. A more full-
+featured distribution is available from
 @url{http://www.activestate.com/Products/ActivePerl/,
-@code{www.activestate.com/@/Products/@/ActivePerl}}.  Perl is @emph{not}
-included in @file{Rtools.exe}.  Alternatives are listed at
-@url{http://win32.perl.org, @code{win32.perl.org}}: we have for example
-built R using Vanilla Perl.
+@code{www.activestate.com/@/Products/@/ActivePerl}}, and this was used
+in releases of @R{} up to @R{} 2.5.1.  Alternatives are listed at
+@url{http://win32.perl.org, @code{win32.perl.org}}.
 
 @strong{Beware}: you do need a @emph{Windows} port and not the Cygwin
 one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
@@ -4387,9 +4389,7 @@ from the Cygwin distribution (@url{http://www.cygwin.com,
 @code{www.cygwin.com}}) or compiled from the sources.  You will also
 need @code{zip} and @code{unzip} from the Info-ZIP project
 (@url{http://www.info-zip.org, @code{www.info-zip.org}}).  All of
-these tools are in @file{Rtools.exe}; they are also available at
-@url{http://www.murdoch-sutherland.com/Rtools/tools.zip,
-@code{www.murdoch-sutherland.com/@/Rtools/@/tools.zip}}.
+these tools are in @file{Rtools.exe}.
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that at the mingw site).  There were also problems with
@@ -4407,10 +4407,9 @@ compilers, use the default setting of @code{BUILD=GCC4} in file
 @file{src/gnuwin32/MkRules}.  For earlier MinGW compilers set
 @code{BUILD=GCC3} in file @file{src/gnuwin32/MkRules}.
 
-The @file{Rtools.exe} installer includes the currently used version of
-the MinGW port of @command{gcc} from
+The @file{Rtools.exe} installer currently includes both versions @code{3.4.5} and
+@code{4.2.1} of the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.
-[It has yet to be updated to @command{gcc} @code{4.2.1}]
 
 If you would like to install your own copy, we recommed downloading from
 the URL above, as the download links from @url{www.mingw.org} have

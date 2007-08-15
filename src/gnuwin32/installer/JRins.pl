@@ -72,7 +72,7 @@ OutputDir=.
 WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
-Compression=lzma
+Compression=lzma/ultra
 SolidCompression=yes
 END
 
