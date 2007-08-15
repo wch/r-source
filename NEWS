@@ -279,6 +279,10 @@ NEW FEATURES
 
     o   New function Sys.which(), an interface to 'which' on Unix-alikes.
 
+    o	optim(method = "L-BFGS-B") now accepts zero-length parameters,
+	like the other methods.  Also, method = "SANN" no longer
+	attempts to optimize in this case.
+
 
 METHODS PACKAGE
 

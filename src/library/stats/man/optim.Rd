@@ -95,7 +95,8 @@ optim(par, fn, gr = NULL, \dots,
   finite.)
 
   \code{optim} can be used recursively, and for a single parameter
-  as well as many.
+  as well as many.  It also accepts a zero-length \code{par}, and just
+  evaluates the function with that argument.
 
   The \code{control} argument is a list that can supply any of the
   following components:

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2006  the R Development Core Team
+ *  Copyright (C) 1999-2007  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -278,7 +278,7 @@ SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
         samin (npar, dpar, &val, fminfn, maxit, tmax, temp, trace, (void *)OS);
         for (i = 0; i < npar; i++)
             REAL(par)[i] = dpar[i] * (OS->parscale[i]);
-        fncount = maxit;
+        fncount = npar > 0 ? maxit : 1;
         grcount = NA_INTEGER;
         UNPROTECT(1);  /* OS->R_gcall */
 
@@ -1014,6 +1014,14 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
     double f, *g, dsave[29], *wa;
     int tr = -1, iter = 0, *iwa, isave[44], lsave[4];
 
+    if(n == 0) { /* not handled in setulb */
+	*fncount = 1;
+	*grcount = 0;
+	*Fmin = fminfn(n, u, ex);
+	strcpy(msg, "NOTHING TO DO");
+	*fail = 0;
+	return;
+    }
     if (nREPORT <= 0)
 	error(_("REPORT must be > 0 (method = \"L-BFGS-B\")"));
     switch(trace) {
@@ -1093,6 +1101,10 @@ void samin(int n, double *pb, double *yb, optimfn fminfn, int maxit,
     double t, y, dy, ytry, scale;
     double *p, *dp, *ptry;
 
+    if(n == 0) { /* don't even attempt to optimize */
+	*yb = fminfn(n, pb, ex);
+	return;
+    }
     p = vect (n); dp = vect (n); ptry = vect (n);
     GetRNGstate();
     *yb = fminfn (n, pb, ex);  /* init best system state pb, *yb */
