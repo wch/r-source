@@ -1087,7 +1087,7 @@ make msi
 
 @noindent
 which will results in a file of about 40Mb with a name like
-@file{R-2.4.0-win32.msi}.  This can be double-clicked to be installed,
+@file{R-2.5.0-win32.msi}.  This can be double-clicked to be installed,
 but those who need it will know what to do with it.
 
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
@@ -1112,8 +1112,9 @@ the scripts available at
 Cross-compilers based on both @command{gcc 3} and @command{gcc 4} are
 supported: the flavour is selected by the macro @code{CROSS-GCC}.
 
-You will need Perl, @command{zip} and @command{unzip} installed and
-@command{makeinfo} version 4.7 or later (part of GNU @code{texinfo}).
+You will need Perl, @command{zip} and @command{unzip} installed and (to
+make the manuals) @command{makeinfo} version 4.7 or later (part of GNU
+@code{texinfo}).
 
 You also need the R source (@file{R-@value{VERSIONno}.tar.gz}).
 
@@ -3943,9 +3944,9 @@ other updates to these instructions.  (Most Windows users will not need
 to build add-on packages from source; see @ref{Add-on packages} for
 details.)
 
-There are known problems with this toolset on Windows Vista: see the
-workaround below. (With that workaround it has been used on both 32- and
-64-bit versions of Vista.)
+There are known problems with one of the compilers sets in this toolset
+on Windows Vista: see the workaround below. (With that workaround it has
+been used on both 32- and 64-bit versions of Vista.)
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -3993,11 +3994,12 @@ The Inno Setup installer
 @end itemize
 
 It is important to set your @env{PATH} properly.
-Your @env{PATH} may include @file{.} first, then the @file{bin} directories
-of the tools, Perl, MinGW and @LaTeX{}, as well as the Help Workshop
-directory.  Do not use filepaths containing spaces or on network shares
-(starting @code{\\}): you can always use the short forms (found by
-@code{dir /x} at the Windows command line).  For example, all on one line,
+Your @env{PATH} may include @file{.} first, then the @file{bin}
+directories of the tools, Perl, MinGW and @LaTeX{}, as well as the Help
+Workshop directory.  Do not use filepaths containing spaces: you can
+always use the short forms (found by @code{dir /x} at the Windows
+command line).  Network shares (with paths starting @code{\\}) are not
+supported.  For example, all on one line,
 
 @example
 PATH=c:\Rtools\bin;c:\perl\bin;c:\Rtools\MinGW\bin;c:\texmf\miktex\bin;
@@ -4045,13 +4047,13 @@ path.
 @section Perl
 
 You will need a Windows port of @code{perl5} (but only the basic
-functionality, not any of the third-party Win32 extensions).  A package
-containing this is available from
+functionality, not any of the third-party Win32 extensions).  The
+Vanilla Perl package is included in @file{Rtools.exe}.  A more full-
+featured distribution is available from
 @url{http://www.activestate.com/Products/ActivePerl/,
-@code{www.activestate.com/@/Products/@/ActivePerl}}.  Perl is @emph{not}
-included in @file{Rtools.exe}.  Alternatives are listed at
-@url{http://win32.perl.org, @code{win32.perl.org}}: we have for example
-built R using Vanilla Perl.
+@code{www.activestate.com/@/Products/@/ActivePerl}}, and this was used
+in releases of @R{} up to @R{} 2.5.1.  Alternatives are listed at
+@url{http://win32.perl.org, @code{win32.perl.org}}.
 
 @strong{Beware}: you do need a @emph{Windows} port and not the Cygwin
 one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
@@ -4133,7 +4135,7 @@ these tools are in @file{Rtools.exe}; they are also available at
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that at the mingw site).  There were also problems with
-several earlier versions of the cygwin tools and DLL.  To avoid
+several earlier versions of the cygwin tools and DLLs.  To avoid
 frustration, please use our tool set, and make sure it is at the front
 of your path (including before the Windows system directories).  If you
 are using a Windows shell, type @code{PATH} at the prompt to find out.
@@ -4147,8 +4149,9 @@ the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
 
 However, MinGW versions of the @command{gcc} @code{4.2.1} compilers were
-released in August 2007.  For those compilers, set @code{BUILD=GCC4} in
-file @file{src/gnuwin32/MkRules}.  For earlier MinGW compilers set
+released in August 2007 and are also contained in @file{Rtools.exe}.
+For those compilers, set @code{BUILD=GCC4} in file
+@file{src/gnuwin32/MkRules}.  For earlier MinGW compilers set
 @code{BUILD=GCC3} (the default) in file @file{src/gnuwin32/MkRules}.
 
 If you would like to install your own copy, we recommed downloading from
@@ -4205,7 +4208,7 @@ gcc-gfortran-4.2.1-sjlj-2.tar.gz
 support) and unpack these into the same directory (using @command{tar
 zxf tarball_name}).  (Note that currently you will need to copy
 @file{bin/gcc-sjlj.exe} to @file{bin/gcc.exe} to work around an
-incompatibility between these components, and a few badly-written
+incompatibility between these components.  (Also, a few badly-written
 packages need @file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)
 Then set @code{BUILD=GCC4} in @file{MkRules}.  This toolset should work
 on Windows Vista with just its @file{bin} directory in the path.
@@ -4214,7 +4217,7 @@ Other builds of @command{gcc} 4 are available from
 @url{http://gcc.gnu.org/wiki/GFortranBinaries} and
 @uref{http://www.tdragon.net/recentgcc/}.  Any of these can be used to
 provide a Fortran 90 compiler if @code{gcc 3.4.5} is used for the main
-languages. 
+languages.  They need the @code{PATH} workaround on Vista.
 
 
 @node Function and variable index, Concept index, The Windows toolset, Top
