@@ -1279,7 +1279,7 @@ What is it `completing'?  There are two modes: within an unterminated
 Otherwise, it is completing R expressions: most obviously it will match
 visible R object names and keywords, so @kbd{apr} folloed by @kbd{TAB}
 will (in a vanilla session) complete to @code{apropos}.  After a
-function name and paranthesis (e.g.@: @kbd{apropos(}) it will complete
+function name and parenthesis (e.g.@: @kbd{apropos(}) it will complete
 argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it will
 complete list components or slot names respectively.
 
