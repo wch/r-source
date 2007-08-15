@@ -223,8 +223,16 @@ setMethod(Gfun, signature(x = "mmat3"),
 	      x <- as(x, "mmat2")
 	      callGeneric()
 	  })
+wrapG <- function(x, a1, a2) {
+    myextra <- missing(a1) && missing(a2)
+    Gfun(x, extrarg = myextra)
+}
+
 (mm <- new("myMat", diag(3)))
 Gfun(mm)
+stopifnot(identical(wrapG(mm),    Gfun(mm, TRUE)),
+          identical(wrapG(mm,,2), Gfun(mm, FALSE)))
+
 Gfun(mm, extrarg = FALSE)
 m2 <- new("mmat2", diag(3))
 Gfun(m2)
@@ -233,6 +241,34 @@ Gfun(m2, extrarg = FALSE)
 (m3 <- new("mmat3", diag(3)))
 Gfun(m3)
 Gfun(m3, extrarg = FALSE) # used to not pass 'extrarg'
+
+## -- a variant of the above which failed in version <= 2.5.1 :
+setGeneric("Gf", function(x, ...) standardGeneric("Gf"))
+setMethod(Gf, signature(x = "mmat2"),
+          function(x, ...) {
+              cat("in 'mmat2' method for 'Gf()\n")
+              x <- unclass(x)
+              callGeneric()
+          })
+setMethod(Gf, signature(x = "mmat3"),
+          function(x, ...) {
+              cat("in 'mmat3' method for 'Gf()\n")
+              x <- as(x, "mmat2")
+              callGeneric()
+          })
+setMethod(Gf, signature(x = "matrix"),
+	  function(x, a1, ...) {
+              cat(sprintf("matrix %d x %d ...\n", nrow(x), ncol(x)))
+              list(x=x, a1=a1, ...)
+          })
+
+wrap2 <- function(x, a1, ...) {
+    A1 <- if(missing(a1)) "A1" else as.character(a1)
+    Gf(x, ..., a1 = A1)
+}
+## Gave errors in R 2.5.1 :
+wrap2(m2, foo = 3.14)
+wrap2(m2, 10, answer.all = 42)
 
 
 ## regression tests of dispatch: most of these became primitive in 2.6.0
@@ -277,3 +313,9 @@ setMethod("!", "foo", function(e1) e1+NA)
 selectMethod("!", "foo")
 xx <- new("foo", FALSE)
 !xx
+
+## This failed for about one day -- as.vector(x, mode) :
+setMethod("as.vector", signature(x = "foo", mode = "missing"),
+          function(x) unclass(x))
+## whereas this fails in R versions earlier than 2.6.0:
+setMethod("as.vector", "foo", function(x) unclass(x))# gives message

@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-06-06 r41860)
+R version 2.6.0 Under development (unstable) (2007-08-15 r42513)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -359,6 +359,11 @@ attr(,"package")
 [1] "Gfun"
 attr(,"package")
 [1] ".GlobalEnv"
+> wrapG <- function(x, a1, a2) {
++     myextra <- missing(a1) && missing(a2)
++     Gfun(x, extrarg = myextra)
++ }
+> 
 > (mm <- new("myMat", diag(3)))
 An object of class "myMat"
      [,1] [,2] [,3]
@@ -368,6 +373,13 @@ An object of class "myMat"
 > Gfun(mm)
 in 'myMat' method for 'Gfun() : extrarg= TRUE 
 [1] 3
+> stopifnot(identical(wrapG(mm),    Gfun(mm, TRUE)),
++           identical(wrapG(mm,,2), Gfun(mm, FALSE)))
+in 'myMat' method for 'Gfun() : extrarg= TRUE 
+in 'myMat' method for 'Gfun() : extrarg= TRUE 
+in 'myMat' method for 'Gfun() : extrarg= FALSE 
+in 'myMat' method for 'Gfun() : extrarg= FALSE 
+> 
 > Gfun(mm, extrarg = FALSE)
 in 'myMat' method for 'Gfun() : extrarg= FALSE 
 [1] 3
@@ -393,6 +405,72 @@ in 'mmat2' method for 'Gfun() : extrarg= TRUE
 in 'mmat3' method for 'Gfun() : extrarg= FALSE 
 in 'mmat2' method for 'Gfun() : extrarg= FALSE 
 [1] 3
+> 
+> ## -- a variant of the above which failed in version <= 2.5.1 :
+> setGeneric("Gf", function(x, ...) standardGeneric("Gf"))
+[1] "Gf"
+> setMethod(Gf, signature(x = "mmat2"),
++           function(x, ...) {
++               cat("in 'mmat2' method for 'Gf()\n")
++               x <- unclass(x)
++               callGeneric()
++           })
+[1] "Gf"
+attr(,"package")
+[1] ".GlobalEnv"
+> setMethod(Gf, signature(x = "mmat3"),
++           function(x, ...) {
++               cat("in 'mmat3' method for 'Gf()\n")
++               x <- as(x, "mmat2")
++               callGeneric()
++           })
+[1] "Gf"
+attr(,"package")
+[1] ".GlobalEnv"
+> setMethod(Gf, signature(x = "matrix"),
++ 	  function(x, a1, ...) {
++               cat(sprintf("matrix %d x %d ...\n", nrow(x), ncol(x)))
++               list(x=x, a1=a1, ...)
++           })
+[1] "Gf"
+attr(,"package")
+[1] ".GlobalEnv"
+> 
+> wrap2 <- function(x, a1, ...) {
++     A1 <- if(missing(a1)) "A1" else as.character(a1)
++     Gf(x, ..., a1 = A1)
++ }
+> ## Gave errors in R 2.5.1 :
+> wrap2(m2, foo = 3.14)
+in 'mmat2' method for 'Gf()
+matrix 3 x 3 ...
+$x
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+
+$a1
+[1] "A1"
+
+$foo
+[1] 3.14
+
+> wrap2(m2, 10, answer.all = 42)
+in 'mmat2' method for 'Gf()
+matrix 3 x 3 ...
+$x
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+
+$a1
+[1] "10"
+
+$answer.all
+[1] 42
+
 > 
 > 
 > ## regression tests of dispatch: most of these became primitive in 2.6.0
@@ -535,4 +613,15 @@ defined "foo"
 > !xx
 An object of class "foo"
 [1] NA
+> 
+> ## This failed for about one day -- as.vector(x, mode) :
+> setMethod("as.vector", signature(x = "foo", mode = "missing"),
++           function(x) unclass(x))
+Creating a new generic function for "as.vector" in ".GlobalEnv"
+[1] "as.vector"
+> ## whereas this fails in R versions earlier than 2.6.0:
+> setMethod("as.vector", "foo", function(x) unclass(x))# gives message
+In method for function "as.vector": expanding the signature 
+to include omitted arguments in definition: mode = "missing" 
+[1] "as.vector"
 > 
