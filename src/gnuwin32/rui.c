@@ -34,11 +34,13 @@
 #include <stdio.h>
 #undef DEBUG /* needed for mingw-runtime 2.0 */
 /* the user menu code looks at the internal structure */
+#define GA_EXTERN
 #include "graphapp/internal.h"
 #include "graphapp/ga.h"
 #ifdef USE_MDI
 # include "graphapp/stdimg.h"
 #endif
+
 #include "console.h"
 #include "rui.h"
 #include "preferences.h"

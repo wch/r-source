@@ -327,7 +327,8 @@ typedef void (*dropfn)(control c, char *data);
 #define gchangemenubar		GA_gchangemenubar
 #define gchangepopup		GA_gchangepopup
 #define gchangescrollbar		GA_gchangescrollbar
-#define gcharmetric		GA_gcharmetric
+#define gcopy		GA_gcopy
+#define gcopyalpha		GA_gcopyalpha
 #define gdrawellipse		GA_gdrawellipse
 #define gdrawline		GA_gdrawline
 #define gdrawpolyline		GA_gdrawpolyline
@@ -576,6 +577,7 @@ typedef void (*dropfn)(control c, char *data);
 #define to_dos_string		GA_to_dos_string
 #define toolbar_hide		GA_toolbar_hide
 #define toolbar_show		GA_toolbar_show
+#define topleft		GA_topleft
 #define topright		GA_topright
 #define tree_search		GA_tree_search
 #define uncheck		GA_uncheck
@@ -1192,12 +1194,14 @@ void	resetdrawstate(void);
  *  Library supplied variables.
  */
 
-extern	font	SystemFont;	/* system font */
-extern	font	Times;  	/* times roman font (serif) */
-extern	font	Helvetica;	/* helvetica font (sans serif) */
-extern	font	Courier;	/* courier font (fixed width) */
-
 #include <R_ext/libextern.h>
+#undef LibExtern
+#ifdef GA_DLL_BUILD
+# define LibExtern LibExport
+#else
+# define LibExtern extern LibImport
+#endif
+
 LibExtern font		FixedFont;	/* fixed-width font */
 LibExtern cursor	ArrowCursor;	/* normal arrow cursor */
 LibExtern cursor	BlankCursor;	/* invisible cursor */
@@ -1206,6 +1210,11 @@ LibExtern cursor	CaretCursor;	/* insert text */
 LibExtern cursor	TextCursor;	/* insert text */
 LibExtern cursor	HandCursor;	/* hand pointer */
 LibExtern cursor	CrossCursor;	/* cross pointer */
+LibExtern font		SystemFont;	/* system font */
+LibExtern font		Times;  	/* times roman font (serif) */
+LibExtern font		Helvetica;	/* helvetica font (sans serif) */
+LibExtern font		Courier;	/* courier font (fixed width) */
+
 #undef LibExtern
 #undef extern
 

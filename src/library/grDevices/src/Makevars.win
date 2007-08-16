@@ -4,4 +4,4 @@ PKG_CFLAGS=-I$(RHOME)/src/include -I$(RHOME)/src/extra/zlib -I$(RHOME)/src/gnuwi
 ifdef SUPPORT_UTF8
 PKG_CFLAGS+=-DSUPPORT_UTF8
 endif
-PKG_LIBS=$(RHOME)/src/extra/zlib/libz.a
+PKG_LIBS=$(RHOME)/src/extra/zlib/libz.a -lgraphapp

@@ -12,14 +12,14 @@ CFLAGS=$(OPTFLAGS) -I../../include -I../../extra/graphapp -DHAVE_CONFIG_H
 	$(MKDIR) -p ../../../modules
 	@$(ECHO) "EXPORTS" > internet.def
 	@$(ECHO) " R_init_internet" >> internet.def
-	$(DLL) -shared  -o $@ $^ internet.def -L../../../bin -lR -lwsock32
+	$(DLL) -shared  -o $@ $^ internet.def -L../../../bin -lR -lgraphapp -lwsock32
 	@$(RM) internet.def
 
 ../../../modules/internet2.dll: internet2.o sockconn.o Rsock.o sock.o dllversion.o
 	$(MKDIR) -p ../../../modules
 	@$(ECHO) "EXPORTS" > internet.def
 	@$(ECHO) " R_init_internet2" >> internet.def
-	$(DLL) -shared  -o $@ $^ internet.def -L../../../bin -lR -lwininet -lwsock32 
+	$(DLL) -shared  -o $@ $^ internet.def -L../../../bin -lR -lgraphapp -lwininet -lwsock32 
 	@$(RM) internet.def
 
 internet2.o: internet.c

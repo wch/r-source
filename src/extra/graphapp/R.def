@@ -1,0 +1,7 @@
+EXPORTS
+ R_ShowMessage
+ Rf_mbrtowc
+ Rf_strchr
+ localeCP
+ libintl_dgettext
+ libintl_gettext

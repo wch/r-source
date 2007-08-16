@@ -397,6 +397,16 @@ struct callinfo
 
 
 /*
+ * variables used building R
+ */
+#ifdef GA_EXTERN
+extern __declspec(dllimport) HWND hwndClient;
+#else
+extern HWND hwndClient;
+#endif
+
+
+/*
  *  Library internal variables.
  */
 
@@ -425,7 +435,6 @@ struct callinfo
 
   extern HACCEL	hAccel;
   extern HWND	hwndMain;
-  extern HWND	hwndClient;
   extern HWND	hwndFrame;
   extern object MDIFrame;
   extern object MDIToolbar;

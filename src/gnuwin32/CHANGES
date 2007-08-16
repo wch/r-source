@@ -55,6 +55,9 @@ PACKAGE INSTALLATION
     o	There are dummy targets 'before' and 'after' in MakeDll which
 	can be overidden in src/Makevars.win.
 
+    o	graphapp is now in a separate DLL, so packages making direct
+	use of it need to link against -lgraphapp.
+
 
 BUILDING R
 

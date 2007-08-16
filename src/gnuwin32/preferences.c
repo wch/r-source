@@ -51,7 +51,7 @@ void editorsetfont(font f);
 
 static void showDialog(Gui gui);
 
-extern const char *ColorName[]; /* from graphapp/rgb.c */
+extern __declspec(dllimport) const char *ColorName[]; /* from graphapp/rgb.c */
 
 static int cmatch(char *col, const char **list)
 {

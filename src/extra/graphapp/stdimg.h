@@ -1,4 +1,11 @@
 #include <R_ext/libextern.h>
+#undef LibExtern
+#ifdef GA_DLL_BUILD
+# define LibExtern LibExport
+#else
+# define LibExtern extern LibImport
+#endif
+
 LibExtern image cam_image;
 LibExtern image color_image;
 LibExtern image console_image;
