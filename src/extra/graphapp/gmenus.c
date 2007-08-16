@@ -24,7 +24,6 @@
    ga.h)
  */
 
-#define ENABLE_NLS 1
 #include "win-nls.h"
 #include "internal.h"
 

@@ -28,7 +28,6 @@
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
 
-#define ENABLE_NLS 1
 #include "win-nls.h"
 #include "internal.h"
 #include "ga.h"

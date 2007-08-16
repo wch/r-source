@@ -2,11 +2,13 @@ include ../../gnuwin32/MkRules
 
 all: makeMakedeps ga.a
 
-CFLAGS=-I. -I../../gnuwin32 -I../../include $(OPTFLAGS) -DINDLL -DR_DLL_BUILD
-SOURCES=$(filter-out graphappmain.c xredef.c, $(wildcard *.c))
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+CFLAGS=-I. -I../../gnuwin32 -I../../include $(OPTFLAGS) \
+  -DINDLL -DR_DLL_BUILD -DENABLE_NLS=1
 
-ga.a: $(OBJS)
+SOURCES=$(filter-out graphappmain.c xredef.c, $(wildcard *.c))
+OBJECTS=$(foreach i, $(SOURCES), $(basename $i).o)
+
+ga.a: $(OBJECTS)
 
 clean:
 	$(RM) *.o *.a *~ \#*\# *.d Makedeps

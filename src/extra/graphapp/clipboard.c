@@ -28,7 +28,6 @@
    This file is an add-on  to GraphApp, a cross-platform C graphics library.
  */
 
-#define ENABLE_NLS 1
 #include "win-nls.h"
 #include "internal.h"
 #include "rui.h"

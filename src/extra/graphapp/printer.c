@@ -24,7 +24,6 @@
  *                          printers can be deleted by 'del(printer)'
  */
 
-#define ENABLE_NLS 1
 #include "win-nls.h"
 #include "internal.h"
 #include "rui.h"
