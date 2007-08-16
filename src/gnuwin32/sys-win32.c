@@ -186,7 +186,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     char  buf[INTERN_BUFSIZE];
     int   vis = 0, flag = 2, i = 0, j, ll, ignore_stderr = 0;
     SEXP  tlist = R_NilValue, tchar, rval;
-    HANDLE hERR;
+    HANDLE hERR = NULL /* -Wall */;
 
     checkArity(op, args);
     if (!isString(CAR(args)))
