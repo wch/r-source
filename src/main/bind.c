@@ -972,7 +972,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, t, obj, classlist, classname, method, classmethod, rho;
     const char *generic;
-    int mode, deparse_level;
+    int mode, deparse_level, compatible=1;
     struct BindData data;
     char buf[512], *s, *klass;
 
@@ -1008,7 +1008,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
     klass = "";
     method = R_NilValue;
-    for (a = args; a != R_NilValue; a = CDR(a)) {
+    for (a = args; a != R_NilValue && compatible; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
 	if (isObject(obj)) {
 	    int i;
@@ -1035,9 +1035,11 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* default method. */
 			if (strcmp(klass, s)) {
 			    method = R_NilValue;
-			    break;
+			    /* need to end both loops */
+			    compatible = 0;  
 			}
-		    }
+		    }			
+		    break; /* go to next parameter */		    
 		}
 	    }
 	}

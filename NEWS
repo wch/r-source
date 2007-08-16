@@ -54,6 +54,9 @@ BUG FIXES
 
     o	ISOLatin7 encoding for postscript/PDF has been corrected.
 	(PR#9845)
+	
+    o	rbind(x,y) and cbind(x,y) did not dispatch properly when x and
+    	y had multiple S3-style classes.
 
 
 
