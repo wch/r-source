@@ -49,8 +49,9 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
-graphappmain.o: ../graphapp/graphappmain.c
-	$(CC) -c -o $@ -I../graphapp $(CFLAGS) ../graphapp/graphappmain.c
+GRAPHAPP=../../extra/graphapp 
+graphappmain.o: ../../extra/graphapp/graphappmain.c
+	$(CC) -c -o $@ -I$(GRAPHAPP) $(CFLAGS) $<
 
 rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
@@ -118,7 +119,7 @@ $(R_HOME)/bin/Rproxy.dll: Rproxy.dll
 	$(CP) Rproxy.dll $@	
 
 CSOURCES=$(filter-out R.c rcmd.c rpwd.c rtest.c, $(wildcard *.c)) \
-  ../graphapp/graphappmain.c
+  ../../extra/graphapp/graphappmain.c
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

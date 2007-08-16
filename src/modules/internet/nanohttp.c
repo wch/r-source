@@ -237,7 +237,7 @@ static int socket_errno(void)
  */
 
 #ifdef Win32
-# include "graphapp/graphapp.h"
+# include "graphapp.h"
 #endif
 
 static void

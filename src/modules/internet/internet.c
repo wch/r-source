@@ -227,7 +227,7 @@ typedef struct {
 } inetconn;
 
 #ifdef Win32
-#include <graphapp/ga.h>
+#include <ga.h>
 
 typedef struct {
     window wprog;

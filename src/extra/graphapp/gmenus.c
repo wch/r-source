@@ -25,7 +25,7 @@
  */
 
 #define ENABLE_NLS 1
-#include "../win-nls.h"
+#include "win-nls.h"
 #include "internal.h"
 
 static void mdimenu(menuitem m) {

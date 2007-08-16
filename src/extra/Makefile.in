@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 SUBDIRS = blas bzip2 pcre xdr zlib @USE_NLS_TRUE@ intl
-SUBDIRS_WITH_NO_BUILD = trio @USE_NLS_FALSE@ intl
+SUBDIRS_WITH_NO_BUILD = graphapp trio @USE_NLS_FALSE@ intl
 
 RBLAS =@BLAS_SHLIB_TRUE@ blas
 LIBBZ2 =@BUILD_BZLIB_TRUE@ bzip2

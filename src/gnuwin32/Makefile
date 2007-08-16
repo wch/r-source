@@ -62,7 +62,7 @@ SOURCES = \
   rui.c run.c shext.c sys-win32.c system.c dos_glob.c
 OBJS = $(SOURCES:.c=.o) e_pow.o
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
-EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
+EXTRALIBS = ../extra/graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a
 
@@ -79,7 +79,7 @@ endif
 .PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
 
 
-CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
+CFLAGS = $(OPTFLAGS) -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(FOPTFLAGS)
 
 Rpwd.exe: front-ends/Rpwd.exe
@@ -173,7 +173,7 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../appl RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ./graphapp OPTFLAGS='$(OPTFLAGS)'
+	$(MAKE) --no-print-directory -C ../extra/graphapp OPTFLAGS='$(OPTFLAGS)'
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
 	@for ex in pcre bzip2 zlib xdr trio; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
@@ -456,7 +456,7 @@ veryclean: distclean
 
 cleanwin:
 	$(RM) *.o *.dll *.a *~ \#*\# .RData .Rhistory Makedeps *.d
-	$(MAKE) -C graphapp clean
+	$(MAKE) -C ../extra/graphapp clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
