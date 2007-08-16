@@ -375,7 +375,7 @@ foreach $pkg (@ARGV){
 			$line =~ s/\s*[0-9]+\ //;
 			$line =~ s/\.[a-zA-Z]+$//;
 			$nodups = 0 if $line eq $prev;
-			$prev = $_;
+			$prev = $line;
 		    }
 		}
 		# print ("out was $out, nodups was $nodups\n");
