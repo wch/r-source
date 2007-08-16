@@ -573,11 +573,13 @@ BUG FIXES
 
     o	Two bugs fixed in methods that in involve the "..." argument in
 	the generic function: previously failed to catch methods that
-	just dropped the "..."; and use of callGeneric() with no
-	arguments failed in the case that "..." was a formal argument.
+	just dropped the "..."; and use of callGeneric() with no arguments
+	failed in some circumstances when "..." was a formal argument.
 
     o	sequence() now behaves more reasonably, although not
 	back-compatibly for zero or negative input.
+
+    o	nls() now allows more peculiar but reasonable ways of being called.
 
 
 

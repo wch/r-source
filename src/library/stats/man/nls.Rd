@@ -201,6 +201,53 @@ Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
               trace = TRUE)
 summary(Pur.wt)
 
+## Passing arguments using a list that can not be coerced to a data.frame
+lisTreat <- with(Treated,
+                 list(conc1 = conc[1], conc.1 = conc[-1], rate = rate))
+
+weighted.MM1 <- function(resp, conc1, conc.1, Vm, K)
+{
+     conc <- c(conc1, conc.1)
+     pred <- (Vm * conc)/(K + conc)
+    (resp - pred) / sqrt(pred)
+}
+system.time(
+Pur.wt1 <- nls( ~ weighted.MM1(rate, conc1, conc.1, Vm, K),
+               data = lisTreat, start = list(Vm = 200, K = 0.1))
+)
+stopifnot(all.equal(coef(Pur.wt), coef(Pur.wt1)))
+
+## Chambers and Hastie (1992) Statistical Models in S  (p. 537):
+## If the value of the right side [of formula] has an attribute called
+## 'gradient' this should be a matrix with the number of rows equal
+## to the length of the response and one column for each parameter.
+
+weighted.MM.grad <- function(resp, conc1, conc.1, Vm, K)
+{
+  conc <- c(conc1, conc.1)
+
+  K.conc <- K+conc
+  dy.dV <- conc/K.conc
+  dy.dK <- -Vm*dy.dV/K.conc
+  pred <- Vm*dy.dV
+  pred.5 <- sqrt(pred)
+  dev <- (resp - pred) / pred.5
+  Ddev <- -0.5*(resp+pred)/(pred.5*pred)
+  attr(dev, "gradient") <- Ddev * cbind(Vm = dy.dV, K = dy.dK)
+  dev
+}
+
+system.time(
+Pur.wt.grad <- nls( ~ weighted.MM.grad(rate, conc1, conc.1, Vm, K),
+                   data = lisTreat, start = list(Vm = 200, K = 0.1))
+)
+
+rbind(coef(Pur.wt), coef(Pur.wt1), coef(Pur.wt.grad))
+
+## In this example, there seems no advantage to providing the gradient.
+## In other cases, there might be.
+
+
 ## The two examples below show that you can fit a model to
 ## artificial data with noise but not to artificial data
 ## without noise.
@@ -215,7 +262,7 @@ nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
      trace = TRUE)
 }
 
-## nls() internal very cheap guess for starting values can be sufficient:
+## the nls() internal cheap guess for starting values can be sufficient:
 
 x <- -(1:100)/10
 y <- 100 + 10 * exp(x / 2) + rnorm(x)/10

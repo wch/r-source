@@ -23,8 +23,6 @@
 ###            Nonlinear least squares for R
 ###
 
-
-
 numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1)
 {
     dir <- rep(dir, length.out = length(theta))
@@ -451,16 +449,15 @@ nls <-
 
     mf <- match.call()                  # for creating the model frame
     varNames <- all.vars(formula) # parameter and variable names from formula
-    ## for prediction we will need to know those which are in RHS
-    form2 <- formula; form2[[2]] <- 0
-    varNamesRHS <- all.vars(form2)
-    mWeights <- missing(weights)
-
     ## adjust a one-sided model formula by using 0 as the response
     if (length(formula) == 2) {
         formula[[3]] <- formula[[2]]
         formula[[2]] <- 0
     }
+    ## for prediction we will need to know those which are in RHS
+    form2 <- formula; form2[[2]] <- 0
+    varNamesRHS <- all.vars(form2)
+    mWeights <- missing(weights)
 
     ## get names of the parameters from the starting values or selfStart model
     pnames <-
@@ -485,60 +482,98 @@ nls <-
     ## If it is a parameter it is not a variable (nothing to guess here :-)
     if(length(pnames))
         varNames <- varNames[is.na(match(varNames, pnames))]
-    if(!length(varNames)) stop("no parameters to fit")
+
     ## This aux.function needs to be as complicated because
     ## exists(var, data) does not work (with lists or dataframes):
     lenVar <- function(var) tryCatch(length(eval(as.name(var), data, env)),
 				     error = function(e) -1)
-    n <- sapply(varNames, lenVar)
-    if(any(not.there <- n == -1)) {
-	nnn <- names(n[not.there])
-	if(missing(start)) {
-	    if(algorithm == "plinear")
-		## TODO: only specify values for the non-lin. parameters
-		stop("No starting values specified")
-	    ## Provide some starting values instead of erroring out later;
-	    ## '1' seems slightly better than 0 (which is often invalid):
-	    warning("No starting values specified for some parameters.\n",
-		    "Intializing ", paste(sQuote(nnn), collapse=", "),
-		    " to '1.'.\n",
-		    "Consider specifying 'start' or using a selfStart model")
-	    start <- as.list(rep(1., length(nnn)))
-	    names(start) <- nnn
-	    varNames <- varNames[i <- is.na(match(varNames, nnn))]
-	    n <- n[i]
-	}
-	else # has 'start' but forgot some
-	    stop("parameters without starting value in 'data': ",
-		 paste(nnn, collapse=", "))
+
+    if(length(varNames)) {
+        n <- sapply(varNames, lenVar)
+        if(any(not.there <- n == -1)) {
+            nnn <- names(n[not.there])
+            if(missing(start)) {
+                if(algorithm == "plinear")
+                    ## TODO: only specify values for the non-lin. parameters
+                    stop("No starting values specified")
+                ## Provide some starting values instead of erroring out later;
+                ## '1' seems slightly better than 0 (which is often invalid):
+                warning("No starting values specified for some parameters.\n",
+                        "Intializing ", paste(sQuote(nnn), collapse=", "),
+                        " to '1.'.\n",
+                        "Consider specifying 'start' or using a selfStart model")
+                start <- as.list(rep(1., length(nnn)))
+                names(start) <- nnn
+                varNames <- varNames[i <- is.na(match(varNames, nnn))]
+                n <- n[i]
+            }
+            else                        # has 'start' but forgot some
+                stop("parameters without starting value in 'data': ",
+                     paste(nnn, collapse=", "))
+        }
+    }
+    else { ## length(varNames) == 0
+	if(length(pnames) && any((np <- sapply(pnames, lenVar)) == -1)) {
+            ## Can fit a model with pnames even if no varNames
+	    message("fitting parameters ",
+		    paste(sQuote(pnames[np == -1]), collapse=", "),
+		    " without any variables")
+            n <- integer(0)
+        }
+	else
+	    stop("no parameters to fit")
     }
 
     ## If its length is a multiple of the response or LHS of the formula,
     ## then it is probably a variable.
     ## This may fail (e.g. when LHS contains parameters):
     respLength <- length(eval(formula[[2]], data, env))
-    varIndex <- n %% respLength == 0
 
-    mf$formula <-                # replace by one-sided linear model formula
-        as.formula(paste("~", paste(varNames[varIndex], collapse = "+")),
-                   env = environment(formula))
-    mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
-    mf$lower <- mf$upper <- NULL
-    mf[[1]] <- as.name("model.frame")
-    mf <- eval.parent(mf)
-    n <- nrow(mf)
-    mf <- as.list(mf)
+    if(length(n) > 0) {
+        varIndex <- n %% respLength == 0
+        if(diff(range(n)) > 0) {
+            ## 'data' is a list that can not be coerced to a data.frame
+            mf <- data
+            if(missing(start))
+                start <- getInitial(formula, mf)
+            startEnv <- new.env(parent = environment(formula))
+            for (i in names(start))
+                assign(i, start[[i]], envir = startEnv)
+            rhs <- eval(formula[[3]], data, startEnv)
+            n <- length(rhs)
+        }
+        else {
+            mf$formula <-  # replace by one-sided linear model formula
+                as.formula(paste("~", paste(varNames[varIndex], collapse = "+")),
+                           env = environment(formula))
+            mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
+            mf$lower <- mf$upper <- NULL
+            mf[[1]] <- as.name("model.frame")
+            mf <- eval.parent(mf)
+            n <- nrow(mf)
+            mf <- as.list(mf)
+        }
+        wts <- if (!mWeights) model.weights(mf) else rep(1, n)
+        if (any(wts < 0 | is.na(wts)))
+            stop("missing or negative weights not allowed")
+    }
+    else {
+        ## length(n) == 0 : Some problems might have no official varNames
+        ##                  but still parameters to fit
+        varIndex <- logical(0)
+        mf <- list(0)
+        wts <- numeric(0)
+    }
+
+    ## set up iteration
     if (missing(start)) start <- getInitial(formula, mf)
     for(var in varNames[!varIndex])
         mf[[var]] <- eval(as.name(var), data, env)
     varNamesRHS <- varNamesRHS[ varNamesRHS %in% varNames[varIndex] ]
-    wts <- if(!mWeights) model.weights(mf) else rep(1, n)
-    if (any(wts < 0 | is.na(wts)))
-	stop("missing or negative weights not allowed")
 
     m <- switch(algorithm,
 		plinear = nlsModel.plinear(formula, mf, start, wts),
-		port = nlsModel(formula, mf, start, wts, upper),
+		port    = nlsModel        (formula, mf, start, wts, upper),
                 ## Default:
 		nlsModel(formula, mf, start, wts))
 
@@ -547,6 +582,7 @@ nls <-
 	control <- as.list(control)
 	ctrl[names(control)] <- control
     }
+                                        # Iterate
     if (algorithm != "port") {
 	if (!missing(lower) || !missing(upper))
 	    warning('Upper or lower bounds ignored unless algorithm = "port"')
