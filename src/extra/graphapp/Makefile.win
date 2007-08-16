@@ -5,7 +5,7 @@ all: makeMakedeps ga.a
 CFLAGS=-I. -I../../gnuwin32 -I../../include $(OPTFLAGS) \
   -DINDLL -DR_DLL_BUILD -DENABLE_NLS=1
 
-SOURCES=$(filter-out graphappmain.c xredef.c, $(wildcard *.c))
+SOURCES=$(wildcard *.c)
 OBJECTS=$(foreach i, $(SOURCES), $(basename $i).o)
 
 ga.a: $(OBJECTS)

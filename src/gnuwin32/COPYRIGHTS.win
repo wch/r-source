@@ -28,11 +28,12 @@ src/gnuwin32/getline/*
 
 
 
-src/gnuwin32/graphapp/*
+src/extra/graphapp/*
+src/gnuwin32/front-ends/graphappmain.c
 
 The files {arith, array, bitmap, buttons, context, controls, cursors,
 drawing, drawtext, events, fonts, image, init, menus, objects,
-strings, windows, xredef}.c, {graphapp, internal}.h are
+strings, windows}.c, {graphapp, internal}.h are in part
 
 	Copyright (C) 1993-1998 Lachlan Patrick
 	Distributed under the GNU Library General Public License

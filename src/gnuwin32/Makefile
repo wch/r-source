@@ -173,9 +173,8 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../appl RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../extra/graphapp OPTFLAGS='$(OPTFLAGS)'
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
-	@for ex in pcre bzip2 zlib xdr trio; do \
+	@for ex in graphapp pcre bzip2 zlib xdr trio; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
 	done
 
@@ -456,7 +455,7 @@ veryclean: distclean
 
 cleanwin:
 	$(RM) *.o *.dll *.a *~ \#*\# .RData .Rhistory Makedeps *.d
-	$(MAKE) -C ../extra/graphapp clean
+	$(MAKE) -C ../extra/graphapp -f Makefile.win clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
