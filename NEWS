@@ -30,10 +30,14 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	storage.mode<- is now primitive, and hence makes fewer copies
-	of an object (none if the mode is unchanged).  It is a little
-	less general than mode<-, which remains available.  (See also
-	the entry under DEFUNCT below.)
+    o	abs(), sign(), sqrt(), floor(), ceiling(), exp() and the gamma,
+	trig and hyperbolic trig functions now only accept one
+	argument even when dispatching to a Math group method (which
+	may accept more than one argument for other group members).
+
+    o	aggregate.data.frame() no longer changes the group variables
+	into factors, and leaves alone the levels of those which are
+	factors.  (Inter alia grants the wish of PR#9666.)
 
     o	as.vector() and the default methods of as.character(),
 	as.complex(), as.double(), as.expression(), as.integer(),
@@ -52,27 +56,163 @@ NEW FEATURES
 	digamma() and trigamma() are now primitive.  (Note that logb()
 	is not.)
 
-    o	New function xyTable() does the 2D gridding "computations" used by
-	sunflowerplot().
+	See under METHODS PACKAGE below for some consquences for S4 methods.
 
     o	apropos() now sorts by name and not by position on the search
 	path.
 
-    o	abs(), sign(), sqrt(), floor(), ceiling(), exp() and the gamma,
-	trig and hyperbolic trig functions now only accept one
-	argument even when dispatching to a Math group method (which
-	may accept more than one argument for other group members).
+    o	attr() gains an 'exact = TRUE' argument to disable partial
+	matching.
+
+    o   bxp() now allows 'xlim' to be specified. (PR#9754)
+
+    o	C(f, SAS) now works in the same way as C(f, treatment), etc.
 
     o	dev2bitmap() has a new option to go via PDF and so allow
 	semi-transparent colours to be used.
+
+    o	dev.interactive() regards devices with the displaylist enabled
+	as interactive, and packages can register the names of their
+	devices as interactive via deviceIsInteractive().
+
+    o	duplicated() and unique() and their methods in base gain an
+	additional argument 'fromLast'.
+
+    o	fifo() no longer has a default 'description' argument.
+
+	fifo("") is now implemented, and works in the same way as file("").
+
+    o	The find() argument is now named 'numeric' and not 'numeric.':
+	the latter was needed to avoid warnings about name clashes
+	many years ago, but partial matching was used.
+
+    o	stats:::.getXlevels() confines attention to factors since some
+	users expected R to treat unclass(<a factor>) as a numeric
+	vector.
+
+    o	grep(), strsplit() and friends now warn if incompatible sets
+	of options are used, instead of silently using the documented
+	priority.
+
+    o	gsub()/sub() with perl = TRUE now preserves attributes from the
+        argument x on the result.
+
+    o	is.finite() and is.infinite() are now S3 and S4 generic.
 
     o	jpeg(), png(), bmp() (Windows), dev2bitmap() and bitmap() have
 	a new argument 'units' to specify the units of 'width' and
 	'height'.
 
-    o	is.finite() and is.infinite() are now S3 and S4 generic.
+    o	levels() is now generic (levels<- has been for a long time).
+
+    o   Loading serialized raw objects with load() is now considerably
+        faster.
+
+    o	New primitive nzchar() as a faster alternative to
+	nchar(x) > 0 (and avoids having to convert to wide chars in
+	a MBCS locale and hence consider validity).
+
+    o	optim(method = "L-BFGS-B") now accepts zero-length parameters,
+	like the other methods.  Also, method = "SANN" no longer
+	attempts to optimize in this case.
+
+    o	New options 'showWarnCalls' and 'showErrorCalls' to give a
+	concise traceback on warnings and errors.  showErrorCalls=TRUE
+	is the default for non-interactive sessions.  Option
+	'showNCalls' controls how abbreviated the call sequence is.
+
+    o	New options 'warnPartialMatchDollar', 'warnPartialMatchArgs'
+	and 'warnPartialMatchAttr' to help detect the unintended use
+	of partial matching in $, argument matching and attr()
+	respectively.
+
+    o	A device named as a character string in options(device =) is now
+	looked for in the grDevices name space if it is not visible
+	from the global environment.
+
+    o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is
+	much faster for large x and y when most matches are exact.
+
+    o	It is now a warning to have an non-integer object for
+	.Random.seed: this indicates a user had been playing with it,
+	and it has always been documented that users should only save
+	and restore it.
+
+    o	New higher-order functions Reduce(), Filter() and Map().
+
+    o	[g]regexpr() gain an 'ignore.case' argument for consistency with
+	grep().  (This does change the positional matching
+	of arguments, but no instances of positional matching beyond
+	the second were found.)
+
+    o	relist() utility, an S3 generic with several methods, providing
+	an 'inverse' for unlist(); thanks to a code proposal from
+	Andrew Clausen.
+
+    o	require() now returns invisibly.
+
+    o	row() and col() now work on matrix-like objects such as data
+	frames, not just matrices.
+
+    o	Rprof() allows smaller values of 'interval' on machines that
+	support it: for example modern Linux systems support
+	interval = 0.001.
+
+    o	sample() now requires its first argument 'x' to be numeric
+	(in the sense of is.numeric()) as well as of length 1 and >= 1
+	before it is regarded as shorthand for 1:x.
+
+    o   sessionInfo() now provides details about package name spaces
+        that are loaded but not attached.  The output of sessionInfo
+        has been improved to make it easier to read when it is
+        inadvertently wrapped after being pasted into an email
+        message.
+
+    o	setRepositories() has a new argument 'ind' to allow selections
+	to be made programmatically.
+
+    o	sprintf() no longer has a output string length limit.
+
+    o	storage.mode<- is now primitive, and hence makes fewer copies
+	of an object (none if the mode is unchanged).  It is a little
+	less general than mode<-, which remains available.  (See also
+	the entry under DEFUNCT below.)
+
+    o	For OSes that cannot unset environment variables, Sys.unsetenv()
+	sets the value to "", with a warning.
+
+    o   New function Sys.which(), an interface to 'which' on Unix-alikes.
+
+    o	On Unix-alikes, system(, intern = TRUE) reports on very long
+        lines that may be truncated, giving the line number of the
+        content being read.
+
+    o   termplot() has a default for 'ask' that uses dev.interactive().
+
+	It allows 'ylim' to be set, or computed to cover all the
+	plots to be made (the new default) or computed for each plot
+	(the previous default).
 
     o	unlink() is now internal, using common POSIX code on all platforms.
+
+    o	The vcov() methods for classes "gls" and "nlme" have migrated to
+	package 'nlme'.
+
+    o	vignette() has a new argument 'all' to choose between showing
+    	vignettes in attached packages or in all installed packages.
+
+    o	X11(), postscript() (and hence bitmap()), xfig(), jpeg(), png()
+	and the Windows devices win.print(), win.metafile() and bmp()
+	now warn (once at first use) if semi-transparent colours are
+	used (rather than silently treating them as fully
+	transparent).
+
+    o	New function xspline() to provide base graphics support of
+	X-splines (cf grid.xspline).
+
+    o	New function xyTable() does the 2D gridding "computations" used by
+	sunflowerplot().
+
 
     o	Rd conversion to HTML and CHM now makes use of classes, which
 	are set in the stylesheets.  Editing R.css will change the
@@ -90,43 +230,20 @@ NEW FEATURES
 	methods and in the case of '!' the argument name differed
 	between S3 and S4 methods.)
 
-    o	levels() is now generic (levels<- has been for a long time).
-
-    o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is
-	much faster for large x and y when most matches are exact.
-
-    o	stats:::.getXlevels() confines attention to factors since some
-	users expected R to treat unclass(<a factor>) as a numeric
-	vector.
-
     o	Imports environments of name spaces are named (as
 	"imports:foo"), and so are known e.g. to environmentName().
 
-    o	Package 'stats4' uses lazy-loading in preparation for the
-	deprecation of SaveImage.
-
-    o	dev.interactive() regards devices with the displaylist enabled
-	as interactive, and packages can register the names of their
-	devices as interactive via deviceIsInteractive().
+    o	Package 'stats4' uses lazy-loading not SaveImage (which is now
+	deprecated).
 
     o	Installing help for a package now parses the .Rd file only
 	once, rather than once for each type.
-
-    o	New function xspline() to provide base graphics support of
-	X-splines (cf grid.xspline).
-
-    o	Rprof() allows smaller values of 'interval' on machines that
-	support it: for example modern Linux systems support
-	interval = 0.001.
 
     o	PCRE has been updated to version 7.2.
 
     o	bzip2 has been updated to version 1.0.4.
 
     o	gettext has been updated to version 0.16.1.
-
-    o	duplicated() and unique() and their methods in base gain an
-	additional argument 'fromLast'.
 
     o   There is now a global CHARSXP cache, R_StringHash.  CHARSXPs
         are no longer duplicated and must not be modified in place.
@@ -135,12 +252,6 @@ NEW FEATURES
         macro, CallocCharBuf, can be used to obtain a temporary char
         buffer for manipulating character data.  This patch was
         written by Seth Falcon.
-
-    o	require() now returns invisibly.
-
-    o	A device named as a character string in options(device =) is now
-	looked for in the grDevices name space if it is not visible
-	from the global environment.
 
     o	The internal equivalents of as.complex, as.double, as.integer
 	and as.logical used to handle length-1 arguments now accept
@@ -152,45 +263,7 @@ NEW FEATURES
 
     o	Various performance improvements lead to a 45% reduction
 	in the startup time without 'methods' (and one-sixth with -
-	methods now takes 75% of the startup time of a default session).
-
-    o	aggregate.data.frame() no longer changes the group variables
-	into factors, and leaves alone the levels of those which are
-	factors.  (Inter alia grants the wish of PR#9666.)
-
-    o	[g]regexpr() gain an 'ignore.case' argument for consistency with
-	grep().  (This does change the positional matching
-	of arguments, but no instances of positional matching beyond
-	the second were found.)
-
-    o	For OSes that cannot unset environment variables, Sys.unsetenv()
-	sets the value to "", with a warning.
-
-    o	The vcov() methods for classes "gls" and "nlme" have migrated to
-	package 'nlme'.
-
-    o	grep(), strsplit() and friends now warn if incompatible sets
-	of options are used, instead of silently using the documented
-	priority.
-
-    o	setRepositories() has a new argument 'ind' to allow selections
-	to be made programmatically.
-
-    o	sample() now requires its first argument 'x' to be numeric
-	(in the sense of is.numeric()) as well as of length 1 and >= 1
-	before it is regarded as shorthand for 1:x.
-
-    o	New options 'warnPartialMatchDollar', 'warnPartialMatchArgs'
-	and 'warnPartialMatchAttr' to help detect the unintended use
-	of partial matching in $, argument matching and attr()
-	respectively.
-
-    o	vignette() has a new argument 'all' to choose between showing
-    	vignettes in attached packages or in all installed packages.
-
-    o	The find() argument is now named 'numeric' and not 'numeric.':
-	the latter was needed to avoid warnings about name clashes
-	many years ago, but partial matching was used.
+	'methods' now takes 75% of the startup time of a default session).
 
     o   The [[ subsetting operator now has an argument 'exact' that
         allows programmers to disable partial matching.  The default
@@ -205,89 +278,23 @@ NEW FEATURES
 	information on either the location or the cause of the
 	problem.
 
-    o   sessionInfo() now provides details about package name spaces
-        that are loaded but not attached.  The output of sessionInfo
-        has been improved to make it easier to read when it is
-        inadvertently wrapped after being pasted into an email
-        message.
-
-    o	attr() gains an 'exact = TRUE' argument to disable partial
-	matching.
-
-    o	New options 'showWarnCalls' and 'showErrorCalls' to give a
-	concise traceback on warnings and errors.  showErrorCalls=TRUE
-	is the default for non-interactive sessions.  Option
-	'showNCalls' controls how abbreviated the call sequence is.
-
-    o	New primitive nzchar() as a faster alternative to
-	nchar(x) > 0 (and avoids having to convert to wide chars in
-	a MBCS locale and hence consider validity).
-
-    o	relist() utility, an S3 generic with several methods, providing
-	an 'inverse' for unlist(); thanks to a code proposal from
-	Andrew Clausen.
-
-    o	row() and col() now work on matrix-like objects such as data
-	frames, not just matrices.
-
-    o	fifo() no longer has a default 'description' argument.
-
-	fifo("") is now implemented, and works in the same way as file("").
-
-    o	C(f, SAS) now works in the same way as C(f, treatment), etc.
-
-    o	sprintf() no longer has a output string length limit.
-
-    o   It is now a warning to have an non-integer object for
-	.Random.seed: this indicates a user had been playing with it,
-	and it was documented that users should only save and restore it.
-
     o	The S3 and S4 Math groups have been harmonized.  Functions
 	log1p(), expm1(), log10() and log2() are members of the S3
 	group, and sign(), log1p(), expm1(), log2(), cummax(),
 	cummin(), digamma(), trigamma() and trunk() are members of the
 	S4 group.  gammaCody() is no longer in the S3 Math group.
 
-    o   termplot() has a default for 'ask' that uses dev.interactive().
-
-	It allows 'ylim' to be set, or computed to cover all the
-	plots to be made (the new default) or computed for each plot
-	(the previous default).
-
-    o   bxp() now allows 'xlim' to be specified. (PR#9754)
-
-    o	X11(), postscript() (and hence bitmap()), xfig(), jpeg(), png()
-	and the Windows devices win.print(), win.metafile() and bmp()
-	now warn (once at first use) if semi-transparent colours are
-	used (rather than silently treating them as fully
-	transparent).
-
-    o	gsub()/sub() with perl = TRUE now preserves attributes from the
-        argument x on the result.
-
-    o	On Unix-alikes, system(, intern = TRUE) reports on very long
-        lines that may be truncated, giving the line number of the
-        content being read.
-
     o	The initialization of the random-number stream makes use of the
 	sub-second part of the current time where available.
-
-    o	New higher-order functions Reduce(), Filter() and Map().
-
-    o   Loading serialized raw objects with load() is now considerably
-        faster.
-
-    o   New function Sys.which(), an interface to 'which' on Unix-alikes.
-
-    o	optim(method = "L-BFGS-B") now accepts zero-length parameters,
-	like the other methods.  Also, method = "SANN" no longer
-	attempts to optimize in this case.
 
 
 METHODS PACKAGE
 
     o	Packages using 'methods' have to have been installed in R 2.4.0
 	or later (when various internal representations were changed).
+
+    o	Internally generic primitives no longer dispatch S4 methods on
+	S3 objects.
 
     o	load() and restoring a workspace attempt to detect and warn on
 	the loading of pre-2.4.0 S4 objects.
@@ -483,8 +490,8 @@ INSTALLATION
 	licence).  You will need to ensure that your texinfo and/or
 	TeX installations supply them.
 
-    o	A system script 'texi2dvi' is now used in preference to that
-	supplied with R.
+    o	A system script/executable 'texi2dvi' is now used in preference
+	to the script supplied with R.
 
 
 PACKAGE INSTALLATION
@@ -520,9 +527,6 @@ PACKAGE INSTALLATION
 
 
 BUG FIXES
-
-    o	Internally generic primitives no longer dispatch S4 methods on
-	S3 objects.
 
     o	charmatch() and pmatch() used to accept non-integer values for
 	'nomatch' even though the return value was documented to be
