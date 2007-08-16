@@ -65,6 +65,11 @@ replicate(n, expr, simplify = TRUE)
 
   if \code{X} has length 0, the return value of \code{sapply} is always
   a 0-length list.
+
+  Users of S4 classes should pass a list to \code{lapply}: the internal
+  coercion is done by the system \code{as.list} in the base namespace
+  and not one defined by a user (e.g. by setting S4 methods on the
+  system function).
 }
 \note{
   \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is
