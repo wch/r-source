@@ -59,6 +59,10 @@
 # include <sys/time.h>		/* for struct timeval */
 #endif
 
+#ifdef HAVE_SYS_SELECT_H
+# include <sys/select.h>	/* for select, according to recent POSIX */
+#endif
+
 extern SA_TYPE SaveAction;
 extern Rboolean UsingReadline;
 extern FILE* ifp;
