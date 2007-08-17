@@ -101,7 +101,6 @@ docs: html
 	  echo "ERROR: 'pdftex' needed but missing on your system."; \
 	  exit 1; \
 	fi
-	fi
 	@if test "$(TEXI2DVI)" = false; then \
 	  echo "ERROR: 'texi2dvi' needed but missing on your system."; \
 	  exit 1; \
