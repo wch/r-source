@@ -40,6 +40,8 @@
 \alias{duplicated.POSIXlt}
 \alias{unique.POSIXlt}
 
+\alias{date-time} % linked to in difftime.Rd
+
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}

@@ -41,8 +41,7 @@ as.difftime(tim, format = "\%X", units="auto")
 \method{as.double}{difftime}(x, units="auto", ...)
 }
 \arguments{
-  \item{time1, time2}{\link[base:DateTimeClasses]{date-time} or
-    \link[base:Dates]{date} objects.}
+  \item{time1, time2}{\link{date-time} or \link[base:Dates]{date} objects.}
   \item{tz}{a timezone specification to be used for the conversion.
     System-specific, but \code{""} is the current time zone, and
     \code{"GMT"} is UTC.}
