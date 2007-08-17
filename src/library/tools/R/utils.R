@@ -228,8 +228,8 @@ function(file, pdf = FALSE, clean = FALSE,
         nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
                            readLines(paste(base, ".log", sep = ""))))
         for(iter in 1:10) { ## safety check
-            if(nmiss && system(paste(shQuote(bibtex), shQuote(base))))
-                    stop(gettextf("unable to run %s on '%s'", bibtex, base), domain = NA)
+            ## This might fail as the citations have been included in the Rnw
+            if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
             nmiss_prev <- nmiss
             if(file.exists(idxfile)) {
                 if(system(paste(shQuote(makeindex), shQuote(idxfile))))
