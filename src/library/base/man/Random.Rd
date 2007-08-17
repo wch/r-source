@@ -108,11 +108,6 @@ set.seed(seed, kind = NULL)
       version: the initialization of the GFSR from the seed was altered.
       \R did not allow you to choose consecutive seeds, the reported
       \sQuote{weakness}, and already scrambled the seeds.
-
-      This version of the generator may not be included in your build of
-      \R: the 2002 version will be and as the difference is only in the
-      initialization, saved \code{.Random.seed} values from this
-      generator will always work.
     }
 
     \item{\code{"user-supplied":}}{

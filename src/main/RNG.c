@@ -25,6 +25,8 @@
 #include <config.h>
 #endif
 
+#define HAVE_TAOCP_1997 1
+
 #include "Defn.h"
 #include <R_ext/Random.h>
 
