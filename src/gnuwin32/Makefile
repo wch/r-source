@@ -79,7 +79,8 @@ endif
 .PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
 
 
-CFLAGS = $(OPTFLAGS) -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
+CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
+CFLAGS = $(OPTFLAGS)
 FFLAGS = $(FOPTFLAGS)
 
 Rpwd.exe: front-ends/Rpwd.exe

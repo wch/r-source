@@ -10,7 +10,8 @@ else
   LINKFLAGS=-s
   DLLFLAGS=-s
 endif
-CFLAGS=$(OPTFLAGS) -I../../include
+CPPFLAGS=-I../../include
+CFLAGS=$(OPTFLAGS)
 
 
 .PHONY : all makeMakedeps
@@ -49,10 +50,10 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
-graphappmain-CFLAGS=-I../../extra
+graphappmain-CPPFLAGS=-I../../extra
 
-rgui-CFLAGS=-DWin32
-rterm-CFLAGS=-DWin32
+rgui-CPPFLAGS=-DWin32
+rterm-CPPFLAGS=-DWin32
 Rgui-LINKFLAGS=-mwindows
 
 Rterm-LIBS=-luser32 -L../../../bin -lR -lgraphapp
@@ -77,7 +78,7 @@ R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
-md5check-CFLAGS=-I../../../include -I../../library/tools/src
+md5check-CPPFLAGS=-I../../../include -I../../library/tools/src
 md5check.exe : md5check.o md5ico.o ../../library/tools/src/md5.o
 
 Rscript.o: ../../unix/Rscript.c

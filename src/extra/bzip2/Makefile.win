@@ -4,7 +4,8 @@ include ../../gnuwin32/MkRules
 
 all: makeMakedeps libbz2.a
 
-CFLAGS=-I../../include $(OPTFLAGS)
+CPPFLAGS=-I../../include
+CFLAGS= $(OPTFLAGS)
 
 CSOURCES= blocksort.c huffman.c crctable.c randtable.c compress.c \
           decompress.c bzlib.c

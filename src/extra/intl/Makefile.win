@@ -10,8 +10,9 @@ header-install: libintl.h
 	@cp -p $< ../../../include
 
 DEFS=-DIN_LIBINTL -DHAVE_CONFIG_H
-CFLAGS=$(DEFS) -I. -I../../include $(OPTFLAGS)
-dcigettext-CFLAGS=-DLOCALEDIR=\"\"
+CPPFLAGS=$(DEFS) -I. -I../../include
+CFLAGS= $(OPTFLAGS)
+dcigettext-CPPFLAGS=-DLOCALEDIR=\"\"
 
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \

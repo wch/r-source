@@ -1,7 +1,8 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
 
-CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+CPPFLAGS=-I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+CFLAGS=$(OPTFLAGS)
 FFLAGS=$(FOPTFLAGS)
 CSOURCES = \
 	approx.c \

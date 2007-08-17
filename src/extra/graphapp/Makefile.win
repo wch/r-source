@@ -3,8 +3,8 @@ include ../../gnuwin32/MkRules
 
 all: makeMakedeps DLL
 
-CFLAGS=-I. -I../../gnuwin32 -I../../include $(OPTFLAGS) \
-  -DGA_DLL_BUILD -DENABLE_NLS=1
+CPPFLAGS=-I. -I../../gnuwin32 -I../../include -DGA_DLL_BUILD -DENABLE_NLS=1
+CFLAGS=$(OPTFLAGS)
 
 SOURCES=$(wildcard *.c)
 OBJECTS=$(foreach i, $(SOURCES), $(basename $i).o)

@@ -189,41 +189,41 @@ SORT=sort
 
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC) $(DEPARG) $(CFLAGS) $($*-CFLAGS) $< -o $@
+	@$(CC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .cc.d:
 	@echo "making $@ from $<"
-	@$(CXX) $(DEPARG) $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+	@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .cpp.d:
 	@echo "making $@ from $<"
-	@$(CXX) $(DEPARG) $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+	@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .C.d:
 	@echo "making $@ from $<"
-	@$(CXX) $(DEPARG) $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+	@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .m.d:
 	@echo "making $@ from $<"
-	@$(OBJC) $(DEPARG) $(OBJCFLAGS) $($*-OBJCFLAGS) $< -o $@
+	@$(OBJC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $(OBJCFLAGS) $($*-OBJCFLAGS) $< -o $@
 
 .c.o:
-	$(CC) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
 
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $($*-CPPFLAGS) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $($*-CPPFLAGS) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 .C.o:
-	$(CXX) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $($*-CPPFLAGS) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 .m.o:
-	$(OBJC) $(OBJCFLAGS) $($*-OBJCFLAGS) -c $< -o $@
+	$(OBJC) $(CPPFLAGS) $($*-CPPFLAGS) $(OBJCFLAGS) $($*-OBJCFLAGS) -c $< -o $@
 
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)

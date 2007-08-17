@@ -18,7 +18,8 @@ LIBOBJECTS = $(LIBSOURCES:.f=.o) Rlapackrc.o
 OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
 FOPTFLAGS=-O3
 
-CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
+CPPFLAGS=-I../../include -DHAVE_CONFIG_H
+CFLAGS=$(OPTFLAGS)
 FFLAGS=$(FOPTFLAGS)
 dlamch-FFLAGS=-ffloat-store
 
