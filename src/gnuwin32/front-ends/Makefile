@@ -49,9 +49,7 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
-GRAPHAPP=../../extra/graphapp 
-graphappmain.o: graphappmain.c
-	$(CC) -c -o $@ -I$(GRAPHAPP) $(CFLAGS) $<
+graphappmain-CFLAGS=-I../../extra/graphapp
 
 rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
