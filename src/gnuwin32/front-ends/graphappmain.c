@@ -26,7 +26,7 @@
    See the file COPYLIB.TXT for details.
 */
 
-#include "internal.h"
+#include "graphapp/internal.h"
 
 extern void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
 
