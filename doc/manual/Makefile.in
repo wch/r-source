@@ -74,6 +74,10 @@ docs: html
 	  echo "ERROR: 'tex' needed but missing on your system."; \
 	  exit 1; \
 	fi
+	@if test "$(TEXI2DVI)" = false; then \
+	  echo "ERROR: 'texi2dvi' needed but missing on your system."; \
+	  exit 1; \
+	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 
 .texi.html:
@@ -95,6 +99,11 @@ docs: html
 .texi.pdf:
 	@if test "$(PDFTEX)" = false; then \
 	  echo "ERROR: 'pdftex' needed but missing on your system."; \
+	  exit 1; \
+	fi
+	fi
+	@if test "$(TEXI2DVI)" = false; then \
+	  echo "ERROR: 'texi2dvi' needed but missing on your system."; \
 	  exit 1; \
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<

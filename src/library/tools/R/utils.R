@@ -192,13 +192,7 @@ function(file, pdf = FALSE, clean = FALSE,
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
-    if(is.null(texi2dvi)) {
-        ## texi2dvi on PATH has priority over that shipped with R
-        texi2dvi <- Sys.which("texi2dvi")
-        if(!nzchar(texi2dvi) &&
-           file.exists(file.path(R.home("bin"), "texi2dvi")))
-            texi2dvi <- file.path(R.home("bin"), "texi2dvi")
-    }
+    if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
 
     if(nzchar(texi2dvi)) {
         if(pdf) pdf <- "--pdf" else pdf <- ""

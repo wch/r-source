@@ -25,18 +25,15 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   \item{texi2dvi}{character (or \code{NULL}).  Script or program used to
     compile a TeX file to dvi or PDF, respectively.
     The default (selected by \code{NULL}) is to look for an executable
-    on the search path
-#ifdef unix
-    then for the script in R's \file{bin} directory
-#endif
-    and otherwise emulate the script with \code{system} calls.}
+    on the search path and otherwise emulate the script with
+    \code{system} calls.}
 }
 \details{
   Despite the name, this is used in \R to compile LaTeX files,
   specifically those generated from vignettes.
 #ifdef windows
   
-  Most Windows TeX installations do not have \code{texi2dvi} executable,
+  Most Windows TeX installations do not have a \code{texi2dvi} executable,
   but MiKTeX does.
 #endif
 }

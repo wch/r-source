@@ -485,13 +485,13 @@ INSTALLATION
 	compiler which will have 'isfinite'.  (If that is missing, we
 	test separately for NaN, Inf and -Inf.)
 
-    o	Files texinfo.tex and txi-en.tex are no longer supplied in
+   o	A script/executable 'texi2dvi' is now required on Unix-alikes:
+	it is part of the texinfo distribution.
+
+   o	Files texinfo.tex and txi-en.tex are no longer supplied in
 	doc/manual (as the latest versions have an incompatible
 	licence).  You will need to ensure that your texinfo and/or
 	TeX installations supply them.
-
-    o	A system script/executable 'texi2dvi' is now used in preference
-	to the script supplied with R.
 
 
 PACKAGE INSTALLATION
@@ -522,7 +522,7 @@ PACKAGE INSTALLATION
 	in the package and then any personal Makevars files.
 
     o	R CMD SHLIB used to support the use of 'OBJS' in Makevars, but
-	this was changed to 'OBJECTS' in 2001. The undocumented
+	this was changed to 'OBJECTS' in 2001.  The undocumented
 	alternative of 'OBJS' has finally been removed.
 
 
@@ -564,12 +564,13 @@ BUG FIXES
     o	write.dcf() no longer writes NA fields (PR#9796), and works
 	correctly on empty descriptions.
 
-    o	pbeta(x, log.p = TRUE) is now improved in many cases, and so are
-	functions depending on it, such as pt(), pf() or pbinom().
+    o	pbeta(x, log.p = TRUE) now has improved accuracy in many cases,
+	and so have functions depending on it such as pt(), pf() and
+	pbinom().
 
     o	mle() had problems with the L-BFGS-B in the no-parameter case
 	and consequentially also when profiling 1-parameter models
-	(thanks to Ben Bolker).
+	(fix thanks to Ben Bolker).
 
     o	Two bugs fixed in methods that in involve the "..." argument in
 	the generic function: previously failed to catch methods that

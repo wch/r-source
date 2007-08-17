@@ -11,7 +11,7 @@ subdir = src/scripts
 include $(top_builddir)/Makeconf
 
 SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt Sweave Stangle \
-  config f77_f2c javareconf mkinstalldirs pager texi2dvi
+  config f77_f2c javareconf mkinstalldirs pager
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rprof.in \

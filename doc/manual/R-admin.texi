@@ -423,8 +423,9 @@ make info     @r{to create info files (not @samp{refman}).}
 
 You will not be able to build any of these unless you have
 @command{makeinfo} version 4.7 or later installed, and for DVI or PDF
-you must have @file{texinfo.tex} installed (which is part of the GNU
-@samp{texinfo} distribution but is often made part of the TeX package in
+you must have @command{texi2dvi} and @file{texinfo.tex} installed
+(which are part of the GNU @pkg{texinfo} distribution but are,
+especially @file{texinfo.tex}, often made part of the TeX package in
 re-distributions).
 
 The DVI versions can be previewed and printed using standard programs
@@ -2268,7 +2269,8 @@ the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
 known to create incorrect @HTML{} files.)  To make DVI or PDF versions
 of the manuals you will also need @file{texinfo.tex} installed (which is
 part of the GNU @samp{texinfo} distribution but is often made part of
-the TeX package in re-distributions).
+the TeX package in re-distributions) as well as @command{texi2dvi} (part of
+the GNU @pkg{texinfo} distribution).
 
 
 @cindex Vignettes

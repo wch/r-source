@@ -191,7 +191,7 @@ if test -n "${warn_pdf}"; then
   AC_MSG_WARN([${warn_pdf}])
 fi
 R_PROG_MAKEINFO
-AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], [\$(top_buildir)/bin/texi2dvi])
+AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], false)
 ## This test admittedly looks a bit strange ... see R_PROG_PERL.
 if test "${PERL}" = "${FALSE}"; then
   AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)

@@ -246,7 +246,7 @@ src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc.f
 src/main/vsnprintf.c
 
   Taken from the wget 1.8.1 distribution: only used on platforms
-  without vnsprintf.
+  without vsnprintf.
   /*
    * Copyright Patrick Powell 1995
    * This code is based on code written by Patrick Powell (papowell@astart.com)
@@ -427,7 +427,6 @@ share/licenses/LGPL-2
 share/licenses/LGPL-2.1
 share/licenses/LGPL-3
 src/main/strdup.c
-src/scripts/texi2dvi
 tools/config.quess
 tools/config.rpath
 tools/config.sub

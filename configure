@@ -4245,7 +4245,7 @@ fi
 
   test -n "$TEXI2DVI" && break
 done
-test -n "$TEXI2DVI" || TEXI2DVI="\$(top_buildir)/bin/texi2dvi"
+test -n "$TEXI2DVI" || TEXI2DVI="false"
 
 if test "${PERL}" = "${FALSE}"; then
   for ac_prog in ${INSTALL_INFO} install-info
