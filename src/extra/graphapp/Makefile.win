@@ -14,7 +14,7 @@ OBJECTS=$(foreach i, $(SOURCES), $(basename $i).o)
 DLL: libR.dll.a graphapp.dll
 	@cp graphapp.dll ../../../bin
 
-graphapp.dll: $(OBJECTS)
+graphapp.dll: $(OBJECTS) dllversion.o
 graphapp-DLLFLAGS=-mwindows
 graphapp-DLLLIBS=-L. -lR -lcomctl32
 
@@ -25,6 +25,7 @@ clean:
 	$(RM) *.o *.a *.dll *~ \#*\# *.d Makedeps
 
 # Dependencies
+dllversion.o: ../../include/Rversion.h
 DEPS=$(SOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
