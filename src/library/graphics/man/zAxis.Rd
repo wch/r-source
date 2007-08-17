@@ -52,7 +52,7 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
 
   There are \code{"Date"}, \code{"POSIXct"} and \code{"POSIXlt"}
   methods which can pass an argument \code{format} onto the
-  \link[graphics:axis.POSIXct]{appropriate} \code{axis} method.
+  appropriate \code{axis} method (see \code{\link{axis.POSIXct}}).
 }
 \seealso{
   \code{\link{axis}}.

@@ -35,8 +35,8 @@ undoc(package, dir, lib.loc = NULL)
 
   The \pkg{base} package is special as it contains the primitives and
   these do not have definitions available at code level.  We provide
-  equivalent closures in environments \code{\link{.ArgsEnv}} and
-  \code{\link{.GenericArgsEnv}} in the \pkg{base} package that are used
+  equivalent closures in environments \code{.ArgsEnv} and
+  \code{GenericArgsEnv} in the \pkg{base} package that are used
   for various purposes: \code{undoc("base")} checks that that all the
   primitive that are not language constructs are prototyped in those
   environments and no others.

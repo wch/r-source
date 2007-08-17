@@ -94,5 +94,5 @@ fred
 fred <- 2
 fred
 }
-\keyword{internal}
+\keyword{utilities}
 \author{Luke Tierney}

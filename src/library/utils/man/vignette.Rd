@@ -7,6 +7,7 @@
 \alias{vignette}
 \alias{edit.vignette}
 \alias{print.vignette}
+\alias{vignettes} % to link to from e.g. grid-package.Rd
 \title{View or List Vignettes}
 \description{
   View a specified vignette, or list the available ones.

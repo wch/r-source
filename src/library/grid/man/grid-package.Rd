@@ -15,10 +15,10 @@
 }
 \details{
 This package contains a graphics system which supplements
-\link[graphics:graphics-package]{old-style S graphics}.
+old-style S graphics (see the \pkg{graphics} package).
 
 Further information is available in the following
-\link[utils:vignette]{vignettes}:
+\link{vignettes}:
 \tabular{ll}{
 \code{displaylist} \tab Display Lists in grid (source, pdf)\cr
 \code{frame} \tab Frames and packing grobs (source, pdf)\cr
