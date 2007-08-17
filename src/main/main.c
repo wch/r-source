@@ -25,6 +25,12 @@
 #include <config.h>
 #endif
 
+#include <math.h> /* avoid redefinition of extern in Defn.h */
+#include <float.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define __MAIN__
 #include "Defn.h"
 #include "Rinterface.h"
