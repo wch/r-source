@@ -57,7 +57,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     rhs <- eval(form[[3]], envir = env)
     storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && (length(wts) != 0))
-        sqrt(wts) else rep(1, length.out=length(rhs))
+        sqrt(wts) else rep(1, length.out=NROW(rhs))
     assign(".swts", .swts, envir = env)
     p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
     p <- p1 + p2
@@ -540,7 +540,7 @@ nls <-
             for (i in names(start))
                 assign(i, start[[i]], envir = startEnv)
             rhs <- eval(formula[[3]], data, startEnv)
-            n <- length(rhs)
+            n <- NROW(rhs)
         }
         else {
             mf$formula <-  # replace by one-sided linear model formula
