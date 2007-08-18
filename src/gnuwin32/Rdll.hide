@@ -68,11 +68,7 @@
  MDIsize
  MainThread
  OutDec
- PRCODE
- PRENV
  PRIMOFFSET
- PRSEEN
- PRVALUE
  PrintUsage
  ProfileEvent
  R_AllocStringBuffer
@@ -140,7 +136,7 @@
  R_ParseContextLast
  R_ParseError
  R_ParseFile
- R_PromiseExpr
+ R_PendingPromises
  R_Quiet
  R_RecursiveSymbol
  R_RestartStack
@@ -183,6 +179,7 @@
  R_Zero_Hack
  R_binary
  R_compress1
+ R_cpolyroot
  R_current_trace_state
  R_data_class2
  R_dec_min_exponent
@@ -200,6 +197,7 @@
  R_getVarsFromFrame
  R_init_base
  R_initialize_bcode
+ R_isMissing
  R_is_running
  R_lazyLoadDBfetch
  R_lazyLoadDBflush
@@ -224,6 +222,7 @@
  R_sysparent
  R_unary
  R_warn_partial_match_args
+ R_warn_partial_match_attr
  R_warn_partial_match_dollar
  Rconsolesetwidth
  Rf_CheckFormals
@@ -379,6 +378,7 @@
  Rwin_rename
  SET_ACTIVE_BINDING_BIT
  SET_LATIN1
+ SET_PRIMOFFSET
  SET_UTF8
  Sys_TempDir
  UNLOCK_BINDING
@@ -386,6 +386,7 @@
  UNSET_UTF8
  UseInternet2
  WrongArgCount
+ __printf__
  _dist_code
  _getextradata
  _length_code
@@ -426,6 +427,7 @@
  _tr_init
  _tr_stored_block
  _tr_tally
+ _vsnprintf
  adler32
  adler32_combine
  app_control_proc
@@ -748,6 +750,7 @@
  do_l10n_info
  do_lapply
  do_layout
+ do_lazyLoadDBfetch
  do_length
  do_lengthgets
  do_levelsgets
@@ -764,6 +767,7 @@
  do_lockBnd
  do_lockEnv
  do_log
+ do_log1arg
  do_logic
  do_logic2
  do_logic3
@@ -964,6 +968,7 @@
  do_syssleep
  do_system
  do_systime
+ do_syswhich
  do_tempdir
  do_tempfile
  do_termsform
