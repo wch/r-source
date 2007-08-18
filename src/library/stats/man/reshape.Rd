@@ -78,14 +78,15 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \code{split=list(regexp="[A-Za-z][0-9]",include=TRUE)}. This splits
   between the alphabetic and numeric parts of the name and does not drop
   the regular expression.
-
 }
 \value{
   The reshaped data frame with added attributes to simplify reshaping
   back to the original form.
 }
-\seealso{\code{\link{stack}}, \code{\link{aperm}}}
-
+\seealso{\code{\link{stack}}, \code{\link{aperm}};
+  \code{\link[utils]{relist}} for \dQuote{reshaping} the result of
+  \code{\link{unlist}}.
+}
 \examples{
 summary(Indometh)
 wide <- reshape(Indometh, v.names="conc", idvar="Subject",
