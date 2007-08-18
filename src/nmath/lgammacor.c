@@ -76,10 +76,11 @@ double attribute_hidden lgammacor(double x)
 	ML_ERR_return_NAN
     else if (x >= xmax) {
 	ML_ERROR(ME_UNDERFLOW, "lgammacor");
+	/* allow to underflow below */
     }
     else if (x < xbig) {
 	tmp = 10 / x;
 	return chebyshev_eval(tmp * tmp * 2 - 1, algmcs, nalgm) / x;
     }
-    else return 1 / (x * 12);
+    return 1 / (x * 12);
 }
