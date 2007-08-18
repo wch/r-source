@@ -530,18 +530,18 @@ nls <-
     respLength <- length(eval(formula[[2]], data, env))
 
     if(length(n) > 0) {
-        varIndex <- n %% respLength == 0
-        if(diff(range(n)) > 0) {
-            ## 'data' is a list that can not be coerced to a data.frame
-            mf <- data
-            if(missing(start))
-                start <- getInitial(formula, mf)
-            startEnv <- new.env(parent = environment(formula))
-            for (i in names(start))
-                assign(i, start[[i]], envir = startEnv)
-            rhs <- eval(formula[[3]], data, startEnv)
-            n <- NROW(rhs)
-        }
+	varIndex <- n %% respLength == 0
+	if(is.list(data) && diff(range(n)) > 0) {
+	    ## 'data' is a list that can not be coerced to a data.frame
+	    mf <- data
+	    if(missing(start))
+		start <- getInitial(formula, mf)
+	    startEnv <- new.env(parent = environment(formula))
+	    for (i in names(start))
+		assign(i, start[[i]], envir = startEnv)
+	    rhs <- eval(formula[[3]], data, startEnv)
+	    n <- NROW(rhs)
+	}
         else {
             mf$formula <-  # replace by one-sided linear model formula
                 as.formula(paste("~", paste(varNames[varIndex], collapse = "+")),
