@@ -134,7 +134,7 @@ density.default <-
 	    xhi = as.double(up),
 	    y = double(2 * n),
 	    ny = as.integer(n),
-            PACKAGE = "base" )$y * totMass
+            PACKAGE = "stats" )$y * totMass
     kords <- seq.int(0, 2*(up-lo), length.out = 2 * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,

@@ -76,6 +76,12 @@
 #include <R_ext/Applic.h>
 #include <Rmath.h>		/* fround */
 
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
+
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -88,6 +94,7 @@
    casting in the code itself.  However, it does mean that we cannot
    use the argument type matching
  */
+attribute_hidden
 void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result)
 {

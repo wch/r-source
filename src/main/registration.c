@@ -77,7 +77,6 @@
    Rdll.lib or libR.so or the equivalent on that platform.
 */
 
-static R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
@@ -87,25 +86,11 @@ static R_NativePrimitiveArgType R_cumsum_t[] = {REALSXP, INTSXP, REALSXP, REALSX
 
 static R_NativePrimitiveArgType find_interv_vec_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, LGLSXP, LGLSXP, INTSXP};
 
-static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
-					      REALSXP, REALSXP, INTSXP, INTSXP, REALSXP,
-					      INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
-					      INTSXP, INTSXP};
-
-static R_NativePrimitiveArgType lowess_t[] = {REALSXP, REALSXP, INTSXP, REALSXP,
-				       INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-
-
-static R_NativePrimitiveArgType massdist_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, REALSXP, REALSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_max_col_t[] = {REALSXP, INTSXP, INTSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_pretty_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 static R_NativePrimitiveArgType R_rowsum_t[] = {INTSXP, REALSXP, REALSXP, REALSXP};
-
-static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
-						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 
 static R_NativePrimitiveArgType stemleaf_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
 
@@ -136,23 +121,15 @@ static R_NativePrimitiveArgType fdhess_t[] = {};
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 static R_CMethodDef cMethods [] = {
-    CDEF(R_approx),
     CDEF(bakslv),
     CDEF(bincode),
     CDEF(bincount),
     CDEF(R_cumsum),
-
     CDEF(find_interv_vec),
-    CDEF(loglin),
-    CDEF(lowess),
-    CDEF(massdist),
     CDEF(R_max_col),
     CDEF(R_pretty),
     /* this is called by Hmisc, although no longer used in R */
     CDEF(R_rowsum),
-
-    CDEF(spline_coef),
-    CDEF(spline_eval),
     CDEF(stemleaf),
 #if 0
     CDEF(str_signif),
@@ -268,13 +245,13 @@ static R_ExternalMethodDef externalMethods [] = {
 
 #define FDEF(name)  {#name, (DL_FUNC) &F77_SYMBOL(name), -1, NULL}
 static R_FortranMethodDef fortranMethods[] = {
-    /* Linpack */
     FDEF(ch2inv),
     FDEF(chol),
     FDEF(cg),
     FDEF(ch),
     FDEF(rg),
     FDEF(rs),
+    /* Linpack */
     FDEF(dchdc),
     FDEF(dpbfa),
     FDEF(dpbsl),
@@ -295,7 +272,6 @@ static R_FortranMethodDef fortranMethods[] = {
     FDEF(dsvdc),
     FDEF(dtrsl),
     FDEF(dtrco),
-    FDEF(lminfl),
     {NULL, NULL, 0}
 };
 

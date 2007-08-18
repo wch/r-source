@@ -62,7 +62,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             dev = double(iter),
             nlast = integer(1),
             ifault = integer(1),
-            PACKAGE = "base")
+            PACKAGE = "stats")
     switch(z$ifault,
            stop("this should not happen"),
            stop("this should not happen"),

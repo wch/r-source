@@ -62,7 +62,7 @@ spline <-
 	    c=double(nx),
 	    d=double(nx),
 	    e=double(if(method == 1) nx else 0),
-	    PACKAGE="base")
+	    PACKAGE="stats")
     u <- seq(xmin, xmax, length.out=n)
 
     .C("spline_eval",
@@ -76,5 +76,5 @@ spline <-
        z$b,
        z$c,
        z$d,
-       PACKAGE="base")[c("x","y")]
+       PACKAGE="stats")[c("x","y")]
 }

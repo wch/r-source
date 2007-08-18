@@ -62,7 +62,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     y <- .C("R_approx", as.double(x), as.double(y), as.integer(nx),
 	    xout = as.double(xout), as.integer(length(xout)),
 	    as.integer(method), as.double(yleft), as.double(yright),
-	    as.double(f), NAOK = TRUE, PACKAGE = "base")$xout
+	    as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
     list(x = xout, y = y)
 }
 
@@ -110,7 +110,7 @@ approxfun <- function(x, y = NULL, method = "linear",
     function(v) .C("R_approx", as.double(x), as.double(y), as.integer(n),
 		   xout = as.double(v), as.integer(length(v)),
 		   as.integer(method), as.double(yleft), as.double(yright),
-		   as.double(f), NAOK = TRUE, PACKAGE = "base")$xout
+		   as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
 }
 
 ### This is a `variant' of  approx( method = "constant" ) :

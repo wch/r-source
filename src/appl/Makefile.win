@@ -5,15 +5,14 @@ CPPFLAGS=-I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 CFLAGS=$(OPTFLAGS)
 FFLAGS=$(FOPTFLAGS)
 CSOURCES = \
-	approx.c \
 	bakslv.c binning.c \
 	cpoly.c cumsum.c \
 	fft.c fmin.c integrate.c interv.c \
-	lbfgsb.c loglin.c lowess.c \
-	machar.c maxcol.c massdist.c \
+	lbfgsb.c \
+	machar.c maxcol.c \
 	pretty.c \
 	rcont.c rowsum.c \
-	splines.c stem.c strsignif.c \
+	stem.c strsignif.c \
 	tabulate.c \
 	uncmin.c \
 	zeroin.c
@@ -21,8 +20,7 @@ FSOURCES = \
 	ch2inv.f chol.f \
 	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
 	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f \
-	eigen.f \
-	lminfl.f
+	eigen.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 
 all: makeMakedeps libappl.a

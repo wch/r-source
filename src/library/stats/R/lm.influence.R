@@ -68,7 +68,7 @@ lm.influence <- function (model, do.coef = TRUE)
                         coefficients= if(do.coef) matrix(0, n, k) else double(0),
                         sigma = double(n),
                         tol = 10 * .Machine$double.eps,
-                        DUP = FALSE, PACKAGE="base"
+                        DUP = FALSE, PACKAGE="stats"
                         )[c("hat", "coefficients", "sigma","wt.res")]
         if(!is.null(model$na.action)) {
             hat <- naresid(model$na.action, res$hat)

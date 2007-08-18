@@ -439,12 +439,20 @@
  apse_set_deletions
  apse_set_insertions
  apse_set_substitutions
+ bakslv
+ balanc_
+ balbak_
  baseRegisterIndex
+ bincode
+ bincount
  bratio
  breaktodebugger
  cbabk2_
  cbal_
- cdiv_
+ cdiv
+ cg_
+ ch2inv_
+ ch_
  check_doc_file
  closeconsole
  complex_binary
@@ -1006,7 +1014,11 @@
  editorchecksave
  editorcleanall
  editorsetfont
+ elmhes_
+ eltran_
  epslon_
+ fft_factor
+ fft_work
  fontname
  fontsty
  framenames
@@ -1058,6 +1070,7 @@
  gzwrite
  haveusedapager
  helpmenuact
+ hqr2_
  hqr_
  htribk_
  htridi_
@@ -1192,6 +1205,7 @@
  realp0_
  reset_duplicate_counter
  restoredpSaved
+ rg_
  rpipeClose
  rpipeGetc
  rpipeGets
@@ -1220,6 +1234,8 @@
  sigrelse
  sigsetmask
  sigsuspend
+ stemleaf
+ str_signif
  switch_stdout
  tql1_
  tql2_

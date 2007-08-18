@@ -60,7 +60,7 @@ splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
 	    c=double(nx),
 	    d=double(nx),
 	    e=double(if(method == 1) nx else 0),
-	    PACKAGE="base")
+	    PACKAGE="stats")
     rm(x,y,nx,o,method)
     z$e <- NULL
     function(x, deriv = 0) {
@@ -89,6 +89,6 @@ splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
 	   z$b,
 	   z$c,
 	   z$d,
-	   PACKAGE="base")$y
+	   PACKAGE="stats")$y
     }
 }

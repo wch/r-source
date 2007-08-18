@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2005   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2007   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -89,10 +89,6 @@ void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 
 /* Entry points NOT in the R API */
 
-/* appl/approx.c */
-void R_approx(double *, double *, int *, double *, int *,
-	      int *, double *, double *, double *);
-
 /* appl/bakslv.c */
 void bakslv(double *, int *, int *,
 	    double *, int *, int *,
@@ -107,7 +103,7 @@ void bincount(double *x, int *n, double *breaks, int *nb, int *count,
 /* appl/ch2inv.f */
 void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
 
-/* appl/chol.f */
+/* appl/chol.f Used in nlme */
 void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
 
 /* appl/cpoly.c : */
@@ -135,6 +131,7 @@ int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
 		 double *fv1, double *fv2, double *fm1, int *ierr);
 int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
 		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
+/* used in nlme */
 int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
@@ -168,30 +165,10 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *wa, int * iwa, char *task, int iprint,
 	    int *lsave, int *isave, double *dsave);
 
-/* appl/lminfl.c */
-void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
-		      double *resid, double *hat, double *coef, double *sigma);
-
-
-/* appl/loglin.c */
-void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
-	    double *table, double *fit, int *locmar, int *nmar, double *marg,
-	    int *nu, double *u, double *maxdev, int *maxit,
-	    double *dev, int *nlast, int *ifault);
-
-/* appl/lowess.c */
-void lowess(double *x, double *y, int *n,
-	    double *f, int *nsteps, double *delta,
-	    double *ys, double *rw, double *res);
-
 /* appl/machar.c */
 void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 	    int *negep, int *iexp, int *minexp, int *maxexp,
 	    double *eps, double *epsneg, double *xmin, double *xmax);
-
-/* appl/massdist.c */
-void massdist(double *x, double *xmass, int *nx, double *xlow, double *xhigh,
-	      double *y, int *ny);
 
 /* appl/maxcol.c: also in Utils.h */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
@@ -207,19 +184,6 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 
 /* appl/rowsum.c */
 void R_rowsum(int *dim, double *na_x, double *x, double *group);
-
-/* appl/splines.c */
-void spline_coef(int *method, int *n, double *x, double *y,
-		 double *b, double *c, double *d, double *e);
-void spline_eval(int *method, int *nu, double *u, double *v,
-		 int *n, double *x, double *y,
-		 double *b, double *c, double *d);
-void natural_spline(int n, double *x, double *y,
-		    double *b, double *c, double *d);
-void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d);
-void periodic_spline(int n, double *x, double *y,
-		     double *b, double *c, double *d, double *e);
-
 
 /* appl/stem.c */
 Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-5   The R Development Core Team.
+ *  Copyright (C) 2001-7   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,6 +65,22 @@ static R_NativePrimitiveArgType band_phi4_bin_t[] = {INTSXP, INTSXP, REALSXP, IN
 static R_NativePrimitiveArgType band_phi6_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType band_den_bin_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 
+static R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
+
+static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
+					      REALSXP, REALSXP, INTSXP, INTSXP, REALSXP,
+					      INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
+					      INTSXP, INTSXP};
+
+static R_NativePrimitiveArgType lowess_t[] = {REALSXP, REALSXP, INTSXP, REALSXP,
+				       INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
+
+static R_NativePrimitiveArgType massdist_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, REALSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
+						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
+
+
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 
@@ -112,11 +128,17 @@ static const R_CMethodDef CEntries[]  = {
     {"HoltWinters", (DL_FUNC) &HoltWinters, 15},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
+    CDEF(R_approx),
     CDEF(band_ucv_bin),
     CDEF(band_bcv_bin),
     CDEF(band_phi4_bin),
     CDEF(band_phi6_bin),
     CDEF(band_den_bin),
+    CDEF(loglin),
+    CDEF(lowess),
+    CDEF(massdist),
+    CDEF(spline_coef),
+    CDEF(spline_eval),
     {NULL, NULL, 0}
 };
 
@@ -173,6 +195,7 @@ static const R_FortranMethodDef FortEntries[] = {
     {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
     {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
     {"stl", (DL_FUNC) &F77_SUB(stl), 18},
+    {"lminfl", (DL_FUNC) &F77_SUB(lminfl), 11},
     {NULL, NULL, 0}
 };
 
