@@ -211,10 +211,8 @@ weighted.MM1 <- function(resp, conc1, conc.1, Vm, K)
      pred <- (Vm * conc)/(K + conc)
     (resp - pred) / sqrt(pred)
 }
-system.time(
 Pur.wt1 <- nls( ~ weighted.MM1(rate, conc1, conc.1, Vm, K),
                data = lisTreat, start = list(Vm = 200, K = 0.1))
-)
 stopifnot(all.equal(coef(Pur.wt), coef(Pur.wt1)))
 
 ## Chambers and Hastie (1992) Statistical Models in S  (p. 537):
@@ -237,10 +235,8 @@ weighted.MM.grad <- function(resp, conc1, conc.1, Vm, K)
   dev
 }
 
-system.time(
 Pur.wt.grad <- nls( ~ weighted.MM.grad(rate, conc1, conc.1, Vm, K),
                    data = lisTreat, start = list(Vm = 200, K = 0.1))
-)
 
 rbind(coef(Pur.wt), coef(Pur.wt1), coef(Pur.wt.grad))
 
