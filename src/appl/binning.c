@@ -25,6 +25,11 @@
 #include <R_ext/Error.h>
 #include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
@@ -36,6 +41,7 @@
 /* bincode  cuts up the data using half open intervals defined as [a,b)
    (if right = FALSE) or (a, b] (if right = TRUE)
 */
+attribute_hidden
 void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 	     int *right, int *include_border, int *naok)
 {
@@ -71,6 +77,7 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 /* bincount is called by  hist(.)  [only]
  */
 
+attribute_hidden
 void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 	      int *right, int *include_border, int *naok)
 {

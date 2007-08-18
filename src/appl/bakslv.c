@@ -31,7 +31,13 @@
 #include <Rinternals.h>
 #include <R_ext/Linpack.h>
 #include <R_ext/Applic.h>
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
 
+attribute_hidden
 void bakslv(double *t, int *ldt, int *n,
 	    double *b, int *ldb, int *nb,
 	    double *x, int *job, int *info)
