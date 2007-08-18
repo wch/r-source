@@ -203,12 +203,6 @@ src/main/RNG.c
   The Mersenne-Twister part is
   Copyright (C) 1997, 1999 Makoto Matsumoto and Takuji Nishimura.
 
-src/main/TAOCP1997.c [if included]
-
-    This program by D E Knuth is in the public domain and freely copyable
-    AS LONG AS YOU MAKE ABSOLUTELY NO CHANGES!
-
-  and is used unchanged.
 
 src/main/xspline.c
 

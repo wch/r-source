@@ -108,6 +108,9 @@ set.seed(seed, kind = NULL)
       version: the initialization of the GFSR from the seed was altered.
       \R did not allow you to choose consecutive seeds, the reported
       \sQuote{weakness}, and already scrambled the seeds.
+
+      Initialization of this generator is done in interpreted \R code
+      and so takes a short but noticeable time.
     }
 
     \item{\code{"user-supplied":}}{

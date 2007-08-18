@@ -287,6 +287,10 @@ NEW FEATURES
     o	The initialization of the random-number stream makes use of the
 	sub-second part of the current time where available.
 
+	Initialization of the 1997 Knuth TAOCP generator is now done
+	in R code, avoiding some C code whose licence status has been
+	questioned.
+
 
 METHODS PACKAGE
 

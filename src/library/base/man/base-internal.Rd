@@ -20,6 +20,7 @@
 \alias{.GenericArgsEnv}
 \alias{findPackageEnv}
 \alias{lazyLoadDBfetch}
+\alias{.TAOCP1997init}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -52,6 +53,8 @@ sys.save.image(name)
 findPackageEnv(info)
 
 lazyLoadDBfetch(key, file, compressed, hook)
+
+.TAOCP1997init(seed)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -82,6 +85,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{file}{the filepath to a lazyload database.}
   \item{compressed}{logical: are the values in the database compressed?}
   \item{refhook}{a load hook: see \code{\link{unserialize}}.}
+  \item{seed}{a length-one integer vector.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -159,6 +163,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{findPackageEnv} is invoked by the unserialize code to set a
   saved environment if possible.
+
+  \code{.TAOCP1997init} is the initialization code for the
+  \code{"Knuth-TAOCP"} \link{RNG}.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character

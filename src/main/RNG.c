@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1997--2007  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,8 +23,6 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-
-#define HAVE_TAOCP_1997 1
 
 #include "Defn.h"
 #include <R_ext/Random.h>
@@ -90,9 +87,7 @@ RNGTAB RNG_Table[] =
 static void Randomize(RNGtype kind);
 static double MT_genrand();
 static Int32 KT_next();
-#ifdef HAVE_TAOCP_1997
-static void RNG_Init_KT(Int32);
-#endif
+static void RNG_Init_R_KT(Int32);
 static void RNG_Init_KT2(Int32);
 #define KT_pos (RNG_Table[KNUTH_TAOCP].i_seed[100])
 
@@ -236,11 +231,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	FixupSeeds(kind, 1);
 	break;
     case KNUTH_TAOCP:
-#ifdef HAVE_TAOCP_1997
-	RNG_Init_KT(seed);
-#else
-	error(_("Knuth-TAOCP (1997) is not supported in this build of R"));
-#endif
+	RNG_Init_R_KT(seed);
 	break;
     case KNUTH_TAOCP2:
 	RNG_Init_KT2(seed);
@@ -608,24 +599,11 @@ static double MT_genrand()
 
 
 #define long Int32
-#define Void void
-#define void static void
 #define ran_arr_buf       R_KT_ran_arr_buf
 #define ran_arr_cycle     R_KT_ran_arr_cycle
 #define ran_arr_ptr       R_KT_ran_arr_ptr
 #define ran_arr_sentinel  R_KT_ran_arr_sentinel
 #define ran_x             dummy
-
-#ifdef HAVE_TAOCP_1997
-#include "TAOCP1997.c"
-
-Void RNG_Init_KT(Int32 seed)
-{
-    ran_start(seed % 1073741821);
-    KT_pos = 100;
-}
-
-#else
 
 #define KK 100                     /* the long lag */
 #define LL  37                     /* the short lag */
@@ -633,7 +611,7 @@ Void RNG_Init_KT(Int32 seed)
 #define TT  70   /* guaranteed separation between streams */
 #define mod_diff(x,y) (((x)-(y))&(MM-1)) /* subtraction mod MM */
 #define is_odd(x)  ((x)&1)          /* units bit of x */
-void ran_array(long aa[],int n)    /* put n new random numbers in aa */
+static void ran_array(long aa[],int n)    /* put n new random numbers in aa */
 {
   register int i,j;
   for (j=0;j<KK;j++) aa[j]=ran_x[j];
@@ -642,20 +620,17 @@ void ran_array(long aa[],int n)    /* put n new random numbers in aa */
   for (;i<KK;i++,j++) ran_x[i]=mod_diff(aa[j-KK],ran_x[i-LL]);
 }
 #define QUALITY 1009 /* recommended quality level for high-res use */
-long ran_arr_buf[QUALITY];
-long ran_arr_sentinel=-1;
-long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
+static long ran_arr_buf[QUALITY];
+static long ran_arr_sentinel=-1;
+static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
-long ran_arr_cycle()
+static long ran_arr_cycle()
 {
   ran_array(ran_arr_buf,QUALITY);
   ran_arr_buf[KK]=-1;
   ran_arr_ptr=ran_arr_buf+1;
   return ran_arr_buf[0];
 }
-#endif
-
-#define ran_start ran_start2002
 
 /* ===================  Knuth TAOCP  2002 ========================== */
 
@@ -669,12 +644,7 @@ long ran_arr_cycle()
       included here; there's no backwards compatibility with the original. */
 
 
-#ifdef __STDC__
-void ran_start(long seed)
-#else
-void ran_start(seed)    /* do this before using ran_array */
-  long seed;            /* selector for different streams */
-#endif
+static void ran_start(long seed)
 {
   register int t,j;
   long x[KK+KK-1];              /* the preparation buffer */
@@ -703,7 +673,7 @@ void ran_start(seed)    /* do this before using ran_array */
 }
 /* ===================== end of Knuth's code ====================== */
 
-Void RNG_Init_KT2(Int32 seed)
+static void RNG_Init_KT2(Int32 seed)
 {
     ran_start(seed % 1073741821);
     KT_pos = 100;
@@ -718,3 +688,16 @@ static Int32 KT_next()
     return ran_x[(KT_pos)++];
 }
 
+static void RNG_Init_R_KT(Int32 seed)
+{
+    SEXP fun, sseed, call, ans;
+    fun = findVar1(install(".TAOCP1997init"), R_BaseEnv, CLOSXP, FALSE);
+    if(fun == R_UnboundValue)
+	error("function '.TAOCP1997init' is missing");
+    PROTECT(sseed = ScalarInteger(seed % 1073741821));
+    PROTECT(call = lang2(fun, sseed));
+    ans = eval(call, R_GlobalEnv);
+    memcpy(dummy, INTEGER(ans), 100*sizeof(int));
+    UNPROTECT(2);
+    KT_pos = 100;
+}
