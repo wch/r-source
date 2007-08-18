@@ -108,7 +108,6 @@ int R_finite(double);
 #define _(String) String
 #endif /* standalone */
 
-#define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
 #define ML_VALID(x)	(!ISNAN(x))
 
 #define ME_NONE		0
