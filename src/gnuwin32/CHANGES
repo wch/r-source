@@ -57,6 +57,9 @@ PACKAGE INSTALLATION
 
     o	graphapp is now in a separate DLL, so packages making direct
 	use of it need to link against -lgraphapp.
+	
+    o	If the HTML Help Workshop fails when chm help is requested,
+	package installation will continue with a warning.
 
 
 BUILDING R
