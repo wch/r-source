@@ -32,11 +32,14 @@ available.packages <-
         localcran <- length(grep("^file:", repos)) > 0
         if(localcran) {
             ## see note in download.packages
-            tmpf <- paste(substring(repos, 6), "PACKAGES", sep = "/")
-            tmpf <- sub("^//", "", tmpf)
-            if(.Platform$OS.type == "windows") {
-                if(length(grep("[A-Za-z]:", tmpf)))
-                    tmpf <- substring(tmpf, 2)
+            if(substring(repos, 1, 8) == "file:///") {
+                tmpf <- paste(substring(repos, 8), "PACKAGES", sep = "/")
+                if(.Platform$OS.type == "windows") {
+                    if(length(grep("^/[A-Za-z]:", tmpf)))
+                        tmpf <- substring(tmpf, 2)
+                }
+            } else {
+                tmpf <- paste(substring(repos, 6), "PACKAGES", sep = "/")
             }
             res0 <- read.dcf(file = tmpf)
             if(length(res0)) rownames(res0) <- res0[, "Package"]
@@ -476,18 +479,25 @@ download.packages <- function(pkgs, destdir, available = NULL,
                         sep="")
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0) { # local repository
-                ## We need to derive the file name from the URL
-                ## This is tricky as so many forms have been allowed,
-                ## and indeed external methods may do even more.
-                fn <- paste(substring(repos, 6), fn, sep = "/")
-                fn <- sub("^//", "", fn)
-                fn <- URLdecode(fn)
-                ## This should leave us with a path beginning with /
-                if(.Platform$OS.type == "windows") {
-                    if(length(grep("[A-Za-z]:", fn)))
-                        fn <- substring(fn, 2)
+                ## This could be file: + file path or a file:/// URL.
+                if(substring(repos, 1, 8) == "file:///") {
+                    ## We need to derive the file name from the URL
+                    ## This is tricky as so many forms have been allowed,
+                    ## and indeed external methods may do even more.
+                    fn <- paste(substring(repos, 8), fn, sep = "/")
+                    ## This leaves a path beginning with /
+                    if(.Platform$OS.type == "windows") {
+                        if(length(grep("^/[A-Za-z]:", fn)))
+                            fn <- substring(fn, 2)
+                    }
+                } else {
+                    fn <- paste(substring(repos, 6), fn, sep = "/")
                 }
-                retval <- rbind(retval, c(p, fn))
+                if(file.exists(fn))
+                    retval <- rbind(retval, c(p, fn))
+                else
+                    warning(gettextf("package '%s' does not exist on the local repository", p),
+                            domain = NA, immediate. = TRUE)
             } else {
                 url <- paste(repos, fn, sep="/")
                 destfile <- file.path(destdir, fn)
