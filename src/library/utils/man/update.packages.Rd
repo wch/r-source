@@ -203,9 +203,18 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{destdir}.  If the list of available packages is not given as
   argument, it is obtained from repositories.  If a repository is local,
   i.e., the URL starts with \code{"file:"}, then the packages are not
-  downloaded but used directly.  (Both \code{"file:"} and
-  \code{"file:///"} are allowed as prefixes to a file path, the latter
-  for an absolute file path.)
+  downloaded but used directly.
+#ifdef unix
+  (Both \code{"file:"} and \code{"file:///"} are allowed as prefixes to
+  a file path, the latter for a file path relative to the root of the
+  file system: see \code{\link{url}} for background.)
+#endif
+#ifdef windows
+  (\code{"file:///"} is allowed as a prefix to a file path.
+  \code{"file:"} can be used for a relative file path (on the current
+  drive).  Neither form allows paths specified as network shares (paths
+  starting \file{\\\\}).)
+#endif
 
   The main function of the set is \code{update.packages}.  First a list
   of all packages/bundles found in \code{lib.loc} is created and

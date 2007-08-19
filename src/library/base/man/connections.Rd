@@ -170,9 +170,9 @@ isIncomplete(con)
 #endif
 #ifdef windows
   In this form the path is relative to the root of the filesystem, not a
-  Windows concept.  The standard form is \code{file://d:/R/repos}: for
+  Windows concept.  The standard form is \code{file:///d:/R/repos}: for
   compatibility with earlier versions of \R and Unix versions,
-  any other form is parsed as \R as \code{file://} plus \code{/path/to/file}.
+  any other form is parsed as \R as \code{file://} plus \code{path_to_file}.
   Also, backslashes are accepted within the path even though
   RFC1738 does not allow them.
 #endif
