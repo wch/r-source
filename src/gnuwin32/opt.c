@@ -26,6 +26,11 @@
 #include <string.h>
 #include <Fileio.h>
 
+#ifndef MAX_PATH
+# include <windows.h>
+#endif
+
+
 static FILE *ff = NULL;
 static char optfl[MAX_PATH];
 static int optln;
