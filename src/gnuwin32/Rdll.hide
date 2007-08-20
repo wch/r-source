@@ -45,7 +45,6 @@
  EncodeReal2
  GRecording
  GetCurrentWinPos
- INTERNAL
  IS_ACTIVE_BINDING
  IS_LATIN1
  IS_UTF8
@@ -512,8 +511,10 @@
  dblep0_
  deflateBound
  deflateCopy
+ deflateInit2_
  deflateParams
  deflatePrime
+ deflateReset
  deflateSetDictionary
  deflateSetHeader
  deflateTune
@@ -1088,6 +1089,7 @@
  inflateGetHeader
  inflateInit2_
  inflatePrime
+ inflateReset
  inflateSetDictionary
  inflateSync
  inflateSyncPoint
@@ -1111,6 +1113,7 @@
  libintl_gettext_free_exp
  libintl_gettext_germanic_plural
  libintl_gettextparse
+ libintl_hash_string
  libintl_ngettext
  libintl_nl_current_default_domain
  libintl_nl_default_default_domain

@@ -467,7 +467,7 @@
 #define HAVE_POSIX_LEAPSECONDS 1
 
 /* Define if your printf() function supports format strings with positions. */
-/* #undef HAVE_POSIX_PRINTF */
+#define HAVE_POSIX_PRINTF 1
 
 /* Define if you have POSIX.1 compatible sigsetjmp/siglongjmp. */
 #define HAVE_POSIX_SETJMP 1
