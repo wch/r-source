@@ -327,6 +327,7 @@ typedef void (*dropfn)(control c, char *data);
 #define gchangemenubar		GA_gchangemenubar
 #define gchangepopup		GA_gchangepopup
 #define gchangescrollbar		GA_gchangescrollbar
+#define gcharmetric		GA_gcharmetric
 #define gcopy		GA_gcopy
 #define gcopyalpha		GA_gcopyalpha
 #define gdrawellipse		GA_gdrawellipse
