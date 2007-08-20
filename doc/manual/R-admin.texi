@@ -4448,12 +4448,11 @@ incompatibility between these components.  (Also, a few badly-written
 packages need @file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)
 This compiler should work on Windows Vista without any workarounds.
 
-Note that @code{mingw-runtime-3.11.tar.gz} or later is required to build
-@R{}, @code{gcc-g77-3.4.4} or later to build some contributed packages,
-and @code{gcc-3.4.5} or later is needed to get a correct build of @R{}
-itself.  (The `Snapshot' @code{binutils-2.17.50-20070129-1.tar.gz} has
-also be tested.)  There are known problems with using other compiler
-sets on Windows Vista
+Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-3.4.5}
+or later are needed to get a correct build of @R{} itself.  (The
+`Snapshot' @code{binutils-2.17.50-20070129-1.tar.gz} has also be
+tested.)  There are known problems with using other compiler sets on
+Windows Vista
 (@url{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
 and that a suitable @code{PATH} needs to be set to include the path to
 @file{cc1}.
