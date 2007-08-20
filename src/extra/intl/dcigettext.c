@@ -159,7 +159,10 @@ char *getwd ();
 #  if VMS
 #   define getcwd(buf, max) (getcwd) (buf, max, 0)
 #  else
+/* This is naughty if already declared, but harmful on Win64 */
+#   ifndef WIN64
 char *getcwd ();
+#   endif
 #  endif
 # endif
 # ifndef HAVE_STPCPY
