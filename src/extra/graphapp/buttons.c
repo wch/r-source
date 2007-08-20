@@ -74,7 +74,7 @@ static void set_new_winproc(object obj)
 	hwnd = obj->handle;
 #ifdef WIN64
 	obj->winproc = (WNDPROC) GetWindowLongPtr(hwnd, GWLP_WNDPROC);
-	SetWindowLongPtr(hwnd, GWL_WNDPROC, app_control_proc);
+	SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR) app_control_proc);
 #else
 	obj->winproc = (WNDPROC) GetWindowLong(hwnd, GWL_WNDPROC);
 	SetWindowLongPtr(hwnd, GWL_WNDPROC, (LONG) app_control_proc);
