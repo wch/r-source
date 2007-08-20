@@ -43,17 +43,6 @@
 
 #include <R_ext/RS.h> /* for S4 allocation */
 
-#if defined(Win32) && defined(LEA_MALLOC)
-#include <stddef.h>
-extern void *Rm_malloc(size_t n);
-extern void *Rm_calloc(size_t n_elements, size_t element_size);
-extern void Rm_free(void * p);
-extern void *Rm_realloc(void * p, size_t n);
-#define calloc Rm_calloc
-#define malloc Rm_malloc
-#define realloc Rm_realloc
-#define free Rm_free
-#endif
 
 /* Declarations for Valgrind.
 
@@ -93,6 +82,17 @@ extern void *Rm_realloc(void * p, size_t n);
 #include <Graphics.h> /* display lists */
 #include <Rdevices.h> /* GetDevice */
 
+#if defined(Win32) && defined(LEA_MALLOC)
+/*#include <stddef.h> */
+extern void *Rm_malloc(size_t n);
+extern void *Rm_calloc(size_t n_elements, size_t element_size);
+extern void Rm_free(void * p);
+extern void *Rm_realloc(void * p, size_t n);
+#define calloc Rm_calloc
+#define malloc Rm_malloc
+#define realloc Rm_realloc
+#define free Rm_free
+#endif
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
