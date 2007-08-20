@@ -13,6 +13,10 @@ endif
 CPPFLAGS=-I../../include
 CFLAGS=$(OPTFLAGS)
 
+## Increase stack size to 10Mb
+LARGE_STACK=-Wl,--stack=0xA00000
+## allow 32-bit builds to address over 2Gb.
+LARGE_ADDR=-Wl,--large-address-aware
 
 .PHONY : all makeMakedeps
 
@@ -51,22 +55,17 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 	$(CP) $^ $@	
 
 graphappmain-CPPFLAGS=-I../../extra
-
 rgui-CPPFLAGS=-DWin32
 rterm-CPPFLAGS=-DWin32
-Rgui-LINKFLAGS=-mwindows
 
-Rterm-LIBS=-luser32 -L../../../bin -lR -lgraphapp
 Rgui-LIBS=-L../../../bin -lR -lgraphapp
 Rpwd-LIBS=-lkernel32
-
-Rgui-LINKFLAGS+=-Wl,--large-address-aware
-Rterm-LINKFLAGS+=-Wl,--large-address-aware
-## Increase stack size to 10Mb
-Rgui-LINKFLAGS+=-Wl,--stack=0xA00000
-Rterm-LINKFLAGS+=-Wl,--stack=0xA00000
-Rscript-LINKFLAGS=-Wl,--large-address-aware -Wl,--stack=0xA00000
 Rscript-LIBS=-luser32 -L../../../bin -lR -lgraphapp
+Rterm-LIBS=-luser32 -L../../../bin -lR -lgraphapp
+
+Rgui-LINKFLAGS=-mwindows $(LARGE_ADDR) $(LARGE_STACK)
+Rterm-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
+Rscript-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
 
 Rgui.exe: graphappmain.o  rgui.o rgico.o
 
