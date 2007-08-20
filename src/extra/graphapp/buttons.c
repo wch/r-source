@@ -875,7 +875,7 @@ void inserttext(control obj, const char *text)
 	if ((obj->kind != FieldObject) && (obj->kind != TextboxObject))
 		return;
 	text = to_dos_string(text);
-	sendmessage(obj->handle, EM_REPLACESEL, 0, (long) text);
+	sendmessage(obj->handle, EM_REPLACESEL, 0, (intptr_t) text);
 	if (text)
 		discard(text);
 }

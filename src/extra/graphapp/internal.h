@@ -418,16 +418,16 @@ extern HWND hwndClient;
   extern HANDLE	this_instance;
   extern HANDLE	prev_instance;
 
-  long WINAPI app_win_proc (HWND, UINT, WPARAM, LPARAM);
-  long WINAPI app_doc_proc (HWND, UINT, WPARAM, LPARAM);
-  long WINAPI app_work_proc (HWND, UINT, WPARAM, LPARAM);
+  LRESULT WINAPI app_win_proc (HWND, UINT, WPARAM, LPARAM);
+  LRESULT WINAPI app_doc_proc (HWND, UINT, WPARAM, LPARAM);
+  LRESULT WINAPI app_work_proc (HWND, UINT, WPARAM, LPARAM);
   long WINAPI app_control_procedure (HWND, UINT, WPARAM, LPARAM);
   UINT WINAPI app_timer_procedure(HWND, UINT, UINT, DWORD);
   extern WNDPROC app_control_proc;
 
   extern int 	menus_active;
   extern int 	active_windows;
-  extern int 	child_id;
+  extern intptr_t child_id;
 
   extern window  current_window;
   extern menubar current_menubar;

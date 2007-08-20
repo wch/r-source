@@ -557,7 +557,7 @@ static long handle_message(HWND hwnd, UINT message,
 			break; /* MDI Client window will handle it */
 		else if (LOWORD(wParam) >= MinChildID) {
 		#ifdef WIN32
-			handle_control((HWND) lParam, HIWORD(wParam));
+			handle_control((HWND) (intptr_t) lParam, HIWORD(wParam));
 		#else
 			handle_control((HWND) LOWORD(lParam), HIWORD(lParam));
 		#endif /* WIN32 */
@@ -570,7 +570,7 @@ static long handle_message(HWND hwnd, UINT message,
 	case WM_HSCROLL:
 		#ifdef WIN32
 		if ( lParam != 0) { /* scrollbar object */
-			hwnd = (HWND) lParam;
+			hwnd = (HWND) (intptr_t) lParam;
 		#else
 		if (HIWORD(lParam) != 0) { /* scrollbar object */
 			hwnd = (HWND) HIWORD(lParam);
@@ -620,7 +620,7 @@ static long handle_message(HWND hwnd, UINT message,
  *  for a window from just knowing the hwnd (which may or may not
  *  belong to us).
  */
-long WINAPI
+LRESULT WINAPI
 app_win_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	long result;
@@ -632,7 +632,7 @@ app_win_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return result;
 }
 
-long WINAPI
+LRESULT WINAPI
 app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	long result;
@@ -662,7 +662,7 @@ app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return result;
 }
 
-long WINAPI
+LRESULT WINAPI
 app_work_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	long result;

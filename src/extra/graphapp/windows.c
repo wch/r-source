@@ -69,7 +69,7 @@
  */
 	PROTECTED window current_window = NULL;
 	PROTECTED int    active_windows = 0;
-	PROTECTED int    child_id = MinChildID;
+	PROTECTED intptr_t child_id = MinChildID;
 
 /*
  *  Handles to special windows.
@@ -237,7 +237,7 @@ static HWND new_mdi_window(const char *name, rect r, unsigned long sty)
 	mdi.lParam	= 0;
 
 	hwnd = (HWND) sendmessage(hwndClient, WM_MDICREATE, 0,
-				(long) (LPMDICREATESTRUCT) &mdi);
+				(intptr_t) (LPMDICREATESTRUCT) &mdi);
 
 
 	return hwnd;
