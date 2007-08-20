@@ -107,7 +107,10 @@
  R_InsertRestartHandlers
  R_IoBufferFree
  R_IoBufferGetc
+ R_IoBufferInit
  R_IoBufferPutc
+ R_IoBufferPuts
+ R_IoBufferReadReset
  R_IoBufferWriteReset
  R_JumpToContext
  R_KeepSource
@@ -128,12 +131,15 @@
  R_PPStack
  R_PPStackSize
  R_PPStackTop
+ R_Parse1Buffer
  R_Parse1File
  R_ParseBuffer
  R_ParseConn
  R_ParseContext
  R_ParseContextLast
  R_ParseError
+ R_ParseErrorFile
+ R_ParseErrorMsg
  R_ParseFile
  R_PendingPromises
  R_Quiet
@@ -348,6 +354,7 @@
  Rf_yylval
  Rf_yynerrs
  Rf_yyparse
+ RgetMDIsize
  RguiCommonHelp
  RguiPackageMenu
  Rgui_Edit
@@ -511,10 +518,8 @@
  dblep0_
  deflateBound
  deflateCopy
- deflateInit2_
  deflateParams
  deflatePrime
- deflateReset
  deflateSetDictionary
  deflateSetHeader
  deflateTune
@@ -1089,7 +1094,6 @@
  inflateGetHeader
  inflateInit2_
  inflatePrime
- inflateReset
  inflateSetDictionary
  inflateSync
  inflateSyncPoint
