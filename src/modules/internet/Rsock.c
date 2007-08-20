@@ -134,7 +134,7 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #include <R_ext/R-ftp-http.h>
 
 #ifdef Win32
-#include <winsock.h>
+#include <winsock2.h>
 #include <io.h>
 #define EWOULDBLOCK             WSAEWOULDBLOCK
 #define EINPROGRESS             WSAEINPROGRESS

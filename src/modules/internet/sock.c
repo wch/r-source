@@ -41,7 +41,7 @@
 #endif
 
 #if defined(Win32)
-#  include <winsock.h>
+#  include <winsock2.h>
 #  include <io.h>
 #else
 #  ifdef HAVE_UNISTD_H

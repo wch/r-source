@@ -43,7 +43,7 @@
 
 #ifdef Win32
 #include <io.h>
-#include <winsock.h>
+#include <winsock2.h>
 #define _WINSOCKAPI_
 extern void R_ProcessEvents(void);
 #define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)

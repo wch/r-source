@@ -58,7 +58,7 @@
 
 #ifdef Win32
 #include <io.h>
-#include <winsock.h>
+#include <winsock2.h>
 #define EWOULDBLOCK             WSAEWOULDBLOCK
 #define EINPROGRESS             WSAEINPROGRESS
 #define EALREADY                WSAEALREADY
