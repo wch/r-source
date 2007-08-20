@@ -40,17 +40,21 @@ match.arg <- function (arg, choices, several.ok = FALSE)
 	choices <- eval(formal.args[[deparse(substitute(arg))]])
     }
     if (is.null(arg)) return(choices[1])
-    else if(length(arg) == 0 || !is.character(arg))
-	## warn for now; should become an error eventually:
-	warning("'arg' must be NULL or a character vector of length >= 1")
+    else if(!is.character(arg))
+	stop("'arg' must be NULL or a character vector")
     if (!several.ok) { # most important (default) case:
-        if(all(arg == choices)) return(choices[1])
-    } else {
-        if (identical(arg, choices)) return(choices)
-    }
-    i <- pmatch(arg, choices)
-    if (any(is.na(i)))
-	stop("'arg' should be one of ", paste(choices, collapse = ", "))
+        ## the arg can be the whole of choices as a default argument.
+        if(identical(arg, choices)) return(arg[1])
+        if(length(arg) > 1) stop("'arg' must be of length 1")
+    } else if(length(arg) == 0) stop("'arg' must be of length >= 1")
+
+    ## handle each element of arg separately
+    i <- pmatch(arg, choices, nomatch = 0L, duplicates.ok = TRUE)
+    if (all(i == 0L))
+	stop(gettextf("'arg' should be one of %s",
+                      paste(dQuote(choices), collapse = ", ")),
+             domain = NA)
+    i <- i[i > 0]
     if (!several.ok && length(i) > 1)
         stop("there is more than one match in 'match.arg'")
     choices[i]

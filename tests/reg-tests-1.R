@@ -4862,3 +4862,12 @@ load("r1-ascii.rda")
 unlink("r1-ascii.rda")
 stopifnot(identical(r1, r0))
 ## wrong < 2.5.1 patched
+
+
+## match.arg with multiple values (PR#9859)
+x <- letters[1:3]
+y <- c('aa','bb')
+try(match.arg(x,y)) # gave spurious warning
+res <- match.arg(x,y, several.ok = TRUE) # error
+stopifnot(identical(res, y))
+## failed in 2.5.1

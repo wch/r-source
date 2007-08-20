@@ -592,6 +592,12 @@ BUG FIXES
     o	nls() now allows more peculiar but reasonable ways of being called,
 	e.g., with data=list(<uneven lengths>) or a model without variables.
 
+    o	match.arg() was not behaving as documented when
+	several.ok=TRUE (PR#9859), gave spurious warnings when 'arg'
+	had the wrong length and was incorrectly documented (exact
+	matches are returned even when there is more than one partial
+	match).
+
 
 
 	**************************************************
