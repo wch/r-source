@@ -29,8 +29,6 @@ that differs only in that
 
  - SUPPORT_UTF8 is defined, but that is not true on Windows.
 
- - HAVE_VASPRINTF is true thanks to the trio library.
-
  - MinGW gcc 4.2.1 supports pthreads, but I left that undefined.
 
 Also, watch out for versions of the header files.  For example,
@@ -104,16 +102,85 @@ most one dot' rule.
 BDR 2006-02-15, 2006-02-24
 
 
-5) Moving to gcc 4.x
+5) Rdll.hide
 
-It looks like just two things are needed:
+AllDevicesKilled
+RConsole
+RFrame
+Rf_runcmd
+RgetMDIheight
+RgetMDIwidth
+RguiMDI
+Ri18n_wcwidth
+Riconv
+Riconv_close
+Riconv_open
+Rwin_graphicsx
+Rwin_graphicsy
+UserBreak
+locale2charset
+optclosefile
+optfile
+optline
+optopenfile
+optread
 
-- change to BUILD=GCC4 in MkRules.
-
-- in fixed/h/config.h, comment out
-#define HAVE_F77_EXTRA_UNDERSCORE 1
-and change to one underscore in
-#define F77_FUNC_(name,NAME) name ## __
+for grDevices
 
 
-BDR 2007-04-06
+R_deferred_default_method
+R_do_MAKE_CLASS
+R_do_new_object
+R_do_slot
+R_do_slot_assign
+R_execMethod
+R_primitive_generic
+R_primitive_methods
+R_set_prim_method
+R_set_quick_method_check
+R_set_standardGeneric_ptr
+R_subassign3_dflt
+do_set_prim_method
+
+for methods
+
+
+R_gl_tab_set
+cmdlineoptions
+getDLLVersion
+gl_hist_init
+gl_loadhistory
+readconsolecfg
+saveConsoleTitle
+setupui
+
+for rgui/rterm/Rscript
+
+
+crc32
+deflate
+deflateEnd
+deflateInit2_
+deflateReset
+inflateReset
+
+for Rbitmap.dll
+
+
+Rf_mbrtowc
+Rf_strchr
+localeCP
+
+for graphapp.dll
+
+
+deflate
+deflateEnd
+deflateInit_
+inflate
+inflateEnd
+inflateInit_
+
+for package GRASS
+
+BDR 2007-08-20

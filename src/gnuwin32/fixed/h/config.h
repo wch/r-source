@@ -209,7 +209,7 @@
 /* Define if your Fortran compiler appends an extra_underscore to external
    names containing an underscore. */
 /* needs to be set for GCC3 */
-/* #define HAVE_F77_EXTRA_UNDERSCORE 1 */
+/* #undef HAVE_F77_EXTRA_UNDERSCORE */
 
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
@@ -642,7 +642,7 @@
 #define HAVE_TIME_H 1
 
 /* Define to 1 if you have the `tsearch' function. */
-/* #define HAVE_TSEARCH 1 */
+#define HAVE_TSEARCH 1
 
 /* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>. */
 #define HAVE_UINTMAX_T 1

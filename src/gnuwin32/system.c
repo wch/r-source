@@ -63,16 +63,6 @@ extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 static FILE *ifp = NULL;
 
-/* used in devWindows.c */
-int RbitmapAlreadyLoaded = 0;
-HINSTANCE hRbitmapDll;
-
-static void UnLoad_Rbitmap_Dll()
-{
-    if (RbitmapAlreadyLoaded) FreeLibrary(hRbitmapDll);
-    RbitmapAlreadyLoaded = 0;
-}
-
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
 void set_workspace_name(char *fn); /* ../main/startup.c */
@@ -448,7 +438,6 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     AllDevicesKilled = TRUE;
     if (R_Interactive && CharacterMode == RTerm)
 	SetConsoleTitle(oldtitle);
-    UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE
 	&& CharacterMode == RTerm)
 	PrintWarnings();

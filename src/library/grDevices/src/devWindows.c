@@ -239,7 +239,6 @@ static double pixelWidth(drawing d);
 static void SetColor(int, double, NewDevDesc *);
 static void SetFont(const char*, int, int, double, NewDevDesc *);
 static int Load_Rbitmap_Dll();
-void UnLoad_Rbitmap_Dll();
 static void SaveAsPng(NewDevDesc *dd, const char *fn);
 static void SaveAsJpeg(NewDevDesc *dd, int quality, const char *fn);
 static void SaveAsBmp(NewDevDesc *dd, const char *fn);
@@ -2872,11 +2871,8 @@ SEXP savePlot(SEXP args)
 typedef int (*R_SaveAsBitmap)();
 static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp;
 
-/* next two are in system.c */
-#include <R_ext/libextern.h>
-LibExtern int RbitmapAlreadyLoaded;
-LibExtern HINSTANCE hRbitmapDll;
-#undef LibExtern
+static int RbitmapAlreadyLoaded = 0;
+static HINSTANCE hRbitmapDll;
 
 static int Load_Rbitmap_Dll()
 {
