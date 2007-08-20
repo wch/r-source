@@ -1023,7 +1023,7 @@ int cmdlineoptions(int ac, char **av)
     return 0;
 }
 
-/* only for back-compatibility */
+/* only for back-compatibility: used by Rserve */
 void setup_term_ui()
 {
     initapp(0, 0);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2006   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997-2007   Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -87,7 +87,7 @@ do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifdef Win32
-extern int R_LoadRconsole;
+extern Rboolean R_LoadRconsole;
 #endif
 
 void
@@ -145,7 +145,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		R_RestoreHistory = 0;     /* --no-restore-history */
 		Rp->NoRenviron = TRUE;
 #ifdef Win32
-		R_LoadRconsole = 0;
+		R_LoadRconsole = FALSE;
 #endif
 	    }
 	    else if (!strcmp(*av, "--no-environ")) {

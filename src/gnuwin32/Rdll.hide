@@ -117,6 +117,7 @@
  R_LastvalueSymbol
  R_LibraryFileName
  R_LoadFromFile
+ R_LoadRconsole
  R_Log10
  R_NHeap
  R_NShowCalls

@@ -24,7 +24,6 @@
 #define RW_LARGEICONS   0x1000
 
 extern int MDIset;
-extern int R_LoadRconsole;
 
 #include <R_ext/Boolean.h>
 #include <R_ext/libextern.h>

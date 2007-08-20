@@ -56,12 +56,12 @@ console RConsole = NULL;
 #ifdef USE_MDI
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
-int   R_LoadRconsole = 1;
 window RFrame;
 rect MDIsize;
 #endif
 extern int ConsoleAcceptCmd, R_is_running;
 extern Rboolean DebugMenuitem;
+Rboolean R_LoadRconsole = TRUE; /* used in commandLineArgs */
 
 static menubar RMenuBar;
 static popup RConsolePopup;
