@@ -54,6 +54,7 @@ typedef objinfo *object;
 #ifndef __WINDOWS_H     /* prevent multiple includes */
 #include <windows.h>
 #endif
+#include <stdint.h> /* for intptr_t */
 
 #ifndef __GA__VERSION__
 #define objptr object
