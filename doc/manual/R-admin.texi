@@ -4025,15 +4025,30 @@ could be installed.)
 @section Cygwin
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
-Only building as a shared library currently works, so use
+This is unsupported, but experiments have been conducted and a few
+workarounds added for @R{} 2.6.0.
+
+Only building as a shared library works,@footnote{DLLs need to have all
+links resolved at build time and so cannot resolve against
+@file{R.bin}.} so use
 
 @example
-./configure --disable-nls --disable-mbcs -enable-Rshlib
+./configure --disable-nls --disable-mbcs -enable-R-shlib
 make
 @end example
 
+@noindent
+(MBCS would work but only be of any use in a CJK locale: NLS would
+probably work with @option{--with-included-gettext}.)
+
 It almost passes @command{make check}: FIFOs are supposedly supported
-but do not work.
+but hung.
+
+Note that this gives you a command-line application using @pkg{readline}
+for command editing.  The @samp{X11} graphics device will work if a
+suitable X server is running, and the standard Unix-alike ways of
+installing source packages work.
+
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
