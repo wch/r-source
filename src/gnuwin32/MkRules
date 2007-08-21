@@ -59,6 +59,9 @@ TCL_VERSION = 84
 # than without it because mixed or modified revisions will be indicated)
 # USE_SVNVERSION = YES
 
+# We normally link against DLLs, but this forces the use of import libs
+# Needed if using other compilers, and currently on Win64
+# USE_IMPLIBS = YES
 
 ## ====== configuration macros for building installer ===========
 
@@ -158,7 +161,7 @@ endif
 AR=$(BINPREF)ar
 AS=$(BINPREF)as
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG) $(C99FLAG)
 CP=cp
 CPP=$(CC) -E
 CXX=$(BINPREF)g++$(GCC4_SUFF) $(MINGW32CFLAG)

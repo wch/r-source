@@ -60,6 +60,9 @@ PACKAGE INSTALLATION
 	
     o	If the HTML Help Workshop fails when chm help is requested,
 	package installation will continue with a warning.
+	
+    o	The C99 flag (-std=gnu99) is now used for compiling packages
+	as well as R itself.
 
 
 BUILDING R

@@ -32,7 +32,7 @@ DATE = $(shell date +%F)
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
-OPTFLAGS=-O3 -Wall -pedantic $(C99FLAG)
+OPTFLAGS=-O3 -Wall -pedantic
 FOPTFLAGS=-O3 -Wall
 ifdef DEBUG
  OPTFLAGS+=$(G_FLAG)
@@ -90,7 +90,6 @@ front-ends/Rpwd.exe:
 	$(MAKE) --no-print-directory -C front-ends Rpwd
 
 ## watch out: R.dll and Rblas.dll depend on each other.
-## so build import library R.dll then Rblas.dll
 rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
@@ -229,6 +228,11 @@ ifdef USE_UNICOWS
 endif
 
 FORCE:
+
+libR.dll.a: R.exp
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll \
+	  --input-def $< --output-lib $@
+
 
 front-ends:
 	$(MAKE) --no-print-directory -C front-ends
