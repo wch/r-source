@@ -15,8 +15,13 @@ DLL: ../../../library/grDevices/libs/Rbitmap.dll
 buildzlib:
 	@$(MAKE) -C ../../extra/zlib -f Makefile.win
 
+## There is a makefile.mingw these days, but .std has always worked
+## Neither the makefile.{mingw,std} build pnggccrd.c but it is needed if
+## the compiler defines __MMX__ , which the win64 gcc does.
+## So we need to explicitly disable it.
 buildpng:
-	@$(MAKE) CC='$(CC)' CFLAGS="-O3 -I../../../extra/zlib" \
+	@$(MAKE) CC='$(CC)' \
+	  CFLAGS="-O3 -I../../../extra/zlib -DPNG_NO_MMX_CODE" \
 	  RANLIB=$(RANLIB) ZLIBLIB=../../../extra/zlib -C $(PNGDIR) \
 	  -f scripts/makefile.std libpng.a
 
