@@ -464,6 +464,8 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef Win32
 #define tzname _tzname
+#elif defined(__CYGWIN__)
+extern __declspec(dllimport) char *tzname[2];
 #else /* Unix */
 extern char *tzname[2];
 #endif

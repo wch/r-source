@@ -3169,6 +3169,7 @@ of compilers and support libraries.
 * Alpha/OSF1::                  
 * Alpha/FreeBSD::               
 * AIX::                         
+* Cygwin::                      
 * New platforms::               
 @end menu
 
@@ -3981,7 +3982,7 @@ rather than suppressing them entirely.  Advice on how to complete this
 port would be greatly appreciated.
 
 
-@node AIX, New platforms, Alpha/FreeBSD, Platform notes
+@node AIX, Cygwin, Alpha/FreeBSD, Platform notes
 @section AIX
 @cindex AIX
 
@@ -4020,7 +4021,21 @@ The AIX native @code{iconv} does not support encodings @samp{latin1} nor
 @samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
 could be installed.)
 
-@node New platforms,  , AIX, Platform notes
+@node Cygwin, New platforms, AIX, Platform notes
+@section Cygwin
+
+The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
+Only building as a shared library currently works, so use
+
+@example
+./configure --disable-nls --disable-mbcs -enable-Rshlib
+make
+@end example
+
+It almost passes @command{make check}: FIFOs are supposedly supported
+but do not work.
+
+@node New platforms,  , Cygwin, Platform notes
 @section New platforms
 
 There are a number of sources of problems when installing @R {} on a new

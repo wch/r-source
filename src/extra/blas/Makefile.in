@@ -29,10 +29,9 @@ R:
 	@$(MAKE) $(Rblas_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
-## must have objects before libs on Cygwin
-blas_OBJS = blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
-@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
-@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) $(Rblas_la_LIBADD) $(blas_OBJS)
+blas_OBJS=blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS) @BUILD_CYGWIN_TRUE@ xerbla.o
+@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD) @BUILD_CYGWIN_TRUE@ xerbla.o
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
@@ -63,7 +62,7 @@ uninstall TAGS info dvi check:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win Rblas.def \
-  $(SOURCES) $(HEADERS)
+  $(SOURCES) $(HEADERS) xerbla.c
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
@@ -71,3 +70,4 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
