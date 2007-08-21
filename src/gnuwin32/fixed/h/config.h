@@ -699,6 +699,9 @@
 /* Define to 1 if you have the `wcslen' function. */
 #define HAVE_WCSLEN 1
 
+/* Define to 1 if you have the `wcstod' function. */
+#define HAVE_WCSTOD 1
+
 /* Define to 1 if you have the `wcstombs' function. */
 #define HAVE_WCSTOMBS 1
 

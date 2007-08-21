@@ -40447,7 +40447,8 @@ if test "$want_mbcs_support" = yes ; then
 
 
 
-for ac_func in mbrtowc wcrtomb wcscoll wcsftime
+
+for ac_func in mbrtowc wcrtomb wcscoll wcsftime wcstod
 do
 as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
@@ -40678,7 +40679,7 @@ _ACEOF
 fi
 done
 
-  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstod wcstombs \
                  wctrans wctype iswctype
   do
     as_ac_var=`echo "ac_cv_func_$ac_func"`

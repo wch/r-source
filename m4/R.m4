@@ -3232,10 +3232,10 @@ if test "$want_mbcs_support" = yes ; then
 fi
 if test "$want_mbcs_support" = yes ; then
 ## Solaris 8 is missing iswblank, but we can make it from iswctype.
-  R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime], [#include <wchar.h>])
+  R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime wcstod], [#include <wchar.h>])
   R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
   R_CHECK_FUNCS([wctrans iswblank wctype iswctype], [#include <wctype.h>])
-  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstod wcstombs \
                  wctrans wctype iswctype
   do
     as_ac_var=`echo "ac_cv_func_$ac_func"`
