@@ -54,7 +54,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../bin -lgraphapp -lcomctl32 -lversion $(LIBEXTRAS)
+R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lgraphapp -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
