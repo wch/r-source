@@ -271,10 +271,10 @@ static rect fix_win_rect(rect r, long flags)
                           CW_USEDEFAULT,CW_USEDEFAULT);
 	/* Find out the maximum rectangle we are allowed. */
 	if ((flags & Document) && (hwndClient)) {
-		GetClientRect(hwndClient, (RECT *) &max_rect);
+		GetClientRect(hwndClient, rect2RECT(&max_rect));
 	}
 	else if ((flags & ChildWindow) && (current_window)) {
-		GetClientRect(current_window->handle, (RECT *) &max_rect);
+		GetClientRect(current_window->handle, rect2RECT(&max_rect));
 	}
 	else {
 		max_rect = rect(0,0,screen_dx,screen_dy);

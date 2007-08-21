@@ -450,6 +450,9 @@ extern HWND hwndClient;
   extern drawstate current;	/* global colour, font &c */
   extern int 	keystate;	/* state of Shift, Ctrl, Alt */
 
+
+static inline RECT *rect2RECT(rect *r) {return (RECT *)r;}
+
 #ifdef __cplusplus
 }
 #endif
