@@ -59,7 +59,7 @@
 #	define NULL 0
 #endif
 
-#if !defined(WIN32) && !defined(macintosh)
+#if !defined(WIN32) && !defined(macintosh) && !defined(__CYGWIN__)
 extern char *malloc();
 #endif
 #if defined(WIN32) && defined(LEA_MALLOC)

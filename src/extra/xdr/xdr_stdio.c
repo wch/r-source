@@ -7,7 +7,7 @@
 #endif
 
 /* Local mod: assumes WIN32 is i386 and little-endian generic is 32-bit */
-#ifdef WIN32
+#if defined(WIN32) || defined(__CYGWIN__)
 static unsigned long int
 ntohl(unsigned long int x)
 { /* could write VC++ inline assembler, but not worth it for now */
