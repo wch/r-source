@@ -142,12 +142,12 @@ static rect getregion(gadesc *xd)
 /* Update the screen 100ms after last plotting call or 500ms after last
    update */
 
-static UINT TimerNo = 0;
+static UINT_PTR TimerNo = 0;
 static gadesc *GA_xd;
 static DWORD GALastUpdate = 0;
 
 static VOID CALLBACK
-GA_timer_proc(HWND hwnd, UINT message, UINT tid, DWORD time)
+GA_timer_proc(HWND hwnd, UINT message, UINT_PTR tid, DWORD time)
 {
     if ((message != WM_TIMER) || tid != TimerNo || !GA_xd) return;
     gbitblt(GA_xd->gawin, GA_xd->bm, pt(0,0), getrect(GA_xd->bm));
@@ -163,7 +163,8 @@ static void GA_Timer(gadesc *xd)
 	GALastUpdate = now;
     } else {
 	GA_xd = xd;
-	TimerNo = SetTimer(0, 0, (UINT) xd->timeafter, GA_timer_proc);
+	TimerNo = SetTimer((HWND)0, (UINT_PTR)0, (UINT) xd->timeafter,
+			   GA_timer_proc);
     }
 }
 
