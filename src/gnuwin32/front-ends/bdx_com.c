@@ -20,6 +20,7 @@
  *
  ******************************************************************************/
 
+#define _FORCENAMELESSUNION
 #ifndef  _BDX_COM_H_
 #include "bdx_com.h"
 #endif
