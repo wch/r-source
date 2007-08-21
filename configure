@@ -2459,7 +2459,7 @@ R_PLATFORM="${host}"
 
 
 case "${host_os}" in
-  cygwin*|mingw*|windows*|winnt)
+  mingw*|windows*|winnt)
 
 cat >>confdefs.h <<\_ACEOF
 #define Win32 1
@@ -32750,6 +32750,15 @@ fi
     SHLIB_LIBADD="\$(LIBM)"
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
+  cygwin*)
+    ## All Windows code is PIC
+    cpicflags=
+    cxxpicflags=
+    fpicflags=
+    fcpicflags=
+    SHLIB_EXT=".dll"
+    dylib_undefined_allowed=no
+    ;;
   darwin*)
     darwin_pic="-fPIC"
     dylib_undefined_allowed=no
@@ -32937,6 +32946,7 @@ echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
     cpicflags=
     cxxpicflags=
     fpicflags=
+    fcpicflags=
     ;;
   netbsd*)
     if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
@@ -33023,7 +33033,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       { echo "$as_me:$LINENO: WARNING: I could not determine CPICFLAGS." >&5
@@ -33038,7 +33048,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       { echo "$as_me:$LINENO: WARNING: I could not determine FPICFLAGS." >&5
@@ -33053,7 +33063,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -47494,7 +47504,7 @@ esac
 : ${FCPICFLAGS="${fcpicflags}"}
 if test -z "${FCPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       { echo "$as_me:$LINENO: WARNING: I could not determine FCPICFLAGS." >&5

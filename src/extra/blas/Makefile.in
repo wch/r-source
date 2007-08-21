@@ -29,8 +29,10 @@ R:
 	@$(MAKE) $(Rblas_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
-@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
-@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) blas.o $(Rblas_la_LIBADD) @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+## must have objects before libs on Cygwin
+blas_OBJS = blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
+@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) $(Rblas_la_LIBADD) $(blas_OBJS)
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)

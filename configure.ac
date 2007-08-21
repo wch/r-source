@@ -72,7 +72,7 @@ R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
 
 case "${host_os}" in
-  cygwin*|mingw*|windows*|winnt)
+  mingw*|windows*|winnt)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
     R_OSTYPE="windows"
@@ -1186,6 +1186,15 @@ case "${host_os}" in
     SHLIB_LIBADD="\$(LIBM)"
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
+  cygwin*)
+    ## All Windows code is PIC
+    cpicflags=
+    cxxpicflags=
+    fpicflags=
+    fcpicflags=
+    SHLIB_EXT=".dll"
+    dylib_undefined_allowed=no
+    ;;
   darwin*)
     darwin_pic="-fPIC"
     dylib_undefined_allowed=no
@@ -1357,6 +1366,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     cpicflags=
     cxxpicflags=
     fpicflags=
+    fcpicflags=
     ;;
   netbsd*)
     if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
@@ -1437,7 +1447,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
@@ -1449,7 +1459,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -1461,7 +1471,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -2048,7 +2058,7 @@ esac
 : ${FCPICFLAGS="${fcpicflags}"}
 if test -z "${FCPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|cygwin*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FCPICFLAGS.])
