@@ -410,7 +410,7 @@ readLines(Tfile)
 close(Tfile)
 
 if(capabilities("fifo")) {
-  zz <- fifo("foo", "w+")
+  zz <- fifo("foo-fifo", "w+")
   writeLines("abc", zz)
   print(readLines(zz))
   close(zz)
