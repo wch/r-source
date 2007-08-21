@@ -26,9 +26,19 @@
    See the file COPYLIB.TXT for details.
 */
 
-#include "graphapp/internal.h"
+#include <windows.h>
 
-extern void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
+/* The mingw-runtime startup code has _argc and _argv as visible symbols,
+   as do the MS compilers.  But the mingw-w64-crt is different */
+
+#ifdef WIN64
+int _argc = 0;
+char **_argv = 0;
+extern void __getmainargs (int *, char ***, char ***, int);
+#endif
+
+extern void 
+GA_startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
 
 /*
  *  If PASS_ARGS is zero, the main function will be passed zero
@@ -39,39 +49,47 @@ extern void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdSho
  *  method ignores any value returned from main.
  */
 
+#define PASS_ARGS 2
+
 int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	 int CmdShow)
 {
+    char **dummy_environ;
 #if (PASS_ARGS > 1) /* define argc, argv, environ */
-	extern int _argc;
-	extern char **_argv;
-	extern char **environ;
-	extern void AppMain(int argc, char **argv, char **envp);
+    extern int _argc;
+    extern char **_argv;
+    extern char **environ;
+    extern void AppMain(int argc, char **argv, char **envp);
 #elif (PASS_ARGS > 0) /* only define argc and argv */
-	extern int _argc;
-	extern char **_argv;
-	extern void AppMain(int argc, char **argv);
+    extern int _argc;
+    extern char **_argv;
+    extern void AppMain(int argc, char **argv);
 #else /* else pass zero and NULL to main */
-	extern void AppMain(int argc, char **argv);
+    extern void AppMain(int argc, char **argv);
 #endif /* end arg declarations */
 
-        startgraphapp(Instance, PrevInstance, CmdShow);
-	/*
-	 *  Call the main function now.
-	*/
-#if (PASS_ARGS > 1)		/* pass argc, argv, environ */
-	AppMain(_argc, _argv, environ);
-#elif (PASS_ARGS > 0)	/* only pass argc and argv */
-	AppMain(_argc, _argv);
-#else			/* pass zero and NULL */
-	AppMain(0, NULL);
+#ifdef WIN64
+    /* '1' means globbing is enabled */
+    (void) __getmainargs (&_argc, &_argv, &dummy_environ, 1);
 #endif
 
-	/*
-	 *  Call the mainloop function to handle events.
-	 */
+    GA_startgraphapp(Instance, PrevInstance, CmdShow);
+    /*
+     *  Call the main function now.
+     */
+#if (PASS_ARGS > 1)		/* pass argc, argv, environ */
+    AppMain(_argc, _argv, environ);
+#elif (PASS_ARGS > 0)	/* only pass argc and argv */
+    AppMain(_argc, _argv);
+#else			/* pass zero and NULL */
+    AppMain(0, NULL);
+#endif
+
+    /*
+     *  Call the mainloop function to handle events.
+     */
 
 
-	return 0;
+    return 0;
 }
