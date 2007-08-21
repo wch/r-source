@@ -2457,6 +2457,30 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p)
     EXTPTR_PROT(s) = p;
 }
 
+/* Work around casting issues: works where it is needed */
+typedef union {void *p; DL_FUNC fn;} fn_ptr;
+
+attribute_hidden
+SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot)
+{
+    fn_ptr tmp;
+    SEXP s = allocSExp(EXTPTRSXP);
+    tmp.fn = p;
+    EXTPTR_PTR(s) = tmp.p;
+    EXTPTR_PROT(s) = prot;
+    EXTPTR_TAG(s) = tag;
+    return s;
+}
+
+attribute_hidden
+DL_FUNC R_ExternalPtrAddrFn(SEXP s)
+{
+    fn_ptr tmp;
+    tmp.p =  EXTPTR_PTR(s);
+    return tmp.fn;
+}
+
+
 #define USE_TYPE_CHECKING
 
 #if defined(USE_TYPE_CHECKING_STRICT) && !defined(USE_TYPE_CHECKING)

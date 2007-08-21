@@ -197,6 +197,9 @@ DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all);
 
 DL_FUNC R_dlsym(DllInfo *info, char const *name, R_RegisteredNativeSymbol *symbol);
 
+SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
+DL_FUNC R_ExternalPtrAddrFn(SEXP s);
+
 #ifdef __cplusplus
 }
 #endif

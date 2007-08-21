@@ -197,11 +197,14 @@ static int computeDLOpenFlag(int asLocal, int now)
 
 /*
   This is the system/OS-specific version for resolving a
-  symbol in a shared library.
+  symbol in a shared library.  A cast would not be legal C.
  */
+typedef union {void *p; DL_FUNC fn;} fn_ptr;
 static DL_FUNC R_local_dlsym(DllInfo *info, char const *name)
 {
-    return (DL_FUNC) dlsym(info->handle, name);
+    fn_ptr tmp;
+    tmp.p = dlsym(info->handle, name);
+    return tmp.fn;
 }
 
 

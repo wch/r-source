@@ -100,7 +100,7 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
     if(TYPEOF(op) == EXTPTRSXP) {
 	char *p = NULL;
 	if(R_ExternalPtrTag(op) == Rf_install("native symbol")) 
-   	   *fun = (DL_FUNC) R_ExternalPtrAddr(op);
+   	   *fun = R_ExternalPtrAddrFn(op);
 	else if(R_ExternalPtrTag(op) == Rf_install("registered native symbol")) {
    	   R_RegisteredNativeSymbol *tmp;
 	   tmp = (R_RegisteredNativeSymbol *) R_ExternalPtrAddr(op);

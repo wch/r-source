@@ -90,6 +90,7 @@
  R_ExactSymbol
  R_Expressions
  R_Expressions_keep
+ R_ExternalPtrAddrFn
  R_FileExists
  R_FileMtime
  R_FreeSEXP
@@ -119,6 +120,7 @@
  R_LoadFromFile
  R_LoadRconsole
  R_Log10
+ R_MakeExternalPtrFn
  R_NHeap
  R_NShowCalls
  R_NSize
