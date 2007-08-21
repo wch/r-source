@@ -1145,6 +1145,7 @@ fi
 
 ## Step 3.  Individual platform overrides.
 dylib_undefined_allowed=yes
+is_cygwin=no
 case "${host_os}" in
   aix[123]*|aix4.[01]*)
     ## These need a form of linking we no longer support
@@ -1194,6 +1195,7 @@ case "${host_os}" in
     fcpicflags=
     SHLIB_EXT=".dll"
     dylib_undefined_allowed=no
+    is_cygwin=yes
     ;;
   darwin*)
     darwin_pic="-fPIC"
@@ -1553,6 +1555,7 @@ else
 fi
 
 AM_CONDITIONAL(DYLIB_UNDEFINED_ALLOWED, [test "x${dylib_undefined_allowed}" = xyes])
+AM_CONDITIONAL(BUILD_CYGWIN, [test "x${is_cygwin}" = xyes])
 
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
