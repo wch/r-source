@@ -96,6 +96,9 @@ rbuild:
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory libRblas.dll.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
+ifeq ($(strip $(USE_IMPLIBS)),YES)
+	@$(MAKE) --no-print-directory implibs
+endif
 	@$(MAKE) --no-print-directory Rblas CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
@@ -228,6 +231,10 @@ ifdef USE_UNICOWS
 endif
 
 FORCE:
+
+implibs: libR.dll.a libRblas.dll.a
+	@$(MKDIR) -p ../../lib
+	@$(CP) $^ ../../lib
 
 libR.dll.a: R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll \

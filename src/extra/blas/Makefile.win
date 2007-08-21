@@ -12,17 +12,17 @@ ifeq ($(strip $(USE_ACML)),YES)
 ../../../bin/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../../bin -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
+	   -L../../../$(IMPDIR) -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../../bin/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../../bin -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas -lg2c
+	   -L../../../$(IMPDIR) -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas -lg2c
 else
 ../../../bin/Rblas.dll: blas.o cmplxblas.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../../bin -lR $(FLIBS)
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../../$(IMPDIR) -lR $(FLIBS)
 endif
 endif
 

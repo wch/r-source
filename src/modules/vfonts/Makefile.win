@@ -15,7 +15,7 @@ OBJS=$(CSOURCES:.c=.o) dllversion.o
 	$(MKDIR) -p ../../../modules
 	@$(ECHO) "EXPORTS" > vfonts.def
 	@$(ECHO) " R_init_vfonts" >> vfonts.def
-	$(DLL) -shared  -o $@ $^ vfonts.def -L../../../bin -lR
+	$(DLL) -shared  -o $@ $^ vfonts.def -L../../../$(IMPDIR) -lR
 	@$(RM) vfonts.def
 
 clean:
