@@ -318,10 +318,9 @@ _nl_make_l10nflist (struct loaded_l10nfile **l10nfile_list,
 	if (dirlist_count > 1)
 	  {
 	    /* Iterate over all elements of the DIRLIST.  */
-	    char *dir = NULL;
+	    char *dir = NULL, *nd = (char *) dirlist;
 
-	    while ((dir = __argz_next ((char *) dirlist, dirlist_len, dir))
-		   != NULL)
+	    while ((dir = __argz_next (nd, dirlist_len, dir)) != NULL)
 	      retval->successor[entries++]
 		= _nl_make_l10nflist (l10nfile_list, dir, strlen (dir) + 1,
 				      cnt, language, territory, codeset,
