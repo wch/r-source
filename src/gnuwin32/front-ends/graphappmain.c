@@ -49,13 +49,12 @@ GA_startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
  *  method ignores any value returned from main.
  */
 
-#define PASS_ARGS 2
+#define PASS_ARGS 1 /* formerly in graphapp/internal.h */
 
 int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	 int CmdShow)
 {
-    char **dummy_environ;
 #if (PASS_ARGS > 1) /* define argc, argv, environ */
     extern int _argc;
     extern char **_argv;
@@ -70,6 +69,7 @@ WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 #endif /* end arg declarations */
 
 #ifdef WIN64
+    char **dummy_environ;
     /* '1' means globbing is enabled */
     (void) __getmainargs (&_argc, &_argv, &dummy_environ, 1);
 #endif
