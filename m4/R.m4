@@ -3238,7 +3238,7 @@ if test "$want_mbcs_support" = yes ; then
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstod wcstombs \
                  wctrans wctype iswctype
   do
-    as_ac_var=`echo "ac_cv_have_decl$ac_func"`
+    as_ac_var=`echo "ac_cv_have_decl_$ac_func"`
     this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
