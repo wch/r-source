@@ -27,7 +27,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
            compress = !ascii, safe = TRUE)
 }
 \arguments{
-  \item{\dots}{the names of the objects to be saved.}
+  \item{\dots}{the names of the objects to be saved (as symbols or
+    character strings).}
   \item{list}{A character vector containing the names of objects to be
     saved.}
   \item{file}{a connection or the name of the file where the data will be
@@ -52,17 +53,17 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     extra disk space during the save.}
 }
 \details{
-  The names of the objects specified either as symbols in \code{\dots} or
-  as a character vector in \code{list} are used to look up the objects
-  from environment \code{envir}.  By default \link{promises} are
-  evaluated, but if \code{eval.promises = FALSE} promises are saved
-  (together with their evaluation environments).  (Promises embedded in
-  objects are always saved unevaluated.)
+  The names of the objects specified either as symbols (or character
+  strings) in \code{\dots} or as a character vector in \code{list} are
+  used to look up the objects from environment \code{envir}.  By default
+  \link{promises} are evaluated, but if \code{eval.promises = FALSE}
+  promises are saved (together with their evaluation environments).
+  (Promises embedded in objects are always saved unevaluated.)
 
   All \R platforms use the XDR representation of binary objects in
   binary save-d files, and these are portable across all \R platforms.
   (ASCII saves used to be useful for moving data between platforms but
-  are now only of historical interest.)
+  are now mainly of historical interest.)
 
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
   \code{version} arguments can be modified with the \code{save.defaults}
