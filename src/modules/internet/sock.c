@@ -186,7 +186,7 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 
     if (cname != NULL && buflen > 0) {
 	size_t nlen;
-	char *name;
+	const char *name;
 	struct in_addr *iaddr = &(net_client.sin_addr);
 	hostptr = gethostbyaddr((char *)iaddr, sizeof(struct in_addr), 
 				AF_INET);

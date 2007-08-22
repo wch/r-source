@@ -4033,21 +4033,31 @@ links resolved at build time and so cannot resolve against
 @file{R.bin}.} so use
 
 @example
-./configure --disable-nls --disable-mbcs -enable-R-shlib
+./configure --disable-nls --disable-mbcs --enable-R-shlib
 make
 @end example
 
 @noindent
-(MBCS would work but only be of any use in a CJK locale: NLS would
-probably work with @option{--with-included-gettext}.)
+MBCS does not work---@code{wcstod} is missing---but only be of any use
+in a CJK locale.  NLS works, although it is better to use with
+@option{--with-included-gettext} to avoid multiple copies being included.
 
 It almost passes @command{make check}: FIFOs are supposedly supported
-but hung.
+but hung in @samp{example(fifo)}.
 
 Note that this gives you a command-line application using @pkg{readline}
 for command editing.  The @samp{X11} graphics device will work if a
 suitable X server is running, and the standard Unix-alike ways of
-installing source packages work.
+installing source packages work.  There was a bug in the
+@file{/usr/lib/tkConfig.sh} script in the version we looked at, which
+needs to have
+
+@example
+TK_LIB_SPEC='-ltk84'
+@end example
+
+The overhead of using shell scripts makes this noticeably slower than a
+native build of @R{} on Windows.
 
 
 @node New platforms,  , Cygwin, Platform notes
