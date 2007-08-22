@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -338,9 +338,8 @@ msgstr "다만 하나의 요소만에 옮겨놓을수 있어야 할것이 아닙
 msgid "names do not match previous names"
 msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
 
-#, fuzzy
-msgid "names do not match previous names:"
-msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
+msgid "numbers of columns of arguments do not match"
+msgstr ""
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "무효인 리스트의 인수입니다. 모든 변수는 동일길이를 가져야 합니다"
@@ -354,7 +353,8 @@ msgstr "(은)는 동일한 size의 데이터 프레임에 대해서만 정의 �
 msgid "list of length %d not meaningful"
 msgstr "길이 %d 의 리스트는 의미가 없습니다"
 
-msgid "only defined on a data frame with all numeric or complex variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric variables"
 msgstr "모든 수치 또는 복소수값의 변수는 데이터 프레임에 대해서만 정의 됩니다"
 
 msgid "character string is not in a standard unambiguous format"
@@ -499,6 +499,9 @@ msgstr "'to'는  POSIXt 오브젝트가 아니면 되지 않습니다"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
+
+msgid "Invalid DCF format."
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x' 정방 행렬이 아니면 되지 않습니다"
@@ -878,6 +881,12 @@ msgstr ""
 msgid "[Previously saved workspace restored]"
 msgstr "[이전에 저장된 workspace를 복귀합니다]"
 
+msgid "Attempting to load the environment '%s'"
+msgstr ""
+
+msgid "not found: using .GlobalEnv instead"
+msgstr ""
+
 msgid "invalid 'category' argument"
 msgstr "무효인 'category' 인수입니다"
 
@@ -885,10 +894,19 @@ msgid "must specify formal argument names to vectorize"
 msgstr ""
 
 #, fuzzy
-msgid "'arg' must be NULL or a character vector of length >= 1"
+msgid "'arg' must be NULL or a character vector"
 msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
 
-msgid "'arg' should be one of"
+#, fuzzy
+msgid "'arg' must be of length 1"
+msgstr "'from'는 길이 1이 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'arg' must be of length >= 1"
+msgstr "'from'는 길이 1이 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'arg' should be one of %s"
 msgstr "'arg'는 이하의 하나가 아니면 되지 않습니다"
 
 msgid "there is more than one match in 'match.arg'"
@@ -1017,6 +1035,12 @@ msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "'%s'에는 export를 위한 메소드는 검색되지 않습니다"
+
+msgid "Multiple methods lists found for '"
+msgstr ""
+
+msgid "'"
+msgstr ""
 
 msgid "No methods table for \""
 msgstr ""
@@ -1485,6 +1509,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "names do not match previous names:"
+#~ msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
 
 #~ msgid "argument must be character"
 #~ msgstr "인수는 문자가 아니면 되지 않습니다"

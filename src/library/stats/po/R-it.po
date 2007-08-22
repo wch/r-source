@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:20\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -94,9 +94,6 @@ msgstr "scope senza termini"
 msgid "no terms in scope for adding to object"
 msgstr "scope senza termini da aggiungere all'oggetto"
 
-msgid "trying +"
-msgstr ""
-
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "il numero di righe in uso è cambiato: elimino i missing value?"
 
@@ -111,9 +108,6 @@ msgstr "nessun metodo 'add1' implementato per modelli \"mlm\""
 
 msgid "scope is not a subset of term labels"
 msgstr "scope non è un sottoinsieme delle etichette dei termini"
-
-msgid "trying -"
-msgstr ""
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "nessun metodo 'drop1' per modelli \"mlm\""
@@ -132,12 +126,6 @@ msgstr "scope superiore non include il modello"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "l'AIC non è definito per questo modello, quindi 'step' non può procedere"
-
-msgid "Start:  AIC="
-msgstr ""
-
-msgid "Step:  AIC="
-msgstr ""
 
 #, fuzzy
 msgid "'A' must be an array or table"
@@ -1480,6 +1468,9 @@ msgstr "variabili non-factor ignorate:"
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr "eff.aovlist: contrasti non ortogonali forniranno una risposta errata"
 
+msgid "cannot create a formula from a zero-column data frame"
+msgstr ""
+
 msgid "no terms component"
 msgstr "manca compoenente terms"
 
@@ -1612,10 +1603,6 @@ msgid "'data' must be a list or an environment"
 msgstr "'newdata' deve essere una matrice o un data frame"
 
 #, fuzzy
-msgid "no parameters to fit"
-msgstr "specificati tutti i parametri"
-
-#, fuzzy
 msgid "No starting values specified"
 msgstr "valori iniziali non specificati"
 
@@ -1634,6 +1621,17 @@ msgstr ""
 
 msgid "parameters without starting value in 'data':"
 msgstr ""
+
+#, fuzzy
+msgid "fitting parameters"
+msgstr "specificati tutti i parametri"
+
+msgid "without any variables"
+msgstr ""
+
+#, fuzzy
+msgid "no parameters to fit"
+msgstr "specificati tutti i parametri"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -422,6 +422,10 @@ msgstr "Rd文件里缺少或有空白的\\name域"
 msgid "unable to create temp directory"
 msgstr "无法建立temp目录"
 
+#, fuzzy
+msgid "--- running texi2dvi on vignettes"
+msgstr "给'%s'调用texi2dvi失败了"
+
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -429,7 +433,8 @@ msgstr ""
 "处理标头'%s'失败，诊断信息为:\n"
 "%s"
 
-msgid "running make failed"
+#, fuzzy
+msgid "running 'make' failed"
 msgstr "调用make失败"
 
 msgid "cannot read index information in file '%s'"
@@ -449,6 +454,19 @@ msgstr "***程辑包'%s'里的Built域坏了***"
 
 msgid "cannot open directory '%s'"
 msgstr "无法打开目录'%s'"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "only the first will be used"
+msgstr ""
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "无法通过LC_COLLATE来关掉地方化分类整理"
@@ -474,17 +492,33 @@ msgstr "无法拷贝索引至'%s'"
 msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
-msgid "unable to run pdflatex on '%s'"
-msgstr "无法在'%s'上调用pdflatex"
+#, fuzzy
+msgid "processing '"
+msgstr "文名分析'%s'"
 
-msgid "unable to run bibtex on '%s'"
-msgstr "无法在'%s'上调用bibtex"
+msgid "'"
+msgstr ""
 
 msgid "file '%s' was not created"
 msgstr "无法产生文件'%s'"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "无法将'%s'拷贝到'%s'"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
 
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
@@ -558,8 +592,13 @@ msgstr "变元'delim'必需指定两个字符"
 msgid "only Rd syntax is currently supported"
 msgstr "目前只支持Rd语法"
 
-msgid "running texi2dvi on '%s' failed"
+#, fuzzy
+msgid "running 'texi2dvi' on '%s' failed"
 msgstr "给'%s'调用texi2dvi失败了"
+
+#, fuzzy
+msgid "unable to run %s on '%s'"
+msgstr "无法在'%s'上调用bibtex"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
@@ -591,3 +630,6 @@ msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
+
+#~ msgid "unable to run pdflatex on '%s'"
+#~ msgstr "无法在'%s'上调用pdflatex"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:20\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-05 21:42+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -91,9 +91,6 @@ msgstr " スコープ中に項がありません"
 msgid "no terms in scope for adding to object"
 msgstr " オブジェクトへ加えるべき項がスコープ中にありません"
 
-msgid "trying +"
-msgstr " + を試みています"
-
 msgid "number of rows in use has changed: remove missing values?"
 msgstr " 使用中の行数が変わりました: 欠損値を取除きますか？"
 
@@ -108,9 +105,6 @@ msgstr " \"mlm\" モデルには 'add1' メソッドは未実装です"
 
 msgid "scope is not a subset of term labels"
 msgstr " スコープは項ラベルの部分集合ではありません"
-
-msgid "trying -"
-msgstr " - を試みています"
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr " 'drop1' は \"mlm\" モデルには実装されていません"
@@ -127,12 +121,6 @@ msgstr " 上位のスコープはモデル項 %s を含んでいません"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 " AIC はこのモデルには定義されません、従って 'step' を進めることができません"
-
-msgid "Start:  AIC="
-msgstr " 開始： AIC= "
-
-msgid "Step:  AIC="
-msgstr " ステップ： AIC="
 
 msgid "'A' must be an array or table"
 msgstr " 'A' は配列かテーブルでなければなりません"
@@ -1440,6 +1428,9 @@ msgstr " 因子でないものは無視されました"
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr " eff.aovlist：直交しない対比は誤った結果を与えるかもしれません"
 
+msgid "cannot create a formula from a zero-column data frame"
+msgstr ""
+
 msgid "no terms component"
 msgstr " terms 成分がありません"
 
@@ -1562,9 +1553,6 @@ msgstr " パラメータの初期値で勾配行列が特異です"
 msgid "'data' must be a list or an environment"
 msgstr " 'data' はリストか環境でなければなりません"
 
-msgid "no parameters to fit"
-msgstr " 当てはめるべきパラメータがありません"
-
 msgid "No starting values specified"
 msgstr " 初期値が与えられていません"
 
@@ -1582,6 +1570,16 @@ msgstr " 'start' を指定するか、selfStart モデルの使用を考慮し�
 
 msgid "parameters without starting value in 'data':"
 msgstr " 'data' 中に初期値の無いパラメータがあります"
+
+#, fuzzy
+msgid "fitting parameters"
+msgstr " 当てはめるべきパラメータがありません"
+
+msgid "without any variables"
+msgstr ""
+
+msgid "no parameters to fit"
+msgstr " 当てはめるべきパラメータがありません"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr " algorithm = \"port\" でない限り上限もしくは下限は無視されます"
@@ -2193,6 +2191,18 @@ msgstr[0] "欠損値のせいで %d 個の観測値が取り除かれました"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
+
+#~ msgid "trying +"
+#~ msgstr " + を試みています"
+
+#~ msgid "trying -"
+#~ msgstr " - を試みています"
+
+#~ msgid "Start:  AIC="
+#~ msgstr " 開始： AIC= "
+
+#~ msgid "Step:  AIC="
+#~ msgstr " ステップ： AIC="
 
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr " 対比は自由度 0 では定義されません"

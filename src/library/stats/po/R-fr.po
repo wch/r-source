@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:20\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-13 12:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -99,9 +99,6 @@ msgstr "aucun terme dans la formule cible"
 msgid "no terms in scope for adding to object"
 msgstr "aucun terme dans la formule cible à rajouter à l'objet"
 
-msgid "trying +"
-msgstr "essai de +"
-
 msgid "number of rows in use has changed: remove missing values?"
 msgstr ""
 "le nombre de lignes utilisées a changé : supprimer les valeurs manquantes ?"
@@ -120,9 +117,6 @@ msgstr ""
 "la formule cible n'est pas un sous-ensemble des étiquettes de termes du "
 "modèle"
 
-msgid "trying -"
-msgstr "essai de -"
-
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "aucune méhode 'drop1' pour les modèles \"mlm\""
 
@@ -137,12 +131,6 @@ msgstr "la formule supérieure n'inclus pas le ou les termes %s du modèle"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC n'est pas défini pour ce modèle, donc 'step' ne peut poursuivre"
-
-msgid "Start:  AIC="
-msgstr "Départ : AIC ="
-
-msgid "Step:  AIC="
-msgstr "Etape : AIC ="
 
 msgid "'A' must be an array or table"
 msgstr "'A' doit être une matrice (array) ou un tableau de données (table)"
@@ -1497,6 +1485,9 @@ msgstr ""
 "eff.aovlist : des contrastes non orthogonaux donneraient un résultat "
 "incorrect"
 
+msgid "cannot create a formula from a zero-column data frame"
+msgstr ""
+
 msgid "no terms component"
 msgstr "pas de composante terms"
 
@@ -1627,9 +1618,6 @@ msgstr ""
 msgid "'data' must be a list or an environment"
 msgstr "'data' doit être une liste ou un environnement"
 
-msgid "no parameters to fit"
-msgstr "aucun paramètre à ajuster"
-
 msgid "No starting values specified"
 msgstr "Pas de valeurs initiales fournies"
 
@@ -1647,6 +1635,16 @@ msgstr "Spécifiez 'start' ou utilisez un model de type 'SelfStart'"
 
 msgid "parameters without starting value in 'data':"
 msgstr "des paramètres n'ont pas de valeurs initiales dans 'data' :"
+
+#, fuzzy
+msgid "fitting parameters"
+msgstr "aucun paramètre à ajuster"
+
+msgid "without any variables"
+msgstr ""
+
+msgid "no parameters to fit"
+msgstr "aucun paramètre à ajuster"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
@@ -2295,6 +2293,18 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#~ msgid "trying +"
+#~ msgstr "essai de +"
+
+#~ msgid "trying -"
+#~ msgstr "essai de -"
+
+#~ msgid "Start:  AIC="
+#~ msgstr "Départ : AIC ="
+
+#~ msgid "Step:  AIC="
+#~ msgstr "Etape : AIC ="
 
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr "les contrastes ne sont pas définis pour 0 degrés de liberté"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:53\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -446,6 +446,9 @@ msgstr ""
 msgid "no package '%s' at the repositories"
 msgstr ""
 
+msgid "package '%s' does not exist on the local repository"
+msgstr ""
+
 msgid "download of package '%s' failed"
 msgstr ""
 
@@ -786,6 +789,9 @@ msgid "cannot create HTML package index"
 msgstr ""
 
 msgid "cannot create HTML search index"
+msgstr ""
+
+msgid "Updating HTML index of packages in '.Library'"
 msgstr ""
 
 msgid "'memory.size()' is Windows-specific"

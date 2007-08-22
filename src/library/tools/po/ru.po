@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: 2005-09-28 06:04+0300\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -29,6 +29,6 @@ msgstr "аргумент 'files' должен быть символьным"
 msgid "md5 failed on file '%s'"
 msgstr "md5 на файле '%s' не удался"
 
-#: text.c:67
+#: text.c:68
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"

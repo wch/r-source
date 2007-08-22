@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: 2007-04-13 12:20+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -16,78 +16,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: grid.c:209
+#: grid.c:210
 msgid "Cannot clip to rotated viewport"
 msgstr "Impossible de couper une vue pivotée"
 
-#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+#: grid.c:649 grid.c:654 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "Impossible de rendre la vue de plus haut niveau active (grid et sorties "
 "graphiques mixées ?)"
 
-#: grid.c:938
+#: grid.c:939
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1218
+#: grid.c:1219
 msgid "There is no layout defined"
 msgstr "Aucune mise en page définie"
 
-#: grid.c:1438
+#: grid.c:1439
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygône non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1447
+#: grid.c:1448
 msgid "Polygon edge not found"
 msgstr "Extrémités de polygône non trouvées"
 
-#: grid.c:1587
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr "Il faut au moins deux points pour tracer une flêche"
 
-#: grid.c:1901
+#: grid.c:1902
 msgid "Non-finite control point in Xspline"
 msgstr "Point de contrôle non fini dans Xspline"
 
-#: grid.c:3072
+#: grid.c:3073
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossible de couper au rectangle pivoté"
 
-#: layout.c:520
+#: layout.c:519
 msgid "invalid layout.pos.row"
 msgstr "layout.pos.row incorrect"
 
-#: layout.c:524
+#: layout.c:523
 msgid "invalid layout.pos.col"
 msgstr "layout.pos.col incorrect"
 
-#: matrix.c:50
+#: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "matrice de transformation singulière"
 
-#: state.c:178
+#: state.c:177
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 "Impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
 
-#: unit.c:258 unit.c:408 unit.c:1137 unit.c:1217 unit.c:1297 unit.c:1377
+#: unit.c:260 unit.c:410 unit.c:1139 unit.c:1219 unit.c:1299 unit.c:1379
 msgid "Unimplemented unit function"
 msgstr "Fonction d'unité non implémentée"
 
-#: unit.c:826 unit.c:1572
+#: unit.c:828 unit.c:1574
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Unité non autorisée ou pas encore implémentée"
 
-#: unit.c:1705
+#: unit.c:1707
 msgid "Invalid unit"
 msgstr "Unité incorrecte"
 
-#: unit.c:1721
+#: unit.c:1723
 msgid "Units must be character"
 msgstr "Les unités doivent être une chaîne de caractères"
 
-#: unit.c:1724
+#: unit.c:1726
 msgid "Units must be of length > 0"
 msgstr "Les unités doivent être de longueur > 0"
 

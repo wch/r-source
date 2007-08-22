@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:53\n"
-"PO-Revision-Date: 2007-06-12 18:53\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
+"PO-Revision-Date: 2007-08-22 12:25\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -504,6 +504,9 @@ msgstr "‘destdir’ is not a directory"
 msgid "no package '%s' at the repositories"
 msgstr "no package ‘%s’ at the repositories"
 
+msgid "package '%s' does not exist on the local repository"
+msgstr "package ‘%s’ does not exist on the local repository"
+
 msgid "download of package '%s' failed"
 msgstr "download of package ‘%s’ failed"
 
@@ -891,6 +894,9 @@ msgstr "cannot create HTML package index"
 
 msgid "cannot create HTML search index"
 msgstr "cannot create HTML search index"
+
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "Updating HTML index of packages in ‘.Library’"
 
 msgid "'memory.size()' is Windows-specific"
 msgstr "‘memory.size()’ is Windows-specific"

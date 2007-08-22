@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -432,12 +432,17 @@ msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습�
 msgid "unable to create temp directory"
 msgstr "temp 디렉토리를 작성할수가 없습니다"
 
+#, fuzzy
+msgid "--- running texi2dvi on vignettes"
+msgstr "'%s'에서 texi2dvi를 실행하는 것은 실패했습니다"
+
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 
-msgid "running make failed"
+#, fuzzy
+msgid "running 'make' failed"
 msgstr "유형의 실행은 실패했습니다"
 
 msgid "cannot read index information in file '%s'"
@@ -458,6 +463,19 @@ msgstr ""
 
 msgid "cannot open directory '%s'"
 msgstr "디렉토리 '%s'를 열수가 없습니다"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "only the first will be used"
+msgstr ""
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr ""
@@ -486,17 +504,33 @@ msgstr "INDEX를 복사할수가 없습니다"
 msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
 
-msgid "unable to run pdflatex on '%s'"
-msgstr "'%s'에서 pdflatex를 실행할 수 없습니다"
+#, fuzzy
+msgid "processing '"
+msgstr "분석 '%s'"
 
-msgid "unable to run bibtex on '%s'"
-msgstr "'%s'에서 bibtex를 실행할 수 없습니다"
+msgid "'"
+msgstr ""
 
 msgid "file '%s' was not created"
 msgstr "파일 '%s'는 작성하지 않았습니다"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "'%s'에서 '%s'를 복사할수가 없습니다"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
 
 msgid "there is no package called '%s'"
 msgstr "'%s'라고 불리는 패키지는 없습니다"
@@ -575,8 +609,13 @@ msgstr "인수 'delim'는 2문자를 지정해야만 합니다"
 msgid "only Rd syntax is currently supported"
 msgstr "Rd syntax만 현재 주어졌습니다"
 
-msgid "running texi2dvi on '%s' failed"
+#, fuzzy
+msgid "running 'texi2dvi' on '%s' failed"
 msgstr "'%s'에서 texi2dvi를 실행하는 것은 실패했습니다"
+
+#, fuzzy
+msgid "unable to run %s on '%s'"
+msgstr "'%s'에서 bibtex를 실행할 수 없습니다"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "파일 '%s'는 유효한 DCF format에 있지 않습니다"
@@ -609,3 +648,6 @@ msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] ""
+
+#~ msgid "unable to run pdflatex on '%s'"
+#~ msgstr "'%s'에서 pdflatex를 실행할 수 없습니다"

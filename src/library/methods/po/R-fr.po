@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-13 12:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -89,6 +89,16 @@ msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 "il faut fournir le squelette d'une fonction, de manière explicite ou via une "
 "fonction existante"
+
+msgid ""
+"New generic for \"%s\" does not agree with implicit generic from package \"%s"
+"\"; a new generic will be assigned with package \"%s\""
+msgstr ""
+
+msgid ""
+"No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
+"will be assigned with package \"%s\""
+msgstr ""
 
 msgid ""
 "function \"%s\" appears to be a generic function, but with generic name \"%s"
@@ -296,6 +306,27 @@ msgstr ""
 "'callGeneric' doit être appelé depuis une fonction générique ou une méthode"
 
 msgid ""
+"\"%s\" is not currently a generic:  define it first to create a non-default "
+"implicit form"
+msgstr ""
+
+#, fuzzy
+msgid "No nongeneric version of function \"%s\" exists to be restored"
+msgstr "aucune fonction \"%s\" non générique n'est trouvée"
+
+#, fuzzy
+msgid "Must provide an environment table; got class \"%s\""
+msgstr "impossible de trouver un environnement contenant la classe \"%s\""
+
+msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+msgstr ""
+
+msgid ""
+"Implicit generic exists for \"%s\", but will be overriden by explicit call "
+"to setGeneric()"
+msgstr ""
+
+msgid ""
 "invalid first argument: should be the name of the first argument in the "
 "dispatch"
 msgstr ""
@@ -371,7 +402,10 @@ msgstr ""
 "uniques) : il y a %d noms de classes, mais seulement %d éléments dans "
 "l'objet signature"
 
-msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+#, fuzzy
+msgid ""
+"more elements in the method signature (%d) than in the generic  signature (%"
+"d)"
 msgstr ""
 "plus d'éléments dans la signature de méthode (%s) que dans le générique %s(%"
 "s)"
@@ -406,14 +440,8 @@ msgstr ""
 "la méthode d'initialisation a renvoyé un objet de classe \"%s\" au lieu de "
 "la classe requise \"%s\""
 
-msgid "An object of class \""
-msgstr "Un objet de classe \""
-
-msgid "\""
-msgstr "\""
-
-msgid ""
-"the names in signature for method (%s) do not match function's arguments (%s)"
+#, fuzzy
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "les noms dans la signature pour la méthode (%s) ne correspondent pas aux "
 "arguments de la fonction (%s)"
@@ -592,21 +620,24 @@ msgstr "pas de slot '.Data' defini pour la classe \"%s\""
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "la classe \"%s\" n'a pas de partie de données définie (un slot .Data)"
 
+#, fuzzy
 msgid ""
-"trying to change the argument list of a function with %d arguments to have "
-"arguments (%s)"
+"trying to change the argument list of %s with %d arguments to have arguments "
+"(%s)"
 msgstr ""
 "tentative de modification de la liste d'arguments d'une fonction ayant %d "
 "arguments vers %d arguments"
 
+#, fuzzy
 msgid ""
-"get rid of variables in definition (%s); they conflict with the needed "
+"get rid of variables in definition %s (%s); they conflict with the needed "
 "change to argument names (%s)"
 msgstr ""
 "débarrassez-vous des variables dans la définition (%s) ; Elles entrent en "
 "conflit avec le changement requis des noms d'arguments (%s)"
 
-msgid "arguments in definition changed from (%s) to (%s)"
+#, fuzzy
+msgid "arguments in definition %s changed from (%s) to (%s)"
 msgstr "les arguments dans la définition sont changés de (%s) vers (%s)"
 
 msgid ","
@@ -667,6 +698,10 @@ msgstr ""
 "la fonction utilisée comme %s dans l'établissement d'une fonction générique "
 "pour \"%s\" est actuellement en cours de déboguage (tracing) ; La fonction "
 "ne sera plus déboguée"
+
+msgid ""
+"Must supply either a generic function or a function as default for \"#s\""
+msgstr ""
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -1166,6 +1201,10 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr "indice incorrect pour l'argument de fonction"
 
+#, fuzzy
+msgid "No function definition found for \"%s\""
+msgstr "aucune définition de fonction n'est trouvée pour \"%s\""
+
 msgid "Need a definition for the method here"
 msgstr "Une définition est nécessaire ici pour la méthode"
 
@@ -1201,6 +1240,9 @@ msgstr "Mauvais objet trouvé comme méthode (\""
 
 msgid "\"), expected a method, got an object of class \""
 msgstr "\"), une méthode est attendue et un objet est fourni de classe \""
+
+msgid "\""
+msgstr "\""
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
@@ -1327,6 +1369,9 @@ msgid ""
 msgstr ""
 "aucune définition de la classe \"%s\" n'existe à la position spécifiée, %s, "
 "définition(s) dans : %s"
+
+msgid "An object of class \""
+msgstr "Un objet de classe \""
 
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-04 13:05+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -83,6 +83,16 @@ msgstr ""
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 " 明示的もしくは既存の関数経由で関数の骨格(skelton) を与える必要があります"
+
+msgid ""
+"New generic for \"%s\" does not agree with implicit generic from package \"%s"
+"\"; a new generic will be assigned with package \"%s\""
+msgstr ""
+
+msgid ""
+"No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
+"will be assigned with package \"%s\""
+msgstr ""
 
 msgid ""
 "function \"%s\" appears to be a generic function, but with generic name \"%s"
@@ -284,6 +294,27 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr " 'callGeneric' は総称的関数かメソッドから呼び出されなくてはなりません"
 
 msgid ""
+"\"%s\" is not currently a generic:  define it first to create a non-default "
+"implicit form"
+msgstr ""
+
+#, fuzzy
+msgid "No nongeneric version of function \"%s\" exists to be restored"
+msgstr " 総称的でない関数 \"%s\" が見付かりません"
+
+#, fuzzy
+msgid "Must provide an environment table; got class \"%s\""
+msgstr " クラス \"%s\" を含む環境を見付けることが出来ません"
+
+msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+msgstr ""
+
+msgid ""
+"Implicit generic exists for \"%s\", but will be overriden by explicit call "
+"to setGeneric()"
+msgstr ""
+
+msgid ""
 "invalid first argument: should be the name of the first argument in the "
 "dispatch"
 msgstr ""
@@ -355,7 +386,10 @@ msgstr ""
 "は正しいシグナチャ(単一のクラス名のリスト)のようには見えません：%d 個のクラス"
 "名がありましたが、シグナチャリストには %d 個の要素があります"
 
-msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+#, fuzzy
+msgid ""
+"more elements in the method signature (%d) than in the generic  signature (%"
+"d)"
 msgstr ""
 " メソッドシグナチャ (%s) 中に総称的な %s(%s) 中よりも多くの要素があります"
 
@@ -387,14 +421,8 @@ msgid ""
 msgstr ""
 " クラス \"%s\" のオブジェクト(要求されたクラス \"%s\" ではなく)を初期化"
 
-msgid "An object of class \""
-msgstr " オブジェクトのクラスは \""
-
-msgid "\""
-msgstr " \""
-
-msgid ""
-"the names in signature for method (%s) do not match function's arguments (%s)"
+#, fuzzy
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 " メソッド (%s) に対するシグナチャ中の名前が関数の引数 (%s) にマッチしません"
 
@@ -564,20 +592,23 @@ msgstr " クラス \"%s\" に対して定義された '.Data' スロットはあ
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr " クラス \"%s\" はデータパート(.Data スロット)が定義されていません"
 
+#, fuzzy
 msgid ""
-"trying to change the argument list of a function with %d arguments to have "
-"arguments (%s)"
+"trying to change the argument list of %s with %d arguments to have arguments "
+"(%s)"
 msgstr ""
 " %d 個の引数を持つ関数の引数リストを、引数  (%s) を持つように変更を試みます"
 
+#, fuzzy
 msgid ""
-"get rid of variables in definition (%s); they conflict with the needed "
+"get rid of variables in definition %s (%s); they conflict with the needed "
 "change to argument names (%s)"
 msgstr ""
 " 定義中の変数 (%s) をとりのぞきます；これらは引数名 (%s) への必要な変換と相克"
 "します"
 
-msgid "arguments in definition changed from (%s) to (%s)"
+#, fuzzy
+msgid "arguments in definition %s changed from (%s) to (%s)"
 msgstr " 定義中の引数を (%s) から (%s) へ変換します"
 
 msgid ","
@@ -633,6 +664,10 @@ msgid ""
 msgstr ""
 " %s として使われている関数(\"%s\" に対する総称的関数の作成時)は現在トレースさ"
 "れています；使われた関数は tracing を取り除かれるでしょう"
+
+msgid ""
+"Must supply either a generic function or a function as default for \"#s\""
+msgstr ""
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -1095,6 +1130,10 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr " 関数引数に対する不正なインデックスです"
 
+#, fuzzy
+msgid "No function definition found for \"%s\""
+msgstr " \"%s\" に対する関数定義はありません"
+
 msgid "Need a definition for the method here"
 msgstr ""
 
@@ -1130,6 +1169,9 @@ msgstr " 不正なオブジェクトが以下のメソッドテーブル中に�
 msgid "\"), expected a method, got an object of class \""
 msgstr ""
 " \")、メソッドが期待されますが、以下のクラスのオブジェクトが得られました \""
+
+msgid "\""
+msgstr " \""
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr " 以下の総称的関数中に不正か未設定のメソッドテーブルがあります \""
@@ -1245,6 +1287,9 @@ msgid ""
 "on : %s"
 msgstr ""
 " クラス \"%s\" の定義は指定された位置 %s にありません、%s に関する定義です"
+
+msgid "An object of class \""
+msgstr " オブジェクトのクラスは \""
 
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "

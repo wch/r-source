@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:53\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-13 12:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -506,6 +506,10 @@ msgstr "'destdir' n'est pas un répertoire"
 msgid "no package '%s' at the repositories"
 msgstr "pas de package '%s' dans les entrepôts"
 
+#, fuzzy
+msgid "package '%s' does not exist on the local repository"
+msgstr "pas de package '%s' dans les entrepôts"
+
 msgid "download of package '%s' failed"
 msgstr "le téléchargement du package '%s' a échoué"
 
@@ -903,6 +907,10 @@ msgstr "impossible de créer l'index HTML des packages"
 
 msgid "cannot create HTML search index"
 msgstr "impossible de créer l'index HTML de recherche"
+
+#, fuzzy
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "mise à jour de la liste HTML des packages"
 
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' est spécifique à Windows"

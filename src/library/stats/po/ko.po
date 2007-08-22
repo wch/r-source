@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -17,13 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: Srunmed.c:60
+#: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qunsari()에서 확률이 [0,1]의 범위외입니다"
+
+#: approx.c:110
+msgid "approx(): invalid f value"
+msgstr ""
+
+#: approx.c:115
+msgid "approx(): invalid interpolation method"
+msgstr ""
+
+#: approx.c:121
+msgid "approx(): attempted to interpolate NA values"
+msgstr ""
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
@@ -33,39 +45,39 @@ msgstr "부적절한 인수의 유형입니다"
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
 
-#: distance.c:151
+#: distance.c:152
 #, fuzzy
 msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"):유한하지 않은 값을 NA로서 취급합니다"
 
-#: distance.c:220
+#: distance.c:221
 msgid "distance(): invalid p"
 msgstr "distance(): 부적절한 p"
 
-#: distance.c:223
+#: distance.c:224
 msgid "distance(): invalid distance"
 msgstr "distance() : 부적절한 distance"
 
-#: family.c:20
+#: family.c:21
 #, c-format
 msgid "Value %d out of range (0, 1)"
 msgstr ""
 
-#: family.c:41 family.c:55 family.c:73
+#: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr ""
 
-#: family.c:106 family.c:109
+#: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr ""
 
-#: ksmooth.c:66
+#: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "sm.method=\"spline\"에서는 2500행까지만 취급할수 없습니다"
 
-#: loessc.c:226
+#: loessc.c:228
 msgid "span is too small"
 msgstr "범위(span)가 너무 작습니다"
 
@@ -85,64 +97,64 @@ msgstr "부적절한 vmethod입니다"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니다"
 
-#: nls.c:104
+#: nls.c:103
 msgid "'control' must be a list"
 msgstr "'control'는 리스트가 아니면 되지 않습니다"
 
-#: nls.c:106
+#: nls.c:105
 msgid "'m' must be a list"
 msgstr "'m'는 리스트가 아니면 되지 않습니다"
 
-#: nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:132 nls.c:173 nls.c:178
-#: nls.c:183 nls.c:188 nls.c:193 nls.c:198
+#: nls.c:111 nls.c:116 nls.c:121 nls.c:126 nls.c:131 nls.c:172 nls.c:177
+#: nls.c:182 nls.c:187 nls.c:192 nls.c:197
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s'가 없습니다"
 
-#: nls.c:239
+#: nls.c:238
 msgid "singular gradient"
 msgstr "구배가 특이합니다"
 
-#: nls.c:260
+#: nls.c:259
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "step인자 %g는 %g의 'minFactor'이하에 감소했습니다"
 
-#: nls.c:269
+#: nls.c:268
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "반복수가 최대치 %d를 넘었습니다"
 
-#: nls.c:274
+#: nls.c:273
 msgid "converged"
 msgstr ""
 
-#: nls.c:295
+#: nls.c:294
 msgid "'theta' should be of type character"
 msgstr "'theta'는 문자 유형이 아니면 되지 않습니다"
 
-#: nls.c:297 port.c:380
+#: nls.c:296 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr ""
 
-#: nls.c:301
+#: nls.c:300
 msgid "'rho' should be an environment"
 msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
 
-#: nls.c:303
+#: nls.c:302
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr ""
 
-#: nls.c:320 nls.c:348
+#: nls.c:319 nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "model를 평가할때 결손값 또는 무한대가 생성되었습니다"
 
-#: nls.c:326
+#: nls.c:325
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 
-#: nls.c:328
+#: nls.c:327
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr ""
@@ -165,7 +177,7 @@ msgstr "forkal 에러 code는 %d입니다"
 msgid "invalid value of lag.max"
 msgstr "부적절한 lag.max 값입니다"
 
-#: port.c:130
+#: port.c:129
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""

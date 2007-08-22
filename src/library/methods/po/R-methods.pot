@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,12 @@ msgid "if the `def' argument is supplied, it must be a function that calls stand
 msgstr ""
 
 msgid "must supply a function skeleton, explicitly or via an existing function"
+msgstr ""
+
+msgid "New generic for \"%s\" does not agree with implicit generic from package \"%s\"; a new generic will be assigned with package \"%s\""
+msgstr ""
+
+msgid "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic will be assigned with package \"%s\""
 msgstr ""
 
 msgid "function \"%s\" appears to be a generic function, but with generic name \"%s\""
@@ -176,6 +182,21 @@ msgstr ""
 msgid "'callGeneric' must be called from a generic function or method"
 msgstr ""
 
+msgid "\"%s\" is not currently a generic:  define it first to create a non-default implicit form"
+msgstr ""
+
+msgid "No nongeneric version of function \"%s\" exists to be restored"
+msgstr ""
+
+msgid "Must provide an environment table; got class \"%s\""
+msgstr ""
+
+msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+msgstr ""
+
+msgid "Implicit generic exists for \"%s\", but will be overriden by explicit call to setGeneric()"
+msgstr ""
+
 msgid "invalid first argument: should be the name of the first argument in the dispatch"
 msgstr ""
 
@@ -215,7 +236,7 @@ msgstr ""
 msgid "object to use as a method signature for function \"%s\" does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object"
 msgstr ""
 
-msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+msgid "more elements in the method signature (%d) than in the generic  signature (%d)"
 msgstr ""
 
 msgid "in the method signature for function \"%s\" invalid argument names in the signature: %s"
@@ -236,13 +257,7 @@ msgstr ""
 msgid "initialize method returned an object of class \"%s\" instead of the required class \"%s\""
 msgstr ""
 
-msgid "An object of class \""
-msgstr ""
-
-msgid "\""
-msgstr ""
-
-msgid "the names in signature for method (%s) do not match function's arguments (%s)"
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 
 msgid "'NextMethod' not defined because the current method is not a 'MethodDefinition' object"
@@ -341,13 +356,13 @@ msgstr ""
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr ""
 
-msgid "trying to change the argument list of a function with %d arguments to have arguments (%s)"
+msgid "trying to change the argument list of %s with %d arguments to have arguments (%s)"
 msgstr ""
 
-msgid "get rid of variables in definition (%s); they conflict with the needed change to argument names (%s)"
+msgid "get rid of variables in definition %s (%s); they conflict with the needed change to argument names (%s)"
 msgstr ""
 
-msgid "arguments in definition changed from (%s) to (%s)"
+msgid "arguments in definition %s changed from (%s) to (%s)"
 msgstr ""
 
 msgid ","
@@ -381,6 +396,9 @@ msgid "No class \"%s\" found as expected in removing subclass \"%s\""
 msgstr ""
 
 msgid "the function being used as %s in making a generic function for \"%s\" is currently traced; the function used will have tracing removed"
+msgstr ""
+
+msgid "Must supply either a generic function or a function as default for \"#s\""
 msgstr ""
 
 msgid "the 'genericFunction' argument must be NULL or a generic function object; got an object of class \"%s\""
@@ -668,6 +686,9 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr ""
 
+msgid "No function definition found for \"%s\""
+msgstr ""
+
 msgid "Need a definition for the method here"
 msgstr ""
 
@@ -696,6 +717,9 @@ msgid "Invalid object in methods table (\""
 msgstr ""
 
 msgid "\"), expected a method, got an object of class \""
+msgstr ""
+
+msgid "\""
 msgstr ""
 
 msgid "Invalid or unset methods table in generic function \""
@@ -783,6 +807,9 @@ msgid "multiple definitions of \"%s\" found; using the one on %s"
 msgstr ""
 
 msgid "no definition of class \"%s\" in the specified position, %s, definition(s) on : %s"
+msgstr ""
+
+msgid "An object of class \""
 msgstr ""
 
 msgid "invalid call to 'classLabel': expected a name or a class definition, got an object of class \"%s\""

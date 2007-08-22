@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
-"PO-Revision-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
+"PO-Revision-Date: 2007-08-22 12:25\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -353,8 +353,8 @@ msgstr "only a single element should be replaced"
 msgid "names do not match previous names"
 msgstr "names do not match previous names"
 
-msgid "names do not match previous names:"
-msgstr "names do not match previous names:"
+msgid "numbers of columns of arguments do not match"
+msgstr "numbers of columns of arguments do not match"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "invalid list argument: all variables should have the same length"
@@ -368,8 +368,8 @@ msgstr "only defined for equally-sized data frames"
 msgid "list of length %d not meaningful"
 msgstr "list of length %d not meaningful"
 
-msgid "only defined on a data frame with all numeric or complex variables"
-msgstr "only defined on a data frame with all numeric or complex variables"
+msgid "only defined on a data frame with all numeric variables"
+msgstr "only defined on a data frame with all numeric variables"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "character string is not in a standard unambiguous format"
@@ -510,6 +510,9 @@ msgstr "‘to’ must be a POSIXt object"
 
 msgid "'file' must be a character string or connection"
 msgstr "‘file’ must be a character string or connection"
+
+msgid "Invalid DCF format."
+msgstr "Invalid DCF format."
 
 msgid "'x' must be a square matrix"
 msgstr "‘x’ must be a square matrix"
@@ -873,17 +876,29 @@ msgstr "image could not be renamed and is left in"
 msgid "[Previously saved workspace restored]"
 msgstr "[Previously saved workspace restored]"
 
+msgid "Attempting to load the environment '%s'"
+msgstr "Attempting to load the environment ‘%s’"
+
+msgid "not found: using .GlobalEnv instead"
+msgstr "not found: using .GlobalEnv instead"
+
 msgid "invalid 'category' argument"
 msgstr "invalid ‘category’ argument"
 
 msgid "must specify formal argument names to vectorize"
 msgstr "must specify formal argument names to vectorize"
 
-msgid "'arg' must be NULL or a character vector of length >= 1"
-msgstr "‘arg’ must be NULL or a character vector of length >= 1"
+msgid "'arg' must be NULL or a character vector"
+msgstr "‘arg’ must be NULL or a character vector"
 
-msgid "'arg' should be one of"
-msgstr "‘arg’ should be one of"
+msgid "'arg' must be of length 1"
+msgstr "‘arg’ must be of length 1"
+
+msgid "'arg' must be of length >= 1"
+msgstr "‘arg’ must be of length >= 1"
+
+msgid "'arg' should be one of %s"
+msgstr "‘arg’ should be one of %s"
 
 msgid "there is more than one match in 'match.arg'"
 msgstr "there is more than one match in ‘match.arg’"
@@ -1005,6 +1020,12 @@ msgstr "in ‘%s’ classes for export not defined: %s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "in ‘%s’ methods for export not found: %s"
+
+msgid "Multiple methods lists found for '"
+msgstr "Multiple methods lists found for '"
+
+msgid "'"
+msgstr "'"
 
 msgid "No methods table for \""
 msgstr "No methods table for \""

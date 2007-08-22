@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,75 +16,75 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: grid.c:209
+#: grid.c:210
 msgid "Cannot clip to rotated viewport"
 msgstr ""
 
-#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+#: grid.c:649 grid.c:654 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 
-#: grid.c:938
+#: grid.c:939
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: grid.c:1218
+#: grid.c:1219
 msgid "There is no layout defined"
 msgstr ""
 
-#: grid.c:1438
+#: grid.c:1439
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1447
+#: grid.c:1448
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1587
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1901
+#: grid.c:1902
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:3072
+#: grid.c:3073
 msgid "Unable to clip to rotated rectangle"
 msgstr ""
 
-#: layout.c:520
+#: layout.c:519
 msgid "invalid layout.pos.row"
 msgstr ""
 
-#: layout.c:524
+#: layout.c:523
 msgid "invalid layout.pos.col"
 msgstr ""
 
-#: matrix.c:50
+#: matrix.c:49
 msgid "singular transformation matrix"
 msgstr ""
 
-#: state.c:178
+#: state.c:177
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 
-#: unit.c:258 unit.c:408 unit.c:1137 unit.c:1217 unit.c:1297 unit.c:1377
+#: unit.c:260 unit.c:410 unit.c:1139 unit.c:1219 unit.c:1299 unit.c:1379
 msgid "Unimplemented unit function"
 msgstr ""
 
-#: unit.c:826 unit.c:1572
+#: unit.c:828 unit.c:1574
 msgid "Illegal unit or unit not yet implemented"
 msgstr ""
 
-#: unit.c:1705
+#: unit.c:1707
 msgid "Invalid unit"
 msgstr ""
 
-#: unit.c:1721
+#: unit.c:1723
 msgid "Units must be character"
 msgstr ""
 
-#: unit.c:1724
+#: unit.c:1726
 msgid "Units must be of length > 0"
 msgstr ""
 

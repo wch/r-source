@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-04 14:08+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -450,6 +450,10 @@ msgstr ""
 msgid "unable to create temp directory"
 msgstr " 仮ディレクトリを生成することが出来ません"
 
+#, fuzzy
+msgid "--- running texi2dvi on vignettes"
+msgstr " texi2dvi を '%s' に対して実行できませんでした"
+
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -457,7 +461,8 @@ msgstr ""
 " ビニエット '%s' の処理に失敗しました。診断は以下の通りです:\n"
 "%s"
 
-msgid "running make failed"
+#, fuzzy
+msgid "running 'make' failed"
 msgstr " make の実行が失敗しました"
 
 msgid "cannot read index information in file '%s'"
@@ -477,6 +482,19 @@ msgstr " *** パッケージ '%s' 中の Built 欄が改ざんされています
 
 msgid "cannot open directory '%s'"
 msgstr " ディレクトリ '%s' を開くことが出来ません"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "only the first will be used"
+msgstr ""
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr " LC_LOCALE によるロケール依存のソーティングを終了できません "
@@ -502,17 +520,33 @@ msgstr " INDEX を '%s' にコピーすることが出来ません"
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を生成することが出来ません"
 
-msgid "unable to run pdflatex on '%s'"
-msgstr " pdflatex を '%s' に対して実行出来ません"
+#, fuzzy
+msgid "processing '"
+msgstr " '%s' を構文解析中"
 
-msgid "unable to run bibtex on '%s'"
-msgstr " bibtex を '%s' に対して実行出来ません"
+msgid "'"
+msgstr ""
 
 msgid "file '%s' was not created"
 msgstr " ファイル '%s' は生成されませんでした"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr " '%s' を '%s' にコピーすることが出来ません"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
 
 msgid "there is no package called '%s'"
 msgstr " '%s' というパッケージが見当たりません"
@@ -587,8 +621,13 @@ msgstr " 引数 'delim' は2つの文字を特定しなければいけません"
 msgid "only Rd syntax is currently supported"
 msgstr " 現在はRd構文のみがサポートされています"
 
-msgid "running texi2dvi on '%s' failed"
+#, fuzzy
+msgid "running 'texi2dvi' on '%s' failed"
 msgstr " texi2dvi を '%s' に対して実行できませんでした"
+
+#, fuzzy
+msgid "unable to run %s on '%s'"
+msgstr " bibtex を '%s' に対して実行出来ません"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません"
@@ -621,3 +660,6 @@ msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] ""
 " 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました:"
+
+#~ msgid "unable to run pdflatex on '%s'"
+#~ msgstr " pdflatex を '%s' に対して実行出来ません"

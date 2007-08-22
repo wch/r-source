@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
-"PO-Revision-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
+"PO-Revision-Date: 2007-08-22 12:25\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -291,6 +291,21 @@ msgstr "Invalid vertical justification"
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "‘respect’ must be logical or an ‘nrow’ by ‘ncol’ matrix"
+
+msgid "Invalid"
+msgstr "Invalid"
+
+msgid "print"
+msgstr "print"
+
+msgid "argument"
+msgstr "argument"
+
+msgid "Invalid object in listing"
+msgstr "Invalid object in listing"
+
+msgid "Invalid listing"
+msgstr "Invalid listing"
 
 msgid "Invalid 'origin'"
 msgstr "Invalid ‘origin’"

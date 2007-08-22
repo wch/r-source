@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: 2006-04-16 21:42-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -20,76 +20,76 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: grid.c:209
+#: grid.c:210
 msgid "Cannot clip to rotated viewport"
 msgstr "Не могу обрезать для повернутой оконницы"
 
-#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+#: grid.c:649 grid.c:654 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
 
-#: grid.c:938
+#: grid.c:939
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
-#: grid.c:1218
+#: grid.c:1219
 msgid "There is no layout defined"
 msgstr "Нет заданного эскиза"
 
-#: grid.c:1438
+#: grid.c:1439
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Край многоугольника не найден (нулевая ширина или высота?)"
 
-#: grid.c:1447
+#: grid.c:1448
 msgid "Polygon edge not found"
 msgstr "Край многоугольника не найден"
 
-#: grid.c:1587
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr "Надо как минимум две точки, чтобы нарисовать стрелку"
 
-#: grid.c:1901
+#: grid.c:1902
 msgid "Non-finite control point in Xspline"
 msgstr "Не-конечная контрольная точка в Xspline"
 
-#: grid.c:3072
+#: grid.c:3073
 msgid "Unable to clip to rotated rectangle"
 msgstr "Не могу обрезать повернутый четырехугольник"
 
-#: layout.c:520
+#: layout.c:519
 msgid "invalid layout.pos.row"
 msgstr "неправильный layout.pos.row"
 
-#: layout.c:524
+#: layout.c:523
 msgid "invalid layout.pos.col"
 msgstr "неправильный layout.pos.col"
 
-#: matrix.c:50
+#: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
-#: state.c:178
+#: state.c:177
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Не могу сохранить состояние grid. Открыто слишком много устройств?"
 
-#: unit.c:258 unit.c:408 unit.c:1137 unit.c:1217 unit.c:1297 unit.c:1377
+#: unit.c:260 unit.c:410 unit.c:1139 unit.c:1219 unit.c:1299 unit.c:1379
 msgid "Unimplemented unit function"
 msgstr "Не разработанная единичная функция"
 
-#: unit.c:826 unit.c:1572
+#: unit.c:828 unit.c:1574
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Неправильная или не разработанная единица"
 
-#: unit.c:1705
+#: unit.c:1707
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
-#: unit.c:1721
+#: unit.c:1723
 msgid "Units must be character"
 msgstr "Единицы должен быть буквами"
 
-#: unit.c:1724
+#: unit.c:1726
 msgid "Units must be of length > 0"
 msgstr "Единицы должны быть длиной > 0"
 

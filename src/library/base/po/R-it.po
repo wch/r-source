@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -349,9 +349,8 @@ msgstr "si può sostituire un solo elemento alla volta"
 msgid "names do not match previous names"
 msgstr "names non coincide con la precedente assegnazione"
 
-#, fuzzy
-msgid "names do not match previous names:"
-msgstr "names non coincide con la precedente assegnazione"
+msgid "numbers of columns of arguments do not match"
+msgstr ""
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
@@ -367,7 +366,8 @@ msgstr "è definita solo per data frame della stessa ampiezza"
 msgid "list of length %d not meaningful"
 msgstr "lista di lunghezza %d non significativa"
 
-msgid "only defined on a data frame with all numeric or complex variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric variables"
 msgstr "è definita solo per data frame con variabili tutte numeric o complex"
 
 msgid "character string is not in a standard unambiguous format"
@@ -512,6 +512,9 @@ msgstr "'to' deve essere un oggetto POSIXt"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' deve essere una string di caratteri o una connessione"
+
+msgid "Invalid DCF format."
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x' deve essere una matrice quadrata"
@@ -888,6 +891,12 @@ msgstr "l'immagine non può essere rinominata ed è stata lasciata in"
 msgid "[Previously saved workspace restored]"
 msgstr "[Caricato workspace precedentemente salvato]"
 
+msgid "Attempting to load the environment '%s'"
+msgstr ""
+
+msgid "not found: using .GlobalEnv instead"
+msgstr ""
+
 msgid "invalid 'category' argument"
 msgstr "argomento 'category' non valido"
 
@@ -895,10 +904,19 @@ msgid "must specify formal argument names to vectorize"
 msgstr ""
 
 #, fuzzy
-msgid "'arg' must be NULL or a character vector of length >= 1"
+msgid "'arg' must be NULL or a character vector"
 msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
 
-msgid "'arg' should be one of"
+#, fuzzy
+msgid "'arg' must be of length 1"
+msgstr "'from' deve avere lunghezza 1"
+
+#, fuzzy
+msgid "'arg' must be of length >= 1"
+msgstr "'from' deve avere lunghezza 1"
+
+#, fuzzy
+msgid "'arg' should be one of %s"
 msgstr "'arg' deve essere uno tra"
 
 msgid "there is more than one match in 'match.arg'"
@@ -1027,6 +1045,12 @@ msgstr "in '%s', classi da esportare non definite: %s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "in '%s', metodi da esportare non trovati: %s"
+
+msgid "Multiple methods lists found for '"
+msgstr ""
+
+msgid "'"
+msgstr ""
 
 msgid "No methods table for \""
 msgstr ""
@@ -1485,6 +1509,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid "names do not match previous names:"
+#~ msgstr "names non coincide con la precedente assegnazione"
 
 #~ msgid "argument must be character"
 #~ msgstr "l'argomento deve essere di tipo character"

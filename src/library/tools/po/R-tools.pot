@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -395,10 +395,13 @@ msgstr ""
 msgid "unable to create temp directory"
 msgstr ""
 
+msgid "--- running texi2dvi on vignettes"
+msgstr ""
+
 msgid "processing vignette '%s' failed with diagnostics:\n%s"
 msgstr ""
 
-msgid "running make failed"
+msgid "running 'make' failed"
 msgstr ""
 
 msgid "cannot read index information in file '%s'"
@@ -417,6 +420,18 @@ msgid "*** someone has corrupted the Built field in package '%s' ***"
 msgstr ""
 
 msgid "cannot open directory '%s'"
+msgstr ""
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "only the first will be used"
+msgstr ""
+
+msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
 msgstr ""
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
@@ -443,16 +458,31 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr ""
 
-msgid "unable to run pdflatex on '%s'"
+msgid "processing '"
 msgstr ""
 
-msgid "unable to run bibtex on '%s'"
+msgid "'"
 msgstr ""
 
 msgid "file '%s' was not created"
 msgstr ""
 
 msgid "cannot copy '%s' to '%s'"
+msgstr ""
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -527,7 +557,10 @@ msgstr ""
 msgid "only Rd syntax is currently supported"
 msgstr ""
 
-msgid "running texi2dvi on '%s' failed"
+msgid "running 'texi2dvi' on '%s' failed"
+msgstr ""
+
+msgid "unable to run %s on '%s'"
 msgstr ""
 
 msgid "file '%s' is not in valid DCF format"

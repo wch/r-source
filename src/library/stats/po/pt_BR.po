@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: 2005-12-17 10:57-0200\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -19,13 +19,25 @@ msgstr ""
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
 
-#: Srunmed.c:60
+#: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "largura de banda/vão das medianas móveis é maior que n"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilidades fora do intervalo [0,1] em qansari()"
+
+#: approx.c:110
+msgid "approx(): invalid f value"
+msgstr ""
+
+#: approx.c:115
+msgid "approx(): invalid interpolation method"
+msgstr ""
+
+#: approx.c:121
+msgid "approx(): attempted to interpolate NA values"
+msgstr ""
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
@@ -35,39 +47,39 @@ msgstr "tipo de argumento inválido"
 msgid "can only transform 100 pars in arima0"
 msgstr "pode-se transformar apenas 100 pares em arima0"
 
-#: distance.c:151
+#: distance.c:152
 #, fuzzy
 msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"): considerando valores não-finitos como NA"
 
-#: distance.c:220
+#: distance.c:221
 msgid "distance(): invalid p"
 msgstr "distance(): p inválido"
 
-#: distance.c:223
+#: distance.c:224
 msgid "distance(): invalid distance"
 msgstr "distance(): distância inválida"
 
-#: family.c:20
+#: family.c:21
 #, c-format
 msgid "Value %d out of range (0, 1)"
 msgstr "Valor %d fora dos limites (0,1)"
 
-#: family.c:41 family.c:55 family.c:73
+#: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Argumento %s deve ser um vetor numérico não-vazio"
 
-#: family.c:106 family.c:109
+#: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
 
-#: ksmooth.c:66
+#: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "apenas 2500 linhas são permitidas para sm.method=\"spline\""
 
-#: loessc.c:226
+#: loessc.c:228
 msgid "span is too small"
 msgstr "vão é muito pequeno"
 
@@ -87,66 +99,66 @@ msgstr "vmethod inválido"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "algoritmo de Burg não conseguiu encontrar correlação parcial"
 
-#: nls.c:104
+#: nls.c:103
 msgid "'control' must be a list"
 msgstr "'control' deve ser uma lista"
 
-#: nls.c:106
+#: nls.c:105
 msgid "'m' must be a list"
 msgstr "'m' deve ser uma lista"
 
-#: nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:132 nls.c:173 nls.c:178
-#: nls.c:183 nls.c:188 nls.c:193 nls.c:198
+#: nls.c:111 nls.c:116 nls.c:121 nls.c:126 nls.c:131 nls.c:172 nls.c:177
+#: nls.c:182 nls.c:187 nls.c:192 nls.c:197
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' ausente"
 
-#: nls.c:239
+#: nls.c:238
 msgid "singular gradient"
 msgstr "gradiente singular"
 
-#: nls.c:260
+#: nls.c:259
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "fator de passos %g reduzido abaixo de 'minFactor' de %g"
 
-#: nls.c:269
+#: nls.c:268
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "número de iterações excedeu o máximo de %d"
 
-#: nls.c:274
+#: nls.c:273
 msgid "converged"
 msgstr ""
 
-#: nls.c:295
+#: nls.c:294
 msgid "'theta' should be of type character"
 msgstr "'theta' deve ser do tipo caractere"
 
-#: nls.c:297 port.c:380
+#: nls.c:296 port.c:380
 #, fuzzy
 msgid "use of NULL environment is defunct"
 msgstr "uso do ambiente NULL é obsoleto"
 
-#: nls.c:301
+#: nls.c:300
 msgid "'rho' should be an environment"
 msgstr "'rho' deve ser um ambiente"
 
-#: nls.c:303
+#: nls.c:302
 #, fuzzy
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
 
-#: nls.c:320 nls.c:348
+#: nls.c:319 nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 
-#: nls.c:326
+#: nls.c:325
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "variável '%s' é inteira, não numérica"
 
-#: nls.c:328
+#: nls.c:327
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variável '%s' não é numérica"
@@ -169,7 +181,7 @@ msgstr "erro forkal código %d"
 msgid "invalid value of lag.max"
 msgstr "valor inválido para lag.max"
 
-#: port.c:130
+#: port.c:129
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d deve ser 1, 2, 3, ou 4"

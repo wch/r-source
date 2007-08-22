@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -278,6 +278,24 @@ msgstr "부적절한 수직방향 위치의 결정지정입니다"
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "'respect'는 논리값 또는 'ncol * 'nrow' 행렬이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "Invalid"
+msgstr "부적절한 'theta' 입니다"
+
+msgid "print"
+msgstr ""
+
+msgid "argument"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid object in listing"
+msgstr "부적절한 위치의 결정 지정입니다"
+
+#, fuzzy
+msgid "Invalid listing"
+msgstr "부적절한 'origin'입니다"
 
 msgid "Invalid 'origin'"
 msgstr "부적절한 'origin'입니다"

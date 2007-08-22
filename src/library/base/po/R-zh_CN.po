@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -335,8 +335,8 @@ msgstr "只能替换一个单元"
 msgid "names do not match previous names"
 msgstr "名字同原来已有的名字不相对"
 
-msgid "names do not match previous names:"
-msgstr "名字同原来已有的名字不相对:"
+msgid "numbers of columns of arguments do not match"
+msgstr ""
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "串列变元有错：所有变数的长度都应该是一样的"
@@ -350,7 +350,8 @@ msgstr "只适用于大小相同的数据框"
 msgid "list of length %d not meaningful"
 msgstr "%d长度的串列没有意义"
 
-msgid "only defined on a data frame with all numeric or complex variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric variables"
 msgstr "只适用于全数值或全复数的数据框"
 
 msgid "character string is not in a standard unambiguous format"
@@ -491,6 +492,9 @@ msgstr "'to'一定得是POSIXt对象"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file'要么是字符串，要么是连接"
+
+msgid "Invalid DCF format."
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
@@ -855,16 +859,32 @@ msgstr "映像无法被重新命名，因此被留在"
 msgid "[Previously saved workspace restored]"
 msgstr "[原来保存的工作空间已还原]"
 
+msgid "Attempting to load the environment '%s'"
+msgstr ""
+
+msgid "not found: using .GlobalEnv instead"
+msgstr ""
+
 msgid "invalid 'category' argument"
 msgstr "'category'变元有错"
 
 msgid "must specify formal argument names to vectorize"
 msgstr "向量化之前必需设定正式变元"
 
-msgid "'arg' must be NULL or a character vector of length >= 1"
+#, fuzzy
+msgid "'arg' must be NULL or a character vector"
 msgstr "'arg'要么是NULL，要么是长度大于等于一的字符向量。"
 
-msgid "'arg' should be one of"
+#, fuzzy
+msgid "'arg' must be of length 1"
+msgstr "'from'的长度必需为一"
+
+#, fuzzy
+msgid "'arg' must be of length >= 1"
+msgstr "'from'的长度必需为一"
+
+#, fuzzy
+msgid "'arg' should be one of %s"
 msgstr "'arg'应当是这些其中的一个"
 
 msgid "there is more than one match in 'match.arg'"
@@ -985,6 +1005,12 @@ msgstr "用于出口的'%s'类别不存在：%s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
+
+msgid "Multiple methods lists found for '"
+msgstr ""
+
+msgid "'"
+msgstr ""
 
 msgid "No methods table for \""
 msgstr "没有方法列表于"
@@ -1429,6 +1455,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "names do not match previous names:"
+#~ msgstr "名字同原来已有的名字不相对:"
 
 #~ msgid "argument must be character"
 #~ msgstr "变元必需为字符"

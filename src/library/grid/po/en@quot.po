@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
-"PO-Revision-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"PO-Revision-Date: 2007-08-22 12:25+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -38,75 +38,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: grid.c:209
+#: grid.c:210
 msgid "Cannot clip to rotated viewport"
 msgstr "Cannot clip to rotated viewport"
 
-#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+#: grid.c:649 grid.c:654 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 
-#: grid.c:938
+#: grid.c:939
 msgid "attempt to plot on null device"
 msgstr "attempt to plot on null device"
 
-#: grid.c:1218
+#: grid.c:1219
 msgid "There is no layout defined"
 msgstr "There is no layout defined"
 
-#: grid.c:1438
+#: grid.c:1439
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygon edge not found (zero-width or zero-height?)"
 
-#: grid.c:1447
+#: grid.c:1448
 msgid "Polygon edge not found"
 msgstr "Polygon edge not found"
 
-#: grid.c:1587
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr "Require at least two points to draw arrow"
 
-#: grid.c:1901
+#: grid.c:1902
 msgid "Non-finite control point in Xspline"
 msgstr "Non-finite control point in Xspline"
 
-#: grid.c:3072
+#: grid.c:3073
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 
-#: layout.c:520
+#: layout.c:519
 msgid "invalid layout.pos.row"
 msgstr "invalid layout.pos.row"
 
-#: layout.c:524
+#: layout.c:523
 msgid "invalid layout.pos.col"
 msgstr "invalid layout.pos.col"
 
-#: matrix.c:50
+#: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "singular transformation matrix"
 
-#: state.c:178
+#: state.c:177
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Unable to store grid state.  Too many devices open?"
 
-#: unit.c:258 unit.c:408 unit.c:1137 unit.c:1217 unit.c:1297 unit.c:1377
+#: unit.c:260 unit.c:410 unit.c:1139 unit.c:1219 unit.c:1299 unit.c:1379
 msgid "Unimplemented unit function"
 msgstr "Unimplemented unit function"
 
-#: unit.c:826 unit.c:1572
+#: unit.c:828 unit.c:1574
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Illegal unit or unit not yet implemented"
 
-#: unit.c:1705
+#: unit.c:1707
 msgid "Invalid unit"
 msgstr "Invalid unit"
 
-#: unit.c:1721
+#: unit.c:1723
 msgid "Units must be character"
 msgstr "Units must be character"
 
-#: unit.c:1724
+#: unit.c:1726
 msgid "Units must be of length > 0"
 msgstr "Units must be of length > 0"
 

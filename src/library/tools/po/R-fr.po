@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-13 12:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -450,6 +450,10 @@ msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
 msgid "unable to create temp directory"
 msgstr "impossible de créer le répertoire temporaire"
 
+#, fuzzy
+msgid "--- running texi2dvi on vignettes"
+msgstr "l'exécution de texi2dvi sur '%s' a échoué"
+
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -457,7 +461,8 @@ msgstr ""
 "le traitement de la vignette '%s' a échoué avec le diagnostic :\n"
 "%s"
 
-msgid "running make failed"
+#, fuzzy
+msgid "running 'make' failed"
 msgstr "l'exécution de make a échoué"
 
 msgid "cannot read index information in file '%s'"
@@ -477,6 +482,19 @@ msgstr "*** quelqu'un a corrompu le champ 'Built' dans le package '%s' ***"
 
 msgid "cannot open directory '%s'"
 msgstr "impossible d'ouvrir le répertoire '%s'"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "only the first will be used"
+msgstr ""
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr ""
@@ -504,17 +522,33 @@ msgstr "impossible de copier INDEX vers '%s'"
 msgid "cannot create directory '%s'"
 msgstr "impossible de créer le répertoire '%s'"
 
-msgid "unable to run pdflatex on '%s'"
-msgstr "impossible d'exécuter pdflatex sur '%s'"
+#, fuzzy
+msgid "processing '"
+msgstr "analyse de '%s'"
 
-msgid "unable to run bibtex on '%s'"
-msgstr "impossible d'exécuter bibtex sur '%s'"
+msgid "'"
+msgstr ""
 
 msgid "file '%s' was not created"
 msgstr "le fichier '%s' n'a pas été créé"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "impossible de copier '%s' dans '%s'"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
 
 msgid "there is no package called '%s'"
 msgstr "aucun package nommé '%s' n'existe"
@@ -589,8 +623,13 @@ msgstr "l'argument 'delim' doit spécifier deux caractères"
 msgid "only Rd syntax is currently supported"
 msgstr "seule la syntaxe Rd est actuellement supportée"
 
-msgid "running texi2dvi on '%s' failed"
+#, fuzzy
+msgid "running 'texi2dvi' on '%s' failed"
 msgstr "l'exécution de texi2dvi sur '%s' a échoué"
+
+#, fuzzy
+msgid "unable to run %s on '%s'"
+msgstr "impossible d'exécuter bibtex sur '%s'"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "le fichier '%s' n'est pas d'un format DCF valide"
@@ -633,3 +672,6 @@ msgstr[0] ""
 msgstr[1] ""
 "Des utilisations globales possibles de 'T' ou 'F' sont trouvées dans les "
 "exemples des fichiers Rd suivants :"
+
+#~ msgid "unable to run pdflatex on '%s'"
+#~ msgstr "impossible d'exécuter pdflatex sur '%s'"

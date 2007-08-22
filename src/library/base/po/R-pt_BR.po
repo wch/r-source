@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -348,9 +348,8 @@ msgstr "somente um único elemento deve ser substituido"
 msgid "names do not match previous names"
 msgstr "nomes não pareiam com os nomes anteriores:"
 
-#, fuzzy
-msgid "names do not match previous names:"
-msgstr "nomes não pareiam com os nomes anteriores:"
+msgid "numbers of columns of arguments do not match"
+msgstr ""
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
@@ -365,7 +364,8 @@ msgstr "definido somente para data frames com tamanhos iguais"
 msgid "list of length %d not meaningful"
 msgstr "lista de comprimento %d sem sentido"
 
-msgid "only defined on a data frame with all numeric or complex variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric variables"
 msgstr ""
 "somente definido para um data frame com todas as variáveis numéricas ou "
 "complexas"
@@ -512,6 +512,9 @@ msgstr "'to' deve ser um objeto POSIXt"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' deve ser uma string de caracteres ou uma conexão"
+
+msgid "Invalid DCF format."
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x' deve ser uma matriz quadrada"
@@ -885,6 +888,12 @@ msgstr "imagem não pôde ser renomeada e foi mantida"
 msgid "[Previously saved workspace restored]"
 msgstr "[Área de trabalho anterior carregada]"
 
+msgid "Attempting to load the environment '%s'"
+msgstr ""
+
+msgid "not found: using .GlobalEnv instead"
+msgstr ""
+
 msgid "invalid 'category' argument"
 msgstr "argumento 'category' inválido"
 
@@ -892,10 +901,19 @@ msgid "must specify formal argument names to vectorize"
 msgstr "nomes de argumentos formais devem ser especificados para vetorizar"
 
 #, fuzzy
-msgid "'arg' must be NULL or a character vector of length >= 1"
+msgid "'arg' must be NULL or a character vector"
 msgstr "'normal.kind' deve ser uma string de caractres de tamanho 1."
 
-msgid "'arg' should be one of"
+#, fuzzy
+msgid "'arg' must be of length 1"
+msgstr "'from' deve ter comprimento 1"
+
+#, fuzzy
+msgid "'arg' must be of length >= 1"
+msgstr "'from' deve ter comprimento 1"
+
+#, fuzzy
+msgid "'arg' should be one of %s"
 msgstr "'arg' deve ser um dentre"
 
 msgid "there is more than one match in 'match.arg'"
@@ -1025,6 +1043,12 @@ msgstr "em '%s' classes para expor~tação não definidas: %s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "em '%s' métodos para exportação não encontrados: %s"
+
+msgid "Multiple methods lists found for '"
+msgstr ""
+
+msgid "'"
+msgstr ""
 
 msgid "No methods table for \""
 msgstr ""
@@ -1480,6 +1504,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "names do not match previous names:"
+#~ msgstr "nomes não pareiam com os nomes anteriores:"
 
 #~ msgid "argument must be character"
 #~ msgstr "argumento deve ser caracter"

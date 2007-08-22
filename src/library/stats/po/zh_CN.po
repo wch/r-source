@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:52+0100\n"
+"POT-Creation-Date: 2007-08-22 12:25+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -16,13 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: Srunmed.c:60
+#: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "移动中位数的帶寬/跨距的值不能大于n"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qansari()里的概率值在[0,1]范围外"
+
+#: approx.c:110
+msgid "approx(): invalid f value"
+msgstr ""
+
+#: approx.c:115
+msgid "approx(): invalid interpolation method"
+msgstr ""
+
+#: approx.c:121
+msgid "approx(): attempted to interpolate NA values"
+msgstr ""
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
@@ -32,39 +44,39 @@ msgstr "变元种类不对"
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0里只能转换100个参数"
 
-#: distance.c:151
+#: distance.c:152
 #, fuzzy
 msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\")：所有无限值都作为NA来处理"
 
-#: distance.c:220
+#: distance.c:221
 msgid "distance(): invalid p"
 msgstr "distance(): p值不对"
 
-#: distance.c:223
+#: distance.c:224
 msgid "distance(): invalid distance"
 msgstr "distance()：距离值不对"
 
-#: family.c:20
+#: family.c:21
 #, c-format
 msgid "Value %d out of range (0, 1)"
 msgstr "%d个值出界在(0, 1)外"
 
-#: family.c:41 family.c:55 family.c:73
+#: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "变元%s必需为非空数字向量"
 
-#: family.c:106 family.c:109
+#: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "变元%s必需为长度为一或长度为%d的数字向量"
 
-#: ksmooth.c:66
+#: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "sm.method=\"spline\"最多只能算2500行"
 
-#: loessc.c:226
+#: loessc.c:228
 msgid "span is too small"
 msgstr "跨距太小"
 
@@ -84,64 +96,64 @@ msgstr "vmethod不对"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg的算法没有能够找到偏相关数"
 
-#: nls.c:104
+#: nls.c:103
 msgid "'control' must be a list"
 msgstr "'control'的值必需为串列"
 
-#: nls.c:106
+#: nls.c:105
 msgid "'m' must be a list"
 msgstr "'m'的值必需是串列"
 
-#: nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:132 nls.c:173 nls.c:178
-#: nls.c:183 nls.c:188 nls.c:193 nls.c:198
+#: nls.c:111 nls.c:116 nls.c:121 nls.c:126 nls.c:131 nls.c:172 nls.c:177
+#: nls.c:182 nls.c:187 nls.c:192 nls.c:197
 #, c-format
 msgid "'%s' absent"
 msgstr "需要设定'%s'"
 
-#: nls.c:239
+#: nls.c:238
 msgid "singular gradient"
 msgstr "奇异梯度"
 
-#: nls.c:260
+#: nls.c:259
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "算法的步因素%g的大小被减少到小于%g的'minFactor'值"
 
-#: nls.c:269
+#: nls.c:268
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "循环次数超过了%d这个最大值"
 
-#: nls.c:274
+#: nls.c:273
 msgid "converged"
 msgstr "收敛了"
 
-#: nls.c:295
+#: nls.c:294
 msgid "'theta' should be of type character"
 msgstr "'theta'的种类必需是字符"
 
-#: nls.c:297 port.c:380
+#: nls.c:296 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用了"
 
-#: nls.c:301
+#: nls.c:300
 msgid "'rho' should be an environment"
 msgstr "'rho'必需为环境"
 
-#: nls.c:303
+#: nls.c:302
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'这个数字向量的长度不对"
 
-#: nls.c:320 nls.c:348
+#: nls.c:319 nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "在计算模型的时候产生了缺省值或无限值"
 
-#: nls.c:326
+#: nls.c:325
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "变量'%s'应该为整数，不能是数值"
 
-#: nls.c:328
+#: nls.c:327
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "变量'%s'不是数值"
@@ -164,7 +176,7 @@ msgstr "forkal出错编号%d"
 msgid "invalid value of lag.max"
 msgstr "lag.max的值不对"
 
-#: port.c:130
+#: port.c:129
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d其值应该是1, 2, 3, 或4"

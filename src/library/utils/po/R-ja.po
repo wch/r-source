@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:53\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-04 14:23+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -495,6 +495,10 @@ msgstr " 'destdir' はディレクトリではありません"
 msgid "no package '%s' at the repositories"
 msgstr " このリポジトリーには '%s' というパッケージはありません"
 
+#, fuzzy
+msgid "package '%s' does not exist on the local repository"
+msgstr " このリポジトリーには '%s' というパッケージはありません"
+
 msgid "download of package '%s' failed"
 msgstr " パッケージ '%s' のダウンロードに失敗しました"
 
@@ -894,6 +898,10 @@ msgstr " HTML パッケージ索引を生成できません"
 
 msgid "cannot create HTML search index"
 msgstr " HTML 検索索引を生成できません"
+
+#, fuzzy
+msgid "Updating HTML index of packages in '.Library'"
+msgstr " HTML パッケージのリストを更新します"
 
 msgid "'memory.size()' is Windows-specific"
 msgstr " 'memory.size()' は Windows 固有の関数です"

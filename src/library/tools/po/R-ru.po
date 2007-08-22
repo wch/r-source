@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-07 02:02-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -436,6 +436,10 @@ msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 msgid "unable to create temp directory"
 msgstr "не могу создать временную папку"
 
+#, fuzzy
+msgid "--- running texi2dvi on vignettes"
+msgstr "запуск 'texi2dvi' на '%s' не удался"
+
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -443,7 +447,8 @@ msgstr ""
 "выполнение очерка '%s' не удалось с диагностикой:\n"
 "%s"
 
-msgid "running make failed"
+#, fuzzy
+msgid "running 'make' failed"
 msgstr "не удался запуск 'make'"
 
 msgid "cannot read index information in file '%s'"
@@ -463,6 +468,19 @@ msgstr "*** что-то сломалось в поле 'Built' пакета '%s'***"
 
 msgid "cannot open directory '%s'"
 msgstr "не могу открыть папку '%s'"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "only the first will be used"
+msgstr ""
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "не могу включить локаль-специфичную сортировку через LC_COLLATE"
@@ -488,17 +506,33 @@ msgstr "не могу скопировать 'INDEX' в '%s'"
 msgid "cannot create directory '%s'"
 msgstr "Не могу создать папку '%s'"
 
-msgid "unable to run pdflatex on '%s'"
-msgstr "Не могу запустить 'pdflatex' на '%s'"
+#, fuzzy
+msgid "processing '"
+msgstr "разбор '%s'"
 
-msgid "unable to run bibtex on '%s'"
-msgstr "не могу запустить 'bibtex' на '%s'"
+msgid "'"
+msgstr ""
 
 msgid "file '%s' was not created"
 msgstr "файл '%s' не создан"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "не могу скопировать '%s' в '%s'"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
 
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
@@ -572,8 +606,13 @@ msgstr "аргумент 'delim' должен определять два символа"
 msgid "only Rd syntax is currently supported"
 msgstr "сейчас поддерживается только Rd-синтаксис"
 
-msgid "running texi2dvi on '%s' failed"
+#, fuzzy
+msgid "running 'texi2dvi' on '%s' failed"
 msgstr "запуск 'texi2dvi' на '%s' не удался"
+
+#, fuzzy
+msgid "unable to run %s on '%s'"
+msgstr "не могу запустить 'bibtex' на '%s'"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "файл '%s' не является правильным форматом DCF"
@@ -613,3 +652,6 @@ msgstr[1] ""
 "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
 msgstr[2] ""
 "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+
+#~ msgid "unable to run pdflatex on '%s'"
+#~ msgstr "Не могу запустить 'pdflatex' на '%s'"

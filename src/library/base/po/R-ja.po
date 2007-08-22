@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -337,8 +337,8 @@ msgstr " ただ一つの要素しか置き換えられるべきではありま�
 msgid "names do not match previous names"
 msgstr " 名前が以前の名前と一致しません"
 
-msgid "names do not match previous names:"
-msgstr " 名前が以下のような以前の名前と一致しません："
+msgid "numbers of columns of arguments do not match"
+msgstr ""
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr " 無効なリストの引数です。全ての変数は同じ長さを持つべきです"
@@ -352,7 +352,8 @@ msgstr " は等しいサイズのデータフレームに対してだけ定義�
 msgid "list of length %d not meaningful"
 msgstr " 長さ %d のリストは意味がありません"
 
-msgid "only defined on a data frame with all numeric or complex variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric variables"
 msgstr ""
 " すべて数値または複素数値の変数のデータフレームに対してだけ定義されます"
 
@@ -497,6 +498,9 @@ msgstr " 'to' は POSIXt のオブジェクトでなければなりません"
 
 msgid "'file' must be a character string or connection"
 msgstr " 'file' は文字列かコネクションでなければなりません"
+
+msgid "Invalid DCF format."
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr " 'x' は正方行列でなければなりません"
@@ -879,16 +883,32 @@ msgstr " イメージは改名できませんので、以下に残されます�
 msgid "[Previously saved workspace restored]"
 msgstr " [以前にセーブされたワークスペースを復帰します]"
 
+msgid "Attempting to load the environment '%s'"
+msgstr ""
+
+msgid "not found: using .GlobalEnv instead"
+msgstr ""
+
 msgid "invalid 'category' argument"
 msgstr " 無効な 'category' 引数です"
 
 msgid "must specify formal argument names to vectorize"
 msgstr " ベクトル化するためには仮引数名を指定しなければなりません"
 
-msgid "'arg' must be NULL or a character vector of length >= 1"
+#, fuzzy
+msgid "'arg' must be NULL or a character vector"
 msgstr " 'arg' は、NULL か長さ >=1 の文字列ベクトルでなければなりません"
 
-msgid "'arg' should be one of"
+#, fuzzy
+msgid "'arg' must be of length 1"
+msgstr " 'from' は長さ 1 でなければなりません"
+
+#, fuzzy
+msgid "'arg' must be of length >= 1"
+msgstr " 'from' は長さ 1 でなければなりません"
+
+#, fuzzy
+msgid "'arg' should be one of %s"
 msgstr " 'arg' は以下の一つでなければなりません："
 
 msgid "there is more than one match in 'match.arg'"
@@ -1012,6 +1032,12 @@ msgstr " '%s' 中にはエクスポートのためのクラスは見付かりま
 
 msgid "in '%s' methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートのためのメソッドは見付かりません： %s"
+
+msgid "Multiple methods lists found for '"
+msgstr ""
+
+msgid "'"
+msgstr ""
 
 msgid "No methods table for \""
 msgstr " 以下に対するメソッドテーブルがありません \""
@@ -1468,6 +1494,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
+
+#~ msgid "names do not match previous names:"
+#~ msgstr " 名前が以下のような以前の名前と一致しません："
 
 #~ msgid "argument must be character"
 #~ msgstr " 引数は文字でなければなりません"

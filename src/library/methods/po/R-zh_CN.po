@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -77,6 +77,16 @@ msgstr ""
 
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr "必需提供函数骨架，要么是明确地提供，要么通过已存在的函数来提供"
+
+msgid ""
+"New generic for \"%s\" does not agree with implicit generic from package \"%s"
+"\"; a new generic will be assigned with package \"%s\""
+msgstr ""
+
+msgid ""
+"No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
+"will be assigned with package \"%s\""
+msgstr ""
 
 msgid ""
 "function \"%s\" appears to be a generic function, but with generic name \"%s"
@@ -242,6 +252,27 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr "'callGeneric'只能由同屬函数或方法来調用"
 
 msgid ""
+"\"%s\" is not currently a generic:  define it first to create a non-default "
+"implicit form"
+msgstr ""
+
+#, fuzzy
+msgid "No nongeneric version of function \"%s\" exists to be restored"
+msgstr "找不到'%s'这一非同屬函数"
+
+#, fuzzy
+msgid "Must provide an environment table; got class \"%s\""
+msgstr "找不到包含类别\"%s\"的环境"
+
+msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+msgstr ""
+
+msgid ""
+"Implicit generic exists for \"%s\", but will be overriden by explicit call "
+"to setGeneric()"
+msgstr ""
+
+msgid ""
 "invalid first argument: should be the name of the first argument in the "
 "dispatch"
 msgstr "第一个变元不对: 应该是分配里的第一变元的名字"
@@ -301,7 +332,10 @@ msgstr ""
 "为函数'%1$s'作为方法标记而用的对象看来不象是合法的标记(单类别名字向量) ：一共"
 "有%2$d类别名字，但标记对象里只有%3$d个單元"
 
-msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+#, fuzzy
+msgid ""
+"more elements in the method signature (%d) than in the generic  signature (%"
+"d)"
 msgstr "方法标记(%s)里的单元比同属%s(%s)里的要多"
 
 msgid ""
@@ -327,14 +361,8 @@ msgid ""
 "class \"%s\""
 msgstr "初始化方法回復了类别为\"%s\"的对象而不是所要求的\"%s\"这一类别"
 
-msgid "An object of class \""
-msgstr "对象为类别"
-
-msgid "\""
-msgstr "\""
-
-msgid ""
-"the names in signature for method (%s) do not match function's arguments (%s)"
+#, fuzzy
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "方法(%s)标记里的名字同函数变元(%s) 不相对应"
 
 msgid ""
@@ -482,17 +510,20 @@ msgstr "类别\"%s\"没有'.Data'这一个槽"
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "类别\"%s\"没有数据部分(.Data 槽)"
 
+#, fuzzy
 msgid ""
-"trying to change the argument list of a function with %d arguments to have "
-"arguments (%s)"
+"trying to change the argument list of %s with %d arguments to have arguments "
+"(%s)"
 msgstr "无法将带%d变元函数的变元串列改成带(%s) 变元"
 
+#, fuzzy
 msgid ""
-"get rid of variables in definition (%s); they conflict with the needed "
+"get rid of variables in definition %s (%s); they conflict with the needed "
 "change to argument names (%s)"
 msgstr "删除定义(%s) 里的变量；它们与需要改变的变元名字(%s) 有朴素矛盾"
 
-msgid "arguments in definition changed from (%s) to (%s)"
+#, fuzzy
+msgid "arguments in definition %s changed from (%s) to (%s)"
 msgstr "定义里的变元从(%s) 改为(%s)"
 
 msgid ","
@@ -541,6 +572,10 @@ msgid ""
 msgstr ""
 "在为'%2$s'制造同屬函数时用的%1$s这一个函数现在已经被追踪；因此删除了对所用函"
 "数的追踪"
+
+msgid ""
+"Must supply either a generic function or a function as default for \"#s\""
+msgstr ""
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -940,6 +975,10 @@ msgstr "类别\"%s\"里的槽必需擴充类别\"%s\"中相应的槽：%s出了�
 msgid "invalid index for function argument"
 msgstr "函数变元的索引不对"
 
+#, fuzzy
+msgid "No function definition found for \"%s\""
+msgstr "没有'%s'这样一个函数定义"
+
 msgid "Need a definition for the method here"
 msgstr ""
 
@@ -971,6 +1010,9 @@ msgstr "列表方法的对象出错"
 
 msgid "\"), expected a method, got an object of class \""
 msgstr "\"),提供的应该是函数，得到的却是对象"
+
+msgid "\""
+msgstr "\""
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr "同属函数的方法表不对，或还没有设制"
@@ -1072,6 +1114,9 @@ msgid ""
 "no definition of class \"%s\" in the specified position, %s, definition(s) "
 "on : %s"
 msgstr "在指定的%2$s这个位置不存在类别\"%1$s\"的定义, 定义在: %3$s"
+
+msgid "An object of class \""
+msgstr "对象为类别"
 
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "

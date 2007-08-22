@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:20\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2007-04-07 01:47-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -101,9 +101,6 @@ msgstr "в области действия нет выражений"
 msgid "no terms in scope for adding to object"
 msgstr "в области действия нет выражений для добавления к объекту"
 
-msgid "trying +"
-msgstr "пробую +"
-
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "количество используемых строк изменилось: убраны пропущенные значения?"
 
@@ -119,9 +116,6 @@ msgstr "'add1'-метод для моделей \"mlm\" не разработан"
 msgid "scope is not a subset of term labels"
 msgstr "область действия не является подмножеством меток выражений"
 
-msgid "trying -"
-msgstr "пробую -"
-
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "'drop1'-метод для моделей \"mlm\" отсутствует"
 
@@ -136,12 +130,6 @@ msgstr "верхняя область действия не включает выражени(я) модели %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC для этой модели не определена, поэтому 'step' не работает"
-
-msgid "Start:  AIC="
-msgstr "Старт:  AIC="
-
-msgid "Step:  AIC="
-msgstr "Ступень:  AIC="
 
 msgid "'A' must be an array or table"
 msgstr "'A' должен быть матрицей или таблицей"
@@ -1453,6 +1441,9 @@ msgstr "не-факторы проигнорированы:"
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr "eff.aovlist: не-ортогональные контрасты могут дать неправильный ответ"
 
+msgid "cannot create a formula from a zero-column data frame"
+msgstr ""
+
 msgid "no terms component"
 msgstr "нет компонента выражений"
 
@@ -1574,9 +1565,6 @@ msgstr "сингулярная градиентная матрица в оценке начальных параметров"
 msgid "'data' must be a list or an environment"
 msgstr "'data' должны быть списком либо окружением"
 
-msgid "no parameters to fit"
-msgstr "нет параметров для подгонки"
-
 msgid "No starting values specified"
 msgstr "Не заданы стартовые значения"
 
@@ -1594,6 +1582,16 @@ msgstr "Укажите 'start' или я использую модель 'selfStart'"
 
 msgid "parameters without starting value in 'data':"
 msgstr "параметры без стартового значения в 'data':"
+
+#, fuzzy
+msgid "fitting parameters"
+msgstr "нет параметров для подгонки"
+
+msgid "without any variables"
+msgstr ""
+
+msgid "no parameters to fit"
+msgstr "нет параметров для подгонки"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "Верхние и нижние границы игнорируются, пока алгоритм не = \"port\""
@@ -2227,6 +2225,18 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "trying +"
+#~ msgstr "пробую +"
+
+#~ msgid "trying -"
+#~ msgstr "пробую -"
+
+#~ msgid "Start:  AIC="
+#~ msgstr "Старт:  AIC="
+
+#~ msgid "Step:  AIC="
+#~ msgstr "Ступень:  AIC="
 
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr "контрасты для 0 степеней свободы не определены"

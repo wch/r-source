@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
-"PO-Revision-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
+"PO-Revision-Date: 2007-08-22 12:25\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -444,6 +444,9 @@ msgstr "missing/empty \\name field in Rd file(s)"
 msgid "unable to create temp directory"
 msgstr "unable to create temp directory"
 
+msgid "--- running texi2dvi on vignettes"
+msgstr "--- running texi2dvi on vignettes"
+
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -451,8 +454,8 @@ msgstr ""
 "processing vignette ‘%s’ failed with diagnostics:\n"
 "%s"
 
-msgid "running make failed"
-msgstr "running make failed"
+msgid "running 'make' failed"
+msgstr "running ‘make’ failed"
 
 msgid "cannot read index information in file '%s'"
 msgstr "cannot read index information in file ‘%s’"
@@ -471,6 +474,20 @@ msgstr "*** someone has corrupted the Built field in package ‘%s’ ***"
 
 msgid "cannot open directory '%s'"
 msgstr "cannot open directory ‘%s’"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr "WARNING: ‘Depends’ entry has multiple dependencies:"
+
+msgid ","
+msgstr ","
+
+msgid "only the first will be used"
+msgstr "only the first will be used"
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
+"WARNING: omitting pointless dependence on ‘R’ without a version requirement"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "cannot turn off locale-specific sorting via LC_COLLATE"
@@ -496,17 +513,32 @@ msgstr "unable to copy INDEX to ‘%s’"
 msgid "cannot create directory '%s'"
 msgstr "cannot create directory ‘%s’"
 
-msgid "unable to run pdflatex on '%s'"
-msgstr "unable to run pdflatex on ‘%s’"
+msgid "processing '"
+msgstr "processing '"
 
-msgid "unable to run bibtex on '%s'"
-msgstr "unable to run bibtex on ‘%s’"
+msgid "'"
+msgstr "'"
 
 msgid "file '%s' was not created"
 msgstr "file ‘%s’ was not created"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "cannot copy ‘%s’ to ‘%s’"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr "missing ‘DESCRIPTION.in’ for package ‘%s’"
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr "WARNING: malformed ‘Depends’ field in ‘DESCRIPTION’"
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr "ERROR: this R is version %s, package ‘%s’ requires R %s %s"
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr "ERROR: this R is version %s, bundle ‘%s’ requires R %s %s"
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr "ERROR: this R is version %s, required is R %s %s"
 
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
@@ -580,8 +612,11 @@ msgstr "argument ‘delim’ must specify two characters"
 msgid "only Rd syntax is currently supported"
 msgstr "only Rd syntax is currently supported"
 
-msgid "running texi2dvi on '%s' failed"
-msgstr "running texi2dvi on ‘%s’ failed"
+msgid "running 'texi2dvi' on '%s' failed"
+msgstr "running ‘texi2dvi’ on ‘%s’ failed"
+
+msgid "unable to run %s on '%s'"
+msgstr "unable to run %s on ‘%s’"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "file ‘%s’ is not in valid DCF format"

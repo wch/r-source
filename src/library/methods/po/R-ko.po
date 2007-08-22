@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -85,6 +85,16 @@ msgstr ""
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 "분명히 또는 기존의 함수에 의해 기능 골격을 주어지지 않으면 되지 않습니다"
+
+msgid ""
+"New generic for \"%s\" does not agree with implicit generic from package \"%s"
+"\"; a new generic will be assigned with package \"%s\""
+msgstr ""
+
+msgid ""
+"No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
+"will be assigned with package \"%s\""
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -304,6 +314,27 @@ msgstr ""
 "'callGeneric'는 generic 함수 또는 메소드로부터 호출되지 않으면 안됩니다"
 
 msgid ""
+"\"%s\" is not currently a generic:  define it first to create a non-default "
+"implicit form"
+msgstr ""
+
+#, fuzzy
+msgid "No nongeneric version of function \"%s\" exists to be restored"
+msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
+
+#, fuzzy
+msgid "Must provide an environment table; got class \"%s\""
+msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
+
+msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+msgstr ""
+
+msgid ""
+"Implicit generic exists for \"%s\", but will be overriden by explicit call "
+"to setGeneric()"
+msgstr ""
+
+msgid ""
 "invalid first argument: should be the name of the first argument in the "
 "dispatch"
 msgstr "무효인 최초의 인수: 'dispatch'의 최초 인수의 이름이 아니면 안됩니다"
@@ -379,7 +410,9 @@ msgstr ""
 "기호 오브젝트에서 %d 요소가 있었습니다"
 
 #, fuzzy
-msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+msgid ""
+"more elements in the method signature (%d) than in the generic  signature (%"
+"d)"
 msgstr "메소드 정의에서 생략된 형식상의 인수는 기호(%s)에 있을 수 없습니다"
 
 #, fuzzy
@@ -413,14 +446,8 @@ msgstr ""
 "initialize 메소드는 필수의 클래스 \"%s\"를 대신에 클래스\n"
 "\"%s\"의 오브젝트를 돌려주었습니다"
 
-msgid "An object of class \""
-msgstr ""
-
-msgid "\""
-msgstr ""
-
-msgid ""
-"the names in signature for method (%s) do not match function's arguments (%s)"
+#, fuzzy
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "메소드(%s)를 위한 기호의 이름은 함수 인수(%s)에 match하지 않습니다"
 
 msgid ""
@@ -603,20 +630,23 @@ msgstr "클래스 \"%s\"때문에 정해지는 '.Data' slot이 아닙니다"
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "클래스 \"%s\"는 데이터 일부(.Data slot)를 정해지지 않습니다"
 
+#, fuzzy
 msgid ""
-"trying to change the argument list of a function with %d arguments to have "
-"arguments (%s)"
+"trying to change the argument list of %s with %d arguments to have arguments "
+"(%s)"
 msgstr ""
 "인수(%s) 때문에 %d 인수와 함수의 논의 리스트를 %d인수와 변경하려고 합니다"
 
+#, fuzzy
 msgid ""
-"get rid of variables in definition (%s); they conflict with the needed "
+"get rid of variables in definition %s (%s); they conflict with the needed "
 "change to argument names (%s)"
 msgstr ""
 "정의(%s)에서 변수를 제거 해주십시오;그것들은 인수명(%s)에의 \n"
 "필요하게 되는 변경과 모순됩니다 "
 
-msgid "arguments in definition changed from (%s) to (%s)"
+#, fuzzy
+msgid "arguments in definition %s changed from (%s) to (%s)"
 msgstr "(%s)에서(%s)부터 변경되어진 정의 인수입니다"
 
 msgid ","
@@ -670,6 +700,10 @@ msgstr ""
 "'%s'에 generic 함수를 작성할때 %s로서 사용되어 있는 함수는 현재 결과로 되어집"
 "니다;\n"
 "사용되는 함수는 결과가 제거될것입니다"
+
+msgid ""
+"Must supply either a generic function or a function as default for \"#s\""
+msgstr ""
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -1161,6 +1195,10 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr "함수 인수를 위한 무효의 인덱스"
 
+#, fuzzy
+msgid "No function definition found for \"%s\""
+msgstr "검색되는 '%s' 때문에 함수 정의가 아닙니다"
+
 msgid "Need a definition for the method here"
 msgstr ""
 
@@ -1194,6 +1232,9 @@ msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 �
 #, fuzzy
 msgid "\"), expected a method, got an object of class \""
 msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
+
+msgid "\""
+msgstr ""
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
@@ -1307,6 +1348,9 @@ msgid ""
 "no definition of class \"%s\" in the specified position, %s, definition(s) "
 "on : %s"
 msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
+
+msgid "An object of class \""
+msgstr ""
 
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "

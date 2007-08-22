@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:20\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -94,9 +94,6 @@ msgstr "範疇里没有项"
 msgid "no terms in scope for adding to object"
 msgstr "加入对象时範疇内没有项"
 
-msgid "trying +"
-msgstr "试用+号"
-
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "行数有变化：是不是删除了遺漏值?"
 
@@ -112,9 +109,6 @@ msgstr "\"mlm\"模型还没有实现'add1'方法"
 msgid "scope is not a subset of term labels"
 msgstr "範疇不是项标记集的子集"
 
-msgid "trying -"
-msgstr "试用-号"
-
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "\"mlm\" 模型没有'drop1'方法"
 
@@ -129,12 +123,6 @@ msgstr "模型上範疇里没有这些词条%s "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
-
-msgid "Start:  AIC="
-msgstr "开始：AIC="
-
-msgid "Step:  AIC="
-msgstr "步：AIC="
 
 msgid "'A' must be an array or table"
 msgstr "'A'必需是矩阵或是数据框"
@@ -1414,6 +1402,9 @@ msgstr "非因子略过不用:"
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr "eff.aovlist: 用非正交对比来算的结果会出错"
 
+msgid "cannot create a formula from a zero-column data frame"
+msgstr ""
+
 msgid "no terms component"
 msgstr "没有项组件"
 
@@ -1533,9 +1524,6 @@ msgstr "参数初始估计值里有奇异梯度矩阵"
 msgid "'data' must be a list or an environment"
 msgstr "'data'必需是串列或是环境"
 
-msgid "no parameters to fit"
-msgstr "没有可用来拟合的参数值"
-
 msgid "No starting values specified"
 msgstr "没有设定初始值"
 
@@ -1553,6 +1541,16 @@ msgstr "请考虑设'start'的值，或使用一个自我设定初始值的模�
 
 msgid "parameters without starting value in 'data':"
 msgstr "'data'里的参数没有被设定初始值"
+
+#, fuzzy
+msgid "fitting parameters"
+msgstr "没有可用来拟合的参数值"
+
+msgid "without any variables"
+msgstr ""
+
+msgid "no parameters to fit"
+msgstr "没有可用来拟合的参数值"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
@@ -2154,6 +2152,18 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "trying +"
+#~ msgstr "试用+号"
+
+#~ msgid "trying -"
+#~ msgstr "试用-号"
+
+#~ msgid "Start:  AIC="
+#~ msgstr "开始：AIC="
+
+#~ msgid "Step:  AIC="
+#~ msgstr "步：AIC="
 
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr "零自由度不能设对比"
