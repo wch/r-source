@@ -60,7 +60,10 @@ SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
   rui.c run.c shext.c sys-win32.c system.c dos_glob.c
-OBJS = $(SOURCES:.c=.o) e_pow.o
+OBJS = $(SOURCES:.c=.o)
+ifeq ($(strip $(WIN)),32)
+ OBJS += e_pow.o
+endif
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \

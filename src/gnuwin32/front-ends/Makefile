@@ -15,8 +15,10 @@ CFLAGS=$(OPTFLAGS)
 
 ## Increase stack size to 10Mb
 LARGE_STACK=-Wl,--stack=0xA00000
-## allow 32-bit builds to address over 2Gb.
+## allow 32-bit builds to address over 2Gb
+ifeq ($(strip $(WIN)),32)
 LARGE_ADDR=-Wl,--large-address-aware
+endif
 
 .PHONY : all makeMakedeps
 

@@ -63,6 +63,12 @@ TCL_VERSION = 84
 # Needed if using other compilers, and currently on Win64
 # USE_IMPLIBS = YES
 
+# 32- or 64-bit Windows?
+WIN=32
+ifeq ($(strip $(WIN)),64)
+USE_IMPLIBS = YES
+endif
+
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.1.x was installed. Spaces allowed.
@@ -88,14 +94,18 @@ F95FLAGS=-O3 $(PKG_FCFLAGS)
 ## =================== cross-compilation settings  =================
 
 ifeq ($(strip $(BUILD)),CROSS)
-# Next might be mingw32- or i386-mingw32msvc- or i586- 
+# Next might be i586-mingw32- or x86_64-pc-mingw32- or ...
 # depending on the cross-compiler.
 BINPREF=i586-mingw32-
-# Set this to where the mingw32 include files are. It must be accurate.
+# Optional, if compiler has been relocated
+# Set this to full path to dir where the mingw32 include files are.
 # It should contain fcntl.h and windows.h
-HEADER=/home/ripley/R/cross-tools7/include
+HEADER=
 # path (possibly full path) to same version of R on the host system
 R_EXE='I failed to read the instructions to set R_EXE in MkRules'
+
+## SHLIB extension on host: 'so' or 'dll'
+CROSS_EXT=so
 endif
 
 ## =============== end of user-customizable parts  ===================
@@ -126,7 +136,9 @@ GCC4_SUFF=-sjlj
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
+ifneq ($(strip $(HEADER)),)
 MINGW32CFLAG=-isystem $(HEADER)
+endif
 ifeq ($(strip $(CROSS-GCC)),gcc4)
 F77=$(BINPREF)gfortran
 FLIBS=-lgfortran
