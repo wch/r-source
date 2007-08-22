@@ -4039,8 +4039,8 @@ make
 
 @noindent
 MBCS does not work---@code{wcstod} is missing---but only be of any use
-in a CJK locale.  NLS works, although it is better to use with
-@option{--with-included-gettext} to avoid multiple copies being included.
+in a CJK locale.  NLS works, although @option{--with-included-gettext}
+is needed.
 
 It almost passes @command{make check}: FIFOs are supposedly supported
 but hung in @samp{example(fifo)}.
