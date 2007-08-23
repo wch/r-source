@@ -25,8 +25,8 @@ shQuote(string, type = c("sh", "csh", "cmd"))
   string is surrounded in double quotes, which suppresses all special
   meanings of metacharacters except dollar, backquote and backslash, so
   these (and of course double quote) are preceded by backslash.  This
-  type of quoting is also appropriate for \code{ksh}, \code{zsh} and
-  \code{bash}.
+  type of quoting is also appropriate for \code{bash}, \code{ksh} and
+  \code{zsh}.
 
   The other type of quoting is for the C-shell (\code{csh} and
   \code{tcsh}).  Once again, if the string does not contain single
@@ -39,16 +39,18 @@ shQuote(string, type = c("sh", "csh", "cmd"))
 
 #ifdef windows
   The Windows shell supports only double quoting.  All this
-  implementation does is to surround by double quotes and escape
-  internal double quotes by a backslash.  As Windows path names cannot
-  contain double quotes, this makes \code{shQuote} safe for use with
-  \code{\link{system}} and with \code{\link{shell}} if the default shell
-  is used.
+  implementation does is to surround the string by double quotes and
+  escape internal double quotes by a backslash.  As Windows path names
+  cannot contain double quotes, this makes \code{shQuote} safe for use
+  with \code{\link{system}} and with \code{\link{shell}} if the default
+  shell is used.
 
   It will usually be safe to use \code{shQuote} to quote arguments of a
   command, but because \code{\link{system}} does not use a shell,
   interpretation of quoted arguments is done by the run-time code of the
-  executable.
+  executable.  This could depend on the compiler used: Microsoft's rules
+  for the C run-time are given at
+  \url{http://msdn2.microsoft.com/en-us/library/ms880421.aspx}.
 #endif
 }
 \references{
