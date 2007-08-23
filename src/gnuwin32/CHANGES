@@ -45,6 +45,12 @@ PACKAGE INSTALLATION
 	removed: use 'OBJECTS' (as documented in 'Writing R
 	Extensions') instead.
 
+    o	PKG_CFLAGS, PKG_CXXFLAGS, PKG_FCFLAGS and PKG_FFLAGS now
+	precede the system equivalents, as they have long done on
+	Unix-alikes.
+
+    o	FC is used rather than F95 for consistency with Unix-alikes.
+
     o	A file src/Makefile will now be ignored: use src/Makefile.win.
 	(All packages known to build on Windows which have a
 	src/Makefile also have a src/Makefile.win.)

@@ -84,12 +84,12 @@ WIXDIR=C:/packages/WiX
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  Spaces allowed.
 ifeq ($(strip $(BUILD)),GCC4)
-F95=gfortran$(GCC4_SUFF)
+FC=gfortran$(GCC4_SUFF)
 else
 # needs to be set by user
-F95=
+FC=
 endif
-F95FLAGS=-O3 $(PKG_FCFLAGS)
+FCFLAGS=-O3
 
 ## =================== cross-compilation settings  =================
 
@@ -225,7 +225,7 @@ SORT=sort
 
 .m.d:
 	@echo "making $@ from $<"
-	@$(OBJC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $(OBJCFLAGS) $($*-OBJCFLAGS) $< -o $@
+	@$(OBJC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .c.o:
 	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
@@ -271,6 +271,6 @@ else
 endif
 
 .f90.o:
-	"$(F95)" $(F95FLAGS) -c $< -o $@
+	"$(FC)" $(PKG_FCFLAGS) $(FCFLAGS) -c $< -o $@
 .f95.o:
-	"$(F95)" $(F95FLAGS) -c $< -o $@
+	"$(FC)" $(PKG_FCFLAGS) $(FCFLAGS) -c $< -o $@
