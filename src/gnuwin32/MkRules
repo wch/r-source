@@ -199,7 +199,7 @@ NM=$(BINPREF)nm
 OBJC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
 PERL=perl
 RANLIB=$(BINPREF)ranlib
-RESCOMP=$(BINPREF)windres --preprocessor="$(BINPREF)gcc$(GCC4_SUFF) -E -xc-header -DRC_INVOKED"
+RESCOMP=$(BINPREF)windres --preprocessor="$(BINPREF)gcc$(GCC4_SUFF) -E -xc -DRC_INVOKED"
 RM=rm -f
 SED=sed
 SORT=sort
