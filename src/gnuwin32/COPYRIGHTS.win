@@ -115,3 +115,8 @@ Modified from perl's ext/File/Glob/bsd_glob.[ch].
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
+
+src/fixed/h/iconv.h
+
+From GNU libiconv-1.11, distributed under LGPL>=2,
+Copyright (C) 1999-2003, 2005-2006 Free Software Foundation, Inc.

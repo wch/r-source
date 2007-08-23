@@ -54,7 +54,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lgraphapp -lcomctl32 -lversion $(LIBEXTRAS)
+R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lgraphapp -liconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
@@ -97,6 +97,9 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
+ifeq ($(strip $(USE_IMPLIBS)),YES)
+	@$(MAKE) --no-print-directory libiconv.dll.a
+endif
 	@$(MAKE) --no-print-directory libRblas.dll.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 ifeq ($(strip $(USE_IMPLIBS)),YES)
@@ -188,7 +191,6 @@ rmodules:
 	$(MAKE) --no-print-directory -C ../modules \
 	  RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
 	  -f Makefile.win
-	$(CP) unicode/iconv.dll ../../modules/
 
 COPYRIGHTS: $(RHOME)/doc/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -241,6 +243,10 @@ implibs: libR.dll.a libRblas.dll.a
 
 libR.dll.a: R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll \
+	  --input-def $< --output-lib $@
+
+libiconv.dll.a: unicode/iconv.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname iconv.dll \
 	  --input-def $< --output-lib $@
 
 

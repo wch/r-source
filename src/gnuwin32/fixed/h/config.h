@@ -749,7 +749,7 @@
 #define HAVE___VA_COPY 1
 
 /* Define as const if the declaration of iconv() needs const. */
-/* #undef ICONV_CONST */
+#define ICONV_CONST const
 
 /* Define if `iconv' accepts "UTF-8", "latin1" and "UCS-*". */
 #define ICONV_LATIN1 1

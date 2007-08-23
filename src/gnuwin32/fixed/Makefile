@@ -12,8 +12,11 @@ $(R_HOME)/library/base/R/Rprofile:  ../../library/profile/Common.R \
 	mkdir -p $(R_HOME)/library/base/R
 	@$(CAT)  $^ > $@
 
-fixbin:  cp2bin
+fixbin:  cp2bin iconv
 	@$(ECHO) done > fixbin
+
+iconv:
+	@$(CP) ../unicode/iconv.dll ../../../bin
 
 cp2bin: $(wildcard ./bin/*)
 ifeq ($(strip $(BUILD)),CROSS)

@@ -380,64 +380,25 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-
-#if defined(HAVE_ICONV_H) && defined(ICONV_LATIN1) && !defined(Win32)
+#if defined(HAVE_ICONV_H) && defined(ICONV_LATIN1)
 /* Unfortunately glibc and Solaris differ in the const in the iconv decl.
    libiconv agrees with Solaris here.
  */
-# define const
 # include <iconv.h>
-# undef const
 #endif
-
-#ifdef Win32
-static DL_FUNC ptr_iconv, ptr_iconv_open, ptr_iconv_close, ptr_iconvlist;
-
-static void iconv_Init(void)
-{
-    static int initialized = 0;
-    char dllpath[PATH_MAX];
-    snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", getenv("R_HOME"),
-	     FILESEP, FILESEP, "iconv", SHLIB_EXT);
-    if(!initialized) {
-	int res = R_moduleCdynload("iconv", 1, 1);
-	initialized = res ? 1 : -1;
-	if(initialized > 0) {
-	    ptr_iconv = R_FindSymbol("libiconv", "iconv", NULL);
-	    ptr_iconv_open = R_FindSymbol("libiconv_open", "iconv", NULL);
-	    ptr_iconv_close = R_FindSymbol("libiconv_close", "iconv", NULL);
-	    ptr_iconvlist = R_FindSymbol("libiconvlist", "iconv", NULL);
-	    if(!ptr_iconv)
-		error(_("failed to find symbols in iconv.dll"));
-	}
-    }
-    if(initialized < 0)
-	error(_("iconv.dll is not available on this system"));
-}
-#undef iconv
-#undef iconv_open
-#undef iconv_close
-#undef iconvlist
-typedef void* iconv_t;
-#define iconv(a,b,c,d,e) ((size_t)(*ptr_iconv)(a,b,c,d,e))
-#define iconv_open(a, b) ((iconv_t)(*ptr_iconv_open)(a,b))
-#define iconv_close(a) ((int)(*ptr_iconv_close)(a))
-#define iconvlist (*ptr_iconvlist)
-#endif /* Win32 */
-
 
 #ifdef HAVE_ICONVLIST
 static unsigned int cnt;
 
 static int
-count_one (unsigned int namescount, char * *names, void *data)
+count_one (unsigned int namescount, const char * const *names, void *data)
 {
     cnt += namescount;
     return 0;
 }
 
 static int
-write_one (unsigned int namescount, char * *names, void *data)
+write_one (unsigned int namescount, const char * const *names, void *data)
 {
   unsigned int i;
   SEXP ans = (SEXP) data;
@@ -457,16 +418,13 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, x = CAR(args);
     void * obj;
     int i, j;
-    const char *inbuf; /* Solaris headers have const char*  here */
+    const char *inbuf;
     char *outbuf;
     const char *sub;
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     checkArity(op, args);
-#ifdef Win32
-    iconv_Init();
-#endif
     if(isNull(x)) {  /* list locales */
 #ifdef HAVE_ICONVLIST
 	cnt = 0;
@@ -475,7 +433,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	cnt = 0;
 	iconvlist(write_one, (void *)ans);
 #else
-    PROTECT(ans = R_NilValue);
+	PROTECT(ans = R_NilValue);
 #endif
     } else {
 	const char *from, *to;
@@ -511,7 +469,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Riconv (obj, NULL, NULL, &outbuf, &outb);
         next_char:
 	    /* Then convert input  */
-	    res = iconv(obj, (char **) &inbuf , &inb, &outbuf, &outb);
+	    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
 	    *outbuf = '\0';
 	    /* other possible error conditions are incomplete
 	       and invalid multibyte chars */
@@ -561,8 +519,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
 #ifdef Win32
-    char *cp = "UTF-8";
-    iconv_Init();
+    const char *cp = "UTF-8";
 #ifndef SUPPORT_UTF8
     cp = locale2charset(NULL);
 #endif
@@ -572,15 +529,15 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 #else
     /* const char * is right according to POSIX, but libiconv
        plays games so that on Solaris 10 it needs the casts */
-    return iconv_open((char *)tocode, (char *)fromcode);
+    return iconv_open(tocode, fromcode);
 #endif
 }
 
 size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
-    return iconv((iconv_t) cd, (char **) inbuf, inbytesleft, 
-		 outbuf, outbytesleft);
+    /* here libiconv has const char **, glibc has const ** for inbuf */
+    return iconv((iconv_t) cd, (ICONV_CONST char **)inbuf, inbytesleft, outbuf, outbytesleft);
 }
 
 int Riconv_close (void *cd)
