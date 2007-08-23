@@ -2,6 +2,14 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_INTTYPES_H
+# include <inttypes.h>
+#endif
+
+#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
+ typedef unsigned long uintptr_t;
+#endif
+
 #if SIZEOF_LONG > 4
 #error This XDR implementation assumes 4-byte longs
 #endif
@@ -201,7 +209,7 @@ xdrmem_getpos(xdrs)
 	register XDR *xdrs;
 {
 
-	return ((u_int)xdrs->x_private - (u_int)xdrs->x_base);
+	return ((uintptr_t)xdrs->x_private - (uintptr_t)xdrs->x_base);
 }
 
 static bool_t
@@ -212,10 +220,10 @@ xdrmem_setpos(xdrs, pos)
 	register caddr_t newaddr = xdrs->x_base + pos;
 	register caddr_t lastaddr = xdrs->x_private + xdrs->x_handy;
 
-	if ((long)newaddr > (long)lastaddr)
+	if ((uintptr_t)newaddr > (uintptr_t)lastaddr)
 		return (FALSE);
 	xdrs->x_private = newaddr;
-	xdrs->x_handy = (int)lastaddr - (int)newaddr;
+	xdrs->x_handy = (uintptr_t)lastaddr - (uintptr_t)newaddr;
 	return (TRUE);
 }
 
