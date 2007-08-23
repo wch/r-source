@@ -23,6 +23,8 @@
 #define _BZLIB_PRIVATE_H
 
 #include <config.h> /* for R_INLINE */
+#undef HAVE_FDOPEN  /* we may have, but this redfines it and
+		       we don't use BZ2_bzdopen */
 #include <stdlib.h>
 
 #ifndef BZ_NO_STDIO
