@@ -31,6 +31,11 @@ FUNCTION CHANGES
     o	getWindowsHandle() now returns the handle as an external pointer.
     	It no longer returns the process ID.
 
+    o	system() (and hence shell()) now reports as the return value
+	only the bottom 16 bits of process error codes to protect
+	against executables with invalid error codes (such as -1 from
+	fc.exe, PR#9868).
+
 
 INSTALLER
 

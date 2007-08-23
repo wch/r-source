@@ -136,8 +136,10 @@ static HANDLE pcreate(const char* cmd, const char *finput,
     sa.lpSecurityDescriptor = NULL;
     sa.bInheritHandle = TRUE;
 
-    if (!(ecmd = expandcmd(cmd)))
+    if (!(ecmd = expandcmd(cmd))) {
+	strcpy(RunError, _("Problem with command expansion"));
 	return NULL;
+    }
     hTHIS = GetCurrentProcess();
     if (finput && finput[0]) {
 	hSAVED = GetStdHandle(STD_INPUT_HANDLE) ;
@@ -178,7 +180,7 @@ static HANDLE pcreate(const char* cmd, const char *finput,
 	break;
     }
     ret = CreateProcess(NULL, ecmd, &sa, &sa, TRUE,
-		    (newconsole && (visible == 1)) ? CREATE_NEW_CONSOLE : 0,
+			(newconsole && (visible == 1)) ? CREATE_NEW_CONSOLE : 0,
 			NULL, NULL, &si, &pi);
     CloseHandle(hTHIS);
     if (finput && finput[0]) {
@@ -242,8 +244,11 @@ int runcmd(const char *cmd, int wait, int visible, const char *finput)
 
 /* I hope no program will use this as an error code */
     if (!(p = pcreate(cmd, finput, !wait, visible, 0))) return NOLAUNCH;
-    if (wait) ret = pwait(p);
-    else ret = 0;
+    if (wait) {
+	ret = pwait(p);
+	sprintf(RunError, _("Exit code was %d"), ret);
+	ret &= 0xffff;
+    } else ret = 0;
     CloseHandle(p);
     return ret;
 }
@@ -391,7 +396,7 @@ int rpipeClose(rpipe * r)
     CloseHandle(r->process);
     i = r->exitcode;
     free(r);
-    return i;
+    return i &= 0xffff;
 }
 
 /* ------------------- Windows pipe connections --------------------- */
