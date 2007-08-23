@@ -37,10 +37,9 @@ arima(x, order = c(0, 0, 0),
   \item{xreg}{Optionally, a vector or matrix of external regressors,
     which must have the same number of rows as \code{x}.}
 
-  \item{include.mean}{Should the ARIMA model include
-    a mean term? The default is \code{TRUE} for undifferenced series,
-    \code{FALSE} for differenced ones (where a mean would not affect
-    the fit nor predictions).}
+  \item{include.mean}{Should the ARMA model include a mean/intercept term?  The
+    default is \code{TRUE} for undifferenced series, and it is ignored
+    for ARIMA models with differencing.}
 
   \item{transform.pars}{Logical.  If true, the AR parameters are
     transformed to ensure that they remain in the region of
@@ -76,22 +75,23 @@ arima(x, order = c(0, 0, 0),
 }
 \details{
   Different definitions of ARMA models have different signs for the
-  AR and/or MA coefficients. The definition here has
+  AR and/or MA coefficients.  The definition used here has
 
   \deqn{X_t = a_1X_{t-1} + \cdots + a_pX_{t-p} + e_t + b_1e_{t-1} + \dots + b_qe_{t-q}}{\code{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}}
 
-  and so the MA coefficients differ in sign from those of
-  S-PLUS.  Further, if \code{include.mean} is true, this formula
-  applies to \eqn{X-m} rather than \eqn{X}.  For ARIMA models with
-  differencing, the differenced series follows a zero-mean ARMA model.
-  If a \code{xreg} term is included, a linear regression (with a
-  constant term if \code{include.mean} is true) is fitted with an ARMA
-  model for the error term.
+  and so the MA coefficients differ in sign from those of S-PLUS.
+  Further, if \code{include.mean} is true (the default for an ARMA
+  model), this formula applies to \eqn{X - m} rather than \eqn{X}.  For
+  ARIMA models with differencing, the differenced series follows a
+  zero-mean ARMA model. If am \code{xreg} term is included, a linear
+  regression (with a constant term if \code{include.mean} is true and
+  there is no differencing) is fitted with an ARMA model for the error
+  term.
 
   The variance matrix of the estimates is found from the Hessian of
   the log-likelihood, and so may only be a rough guide.
 
-  Optimization is done by \code{\link{optim}}. It will work
+  Optimization is done by \code{\link{optim}}.  It will work
   best if the columns in \code{xreg} are roughly scaled to zero mean
   and unit variance, but does attempt to estimate suitable scalings.
 }
