@@ -48,7 +48,7 @@ Gordon Smyth		<smyth@wehi.edu.au>
 Adrian Trapletti	<a.trapletti@bluewin.ch>
 Terry Therneau		<therneau.terry@mayo.edu>
 Rolf Turner 		<rolf@math.unb.ca>
-Bill Venables		<William.Venables@cmis.CSIRO.AU>
+Bill Venables		<William.Venables@csiro.au>
 Gregory R. Warnes	<warnes@biostat.washington.edu>
 Andreas Weingessel	<Andreas.Weingessel@ci.tuwien.ac.at>
 Morten Welinder		<terra@gnome.org>
@@ -65,11 +65,11 @@ email addresses to contributors to the R Project (even without making them
 members of the R Foundation) when in the view of the R Foundation this
 would help advance the R project.
 
-The R Core Group, Bill Venables and Roger Bivand are the regular members
-of the R Foundation.  In addition,
-Dirk Eddelbuettel, Torsten Hothorn, Uwe Ligges, David Meyer, Deepayan Sarkar,
-Simon Wood, and Achim Zeileis
-are also e-addressable by <Firstname>.<Lastname>@R-project.org.
+The R Core Group, Roger Bivand, John Fox and Bill Venables are the
+regular members of the R Foundation.  In addition, Dirk Eddelbuettel,
+Torsten Hothorn, Uwe Ligges, David Meyer, Deepayan Sarkar, Simon Wood,
+and Achim Zeileis are also e-addressable by
+<Firstname>.<Lastname>@R-project.org.
 
 Many more, too numerous to mention here, have contributed by sending bug
 reports and suggesting various improvements.
@@ -77,8 +77,8 @@ reports and suggesting various improvements.
 Simon Davies whilst at the University of Auckland wrote the original
 version of glm().
 
-Julian Harris and Wing Kwong (Tiki) Wan whilst at the
-University of Auckland assisted Ross Ihaka with the Macintosh port.
+Julian Harris and Wing Kwong (Tiki) Wan whilst at the University of
+Auckland assisted Ross Ihaka with the original Macintosh port.
 
 R was inspired by the S environment which has been principally
 developed by John Chambers, with substantial input from Douglas Bates,
