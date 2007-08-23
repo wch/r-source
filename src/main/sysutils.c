@@ -533,6 +533,10 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 #endif
 }
 
+#ifndef ICONV_CONST
+# define ICONV_CONST
+#endif
+
 size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
