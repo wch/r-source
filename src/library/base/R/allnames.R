@@ -14,8 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-all.names <- function(expr, functions = TRUE, max.names = 200, unique = FALSE)
+all.names <- function(expr, functions = TRUE, max.names = -1L, unique = FALSE)
     .Internal(all.names(expr, functions, max.names, unique))
 
-all.vars <- function(expr, functions = FALSE, max.names = 200, unique = TRUE)
+all.vars <- function(expr, functions = FALSE, max.names = -1L, unique = TRUE)
     .Internal(all.names(expr, functions, max.names, unique))

@@ -39,6 +39,9 @@ NEW FEATURES
 	into factors, and leaves alone the levels of those which are
 	factors.  (Inter alia grants the wish of PR#9666.)
 
+    o	The default 'max.names' in all.names() and all.vars() is now
+	-1 which means unlimited.  This fixes PR#9873. 
+
     o	as.vector() and the default methods of as.character(),
 	as.complex(), as.double(), as.expression(), as.integer(),
 	as.logical() and as.raw() no longer duplicate in most cases
