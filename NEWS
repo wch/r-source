@@ -601,6 +601,10 @@ BUG FIXES
 	matches are returned even when there is more than one partial
 	match).
 
+    o	The test for -D__NO_MATH_INLINES was badly broken and returned
+	true on all non-glibc platforms and false on all glibc ones
+	(whether they were broken or not).
+
 
 
 	**************************************************

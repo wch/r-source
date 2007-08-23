@@ -30987,11 +30987,11 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
-#include <stdlib.h>
 #if defined(__GLIBC__)
+#include <math.h>
 int main () {
   double x, y;
-  x = -0./1.;
+  x = -1./0.;
   y = exp(x);
   exit (y != 0.);
 }
@@ -31022,14 +31022,14 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  r_cv_c_no_math_inlines=yes
+  r_cv_c_no_math_inlines=no
 else
   echo "$as_me: program exited with status $ac_status" >&5
 echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
 ( exit $ac_status )
-r_cv_c_no_math_inlines=no
+r_cv_c_no_math_inlines=yes
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
