@@ -15,17 +15,19 @@ CXX=g++-sjlj
 in the environment (or copy the executables to gcc.exe, gfortran.exe
 and g++.exe).
 
-To test trio, set
+To test trio and iconv, set
 
-LIBS=RHOME/src/extra/trio/libtrio.a
+LIBS='RHOME/src/extra/trio/libtrio.a -LRHOME/src/gnuwin32/unicode'
 
-sh /R/R-2.6.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no --without-iconv
+and put fixed/h/iconv.h in your C_INCLUDE_PATH.
+
+sh /R/R-2.6.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no
 
 This ran fairly slowly, currently producing a src/include/config.h
 that differs only in that
 
  - it does not find the declarations of siglongjmp/sigsetjmp (in
-   psignal.h)
+   psignal.[ch])
 
  - SUPPORT_UTF8 is defined, but that is not true on Windows.
 
