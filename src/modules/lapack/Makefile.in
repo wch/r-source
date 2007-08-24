@@ -37,7 +37,7 @@ Rlapack_la = libRlapack$(DYLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
 ## Used for passing '+s' to SHLIB_LINK on HP-UX.
 lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
-lapack_la_LIBADD = $(LIBR)
+lapack_la_LIBADD = $(LIBR) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 Rlapack_la_OBJECTS = $(LIBOBJECTS)
 Rlapack_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(FLIBS) $(LIBR)
