@@ -111,6 +111,10 @@ isIncomplete(con)
 
   For \code{pipe} the description is the command line to be piped to or
   from (see the Examples).
+#ifdef windows
+  This command line is run in the shell specified by the \env{COMSPEC}
+  environment variable.
+#endif
 
   For \code{fifo} the description is the path of the fifo.
 #ifdef windows

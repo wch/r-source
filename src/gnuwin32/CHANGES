@@ -35,6 +35,9 @@ FUNCTION CHANGES
 	only the bottom 16 bits of process error codes to protect
 	against executables with invalid error codes (such as -1 from
 	fc.exe, PR#9868).
+	
+    o	pipe() in Rgui now runs the command through the shell specified
+    	by the COMSPEC environment variable, as Rterm has always done.
 
 
 INSTALLER

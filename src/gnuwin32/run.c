@@ -537,6 +537,9 @@ static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
 Rconnection newWpipe(const char *description, const char *mode)
 {
     Rconnection new;
+    char *command;
+    int len;
+    
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of pipe connection failed"));
     new->class = (char *) malloc(strlen("pipe") + 1);
@@ -545,12 +548,30 @@ Rconnection newWpipe(const char *description, const char *mode)
 	error(_("allocation of pipe connection failed"));
     }
     strcpy(new->class, "pipe");
-    new->description = (char *) malloc(strlen(description) + 1);
+    
+    len = strlen(getenv("COMSPEC")) + strlen(description) + 5;
+    command = (char *) malloc(len);
+    if (command) 
+    	new->description = (char *) malloc(len);
+    else
+        new->description = NULL;
+        
     if(!new->description) {
-	free(new->class); free(new);
+    	free(command); free(new->class); free(new);
 	error(_("allocation of pipe connection failed"));
     }
-    init_con(new, description, mode);
+    
+/* We always use COMSPEC here, not R_SHELL or SHELL, for compatibility with Rterm.
+   We also use /c for the same reason.
+*/
+   
+    strcpy(command, getenv("COMSPEC"));
+    strcat(command, " /c ");
+    strcat(command, description);
+    
+    init_con(new, command, mode);
+    free(command);
+    
     new->open = &Wpipe_open;
     new->close = &Wpipe_close;
     new->destroy = &Wpipe_destroy;
