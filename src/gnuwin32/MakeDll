@@ -6,7 +6,7 @@ all:  before makeMakedeps $(DLLNAME).dll after
 before:
 after:
 
-.PHONY: all before shlib-clean makeMakedeps
+.PHONY: all before after shlib-clean makeMakedeps
 
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res

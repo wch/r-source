@@ -75,10 +75,10 @@ HTM = $(filter-out 00Index.html, $(wildcard *.html))
 %.chm: $(HTM) Rchm.css logo.jpg
 	@hhc $*.hhp || exit 0
 
-Rchm.css: $(RHOME)/src/gnuwin32/help/Rchm.css
+Rchm.css: ../../../src/gnuwin32/help/Rchm.css
 	@$(CP) $^ $@
 
-logo.jpg: $(RHOME)/doc/html/logo.jpg
+logo.jpg: ../../../doc/html/logo.jpg
 	@$(CP) $^ $@
 
 # following are designed to be run from the library/pkg directory:

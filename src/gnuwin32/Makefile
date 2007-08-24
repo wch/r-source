@@ -192,7 +192,7 @@ rmodules:
 	  RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
 	  -f Makefile.win
 
-COPYRIGHTS: $(RHOME)/doc/COPYRIGHTS COPYRIGHTS.win
+COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 

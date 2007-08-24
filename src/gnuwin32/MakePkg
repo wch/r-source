@@ -68,6 +68,9 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS $(SPKG)/exec/.svn $(SPKG)/exec/.arch-ids
 # Others: we will remove CVS and subversion files later.
 INSTFILES=$(wildcard $(SPKG)/inst/*)
 
+.PHONY: all fake clean Rcode Rcode0 zzzfirst frontmatter nmspace nmspacefake
+.PHONY: Dynlib Dynlib0 srcDynlib mansrcs md5sums lazyload lazydata sysdata
+
 all:  
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzz 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s frontmatter
