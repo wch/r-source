@@ -100,7 +100,7 @@ DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
 ifneq ($(strip $(DEPS)),)
-	@cat $(DEPS) >> Makedeps
+	-@cat $(DEPS) >> Makedeps
 endif
 
 -include Makedeps

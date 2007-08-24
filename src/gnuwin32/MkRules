@@ -209,19 +209,19 @@ SORT=sort
 
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
+	-@$(CC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .cc.d:
 	@echo "making $@ from $<"
-	@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
+	-@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .cpp.d:
 	@echo "making $@ from $<"
-	@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
+	-@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .C.d:
 	@echo "making $@ from $<"
-	@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
+	-@$(CXX) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .m.d:
 	@echo "making $@ from $<"
