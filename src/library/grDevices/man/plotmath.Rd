@@ -63,6 +63,7 @@
     \code{bold(x)}   \tab draw x in bold font \cr
     \code{italic(x)}   \tab draw x in italic font \cr
     \code{bolditalic(x)} \tab draw x in bolditalic font \cr
+    \code{symbol(x)} \tab draw x in symbol font \cr
     \code{list(x, y, z)} \tab comma-separated list \cr
     \code{...}    \tab ellipsis (height varies) \cr
     \code{cdots}   \tab ellipsis (vertically centred) \cr
@@ -127,6 +128,12 @@
     \code{bgroup("(",atop(x,y),")")} \tab use scalable delimiters \cr
     \code{group(lceil, x, rceil)} \tab special delimiters \cr
   }
+
+  The symbol font uses Adobe Symbol encoding so, for example, a
+  Greek lower case mu can be obtained either by the special
+  symbol \code{mu} or by \code{symbol("m")}.  This provides
+  access to symbols that have no special symbol name, for example,
+  the universal, or forall, symbol is \code{symbol("\\042")}.
 
   Note to TeX users: TeX's \code{\Upsilon} is \code{Upsilon1}, TeX's
   \code{\varepsilon} is close to \code{epsilon}, and there is no

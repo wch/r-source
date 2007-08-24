@@ -2847,6 +2847,34 @@ static BBOX RenderPlain(SEXP expr, int draw, mathContext *mc,
 
 /*----------------------------------------------------------------------
  *
+ *  Code for SymbolFace (i.e. font = 5) Expressions
+ *
+ *  This makes the default font an Adobe Symbol Encoded font
+ *  (provides access to any character in the Adobe Symbol Font
+ *   encoding via strings like "\042" for the universal ["for all"]
+ *   symbol, without the need for separate special names for each
+ *   of these symbols).
+ *
+ */
+
+static int SymbolFaceAtom(SEXP expr)
+{
+    return NameAtom(expr) &&
+	NameMatch(expr, "symbol");
+}
+
+static BBOX RenderSymbolFace(SEXP expr, int draw, mathContext *mc,
+                             R_GE_gcontext *gc, GEDevDesc *dd)
+{
+    BBOX bbox;
+    int prevfont = SetFont(SymbolFont, gc);
+    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    SetFont(prevfont, gc);
+    return bbox;
+}
+
+/*----------------------------------------------------------------------
+ *
  *  Code for Bold Italic Expressions
  *
  */
@@ -3087,6 +3115,8 @@ static BBOX RenderFormula(SEXP expr, int draw, mathContext *mc,
 	return RenderItalic(expr, draw, mc, gc, dd);
     else if (PlainAtom(head))
 	return RenderPlain(expr, draw, mc, gc, dd);
+    else if (SymbolFaceAtom(head))
+	return RenderSymbolFace(expr, draw, mc, gc, dd);
     else if (BoldItalicAtom(head))
 	return RenderBoldItalic(expr, draw, mc, gc, dd);
     else if (StyleAtom(head))
