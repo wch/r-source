@@ -26,6 +26,12 @@ paste(\dots, sep = " ", collapse = NULL)
   give a character vector result.  Vector arguments are recycled as
   needed, with zero-length arguments being recycled to \code{""}.
 
+  Note that \code{paste()} coerces \code{as.character(NA)} to \code{"NA"}
+  (a string with two characters rather than the \code{\link{character}}
+  missing value, \code{\link{NA_character_}}), which may seem
+  undesirable, e.g., when pasting two character vectors, but very
+  desirable in, e.g., \code{paste("the value of p is ", p)}.
+
   If a value is specified for \code{collapse}, the values in the result
   are then concatenated into a single string, with the elements being
   separated by the value of \code{collapse}.
