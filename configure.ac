@@ -2189,6 +2189,8 @@ if test "${USE_NLS}" = "yes"; then
   fi
 else
   USE_INCLUDED_LIBINTL=no
+  ## for ICONV_CONST
+  AM_ICONV
 fi
 AC_SUBST(XTRA_INTL_CPPFLAGS)
 
