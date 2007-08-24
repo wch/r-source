@@ -451,8 +451,6 @@
  apse_set_insertions
  apse_set_substitutions
  bakslv
- balanc_
- balbak_
  baseRegisterIndex
  bincode
  bincount
@@ -1028,8 +1026,6 @@
  editorchecksave
  editorcleanall
  editorsetfont
- elmhes_
- eltran_
  epslon_
  fontname
  fontsty
@@ -1082,7 +1078,6 @@
  gzwrite
  haveusedapager
  helpmenuact
- hqr2_
  hqr_
  htribk_
  htridi_
