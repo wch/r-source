@@ -350,21 +350,21 @@ static void Specify(const char *what, SEXP value, DevDesc *dd, SEXP call)
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 2, call);
-	R_DEV_2(defaultFigure) = 0;
-	R_DEV_2(fUnits) = INCHES;
-	R_DEV_2(numrows) = 1;
-	R_DEV_2(numcols) = 1;
-	R_DEV_2(heights[0]) = 1;
-	R_DEV_2(widths[0]) = 1;
-	R_DEV_2(cmHeights[0]) = 0;
-	R_DEV_2(cmWidths[0]) = 0;
-	R_DEV_2(order[0]) = 1;
-	R_DEV_2(currentFigure) = 1;
-	R_DEV_2(lastFigure) = 1;
-	R_DEV__(rspct) = 0;
-	R_DEV_2(fin[0]) = REAL(value)[0];
-	R_DEV_2(fin[1]) = REAL(value)[1];
-	GReset(dd);
+        R_DEV_2(defaultFigure) = 0;
+        R_DEV_2(fUnits) = INCHES;
+        R_DEV_2(numrows) = 1;
+        R_DEV_2(numcols) = 1;
+        R_DEV_2(heights[0]) = 1;
+        R_DEV_2(widths[0]) = 1;
+        R_DEV_2(cmHeights[0]) = 0;
+        R_DEV_2(cmWidths[0]) = 0;
+        R_DEV_2(order[0]) = 1;
+        R_DEV_2(currentFigure) = 1;
+        R_DEV_2(lastFigure) = 1;
+        R_DEV__(rspct) = 0;
+        R_DEV_2(fin[0]) = REAL(value)[0];
+        R_DEV_2(fin[1]) = REAL(value)[1];
+        GReset(dd);
     }
     /* -- */
     else if (streql(what, "lheight")) {
