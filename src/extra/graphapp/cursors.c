@@ -237,6 +237,7 @@ cursor newcursor(point p, image img)
 	return c;
 }
 
+#ifdef UNUSED
 /*
  *  Load a cursor from resources.
  */
@@ -302,6 +303,7 @@ cursor loadcursor(const char *name)
 
 	return c;
 }
+#endif
 
 /*
  *  Private cursor initialisation routines.

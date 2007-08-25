@@ -534,6 +534,7 @@ void sortpalette(image img)
 	discard(histogram);
 }
 
+#ifdef UNUSED
 /*
  *  Load and save images (utility functions):
  */
@@ -832,6 +833,7 @@ void saveimage(image img, const char *filename)
 	else if (string_ends_with(filename, ".img"))
 		save_header_image(img, filename);
 }
+#endif
 
 /*
  *  Changing an rgb's value:

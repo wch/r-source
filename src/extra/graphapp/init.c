@@ -159,6 +159,7 @@ static void getappname(HANDLE Instance)
 	setappname(title);
 }
 
+#if 0
 /*
  *  Special function for making printf work on Windows systems.
  *  This function is never called, it merely tricks the compiler into
@@ -174,6 +175,7 @@ void app_init_printf(void)
  	printf(" ");
  	#endif
 }
+#endif
 
 /*
  *  The main Windows entry point is the WinMain function.
