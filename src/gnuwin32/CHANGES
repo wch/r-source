@@ -69,8 +69,11 @@ PACKAGE INSTALLATION
     o	There are dummy targets 'before' and 'after' in MakeDll which
 	can be overidden in src/Makevars.win.
 
-    o	graphapp is now in a separate DLL, so packages making direct
-	use of it need to link against -lgraphapp.
+    o	graphapp is now in a separate DLL, so packages making direct use
+	of it need to link against -lgraphapp.  This is the value of
+	the macro GRAPHAPP_LIB that you can include in PKG_LIBS in
+	Makevars.win (etc).  (GRAPHAPP_LIB is undefined in earlier
+	versions, so this is backwards compatible).
 	
     o	If the HTML Help Workshop fails when chm help is requested,
 	package installation will continue with a warning.

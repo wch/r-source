@@ -1,1 +1,1 @@
-PKG_LIBS=-lgraphapp
+PKG_LIBS=$(GRAPHAPP_LIB)
