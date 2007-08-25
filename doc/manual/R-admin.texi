@@ -2969,6 +2969,8 @@ To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
 @command{make} on Solaris 2.7 or later.
 
+@command{dmake} has also been used. e.g,@: on Solaris 10.
+
 If you want to use a @command{make} by another name, for example if your
 @acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
 variable @code{MAKE} at configure time, for example
@@ -3611,6 +3613,7 @@ CXXFLAGS=-O
 FC=f95
 FCFLAGS=$FFLAGS
 LDFLAGS=-L/opt/csw/lib
+SHLIB_CXXLDFLAGS=-G -lCstd
 @end example
 
 @noindent
@@ -3638,6 +3641,17 @@ CXXFLAGS="-xO5 -xlibmil -nofstore"
 SAFE_FFLAGS="-O5 -libmil -fstore"
 @end example
 
+
+Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
+check} in the complex LAPACK tests: using Sun Studio 11 worked
+correctly.
+
+There is limited support for @cputype{x86-64} builds in the pre-built
+GNU software repositories, with 64-bit libraries (which are in
+@file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
+@command{gcc} support libraries).  The Sun Studio compilers do support
+64-bit builds via @code{-xarch=amd64}.
+
 @cindex BLAS library
 @cindex LAPACK library
 
@@ -3653,22 +3667,12 @@ LAPACK via
 However, our tests were none too successful: Sparc 64-bit builds
 crashed.
 
-Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
-check} in the complex LAPACK tests: using Sun Studio 11 worked
-correctly.
-
-There is limited support for @cputype{x86-64} builds in the pre-built
-GNU software repositories, with 64-bit libraries (which are in
-@file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
-@command{gcc} support libraries).  The Sun Studio compilers do support
-64-bit builds via @code{-xarch=amd64}.
-
 
 @node Sparc Solaris 9 and earlier,  , Solaris 10 and Open Solaris, Solaris
 @subsection Sparc Solaris 9 and earlier
 
-These are now obsolete operating systems, so this subsection is largely
-of historical interest and refers to equally old compiler versions.
+These are now obsolete operating systems, so this subsection refers to
+equally old compiler versions.
 
 Sun packages for @R{} are available from
 @uref{http://www.sunfreeware.com/} for both Sparc and @cputype{x86}.
@@ -3987,14 +3991,13 @@ port would be greatly appreciated.
 @cindex AIX
 
 We no longer support AIX prior to 4.2, and @command{configure} will
-throw an error on such systems.  The only recent testing has been under
-AIX 5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build
-pre-2.5.0 with @command{gcc 4.0.3} in several configurations.
+throw an error on such systems.  The recent testing has been under AIX
+5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build pre-2.5.0
+with @command{gcc 4.0.3} in several configurations.
 
 Mr Nakama found 32-bit versions of @R{} could be built with
-@command{configure --without-iconv} as well as @option{--enable-R-shlib}
-and @option{--enable-R-shlib --enable-BLAS-shlib}.  For 64-bit versions
-he used
+@command{configure --without-iconv} as well as
+@option{--enable-R-shlib}.  For 64-bit versions he used
 
 @example
 OBJECT_MODE=64
