@@ -121,12 +121,12 @@ typedef struct
 
 
 /* Prototype stuff ***********************************************************/
-unsigned long sigsetmask(unsigned long signal_Block_MaskNew);
-unsigned long sigblock(unsigned long signal_Block_MaskNew);
+int           sigsetmask(int signal_Block_MaskNew);
+int           sigblock(int signal_Block_MaskNew);
 int           sighold(int signal_Number);
 int           sigrelse(int signal_Number);
 int           sigaction(int signal_Number,struct sigaction* sigaction_Info,
-               struct sigaction* signaction_InfoOld);
+			struct sigaction* signaction_InfoOld);
 int           sigaddset(sigset_t* sigset_Info,int signal_Number);
 int           sigdelset(sigset_t* sigset_Info,int signal_Number);
 int           sigemptyset(sigset_t* sigset_Info);
@@ -134,7 +134,7 @@ int           sigfillset(sigset_t* sigset_Info);
 int           sigismember(sigset_t* sigset_Info,int signal_Number);
 int           sigpending(sigset_t* sigset_Info);
 int           sigprocmask(int mask_Function,sigset_t* sigset_Info,
-               sigset_t* sigset_InfoOld);
+			  sigset_t* sigset_InfoOld);
 sighandler_t  signal(int signal_Number, sighandler_t);
 void          raise(int);
 int pause(void);

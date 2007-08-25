@@ -380,20 +380,18 @@ int sigprocmask(int mask_Function,sigset_t* sigset_Info,
 }
 
 /* Set signal mask ========================================================= */
-unsigned long sigsetmask(unsigned long signal_MaskNew)
+int sigsetmask(int signal_MaskNew)
 {
-	unsigned long signal_MaskOld = downhill_Sigset_Mask;
+	int signal_MaskOld = downhill_Sigset_Mask;
 
-	if (sigprocmask(SIG_SETMASK,(sigset_t*)(&signal_MaskNew),NULL) == -1)
-	{
-		return (unsigned long)-1;
-	}
+	if (sigprocmask(SIG_SETMASK, &signal_MaskNew, NULL) == -1)
+		return (int)-1;
 
 	return signal_MaskOld;
 }
 
 /* Add signals to mask ===================================================== */
-unsigned long sigblock(unsigned long signal_MaskNew)
+int sigblock(int signal_MaskNew)
 {
 	/* Block a specific group of signals */
 	return sigsetmask(downhill_Sigset_Mask|signal_MaskNew);
