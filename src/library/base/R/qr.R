@@ -18,7 +18,9 @@
 
 is.qr <- function(x) inherits(x, "qr")
 
-qr <- function(x, tol = 1e-07, LAPACK = FALSE)
+qr <- function(x, ...) UseMethod("qr")
+
+qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 {
     x <- as.matrix(x)
     if(is.complex(x))

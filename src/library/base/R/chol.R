@@ -14,7 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-chol <- function(x, pivot = FALSE, LINPACK = pivot)
+chol <- function(x, ...) UseMethod("chol")
+
+chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 {
     if (is.complex(x))
         stop("complex matrices not permitted at present")

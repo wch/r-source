@@ -5,16 +5,21 @@
 
 \name{chol}
 \alias{chol}
+\alias{chol.default}
 \title{The Choleski Decomposition}
 \description{
   Compute the Choleski factorization of a real symmetric
   positive-definite square matrix.
 }
 \usage{
-chol(x, pivot = FALSE,  LINPACK = pivot)
+chol(x, \dots)
+
+\method{chol}{default}(x, pivot = FALSE,  LINPACK = pivot, \dots)
 }
 \arguments{
-  \item{x}{a real symmetric, positive-definite matrix}
+  \item{x}{an object for which a method exists.  The default method
+    applies to real symmetric, positive-definite matrices.}
+  \item{\dots}{arguments to be based to or from methods.}
   \item{pivot}{Should pivoting be used?}
   \item{LINPACK}{logical.  Should LINPACK be used in the non-pivoting
     case (for compatibility with \R < 1.7.0)?}
@@ -27,6 +32,9 @@ chol(x, pivot = FALSE,  LINPACK = pivot)
   \code{"pivot"} and \code{"rank"} are also returned.
 }
 \details{
+  \code{chol} is generic: the description here applies to the default
+  method.
+  
   This is an interface to the LAPACK routine DPOTRF and the
   LINPACK routines DPOFA and DCHDC.
 
@@ -51,10 +59,10 @@ chol(x, pivot = FALSE,  LINPACK = pivot)
 \section{Warning}{
   The code does not check for symmetry.
 
-  If \code{pivot = TRUE} and \code{x} is not non-negative
-  definite then there will be a warning message but a meaningless
-  result will occur.  So only use \code{pivot = TRUE} when \code{x} is
-  non-negative definite by construction.
+  If \code{pivot = TRUE} and \code{x} is not non-negative definite then
+  there will be a warning message but a meaningless result will occur.
+  So only use \code{pivot = TRUE} when \code{x} is non-negative definite
+  by construction.
 }
 
 \references{

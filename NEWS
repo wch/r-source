@@ -74,6 +74,8 @@ NEW FEATURES
 
     o	C(f, SAS) now works in the same way as C(f, treatment), etc.
 
+    o	chol() is now generic.
+
     o	dev2bitmap() has a new option to go via PDF and so allow
 	semi-transparent colours to be used.
 
@@ -143,6 +145,8 @@ NEW FEATURES
 
     o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is
 	much faster for large x and y when most matches are exact.
+
+    o	qr() is now generic.
 
     o	It is now a warning to have an non-integer object for
 	.Random.seed: this indicates a user had been playing with it,
