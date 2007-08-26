@@ -120,7 +120,7 @@ if($opt_library){
     # remove quotes around the library path
     $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
     chdir($opt_library) ||
-	die "Error: cannot change to library directory \$opt_library'\n";
+	die "Error: cannot change to library directory '$opt_library'\n";
     $library = cwd();
     $library = Win32::GetShortPathName($library) if $library =~ / /;
     my $R_LIBS = $ENV{'R_LIBS'};
