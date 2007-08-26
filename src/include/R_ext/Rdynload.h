@@ -92,10 +92,6 @@ int R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
                        const R_ExternalMethodDef * const externalRoutines);
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
-#ifdef __cplusplus 
-}
-#endif
-
 
 DllInfo *R_getDllInfo(const char *name);
 
@@ -113,7 +109,6 @@ DL_FUNC R_FindSymbol(char const *, char const *,
 int R_moduleCdynload(const char *module, int local, int now);
 
 
-
 /* Experimental interface for exporting and importing functions from
    one package for use from C code in a package.  The registration
    part probably ought to be integrated with the other registrations.
@@ -121,5 +116,9 @@ int R_moduleCdynload(const char *module, int local, int now);
 
 void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr);
 DL_FUNC R_GetCCallable(const char *package, const char *name);
+
+#ifdef __cplusplus 
+}
+#endif
 
 #endif /* R_EXT_DYNLOAD_H_ */
