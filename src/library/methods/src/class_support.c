@@ -19,8 +19,12 @@
 
 
 #include <R.h>
-#include <Rdefines.h>
 #include <Rinternals.h>
+#include <R_ext/Rdynload.h> /* for DL_FUNC */
+
+/* from Rdynpriv.h, but that pulls in too much */
+SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
+
 #include "methods.h"
 
 SEXP R_dummy_extern_place()
@@ -31,6 +35,7 @@ SEXP R_dummy_extern_place()
 
 SEXP R_externalptr_prototype_object()
 {
-    return R_MakeExternalPtr(R_dummy_extern_place, R_NilValue, R_NilValue);
+    return R_MakeExternalPtrFn((DL_FUNC) R_dummy_extern_place, R_NilValue,
+			       R_NilValue);
 }
 
