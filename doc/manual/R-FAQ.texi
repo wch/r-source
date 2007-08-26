@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-08-12
+@set FAQ_DATE @value{FAQ_YEAR}-08-25
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1887,6 +1887,8 @@ Level-dependent Cross-Validation Thresholding.
 Graphics device using cairographics library for creating high-quality
 PNG, PDF, SVG, PostScript output and interactive display devices such as
 X11.
+@item CarbonEL
+Carbon Event Loop.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -2018,6 +2020,8 @@ Functions for generating and manipulating generalised binned kernel
 density estimates.
 @item GeneCycle
 Identification of periodically expressed genes.
+@item GeneF
+Generalized @math{F}-statistics.
 @item GeneNT
 Relevance or Dependency network and signaling pathway discovery.
 @item GeneNet
@@ -2321,6 +2325,10 @@ furthermore access to Unidata's udunits calendar conversions.
 Visualizing the performance of scoring classifiers.
 @item RODBC
 An @acronym{ODBC} database interface.
+@item ROptEst
+Optimally robust estimation.
+@item ROptEstTS
+Optimally robust estimation for regression-type models.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RQuantLib
@@ -2401,6 +2409,10 @@ statistical computing can be carried out.
 @c @item Rnotes
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
+@item RobLox
+Optimally robust influence curves for location and scale.
+@item RobRex
+Optimally robust influence curves for regression and scale.
 @item Rpad
 Utility functions for the Rpad workbook-style interface.
 @item Rsac
@@ -2619,6 +2631,8 @@ minimum spanning tree, or the population parameter theta based on
 various approaches.
 @item aplpack
 Another PLot PACKage: stem.leaf, bagplot, faces, spin3R, @dots{}.
+@item argosfilter
+Argos locations filter.
 @item arm
 Data Analysis using Regression and Multilevel/hierarchical models.
 @item arrayImpute
@@ -2673,6 +2687,8 @@ model.
 28 benchmark densities from Berlinet/Devroye (1994).
 @item betareg
 Beta regression for modeling rates and proportions.
+@item biOps
+Basic image operations and image processing.
 @item bicreduc
 Reduction algorithm for the NPMLE for the distribution function of
 bivariate interval-censored data.
@@ -2683,6 +2699,9 @@ Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
 @item binGroup
 Evaluation and experimental design for binomial group testing.
+@item binMto
+Asymptotic simultaneous confidence intervals for many-to-one comparisons
+of proportions.
 @item bindata
 Generation of correlated artificial binary data.
 @item binom
@@ -2697,6 +2716,9 @@ Functions for Bitwise operations on integer vectors.
 Bivariate Poisson models using the EM algorithm.
 @item blighty
 Function for drawing the coastline of the United Kingdom.
+@item blockTools
+Block, randomly assign, and diagnose potential problems between units in
+randomized experiments.
 @item blockrand
 Randomization for block random clinical trials.
 @item boa
@@ -3328,6 +3350,8 @@ multi-group (more than 2 group) classification.
 Various functions to draw plots.
 @item grImport
 Importing vector graphics.
+@item granova
+Graphical Analysis of Variance.
 @item graph
 Handling of graph data structures.
 @item grasp
@@ -3962,6 +3986,9 @@ Functions for plotting Australia's coastline and state boundaries.
 @item pARtial
 (Partial) attributable risk estimates, corresponding variance estimates
 and confidence intervals.
+@item pairwiseCI
+Calculate and plot unadjusted confidence intervals for two sample
+comparisons.
 @item paleoTS
 Modeling evolution in paleontological time-series.
 @item pamr
@@ -4226,6 +4253,8 @@ Fitting Gaussian linear models where the covariance structure is a
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models.
+@item regtest
+Regression testing.
 @item relaimpo
 RELAtive IMPOrtance of regressors in linear models.
 @item relations
@@ -4269,6 +4298,8 @@ Side effect risks in hospital: simulation and estimation.
 @item rimage
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
+@item rindex
+Indexing for R.
 @item riv
 Robust Instrumental Variables estimators based on high breakpoint point
 S-estimators of multivariate location and scatter matrices.
@@ -4779,6 +4810,8 @@ Robust statistical inference via a weighted likelihood approach.
 WNOMINATE roll call analysis software.
 @item wombsoft
 Wombling computation.
+@item wordnet
+WordNet interface.
 @item write.snns
 Function for exporting data to SNNS (Stuttgart Neural Network Simulator)
 pattern files.
