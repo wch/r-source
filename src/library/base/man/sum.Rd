@@ -40,6 +40,11 @@ sum(\dots, na.rm = FALSE)
   For historical reasons, \code{NULL} is accepted and treated as if it
   were \code{integer(0)}.
 }
+\section{S4 methods}{
+  This is part of the S4 \code{\link[methods:S4groupGeneric]{Summary}}
+  group generic.  Methods for it must use the signature
+  \code{x, \dots, na.rm}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

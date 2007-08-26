@@ -62,6 +62,34 @@ list(
 {
     standardGeneric("c")
 }
+, "all" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("all")
+}
+, "any" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("any")
+}
+, "sum" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("sum")
+}
+, "prod" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("prod")
+}
+, "max" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("max")
+}
+, "min" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("min")
+}
+, "range" = function(x, ..., na.rm = FALSE)
+{
+    standardGeneric("range")
+}
 ## , "!" = function(e1)
 ## {
 ##     standardGeneric("!")

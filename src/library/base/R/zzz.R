@@ -149,8 +149,7 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
         assign(f, fx, envir = env)
     }
     ## now add the group generics
-    ## round, signif are not primitive
-    ## log, trunc are handled below
+    ## round, signif, log, trunc are handled below
     fx <- function(x) {}
     for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling',
                'exp', 'expm1', 'log1p', 'log10', 'log2',
@@ -172,7 +171,13 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
         assign(f, fx, envir = env)
     }
 
-    ## none of Summary is primitive
+    for(f in c("all", "any", "sum", "prod", "max", "min", "range")) {
+        fx <- function(..., na.rm = FALSE) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- .BaseNamespaceEnv
+        assign(f, fx, envir = env)
+    }
+
     for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
         fx <- function(z) {}
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
@@ -209,8 +214,12 @@ assign("log", function(x, base=exp(1)) UseMethod("log"),
 assign("names<-", function(x, value) UseMethod("names<-"),
        envir = .GenericArgsEnv)
 assign("rep", function(x, ...) UseMethod("rep"), envir = .GenericArgsEnv)
+assign("round", function(x, digits=0) UseMethod("round"),
+       envir = .GenericArgsEnv)
 assign("seq.int", function(from, to, by, length.out, along.with, ...)
        UseMethod("seq.int"), envir = .GenericArgsEnv)
+assign("signif", function(x, digits=6) UseMethod("signif"),
+       envir = .GenericArgsEnv)
 assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 
 ## make these the same object as as.double

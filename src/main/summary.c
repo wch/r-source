@@ -41,7 +41,7 @@
 #endif
 
 
-static Rboolean isum(int *x, int n, int *value, Rboolean narm)
+static Rboolean isum(int *x, int n, int *value, Rboolean narm, SEXP call)
 {
     double s = 0.0;
     int i;
@@ -58,7 +58,7 @@ static Rboolean isum(int *x, int n, int *value, Rboolean narm)
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
-	warning(_("Integer overflow - use sum(as.numeric(.))"));
+	warningcall(call, _("Integer overflow - use sum(as.numeric(.))"));
 	*value = NA_INTEGER;
     }
     else *value = s;
@@ -319,6 +319,38 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 }
 
 
+SEXP fixup_NaRm(SEXP args)
+{
+    SEXP a, r, t, na_value, prev = R_NilValue;
+
+    /* Need to make sure na.rm is last and exists */
+    na_value = ScalarLogical(FALSE);
+    for(a = args ; a != R_NilValue; a = CDR(a)) {
+	if(TAG(a) == R_NaRmSymbol) {
+	    if(CDR(a) == R_NilValue) return args;
+	    na_value = CAR(a);
+	    if(prev == R_NilValue) args = CDR(a);
+	    else SETCDR(prev, CDR(a));
+	}
+	prev = a;
+    }
+    
+    PROTECT(na_value);
+    t = CONS(na_value, R_NilValue);
+    UNPROTECT(1);
+    PROTECT(t);
+    SET_TAG(t, R_NaRmSymbol);
+    if (args == R_NilValue)
+	args = t;
+    else {
+	r = args;
+	while (CDR(r) != R_NilValue) r = CDR(r);
+	SETCDR(r, t);
+    }
+    UNPROTECT(1);
+    return args;
+}
+
 /* do_summary provides a variety of data summaries
 	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod
  */
@@ -329,7 +361,7 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, a, stmp = NA_STRING /* -Wall */, scum = NA_STRING;
+    SEXP ans, a, stmp = NA_STRING /* -Wall */, scum = NA_STRING, call2;
     double tmp = 0.0, s;
     Rcomplex z, ztmp, zcum={0.0, 0.0} /* -Wall */;
     int itmp = 0, icum=0, int_a, real_a, empty, warn = 0 /* dummy */;
@@ -393,9 +425,16 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     }
 
+    /* match to foo(..., na.rm=FALSE) */
+    PROTECT(args = fixup_NaRm(args));
+    PROTECT(call2 = duplicate(call));
+    SETCDR(call2, args);
 
-    if(DispatchGroup("Summary", call, op, args, env, &ans))
-	return ans;
+    if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
+	UNPROTECT(2);
+	return(ans);
+    }
+    UNPROTECT(1);
 
 #ifdef DEBUG_Summary
     REprintf("C do_summary(op%s, *): did NOT dispatch\n", PRIMNAME(op));
@@ -541,13 +580,13 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		case INTSXP:
 		    updated = isum(TYPEOF(a) == LGLSXP ? 
                                    LOGICAL(a) :INTEGER(a), length(a),
-                                   &itmp, narm);
+                                   &itmp, narm, call);
 		    if(updated) {
 			if(itmp == NA_INTEGER) goto na_answer;
 			if(ans_type == INTSXP) {
 			    s = (double) icum + (double) itmp;
 			    if(s > INT_MAX || s < R_INT_MIN){
-				warning(_("Integer overflow - use sum(as.numeric(.))"));
+				warningcall(call,_("Integer overflow - use sum(as.numeric(.))"));
 				goto na_answer;
 			    }
 			    else icum += itmp;
@@ -655,12 +694,12 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     /*-------------------------------------------------------*/
     if(empty && (iop == 2 || iop == 3)) {
 	if(ans_type == STRSXP) {
-	    warning(_("no non-missing arguments, returning NA"));
+	    warningcall(call, _("no non-missing arguments, returning NA"));
 	} else {
 	    if(iop == 2)
-		warning(_("no non-missing arguments to min; returning Inf"));
+		warningcall(call, _("no non-missing arguments to min; returning Inf"));
 	    else
-		warning(_("no non-missing arguments to max; returning -Inf"));
+		warningcall(call, _("no non-missing arguments to max; returning -Inf"));
 	    ans_type = REALSXP;
 	}
     }
@@ -672,9 +711,10 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     case CPLXSXP:  COMPLEX(ans)[0].r = zcum.r; COMPLEX(ans)[0].i = zcum.i;break;
     case STRSXP:   SET_STRING_ELT(ans, 0, scum); break;
     }
+    UNPROTECT(1);  /* args */
     return ans;
 
-na_answer: /* only INTSXP case curently used */
+na_answer: /* only INTSXP case currently used */
     ans = allocVector(ans_type, 1);
     switch(ans_type) {
     case INTSXP:	INTEGER(ans)[0] = NA_INTEGER; break;
@@ -682,25 +722,35 @@ na_answer: /* only INTSXP case curently used */
     case CPLXSXP:	COMPLEX(ans)[0].r = COMPLEX(ans)[0].i = NA_REAL; break;
     case STRSXP:        SET_STRING_ELT(ans, 0, NA_STRING); break;
     }
+    UNPROTECT(1);  /* args */
     return ans;
 
 invalid_type:
-    error(R_MSG_type, type2char(TYPEOF(a)));
+    errorcall(call, R_MSG_type, type2char(TYPEOF(a)));
     return R_NilValue;
 }/* do_summary */
 
+
 SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, a, b, prargs;
+    SEXP ans, a, b, prargs, call2;
 
-    if (DispatchGroup("Summary", call, op, args, env, &ans))
+    PROTECT(args = fixup_NaRm(args));
+    PROTECT(call2 = duplicate(call));
+    SETCDR(call2, args);
+
+    if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
+	UNPROTECT(2);
 	return(ans);
+    }
+    UNPROTECT(1);
+    
     PROTECT(op = findFun(install("range.default"), env));
     PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
     for (a = args, b = prargs; a != R_NilValue; a = CDR(a), b = CDR(b))
 	SET_PRVALUE(CAR(b), CAR(a));
     ans = applyClosure(call, op, prargs, env, R_BaseEnv);
-    UNPROTECT(2);
+    UNPROTECT(3);
     return(ans);
 }
 

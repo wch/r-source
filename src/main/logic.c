@@ -346,17 +346,25 @@ static void checkValues(int * x, int n, Rboolean *haveFalse,
     }
 }
 
+extern SEXP fixup_NaRm(SEXP args); /* summary.c */
+
 /* all, any */
 SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, s, t;
+    SEXP ans, s, t, call2;
     int narm;
     Rboolean haveTrue;
     Rboolean haveFalse;
     Rboolean haveNA;
 
-    if(DispatchGroup("Summary", call, op, args, env, &s))
-	return s;
+    PROTECT(args = fixup_NaRm(args));
+    PROTECT(call2 = duplicate(call));
+    SETCDR(call2, args);
+
+    if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
+	UNPROTECT(2);
+	return(ans);
+    }
 
     ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical(ans);
@@ -380,5 +388,6 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {			/* ANY */
 	LOGICAL(s)[0] = haveNA ? (haveTrue  ? TRUE  : NA_LOGICAL) : haveTrue;
     }
+    UNPROTECT(2);
     return s;
 }

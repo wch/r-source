@@ -1321,14 +1321,38 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 /* The S4 Math2 group, round and signif */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res;
+    SEXP res;;
+    int n;
 
+    if (length(args) >= 2 && 
+        isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
+        double digits = 0;
+	if(PRIMVAL(op) == 10004) digits = 6.0;
+	SETCAR(CDR(args), ScalarReal(digits));
+    }
+
+    PROTECT(args = evalListKeepMissing(args, env));
+
+    n = length(args);
+    switch (n) {
+    case 1:
+    case 2:
+	break;
+    default:
+	error(_("%d arguments passed to '%s' which requires 1 or 2"), 
+	      n, PRIMNAME(op));
+    }
+    
     if (! DispatchGroup("Math", call, op, args, env, &res)) {
-	checkArity(op, args);
-	if (length(CADR(args)) == 0)
-	    errorcall(call, _("invalid second argument of length 0"));
+	if(n == 1) {
+	    double digits = 0.0;
+	    if(PRIMVAL(op) == 10004) digits = 6.0;
+	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
+	} else if (length(CADR(args)) == 0)
+            errorcall(call, _("invalid second argument of length 0"));
 	res = do_math2(call, op, args, env);
     }
+    UNPROTECT(1);
     return res;
 }
 
@@ -1355,7 +1379,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP res, ap = args;
     int n = length(args), nprotect = 1;
 
-    if (n >=2 && R_isMissing(CADR(args), env)) {
+    if (n >= 2 && isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
 #ifdef M_E
         double e = M_E;
 #else
@@ -1364,6 +1388,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	SETCAR(CDR(args), ScalarReal(e));
     }
     PROTECT(args = evalListKeepMissing(args, env));
+    n = length(args);
 
     if (! DispatchGroup("Math", call, op, args, env, &res)) {
 	switch (n) {

@@ -177,8 +177,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Logic Related Functions */
 /* these are group generic and so need to eval args */
-{"all",		do_logic3,	1,	11,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
-{"any",		do_logic3,	2,	11,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
+{"all",		do_logic3,	1,	1,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
+{"any",		do_logic3,	2,	1,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 
 
 /* Vectors, Matrices and Arrays */
@@ -240,10 +240,10 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Mathematical Functions */
 /* these are group generic and so need to eval args */
-/* Note that the number of arguments for the primitives in this group
+/* Note that the number of arguments for the primitives in the Math group
    only applies to the default method. */
-{"round",	do_Math2,	10001,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"signif",	do_Math2,	10004,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"round",	do_Math2,	10001,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"signif",	do_Math2,	10004,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"log",		do_log,		10003,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"log10",	do_log1arg,	10,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -441,12 +441,12 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Data Summaries */
 /* sum, min, max, prod, range are group generic and so need to eval args */
-{"sum",		do_summary,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sum",		do_summary,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mean",	do_summary,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"min",		do_summary,	2,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"max",		do_summary,	3,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"prod",	do_summary,	4,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"range",	do_range,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"min",		do_summary,	2,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"max",		do_summary,	3,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"prod",	do_summary,	4,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"range",	do_range,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cov",		do_cov,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"cor",		do_cov,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 

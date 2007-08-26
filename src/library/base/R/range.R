@@ -14,9 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-range <- function(..., na.rm = FALSE)
-    .Internal(range(..., na.rm = na.rm))
-
 range.default <- function(..., na.rm = FALSE, finite = FALSE)
 {
     x <- c(..., recursive = TRUE)

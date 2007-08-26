@@ -38,6 +38,11 @@ any(\dots, na.rm = FALSE)
   and \code{\dots} contains no \code{TRUE} values and at least one
   \code{NA} value).
 }
+\section{S4 methods}{
+  This is part of the S4 \code{\link[methods:S4groupGeneric]{Summary}}
+  group generic.  Methods for it must use the signature
+  \code{x, \dots, na.rm}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

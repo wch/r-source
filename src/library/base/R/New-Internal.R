@@ -50,10 +50,6 @@ try <- function(expr, silent = FALSE) {
 comment <- function(x).Internal(comment(x))
 "comment<-" <- function(x,value).Internal("comment<-"(x,value))
 
-round <- function(x, digits = 0)
-    if(missing(digits)) .Internal(round(x, 0)) else .Internal(round(x,digits))
-signif <- function(x, digits = 6)
-    if(missing(digits)) .Internal(signif(x, 6)) else .Internal(signif(x,digits))
 logb <- function(x, base=exp(1)) if(missing(base)) log(x) else log(x,base)
 
 atan2 <- function(y, x).Internal(atan2(y, x))

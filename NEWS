@@ -59,6 +59,9 @@ NEW FEATURES
 	digamma() and trigamma() are now primitive.  (Note that logb()
 	is not.)
 
+	The Math2 and Summary groups (round, signif, all, any, max, min,
+	summ, prod, range) are now primitive.
+
 	See under METHODS PACKAGE below for some consquences for S4 methods.
 
     o	apropos() now sorts by name and not by position on the search
@@ -291,6 +294,7 @@ NEW FEATURES
 	group, and sign(), log1p(), expm1(), log2(), cummax(),
 	cummin(), digamma(), trigamma() and trunk() are members of the
 	S4 group.  gammaCody() is no longer in the S3 Math group.
+	They are now all primitive.
 
     o	The initialization of the random-number stream makes use of the
 	sub-second part of the current time where available.
@@ -323,7 +327,13 @@ METHODS PACKAGE
 
 	This applies to as.complex(), as.integer(), as.logical(),
 	as.numeric(), as.raw(), expm1(), log(), log1p(), log2(),
-	log10(), gamma(), lgamma(), digamma() and trigamma().
+	log10(), gamma(), lgamma(), digamma() and trigamma(), as
+	well as the Math2 and Summary groups.
+
+	Because all members of the group generics are now primitive,
+	they are all S4 generic and setting an S4 group generic does
+	at last apply to all members and not just those already made
+	S4 generic.
 
 	as.double() and as.real() are identical to as.numeric(), and
 	now remain so even if S4 methods are set on any of them.
