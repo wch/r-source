@@ -520,6 +520,10 @@ INSTALLATION
 	licence).  You will need to ensure that your texinfo and/or
 	TeX installations supply them.
 
+   o	wcstod is now required for MBCS support.
+
+   o	There are some experimental provisions for building on Cygwin.
+
 
 PACKAGE INSTALLATION
 
