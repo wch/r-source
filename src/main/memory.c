@@ -2460,7 +2460,7 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p)
 /* Work around casting issues: works where it is needed */
 typedef union {void *p; DL_FUNC fn;} fn_ptr;
 
-attribute_hidden
+/* used in package methods */
 SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot)
 {
     fn_ptr tmp;
