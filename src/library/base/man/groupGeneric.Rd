@@ -152,6 +152,8 @@ Summary(\dots, na.rm = FALSE)
   There is no lazy evaluation of arguments for group-generic functions.
 }
 \section{Technical Details}{
+  These functions are all primitive and \link{internal generic}.
+
   The details of method dispatch and variables such as \code{.Generic}
   are discussed in the help for \code{\link{UseMethod}}.  There are a
   few small differences:

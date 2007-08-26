@@ -141,24 +141,23 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   because none of the methods for the function will ever be
   dispatched.
 
-      By default, the generic function can return any object.
-   If \code{valueClass} is supplied, it should be a vector of
-   class names; the value returned by a method is then required to
-   satisfy \code{is(object, Class)} for one of the specified classes.
-   An empty (i.e., zero length) vector of classes means anything is
-   allowed.
-   Note that more complicated requirements on the result can be
-   specified explicitly, by defining a non-standard generic function.
+  By default, the generic function can return any object.  If
+  \code{valueClass} is supplied, it should be a vector of class names;
+  the value returned by a method is then required to satisfy
+  \code{is(object, Class)} for one of the specified classes.  An empty
+  (i.e., zero length) vector of classes means anything is allowed.  Note
+  that more complicated requirements on the result can be specified
+  explicitly, by defining a non-standard generic function.
 
-  The \code{setGroupGeneric} function behaves like \code{setGeneric} except that
-  it constructs a group generic function, differing in two ways from an
-  ordinary generic function.  First,
-  this function cannot be called directly, and the body of the function
-  created will contain a stop call with this information.  Second, the
-  group generic function contains information about the known members of
-  the group, used to keep the members up to date when the group
-  definition changes, through changes in the search list or direct
-  specification of methods, etc.
+   The \code{setGroupGeneric} function behaves like \code{setGeneric}
+   except that it constructs a group generic function, differing in two
+   ways from an ordinary generic function.  First, this function cannot
+   be called directly, and the body of the function created will contain
+   a stop call with this information.  Second, the group generic
+   function contains information about the known members of the group,
+   used to keep the members up to date when the group definition
+   changes, through changes in the search list or direct specification
+   of methods, etc.
 }
 \section{Generic Functions and Primitive Functions}{
   A number of the basic \R functions are specially implemented as
@@ -170,8 +169,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
 
   Currently those with implicit generics are those which are
   \link{internal generic} (which includes all members of the group
-  generics except groups \code{"Math2"} and \code{"Summary"}) and
-  \code{\link{\%*\%}}.
+  generics) and \code{\link{\%*\%}}.
 }
 \value{
   The \code{setGeneric} function exists for its side effect: saving the
