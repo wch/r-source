@@ -120,7 +120,6 @@
  R_LoadFromFile
  R_LoadRconsole
  R_Log10
- R_MakeExternalPtrFn
  R_NHeap
  R_NShowCalls
  R_NSize

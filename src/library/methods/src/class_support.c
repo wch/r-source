@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2005   The R Development Core Team.
+ *  Copyright (C) 2002-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ SEXP R_dummy_extern_place()
 
 SEXP R_externalptr_prototype_object()
 {
-    return R_MakeExternalPtr((void *)R_dummy_extern_place, R_NilValue, 
-			     R_NilValue);
+    return R_MakeExternalPtrFn(R_dummy_extern_place, R_NilValue, R_NilValue);
 }
 
