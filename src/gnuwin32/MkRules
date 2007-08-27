@@ -96,7 +96,11 @@ FCFLAGS=-O3
 ifeq ($(strip $(BUILD)),CROSS)
 # Next might be i586-mingw32- or x86_64-pc-mingw32- or ...
 # depending on the cross-compiler.
+ifeq ($(strip $(WIN)),64)
+BINPREF=x86_64-pc-mingw32-
+else
 BINPREF=i586-mingw32-
+endif
 # Optional, if compiler has been relocated
 # Set this to full path to dir where the mingw32 include files are.
 # It should contain fcntl.h and windows.h
