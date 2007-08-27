@@ -4041,9 +4041,10 @@ make
 @end example
 
 @noindent
-MBCS does not work---@code{wcstod} is missing---but only be of any use
-in a CJK locale.  NLS works, although @option{--with-included-gettext}
-is preferable.
+MBCS does not work---@code{wcstod} is missing---but would only be of any
+use in a CJK locale.  NLS does work, although
+@option{--with-included-gettext} is preferable.  You will see many
+warnings about the use of auto-import.
 
 It almost passes @command{make check}: FIFOs are supposedly supported
 but hung in @samp{example(fifo)}.

@@ -1196,6 +1196,7 @@ case "${host_os}" in
     SHLIB_EXT=".dll"
     dylib_undefined_allowed=no
     is_cygwin=yes
+    main_ldflags="${wl}--large-address-aware ${wl}--stack=0xA00000"
     ;;
   darwin*)
     darwin_pic="-fPIC"
