@@ -163,14 +163,14 @@ function(package, dir, lib.loc = NULL)
         ## In the long run we need dynamic documentation.
         if(.isMethodsDispatchOn()) {
             code_objs <-
-                .filter(code_objs,
-                        function(f) {
-                            fdef <- get(f, envir = code_env)
-                            if(methods::is(fdef, "genericFunction"))
-                                fdef@package == pkgname
-                            else
-                                TRUE
-                        })
+                Filter(function(f) {
+                           fdef <- get(f, envir = code_env)
+                           if(methods::is(fdef, "genericFunction"))
+                               fdef@package == pkgname
+                           else
+                               TRUE
+                       },
+                       code_objs)
         }
         ## </FIXME>
 
@@ -413,11 +413,11 @@ function(package, dir, lib.loc = NULL,
 
     ## Find the function objects to work on.
     functions_in_code <-
-        .filter(objects_in_code,
-                function(f) {
-                    f <- get(f, envir = code_env)
-                    is.function(f) && (length(formals(f)) > 0)
-                })
+        Filter(function(f) {
+                   f <- get(f, envir = code_env)
+                   is.function(f) && (length(formals(f)) > 0)
+               },
+               objects_in_code)
     ## <FIXME>
     ## Sourcing all R code files in the package is a problem for base,
     ## where this misses the .Primitive functions.  Hence, when checking
@@ -430,7 +430,7 @@ function(package, dir, lib.loc = NULL,
             objects(envir = baseenv(), all.names = TRUE)
         objects_in_code <-
             c(objects_in_code,
-              .filter(objects_in_base, .is_primitive, baseenv()),
+              Filter(.is_primitive_in_base, objects_in_base),
               c(".First.lib", ".Last.lib", ".Random.seed",
                 ".onLoad", ".onAttach", ".onUnload"))
         objects_in_code_or_namespace <- objects_in_code
@@ -453,11 +453,11 @@ function(package, dir, lib.loc = NULL,
     names(function_args_in_code) <- functions_in_code
     if(has_namespace) {
         functions_in_ns <-
-            .filter(objects_in_ns,
-                    function(f) {
-                        f <- get(f, envir = ns_env)
-                        is.function(f) && (length(formals(f)) > 0)
-                    })
+            Filter(function(f) {
+                       f <- get(f, envir = ns_env)
+                       is.function(f) && (length(formals(f)) > 0)
+                   },
+                   objects_in_ns)
         function_args_in_ns <-
             lapply(functions_in_ns,
                    function(f) formals(get(f, envir = ns_env)))
@@ -1587,12 +1587,13 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the function objects in the given package.
     functions_in_code <-
-        .filter(objects_in_code,
-                function(f) is.function(get(f, envir = code_env)))
+        Filter(function(f) is.function(get(f, envir = code_env)),
+               objects_in_code)
 
     ## Find all S3 generics "as seen from the package".
     all_S3_generics <-
-        unique(c(.filter(functions_in_code, .is_S3_generic, code_env),
+        unique(c(Filter(function(f) .is_S3_generic(f, envir = code_env),
+                        functions_in_code),
                  .get_S3_generics_as_seen_from_package(dir,
                                                        !missing(package),
                                                        TRUE),
@@ -1999,8 +2000,8 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the function objects in the given package.
     functions_in_code <-
-        .filter(objects_in_code,
-                function(f) is.function(get(f, envir = code_env)))
+        Filter(function(f) is.function(get(f, envir = code_env)),
+               objects_in_code)
 
     ## This is the virtual groyp generics, not the members
     S3_group_generics <- .get_S3_group_generics()
@@ -2083,7 +2084,8 @@ function(package, dir, lib.loc = NULL)
     }
 
     all_S3_generics <-
-        unique(c(.filter(functions_in_code, .is_S3_generic, code_env),
+        unique(c(Filter(function(f) .is_S3_generic(f, envir = code_env),
+                        functions_in_code),
                  .get_S3_generics_as_seen_from_package(dir,
                                                        !missing(package),
                                                        FALSE),
@@ -2244,14 +2246,14 @@ function(package, dir, lib.loc = NULL)
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     bad_replace_funs <- if(length(replace_funs)) {
-        .filter(replace_funs,
-                function(f) {
-                    ## Always get the functions from code_env ...
-                    ## Should maybe get S3 methods from the registry ...
-                    f <- get(f, envir = code_env)
-                    if(!is.function(f)) return(FALSE)
-                    ! .check_last_formal_arg(f)
-                })
+        Filter(function(f) {
+                   ## Always get the functions from code_env ...
+                   ## Should maybe get S3 methods from the registry ...
+                   f <- get(f, envir = code_env)
+                   if(!is.function(f)) return(FALSE)
+                   ! .check_last_formal_arg(f)
+               },
+               replace_funs)
     } else character(0)
 
     if(.isMethodsDispatchOn()) {
@@ -4293,8 +4295,8 @@ function()
 
 .get_S4_generics_really_in_env <-
 function(env)
-    .filter(methods::getGenerics(env),
-            function(g) !is.null(methods::getGeneric(g, where = env)))
+    Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
+           methods::getGenerics(env))
 
 ### ** .get_S4_methods_list
 

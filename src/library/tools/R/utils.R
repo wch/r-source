@@ -288,16 +288,6 @@ function(file1, file2)
     .Internal(codeFiles.append(file1, file2))
 }
 
-### ** .filter
-
-.filter <-
-function(x, f, ...)
-{
-    ## Higher-order function for filtering elements for which predicate
-    ## function f (with additional arguments in ...) is true.
-    x[as.logical(sapply(x, f, ...))]
-}
-
 ### ** .find_owner_env
 
 .find_owner_env <-
@@ -332,10 +322,11 @@ function(primitive = TRUE) # primitive means 'include primitives'
         c("[", "[[", "$", "[<-", "[[<-", "$<-",
           "as.vector", "unlist",
           .get_S3_primitive_generics()
-          ## ^^^^^^^ now contains the members of the group generics from groupGeneric.Rd
+          ## ^^^^^^^ now contains the members of the group generics from
+          ## groupGeneric.Rd.
           )
     if(!primitive)
-        out <- out[!sapply(out, .is_primitive, baseenv())]
+        out <- out[!sapply(out, .is_primitive_in_base)]
     out
 }
 
@@ -436,7 +427,9 @@ function(dir, installed = TRUE, primitive = FALSE)
                                               all.names = TRUE)
                                if(".no_S3_generics" %in% nms)
                                    character()
-                               else .filter(nms, .is_S3_generic, env)
+                               else Filter(function(f)
+                                           .is_S3_generic(f, envir = env),
+                                           nms)
                            }))))
 }
 
@@ -533,14 +526,14 @@ function(x)
                       }))
 }
 
-### ** .is_primitive
+### ** .is_primitive_in_base
 
-.is_primitive <-
-function(fname, envir)
+.is_primitive_in_base <-
+function(fname)
 {
-    ## Determine whether object named 'fname' found in environment
-    ## 'envir' is a primitive function.
-    is.primitive(get(fname, envir = envir, inherits = FALSE))
+    ## Determine whether object named 'fname' found in the base
+    ## environment is a primitive function.
+    is.primitive(get(fname, envir = baseenv(), inherits = FALSE))
 }
 
 ### ** .is_S3_generic
