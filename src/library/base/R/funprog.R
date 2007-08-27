@@ -15,33 +15,82 @@
 #  http://www.r-project.org/Licenses/
 
 Reduce <-
-function(f, x, init, right = FALSE)
+function(f, x, init, right = FALSE, accumulate = FALSE)
 {
+    mis <- missing(init)
     len <- length(x)
-    if(len == 0L) return(if(missing(init)) NULL else init)
+    tox <- typeof(x)
+    
+    if(len == 0L) return(if(mis) NULL else init)
+    
     f <- match.fun(f)
+
+    ## Try to avoid the "obvious"
+    ##   if(!mis) x <- if(right) c(x, init) else c(init, x)
+    ## to be more efficient ...
+    
     if(!is.vector(x) || is.object(x))
         x <- as.list(x)
+    
     ind <- seq_len(len)
-    if(missing(init)) {
+
+    if(mis) {
         if(right) {
             init <- x[[len]]
             ind <- ind[-len]
         }
         else {
             init <- x[[1L]]
-             ind <- ind[-1L]
+            ind <- ind[-1L]
         }
     }
-    if(right) {
-        for(i in rev(ind))
-            init <- f(x[[i]], init)
+            
+    if(!accumulate) {
+        if(right) {
+            for(i in rev(ind))
+                init <- f(x[[i]], init)
+        }
+        else {
+            for(i in ind)
+                init <- f(init, x[[i]])
+        }
+        init
     }
     else {
-        for(i in ind)
-            init <- f(init, x[[i]])
+        len <- length(ind) + 1L
+        out <- vector(tox, len)
+        if(mis) {
+            if(right) {
+                out[[len]] <- init
+                for(i in rev(ind)) {
+                    init <- f(x[[i]], init)
+                    out[[i]] <- init
+                }
+            } else {
+                out[[1L]] <- init
+                for(i in ind) {
+                    init <- f(init, x[[i]])
+                    out[[i]] <- init
+                }
+            }
+        } else {
+            if(right) {
+                out[[len]] <- init
+                for(i in rev(ind)) {
+                    init <- f(x[[i]], init)
+                    out[[i]] <- init
+                }
+            }
+            else {
+                for(i in ind) {
+                    out[[i]] <- init
+                    init <- f(init, x[[i]])
+                }
+                out[[len]] <- init
+            }
+        }
+        out
     }
-    init
 }
 
 Filter <- function(f, x)

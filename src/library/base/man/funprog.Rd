@@ -17,7 +17,7 @@
   corresponding elements of given vectors.
 }
 \usage{
-Reduce(f, x, init, right = FALSE)
+Reduce(f, x, init, right = FALSE, accumulate = FALSE)
 Filter(f, x)
 Map(f, ...)
 }
@@ -31,6 +31,9 @@ Map(f, ...)
   \item{right}{a logical indicating whether reduction should proceed
     from left to right (left-associative, default) or from right to
     left.}
+  \item{accumulate}{a logical indicating whether the successive
+    combinations should be accumulated.  By default, only the final
+    combination is used.}
   \item{\dots}{vectors.}
 }
 \details{
@@ -54,7 +57,8 @@ Map(f, ...)
 
   \code{Reduce} is patterned after Common Lisp's \code{reduce}.  A
   reduce is also known as a fold (e.g., in Haskell) or an accumulate
-  (e.g., in the C++ Standard Template Library).
+  (e.g., in the C++ Standard Template Library).  The accumulative
+  version correponds to Haskell's scan functions.
 
   \code{Filter} applies the unary predicate function \code{f} to each
   element of \code{x}, coercing to logical if necessary, and returns the
@@ -71,8 +75,8 @@ Map(f, ...)
 }
 \examples{
 ## A general-purpose adder:
-Add <- function(x) Reduce("+", x, 0)
-Add(list(1, 2, 3))
+add <- function(x) Reduce("+", x)
+add(list(1, 2, 3))
 ## Like sum(), but can also used for adding matrices etc., as it will
 ## use the appropriate '+' method in each reduction step.
 ## More generally, many generics meant to work on arbitrarily many
@@ -80,6 +84,10 @@ Add(list(1, 2, 3))
 FOO <- function(...) Reduce(FOO2, list(...))
 FOO2 <- function(x, y) UseMethod("FOO2")
 ## FOO() methods can then be provided via FOO2() methods.
+
+## A general-purpose cumulative adder:
+cadd <- function(x) Reduce("+", x, accumulate = TRUE)
+cadd(seq_len(7))
 
 ## A simple function to compute continued fractions:
 cfrac <- function(x) Reduce(function(u, v) u + 1 / v, x, right = TRUE)
