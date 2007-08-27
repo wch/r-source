@@ -56,14 +56,14 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
-graphappmain-CPPFLAGS=-I../../extra
+#graphappmain-CPPFLAGS=-I../../extra
 rgui-CPPFLAGS=-DWin32
 rterm-CPPFLAGS=-DWin32
 
+## -luser32 -lkernel32 -ladvapi32 -lshell32 are now standard
 Rgui-LIBS=-L../../../$(IMPDIR) -lR -lgraphapp
-Rpwd-LIBS=-lkernel32
-Rscript-LIBS=-luser32 -L../../../$(IMPDIR) -lR -lgraphapp
-Rterm-LIBS=-luser32 -L../../../$(IMPDIR) -lR -lgraphapp
+Rscript-LIBS=-L../../../$(IMPDIR) -lR -lgraphapp
+Rterm-LIBS=-L../../../$(IMPDIR) -lR -lgraphapp
 
 Rgui-LINKFLAGS=-mwindows $(LARGE_ADDR) $(LARGE_STACK)
 Rterm-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
