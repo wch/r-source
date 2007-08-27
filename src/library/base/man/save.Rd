@@ -60,10 +60,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   promises are saved (together with their evaluation environments).
   (Promises embedded in objects are always saved unevaluated.)
 
-  All \R platforms use the XDR representation of binary objects in
-  binary save-d files, and these are portable across all \R platforms.
-  (ASCII saves used to be useful for moving data between platforms but
-  are now mainly of historical interest.)
+  All \R platforms use the XDR (bigendian) representation of C ints and
+  doubles in binary save-d files, and these are portable across all \R
+  platforms. (ASCII saves used to be useful for moving data between
+  platforms but are now mainly of historical interest.)
 
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
   \code{version} arguments can be modified with the \code{save.defaults}

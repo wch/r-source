@@ -1121,7 +1121,9 @@ references after the first are written out as a reference marker indexed
 by the table entry.
 
 Serialization first writes a header indicating the format (normally
-@samp{X\n} for an XDR format binary save) and the version number of the
+@samp{X\n} for an XDR format binary save, but @samp{A\n}, ASCII, and
+@samp{B\n}, native word-order binary@footnote{there is no R-level
+interface to this format}, can also occur) and the version number of the
 format and of two @R{} versions (as integers).  (Unserialization
 interprets the two versions as the version of @R{} which wrote the file
 followed by the minimal version of @R{} needed to read the format.)
@@ -1156,6 +1158,18 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, tag and attributes.
 
+In the `XDR' format integers and doubles are written in bigendian
+order: however the format is not fully XDR as defind in RFC 1832 as byte
+quantities (such as the contents of @code{CHARSXP} and @code{RAWSXP}
+types) are written as-is and not padded to a multiple of four bytes.
+
+The `ASCII' format writes 7-bit characters.  Integers are formatted with
+@code{%d} (except that @code{NA_integer_} is written as @code{NA}),
+doubles formatted with @code{%.16g} (plus @code{NA}, @code{Inf} and
+@code{-Inf}) and bytes with @code{%02x}.  Strings are written using
+standard escapes (e.g.@: @code{\t} and @code{\013} for non-printing and
+non-ASCII bytes.
+
 @node Encodings for CHARSXPs, Warnings and errors, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
@@ -1180,9 +1194,9 @@ declare the encoding to be either Latin-1 or UTF-8.  (Note that it is
 possible for a character vector to contain elements in different
 encodings.)  Both printing and plotting notice the declaration and
 convert the string to the current locale (possibly using @code{<xx>} to
-display bytes that are not valid in the current locale).  Many (but not
-all) of the character manipulation functions will either preserve the
-declaration or re-encode the character string.
+display in hexadecimal bytes that are not valid in the current locale).
+Many (but not all) of the character manipulation functions will either
+preserve the declaration or re-encode the character string.
 
 Eventually strings that refer to the OS such as file names will need to
 be passed through a wide-character interface on some OSes
