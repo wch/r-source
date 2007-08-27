@@ -18,20 +18,34 @@ reshape <-
     function(data, varying= NULL, v.names= NULL, timevar = "time", idvar = "id",
              ids = 1:NROW(data), times = seq_along(varying[[1]]),
              drop = NULL, direction, new.row.names = NULL,
-             split = list(regexp= "\\.", include= FALSE))
+             sep = ".",
+             split = if (sep==""){
+                 list(regexp="[A-Za-z][0-9]",include=TRUE)
+             } else {
+                 list(regexp=sep, include= FALSE, fixed=TRUE)}
+             )
 {
-    guess <- function(nms,re = split$regexp,drop = !split$include) {
-        if (is.numeric(nms))
-            nms <- names(data)[nms]
+
+    ix2names <- function(ix)
+        if (is.character(ix)) ix else names(data)[ix]
+
+    guess <- function(nms,re = split$regexp,drop = !split$include,
+                      fixed=if(is.null(split$fixed)) FALSE else split$fixed)
+    {
         if (drop)
-            nn <- do.call("rbind",strsplit(nms,re))
+            nn <- do.call("rbind",strsplit(nms, re, fixed=fixed))
         else
             nn <- cbind(substr(nms, 1, regexpr(re,nms)),
                         substr(nms, regexpr(re,nms)+1, 10000))
-        v.names <- tapply(nms,nn[,1],c)
-        varying <- unique(nn[,1])
+
+        if (ncol(nn) != 2)
+            stop("Failed to guess time-varying variables from their names")
+
+
+        v.names <- split(nms, nn[,1])
+        vn <- unique(nn[,1])
         times <- unique(nn[,2])
-        attr(v.names,"v.names") <- varying
+        attr(v.names,"v.names") <- vn
         tt <- tryCatch({as.numeric(times)}, warning=function(w) times)
         attr(v.names,"times") <- tt
         v.names
@@ -41,8 +55,6 @@ reshape <-
         function(data,varying,v.names = NULL,timevar,idvar,
                  ids = 1:NROW(data), times,drop = NULL,new.row.names = NULL) {
 
-        if (is.matrix(varying))
-            varying <- tapply(varying,row(varying),list)
         ll <- unlist(lapply(varying,length))
         if (any(ll != ll[1])) stop("'varying' arguments must be the same length")
         if (ll[1] != length(times)) stop("'times' is wrong length")
@@ -200,15 +212,13 @@ reshape <-
         if (length(undo)==1) direction<-undo
     }
     direction <- match.arg(direction, c("wide", "long"))
-    if (!is.null(varying) && is.atomic(varying) && direction == "long")
-        varying <- guess(varying)
+
 
     switch(direction,
            "wide" =
        {
-           if (missing(timevar) && missing(idvar)) {
-               back <- attr(data,"reshapeLong")
-               if (is.null(back)) stop("no 'time' or 'id' specified")
+           back <- attr(data,"reshapeLong")
+           if (missing(timevar) && missing(idvar) && !is.null(back)) {
                reshapeWide(data, idvar = back$idvar, timevar = back$timevar,
                            varying = back$varying, v.names = back$v.names,
                            new.row.names = new.row.names)
@@ -221,21 +231,49 @@ reshape <-
        },
            "long" =
        {
-           if (missing(timevar) && missing(idvar) && missing(v.names) && missing(varying)) {
+           if (missing(varying)) {
                back <- attr(data,"reshapeWide")
-               if (is.null(back)) stop("no 'time' or 'id' specified")
-               reshapeLong(data, idvar = back$idvar, timevar = back$timevar,
-                           varying = back$varying, v.names = back$v.names,
-                           times = back$times)
-           } else if (missing(v.names) && !is.null(attr(varying,"v.names"))) {
-               reshapeLong(data, idvar = idvar, timevar = timevar, varying = varying,
-                           v.names = attr(varying,"v.names"), drop = drop,
-                           times = attr(varying,"times"), ids = ids,
-                           new.row.names = new.row.names)
-           } else {
-               reshapeLong(data, idvar = idvar, timevar = timevar,
-                           varying = varying, v.names = v.names, drop = drop,
-                           times = times, ids = ids, new.row.names = new.row.names)
+               if (is.null(back))
+                   stop("no 'reshapeWide' attribute, must specify 'varying'")
+               varying <- back$varying
+               idvar <- back$idvar
+               timevar <- back$timevar
+               v.names <- back$v.names
+               times <- back$times
            }
+
+           if (is.matrix(varying))
+               varying <- split(varying,row(varying))
+           if (is.null(varying))
+               stop("'varying' must be nonempty list or vector")
+           if(is.atomic(varying)){
+               varying <- ix2names(varying) # normalize
+               if (missing(v.names))
+                   varying <- guess(varying)
+               else {
+                   if (length(varying) %% length(v.names))
+                       stop("length of v.names does not evenly divide length of varying")
+                   ntimes <- length(varying) %/% length(v.names)
+                   if (missing(times))
+                       times <- seq_len(ntimes)
+                   else if (length(times) != ntimes)
+                       stop("length of varying must be the product of length of v.names and length of times")
+                   varying <- split(varying, rep(v.names, ntimes))
+                   attr(varying, "v.names") <- v.names
+                   attr(varying, "times") <- times
+               }
+           }
+           else varying <- lapply(varying, ix2names)
+
+           ## This must happen after guess()
+           if (missing(v.names) && !is.null(attr(varying,"v.names"))) {
+               v.names <- attr(varying,"v.names")
+               times <- attr(varying,"times")
+           }
+
+
+           reshapeLong(data, idvar = idvar, timevar = timevar,
+                       varying = varying, v.names = v.names, drop = drop,
+                       times = times, ids = ids, new.row.names = new.row.names)
        })
 }

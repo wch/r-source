@@ -307,6 +307,11 @@ NEW FEATURES
 	in R code, avoiding some C code whose licence status has been
 	questioned.
 
+    o   The interface to reshape() has been revised, allowing some
+        simplified forms that did not work before, and somewhat improved
+        error handling. A new argument 'sep' has been introduced to replace
+        simple usages of 'split' (the old features are retained).
+
     o   The mathematical annotation facility (plotmath) now recognises
         a symbol() function which forces the font to be a symbol font.
         This allows access to all characters in the Adobe Symbol 
@@ -623,6 +628,8 @@ BUG FIXES
 	had the wrong length and was incorrectly documented (exact
 	matches are returned even when there is more than one partial
 	match).
+
+    o   The data frame method for split<-() was broken.
 
     o	The test for -D__NO_MATH_INLINES was badly broken and returned
 	true on all non-glibc platforms and false on all glibc ones

@@ -67,7 +67,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 
 "split<-.data.frame" <- function(x, f, drop = FALSE, ..., value)
 {
-    ix <- split(seq_along(x), f, drop = drop, ...)
+    ix <- split(seq_len(nrow(x)), f, drop = drop, ...)
     n <- length(value)
     j <- 0
     for (i in ix) {

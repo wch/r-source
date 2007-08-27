@@ -17,17 +17,26 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 	idvar = "id", ids = 1:NROW(data),
 	times = seq_along(varying[[1]]),
 	drop = NULL, direction, new.row.names = NULL,
-	split = list(regexp="\\\\.", include=FALSE))
+        sep = ".",
+        split = if (sep==""){
+            list(regexp="[A-Za-z][0-9]",include=TRUE)
+        } else {
+            list(regexp=sep, include= FALSE, fixed=TRUE)}
+        )
+
 }
 \arguments{
   \item{data}{a data frame}
   \item{varying}{names of sets of variables in the wide format that
     correspond to single variables in long format
-    (\sQuote{time-varying}).  A list of vectors (or optionally a matrix
-    for \code{direction="wide"}).  See below for more details and
+    (\sQuote{time-varying}).  This is canonically a list of vectors of
+    variable names, but it can optionally be a matrix of names, or a
+    single vector of names. In each case, the names can be replaced by
+    indexes which are interpreted as referring to \code{names(data)}. 
+    See below for more details and
     options.}
   \item{v.names}{names of variables in the long format that correspond
-    to multiple variables in the wide format.}
+    to multiple variables in the wide format. See below for details.}
   \item{timevar}{the variable in long format that differentiates multiple
     records from the same group or individual.}
   \item{idvar}{Names of one or more variables in long format that identify multiple
@@ -36,15 +45,21 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{ids}{the values to use for a newly created \code{idvar}
     variable in long format.}
   \item{times}{the values to use for a newly created \code{timevar}
-    variable in long format.}
+    variable in long format. See below for details.}
   \item{drop}{a vector of names of variables to drop before reshaping}
   \item{direction}{character string, either \code{"wide"} to reshape to
     wide format, or \code{"long"} to reshape to long format.}
   \item{new.row.names}{logical; if \code{TRUE} and \code{direction="wide"},
     create new row names in long format from the values of the id and
     time variables.}
-  \item{split}{information for guessing the \code{varying},
-    \code{v.names}, and \code{times} arguments.  See below for details.}
+  \item{sep} {A character vector of length 1, indicating a separating
+    character in the variable names in the wide format. This is used for
+    guessing \code{v.names} and \code{times} arguments based on the
+    names in \code{varying}. If \code{sep==""}, the split is just before
+    the first numeral that follows an alphabetic character.} 
+    \item{split}{A list with three components, \code{regexp},
+      \code{include}, and (optionally) \code{fixed}. This allows an
+      extended interface to variable name splitting. See below for details.}
 }
 \details{
   The arguments to this function are described in terms of longitudinal
@@ -63,21 +78,36 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \code{direction} argument is optional and the other arguments are
   stored as attributes on the data frame.
 
-  If \code{direction="long"} and no \code{varying} or \code{v.names}
+  If \code{direction="wide"} and no \code{varying} or \code{v.names}
   arguments are supplied it is assumed that all variables except
   \code{idvar} and \code{timevar} are time-varying. They are all
   expanded into multiple variables in wide format.
 
-  If \code{direction="wide"} the \code{varying} argument can be a vector
-  of column names or column numbers (converted to column names). The
-  function will attempt to guess the \code{v.names} and \code{times} from
-  these names.  The default is variable names like \code{x.1},
-  \code{x.2}, where \code{split=list(regexp="\\.",include=FALSE)}
-  specifies to split at the dot and drop it from the name. To have alphabetic
-  followed by numeric times use
-  \code{split=list(regexp="[A-Za-z][0-9]",include=TRUE)}. This splits
-  between the alphabetic and numeric parts of the name and does not drop
-  the regular expression.
+  If \code{direction="long"} the \code{varying} argument can be a vector
+  of column names (or a corresponding index). The function will attempt
+  to guess the \code{v.names} and \code{times} from these names.  The
+  default is variable names like \code{x.1}, \code{x.2}, where
+  \code{sep="."}  specifies to split at the dot and drop it from the
+  name. To have alphabetic followed by numeric times use \code{sep=""}.
+
+  Variable name splitting as described above is only attempted in the
+  case where \code{varying} is an atomic vector, if it is a list or a
+  matrix, \code{v.names} and \code{times} will generally need to be
+  specified, although they will default to, respectively, the first
+  variable name in each set, and sequential times.
+
+  Also, guessing is not attempted if \code{v.names} is given
+  explicitly. Notice that the order of variables in \code{varying} is
+  like \code{x.1},\code{y.1},\code{x.2},\code{y.2}.
+
+  The \code{split} argument should not usually be necessary. The
+  \code{split$regexp} component is passed to either \code{strsplit()} or
+  \code{regexp()}, where the latter is used if \code{split$include} is
+  \code{TRUE}, in which case the splitting occurs after the first
+  character of the matched string. In the \code{strsplit()} case, the
+  separator is not included in the result, and it is possible to specify
+  fixed-string matching using \code{split$fixed}.
+  
 }
 \value{
   The reshaped data frame with added attributes to simplify reshaping
@@ -94,7 +124,7 @@ wide <- reshape(Indometh, v.names="conc", idvar="Subject",
 wide
 
 reshape(wide, direction="long")
-reshape(wide, idvar="Subject", varying=list(names(wide)[2:12]),
+reshape(wide, idvar="Subject", varying=list(2:12),
         v.names="conc", direction="long")
 
 ## times need not be numeric
@@ -115,8 +145,7 @@ reshape(df2, timevar="visit", idvar="id", direction="wide")
 ## Alternative regular expressions for guessing names
 df3 <- data.frame(id=1:4, age=c(40,50,60,50), dose1=c(1,2,1,2),
                   dose2=c(2,1,2,1), dose4=c(3,3,3,3))
-reshape(df3, direction="long", varying=3:5,
-        split=list(regexp="[a-z][0-9]", include=TRUE))
+reshape(df3, direction="long", varying=3:5, sep="")
 
 
 ## an example that isn't longitudinal data
