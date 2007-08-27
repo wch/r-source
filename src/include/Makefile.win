@@ -23,8 +23,13 @@ version: Rversion.h
 fixh: $(GW32_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS)
 	@$(ECHO) done > fixh
 
+ifeq ($(strip $(WIN)),64)
+config.h: ../gnuwin32/fixed/h/config64.h
+	@cp $< $@
+else
 config.h: ../gnuwin32/fixed/h/config.h
 	@cp $< $@
+endif
 
 iconv.h: ../gnuwin32/fixed/h/iconv.h
 	@cp $< $@
