@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-08-25
+@set FAQ_DATE @value{FAQ_YEAR}-08-27
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2116,6 +2116,8 @@ Heat maps of linkage disequilibrium measures.
 @item LLAhclust
 Hierarchical clustering of variables or objects based on the likelihood
 linkage analysis method.
+@item LLN
+Learning with latent networks.
 @item LMGene
 Date transformation and identification of differentially expressed genes
 in gene expression arrays.
@@ -2669,6 +2671,8 @@ Exploring portfolio-based hypotheses about financial instruments.
 @item bayesSurv
 Bayesian survival regression with flexible error and (later on also
 random effects) distributions.
+@item bayescount
+Bayesian analysis of count distributions with JAGS.
 @item bayesm
 Bayes Inference for Marketing/Micro-econometrics.
 @item bayesmix
@@ -4137,6 +4141,8 @@ Pretty descriptive stats.
 Patient Rule Induction Method (PRIM).
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
+@item proftools
+Profile output processing tools for R.
 @item proj4
 A simple interface to the PROJ.4 cartographic projections library.
 @item proptest
@@ -4280,6 +4286,8 @@ Flexibly reshape data.
 Sampling from restricted permutations.
 @item reweight
 Adjustment of survey respondent weights.
+@item rgcvpack
+R interface for GCVPACK Fortran package.
 @item rgdal
 Provides bindings to Frank Warmerdam's Geospatial Data Abstraction 
 Library (GDAL).
@@ -4457,6 +4465,8 @@ A set of generally Matlab/Octave-compatible signal processing
 functions.
 @item signalextraction
 Real-time signal extraction (Direct Filter Approach).
+@item simba
+Functions for similarity calculation of binary data.
 @item simco
 Import Structure files and deduce similarity coefficients from them.
 @item simecol
