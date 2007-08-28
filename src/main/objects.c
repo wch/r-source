@@ -950,19 +950,17 @@ SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env
 	R_set_standardGeneric_ptr(dispatchNonGeneric, NULL);
 	ptr = R_get_standardGeneric_ptr();
     }
-/*    PROTECT(args);
-      PROTECT(arg = CAR(args)); args are always protected */
 
-    checkArity(op, args);
+    checkArity(op, args); /* set to -1 */
     arg = CAR(args);
     if(!isValidStringF(arg))
-      errorcall(call,
-		_("argument to standardGeneric must be a non-empty character string"));
+	errorcall(call,
+		  _("argument to standardGeneric must be a non-empty character string"));
 
     PROTECT(fdef = get_this_generic(args));
 
     if(isNull(fdef))
-      error(_("call to standardGeneric(\"%s\") apparently not from the body of that generic function"), translateChar(STRING_ELT(arg, 0)));
+	error(_("call to standardGeneric(\"%s\") apparently not from the body of that generic function"), translateChar(STRING_ELT(arg, 0)));
 
     value = (*ptr)(arg, env, fdef);
 
