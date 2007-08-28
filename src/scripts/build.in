@@ -74,7 +74,11 @@ $ENV{"R_DEFAULT_PACKAGES"} = "";
 my $startdir = R_cwd();
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $gzip = R_getenv("R_GZIPCMD", "gzip");
-my $tar = R_getenv("TAR", "tar");
+## The tar.exe in Rtools has --force-local by default, but this 
+## enables people to use Cygwin or MSYS tar. 
+my $tar_default = "tar";
+$tar_defualt = "tar --force-local" if $WINDOWS;
+my $tar = R_getenv("TAR", $tar_default);
 my $libdir = R_tempfile("Rinst");
 
 my $INSTALL_opts = "";
@@ -228,12 +232,6 @@ foreach my $pkg (@ARGV) {
 
     my $filename = "${intname}_" . $description->{"Version"} . ".tar";
     my $filepath = &file_path($startdir, $filename);
-    ## under Windows, need separate Cygwin and Windows versions of path.
-    my $origfilepath = $filepath;
-    if($WINDOWS) {
-	## workaround for paths in Cygwin tar
-	$filepath =~ s+^([A-Za-z]):+/cygdrive/\1+;
-    }
     R_system(join(" ",
 		  ("$tar chf",
 		   &shell_quote_file_path($filepath),
@@ -256,7 +254,7 @@ foreach my $pkg (@ARGV) {
     }
     close(EXCLUDE);
     unlink($exclude);
-    unlink($origfilepath);
+    unlink($filepath);
     ## Now correct the package name (PR#9266)
     if($pkgname ne $intname) {
 	rename $pkgname, $intname 
@@ -364,7 +362,7 @@ foreach my $pkg (@ARGV) {
 	my $srcdir = &file_path($tmpdir, $pkgname);
 	my $cmd;
 	if($WINDOWS) {
-	    $log->warning("some HTML links may not be found");
+	    $log->print("WARNING: some HTML links may not be found\n");
 	    $cmd = join(" ",
 			("Rcmd.exe INSTALL -l",
 			 &shell_quote_file_path($libdir),
@@ -410,7 +408,7 @@ foreach my $pkg (@ARGV) {
 		       "$pkgname")));
 	R_system(join(" ",
 		      ("$gzip -9f",
-		       &shell_quote_file_path($origfilepath))));
+		       &shell_quote_file_path($filepath))));
     }
     chdir($startdir);
     rmtree($tmpdir);

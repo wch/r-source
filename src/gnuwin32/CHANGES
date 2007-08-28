@@ -120,6 +120,10 @@ OTHERS
 	BUILD=GCC3 in MkRules if you have gcc 3.4.5.  There is support
 	for a gcc4 cross-compiler via the CROSS-GCC macro in MkRules.
 
+    o	Rcmd build now uses 'tar --force-local' so it should work with
+	Cygwin and MSYS tar as well as that in Rtools.  This replaces
+	a workaround for Cygwin tar only.
+
 
 
 
