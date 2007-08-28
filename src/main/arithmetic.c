@@ -1321,7 +1321,7 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 /* The S4 Math2 group, round and signif */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res;;
+    SEXP res;
     int n;
 
     if (length(args) >= 2 && 
