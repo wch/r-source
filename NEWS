@@ -370,6 +370,10 @@ METHODS PACKAGE
         package provide the name of the generic to provide more
         contextual information.
 
+    o	It is now possible to use setGeneric(useAsDefault = FALSE) to
+	define a new generic with the name of a primitive function
+	(but having no connection with the primitive).
+
 
 DEPRECATED & DEFUNCT
 
@@ -629,7 +633,7 @@ BUG FIXES
 	matches are returned even when there is more than one partial
 	match).
 
-    o   The data frame method for split<-() was broken.
+    o   The data.frame method for split<-() was broken.
 
     o	The test for -D__NO_MATH_INLINES was badly broken and returned
 	true on all non-glibc platforms and false on all glibc ones

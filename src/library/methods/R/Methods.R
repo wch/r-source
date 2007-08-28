@@ -33,15 +33,20 @@ setGeneric <-
 {
     name <- switch(name, "as.double" =, "as.real" = "as.numeric", name)
     if(exists(name, "package:base") &&
-       typeof(get(name, "package:base")) != "closure") { # primitives
+       is.primitive(get(name, "package:base"))) { # primitives
 
         fdef <- getGeneric(name) # will fail if this can't have methods
-        msg <- gettextf("\"%s\" is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", name)
-        if(nargs() > 1)
+        if(nargs() <= 1) {
+            ## generics for primitives are global, so can & must always be cached
+            .cacheGeneric(name, fdef)
+            return(name)
+        }
+        ## you can only conflict with a primitive if you supply
+        ## useAsDefault to signal you really mean a different function
+        if(!is.function(useAsDefault) && !identical(useAsDefault, TRUE)) {
+            msg <- gettextf("\"%s\" is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", name)
             stop(msg, domain = NA)
-        ## generics for primitives are global, so can & must always be cached
-        .cacheGeneric(name, fdef)
-        return(name)
+        }
     }
     simpleCall <- nargs() < 2 || (nargs() == 2 & !missing(where))
     stdGenericBody <- substitute(standardGeneric(NAME), list(NAME = name))
@@ -66,6 +71,7 @@ setGeneric <-
     }
     else if(is.function(fdef)) {
         prevDefault <- fdef
+        if(is.primitive(fdef)) package <- "base"
         if(is.null(package))
             package <- getPackageName(environment(fdef))
     }
@@ -115,14 +121,14 @@ setGeneric <-
               "New generic for \"%s\" does not agree with implicit generic from package \"%s\"; a new generic will be assigned with package \"%s\"",
                              name, package, thisPackage),
                     domain = NA)
-            fdef@package <- thisPackage
+            fdef@package <- attr(fdef@generic, "package") <- thisPackage
         }
         else { # generic prohibited
             warning(gettextf(
               "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic will be assigned with package \"%s\"",
                              name, package, thisPackage),
                     domain = NA)
-            fdef@package <- thisPackage
+            fdef@package <- attr(fdef@generic, "package") <- thisPackage
         }
     }
     if(doUncache)
@@ -364,7 +370,7 @@ setMethod <-
     funcName = if (inherits(ischar, "try-error")) deparse(substitute(f)) else f
     if(is(funcName, "standardGeneric") || is(funcName, "MethodDefinition"))
        funcName = funcName@generic
-    
+
     ## Methods are stored in metadata in database where.  A generic function will be
     ## assigned if there is no current generic, and the function is NOT a primitive.
     ## Primitives are dispatched from the main C code, and an explicit generic NEVER
@@ -452,7 +458,7 @@ setMethod <-
         if(!isGeneric(f))
           setGeneric(f) #  turn on this generic and cache it.
     }
-    if(isSealedMethod(f, signature, fdef))
+    if(isSealedMethod(f, signature, fdef, where=where))
         stop(gettextf("the method for function \"%s\" and signature %s is sealed and cannot be re-defined", f, .signatureString(fdef, signature)), domain = NA)
     signature <- matchSignature(signature, fdef, where)
     switch(typeof(definition),
@@ -1130,9 +1136,10 @@ initMethodDispatch <- function(where = topenv(parent.frame()))
           PACKAGE = "methods")# C-level initialization
 
 isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where), where = topenv(parent.frame())) {
-    fNonGen <- getFunction(f, FALSE, FALSE, where = where)
-    if(!is.primitive(fNonGen)) {
-        mdef <- getMethod(f, signature, optional = TRUE)
+    ## look for the generic to see if it is a primitive
+    fGen <- getFunction(f, TRUE, FALSE, where = where)
+    if(!is.primitive(fGen)) {
+        mdef <- getMethod(f, signature, optional = TRUE, where = where)
         return(is(mdef, "SealedMethodDefinition"))
     }
     ## else, a primitive
@@ -1177,7 +1184,7 @@ implicitGeneric <- function(...) NULL
 ## real version, installed after methods package initialized
 
 .implicitGeneric <- function(name, where = topenv(parent.frame()),
-                            generic = getGeneric(name, where = where))
+                             generic = getGeneric(name, where = where))
 ### Add the named function to the table of implicit generics in environment where.
 ###
 ### If there is a generic function of this name, it is saved to the
@@ -1219,7 +1226,7 @@ implicitGeneric <- function(...) NULL
           else
             generic <- makeGeneric(name, generic, fdefault, package = package,
                                    group = group)
-          
+
       }
       .saveToImplicitGenerics(name, generic, where)
       generic
@@ -1260,7 +1267,7 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where), where
       for(f in objs)
         .cacheImplicitGeneric(f, get(f, envir = what))
   }
-        
+
 
 ### the metadata name for the implicit generic table
 .ImplicitGenericsMetaName <- ".__IG__table" # methodsPackageMetaName("IG", "table")
@@ -1342,11 +1349,10 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where), where
 }
 
 .getImplicitGroup <- function(name, where) {
-     if(exists(.ImplicitGroupMetaName, where, inherits = FALSE)) {
-         tbl <- get(.ImplicitGroupMetaName, where)
-         if(exists(name, envir = tbl, inherits = FALSE))
-           return(get(name, envir = tbl))
-     }
+    if(exists(.ImplicitGroupMetaName, where, inherits = FALSE)) {
+        tbl <- get(.ImplicitGroupMetaName, where)
+        if(exists(name, envir = tbl, inherits = FALSE))
+            return(get(name, envir = tbl))
+    }
     list()
- }
-                  
+}

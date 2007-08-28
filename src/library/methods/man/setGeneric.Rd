@@ -45,30 +45,30 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     references for more discussion.
   }
   \item{valueClass}{ An optional character vector or unevaluated
-      expression.  The value returned by the generic function must
-      have (or extend) this class, or one of the classes; otherwise,
-      an error is generated.  See the
-      details section for supplying an expression.
-   }
+    expression.  The value returned by the generic function must
+    have (or extend) this class, or one of the classes; otherwise,
+    an error is generated.  See the
+    details section for supplying an expression.
+  }
   \item{package}{ The name of the package with which this function is
-      associated.  Usually determined automatically (as the package
-      containing the non-generic version if there is one, or else the
-      package where this generic is to be saved).
-      }
+    associated.  Usually determined automatically (as the package
+    containing the non-generic version if there is one, or else the
+    package where this generic is to be saved).
+  }
   \item{where}{ Where to store the resulting initial methods definition,
     and possibly the generic function; by
     default, stored into the top-level environment.
   }
   \item{signature}{
-      Optionally, the signature of arguments in the function that can
-      be used in methods for this generic.  By default, all arguments
-      other than \code{...} can be used.  The signature argument can
-      prohibit methods from using some arguments.  The argument, if
-      provided, is a vector of formal argument names.
+    Optionally, the signature of arguments in the function that can
+    be used in methods for this generic.  By default, all arguments
+    other than \code{...} can be used.  The signature argument can
+    prohibit methods from using some arguments.  The argument, if
+    provided, is a vector of formal argument names.
   }
   \item{genericFunction}{ The object to be used as a (nonstandard)
-  generic function definition. Supply this explicitly \emph{only} if
-  you know what you are doing!
+    generic function definition.  Supply this explicitly \emph{only} if
+    you know what you are doing!
   }
   \item{useAsDefault}{
     Override the usual choice of default argument (an existing
@@ -81,14 +81,14 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     \code{TRUE} says to use the existing function as default,
     unconditionally (hardly ever needed as an explicit argument).
     See the section on details.
-    }
+  }
 
   \item{knownMembers}{
     (For \code{setGroupGeneric} only.)  The names of functions that are
     known to be members of this group.  This information is used to
     reset cached definitions of the member generics when information
     about the group generic is changed.
-    }
+  }
 }
 \details{
   The \code{setGeneric} function is called to initialize a generic
@@ -119,9 +119,9 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   the argument as \code{FALSE} to force no default (i.e., to cause an error if
   there is not direct or inherited method on call to the function).
 
-  The same no-default situation occurs if there is no non-generic form of the function, and
-  \code{useAsDefault=FALSE}.  Remember, though, you can
-  also just assign the default you want (even one that generates an
+  The same no-default situation occurs if there is no non-generic form
+  of the function, and \code{useAsDefault=FALSE}.  Remember, though, you
+  can also just assign the default you want (even one that generates an
   error) rather than relying on the prior situation.
 
   You cannot (and never need to) create an explicit generic for the
@@ -149,15 +149,15 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   that more complicated requirements on the result can be specified
   explicitly, by defining a non-standard generic function.
 
-   The \code{setGroupGeneric} function behaves like \code{setGeneric}
-   except that it constructs a group generic function, differing in two
-   ways from an ordinary generic function.  First, this function cannot
-   be called directly, and the body of the function created will contain
-   a stop call with this information.  Second, the group generic
-   function contains information about the known members of the group,
-   used to keep the members up to date when the group definition
-   changes, through changes in the search list or direct specification
-   of methods, etc.
+  The \code{setGroupGeneric} function behaves like \code{setGeneric}
+  except that it constructs a group generic function, differing in two
+  ways from an ordinary generic function.  First, this function cannot
+  be called directly, and the body of the function created will contain
+  a stop call with this information.  Second, the group generic
+  function contains information about the known members of the group,
+  used to keep the members up to date when the group definition
+  changes, through changes in the search list or direct specification
+  of methods, etc.
 }
 \section{Generic Functions and Primitive Functions}{
   A number of the basic \R functions are specially implemented as
@@ -192,8 +192,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
 }
 \examples{
 \dontshow{
-setClass("track",
-            representation(x="numeric", y="numeric"))
+setClass("track", representation(x="numeric", y="numeric"))
 }
 
 ###   A non-standard generic function.  It insists that the methods
@@ -213,9 +212,7 @@ setMethod("authorNames", "character", function(text)text)
 
 stopifnot(identical(authorNames(c("me", "you")), c("me", "you")),
           is(trySilent(authorNames(character())), "try-error"), # empty value
-          is(trySilent(authorNames(NULL)), "try-error"),        # no default method
-          is(trySilent(setGeneric("[", function(x,...)standardGeneric("["))),
-             "try-error"))                       # trying setGeneric on a primitive
+          is(trySilent(authorNames(NULL)), "try-error"))        # no default method
 }
 
 ## An example of group generic methods, using the class
