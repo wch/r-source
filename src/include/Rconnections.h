@@ -21,6 +21,10 @@
 #define R_CONNECTIONS_H_
 #include <R_ext/Boolean.h>
 
+#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO) && defined(HAVE_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+
 /* until we make connections more public this allows the opaque
    pointer definition to be made available in Rinternals.h */
 #ifndef HAVE_RCONNECTION_TYPEDEF
