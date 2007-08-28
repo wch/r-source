@@ -58,6 +58,9 @@ BUG FIXES
     o	rbind(x,y) and cbind(x,y) did not dispatch properly when x and
     	y had multiple S3-style classes.
 
+    o	The workaround for seeking on > 2Gb files did not work correctly
+	on Unix-alike 32-bit systems.  (PR#9883)
+
 
 
 		CHANGES IN R VERSION 2.5.1

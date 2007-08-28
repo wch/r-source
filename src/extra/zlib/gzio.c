@@ -23,7 +23,7 @@ static FILE *fdopen(int fildes, const char *mode)
 #include "zutil.h"
 
 /* R ADDITION */
-#if defined(HAVE_OFF_T) && defined(HAVE_SEEKO)
+#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
 #define f_seek fseeko
 #define f_tell ftello
 #else
