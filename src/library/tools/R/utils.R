@@ -721,6 +721,7 @@ function(package)
              SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
+	     assist = "chol.new",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
 	     calibrator = "t.fun",
@@ -740,6 +741,7 @@ function(package)
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
              "influence.measures", "t.test"),
              supclust = c("sign.change", "sign.flip"),
+	     tensorA = "chol.tensor",
              utils = c("close.socket", "flush.console", "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
