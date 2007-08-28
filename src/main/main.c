@@ -934,10 +934,8 @@ extern SA_TYPE SaveAction; /* from src/main/startup.c */
 
 void end_Rmainloop(void)
 {
-    /* refrain from printing trailing '\n' only if quiet flag is on and
-       the save action is known (e.g. implied by --slave) */
-    if (!R_Quiet ||
-	(SaveAction != SA_NOSAVE && SaveAction != SA_SAVE))
+    /* refrain from printing trailing '\n' in slave mode */
+    if (!R_Slave)
         Rprintf("\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */

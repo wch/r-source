@@ -635,6 +635,9 @@ BUG FIXES
 	true on all non-glibc platforms and false on all glibc ones
 	(whether they were broken or not).
 
+    o	LF was missing after the last prompt when --quiet was used without
+	--slave. Use --slave when no final LF is desired.
+
 
 
 	**************************************************
