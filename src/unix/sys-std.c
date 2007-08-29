@@ -808,8 +808,10 @@ Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 {
     if(!R_Interactive) {
 	int ll, err = 0;
-	if (!R_Slave)
+	if (!R_Slave) {
 	    fputs(prompt, stdout);
+	    fflush(stdout); /* make sure prompt is output */
+	}
 	if (fgets((char *)buf, len, ifp ? ifp: stdin) == NULL)
 	    return 0;
 	ll = strlen((char *)buf);

@@ -166,6 +166,17 @@ NEW FEATURES
 
     o	require() now returns invisibly.
 
+    o	The interface to reshape() has been revised, allowing some
+        simplified forms that did not work before, and somewhat
+        improved error handling. A new argument 'sep' has been
+        introduced to replace simple usages of 'split' (the old
+        features are retained).
+
+    o	rmultinom() uses a high-precision accumulator where available,
+	and so is more likely to give the same result on different
+	platforms (although it is still possible to get different
+	results, and the result may differ from previous versions of R).
+
     o	row() and col() now work on matrix-like objects such as data
 	frames, not just matrices.
 
@@ -193,10 +204,16 @@ NEW FEATURES
 	less general than mode<-, which remains available.  (See also
 	the entry under DEFUNCT below.)
 
+    o   The mathematical annotation facility (plotmath) now recognises
+        a symbol() function which forces the font to be a symbol font.
+        This allows access to all characters in the Adobe Symbol 
+        encoding within plotmath expressions.
+
     o	For OSes that cannot unset environment variables, Sys.unsetenv()
 	sets the value to "", with a warning.
 
-    o   New function Sys.which(), an interface to 'which' on Unix-alikes.
+    o   New function Sys.which(), an interface to 'which' on
+	Unix-alikes and an emulation on Windows.
 
     o	On Unix-alikes, system(, intern = TRUE) reports on very long
         lines that may be truncated, giving the line number of the
@@ -306,16 +323,6 @@ NEW FEATURES
 	Initialization of the 1997 Knuth TAOCP generator is now done
 	in R code, avoiding some C code whose licence status has been
 	questioned.
-
-    o   The interface to reshape() has been revised, allowing some
-        simplified forms that did not work before, and somewhat improved
-        error handling. A new argument 'sep' has been introduced to replace
-        simple usages of 'split' (the old features are retained).
-
-    o   The mathematical annotation facility (plotmath) now recognises
-        a symbol() function which forces the font to be a symbol font.
-        This allows access to all characters in the Adobe Symbol 
-        encoding within plotmath expressions.
 
 
 METHODS PACKAGE
@@ -641,6 +648,7 @@ BUG FIXES
 
     o	LF was missing after the last prompt when --quiet was used without
 	--slave. Use --slave when no final LF is desired.
+
 
 
 
