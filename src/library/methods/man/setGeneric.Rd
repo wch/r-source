@@ -96,12 +96,11 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   preparation for defining some methods for that function.
 
   The simplest and most common situation is that \code{name} is already
-  an ordinary non-generic function, and you now want to turn this
-  function into a generic.
-  In this
-  case you will most often supply only \code{name}.  The existing
-  function becomes the default method, and the special \code{group} and
-  \code{valueClass} properties remain unspecified.
+  an ordinary non-generic non-primitive function, and you now want to turn this
+  function into a generic.  In this case you will most often supply only
+  \code{name}.  The existing function becomes the default method, and
+  the special \code{group} and \code{valueClass} properties remain
+  unspecified.
 
   A second situation is that you want to create a new, generic
   function, unrelated to any existing function.  In this case, you
@@ -125,9 +124,11 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   error) rather than relying on the prior situation.
 
   You cannot (and never need to) create an explicit generic for the
-  primitive functions in the base library.  These are dispatched from
-  C code for efficiency and are not to be redefined
-  in any case.
+  primitive functions in the base package.  Those which are generic are
+  dispatched from C code for efficiency and the others cannot be made
+  generic.  If you want to define a generic with the same name as a
+  primitive but unrelated to it, you must specify both \code{def} and
+  \code{useAsDefault} (as a function or \code{FALSE}).
 
   As mentioned, the body of a generic function usually does nothing
   except for dispatching methods by a call to \code{standardGeneric}.
