@@ -216,6 +216,8 @@ static Rboolean neWithNaN(double x,  double y)
 {
     if(R_IsNA(x))
 	return(R_IsNA(y) ? FALSE : TRUE);
+    if(R_IsNA(y))
+	return(R_IsNA(x) ? FALSE : TRUE);
     if(ISNAN(x))
 	return(ISNAN(y) ? FALSE : TRUE);
     return(x != y);
