@@ -1460,18 +1460,6 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* because it is does not cause growth of the pointer protection stack, */
 /* and because it is a little more efficient. */
 
-static void PrintArgs(SEXP args, SEXP op)
-{
-    if(op == R_NilValue)
-	REprintf("the part of the args list of a builtin being evaluated was:\n");
-    else
-	REprintf("the part of the args list of '%s' being evaluated was:\n",
-		 PRIMNAME(op));
-    REprintf("   %s\n", 
-	     CHAR(STRING_ELT(deparse1line(args, 0), 0))+4);
-}
-
-
 /* called in names.c and objects.c */
 
 /* Prior to 2.4.0 this dropped missing elements */
@@ -1509,8 +1497,17 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP op)
 	    tail = CDR(tail);
 	    SET_TAG(tail, CreateTag(TAG(el)));
 	} else { /* It was a missing element */
-	    PrintArgs(orig, op);
-	    error(_("element %d is empty"), n);
+	    SEXP line = STRING_ELT(deparse1line(orig, 0), 0);
+	    PROTECT(line);
+	    if(op == R_NilValue)
+		error(_("element %d is empty;\n   the part of the args "
+			"list of a builtin being evaluated was:\n   %s"),
+		      n, CHAR(line)+4);
+	    else
+		error(_("element %d is empty;\n   the part of the args "
+			"list of '%s' being evaluated was:\n   %s"),
+		      n, PRIMNAME(op), CHAR(line)+4);
+	    UNPROTECT(1);
 	}
 	el = CDR(el);
 	n++;
