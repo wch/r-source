@@ -47,8 +47,8 @@ identical(x, y)
   independent copies.  For most applications, however, the computational cost
   should be negligible.
 
-  \code{identical} sees \code{NaN} as different from
-  \code{as.double(NA)}, but all \code{NaN}s are equal (and all \code{NA}
+  \code{identical} sees \code{\link{NaN}} as different from
+  \code{\link{NA_real_}}, but all \code{NaN}s are equal (and all \code{NA}
   of the same type are equal).
 
   Comparison of character strings allows for embedded \code{nul}
@@ -59,7 +59,7 @@ identical(x, y)
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}
   and never anything other than a single value.
 }
-\author{John Chambers}
+\author{John Chambers and R Core}
 
 \references{
   Chambers, J. M. (1998)
