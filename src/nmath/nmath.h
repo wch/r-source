@@ -21,19 +21,21 @@
 #ifndef MATHLIB_PRIVATE_H
 #define MATHLIB_PRIVATE_H
 
-#ifndef MATHLIB_STANDALONE
-/* Mathlib in R */
-# ifdef HAVE_CONFIG_H
+#ifdef HAVE_CONFIG_H
 #  include <config.h>
-# endif
-# if defined(HAVE_GLIBC2) && !defined(_BSD_SOURCE)
+#endif
+#if defined(HAVE_GLIBC2) && !defined(_BSD_SOURCE)
 /* ensure isnan is declared */
 #  define _BSD_SOURCE 1
-# endif
-# if defined(HAVE_GLIBC2) && !defined(_ISOC99_SOURCE)
+#endif
+#if defined(HAVE_GLIBC2) && !defined(_ISOC99_SOURCE)
 /* ensure expm1 and log1p are declared */
 #  define _ISOC99_SOURCE 1
-# endif
+#endif
+#ifdef HAVE_LONG_DOUBLE
+#  define LDOUBLE long double
+#else
+#  define LDOUBLE double
 #endif
 
 #include <math.h>
