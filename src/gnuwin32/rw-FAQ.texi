@@ -919,7 +919,7 @@ XP there are three tabs on the @emph{Regional and Language Options}
 applet in the Control Panel.  The first tab controls the locale, the
 second the UI and the third the fonts used for `non-Unicode' programs
 (but apparently also for Unicode ones in many cases): see Q3.3.  Vista
-talks about the ' UI language', and the 'system locale' for setting
+talks about the 'UI language', and the 'system locale' for setting
 the fonts used for `non-Unicode' programs.
 
 If you have Windows running completely in say French or Chinese these
