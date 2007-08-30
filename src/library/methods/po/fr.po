@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: methods 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-08-30 08:53+0100\n"
 "PO-Revision-Date: 2007-04-13 12:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: class_support.c:28
+#: class_support.c:32
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr ""
 "appel de la routine C utilisée comme initialisation pour des objets "

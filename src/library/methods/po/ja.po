@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-08-30 08:53+0100\n"
 "PO-Revision-Date: 2007-04-04 08:12+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 0.10.1\n"
 
-#: class_support.c:28
+#: class_support.c:32
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr ""
 " 'externalptr' オブジェクトに対する初期化用に C ルーティンを呼び出しています"

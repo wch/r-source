@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-08-30 08:53\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1706,6 +1706,9 @@ msgstr ""
 msgid "ref = %d must be in 1:%d"
 msgstr ""
 
+msgid "Failed to guess time-varying variables from their names"
+msgstr ""
+
 msgid "'varying' arguments must be the same length"
 msgstr ""
 
@@ -1718,7 +1721,16 @@ msgstr ""
 msgid "some constant variables (%s) are really varying"
 msgstr ""
 
-msgid "no 'time' or 'id' specified"
+msgid "no 'reshapeWide' attribute, must specify 'varying'"
+msgstr ""
+
+msgid "'varying' must be nonempty list or vector"
+msgstr ""
+
+msgid "length of v.names does not evenly divide length of varying"
+msgstr ""
+
+msgid "length of varying must be the product of length of v.names and length of times"
 msgstr ""
 
 msgid "'k' must be positive"

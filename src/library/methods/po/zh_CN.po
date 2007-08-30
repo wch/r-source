@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-08-30 08:53+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: class_support.c:28
+#: class_support.c:32
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr "调用C子程式给'externalptr'对象进行初始化"
 

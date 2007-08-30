@@ -148,8 +148,9 @@ RGui.pot-update: remove-potcdate.sed
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
 	   -o - console.c dataentry.c editor.c extra.c pager.c preferences.c rui.c \
 	    system.c \
-	    graphapp/clipboard.c graphapp/dialogs.c graphapp/gmenus.c \
-	    graphapp/metafile.c graphapp/printer.c \
+	    ../extra/graphapp/clipboard.c ../extra/graphapp/dialogs.c \
+	    ../extra/graphapp/gmenus.c \
+	    ../extra/graphapp/metafile.c ../extra/graphapp/printer.c \
 	    ../library/grDevices/src/devWindows.c) \
 	  > RGui.po
 	test ! -f RGui.po || { \

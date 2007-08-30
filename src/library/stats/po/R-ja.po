@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-08-30 08:53\n"
 "PO-Revision-Date: 2007-04-05 21:42+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1792,6 +1792,9 @@ msgstr " 'ref' は既存の水準でなければなりません"
 msgid "ref = %d must be in 1:%d"
 msgstr " ref = %d は 1:%d 中になければなりません:"
 
+msgid "Failed to guess time-varying variables from their names"
+msgstr ""
+
 msgid "'varying' arguments must be the same length"
 msgstr " 'varying' 引数は同じ長さでなければなりません"
 
@@ -1804,8 +1807,23 @@ msgstr " 時間が欠損した記録がありますので、取り除きます"
 msgid "some constant variables (%s) are really varying"
 msgstr " 定数変数 (%s) は実際は変化しています"
 
-msgid "no 'time' or 'id' specified"
-msgstr " 'time' も 'id' も指定されていません"
+msgid "no 'reshapeWide' attribute, must specify 'varying'"
+msgstr ""
+
+#, fuzzy
+msgid "'varying' must be nonempty list or vector"
+msgstr " 'varying' は論理値, 整数または文字でなければなりません"
+
+#, fuzzy
+msgid "length of v.names does not evenly divide length of varying"
+msgstr ""
+" FUNの長さ %d は\n"
+"  マージンの長さ %d と合致しません"
+
+msgid ""
+"length of varying must be the product of length of v.names and length of "
+"times"
+msgstr ""
 
 msgid "'k' must be positive"
 msgstr " 'k' は正でなければなりません"
@@ -2191,6 +2209,9 @@ msgstr[0] "欠損値のせいで %d 個の観測値が取り除かれました"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
+
+#~ msgid "no 'time' or 'id' specified"
+#~ msgstr " 'time' も 'id' も指定されていません"
 
 #~ msgid "trying +"
 #~ msgstr " + を試みています"

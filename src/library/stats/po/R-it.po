@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-08-30 08:53\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1847,6 +1847,9 @@ msgstr "'ref' deve essere un livello esistente"
 msgid "ref = %d must be in 1:%d"
 msgstr "ref = %d deve essere in 1:%d"
 
+msgid "Failed to guess time-varying variables from their names"
+msgstr ""
+
 msgid "'varying' arguments must be the same length"
 msgstr "gli argomenti 'varying' devono avere la stessa lunghezza"
 
@@ -1859,8 +1862,23 @@ msgstr "ci sono record con 'times' mancanti, saranno ignorati"
 msgid "some constant variables (%s) are really varying"
 msgstr "alcune variabili 'constant' (%s) sono in realtà 'varying'"
 
-msgid "no 'time' or 'id' specified"
-msgstr "nessun 'time' o 'id' specificati"
+msgid "no 'reshapeWide' attribute, must specify 'varying'"
+msgstr ""
+
+#, fuzzy
+msgid "'varying' must be nonempty list or vector"
+msgstr "'varying' deve essere di tipo logical, integer o character"
+
+#, fuzzy
+msgid "length of v.names does not evenly divide length of varying"
+msgstr ""
+"lunghezza di FUN, %d,\n"
+" non coincide con la lunghezza delle marginali, %d"
+
+msgid ""
+"length of varying must be the product of length of v.names and length of "
+"times"
+msgstr ""
 
 #, fuzzy
 msgid "'k' must be positive"
@@ -2272,6 +2290,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "no 'time' or 'id' specified"
+#~ msgstr "nessun 'time' o 'id' specificati"
 
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr "contrasti non definiti per 0 gradi di libertà"

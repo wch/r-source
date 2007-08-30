@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-08-30 08:53\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1851,6 +1851,9 @@ msgstr "'ref'는 기존의 수준이 아니면 되지 않습니다"
 msgid "ref = %d must be in 1:%d"
 msgstr "ref = %d는 1:%d에 없으면 되지 않습니다"
 
+msgid "Failed to guess time-varying variables from their names"
+msgstr ""
+
 msgid "'varying' arguments must be the same length"
 msgstr "'varying' 인수는 동일 길이가 나오지 않으면 되지 않습니다"
 
@@ -1863,8 +1866,21 @@ msgstr "시간이 결손한 기록이 있기 때문에 제거합니다"
 msgid "some constant variables (%s) are really varying"
 msgstr "다음의 정수 변수(%s)s는 실제로 변화하고 있습니다"
 
-msgid "no 'time' or 'id' specified"
-msgstr "'time' 또는 'id'도 지정되어 있지 않습니다"
+msgid "no 'reshapeWide' attribute, must specify 'varying'"
+msgstr ""
+
+#, fuzzy
+msgid "'varying' must be nonempty list or vector"
+msgstr "'varying'는 논리값, 정수 또는 문자가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "length of v.names does not evenly divide length of varying"
+msgstr "FUN 길이 %d는 마진의 길이%d와 match하지 않습니다"
+
+msgid ""
+"length of varying must be the product of length of v.names and length of "
+"times"
+msgstr ""
 
 #, fuzzy
 msgid "'k' must be positive"
@@ -2263,6 +2279,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "no 'time' or 'id' specified"
+#~ msgstr "'time' 또는 'id'도 지정되어 있지 않습니다"
 
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr "대비는 자유도 0에서는 정의 되지 않습니다"
