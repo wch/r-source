@@ -54,7 +54,7 @@ setGeneric <-
     fdef <- getFunction(name, mustFind = FALSE, where = where)
     ## if not a generic, try for a saved implicit version
     if(!is(fdef, "genericFunction") && .restoreImplicitGeneric(name, fdef, where, simpleCall))
-      return(name)
+        return(name)
     if(is.null(fdef) && !isNamespace(where))
         fdef <- getFunction(name, mustFind = FALSE)
     if(is.null(fdef) && is.function(useAsDefault))
