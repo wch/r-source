@@ -16,7 +16,9 @@ Since this is made with visibility hidden, we need to add visibility
 to some entry points.
 
 On Windows we needed to override the way the locale_charset is found,
-and map some Windows locale names to XPG ones.
+and map some Windows locale names to XPG ones.  And we use localeCP
+not getACP, since the latter refers to the default codepage
+irrespective of locales.
 
 BDR
 

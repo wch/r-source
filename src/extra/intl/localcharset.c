@@ -287,6 +287,8 @@ get_charset_aliases (void)
    If the canonical name cannot be determined, the result is a non-canonical
    name.  */
 
+extern unsigned int localeCP; /* from Defn.h */
+
 #ifdef STATIC
 STATIC
 #endif
@@ -384,8 +386,9 @@ locale_charset (void)
 
   static char buf[2 + 10 + 1];
 
-  /* Woe32 has a function returning the locale's codepage as a number.  */
-  sprintf (buf, "CP%u", GetACP ());
+  /* Woe32 has a function returning the locale's codepage as a number.
+  sprintf (buf, "CP%u", GetACP ()); */
+  sprintf (buf, "CP%u", localeCP);
   codeset = buf;
 
 #elif defined OS2
