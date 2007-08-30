@@ -131,6 +131,10 @@ OTHERS
 	about such names, so LC_ALL=ru no longer works and LC_ALL=rus
 	is required).
 
+    o	There are now warnings on startup if locale categories cannot
+	be set (a warning for LC_CTYPE may apply to all categories).
+	This has become much more common under Vista.
+
 
 
 

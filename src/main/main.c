@@ -663,6 +663,11 @@ void setup_Rmainloop(void)
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
+#ifdef Win32
+    char deferred_warnings[4][250];
+    int ndeferred_warnings = 0;
+#endif
+
     InitConnections(); /* needed to get any output at all */
 
     /* Initialize the interpreter's internal structures. */
@@ -672,18 +677,32 @@ void setup_Rmainloop(void)
     {
 	char *p, Rlocale[1000]; /* Windows' locales can be very long */
 	p = getenv("LC_ALL");
-	if(p) strcpy(Rlocale, p); else strcpy(Rlocale, "");
-	if((p = getenv("LC_CTYPE"))) setlocale(LC_CTYPE, p);
-	else setlocale(LC_CTYPE, Rlocale);
+	strcpy(Rlocale, p ? p : "");
+	if(!(p = getenv("LC_CTYPE"))) p = Rlocale;
+	/* We'd like to use warning, but cannot yet. 
+	   Also cannot translate. */
+	if(!setlocale(LC_CTYPE, p))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_CTYPE=%s failed\n", p);	
 	/* LC_CTYPE=C bombs in mingwex */
 	if(strcmp(setlocale(LC_CTYPE, NULL), "C") == 0) 
 	    setlocale(LC_CTYPE, "en");
-	if((p = getenv("LC_COLLATE"))) setlocale(LC_COLLATE, p);
-	else setlocale(LC_COLLATE, Rlocale);
-	if((p = getenv("LC_TIME"))) setlocale(LC_TIME, p);
-	else setlocale(LC_TIME, Rlocale);
-	if((p = getenv("LC_MONETARY"))) setlocale(LC_MONETARY, p);
-	else setlocale(LC_MONETARY, Rlocale);
+
+	if((p = getenv("LC_COLLATE"))) {
+	    if(!setlocale(LC_COLLATE, p))
+		snprintf(deferred_warnings[ndeferred_warnings++], 250,
+			 "Setting LC_COLLATE=%s failed\n", p);
+	} else setlocale(LC_COLLATE, Rlocale);
+	if((p = getenv("LC_TIME"))) {
+	    if(!setlocale(LC_TIME, p))
+		snprintf(deferred_warnings[ndeferred_warnings++], 250,
+			 "Setting LC_TIME=%s failed\n", p);
+	} else setlocale(LC_TIME, Rlocale);
+	if((p = getenv("LC_MONETARY"))) {
+	    if(!setlocale(LC_MONETARY, p))
+		snprintf(deferred_warnings[ndeferred_warnings++], 250,
+			 "Setting LC_MONETARY=%s failed\n", p);
+	} else setlocale(LC_MONETARY, Rlocale);
 	/* Windows does not have LC_MESSAGES */
     }
 #else
@@ -924,6 +943,13 @@ void setup_Rmainloop(void)
 	UNPROTECT(1);
     }
     /* gc_inhibit_torture = 0; */
+#ifdef Win32
+    {
+	int i;
+	for(i = 0 ; i < ndeferred_warnings; i++)
+	    warning(deferred_warnings[i]);
+    }
+#endif
     if (R_CollectWarnings) {
 	REprintf(_("During startup - "));
 	PrintWarnings();
