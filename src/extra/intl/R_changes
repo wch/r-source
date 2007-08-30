@@ -22,10 +22,20 @@ irrespective of locales.
 
 BDR
 
-diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
---- intl/dcigettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/dcigettext.c	2007-05-12 07:16:44.000000000 +0100
-@@ -260,6 +260,9 @@
+--- ./dcigettext.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/dcigettext.c	2007-08-30 14:40:53.890625000 +0100
+@@ -159,7 +159,10 @@
+ #  if VMS
+ #   define getcwd(buf, max) (getcwd) (buf, max, 0)
+ #  else
++/* This is naughty if already declared, but harmful on Win64 */
++#   ifndef WIN64
+ char *getcwd ();
++#   endif
+ #  endif
+ # endif
+ # ifndef HAVE_STPCPY
+@@ -260,6 +263,9 @@
    size_t translation_length;
  
    /* Pointer to the string in question.  */
@@ -35,7 +45,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
    char msgid[ZERO];
  };
  
-@@ -1055,6 +1058,7 @@
+@@ -1055,6 +1061,7 @@
  	     entry does not exist or if this does not contain the 'charset='
  	     information, we will assume the charset matches the one the
  	     current locale and we don't have to perform any conversion.  */
@@ -43,7 +53,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  # ifdef _LIBC
  	  convd->conv = (__gconv_t) -1;
  # else
-@@ -1062,6 +1066,11 @@
+@@ -1062,6 +1069,11 @@
  	  convd->conv = (iconv_t) -1;
  #  endif
  # endif
@@ -55,7 +65,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  	  {
  	    char *nullentry;
  	    size_t nullentrylen;
-@@ -1118,7 +1127,7 @@
+@@ -1118,7 +1130,7 @@
  			convd->conv = (__gconv_t) -1;
  		      }
  # else
@@ -64,7 +74,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  		    /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
  		       we want to use transliteration.  */
  #   if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 \
-@@ -1133,13 +1142,13 @@
+@@ -1133,13 +1145,13 @@
  			memcpy (tmp + len, "//TRANSLIT", 10 + 1);
  			outcharset = tmp;
  
@@ -80,7 +90,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  #  endif
  # endif
  
-@@ -1153,6 +1162,7 @@
+@@ -1153,6 +1165,7 @@
  	}
  
        if (
@@ -88,7 +98,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  # ifdef _LIBC
  	  convd->conv != (__gconv_t) -1
  # else
-@@ -1160,6 +1170,13 @@
+@@ -1160,6 +1173,13 @@
  	  convd->conv != (iconv_t) -1
  #  endif
  # endif
@@ -102,7 +112,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  	  )
  	{
  	  /* We are supposed to do a conversion.  First allocate an
-@@ -1248,8 +1265,8 @@
+@@ -1248,8 +1268,8 @@
  		    goto resize_freemem;
  
  		  outleft = freemem_size - sizeof (size_t);
@@ -113,7 +123,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  			     &outptr, &outleft)
  		      != (size_t) (-1))
  		    {
-@@ -1503,6 +1520,13 @@
+@@ -1503,6 +1523,22 @@
  	  locale_defaulted = 1;
  	}
      }
@@ -123,13 +133,21 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
 +  if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
 +  if(strcmp(locale, "cht") == 0) locale = "zh_TW";
 +  if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
++  /* Vista has got a lot pickier, so e.g. 'LC_ALL=ru' does not work */
++  if(strncmp(locale, "de", 2) == 0) locale = "de_DE";
++  if(strcmp(locale, "esp") == 0) locale = "es_ES";
++  if(strncmp(locale, "fr", 2) == 0) locale = "fr_FR";
++  if(strncmp(locale, "it", 2) == 0) locale = "it_IT";
++  if(strncmp(locale, "ko", 2) == 0) locale = "ko_KO";
++  if(strcmp(locale, "jpn") == 0) locale = "ja_JP";
++  if(strncmp(locale, "rus", 3) == 0) locale = "ru_RU";
++  if(strcmp(locale, "spanish") == 0) locale = "es_ES";
 +#  endif
  # endif
  #endif
  
-diff -u intl/dgettext.c ../extra/intl/dgettext.c
---- intl/dgettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/dgettext.c	2007-05-12 05:55:38.000000000 +0100
+--- ./dgettext.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/dgettext.c	2007-05-12 05:55:38.000000000 +0100
 @@ -46,7 +46,10 @@
  
  /* Look up MSGID in the DOMAINNAME message catalog of the current
@@ -142,9 +160,8 @@ diff -u intl/dgettext.c ../extra/intl/dgettext.c
  DGETTEXT (const char *domainname, const char *msgid)
  {
    return DCGETTEXT (domainname, msgid, LC_MESSAGES);
-diff -u intl/finddomain.c ../extra/intl/finddomain.c
---- intl/finddomain.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/finddomain.c	2007-05-12 05:26:42.000000000 +0100
+--- ./finddomain.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/finddomain.c	2007-05-12 05:26:42.000000000 +0100
 @@ -67,7 +67,9 @@
    const char *territory;
    const char *codeset;
@@ -184,9 +201,8 @@ diff -u intl/finddomain.c ../extra/intl/finddomain.c
  
    /* The space for normalized_codeset is dynamically allocated.  Free it.  */
    if (mask & XPG_NORM_CODESET)
-diff -u intl/gettext.c ../extra/intl/gettext.c
---- intl/gettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/gettext.c	2007-05-12 05:56:24.000000000 +0100
+--- ./gettext.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/gettext.c	2007-05-12 05:56:24.000000000 +0100
 @@ -51,6 +51,9 @@
  /* Look up MSGID in the current default message catalog for the current
     LC_MESSAGES locale.  If not found, returns MSGID itself (the default
@@ -197,9 +213,8 @@ diff -u intl/gettext.c ../extra/intl/gettext.c
  char *
  GETTEXT (const char *msgid)
  {
-diff -u intl/gettextP.h ../extra/intl/gettextP.h
---- intl/gettextP.h	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/gettextP.h	2007-05-12 04:02:42.000000000 +0100
+--- ./gettextP.h	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/gettextP.h	2007-05-12 04:02:42.000000000 +0100
 @@ -26,7 +26,7 @@
  # include "../iconv/gconv_int.h"
  #else
@@ -228,9 +243,23 @@ diff -u intl/gettextP.h ../extra/intl/gettextP.h
    char domainname[ZERO];
  };
  
-diff -u intl/localcharset.c ../extra/intl/localcharset.c
---- intl/localcharset.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/localcharset.c	2007-05-15 13:36:08.000000000 +0100
+--- ./l10nflist.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/l10nflist.c	2007-08-21 09:38:31.656250000 +0100
+@@ -318,10 +318,9 @@
+ 	if (dirlist_count > 1)
+ 	  {
+ 	    /* Iterate over all elements of the DIRLIST.  */
+-	    char *dir = NULL;
++	    char *dir = NULL, *nd = (char *) dirlist;
+ 
+-	    while ((dir = __argz_next ((char *) dirlist, dirlist_len, dir))
+-		   != NULL)
++	    while ((dir = __argz_next (nd, dirlist_len, dir)) != NULL)
+ 	      retval->successor[entries++]
+ 		= _nl_make_l10nflist (l10nfile_list, dir, strlen (dir) + 1,
+ 				      cnt, language, territory, codeset,
+--- ./localcharset.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/localcharset.c	2007-08-30 10:16:31.703125000 +0100
 @@ -19,7 +19,9 @@
  
  /* Written by Bruno Haible <bruno@clisp.org>.  */
@@ -274,9 +303,29 @@ diff -u intl/localcharset.c ../extra/intl/localcharset.c
  #else
  
  # if defined VMS
-diff -u intl/localename.c ../extra/intl/localename.c
---- intl/localename.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/localename.c	2007-05-12 04:28:12.000000000 +0100
+@@ -280,6 +287,8 @@
+    If the canonical name cannot be determined, the result is a non-canonical
+    name.  */
+ 
++extern unsigned int localeCP; /* from Defn.h */
++
+ #ifdef STATIC
+ STATIC
+ #endif
+@@ -377,8 +386,9 @@
+ 
+   static char buf[2 + 10 + 1];
+ 
+-  /* Woe32 has a function returning the locale's codepage as a number.  */
+-  sprintf (buf, "CP%u", GetACP ());
++  /* Woe32 has a function returning the locale's codepage as a number.
++  sprintf (buf, "CP%u", GetACP ()); */
++  sprintf (buf, "CP%u", localeCP);
+   codeset = buf;
+ 
+ #elif defined OS2
+--- ./localename.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/localename.c	2007-05-12 04:28:12.000000000 +0100
 @@ -1142,7 +1142,7 @@
  	switch (sub)
  	  {
@@ -304,9 +353,8 @@ diff -u intl/localename.c ../extra/intl/localename.c
  	  }
  	return "ro";
        case LANG_RUSSIAN:
-diff -u intl/ngettext.c ../extra/intl/ngettext.c
---- intl/ngettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/ngettext.c	2007-05-12 07:34:56.000000000 +0100
+--- ./ngettext.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/ngettext.c	2007-05-12 07:34:56.562500000 +0100
 @@ -53,6 +53,9 @@
  /* Look up MSGID in the current default message catalog for the current
     LC_MESSAGES locale.  If not found, returns MSGID itself (the default
@@ -317,9 +365,8 @@ diff -u intl/ngettext.c ../extra/intl/ngettext.c
  char *
  NGETTEXT (const char *msgid1, const char *msgid2, unsigned long int n)
  {
-diff -u intl/printf-args.c ../extra/intl/printf-args.c
---- intl/printf-args.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/printf-args.c	2007-05-12 06:30:01.000000000 +0100
+--- ./printf-args.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/printf-args.c	2007-05-12 06:30:01.000000000 +0100
 @@ -16,7 +16,9 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
     USA.  */
@@ -331,9 +378,8 @@ diff -u intl/printf-args.c ../extra/intl/printf-args.c
  
  /* Specification.  */
  #include "printf-args.h"
-diff -u intl/printf-parse.c ../extra/intl/printf-parse.c
---- intl/printf-parse.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/printf-parse.c	2007-05-12 06:29:52.000000000 +0100
+--- ./printf-parse.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/printf-parse.c	2007-05-12 06:29:52.000000000 +0100
 @@ -16,7 +16,9 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
     USA.  */
@@ -345,9 +391,8 @@ diff -u intl/printf-parse.c ../extra/intl/printf-parse.c
  
  /* Specification.  */
  #if WIDE_CHAR_VERSION
-diff -u intl/vasnprintf.c ../extra/intl/vasnprintf.c
---- intl/vasnprintf.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/vasnprintf.c	2007-05-12 06:30:18.000000000 +0100
+--- ./vasnprintf.c	2006-11-27 17:02:00.000000000 +0000
++++ ../../extra/intl/vasnprintf.c	2007-05-12 06:30:18.000000000 +0100
 @@ -23,7 +23,9 @@
  # define _GNU_SOURCE    1
  #endif
