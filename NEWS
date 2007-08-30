@@ -450,6 +450,9 @@ UTILITIES
     o	R CMD SHLIB gains arguments --clean and --preclean to clean up
 	intermediate files after and before building.
 
+    o	R CMD config now knows about FC and FCFLAGS (used for F9x
+	compilation).
+
 
 C-LEVEL FACILITIES
 
@@ -532,17 +535,17 @@ INSTALLATION
 	compiler which will have 'isfinite'.  (If that is missing, we
 	test separately for NaN, Inf and -Inf.)
 
-   o	A script/executable 'texi2dvi' is now required on Unix-alikes:
+    o	A script/executable 'texi2dvi' is now required on Unix-alikes:
 	it is part of the texinfo distribution.
 
-   o	Files texinfo.tex and txi-en.tex are no longer supplied in
+    o	Files texinfo.tex and txi-en.tex are no longer supplied in
 	doc/manual (as the latest versions have an incompatible
 	licence).  You will need to ensure that your texinfo and/or
 	TeX installations supply them.
 
-   o	wcstod is now required for MBCS support.
+    o	wcstod is now required for MBCS support.
 
-   o	There are some experimental provisions for building on Cygwin.
+    o	There are some experimental provisions for building on Cygwin.
 
 
 PACKAGE INSTALLATION
