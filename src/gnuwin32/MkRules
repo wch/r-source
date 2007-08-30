@@ -185,6 +185,7 @@ AS=$(BINPREF)as
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG) $(C99FLAG)
 CP=cp
+# as set by make
 CPP=$(CC) -E
 CXX=$(BINPREF)g++$(GCC4_SUFF) $(MINGW32CFLAG)
 ## overridden in some packages
@@ -205,9 +206,15 @@ OBJC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
 PERL=perl
 RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres --preprocessor="$(BINPREF)gcc$(GCC4_SUFF) -E -xc -DRC_INVOKED"
+# as set by make
 RM=rm -f
 SED=sed
 SORT=sort
+
+## from etc/Renviron.site on Unix
+EGREP=grep -e
+LN_S=cp -p
+TAR=tar
 
 .SUFFIXES:
 .SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95 .m .S
