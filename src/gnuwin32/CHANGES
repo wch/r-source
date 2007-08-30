@@ -124,6 +124,8 @@ OTHERS
 	Cygwin and MSYS tar as well as that in Rtools.  This replaces
 	a workaround for Cygwin tar only.
 
+    o	Rcmd config now works.
+
 
 
 

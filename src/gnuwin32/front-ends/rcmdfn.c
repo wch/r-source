@@ -44,7 +44,7 @@ static int pwait(HANDLE p)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
 	    "  INSTALL  Install add-on packages.\n",
 	    "  REMOVE   Remove add-on packages.\n",
@@ -60,7 +60,8 @@ void rcmdusage (char *RCMD)
 	    "  Rd2txt   Convert Rd format to text.\n",
 	    "  Sd2Rd    Convert S documentation to Rd format.\n",
 	    "  Stangle  Extract S/R code from Sweave documentation.\n",
-	    "  Sweave   Process Sweave documentation.\n"
+	    "  Sweave   Process Sweave documentation.\n",
+	    "  config   Obtain configuration information about R.\n"
 	    );
 
     fprintf(stderr, "\n%s%s%s%s",
@@ -293,6 +294,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else if (strcmp(p, "Stangle") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Stangle.sh");
+	    } else if (strcmp(p, "config") == 0) {
+		strcpy(cmd, "sh ");
+		strcat(cmd, RHome); strcat(cmd, "/bin/config.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh ");

@@ -2,21 +2,22 @@
 
 # Hand-edited version for gnuwin32.
 
-include "$(R_HOME)/src/gnuwin32/MkRules"
+RHOME=$(R_HOME) # for use in TCL_HOME
+include $(R_HOME)/src/gnuwin32/MkRules
 
 # AR = ar
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 # CC = gcc
-CFLAGS = -O3 -std=gnu99
+CFLAGS = -O3
 CPICFLAGS = 
 CPPFLAGS =
 # CXX = g++
-CXXCPP = g++ -E
+CXXCPP = $(CXX) -E
 CXXFLAGS = -O2
 CXXPICFLAGS = 
 DYLIB_EXT = .dll
-DYLIB_LD = gcc
+DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
 DYLIB_LINK = $(DYLIB_LD) $(DYLIB_LDFLAGS) $(LDFLAGS)
 ECHO_C = 
@@ -48,9 +49,9 @@ LIBS =  -lm
 LIBnn = lib
 LIBTOOL =
 LDFLAGS =
-OBJC =
-OBJCFLAGS =
-OBJC_LIBS =
+# OBJC =
+OBJCFLAGS = -O2
+OBJC_LIBS = -lobjc
 OBJCXX =
 R_ARCH = 
 # RANLIB = ranlib
@@ -62,7 +63,7 @@ SHLIB_CXXFLAGS =
 SHLIB_CXXLD = $(CXX)
 SHLIB_CXXLDFLAGS = -shared
 SHLIB_EXT = .dll
-SHLIB_FCLD = $(F77)
+SHLIB_FCLD = $(FC)
 SHLIB_FCLDFLAGS = -shared
 SHLIB_FFLAGS = 
 SHLIB_LD = $(CC)

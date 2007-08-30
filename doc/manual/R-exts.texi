@@ -772,7 +772,7 @@ configure information by direct extraction (using grep and sed) from
 recorded there as literals.  You can use @code{R CMD config} for getting
 the value of the basic configuration variables, or the header and
 library flags necessary for linking against @R{}, see @kbd{R CMD config
---help} for details.
+--help} for details.  (This works on Windows as from @R{} 2.6.0.)
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
