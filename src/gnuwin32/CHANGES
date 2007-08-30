@@ -126,6 +126,11 @@ OTHERS
 
     o	Rcmd config now works.
 
+    o	More Windows locale names set via LC_ALL etc work to set the
+	message language, needed under Vista (which is picker than XP
+	about such names, so LC_ALL=ru no longer works and LC_ALL=rus
+	is required).
+
 
 
 
