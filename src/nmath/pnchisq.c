@@ -11,7 +11,7 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2006  The R Development Core Team
+ *  Copyright (C) 2000-2007  The R Development Core Team
  *  Copyright (C) 2003-2006  The R Foundation
  */
 
@@ -51,10 +51,11 @@ double attribute_hidden
 pnchisq_raw(double x, double f, double theta,
 	    double errmax, double reltol, int itrmax, Rboolean lower_tail)
 {
-    double ans, lam, u, v, x2, f2, t, term, bound, f_x_2n, f_2n, lt;
-    double lu = -1., l_lam = -1., l_x = -1.; /* initialized for -Wall */
+    double lam, x2, f2, term, bound, f_x_2n, f_2n;
+    double l_lam = -1., l_x = -1.; /* initialized for -Wall */
     int n;
     Rboolean lamSml, tSml, is_r, is_b, is_it;
+    LDOUBLE ans, u, v, t, lt, lu =-1;
 
     static const double _dbl_min_exp = M_LN2 * DBL_MIN_EXP;
     /*= -708.3964 for IEEE double precision */
@@ -68,7 +69,7 @@ pnchisq_raw(double x, double f, double theta,
 #endif
 
     if(theta < 80) {
-	double sum = 0, lambda = 0.5*theta, pr = exp(-lambda);
+	LDOUBLE sum = 0, lambda = 0.5*theta, pr = exp(-lambda);
 	int i;
 	for(i = 0; i < 100;  pr *= lambda/++i)
 	    sum += pr * pchisq(x, f+2*i, lower_tail, FALSE);

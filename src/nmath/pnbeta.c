@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000-2006 The R Development Core Team
+ *  Copyright (C) 2000-2007 The R Development Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
@@ -25,8 +25,9 @@ double pnbeta(double x, double a, double b, double lambda,
     const static double errmax = 1.0e-9;
     const int    itrmax = 1000;  /* 100 is not enough for pf(ncp=200) */
 
-    double a0, ans, ax, lbeta, c, errbd, gx, q, sumq, temp, x0;
+    double a0, ax, lbeta, c, errbd, temp, x0;
     int j;
+    LDOUBLE ans, gx, q, sumq;
 
 
 #ifdef IEEE_754

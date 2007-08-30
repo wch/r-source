@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-1 The R Development Core Team
+ *  Copyright (C) 2000-7 The R Development Core Team
  *  Copyright (C) 2004   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,8 @@ double dnchisq(double x, double df, double lambda, int give_log)
 {
     const static double eps = 5e-15;
 
-    double i, lambda2, term, sum, q, mid, dfmid, imax, errorbound;
+    double i, lambda2, q, mid, dfmid, imax, errorbound;
+    LDOUBLE sum, term;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(df) || ISNAN(lambda))
