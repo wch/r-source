@@ -191,6 +191,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE)
 
     if(have.makefile) {
     	make <- Sys.getenv("MAKE")
+        if(!nzchar(make)) make <- "make"
         yy <- system(make)
         if(make == "" || yy > 0) stop("running 'make' failed")
     } else {
