@@ -40,7 +40,7 @@ NEW FEATURES
 	factors.  (Inter alia grants the wish of PR#9666.)
 
     o	The default 'max.names' in all.names() and all.vars() is now
-	-1 which means unlimited.  This fixes PR#9873. 
+	-1 which means unlimited.  This fixes PR#9873.
 
     o	as.vector() and the default methods of as.character(),
 	as.complex(), as.double(), as.expression(), as.integer(),
@@ -204,9 +204,12 @@ NEW FEATURES
 	less general than mode<-, which remains available.  (See also
 	the entry under DEFUNCT below.)
 
+    o	sweep() gains an argument 'check.margin = TRUE' which warns
+	about mismatched dimensions.
+
     o   The mathematical annotation facility (plotmath) now recognises
         a symbol() function which forces the font to be a symbol font.
-        This allows access to all characters in the Adobe Symbol 
+        This allows access to all characters in the Adobe Symbol
         encoding within plotmath expressions.
 
     o	For OSes that cannot unset environment variables, Sys.unsetenv()

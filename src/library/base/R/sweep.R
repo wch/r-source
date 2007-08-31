@@ -14,10 +14,30 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-sweep <- function(x, MARGIN, STATS, FUN = "-", ...)
+sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin=TRUE, ...)
 {
     FUN <- match.fun(FUN)
     dims <- dim(x)
-    perm <- c(MARGIN, (1:length(dims))[ - MARGIN])
+    if (check.margin) {
+        dimmargin <- dims[MARGIN]
+        dimstats <- dim(STATS)
+        lstats <- length(STATS)
+        if (lstats > prod(dimmargin)) {
+            warning("STATS is longer than the extent of 'dim(x)[MARGIN]'")
+        } else if (is.null(dimstats)) { # STATS is a vector
+            cumDim <- c(1, cumprod(dimmargin))
+            upper <- min(cumDim[cumDim >= lstats])
+            lower <- max(cumDim[cumDim <= lstats])
+            if (upper %% lstats != 0 || lstats %% lower != 0)
+                warning("STATS does not recycle exactly across MARGIN")
+        } else {
+            dimmargin <- dimmargin[dimmargin > 1]
+            dimstats <- dimstats[dimstats > 1]
+            if (length(dimstats) != length(dimmargin) ||
+                any(dimstats != dimmargin))
+                warning("length(STATS) or dim(STATS) do not match dim(x)[MARGIN]")
+        }
+    }
+    perm <- c(MARGIN, seq_along(dims)[ - MARGIN])
     FUN(x, aperm(array(STATS, dims[perm]), order(perm)), ...)
 }
