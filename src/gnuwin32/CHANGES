@@ -16,6 +16,9 @@ BUG FIXES
     o	.Platform$GUI would report "Rgui" when no GUI was present in
 	R(D)COM.
 
+    o	'=' within -e expression is no longer interpreted as setting
+	an environment variable.
+
 
 
 		CHANGES IN R VERSION 2.5.1
