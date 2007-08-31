@@ -486,6 +486,7 @@ SEXP do_while(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writetable(SEXP, SEXP, SEXP, SEXP);
 SEXP do_xspline(SEXP, SEXP, SEXP, SEXP);
 SEXP do_zeroin(SEXP, SEXP, SEXP, SEXP);
+SEXP do_zeroin2(SEXP, SEXP, SEXP, SEXP);
 
 SEXP do_playDL(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setGPar(SEXP, SEXP, SEXP, SEXP);

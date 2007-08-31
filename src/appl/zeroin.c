@@ -88,12 +88,29 @@ double R_zeroin(			/* An estimate of the root */
     double *Tol,			/* Acceptable tolerance		*/
     int *Maxit)				/* Max # of iterations */
 {
-    double a,b,c,			/* Abscissae, descr. see above	*/
-	fa, fb, fc;			/* f(a), f(b), f(c) */
+    double fa = (*f)(ax, info);
+    double fb = (*f)(bx, info);
+    R_zeroin2(ax, bx, fa, fb,
+	      f, info, Tol, Maxit);
+}
+
+/* R_zeroin2() is faster for "expensive" f(), in those typical cases where
+ *             f(ax) and f(bx) are available anyway : */
+
+double R_zeroin2(			/* An estimate of the root */
+    double ax,				/* Left border | of the range	*/
+    double bx,				/* Right border| the root is seeked*/
+    double fa, double fb,		/* f(a), f(b) */
+    double (*f)(double x, void *info),	/* Function under investigation	*/
+    void *info,				/* Add'l info passed on to f	*/
+    double *Tol,			/* Acceptable tolerance		*/
+    int *Maxit)				/* Max # of iterations */
+{
+    double a,b,c, fc;			/* Abscissae, descr. see above,  f(c) */
     double tol;
     int maxit;
 
-    a = ax;  b = bx;  fa = (*f)(a, info);  fb = (*f)(b, info);
+    a = ax;  b = bx;
     c = a;   fc = fa;
     maxit = *Maxit + 1; tol = * Tol;
 

@@ -228,6 +228,10 @@ NEW FEATURES
 	plots to be made (the new default) or computed for each plot
 	(the previous default).
 
+    o	uniroot(f, *) is slightly faster for non-trivial f() because it
+	computes f(lower) and f(upper) only once, and it has new optional
+	arguments 'f.lower' and 'f.upper' by which the caller can pass these.
+
     o	unlink() is now internal, using common POSIX code on all platforms.
 
     o	The vcov() methods for classes "gls" and "nlme" have migrated to

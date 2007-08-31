@@ -7,6 +7,7 @@
 \title{One Dimensional Root (Zero) Finding}
 \usage{
 uniroot(f, interval, \dots, lower = min(interval), upper = max(interval),
+        f.lower = f(lower, ...), f.upper = f(upper, ...),
         tol = .Machine$double.eps^0.25, maxiter = 1000)
 }
 \alias{uniroot}
@@ -16,8 +17,12 @@ uniroot(f, interval, \dots, lower = min(interval), upper = max(interval),
     to be searched for the root.}
   \item{\dots}{additional named or unnamed arguments to be passed
     to \code{f}}
-  \item{lower}{the lower end point of the interval to be searched.}
-  \item{upper}{the upper end point of the interval to be searched.}
+  \item{lower, upper}{the lower and upper end points of the interval to
+    be searched.}
+  \item{f.lower, f.upper}{the same as \code{f(upper)} and
+    \code{f(lower)}, respectively.  Passing these values from the caller
+    where they are often known is more economical as soon as \code{f()}
+    contains non-trivial computations.}
   \item{tol}{the desired accuracy (convergence tolerance).}
   \item{maxiter}{the maximum number of iterations.}
 }
@@ -28,7 +33,7 @@ uniroot(f, interval, \dots, lower = min(interval), upper = max(interval),
 }
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
-  
+
   Either \code{interval} or both \code{lower} and \code{upper} must be
   specified: the upper endpoint must be strictly larger than the lower
   endpoint.  The function values at the endpoints must be of opposite

@@ -159,53 +159,55 @@ static double fcn2(double x, struct callinfo *info)
 /* zeroin(f, xmin, xmax, tol, maxiter) */
 SEXP attribute_hidden do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    double xmin, xmax, tol;
-    int iter;
-    SEXP v, res;
-    struct callinfo info;
+#define DO_ZEROIN_part_1				\
+    double xmin, xmax, tol;				\
+    int iter;						\
+    SEXP v, res;					\
+    struct callinfo info;				\
+							\
+    checkArity(op, args);				\
+    PrintDefaults(rho);					\
+							\
+    /* the function to be minimized */			\
+    v = CAR(args);					\
+    if (!isFunction(v))					\
+	error(_("attempt to minimize non-function"));	\
+    args = CDR(args);					\
+							\
+    /* xmin */						\
+    xmin = asReal(CAR(args));				\
+    if (!R_FINITE(xmin))				\
+	error(_("invalid '%s' value"), "xmin");		\
+    args = CDR(args);					\
+							\
+    /* xmax */						\
+    xmax = asReal(CAR(args));				\
+    if (!R_FINITE(xmax))				\
+	error(_("invalid '%s' value"), "xmax");		\
+    if (xmin >= xmax)					\
+	error(_("'xmin' not less than 'xmax'"));	\
+    args = CDR(args)
 
-    checkArity(op, args);
-    PrintDefaults(rho);
+#define DO_ZEROIN_part_2						\
+    /* tol */								\
+    tol = asReal(CAR(args));						\
+    if (!R_FINITE(tol) || tol <= 0.0)					\
+	error(_("invalid '%s' value"), "tol");				\
+    args = CDR(args);							\
+									\
+    /* maxiter */							\
+    iter = asInteger(CAR(args));					\
+    if (iter <= 0)							\
+	error(_("'maxiter' must be positive"));				\
+									\
+    info.R_env = rho;							\
+    PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */	\
+    SETCADR(info.R_fcall, allocVector(REALSXP, 1));			\
+    PROTECT(res = allocVector(REALSXP, 3))
 
-    /* the function to be minimized */
+    DO_ZEROIN_part_1;
+    DO_ZEROIN_part_2;
 
-    v = CAR(args);
-    if (!isFunction(v))
-	error(_("attempt to minimize non-function"));
-    args = CDR(args);
-
-    /* xmin */
-
-    xmin = asReal(CAR(args));
-    if (!R_FINITE(xmin))
-	error(_("invalid '%s' value"), "xmin");
-    args = CDR(args);
-
-    /* xmax */
-
-    xmax = asReal(CAR(args));
-    if (!R_FINITE(xmax))
-	error(_("invalid '%s' value"), "xmax");
-    if (xmin >= xmax)
-	error(_("'xmin' not less than 'xmax'"));
-    args = CDR(args);
-
-    /* tol */
-
-    tol = asReal(CAR(args));
-    if (!R_FINITE(tol) || tol <= 0.0)
-	error(_("invalid '%s' value"), "tol");
-    args = CDR(args);
-
-    /* maxiter */
-    iter = asInteger(CAR(args));
-    if (iter <= 0)
-	error(_("'maxiter' must be positive"));
-
-    info.R_env = rho;
-    PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
-    SETCADR(info.R_fcall, allocVector(REALSXP, 1));
-    PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
 	R_zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2,
 		 (void *) &info, &tol, &iter);
@@ -214,6 +216,37 @@ SEXP attribute_hidden do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return res;
 }
+
+/* zeroin2(f, ax, bx, f.ax, f.bx, tol, maxiter) */
+SEXP attribute_hidden do_zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    double f_ax, f_bx;
+    DO_ZEROIN_part_1;
+
+    /* f(ax) = f(xmin) */
+    f_ax = asReal(CAR(args));
+    if (!R_FINITE(f_ax))
+	error(_("invalid '%s' value"), "f_ax");
+    args = CDR(args);
+
+    /* f(bx) = f(xmax) */
+    f_bx = asReal(CAR(args));
+    if (!R_FINITE(f_bx))
+	error(_("invalid '%s' value"), "f_bx");
+    args = CDR(args);
+
+    DO_ZEROIN_part_2;
+
+    REAL(res)[0] =
+	R_zeroin2(xmin, xmax, f_ax, f_bx, (double (*)(double, void*)) fcn2,
+		 (void *) &info, &tol, &iter);
+    REAL(res)[1] = (double)iter;
+    REAL(res)[2] = tol;
+    UNPROTECT(2);
+    return res;
+}
+#undef DO_ZEROIN_part_1
+#undef DO_ZEROIN_part_2
 
 
 

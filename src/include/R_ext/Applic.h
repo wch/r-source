@@ -174,7 +174,7 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 
 /* appl/maxcol.c: also in Utils.h  Used in package MNP */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
-    
+
 
 /* appl/pretty.c */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
@@ -225,6 +225,10 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 /* appl/zeroin.c : non API, but used in packages ape and qtl */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 		double *Tol, int *Maxit);
+/* R_zeroin2() is faster for "expensive" f(), in those typical cases where
+ *             f(ax) and f(bx) are available anyway : */
+double R_zeroin2(double ax, double bx, double fa, double fb,
+		 double (*f)(double, void *), void *info, double *Tol, int *Maxit);
 
 
 /* ALL appl/<foobar>.f	[semi-automatically by

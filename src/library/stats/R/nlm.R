@@ -48,16 +48,18 @@ optimise <- optimize
 
 uniroot <- function(f, interval, ...,
                     lower = min(interval), upper = max(interval),
+                    f.lower = f(lower, ...), f.upper = f(upper, ...),
 		    tol = .Machine$double.eps^0.25, maxiter = 1000)
 {
     if(!missing(interval) && length(interval) != 2)
         stop("'interval' must be a vector of length 2")
     if(!is.numeric(lower) || !is.numeric(upper) || lower >= upper)
         stop("lower < upper  is not fulfilled")
-    if(f(lower, ...) * f(upper, ...) > 0)
+    if(f.lower * f.upper > 0)
 	stop("f() values at end points not of opposite sign")
-    val <- .Internal(zeroin(function(arg) f(arg, ...), lower, upper, tol,
-			    as.integer(maxiter)))
+    val <- .Internal(zeroin2(function(arg) f(arg, ...),
+                             lower, upper, f.lower, f.upper,
+			     tol, as.integer(maxiter)))
     iter <- as.integer(val[2])
     if(iter < 0) {
 	warning("_NOT_ converged in ", maxiter, " iterations")

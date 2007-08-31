@@ -834,6 +834,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"nlm",		do_nlm,		0,	11,	11,	{PP_FUNCALL, PREC_FN,	0}},
 {"fmin",	do_fmin,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"zeroin",	do_zeroin,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"zeroin2",	do_zeroin2,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optim",	do_optim,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optimhess",	do_optimhess,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"terms.formula",do_termsform,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
