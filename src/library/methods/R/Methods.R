@@ -870,7 +870,7 @@ showMethods <-
     ## optionally include the method definitions, if `includeDefs == TRUE'.
     ##
     function(f = character(), where = topenv(parent.frame()), classes = NULL,
-             includeDefs = FALSE, inherited = TRUE,
+             includeDefs = FALSE, inherited = !includeDefs,
              showEmpty, printTo = stdout())
 {
     if(missing(showEmpty))

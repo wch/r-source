@@ -197,6 +197,9 @@ NEW FEATURES
     o	setRepositories() has a new argument 'ind' to allow selections
 	to be made programmatically.
 
+    o	showMethods() has a "smart" default for 'inherited' such that
+	showMethods(<genfun>, incl = TRUE)  becomes a useful short cut.
+
     o	sprintf() no longer has a output string length limit.
 
     o	storage.mode<- is now primitive, and hence makes fewer copies

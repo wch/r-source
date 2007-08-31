@@ -12,7 +12,7 @@
 }
 \usage{
 showMethods(f = character(), where = topenv(parent.frame()),
-            classes = NULL, includeDefs = FALSE, inherited = TRUE,
+            classes = NULL, includeDefs = FALSE, inherited = !includeDefs,
             showEmpty, printTo = stdout())
 }
 \arguments{
@@ -29,10 +29,10 @@ showMethods(f = character(), where = topenv(parent.frame()),
     whose signatures include one or more of those classes. }
   \item{includeDefs}{ If \code{includeDefs} is \code{TRUE}, include the
     definitions of the individual methods in the printout. }
-  \item{inherited}{ If \code{inherits} is \code{TRUE}, then methods that
-    have been found by inheritance, so far in the session, will be
-    included and marked as inherited. Note that an inherited method
-    will not usually appear until it has been used in this session.
+  \item{inherited}{logical indicating if methods that have been found by
+    inheritance, so far in the session, will be included and marked as
+    inherited.  Note that an inherited method will not usually appear
+    until it has been used in this session.
     See \code{\link{selectMethod}} if you want to know what method is
     dispatched for particular classes of arguments.}
   \item{showEmpty}{logical indicating whether methods with no defined
@@ -42,7 +42,7 @@ showMethods(f = character(), where = topenv(parent.frame()),
   \item{printTo}{The connection on which the printed information will be
     written; by default, standard output.  If \code{printTo} is
     \code{FALSE}, the output will be collected as a character vector and
-    returned as the value of the call to \code{showMethod}.   See
+    returned as the value of the call to \code{showMethod}.  See
     \code{\link{show}}.
   }
 }
