@@ -333,7 +333,10 @@ NEW FEATURES
 	Initialization of the 1997 Knuth TAOCP generator is now done
 	in R code, avoiding some C code whose licence status has been
 	questioned.
-
+	
+    o	The reporting of syntax errors has been made more user-
+	friendly.	
+	
 
 METHODS PACKAGE
 
