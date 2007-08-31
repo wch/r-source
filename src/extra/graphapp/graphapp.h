@@ -609,7 +609,6 @@ typedef void (*dropfn)(control c, char *data);
 #define app_win_proc		GAI_app_win_proc
 #define app_work_proc		GAI_app_work_proc
 #define child_id		GAI_child_id
-#define cmd_show		GA_cmd_show
 #define current			GAI_current
 #define current_menu		GAI_current_menu
 #define current_menubar		GAI_current_menubar

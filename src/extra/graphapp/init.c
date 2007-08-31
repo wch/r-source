@@ -31,9 +31,8 @@
 	PROTECTED char * app_name = "GraphApp";
 	PROTECTED int    is_NT = 0;
 	PROTECTED int    app_initialised = 0;
-	PROTECTED HANDLE this_instance = 0;
-	PROTECTED HANDLE prev_instance = 0;
-	PROTECTED int    cmd_show = 1;
+	PROTECTED HANDLE this_instance = NULL;
+	PROTECTED HANDLE prev_instance = NULL;
 
 /*
  *  Functions defined in this file.
@@ -150,8 +149,8 @@ static void setappname(char *title)
  */
 static void getappname(HANDLE Instance)
 {
-	char exename[120];
-	char title[120];
+	char exename[MAX_PATH];
+	char title[MAX_PATH];
 
 	/* find out executable name */
 	GetModuleFileName(Instance, exename, sizeof(exename));
@@ -189,8 +188,7 @@ void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow)
 	 *  Save some variables for later.
 	 */
 	this_instance = Instance;
-	prev_instance = PrevInstance;
-	cmd_show = CmdShow;
+	/* prev_instance = PrevInstance; is always NULL */
 
 	/*
 	 *  Initialise the graphical interface.
