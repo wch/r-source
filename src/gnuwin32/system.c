@@ -694,13 +694,21 @@ static void env_command_line(int *pac, char **argv)
 {
     int ac = *pac, newac = 1; /* Remember argv[0] is process name */
     char **av = argv;
+    Rboolean hadE = FALSE;
 
+    /* We don't want to parse -e expressions */
     while(--ac) {
 	++av;
-	if(**av != '-' && Rf_strchr(*av, '='))
+	if(strcmp(*av, "-e") == 0) {
+	    hadE = TRUE;
+	    argv[newac++] = *av; 
+	    continue;
+	}
+	if(!hadE && **av != '-' && Rf_strchr(*av, '='))
 	    Putenv(*av);
 	else
 	    argv[newac++] = *av;
+	hadE = FALSE;
     }
     *pac = newac;
 }
@@ -861,7 +869,8 @@ int cmdlineoptions(int ac, char **av)
 
     pR_ShowMessage = Rp->ShowMessage; /* used here */
     TrueWriteConsole = Rp->WriteConsole;
-    /* Rp->WriteConsole is guaranteed to be set above, so we WriteConsoleEx is not used */
+    /* Rp->WriteConsole is guaranteed to be set above, 
+       so we know WriteConsoleEx is not used */
     R_CallBackHook = Rp->CallBack;
 
     /* process environment variables
@@ -873,7 +882,6 @@ int cmdlineoptions(int ac, char **av)
 	Rp->NoRenviron = TRUE;
     }
     env_command_line(&ac, av);
-/*    R_SizeFromEnv(Rp); */
 
     R_common_command_line(&ac, av, Rp);
 
