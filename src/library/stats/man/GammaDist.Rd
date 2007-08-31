@@ -75,12 +75,18 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \code{scale} parameter.
 
   \code{pgamma} is closely related to the incomplete gamma function.  As
-  defined by Abramowitz and Stegun 6.5.1
+  defined by Abramowitz and Stegun 6.5.1 (and by \sQuote{Numerical
+    Recipes}) this is
   \deqn{P(a,x) = \frac{1}{\Gamma(a)} \int_0^x t^{a-1} e^{-t} dt}{P(a,x) =
       1/Gamma(a) integral_0^x t^(a-1) exp(-t) dt}
   \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
   Karl Pearson in his 1922 tables) omit the normalizing factor,
   defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
+  A few use the \sQuote{upper} incomplete gamma function, the integral
+  from \eqn{x} to \eqn{\infty} which can be computed by
+  \code{pgamma(x, a, lower=FALSE) * gamma(a)}, or its normalized
+  version. See also
+  \url{http://en.wikipedia.org/wiki/Incomplete_gamma_function}.
 }
 \source{
   \code{dgamma} is computed via the Poisson density, using code contributed
