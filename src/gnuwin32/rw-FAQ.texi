@@ -1397,10 +1397,12 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 See the `R Installation and Administration' manual.
 
-Note that building for Windows 64 is not supported as no suitable
-non-commercial compiler is yet available.  There is a glimmer of hope
-that this will change in the not too far distance future: see
-@url{http://sourceforge.net/mailarchive/forum.php?thread_name=460D8FC1.64E689DB%40dessent.net&forum_name=mingw-users}
+It is possible to cross-build R for Windows 64 using @code{binutils} and
+@code{gcc} with the @samp{x86_64-pc-mingw32} target, using suitable
+settings in @file{src/gnuwin32/MkRules} (see the comments there).
+However, at present that toolchain is experimental and the build does
+not run.
+ 
 You are of course welcome to try a commercial compiler, but we will not
 be distributing a port to which users cannot easily add packages.
 
