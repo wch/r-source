@@ -659,6 +659,10 @@ BUG FIXES
     o	LF was missing after the last prompt when --quiet was used without
 	--slave. Use --slave when no final LF is desired.
 
+    o   Fixed bug in initialisation code in 'grid' package for
+        determining the boundaries of shapes.  Problem reported
+        by Hadley Wickham;  symptom was error message: 
+        "Polygon edge not found".
 
 
 
