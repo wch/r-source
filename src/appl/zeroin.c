@@ -90,8 +90,7 @@ double R_zeroin(			/* An estimate of the root */
 {
     double fa = (*f)(ax, info);
     double fb = (*f)(bx, info);
-    R_zeroin2(ax, bx, fa, fb,
-	      f, info, Tol, Maxit);
+    return R_zeroin2(ax, bx, fa, fb, f, info, Tol, Maxit);
 }
 
 /* R_zeroin2() is faster for "expensive" f(), in those typical cases where
