@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-01 12:25\n"
 "PO-Revision-Date: 2007-04-13 12:13+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -593,6 +593,13 @@ msgstr "'cg' a renvoyé le code %d dans 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' a renvoyé le code %d dans 'eigen'"
+
+msgid "'within' requires a name for its 'data' argument"
+msgstr ""
+
+#, fuzzy
+msgid "'data' must exist"
+msgstr "'object' doit être une liste"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "étiquettes incorrectes ; la longueur %d doit être 1 ou %d"
@@ -1402,6 +1409,15 @@ msgstr "'nv' doit être 0 ou ncol(x)"
 
 msgid "error %d in 'dsvdc'"
 msgstr "erreur %d dans 'dsvdc'"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr ""
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr ""
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr "rien à tabuler"

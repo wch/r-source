@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
-"PO-Revision-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-01 12:25\n"
+"PO-Revision-Date: 2007-09-01 12:25\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -578,6 +578,12 @@ msgstr "‘cg’ returned code %d in ‘eigen’"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "‘rg’ returned code %d in ‘eigen’"
+
+msgid "'within' requires a name for its 'data' argument"
+msgstr "‘within’ requires a name for its ‘data’ argument"
+
+msgid "'data' must exist"
+msgstr "‘data’ must exist"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "invalid labels; length %d should be 1 or %d"
@@ -1355,6 +1361,15 @@ msgstr "‘nv’ must be 0 or ncol(x)"
 
 msgid "error %d in 'dsvdc'"
 msgstr "error %d in ‘dsvdc’"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr "STATS is longer than the extent of ‘dim(x)[MARGIN]’"
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr "STATS does not recycle exactly across MARGIN"
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 
 msgid "nothing to tabulate"
 msgstr "nothing to tabulate"

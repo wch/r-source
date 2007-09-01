@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-01 12:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -549,6 +549,12 @@ msgid "'cg' returned code %d in 'eigen'"
 msgstr ""
 
 msgid "'rg' returned code %d in 'eigen'"
+msgstr ""
+
+msgid "'within' requires a name for its 'data' argument"
+msgstr ""
+
+msgid "'data' must exist"
 msgstr ""
 
 msgid "invalid labels; length %d should be 1 or %d"
@@ -1302,6 +1308,15 @@ msgid "'nv' must be 0 or ncol(x)"
 msgstr ""
 
 msgid "error %d in 'dsvdc'"
+msgstr ""
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr ""
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr ""
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 msgstr ""
 
 msgid "nothing to tabulate"

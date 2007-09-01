@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-01 12:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -560,6 +560,13 @@ msgstr "'eigen'里'cg'回覆了代码%d"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'eigen'里'rg'回覆了代码%d"
+
+msgid "'within' requires a name for its 'data' argument"
+msgstr ""
+
+#, fuzzy
+msgid "'data' must exist"
+msgstr "'object'必需是串列"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "标记不对；长度%d应该是一或%d"
@@ -1338,6 +1345,15 @@ msgstr "'nv'的值必需为零或为ncol(x)"
 
 msgid "error %d in 'dsvdc'"
 msgstr "'dsvdc'里的%d有错"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr ""
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr ""
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr "没有可列表的东西"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-01 12:25\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -572,6 +572,13 @@ msgstr " 'eigen' で 'cg' がコード %d を返しました"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'rg' がコード %d を返しました"
+
+msgid "'within' requires a name for its 'data' argument"
+msgstr ""
+
+#, fuzzy
+msgid "'data' must exist"
+msgstr " 'object' はリストでなければなりません"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr " 無効なラベルです。長さ %d は 1 または %d であるべきです"
@@ -1380,6 +1387,15 @@ msgstr " 'nv' は 0 か ncol(x) でなければなりません"
 
 msgid "error %d in 'dsvdc'"
 msgstr " 'dsvdc' 中にエラー %d があります"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr ""
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr ""
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr " 表にするものが何もありません"

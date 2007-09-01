@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-01 12:25\n"
 "PO-Revision-Date: 2007-04-07 01:35-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -570,6 +570,13 @@ msgstr "'cg' возвратил код %d в 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' возвратил код %d в 'eigen'"
+
+msgid "'within' requires a name for its 'data' argument"
+msgstr ""
+
+#, fuzzy
+msgid "'data' must exist"
+msgstr "'object' должен быть списком"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "неправильные метки; длина %d должна быть 1 или %d"
@@ -1358,6 +1365,15 @@ msgstr "'nv' должен быть 0 или ncol(x)"
 
 msgid "error %d in 'dsvdc'"
 msgstr "ошибка %d в 'dsvdc'"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr ""
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr ""
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr "нечего табулировать"
