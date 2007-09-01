@@ -1737,6 +1737,8 @@ static int stderr_vfprintf(Rconnection con, const char *format, va_list ap)
 
 static int stderr_fflush(Rconnection con)
 {
+    /* normally stderr and hence unbuffered, but it needs not be,
+       e.g. it is stdout on Win9x */
     if(R_Consolefile) return fflush(R_Consolefile);
     return 0;
 }

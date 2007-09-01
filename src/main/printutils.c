@@ -752,6 +752,8 @@ void REvprintf(const char *format, va_list arg)
 	if(R_Outputfile && (R_Outputfile != R_Consolefile)) {
 	    fflush(R_Outputfile);
 	    vfprintf(R_Consolefile, format, arg);
+	    /* normally R_Consolefile is stderr and so unbuffered, but
+	       it can be something else (e.g. stdout on Win9x) */
 	    fflush(R_Consolefile);
 	} else vfprintf(R_Consolefile, format, arg);
     } else {

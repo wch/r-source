@@ -3961,10 +3961,11 @@ static void yyerror(char *s)
     R_ParseErrorFile = SrcFile;
     
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
+	int i;
     	/* Edit the error message */    
     	expecting = strstr(s + sizeof yyunexpected -1, yyexpecting);
     	if (expecting) *expecting = '\0';
-    	for (int i=0; yytname_translations[i]; i += 2) {
+    	for (i=0; yytname_translations[i]; i += 2) {
     	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
     	    	sprintf(R_ParseErrorMsg, _("unexpected %s"), 
     	    	    i/2 < YYENGLISH ? _(yytname_translations[i+1])
