@@ -26,7 +26,7 @@
 # include "../iconv/gconv_int.h"
 #else
 # if HAVE_ICONV
-# include <R_ext/Riconv.h>
+#  include <iconv.h>
 # endif
 #endif
 
@@ -136,7 +136,7 @@ struct converted_domain
   __gconv_t conv;
 #else
 # if HAVE_ICONV
-  void * conv;
+  iconv_t conv;
 # endif
 #endif
   /* The table of translated strings after charset conversion.  */

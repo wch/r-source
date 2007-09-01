@@ -1061,7 +1061,6 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 	     entry does not exist or if this does not contain the 'charset='
 	     information, we will assume the charset matches the one the
 	     current locale and we don't have to perform any conversion.  */
-# if 0
 # ifdef _LIBC
 	  convd->conv = (__gconv_t) -1;
 # else
@@ -1069,11 +1068,6 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 	  convd->conv = (iconv_t) -1;
 #  endif
 # endif
-# endif
-
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
-	  convd->conv = (void *) -1;
-#endif
 	  {
 	    char *nullentry;
 	    size_t nullentrylen;
@@ -1130,7 +1124,7 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 			convd->conv = (__gconv_t) -1;
 		      }
 # else
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+#  if HAVE_ICONV
 		    /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
 		       we want to use transliteration.  */
 #   if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 \
@@ -1145,13 +1139,13 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 			memcpy (tmp + len, "//TRANSLIT", 10 + 1);
 			outcharset = tmp;
 
-			convd->conv = Riconv_open (outcharset, charset);
+			convd->conv = iconv_open (outcharset, charset);
 
 			freea (outcharset);
 		      }
 		    else
 #   endif
-		      convd->conv = Riconv_open (outcharset, charset);
+		      convd->conv = iconv_open (outcharset, charset);
 #  endif
 # endif
 
@@ -1165,7 +1159,6 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 	}
 
       if (
-#if 0
 # ifdef _LIBC
 	  convd->conv != (__gconv_t) -1
 # else
@@ -1173,13 +1166,6 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 	  convd->conv != (iconv_t) -1
 #  endif
 # endif
-#endif
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
-	  convd->conv != (void *) -1
-#else
-	  0
-#endif
-
 	  )
 	{
 	  /* We are supposed to do a conversion.  First allocate an
@@ -1268,8 +1254,8 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 		    goto resize_freemem;
 
 		  outleft = freemem_size - sizeof (size_t);
-		  if (Riconv (convd->conv,
-			     &inptr, &inleft,
+		  if (iconv (convd->conv,
+			     (ICONV_CONST char **) &inptr, &inleft,
 			     &outptr, &outleft)
 		      != (size_t) (-1))
 		    {
