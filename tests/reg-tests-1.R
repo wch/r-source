@@ -4871,3 +4871,8 @@ try(match.arg(x,y)) # gave spurious warning
 res <- match.arg(x,y, several.ok = TRUE) # error
 stopifnot(identical(res, y))
 ## failed in 2.5.1
+
+## sweep() must work with 0-extent matrix/STATS :
+m <- matrix(1:5, 5,0)
+stopifnot(identical(m, sweep(m, 2, apply(m,2, min))))
+## failed in R-devel around 2007-08-31

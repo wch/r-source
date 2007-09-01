@@ -28,7 +28,7 @@ sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin=TRUE, ...)
             cumDim <- c(1, cumprod(dimmargin))
             upper <- min(cumDim[cumDim >= lstats])
             lower <- max(cumDim[cumDim <= lstats])
-            if (upper %% lstats != 0 || lstats %% lower != 0)
+            if (lstats && (upper %% lstats != 0 || lstats %% lower != 0))
                 warning("STATS does not recycle exactly across MARGIN")
         } else {
             dimmargin <- dimmargin[dimmargin > 1]
