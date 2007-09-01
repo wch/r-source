@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-08-27
+@set FAQ_DATE @value{FAQ_YEAR}-09-01
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -4443,6 +4443,8 @@ Sequential monitoring of clinical trials.
 @c @item serialize
 @c Simple interfce for serializing to connections.
 @c </COMMENT>
+@item seriation
+Infrastructure for seriation.
 @item session
 Functions for interacting with, saving and restoring R sessions.
 @item setRNG
