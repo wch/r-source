@@ -314,9 +314,8 @@ their names and re-install them from CRAN.
 Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
-1.5Gb.  It can be set to any amount between 32Mb and 4095Mb.  Be aware though
-that Windows has (in most versions) a maximum amount of user virtual
-memory of 2Gb.
+0.5Gb less than the limit of user virtual memory for a process (most
+often 2GB).  It can be set to any amount between 32Mb and 4095Mb.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a

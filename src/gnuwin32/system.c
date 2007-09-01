@@ -775,7 +775,7 @@ int cmdlineoptions(int ac, char **av)
     R_size_t value;
     char *p;
     char  s[1024], cmdlines[10000];
-    R_size_t Virtual, Phys; /* same as ulong on 32-bit: call returns DWORD */
+    R_size_t Virtual;
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
@@ -814,8 +814,8 @@ int cmdlineoptions(int ac, char **av)
     {    
 	MEMORYSTATUSEX ms;
 	GlobalMemoryStatusEx(&ms); /* Win2k or later */
-	Virtual = ms.ullTotalVirtual;
-	R_max_memory = Phys = ms.ullTotalPhys;
+	Virtual = ms.ullTotalVirtual; /* uint64 = DWORDLONG */
+	R_max_memory = ms.ullTotalPhys;
     }
 #else
     {
@@ -825,14 +825,8 @@ int cmdlineoptions(int ac, char **av)
 	   -1 on machines with >= 4Gb of RAM
 	*/
 	GlobalMemoryStatus(&ms);
-	Virtual = ms.dwTotalVirtual; Phys = ms.dwTotalPhys;
-	/* As from 2.4.0, look at the virtual memsize */
-	if(Virtual > 3072*Mega) /* some Win64 systems */
-	    R_max_memory = min(3584 * Mega, Phys);
-	else if(Virtual > 2048*Mega) /* /3GB systems */
-	    R_max_memory = min(2560 * Mega, Phys);
-	else  /* most 32-bit systems */
-	    R_max_memory = min(1536 * Mega, Phys);
+	Virtual = ms.dwTotalVirtual; /* uint32 = DWORD */
+	R_max_memory = min(Virtual - 512*Mega, ms.dwTotalPhys);
     }
 #endif
     /* need enough to start R, with some head room */
