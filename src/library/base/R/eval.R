@@ -48,8 +48,35 @@ local <-
 Recall <- function(...) .Internal(Recall(...))
 
 with <- function(data, expr, ...) UseMethod("with")
+within <- function(data, expr, ...) UseMethod("within")
 
 with.default <- function(data, expr, ...)
     eval(substitute(expr), data, enclos=parent.frame())
+within.default <- with.default
+
+within.data.frame <- within.list <- function(data, expr, ...) {
+    subd <- substitute(data)
+    if (is.name(subd))
+        subd <- deparse(subd)
+    if (!is.character(subd) || length(subd) != 1)
+        stop("'within' requires a name for its 'data' argument")
+    parent <- parent.frame()
+    if (!exists(subd, envir = parent, inherits = TRUE))
+        stop("'data' must exist")
+
+    newd <- get(subd, envir=parent)
+    e   <- evalq(environment(), newd)
+    ret <- eval(substitute(expr), e)
+    l   <- as.list(e)
+    del <- setdiff(names(newd), names(l))
+    newd[names(l)] <- l
+    newd[del] <- NULL
+    assign(subd, newd, envir=parent, inherits=TRUE)
+    invisible(ret)
+}
+
+
+
+
 
 force <- function(x) x

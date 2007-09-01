@@ -3191,6 +3191,7 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [31] rbind         row.names     row.names<-   rowsum        split        
 [36] split<-       stack         str           subset        summary      
 [41] t             tail          transform     unique        unstack      
+[46] within 
 > meth2gen("dendrogram")
 [1] [[         cophenetic cut        labels     plot       print      reorder   
 [8] rev        str       

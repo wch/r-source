@@ -243,6 +243,10 @@ NEW FEATURES
     o	vignette() has a new argument 'all' to choose between showing
     	vignettes in attached packages or in all installed packages.
 
+    o   New function within(), which is like with(), except that it
+        tries to store modifications back to the original in the list
+        and data frame cases.
+
     o	X11(), postscript() (and hence bitmap()), xfig(), jpeg(), png()
 	and the Windows devices win.print(), win.metafile() and bmp()
 	now warn (once at first use) if semi-transparent colours are
@@ -337,6 +341,11 @@ NEW FEATURES
     o	The reporting of syntax errors has been made more user-
 	friendly.	
 	
+    o   The mathematical annotation facility (plotmath) now recognises
+        a symbol() function which forces the font to be a symbol font.
+        This allows access to all characters in the Adobe Symbol 
+        encoding within plotmath expressions.
+
 
 METHODS PACKAGE
 
