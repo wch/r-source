@@ -40,19 +40,6 @@
 # include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2)
-#include <features.h>
-# ifndef __USE_POSIX
-#  define __USE_POSIX		/* for tzset */
-# endif
-# ifndef __USE_BSD
-#  define __USE_BSD		/* so that we get unsetenv() */
-# endif
-# ifndef __USE_MISC
-#  define __USE_MISC		/* for finite */
-# endif
-#endif
-
 #include <time.h>
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>

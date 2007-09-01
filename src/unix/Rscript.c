@@ -39,15 +39,6 @@ R --slave --no-restore --vanilla --file=foo [script_args]
 # include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2)
-#include <features.h>
-# ifndef __USE_SVID
-#  define __USE_SVID             /* so that we get putenv declared */
-# endif
-#endif
-
-
-
 #include <stdio.h>
 #include <limits.h> /* for PATH_MAX */
 #include <string.h>

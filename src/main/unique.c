@@ -28,11 +28,6 @@
 #include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2)
-/* for isnan in Rinlinedfuns.h */
-# define _SVID_SOURCE 1
-#endif
-
 #include <Defn.h>
 
 #define NIL -1

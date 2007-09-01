@@ -35,10 +35,6 @@
 #include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2) && !defined(_GNU_SOURCE)
-# define _GNU_SOURCE /* iswblank is a GNU extension, also in C99 */
-#endif
-
 #include <string.h>
 #include <stdlib.h>
 

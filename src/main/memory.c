@@ -36,11 +36,6 @@
 #include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2)
-/* for isnan in Rinlinedfuns.h */
-# define _SVID_SOURCE 1
-#endif
-
 #include <R_ext/RS.h> /* for S4 allocation */
 
 

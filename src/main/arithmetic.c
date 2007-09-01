@@ -23,11 +23,6 @@
 #include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2)
-/* for matherr etc */
-# define _SVID_SOURCE 1
-#endif
-
 #ifdef __OpenBSD__
 /* for definition of "struct exception" in math.h */
 # define __LIBM_PRIVATE

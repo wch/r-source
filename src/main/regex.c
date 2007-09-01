@@ -185,6 +185,7 @@
 #else
 # define BE(expr, val) (expr)
 #endif
+#undef inline
 #define inline R_INLINE
 
 /* Number of single byte character.  */

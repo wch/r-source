@@ -1611,6 +1611,7 @@ AC_CHECK_DECLS([alloca], , ,
 # include <alloca.h>
 #endif])
 ## fseeko/ftello may be macros, matherr is redefined
+## is.blank should be a macro according to C99
 AC_CHECK_FUNCS(fseeko ftello isblank matherr)
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
 R_CHECK_FUNCS([getgrgid], [#include <grp.h>])

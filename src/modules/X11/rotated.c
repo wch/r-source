@@ -31,10 +31,6 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_GLIBC2
-# define _BSD_SOURCE /* for M_PI */
-#endif
-
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
