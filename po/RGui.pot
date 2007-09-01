@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:55+0100\n"
+"POT-Creation-Date: 2007-09-01 11:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -495,15 +495,13 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: extra.c:722 preferences.c:793 ../extra/graphapp/dialogs.c:508
-#: ../extra/graphapp/dialogs.c:603
+#: extra.c:722 ../extra/graphapp/dialogs.c:508 ../extra/graphapp/dialogs.c:603
 msgid "OK"
 msgstr ""
 
-#: extra.c:723 preferences.c:794 ../extra/graphapp/dialogs.c:482
-#: ../extra/graphapp/dialogs.c:506 ../extra/graphapp/dialogs.c:512
-#: ../extra/graphapp/dialogs.c:587 ../extra/graphapp/dialogs.c:601
-#: ../extra/graphapp/dialogs.c:607
+#: extra.c:723 ../extra/graphapp/dialogs.c:482 ../extra/graphapp/dialogs.c:506
+#: ../extra/graphapp/dialogs.c:512 ../extra/graphapp/dialogs.c:587
+#: ../extra/graphapp/dialogs.c:601 ../extra/graphapp/dialogs.c:607
 msgid "Cancel"
 msgstr ""
 
@@ -580,18 +578,6 @@ msgstr ""
 
 #: preferences.c:681
 msgid "Rgui Configuration Editor"
-msgstr ""
-
-#: preferences.c:790
-msgid "Apply"
-msgstr ""
-
-#: preferences.c:791
-msgid "Save..."
-msgstr ""
-
-#: preferences.c:792
-msgid "Load..."
 msgstr ""
 
 #: rui.c:127

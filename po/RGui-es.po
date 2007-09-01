@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:55+0100\n"
+"POT-Creation-Date: 2007-09-01 11:40+0100\n"
 "PO-Revision-Date: 2006-12-12 12:24+0100\n"
 "Last-Translator: Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -545,15 +545,13 @@ msgstr "No es posible abrir el área de transferencia"
 msgid "Untitled"
 msgstr "Sin nombre"
 
-#: extra.c:722 preferences.c:793 ../extra/graphapp/dialogs.c:508
-#: ../extra/graphapp/dialogs.c:603
+#: extra.c:722 ../extra/graphapp/dialogs.c:508 ../extra/graphapp/dialogs.c:603
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:723 preferences.c:794 ../extra/graphapp/dialogs.c:482
-#: ../extra/graphapp/dialogs.c:506 ../extra/graphapp/dialogs.c:512
-#: ../extra/graphapp/dialogs.c:587 ../extra/graphapp/dialogs.c:601
-#: ../extra/graphapp/dialogs.c:607
+#: extra.c:723 ../extra/graphapp/dialogs.c:482 ../extra/graphapp/dialogs.c:506
+#: ../extra/graphapp/dialogs.c:512 ../extra/graphapp/dialogs.c:587
+#: ../extra/graphapp/dialogs.c:601 ../extra/graphapp/dialogs.c:607
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -644,18 +642,6 @@ msgstr "Error en la linea %d del archivo %s"
 #: preferences.c:681
 msgid "Rgui Configuration Editor"
 msgstr "Editor de configuración de Rgui"
-
-#: preferences.c:790
-msgid "Apply"
-msgstr "Aplicar"
-
-#: preferences.c:791
-msgid "Save..."
-msgstr "Guardar como ..."
-
-#: preferences.c:792
-msgid "Load..."
-msgstr "Cargar"
 
 #: rui.c:127
 msgid "Select file to source"
@@ -1239,6 +1225,15 @@ msgstr "Esperando para confirmar cambio de página..."
 #: ../library/grDevices/src/devWindows.c:3175
 msgid "Click or hit ENTER for next page"
 msgstr "Clique con el mouse o presione ENTER para próxima página"
+
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
+
+#~ msgid "Save..."
+#~ msgstr "Guardar como ..."
+
+#~ msgid "Load..."
+#~ msgstr "Cargar"
 
 #~ msgid "75% quality..."
 #~ msgstr "75% calidad..."

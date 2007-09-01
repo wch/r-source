@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:55+0100\n"
+"POT-Creation-Date: 2007-09-01 11:40+0100\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -536,15 +536,13 @@ msgstr "clipborad를 열수 없습니다"
 msgid "Untitled"
 msgstr "제목이 없음"
 
-#: extra.c:722 preferences.c:793 ../extra/graphapp/dialogs.c:508
-#: ../extra/graphapp/dialogs.c:603
+#: extra.c:722 ../extra/graphapp/dialogs.c:508 ../extra/graphapp/dialogs.c:603
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:723 preferences.c:794 ../extra/graphapp/dialogs.c:482
-#: ../extra/graphapp/dialogs.c:506 ../extra/graphapp/dialogs.c:512
-#: ../extra/graphapp/dialogs.c:587 ../extra/graphapp/dialogs.c:601
-#: ../extra/graphapp/dialogs.c:607
+#: extra.c:723 ../extra/graphapp/dialogs.c:482 ../extra/graphapp/dialogs.c:506
+#: ../extra/graphapp/dialogs.c:512 ../extra/graphapp/dialogs.c:587
+#: ../extra/graphapp/dialogs.c:601 ../extra/graphapp/dialogs.c:607
 msgid "Cancel"
 msgstr "취소"
 
@@ -632,20 +630,6 @@ msgstr "파일 %2$s의 %1$d 항목에 에러가 발생했습니다"
 #: preferences.c:681
 msgid "Rgui Configuration Editor"
 msgstr "RGui 구성Editor"
-
-#: preferences.c:790
-msgid "Apply"
-msgstr "적용"
-
-#: preferences.c:791
-#, fuzzy
-msgid "Save..."
-msgstr "다른 이름으로 저장..."
-
-#: preferences.c:792
-#, fuzzy
-msgid "Load..."
-msgstr "패키지 불러오기..."
 
 #: rui.c:127
 msgid "Select file to source"
@@ -1226,6 +1210,17 @@ msgstr "페이지 변경을 확인하는까지 기다리는 중..."
 #: ../library/grDevices/src/devWindows.c:3175
 msgid "Click or hit ENTER for next page"
 msgstr "click 또는 ENTER 키를 누르는 것으로 다음 페이지로 이동됩니다"
+
+#~ msgid "Apply"
+#~ msgstr "적용"
+
+#, fuzzy
+#~ msgid "Save..."
+#~ msgstr "다른 이름으로 저장..."
+
+#, fuzzy
+#~ msgid "Load..."
+#~ msgstr "패키지 불러오기..."
 
 #~ msgid "75% quality..."
 #~ msgstr "75퍼센트 품질..."
