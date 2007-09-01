@@ -61,6 +61,9 @@ BUG FIXES
     o	The workaround for seeking on > 2Gb files did not work correctly
 	on Unix-alike 32-bit systems.  (PR#9883)
 
+    o	We had identical(NaN, NA_real_) != identical(NA_real_, NaN),
+	spotted by Petr Savicky.
+
 
 
 		CHANGES IN R VERSION 2.5.1
