@@ -24,6 +24,8 @@
 #if defined(HAVE_GLIBC2)
 /* for fileno */
 # define _POSIX_SOURCE 1
+/* for fseeko and ftello */
+# define _XOPEN_SOURCE 600
 #endif
 
 #include <Defn.h>
