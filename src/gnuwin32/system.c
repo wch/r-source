@@ -56,7 +56,7 @@ void editorcleanall();                  /* from editor.c */
 
 int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
 
-R_size_t R_max_memory = INT_MAX;\
+R_size_t R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;
 
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
@@ -775,12 +775,12 @@ int cmdlineoptions(int ac, char **av)
     R_size_t value;
     char *p;
     char  s[1024], cmdlines[10000];
+    R_size_t Virtual;
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
     structRstart rstart;
     Rstart Rp = &rstart;
-    MEMORYSTATUS ms;
     Rboolean usedRdata = FALSE, processing = TRUE;
 
     /* ensure R_Home gets set early: we are in rgui or rterm here */
@@ -810,12 +810,16 @@ int cmdlineoptions(int ac, char **av)
 
     /* set defaults for R_max_memory. This is set here so that
        embedded applications get no limit */
-    GlobalMemoryStatus(&ms);
-    /* As from 2.4.0, look at the virtual memsize */
-    if((unsigned int) ms.dwTotalVirtual > 2048*Mega)
-	R_max_memory = min(2560 * Mega, ms.dwTotalPhys);
-    else
-	R_max_memory = min(1536 * Mega, ms.dwTotalPhys);
+    {
+	MEMORYSTATUS ms;
+	/* See http://support.microsoft.com/kb/274558
+	   Since our applications are large-addess aware, should return
+	   -1 on machines with >= 4Gb of RAM
+	*/
+	GlobalMemoryStatus(&ms);
+	Virtual = ms.dwTotalVirtual; /* uint32 = DWORD */
+	R_max_memory = min(Virtual - 512*Mega, ms.dwTotalPhys);
+    }
     /* need enough to start R: fails on a 8Mb system */
     R_max_memory = max(32 * Mega, R_max_memory);
 
@@ -917,15 +921,19 @@ int cmdlineoptions(int ac, char **av)
 		    if(ierr < 0)
 			sprintf(s, _("WARNING: --max-mem-size value is invalid: ignored\n"));
 		    else
-			sprintf(s, _("WARNING: --max-mem-size=%lu'%c': too large and ignored\n"),
+			sprintf(s, _("WARNING: --max-mem-size=%lu%c: too large and ignored\n"),
 				(unsigned long) value,
-				(ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
+				(ierr == 1) ? 'M': ((ierr == 2) ? 'K': 'G'));
 		    R_ShowMessage(s);
 		} else if (value < 32 * Mega) {
-		    sprintf(s, _("WARNING: max-mem-size =%4.1fM too small and ignored\n"), value/(1024.0 * 1024.0));
+		    sprintf(s, _("WARNING: --max-mem-size=%4.1fM: too small and ignored\n"), 
+			    value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
-		} else if (value >= 3072 * Mega) {
-		    sprintf(s, _("WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"), value/(1024.0 * 1024.0));
+		} else if (value > Virtual) {
+		    sprintf(s, _("WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"), 
+			    value/(1024.0 * 1024.0), 
+			    (unsigned int) (Virtual/(1024.0 * 1024.0)));
+		    R_max_memory = Virtual;
 		    R_ShowMessage(s);
 		} else
 		    R_max_memory = value;
@@ -1029,7 +1037,7 @@ int cmdlineoptions(int ac, char **av)
     return 0;
 }
 
-/* only for back-compatibility */
+/* only for back-compatibility: used by Rserve */
 void setup_term_ui()
 {
     initapp(0, 0);
