@@ -336,11 +336,6 @@ amount of RAM and 2.5Gb.  On some 64-bit versions of Windows (e.g.@:
 Vista) the limit is 4GB, and there the default for @code{--max-mem-size}
 is the smaller of the amount of RAM and 3.5Gb.
 
-It is possible that the Windows API calls used will give misleading
-results on machines with more than 4Gb of physical RAM (and later ones
-cannot be used as R must run on Windows 2000 and earlier): for safety
-set @code{--max-mem-size} explicitly on such machines.
-
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?

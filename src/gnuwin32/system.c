@@ -775,12 +775,12 @@ int cmdlineoptions(int ac, char **av)
     R_size_t value;
     char *p;
     char  s[1024], cmdlines[10000];
+    R_size_t Virtual, Phys; /* same as ulong on 32-bit: call returns DWORD */
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
     structRstart rstart;
     Rstart Rp = &rstart;
-    MEMORYSTATUS ms;
     Rboolean usedRdata = FALSE, processing = TRUE;
 
     /* ensure R_Home gets set early: we are in rgui or rterm here */
@@ -810,15 +810,32 @@ int cmdlineoptions(int ac, char **av)
 
     /* set defaults for R_max_memory. This is set here so that
        embedded applications get no limit */
-    GlobalMemoryStatus(&ms);
-    /* As from 2.4.0, look at the virtual memsize */
-    if((unsigned int) ms.dwTotalVirtual > 3072*Mega)
-	R_max_memory = min(3584 * Mega, ms.dwTotalPhys);
-    else if((unsigned int) ms.dwTotalVirtual > 2048*Mega)
-	R_max_memory = min(2560 * Mega, ms.dwTotalPhys);
-    else
-	R_max_memory = min(1536 * Mega, ms.dwTotalPhys);
-    /* need enough to start R: fails on a 8Mb system */
+#ifdef WIN64
+    {    
+	MEMORYSTATUSEX ms;
+	GlobalMemoryStatusEx(&ms); /* Win2k or later */
+	Virtual = ms.ullTotalVirtual;
+	R_max_memory = Phys = ms.ullTotalPhys;
+    }
+#else
+    {
+	MEMORYSTATUS ms;
+	/* See http://support.microsoft.com/kb/274558
+	   Since our applications are large-addess aware, should return
+	   -1 on machines with >= 4Gb of RAM
+	*/
+	GlobalMemoryStatus(&ms);
+	Virtual = ms.dwTotalVirtual; Phys = ms.dwTotalPhys;
+	/* As from 2.4.0, look at the virtual memsize */
+	if(Virtual > 3072*Mega) /* some Win64 systems */
+	    R_max_memory = min(3584 * Mega, Phys);
+	else if(Virtual > 2048*Mega) /* /3GB systems */
+	    R_max_memory = min(2560 * Mega, Phys);
+	else  /* most 32-bit systems */
+	    R_max_memory = min(1536 * Mega, Phys);
+    }
+#endif
+    /* need enough to start R, with some head room */
     R_max_memory = max(32 * Mega, R_max_memory);
 
     R_DefParams(Rp);
@@ -919,15 +936,19 @@ int cmdlineoptions(int ac, char **av)
 		    if(ierr < 0)
 			sprintf(s, _("WARNING: --max-mem-size value is invalid: ignored\n"));
 		    else
-			sprintf(s, _("WARNING: --max-mem-size=%lu'%c': too large and ignored\n"),
+			sprintf(s, _("WARNING: --max-mem-size=%lu%c: too large and ignored\n"),
 				(unsigned long) value,
-				(ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
+				(ierr == 1) ? 'M': ((ierr == 2) ? 'K': 'G'));
 		    R_ShowMessage(s);
 		} else if (value < 32 * Mega) {
-		    sprintf(s, _("WARNING: max-mem-size =%4.1fM too small and ignored\n"), value/(1024.0 * 1024.0));
+		    sprintf(s, _("WARNING: --max-mem-size=%4.1fM: too small and ignored\n"), 
+			    value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
-		} else if (value >= 3072 * Mega) {
-		    sprintf(s, _("WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"), value/(1024.0 * 1024.0));
+		} else if (value > Virtual) {
+		    sprintf(s, _("WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"), 
+			    value/(1024.0 * 1024.0), 
+			    (unsigned int) (Virtual/(1024.0 * 1024.0)));
+		    R_max_memory = Virtual;
 		    R_ShowMessage(s);
 		} else
 		    R_max_memory = value;
