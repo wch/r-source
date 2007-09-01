@@ -55,6 +55,8 @@ uniroot <- function(f, interval, ...,
         stop("'interval' must be a vector of length 2")
     if(!is.numeric(lower) || !is.numeric(upper) || lower >= upper)
         stop("lower < upper  is not fulfilled")
+    if(is.na(f.lower)) stop("f.lower = f(lower) is NA")
+    if(is.na(f.upper)) stop("f.upper = f(upper) is NA")
     if(f.lower * f.upper > 0)
 	stop("f() values at end points not of opposite sign")
     val <- .Internal(zeroin2(function(arg) f(arg, ...),

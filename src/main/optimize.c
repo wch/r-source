@@ -225,14 +225,14 @@ SEXP attribute_hidden do_zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* f(ax) = f(xmin) */
     f_ax = asReal(CAR(args));
-    if (!R_FINITE(f_ax))
-	error(_("invalid '%s' value"), "f_ax");
+    if (ISNA(f_ax))
+	error(_("NA value for '%s' is not allowed"), "f.lower");
     args = CDR(args);
 
     /* f(bx) = f(xmax) */
     f_bx = asReal(CAR(args));
-    if (!R_FINITE(f_bx))
-	error(_("invalid '%s' value"), "f_bx");
+    if (ISNA(f_bx))
+	error(_("NA value for '%s' is not allowed"), "f.upper");
     args = CDR(args);
 
     DO_ZEROIN_part_2;
