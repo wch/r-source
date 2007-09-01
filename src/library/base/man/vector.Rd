@@ -8,6 +8,7 @@
 \alias{as.vector}
 \alias{as.vector.factor}
 \alias{is.vector}
+\alias{atomic} % for read.table.Rd
 \title{Vectors}
 \usage{
 vector(mode = "logical", length = 0)

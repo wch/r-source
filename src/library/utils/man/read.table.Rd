@@ -243,12 +243,16 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   the column of row names (if any).
 
   Less memory will be used if \code{colClasses} is specified as one of
-  the six atomic vector classes.
+  the six \link{atomic} vector classes.  This can be particularly so when
+  reading a column that takes many distinct numeric values, as storing
+  each distinct value as a character string can take up to 14 times as
+  much memory as storing it as an integer.
 
   Using \code{nrows}, even as a mild over-estimate, will help memory
   usage.
 
-  Using \code{comment.char = ""} will be appreciably faster.
+  Using \code{comment.char = ""} will be appreciably faster than the
+  \code{read.table} default.
 
   \code{read.table} is not the right tool for reading large matrices,
   especially those with many columns: it is designed to read

@@ -58,8 +58,9 @@ void attribute_hidden nl_Rdummy()
 #endif
 
 
-/* The 'real' main() program is in ../<SYSTEM>/system.c */
-/* e.g. ../unix/system.c */
+/* The 'real' main() program is in Rmain.c on Unix-alikes, and
+   src/gnuwin/front-ends/graphappmain.c on Windows, unless of course
+   R is embedded */
 
 /* Global Variables:  For convenience, all interpeter global symbols
  * ================   are declared in Defn.h as extern -- and defined here.

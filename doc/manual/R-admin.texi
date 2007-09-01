@@ -2098,9 +2098,10 @@ will make standalone libraries @file{libRmath.a} and @file{libRmath.so}.
 @samp{make static} and @code{make shared} will create just one of them.
 
 @strong{NB:} certain compilers are unable to do compile-time IEEE-754
-arithmetic and so cannot compile @file{mlutils.c}.  The known example is
-Sun's @code{cc}.  Use @code{gcc} for @file{mlutils.c} (or the whole
-library).
+arithmetic and so cannot compile @file{mlutils.c} and several other
+files.  The known example is earlier versions of Sun's @code{cc}
+(e.g. Forte 6 and 7): the Sun Studio 11 suite does work.
+
 
 To use the routines in your own C or C++ programs, include
 
@@ -3059,7 +3060,7 @@ appropriately.
 
 @command{gfortran} is the F95 compiler that is part of
 @command{gcc}@tie{}4.@var{x}.@var{y}.  There were problems compiling
-@R{} with the first release (@command{gcc}@tie{}4.0.0) and more
+@R{} with the first release (@command{gcc}@tie{}4.0.0) and more with
 pre-releases, but these are resolved in later versions.
 
 On Linux @cputype{x86_64} systems there is an incompatibility in the
@@ -3606,7 +3607,7 @@ we used
 @example
 CC="cc -xc99"
 CPPFLAGS=-I/opt/csw/include
-CFLAGS=-O
+CFLAGS="-O -xlibmieee"
 F77=f95
 FFLAGS=-O4
 CXX=CC
@@ -3632,11 +3633,14 @@ higher performance: Sun recommend
 @noindent
 (in @code{CFLAGS} etc.) as a good compromise for recent Sparc chipsets.
 
+By default the Sun Studio compilers do not conform to the C99 standard
+(appendix F 8.9) on the return values of functions such as @code{log}:
+use @code{-xlibmieee} to ensure this.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
-CFLAGS="-xO5 -xc99 -xlibmil -nofstore"
+CFLAGS="-xO5 -xc99 -xlibmieee -xlibmil -nofstore"
 FFLAGS="-O5 -libmil -nofstore"
 CXXFLAGS="-xO5 -xlibmil -nofstore"
 SAFE_FFLAGS="-O5 -libmil -fstore"
@@ -3717,7 +3721,8 @@ Solaris 8 is
 
 @noindent
 (@cputype{x86} versions do not need @samp{-dalign}, and some do not
-support it.)
+support it.)  To get correct results for @code{log} requires
+@code{-xlibmieee}, but @R{} works around that.
 
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
