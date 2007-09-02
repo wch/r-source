@@ -1762,7 +1762,7 @@ static unsigned long bitgp(XImage *xi, int x, int y)
     default:
 	return 0;
     }
-    return 0; /* not reached, needed for some compilers */
+    /* return 0;  not reached, needed for some compilers */
 }
 
 static void X11_Close_bitmap(newX11Desc *xd)

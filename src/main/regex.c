@@ -1351,7 +1351,7 @@ re_string_skip_chars (re_string_t *pstr, int new_raw_idx, wint_t *last_wc)
   mbstate_t prev_st;
   int rawbuf_idx;
   size_t mbclen;
-  wchar_t wc = WEOF;
+  wchar_t wc = (wchar_t) WEOF; /* R change, for Sun Studio 12 on Linux */
 
   /* Skip the characters which are not necessary to check.  */
   for (rawbuf_idx = pstr->raw_mbs_idx + pstr->valid_raw_len;
