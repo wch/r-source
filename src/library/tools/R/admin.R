@@ -112,8 +112,8 @@ function(db, verbose = FALSE)
             Built <- NULL
         } else {
             names(Built) <- c("R", "Platform", "Date", "OStype")
-            Built[["R"]] <- package_version(sub("^R ([0-9.]+)", "\\1",
-                                                Built[["R"]]))
+            Built[["R"]] <- R_system_version(sub("^R ([0-9.]+)", "\\1",
+                                                 Built[["R"]]))
         }
     } else Built <- NULL
     ## might perhaps have multiple entries
@@ -770,7 +770,7 @@ function(dir)
             message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
         else
             status <- !do.call(depends$op,
-                               list(R.version, depends$version))
+                               list(getRversion(), depends$version))
         if(status != 0) {
             package <- Sys.getenv("R_PACKAGE_NAME")
             if(nzchar(package))

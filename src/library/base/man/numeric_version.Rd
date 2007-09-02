@@ -1,51 +1,64 @@
-% File src/library/base/man/package_version.Rd
+% File src/library/base/man/numeric_version.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{package-version}		% Cannot have 'package_version' ...
+\name{numeric_version}
+% User-level functions.
+\alias{numeric_version}
+\alias{as.numeric_version}
+\alias{is.numeric_version}
 \alias{package_version}
 \alias{is.package_version}
 \alias{as.package_version}
-\alias{as.character.package_version}
-\alias{print.package_version}
-\alias{Ops.package_version}
-\alias{Summary.package_version}
-\alias{c.package_version}
-\alias{[.package_version}
-\alias{[[.package_version}
-\alias{$.package_version}
-\alias{as.data.frame.package_version}
-\alias{.encode_package_version}
-\alias{.decode_package_version}
+\alias{R_system_version}
 \alias{getRversion}
-\title{Package versions}
-\description{A simple S3 class for representing package versions, and
-  associated methods.}
+% Methods.
+\alias{[.numeric_version}
+\alias{[[.numeric_version}
+\alias{Ops.numeric_version}
+\alias{Summary.numeric_version}
+\alias{as.character.numeric_version}
+\alias{c.numeric_version}
+\alias{as.data.frame.numeric_version}
+\alias{print.numeric_version}
+\alias{$.package_version}
+% Internal.
+\alias{.encode_numeric_version}
+\alias{.decode_numeric_version}
+\alias{.make_numeric_version}
+\title{Numeric versions}
+\description{A simple S3 class for representing numeric versions
+  including package versions, and associated methods.}
 \usage{
+numeric_version(x, strict = TRUE)
 package_version(x, strict = TRUE)
-
+R_system_version(x, strict = TRUE)
 getRversion()
 }
 \arguments{
-  \item{x}{a character vector with package version strings, or an R
+  \item{x}{a character vector with suitable numeric version strings (see
+    \bold{Details}); for \code{package_version}, alternatively an R
     version object as obtained by \code{\link{R.version}}.}
-  \item{strict}{a logical indicating whether invalid package versions
+  \item{strict}{a logical indicating whether invalid numeric versions
     should results in an error (default) or not.}
 }
 \details{
-  \R (package) versions are sequences of at least two non-negative
-  integers, usually (e.g., in package \file{DESCRIPTION} files)
-  represented as character strings with the elements of the sequence
-  concatenated and separated by single \samp{.} or \samp{-} characters.
+  Numeric versions are sequences of one or more non-negative integers,
+  usually (e.g., in package \file{DESCRIPTION} files) represented as
+  character strings with the elements of the sequence concatenated and
+  separated by single \samp{.} or \samp{-} characters.  \R package
+  versions consist of at least two such integers, an \R system version
+  of exactly three (major, minor and patchlevel).
 
-  \code{package_version} creates a representation from such strings
-  which allows for coercion and testing, combination, comparison,
-  summaries (min/max), inclusion in data frames, subscripting, and
-  printing.
+  Functions \code{numeric_version}, \code{package_version} and
+  \code{R_system_version} create a representation from such strings (if
+  suitable) which allows for coercion and testing, combination,
+  comparison, summaries (min/max), inclusion in data frames,
+  subscripting, and printing.
 
-  \code{getRversion} returns the version of the running \R as an object
-  of class \code{"package_version"}.
+  \code{getRversion} returns the version of the running \R as an R
+  system version object.
 }
 \seealso{
   \code{\link{compareVersion}}
@@ -58,10 +71,10 @@ x[2, 2]
 x$major
 x$minor
 
-if(getRversion() <= "2.5.0") { # work around missing feature
-  cat("your version of R, ", as.character(getRversion()),
+if(getRversion() <= "2.5.0") { ## work around missing feature
+  cat("Your version of R, ", as.character(getRversion()),
       ", is outdated.\n",
-      "Now trying to work around that ..\n", sep='')
+      "Now trying to work around that ...\n", sep = "")
 }
 
 }

@@ -43,5 +43,7 @@ shQuote <- function(string, type = c("sh", "csh", "cmd"))
 function()
 {
     list(valid_package_name = "[[:alpha:]][[:alnum:].]*",
-         valid_package_version = "([[:digit:]]+[.-]){1,}[[:digit:]]+")
+         valid_package_version = "([[:digit:]]+[.-]){1,}[[:digit:]]+",
+         valid_R_system_version =
+         "[[:digit:]]+\\.[[:digit:]]+\\.[[:digit:]]+")
 }

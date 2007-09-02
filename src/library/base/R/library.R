@@ -42,7 +42,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## That this is NULL or of length 1 (installed < 2.6.0 only) or
         ## length 3 with valid components was checked at INSTALL time.
         if(length(Rdeps <- pkgInfo$Rdepends) > 1) {
-            target <- Rdeps$version
+            target <- as.numeric_version(Rdeps$version)
             res <- eval(parse(text=paste("current", Rdeps$op, "target")))
             if(!res)
                 stop(gettextf("This is R %s, package '%s' needs %s %s",
@@ -52,11 +52,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## which version was this package built under?
         if(!is.null(built <- pkgInfo$Built)) {
             ## must be >= 2.0.0
-            if(built$R < "2.0.0")
+            R_version_built_under <- as.numeric_version(built$R)
+            if(R_version_built_under < "2.0.0")
                 stop(gettextf("package '%s' was built before R 2.0.0: please re-install it",
                               pkgname), call. = FALSE, domain = NA)
             ## warn if later than this version
-            if(built$R > current)
+            if(R_version_built_under > current)
                 warning(gettextf("package '%s' was built under R version %s",
                                  pkgname, as.character(built$R)),
                         call. = FALSE, domain = NA)
@@ -1027,9 +1028,10 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                                       pkg, pkgname),
                              call. = FALSE, domain = NA)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
-                    if (!eval(parse(text=paste("current", z$op, "z$version"))))
+                    target <- as.numeric_version(z$version)
+                    if (!eval(parse(text=paste("current", z$op, "target"))))
                         stop(gettextf("package '%s' %s was found, but %s %s is required by '%s'",
-                             pkg, current, z$op, z$version, pkgname),
+                             pkg, current, z$op, target, pkgname),
                              call. = FALSE, domain = NA)
                 }
 
@@ -1046,9 +1048,10 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
-                    if (!eval(parse(text=paste("current", z$op, "z$version"))))
+                    target <- as.numeric_version(z$version)
+                    if (!eval(parse(text=paste("current", z$op, "target"))))
                         stop(gettextf("package '%s' %s is loaded, but %s %s is required by '%s'",
-                             pkg, current, z$op, z$version, pkgname),
+                             pkg, current, z$op, target, pkgname),
                              call. = FALSE, domain = NA)
                 }
             }
