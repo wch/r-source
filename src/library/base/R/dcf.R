@@ -170,9 +170,8 @@ function(x, file = "", append = FALSE,
     eor <- character(sum(is_not_empty))
     if(length(eor)) {
         ## Newline for end of record.
-        ## Note that we also write a trailing blank line.  (Should we?)
-        eor[ c(diff(c(col(out))[is_not_empty]), 1) >= 1 ] <- "\n"
-        ## eor[ diff(c(col(out))[is_not_empty]) >= 1 ] <- "\n"
+        ## Note that we do not write a trailing blank line.
+        eor[ diff(c(col(out))[is_not_empty]) >= 1 ] <- "\n"
     }
     writeLines(paste(c(out[is_not_empty]), eor, sep = ""), file)
 }
