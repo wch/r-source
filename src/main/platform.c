@@ -390,6 +390,12 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(i = 0; i < n; i++) {
 	    status = 0;
 	    if(!(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
+	    if(PRIMVAL(op) == 1) {
+	    	strcpy(buf, "#line 1 \"");
+	    	strcat(buf, CHAR(STRING_ELT(f2, i)));
+	    	strcat(buf, "\"\n");
+	    	fwrite(buf, 1, strlen(buf), fp2);
+	    }
 	    while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
 		if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
 		    goto append_error;

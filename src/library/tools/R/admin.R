@@ -268,6 +268,7 @@ function(dir, outDir)
             if(any(is.na(tmp)))
                stop(gettextf("unable to re-encode '%s'", basename(f)),
                     domain = NA, call. = FALSE)
+            writeLines(paste("#line(1, \"", f, "\")", sep=""), con)                    
             writeLines(tmp, con)
         }
     } else {

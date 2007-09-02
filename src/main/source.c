@@ -100,21 +100,20 @@ void attribute_hidden parseError(SEXP call, int linenum)
     char filename[128];
     if (linenum) {
     	getParseFilename(filename, sizeof(filename)-2);
-    	if (strlen(filename)) strcpy(filename + strlen(filename), ": ");
 
 	switch (len) {
 	case 0:
-	    error(_("%s%s on line %d"),
-		  filename, R_ParseErrorMsg, linenum);
+	    error("%s:%d: %s",
+		  filename, linenum, R_ParseErrorMsg);
 	    break;
 	case 1:
-	    error(_("%s%s at\n%d: %s"),
-		  filename, R_ParseErrorMsg, linenum,
+	    error("%s:%d: %s\n%d: %s",
+		  filename, linenum, R_ParseErrorMsg, linenum,
 		  CHAR(STRING_ELT(context, 0)));
 	    break;
 	default:
-	    error(_("%s%s at\n%d: %s\n%d: %s"),
-		  filename, R_ParseErrorMsg, linenum-1,
+	    error("%s:%d: %s\n%d: %s\n%d: %s",
+		  filename, linenum, R_ParseErrorMsg, linenum-1,
 		  CHAR(STRING_ELT(context, len-2)),
 		      linenum, CHAR(STRING_ELT(context, len-1)));
 	    break;

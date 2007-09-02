@@ -405,6 +405,11 @@ function(package, dir, lib.loc = NULL)
                 sub("^% --- Source file: (.+) ---$", "\\1", paths)
             else
                 NULL
+        if (!is.null(names(db))) 
+            db <- lapply(db, function(Rd) {
+            			names(Rd) <- (1:length(Rd)) - 1
+            			Rd
+            		     })
     }
     else {
         if(missing(dir))
@@ -422,6 +427,10 @@ function(package, dir, lib.loc = NULL)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- lapply(docsFiles, .read_Rd_lines_quietly)
         names(db) <- docsFiles
+        db <- lapply(db, function(Rd) {
+            			names(Rd) <- 1:length(Rd)
+            			Rd
+            		     })
     }
 
     db

@@ -72,6 +72,7 @@ static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP);
+static int 	processLineDirective(int);
 
 /* These routines allocate constants */
 
@@ -95,6 +96,8 @@ static int	xxlastlinelen;
 static SEXP     SrcFile = NULL;
 static SEXP	SrcRefs = NULL;
 static PROTECT_INDEX srindex;
+
+#define min(a, b) (a<b?a:b)
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
@@ -1778,8 +1781,14 @@ static int SkipComment(void)
     DECLARE_YYTEXT_BUFP(yyp);
     int c;
     YYTEXT_PUSH('#', yyp);
-    while ((c = xxgetc()) != '\n' && c != R_EOF)
+    while (isalpha(c = xxgetc())) YYTEXT_PUSH(c, yyp);
+    if (!strncmp(yytext, "#line", yyp - yytext)) {
+    	c = processLineDirective(c);
+    }
+    while (c != '\n' && c != R_EOF) {
 	YYTEXT_PUSH(c, yyp);
+	c = xxgetc();
+    }
     YYTEXT_PUSH('\0', yyp);
     if (c == R_EOF) EndOfFile = 2;
     return c;
@@ -2196,6 +2205,42 @@ static int SymbolValue(int c)
     }
     PROTECT(yylval = install(yytext));
     return SYMBOL;
+}
+
+static void setParseFilename(char* newname) {
+    if (SrcFile && isEnvironment(SrcFile)) {
+	SEXP filename;
+	PROTECT(filename = ScalarString(mkChar(newname)));
+	defineVar(install("filename"), filename, SrcFile);
+	UNPROTECT(1);
+    }
+}
+
+static int processLineDirective(int c)
+{
+    int tok, linenumber;
+    xxungetc(c);
+    c = SkipSpace();
+    if (c != '(') return(c);
+    c = SkipSpace();
+    if (!isdigit(c)) return(c);
+    tok = NumericValue(c);
+    linenumber = atoi(yytext);
+    c = SkipSpace();
+    if (c == ',') {
+    	c = SkipSpace();
+	if (c == '"' || c == '\'') {
+    	    tok = StringValue(c);
+    	    c = SkipSpace();
+    	} else return(c);
+    }
+    if (c == ')') {
+    	if (tok == STR_CONST) setParseFilename(yytext);
+        while ((c = xxgetc()) != '\n' && c != R_EOF) /* skip */ ;
+    	xxlineno = linenumber;
+    	R_ParseContext[R_ParseContextLast] = '\0';  /* Context report shouldn't show the directive */
+    }
+    return(c);
 }
 
 /* Split the input stream into tokens. */
