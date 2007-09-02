@@ -621,7 +621,7 @@ static void ran_array(long aa[],int n)    /* put n new random numbers in aa */
 }
 #define QUALITY 1009 /* recommended quality level for high-res use */
 static long ran_arr_buf[QUALITY];
-static long ran_arr_sentinel=-1;
+static long ran_arr_sentinel=(long)-1;
 static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
 static long ran_arr_cycle()
