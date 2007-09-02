@@ -18,15 +18,20 @@
 \usage{
 with(data, expr, \dots)
 within(data, expr, \dots)
-%\method{with}{default}(data, expr, \dots)
+\method{within}{data.frame}(data, expr, fix=TRUE, inherits=FALSE, \dots)
+\method{within}{list}(data, expr, fix=TRUE, inherits=FALSE, \dots)
 }
 \arguments{
   \item{data}{data to use for constructing an environment. For the
-    default \code{with }method this may be an environment, a list, a
+    default \code{with} method this may be an environment, a list, a
     data frame, or an integer as in \code{sys.call}. For \code{within},
-    it must be an environment, or the name of a preexisting list or data
-    frame as a symbol or a character of length 1.}
+    it can be an environment, a list, or a data
+    frame; it must be a simple name if \code{fix=TRUE} is used.}
   \item{expr}{expression to evaluate.}
+  \item{fix}{if \code{TRUE}, store the modified object back
+    under the original name, otherwise return it.}
+  \item{inherits}{when storing the result, should the enclosing frames
+    of the environment be inspected? (as in \code{assign})}
   \item{\dots}{arguments to be passed to future methods.}
 }
 \details{
@@ -35,17 +40,25 @@ within(data, expr, \dots)
   the caller's environment as its parent.  This is useful for
   simplifying calls to modeling functions.
 
+  Note that assignments within \code{expr} take place in the constructed
+  environment and not in the user's workspace.
+
   \code{within} is similar, except that it examines the environment
   after the evaluation of \code{expr} and makes the corresponding
   modifications to \code{data} (this may fail in the data frame case if
-  objects are created which cannot be stored back). \code{within} can be
-  used as an alternative to \code{transform}.
-
-  Note that assignments within \code{expr} take place in the constructed
-  environment and not in the user's workspace.
+  objects are created which cannot be stored in a data frame), and
+  optionally stores it back or returns it. \code{within} can be used as
+  an alternative to \code{transform}.
+  
+}
+\value{
+  For \code{with} and for \code{within} when \code{fix=TRUE}, the value
+  of the evaluated \code{expr}. For \code{within} when \code{fix=FALSE},
+  the modified object.
 }
 \seealso{
-  \code{\link{evalq}}, \code{\link{attach}}, \code{\link{transform}} .
+  \code{\link{evalq}}, \code{\link{attach}}, \code{\link{assign}},
+  \code{\link{transform}}. 
 }
 \examples{
 require(stats); require(graphics)
@@ -59,13 +72,17 @@ with(anorexia, {
 })
 }
 
-aq <- airquality # Must make a copy
-within(aq, {     # Notice that multiple vars can be changed
+
+
+## Notice that, since "inherits" is FALSE by default, the modified
+## airquality data end up in the global environment
+
+within(airquality, {     # Notice that multiple vars can be changed
     lOzone<-log(Ozone)
     Month<-factor(month.abb[Month])
     rm(Day)
 })
-head(aq)
+head(airquality)
 
 with(data.frame(u = c(5,10,15,20,30,40,60,80,100),
                 lot1 = c(118,58,42,35,27,25,21,19,18),

@@ -54,28 +54,32 @@ with.default <- function(data, expr, ...)
     eval(substitute(expr), data, enclos=parent.frame())
 within.default <- with.default
 
-within.data.frame <- within.list <- function(data, expr, ...) {
-    subd <- substitute(data)
-    if (is.name(subd))
-        subd <- deparse(subd)
-    if (!is.character(subd) || length(subd) != 1)
-        stop("'within' requires a name for its 'data' argument")
-    parent <- parent.frame()
-    if (!exists(subd, envir = parent, inherits = TRUE))
-        stop("'data' must exist")
+within.data.frame <- function(data, expr, fix=TRUE, inherits=FALSE, ...) {
+    if (fix) {
+        name <- substitute(data)
+        if (!is.name(name))
+            stop("'data' must be a name")
+        name <- as.character(name)
+    }
 
-    newd <- get(subd, envir=parent)
-    e   <- evalq(environment(), newd)
+    parent <- parent.frame()
+    e   <- evalq(environment(), data, parent)
+
     ret <- eval(substitute(expr), e)
     l   <- as.list(e)
-    del <- setdiff(names(newd), names(l))
-    newd[names(l)] <- l
-    newd[del] <- NULL
-    assign(subd, newd, envir=parent, inherits=TRUE)
-    invisible(ret)
+    del <- setdiff(names(data), names(l))
+    data[names(l)] <- l
+    data[del] <- NULL
+
+    if (fix) {
+        assign(name, data, envir=parent, inherits=inherits)
+        invisible(ret)
+    }
+    else
+        data
 }
 
-
+within.list <- within.data.frame
 
 
 
