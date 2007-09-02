@@ -56,6 +56,11 @@ AH_TOP([#ifndef R_CONFIG_H
 AH_BOTTOM([
 #endif /* not R_CONFIG_H */])
 
+## The gettext macros call AC_GNU_SOURCE early, so all the
+## C compiling makes use of that.  If it is ever removed, we
+## would need it or something similar here.
+
+
 ### ** Platform.
 
 AC_CANONICAL_HOST

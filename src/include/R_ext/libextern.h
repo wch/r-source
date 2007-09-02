@@ -26,6 +26,8 @@
 #undef LibImport
 #undef LibExport
 
+/* Don't try to include CYGWIN here: decorating some symbols breaks
+   the auto-export that it relies on, even if R_DLL_BUILD were set. */
 #ifdef WIN32 /* WIN32 as does not depend on config.h */
 #define LibImport __declspec(dllimport)
 #define LibExport __declspec(dllexport)
