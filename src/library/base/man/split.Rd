@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{split}
-\title{Divide into Groups}
+\title{Divide into Groups and Reassemble}
 \alias{split}
 \alias{split.default}
 \alias{split.data.frame}
@@ -37,13 +37,19 @@ unsplit(value, f, drop = FALSE)
 \details{
   \code{split} and \code{split<-} are generic functions with default and
   \code{data.frame} methods.
-
-  \code{f} is recycled as necessary and if the length of \code{x} is not
-  a multiple of the length of \code{f} a warning is printed.
-  \code{unsplit} works only with lists of vectors.  The data frame
+  The data frame
   method can also be used to split a matrix into a list of matrices,
   and the replacement form likewise, provided they are invoked
   explicitly.
+
+  \code{unsplit} works with lists of vectors or data frames (assumed to
+  have compatible structure, as if created by \code{split}). It puts
+  elements or rows back in the positions given by \code{f}. In the data
+  frame case, row names are obtained by unsplitting the row name
+  vectors from the elements of \code{value}.
+
+  \code{f} is recycled as necessary and if the length of \code{x} is not
+  a multiple of the length of \code{f} a warning is printed.
 
   Any missing values in \code{f} are dropped together with the
   corresponding values of \code{x}.
@@ -55,7 +61,9 @@ unsplit(value, f, drop = FALSE)
   longer than \code{x} then some of the components will be of zero length.)
 
   The replacement forms return their right hand side.  \code{unsplit}
-  returns a vector for which \code{split(x, f)} equals \code{value}
+  returns a vector or data frame for which \code{split(x, f)} equals
+  \code{value}
+
 }
 \seealso{
   \code{\link{cut}}
@@ -75,7 +83,7 @@ boxplot(xg, col = "lavender", notch = TRUE, varwidth = TRUE)
 sapply(xg, length)
 sapply(xg, mean)
 
-## Calculate z-scores by group
+### Calculate z-scores by group
 
 z <- unsplit(lapply(split(x, g), scale), g)
 tapply(z, g, mean)
@@ -86,7 +94,19 @@ z <- x
 split(z, g) <- lapply(split(x, g), scale)
 tapply(z, g, sd)
 
-## Split a matrix into a list by columns
+### data frame variation
+
+## Notice that assignment form is not used since a variable is being added
+
+g <- airquality$Month
+l <- split(airquality, g)
+l <- lapply(l, transform, Oz.Z = scale(Ozone))
+aq2 <- unsplit(l, g)
+head(aq2)
+with(aq2, tapply(Oz.Z,  Month, sd, na.rm=TRUE))
+ 
+
+### Split a matrix into a list by columns
 ma <- cbind(x = 1:10, y = (-4:5)^2)
 split(ma, col(ma))
 

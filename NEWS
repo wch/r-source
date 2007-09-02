@@ -237,6 +237,8 @@ NEW FEATURES
 
     o	unlink() is now internal, using common POSIX code on all platforms.
 
+    o	unsplit() now works with lists of dataframes.
+
     o	The vcov() methods for classes "gls" and "nlme" have migrated to
 	package 'nlme'.
 

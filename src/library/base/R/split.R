@@ -77,10 +77,23 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
     x
 }
 
-unsplit <- function(value, f, drop = FALSE)
+## unsplit <- function(value, f, drop = FALSE)
+## {
+##     len <- length(if (is.list(f)) f[[1]] else f)
+##     x <- vector(mode = typeof(value[[1]]), length = len)
+##     split(x, f, drop = drop) <- value
+##     x
+## }
+
+unsplit <-function (value, f, drop = FALSE)
 {
     len <- length(if (is.list(f)) f[[1]] else f)
-    x <- vector(mode = typeof(value[[1]]), length = len)
+    if (is.data.frame(value[[1]])) {
+        x <- value[[1]][rep(NA,len),]
+        rownames(x) <- unsplit(lapply(value, rownames), f)
+    }
+    else
+        x <- value[[1]][rep(NA,len)]
     split(x, f, drop = drop) <- value
     x
 }
