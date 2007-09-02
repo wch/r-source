@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-23 r41677)
+R version 2.6.0 Under development (unstable) (2007-09-02 r42734)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -72,6 +72,9 @@ Type 'q()' to quit R.
 [1] TRUE
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
+[1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
 [1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
@@ -183,6 +186,11 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -287,6 +295,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
+[1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
@@ -377,6 +388,9 @@ In as.dist.default(x) : non-square matrix
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 > res <- try(as.package_version( x ), silent = TRUE)
@@ -484,6 +498,11 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -585,6 +604,9 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
+[1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
@@ -674,6 +696,9 @@ Error: x is not TRUE
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 > res <- try(as.package_version( x ), silent = TRUE)
@@ -782,6 +807,11 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -884,6 +914,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
+[1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
@@ -978,6 +1011,9 @@ In as.dist.default(x) : non-square matrix
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 [1] TRUE
@@ -1092,6 +1128,11 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1200,6 +1241,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
+[1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
@@ -1295,13 +1339,19 @@ IS: [1] TRUE
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+Warning message:
+In lapply(strsplit(x[ok], "[.-]"), as.integer) :
+  inaccurate integer conversion in coercion
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-	inaccurate integer conversion in coercion
+  inaccurate integer conversion in coercion
 > if(!inherits(res, 'try-error')) report(is.package_version(res))
 [1] TRUE
 > res <- try(as.pairlist( x ), silent = TRUE)
@@ -1413,6 +1463,14 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+Warning message:
+In lapply(strsplit(x[ok], "[.-]"), as.integer) :
+  inaccurate integer conversion in coercion
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1421,7 +1479,7 @@ IS: [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-	inaccurate integer conversion in coercion
+  inaccurate integer conversion in coercion
 > if(!inherits(res, 'try-error'))
 +    report({if(is.package_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
@@ -1526,13 +1584,19 @@ IS: [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
 [1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+Warning message:
+In lapply(strsplit(x[ok], "[.-]"), as.integer) :
+  inaccurate integer conversion in coercion
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
+[1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
 > f <- try(as.package_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-	inaccurate integer conversion in coercion
+  inaccurate integer conversion in coercion
 >   if(!inherits(f, 'try-error')) report(identical(f, as.package_version( f )))
 [1] TRUE
 > f <- try(as.pairlist( x ), silent = TRUE)
@@ -1623,6 +1687,9 @@ In lapply(strsplit(x[ok], "[.-]"), as.integer) :
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 [1] TRUE
@@ -1736,6 +1803,11 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1844,6 +1916,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
+[1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
@@ -1938,6 +2013,9 @@ IS: [1] TRUE
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 > res <- try(as.package_version( x ), silent = TRUE)
@@ -2048,6 +2126,11 @@ IS: [1] TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2153,6 +2236,9 @@ IS: [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
 [1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
+[1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -2242,6 +2328,8 @@ IS: [1] TRUE
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.numeric_version(res))
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 > res <- try(as.package_version( x ), silent = TRUE)
@@ -2254,7 +2342,7 @@ IS: [1] TRUE
 > res <- try(as.raw( x ), silent = TRUE)
 Warning message:
 In doTryCatch(return(expr), name, parentenv, handler) :
-	out-of-range values treated as 0 in coercion to raw
+  out-of-range values treated as 0 in coercion to raw
 > if(!inherits(res, 'try-error')) report(is.raw(res))
 [1] TRUE
 > res <- try(as.real( x ), silent = TRUE)
@@ -2356,6 +2444,10 @@ Error: x is not all TRUE
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> res <- try(as.numeric_version( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2376,7 +2468,7 @@ Error: x is not all TRUE
 > res <- try(as.raw( x ), silent = TRUE)
 Warning message:
 In doTryCatch(return(expr), name, parentenv, handler) :
-	out-of-range values treated as 0 in coercion to raw
+  out-of-range values treated as 0 in coercion to raw
 > if(!inherits(res, 'try-error'))
 +    report({if(is.raw(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
@@ -2463,6 +2555,8 @@ Error: x is not TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
 [1] TRUE
+> f <- try(as.numeric_version( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -2475,7 +2569,7 @@ Error: x is not TRUE
 > f <- try(as.raw( x ), silent = TRUE)
 Warning message:
 In doTryCatch(return(expr), name, parentenv, handler) :
-	out-of-range values treated as 0 in coercion to raw
+  out-of-range values treated as 0 in coercion to raw
 >   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
 [1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
@@ -2508,6 +2602,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.349 0.014 0.365 0 0 
+Time elapsed:  0.496 0.016 0.509 0 0 
 > 
 > 
