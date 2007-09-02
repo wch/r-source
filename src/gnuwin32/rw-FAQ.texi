@@ -139,8 +139,8 @@ You need Windows 95 or later.  There is no specific version for Windows
 64, but the standard 32-bit version has been proven to work.  Some
 features only work on an NT-based version of Windows (and some work
 better on such an OS).  We do minimally test most releases on Windows 98
-(2.5.0 was tested, for example) and sometimes on NT4, but only test
-thoroughly on XP.
+(2.5.0 was tested, for example), but only test thoroughly on XP and
+Vista 64.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -416,11 +416,12 @@ The home directory is set as follows: If environment variable
 variable @env{HOME} is set, its value is used.  After those two
 user-controllable settings, R tries to find system-defined home
 directories.  It first tries to use the Windows "personal" directory
-(typically @file{C:\Documents and Settings\username\My Documents} in
-Windows XP).  If that fails, if both environment variables
-@env{HOMEDRIVE} and @env{HOMEPATH} are set (and they normally are under
-Windows NT/2000/XP/2003), the value is @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.
-If all of these fail, the current working directory is used.
+(typically @file{C:\Documents and Settings\username\My Documents} on
+Windows XP and @file{C:\Users\username\Documents} on Vista).  If that
+fails, if both environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
+are set (and they normally are under Windows NT4, 2000 and later), the
+value is @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the
+current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
 
@@ -458,11 +459,13 @@ See @code{?Startup} for more details of environment files.
 For all applications via Windows.  How you set an environment variable
 is system specific: in Windows 9x you can set them in
 @file{autoexec.bat} or in an MS-DOS window from which you launch
-@command{Rgui} / @command{Rterm}.  Under Windows NT/2000/XP/2003 you can use
-the control panel or the properties of `My Computer'.  Under Windows ME
-you can use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu).  You may have to log out
-or reboot for such changes to take effect.
+@command{Rgui} / @command{Rterm}.  Under Windows NT/2000/XP/2003 you can
+use the control panel or the properties of `My Computer'.  Under Windows
+ME you can use the System Configuration Utility (under Programs,
+Accessories, System Tools on the Start menu).  Under Vista, go to `User
+Accounts' in the Control Panel, and select your account and then `Change
+my environment variables'.  You may have to log out or reboot for such
+changes to take effect.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
@@ -580,8 +583,7 @@ password when HTTP downloads are first used.
 
 Another possibility is that firewall settings are blocking the R
 executables from contacting the Internet, but this should result in
-informative error messages from the firewall program (and it does from
-the Windows XP firewall).
+informative error messages from the firewall program.
 
 
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
@@ -913,12 +915,12 @@ XP there are three tabs on the @emph{Regional and Language Options}
 applet in the Control Panel.  The first tab controls the locale, the
 second the UI and the third the fonts used for `non-Unicode' programs
 (but apparently also for Unicode ones in many cases): see Q3.3.  Vista
-talks about the 'UI language', and the 'system locale' for setting
-the fonts used for `non-Unicode' programs.
+talks about the 'UI language' and the 'system locale' for setting
+the language used for `non-Unicode' programs.
 
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
-Windows XP in one language and R in another, you may find the way Windows
+Windows in one language and R in another, you may find the way Windows
 handles internationalization slightly odd.  For further details see
 @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}.
 
