@@ -638,6 +638,7 @@ foreach my $pkg (@ARGV) {
 					 ": warning: .*ISO C",
 					 ": warning: implicit declaration of function",
 					 ": warning: .* discards qualifiers from pointer target type",
+					 ": warning: .* is used uninitialized",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
 
