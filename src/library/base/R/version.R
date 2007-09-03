@@ -177,7 +177,7 @@ function(x, i, j)
 
 `[[.numeric_version` <-
 function(x, i)
-    structure(list(unclass(x)[[i]]), class = oldClass(x))
+    unclass(x)[[i]]
    
 Ops.numeric_version <-
 function(e1, e2)
