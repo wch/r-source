@@ -29,7 +29,7 @@ file.show <-
     function (..., header = rep("", nfiles), title = "R Information",
               delete.file = FALSE, pager = getOption("pager"), encoding = "")
 {
-    files <- c(...)
+    files <- path.expand(c(...))
     nfiles <- length(files)
     if(nfiles == 0)
         return(invisible(NULL))

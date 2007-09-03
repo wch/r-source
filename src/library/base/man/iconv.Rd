@@ -60,7 +60,7 @@ iconvlist()
 
   The elements of the result have a declared encoding if \code{from} is
   \code{"latin1"} or \code{"UTF-8"}, or if \code{from = ""} and the
-  current locale's charset is detected as Latin-1 or UTF-8.
+  current locale's encoding is detected as Latin-1 or UTF-8.
 }
 \note{
   Not all platforms support these functions.  See also

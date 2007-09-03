@@ -13,7 +13,8 @@ file.show(\dots, header = rep("", nfiles), title = "R Information",
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
-    files to be displayed.}
+    files to be displayed.  These will be tilde-expanded: see
+    \code{\link{path.expand}}.}
   \item{header}{character vector (of the same length as the number of files
     specified in \code{\dots}) giving a header for each file being
     displayed.  Defaults to empty strings.}
@@ -24,7 +25,8 @@ file.show(\dots, header = rep("", nfiles), title = "R Information",
   \item{delete.file}{should the files be deleted after display?  Used
     for temporary files.}
   \item{pager}{the pager to be used.}
-  \item{encoding}{charset to be assumed for the file(s).}
+  \item{encoding}{character string giving the encoding to be assumed for
+    the file(s).}
 }
 \details{
   This function provides the core of the R help system, but it can be

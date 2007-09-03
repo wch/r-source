@@ -292,7 +292,7 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++) {
 	    if (!isNull(STRING_ELT(fn, i)))
 		/* Do better later for file names? */
-		f[i] = acopy_string(translateChar(STRING_ELT(fn, i)));
+		f[i] = acopy_string(R_ExpandFileName(translateChar(STRING_ELT(fn, i))));
 	    else
 		f[i] = acopy_string(CHAR(R_BlankString));
 	    if (!isNull(STRING_ELT(ti, i)))

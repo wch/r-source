@@ -14,9 +14,11 @@
 file.info(\dots)
 }
 \arguments{
-  \item{\dots}{character vectors containing file names.}
+  \item{\dots}{character vectors containing file paths.}
 }
 \details{
+  The file paths are tilde-expanded: see \code{\link{path.expand}}.
+
   What is meant by \dQuote{file access} and hence the last access time
   is system-dependent.
 

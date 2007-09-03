@@ -23,7 +23,9 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
   \item{warn}{logical.  Warn if a text file is missing a final EOL.}
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input.}
+    Latin-1 or UTF-8: it is not used to re-encode the input.  To do the
+    latter, specify the encoding as part of the connection \code{con} or
+    via \code{\link{options}(encoding=)}.}
 }
 \details{
   If the \code{con} is a character string, the function calls

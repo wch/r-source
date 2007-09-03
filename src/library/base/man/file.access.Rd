@@ -18,6 +18,8 @@ file.access(names, mode = 0)
   \item{mode}{integer specifying access mode required.}
 }
 \details{
+  Tilde-expansion is done on \code{names}: see \code{\link{path.expand}}.
+
   The \code{mode} value can be the exclusive or of the following values
   \describe{
     \item{0}{test for existence.}

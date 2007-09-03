@@ -95,6 +95,9 @@ NEW FEATURES
 
 	fifo("") is now implemented, and works in the same way as file("").
 
+    o	file.edit() and file.show() now tilde-expand file paths on all
+	interfaces (they used to on some and not others).
+
     o	The find() argument is now named 'numeric' and not 'numeric.':
 	the latter was needed to avoid warnings about name clashes
 	many years ago, but partial matching was used.

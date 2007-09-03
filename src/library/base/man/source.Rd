@@ -37,7 +37,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
-  \item{encoding}{character string.  The encoding to be assumed when
+  \item{encoding}{character vector.  The encoding(x) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
     possible value is \code{"unknown"}: see the Details.}
   \item{continue.echo}{character; gives the prompt to use on
@@ -67,7 +67,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   This paragraph applies if \code{file} is a filename (rather than a
   connection).  If \code{encoding = "unknown"}, an attempt is made to
   guess the encoding.  The result of \code{\link{localeToCharset}()} is
-  used a guide.  If \code{encoding} has two or more elements, they are
+  used as a guide.  If \code{encoding} has two or more elements, they are
   tried in turn until the file/URL can be read without error in the
   trial encoding.
 
