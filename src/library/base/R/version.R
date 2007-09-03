@@ -61,11 +61,7 @@ function(x, strict = TRUE)
 
 is.numeric_version <-
 function(x)
-{
-    ## Pre 2.6.0 is.package_version() compatibility code ...
-    ## Simplify eventually ...
-    inherits(x, "numeric_version") || inherits(x, "package_version")
-}
+    inherits(x, "numeric_version")
 
 as.numeric_version <-
 function(x)
@@ -181,8 +177,8 @@ function(x, i, j)
 
 `[[.numeric_version` <-
 function(x, i)
-   unclass(x)[[i]]
-
+    structure(list(unclass(x)[[i]]), class = oldClass(x))
+   
 Ops.numeric_version <-
 function(e1, e2)
 {
