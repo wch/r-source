@@ -73,18 +73,22 @@ dQuote(x)
 op <- options("useFancyQuotes")
 paste("argument", sQuote("x"), "must be non-zero")
 options(useFancyQuotes = FALSE)
-cat("\ndistinguish", sQuote("single"), "and",
-    dQuote("double"), "quotes\n\n")
+cat("\ndistinguish plain", sQuote("single"), "and",
+    dQuote("double"), "quotes\n")
 options(useFancyQuotes = TRUE)
-cat("\ndistinguish", sQuote("single"), "and",
-    dQuote("double"), "quotes\n\n")
+cat("\ndistinguish fancy", sQuote("single"), "and",
+    dQuote("double"), "quotes\n")
 options(useFancyQuotes = "TeX")
-cat("\ndistinguish", sQuote("single"), "and",
-    dQuote("double"), "quotes\n\n")
-if(l10n_info()$`Latin-1` || l10n_info()$`UTF-8`) {
+cat("\ndistinguish TeX", sQuote("single"), "and",
+    dQuote("double"), "quotes\n")
+if(l10n_info()$`Latin-1`) {
     options(useFancyQuotes = c("\xab", "\xbb", "\xbf", "?"))
     cat("\n", sQuote("guillemet"), "and",
-        dQuote("Spanish question"), "style\n\n")
+        dQuote("Spanish question"), "style\n")
+} else if(l10n_info()$`UTF-8`) {
+    options(useFancyQuotes = c("\u00ab", "\u00bb", "\u00bf", "?"))
+    cat("\n", sQuote("guillemet"), "and",
+        dQuote("Spanish question"), "style\n")
 }
 options(op)
 }
