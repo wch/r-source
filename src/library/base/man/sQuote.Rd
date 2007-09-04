@@ -69,6 +69,8 @@ dQuote(x)
   Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.
   \url{http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html}
 }
+% these char strings have to be readable in any locale,
+% so cannot use \uxxxx (fails in Japanese).
 \examples{
 op <- options("useFancyQuotes")
 paste("argument", sQuote("x"), "must be non-zero")
@@ -86,7 +88,7 @@ if(l10n_info()$`Latin-1`) {
     cat("\n", sQuote("guillemet"), "and",
         dQuote("Spanish question"), "style\n")
 } else if(l10n_info()$`UTF-8`) {
-    options(useFancyQuotes = c("\u00ab", "\u00bb", "\u00bf", "?"))
+    options(useFancyQuotes = c("\xc2\xab", "\xc2\xbb", "\xc2\xbf", "?"))
     cat("\n", sQuote("guillemet"), "and",
         dQuote("Spanish question"), "style\n")
 }
