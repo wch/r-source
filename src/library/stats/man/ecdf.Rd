@@ -65,7 +65,7 @@ ecdf(x)
 Fn <- ecdf(rnorm(12))
 Fn
 tt <- seq(-2,2, by = 0.1)
-12* Fn(tt) # Fn is a `simple' function {with values k/12}
+12* Fn(tt) # Fn is a 'simple' function {with values k/12}
 summary(Fn)
 knots(Fn)# the unique data values {12 of them if there were no ties}
 

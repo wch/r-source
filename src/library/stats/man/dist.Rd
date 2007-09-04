@@ -151,7 +151,7 @@ m <- as.matrix(dist(x))
 d <- as.dist(m)
 stopifnot(d == dist(x))
 
-## Use correlations between variables ``as distance''
+## Use correlations between variables "as distance"
 dd <- as.dist((1 - cor(USJudgeRatings))/2)
 round(1000 * dd) # (prints more nicely)
 plot(hclust(dd)) # to see a dendrogram of clustered variables

@@ -71,7 +71,7 @@ cat(shQuote(test), "\n")
 test <- "don't do it!"
 cat(shQuote(test), "\n")
 
-tryit <- "use the `-c' switch\nlike this"
+tryit <- paste("use the", sQuote("-c"), "switch\nlike this")
 cat(shQuote(tryit), "\n")
 \dontrun{system(paste("echo", shQuote(tryit)))}
 cat(shQuote(tryit, type="csh"), "\n")

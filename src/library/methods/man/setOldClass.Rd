@@ -46,7 +46,7 @@
 \alias{initialize,summary.table-method}
 \title{ Specify Names for Old-Style Classes }
 \description{
-  Register an old-style (a.k.a. `S3') class as a formally defined
+  Register an old-style (a.k.a. \sQuote{S3}) class as a formally defined
   class. The \code{Classes} argument is the character vector used as the
   \code{class} attribute; in particular, if there is more than one
   string,  old-style class inheritance is mimicked.  Registering via

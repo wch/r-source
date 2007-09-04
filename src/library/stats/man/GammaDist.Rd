@@ -94,7 +94,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   
   Prior to \R 2.1.0 \code{pgamma} used AS239 (Shea, 1988).  It
   currently uses an unpublished (and not otherwise documented) algorithm
-  `mainly by Morten Welinder'.
+  \sQuote{mainly by Morten Welinder}.
 
   \code{qgamma} is based on a C translation of
 

@@ -60,7 +60,7 @@ help.start(update = TRUE, gui = "irrelevant",
   \code{help.start} and the Java-based search engine have been tested
   under Internet Explorer 6/7, Netscape 7.1, Opera 7.54,
   Mozilla 1.6/1.7 and Firefox 1.0/1.5/2.0.  Users of IE
-  will probably need to allow `active content' from the
+  will probably need to allow \sQuote{active content} from the
   \sQuote{information bar} before the search engine can be used.
 #endif
 }

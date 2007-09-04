@@ -80,7 +80,7 @@ rr <- for(i in 1:3) print(1:i)
 rr
 
 ## Printing of factors
-attenu$station ## 117 levels -> `max.levels' depending on width
+attenu$station ## 117 levels -> 'max.levels' depending on width
 
 ## ordered factors: levels  "l1 < l2 < .."
 esoph$agegp[1:12]

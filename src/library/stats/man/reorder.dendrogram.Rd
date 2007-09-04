@@ -50,7 +50,7 @@ x <- rnorm(10)
 hc <- hclust(dist(x))
 dd <- as.dendrogram(hc)
 dd.reorder <- reorder(dd, 10:1)
-plot(dd, main = "random dendrogram `dd'")
+plot(dd, main = "random dendrogram 'dd'")
 
 op <- par(mfcol = 1:2)
 plot(dd.reorder, main = "reorder(dd, 10:1)")
