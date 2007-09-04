@@ -94,6 +94,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   \code{\link{strptime}} for uses of \code{category = "LC_TIME"}.
   \code{\link{Sys.localeconv}} for details of numerical and monetary
   representations.
+
+  \code{\link{l10n_info}} gives some summary facts about the locale and
+  its encoding.
 }
 \examples{
 Sys.getlocale()
