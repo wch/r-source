@@ -100,16 +100,59 @@ casefold <- function(x, upper = FALSE)
     if(upper) toupper(x) else tolower(x)
 
 sQuote <- function(x) {
-    if(length(x) == 0) return(character())
-    if(l10n_info()$"UTF-8")
-        paste("\xe2\x80\x98", x, "\xe2\x80\x99", sep = "")
-    else
-        paste("'", x, "'", sep = "")
+    before <- after <- "'"
+    q <- getOption("useFancyQuotes")
+    if(!is.null(q)) {
+        if(identical(q, TRUE)) {
+            li <- l10n_info()
+            if(li$"UTF-8") q <- "UTF-8"
+            if(!is.null(li$codepage)) {
+                if(li$codepage >= 1250 && li$codepage <= 1258) {
+                    before <- "\x91"; after <- "\x92"
+                } else {
+                    z <- iconv(c("\xe2\x80\x98", "\xe2\x80\x99"), "UTF-8", "")
+                    before <- z[1]; after <- z[2]
+                }
+            }
+        }
+        if(identical(q, "TeX")) {
+            before <- "`"; after <- "'"
+        }
+        if(identical(q, "UTF-8")) {
+            before <- "\xe2\x80\x98"; after <- "\xe2\x80\x99"
+        }
+        if(is.character(q) && length(q) >= 4) {
+            before <- q[1]; after <- q[2]
+        }
+    }
+    paste(before, x, after, sep = "")
 }
+
 dQuote <- function(x) {
-    if(length(x) == 0) return(character())
-    if(l10n_info()$"UTF-8")
-        paste("\xe2\x80\x9c", x, "\xe2\x80\x9d", sep = "")
-    else
-        paste("\"", x, "\"", sep = "")
+    before <- after <- "\""
+    q <- getOption("useFancyQuotes")
+    if(!is.null(q)) {
+        if(identical(q, TRUE)) {
+            li <- l10n_info()
+            if(li$"UTF-8") q <- "UTF-8"
+            if(!is.null(li$codepage)) {
+                if(li$codepage >= 1250 && li$codepage <= 1258) {
+                    before <- "\x93"; after <- "\x94"
+                } else {
+                    z <- iconv(c("\xe2\x80\x9c", "\xe2\x80\x9d"), "UTF-8", "")
+                    before <- z[1]; after <- z[2]
+                }
+            }
+        }
+        if(identical(q, "TeX")) {
+            before <- "``"; after <- "''"
+        }
+        if(identical(q, "UTF-8")) {
+            before <- "\xe2\x80\x9c"; after <- "\xe2\x80\x9d"
+        }
+        if(is.character(q) && length(q) >= 4) {
+            before <- q[3]; after <- q[4]
+        }
+    }
+    paste(before, x, after, sep = "")
 }

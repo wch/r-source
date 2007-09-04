@@ -88,6 +88,11 @@ NEW FEATURES
 	file: plus a general path (including drives on a UNC path on
 	Windows) or a file:/// URL in the same way as url().
 
+    o	dQuote() and sQuote() are more flexible, with rendering
+	controlled by the new option 'useFancyQuotes'.  This includes
+	the ability to have TeX-style rendering and directional quotes
+	(the so-called 'smart quotes') on Windows.
+
     o	duplicated() and unique() and their methods in base gain an
 	additional argument 'fromLast'.
 
