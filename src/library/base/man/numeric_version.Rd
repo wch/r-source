@@ -19,8 +19,9 @@
 \alias{Ops.numeric_version}
 \alias{Summary.numeric_version}
 \alias{as.character.numeric_version}
-\alias{c.numeric_version}
 \alias{as.data.frame.numeric_version}
+\alias{as.list.numeric_version}
+\alias{c.numeric_version}
 \alias{print.numeric_version}
 \alias{$.package_version}
 % Internal.

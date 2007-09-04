@@ -177,7 +177,7 @@ function(x, i, j)
 
 `[[.numeric_version` <-
 function(x, i)
-    unclass(x)[[i]]
+    structure(list(unclass(x)[[i]]), class = oldClass(x))
    
 Ops.numeric_version <-
 function(e1, e2)
@@ -215,6 +215,10 @@ function(x, ...)
     as.character(unlist(lapply(x, paste, collapse = ".")))
 
 as.data.frame.numeric_version <- as.data.frame.vector
+
+as.list.numeric_version <-
+function(x, ...)
+    unclass(x)
 
 c.numeric_version <-
 function(..., recursive = FALSE)
