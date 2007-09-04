@@ -49,9 +49,8 @@
   metacharacter with special meaning may be quoted by preceding it with
   a backslash.  (Escaping other characters with a backslash is
   undefined in POSIX but gives the character in the \R implementation.)
-  The metacharacters are in EREs are
-  \code{. \\ | ( ) [ \{ ^ $ * + ?}, but note that whether these have a
-  special meaning depends on the context.
+  The metacharacters in EREs are \code{. \\ | ( ) [ \{ ^ $ * + ?}, but
+  note that whether these have a special meaning depends on the context.
 
   A \emph{character class} is a list of characters enclosed between
   \code{[} and \code{]} which matches any single character in that list;
