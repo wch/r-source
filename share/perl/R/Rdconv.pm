@@ -790,7 +790,8 @@ sub html_striptitle {
     $text =~ s/--/&ndash;/go;
     $text =~ s/\`\`/&ldquo;/g;
     $text =~ s/\'\'/&rdquo;/g;
-    $text =~ s/\`/\'/g;		# @samp{'} could be an apostroph ...
+    $text =~ s/\`([^']+)'/&lsquo;$1&rsquo;/g;
+    $text =~ s/\`/\'/g;		# @samp{'} could be an apostrophe ...
     $text =~ s/</&lt;/g;
     $text =~ s/>/&gt;/g;
     $text;
@@ -1401,7 +1402,7 @@ sub chm_functionhead
 
 use Text::Tabs qw(expand);
 
-sub rdoc2txt { # (filename); 0 for STDOUT
+sub rdoc2txt { # (filename, def_encoding); 0 for STDOUT
 
     local $txtout;
     if($_[0]) {
@@ -1453,8 +1454,21 @@ sub txt_striptitle {
     ## Call striptitle(), and handle LaTeX style single/double quotes.
     my ($text) = @_;
     $text = striptitle($text);
-    $text =~ s/(\`\`|\'\')/\"/g;
-    $text =~ s/\`/\'/g;
+    if(($R::Vars::OSTYPE eq "windows") && 
+       ($encoding eq "unknown" || $encoding eq "latin1")) {
+	$text =~ s/\`\`/\x93/g;
+	$text =~ s/\'\'/\x94/g;
+	$text =~ s/\`([^']+)'/\x91$1\x92/g;
+	$text =~ s/\`/\'/g;
+#     } elsif (encoding eq "UTF-8") {
+# 	$text =~ s/\`\`/\xe2\x80\x9c/g;
+# 	$text =~ s/\'\'/\xe2\x80\xdc/g;
+# 	$text =~ s/`([^']+)'/\xe2\x80\x98$1\xe2\x80\x99/g; #` for emacs
+# 	$text =~ s/\`/\'/g;
+    } else {
+	$text =~ s/(\`\`|\'\')/\"/g;
+	$text =~ s/\`/\'/g;
+    }
     $text;
 }
 
@@ -1563,8 +1577,17 @@ sub text2txt {
     $text = undefine_command($text, "var");
     ## </FIXME>
 
-    $text = replace_command($text, "sQuote", "'", "'");
-    $text = replace_command($text, "dQuote", "\"", "\"");
+    if(($R::Vars::OSTYPE eq "windows") && 
+       ($encoding eq "unknown" || $encoding eq "latin1")) {
+	$text = replace_command($text, "sQuote", "\x91", "\x92");
+	$text = replace_command($text, "dQuote", "\x93", "\x94");
+#     } elsif (encoding eq "UTF-8") {
+# 	$text = replace_command($text, "sQuote", "\xe2\x80\x98", "\xe2\x80\x99");
+# 	$text = replace_command($text, "dQuote", "\xe2\x80\x9c", "\xe2\x80\x9d");
+    } else {
+	$text = replace_command($text, "sQuote", "'", "'");
+	$text = replace_command($text, "dQuote", "\"", "\"");
+    }
 
     ## Handle equations:
     my $loopcount = 0;

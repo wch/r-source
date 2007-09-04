@@ -485,6 +485,9 @@ UTILITIES
     o	R CMD config now knows about FC and FCFLAGS (used for F9x
 	compilation).
 
+    o	R CMD Rdconv now does a better job of rendering quotes in
+	titles in HTML, and \sQuote and \dQuote into text on Windows.
+
 
 C-LEVEL FACILITIES
 

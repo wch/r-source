@@ -185,6 +185,10 @@ function(x, ...)
                 enc <- if(length(grep("\\(.*\\)$", first)) > 0)
                     sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
                 if(enc == "utf8") enc <- "UTF-8"
+                ## allow for 'smart' quotes on Windows, which work
+                ## in all but CJK encodings
+                if(.Platform$OS.type == "windows" && enc == ""
+                   && l10n_info()$codepage < 1000) enc <- "CP1252"
                 file.show(zfile,
                           title = gettextf("R Help on '%s'", topic),
                           delete.file = (zfile != file),
