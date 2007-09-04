@@ -1717,16 +1717,25 @@ end:
 
 SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans, names;
+#ifdef Win32
+    int len = 4;
+#else
+    int len = 3;
+#endif
+    SEXP ans, names;
     checkArity(op, args);
-    PROTECT(ans = allocVector(VECSXP, 3));
-    PROTECT(names = allocVector(STRSXP, 3));
+    PROTECT(ans = allocVector(VECSXP, len));
+    PROTECT(names = allocVector(STRSXP, len));
     SET_STRING_ELT(names, 0, mkChar("MBCS"));
     SET_STRING_ELT(names, 1, mkChar("UTF-8"));
     SET_STRING_ELT(names, 2, mkChar("Latin-1"));
     SET_VECTOR_ELT(ans, 0, ScalarLogical(mbcslocale));
     SET_VECTOR_ELT(ans, 1, ScalarLogical(utf8locale));
     SET_VECTOR_ELT(ans, 2, ScalarLogical(latin1locale));
+#ifdef Win32
+    SET_STRING_ELT(names, 3, mkChar("codepage"));
+    SET_VECTOR_ELT(ans, 3, ScalarInteger(localeCP));
+#endif
     setAttrib(ans, R_NamesSymbol, names);
     UNPROTECT(2);
     return ans;

@@ -39,6 +39,8 @@ FUNCTION CHANGES
     o	pipe() in Rgui now runs the command through the shell specified
     	by the COMSPEC environment variable, as Rterm has always done.
 
+    o	l10n_info reports the codepage in current use.
+
 
 INSTALLER
 
