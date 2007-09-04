@@ -1,4 +1,5 @@
 ##--- S4 Methods (and Classes)
+options(useFancyQuotes=FALSE)
 library(methods)
 ##too fragile: showMethods(where = "package:methods")
 

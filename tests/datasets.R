@@ -1,5 +1,6 @@
 #### Simple integrity tests of the system datasets
 
+options(useFancyQuotes=FALSE)
 env <- as.environment("package:datasets")
 d <- ls(env) # don't want .names
 for(f in d) {

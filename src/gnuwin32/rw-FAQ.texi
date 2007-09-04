@@ -842,9 +842,10 @@ several places to select the language under the `Regional and Language
 Options' part of the control panel, and the appropriate language has to
 be set under @emph{both} the `Regional Options' and `Advanced' tabs.
 
-When using @command{Rterm} the window in which it is run has to be set up
-to use a suitable font and a suitable codepage (which for the Windows
-Cmd shell can be done by @command{chcp}).
+When using @command{Rterm} the window in which it is run has to be set
+up to use a suitable font (e.g. Lucida Console, not the OEM raster
+fonts) and a suitable codepage (which for the Windows Cmd shell can be
+done by @command{chcp}).
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
 @section I selected English for installation but R runs in Chinese.

@@ -6,7 +6,7 @@ RNGversion("1.6.2")
 
 ## force standard handling for data frames
 options(stringsAsFactors=TRUE)
-
+options(useFancyQuotes=FALSE)
 
 ### moved from various .Rd files
 ## abbreviate

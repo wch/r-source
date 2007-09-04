@@ -41,6 +41,10 @@ FUNCTION CHANGES
 
     o	l10n_info() reports the codepage in current use.
 
+    o	dQuote() and sQuote() now use directional quotes by
+	default.  You might prefer options(useFancyQuotes=FALSE) when
+	running Rterm.
+
 
 INSTALLER
 

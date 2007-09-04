@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-08-15 r42513)
+R version 2.6.0 Under development (unstable) (2007-09-04 r42757)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -16,6 +16,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > ##--- S4 Methods (and Classes)
+> options(useFancyQuotes=FALSE)
 > library(methods)
 > ##too fragile: showMethods(where = "package:methods")
 > 

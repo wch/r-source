@@ -43,17 +43,18 @@ dQuote(x)
   quotation marks, and doubled grave and doubled apostrophe for the
   directional double quotation marks.
 
-  What rendering is used depend on the \code{\link{options}} setting
-  for \code{useFancyQuotes}.  If this is \code{FALSE} (the default under
-  Windows) then the undirectional ASCII quotation style is used.  If
-  this is \code{TRUE} (the default under Unix-alikes), Unicode
-  directional quotes are used are used where available: if set to
-  \code{"UTF-8"} UTF-8 markup is used (whatever the current locale).  If
-  set to \code{"TeX"}, TeX-style markup is used.  Finally, if this is set
-  to a character vector of length four, the first two entries are used
-  for beginning and ending single quotes and the second two for
-  beginning and ending double quotes: this can be used to implement
-  non-English quoting conventions such as the use of guillemets.
+  What rendering is used depend on the \code{\link{options}} setting for
+  \code{useFancyQuotes}.  If this is \code{FALSE} then the undirectional
+  ASCII quotation style is used.  If this is \code{TRUE} (the default),
+  Unicode directional quotes are used are used where available
+  (currently, UTF-8 locales on Unix-alikes and all Windows locales): if
+  set to \code{"UTF-8"} UTF-8 markup is used (whatever the current
+  locale). If set to \code{"TeX"}, TeX-style markup is used.  Finally,
+  if this is set to a character vector of length four, the first two
+  entries are used for beginning and ending single quotes and the second
+  two for beginning and ending double quotes: this can be used to
+  implement non-English quoting conventions such as the use of
+  guillemets.
 
   Where fancy quotes are used, you should be aware that they may not be
   rendered correctly as not all fonts include the requisite glyphs: for
