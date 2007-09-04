@@ -127,6 +127,9 @@ sQuote <- function(x) {
         if(is.character(q) && length(q) >= 4) {
             before <- q[1]; after <- q[2]
         }
+        ## we do not want these strings marked as in the encoding
+        ## R was built under
+        Encoding(before) <- Encoding(after) <- "unknown"
     }
     paste(before, x, after, sep = "")
 }
@@ -157,6 +160,7 @@ dQuote <- function(x) {
         if(is.character(q) && length(q) >= 4) {
             before <- q[3]; after <- q[4]
         }
+        Encoding(before) <- Encoding(after) <- "unknown"
     }
     paste(before, x, after, sep = "")
 }
