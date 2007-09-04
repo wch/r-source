@@ -43,7 +43,9 @@ function(dir, fields = NULL,
             desci <- desc[i, !(is.na(desc[i, ]) | (desc[i, ] == "")),
                           drop = FALSE]
             write.dcf(desci, file = out)
+            cat("\n", file = out)
             write.dcf(desci, file = outgz)
+            cat("\n", file = outgz)
         }
         close(out)
         close(outgz)
