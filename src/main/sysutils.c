@@ -363,7 +363,7 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(vars);
     for (i = 0; i < n; i++) {
 #ifdef HAVE_SETENV
-	setenv(translateChar(STRING_ELT(vars, i)), "");
+	setenv(translateChar(STRING_ELT(vars, i)), "", 1);
 #else
 	Rputenv(translateChar(STRING_ELT(vars, i)), "");
 #endif
