@@ -214,9 +214,11 @@ frontmatter:
 	fi
 	@$(ECHO) "tools:::.install_package_description('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null
-	@if test -f ${SPKG}/COPYING; then \
-	  $(CP) ${SPKG}/COPYING $(DPKG)/COPYING; \
-	fi
+	@for f in LICENSE LICENCE COPYING; do \
+	  if test -f ${SPKG}/$${f}; then \
+	    $(CP) ${SPKG}/$${f} $(DPKG)/$${f}; \
+	  fi; \
+	done
 
 nmspace:
 	@if test -f ${SPKG}/NAMESPACE; then \

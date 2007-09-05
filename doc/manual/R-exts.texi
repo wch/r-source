@@ -147,9 +147,10 @@ A package consists of a subdirectory containing a file
 @file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po},
 @file{src}, and @file{tests} (some of which can be missing).  The
 package subdirectory may also contain files @file{INDEX},
-@file{NAMESPACE}, @file{configure}, @file{cleanup}, and @file{COPYING}.
-Other files such as @file{README}, @file{NEWS} or @file{ChangeLog} will
-be ignored by @R{}, but may be useful to end-users.
+@file{NAMESPACE}, @file{configure}, @file{cleanup}, @file{LICENSE},
+@file{LICENCE}, and @file{COPYING}.  Other files such as @file{README},
+@file{NEWS} or @file{ChangeLog} will be ignored by @R{}, but may be
+useful to end-users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 sections below.  The @file{NAMESPACE} file is described in @ref{Package
@@ -163,15 +164,18 @@ shell) script files which are executed before and (provided that option
 @option{--clean} was given) after installation on Unix-alikes, see
 @ref{Configure and cleanup}.
 
+@cindex LICENSE file
+@cindex LICENCE file
 @cindex COPYING file
 
-The optional file @file{COPYING} contains a copy of the license to the
+The optional file @file{LICENSE}/@file{LICENCE} or @file{COPYING} (where
+the former names are preferred) contains a copy of the license to the
 package, e.g.@: a copy of the @acronym{GNU} public license.  Whereas you
-should feel free to include a licence file in your source distribution,
+should feel free to include a license file in your source distribution,
 please do not arrange to install yet another copy of the @acronym{GNU}
-@file{COPYING} or @file{COPYING.LIB} files but refer to the copies in
-the @R{} distribution (e.g., in directory @file{share/licenses} in your
-own @file{COPYING} file).
+@file{COPYING} or @file{COPYING.LIB} files but refer to the copies on
+@url{http://www.r-project.org/Licenses/} and included in the @R{}
+distribution (in directory @file{share/licenses}).
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -224,7 +228,7 @@ Depends: R (>= 1.8.0), nlme
 Suggests: MASS
 Description: A short (one paragraph) description of what
   the package does and why it may be useful.
-License: GPL version 2 or newer
+License: GPL (>= 2)
 URL: http://www.r-project.org, http://www.another.url
 @end smallexample
 @end cartouche
@@ -250,12 +254,45 @@ version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
 were @samp{0.1-0}.  (Translation packages are allowed names of the form
 @samp{Translation-@var{ll}}.)
 
-The @samp{License} field should contain an explicit statement or a
-well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
-@samp{Artistic}), perhaps followed by a reference to the actual license
-file.  It is very important that you include this information!
-Otherwise, it may not even be legally correct for others to distribute
-copies of the package.
+The @samp{License} field should specify the license of the package in
+the following standardized form.  Alternatives are indicated via
+vertical bars.  Individual specifications must be one of
+@itemize @bullet
+@item
+One of the ``standard'' abbreviations
+@example
+GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 BSD Artistic
+@end example
+as made available via @url{http://@/www.r-project.org/@/Licenses/} and
+shipped in @file{share/licenses} in the R sources.
+@item
+The full names (with commas removed) or abbrevations of open source
+licenses as approved by the Open Source Initiative (see
+@url{http://@/www.opensource.org/@/licenses/@/alphabetical}), possibly
+followed by a version restriction of the form @samp{(@var{op} @var{v})}
+with @var{op} one of the comparison operators @samp{<}, @samp{<=},
+@samp{>}, @samp{>=}, @samp{==}, or @samp{!=} and @var{v} a numeric
+version specification (strings of non-negative integers separated by
+@samp{.}), possibly combined via @samp{,} (see below for an example).
+@item
+One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
+to a file named @file{LICENSE} or @file{LICENCE} in the package (source
+and installation) top-level directory.
+@item
+The string @samp{Unlimited}, meaning that there no are restrictions on
+distribution or use other than those imposed by relevant laws.
+@end itemize
+Examples for standardized specifications include
+@example
+License: GPL-2
+License: GPL (>= 2) | BSD
+License: LGPL (>= 2.0, < 3) | Eclipse Public License
+License: GPL-2 | file LICENCE
+@end example
+Please note in particular that ``Public domain'' is not a valid license.
+It is very important that you include this information!  Otherwise, it
+may not even be legally correct for others to distribute copies of the
+package.
 
 The @samp{Description} field should give a comprehensive description of
 what the package does.  One can use several (complete) sentences, but
@@ -570,14 +607,14 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{html}, @file{latex}, @file{R-ex}, @file{chtml}, and @file{Meta}).
 The copying of the @file{inst} happens after @file{src} is built so its
 @file{Makefile} can create files to be installed.  Note that with the
-exceptions of @file{INDEX} and @file{COPYING}, information files at the
-top level of the package will @emph{not} be installed and so not be
-known to users of Windows and MacOS X compiled packages (and not seen by
-those who use @command{R CMD INSTALL} or @command{install.packages} on
-the tarball).  So any information files you wish an end user to see
-should be included in @file{inst}.  One thing you might like to add to
-@file{inst} is a @file{CITATION} file for use by the @code{citation}
-function.
+exceptions of @file{INDEX}, @file{LICENSE}/@file{LICENCE} and
+@file{COPYING}, information files at the top level of the package will
+@emph{not} be installed and so not be known to users of Windows and
+MacOS X compiled packages (and not seen by those who use @command{R CMD
+INSTALL} or @command{install.packages} on the tarball).  So any
+information files you wish an end user to see should be included in
+@file{inst}.  One thing you might like to add to @file{inst} is a
+@file{CITATION} file for use by the @code{citation} function.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
@@ -619,17 +656,17 @@ field and no @samp{Package} field, as in
 Bundle: VR
 Priority: recommended
 Contains: MASS class nnet spatial
-Version: 7.2-12
-Date: 2005-01-31
-Depends: R (>= 2.0.0), graphics, stats
+Version: 7.2-36
+Date: 2007-08-29
+Depends: R (>= 2.4.0), grDevices, graphics, stats, utils
 Suggests: lattice, nlme, survival
 Author: S original by Venables & Ripley.
   R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
   work by Kurt Hornik and Albrecht Gebhardt.
 Maintainer: Brian Ripley <ripley@@stats.ox.ac.uk>
 BundleDescription: Functions and datasets to support Venables and
-  Ripley, `Modern Applied Statistics with S' (4th edition).
-License: GPL (version 2 or later)  See file LICENCE.
+  Ripley, 'Modern Applied Statistics with S' (4th edition).
+License: GPL-2 | GPL-3
 URL: http://www.stats.ox.ac.uk/pub/MASS4/
 @end smallexample
 @end cartouche
@@ -2575,7 +2612,7 @@ Title: Italian Translations for R 2.2.1
 Description: Italian Translations for R 2.2.1
 Author: The translators
 Maintainer: Some Body <somebody@@some.where.net>
-License: GPL Version 2 or later.
+License: GPL (>= 2)
 @end example
 
 @node Services,  , Package types, Creating R packages

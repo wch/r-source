@@ -585,6 +585,12 @@ PACKAGE INSTALLATION
     o	The encoding declared in the DESCRIPTION file is now used as
 	the default encoding for .Rd files.
 
+    o	A standard for specifying package license information in the
+    	DESCRIPTION License field was introduced, see 'Writing R
+    	Extensions'.  In addition, files LICENSE or LICENCE in a package
+    	top-level source directory are now installed (so putting copies
+    	into the 'inst' subdirectory is no longer necessary).
+
     o	install.packages() on a Unix-alike now updates
 	doc/html/packages.html only if packages are installed to
 	.Library (by that exact name).
