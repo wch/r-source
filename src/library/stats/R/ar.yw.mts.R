@@ -33,7 +33,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     n.used <- nrow(x)
     if (demean) {
         x.mean <- colMeans(x)
-        x <- sweep(x, 2, x.mean)
+        x <- sweep(x, 2, x.mean, check.margin=FALSE)
     }
     else x.mean <- rep(0, nser)
     order.max <- if (is.null(order.max))

@@ -24,7 +24,8 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE)
 	z <- QR$qr
 	z <- z *(row(z) == col(z))
 	raw <- qr.qy(QR, z)
-	Z <- sweep(raw, 2, apply(raw, 2, function(x) sqrt(sum(x^2))), "/")
+	Z <- sweep(raw, 2, apply(raw, 2, function(x) sqrt(sum(x^2))), "/",
+		   check.margin=FALSE)
 	colnames(Z) <- paste("^", 1:n - 1, sep="")
 	Z
     }

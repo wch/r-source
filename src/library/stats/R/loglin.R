@@ -145,7 +145,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             vars <- which(dyadic[i - 1, ] > 0)
             parval[[i]] <- apply(fit, vars, mean)
             parnam[i] <- paste(varnames[vars], collapse = ".")
-            fit <- sweep(fit, vars, parval[[i]])
+            fit <- sweep(fit, vars, parval[[i]], check.margin=FALSE)
         }
 
         names(parval) <- parnam
