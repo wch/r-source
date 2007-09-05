@@ -95,7 +95,6 @@ NEW FEATURES
 
     o	duplicated() and unique() and their methods in base gain an
 	additional argument 'fromLast'.
-
     o	fifo() no longer has a default 'description' argument.
 
 	fifo("") is now implemented, and works in the same way as file("").
@@ -347,13 +346,13 @@ NEW FEATURES
 	Initialization of the 1997 Knuth TAOCP generator is now done
 	in R code, avoiding some C code whose licence status has been
 	questioned.
-	
+
     o	The reporting of syntax errors has been made more user-
-	friendly.	
-	
+	friendly.
+
     o   The mathematical annotation facility (plotmath) now recognises
         a symbol() function which forces the font to be a symbol font.
-        This allows access to all characters in the Adobe Symbol 
+        This allows access to all characters in the Adobe Symbol
         encoding within plotmath expressions.
 
 
@@ -689,8 +688,12 @@ BUG FIXES
 
     o   Fixed bug in initialisation code in 'grid' package for
         determining the boundaries of shapes.  Problem reported
-        by Hadley Wickham;  symptom was error message: 
+        by Hadley Wickham;  symptom was error message:
         "Polygon edge not found".
+
+    o	str() is no longer slow for large POSIXct objects.
+	Its output is also slightly more compact for such; implementation
+	via new optional argument 'give.head'.
 
 
 
