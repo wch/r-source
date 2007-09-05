@@ -353,11 +353,6 @@ NEW FEATURES
     o	The reporting of syntax errors has been made more user-
 	friendly.
 
-    o   The mathematical annotation facility (plotmath) now recognises
-        a symbol() function which forces the font to be a symbol font.
-        This allows access to all characters in the Adobe Symbol
-        encoding within plotmath expressions.
-
 
 METHODS PACKAGE
 
