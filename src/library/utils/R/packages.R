@@ -225,7 +225,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     update <- NULL
 
     currentR <- minorR <- getRversion()
-    minorR[[1]][3] <- 0 # set patchlevel to 0
+    minorR[[c(1,3)]] <- 0 # set patchlevel to 0
     for(k in 1:nrow(instp)) {
         if (instp[k, "Priority"] %in% "base") next
         z <- match(instp[k, "Package"], available[,"Package"])
