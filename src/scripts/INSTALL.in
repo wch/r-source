@@ -589,7 +589,7 @@ do_install_source () {
 
 
   if ${more_than_libs}; then
-    for f in COPYING NAMESPACE; do
+    for f in NAMESPACE LICENSE LICENCE COPYING; do
       if test -f "${f}"; then
 	cp "${f}" "${R_PACKAGE_DIR}"
 	chmod 644 "${R_PACKAGE_DIR}/${f}"
