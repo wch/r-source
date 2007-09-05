@@ -40,7 +40,7 @@ substring <- function(text,first,last=1000000)
 
 abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE,
-             method = c("left", "both.sides"))
+             method = c("left.kept", "both.sides"))
 {
     ## we just ignore use.classes
     if(minlength <= 0)

@@ -8,7 +8,6 @@
 \usage{
 abbreviate(names.arg, minlength = 4, use.classes = TRUE,
            dot = FALSE, method = c("left.kept", "both.sides"))
-
 }
 \alias{abbreviate}
 \arguments{
@@ -25,7 +24,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   such that they remain \emph{unique} (if they were).
 }
 \details{
-  The algorithm (\code{method = "keep.left"}) used is similar to that of
+  The algorithm (\code{method = "left.kept"}) used is similar to that of
   S.  For a single string it works as follows.
   First all spaces at the beginning of the string are stripped.
   Then (if necessary) any other spaces are stripped.
