@@ -42,8 +42,32 @@ str.data.frame <- function(object, ...)
 
 str.POSIXt <- function(object, ...) {
     cl <- oldClass(object)
-    cat("'", cl[min(2, length(cl))],"', format:", sep = "")
-    str(format(object), ...)
+    ## be careful to be fast for large object:
+    n <- length(object)
+    if(n >= 1000) object <- object[1:1000]
+
+    give.length <- TRUE ## default
+    ## use 'give.length' when specified, else default = give.head
+    if(length(larg <- list(...))) {
+	nl <- names(larg)
+	iGiveHead <- which(nl == "give.head")
+	if (any(Bgl <- nl == "give.length"))
+	    give.length <- larg[[which(Bgl)]]
+	else if(length(iGiveHead))
+	    give.length <- larg[[iGiveHead]]
+	if(length(iGiveHead)) # eliminate it from arg.list
+	    larg <- larg[ - iGiveHead ]
+	if(is.numeric(larg[["nest.lev"]]) &&
+	   is.numeric(v.len <- larg[["vec.len"]])) # typical call from data.frame
+	    ## diminuish length for typical call:
+	    larg[["vec.len"]] <-
+		min(larg[["vec.len"]],
+		    (larg[["width"]]- nchar(larg[["indent.str"]]) -31)%/% 19)
+    }
+
+    le.str <- if(give.length) paste("[1:",as.character(n),"]", sep="")
+    cat(" ", cl[min(2, length(cl))], le.str,", format: ", sep = "")
+    do.call(str, c(list(format(object), give.head = FALSE), larg))
 }
 
 strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4)
@@ -52,7 +76,8 @@ strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4)
 str.default <-
     function(object, max.level = NA, vec.len = strO$vec.len,
              digits.d = strO$digits.d,
-	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
+	     nchar.max = 128, give.attr = TRUE,
+             give.head = TRUE, give.length = give.head,
 	     width = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
@@ -79,7 +104,7 @@ str.default <-
 	ss <- capture.output(str(object, max.level = max.level,
 				 vec.len = vec.len, digits.d = digits.d,
 				 nchar.max = nchar.max,
-				 give.attr= give.attr, give.length= give.length,
+				 give.attr= give.attr, give.head= give.head, give.length= give.length,
 				 width = width, nest.lev = nest.lev,
 				 indent.str = indent.str, comp.str= comp.str,
 				 no.list= no.list || is.data.frame(object),
@@ -177,7 +202,7 @@ str.default <-
                         indent.str = paste(indent.str,".."),
                         nchar.max = nchar.max, max.level = max.level,
                         vec.len = vec.len, digits.d = digits.d,
-                        give.attr = give.attr, give.length = give.length,
+                        give.attr = give.attr, give.head= give.head, give.length = give.length,
                         width = width, envir = envir)
 		}
 	    }
@@ -429,8 +454,8 @@ str.default <-
 	    formObj <- function(x) paste(format.fun(x), collapse = " ")
 	}
 
-	cat(str1, " ", formObj(if(ile >= 1) object[1:ile] else
-			       if(v.len > 0) object),
+	cat(if(give.head) P0(str1, " "),
+	    formObj(if(ile >= 1) object[1:ile] else if(v.len > 0) object),
 	    if(le > v.len) " ...", "\n", sep="")
 
     } ## else (not function nor list)----------------------------------------
@@ -445,7 +470,7 @@ str.default <-
 		    max.level = max.level, digits.d = digits.d,
 		    nchar.max = nchar.max,
 		    vec.len = if(nam[i] == "source") 1 else vec.len,
-		    give.attr= give.attr, give.length= give.length, width= width)
+		    give.attr= give.attr, give.head= give.head, give.length= give.length, width= width)
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects

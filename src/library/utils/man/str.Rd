@@ -16,7 +16,8 @@ str(object, \dots)
 
 \method{str}{default}(object, max.level = NA,
     vec.len  = strO$vec.len, digits.d = strO$digits.d,
-    nchar.max = 128, give.attr = TRUE, give.length = TRUE,
+    nchar.max = 128, give.attr = TRUE,
+    give.head = TRUE, give.length = give.head,
     width = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
                        collapse = ".."),
@@ -58,6 +59,8 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4)
     as sub structures.}
   \item{give.length}{logical; if \code{TRUE} (default), indicate
     length (as \code{[1:\dots]}).}
+  \item{give.head}{logical; if \code{TRUE} (default), give (possibly
+    abbreviated) mode/class and length (as \code{<type>[1:\dots]}).}
   \item{width}{the page width to be used.  The default is the currently
     active \code{\link{options}("width")}; note that this has only a
     weak effect, unless \code{strict.width} is not \code{"no"}.}
