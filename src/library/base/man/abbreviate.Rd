@@ -7,7 +7,8 @@
 \title{Abbreviate Strings}
 \usage{
 abbreviate(names.arg, minlength = 4, use.classes = TRUE,
-           dot = FALSE)
+           dot = FALSE, method = c("left.kept", "both.sides"))
+
 }
 \alias{abbreviate}
 \arguments{
@@ -16,14 +17,16 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{minlength}{the minimum length of the abbreviations.}
   \item{use.classes}{logical (currently ignored by \R).}
   \item{dot}{logical: should a dot (\code{"."}) be appended?}
+  \item{method}{a string specifying the method used with default
+    \code{"left.kept"}, see \emph{Details} below.
 }
 \description{
   Abbreviate strings to at least \code{minlength} characters,
   such that they remain \emph{unique} (if they were).
 }
 \details{
-  The algorithm used is similar to that of S.  For a single string it
-  works as follows.
+  The algorithm (\code{method = "keep.left"}) used is similar to that of
+  S.  For a single string it works as follows.
   First all spaces at the beginning of the string are stripped.
   Then (if necessary) any other spaces are stripped.
   Next, lower case vowels are removed (starting at the right)
@@ -37,7 +40,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   retained.
 
   Missing (\code{NA}) values are unaltered.
-  
+
   If \code{use.classes} is \code{FALSE} then the only distinction is to
   be between letters and space.  This has NOT been implemented.
 }
@@ -45,7 +48,10 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   A character vector containing abbreviations for the strings in its
   first argument.  Duplicates in the original \code{names.arg} will be
   given identical abbreviations.  If any non-duplicated elements have
-  the same \code{minlength} abbreviations then \code{minlength} is
+  the same \code{minlength} abbreviations then, if \code{method =
+  "both.sides"} the basic internal \code{abbreviate()} algorithm is
+  applied to the characterwise \emph{reversed} strings; if there are
+  still duplicated abbreviations, \code{minlength} is
   incremented by one and new abbreviations are found for those elements
   only.  This process is repeated until all unique elements of
   \code{names.arg} have unique abbreviations.
@@ -67,5 +73,11 @@ abbreviate(x, 2)
 
 (st.abb <- abbreviate(state.name, 2))
 table(nchar(st.abb))# out of 50, 3 need 4 letters
+
+## method="both.sides" helps:  no 4-letters, and only 4 3-letters:
+st.ab2 <- abbreviate(state.name, 2, method="both")
+table(nchar(st.ab2))
+## Compare the two methods:
+cbind(st.abb, st.ab2)
 }
 \keyword{character}

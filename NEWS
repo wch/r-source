@@ -35,6 +35,9 @@ NEW FEATURES
 	argument even when dispatching to a Math group method (which
 	may accept more than one argument for other group members).
 
+    o	abbreviate() gains a 'method' argument with a new option
+	"both.sides" which can make shorter abbreviations.
+
     o	aggregate.data.frame() no longer changes the group variables
 	into factors, and leaves alone the levels of those which are
 	factors.  (Inter alia grants the wish of PR#9666.)
