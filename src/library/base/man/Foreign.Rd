@@ -68,7 +68,7 @@
   compiled code that uses \R objects in the same way as internal
   \R functions.
 
-  \code{.Call} and \code{.Call.graphics} can be used call compiled code
+  \code{.Call} and \code{.Call.graphics} can be used to call compiled code
   which makes use of internal \R objects.  The arguments are passed to
   the C code as a sequence of \R objects.  It is included to provide
   compatibility with S version 4.
