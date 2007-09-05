@@ -18,7 +18,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{use.classes}{logical (currently ignored by \R).}
   \item{dot}{logical: should a dot (\code{"."}) be appended?}
   \item{method}{a string specifying the method used with default
-    \code{"left.kept"}, see \emph{Details} below.
+    \code{"left.kept"}, see \emph{Details} below.}
 }
 \description{
   Abbreviate strings to at least \code{minlength} characters,
