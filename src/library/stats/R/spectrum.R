@@ -114,7 +114,7 @@ spec.pgram <-
             x[, i] <- x[, i] - mean(x[, i]) - sum(x[, i] * t) * t/sumt2
     }
     else if (demean) {
-        x <- sweep(x, 2, colMeans(x))
+	x <- sweep(x, 2, colMeans(x), check.margin=FALSE)
     }
     ## apply taper:
     x <- spec.taper(x, taper)

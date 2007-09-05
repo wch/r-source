@@ -37,7 +37,7 @@ cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE,
 	if (length(center) != ncol(x))
 	    stop("length of 'center' must equal the number of columns in 'x'")
     }
-    x <- sqrt(wt) * sweep(x, 2, center)
+    x <- sqrt(wt) * sweep(x, 2, center, check.margin=FALSE)
     cov <-
         switch(match.arg(method),
                "unbiased" = crossprod(x) / (1 - sum(wt^2)),

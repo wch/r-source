@@ -54,7 +54,7 @@ ar.yw.default <-
     nser <- ncol(x)
     if (demean) {
         xm <- colMeans(x)
-        x <- sweep(x, 2, xm)
+        x <- sweep(x, 2, xm, check.margin=FALSE)
     } else xm <- rep(0, nser)
     n.used <- nrow(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
@@ -213,7 +213,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     if(nser > 1) {
         if(is.null(object$x.intercept)) xint <- rep(0, nser)
         else xint <- object$x.intercept
-        x <- rbind(sweep(newdata, 2, object$x.mean),
+        x <- rbind(sweep(newdata, 2, object$x.mean, check.margin=FALSE),
                    matrix(rep(0, nser), n.ahead, nser, byrow=TRUE))
         if(p > 0) {
             for(i in 1:n.ahead) {

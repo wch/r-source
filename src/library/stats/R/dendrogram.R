@@ -635,14 +635,14 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	else labCol[colInd]
 
     if(scale == "row") {
-	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
+	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm), check.margin=FALSE)
 	sx <- apply(x, 1, sd, na.rm = na.rm)
-	x <- sweep(x, 1, sx, "/")
+	x <- sweep(x, 1, sx, "/", check.margin=FALSE)
     }
     else if(scale == "column") {
-	x <- sweep(x, 2, colMeans(x, na.rm = na.rm))
+	x <- sweep(x, 2, colMeans(x, na.rm = na.rm), check.margin=FALSE)
 	sx <- apply(x, 2, sd, na.rm = na.rm)
-	x <- sweep(x, 2, sx, "/")
+	x <- sweep(x, 2, sx, "/", check.margin=FALSE)
     }
 
     ## Calculate the plot layout

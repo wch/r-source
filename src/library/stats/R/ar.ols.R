@@ -50,7 +50,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     ## remove means for conditioning
     if(demean) {
         xm <- colMeans(x)
-        x <- sweep(x, 2, xm)
+        x <- sweep(x, 2, xm, check.margin=FALSE)
     } else xm <- rep(0, nser)
     ## Fit models of increasing order
 

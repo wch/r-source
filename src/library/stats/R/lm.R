@@ -730,7 +730,7 @@ predict.lm <-
                 Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
             }
             if(hasintercept)
-                X <- sweep(X, 2, avx)
+                X <- sweep(X, 2, avx, check.margin=FALSE)
             unpiv <- rep.int(0, NCOL(X))
             unpiv[piv] <- p1
             ## Predicted values will be set to 0 for any term that

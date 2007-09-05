@@ -203,7 +203,7 @@ as.table.default <- function(x, ...)
 prop.table <- function(x, margin = NULL)
 {
     if(length(margin))
-	sweep(x, margin, margin.table(x, margin), "/")
+	sweep(x, margin, margin.table(x, margin), "/", check.margin=FALSE)
     else
 	x / sum(x)
 }
