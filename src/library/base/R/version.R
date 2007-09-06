@@ -57,7 +57,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
 numeric_version <-
 function(x, strict = TRUE)
     .make_numeric_version(x, strict,
-                          "([[:digit:]]+[.-])*[[:digit:]]+")    
+                          "([[:digit:]]+[.-])*[[:digit:]]+")
 
 is.numeric_version <-
 function(x)
@@ -156,7 +156,7 @@ function(x, base = NULL)
     class(y) <- unique(c(attr(x, ".classes"), "numeric_version"))
     y
 }
-                          
+
 ## Methods.
 
 `[.numeric_version` <-
@@ -175,10 +175,43 @@ function(x, i, j)
     y
 }
 
-`[[.numeric_version` <-
-function(x, i)
-    structure(list(unclass(x)[[i]]), class = oldClass(x))
-   
+## `[[.numeric_version` <-
+## function(x, i)
+##     structure(list(unclass(x)[[i]]), class = oldClass(x))
+
+`[[.numeric_version` <- function(x, ..., exact=NA)
+{
+   if(length(list(...)) < 2)
+      structure(list(unclass(x)[[..., exact=exact]]), class = oldClass(x))
+   else
+      unclass(x)[[..1, exact=exact]][..2]
+}
+
+## allowed forms
+## x[[i]] <- "1.2.3"; x[[i]] <- 1:3; x[[c(i,j)]] <- <single integer>
+## x[[i,j]] <- <single integer>
+`[[<-.numeric_version` <- function(x, ..., value)
+{
+   z <- unclass(x)
+   if(nargs() < 4) {
+       if(length(..1) < 2) {
+           if(is.character(value) && length(value) == 1)
+               value <- unclass(as.numeric_version(value))[[1]]
+           else if(!is.integer(value)) stop("invalid value")
+       } else {
+           value <- as.integer(value)
+           if(length(value) != 1) stop("invalid value")
+       }
+       z[[..1]] <- value
+   } else {
+       value <- as.integer(value)
+       if(length(value) != 1) stop("invalid value")
+       z[[..1]][..2] <- value
+   }
+   structure(z, class = oldClass(x))
+}
+
+
 Ops.numeric_version <-
 function(e1, e2)
 {

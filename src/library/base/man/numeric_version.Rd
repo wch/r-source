@@ -16,6 +16,7 @@
 % Methods.
 \alias{[.numeric_version}
 \alias{[[.numeric_version}
+\alias{[[<-.numeric_version}
 \alias{Ops.numeric_version}
 \alias{Summary.numeric_version}
 \alias{as.character.numeric_version}
@@ -28,7 +29,7 @@
 \alias{.encode_numeric_version}
 \alias{.decode_numeric_version}
 \alias{.make_numeric_version}
-\title{Numeric versions}
+\title{Numeric Versions}
 \description{A simple S3 class for representing numeric versions
   including package versions, and associated methods.}
 \usage{
@@ -56,10 +57,14 @@ getRversion()
   \code{R_system_version} create a representation from such strings (if
   suitable) which allows for coercion and testing, combination,
   comparison, summaries (min/max), inclusion in data frames,
-  subscripting, and printing.
+  subscripting, and printing.  The classes can hold a vector of such
+  representations.
 
   \code{getRversion} returns the version of the running \R as an R
   system version object.
+
+  The \code{[[} operator extracts or replaces a single version.  To
+  access the integers of a version use two indices: see the examples.
 }
 \seealso{
   \code{\link{compareVersion}}
@@ -78,5 +83,11 @@ if(getRversion() <= "2.5.0") { ## work around missing feature
       "Now trying to work around that ...\n", sep = "")
 }
 
+x[[c(1,3)]]  # '4' as a numeric vector, same as x[1, 3]
+x[1, 3]      # 4 as an integer
+x[[2, 3]] <- 0   # zero the patchlevel
+x[[c(2,3)]] <- 0 # same
+x
+x[3] <- "2.2.3"; x
 }
 \keyword{utilities}
