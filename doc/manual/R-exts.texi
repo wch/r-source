@@ -8874,7 +8874,7 @@ Also consider @code{predict.glm}: it happens that in @R{} for historical
 reasons it calls @code{predict.lm} directly, but in principle (and in S
 originally and currently) it could use @code{NextMethod}.
 (@code{NextMethod} seems under-used in the @R{} sources.  Do be aware
-that there as S/R differences in this area, and the example above works
+that there are S/R differences in this area, and the example above works
 because there is a @emph{next} method, the default method, not that a
 new method is selected when the class is changed.)
 
