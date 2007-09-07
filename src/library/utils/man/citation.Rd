@@ -30,7 +30,7 @@ citation(package = "base", lib.loc = NULL)
   The R core development team and the very active community of package
   authors have invested a lot of time and effort in creating R as it is
   today. Please give credit where credit is due and cite R and R
-  packages when you use them for data anlysis.
+  packages when you use them for data analysis.
   
   Execute function \code{citation()} for information on how to cite the
   base R system in publications. If the name of a non-base package is
