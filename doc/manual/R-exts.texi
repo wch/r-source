@@ -261,10 +261,11 @@ vertical bars.  Individual specifications must be one of
 @item
 One of the ``standard'' abbreviations
 @example
-GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 BSD Artistic
+GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 Artistic-1.0 Artistic-2.0
 @end example
 as made available via @url{http://@/www.r-project.org/@/Licenses/} and
-shipped in @file{share/licenses} in the R sources.
+shipped in @file{share/licenses} in the R sources, or @samp{BSD} (see
+@url{http://@/www.opensource.org/@/licenses/@/bsd-license.php}).
 @item
 The full names (with commas removed) or abbrevations of open source
 licenses as approved by the Open Source Initiative (see
