@@ -490,8 +490,9 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 			goto top_of_loop;
 		    }
-		    for(j = 0; j < strlen(sub); j++) *outbuf++ = sub[j];
-		    outb -= strlen(sub);
+		    memcpy(outbuf, sub, j = strlen(sub)); 
+		    outbuf += j;
+		    outb -= j;
 		}
 		inbuf++; inb--;
 		goto next_char;

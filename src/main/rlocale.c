@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-6   The R Development Core Team
+ *  Copyright (C) 2005-7   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 /*  This file was contributed by Ei-ji Nakama.
  *  See also the comments in R_ext/rlocale.h.
  *
- *  It provides replacements for the wctype functions on 
+ *  It provides replacements for the wctype functions on
  *  Windows (where they are not correct in e.g. Japanese)
  *  AIX (missing)
  *  MacOS X in CJK (where these just call the ctype functions)
@@ -58,7 +58,7 @@ void Ri18n_iswctype(void)
 
 #else /* SUPPORT_MBCS */
 
-#define IN_RLOCALE_C 1 /* used in rlocale.h */ 
+#define IN_RLOCALE_C 1 /* used in rlocale.h */
 #include <R_ext/rlocale.h>
 #include "rlocale_data.h"
 
@@ -69,8 +69,8 @@ void Ri18n_iswctype(void)
 #include <limits.h>
 #include <R_ext/Riconv.h>
 
-static int wcwidthsearch(int wint, const struct interval_wcwidth *table, 
-			 int max, int locale) 
+static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
+			 int max, int locale)
 {
     int min = 0;
     int mid;
@@ -127,18 +127,18 @@ static cjk_locale_name_t cjk_locale_name[] = {
 int Ri18n_wcwidth(wchar_t c)
 {
     char lc_str[128];
-    unsigned int i;
+    unsigned int i, j;
 
     static char *lc_cache = "";
     static int lc = 0;
 
     if (0 != strcmp(setlocale(LC_CTYPE, NULL), lc_cache)) {
 	strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str));
-	for (i = 0; i < strlen(lc_str) && i < sizeof(lc_str); i++)
+	for (i = 0, j = strlen(lc_str); i < j && i < sizeof(lc_str); i++)
 	    lc_str[i] = toupper(lc_str[i]);
-	for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t)); 
+	for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t));
 	     i++) {
-	    if (0 == strncmp(cjk_locale_name[i].name, lc_str, 
+	    if (0 == strncmp(cjk_locale_name[i].name, lc_str,
 			     strlen(cjk_locale_name[i].name))) {
 		lc = cjk_locale_name[i].locale;
 		break;
@@ -165,7 +165,7 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
 }
 
 #if defined(Win32) || defined(_AIX) || defined(__APPLE_CC__)
-static int wcsearch(int wint, const struct interval *table, int max) 
+static int wcsearch(int wint, const struct interval *table, int max)
 {
     int min = 0;
     int mid;
@@ -314,7 +314,7 @@ static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
     {NULL,     0,     NULL}
 };
 
-wctype_t Ri18n_wctype(const char *name) 
+wctype_t Ri18n_wctype(const char *name)
 {
     int i;
 
