@@ -1162,8 +1162,20 @@ sub check_pkg {
 	}
     }
     &check_subdirs(".") unless ($subdirs eq "no");
+    sub has_lazyload_data {
+        my ($dir) = @_;
+        my @files;
+        my $ans = 0;
+        if (-s &file_path($dir, "Rdata.rdb")
+            && -s &file_path($dir, "Rdata.rds")
+            && -s &file_path($dir, "Rdata.rdx")) {
+            $ans = 1;
+        }
+        $ans;
+    }
     ## Subdirectory 'data' without data sets?
-    if((-d "data") && !&list_files_with_type("data", "data")) {
+    if((-d "data") && !&list_files_with_type("data", "data")
+       && !&has_lazyload_data("data")) {
 	$log->warning() unless $any;
 	$any++;
 	$log->print("Subdirectory 'data' contains no data sets.\n");

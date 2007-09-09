@@ -622,6 +622,11 @@ PACKAGE INSTALLATION
 	this was changed to 'OBJECTS' in 2001.  The undocumented
 	alternative of 'OBJS' has finally been removed.
 
+    o   R CMD check no longer issues a warning about no data sets
+        being present if a lazyload db is found (as determined by the
+        presence of Rdata.rdb, Rdata.rds, and Rdata.rdx in the 'data'
+        subdirectory.
+
 
 BUG FIXES
 
