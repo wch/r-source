@@ -17,7 +17,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
 }
 \arguments{
   \item{theta}{Starting value: must be in the feasible region.}
-  \item{f}{Function to minimize (see below).}
+  \item{f}{Function to minimise (see below).}
   \item{grad}{Gradient of \code{f}, or \code{NULL} (see below).}
   \item{ui}{Constraints (see below).}
   \item{ci}{Constraints (see below).}
@@ -52,7 +52,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   objective function may be used (currently all but "L-BFGS-B").  
   
   The objective function \code{f} takes as first argument the vector
-  of parameters over which minimization is to take place.  It should
+  of parameters over which minimisation is to take place.  It should
   return a scalar result. Optional arguments \code{\dots} will be
   passed to \code{optim} and then (if not used by \code{optim}) to
   \code{f}. As with \code{optim}, the default is to minimise, but
