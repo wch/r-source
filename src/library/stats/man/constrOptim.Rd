@@ -17,8 +17,8 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
 }
 \arguments{
   \item{theta}{Starting value: must be in the feasible region.}
-  \item{f}{Function to minimise.}
-  \item{grad}{Gradient of \code{f}.}
+  \item{f}{Function to minimize (see below).}
+  \item{grad}{Gradient of \code{f}, or \code{NULL} (see below).}
   \item{ui}{Constraints (see below).}
   \item{ci}{Constraints (see below).}
   \item{mu}{(Small) tuning parameter.}
@@ -28,7 +28,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   \item{outer.eps}{Criterion for relative convergence of the barrier
     algorithm.}
   \item{\dots}{ Other arguments passed to \code{\link{optim}}, which
-    will pass them to \code{f} and \code{grad} if it does not used them.}
+    will pass them to \code{f} and \code{grad} if it does not use them.}
 }
 \details{
   The feasible region is defined by \code{ui \%*\% theta - ci >= 0}. The
@@ -48,12 +48,20 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   function but also less smooth near the boundary of the feasible
   region.
 
-  Any \code{optim} method that permits infinite values for the objective
-  function may be used (currently all but "L-BFGS-B").  The gradient
-  function must be supplied except with \code{method="Nelder-Mead"}.
+  Any \code{optim} method that permits infinite values for the
+  objective function may be used (currently all but "L-BFGS-B").  
   
-  As with \code{optim}, the default is to minimise and maximisation can
-  be performed by setting \code{control$fnscale} to a negative value.
+  The objective function \code{f} takes as first argument the vector
+  of parameters over which minimization is to take place.  It should
+  return a scalar result. Optional arguments \code{\dots} will be
+  passed to \code{optim} and then (if not used by \code{optim}) to
+  \code{f}. As with \code{optim}, the default is to minimise, but
+  maximisation can be performed by setting \code{control$fnscale} to a
+  negative value.
+  
+  The gradient function \code{grad} must be supplied except with
+  \code{method="Nelder-Mead"}.  It should take arguments matching
+  those of \code{f} and return a vector containing the gradient.
   
 }
 \value{
