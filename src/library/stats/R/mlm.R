@@ -103,12 +103,8 @@ Thin.col <- function(X, tol=1e-7) {
 }
 
 
-mauchly.test <- function(object, Sigma=diag(nrow=p),
-                          T = Thin.row(proj(M)-proj(X)),
-                          M = diag(nrow=p),
-                          X = ~0,
-                          idata=data.frame(index=seq_len(p)),...)
-	 UseMethod("mauchly.test")
+mauchly.test <- function(object, ...)
+	 UseMethod("mauchly.test", object)
 
 mauchly.test.mlm <- function(object, ...)
  	mauchly.test(SSD(object), ...)
