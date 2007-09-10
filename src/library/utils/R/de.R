@@ -102,7 +102,7 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
 		cnames[ind1] <- lnames[j]
 		j <- j+1
 	    }
-	    if( dim(x) == dim(args[[i]]) )
+	    if( nrow(x) == nrow(args[[i]]) )
 		rn <- dimnames(args[[i]])[[1]]
 	    else rn <- NULL
 	    if( any(cnames!="") )
