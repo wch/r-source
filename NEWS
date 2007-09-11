@@ -256,8 +256,7 @@ NEW FEATURES
     	vignettes in attached packages or in all installed packages.
 
     o   New function within(), which is like with(), except that it
-        tries to store modifications back to the original in the list
-        and data frame cases.
+        returns modified versions back of lists and data frames.
 
     o	X11(), postscript() (and hence bitmap()), xfig(), jpeg(), png()
 	and the Windows devices win.print(), win.metafile() and bmp()
