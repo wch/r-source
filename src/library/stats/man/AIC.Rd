@@ -47,7 +47,7 @@ AIC(object, \dots, k = 2)
 \value{
   If just one object is provided, returns a numeric value
   with the corresponding AIC (or BIC, or \dots, depending on \code{k});
-  if more than one object are provided, returns a \code{data.frame} with
+  if multiple objects are provided, returns a \code{data.frame} with
   rows corresponding to the objects and columns representing the number
   of parameters in the model (\code{df}) and the AIC.
 }
