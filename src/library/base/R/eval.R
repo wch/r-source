@@ -52,17 +52,11 @@ within <- function(data, expr, ...) UseMethod("within")
 
 with.default <- function(data, expr, ...)
     eval(substitute(expr), data, enclos=parent.frame())
-within.default <- with.default
 
-within.data.frame <- function(data, expr, fix=TRUE, inherits=FALSE, ...) {
-    if (fix) {
-        name <- substitute(data)
-        if (!is.name(name))
-            stop("'data' must be a name")
-        name <- as.character(name)
-    }
+within.data.frame <- function(data, expr, ...) {
 
     parent <- parent.frame()
+
     e   <- evalq(environment(), data, parent)
 
     ret <- eval(substitute(expr), e)
@@ -71,12 +65,7 @@ within.data.frame <- function(data, expr, fix=TRUE, inherits=FALSE, ...) {
     data[names(l)] <- l
     data[del] <- NULL
 
-    if (fix) {
-        assign(name, data, envir=parent, inherits=inherits)
-        invisible(ret)
-    }
-    else
-        data
+    data
 }
 
 within.list <- within.data.frame

@@ -7,7 +7,6 @@
 \alias{with}
 \alias{with.default}
 \alias{within}
-\alias{within.default}
 \alias{within.list}
 \alias{within.data.frame}
 \title{Evaluate an Expression in a Data Environment}
@@ -18,20 +17,14 @@
 \usage{
 with(data, expr, \dots)
 within(data, expr, \dots)
-\method{within}{data.frame}(data, expr, fix=TRUE, inherits=FALSE, \dots)
-\method{within}{list}(data, expr, fix=TRUE, inherits=FALSE, \dots)
 }
 \arguments{
   \item{data}{data to use for constructing an environment. For the
     default \code{with} method this may be an environment, a list, a
     data frame, or an integer as in \code{sys.call}. For \code{within},
-    it can be an environment, a list, or a data
-    frame; it must be a simple name if \code{fix=TRUE} is used.}
+    it can be a list or a data
+    frame.}
   \item{expr}{expression to evaluate.}
-  \item{fix}{if \code{TRUE}, store the modified object back
-    under the original name, otherwise return it.}
-  \item{inherits}{when storing the result, should the enclosing frames
-    of the environment be inspected? (as in \code{assign})}
   \item{\dots}{arguments to be passed to future methods.}
 }
 \details{
@@ -47,13 +40,13 @@ within(data, expr, \dots)
   after the evaluation of \code{expr} and makes the corresponding
   modifications to \code{data} (this may fail in the data frame case if
   objects are created which cannot be stored in a data frame), and
-  optionally stores it back or returns it. \code{within} can be used as
+  returns it. \code{within} can be used as
   an alternative to \code{transform}.
   
 }
 \value{
-  For \code{with} and for \code{within} when \code{fix=TRUE}, the value
-  of the evaluated \code{expr}. For \code{within} when \code{fix=FALSE},
+  For \code{with}, the value
+  of the evaluated \code{expr}. For \code{within},
   the modified object.
 }
 \seealso{
@@ -74,15 +67,13 @@ with(anorexia, {
 
 
 
-## Notice that, since "inherits" is FALSE by default, the modified
-## airquality data end up in the global environment
-
-within(airquality, {     # Notice that multiple vars can be changed
+aq <- within(airquality, {     # Notice that multiple vars can be changed
     lOzone<-log(Ozone)
     Month<-factor(month.abb[Month])
     rm(Day)
 })
-head(airquality)
+
+head(aq)
 
 with(data.frame(u = c(5,10,15,20,30,40,60,80,100),
                 lot1 = c(118,58,42,35,27,25,21,19,18),
