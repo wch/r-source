@@ -57,7 +57,7 @@ is.tskernel(k)
   \code{k <- kernel(*)}, \code{sum(k[ -k$m : k$m ])} is one.
 
   \code{df.kernel} returns the \dQuote{equivalent degrees of freedom} of
-  a smoothing kernel as defined in Brockwell and Davies (1991), page
+  a smoothing kernel as defined in Brockwell and Davis (1991), page
   362, and \code{bandwidth.kernel} returns the equivalent bandwidth as
   defined in Bloomfield (1976), p. 201, with a continuity correction.
 }
@@ -102,7 +102,7 @@ kd[-2:2]
 plot(kernel("fejer", 100, r=6))
 plot(kernel("modified.daniell", c(7,5,3)))
 
-# Reproduce example 10.4.3 from Brockwell and Davies (1991)
+# Reproduce example 10.4.3 from Brockwell and Davis (1991)
 spectrum(sunspot.year, kernel=kernel("daniell", c(11,7,3)), log="no")
 }
 \keyword{ts}
