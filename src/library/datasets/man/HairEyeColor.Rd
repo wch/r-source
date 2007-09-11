@@ -28,6 +28,9 @@
   or, more generally, log-linear modelling, and graphical methods such
   as mosaic plots, sieve diagrams or association plots.
 }
+\source{
+  \url{http://euclid.psych.yorku.ca/ftp/sas/vcd/catdata/haireye.sas}
+}
 \references{
   Snee, R. D. (1974),
   Graphical display of two-way contingency tables.
