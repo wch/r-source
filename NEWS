@@ -718,6 +718,11 @@ BUG FIXES
 	when plotting a function.
 
 
+    o   old.packages, and hence update.packages, incorrectly handled
+        duplicate packages when multiple package repositories are
+        specified.  The first package encountered was selected, not
+        the one with highest version number.  This has been fixed.
+
 
 
 	**************************************************
