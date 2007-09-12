@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-06-27 r42089)
+R version 2.7.0 Under development (unstable) (2007-09-11 r42820)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1517,10 +1517,10 @@ Single term deletions
 Model:
 Fr ~ (Hair + Eye + Sex)^2
          Df Deviance    AIC
-<none>          8.19 192.94
-Hair:Eye  9   162.21 328.96
-Hair:Sex  3    22.03 200.78
-Eye:Sex   3    23.08 201.83
+<none>          6.76 191.64
+Hair:Eye  9   156.68 323.56
+Hair:Sex  3    18.33 197.21
+Eye:Sex   3    11.76 190.64
 > ## broken around 1.2.1 it seems.
 > 
 > 
@@ -3191,7 +3191,7 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [31] rbind         row.names     row.names<-   rowsum        split        
 [36] split<-       stack         str           subset        summary      
 [41] t             tail          transform     unique        unstack      
-[46] within 
+[46] within       
 > meth2gen("dendrogram")
 [1] [[         cophenetic cut        labels     plot       print      reorder   
 [8] rev        str       
