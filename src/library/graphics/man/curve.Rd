@@ -38,9 +38,11 @@ curve(expr, from, to, n = 101, add = FALSE, type = "l",
   \code{x(t)} or \code{expr} (with \code{x} inside) must return a
   numeric of the same length as the argument \code{t} or \code{x}.
 
-  If \code{add = TRUE}, \code{c(from,to)} default to \code{xlim} which
-  defaults to the current x-limits.  Further, \code{log} is taken from the
-  current plot when \code{add} is true.
+  If either of \code{from} or \code{to} is missing, it defaults to
+  the corresponding element of \code{xlim}, and \code{xlim} defaults to
+  the x-limits of the current plot.  \code{log} is taken from
+  the current plot only when \code{add} is true, and otherwise
+  defaults to \code{""} for linear scales on both axes.
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.

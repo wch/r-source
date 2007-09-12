@@ -19,16 +19,20 @@
 plot <- function (x, y, ...)
 {
     if (is.null(attr(x, "class")) && is.function(x)) {
-	nms <- names(list(...))
-	## need to pass 'y' to plot.function() when positionally matched
-	if(missing(y)) # set to defaults {could use formals(plot.default)}:
-	    y <- { if (!"from" %in% nms) 0 else
-		   if (!"to"   %in% nms) 1 else
-		   if (!"xlim" %in% nms) NULL }
-	if ("ylab" %in% nms)
-	    plot.function(x,  y, ...)
-	else
-	    plot.function(x, y, ylab=paste(deparse(substitute(x)),"(x)"), ...)
+        # A named y is ignored, but a positional y should be treated
+        # as "from" --- unless "from" was specified...
+		nms <- names(sys.call())
+		special <- c("x", "y", names(formals(curve)))
+		fix <- pmatch(nms, special)
+		nms[!is.na(fix)] <- special[fix[!is.na(fix)]]
+		args <- list(x)
+		if(!"y" %in% nms && !"from" %in% nms && !missing(y)) 
+			args <- c(args, list(from=y))
+		# Construct a y label if not specified.
+		if (!"ylab" %in% nms)
+			args <- c(args, list(ylab=paste(deparse(substitute(x)),"(x)")))
+		args <- c(args, list(...))
+		do.call(plot.function, args)
     }
     else UseMethod("plot")
 }
