@@ -204,6 +204,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
+    available <- .remove_stale_dups(available)
 
     ## For bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
@@ -738,4 +739,26 @@ compareVersion <- function(a, b)
         DL <- DL[!OK]
     }
     done
+}
+
+.remove_stale_dups <- function(ap)
+{
+    ## Given a matrix from available.packages, return a copy
+    ## with no duplicate packages, being sure to keep the packages
+    ## with highest version number.
+    pkgs <- ap[ , "Package"]
+    dup_pkgs <- pkgs[duplicated(pkgs)]
+    stale_dups <- integer(length(dup_pkgs))
+    i <- 1L
+    for (dp in dup_pkgs) {
+        wh <- which(dp == pkgs)
+        vers <- package_version(ap[wh, "Version"])
+        keep_ver <- max(vers)
+        keep_idx = which(vers == keep_ver)[1L] # they might all be max
+        wh <- wh[-keep_idx]
+        end_i <- i + length(wh) - 1L
+        stale_dups[i:end_i] <- wh
+        i <- end_i + 1L
+    }
+    ap[-stale_dups, ]
 }
