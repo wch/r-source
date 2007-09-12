@@ -1232,7 +1232,7 @@ static void clearrect(DEstruct DE)
    do as we get a char at a time */
 static void handlechar(DEstruct DE, char *text)
 {
-    int i, c = text[0];
+    int i, c = text[0], j;
 #ifdef USE_FONTSET
     wchar_t wcs[BOOSTED_BUF_SIZE];
 
@@ -1355,9 +1355,13 @@ static void handlechar(DEstruct DE, char *text)
 	goto donehc;
     }
 
-    for(i = 0; i < strlen(text); i++) *bufp++ = text[i];
-    *(bufp+1) = '\0';
-    clength += strlen(text);
+    /* as originally written, this left an undefined byte at
+       the end of bufp, followed by a zero byte; luckily, the storage
+       pointed to by bufp had already been zeroed, so the undefined
+       byte was in fact zero.  */
+    strcpy(bufp, text);
+    bufp += (j = strlen(text));
+    clength += j;
     printstring(DE, buf, clength, DE->crow, DE->ccol, 1);
     return;
 

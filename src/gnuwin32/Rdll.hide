@@ -1018,6 +1018,7 @@
  do_writetable
  do_xspline
  do_zeroin
+ do_zeroin2
  dos_glob
  dos_globfree
  dpois_raw

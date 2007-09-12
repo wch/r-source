@@ -162,7 +162,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		nc = mbstowcs(NULL, xi, 0);
 		if(nc >= 0) {
 		    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-		    
+
 		    mbstowcs(wc, xi, nc + 1);
 		    INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
 		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
@@ -357,7 +357,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, len, tlen, ntok, slen;
     int extended_opt, cflags, fixed_opt, perl_opt;
     char *pt = NULL;
-    const char *buf, *split = "", *bufp, *laststart;
+    const char *buf, *split = "", *bufp, *laststart, *ebuf = NULL;
     regex_t reg;
     regmatch_t regmatch[1];
     pcre *re_pcre = NULL;
@@ -419,7 +419,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(fixed_opt) {
 		/* This is UTF-8 safe since it compares whole strings */
 		laststart = buf;
-		for(bufp = buf; bufp - buf < strlen(buf); bufp++) {
+		ebuf = buf + strlen(buf);
+		for(bufp = buf; bufp < ebuf; bufp++) {
 		    if((slen == 1 && *bufp != *split) ||
 		       (slen > 1 && strncmp(bufp, split, slen))) continue;
 		    ntok++;
@@ -480,7 +481,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* This is UTF-8 safe since it compares whole strings,
 		       but it would be more efficient to skip along by chars.
 		     */
-		    for(; bufp - buf < strlen(buf); bufp++) {
+		    for(; bufp < ebuf; bufp++) {
 			if((slen == 1 && *bufp != *split) ||
 			   (slen > 1 && strncmp(bufp, split, slen))) continue;
 			if(slen) {
