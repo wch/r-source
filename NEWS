@@ -708,7 +708,12 @@ BUG FIXES
 	Its output is also slightly more compact for such; implementation
 	via new optional argument 'give.head'.
 
+    o	strsplit(*, fixed=TRUE), potentially iconv() and internal string
+	formatting is now faster for large strings, thanks to report
+	PR#9902 by John Brzustowski.
+
     o   de.restore() gave spurious warning for matrices (Ben Bolker)
+
 
 
 
