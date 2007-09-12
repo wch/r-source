@@ -713,6 +713,9 @@ BUG FIXES
 	PR#9902 by John Brzustowski.
 
     o   de.restore() gave spurious warning for matrices (Ben Bolker)
+    
+    o	plot(fn, xlim=c(a,b)) would not set "from" and "to" properly
+	when plotting a function.
 
 
 
