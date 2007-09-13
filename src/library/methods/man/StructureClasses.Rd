@@ -4,15 +4,27 @@
 % Distributed under GPL 2 or later
 
 \name{StructureClasses}
+\title{Classes Corresponding to Basic Structures}
 \docType{class}
+%
 \alias{structure-class}
 \alias{matrix-class}
 \alias{array-class}
 \alias{ts-class}
-\title{Classes Corresponding to Basic Structures }
-\description{  The virtual class \code{structure} and classes that
+% Group Methods of these
+\alias{Math,structure-method}
+\alias{Ops,structure,vector-method}
+\alias{Ops,structure,structure-method}
+\alias{Ops,structure,array-method}
+\alias{Ops,vector,structure-method}
+\alias{Ops,array,structure-method}
+\alias{Ops,array,array-method}
+%
+\description{
+  The virtual class \code{structure} and classes that
   extend it are formal classes analogous to S language structures such
-  as arrays and time-series}
+  as arrays and time-series.
+}
 \usage{
 ## The following class names can appear in method signatures,
 ## as the class in as() and is() expressions, and, except for
@@ -42,7 +54,27 @@
   \describe{
     \item{coerce}{Methods are defined to coerce arbitrary objects to
       these classes, by calling the corresponding basic function, for
-      example, \code{as(x, "matrix")} calls \code{as.matrix(x)}. }
+      example, \code{as(x, "matrix")} calls \code{as.matrix(x)}.}
+    \item{Ops, Math}{Group methods (see, e.g., \code{\link{S4groupGeneric}})
+      are defined for combinations of structures and vectors (including
+      special cases for array and matrix), implementing the concept of
+      vector structures as in the reference.
+    }
   }
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
+\examples{
+showClass("structure")
+
+## explore a bit :
+showClass("ts")
+(ts0 <- new("ts"))
+str(ts0)
+
+showMethods("Ops") # six methods from these classes, but maybe many more
 }
 \keyword{classes}
