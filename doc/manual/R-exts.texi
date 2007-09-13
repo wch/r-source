@@ -8951,18 +8951,25 @@ scale.bar <- function(x, center, scale = TRUE) NextMethod("scale")
 @end example
 
 @noindent
-and @code{x} has class @code{c("bar", "foo")}?  We are not going to give
-you the answers because it is unreasonable that a user should be
-expected to anticipate such behaviour.  This leads to the
-recommendation:
+and @code{x} has class @code{c("bar", "foo")}?  It is the default
+specified in the method that is used, but the default
+specified in the generic may be the one the user sees.
+This leads to the recommendation:
 
 @quotation
-@emph{A method should use the same defaults as the generic.}
+@emph{If the generic specifies defaults, all methods should use the same defaults.}
 @end quotation
 
 @noindent
-Here there might be justifiable exceptions, which will need careful
-documentation.
+An easy way to follow these recommendations is to always keep generics
+simple, e.g.
+
+@example
+scale <- function(x, ...) UseMethod("scale")
+@end example
+
+Only add parameters and defaults to the generic if they make sense in 
+all possible methods implementing it.
 
 @menu
 * Adding new generics::         
