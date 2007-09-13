@@ -710,8 +710,9 @@ BUG FIXES
     o   de.restore() gave spurious warning for matrices (Ben Bolker)
     
     o	plot(fn, xlim=c(a,b)) would not set "from" and "to" properly
-	when plotting a function.
-
+	when plotting a function.  The argument lists to curve() and
+	plot.function() have been modified slightly as part of the
+	fix.
 
     o   old.packages, and hence update.packages, incorrectly handled
         duplicate packages when multiple package repositories are

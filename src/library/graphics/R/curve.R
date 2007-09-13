@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-curve <- function(expr, from, to, n=101, add=FALSE, type="l",
+curve <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, type="l",
 		  ylab=NULL, log=NULL, xlim=NULL, ...)
 {
     sexpr <- substitute(expr)
@@ -31,8 +31,8 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
     if (is.null(xlim)) delayedAssign("lims", {pu <- par("usr")[1:2]
                                  if(par("xlog")) 10^pu else pu})
         else lims <- xlim
-    if(missing(from)) from <- lims[1]
-    if(missing(to))     to <- lims[2]
+    if(is.null(from)) from <- lims[1]
+    if(is.null(to))     to <- lims[2]
     lg <-
         if(length(log)) log
         else paste(if(add && par("xlog"))"x",
