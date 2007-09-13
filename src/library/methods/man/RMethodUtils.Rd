@@ -79,7 +79,7 @@ getAllMethods(f, fdef, where)
 doPrimitiveMethod(name, def, call= sys.call(sys.parent()),
                   ev = sys.frame(sys.parent(2)))
 
-conformMethod(signature, mnames, fnames, f)
+conformMethod(signature, mnames, fnames, f= , fdef)
 
 matchSignature(signature, fun, where)
 
@@ -308,7 +308,8 @@ addNextMethod(method, f, mlist, optional, envir)
       \code{conformMethod} determines whether the signature and the two
       sets of arguments conform, and returns the signature, possibly
       extended.  The function name, \code{f} is supplied for error
-      messages.
+      messages. The generic function, \code{fdef}, supplies the
+      generic signature  for matching purposes.
 
       The method assignment conforms if either method and function have
       identical formal argument lists.  It can also conform if the
