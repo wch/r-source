@@ -20,6 +20,7 @@ Type 'q()' to quit R.
 > 
 > options(digits=5, width=65)##--- for outputs !
 > options(stringsAsFactors=TRUE) ## factory-fresh defaults
+> options(useFancyQuotes=FALSE) ## avoid problems on Windows
 > 
 > ## 2. Simple Manipulations
 > 
@@ -35,7 +36,7 @@ Type 'q()' to quit R.
 > v <- 2*x + y + 1
 Warning message:
 In 2 * x + y :
-	longer object length is not a multiple of shorter object length
+  longer object length is not a multiple of shorter object length
 > ##-  Warning message:
 > ##-  longer object length
 > ##-  is not a multiple of shorter object length in: 2 * x + y
@@ -554,7 +555,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
-	cannot compute correct p-values with ties
+  cannot compute correct p-values with ties
 > 
 > ##@section One- and two-sample tests
 > 

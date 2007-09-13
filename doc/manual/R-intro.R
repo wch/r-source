@@ -3,6 +3,7 @@
 
 options(digits=5, width=65)##--- for outputs !
 options(stringsAsFactors=TRUE) ## factory-fresh defaults
+options(useFancyQuotes=FALSE) ## avoid problems on Windows
 
 ## 2. Simple Manipulations
 
