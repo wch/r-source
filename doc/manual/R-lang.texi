@@ -2694,7 +2694,7 @@ The object system makes use of
 @emph{generic functions} via two
 dispatching functions, @code{UseMethod} and @code{NextMethod}.  The
 typical use of the object system is to begin by calling a generic
-function.  This is typically a function is very simple and consists of a
+function.  This is typically a very simple function and consists of a
 single line of code.  The system function @code{mean} is just such a
 function,
 
@@ -2834,10 +2834,10 @@ FIXME: something is missing here
 
 @cindex function, generic
 Generic functions should consist of a single statement.  They should
-always be of the form @code{foo <- function(x, ...) UseMethod("foo",
-x)}.  The semantics of @code{UseMethod} are an appropriate method is
-determined and then that method is invoked with the same arguments, in
-the same order as the call to the generic as if the call had been made
+usually be of the form @code{foo <- function(x, ...) UseMethod("foo",
+x)}.  When @code{UseMethod} is called, it determines the appropriate 
+method and then that method is invoked with the same arguments, in
+the same order as the call to the generic, as if the call had been made
 directly to the method.
 
 In order to determine the correct method the class attribute of the
