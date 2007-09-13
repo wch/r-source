@@ -23,13 +23,24 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
         retval[fields] <- NA
     }
 
-    pkgpath <- ""
-    libs <- if(is.null(lib.loc)) .libPaths() else lib.loc
-    for(lib in libs)
-        if(file.access(file.path(lib, pkg), 5) == 0) {
-            pkgpath <- file.path(lib, pkg)
-            break
-        }
+    pkgpath <- ""    
+    ## If the NULL default for lib.loc is used, the loaded packages are
+    ## searched before the libraries.
+    if(is.null(lib.loc)) {
+        if(pkg == "base")
+            pkgpath <- file.path(.Library, "base")
+        else if((envname <- paste("package:", pkg, sep = ""))
+                %in% search())
+            pkgpath <- attr(as.environment(envname), "path")
+    }
+    if(pkgpath == "") {    
+        libs <- if(is.null(lib.loc)) .libPaths() else lib.loc
+        for(lib in libs)
+            if(file.access(file.path(lib, pkg), 5) == 0) {
+                pkgpath <- file.path(lib, pkg)
+                break
+            }
+    }
     if(pkgpath == "") {
         ## This is slow and does a lot of checking we do here,
         ## but is needed for versioned installs
