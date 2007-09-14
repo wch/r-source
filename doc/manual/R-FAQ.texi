@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-09-02
+@set FAQ_DATE @value{FAQ_YEAR}-09-14
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1832,6 +1832,8 @@ Bayesian Analysis of Computer Code Output.  Contains
 @strong{approximator}, @strong{calibrator}, and @strong{emulator}, for
 Bayesian prediction of complex computer codes, calibration of computer
 models, and emulation of computer programs, respectively.
+@item BARD
+Better Automated ReDistricting.
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -1979,6 +1981,8 @@ Factor analysis and data mining with R.
 Data from the book ``Multivariate Statistical Modelling Based
 on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
 (1994),  Springer.
+@item FieldSim
+Random fields simulations.
 @item Flury
 Data sets from from ``A First Course in Multivariate Statistics'' by
 Bernard Flury (1997), Springer.
@@ -2105,6 +2109,9 @@ Joint modeling of mean and dispersion through two interlinked GLM's.
 @emph{Defunct} in favor of @strong{JointModeling}.
 @item JointModeling
 Joint modeling of mean and dispersion.
+@item JudgeIt
+Calculates bias, responsiveness, and other characteristics of two-party
+electoral systems, with district-level electoral and other data.
 @item KMsurv
 Data sets and functions for ``Survival Analysis, Techniques for Censored
 and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
@@ -2488,6 +2495,10 @@ Sequential KNN imputation.
 @item SharedHT2
 Shared Hotelling @math{T^2} test for small sample microarray
 experiments.
+@item SimHap
+A comprehensive modeling framework for epidemiological outcomes and a
+multiple-imputation approach to haplotypic analysis of population-based
+data.
 @item Snowball
 Snowball stemmers.
 @item SoPhy
@@ -2497,6 +2508,8 @@ soil.
 Sparse logistic regression.
 @item SparseM
 Basic linear algebra for sparse matrices.
+@item SpatialNP
+Multivariate nonparametric methods based on spatial signs and ranks.
 @item SpherWave
 Spherical Wavelets and SW-based spatially adaptive methods.
 @item StatDataML
@@ -2806,6 +2819,9 @@ bivariate data.
 Change in length of hospital stay (LOS).
 @item chemCal
 Calibration functions for analytical chemistry.
+@item choplump
+Choplump tests (permutation tests for comparing two groups with some
+positive but many zero responses).
 @item chron
 A package for working with chronological objects (times and dates).
 @item circular
@@ -2977,6 +2993,8 @@ Double generalized linear models.
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
 or sampling grids.
+@item dice
+Calculate probabilities of various dice-rolling events.
 @item dichromat
 Color schemes for dichromats: collapse red-green distinctions to
 simulate the effects of colour-blindness.
@@ -3217,6 +3235,8 @@ Fixed point clusters, clusterwise regression and discriminant plots.
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
 Statistics, 1989).
+@item fractal
+Insightful fractal time series modeling and analysis.
 @item frailtypack
 Fit a shared gamma frailty model and Cox proportional hazards model
 using a Penalized Likelihood on the hazard function.
@@ -3412,6 +3432,8 @@ Statistical analysis of haplotypes with traits and covariates when
 linkage phase is ambiguous.
 @item hapsim
 Haplotype data simulation.
+@item hbim
+Hill/Bliss Independence Model for combination vaccines.
 @item hddplot
 Use known groups in high-dimensional data to derive scores for plots.
 @item hdeco
@@ -3474,6 +3496,8 @@ Jacquard condensed coefficients of identity.
 Independent Factor Analysis.
 @item ifs
 Iterated Function Systems distribution function estimator.
+@item ifultools
+Insightful research tools.
 @item igraph
 Routines for simple graphs.
 @item iid.test
@@ -3600,6 +3624,8 @@ A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
 and also performs searches using a number of less time-consuming
 techniques.
+@item lga
+Tools for Linear Grouping Analysis (LGA).
 @item lgtdl
 A set of methods for longitudinal data objects.
 @item lhs
@@ -4067,6 +4093,8 @@ Functions for import, export, plotting and other manipulations of
 bitmapped images.
 @item plRasch
 Log linear by linear asscociation models.
+@item plink
+Separate calibration linking methods.
 @item plm
 Linear models for panel data.
 @item plotAndPlayGTK
@@ -4383,6 +4411,8 @@ Significance Analysis of Microarrays.
 @item sandwich
 Model-robust standard error estimators for time series and longitudinal
 data.
+@item sapa
+Insightful Spectral Analysis for Physical Applications.
 @item sbgcop
 Semiparametric Bayesian Gaussian copula estimation.
 @item sca
@@ -4531,6 +4561,8 @@ more.
 @item spBayes
 Fit Gaussian models with potentially complex hierarchical error
 structures by Markov chain Monte Carlo (MCMC).
+@item spam
+SPArse Matrix algebra.
 @item spatclus
 Arbitrarily shaped multiple spatial cluster detection for case event
 data.
@@ -4576,6 +4608,8 @@ Interface between the GRASS 6.0 geographical information system and R.
 Geographically weighted regression.
 @item splancs
 Spatial and space-time point pattern analysis functions.
+@item splus2R
+Insightful package providing missing S-PLUS functionality in R.
 @c <COMMENT>
 @c Deprecated in favor of new @strong{spdep} along with 1.5.0 release.
 @c @item spsarlm
@@ -4599,6 +4633,8 @@ Sample Size Adjusted for Nonadherence or Variability of input
 parameters.
 @item sspir
 State SPace models In R.
+@item sspline
+Smoothing splines on the sphere.
 @item st
 Shrinkage @math{t} statistic.
 @item staRt
@@ -4718,6 +4754,8 @@ Simple mechanism for placing R graphics in a Tk widget.
 Two-level normal independent sampling estimation.
 @item tm
 A framework for text mining applications within R.
+@item trackObjs
+Track objects.
 @item tradeCosts
 Post-trade analysis of transaction costs.
 @item tree
@@ -4823,6 +4861,8 @@ SOM networks for comparing patterns with peak shifts.
 Functions and datasets for the German WikiBook ``GNU R''.
 @item wle
 Robust statistical inference via a weighted likelihood approach.
+@item wmtsa
+Insightful Wavelet Methods for Time Series Analysis.
 @item wnominate
 WNOMINATE roll call analysis software.
 @item wombsoft
@@ -5118,7 +5158,7 @@ pattern matching algorithms.
 A collection of tools for performing category analysis.
 @item ChromoViz
 Draw gene expression profile onto chromosome using @acronym{SVG}.
-@item CoCiteStats
+@item CoCiteStat
 A collection of software tools for dealing with co-citation data.
 @item DEDS
 Differential Expression via Distance Summary for microarray data.
