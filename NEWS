@@ -707,17 +707,21 @@ BUG FIXES
 	formatting is now faster for large strings, thanks to report
 	PR#9902 by John Brzustowski.
 
-    o   de.restore() gave spurious warning for matrices (Ben Bolker)
+    o	de.restore() gave a spurious warning for matrices (Ben Bolker)
     
     o	plot(fn, xlim=c(a,b)) would not set "from" and "to" properly
 	when plotting a function.  The argument lists to curve() and
 	plot.function() have been modified slightly as part of the
 	fix.
 
-    o   old.packages, and hence update.packages, incorrectly handled
+    o	old.packages, and hence update.packages, incorrectly handled
         duplicate packages when multiple package repositories are
         specified.  The first package encountered was selected, not
         the one with highest version number.  This has been fixed.
+
+    o	julian() was documented to work with POSIXt origins, but did
+	not work with POSIXlt ones.  (PR#9908)
+
 
 
 
