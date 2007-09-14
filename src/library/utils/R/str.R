@@ -132,6 +132,9 @@ str.default <-
 	if(any(ii)) x[ii] <- P0(trimmed[ii], Sep, ch)
 	x
     }
+    pClass <- function(cls)
+	paste("Class", if(length(cls) > 1) "es",
+              " '", paste(cls, collapse = "', '"), "' ", sep="")
 
     ## le.str: not used for arrays:
     le.str <-
@@ -174,7 +177,11 @@ str.default <-
 	if(le == 0) {
 	    if(is.d.f) std.attr <- c(std.attr, "class", "row.names")
 	    else cat(" ", if(i.pl)"pair", "list()\n",sep="")
-	} else {
+	} else { # list, length >= 1 :
+	    if(irregCl <- has.class && identical(object[[1]], object)) {
+		le <- length(object <- unclass(object))
+		std.attr <- c(std.attr, "class")
+	    }
 	    if(no.list || (has.class &&
 			   any(sapply(paste("str", cl, sep="."),
 					#use sys.function(.) ..
@@ -183,7 +190,8 @@ str.default <-
 		## str.default is a 'NextMethod' : omit the 'List of ..'
 		std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	    } else {
-		cat(if(i.pl) "Dotted pair list" else "List",
+		cat(if(i.pl) "Dotted pair list" else
+		    if(irregCl) paste(pClass(cl), "hidden list") else "List",
 		    " of ", le, "\n", sep="")
 	    }
 	    if (is.na(max.level) || nest.lev < max.level) {
@@ -311,8 +319,7 @@ str.default <-
 		  c("externalptr", "weakref", "environment")) {
 	    ## Careful here, we don't want to change pointer objects
 	    if(has.class)
-		cat("Class", if(length(cl) > 1) "es",
-		" '", paste(cl, collapse = "', '"), "' ", sep="")
+                cat(pClass(cl))
 	    le <- v.len <- 0
 	    str1 <- paste("<", typeof(object), ">", sep="")
 	    if(typeof(object) == "environment") {
