@@ -82,7 +82,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
        launch %R_HOME%\bin\$*
      */
     int i, iused, res, status = 0;
-    char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], PATH[10000],
+    char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], BUFFER[10000],
 	RHOME[MAX_PATH], *p, cmd[CMD_LEN], Rversion[25], HOME[MAX_PATH + 10],
 	RSHARE[MAX_PATH];
     char RCMD[] = "R CMD";
@@ -254,15 +254,20 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	putenv("R_CMD=R CMD");
 	putenv("R_OSTYPE=windows");
 
-	strcpy(PATH, "PATH=");
-	strcat(PATH, RHome); strcat(PATH, "\\bin;");
-	strcat(PATH, getenv("PATH"));
-	putenv(PATH);
+	strcpy(BUFFER, "PATH=");
+	strcat(BUFFER, RHome); strcat(BUFFER, "\\bin;");
+	strcat(BUFFER, getenv("PATH"));
+	putenv(BUFFER);
 
 	if ( (p = getenv("TMPDIR")) && strlen(p)) {
 	    /* TMPDIR is already set */
 	} else {
-	    putenv("TMPDIR=c:/TEMP");
+	    if ( (p = getenv("TEMP")) && strlen(p)) {
+	        strcpy(BUFFER, "TMPDIR=");
+	        strcat(BUFFER, p);
+	        putenv(BUFFER);
+	    } else
+	        putenv("TMPDIR=c:/TEMP");
 	}
 
 	strcpy(PERL5LIB, "PERL5LIB=");

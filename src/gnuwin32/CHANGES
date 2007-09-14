@@ -86,6 +86,9 @@ PACKAGE INSTALLATION
 	
     o	The C99 flag (-std=gnu99) is now used for compiling packages
 	as well as R itself.
+	
+    o	If the TMPDIR environment variable is not set, Rcmd now tries
+    	the TEMP variable before setting TMPDIR to C:/temp.
 
 
 BUILDING R
