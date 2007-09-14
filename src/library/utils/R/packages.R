@@ -760,5 +760,5 @@ compareVersion <- function(a, b)
         stale_dups[i:end_i] <- wh
         i <- end_i + 1L
     }
-    ap[-stale_dups, ]
+    if(length(stale_dups)) ap[-stale_dups, ] else ap
 }
