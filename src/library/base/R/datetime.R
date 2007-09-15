@@ -210,7 +210,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 Ops.POSIXt <- function(e1, e2)
 {
     if (nargs() == 1)
-        stop("unary", .Generic, " not defined for \"POSIXt\" objects")
+        stop("unary ", .Generic, " not defined for \"POSIXt\" objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
     if (!boolean) stop(.Generic, " not defined for \"POSIXt\" objects")
@@ -457,7 +457,7 @@ Ops.difftime <- function(e1, e2)
     }
     if (nargs() == 1) {
         switch(.Generic, "+"= {}, "-" = {e1[] <- -unclass(e1)},
-               stop("unary", .Generic, " not defined for \"difftime\" objects")
+               stop("unary ", .Generic, " not defined for \"difftime\" objects")
                )
         return(e1)
     }
@@ -512,7 +512,7 @@ Ops.difftime <- function(e1, e2)
 
 Math.difftime <- function (x, ...)
 {
-    stop(.Generic, "not defined for \"difftime\" objects")
+    stop(.Generic, " not defined for \"difftime\" objects")
 }
 
 mean.difftime <- function (x, ..., na.rm = FALSE)
