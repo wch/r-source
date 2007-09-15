@@ -135,6 +135,11 @@ NEW FEATURES
 	nchar(x) > 0 (and avoids having to convert to wide chars in
 	a MBCS locale and hence consider validity).
 
+    o	The way old.packages() and hence update.packages() handle
+	packages with different versions in multiple package
+	repositories has been changed.  The first package encountered
+	was selected, now the one with highest version number.
+
     o	optim(method = "L-BFGS-B") now accepts zero-length parameters,
 	like the other methods.  Also, method = "SANN" no longer
 	attempts to optimize in this case.
@@ -699,8 +704,8 @@ BUG FIXES
         by Hadley Wickham;  symptom was error message:
         "Polygon edge not found".
 
-    o	str() is no longer slow for large POSIXct objects.
-	Its output is also slightly more compact for such; implementation
+    o	str() is no longer slow for large POSIXct objects.  Its output
+	is also slightly more compact for such objects; implementation
 	via new optional argument 'give.head'.
 
     o	strsplit(*, fixed=TRUE), potentially iconv() and internal string
@@ -713,11 +718,6 @@ BUG FIXES
 	when plotting a function.  The argument lists to curve() and
 	plot.function() have been modified slightly as part of the
 	fix.
-
-    o	old.packages, and hence update.packages, incorrectly handled
-        duplicate packages when multiple package repositories are
-        specified.  The first package encountered was selected, not
-        the one with highest version number.  This has been fixed.
 
     o	julian() was documented to work with POSIXt origins, but did
 	not work with POSIXlt ones.  (PR#9908)

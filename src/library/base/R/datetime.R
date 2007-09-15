@@ -487,7 +487,7 @@ Ops.difftime <- function(e1, e2)
         }
     } else {
         ## '*' is covered by a specific method
-        stop(.Generic, "not defined for \"difftime\" objects")
+        stop(.Generic, " not defined for \"difftime\" objects")
     }
 }
 
