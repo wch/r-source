@@ -152,6 +152,11 @@ OTHERS
 	correctly in CJK locales using the builtin pager, they may not
 	be in external pagers.
 
+    o	Rcmd Rdiff now ignores difference between smart single quotes
+	and '.  This will probably only work correctly in single-byte
+	locales.  (This is in addition to UTF-8 directional single
+	quotes which the Unix version has for some time equated to '.)
+
 
 
 
