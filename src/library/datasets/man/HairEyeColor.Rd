@@ -23,6 +23,8 @@
   }
 }
 \details{
+  From a survey of students at the University of Delaware.
+  
   This data set is useful for illustrating various techniques for the
   analysis of contingency tables, such as the standard chi-squared test
   or, more generally, log-linear modelling, and graphical methods such
@@ -30,6 +32,10 @@
 }
 \source{
   \url{http://euclid.psych.yorku.ca/ftp/sas/vcd/catdata/haireye.sas}
+
+  Snee (1974) gives the two-way table aggregated over \code{Sex}.  The
+  Sex split of the \sQuote{Brown hair, Brown eye cell} was changed in
+  \R 2.6.0 to agree with that used by Friendly (2000).
 }
 \references{
   Snee, R. D. (1974),
@@ -47,6 +53,10 @@
   \emph{Proceedings of the Statistical Graphics Section},
   American Statistical Association, pp. 61--68.
   \url{http://www.math.yorku.ca/SCS/Papers/asa92.html}
+
+  Friendly, M. (2000)
+  \emph{Visualizing Categorical Data.}
+  SAS Institute, ISBN 1-58025-660-0.
 }
 \seealso{
   \code{\link{chisq.test}},
@@ -57,7 +67,7 @@
 require(graphics)
 ## Full mosaic
 mosaicplot(HairEyeColor)
-## Aggregate over sex:
+## Aggregate over sex (as in Snee's original data)
 x <- apply(HairEyeColor, c(1, 2), sum)
 x
 mosaicplot(x, main = "Relation between hair and eye color")
