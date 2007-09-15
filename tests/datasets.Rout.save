@@ -102,7 +102,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	176 o
  $ optden: num  0.086 0.269 0.446 0.538 0.626 0.782
 
 ** structure of dataset HairEyeColor
- table [1:4, 1:4, 1:2] 32 38 10 3 11 50 10 30 10 25 ...
+ table [1:4, 1:4, 1:2] 32 53 10 3 11 50 10 30 10 25 ...
  - attr(*, "dimnames")=List of 3
   ..$ Hair: chr [1:4] "Black" "Brown" "Red" "Blond"
   ..$ Eye : chr [1:4] "Brown" "Blue" "Hazel" "Green"
