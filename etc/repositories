@@ -4,7 +4,7 @@
 ## default 	is whether this should be a default choice
 ## source, win.binary, mac.binary   indicate if the corresponding type is present
 ##
-## BioC entries are version-specific: 2.1 is for R 2.1.?
+## BioC entries are version-specific: 2.1 is for R 2.666666.?
 ##
 menu_name	URL	default	source	win.binary	mac.binary
 CRAN	CRAN	@CRAN@	TRUE	TRUE	TRUE	TRUE
