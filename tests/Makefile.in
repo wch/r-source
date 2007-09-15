@@ -19,7 +19,8 @@ test-src-gct = \
 	arith.R \
 	lm-tests.R \
 	ok-errors.R \
-	method-dispatch.R
+	method-dispatch.R \
+	datasets.R
 test-src-strict-1 = \
 	$(test-src-gct) \
 	d-p-q-r-tests.R
@@ -27,7 +28,6 @@ test-src-strict-auto =
 test-src-sloppy-1 = \
 	complex.R \
 	print-tests.R \
-	datasets.R \
 	lapack.R
 test-src-sloppy-auto =
 
