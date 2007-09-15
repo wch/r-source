@@ -717,7 +717,9 @@ function(package)
              MASS = c("frequency.polygon",
              "gamma.dispersion", "gamma.shape",
              "hist.FD", "hist.scott"),
-             Matrix = c("qr.R", "qr.coef", "qr.fitted", "qr.qty", "qr.qy", "qr.resid"),
+             ## FIXME: since these are already listed with 'base',
+             ##        they should not need to be repeated here:
+             Matrix = c("qr.Q", "qr.R", "qr.coef", "qr.fitted", "qr.qty", "qr.qy", "qr.resid"),
              SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
