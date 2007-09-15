@@ -42,10 +42,12 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-demo = demos.R demos2.R
+test-src-errmsgs = errormsgs.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
+test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
 test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
@@ -58,11 +60,13 @@ test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
+test-out-errmsgs = $(test-src-errmsgs:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 
@@ -147,7 +151,7 @@ test-Packages:
 test-Docs:
 	@echo "running tests of documentation examples"
 	@cp ../doc/manual/*.R .
-	@$(MAKE) -f Makefile.win R-intro.Rout RVAL_IF_DIFF=1
+	@$(MAKE) -f Makefile.win R-intro.Rout RVAL_IF_DIFF=0
 	@cp ../doc/manual/R-exts.c .
 	@$(RHOME)/bin/rcmd SHLIB R-exts.c
 	@$(MAKE) -f Makefile.win R-exts.Rout

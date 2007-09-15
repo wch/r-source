@@ -240,7 +240,7 @@ test-Vgct: $(test-out-valgct)
 test-Docs:
 	@echo "running tests of documentation examples"
 	@cp ${top_srcdir}/doc/manual/*.R .
-	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=1
+	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=0
 	@cp ${top_srcdir}/doc/manual/R-exts.c .
 	@$(top_builddir)/bin/R CMD SHLIB R-exts.c
 	@$(MAKE) R-exts.Rout
@@ -269,7 +269,7 @@ test-IsAs:
 
 test-Primitive:
 	@echo "running tests of primitives"
-	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=0
+	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=1
 
 test-Random:
 	@echo "running tests of random deviate generation"
