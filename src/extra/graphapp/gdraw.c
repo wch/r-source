@@ -532,7 +532,7 @@ int gdrawstr(drawing d, font f, rgb c, point p, const char *s)
     SetBkMode(dc, TRANSPARENT);
     SetTextAlign(dc, TA_TOP | TA_LEFT | TA_UPDATECP);
 
-    if (is_NT && (localeCP != GetACP())) {
+    if (is_NT && localeCP > 0 && (localeCP != GetACP())) {
 	/* This allows us to change locales and output in the new locale */
 	wchar_t *wc; int n = strlen(s), cnt;
 	wc = alloca((n+1) * sizeof(wchar_t));
