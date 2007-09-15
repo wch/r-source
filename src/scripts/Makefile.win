@@ -4,8 +4,7 @@ R_HOME = ../..
 
 all: $(R_HOME)/bin/massage-Examples \
 	 $(R_HOME)/bin/build $(R_HOME)/bin/check $(R_HOME)/bin/Rdconv \
-	 $(R_HOME)/bin/Sd2Rd $(R_HOME)/bin/Rdiff.sh $(R_HOME)/bin/Rprof
-	
+	 $(R_HOME)/bin/Sd2Rd $(R_HOME)/bin/Rprof
 
 $(R_HOME)/bin/massage-Examples: $(R_HOME)/share/perl/massage-Examples.pl
 	@$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
@@ -22,10 +21,5 @@ $(R_HOME)/bin/Sd2Rd: Sd2Rd.in
 $(R_HOME)/bin/Rdconv: Rdconv.in
 	@$(SED) -e 1d -e s/\"unix\"/\"windows\"/ $< > $@
 
-$(R_HOME)/bin/Rdiff.sh: Rdiff
-	@$(SED) -e 1d -e 's/\$${EGREP}/grep -E/' $< > $@
-
 $(R_HOME)/bin/Rprof: Rprof.in
 	@$(SED) -e 1d $< > $@
-
-
