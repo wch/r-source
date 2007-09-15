@@ -301,7 +301,7 @@ menubar newmenubar(actionfn adjust_menus)
 
 BOOL myAppendMenu(HMENU h, UINT flags, UINT_PTR id, LPCTSTR name)
 {
-    if(is_NT && (localeCP != GetACP())) {
+    if(is_NT && localeCP > 0 && (localeCP != GetACP())) {
 	wchar_t wc[100];
 	mbstowcs(wc, name, 100);
 	return AppendMenuW(h, flags, id, wc);

@@ -412,7 +412,12 @@ extern HWND hwndClient;
  */
 
   extern int    is_NT;
-  extern unsigned int localeCP; /* from Defn.h */
+#if defined(R_DLL_BUILD)
+  extern
+#else
+  extern  __declspec(dllimport) 
+#endif
+    unsigned int localeCP; /* from Defn.h */
   extern int    app_initialised;
   extern char * app_name;
 

@@ -116,7 +116,7 @@ sQuote <- function(x) {
         if(identical(q, TRUE)) {
             li <- l10n_info()
             if(li$"UTF-8") q <- "UTF-8"
-            if(!is.null(li$codepage)) {
+            if(!is.null(li$codepage) && li$codepage > 0) {
                 ## we can't just use iconv, as that seems to think
                 ## it is in latin1 in CP1252
                 if(li$codepage >= 1250 && li$codepage <= 1258
@@ -151,7 +151,7 @@ dQuote <- function(x) {
         if(identical(q, TRUE)) {
             li <- l10n_info()
             if(li$"UTF-8") q <- "UTF-8"
-            if(!is.null(li$codepage)) {
+            if(!is.null(li$codepage) && li$codepage > 0) {
                 if(li$codepage >= 1250 && li$codepage <= 1258
                     || li$codepage == 874) {
                     before <- "\x93"; after <- "\x94"

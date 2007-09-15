@@ -7,7 +7,8 @@
 	*	       2.6 SERIES NEWS			 *
 	*						 *
 	**************************************************
-	
+
+
 		CHANGES IN R VERSION 2.6.0
 		
 GUI CHANGES
@@ -133,7 +134,7 @@ OTHERS
 	Cygwin and MSYS tar as well as that in Rtools.  This replaces
 	a workaround for Cygwin tar only.
 
-    o	Rcmd config now works.
+    o	Rcmd config is now implemented.
 
     o	More Windows locale names set via LC_ALL etc work to set the
 	message language, needed under Vista (which is picker than XP
@@ -156,6 +157,10 @@ OTHERS
 	and '.  This will probably only work correctly in single-byte
 	locales.  (This is in addition to UTF-8 directional single
 	quotes which the Unix version has for some time equated to '.)
+
+    o	locale category LC_CTYPE="C" is now supported: it was previously
+	remapped to 'en' (that is US English) due to problems in the
+	MinGW runtime which have since been resolved.
 
 
 
