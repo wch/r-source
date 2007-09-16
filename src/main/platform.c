@@ -1234,15 +1234,9 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cat = LC_ALL;
 	p = CHAR(STRING_ELT(locale, 0));
 	setlocale(LC_COLLATE, p);
-#ifdef Win32
-	if(strcmp(p, "C") == 0) setlocale(LC_CTYPE, "en");
-	else setlocale(LC_CTYPE, p);
-#else
-	setlocale(LC_CTYPE, p);
-#endif 
 	setlocale(LC_MONETARY, p);
 	setlocale(LC_TIME, p);
-	p = setlocale(cat, NULL);
+	p = setlocale(LC_CTYPE, p);
 	break;
     case 2:
 	cat = LC_COLLATE;
