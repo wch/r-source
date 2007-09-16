@@ -739,9 +739,10 @@ BUG FIXES
     o	julian() was documented to work with POSIXt origins, but did
 	not work with POSIXlt ones.  (PR#9908)
 
-    o	Dataset HairEyeColor has been corrected to agree with Friendly
-	(2000): the change involves the breakdown of Brown/Brown by
-	Sex, and only totals over Sex are given in the original source.
+    o   Dataset HairEyeColor has been corrected to agree with
+	Friendly (2000): the change involves the breakdown of the
+	Brown hair / Brown eye cell by Sex, and only totals over Sex
+	are given in the original source.
 
 
 

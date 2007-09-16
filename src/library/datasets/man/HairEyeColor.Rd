@@ -23,8 +23,10 @@
   }
 }
 \details{
-  From a survey of students at the University of Delaware.
-  
+  The Hair \eqn{\times}{x} Eye table comes rom a survey of students at
+  the University of Delaware reported by Snee (1974).  The split by
+  \code{Sex} was added by Friendly (1992a) for didactic purposes.
+
   This data set is useful for illustrating various techniques for the
   analysis of contingency tables, such as the standard chi-squared test
   or, more generally, log-linear modelling, and graphical methods such
@@ -34,21 +36,21 @@
   \url{http://euclid.psych.yorku.ca/ftp/sas/vcd/catdata/haireye.sas}
 
   Snee (1974) gives the two-way table aggregated over \code{Sex}.  The
-  Sex split of the \sQuote{Brown hair, Brown eye cell} was changed in
+  Sex split of the \sQuote{Brown hair, Brown eye} cell was changed in
   \R 2.6.0 to agree with that used by Friendly (2000).
 }
 \references{
-  Snee, R. D. (1974),
+  Snee, R. D. (1974)
   Graphical display of two-way contingency tables.
   \emph{The American Statistician}, \bold{28}, 9--12.
 
-  Friendly, M. (1992),
+  Friendly, M. (1992a)
   Graphical methods for categorical data.
   \emph{SAS User Group International Conference Proceedings}, \bold{17},
   190--200.
   \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
 
-  Friendly, M. (1992),
+  Friendly, M. (1992b)
   Mosaic displays for loglinear models.
   \emph{Proceedings of the Statistical Graphics Section},
   American Statistical Association, pp. 61--68.
