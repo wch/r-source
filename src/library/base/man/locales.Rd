@@ -72,11 +72,6 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   machine.
 }
 \section{Warning}{
-#ifdef windows
-  Setting \code{"LC_CTYPE"} to \code{"C"} causes problems in the C
-  runtime support code, so it is interpreted as an English locale in CP1252.
-  
-#endif
   Setting \code{"LC_NUMERIC"} may cause \R to function
   anomalously, so gives a warning.  (The known problems are with
   input conversion in locales with \code{,} as the decimal point.)
@@ -85,9 +80,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   well enough, but \code{\link{options}(OutDec)} is often preferable.
 #endif
 #ifdef windows
-  (Almost all the output routines used by \R itself ignore the setting of
-  \code{"LC_NUMERIC"} since they make use of the Trio library which is
-  not internationalized.)
+  Almost all the output routines used by \R itself under Windows ignore
+  the setting of \code{"LC_NUMERIC"} since they make use of the Trio
+  library which is not internationalized.
 #endif
 }
 \seealso{
