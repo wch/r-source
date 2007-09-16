@@ -177,7 +177,7 @@ closeAllConnections <- function()
     invisible()
 }
 
-readBin <- function(con, what, n = 1, size = NA, signed = TRUE,
+readBin <- function(con, what, n = 1, size = NA_integer_, signed = TRUE,
                     endian = .Platform$endian)
 {
     if(is.character(con)) {
@@ -192,7 +192,8 @@ readBin <- function(con, what, n = 1, size = NA, signed = TRUE,
     .Internal(readBin(con, what, n, size, signed, swap))
 }
 
-writeBin <- function(object, con, size = NA, endian = .Platform$endian)
+writeBin <-
+    function(object, con, size = NA_integer_, endian = .Platform$endian)
 {
     swap <- endian != .Platform$endian
     if(!is.vector(object) || mode(object) == "list")
