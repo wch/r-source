@@ -136,6 +136,14 @@ please bug.report() [R_run_onexits]"));
 	    R_HandlerStack = c->handlerstack;
 	    R_RestartStack = c->restartstack;
 	    PROTECT(s);
+	    /* Since these are run before any jumps rather than after
+	       jumping to the context where the exit handler was set
+	       we need to make sure there is enough room on the
+	       evaluation stack in case the jump is from handling a
+	       stack overflow. To be safe it is good to also call
+	       R_CheckStack. LT */
+	    R_Expressions = R_Expressions_keep + 500;
+	    R_CheckStack();
 	    eval(s, c->cloenv);
 	    UNPROTECT(1);
 	}
@@ -158,6 +166,9 @@ void attribute_hidden R_restore_globals(RCNTXT *cptr)
     R_interrupts_suspended = cptr->intsusp;
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
+    /* Need to reset R_Expressions in case we are jumping after
+       handling a stack overflow. */
+    R_Expressions = R_Expressions_keep;
 #ifdef BYTECODE
     R_BCNodeStackTop = cptr->nodestack;
 # ifdef BC_INT_STACK
