@@ -1221,7 +1221,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_LOCALE_H
     SEXP locale = CADR(args), ans;
     int cat;
-    const char *p = "";
+    const char *p;
 
     checkArity(op, args);
     cat = asInteger(CAR(args));
@@ -1231,13 +1231,19 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "locale");
     switch(cat) {
     case 1:
+    {
+	const char *l = CHAR(STRING_ELT(locale, 0));
 	cat = LC_ALL;
-	p = CHAR(STRING_ELT(locale, 0));
-	setlocale(LC_COLLATE, p);
-	setlocale(LC_MONETARY, p);
-	setlocale(LC_TIME, p);
-	p = setlocale(LC_CTYPE, p);
+	/* assume we can set LC_CTYPE iff we can set the rest */
+	if((p = setlocale(LC_CTYPE, l))) {   
+	    setlocale(LC_COLLATE, l);
+	    setlocale(LC_MONETARY, l);
+	    setlocale(LC_TIME, l);
+	    /* Need to return value of LC_ALL */
+	    p = setlocale(cat, NULL);
+	}
 	break;
+    }
     case 2:
 	cat = LC_COLLATE;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
@@ -1279,6 +1285,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
 #endif
     default:
+	p = NULL; /* -Wall */
 	error(_("invalid '%s' argument"), "category");
     }
     PROTECT(ans = allocVector(STRSXP, 1));

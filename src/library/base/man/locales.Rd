@@ -53,9 +53,8 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   Note that setting \code{"LC_ALL"} sets only \code{"LC_COLLATE"},
   \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and \code{"LC_TIME"}.
 
-  Attempts to set an invalid locale are (silently) ignored.  (Most OSes
-  give no indication if the request succeeded, and the name of the
-  locale set need bear little resemblance to that asked for.)
+  Attempts to set an invalid locale are ignored.  There may or may not
+  be a warning, depending on the OS.
 }
 \value{
   A character string of length one describing the locale in use (after
