@@ -53,7 +53,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
 }
 \value{
   Either a vector giving the indices of the elements that yielded a
-  match, of, if \code{value} is \code{TRUE}, the matched elements (after
+  match, or, if \code{value} is \code{TRUE}, the matched elements (after
   coercion, preserving names but no other attributes).
 }
 \author{
