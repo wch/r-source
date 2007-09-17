@@ -806,54 +806,6 @@ do_install_source () {
   if test "$value" != "missing" ; then
     save=${value}
   fi
-  ## sanity check
-  if test ! -d R ; then
-    R_SAVE_IMAGE=false
-  else
-    R_SAVE_IMAGE=${save}
-  fi
-  export R_SAVE_IMAGE
-  if ${R_SAVE_IMAGE}; then
-    warning "true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'"
-  fi
-
-  if ${R_SAVE_IMAGE}; then
-    message "save image"
-    ## <NOTE>
-    ## We want R to run as quietly as possible when creating the save
-    ## image.  But this is tricky: sending options(echo=FALSE) to R via
-    ## stdin (as opposed to writing to a file and reading from it)
-    ## echoes what we sent before shutting up R, which is not what we
-    ## want.  Option '--slave' gets around this but also turns off
-    ## saving ... hence we call R with '--slave --save' (in case there
-    ## is no namespace).  Argh.
-    ## </NOTE>
-    save_image_defaults="list(compress=TRUE, safe=FALSE)"
-    code_file="${R_PACKAGE_DIR}/R/${pkg_name}"
-    rda_file="${R_PACKAGE_DIR}/R/all.rda"
-    if test -f NAMESPACE; then
-      code_cmd="echo invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); saveNamespaceImage(\"${R_PACKAGE_NAME}\", \"${rda_file}\", \"${lib}\")"
-      loader_file=nsrdaload.R
-      R_save_args="--vanilla --slave"
-    else
-      code_cmd="eval cat \"${code_file}\""
-      loader_file=firstlib.R
-      R_save_args="--vanilla --slave --save"
-    fi
-    (echo "options(save.image.defaults=${save_image_defaults})"; \
-      echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages()"; \
-      ${code_cmd}) | \
-        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" ${R_save_args}
-    if test ${?} -ne 0; then
-      error "execution of package source for '${pkg_name}' failed"
-      do_exit_on_error
-    fi
-    test -f NAMESPACE || mv .RData "${rda_file}"
-    ## we used to install the dumped code but this seems a waste of space
-    rm "${code_file}"
-    # mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
-    cat "${R_SHARE_DIR}/R/${loader_file}" > "${code_file}"
-  fi
 
   parse_description_field LazyLoad
   if test "$value" = "missing" ; then
@@ -863,6 +815,10 @@ do_install_source () {
   fi
   if test ! -d R ; then
     thislazy=false
+  fi
+  if ${save}; then
+    warning "true value of 'SaveImage' is defunct: using 'LazyLoad: yes' instead"
+    thislazy=true
   fi
   ## This test is designed to fail if a loader is used.
   ## Beware: the wc format is not portable -- some systems give

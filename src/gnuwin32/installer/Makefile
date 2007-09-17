@@ -26,7 +26,7 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf
 
-GW32_FILES = MkRules MakePkg MakeDll Rpwd.exe pwd.pl makeDllRes.pl install-save.sh
+GW32_FILES = MkRules MakePkg MakeDll Rpwd.exe pwd.pl makeDllRes.pl
 
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf

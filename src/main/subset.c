@@ -1105,10 +1105,10 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
       return R_NilValue;
     }
     else if( isVectorAtomic(x) ){
-        warningcall(call, "$ operator is invalid for atomic vectors, returning NULL");
+        errorcall(call, "$ operator is invalid for atomic vectors");
     }
     else if( IS_S4_OBJECT(x) ){
-        warningcall(call, "$ operator not defined for this S4 class, returning NULL");
+        errorcall(call, "$ operator not defined for this S4 class");
     }
     UNPROTECT(2);
     return R_NilValue;

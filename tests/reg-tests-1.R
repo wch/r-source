@@ -4118,10 +4118,10 @@ options(op)
 ## were +/-Inf with warning in 2.2.1.
 
 
-## PR#8718
-a <- matrix(2,2,2)
-apply(a,1,"$","a")
-apply(a,1,sum)
+## PR#8718: invalid usage in R >= 2.7.0
+#a <- matrix(2,2,2)
+#apply(a,1,"$","a")
+#apply(a,1,sum)
 ## first apply was corrupting apply() code in 2.2.1
 
 
