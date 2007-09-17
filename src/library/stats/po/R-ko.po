@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:32\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1549,6 +1549,12 @@ msgstr "'margins'는 길이 2의 수치 벡터가 아니면 되지 않습니다"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper가 되어 있지 않습니다"
+
+msgid "f.lower = f(lower) is NA"
+msgstr ""
+
+msgid "f.upper = f(upper) is NA"
+msgstr ""
 
 msgid "f() values at end points not of opposite sign"
 msgstr "f()의 end point에서의 값이 다른 부호를 가지지 않습니다"

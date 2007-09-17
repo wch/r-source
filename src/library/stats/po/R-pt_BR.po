@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:32\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1545,6 +1545,12 @@ msgstr "'margins' deve ser um vetor numérico de comprimento 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper não satisfeito"
+
+msgid "f.lower = f(lower) is NA"
+msgstr ""
+
+msgid "f.upper = f(upper) is NA"
+msgstr ""
 
 msgid "f() values at end points not of opposite sign"
 msgstr "valores de f() nos pontos extremos não têm sinal oposto"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:32\n"
 "PO-Revision-Date: 2007-04-13 12:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1566,6 +1566,12 @@ msgstr "'interval' doit être un vecteur de longueur 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper n'est pas vérifié"
+
+msgid "f.lower = f(lower) is NA"
+msgstr ""
+
+msgid "f.upper = f(upper) is NA"
+msgstr ""
 
 msgid "f() values at end points not of opposite sign"
 msgstr "les valeurs de f() aux points extrêmes ne sont pas de signe opposé"

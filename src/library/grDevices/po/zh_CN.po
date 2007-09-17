@@ -199,7 +199,7 @@ msgstr "页类别'%s'(postscript)不对"
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
-msgstr ""
+msgstr "此装置不支持半透明：每一页将被报告一次"
 
 #: devPS.c:3439
 msgid "printing via file = \"\" is not implemented in this version"
@@ -508,9 +508,8 @@ msgid "Insufficient memory for resize. Killing device"
 msgstr "内存不够，无法重新修改大小. 关闭装置"
 
 #: devWindows.c:2009
-#, fuzzy
 msgid "Insufficient memory for resize. Disabling alpha blending"
-msgstr "内存不够，无法重新修改大小. 关闭装置"
+msgstr "内存不够，无法重新修改大小. 关闭alpha混合"
 
 #: devWindows.c:2038
 msgid "A clipboard metafile can store only one figure."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:30\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -444,32 +444,30 @@ msgstr "'%s'를 class\"POSIXlt\"에 변경하는 방법을 모릅니다"
 msgid "wrong class"
 msgstr "잘못된 class입니다"
 
-msgid "binary + is not defined for \"POSIXt\" objects"
+#, fuzzy
+msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr "\"POSIXt\" 오브젝트에는 2항연산 + 는 정의되어 있지 않습니다"
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "POSIXt 오브젝트로부터 나눌수가 없습니다"
 
-msgid "unary - is not defined for \"POSIXt\" objects"
+#, fuzzy
+msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr "단항연산 - 는 \"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "POSIXt 오브젝트로부터 나눌수가 없습니다"
 
-msgid "not defined for \"POSIXt\" objects"
-msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+#, fuzzy
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr "단항연산 - 는 \"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
-msgid "not defined for POSIXt objects"
-msgstr "POSIXt 오브젝트에 대해서는 정의 되어 있지 않습니다"
+#, fuzzy
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
 msgid "'tzone' attributes are inconsistent"
 msgstr ""
-
-msgid "not defined for \"POSIXct\" objects"
-msgstr "\"POSTIXct\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
-
-msgid "not defined for \"POSIXlt\" objects"
-msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
 #, fuzzy
 msgid "'tim' is not character or numeric"
@@ -482,7 +480,12 @@ msgstr ""
 msgid "invalid units specified"
 msgstr "무효인 'quote' 지정입니다"
 
-msgid "not defined for \"difftime\" objects"
+#, fuzzy
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "\"difftime\"오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#, fuzzy
+msgid "'%s' not defined for \"difftime\" objects"
 msgstr "\"difftime\"오브젝트에 대해서는 정의 되어 있지 않습니다"
 
 msgid "both arguments of * cannot be \"difftime\" objects"
@@ -571,13 +574,6 @@ msgstr "'eigen'로 'cg'가 부호 %d를 돌려주었습니다"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'eigen'로 'rg'가 부호 %d를 돌려주었습니다"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr "'subset'는 논리값이 아니면 되지 않습니다"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "무효인 레벨입니다. 길이 %d는 1 또는 %d이어야 합니다"
@@ -1161,15 +1157,6 @@ msgstr "'%s'는 아직 실제로 적용되지 않습니다"
 msgid "argument '%s' is not used (yet)"
 msgstr "인수'%s'는 사용되어 있지 않습니다"
 
-msgid "invalid version specification"
-msgstr "무효 버전의 지정입니다"
-
-msgid "wrong argument"
-msgstr "잘못된 인수입니다"
-
-msgid "not defined for package_version objects"
-msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있지 않습니다"
-
 #, fuzzy
 msgid "no arguments"
 msgstr "잘못된 인수입니다"
@@ -1448,6 +1435,20 @@ msgstr "'width'는 positive이 아니면 되지 않습니다"
 msgid "No traceback available"
 msgstr "이용 할수 있는 traceback가 없습니다"
 
+msgid "invalid version specification"
+msgstr "무효 버전의 지정입니다"
+
+msgid "wrong argument"
+msgstr "잘못된 인수입니다"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "무효인 'n'값입니다"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
 msgid "argument to 'which' is not logical"
 msgstr "'which'에서 인수는 논리값이 아닙니다"
 
@@ -1470,12 +1471,12 @@ msgid "'cmd' execution failed with error code %d"
 msgstr "'cmd'의 실행은 에러부호 %d로 실패했습니다"
 
 #, fuzzy
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr "패케지'%s'는 '%s'에 병합되었습니다"
-
-#, fuzzy
 msgid "cannot find name space environment"
 msgstr "이름 공간이 아닙니다"
+
+#, fuzzy
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr "패케지'%s'는 '%s'에 병합되었습니다"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
@@ -1525,6 +1526,19 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "not defined for POSIXt objects"
+#~ msgstr "POSIXt 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#~ msgid "not defined for \"POSIXct\" objects"
+#~ msgstr "\"POSTIXct\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#~ msgid "not defined for \"POSIXlt\" objects"
+#~ msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr "'subset'는 논리값이 아니면 되지 않습니다"
 
 #, fuzzy
 #~ msgid "names do not match previous names:"

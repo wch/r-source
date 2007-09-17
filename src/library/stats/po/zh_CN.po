@@ -26,15 +26,15 @@ msgstr "qansari()里的概率值在[0,1]范围外"
 
 #: approx.c:110
 msgid "approx(): invalid f value"
-msgstr ""
+msgstr "approx(): f值不对"
 
 #: approx.c:115
 msgid "approx(): invalid interpolation method"
-msgstr ""
+msgstr "approx(): 内插方法不对"
 
 #: approx.c:121
 msgid "approx(): attempted to interpolate NA values"
-msgstr ""
+msgstr "approx(): 不能内插NA值"
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
@@ -45,9 +45,8 @@ msgid "can only transform 100 pars in arima0"
 msgstr "arima0里只能转换100个参数"
 
 #: distance.c:152
-#, fuzzy
 msgid "treating non-finite values as NA"
-msgstr "dist(.,\"binary\")：所有无限值都作为NA来处理"
+msgstr "所有无限值都作为NA来处理"
 
 #: distance.c:221
 msgid "distance(): invalid p"

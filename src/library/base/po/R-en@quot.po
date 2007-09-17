@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
-"PO-Revision-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:30\n"
+"PO-Revision-Date: 2007-09-17 10:30\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -457,32 +457,26 @@ msgstr "do not know how to convert ‘%s’ to class “POSIXlt”"
 msgid "wrong class"
 msgstr "wrong class"
 
-msgid "binary + is not defined for \"POSIXt\" objects"
-msgstr "binary + is not defined for “POSIXt” objects"
+msgid "binary '+' is not defined for \"POSIXt\" objects"
+msgstr "binary ‘+’ is not defined for “POSIXt” objects"
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "Can only subtract from POSIXt objects"
 
-msgid "unary - is not defined for \"POSIXt\" objects"
-msgstr "unary - is not defined for “POSIXt” objects"
+msgid "unary '-' is not defined for \"POSIXt\" objects"
+msgstr "unary ‘-’ is not defined for “POSIXt” objects"
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "can only subtract numbers from POSIXt objects"
 
-msgid "not defined for \"POSIXt\" objects"
-msgstr "not defined for “POSIXt” objects"
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr "unary ‘%s’ not defined for “POSIXt” objects"
 
-msgid "not defined for POSIXt objects"
-msgstr "not defined for POSIXt objects"
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "‘%s’ not defined for “POSIXt” objects"
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "‘tzone’ attributes are inconsistent"
-
-msgid "not defined for \"POSIXct\" objects"
-msgstr "not defined for “POSIXct” objects"
-
-msgid "not defined for \"POSIXlt\" objects"
-msgstr "not defined for “POSIXlt” objects"
 
 msgid "'tim' is not character or numeric"
 msgstr "‘tim’ is not character or numeric"
@@ -493,8 +487,11 @@ msgstr "need explicit units for numeric conversion"
 msgid "invalid units specified"
 msgstr "invalid units specified"
 
-msgid "not defined for \"difftime\" objects"
-msgstr "not defined for “difftime” objects"
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "unary ‘%s’ not defined for “difftime” objects"
+
+msgid "'%s' not defined for \"difftime\" objects"
+msgstr "‘%s’ not defined for “difftime” objects"
 
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr "both arguments of * cannot be “difftime” objects"
@@ -578,12 +575,6 @@ msgstr "‘cg’ returned code %d in ‘eigen’"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "‘rg’ returned code %d in ‘eigen’"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr "‘within’ requires a name for its ‘data’ argument"
-
-msgid "'data' must exist"
-msgstr "‘data’ must exist"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "invalid labels; length %d should be 1 or %d"
@@ -1138,15 +1129,6 @@ msgstr "‘%s’ is not implemented yet"
 msgid "argument '%s' is not used (yet)"
 msgstr "argument ‘%s’ is not used (yet)"
 
-msgid "invalid version specification"
-msgstr "invalid version specification"
-
-msgid "wrong argument"
-msgstr "wrong argument"
-
-msgid "not defined for package_version objects"
-msgstr "not defined for package_version objects"
-
 msgid "no arguments"
 msgstr "no arguments"
 
@@ -1422,6 +1404,18 @@ msgstr "‘width’ must be positive"
 msgid "No traceback available"
 msgstr "No traceback available"
 
+msgid "invalid version specification"
+msgstr "invalid version specification"
+
+msgid "wrong argument"
+msgstr "wrong argument"
+
+msgid "invalid value"
+msgstr "invalid value"
+
+msgid "not defined for numeric_version objects"
+msgstr "not defined for numeric_version objects"
+
 msgid "argument to 'which' is not logical"
 msgstr "argument to ‘which’ is not logical"
 
@@ -1444,11 +1438,11 @@ msgstr "‘cmd’ could not be run"
 msgid "'cmd' execution failed with error code %d"
 msgstr "‘cmd’ execution failed with error code %d"
 
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr "package ‘%s’ has a non-function ‘.First.lib’"
-
 msgid "cannot find name space environment"
 msgstr "cannot find name space environment"
+
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr "package ‘%s’ has a non-function ‘.First.lib’"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"

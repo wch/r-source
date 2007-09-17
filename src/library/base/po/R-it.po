@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:30\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -457,32 +457,30 @@ msgstr "non so come convertire '%s' in classe \"POSIXlt\""
 msgid "wrong class"
 msgstr "classe sbagliata"
 
-msgid "binary + is not defined for \"POSIXt\" objects"
+#, fuzzy
+msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr "operatore binario + non definito per oggetti \"POSIXt\""
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "Posso solo sottrarre da oggetti POSIXt"
 
-msgid "unary - is not defined for \"POSIXt\" objects"
+#, fuzzy
+msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr "operatore unario - non definito per oggetti \"POSIXt\""
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "posso solo sottrarre numeri da oggetti POSIXt"
 
-msgid "not defined for \"POSIXt\" objects"
-msgstr "non definito per oggetti \"POSIXt\""
+#, fuzzy
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr "operatore unario - non definito per oggetti \"POSIXt\""
 
-msgid "not defined for POSIXt objects"
-msgstr "non definito per oggetti POSIXt"
+#, fuzzy
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "non definito per oggetti \"POSIXt\""
 
 msgid "'tzone' attributes are inconsistent"
 msgstr ""
-
-msgid "not defined for \"POSIXct\" objects"
-msgstr "non definito per oggetti \"POSIXct\""
-
-msgid "not defined for \"POSIXlt\" objects"
-msgstr "non definito per oggetti \"POSIXlt\""
 
 #, fuzzy
 msgid "'tim' is not character or numeric"
@@ -495,7 +493,12 @@ msgstr ""
 msgid "invalid units specified"
 msgstr "specificazione di 'quote' non valida"
 
-msgid "not defined for \"difftime\" objects"
+#, fuzzy
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "non definito per oggetti \"difftime\""
+
+#, fuzzy
+msgid "'%s' not defined for \"difftime\" objects"
 msgstr "non definito per oggetti \"difftime\""
 
 msgid "both arguments of * cannot be \"difftime\" objects"
@@ -586,13 +589,6 @@ msgstr "'cg' ha restituito codice %d in 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' ha restituito codice %d in 'eigen'"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr "'subset' deve essere di tipo logico"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "'labels' non valide; lunghezza %d dovrebbe essere 1 o %d"
@@ -1169,15 +1165,6 @@ msgstr "'%s' non ancora implementato"
 msgid "argument '%s' is not used (yet)"
 msgstr "argomento '%s' non (ancora) usato"
 
-msgid "invalid version specification"
-msgstr "versione specificata non valida"
-
-msgid "wrong argument"
-msgstr "argomento sbagliato"
-
-msgid "not defined for package_version objects"
-msgstr "non definito per oggetti package_version"
-
 #, fuzzy
 msgid "no arguments"
 msgstr "argomento sbagliato"
@@ -1456,6 +1443,20 @@ msgstr "'width' deve essere positiva"
 msgid "No traceback available"
 msgstr "Nessun traceback disponibile"
 
+msgid "invalid version specification"
+msgstr "versione specificata non valida"
+
+msgid "wrong argument"
+msgstr "argomento sbagliato"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "valore 'n' non valido"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr "non definito per oggetti package_version"
+
 msgid "argument to 'which' is not logical"
 msgstr "l'argomento di 'which' non è di tipo logico"
 
@@ -1477,10 +1478,10 @@ msgstr "'cmd' non può essere eseguito"
 msgid "'cmd' execution failed with error code %d"
 msgstr "l'esecuzione di 'cmd' non è fallita con errore"
 
-msgid "package '%s' has a non-function '.First.lib'"
+msgid "cannot find name space environment"
 msgstr ""
 
-msgid "cannot find name space environment"
+msgid "package '%s' has a non-function '.First.lib'"
 msgstr ""
 
 msgid "deparse option %s is not recognized"
@@ -1525,6 +1526,19 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "not defined for POSIXt objects"
+#~ msgstr "non definito per oggetti POSIXt"
+
+#~ msgid "not defined for \"POSIXct\" objects"
+#~ msgstr "non definito per oggetti \"POSIXct\""
+
+#~ msgid "not defined for \"POSIXlt\" objects"
+#~ msgstr "non definito per oggetti \"POSIXlt\""
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr "'subset' deve essere di tipo logico"
 
 #, fuzzy
 #~ msgid "names do not match previous names:"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:30\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -444,32 +444,30 @@ msgstr " '%s' をクラス \"POSIXlt\" へ変換する方法が分かりませ�
 msgid "wrong class"
 msgstr " 間違ったクラスです"
 
-msgid "binary + is not defined for \"POSIXt\" objects"
+#, fuzzy
+msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr " \"POSIXt\" オブジェクトには二項演算 + は定義されていません"
 
 msgid "Can only subtract from POSIXt objects"
 msgstr " POSIXt オブジェクトからしか引けません"
 
-msgid "unary - is not defined for \"POSIXt\" objects"
+#, fuzzy
+msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr " 単項演算 - は \"POSIXt\" オブジェクトに対しては定義されていません"
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr " POSIXt オブジェクトからは数値しか引くことができません"
 
-msgid "not defined for \"POSIXt\" objects"
-msgstr " \"POSIXt\" オブジェクトに対しては定義されていません"
+#, fuzzy
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr " 単項演算 - は \"POSIXt\" オブジェクトに対しては定義されていません"
 
-msgid "not defined for POSIXt objects"
-msgstr " POSIXt オブジェクトに対しては定義されていません"
+#, fuzzy
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr " \"POSIXt\" オブジェクトに対しては定義されていません"
 
 msgid "'tzone' attributes are inconsistent"
 msgstr " 'tzone' 属性は整合性がありません"
-
-msgid "not defined for \"POSIXct\" objects"
-msgstr " \"POSIXct\" オブジェクトに対しては定義されていません"
-
-msgid "not defined for \"POSIXlt\" objects"
-msgstr " \"POSIXlt\" オブジェクトに対しては定義されていません"
 
 msgid "'tim' is not character or numeric"
 msgstr " 'tim' は文字、または数値ではありません"
@@ -480,7 +478,12 @@ msgstr " 数値変換の為に必要な明示的なユニットがありませ�
 msgid "invalid units specified"
 msgstr " 無効なユニット指定です"
 
-msgid "not defined for \"difftime\" objects"
+#, fuzzy
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr " \"difftime\" オブジェクトに対しては定義されていません"
+
+#, fuzzy
+msgid "'%s' not defined for \"difftime\" objects"
 msgstr " \"difftime\" オブジェクトに対しては定義されていません"
 
 msgid "both arguments of * cannot be \"difftime\" objects"
@@ -572,13 +575,6 @@ msgstr " 'eigen' で 'cg' がコード %d を返しました"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'rg' がコード %d を返しました"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr " 'object' はリストでなければなりません"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr " 無効なラベルです。長さ %d は 1 または %d であるべきです"
@@ -1161,15 +1157,6 @@ msgstr " '%s' はまだ実装されていません"
 msgid "argument '%s' is not used (yet)"
 msgstr " 引数 '%s' は(まだ)使用されていません"
 
-msgid "invalid version specification"
-msgstr " 無効なバージョンの指定です"
-
-msgid "wrong argument"
-msgstr " 間違った引数です"
-
-msgid "not defined for package_version objects"
-msgstr " package_version オブジェクトに対しては定義されていません"
-
 msgid "no arguments"
 msgstr " 引数がありません"
 
@@ -1448,6 +1435,20 @@ msgstr " 'width' は正でなければなりません"
 msgid "No traceback available"
 msgstr " 利用できる traceback がありません"
 
+msgid "invalid version specification"
+msgstr " 無効なバージョンの指定です"
+
+msgid "wrong argument"
+msgstr " 間違った引数です"
+
+#, fuzzy
+msgid "invalid value"
+msgstr " 無効な 'n' 値です"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr " package_version オブジェクトに対しては定義されていません"
+
 msgid "argument to 'which' is not logical"
 msgstr " 'which' への引数は論理値ではありません"
 
@@ -1470,11 +1471,11 @@ msgstr " 'cmd' を実行できませんでした"
 msgid "'cmd' execution failed with error code %d"
 msgstr " 'cmd' の実行は失敗しました(エラーコード %d)"
 
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr " パッケージ '%s' は関数でない '.First.lib' を持ちます"
-
 msgid "cannot find name space environment"
 msgstr " 名前空間環境を見つけられません"
+
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr " パッケージ '%s' は関数でない '.First.lib' を持ちます"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
@@ -1510,6 +1511,19 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
+
+#~ msgid "not defined for POSIXt objects"
+#~ msgstr " POSIXt オブジェクトに対しては定義されていません"
+
+#~ msgid "not defined for \"POSIXct\" objects"
+#~ msgstr " \"POSIXct\" オブジェクトに対しては定義されていません"
+
+#~ msgid "not defined for \"POSIXlt\" objects"
+#~ msgstr " \"POSIXlt\" オブジェクトに対しては定義されていません"
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr " 'object' はリストでなければなりません"
 
 #~ msgid "names do not match previous names:"
 #~ msgstr " 名前が以下のような以前の名前と一致しません："

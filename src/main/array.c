@@ -378,7 +378,7 @@ SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     x = CAR(args);
     if (!isInteger(x) || LENGTH(x) != 2)
-	error(_("a matrix-like objects is required as argument to 'row/col'"));
+	error(_("a matrix-like object is required as argument to 'row/col'"));
 
     nr = INTEGER(x)[0];
     nc = INTEGER(x)[1];

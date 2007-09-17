@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:32\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -279,13 +279,13 @@ msgid "results are only valid up to model order"
 msgstr "计算结果只适用于模型顺序"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
-msgstr "'order'必需是长度为三的非负数值向量"
+msgstr "'order'必需是长度为三的非负数值矢量"
 
 msgid "'seasonal' must be a list with component 'order'"
 msgstr "'seasonal'必需是带'order'组件的串列"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
-msgstr "'seasonal$order'必需是长度为三的非负数值向量"
+msgstr "'seasonal$order'必需是长度为三的非负数值矢量"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "'x'和'xreg'的长度不一样"
@@ -354,7 +354,7 @@ msgid "no solution in the specified range of bandwidths"
 msgstr "在设定的頻寬值域内找不到解答"
 
 msgid "increasing bw.SJ() search interval (%d)"
-msgstr ""
+msgstr "增加bw.SJ()的搜索间隔(%d)"
 
 msgid "minimum occurred at one end of the range"
 msgstr "最小值存在于值域的边界上"
@@ -476,7 +476,7 @@ msgid "'degree' must be less than number of points"
 msgstr "'degree'小于数据点的数目"
 
 msgid "must supply one or more vectors"
-msgstr "至少要提供一或多个向量"
+msgstr "至少要提供一或多个矢量"
 
 msgid "arguments must have the same length"
 msgstr "变元的长度必需一样"
@@ -594,7 +594,7 @@ msgid "'x' must have at least 2 rows and 2 columns"
 msgstr "'x'至少有两行和两列"
 
 msgid "'margins' must be a numeric vector of length 2"
-msgstr "'margins'必需是长度为二的数值向量"
+msgstr "'margins'必需是长度为二的数值矢量"
 
 msgid "row dendrogram ordering gave index of wrong length"
 msgstr "行系統樹圖排序索引结果的长度出了错"
@@ -606,10 +606,10 @@ msgid "column dendrogram ordering gave index of wrong length"
 msgstr "行系統樹圖排序索引结果的长度出了错"
 
 msgid "'ColSideColors' must be a character vector of length ncol(x)"
-msgstr "'ColSideColors'必需是长度为ncol(x)的字节向量"
+msgstr "'ColSideColors'必需是长度为ncol(x)的字节矢量"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr "'RowSideColors'必需是长度为nrow(x)的字节向量"
+msgstr "'RowSideColors'必需是长度为nrow(x)的字节矢量"
 
 msgid "non-matched further arguments are disregarded"
 msgstr "不匹配的额外变元略过不用"
@@ -654,7 +654,7 @@ msgid "invalid formula in deriv"
 msgstr "deriv里的公式不对"
 
 msgid "'x' is not a vector"
-msgstr "'x'不是向量"
+msgstr "'x'不是矢量"
 
 msgid "bad value for 'lag' or 'differences'"
 msgstr "'lag'或'differences'的值有错"
@@ -666,7 +666,7 @@ msgid "incorrect dimensions for 'xi'"
 msgstr "'xi'的尺寸不对"
 
 msgid "'x' is not a vector or matrix"
-msgstr "'x'不是向量或矩阵"
+msgstr "'x'不是矢量或矩阵"
 
 msgid "invalid distance method"
 msgstr "距离方法不对"
@@ -678,7 +678,7 @@ msgid "non-square matrix"
 msgstr "非正方形矩阵"
 
 msgid "x[] and prob[] must be equal length vectors."
-msgstr "x[]和prob[]必需是长度相等的向量。"
+msgstr "x[]和prob[]必需是长度相等的矢量。"
 
 msgid "probabilities cannot be negative nor all 0."
 msgstr "機率不能是负数，也不能全都是零。"
@@ -772,7 +772,7 @@ msgid "non-integer counts in a binomial glm!"
 msgstr "二项通用线性模型里出现了非整数的计数!"
 
 msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr "二项分布族中的y必需是由0和1组成的向量"
+msgstr "二项分布族中的y必需是由0和1组成的矢量"
 
 msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
@@ -783,7 +783,7 @@ msgid ""
 msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr "quasibinomial分布族中的y必需由零和一组成的向量"
+msgstr "quasibinomial分布族中的y必需由零和一组成的矢量"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
@@ -923,7 +923,7 @@ msgid "invalid 'method':"
 msgstr "'method'有错:"
 
 msgid "'weights' must be a numeric vector"
-msgstr "'weights'必需是数值向量"
+msgstr "'weights'必需是数值矢量"
 
 msgid "negative weights not allowed"
 msgstr "权数不能是负的"
@@ -1090,7 +1090,7 @@ msgid "unknown named kernel"
 msgstr "没有这样的内核名"
 
 msgid "'coef' must be a vector"
-msgstr "'coef'必需是向量"
+msgstr "'coef'必需是矢量"
 
 msgid "'coef' does not have the correct length"
 msgstr "'coef'的长度不对"
@@ -1403,22 +1403,20 @@ msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr "eff.aovlist: 用非正交对比来算的结果会出错"
 
 msgid "cannot create a formula from a zero-column data frame"
-msgstr ""
+msgstr "无法用空数据框来建立公式"
 
 msgid "no terms component"
 msgstr "没有项组件"
 
 msgid "'termlabels' must be a character vector of length at least one"
-msgstr "'termlabels'必需是长度至少为一的字节向量"
+msgstr "'termlabels'必需是长度至少为一的字节矢量"
 
 msgid "'termobj' must be a object of class \"terms\""
 msgstr "'termobj'必需是类别为个\"terms\"的对象"
 
-#, fuzzy
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "变量'%s'是由\"%s\"类别拟合而成，与提供的类别\"%s\"不相配"
 
-#, fuzzy
 msgid "variables %s were specified with different types from the fit"
 msgstr "设定的变量%s的类别同拟合的类别不相符"
 
@@ -1471,10 +1469,16 @@ msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level'必需是{0,1,2}"
 
 msgid "'interval' must be a vector of length 2"
-msgstr "'interval'必需是长度为二的数值向量"
+msgstr "'interval'必需是长度为二的数值矢量"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "没有满足lower小于upper这个条件"
+
+msgid "f.lower = f(lower) is NA"
+msgstr ""
+
+msgid "f.upper = f(upper) is NA"
+msgstr ""
 
 msgid "f() values at end points not of opposite sign"
 msgstr "位于极点边的f()值之正负号不相反"
@@ -1542,12 +1546,11 @@ msgstr "请考虑设'start'的值，或使用一个自我设定初始值的模�
 msgid "parameters without starting value in 'data':"
 msgstr "'data'里的参数没有被设定初始值"
 
-#, fuzzy
 msgid "fitting parameters"
-msgstr "没有可用来拟合的参数值"
+msgstr "拟合参数"
 
 msgid "without any variables"
-msgstr ""
+msgstr "没有变量"
 
 msgid "no parameters to fit"
 msgstr "没有可用来拟合的参数值"
@@ -1756,7 +1759,7 @@ msgid "ref = %d must be in 1:%d"
 msgstr "ref = %d必需在1:%d里"
 
 msgid "Failed to guess time-varying variables from their names"
-msgstr ""
+msgstr "没有能够从它们的名字里来猜测时变变元"
 
 msgid "'varying' arguments must be the same length"
 msgstr "'varying'变元的长度必需相同"
@@ -1771,22 +1774,18 @@ msgid "some constant variables (%s) are really varying"
 msgstr "某些恆量变量(%s)其实在变动"
 
 msgid "no 'reshapeWide' attribute, must specify 'varying'"
-msgstr ""
+msgstr "没有'reshapeWide'这个属性，必需设定varying'"
 
-#, fuzzy
 msgid "'varying' must be nonempty list or vector"
-msgstr "'varying'必需是逻辑值，整数值或字符"
+msgstr "'varying'必需是非空串列或矢量"
 
-#, fuzzy
 msgid "length of v.names does not evenly divide length of varying"
-msgstr ""
-"FUN的长度, %d,\n"
-"与边缘的长度, %d不相符"
+msgstr "v.names的长度不能双数分除varying的长度"
 
 msgid ""
 "length of varying must be the product of length of v.names and length of "
 "times"
-msgstr ""
+msgstr "varying的长度必需是v.names和times长度的乘積"
 
 msgid "'k' must be positive"
 msgstr "'k'必需是正数"
@@ -1867,7 +1866,7 @@ msgid "not a valid \"smooth.spline\" object"
 msgstr " \"smooth.spline\"对象不对"
 
 msgid "'y' must be numeric vector"
-msgstr "'y'必需是数值向量"
+msgstr "'y'必需是数值矢量"
 
 msgid "number of observations in 'x' and 'y' must match."
 msgstr " 'x'和'y'里的观察量数目必需相等。"
@@ -1972,10 +1971,10 @@ msgid "data are essentially constant"
 msgstr "数据是恆量"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
-msgstr "'main'必需是TRUE, FALSE, NULL或字符(向量) 。"
+msgstr "'main'必需是TRUE, FALSE, NULL或字符(矢量) 。"
 
 msgid "x is not a vector or univariate time series"
-msgstr "x不是向量或单变量时间序列"
+msgstr "x不是矢量或单变量时间序列"
 
 msgid "singularities in regression"
 msgstr "迴歸产生了奇异"

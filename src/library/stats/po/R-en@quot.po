@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
-"PO-Revision-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:32\n"
+"PO-Revision-Date: 2007-09-17 10:32\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1505,6 +1505,12 @@ msgstr "‘interval’ must be a vector of length 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper  is not fulfilled"
+
+msgid "f.lower = f(lower) is NA"
+msgstr "f.lower = f(lower) is NA"
+
+msgid "f.upper = f(upper) is NA"
+msgstr "f.upper = f(upper) is NA"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "f() values at end points not of opposite sign"

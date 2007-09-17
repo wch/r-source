@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:31\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -82,11 +82,15 @@ msgid ""
 "New generic for \"%s\" does not agree with implicit generic from package \"%s"
 "\"; a new generic will be assigned with package \"%s\""
 msgstr ""
+"\"%s\"的新同属函数与程序包\"%s\"里所隐含的同属函数不相符合；一个新的同属函数"
+"将会同程序包\"%s\"一起被分配"
 
 msgid ""
 "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
 "will be assigned with package \"%s\""
 msgstr ""
+"程序包\"%2$s\"不允许同属版本的\"%1$s\"；一个新的同属函数将会同程序包\"%3s\"一"
+"起被分配"
 
 msgid ""
 "function \"%s\" appears to be a generic function, but with generic name \"%s"
@@ -143,9 +147,8 @@ msgid ""
 "defined"
 msgstr "函数'%s'的方法和'%s'标记都被封闭了，因此无法将之重新定义"
 
-#, fuzzy
 msgid "argument in method definition changed from (%s) to (%s)"
-msgstr "定义里的变元从(%s) 改为(%s)"
+msgstr "定义里的变元从(%s)改为(%s)"
 
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
@@ -192,7 +195,7 @@ msgid "\"%s\" has no methods defined"
 msgstr "'%s'没有设定任何方法"
 
 msgid "signature must be a vector of classes or an environment"
-msgstr "标记要么是个含类别的向量，要么是个环境"
+msgstr "标记要么是个含类别的矢量，要么是个环境"
 
 msgid "no unique method corresponding to this signature"
 msgstr "这一标记没有与之相对应的唯一方法"
@@ -254,23 +257,21 @@ msgstr "'callGeneric'只能由同屬函数或方法来調用"
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
 "implicit form"
-msgstr ""
+msgstr "\"%s\"目前不是同属函数：请先将之定义以建立一个非较默隐含形式 "
 
-#, fuzzy
 msgid "No nongeneric version of function \"%s\" exists to be restored"
-msgstr "找不到'%s'这一非同屬函数"
+msgstr "没有非同属版本的'%s'这一函数，因此不能恢复原状"
 
-#, fuzzy
 msgid "Must provide an environment table; got class \"%s\""
-msgstr "找不到包含类别\"%s\"的环境"
+msgstr "必需提供环境表；得到的是\"%s\"类别"
 
 msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-msgstr ""
+msgstr "函数\"%s\"不能当作同属函数来用"
 
 msgid ""
 "Implicit generic exists for \"%s\", but will be overriden by explicit call "
 "to setGeneric()"
-msgstr ""
+msgstr "\"%s\"有隐含同属，但明确调用用setGeneric()会将之置換"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -311,7 +312,7 @@ msgid ""
 "'useInherited' must be TRUE, FALSE, or a named logical vector of those "
 "values; got an object of class \"%s\""
 msgstr ""
-"'useInherited'的值必需为TRUE, FALSE, 或是个带名字的逻辑向量; 现在得到的却是 "
+"'useInherited'的值必需为TRUE, FALSE, 或是个带名字的逻辑矢量; 现在得到的却是 "
 "类别为\"%s\"的对象"
 
 msgid ""
@@ -322,21 +323,20 @@ msgstr "无法将方法标记同一个不是同属函数的对象(类别是\"%s\
 msgid ""
 "trying to match a method signature of class \"%s\"; expects a list or a "
 "character vector"
-msgstr "无法同类别为\"%s\"的方法标记相对应; 必需用串列或字符向量"
+msgstr "无法同类别为\"%s\"的方法标记相对应; 必需用串列或字符矢量"
 
 msgid ""
 "object to use as a method signature for function \"%s\" does not look like a "
 "legitimate signature (a vector of single class names): there were %d class "
 "names, but %d elements in the signature object"
 msgstr ""
-"为函数'%1$s'作为方法标记而用的对象看来不象是合法的标记(单类别名字向量) ：一共"
+"为函数'%1$s'作为方法标记而用的对象看来不象是合法的标记(单类别名字矢量) ：一共"
 "有%2$d类别名字，但标记对象里只有%3$d个單元"
 
-#, fuzzy
 msgid ""
 "more elements in the method signature (%d) than in the generic  signature (%"
 "d)"
-msgstr "方法标记(%s)里的单元比同属%s(%s)里的要多"
+msgstr "方法标记(%d)里的单元比同属标记(%d)里的要多"
 
 msgid ""
 "in the method signature for function \"%s\" invalid argument names in the "
@@ -361,9 +361,8 @@ msgid ""
 "class \"%s\""
 msgstr "初始化方法回復了类别为\"%s\"的对象而不是所要求的\"%s\"这一类别"
 
-#, fuzzy
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
-msgstr "方法(%s)标记里的名字同函数变元(%s) 不相对应"
+msgstr "方法(%s)标记里的名字同函数%s变元(%s)不相对应"
 
 msgid ""
 "'NextMethod' not defined because the current method is not a "
@@ -510,21 +509,18 @@ msgstr "类别\"%s\"没有'.Data'这一个槽"
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "类别\"%s\"没有数据部分(.Data 槽)"
 
-#, fuzzy
 msgid ""
 "trying to change the argument list of %s with %d arguments to have arguments "
 "(%s)"
-msgstr "无法将带%d变元函数的变元串列改成带(%s) 变元"
+msgstr "无法将带%d变元函数%s的变元串列改成带(%s) 变元"
 
-#, fuzzy
 msgid ""
 "get rid of variables in definition %s (%s); they conflict with the needed "
 "change to argument names (%s)"
-msgstr "删除定义(%s) 里的变量；它们与需要改变的变元名字(%s) 有朴素矛盾"
+msgstr "删除定义(%s)里的变量；它们与需要改变的变元名字(%s)有矛盾"
 
-#, fuzzy
 msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "定义里的变元从(%s) 改为(%s)"
+msgstr "定义%s里的变元从(%s)改为(%s)"
 
 msgid ","
 msgstr ","
@@ -575,7 +571,7 @@ msgstr ""
 
 msgid ""
 "Must supply either a generic function or a function as default for \"#s\""
-msgstr ""
+msgstr "必需为\"#s\"提供一个作默认用的同属函数或函数"
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -689,9 +685,12 @@ msgid ""
 msgstr ""
 "'%s'同屬函数的程序部分調用'standardGeneric'来分配给一个不同的名字('%s')!"
 
-msgid ""
-"the supplied generic function definition does not seem to call "
-"'standardGeneric'; no methods will be dispatched!"
+#, fuzzy
+msgid "the supplied generic function definition for"
+msgstr "必需为\"#s\"提供一个作默认用的同属函数或函数"
+
+#, fuzzy
+msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
 msgstr "所提供的同屬函数定义没有調用'standardGeneric'；因此无法分配任何方法!"
 
 msgid ""
@@ -975,18 +974,17 @@ msgstr "类别\"%s\"里的槽必需擴充类别\"%s\"中相应的槽：%s出了�
 msgid "invalid index for function argument"
 msgstr "函数变元的索引不对"
 
-#, fuzzy
 msgid "No function definition found for \"%s\""
-msgstr "没有'%s'这样一个函数定义"
+msgstr "没有\"%s\"这样一个函数定义"
 
 msgid "Need a definition for the method here"
-msgstr ""
+msgstr "这里需要方法客店"
 
 msgid "Skeleton of method written to"
-msgstr ""
+msgstr "方法骨架定于"
 
 msgid "connection"
-msgstr ""
+msgstr "链结"
 
 msgid ""
 "Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
@@ -1102,7 +1100,7 @@ msgstr "用于旧式类别\"%s\"的as(x, \"%s\") <- value的替换值没有明�
 msgid ""
 "argument 'Classes' must be a vector of two classes; got an argument of "
 "length %d"
-msgstr "变元'classes'必需是包含两个类别的向量；现在得到的是长度为%d的变元"
+msgstr "变元'classes'必需是包含两个类别的矢量；现在得到的是长度为%d的变元"
 
 msgid "no definition of class \"%s\" found"
 msgstr "类别\"%s\"的定义不存在"
