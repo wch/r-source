@@ -274,23 +274,20 @@ msgstr "垂直定位不对"
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "'respect'的值要么是逻辑值，要么是一个'nrow'乘'ncol'大小的矩阵"
 
-#, fuzzy
 msgid "Invalid"
-msgstr "theta值不对"
+msgstr "不对"
 
 msgid "print"
-msgstr ""
+msgstr "印刷"
 
 msgid "argument"
-msgstr ""
+msgstr "变元"
 
-#, fuzzy
 msgid "Invalid object in listing"
-msgstr "定位不对"
+msgstr "表里目标对象不对"
 
-#, fuzzy
 msgid "Invalid listing"
-msgstr "'origin'的值不对"
+msgstr "表不对"
 
 msgid "Invalid 'origin'"
 msgstr "'origin'的值不对"
@@ -484,3 +481,4 @@ msgstr "至少要设定'y'或'yscale'两个中的一个"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

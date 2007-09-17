@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-09-01 11:40+0100\n"
-"PO-Revision-Date: 2007-03-30 10:47+0200\n"
+"PO-Revision-Date: 2007-09-16 16:15+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -99,9 +99,8 @@ msgid "  Deleting:\n"
 msgstr "  Lösche:\n"
 
 #: console.c:2187
-#, fuzzy
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr "     Entf oder Strg+D: lösche aktuelles Zeichen;\n"
+msgstr "     Entf oder Strg+D: lösche aktuelles Zeichen oder Auswahl;\n"
 
 #: console.c:2188
 msgid "     Backspace: delete preceding character;\n"
@@ -157,11 +156,10 @@ msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Strg+L: Leere die Konsole.\n"
 
 #: console.c:2198
-#, fuzzy
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
 "     Strg+O: Zwischen Überschreiben und Einfügen hin und herschalten, steht "
-"anfangs auf einfügen.\n"
+"anfangs auf Einfügen.\n"
 
 #: console.c:2199
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -196,6 +194,8 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
+"TAB startet Vervollständigung des aktuellen Wortes.\n"
+"\n"
 
 #: console.c:2204
 msgid "Standard Windows hotkeys can be used to switch to the\n"
@@ -860,11 +860,11 @@ msgstr "Abbruch zum Debugger"
 
 #: rui.c:1143
 msgid "Word completion"
-msgstr ""
+msgstr "Wortvervollständigung"
 
 #: rui.c:1145
 msgid "Filename completion"
-msgstr ""
+msgstr "Dateinamenvervolständigung"
 
 #: rui.c:1152
 msgid "List objects"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:18\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -572,13 +572,6 @@ msgstr " 'eigen' で 'cg' がコード %d を返しました"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'rg' がコード %d を返しました"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr " 'object' はリストでなければなりません"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr " 無効なラベルです。長さ %d は 1 または %d であるべきです"
@@ -1161,15 +1154,6 @@ msgstr " '%s' はまだ実装されていません"
 msgid "argument '%s' is not used (yet)"
 msgstr " 引数 '%s' は(まだ)使用されていません"
 
-msgid "invalid version specification"
-msgstr " 無効なバージョンの指定です"
-
-msgid "wrong argument"
-msgstr " 間違った引数です"
-
-msgid "not defined for package_version objects"
-msgstr " package_version オブジェクトに対しては定義されていません"
-
 msgid "no arguments"
 msgstr " 引数がありません"
 
@@ -1448,6 +1432,20 @@ msgstr " 'width' は正でなければなりません"
 msgid "No traceback available"
 msgstr " 利用できる traceback がありません"
 
+msgid "invalid version specification"
+msgstr " 無効なバージョンの指定です"
+
+msgid "wrong argument"
+msgstr " 間違った引数です"
+
+#, fuzzy
+msgid "invalid value"
+msgstr " 無効な 'n' 値です"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr " package_version オブジェクトに対しては定義されていません"
+
 msgid "argument to 'which' is not logical"
 msgstr " 'which' への引数は論理値ではありません"
 
@@ -1510,6 +1508,10 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr " 'object' はリストでなければなりません"
 
 #~ msgid "names do not match previous names:"
 #~ msgstr " 名前が以下のような以前の名前と一致しません："

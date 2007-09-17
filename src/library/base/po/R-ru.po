@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:18\n"
 "PO-Revision-Date: 2007-04-07 01:35-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -570,13 +570,6 @@ msgstr "'cg' возвратил код %d в 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' возвратил код %d в 'eigen'"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr "'object' должен быть списком"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "неправильные метки; длина %d должна быть 1 или %d"
@@ -1140,15 +1133,6 @@ msgstr "'%s' пока не разработан"
 msgid "argument '%s' is not used (yet)"
 msgstr "аргумент '%s' не используется (пока)"
 
-msgid "invalid version specification"
-msgstr "неправильное указание версии"
-
-msgid "wrong argument"
-msgstr "неправильный аргумент"
-
-msgid "not defined for package_version objects"
-msgstr "не определено для объектов package_version"
-
 msgid "no arguments"
 msgstr "нет аргументов"
 
@@ -1426,6 +1410,20 @@ msgstr "'width' должна быть положительной"
 msgid "No traceback available"
 msgstr "Трассировка недоступна"
 
+msgid "invalid version specification"
+msgstr "неправильное указание версии"
+
+msgid "wrong argument"
+msgstr "неправильный аргумент"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "неправильное значение 'n'"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr "не определено для объектов package_version"
+
 msgid "argument to 'which' is not logical"
 msgstr "аргумент 'which' не является логическим"
 
@@ -1503,6 +1501,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr "'object' должен быть списком"
 
 #~ msgid "names do not match previous names:"
 #~ msgstr "имена не соответствуют прежним именам:"

@@ -27,7 +27,6 @@ msgstr "程序包'%2$s'里没有'%1$s'这样一本说明书"
 msgid "document not found"
 msgstr "找不到这个说明书"
 
-#, fuzzy
 msgid "A search query has been submitted to"
 msgstr "檢索查詢疑問%s已被提出于"
 
@@ -243,9 +242,8 @@ msgstr "串列项太多(最多只能有3899项("
 msgid "'form' must be a two-sided formula"
 msgstr "'form'必需是双边公式"
 
-#, fuzzy
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr "'form'必需是双边公式"
+msgstr "'form'必需是双边公式，每一边至少带一项"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -483,9 +481,9 @@ msgstr "'destdir'不是目录"
 msgid "no package '%s' at the repositories"
 msgstr "貯藏處里没有'%s'这样的程序包"
 
-#, fuzzy
+
 msgid "package '%s' does not exist on the local repository"
-msgstr "貯藏處里没有'%s'这样的程序包"
+msgstr "地方貯藏處里没有'%s'这样的程序包"
 
 msgid "download of package '%s' failed"
 msgstr "下载程序包'%s'时出了问题"
@@ -523,9 +521,8 @@ msgstr "没有设定程序包"
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "没有'lib'这个变元：改用%s"
 
-#, fuzzy
 msgid "'lib = \"%s\"' is not writable"
-msgstr "'lib'不可写"
+msgstr "'lib=\"%s\"'不可写"
 
 msgid ""
 "Would you like to create a personal library\n"
@@ -726,15 +723,15 @@ msgid "first five rows are empty: giving up"
 msgstr "开头五行都是空白的：停止运行"
 
 msgid "relist() requires recursively unlisted objects."
-msgstr ""
+msgstr "relist()需要递归解串列目标对象"
 
 msgid "The flesh argument does not contain a skeleton attribute."
-msgstr ""
+msgstr "親屬变元不包含骨架属性"
 
 msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
 "separately."
-msgstr ""
+msgstr "你要么得保证你解串列了一个可重新串列的目标对象，要么你得分别设定一个骨架"
 
 msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"
@@ -867,9 +864,8 @@ msgstr "无法建立HTML程序包索引"
 msgid "cannot create HTML search index"
 msgstr "无法建立HTML搜索索引"
 
-#, fuzzy
 msgid "Updating HTML index of packages in '.Library'"
-msgstr "更新HTML程序包列表"
+msgstr "更新'.Library'里的HTML程序包列表"
 
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()'只在Windows上有用"
@@ -982,3 +978,4 @@ msgstr[1] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
+

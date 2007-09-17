@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
-"PO-Revision-Date: 2007-04-13 12:13+0100\n"
+"POT-Creation-Date: 2007-09-17 10:18\n"
+"PO-Revision-Date: 2007-09-16 17:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -594,13 +594,6 @@ msgstr "'cg' a renvoyé le code %d dans 'eigen'"
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' a renvoyé le code %d dans 'eigen'"
 
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr "'object' doit être une liste"
-
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "étiquettes incorrectes ; la longueur %d doit être 1 ou %d"
 
@@ -1183,15 +1176,6 @@ msgstr "'%s' n'est pas encore implémenté"
 msgid "argument '%s' is not used (yet)"
 msgstr "l'argument '%s' n'est pas (encore) utilisé"
 
-msgid "invalid version specification"
-msgstr "spécification de version incorrecte"
-
-msgid "wrong argument"
-msgstr "mauvais argument"
-
-msgid "not defined for package_version objects"
-msgstr "non défini pour des objets package_version"
-
 msgid "no arguments"
 msgstr "pas d'arguments"
 
@@ -1470,6 +1454,20 @@ msgstr "'width' doit être postif"
 msgid "No traceback available"
 msgstr "Pas d'historique des fonctions appelées ('traceback') disponible"
 
+msgid "invalid version specification"
+msgstr "spécification de version incorrecte"
+
+msgid "wrong argument"
+msgstr "mauvais argument"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "valeur 'n' incorrecte"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr "non défini pour des objets package_version"
+
 msgid "argument to 'which' is not logical"
 msgstr "l'argument pour 'which' n'est pas une valeur logique"
 
@@ -1541,6 +1539,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr "'object' doit être une liste"
 
 #~ msgid "names do not match previous names:"
 #~ msgstr "les noms ne correspondent pas aux noms précédents :"

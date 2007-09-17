@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -191,7 +191,7 @@ msgid "can only truncate an open connection"
 msgstr "只能截断已经打开了的链结"
 
 msgid "can only write vector objects"
-msgstr "只能写向量对象"
+msgstr "只能写矢量对象"
 
 msgid "can only write character objects"
 msgstr "只能写字符对象"
@@ -336,7 +336,7 @@ msgid "names do not match previous names"
 msgstr "名字同原来已有的名字不相对"
 
 msgid "numbers of columns of arguments do not match"
-msgstr ""
+msgstr "变量的列数不对"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "串列变元有错：所有变数的长度都应该是一样的"
@@ -350,9 +350,8 @@ msgstr "只适用于大小相同的数据框"
 msgid "list of length %d not meaningful"
 msgstr "%d长度的串列没有意义"
 
-#, fuzzy
 msgid "only defined on a data frame with all numeric variables"
-msgstr "只适用于全数值或全复数的数据框"
+msgstr "只适用于全数值数据框"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
@@ -494,7 +493,7 @@ msgid "'file' must be a character string or connection"
 msgstr "'file'要么是字符串，要么是连接"
 
 msgid "Invalid DCF format."
-msgstr ""
+msgstr "DCF格式不对"
 
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
@@ -511,9 +510,8 @@ msgstr "只能替换矩阵的对角"
 msgid "replacement diagonal has wrong length"
 msgstr "对角替换值的长度不对"
 
-#, fuzzy
 msgid "'fromLast' must be TRUE or FALSE"
-msgstr "'quote'的值必需是'TRUE', 'FALSE'或数值三者之一"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -560,13 +558,6 @@ msgstr "'eigen'里'cg'回覆了代码%d"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'eigen'里'rg'回覆了代码%d"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr "'object'必需是串列"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "标记不对；长度%d应该是一或%d"
@@ -624,7 +615,7 @@ msgstr ""
 "'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
 
 msgid "'digits' reduced to 50"
-msgstr ""
+msgstr "'digits'被减少到50"
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag'只能含'0+- #'"
@@ -656,9 +647,8 @@ msgstr "所有变元都必需有名字"
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'必需为非空字符串"
 
-#, fuzzy
 msgid "invalid multibyte string for 'pattern'"
-msgstr "'by'的字符串有错"
+msgstr "'pattern'的多字节字符串出错"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance'不能有负值"
@@ -741,9 +731,8 @@ msgstr "在搜索路径上找不到'%s'，用pos=2"
 msgid "package/namespace load failed for '%s'"
 msgstr "'%s'程辑包/名字空间载入失败，"
 
-#, fuzzy
 msgid "package was installed prior to 2.4.0 and must be re-installed"
-msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
+msgstr "程辑包'%s'是在R版本2.4.0之前建的：你得重新组装"
 
 msgid "unable to load R code in package '%s'"
 msgstr "程辑包'%s'里的R写碼载入失败"
@@ -867,32 +856,28 @@ msgid "[Previously saved workspace restored]"
 msgstr "[原来保存的工作空间已还原]"
 
 msgid "Attempting to load the environment '%s'"
-msgstr ""
+msgstr "试图载入'%s'环境"
 
 msgid "not found: using .GlobalEnv instead"
-msgstr ""
+msgstr "找不到：用.GlobalEnv"
 
 msgid "invalid 'category' argument"
 msgstr "'category'变元有错"
 
 msgid "must specify formal argument names to vectorize"
-msgstr "向量化之前必需设定正式变元"
+msgstr "矢量化之前必需设定正式变元"
 
-#, fuzzy
 msgid "'arg' must be NULL or a character vector"
-msgstr "'arg'要么是NULL，要么是长度大于等于一的字符向量。"
+msgstr "'arg'要么是NULL，要么是字符矢量。"
 
-#, fuzzy
 msgid "'arg' must be of length 1"
-msgstr "'from'的长度必需为一"
+msgstr "'arg'的长度必需为一"
 
-#, fuzzy
 msgid "'arg' must be of length >= 1"
-msgstr "'from'的长度必需为一"
+msgstr "'arg'的长度必需大于等于一"
 
-#, fuzzy
 msgid "'arg' should be one of %s"
-msgstr "'arg'应当是这些其中的一个"
+msgstr "'arg'应当是%s其中的一个"
 
 msgid "there is more than one match in 'match.arg'"
 msgstr "'match.arg'里有重复的匹配"
@@ -1014,10 +999,10 @@ msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
 
 msgid "Multiple methods lists found for '"
-msgstr ""
+msgstr "存在多个方法串列，目标为'"
 
 msgid "'"
-msgstr ""
+msgstr "'"
 
 msgid "No methods table for \""
 msgstr "没有方法列表于"
@@ -1124,15 +1109,6 @@ msgstr "'%s'还没有编程实现"
 msgid "argument '%s' is not used (yet)"
 msgstr "'%s' 变元现在还没有用"
 
-msgid "invalid version specification"
-msgstr "版本设定不对"
-
-msgid "wrong argument"
-msgstr "变元不对"
-
-msgid "not defined for package_version objects"
-msgstr "对package_version对象没有定义"
-
 msgid "no arguments"
 msgstr "没有变元"
 
@@ -1179,7 +1155,7 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "因为产生了主轴，需要大一点的'ncol'值"
 
 msgid "'x' must be a vector"
-msgstr "'x'必需为向量"
+msgstr "'x'必需为矢量"
 
 msgid "invalid 'rle' structure"
 msgstr "'rle'结构有错"
@@ -1253,7 +1229,7 @@ msgstr "solve里的'a'是奇异矩阵"
 msgid ""
 "'decreasing' must be a length-1 logical vector.\n"
 "Did you intend to set 'partial'?"
-msgstr "'decreasing'必需是长度为一的向量，你是不是想设'partial'的值？"
+msgstr "'decreasing'必需是长度为一的矢量，你是不是想设'partial'的值？"
 
 msgid "'index.return' only for non-factors"
 msgstr "'index.return'只能适用于非因子"
@@ -1347,13 +1323,13 @@ msgid "error %d in 'dsvdc'"
 msgstr "'dsvdc'里的%d有错"
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
-msgstr ""
+msgstr "STATS大于'dim(x)[MARGIN]'的范围"
 
 msgid "STATS does not recycle exactly across MARGIN"
-msgstr ""
+msgstr "STATS 没有確切地再利用于界限"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
-msgstr ""
+msgstr "length(STATS)或dim(STATS)于dim(x)[MARGIN]不相配"
 
 msgid "nothing to tabulate"
 msgstr "没有可列表的东西"
@@ -1406,6 +1382,20 @@ msgstr "'width'必需为正数"
 msgid "No traceback available"
 msgstr "无traceback"
 
+msgid "invalid version specification"
+msgstr "版本设定不对"
+
+msgid "wrong argument"
+msgstr "变元不对"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "'n'的值有错"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr "对package_version对象没有定义"
+
 msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
 
@@ -1419,7 +1409,7 @@ msgstr ""
 "变元'show.output.on.console', 'minimized' 和'invisible'只适用在Windows上"
 
 msgid "'input' must be a character vector or 'NULL'"
-msgstr "'input'只能为字符向量或NULL值"
+msgstr "'input'只能为字符矢量或NULL值"
 
 msgid "'cmd' could not be run"
 msgstr "无法運行'cmd'"
@@ -1452,16 +1442,14 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "不存在叫这个名称的程辑包"
 
-#, fuzzy
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
-msgstr[0] "'namespace:%2$s'没有出口%1$s这个对象"
-msgstr[1] "'namespace:%2$s'没有出口%1$s这个对象"
+msgstr[0] "'namespace:%2$s'没有出口'%1$s'这个对象"
+msgstr[1] "'namespace:%2$s'没有出口'%1$s'这个对象"
 
-#, fuzzy
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
-msgstr[0] "现在正在替换原出口对象%s"
+msgstr[0] "现在正在替换原出口对象'%s'"
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
@@ -1471,6 +1459,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "'within' requires a name for its 'data' argument"
+#~ msgstr "'within'的'data'变元必需带个名字"
+
+#~ msgid "'data' must exist"
+#~ msgstr "'data'必需存在"
 
 #~ msgid "names do not match previous names:"
 #~ msgstr "名字同原来已有的名字不相对:"

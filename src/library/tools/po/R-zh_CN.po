@@ -327,13 +327,11 @@ msgid ""
 msgstr ""
 "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
-#, fuzzy
 msgid "Encoding '%s' is not portable"
-msgstr "不存在'%s'这个测试"
+msgstr "编码'%s'不可便携"
 
-#, fuzzy
 msgid "Unknown encoding with non-ASCII data"
-msgstr "域内有非-ASCII的标签:"
+msgstr "没有这样的编码，带非ASCII数据:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -354,7 +352,7 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
 msgid "argument 'lines' must be a character vector"
-msgstr "变元'lines'必需是字符向量"
+msgstr "变元'lines'必需是字符矢量"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "变元'document'必需是字符串或联结"
@@ -422,9 +420,8 @@ msgstr "Rd文件里缺少或有空白的\\name域"
 msgid "unable to create temp directory"
 msgstr "无法建立temp目录"
 
-#, fuzzy
 msgid "--- running texi2dvi on vignettes"
-msgstr "给'%s'调用texi2dvi失败了"
+msgstr "---在标头上调用texi2dvi失败"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -433,9 +430,8 @@ msgstr ""
 "处理标头'%s'失败，诊断信息为:\n"
 "%s"
 
-#, fuzzy
 msgid "running 'make' failed"
-msgstr "调用make失败"
+msgstr "调用'make'失败"
 
 msgid "cannot read index information in file '%s'"
 msgstr "无法从文件'%s'中读取索引信息"
@@ -456,17 +452,18 @@ msgid "cannot open directory '%s'"
 msgstr "无法打开目录'%s'"
 
 msgid "WARNING: 'Depends' entry has multiple dependencies:"
-msgstr ""
+msgstr "警告：'Depends'项有多个從屬项"
 
 msgid ","
-msgstr ""
+msgstr ","
 
 msgid "only the first will be used"
-msgstr ""
+msgstr "只能用第一个"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
 msgstr ""
+"警告：略过不带版本需求的无意义'R'从属"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "无法通过LC_COLLATE来关掉地方化分类整理"
@@ -492,12 +489,11 @@ msgstr "无法拷贝索引至'%s'"
 msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
-#, fuzzy
 msgid "processing '"
-msgstr "文名分析'%s'"
+msgstr "处理 '"
 
 msgid "'"
-msgstr ""
+msgstr "'"
 
 msgid "file '%s' was not created"
 msgstr "无法产生文件'%s'"
@@ -506,19 +502,19 @@ msgid "cannot copy '%s' to '%s'"
 msgstr "无法将'%s'拷贝到'%s'"
 
 msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr ""
+msgstr "程序包'%s'缺少'DESCRIPTION.in'"
 
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
-msgstr ""
+msgstr "警告：'DESCRIPTION'里'Depends'项格式不对"
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
-msgstr ""
+msgstr "错误：R的版本是%s，程序包'%s'要求版本为%s %s的R"
 
 msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-msgstr ""
+msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
-msgstr ""
+msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
@@ -584,7 +580,7 @@ msgid "no or more than one match"
 msgstr "没有成对的，或多于一双"
 
 msgid "argument 'x' must be a character vector"
-msgstr "变元'x'必需是字符向量"
+msgstr "变元'x'必需是字符矢量"
 
 msgid "argument 'delim' must specify two characters"
 msgstr "变元'delim'必需指定两个字符"
@@ -592,13 +588,11 @@ msgstr "变元'delim'必需指定两个字符"
 msgid "only Rd syntax is currently supported"
 msgstr "目前只支持Rd语法"
 
-#, fuzzy
 msgid "running 'texi2dvi' on '%s' failed"
-msgstr "给'%s'调用texi2dvi失败了"
+msgstr "给'%s'调用'texi2dvi'失败了"
 
-#, fuzzy
 msgid "unable to run %s on '%s'"
-msgstr "无法在'%s'上调用bibtex"
+msgstr "无法在'%2$s'上调用%1$s"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
@@ -633,3 +627,4 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr "无法在'%s'上调用pdflatex"
+

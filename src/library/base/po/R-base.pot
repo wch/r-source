@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -551,12 +551,6 @@ msgstr ""
 msgid "'rg' returned code %d in 'eigen'"
 msgstr ""
 
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-msgid "'data' must exist"
-msgstr ""
-
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr ""
 
@@ -1094,15 +1088,6 @@ msgstr ""
 msgid "argument '%s' is not used (yet)"
 msgstr ""
 
-msgid "invalid version specification"
-msgstr ""
-
-msgid "wrong argument"
-msgstr ""
-
-msgid "not defined for package_version objects"
-msgstr ""
-
 msgid "no arguments"
 msgstr ""
 
@@ -1368,6 +1353,18 @@ msgid "'width' must be positive"
 msgstr ""
 
 msgid "No traceback available"
+msgstr ""
+
+msgid "invalid version specification"
+msgstr ""
+
+msgid "wrong argument"
+msgstr ""
+
+msgid "invalid value"
+msgstr ""
+
+msgid "not defined for numeric_version objects"
 msgstr ""
 
 msgid "argument to 'which' is not logical"

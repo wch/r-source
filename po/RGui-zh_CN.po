@@ -99,9 +99,8 @@ msgid "  Deleting:\n"
 msgstr "  删除:\n"
 
 #: console.c:2187
-#, fuzzy
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr "     Del或Ctrl+D: 删除在目前位置的字符;\n"
+msgstr "     Del或Ctrl+D: 删除在目前位置的字符或选择;\n"
 
 #: console.c:2188
 msgid "     Backspace: delete preceding character;\n"
@@ -149,9 +148,8 @@ msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: 清除控制台.\n"
 
 #: console.c:2198
-#, fuzzy
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O: 开关重写状态: 最初是关掉的。\n"
+msgstr "     Ctrl+O或INS: 开关重写状态: 最初是关掉的。\n"
 
 #: console.c:2199
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -185,7 +183,7 @@ msgstr ""
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
-msgstr ""
+msgstr "TAB完整现用字。\n"
 
 #: console.c:2204
 msgid "Standard Windows hotkeys can be used to switch to the\n"
@@ -838,11 +836,11 @@ msgstr "暂停进入到侦错器"
 
 #: rui.c:1143
 msgid "Word completion"
-msgstr ""
+msgstr "單詞完結"
 
 #: rui.c:1145
 msgid "Filename completion"
-msgstr ""
+msgstr "文件名字完結"
 
 #: rui.c:1152
 msgid "List objects"

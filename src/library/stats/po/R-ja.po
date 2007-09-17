@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:19\n"
 "PO-Revision-Date: 2007-04-05 21:42+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1504,6 +1504,12 @@ msgstr " 'intervals' は長さ 2 の数値ベクトルでなければなりま�
 
 msgid "lower < upper  is not fulfilled"
 msgstr " lower < upper になっていません"
+
+msgid "f.lower = f(lower) is NA"
+msgstr ""
+
+msgid "f.upper = f(upper) is NA"
+msgstr ""
 
 msgid "f() values at end points not of opposite sign"
 msgstr " f() の端点での値が異なった符号を持ちません"

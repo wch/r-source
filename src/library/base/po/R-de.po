@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-01 12:25\n"
+"POT-Creation-Date: 2007-09-17 10:18\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -578,13 +578,6 @@ msgstr "'cg' gab Kode %d zurück in 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' gab Kode %d zurück in 'eigen'"
-
-msgid "'within' requires a name for its 'data' argument"
-msgstr ""
-
-#, fuzzy
-msgid "'data' must exist"
-msgstr "'subset' muss boolesch sein"
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "ungültige Label; Länge %d sollte 1 oder %d sein"
@@ -1158,15 +1151,6 @@ msgstr "'%s' ist bisher nicht implementiert"
 msgid "argument '%s' is not used (yet)"
 msgstr "Argument '%s' wird bisher nicht benutzt"
 
-msgid "invalid version specification"
-msgstr "ungültige Versionsspezifikation"
-
-msgid "wrong argument"
-msgstr "falsches Argument"
-
-msgid "not defined for package_version objects"
-msgstr "für package_version Objekte nicht definiert"
-
 #, fuzzy
 msgid "no arguments"
 msgstr "falsches Argument"
@@ -1441,6 +1425,20 @@ msgstr "'width' muss positiv sein"
 msgid "No traceback available"
 msgstr "Kein traceback vefügbar"
 
+msgid "invalid version specification"
+msgstr "ungültige Versionsspezifikation"
+
+msgid "wrong argument"
+msgstr "falsches Argument"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "ungültiger Wert für 'n'"
+
+#, fuzzy
+msgid "not defined for numeric_version objects"
+msgstr "für package_version Objekte nicht definiert"
+
 msgid "argument to 'which' is not logical"
 msgstr "Argument zu 'which' ist nicht boolesch"
 
@@ -1510,6 +1508,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#, fuzzy
+#~ msgid "'data' must exist"
+#~ msgstr "'subset' muss boolesch sein"
 
 #, fuzzy
 #~ msgid "names do not match previous names:"

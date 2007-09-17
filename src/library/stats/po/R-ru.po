@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53\n"
+"POT-Creation-Date: 2007-09-17 10:19\n"
 "PO-Revision-Date: 2007-04-07 01:47-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1516,6 +1516,12 @@ msgstr "'interval' должен быть вектором длины 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper не выполнено"
+
+msgid "f.lower = f(lower) is NA"
+msgstr ""
+
+msgid "f.upper = f(upper) is NA"
+msgstr ""
 
 msgid "f() values at end points not of opposite sign"
 msgstr "f() значений на концевых точках не противоположного знака"

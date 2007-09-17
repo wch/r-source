@@ -217,9 +217,8 @@ msgstr "数据间隔的数目必需比颜色要多一个"
 msgid "breaks must all be finite"
 msgstr "数据间隔值不能有无限的"
 
-#, fuzzy
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
-msgstr "z的大小应该等于length(x)(+1)乘length(y)(+1)"
+msgstr "z的大小应该等于length(x)(-1)乘length(y)(-1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "'respect'要么是逻辑值，要么是同'mat'大小一样的矩阵"
@@ -397,3 +396,4 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个变元"
 msgstr[1] "没有用%s这个变元"
+
