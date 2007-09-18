@@ -727,6 +727,9 @@ BUG FIXES
 	Brown hair / Brown eye cell by Sex, and only totals over Sex
 	are given in the original source.
 
+    o   Trailing spaces are now conistently stripped from \alias{}
+	entries in .Rd files, and this is now documented.  (PR#9915)
+
 
 
 

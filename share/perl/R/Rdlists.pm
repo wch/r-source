@@ -329,10 +329,11 @@ sub build_index { # lib, dest, version, [chmdir]
 		$main::title2file{$rdtitle} = $manfilebase;
 	    }
 
-	    while($text =~ s/\\alias\{\s*(.*)\s*\}//){
+	    while($text =~ s/\\alias\{\s*(.*)\}//){
 		$alias = $1;
 		$alias =~ s/\\%/%/g;
-		if ($internal){
+		$alias =~ s/\s*$//;
+		if ($internal) {
 		    $internal{$alias} = 1;
 		}
 		my $an = $main::aliasnm{$alias};
