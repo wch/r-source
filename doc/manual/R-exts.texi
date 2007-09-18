@@ -2753,7 +2753,9 @@ represented by the file and has to be unique in a package.
 @findex \alias
 The @code{\alias} entries specify all ``topics'' the file documents.
 This information is collected into index data bases for lookup by the
-on-line (plain text and @HTML{}) help systems.
+on-line (plain text and @HTML{}) help systems.  The @var{topic} can
+contain spaces, but (for historical reasons) leading and trailing spaces
+will be stripped.
 
 There may be several @code{\alias} entries.  Quite often it is
 convenient to document several @R{} objects in one file.  For example,
@@ -3368,6 +3370,10 @@ the text and S nroff formats.
 
 One main usage of @code{\link} is in the @code{\seealso} section of the
 help page, @pxref{Rd format}.
+
+Note that whereas leading and trailing spaces are stripped when
+extracting a topic from a @code{\alias}, they are not stripped when
+looking up the topic of a @code{\link}.
 
 @cindex \linkS4class
 You can specify a link to a different topic than its name by
