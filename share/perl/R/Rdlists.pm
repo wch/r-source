@@ -329,7 +329,8 @@ sub build_index { # lib, dest, version, [chmdir]
 		$main::title2file{$rdtitle} = $manfilebase;
 	    }
 
-	    while($text =~ s/\\alias\{\s*(.*)\}//){
+	    ## some \alias entries have trailing comments including a }
+	    while($text =~ s/\\alias\{\s*([^}]+)\}//){
 		$alias = $1;
 		$alias =~ s/\\%/%/g;
 		$alias =~ s/\s*$//;
