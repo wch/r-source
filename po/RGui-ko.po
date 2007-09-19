@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-01 11:40+0100\n"
+"POT-Creation-Date: 2007-09-19 09:18+0100\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -1030,7 +1030,7 @@ msgid "Enhanced metafiles"
 msgstr "강화된 metafiles"
 
 #: ../library/grDevices/src/devWindows.c:912
-#: ../library/grDevices/src/devWindows.c:2855
+#: ../library/grDevices/src/devWindows.c:2864
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "선택되어져 있는 파일경로는 너무 큽니다: 512의 바이트만 허용됩니다"
 
@@ -1199,15 +1199,15 @@ msgstr "metafile에 저장..."
 msgid "Save as postscript..."
 msgstr "postscript에 저장..."
 
-#: ../library/grDevices/src/devWindows.c:2588
+#: ../library/grDevices/src/devWindows.c:2597
 msgid "Locator is active"
 msgstr "전파이(가) 활발합니다"
 
-#: ../library/grDevices/src/devWindows.c:3163
+#: ../library/grDevices/src/devWindows.c:3172
 msgid "Waiting to confirm page change..."
 msgstr "페이지 변경을 확인하는까지 기다리는 중..."
 
-#: ../library/grDevices/src/devWindows.c:3175
+#: ../library/grDevices/src/devWindows.c:3184
 msgid "Click or hit ENTER for next page"
 msgstr "click 또는 ENTER 키를 누르는 것으로 다음 페이지로 이동됩니다"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-19 09:18\n"
 "PO-Revision-Date: 2007-04-04 14:23+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -770,6 +770,10 @@ msgstr " 'x' をローマンに変換できません"
 
 msgid "Invalid roman numeral(s): %s"
 msgstr " 不正なローマ数字です: %s"
+
+#, fuzzy
+msgid "no valid packages were specified"
+msgstr " 如何なるパッケージも指定されませんでした"
 
 msgid "invalid 'socket' argument"
 msgstr " 不正な 'socket' 引数"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-19 09:18\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -785,6 +785,10 @@ msgstr ""
 
 msgid "Invalid roman numeral(s): %s"
 msgstr ""
+
+#, fuzzy
+msgid "no valid packages were specified"
+msgstr "패키지는 지정되지 않았습니다"
 
 msgid "invalid 'socket' argument"
 msgstr "무효의 'socket' 인수입니다"

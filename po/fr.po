@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-09-17 10:16+0100\n"
-"PO-Revision-Date: 2007-09-16 19:10+0100\n"
+"PO-Revision-Date: 2007-09-18 13:10-0400\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -3257,8 +3257,9 @@ msgid "argument is missing, with no default"
 msgstr "argument manquant, sans valeur associée par défaut"
 
 #: src/main/eval.c:511 src/main/eval.c:3091
+#, fuzzy
 msgid "attempt to apply non-function"
-msgstr "tentative d'exécution d'un object qui n'est pas une function"
+msgstr "tentative d'exécution d'un objet qui n'est pas une fonction"
 
 #: src/main/eval.c:803
 #, c-format

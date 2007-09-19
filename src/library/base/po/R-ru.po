@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-09-17 10:18\n"
-"PO-Revision-Date: 2007-04-07 01:35-0800\n"
+"PO-Revision-Date: 2007-09-18 00:11-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -342,7 +342,7 @@ msgid "names do not match previous names"
 msgstr "имена не соответствуют прежним именам"
 
 msgid "numbers of columns of arguments do not match"
-msgstr ""
+msgstr "количество колонок аргументов не соответствует друг другу"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "неправильный аргумент списка: длины всех переменных должны быть равны"
@@ -356,11 +356,8 @@ msgstr "определено только для таблиц данных одинаковых размеров"
 msgid "list of length %d not meaningful"
 msgstr "список длины %d не значим"
 
-#, fuzzy
 msgid "only defined on a data frame with all numeric variables"
-msgstr ""
-"определено только для таблиц данных со всеми числовыми или комплексными "
-"переменными"
+msgstr "определено только для таблиц данных со всеми числовыми переменными"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "текстовая строка не относится к стандартному однозначному формату"
@@ -503,7 +500,7 @@ msgid "'file' must be a character string or connection"
 msgstr "'file' должен быть текстовой строкой или соединением"
 
 msgid "Invalid DCF format."
-msgstr ""
+msgstr "Неправильный формат DCF."
 
 msgid "'x' must be a square matrix"
 msgstr "'x' должен быть квадратной матрицей"
@@ -520,9 +517,8 @@ msgstr "только диагонали матрицы могут быть заменены"
 msgid "replacement diagonal has wrong length"
 msgstr "у замены диагонали -- неправильная длина"
 
-#, fuzzy
 msgid "'fromLast' must be TRUE or FALSE"
-msgstr "'quote' должен быть 'TRUE', 'FALSE' или числом"
+msgstr "'quote' должен быть TRUE или FALSE"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -627,7 +623,7 @@ msgstr ""
 "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'digits' reduced to 50"
-msgstr ""
+msgstr "'digits' сокращено до 50"
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' может содержать лишь '0+- #'"
@@ -659,9 +655,8 @@ msgstr "все аргументы должны быть именованы"
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"
 
-#, fuzzy
 msgid "invalid multibyte string for 'pattern'"
-msgstr "неправильная строка для 'by'"
+msgstr "неправильная многобайтная строка для 'pattern'"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance' должна быть неотрицательной"
@@ -745,10 +740,8 @@ msgstr "'%s' не найден в пути поиска, использую pos = 2"
 msgid "package/namespace load failed for '%s'"
 msgstr "не удалась загрузка пакета/пространства имен для '%s'"
 
-#, fuzzy
 msgid "package was installed prior to 2.4.0 and must be re-installed"
-msgstr ""
-"пакет '%s' был скомпилирован до R 2.0.0: пожалуйста, инсталлируйте его заново"
+msgstr "пакет был установлен до R 2.4.0 и должен быть переустановлен"
 
 msgid "unable to load R code in package '%s'"
 msgstr "не могу загрузить код R пакета '%s'"
@@ -872,10 +865,10 @@ msgid "[Previously saved workspace restored]"
 msgstr "[Загружено ранее сохраненное рабочее пространство]"
 
 msgid "Attempting to load the environment '%s'"
-msgstr ""
+msgstr "Пытаюсь загрузить окружение '%s'"
 
 msgid "not found: using .GlobalEnv instead"
-msgstr ""
+msgstr "не найдено: использую .GlobalEnv"
 
 msgid "invalid 'category' argument"
 msgstr "неправильный аргумент 'category'"
@@ -883,21 +876,17 @@ msgstr "неправильный аргумент 'category'"
 msgid "must specify formal argument names to vectorize"
 msgstr "для векторизации надо указать формальные имена аргументов"
 
-#, fuzzy
 msgid "'arg' must be NULL or a character vector"
-msgstr "'arg' должен быть NULL либо текстовой строкой длиной не меньше 1"
+msgstr "'arg' должен быть NULL либо текстовой строкой"
 
-#, fuzzy
 msgid "'arg' must be of length 1"
-msgstr "'from' должен быть длиной 1"
+msgstr "'arg' должен быть длиной 1"
 
-#, fuzzy
 msgid "'arg' must be of length >= 1"
-msgstr "'from' должен быть длиной 1"
+msgstr "'arg' должен быть длиной >= 1"
 
-#, fuzzy
 msgid "'arg' should be one of %s"
-msgstr "'arg' должен быть одним из"
+msgstr "'arg' должен быть одним из %s"
 
 msgid "there is more than one match in 'match.arg'"
 msgstr "более одного соответствия для 'match.arg'"
@@ -1023,10 +1012,10 @@ msgid "in '%s' methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
 
 msgid "Multiple methods lists found for '"
-msgstr ""
+msgstr "Множественные списки методов найдены для '"
 
 msgid "'"
-msgstr ""
+msgstr "'"
 
 msgid "No methods table for \""
 msgstr "Нет таблицы методов для \""
@@ -1351,13 +1340,13 @@ msgid "error %d in 'dsvdc'"
 msgstr "ошибка %d в 'dsvdc'"
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
-msgstr ""
+msgstr "STATS длиннее чем протяженность 'dim(x)[MARGIN]'"
 
 msgid "STATS does not recycle exactly across MARGIN"
-msgstr ""
+msgstr "STATS не самоповторяется в точности в MARGIN"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
-msgstr ""
+msgstr "length(STATS) или dim(STATS) не соответствует dim(x)[MARGIN]"
 
 msgid "nothing to tabulate"
 msgstr "нечего табулировать"
@@ -1476,14 +1465,12 @@ msgstr[0] "нет пакета под названием"
 msgstr[1] "нет пакетов под названиями"
 msgstr[2] "нет пакетов под названиями"
 
-#, fuzzy
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "объект %s не экспортирован 'namespace:%s'"
 msgstr[1] "объекты %s не экспортированы 'namespace:%s'"
 msgstr[2] "объекты %s не экспортированы 'namespace:%s'"
 
-#, fuzzy
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "предыдущий экспорт %s заменяется"
@@ -1502,9 +1489,11 @@ msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
 
-#, fuzzy
+#~ msgid "'within' requires a name for its 'data' argument"
+#~ msgstr "'within' требует имя для своего аргумента 'data'"
+
 #~ msgid "'data' must exist"
-#~ msgstr "'object' должен быть списком"
+#~ msgstr "'data' должен существовать"
 
 #~ msgid "names do not match previous names:"
 #~ msgstr "имена не соответствуют прежним именам:"

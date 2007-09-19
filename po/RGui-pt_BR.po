@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-01 11:40+0100\n"
+"POT-Creation-Date: 2007-09-19 09:18+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1050,7 +1050,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
 #: ../library/grDevices/src/devWindows.c:912
-#: ../library/grDevices/src/devWindows.c:2855
+#: ../library/grDevices/src/devWindows.c:2864
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr ""
 "caminho do arquivo selecionado é muito grande: somente 512 bytes são "
@@ -1222,15 +1222,15 @@ msgstr "Salvar como metafile..."
 msgid "Save as postscript..."
 msgstr "Salvar como postscript..."
 
-#: ../library/grDevices/src/devWindows.c:2588
+#: ../library/grDevices/src/devWindows.c:2597
 msgid "Locator is active"
 msgstr "Localizador está ativo"
 
-#: ../library/grDevices/src/devWindows.c:3163
+#: ../library/grDevices/src/devWindows.c:3172
 msgid "Waiting to confirm page change..."
 msgstr "Esperando para confirmar mudança de página..."
 
-#: ../library/grDevices/src/devWindows.c:3175
+#: ../library/grDevices/src/devWindows.c:3184
 msgid "Click or hit ENTER for next page"
 msgstr "Clique com o mouse ou pressione ENTER para próxima página"
 

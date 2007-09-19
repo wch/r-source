@@ -7,11 +7,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-09-17 10:18\n"
-"PO-Revision-Date: 2007-04-09 23:30+0400\n"
-"Last-Translator: Alexey Garkovenko <garkovenko@gmail.com>\n"
+"PO-Revision-Date: 2007-09-18 00:27-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
@@ -95,11 +95,15 @@ msgid ""
 "New generic for \"%s\" does not agree with implicit generic from package \"%s"
 "\"; a new generic will be assigned with package \"%s\""
 msgstr ""
+"Новая общая функция для \"%s\" не согласуется с подразумеваемой общей "
+"функцией из пакета \"%s\"; новая общая функция будет присвоена пакету \"%s\""
 
 msgid ""
 "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
 "will be assigned with package \"%s\""
 msgstr ""
+"Нет разрешенной общей функции версии \"%s\" в пакете \"%s\"; новая общая "
+"функция будет присвоена пакету \"%s\""
 
 msgid ""
 "function \"%s\" appears to be a generic function, but with generic name \"%s"
@@ -164,9 +168,8 @@ msgid ""
 msgstr ""
 "метод для функции \"%s\" и подпись %s запечатаны и не могут быть изменены"
 
-#, fuzzy
 msgid "argument in method definition changed from (%s) to (%s)"
-msgstr "аргументы в определении изменены с (%s) на (%s)"
+msgstr "аргументы в определении метода изменены с (%s) на (%s)"
 
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
@@ -299,22 +302,27 @@ msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr ""
+"\"%s\" в настоящее время не является общей функцией: определите ее первой, "
+"чтобы создать не умалчиваемую подразумеваемую форму"
 
-#, fuzzy
 msgid "No nongeneric version of function \"%s\" exists to be restored"
-msgstr "обнаружена не общая функция \"%s\""
+msgstr ""
+"Не обнаружено не общей версии функции \"%s\" для того чтобы ее восстановить"
 
-#, fuzzy
 msgid "Must provide an environment table; got class \"%s\""
-msgstr "не могу найти окружение, содержащее класс \"%s\""
+msgstr "Нужно указать таблицу окружения; получен класс \"%s\""
 
 msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
 msgstr ""
+"Функция \"%s\" не может быть использована в качестве общей (запрещается "
+"безоговорочно)"
 
 msgid ""
 "Implicit generic exists for \"%s\", but will be overriden by explicit call "
 "to setGeneric()"
 msgstr ""
+"Подразумеваемая общая функция для \"%s\" существует, но будет переписана "
+"четким вызовом setGeneric()"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -387,11 +395,12 @@ msgstr ""
 "не выглядит правильным идентификатором (вектором одиночного класса имен): "
 "там было %d классов имен, но %d элементов в идентификаторе"
 
-#, fuzzy
 msgid ""
 "more elements in the method signature (%d) than in the generic  signature (%"
 "d)"
-msgstr "в идентификаторе метода (%s) больше элементов, чем в общей  %s(%s)"
+msgstr ""
+"в идентификаторе метода (%d) больше элементов, чем в общем идентификаторе (%"
+"d)"
 
 msgid ""
 "in the method signature for function \"%s\" invalid argument names in the "
@@ -422,11 +431,10 @@ msgstr ""
 "инициализированный метод возвратил объект класса \"%s\" вместо необходимого "
 "класса \"%s\""
 
-#, fuzzy
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
-"имена в идентификаторе для метода (%s) не совпадают с аргументами функции (%"
-"s)"
+"имена в идентификаторе для метода (%s) не совпадают с %s аргументами функции "
+"(%s)"
 
 msgid ""
 "'NextMethod' not defined because the current method is not a "
@@ -480,8 +488,8 @@ msgid ""
 "potential cycle in class inheritance: \"%s\" has duplicates in superclasses "
 "and subclasses (%s)"
 msgstr ""
-"потенциальный цикл в наследовании класса: \"%s\" имеет повторы в супер-"
-"классах и подклассах (%s)"
+"потенциальный цикл в наследовании класса: \"%s\" имеет повторы в "
+"суперклассах и подклассах (%s)"
 
 msgid "undefined slot classes in definition of \"%s\": %s"
 msgstr "неопределенные слотовые классы в определении \"%s\": %s"
@@ -598,25 +606,22 @@ msgstr "не определен слот '.Data' для класса \"%s\""
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "класс \"%s\" не имеет определенного раздела данных (слот.Data)"
 
-#, fuzzy
 msgid ""
 "trying to change the argument list of %s with %d arguments to have arguments "
 "(%s)"
 msgstr ""
-"пытаюсь изменить список аргументов функции с %d аргументами для установки "
-"аргументов (%s)"
+"пытаюсь изменить список аргументов %s с %d аргументами чтобы иметь аргументы "
+"(%s)"
 
-#, fuzzy
 msgid ""
 "get rid of variables in definition %s (%s); they conflict with the needed "
 "change to argument names (%s)"
 msgstr ""
-"избавляюсь от переменных в определении (%s); они конфликтуют с необходимым "
-"изменением в именах аргумента (%s)"
+"избавляюсь от переменных в определении %s (%s); они конфликтуют с "
+"необходимым изменением в именах аргумента (%s)"
 
-#, fuzzy
 msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "аргументы в определении изменены с (%s) на (%s)"
+msgstr "аргументы в определении %s изменены с (%s) на (%s)"
 
 msgid ","
 msgstr ","
@@ -675,6 +680,7 @@ msgstr ""
 msgid ""
 "Must supply either a generic function or a function as default for \"#s\""
 msgstr ""
+"Надо определить либо общую функцию, либо функцию по умолчанию для \"#s\""
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -805,7 +811,8 @@ msgstr ""
 
 #, fuzzy
 msgid "the supplied generic function definition for"
-msgstr "не найдено общей функции для \"%s\""
+msgstr ""
+"Надо определить либо общую функцию, либо функцию по умолчанию для \"#s\""
 
 #, fuzzy
 msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
@@ -1142,9 +1149,8 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr "неверный индекс для аргумента функции"
 
-#, fuzzy
 msgid "No function definition found for \"%s\""
-msgstr "не найдено определение функции для \"%s\""
+msgstr "Не найдено определение функции для \"%s\""
 
 msgid "Need a definition for the method here"
 msgstr "Здесь необходимо определение метода"
@@ -1390,13 +1396,12 @@ msgstr ""
 "очевидно плохой метод или метаданные класса в сохраненном окружении; "
 "переместите файл либо удалите класс/метод"
 
-#, fuzzy
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] ""
 "в идентификаторе метода для функции \"%s\" нет определения для класса: %s"
 msgstr[1] ""
-"в идентификаторе метода для функции \"%s\" нет определения для класса: %s"
+"в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
-"в идентификаторе метода для функции \"%s\" нет определения для класса: %s"
+"в идентификаторе метода для функции \"%s\" нет определения для классов: %s"

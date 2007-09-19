@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-09-17 10:19\n"
-"PO-Revision-Date: 2007-04-07 01:47-0800\n"
+"PO-Revision-Date: 2007-09-18 00:33-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -365,7 +365,7 @@ msgid "no solution in the specified range of bandwidths"
 msgstr "в указанном диапазоне решений нет"
 
 msgid "increasing bw.SJ() search interval (%d)"
-msgstr ""
+msgstr "увеличиваю bw.SJ() интервал поиска (%d)"
 
 msgid "minimum occurred at one end of the range"
 msgstr "минимум оказался в конце интервала"
@@ -1442,7 +1442,7 @@ msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr "eff.aovlist: не-ортогональные контрасты могут дать неправильный ответ"
 
 msgid "cannot create a formula from a zero-column data frame"
-msgstr ""
+msgstr "не могу создать формулу из таблицы данных без колонок"
 
 msgid "no terms component"
 msgstr "нет компонента выражений"
@@ -1453,13 +1453,11 @@ msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
 msgid "'termobj' must be a object of class \"terms\""
 msgstr "'termobj' должен быть объектом класса \"terms\""
 
-#, fuzzy
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
-msgstr "переменная '%s' была подогнана с классом \"%s\", а указан класс \"%s\""
+msgstr "переменная '%s' была подогнана к типу \"%s\", а указан тип \"%s\""
 
-#, fuzzy
 msgid "variables %s were specified with different types from the fit"
-msgstr "переменные %s указаны с другим классом, чем в подгонке"
+msgstr "переменные %s указаны с другими типами, чем в подгонке"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' должна быть таблицей данных, а не матрицей"
@@ -1589,12 +1587,11 @@ msgstr "Укажите 'start' или я использую модель 'selfStart'"
 msgid "parameters without starting value in 'data':"
 msgstr "параметры без стартового значения в 'data':"
 
-#, fuzzy
 msgid "fitting parameters"
-msgstr "нет параметров для подгонки"
+msgstr "параметры для подгонки"
 
 msgid "without any variables"
-msgstr ""
+msgstr "безо всяких переменных"
 
 msgid "no parameters to fit"
 msgstr "нет параметров для подгонки"
@@ -1810,7 +1807,7 @@ msgid "ref = %d must be in 1:%d"
 msgstr "ref = %d должен быть в 1:%d"
 
 msgid "Failed to guess time-varying variables from their names"
-msgstr ""
+msgstr "Не получилось создать временнЫе переменные из их имен"
 
 msgid "'varying' arguments must be the same length"
 msgstr "аргументы 'varying' должны быть одной длины"
@@ -1825,22 +1822,19 @@ msgid "some constant variables (%s) are really varying"
 msgstr "некоторая постоянная переменная (%s) на самом деле варьирует"
 
 msgid "no 'reshapeWide' attribute, must specify 'varying'"
-msgstr ""
+msgstr "нет атрибута 'reshapeWide', надо задать 'varying'"
 
-#, fuzzy
 msgid "'varying' must be nonempty list or vector"
-msgstr "'varying' должен быть текстовым, целочисленным или логическим"
+msgstr "'varying' должен быть непустым списком или вектором"
 
-#, fuzzy
 msgid "length of v.names does not evenly divide length of varying"
-msgstr ""
-"длина FUN, %d,\n"
-" не соответствует длине краев, %d"
+msgstr "длина 'v.names' не делится без остатка длиной 'varying'"
 
 msgid ""
 "length of varying must be the product of length of v.names and length of "
 "times"
 msgstr ""
+"длина 'varying' должна быть произведением длины 'v.names' и длины 'times'"
 
 msgid "'k' must be positive"
 msgstr "'k' должен быть положителен"

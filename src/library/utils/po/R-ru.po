@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
-"PO-Revision-Date: 2007-04-07 02:16-0800\n"
+"POT-Creation-Date: 2007-09-19 09:18\n"
+"PO-Revision-Date: 2007-09-18 00:46-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -34,9 +34,8 @@ msgstr "для функции '%s' из пакета '%s' нет документации"
 msgid "document not found"
 msgstr "документ не найден"
 
-#, fuzzy
 msgid "A search query has been submitted to"
-msgstr "Поисковый запрос должен быть послан в %s"
+msgstr "Поисковый запрос должен быть послан в"
 
 msgid "The results page should open in your browser shortly"
 msgstr "Страница с результатами должна скоро открыться в броузере"
@@ -252,9 +251,9 @@ msgstr "слишком много пунктов в списке (самое большее 3899)"
 msgid "'form' must be a two-sided formula"
 msgstr "'form' должен быть двусторонней формулой"
 
-#, fuzzy
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr "'form' должен быть двусторонней формулой"
+msgstr ""
+"'form' должен быть двусторонней формулой с одним термином на каждой стороне"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
@@ -494,9 +493,8 @@ msgstr "'destdir' не является папкой"
 msgid "no package '%s' at the repositories"
 msgstr "в хранилище нет пакета '%s'"
 
-#, fuzzy
 msgid "package '%s' does not exist on the local repository"
-msgstr "в хранилище нет пакета '%s'"
+msgstr "в локальном хранилище нет пакета '%s'"
 
 msgid "download of package '%s' failed"
 msgstr "скачивание пакета '%s' не удалось"
@@ -535,9 +533,8 @@ msgstr "не указаны пакеты"
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "аргумент 'lib' пропущен: использую %s"
 
-#, fuzzy
 msgid "'lib = \"%s\"' is not writable"
-msgstr "'lib' не для записи"
+msgstr "'lib = \"%s\"' не для записи"
 
 msgid ""
 "Would you like to create a personal library\n"
@@ -743,21 +740,27 @@ msgid "first five rows are empty: giving up"
 msgstr "первые пять строк пусты: завязываю с этим"
 
 msgid "relist() requires recursively unlisted objects."
-msgstr ""
+msgstr "relist() требует объектов, преобразованных из списка рекурсивно."
 
 msgid "The flesh argument does not contain a skeleton attribute."
-msgstr ""
+msgstr "Аргумент 'flesh' не содержит атрибута 'skeleton'."
 
 msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
 "separately."
 msgstr ""
+"Либо убедитесь в том, что Вы преобразовали из списка объект, который можно "
+"восстановить, либо определите 'skeleton' отдельно."
 
 msgid "cannot coerce 'x' to roman"
 msgstr "не могу перевести 'x' в римскую"
 
 msgid "Invalid roman numeral(s): %s"
 msgstr "Неправильные римские номер(а): %s"
+
+#, fuzzy
+msgid "no valid packages were specified"
+msgstr "не указаны пакеты"
 
 msgid "invalid 'socket' argument"
 msgstr "неправильный аргумент 'socket'"
@@ -885,9 +888,8 @@ msgstr "не могу создать HTML-индекс пакетов"
 msgid "cannot create HTML search index"
 msgstr "не могу создать HTML-индекс для поиска"
 
-#, fuzzy
 msgid "Updating HTML index of packages in '.Library'"
-msgstr "обновляю HTML-список пакетов"
+msgstr "Обновляю HTML-список пакетов в '.Library'"
 
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' -- Windows-специфичный"

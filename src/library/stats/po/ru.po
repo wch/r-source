@@ -7,18 +7,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-08-22 12:25+0100\n"
-"PO-Revision-Date: 2007-04-07 01:47-0800\n"
+"PO-Revision-Date: 2007-09-18 00:34-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
@@ -30,28 +29,32 @@ msgstr "вероятности вне [0,1] в qansari()"
 
 #: approx.c:110
 msgid "approx(): invalid f value"
-msgstr ""
+msgstr "approx(): неправильное значение f"
 
 #: approx.c:115
 msgid "approx(): invalid interpolation method"
-msgstr ""
+msgstr "approx(): неправильный метод интерполяции"
 
 #: approx.c:121
 msgid "approx(): attempted to interpolate NA values"
-msgstr ""
+msgstr "approx(): попытка интерполировать пропущенные значения"
 
-#: arima.c:69 arima.c:183 arima.c:359
+#: arima.c:69
+#: arima.c:183
+#: arima.c:359
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418
+#: arima.c:502
+#: pacf.c:308
+#: pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "могу трансформировать только 100 пар в arima0"
 
 #: distance.c:152
-#, fuzzy
 msgid "treating non-finite values as NA"
-msgstr "dist(.,\"binary\"): обрабатываю не-конечные значения как NA"
+msgstr "обрабатываю не-конечные значения как NA"
 
 #: distance.c:221
 msgid "distance(): invalid p"
@@ -66,12 +69,15 @@ msgstr "distance(): неправильное расстояние"
 msgid "Value %d out of range (0, 1)"
 msgstr "Значение %d вне промежутка (0, 1)"
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:42
+#: family.c:56
+#: family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Аргумент %s должен быть непустым числовым вектором"
 
-#: family.c:107 family.c:110
+#: family.c:107
+#: family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "аргумент %s должен быть числовым вектором длины 1 или %d"
@@ -108,8 +114,17 @@ msgstr "'control' должен быть списком"
 msgid "'m' must be a list"
 msgstr "'m' должен быть списком"
 
-#: nls.c:111 nls.c:116 nls.c:121 nls.c:126 nls.c:131 nls.c:172 nls.c:177
-#: nls.c:182 nls.c:187 nls.c:192 nls.c:197
+#: nls.c:111
+#: nls.c:116
+#: nls.c:121
+#: nls.c:126
+#: nls.c:131
+#: nls.c:172
+#: nls.c:177
+#: nls.c:182
+#: nls.c:187
+#: nls.c:192
+#: nls.c:197
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' отсутствует"
@@ -136,7 +151,8 @@ msgstr "сошлось"
 msgid "'theta' should be of type character"
 msgstr "'theta' должна быть текстового типа"
 
-#: nls.c:296 port.c:380
+#: nls.c:296
+#: port.c:380
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL больше не работает"
 
@@ -148,10 +164,10 @@ msgstr "'rho' должно быть окружением"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' не является числовым вектором вектор правильной длины длина"
 
-#: nls.c:319 nls.c:347
+#: nls.c:319
+#: nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
-msgstr ""
-"Пропущенное значение или неопределенность получено при выполнении модели"
+msgstr "Пропущенное значение или неопределенность получено при выполнении модели"
 
 #: nls.c:325
 #, c-format
@@ -194,14 +210,14 @@ msgstr "градиентная функция должна возвращать числовой вектор длины %d"
 #: port.c:334
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
-"Hessian-функция должна возвращать квадратную числовую матрицу порядка %d"
+msgstr "Hessian-функция должна возвращать квадратную числовую матрицу порядка %d"
 
 #: port.c:384
 msgid "'rho' must be an environment"
 msgstr "'rho' должно быть окружением"
 
-#: port.c:386 port.c:537
+#: port.c:386
+#: port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' должен быть непустым числовым вектором"
 
@@ -230,8 +246,7 @@ msgstr "%s$%s() не найден"
 #: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr ""
-"'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
+msgstr "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
 
 #: port.c:506
 #, c-format
@@ -259,7 +274,8 @@ msgstr "неправильное конечное правило для бегущей медианы 3: %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "ошибка размещения в smooth(*, '3RSR')."
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:244
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "ошибка размещения в smooth(*, '3RSS')."
 
@@ -271,3 +287,4 @@ msgstr "ошибка размещения в smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "пропущенное значение в последних %d наблюдениях"
+

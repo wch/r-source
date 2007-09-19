@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-01 11:40+0100\n"
-"PO-Revision-Date: 2007-04-07 00:42-0800\n"
+"POT-Creation-Date: 2007-09-19 09:18+0100\n"
+"PO-Revision-Date: 2007-09-17 20:36-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -101,9 +101,8 @@ msgid "  Deleting:\n"
 msgstr "  Удаление:\n"
 
 #: console.c:2187
-#, fuzzy
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr "     Del или Ctrl+D: удалить текущий символr;\n"
+msgstr "     Del или Ctrl+D: удалить текущий символ или выделение;\n"
 
 #: console.c:2188
 msgid "     Backspace: delete preceding character;\n"
@@ -157,10 +156,8 @@ msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: Очистить консоль.\n"
 
 #: console.c:2198
-#, fuzzy
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr ""
-"     Ctrl+O: Переключить замену/вставку символов (сначала отключена).\n"
+msgstr "     Ctrl+O: Переключить замену/вставку символов: вначале отключена.\n"
 
 #: console.c:2199
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -191,12 +188,11 @@ msgstr ""
 "\n"
 
 #: console.c:2203
-#, fuzzy
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-"TAB вызывает дополнение, если инсталлирован пакет 'rcompgen'.\n"
+"TAB вызывает дополнение текущего слова.\n"
 "\n"
 
 #: console.c:2204
@@ -853,11 +849,11 @@ msgstr "Прерывание для отладчика"
 
 #: rui.c:1143
 msgid "Word completion"
-msgstr ""
+msgstr "Дополнение слов"
 
 #: rui.c:1145
 msgid "Filename completion"
-msgstr ""
+msgstr "Дополнение имен файлов"
 
 #: rui.c:1152
 msgid "List objects"
@@ -1032,7 +1028,7 @@ msgid "Enhanced metafiles"
 msgstr "Улучшенные метафайлы Windows"
 
 #: ../library/grDevices/src/devWindows.c:912
-#: ../library/grDevices/src/devWindows.c:2855
+#: ../library/grDevices/src/devWindows.c:2864
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "выбранный файловый путь слишком длинный: можно только 512 байт"
 
@@ -1201,15 +1197,15 @@ msgstr "Сохранить как метафайл..."
 msgid "Save as postscript..."
 msgstr "Сохранить как PostScript..."
 
-#: ../library/grDevices/src/devWindows.c:2588
+#: ../library/grDevices/src/devWindows.c:2597
 msgid "Locator is active"
 msgstr "Локатор активен"
 
-#: ../library/grDevices/src/devWindows.c:3163
+#: ../library/grDevices/src/devWindows.c:3172
 msgid "Waiting to confirm page change..."
 msgstr "Ожидаю подтверждения смены страницы..."
 
-#: ../library/grDevices/src/devWindows.c:3175
+#: ../library/grDevices/src/devWindows.c:3184
 msgid "Click or hit ENTER for next page"
 msgstr "Следующая страница: щелкните или нажмите ENTER "
 
