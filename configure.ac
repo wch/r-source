@@ -2366,8 +2366,10 @@ r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
 r_interfaces=
+## we will not have tested for X11 under some configure options, so
+## need to test protect the test.
 for item in X11 aqua tcltk; do
-  if eval "test \${use_${item}} = yes"; then
+  if eval "test x\${use_${item}} = xyes"; then
     R_SH_VAR_ADD(r_interfaces, [${item}], [, ])
   fi
 done
