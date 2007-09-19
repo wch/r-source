@@ -5,95 +5,95 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.1\n"
+"Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-08-22 12:25+0100\n"
-"PO-Revision-Date: 2005-06-02 16:09+0900\n"
-"Last-Translator: Nobuo Funao\n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2005-06-02 16:09+0900 \n"
+"Last-Translator: Nobuo Funao \n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
+"Content-Transfer-Encoding: 8bit \n"
 
 #: grid.c:210
 msgid "Cannot clip to rotated viewport"
-msgstr " rotated viewport は省略することが出来ません"
+msgstr " rotated viewport は省略することが出来ません "
 
 #: grid.c:649 grid.c:654 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 " トップレベルの viewport は pop することが出来ません（grid と グラフィックス"
-"出力を混同していませんか？）"
+"出力を混同していませんか？） "
 
 #: grid.c:939
 msgid "attempt to plot on null device"
-msgstr " ヌルデバイスに作図を試みる"
+msgstr " ヌルデバイスに作図を試みる "
 
 #: grid.c:1219
 msgid "There is no layout defined"
-msgstr " layout が定義されていません"
+msgstr " layout が定義されていません "
 
 #: grid.c:1439
 msgid "Polygon edge not found (zero-width or zero-height?)"
-msgstr " 多角形頂点が見付かりません(幅もしくは高さがゼロ？)"
+msgstr " 多角形頂点が見付かりません(幅もしくは高さがゼロ？) "
 
 #: grid.c:1448
 msgid "Polygon edge not found"
-msgstr " 多角形の頂点が見付かりません"
+msgstr " 多角形の頂点が見付かりません "
 
 #: grid.c:1588
 msgid "Require at least two points to draw arrow"
-msgstr " 矢印を書くためには少なくとも二つの点が必要です"
+msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
 #: grid.c:1902
 msgid "Non-finite control point in Xspline"
-msgstr " Xspline 中に有限でない制御点"
+msgstr " Xspline 中に有限でない制御点 "
 
 #: grid.c:3073
 msgid "Unable to clip to rotated rectangle"
-msgstr " 回転矩形へクリップ出来ません"
+msgstr " 回転矩形へクリップ出来ません "
 
 #: layout.c:519
 msgid "invalid layout.pos.row"
-msgstr " 不正な layout.pos.row です"
+msgstr " 不正な layout.pos.row です "
 
 #: layout.c:523
 msgid "invalid layout.pos.col"
-msgstr " 不正な layout.pos.col です"
+msgstr " 不正な layout.pos.col です "
 
 #: matrix.c:49
 msgid "singular transformation matrix"
-msgstr " 特異な変換行列です"
+msgstr " 特異な変換行列です "
 
 #: state.c:177
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 " 現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"
-"か？"
+"か？ "
 
 #: unit.c:260 unit.c:410 unit.c:1139 unit.c:1219 unit.c:1299 unit.c:1379
 msgid "Unimplemented unit function"
-msgstr " 単位(unit)関数は推奨されていません"
+msgstr " 単位(unit)関数は推奨されていません "
 
 #: unit.c:828 unit.c:1574
 msgid "Illegal unit or unit not yet implemented"
-msgstr " 不正な単位(unit)か，まだ推奨されていない単位(unit)です"
+msgstr " 不正な単位(unit)か，まだ推奨されていない単位(unit)です "
 
 #: unit.c:1707
 msgid "Invalid unit"
-msgstr " 不正な単位(unit) です"
+msgstr " 不正な単位(unit) です "
 
 #: unit.c:1723
 msgid "Units must be character"
-msgstr " 単位(Units)は文字型である必要があります"
+msgstr " 単位(Units)は文字型である必要があります "
 
 #: unit.c:1726
 msgid "Units must be of length > 0"
-msgstr " 単位(Units)の長さは 0 より大きい必要があります"
+msgstr " 単位(Units)の長さは 0 より大きい必要があります "
 
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
-msgstr " 有限でない location かつ/または 有限でない viewport です"
+msgstr " 有限でない location かつ/または 有限でない viewport です "
 
 #~ msgid "Invalid circle radius (must be non-negative)"
-#~ msgstr "不正な円の半径です（非負でなければなりません）"
+#~ msgstr " 不正な円の半径です（非負でなければなりません） "
