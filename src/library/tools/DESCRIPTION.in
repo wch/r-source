@@ -5,4 +5,4 @@ Title: Tools for Package Development
 Author: Kurt Hornik and Friedrich Leisch
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Tools for package development, administration and documentation
-License: GPL Version 2 or later.
+License: GPL (>= 2)
