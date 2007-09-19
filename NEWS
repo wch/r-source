@@ -22,6 +22,12 @@ DEPRECATED & DEFUNCT
     o	$ on an atomic vector or S4 object is now defunct.
 
 
+BUG FIXES
+
+    o	Ranges in chartr() now work better in CJK locales, thanks to
+	Ei-ji Nakama.
+
+
 
 	**************************************************
 	*						 *

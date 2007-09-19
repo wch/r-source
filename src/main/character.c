@@ -2042,6 +2042,21 @@ tr_get_next_char_from_spec(struct tr_spec **p) {
     return(c);
 }
 
+#if defined HAVE_BSEARCH && defined HAVE_QSORT
+# define USE_XTABLE
+typedef struct { wchar_t c_old, c_new; } xtable_t;
+
+static R_INLINE int xtable_comp(const void *a, const void *b)
+{
+    return ((xtable_t *)a)->c_old - ((xtable_t *)b)->c_old;
+}
+
+static R_INLINE int xtable_key_comp(const void *a, const void *b)
+{
+    return *((wchar_t *)a) - ((xtable_t *)b)->c_old;
+}
+#endif
+
 SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP old, _new, x, y;
@@ -2065,13 +2080,21 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_MBCS
     if(mbcslocale) {
         int j, nb, nc;
-        wchar_t xtable[65536 + 1], c_old, c_new, *wc;
+#ifdef USE_XTABLE
+        xtable_t *xtable, *tbl;
+        int xtable_cnt;
+        struct wtr_spec *trs_cnt, **trs_cnt_ptr;
+#else
+        wchar_t xtable[65536 + 1];
+#endif
+        wchar_t c_old, c_new, *wc;
         const char *xi, *s;
         struct wtr_spec *trs_old, **trs_old_ptr;
         struct wtr_spec *trs_new, **trs_new_ptr;
 
+#ifndef USE_XTABLE
         for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
-
+#endif
         /* Initialize the old and new wtr_spec lists. */
         trs_old = Calloc(1, struct wtr_spec);
         trs_old->type = WTR_INIT;
@@ -2086,6 +2109,12 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
         mbstowcs(wc, s, nc + 1);
         wtr_build_spec(wc, trs_old);
+#ifdef USE_XTABLE
+        trs_cnt = Calloc(1, struct wtr_spec);
+        trs_cnt->type = WTR_INIT;
+        trs_cnt->next = NULL;
+        wtr_build_spec(wc, trs_cnt); /* use count only */
+#endif
 
 	s = translateChar(STRING_ELT(_new, 0));
         nc = mbstowcs(NULL, s, 0);
@@ -2097,24 +2126,44 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         /* Initialize the pointers for walking through the old and new
            wtr_spec lists and retrieving the next chars from the lists.
         */
+
+#ifdef USE_XTABLE
+        trs_cnt_ptr = Calloc(1, struct wtr_spec *);
+        *trs_cnt_ptr = trs_cnt->next;
+	for( xtable_cnt = 0 ; wtr_get_next_char_from_spec(trs_cnt_ptr); xtable_cnt++ );
+	Free(trs_cnt_ptr);
+	xtable = (xtable_t *)R_alloc(xtable_cnt+1,sizeof(xtable_t));
+#endif
+
         trs_old_ptr = Calloc(1, struct wtr_spec *);
         *trs_old_ptr = trs_old->next;
         trs_new_ptr = Calloc(1, struct wtr_spec *);
         *trs_new_ptr = trs_new->next;
-        for(;;) {
+        for(i = 0; ; i++) {
             c_old = wtr_get_next_char_from_spec(trs_old_ptr);
             c_new = wtr_get_next_char_from_spec(trs_new_ptr);
             if(c_old == '\0')
                 break;
             else if(c_new == '\0')
                 error(_("'old' is longer than 'new'"));
-            else
+            else {
+#ifdef USE_XTABLE
+                xtable[i].c_old = c_old;
+                xtable[i].c_new = c_new;
+#else
                 xtable[c_old] = c_new;
+#endif
+	    }
         }
+
         /* Free the memory occupied by the wtr_spec lists. */
         wtr_free_spec(trs_old);
         wtr_free_spec(trs_new);
         Free(trs_old_ptr); Free(trs_new_ptr);
+
+#ifdef USE_XTABLE
+        qsort(xtable, xtable_cnt, sizeof(xtable_t), xtable_comp);
+#endif
 
         n = LENGTH(x);
         PROTECT(y = allocVector(STRSXP, n));
@@ -2128,7 +2177,14 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
                     error(_("invalid input multibyte string %d"), i+1);
                 wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
                 mbstowcs(wc, xi, nc + 1);
+#ifdef USE_XTABLE
+                for(j = 0; j < nc; j++)
+                    if ((tbl = bsearch(&wc[j], xtable, xtable_cnt, 
+				       sizeof(xtable_t), xtable_key_comp)))
+                        wc[j] = tbl->c_new;
+#else
                 for(j = 0; j < nc; j++) wc[j] = xtable[wc[j]];
+#endif
                 nb = wcstombs(NULL, wc, 0);
                 cbuf = CallocCharBuf(nb);
                 wcstombs(cbuf, wc, nb + 1);

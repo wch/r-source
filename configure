@@ -34438,7 +34438,9 @@ done
 
 
 
-for ac_func in setenv system unsetenv
+
+
+for ac_func in bsearch qsort setenv system unsetenv
 do
 as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
@@ -46102,8 +46104,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <sys/types.h> /* for off_t */
-     #include <stdio.h>
+#include <stdio.h>
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -46115,8 +46116,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-int (*fp) (FILE *, off_t, int) = fseeko;
-     return fseeko (stdin, 0, 0) && fp (stdin, 0, 0);
+return fseeko (stdin, 0, 0) && (fseeko) (stdin, 0, 0);
   ;
   return 0;
 }
@@ -46156,8 +46156,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 #define _LARGEFILE_SOURCE 1
-#include <sys/types.h> /* for off_t */
-     #include <stdio.h>
+#include <stdio.h>
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -46169,8 +46168,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-int (*fp) (FILE *, off_t, int) = fseeko;
-     return fseeko (stdin, 0, 0) && fp (stdin, 0, 0);
+return fseeko (stdin, 0, 0) && (fseeko) (stdin, 0, 0);
   ;
   return 0;
 }
