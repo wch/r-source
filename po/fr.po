@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-09-17 10:30+0100\n"
-"PO-Revision-Date: 2007-09-16 19:10+0100\n"
+"PO-Revision-Date: 2007-09-18 13:10-0400\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -927,7 +927,6 @@ msgid "allocArray: too many elements specified by 'dims'"
 msgstr "allocArray : trop d'éléments fournis par 'dims'"
 
 #: src/main/array.c:381
-#, fuzzy
 msgid "a matrix-like object is required as argument to 'row/col'"
 msgstr ""
 "une objet de type matrice ou assimilé est nécessaire comme argument pour "
@@ -3258,8 +3257,9 @@ msgid "argument is missing, with no default"
 msgstr "argument manquant, sans valeur associée par défaut"
 
 #: src/main/eval.c:511 src/main/eval.c:3091
+#, fuzzy
 msgid "attempt to apply non-function"
-msgstr "tentative d'exécution d'un object qui n'est pas une function"
+msgstr "tentative d'exécution d'un objet qui n'est pas une fonction"
 
 #: src/main/eval.c:803
 #, c-format
@@ -4601,9 +4601,9 @@ msgid "'maxiter' must be positive"
 msgstr "'maxiter' doit être positif"
 
 #: src/main/optimize.c:229 src/main/optimize.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "NA value for '%s' is not allowed"
-msgstr "la valeur dans '...' n'est pas une promesse (promise)"
+msgstr ""
 
 #: src/main/optimize.c:378
 msgid "non-finite value supplied by 'nlm'"

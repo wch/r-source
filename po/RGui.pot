@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-01 11:40+0100\n"
+"POT-Creation-Date: 2007-09-19 09:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -978,7 +978,7 @@ msgid "Enhanced metafiles"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:912
-#: ../library/grDevices/src/devWindows.c:2855
+#: ../library/grDevices/src/devWindows.c:2864
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr ""
 
@@ -1147,14 +1147,14 @@ msgstr ""
 msgid "Save as postscript..."
 msgstr ""
 
-#: ../library/grDevices/src/devWindows.c:2588
+#: ../library/grDevices/src/devWindows.c:2597
 msgid "Locator is active"
 msgstr ""
 
-#: ../library/grDevices/src/devWindows.c:3163
+#: ../library/grDevices/src/devWindows.c:3172
 msgid "Waiting to confirm page change..."
 msgstr ""
 
-#: ../library/grDevices/src/devWindows.c:3175
+#: ../library/grDevices/src/devWindows.c:3184
 msgid "Click or hit ENTER for next page"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-09-19 09:19+0100\n"
 "PO-Revision-Date: 2007-04-13 12:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -529,74 +529,74 @@ msgstr "Un presse-papier metafile ne peut stocker qu'une seule figure"
 msgid "metafile '%s' could not be created"
 msgstr "le fichier metafile '%s' ne peut être créé"
 
-#: devWindows.c:2564 devWindows.c:3150
+#: devWindows.c:2573 devWindows.c:3159
 msgid "R Graphics"
 msgstr "R Graphes"
 
-#: devWindows.c:2811
+#: devWindows.c:2820
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'option 'windowsTimeouts' doit être un entier"
 
-#: devWindows.c:2833
+#: devWindows.c:2842
 msgid "invalid device number in savePlot"
 msgstr "numéro de périphérique incorrect dans savePlot"
 
-#: devWindows.c:2835
+#: devWindows.c:2844
 msgid "invalid device in savePlot"
 msgstr "périphérique incorrect dans savePlot"
 
-#: devWindows.c:2838
+#: devWindows.c:2847
 msgid "invalid filename argument in savePlot"
 msgstr "argument nom de fichier incorrect dans savePlot"
 
-#: devWindows.c:2842
+#: devWindows.c:2851
 msgid "invalid type argument in savePlot"
 msgstr "type d'argument incorrect dans savePlot"
 
-#: devWindows.c:2865
+#: devWindows.c:2874
 msgid "unknown type in savePlot"
 msgstr "type inconnu dans savePlot"
 
-#: devWindows.c:2937 devWindows.c:2973 devWindows.c:3005 devWindows.c:3040
+#: devWindows.c:2946 devWindows.c:2982 devWindows.c:3014 devWindows.c:3049
 msgid "processing of the plot ran out of memory"
 msgstr "la réalisation du graphe manque de mémoire"
 
-#: devWindows.c:2953 devWindows.c:2986 devWindows.c:3019
+#: devWindows.c:2962 devWindows.c:2995 devWindows.c:3028
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossible to charger Rbitmap.dll"
 
-#: devWindows.c:3025
+#: devWindows.c:3034
 msgid "Impossible to open "
 msgstr "Impossible d'ouvrir "
 
-#: devWindows.c:3066
+#: devWindows.c:3075
 msgid "invalid width or height in devWindows"
 msgstr "largeur ou hauteur incorrecte dans devWindows"
 
-#: devWindows.c:3071
+#: devWindows.c:3080
 msgid "invalid value of 'recording' in devWindows"
 msgstr "valeur incorrecte de 'recording' dans devWindows"
 
-#: devWindows.c:3075
+#: devWindows.c:3084
 msgid "invalid value of 'resize' in devWindows"
 msgstr "valeur incorrecte de 'resize' dans devWindows"
 
-#: devWindows.c:3083
+#: devWindows.c:3092
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "valeur incorrecte de 'canvas' dans devWindows"
 
-#: devWindows.c:3094
+#: devWindows.c:3103
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "valeur incorrecte de 'buffered' dans devWindows"
 
-#: devWindows.c:3100
+#: devWindows.c:3109
 msgid "invalid value of 'bg' in devWindows"
 msgstr "valeur incorrecte de 'bg' dans devWindows"
 
-#: devWindows.c:3122
+#: devWindows.c:3131
 msgid "unable to start device devWindows"
 msgstr "impossible de démarrer périphérique devWindows"
 
-#: devWindows.c:3195
+#: devWindows.c:3204
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'utilisation récursive de getGraphicsEvent n'est pas supportée"

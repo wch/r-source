@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
-"PO-Revision-Date: 2007-04-07 01:40-0800\n"
+"POT-Creation-Date: 2007-09-19 09:19+0100\n"
+"PO-Revision-Date: 2007-09-18 00:14-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -205,6 +205,8 @@ msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
+"полупрозрачность не поддерживается этим устройством: сообщается раз на "
+"страницу"
 
 #: devPS.c:3439
 msgid "printing via file = \"\" is not implemented in this version"
@@ -513,9 +515,8 @@ msgid "Insufficient memory for resize. Killing device"
 msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
 
 #: devWindows.c:2009
-#, fuzzy
 msgid "Insufficient memory for resize. Disabling alpha blending"
-msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
+msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
 #: devWindows.c:2038
 msgid "A clipboard metafile can store only one figure."
@@ -526,74 +527,74 @@ msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 msgid "metafile '%s' could not be created"
 msgstr "метафайл '%s' не получается создать"
 
-#: devWindows.c:2564 devWindows.c:3150
+#: devWindows.c:2573 devWindows.c:3159
 msgid "R Graphics"
 msgstr "R-графика"
 
-#: devWindows.c:2811
+#: devWindows.c:2820
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
-#: devWindows.c:2833
+#: devWindows.c:2842
 msgid "invalid device number in savePlot"
 msgstr "неправильный номер устройства в savePlot"
 
-#: devWindows.c:2835
+#: devWindows.c:2844
 msgid "invalid device in savePlot"
 msgstr "неправильное устройство в savePlot"
 
-#: devWindows.c:2838
+#: devWindows.c:2847
 msgid "invalid filename argument in savePlot"
 msgstr "неправильный аргумент имени файла в savePlot"
 
-#: devWindows.c:2842
+#: devWindows.c:2851
 msgid "invalid type argument in savePlot"
 msgstr "неправильный тип аргумента в savePlot"
 
-#: devWindows.c:2865
+#: devWindows.c:2874
 msgid "unknown type in savePlot"
 msgstr "неизвестный тип в savePlot"
 
-#: devWindows.c:2937 devWindows.c:2973 devWindows.c:3005 devWindows.c:3040
+#: devWindows.c:2946 devWindows.c:2982 devWindows.c:3014 devWindows.c:3049
 msgid "processing of the plot ran out of memory"
 msgstr "обработка графика исчерпала память"
 
-#: devWindows.c:2953 devWindows.c:2986 devWindows.c:3019
+#: devWindows.c:2962 devWindows.c:2995 devWindows.c:3028
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Невозможно загрузить Rbitmap.dll"
 
-#: devWindows.c:3025
+#: devWindows.c:3034
 msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
-#: devWindows.c:3066
+#: devWindows.c:3075
 msgid "invalid width or height in devWindows"
 msgstr "неправильная ширина или длина в devWindows"
 
-#: devWindows.c:3071
+#: devWindows.c:3080
 msgid "invalid value of 'recording' in devWindows"
 msgstr "неправильное значение 'recording' в devWindows"
 
-#: devWindows.c:3075
+#: devWindows.c:3084
 msgid "invalid value of 'resize' in devWindows"
 msgstr "неправильное значение 'resize' в devWindows"
 
-#: devWindows.c:3083
+#: devWindows.c:3092
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "неправильное значение 'canvas' в devWindows"
 
-#: devWindows.c:3094
+#: devWindows.c:3103
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "неправильное значение 'buffered' в devWindows"
 
-#: devWindows.c:3100
+#: devWindows.c:3109
 msgid "invalid value of 'bg' in devWindows"
 msgstr "неправильное значение 'bg' в devWindows"
 
-#: devWindows.c:3122
+#: devWindows.c:3131
 msgid "unable to start device devWindows"
 msgstr "не могу запустить устройство devWindows"
 
-#: devWindows.c:3195
+#: devWindows.c:3204
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "рекурсивное использование getGraphicsEvent не поддерживается"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-09-19 09:19+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -516,74 +516,74 @@ msgstr ""
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:2564 devWindows.c:3150
+#: devWindows.c:2573 devWindows.c:3159
 msgid "R Graphics"
 msgstr ""
 
-#: devWindows.c:2811
+#: devWindows.c:2820
 msgid "option 'windowsTimeouts' should be integer"
 msgstr ""
 
-#: devWindows.c:2833
+#: devWindows.c:2842
 msgid "invalid device number in savePlot"
 msgstr ""
 
-#: devWindows.c:2835
+#: devWindows.c:2844
 msgid "invalid device in savePlot"
 msgstr ""
 
-#: devWindows.c:2838
+#: devWindows.c:2847
 msgid "invalid filename argument in savePlot"
 msgstr ""
 
-#: devWindows.c:2842
+#: devWindows.c:2851
 msgid "invalid type argument in savePlot"
 msgstr ""
 
-#: devWindows.c:2865
+#: devWindows.c:2874
 msgid "unknown type in savePlot"
 msgstr ""
 
-#: devWindows.c:2937 devWindows.c:2973 devWindows.c:3005 devWindows.c:3040
+#: devWindows.c:2946 devWindows.c:2982 devWindows.c:3014 devWindows.c:3049
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:2953 devWindows.c:2986 devWindows.c:3019
+#: devWindows.c:2962 devWindows.c:2995 devWindows.c:3028
 msgid "Impossible to load Rbitmap.dll"
 msgstr ""
 
-#: devWindows.c:3025
+#: devWindows.c:3034
 msgid "Impossible to open "
 msgstr ""
 
-#: devWindows.c:3066
+#: devWindows.c:3075
 msgid "invalid width or height in devWindows"
 msgstr ""
 
-#: devWindows.c:3071
+#: devWindows.c:3080
 msgid "invalid value of 'recording' in devWindows"
 msgstr ""
 
-#: devWindows.c:3075
+#: devWindows.c:3084
 msgid "invalid value of 'resize' in devWindows"
 msgstr ""
 
-#: devWindows.c:3083
+#: devWindows.c:3092
 msgid "invalid value of 'canvas' in devWindows"
 msgstr ""
 
-#: devWindows.c:3094
+#: devWindows.c:3103
 msgid "invalid value of 'buffered' in devWindows"
 msgstr ""
 
-#: devWindows.c:3100
+#: devWindows.c:3109
 msgid "invalid value of 'bg' in devWindows"
 msgstr ""
 
-#: devWindows.c:3122
+#: devWindows.c:3131
 msgid "unable to start device devWindows"
 msgstr ""
 
-#: devWindows.c:3195
+#: devWindows.c:3204
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr ""
