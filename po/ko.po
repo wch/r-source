@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30+0100\n"
+"POT-Creation-Date: 2007-09-19 16:55+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -92,9 +92,9 @@ msgstr ""
 #: src/gnuwin32/extra.c:684 src/main/apply.c:193 src/main/apply.c:195
 #: src/main/apply.c:198 src/main/attrib.c:190 src/main/builtin.c:158
 #: src/main/builtin.c:478 src/main/builtin.c:494 src/main/character.c:131
-#: src/main/character.c:134 src/main/character.c:177 src/main/character.c:2696
-#: src/main/character.c:2700 src/main/character.c:2763
-#: src/main/character.c:2767 src/main/character.c:2804
+#: src/main/character.c:134 src/main/character.c:177 src/main/character.c:2752
+#: src/main/character.c:2756 src/main/character.c:2819
+#: src/main/character.c:2823 src/main/character.c:2860
 #: src/main/connections.c:875 src/main/connections.c:881
 #: src/main/connections.c:884 src/main/connections.c:888
 #: src/main/connections.c:1021 src/main/connections.c:1027
@@ -1428,46 +1428,46 @@ msgstr "범위 지정을 축소합니다('%lc-%lc')"
 msgid "decreasing range specification ('%c-%c')"
 msgstr "범위 지정을 축소합니다('%c-%c')"
 
-#: src/main/character.c:2062
+#: src/main/character.c:2077
 msgid "invalid (NA) arguments."
 msgstr "인수가 부적절한(NA)입니다."
 
-#: src/main/character.c:2085
+#: src/main/character.c:2108
 msgid "invalid multibyte string 'old'"
 msgstr "'old'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:2092
+#: src/main/character.c:2121
 msgid "invalid multibyte string 'new'"
 msgstr "'new'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:2110 src/main/character.c:2173
+#: src/main/character.c:2148 src/main/character.c:2229
 msgid "'old' is longer than 'new'"
 msgstr "'old'가 'new'보다 깁니다"
 
-#: src/main/character.c:2128
+#: src/main/character.c:2177
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "부적절한 복수바이트 문자열 입력%d입니다"
 
-#: src/main/character.c:2277
+#: src/main/character.c:2333
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "부적절한 UTF-8 locale에 있어서 agrep()함수의 사용은 ASCII 문자열 이외에는 적"
 "용되지 않습니다"
 
-#: src/main/character.c:2286
+#: src/main/character.c:2342
 msgid "could not allocate memory for approximate matching"
 msgstr "근사 matching을 위한 메모리를 할당할수 없습니다"
 
-#: src/main/character.c:2310
+#: src/main/character.c:2366
 msgid "could not perform case insensitive matching"
 msgstr "대소문자를 무시한 matching를 실행할수 없습니다"
 
-#: src/main/character.c:2362 src/main/character.c:2595
+#: src/main/character.c:2418 src/main/character.c:2651
 msgid "argument must be a character vector of length 1"
 msgstr "인수는 길이 1의 문자 벡터이어야만 합니다"
 
-#: src/main/character.c:2364 src/main/character.c:2597
+#: src/main/character.c:2420 src/main/character.c:2653
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1475,60 +1475,60 @@ msgstr ""
 "인수는 길이 1의 문자 벡터이어야만 합니다\\n\n"
 "최초의 요소 이외는 무시됩니다"
 
-#: src/main/character.c:2380 src/main/character.c:2412
-#: src/main/character.c:2433
+#: src/main/character.c:2436 src/main/character.c:2468
+#: src/main/character.c:2489
 msgid "argument 'x' must be a raw vector"
 msgstr "인수 'x'는 raw 벡터이어야만 합니다"
 
-#: src/main/character.c:2383 src/main/character.c:2647
+#: src/main/character.c:2439 src/main/character.c:2703
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "인수 'multiple'는 TRUE 또는 FALSE 이어야만 합니다"
 
-#: src/main/character.c:2414
+#: src/main/character.c:2470
 msgid "argument 'shift' must be a small integer"
 msgstr "인수 'shift'는 작은 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:2451
+#: src/main/character.c:2507
 msgid "argument 'x' must be a integer vector"
 msgstr "인수 'x'는 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:2471
+#: src/main/character.c:2527
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "인수 'x'는 raw, 정수, 논리값이어야만 합니다"
 
-#: src/main/character.c:2473
+#: src/main/character.c:2529
 msgid "argument 'type' must be a character string"
 msgstr "인수 'type'는 문자열이어야만 합니다"
 
-#: src/main/character.c:2477
+#: src/main/character.c:2533
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "인수 'x'는 길이 %d의 정수배이어야만 합니다"
 
-#: src/main/character.c:2490 src/main/character.c:2504
+#: src/main/character.c:2546 src/main/character.c:2560
 msgid "argument 'x' must not contain NAs"
 msgstr "인수 'x'는 NA를 포함해서는 안됩니다"
 
-#: src/main/character.c:2644
+#: src/main/character.c:2700
 #, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "인수 'x'는 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:2691
+#: src/main/character.c:2747
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 함수는 문자 벡터를 요구합니다"
 
-#: src/main/character.c:2770
+#: src/main/character.c:2826
 #, fuzzy
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE'는 이 platform에서는 서포트되어있지 않습니다"
 
-#: src/main/character.c:2782 src/main/platform.c:1158
+#: src/main/character.c:2838 src/main/platform.c:1158
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "read error입니다"
 
-#: src/main/character.c:2786 src/main/platform.c:1162
+#: src/main/character.c:2842 src/main/platform.c:1162
 msgid "internal out-of-memory condition"
 msgstr ""
 

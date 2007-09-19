@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30+0100\n"
+"POT-Creation-Date: 2007-09-19 16:55+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -90,9 +90,9 @@ msgstr "在显示'%s'时出了问题"
 #: src/gnuwin32/extra.c:684 src/main/apply.c:193 src/main/apply.c:195
 #: src/main/apply.c:198 src/main/attrib.c:190 src/main/builtin.c:158
 #: src/main/builtin.c:478 src/main/builtin.c:494 src/main/character.c:131
-#: src/main/character.c:134 src/main/character.c:177 src/main/character.c:2696
-#: src/main/character.c:2700 src/main/character.c:2763
-#: src/main/character.c:2767 src/main/character.c:2804
+#: src/main/character.c:134 src/main/character.c:177 src/main/character.c:2752
+#: src/main/character.c:2756 src/main/character.c:2819
+#: src/main/character.c:2823 src/main/character.c:2860
 #: src/main/connections.c:875 src/main/connections.c:881
 #: src/main/connections.c:884 src/main/connections.c:888
 #: src/main/connections.c:1021 src/main/connections.c:1027
@@ -1375,101 +1375,101 @@ msgstr "不能设定递减的范围('%lc-%lc')"
 msgid "decreasing range specification ('%c-%c')"
 msgstr "不能设定递减的范围('%c-%c')"
 
-#: src/main/character.c:2062
+#: src/main/character.c:2077
 msgid "invalid (NA) arguments."
 msgstr "(NA)变元不对."
 
-#: src/main/character.c:2085
+#: src/main/character.c:2108
 msgid "invalid multibyte string 'old'"
 msgstr "多字节字符串'old'有错"
 
-#: src/main/character.c:2092
+#: src/main/character.c:2121
 msgid "invalid multibyte string 'new'"
 msgstr "多字节字符串'new'有错"
 
-#: src/main/character.c:2110 src/main/character.c:2173
+#: src/main/character.c:2148 src/main/character.c:2229
 msgid "'old' is longer than 'new'"
 msgstr "'old'比'new'要长"
 
-#: src/main/character.c:2128
+#: src/main/character.c:2177
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "输入的多字节字符串%d有错"
 
-#: src/main/character.c:2277
+#: src/main/character.c:2333
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr "在UTF-8语言环境下agrep()只能对ASCII字符串适用"
 
-#: src/main/character.c:2286
+#: src/main/character.c:2342
 msgid "could not allocate memory for approximate matching"
 msgstr "做近似比较时无法分配足够内存"
 
-#: src/main/character.c:2310
+#: src/main/character.c:2366
 msgid "could not perform case insensitive matching"
 msgstr "无法进行不区分字体大小写的比较"
 
-#: src/main/character.c:2362 src/main/character.c:2595
+#: src/main/character.c:2418 src/main/character.c:2651
 msgid "argument must be a character vector of length 1"
 msgstr "变元必需是长度为一的字符矢量"
 
-#: src/main/character.c:2364 src/main/character.c:2597
+#: src/main/character.c:2420 src/main/character.c:2653
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr "变元应当是长度为一的字节矢量，除第一个元素外其他所有的元素都略过不用"
 
-#: src/main/character.c:2380 src/main/character.c:2412
-#: src/main/character.c:2433
+#: src/main/character.c:2436 src/main/character.c:2468
+#: src/main/character.c:2489
 msgid "argument 'x' must be a raw vector"
 msgstr "变元'x'必需是原始矢量"
 
-#: src/main/character.c:2383 src/main/character.c:2647
+#: src/main/character.c:2439 src/main/character.c:2703
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "变元'multiple'的值要么是TRUE要么是FALSE"
 
-#: src/main/character.c:2414
+#: src/main/character.c:2470
 msgid "argument 'shift' must be a small integer"
 msgstr "变元'shift'值必需是一个小整数"
 
-#: src/main/character.c:2451
+#: src/main/character.c:2507
 msgid "argument 'x' must be a integer vector"
 msgstr "变元'x'必需是整数矢量"
 
-#: src/main/character.c:2471
+#: src/main/character.c:2527
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "变元'x'必需是原始值, 整数值或逻辑值"
 
-#: src/main/character.c:2473
+#: src/main/character.c:2529
 msgid "argument 'type' must be a character string"
 msgstr "变元'type'必需是字符串"
 
-#: src/main/character.c:2477
+#: src/main/character.c:2533
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "变元'x'必需是%d值的整倍数"
 
-#: src/main/character.c:2490 src/main/character.c:2504
+#: src/main/character.c:2546 src/main/character.c:2560
 msgid "argument 'x' must not contain NAs"
 msgstr "变元'x'不能含NA值"
 
-#: src/main/character.c:2644
+#: src/main/character.c:2700
 msgid "argument 'x' must be an integer vector"
 msgstr "变元'x'必需是整数矢量"
 
-#: src/main/character.c:2691
+#: src/main/character.c:2747
 msgid "strtrim() requires a character vector"
 msgstr "strtrim()需要字符矢量"
 
-#: src/main/character.c:2770
+#: src/main/character.c:2826
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "本平台不支持'dirmark = TRUE'"
 
-#: src/main/character.c:2782 src/main/platform.c:1158
+#: src/main/character.c:2838 src/main/platform.c:1158
 #, c-format
 msgid "read error on '%s'"
 msgstr "读取'%s'时出了错"
 
-#: src/main/character.c:2786 src/main/platform.c:1162
+#: src/main/character.c:2842 src/main/platform.c:1162
 msgid "internal out-of-memory condition"
 msgstr "内部出现了内存不够情况"
 

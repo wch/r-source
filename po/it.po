@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30+0100\n"
+"POT-Creation-Date: 2007-09-19 16:55+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -97,9 +97,9 @@ msgstr ""
 #: src/gnuwin32/extra.c:684 src/main/apply.c:193 src/main/apply.c:195
 #: src/main/apply.c:198 src/main/attrib.c:190 src/main/builtin.c:158
 #: src/main/builtin.c:478 src/main/builtin.c:494 src/main/character.c:131
-#: src/main/character.c:134 src/main/character.c:177 src/main/character.c:2696
-#: src/main/character.c:2700 src/main/character.c:2763
-#: src/main/character.c:2767 src/main/character.c:2804
+#: src/main/character.c:134 src/main/character.c:177 src/main/character.c:2752
+#: src/main/character.c:2756 src/main/character.c:2819
+#: src/main/character.c:2823 src/main/character.c:2860
 #: src/main/connections.c:875 src/main/connections.c:881
 #: src/main/connections.c:884 src/main/connections.c:888
 #: src/main/connections.c:1021 src/main/connections.c:1027
@@ -1443,46 +1443,46 @@ msgstr "specificazione range decrescente ('%lc-%lc')"
 msgid "decreasing range specification ('%c-%c')"
 msgstr "specificazione range decrescente ('%c-%c')"
 
-#: src/main/character.c:2062
+#: src/main/character.c:2077
 msgid "invalid (NA) arguments."
 msgstr "argomenti non validi (NA)."
 
-#: src/main/character.c:2085
+#: src/main/character.c:2108
 msgid "invalid multibyte string 'old'"
 msgstr "stringa multibyte non valido in 'old'"
 
-#: src/main/character.c:2092
+#: src/main/character.c:2121
 msgid "invalid multibyte string 'new'"
 msgstr "stringa multibyte 'new' non valida"
 
-#: src/main/character.c:2110 src/main/character.c:2173
+#: src/main/character.c:2148 src/main/character.c:2229
 msgid "'old' is longer than 'new'"
 msgstr "'old' è più lungo di 'new'"
 
-#: src/main/character.c:2128
+#: src/main/character.c:2177
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "stringa input multibyte %d non valida"
 
-#: src/main/character.c:2277
+#: src/main/character.c:2333
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "l'uso di agrep() in un locale UTF-8 può funzionare solo per stringhe ASCII"
 
-#: src/main/character.c:2286
+#: src/main/character.c:2342
 msgid "could not allocate memory for approximate matching"
 msgstr "non è possibile allocare memoria per match approssimato"
 
-#: src/main/character.c:2310
+#: src/main/character.c:2366
 msgid "could not perform case insensitive matching"
 msgstr ""
 "non posso eseguire accoppiamenti senza tener conto delle maiuscole/minuscole"
 
-#: src/main/character.c:2362 src/main/character.c:2595
+#: src/main/character.c:2418 src/main/character.c:2651
 msgid "argument must be a character vector of length 1"
 msgstr "l'argomento deve essere un vettore character di lunghezza 1"
 
-#: src/main/character.c:2364 src/main/character.c:2597
+#: src/main/character.c:2420 src/main/character.c:2653
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1490,59 +1490,59 @@ msgstr ""
 "l'argomento deve essere un vettore di caratteri di lunghezza 1\n"
 "verranno ignorati tutti tranne il primo elemento"
 
-#: src/main/character.c:2380 src/main/character.c:2412
-#: src/main/character.c:2433
+#: src/main/character.c:2436 src/main/character.c:2468
+#: src/main/character.c:2489
 msgid "argument 'x' must be a raw vector"
 msgstr "l'argomento 'x' deve essere un vettore semplice"
 
-#: src/main/character.c:2383 src/main/character.c:2647
+#: src/main/character.c:2439 src/main/character.c:2703
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "l'argomento 'mutiple' deve essere TRUE o FALSE"
 
-#: src/main/character.c:2414
+#: src/main/character.c:2470
 msgid "argument 'shift' must be a small integer"
 msgstr "l'argomento 'shift' deve essere un intero piccolo"
 
-#: src/main/character.c:2451
+#: src/main/character.c:2507
 msgid "argument 'x' must be a integer vector"
 msgstr "l'argomento 'x' deve essere un vettore di interi"
 
-#: src/main/character.c:2471
+#: src/main/character.c:2527
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "l'argomento 'x' deve essere semplice, intero o booleano"
 
-#: src/main/character.c:2473
+#: src/main/character.c:2529
 msgid "argument 'type' must be a character string"
 msgstr "l'argomento 'type' deve essere una stringa character"
 
-#: src/main/character.c:2477
+#: src/main/character.c:2533
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "l'argomento 'x' deve essere lungo un multiplo di %d"
 
-#: src/main/character.c:2490 src/main/character.c:2504
+#: src/main/character.c:2546 src/main/character.c:2560
 msgid "argument 'x' must not contain NAs"
 msgstr "l'argomento 'x' non deve contenere NA"
 
-#: src/main/character.c:2644
+#: src/main/character.c:2700
 msgid "argument 'x' must be an integer vector"
 msgstr "l'argomento 'x' deve essere un vettore di interi"
 
-#: src/main/character.c:2691
+#: src/main/character.c:2747
 msgid "strtrim() requires a character vector"
 msgstr "strstrim() necessita di un vettore di caratteri"
 
-#: src/main/character.c:2770
+#: src/main/character.c:2826
 #, fuzzy
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE' non è supportato su questa piattaforma"
 
-#: src/main/character.c:2782 src/main/platform.c:1158
+#: src/main/character.c:2838 src/main/platform.c:1158
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "errore di lettura"
 
-#: src/main/character.c:2786 src/main/platform.c:1162
+#: src/main/character.c:2842 src/main/platform.c:1162
 msgid "internal out-of-memory condition"
 msgstr ""
 

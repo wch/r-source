@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-09-19 16:56\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -481,7 +481,6 @@ msgstr "'destdir'不是目录"
 msgid "no package '%s' at the repositories"
 msgstr "貯藏處里没有'%s'这样的程序包"
 
-
 msgid "package '%s' does not exist on the local repository"
 msgstr "地方貯藏處里没有'%s'这样的程序包"
 
@@ -731,13 +730,18 @@ msgstr "親屬变元不包含骨架属性"
 msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
 "separately."
-msgstr "你要么得保证你解串列了一个可重新串列的目标对象，要么你得分别设定一个骨架"
+msgstr ""
+"你要么得保证你解串列了一个可重新串列的目标对象，要么你得分别设定一个骨架"
 
 msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"
 
 msgid "Invalid roman numeral(s): %s"
 msgstr "罗马数字不对：%S"
+
+#, fuzzy
+msgid "no valid packages were specified"
+msgstr "没有设定程序包"
 
 msgid "invalid 'socket' argument"
 msgstr "'socket'变元不对"
@@ -978,4 +982,3 @@ msgstr[1] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
-
