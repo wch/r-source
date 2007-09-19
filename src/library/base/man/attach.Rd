@@ -16,7 +16,7 @@ attach(what, pos = 2, name = deparse(substitute(what)),
     \code{\link{save}} or \code{NULL} or an environment.  See also Details.}
   \item{pos}{integer specifying position in \code{\link{search}()} where
     to attach.}
-  \item{name}{alternative way to specify the database to be attached.}
+  \item{name}{name to use for the attached database.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the database,
     unless that database contains an object \code{.conflicts.OK}.  A
@@ -27,8 +27,8 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 \description{
   The database is attached to the \R search path.  This means that the
   database is searched by \R when evaluating a variable, so objects in
-  the database can be accessed by simply giving their names.}
-
+  the database can be accessed by simply giving their names.
+}
 \details{
   When evaluating a variable or function name \R searches for
   that name in the databases listed by \code{\link{search}}.  The first
@@ -41,7 +41,7 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 
   By default the database is attached in position 2 in the search path,
   immediately after the user's workspace and before all previously
-  loaded packages and previously attached databases. This can be altered
+  loaded packages and previously attached databases.  This can be altered
   to attach later in the search path with the \code{pos} option, but you
   cannot attach at \code{pos=1}.
 
@@ -59,6 +59,11 @@ attach(what, pos = 2, name = deparse(substitute(what)),
   length-zero list) to create a new environment on the search path into
   which objects can be assigned by \code{\link{assign}} or
   \code{\link{load}} or \code{\link{sys.source}}.
+
+  Names starting \code{"package:"} are reserved for
+  \code{\link{library}} and should not be used by end users.  The name
+  given for the attached environment will be used by \code{\link{search}}
+  and can be used as the argument to \code{\link{as.environment}}.
 
   There are hooks to attach user-defined table objects of class
   \code{"UserDefinedDatabase"}, supported by the Omegahat package

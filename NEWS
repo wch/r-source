@@ -730,6 +730,11 @@ BUG FIXES
     o   Trailing spaces are now conistently stripped from \alias{}
 	entries in .Rd files, and this is now documented.  (PR#9915)
 
+    o	.find.packages(), packageDescription() and sessionInfo()
+	assumed that attached environments named "package:foo" were
+	package environments, although misguided users could use such
+	a name in attach().
+
 
 
 

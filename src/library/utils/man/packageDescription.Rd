@@ -35,6 +35,9 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE,
   which contains a valid \code{Version} field.  Different warnings are
   given when no package directory is found and when there is a suitable
   directory but no valid \file{DESCRIPTION} file.
+
+  An \link{attach}ed environment named to look like a package
+  (e.g. \code{package:utils2}) will be ignored as from \R 2.6.0.
 }
 \value{
   If a \file{DESCRIPTION} file for the given package is found and can
