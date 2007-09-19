@@ -871,6 +871,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                 else
                     attr(env, "path")
             })
+            ## possibly NULL if no path attribute.
+            dirs <- dirs[!sapply(dirs, is.null)]
             paths <- c(as.character(dirs), paths)
         }
         ## As an extra safety measure, only use the paths we found if

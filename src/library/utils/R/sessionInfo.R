@@ -22,10 +22,13 @@ sessionInfo <- function(package=NULL)
 
     if(is.null(package)){
         package <- grep("^package:", search(), value=TRUE)
-        package <- sub("^package:", "", package)
+        # weed out environments which are not really packages
+        keep <- sapply(package, function(x) x == "package:base" || !is.null(attr(as.environment(x), "path")))
+        package <- sub("^package:", "", package[keep])
     }
 
     pkgDesc <- lapply(package, packageDescription)
+    if(length(package) == 0) stop("no valid packages were specified")
     basePkgs <- sapply(pkgDesc,
                        function(x) !is.null(x$Priority) && x$Priority=="base")
     z$basePkgs <- package[basePkgs]
