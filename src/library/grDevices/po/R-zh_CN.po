@@ -73,9 +73,8 @@ msgstr "'to.ref.white'同下面这个定义有冲突"
 msgid "color spaces use different reference whites."
 msgstr "颜色空间不能使用不同的白色参考。"
 
-#, fuzzy
-msgid "'name'must be a character vector"
-msgstr "'name'必需是非空字符串"
+msgid "'name' must be a character vector"
+msgstr "'name' 必需是非空字符串"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "不能关闭一号装置(无效装置)"

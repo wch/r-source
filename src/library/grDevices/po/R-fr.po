@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:17\n"
+"POT-Creation-Date: 2007-09-19 11:54\n"
 "PO-Revision-Date: 2007-04-13 12:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -74,7 +74,7 @@ msgid "color spaces use different reference whites."
 msgstr "les espaces de couleurs utilisent différents blancs de référence."
 
 #, fuzzy
-msgid "'name'must be a character vector"
+msgid "'name' must be a character vector"
 msgstr "'file' doit être une chaîne de caractère non vide"
 
 msgid "cannot shut down device 1 (the null device)"
