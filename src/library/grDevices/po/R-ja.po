@@ -71,7 +71,7 @@ msgid "color spaces use different reference whites."
 msgstr " 色空間(color spaces)は異なった基準白色を使っています"
 
 #, fuzzy
-msgid "'name'must be a character vector"
+msgid "'name' must be a character vector"
 msgstr " 'file' は空でない文字列でなければなりません"
 
 msgid "cannot shut down device 1 (the null device)"

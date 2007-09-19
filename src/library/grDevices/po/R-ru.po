@@ -76,7 +76,7 @@ msgstr "'to.ref.white' не согласуется с определением"
 msgid "color spaces use different reference whites."
 msgstr "цветовые пространства используют разные стандарты белого."
 
-msgid "'name'must be a character vector"
+msgid "'name' must be a character vector"
 msgstr "'name' должен быть непустой текстовой строкой"
 
 msgid "cannot shut down device 1 (the null device)"

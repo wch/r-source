@@ -72,7 +72,7 @@ msgid "color spaces use different reference whites."
 msgstr "color spaves는 다른 기준 백색이 사용되고 있습니다"
 
 #, fuzzy
-msgid "'name'must be a character vector"
+msgid "'name' must be a character vector"
 msgstr "'file'는 비어 있지 않은 문자열이 아니면 되지 않습니다"
 
 msgid "cannot shut down device 1 (the null device)"

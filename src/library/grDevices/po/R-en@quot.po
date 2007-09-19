@@ -90,8 +90,8 @@ msgstr "‘to.ref.white’ disagrees with definition of"
 msgid "color spaces use different reference whites."
 msgstr "color spaces use different reference whites."
 
-msgid "'name'must be a character vector"
-msgstr "'name'must be a character vector"
+msgid "'name' must be a character vector"
+msgstr "‘name’ must be a character vector"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "cannot shut down device 1 (the null device)"

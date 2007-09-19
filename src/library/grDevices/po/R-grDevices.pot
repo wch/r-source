@@ -68,7 +68,7 @@ msgstr ""
 msgid "color spaces use different reference whites."
 msgstr ""
 
-msgid "'name'must be a character vector"
+msgid "'name' must be a character vector"
 msgstr ""
 
 msgid "cannot shut down device 1 (the null device)"

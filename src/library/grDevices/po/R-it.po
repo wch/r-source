@@ -75,7 +75,7 @@ msgid "color spaces use different reference whites."
 msgstr "spazi colori usano binachi di riferimento differenti."
 
 #, fuzzy
-msgid "'name'must be a character vector"
+msgid "'name' must be a character vector"
 msgstr "'file' deve essere una stringa carattere non vuota"
 
 msgid "cannot shut down device 1 (the null device)"
