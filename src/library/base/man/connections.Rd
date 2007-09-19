@@ -418,7 +418,7 @@ if(capabilities("fifo")) {
   writeLines("abc", zz)
   print(readLines(zz))
   close(zz)
-  unlink("foo")
+  unlink("foo-fifo")
 }
 
 \dontrun{## Unix examples of use of pipes
