@@ -3189,12 +3189,12 @@ static void drawLabel(double xi, double yi, int pos, double offset,
     }
 }
 
-/* This manages R_Visibile */
+/* This manages R_Visible */
 SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x, y, l, ind, pos, Offset, draw, saveans;
     double xi, yi, xp, yp, d, dmin, offset, tol;
-    int atpen, i, imin, k, n, npts, plot, posi, warn;
+    int atpen, i, imin, k, n, nl, npts, plot, posi, warn;
     DevDesc *dd = CurrentDevice();
 
     /* If we are replaying the display list, then just redraw the
@@ -3207,7 +3207,8 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	Offset = CAR(args); args = CDR(args);
 	l = CAR(args); args = CDR(args);
 	draw = CAR(args);
-	n = length(x);
+	n = LENGTH(x);
+	nl = LENGTH(l);
 	/*
 	 * Most of the appropriate settings have been set up in
 	 * R code by par(...)
@@ -3227,7 +3228,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		GConvert(&xi, &yi, USER, INCHES, dd);
 		posi = INTEGER(pos)[i];
 		drawLabel(xi, yi, posi, offset,
-			  translateChar(STRING_ELT(l, i)), dd);
+			  translateChar(STRING_ELT(l, i % nl)), dd);
 	    }
 	}
 	return R_NilValue;
@@ -3254,9 +3255,14 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' value"), "plot");
 	if (atpen == NA_LOGICAL)
 	    error(_("invalid '%s' value"), "atpen");
-	if (LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
+	nl = LENGTH(l);
+	if (nl <= 0)
+	    error(_("zero length 'labels'"));
+	n = LENGTH(x);	
+	if (n != LENGTH(y))
 	    error(_("different argument lengths"));
-	n = LENGTH(x);
+	if (nl > n)
+	    warning(_("more 'labels' than points"));
 	if (n <= 0) {
 	    R_Visible = FALSE;
 	    return NULL;
@@ -3348,7 +3354,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (plot)
 		    drawLabel(xi, yi, INTEGER(pos)[imin], offset,
-			      translateChar(STRING_ELT(l, imin)), dd);
+			      translateChar(STRING_ELT(l, imin % nl)), dd);
 	    }
 	}
 	GMode(0, dd);

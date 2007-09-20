@@ -11,7 +11,7 @@
 
 NEW FEATURES
 
-    o	Place holder.
+    o	identify() recycles its 'labels' argument if necessary.
 
 
 DEPRECATED & DEFUNCT
