@@ -28284,13 +28284,16 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-if test "${ac_cv_sizeof_int}" = 4; then
+## on some platforms this gives a trailing lf, so
+case "${ac_cv_sizeof_int}" in
+    4*)
 
 cat >>confdefs.h <<\_ACEOF
 #define INT_32_BITS 1
 _ACEOF
 
-fi
+    ;;
+esac
 { echo "$as_me:$LINENO: checking for long" >&5
 echo $ECHO_N "checking for long... $ECHO_C" >&6; }
 if test "${ac_cv_type_long+set}" = set; then
@@ -46559,6 +46562,7 @@ fi
 
 fi
 			# standard X11 search macro
+use_X11="no"
 if test -z "${no_x}"; then
   ## now we look for Xt and its header: it seems Intrinsic.h is key.
   r_save_CFLAGS="${CFLAGS}"

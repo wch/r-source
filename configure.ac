@@ -756,9 +756,12 @@ AC_C_BIGENDIAN
 AC_C_CONST
 R_C_INLINE
 AC_CHECK_SIZEOF(int)
-if test "${ac_cv_sizeof_int}" = 4; then
-  AC_DEFINE(INT_32_BITS, 1, [Define if you have 32 bit ints.])
-fi
+## on some platforms this gives a trailing lf, so
+case "${ac_cv_sizeof_int}" in
+    4*)
+    AC_DEFINE(INT_32_BITS, 1, [Define if you have 32 bit ints.])
+    ;;
+esac
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(double)
