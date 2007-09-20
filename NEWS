@@ -727,13 +727,16 @@ BUG FIXES
 	Brown hair / Brown eye cell by Sex, and only totals over Sex
 	are given in the original source.
 
-    o   Trailing spaces are now conistently stripped from \alias{}
+    o   Trailing spaces are now consistently stripped from \alias{}
 	entries in .Rd files, and this is now documented.  (PR#9915)
 
     o	.find.packages(), packageDescription() and sessionInfo()
 	assumed that attached environments named "package:foo" were
 	package environments, although misguided users could use such
 	a name in attach().
+	
+    o	spline() and splinefun() with method = "periodic" could return
+    	incorrect results when length(x) was 2 or 3.
 
 
 

@@ -240,6 +240,20 @@ void periodic_spline(int n, double *x, double *y,
 	errno = EDOM;
 	return;
     }
+    
+    if(n == 2) {
+    	b[1] = b[2] = c[1] = c[2] = d[1] = d[2] = 0.0;
+    	return;
+    } else if (n == 3) {
+        b[1] = b[2] = b[3] = -(y[1] - y[2])*(x[1] - 2*x[2] + x[3])/(x[3]-x[2])/(x[2]-x[1]);
+        c[1] = -3*(y[1]-y[2])/(x[3]-x[2])/(x[2]-x[1]);
+        c[2] = -c[1];
+        c[3] = c[1];
+        d[1] = -2*c[1]/3/(x[2]-x[1]);
+        d[2] = -d[1]*(x[2]-x[1])/(x[3]-x[2]);
+        d[3] = d[1];
+        return;
+    }
 
     nm1 = n-1;
 
