@@ -1651,6 +1651,7 @@ fi])# R_TYPE_KEYSYM
 ## Updated for R 2.5.0.  We need -lXt, and nowadays that is unbundled.
 AC_DEFUN([R_X11],
 [AC_PATH_XTRA			# standard X11 search macro
+use_X11="no"
 if test -z "${no_x}"; then
   ## now we look for Xt and its header: it seems Intrinsic.h is key.
   r_save_CFLAGS="${CFLAGS}"
