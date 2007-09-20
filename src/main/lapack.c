@@ -49,6 +49,10 @@ SEXP det_ge_real(SEXP A, SEXP logarithm)
 
 static int initialized = 0;
 
+#ifdef Win32
+# include <fcntl.h>
+#endif
+
 static void La_Init(void)
 {
     int res = R_moduleCdynload("lapack", 1, 1);
@@ -56,7 +60,12 @@ static void La_Init(void)
     if(!res) return;
     if(!ptr->svd)
 	error(_("lapack routines cannot be accessed in module"));
-    initialized = 1;    
+    initialized = 1;
+#ifdef Win32
+    /* gfortran initialization sets these to _O_BINARY */
+    setmode(1,_O_TEXT); /* stdout */
+    setmode(2,_O_TEXT); /* stderr */
+#endif
     return;
 }
 
