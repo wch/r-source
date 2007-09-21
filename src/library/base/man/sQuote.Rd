@@ -25,13 +25,14 @@ dQuote(x)
 
   The choice of the appropriate quotation marks depends on both the
   locale and the available character sets.  Older Unix/X11 fonts
-  displayed the grave accent (0x60) and the apostrophe (0x27) in a way
-  that they could also be used as matching open and close single
-  quotation marks.  Using modern fonts, or non-Unix systems, these
-  characters no longer produce matching glyphs.  Unicode provides left
-  and right single quotation mark characters (U+2018 and U+2019); if
-  Unicode markup cannot be assumed to be available, it seems good practice
-  to use the apostrophe as an undirectional single quotation mark.
+  displayed the grave accent (ASCII code 0x60) and the apostrophe (0x27)
+  in a way that they could also be used as matching open and close
+  single quotation marks.  Using modern fonts, or non-Unix systems,
+  these characters no longer produce matching glyphs.  Unicode provides
+  left and right single quotation mark characters (U+2018 and U+2019);
+  if Unicode markup cannot be assumed to be available, it seems good
+  practice to use the apostrophe as a non-directional single quotation
+  mark.
 
   Similarly, Unicode has left and right double quotation mark characters
   (U+201C and U+201D); if only ASCII's typewriter characteristics can be
@@ -60,6 +61,20 @@ dQuote(x)
   rendered correctly as not all fonts include the requisite glyphs: for
   example some have directional single quotes but not directional double
   quotes.
+#ifdef windows
+  This is particularly truoblesome in Windows \sQuote{Command Prompt}
+  windows, which by default are setup to run in the so-called OEM
+  codepage, which in most locales uses a different encoding from
+  Windows.  Further, if the codepage is changed (with \code{chcp.exe},
+  e.g. to 1252 in a Western European language), the default raster fonts
+  do not support the directional quotes.
+
+  To work around this, the default for \code{options("useFancyQuotes")}
+  is \code{FALSE} on Windows except for the \code{Rgui} console.  There
+  fancy quotes work with the default Courier New font and more elegantly with
+  Lucida Console and standard the CJK fonts, but directional double
+  quotes are missing in raster fonts such as Courier and FixedSys.
+#endif
 }
 \seealso{
   \code{Quotes} for quoting \R code.
@@ -87,11 +102,11 @@ cat("\ndistinguish TeX", sQuote("single"), "and",
 if(l10n_info()$`Latin-1`) {
     options(useFancyQuotes = c("\xab", "\xbb", "\xbf", "?"))
     cat("\n", sQuote("guillemet"), "and",
-        dQuote("Spanish question"), "style\n")
+        dQuote("Spanish question"), "styles\n")
 } else if(l10n_info()$`UTF-8`) {
     options(useFancyQuotes = c("\xc2\xab", "\xc2\xbb", "\xc2\xbf", "?"))
     cat("\n", sQuote("guillemet"), "and",
-        dQuote("Spanish question"), "style\n")
+        dQuote("Spanish question"), "styles\n")
 }
 options(op)
 }
