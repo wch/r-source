@@ -216,8 +216,7 @@ getS3method <-  function(f, class, optional = FALSE)
         else .BaseNamespaceEnv
     }
     S3Table <- get(".__S3MethodsTable__.", envir = defenv)
-    S3reg <- ls(S3Table)
-    if(length(grep(gsub("([.[$])", "\\\\\\1", method), S3reg)))
+    if(exists(method, envir = S3Table, inherits = FALSE))
         return(get(method, envir = S3Table))
     if(optional) NULL else stop(gettextf("S3 method '%s' not found", method),
                                 domain = NA)
