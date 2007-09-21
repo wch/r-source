@@ -113,6 +113,7 @@ The information here applies only to recent versions of R for Windows,
 * Other strange crashes.::      
 * Why does R never use more than 50% of my CPU?::  
 * Does R run under Windows Vista?::  
+* Quotes don't come out right on the console/terminal/pager::  
 @end menu
 
 
@@ -658,7 +659,7 @@ Many benchmarks show hyperthreading reduces the overall workload, so you
 may want to experiment with disabling it.
 
 
-@node Does R run under Windows Vista?,  , Why does R never use more than 50% of my CPU?, Installation and Usage
+@node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
 @section Does R run under Windows Vista?
 
 It does.  A few issues have been reported that related to the way
@@ -753,13 +754,45 @@ Another issue with Vista is that the standard POSIX ways that R uses
 (e.g.@: in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} has been
 re-written for R 2.5.1 to work with Windows NT-based security and
-seems much more reliable with Vista.
+the new version seems much more reliable with Vista.
 
 On suitably recent hardware Vista can prevent the execution of code
 from data areas via `Data Execution Prevention' (from a tab in
 System Properties -> Advanced -> Performance), and sysadmins can turn
 this on for all programs.  R runs correctly with DEP enabled.
 
+
+@node Quotes don't come out right on the console/terminal/pager,  , Does R run under Windows Vista?, Installation and Usage
+@section Quotes don't come out right on the console/terminal/pager
+
+R version 2.6.0 and later will make use of directional quotes that are
+not always rendered correctly by Windows.
+
+Whether these are used in R output (from functions @code{sQuote} and
+@code{dQuote}) is controlled by @code{getOption("useFancyQuotes")} whose
+default is @code{FALSE} except for the @code{Rgui} console.  There are
+two potential problems with rendering directional quotes.  The first is
+that in European locales the `Windows Command Prompt' is by default set
+up to use MS-DOS and not Windows default encodings: this can be changed
+via @command{chcp}, with @command{chcp 1252} being appropriate for
+Western European (including English) locales.  The other is that the
+default raster fonts only include directional single quotes and not
+directional double quotes (which will probably be rendered as a filled
+rectangle).
+
+Directional quotes will also be used in text help which is normally
+displayed in R's internal pager: these may not be rendered correctly in
+an external pager.  They are also used in CHM and HTML help, where
+most browsers use fonts which render them correctly.
+
+The font used can affect whether quotes are rendered correctly.  The
+default font in the @code{Rgui} console and internal pager is
+@code{Courier New}, which has directional quotes on all the systems we
+tried.  @code{Lucida Console} has elegant glyphs for directional quotes,
+but seems rather light on Windows XP (it looks better than @code{Courier
+New} on Vista).  Non-TrueType fonts such as @code{Courier} and
+@code{FixedSys} lack directional double quotes on all the systems we
+tried.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
