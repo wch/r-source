@@ -818,21 +818,20 @@ in future only to be offered via a source-code licence.
 
 @end itemize
 
-The following additional items are normally installed by @file{Rtools.exe}.
-If instead you choose to do a completely manual build, you will also need
+The following additional items are normally installed by
+@file{Rtools.exe}.  If instead you choose to do a completely manual
+build (or a cross-build), you will also need
 
 @itemize
 
 @item
-Extract the international character support file @file{iconv.dll} from
-@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip,
-@code{www.@/murdoch-@/sutherland.com/@/Rtools/@/iconv.zip}} and put it in
+Get @file{iconv.dll} from
+@url{http://www.stats.ox.ac.uk/pub/Rtools/iconv.dll} and put it in
 @file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
 
 @item
 The Tcl/Tk support files are in
-@url{http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip,
-@code{www.murdoch-sutherland.com/@/Rtools/@/R_Tcl.zip}}: unzip this in
+@url{http://www.stats.ox.ac.uk/pub/Rtools/R_Tcl.zip}: unzip this in
 @var{R_HOME}, and it will add directories @file{@var{R_HOME}/Tcl},
 @file{@var{R_HOME}/Tcl/bin}, etc.
 
@@ -840,7 +839,7 @@ The Tcl/Tk support files are in
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @url{http://www.libpng.org, @code{www.libpng.org}},
 @url{ftp://ftp.uu.net/graphics/}[png,jpeg].  You will need files
-@file{libpng-1.2.8.tar.gz} and @file{jpegsrc.v6b.tar.gz} or later.
+@file{libpng-1.2.18.tar.gz} and @file{jpegsrc.v6b.tar.gz} or later.
 
 Working in the directory @file{@var{R_HOME}
 /src/gnuwin32/bitmap}, install the @code{libpng} and
@@ -853,8 +852,8 @@ and change the definition of @code{JPEGDIR}.
 Example:
 
 @example
-> tar xzvf libpng-1.2.8.tar.gz
-> mv libpng-1.2.8 libpng
+> tar xzvf libpng-1.2.20.tar.gz
+> mv libpng-1.2.20 libpng
 > tar xzvf jpegsrc.v6b.tar.gz
 @end example
 
@@ -1126,16 +1125,20 @@ You will need Perl, @command{zip} and @command{unzip} installed and (to
 make the manuals) @command{makeinfo} version 4.7 or later (part of GNU
 @code{texinfo}) as well as @file{texinfo.tex}.
 
-You also need the R source (@file{R-@value{VERSIONno}.tar.gz}).
+You also need the R source (@file{R-@value{VERSIONno}.tar.gz}),
+@file{R_Tcl.zip} and @file{iconv.dll} (see above).
 
-Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, and
+Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, unpack
+@file{R_Tcl.zip} at the top level and put @file{iconv.dll} in
+@file{src/gnuwin32/unicode}, then
 
 @example
 cd /somewhere/R-@value{VERSIONno}/src/gnuwin32
 @end example
 
 Edit @file{MkRules} to set @code{BUILD=CROSS}, @code{CROSS-GCC} as
-appropriate and the appropriate paths (including @code{HEADER}).
+appropriate and the appropriate paths (including @code{HEADER} if
+needed).
 
 Edit @file{MkRules} to set the type(s) of help that you want built. (You
 will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
