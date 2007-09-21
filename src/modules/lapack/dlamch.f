@@ -520,10 +520,10 @@
          FIRST = .FALSE.
 ***
 * Comment out this if block if EMIN is ok
-         IF( IWARN ) THEN
-            FIRST = .TRUE.
-            WRITE( 6, FMT = 9999 )LEMIN
-         END IF
+*         IF( IWARN ) THEN
+*            FIRST = .TRUE.
+*            WRITE( 6, FMT = 9999 )LEMIN
+*         END IF
 ***
 *
 *        Assume IEEE arithmetic if we found denormalised  numbers above,
@@ -558,12 +558,12 @@
 *
       RETURN
 *
- 9999 FORMAT( / / ' WARNING. The value EMIN may be incorrect:-',
-     $      '  EMIN = ', I8, /
-     $      ' If, after inspection, the value EMIN looks',
-     $      ' acceptable please comment out ',
-     $      / ' the IF block as marked within the code of routine',
-     $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
+*9999 FORMAT( / / ' WARNING. The value EMIN may be incorrect:-',
+*    $      '  EMIN = ', I8, /
+*    $      ' If, after inspection, the value EMIN looks',
+*    $      ' acceptable please comment out ',
+*    $      / ' the IF block as marked within the code of routine',
+*    $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *
 *     End of DLAMC2
 *
