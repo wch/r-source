@@ -124,7 +124,9 @@ NEW FEATURES
     o	dQuote() and sQuote() are more flexible, with rendering
 	controlled by the new option 'useFancyQuotes'.  This includes
 	the ability to have TeX-style rendering and directional quotes
-	(the so-called 'smart quotes') on Windows.
+	(the so-called 'smart quotes') on Windows.  The default is to
+	use directional quotes in UTF-8 locales (as before) and in the
+	Rgui console on Windows (new).
 
     o	duplicated() and unique() and their methods in base gain an
 	additional argument 'fromLast'.

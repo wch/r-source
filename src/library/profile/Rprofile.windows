@@ -29,4 +29,4 @@ if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
 }
 
 options(pager = if(any(grep("--ess", commandArgs()))) "console" else "internal")
-options(useFancyQuotes = TRUE)
+options(useFancyQuotes = (.Platform$GUI == "Rgui"))
