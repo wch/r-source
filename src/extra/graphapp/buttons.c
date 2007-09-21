@@ -992,6 +992,7 @@ textbox newrichtextarea(const char *text, rect r)
 		      ES_LEFT | ES_MULTILINE | ES_NOHIDESEL,
 		      r, NULL);
     if (obj) {
+        sendmessage(obj->handle, EM_SETTEXTMODE, TM_PLAINTEXT, 0);
 	obj->kind = TextboxObject;
 	settext(obj, text);
     }
