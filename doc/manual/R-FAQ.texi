@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-09-14
+@set FAQ_DATE @value{FAQ_YEAR}-09-21
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2039,6 +2039,8 @@ MCMC inference from individual genetic data based on a spatial
 statistical model.
 @item GeoXp
 Interactive exploratory spatial data analysis.
+@item GillespieSSA
+Gillespie's Stochastic Simulation Algorithm (SSA).
 @item GroupSeq
 Computations related to group-seqential boundaries.
 @item HH
@@ -2343,6 +2345,8 @@ Optimally robust estimation.
 Optimally robust estimation for regression-type models.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
+@item RPyGeo
+ArcGIS Geoprocessing in R via Python.
 @item RQuantLib
 Provides access to (some) of the QuantLib functions from within R;
 currently limited to some Option pricing and analysis functions.  The
@@ -2741,6 +2745,8 @@ Block, randomly assign, and diagnose potential problems between units in
 randomized experiments.
 @item blockrand
 Randomization for block random clinical trials.
+@item bnlearn
+Bayesian network structure learning.
 @item boa
 Bayesian Output Analysis Program for MCMC.
 @item boolean
