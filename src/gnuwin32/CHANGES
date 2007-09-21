@@ -168,12 +168,12 @@ OTHERS
     o	Single and double quotations are now rendered using directional
 	quotes in text conversions of R help (as they always have been
 	in HTML, CHM and latex versions of the help).  Note that
-	directional double quotes are missing in FixedFont on some
+	directional double quotes are missing in FixedSys on most
 	versions of Windows, and although the files will be rendered
 	correctly in CJK locales using the builtin pager, they may not
 	be in external pagers.
 
-    o	Rcmd Rdiff now ignores difference between smart single quotes
+    o	Rcmd Rdiff now ignores the difference between smart single quotes
 	and '.  This will probably only work correctly in single-byte
 	locales.  (This is in addition to UTF-8 directional single
 	quotes which the Unix version has for some time equated to '.)
