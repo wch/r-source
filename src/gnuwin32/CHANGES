@@ -163,6 +163,12 @@ OTHERS
 	MinGW runtime which have since been resolved.
 
 
+BUG FIXES
+
+    o	Pasting into the script editor would sometimes change fonts and
+    	lose line breaks. (Reported by Bob Muenchen.)
+
+
 
 
 	**************************************************
