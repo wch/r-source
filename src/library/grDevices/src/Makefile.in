@@ -13,10 +13,11 @@ R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
 
-SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devQuartz.c init.c
+SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devQuartz.c init.c @BUILD_AQUA_TRUE@ qdBitmap.c
+SOURCES_M = @BUILD_AQUA_TRUE@ qdCocoa.m
 
 DEPENDS = $(SOURCES_C:.c=.d)
-OBJECTS = $(SOURCES_C:.c=.o)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_M:.m=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 

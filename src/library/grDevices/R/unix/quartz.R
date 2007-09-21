@@ -16,17 +16,13 @@
 
 .Quartzenv <- new.env()
 
-quartz <- function (display = "", width = 5, height = 5, pointsize = 12,
-                    family = "Helvetica", antialias = TRUE, autorefresh = TRUE)
-{
-    if (.Platform$GUI != "AQUA")
-        warning("quartz() device interactivity reduced without an event loop manager")
-
-    .External("Quartz", display, width, height, pointsize,family, antialias,
-              autorefresh, PACKAGE = "grDevices")
+quartz <- function(title="Quartz %d", width=5, height=5, pointsize=12, family="Helvetica",
+                   fontsmooth=TRUE, antialias=TRUE,  type=getOption('quartz.type'), file=NULL,
+                   bg="transparent", dpi=getOption('quartz.dpi')) {
+    .External("Quartz", type, file, width, height, pointsize, family,
+              antialias, fontsmooth, title, bg, dpi, PACKAGE="grDevices")
     invisible()
 }
-
 
 #########
 # QUARTZ font database
