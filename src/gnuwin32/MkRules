@@ -71,8 +71,8 @@ endif
 
 ## ====== configuration macros for building installer ===========
 
-# location where Inno Setup 5.1.x was installed. Spaces allowed.
-ISDIR=C:/packages/Inno51
+# location where Inno Setup 5.[12].x was installed. Spaces allowed.
+ISDIR=C:/packages/Inno
 
 ## ====== configuration macros for building MSI installer ===========
 
