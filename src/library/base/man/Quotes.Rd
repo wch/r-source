@@ -54,11 +54,12 @@
     \code{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
   }
   The last two are only supported on versions of \R built with MBCS
-  support, and the last is not supported on Windows.  (They are an error
-  if used where not supported.)  All except the Unicode escape sequences
-  are also supported when reading character strings by
-  \code{\link{scan}} and \code{\link{read.table}} if
-  \code{allowEscapes = TRUE}.
+  support, and the last is only supported in MBCS locales, and not on
+  Windows.  Alternative forms are \code{\\u\{nnnn\}} and
+  \code{\\U\{nnnnnnnn\}}.  (They are an error if used where not
+  supported.)  All except the Unicode escape sequences are also
+  supported when reading character strings by \code{\link{scan}} and
+  \code{\link{read.table}} if \code{allowEscapes = TRUE}.
 
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).
