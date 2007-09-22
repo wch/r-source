@@ -54,9 +54,9 @@
     \code{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
   }
   The last two are only supported on versions of \R built with MBCS
-  support, and the last is not supported on Windows.  (They are an error
-  if used where not supported.)  All except the Unicode escape sequences
-  are also supported when reading character strings by
+  support: they are an error on other versions.  Alternative forms are
+  \code{\\u\{nnnn\}} and \code{\\U\{nnnnnnnn\}}.  All except the Unicode
+  escape sequences are also supported when reading character strings by
   \code{\link{scan}} and \code{\link{read.table}} if
   \code{allowEscapes = TRUE}.
 
