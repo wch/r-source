@@ -17,10 +17,10 @@
 \description{
   \code{NA} is a logical constant of length 1 which contains a missing
   value indicator.  \code{NA} can be freely coerced to any other vector
-  type except raw.  As from \R 2.5.0 there are constants
-  \code{NA_integer_}, \code{NA_real_}, \code{NA_complex_} and
-  \code{NA_character_} of the other atomic vector types which support
-  missing values.
+  type except raw.  There are also constants \code{NA_integer_},
+  \code{NA_real_}, \code{NA_complex_} and \code{NA_character_} of the
+  other atomic vector types which support missing values: all of these
+  are \link{reserved} words in the \R language.
 
   The generic function \code{is.na} indicates which elements are missing.
 
@@ -41,7 +41,7 @@ is.na(x) <- value
   %% Next par on character NAs taken from R-lang.texi:
   The \code{NA} of character type is distinct from the
   string \code{"NA"}.  Programmers who need to specify an explicit
-  string \code{NA} should use \code{as.character(NA)} rather than
+  string \code{NA} should use \code{NA_character_} rather than
   \code{"NA"}, or set elements to \code{NA} using \code{is.na<-}.
 
   \code{is.na(x)} works elementwise when \code{x} is a

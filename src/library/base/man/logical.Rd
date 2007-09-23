@@ -27,9 +27,10 @@ as.logical(x, \dots)
 is.logical(x)
 }
 \details{
-  \code{TRUE} and \code{FALSE} are part of the \R language, where
-  \code{T} and \code{F} are global variables set to these.
-  All four are \code{logical(1)} vectors.
+  \code{TRUE} and \code{FALSE} are \link{reserved} words denoting logical
+  constants in the \R language, whereas \code{T} and \code{F} are global
+  variables whose initial values set to these.  All four are
+  \code{logical(1)} vectors.
 }
 \arguments{
   \item{length}{desired length.}
@@ -47,6 +48,9 @@ is.logical(x)
 
   \code{is.logical} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of logical type or not.
+}
+\seealso{
+  \code{\link{NA}}, the other logical constant.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
