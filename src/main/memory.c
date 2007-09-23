@@ -1928,8 +1928,8 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     case LISTSXP:
 	return allocList(length);
     default:
-	error(_("invalid type/length (%d/%d) in vector allocation"),
-	      type, length);
+	error(_("invalid type/length (%s/%d) in vector allocation"),
+	      type2char(type), length);
     }
 
     if (size <= NodeClassSize[1]) {

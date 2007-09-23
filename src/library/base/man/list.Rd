@@ -79,6 +79,9 @@ alist(\dots)
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
   is different from \code{list()}.
+
+  \code{as.pairlist} is implemented as \code{\link{as.vector}(x, "pairlist")},
+  and hence will dispatch methods for the generic function \code{as.vector}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
