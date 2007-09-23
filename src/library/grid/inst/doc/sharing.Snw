@@ -4,7 +4,7 @@
 \newcommand{\R}{{\tt R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
-\title{An Example of ``Linking'' Graphical Objects in Grid}
+\title{An Example of ``Linking'' Graphical Objects in \grid{}}
 \author{Paul Murrell}
 
 \begin{document}

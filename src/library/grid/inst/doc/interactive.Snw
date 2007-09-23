@@ -7,7 +7,7 @@
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
-\title{An Example of Interactive Graphics Editing in Grid}
+\title{An Example of Interactive Graphics Editing in \grid}
 \author{Paul Murrell}
 
 \begin{document}

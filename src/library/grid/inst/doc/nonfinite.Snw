@@ -7,7 +7,7 @@
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
-\title{How Grid Responds to Non-Finite Values}
+\title{How \grid{} Responds to Non-Finite Values}
 \author{Paul Murrell}
 
 \begin{document}
