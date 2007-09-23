@@ -33,12 +33,13 @@ return(value)
   Prior to \R 1.8.0, \code{value} could be a series of non-empty
   expressions separated by commas.  In that case the value
   returned is a list of the evaluated expressions, with names set to
-  the expressions where these are the names of \R objects. That is,
+  the expressions where these are the names of \R objects.  That is,
   \code{a=foo()} names the list component \code{a} and gives it the value
   which results from evaluating \code{foo()}.
 
   This has been deprecated (and a warning is given), as it was never
-  documented in S, and whether or not the list is named differs by S versions.
+  documented in S, and whether or not the list is named differs by S
+  versions.  Supply a (named) list \code{value} instead.
 }
 \seealso{
   \code{\link{args}} and \code{\link{body}} for accessing the arguments
