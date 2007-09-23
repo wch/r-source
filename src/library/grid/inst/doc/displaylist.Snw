@@ -12,7 +12,7 @@
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
 
-\title{Display Lists in \grid}
+\title{Display Lists in \grid{}}
 \author{Paul Murrell}
 
 \begin{document}

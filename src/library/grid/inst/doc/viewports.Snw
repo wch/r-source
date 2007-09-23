@@ -8,7 +8,7 @@
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
 
-\title{Working with Grid Viewports}
+\title{Working with \grid{} Viewports}
 \author{Paul Murrell}
 
 \begin{document}
