@@ -40,14 +40,9 @@ function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
     if(inherits(ischar, "try-error")) ischar <- FALSE
     ## if this was not a length-one character vector, try for the name.
     if(!ischar) {
-        ## the resereved words that could be parsed as a help arg:
-        reserved <-
-            c("TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer_",
-              "NA_real_", "NA_complex_", "NA_character_")
-        stopic <- deparse(substitute(topic))
-        if(!is.name(topic) && ! stopic %*% reserved)
-            stop("'topic' should be a name, length-one character vector or reserved word")
-        topic <- stopic
+        ## we only want names here, but some reserved words parse
+        ## to other types, e.g. NA, Inf
+        topic <- deparse(substitute(topic))
     }
 
     type <- if(offline)
