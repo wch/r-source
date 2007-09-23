@@ -10,7 +10,7 @@
 \description{
   These functions provide access to documentation.
   Documentation on a topic with name \code{name} (typically, an \R
-  object or a data set) can be printed with either \code{help(name)} or
+  object or a data set) can be displayed with either \code{help("name")} or
   \code{?name}.
 }
 \usage{
@@ -26,16 +26,21 @@ help(topic, offline = FALSE, package = NULL,
 type?topic
 }
 \arguments{
- \item{topic}{usually, the name on which documentation is sought.
-   The name may be quoted or unquoted (but note that if \code{topic}
-   is the name of a variable containing a character string documentation
-   is provided for the name, not for the character string).
+  \item{topic}{usually, a \link{name} or character string specifying the topic
+   for which help is sought.  A character string (enclosed in explicit
+   single or double quotes) is always taken as naming a topic.
 
-   The \code{topic} argument may also be a function call, to ask for
-   documentation on a corresponding method.  See the section on method
-   documentation.
+   For \code{help}, if the value of \code{topic} is a length-one
+   character vector the topic is taken to be the value of the only
+   element.  Any other argument \code{topic} are regarded as a name and
+   \link{deparse}d to give the desired topic.
 
-   See Details for what happens if this is omitted.
+   For \code{?} the \code{topic} argument may also be a function call,
+   to ask for documentation on a corresponding method: see the section
+   on S4 method documentation.  Unlike \code{help}, all names are
+   deparsed to give the desired topic.
+
+   See Details for what happens if this is omitted for \code{help}.
  }
  \item{offline}{a logical indicating whether documentation should be
    displayed on-line to the screen (the default) or hardcopy of it
@@ -81,10 +86,15 @@ type?topic
   to suitable topics if a package is specified, to available packages if
   \code{lib.loc} only is specified, and help on \code{help} itself if
   nothing is specified.  (In all cases this will be text help.)
-  
-  In the case of unary and binary operators and control-flow special
-  forms (including \code{if}, \code{for} and \code{function}), the topic
-  may need to be quoted.
+
+  Some topics need to be quoted (by \link{backtick}s) or given as a
+  character string.  There include those which cannot syntactically
+  appear on their own such  as unary and binary operators,
+  \code{function} and control-flow \link{reserved} words (including
+  \code{if}, \code{else} \code{for}, \code{in}, \code{repeat},
+  \code{while}, \code{break} and \code{next}.  The other \code{reserved}
+  words can be used as if they were names, for example \code{TRUE},
+  \code{NA} and \code{Inf}.
 
   If multiple help files matching \code{topic} are found, in interactive
   use a menu is presented for the user to choose one: otherwise the
@@ -201,8 +211,8 @@ help(help)              # the same
 help(lapply)
 ?lapply                 # the same
 
-help("for")             # or ?"for", but the quotes are needed
-?"+"
+help("for")             # or ?"for", but the quotes or backticks are needed
+?`+`
 
 help(package="splines") # get help even when package is not loaded
 
@@ -210,7 +220,7 @@ data()                  # list all available data sets
 ?women                  # information about data set "women"
 
 topi <- "women"
-\dontrun{help(topi) ##--> Error: No documentation for 'topi'}
+help(topi)
 
 try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
 help("bs", try.all.packages=TRUE) # reports can be found in package 'splines'
