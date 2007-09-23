@@ -12,13 +12,15 @@
 \alias{is.name}
 \title{Names and Symbols}
 \description{
-  \code{as.symbol} coerces its argument to be a \emph{symbol}, or
-  equivalently, a \emph{name}.  The argument must be of mode
-  \code{"character"}.  \code{as.name} is an alias for \code{as.symbol}.
+  A \sQuote{name} (also known as a \sQuote{symbol}) is a way to refer to
+  \R objects by name (rather than the value of the object, if any, bound
+  to that name).
 
-  \code{is.symbol} (and \code{is.name} equivalently) returns \code{TRUE}
-  or \code{FALSE} depending on whether its argument is a symbol (i.e.,
-  name) or not.
+  \code{as.name} and \code{as.symbol} are identical: they attempt to
+  coerce the argument to a name.
+
+  \code{is.symbol} and the identical \code{is.name} return \code{TRUE}
+  or \code{FALSE} depending on whether the argument is a name or not.
 }
 \usage{
 as.symbol(x)
@@ -29,6 +31,23 @@ is.name(x)
 }
 \arguments{
   \item{x}{object to be coerced or tested.}
+}
+\details{
+  \code{as.name} first coerces its argument internally to a character
+  vector (so methods for \code{as.character} are not used).  It then
+  takes the first element and provided it is not \code{""}, returns a
+  symbol of that name (and if the element is \code{NA_character_}, the
+  name is \code{`NA`}. 
+
+  \code{as.name} is implemented as \code{\link{as.vector}(x, "symbol")},
+  and hence will dispatch methods for the generic function \code{as.vector}.
+}
+\value{
+  For \code{as.name} and \code{as.symbol}, an \R object of type
+  \code{"symbol"} (see \code{\link{typeof}}).
+
+  For \code{is.name} and \code{is.symbol}, a length-one logical vector
+  with value \code{TRUE} or \code{FALSE}.
 }
 \note{
   The term \dQuote{symbol} is from the LISP background of \R, whereas
