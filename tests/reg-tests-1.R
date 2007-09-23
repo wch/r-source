@@ -2279,7 +2279,8 @@ as.character(list())
 ## help on reserved words
 ## if else repeat while function for in next break  will fail
 if(.Platform$OS.type == "windows") options(pager="console")
-for(topic in c("TRUE", "FALSE",  "NULL", "NA", "Inf", "NaN")) {
+for(topic in c("TRUE", "FALSE",  "NULL", "NA", "Inf", "NaN",
+               "NA_integer_", "NA_real_", "NA_complex_", "NA_character_")) {
     eval(parse(text=paste("?", topic, sep="")))
     eval(parse(text=paste("help(", topic, ")", sep="")))
 }
