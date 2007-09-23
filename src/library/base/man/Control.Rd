@@ -8,6 +8,7 @@
 \alias{if}
 \alias{else}
 \alias{for}
+\alias{in}
 \alias{while}
 \alias{repeat}
 \alias{break}
@@ -16,7 +17,7 @@
 \description{
   These are the basic control-flow constructs of the \R language.  They
   function in much the same way as control statements in any Algol-like
-  language.
+  language.  They are all \link{reserved} words.
 }
 \usage{
 if(cond) expr

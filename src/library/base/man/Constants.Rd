@@ -21,7 +21,7 @@ month.name
 pi
 }
 \details{
-  \R has a limited number of built-in constants (there is also a rather
+  \R has a small number of built-in constants (there is also a rather
   larger library of data sets which can be loaded with the function
   \code{\link{data}}).
 
@@ -38,6 +38,9 @@ pi
     \item \code{pi}: the ratio of the circumference of a circle to its
     diameter.
   }
+
+  These are implemented as variables in the base name space taking
+  appropriate values. 
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
