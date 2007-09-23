@@ -770,8 +770,13 @@ BUG FIXES
     o	spline() and splinefun() with method = "periodic" could return
     	incorrect results when length(x) was 2 or 3.
     	
-    o	getS3method() could fail if the method name contained a special
-    	character such as "+".
+    o	getS3method() could fail if the method name contained a regexp
+    	metacharacter such as "+".
+    	
+    o	help(<a character vector>) now uses the name and not the
+	value of the vector unless it has length exactly one, so
+	e.g. help(letters) now gives help on 'letters'.
+	(Related to PR#9927)
 
 
 

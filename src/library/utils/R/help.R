@@ -36,9 +36,14 @@ function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
         return(help("help", package = "utils", lib.loc = .Library))
     }
 
-    ischar <- try(is.character(topic), silent = TRUE)
+    ischar <- try(is.character(topic) && length(topic) == 1, silent = TRUE)
     if(inherits(ischar, "try-error")) ischar <- FALSE
-    if(!ischar) topic <- deparse(substitute(topic))
+    ## if this was not a length-one character vector, try for the name.
+    if(!ischar) {
+        ## we only want names here, but some reserved words parse
+        ## to other types, e.g. NA, Inf
+        topic <- deparse(substitute(topic))
+    }
 
     type <- if(offline)
         "latex"
