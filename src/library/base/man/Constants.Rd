@@ -53,8 +53,9 @@ pi
   \code{\link{Quotes}} for the parsing of character constants,
   \code{\link{NumericConstants}} for numeric constants.
 }
-\examples{
-# John Machin (1705) computed 100 decimals of pi :
+\examples{% earlier R versions said 1705, but most refs say 1706.
+## John Machin (ca 1706) computed pi to over 100 decimal places
+## using the Taylor series expansion of the second term of
 pi - 4*(4*atan(1/5) - atan(1/239))
 
 ## months in English
