@@ -19,7 +19,7 @@
       belong (or extend), and the names of the list gives the
       corresponding slot names.}
     \item{\code{contains}:}{A named list of the classes this class
-      \dQuote{contains}; the elements of the list are objects of
+      \sQuote{contains}; the elements of the list are objects of
       \code{\link{SClassExtension-class}}. The list may be only the
       direct extensions or all the currently known extensions (see the
       details).}

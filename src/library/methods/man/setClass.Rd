@@ -161,7 +161,7 @@ sealClass(Class, where)
   }
 }
 \section{Inheritance and Prototypes}{
-  Defining new classes that inherit from (\dQuote{extend}) other classes
+  Defining new classes that inherit from (\sQuote{extend}) other classes
   is a powerful technique, but has to be used carefully and not
   over-used.  Otherwise, you will often get unintended results when you
   start to compute with objects from the new class.
@@ -175,16 +175,16 @@ sealClass(Class, where)
   Another variety of extension starts with one of the built-in data types,
   perhaps with the intention of modifying R's standard behavior for that
   class.  In this case, the new class inherits the built-in data type
-  as its \dQuote{data} part.  See the \dQuote{numWithId} example below.
+  as its \sQuote{data} part.  See the \code{"numWithId"} example below.
 
   When such a class definition is printed, the data part shows up as a
-  pseudo-slot named \dQuote{.Data}.
+  pseudo-slot named \code{.Data}.
 }
 
 \section{S3 Classes}{
 
   Earlier, informal classes of objects (usually referred to as
-  \dQuote{S3} classes) are used by many R functions.  It's natural to
+  \sQuote{S3} classes) are used by many R functions.  It is natural to
   consider including them as the class for a slot in a formal class,
   or even as a class to be extended by the new class.  This isn't
   prohibited but there are some disadvantages, and if you do want to

@@ -31,7 +31,7 @@ callNextMethod(...)
     }
 }
 \details{
-  The \dQuote{next} method (i.e., the first inherited method) is defined
+  The \sQuote{next} method (i.e., the first inherited method) is defined
   to be that method which \emph{would} have been called if the current
   method did not exist. This is more-or-less literally what happens: The
   current method (to be precise, the method with signature given by the
@@ -67,7 +67,7 @@ callNextMethod(...)
   call are still missing (remember that \code{"missing"} is a valid
   class in a method signature).  For a formal argument, say \code{x}, that
   appears in the original call, there is a corresponding argument in the
-  next method call equivalent to \dQuote{\code{x = x}}.  In effect, this
+  next method call equivalent to \code{x = x}.  In effect, this
   means that the next method sees the same actual arguments, but
   arguments are evaluated only once.
 }
