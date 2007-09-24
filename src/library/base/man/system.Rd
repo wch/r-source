@@ -142,7 +142,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   \code{ignore.stderr = TRUE}.
 #endif
 
-  If \code{intern = FALSE}, the return value is an error code(\code{0}
+  If \code{intern = FALSE}, the return value is an error code (\code{0}
   for success), given the invisible attribute (so needs to be printed
   explicitly).  If the command could not be run for any reason, the
   value is

@@ -140,7 +140,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                 simplifyRepos(old[k, "Repository"], type))
             cat("\n")
             answer <- substr(readline("Update (y/N/c)?  "), 1, 1)
-            if(answer == "c" | answer == "c") {
+            if(answer == "c" | answer == "C") {
                 cat("cancelled by user\n")
                 return(invisible())
             }
