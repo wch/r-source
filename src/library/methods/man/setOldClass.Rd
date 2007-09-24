@@ -81,30 +81,38 @@ setOldClass(Classes, prototype, where, test = FALSE)
 }
 \details{
   Each of the names will be defined as an S4 class, extending the
-  remaining classes in \code{Classes}, and the class
-  \code{oldClass}, which is the \dQuote{root} of all old-style classes.
-S3 classes have no formal definition, and therefore no formally defined slots.
-If a \code{prototype} argument is supplied in the call to \code{setOldClass()}, objects from the class can be generated.
-If the S3 class is to be a slot in an S4 class, providing a prototype is recommended.
-Otherwise, the class will be created as a virtual S4 class; method dispatch will still work and inheritance will follow the S3 class hierarchy, but actions that require a prototype object from the class will not.
-For example, using the class as a slot in an S4 class definition will set the corresponding slot to \code{NULL} in the prototype for the S4 class.
+  remaining classes in \code{Classes}, and the class \code{oldClass},
+  which is the \sQuote{root} of all old-style classes. S3 classes have
+  no formal definition, and therefore no formally defined slots. If a
+  \code{prototype} argument is supplied in the call to
+  \code{setOldClass()}, objects from the class can be generated. If the
+  S3 class is to be a slot in an S4 class, providing a prototype is
+  recommended. Otherwise, the class will be created as a virtual S4
+  class; method dispatch will still work and inheritance will follow the
+  S3 class hierarchy, but actions that require a prototype object from
+  the class will not. For example, using the class as a slot in an S4
+  class definition will set the corresponding slot to \code{NULL} in the
+  prototype for the S4 class.
 
-Providing a prototype allows the function \code{new()} to be called for this class, but optional arguments in this call are not meaningful, since the class has no formal slots.
-Extending an S3 class with an S4 class is formally legal, but discouraged.
-Since the S4 subclass will have a single character string in its \code{class()}, S3 inheritance will not work.
-Also, there is no safe way for a general object from the S3 class to be inserted when an object is generated from the subclass.
+  Providing a prototype allows the function \code{new()} to be called
+  for this class, but optional arguments in this call are not
+  meaningful, since the class has no formal slots. Extending an S3 class
+  with an S4 class is formally legal, but discouraged. Since the S4
+  subclass will have a single character string in its \code{class()}, S3
+  inheritance will not work. Also, there is no safe way for a general
+  object from the S3 class to be inserted when an object is generated
+  from the subclass.
 
   See \link{Methods} for the details of method dispatch and
   inheritance. See the section \bold{Register or Convert?} for
-  comments on the alternative of defining \dQuote{real} S4 classes
+  comments on the alternative of defining \sQuote{real} S4 classes
   rather than using \code{setOldClass}.
 
-  Some S3 classes cannot be
-  represented as an ordinary combination of S4 classes and
-  superclasses, because objects from the S3 class can have a variable set of strings in the class.
- It is still possible to register such classes as S4
-  classes, but now the inheritance has to be verified for each
-  object, and you must call \code{setOldClass} with argument
+  Some S3 classes cannot be represented as an ordinary combination of S4
+  classes and superclasses, because objects from the S3 class can have a
+  variable set of strings in the class. It is still possible to register
+  such classes as S4 classes, but now the inheritance has to be verified
+  for each object, and you must call \code{setOldClass} with argument
   \code{test=TRUE} once for each superclass.
 
   For example, ordered factors \emph{always} have the S3

@@ -8,7 +8,8 @@
 \title{Heuristic test for an object from an S4 class}
 \description{
   Returns \code{TRUE} if \code{object} has been generated from
-  a formally defined (\dQuote{S4}) class.  DEPRECATED:  use isS4(object) instead.
+  a formally defined (\sQuote{S4}) class.  DEPRECATED:  use
+  \code{isS4(object)} instead.
 }
 \usage{
 seemsS4Object(object)
@@ -56,7 +57,7 @@ seemsS4Object(object)
   a version of R recent enough to contain the \code{seemsS4Object}
   function (e.g., \R 2.3.0 or later).
 }
-\examples{
+\examples{\dontrun{## this is deprecated
 seemsS4Object(1) # FALSE
 
 seemsS4Object(getClass(class(1)))  #TRUE
@@ -76,11 +77,8 @@ obj2 <- new("classWithNumeric", 1, y=2)
 seemsS4Object(obj1); seemsS4Object(obj2)  # TRUE, TRUE
 S4NotVector(obj1); S4NotVector(obj2)  # TRUE, FALSE
 
-\dontshow{
 removeClass("classNotNumeric")
 removeClass("classWithNumeric")
-}
-
-}
+}}
 \keyword{programming}
 \keyword{classes}

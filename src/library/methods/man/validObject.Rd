@@ -54,10 +54,10 @@ setValidity(Class, method, where = topenv(parent.frame()) )
   should \emph{not} call \code{validObject}.
 }
 \details{
-  Validity testing takes place \dQuote{bottom up}: Optionally, if
+  Validity testing takes place \sQuote{bottom up}: Optionally, if
   \code{complete=TRUE}, the validity of the object's slots, if any, is
   tested.  Then, in all cases, for each of the classes that this class
-  extends (the \dQuote{superclasses}), the explicit validity method of
+  extends (the \sQuote{superclasses}), the explicit validity method of
   that class is called, if one exists.  Finally, the validity method of
   \code{object}'s class is called, if there is one.
 

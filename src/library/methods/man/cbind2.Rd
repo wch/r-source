@@ -16,7 +16,7 @@
 %
 \title{Combine two Objects by Columns or Rows}
 \description{
-  Combine two \dQuote{matrix-like} \R objects by columns (\code{cbind2})
+  Combine two matrix-like \R objects by columns (\code{cbind2})
   or rows (\code{rbind2}). These are (S4) generic functions with default
   methods.
 }
@@ -24,11 +24,11 @@
   The main use of \code{cbind2} (\code{rbind2}) is to be called by
   \code{\link{cbind}()}  (\code{rbind()})
   \bold{if} these are activated.  This allows \code{cbind}
-  (\code{rbind}) to \dQuote{work} for formally classed (aka \sQuote{S4})
+  (\code{rbind}) to work for formally classed (aka \sQuote{S4})
   objects by providing S4 methods for these objects.  Currently, a call\cr
   \code{methods:::bind_activation(TRUE)}\cr
   is needed to install a
-  \dQuote{\code{cbind2}-calling} version of \code{cbind} (into the
+  \code{cbind2}-calling version of \code{cbind} (into the
   \code{base} name space) and the same for \code{rbind}.\cr
   \code{methods:::bind_activation(FALSE)} reverts to the
   previous internal version of \code{cbind} which does not build on
@@ -39,7 +39,7 @@ cbind2(x, y)
 rbind2(x, y)
 }
 \arguments{
-  \item{x}{any \R object, typically \dQuote{matrix-like}.}
+  \item{x}{any \R object, typically matrix-like.}
   \item{y}{any \R object, typically similar to \code{x}, or missing
     completely.}
 }

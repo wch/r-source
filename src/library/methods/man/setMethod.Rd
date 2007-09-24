@@ -73,7 +73,7 @@ removeMethod(f, signature, where)
   appear in the call in order to match this signature.  Don't confuse
   these two:  if an argument isn't mentioned in a signature, it
   corresponds implicitly to class \code{"ANY"}, not to
-  \code{"missing"}.  See the example below.  Old-style (\dQuote{S3})
+  \code{"missing"}.  See the example below.  Old-style (\sQuote{S3})
   classes can also be used, if you need compatibility with these, but
   you should definitely declare these classes by calling
   \code{\link{setOldClass}} if you want S3-style inheritance to work.
@@ -85,7 +85,7 @@ removeMethod(f, signature, where)
   select and evaluate methods for \code{f}, the methods on the current
   search list are merged to form a single generic function and
   associated methods list.  When \code{f}
-  is called and a method is \dQuote{dispatched}, the evaluator matches the
+  is called and a method is dispatched, the evaluator matches the
   classes of the actual arguments to the signatures of the available
   methods.  When a match is found, the body of the corresponding
   method is evaluated, but without rematching the arguments to

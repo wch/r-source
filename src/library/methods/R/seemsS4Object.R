@@ -14,5 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-seemsS4Object <- function(object)
-  is.character(attr(class(object), "package"))
+seemsS4Object <- function(object) {
+    .Deprecated("isS4")
+    is.character(attr(class(object), "package"))
+}

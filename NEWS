@@ -429,6 +429,8 @@ DEPRECATED & DEFUNCT
     o	In package installation, SaveImage: yes is deprecated in
 	favour of LazyLoad: yes.
 
+    o	seemsS4Object (methods package) is deprecated in favour of isS4().
+
 
 UTILITIES
 

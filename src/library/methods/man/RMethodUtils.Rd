@@ -226,7 +226,7 @@ addNextMethod(method, f, mlist, optional, envir)
       environment of the call to \code{missingArg}).  If \code{eval} is
       true, the argument is evaluated to get the name of the symbol to
       test.  Note that \code{missingArg} is closer to the
-      \dQuote{blue-book} sense of the \code{\link{missing}} function,
+      \sQuote{Blue Book} sense of the \code{\link{missing}} function,
       not that of the current R base package implementation.  But beware
       that it works reliably only if no assignment has yet been made to
       the argument.  (For method dispatch this is fine, because
