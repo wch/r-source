@@ -16,7 +16,7 @@ Sys.which(names)
   \item{names}{Character vector of names of possible executables.}
 }
 \details{
-  The system command \code{shich} reports on the full names of an
+  The system command \code{which} reports on the full names of an
   executable (including an executable script) found on the current path.
 
 #ifdef windows
