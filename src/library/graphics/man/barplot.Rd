@@ -31,7 +31,7 @@ barplot(height, \dots)
     given by the values in the vector.  If \code{height} is a matrix
     and \code{beside} is \code{FALSE} then each bar of the plot
     corresponds to a column of \code{height}, with the values in the
-    column giving the heights of stacked \dQuote{sub-bars} making up the
+    column giving the heights of stacked sub-bars making up the
     bar.  If \code{height} is a matrix and \code{beside} is
     \code{TRUE}, then the values in each column are juxtaposed
     rather than stacked.}

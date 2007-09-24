@@ -55,7 +55,7 @@ is.na(x) <- value
 }
 \value{
   The default method for \code{is.na} returns a logical vector of the same
-  \dQuote{form} as its argument \code{x}, containing \code{TRUE} for those
+  length as its argument \code{x}, containing \code{TRUE} for those
   elements marked \code{NA} or \code{\link{NaN}} (!) and \code{FALSE}
   otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
   are preserved.

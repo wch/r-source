@@ -31,10 +31,10 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \item{\dots}{further arguments to be passed to the next method.}
 }
 \details{
-  An \R \dQuote{object} is a data object which has a \code{class}
+  An \R object is a data object which has a \code{class}
   attribute (and this can be tested by \code{\link{is.object}}).
   A class attribute is a character vector giving the names of
-  the classes which the object \dQuote{inherits} from.
+  the classes from which the object \emph{inherits}.
   If the object does not have a class attribute, it has an implicit
   class.  Matrices and arrays have class \code{"matrix"}
   or\code{"array"} followed by the class of the underlying vector.
@@ -86,7 +86,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   Now for some obscure details that need to appear somewhere.  These
   comments will be slightly different than those in Chambers(1992).
   (See also the draft \sQuote{R Language Definition}.)
-  \code{UseMethod} creates a \dQuote{new} function call with
+  \code{UseMethod} creates a new function call with
   arguments matched as they came in to the generic.  Any local variables
   defined before the call to \code{UseMethod} are retained (unlike S).  Any
   statements after the call to \code{UseMethod} will not be evaluated as

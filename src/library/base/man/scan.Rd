@@ -50,7 +50,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     \code{complex}, \code{character}, \code{raw} and \code{\link{list}}.
     If \code{what} is a list, it is assumed that the lines of the data file
     are records each containing \code{length(what)} items
-    (\dQuote{fields}) and the list components should have elements which
+    (\sQuote{fields}) and the list components should have elements which
     are one of the first six types listed or \code{NULL}, see section
     \sQuote{Details} below.}
 

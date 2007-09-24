@@ -42,7 +42,7 @@ as an argument to a function.
 }
 \seealso{
   \code{\link{substitute}} for argument expression;
-  \code{\link{NA}} for \dQuote{missing values} in data.
+  \code{\link{NA}} for missing values in data.
 }
 \examples{
 myplot <- function(x,y) {

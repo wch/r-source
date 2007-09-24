@@ -37,7 +37,7 @@ replicate(n, expr, simplify = TRUE)
   element of which is the result of applying \code{FUN} to the
   corresponding element of \code{X}.
 
-  \code{sapply} is a \dQuote{user-friendly} version of \code{lapply}
+  \code{sapply} is a user-friendly version of \code{lapply}
   by default returning a vector or matrix if appropriate.
 
   \code{replicate} is a wrapper for the common use of \code{sapply} for

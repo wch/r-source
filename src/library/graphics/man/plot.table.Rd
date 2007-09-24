@@ -10,7 +10,7 @@
   This is a method of the generic \code{plot} function for
   (contingency) \code{\link{table}} objects.  Whereas for two- and more
   dimensional tables, a \code{\link{mosaicplot}} is drawn,
-  one-dimensional ones are plotted \dQuote{bar like}.
+  one-dimensional ones are plotted as bars.
 }
 \usage{
 %% Improvement ideas: see code definition, currently in ../R/plot.R

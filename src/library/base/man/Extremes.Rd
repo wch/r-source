@@ -49,7 +49,7 @@ pmin.int(\dots, na.rm = FALSE)
   \code{na.rm = TRUE}.
 
   \code{pmax} and \code{pmin} take one or more vectors (or matrices) as
-  arguments and return a single vector giving the \dQuote{parallel}
+  arguments and return a single vector giving the \sQuote{parallel}
   maxima (or minima) of the vectors.  The first element of the result is
   the maximum (minimum) of the first elements of all the arguments, the
   second element of the result is the maximum (minimum) of the second

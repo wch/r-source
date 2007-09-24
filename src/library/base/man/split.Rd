@@ -25,7 +25,7 @@ unsplit(value, f, drop = FALSE)
 }
 \arguments{
   \item{x}{vector or data frame containing values to be divided into groups.}
-  \item{f}{a \dQuote{factor} in the sense that \code{\link{as.factor}(f)}
+  \item{f}{a \sQuote{factor} in the sense that \code{\link{as.factor}(f)}
     defines the grouping, or a list of such factors in which case their
     interaction is used for the grouping.}
   \item{drop}{logical indicating if levels that do not occur should be dropped

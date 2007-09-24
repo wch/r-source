@@ -30,7 +30,7 @@
   \item{digits}{the number of significant digits to use when printing.}
   \item{symbolic.cor}{logical. If \code{TRUE}, print the correlations in
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
-  \item{signif.stars}{logical. If \code{TRUE}, \dQuote{significance stars}
+  \item{signif.stars}{logical. If \code{TRUE}, \sQuote{significance stars}
     are printed for each coefficient.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -41,7 +41,7 @@
 \details{
   \code{print.summary.glm} tries to be smart about formatting the
   coefficients, standard errors, etc. and additionally gives
-  \dQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
+  \sQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
   The \code{coefficients} component of the result gives the estimated
   coefficients and their estimated standard errors, together with their
   ratio.  This third column is labelled \code{t ratio} if the

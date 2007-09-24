@@ -37,7 +37,7 @@ formals(fun, envir = environment(fun)) <- value
   environment of the function.
 }
 \seealso{
-  \code{\link{args}} for a \dQuote{human-readable} version,
+  \code{\link{args}} for a human-readable version,
   \code{\link{alist}},
   \code{\link{body}},
   \code{\link{function}}.

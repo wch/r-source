@@ -105,7 +105,7 @@ contour(x, \dots)
   complexity of a single contour line.
 
   \code{\link[grDevices]{contourLines}},
-  \code{\link{filled.contour}} for \dQuote{color-filled} contours,
+  \code{\link{filled.contour}} for color-filled contours,
   \code{\link[lattice]{contourplot}} (and \code{\link[lattice]{levelplot}})
   from package \pkg{lattice}.  Further, \code{\link{image}} and the
   graphics demo which can be invoked as \code{demo(graphics)}.

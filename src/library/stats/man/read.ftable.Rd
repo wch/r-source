@@ -8,7 +8,7 @@
 \alias{read.ftable}
 \alias{write.ftable}
 \alias{format.ftable}
-\description{Read, write and coerce \dQuote{flat} contingency tables.}
+\description{Read, write and coerce \sQuote{flat} contingency tables.}
 \usage{
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
@@ -57,14 +57,14 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
   of the column variable using \code{row.var.names} and \code{col.vars},
   respectively.  See the examples below.
 
-  Note that flat tables are characterized by their \dQuote{ragged}
+  Note that flat tables are characterized by their \sQuote{ragged}
   display of row (and maybe also column) labels.  If the full grid of
   levels of the row variables is given, one should instead use
   \code{read.table} to read in the data, and create the contingency
   table from this using \code{\link{xtabs}}.
 
   \code{write.ftable} writes a flat table to a file, which is useful for
-  generating \dQuote{pretty} ASCII representations of contingency tables.
+  generating \sQuote{pretty} ASCII representations of contingency tables.
 }
 \seealso{
   \code{\link{ftable}} for more information on flat contingency tables.

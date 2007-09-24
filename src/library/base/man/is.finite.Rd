@@ -16,8 +16,8 @@
   length as \code{x}, indicating which elements are finite (not infinite
   and not missing).
 
-  \code{Inf} and \code{-Inf} are positive and negative \dQuote{infinity}
-  whereas \code{NaN} means \dQuote{Not a Number}.  (These apply to numeric
+  \code{Inf} and \code{-Inf} are positive and negative infinity
+  whereas \code{NaN} means \sQuote{Not a Number}.  (These apply to numeric
   values and real and imaginary parts of complex values but not to
   values of integer vectors.)  All are \code{reserved} words in the \R
   language.
@@ -72,7 +72,7 @@ is.nan(x)
   modes, not just numeric.
 }
 \references{
-  The IEC 60559 standard, also know as the
+  The IEC 60559 standard, also known as the
   ANSI/IEEE 754 Floating-Point Standard.
 
   D. Goldberg (1991) \emph{What Every Computer Scientist Should Know

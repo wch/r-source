@@ -39,14 +39,13 @@ file.show(\dots, header = rep("", nfiles), title = "R Information",
   \code{pager} argument, which is a character vector specifying a system
   command (usually \code{less}) to run on the set of files.
 
-  Most GUI systems will use a separate pager window for each file,
-  and let the user leave it up while \R
-  continues running.  The selection of such pagers could either be done
-  using \dQuote{magic} pager names being intercepted by lower-level code
-  (such as \code{"internal"} and \code{"console"} on Windows), or
-  by letting \code{pager} be an R function which will be called with the
-  same first four arguments as \code{file.show} and take care of
-  interfacing to the GUI.
+  Most GUI systems will use a separate pager window for each file, and
+  let the user leave it up while \R continues running.  The selection of
+  such pagers could either be done using special pager names being
+  intercepted by lower-level code (such as \code{"internal"} and
+  \code{"console"} on Windows), or by letting \code{pager} be an R
+  function which will be called with the same first four arguments as
+  \code{file.show} and take care of interfacing to the GUI.
 
   Not all implementations will honour \code{delete.file}.
 #ifdef windows

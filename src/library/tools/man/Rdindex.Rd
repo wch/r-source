@@ -7,7 +7,7 @@
 \title{Generate Index from Rd Files}
 \alias{Rdindex}
 \description{
-  Print a 2-column index table with \dQuote{names} and titles from given
+  Print a 2-column index table with names and titles from given
   R documentation files to a given output file or connection.  The
   titles are nicely formatted between two column positions (typically 25
   and 72, respectively).

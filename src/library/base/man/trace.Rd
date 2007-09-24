@@ -178,7 +178,7 @@ tracingState(on = NULL)
   but they disappear when the browser exits.  This may be relevant in
   that the S-Plus version allows you to experiment with code changes
   interactively, but the \R version does not.  (A future revision may
-  include a \dQuote{destructive} browser for \R.)
+  include a \sQuote{destructive} browser for \R.)
 }
 \note{
   The version of function tracing that includes any of the arguments

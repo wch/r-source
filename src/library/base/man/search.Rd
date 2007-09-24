@@ -40,7 +40,7 @@ searchpaths()
   \code{\link{loadedNamespaces}} to list loaded name spaces.
 
   \code{\link{attach}} and \code{\link{detach}} to change the
-  search \dQuote{path}, \code{\link{objects}} to find \R objects in there.
+  search path, \code{\link{objects}} to find \R objects in there.
 }
 \examples{
 search()

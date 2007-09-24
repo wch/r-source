@@ -140,7 +140,7 @@ arima0(x, order = c(0, 0, 0),
   \code{n.cond} on, (where \code{n.cond} is at least the maximum lag of
   an AR term), treating all earlier innovations to be zero.  Argument
   \code{n.cond} can be used to allow comparability between different
-  fits.  The \dQuote{part log-likelihood} is the first term, half the
+  fits.  The \sQuote{part log-likelihood} is the first term, half the
   log of the estimated mean square.  Missing values are allowed, but
   will cause many of the innovations to be missing.
 

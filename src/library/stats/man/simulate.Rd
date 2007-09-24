@@ -13,7 +13,7 @@ simulate(object, nsim, seed, \dots)
   \item{object}{an object representing a fitted model.}
   \item{nsim}{number of response vectors to simulate.  Defaults to 1.}
   \item{seed}{an object specifying if and how the random number
-    generator should be initialized (\dQuote{seeded}).\cr
+    generator should be initialized (\sQuote{seeded}).\cr
     For the "lm" method, either \code{NULL} or an integer that will be
     used in a call to \code{set.seed} before simulating the response
     vectors.  If set, the value is saved as the \code{"seed"} attribute

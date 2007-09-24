@@ -40,7 +40,7 @@
     for the case of two plots.}
   \item{grid}{logical indicating if grid lines should be drawn.  If
     true, \code{\link{grid}()} is used for the first plot, where as
-    vertical lines are drawn at \dQuote{touching} points for the
+    vertical lines are drawn at \sQuote{touching} points for the
     cumulative plot.}
   \item{do.points}{for \code{lines()}: logical indicating if the step
     points should be drawn as well (and as they are drawn in \code{plot()}).}

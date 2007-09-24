@@ -39,7 +39,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{\link{postscript}} or \code{\link{pdf}} device, and
   post-processing the output file using \code{ghostscript}.
   \code{bitmap} works in the same way using a \code{postscript} device
-  and post-processing the output as \dQuote{printing}.
+  and post-processing the output as \sQuote{printing}.
 
   You will need \code{ghostscript}: the full path to the executable can
   be set by the environment variable \env{R\_GSCMD}.

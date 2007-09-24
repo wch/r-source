@@ -106,8 +106,11 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
 
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
-\seealso{\code{\link{stars}} for drawing \emph{stars} with a bit more
-  flexibility.  If you are about doing \dQuote{bubble plots} by
+\seealso{
+  \code{\link{stars}} for drawing \emph{stars} with a bit more
+  flexibility.
+
+  If you are thinking about doing \sQuote{bubble plots} by
   \code{symbols(*, circles=*)}, you should \emph{really} consider using
   \code{\link{sunflowerplot}} instead.
 }

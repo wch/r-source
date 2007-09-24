@@ -26,7 +26,7 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
   \code{format.pval} is mainly an auxiliary function for
   \code{\link{print.summary.lm}} etc., and does separate formatting for
   fixed, floating point and very small values; those less than
-  \code{eps} are formatted as \code{"< [eps]"} (where \dQuote{[eps]}
+  \code{eps} are formatted as \code{"< [eps]"} (where \sQuote{[eps]}
   stands for \code{format(eps, digits)}).
 }
 \examples{

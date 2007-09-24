@@ -30,7 +30,7 @@
   variables.  The name of the site file is the one pointed to by the
   environment variable \env{R\_ENVIRON}; if this is unset or empty,
   \file{\$R\_HOME/etc/Renviron.site} is used (if it exists, which it
-  does not in a \dQuote{factory-fresh} installation).
+  does not in a \sQuote{factory-fresh} installation).
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
 #ifdef windows
@@ -44,10 +44,10 @@
   If this variable is unset, the default is
   \file{\$R\_HOME/etc/Rprofile.site}, which is used if it exists
 #ifdef unix
-  (which it does not in a \dQuote{factory-fresh} installation).
+  (which it does not in a \sQuote{factory-fresh} installation).
 #endif
 #ifdef windows
-  (it contains settings from the installer in a \dQuote{factory-fresh}
+  (it contains settings from the installer in a \sQuote{factory-fresh}
   installation).
 #endif
   This code is sourced into the \pkg{base} package.  Users need to be

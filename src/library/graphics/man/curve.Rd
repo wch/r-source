@@ -48,7 +48,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE, type = "l",
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
 
-  For \dQuote{expensive} \code{expr}essions, you should use smarter tools.
+  For expensive-to-compute \code{expr}essions, you should use smarter tools.
 }
 \seealso{
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.

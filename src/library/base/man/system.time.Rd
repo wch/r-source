@@ -12,7 +12,7 @@ unix.time(expr, gcFirst = TRUE)
 \alias{system.time}
 \alias{unix.time}
 \arguments{
-  \item{expr}{Valid \R expression to be \dQuote{timed}}
+  \item{expr}{Valid \R expression to be timed.}
   \item{gcFirst}{Logical - should a garbage collection be performed
     immediately before the timing?  Default is \code{TRUE}.}
 }

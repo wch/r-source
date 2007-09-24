@@ -59,7 +59,7 @@ rlogis(n, location = 0, scale = 1)
 \note{
   \code{qlogis(p)} is the same as the well known \sQuote{\emph{logit}}
   function, \eqn{logit(p) = \log(p/(1-p))}, and \code{plogis(x)} has
-  consequently been called the \dQuote{inverse logit}.
+  consequently been called the \sQuote{inverse logit}.
 
   The distribution function is a rescaled hyperbolic tangent,
   \code{plogis(x) == (1+ \link{tanh}(x/2))/2}, and it is called a

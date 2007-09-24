@@ -17,7 +17,7 @@ recordGraphics(expr, list, env)
 }
 \arguments{
   \item{expr}{object of mode \code{\link{expression}} or \code{call} or
-    an \dQuote{unevaluated expression}.}
+    an unevaluated expression.}
   \item{list}{a list defining the environment in which \code{expr} is to
     be evaluated.}
   \item{env}{An \code{\link{environment}} specifying

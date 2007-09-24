@@ -50,7 +50,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \code{\link{barplot}}, \code{\link{legend}}, etc.
 }
 \seealso{
-  \code{\link{box}} for the \dQuote{standard} box around the plot;
+  \code{\link{box}} for the standard box around the plot;
   \code{\link{polygon}} and \code{\link{segments}} for flexible line
   drawing.
 

@@ -60,7 +60,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
 
   In the old, \code{vfont} specification for the \code{text} function,
   the Hershey font is specified by a typeface (e.g., \code{serif} or
-  \code{sans serif}) and a fontindex or \dQuote{style} (e.g.,
+  \code{sans serif}) and a fontindex or \sQuote{style} (e.g.,
   \code{plain} or \code{italic}). The first element of \code{vfont}
   specifies the typeface and the second element specifies the fontindex.
   The first table produced by \code{demo(Hershey)} shows the character
@@ -181,7 +181,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
 
       The Kanji characters may be specified in a third way, using the
       so-called "Nelson Index", by specifying an escape sequence of the form
-      \code{\\\\#N1234}.  For example, the Kanji for \dQuote{one} is
+      \code{\\\\#N1234}.  For example, the (obsolete) Kanji for \sQuote{one} is
       produced by \code{\\\\#N0001}.
     
       \code{demo(Japanese)} shows the available Japanese characters.

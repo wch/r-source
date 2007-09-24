@@ -44,7 +44,7 @@ Sys.info()
   built on: they may well be different.
 }
 \note{
-  The meaning of OS \dQuote{release} and \dQuote{version} is highly
+  The meaning of OS \sQuote{release} and \sQuote{version} is
   system-dependent and there is no guarantee that the node or
   login or user names will be what you might reasonably expect.
   (In particular on some Linux distributions the login name is unknown

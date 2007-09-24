@@ -7,7 +7,7 @@
 \alias{col2rgb}
 \title{Color to RGB Conversion}
 \description{
-  \dQuote{Any \R color} to RGB (red/green/blue) conversion.
+  \R color to RGB (red/green/blue) conversion.
 }
 \usage{
 col2rgb(col, alpha = FALSE)
@@ -22,7 +22,7 @@ col2rgb(col, alpha = FALSE)
 }
 \details{
   For integer colors, \code{0} is shorthand for the current
-  \code{par("bg")}, and \code{\link{NA}} means \dQuote{nothing} which
+  \code{par("bg")}, and \code{\link{NA}} means \sQuote{nothing} which
   effectively does not draw the corresponding item.
 
   For character colors, \code{"NA"} is equivalent to \code{NA} above.

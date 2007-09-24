@@ -64,7 +64,7 @@ quote(expr)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{missing}} for argument \dQuote{missingness},
+  \code{\link{missing}} for argument \sQuote{missingness},
   \code{\link{bquote}} for partial substitution,
   \code{\link{sQuote}} and \code{\link{dQuote}} for adding quotation
   marks to strings.

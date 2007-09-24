@@ -68,8 +68,8 @@
   separate pages, or as a subtitle in the outer margin (if any) when
   there are multiple plots per page.
 
-  The \dQuote{Scale-Location} plot, also called \dQuote{Spread-Location} or
-  \dQuote{S-L} plot, takes the square root of the absolute residuals in
+  The \sQuote{Scale-Location} plot, also called \sQuote{Spread-Location} or
+  \sQuote{S-L} plot, takes the square root of the absolute residuals in
   order to diminish skewness (\eqn{\sqrt{| E |}} is much less skewed
   than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 

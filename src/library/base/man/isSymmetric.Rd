@@ -27,7 +27,7 @@ isSymmetric(object, \dots)
 }
 \details{
   The \code{\link{matrix}} method is used inside \code{\link{eigen}} by
-  default to test symmetry of matrices \dQuote{up to rounding error}, using
+  default to test symmetry of matrices \emph{up to rounding error}, using
   \code{\link{all.equal}}.  It might not be appropriate in all
   situations.
 }

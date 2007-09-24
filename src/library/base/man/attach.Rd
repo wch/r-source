@@ -11,7 +11,7 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 }
 \alias{attach}
 \arguments{
-  \item{what}{\dQuote{database}.  This may currently be a
+  \item{what}{\sQuote{database}.  This can be a
     \code{data.frame} or a \code{list} or a \R data file created with
     \code{\link{save}} or \code{NULL} or an environment.  See also Details.}
   \item{pos}{integer specifying position in \code{\link{search}()} where

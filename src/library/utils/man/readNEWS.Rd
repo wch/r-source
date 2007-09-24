@@ -23,8 +23,7 @@ readNEWS(file = file.path(R.home(), "NEWS"), trace = FALSE,
   \item{trace}{logical indicating if the recursive reading should be
     traced, i.e., print what it is doing.}
   \item{chop}{a character string specifying how the news entries should
-    be \emph{\dQuote{chopped}}; \code{chop = "keepAll"} saves the full
-    entries.}
+    be \emph{chopped}; \code{chop = "keepAll"} saves the full entries.}
 }
 % \details{
 %   ~~ If necessary, more details than the description above ~~

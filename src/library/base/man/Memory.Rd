@@ -52,10 +52,10 @@ mem.limits(nsize = NA, vsize = NA)
 
   To understand the options, one needs to know that \R maintains
   separate areas for fixed and variable sized objects.  The first of these
-  is allocated as an array of \dQuote{\emph{cons cells}} (Lisp programmers will
+  is allocated as an array of \emph{cons cells} (Lisp programmers will
   know what they are, others may think of them as the building blocks of
   the language itself, parse trees, etc.), and the second are thrown on a
-  \dQuote{\emph{heap}} of \dQuote{Vcells} of 8 bytes each.  Effectively,
+  \emph{heap} of \sQuote{Vcells} of 8 bytes each.  Effectively,
   the inputs \code{vl} and \code{vu} are rounded up to the next
   multiple of 8.
 

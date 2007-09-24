@@ -45,7 +45,7 @@ attr.all.equal(target, current,
 }
 \description{
     \code{all.equal(x,y)} is a utility to compare \R objects \code{x}
-    and \code{y} testing \dQuote{near equality}.  If they are different,
+    and \code{y} testing \sQuote{near equality}.  If they are different,
     comparison is still made to some extent, and a report of the
     differences is returned.    Don't use \code{all.equal} directly in
     \code{if} expressions---either use \code{isTRUE(all.equal(....))} or

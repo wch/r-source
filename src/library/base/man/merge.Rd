@@ -11,7 +11,7 @@
 \title{Merge Two Data Frames}
 \description{
   Merge two data frames by common columns or row names, or do other
-  versions of database \dQuote{join} operations.
+  versions of database \emph{join} operations.
 }
 \usage{
 merge(x, y, \dots)
@@ -52,7 +52,7 @@ merge(x, y, \dots)
 
   If \code{by} or both \code{by.x} and \code{by.y} are of length 0 (a
   length zero vector or \code{NULL}), the result, \code{r}, is the
-  \dQuote{Cartesian product} of \code{x} and \code{y}, i.e.,
+  \emph{Cartesian product} of \code{x} and \code{y}, i.e.,
   \code{dim(r) = c(nrow(x)*nrow(y), ncol(x) + ncol(y))}.
 
   If \code{all.x} is true, all the non matching cases of \code{x} are

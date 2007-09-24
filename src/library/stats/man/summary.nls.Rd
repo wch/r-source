@@ -26,7 +26,7 @@
   \item{digits}{the number of significant digits to use when printing.}
   \item{symbolic.cor}{logical.  If \code{TRUE}, print the correlations in
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
-  \item{signif.stars}{logical.  If \code{TRUE}, \dQuote{significance stars}
+  \item{signif.stars}{logical.  If \code{TRUE}, \sQuote{significance stars}
     are printed for each coefficient.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -37,7 +37,7 @@
 
   \code{print.summary.nls} tries to be smart about formatting the
   coefficients, standard errors, etc. and additionally gives
-  \dQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
+  \sQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
 
   Correlations are printed to two decimal places (or symbolically): to
   see the actual correlations print \code{summary(object)$correlation}

@@ -37,7 +37,7 @@ rank(x, na.last = TRUE,
   The \code{"random"} method puts these in random order whereas the
   default, \code{"average"}, replaces them by their mean, and
   \code{"max"} and \code{"min"} replaces them by their maximum and
-  minimum respectively, the latter being the typical \dQuote{sports}
+  minimum respectively, the latter being the typical sports
   ranking.
 
   \code{NA} values are never considered to be equal: for \code{na.last =

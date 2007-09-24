@@ -47,7 +47,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   way.
 
   The \code{Lab} and \code{Luv} spaces describe colors of objects, and
-  so require the specification of a reference \dQuote{white light}
+  so require the specification of a reference \sQuote{white light}
   color.  Illuminant \code{D65} is a standard indirect daylight,
   Illuminant \code{D50} is close to direct sunlight, and Illuminant
   \code{A} is the light from a standard incandescent bulb. Other

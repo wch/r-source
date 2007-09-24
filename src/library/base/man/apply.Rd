@@ -41,7 +41,7 @@ apply(X, MARGIN, FUN, \dots)
   vector if \code{MARGIN} has length 1 and an array of dimension
   \code{dim(X)[MARGIN]} otherwise.
   If \code{n} is \code{0}, the result has length 0 but not necessarily
-  the \dQuote{correct} dimension.
+  the \sQuote{correct} dimension.
 
   If the calls to \code{FUN} return vectors of different lengths,
   \code{apply} returns a list of length \code{prod(dim(X)[MARGIN])} with

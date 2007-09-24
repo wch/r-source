@@ -27,7 +27,7 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
     files are considered; if \code{TRUE}, all files are used.}
   \item{full.names}{a logical indicating whether the full paths of the
     files found are returned (default), or just the file names.}
-  \item{type}{a character string giving the \dQuote{type} of the files
+  \item{type}{a character string giving the \sQuote{type} of the files
     to be listed, as characterized by their extensions.  Currently,
     possible values are \code{"code"} (R code), \code{"data"} (data
     sets), \code{"demo"} (demos), \code{"docs"} (R documentation), and
@@ -52,7 +52,7 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
   only visible files are used.
 
   \code{list_files_with_type} returns the paths of the files in \code{dir}
-  of the given \dQuote{type}, as determined by the extensions recognized
+  of the given \sQuote{type}, as determined by the extensions recognized
   by \R.  When listing R code and documentation files, files in
   OS-specific subdirectories are included if present according to the
   value of \code{OS_subdirs}.  Note that by default, full paths are

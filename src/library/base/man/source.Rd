@@ -32,7 +32,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
   \item{max.deparse.length}{integer; is used only if \code{echo} is
-    \code{TRUE} and gives the maximal length of the \dQuote{echo} of a
+    \code{TRUE} and gives the maximal length of the printout of a
     single expression.}
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory

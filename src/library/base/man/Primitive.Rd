@@ -8,7 +8,7 @@
 \alias{primitive}
 \title{Call a ``Primitive'' Internal Function}
 \description{
-  \code{.Primitive} returns an entry point to a \dQuote{primitive}
+  \code{.Primitive} returns an entry point to a \sQuote{primitive}
   (internally implemented) function.
 }
 \usage{

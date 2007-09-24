@@ -21,7 +21,7 @@ forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
   \item{r,l}{an upper (or lower) triangular matrix giving the
     coefficients for the system to be solved.  Values below (above)
     the diagonal are ignored.}
-  \item{x}{a matrix whose columns give \dQuote{right-hand sides} for
+  \item{x}{a matrix whose columns give the right-hand sides for
     the equations.}
   \item{k}{The number of columns of \code{r} and rows of \code{x} to use.}
   \item{upper.tri}{logical; if \code{TRUE} (default), the \emph{upper}

@@ -10,7 +10,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 }
 \alias{rgb}
 \description{
-  This function creates \dQuote{colors} corresponding to the given
+  This function creates colors corresponding to the given
   intensities (between 0 and \code{max}) of the red, green and blue
   primaries.
 
@@ -56,8 +56,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   hexadecimal (after rescaling to \code{0 ... 255}).
 }
 \seealso{
-  \code{\link{col2rgb}} the \dQuote{inverse} for translating \R colors
-  to RGB vectors;
+  \code{\link{col2rgb}}for translating \R colors to RGB vectors;
   \code{\link{rainbow}}, \code{\link{hsv}}, \code{\link{hcl}},
   \code{\link{gray}}.
 }

@@ -52,7 +52,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
   \item{cex}{vector of character expansion sizes, used cyclically.
     This works as a multiple of \code{\link{par}("cex")}.  \code{NULL} is
     equivalent to \code{1.0}. }
-  \item{bg}{vector of (\dQuote{fill}) colors for the open plot
+  \item{bg}{vector of background (fill) colors for the open plot
     symbols given by \code{pch=21:25} as in \code{\link{points}}.  The
     default \code{NA} corresponds to the one of the underlying function
     \code{\link{plot.xy}}.}

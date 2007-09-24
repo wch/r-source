@@ -18,7 +18,7 @@
 \title{Functions to Access the Function Call Stack}
 \description{
   These functions provide access to \code{\link{environment}}s
-  (\dQuote{frames} in S terminology) associated with functions further
+  (\sQuote{frames} in S terminology) associated with functions further
   up the calling stack.
 }
 \usage{

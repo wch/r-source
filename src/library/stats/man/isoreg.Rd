@@ -19,7 +19,7 @@ isoreg(x, y = NULL)
 \arguments{
   \item{x, y}{%in \code{isoreg},
     coordinate vectors of the regression points.  Alternatively a single
-    \dQuote{plotting} structure can be specified: see \code{\link{xy.coords}}.
+    plotting structure can be specified: see \code{\link{xy.coords}}.
   }
 }
 \details{
@@ -49,7 +49,7 @@ isoreg(x, y = NULL)
 \note{
   The code should be improved to accept \emph{weights} additionally and
   solve the corresponding weighted least squares problem.\cr
-  \dQuote{Patches are welcome!}
+  \sQuote{Patches are welcome!}
 }
 \references{
   Barlow, R. E., Bartholomew, D. J., Bremner, J. M., and Brunk, H. D. (1972)

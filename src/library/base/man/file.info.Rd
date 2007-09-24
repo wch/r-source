@@ -19,7 +19,7 @@ file.info(\dots)
 \details{
   The file paths are tilde-expanded: see \code{\link{path.expand}}.
 
-  What is meant by \dQuote{file access} and hence the last access time
+  What is meant by \sQuote{file access} and hence the last access time
   is system-dependent.
 
   The file \sQuote{mode} follows POSIX conventions, giving three octal

@@ -67,7 +67,7 @@ pairs(x, \dots)
 }
 \details{
   The \eqn{ij}th scatterplot contains \code{x[,i]} plotted against
-  \code{x[,j]}.  The \dQuote{scatterplot} can be customised by setting panel
+  \code{x[,j]}.  The scatterplot can be customised by setting panel
   functions to appear as something completely different. The
   off-diagonal panel functions are passed the appropriate columns of
   \code{x} as \code{x} and \code{y}: the diagonal panel function (if

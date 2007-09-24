@@ -14,19 +14,12 @@
 }
 \usage{
 dimnames(x)
-%MM dimnames(x, \dots)
-%MM \method{dimnames}{data.frame}(x, maybeNULL = FALSE, \dots)
 dimnames(x) <- value
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
-%MM \item{\dots}{potentially further arguments for \code{dimnames} methods.}
-%MM \item{maybeNULL}{for the \code{\link{data.frame}} method, a
-%MM   \code{\link{logical}} indicating if the \code{dimnames()[[1]]}
-%MM   component may be \code{\link{NULL}} when \code{x} is a data frame
-%MM   with trivial row names, i.e., rownames equivalent to \code{1:nrow(x)}.}
-  \item{value}{a possible value for \code{dimnames(x)}: see
-    \dQuote{Value}.}
+  \item{value}{a possible value for \code{dimnames(x)}: see the
+    Value section.}
 }
 \details{
   The functions \code{dimnames} and \code{dimnames<-} are generic.

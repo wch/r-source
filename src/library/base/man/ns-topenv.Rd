@@ -18,7 +18,7 @@ topenv(envir = parent.frame(),
 
   \item{matchThisEnv}{return this environment, if it matches before
       any other criterion is satisfied.  The default, the option
-      \dQuote{topLevelEnvironment}, is set by \code{\link{sys.source}},
+      \sQuote{topLevelEnvironment}, is set by \code{\link{sys.source}},
       which treats a specific environment as the top level environment.
       Supplying the argument as \code{NULL} means it will never match.}
 }

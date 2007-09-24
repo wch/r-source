@@ -44,7 +44,7 @@ lm(formula, data, subset, weights, na.action,
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
-    \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
+    \code{\link{na.fail}} if that is unset.  The \sQuote{factory-fresh}
     default is \code{\link{na.omit}}.  Another possible value is
     \code{NULL}, no action.  Value \code{\link{na.exclude}} can be useful.}
 

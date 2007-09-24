@@ -28,7 +28,7 @@ AIC(object, \dots, k = 2)
     \code{logLik} method to extract the corresponding log-likelihood, or
     an object inheriting from class \code{logLik}.}
   \item{\dots}{optionally more fitted model objects.}
-  \item{k}{numeric, the \dQuote{penalty} per parameter to be used; the
+  \item{k}{numeric, the \emph{penalty} per parameter to be used; the
     default \code{k = 2} is the classical AIC.}
 }
 \details{

@@ -49,7 +49,7 @@ any(\dots, na.rm = FALSE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{all}}, the \dQuote{complement} of \code{any}.
+  \code{\link{all}}, the \sQuote{complement} of \code{any}.
 }
 \examples{
 range(x <- sort(round(stats::rnorm(10) - 1.2,1)))

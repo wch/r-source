@@ -90,7 +90,7 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     \code{formatC()}.}
   \item{zero.print}{logical, character string or \code{NULL} specifying
     if and how \emph{zeros} should be formatted specially.  Useful for
-    pretty printing \dQuote{sparse} objects.}
+    pretty printing \sQuote{sparse} objects.}
   \item{\dots}{arguments passed to \code{format}.}
 }
 \value{

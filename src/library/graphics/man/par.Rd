@@ -232,7 +232,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{col.main}}{The color to be used for plot main titles.}
     \item{\code{col.sub}}{The color to be used for plot sub-titles.}
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
-      \code{(width, height)} in \dQuote{rasters} (pixels).  Some devices
+      \code{(width, height)} in \sQuote{rasters} (pixels).  Some devices
       have no concept of pixels and so assume an arbitrary pixel size,
       usually 1/72 inch.}
     \item{\code{crt}}{A numerical value specifying (in degrees) how
@@ -419,7 +419,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{new}}{logical, defaulting to \code{FALSE}.  If set to
       \code{TRUE}, the next high-level plotting command (actually
       \code{\link{plot.new}}) should \emph{not clean} the frame before
-      drawing \dQuote{as if it was on a \bold{\emph{new}} device}.}
+      drawing \emph{as if it was on a \bold{\emph{new}} device}.}
     \item{\code{oma}}{A vector of the form \code{c(bottom, left, top,
 	right)} giving the size of the outer margins in lines of text.}
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}

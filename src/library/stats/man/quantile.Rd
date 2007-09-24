@@ -124,9 +124,9 @@ quantile(x, \dots)
 }
 \seealso{
   \code{\link{ecdf}} for empirical distributions of which
-  \code{quantile} is the \dQuote{inverse};
+  \code{quantile} is an inverse;
   \code{\link{boxplot.stats}} and \code{\link{fivenum}} for computing
-  \dQuote{versions} of quartiles, etc.
+  other versions of quartiles, etc.
 }
 \examples{
 quantile(x <- rnorm(1001))# Extremes & Quartiles by default

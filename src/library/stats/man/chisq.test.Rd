@@ -35,9 +35,9 @@ chisq.test(x, y = NULL, correct = TRUE,
 }
 \details{
   If \code{x} is a matrix with one row or column, or if \code{x} is a
-  vector and \code{y} is not given, then a \dQuote{goodness-of-fit test}
-  is performed (\dQuote{\code{x} is treated as a one-dimensional
-  contingency table}).  The entries of \code{x} must be non-negative
+  vector and \code{y} is not given, then a \emph{goodness-of-fit test}
+  is performed (\code{x} is treated as a one-dimensional
+  contingency table).  The entries of \code{x} must be non-negative
   integers.  In this case, the hypothesis tested is whether the
   population probabilities equal those in \code{p}, or are all equal if
   \code{p} is not given.

@@ -26,7 +26,7 @@ pkg:::name
   a name space.  The package will be loaded if it was not loaded already
   before the call.  Assignment into name spaces is not supported.
 
-  Note that it is typically a \dQuote{design mistake} to use \code{:::}
+  Note that it is typically a design mistake to use \code{:::}
   in your code since the corresponding object has probably been kept
   namespace-internal for a good reason.  Consider contacting the package
   maintainer if you feel the need to access the object for anything but

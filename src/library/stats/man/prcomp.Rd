@@ -38,7 +38,7 @@ prcomp(x, \dots)
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
-    \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
+    \code{\link{na.fail}} if that is unset. The \sQuote{factory-fresh}
     default is \code{\link{na.omit}}.}
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{scale.} or \code{tol}.}

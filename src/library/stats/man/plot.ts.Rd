@@ -54,7 +54,7 @@
   \code{plot.type}.
 
   If \code{y} is present, both \code{x} and \code{y} must be univariate,
-  and a \dQuote{scatter} plot \code{y ~ x} will be drawn, enhanced by
+  and a scatter plot \code{y ~ x} will be drawn, enhanced by
   using \code{\link{text}} if \code{xy.labels} is
   \code{\link{TRUE}} or \code{character}, and \code{\link{lines}} if
   \code{xy.lines} is \code{TRUE}.

@@ -50,7 +50,7 @@ lm.influence(model, do.coef = TRUE)
   Cases omitted in the fit are omitted unless a \code{\link{na.action}}
   method was used (such as \code{\link{na.exclude}}) which restores them.
   
-  \item{hat}{a vector containing the diagonal of the \dQuote{hat} matrix.}
+  \item{hat}{a vector containing the diagonal of the \sQuote{hat} matrix.}
   \item{coefficients}{(unless \code{do.coef} is false) a matrix whose
     i-th row contains the change in the estimated coefficients which
     results when the i-th case is dropped from the regression.  Note

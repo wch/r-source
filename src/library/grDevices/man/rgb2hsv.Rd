@@ -16,13 +16,13 @@
 rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 }
 \arguments{
-  \item{r}{vector of \dQuote{red} values in \eqn{[0,M]}, (\eqn{M
+  \item{r}{vector of \sQuote{red} values in \eqn{[0,M]}, (\eqn{M
       =}\code{maxColorValue}) or 3-row rgb matrix.}
-  \item{g}{vector of \dQuote{green} values, or \code{\link{NULL}} when
+  \item{g}{vector of \sQuote{green} values, or \code{\link{NULL}} when
     \code{r} is a matrix.}
-  \item{b}{vector of \dQuote{blue} values, or \code{\link{NULL}} when
+  \item{b}{vector of \sQuote{blue} values, or \code{\link{NULL}} when
     \code{r} is a matrix.}
-  \item{gamma}{a \dQuote{gamma correction} (supposedly applied to the
+  \item{gamma}{a gamma-correction (supposedly applied to the
     r,g,b values previously), see \code{\link{hsv}(...., gamma)}.}
   \item{maxColorValue}{number giving the maximum of the RGB color values
     range.  The default \code{255} corresponds to the typical \code{0:255}
