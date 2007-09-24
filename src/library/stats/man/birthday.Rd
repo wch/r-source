@@ -8,7 +8,7 @@
 \alias{pbirthday}
 \title{Probability of coincidences}
 \description{
-  Computes approximate answers to a generalised \dQuote{birthday paradox}
+  Computes approximate answers to a generalised \emph{birthday paradox}
   problem. \code{pbirthday} computes the probability of a coincidence
   and \code{qbirthday} computes the number of observations needed to
   have a specified probability of coincidence.

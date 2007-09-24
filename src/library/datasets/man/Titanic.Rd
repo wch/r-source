@@ -29,7 +29,7 @@
 \details{
   The sinking of the Titanic is a famous event, and new books are still
   being published about it.  Many well-known facts---from the
-  proportions of first-class passengers to the \dQuote{women and
+  proportions of first-class passengers to the \sQuote{women and
     children first} policy, and the fact that that policy was not
   entirely successful in saving the women and children in the third
   class---are reflected in the survival rates for various classes of

@@ -33,10 +33,9 @@ identical(x, y)
   the result is also \code{NA}.  In either case, the expression
   \code{if(x == y)....} won't work as expected.
 
-  The function \code{all.equal} is also
-  sometimes used to test equality this way, but was intended for
-  something different:  It allows for \dQuote{reasonable}
-  differences in numeric results.
+  The function \code{all.equal} is also sometimes used to test equality
+  this way, but was intended for something different:  it allows for
+  small differences in numeric results.
 
   The computations in \code{identical} are also reliable and usually
   fast.  There should never be an error.  The only known way to kill

@@ -33,16 +33,13 @@ delayedAssign(x, value, eval.env = parent.frame(1),
   environment.
 
   The expression assigned to a promise by \code{delayedAssign} will
-  not be evaluated until it is eventually \dQuote{forced}.  This happens when
+  not be evaluated until it is eventually \sQuote{forced}.  This happens when
   the variable is first accessed.
   
   When the promise is eventually forced, it is evaluated within the
   environment specified by \code{eval.env} (whose contents may have changed in
   the meantime).  After that, the value is fixed and the expression will
   not be evaluated again.
-  
-  This function is meant to replace the \code{delay()} function, to make it
-  more difficult for R code to see \dQuote{naked} promises.
 }
 \seealso{
 \code{\link{substitute}}, to see the expression associated with a promise.

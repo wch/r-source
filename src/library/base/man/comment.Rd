@@ -27,8 +27,7 @@ comment(x) <- value
   comment.
 }
 \seealso{
-  \code{\link{attributes}} and \code{\link{attr}} for \dQuote{normal}
-  attributes.
+  \code{\link{attributes}} and \code{\link{attr}} for other attributes.
 }
 \examples{
 x <- matrix(1:12, 3,4)

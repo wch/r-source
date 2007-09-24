@@ -8,7 +8,7 @@
 \title{Time Series Lag Plots}
 \description{
   Plot time series against lagged versions of themselves.
-  Helps visualizing \dQuote{auto-dependence} even when auto-correlations
+  Helps visualizing \sQuote{auto-dependence} even when auto-correlations
   vanish. 
 }
 \usage{

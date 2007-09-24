@@ -57,9 +57,9 @@ all(\dots, na.rm = FALSE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{any}}, the \dQuote{complement} of \code{all}, and
+  \code{\link{any}}, the \sQuote{complement} of \code{all}, and
   \code{\link{stopifnot}(*)} which is an \code{all(*)}
-  \dQuote{insurance}.
+  \sQuote{insurance}.
 }
 \examples{
 range(x <- sort(round(stats::rnorm(10) - 1.2, 1)))

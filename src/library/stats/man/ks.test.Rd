@@ -91,8 +91,8 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   William J. Conover (1971),
   \emph{Practical Nonparametric Statistics}.
   New York: John Wiley & Sons.
-  Pages 295--301 (one-sample \dQuote{Kolmogorov} test),
-  309--314 (two-sample \dQuote{Smirnov} test).
+  Pages 295--301 (one-sample Kolmogorov test),
+  309--314 (two-sample Smirnov test).
 
   Durbin, J. (1973)
   \emph{Distribution theory for tests based on the sample distribution

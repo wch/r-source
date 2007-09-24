@@ -15,10 +15,10 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
 }
 \arguments{
   \item{h,s,v}{numeric vectors of values in the range \code{[0,1]} for
-    \dQuote{hue}, \dQuote{saturation} and \dQuote{value} to be combined
+    \sQuote{hue}, \sQuote{saturation} and \sQuote{value} to be combined
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
-  \item{gamma}{a \dQuote{gamma correction} exponent, \eqn{\gamma}}
+  \item{gamma}{a gamma-correction exponent, \eqn{\gamma}}
   \item{alpha}{numeric vector of values in the range \code{[0,1]} for
     alpha transparency channel (0 means transparent and 1 means opaque).}
 }
@@ -27,7 +27,7 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   some devices: see \code{\link{rgb}}.
 }
 \value{
-  This function creates a vector of \dQuote{colors} corresponding to the
+  This function creates a vector of colors corresponding to the
   given values in HSV space.  The values returned by \code{hsv} can be
   used with a \code{col=} specification in graphics functions or in
   \code{par}.

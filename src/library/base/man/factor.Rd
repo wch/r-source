@@ -120,7 +120,7 @@ as.ordered(x)
   \code{"levels"} attribute.  Be careful only to compare factors with
   the same set of levels (in the same order).  In particular,
   \code{as.numeric} applied to a factor is meaningless, and may
-  happen by implicit coercion.	To \dQuote{revert} a factor \code{f} to
+  happen by implicit coercion.	To transform a factor \code{f} to
   its original numeric values, \code{as.numeric(levels(f))[f]} is
   recommended and slightly more efficient than
   \code{as.numeric(as.character(f))}.
@@ -165,7 +165,7 @@ as.ordered(x)
 \seealso{
   \code{\link{[.factor}} for subsetting of factors.
 
-  \code{\link{gl}} for construction of \dQuote{balanced} factors and
+  \code{\link{gl}} for construction of balanced factors and
   \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
   levels, and \code{\link{unclass}} to get integer codes.

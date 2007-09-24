@@ -130,7 +130,7 @@ env.profile(env)
   \code{\link{ls}} may be used to view the objects in an environment,
   and hence \code{\link{ls.str}} may be useful for an overview.
 
-  \code{\link{sys.source}} can be used to \dQuote{fill} an environment.
+  \code{\link{sys.source}} can be used to populate an environment.
 }
 \examples{
 f <- function() "top level function"

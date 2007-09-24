@@ -7,7 +7,7 @@
 \alias{printCoefmat}
 \title{Print Coefficient Matrices}
 \description{
-  Utility function to be used in \dQuote{higher level} \code{\link{print}}
+  Utility function to be used in higher-level \code{\link{print}}
   methods, such as \code{\link{print.summary.lm}},
   \code{\link{print.summary.glm}} and \code{\link{print.anova}}.  The
   goal is to provide a flexible interface with smart defaults such
@@ -30,11 +30,11 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
   \item{digits}{minimum number of significant digits to be used for
     most numbers.}
   \item{signif.stars}{logical; if \code{TRUE}, P-values are additionally
-    encoded visually as \dQuote{significance stars} in order to help scanning
+    encoded visually as \sQuote{significance stars} in order to help scanning
     of long coefficient tables.  It defaults to the
     \code{show.signif.stars} slot of \code{\link{options}}.}
   \item{signif.legend}{logical; if \code{TRUE}, a legend for the 
-    \dQuote{significance stars} is printed provided \code{signif.stars=TRUE}.}
+    \sQuote{significance stars} is printed provided \code{signif.stars=TRUE}.}
   \item{dig.tst}{minimum number of significant digits for the test statistics,
     see \code{tst.ind}.}
   \item{cs.ind}{indices (integer) of column numbers which are (like)
@@ -43,7 +43,7 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
   \item{tst.ind}{indices (integer) of column numbers for test
     statistics.}
   \item{zap.ind}{indices (integer) of column numbers which should be
-    formatted by \code{\link{zapsmall}}, i.e., by \dQuote{zapping} values
+    formatted by \code{\link{zapsmall}}, i.e., by \sQuote{zapping} values
     close to 0.}
   \item{P.values}{logical or \code{NULL}; if \code{TRUE}, the last
     column of \code{x} is formatted by \code{\link{format.pval}} as P

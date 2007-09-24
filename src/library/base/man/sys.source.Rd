@@ -23,8 +23,8 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
     typically supply an explicit \code{envir} argument.}
   \item{chdir}{logical; if \code{TRUE}, the \R working directory is
     changed to the directory containing \code{file} for evaluating.}
-  \item{keep.source}{logical.  If \code{TRUE}, functions \dQuote{keep
-      their source} including comments, see
+  \item{keep.source}{logical.  If \code{TRUE}, functions keep
+    their source including comments, see
     \code{\link{options}(keep.source = *)} for more details.}
 }
 \details{

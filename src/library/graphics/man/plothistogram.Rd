@@ -29,7 +29,7 @@
   \item{freq}{logical; if \code{TRUE}, the
     histogram graphic is to present a representation of frequencies, i.e,
     \code{x$counts}; if \code{FALSE}, \emph{relative} frequencies
-    (\dQuote{probabilities}), i.e., \code{x$density}, are plotted.  The
+    (probabilities), i.e., \code{x$density}, are plotted.  The
     default is true for equidistant \code{breaks} and false otherwise.}
   \item{col}{a colour to be used to fill the bars.  The default of
     \code{NULL} yields unfilled bars.}

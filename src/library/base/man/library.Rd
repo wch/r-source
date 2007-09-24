@@ -61,7 +61,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     or a non-function masking a non-function.
   }
   \item{keep.source}{logical.  If \code{TRUE}, functions
-    \dQuote{keep their source} including comments, see argument
+    \sQuote{keep their source} including comments, see argument
     \code{keep.source} to \code{\link{options}}.  This applies only to
     the named package, and not to any packages or name spaces which might be
     loaded to satisfy dependencies or imports.
@@ -131,7 +131,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   put calls to \code{\link{library.dynam}} which are needed when loading
   a package into this function (don't call \code{library.dynam}
   directly, as this will not work if the package is not installed in a
-  \dQuote{standard} location).  \code{.First.lib} is invoked after the
+  standard location).  \code{.First.lib} is invoked after the
   search path interrogated by \code{search()} has been updated, so
   \code{as.environment(match("package:name", search()))} will return the
   environment in which the package is stored.  If calling
@@ -140,7 +140,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   option \code{".First.lib"} has a list element with the package's name,
   this element is called in the same manner as \code{.First.lib} when
   the package is loaded.  This mechanism allows the user to set package
-  \dQuote{load hooks} in addition to startup code as provided by the
+  \sQuote{load hooks} in addition to startup code as provided by the
   package maintainers, but \code{\link{setHook}} is preferred.
 
   \code{.Last.lib} is called when a package is detached.  Beware

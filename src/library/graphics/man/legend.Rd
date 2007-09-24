@@ -68,7 +68,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     coordinates.  (Should be positive even for a reversed x axis.)
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
   \item{text.col}{the color used for the legend text.}
-  \item{merge}{logical; if \code{TRUE}, \dQuote{merge} points and lines but
+  \item{merge}{logical; if \code{TRUE}, merge points and lines but
     not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
   \item{trace}{logical; if \code{TRUE}, shows how \code{legend} does all
     its magical computations.}
@@ -111,8 +111,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   both margins; if two values are given, the first is used for \code{x}-
   distance, the second for \code{y}-distance.
 
-  \dQuote{Attribute} arguments such as \code{col}, \code{pch}, \code{lty},
-  etc, are recycled if necessary.  \code{merge} is not.
+  Attribute arguments such as \code{col}, \code{pch}, \code{lty},
+  etc, are recycled if necessary: \code{merge} is not.
 
   Points are drawn \emph{after} lines in order that they can cover the
   line with their background color \code{pt.bg}, if applicable.

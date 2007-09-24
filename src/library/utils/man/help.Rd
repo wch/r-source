@@ -192,7 +192,7 @@ type?topic
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{help.search}()} for finding help pages on a \dQuote{vague}
+  \code{\link{help.search}()} for finding help pages on a vague
   topic;
   \code{\link{help.start}()} which opens the HTML version of the \R
   help pages;

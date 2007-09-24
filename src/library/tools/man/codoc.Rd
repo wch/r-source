@@ -18,7 +18,7 @@ codocClasses(package, lib.loc = NULL)
 codocData(package, lib.loc = NULL)
 }
 \description{
-  Find inconsistencies between actual and documented \dQuote{structure}
+  Find inconsistencies between actual and documented \sQuote{structure}
   of \R objects in a package.  \code{codoc} compares names and
   optionally also corresponding positions and default values of the
   arguments of functions.  \code{codocClasses} and \code{codocData}
@@ -58,7 +58,7 @@ codocData(package, lib.loc = NULL)
   already loaded version of the package.  Otherwise, if the sources are
   used, the \R code files of the package are collected and sourced in a
   new environment.  Then, the usage sections of the Rd files are
-  extracted and parsed \dQuote{as much as possible} to give the formals
+  extracted and parsed \sQuote{as much as possible} to give the formals
   documented.  For interpreted functions in the code environment, the
   formals are compared between code and documentation according to the
   values of the argument \code{use.values}.  Synopsis sections are used
@@ -71,9 +71,9 @@ codocData(package, lib.loc = NULL)
   found is checked.)
 
   Currently, the R documentation format has no high-level markup for the
-  basic \dQuote{structure} of classes and data sets (similar to the usage
+  basic \sQuote{structure} of classes and data sets (similar to the usage
   sections for function synopses).  Variable names for data frames in
-  documentation objects obtained by suitably editing \dQuote{shells}
+  documentation objects obtained by suitably editing \sQuote{templates}
   created by \code{\link{prompt}} are recognized by \code{codocData}
   and used provided that the documentation object is for a single data
   frame (i.e., only has one alias).  \code{codocClasses} analogously

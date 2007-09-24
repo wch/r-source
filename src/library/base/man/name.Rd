@@ -50,8 +50,8 @@ is.name(x)
   with value \code{TRUE} or \code{FALSE}.
 }
 \note{
-  The term \dQuote{symbol} is from the LISP background of \R, whereas
-  \dQuote{name} has been the standard S term for this.
+  The term \sQuote{symbol} is from the LISP background of \R, whereas
+  \sQuote{name} has been the standard S term for this.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

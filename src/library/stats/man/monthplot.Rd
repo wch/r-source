@@ -36,10 +36,10 @@ monthplot(x, \dots)
 }
 \arguments{
   \item{x}{Time series or related object.}
-  \item{labels}{Labels to use for each \dQuote{season}.}
+  \item{labels}{Labels to use for each \sQuote{season}.}
   \item{ylab}{y label.}
   \item{times}{Time of each observation.}
-  \item{phase}{Indicator for each \dQuote{season}.}
+  \item{phase}{Indicator for each \sQuote{season}.}
   \item{base}{Function to use for reference line for subseries.}
   \item{choice}{Which series of an \code{stl} or \code{StructTS} object?}
   \item{\dots}{Arguments to be passed to the default method or

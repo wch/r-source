@@ -20,10 +20,10 @@ smoothEnds(y, k = 3)
 \value{vector of smoothed values, the same length as \code{y}.
 }
 \details{
-  \code{smoothEnds} is used to only do the \dQuote{end point smoothing},
+  \code{smoothEnds} is used to only do the \sQuote{end point smoothing},
   i.e., change at most the observations closer to the beginning/end
   than half the window \code{k}.  The first and last value are computed using
-  \dQuote{\emph{Tukey's end point rule}}, i.e.,
+  \emph{Tukey's end point rule}, i.e.,
   \code{sm[1] = median(y[1], sm[2], 3*sm[2] - 2*sm[3])}.
 }
 \references{

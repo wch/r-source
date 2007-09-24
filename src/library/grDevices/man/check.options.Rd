@@ -21,7 +21,7 @@ check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,
 \arguments{
   \item{new}{a \emph{named} list}
   \item{name.opt}{character with the name of \R object containing the
-    \dQuote{model} (default) list.}
+    default list.}
   \item{reset}{logical; if \code{TRUE}, reset the options from
     \code{name.opt}.  If there is more than one \R object with name
     \code{name.opt}, remove the first one in the \code{\link{search}()} path.}

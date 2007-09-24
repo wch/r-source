@@ -35,10 +35,10 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   \item{main}{logical, or vector of main titles;  if \code{TRUE}, the
     model's call is taken as main title, \code{NULL} or \code{FALSE} mean
     no titles.}
-  \item{col.term, lwd.term}{color and line width for the \dQuote{term curve},
+  \item{col.term, lwd.term}{color and line width for the \sQuote{term curve},
     see \code{\link{lines}}.}
   \item{col.se, lty.se, lwd.se}{color, line type and line width for the
-    \dQuote{twice-standard-error curve} when \code{se = TRUE}.}
+    \sQuote{twice-standard-error curve} when \code{se = TRUE}.}
   \item{col.res, cex, pch}{color, plotting character expansion and type
     for partial residuals, when \code{partial.resid = TRUE}, see
     \code{\link{points}}.}

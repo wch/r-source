@@ -29,7 +29,7 @@
     \code{\link{NA}} values in printed output, or \code{NULL} (see Details)}
   \item{print.gap}{a non-negative integer \eqn{\le 1024}{<= 1024},
     or \code{NULL} (meaning 1), giving the spacing between adjacent
-    \dQuote{columns} in printed vectors, matrices and arrays.}
+    columns in printed vectors, matrices and arrays.}
   \item{right}{logical, indicating whether or not strings should be
     right aligned.  The default is left alignment.}
   \item{max}{a non-null value for \code{max} specifies the approximate

@@ -39,7 +39,7 @@ Sys.getenv(x = NULL, unset = "")
 }
 \seealso{
   \code{\link{Sys.putenv}},
-  \code{\link{Sys.getlocale}} for the locale \dQuote{environment},
+  \code{\link{Sys.getlocale}} for the locale in use,
   \code{\link{getwd}} for the working directory.
 }
 \examples{

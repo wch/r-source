@@ -31,7 +31,7 @@ points(x, \dots)
 
   Graphical parameters commonly used are
   \describe{
-    \item{\code{pch}}{plotting \dQuote{character}, i.e., symbol to use.  This can
+    \item{\code{pch}}{plotting \sQuote{character}, i.e., symbol to use.  This can
       either be a single character or an integer code for one of a set of
       graphics symbols.  The full set of S symbols is available with
       \code{pch=0:18}, see the last picture from \code{example(points)},
@@ -66,7 +66,7 @@ points(x, \dots)
       \code{\link{xfig}} devices).
     }
     \item{\code{col}}{color code or name, see \code{\link{par}}.}
-    \item{\code{bg}}{background (\dQuote{fill}) color for the open plot
+    \item{\code{bg}}{background (fill) color for the open plot
       symbols given by \code{pch=21:25}.}
     \item{\code{cex}}{character (or symbol) expansion: a numerical vector.
       This works as a multiple of \code{\link{par}("cex")}.}

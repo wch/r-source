@@ -30,7 +30,7 @@ anova(object, \dots)
   the models against one another in the order specified.
 
   The print method for \code{anova} objects prints
-  tables in a \dQuote{pretty} form.
+  tables in a \sQuote{pretty} form.
 }
 \section{Warning}{
   The comparison between two or more models will only be valid if they

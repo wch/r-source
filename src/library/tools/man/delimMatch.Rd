@@ -20,7 +20,7 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
   \item{syntax}{currently, always the string \samp{"Rd"} indicating Rd
     syntax (i.e., \samp{\%} starts a comment extending till the end of
     the line, and \samp{\\} escapes).  Future versions might know about
-    other syntaxes, perhaps via \dQuote{syntax tables} allowing to
+    other syntaxes, perhaps via \sQuote{syntax tables} allowing to
     flexibly specify comment, escape, and quote characters.}
 }
 \value{
@@ -30,7 +30,7 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
   characters) of the matched text (or \eqn{-1} for no match).
 }
 \seealso{
-  \code{\link{regexpr}} for \dQuote{simple} pattern matching.
+  \code{\link{regexpr}} for \sQuote{simple} pattern matching.
 }
 \examples{
 x <- c("\\value{foo}", "function(bar)")

@@ -31,7 +31,7 @@ density(x, \dots)
     \code{adjust}.
   }
   \item{adjust}{the bandwidth used is actually \code{adjust*bw}.
-    This makes it easy to specify values like \dQuote{half the default}
+    This makes it easy to specify values like \sQuote{half the default}
     bandwidth.}
 
   \item{kernel, window}{a character string giving the smoothing kernel
@@ -42,7 +42,7 @@ density(x, \dots)
     letter).
 
     \code{"cosine"} is smoother than \code{"optcosine"}, which is the
-    usual \dQuote{cosine} kernel in the literature and almost MSE-efficient.
+    usual \sQuote{cosine} kernel in the literature and almost MSE-efficient.
     However, \code{"cosine"} is the version used by S.
   }
 
@@ -57,7 +57,7 @@ density(x, \dots)
     if this is numeric.}
 
   \item{give.Rkern}{logical; if true, \emph{no} density is estimated, and
-    the \dQuote{canonical bandwidth} of the chosen \code{kernel} is returned
+    the \sQuote{canonical bandwidth} of the chosen \code{kernel} is returned
     instead.}
 
   \item{n}{the number of equally spaced points at which the density

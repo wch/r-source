@@ -39,7 +39,7 @@
   \item{freq}{logical; if \code{TRUE}, the
     histogram graphic is a representation of frequencies, i.e,
     the \code{counts} component of the result; if \code{FALSE},
-    \emph{relative} frequencies (\dQuote{probabilities}) are plotted.}
+    \emph{relative} frequencies (probabilities) are plotted.}
   \item{start.on.monday}{logical. If \code{breaks = "weeks"}, should the
     week start on Mondays or Sundays?}
   \item{format}{for the x-axis labels. See \code{\link{strptime}}.}

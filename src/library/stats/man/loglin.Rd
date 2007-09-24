@@ -20,7 +20,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   \item{margin}{a list of vectors with the marginal totals to be fit.
 
     (Hierarchical) log-linear models can be specified in terms of these
-    marginal totals which give the \dQuote{maximal} factor subsets contained
+    marginal totals which give the \sQuote{maximal} factor subsets contained
     in the model.  For example, in a three-factor model,
     \code{list(c(1, 2), c(1, 3))} specifies a model which contains
     parameters for the grand mean, each factor, and the 1-2 and 1-3
@@ -58,7 +58,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   \item{fit}{An array like \code{table} containing the fitted values.
     Only returned if \code{fit} is \code{TRUE}.}
   \item{param}{A list containing the estimated parameters of the
-    model.  The \dQuote{standard} constraints of zero marginal sums
+    model.  The \sQuote{standard} constraints of zero marginal sums
     (e.g., zero row and column sums for a two factor parameter) are
     employed.  Only returned if \code{param} is \code{TRUE}.}
 }

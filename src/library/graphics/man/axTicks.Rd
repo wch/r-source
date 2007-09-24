@@ -18,14 +18,13 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
 \arguments{
   \item{side}{integer in 1:4, as for \code{\link{axis}}.}
   \item{axp}{numeric vector of length three, defaulting to
-    \code{\link{par}("Zaxp")} where \dQuote{Z} is \dQuote{x} or
-    \dQuote{y} depending on the \code{side} argument.}
+    \code{\link{par}("xaxp")} or \code{\link{par}("yaxp")}
+    depending on the \code{side} argument.}
   \item{usr}{numeric vector of length four, defaulting to
     \code{\link{par}("usr")} giving horizontal (\sQuote{x}) and vertical
     (\sQuote{y}) user coordinate limits.}
   \item{log}{logical indicating if log coordinates are active; defaults
-    to \code{\link{par}("Zlog")} where \sQuote{Z} is as for the
-    \code{axp} argument above.}
+    to \code{\link{par}("xlog")} or \code{\link{par}("ylog")}.}
 }
 \details{
   The \code{axp}, \code{usr}, and \code{log} arguments must be consistent

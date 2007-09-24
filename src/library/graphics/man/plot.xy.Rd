@@ -27,7 +27,7 @@ plot.xy(xy, type, pch = par("pch"), lty = par("lty"),
   \item{lty}{line type code, see \code{\link{lines}}.}
   \item{col}{color code or name, see \code{\link{colors}},
     \code{\link{palette}}.  Here \code{NULL} means colour 0.}
-  \item{bg}{background (\dQuote{fill}) color for the open plot symbols 21:25:
+  \item{bg}{background (fill) color for the open plot symbols 21:25:
     see \code{\link{points.default}}.}
   \item{cex}{character expansion.}
   \item{lwd}{line width, also used for (non-filled) plot symbols, see

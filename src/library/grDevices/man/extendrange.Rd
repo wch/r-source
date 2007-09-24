@@ -24,8 +24,7 @@ extendrange(x, r = range(x, na.rm = TRUE), f = 0.05)
   considered a sophisticated extension of \code{extendrange}.
 }
 \value{
-  numeric vector of length 2, \dQuote{\code{r} extended},
-  namely simply \code{r + c(-f,f) * diff(r)}.
+  A numeric vector of length 2, \code{r + c(-f,f) * diff(r)}.
 }
 \examples{
 x <- 1:5

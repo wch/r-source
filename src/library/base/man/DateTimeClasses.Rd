@@ -88,8 +88,8 @@
     \item{\code{isdst}}{Daylight savings time flag.  Positive if in
       force, zero if not, negative if unknown.}
   }
-  The classes correspond to the ANSI C constructs of \dQuote{calendar
-    time} (the \code{time\_t} data type) and \dQuote{local time} (or
+  The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
+    time} (the \code{time\_t} data type) and \sQuote{local time} (or
   broken-down time, the \code{struct tm} data type), from which they
   also inherit their names.
 

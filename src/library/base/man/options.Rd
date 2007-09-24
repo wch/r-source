@@ -9,7 +9,7 @@
 \alias{getOption}
 \title{Options Settings}
 \description{
-  Allow the user to set and examine a variety of global \dQuote{options}
+  Allow the user to set and examine a variety of global \emph{options}
   which affect the way in which \R computes and displays its results.
 }
 \usage{
@@ -24,7 +24,7 @@ getOption(x)
 \arguments{
   \item{\dots}{any options can be defined, using \code{name = value} or
     by passing a list of such tagged values.  However, only the ones
-    below are used in \dQuote{base \R}.
+    below are used in base \R.
     Further, \code{options('name') == options()['name']}, see the example.
   }
   \item{x}{a character string holding an option name.}
@@ -58,8 +58,8 @@ getOption(x)
       used by \code{\link[stats]{plot.lm}}.}
 
       \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
-      true, a \link{warning} is produced whenever a \dQuote{generalized
-      vector} (atomic or \code{\link{list}}) is extended, by something
+      true, a \link{warning} is produced whenever a
+      vector (atomic or \code{\link{list}}) is extended, by something
       like \code{x <- 1:3; x[5] <- 6}.}
 
     \item{\code{continue}:}{a non-empty string setting the prompt used

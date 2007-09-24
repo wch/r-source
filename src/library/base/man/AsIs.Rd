@@ -11,7 +11,7 @@
 \title{Inhibit Interpretation/Conversion of Objects}
 \description{
   Change the class of an object to indicate that it should be treated
-  \dQuote{as is}.
+  \sQuote{as is}.
 }
 \usage{
 I(x)

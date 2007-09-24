@@ -7,8 +7,8 @@
 \alias{sunflowerplot}
 \title{Produce a Sunflower Scatter Plot}
 \description{
-  Multiple points are plotted as \dQuote{sunflowers} with multiple leaves
-  (\dQuote{petals}) such that overplotting is visualized instead of accidental and
+  Multiple points are plotted as \sQuote{sunflowers} with multiple leaves
+  (\sQuote{petals}) such that overplotting is visualized instead of accidental and
   invisible.
 }
 \usage{
@@ -63,7 +63,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   For \code{number[i]==1}, a (slightly enlarged) usual plotting symbol
   (\code{pch}) is drawn.
   For \code{number[i] > 1}, a small plotting symbol is drawn and
-  \code{number[i]} equi-angular \dQuote{rays} emanate from it.
+  \code{number[i]} equi-angular \sQuote{rays} emanate from it.
 
   If \code{rotate=TRUE} and \code{number[i] >= 2}, a random direction
   is chosen (instead of the y-axis) for the first ray.  The goal is to
@@ -71,7 +71,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   artefactual visual impressions.
 }
 \section{Side Effects}{
-  A scatter plot is drawn with \dQuote{sunflowers} as symbols.
+  A scatter plot is drawn with \sQuote{sunflowers} as symbols.
 }
 \value{
   A list with three components of same length,

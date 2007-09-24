@@ -82,7 +82,7 @@ hist(x, \dots)
   \code{\link{plot.histogram}}, before it is returned.
 }
 \details{
-  The definition of \dQuote{histogram} differs by source (with
+  The definition of \emph{histogram} differs by source (with
   country-specific biases).  \R's default with equi-spaced breaks (also
   the default) is to plot the counts in the cells defined by
   \code{breaks}.  Thus the height of a rectangle is proportional to
@@ -99,8 +99,7 @@ hist(x, \dots)
   \code{include.lowest} is \code{TRUE}.
 
   For \code{right = FALSE}, the intervals are of the form \code{[a, b)},
-  and \code{include.lowest} really has the meaning of
-  \dQuote{\emph{include highest}}.
+  and \code{include.lowest} means \sQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
   is applied when counting entries on the edges of bins.

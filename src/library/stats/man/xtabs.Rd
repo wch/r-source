@@ -54,7 +54,7 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
     "table")}, with a \code{"call"} attribute storing the matched call.
 }
 \seealso{
-  \code{\link{table}} for \dQuote{traditional} cross-tabulation, and
+  \code{\link{table}} for traditional cross-tabulation, and
   \code{\link{as.data.frame.table}} which is the inverse operation of
   \code{xtabs} (see the \code{DF} example below).
 }

@@ -32,7 +32,7 @@ system.file(\dots, package = "base", lib.loc = NULL)
   As a special case, \code{system.file()} gives the root of the
   \pkg{base} package only.
 }
-\seealso{\code{\link{R.home}} for the \dQuote{root} directory of the \R
+\seealso{\code{\link{R.home}} for the root directory of the \R
   installation, \code{\link{list.files}}
 }
 \examples{

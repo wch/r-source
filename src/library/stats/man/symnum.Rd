@@ -9,7 +9,7 @@
 \concept{matrix visualization}
 \description{
   Symbolically encode a given numeric or logical vector or array.
-  Particularly useful for \dQuote{visualization} of structured matrices,
+  Particularly useful for visualization of structured matrices,
   e.g., correlation, sparse, or logical ones.
 }
 \usage{
@@ -30,7 +30,7 @@ symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
     below) are used for intervals.}
   \item{symbols}{character vector, one shorter than (the
     \emph{augmented}, see \code{corr} below) \code{cutpoints}.
-    \code{symbols[j]}\eqn{= s_j}{ == s[j]} are used as \dQuote{code} for
+    \code{symbols[j]}\eqn{= s_j}{ == s[j]} are used as \sQuote{code} for
     the (half open) interval \eqn{(c_j,c_{j+1}]}{(c[j], c[j+1]]}.
 
     When \code{numeric.x} is \code{FALSE}, i.e., by default when

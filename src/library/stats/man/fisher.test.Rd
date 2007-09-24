@@ -104,7 +104,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
   For larger than  \eqn{2 \times 2}{2 by 2} tables and \code{hybrid =
     TRUE}, asymptotic chi-squared probabilities are only used if the
-  \dQuote{Cochran conditions} are satisfied, that is if no cell has
+  \sQuote{Cochran conditions} are satisfied, that is if no cell has
   count zero, and more than 80\% of the cells have counts at least 5.
 
   Simulation is done conditional on the row and column marginals, and

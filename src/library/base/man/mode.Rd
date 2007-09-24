@@ -71,7 +71,7 @@ storage.mode(x) <- value
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{typeof}} for the R-internal \dQuote{mode},
+  \code{\link{typeof}} for the R-internal \sQuote{mode},
   \code{\link{attributes}}.
 }
 \examples{

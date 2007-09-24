@@ -14,7 +14,7 @@ max.col(m, ties.method=c("random", "first", "last"))
 }
 \arguments{
   \item{m}{numerical matrix}
-  \item{ties.method}{a character string specifying how \dQuote{ties} are
+  \item{ties.method}{a character string specifying how ties are
     handled, \code{"random"} by default; can be abbreviated; see
     \emph{Details}.}
 }
@@ -23,7 +23,7 @@ max.col(m, ties.method=c("random", "first", "last"))
 }
 \details{
   When \code{ties.method = "random"}, as per default, ties are broken at
-  random.  In this case, the determination of \dQuote{tie} assumes that
+  random.  In this case, the determination of a tie assumes that
   the entries are probabilities: there is a relative tolerance of
   \eqn{10^{-5}}{1e-5}, relative to the largest (in magnitude, omitting
   infinity) entry in the row.

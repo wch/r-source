@@ -80,7 +80,7 @@ stl(x, s.window, s.degree = 0,
     \code{"t"}, and \code{"l"} smoothers.}
   \item{deg}{integer (length 3) vector with the polynomial degrees for
     these smoothers.}
-  \item{jump}{integer (length 3) vector with the \dQuote{jumps} (skips)
+  \item{jump}{integer (length 3) vector with the \sQuote{jumps} (skips)
     used for these smoothers.}
   \item{ni}{number of \bold{i}nner iterations}
   \item{no}{number of \bold{o}uter robustness iterations}

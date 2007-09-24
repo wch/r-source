@@ -56,7 +56,7 @@ is.tskernel(k)
   with indices in \code{(-m) : m}.  The normalization is such that for
   \code{k <- kernel(*)}, \code{sum(k[ -k$m : k$m ])} is one.
 
-  \code{df.kernel} returns the \dQuote{equivalent degrees of freedom} of
+  \code{df.kernel} returns the \sQuote{equivalent degrees of freedom} of
   a smoothing kernel as defined in Brockwell and Davis (1991), page
   362, and \code{bandwidth.kernel} returns the equivalent bandwidth as
   defined in Bloomfield (1976), p. 201, with a continuity correction.

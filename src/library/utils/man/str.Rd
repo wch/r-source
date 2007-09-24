@@ -28,9 +28,9 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4)
 }
 \description{
   Compactly display the internal \bold{str}ucture of an \R object, a
-  \dQuote{diagnostic} function and an alternative to \code{\link{summary}}
+  diagnostic function and an alternative to \code{\link{summary}}
   (and to some extent, \code{\link{dput}}).  Ideally, only one line for
-  each \dQuote{basic} structure is displayed.  It is especially well suited
+  each \sQuote{basic} structure is displayed.  It is especially well suited
   to compactly display the (abbreviated) contents of (possibly nested)
   lists.  The idea is to give reasonable output for \bold{any} \R
   object.  It calls \code{\link{args}} for (non-primitive) function objects.
@@ -44,7 +44,7 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4)
   \item{max.level}{maximal level of nesting which is applied for
     displaying nested structures, e.g., a list containing sub lists.
     Default NA: Display all nesting levels.}
-  \item{vec.len}{numeric (>= 0) indicating how many \dQuote{first few} elements
+  \item{vec.len}{numeric (>= 0) indicating how many \sQuote{first few} elements
     are displayed of each vector.  The number is multiplied by different
     factors (from .5 to 3) depending on the kind of vector.  Defaults to
     the \code{vec.len} component of option \code{"str"} (see
@@ -68,8 +68,8 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4)
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
   \item{comp.str}{string to be used for separating list components.}
-  \item{no.list}{logical; if true, no \dQuote{list of ..} is nor the
-    class is printed.}
+  \item{no.list}{logical; if true, no \sQuote{list of \dots} nor the
+    class are printed.}
   \item{envir}{the environment to be used for \emph{promise} (see
     \code{\link{delayedAssign}}) objects only.}
   \item{strict.width}{string indicating if the \code{width} argument's

@@ -7,8 +7,8 @@
 \alias{glob2rx}
 \title{Change Wildcard or Globbing Pattern into Regular Expression}
 \description{
-  Change \emph{wildcard} aka \emph{globbing} (or \dQuote{ls} like)
-  pattern into the corresponding regular expression (\code{\link{regexp}}).
+  Change \emph{wildcard} aka \emph{globbing} patterns into the
+  corresponding regular expressions (\code{\link{regexp}}).
 }
 \usage{
 glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
@@ -30,7 +30,7 @@ glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
 }
 \value{
   A character vector of the same length as the input \code{pattern}
-  where each \dQuote{wild card} is translated to the corresponding
+  where each wildcard is translated to the corresponding
   regular expression.
 }
 \author{Martin Maechler, Unix/sed based version, 1991; current: 2004}

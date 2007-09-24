@@ -9,8 +9,8 @@
 \concept{2D binning}
 \description{
   Given (x,y) points, determine their multiplicity -- checking for
-  equality only up to some (crude kind of) noise.
-  Note that this is special kind of \dQuote{2D binning}.
+  equality only up to some (crude kind of) noise.  Note that this is
+  special kind of 2D binning.
 }
 \usage{
 xyTable(x, y = NULL, digits)

@@ -11,7 +11,7 @@
 .standard_regexps()
 }
 \details{
-  \code{.standard_regexps} returns a list of \dQuote{standard} regexps,
+  \code{.standard_regexps} returns a list of \sQuote{standard} regexps,
   including elements named \code{valid_package_name} and
   \code{valid_package_version} with the obvious meanings.  The regexps
   are not anchored.

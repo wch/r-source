@@ -40,7 +40,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
   }
   \item{log}{character, indicating if any axis should be drawn in
     logarithmic scale, as in \code{\link{plot.default}}.}
-  \item{frame.plot}{logical, indicating if a \dQuote{frame}
+  \item{frame.plot}{logical, indicating if a \sQuote{frame}
     (\code{\link{box}}) should be drawn; defaults to \code{TRUE}, unless
     \code{axes = FALSE} is specified.}
   \item{horizontal}{logical indicating if the  boxplots should be
@@ -88,7 +88,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 	background color.  The default \code{medpch= NA} suppresses the
 	point, and \code{medlty="blank"} does so for the line.
 	Note that\code{medlwd} defaults to
-	\eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
+	\eqn{3\times}{3x} the default \code{lwd}.}
       \item{whisklty, whisklwd, whiskcol:}{whisker line type (default:
 	\code{"dashed"}), width, and color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line

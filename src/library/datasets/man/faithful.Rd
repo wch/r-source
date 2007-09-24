@@ -34,7 +34,7 @@
   A closer look at \code{faithful$eruptions} reveals that these are
   heavily rounded times originally in seconds, where multiples of 5 are
   more frequent than expected under non-human measurement.  For a
-  \dQuote{better} version of the eruptions times, see the example below.
+  better version of the eruption times, see the example below.
 
   There are many versions of this dataset around: Azzalini and Bowman
   (1990) use a more complete version.

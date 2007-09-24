@@ -54,8 +54,7 @@ na.pass(object, \dots)
 }
 \seealso{
   \code{\link{na.action}};
-  \code{\link{options}} with argument \code{na.action} for setting
-  \dQuote{NA actions};
+  \code{\link{options}} with argument \code{na.action} for setting NA actions;
   and \code{\link{lm}} and \code{\link{glm}} for functions using these.
   \code{\link{na.contiguous}} as alternative for time series.
 }

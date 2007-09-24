@@ -38,7 +38,7 @@ checkS3methods(package, dir, lib.loc = NULL)
   \code{checkDocFiles} checks, for all Rd files in a package, whether all
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
-  arguments section, and \dQuote{over-documented} arguments which are
+  arguments section, and \sQuote{over-documented} arguments which are
   given in the arguments section but not in the usage.  Note that the
   match is for the usage section and not a possibly existing synopsis
   section, as the usage is what gets displayed.
@@ -50,7 +50,7 @@ checkS3methods(package, dir, lib.loc = NULL)
   methods shown along with their generic, which typically caused
   problems for the documentation of the primary argument in the generic
   and its methods.  With \code{\\method} now being expanded in a way
-  that class information is preserved, \dQuote{joint} documentation is
+  that class information is preserved, joint documentation is
   no longer necessarily a problem.  (The corresponding information is
   still contained in the object returned by \code{checkDocStyle}.)
 

@@ -31,7 +31,7 @@ autoloader(name, package, \dots)
   package's environment.  The result is that \R behaves as if
   \code{file} was loaded but it does not occupy memory.
 
-  \code{.Autoloaded} contains the \dQuote{base names} of the packages for
+  \code{.Autoloaded} contains the names of the packages for
   which autoloading has been promised.
 }
 \value{

@@ -40,8 +40,8 @@ proc.time()
   and times are typically available to 10ms on NT-based versions of Windows.
 #endif
 
-  It is most useful for \dQuote{timing} the evaluation of \R expressions,
-  which can be done conveniently with \code{\link{system.time}}.
+  It is useful for timing the evaluation of \R expressions,
+  which can be done more conveniently with \code{\link{system.time}}.
 }
 \note{
 #ifdef unix

@@ -40,8 +40,8 @@ zapsmall(x, digits = getOption("digits"))
   number of significant digits.
 
   \code{zapsmall} determines a \code{digits} argument \code{dr} for
-  calling \code{round(x, digits = dr)} such that values \dQuote{close to
-    zero} (compared with the maximal absolute value) are \dQuote{zapped},
+  calling \code{round(x, digits = dr)} such that values close to
+  zero (compared with the maximal absolute value) are \sQuote{zapped},
   i.e., treated as \code{0}.
 }
 \arguments{
@@ -56,7 +56,7 @@ zapsmall(x, digits = getOption("digits"))
   \code{\link[base:groupGeneric]{Math}} group generic.
 
   Note that for rounding off a 5, the IEC 60559 standard is expected to
-  be used, \dQuote{\emph{go to the even digit}}.
+  be used, \sQuote{\emph{go to the even digit}}.
   Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is
   \code{-2}.  However, this is dependent on OS services and on
   representation error (since e.g. \code{0.15} is not represented

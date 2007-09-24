@@ -46,7 +46,7 @@ as.stepfun(x, \dots)
   Given the vectors \eqn{(x_1,\ldots, x_n)}{(x[1],\ldots, x[n])} and
   \eqn{(y_0,y_1,\ldots, y_n)}{(y[0],y[1],\ldots, y[n])} (one value
   more!), \code{stepfun(x,y,\dots)} returns an interpolating
-  \dQuote{step} function, say \code{fn}. I.e., \eqn{fn(t) =
+  \sQuote{step} function, say \code{fn}. I.e., \eqn{fn(t) =
     c}\eqn{_i}{[i]} (constant) for \eqn{t \in (x_i, x_{i+1})}{t in (
     x[i], x[i+1])} and at the abscissa values, if (by default)
   \code{right = FALSE}, \eqn{fn(x_i) = y_i}{fn(x[i]) = y[i]} and for
@@ -54,10 +54,10 @@ as.stepfun(x, \dots)
   \eqn{i=1,\ldots,n}.
 
   The value of the constant \eqn{c_i}{c[i]} above depends on the
-  \dQuote{continuity} parameter \code{f}.
+  \sQuote{continuity} parameter \code{f}.
   For the default, \code{right = FALSE, f = 0},
-  \code{fn} is a \dQuote{cadlag} function, i.e., continuous at right,
-  limit (\dQuote{the point}) at left.
+  \code{fn} is a \emph{cadlag} function, i.e., continuous at right,
+  limit (\sQuote{the point}) at left.
   In general, \eqn{c_i}{c[i]} is interpolated in between the
   neighbouring \eqn{y} values,
   \eqn{c_i= (1-f) y_i + f\cdot y_{i+1}}{c[i] = (1-f)*y[i] + f*y[i+1]}.

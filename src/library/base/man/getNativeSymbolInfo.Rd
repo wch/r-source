@@ -12,7 +12,7 @@
 }
 \description{
   This finds and returns as comprehensive a description of one or more
-  dynamically loaded or \dQuote{exported} built-in native
+  dynamically loaded or \sQuote{exported} built-in native
   symbols. For each name, it returns information about the
   name of the symbol, the library in which it is located
   and, if available, the number of arguments it expects
@@ -99,14 +99,14 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
 	or only registered routines can be located.}
     }    
   }
-  If the routine was explicitly registered by the dynamically
-  loaded library, the list contains a fourth field
-  \item{numParameters}{the number of arguments that should be passed
-    in a call to this routine.}
+  If the routine was explicitly registered by the dynamically loaded
+  library, the list contains a fourth field
+  \item{numParameters}{the number of arguments that should be passed in
+    a call to this routine.}
   Additionally, the list will have an additional class,
-  being \code{CRoutine},   \code{CallRoutine},
-  \code{FortranRoutine} or \code{ExternalRoutine}
-  corresponding to the R interface by which it should be invoked.
+  being \code{CRoutine}, \code{CallRoutine}, \code{FortranRoutine} or
+  \code{ExternalRoutine} corresponding to the R interface by which it
+  should be invoked.
 
   If any of the symbols is not found, an error is immediately raised.
 
@@ -122,18 +122,14 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
 }
 \author{Duncan Temple Lang}
 \note{
-  One motivation for accessing this reflectance information
-  is to be able to pass native routines to 
-  C routines as \dQuote{function pointers} in C.
-  This allows us to treat native routines and R functions
-  in a similar manner, such as when passing an R function
-  to C code that makes callbacks to that function
-  at different points in its computation
-  (e.g., \code{\link{nls}}).
-  Additionally, we can resolve the symbol just once and
-  avoid resolving it repeatedly or using the internal
-  cache.
-  In the future, one may be able to treat \code{NativeSymbol}
+  One motivation for accessing this reflectance information is to be
+  able to pass native routines to C routines as function pointers in C.
+  This allows us to treat native routines and \R functions in a similar
+  manner, such as when passing an \R function to C code that makes
+  callbacks to that function at different points in its computation
+  (e.g., \code{\link{nls}}).  Additionally, we can resolve the symbol
+  just once and avoid resolving it repeatedly or using the internal
+  cache.  In the future, one may be able to treat \code{NativeSymbol}
   objects directly as callback objects.
 }
 \seealso{

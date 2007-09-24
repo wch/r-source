@@ -24,7 +24,7 @@ deparse(expr, width.cutoff = 60,
     \code{\link{.deparseOpts}}.}
 }
 \details{
-  This function turns unevaluated expressions (where \dQuote{expression}
+  This function turns unevaluated expressions (where \sQuote{expression}
   is taken in a wider sense than the strict concept of a vector of mode
   \code{"expression"} used in \code{\link{expression}}) into character
   strings (a kind of inverse \code{\link{parse}}).

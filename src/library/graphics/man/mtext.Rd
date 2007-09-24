@@ -53,9 +53,9 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     the device region.  It can only be increased.)}
 }
 \details{
-  The \dQuote{user coordinates} in the outer margins always range from zero to
+  The user coordinates in the outer margins always range from zero to
   one, and are not affected by the user coordinates in the figure
-  region(s) --- \R is differing here from other implementations of S.
+  region(s) --- \R differs here from other implementations of S.
 
   All of the named arguments can be vectors, and recycling will take
   place to plot as many strings as the longest of the vector arguments.

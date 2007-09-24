@@ -86,7 +86,7 @@ set.seed(seed, kind = NULL)
     \item{\code{"Mersenne-Twister":}}{
       From Matsumoto and Nishimura (1998). A twisted GFSR with period
       \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
-      consecutive dimensions (over the whole period).  The \dQuote{seed} is a
+      consecutive dimensions (over the whole period).  The \sQuote{seed} is a
       624-dimensional set of 32-bit integers plus a current position in
       that set.
     }
@@ -96,7 +96,7 @@ set.seed(seed, kind = NULL)
       subtraction.  That is, the recurrence used is
       \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
       }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
-      and the \dQuote{seed} is the set of the 100 last numbers (actually
+      and the \sQuote{seed} is the set of the 100 last numbers (actually
       recorded as 101 numbers, the last being a cyclic shift of the
       buffer).  The period is around \eqn{2^{129}}{2^129}.
     }

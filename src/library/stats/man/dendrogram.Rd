@@ -123,8 +123,8 @@ is.leaf(object)
     \item{\code{label}}{character; the label of the node}
     \item{\code{x.member}}{for \code{cut()$upper},
       the number of \emph{former} members; more generally a substitute
-      for the \code{members} component used for \dQuote{horizontal}
-      (when \code{horiz = FALSE}, else \dQuote{vertical}) alignment.}
+      for the \code{members} component used for \sQuote{horizontal}
+      (when \code{horiz = FALSE}, else \sQuote{vertical}) alignment.}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}
     \item{\code{nodePar}}{a named list (of length-1 components)

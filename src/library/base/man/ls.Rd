@@ -64,7 +64,7 @@ objects(name, pos= -1, envir = as.environment(pos),
   \code{\link{ls.str}} for a long listing based on \code{\link{str}}.
   \code{\link{apropos}} (or \code{\link{find}})
   for finding objects in the whole search path;
-  \code{\link{grep}} for more details on \dQuote{regular expressions};
+  \code{\link{grep}} for more details on \sQuote{regular expressions};
   \code{\link[base]{class}},
   \code{\link{methods}}, etc., for
   object-oriented programming.

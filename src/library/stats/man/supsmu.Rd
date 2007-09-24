@@ -7,7 +7,7 @@
 \alias{supsmu}
 \title{Friedman's SuperSmoother}
 \description{
-  Smooth the (x, y) values by Friedman's \dQuote{super smoother}.
+  Smooth the (x, y) values by Friedman's \sQuote{super smoother}.
 }
 \usage{
 supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)

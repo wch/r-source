@@ -85,7 +85,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \code{dd <- as.dendrogram(hclustfun(distfun(X)))} where \code{X} is
   either \code{x} or \code{t(x)}.
 
-  If either is a vector (of \dQuote{weights}) then the appropriate
+  If either is a vector (of \sQuote{weights}) then the appropriate
   dendrogram is reordered according to the supplied values subject to
   the constraints imposed by the dendrogram, by \code{\link{reorder}(dd,
     Rowv)}, in the row case.

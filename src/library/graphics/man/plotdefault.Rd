@@ -7,7 +7,7 @@
 \alias{plot.default}
 \title{The Default Scatterplot Function}
 \description{
-  Draw a scatter plot with \dQuote{decorations} such as axes and titles
+  Draw a scatter plot with decorations such as axes and titles
   in the active graphics window.
 }
 \usage{
@@ -30,7 +30,7 @@
     \code{"h"} for histogram-like vertical lines.  Finally,
     \code{"n"} does not produce any points or lines.}
   \item{xlim}{the x limits (x1, x2) of the plot.  Note that \code{x1 > x2}
-    is allowed and leads to a \dQuote{reversed axis}.}
+    is allowed and leads to a \sQuote{reversed axis}.}
   \item{ylim}{the y limits of the plot.}
   \item{log}{a character string which contains \code{"x"} if the x axis
     is to be logarithmic, \code{"y"} if the y axis is to be logarithmic

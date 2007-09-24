@@ -30,7 +30,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    squared second derivative in the fit (penalized log likelihood)
    criterion is a monotone function of \code{spar}, see the details
    below.}
- \item{cv}{ordinary (\code{TRUE}) or \dQuote{generalized} cross-validation
+ \item{cv}{ordinary (\code{TRUE}) or \sQuote{generalized} cross-validation
    (GCV) when \code{FALSE}.}
  \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used as
    knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
@@ -71,7 +71,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 }
 \details{
   The \code{x} vector should contain at least four distinct values.
-  \emph{Distinct} here means \dQuote{distinct after rounding to 6 significant
+  \emph{Distinct} here means \sQuote{distinct after rounding to 6 significant
   digits}, i.e., \code{x} will be transformed to
   \code{unique(sort(signif(x, 6)))}, and \code{y} and \code{w} are
   pooled accordingly.
@@ -98,7 +98,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 
   If \code{spar} is missing or \code{NULL}, the value of \code{df} is used to
   determine the degree of smoothing.  If both are missing, leave-one-out
-  cross-validation (ordinary or \dQuote{generalized} as determined by
+  cross-validation (ordinary or \sQuote{generalized} as determined by
   \code{cv}) is used to determine \eqn{\lambda}.
   Note that from the above relation,
 %%  lam      = r * 256^(3s - 1)
@@ -121,7 +121,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \code{spar} or the controls \code{low} and \code{high} outside such a
   safe range, unless you know what you are doing!
 
-  The \dQuote{generalized} cross-validation method will work correctly when
+  The \sQuote{generalized} cross-validation method will work correctly when
   there are duplicated points in \code{x}.  However, it is ambiguous what
   leave-one-out cross-validation means with duplicated points, and the
   internal code uses an approximation that involves leaving out groups
@@ -153,7 +153,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
     hence be longer than the above \code{x} component; see details.
     }
   \item{lev}{leverages, the diagonal values of the smoother matrix.}
-  \item{cv.crit}{cross-validation score, \dQuote{generalized} or true, depending
+  \item{cv.crit}{cross-validation score, \sQuote{generalized} or true, depending
     on \code{cv}.}
   \item{pen.crit}{penalized criterion}
   \item{crit}{the criterion value minimized in the underlying
@@ -172,7 +172,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
     \describe{
       \item{knot:}{the knot sequence (including the repeated boundary
 	knots).}
-      \item{nk:}{number of coefficients or number of \dQuote{proper}
+      \item{nk:}{number of coefficients or number of \sQuote{proper}
 	knots plus 2.}
       \item{coef:}{coefficients for the spline basis used.}
       \item{min, range:}{numbers giving the corresponding quantities of

@@ -17,8 +17,8 @@ ecdf(x)
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
 }
 \arguments{
-  \item{x}{numeric vector of \dQuote{observations} in \code{ecdf};  for
-    the methods, an object of class \code{"ecdf"}, typically.}
+  \item{x}{numeric vector of the observations for \code{ecdf};  for
+    the methods, an object inheriting from class \code{"ecdf"}.}
   \item{\dots}{arguments to be passed to subsequent methods, i.e.,
     \code{\link{plot.stepfun}} for the \code{plot} method.}
   \item{ylab}{label for the y-axis.}

@@ -68,7 +68,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.  If \code{sep = ""} (the
-    default for \code{read.table}) the separator is \dQuote{white space},
+    default for \code{read.table}) the separator is \sQuote{white space},
     that is one or more spaces, tabs, newlines or carriage returns.}
 
   \item{quote}{the set of quoting characters. To disable quoting
@@ -215,7 +215,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
-  reading \dQuote{comma separated value} files (\file{.csv}) or
+  reading \sQuote{comma separated value} files (\file{.csv}) or
   (\code{read.csv2}) the variant
   used in countries that use a comma as decimal point and a semicolon
   as field separator.  Similarly, \code{read.delim} and
