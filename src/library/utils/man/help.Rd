@@ -32,7 +32,7 @@ type?topic
 
    For \code{help}, if the value of \code{topic} is a length-one
    character vector the topic is taken to be the value of the only
-   element.  Any other argument \code{topic} are regarded as a name and
+   element.  Any other argument \code{topic} is regarded as a name and
    \link{deparse}d to give the desired topic.
 
    For \code{?} the \code{topic} argument may also be a function call,
