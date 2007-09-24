@@ -33,7 +33,7 @@ type?topic
    For \code{help}, if the value of \code{topic} is a length-one
    character vector the topic is taken to be the value of the only
    element.  Otherwise \code{topic} must be a name or a \link{reserved}
-   word (if syntactically valid).
+   word (if syntactically valid) or character string.
 
    For \code{?} the \code{topic} argument may also be a function call,
    to ask for documentation on a corresponding method: see the section
