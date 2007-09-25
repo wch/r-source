@@ -13,6 +13,9 @@ NEW FEATURES
 
     o	identify() recycles its 'labels' argument if necessary.
 
+    o	The "data.frame" method for [[ now supports the 'exact' argument
+	introduced in 2.6.0.
+
 
 DEPRECATED & DEFUNCT
 
