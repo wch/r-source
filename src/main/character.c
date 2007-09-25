@@ -2231,7 +2231,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         }
 	R_FreeStringBufferL(&cbuff);
     } else
-#endif 
+#endif
     {
 	unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
 	struct tr_spec *trs_old, **trs_old_ptr;
