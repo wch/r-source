@@ -90,11 +90,11 @@ lazyLoadDBfetch(key, file, compressed, hook)
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
   equivalent to the \code{\link{[}} and \code{\link{[[}} operators,
-  except methods that dispatch does not take place.  This is to avoid
+  except that methods dispatch does not take place.  This is to avoid
   expensive unclassing when applying the default method to an object.  They
   should not normally be invoked by end users.  Note that unlike the
-  operators they are builtins and not specials and hence do not allow
-  missing values in their arguments.
+  operators they are builtins and not specials (all arguments are
+  evaluated) and hence do not allow missing arguments.
 
   \code{.find.package} returns the paths to the locations where the
   given packages can be found.  If \code{lib.loc} is \code{NULL}, then

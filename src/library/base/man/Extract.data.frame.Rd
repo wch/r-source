@@ -81,6 +81,10 @@
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
   elements to be replaced in the same way as for a matrix.
+
+  Both \code{[} and \code{[[} extraction methods partially match row
+  names. \code{[[} partially matches column names (with a
+  warning) whereas \code{[} does not.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
