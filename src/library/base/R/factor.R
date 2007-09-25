@@ -190,12 +190,12 @@ Ops.factor <- function(e1, e2)
     class(x) <- cx
     x
 }
-"[[.factor" <- function(x, i)
+"[[.factor" <- function(x, ...)
 {
     y <- NextMethod("[[")
-    attr(y,"contrasts")<-attr(x,"contrasts")
+    attr(y,"contrasts") <- attr(x,"contrasts")
     ## NB factor has levels before class in attribute list (PR#6799)
-    attr(y,"levels")<-attr(x,"levels")
+    attr(y,"levels") <- attr(x,"levels")
     class(y) <- oldClass(x)
     y
 }
