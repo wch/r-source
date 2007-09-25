@@ -24,8 +24,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	Ranges in chartr() now work better in CJK locales, thanks to
-	Ei-ji Nakama.
+    o	Placeholder
 
 
 
@@ -779,6 +778,9 @@ BUG FIXES
 	value of the vector unless it has length exactly one, so
 	e.g. help(letters) now gives help on 'letters'.
 	(Related to PR#9927)
+
+    o	Ranges in chartr() now work better in CJK locales, thanks to
+	Ei-ji Nakama.
 
 
 

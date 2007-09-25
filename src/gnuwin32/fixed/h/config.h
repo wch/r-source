@@ -72,9 +72,6 @@
 /* Define if you have BSD networking headers and libraries. */
 /* #undef HAVE_BSD_NETWORKING */
 
-/* Define to 1 if you have the `bsearch' function. */
-#define HAVE_BSEARCH 1
-
 /* Define to 1 if the compiler understands __builtin_expect. */
 #define HAVE_BUILTIN_EXPECT 1
 
@@ -492,9 +489,6 @@
 
 /* Define to 1 if you have the <pwd.h> header file. */
 /* #undef HAVE_PWD_H */
-
-/* Define to 1 if you have the `qsort' function. */
-#define HAVE_QSORT 1
 
 /* Define to 1 if you have the <readline/history.h> header file. */
 /* #undef HAVE_READLINE_HISTORY_H */

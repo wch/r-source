@@ -1622,7 +1622,6 @@ AC_CHECK_DECLS([alloca], , ,
 ## C99 functions: we don't as yet require a C99 compiler/runtime
 ## (and not everyone has one).
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
-R_CHECK_FUNCS([bsearch qsort], [#include <stdlib.h>])
 
 ## fseeko/ftello may be macros, matherr is redefined
 ## is.blank should be a macro according to C99
