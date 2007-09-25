@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-07 r39824)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.7.0 Under development (unstable) (2007-09-21 r42937)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -36,4 +36,10 @@ Error: test of `options(error=expression(NULL))'
 Error: 'getenv' is defunct.
 Use 'Sys.getenv' instead.
 See help("Defunct")
+> 
+> ## bad infinite recursion / on.exit / ... interactions
+> bar <- function() 1+1
+> foo <- function() { on.exit(bar()); foo() }
+> foo() # now simple "infinite recursion"
+Error: evaluation nested too deeply: infinite recursion / options(expressions=)?
 > 
