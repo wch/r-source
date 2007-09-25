@@ -4883,3 +4883,10 @@ stopifnot(identical(m, sweep(m, 2, apply(m,2, min))))
 ## julian with POSIXlt origin (PR#9908)
 julian(as.POSIXlt("1999-2-1"), origin=as.POSIXlt("1999-1-1"))
 ## failed < 2.6.0
+
+
+## str() assumes a "sensical" '[[' for list-alikes :
+"[[.foo" <- function(x,i) x
+x <- structure(list(2), class="foo")
+str(x)
+## gave infinite recursion < 2.6.0
