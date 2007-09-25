@@ -13,9 +13,6 @@ NEW FEATURES
 
     o	identify() recycles its 'labels' argument if necessary.
 
-    o	The "data.frame"and "factor" methods for [[ now supports
-	the 'exact' argument introduced in 2.6.0.
-
 
 DEPRECATED & DEFUNCT
 
@@ -27,7 +24,8 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	Placeholder.
+    o	The "data.frame"and "factor" methods for [[ now support
+	the 'exact' argument introduced in 2.6.0.
 
 
 
