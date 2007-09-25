@@ -2042,6 +2042,75 @@ tr_get_next_char_from_spec(struct tr_spec **p) {
     return(c);
 }
 
+typedef struct { wchar_t c_old, c_new; } xtable_t;
+
+static R_INLINE int xtable_comp(const void *a, const void *b)
+{
+    return ((xtable_t *)a)->c_old - ((xtable_t *)b)->c_old;
+}
+
+static R_INLINE int xtable_key_comp(const void *a, const void *b)
+{
+    return *((wchar_t *)a) - ((xtable_t *)b)->c_old;
+}
+
+#define SWAP(_a, _b, _TYPE)                                    \
+{                                                              \
+    _TYPE _t;                                                  \
+    _t    = *(_a);                                             \
+    *(_a) = *(_b);                                             \
+    *(_b) = _t;                                                \
+}
+
+#define ISORT(_base,_num,_TYPE,_comp)                          \
+{                                                              \
+/* insert sort */                                              \
+/* require stable data */                                      \
+    int _i, _j ;                                               \
+    for ( _i = 1 ; _i < _num ; _i++ )                          \
+        for ( _j = _i; _j > 0 &&                               \
+                      (*_comp)(_base+_j-1, _base+_j)>0; _j--)  \
+           SWAP(_base+_j-1, _base+_j, _TYPE);                  \
+}
+
+#define COMPRESS(_base,_num,_TYPE,_comp)                       \
+{                                                              \
+/* supress even c_old. last use */                             \
+    int _i,_j ;                                                \
+    for ( _i = 0 ; _i < (*(_num)) - 1 ; _i++ ){                \
+        int rc = (*_comp)(_base+_i, _base+_i+1);               \
+        if (rc == 0){                                          \
+           for( _j = _i, _i-- ; _j < (*(_num)) - 1; _j++ )     \
+                *((_base)+_j) = *((_base)+_j+1);               \
+            (*(_num))--;                                       \
+        }                                                      \
+    }                                                          \
+}
+
+#define BSEARCH(_rc,_key,_base,_nmemb,_TYPE,_comp)             \
+{                                                              \
+    size_t l, u, idx;                                          \
+    _TYPE *p;                                                  \
+    int comp;                                                  \
+    l = 0;                                                     \
+    u = _nmemb;                                                \
+    _rc = NULL;                                                \
+    while (l < u)                                              \
+    {                                                          \
+        idx = (l + u) / 2;                                     \
+        p =  (_base) + idx;                                    \
+        comp = (*_comp)(_key, p);                              \
+        if (comp < 0)                                          \
+            u = idx;                                           \
+        else if (comp > 0)                                     \
+            l = idx + 1;                                       \
+        else{                                                  \
+          _rc = p;                                             \
+          break;                                               \
+        }                                                      \
+    }                                                          \
+}
+
 SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP old, _new, x, y;
@@ -2065,12 +2134,13 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_MBCS
     if(mbcslocale) {
         int j, nb, nc;
-        wchar_t xtable[65536 + 1], c_old, c_new, *wc;
+        xtable_t *xtable, *tbl;
+        int xtable_cnt;
+        struct wtr_spec *trs_cnt, **trs_cnt_ptr;
+        wchar_t c_old, c_new, *wc;
         const char *xi, *s;
         struct wtr_spec *trs_old, **trs_old_ptr;
         struct wtr_spec *trs_new, **trs_new_ptr;
-
-        for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
 
         /* Initialize the old and new wtr_spec lists. */
         trs_old = Calloc(1, struct wtr_spec);
@@ -2086,6 +2156,10 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
         mbstowcs(wc, s, nc + 1);
         wtr_build_spec(wc, trs_old);
+        trs_cnt = Calloc(1, struct wtr_spec);
+        trs_cnt->type = WTR_INIT;
+        trs_cnt->next = NULL;
+        wtr_build_spec(wc, trs_cnt); /* use count only */
 
 	s = translateChar(STRING_ELT(_new, 0));
         nc = mbstowcs(NULL, s, 0);
@@ -2097,24 +2171,37 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         /* Initialize the pointers for walking through the old and new
            wtr_spec lists and retrieving the next chars from the lists.
         */
+
+        trs_cnt_ptr = Calloc(1, struct wtr_spec *);
+        *trs_cnt_ptr = trs_cnt->next;
+	for( xtable_cnt = 0 ; wtr_get_next_char_from_spec(trs_cnt_ptr); xtable_cnt++ );
+	Free(trs_cnt_ptr);
+	xtable = (xtable_t *)R_alloc(xtable_cnt+1,sizeof(xtable_t));
+
         trs_old_ptr = Calloc(1, struct wtr_spec *);
         *trs_old_ptr = trs_old->next;
         trs_new_ptr = Calloc(1, struct wtr_spec *);
         *trs_new_ptr = trs_new->next;
-        for(;;) {
+        for(i = 0; ; i++) {
             c_old = wtr_get_next_char_from_spec(trs_old_ptr);
             c_new = wtr_get_next_char_from_spec(trs_new_ptr);
             if(c_old == '\0')
                 break;
             else if(c_new == '\0')
                 error(_("'old' is longer than 'new'"));
-            else
-                xtable[c_old] = c_new;
+            else {
+                xtable[i].c_old = c_old;
+                xtable[i].c_new = c_new;
+	    }
         }
+
         /* Free the memory occupied by the wtr_spec lists. */
         wtr_free_spec(trs_old);
         wtr_free_spec(trs_new);
         Free(trs_old_ptr); Free(trs_new_ptr);
+
+        ISORT(xtable, xtable_cnt, xtable_t , xtable_comp);
+	COMPRESS(xtable, &xtable_cnt, xtable_t, xtable_comp);
 
         n = LENGTH(x);
         PROTECT(y = allocVector(STRSXP, n));
@@ -2126,9 +2213,14 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
                 nc = mbstowcs(NULL, xi, 0);
                 if(nc < 0)
                     error(_("invalid input multibyte string %d"), i+1);
-                wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+                wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t),
+						     &cbuff);
                 mbstowcs(wc, xi, nc + 1);
-                for(j = 0; j < nc; j++) wc[j] = xtable[wc[j]];
+                for(j = 0; j < nc; j++){
+                    BSEARCH(tbl,&wc[j], xtable, xtable_cnt,
+			    xtable_t, xtable_key_comp);
+                    if (tbl) wc[j] = tbl->c_new;
+		}
                 nb = wcstombs(NULL, wc, 0);
                 cbuf = CallocCharBuf(nb);
                 wcstombs(cbuf, wc, nb + 1);

@@ -750,6 +750,9 @@ BUG FIXES
 	e.g. help(letters) now gives help on 'letters'.
 	(Related to PR#9927)
 
+    o	Ranges in chartr() now work better in CJK locales, thanks to
+	Ei-ji Nakama.
+
 
 
 
