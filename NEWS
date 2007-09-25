@@ -359,13 +359,14 @@ NEW FEATURES
 	in the startup time without 'methods' (and one-sixth with -
 	'methods' now takes 75% of the startup time of a default session).
 
-    o   The [[ subsetting operator now has an argument 'exact' that
-        allows programmers to disable partial matching.  The default
-        value is exact=NA which causes a warning to be issued when
-        partial matching occurs.  When exact = TRUE, no partial matching
-        will be performed.  When exact = FALSE, partial matching can
-        occur and no warning will be issued.  This patch was written
-        by Seth Falcon.
+    o	The [[ subsetting operator now has an argument 'exact' that
+        allows programmers to disable partial matching (which will in
+        due course become the default).  The default value is exact=NA
+        which causes a warning to be issued when partial matching
+        occurs.  When exact = TRUE, no partial matching will be
+        performed.  When exact = FALSE, partial matching can occur and
+        no warning will be issued.  This patch was written by Seth
+        Falcon.
 
     o	Many of the C-level warning / error messages (e.g. from
 	subscripting) have been re-worked to give more detailed
@@ -460,6 +461,9 @@ DEPRECATED & DEFUNCT
 	favour of LazyLoad: yes.
 
     o	seemsS4Object (methods package) is deprecated in favour of isS4().
+
+    o	It is planned that [[exact=TRUE]] will become the default in
+	R 2.7.0.
 
 
 UTILITIES

@@ -218,6 +218,10 @@ x$name
   \sQuote{goes nowhere} but uses up an element of \code{value}
   (Becker \emph{et al} p. 359).  However, that is not the current
   behaviour of S-PLUS.
+
+  It is planned that the default for \code{exact} will become
+  \code{exact=TRUE} in \R 2.7.0: partial matching for \code{$} will
+  remain the default.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
