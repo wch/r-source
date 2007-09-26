@@ -27,7 +27,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	The "data.frame"and "factor" methods for [[ now support
+    o	The "data.frame" and "factor" methods for [[ now support
 	the 'exact' argument introduced in 2.6.0.
 
 
