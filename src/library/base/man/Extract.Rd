@@ -23,8 +23,8 @@
 \usage{
 x[i]
 x[i, j, \dots , drop = TRUE]
-x[[i, exact = NA]]
-x[[i, j, \dots, exact = NA]]
+x[[i, exact = TRUE]]
+x[[i, j, \dots, exact = TRUE]]
 x$name
 }
 \arguments{

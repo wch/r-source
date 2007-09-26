@@ -21,6 +21,9 @@ DEPRECATED & DEFUNCT
 
     o	$ on an atomic vector or S4 object is now defunct.
 
+    o	Partial matching in [[ is now only performed if explicitly
+	requested (by exact=FALSE or exact=NA).
+
 
 BUG FIXES
 

@@ -553,7 +553,7 @@ static void ExtractDropArg(SEXP el, int *drop)
 static int ExtractExactArg(SEXP args)
 {
     SEXP argval = ExtractArg(args, R_ExactSymbol);
-    int exact = -1;
+    int exact = 1; /* Default is true as from R 2.7.0 */
     exact = asLogical(argval);
     if (exact == NA_LOGICAL) exact = -1;
     return exact;

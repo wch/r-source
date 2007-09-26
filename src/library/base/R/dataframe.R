@@ -584,7 +584,7 @@ data.frame <-
     x
 }
 
-"[[.data.frame" <- function(x, ..., exact=NA)
+"[[.data.frame" <- function(x, ..., exact=TRUE)
 {
     ## use in-line functions to refer to the 1st and 2nd ... arguments
     ## explicitly. Also will check for wrong number or empty args
