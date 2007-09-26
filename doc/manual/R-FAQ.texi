@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-09-21
+@set FAQ_DATE @value{FAQ_YEAR}-09-25
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1629,6 +1629,12 @@ Computing} has released
 enterprise-class statistical analysis system based on R, suitable for
 deployment in professional, commercial and regulated environments.
 
+@url{http://www.random-technologies-llc.com/, Random Technologies}
+offers @url{http://random-technologies-llc.com/products/RStat/rstat,
+RStat}, an enterprise-strength statistical computing environment which
+combines R with enterprise-level validation, documentation, software
+support, and consulting services, as well as related R-based products.
+
 @node R Web Interfaces, R Add-On Packages, R and S, Top
 @chapter R Web Interfaces
 
@@ -1902,6 +1908,8 @@ Graphical modeling for contingency tables using CoCo.
 @c @item CoCoAn
 @c Constrained Correspondence Analysis.
 @c </COMMENT>
+@item ComPairWise
+Compare phylogenetic or population genetic data alignments.
 @item CompetingRiskFrailty
 Competing risk model with frailties for right censored survival data.
 @item CreditMetrics
@@ -2218,6 +2226,8 @@ Evaluates complex erf, erfc and density of sum of Gaussian and Student's
 @item NRAIA
 Data sets with sample code from ``Nonlinear Regression Analysis and Its
 Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
+@item NestedCohort
+Survival analysis for cohorts with missing covariate information.
 @item ORMDR
 Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
@@ -2393,8 +2403,11 @@ interface) for R, based on the @strong{tcltk} package.
 Rcmdr support for the introductory course at Temple University.
 @item RcmdrPlugin.TeachingDemos
 Rcmdr Teaching Demos plug-in.
-@item RcppTemplate
-An illustration of the use of the Rcpp R/C++ interface library.
+@c <COMMENT>
+@c Moved to the Archive on 2007-09-25 as requested by the maintainer.
+@c @item RcppTemplate
+@c An illustration of the use of the Rcpp R/C++ interface library.
+@c </COMMENT>
 @item Reliability
 Functions for estimating parameters in software reliability models.
 @item ResistorArray
@@ -4256,6 +4269,9 @@ Implementation of some racing methods for the empirical selection of the
 best.
 @item rake
 Raking survey datasets by re-weighting.
+@item ramps
+Bayesian geostatistical modeling of Gaussian processes using a
+reparameterized and marginalized posterior sampling (RAMPS) algorithm.
 @item randaes
 Random number generator based on AES cipher.
 @item random
