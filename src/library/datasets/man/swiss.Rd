@@ -21,7 +21,7 @@
     fertility measure}\cr
     [,2] \tab Agriculture\tab \% of males involved in agriculture
     as occupation\cr
-    [,3] \tab Examination\tab \% \draftees receiving highest mark
+    [,3] \tab Examination\tab \% draftees receiving highest mark
     on army examination\cr
     [,4] \tab Education \tab \% education beyond primary school for draftees.\cr
     [,5] \tab Catholic \tab \% \sQuote{catholic} (as opposed to \sQuote{protestant}).\cr
