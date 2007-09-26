@@ -30,7 +30,7 @@
   \code{R CMD build}
   builds \R source or binary packages from their sources.  The name(s)
   of the packages are taken from the \file{DESCRIPTION} files and not
-  from the directory names (as from \R 2.5.0).
+  from the directory names.
 
   Use
   \code{R CMD foo --help}

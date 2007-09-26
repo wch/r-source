@@ -190,9 +190,9 @@
   Symbol names containing underscores are not valid Fortran 77 (although
   they are valid in Fortran 9x).  Many Fortran 77 compilers (including
   \code{g77}) will allow them but translate them in a different way to
-  names not containing underscores.  As from \R 2.4.0 such names will
-  work with \code{.Fortran}, but portable code should not use Fortran
-  names containing underscores.
+  names not containing underscores.  Such names will work with
+  \code{.Fortran}, but portable code should not use Fortran names
+  containing underscores.
 
   Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
   work if the Fortran 9x compiler used differs from the Fortran compiler

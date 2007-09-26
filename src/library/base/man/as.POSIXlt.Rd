@@ -47,8 +47,7 @@ as.POSIXlt(x, tz = "")
   white space and a time in the format \code{"14:52"} or
   \code{"14:52:03"}.  (Formats such as \code{"01/02/03"} are ambiguous
   but can be converted via a format specification by
-  \code{\link{strptime}}.)  (As from \R 2.4.0 fractional seconds can be
-  converted.)
+  \code{\link{strptime}}.)  Fractional seconds are allowed.
 
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.

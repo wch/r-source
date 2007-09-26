@@ -578,11 +578,6 @@ par(\dots, no.readonly = FALSE)
   \code{c("44", "13", "1343", "73", "2262")}.
 
   Note that \code{NA} is not a valid value for \code{lty}.
-
-  Prior to \R 2.4.0, zero hex digits were accepted and handled in a
-  device-dependent way, e.g. \code{X11()} mapped them to one, \code{pdf()}
-  regarded zero as terminating the string and \code{windows()} gave a
-  zero-length stretch.
 }
 
 \note{
