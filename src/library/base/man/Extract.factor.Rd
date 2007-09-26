@@ -24,8 +24,7 @@
     character.}
 }
 \value{
-  A factor with the same set of levels as \code{x} unless
-  \code{drop=TRUE}.  (Prior to \R 2.4.0, \code{[[} returned the integer code.)
+  A factor with the same set of levels as \code{x} unless \code{drop=TRUE}.
 }
 \details{
   When unused levels are dropped the ordering of the remaining levels is

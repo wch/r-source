@@ -63,10 +63,8 @@ merge(x, y, \dots)
   these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
   appended to make the names of the result unique.
 
-  Prior to \R 2.4.0 the complexity was proportional to the product of
-  the numbers of rows of \code{x} and \code{y}.  As from \R 2.4.0 it is
-  proportional to the length of the answer, which can be much less if
-  there are few matches (for example, only 1--1 matches).
+  The complexity of the algorithm used is proportional to the length of
+  the answer.
 }
 \value{
   A data frame.  The rows are by default lexicographically sorted on the

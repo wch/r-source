@@ -16,7 +16,7 @@ proc.time()
 }
 \details{
   \code{proc.time} returns five elements for backwards compatibility,
-  but as from \R 2.5.0 its \code{print} method prints a named vector of
+  but its \code{print} method prints a named vector of
   length 3.  The first two entries are the total user and system CPU
   times of the current \R process and any child processes on which it
   has waited, and the third entry is the \sQuote{real} elapsed time

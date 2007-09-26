@@ -41,10 +41,6 @@ load(file, envir = parent.frame())
   conversion of end of line markers.  \code{load} tries to detect this
   case and give an informative error message.
 }
-\note{
-  Prior to  \R 2.4.0 an object saved as a \code{\link{pairlist}} was
-  coerced to a \code{list}, silently (and undocumented). 
-}
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.
 }

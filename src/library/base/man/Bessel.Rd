@@ -25,7 +25,7 @@ gammaCody(x)
   Modified Bessel functions (of first and third kind),
   \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}.
 
-  \code{gammaCody} is the \eqn{(\Gamma)} function as from the Specfun
+  \code{gammaCody} is the \eqn{(\Gamma)} function from the Specfun
   package and originally used in the Bessel code.
 }
 \arguments{

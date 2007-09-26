@@ -22,7 +22,7 @@ Encoding(x) <- value
   \item{value}{A character vector of positive length.}
 }
 \details{
-  As from \R 2.5.0, character strings in \R can be declared to be in
+  Character strings in \R can be declared to be in
   \code{"latin1"} or \code{"UTF-8"}.  These declarations can be read by
   \code{Encoding}, which will return a character vector of values
   \code{"latin1"}, \code{"UTF-8"} or \code{"unknown"}, or set, when

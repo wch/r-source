@@ -117,8 +117,5 @@ file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
 
 ## Help pages with documented topics starting with 'try'.
 help.search("\\\\btry", fields = "alias")
-## Do not use '^' or '$' when matching aliases or keywords
-## (unless all packages were installed using R 1.7 or newer).
-}
-}
+}}
 \keyword{documentation}

@@ -57,10 +57,6 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   initial frame of \code{envir}, unless an existing binding is locked or
   there is no existing binding and the environment is locked.
 }
-\note{
-  Prior to \R 2.4.0 the base environment was ignored in the search for a
-  binding by \code{inherits = TRUE}.
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

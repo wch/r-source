@@ -131,15 +131,6 @@ hist(x, \dots)
   \item{equidist}{logical, indicating if the distances between
     \code{breaks} are all the same.}
 }
-\note{
-  The resulting value does \emph{not} depend on the values of
-  the arguments \code{freq} (or \code{probability})
-  or \code{plot}.  This is intentionally different from S.
-
-  Prior to \R 1.7.0, the element \code{breaks} of the result was
-  adjusted for numerical tolerances.  The nominal values are now
-  returned even though tolerances are still used when counting.
-}
 
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

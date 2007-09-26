@@ -58,7 +58,7 @@ alist(\dots)
   arguments and the function body.  For expressions, the list of
   constituent elements is returned.  \code{as.list} is generic, and as the
   default method calls \code{\link{as.vector}(mode="list")} methods for
-  \code{as.vector} may be invoked.  As from \R 2.4.0, \code{as.list}
+  \code{as.vector} may be invoked.  \code{as.list}
   turns a factor into a list of one-element factors.  All attributes
   will be dropped unless the argument already is a list.  (This is
   inconsistent with functions such as \code{\link{as.character}}, and is

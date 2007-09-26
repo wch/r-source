@@ -84,7 +84,7 @@ rep.int(x, times)
   Function \code{rep.int} is a simple case handled by internal code, and
   provided as a separate function purely for S compatibility.
 
-  As from \R 2.4.0, function \code{rep} is a primitive, but (partial)
+  Function \code{rep} is a primitive, but (partial)
   matching of argument names is performed as for normal functions.
   You can no longer pass a missing argument to. e.g. \code{length.out}.
 }

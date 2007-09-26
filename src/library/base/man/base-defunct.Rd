@@ -194,7 +194,7 @@ unix(call, intern = FALSE)
   \code{loadURL} has been superseded by \code{\link{load}(url())}.
   
   \code{delay} has been replaced by \code{\link{delayedAssign}}. 
-  As from \R 2.1.0 promises should never be visible unevaluated.
+  Unevaluated promises should never be visible.
 
   \code{write.table0} was an \R-level version of \code{write.table}
   provided for temporary back-compatibility.

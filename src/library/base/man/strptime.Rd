@@ -196,8 +196,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The timezone is used to set the
-  \code{isdst} component and (as from \R 2.5.0) to set the
-  \code{"tzone"} attribute if \code{tz != ""}.
+  \code{isdst} component and to set the \code{"tzone"} attribute if
+  \code{tz != ""}.
 
   \code{ISOdatetime} and \code{ISOdate} return an object of class
   \code{"\link{POSIXct}"}.

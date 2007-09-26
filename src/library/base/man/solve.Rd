@@ -36,11 +36,11 @@ solve(a, b, \dots)
   arithmetic which might not be available on all platforms and LAPACK
   will always be used.
 
-  The row and column names of the result are taken from the column
-  names of \code{a} and of \code{b} respectively.  As from \R 1.7.0
-  if \code{b} is missing the column names of the result are the row
-  names of \code{a}.  No check is made that the column names of \code{a}
-  and the row names of \code{b} are equal.
+  The row and column names of the result are taken from the column names
+  of \code{a} and of \code{b} respectively.  If \code{b} is missing the
+  column names of the result are the row names of \code{a}.  No check is
+  made that the column names of \code{a} and the row names of \code{b}
+  are equal.
 
   For back-compatibility \code{a} can be a (real) QR decomposition,
   although \code{\link{qr.solve}} should be called in that case.

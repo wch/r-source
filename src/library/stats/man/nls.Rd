@@ -32,8 +32,8 @@ nls(formula, data, start, control, algorithm,
   \item{data}{an optional data frame in which to evaluate the variables in
     \code{formula}.  Can also be a list or an environment, but not a matrix.}
   \item{start}{a named list or named numeric vector of starting
-    estimates.  Since R 2.4.0, when \code{start} is missing, a very
-    cheap guess for \code{start} is tried (if \code{algorithm != "plinear"}).
+    estimates.  When \code{start} is missing, a very cheap guess for
+    \code{start} is tried (if \code{algorithm != "plinear"}).
   }
   \item{control}{an optional list of control settings.  See
     \code{\link{nls.control}} for the names of the settable control

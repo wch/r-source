@@ -67,7 +67,7 @@
   Using too large a value of \code{digits} may lead to representation
   errors in the calculation of the number of significant digits and the
   decimal representation: these are likely for \code{digits >= 16}, and
-  as from \R 2.5.0 these possible errors are taken into account in
+  these possible errors are taken into account in
   assessing the numher of significant digits to be printed in that case.
 
   Whereas earlier versions of \R might have printed further digits for

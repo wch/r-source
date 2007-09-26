@@ -26,7 +26,7 @@ mostattributes(obj) <- value
 \details{
   Note that some attributes (namely \code{\link{class}},
   \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
-  \code{\link{names}}, (from \R 2.4.0) \code{\link{row.names}} and
+  \code{\link{names}}, \code{\link{row.names}} and
   \code{\link{tsp}}) are treated specially and have restrictions on
   the values which can be set.
 

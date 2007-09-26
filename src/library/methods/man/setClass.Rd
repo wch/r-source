@@ -237,8 +237,7 @@ sealClass(Class, where)
   Certain slot names are not allowed in the current implementation, as
   they correspond to \link{attributes} which are treated
   specially.  These are \code{class}, \code{comment}, \code{dim},
-  \code{dimnames}, \code{names}, (from \R 2.4.0) \code{row.names}
-  and \code{tsp}.
+  \code{dimnames}, \code{names}, \code{row.names} and \code{tsp}.
 }
 
 \references{

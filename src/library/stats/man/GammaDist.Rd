@@ -92,9 +92,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \code{dgamma} is computed via the Poisson density, using code contributed
   by Catherine Loader (see \code{\link{dbinom}}).
   
-  Prior to \R 2.1.0 \code{pgamma} used AS239 (Shea, 1988).  It
-  currently uses an unpublished (and not otherwise documented) algorithm
-  \sQuote{mainly by Morten Welinder}.
+  \code{pgamma} uses an unpublished (and not otherwise documented)
+  algorithm \sQuote{mainly by Morten Welinder}.
 
   \code{qgamma} is based on a C translation of
 

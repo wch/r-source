@@ -165,12 +165,6 @@ NextMethod(generic = NULL, object = NULL, \dots)
   it is recommended to use the more flexible and robust \emph{S4} scheme
   provided in the \pkg{methods} package.
 }
-\section{Historical note}{
-  Prior to \R 2.1.0 \code{UseMethod} accepted a call with no arguments
-  and tried to deduce the generic from the context.  This was
-  undocumented on the help page.  It is allowed but
-  \sQuote{strongly discouraged} in S-PLUS, and is no longer allowed in \R.
-}
 \seealso{
   The draft \sQuote{R Language Definition}.
 

@@ -17,7 +17,8 @@ is.primitive(x)
 }
 \details{
   \code{is.primitive(x)} tests if \code{x} is a primitive function
-  (either a \code{"builtin"} or \code{"special"} as from \code{\link{typeof}})?
+  (either a \code{"builtin"} or \code{"special"} as described for
+  \code{\link{typeof}})?
 }
 \value{
   \code{TRUE} if \code{x} is a (primitive) function, and \code{FALSE}

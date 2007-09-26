@@ -3285,7 +3285,7 @@ function(package, lib.loc = NULL)
             assign("choose.files",
                    function (default = "", caption = "Select files",
                              multi = TRUE, filters = Filters,
-                             index = nrow(Filters)) {}, envir = compat)
+                             index = nrow(Filters)) {Filters=NULL}, envir = compat)
             assign("DLL.version", function(path) {}, envir = compat)
             assign("getClipboardFormats", function() {}, envir = compat)
             assign("getIdentification", function() {}, envir = compat)
