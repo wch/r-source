@@ -12,8 +12,9 @@
   being the default.
 }
 \usage{
-quartz(title = "Quartz %d", width = 5, height = 5, pointsize = 12, family = "Helvetica", 
-       fontsmooth = TRUE, antialias = TRUE, type = getOption("quartz.type"),
+quartz(title = "Quartz \%d", width = 5, height = 5, pointsize = 12,
+       family = "Helvetica", fontsmooth = TRUE, antialias = TRUE,
+       type = getOption("quartz.type"),
        file = NULL, bg = "transparent", dpi = getOption("quartz.dpi"))
 }
 \arguments{
@@ -26,7 +27,8 @@ quartz(title = "Quartz %d", width = 5, height = 5, pointsize = 12, family = "Hel
   \item{fontsmooth}{logical specifying if fonts should be smoothed.}
   \item{antialias}{whether to use antialiasing.}
   \item{type}{the type of output to use. See Details for more information. }
-  \item{file}{an optional target for the graphics device. See Details for more information. }
+  \item{file}{an optional target for the graphics device. See Details
+    for more information.}
   \item{bg}{background color to use for the device.}
   \item{dpi}{resolution of the output. For on-screen display \code{NULL}
     defaults to the resolution of the main screen, 72 dpi otherwise. See
@@ -34,9 +36,9 @@ quartz(title = "Quartz %d", width = 5, height = 5, pointsize = 12, family = "Hel
 }
 \details{
   The Quartz graphics device supports a variety of output
-  types. On-screen output types are \code{"native"} (picks the best
+  types.  On-screen output types are \code{"native"} (picks the best
   possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and higher)
-  and \code{"Carbon"} (Mac OS X 10.3 and earlier). Off-screen output
+  and \code{"Carbon"} (Mac OS X 10.3 and earlier).  Off-screen output
   types produce output files and utilize the \code{file} argument. The
   following bitmap formats may be supported: \code{"png"},
   \code{"jpeg"}, \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe
@@ -72,7 +74,7 @@ quartz(title = "Quartz %d", width = 5, height = 5, pointsize = 12, family = "Hel
   and thus only the last page will be emitted. (This may change in the
   future.)
 
-  If a device-independent R graphics font family is specified
+  If a device-independent \R graphics font family is specified
   (e.g., via \code{par(family=)} in the graphics package),
   the Quartz device makes use of the Quartz font database
   (see \code{quartzFonts}) to convert the R graphics font family
