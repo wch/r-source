@@ -127,8 +127,9 @@ file.access <- function(names, mode = 0)
     res
 }
 
-dir.create <- function(path, showWarnings = TRUE, recursive = FALSE)
-    invisible(.Internal(dir.create(path, showWarnings, recursive)))
+dir.create <- function(path, showWarnings = TRUE, recursive = FALSE,
+                       mode = as.octmode("777"))
+    invisible(.Internal(dir.create(path, showWarnings, recursive, mode)))
 
 format.octmode <- function(x, ...)
 {
@@ -160,6 +161,20 @@ print.octmode <- function(x, ...)
     y <- NextMethod("[")
     oldClass(y) <- cl
     y
+}
+
+as.octmode <- function(x)
+{
+    if(length(x) != 1) stop("'x' must be have length 1")
+    if(is.double(x) && x == as.integer(x)) x <- as.integer(x)
+    if(is.integer(x)) return(structure(x, class="octmode"))
+    if(is.character(x)) {
+        xx <- strsplit(x, "")[[1]]
+        if(!all(xx %in% 0:7)) stop("invalid digits")
+        z <- as.numeric(xx) * 8^(rev(seq_along(xx)-1))
+        return(structure(sum(z), class="octmode"))
+    }
+    stop("'x' cannot be coerced to 'octmode'")
 }
 
 format.hexmode <- function(x, ...)

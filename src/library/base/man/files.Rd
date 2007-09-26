@@ -15,7 +15,8 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = FALSE)
 file.symlink(from, to)
-dir.create(path, showWarnings = TRUE, recursive = FALSE)
+dir.create(path, showWarnings = TRUE, recursive = FALSE,
+           mode = as.octmode("777"))
 }
 \alias{file.append}
 \alias{file.copy}
@@ -33,6 +34,7 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical: should elements of the path other than the
     last be created?  If true, like Unix's \code{mkdir -p}.}
+  \item{mode}{the file creation mode to be used on Unix-alikes.}
 }
 \description{
   These functions provide a low-level interface to the computer's
@@ -44,7 +46,9 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
   All of these functions expand path names: see \code{\link{path.expand}}.
 
   \code{file.create} creates files with the given names if they
-  do not already exist and truncates them if they do.
+  do not already exist and truncates them if they do.  On a Unix-alike
+  they are created with the maximal permissions allowed by the
+  \code{umask} setting.
 
   \code{file.exists} returns a logical vector indicating whether
   the files named by its argument exist.  (Here \sQuote{exists} is in the
@@ -83,7 +87,13 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
 #ifdef windows
   On Windows drives are allowed in the path specification and unless
   the path is rooted, it will be interpreted relative to the current
-  directory on that drive.
+  directory on that drive.  \code{mode} is ignored on Windows.
+#endif
+#ifdef unix
+  The mode will be modified by the \code{umask} setting in the same way
+  as for the system function \code{mkdir}.  What modes can be set is
+  OS-dependent, and it is unsafe to assume that more that three octal
+  digits will be used.
 #endif
 }
 \value{

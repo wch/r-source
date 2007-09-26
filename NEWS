@@ -13,6 +13,12 @@ NEW FEATURES
 
     o	identify() recycles its 'labels' argument if necessary.
 
+    o	New function as.octmode() to create object such as file
+	permissions.
+
+    o	dir.create() has a new argument 'mode', used on Unix-alikes
+	(only) to set the permissions on the created directory.
+
 
 DEPRECATED & DEFUNCT
 

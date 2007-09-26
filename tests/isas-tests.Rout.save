@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-09-02 r42734)
+R version 2.7.0 Under development (unstable) (2007-09-26 r42984)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -299,6 +299,8 @@ IS: [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
@@ -608,6 +610,8 @@ Error: x is not TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -918,6 +922,8 @@ IS: [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -1244,6 +1250,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
+[1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 [1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
@@ -1590,6 +1599,8 @@ In lapply(strsplit(x[ok], "[.-]"), as.integer) :
   inaccurate integer conversion in coercion
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
@@ -1920,6 +1931,8 @@ IS: [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
@@ -2239,6 +2252,8 @@ IS: [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -2557,6 +2572,8 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
+> f <- try(as.octmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -2602,6 +2619,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.496 0.016 0.509 0 0 
+Time elapsed:  0.232 0.016 0.249 0 0 
 > 
 > 
