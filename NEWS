@@ -19,6 +19,9 @@ NEW FEATURES
     o	dir.create() has a new argument 'mode', used on Unix-alikes
 	(only) to set the permissions on the created directory.
 
+    o	New function Sys.chmod(), a wrapper for chmod on platforms
+	which support it.
+
 
 DEPRECATED & DEFUNCT
 

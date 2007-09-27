@@ -15,8 +15,8 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = FALSE)
 file.symlink(from, to)
-dir.create(path, showWarnings = TRUE, recursive = FALSE,
-           mode = as.octmode("777"))
+dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
+Sys.chmod(paths, mode = "0777")
 }
 \alias{file.append}
 \alias{file.copy}
@@ -26,15 +26,17 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE,
 \alias{file.rename}
 \alias{file.symlink}
 \alias{dir.create}
+\alias{Sys.chmod}
 \arguments{
-  \item{\dots, file1, file2, from, to}{character vectors,
+  \item{\dots, file1, file2, from, to, paths}{character vectors,
     containing file names or paths.}
   \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical: should elements of the path other than the
     last be created?  If true, like Unix's \code{mkdir -p}.}
-  \item{mode}{the file creation mode to be used on Unix-alikes.}
+  \item{mode}{the file mode to be used on Unix-alikes: it will be
+    coerced by \code{\link{as.octmode}}.}
 }
 \description{
   These functions provide a low-level interface to the computer's
@@ -94,6 +96,15 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE,
   as for the system function \code{mkdir}.  What modes can be set is
   OS-dependent, and it is unsafe to assume that more that three octal
   digits will be used.
+#endif
+
+  \code{Sys.chmod} sets the file permissions of one or more files.
+#ifdef windows
+  It is not supported on Windows (and a warning is issued).
+#endif
+#ifdef unix
+  It may not be supported (when a warning is issued).
+  See the comments for \code{dir.create} for how modes are interpeted.
 #endif
 }
 \value{

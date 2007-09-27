@@ -1667,7 +1667,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 end:
     return ScalarLogical(res == 0);
 }
-#else
+#else /* Win32 */
 #include <io.h> /* mkdir is defined here */
 SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1779,6 +1779,45 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 #endif
+
+SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_CHMOD
+    SEXP paths, ans;
+    int i, n, mode, res;
+
+    checkArity(op, args);
+    paths = CAR(args);
+    if (!isString(paths))
+	error(_("invalid '%s' argument"), "paths");
+    n = LENGTH(paths);
+    mode = asInteger(CADR(args));
+    if(mode == NA_LOGICAL) mode = 0777;
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for(i = 0; i < n; i++) {
+	res = chmod(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
+		    mode);
+	LOGICAL(ans)[i] = res == 0;
+   }
+    UNPROTECT(1);
+    return ans;
+#else
+    SEXP paths, ans;
+    int i, n;
+    
+    checkArity(op, args);
+    paths = CAR(args);
+    if (!isString(paths))
+	error(_("invalid '%s' argument"), "paths");
+    n = LENGTH(paths);
+    warning("insufficient OS support on this platform");
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for(i = 0; i < n; i++) LOGICAL(ans)[i] = 0;
+#endif
+    UNPROTECT(1);
+    return ans;
+}
+
 
 SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

@@ -128,8 +128,9 @@ file.access <- function(names, mode = 0)
 }
 
 dir.create <- function(path, showWarnings = TRUE, recursive = FALSE,
-                       mode = as.octmode("777"))
-    invisible(.Internal(dir.create(path, showWarnings, recursive, mode)))
+                       mode = "0777")
+    invisible(.Internal(dir.create(path, showWarnings, recursive,
+                                   as.octmode(mode))))
 
 format.octmode <- function(x, ...)
 {
@@ -165,6 +166,7 @@ print.octmode <- function(x, ...)
 
 as.octmode <- function(x)
 {
+    if(inherits(x, "octmode")) return(x)
     if(length(x) != 1) stop("'x' must be have length 1")
     if(is.double(x) && x == as.integer(x)) x <- as.integer(x)
     if(is.integer(x)) return(structure(x, class="octmode"))
@@ -252,4 +254,7 @@ Sys.glob <- function(paths, dirmark = FALSE)
 
 unlink <- function(x, recursive = FALSE)
     .Internal(unlink(as.character(x), recursive))
+
+Sys.chmod <- function(paths, mode = "0777")
+    .Internal(Sys.chmod(paths, as.octmode(mode)))
 

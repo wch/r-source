@@ -34679,7 +34679,8 @@ done
 
 
 
-for ac_func in mkfifo stat
+
+for ac_func in chmod mkfifo stat
 do
 as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5

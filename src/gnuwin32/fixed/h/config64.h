@@ -89,6 +89,9 @@
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
 
+/* Define to 1 if you have the `chmod' function. */
+#define HAVE_CHMOD 1
+
 /* Defined if framework CoreFoundation is present */
 /* #undef HAVE_COREFOUNDATION_FW */
 
