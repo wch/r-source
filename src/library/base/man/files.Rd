@@ -99,12 +99,16 @@ Sys.chmod(paths, mode = "0777")
 #endif
 
   \code{Sys.chmod} sets the file permissions of one or more files.
-#ifdef windows
-  It is not supported on Windows (and a warning is issued).
-#endif
 #ifdef unix
   It may not be supported (when a warning is issued).
-  See the comments for \code{dir.create} for how modes are interpeted.
+  See the comments for \code{dir.create} for how modes are interpreted.
+  Changing mode on a symbolic link is unlikely to work (nor be necessary).
+#endif
+#ifdef windows
+  The interpretation of \code{mode} in the Windows system function is
+  non-POSIX and only supports setting the read-only attribute of the
+  file.  So \R interprets \code{mode} to mean set read-only if and only
+  if \code{mode & 0200 == 0} (interpreted in octal).
 #endif
 }
 \value{

@@ -1793,6 +1793,11 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(paths);
     mode = asInteger(CADR(args));
     if(mode == NA_LOGICAL) mode = 0777;
+#ifdef Win32
+    /* Windows' _chmod seems only to support read access or read-write access
+     */
+    mode = (mode & 0200) ? (_S_IWRITE | _S_IREAD): _S_IREAD;
+#endif
     PROTECT(ans = allocVector(LGLSXP, n));
     for(i = 0; i < n; i++) {
 	res = chmod(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
