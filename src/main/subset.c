@@ -553,7 +553,8 @@ static void ExtractDropArg(SEXP el, int *drop)
 static int ExtractExactArg(SEXP args)
 {
     SEXP argval = ExtractArg(args, R_ExactSymbol);
-    int exact = 1; /* Default is true as from R 2.7.0 */
+    int exact;
+    if(isNull(argval)) return 1; /* Default is true as from R 2.7.0 */
     exact = asLogical(argval);
     if (exact == NA_LOGICAL) exact = -1;
     return exact;
@@ -805,7 +806,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
       
       UNPROTECT(1);
       if(ans == R_UnboundValue )
-        return(R_NilValue);
+	  return(R_NilValue);
       return(ans);
     }
     
@@ -815,7 +816,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(nsubs == 1) { /* vector indexing */
 	SEXP thesub = CAR(subs);
-	int i =-1, len = length(thesub);
+	int i = -1, len = length(thesub);
 
 	/* new case in 1.7.0, one vector index for a list */
 	if(isVectorList(x) && length(CAR(subs)) > 1) {
