@@ -8,7 +8,7 @@
 \title{Report Time Spent in Garbage Collection}
 \description{
   This function reports the time spent in garbage collection so far in
-  the \R session while GC timing was enabled..
+  the \R session while GC timing was enabled.
 }
 \usage{
 gc.time(on = TRUE)
@@ -19,7 +19,8 @@ gc.time(on = TRUE)
 \value{
   A numerical vector of length 5 giving the user CPU time, the system
   CPU time, the elapsed time and children's user and system CPU times
-  (normally both zero).
+  (normally both zero), of time spent doing garbage collection whilst
+  GC timing was enabled.
 }
 #ifdef windows
 \note{
