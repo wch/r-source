@@ -19,7 +19,6 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
 {
     mis <- missing(init)
     len <- length(x)
-    tox <- typeof(x)
     
     if(len == 0L) return(if(mis) NULL else init)
     
@@ -58,7 +57,9 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
     }
     else {
         len <- length(ind) + 1L
-        out <- vector(tox, len)
+        ## We need a list to accumulate the results as these do not 
+        ## necessarily all have length one (e.g., reducing with c()).
+        out <- vector("list", len)
         if(mis) {
             if(right) {
                 out[[len]] <- init
@@ -89,17 +90,27 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
                 out[[len]] <- init
             }
         }
+        ## If all results have length one, we can simplify.
+        ## (Note that we do not simplify to arrays in case all results
+        ## have a common length > 1.)
+        if(all(sapply(out, length) == 1L))
+            out <- unlist(out, recursive = FALSE)
         out
     }
 }
 
-Filter <- function(f, x)
+Filter <-
+function(f, x)
 {
     ind <- as.logical(sapply(x, f))
     x[!is.na(ind) & ind]
 }
 
 
-Map <- function(f, ...)
+Map <-
+function(f, ...)
     mapply(f, ..., SIMPLIFY = FALSE)
 
+Negate <-
+function(f)
+    function(...) ! match.fun(f)(...)

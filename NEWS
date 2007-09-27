@@ -30,6 +30,8 @@ NEW FEATURES
 	arguments (days or seconds since some epoch) provided the
 	'origin' argument is specified.
 
+    o	New higher-order function Negate().
+
 
 DEPRECATED & DEFUNCT
 
