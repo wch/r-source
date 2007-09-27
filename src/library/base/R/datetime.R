@@ -19,46 +19,70 @@ Sys.time <- function()
 
 Sys.timezone <- function() as.vector(Sys.getenv("TZ"))
 
-as.POSIXlt <- function(x, tz = "")
-{
-    fromchar <- function(x) {
-	xx <- x[1]
-        if(is.na(xx)) {
-            j <- 1
-            while(is.na(xx) && (j <- j+1) <= length(x))
-                xx <- x[j]
-            if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
-        }
-	if(is.na(xx) ||
-           !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS")) ||
-	   !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
-	   !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d")))
-        {
-	    res <- strptime(x, f)
-            if(nzchar(tz)) attr(res, "tzone") <- tz
-            return(res)
-        }
-	stop("character string is not in a standard unambiguous format")
-    }
+as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
-    if(inherits(x, "POSIXlt")) return(x)
-    if(inherits(x, "Date")) return(.Internal(Date2POSIXlt(x)))
+as.POSIXlt.Date <- function(x, ...)
+    return(.Internal(Date2POSIXlt(x)))
+
+as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
+    as.POSIXlt(as.POSIXct(x), ...)
+
+as.POSIXlt.POSIXct <- function(x, tz = "", ...)
+{
     tzone <- attr(x, "tzone")
-    if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
-    if(is.character(x)) return(fromchar(unclass(x))) # precaution PR7826
-    if(is.factor(x))	return(fromchar(as.character(x)))
-    if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
-    if(!inherits(x, "POSIXct"))
-        stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
-                      deparse(substitute(x))))
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
     .Internal(as.POSIXlt(x, tz))
 }
 
-as.POSIXct <- function(x, tz = "") UseMethod("as.POSIXct")
+as.POSIXlt.factor <- function(x, ...) as.POSIXlt(as.character(x))
+
+as.POSIXlt.character <- function(x, tz = "", format, ...)
+{
+    x <- unclass(x) # precaution PR7826
+    if(!missing(format)) {
+        res <- strptime(x, format)
+        if(nzchar(tz)) attr(res, "tzone") <- tz
+        return(res)
+    }
+    xx <- x[1]
+    if(is.na(xx)) {
+        j <- 1
+        while(is.na(xx) && (j <- j+1) <= length(x))
+            xx <- x[j]
+        if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
+    }
+    if(is.na(xx) ||
+       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS")) ||
+       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS")) ||
+       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
+       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
+       !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
+       !is.na(strptime(xx, f <- "%Y/%m/%d")))
+    {
+        res <- strptime(x, f)
+        if(nzchar(tz)) attr(res, "tzone") <- tz
+        return(res)
+    }
+    stop("character string is not in a standard unambiguous format")
+}
+
+as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
+{
+    if(missing(origin)) stop("'origin' must be supplied")
+    as.POSIXlt(as.POSIXct(origin, tz = "UTC", ...) + x, tz = tz)
+}
+
+as.POSIXlt.default <- function(x, tz = "", ...)
+{
+
+    if(inherits(x, "POSIXlt")) return(x)
+    if(is.logical(x) && all(is.na(x)))
+        return(as.POSIXlt(as.POSIXct.default(x), tz=tz))
+    stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
+                  deparse(substitute(x))))
+}
+
+as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 
 as.POSIXct.Date <- function(x, ...)
     structure(unclass(x)*86400, class=c("POSIXt", "POSIXct"))
@@ -87,7 +111,7 @@ as.POSIXct.dates <- function(x, ...)
                          deparse(substitute(x)) ))
 }
 
-as.POSIXct.POSIXlt <- function(x, tz = "")
+as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
@@ -95,11 +119,17 @@ as.POSIXct.POSIXlt <- function(x, tz = "")
               tzone = tz)
 }
 
-as.POSIXct.default <- function(x, tz = "")
+as.POSIXct.numeric <- function(x, tz = "", origin, ...)
+{
+    if(missing(origin)) stop("'origin' must be supplied")
+    as.POSIXct(origin, tz=tz, ...) + x
+}
+
+as.POSIXct.default <- function(x, tz = "", ...)
 {
     if(inherits(x, "POSIXct")) return(x)
     if(is.character(x) || is.factor(x))
-	return(as.POSIXct(as.POSIXlt(x), tz))
+	return(as.POSIXct(as.POSIXlt(x), tz, ...))
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = c("POSIXt", "POSIXct")))
     stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",

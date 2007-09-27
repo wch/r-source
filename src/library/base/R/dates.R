@@ -54,6 +54,12 @@ as.Date.character <- function(x, format="", ...)
     .Internal(POSIXlt2Date(res))
 }
 
+as.Date.numeric <- function(x, origin, ...)
+{
+    if(missing(origin)) stop("'origin' must be supplied")
+    as.Date(origin, ...) + x
+}
+
 as.Date.default <- function(x, ...)
 {
     if(inherits(x, "Date")) return(x)

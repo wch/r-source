@@ -13,14 +13,22 @@ NEW FEATURES
 
     o	identify() recycles its 'labels' argument if necessary.
 
-    o	New function as.octmode() to create object such as file
+    o	New function as.octmode() to create objects such as file
 	permissions.
 
     o	dir.create() has a new argument 'mode', used on Unix-alikes
 	(only) to set the permissions on the created directory.
 
-    o	New function Sys.chmod(), a wrapper for chmod on platforms
+    o	New function Sys.chmod(), a wrapper for 'chmod' on platforms
 	which support it.
+
+    o	as.POSIXlt() is now generic, and it and as.POSIXct() gain a
+	'...' argument.  The character/factor methods now accept a
+	'format' argument (analogous to that for as.Date).
+
+    o	as.Date(), as.POSIXct() and as.POSIXlt() now convert numeric
+	arguments (days or seconds since some epoch) provided the
+	'origin' argument is specified.
 
 
 DEPRECATED & DEFUNCT
