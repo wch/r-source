@@ -57,7 +57,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
 numeric_version <-
 function(x, strict = TRUE)
     .make_numeric_version(x, strict,
-                          "([[:digit:]]+[.-])*[[:digit:]]+")
+                          .standard_regexps()$valid_numeric_version)
 
 is.numeric_version <-
 function(x)
