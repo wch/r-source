@@ -94,21 +94,28 @@ Sys.chmod(paths, mode = "0777")
 #ifdef unix
   The mode will be modified by the \code{umask} setting in the same way
   as for the system function \code{mkdir}.  What modes can be set is
-  OS-dependent, and it is unsafe to assume that more that three octal
-  digits will be used.
+  OS-dependent, and it is unsafe to assume that more than three octal
+  digits will be used.  For more details see your OS's documentation on the
+  system call \code{mkdir} (and not that on the command-line utility of
+  that name). 
 #endif
 
   \code{Sys.chmod} sets the file permissions of one or more files.
 #ifdef unix
   It may not be supported (when a warning is issued).
   See the comments for \code{dir.create} for how modes are interpreted.
-  Changing mode on a symbolic link is unlikely to work (nor be necessary).
+  Changing mode on a symbolic link is unlikely to work (nor be
+  necessary).  For more details see your OS's documentation on the
+  system call \code{chmod} (and not that on the command-line utility of
+  that name). 
 #endif
 #ifdef windows
   The interpretation of \code{mode} in the Windows system function is
   non-POSIX and only supports setting the read-only attribute of the
   file.  So \R interprets \code{mode} to mean set read-only if and only
-  if \code{mode & 0200 == 0} (interpreted in octal).
+  if \code{mode & 0200 == 0} (interpreted in octal).  Windows has a much
+  more extensive system of file permissions on some file systems
+  (e.g. versions of NTFS) which are unrelated to this system call.
 #endif
 }
 \value{
