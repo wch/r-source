@@ -848,7 +848,11 @@ all the matched values are promises, the defaults as promises to be
 evaluated in the environment just created.  That environment is then
 used for the evaluation of the body of the function, and promises will
 be forced (and hence actual or default arguments evaluated) when they
-are encountered.
+are encountered. 
+@findex NAMED
+(Evaluating a promise sets @code{NAMED = 2} on its value, so if the
+argument was a symbol its binding is regarded as having multiple
+references during the evaluation of the closure call.)
 
 If the closure is an S3 generic (that is, contains a call to
 @code{UseMethod}) the evaluation process is the same until the
@@ -1881,9 +1885,9 @@ dimnames    dimnames<-
 @noindent
 Note that optimizing @code{NAMED = 1} is only effective within a
 primitive (as the closure wrapper of a @code{.Internal} will set
-@code{NAMED = 2} on the argument) and hence replacement functions should
-where possible be primitive to avoid copying (at least in their default
-methods).
+@code{NAMED = 2} when the promise to the argument is evaluated) and
+hence replacement functions should where possible be primitive to avoid
+copying (at least in their default methods).
 
 @item
 The following few @math{N}-argument functions are ``primitive'' for
