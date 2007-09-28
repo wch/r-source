@@ -969,6 +969,7 @@
  do_symbol
  do_symbols
  do_sys
+ do_syschmod
  do_sysgetpid
  do_sysinfo
  do_syssleep
