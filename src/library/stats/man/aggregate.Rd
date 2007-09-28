@@ -26,8 +26,7 @@ aggregate(x, \dots)
 \arguments{
   \item{x}{an R object.}
   \item{by}{a list of grouping elements, each as long as the variables
-    in \code{x}.  Names for the grouping variables are provided if
-    they are not given.}
+    in \code{x}.}
   \item{FUN}{a scalar function to compute the summary statistics which
     can be applied to all data subsets.}
   \item{nfrequency}{new number of observations per unit of time; must
@@ -82,7 +81,12 @@ aggregate(x, \dots)
 
   For the data frame method, a data frame with columns
   corresponding to the grouping variables in \code{by} followed by
-  aggregated columns from \code{x}.  \strong{Note:} prior to \R 2.6.0
+  aggregated columns from \code{x}.  If the \code{by} has names, the
+  non-empty times are used to label the columns in the results, with
+  unnamed grouping variables being named \code{Group.\var{i}} for
+  \code{by[[\var{i}]]}.
+
+  \strong{Note:} prior to \R 2.6.0
   the grouping variables were reported as factors with levels in
   alphabetical order in the current locale.  Now the variable in the
   result is found by subsetting the original variable.
