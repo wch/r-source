@@ -14,16 +14,16 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-matrix <- function(data=NA, nrow=1, ncol=1, byrow=FALSE, dimnames=NULL) {
+matrix <- function(data=NA, nrow=1, ncol=1, byrow=FALSE, dimnames=NULL)
+{
     data <- as.vector(data)
     if(missing(nrow))
         nrow <- ceiling(length(data)/ncol)
     else if(missing(ncol))
         ncol <- ceiling(length(data)/nrow)
-    x <- .Internal(matrix(data, nrow, ncol, byrow))
-    dimnames(x) <- dimnames
-    x
+    .Internal(matrix(data, nrow, ncol, byrow, dimnames))
 }
+
 nrow <- function(x) dim(x)[1]
 ncol <- function(x) dim(x)[2]
 

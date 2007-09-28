@@ -284,17 +284,15 @@ static SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
 
   R_NewHashTable
 
-  Hash table initialisation function.  Creates a table of size 'size'
-  that increases in size by 'growth_rate' after a threshold is met.
+  Hash table initialisation function.  Creates a table of size 'size'.
 
 */
 
-static SEXP R_NewHashTable(int size, int growth_rate)
+static SEXP R_NewHashTable(int size)
 {
     SEXP table;
 
     /* Some checking */
-    if (growth_rate <= 0) growth_rate =  HASHTABLEGROWTHRATE;
     if (size <= 0) size = HASHMINSIZE;
 
     /* Allocate hash table in the form of a vector */
@@ -310,7 +308,7 @@ static SEXP R_NewHashTable(int size, int growth_rate)
   R_NewHashedEnv
 
   Returns a new environment with a hash table initialized with default
-  size/growth settings.  The only non-static hash table function.
+  size.  The only non-static hash table function.
 */
 
 SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
@@ -318,7 +316,7 @@ SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
     SEXP s;
 
     PROTECT(s = NewEnvironment(R_NilValue, R_NilValue, enclos));
-    SET_HASHTAB(s, R_NewHashTable(asInteger(size), 0));
+    SET_HASHTAB(s, R_NewHashTable(asInteger(size)));
     UNPROTECT(1);
     return s;
 }
@@ -356,28 +354,22 @@ static void R_HashDelete(int hashcode, SEXP symbol, SEXP table)
   R_HashResize
 
   Hash table resizing function Increase the size of the hash table by
-  the growth_rate of the table.	 The vector is reallocated, however
-  the lists with in the hash table have their pointers shuffled around
-  so that they are not reallocated.
+  the static growth_rate. The vector is reallocated, however the lists
+  in the hash table have their pointers shuffled around so that
+  they are not reallocated.
 
 */
 
 static SEXP R_HashResize(SEXP table)
 {
     SEXP new_table, chain, new_chain, tmp_chain;
-    int /*hash_grow,*/ counter, new_hashcode;
+    int counter, new_hashcode;
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP)
 	error("first argument ('table') not of type VECSXP, from R_HashResize");
-
-    /* This may have to change.	 The growth rate should
-       be independent of the size (not implemented yet) */
-    /* hash_grow = HASHSIZE(table); */
-
     /* Allocate the new hash table */
-    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE,
-			       HASHTABLEGROWTHRATE);
+    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE);
     for (counter = 0; counter < length(table); counter++) {
 	chain = VECTOR_ELT(table, counter);
 	while (!isNull(chain)) {
@@ -608,11 +600,11 @@ void attribute_hidden InitGlobalEnv()
 {
     R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_BaseEnv);
 #ifdef NEW_CODE
-    HASHTAB(R_GlobalEnv) = R_NewHashTable(100, HASHTABLEGROWTHRATE);
+    HASHTAB(R_GlobalEnv) = R_NewHashTable(100);
 #endif
 #ifdef USE_GLOBAL_CACHE
     MARK_AS_GLOBAL_FRAME(R_GlobalEnv);
-    R_GlobalCache = R_NewHashTable(INITIAL_CACHE_SIZE, HASHTABLEGROWTHRATE);
+    R_GlobalCache = R_NewHashTable(INITIAL_CACHE_SIZE);
     R_GlobalCachePreserve = CONS(R_GlobalCache, R_NilValue);
     R_PreserveObject(R_GlobalCachePreserve);
 #endif
@@ -2008,7 +2000,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    hsize = length(s);
 
-	SET_HASHTAB(s, R_NewHashTable(hsize, HASHTABLEGROWTHRATE));
+	SET_HASHTAB(s, R_NewHashTable(hsize));
 	s = R_HashFrame(s);
 
 	/* FIXME: A little inefficient */
@@ -3216,7 +3208,7 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 void attribute_hidden InitStringHash()
 {
     const int STRING_HASH_INIT_SIZE = 54979;
-    R_StringHash = R_NewHashTable(STRING_HASH_INIT_SIZE, 0);
+    R_StringHash = R_NewHashTable(STRING_HASH_INIT_SIZE);
 }
 
 #define NEXT_CHAIN_EL(e) (CDR(e))
@@ -3245,8 +3237,7 @@ static SEXP R_CharHashResize(SEXP table)
 	error("first argument ('table') not of type VECSXP, from R_StringHashResize");
 
     /* Allocate the new hash table */
-    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE,
-			       HASHTABLEGROWTHRATE);
+    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE);
     PROTECT(new_table);
     for (counter = 0; counter < length(table); counter++) {
 	chain = VECTOR_ELT(table, counter);

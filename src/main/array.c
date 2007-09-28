@@ -58,19 +58,20 @@ SEXP GetColNames(SEXP dimnames)
 
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP vals, snr, snc;
+    SEXP vals, ans, snr, snc, dimnames;
     int nr, nc, byrow, lendat;
 
     checkArity(op, args);
     vals = CAR(args);
     snr = CADR(args);
     snc = CADDR(args);
-    byrow = asLogical(CADR(CDDR(args)));
-    if (byrow == NA_INTEGER)
-	error(_("invalid 'byrow' value"));
-
     if (!isNumeric(snr) || !isNumeric(snc))
 	error(_("non-numeric matrix extent"));
+    byrow = asLogical(CADDDR(args));
+    if (byrow == NA_INTEGER)
+	error(_("invalid 'byrow' value"));
+    dimnames = CAD4R(args);
+
 
     lendat = length(vals);
     nr = asInteger(snr);
@@ -101,34 +102,34 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((double)nr * (double)nc > INT_MAX)
 	error(_("too many elements specified"));
 
-    PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
+    PROTECT(ans = allocMatrix(TYPEOF(vals), nr, nc));
     if(lendat) {
 	if (isVector(vals))
-	    copyMatrix(snr, vals, byrow);
+	    copyMatrix(ans, vals, byrow);
 	else
-	    copyListMatrix(snr, vals, byrow);
+	    copyListMatrix(ans, vals, byrow);
     } else if (isVector(vals)) { /* fill with NAs */
 	int i, j;
 	switch(TYPEOF(vals)) {
 	case STRSXP:
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
-		    SET_STRING_ELT(snr, i + j * nr, NA_STRING);
+		    SET_STRING_ELT(ans, i + j * nr, NA_STRING);
 	    break;
 	case LGLSXP:
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
-		    LOGICAL(snr)[i + j * nr] = NA_LOGICAL;
+		    LOGICAL(ans)[i + j * nr] = NA_LOGICAL;
 	    break;
 	case INTSXP:
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
-		    INTEGER(snr)[i + j * nr] = NA_INTEGER;
+		    INTEGER(ans)[i + j * nr] = NA_INTEGER;
 	    break;
 	case REALSXP:
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
-		    REAL(snr)[i + j * nr] = NA_REAL;
+		    REAL(ans)[i + j * nr] = NA_REAL;
 	    break;
 	case CPLXSXP:
 	    {
@@ -137,21 +138,22 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		na_cmplx.i = 0;
 		for (i = 0; i < nr; i++)
 		    for (j = 0; j < nc; j++)
-			COMPLEX(snr)[i + j * nr] = na_cmplx;
+			COMPLEX(ans)[i + j * nr] = na_cmplx;
 	    }
 	    break;
 	case RAWSXP:
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
-		    RAW(snr)[i + j * nr] = 0;
+		    RAW(ans)[i + j * nr] = 0;
 	    break;
 	default:
 	    /* don't fill with anything */
 	    ;
 	}
     }
+    if(!isNull(dimnames)) ans = dimnamesgets(ans, dimnames);
     UNPROTECT(1);
-    return snr;
+    return ans;
 }
 
 
