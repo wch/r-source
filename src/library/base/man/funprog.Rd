@@ -58,7 +58,7 @@ Map(f, ...)
   \code{Reduce} is patterned after Common Lisp's \code{reduce}.  A
   reduce is also known as a fold (e.g., in Haskell) or an accumulate
   (e.g., in the C++ Standard Template Library).  The accumulative
-  version correponds to Haskell's scan functions.
+  version corresponds to Haskell's scan functions.
 
   \code{Filter} applies the unary predicate function \code{f} to each
   element of \code{x}, coercing to logical if necessary, and returns the
