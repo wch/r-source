@@ -26,6 +26,8 @@
 
 #define BYTECODE
 
+#define USE_CHAR_HASHING
+
 /* probably no longer needed */
 #define NEW_CONDITION_HANDLING
 

@@ -3212,6 +3212,32 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+#ifndef USE_CHAR_HASHING
+SEXP mkChar(const char *name)
+{
+    SEXP c = allocString(strlen(name));
+    strcpy(CHAR_RW(c), name);
+    return c;
+}
+SEXP mkCharEnc(const char *name, int enc)
+{
+    SEXP c = allocString(strlen(name));
+    strcpy(CHAR_RW(c), name);
+    switch(enc) {
+    case 0:
+	break;          /* don't set encoding */
+    case UTF8_MASK:
+	SET_UTF8(c);
+	break;
+    case LATIN1_MASK:
+	SET_LATIN1(c);
+	break;
+    default:
+	error("unknown encoding mask: %d", enc);
+    }
+    return c;
+}
+#else
 /* Global CHARSXP cache and code for char-based hash tables */
 
 /* We can reuse the hash structure, but need separate code for get/set
@@ -3411,3 +3437,4 @@ SEXP mkChar(const char *name)
 {
     return mkCharEnc(name, 0);
 }
+#endif
