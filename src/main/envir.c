@@ -3276,7 +3276,7 @@ static void R_StringHash_resize()
     char *status = HASHPRI(new_table) > HASHPRI(R_StringHash) ? " OK" : "BAD";
     Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
             HASHSIZE(R_StringHash), HASHSIZE(new_table),
-            HASHPRI(table), HASHPRI(new_table), status);
+            HASHPRI(R_StringHash), HASHPRI(new_table), status);
 #endif
     UNPROTECT(1);
     R_ReleaseObject(R_StringHash);
