@@ -2619,6 +2619,7 @@ function(db, def_enc = FALSE)
     files_with_unknown_tags <- NULL
     files_with_bad_name <- files_with_bad_title <- NULL
     files_with_bad_keywords <- NULL
+    files_with_empty_sections <- list()
 
     db_aliases <- vector("list", length(db))
     names(db_aliases) <- names(db)
@@ -2699,6 +2700,11 @@ function(db, def_enc = FALSE)
             files_with_bad_keywords <-
                 rbind(files_with_bad_keywords,
                       cbind(f, bad_keywords))
+        
+        empty_sections <- x$data$tags[regexpr("^[[:space:]]*$",
+                                              x$data$vals) > -1]
+        if(length(empty_sections))
+            files_with_empty_sections[[f]] <- empty_sections
     }
 
     ## db_aliases could be length 0, or could contain nothing
@@ -2722,7 +2728,8 @@ function(db, def_enc = FALSE)
                 files_with_bad_name,
                 files_with_bad_title,
                 files_with_bad_keywords,
-                files_with_duplicated_aliases)
+                files_with_duplicated_aliases,
+                files_with_empty_sections)
     names(val) <-
         c("files_with_surely_bad_Rd",
           "files_with_likely_bad_Rd",
@@ -2735,7 +2742,8 @@ function(db, def_enc = FALSE)
           "files_with_bad_name",
           "files_with_bad_title",
           "files_with_bad_keywords",
-          "files_with_duplicated_aliases")
+          "files_with_duplicated_aliases",
+          "files_with_empty_sections")
     class(val) <- "check_Rd_files_in_Rd_db"
     val
 }
@@ -2882,6 +2890,28 @@ function(x, ...)
         for(alias in names(bad)) {
             writeLines(gettextf("Rd files with duplicated alias '%s':", alias))
             .pretty_print(bad[[alias]])
+        }
+        writeLines("")
+    }
+
+    if(identical(as.logical(Sys.getenv("_R_CHECK_RD_EMPTY_SECTIONS_")),
+                 TRUE)
+       && length(x$files_with_empty_sections)) {
+        writeLines(gettext("Rd files with empty sections:"))
+        bad <- x$files_with_empty_sections
+        for(i in seq_along(bad)) {
+            writeLines(paste("  ", names(bad)[i], ":", sep = ""))
+            tags <- bad[[i]]
+            ind <- sapply(tags, length) == 1L
+            if(any(ind))
+                writeLines(strwrap(paste(tags[ind], collapse = " "),
+                                   indent = 4, exdent = 4))
+            if(any(!ind)) {
+                ## For the time being, these should be user-defined
+                ## sections with tags 'section' and the section title.
+                writeLines(sprintf("    section{%s}",
+                                   sapply(tags[!ind], "[[", 2L)))
+            }
         }
         writeLines("")
     }
