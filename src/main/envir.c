@@ -184,6 +184,10 @@ int attribute_hidden R_Newhashpjw(const char *s)
     char *p;
     unsigned h = 0, g;
     for (p = (char *) s; *p; p++) {
+	/* better to use 'djb2', http://www.cse.yorku.ca/~oz/hash.html
+	   h = ((h << 5) + h) + (*p);
+	   Or unique() uses 11*h + (*p);
+	*/
 	h = (h << 4) + (*p);
 	if ((g = h & 0xf0000000) != 0) {
 	    h = h ^ (g >> 24);
@@ -3233,9 +3237,8 @@ void attribute_hidden InitStringHash()
                          ((IS_UTF8(a) == IS_UTF8(b)) && \
                           (IS_UTF8(a) == IS_UTF8(b))))
 
-/* Resize a hash table with char* based keys.  The new table will be
-   sized according to HASHTABLEGROWTHRATE. */
-static SEXP R_CharHashResize(SEXP table)
+/* Resize a hash table with char* based keys. */
+static SEXP R_CharHashResize(SEXP table, int newsize)
 {
     SEXP new_table, chain, new_chain, val;
     int /*hash_grow,*/ counter, new_hashcode;
@@ -3245,8 +3248,7 @@ static SEXP R_CharHashResize(SEXP table)
 	error("first argument ('table') not of type VECSXP, from R_StringHashResize");
 
     /* Allocate the new hash table */
-    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE,
-			       HASHTABLEGROWTHRATE);
+    new_table = R_NewHashTable(newsize, HASHTABLEGROWTHRATE);
     PROTECT(new_table);
     for (counter = 0; counter < length(table); counter++) {
 	chain = VECTOR_ELT(table, counter);
@@ -3268,29 +3270,43 @@ static SEXP R_CharHashResize(SEXP table)
     return new_table;
 }
 
+/* #define DEBUG_GLOBAL_STRING_HASH 1 */
+
 /* Resize the global R_StringHash CHARSXP cache */
-static void R_StringHash_resize()
+static void R_StringHash_resize(int newsize)
 {
     SEXP new_table;
 
-    /* Normally, GC can modify R_StringHash by null-ifying unmarked CHARSXPs.
-       Since GC can occur during the resize, we temporarily preserve all CHARSXPs
-       in the cache to avoid any changes during the resize op.
+    /* Normally, GC can modify R_StringHash by null-ifying unmarked
+       CHARSXPs.  Since GC can occur during the resize, we temporarily
+       preserve all CHARSXPs in the cache to avoid any changes during
+       the resize op.
      */
     R_PreserveObject(R_StringHash);
 
-    PROTECT(new_table = R_CharHashResize(R_StringHash));
+    new_table = R_CharHashResize(R_StringHash, newsize);
 
 #ifdef DEBUG_GLOBAL_STRING_HASH
-    char *status = HASHPRI(new_table) > HASHPRI(R_StringHash) ? " OK" : "BAD";
-    Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
-            HASHSIZE(R_StringHash), HASHSIZE(new_table),
-            HASHPRI(R_StringHash), HASHPRI(new_table), status);
+    {
+	PROTECT(new_table); /* precaution on case anything is added here */
+	char *status = HASHPRI(new_table) > HASHPRI(R_StringHash) ? " OK" : "BAD";
+	Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
+		HASHSIZE(R_StringHash), HASHSIZE(new_table),
+		HASHPRI(R_StringHash), HASHPRI(new_table), status);
+	UNPROTECT(1);
+    }
 #endif
-    UNPROTECT(1);
+
     R_ReleaseObject(R_StringHash);
     R_StringHash = new_table;
 }
+
+/* For experiments with setting the initial hash table size */
+void Rf_ResizeStringHash(int size)
+{
+    if(size > HASHSIZE(R_StringHash)) R_StringHash_resize(size);
+}
+
 
 
 /* Get CHARSXP for string s in the hash table.
@@ -3359,9 +3375,8 @@ SEXP mkCharEnc(const char *name, int enc)
         enc != LATIN1_MASK)
         error("unknown encoding mask: %d", enc);
 
-    if (R_HashSizeCheck(R_StringHash)) {
-        R_StringHash_resize();
-    }
+    if (R_HashSizeCheck(R_StringHash))
+        R_StringHash_resize(HASHSIZE(R_StringHash) * HASHTABLEGROWTHRATE);
 
     /* have to handle "" specially since it doesn't hash */
     if (*name != '\0')
