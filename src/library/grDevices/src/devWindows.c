@@ -2465,7 +2465,7 @@ static void GA_Polygon(int n, double *x, double *y,
 	my1 = imax2(my1, points[i].y);
     }
     r.x = mx0; r.width = mx1 - mx0;
-    r.y = my0; r.height = my1 = my0;
+    r.y = my0; r.height = my1 - my0;
 
     SetColor(gc->fill, gc->gamma, dd);
     if (R_OPAQUE(gc->fill)) {
