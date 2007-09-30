@@ -178,16 +178,17 @@ static SEXP getActiveValue(SEXP fun)
 
 */
 
-/* was extern: used in this file and names.c */
+/* was extern: used in this file and names.c (for the symbol table).
+
+   This hash function seems to work well enough for symbol tables,
+   and hash tables get saved as part of environments so changing it
+   is a major decision.
+ */
 int attribute_hidden R_Newhashpjw(const char *s)
 {
     char *p;
     unsigned h = 0, g;
     for (p = (char *) s; *p; p++) {
-	/* better to use 'djb2', http://www.cse.yorku.ca/~oz/hash.html
-	   h = ((h << 5) + h) + (*p);
-	   Or unique() uses 11*h + (*p);
-	*/
 	h = (h << 4) + (*p);
 	if ((g = h & 0xf0000000) != 0) {
 	    h = h ^ (g >> 24);
@@ -3241,12 +3242,27 @@ SEXP mkCharEnc(const char *name, int enc)
 /* Global CHARSXP cache and code for char-based hash tables */
 
 /* We can reuse the hash structure, but need separate code for get/set
-   of values since our keys are char* and not SEXP symbol types. */
+   of values since our keys are char* and not SEXP symbol types. 
+
+   Experience has shown that it is better to use a different hash function:
+   this is the simplest known good one and is likely to be replaced.
+*/
+
+static unsigned int char_hash_size = 65536;
+static unsigned int char_hash_mask = 65535;
+
+static unsigned int char_hash(const char *s)
+{
+    char *p;
+    unsigned int h = 0;
+    for (p = (char *) s; *p; p++)
+	h = ((h << 5) + h) + (*p);
+    return h;
+}
 
 void attribute_hidden InitStringHash()
 {
-    const int STRING_HASH_INIT_SIZE = 54979;
-    R_StringHash = R_NewHashTable(STRING_HASH_INIT_SIZE, 0);
+    R_StringHash = R_NewHashTable(char_hash_size, 0);
 }
 
 #define NEXT_CHAIN_EL(e) (CDR(e))
@@ -3264,24 +3280,27 @@ void attribute_hidden InitStringHash()
                           (IS_UTF8(a) == IS_UTF8(b))))
 
 /* Resize a hash table with char* based keys. */
-static SEXP R_CharHashResize(SEXP table, int newsize)
+static SEXP R_CharHashResize(SEXP table, unsigned int newsize)
 {
     SEXP new_table, chain, new_chain, val;
-    int /*hash_grow,*/ counter, new_hashcode;
+    unsigned int counter, new_hashcode;
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP)
 	error("first argument ('table') not of type VECSXP, from R_StringHashResize");
 
     /* Allocate the new hash table */
-    new_table = R_NewHashTable(newsize, HASHTABLEGROWTHRATE);
+    new_table = R_NewHashTable(newsize, /* unused */ 2);
+    char_hash_size = newsize;
+    char_hash_mask = char_hash_size - 1;
     PROTECT(new_table);
     for (counter = 0; counter < length(table); counter++) {
 	chain = VECTOR_ELT(table, counter);
 	while (!isNull(chain)) {
             val = CAR(chain);
             if (*CHAR(val) != '\0')
-                new_hashcode = R_Newhashpjw(CHAR(val)) % HASHSIZE(new_table);
+                /* new_hashcode = char_hash(CHAR(val)) % char_hash_size; */
+                new_hashcode = char_hash(CHAR(val)) & char_hash_mask;
             else
                 new_hashcode = 0;
 	    new_chain = VECTOR_ELT(new_table, new_hashcode);
@@ -3299,7 +3318,7 @@ static SEXP R_CharHashResize(SEXP table, int newsize)
 /* #define DEBUG_GLOBAL_STRING_HASH 1 */
 
 /* Resize the global R_StringHash CHARSXP cache */
-static void R_StringHash_resize(int newsize)
+static void R_StringHash_resize(unsigned int newsize)
 {
     SEXP new_table;
 
@@ -3315,10 +3334,9 @@ static void R_StringHash_resize(int newsize)
 #ifdef DEBUG_GLOBAL_STRING_HASH
     {
 	PROTECT(new_table); /* precaution on case anything is added here */
-	char *status = HASHPRI(new_table) > HASHPRI(R_StringHash) ? " OK" : "BAD";
-	Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
+	Rprintf("Resized: size %d => %d\tpri %d => %d\n",
 		HASHSIZE(R_StringHash), HASHSIZE(new_table),
-		HASHPRI(R_StringHash), HASHPRI(new_table), status);
+		HASHPRI(R_StringHash), HASHPRI(new_table));
 	UNPROTECT(1);
     }
 #endif
@@ -3328,7 +3346,7 @@ static void R_StringHash_resize(int newsize)
 }
 
 /* For experiments with setting the initial hash table size */
-void Rf_ResizeStringHash(int size)
+void Rf_ResizeStringHash(unsigned int size)
 {
     if(size > HASHSIZE(R_StringHash)) R_StringHash_resize(size);
 }
@@ -3395,18 +3413,18 @@ static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
 SEXP mkCharEnc(const char *name, int enc)
 {
     SEXP cval;
-    int h = 0;
+    unsigned int h = 0;
 
     if (enc != 0 && enc != UTF8_MASK &&
         enc != LATIN1_MASK)
         error("unknown encoding mask: %d", enc);
 
     if (R_HashSizeCheck(R_StringHash))
-        R_StringHash_resize(HASHSIZE(R_StringHash) * HASHTABLEGROWTHRATE);
+        R_StringHash_resize(char_hash_size * 2);
 
     /* have to handle "" specially since it doesn't hash */
-    if (*name != '\0')
-        h = R_Newhashpjw(name) % HASHSIZE(R_StringHash);
+    /* if (*name != '\0') h = char_hash(name) % char_hash_size; */
+    if (*name != '\0') h = char_hash(name) & char_hash_mask;
     cval = R_StringHash_get(h, name, enc);
     if (cval == R_NilValue) {
         PROTECT(cval = allocString(strlen(name)));
