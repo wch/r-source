@@ -3280,7 +3280,7 @@ void attribute_hidden InitStringHash()
 
 #define CHARENCCMP(a, b) ( \
                          ((IS_UTF8(a) == IS_UTF8(b)) && \
-                          (IS_UTF8(a) == IS_UTF8(b))))
+                          (IS_LATIN1(a) == IS_LATIN1(b))))
 
 /* Resize a hash table with char* based keys. */
 static SEXP R_CharHashResize(SEXP table, unsigned int newsize)
