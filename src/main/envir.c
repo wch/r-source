@@ -3358,82 +3358,35 @@ void Rf_ResizeStringHash(unsigned int size)
     if(size > HASHSIZE(R_StringHash)) R_StringHash_resize(size);
 }
 
-
-
-/* Get CHARSXP for string s in the hash table.
-   Return R_NilValue, if not found.
-*/
-static SEXP R_CharHashGet(int hashcode, const char *s, int enc, SEXP table)
-{
-    SEXP chain, val;
-
-    /* Grab the chain from the hashtable */
-    chain = VECTOR_ELT(table, hashcode);
-    /* Retrieve the value from the chain */
-    for (; chain != R_NilValue ; chain = CDR(chain)) {
-        val = CAR(chain);
-	if (STRINGHASHCMP(val, s, enc))
-            return val;
-    }
-    /* If not found */
-    return R_NilValue;
-}
-
-/* Get a CHARSXP from the global cache, R_NilValue if not found */
-#define R_StringHash_get(h, s, e) (R_CharHashGet(h, s, e, R_StringHash))
-
-
-/* Add CHARSXP, schar to the table using key CHAR(schar).  If a
-   CHARSXP with that key already exists, it is replaced.
-*/
-static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
-{
-    SEXP chain, val;
-
-    /* Grab the chain from the hashtable */
-    chain = VECTOR_ELT(table, hashcode);
-
-    /* Search for the value in the chain */
-    for (; !ISNULL(chain); chain = CDR(chain)) {
-        val = CAR(chain);
-	if (CHARENCCMP(val, schar) &&
-            strcmp(CHAR(val), CHAR(schar)) == 0) {
-            SETCAR(chain, schar); /* set to new value */
-	    return;
-	}
-    }
-    chain = VECTOR_ELT(table, hashcode);
-    if (ISNULL(chain))
-	SET_HASHPRI(table, HASHPRI(table) + 1);
-    /* Add the value into the chain */
-    SET_VECTOR_ELT(table, hashcode, CONS(schar, chain));
-    return;
-}
-
-/* Add a CHARSXP to the global cache */
-#define R_StringHash_set(h, s) (R_CharHashSet(h, s, R_StringHash))
-
 /* mkCharEnc - make a character (CHARSXP) variable and set its
    encoding bit.  If a CHARSXP with the same string already exists in
    the global CHARSXP cache, R_StringHash, it is returned.  Otherwise,
    a new CHARSXP is created, added to the cache and then returned. */
 SEXP mkCharEnc(const char *name, int enc)
 {
-    SEXP cval;
-    unsigned int h = 0;
+    SEXP cval, chain;
+    unsigned int hashcode = 0;
 
     if (enc != 0 && enc != UTF8_MASK &&
         enc != LATIN1_MASK)
         error("unknown encoding mask: %d", enc);
 
-    if (R_HashSizeCheck(R_StringHash))
-        R_StringHash_resize(char_hash_size * 2);
-
     /* have to handle "" specially since it doesn't hash */
-    /* if (*name != '\0') h = char_hash(name) % char_hash_size; */
-    if (*name != '\0') h = char_hash(name) & char_hash_mask;
-    cval = R_StringHash_get(h, name, enc);
+    /* if (*name != '\0') hashcode = char_hash(name) % char_hash_size; */
+    if (*name != '\0') hashcode = char_hash(name) & char_hash_mask;
+
+    /* Search for a cached value */
+    cval = R_NilValue;
+    chain = VECTOR_ELT(R_StringHash, hashcode);
+    for (; !ISNULL(chain) ; chain = CDR(chain)) {
+        SEXP val = CAR(chain);
+	if (STRINGHASHCMP(val, name, enc)) {
+            cval = val;
+            break;
+        }
+    }
     if (cval == R_NilValue) {
+        /* no cached value; need to allocate one and add to the cache */
         PROTECT(cval = allocString(strlen(name)));
         strcpy(CHAR_RW(cval), name);
         switch(enc) {
@@ -3448,7 +3401,17 @@ SEXP mkCharEnc(const char *name, int enc)
         default:
             error("unknown encoding mask: %d", enc);
         }
-        R_StringHash_set(h, cval);
+	/* add the new value to the cache */
+        chain = VECTOR_ELT(R_StringHash, hashcode);
+        if (ISNULL(chain))
+            SET_HASHPRI(R_StringHash, HASHPRI(R_StringHash) + 1);
+        SET_VECTOR_ELT(R_StringHash, hashcode, CONS(cval, chain));
+
+        /* resize the hash table if necessary with the new entry still
+           protected. */
+        if (R_HashSizeCheck(R_StringHash))
+            R_StringHash_resize(char_hash_size * 2);
+
         UNPROTECT(1);
     }
     return cval;
