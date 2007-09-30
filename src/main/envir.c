@@ -3251,6 +3251,10 @@ SEXP mkCharEnc(const char *name, int enc)
    this is the simplest known good one and is likely to be replaced.
 */
 
+/* char_hash_size MUST be a power of 2 and char_hash_mask ==
+   char_hash_size - 1 for x & char_hash_mask to be equivalent to x %
+   char_hash_size.
+*/
 static unsigned int char_hash_size = 65536;
 static unsigned int char_hash_mask = 65535;
 
