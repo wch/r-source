@@ -498,11 +498,24 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 
 	    if(res != -1 && inb == 0) {
-		SEXP tmp;
-		if(isLatin1) tmp = mkCharEnc(cbuff.data, LATIN1_MASK);
-		else if(isUTF8) tmp = mkCharEnc(cbuff.data, UTF8_MASK);
-		else tmp = mkChar(cbuff.data);
-		SET_STRING_ELT(ans, i, tmp);
+		/* we can currently only put the result in the CHARSXP
+		   cache if it does not contain nuls. */
+		Rboolean has_nul = FALSE;
+		char *p = cbuff.data;
+
+		nout = cbuff.bufsize - 1 - outb;
+		for(j = 0; j < nout; j++) if(!*p++) {has_nul = TRUE; break;}
+		if(has_nul) {
+		    si = allocString(nout);
+		    memcpy(CHAR_RW(si), cbuff.data, nout);
+		    if(isLatin1) SET_LATIN1(si);
+		    if(isUTF8) SET_UTF8(si);
+		} else {
+		    if(isLatin1) si = mkCharEnc(cbuff.data, LATIN1_MASK);
+		    else if(isUTF8) si = mkCharEnc(cbuff.data, UTF8_MASK);
+		    else si = mkChar(cbuff.data);
+		}
+		SET_STRING_ELT(ans, i, si);
 	    }
 	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}
