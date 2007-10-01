@@ -58,10 +58,13 @@ SEXP GetColNames(SEXP dimnames)
 
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP vals, ans, snr, snc, dimnames;
-    int nr, nc, byrow, lendat;
+    SEXP vals, ans, snr, snc, dimnames = R_NilValue;
+    int nr, nc, byrow, lendat,nargs;
 
     checkArity(op, args);
+    nargs = length(args);
+    if(nargs < 4 || nargs > 5)
+	error("incorrect number of arguments to 'matrix'");
     vals = CAR(args);
     snr = CADR(args);
     snc = CADDR(args);
@@ -70,7 +73,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     byrow = asLogical(CADDDR(args));
     if (byrow == NA_INTEGER)
 	error(_("invalid 'byrow' value"));
-    dimnames = CAD4R(args);
+    if(nargs == 5) dimnames = CAD4R(args);
 
 
     lendat = length(vals);
