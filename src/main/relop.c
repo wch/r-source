@@ -453,7 +453,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
 static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2, res;
-    SEXP ans;
+    SEXP ans, c1, c2;
 
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
@@ -465,39 +465,45 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     switch (code) {
     case EQOP:
 	for (i = 0; i < n; i++) {
-	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
-		(STRING_ELT(s2, i % n2) == NA_STRING))
+	    c1 = STRING_ELT(s1, i % n1);
+	    c2 = STRING_ELT(s2, i % n2);
+	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
- 	    else
-	    if (strcmp(translateChar(STRING_ELT(s1, i % n1)),
-		       translateChar(STRING_ELT(s2, i % n2))) == 0)
+ 	    else if (c1 == c2)  /* This will pretest all cached strings */
 		LOGICAL(ans)[i] = 1;
 	    else
-		LOGICAL(ans)[i] = 0;
+		if (strcmp(translateChar(c1), translateChar(c2)) == 0)
+		    LOGICAL(ans)[i] = 1;
+		else
+		    LOGICAL(ans)[i] = 0;
 	}
 	break;
     case NEOP:
 	for (i = 0; i < n; i++) {
-	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
-		(STRING_ELT(s2, i % n2) == NA_STRING))
+	    c1 = STRING_ELT(s1, i % n1);
+	    c2 = STRING_ELT(s2, i % n2);
+	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
- 	    else
-	    if (streql(translateChar(STRING_ELT(s1, i % n1)),
-		       translateChar(STRING_ELT(s2, i % n2))) != 0)
+ 	    else if (c1 == c2)
 		LOGICAL(ans)[i] = 0;
-	    else
-		LOGICAL(ans)[i] = 1;
+ 	    else
+		if (strcmp(translateChar(c1), translateChar(c2)) == 0)
+		    LOGICAL(ans)[i] = 0;
+		else
+		    LOGICAL(ans)[i] = 1;
 	}
 	break;
     case LTOP:
 	for (i = 0; i < n; i++) {
-	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
-		(STRING_ELT(s2, i % n2) == NA_STRING))
+	    c1 = STRING_ELT(s1, i % n1);
+	    c2 = STRING_ELT(s2, i % n2);
+	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else if (c1 == c2)
+		LOGICAL(ans)[i] = 0;
  	    else {
 		errno = 0;
-		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
-			      translateChar(STRING_ELT(s2, i % n2)));
+		res = STRCOLL(translateChar(c1), translateChar(c2));
 		if(errno)  
 		    LOGICAL(ans)[i] = NA_LOGICAL;
 		else
@@ -507,13 +513,15 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case GTOP:
 	for (i = 0; i < n; i++) {
-	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
-		(STRING_ELT(s2, i % n2) == NA_STRING))
+	    c1 = STRING_ELT(s1, i % n1);
+	    c2 = STRING_ELT(s2, i % n2);
+	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else if (c1 == c2)
+		LOGICAL(ans)[i] = 0;
  	    else {
 		errno = 0;
-		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
-			      translateChar(STRING_ELT(s2, i % n2)));
+		res = STRCOLL(translateChar(c1), translateChar(c2));
 		if(errno)  
 		    LOGICAL(ans)[i] = NA_LOGICAL;
 		else
@@ -523,9 +531,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case LEOP:
 	for (i = 0; i < n; i++) {
-	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
-		(STRING_ELT(s2, i % n2) == NA_STRING))
+	    c1 = STRING_ELT(s1, i % n1);
+	    c2 = STRING_ELT(s2, i % n2);
+	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else if (c1 == c2)
+		LOGICAL(ans)[i] = 1;
  	    else {
 		errno = 0;
 		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
@@ -539,9 +550,12 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case GEOP:
 	for (i = 0; i < n; i++) {
-	    if ((STRING_ELT(s1, i % n1) == NA_STRING) ||
-		(STRING_ELT(s2, i % n2) == NA_STRING))
+	    c1 = STRING_ELT(s1, i % n1);
+	    c2 = STRING_ELT(s2, i % n2);
+	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
+ 	    else if (c1 == c2)
+		LOGICAL(ans)[i] = 1;
   	    else {
 		errno = 0;
 		res = STRCOLL(translateChar(STRING_ELT(s1, i % n1)),
