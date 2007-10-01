@@ -1036,9 +1036,9 @@ void InitNames()
     SET_ATTRIB(R_RestartToken, R_NilValue);
     /* Parser Structures */
     R_CommentSxp = R_NilValue;
-    /* String constants (CHARSXP values */
-    /* Note: changed from mkChar so mkChar can see if it is getting
-       "NA" and then return NA_STRING rather than alloc a new CHAR */
+    /* String constants (CHARSXP values) */
+    /* Note: we don't want NA_STRING to be in the CHARSXP cache, so that
+       mkChar("NA") is distinct from NA_STRING */
     /* NA_STRING */
     NA_STRING = allocString(strlen("NA"));
     strcpy(CHAR_RW(NA_STRING), "NA");
