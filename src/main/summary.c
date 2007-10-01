@@ -167,9 +167,10 @@ static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
 
     for (i = 0; i < length(x); i++) {
 	if (STRING_ELT(x, i) != NA_STRING) {
-	    if (!updated || 
-		STRCOLL(translateChar(s), 
-			translateChar(STRING_ELT(x, i))) > 0) {
+	    if (!updated ||
+		(s != STRING_ELT(x, i) &&
+		 STRCOLL(translateChar(s),
+			 translateChar(STRING_ELT(x, i))) > 0)) {
 		s = STRING_ELT(x, i);
 		if(!updated) updated = TRUE;
 	    }
@@ -235,9 +236,10 @@ static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
 
     for (i = 0; i < length(x); i++) {
 	if (STRING_ELT(x, i) != NA_STRING) {
-	    if (!updated || 
-		STRCOLL(translateChar(s),
-			translateChar(STRING_ELT(x, i))) < 0) {
+	    if (!updated ||
+		(s != STRING_ELT(x, i) &&
+		 STRCOLL(translateChar(s),
+			 translateChar(STRING_ELT(x, i))) < 0)) {
 		s = STRING_ELT(x, i);
 		if(!updated) updated = TRUE;
 	    }
@@ -334,7 +336,7 @@ SEXP fixup_NaRm(SEXP args)
 	}
 	prev = a;
     }
-    
+
     PROTECT(na_value);
     t = CONS(na_value, R_NilValue);
     UNPROTECT(1);
@@ -497,7 +499,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	a = CAR(args);
 	int_a = 0;/* int_a = 1	<-->	a is INTEGER */
 	real_a = 0;
-	
+
 	if(length(a) > 0) {
 	    updated = 0;/*- GLOBAL -*/
 
@@ -507,7 +509,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		switch(TYPEOF(a)) {
 		case LGLSXP:
-		case INTSXP: 
+		case INTSXP:
 		    int_a = 1;
 		    if (iop == 2) updated = imin(INTEGER(a), length(a), &itmp, narm);
 		    else	  updated = imax(INTEGER(a), length(a), &itmp, narm);
@@ -557,9 +559,9 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 				stmp = StringFromInteger(itmp, &warn);
 			    if(real_a)
 				stmp = StringFromReal(tmp, &warn);
-			    if(((iop == 2 && 
+			    if(((iop == 2 && stmp != scum &&
 				 STRCOLL(translateChar(stmp), translateChar(scum)) < 0)) ||
-			       (iop == 3 && 
+			       (iop == 3 && stmp != scum &&
 				STRCOLL(translateChar(stmp), translateChar(scum)) > 0) )
 				scum = stmp;
 			}
@@ -578,7 +580,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		switch(TYPEOF(a)) {
 		case LGLSXP:
 		case INTSXP:
-		    updated = isum(TYPEOF(a) == LGLSXP ? 
+		    updated = isum(TYPEOF(a) == LGLSXP ?
                                    LOGICAL(a) :INTEGER(a), length(a),
                                    &itmp, narm, call);
 		    if(updated) {
@@ -744,7 +746,7 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ans);
     }
     UNPROTECT(1);
-    
+
     PROTECT(op = findFun(install("range.default"), env));
     PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
     for (a = args, b = prargs; a != R_NilValue; a = CDR(a), b = CDR(b))
@@ -789,7 +791,7 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(ans)[0] = indx + 1;
 	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* preserve names */
 	    SEXP ansnam;
-	    PROTECT(ansnam = 
+	    PROTECT(ansnam =
 		    ScalarString(STRING_ELT(getAttrib(sx, R_NamesSymbol), indx)));
 	    setAttrib(ans, R_NamesSymbol, ansnam);
 	    UNPROTECT(1);
@@ -977,15 +979,15 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* op = 0 is pmin.int, op = 1 is pmax.int
-   It seems that NULL and logicals are supposed to be handled as 
-   if they have been coerced to integer. 
+   It seems that NULL and logicals are supposed to be handled as
+   if they have been coerced to integer.
  */
 SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, x, ans;
     int i, n, len, narm;
     SEXPTYPE type, anstype;
-    
+
     narm = asLogical(CAR(args));
     if(narm == NA_LOGICAL)
 	error(_("invalid '%s' value"), "na.rm");
@@ -1002,7 +1004,7 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     case STRSXP:
 	break;
     default:
-	error(_("invalid input type"));	
+	error(_("invalid input type"));
     }
     a = CDR(args);
     if(a == R_NilValue) return x; /* one input */
@@ -1049,13 +1051,13 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 		tmp = r[i % n];
 		if(PRIMVAL(op) == 1) {
 		    if( (narm && ra[i] == NA_INTEGER) ||
-			(ra[i] != NA_INTEGER && tmp != NA_INTEGER 
+			(ra[i] != NA_INTEGER && tmp != NA_INTEGER
 			 && tmp > ra[i]) ||
 			(!narm && tmp == NA_INTEGER) )
 			ra[i] = tmp;
 		} else {
 		    if( (narm && ra[i] == NA_INTEGER) ||
-			(ra[i] != NA_INTEGER && tmp != NA_INTEGER 
+			(ra[i] != NA_INTEGER && tmp != NA_INTEGER
 			 && tmp < ra[i]) ||
 			(!narm && tmp == NA_INTEGER) )
 			ra[i] = tmp;
@@ -1110,13 +1112,13 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 		t2 = STRING_ELT(ans, i);
 		if(PRIMVAL(op) == 1) {
 		    if( (narm && t2 == NA_STRING) ||
-			(t2 != NA_STRING && tmp != NA_STRING 
+			(t2 != NA_STRING && tmp != NA_STRING && tmp != t2
 			 && STRCOLL(translateChar(tmp), translateChar(t2)) > 0) ||
 			(!narm && tmp == NA_STRING) )
 			SET_STRING_ELT(ans, i, tmp);
 		} else {
 		    if( (narm && t2 == NA_STRING) ||
-			(t2 != NA_STRING && tmp != NA_STRING 
+			(t2 != NA_STRING && tmp != NA_STRING && tmp != t2
 			 && STRCOLL(translateChar(tmp), translateChar(t2)) < 0) ||
 			(!narm && tmp == NA_STRING) )
 			SET_STRING_ELT(ans, i, tmp);
