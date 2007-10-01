@@ -88,10 +88,10 @@ print(1.001, digits=16)
 
 ## iconv to UCS-2
 x <- "A test string"
-y <- try(iconv(x, "", "UCS-2"))
+y <- try(iconv(x, "", "UCS-2BE"))
 if(!inherits(y, "try-error")) {
     print(y)
-    z <- iconv(y, "UCS-2", "")
+    z <- iconv(y, "UCS-2BE", "")
     stopifnot(identical(x, z))
 }
 ## works in R >= 2.6.0
