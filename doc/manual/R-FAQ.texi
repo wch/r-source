@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-09-25
+@set FAQ_DATE @value{FAQ_YEAR}-10-01
 @set REL_YEAR 2007
 @set REL_MAJOR 2
-@set REL_MINOR 5
-@set REL_PATCHLEVEL 1
+@set REL_MINOR 6
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -2009,8 +2009,9 @@ Generalized additive models by likelihood based boosting.
 @item GDD
 Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
-@item GenABEL
-Genome-wide SNP association analysis.
+@item GLDEX
+Fit RS and FMKL generalised lambda distributions using discretized and
+maximum likelihood methods.
 @item GOSim
 Computation of functional similarities between GO terms and gene
 products.
@@ -2027,6 +2028,8 @@ Gene set analysis.
 Gamma Shape Mixture.
 @item GammaTest
 Gamma Test data analysis.
+@item GenABEL
+Genome-wide SNP association analysis.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
@@ -2724,6 +2727,8 @@ model.
 28 benchmark densities from Berlinet/Devroye (1994).
 @item betareg
 Beta regression for modeling rates and proportions.
+@item bs
+Utilities for the Birnbaum-Saunders distribution.
 @item biOps
 Basic image operations and image processing.
 @item bicreduc
@@ -3829,6 +3834,8 @@ Copula selection and fitting using maximum likelihood.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item mlegp
+Maximum Likelihood Estimates of Gaussian Processes.
 @item mlica
 Independent Component Analysis using Maximum Likelihood.
 @item mlmRev
@@ -4301,8 +4308,11 @@ Interface to the CDK libraries, a Java framework for cheminformatics.
 R COM Client Interface and internal COM Server.
 @item rcomgen
 Completion generator for R.  @emph{Recommended} for R 2.5.0 or later.
-@item rcompletion
-TAB completion for R using Readline.
+@c <COMMENT>
+@c Moved to the Archive o 2007-09-30 as requested by the maintainer.
+@c @item rcompletion
+@c TAB completion for R using Readline.
+@c </COMMENT>
 @item rda
 Shrunken Centroids Regularized Discriminant Analysis.
 @item ref
@@ -4314,6 +4324,8 @@ Fitting Gaussian linear models where the covariance structure is a
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models.
+@item regsubseq
+Detect and test regular sequences and subsequences.
 @item regtest
 Regression testing.
 @item relaimpo
@@ -4379,8 +4391,11 @@ two-sample comparison of binary outcomes.
 An interface between R and the metasim simulation engine.  Facilitates
 the use of the metasim engine to build and run individual based
 population genetics simulations.
-@item roblm
-Robust regression estimators.
+@c <COMMENT>
+@c Moved to the Archive o 2007-09-30 as requested by the maintainer.
+@c @item roblm
+@c Robust regression estimators.
+@c </COMMENT>
 @item robust
 Insightful robust package.
 @item robustbase
