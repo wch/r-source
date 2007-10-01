@@ -27,7 +27,7 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
     to be searched.}
   \item{upper}{the upper end point of the interval
     to be searched.}
-  \item{maximum}{logical. Should we maximize or minimize (the default)?}
+  \item{maximum}{logical.  Should we maximize or minimize (the default)?}
   \item{tol}{the desired accuracy.}
 }
 \description{
@@ -41,7 +41,8 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
   Note that arguments after \code{\dots} must be matched exactly.
   
   The method used is a combination of golden section search and
-  successive parabolic interpolation.  Convergence is never much slower
+  successive parabolic interpolation, and was designed for use with
+  continuous functions.  Convergence is never much slower
   than that for a Fibonacci search.  If \code{f} has a continuous second
   derivative which is positive at the minimum (which is not at \code{lower} or
   \code{upper}), then convergence is superlinear, and usually of the
