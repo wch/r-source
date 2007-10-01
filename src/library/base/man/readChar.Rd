@@ -51,7 +51,9 @@ writeChar(object, con,
   In a single-byte locale, character strings containing ASCII
   \code{nul}(s) will be read correctly by \code{readChar} and appear
   with embedded nuls in the character vector returned.  This may not
-  work for multi-byte locales, and does not work for \code{writeChar}.
+  work for multi-byte locales.  \code{writeChar} can write strings with
+  embedded \code{nul}s, and for such strings inteprets \code{nchar} as
+  the number of bytes to be written.
   
   If the character length requested for \code{readChar} is longer than
   the data available on the connection, what is available is
