@@ -49,6 +49,9 @@ BUG FIXES
     o	The "data.frame" and "factor" methods for [[ now support
 	the 'exact' argument introduced in 2.6.0.
 
+    o	iconv() is now able to translate character strings with
+	embedded nuls (such as those in UCS-2).
+
 
 
 	**************************************************

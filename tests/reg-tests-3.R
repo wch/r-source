@@ -84,3 +84,14 @@ if(require(MASS)) {
 print(1.001, digits=16)
 ## 2.4.1 gave  1.001000000000000
 ## 2.5.0 errs on the side of caution.
+
+
+## iconv to UCS-2
+x <- "A test string"
+y <- try(iconv(x, "", "UCS-2"))
+if(!inherits(y, "try-error")) {
+    print(y)
+    z <- iconv(y, "UCS-2", "")
+    stopifnot(identical(x, z))
+}
+## works in R >= 2.6.0
