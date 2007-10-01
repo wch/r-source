@@ -397,7 +397,7 @@ length and `true length'@footnote{This is almost unused.  The only
 current use is for hash tables of environments (@code{VECSXP}s), where
 @code{length} is the size of the table and @code{truelength} is the
 number of primary slots in use, and for the reference hash tables in
-serialization(@code{VECSXP}s), where @code{truelength} is the number of
+serialization (@code{VECSXP}s), where @code{truelength} is the number of
 slots in use.} of the vector, and then followed by the data (aligned as
 required: on most 32-bit systems with a 24-byte @code{VECTOR_SEXPREC}
 node the data can follow immediately after the node).  The data are a
@@ -1160,7 +1160,7 @@ written as specific pseudo-@code{SEXPTYPE}s.  Package and name space
 environments are written with pseudo-@code{SEXPTYPE}s followed by the
 name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
-enclosure, frame, tag and attributes.
+enclosure, frame, `tag' (the hash table) and attributes.
 
 In the `XDR' format integers and doubles are written in bigendian
 order: however the format is not fully XDR as defind in RFC 1832 as byte
