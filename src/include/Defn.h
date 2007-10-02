@@ -120,7 +120,7 @@ void UNSET_UTF8(SEXP x);
 #endif
 /* macros and declarations for managing CHARSXP cache */
 #ifdef USE_CHAR_HASHING
-/*# define USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS*/
+# define USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 # ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 #  define CXHEAD(x) (x)
 #  define CXTAIL(x) ATTRIB(x)
