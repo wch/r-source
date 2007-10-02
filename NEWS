@@ -46,11 +46,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	The "data.frame" and "factor" methods for [[ now support
-	the 'exact' argument introduced in 2.6.0.
-
-    o	iconv() is now able to translate character strings with
-	embedded nuls (such as those in UCS-2).
+    o	Place holder
 
 
 
@@ -59,6 +55,19 @@ BUG FIXES
 	*	       2.6 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.6.0 patched
+
+
+BUG FIXES
+
+    o	The "data.frame" and "factor" methods for [[ now support
+	the 'exact' argument introduced in 2.6.0.
+
+    o	iconv() is again able to translate character strings with
+	embedded nuls (such as those in UCS-2).
+
 
 
 		CHANGES IN R VERSION 2.6.0
