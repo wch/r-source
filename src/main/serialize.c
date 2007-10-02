@@ -850,7 +850,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	}
     }
     else {
-	int flags, hastag;
+	int flags, hastag, hasattr;
 	switch(TYPEOF(s)) {
 	case LISTSXP:
 	case LANGSXP:
@@ -859,8 +859,9 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	case DOTSXP: hastag = TAG(s) != R_NilValue; break;
 	default: hastag = FALSE;
 	}
+	hasattr = ATTRIB(s) != R_NilValue;
 	flags = PackFlags(TYPEOF(s), LEVELS(s), OBJECT(s),
-			  ATTRIB(s) != R_NilValue, hastag);
+			  hasattr, hastag);
 	OutInteger(stream, flags);
 	switch (TYPEOF(s)) {
 	case LISTSXP:
@@ -871,7 +872,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    /* Dotted pair objects */
 	    /* These write their ATTRIB fields first to allow us to avoid
 	       recursion on the CDR */
-	    if (ATTRIB(s) != R_NilValue)
+	    if (hasattr)
 		WriteItem(ATTRIB(s), ref_table, stream);
 	    if (TAG(s) != R_NilValue)
 		WriteItem(TAG(s), ref_table, stream);
@@ -943,7 +944,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	default:
 	    error(_("WriteItem: unknown type %i"), TYPEOF(s));
 	}
-	if (ATTRIB(s) != R_NilValue)
+	if (hasattr)
 	    WriteItem(ATTRIB(s), ref_table, stream);
     }
 }
