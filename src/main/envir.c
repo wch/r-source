@@ -3269,76 +3269,57 @@ void attribute_hidden InitStringHash()
     R_StringHash = R_NewHashTable(char_hash_size);
 }
 
-#define NEXT_CHAIN_EL(e) (CDR(e))
-#define SET_NEXT_CHAIN_EL(e1, e2) (SETCDR(e1, e2))
-
 #define INT_IS_LATIN1(x) (x & LATIN1_MASK)
 #define INT_IS_UTF8(x)   (x & UTF8_MASK)
-
-/* Resize a hash table with char* based keys. */
-static SEXP R_CharHashResize(SEXP table, unsigned int newsize)
-{
-    SEXP new_table, chain, new_chain, val;
-    unsigned int counter, new_hashcode;
-
-    /* Do some checking */
-    if (TYPEOF(table) != VECSXP)
-	error("first argument ('table') not of type VECSXP, from R_StringHashResize");
-
-    /* Allocate the new hash table.  This could fail to allocate
-       enough memory, and ideally we would recover from that and
-       carry over with a table that was getting full.
-     */
-    new_table = R_NewHashTable(newsize);
-    char_hash_size = newsize;
-    char_hash_mask = char_hash_size - 1;
-    PROTECT(new_table);
-    for (counter = 0; counter < length(table); counter++) {
-	chain = VECTOR_ELT(table, counter);
-	while (!ISNULL(chain)) {
-            val = CAR(chain);
-	    /* new_hashcode = char_hash(CHAR(val)) % char_hash_size; */
-	    new_hashcode = char_hash(CHAR(val)) & char_hash_mask;
-	    new_chain = VECTOR_ELT(new_table, new_hashcode);
-	    /* If using a primary slot then increase HASHPRI */
-	    if (ISNULL(new_chain))
-		SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
-	    SET_VECTOR_ELT(new_table, new_hashcode,  CONS(val, new_chain));
-	    chain = NEXT_CHAIN_EL(chain);
-	}
-    }
-    UNPROTECT(1);
-    return new_table;
-}
 
 /* #define DEBUG_GLOBAL_STRING_HASH 1 */
 
 /* Resize the global R_StringHash CHARSXP cache */
 static void R_StringHash_resize(unsigned int newsize)
 {
-    SEXP new_table;
-
-    /* Normally, GC can modify R_StringHash by null-ifying unmarked
-       CHARSXPs.  Since GC can occur during the resize, we temporarily
-       preserve all CHARSXPs in the cache to avoid any changes during
-       the resize op.
-     */
-    R_PreserveObject(R_StringHash);
-
-    new_table = R_CharHashResize(R_StringHash, newsize);
-
+    SEXP old_table = R_StringHash;
+    SEXP new_table, chain, new_chain, val, next;
+    unsigned int counter, new_hashcode;
 #ifdef DEBUG_GLOBAL_STRING_HASH
-    {
-	PROTECT(new_table); /* precaution on case anything is added here */
-	Rprintf("Resized: size %d => %d\tpri %d => %d\n",
-		HASHSIZE(R_StringHash), HASHSIZE(new_table),
-		HASHPRI(R_StringHash), HASHPRI(new_table));
-	UNPROTECT(1);
-    }
+    unsigned int oldsize = HASHSIZE(R_StringHash);
+    unsigned int oldpri = HASHPRI(R_StringHash);
+    unsigned int newsize, newpri;
 #endif
 
-    R_ReleaseObject(R_StringHash);
+    /* Allocate the new hash table.  This could fail to allocate
+       enough memory, and ideally we would recover from that and
+       carry over with a table that was getting full.
+     */
+    PROTECT(old_table);
+    PROTECT(new_table = R_NewHashTable(newsize));
+    char_hash_size = newsize;
+    char_hash_mask = char_hash_size - 1;
+
+    /* transfer chains from old table to new table */
+    for (counter = 0; counter < LENGTH(old_table); counter++) {
+        chain = VECTOR_ELT(old_table, counter);
+        while (!ISNULL(chain)) {
+            val = CAR(chain);
+            next = CDR(chain);
+            /* new_hashcode = char_hash(CHAR(val)) % char_hash_size; */
+            new_hashcode = char_hash(CHAR(val)) & char_hash_mask;
+            new_chain = VECTOR_ELT(new_table, new_hashcode);
+            /* If using a primary slot then increase HASHPRI */
+            if (ISNULL(new_chain))
+                SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
+            /* move the current chain link to the new chain */
+            SET_VECTOR_ELT(new_table, new_hashcode, CONS(val, new_chain));
+            chain = next;
+        }
+    }
+    UNPROTECT(2);
     R_StringHash = new_table;
+#ifdef DEBUG_GLOBAL_STRING_HASH
+    newsize = HASHSIZE(new_table);
+    newpri = HASHPRI(new_table);
+    Rprintf("Resized: size %d => %d\tpri %d => %d\n",
+	    oldsize, newsize, oldpri, newpri);
+#endif
 }
 
 /* mkCharEnc - make a character (CHARSXP) variable and set its
