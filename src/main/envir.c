@@ -3395,4 +3395,60 @@ SEXP mkChar(const char *name)
 {
     return mkCharEnc(name, 0);
 }
+
+#ifdef DEBUG_SHOW_CHARSXP_CACHE
+/* Call this from gdb with
+
+       call do_show_cache(10)
+
+   for the first 10 cache chains in use. */
+void do_show_cache(int n)
+{
+    int i, j;
+    Rprintf("Cache size: %d\n", LENGTH(R_StringHash));
+    Rprintf("Cache pri:  %d\n", HASHPRI(R_StringHash));
+    for (i = 0, j = 0; j < n && i < LENGTH(R_StringHash); i++) {
+	SEXP chain = VECTOR_ELT(R_StringHash, i);
+	if (! ISNULL(chain)) {
+	    Rprintf("Line %d: ", i);
+	    do {
+		if (IS_UTF8(CAR(chain)))
+		    Rprintf("U");
+		else if (IS_LATIN1(CAR(chain)))
+		    Rprintf("L");
+		Rprintf("|%s| ", CHAR(CAR(chain)));
+		chain = CDR(chain);
+	    } while(! ISNULL(chain));
+	    Rprintf("\n");
+	    j++;
+	}
+    }
+}
+
+void do_write_cache()
+{
+    int i;
+    FILE *f = fopen("/tmp/CACHE", "w");
+    if (f != NULL) {
+	fprintf(f, "Cache size: %d\n", LENGTH(R_StringHash));
+	fprintf(f, "Cache pri:  %d\n", HASHPRI(R_StringHash));
+	for (i = 0; i < LENGTH(R_StringHash); i++) {
+	    SEXP chain = VECTOR_ELT(R_StringHash, i);
+	    if (! ISNULL(chain)) {
+		fprintf(f, "Line %d: ", i);
+		do {
+		    if (IS_UTF8(CAR(chain)))
+			fprintf(f, "U");
+		    else if (IS_LATIN1(CAR(chain)))
+			fprintf(f, "L");
+		    fprintf(f, "|%s| ", CHAR(CAR(chain)));
+		    chain = CDR(chain);
+		} while(! ISNULL(chain));
+		fprintf(f, "\n");
+	    }
+	}
+	fclose(f);
+    }
+}
+#endif /* DEBUG_SHOW_CHARSXP_CACHE */
 #endif
