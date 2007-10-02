@@ -3316,7 +3316,7 @@ static void R_StringHash_resize(unsigned int newsize)
             /* move the current chain link to the new chain */
 #ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	    /* this is a destrictive modification */
-	    new_chain = SET_CXTAIL(val, new_chain)
+	    new_chain = SET_CXTAIL(val, new_chain);
             SET_VECTOR_ELT(new_table, new_hashcode, new_chain);
 #else
             SET_VECTOR_ELT(new_table, new_hashcode, CONS(val, new_chain));
