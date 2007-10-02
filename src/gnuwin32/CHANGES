@@ -29,6 +29,17 @@ OTHERS
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.6.0 patched
+
+OTHERS
+
+    o	The canvas used when plotting on a jpeg() or png() device with
+	a transparent background (most often by copying from a screen
+	device with the default transparent background) is now white
+	and not grey.
+ 
+		
+
 		CHANGES IN R VERSION 2.6.0
 		
 GUI CHANGES
