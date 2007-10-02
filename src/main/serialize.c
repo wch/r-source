@@ -1333,11 +1333,11 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		cbuf = alloca(length+1);
 		InString(stream, cbuf, length);
 		cbuf[length] = '\0';
-                PROTECT(s = mkChar(cbuf));		
+                PROTECT(s = mkCharEnc(cbuf, levs & (LATIN1_MASK | UTF8_MASK)));
 	    } else {
                 cbuf = CallocCharBuf(length);
 		InString(stream, cbuf, length);
-                PROTECT(s = mkChar(cbuf));
+                PROTECT(s = mkCharEnc(cbuf, levs & (LATIN1_MASK | UTF8_MASK)));
                 Free(cbuf);
 	    }
 	    break;
