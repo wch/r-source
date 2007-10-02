@@ -412,8 +412,21 @@ static R_size_t R_NodesInUse = 0;
 
 /* This macro calls dc__action__ for each child of __n__, passing
    dc__extra__ as a second argument for each call. */
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+/* When the CHARSXP hash chains are maintained through the ATTRIB
+   field it is important that we NOT trace those fields otherwise too
+   many CHARSXPs will be kept alive artificially. As a safety we don't
+   ignore all non-NULL ATTRIB values for CHARSXPs but only those that
+   are themselves CHARSXPs, which is what they will be if they are
+   part of a hash chain.  Theoretically, for CHARSXPs the ATTRIB field
+   should always be either R_NilValue or a CHARSXP. */
+# define HAS_GENUINE_ATTRIB(x) \
+  (ATTRIB(x) != R_NilValue && TYPEOF(ATTRIB(x)) != CHARSXP)
+#else
+# define HAS_GENUINE_ATTRIB(x) (ATTRIB(x) != R_NilValue)
+#endif
 #define DO_CHILDREN(__n__,dc__action__,dc__extra__) do { \
-  if (ATTRIB(__n__) != R_NilValue) \
+  if (HAS_GENUINE_ATTRIB(__n__)) \
     dc__action__(ATTRIB(__n__), dc__extra__); \
   switch (TYPEOF(__n__)) { \
   case NILSXP: \
@@ -1351,18 +1364,18 @@ static void RunGenCollect(R_size_t size_needed)
 	    s = VECTOR_ELT(R_StringHash, i);
 	    t = R_NilValue;
 	    while (s != R_NilValue) {
-		if (! NODE_IS_MARKED(CAR(s))) { /* remove unused CHARSXP and cons cell */
+		if (! NODE_IS_MARKED(CXHEAD(s))) { /* remove unused CHARSXP and cons cell */
 		    if (t == R_NilValue) /* head of list */
-			VECTOR_ELT(R_StringHash, i) = CDR(s);
+			VECTOR_ELT(R_StringHash, i) = CXTAIL(s);
 		    else
-			CDR(t) = CDR(s);
-		    s = CDR(s);
+			CXTAIL(t) = CXTAIL(s);
+		    s = CXTAIL(s);
 		    continue;
 		}
 		FORWARD_NODE(s);
-		FORWARD_NODE(CAR(s));
+		FORWARD_NODE(CXHEAD(s));
 		t = s;
-		s = CDR(s);
+		s = CXTAIL(s);
 	    }
 	    if(VECTOR_ELT(R_StringHash, i) != R_NilValue) nc++;
 	}
@@ -2808,6 +2821,19 @@ int (HASHVALUE)(SEXP x) { return HASHVALUE(x); }
 
 void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(x, v); }
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(x, v); }
+
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+SEXP (SET_CXTAIL)(SEXP x, SEXP v) { 
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP) 
+	error("value of 'SET_CXTAIL' must be a char or NULL, not a '%s'", 
+	      type2char(TYPEOF(x)));
+#endif
+    /*CHECK_OLD_TO_NEW(x, v); *//* not needed since not properly traced */
+    ATTRIB(x) = v;
+    return x;
+}
+#endif /* USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS */
 
 /* Test functions */
 Rboolean Rf_isNull(SEXP s) { return isNull(s); }
