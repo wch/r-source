@@ -4401,18 +4401,10 @@ will not be needed (but it will be needed for installing packages by
 @section @LaTeX{}
 
 The @samp{MiKTeX} (@url{http://www.miktex.org, @code{www.miktex.org}})
-distribution of @LaTeX{} includes a suitable port of @code{pdftex}, as
-does the @samp{ProText} (@url{http://www.tug.org/protext/,
-@code{www.tug.org/@/protext}}) enhanced version.  We have also used
-the @samp{fptex} distribution (available from any CTAN node such as
-@url{http://www.ctan.org/tex-archive/systems/windows/fptex/,
-@code{www.ctan.org/@/tex-archive/@/systems/@/windows/@/fptex}} and as
-part of TexLive (@url{http://www.tug.org/texlive/,
-@code{www.tug.org/@/texlive}}).  Another actively-maintained version
-is available from
-@url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
-@code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.  The
-@file{Rtools.exe} installer does @emph{not} include any version of
+distribution of @LaTeX{} includes a suitable port of @code{pdftex}.  The
+`basic' version of @samp{MiKTeX} suffices, but it will install the 15Mb
+@samp{lm} package if allowed to (although that is not actually used).
+The @file{Rtools.exe} installer does @emph{not} include any version of
 @LaTeX{}.
 
 @enindex R_RD4DVI
