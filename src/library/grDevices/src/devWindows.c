@@ -2076,10 +2076,10 @@ static void GA_NewPage(R_GE_gcontext *gc,
     if (xd->kind != SCREEN) {
 	xd->needsave = TRUE;
 	xd->clip = getrect(xd->gawin);
-	if(R_OPAQUE(xd->bg) || xd->kind == PNG ||
-	   xd->kind == BMP || xd->kind == JPEG )
-	    DRAW(gfillrect(_d, R_OPAQUE(xd->bg) ? xd->bgcolor : PNG_TRANS,
-			   xd->clip));
+	if(R_OPAQUE(xd->bg) || xd->kind == BMP || xd->kind == JPEG) {
+	    DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
+	} else if(xd->kind == PNG)
+	    DRAW(gfillrect(_d, PNG_TRANS, xd->clip));
 	if(xd->kind == PNG) xd->pngtrans = ggetpixel(xd->gawin, pt(0,0));
     } else {
 	xd->clip = getregion(xd);
