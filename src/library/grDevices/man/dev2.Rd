@@ -56,6 +56,12 @@ dev.control(displaylist = c("inhibit", "enable"))
   the device which has been copied from.
 }
 \details{
+  Note that these functions copy the \emph{device region} and not a
+  plot: the background colour of the device surface is part of what is
+  copied. Most screen devices default to a transparent background, which
+  is probably not what is needed when copying to a device such as
+  \code{\link{png}}.
+  
   For \code{dev.copy2eps}, \code{width} and \code{height} are taken
   from the current device unless otherwise specified.  If just one of
   \code{width} and \code{height} is specified, the other is adjusted
@@ -88,8 +94,14 @@ dev.control(displaylist = c("inhibit", "enable"))
   If \code{dev.print} is used with a specified \code{device} (even
   \code{postscript}) it sets the width and height in the same way as
   \code{dev.copy2eps}.  This will not be appropriate unless the device
-  specifies dimensions in inches, in particular not for \code{png},
-  \code{jpeg} and (Windows only) \code{bmp}.
+  specifies dimensions in inches, in particular not for
+#ifdef unix
+  \code{png} and \code{jpeg}.
+#endif
+#ifdef windows
+  \code{png}, \code{jpeg} and\code{bmp} unless \code{units="inches"}
+  is specified.
+#endif
 }
 \note{
   Most devices (including all screen devices) have a display list
