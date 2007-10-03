@@ -68,6 +68,9 @@ BUG FIXES
     o	iconv() is again able to translate character strings with
 	embedded nuls (such as those in UCS-2).
 
+    o	plot.lm() gains a new argument 'cex.caption' to allow the
+	size of the captions to be controlled.
+
 
 
 		CHANGES IN R VERSION 2.6.0

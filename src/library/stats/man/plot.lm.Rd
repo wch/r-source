@@ -18,7 +18,8 @@
      \dots,
      id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
      qqline = TRUE, cook.levels = c(0.5, 1.0),
-     add.smooth = getOption("add.smooth"), label.pos = c(4,2))
+     add.smooth = getOption("add.smooth"), label.pos = c(4,2),
+     cex.caption = 1)
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
@@ -51,6 +52,7 @@
     most plots; see also \code{panel} above.}
   \item{label.pos}{positioning of labels, for the left half and right
     half of the graph respectively, for plots 1-3.}
+  \item{cex.caption}{controls the size of \code{caption}.}
 }
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
