@@ -604,6 +604,7 @@ SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char *);
 SEXP Rf_mkCharEnc(const char *, int);
+SEXP Rf_mkCharLen(const char *, int);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
@@ -906,6 +907,7 @@ int R_system(const char *);
 #define match			Rf_match
 #define mkChar			Rf_mkChar
 #define mkCharEnc		Rf_mkCharEnc
+#define mkCharLen		Rf_mkCharLen
 #define mkString		Rf_mkString
 #define namesgets		Rf_namesgets
 #define ncols			Rf_ncols

@@ -506,10 +506,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		nout = cbuff.bufsize - 1 - outb;
 		for(j = 0; j < nout; j++) if(!*p++) {has_nul = TRUE; break;}
 		if(has_nul) {
-		    si = allocString(nout);
-		    memcpy(CHAR_RW(si), cbuff.data, nout);
-		    if(isLatin1) SET_LATIN1(si);
-		    if(isUTF8) SET_UTF8(si);
+		    si = mkCharLen(cbuff.data, nout);
 		} else {
 		    if(isLatin1) si = mkCharEnc(cbuff.data, LATIN1_MASK);
 		    else if(isUTF8) si = mkCharEnc(cbuff.data, UTF8_MASK);

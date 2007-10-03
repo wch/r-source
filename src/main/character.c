@@ -2459,7 +2459,7 @@ SEXP attribute_hidden do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 /* <UTF8>  rawToChar should work at byte level */
 SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, c, x = CAR(args);
+    SEXP ans, x = CAR(args);
     int i, nc = LENGTH(x), multiple, len;
     char buf[2];
 
@@ -2482,9 +2482,7 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
         PROTECT(ans = allocVector(STRSXP, 1));
         /* String is not necessarily 0-terminated and may contain nuls
            so don't use mkChar */
-        c = allocString(len); /* adds zero terminator */
-        memcpy(CHAR_RW(c), RAW(x), len);
-        SET_STRING_ELT(ans, 0, c);
+        SET_STRING_ELT(ans, 0, mkCharLen((const char *)RAW(x), len));
     }
     UNPROTECT(1);
     return ans;

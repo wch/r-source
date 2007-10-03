@@ -3212,6 +3212,18 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* 
+   Version for strings with embedded nuls:
+   these do not currently go in the cache,
+   and do not have an encoding. 
+*/
+SEXP mkCharLen(const char *name, int len)
+{
+    SEXP c = allocString(len);
+    memcpy(CHAR_RW(c), name, len);
+    return c;
+}
+
 
 #ifndef USE_CHAR_HASHING
 SEXP mkChar(const char *name)
@@ -3244,8 +3256,8 @@ SEXP mkCharEnc(const char *name, int enc)
 /* We can reuse the hash structure, but need separate code for get/set
    of values since our keys are char* and not SEXP symbol types. 
 
-   Experience has shown that it is better to use a different hash function:
-   this is the simplest known good one and is likely to be replaced.
+   Experience has shown that it is better to use a different hash function,
+   and a power of 2 for the hash size.
 */
 
 /* char_hash_size MUST be a power of 2 and char_hash_mask ==
@@ -3257,8 +3269,9 @@ static unsigned int char_hash_mask = 65535;
 
 static unsigned int char_hash(const char *s)
 {
+    /* djb2 as from http://www.cse.yorku.ca/~oz/hash.html */
     char *p;
-    unsigned int h = 0;
+    unsigned int h = 5381;
     for (p = (char *) s; *p; p++)
 	h = ((h << 5) + h) + (*p);
     return h;
@@ -3373,7 +3386,7 @@ SEXP mkCharEnc(const char *name, int enc)
     }
     if (cval == R_NilValue) {
         /* no cached value; need to allocate one and add to the cache */
-        PROTECT(cval = allocString(strlen(name)));
+        PROTECT(cval = allocString(len));
         strcpy(CHAR_RW(cval), name);
         switch(enc) {
         case 0:
