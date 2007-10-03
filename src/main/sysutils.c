@@ -270,9 +270,10 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (s == NULL)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
-		SEXP tmp = mkChar(s);
-		if(known_to_be_latin1) SET_LATIN1(tmp);
-		if(known_to_be_utf8) SET_UTF8(tmp);
+		SEXP tmp;
+		if(known_to_be_latin1) tmp = mkCharEnc(s, LATIN1_MASK);
+		else if(known_to_be_utf8) tmp = mkCharEnc(s, UTF8_MASK);
+		else tmp = mkChar(s);
 		SET_STRING_ELT(ans, j, tmp);
 	    }
 	}
@@ -381,9 +382,6 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #if defined(HAVE_ICONV_H) && defined(ICONV_LATIN1)
-/* Unfortunately glibc and Solaris differ in the const in the iconv decl.
-   libiconv agrees with Solaris here.
- */
 # include <iconv.h>
 #endif
 
@@ -415,9 +413,9 @@ write_one (unsigned int namescount, const char * const *names, void *data)
 SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
-    SEXP ans, x = CAR(args);
+    SEXP ans, x = CAR(args), si;
     void * obj;
-    int i, j;
+    int i, j, nout;
     const char *inbuf;
     char *outbuf;
     const char *sub;
@@ -462,8 +460,9 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = duplicate(x));
 	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
 	for(i = 0; i < LENGTH(x); i++) {
+	    si = STRING_ELT(x, i);
 	top_of_loop:
-	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
+	    inbuf = CHAR(si); inb = LENGTH(si);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
 	    /* First initialize output */
 	    Riconv (obj, NULL, NULL, &outbuf, &outb);
@@ -499,9 +498,24 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 
 	    if(res != -1 && inb == 0) {
-		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
-		if(isLatin1) SET_LATIN1(STRING_ELT(ans, i));
-		if(isUTF8) SET_UTF8(STRING_ELT(ans, i));
+		/* we can only put the result in the CHARSXP
+		   cache if it does not contain nuls. */
+		Rboolean has_nul = FALSE;
+		char *p = cbuff.data;
+
+		nout = cbuff.bufsize - 1 - outb;
+		for(j = 0; j < nout; j++) if(!*p++) {has_nul = TRUE; break;}
+		if(has_nul) {
+		    si = allocString(nout);
+		    memcpy(CHAR_RW(si), cbuff.data, nout);
+		    if(isLatin1) SET_LATIN1(si);
+		    if(isUTF8) SET_UTF8(si);
+		} else {
+		    if(isLatin1) si = mkCharEnc(cbuff.data, LATIN1_MASK);
+		    else if(isUTF8) si = mkCharEnc(cbuff.data, UTF8_MASK);
+		    else si = mkChar(cbuff.data);
+		}
+		SET_STRING_ELT(ans, i, si);
 	    }
 	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}
@@ -534,6 +548,7 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 #endif
 }
 
+/* Should be defined in config.h */
 #ifndef ICONV_CONST
 # define ICONV_CONST
 #endif
@@ -542,7 +557,8 @@ size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
     /* here libiconv has const char **, glibc has const ** for inbuf */
-    return iconv((iconv_t) cd, (ICONV_CONST char **)inbuf, inbytesleft, outbuf, outbytesleft);
+    return iconv((iconv_t) cd, (ICONV_CONST char **) inbuf, inbytesleft, 
+		 outbuf, outbytesleft);
 }
 
 int Riconv_close (void *cd)

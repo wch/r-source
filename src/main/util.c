@@ -863,26 +863,28 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(x);
     n = LENGTH(x);
     for(i = 0; i < n; i++) {
-	tmp = STRING_ELT(x, i);
-	UNSET_LATIN1(tmp);
-	UNSET_UTF8(tmp);
+	int ienc = 0;
 	this = CHAR(STRING_ELT(enc, i % m)); /* ASCII */
-	if(streql(this, "latin1")) SET_LATIN1(tmp);
-	else if(streql(this, "UTF-8")) SET_UTF8(tmp);
-	SET_STRING_ELT(x, i, tmp);
+	if(streql(this, "latin1")) ienc = LATIN1_MASK;
+	else if(streql(this, "UTF-8")) ienc = UTF8_MASK;
+	tmp = STRING_ELT(x, i);
+	if (! ((ienc == LATIN1_MASK && IS_LATIN1(tmp)) ||
+	       (ienc == UTF8_MASK && IS_UTF8(tmp)) ||
+	       (ienc == 0 && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
+	    SET_STRING_ELT(x, i, mkCharEnc(CHAR(tmp), ienc));
     }
     UNPROTECT(1);
     return x;
 }
 
-void attribute_hidden markKnown(SEXP x, SEXP ref)
+SEXP attribute_hidden markKnown(const char *s, SEXP ref)
 {
-    if(TYPEOF(x) != CHARSXP)
-	error("invalid use of 'markKnown'");
+    int ienc = 0;
     if(IS_LATIN1(ref) || IS_UTF8(ref)) {
-	if(known_to_be_latin1) SET_LATIN1(x);
-	if(known_to_be_utf8) SET_UTF8(x);
+	if(known_to_be_latin1) ienc = LATIN1_MASK;
+	if(known_to_be_utf8) ienc = UTF8_MASK;
     }
+    return mkCharEnc(s, ienc);
 }
 
 /* Note: this is designed to be fast and valid only for UTF-8 strings.

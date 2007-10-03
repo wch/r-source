@@ -845,12 +845,12 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    OutInteger(stream, R_EnvironmentIsLocked(s) ? 1 : 0);
 	    WriteItem(ENCLOS(s), ref_table, stream);
 	    WriteItem(FRAME(s), ref_table, stream);
-	    WriteItem(TAG(s), ref_table, stream);
+	    WriteItem(HASHTAB(s), ref_table, stream);
 	    WriteItem(ATTRIB(s), ref_table, stream);
 	}
     }
     else {
-	int flags, hastag;
+	int flags, hastag, hasattr;
 	switch(TYPEOF(s)) {
 	case LISTSXP:
 	case LANGSXP:
@@ -859,8 +859,9 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	case DOTSXP: hastag = TAG(s) != R_NilValue; break;
 	default: hastag = FALSE;
 	}
+	hasattr = ATTRIB(s) != R_NilValue;
 	flags = PackFlags(TYPEOF(s), LEVELS(s), OBJECT(s),
-			  ATTRIB(s) != R_NilValue, hastag);
+			  hasattr, hastag);
 	OutInteger(stream, flags);
 	switch (TYPEOF(s)) {
 	case LISTSXP:
@@ -871,7 +872,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    /* Dotted pair objects */
 	    /* These write their ATTRIB fields first to allow us to avoid
 	       recursion on the CDR */
-	    if (ATTRIB(s) != R_NilValue)
+	    if (hasattr)
 		WriteItem(ATTRIB(s), ref_table, stream);
 	    if (TAG(s) != R_NilValue)
 		WriteItem(TAG(s), ref_table, stream);
@@ -943,7 +944,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	default:
 	    error(_("WriteItem: unknown type %i"), TYPEOF(s));
 	}
-	if (ATTRIB(s) != R_NilValue)
+	if (hasattr)
 	    WriteItem(ATTRIB(s), ref_table, stream);
     }
 }
@@ -1252,7 +1253,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    /* Now fill it in  */
 	    SET_ENCLOS(s, ReadItem(ref_table, stream));
 	    SET_FRAME(s, ReadItem(ref_table, stream));
-	    SET_TAG(s, ReadItem(ref_table, stream));
+	    SET_HASHTAB(s, ReadItem(ref_table, stream));
 	    SET_ATTRIB(s, ReadItem(ref_table, stream));
 	    if (ATTRIB(s) != R_NilValue &&
 		getAttrib(s, R_ClassSymbol) != R_NilValue)
@@ -1310,20 +1311,26 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    break;
 	case SPECIALSXP:
 	case BUILTINSXP:
+	    /* These are all short strings */
 	    length = InInteger(stream);
-            cbuf = CallocCharBuf(length);
+	    cbuf = alloca(length+1);
 	    InString(stream, cbuf, length);
+	    cbuf[length] = '\0';
 	    PROTECT(s = mkPRIMSXP(StrToInternal(cbuf), type == BUILTINSXP));
-            Free(cbuf);
 	    break;
 	case CHARSXP:
 	    length = InInteger(stream);
 	    if (length == -1)
 		PROTECT(s = NA_STRING);
-	    else {
+	    else if (length < 1000) {
+		cbuf = alloca(length+1);
+		InString(stream, cbuf, length);
+		cbuf[length] = '\0';
+                PROTECT(s = mkCharEnc(cbuf, levs & (LATIN1_MASK | UTF8_MASK)));
+	    } else {
                 cbuf = CallocCharBuf(length);
 		InString(stream, cbuf, length);
-                PROTECT(s = mkChar(cbuf));
+                PROTECT(s = mkCharEnc(cbuf, levs & (LATIN1_MASK | UTF8_MASK)));
                 Free(cbuf);
 	    }
 	    break;
