@@ -20,6 +20,10 @@ BUG FIXES
     o	plot.lm() gains a new argument 'cex.caption' to allow the
 	size of the captions to be controlled.
 
+    o	A series of changes make the CHARSXP cache introduced in 2.6.0
+	faster (and in some cases many times faster) in sessions with
+	a large number (e.g. a million) of unique character strings.
+
 
 
 		CHANGES IN R VERSION 2.6.0

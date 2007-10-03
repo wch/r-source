@@ -1345,7 +1345,7 @@ static void RunGenCollect(R_size_t size_needed)
     /* process CHARSXP cache */
     { 
 	int nc = 0;
-	for (i = 0; i < length(R_StringHash); i++) {
+	for (i = 0; i < LENGTH(R_StringHash); i++) {
 	    s = VECTOR_ELT(R_StringHash, i);
 	    t = R_NilValue;
 	    while (s != R_NilValue) {

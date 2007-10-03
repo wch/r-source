@@ -148,6 +148,9 @@ static SEXP getActiveValue(SEXP fun)
     return expr;
 }
 
+/* Macro version of isNull for only the test against R_NilValue */
+#define ISNULL(x) ((x) == R_NilValue)
+
 /*----------------------------------------------------------------------
 
   Hash Tables
@@ -178,7 +181,12 @@ static SEXP getActiveValue(SEXP fun)
 
 */
 
-/* was extern: used in this file and names.c */
+/* was extern: used in this file and names.c (for the symbol table).
+
+   This hash function seems to work well enough for symbol tables,
+   and hash tables get saved as part of environments so changing it
+   is a major decision.
+ */
 int attribute_hidden R_Newhashpjw(const char *s)
 {
     char *p;
@@ -212,7 +220,7 @@ static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value,
     chain = VECTOR_ELT(table, hashcode);
 
     /* Search for the value in the chain */
-    for (; !isNull(chain); chain = CDR(chain))
+    for (; !ISNULL(chain); chain = CDR(chain))
 	if (TAG(chain) == symbol) {
 	    SET_BINDING_VALUE(chain, value);
 	    SET_MISSING(chain, 0);	/* Over-ride for new value */
@@ -220,7 +228,7 @@ static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value,
 	}
     if (frame_locked)
 	error(_("cannot add bindings to a locked environment"));
-    if (isNull(chain))
+    if (ISNULL(chain))
 	SET_HASHPRI(table, HASHPRI(table) + 1);
     /* Add the value into the chain */
     SET_VECTOR_ELT(table, hashcode, CONS(value, VECTOR_ELT(table, hashcode)));
@@ -272,7 +280,7 @@ static SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
     /* Retrieve the value from the chain */
-    for (; !isNull(chain); chain = CDR(chain))
+    for (; !ISNULL(chain); chain = CDR(chain))
 	if (TAG(chain) == symbol) return chain;
     /* If not found */
     return R_NilValue;
@@ -289,12 +297,10 @@ static SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
 
 */
 
-static SEXP R_NewHashTable(int size, int growth_rate)
+static SEXP R_NewHashTable(int size)
 {
     SEXP table;
 
-    /* Some checking */
-    if (growth_rate <= 0) growth_rate =  HASHTABLEGROWTHRATE;
     if (size <= 0) size = HASHMINSIZE;
 
     /* Allocate hash table in the form of a vector */
@@ -310,7 +316,7 @@ static SEXP R_NewHashTable(int size, int growth_rate)
   R_NewHashedEnv
 
   Returns a new environment with a hash table initialized with default
-  size/growth settings.  The only non-static hash table function.
+  size.  The only non-static hash table function.
 */
 
 SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
@@ -318,7 +324,7 @@ SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
     SEXP s;
 
     PROTECT(s = NewEnvironment(R_NilValue, R_NilValue, enclos));
-    SET_HASHTAB(s, R_NewHashTable(asInteger(size), 0));
+    SET_HASHTAB(s, R_NewHashTable(asInteger(size)));
     UNPROTECT(1);
     return s;
 }
@@ -365,7 +371,7 @@ static void R_HashDelete(int hashcode, SEXP symbol, SEXP table)
 static SEXP R_HashResize(SEXP table)
 {
     SEXP new_table, chain, new_chain, tmp_chain;
-    int /*hash_grow,*/ counter, new_hashcode;
+    int counter, new_hashcode;
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP)
@@ -376,16 +382,15 @@ static SEXP R_HashResize(SEXP table)
     /* hash_grow = HASHSIZE(table); */
 
     /* Allocate the new hash table */
-    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE,
-			       HASHTABLEGROWTHRATE);
+    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE);
     for (counter = 0; counter < length(table); counter++) {
 	chain = VECTOR_ELT(table, counter);
-	while (!isNull(chain)) {
+	while (!ISNULL(chain)) {
 	    new_hashcode = R_Newhashpjw(CHAR(PRINTNAME(TAG(chain)))) %
 		HASHSIZE(new_table);
 	    new_chain = VECTOR_ELT(new_table, new_hashcode);
 	    /* If using a primary slot then increase HASHPRI */
-	    if (isNull(new_chain))
+	    if (ISNULL(new_chain))
 		SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
 	    tmp_chain = chain;
 	    chain = CDR(chain);
@@ -457,7 +462,7 @@ static SEXP R_HashFrame(SEXP rho)
 	error("first argument ('table') not of type ENVSXP, from R_HashVector2Hash");
     table = HASHTAB(rho);
     frame = FRAME(rho);
-    while (!isNull(frame)) {
+    while (!ISNULL(frame)) {
 	if( !HASHASH(PRINTNAME(TAG(frame))) ) {
 	    SET_HASHVALUE(PRINTNAME(TAG(frame)),
 			  R_Newhashpjw(CHAR(PRINTNAME(TAG(frame)))));
@@ -466,7 +471,7 @@ static SEXP R_HashFrame(SEXP rho)
 	hashcode = HASHVALUE(PRINTNAME(TAG(frame))) % HASHSIZE(table);
 	chain = VECTOR_ELT(table, hashcode);
 	/* If using a primary slot then increase HASHPRI */
-	if (isNull(chain)) SET_HASHPRI(table, HASHPRI(table) + 1);
+	if (ISNULL(chain)) SET_HASHPRI(table, HASHPRI(table) + 1);
 	tmp_chain = frame;
 	frame = CDR(frame);
 	SETCDR(tmp_chain, chain);
@@ -608,11 +613,11 @@ void attribute_hidden InitGlobalEnv()
 {
     R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_BaseEnv);
 #ifdef NEW_CODE
-    HASHTAB(R_GlobalEnv) = R_NewHashTable(100, HASHTABLEGROWTHRATE);
+    HASHTAB(R_GlobalEnv) = R_NewHashTable(100);
 #endif
 #ifdef USE_GLOBAL_CACHE
     MARK_AS_GLOBAL_FRAME(R_GlobalEnv);
-    R_GlobalCache = R_NewHashTable(INITIAL_CACHE_SIZE, HASHTABLEGROWTHRATE);
+    R_GlobalCache = R_NewHashTable(INITIAL_CACHE_SIZE);
     R_GlobalCachePreserve = CONS(R_GlobalCache, R_NilValue);
     R_PreserveObject(R_GlobalCachePreserve);
 #endif
@@ -1659,7 +1664,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (TYPEOF(rval) == PROMSXP)
 	    rval = eval(rval, genv);
 
-	if (!isNull(rval) && NAMED(rval) == 0)
+	if (!ISNULL(rval) && NAMED(rval) == 0)
 	    SET_NAMED(rval, 1);
 	return rval;
     }
@@ -1694,7 +1699,7 @@ static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
 
     /* We need to evaluate if it is a promise */
     if (TYPEOF(rval) == PROMSXP) rval = eval(rval, env);
-    if (!isNull(rval) && NAMED(rval) == 0) SET_NAMED(rval, 1);
+    if (!ISNULL(rval) && NAMED(rval) == 0) SET_NAMED(rval, 1);
     return rval;
 }
 
@@ -1722,7 +1727,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* FIXME: should we install them all?) */
 
     env = CADR(args);
-    if (isNull(env)) {
+    if (ISNULL(env)) {
 	error(_("use of NULL environment is defunct"));
     } else if( !isEnvironment(env) )
 	error(_("second argument must be an environment"));
@@ -2008,7 +2013,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    hsize = length(s);
 
-	SET_HASHTAB(s, R_NewHashTable(hsize, HASHTABLEGROWTHRATE));
+	SET_HASHTAB(s, R_NewHashTable(hsize));
 	s = R_HashFrame(s);
 
 	/* FIXME: A little inefficient */
@@ -2367,7 +2372,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     env = CAR(args);
-    if (isNull(env))
+    if (ISNULL(env))
     	error(_("use of NULL environment is defunct"));
     if( !isEnvironment(env) )
         error(_("argument must be an environment"));
@@ -2420,7 +2425,7 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     env = eval(CAR(args), rho);
-    if (isNull(env))
+    if (ISNULL(env))
     	error(_("use of NULL environment is defunct"));
     if( !isEnvironment(env) )
         error(_("argument must be an environment"));
@@ -3211,140 +3216,85 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* Global CHARSXP cache and code for char-based hash tables */
 
 /* We can reuse the hash structure, but need separate code for get/set
-   of values since our keys are char* and not SEXP symbol types. */
+   of values since our keys are char* and not SEXP symbol types. 
+
+   Experience has shown that it is better to use a different hash function,
+   and a power of 2 for the hash size.
+*/
+
+/* char_hash_size MUST be a power of 2 and char_hash_mask ==
+   char_hash_size - 1 for x & char_hash_mask to be equivalent to x %
+   char_hash_size.
+*/
+static unsigned int char_hash_size = 65536;
+static unsigned int char_hash_mask = 65535;
+
+static unsigned int char_hash(const char *s)
+{
+    /* djb2 as from http://www.cse.yorku.ca/~oz/hash.html */
+    char *p;
+    unsigned int h = 5381;
+    for (p = (char *) s; *p; p++)
+	h = ((h << 5) + h) + (*p);
+    return h;
+}
 
 void attribute_hidden InitStringHash()
 {
-    const int STRING_HASH_INIT_SIZE = 54979;
-    R_StringHash = R_NewHashTable(STRING_HASH_INIT_SIZE, 0);
+    R_StringHash = R_NewHashTable(char_hash_size);
 }
-
-#define NEXT_CHAIN_EL(e) (CDR(e))
-#define SET_NEXT_CHAIN_EL(e1, e2) (SETCDR(e1, e2))
 
 #define INT_IS_LATIN1(x) (x & LATIN1_MASK)
 #define INT_IS_UTF8(x)   (x & UTF8_MASK)
-#define STRINGHASHCMP(s, k, e) ( \
-                                ((INT_IS_UTF8(e) == IS_UTF8(s)) &&    \
-                                 (INT_IS_LATIN1(e) == IS_LATIN1(s)))  && \
-                                strcmp(CHAR(s), k) == 0)
-
-#define CHARENCCMP(a, b) ( \
-                         ((IS_UTF8(a) == IS_UTF8(b)) && \
-                          (IS_LATIN1(a) == IS_LATIN1(b))))
-
-/* Resize a hash table with char* based keys.  The new table will be
-   sized according to HASHTABLEGROWTHRATE. */
-static SEXP R_CharHashResize(SEXP table)
-{
-    SEXP new_table, chain, new_chain, val;
-    int /*hash_grow,*/ counter, new_hashcode;
-
-    /* Do some checking */
-    if (TYPEOF(table) != VECSXP)
-	error("first argument ('table') not of type VECSXP, from R_StringHashResize");
-
-    /* Allocate the new hash table */
-    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE,
-			       HASHTABLEGROWTHRATE);
-    PROTECT(new_table);
-    for (counter = 0; counter < length(table); counter++) {
-	chain = VECTOR_ELT(table, counter);
-	while (!isNull(chain)) {
-            val = CAR(chain);
-            if (*CHAR(val) != '\0')
-                new_hashcode = R_Newhashpjw(CHAR(val)) % HASHSIZE(new_table);
-            else
-                new_hashcode = 0;
-	    new_chain = VECTOR_ELT(new_table, new_hashcode);
-	    /* If using a primary slot then increase HASHPRI */
-	    if (isNull(new_chain))
-		SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
-	    SET_VECTOR_ELT(new_table, new_hashcode,  CONS(val, new_chain));
-	    chain = NEXT_CHAIN_EL(chain);
-	}
-    }
-    UNPROTECT(1);
-    return new_table;
-}
 
 /* Resize the global R_StringHash CHARSXP cache */
-static void R_StringHash_resize()
+static void R_StringHash_resize(unsigned int newsize)
 {
-    SEXP new_table;
-
-    /* Normally, GC can modify R_StringHash by null-ifying unmarked CHARSXPs.
-       Since GC can occur during the resize, we temporarily preserve all CHARSXPs
-       in the cache to avoid any changes during the resize op.
-     */
-    R_PreserveObject(R_StringHash);
-
-    PROTECT(new_table = R_CharHashResize(R_StringHash));
-
+    SEXP old_table = R_StringHash;
+    SEXP new_table, chain, new_chain, val, next;
+    unsigned int counter, new_hashcode, newmask;
 #ifdef DEBUG_GLOBAL_STRING_HASH
-    char *status = HASHPRI(new_table) > HASHPRI(R_StringHash) ? " OK" : "BAD";
-    Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
-            HASHSIZE(R_StringHash), HASHSIZE(new_table),
-            HASHPRI(table), HASHPRI(new_table), status);
+    unsigned int oldsize = HASHSIZE(R_StringHash);
+    unsigned int oldpri = HASHPRI(R_StringHash);
+    unsigned int newsize, newpri;
 #endif
-    UNPROTECT(1);
-    R_ReleaseObject(R_StringHash);
+
+    /* Allocate the new hash table.  This could fail to allocate
+       enough memory, and ideally we would recover from that and
+       carry over with a table that was getting full.
+     */
+    PROTECT(old_table);
+    PROTECT(new_table = R_NewHashTable(newsize));
+    newmask = newsize - 1;
+
+    /* transfer chains from old table to new table */
+    for (counter = 0; counter < LENGTH(old_table); counter++) {
+        chain = VECTOR_ELT(old_table, counter);
+        while (!ISNULL(chain)) {
+            val = CAR(chain);
+            next = CDR(chain);
+            /* new_hashcode = char_hash(CHAR(val)) % newsize; */
+            new_hashcode = char_hash(CHAR(val)) & newmask;
+            new_chain = VECTOR_ELT(new_table, new_hashcode);
+            /* If using a primary slot then increase HASHPRI */
+            if (ISNULL(new_chain))
+                SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
+            /* move the current chain link to the new chain */
+            SET_VECTOR_ELT(new_table, new_hashcode, CONS(val, new_chain));
+            chain = next;
+        }
+    }
+    UNPROTECT(2);
     R_StringHash = new_table;
+    char_hash_size = newsize;
+    char_hash_mask = newmask;
+#ifdef DEBUG_GLOBAL_STRING_HASH
+    newsize = HASHSIZE(new_table);
+    newpri = HASHPRI(new_table);
+    Rprintf("Resized: size %d => %d\tpri %d => %d\n",
+	    oldsize, newsize, oldpri, newpri);
+#endif
 }
-
-
-/* Get CHARSXP for string s in the hash table.
-   Return R_NilValue, if not found.
-*/
-static SEXP R_CharHashGet(int hashcode, const char *s, int enc, SEXP table)
-{
-    SEXP chain, val;
-
-    /* Grab the chain from the hashtable */
-    chain = VECTOR_ELT(table, hashcode);
-    /* Retrieve the value from the chain */
-    for (; chain != R_NilValue ; chain = CDR(chain)) {
-        val = CAR(chain);
-	if (STRINGHASHCMP(val, s, enc))
-            return val;
-    }
-    /* If not found */
-    return R_NilValue;
-}
-
-/* Get a CHARSXP from the global cache, R_NilValue if not found */
-#define R_StringHash_get(h, s, e) (R_CharHashGet(h, s, e, R_StringHash))
-
-
-/* Add CHARSXP, schar to the table using key CHAR(schar).  If a
-   CHARSXP with that key already exists, it is replaced.
-*/
-static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
-{
-    SEXP chain, val;
-
-    /* Grab the chain from the hashtable */
-    chain = VECTOR_ELT(table, hashcode);
-
-    /* Search for the value in the chain */
-    for (; !isNull(chain); chain = CDR(chain)) {
-        val = CAR(chain);
-	if (CHARENCCMP(val, schar) &&
-            strcmp(CHAR(val), CHAR(schar)) == 0) {
-            SETCAR(chain, schar); /* set to new value */
-	    return;
-	}
-    }
-    chain = VECTOR_ELT(table, hashcode);
-    if (isNull(chain))
-	SET_HASHPRI(table, HASHPRI(table) + 1);
-    /* Add the value into the chain */
-    SET_VECTOR_ELT(table, hashcode, CONS(schar, chain));
-    return;
-}
-
-/* Add a CHARSXP to the global cache */
-#define R_StringHash_set(h, s) (R_CharHashSet(h, s, R_StringHash))
 
 /* mkCharEnc - make a character (CHARSXP) variable and set its
    encoding bit.  If a CHARSXP with the same string already exists in
@@ -3352,23 +3302,33 @@ static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
    a new CHARSXP is created, added to the cache and then returned. */
 SEXP mkCharEnc(const char *name, int enc)
 {
-    SEXP cval;
-    int h = 0;
+    SEXP cval, chain;
+    unsigned int hashcode;
+    int len = strlen(name);
 
-    if (enc != 0 && enc != UTF8_MASK &&
-        enc != LATIN1_MASK)
+    if (enc != 0 && enc != UTF8_MASK && enc != LATIN1_MASK)
         error("unknown encoding mask: %d", enc);
 
-    if (R_HashSizeCheck(R_StringHash)) {
-        R_StringHash_resize();
-    }
+    /* hashcode = char_hash(name) % char_hash_size; */
+    hashcode = char_hash(name) & char_hash_mask;
 
-    /* have to handle "" specially since it doesn't hash */
-    if (*name != '\0')
-        h = R_Newhashpjw(name) % HASHSIZE(R_StringHash);
-    cval = R_StringHash_get(h, name, enc);
+    /* Search for a cached value */
+    cval = R_NilValue;
+    chain = VECTOR_ELT(R_StringHash, hashcode);
+    for (; !ISNULL(chain) ; chain = CDR(chain)) {
+        SEXP val = CAR(chain);
+	/* If we had USE_RINTERNALS we could do the two in one step */
+	if (INT_IS_UTF8(enc) == IS_UTF8(val) &&
+	    INT_IS_LATIN1(enc) == IS_LATIN1(val) &&
+	    LENGTH(val) == len &&  /* quick pretest */
+	    strcmp(CHAR(val), name) == 0) {
+            cval = val;
+            break;
+        }
+    }
     if (cval == R_NilValue) {
-        PROTECT(cval = allocString(strlen(name)));
+        /* no cached value; need to allocate one and add to the cache */
+        PROTECT(cval = allocString(len));
         strcpy(CHAR_RW(cval), name);
         switch(enc) {
         case 0:
@@ -3382,7 +3342,20 @@ SEXP mkCharEnc(const char *name, int enc)
         default:
             error("unknown encoding mask: %d", enc);
         }
-        R_StringHash_set(h, cval);
+	/* add the new value to the cache */
+        chain = VECTOR_ELT(R_StringHash, hashcode);
+        if (ISNULL(chain))
+            SET_HASHPRI(R_StringHash, HASHPRI(R_StringHash) + 1);
+        SET_VECTOR_ELT(R_StringHash, hashcode, CONS(cval, chain));
+
+        /* resize the hash table if necessary with the new entry still
+           protected. 
+	   Maximum possible power of two is 2^30 for a VECSXP.
+	*/
+        if (R_HashSizeCheck(R_StringHash) 
+	    && char_hash_size < 1073741824 /* 2^30 */)
+            R_StringHash_resize(char_hash_size * 2);
+
         UNPROTECT(1);
     }
     return cval;
@@ -3396,3 +3369,59 @@ SEXP mkChar(const char *name)
 {
     return mkCharEnc(name, 0);
 }
+
+#ifdef DEBUG_SHOW_CHARSXP_CACHE
+/* Call this from gdb with
+
+       call do_show_cache(10)
+
+   for the first 10 cache chains in use. */
+void do_show_cache(int n)
+{
+    int i, j;
+    Rprintf("Cache size: %d\n", LENGTH(R_StringHash));
+    Rprintf("Cache pri:  %d\n", HASHPRI(R_StringHash));
+    for (i = 0, j = 0; j < n && i < LENGTH(R_StringHash); i++) {
+	SEXP chain = VECTOR_ELT(R_StringHash, i);
+	if (! ISNULL(chain)) {
+	    Rprintf("Line %d: ", i);
+	    do {
+		if (IS_UTF8(CAR(chain)))
+		    Rprintf("U");
+		else if (IS_LATIN1(CAR(chain)))
+		    Rprintf("L");
+		Rprintf("|%s| ", CHAR(CAR(chain)));
+		chain = CDR(chain);
+	    } while(! ISNULL(chain));
+	    Rprintf("\n");
+	    j++;
+	}
+    }
+}
+
+void do_write_cache()
+{
+    int i;
+    FILE *f = fopen("/tmp/CACHE", "w");
+    if (f != NULL) {
+	fprintf(f, "Cache size: %d\n", LENGTH(R_StringHash));
+	fprintf(f, "Cache pri:  %d\n", HASHPRI(R_StringHash));
+	for (i = 0; i < LENGTH(R_StringHash); i++) {
+	    SEXP chain = VECTOR_ELT(R_StringHash, i);
+	    if (! ISNULL(chain)) {
+		fprintf(f, "Line %d: ", i);
+		do {
+		    if (IS_UTF8(CAR(chain)))
+			fprintf(f, "U");
+		    else if (IS_LATIN1(CAR(chain)))
+			fprintf(f, "L");
+		    fprintf(f, "|%s| ", CHAR(CAR(chain)));
+		    chain = CDR(chain);
+		} while(! ISNULL(chain));
+		fprintf(f, "\n");
+	    }
+	}
+	fclose(f);
+    }
+}
+#endif /* DEBUG_SHOW_CHARSXP_CACHE */
