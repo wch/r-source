@@ -22,7 +22,7 @@
   This provides a rather nice 3-way analysis of variance example.
 }
 \source{
-  Moyneau, L.,  Gilliam, S. K., and  Florant, L. C.(1947)
+  Molyneaux, L.,  Gilliam, S. K., and  Florant, L. C.(1947)
   Differences in Virginia death rates by color, sex, age,
   and rural or urban residence.
   \emph{American Sociological Review}, \bold{12}, 525--535.
