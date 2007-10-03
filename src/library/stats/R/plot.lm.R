@@ -25,7 +25,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
           qqline = TRUE, cook.levels = c(0.5, 1.0),
           add.smooth = getOption("add.smooth"),
-          label.pos = c(4,2))
+          label.pos = c(4,2), cex.caption = 1)
 {
     if (!inherits(x, "lm"))
 	stop("use only with \"lm\" objects")
@@ -120,7 +120,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	panel(yh, r, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
-	mtext(caption[1], 3, 0.25)
+	mtext(caption[1], 3, 0.25, cex = cex.caption)
 	if(id.n > 0) {
 	    y.id <- r[show.r]
 	    y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
@@ -135,7 +135,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if (qqline) qqline(rs, lty = 3, col = "gray50")
 	if (one.fig)
 	    title(sub = sub.caption, ...)
-	mtext(caption[2], 3, 0.25)
+	mtext(caption[2], 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
 	    text.id(qq$x[show.rs], qq$y[show.rs], show.rs)
     }
@@ -149,7 +149,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	panel(yhn0, sqrtabsr, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
-	mtext(caption[3], 3, 0.25)
+	mtext(caption[3], 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs)
     }
@@ -162,7 +162,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	     xlab = "Obs. number", ylab = "Cook's distance", ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
-	mtext(caption[4], 3, 0.25)
+	mtext(caption[4], 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
 	    text.id(show.r, cook[show.r], show.r, adj.x=FALSE)
     }
@@ -252,7 +252,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             }
         } # if(const h_ii) .. else ..
 	if (do.plot) {
-	    mtext(caption[5], 3, 0.25)
+	    mtext(caption[5], 3, 0.25, cex = cex.caption)
 	    if (id.n > 0) {
 		y.id <- rs[show.r]
 		y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
@@ -296,7 +296,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 
 	## axis(4, at=p*cook.levels, labels=paste(c(rev(cook.levels), cook.levels)),
 	##	mgp=c(.25,.25,0), las=2, tck=0, cex.axis=cex.id)
-	mtext(caption[6], 3, 0.25)
+	mtext(caption[6], 3, 0.25, cex = cex.caption)
 	if (id.n > 0) {
 	    show.r <- order(-cook)[iid]
             text.id(g[show.r], cook[show.r], show.r)

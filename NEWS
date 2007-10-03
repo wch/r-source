@@ -6,6 +6,16 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.6.0 patched
+
+
+BUG FIXES
+
+    o	plot.lm() gains a new argument 'cex.caption' to allow the
+	size of the captions to be controlled.
+
+
+
 		CHANGES IN R VERSION 2.6.0
 
 
