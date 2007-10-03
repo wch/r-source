@@ -4890,3 +4890,12 @@ julian(as.POSIXlt("1999-2-1"), origin=as.POSIXlt("1999-1-1"))
 x <- structure(list(2), class="foo")
 str(x)
 ## gave infinite recursion < 2.6.0
+
+
+## tests of side-effects with CHARSXP caching
+x <- y <- "abc"
+Encoding(x) <- "UTF-8"
+stopifnot(Encoding(y) == "unknown") # was UTF-8 in 2.6.0
+x <- unserialize(serialize(x, NULL))
+stopifnot(Encoding(y) == "unknown") # was UTF-8 in 2.6.0
+##  problems in earlier versions of cache
