@@ -32,6 +32,8 @@ NEW FEATURES
 
     o	New higher-order function Negate().
 
+    o	PCRE has been updated to 7.4.
+
 
 DEPRECATED & DEFUNCT
 
