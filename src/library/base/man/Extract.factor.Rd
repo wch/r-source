@@ -13,12 +13,12 @@
 }
 \usage{
 \method{[}{factor}(x, \dots, drop = FALSE)
-\method{[[}{factor}(x, i)
+\method{[[}{factor}(x, \dots)
 \method{[}{factor}(x, \dots) <- value
 }
 \arguments{
   \item{x}{a factor}
-  \item{\dots, i}{a specification of indices -- see \code{\link{Extract}}.}
+  \item{\dots}{a specification of indices -- see \code{\link{Extract}}.}
   \item{drop}{logical.  If true, unused levels are dropped.}
   \item{value}{character: a set of levels.  Factor values are coerced to
     character.}
@@ -35,6 +35,8 @@
   
   Any \code{\link{contrasts}} assigned to the factor are preserved
   unless \code{drop=TRUE}.
+
+  The \code{[[} method supports argument \code{exact}.
 }
 \seealso{
   \code{\link{factor}}, \code{\link{Extract}}.

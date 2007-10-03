@@ -11,6 +11,9 @@
 
 BUG FIXES
 
+    o	The "data.frame" and "factor" methods for [[ now support
+	the 'exact' argument introduced in 2.6.0.
+
     o	plot.lm() gains a new argument 'cex.caption' to allow the
 	size of the captions to be controlled.
 
