@@ -2700,7 +2700,7 @@ function(db, def_enc = FALSE)
             files_with_bad_keywords <-
                 rbind(files_with_bad_keywords,
                       cbind(f, bad_keywords))
-        
+
         empty_sections <- x$data$tags[regexpr("^[[:space:]]*$",
                                               x$data$vals) > -1]
         if(length(empty_sections))
@@ -3293,6 +3293,7 @@ function(package, lib.loc = NULL)
                                                   silent = TRUE)))
                        })
 
+        runif(1) # create .Random.seed
         compat <- new.env(hash=TRUE)
         if(.Platform$OS.type != "unix") {
             assign("nsl", function(hostname) {}, envir = compat)
