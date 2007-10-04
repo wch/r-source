@@ -7127,6 +7127,7 @@ SEXP XFig(SEXP args)
 /*  PDF Device Driver Parameters:
  *  ------------------------
  *  file	= output filename
+ *  paper       = paper type
  *  family	= typeface = "family"
  *  encoding	= char encoding file name
  *  cidfamily	= char encoding file name for CID fonts
