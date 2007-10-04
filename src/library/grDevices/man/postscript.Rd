@@ -36,11 +36,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
-    number and use an EPSF header and no \code{DocumentMedia} comment.}
+    number for each page and use an EPSF header and no
+    \code{DocumentMedia} comment.}
   \item{family}{the initial font family to be used, normally as a
     character string.  See the section \sQuote{Families}.  This defaults
     to \code{"Helvetica"}.}
-  \item{title}{title string to embed in the file.}
+  \item{title}{title string to embed as the \code{Title} comment in the file.}
   \item{fonts}{a character vector specifying additional \R graphics font
     family names for font families whose declarations will be included
     in the PostScript file and are available for use with the device.
@@ -51,7 +52,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U},
 #endif
 #ifdef windows
-    \file{"CP1250.enc"} (East European), \code{"CP1251.enc"} (Cyrillic),
+    \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
     \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
     of those codepages is in use, otherwise \file{"WinAnsi.enc"}
     (codepage 1252),
@@ -65,8 +66,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     background is painted.}
   \item{fg}{the default foreground color to be used.}
   \item{width, height}{the width and height of the graphics region in
-    inches.  The default is to use the entire page less a 0.25 inch
-    border on each side.}
+    inches.  The default is to use the entire page less a total 0.5 inch
+    margin: a 0.25 inch border on each side if \code{pagecentre} is
+    true, the default.}
   \item{horizontal}{the orientation of the printed image, a
     logical.  Defaults to true, that is landscape orientation on paper
     sizes with width less than height.}
@@ -86,7 +88,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     closed?  (This only applies if \code{file} is a real file name.)}
   \item{command}{the command to be used for \sQuote{printing}.  Defaults to
     option \code{"printcmd"}; this can also be selected as
-    \code{"default"}. The length limit is \code{2*PATH_MAX},
+    \code{"default"}.  The length limit is \code{2*PATH_MAX},
 #ifdef unix
     typically 8096 bytes.
 #endif
@@ -161,6 +163,10 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{cex = 1} corresponds to a square of side 1/72 inch, which is
   also the \sQuote{pixel} size assumed for graphics parameters such as
   \code{"cra"}.
+
+  If \code{paper != "special"} and \code{width} or \code{height} is less
+  than \code{0.1} or too large to give a total margin of 0.5 inch, it is
+  reset to the corresponding paper dimension minus 0.5.
 }
 
 \section{Families}{
