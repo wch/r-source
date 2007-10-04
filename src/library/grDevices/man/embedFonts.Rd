@@ -45,7 +45,8 @@ embedFonts(file, format, outfile = file, fontpaths = "", options = "")
   For Windows users, this should be the path to \code{gswin32c.exe}.
 #endif
 
-  Note that 
+  Note that Ghostscript may do font substitution, so the font embedded
+  may differ from that specified in the original file.
 }
 \value{
   The shell command used to invoke Ghostscript is returned
