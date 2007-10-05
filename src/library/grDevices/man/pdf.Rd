@@ -135,12 +135,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
-  Helvetica.  This can be circomvented by embedding fonts where possible.
+  Helvetica.  This can be circumvented by embedding fonts where possible.
 
   Acrobat Reader 5.x and later can be extended by support for Asian and
   (so-called) Central European fonts (the latter only for 7.x and
-  later), and this will be needed for the full use of encodings other
-  than Latin-1. See
+  later, part of the \sQuote{Extended} pack for 8.x), and this will be
+  needed for the full use of encodings other than Latin-1.  See
   \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
 }
 \seealso{
