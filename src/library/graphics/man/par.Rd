@@ -204,15 +204,15 @@ par(\dots, no.readonly = FALSE)
       \code{"]"} the resulting box resembles the corresponding upper
       case letter.  A value of \code{"n"} suppresses the box.}
     \item{\code{cex}}{A numerical value giving the amount by which
-      plotting text and symbols should be scaled relative to the
+      plotting text and symbols should be magnified relative to the
       default.  Note that some graphics functions such as
       \code{\link{plot.default}} have an \emph{argument} of this name
-      which multiplies this graphical parameter.}
-    \item{\code{cex.axis}}{The magnification to be used for axis
-      annotation relative to the current setting of \code{cex}.
-      (Some functions such as \code{\link{points}} accept a vector of values
+      which \emph{multiplies} this graphical parameter, and some
+      functions such as \code{\link{points}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.)}
+      a vector of length greater than one is supplied.}
+    \item{\code{cex.axis}}{The magnification to be used for axis
+      annotation relative to the current setting of \code{cex}.}
     \item{\code{cex.lab}}{The magnification to be used for x and y
       labels relative to the current setting of \code{cex}.}
     \item{\code{cex.main}}{The magnification to be used for main titles

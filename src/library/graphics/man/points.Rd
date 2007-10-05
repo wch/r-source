@@ -64,6 +64,11 @@ points(x, \dots)
 	1} (the default), each side is at least one pixel (1/72 inch on
       the \code{\link{pdf}}, \code{\link{postscript}} and
       \code{\link{xfig}} devices).
+
+      For other text symbols, \code{cex=1} corresponds to the default fontsize
+      of the device, often specified by an argument \code{pointsize}.
+      For \code{pch} in \code{1:25} the default size is about 75\% of
+      the character height (see \code{par("cin")}).
     }
     \item{\code{col}}{color code or name, see \code{\link{par}}.}
     \item{\code{bg}}{background (fill) color for the open plot
