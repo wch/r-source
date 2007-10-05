@@ -24,6 +24,10 @@ BUG FIXES
 	faster (and in some cases many times faster) in sessions with
 	a large number (e.g. a million) of unique character strings.
 
+    o	new.packages() and update.packages() failed when called on an
+	empty library, since old.packages() threw an error.
+	old.packages() now returns NULL (as documented) in that case.
+
 
 
 		CHANGES IN R VERSION 2.6.0

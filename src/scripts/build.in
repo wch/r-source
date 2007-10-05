@@ -77,7 +77,7 @@ my $gzip = R_getenv("R_GZIPCMD", "gzip");
 ## The tar.exe in Rtools has --force-local by default, but this 
 ## enables people to use Cygwin or MSYS tar. 
 my $tar_default = "tar";
-$tar_defualt = "tar --force-local" if $WINDOWS;
+$tar_default = "tar --force-local" if $WINDOWS;
 my $tar = R_getenv("TAR", $tar_default);
 my $libdir = R_tempfile("Rinst");
 
