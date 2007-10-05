@@ -131,6 +131,8 @@ extern void * __libc_stack_end;
 
 int R_running_as_main_program = 0;
 
+void R_init_objc();
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -183,6 +185,8 @@ int Rf_initialize_R(int ac, char **av)
               R_CStackStart, R_CStackDir); */
 }
 #endif
+
+ R_init_objc();
 
     ptr_R_Suicide = Rstd_Suicide;
     ptr_R_ShowMessage = Rstd_ShowMessage;

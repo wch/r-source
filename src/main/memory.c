@@ -31,6 +31,16 @@
 
 #define USE_RINTERNALS
 
+#ifndef __OBJC__
+#define id void*
+#endif
+
+/* ObjC classes */
+extern id R_RObject;
+extern id R_RVector;
+extern id R_RList;
+extern id R_RPromise;
+extern id R_REnvironment;
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -1602,6 +1612,7 @@ void attribute_hidden InitMemory()
        since the write barrier prevents assignments to R_NilValue's fields.
        because of checks for nil */
     GET_FREE_NODE(R_NilValue);
+    R_NilValue->oclass = R_RObject; /* FIXME: should be NIL? */
     R_NilValue->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(R_NilValue) = NILSXP;
     CAR(R_NilValue) = R_NilValue;
@@ -1721,6 +1732,7 @@ SEXP allocSExp(SEXPTYPE t)
 	    mem_err_cons();
     }
     GET_FREE_NODE(s);
+    s->oclass = R_RObject;
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = t;
     CAR(s) = R_NilValue;
@@ -1742,6 +1754,7 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
 	    mem_err_cons();
     }
     GET_FREE_NODE(s);
+    s->oclass = R_RObject;
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = t;
     TAG(s) = R_NilValue;
@@ -1769,6 +1782,7 @@ SEXP cons(SEXP car, SEXP cdr)
 #if VALGRIND_LEVEL > 2
     VALGRIND_MAKE_READABLE(s, sizeof(*s));
 #endif
+    s->oclass = R_RList;
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = LISTSXP;
     CAR(s) = car;
@@ -1813,6 +1827,7 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 #if VALGRIND_LEVEL > 2
     VALGRIND_MAKE_READABLE(newrho, sizeof(*newrho));
 #endif
+    newrho->oclass = R_REnvironment;
     newrho->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(newrho) = ENVSXP;
     FRAME(newrho) = valuelist;
@@ -1847,6 +1862,7 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 #if VALGRIND_LEVEL > 2
     VALGRIND_MAKE_READABLE(s,sizeof(*s));
 #endif
+    s->oclass = R_RPromise;
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = PROMSXP;
     PRCODE(s) = expr;
@@ -1986,6 +2002,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 #if VALGRIND_LEVEL > 1
 	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), actual_size);
 #endif
+	    s->oclass = R_RVector;
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;

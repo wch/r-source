@@ -120,6 +120,8 @@ static R_NativePrimitiveArgType fdhess_t[] = {};
 
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
+SEXP objc_info(SEXP); /* FIXME: hack for debugging */
+
 static R_CMethodDef cMethods [] = {
     CDEF(bakslv),
     CDEF(bincode),
@@ -229,6 +231,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_stopbcprof, 0),
 #endif
 
+    CALLDEF(objc_info, 1),
 
     {NULL, NULL, 0}
 };

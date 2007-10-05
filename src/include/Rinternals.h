@@ -206,6 +206,7 @@ struct promsxp_struct {
    field. Under the generational collector these are followed by the
    fields used to maintain the collector's linked list structures. */
 #define SEXPREC_HEADER \
+    void *oclass;			   \
     struct sxpinfo_struct sxpinfo; \
     struct SEXPREC *attrib; \
     struct SEXPREC *gengc_next_node, *gengc_prev_node
@@ -223,6 +224,27 @@ typedef struct SEXPREC {
 	struct promsxp_struct promsxp;
     } u;
 } SEXPREC, *SEXP;
+
+#ifdef __OBJC__
+  /* #include <objc/Object.h> */
+
+@interface RObject : NSObject
+{
+  /* class is implicit */
+  struct sxpinfo_struct sxpinfo;
+  struct SEXPREC *attrib;
+  struct SEXPREC *gengc_next_node, *gengc_prev_node;
+  union {
+    struct primsxp_struct primsxp;
+    struct symsxp_struct symsxp;
+    struct listsxp_struct listsxp;
+    struct envsxp_struct envsxp;
+    struct closxp_struct closxp;
+    struct promsxp_struct promsxp;
+  } u;  
+}
+@end
+#endif
 
 /* The generational collector uses a reduced version of SEXPREC as a
    header in vector nodes.  The layout MUST be kept consistent with

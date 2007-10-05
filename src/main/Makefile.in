@@ -39,6 +39,8 @@ SOURCES_C = \
 	version.c vfonts.c
 SOURCES_F = \
 	xxxpr.f
+SOURCES_M = \
+	objc.m
 
 ## If the substitubtes are needed, the corresponding objects are put by
 ## configure in @LIBOBJS@ @ALLOCA@
@@ -50,8 +52,8 @@ EXTRA_SOURCES_C = \
 	vsnprintf.c xspline.c
 
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
-SOURCES = $(SOURCES_C) $(SOURCES_F)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @LIBOBJS@ @ALLOCA@
+SOURCES = $(SOURCES_C) $(SOURCES_F) $(SOURCES_M)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(SOURCES_M:.m=.o) @LIBOBJS@ @ALLOCA@
 HEADERS = \
 	RBufferUtils.h Rregex.h Rstrptime.h \
 	arithmetic.h apse.h \
@@ -67,6 +69,7 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_C) \
 	$(EXTRA_SOURCES_C) \
 	$(SOURCES_F) \
+	$(SOURCES_M) \
 	gram.y
 
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
@@ -112,7 +115,7 @@ libR_la_OBJECTS = $(OBJECTS)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = $(EXTRA_LIBS)
+libR_la_LIBADD = $(EXTRA_LIBS) -framework Foundation #$(FOUNDATION_LIBS) FIXME - it should work!
 libR_la_DEPENDENCIES = ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo \
 	 $(COMMON_DEPENDENCIES)
 ## </FIXME>

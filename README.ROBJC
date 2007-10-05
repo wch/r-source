@@ -1,0 +1,39 @@
+ R-ObjC branch
+---------------
+
+This is a branch of R where all R objects are at the same time
+Objective-C objects. This means that any R object can respond to ObjC
+messages.
+
+The reason for this branch is to experiment with new features, types
+and approaches in R. The use of the Objective-C architecture allows
+us to plug-in different evaluators for different objects, change the
+semantics, memory model etc. easily.
+
+This branch is not targetted at real-life use, instead it is a part of
+the Aleph project to develop and test new ideas for statistical
+computing. (Basically the overhead buys flecibility but not speed).
+
+* What is the major difference?
+
+All SEXPs in this branch have an additional pointer (before the
+regular SEXP header) which points to the ObjC class (Class isa). This
+allows ObjC dispatch in addition to the regular R facilities.
+
+- public class definitions are in include/RObjC.h
+- implementations are currently in src/main/objc.m but that is
+  likely to change (into separate .m files)
+
+* Why Objective-C?
+
+Objective-C is dynamic, has introspection/reflection, has very little
+overhead and the way objects are implemented allows a very
+non-intrusive adaptation of existing objects into ObjC objects.
+
+* Next goals
+
+- add hooks in the evaluator and primitives to dispatch to ObjC when
+  necessary
+
+
+Simon Urbanek 10/2007
