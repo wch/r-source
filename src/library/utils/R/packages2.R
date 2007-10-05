@@ -246,6 +246,13 @@ install.packages <-
                                  "packages %s are not available"),
                         paste(sQuote(p0[miss]), collapse=", ")),
                 domain = NA)
+        if (sum(miss) == 1 &&
+            (w <- match(tolower(p0[miss]),
+                        tolower(row.names(available))))) {
+            warning(sprintf("Perhaps you meant %s ?",
+                            sQuote( row.names(available)[w])),
+                    call. = FALSE, domain = NA)
+        }
         flush.console()
     }
     p0 <- p0[!miss]

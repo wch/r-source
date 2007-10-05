@@ -34,6 +34,10 @@ NEW FEATURES
 
     o	PCRE has been updated to 7.4.
 
+    o   In addition to warning when 'pkgs' is not found,
+        install.packages() now reports if it finds a valid package
+        with only a case mismatch in the name.
+
 
 DEPRECATED & DEFUNCT
 
