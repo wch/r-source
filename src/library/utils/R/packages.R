@@ -198,9 +198,9 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         lib.loc <- .libPaths()
 
     instp <- installed.packages(lib.loc = lib.loc)
-    if(NROW(instp) == 0)
-        stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
-                      lib.loc), domain = NA)
+    if(NROW(instp) == 0) return(NULL)
+    ##    stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
+    ##                  lib.loc), domain = NA)
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)

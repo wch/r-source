@@ -77,6 +77,10 @@ BUG FIXES
     o	plot.lm() gains a new argument 'cex.caption' to allow the
 	size of the captions to be controlled.
 
+    o	new.packages() and update.packages() failed when called on an
+	empty library, since old.packages() threw an error.
+	old.packages() now returns NULL (as documented) in that case.
+
 
 
 		CHANGES IN R VERSION 2.6.0
