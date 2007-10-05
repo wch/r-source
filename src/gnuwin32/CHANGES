@@ -79,9 +79,10 @@ FUNCTION CHANGES
 
     o	l10n_info() reports the codepage in current use.
 
-    o	dQuote() and sQuote() now use directional quotes by
-	default.  You might prefer options(useFancyQuotes=FALSE) when
-	running Rterm.
+    o	dQuote() and sQuote() now use directional quotes by default
+	under RGui.  You might prefer options(useFancyQuotes=FALSE)
+	if the console font does not have these quotes: see the
+	rw-FAQ.
 
 
 INSTALLER
@@ -222,8 +223,8 @@ BUG FIXES
     o	.Platform$GUI would report "Rgui" when no GUI was present in
 	R(D)COM.
 
-    o	'=' within -e expression is no longer interpreted as setting
-	an environment variable.
+    o	'=' within '-e expression' on the command line is no longer
+	interpreted as setting an environment variable.
 
 
 
@@ -243,7 +244,7 @@ GUI CHANGES
 	or debug sessions.
 
     o	Using a modal widget from Rterm (e.g. select.list) is now far
-	likely to be forced to the front.
+	more likely to be forced to the front.
 
 
 OTHERS
@@ -293,7 +294,7 @@ BUG FIXES
     o	winMenuDel() was not automatically deleting sub-menus when a
 	user menu was deleted.  (PR#9702)
 
-    o	Rcnd INSTALL --docs=txt etc works (for a single type, except
+    o	Rcmd INSTALL --docs=txt etc works (for a single type, except
 	'chm' which is equivalent to 'all' nowadays).
 
 
