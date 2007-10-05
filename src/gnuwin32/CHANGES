@@ -13,10 +13,11 @@
 
 OTHERS
 
-    o	The canvas used when plotting on a jpeg() or png() device with
+    o	The canvas used when plotting on a jpeg() or bmp() device with
 	a transparent background (most often by copying from a screen
 	device with the default transparent background) is now white
 	and not grey.
+
 
 BUG FIXES
 
