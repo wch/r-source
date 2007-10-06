@@ -171,6 +171,24 @@ foreach my $pkg (@ARGV) {
     $log->message("removing junk files");
     find(\&unlink_junk_files, $pkgdir);
 
+       chdir(dirname($pkgdir));
+       my $filename = "${intname}_" . $description->{"Version"} . ".tar";
+    my $filepath = &file_path($startdir, $filename);
+    R_system(join(" ",
+                 ("$tar chf",
+                  &shell_quote_file_path($filepath),
+                  "$pkgname")));
+    my $tmpdir = R_tempfile("Rbuild");
+    rmtree($tmpdir) if(-d $tmpdir);
+    mkdir("$tmpdir", 0755)
+       or die "Error: cannot create directory '$tmpdir'\n";
+    chdir($tmpdir);
+    ## was xhf, but there are no symbolic links here and that is invalid
+    ## on FreeBSD, see http://www.freebsd.org/cgi/man.cgi?query=tar&apropos=0&sektion=0&manpath=FreeBSD+5.4-RELEASE+and+Ports&format=html
+    R_system(join(" ",
+                 ("$tar xf",
+                  &shell_quote_file_path($filepath))));
+
     my $exclude = R_tempfile("Rbuild-exclude");
     open(EXCLUDE, "> $exclude")
 	or die "Error: cannot open file '$exclude' for writing\n";
@@ -226,26 +244,8 @@ foreach my $pkg (@ARGV) {
 	    }
 	}
     }
-    chdir(dirname($pkgdir));
     find(\&find_exclude_files, "$pkgname");
     close(EXCLUDE);
-
-    my $filename = "${intname}_" . $description->{"Version"} . ".tar";
-    my $filepath = &file_path($startdir, $filename);
-    R_system(join(" ",
-		  ("$tar chf",
-		   &shell_quote_file_path($filepath),
-		   "$pkgname")));
-    my $tmpdir = R_tempfile("Rbuild");
-    rmtree($tmpdir) if(-d $tmpdir);
-    mkdir("$tmpdir", 0755)
-	or die "Error: cannot create directory '$tmpdir'\n";
-    chdir($tmpdir);
-    ## was xhf, but there are no symbolic links here and that is invalid
-    ## on FreeBSD, see http://www.freebsd.org/cgi/man.cgi?query=tar&apropos=0&sektion=0&manpath=FreeBSD+5.4-RELEASE+and+Ports&format=html
-    R_system(join(" ",
-		  ("$tar xf",
-		   &shell_quote_file_path($filepath))));
 
     ## Remove exclude files.
     open(EXCLUDE, "< $exclude");

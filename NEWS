@@ -32,6 +32,11 @@ BUG FIXES
 	in the binary headers to relocate dependent libraries into the
 	framework.
 
+    o	R CMD build now computes the exclusion list on the copy it
+	makes: this avoids problems if the original sources contain
+	symbolic links (which are resolved in the copy).  Thanks to
+	Michael Lawrence for diagnosis and patch.
+
 
 
 		CHANGES IN R VERSION 2.6.0
