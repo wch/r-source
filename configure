@@ -32824,7 +32824,7 @@ fi ;;
         ## dylib_undefined_allowed=yes
 	{ echo "$as_me:$LINENO: checking whether linker supports dynamic lookup" >&5
 echo $ECHO_N "checking whether linker supports dynamic lookup... $ECHO_C" >&6; }
-	shlib_ldflags="-dynamiclib -Wl,-macosx_version_min -Wl,10.3 -undefined dynamic_lookup -single_module -multiply_defined suppress"
+	shlib_ldflags="-dynamiclib -Wl,-headerpad_max_install_names -Wl,-macosx_version_min -Wl,10.3 -undefined dynamic_lookup -single_module -multiply_defined suppress"
 	if test "${r_cv_has_dynlookup+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else

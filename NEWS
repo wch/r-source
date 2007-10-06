@@ -81,6 +81,10 @@ BUG FIXES
 	empty library, since old.packages() threw an error.
 	old.packages() now returns NULL (as documented) in that case.
 
+    o	Builds on Mac OS X 10.4 or higher now allocate enough space
+	in the binary headers to relocate dependent libraries into the
+	framework.
+
 
 
 		CHANGES IN R VERSION 2.6.0
