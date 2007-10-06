@@ -175,7 +175,7 @@ foreach my $pkg (@ARGV) {
        my $filename = "${intname}_" . $description->{"Version"} . ".tar";
     my $filepath = &file_path($startdir, $filename);
     R_system(join(" ",
-                 ("$tar chf",
+                 ("$tar -chf",
                   &shell_quote_file_path($filepath),
                   "$pkgname")));
     my $tmpdir = R_tempfile("Rbuild");
@@ -186,7 +186,7 @@ foreach my $pkg (@ARGV) {
     ## was xhf, but there are no symbolic links here and that is invalid
     ## on FreeBSD, see http://www.freebsd.org/cgi/man.cgi?query=tar&apropos=0&sektion=0&manpath=FreeBSD+5.4-RELEASE+and+Ports&format=html
     R_system(join(" ",
-                 ("$tar xf",
+                 ("$tar -xf",
                   &shell_quote_file_path($filepath))));
 
     my $exclude = R_tempfile("Rbuild-exclude");
@@ -383,7 +383,7 @@ foreach my $pkg (@ARGV) {
 	    chdir("$libdir");
 	    copy(&file_path($pkgdir, "DESCRIPTION"), "DESCRIPTION");
 	    R_system(join(" ",
-			  ("$tar chf ",
+			  ("$tar -chf ",
 			   &shell_quote_file_path($filepath),
 			   @bundlepkgs, "DESCRIPTION")));
 	    R_system(join(" ",
@@ -403,7 +403,7 @@ foreach my $pkg (@ARGV) {
     } else {
 	$log->message("building '$filename.gz'");
 	R_system(join(" ",
-		      ("$tar chf",
+		      ("$tar -chf",
 		       &shell_quote_file_path($filepath),
 		       "$pkgname")));
 	R_system(join(" ",
