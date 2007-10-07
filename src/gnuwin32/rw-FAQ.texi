@@ -1034,12 +1034,12 @@ OR use a package by, e.g.@:
 library(mypkg, lib.loc="p:/myRlib")
 @end example
 
-You can also have you a personal library, which defaults to the
-directory @file{R\win-library\@var{x.y}} of your home directory for
-versions @var{x.y.z} of R.  This location can be changed by setting
-the environment variable @env{R_LIBS_USER}, and can be found from inside
-R by running @code{Sys.getenv("R_LIBS_USER")}.  This will only be
-used if it exists so you may need to create it: you can use
+You can also have a personal library, which defaults to the directory
+@file{R\win-library\@var{x.y}} of your home directory for versions
+@var{x.y.z} of R.  This location can be changed by setting the
+environment variable @env{R_LIBS_USER}, and can be found from inside R
+by running @code{Sys.getenv("R_LIBS_USER")}.  This will only be used if
+it exists so you may need to create it: you can use
 
 @example
 dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)
