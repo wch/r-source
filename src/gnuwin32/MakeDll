@@ -66,6 +66,10 @@ SAFE_FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) -ffloat-store
 
 ## can be overridden in Makevars[.win]
 OBJECTS=$(filter-out $(OBJS-NO),$(OBJSA))
+CXXSOURCES1=$(wildcard -f *.cc)
+CXXSOURCES2=$(wildcard -f *.cpp)
+CXXSOURCES3=$(wildcard -f *.C)
+DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES3:.C=.d) $(MSOURCES:.m=.d)
 
 ## these are documented (in R-admin) to come after MakeDll and MkRules,
 ## unlike Unix.
@@ -91,11 +95,6 @@ endif
 shlib-clean:
 	@$(RM) -f $(DLLNAME)_res.rc $(OBJECTS) $(RCOBJ) *.d Makedeps
 
-# Dependencies
-CXXSOURCES1=$(wildcard -f *.cc)
-CXXSOURCES2=$(wildcard -f *.cpp)
-CXXSOURCES3=$(wildcard -f *.C)
-DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES3:.C=.d) $(MSOURCES:.m=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
