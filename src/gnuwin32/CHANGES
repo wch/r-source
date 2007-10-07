@@ -38,6 +38,14 @@ OTHERS
 	device with the default transparent background) is now white
 	and not grey.
 
+   o	It seems file.access() can be unreliable both ways: that is it
+	can also report that access is barred when it is not.
+	(Seen on network file systems.)  So install.packages() to a
+	single library no longer makes use of file.access() but checks
+	directory creation instead: it is still possible that you can
+	create a directory but not be allowed to create a .dll or .chm
+	file, at least under Vista.
+
 
 BUG FIXES
 
@@ -993,7 +1001,7 @@ UNCATEGORIZED
 	registry entry
 	HKEY_LOCAL_MACHINE\Software\R-core\R\{version}\InstallPath
 	will be added.  Users require administrative privileges to
-	create this key.  For others, the same key will be put under
+	create this key: for others, the same key will be put under
 	the HKEY_CURRENT_USER root.
 
     o	The sample R_HOME/etc/Rprofile file has been renamed to
