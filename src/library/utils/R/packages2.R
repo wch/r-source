@@ -117,14 +117,17 @@ install.packages <-
                               "'lib' element '%s'  is not a writable directory",
                               "'lib' elements '%s' are not writable directories"),
                      paste(lib[!ok], collapse=", ")), domain = NA)
-    if(length(lib) == 1 && ok && .Platform$OS.type == "windows") {
+    if(length(lib) == 1 && .Platform$OS.type == "windows") {
         ## file.access is unreliable on Windows, especially Vista.
         ## the only known reliable way is to try it
-        fn <- file.path(lib, "_test_dir_")
-        unlink(fn, recursive = TRUE) # precaution
-        res <- try(dir.create(fn, showWarnings = FALSE))
-        if(inherits(res, "try-error") || !res) ok <- FALSE
-        else unlink(fn, recursive = TRUE)
+        ok <- file.info(lib)$isdir
+        if(ok) {
+            fn <- file.path(lib, "_test_dir_")
+            unlink(fn, recursive = TRUE) # precaution
+            res <- try(dir.create(fn, showWarnings = FALSE))
+            if(inherits(res, "try-error") || !res) ok <- FALSE
+            else unlink(fn, recursive = TRUE)
+        }
     }
     if(length(lib) == 1 && !ok) {
         warning(gettextf("'lib = \"%s\"' is not writable", lib),

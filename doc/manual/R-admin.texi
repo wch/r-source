@@ -528,7 +528,7 @@ the man page
 @item @file{@var{prefix}/@var{LIBnn}/R} or @file{@var{libdir}/R}
 all the rest (libraries, on-line help system, @dots{}).  Here
 @var{LIBnn} is usually @samp{lib}, but may be @samp{lib64} on some
-64-bit Linux systems.
+64-bit Linux systems.  This is known as the @R{} home directory.
 @end table
 
 @noindent
@@ -569,7 +569,7 @@ where @var{eprefix} is the prefix used for installing
 architecture-dependent files, defaults to @var{prefix}, and can be set
 via the configure option @option{--exec-prefix}.
 
-All of @code{bindir} and @code{mandir} and @code{libdir} can also be
+Each of @code{bindir}, @code{mandir} and @code{libdir} can also be
 specified on the @command{make install} command line (at least for GNU
 @command{make}).
 
@@ -580,6 +580,16 @@ The @command{configure} or @command{make} variables @code{rdocdir} and
 @code{rincludedir}: note that as the headers are not installed into a
 subdirectory you probably want something like
 @code{rincludedir=/usr/local/include/R-@value{VERSIONno}}.
+
+If you want the @R{} home to be something other than
+@file{@var{libdir}/R}, use @option{rhome}: for example
+
+@example
+make install rhome=/usr/local/lib64/R-2.6.0
+@end example
+
+@noindent
+will use a version-specific @R{} home on a Linux 64-bit system.
 
 If you have made @R{} as a shared/dynamic library you can install it in
 your system's library directory by
@@ -612,7 +622,9 @@ make install-pdf
 @end example
 
 @noindent
-Once again, it is optional to specify @code{prefix}.  
+Once again, it is optional to specify @code{prefix}, @code{libdir} or
+@code{rhome} (the DVI and PDF manuals are installed under the @R{} home
+directory).
 
 More precise control is possible.  For info, the setting used is that of
 @code{infodir} (default @samp{@var{prefix}/info}, set by configure
