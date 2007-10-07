@@ -32,10 +32,10 @@ is.table(x)
               responseName = "Freq")
 }
 \arguments{
-  \item{\dots}{objects which can be interpreted as factors (including
-    character strings), or a list (or data frame) whose components can
-    be so interpreted.  (For \code{as.table} and \code{as.data.frame},
-    arguments passed to specific methods.)}
+  \item{\dots}{one of more objects which can be interpreted as factors
+    (including character strings), or a list (or data frame) whose
+    components can be so interpreted.  (For \code{as.table} and
+    \code{as.data.frame}, arguments passed to specific methods.)}
   \item{exclude}{values to use in the exclude argument of \code{\link{factor}}
     when interpreting non-factor objects; if specified, levels to remove
     from all factors in \code{\dots}.}
@@ -50,14 +50,32 @@ is.table(x)
   \item{responseName}{The name to be used for the column of
     table entries, usually counts.}
 }
+\details{
+  If the argument \code{dnn} is not supplied, the internal function
+  \code{list.names} is called to compute the \sQuote{dimname names}.  If the
+  arguments in \code{\dots} are named, those names are used.  For the
+  remaining arguments, \code{deparse.level = 0} gives an empty name,
+  \code{deparse.level = 1} uses the supplied argument if it is a symbol,
+  and \code{deparse.level = 2} will deparse the argument.
+
+  Only when \code{exclude} is specified (i.e., not by default), will
+  \code{table} potentially drop levels of factor arguments.
+
+  Note (again!) that \code{exclude} has no effect on factor arguments;
+  if these contain \code{\link{NA}}'s and you want to tabulate them, use
+  \code{table(factor(., exclude=NULL), ...)}; see the examples.
+
+  The \code{summary} method for class \code{"table"} (used for objects
+  created by \code{table} or \code{\link{xtabs}}) which gives basic
+  information and performs a chi-squared test for independence of
+  factors (note that the function \code{\link{chisq.test}} currently
+  only handles 2-d tables).
+}
 \value{
   \code{table()} returns a \emph{contingency table}, an object of
   \code{\link[base]{class}} \code{"table"}, an array of integer values.
-
-  There is a \code{summary} method for objects created by \code{table}
-  or \code{\link{xtabs}}, which gives basic information and performs a
-  chi-squared test for independence of factors (note that the function
-  \code{\link{chisq.test}} currently only handles 2-d tables).
+  Note that unlike S the result is always an array, a 1D array if one
+  factor is given.
 
   \code{as.table} and \code{is.table} coerce to and test for contingency
   table, respectively.
@@ -68,22 +86,11 @@ is.table(x)
   factors and the corresponding entries (the latter as component
   named by \code{responseName}).  This is the inverse of \code{\link{xtabs}}.
 }
-\details{
-  If the argument \code{dnn} is not supplied, the internal function
-  \code{list.names} is called to compute the \sQuote{dimname names}.  If the
-  arguments in \code{\dots} are named, those names are used.  For the
-  remaining arguments, \code{deparse.level = 0} gives an empty name,
-  \code{deparse.level = 1} uses the supplied argument if it is a symbol,
-  and \code{deparse.level = 2} will deparse the argument.
+\seealso{
+  \code{\link{tabulate}} is the underlying function and allows finer
+  control. 
 
-  Only when \code{exclude} is specified (i.e., not by default), will
-  \code{table} drop levels of factor arguments potentially.
-
-  Note (again!) that \code{exclude} has no effect on factor arguments;
-  if these contain \code{\link{NA}}'s and you want to tabulate them, use
-  \code{table(factor(., exclude=NULL), ...)}; see the examples.
-}
-\seealso{Use \code{\link{ftable}} for printing (and more) of
+  Use \code{\link{ftable}} for printing (and more) of
   multidimensional tables.  \code{\link{margin.table}},
   \code{\link{prop.table}}, \code{\link{addmargins}}.
 }
