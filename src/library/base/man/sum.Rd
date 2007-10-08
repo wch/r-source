@@ -44,6 +44,8 @@ sum(\dots, na.rm = FALSE)
   This is part of the S4 \code{\link[methods:S4groupGeneric]{Summary}}
   group generic.  Methods for it must use the signature
   \code{x, \dots, na.rm}.
+
+  \sQuote{\link{plotmath}} for the use of \code{sum} in plot annotation.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

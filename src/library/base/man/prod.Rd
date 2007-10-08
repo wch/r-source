@@ -49,6 +49,8 @@ prod(\dots, na.rm = FALSE)
 \seealso{
   \code{\link{sum}},
   \code{\link{cumprod}}, \code{\link{cumsum}}.
+
+  \sQuote{\link{plotmath}} for the use of \code{prod} in plot annotation.
 }
 \examples{
 print(prod(1:7)) == print(gamma(8))
