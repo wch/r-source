@@ -94,7 +94,7 @@ rep.int(x, times)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{seq}}, \code{\link{sequence}}.
+  \code{\link{seq}}, \code{\link{sequence}}, \code{\link{replicate}}.
 }
 \examples{
 rep(1:4, 2)
