@@ -26,7 +26,7 @@ OTHERS
 	create a directory but not be allowed to create a .dll or .chm
 	file, at least under Vista.
 
-    o	Whem R_COMPLETION is set to FALSE, TAB is no longer ignored,
+    o	When R_COMPLETION is set to FALSE, TAB is no longer ignored,
 	but advances to the next tab stop in Rterm (the pre-2.5.0
 	behaviour) and inserts a space in Rgui.
 
