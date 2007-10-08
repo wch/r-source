@@ -24,9 +24,9 @@ typeof(x)
   \code{"complex"}, \code{"character"}, \code{"raw"} and \code{"list"},
   \code{"NULL"},
   \code{"closure"} (function), \code{"special"} and \code{"builtin"}
-  (basic functions and operators), \code{"environment"}, and others that
-  are unlikely to be seen at user level (\code{"symbol"},
-  \code{"pairlist"}, \code{"promise"},
+  (basic functions and operators), \code{"environment"}, \code{"S4"}
+  (some S4 objects) and others that are unlikely to be seen at user
+  level (\code{"symbol"}, \code{"pairlist"}, \code{"promise"},
   \code{"language"}, \code{"char"}, \code{"..."}, \code{"any"},
   \code{"expression"}, \code{"externalptr"}, \code{"bytecode"} and
   \code{"weakref"}).
