@@ -38,6 +38,22 @@ extern char *alloca(size_t);
 
 static int rcompgen_available = -1;
 
+static int gl_tab(char *buf, int offset, int *loc)
+/* default tab handler, acts like tabstops every 8 cols */
+{
+    int i, count, len;
+
+    len = strlen(buf);
+    count = 8 - (offset + *loc) % 8;
+    for (i=len; i >= *loc; i--)
+        buf[i+count] = buf[i];
+    for (i=0; i < count; i++)
+        buf[*loc+i] = ' ';
+    i = *loc;
+    *loc = i + count;
+    return i;
+}
+
 static int rt_completion(char *buf, int offset, int *loc)
 {
     int i, alen, cursor_position = *loc;
@@ -47,13 +63,13 @@ static int rt_completion(char *buf, int offset, int *loc)
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
 
-    if(!rcompgen_available) return *loc;
+    if(!rcompgen_available) return gl_tab(buf, offset, loc);
     
     if(rcompgen_available < 0) {
 	char *p = getenv("R_COMPLETION");
 	if(p && strcmp(p, "FALSE") == 0) {
 	    rcompgen_available = 0;
-	    return -1; /* no change */	    
+	    return gl_tab(buf, offset, loc);   
 	}
 	/* First check if namespace is loaded */
 	if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))

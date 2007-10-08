@@ -18,13 +18,17 @@ OTHERS
 	device with the default transparent background) is now white
 	and not grey.
 
-   o	It seems file.access() can be unreliable both ways: that is it
+    o	It seems file.access() can be unreliable both ways: that is it
 	can also report that access is barred when it is not.
 	(Seen on network file systems.)  So install.packages() to a
 	single library no longer makes use of file.access() but checks
 	directory creation instead: it is still possible that you can
 	create a directory but not be allowed to create a .dll or .chm
 	file, at least under Vista.
+
+    o	Whem R_COMPLETION is set to FALSE, TAB is no longer ignored,
+	but advances to the next tab stop in Rterm (the pre-2.5.0
+	behaviour) and inserts a space in Rgui.
 
 
 BUG FIXES

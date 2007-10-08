@@ -66,6 +66,8 @@ ESC-B   : Move cursor backward one word.
 TAB	: Within quotes, completes the current word as a file name,
 	  otherwise as an R object name.  Completion is does as far as 
 	  can be done unambiguously.  A second press shows alternative 
-	  completions.
+	  completions.  However, if environment variable R_COMPLETION is
+	  set to FALSE, this advances to the next tab stop (set at every 
+	  8th column). 
 NL, CR  : returns current buffer to the program.
 
