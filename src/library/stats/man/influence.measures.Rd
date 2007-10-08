@@ -159,7 +159,10 @@ hat(x, intercept = TRUE)
   \emph{An R and S-Plus Companion to Applied Regression}.
   Sage Publ.; \url{http://www.socsci.mcmaster.ca/jfox/Books/Companion/}.
 }
-\seealso{\code{\link{influence}} (containing \code{\link{lm.influence}}).
+\seealso{
+  \code{\link{influence}} (containing \code{\link{lm.influence}}).
+
+  \sQuote{\link{plotmath}} for the use of \code{hat} in plot annotation.
 }
 \examples{
 require(graphics)

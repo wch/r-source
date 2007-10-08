@@ -42,7 +42,12 @@ is.element(el, set)
   A logical scalar for \code{setequal} and a logical of the same
   length as \code{x} for \code{is.element}.
 }
-\seealso{\code{\link{\%in\%}}}
+\seealso{
+  \code{\link{\%in\%}}
+
+  \sQuote{\link{plotmath}} for the use of \code{union} and
+  \code{intersect} in plot annotation.
+}
 
 \examples{
 (x <- c(sort(sample(1:20, 9)),NA))

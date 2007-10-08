@@ -92,6 +92,8 @@ alist(\dots)
   \code{\link{vector}("list", length)} for creation of a list with empty
   components; \code{\link{c}}, for concatenation; \code{\link{formals}}.
   \code{\link{unlist}} is an approximate inverse to \code{as.list()}.
+
+  \sQuote{\link{plotmath}} for the use of \code{list} in plot annotation.
 }
 \examples{
 require(graphics)

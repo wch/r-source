@@ -5,6 +5,33 @@
 
 \name{plotmath}
 \alias{plotmath}
+\alias{symbol}
+\alias{plain}
+\alias{bold}
+\alias{italic}
+\alias{bolditalic}
+\alias{hat}
+\alias{bar}
+\alias{dot}
+\alias{ring}
+\alias{widehat}
+\alias{widetilde}
+\alias{displaystyle}
+\alias{textstyle}
+\alias{scriptstyle}
+\alias{scriptscriptstyle}
+\alias{underline}
+\alias{phantom}
+\alias{over}
+\alias{frac}
+\alias{atop}
+\alias{integral}
+\alias{inf}
+\alias{sup}
+\alias{group}
+\alias{bgroup}
+
+
 \title{Mathematical Annotation in R}
 \description{
   If the \code{text} argument to one of the text-drawing functions
@@ -151,6 +178,15 @@
   mathematical annotation in plots.
   \emph{Journal of Computational and Graphical Statistics},
   \bold{9}, 582--599.
+
+  The symbol codes can be found in octal in the Adobe reference manuals,
+  e.g. for Postscript
+  \url{http://www.adobe.com/products/postscript/pdfs/PLRM.pdf}
+  or PDF
+  \url{http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
+  and in decimal at
+  \url{http://www.stat.auckland.ac.nz/~paul/R/CM/AdobeSym.html}.
+  (Incorrect versions can also be found on the Internet.)
 }
 \seealso{
   \code{demo(plotmath)},

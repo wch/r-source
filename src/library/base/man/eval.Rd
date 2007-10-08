@@ -39,7 +39,7 @@ local(expr, envir = new.env())
   \code{eval} was made).
 
   Objects to be evaluated can be of types \code{\link{call}} or
-  \code{\link{expression}} or \link{symbol} (when the symbol is looked
+  \code{\link{expression}} or \link{name} (when the name is looked
   up in the current scope and its binding is evaluated), a \link{promise}
   or any of the basic types such as vectors, functions and environments
   (which are returned unchanged).
@@ -77,7 +77,7 @@ local(expr, envir = new.env())
   Wadsworth \& Brooks/Cole. (\code{eval} only.)
 }
 \seealso{
-  \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
+  \code{\link{expression}}, \code{\link{quote}}, \code{\link{sys.frame}},
   \code{\link{parent.frame}}, \code{\link{environment}}.
 
   Further, \code{\link{force}} to \emph{force} evaluation, typically of

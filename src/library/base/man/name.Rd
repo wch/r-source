@@ -5,7 +5,7 @@
 
 \name{name}
 \alias{name}
-\alias{symbol}
+%\alias{symbol} use for plotmath as from R 2.6.0
 \alias{is.symbol}
 \alias{as.symbol}
 \alias{as.name}
@@ -61,6 +61,8 @@ is.name(x)
 \seealso{
   \code{\link{call}}, \code{\link{is.language}}.
   For the internal object mode, \code{\link{typeof}}.
+
+  \code{\link{plotmath}} for another use of \sQuote{symbol}.
 }
 \examples{
 an <- as.name("arrg")

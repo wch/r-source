@@ -36,6 +36,8 @@ sqrt(x)
   \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
   \code{\link{sin}} for trigonometric, and \code{\link{Special}} for
   special mathematical functions.
+
+  \sQuote{\link{plotmath}} for the use of \code{sqrt} in plot annotation.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

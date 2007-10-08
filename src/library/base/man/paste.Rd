@@ -52,6 +52,8 @@ paste(\dots, sep = " ", collapse = NULL)
   \code{\link{strsplit}}; further, \code{\link{cat}} which concatenates and
   writes to a file, and \code{\link{sprintf}} for C like string
   construction.
+
+  \sQuote{\link{plotmath}} for the use of \code{paste} in plot annotation.
 }
 \examples{
 paste(1:12) # same as as.character(1:12)
