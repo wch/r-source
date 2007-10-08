@@ -20,7 +20,8 @@ object.size(x)
   which object is not clear-cut.  This function merely provides a rough
   indication: it should be reasonably accurate for atomic vectors, but
   does not detect if elements of a list are shared, for example.
-  (Sharing amongst elements of a character vector is taken into account.)
+  (Sharing amongst elements of a character vector is taken into account,
+  but not that between character vectors in a single object.)
   
   The calculation is of the size of the object, and excludes the space
   needed to store its name in the symbol table.
