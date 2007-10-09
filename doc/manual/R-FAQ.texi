@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-10-01
+@set FAQ_DATE @value{FAQ_YEAR}-10-05
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2360,6 +2360,8 @@ Optimally robust estimation.
 Optimally robust estimation for regression-type models.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
+@item RPMG
+Poor Man's Gui: create interactive R analysis sessions.
 @item RPyGeo
 ArcGIS Geoprocessing in R via Python.
 @item RQuantLib
@@ -2819,6 +2821,10 @@ Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
 emphasis on regression diagnostics, particularly graphical diagnostic
 methods.
+@item caret
+Classification and REgression Training.
+@item caretLSF
+Classification and REgression Training, LSF style.
 @item cat
 Analysis of categorical-variable datasets with missing values.
 @item catmap
@@ -4220,6 +4226,8 @@ Power analyses for the affected sib pair and the TDT design.
 @item ppc
 Sample classification of protein mass spectra by peak probabilty
 contrasts.
+@item ppls
+Penalized Partial Least Squares.
 @item pps
 Functions to select samples using PPS (probability proportional to size)
 sampling, for stratified simple random sampling, and to compute joint
