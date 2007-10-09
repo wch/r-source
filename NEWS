@@ -37,7 +37,10 @@ BUG FIXES
 	symbolic links (which are resolved in the copy).  Thanks to
 	Michael Lawrence for diagnosis and patch.
 
-    o	object.size() has slightly too low a size for objects of type "S4".
+    o	object.size() had slightly too low a size for objects of type "S4".
+
+    o	embedFonts(), bitmap() and dev2bitmap() explicitly turn off
+	auto-rotation in Ghostscript when generating PDF.
 
 
 

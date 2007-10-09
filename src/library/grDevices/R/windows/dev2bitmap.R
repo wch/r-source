@@ -60,6 +60,7 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     dev.set(current.device)
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
+                 "-dAutoRotatePages=/None",
                  " -g", ceiling(res*width), "x", ceiling(res*height),
                  " -sOutputFile=", file, " ", tmp, sep="")
     system(cmd, invisible=TRUE)
@@ -94,6 +95,7 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
     tmp <- tempfile("Rbit")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
+                 "-dAutoRotatePages=/None",
                  " -g", ceiling(res*width), "x", ceiling(res*height),
                  " -sOutputFile=", file, sep="")
     postscript(file=tmp, width=width, height=height,

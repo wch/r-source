@@ -38,11 +38,16 @@ embedFonts(file, format, outfile = file, fontpaths = "", options = "")
   something like \code{options="-sFONTPATH=path/to/font"}.
 
   This function relies on a suitable Ghostscript executable being in
-  your path, or the environment variable \code{R_GSCMD} (the same as
+  your path, or the environment variable \env{R\_GSCMD} (the same as
   \code{\link{bitmap}}) being set as the full path to the Ghostscript
   executable.
+#ifdef unix
+  This defaults to \code{"gs"}.
+#endif
 #ifdef windows
   For Windows users, this should be the path to \code{gswin32c.exe}.
+  If unset, environment variable \env{GSC} is tried and then
+  \code{"gswin32c.exe"}.
 #endif
 
   Note that Ghostscript may do font substitution, so the font embedded

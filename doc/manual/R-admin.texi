@@ -4414,7 +4414,8 @@ will not be needed (but it will be needed for installing packages by
 
 The @samp{MiKTeX} (@url{http://www.miktex.org, @code{www.miktex.org}})
 distribution of @LaTeX{} includes a suitable port of @code{pdftex}.  The
-`basic' version of @samp{MiKTeX} suffices, but it will install the 15Mb
+`basic' version of @samp{MiKTeX} almost suffices (the @pkg{grid}
+vignettes need @file{fancyvrb.sty}), but it will install the 15Mb
 @samp{lm} package if allowed to (although that is not actually used).
 The @file{Rtools.exe} installer does @emph{not} include any version of
 @LaTeX{}.

@@ -92,6 +92,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #ifdef windows
   such as GSView which utilise URW fonts.
 #endif
+  Since \code{\link{embedFonts}} makes use of Ghostscript, it should be
+  able to embed the URW-based families for use with other viewers.
   
   See \code{\link{postscript}} for details of encodings, as the internal
   code is shared between the drivers.  The native PDF encoding is given
