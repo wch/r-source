@@ -94,6 +94,7 @@ endif
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #
 	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
+	$(FIND) $(RPREFIX) -name \*~ -prune -delete
 
 md5sums:
 	@echo "adding MD5 checksums"
