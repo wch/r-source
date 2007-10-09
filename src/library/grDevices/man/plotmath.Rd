@@ -160,7 +160,9 @@
   Greek lower case mu can be obtained either by the special
   symbol \code{mu} or by \code{symbol("m")}.  This provides
   access to symbols that have no special symbol name, for example,
-  the universal, or forall, symbol is \code{symbol("\\042")}.
+  the universal, or forall, symbol is \code{symbol("\\042")}.  Note that
+  in a multi-byte locale (e.g. UTF-8) this only works for characters up
+  to \code{"\\176"}.
 
   Note to TeX users: TeX's \code{\Upsilon} is \code{Upsilon1}, TeX's
   \code{\varepsilon} is close to \code{epsilon}, and there is no
@@ -184,7 +186,7 @@
   \url{http://www.adobe.com/products/postscript/pdfs/PLRM.pdf}
   or PDF
   \url{http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
-  and in decimal at
+  and in decimal, octal and hex at
   \url{http://www.stat.auckland.ac.nz/~paul/R/CM/AdobeSym.html}.
   (Incorrect versions can also be found on the Internet.)
 }
