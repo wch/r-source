@@ -520,6 +520,8 @@ vignettes:
 	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(REXE) > /dev/null; \
 	  fi; \
 	done
+	@rm -rf .vignettes
+
 
 ## ===================== Maintainer targets ========================
 
