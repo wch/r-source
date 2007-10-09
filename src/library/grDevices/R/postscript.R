@@ -854,6 +854,8 @@ embedFonts <- function(file, # The ps or pdf file to convert
         stop("Invalid output format")
     }
     gsexe <- Sys.getenv("R_GSCMD")
+    if(.Platform$OS.type == "windows" && !nzchar(gsexe))
+        gsexe <- Sys.getenv("GSC")
     if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- switch(.Platform$OS.type,
                         unix = "gs",
@@ -866,7 +868,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
         fontpaths <- paste("-sFONTPATH=",
                            paste(fontpaths, collapse=.Platform$path.sep),
                            sep="")
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", format,
+    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
                  options, " ", file, sep = "")
     ret <- system(cmd, invisible = TRUE)

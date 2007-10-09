@@ -18,7 +18,9 @@ PACKAGE INSTALLATION
 
 OTHERS
 
-    o	Place holder.
+    o	bitmap(), dev2bitmap() and embedfonts() now look at environment
+	variable GSC if R_GSCMD is unset.  (This is the variable used
+	by ps2pdf and similar batch files.)
 
 
 
