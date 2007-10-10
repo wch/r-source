@@ -95,6 +95,10 @@ BUG FIXES
     o	embedFonts(), bitmap() and dev2bitmap() explicitly turn off
 	auto-rotation in Ghostscript when generating PDF.
 
+    o	symbol() in plotmath expressions was only accepting valid
+	character strings, which made it impossible to specify symbols
+	such as aleph (obtained by symbol("\300")) in a UTF-8 locale.
+
 
 
 		CHANGES IN R VERSION 2.6.0
@@ -191,6 +195,7 @@ NEW FEATURES
 
     o	duplicated() and unique() and their methods in base gain an
 	additional argument 'fromLast'.
+
     o	fifo() no longer has a default 'description' argument.
 
 	fifo("") is now implemented, and works in the same way as file("").
@@ -305,9 +310,6 @@ NEW FEATURES
     o	setRepositories() has a new argument 'ind' to allow selections
 	to be made programmatically.
 
-    o	showMethods() has a "smart" default for 'inherited' such that
-	showMethods(<genfun>, incl = TRUE)  becomes a useful short cut.
-
     o	sprintf() no longer has a output string length limit.
 
     o	storage.mode<- is now primitive, and hence makes fewer copies
@@ -409,7 +411,7 @@ NEW FEATURES
         written by Seth Falcon.
 
     o	The internal equivalents of as.complex, as.double, as.integer
-	and as.logical used to handle length-1 arguments now accept
+	and as.logical used to handle length=1 arguments now accept
 	character strings (rather than report that this is
 	'unimplemented').
 
@@ -507,6 +509,9 @@ METHODS PACKAGE
     o	It is now possible to use setGeneric(useAsDefault = FALSE) to
 	define a new generic with the name of a primitive function
 	(but having no connection with the primitive).
+
+    o	showMethods() has a "smart" default for 'inherited' such that
+	showMethods(<genfun>, incl = TRUE)  becomes a useful short cut.
 
 
 DEPRECATED & DEFUNCT
@@ -618,10 +623,10 @@ C-LEVEL FACILITIES
     o	asLogical, asInteger, asReal and asComplex now accept STRSXP
 	and CHARSXP arguments, and asChar accepts CHARSXP.
 
-    o	New R_GE_str2col() exported via R_ext/GraphicsEngine.h for
-        external device developers.
+    o	New entry point R_GE_str2col listed in R_ext/GraphicsEngine.h
+	for external graphics device developers.
 
-    o   doKeybd and doMouseevent are now exported in GraphicsDevice.h.
+    o	doKeybd and doMouseevent are now exported in GraphicsDevice.h.
 
     o	R_alloc now has first argument of type 'size_t' to support
 	64-bit platforms (e.g. Win64) with a 32-bit 'long' type.

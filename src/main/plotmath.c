@@ -1156,30 +1156,34 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 {
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
+
     if (str) {
 #ifdef SUPPORT_MBCS
-	int n = strlen(str), used;
-	wchar_t wc;
-	const char *p = str;
-	mbstate_t mb_st;
-	mbs_init(&mb_st);
-	while ((used = Mbrtowc(&wc, p, n, &mb_st)) > 0) {
-	    glyphBBox = GlyphBBox(wc, gc, dd);
-	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
-	    p += used; n -= used;
-	}
+	if(mbcslocale && gc->fontface != 5) {
+	    int n = strlen(str), used;
+	    wchar_t wc;
+	    const char *p = str;
+	    mbstate_t mb_st;
+	    mbs_init(&mb_st);
+	    while ((used = Mbrtowc(&wc, p, n, &mb_st)) > 0) {
+		glyphBBox = GlyphBBox(wc, gc, dd);
+		resultBBox = CombineBBoxes(resultBBox, glyphBBox);
+		p += used; n -= used;
+	    }
+	} else
 #else
-	const char *s = str;
-	while (*s) {
-	    glyphBBox = GlyphBBox(*s, gc, dd);
-	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
-	    s++;
+	{
+	    const char *s = str;
+	    while (*s) {
+		glyphBBox = GlyphBBox(*s, gc, dd);
+		resultBBox = CombineBBoxes(resultBBox, glyphBBox);
+		s++;
+	    }
 	}
 #endif
 	if (draw) {
 	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str,
-		   0.0, 0.0, mc->CurrentAngle, gc,
-		   dd);
+		   0.0, 0.0, mc->CurrentAngle, gc, dd);
 	    PMoveAcross(bboxWidth(resultBBox), mc);
 	}
 	if (UsingItalics(gc))
@@ -3310,7 +3314,7 @@ void GEMathText(double x, double y, SEXP expr,
     mc.CosAngle = cos(rot);
     mc.SinAngle = sin(rot);
     RenderElement(expr, 1, &mc, gc, dd);
-}/* GMathText */
+}/* GEMathText */
 
 
 /********************************
