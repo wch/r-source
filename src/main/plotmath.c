@@ -1044,12 +1044,15 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 
     if (str) {
 #ifdef SUPPORT_MBCS
-	if(mbcslocale) {  /* need to advance by character, not byte */
+	/* Need to advance by character, not byte, except in the symbol font.
+	   The latter would be hard to achieve, but perhaps not impossible.
+	 */
+	if(mbcslocale && gc->fontface != 5) {
 	    wchar_t wc;
 	    mbstate_t mb_st;
 	    size_t res;
 
-	    memset(&mb_st, 0, sizeof(mb_st));
+	    mbs_init(&mb_st);
 	    while (*s) {
 		wc = 0;
 		res = mbrtowc(&wc, s, MB_LEN_MAX, &mb_st);
@@ -1159,6 +1162,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 
     if (str) {
 #ifdef SUPPORT_MBCS
+	/* need to advance by character, not byte, except in the symbol font */
 	if(mbcslocale && gc->fontface != 5) {
 	    int n = strlen(str), used;
 	    wchar_t wc;
