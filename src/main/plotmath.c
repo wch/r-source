@@ -1171,7 +1171,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 		p += used; n -= used;
 	    }
 	} else
-#else
+#endif
 	{
 	    const char *s = str;
 	    while (*s) {
@@ -1180,7 +1180,6 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 		s++;
 	    }
 	}
-#endif
 	if (draw) {
 	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str,
 		   0.0, 0.0, mc->CurrentAngle, gc, dd);
