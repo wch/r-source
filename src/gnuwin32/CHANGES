@@ -19,7 +19,11 @@ PACKAGE INSTALLATION
     o	INSTALL does selection of lazyloading or not via an initial
 	dummy installation, so large packages which cannot be
 	installed without lazyloading and do not specify it may
-	succeed when they did not earlier. 
+	succeed when they did not earlier.
+
+    o	The header iconv.h is now installed, and can be used by
+	packages in conjunction with PKG_LIBS=-liconv .
+
 
 OTHERS
 
