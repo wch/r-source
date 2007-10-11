@@ -49,16 +49,45 @@ void QuartzBitmap_Close(QuartzDesc_t dev,void *userInfo) {
         /* On 10.4+ we can employ the CGImageDestination API to create a
            variety of different bitmap formats */
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
-        CFURLRef    path  = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault,(const UInt8*)qbd->path,strlen(qbd->path),FALSE);
-        CFStringRef type  = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)qbd->uti,strlen(qbd->uti),kCFStringEncodingUTF8,FALSE);
-        CGImageDestinationRef dest = CGImageDestinationCreateWithURL(path,type,1,NULL);
-        CGImageRef image = CGBitmapContextCreateImage(qbd->bitmap);
-        CGImageDestinationAddImage(dest,image,NULL);
-        CGImageDestinationFinalize(dest);
-        CFRelease(image);
-        CFRelease(dest);
-        CFRelease(type);
+        CFStringRef pathString = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)qbd->path,strlen(qbd->path),kCFStringEncodingUTF8,FALSE);
+        CFURLRef path;
+        if(CFStringFind(pathString,CFSTR("://"),0).location != kCFNotFound) {
+            CFStringRef pathEscaped= CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,pathString,NULL,NULL,kCFStringEncodingUTF8);
+            path = CFURLCreateWithString(kCFAllocatorDefault,pathEscaped,NULL);
+            CFRelease(pathEscaped);
+        } else {
+            path = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault,(const UInt8*)qbd->path,strlen(qbd->path),FALSE);
+        }
+        CFRelease(pathString);
+        
+        CFStringRef scheme = CFURLCopyScheme(path);
+       	CFStringRef type  = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)qbd->uti,strlen(qbd->uti),kCFStringEncodingUTF8,FALSE);
+    	CGImageRef image = CGBitmapContextCreateImage(qbd->bitmap);
+        if(CFStringCompare(scheme,CFSTR("file"),0) == 0) {
+            CGImageDestinationRef dest = CGImageDestinationCreateWithURL(path,type,1,NULL);
+            CGImageDestinationAddImage(dest,image,NULL);
+            CGImageDestinationFinalize(dest);
+            CFRelease(dest);
+        } else if(CFStringCompare(scheme,CFSTR("clipboard"),0) == 0) {
+            //Copy our image into data
+            CFMutableDataRef      data = CFDataCreateMutable(kCFAllocatorDefault,0);
+            CGImageDestinationRef dest = CGImageDestinationCreateWithData(data,type,1,NULL);
+            CGImageDestinationAddImage(dest,image,NULL);
+            CGImageDestinationFinalize(dest);
+            CFRelease(dest);
+            PasteboardRef pb = NULL;
+            if(noErr == PasteboardCreate(kPasteboardClipboard,&pb)) {
+                PasteboardClear(pb);
+                PasteboardSyncFlags syncFlags = PasteboardSynchronize(pb);
+                PasteboardPutItemFlavor(pb,(PasteboardItemID)1,type,data,0);
+            }
+            CFRelease(data);
+        } else
+            warning("Not a supported scheme, no image data written.");
+        CFRelease(scheme);
+       	CFRelease(type);
         CFRelease(path);
+        CFRelease(image);
 #endif
     }
     /* Free ourselves */
