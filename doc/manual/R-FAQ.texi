@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-10-05
+@set FAQ_DATE @value{FAQ_YEAR}-10-11
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2318,6 +2318,8 @@ variable.
 R interface to the dieharder random number generator test suite.
 @item RFA
 Regional Frequency Analysis.
+@item RFOC
+Graphics for spherical distributions and earthquake focal mechanisms.
 @item RGtk2
 Facilities for programming graphical interfaces using Gtk (the Gimp Tool
 Kit) version 2.
@@ -2814,6 +2816,8 @@ files, a LogitBoost classifier, and a base64 encoder/decoder.
 Tools for caching Sweave computations.
 @item cairoDevice
 Loadable CAIRO/GTK device driver.
+@item calib
+Statistical tool for calibration of plate based bioassays.
 @item calibrate
 Calibration of biplot axes.
 @item car
@@ -2825,6 +2829,8 @@ methods.
 Classification and REgression Training.
 @item caretLSF
 Classification and REgression Training, LSF style.
+@item caretNWS
+Classification and REgression Training in parallel using NetworkSpaces.
 @item cat
 Analysis of categorical-variable datasets with missing values.
 @item catmap
@@ -4257,6 +4263,8 @@ Distance and similarity measures.
 @item pscl
 R in the Political Science Computational Laboratory, Stanford
 University.
+@item pseudo
+Pseudo-observations.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
