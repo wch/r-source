@@ -557,8 +557,8 @@ static void RQuartz_Deactivate(DEVDESC) {
 static void RQuartz_Size(double*left,double*right,double*bottom,double*top,DEVDESC) {
     XD;
     *left = *top = 0;
-    *right  = QuartzDevice_GetScaledWidth(xd);
-    *bottom = QuartzDevice_GetScaledHeight(xd);
+    *right  = QuartzDevice_GetWidth(xd)*72.0;
+    *bottom = QuartzDevice_GetHeight(xd)*72.0;
 }
 
 static void RQuartz_NewPage(CTXDESC) {
