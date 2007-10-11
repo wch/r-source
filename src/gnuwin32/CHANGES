@@ -16,6 +16,11 @@ PACKAGE INSTALLATION
     o	Using PKG_C[XX]FLAGS instead of PKG_CPPFLAGS for -I and -D
 	flags is now a fatal error.
 
+    o	INSTALL does selection of lazyloading or not via an initial
+	dummy installation, so large packages which cannot be
+	installed without lazyloading and do not specify it may
+	succeed when they did not earlier. 
+
 OTHERS
 
     o	bitmap(), dev2bitmap() and embedfonts() now look at environment
