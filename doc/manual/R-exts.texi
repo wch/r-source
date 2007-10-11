@@ -966,7 +966,7 @@ slamc.o: slamc.f
 
 @noindent
 to ensure that the LAPACK routines find some constants without infinite
-looping.  The Windows equivalent would be
+looping.  The Windows equivalent is
 
 @smallexample
 slamc.o: slamc.f
@@ -988,9 +988,8 @@ after:
 @end smallexample
 
 @noindent
-On Windows, one can do is to add dependencies to the @samp{all}
-target (which is what will get called), e.g.@: (based on package
-@pkg{rcom})
+On Windows, one can add dependencies to the @samp{all} target (which is
+what will get called), e.g.@: (based on package @pkg{rcom})
 
 @smallexample
 all: ../inst/tst/bin/rcom_test.exe extraclean
