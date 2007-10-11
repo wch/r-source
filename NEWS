@@ -22,7 +22,8 @@ BUG FIXES
 
     o	A series of changes make the CHARSXP cache introduced in 2.6.0
 	faster (and in some cases many times faster) in sessions with
-	a large number (e.g. a million) of unique character strings.
+	a large number (e.g. a million) of unique character strings,
+	and also if there are many empty strings.
 
     o	new.packages() and update.packages() failed when called on an
 	empty library, since old.packages() threw an error.
