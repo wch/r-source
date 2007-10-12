@@ -1,0 +1,42 @@
+% File src/library/utils/man/windows/choose.dir.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2007 R Core Development Team
+% Distributed under GPL 2 or later
+
+\name{choose.dir}
+\alias{choose.dir}
+\title{Choose a Folder Interactively}
+\description{
+  Use a Windows shell folder widget to choose a folder interactively.
+}
+\usage{
+choose.dir(default = "", caption = "Select folder")
+}
+\arguments{
+  \item{default}{which folder to show initially}
+  \item{caption}{the caption on the selection dialog}
+}
+\value{
+  A length-one character vector, character \code{NA} if
+  \sQuote{Cancel} was selected. 
+}
+\details{
+  This brings up a dialog box with a text field to enter the folder path
+  and a \sQuote{Browse} button to access the Windows shell folder
+  selection widget.
+
+  Note: the folder selection widget appears broken on Vista when called
+  from the GUI (but not from \file{Rterm}): only the Desktop is shown
+  and it is impossible to navigate below it.
+
+  The \sQuote{Change dir ...} menu item uses the same dialog box, and so
+  has the same Vista issues.
+}
+\seealso{
+  \code{\link{choose.files}}
+}
+\examples{
+  if (interactive()) 
+	choose.dir(getwd(), "Choose a suitable folder")
+}
+\keyword{file}

@@ -5,7 +5,6 @@
 
 \name{choose.files}
 \alias{choose.files}
-\alias{choose.dir}
 \alias{Filters}
 \title{Choose a List of Files Interactively}
 \description{
@@ -18,8 +17,6 @@ choose.files(default = "", caption = "Select files",
              index = nrow(Filters))
 
 Filters
-
-choose.dir(default = "", caption = "Select folder")
 }
 \arguments{
   \item{default}{which filename to show initially}
@@ -29,11 +26,7 @@ choose.dir(default = "", caption = "Select folder")
   \item{index}{which row of filters to use by default}
 }
 \value{
-  For \code{choose.files}, a character vector giving zero or more file
-  paths.
-
-  For \code{choose.dir}, a character string, \code{NA} if
-  \sQuote{Cancel} was selected. 
+  A character vector giving zero or more file paths.
 }
 \details{
   Unlike \code{\link{file.choose}}, \code{choose.files} will always
@@ -42,7 +35,7 @@ choose.dir(default = "", caption = "Select folder")
   \code{\link{file.choose}} would signal an error.  \code{choose.dir}
   chooses a directory.
 
-  Windows file dialog boxes include a list of \dQuote{filters}, which allow
+  Windows file dialog boxes include a list of \sQuote{filters}, which allow
   the file selection to be limited to files of specific types.
   The \code{filters} argument to \code{choose.files} allows the list
   of filters to be set.  It should be an \code{n} by \code{2} character
@@ -58,19 +51,16 @@ choose.dir(default = "", caption = "Select folder")
   filters may be selected.
 
   If you would like to display files in a particular directory,
-  give a fully qualified file mask (e.g., \code{'c:\\\\*.*'})
+  give a fully qualified file mask (e.g., \code{"c:\\\\*.*"})
   in the \code{default} argument.  If a directory is not given, the
   dialog will start in the current directory the first time, and
-  \dQuote{remember} the last directory on subsequent invocations.
+  remember the last directory used on subsequent invocations.
 }
 \seealso{
-  \code{\link{file.choose}}
+  \code{\link{file.choose}}, \code{\link{choose.dir}}
 }
 \examples{
   if (interactive()) 
 	choose.files(filters = Filters[c("zip", "All"),])
-
-  if (interactive()) 
-	choose.dir(getwd(), "Choose a suitable folder")
 }
 \keyword{file}
