@@ -35,10 +35,15 @@
 #include <shlobj.h>
 
 static int CALLBACK
-InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
+InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
 {
-    if (uMsg == BFFM_INITIALIZED)
+    char szDir[MAX_PATH];
+    if (uMsg == BFFM_INITIALIZED) {
 	SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
+    } else if (uMsg == BFFM_SELCHANGED) {
+	if (SHGetPathFromIDList((LPITEMIDLIST) lp ,szDir))
+	    SendMessage(hwnd, BFFM_SETSTATUSTEXT, 0, (LPARAM) szDir);
+    }
     return(0);
 }
 
@@ -48,18 +53,18 @@ static void selectfolder(char *folder, const char *title)
 {
     char buf[MAX_PATH];
     LPMALLOC g_pMalloc;
-    HWND hwnd=0;
     BROWSEINFO bi;
     LPITEMIDLIST pidlBrowse;
 
     /* Get the shell's allocator. */
     if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
 
-    bi.hwndOwner = hwnd;
+    ZeroMemory(&bi, sizeof(bi));
+    bi.hwndOwner = 0;
     bi.pidlRoot = NULL;
     bi.pszDisplayName = buf;
     bi.lpszTitle = title;
-    bi.ulFlags = BIF_RETURNONLYFSDIRS;
+    bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT;
     bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
     bi.lParam = (LPARAM) folder;
 
