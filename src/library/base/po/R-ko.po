@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -360,6 +360,10 @@ msgstr "모든 수치 또는 복소수값의 변수는 데이터 프레임에 �
 msgid "character string is not in a standard unambiguous format"
 msgstr "문자열은 표준적인 애매함이 없는 서식으로 되고있지 않습니다"
 
+#, fuzzy
+msgid "'origin' must be supplied"
+msgstr "'from'를 지정하지 않으면 되지 않습니다"
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "%s를 class \"Date\"에 변환하는 방법을 모릅니다"
 
@@ -610,6 +614,18 @@ msgstr "link 해야할 파일이 없습니다"
 
 msgid "no files/directory to link to"
 msgstr "link 해야할 파일 또는 디렉토리가 없습니다"
+
+#, fuzzy
+msgid "'x' must be have length 1"
+msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "invalid digits"
+msgstr "무효인 'digits'입니다"
+
+#, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "테이블에 강제 변환 할수 없습니다"
 
 msgid "'package' must be of length 1"
 msgstr "'package'는 길이 1이 나오지 않으면 되지 않습니다"

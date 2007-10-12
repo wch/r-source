@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: 2007-09-16 17:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -378,6 +378,10 @@ msgstr ""
 msgid "character string is not in a standard unambiguous format"
 msgstr "la chaîne de caractères n'est pas dans un format standard non ambigu"
 
+#, fuzzy
+msgid "'origin' must be supplied"
+msgstr "'from' doit être spécifié"
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "incapable de convertir '%s' dans la classe \"Date\""
 
@@ -632,6 +636,18 @@ msgstr "aucun fichier vers où pointer un lien"
 
 msgid "no files/directory to link to"
 msgstr "aucun fichier / répertoire vers où pointer un lien"
+
+#, fuzzy
+msgid "'x' must be have length 1"
+msgstr "'input' doit être de longueur 1"
+
+#, fuzzy
+msgid "invalid digits"
+msgstr "'digits' incorrect"
+
+#, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "impossible de convertir automatiquement en un tableau de contingence"
 
 msgid "'package' must be of length 1"
 msgstr "'package' doit être de longueur unaire"

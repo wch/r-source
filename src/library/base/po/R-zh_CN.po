@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -356,6 +356,10 @@ msgstr "只适用于全数值数据框"
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
 
+#, fuzzy
+msgid "'origin' must be supplied"
+msgstr "'from'一定得给值"
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "不知如何将'%s'转换成\"Date\""
 
@@ -597,6 +601,18 @@ msgstr "鏈結时没有可以读的文件"
 
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
+
+#, fuzzy
+msgid "'x' must be have length 1"
+msgstr "'input'的长度一定得为一"
+
+#, fuzzy
+msgid "invalid digits"
+msgstr "'digits'的值不对"
+
+#, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "不能强迫变表"
 
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为一"

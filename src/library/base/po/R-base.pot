@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -350,6 +350,9 @@ msgstr ""
 msgid "character string is not in a standard unambiguous format"
 msgstr ""
 
+msgid "'origin' must be supplied"
+msgstr ""
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr ""
 
@@ -582,6 +585,15 @@ msgid "no files to link from"
 msgstr ""
 
 msgid "no files/directory to link to"
+msgstr ""
+
+msgid "'x' must be have length 1"
+msgstr ""
+
+msgid "invalid digits"
+msgstr ""
+
+msgid "'x' cannot be coerced to 'octmode'"
 msgstr ""
 
 msgid "'package' must be of length 1"

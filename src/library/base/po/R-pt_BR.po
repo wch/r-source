@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -373,6 +373,10 @@ msgstr ""
 msgid "character string is not in a standard unambiguous format"
 msgstr "string de caracteres não é um formato padrão não ambíguo"
 
+#, fuzzy
+msgid "'origin' must be supplied"
+msgstr "'from' deve ser especificado"
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "não sei como converter '%s' para classe \"Date\""
 
@@ -623,6 +627,18 @@ msgstr "nenhum arquivo para onde fazer a vinculação"
 
 msgid "no files/directory to link to"
 msgstr "nenhum arquivo/diretório para onde fazer a vinculação"
+
+#, fuzzy
+msgid "'x' must be have length 1"
+msgstr "'input' deve ter comprimento 1"
+
+#, fuzzy
+msgid "invalid digits"
+msgstr "'digits' inválido"
+
+#, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "não é possível fazer coerção para tabela"
 
 msgid "'package' must be of length 1"
 msgstr "'package' deve ter comprimento 1"

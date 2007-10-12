@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: 2007-09-11 16:22+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -358,6 +358,10 @@ msgstr " すべてが数値変数のデータフレームに対してだけ定�
 msgid "character string is not in a standard unambiguous format"
 msgstr " 文字列は標準的な曖昧さのない書式にはなっていません "
 
+#, fuzzy
+msgid "'origin' must be supplied"
+msgstr " 'from' を指定しなければなりません "
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr " '%s' をクラス \"Date\" へ変換する仕方が分かりません "
 
@@ -609,6 +613,18 @@ msgstr " リンクすべきファイルがありません "
 
 msgid "no files/directory to link to"
 msgstr " リンクすべきファイルもしくはディレクトリがありません "
+
+#, fuzzy
+msgid "'x' must be have length 1"
+msgstr " 'input' は長さ 1 でなければなりません "
+
+#, fuzzy
+msgid "invalid digits"
+msgstr " 無効な 'digits' です "
+
+#, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr " テーブルに強制変換できません "
 
 msgid "'package' must be of length 1"
 msgstr " 'package' は長さ 1 でなければなりません "

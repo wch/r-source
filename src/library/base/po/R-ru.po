@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:30\n"
+"POT-Creation-Date: 2007-10-12 06:06\n"
 "PO-Revision-Date: 2007-09-18 00:11-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -362,6 +362,10 @@ msgstr "определено только для таблиц данных со всеми числовыми переменными"
 msgid "character string is not in a standard unambiguous format"
 msgstr "текстовая строка не относится к стандартному однозначному формату"
 
+#, fuzzy
+msgid "'origin' must be supplied"
+msgstr "должен быть указан 'from'"
+
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "не знаю как конвертировать '%s' в класс \"Date\""
 
@@ -605,6 +609,18 @@ msgstr "нет файлов для ссылки с"
 
 msgid "no files/directory to link to"
 msgstr "нет файлов/папок для ссылки на"
+
+#, fuzzy
+msgid "'x' must be have length 1"
+msgstr "'input' должен иметь длину 1"
+
+#, fuzzy
+msgid "invalid digits"
+msgstr "неправильные 'digits'"
+
+#, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "не могу преобразовать в таблицу"
 
 msgid "'package' must be of length 1"
 msgstr "'пакет' должен быть длиной 1"
