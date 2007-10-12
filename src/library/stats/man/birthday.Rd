@@ -43,8 +43,10 @@ pbirthday(n, classes = 365, coincident = 2)
  preferable.
 }
 \references{
-  Diaconis P, Mosteller F., \dQuote{Methods for studying coincidences}.
-  JASA 84:853-861}
+  Diaconis, P. and Mosteller F. (1989)
+  Methods for studying coincidences.
+  J. American Statistical Association, \bold{84}, 853-861.
+}
 \examples{
 require(graphics)
 

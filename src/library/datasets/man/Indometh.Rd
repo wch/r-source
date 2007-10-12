@@ -33,8 +33,8 @@
 }
 \source{
   Kwan, Breault, Umbenhauer, McMahon and Duggan (1976),
-  \dQuote{Kinetics of Indomethicin absorption, elimination, and
-    enterohepatic circulation in man},
+  Kinetics of Indomethicin absorption, elimination, and
+    enterohepatic circulation in man.
   \emph{Journal of Pharmacokinetics and Biopharmaceutics}, \bold{4},
   255--280.
 

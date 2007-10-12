@@ -9,7 +9,7 @@
 \title{Distances Between European Cities}
 \description{
   The data give the road distances (in km) between 21 cities in Europe.
-  The data are taken from a table in \dQuote{The Cambridge Encyclopaedia}.
+  The data are taken from a table in \emph{The Cambridge Encyclopaedia}.
 }
 \usage{eurodist}
 \format{
