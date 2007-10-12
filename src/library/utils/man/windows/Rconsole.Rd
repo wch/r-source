@@ -57,7 +57,7 @@
 
   If the environment variable \env{R\_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
-  otherwise to the Windows \dQuote{personal}  directory, 
+  otherwise to the Windows \sQuote{personal}  directory, 
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and
   \code{HOMEDRIVE} are both set
   otherwise to the working directory.  This is as described in the file
