@@ -113,7 +113,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 
   For \code{gregexpr} a list of the same length as \code{text} each
   element of which is an integer vector as in \code{regexpr}, except
-  that the starting positions of every match are given.
+  that the starting positions of every (disjoint) match are given.
 
   If in a multi-byte locale the pattern or replacement is not a valid
   sequence of bytes, an error is thrown.  An invalid string in \code{x}
