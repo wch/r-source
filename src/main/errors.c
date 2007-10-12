@@ -120,7 +120,9 @@ void R_CheckUserInterrupt(void)
 #if  ( defined(HAVE_AQUA) || defined(Win32) )
     R_ProcessEvents();
 #else
+/* This breaks Tcl event handling, so commented out for now
     R_PolledEvents();
+    */
     if (R_interrupts_pending)
 	onintr();
 #endif /* Win32 */
