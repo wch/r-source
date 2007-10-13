@@ -7,13 +7,13 @@
 \alias{as.graphicsAnnot}
 \title{Coerce an Object for Graphics Annotation}
 \description{
-  Coerce am \R object into a form suitable for graphics annotation.
+  Coerce an \R object into a form suitable for graphics annotation.
 }
 \usage{
 as.graphicsAnnot(x)
 }
 \arguments{
-  \item{x}{An \R object}
+  \item{x}{an \R object}
 }
 \details{
   Expressions, calls and names (as used by \link{plotmath}) are passed
