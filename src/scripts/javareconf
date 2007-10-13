@@ -65,15 +65,15 @@ else
     if test ! -e "${JAVA_HOME}"; then
 	echo "*** JAVA_HOME is not a valid path, ignoring"
 	JAVA_HOME=
+	JAVA_PATH=${PATH}
+    else
+	## try jre/bin first just in case we don't have full JDK
+	JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${JAVA_HOME}/../bin:${PATH}
     fi
-
-    ## try jre/bin first just in case we don't have full JDK
-    JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${JAVA_HOME}/../bin:${PATH}
 fi
 ## if 'java' is not on the PATH or JAVA_HOME, add some guesses as of
 ## where java could live
-JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk\
-/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
+JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
 
 if test -z "$JAVA"; then
     save_IFS=$IFS; IFS=:
@@ -87,7 +87,7 @@ if test -z "$JAVA"; then
 fi
 
 if test -z "$JAVA"; then
-    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on you PATH or set JAVA_HOME correspondingly"|${SED} -e 'y/~/\n/' >&2
+    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on your PATH or set JAVA_HOME correspondingly"|${SED} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -204,13 +204,14 @@ case "$hostos" in
 
         ## includes consist of two parts - jni.h and machine-dependent jni_md.h
         jinc=''
+	JAVA_CPPFLAGS=''
         for pinc in include ../include jre/include; do
           if test -e "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
         done
         ## only if we get jni.h we can try to find jni_md.h
         if test -n "${jinc}"; then
            JAVA_CPPFLAGS="-I${jinc}"
-           mdinc=''
+           jmdinc=''
            jmdirs=''
 	   ## we are not in configure, so we need to find the OS from R
 	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
@@ -239,6 +240,7 @@ case "$hostos" in
                JAVA_CPPFLAGS="${JAVA_CPPFLAGS} -I${jmdinc}"
              fi
            fi
+	   JAVA_CPPFLAGS=`echo ${JAVA_CPPFLAGS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
         fi
 	;;
 esac
