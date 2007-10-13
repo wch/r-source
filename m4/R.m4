@@ -1199,6 +1199,52 @@ else
 fi
 ])# R_PROG_F77_FLAG
 
+## R_PROG_OBJC_M
+## -------------
+## Check whether we can figure out ObjC Make dependencies.
+AC_DEFUN([R_PROG_OBJC_M],
+[AC_MSG_CHECKING([whether we can compute ObjC Make dependencies])
+AC_CACHE_VAL([r_cv_prog_objc_m],
+[echo "#include <math.h>" > conftest.m
+for prog in "${OBJC} -MM" "${OBJC} -M" "${CPP} -M" "cpp -M"; do
+  if ${prog} conftest.m 2>/dev/null | \
+      grep 'conftest.o: conftest.m' >/dev/null; then
+    r_cv_prog_objc_m="${prog}"
+    break
+  fi
+done])
+if test -z "${r_cv_prog_objc_m}"; then
+  AC_MSG_RESULT([no])
+else
+  AC_MSG_RESULT([yes, using ${r_cv_prog_objc_m}])
+fi
+])# R_PROG_OBJC_M
+
+## R_PROG_OBJC_MAKEFRAG
+## --------------------
+## Generate a Make fragment with suffix rules for the Obj-C compiler.
+AC_DEFUN([R_PROG_OBJC_MAKEFRAG],
+[r_objc_rules_frag=Makefrag.m
+AC_REQUIRE([R_PROG_OBJC_M])
+cat << \EOF > ${r_objc_rules_frag}
+.m.o:
+	$(OBJC) $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) -c $< -o $[@]
+EOF
+if test -n "${r_cv_prog_objc_m}"; then
+  cat << EOF >> ${r_objc_rules_frag}
+.m.d:
+	@echo "making \$[@] from \$<"
+	@${r_cv_prog_objc_m} \$(ALL_CPPFLAGS) $< > \$[@]
+EOF
+else
+  cat << \EOF >> ${r_cc_rules_frag}
+.m.d:
+	@echo > $[@]
+EOF
+fi
+AC_SUBST_FILE(r_objc_rules_frag)
+])# R_PROG_OBJC_MAKEFRAG
+
 ## R_PROG_OBJC_RUNTIME
 ## -------------------
 ## Check for ObjC runtime and style.

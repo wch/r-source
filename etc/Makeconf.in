@@ -93,8 +93,7 @@ ALL_LIBS = $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR)@DYLIB_UNDEFINED_ALLOWED_FALSE@ $(
 
 @r_cc_rules_frag@
 @r_cxx_rules_frag@
-.m.o:
-	$(OBJC) $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) -c $< -o $@
+@r_objc_rules_frag@
 .mm.o:
 	$(OBJCXX) $(ALL_CPPFLAGS) $(ALL_OBJCXXFLAGS) -c $< -o $@
 .M.o:

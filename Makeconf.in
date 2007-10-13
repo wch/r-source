@@ -101,6 +101,7 @@ YACC = @YACC@
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ALL_FFLAGS = $(R_XTRA_FFLAGS) $(MAIN_FFLAGS) $(FFLAGS)
+ALL_OBJCFLAGS = $(R_XTRA_OBJCFLAGS) $(MAIN_OBJCFLAGS) $(OBJCFLAGS)
 ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
@@ -110,11 +111,7 @@ ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 @r_cc_rules_frag@
 .f.o:
 	$(F77) $(ALL_FFLAGS) -c $< -o $@
-
-## mainly for OS X to allow us to include Obj-C/Cocoa code if necessary
-## the (long-term) goal is to integrate the Obj-C R API in the framework
-.m.o:
-	$(OBJC) $(ALL_CPPFLAGS) $(OBJCFLAGS) -c $< -o $@
+@r_objc_rules_frag@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@

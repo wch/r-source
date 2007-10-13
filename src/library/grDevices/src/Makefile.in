@@ -16,7 +16,7 @@ R_INCLUDE_DIR = $(R_HOME)/include
 SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devQuartz.c init.c @BUILD_AQUA_TRUE@ qdBitmap.c qdPDF.c
 SOURCES_M = @BUILD_AQUA_TRUE@ qdCocoa.m
 
-DEPENDS = $(SOURCES_C:.c=.d)
+DEPENDS = $(SOURCES_C:.c=.d) $(SOURCES_M:.m=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_M:.m=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
