@@ -126,7 +126,8 @@ Rboolean QuartzBitmap_DeviceCreate(void *dd,const char *type,const char *file,do
         CGContextTranslateCTM(dev->bitmap,0.0,height*dpi[1]);
         CGContextScaleCTM(dev->bitmap,1.0,-1.0);
         /* Rprintf("dpi=%f/%f, scale=%f/%f, wh=%f/%f\n", dpi[0], dpi[1], dpi[0]/72.0, dpi[1]/72.0, width, height); */
-        if(!(qd=QuartzDevice_Create(dd,dpi[0]/72.0,dpi[1]/72.0,pointsize,width,height,bg,antialias,smooth,
+        if(!(qd=QuartzDevice_Create(dd,dpi[0]/72.0,dpi[1]/72.0,pointsize,width,height,bg,antialias,
+                                       0, /* no flags */
                                        QuartzBitmap_GetCGContext,
                                        NULL,	/* locate */
                                        QuartzBitmap_Close,

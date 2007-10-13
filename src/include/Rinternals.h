@@ -148,6 +148,7 @@ typedef enum {
 
 /* Flags */
 struct sxpinfo_struct {
+    void *isa;
     SEXPTYPE type      :  5;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
 			     * -> warning: `type' is narrower than values
 			     *              of its type

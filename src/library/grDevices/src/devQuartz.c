@@ -18,7 +18,7 @@
  *
  *  Modular Quartz device for Mac OS X
  *
- *  Partialy based on code by Byron Ellis
+ *  Partially based on code by Byron Ellis
  */
 
 #ifdef HAVE_CONFIG_H
@@ -96,13 +96,16 @@ typedef struct QuartzSpecific_s {
                                       i.e. it constitutes a text zoom factor */
     int           dirty;           /* dirtly flag. Not acted upon by the Quartz
                                       core, but QC sets it whenever a drawing
-                                      operation is performed. */
+                                      operation is performed (see detailed
+									  description in R_ext/QuartzDevice.h) */
     int           gstate;          /* gstate counter */
     int           async;           /* asynchronous drawing (i.e. context was
                                       not ready for an operation) */
     int           bg;              /* background color */
-    int           antialias,smooth;/* smoothing flags */
-    int           redraw;          /* redraw flag is set when replaying */
+    int           antialias,smooth;/* smoothing flags (only aa makes any sense) */
+    int           flags;           /* additional QDFLAGs */
+    int           redraw;          /* redraw flag is set when replaying
+		                              and inhibits syncs on Mode */
     CGRect        clipRect;        /* clipping rectangle */
     NewDevDesc    *dev;            /* device structure holding this one */
 
@@ -112,7 +115,7 @@ typedef struct QuartzSpecific_s {
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void*userInfo);
     int          (*locatePoint)(QuartzDesc_t dev, void*userInfo,double*x,double*y);
     void         (*close)(QuartzDesc_t dev, void*userInfo);
-    void         (*newPage)(QuartzDesc_t dev, void*userInfo);
+    void         (*newPage)(QuartzDesc_t dev, void*userInfo, int flags);
     void         (*state)(QuartzDesc_t dev, void*userInfo, int state);
     void*        (*par)(QuartzDesc_t dev, void *userInfo, void *par);
     void         (*sync)(QuartzDesc_t dev, void *userInfo);
@@ -251,21 +254,25 @@ static void   QuartzDevice_Update(QuartzDesc_t desc) {
 
 void QuartzDevice_ReplayDisplayList(QuartzDesc_t desc) {
     QuartzDesc *qd = (QuartzDesc*)desc;
+	int _dirty = qd->dirty;
     qd->redraw = 1;
     if(qd->dev->displayList != R_NilValue)
         GEplayDisplayList((GEDevDesc*)GetDevice(devNumber((DevDesc*)qd->dev)));
     qd->redraw = 0;
+	qd->dirty = _dirty; /* we do NOT change the dirty flag */
 }
 
-void* QuartzDevice_GetSnapshot(QuartzDesc_t desc) {
+void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
     QuartzDesc *qd = (QuartzDesc*)desc;
     GEDevDesc *gd  = (GEDevDesc*)GetDevice(devNumber((DevDesc*)qd->dev));
-    SEXP snap = GEcreateSnapshot(gd);
-    if(R_NilValue == VECTOR_ELT(snap,0)) {
-        warning("No valid display list?");
-        SET_VECTOR_ELT(snap,0,qd->dev->displayList);
-    }
-    return (NULL == snap) ? R_NilValue : snap;
+	SEXP snap;
+	if (last)
+		snap = qd->dev->savedSnapshot;
+	else
+		snap = GEcreateSnapshot(gd);
+    if (R_NilValue == VECTOR_ELT(snap,0))
+		snap = 0;
+    return (snap == R_NilValue) ? 0 : snap;
 }
 
 void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
@@ -278,6 +285,7 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
     qd->redraw = 1;
     GEplaySnapshot((SEXP)snap,gd);
     qd->redraw = 0;
+    qd->dirty = 0; /* we reset the dirty flag */
     UNPROTECT(1);
 }
 
@@ -313,7 +321,7 @@ void* QuartzDevice_Create(
                           CGContextRef (*getCGContext)(QuartzDesc_t dev,void*userInfo), //Get the context for this device
                           int          (*locatePoint)(QuartzDesc_t dev,void*userInfo,double*x,double*y),
                           void         (*close)(QuartzDesc_t dev,void*userInfo),
-                          void         (*newPage)(QuartzDesc_t dev,void*userInfo),
+                          void         (*newPage)(QuartzDesc_t dev,void*userInfo, int flags),
                           void         (*state)(QuartzDesc_t dev,void*userInfo, int state),
                           void*        (*par)(QuartzDesc_t dev,void*userInfo,void*par),
                           void         (*sync)(QuartzDesc_t dev,void*userInfo),
@@ -383,6 +391,7 @@ void* QuartzDevice_Create(
     qd->ps         = ps;
     qd->bg         = bg;
     qd->antialias  = aa;
+    qd->flags      = fs;
     qd->gstate     = 0;
     
     dev->deviceSpecific = qd;
@@ -568,7 +577,7 @@ static void RQuartz_NewPage(CTXDESC) {
         DRAWSPEC;
         ctx = NULL;
         if (xd->newPage)
-            xd->newPage(xd,xd->userInfo);
+            xd->newPage(xd,xd->userInfo, xd->redraw?QNPF_REDRAW:0);
     }
     { /* we have to re-fetch the status *after* newPage since it may have changed it */
         DRAWSPEC;

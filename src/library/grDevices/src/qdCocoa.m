@@ -33,6 +33,7 @@
 #include <R_ext/eventloop.h>
 
 /* --- userInfo structure for the CocoaDevice --- */
+#define histsize 16
 
 struct sQuartzCocoaDevice {
     QuartzDesc_t    qd;
@@ -44,6 +45,10 @@ struct sQuartzCocoaDevice {
     BOOL            closing;
     int             inLocator;
     double          locator[2]; /* locaton click position (x,y) */
+	BOOL            inHistoryRecall;
+    int             inHistory;
+	SEXP            history[histsize];
+	int             histptr;
     const char *title;
 };
 
@@ -71,11 +76,29 @@ struct sQuartzCocoaDevice {
     {
         NSMenu *menu;
         NSMenuItem *menuItem;
-        BOOL soleMenu = (![NSApp mainMenu]);
+        BOOL soleMenu = (![NSApp mainMenu]); /* soleMenu is set if we have no menu at all, so we have to create it. Otherwise we are loading into an application that has already some menu, so we need only our specific stuff. */
         
         if (soleMenu) [NSApp setMainMenu:[[NSMenu alloc] init]];
 
-        if (soleMenu) {
+        if ([[NSApp mainMenu] indexOfItemWithTitle:@"Quartz"]<0) {
+            unichar leftArrow = NSLeftArrowFunctionKey, rightArrow = NSRightArrowFunctionKey;
+            menu = [[NSMenu alloc] initWithTitle:@"Quartz"];
+            menuItem = [[NSMenuItem alloc] initWithTitle:@"Back" action:@selector(historyBack:) keyEquivalent:[NSString stringWithCharacters:&leftArrow length:1]]; [menu addItem:menuItem]; [menuItem release];
+            menuItem = [[NSMenuItem alloc] initWithTitle:@"Forward" action:@selector(historyForward:) keyEquivalent:[NSString stringWithCharacters:&rightArrow length:1]]; [menu addItem:menuItem]; [menuItem release];
+            menuItem = [[NSMenuItem alloc] initWithTitle:@"Clear History" action:@selector(historyFlush:) keyEquivalent:@"L"]; [menu addItem:menuItem]; [menuItem release];
+            menuItem = [[NSMenuItem alloc] initWithTitle:@"History" action:nil keyEquivalent:@""];
+            [menuItem setSubmenu:menu];
+            if (soleMenu)
+                [[NSApp mainMenu] addItem:menuItem];
+            else {
+                int wmi; /* put us just before the Windows menu if possible */
+                if ([NSApp windowsMenu] && ((wmi = [[NSApp mainMenu] indexOfItemWithSubmenu: [NSApp windowsMenu]])>=0))
+                    [[NSApp mainMenu] insertItem: menuItem atIndex: wmi];
+                else
+                    [[NSApp mainMenu] addItem:menuItem];
+            }
+        }
+        if (soleMenu) { /* those should be standard if we have some menu */
             menu = [[NSMenu alloc] initWithTitle:@"Window"];
             
             menuItem = [[NSMenuItem alloc] initWithTitle:@"Minimize" action:@selector(performMiniaturize:) keyEquivalent:@"m"]; [menu addItem:menuItem];
@@ -102,6 +125,10 @@ struct sQuartzCocoaDevice {
         ci->view = self;
         ci->closing = NO;
         ci->inLocator = NO;
+        ci->inHistoryRecall = NO;
+        ci->inHistory = -1;
+        ci->histptr = 0;
+        memset(ci->history, 0, sizeof(ci->history));
     }
     return self;
 }
@@ -122,7 +149,11 @@ struct sQuartzCocoaDevice {
         ci->layer = CGLayerCreateWithContext(ctx, size, 0);
         ci->layerContext = CGLayerGetContext(ci->layer);
         QuartzDevice_ResetContext(ci->qd);
-        QuartzDevice_ReplayDisplayList(ci->qd);
+        if (ci->inHistoryRecall && ci->inHistory >= 0) {
+            QuartzDevice_RestoreSnapshot(ci->qd, ci->history[ci->inHistory]);
+            ci->inHistoryRecall = NO;
+        } else
+            QuartzDevice_ReplayDisplayList(ci->qd);
     } else {
         CGSize size = CGLayerGetSize(ci->layer);
         /* Rprintf(" - have layer %p\n", ci->layer); */
@@ -140,7 +171,11 @@ struct sQuartzCocoaDevice {
                 /* set size */
                 QuartzDevice_SetScaledSize(ci->qd, ci->bounds.size.width, ci->bounds.size.height);
                 /* issue replay */
-                QuartzDevice_ReplayDisplayList(ci->qd);
+                if (ci->inHistoryRecall && ci->inHistory >= 0) {
+                    QuartzDevice_RestoreSnapshot(ci->qd, ci->history[ci->inHistory]);
+                    ci->inHistoryRecall = NO;
+                } else
+                    QuartzDevice_ReplayDisplayList(ci->qd);
             }
         }
     }
@@ -160,6 +195,78 @@ struct sQuartzCocoaDevice {
         if (mf&NSControlKeyMask)
             ci->locator[0] = -1.0;
         ci->inLocator = NO;
+    }
+}
+
+static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
+    SEXP ss = (SEXP) QuartzDevice_GetSnapshot(ci->qd, last);
+    if (ss) { /* ss will be NULL if there is no content, e.g. during the first call */
+        R_PreserveObject(ss);
+        if (ci->inHistory != -1) { /* if we are editing an existing snapshot, replace it */
+            /* Rprintf("(updating plot in history at %d)\n", ci->inHistory); */
+            if (ci->history[ci->inHistory]) R_ReleaseObject(ci->history[ci->inHistory]);
+            ci->history[ci->inHistory] = ss;
+        } else {
+            /* Rprintf("(adding plot to history at %d)\n", ci->histptr); */
+            if (ci->history[ci->histptr]) R_ReleaseObject(ci->history[ci->histptr]);
+            ci->history[ci->histptr++] = ss;
+            ci->histptr &= histsize - 1;
+        }
+    }
+}
+
+- (void)historyBack: (id) sender
+{
+    int hp = ci->inHistory - 1;
+    if (ci->inHistory == -1)
+        hp = (ci->histptr - 1);
+    hp &= histsize - 1;
+    if (hp == ci->histptr || !ci->history[hp])
+        return;	
+    if (QuartzDevice_GetDirty(ci->qd)) /* save the current snapshot if it is dirty */
+        QuartzCocoa_SaveHistory(ci, 0);
+    ci->inHistory = hp;
+    ci->inHistoryRecall = YES;
+    /* Rprintf("(activating history entry %d) ", hp); */
+    /* get rid of the current layer and force a repaint which will fetch the right entry */
+    CGLayerRelease(ci->layer);
+    ci->layer = 0;
+    ci->layerContext = 0;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)historyForward: (id) sender
+{
+    int hp = ci->inHistory + 1;
+    if (ci->inHistory == -1) return;
+    hp &= histsize - 1;
+    if (hp == ci->histptr || !ci->history[hp]) /* we can't really get past the last entry */
+        return;
+    if (QuartzDevice_GetDirty(ci->qd)) /* save the current snapshot if it is dirty */
+        QuartzCocoa_SaveHistory(ci, 0);
+    
+    ci->inHistory = hp;
+    /* Rprintf("(activating history entry %d)\n", hp); */
+    ci->inHistoryRecall = YES;
+    
+    CGLayerRelease(ci->layer);
+    ci->layer = 0;
+    ci->layerContext = 0;
+    [self setNeedsDisplay:YES];
+}	
+
+- (void)historyFlush: (id) sender
+{
+    int i = 0;
+    ci->inHistory = -1;
+    ci->inHistoryRecall = NO;
+    ci->histptr = 0;
+    while (i < histsize) {
+        if (ci->history[i]) {
+            R_ReleaseObject(ci->history[i]);
+            ci->history[i]=0;
+        }
+        i++;
     }
 }
 
@@ -320,11 +427,29 @@ static CGContextRef QuartzCocoa_GetCGContext(QuartzDesc_t dev, void *userInfo) {
 
 static void QuartzCocoa_Close(QuartzDesc_t dev,void *userInfo) {
     QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
-    ci->inLocator = NO; /* cancel any locator events */
+	
+    /* cancel any locator events */
+    ci->inLocator = NO;
     ci->locator[0] = -1.0;
-    if (ci && ci->view && !ci->closing) {
-        [[ci->view window] close];
+	
+    /* release all history objects */
+    ci->inHistory = -1;
+    ci->inHistoryRecall = NO;
+    ci->histptr = 0;
+    {
+        int i = 0;
+        while (i < histsize) {
+            if (ci->history[i]) {
+                R_ReleaseObject(ci->history[i]);
+                ci->history[i] = 0;
+            }
+            i++;
+        }
     }
+	
+    /* close the window (if it's not already closing) */
+    if (ci && ci->view && !ci->closing)
+        [[ci->view window] close];
 }
 
 static int QuartzCocoa_Locator(QuartzDesc_t dev, void* userInfo, double *x, double*y) {
@@ -349,9 +474,13 @@ static int QuartzCocoa_Locator(QuartzDesc_t dev, void* userInfo, double *x, doub
     return (*x >= 0.0)?TRUE:FALSE;
 }
 
-static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo) {
+static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
     QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
     if (!ci) return;
+    if ((flags&QNPF_REDRAW)==0) { /* no redraw -> really new page */
+        QuartzCocoa_SaveHistory(ci, 1);
+        ci->inHistory = -1;
+    }
     if (ci->layer) {
         CGLayerRelease(ci->layer);
         ci->layer = 0;
@@ -382,14 +511,6 @@ static void QuartzCocoa_State(QuartzDesc_t dev, void *userInfo, int state) {
     [[ci->view window] setTitle: title];
 }
 
-static void QuartzCocoa_Deactivate(QuartzDesc_t dev,void *userInfo) {
-    QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
-    if (!ci || !ci->view) return;
-    if (!ci->title) ci->title=strdup("Quartz %d");
-    [[ci->view window] setTitle: [NSString stringWithFormat: [NSString stringWithUTF8String: ci->title],
-        QuartzDevice_DevNumber(dev)]];
-}
-
 Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
                                   Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg,const char *title, double *dpi)
 {
@@ -415,7 +536,8 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,dou
     scalex = dpi[0]/72.0;
     scaley = dpi[1]/72.0;
             
-    qd = QuartzDevice_Create(dd,scalex,scaley,pointsize,width,height,bg,antialias,smooth,
+    qd = QuartzDevice_Create(dd,scalex,scaley,pointsize,width,height,bg,antialias,
+                             QDFLAG_INTERACTIVE, /* we use our own history */
                              QuartzCocoa_GetCGContext,
                              QuartzCocoa_Locator,
                              QuartzCocoa_Close,
