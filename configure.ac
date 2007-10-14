@@ -863,9 +863,9 @@ case "${host_os}" in
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
     if test "${GCC}" = yes; then
-      ## only Apple build of gcc supports (and needs?) -no-cpp-precomp
-      ${CC} --version|grep Apple >/dev/null 2>/dev/null
-      if test $? == 0; then
+      ## only old Apple builds of gcc support (and need?) -no-cpp-precomp
+      APPLEBLD=`${CC} --version|sed -n -e 's:.*Apple.*build \([0-9]\{1,\}\).*:\1:p' 2>/dev/null`
+      if test -n "${APPLEBLD}" -a "${APPLEBLD}" -lt 5300; then
         R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])
       fi
     fi
