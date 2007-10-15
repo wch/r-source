@@ -199,6 +199,27 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	    warn "\n** Rdconv --type '..' : no valid type specified\n";
 	}
 
+	## Remove empty sections.
+	foreach my $key (keys %blocks) {
+	    if($blocks{$key} =~ /^[[:space:]]*$/) {
+		warn "Note: removing empty section \\${key}\n";
+		delete $blocks{$key};
+	    }
+	}
+	my ($section, $title, @nonempty);
+	for($section = 0; $section < $max_section; $section++) {
+	    if($section_body[$section] =~ /^[[:space:]]*$/) {
+		$title = $section_title[$section];
+		warn "Note: removing empty section \\section\{$title\}\n";
+	    }
+	    else {
+		push(@nonempty, $section);
+	    }
+	}
+	@section_title = @section_title[@nonempty];
+	@section_body  = @section_body [@nonempty];
+	$max_section = scalar(@section_title);
+	
 	rdoc2html($htmlfile, $def_encoding)	if $type =~ /html/i;
 	rdoc2txt($txtfile, $def_encoding)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/;
