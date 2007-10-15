@@ -50,6 +50,8 @@ static SEXP AcosSymbol;
 static SEXP AtanSymbol;
 static SEXP GammaSymbol;
 static SEXP LGammaSymbol;
+static SEXP DiGammaSymbol;
+static SEXP TriGammaSymbol;
 static SEXP PsiSymbol;
 
 static Rboolean Initialized = FALSE;
@@ -81,6 +83,8 @@ static void InitDerivSymbols()
     AtanSymbol = install("atan");
     GammaSymbol = install("gamma");
     LGammaSymbol = install("lgamma");
+    DiGammaSymbol = install("digamma");
+    TriGammaSymbol = install("trigamma");
     PsiSymbol = install("psigamma");
 
     Initialized = TRUE;
@@ -245,7 +249,12 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
     else if (fun == AtanSymbol) ans = lang2(AtanSymbol, arg1);
     else if (fun == GammaSymbol)ans = lang2(GammaSymbol, arg1);
     else if (fun == LGammaSymbol)ans = lang2(LGammaSymbol, arg1);
-    else if (fun == PsiSymbol)	ans = lang2(PsiSymbol, arg1);
+    else if (fun == DiGammaSymbol) ans = lang2(DiGammaSymbol, arg1);
+    else if (fun == TriGammaSymbol) ans = lang2(TriGammaSymbol, arg1);
+    else if (fun == PsiSymbol){
+       if (arg2 == R_MissingArg) ans = lang2(PsiSymbol, arg1);
+       else ans = lang3(PsiSymbol, arg1, arg2);
+    }
     else ans = Constant(NA_REAL);
     /* FIXME */
 #ifdef NOTYET
@@ -464,7 +473,7 @@ static SEXP D(SEXP expr, SEXP var)
 	else if (CAR(expr) == LGammaSymbol) {
 	    ans = simplify(TimesSymbol,
 			   PP(D(CADR(expr), var)),
-			   PP_S2(PsiSymbol, CADR(expr)));
+			   PP_S2(DiGammaSymbol, CADR(expr)));
 	    UNPROTECT(2);
 	}
 	else if (CAR(expr) == GammaSymbol) {
@@ -472,8 +481,44 @@ static SEXP D(SEXP expr, SEXP var)
 			   PP(D(CADR(expr), var)),
 			   PP_S(TimesSymbol,
 				expr,
-				PP_S2(PsiSymbol, CADR(expr))));
+				PP_S2(DiGammaSymbol, CADR(expr))));
 	    UNPROTECT(3);
+	}
+	else if (CAR(expr) == DiGammaSymbol) {
+	    ans = simplify(TimesSymbol,
+			   PP(D(CADR(expr), var)),
+			   PP_S2(TriGammaSymbol, CADR(expr)));
+	    UNPROTECT(2);
+	}
+	else if (CAR(expr) == TriGammaSymbol) {
+	    ans = simplify(TimesSymbol,
+			   PP(D(CADR(expr), var)),
+			   PP_S(PsiSymbol, CADR(expr), ScalarInteger(2)));
+	    UNPROTECT(2);
+	}
+	else if (CAR(expr) == PsiSymbol) {
+	    if (length(expr) == 2){
+		ans = simplify(TimesSymbol,
+			       PP(D(CADR(expr), var)),
+			       PP_S(PsiSymbol, CADR(expr), ScalarInteger(1)));
+		UNPROTECT(2);
+	    } else if (TYPEOF(CADDR(expr)) == INTSXP ||
+		       TYPEOF(CADDR(expr)) == REALSXP) {
+		ans = simplify(TimesSymbol,
+			       PP(D(CADR(expr), var)),
+			       PP_S(PsiSymbol,
+				    CADR(expr),
+				    ScalarInteger(asInteger(CADDR(expr))+1)));
+		UNPROTECT(2);
+	    } else {
+		ans = simplify(TimesSymbol,
+			       PP(D(CADR(expr), var)),
+			       PP_S(PsiSymbol,
+				    CADR(expr),
+				    simplify(PlusSymbol, CADDR(expr),
+					     ScalarInteger(1))));
+		UNPROTECT(2);
+	    }
 	}
 
 	else {

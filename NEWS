@@ -38,6 +38,9 @@ NEW FEATURES
         install.packages() now reports if it finds a valid package
         with only a case mismatch in the name.
 
+    o   deriv() now knows the derivatives of digamma(x), trigamma(x)
+	and psigamma(x, deriv) (wrt to x).
+
 
 DEPRECATED & DEFUNCT
 

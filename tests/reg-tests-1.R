@@ -4899,3 +4899,15 @@ stopifnot(Encoding(y) == "unknown") # was UTF-8 in 2.6.0
 x <- unserialize(serialize(x, NULL))
 stopifnot(Encoding(y) == "unknown") # was UTF-8 in 2.6.0
 ##  problems in earlier versions of cache
+
+
+## regression test for adding functions to deriv()
+deriv3(~  gamma(y), namevec="y")
+deriv3(~  lgamma(y), namevec="y")
+# failed in R < 2.7.0
+D(quote(digamma(sin(x))),"x")
+D(quote(trigamma(sin(x))),"x")
+D(quote(psigamma(sin(x))),"x")
+D(quote(psigamma(sin(x), 3)),"x")
+n <- 2L; D(quote(psigamma(sin(x), n)),"x")
+## rest are new

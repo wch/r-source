@@ -19,6 +19,7 @@
 \alias{lfactorial}
 \concept{tetragamma}% existed till 1.9.0
 \concept{pentagamma}
+\concept{polygamma}
 \concept{binomial coefficient}
 \concept{psi function}
 \description{
@@ -66,6 +67,8 @@ lfactorial(x)
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
     \frac{\Gamma'(x)}{\Gamma(x)}}{%
     \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
+  This is often called the \sQuote{polygamma} function, e.g. in
+  Abramowitz and Stegun section 6.4.1.
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and their logarithms.  Note that \code{choose(n,k)} is
@@ -84,7 +87,7 @@ lfactorial(x)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole. (for \code{gamma} and \code{lgamma}.)
+  Wadsworth \& Brooks/Cole. (For \code{gamma} and \code{lgamma}.)
 
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.

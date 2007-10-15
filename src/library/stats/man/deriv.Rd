@@ -68,7 +68,9 @@ deriv3(expr, \dots)
   \code{-}, \code{*}, \code{/} and \code{^}, and the single-variable
   functions \code{exp}, \code{log}, \code{sin}, \code{cos}, \code{tan},
   \code{sinh}, \code{cosh}, \code{sqrt}, \code{pnorm}, \code{dnorm},
-  \code{asin}, \code{acos}, \code{atan}, \code{gamma} and \code{lgamma}.
+  \code{asin}, \code{acos}, \code{atan}, \code{gamma}, \code{lgamma},
+  \code{digamma} and \code{trigamma}, as well as \code{psigamma} for one
+  or two arguments (but derivative only with respect to the first).
   (Note that only the standard normal distribution is considered.)
 }
 \value{
