@@ -3173,7 +3173,7 @@ function(dfile)
     out
 }
 
-print.check_package_description_encoding<-
+print.check_package_description_encoding <-
 function(x, ...)
 {
     if(length(x$non_portable_encoding))
@@ -3195,6 +3195,70 @@ function(x, ...)
         writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
                      ""))
 
+    invisible(x)
+}
+
+###
+
+.check_package_license <-
+function(dfile, dir)
+{
+    dfile <- file_path_as_absolute(dfile)
+    db <- .read_description(dfile)
+
+    if(missing(dir))
+        dir <- dirname(dfile)
+
+    ## Analyze the license information here.
+    ## Cannot easily do this in .check_package_description(), as R CMD
+    ## check's R::Utils::check_package_description() takes any output
+    ## from this as indication of an error.
+
+    ## <FIXME>
+    ## With the newly proposed standard the License specs should be all
+    ## ASCII.  Test for this in .check_package_description() ...
+    ## </FIXME>
+
+    out <- list()
+    if(!is.na(val <- db["License"])) {
+        ## If there is no License field, .check_package_description()
+        ## will give an error.
+        status <- analyze_license(val)
+        ok <- status$is_canonical
+        ## This analyzes the license specification but does not verify
+        ## whether pointers exist, so let us do this here.
+        if(length(pointers <- status$pointers)) {
+            bad_pointers <-
+                pointers[!file.exists(file.path(dir, pointers))]
+            if(length(bad_pointers)) {
+                status$bad_pointers <- bad_pointers
+                ok <- FALSE
+            }
+        }
+        ## Could always return the analysis results and not print them
+        ## if ok, but it seems more standard to only return trouble.
+        if(!ok) 
+            out <- c(list(license = val), status)
+    }
+    
+    class(out) <- "check_package_license"
+    out
+}
+
+print.check_package_license <-
+function(x, ...)
+{
+    if(length(x)
+       && identical(as.logical(Sys.getenv("_R_CHECK_LICENSE_")),
+                    TRUE)) {
+        writeLines(c(gettext("Non-standard license specification:"),
+                     strwrap(x$license, indent = 2, exdent = 2),
+                     if(length(x$bad_pointers))
+                     gettextf("Invalid license file pointers: %s",
+                              paste(x$bad_pointers, collapse = " ")),
+                     gettextf("Verifiable as open source: %s",
+                              x$is_verified)))
+    }
     invisible(x)
 }
 
