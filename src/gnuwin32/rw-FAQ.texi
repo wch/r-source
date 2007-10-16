@@ -1425,7 +1425,9 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 @node How can I compile R from source?, Can I use a fast BLAS?, Building from Source, Building from Source
 @section How can I compile R from source?
 
-See the `R Installation and Administration' manual.
+To build R on 32-bit Windows you will need the tools from 
+@uref{http://www.murdoch-sutherland.com/Rtools/} as well as some
+others.  See the `R Installation and Administration' manual.
 
 It is possible to cross-build R for Windows 64 using @code{binutils} and
 @code{gcc} with the @samp{x86_64-pc-mingw32} target, using suitable
