@@ -48,9 +48,17 @@ BUG FIXES
 	such as aleph (obtained by symbol("\300")) in a UTF-8 locale.
 
     o   An event handling issue caused autorepeat functions to
-        misbehave with tcltk (notably scrollbars). This was due to 
+        misbehave with tcltk (notably scrollbars). This was due to
 	a change intended to allow checking for user interrupts
 	inside tight loops. The change has been backed out.
+
+    o	plot(sin, -5, 5) gives ylab 'sin(x)' again, where it resulted
+	in 'x(x)' in 2.6.0.  Further,  plot(sin)  again plots from
+	[0,1] also in cases where a previously used coordinate system
+	differs.
+
+    o	curve() with unspecified 'from', 'to' and 'xlim' now reuses the
+	previous x limits, and not slightly larger ones.
 
 
 
@@ -770,7 +778,7 @@ BUG FIXES
 	PR#9902 by John Brzustowski.
 
     o	de.restore() gave a spurious warning for matrices (Ben Bolker)
-    
+
     o	plot(fn, xlim=c(a,b)) would not set "from" and "to" properly
 	when plotting a function.  The argument lists to curve() and
 	plot.function() have been modified slightly as part of the
@@ -791,13 +799,13 @@ BUG FIXES
 	assumed that attached environments named "package:foo" were
 	package environments, although misguided users could use such
 	a name in attach().
-	
+
     o	spline() and splinefun() with method = "periodic" could return
     	incorrect results when length(x) was 2 or 3.
-    	
+
     o	getS3method() could fail if the method name contained a regexp
     	metacharacter such as "+".
-    	
+
     o	help(<a character vector>) now uses the name and not the
 	value of the vector unless it has length exactly one, so
 	e.g. help(letters) now gives help on 'letters'.

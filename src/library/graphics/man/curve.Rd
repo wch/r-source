@@ -29,8 +29,9 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE, type = "l",
     \code{plot.function} passes all these to \code{curve}.}
 }
 \description{
-  Draws a curve corresponding to the given function or expression (in
-  \code{x}) over the interval \code{[from,to]}.
+  Draws a curve corresponding to the given function or, for
+  \code{curve()} also an expression (in \code{x}) over the interval
+  \code{[from,to]}.
 }
 \details{
   The evaluation of \code{expr} is at \code{n} points equally spaced
@@ -39,9 +40,13 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE, type = "l",
   \code{x(t)} or \code{expr} (with \code{x} inside) must return a
   numeric of the same length as the argument \code{t} or \code{x}.
 
-  If either of \code{from} or \code{to} is \code{NULL}, it defaults to
-  the corresponding element of \code{xlim}, and \code{xlim} defaults to
-  the x-limits of the current plot.  \code{log} is taken from
+  For \code{curve()}, if either of \code{from} or \code{to} is
+  \code{NULL}, it defaults to the corresponding element of \code{xlim},
+  and \code{xlim} defaults to the x-limits of the current plot.
+  For \code{plot(<function>, ..)}, the defaults for \eqn{(from,to)} are
+  \eqn{(0,1)}.
+
+  \code{log} is taken from
   the current plot only when \code{add} is true, and otherwise
   defaults to \code{""} indicating linear scales on both axes.
 
@@ -54,15 +59,24 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE, type = "l",
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
 \examples{
+plot(qnorm)
+plot(qlogis, main = "The Inverse Logit : qlogis()")
+abline(h=0, v=0:2/2, lty=3, col="gray")
+
+curve(sin, -2*pi, 2*pi)
+curve(tan, main = "curve(tan)  --> same x-scale as previous plot")
+
 op <- par(mfrow=c(2,2))
 curve(x^3-3*x, -2, 2)
 curve(x^2-2, add = TRUE, col = "violet")
 
-plot(cos, xlim = c(-pi,3*pi), n = 1001, col = "blue")
+## simple and sophisticated, quite similar:
+plot(cos, -pi,  3*pi)
+plot(cos, xlim = c(-pi,3*pi), n = 1001, col = "blue", add=TRUE)
 
 chippy <- function(x) sin(cos(x)*exp(-x/2))
 curve(chippy, -8, 7, n=2001)
-curve(chippy, -8, -5)
+plot (chippy, -8, -5)
 
 for(ll in c("","x","y","xy"))
    curve(log(1+x), 1,100, log=ll, sub=paste("log= '",ll,"'",sep=""))
