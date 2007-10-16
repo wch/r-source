@@ -4976,6 +4976,7 @@ $7 = 5
 * Registering native routines::  
 * Creating shared objects::     
 * Interfacing C++ code::        
+* Fortran I/O::                 
 * Handling R objects in C::     
 * Interface functions .Call and .External::  
 * Evaluating R expressions from C::  
@@ -5002,7 +5003,8 @@ vector.
 The function @code{system.time}
 @findex system.time
 is available for timing (although the information available may be
-limited on non-Unix-like platforms).
+limited on non-Unix-like platforms: these days only on the obsolete
+Windows 9x/ME).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
 @section Interface functions @code{.C} and @code{.Fortran}
@@ -5568,7 +5570,7 @@ not libraries) supplied to @code{R CMD SHLIB} will be exported from the
 DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
 
 
-@node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
+@node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
 @section Interfacing C++ code
 @cindex Interfacing C++ code
 @cindex C++ code, interfacing
@@ -5692,7 +5694,27 @@ some @R{} headers as they in turn include C header files that may cause
 conflicts---if this happens, define @samp{NO_C_HEADERS} before including
 the @R{} headers, and include the appropriate headers yourself.
 
-@node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
+@node Fortran I/O, Handling R objects in C, Interfacing C++ code, System and foreign language interfaces
+@section Fortran I/O
+
+We have already warned against the use of C++ iostreams not least
+because output is not guaranteed to appear on the @R{} console, and
+this warning applies equally to Fortran output to units @code{*} and
+@code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
+
+In the past most Fortran compilers implemented I/O on top of the C I/O
+system and so the two interworked successfully.  This was true of
+@command{g77}, but it is less true of @command{gfortran} as used in
+@code{gcc 4.y.x}.  In particular, any package that makes use of
+Fortran I/O will when compiled on Windows interfere with C I/O: when
+the Fortran I/O is initialized (typically when the package is loaded)
+the C @code{stdout} and @code{stderr} are switched to LF line endings.
+The @command{gfortran} I/O system assumes that it has exclusive access
+to @code{stdin}/@code{stdout}/@code{stderr} and so should be avoided
+if at all possible.  Function @code{La_Init} in file
+@file{src/main/lapack.c} shows how to mitigate the worst effects.
+
+@node Handling R objects in C, Interface functions .Call and .External, Fortran I/O, System and foreign language interfaces
 @section Handling R objects in C
 @cindex Handling R objects in C
 
@@ -7438,7 +7460,7 @@ from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
 functions.)
 
 As from @R{} 2.4.0 the accessor functions check that they are being used
-on an appropriate type of @code{SEXP}.  By default an certain amount of
+on an appropriate type of @code{SEXP}.  By default a certain amount of
 misuse is allowed where the internal representation is the same: for
 example @code{LOGICAL} can be used on a @code{INTSXP} and
 @code{SET_VECTOR_ELT} on a @code{STRSXP}.  Strict checking can be
@@ -7449,7 +7471,7 @@ variable @samp{DEFS} on a Unix-alike).
 If efficiency is essential, the macro versions of the accessors can be 
 obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
-that your code compiled without @samp{USE_RINTERNALS} defined as this
+that your code compiled without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
