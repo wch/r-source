@@ -72,7 +72,8 @@ rbeta(n, shape1, shape2, ncp = 0)
   The non-central case is based on the derivation as a Poisson
   mixture of betas (Johnson \emph{et al}, 1995, pp. 502--3).
 
-  The central \code{pbeta} uses a C translation of
+  The central \code{pbeta} uses a C translation (and enhancement for
+  \code{log_p=TRUE}) of
 
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta
@@ -84,11 +85,14 @@ rbeta(n, shape1, shape2, ncp = 0)
   \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)
 
   The non-central \code{pbeta} uses a C translation of
-  
+
   Lenth, R. V. (1987) Algorithm AS226: Computing noncentral beta
-  probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,\cr
-incorporating AS R84 (1990), \emph{Appl. Statist}, \bold{39}, 311--2.
-  
+  probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,
+  incorporating\cr
+  Frick, H. (1990)'s AS R84, \emph{Appl. Statist}, \bold{39}, 311--2,
+  and\cr
+  Lam, M.L. (1995)'s AS R95, \emph{Appl. Statist}, \bold{44}, 551--2.
+
   \code{qbeta} is based on a C translation of
 
   Cran, G. W., K. J. Martin and G. E. Thomas (1977).
@@ -100,7 +104,7 @@ incorporating AS R84 (1990), \emph{Appl. Statist}, \bold{39}, 311--2.
 
   R. C. H. Cheng (1978).
   Generating beta variates with nonintegral shape parameters.
-  \emph{Communications of the ACM}, \bold{21}, 317--322.  
+  \emph{Communications of the ACM}, \bold{21}, 317--322.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
