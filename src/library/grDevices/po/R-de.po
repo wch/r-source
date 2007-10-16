@@ -1,0 +1,292 @@
+# German translation of 
+# src/library/grDevices/po/R-grDevices.pot
+# Copyright (C) 2005-2007 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.6.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-10-15 14:54+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R-Core <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+msgid "'coef' must not be negative"
+msgstr "'coef' darf nicht negativ sein"
+
+msgid "no 'z' matrix specified"
+msgstr "keine 'z' Matrix angegeben"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "ansteigende 'x' und 'y' Werte erwarted"
+
+msgid "no proper 'z' matrix specified"
+msgstr "keine geeignete 'z' Matrix angegeben"
+
+msgid "'bias' must be positive"
+msgstr "'bias' muss positiv sein"
+
+msgid "at least 3 columns needed"
+msgstr "zumindest 3 Spalten benötigt"
+
+msgid "rgb matrix must be numeric"
+msgstr "RGB Matrix muss nummerisch sein"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "RGB Matrix muss 3 Zeilen haben"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "RGB Werte müssen in [0, maxColorValue] liegen"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'start' und 'end' müssen unterschiedlich und in [0, 1] sein"
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' muss ein Skalar oder 'sRGB' sein"
+
+msgid "Color space converter:"
+msgstr "Farbraumkonverter:"
+
+msgid "Reference white:"
+msgstr "Referenz-Weiß:"
+
+msgid "display gamma"
+msgstr "Gamma für Display"
+
+msgid "'from' must be a colorConverter or string"
+msgstr "'from' muss ein Farbkonvertierer oder eine Zeichenkette sein"
+
+msgid "'to' must be a colorConverter or string"
+msgstr "'to' muss ein Farbkonvertierer oder eine Zeichenkette sein"
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr "'from.ref.white' stimmt nicht Überein mit der Definition von"
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr "'to.ref.white' stimmt nicht Überein mit der Definition von"
+
+msgid "color spaces use different reference whites."
+msgstr "Farbräume nutzen unterschiedliches Referenz-Weiß"
+
+msgid "'name' must be a character vector"
+msgstr "'name' muss Charakter-Vektor sein"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "kann Device 1 (Null Device) nicht schließen"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "kann nicht gleichzeitig 'which' und 'device' unterstützen"
+
+msgid "cannot copy from the null device"
+msgstr "kann aus dem Null-Device nicht kopieren"
+
+msgid "cannot copy to the null device"
+msgstr "kann nicht ins Null-Device kopieren"
+
+msgid "cannot copy device to itself"
+msgstr "kann Device nicht auf sich selbst kopieren"
+
+msgid "'device' should be a function"
+msgstr "'device' sollte eine Funktion sein"
+
+msgid "no device to print from"
+msgstr "kein Device um es zu drucken"
+
+msgid "can only print from screen device"
+msgstr "kann nur aus Screen-Device drucken"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "entweder 'width' oder 'heigth' müssen angegeben werden"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "dev.control() ohne geöffnetes Grafik-Device aufgerufen"
+
+msgid "argument is missing with no default"
+msgstr "Argument fehlt ohne Standardwert"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() ohne geöffnetes Grafik-Device aufgerufen"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt' muss ein Charkter, ein Name oder eine exisitierende Liste sein"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "kann nicht existierendes ' %s' nicht zurücksetzen"
+
+msgid "invalid options in '%s'"
+msgstr "ungültige Optionen in '%s'"
+
+msgid "NOT changing"
+msgstr "NICHT ändernd"
+
+msgid "unknown family '%s'"
+msgstr "unbekannte Familie '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "ungültiges 'family' Argument"
+
+msgid "invalid PDF version"
+msgstr "ungültige PDF Version"
+
+msgid "Invalid font type"
+msgstr "ungültiger Zeichensatztyp"
+
+msgid "invalid family name in font specification"
+msgstr "ungültiger Familienname in der Zeichensatzspezifikation"
+
+msgid "invalid metric information in font specification"
+msgstr "ungültige metrische Information in der Zeichensatzspezifikation"
+
+msgid "invalid encoding in font specification"
+msgstr "ungültige Kodierung in der Zeichensatzspezifikation"
+
+msgid "Not a CID font"
+msgstr "Kein CID Zeichensatz"
+
+msgid "invalid CMap name in font specification"
+msgstr "ungültiger CMap Name in der Zeichensatzspezifikation"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "ungültige 'cmapEncoding'  in der Zeichensatzspezifikation"
+
+msgid "invalid PDF resource in font specification"
+msgstr "ungültige PDF Resource  in der Zeichensatzspezifikation"
+
+msgid "Invalid font database name"
+msgstr "Ungültiger Zeichensatzdatenbankname"
+
+msgid "font %s already in use"
+msgstr "Zeichensatz %s bereits benutzt"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "ungültige Argumente in '%s' (muss ein Zeichensatzname sein)"
+
+msgid "unknown font"
+msgstr "unbekannter Zeichensatz"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "Zeichenkodierungen passen nicht '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' muss eine nicht-leere Zeichenkette sein"
+
+msgid "Invalid output format"
+msgstr "ungültiges Ausgabeformat"
+
+msgid "status %d in running command '%s'"
+msgstr "Status %d im laufenden Kommando '%s'"
+
+msgid "no current device to record from"
+msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
+
+msgid "argument is not of class \"recordedplot\""
+msgstr "Argument ist nicht von Klasse \" recordedplot\""
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr "lade Snapshot einer Version vor R-2.0.0"
+
+msgid "loading snapshot from different R version"
+msgstr "lade Snapshot einer anderen R Version"
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' muss ein \"range\" sein, deshalb von Länge 2"
+
+msgid "invalid first argument"
+msgstr "ungültiges erstes Argument"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "Längen von 'x' nud 'y' unterscheiden sich"
+
+msgid "invalid first argument [bad language object]"
+msgstr "ungültiges erstes Argument [schlechtes Sprachobjekt]"
+
+msgid "at least 2 columns needed"
+msgstr "mindestens 2 Spalten nötig"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "Längen von 'x', 'y' und 'z' unterscheiden sich"
+
+msgid "'file' is missing with no default"
+msgstr "'file' fehlt ohne Standardwert"
+
+msgid "sorry, 'gs' cannot be found"
+msgstr "'gs' kann leider nicht gefunden werden"
+
+msgid "device '%s' is not available"
+msgstr "Device '%s' steht nicht zur Verfügung"
+
+msgid "Available devices are %s"
+msgstr "Verfügbar Devices sind %s"
+
+msgid "quartz() device interactivity reduced without an event loop manager"
+msgstr "quartz() Device mit reduzierter Interaktivität ohne Event-Loop Manager"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "ungültiger Quartz Zeichensatz: müssen 4 Zeichenketten sein"
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr "ungültige Argumente in quartzFonts (muss ein Zeichensatzname sein)"
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr "ungültige Argumente in quartzFonts (benötigt benannte Argumente)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "'res' muss angegeben werden, außer 'units = \"px\"'"
+
+msgid "invalid X11 font specification:"
+msgstr "ungültige X11 Zeichensatzspezifikation"
+
+msgid "can only bring windows devices to the front"
+msgstr "kann nur windows-Devices nach Vorne bringen"
+
+msgid "no such device"
+msgstr "kein solches Device"
+
+msgid "can only copy from 'windows' devices"
+msgstr "kann nur aus 'windows' Devices kopieren"
+
+msgid "subscript out of range"
+msgstr "Index außerhalb des Bereichs"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "ungültiger Windows-Zeichensatz: muss einzelner Zeichensatzname sein"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "ungültige Argumente in 'windowsFonts' (muss ein Zeichensatzname sein)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "ungültige Argumente in 'windowsFonts' (benannte Argumente nötig)"
+
+msgid        "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0]    "ungültiger Argumentname %s in '%s'"
+msgstr[1]    "ungültige Argumentnamen %s in '%s'"
+
+msgid        "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0]    "unterscheidet sich zwischen neu und vorhergehend"
+msgstr[1]    "unterscheiden sich zwischen neu und vorhergehend"
+
+msgid        "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0]    "%d x Wert <= 0 ausgelassen in logarithmischem Plot"
+msgstr[1]    "%d x Werte <= 0 ausgelassen in logarithmischem Plot"
+
+msgid        "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0]    "%d y Wert <= 0 ausgelassen in logarithmischem Plot"
+msgstr[1]    "%d y Werte <= 0 ausgelassen in logarithmischem Plot"
+
+msgid        "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0]    "%d z Wert <= 0 ausgelassen in logarithmischem Plot"
+msgstr[1]    "%d z Werte <= 0 ausgelassen in logarithmischem Plot"

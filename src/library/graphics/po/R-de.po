@@ -1,0 +1,397 @@
+# German translation of 
+# src/library/graphics/po/R-graphics.pot
+# Copyright (C) 2005-2007 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.6.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-10-12 14:45+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R-Core <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+
+msgid "'a' is overridden by 'reg'"
+msgstr "'a' wird überschrieben durch 'reg'"
+
+msgid "only using the first two of"
+msgstr "nutze nur die ersten beiden aus"
+
+msgid "regression coefficients"
+msgstr "Regressionskoeffizienten"
+
+msgid "'a' and 'b' are overridden by 'coef'"
+msgstr "'a' und 'b' werden überschrieben durch 'coef'"
+
+msgid "'x' must be a 2-d contingency table"
+msgstr "'x' muss eine 2-D Kontingenztafel sein"
+
+msgid "all entries of 'x' must be nonnegative and finite"
+msgstr "alle Einträge in 'x' müssen nicht-negativ und endlich sein"
+
+msgid "at least one entry of 'x' must be positive"
+msgstr "midestens ein Eintrag in 'x' muss positiv sein"
+
+msgid "incorrect 'col': must be length 2"
+msgstr "ungültiger Wert für 'col': muss Länge 2 haben"
+
+msgid "'side' must be in {1:4}"
+msgstr "'side' muss in {1:4} liegen"
+
+msgid "invalid 'axp'"
+msgstr "ungültiger Wert für 'axp'"
+
+msgid "invalid 'log'"
+msgstr "ungültiger Wert für 'axp'"
+
+msgid "invalid positive 'axp[3]'"
+msgstr "ungültiger positiver Wert für 'axp[3]'"
+
+msgid "invalid 'usr'"
+msgstr "ungültiger Wert für 'usr'"
+
+msgid "'height' must be a vector or a matrix"
+msgstr "'height' muss ein Vektor oder eine Matrix sein"
+
+msgid "Cannot use shading lines in bars when log scale is used"
+msgstr "Kann keine Schattierungslinien nutzen, wenn eine Log-Skala benutzt wird"
+
+msgid "log scale error: at least one 'height + offset' value <= 0"
+msgstr "Log-Skalen-Fehler: mindestens ein Wert 'height + offset' <= 0"
+
+msgid "log scale error: 'xlim' <= 0"
+msgstr "Log-Skalen-Fehler: 'xlim' <= 0"
+
+msgid "log scale error: 'ylim' <= 0"
+msgstr "Log-Skalen-Fehler: 'ylim' <= 0"
+
+msgid "incorrect number of names"
+msgstr "falsche Anzahl von Namen"
+
+msgid "invalid first argument"
+msgstr "ungültiges erstes Argument"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' fehlt oder fehlerhaft"
+
+msgid "'at' must have same length as 'z$n', i.e."
+msgstr "'at' muss dieselbe Länge wie 'z$n' haben, z. B."
+
+msgid "invalid boxplot widths"
+msgstr "unzulässige Boxplot-Breite"
+
+msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
+msgstr "einige notches liegen außerhalb der hinges ('box'): evtl. notch=FALSE setzen"
+
+msgid "'formula' should specify exactly two variables"
+msgstr "'formula' sollte genau zwei Variablen spezifizieren"
+
+msgid "dependent variable should be a factor"
+msgstr "abhängige Variable sollte ein Faktor sein"
+
+msgid "explanatory variable should be numeric"
+msgstr "erklärende Variable sollte nummerisch sein"
+
+msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
+msgstr "Y-Achse ist eine kumulative Wahscheinlichkeitsskala, 'ylim' muss in [0,1] sein"
+
+msgid "no 'z' matrix specified"
+msgstr "keine 'z' Matrix spezifiziert"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "ansteigende 'x' und 'y' Werte erwartet"
+
+msgid "no proper 'z' matrix specified"
+msgstr "keine geeignete 'z' Matrix spezifiziert"
+
+msgid "invalid conditioning formula"
+msgstr "ungeeignete bedingende Formel"
+
+msgid "incompatible variable lengths"
+msgstr "unpassende Variablenlängen"
+
+msgid "'number' must be integer >= 1"
+msgstr "'number' muss eine ganze Zahl >= 1 sein"
+
+msgid "'overlap' must be < 1 (and typically >= 0)."
+msgstr "'overlap' muss , 1 (und typisch >= 0 ) sein"
+
+msgid "invalid 'given.values'"
+msgstr "ungültige 'given.values'"
+
+msgid "rows * columns too small"
+msgstr " Zeilen * Spalten zu klein"
+
+msgid "Missing rows"
+msgstr "fehlende Zeilen"
+
+msgid "'expr' must be a function or an expression containing 'x'"
+msgstr "'expr' muss eine Funktion sein oder ein Ausdruck, der 'x' enthält"
+
+msgid "'from' and 'to' must be > 0 with log=\"x\""
+msgstr "'from' und 'to' müssen > 0 sein mit log=\"x\""
+
+msgid "wrong method"
+msgstr "falsche Methode"
+
+msgid "invalid specification of 'breaks'"
+msgstr "ungültige Spezifikation von 'breaks'"
+
+msgid "'x' must be a numeric vector or matrix"
+msgstr "'x' muss ein nummerischer Vektor oder eine Matrix sein"
+
+msgid "'x' must be an array"
+msgstr "'x' muss ein Array sein"
+
+msgid "'x' must be 2- or 3-dimensional"
+msgstr "'x' muss 2- oder 3-dimensional sein"
+
+msgid "table for each stratum must be 2 by 2"
+msgstr "Tabelle für jedes Stratum muss 2x2 sein"
+
+msgid "'conf.level' must be a single number between 0 and 1"
+msgstr "'conf.level' muss eine einzelne Zahl aus (0, 1) sein"
+
+msgid "incorrect 'margin' specification"
+msgstr "ungültige Spezifikation von 'margin'"
+
+msgid "incorrect geometry specification"
+msgstr "ungültige Spzifikation der Geometrie"
+
+msgid "'x' must be numeric"
+msgstr "'x' muss nummerisch sein"
+
+msgid "'nclass' not used when 'breaks' is specified"
+msgstr "'nclass' wird nicht benutzt, wenn 'breaks' spezifizert werden"
+
+msgid "'include.lowest' ignored as 'breaks' is not a vector"
+msgstr "'include.lowest' ignoriert, da 'breaks' kein Vektor ist"
+
+msgid "unknown 'breaks' algorithm"
+msgstr "unbekannter Algorithmus für 'breaks'"
+
+msgid "invalid number of 'breaks'"
+msgstr "unzulässige Anzahle für 'breaks'"
+
+msgid "hist.default: pretty() error, breaks="
+msgstr "hist.default: Fehler in pretty(), breaks="
+
+msgid "'breaks' are not strictly increasing"
+msgstr "'breaks' sind nicht streng monoton steigend"
+
+msgid "'probability' is an alias for '!freq', however they differ."
+msgstr "'probability' ist ein Alias für '!freq', aber sie unterschieden sich"
+
+msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
+msgstr "negative 'counts'. Interner Fehler im C-Kode für\"bincount\""
+
+msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
+msgstr "einige 'x' nicht gezählt: evtl. überdecken die 'breaks' nicht den gesamten Bereich von 'x'"
+
+msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+msgstr "Die FLÄCHEN im Plot sind falsch -- lieber freq=FALSE benutzen"
+
+msgid "'x' is wrongly structured"
+msgstr "'x' hat falsche Struktur"
+
+msgid "argument must be matrix-like"
+msgstr "Argument muss ähnlich einer Matrix sein"
+
+msgid "'x' and 'y' values must be finite and non-missing"
+msgstr "'x' und 'y' Werte müssen endlich und nicht fehlend sein"
+
+msgid "'z' must be a matrix"
+msgstr "'z' muss eine Matrix sein"
+
+msgid "invalid z limits"
+msgstr "unzulässige Grenzen für z"
+
+msgid "must have one more break than colour"
+msgstr "es muss eine Stützstelle mehr gebe als Farben"
+
+msgid "breaks must all be finite"
+msgstr "alle Stützstellen müssen endlich sein"
+
+msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
+msgstr "Dimensionen von z sind nicht length(x)(-1) mal length(y)(-1)"
+
+msgid "'respect' must be logical or matrix with same dimension as 'mat'"
+msgstr "'respect' muss boolesch oder eine Matrix mit dem selben Format wie 'mat' sein"
+
+msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n ="
+msgstr "Die Layout-Matrix muss zumindest eine Referenz auf\njeden der Werte {1..n} enthalten: hier n ="
+
+msgid "invalid title"
+msgstr "unzulässiger Titel"
+
+msgid "'legend' is of length 0"
+msgstr "'legend' hat Länge 0"
+
+msgid "invalid coordinate lengths"
+msgstr "unzulässige Koordinatenlängen"
+
+msgid "'text.width' must be numeric, >= 0"
+msgstr "'text.width' muss nummerisch >= 0 sein"
+
+msgid "horizontal specification overrides: Number of columns :="
+msgstr "horizontale Spezifikation überschreibt Anzahl der Spalten ;="
+
+msgid "not using pch[2..] since pch[1] has multiple chars"
+msgstr "nutze pch[2..] nicht, da pch[1] mehrere Zeichen enthält"
+
+msgid "must specify at least one of 'x' and 'y'"
+msgstr "entweder 'x' oder 'y' muss mindestens angegeben werden"
+
+msgid "'x' and 'y' must have same number of rows"
+msgstr "'x' und 'y' müssen gleiche Zeilenzahl haben"
+
+msgid "'x' and 'y' must have only 1 or the same number of columns"
+msgstr "'x' und 'y' müssen entweder 1 oder die selbe Spaltenanzahl haben"
+
+msgid "missing values in contingency table"
+msgstr "fehlende Werte in Kontingenztabelle"
+
+msgid "'x' must not have 0 dimensionality"
+msgstr "'x' darf nicht Dimension 0 haben"
+
+msgid "extra argument(s) %s will be disregarded"
+msgstr "zusätzliche(s) Argument(e) %s werden verworfen"
+
+msgid "invalid 'shade' specification"
+msgstr "unzulässige spezifikation für 'shade'"
+
+msgid "length of 'sort' does not conform to 'dim(x)'"
+msgstr "Länge von 'sort' passt nicht zu 'dim(x)'"
+
+msgid "non-numeric argument to 'pairs'"
+msgstr "nicht-nummerisches Argument für 'pairs'"
+
+msgid "only one column in the argument to 'pairs'"
+msgstr "nur eine Spalte im Argument zu 'pairs'"
+
+msgid "the 'panel' function made a new plot"
+msgstr "die 'panel' Funktion hat neuen Plot erstellt"
+
+msgid "'x' values must be positive."
+msgstr "'x' Werte müssen positiv sein."
+
+msgid "invalid table 'x'"
+msgstr "ungültige Tabelle 'x'"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "kann nicht mehr als eine 'x' Koordinate behandeln"
+
+msgid "must have a response variable"
+msgstr "muss eine Antwortvariable besitzen"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' auf etwas anderes als einen Dataframe angewendet"
+
+msgid "'y' must be a numeric vector"
+msgstr "'z' muss nummerischer Vektor sein"
+
+msgid "'x' must be a data frame"
+msgstr "'x' muss Dataframe sein"
+
+msgid "all columns/components of 'x' must be factors"
+msgstr "alle Spalten/Komponenten von 'x' müssen Faktoren sein"
+
+msgid "some levels of the factors are empty"
+msgstr "einige Faktorstufen sind leer"
+
+msgid "'x' must be a dataframe or a formula"
+msgstr "'x' muss entweder Dataframe oder Formel sein"
+
+msgid "a variable in 'y' is not numeric"
+msgstr "a variable in 'y' ist nicht nummerisch"
+
+msgid "there must be at least one numeric variable!"
+msgstr "es muss zumindest eine nummerische Varable vorhanden sein!"
+
+msgid "cannot hatch with logarithmic scale active"
+msgstr "bei logarithmischer Skala hatch nicht möglich"
+
+msgid "invalid rectangle specification"
+msgstr "unzulässige Spezifikation des Rechecks"
+
+msgid "some values will be clipped"
+msgstr "einige Werte werden abgeschnitten"
+
+msgid "invalid screen number"
+msgstr "ungültige Screennummer"
+
+msgid "'figs' must be a vector or a matrix with 4 columns"
+msgstr "'figs' muss ein Vektor oder eine Matrix mit 4 Spalten sein"
+
+msgid "'figs' must specify at least one screen"
+msgstr "'figs' muss zumindet einen Screen angeben"
+
+msgid "a 2-way table has to be specified"
+msgstr "eine 2-Wege-Tafel muss angegeben werden"
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr "x-Achse ist eine kumulative Wahrscheinlichkeitsskala, 'xlim' muss in [0, 1] liegen"
+
+msgid "'x' must be a matrix or a data frame"
+msgstr "'x' muss eine Matrix oder ein Dataframe sein"
+
+msgid "data in 'x' must be numeric"
+msgstr "die Daten in 'x' müssen nummerisch sein"
+
+msgid "nrow * ncol <  number of observations"
+msgstr "nrow * ncol < Anzahl der Beobachtungen"
+
+msgid "labels do not make sense for a single location"
+msgstr "Labels haben keine Sinn für eine einzelne Position"
+
+msgid "'locations' must be a 2-column matrix."
+msgstr "'locations' muss eine 2-spaltige Matrix sein"
+
+msgid "number of rows of 'locations' and 'x' must be equal."
+msgstr "Anzahl der Zeilen von 'locations' und 'x' müssen gleich sein"
+
+msgid "length of 'angles' must equal 'ncol(x)'"
+msgstr "Länge von 'angels' muss 'ncol(x)' entsprechen"
+
+msgid "no non-missing values"
+msgstr "ausschließlich fehlende Werte"
+
+msgid "'scale' must be positive"
+msgstr "'scale' muss positiv sein"
+
+msgid "invalid plotting method"
+msgstr "ungültige Plot-Methode"
+
+msgid "'at' must have length equal to the number %d of groups"
+msgstr "'at' muss die selbe Länge haben wie die Anzahl %d der Gruppen"
+
+msgid "'number' must have same length as 'x' and 'y'"
+msgstr "'number' muss die selbe Länge haben wie 'x' und 'y'"
+
+msgid "exactly one symbol type must be specified"
+msgstr "genau ein Symboltyp muss angegeben werden"
+
+msgid "x log scale:  xinch() is non-sense"
+msgstr "x ist logarithmische Skala: xinch() ergibt keinen Sinn"
+
+msgid "y log scale:  yinch() is non-sense"
+msgstr "y ist logarithmische Skala: yinch() ergibt keinen Sinn"
+
+msgid "log scale:  xyinch() is non-sense"
+msgstr "logarithmische Skala: xyinch ergibt keinen Sinn"
+
+msgid        "Outlier (%s) in boxplot %d is not drawn"
+msgid_plural "Outliers (%s) in boxplot %d are not drawn"
+msgstr[0]    "Ausreißer (%s) im Boxplot %d wird nicht gezeichnet"
+msgstr[1]    "Ausreißer (%s) im Boxplot %d wird nicht gezeichnet"
+
+msgid        "argument %s is not made use of"
+msgid_plural "arguments %s are not made use of"
+msgstr[0]    "Argument (%s) wird nicht benutzt"
+msgstr[1]    "Argumente (%s) werden nicht benutzt"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-09-19 09:17+0100\n"
+"POT-Creation-Date: 2007-10-16 09:28+0100\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -139,11 +139,11 @@ msgstr "Registrazione endocing device non riuscita"
 msgid "Object .ps.prolog is not a character vector"
 msgstr "L'ogetto .ps.prolog non è un vettore di caratteri"
 
-#: devPS.c:2646 devPS.c:5737 devQuartz.c:1402 devWindows.c:707
+#: devPS.c:2646 devPS.c:5737 devQuartz.c:1402 devWindows.c:722
 msgid "Invalid line end"
 msgstr "'line end' non valida"
 
-#: devPS.c:2665 devPS.c:5756 devQuartz.c:1422 devWindows.c:720
+#: devPS.c:2665 devPS.c:5756 devQuartz.c:1422 devWindows.c:735
 msgid "Invalid line join"
 msgstr "'line join' non valida"
 
@@ -196,7 +196,7 @@ msgstr "postscript(print.it=TRUE) usato con un comando print vuoto"
 msgid "invalid page type '%s' (postscript)"
 msgstr "tipo pagina '%s' non valida (postscript)"
 
-#: devPS.c:3348 devPS.c:4213 devWindows.c:2200
+#: devPS.c:3348 devPS.c:4213 devWindows.c:2215
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -392,12 +392,12 @@ msgstr "Impossibile caricare o trovare il font PDF"
 msgid "Failed to find or load PDF CID font"
 msgstr "Impossibile caricare o trovare il font PDF CID"
 
-#: devPS.c:7006 devPS.c:7010 devPS.c:7165 devPS.c:7169
+#: devPS.c:7006 devPS.c:7010 devPS.c:7166 devPS.c:7170
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "parametro 'family' non valido in %s"
 
-#: devPS.c:7029 devPS.c:7181
+#: devPS.c:7029 devPS.c:7182
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "parametro 'fonts' non valido in %s"
@@ -410,7 +410,7 @@ msgstr "impossibile aprire dispositivo PostScript"
 msgid "unable to start device xfig"
 msgstr "impossibile aprire dispositivo xfig"
 
-#: devPS.c:7199
+#: devPS.c:7200
 msgid "unable to start device pdf"
 msgstr "impossibile aprire dispositivo pdf"
 
@@ -430,7 +430,7 @@ msgstr "'width' o 'height' non validi in quartz"
 msgid "unable to start device Quartz"
 msgstr "impossibile aprire device Quartz"
 
-#: devQuartz.c:1024 devWindows.c:540
+#: devQuartz.c:1024 devWindows.c:555
 msgid "Invalid font specification"
 msgstr "Specificazione font non valida"
 
@@ -442,156 +442,156 @@ msgstr "Famiglia font non presente nel database font di Quartz"
 msgid "Quartz device not available on this platform"
 msgstr "Il dispositivo Quartz non è disponibile per questa piattaforma"
 
-#: devWindows.c:272 devWindows.c:304 devWindows.c:369
+#: devWindows.c:272 devWindows.c:316 devWindows.c:383
 msgid "Not enough memory to copy graphics window"
 msgstr "Non c'è abbastanza memoria per copiare la finestra grafica"
 
-#: devWindows.c:277 devWindows.c:309 devWindows.c:374
+#: devWindows.c:277 devWindows.c:321 devWindows.c:388
 msgid "No device available to copy graphics window"
 msgstr "Nessun dispositivo disponibile per copiarci la finestra grafica"
 
-#: devWindows.c:579
+#: devWindows.c:594
 msgid "Font family not found in Windows font database"
 msgstr "Famiglia font non trovata nel databse font di Windows"
 
-#: devWindows.c:996
+#: devWindows.c:1011
 msgid "plot history seems corrupted"
 msgstr "plot history sembra essere danneggiato"
 
-#: devWindows.c:1003
+#: devWindows.c:1018
 msgid "no plot history!"
 msgstr "nessuna plot history!"
 
-#: devWindows.c:1713
+#: devWindows.c:1728
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "nome file troppo lungo in %s()"
 
-#: devWindows.c:1717 devWindows.c:1746
+#: devWindows.c:1732 devWindows.c:1761
 msgid "Unable to load Rbitmap.dll"
 msgstr "Impossibile caricare Rbitmap.dll"
 
-#: devWindows.c:1722 devWindows.c:1755
+#: devWindows.c:1737 devWindows.c:1770
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: devWindows.c:1730 devWindows.c:1758
+#: devWindows.c:1745 devWindows.c:1773
 msgid "Unable to allocate bitmap"
 msgstr "Impossibile allocare bitmap"
 
-#: devWindows.c:1736 devWindows.c:1764 devWindows.c:2053
+#: devWindows.c:1751 devWindows.c:1779 devWindows.c:2068
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Impossibile aprire file '%s' in scrittura"
 
-#: devWindows.c:1752
+#: devWindows.c:1767
 msgid "filename too long in jpeg() call"
 msgstr "nome file troppo lungo in jpeg()"
 
-#: devWindows.c:1782
+#: devWindows.c:1797
 msgid "filename too long in win.metafile() call"
 msgstr "nome file troppo lungo in win.metafile()"
 
-#: devWindows.c:1792
+#: devWindows.c:1807
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr "Impossibile aprire metafile '%s' in scrittura"
 
-#: devWindows.c:1794
+#: devWindows.c:1809
 msgid "Unable to open clipboard to write metafile"
 msgstr "Impossibile aprire appunti per scrittura metafile"
 
-#: devWindows.c:1804
+#: devWindows.c:1819
 msgid "can't find any fonts"
 msgstr "non trovo alcun font"
 
-#: devWindows.c:2002
+#: devWindows.c:2017
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Memoria insufficiente per resize. Chiudo il dispositivo"
 
-#: devWindows.c:2009
+#: devWindows.c:2024
 #, fuzzy
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Memoria insufficiente per resize. Chiudo il dispositivo"
 
-#: devWindows.c:2038
+#: devWindows.c:2053
 msgid "A clipboard metafile can store only one figure."
 msgstr "Gli appunti possono memorizzare una sola figura."
 
-#: devWindows.c:2044
+#: devWindows.c:2059
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:2573 devWindows.c:3159
+#: devWindows.c:2588 devWindows.c:3174
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:2820
+#: devWindows.c:2835
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'opzione 'windowsTimeouts' dovrebbe essere un intero"
 
-#: devWindows.c:2842
+#: devWindows.c:2857
 msgid "invalid device number in savePlot"
 msgstr "numero dispositivo non valido in savePlot"
 
-#: devWindows.c:2844
+#: devWindows.c:2859
 msgid "invalid device in savePlot"
 msgstr "dispositivo non valido in savePlot"
 
-#: devWindows.c:2847
+#: devWindows.c:2862
 msgid "invalid filename argument in savePlot"
 msgstr "nome file non valido in savePlot"
 
-#: devWindows.c:2851
+#: devWindows.c:2866
 msgid "invalid type argument in savePlot"
 msgstr "argomento type non valido in savePlot"
 
-#: devWindows.c:2874
+#: devWindows.c:2889
 msgid "unknown type in savePlot"
 msgstr "type sconosciuto in savePlot"
 
-#: devWindows.c:2946 devWindows.c:2982 devWindows.c:3014 devWindows.c:3049
+#: devWindows.c:2961 devWindows.c:2997 devWindows.c:3029 devWindows.c:3064
 msgid "processing of the plot ran out of memory"
 msgstr "mancanza di memoria nel processare il grafico"
 
-#: devWindows.c:2962 devWindows.c:2995 devWindows.c:3028
+#: devWindows.c:2977 devWindows.c:3010 devWindows.c:3043
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossibile caricare Rbitmap.dll"
 
-#: devWindows.c:3034
+#: devWindows.c:3049
 msgid "Impossible to open "
 msgstr "Impossibile aprire "
 
-#: devWindows.c:3075
+#: devWindows.c:3090
 msgid "invalid width or height in devWindows"
 msgstr "'width' o 'height' non validi in devWindows"
 
-#: devWindows.c:3080
+#: devWindows.c:3095
 msgid "invalid value of 'recording' in devWindows"
 msgstr "valore 'recording' non valido in devWindows"
 
-#: devWindows.c:3084
+#: devWindows.c:3099
 msgid "invalid value of 'resize' in devWindows"
 msgstr "valore di 'resize' non valido in devWindows"
 
-#: devWindows.c:3092
+#: devWindows.c:3107
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "valore di 'canvas' non valido in devWindows"
 
-#: devWindows.c:3103
+#: devWindows.c:3118
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "valore di 'buffered' non valido in devWindows"
 
-#: devWindows.c:3109
+#: devWindows.c:3124
 msgid "invalid value of 'bg' in devWindows"
 msgstr "valore di 'bg' non valido in devWindows"
 
-#: devWindows.c:3131
+#: devWindows.c:3146
 msgid "unable to start device devWindows"
 msgstr "impossibile aprire devWindows"
 
-#: devWindows.c:3204
+#: devWindows.c:3219
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'uso ricorsivo di getGraphicsEvent non è ammesso"
