@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 11:54\n"
+"POT-Creation-Date: 2007-10-16 09:28\n"
 "PO-Revision-Date: 2007-09-11 16:32+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -226,9 +226,6 @@ msgstr " デバイス '%s' は有効ではありません "
 msgid "Available devices are %s"
 msgstr " 利用可能なデバイスは %s です "
 
-msgid "quartz() device interactivity reduced without an event loop manager"
-msgstr " quartz() デバイスは event loop manager なしに対話的に減らされました "
-
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr " 不正な Quartz font です: 4 つの文字列でなければなりません "
 
@@ -285,3 +282,7 @@ msgstr[0] " %d 個の正でない y の値が対数プロットから除かれ�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] " %d 個の正でない x の値が対数プロットから除かれました "
+
+#~ msgid "quartz() device interactivity reduced without an event loop manager"
+#~ msgstr ""
+#~ " quartz() デバイスは event loop manager なしに対話的に減らされました "
