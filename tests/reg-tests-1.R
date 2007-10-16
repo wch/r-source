@@ -4891,6 +4891,9 @@ x <- structure(list(2), class="foo")
 str(x)
 ## gave infinite recursion < 2.6.0
 
+curve(sin, -2*pi, 3*pi); pu1 <- par("usr")[1:2]
+curve(cos); stopifnot(all.equal(par("usr")[1:2], pu1))
+## failed in R <= 2.6.0
 
 ## tests of side-effects with CHARSXP caching
 x <- y <- "abc"

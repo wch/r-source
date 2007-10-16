@@ -28,9 +28,12 @@ curve <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, type="l",
 	expr <- sexpr
 	if(is.null(ylab)) ylab <- deparse(sexpr)
     }
-    if (is.null(xlim)) delayedAssign("lims", {pu <- par("usr")[1:2]
-                                 if(par("xlog")) 10^pu else pu})
-        else lims <- xlim
+    if (is.null(xlim))
+	delayedAssign("lims",
+		  {pu <- par("usr")[1:2]
+		   ll <- if(par("xlog")) 10^pu else pu
+		   if(par("xaxs") == "r") extendrange(ll, f = -1/27) else ll })
+    else lims <- xlim
     if(is.null(from)) from <- lims[1]
     if(is.null(to))     to <- lims[2]
     lg <-
