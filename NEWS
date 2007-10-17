@@ -114,6 +114,9 @@ BUG FIXES
 	character strings, which made it impossible to specify symbols
 	such as aleph (obtained by symbol("\300")) in a UTF-8 locale.
 
+    o   An event handling issue caused autorepeat functions to
+        misbehave with tcltk (notably scrollbars). 
+
     o	plot(sin, -5, 5) gives ylab 'sin(x)' again, where it resulted
 	in 'x(x)' in 2.6.0.  Further,  plot(sin)  again plots from
 	[0,1] also in cases where a previously used coordinate system

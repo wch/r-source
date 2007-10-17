@@ -661,19 +661,32 @@ SEXP dotTclcallback(SEXP args)
 static void (* OldHandler)(void);
 static int OldTimeout;
 static int Tcl_loaded = 0;
+static int Tcl_lock = 0; /* reentrancy guard */
 
-static void TclHandler(void)
+static void TclSpinLoop(void *data)
 {
     while (Tcl_DoOneEvent(TCL_DONT_WAIT))
 	;
+}
+
+static void TclHandler(void)
+{
+    if (!Tcl_lock) {
+	Tcl_lock = 1;
+	(void) R_ToplevelExec(TclSpinLoop, NULL);
+	Tcl_lock = 0;
+    }
     /* Tcl_ServiceAll is not enough here, for reasons that escape me */
     OldHandler();
 }
 
 static int Gtk_TclHandler(void)
 {
-    while (Tcl_DoOneEvent(TCL_DONT_WAIT))
-	;
+    if (!Tcl_lock) {
+	Tcl_lock = 1;
+	(void) R_ToplevelExec(TclSpinLoop, NULL);
+	Tcl_lock = 0;
+    }
     return 1;
 }
 
