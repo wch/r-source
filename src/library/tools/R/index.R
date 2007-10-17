@@ -20,8 +20,8 @@
 ## Currently indices are represented as 2-column character matrices.
 ## To 'merge' indices in the sense of using the values from index B for
 ## all keys in index A also present in index B, we currently use
-##   idx <- match(indA[ , 1], indB[ , 1], 0)
-##   indA[which(idx != 0), 2] <- indB[idx, 2]
+##   idx <- match(indA[ , 1L], indB[ , 1L], 0)
+##   indA[which(idx != 0), 2L] <- indB[idx, 2L]
 ## which could be abstracted into a function .mergeIndexEntries().
 ## </NOTE>
 
@@ -60,11 +60,11 @@ function(dataDir, contents)
         aliasIndices <-
             rep(1 : NROW(contents), sapply(contents$Aliases, length))
         idx <- match(datasets, unlist(contents$Aliases), 0)
-        dataIndex[which(idx != 0), 2] <-
+        dataIndex[which(idx != 0), 2L] <-
             contents[aliasIndices[idx], "Title"]
     }
     if(length(datasets))
-        dataIndex[, 1] <-
+        dataIndex[, 1L] <-
             as.vector(ifelse(datasets == names(datasets), datasets,
                              paste(datasets, " (", names(datasets), ")", sep="")))
     dimnames(dataIndex) <- NULL
@@ -103,8 +103,8 @@ function(demoDir)
                              INDEX),
                     domain = NA)
         else {
-            idx <- match(demoTopics, demoEntries[ , 1], 0)
-            demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
+            idx <- match(demoTopics, demoEntries[ , 1L], 0)
+            demoIndex[which(idx != 0), 2L] <- demoEntries[idx, 2L]
         }
     }
     dimnames(demoIndex) <- NULL
@@ -129,12 +129,12 @@ function(demoDir)
     bad_entries <-
         list(missing_from_index =
              info_from_build[grep("^[[:space:]]*$",
-                                  info_from_build[ , 2]),
-                             1],
+                                  info_from_build[ , 2L]),
+                             1L],
              missing_from_demos =
-             info_from_index[!info_from_index[ , 1]
-                             %in% info_from_build[ , 1],
-                             1])
+             info_from_index[!info_from_index[ , 1L]
+                             %in% info_from_build[ , 1L],
+                             1L])
     class(bad_entries) <- "check_demo_index"
     bad_entries
 }

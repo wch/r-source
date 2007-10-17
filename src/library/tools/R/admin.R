@@ -103,7 +103,7 @@ function(dir, outDir)
 function(db, verbose = FALSE)
 {
     if(!is.na(Built <- db["Built"])) {
-        Built <- as.list(strsplit(Built, "; ")[[1]])
+        Built <- as.list(strsplit(Built, "; ")[[1L]])
         if(length(Built) != 4) {
             warning(gettextf("*** someone has corrupted the Built field in package '%s' ***",
                              db["Package"]),
@@ -232,7 +232,7 @@ function(dir, outDir)
         ## white space, possibly quoted.  Note that we could have
         ## newlines in DCF entries but do not allow them in file names,
         ## hence we gsub() them out.
-        collationField <- collationField[i][1]
+        collationField <- collationField[i][1L]
         con <- textConnection(gsub("\n", " ", db[collationField]))
         on.exit(close(con))
         codeFilesInCspec <- scan(con, what = character(),
@@ -694,11 +694,11 @@ function(dir, packages)
     ## -I"/path/to/package/include" ...
 
     if(!is.null(file)) {
-        tmp <- read.dcf(file, "LinkingTo")[1,1]
+        tmp <- read.dcf(file, "LinkingTo")[1L, 1L]
         if(is.na(tmp)) return(invisible())
         pkgs <- tmp
     }
-    pkgs <- strsplit(pkgs[1], ",[:blank]*")[[1]]
+    pkgs <- strsplit(pkgs[1L], ",[:blank]*")[[1L]]
     paths <- .find.package(pkgs, lib.loc, quiet=TRUE)
     if(length(paths))
         cat(paste(paste('-I"', paths, '/include"', sep=""), collapse=" "))

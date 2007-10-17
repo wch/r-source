@@ -92,13 +92,13 @@ function(dir, fields = NULL,
             if(verbose) message(paste(" ", files[i]))
             ## for bundles:
             con <- unz(files[i], "DESCRIPTION")
-            temp <- try(read.dcf(con, fields = fields)[1, ],
+            temp <- try(read.dcf(con, fields = fields)[1L, ],
                         silent = TRUE)
             if(inherits(temp, "try-error")) {
                 close(con)
                 ## for regular packages:
                 con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
-                temp <- try(read.dcf(con, fields = fields)[1, ],
+                temp <- try(read.dcf(con, fields = fields)[1L, ],
                             silent = TRUE)
                 if(inherits(temp, "try-error")) {
                     close(con)
@@ -122,7 +122,7 @@ function(dir, fields = NULL,
             p <- file.path(packages[i], "DESCRIPTION")
             temp <- try(system(paste("tar zxf", files[i], p)))
             if(!inherits(temp, "try-error")) {
-                temp <- try(read.dcf(p, fields = fields)[1, ],
+                temp <- try(read.dcf(p, fields = fields)[1L, ],
                             silent = TRUE)
                 if(!inherits(temp, "try-error"))
                     db[[i]] <- temp
@@ -149,7 +149,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     for(i in seq_along(paths)) {
         if(verbose) message(paste(" ", basename(paths[i])))
         temp <- try(read.dcf(file.path(paths[i], "DESCRIPTION"),
-                             fields = fields)[1, ],
+                             fields = fields)[1L, ],
                     silent = TRUE)
         if(!inherits(temp, "try-error"))
             db[[i]] <- temp
