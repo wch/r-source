@@ -3691,8 +3691,6 @@ print.check_package_datasets <- function(x, ...)
         vignettes <- c(vignettes,
                        list_files_with_exts(vign_dir, "pdf",
                                             full.names = FALSE))
-        ## Assume here this is run in the C locale, as it is by R CMD
-        ## check.
         OK <- grep("^[[:alpha:]][[:alnum:]._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
