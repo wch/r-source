@@ -1288,11 +1288,10 @@ intention were to always use a @code{PACKAGE} argument)
 
 @item
 The Rd files are checked for correct syntax and meta data, including the
-presence of the mandatory (@code{\name}, @code{\alias}, @code{\title},
-@code{\description} and @code{\keyword}) fields.  The Rd name and title
-are checked for being non-empty, and the keywords found are compared to
-the standard ones.  There is a check for missing cross-references
-(links).
+presence of the mandatory (@code{\name}, @code{\alias}, @code{\title}
+and @code{\description}) fields.  The Rd name and title are checked for
+being non-empty, and the keywords found are compared to the standard
+ones.  There is a check for missing cross-references (links).
 
 @item
 A check is made for missing documentation entries, such as undocumented
@@ -3010,9 +3009,9 @@ Each @code{\keyword} entry should specify one of the standard keywords
 as listed in file @file{KEYWORDS} in the R documentation directory
 (default @file{@var{R_HOME}/doc}).  Use e.g.@:
 @code{file.show(file.path(R.home("doc"), "KEYWORDS"))} to inspect the
-standard keywords from within R.  There must be at least one
-@code{\keyword} entry, but can be more than one if the @R{} object being
-documented falls into more than one category.
+standard keywords from within R.  There can be more than @code{\keyword}
+entry if the @R{} object being documented falls into more than one
+category.
 
 The special keyword @samp{internal} marks a page of internal objects
 that are not part of the packages' API. If the help page for object
