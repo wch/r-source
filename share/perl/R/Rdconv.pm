@@ -409,6 +409,7 @@ sub get_multi {
     my @res, $k=0;
     print STDERR "--- Multi: $name\n" if $debug;
     my $loopcount = 0;
+    my $any = 0;
     while(checkloop($loopcount++, $text, "\\name")
 	  && $text =~ /\\$name($ID)/) {
 	my $id = $1;
@@ -419,10 +420,16 @@ sub get_multi {
 	$arg =~ s/^\s*(\S)/$1/;
 	$arg =~ s/\n[ \t]*(\S)/\n$1/g;
 	$arg =~ s/\s*$//;
-	$res[$k++] = $arg;
+	if($arg) {
+	    $res[$k++] = $arg;
+	}
+	else {
+	    $any++;
+	}
 	$text =~ s/\\$name//s;
     }
     print STDERR "\n---\n" if $debug;
+    warn "Note: ignoring empty \\${name} entries\n" if($any);
     @res;
 }
 
