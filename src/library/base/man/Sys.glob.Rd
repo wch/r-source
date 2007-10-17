@@ -34,7 +34,7 @@ Sys.glob(paths, dirmark = FALSE)
   POSIX 1003.2 standard (see
   \url{http://www.opengroup.org/onlinepubs/009695399/functions/glob.html})
   but some OSes will go beyond this (in particular some BSD-based OSes also
-  do tilde expansion, see  \code{\link{path.expand}}).
+  do tilde expansion, see \code{\link{path.expand}}).
 
   All systems should interpret \code{*} (match one of more characters),
   \code{?} (match a single character) and \code{[} (begin a character
@@ -50,8 +50,7 @@ Sys.glob(paths, dirmark = FALSE)
   a single character against any of the characters specified.  The class
   cannot be empty, so \code{]} can be included provided it is first.  If
   the first character is \code{!}, the character class matches a single
-  character which is none of the \emph{none} of the specified
-  characters.
+  character which is \emph{none} of the specified characters.
   
   Character classes can include ranges such as \code{[A-Z]}: include
   \code{-} as a character by having it first or last in a class.  (The
@@ -75,8 +74,8 @@ Sys.glob(paths, dirmark = FALSE)
   which matches a single character against any of the characters
   specified.  The class cannot be empty, so \code{]} can be included
   provided it is first.  If the first character is \code{!}, the
-  character class matches a single character which is none of the
-  \emph{none} of the specified characters.
+  character class matches a single character which is \emph{none} of the
+  specified characters.
   
   Character classes can include ranges such as \code{[A-Z]}: include
   \code{-} as a character by having it first or last in a class.  (In the
