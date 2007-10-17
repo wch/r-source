@@ -1649,21 +1649,21 @@ sub text2txt {
 
     $text = replace_command($text,
 			    "itemize",
-			    "\n.in +$INDENT\n",
-			    "\n.in -$INDENT\n");
+			    "\n\n.in +$INDENT\n",
+			    "\n\n.in -$INDENT\n");
 
     $text = replace_command($text,
 			    "enumerate",
-			    "\n.inen +$INDENT\n",
-			    "\n.inen -$INDENT\n");
+			    "\n\n.inen +$INDENT\n",
+			    "\n\n.inen -$INDENT\n");
 
     $text =~ s/\\item\s+/\n.ti * \n/go;
 
     ## Handle '\describe':
     $text = replace_command($text,
 			    "describe",
-			    "\n.in +$INDENTDD\n",
-			    "\n.in -$INDENTDD\n");
+			    "\n\n.in +$INDENTDD\n",
+			    "\n\n.in -$INDENTDD\n");
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
