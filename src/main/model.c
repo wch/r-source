@@ -1022,7 +1022,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
 
-    UNPROTECT(3);	/* keep termlabs until here */
+    UNPROTECT(2);	/* keep termlabs until here */
 
     /* Step 6: Fix up the formula by substituting for dot, which should be 
        the framenames joined by + */
@@ -1072,7 +1072,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SETCDR(a, R_NilValue);  /* truncate if necessary */
 
-    UNPROTECT(3);
+    UNPROTECT(4);
     return ans;
 }
 
