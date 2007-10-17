@@ -52,6 +52,13 @@ DEPRECATED & DEFUNCT
     o	Partial matching in [[ is now only performed if explicitly
 	requested (by exact=FALSE or exact=NA).
 
+UTILITIES
+
+    o	Rdconv now removes empty sections including alias and keyword
+    	entries, with a note.
+
+    o	Keyword entries are no longer mandatory in Rd files.
+
 
 BUG FIXES
 
