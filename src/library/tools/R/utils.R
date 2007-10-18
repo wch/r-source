@@ -133,11 +133,13 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
             }
         }
     }
+    ## avoid ranges since they depend on the collation order in the locale.
+    ## in particular, Estonian sorts Z after S.
     if(type %in% c("code", "docs")) { # only certain filenames are valid.
-        files <- files[grep("^[A-Za-z0-9]", basename(files))]
+        files <- files[grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789]", basename(files))]
     }
     if(type %in% "demo") {           # only certain filenames are valid.
-        files <- files[grep("^[A-Za-z]", basename(files))]
+        files <- files[grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]", basename(files))]
     }
     files
 }

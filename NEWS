@@ -125,6 +125,12 @@ BUG FIXES
     o	curve() with unspecified 'from', 'to' and 'xlim' now reuses the
 	previous x limits, and not slightly larger ones.
 
+    o	It was intended that R code filenames in packages should start
+	with an ASCII letter or digits (and R CMD INSTALL uses that),
+	but the test used in R CMD build ([A-Za-z0-9]) was
+	locale-specific (and excluded t to y in Estonian, for
+	example).
+
 
 
 		CHANGES IN R VERSION 2.6.0

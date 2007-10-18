@@ -823,9 +823,9 @@ sub check_pkg {
     ## Check for portable file names.
 
     ## Ensure that the names of the files in the package are valid for
-    ## at least the supported OS types.  Under Unix, we definitely
-    ## cannot have '/'; under Windows, the control characters as well as
-    ##   " * : < > ? \ |
+    ## at least the supported OS types.
+    ## Under Unix, we definitely cannot have '/'.
+    ## Under Windows, the control characters as well as  " * : < > ? \ |
     ## (i.e., ASCII characters 1 to 31 and 34, 36, 58, 60, 62, 63, 92,
     ## and 124) are or can be invalid.  (In addition, one cannot have
     ## one-character file names consisting of just ' ', '.', or '~'.)
@@ -874,14 +874,14 @@ sub check_pkg {
 	} elsif(dirname($file_path) =~ /man$/) {
 	    my $ch;
 	    foreach $ch (split //, $file_name) {
-		## collation is ASCII as uselocale is not in effect.
+		## collation is ASCII as 'use locale' is not in effect.
 		if ($ch eq "%" || $ch lt " " || $ch gt "~")  {
 		    push(@bad_files, $file_path);
 		    last;
 		}
 	    }
 	} else {
-	    $file_name =~ tr/A-Z/a-z/;
+	    $file_name =~ tr/A-Z/a-z/;  # collation is ASCII
 	    $file_name =~ s/\..*//;
 	    push(@bad_files, $file_path)
 	      if(grep(/^(con|prn|aux|clock\$|nul|lpt[1-9]|com[1-9])$/,
@@ -1148,6 +1148,9 @@ sub check_pkg {
     sub check_subdirs {
 	my ($dpath) = @_;
 	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\")\n";
+	## We don't run this in the C locale, as we only require
+	## certain filenames to start with ASCII letters/digits, and not
+	## to be entirely ASCII.
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
@@ -2197,8 +2200,8 @@ sub check_pkg {
 	    $pdf_file =~ s/\.[[:alpha:]]+$/.pdf/;
 	    push(@bad_vignettes, $file) unless(-f $pdf_file);
 	}
-        ## A base package may not have PDFs to avoid blowing out the
-	## distribution size.  *Note* that it is assumed that base
+	## A base source package may not have PDFs to avoid blowing out
+	## the distribution size.  *Note* that it is assumed that base
 	## packages can be woven (i.e., that they only contain
 	## "standard" LaTeX).
 	if(!$is_base_pkg && scalar(@bad_vignettes) > 0) {

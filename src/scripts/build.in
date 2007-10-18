@@ -261,10 +261,13 @@ foreach my $pkg (@ARGV) {
 	    or die "Error: cannot rename directory to '$intname'\n";
 	$pkgname = $intname;
     }
-    ## Fix up man, R and demo directories (in each package for a bundle)
+    ## Fix up man, R, demo inst/doc directories (in each package for a bundle)
     sub find_invalid_files {
 	my ($dpath) = @_;
 	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\", TRUE)\n";
+	## We don't run this in the C locale, as we only require
+	## certain filenames to start with ASCII letters/digits, and not
+	## to be entirely ASCII.
 	my @out = R_runR($Rcmd, "--vanilla --slave",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);

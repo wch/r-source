@@ -2941,7 +2941,7 @@ function(dfile)
     if(any(ind <- !.is_ASCII(names(db))))
         out$fields_with_non_ASCII_tags <- names(db)[ind]
     ## For all fields used by the R package management system, values
-    ## must be ASCII we well (so that the RPM works in a C locale).
+    ## must be ASCII as well (so that the RPM works in a C locale).
     ASCII_fields <- c("Package", "Version", "Depends", "Suggests",
                       "Imports", "Priority", "Encoding", "License")
     ASCII_fields <- intersect(ASCII_fields, names(db))
@@ -3232,10 +3232,10 @@ function(dfile, dir)
         }
         ## Could always return the analysis results and not print them
         ## if ok, but it seems more standard to only return trouble.
-        if(!ok) 
+        if(!ok)
             out <- c(list(license = val), status)
     }
-    
+
     class(out) <- "check_package_license"
     out
 }
@@ -3270,24 +3270,24 @@ function(dir)
     paths <- paths[file_test("-f", paths)]
     if(!length(paths)) return(bad_flags)
     mfile <- paths[1L]
+    make <- Sys.getenv("MAKE")
+    if(make == "") make <- "make"
 
     lines <-
         tryCatch(system(sprintf("%s -f %s -f %s",
-                                Sys.getenv("MAKE"),
+                                make,
                                 shQuote(mfile),
                                 shQuote(file.path(R.home("share"),
                                                   "make", "check.mk"))),
-                        intern = TRUE,
-                        if(identical(.Platform$OS.type, "unix"))
-                        ignore.stderr = TRUE),
+                        intern = TRUE, ignore.stderr = TRUE),
                  error = .identity)
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
     ## Try to be careful ...
-    lines <- lines[regexpr("^PKG_[A-Z]*FLAGS: ", lines) > -1L]
+    lines <- lines[regexpr("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", lines) > -1L]
     names <- sub(":.*", "", lines)
-    lines <- sub("^PKG_[A-Z]*FLAGS: ", "", lines)
+    lines <- sub("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", "", lines)
     flags <- strsplit(lines, "[[:space:]]+")
     ## Bad flags:
     ##   -O*
@@ -3301,7 +3301,7 @@ function(dir)
     bad_flags_regexp <-
         sprintf("^-(%s)$",
                 paste(c("O.*",
-                        "Wall", "ansi", "pedantic", "traditiona",
+                        "Wall", "ansi", "pedantic", "traditional",
                         "f.*", "m.*", "std.*",
                         "x",
                         "q"),
@@ -3644,7 +3644,7 @@ print.check_package_datasets <- function(x, ...)
     code_dir <- file.path(dir, "R")
     if(file_test("-d", code_dir)) {
         all_files <- mydir(code_dir)
-        ## Under Windows, need a Makefile for methods.
+        ## Under Windows, need a Makefile.win for methods.
         R_files <- c("sysdata.rda", "Makefile.win",
                      list_files_with_type(code_dir, "code",
                                           full.names = FALSE,
@@ -3691,7 +3691,9 @@ print.check_package_datasets <- function(x, ...)
         vignettes <- c(vignettes,
                        list_files_with_exts(vign_dir, "pdf",
                                             full.names = FALSE))
-        OK <- grep("^[[:alpha:]][[:alnum:]._-]+$", vignettes)
+        ## we specify ASCII filenames starting with a letter in R-exts
+        ## do this in a locale-independent way.
+        OK <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz][ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
         if(length(wrong)) wrong_things$`inst/doc` <- wrong
