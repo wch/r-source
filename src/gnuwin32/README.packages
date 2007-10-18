@@ -59,7 +59,11 @@ executable to be debugged as the full path to the R front-end.
 
 Extra care is needed when referencing variables (rather than
 functions) exported from R.dll.  These must be declared
-__declspec(dllimport) (as in R's own header files).
+__declspec(dllimport) (as in R's own header files).  
+
+For some applications making use of the R API headers you will need to
+build import libraries for Rblas.dll or graphapp.dll and link against
+those.
 
 VC++6 lacks some standard functions such as isnan and isfinite.  To use
 R's macros you will need
