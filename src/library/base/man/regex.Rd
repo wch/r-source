@@ -209,12 +209,18 @@
   (version \eqn{\ge}{>=} 4.0 is required if \R is configured to use the
   system's PCRE library).
 
+  Perl regular expressions are computed byte-by-byte rather than
+  character-by-character except in UTF-8 locales.  Since the only
+  non-UTF-8 multibyte locales in common use are those for CJK languages,
+  they should be used with care in non-UTF-8 CJK locales.
+
   All the regular expressions described for extended regular expressions
   are accepted except \code{\\<} and \code{\\>}: in Perl all backslashed
   metacharacters are alphanumeric and backslashed symbols always are
   interpreted as a literal character. \code{\{} is not special if it would
   be the start of an invalid interval specification.  There can be more than
-  9 backreferences.
+  9 backreferences.  In a UTF-8 locale the named character classes only
+  match ASCII characters: see \code{\\p} below for an alternative.
 
   The construct \code{(?...)} is used for Perl extensions in a variety
   of ways depending on what immediately follows the \code{?}.
@@ -253,18 +259,28 @@
   \code{CR} and \code{\\t} is \code{TAB}.  In addition \code{\\cx} is
   \code{cntrl-x} for any \code{x}, \code{\\ddd} is the octal character
   \code{ddd} (for up to three digits unless interpretable as a
-  backreference), and \code{\\xhh} specifies a character in hex.
+  backreference, as \code{\\1} to \code{\\7} always are), and
+  \code{\\xhh} specifies a character in hex.  In a UTF-8 locale,
+  \code{\\x\{h...\}} specifies a Unicode point by one or more hex
+  digits.
 
   Outside a character class, \code{\\b} matches a word boundary,
   \code{\\B} is its negation, \code{\\A} matches at start of a subject (even
   in multiline mode, unlike \code{^}), \code{\\Z} matches at end of a
   subject or before newline at end, \code{\\z} matches at end of a
   subject. and \code{\\G} matches at first matching position in a
-  subject. \code{\\C} matches a single byte. including a newline.
-  In a UTF-8 locale,
-  \code{\\R} matches any Unicode newline character (not just CR).
-  \code{\\X} matches any number of Unicode characters that form an
-  extended Unicode sequence.
+  subject (which is subtly different from Perl's end of the previous
+  match).  \code{\\C} matches a single byte. including a newline.
+  In a UTF-8 locale, \code{\\R} matches any Unicode newline character
+  (not just CR), and \code{\\X} matches any number of Unicode characters
+  that form an extended Unicode sequence.
+
+  In a UTF-8 locale, some Unicode properties are supported via
+  \code{\\p\{\var{xx}\}} and \code{\\P\{\var{xx}\}} which match
+  characters with and without property \code{\var{xx}} respectively.
+  For a list of supported properties see the PCRE documentation, but for
+  example \code{Lu} is \sQuote{upper case letter} and \code{Sc} is
+  \sQuote{currency symbol}.
 
   The same repetition quantifiers as extended POSIX are supported.
   However, if a quantifier is followed by \code{?}, the match is
@@ -292,18 +308,17 @@
   in \code{\dots}.
 
   Named subpatterns, atomic grouping, possessive qualifiers and conditional
-  and recursive patterns are not covered here.  Nor is the use of
-  Unicode properties, which is supported in UTF-8 locales as from \R 2.6.0.
+  and recursive patterns are not covered here.
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2 and the
-  \code{pcrepattern} man page from PCRE 7.2.
+  \code{pcrepattern} man page from PCRE 7.4.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
   \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}} and \code{\link{strsplit}}.
-  
+
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}
 
   The \code{pcrepattern} can be found as part of
