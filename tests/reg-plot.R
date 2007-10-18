@@ -111,11 +111,16 @@ stopifnot(identical(names(Opar)[ii],
           identical(Opar[-ii], Npar[-ii]))
 ## did not correctly restore par("mar") up to (incl) R 2.4.0
 
-## plot.function() : use small n, axes=F  since we store and diff PS file !
-plot(cos, xlim=c(-5,5), n=11, axes=FALSE)
+## plot.function()     [n=11, ... : since we store and diff PS file !]
+plot(cos,       xlim=c(-5,5), n=11, axes=FALSE); abline(v=0)
 ## did *not* plot for negative x up to R 2.5.1
+plot(sin, -2,3, xlim=c(-5,5), n=11, axes=FALSE, xlab="")# plot from -2
+axis(1, at=c(-2,3), tcl=-1); axis(1, at=c(-5,5))
+## (from,to) & xlim  should work simultaneously
+
 plot(cos, -7,7, n=11, axes=FALSE)
 ## gave wrong ylab in R 2.6.0
 plot(cos, -7,7, ylab = "Cosine  cos(x)", n=11, axes=FALSE)
 ## partial matching of 'ylab'; mapping  [0,1] (not [-7.7]):
 plot(gamma, yla = expression(Gamma(x)), n=11, yaxt="n")
+

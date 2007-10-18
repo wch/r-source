@@ -19,7 +19,7 @@
 plot <- function (x, y, ...)
 {
     if (is.function(x) && is.null(attr(x, "class"))) {
-	if (missing(y)) y <- formals(plot.function)$y # use its default
+	if (missing(y)) y <- NULL
 	hasylab <- function(...) !all(is.na(pmatch(names(list(...)), "ylab")))
 	## not ok: hasylab <- function(ylab, ...) !missing(ylab)
 	if (hasylab(...))
@@ -30,12 +30,13 @@ plot <- function (x, y, ...)
     else UseMethod("plot")
 }
 
-## Deepayan's proposal [R-core, 13 Sep 2007 11:03:17 -0700] {apart from 'ylab'}
-## xlim = NULL (instead of "missing", since it will be passed to plot.default:
+## xlim = NULL (instead of "missing", since it will be passed to plot.default):
 plot.function <- function(x, y = 0, to = 1, from = y, xlim = NULL, ...)
 {
-    if(!is.null(xlim)) {
-	if(missing(from)) from <- xlim[1]
+    if(is.null(xlim)) {
+	if(is.null(from)) from <- 0
+    } else {
+	if(is.null(from)) from <- xlim[1]
 	if(missing(to))	  to   <- xlim[2]
     }
     curve(x, from, to, xlim = xlim, ...)
