@@ -3263,16 +3263,23 @@ static void R_StringHash_resize(unsigned int newsize)
        enough memory, and ideally we would recover from that and
        carry over with a table that was getting full.
      */
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+    /* When using the ATTRIB fields to maintain the chains the chain
+       moving is destructive and does not involve allocation.  This is
+       therefore the only point where GC can occur. */
+    new_table = R_NewHashTable(newsize);
+#else
     PROTECT(old_table);
     PROTECT(new_table = R_NewHashTable(newsize));
+#endif
     newmask = newsize - 1;
 
     /* transfer chains from old table to new table */
     for (counter = 0; counter < LENGTH(old_table); counter++) {
         chain = VECTOR_ELT(old_table, counter);
         while (!ISNULL(chain)) {
-            val = CAR(chain);
-            next = CDR(chain);
+            val = CXHEAD(chain);
+            next = CXTAIL(chain);
             /* new_hashcode = char_hash(CHAR(val)) % newsize; */
             new_hashcode = char_hash(CHAR(val)) & newmask;
             new_chain = VECTOR_ELT(new_table, new_hashcode);
@@ -3280,11 +3287,19 @@ static void R_StringHash_resize(unsigned int newsize)
             if (ISNULL(new_chain))
                 SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
             /* move the current chain link to the new chain */
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+	    /* this is a destrictive modification */
+	    new_chain = SET_CXTAIL(val, new_chain);
+            SET_VECTOR_ELT(new_table, new_hashcode, new_chain);
+#else
             SET_VECTOR_ELT(new_table, new_hashcode, CONS(val, new_chain));
+#endif
             chain = next;
         }
     }
+#ifndef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
     UNPROTECT(2);
+#endif
     R_StringHash = new_table;
     char_hash_size = newsize;
     char_hash_mask = newmask;
@@ -3315,8 +3330,11 @@ SEXP mkCharEnc(const char *name, int enc)
     /* Search for a cached value */
     cval = R_NilValue;
     chain = VECTOR_ELT(R_StringHash, hashcode);
-    for (; !ISNULL(chain) ; chain = CDR(chain)) {
-        SEXP val = CAR(chain);
+    for (; !ISNULL(chain) ; chain = CXTAIL(chain)) {
+        SEXP val = CXHEAD(chain);
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+	if (TYPEOF(val) != CHARSXP) break; /* sanity check */
+#endif
 	/* If we had USE_RINTERNALS we could do the two in one step */
 	if (INT_IS_UTF8(enc) == IS_UTF8(val) &&
 	    INT_IS_LATIN1(enc) == IS_LATIN1(val) &&
@@ -3346,7 +3364,13 @@ SEXP mkCharEnc(const char *name, int enc)
         chain = VECTOR_ELT(R_StringHash, hashcode);
         if (ISNULL(chain))
             SET_HASHPRI(R_StringHash, HASHPRI(R_StringHash) + 1);
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+	/* this is a destrictive modification */
+	chain = SET_CXTAIL(cval, chain);
+        SET_VECTOR_ELT(R_StringHash, hashcode, chain);
+#else
         SET_VECTOR_ELT(R_StringHash, hashcode, CONS(cval, chain));
+#endif
 
         /* resize the hash table if necessary with the new entry still
            protected. 
@@ -3386,12 +3410,12 @@ void do_show_cache(int n)
 	if (! ISNULL(chain)) {
 	    Rprintf("Line %d: ", i);
 	    do {
-		if (IS_UTF8(CAR(chain)))
+		if (IS_UTF8(CXHEAD(chain)))
 		    Rprintf("U");
-		else if (IS_LATIN1(CAR(chain)))
+		else if (IS_LATIN1(CXHEAD(chain)))
 		    Rprintf("L");
-		Rprintf("|%s| ", CHAR(CAR(chain)));
-		chain = CDR(chain);
+		Rprintf("|%s| ", CHAR(CXHEAD(chain)));
+		chain = CXTAIL(chain);
 	    } while(! ISNULL(chain));
 	    Rprintf("\n");
 	    j++;
@@ -3411,12 +3435,12 @@ void do_write_cache()
 	    if (! ISNULL(chain)) {
 		fprintf(f, "Line %d: ", i);
 		do {
-		    if (IS_UTF8(CAR(chain)))
+		    if (IS_UTF8(CXHEAD(chain)))
 			fprintf(f, "U");
-		    else if (IS_LATIN1(CAR(chain)))
+		    else if (IS_LATIN1(CXHEAD(chain)))
 			fprintf(f, "L");
-		    fprintf(f, "|%s| ", CHAR(CAR(chain)));
-		    chain = CDR(chain);
+		    fprintf(f, "|%s| ", CHAR(CXHEAD(chain)));
+		    chain = CXTAIL(chain);
 		} while(! ISNULL(chain));
 		fprintf(f, "\n");
 	    }
