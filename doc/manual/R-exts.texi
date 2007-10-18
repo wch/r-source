@@ -464,15 +464,15 @@ vignettes}).
 @cindex Package subdirectories
 
 The @file{R} subdirectory contains @R{} code files, only.  The code
-files to be installed must start with a (lower or upper case) letter or
-digit and have one of the extensions @file{.R}, @file{.S}, @file{.q},
-@file{.r}, or @file{.s}.  We recommend using @file{.R}, as this
-extension seems to be not used by any other software.  It should be
-possible to read in the files using @code{source()}, so @R{} objects
-must be created by assignments.  Note that there need be no connection
-between the name of the file and the R objects created by it.  The @R{}
-code files should only create @R{} objects and not call functions with
-side effects such as @code{require} and @code{options}.
+files to be installed must start with an @acronym{ASCII} (lower or upper
+case) letter or digit and have one of the extensions @file{.R},
+@file{.S}, @file{.q}, @file{.r}, or @file{.s}.  We recommend using
+@file{.R}, as this extension seems to be not used by any other software.
+It should be possible to read in the files using @code{source()}, so
+@R{} objects must be created by assignments.  Note that there need be no
+connection between the name of the file and the R objects created by it.
+The @R{} code files should only create @R{} objects and not call
+functions with side effects such as @code{require} and @code{options}.
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects) this will be
@@ -519,13 +519,13 @@ call @code{library.dynam.unload} to unload compiled code.
 
 The @file{man} subdirectory should contain (only) documentation files
 for the objects in the package in @dfn{R documentation} (Rd) format.
-The documentation files to be installed must start with a (lower or
-upper case @acronym{ASCII}) letter or digit and have the extension
-@file{.Rd} (the default) or @file{.rd}.  Further, the names must be
-valid in @samp{file://} URLs, which means@footnote{More precisely, they
-can contain the English alphanumeric characters and the symbols @samp{$
-- _ . + ! ' ( ) , ; @ = &}.}  they must be entirely @acronym{ASCII} and
-not contain @samp{%}.  @xref{Writing R documentation files}, for more
+The documentation filenames must start with an @acronym{ASCII} (lower or
+upper case) letter or digit and have the extension @file{.Rd} (the
+default) or @file{.rd}.  Further, the names must be valid in
+@samp{file://} URLs, which means@footnote{More precisely, they can
+contain the English alphanumeric characters and the symbols @samp{$ - _
+. + ! ' ( ) , ; @ = &}.}  they must be entirely @acronym{ASCII} and not
+contain @samp{%}.  @xref{Writing R documentation files}, for more
 information.  Note that all user-level objects in a package should be
 documented; if a package @var{pkg} contains user-level objects which are
 for ``internal'' use only, it should provide a file
@@ -1511,8 +1511,8 @@ documents are automatically created.  Documents in @file{inst/doc} can
 be in arbitrary format, however we strongly recommend to provide them in
 PDF format, such that users on all platforms can easily read them.  To
 ensure that they can be accessed from a browser, the file names should
-start with an @acronym{ASCII} letter and be entirely in @acronym{ASCII}
-letters or digits or minus or underscore.
+start with an @acronym{ASCII} letter and be comprised entirely of
+@acronym{ASCII} letters or digits or minus or underscore.
 
 A special case are documents in Sweave format, which we call
 @emph{package vignettes}.  Sweave allows the integration of @LaTeX{}
@@ -2346,7 +2346,7 @@ locale via an environment variable.  The default is equivalent setting
 
 @noindent
 which is appropriate for a system based on @code{glibc}, except if the
-current locale in UTF-8 and @samp{iconv} is available, when the
+current locale is UTF-8 and @samp{iconv} is available, when the
 package code is translated to UTF-8 for syntax checking.
 
 
