@@ -35,7 +35,7 @@
 #endif
 
 /* Apple's gcc build >5400 (since Xcode 3.0) doesn't support GNU inline in C99 mode */
-#if __APPLE_CC__ > 5400 && !defined(C99_INLINE_SEMANTICS)
+#if __APPLE_CC__ > 5400 && !defined(C99_INLINE_SEMANTICS) && __STDC_VERSION__ >= 199901L
 #define C99_INLINE_SEMANTICS 1
 #endif
 
