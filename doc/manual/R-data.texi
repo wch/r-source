@@ -1308,7 +1308,10 @@ is a repository of information related to @acronym{ODBC}.
 @findex .dbf
 Windows provides drivers not just for DBMSs but also for Excel (@file{.xls})
 spreadsheets, DBase (@file{.dbf}) files and even text files.  (The named
-applications do @emph{not} need to be installed.)
+applications do @emph{not} need to be installed.)  There are versions
+for Excel 2007 and Access 2007 (go to
+@url{http://download.microsoft.com}, select `Office' and search for
+`ODBC', which will lead to @file{AccessDatabaseEngine.exe}).
 
 @findex odbcConnect
 @findex odbcDriverConnect
@@ -1424,8 +1427,6 @@ Notice that the specification of the table is different from the name
 returned by @code{sqlTables}: @code{sqlFetch} is able to map the
 differences.
 
-The ODBC interface to Excel spreadsheets is read-only; you cannot alter
-the spreadsheet data.
 
 
 @c @node RPgSQL,  , RODBC, R interface packages
@@ -2088,9 +2089,11 @@ project at @url{http://www.omegahat.org/RSCORBA/}.
 @node Reading Excel spreadsheets, References, Network interfaces, Top
 @chapter Reading Excel spreadsheets
 
-The most common R data import/export question seems to be `how do I read an
-Excel spreadsheet'.  This chapter collects together advice and options
-given earlier.
+The most common R data import/export question seems to be `how do I read
+an Excel spreadsheet'.  This chapter collects together advice and
+options given earlier.  Note that most of the advice is for pre-Excel
+2007 spreadsheets: currently the only one of these methods that reads
+the @file{.xlsx} format is that @emph{via} @pkg{RODBC}.
 
 @findex read.csv
 @findex read.delim
@@ -2109,10 +2112,11 @@ If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
 example Gnumeric (@url{http://www.gnome.org/projects/gnumeric/}) and
 OpenOffice (@url{http://www.openoffice.org}).  You can also
-cut-and-paste from the display of a spreadsheet in such a program and R:
-@code{read.table} will read from the R console or, under Windows, from
-the clipboard (via @code{file = "clipboard"} or @code{readClipboard}).
-The @code{read.DIF} function can also read from the clipboard.
+cut-and-paste between the display of a spreadsheet in such a program and
+R: @code{read.table} will read from the R console or, under Windows,
+from the clipboard (via @code{file = "clipboard"} or
+@code{readClipboard}).  The @code{read.DIF} function can also read from
+the clipboard.
 
 Note that an Excel @file{.xls} is not just a spreadsheet: such files can
 contain many sheets, and the sheets can contain formulae, macros and so
@@ -2120,9 +2124,12 @@ on.  Not all readers can read other than the first sheet, and may be
 confused by other contents of the file.
 
 @findex odbcConnectExcel
+@findex odbcConnectExcel2007
 Windows users can use @code{odbcConnectExcel} in package @pkg{RODBC}.
 This can select rows and columns from any of the sheets in an Excel
-spreadsheet file.
+spreadsheet file.  The version @code{odbcConnectExcel2007} will read the
+Excel 2007 formats as well as earlier ones (provided the latest drivers
+are installed: see above).
 
 @findex xlsReadWrite
 Also only for Windows, the package @pkg{xlsReadWrite} has a function
