@@ -58,7 +58,8 @@ R_ARCH =
 # RANLIB = ranlib
 SAFE_FFLAGS = -O3 -ffloat-store
 # SED = sed
-SHELL = /bin/sh
+## it seems some makes (but not ours) get upset if SHELL is set.
+# SHELL = /bin/sh
 SHLIB_CFLAGS = 
 SHLIB_CXXFLAGS = 
 SHLIB_CXXLD = $(CXX)
