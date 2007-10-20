@@ -773,13 +773,13 @@ function(dir)
                                list(getRversion(), depends$version))
         if(status != 0) {
             package <- Sys.getenv("R_PACKAGE_NAME")
-            if(nzchar(package))
+            if(!nzchar(package))
                 package <- meta["Package"]
             if(nzchar(package))
                 msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
                                 getRversion(), package,
                                 depends$op, depends$version)
-            else if (nzchar(bundle <-  meta["Bundle"]))
+            else if (nzchar(bundle <-  meta["Bundle"]) && !is.na(bundle))
                 msg <- gettextf("ERROR: this R is version %s, bundle '%s' requires R %s %s",
                                 getRversion(), bundle,
                                 depends$op, depends$version)
