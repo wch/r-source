@@ -49,6 +49,12 @@ OTHERS
 
 		CHANGES IN R VERSION 2.6.0 patched
 
+PACKAGE INSTALLATION
+
+    o	Fortran code in packages is no longer compiled with -Wall, as
+	this is not done on other platforms.
+
+
 OTHERS
 
     o	The canvas used when plotting on a jpeg() or bmp() device with
