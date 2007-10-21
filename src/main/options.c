@@ -408,12 +408,12 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_KeepSource = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
-/* 	    else if (streql(CHAR(namei), "editor")) { */
-/* 		s = asChar(argi); */
-/* 		if (s == NA_STRING || length(s) == 0) */
-/* 		    error(_("invalid value for '%s'"), CHAR(namei)); */
-/* 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s))); */
-/* 	    } */
+	    else if (streql(CHAR(namei), "editor") && isString(argi)) {
+		s = asChar(argi);
+		if (s == NA_STRING || length(s) == 0)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s)));
+	    }
 	    else if (streql(CHAR(namei), "continue")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
