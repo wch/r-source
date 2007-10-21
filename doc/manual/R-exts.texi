@@ -259,22 +259,27 @@ the following standardized form.  Alternatives are indicated via
 vertical bars.  Individual specifications must be one of
 @itemize @bullet
 @item
-One of the ``standard'' abbreviations
+One of the ``standard'' short specifications
 @example
 GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 Artistic-1.0 Artistic-2.0
 @end example
 as made available via @url{http://@/www.r-project.org/@/Licenses/} and
-shipped in @file{share/licenses} in the R sources, or @samp{BSD} (see
-@url{http://@/www.opensource.org/@/licenses/@/bsd-license.php}).
+contained in subdirectory @file{share/licenses} of the R source or home
+directory.
 @item
-The full names (with commas removed) or abbrevations of open source
-licenses as approved by the Open Source Initiative (see
-@url{http://@/www.opensource.org/@/licenses/@/alphabetical}), possibly
-followed by a version restriction of the form @samp{(@var{op} @var{v})}
-with @var{op} one of the comparison operators @samp{<}, @samp{<=},
-@samp{>}, @samp{>=}, @samp{==}, or @samp{!=} and @var{v} a numeric
-version specification (strings of non-negative integers separated by
-@samp{.}), possibly combined via @samp{,} (see below for an example).
+The names of abbreviations of free or open software licenses as
+contained the the license data base in file
+@file{share/licenses/license.db} in the R source or home directory,
+possibly (for versioned licenses) followed by a version restriction of
+the form @samp{(@var{op} @var{v})} with @var{op} one of the comparison
+operators @samp{<}, @samp{<=}, @samp{>}, @samp{>=}, @samp{==}, or
+@samp{!=} and @var{v} a numeric version specification (strings of
+non-negative integers separated by @samp{.}), possibly combined via
+@samp{,} (see below for an example).  Further free (see
+@url{http://@/www.fsf.org/@/licenses/@/license-list.html}) or open
+source (see
+@url{http://@/www.opensource.org/@/licenses/@/bsd-license.php}) licenses
+will be added to this data base if necessary.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
@@ -287,7 +292,7 @@ Examples for standardized specifications include
 @example
 License: GPL-2
 License: GPL (>= 2) | BSD
-License: LGPL (>= 2.0, < 3) | Eclipse Public License
+License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
 @end example
 Please note in particular that ``Public domain'' is not a valid license.
