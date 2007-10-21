@@ -262,7 +262,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 
     browseURL(url = url, browser = browser)
     cat(main, "environment is shown in browser",
-        if(!is.null(browser))paste("`",browser, "'", sep=""),"\n")
+        if (is.character(browser)) paste("`",browser, "'", sep=""),"\n")
 
     invisible(fname)
 }

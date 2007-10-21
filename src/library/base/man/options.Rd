@@ -413,14 +413,16 @@ getOption(x)
   \describe{
     \item{\code{browser}:}{default HTML browser used by
       \code{\link{help.start}()} on UNIX, or a non-default browser on
-      Windows.}
+      Windows.  Alternatively, a function that is called with a URL as
+      its argument. }
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
       If this is unset (the default), 0, negative or \code{NA}, variable
       cell widths are used.}
 
-    \item{\code{editor}:}{a non-empty string.
+    \item{\code{editor}:}{a non-empty string, or a function that is
+      called with a file path as argument.
       Sets the default text editor, e.g., for
       \code{\link{edit}}.  Set from the environment variable
       \code{VISUAL} on UNIX.}

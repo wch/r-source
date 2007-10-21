@@ -11,6 +11,9 @@
 
 NEW FEATURES
 
+    o   The options "browser" and "editor" may now be set to functions,
+        just as "pager" already could
+
     o	identify() recycles its 'labels' argument if necessary.
 
     o	New function as.octmode() to create objects such as file

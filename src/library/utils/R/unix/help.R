@@ -38,12 +38,14 @@ function(file, topic)
     if(is.null(browser <- getOption("browser")))
         stop("options(\"browser\") not set")
     browseURL(file)
-    writeLines(c(paste("Help for", sQuote(topic),
-                       "is shown in browser", browser, "..."),
-                 "Use",
-                 paste("\thelp(\"", topic, "\", htmlhelp = FALSE)",
-                       sep = ""),
-                 "or\n\toptions(htmlhelp = FALSE)\nto revert."))
+    if (is.character(browser)) {
+        writeLines(c(paste("Help for", sQuote(topic),
+                           "is shown in browser", browser, "..."),
+                     "Use",
+                     paste("\thelp(\"", topic, "\", htmlhelp = FALSE)",
+                           sep = ""),
+                     "or\n\toptions(htmlhelp = FALSE)\nto revert."))
+    }
     return(invisible())
 }
 

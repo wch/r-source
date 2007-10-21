@@ -24,6 +24,8 @@ help.start(update = TRUE, gui = "irrelevant",
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
     browser. It should be in the PATH, or a full path specified.
+    Alternatively, it can be a function which will be called with an
+    URL as its only argument.
   }
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the \file{\$R\_HOME}
@@ -44,7 +46,8 @@ help.start(update = TRUE, gui = "irrelevant",
   If the browser given by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
   default is changed to the given browser so that it gets used for all
-  future help requests.
+  future help requests.  This only holds when \code{browser} is a name,
+  not a function.
 #endif
 #ifdef windows
   The Windows file association mechanism is used to send the HTML file

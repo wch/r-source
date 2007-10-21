@@ -19,7 +19,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
 {
     if(is.null(browser))
 	stop("invalid browser name, check options(\"browser\").")
-    if(browser != getOption("browser")) {
+    if (is.character(browser) && browser != getOption("browser")) {
         msg <- gettext("Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests.")
         writeLines(strwrap(msg, exdent = 4))
         options(browser = browser)
@@ -35,10 +35,12 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
-    writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
-                                browser),
-                       exdent = 4))
-    writeLines(gettext("Otherwise, be patient ..."))
+    if (is.character(browser)) {
+        writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
+                                    browser),
+                           exdent = 4))
+        writeLines(gettext("Otherwise, be patient ..."))
+    }
     browseURL(url)
     options(htmlhelp = TRUE)
 }
@@ -53,6 +55,8 @@ browseURL <- function(url, browser = getOption("browser"))
 
     if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
         stop("'url' must be a non-empty character string")
+    if (is.function(browser))
+        return(invisible(browser(url)))
     if(!is.character(browser)
        || !(length(browser) == 1)
        || !nzchar(browser))
