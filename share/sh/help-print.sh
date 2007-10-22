@@ -19,7 +19,7 @@ if test "${DVIPS}" = "false"; then
 fi
 ODIR=`pwd`
 cd `(dirname "${FILE}") 2>/dev/null || \
-     echo "${FILE}" | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
+     echo "${FILE}" | ${SED=sed} -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
 ${LATEX} "\\nonstopmode\\input{${FILE}}" >/dev/null 2>&1
 ${DVIPS} "${FILE}" 2>/dev/null
 if test -f "${FILE}.ps"; then

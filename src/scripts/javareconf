@@ -5,8 +5,6 @@ if test -z "${R_HOME}"; then
     exit 1
 fi
 
-SED=sed
-
 tools_classpath=${R_SHARE_DIR}/java
 
 usage="
@@ -87,7 +85,7 @@ if test -z "$JAVA"; then
 fi
 
 if test -z "$JAVA"; then
-    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on your PATH or set JAVA_HOME correspondingly"|${SED} -e 'y/~/\n/' >&2
+    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on your PATH or set JAVA_HOME correspondingly"|${SED-sed} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -95,7 +93,7 @@ echo "Java interpreter : $JAVA"
 jires=`$JAVA -classpath ${tools_classpath} getsp -test`
 if test "$jires" != "Test1234OK"; then
     echo "$jires"
-    echo "~*** Java interpreter doesn't work properly.~"|${SED} -e 'y/~/\n/' >&2
+    echo "~*** Java interpreter doesn't work properly.~"|${SED-sed} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -104,7 +102,7 @@ if test -z "${JAVA_HOME}"; then
 fi
 
 if test -z "${JAVA_HOME}"; then
-    echo "~*** Cannot find Java environemnt.~*** Please set JAVA_HOME correspondingly.~"|${SED} -e 'y/~/\n/' >&2
+    echo "~*** Cannot find Java environemnt.~*** Please set JAVA_HOME correspondingly.~"|${SED-sed} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -192,15 +190,15 @@ case "$hostos" in
 	export LD_LIBRARY_PATH
 	# remove trailing : (if any) and replace occurrences of JAVA_HOME
 	# with $(JAVA_HOME)
-	JAVA_LD_LIBRARY_PATH=`$JAVA -classpath ${tools_classpath} getsp java.library.path| ${SED} -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g -e 's/:$//'`
+	JAVA_LD_LIBRARY_PATH=`$JAVA -classpath ${tools_classpath} getsp java.library.path| ${SED-sed} -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g -e 's/:$//'`
 	LD_LIBRARY_PATH=${save_LDLP}
 	export LD_LIBRARY_PATH
 	# build JAVA_LIBS from the detected path
-	JAVA_LIBS=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's|:| -L|g'`
+	JAVA_LIBS=`echo ${JAVA_LD_LIBRARY_PATH}|${SED-sed} -e 's|:| -L|g'`
 	if test -n "${JAVA_LIBS}"; then JAVA_LIBS="-L${JAVA_LIBS}"; fi
 	JAVA_LIBS="${JAVA_LIBS} -ljvm"
 	# create shell-version to be used in scripts
-	JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
+	JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED-sed} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
 
         ## includes consist of two parts - jni.h and machine-dependent jni_md.h
         jinc=''
@@ -240,7 +238,7 @@ case "$hostos" in
                JAVA_CPPFLAGS="${JAVA_CPPFLAGS} -I${jmdinc}"
              fi
            fi
-	   JAVA_CPPFLAGS=`echo ${JAVA_CPPFLAGS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+	   JAVA_CPPFLAGS=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
         fi
 	;;
 esac
@@ -251,7 +249,7 @@ if test -n "${add_java_libs}"; then JAVA_LIBS="${JAVA_LIBS} ${add_java_libs}"; f
 acx_custom_java_libs=no
 if test "${custom_JAVA_LIBS}" != '~autodetect~'; then
   JAVA_LIBS="${custom_JAVA_LIBS}"
-  JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+  JAVA_LIBS0=`echo ${JAVA_LIBS} | ${SED-sed} -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
   acx_custom_java_libs=yes
 fi
 if test "${custom_JAVA_CPPFLAGS}" != '~autodetect~'; then
@@ -259,7 +257,7 @@ if test "${custom_JAVA_CPPFLAGS}" != '~autodetect~'; then
 fi
 if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then
   JAVA_LD_LIBRARY_PATH="${custom_JAVA_LD_LIBRARY_PATH}"
-  JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
+  JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED-sed} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
   if test "${acx_custom_java_libs}" != yes; then
     echo ''
     echo ' ** Warning: you are using custom JAVA_LD_LIBRARY_PATH without' >&2
@@ -298,12 +296,12 @@ echo "Updating Java configuration in ${R_HOME}"
 
 files="${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
 for file in $files; do
-    ${SED} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" -e "s|JAVAC =.\{0,\}|JAVAC = $JAVAC|" -e "s|JAVAH =.\{0,\}|JAVAH = $JAVAH|" -e "s|JAR =.\{0,\}|JAR = $JAR|" "${file}" -e "s|JAVA_CPPFLAGS =.\{0,\}|JAVA_CPPFLAGS = ${JAVA_CPPFLAGS}|g"> "${file}.new"
+    ${SED-sed} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" -e "s|JAVAC =.\{0,\}|JAVAC = $JAVAC|" -e "s|JAVAH =.\{0,\}|JAVAH = $JAVAH|" -e "s|JAR =.\{0,\}|JAR = $JAR|" "${file}" -e "s|JAVA_CPPFLAGS =.\{0,\}|JAVA_CPPFLAGS = ${JAVA_CPPFLAGS}|g"> "${file}.new"
     if test -f "${file}.new"; then
 	mv "${file}" "${file}.old"
 	mv "${file}.new" "${file}"
     else
-	echo "*** cannot create ${file}.new~*** Please run as root if required.~" | ${SED} -e 'y/~/\n/' >&2
+	echo "*** cannot create ${file}.new~*** Please run as root if required.~" | ${SED-sed} -e 'y/~/\n/' >&2
 	exit 1
     fi
 done

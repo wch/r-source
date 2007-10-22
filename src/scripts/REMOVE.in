@@ -39,7 +39,7 @@ while test -n "${1}"; do
     -l)
       lib="${2}"; shift ;;
     --library=*)
-      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      lib=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     *)
       pkgs="${pkgs} ${1}" ;;
   esac
