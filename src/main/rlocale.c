@@ -223,7 +223,7 @@ static const char UNICODE[] = "UCS-4LE";
       _wc_buf = (char *)ucs4_buf;		       		     \
       mb_len = strlen(mb_buf);					     \
       _mb_buf = (char *)mb_buf;					     \
-      rc = Riconv(cd, (char **)&_mb_buf, (size_t *)&mb_len,	     \
+      rc = Riconv(cd, (const char **)&_mb_buf, (size_t *)&mb_len,	     \
 	          (char **)&_wc_buf, (size_t *)&wc_len);       	     \
       Riconv_close(cd);						     \
       wc = ucs4_buf[0];                                              \
