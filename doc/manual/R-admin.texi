@@ -293,7 +293,8 @@ make
 @noindent
 (See @ref{Using make} if your make is not called @samp{make}.)
 
-Then check the built system works correctly, by
+Then check the built system works correctly@footnote{This needs Perl to
+be available.}, by
 
 @example
 make check
@@ -2278,16 +2279,17 @@ and @command{make check} (and other checks) are likely to fail.
 
 You will need Perl version 5.8.0 or later, available via
 @url{http://www.perl.com/CPAN/, @code{www.perl.com/CPAN}}, to build any
-of the on-line documentation.
+of the on-line documentation, which includes the examples needed for
+regression testing.
 
-You will not be able to build the manuals unless you have
+You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
 known to create incorrect @HTML{} files.)  To make DVI or PDF versions
 of the manuals you will also need @file{texinfo.tex} installed (which is
 part of the GNU @samp{texinfo} distribution but is often made part of
-the TeX package in re-distributions) as well as @command{texi2dvi} (part of
-the GNU @pkg{texinfo} distribution).
+the TeX package in re-distributions) as well as @command{texi2dvi} (part
+of the GNU @pkg{texinfo} distribution).
 
 
 @cindex Vignettes
