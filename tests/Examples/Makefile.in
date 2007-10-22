@@ -110,6 +110,9 @@ graphics-Ex.Rout: graphics-Ex.R
 ## will fail.
 ## </NOTE>
 $(EX_IN_BASE): FORCE
+	@if test x$(PERL) = xfalse; then \
+	  echo "     **** Perl is needed to run the tests of the examples ****" && exit 1; \
+	fi 
 	@(pkg=`basename $@ -Ex.R`; \
 	if find $@ -newer $(top_srcdir)/share/perl/massage-Examples.pl \
 	    -print 2> /dev/null | grep $@ > /dev/null; then \
@@ -136,6 +139,9 @@ $(EX_IN_BASE): FORCE
 	fi)
 
 $(EX_IN_RECOMMENDED): FORCE
+	@if test x$(PERL) = xfalse; then \
+	  echo "    **** Perl is needed to run the tests of the recommnded packages ****" && exit 1; \
+	fi 
 	@(pkg=`basename $@ -Ex.R`; \
 	if find $@ -newer $(top_srcdir)/share/perl/massage-Examples.pl \
 	    -print 2> /dev/null | grep $@ > /dev/null; then \
