@@ -350,24 +350,24 @@ static void menulazy(control m)
 /*    show(RConsole); */
 }
 
-extern void set_rcompgen_available(int x);
+extern void set_completion_available(int x);
 
 static int filename_completion_on = 1;
 
 static int check_file_completion(void)
 {
-    /* ought really to ask rcompgen, but that means loading it */
+    /* ought really to ask utils */
     return filename_completion_on;
 }
 
 static void menucomplete(control m)
 {
     if(ischecked(mcomplete)) {
-	set_rcompgen_available(0);
+	set_completion_available(0);
 	uncheck(mcomplete);
 	uncheck(mfncomplete);
     } else {
-	set_rcompgen_available(-1);
+	set_completion_available(-1);
 	check(mcomplete);
 	if(check_file_completion()) check(mfncomplete);
 	else uncheck(mfncomplete);
@@ -386,7 +386,7 @@ static void menufncomplete(control m)
 	check(mfncomplete);
 	filename_completion_on = 1;
     }
-    sprintf(cmd, "rcompgen::rc.settings(files=%s)", c0);
+    sprintf(cmd, "utils::rc.settings(files=%s)", c0);
     consolecmd(RConsole, cmd);
     
 }

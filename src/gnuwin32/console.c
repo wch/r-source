@@ -874,11 +874,11 @@ static void storetab(control c)
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
 
-static int rcompgen_available = -1;
+static int completion_available = -1;
 
-void set_rcompgen_available(int x)
+void set_completion_available(int x)
 {
-    rcompgen_available = x;
+    completion_available = x;
 }
     
 
@@ -892,23 +892,23 @@ static void performCompletion(control c)
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
 
-    if(!rcompgen_available) {
+    if(!completion_available) {
 	storetab(c);
 	return;
     }
     
-    if(rcompgen_available < 0) {
+    if(completion_available < 0) {
 	char *p = getenv("R_COMPLETION");
 	if(p && strcmp(p, "FALSE") == 0) {
-	    rcompgen_available = 0;
+	    completion_available = 0;
 	    storetab(c);
 	    return;	    
 	}
 	/* First check if namespace is loaded */
 	if(findVarInFrame(R_NamespaceRegistry, install("utils"))
-	   != R_UnboundValue) rcompgen_available = 1;
+	   != R_UnboundValue) completion_available = 1;
 	else { /* Then try to load it */
-	    char *p = "try(loadNamespace('rcompgen'), silent=TRUE)";
+	    char *p = "try(loadNamespace('utils'), silent=TRUE)";
 	    PROTECT(cmdSexp = mkString(p));
 	    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
 	    if(status == PARSE_OK) {
@@ -917,9 +917,9 @@ static void performCompletion(control c)
 	    }
 	    UNPROTECT(2);
 	    if(findVarInFrame(R_NamespaceRegistry, install("utils"))
-	       != R_UnboundValue) rcompgen_available = 1;
+	       != R_UnboundValue) completion_available = 1;
 	    else {
-		rcompgen_available = 0;
+		completion_available = 0;
 		return;
 	    }
 	}
@@ -934,7 +934,7 @@ static void performCompletion(control c)
         if (pline[i] == '"') pline[i] = '\'';
 
     cmd = alloca(strlen(pline) + 100);
-    sprintf(cmd, "rcompgen:::.win32consoleCompletion(\"%s\", %d)",
+    sprintf(cmd, "utils:::.win32consoleCompletion(\"%s\", %d)",
 	    pline, cursor_position);
     PROTECT(cmdSexp = mkString(cmd));
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
