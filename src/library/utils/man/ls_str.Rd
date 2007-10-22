@@ -6,10 +6,8 @@
 \name{ls.str}
 \title{List Objects and their Structure}
 \usage{
-ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos),
-       mode = "any")
-
-lsf.str(pos = 1, \dots, envir = as.environment(pos))
+ls.str(pos = -1, name, envir, all.names = FALSE, pattern, mode = "any")
+lsf.str(pos = -1, envir, \dots)
 
 \method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots)
 }
@@ -22,6 +20,11 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
 }
 \arguments{
   \item{pos}{integer indicating \code{\link{search}} path position.}
+  \item{name}{optional name indicating \code{\link{search}} path
+    position, see \code{\link{ls}}.}
+  \item{envir}{environment to use, see \code{\link{ls}}.}
+  \item{all.names}{logical indicating if names which begin with a
+    \code{.} are omitted; see \code{\link{ls}}.}
   \item{pattern}{a \link{regular expression} passed to \code{\link{ls}}.
     Only names matching \code{pattern} are considered.}
   \item{max.level}{maximal level of nesting which is applied for
@@ -29,7 +32,6 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
     Default 0: Display all nesting levels.}
   \item{give.attr}{logical; if \code{TRUE} (default), show attributes
     as sub structures.}
-  \item{envir}{environment to use, see \code{\link{ls}}.}
   \item{mode}{character specifying the \code{\link{mode}} of objects to
     consider.  Passed to \code{\link{exists}} and \code{\link{get}}.}
   \item{x}{an object of class \code{"ls_str"}.}
@@ -63,6 +65,10 @@ print(ls.str(), max.level = 0)# don't show details
 ## which base functions have "file" in their name ?
 lsf.str(pos = length(search()), pattern = "file")
 
+## demonstrating that  ls.str() works inside functions ["browser/debug mode"]:
+tt <- function(x, y=1) { aa <- 7; r <- x + y; ls.str() }
+(nms <- sapply(strsplit(capture.output(tt(2))," *: *"), `[`, 1))
+stopifnot(nms == c("aa", "r","x","y"))
 }
 \keyword{print}
 \keyword{utilities}

@@ -45,6 +45,9 @@ NEW FEATURES
     o   The options "browser" and "editor" may now be set to functions,
         just as "pager" already could.
 
+    o	ls.str() and lsf.str() have slightly changed arguments and
+	defaults such that ls.str() {no arguments} works when debugging.
+
 
 DEPRECATED & DEFUNCT
 
@@ -71,7 +74,9 @@ UTILITIES
 
 BUG FIXES
 
-    o	Place holder
+    o	pt(x, df) is now even more accurate in some cases (e.g. 12 instead
+	of 8 significant digits), when x^2 << df, thanks to a remark from
+	Ian Smith, related to the non-bug report PR#9945.
 
 
 
@@ -124,7 +129,7 @@ BUG FIXES
 	such as aleph (obtained by symbol("\300")) in a UTF-8 locale.
 
     o   An event handling issue caused autorepeat functions to
-        misbehave with tcltk (notably scrollbars). 
+        misbehave with tcltk (notably scrollbars).
 
     o	plot(sin, -5, 5) gives ylab 'sin(x)' again, where it resulted
 	in 'x(x)' in 2.6.0.  Further,  plot(sin)  again plots from

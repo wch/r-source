@@ -485,16 +485,21 @@ str.default <-
 
 ## An extended `ls()' whose print method will use str() :
 ls.str <-
-    function(pos = 1, pattern, ..., envir = as.environment(pos), mode = "any")
+    function (pos = -1, name, envir, all.names = FALSE, pattern, mode = "any")
 {
-    nms <- ls(..., envir = envir, pattern = pattern)
+    if(missing(envir)) ## [for "lazy" reasons, this fails as default]
+        envir <- as.environment(pos)
+    nms <- ls(name, envir = envir, all.names=all.names, pattern=pattern)
     r <- unlist(lapply(nms, function(n)
                        exists(n, envir= envir, mode= mode, inherits=FALSE)))
     structure(nms[r], envir = envir, mode = mode, class = "ls_str")
 }
 
-lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
-    ls.str(pos = pos, envir = envir, mode = "function", ...)
+lsf.str <- function(pos = -1, envir, ...) {
+    if(missing(envir)) ## [for "lazy" reasons, this fails as default]
+        envir <- as.environment(pos)
+    ls.str(pos=pos, envir=envir, mode = "function", ...)
+}
 
 print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 {
