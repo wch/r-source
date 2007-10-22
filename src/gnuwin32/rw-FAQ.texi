@@ -1325,9 +1325,7 @@ library(rcompgen)
 @end example
 
 @noindent
-which also explains how the various types of completion work.  (Note
-that comtrary to the documentation in @code{rcompgen 0.1-10}, file
-completion is turned on by default on Windows.)
+which also explains how the various types of completion work.
 
 This feature is quite similar to the completion available in the
 @code{readline}-based command line interface on Unix-alikes: the MacOS X
