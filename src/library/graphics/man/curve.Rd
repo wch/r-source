@@ -11,7 +11,7 @@
 curve(expr, from = NULL, to = NULL, n = 101, add = FALSE, type = "l",
       ylab = NULL, log = NULL, xlim = NULL, \dots)
 
-\method{plot}{function}(x, y = NULL, to = NULL, from = y, xlim = NULL, \dots)
+\method{plot}{function}(x, y = 0, to = 1, from = y, xlim = NULL, \dots)
 }
 \arguments{
   \item{expr}{an expression written as a function of \code{x}, or
