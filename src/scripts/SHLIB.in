@@ -28,7 +28,8 @@ Options:
 
 Report bugs to <r-bugs@r-project.org>."
 
-R_HOME=`echo ${R_HOME} | ${SED-sed} 's/ /\\\\ /g'`
+SED=@SED@
+R_HOME=`echo ${R_HOME} | ${SED} 's/ /\\\\ /g'`
 
 objs=
 shlib=
@@ -56,20 +57,20 @@ while test -n "${1}"; do
     -o)
       shlib=${2}; shift ;;
     --output=*)
-      shlib=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+      shlib=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     *.cc|*.cpp|*.C)
       with_cxx=true
       if test -z "${shlib}"; then
-	shlib="`echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+	shlib="`echo ${1} | ${SED} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
-      objs="${objs} `echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/.o/'`"
+      objs="${objs} `echo ${1} | ${SED} 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.m)
       with_objc=true
       if test -z "${shlib}"; then
-	shlib="`echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+	shlib="`echo ${1} | ${SED} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
-      objs="${objs} `echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/.o/'`"
+      objs="${objs} `echo ${1} | ${SED} 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.mm|*.M)
       with_objcxx=true
@@ -78,29 +79,29 @@ while test -n "${1}"; do
       # ObjC++ implies C++ because we use C++ linker
       with_cxx=true
       if test -z "${shlib}"; then
-	shlib="`echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+	shlib="`echo ${1} | ${SED} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
-      objs="${objs} `echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/.o/'`"
+      objs="${objs} `echo ${1} | ${SED} 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.f)
       with_f77=true
       if test -z "${shlib}"; then
-	shlib="`echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+	shlib="`echo ${1} | ${SED} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
-      objs="${objs} `echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/.o/'`"
+      objs="${objs} `echo ${1} | ${SED} 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.f90|*.f95)
       with_f9x=true
       if test -z "${shlib}"; then
-	shlib="`echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+	shlib="`echo ${1} | ${SED} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
-      objs="${objs} `echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/.o/'`"
+      objs="${objs} `echo ${1} | ${SED} 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.[co])
       if test -z "${shlib}"; then
-	shlib="`echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+	shlib="`echo ${1} | ${SED} 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
-      objs="${objs} `echo ${1} | ${SED-sed} 's/\.[^\.][^\.]*$/.o/'`"
+      objs="${objs} `echo ${1} | ${SED} 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *)
       pkg_libs="${pkg_libs} ${1}"
