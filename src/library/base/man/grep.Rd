@@ -83,8 +83,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \code{extended} argument, unless \code{perl = TRUE} when they are
   those of PCRE, \url{http://www.pcre.org/}.
   (The exact set of patterns supported may depend on the version of
-  PCRE installed on the system in use, if \R was configured to use the
-  system PCRE.  \R's internal copy used PCRE 6.7.)
+  PCRE installed on the system in use if \R was configured to use the
+  system PCRE.)
 
   \code{useBytes} is only used if \code{fixed = TRUE} or \code{perl = TRUE}.
   Its main effect is to avoid errors/warnings about invalid inputs and

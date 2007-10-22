@@ -27,11 +27,12 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
     \code{x}.
   }
   \item{extended}{
-    logical.  If \code{TRUE}, extended regular expression matching
-    is used, and if \code{FALSE} basic regular expressions are used.
+    logical.  If \code{TRUE} (the default), extended regular expression
+    matching is used, and if \code{FALSE} basic regular expressions are
+    used.
   }
   \item{fixed}{
-    logical.  If \code{TRUE} match string exactly, otherwise
+    logical.  If \code{TRUE} match \code{split} exactly, otherwise
     use regular expressions.  Has priority over \code{perl} and
     \code{extended}.
   }
