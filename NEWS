@@ -11,9 +11,6 @@
 
 NEW FEATURES
 
-    o   The options "browser" and "editor" may now be set to functions,
-        just as "pager" already could
-
     o	identify() recycles its 'labels' argument if necessary.
 
     o	New function as.octmode() to create objects such as file
@@ -44,6 +41,9 @@ NEW FEATURES
 
     o	deriv() now knows the derivatives of digamma(x), trigamma(x)
 	and psigamma(x, deriv) (wrt to x).
+
+    o   The options "browser" and "editor" may now be set to functions,
+        just as "pager" already could.
 
 
 DEPRECATED & DEFUNCT
