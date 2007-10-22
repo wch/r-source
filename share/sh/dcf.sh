@@ -3,10 +3,11 @@ get_dcf_field () {
   ## Usage:
   ##   get_dcf_field FIELD FILE
   ws="[ 	]"		# space and tab
-  (sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
-    sed -n "/^${1}:/{s/^${1}:${ws}*//;p;}
-            /^${ws}/{s/^${ws}*//;p;}") |
-    sed "s/[ 	]*$//"
+  ${SED-sed} -n "/^${1}:/,/^[^ ]/p" ${2} | \
+    ${SED-sed} -n "1s/^${1}:${ws}*//p; /^${ws}/p" | \
+    ${SED-sed} "/^${ws}/s/^${ws}*//; s/[ 	]*$//"
+    ## (Strip leading tag [first match], delete all additional tag
+    ## lines, and remove leading whitespace from continuation lines.)
 }
 
 ### Local Variables: ***
