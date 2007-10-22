@@ -72,7 +72,7 @@ static int rt_completion(char *buf, int offset, int *loc)
 	    return gl_tab(buf, offset, loc);   
 	}
 	/* First check if namespace is loaded */
-	if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))
+	if(findVarInFrame(R_NamespaceRegistry, install("utils"))
 	   != R_UnboundValue) rcompgen_available = 1;
 	else { /* Then try to load it */
 	    char *p = "try(loadNamespace('rcompgen'), silent=TRUE)";
@@ -83,7 +83,7 @@ static int rt_completion(char *buf, int offset, int *loc)
 		    eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
 	    }
 	    UNPROTECT(2);
-	    if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))
+	    if(findVarInFrame(R_NamespaceRegistry, install("utils"))
 	       != R_UnboundValue) rcompgen_available = 1;
 	    else {
 		rcompgen_available = 0;

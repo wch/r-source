@@ -23,7 +23,8 @@ NEW FEATURES
 	(only) to set the permissions on the created directory.
 
     o	New function Sys.chmod(), a wrapper for 'chmod' on platforms
-	which support it.
+	which support it.  (On Windows it handles only the read-only
+	bit.)
 
     o	as.POSIXlt() is now generic, and it and as.POSIXct() gain a
 	'...' argument.	 The character/factor methods now accept a
@@ -54,6 +55,11 @@ DEPRECATED & DEFUNCT
 
     o	Partial matching in [[ is now only performed if explicitly
 	requested (by exact=FALSE or exact=NA).
+
+    o	Command-line completion has been moved from package 'rcompgen'
+	to package 'utils': the former no longer exists as a separate
+	package in the R distribution.
+
 
 UTILITIES
 
