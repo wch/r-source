@@ -90,13 +90,10 @@ BUG FIXES
 		CHANGES IN R VERSION 2.6.0 patched
 
 
-BUG FIXES
+NEW FEATURES
 
     o	The "data.frame" and "factor" methods for [[ now support
 	the 'exact' argument introduced in 2.6.0.
-
-    o	iconv() is again able to translate character strings with
-	embedded nuls (such as those in UCS-2).
 
     o	plot.lm() gains a new argument 'cex.caption' to allow the
 	size of the captions to be controlled.
@@ -105,6 +102,15 @@ BUG FIXES
 	faster (and in some cases many times faster) in sessions with
 	a large number (e.g. a million) of unique character strings,
 	and also if there are many empty strings.
+
+    o	embedFonts(), bitmap() and dev2bitmap() explicitly turn off
+	auto-rotation in Ghostscript when generating PDF.
+
+
+BUG FIXES
+
+    o	iconv() is again able to translate character strings with
+	embedded nuls (such as those in UCS-2).
 
     o	new.packages() and update.packages() failed when called on an
 	empty library, since old.packages() threw an error.
@@ -120,9 +126,6 @@ BUG FIXES
 	Michael Lawrence for diagnosis and patch.
 
     o	object.size() had slightly too low a size for objects of type "S4".
-
-    o	embedFonts(), bitmap() and dev2bitmap() explicitly turn off
-	auto-rotation in Ghostscript when generating PDF.
 
     o	symbol() in plotmath expressions was only accepting valid
 	character strings, which made it impossible to specify symbols
@@ -143,7 +146,7 @@ BUG FIXES
 	with an ASCII letter or digits (and R CMD INSTALL uses that),
 	but the test used in R CMD build ([A-Za-z0-9]) was
 	locale-specific (and excluded t to y in Estonian, for
-	example).
+	example).  (PR#10351)
 
 
 

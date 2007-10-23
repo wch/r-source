@@ -84,7 +84,9 @@ Sys.glob(paths, dirmark = FALSE)
 
   One can remove the special meaning of \code{?}, \code{*}  and
   \code{[} by preceding them by a backslash (except within a
-  character class).
+  character class).  Note that on Windows \code{?} and \code{*} are not
+  valid in file names, so this is mainly for consistency with other
+  platforms.
 
   File paths in Windows are interpreted with separator \code{\\} or
   \code{/}.  Paths with a drive but relative (such as \code{c:foo\\bar})
