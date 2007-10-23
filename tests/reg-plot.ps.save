@@ -4233,14 +4233,7 @@ o
 /ps 12 def /Font1 findfont 12 s
 0 setgray
 435.34 36.72 (x) .5 0 0 t
-/ps 12 def /Font5 findfont 12 s
-30.97 293.22 (G) 0 0 90 t
-/ps 15 def /Font5 findfont 15 s
-30.97 300.46 (\() 0 0 90 t
-/ps 12 def /Font1 findfont 12 s
-30.97 305.46 (x) 0 0 90 t
-/ps 15 def /Font5 findfont 15 s
-30.97 311.46 (\)) 0 0 90 t
+30.96 304.84 (Gamma\(x\)) .5 0 90 t
 ep
 %%Trailer
 %%Pages: 23

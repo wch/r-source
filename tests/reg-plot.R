@@ -122,5 +122,5 @@ plot(cos, -7,7, n=11, axes=FALSE)
 ## gave wrong ylab in R 2.6.0
 plot(cos, -7,7, ylab = "Cosine  cos(x)", n=11, axes=FALSE)
 ## partial matching of 'ylab'; mapping  [0,1] (not [-7.7]):
-plot(gamma, yla = expression(Gamma(x)), n=11, yaxt="n")
+plot(gamma, yla = 'Gamma(x)', n=11, yaxt="n")
 
