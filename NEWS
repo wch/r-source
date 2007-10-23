@@ -76,7 +76,7 @@ BUG FIXES
 
     o	pt(x, df) is now even more accurate in some cases (e.g. 12 instead
 	of 8 significant digits), when x^2 << df, thanks to a remark from
-	Ian Smith, related to the non-bug report PR#9945.
+	Ian Smith, related to PR#9945.
 
 
 
