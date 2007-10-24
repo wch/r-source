@@ -8,12 +8,6 @@ blas00.o: blas00.c
 	$(CC) -O3 -I../../include  -c $< -o $@
 
 ## Rblas.dll imports xerbla_ from R.dll
-ifeq ($(strip $(USE_ACML)),YES)
-../../../bin/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../../$(IMPDIR) -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
-else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../../bin/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
@@ -23,7 +17,6 @@ else
 ../../../bin/Rblas.dll: blas.o cmplxblas.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../../$(IMPDIR) -lR $(FLIBS)
-endif
 endif
 
 distclean clean:
