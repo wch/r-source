@@ -1455,11 +1455,11 @@ some of the more common chips are available on CRAN in directory
 Installation and Administration Manual} for how to build an ATLAS
 @file{Rblas.dll} tuned to your system using the R sources.
 
-An alternative for those building from sources is to use AMD's Core Math
-Library (ACML) @url{http://www.amd.com/acml} (see the @emph{R
-Installation and Administration Manual} for details).  This does seem to
-run on a wide range of CPUs at speeds comparable to ATLAS, but the
-license conditions mean we cannot redistribute it.
+@c An alternative for those building from sources is to use AMD's Core Math
+@c Library (ACML) @url{http://www.amd.com/acml} (see the @emph{R
+@c Installation and Administration Manual} for details).  This does seem to
+@c run on a wide range of CPUs at speeds comparable to ATLAS, but the
+@c license conditions mean we cannot redistribute it.
 
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
