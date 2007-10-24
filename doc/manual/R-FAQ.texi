@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-10-16
+@set FAQ_DATE @value{FAQ_YEAR}-10-22
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1979,6 +1979,8 @@ Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
+@item FKBL
+Fuzzy Knowledge Base Learning.
 @item FLCore
 Core package of FLR, fisheries modeling in R.
 @item FLEDA
@@ -2464,6 +2466,8 @@ to be sent to R.
 @item Runuran
 Interface to the UNU.RAN library for Universal Non-Uniform RANdom
 variate generators.
+@item Rvelslant
+Downhole seismic analysis.
 @item Rwave
 An environment for the time-frequency analysis of 1-D signals (and
 especially for the wavelet and Gabor transforms of noisy signals), based
@@ -4042,6 +4046,8 @@ networks''), and for multinomial log-linear models.  Contained in the
 @file{VR} bundle.  @emph{Recommended}.
 @item nnls
 The Lawson-Hanson NNLS algorithm for non-negative least squares.
+@item nonbinROC
+ROC-type analysis for non-binary gold standards.
 @item nor1mix
 One-dimensional normal mixture models classes, for, e.g., density
 estimation or clustering algorithms research and teaching; providing the
@@ -4105,6 +4111,9 @@ Calculate and plot unadjusted confidence intervals for two sample
 comparisons.
 @item paleoTS
 Modeling evolution in paleontological time-series.
+@item paleoTSalt
+Modeling evolution in paleontological time-series (alternate
+paramaterization).
 @item pamr
 Pam: Prediction Analysis for Microarrays.
 @item pan
