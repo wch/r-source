@@ -32,7 +32,7 @@ LEA_MALLOC=YES
 USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
-# If you want to use AMD's ACML BLAS,
+# If you want to use AMD's ACML BLAS - not currently available for gfortran,
 # set to YES and specify the path to libacml.a 
 USE_ACML=NO
 ACML_PATH=c:/Program Files/AMD/acml3.6.0/gnu32/lib
