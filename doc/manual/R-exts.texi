@@ -280,9 +280,11 @@ the form @samp{(@var{op} @var{v})} with @var{op} one of the comparison
 operators @samp{<}, @samp{<=}, @samp{>}, @samp{>=}, @samp{==}, or
 @samp{!=} and @var{v} a numeric version specification (strings of
 non-negative integers separated by @samp{.}), possibly combined via
-@samp{,} (see below for an example).  Further free (see
+@samp{,} (see below for an example).  For versioned licenses, one can
+also specify the name followed by the version, or combine an existing
+abbreviation and the version with a @samp{-}.  Further free (see
 @url{http://@/www.fsf.org/@/licenses/@/license-list.html}) or open
-source (see
+software (see
 @url{http://@/www.opensource.org/@/licenses/@/bsd-license.php}) licenses
 will be added to this data base if necessary.
 @item

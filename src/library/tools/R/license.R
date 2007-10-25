@@ -1,23 +1,108 @@
-## Read in the license data base, and precompute some variables.
+#  File src/library/tools/R/license.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
 
-license_db <-
-    data.frame(read.dcf(file.path(R.home(),
-                                  "share", "licenses", "license.db")),
-               stringsAsFactors = FALSE)
-## (For the time being we ensure that all fields are in the db file, so
-## that no NAs occur when reading in.)
-standard_license_short_specs <-
-    c(Filter(nzchar, license_db$SSS), "AGPL-3")
-license_names_or_abbrevs_without_version <-
-    Filter(nzchar,
-           unlist(subset(license_db, Version == "",
-                         c("Name", "Abbrev")),
-                  use.names = FALSE))
-license_names_or_abbrevs_with_version <-
-    Filter(nzchar,
-           unlist(subset(license_db, Version != "",
-                         c("Name", "Abbrev")),
-                  use.names = FALSE))
+re_anchor <- function(s)
+    if(length(s)) paste("^", s, "$", sep = "") else character()
+re_group <- function(s)
+    if(length(s)) paste("(", s, ")", sep = "") else character()
+re_or <- function(s, group = TRUE) {
+    if(!length(s))
+        character()
+    else if(group)
+        re_group(paste(s, collapse = "|"))
+    else
+        paste(s, collapse = "|")
+}
+
+.make_license_regexps <-
+function()
+{
+    ## Build license regexps according to the specs.
+
+    ## Read in the license data base, and precompute some variables.
+    license_db <-
+        read.dcf(file.path(R.home(), "share", "licenses", "license.db"))
+    license_db[is.na(license_db)] <- ""
+    ## (Could also keeps NAs and filter on is.finite().)
+    license_db <- data.frame(license_db, stringsAsFactors = FALSE)
+
+    has_abbrev <- nzchar(license_db$Abbrev)
+    has_version <- nzchar(license_db$Version)
+
+    license_short_specs <-
+        unique(c(Filter(nzchar, license_db$SSS),
+                 do.call(paste,
+                         c(license_db[has_abbrev & has_version,
+                                      c("Abbrev", "Version")],
+                           list(sep = "-"))),
+                 "AGPL-3"))
+    license_names_or_abbrevs_without_version <-
+        Filter(nzchar,
+               unlist(subset(license_db, Version == "",
+                             c("Name", "Abbrev")),
+                      use.names = FALSE))
+    license_names_or_abbrevs_with_version <-
+        Filter(nzchar,
+               unlist(subset(license_db, Version != "",
+                             c("Name", "Abbrev")),
+                      use.names = FALSE))
+    
+    operators <- c("<", "<=", ">", ">=", "==", "!=")
+    re_for_numeric_version <- .standard_regexps()$valid_numeric_version
+    re_for_single_version_spec <-
+        paste("[[:space:]]*",
+              re_or(operators),
+              "[[:space:]]*",
+              re_for_numeric_version,
+              "[[:space:]]*",
+              sep = "")
+    re_for_version_spec <-
+        paste("\\(",
+              paste("(", re_for_single_version_spec, ",)*", sep = ""),
+              re_for_single_version_spec,
+              "\\)",
+              sep = "")
+    re_for_free_or_open_software_spec <-
+        re_or(c(re_or(license_names_or_abbrevs_without_version),
+                paste(re_or(license_names_or_abbrevs_with_version),
+                      "[[:space:]]*",
+                      paste("(", re_for_version_spec, ")*", sep = ""),
+                      sep = ""),
+                ## Also allow for things like
+                ##   GNU General Public License version 2
+                ##   Apache License Version 2.0
+                ## as one can argue that these are really the full names
+                ## of these licenses.
+                re_or(paste(license_db$Name[has_version],
+                            "[[:space:]]+([Vv]ersion[[:space:]]+)?",
+                            license_db$Version[has_version],
+                            sep = ""))))
+
+    re_for_license_short_spec <- re_or(license_short_specs)
+    re_for_license_file <- "file LICEN[CS]E"
+    re_for_component <-
+        re_anchor(re_or(c(re_for_license_short_spec,
+                          re_for_free_or_open_software_spec,
+                          re_for_license_file,
+                          "Unlimited")))
+    list(re_for_component = re_for_component,
+         re_for_license_file = re_for_license_file)
+}
+
+license_regexps <- .make_license_regexps()
 
 ## License specifications found on CRAN/BioC/Omegahat and manually
 ## classified as "safe" open/free software licenses.  With ongoing
@@ -62,7 +147,6 @@ license_names_or_abbrevs_with_version <-
       "GPL version 2.1 or newer",
       ## </NOTE>
       "BSD",
-      "BSD.",
       "CeCILL version 2", 
       "GNU GENERAL PUBLIC LICENSE Version 2",
       "GNU GPL (version 2 or any later version)", 
@@ -140,7 +224,6 @@ license_names_or_abbrevs_with_version <-
       "LGPL version 2",
       "LGPL version 2 or newer",
       "LGPL version 2.1 or later",
-      "LGPL version 2.1 or newer (the releases)", 
       "LGPL2",
       "MIT",
       "Mozilla Public License 1.1 (http://www.mozilla.org/MPL/)", 
@@ -150,7 +233,6 @@ license_names_or_abbrevs_with_version <-
       "use under GPL2, or see file LICENCE",
       "GNU GPL",
       "GNU General Public License (GNU GPL)",
-      "GPL version 2 or later",
       "GPL (version 2 or later) See file LICENCE.",
       "GPL 2.",
       "GPL Version 2 (or later)",
@@ -158,7 +240,6 @@ license_names_or_abbrevs_with_version <-
       ## BioC
       "Artistic License 2.0",
       "Artistic License, Version 2.0",
-      "Free Software Licence CeCILL",
       "GNU GPL.",
       "GPL (http://www.gnu.org/copyleft/gpl.html)",
       "GPL V2",
@@ -183,51 +264,6 @@ function(x)
              is_verified = is_verified,
              pointers = pointers)
 
-    ## Build up a regexp according to the specs.
-    ## <FIXME>
-    ## Maybe use a dynamic variable for storing things?
-    ## </FIXME>
-    re_group <- function(s)
-        if(length(s)) paste("(", s, ")", sep = "") else character()
-    re_or <- function(s, group = TRUE) {
-        if(!length(s))
-            character()
-        else if(group)
-            re_group(paste(s, collapse = "|"))
-        else
-            paste(s, collapse = "|")
-    }
-    operators <- c("<", "<=", ">", ">=", "==", "!=")
-    re_for_numeric_version <- .standard_regexps()$valid_numeric_version
-    re_for_single_version_spec <-
-        paste("[[:space:]]*",
-              re_or(operators),
-              "[[:space:]]*",
-              re_for_numeric_version,
-              "[[:space:]]*",
-              sep = "")
-    re_for_version_spec <-
-        paste("\\(",
-              paste("(", re_for_single_version_spec, ",)*", sep = ""),
-              re_for_single_version_spec,
-              "\\)",
-              sep = "")
-    re_for_free_or_open_source_spec <-
-        re_or(c(re_or(license_names_or_abbrevs_without_version),
-                paste(re_or(license_names_or_abbrevs_with_version),
-                      "[[:space:]]*",
-                      paste("(", re_for_version_spec, ")*", sep = ""),
-                      sep = "")))
-    re_for_standard_short_specs <- re_or(standard_license_short_specs)
-    re_for_license_file <- "file LICEN[CS]E"
-    re_for_component <-
-        paste("^",
-              re_or(c(re_for_standard_short_specs,
-                      re_for_free_or_open_source_spec,
-                      re_for_license_file,
-                      "Unlimited")),
-              "$",
-              sep = "")
 
     x <- .strip_whitespace(x)
     if(x == "") {
@@ -240,10 +276,10 @@ function(x)
         .strip_whitespace(unlist(strsplit(x, "|", fixed = TRUE)))
     
     ## Now analyze the individual components.
-    ok <- regexpr(re_for_component, components) > -1L
+    ok <- regexpr(license_regexps$re_for_component, components) > -1L
 
     pointers <- if(all(ok)) NULL else {
-        ind <- regexpr(paste("^", re_for_license_file, "$", sep = ""),
+        ind <- regexpr(re_anchor(license_regexps$re_for_license_file),
                        components) > -1L
         sub("file ", "", components[ind])
     }
@@ -255,7 +291,7 @@ function(x)
     ## 2007.
     is_verified <-
         ((all(ok)
-          && any(regexpr(paste("^", re_for_license_file, "$", sep = ""),
+          && any(regexpr(re_anchor(license_regexps$re_for_license_file),
                          components) == -1L))
          || all(components %in%
                 .safe_license_specs_in_standard_repositories))
@@ -310,8 +346,22 @@ function(db)
     cbind(db, analyze_licenses(db$License))
 
 analyze_licenses_in_repository <-
-function(dir, unpacked = FALSE)
-    analyze_licenses_in_license_db(build_license_db(dir, unpacked))
+function(dir, unpacked = FALSE, full = TRUE)
+{
+    db <- build_license_db(dir, unpacked)
+    if(!full) {
+        ## Only keep the highest available versions.
+        ## Such an option might be useful for build_license_db()
+        ## itself.
+        db <- do.call("rbind",
+                      lapply(split(db, db$Package),
+                             function(e) {
+                                 m <- max(as.numeric_version(e$Version))
+                                 e[which(e$Version == m)[1L], ]
+                             }))
+    }        
+    analyze_licenses_in_license_db(db)
+}
 
 summarize_license_db <-
 function(db, full = FALSE)
@@ -323,7 +373,8 @@ function(db, full = FALSE)
     packages <- split(packages, db$License)
     licenses <- names(packages)
     out <- data.frame(Licenses = licenses, stringsAsFactors = FALSE)
-    out$Packages <- packages            # Argh, lists and data frames.
+    ## To get the 'packages' list into a data frame without I() ...
+    out$Packages <- packages
     cat(formatDL(out$Licenses,
                  sapply(out$Packages,
                         function(p) paste(unique(p), collapse = " ")),

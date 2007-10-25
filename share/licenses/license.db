@@ -39,31 +39,24 @@ FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/LGPL-3
 
 Name: Apache License
-Abbrev:
 Version: 1.0
-SSS:
 OSF: open
 FSF: free_and_GPL_incompatible
 URL: http://www.apache.org/LICENSE-1.0
 
 Name: Apache License
-Abbrev:
 Version: 1.1
-SSS:
 OSF: open
 FSF: free_and_GPL_incompatible
 URL: http://www.apache.org/LICENSE-1.1
 
 Name: Apache License
-Abbrev:
 Version: 2.0
-SSS:
 OSF: open
 FSF: free_and_GPL_compatible
 URL: http://www.apache.org/licenses/LICENSE-2.0
 
 Name: Artistic License
-Abbrev:
 Version: 1.0
 SSS: Artistic-1.0
 OSF: open
@@ -71,7 +64,6 @@ FSF: non_free
 URL: http://www.R-project.org/Licenses/Artistic-1.0
 
 Name: Artistic License
-Abbrev:
 Version: 2.0
 SSS: Artistic-2.0
 OSF: open
@@ -79,33 +71,23 @@ FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/Artistic-2.0
 
 Name: CeCILL
-Abbrev:
+Abbrev: CeCILL
 Version: 2
-SSS:
-OSF:
 FSF: free_and_GPL_compatible
 URL: http://www.cecill.info/licences.en.html
 
 Name: FreeBSD License
 Abbrev: FreeBSD
-Version:
-SSS:
-OSF:
 FSF: free_and_GPL_compatible
 URL: http://www.freebsd.org/copyright/freebsd-license.html
 
 Name: MIT License
 Abbrev: MIT
-Version:
-SSS:
 OSF: open
-FSF:
 URL: http://www.opensource.org/licenses/mit-license.php
 
 Name: Modified BSD License
 Abbrev: BSD
-Version:
-SSS:
 OSF: open
 FSF: free_and_GPL_compatible
 URL: http://www.opensource.org/licenses/bsd-license.php
@@ -113,7 +95,6 @@ URL: http://www.opensource.org/licenses/bsd-license.php
 Name: Mozilla Public License
 Abbrev: MPL
 Version: 1.0
-SSS:
 OSF: open
 FSF: free_and_GPL_incompatible
 URL: http://www.opensource.org/licenses/mozilla1.0.php
@@ -121,15 +102,11 @@ URL: http://www.opensource.org/licenses/mozilla1.0.php
 Name: Mozilla Public License
 Abbrev: MPL
 Version: 1.1
-SSS:
 OSF: open
 FSF: free_and_GPL_incompatible
 URL: http://www.opensource.org/licenses/mozilla1.1.php
 
 Name: X11 License
 Abbrev: X11
-Version:
-SSS:
-OSF:
 FSF: free_and_GPL_compatible
 URL: http://www.xfree86.org/3.3.6/COPYRIGHT2.html#3
