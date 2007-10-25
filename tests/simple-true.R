@@ -5,10 +5,6 @@
 ### mode checking, etc.
 is.recursive(expression(1+3, 2/sqrt(pi)))# fix PR#9
 
-## any & all [PR#36]
-any(NA,na.rm=TRUE) == any(numeric(0))
-all(c(1L,NA),na.rm=TRUE) == all(1L)
-
 ## sum():
 all(1:12 == cumsum(rep(1,12)))
 x <- rnorm(127); sx <- sum(x);	abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)

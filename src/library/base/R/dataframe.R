@@ -1007,7 +1007,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     match.names <- function(clabs, nmi)
     {
 	if(identical(clabs, nmi)) NULL
-	else if(length(nmi) == length(clabs) && all(match(nmi, clabs, 0L))) {
+	else if(length(nmi) == length(clabs) && all(nmi %in% clabs)) {
             ## we need 1-1 matches here
 	    m <- pmatch(nmi, clabs, 0L)
             if(any(m == 0L))

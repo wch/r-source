@@ -1299,7 +1299,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Exclude internal objects from further computations.
     ind <- sapply(db_keywords,
-                  function(x) any(grep("^ *internal *$", x)))
+                  function(x) length(grep("^ *internal *$", x)) > 0L )
     if(any(ind)) {                      # exclude them
         db <- db[!ind]
         db_names <- db_names[!ind]
@@ -1402,7 +1402,7 @@ function(package, dir, lib.loc = NULL)
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
-        if(!any(grep("-deprecated$", aliases))) {
+        if(!length(grep("-deprecated$", aliases))) {
             ## Currently, there is no useful markup for S3 Ops group
             ## methods and S3 methods for subscripting and subassigning,
             ## so the corresponding generics and methods need to be
@@ -2227,7 +2227,7 @@ function(package, dir, lib.loc = NULL)
         ns_S3_methods <- ns_S3_methods_db[, 3L]
         ## S3 replacement methods from namespace registration?
         idx <- grep("<-$", ns_S3_generics)
-        if(any(idx)) replace_funs <- ns_S3_methods[idx]
+        if(length(idx)) replace_funs <- ns_S3_methods[idx]
         ## Now remove the functions registered as S3 methods.
         objects_in_code <- objects_in_code %w/o% ns_S3_methods
     }
@@ -3186,7 +3186,7 @@ function(x, ...)
         writeLines(gettext("Fields with non-ASCII values:"))
         .pretty_print(x$fields_with_non_ASCII_values)
     }
-    if(any(as.integer(sapply(x, length)) > 0))
+    if(any(as.integer(sapply(x, length)) > 0L))
         writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
                      ""))
 
@@ -4306,7 +4306,7 @@ function(x)
         seq_along(y)
     else
         which(names(y) == "")
-    if(any(ind)) {
+    if(length(ind)) {
         names(y)[ind] <- sapply(y[ind],as.character)
         y[ind] <- rep.int(list(alist(irrelevant = )[[1L]]), length(ind))
     }

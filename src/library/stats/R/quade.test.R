@@ -27,7 +27,7 @@ function(y, groups, blocks, ...)
     else {
         if(any(is.na(groups)) || any(is.na(blocks)))
             stop("NA's are not allowed in 'groups' or 'blocks'")
-        if(any(diff(c(length(y), length(groups), length(blocks)))))
+        if(any(diff(c(length(y), length(groups), length(blocks))) != 0L))
             stop("'y', 'groups' and 'blocks' must have the same length")
         DNAME <- paste(DNAME, ", ",
                        deparse(substitute(groups)), " and ",

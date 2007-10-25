@@ -602,7 +602,7 @@ editDetails.default <- function(x, specs) {
 
 editDetails.gTree <- function(x, specs) {
   # Disallow editing children or childrenOrder slots directly
-  if (any(match(specs, c("children", "childrenOrder"), nomatch=FALSE)))
+  if (any(specs %in% c("children", "childrenOrder")))
     stop("It is invalid to directly edit the 'children' or 'childrenOrder' slot")
   x
 }
