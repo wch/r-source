@@ -75,7 +75,7 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
     }
 
     if(!missing(m))
-	if(!is.numeric(m) || length(m) < 1 || m != round(m) || any(m) < 0)
+	if(!is.numeric(m) || length(m) < 1 || m != round(m) || any(m < 0))
 	    stop("'m' must be numeric with non-negative integers")
 
     if(is.character(coef)) {

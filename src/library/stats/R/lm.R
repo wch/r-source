@@ -741,11 +741,11 @@ predict.lm <-
                 ii <- unpiv[iipiv]      # Corresponding rows of Rinv
                 iipiv[ii == 0] <- 0
                 predictor[, i] <-
-                    if(any(iipiv) > 0) X[, iipiv, drop = FALSE] %*% beta[iipiv]
+                    if(any(iipiv > 0)) X[, iipiv, drop = FALSE] %*% beta[iipiv]
                     else 0
                 if (se.fit || interval != "none")
                     ip[, i] <-
-                        if(any(iipiv) > 0)
+                        if(any(iipiv > 0))
                             as.matrix(X[, iipiv, drop = FALSE] %*%
                                       Rinv[ii, , drop = FALSE])^2 %*% rep.int(res.var, p)
                         else 0
