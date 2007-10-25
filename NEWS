@@ -71,6 +71,9 @@ UTILITIES
 
     o	Keyword entries are no longer mandatory in Rd files.
 
+    o	R CMD check now warns if spaces or non-ASCII characters are
+	used in file paths, since these are not in general portable.
+
 
 BUG FIXES
 

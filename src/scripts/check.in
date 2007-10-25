@@ -855,6 +855,7 @@ sub check_pkg {
 
     $log->checking("for portable file names");
     my @bad_files = ();
+    my @non_ASCII_files = ();
     sub find_wrong_names {
 	my $file_path = $File::Find::name;
 	$file_path =~ s/^\.[^\/]*\///;
@@ -869,9 +870,16 @@ sub check_pkg {
 	    }
 	}
 	my $file_name = basename($file_path);
+	{
+	    ## collation is ASCII as 'use locale' is not in effect.
+	    if (grep(/[^-A-Za-z0-9._!\#\$%&+,;=@^\(\)\{\}\'\[\]]/, $file_name))  {
+		push(@non_ASCII_files, $file_path);
+	    }
+	}
 	if(grep(/[[:cntrl:]\"\*\/\:\<\>\?\\\|]/, $file_name)) {
 	    push(@bad_files, $file_path);
 	} elsif(dirname($file_path) =~ /man$/) {
+	    ## perhaps use ranges here, /([^ -~]|%)/ ?
 	    my $ch;
 	    foreach $ch (split //, $file_name) {
 		## collation is ASCII as 'use locale' is not in effect.
@@ -941,7 +949,19 @@ sub check_pkg {
 	exit(1);
     }
 
-    $log->result("OK");
+    if(scalar(@non_ASCII_files) > 0) {
+	$log->warning();
+	$log->print("Found the following file(s) with " .
+		    "non-portable file names:\n");
+	$log->print("  " . join("\n  ", @non_ASCII_files) . "\n");
+	$log->print(wrap("", "",
+			 ("These are not fully portable file names\n",
+			  "See section 'Package structure'",
+			  "in manual 'Writing R Extensions'.\n")));
+    }
+    else {
+	$log->result("OK");
+    }
 
     ## Check for sufficient file permissions (Unix only).
 
