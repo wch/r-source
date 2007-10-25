@@ -22,11 +22,11 @@ invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
 if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
     options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
 } else {
-    if(any(grep("united.states", Sys.getlocale("LC_MONETARY"), TRUE)) ||
-       any(grep("canada", Sys.getlocale("LC_MONETARY"), TRUE)))
+    if(length(grep("united.states", Sys.getlocale("LC_MONETARY"), TRUE)) ||
+       length(grep("canada", Sys.getlocale("LC_MONETARY"), TRUE)))
         options(papersize = "letter")
     else options(papersize = "a4")
 }
 
-options(pager = if(any(grep("--ess", commandArgs()))) "console" else "internal")
+options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal")
 options(useFancyQuotes = (.Platform$GUI == "Rgui"))

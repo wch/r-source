@@ -306,7 +306,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     else {
 	if(!is.character(scope))
 	    scope <- attr(terms(update.formula(object, scope)), "term.labels")
-	if(!all(match(scope, tl, FALSE)))
+	if(!all(match(scope, tl, 0L) > 0L))
 	    stop("scope is not a subset of term labels")
     }
 #    data <- model.frame(object) # remove NAs
@@ -362,7 +362,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     else {
 	if(!is.character(scope))
 	    scope <- attr(terms(update.formula(object, scope)), "term.labels")
-	if(!all(match(scope, tl, FALSE)))
+	if(!all(match(scope, tl, 0L) > 0L))
 	    stop("scope is not a subset of term labels")
     }
     ndrop <- match(scope, tl)
@@ -441,7 +441,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     else {
 	if(!is.character(scope))
 	    scope <- attr(terms(update.formula(object, scope)), "term.labels")
-	if(!all(match(scope, tl, FALSE)))
+	if(!all(match(scope, tl, 0L) > 0L))
 	    stop("scope is not a subset of term labels")
     }
     ndrop <- match(scope, tl)

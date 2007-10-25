@@ -587,7 +587,7 @@ function(chname, package = NULL, lib.loc = NULL,
     if(file == "")
         stop(gettextf("shared library '%s' not found", chname), domain = NA)
     ind <- sapply(dll_list, function(x) x[["path"]] == file)
-    if(any(ind)) {
+    if(length(ind) && any(ind)) {
         if(verbose)
             message(gettextf("shared library '%s' already loaded", chname),
                     domain = NA)
@@ -834,7 +834,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     out <- character(0)
 
     for(pkg in package) {
-        if(any(grep("_", pkg))) {
+        if(length(grep("_", pkg))) {
             ## The package "name" contains the version info.
             ## Note that .packages() is documented to return the "base
             ## names" of all currently attached packages.  In the case
@@ -862,9 +862,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                                                   "DESCRIPTION"))])
         }
         if(use_attached
-           && any(pos <- grep(paste("^package:", pkg_regexp,
-                                    sep = ""),
-                              search()))) {
+           && length(pos <- grep(paste("^package:", pkg_regexp, sep = ""),
+                                 search()))) {
             dirs <- sapply(pos, function(i) {
                 if(identical(env <- as.environment(i), baseenv()))
                     system.file()
@@ -934,7 +933,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             paths <- if(pkg_has_version) {
                 paths[1]
             }
-            else if(any(pos <- which(basename(paths) == pkg)))
+            else if(length(pos <- which(basename(paths) == pkg)))
                 paths[pos][1]
             else {
                 versions <- package_version(db[ok, "Version"])

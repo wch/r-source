@@ -29,7 +29,7 @@ function(dir, outDir)
     ## path to the DESCRIPTION file, and returns an object with check
     ## results and not the package metadata ...
     ok <- .check_package_description(file.path(dir, "DESCRIPTION"))
-    if(any(as.integer(sapply(ok, length))) > 0) {
+    if(any(as.integer(sapply(ok, length)) > 0L)) {
         stop(paste(gettext("Invalid DESCRIPTION file") ,
                    paste(.capture_output_from_print(ok),
                          collapse = "\n"),
@@ -468,7 +468,7 @@ function(dir, outDir)
     vignetteIndex <- .build_vignette_index(vignetteDir)
     ## For base package vignettes there is no PDF in @file{vignetteDir}
     ## but there might/should be one in @file{outVignetteDir}.
-    if(NROW(vignetteIndex) > 0) {
+    if(NROW(vignetteIndex) > 0L) {
         vignettePDFs <-
             sub("$", ".pdf",
                 basename(file_path_sans_ext(vignetteIndex$File)))

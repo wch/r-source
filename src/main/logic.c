@@ -374,9 +374,17 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (s = args; s != R_NilValue; s = CDR(s)) {
 	t = CAR(s);
+	if(length(t) == 0) continue;
 	/* coerceVector protects its argument so this actually works
 	   just fine */
-	if (TYPEOF(t)  != LGLSXP) t = coerceVector(t, LGLSXP);
+	if (TYPEOF(t)  != LGLSXP) {
+#if 0
+	    if(TYPEOF(t) != INTSXP)
+		warningcall(call, "coercing argument of type '%s' to logical",
+			    type2char(TYPEOF(t)));
+#endif
+	    t = coerceVector(t, LGLSXP);
+	}
 	checkValues(LOGICAL(t), LENGTH(t), &haveFalse, &haveTrue, &haveNA);
     }
     if (narm)

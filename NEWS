@@ -48,6 +48,10 @@ NEW FEATURES
     o	ls.str() and lsf.str() have slightly changed arguments and
 	defaults such that ls.str() {no arguments} works when debugging.
 
+   o	any() and all() avoid coercing zero-length arguments (which
+	used a surprising amount of memory) since they cannot affect
+	the answer.
+
 
 DEPRECATED & DEFUNCT
 

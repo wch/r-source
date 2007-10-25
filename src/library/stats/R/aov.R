@@ -561,9 +561,9 @@ se.contrast.aov <-
                                 domain = NA)
                    x/sum(x)
                })
-        contrast <- contrast %*% coef
-        if(!any(contrast) || all(is.na(contrast)))
+        if(!length(contrast) || all(is.na(contrast)))
             stop("the contrast defined is empty (has no TRUE elements)")
+        contrast <- contrast %*% coef
     } else {
         contrast <- contrast.obj
         if(any(abs(colSums(contrast)) > 1e-8))
@@ -656,9 +656,9 @@ se.contrast.aovlist <-
                                 domain = NA)
                        x/sum(x)
                    })
-        contrast <- contrast %*% coef
-        if(!any(contrast))
+        if(!length(contrast) || all(is.na(contrast)))
             stop("the contrast defined is empty (has no TRUE elements)")
+        contrast <- contrast %*% coef
     }
     else {
         contrast <- contrast.obj

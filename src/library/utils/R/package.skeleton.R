@@ -121,7 +121,7 @@ package.skeleton <-
 
     internalObjInds <- grep("^\\.", list)
     internalObjs <- list[internalObjInds]
-    if(any(internalObjInds))
+    if(length(internalObjInds))
 	list <- list[-internalObjInds]
 
     if(!use_code_files) {
@@ -153,7 +153,7 @@ package.skeleton <-
     ## Dump the items in 'data' or 'R'
     if(!use_code_files) {
         message("Saving functions and data ...")
-        if(any(internalObjInds))
+        if(length(internalObjInds))
             dump(internalObjs,
                  file = file.path(code_dir,
                                   sprintf("%s-internal.R", name)))
@@ -174,7 +174,7 @@ package.skeleton <-
 
     ## Make help file skeletons in 'man'
     message("Making help files ...")
-    if(any(internalObjInds)) {
+    if(length(internalObjInds)) {
 	Rdfile <- file(file.path(docs_dir,
                                  sprintf("%s-internal.Rd", name)),
                        "wt")

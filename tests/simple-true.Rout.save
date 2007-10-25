@@ -26,7 +26,7 @@ Type 'q()' to quit R.
 > ## any & all [PR#36]
 > any(NA,na.rm=TRUE) == any(numeric(0))
 [1] TRUE
-> all(c(1,NA),na.rm=TRUE) == all(1)
+> all(c(1L,NA),na.rm=TRUE) == all(1L)
 [1] TRUE
 > 
 > ## sum():

@@ -37,7 +37,7 @@ function(file, fields = NULL, all = FALSE)
 
     .assemble_things_into_a_data_frame <- function(tags, vals, nums) {
         tf <- factor(tags, levels = unique(tags))
-            
+
         cnts <- table(nums, tf)
         out <- array(as.character(NA), dim = dim(cnts),
                      dimnames = list(NULL, levels(tf)))
@@ -59,10 +59,10 @@ function(file, fields = NULL, all = FALSE)
                 out[[l]][unique(nums[i])] <- split(vals[i], nums[i])
             }
         }
-        
+
         out
-    }    
-    
+    }
+
     on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
     Sys.setlocale("LC_CTYPE", "C")
 
@@ -71,8 +71,7 @@ function(file, fields = NULL, all = FALSE)
     ## Try to find out about invalid things: mostly, lines which do not
     ## start with blanks but have no ':' ...
     ind <- grep("^[^[:blank:]][^:]*$", lines)
-    if(any(ind))
-        stop("Invalid DCF format.")
+    if(length(ind)) stop("Invalid DCF format.")
 
     line_is_not_empty <- regexpr("^[[:space:]]*$", lines) < 0
     nums <- cumsum(diff(c(FALSE, line_is_not_empty) > 0) > 0)
@@ -93,7 +92,7 @@ function(file, fields = NULL, all = FALSE)
     ## Check that records start with tag lines.
     if(!all(line_has_tag[which(diff(nums) > 0) + 1]))
         stop("Invalid DCF format.")
-    
+
     ## End positions of field entries.
     pos <- cumsum(rle(cumsum(line_has_tag))$lengths)
 
@@ -114,10 +113,10 @@ function(file, fields = NULL, all = FALSE)
 
     out
 }
-                     
+
 write.dcf <-
 function(x, file = "", append = FALSE,
-         indent = 0.1 * getOption("width"), 
+         indent = 0.1 * getOption("width"),
          width = 0.9 * getOption("width"))
 {
     if(file == "")
@@ -126,7 +125,7 @@ function(x, file = "", append = FALSE,
         file <- file(file, ifelse(append, "a", "w"))
         on.exit(close(file))
     }
-    if(!inherits(file, "connection")) 
+    if(!inherits(file, "connection"))
         stop("'file' must be a character string or connection")
 
     ## We need to take care of two things:
@@ -136,7 +135,7 @@ function(x, file = "", append = FALSE,
     escape_paragraphs <- function(s)
         gsub("\n[[:space:]]*\n", "\n .\n ", s)
 
-    if(!is.data.frame(x)) 
+    if(!is.data.frame(x))
         x <- as.data.frame(x, stringsAsFactors = FALSE)
     nmx <- names(x)
     out <- matrix("", nrow(x), ncol(x))

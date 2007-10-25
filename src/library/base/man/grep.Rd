@@ -158,7 +158,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 grep("[a-z]", letters)
 
 txt <- c("arm","foot","lefroo", "bafoobar")
-if(any(i <- grep("foo",txt)))
+if(length(i <- grep("foo",txt)))
    cat("'foo' appears at least once in\n\t",txt,"\n")
 i # 2 and 4
 txt[i]

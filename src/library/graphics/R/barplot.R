@@ -60,8 +60,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     stopifnot(is.character(log))
     logx <- logy <- FALSE
     if (log != "") {
-	logx <- any(grep("x", log))
-	logy <- any(grep("y", log))
+	logx <- length(grep("x", log)) > 0L
+	logy <- length(grep("y", log)) > 0L
     }
     ## Cannot use rect(*, density=.) when log scales used
     if ((logx || logy) && !is.null(density))

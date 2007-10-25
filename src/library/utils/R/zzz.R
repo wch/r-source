@@ -32,7 +32,7 @@
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",
                  unzip = "internal",
-                 editor = if(any(grep("Rgui", commandArgs(), TRUE))) "internal" else "notepad",
+                 editor = if(length(grep("Rgui", commandArgs(), TRUE))) "internal" else "notepad",
                  repos = c(CRAN="@CRAN@",
                  CRANextra="http://www.stats.ox.ac.uk/pub/RWin")
                  )

@@ -190,11 +190,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             ## Compute the range of sigma first.
             srangepos <- NULL
             srangeneg <- NULL
-            if (any(x[x > 0]) && any(y[y > 0]))
+            if (length(x[x > 0]) && length(y[y > 0]))
                 srangepos <-
                     c(min(x[x>0], na.rm=TRUE)/max(y[y>0], na.rm=TRUE),
                       max(x[x>0], na.rm=TRUE)/min(y[y>0], na.rm=TRUE))
-            if (any(x[x <= 0]) && any(y[y < 0]))
+            if (length(x[x <= 0]) && length(y[y < 0]))
                 srangeneg <-
                     c(min(x[x<=0], na.rm=TRUE)/max(y[y<0], na.rm=TRUE),
                       max(x[x<=0], na.rm=TRUE)/min(y[y<0], na.rm=TRUE))

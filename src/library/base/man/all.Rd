@@ -13,7 +13,8 @@ all(\dots, na.rm = FALSE)
   Given a set of logical vectors, are all of the values true?
 }
 \arguments{
-  \item{\dots}{zero or more logical vectors.  Other objects are coerced in
+  \item{\dots}{zero or more logical vectors.  Other objects of zero
+    length are ignored, and the rest are coerced in
     a similar way to \code{as.logical.default}.}
   \item{na.rm}{logical.  If true \code{NA} values are removed before
     the result is computed.}

@@ -611,7 +611,7 @@ function(package, dir, lib.loc = NULL,
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     db_synopses <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "synopsis")
-    ind <- sapply(db_synopses, length) > 0
+    ind <- sapply(db_synopses, length) > 0L
     db_usage_texts[ind] <- db_synopses[ind]
     with_synopsis <- as.character(db_names[ind])
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
@@ -2979,8 +2979,8 @@ function(dfile)
     ##   Maintainer.
     required_fields <- c("Package", "Version", "License", "Description",
                          "Title", "Author", "Maintainer")
-    if(any(i <- which(is.na(match(required_fields, names(db))) |
-                      is.na(db[required_fields]))))
+    if(length(i <- which(is.na(match(required_fields, names(db))) |
+                         is.na(db[required_fields]))))
         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
@@ -3099,7 +3099,7 @@ function(x, ...)
     if(length(x$bad_maintainer))
         writeLines(c(gettext("Malformed maintainer field."), ""))
 
-    if(any(as.integer(sapply(x$bad_depends_or_suggests_or_imports, length)))) {
+    if(any(as.integer(sapply(x$bad_depends_or_suggests_or_imports, length)) > 0L )) {
         bad <- x$bad_depends_or_suggests_or_imports
         writeLines(gettext("Malformed Depends or Suggests or Imports or Enhances field."))
         if(length(bad$bad_dep_entry)) {
@@ -3130,7 +3130,7 @@ function(x, ...)
                      strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
                      ""))
 
-    if(any(as.integer(sapply(x, length))))
+    if(any(as.integer(sapply(x, length)) > 0L))
         writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
                      ""))
 
@@ -3186,7 +3186,7 @@ function(x, ...)
         writeLines(gettext("Fields with non-ASCII values:"))
         .pretty_print(x$fields_with_non_ASCII_values)
     }
-    if(any(as.integer(sapply(x, length))))
+    if(any(as.integer(sapply(x, length)) > 0))
         writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
                      ""))
 

@@ -73,11 +73,11 @@ function(lines)
     ## TRUE/FALSE according to whether they increase the skip level or
     ## not, and NA for ends of conditionals.
     ppTypes <- rep(NA, n_of_pp_lines)
-    if(any(i <- grep("^#ifdef", ppLines))) {
+    if(length(i <- grep("^#ifdef", ppLines))) {
         ppTypes[i] <- gsub("^#ifdef[[:space:]]+([[:alnum:]]+).*",
                            "\\1", ppLines[i]) != OS
     }
-    if(any(i <- grep("^#ifndef", ppLines))) {
+    if(length(i <- grep("^#ifndef", ppLines))) {
         ppTypes[i] <- gsub("^#ifndef[[:space:]]+([[:alnum:]]+).*",
                            "\\1", ppLines[i]) == OS
     }
@@ -490,7 +490,7 @@ function(file, text = NULL)
                     "\\{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*\\}.*",
                     sep = ""),
               lines)
-    if(any(i)) lines <- lines[-i]
+    if(length(i)) lines <- lines[-i]
     ## Collapse into one character string.
     txt <- paste(lines, collapse = "\n")
     ## Initialize for extraction loop.
