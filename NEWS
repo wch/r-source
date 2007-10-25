@@ -67,6 +67,10 @@ BUG FIXES
 	locale-specific (and excluded t to y in Estonian, for
 	example).  (PR#10351)
 
+    o	'R CMD build' could misbehave when faced with files with CRLF
+	line endings *and* no line ending on the final line of the
+	file, removing the last byte of the file.
+
 
 
 		CHANGES IN R VERSION 2.6.0

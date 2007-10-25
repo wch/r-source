@@ -814,7 +814,7 @@ sub check_pkg {
     if(-f $exclude_file) {
 	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
-	    chop;
+	    chomp;
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);

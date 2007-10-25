@@ -72,7 +72,7 @@ sub doS3 {
   $output = "";
 
   foreach $_ (@lines) {
-    chop;
+    chomp;
     &substitute unless /^\./;
     my @word = split;
 
