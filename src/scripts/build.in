@@ -200,7 +200,7 @@ foreach my $pkg (@ARGV) {
     if(-f &file_path($pkgdir, ".Rbuildignore")) {
 	open(RBUILDIGNORE, &file_path($pkgdir, ".Rbuildignore"));
 	while(<RBUILDIGNORE>) {
-	    chop;
+	    chomp;
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
@@ -653,7 +653,7 @@ sub fix_nonLF_in_source_files {
 		or die "Error: cannot open '$file.tmp' for writing\n";
             binmode(FILE); binmode(TFILE);	# for Windows
 	    while(<FILE>) {
-		chop;
+		chomp;
 		$has_nonLF = 1 if $_ =~ /\r/;
 		$_ =~ s/\r$//;
 		# any remaining CRs are internal and so line endings.
@@ -689,7 +689,7 @@ sub fix_nonLF_in_make_files {
 		or die "Error: cannot open '$file.tmp' for writing\n";
             binmode(FILE); binmode(TFILE);	# for Windows
 	    while(<FILE>) {
-		chop;
+		chomp;
 		$has_nonLF = 1 if $_ =~ /\r/;
 		$_ =~ s/\r$//;
 		# any remaining CRs are internal and so line endings.

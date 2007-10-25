@@ -814,7 +814,7 @@ sub check_pkg {
     if(-f $exclude_file) {
 	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
-	    chop;
+	    chomp;
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
@@ -872,6 +872,7 @@ sub check_pkg {
 	my $file_name = basename($file_path);
 	{
 	    ## collation is ASCII as 'use locale' is not in effect.
+	    ## NB: the omission of ' ' is deliberate.
 	    if (grep(/[^-A-Za-z0-9._!\#\$%&+,;=@^\(\)\{\}\'\[\]]/, $file_name))  {
 		push(@non_ASCII_files, $file_path);
 	    }
