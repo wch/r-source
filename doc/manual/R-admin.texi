@@ -293,8 +293,7 @@ make
 @noindent
 (See @ref{Using make} if your make is not called @samp{make}.)
 
-Then check the built system works correctly@footnote{This needs Perl to
-be available.}, by
+Then check the built system works correctly by
 
 @example
 make check
@@ -366,9 +365,7 @@ pathname of the build directory should not contain spaces.)
 Make will also build plain text help pages as well as @HTML{} and
 @LaTeX{} versions of the @R{} object documentation (the three kinds can
 also be generated separately using @code{make help}, @code{make html}
-and @code{make latex}).  Note that you need Perl version 5.8.x: if this
-is not available on your system, you can obtain PDF versions of the
-documentation files via @acronym{CRAN}.
+and @code{make latex}).
 
 For those obtaining @R{} @emph{via} Subversion, one additional step is
 necessary:
@@ -2281,10 +2278,9 @@ This is regarded as essential from @R{} 2.5.0: if you do not have it
 will need to configure with @option{--without-iconv} (or equivalent),
 and @command{make check} (and other checks) are likely to fail.
 
-You will need Perl version 5.8.0 or later, available via
-@url{http://www.perl.com/CPAN/, @code{www.perl.com/CPAN}}, to build any
-of the on-line documentation, which includes the examples needed for
-regression testing.
+Perl version 5.8.0 or later, available via
+@url{http://www.perl.com/CPAN/, @code{www.perl.com/CPAN}} is
+essential.
 
 You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
@@ -2300,7 +2296,7 @@ of the GNU @pkg{texinfo} distribution).
 The DVI and PDF documentation and building vignettes needs @command{tex}
 and @command{latex}, or @command{pdftex} and @command{pdflatex}.
 
-If you want to build from the R Subversion repository you need Perl,
+If you want to build from the R Subversion repository you need both
 @command{makeinfo} and @command{pdflatex}.
 @cindex Subversion
 

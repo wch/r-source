@@ -67,15 +67,6 @@ umask 022
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
 R_GZIPCMD='@R_GZIPCMD@'
-NO_PERL5=@NO_PERL5@
-NO_PERL5_MSG="\
-*** Formatting and installing R help pages needs Perl version 5, which
-*** does not seem to be installed on your system or is not in your path.
-*** Please install either Perl 5 on your system and re-configure R or
-*** (for a CRAN package) get the PDF reference manual from the nearest
-*** CRAN mirror.
-*** The CRAN master site can be found at
-***    http://cran.r-project.org/"
 
 : ${R_ARCH=@R_ARCH@}
 SED=@SED@
@@ -854,19 +845,15 @@ do_install_source () {
     chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd.gz"
     ## Maybe build preformatted help pages ...
     if ${build_help}; then
-      if ${NO_PERL5}; then
-	echo "${NO_PERL5_MSG}"
-      else
-	if ${debug}; then
-	  echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
-	fi
-	"${R_CMD}" perl "${R_SHARE_DIR}/perl/build-help.pl" \
-	  ${build_help_opts} \
-	  "${pkg_dir}" "${lib}" "${R_PACKAGE_DIR}" "${pkg_name}"
-	if test ${?} -ne 0; then
-	  error "building help failed for package '${pkg_name}'"
-	  do_exit_on_error
-        fi
+      if ${debug}; then
+	echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
+      fi
+      "${R_CMD}" perl "${R_SHARE_DIR}/perl/build-help.pl" \
+	${build_help_opts} \
+	"${pkg_dir}" "${lib}" "${R_PACKAGE_DIR}" "${pkg_name}"
+      if test ${?} -ne 0; then
+	error "building help failed for package '${pkg_name}'"
+	do_exit_on_error
       fi
       if test -n "${use_zip_help}" \
 	  && test -n "${R_UNZIPCMD}" \

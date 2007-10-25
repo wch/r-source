@@ -130,22 +130,10 @@ AC_DEFUN([R_PROG_PERL],
 [AC_PATH_PROGS(PERL, [${PERL} perl])
 if test -n "${PERL}"; then
   _R_PROG_PERL_VERSION
-else
-  ## <NOTE>
-  ## Need a full path for '@PERL@' substitutions when starting Perl
-  ## scripts with a line of the form '#! FOO'.
-  AC_PATH_PROGS(FALSE, false)
-  PERL="${FALSE}"
-  ## </NOTE>
 fi
-if test "${r_cv_prog_perl_v5}" = yes; then
-  NO_PERL5=false
-else
-  warn_perl5="you cannot build the object documentation system"
-  AC_MSG_WARN([${warn_perl5}])
-  NO_PERL5=true
+if test "${r_cv_prog_perl_v5}" != yes; then
+  AC_MSG_ERROR([Building R requires Perl >= 5.8.0])
 fi
-AC_SUBST(NO_PERL5)
 ])# R_PROG_PERL
 
 ## _R_PROG_PERL_VERSION

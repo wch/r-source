@@ -68,6 +68,11 @@ DEPRECATED & DEFUNCT
 	package in the R distribution.
 
 
+INSTALLATION
+
+    o	Perl (>= 5.8.0) is now required to build R.
+
+
 UTILITIES
 
     o	Rdconv now removes empty sections including alias and keyword

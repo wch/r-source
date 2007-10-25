@@ -57,18 +57,10 @@ docs:
 	@touch stamp-docs
 
 help-indices:
-	@if @NO_PERL5@; then \
-	  echo "you need Perl version 5 to build the R object docs"; \
-	  exit 1; \
-	fi
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) --index $(srcdir)/$${pkg}; \
 	done
 Rdfiles:
-	@if @NO_PERL5@; then \
-	  echo "you need Perl version 5 to build the R object docs"; \
-	  exit 1; \
-	fi
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
 	done
