@@ -353,7 +353,7 @@ predict.polySpline <- function(object, x, nseg = 50, deriv = 0, ...)
 predict.bSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
-    if(any(diff(knots)) < 0)
+    if(any(diff(knots) < 0))
 	stop("knot positions must be non-decreasing")
     ord <- splineOrder(object)
     if(deriv < 0 || deriv >= ord)
