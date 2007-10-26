@@ -6,7 +6,6 @@
 \name{integer}
 \alias{integer}
 \alias{as.integer}
-\alias{as.integer.default}
 \alias{is.integer}
 \title{Integer Vectors}
 \description{

@@ -32,7 +32,8 @@ next
 \arguments{
   \item{cond}{A length-one logical vector that is not \code{NA}.
     Conditions of length greater than one are accepted with a warning, but
-    only the first element is used.
+    only the first element is used.  Other types are coerced to logical
+    if possible, ignoring any class.
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
