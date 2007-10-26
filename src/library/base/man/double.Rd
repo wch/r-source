@@ -7,7 +7,6 @@
 \title{Double-Precision Vectors}
 \alias{double}
 \alias{as.double}
-\alias{as.double.default}
 \alias{is.double}
 \alias{single}
 \alias{as.single}

@@ -7,7 +7,6 @@
 \title{Complex Vectors}
 \alias{complex}
 \alias{as.complex}
-\alias{as.complex.default}
 \alias{is.complex}
 \alias{Re}
 \alias{Im}
