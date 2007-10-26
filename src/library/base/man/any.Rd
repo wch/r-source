@@ -14,8 +14,8 @@ any(\dots, na.rm = FALSE)
 }
 \arguments{
   \item{\dots}{zero or more logical vectors.  Other objects of zero
-    length are ignored, and the rest are coerced in
-    a similar way to \code{as.logical.default}.}
+    length are ignored, and the rest are coerced to logical ignoring
+    any class.}
   \item{na.rm}{logical.  If true \code{NA} values are removed before
     the result is computed.}
 }
@@ -24,6 +24,9 @@ any(\dots, na.rm = FALSE)
   directly or via the \code{\link[base:groupGeneric]{Summary}} group generic.
   For this to work properly, the arguments \code{\dots} should be
   unnamed, and dispatch is on the first argument.
+
+  Coercion of types other than integer (raw, double, complex, character,
+  list) gives a warning as from \R 2.7.0, as this was often unintentional.
 }
 \value{
   The value is a logical vector of length one.

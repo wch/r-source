@@ -52,6 +52,10 @@ NEW FEATURES
 	used a surprising amount of memory) since they cannot affect
 	the answer.
 
+	Coercion of other than integer arguments now gives a warning
+	as this is often a mistake (e.g. writing all(pr) > 0 instead
+	of all(pr > 0) ).
+
 
 DEPRECATED & DEFUNCT
 
