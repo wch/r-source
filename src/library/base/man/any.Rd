@@ -13,8 +13,8 @@ any(\dots, na.rm = FALSE)
   Given a set of logical vectors, is at least one of the values true?
 }
 \arguments{
-  \item{\dots}{zero or more logical vectors.  Other objects are coerced in
-    a similar way to \code{as.logical.default}.}
+  \item{\dots}{zero or more logical vectors.  Other objects are coerced
+    to logical, ignoring any class.}
   \item{na.rm}{logical.  If true \code{NA} values are removed before
     the result is computed.}
 }
