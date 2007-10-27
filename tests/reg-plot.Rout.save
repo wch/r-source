@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2007-10-17 r43189)
+R version 2.7.0 Under development (unstable) (2007-10-25 r43276)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -149,7 +149,10 @@ Error in plot.xy(xy.coords(x, y), type = type, ...) :
 > ## gave wrong ylab in R 2.6.0
 > plot(cos, -7,7, ylab = "Cosine  cos(x)", n=11, axes=FALSE)
 > ## partial matching of 'ylab'; mapping  [0,1] (not [-7.7]):
+> ## margins chosen to avoid rouding error showing to 2dp.
+> op <- par(mar=c(5,4.123,4,2)+0.1)
 > plot(gamma, yla = expression(Gamma(x)), n=11, yaxt="n")
 Warning in x(x) : NaNs produced
+> par(op)
 > 
 > 
