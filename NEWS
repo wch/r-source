@@ -94,6 +94,16 @@ BUG FIXES
 	of 8 significant digits), when x^2 << df, thanks to a remark from
 	Ian Smith, related to PR#9945.
 
+    o	co[rv](use = "complete.obs") now always gives an error if there
+	are no complete cases: they used to give NA if
+	method = "pearson" but an error for the other two methods.  (Note
+	that this is pretty arbitrary, but zero-length vectors always
+	give an error so it is at least consistent.)
+
+	cor(use="pair") used to give diagonal 1 even if the variable
+	was completely missing for the rank methods but NA for the
+	Pearson method: it now gives NA in all cases.
+
 
 
 	**************************************************

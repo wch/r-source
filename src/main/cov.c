@@ -380,7 +380,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, ans, xm, ym, ind;
     Rboolean cor, kendall, pair, na_fail, sd_0;
-    int ansmat, method, n, ncx, ncy;
+    int i, ansmat, method, n, ncx, ncy;
 
     checkArity(op, args);
 
@@ -447,11 +447,14 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     sd_0 = FALSE;
     if (isNull(y)) {
 	if (!pair) { /* all | complete "var" */
+	    Rboolean indany = FALSE;
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete1(n, ncx, REAL(x), INTEGER(ind), na_fail);
 	    cov_complete1(n, ncx, REAL(x), REAL(xm),
 			  INTEGER(ind), REAL(ans), &sd_0, cor, kendall);
+	    for(i = 0; i < n; i++) if(INTEGER(ind)[i] == 1) indany = TRUE;
+	    if(!indany) error(_("no complete element pairs"));
 	    UNPROTECT(2);
 	}
 	else {		/* pairwise "var" */
@@ -460,12 +463,15 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else { /* Co[vr] (x, y) */
 	if (!pair) { /* all | complete */
+	    Rboolean indany = FALSE;
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ym = allocVector(REALSXP, ncy));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete2(n, ncx, ncy, REAL(x), REAL(y), INTEGER(ind), na_fail);
 	    cov_complete2(n, ncx, ncy, REAL(x), REAL(y), REAL(xm), REAL(ym),
 			  INTEGER(ind), REAL(ans), &sd_0, cor, kendall);
+	    for(i = 0; i < n; i++) if(INTEGER(ind)[i] == 1) indany = TRUE;
+	    if(!indany) error(_("no complete element pairs"));
 	    UNPROTECT(3);
 	}
 	else {		/* pairwise */

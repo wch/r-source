@@ -61,17 +61,18 @@ cov2cor(V)
   variance.  Otherwise (\code{use = "all"}), \code{var} will give an
   error if there are missing values.
 
-  If \code{use} is \code{"all.obs"}, then the presence
-  of missing observations will produce an error.
-  If \code{use} is \code{"complete.obs"} then missing values
-  are handled by casewise deletion.  Finally, if \code{use} has the
-  value \code{"pairwise.complete.obs"} then the correlation between
-  each pair of variables is computed using all complete pairs
-  of observations on those variables.
-  This can result in covariance or correlation matrices which are not
-  positive semi-definite. \code{"pairwise.complete.obs"} only works with
-  the \code{"pearson"} method for \code{cov} and \code{var}.
-
+  If \code{use} is \code{"all.obs"}, then the presence of missing
+  observations will produce an error.  If \code{use} is
+  \code{"complete.obs"} then missing values are handled by casewise
+  deletion (and if there are no complete cases, that gives an error).
+  Finally, if \code{use} has the value \code{"pairwise.complete.obs"}
+  then the correlation between each pair of variables is computed using
+  all complete pairs of observations on those variables.  This can
+  result in covariance or correlation matrices which are not positive
+  semi-definite, as well as \code{NA} entries if there are no complete
+  pairs for that pair of variables.   \code{"pairwise.complete.obs"}
+  only works with the \code{"pearson"} method for \code{cov} and
+  \code{var}.
 
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
