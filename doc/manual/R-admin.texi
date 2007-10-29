@@ -672,7 +672,7 @@ CPUs (@cputype{ppc}, @cputype{ppc64}, @cputype{i386} and
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
 @var{name} can be anything non-empty, and is used to name subdirectories
 of @file{lib}, @file{etc}, @file{include} and @file{libs}.  Example
-names from other systems are the use of @file{sparcv9} on Soarc Solaris
+names from other systems are the use of @file{sparcv9} on Sparc Solaris
 and @file{32} by @code{gcc} on @cputype{x86_64} Linux.
 
 If you have two or more such builds you can install them over each other
@@ -699,6 +699,10 @@ extra builds by
 R --arch=@var{name} CMD INSTALL --libs-only @var{pkg(s)}
 @end example
 
+If you want to mix sub-architectures compiled on different platforms
+(for example @cputype{x86_64} Linux and @cputype{i686} Linux), it is
+wise to use explicit names for each, and you may also need to set
+@option{libdir} to ensure that they install into the same place.
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
