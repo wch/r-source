@@ -531,7 +531,10 @@ data.frame <-
                 rows <- attr(xx, "row.names")
                 i <- pmatch(i, rows, duplicates.ok = TRUE)
             }
-            xj <- .subset2(xx, j)
+            ## need to figure which col was selected:
+            ## cannot use .subset2 directly as that may
+            ## use recursive selection for a logical index.
+            xj <- .subset2(.subset(xx, j), 1L)
             return(if(length(dim(xj)) != 2L) xj[i] else xj[i, , drop = FALSE])
         }
         if(any(is.na(cols))) stop("undefined columns selected")

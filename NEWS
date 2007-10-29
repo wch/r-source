@@ -173,6 +173,9 @@ BUG FIXES
 	line endings *and* no line ending on the final line of the
 	file, removing the last byte of the file.
 
+    o	DF[i, j] failed in 2.6.0 if j was a logical vector selecting a
+	single column.
+
 
 
 		CHANGES IN R VERSION 2.6.0

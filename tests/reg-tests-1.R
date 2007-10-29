@@ -4925,3 +4925,9 @@ D(quote(psigamma(sin(x))),"x")
 D(quote(psigamma(sin(x), 3)),"x")
 n <- 2L; D(quote(psigamma(sin(x), n)),"x")
 ## rest are new
+
+
+## .subset2 quirk
+iris[1, c(TRUE, FALSE, FALSE, FALSE, FALSE)]
+iris[1, c(FALSE, FALSE, FALSE, FALSE, TRUE)]
+## failed in 2.6.0
