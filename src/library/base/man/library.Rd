@@ -217,7 +217,11 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   provided it contains compiled code.  Packages which do not contain
   compiled code can be shared between Unix-alikes, but not to other OSes
   because of potential problems with line endings and OS-specific help
-  files.
+  files.  If sub-architectures are used, the OS similarity is not
+  checked since the OS used to build may differ (e.g.
+  \code{i386-pc-linux-gnu} code can be built on an
+  \code{x86_64-unknown-linux-gnu} OS).
+ 
 
   The package name given to \code{library} and \code{require} must match
   the name given in the package's \file{DESCRIPTION} file exactly, even
