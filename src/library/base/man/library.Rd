@@ -66,9 +66,9 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     the named package, and not to any packages or name spaces which might be
     loaded to satisfy dependencies or imports.
 
-    This argument does not apply to packages using lazy-loading or saved
-    images.  Whether they have kept source is determined when they are
-    installed (and is most likely false).
+    This argument does not apply to packages using lazy-loading.
+    Whether they have kept source is determined when they are installed
+    (and is most likely false).
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
