@@ -1299,7 +1299,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, const char *dsp,
 
 		app_con = XtCreateApplicationContext();
 		XtAppSetFallbackResources(app_con, x_fallback_resources);
-		xtdpy = XtOpenDisplay(app_con, NULL, "r_x11", "R_x11",
+		xtdpy = XtOpenDisplay(app_con, dsp, "r_x11", "R_x11",
 				      NULL, 0, &zero, NULL);
 		toplevel = XtAppCreateShell(NULL, "R_x11",
 					    applicationShellWidgetClass,

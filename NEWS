@@ -79,6 +79,9 @@ BUG FIXES
     o	DF[i, j] failed in 2.6.0 if j was a logical vector selecting a
 	single column.
 
+    o	Unix x11() would fail if a valid 'display' was specified but
+	DISPLAY was unset. (PR#10379)
+
 
 
 		CHANGES IN R VERSION 2.6.0
