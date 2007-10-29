@@ -122,6 +122,11 @@ NEW FEATURES
     o	embedFonts(), bitmap() and dev2bitmap() explicitly turn off
 	auto-rotation in Ghostscript when generating PDF.
 
+    o	The canonical architecture is no longer checked when loading
+	packages using a non-empty sub-architecture, since it is
+	possible to (e.g.) build packages for i386-pc-linux-gnu on both
+	that architecture and on x86_64-unknown-linux-gnu.
+
 
 BUG FIXES
 
