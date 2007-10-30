@@ -52,8 +52,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   that is missing the final EOL marker.
 
   See \code{\link{source}} for the limits on the size of functions
-  that can be parsed (by default).  There is also a limit of 100000 bytes
-  on the size of strings which can be parsed.
+  that can be parsed (by default).
 
   When input is taken from the console, \code{n = NULL} is equivalent to
   \code{n = 1}, and \code{n < 0} will read until an EOF character is read.
