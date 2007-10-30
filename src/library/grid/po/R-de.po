@@ -1,0 +1,461 @@
+# German translation of 
+# src/library/graphics/po/R-grid.pot
+# Copyright (C) 2005-2007 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.6.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
+"PO-Revision-Date: 2007-10-30 15:00+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R-Core <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+msgid "Invalid 'at' location in 'axis'"
+msgstr "unzulässiger Ort für 'at' in 'axis'"
+
+msgid "Invalid to specify axis labels when 'at' is NULL"
+msgstr "unzulässig, die Achsenlabel anzugeben, wenn 'at' NULL ist"
+
+msgid "'labels' and 'at' locations must have same length"
+msgstr "'labels' und 'at' müssen die selbe Läne haben"
+
+msgid "logical 'label' supplied on length 0"
+msgstr "boolescher 'label' bei Länge 0 angegeben"
+
+msgid "End points must not be identical"
+msgstr "Endpunkte dürfen nicht identisch sein"
+
+msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+msgstr "'x1', 'y1', 'x2' und 'y2' müssen Einheiten sein"
+
+msgid "'shape' must be between -1 and 1"
+msgstr "'shape' muss zwischen -1 und 1 sein"
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr "'squareShape' muss zwischen -1 und 1 sein"
+
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "'arrow' muss ein Pfeil-Objekt oder NULL sein"
+
+msgid "Invalid 'edit' information"
+msgstr "ungültige 'edit' Information"
+
+msgid "'gEditList' can only contain 'gEdit' objects"
+msgstr "gEditList' kann nur 'gEdit' Objekte enthalten"
+
+msgid "Invalid 'frame'"
+msgstr "ungültiger 'frame'"
+
+msgid "Invalid 'grob'"
+msgstr "ungültiges 'grob'"
+
+msgid "Invalid 'row' and/or 'col' (no such cell in frame layout)"
+msgstr "ungültiges 'row' und/oder 'col' (keine solche Zelle im Layout)"
+
+msgid "'col' can only be a range of existing columns"
+msgstr "'col' kann nur ein Bereich existierender Spalten sein"
+
+msgid "Invalid 'col' specification"
+msgstr "Unzulässige 'col' Spezifikation"
+
+msgid "'row' can only be a range of existing rows"
+msgstr "'row' kann nur ein Bereich existierender Zeilen sein"
+
+msgid "Invalid 'row' specification"
+msgstr "Unzulässige 'row' Spezifikation"
+
+msgid "Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "es kann nur ein Parameter aus 'side=[\"left\", \"right\"]', 'col', 'col.before' oder 'col.after' angegeben werden"
+
+msgid "Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "es kann nur ein Parameter aus 'side=[\"left\", \"right\"]', 'row', 'row.before' oder 'row.after' angegeben werden"
+
+msgid "gpar element '%s' must not be length 0"
+msgstr "gpar element '%s' darf nicht Länge 0 haben"
+
+msgid "'gamma' gpar is deprecated"
+msgstr "gpar 'gamma' ist veraltet"
+
+msgid "Invalid 'linemitre' value"
+msgstr "unzulässiger Wert für 'linemitre'"
+
+msgid "Invalid 'alpha' value"
+msgstr "unzulässiger Wert für 'alpha'"
+
+msgid "Must specify only one of 'font' and 'fontface'"
+msgstr "es darf nur entweder 'font' oder 'fontface' angegeben werden"
+
+msgid "Invalid font face"
+msgstr "ungültiger Fontace"
+
+msgid "Argument must be a 'gpar' object"
+msgstr "Argument muss ein 'gpar' Objekt sein"
+
+msgid "Must specify only valid 'gpar' names"
+msgstr "es darf nur ein gültiger 'gpar' Name angegeben werden"
+
+msgid "Invalid display list element"
+msgstr "ungültiges Displaylisten-Element"
+
+msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+msgstr "grob(s) überschrieben (grab NICHT zuverlässig; versuche 'wrap=TRUE'"
+
+msgid "viewport overwritten (grab MAY not be faithful)"
+msgstr "Viewport überschrieben (grab EVTL. nicht zuverlässig)"
+
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob hat Viewports auf den Stack gelegt, aber nicht zurückgeholt/weitergeschoben (grab EVTL. nicht zuverlässig)"
+
+msgid "Only valid to push viewports"
+msgstr "Viewports dürfen nur ge\"pushed\" werden"
+
+msgid "Must specify at least one viewport"
+msgstr "es muss zumindest ein Viewport angegeben werden"
+
+msgid "Viewport '%s' was not found"
+msgstr "Viewport '%s' nicht gefunden"
+
+msgid "Must pop at least one viewport"
+msgstr "es muss zumindest ein Viewport von Stacke geholt werden"
+
+msgid "Must navigate up at least one viewport"
+msgstr "es muss mindestens ein Viewport nach oben navigiert werden"
+
+msgid "The vp argument is deprecated"
+msgstr "vp Argument ist verwaltet"
+
+msgid "Invalid 'ask' value"
+msgstr "ungültiger Wert für 'ask'"
+
+msgid "Invalid object inserted on the display list"
+msgstr "unzulässiges Objekt in die Displayliste eingefügt"
+
+msgid "Invalid 'grob' argument"
+msgstr "unzulässiges 'grob' argument"
+
+msgid "Invalid 'vp' slot"
+msgstr "unzulässiger 'vp' slot"
+
+msgid "Invalid 'gp' slot"
+msgstr "unzulässiger 'gp' slot"
+
+msgid "Invalid 'grob' class"
+msgstr "ungültige 'grob' Klasse"
+
+msgid "grid.grob() is deprecated; please use grob() instead"
+msgstr "grid.grob() ist veraltet; bitte stattdessen grob() nutzen"
+
+msgid "A 'grob' path must contain at least one 'grob' name"
+msgstr "ein 'grob' Pfad muss mindestens einen 'grob' Namen enthalten"
+
+msgid "Invalid 'grob' name(s)"
+msgstr "ungültige(r) 'grob' Name(n)"
+
+msgid "Unable to coerce to gList"
+msgstr "kann nicht in gList gewandelt werden"
+
+msgid "Only 'grobs' allowed in 'gList'"
+msgstr "nur 'grobs' in 'gList' erlaubt"
+
+msgid "Invalid element to add to 'gList'"
+msgstr "unzulässiges Element für Hinzufügen in 'gList'"
+
+msgid "Can only set 'children' for a 'gTree'"
+msgstr "kann nur 'children' für einen 'gTree' setzen"
+
+msgid "'children' must be a 'gList'"
+msgstr "'children' muss eine 'gList' sein"
+
+msgid "It is only valid to get 'children' from a 'gTree'"
+msgstr "es ist nur zulässig, 'children' aus einem 'gTree' zu bekommen"
+
+msgid "Invalid 'gTree' class"
+msgstr "ungültige 'gTree' Klasse"
+
+msgid "'allDevices' not yet implemented"
+msgstr "'allDevices' noch nicht implementiert"
+
+msgid "Invalid 'gPath'"
+msgstr "ungültiger 'gPath'"
+
+msgid "Invalid 'grep' value"
+msgstr "ungültiger 'grep' Wert"
+
+msgid "It is only valid to get a child from a 'gTree'"
+msgstr "es ist nur zulässig, ein Kind aus einem 'gTree' zu bekommen"
+
+msgid "'gPath' does not specify a valid child"
+msgstr "'gPath' spezifiziert keine gültiges Kind"
+
+msgid "It is only valid to set a child of a 'gTree'"
+msgstr "es ist nur zulässig ein Kind eines 'gTree' zu setzen"
+
+msgid "It is only valid to set a 'grob' as child of a 'gTree'"
+msgstr "es ist nur zulässig ein 'grob' als Kind eines 'gTree' zu setzen"
+
+msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
+msgstr "Neuer 'grob' Name (%s) passt nicht auf 'gPath' (%s)"
+
+msgid "It is only valid to add a 'grob' to a 'gTree'"
+msgstr "es ist nur zulässig einen 'grob' zu einem 'gTree' hinzuzufügen"
+
+msgid "It is only valid to add a child to a 'gTree'"
+msgstr "es ist nur zulässig ein Kind zu einem 'gTree' hinzuzufügen"
+
+msgid "It is only valid to remove a child from a 'gTree'"
+msgstr "es ist nur zulässig ein Kind aus einem 'gTree' zu entfernen"
+
+msgid "It is only valid to edit a child of a 'gTree'"
+msgstr "es ist nur zulässig ein Kind eines 'gTree' zu editieren"
+
+msgid "It is invalid to directly edit the 'children' or 'childrenOrder' slot"
+msgstr "es ist unzulässig direkt den 'children' oder 'childrenOrder' Slot zu editieren"
+
+msgid "Invalid 'result'"
+msgstr "unzulässiges 'result'"
+
+msgid "The new 'grob' must have the same name as the old 'grob'"
+msgstr "neuer 'grob' muss den selben Namen wie der alte 'grob' haben"
+
+msgid "Slot '%s' not found"
+msgstr "Slot '%s' nicht gefunden"
+
+msgid "'gPath' (%s) not found"
+msgstr "'gPath' (%s) nicht gefunden"
+
+msgid "gPath (%s) not found"
+msgstr "gPath (%s) nicht gefunden"
+
+msgid "Grob '%s' not found"
+msgstr "Grob '%s' nicht gefunden"
+
+msgid "Invalid element in the display list"
+msgstr "unzulässiges Element in der Display-Liste"
+
+msgid "This function is redundant and will disappear in future versions."
+msgstr "Diese Funktion ist redundant und wird in späteren Versionen verschwinden"
+
+msgid "'l' must be a layout"
+msgstr "'l' muss ein Layout sein"
+
+msgid "'pch' and 'labels' not the same length"
+msgstr "'pch' und 'labels' nicht gleich lang"
+
+msgid "'hgap' must be single unit"
+msgstr "'hgap' muss eine einzelne Stelle sein"
+
+msgid "'vgap' must be single unit"
+msgstr "'vgap' muss eine einzelne Stelle sein"
+
+msgid "Invalid justification"
+msgstr "unzulässige Ausrichtung"
+
+msgid "Invalid horizontal justification"
+msgstr "unzulässige horizontale Ausrichtung"
+
+msgid "Invalid vertical justification"
+msgstr "unzulässige vertikale Ausrichtung"
+
+msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+msgstr "'respect'muss boolesch oder eine 'nrow' mal 'ncol' Matix sein"
+
+msgid "Invalid"
+msgstr "ungültig"
+
+msgid "print"
+msgstr "drucke"
+
+msgid "argument"
+msgstr "Argument"
+
+msgid "Invalid object in listing"
+msgstr "Ungültiges Objekt im Listing"
+
+msgid "Invalid listing"
+msgstr "Ungültiges Listing"
+
+msgid "Invalid 'origin'"
+msgstr "unzulässiger 'origin'"
+
+msgid "'length' must be a unit object"
+msgstr "'length' muss ein unit-Objekt sein"
+
+msgid "Invalid 'ends' or 'type' argument"
+msgstr "unzulässiges 'ends' oder 'type' Argument"
+
+msgid "'x' and 'y' must be units"
+msgstr "'x' und 'y' müssen Einheiten sein"
+
+msgid "'x' and 'y' must have length 1"
+msgstr "'x' und 'y' müssen Länge 1 haben"
+
+msgid "invalid 'arrow' argument"
+msgstr "ungültiges 'arrow' Argument"
+
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
+msgstr "Es ist nicht zulässig 'id' und 'id.lengths' anzugeben"
+
+msgid "'x' and 'y' must be same length"
+msgstr "'x' und 'y' müssen gleiche Länge haben"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "'x','y' und 'id' müssen gleiche Länge haben"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr "'x', 'y' und 'id.length' müssen dieselbe Gesamtlänge angeben"
+
+msgid "'x0', 'y0', 'x1', and 'y1' must be units"
+msgstr "'x0', 'y0', 'x1' und 'y1' müssen Einheiten sein"
+
+msgid "'x' and 'y' must be units or NULL"
+msgstr "'x' und 'y' müssen Einheiten oder NULL sein"
+
+msgid "Corrupt 'arrows' object"
+msgstr "korruptes 'arrows' Objekt sein"
+
+msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+msgstr "grid.arrows() ist veraltet; bitte das 'arrow' Argument für die Linienzugfuktionen nutzen"
+
+msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+msgstr "Das 'grob' Argument muss entweder ein 'line.to', 'lines' oder 'segments' Grob sein"
+
+msgid "x and y must be units"
+msgstr "x und y müssen Einheiten sein"
+
+msgid "shape must be between -1 and 1"
+msgstr "shape muss zwischen -1 und 1 liegen"
+
+msgid "'x', 'y', and 'r' must be units"
+msgstr "'x', 'y' und 'r' müssen Einheiten sein"
+
+msgid "'x', 'y', 'width', and 'height' must be units"
+msgstr "'x', 'y', 'width' und 'height' müssen Einheiten sein"
+
+msgid "Invalid 'rot' value"
+msgstr "Unzulässiger Wert für 'rot'"
+
+msgid "zero-length 'pch'"
+msgstr "'pch' mit Länge 0"
+
+msgid "'x', 'y' and 'size' must be units"
+msgstr "'x', 'y' und 'size' müssen Einheiten sein"
+
+msgid "'x' and 'y' must be unit objects and have the same length"
+msgstr "'x' und 'y' müssen Einheiten-Objekte derselben Länge sein"
+
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr "'x', 'y', 'width' und 'height' müssen alle Einheiten der Länge 1 sein"
+
+msgid "'x' and 'units' must have length > 0"
+msgstr "'x' und 'units' müssen Länge > 0 haben"
+
+msgid "'x' argument must be a unit object"
+msgstr "'x' Argument muss ein Einheiten-Objekt sein"
+
+msgid "Invalid 'axis' or 'type'"
+msgstr "Ungültige 'axis' oder ungültiger 'type'"
+
+msgid "No string supplied for 'strwidth/height' unit"
+msgstr "Keine Zeichenkette für 'strwidth/height' Einheit angegeben"
+
+msgid "No 'grob' supplied for 'grobwidth/height' unit"
+msgstr "Kein 'grob' angegeben für 'grobwidth/height' Einheit"
+
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+msgstr "'gPath' muss Tiefe 1 haben in 'grobwidth/height' Einheiten"
+
+msgid "Non-NULL value supplied for plain unit"
+msgstr "Nicht-NULL Wert angegeben für eine plain Einheit"
+
+msgid "Operator '%s' not meaningful for units"
+msgstr "Operator '%s' hat für Einheiten keine Bedeutung"
+
+msgid "Only one operand may be a unit"
+msgstr "Nur ein Operand darf eine Einheit sein"
+
+msgid "Non-unit operand must be numeric"
+msgstr "Nicht-einheits Operand muss nummerisch sein"
+
+msgid "Both operands must be units"
+msgstr "Beide Operanden müssen Einheiten sein"
+
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "'Summary'-Funktion '%s' hat für Einheiten keine Bedeutung"
+
+msgid "Zero arguments where at least one expected"
+msgstr "Kein Argument, wo zumindest eines erwartet"
+
+msgid "Index out of bounds (unit subsetting)"
+msgstr "Index außerhalb des Bereichs (Einheitenauswahl)"
+
+msgid "Index out of bounds (unit arithmetic subsetting)"
+msgstr "Index außerhalb des Bereichs (arithmetische Einheitsauswahl)"
+
+msgid "Index out of bounds (unit list subsetting)"
+msgstr "Index außerhalb des Bereichs (Einheitslistenauswahl)"
+
+msgid "It is invalid to combine unit objects with other types"
+msgstr "Einheiten-Objekte können nicht mit anderen Typen kombiniert werden"
+
+msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+msgstr "unit.rep ist veraltet zugunsten einer Einheiten-Methode für die generische rep Funktion"
+
+msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+msgstr "unit.length ist veraltet zugunsten einer Einheiten-Methode für die generische length Funktion"
+
+msgid "Invalid theta"
+msgstr "Unzulässiges theta"
+
+msgid "'range' must be numeric"
+msgstr "'range' muss nummerisch sein"
+
+msgid "Invalid graphics parameters"
+msgstr "Unzulässige Grafikparameter"
+
+msgid "Invalid 'clip' value"
+msgstr "Unzulässiger Wert für 'clip'"
+
+msgid "Invalid 'xscale' in viewport"
+msgstr "Unzulässiger Wert für 'xscale' in viewport"
+
+msgid "Invalid 'yscale' in viewport"
+msgstr "Unzulässiger Wert für 'yscale' in viewport"
+
+msgid "Invalid 'angle' in viewport"
+msgstr "Unzulässiger Wert für 'angle' in viewport"
+
+msgid "Invalid 'layout' in viewport"
+msgstr "Unzulässiger Wert für 'layout' in viewport"
+
+msgid "Invalid 'layout.pos.row' in viewport"
+msgstr "Unzulässiger Wert für 'layout.pos.row' in viewport"
+
+msgid "Invalid 'layout.pos.col' in viewport"
+msgstr "Unzulässiger Wert für 'layout.pos.col in viewport"
+
+msgid "Only viewports allowed in 'vpList'"
+msgstr "Nur Viewports zulässig in 'vpList'"
+
+msgid "Only viewports allowed in 'vpStack'"
+msgstr "Nur Viewports zulässig in 'vpStack'"
+
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' muss ein Viewport sein und 'children eine 'vpList' in einem 'vpTree'"
+
+msgid "A viewport path must contain at least one viewport name"
+msgstr "Ein Viewport-Pfad muss zumindest einen Viewport-Namen enthalten"
+
+msgid "Invalid viewport name(s)"
+msgstr "Unzulässige(r) Viewport-Name(n)"
+
+msgid "Must specify at least one of 'x' or 'xscale'"
+msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"
+
+msgid "Must specify at least one of 'y' or 'yscale'"
+msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
