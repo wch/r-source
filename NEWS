@@ -56,6 +56,9 @@ NEW FEATURES
 	as this is often a mistake (e.g. writing all(pr) > 0 instead
 	of all(pr > 0) ).
 
+    o	The parser limit on string size has been raised from 8192 to
+	100,000 bytes.
+
 
 DEPRECATED & DEFUNCT
 

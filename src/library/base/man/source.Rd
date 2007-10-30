@@ -72,8 +72,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   trial encoding.
 
   Unlike input from a console, lines in the file or on a connection can
-  contain an unlimited number of characters.  However, there is a limit
-  of 8192 bytes on the size of character strings.
+  contain an unlimited number of characters.  However, there is a parser
+  limit of 100000 bytes on the size of character strings.
   
   When \code{skip.echo > 0}, that many comment lines at the start of
   the file will not be echoed.  This does not affect the execution of

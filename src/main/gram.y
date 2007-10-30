@@ -1816,7 +1816,7 @@ static void CheckFormalArgs(SEXP formlist, SEXP _new)
     }
 }
 
-static char yytext[MAXELTSIZE];
+static char yytext[100000];
 
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
 #define YYTEXT_PUSH(c, bp) do { \
