@@ -38,7 +38,7 @@ check.options <-
 	} else stop(gettextf("cannot reset non-existent '%s'", name.opt),
                     domain = NA)
     }
-    old <- get(name.opt, envir=envir)
+    old <- get(name.opt, envir=envir, inherits=FALSE)
     if(!is.list(old))
 	stop(gettextf("invalid options in '%s'", name.opt), domain = NA)
     oldnames <- names(old)
@@ -551,7 +551,7 @@ matchFont <- function(font, encoding) {
 #      Also, we want the run-time locale not the install-time locale.
 
 initPSandPDFfonts <- function() {
-    if(exists(".PostScript.Options", envir = .PSenv)) return()
+    if(exists(".PostScript.Options", envir = .PSenv, inherits=FALSE)) return()
 
 assign(".PostScript.Options",
     list(paper	= "default",

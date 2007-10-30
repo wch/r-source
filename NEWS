@@ -192,6 +192,9 @@ BUG FIXES
     o	Unix x11() would fail if a valid 'display' was specified but
 	DISPLAY was unset. (PR#10379)
 
+    o	postscript() was not always ignoring .Postscript.Options in
+	the workspace (where it should not have occurred).
+
 
 
 		CHANGES IN R VERSION 2.6.0
