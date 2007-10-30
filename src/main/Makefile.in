@@ -177,6 +177,9 @@ install-lib-local: $(libR_la)
 ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
 
+# suppress #line directives
+YFLAGS=-l
+
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@echo "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
