@@ -1947,7 +1947,7 @@ static int StringValue(int c)
 {
     int quote = c;
     int have_warned = 0;
-    char currtext[MAXELTSIZE], *ct = currtext;
+    char currtext[100000], *ct = currtext;
     DECLARE_YYTEXT_BUFP(yyp);
 
     while ((c = xxgetc()) != R_EOF && c != quote) {

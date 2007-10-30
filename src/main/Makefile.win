@@ -41,10 +41,6 @@ CSOURCES=\
 FSOURCES=xxxpr.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
 
-gram.c: gram.y
-	bison gram.y
-	$(SED) -e "s/gram.tab.c/gram.c/" gram.tab.c > gram.c
-	$(RM) gram.tab.c
 
 saveload-CPPFLAGS=-I../extra/xdr
 connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
