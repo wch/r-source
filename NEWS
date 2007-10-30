@@ -140,6 +140,9 @@ NEW FEATURES
 	possible to (e.g.) build packages for i386-pc-linux-gnu on both
 	that architecture and on x86_64-unknown-linux-gnu.
 
+    o	Deparsing will (if option warnIncomplete is set) warn on
+	strings longer than the parser limit (8192 bytes).
+
 
 BUG FIXES
 
