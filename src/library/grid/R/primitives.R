@@ -676,12 +676,14 @@ validDetails.xspline <- function(x) {
   if (any(x$shape < -1 || x$shape > 1))
     stop("shape must be between -1 and 1")
   x$open <- as.logical(x$open)
-  if (x$open &&
-      (x$shape[1] != 0 ||
-       rep(x$shape, length.out=nx)[nx] != 0)) {
-    # warning("First and last shape set to 0")
-    x$shape <- rep(x$shape, length.out=nx)
-    x$shape[c(1, length(x$shape))] <- 0
+  # Force all first and last shapes to be 0 for open xsplines
+  if (x$open) {
+      x$shape <- rep(x$shape, length.out=nx)
+      # Watch out for id or id.length!
+      index <- xsplineIndex(x)
+      first <- sapply(index, min)
+      last <- sapply(index, max)
+      x$shape[c(first, last)] <- 0
   }
   x
 }

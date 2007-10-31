@@ -1806,8 +1806,9 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
     void *vmaxsave = vmaxget();
     if (open) {
       compute_open_spline(n, x, y, s, repEnds, LOW_PRECISION, dd);
-      if (draw)
+      if (draw) {
 	  GEPolyline(npoints, xpoints, ypoints, gc, dd);
+      }
     } else {
       compute_closed_spline(n, x, y, s, LOW_PRECISION, dd);
       if (draw)
