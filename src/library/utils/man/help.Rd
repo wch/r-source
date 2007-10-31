@@ -111,8 +111,6 @@ type?topic
   locations and hence were not found at compile time, you can either set
   the options \code{latexcmd} and \code{dvipscmd}, or the environment
   variables \env{R\_LATEXCMD} and \env{R\_DVIPSCMD} appropriately.
-  The appearance of the output can be customized through a file
-  \file{Rhelp.cfg} somewhere in your LaTeX search path.
 #endif
 #ifdef windows
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
