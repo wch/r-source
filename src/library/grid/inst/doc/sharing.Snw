@@ -25,13 +25,13 @@ axes to aid in comparison of the subjects.
 
 First of all, I will split the page up into two bits for the two graphs.
 
-<<axes1, results=hide>>=
+<<axes1, eval=FALSE, results=hide>>=
 pushViewport(viewport(layout=grid.layout(1, 2, respect=TRUE)))
 
 @
 Now I generate some data and draw the first plot.
 
-<<axes2, results=hide>>=
+<<axes2, eval=FALSE, results=hide>>=
 x <- 1:10
 y1 <- rnorm(10)
 vp1a <- viewport(layout.pos.col=1)
@@ -48,7 +48,7 @@ Notice that I have named the graphical objects for the axes.
 When I draw the second plot I will use the same names for the
 axis objects.
 
-<<axes3, results=hide>>=
+<<axes3, eval=FALSE, results=hide>>=
 y2 <- rnorm(10)
 vp2a <- viewport(layout.pos.col=2)
 vp2b <- viewport(width=0.6, height=0.6,
@@ -80,13 +80,13 @@ Because I have used the same name for the axis objects in both plots,
 simultaneously rather than having to edit each one in turn.
 For example ...
 
-<<axesedit, results=hide>>=
+<<axesedit, eval=FALSE, results=hide>>=
 grid.edit("xaxis", at=c(1, 5, 9), global=TRUE)
 
 @
 The output now looks like the figure below.
 
-<<shared2, results=hide, fig=TRUE, echo=FALSE, width=4, height=2, include=FALSE>>=
+<<shared2, results=hide, echo=FALSE>>=
 postscript("shared2-%02d.eps", onefile=FALSE, paper="special",
   width=4, height=2)
 <<axes1>>
