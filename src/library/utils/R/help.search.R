@@ -157,9 +157,10 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    if(verbose)
 		message(" ", p, appendLF = ((np %% 5) == 0), domain=NA)
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
-	    if(length(path) == 0)
-		stop(gettextf("could not find package '%s'", p), domain = NA)
-
+	    if(length(path) == 0) {
+                if(is.null(package)) next
+		else stop(gettextf("could not find package '%s'", p), domain = NA)
+            }
 	    ## Hsearch 'Meta/hsearch.rds' indices were introduced in
 	    ## R 1.8.0.	 If they are missing, we really cannot use
 	    ## the package (as library() will refuse to load it).
@@ -176,7 +177,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 		} else if(verbose)
 		    message(gettextf("package '%s' has empty hsearch data - strangely", p), domain=NA)
 	    }
-	    else warning("no hsearch.rds meta data for package ", p)
+	    else if(!is.null(package))
+                warning("no hsearch.rds meta data for package ", p)
 	}
 
 	if(verbose)  {
