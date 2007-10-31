@@ -88,6 +88,9 @@ BUG FIXES
     o	postscript() was not always ignoring .Postscript.Options in
 	the workspace (where it should not have occurred).
 
+    o	help.search() would give an error if it found a badly
+	installed package, even if 'package' was not specified.
+
 
 
 		CHANGES IN R VERSION 2.6.0

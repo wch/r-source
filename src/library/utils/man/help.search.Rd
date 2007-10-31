@@ -70,8 +70,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 }
 \details{
   Upon installation of a package, a pre-built help.search index is
-  serialized as \file{hsearch.rds} in the \file{Meta} directory.  These
-  files are used to create the data base.
+  serialized as \file{hsearch.rds} in the \file{Meta} directory
+  (provided the package has any help pages).  These files are used to
+  create the data base.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.

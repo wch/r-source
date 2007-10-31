@@ -19,7 +19,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
     of the polygon.}
   \item{density}{the density of shading lines, in lines per inch.  The
     default value of \code{NULL} means that no shading lines are drawn.
-    A zero value of \code{density} means no shading lines whereas
+    A zero value of \code{density} means no shading nor filling whereas
     negative values (and \code{NA}) suppress shading (and so allow
     color filling).}
   \item{angle}{the slope of shading lines, given as an angle
@@ -27,7 +27,8 @@ polygon(x, y = NULL, density = NULL, angle = 45,
    \item{col}{the color for filling the polygon. The default,
      \code{NA}, is to leave polygons unfilled, unless \code{density} is
      specified.  (For back-compatibility, \code{NULL} is equivalent to
-     \code{NA}.)}
+     \code{NA}.)  If \code{density} is specified with a positive value
+     this gives the color of the shading lines.}
   \item{border}{the color to draw the border.  The default, \code{NULL},
     means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
     omit borders.
