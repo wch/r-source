@@ -8814,7 +8814,7 @@ to read the seeds).
 
 The header files which @R{} installs are in directory
 @file{@var{R_INCLUDE_DIR}} (default @file{@var{R_HOME}/include}).  This
-currently contains
+currently includes
 
 @quotation
 @multitable @columnfractions 0.30 0.55
@@ -8827,25 +8827,26 @@ above
 @item @file{Rmath.h} @tab standalone math library
 @item @file{Rversion.h} @tab @R{} version information
 @item @file{Rinterface.h} @tab for add-on front-ends (Unix-alikes only)
-@item @file{R_ext/RStartup.h} @tab ditto
-@item @file{R_ext/eventloop.h} @tab for add-on front-ends and for packages that need to
-share in the @R{} event loops (on all platforms)
+@item @file{Rembedded.h} @tab for add-on front-ends
 @item @file{R_ext/Applic.h} @tab optimization and integration
 @item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
+@item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
+handlers
+@item @file{R_ext/GetX11Image.h} @tab X11Image interface used by package
+@pkg{trkplot}
 @item @file{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
 @item @file{R_ext/Linpack.h} @tab C definitions for some LINPACK
 routines, not all of which are included in @R{}
-@item @file{R_ext/GetX11Image.h} @tab X11Image interface used by package
-@pkg{trkplot}
 @item @file{R_ext/Parse.h} @tab a small part of @R{}'s parse interface
-@item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
-handlers
 @item @file{R_ext/RConvertors.h}
 @item @file{R_ext/Rdynload.h} @tab needed to register compiled code in
 packages
 @item @file{R_ext/R-ftp-http.h} @tab interface to internal method of
 @code{download.file}
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
+@item @file{R_ext/RStartup.h} @tab for add-on front-ends
+@item @file{R_ext/eventloop.h} @tab for add-on front-ends and for
+packages that need to share in the @R{} event loops (on all platforms)
 @end multitable
 @end quotation
 
@@ -8874,6 +8875,9 @@ The following headers are included by @file{R.h}:
 The graphics systems are exposed in headers @file{Rdevices.h} (for
 writing graphics devices), @file{Rgraphics.h} and
 @file{R_ext/Graphics@{Base,Device,Engine@}.h}.
+Some entry points from the @pkg{stats}
+package are in @file{R_ext/stats_package.h} (currently related to the
+internals of @samp{nls} and @samp{nlminb}).
 
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
