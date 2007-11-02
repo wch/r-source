@@ -66,6 +66,12 @@ static char DLLversion[25];
 
 char *getDLLVersion()
 {
+    OSVERSIONINFO osvi;
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+    /* 95, 98, ME are 4.x */
+    if(osvi.dwMajorVersion < 5)
+	R_Suicide("Windows 2000 or later is required");
     sprintf(DLLversion, "%s.%s", R_MAJOR, R_MINOR);
     return (DLLversion);
 }

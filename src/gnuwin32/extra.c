@@ -59,8 +59,10 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("unsupported version of Windows"));
 
     /* see http://msdn2.microsoft.com/en-us/library/ms724429.aspx
-       for ways to get more info */
-    if((int) osvi.dwMajorVersion >= 5) {
+       for ways to get more info.
+       Pre-NT versions are all 4.x, so no need to separate test.
+    */
+    if(osvi.dwMajorVersion >= 5) {
 	char *desc = "", *type="";
 	PGNSI pGNSI;
 	SYSTEM_INFO si;
