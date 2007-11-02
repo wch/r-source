@@ -46,48 +46,86 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #include <winbase.h>
+/* typedef struct _OSVERSIONINFO{
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    TCHAR szCSDVersion[ 128 ];
+    } OSVERSIONINFO; */
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char ver[256];
-    OSVERSIONINFOEX osvi;
+    char isNT[8]="??", ver[256];
+    OSVERSIONINFO verinfo;
 
     checkArity(op, args);
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-    if(!GetVersionEx((OSVERSIONINFO *)&osvi))
-	error(_("unsupported version of Windows"));
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	strcpy(isNT, "NT");
+	break;
+    case VER_PLATFORM_WIN32_WINDOWS:
+	switch(verinfo.dwMinorVersion ) {
+	case 0:
+	    strcpy(isNT, "95");
+	    if (verinfo.szCSDVersion[1] == 'C') strcat(isNT, " OSR2" );
+	    break;
+	case 10:
+	    strcpy(isNT, "98");
+	    if (verinfo.szCSDVersion[1] == 'A') strcat(isNT, " SE" );
+	    break;
+	case 90:
+	    strcpy(isNT, "ME");
+	    break;
+	default:
+	    strcpy(isNT, "9x");
+	}
+	break;
+    case VER_PLATFORM_WIN32s:
+	strcpy(isNT, "win32s");
+	break;
+    default:
+	sprintf(isNT, "ID=%d", (int)verinfo.dwPlatformId);
+	break;
+    }
 
     /* see http://msdn2.microsoft.com/en-us/library/ms724429.aspx
        for ways to get more info */
-    if((int) osvi.dwMajorVersion >= 5) {
-	char *desc="", *type="";
+    if((int)verinfo.dwMajorVersion >= 5) {
+	OSVERSIONINFOEX osvi;
+	char *type="";
 	PGNSI pGNSI;
 	SYSTEM_INFO si;
+	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	if(GetVersionEx((OSVERSIONINFO *)&osvi)) {
+	    char tmp[]="", *desc= tmp;
+	    if(osvi.dwMajorVersion == 6) {
+		if(osvi.wProductType == VER_NT_WORKSTATION) desc = "Vista";
+		else desc = "Server 2008";
+	    }
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
+		desc = "2000";
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
+		desc = "XP";
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2) {
+		if(osvi.wProductType == VER_NT_WORKSTATION)
+		    desc = "XP Professional";
+		else
+		    desc = "Server 2003";
+	    }
+	    pGNSI = (PGNSI)
+		GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
+			       "GetNativeSystemInfo");
+	    if(NULL != pGNSI) pGNSI(&si); else GetSystemInfo(&si);
+	    if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
+		type = " x64";
 
-	if(osvi.dwMajorVersion == 6) {
-	    if(osvi.wProductType == VER_NT_WORKSTATION) desc = "Vista";
-	    else desc = "Server 2008";
-	}
-	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
-	    desc = "2000";
-	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
-	    desc = "XP";
-	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2) {
-	    if(osvi.wProductType == VER_NT_WORKSTATION)
-		desc = "XP Professional";
-	    else
-		desc = "Server 2003";
-	}
-	pGNSI = (PGNSI)
-	    GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
-			   "GetNativeSystemInfo");
-	if(NULL != pGNSI) pGNSI(&si); else GetSystemInfo(&si);
-	if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
-	    type = " x64";
-	
-	if(osvi.wServicePackMajor > 0)
-	    sprintf(ver,
+	    if(osvi.wServicePackMajor > 0)
+		sprintf(ver,
 			"Windows %s%s (build %d) Service Pack %d",
 			desc, type,
 			LOWORD(osvi.dwBuildNumber),
@@ -97,10 +135,15 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 			"Windows %s%s (build %d)",
 			desc, type,
 			LOWORD(osvi.dwBuildNumber));
-    } else { /* unsupported, probably cannot be reached */
-	sprintf(ver, "Windows %d.%d (build %d) %s",
-		(int)osvi.dwMajorVersion, (int)osvi.dwMinorVersion,
-		LOWORD(osvi.dwBuildNumber), osvi.szCSDVersion);
+	} else {
+	    sprintf(ver, "Windows 2000 %d.%d (build %d) %s",
+		    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
+		    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
+	}
+    } else {
+	sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
+		(int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
+		LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
     }
 
     return mkString(ver);
@@ -415,22 +458,42 @@ SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
-    OSVERSIONINFOEX osvi;
-    char ver[256], name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
+    OSVERSIONINFO osvi;
+    OSVERSIONINFOEX osviex;
+    char isNT[8]="??", ver[256],
+	name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
     DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
 
     checkArity(op, args);
     PROTECT(ans = allocVector(STRSXP, 7));
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-    if(!GetVersionEx((OSVERSIONINFO *)&osvi))
-	error(_("unsupported version of Windows"));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+    switch(osvi.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	strcpy(isNT, "NT");
+	break;
+    case VER_PLATFORM_WIN32_WINDOWS:
+	strcpy(isNT, "9x");
+	break;
+    case VER_PLATFORM_WIN32s:
+	strcpy(isNT, "win32s");
+	break;
+    default:
+	sprintf(isNT, "ID=%d", (int)osvi.dwPlatformId);
+	break;
+    }
 
     SET_STRING_ELT(ans, 0, mkChar("Windows"));
+
+    sprintf(ver, "%s %d.%d", isNT,
+	    (int)osvi.dwMajorVersion, (int)osvi.dwMinorVersion);
     if((int)osvi.dwMajorVersion >= 5) {
 	PGNSI pGNSI;
 	SYSTEM_INFO si;
+	osviex.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	GetVersionEx((OSVERSIONINFO *)&osviex);
 	if(osvi.dwMajorVersion == 6) {
-	    if(osvi.wProductType == VER_NT_WORKSTATION)
+	    if(osviex.wProductType == VER_NT_WORKSTATION)
 		strcpy(ver, "Vista");
 	    else
 		strcpy(ver, "Server 2008");
@@ -440,7 +503,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
 	    strcpy(ver, "XP");
 	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2) {
-	    if(osvi.wProductType == VER_NT_WORKSTATION)
+	    if(osviex.wProductType == VER_NT_WORKSTATION)
 		strcpy(ver, "XP Professional");
 	    else strcpy(ver, "Server 2003");
 	}
@@ -450,14 +513,14 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(NULL != pGNSI) pGNSI(&si); else GetSystemInfo(&si);
 	if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 	    strcat(ver, " x64");
-    } else strcpy(ver, "unsupported");
+    }
     SET_STRING_ELT(ans, 1, mkChar(ver));
 
     if((int)osvi.dwMajorVersion >= 5) {
-	if(osvi.wServicePackMajor > 0)
+	if(osviex.wServicePackMajor > 0)
 	    sprintf(ver, "build %d, Service Pack %d",
 		    LOWORD(osvi.dwBuildNumber),
-		    (int)osvi.wServicePackMajor);
+		    (int)osviex.wServicePackMajor);
 	else sprintf(ver, "build %d", LOWORD(osvi.dwBuildNumber));
     } else
 	sprintf(ver, "build %d, %s", LOWORD(osvi.dwBuildNumber),
