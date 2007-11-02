@@ -31,7 +31,6 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <wchar.h>
 #define alloca(x) __builtin_alloca((x)) /* always GNUC */
 
-static int getcharset(void);
 
 /* Some of the ideas in haveAlpha are borrowed from Cairo */
 typedef BOOL 
@@ -532,7 +531,7 @@ int gdrawstr(drawing d, font f, rgb c, point p, const char *s)
     SetBkMode(dc, TRANSPARENT);
     SetTextAlign(dc, TA_TOP | TA_LEFT | TA_UPDATECP);
 
-    if (is_NT && localeCP > 0 && (localeCP != GetACP())) {
+    if (localeCP > 0 && (localeCP != GetACP())) {
 	/* This allows us to change locales and output in the new locale */
 	wchar_t *wc; int n = strlen(s), cnt;
 	wc = alloca((n+1) * sizeof(wchar_t));
@@ -743,88 +742,62 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     SelectObject(dc, old);
 }
 
-/* This needs to work even when not on NT */
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width)
 {
-    if (is_NT) {
-	int first, last, extra;
-	TEXTMETRICW tm;
-	HFONT old;
-	HDC dc = GETHDC(d);
-	old = SelectObject(dc, (HFONT)f->handle);
-	GetTextMetricsW(dc, &tm);
-	first = tm.tmFirstChar;
-	last = tm.tmLastChar;
-	extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
-	if (c < 0) { /* used for setting cra */
-	    SIZE size;
-	    char *cc = "M";
-	    GetTextExtentPoint32(dc,(LPSTR) cc, 1, &size);
-	    *descent = tm.tmDescent ;
-	    *ascent = size.cy - *descent;
-	    *width = size.cx;
-	    if (*width > size.cy) *width = size.cy;
-	} else if (c == 0) {
-	    *descent = tm.tmDescent ;
-	    *ascent = tm.tmHeight - *descent - extra ;
-	    *width = tm.tmMaxCharWidth ;
-	} else if ((first <= c) && (c <= last)) {
-	    SIZE size;
-	    wchar_t wc = c;
-	    GetTextExtentPoint32W(dc, &wc, 1, &size);
-	    *descent = tm.tmDescent ;
-	    *ascent = size.cy - *descent - extra ;
-	    *width = size.cx;
-	    /*
-	      Under NT, ' ' gives 0 ascent and descent, which seems
-	      correct but this : (i) makes R engine to center in random way;
-	      (ii) doesn't correspond to what 98 and X do (' ' is there
-	      high as the full font)
-	    */
-	    if ((c!=' ') && (tm.tmPitchAndFamily & TMPF_TRUETYPE)) {
-		GLYPHMETRICS gm;
-		MAT2 m2;
-		m2.eM11.value = m2.eM22.value = (WORD) 1 ;
-		m2.eM21.value = m2.eM12.value = (WORD) 0 ;
-		m2.eM11.fract = m2.eM12.fract =
-		    m2.eM21.fract = m2.eM22.fract =  (short) 0 ;
-		if (GetGlyphOutlineW(dc, c, GGO_METRICS, &gm, 0, NULL, &m2)
-		    != GDI_ERROR) {
-		    *descent = gm.gmBlackBoxY - gm.gmptGlyphOrigin.y ;
-		    *ascent  = gm.gmptGlyphOrigin.y + 1;
-		}
+    int first, last, extra;
+    TEXTMETRICW tm;
+    HFONT old;
+    HDC dc = GETHDC(d);
+    old = SelectObject(dc, (HFONT)f->handle);
+    GetTextMetricsW(dc, &tm);
+    first = tm.tmFirstChar;
+    last = tm.tmLastChar;
+    extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
+    if (c < 0) { /* used for setting cra */
+	SIZE size;
+	char *cc = "M";
+	GetTextExtentPoint32(dc,(LPSTR) cc, 1, &size);
+	*descent = tm.tmDescent ;
+	*ascent = size.cy - *descent;
+	*width = size.cx;
+	if (*width > size.cy) *width = size.cy;
+    } else if (c == 0) {
+	*descent = tm.tmDescent ;
+	*ascent = tm.tmHeight - *descent - extra ;
+	*width = tm.tmMaxCharWidth ;
+    } else if ((first <= c) && (c <= last)) {
+	SIZE size;
+	wchar_t wc = c;
+	GetTextExtentPoint32W(dc, &wc, 1, &size);
+	*descent = tm.tmDescent ;
+	*ascent = size.cy - *descent - extra ;
+	*width = size.cx;
+	/*
+	  Under NT, ' ' gives 0 ascent and descent, which seems
+	  correct but this : (i) makes R engine to center in random way;
+	  (ii) doesn't correspond to what 98 and X do (' ' is there
+	  high as the full font)
+	*/
+	if ((c!=' ') && (tm.tmPitchAndFamily & TMPF_TRUETYPE)) {
+	    GLYPHMETRICS gm;
+	    MAT2 m2;
+	    m2.eM11.value = m2.eM22.value = (WORD) 1 ;
+	    m2.eM21.value = m2.eM12.value = (WORD) 0 ;
+	    m2.eM11.fract = m2.eM12.fract =
+		m2.eM21.fract = m2.eM22.fract =  (short) 0 ;
+	    if (GetGlyphOutlineW(dc, c, GGO_METRICS, &gm, 0, NULL, &m2)
+		!= GDI_ERROR) {
+		*descent = gm.gmBlackBoxY - gm.gmptGlyphOrigin.y ;
+		*ascent  = gm.gmptGlyphOrigin.y + 1;
 	    }
-	} else { /* Unicode char out of range */
-	    *ascent = 0;
-	    *descent = 0;
-	    *width = 0;
 	}
-	SelectObject(dc, old);
-    } else {
-	if (c > 127) {
-	    int extra;
-	    TEXTMETRIC tm;
-	    HFONT old;
-	    HDC dc = GETHDC(d);
-	    SIZE size;
-	    char s[3];
-	    old = SelectObject(dc, (HFONT)f->handle);
-	    GetTextMetrics(dc, &tm);
-	    extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
-	    /* choose some reasonable fallback values */
-	    *ascent = tm.tmAscent; *descent = tm.tmDescent; 
-	    *width = tm.tmAveCharWidth;
-	    if (wctomb(s, (wchar_t) c) >= 1 &&
-	       GetTextExtentPoint32(dc, (LPSTR) s, 1, &size))
-	    {
-		*ascent = size.cy - *descent - extra;
-		*width = size.cx;
-	    }
-	    SelectObject(dc, old);
-	} else
-	    gcharmetric(d, f, c, ascent, descent, width);
+    } else { /* Unicode char out of range */
+	*ascent = 0;
+	*descent = 0;
+	*width = 0;
     }
+    SelectObject(dc, old);
 }
 
 font gnewfont(drawing d, const char *face, int style, int size, double rot)
@@ -845,7 +818,7 @@ font gnewfont(drawing d, const char *face, int style, int size, double rot)
     if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
-        lf.lfCharSet = getcharset();
+        lf.lfCharSet = DEFAULT_CHARSET;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
@@ -942,44 +915,4 @@ void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for 
 		      SWP_NOMOVE | SWP_NOSIZE);
     TopmostDialogs &= !MB_TOPMOST;
     apply_to_list(c->parent->child, setMessageBoxTopmost);
-}
-
-typedef struct {
-    int codepage;
-    int charset;
-} cp2charset_table;
-
-static cp2charset_table cp2charset [] = {
-    {874, THAI_CHARSET},
-    {932, SHIFTJIS_CHARSET},
-    {936, GB2312_CHARSET},
-    {949, HANGUL_CHARSET},
-    {950, CHINESEBIG5_CHARSET},
-    {1250,EASTEUROPE_CHARSET},
-    {1251,RUSSIAN_CHARSET},
-    {1252,ANSI_CHARSET},
-    {1253,GREEK_CHARSET},
-    {1254,TURKISH_CHARSET},
-    {1255,HEBREW_CHARSET},
-    {1256,ARABIC_CHARSET},
-    {1257,BALTIC_CHARSET},
-    {1258,VIETNAMESE_CHARSET},
-    {1361,JOHAB_CHARSET},
-};
-
-/* Used to set the charset for the font in the console/pager/editor.
-   As from 2.3.0 these use wchar on NT, but the charset still 
-   seems to affect the font chosen. */
-static int getcharset(void)
-{
-    int i, cp = localeCP;
-    if (is_NT) 
-	return (DEFAULT_CHARSET);
-    else
-	/* If SHIFTJIS_CHARSET is not specified in the case of Windows9x,
-	   even if it will output this to emf, a
-	   character does not come out exactly. */
-	for (i = 0; i < sizeof(cp2charset)/sizeof(cp2charset_table); i++)
-	    if (cp == cp2charset[i].codepage) return(cp2charset[i].charset);
-    return(ANSI_CHARSET);
 }

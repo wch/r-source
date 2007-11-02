@@ -78,6 +78,9 @@ INSTALLATION
 
     o	Perl (>= 5.8.0) is now required to build R.
 
+    o	The Windows build only supports Windows 2000 or later (XP,
+	Vista, Server 2003 and Server 2008).
+
 
 UTILITIES
 

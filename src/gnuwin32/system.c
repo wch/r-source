@@ -35,6 +35,7 @@
 #include "editor.h"
 #include "getline/getline.h"
 #define WIN32_LEAN_AND_MEAN 1
+#define _WIN32_WINNT 0x0500     /* for MEMORYSTATUSEX */
 #include <windows.h>		/* for CreateEvent,.. */
 #include <process.h>		/* for _beginthread,... */
 #include <io.h>			/* for isatty, chdir */
@@ -810,29 +811,19 @@ int cmdlineoptions(int ac, char **av)
 
     /* set defaults for R_max_memory. This is set here so that
        embedded applications get no limit */
-#ifdef WIN64
     {    
 	MEMORYSTATUSEX ms;
 	GlobalMemoryStatusEx(&ms); /* Win2k or later */
 	Virtual = ms.ullTotalVirtual; /* uint64 = DWORDLONG */
+#ifdef WIN64
 	R_max_memory = ms.ullTotalPhys;
-    }
 #else
-    {
-	MEMORYSTATUS ms;
-	R_size_t Phys;
-	/* See http://support.microsoft.com/kb/274558
-	   Since our applications are large-address aware, should return
-	   -1 on machines with >= 4Gb of RAM
-	*/
-	GlobalMemoryStatus(&ms);
-	Virtual = ms.dwTotalVirtual; /* uint32 = DWORD */
-	Phys = ms.dwTotalPhys; /* -1 maps to just under 4Gb */
-	R_max_memory = min(Virtual - 512*Mega, Phys);
-    }
+	R_max_memory = min(Virtual - 512*Mega, ms.ullTotalPhys);
 #endif
-    /* need enough to start R, with some head room */
-    R_max_memory = max(32 * Mega, R_max_memory);
+
+	/* need enough to start R, with some head room */
+	R_max_memory = max(32 * Mega, R_max_memory);
+    }
 
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;

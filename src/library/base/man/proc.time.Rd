@@ -32,12 +32,12 @@ proc.time()
  
   The resolution of the times will be system-specific
 #ifdef unix
-  and times are rounded to the nearest 1ms.  On modern systems they will
-  be that accurate, but on older systems they might be accurate to
-  1/100 or 1/60 sec.
+  and on Unix-alikes times are rounded to the nearest 1ms.  On modern
+  systems they will be that accurate, but on older systems they might be
+  accurate to 1/100 or 1/60 sec.
 #endif
 #ifdef windows
-  and times are typically available to 10ms on NT-based versions of Windows.
+  and are typically available to 10ms on Windows.
 #endif
 
   It is useful for timing the evaluation of \R expressions,
@@ -49,9 +49,8 @@ proc.time()
   when the function will throw an error.
 #endif
 #ifdef windows
-  CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
-  are genuine times on NT4/2000/XP/2003/Vista systems.  Times of child
-  processes are not available and will always be given as \code{NA}.
+  Times of child processes are not available and will always be given as
+  \code{NA}.
 #endif
 }
 \references{

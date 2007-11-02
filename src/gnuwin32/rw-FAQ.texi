@@ -136,12 +136,10 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-You need Windows 95 or later.  There is no specific version for Windows
-64, but the standard 32-bit version has been proven to work.  Some
-features only work on an NT-based version of Windows (and some work
-better on such an OS).  We do minimally test most releases on Windows 98
-(2.5.0 was tested, for example), but only test thoroughly on XP and
-Vista 64.
+We only support Windows 2000 or later.  There is no specific version for
+Windows 64, but the standard 32-bit version works well.  We only test on
+versions of Windows currently supported by Microsoft, mainly on XP,
+Vista 64 and Windows Server 2003.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -251,11 +249,10 @@ If you want to set up another project, make a new shortcut or use the
 existing one and change the `Start in' field of the Properties.
 
 You may if you prefer run R from the command line of any shell you use,
-for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
-(NT-based versions) or a port of a Unix shell such as @command{tcsh} or
-@command{bash}. (The command line can be anything you would put in the
-Target field of a shortcut, and the starting directory will be the
-current working directory of the shell.)
+for example a `Command Prompt' or a port of a Unix shell such as
+@command{tcsh} or @command{bash}. (The command line can be anything you
+would put in the Target field of a shortcut, and the starting directory
+will be the current working directory of the shell.)
 
 @node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
 @section Can I run R from a CD or USB drive?
@@ -268,9 +265,9 @@ will appear in the HTML packages list.)
 
 Running R does need access to a writable temporary directory and to a
 home directory, and in the last resort these are taken to be the current
-directory.  This should be no problem on a properly configured NT-based
-version of Windows, but otherwise does mean that it may not be possible
-to run R without creating a shortcut in a writable folder.
+directory.  This should be no problem on a properly configured version
+of Windows, but otherwise does mean that it may not be possible to run R
+without creating a shortcut in a writable folder.
 
 
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
@@ -322,12 +319,8 @@ Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
-R can be compiled to use a different memory manager which might be better
-at using large amounts of memory, but is substantially slower (making R
-several times slower on some tasks).
-
 The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
-per process under suitably enabled versions of Windows (see
+per process under suitably enabled versions of 32-bit Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
 and @uref{http://msdn2.microsoft.com/en-us/library/aa366778.aspx}: where
 this is supported it may need to be specifically enabled).  On such
@@ -420,9 +413,9 @@ directories.  It first tries to use the Windows "personal" directory
 (typically @file{C:\Documents and Settings\username\My Documents} on
 Windows XP and @file{C:\Users\username\Documents} on Vista).  If that
 fails, if both environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
-are set (and they normally are under Windows NT4, 2000 and later), the
-value is @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the
-current working directory is used.
+are set (and they normally are), the value is
+@file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the current
+working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
 
@@ -458,15 +451,11 @@ See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
-is system specific: in Windows 9x you can set them in
-@file{autoexec.bat} or in an MS-DOS window from which you launch
-@command{Rgui} / @command{Rterm}.  Under Windows NT/2000/XP/2003 you can
-use the control panel or the properties of `My Computer'.  Under Windows
-ME you can use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu).  Under Vista, go to `User
-Accounts' in the Control Panel, and select your account and then `Change
-my environment variables'.  You may have to log out or reboot for such
-changes to take effect.
+is system specific: under Windows 2000/XP/2003 you can use `System' in
+the control panel or the properties of `My Computer' (under the
+`Advanced' tab).  Under Vista, go to `User Accounts' in the Control
+Panel, and select your account and then `Change my environment
+variables'.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
@@ -495,8 +484,7 @@ tried to make R work on paths with spaces in, but many people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @samp{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties of the file on some versions of
-Windows, and from @command{dir /X} in a @samp{Command Prompt} window on
-2000 and later).
+Windows, and from @command{dir /X} in a @samp{Command Prompt} window).
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -601,9 +589,7 @@ If it still happens, try extracting the @samp{msvcrt.dll} to be found in
 the self-extracting archive
 @uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
 the @file{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
-directory reverts to the standard behaviour.  It seems that on some
-versions of Windows (but not 2000 or later) you also need to put the
-@file{@RWVER@\bin} directory early in your path.
+directory reverts to the standard behaviour.
 
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.  However, you are probably better off

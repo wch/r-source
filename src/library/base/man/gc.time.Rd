@@ -24,9 +24,8 @@ gc.time(on = TRUE)
 }
 #ifdef windows
 \note{
-  CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
-  are genuine times on NT4/2000/XP/2003/Vista systems.  Times of child
-  processes are not available and will always be given as \code{NA}.
+  Times of child processes are not available and will always be given as
+  \code{NA}.
 }
 #endif
 \section{Warnings}{

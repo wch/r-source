@@ -29,15 +29,14 @@ Sys.info()
   login name comes from \code{getlogin(2)}, and the user name from
   \code{getpwuid(getuid())}
 #endif
-#ifdef windows
-  The information is obtained from Windows system calls.  It is likely to
-  be most complete on Windows NT/2000/XP/2003/Vista systems.
-#endif
 }
 \details{
   This function is not implemented on all \R platforms, and returns
   \code{NULL} when not available.  Where possible it is based on POSIX
   system calls.
+#ifdef windows
+  (Under Windows, it is obtained from Windows system calls.)
+#endif
 
   \code{Sys.info()} returns details of the platform \R is running on,
   whereas \code{\link{R.version}} gives details of the platform \R was
