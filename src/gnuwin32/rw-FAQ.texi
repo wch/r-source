@@ -251,11 +251,10 @@ If you want to set up another project, make a new shortcut or use the
 existing one and change the `Start in' field of the Properties.
 
 You may if you prefer run R from the command line of any shell you use,
-for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
-(NT-based versions) or a port of a Unix shell such as @command{tcsh} or
-@command{bash}. (The command line can be anything you would put in the
-Target field of a shortcut, and the starting directory will be the
-current working directory of the shell.)
+for example a `Command Prompt' or a port of a Unix shell such as
+@command{tcsh} or @command{bash}. (The command line can be anything you
+would put in the Target field of a shortcut, and the starting directory
+will be the current working directory of the shell.)
 
 @node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
 @section Can I run R from a CD or USB drive?
@@ -268,9 +267,9 @@ will appear in the HTML packages list.)
 
 Running R does need access to a writable temporary directory and to a
 home directory, and in the last resort these are taken to be the current
-directory.  This should be no problem on a properly configured NT-based
-version of Windows, but otherwise does mean that it may not be possible
-to run R without creating a shortcut in a writable folder.
+directory.  This should be no problem on a properly configured version
+of Windows, but otherwise does mean that it may not be possible to run R
+without creating a shortcut in a writable folder.
 
 
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
@@ -322,12 +321,8 @@ Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
-R can be compiled to use a different memory manager which might be better
-at using large amounts of memory, but is substantially slower (making R
-several times slower on some tasks).
-
 The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
-per process under suitably enabled versions of Windows (see
+per process under suitably enabled versions of 32-bit Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
 and @uref{http://msdn2.microsoft.com/en-us/library/aa366778.aspx}: where
 this is supported it may need to be specifically enabled).  On such
@@ -458,15 +453,11 @@ See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
-is system specific: in Windows 9x you can set them in
-@file{autoexec.bat} or in an MS-DOS window from which you launch
-@command{Rgui} / @command{Rterm}.  Under Windows NT/2000/XP/2003 you can
-use the control panel or the properties of `My Computer'.  Under Windows
-ME you can use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu).  Under Vista, go to `User
-Accounts' in the Control Panel, and select your account and then `Change
-my environment variables'.  You may have to log out or reboot for such
-changes to take effect.
+is system specific: under Windows 2000/XP/2003 you can use `System' in
+the control panel or the properties of `My Computer' (under the
+`Advanced' tab).  Under Vista, go to `User Accounts' in the Control
+Panel, and select your account and then `Change my environment
+variables'.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
