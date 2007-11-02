@@ -38,12 +38,16 @@ OTHERS
 	variable GSC if R_GSCMD is unset.  (This is the variable used
 	by ps2pdf and similar batch files.)
 
+    o	win.version() and Sys.info() know about recent and upcoming
+	Windows versions, including if they are running on a 64-bit
+	platform.
+
 
 BUILDING R
 
     o	Support for the ACML BLAS has been withdrawn (there is no
-	version of 4.0.0 for gcc under Windows, and none at all for
-	gfortran).
+	version of ACML 4.0.0 for gcc under Windows, and none at all
+	for gfortran).
 
 
 
