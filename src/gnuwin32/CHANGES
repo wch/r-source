@@ -11,6 +11,13 @@
 
 		CHANGES IN R VERSION 2.7.0
 
+
+WINDOWS VERSIONS
+
+    o	Versions of Windows older than 2000 are no longer supported
+	(specifically, 95, 98, ME, NT4).
+
+
 GUI CHANGES
 
     o	The folder selection dialog used by choose.dir() and

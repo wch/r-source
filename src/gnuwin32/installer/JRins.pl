@@ -51,6 +51,7 @@ print insfile <<END;
 [Setup]
 OutputBaseFilename=${RW}-win32
 PrivilegesRequired=none
+MinVersion=0,5.0
 END
 
 my $lines=<<END;

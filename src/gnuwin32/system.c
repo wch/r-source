@@ -820,13 +820,15 @@ int cmdlineoptions(int ac, char **av)
 #else
     {
 	MEMORYSTATUS ms;
+	R_size_t Phys;
 	/* See http://support.microsoft.com/kb/274558
-	   Since our applications are large-addess aware, should return
+	   Since our applications are large-address aware, should return
 	   -1 on machines with >= 4Gb of RAM
 	*/
 	GlobalMemoryStatus(&ms);
 	Virtual = ms.dwTotalVirtual; /* uint32 = DWORD */
-	R_max_memory = min(Virtual - 512*Mega, ms.dwTotalPhys);
+	Phys = ms.dwTotalPhys; /* -1 maps to just under 4Gb */
+	R_max_memory = min(Virtual - 512*Mega, Phys);
     }
 #endif
     /* need enough to start R, with some head room */
