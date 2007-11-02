@@ -95,16 +95,16 @@ as.POSIXlt(x, tz = "", \dots)
 #endif
 #ifdef windows
   Windows documents a specification of the form \code{GST-1GDT}, but
-  seems always to apply the US rules for changing to/from DST with such a
-  specification.  (There appears to be no documented way to apply
-  timezones using other DST rules except to switch to the timezone,
-  e.g. from the Control Panel.)  So valid time zone values are of the
-  forms \code{EST5EDT} for a timezone 5 hours west of GMT called
-  \code{EST} when daylight saving is in force and \code{EDT} when it is
-  not, \code{HST10} for \sQuote{Hawaii-Aleutian Standard Time} (which has no
-  DST), and \code{CST-9:30} for the Northern Territory of Australia.
-  The abbreviations have to be exactly 3 letters, and have no meaning
-  other than as labels on the output.
+  always applies the \sQuote{US rules} for changing to/from DST with
+  such a specification.  (Further, the \sQuote{US rules} changed in
+  2007, which has caused errors even in US/Canadian timezones.)  So valid
+  time zone values are of the forms \code{EST5EDT} for a timezone 5
+  hours west of GMT called \code{EST} when daylight saving is in force
+  and \code{EDT} when it is not, \code{HST10} for
+  \sQuote{Hawaii-Aleutian Standard Time} (which has no DST), and
+  \code{CST-9:30} for the Northern Territory of Australia. The
+  abbreviations have to be exactly 3 letters, and have no meaning other
+  than as labels on the output.
 #endif
 }
 \value{
