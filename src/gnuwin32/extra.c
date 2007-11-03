@@ -1378,6 +1378,20 @@ int winAccess(const char *path, int mode)
     return 0;
 }
 
+#include <Rversion.h>
+char *getDLLVersion()
+{
+    static char DLLversion[25];
+    OSVERSIONINFO osvi;
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+    /* 95, 98, ME are 4.x */
+    if(osvi.dwMajorVersion < 5)
+	R_Suicide("Windows 2000 or later is required");
+    sprintf(DLLversion, "%s.%s", R_MAJOR, R_MINOR);
+    return (DLLversion);
+}
+
 
 
 /* UTF-8 support ----------------------------------------------- */
