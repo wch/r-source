@@ -788,6 +788,21 @@ function(con)
     .try_quietly(readLines(con, warn=FALSE))
 }
 
+### ** .read_collate_field
+
+.read_collate_field <-
+function(txt)
+{
+    ## Read Collate specifications in DESCRIPTION files.
+    ## These consist of file paths relative to the R code directory,
+    ## separated by white space, possibly quoted.  Note that we could
+    ## have newlines in DCF entries but do not allow them in file names,
+    ## hence we gsub() them out.
+    con <- textConnection(gsub("\n", " ", txt))
+    on.exit(close(con))
+    scan(con, what = character(), strip.white = TRUE, quiet = TRUE)
+}
+
 ### ** .read_description
 
 .read_description <-
@@ -841,20 +856,26 @@ function(file, envir, enc = NA)
 ### .source_assignments_in_code_dir
 
 .source_assignments_in_code_dir <-
-function(dir, env, enc = NA)
+function(dir, env, meta = character())
 {
     ## Combine all code files in @code{dir}, read and parse expressions,
-    ## and successively evaluated the top-level assignments in
-    ## @code{env}.
+    ## and successively evaluate the top-level assignments in @code{env}.
     con <- tempfile("Rcode")
     on.exit(unlink(con))
     if(!file.create(con))
         stop("unable to create ", con)
-    if(!all(.file_append_ensuring_LFs(con,
-                                      list_files_with_type(dir,
-                                                           "code"))))
+    ## If the (DESCRIPTION) metadata contain a Collate specification,
+    ## use this for determining the code files and their order.
+    txt <- meta[c(paste("Collate", .OStype(), sep = "."), "Collate")]
+    ind <- which(!is.na(txt))
+    files <- if(any(ind))
+        Filter(function(x) file_test("-f", x),
+               file.path(dir, .read_collate_field(txt[ind[1L]])))
+    else
+        list_files_with_type(dir, "code")
+    if(!all(.file_append_ensuring_LFs(con, files)))
         stop("unable to write code files")
-    tryCatch(.source_assignments(con, env, enc = enc),
+    tryCatch(.source_assignments(con, env, enc = meta["Encoding"]),
              error =
              function(e)
              stop("cannot source package code\n",

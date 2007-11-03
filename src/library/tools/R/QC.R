@@ -56,13 +56,15 @@ function(package, dir, lib.loc = NULL)
 
         all_doc_topics <- Rd_aliases(dir = dir)
 
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
-            .source_assignments_in_code_dir(code_dir, code_env, enc)
+            dfile <- file.path(dir, "DESCRIPTION")
+            meta <- if(file_test("-f", dfile))
+                .read_description(dfile)
+            else
+                character()
+            .source_assignments_in_code_dir(code_dir, code_env, meta)
             sys_data_file <- file.path(code_dir, "sysdata.rda")
             if(file_test("-f", sys_data_file))
                 load(sys_data_file, code_env)
@@ -375,11 +377,13 @@ function(package, dir, lib.loc = NULL,
         package_name <- basename(dir)
         is_base <- package_name == "base"
 
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env, enc)
+        dfile <- file.path(dir, "DESCRIPTION")
+        meta <- if(file_test("-f", dfile))
+            .read_description(dfile)
+        else
+            character()
+        .source_assignments_in_code_dir(code_dir, code_env, meta)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -1555,11 +1559,13 @@ function(package, dir, lib.loc = NULL)
         package_name <- basename(dir)
         is_base <- package_name == "base"
 
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env, enc)
+        dfile <- file.path(dir, "DESCRIPTION")
+        meta <- if(file_test("-f", dfile))
+            .read_description(dfile)
+        else
+            character()
+        .source_assignments_in_code_dir(code_dir, code_env, meta)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -1968,11 +1974,13 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         is_base <- basename(dir) == "base"
 
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env, enc)
+        dfile <- file.path(dir, "DESCRIPTION")
+        meta <- if(file_test("-f", dfile))
+            .read_description(dfile)
+        else
+            character()
+        .source_assignments_in_code_dir(code_dir, code_env, meta)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -2201,11 +2209,13 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         is_base <- basename(dir) == "base"
 
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env, enc)
+        dfile <- file.path(dir, "DESCRIPTION")
+        meta <- if(file_test("-f", dfile))
+            .read_description(dfile)
+        else
+            character()
+        .source_assignments_in_code_dir(code_dir, code_env, meta)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -4215,14 +4225,16 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         dir <- file_path_as_absolute(dir)
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
         code_dir <- file.path(dir, "R")
         if(!packageHasNamespace(basename(dir), dirname(dir))
            && file_test("-d", code_dir)) {
             code_env <- new.env()
-            .source_assignments_in_code_dir(code_dir, code_env, enc)
+            dfile <- file.path(dir, "DESCRIPTION")
+            meta <- if(file_test("-f", dfile))
+                .read_description(dfile)
+            else
+                character()
+            .source_assignments_in_code_dir(code_dir, code_env, meta)
             bad_closures <- find_bad_closures(code_env)
         }
         if(check_examples)

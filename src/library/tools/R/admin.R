@@ -227,16 +227,8 @@ function(dir, outDir)
     collationField <-
         c(paste("Collate", .OStype(), sep = "."), "Collate")
     if(any(i <- collationField %in% names(db))) {
-        ## We have a Collate specification in the DESCRIPTION file:
-        ## currently, file paths relative to codeDir, separated by
-        ## white space, possibly quoted.  Note that we could have
-        ## newlines in DCF entries but do not allow them in file names,
-        ## hence we gsub() them out.
         collationField <- collationField[i][1L]
-        con <- textConnection(gsub("\n", " ", db[collationField]))
-        on.exit(close(con))
-        codeFilesInCspec <- scan(con, what = character(),
-                                 strip.white = TRUE, quiet = TRUE)
+        codeFilesInCspec <- .read_collate_field(db[collationField])
         ## Duplicated entries in the collation spec?
         badFiles <-
             unique(codeFilesInCspec[duplicated(codeFilesInCspec)])
