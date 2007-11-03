@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-10-22
+@set FAQ_DATE @value{FAQ_YEAR}-11-03
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1859,6 +1859,8 @@ Bayesian software validation using posterior quantiles.
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item BiasedUrn
 Biased urn model distributions.
+@item BioIDMapper
+Mapping between BioIDs.
 @item Biodem
 A number of functions for biodemographycal analysis.
 @item BiodiversityR
@@ -2114,6 +2116,8 @@ Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 Functions for computing the NPMLE for censored and truncated data.
 @item InfNet
 Function that simulates an epidemic in a network of contacts.
+@item JADE
+JADE and ICA performance criteria.
 @item JLLprod
 Nonparametric estimation of homothetic and generalized homothetic
 production functions.
@@ -2565,6 +2569,14 @@ Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
 @item TSP
 Traveling Salesperson Problem (TSP).
+@item TSSQLite
+Time Series Database Interface extensions for SQLite.
+@item TSdbi
+Time Series Database Interface.
+@item TSpadi
+Connect to a time series database (e.g., Fame) via PADI (Protocol for
+Application Database Interface), using the @strong{TSdbi}
+infrastructure.
 @item TTR
 Technical Trading Rules.
 @item TWIX
@@ -2853,6 +2865,8 @@ finding the number of clusters in a data set.
 Retrieve Affymetrix microarray measurements and metadata from Celsius.
 @item cfa
 Analysis of configuration frequencies.
+@item cggd
+Continuous Generalized Gradient Descent.
 @item cgh
 Analysis of microarray comparative genome hybridisation data using the
 Smith-Waterman algorithm.
@@ -3253,6 +3267,9 @@ Estimation and control of (local) False Discovery Rates.
 Feature significance for multivariate kernel density estimation.
 @item femmeR
 Output analysis of FEMME model results.
+@item ff
+Flat file database designed for large vectors and multi-dimensional
+arrays.
 @item ffmanova
 Fifty-fifty MANOVA.
 @item fgac
@@ -3800,6 +3817,8 @@ Tools for constructing and manipulating objects from a class of directed
 and undirected graphs.
 @item matlab
 Emulate MATLAB code using R.
+@item matrixcalc
+Collection of functions for matrix differential calculus.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
@@ -4372,8 +4391,8 @@ geometry library.
 Interface to the CDK libraries, a Java framework for cheminformatics.
 @item rcom
 R COM Client Interface and internal COM Server.
-@item rcomgen
-Completion generator for R.  @emph{Recommended} for R 2.5.0 or later.
+@item rcompgen
+Completion generator for R.  @emph{Recommended} for R 2.5.0 or 2.6.0.
 @c <COMMENT>
 @c Moved to the Archive o 2007-09-30 as requested by the maintainer.
 @c @item rcompletion
