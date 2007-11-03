@@ -94,7 +94,7 @@ my $R_HOME = $ENV{'R_HOME'} ||
 usage() if $opt_help;
 
 ## ===== to allow to be converted for use when cross-compiling =====
-my $BUILD = "MINGW";
+my $BUILD = "GCC4";
 my $Rversion;
 if($BUILD eq "CROSS") {
     my $startdir = cwd();

@@ -56,5 +56,5 @@ $(R_HOME)/doc/html/search/SearchEngine.html: $(R_HOME)/doc/html/search/SearchEng
 	cat html/search/SearchEngine-foot.html >> html/search/SearchEngine.html)
 ../XINSTALL: bin/INSTALL
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(SED) -e 's/"MINGW"/"CROSS"/' $< > $@
+	@$(SED) -e 's/"GCC4"/"CROSS"/' $< > $@
 endif
