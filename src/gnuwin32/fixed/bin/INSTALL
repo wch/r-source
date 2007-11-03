@@ -94,7 +94,7 @@ my $R_HOME = $ENV{'R_HOME'} ||
 usage() if $opt_help;
 
 ## ===== to allow to be converted for use when cross-compiling =====
-my $BUILD = "MINGW";
+my $BUILD = "GCC4";
 my $Rversion;
 if($BUILD eq "CROSS") {
     my $startdir = cwd();
@@ -386,7 +386,7 @@ foreach $pkg (@ARGV){
 	    if(! -d "$pkgdir/$pkgname/R") {
 		$lazyload = 0;
 	    } else {
-		$res = system("make --no-print-directory -C $pkgdir/$pkgname -f $R_HOME/src/gnuwin32/MakePkg PKG=$pkgname RLIB=$library RHOME=$R_HOME Rcode0");
+		$res = system("make --no-print-directory -C $pkgdir/$pkgname -f $R_HOME/src/gnuwin32/MakePkg PKG=$pkgname RLIB=$library RHOME=$R_HOME BUILD=$BUILD Rcode0");
 		if($res==0 && $lazyload == -1) { # choose based on code size
 		    my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
 		    $codesize =~ / *([0-9]+)/;
