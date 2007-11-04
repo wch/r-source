@@ -70,16 +70,12 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) libnmath.a
-@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+	@$(MAKE) libnmath.a
 
 libnmath.a: $(OBJECTS)
 	rm -rf $@
 	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
-
-stamp-lo: $(OBJECTS)
-	@touch $@
 
 mostlyclean: clean
 clean:

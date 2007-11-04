@@ -85,36 +85,29 @@ R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
 R_BZLIBS = @BUILD_BZLIB_TRUE@ ../extra/bzip2/libbz2.a
 R_PCRE = @BUILD_PCRE_TRUE@ ../extra/pcre/libpcre.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
+R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
+
+MAIN_LIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
+EXTRA_STATIC_LIBS = $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR)$(R_LIBINTL)
+STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
 ## <FIXME>
-## Names in here should use '$(top_builddir)' instead ...
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
+## possibly @LIBINTL@ contains more than the static library, but the
+## main possibility is -liconv, which we would have in LIBS
+LIBINTL= @BUILD_LIBINTL_FALSE@ @LIBINTL@
+EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBINTL) $(READLINE_LIBS) $(LIBS)
 ## </FIXME>
-
-EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) \
-	$(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@\
-	$(READLINE_LIBS) $(LIBS)
-
-## find dependencies for both libR and standalone R.bin
-DEP_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
-COMMON_DEPENDENCIES = \
-	$(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR) $(DEP_LIBINTL)
 
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
-@WANT_R_SHLIB_FALSE@R_bin_LDADD = $(RLIBS) $(EXTRA_LIBS)
+@WANT_R_SHLIB_FALSE@R_bin_LDADD = libR.a $(EXTRA_LIBS)
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib@R_ARCH@ -lR @BLAS_SHLIB_TRUE@-lRblas
-R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ $(RLIBS) $(COMMON_DEPENDENCIES)
+R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a
 
 libR_la = libR$(DYLIB_EXT)
 libR_la_OBJECTS = $(OBJECTS)
-## <FIXME>
-## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
-## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = $(EXTRA_LIBS)
-libR_la_DEPENDENCIES = ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo \
-	 $(COMMON_DEPENDENCIES)
-## </FIXME>
+libR_la_LIBADD = $(STATIC_LIBS) $(EXTRA_LIBS)
+libR_la_DEPENDENCIES = $(STATIC_LIBS)
 
 ## The next is needed on darwin only at present
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
@@ -151,14 +144,22 @@ R: Makefile
 $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 	$(MAIN_LINK) -o $@ $(R_bin_OBJECTS) $(R_bin_LDADD)
 
+libR.a: $(OBJECTS) $(STATIC_LIBS)
+	-@mkdir libs
+	@(cd libs; for l in $(STATIC_LIBS); do $(AR) x ../$$l; done)
+	@rm -rf $@
+	$(AR) cr $@ $(OBJECTS) libs/*o
+	$(RANLIB) $@
+	@rm -rf libs
+
 install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
 
-$(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
-	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
+$(top_builddir)/etc/R.exp: $(OBJECTS) $(MAIN_LIBS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(MAIN_LIBS)
 
 ## is this portable?  Documented as GNU extension.
-$(RLIBS):
+$(MAIN_LIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
 ../extra/bzip2/libbz2.a ../extra/pcre/libpcre.a ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/intl/libintl.a:
@@ -168,13 +169,11 @@ $(RLIBS):
 libR: $(libR_la)
 
 $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_OBJECTS) `ls ../appl/*.o ../nmath/*.o ../unix/*.o  2>/dev/null|grep -v /ext-` $(libR_la_LIBADD)
+	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_OBJECTS) $(libR_la_LIBADD)
 
 install-lib-local: $(libR_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-lib
 
-../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
-	(cd $(@D); $(MAKE) $(@F))
 
 # suppress #line directives
 YFLAGS=-l
@@ -209,7 +208,7 @@ clean:
 	@-rm -f $(top_builddir)/etc/R.exp
 	@-rm -rf .libs _libs
 	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
-	  $(R_binary)
+	  $(R_binary) libR.a
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

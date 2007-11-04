@@ -64,16 +64,12 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) libappl.a
-@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+	@$(MAKE) libappl.a
 
 libappl.a: $(OBJECTS)
 	rm -f $@
 	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
-
-stamp-lo: $(OBJECTS)
-	@touch $@
 
 blas.o: $(top_srcdir)/src/extra/blas/blas.f
 	$(F77) $(ALL_FFLAGS) -c $< -o $@
