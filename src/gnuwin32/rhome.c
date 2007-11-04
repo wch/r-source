@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2006  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1999--2007  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
 #include <string.h>		/* for strrchr(...) */
 #include <stdio.h>
 #include <ctype.h>
-#include <Rversion.h>
 #include <stdlib.h>		/* for exit */
 
 static char rhomebuf[MAX_PATH];
