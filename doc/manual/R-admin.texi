@@ -707,9 +707,8 @@ wise to use explicit names for each, and you may also need to set
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 2000, XP, 2003 Server and Vista
-(at least) on Intel x86 and clones (including AMD64/EM64T chips and
-Windows x64).
+from @acronym{CRAN} to run on Windows 2000 or later on ix86 CPUs
+(including AMD64/EM64T chips and Windows x64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -4277,10 +4276,8 @@ other updates to these instructions.  (Most Windows users will not need
 to build add-on packages from source; see @ref{Add-on packages} for
 details.)
 
-There are known problems with one of the compilers sets in this toolset
-on Windows Vista: see the workaround below. (With that workaround it has
-been used on both 32- and 64-bit versions of Vista: the recommended
-@command{gcc 4.2.1} does not need the workaround.)
+As from @R{} 2.7.0, only building with @command{gcc 4.y.z} is
+supported, and that compiler set works out-of-the-box on Windows Vista.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4348,14 +4345,6 @@ tools in other directories, and they will @strong{not} work.  The
 ordering of the other directories is less important, but if in doubt,
 use the order above.
 
-On Vista systems when using the @command{gcc 3.4.5} compilers you will
-need to add
-@example
-c:\Rtools\MinGW\libexec\gcc\mingw\3.4.5
-@end example
-
-@noindent
-to the path.
 
 Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
 paths as needed and to set the type(s) of help that you want built.
