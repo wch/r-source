@@ -252,6 +252,19 @@ AC_ARG_ENABLE([R-shlib],
 [want_R_shlib="${want_R_framework}"])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 
+AC_ARG_ENABLE([R-static-lib],
+[AC_HELP_STRING([--enable-R-static-lib],
+                [build the static library 'libR.a' @<:@no@:>@])],
+[want_R_static="${enableval}"],
+[want_R_static="no"])
+if test "x${want_R_static}" = xyes; then
+  if test "x${want_R_shlib}" = xyes; then
+    AC_WARN([--enable-R-static-lib conflicts with --enable-R-shlib and will be ignored])
+    want_R_static=no
+  fi
+fi
+AM_CONDITIONAL(WANT_R_STATIC, [test "x${want_R_static}" = xyes])
+
 ## Build separate shared library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],
 [AC_HELP_STRING([--enable-BLAS-shlib],
@@ -2423,6 +2436,8 @@ if test "${want_R_framework}" = yes; then
   R_SH_VAR_ADD(r_options, [framework], [, ])
 elif test "${want_R_shlib}" = yes; then
   R_SH_VAR_ADD(r_options, [shared R library], [, ])
+elif test "${want_R_static}" = yes; then
+  R_SH_VAR_ADD(r_options, [static R library], [, ])
 fi
 if test "${use_blas_shlib}" = yes; then
   R_SH_VAR_ADD(r_options, [shared BLAS], [, ])

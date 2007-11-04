@@ -134,6 +134,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 @WANT_R_SHLIB_TRUE@	@$(MAKE) install-lib-local
+@WANT_R_STATIC_TRUE@	@$(MAKE) install-static-local
 	@$(MAKE) install-bin-local
 
 
@@ -154,6 +155,9 @@ libR.a: $(OBJECTS) $(STATIC_LIBS)
 
 install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
+
+install-static-local: libR.a
+	@$(MAKE) rhome="$(abs_top_builddir)" install-static
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(MAIN_LIBS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(MAIN_LIBS)
@@ -186,6 +190,7 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
+	@WANT_R_STATIC_TRUE@ @$(MAKE) install-static
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir2)"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
@@ -193,6 +198,8 @@ install-bin: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 install-lib: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"
+install-static: installdirs
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change libR.a "$(DESTDIR)$(Rexeclibdir)/libR.a"
 install-strip: installdirs
 	@${INSTALL_PROGRAM} -s $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
@@ -202,6 +209,7 @@ install-strip: installdirs
 uninstall:
 	@rm -f "$(DESTDIR)$(Rexecbindir)/exec/$(R_ARCH)/R" "$(DESTDIR)$(Rexecbindir)/R.bin"
 	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR$(DYLIB_EXT)"
+	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR.a"
 
 mostlyclean: clean
 clean:

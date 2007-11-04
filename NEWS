@@ -81,6 +81,9 @@ INSTALLATION
     o	The Windows build only supports Windows 2000 or later (XP,
 	Vista, Server 2003 and Server 2008).
 
+    o	New option --enable-R-static-lib installs libR.a which can
+	be linked to a front-end via 'R CMD config --ldflags'.
+
 
 UTILITIES
 
