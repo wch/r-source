@@ -712,7 +712,7 @@ The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME, XP, 2003
 Server and Vista (at least) on Intel x86 and clones (including
-AMD64/EM64T chips and Windows 64).
+AMD64/EM64T chips and Windows x64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -4284,7 +4284,8 @@ details.)
 There are known problems with one of the compilers sets in this toolset
 on Windows Vista: see the workaround below. (With that workaround it has
 been used on both 32- and 64-bit versions of Vista: the recommended
-@command{gcc 4.2.1} does not need the workaround.)
+@command{gcc 4.2.1} does not need the workaround, and it may indeed be
+harmful.)
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4359,7 +4360,8 @@ c:\Rtools\MinGW\libexec\gcc\mingw\3.4.5
 @end example
 
 @noindent
-to the path.
+to the path.  (Do @strong{not} do this when using the recommended
+@command{gcc 4.2.1} compilers.)
 
 Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
 paths as needed and to set the type(s) of help that you want built.
