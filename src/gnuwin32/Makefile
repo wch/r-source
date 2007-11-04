@@ -231,9 +231,6 @@ Rdll: makeMakedeps libRblas.dll.a ../../bin/R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
 	@$(MKDIR) -p ./../modules/
-ifdef USE_UNICOWS
-	$(CP) unicode/opencow.dll ../../bin/
-endif
 
 FORCE:
 

@@ -5,6 +5,7 @@
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
 # or F2C (use suitable f2c rather than a Fortran compiler).
+# Use of GCC3 is no longer supported: use at your own risk.
 
 BUILD=GCC4
 ## if cross-building, is this gcc3 or gcc4?
@@ -45,14 +46,11 @@ HHWDIR=C:/Program Files/HTML Help Workshop
 TCL_HOME = $(RHOME)/Tcl
 TCL_VERSION = 84
 
-# Define to use unicows
-# USE_UNICOWS = YES
-
 # Define to use svnversion to set SVN-REVISION (slow, but more informative
 # than without it because mixed or modified revisions will be indicated)
 # USE_SVNVERSION = YES
 
-# We normally link against DLLs, but this forces the use of import libs
+# We normally link against DLLs, but this macro forces the use of import libs
 # Needed if using other compilers, and currently on Win64
 # USE_IMPLIBS = YES
 
