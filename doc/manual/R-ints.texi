@@ -1140,7 +1140,7 @@ pseudo-@code{SEXPTYPE}s cover @code{R_NilValue}, @code{R_EmptyEnv},
 @code{R_MissingArg} and @code{R_BaseNamespace}.
 
 For all @code{SEXPTYPE}s except @code{NILSXP}, @code{SYMSXP} and
-@code{ENVSXP} serialization starts with a integer with the
+@code{ENVSXP} serialization starts with an integer with the
 @code{SEXPTYPE} in bits 0:7@footnote{only 0:4 will currently be used for
 @code{SEXPTYPE}s but values 241:255 are used for pseudo-@code{SEXPTYPE}s.}
 followed by the object bit, two bits indicating if there are any
