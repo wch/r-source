@@ -77,6 +77,12 @@ function()
               sep = "")
     re_for_free_or_open_software_spec <-
         re_or(c(re_or(license_names_or_abbrevs_without_version),
+                ## We currently considers names or abbrevs of versioned
+                ## licenses, *possibly* followed by a version spec, as
+                ## canonical.  This is not quite perfect, as ideally a
+                ## version spec should be provided in case it matters.
+                ## Let us use the interpretation that no version spec
+                ## means "any version" (which is correct for GPL).
                 paste(re_or(license_names_or_abbrevs_with_version),
                       "[[:space:]]*",
                       paste("(", re_for_version_spec, ")*", sep = ""),
@@ -105,22 +111,22 @@ function()
 license_regexps <- .make_license_regexps()
 
 ## License specifications found on CRAN/BioC/Omegahat and manually
-## classified as "safe" open/free software licenses.  With ongoing
-## standardiation this should gradually be eliminated.
-## Last updated: 2007-10-20.
+## classified as "safe" open/free software licenses (even though not
+## canonical).  With ongoing standardization this should gradually be
+## eliminated.
+## Last updated: 2007-11-04.
+
+## Note
+##   http://www.fsf.org/licensing/licenses
+##   http://en.wikipedia.org/wiki/List_of_FSF_approved_software_licences
 
 .safe_license_specs_in_standard_repositories <-
     c(## <NOTE>
       ## These really need fixing for a variety of reasons:
       "'GPL'",
-      "Apache-Style Software License",
       "Artistic",
-      "Artistic License",
       "CeCILL 2 (GNU GPL 2 compatible)",
-      "GPL version 2 o newer",
       "LGPL version 2.1 or newer (the releases)",
-      "Public Domain, unlimited distribution",
-      "Public domain",
       "Standard GNU public license",
       "The Gnu general public liscense, current version, 2/12/2004.", 
       "Unlimited distribution.",
@@ -145,10 +151,12 @@ license_regexps <- .make_license_regexps()
       "GPL2.0",
       ## These are variants of GPL 2.1 which does not exist:
       "GPL version 2.1 or newer",
+      ## CeCILL is a bit of a mess: the current version is referred to
+      ## as "version 2" (http://www.cecill.info/licences.en.html) but
+      ## internally uses "Version 2.0 dated 2006-09-05"
+      ## (http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt).
+      "CeCILL-2.0",
       ## </NOTE>
-      "BSD",
-      "CeCILL version 2", 
-      "GNU GENERAL PUBLIC LICENSE Version 2",
       "GNU GPL (version 2 or any later version)", 
       "GNU GPL (version 2 or later)",
       "GNU GPL (version 2 or later); see the file COPYING for details", 
@@ -158,8 +166,6 @@ license_regexps <- .make_license_regexps()
       "GNU GPL version 2", 
       "GNU GPL version 2 or newer",
       "GNU GPL version 2.",
-      "GNU GPL2; http://www.fsf.org/licenses/gpl.html", 
-      "GNU General Public License",
       "GNU General Public License Version 2 or higher.", 
       "GNU General Public License version 2 or newer",
       "GNU Public License",
@@ -225,7 +231,6 @@ license_regexps <- .make_license_regexps()
       "LGPL version 2 or newer",
       "LGPL version 2.1 or later",
       "LGPL2",
-      "MIT",
       "Mozilla Public License 1.1 (http://www.mozilla.org/MPL/)", 
       "The Artistic License, Version 2.0",
       "Unlimited use and distribution (see LICENCE).", 
@@ -238,7 +243,6 @@ license_regexps <- .make_license_regexps()
       "GPL Version 2 (or later)",
       "LGPL (version 2 or later)",
       ## BioC
-      "Artistic License 2.0",
       "Artistic License, Version 2.0",
       "GNU GPL.",
       "GPL (http://www.gnu.org/copyleft/gpl.html)",
@@ -389,4 +393,12 @@ function(...)
     ldb <- do.call("rbind", list(...))
     safe <- .safe_license_specs_in_standard_repositories
     safe[!safe %in% unique(ldb$License)]
+}
+
+find_canonical_safe_license_specs <-
+function()
+{
+    grep(license_regexps$re_for_component,
+         .safe_license_specs_in_standard_repositories,
+         value = TRUE)
 }
