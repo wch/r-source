@@ -48,7 +48,7 @@ rt(n, df, ncp)
 \note{
   Setting \code{ncp = 0} is \emph{not} equivalent to omitting
   \code{ncp}.  \R uses the non-centrality functionality whenever \code{ncp}
-  is specified which provides continuous behavior at \eqn{ncp=0}.
+  is specified which provides continuous behavior at \eqn{ncp = 0}.
 }
 \details{
   The \eqn{t} distribution with \code{df} \eqn{= \nu}{= n} degrees of
@@ -62,27 +62,25 @@ rt(n, df, ncp)
   variance \eqn{\frac{\nu}{\nu-2}}{n/(n-2)} (for \eqn{\nu > 2}{n > 2}).
 
   The general \emph{non-central} \eqn{t}
-  with parameters \eqn{(\nu,\delta)}{(df,Del)} \code{= (df, ncp)}
+  with parameters \eqn{(\nu, \delta)}{(df, Del)} \code{= (df, ncp)}
   is defined as the distribution of
-  \eqn{T_{\nu}(\delta) := \frac{U + \delta}{\chi_{\nu}/\sqrt{\nu}}}{%
-      T(df, Del) := (U + Del) / (Chi(df) / sqrt(df)) }
-  where \eqn{U} and \eqn{\chi_{\nu}}{Chi(df)}  are independent random
-  variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)}, and
-%%fails  \eqn{{\chi_{\nu}}^2}{(Chi(df))^2}
-  \eqn{\chi^2_\nu}{Chi(df)^2}
-  is chi-squared, see \link{Chisquare}.
+  \eqn{T_{\nu}(\delta) := (U + \delta)/\sqrt{V/\nu}}{%
+      T(df, Del) := (U + Del) / sqrt(V/df) }
+  where \eqn{U} and \eqn{V}  are independent random
+  variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)} and
+  \eqn{V \sim \chi^2_\nu}{V \~ Chi^2(df)} (see \link{Chisquare}).
 
   The most used applications are power calculations for \eqn{t}-tests:\cr
-  Let \eqn{T= \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}
+  Let \eqn{T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}
   where
   \eqn{\bar{X}}{mX} is the \code{\link{mean}} and \eqn{S} the sample standard
-  deviation (\code{\link{sd}}) of \eqn{X_1,X_2,\dots,X_n} which are i.i.d.
-%%fails \eqn{{\cal N}(\mu,\sigma^2)}{N(mu,sigma^2)}
-        \eqn{       N(\mu,\sigma^2)}{N(mu,sigma^2)}.
-  Then \eqn{T} is distributed as non-centrally \eqn{t} with
-  \code{df}\eqn{= n-1}
+  deviation (\code{\link{sd}}) of \eqn{X_1, X_2, \dots, X_n} which are
+  i.i.d. \eqn{{\cal N}(\mu, \sigma^2)}{N(mu, sigma^2)}
+%%        \eqn{       N(\mu, \sigma^2)}{N(mu, sigma^2)}.
+  Then \eqn{T} is distributed as non-central \eqn{t} with
+  \code{df}\eqn{{} = n-1}
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
-  \code{ncp}\eqn{= (\mu - \mu_0) \sqrt{n}/\sigma}{= (mu - m0) * sqrt(n)/sigma}.
+  \code{ncp}\eqn{{} = (\mu - \mu_0) \sqrt{n}/\sigma}{ = (mu - m0) * sqrt(n)/sigma}.
 }
 \source{
   The central \code{dt} is computed via an accurate formula

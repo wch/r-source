@@ -39,15 +39,19 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
 }
 \value{
   An object inheriting from class \code{"connection"}.  This is the same
-  connection \emph{number} as supplied, but with a modified internal structure.
+  connection \emph{number} as supplied, but with a modified internal
+  structure. It has binary mode.
 }
 \seealso{\code{\link{gzfile}}}
 \examples{
-\dontrun{## This example is no longer available
-## print the value to see what objects were created.
-con <- url("http://hesweb1.med.virginia.edu/biostat/s/data/sav/kprats.sav")
-print(load(con))
-close(con)}
+\dontrun{## Uncompress a data file from a URL
+z <- gzcon(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch12.dat.gz"))
+# read.table can only read from a text-mode connection.
+raw <- textConnection(readLines(z))
+close(z)
+dat <- read.table(raw)
+close(raw)
+}
 
 ## gzfile and gzcon can inter-work.
 ## Of course here one would used gzfile, but file() can be replaced by

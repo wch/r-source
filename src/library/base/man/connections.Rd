@@ -135,7 +135,7 @@ isIncomplete(con)
   \code{gzfile} and \code{bzfile} open the actual file in binary mode
   and so no translations are done if the original file was a text file.
   (See \code{\link{gzcon}} for a way to add compression to non-file
-  connections.)
+  connections such as URLs.)
   
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
   \code{unz} and \code{url("file://")} connections.  The other types may
