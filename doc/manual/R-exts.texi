@@ -1723,8 +1723,8 @@ export(f, g)
 
 @noindent
 specifies that the variables @code{f} and @code{g} are to be exported.
-(Note that variable names may be quoted, and non-standard names such as
-@code{[<-.fractions} must be.)
+(Note that variable names may be quoted, and reserved words and
+non-standard names such as @code{[<-.fractions} must be.)
 
 For packages with many variables to export it may be more convenient to
 specify the names to export with a regular expression using
@@ -1806,6 +1806,9 @@ defined in a package that does not use a name space should be exported,
 and the package defining and exporting the methods should be attached to
 the search path if the methods are to be found.
 
+(Note that function and class names may be quoted, and reserved words
+and non-standard names such as @code{[<-} and @code{function} must
+be.)
 
 @node Load hooks, An example, Registering S3 methods, Package name spaces
 @subsection Load hooks
