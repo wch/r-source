@@ -37,7 +37,7 @@ extern int UserBreak;
 /* calls into the R DLL */
 extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
 extern void R_DefParams(Rstart), R_SetParams(Rstart), R_setStartTime();
-extern void setup_term_ui(void), ProcessEvents(void);
+extern void ProcessEvents(void);
 extern int R_ReplDLLdo1();
 
 
