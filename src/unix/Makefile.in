@@ -77,9 +77,15 @@ install-pc:
 	  -e 's:@libsprivate:$(STATIC_LIBR_PC):' \
 	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
 	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
-install: install-Rscript @WANT_R_SHLIB_TRUE@ install-pc
+
+install: install-main install-Rscript
+install: @WANT_R_SHLIB_TRUE@ install-pc
+install: @WANT_R_STATIC_TRUE@ install-pc
+
+install-main:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(bindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(bindir)/Rscript"
+
 uninstall:
 	@rm -f "$(DESTDIR)$(bindir)/Rscript" "$(DESTDIR)$(Rexecbindir)/Rscript" \
 	  "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
