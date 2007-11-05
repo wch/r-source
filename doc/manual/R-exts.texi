@@ -9058,10 +9058,10 @@ There are a number of ways to build front-ends to @R{}: we take this to
 mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
-example @samp{Rserve} (see @url{http://www.rosuda.org/Rserve}) and
-connections to Java in @samp{SJava} (see
-@url{http://www.omegahat.org/RSJava/} and @samp{JRI}, part of the
-@pkg{rJava} package on CRAN).
+example the package @pkg{Rserve} (from CRAN, see also
+@url{http://www.rforge.net/Rserve/}) and connections to Java in
+@samp{SJava} (see @url{http://www.omegahat.org/RSJava/} and @samp{JRI},
+part of the @pkg{rJava} package on CRAN).
 
 @menu
 * Embedding R under Unix-alikes::  
@@ -9113,7 +9113,7 @@ Setting @env{R_HOME} and checking it is valid, as well as the path
 @item
 Setting @env{LD_LIBRARY_PATH} to include the directories used in linking
 @R{}.  This is recorded as the default setting of
-@env{R_LD_LIBRARY_PATH} in the shell script.
+@env{R_LD_LIBRARY_PATH} in the shell script @file{R_HOME/etc/ldpaths}.
 
 @item
 Processing some of the arguments, for example to run @R{} under a
@@ -9135,7 +9135,8 @@ first for executables in @file{@var{R_HOME}/bin}.)  If you do not want
 to run your front-end in this way, you need to ensure that @env{R_HOME}
 is set and @env{LD_LIBRARY_PATH} is suitable.  (The latter might well
 be, but modern Unix/Linux systems do not normally include
-@file{/usr/local/lib}, and @R{} does look there for system components.)
+@file{/usr/local/lib} (@file{/usr/local/lib64} on some architectures),
+and @R{} does look there for system components.)
 
 The other senses in which this example is too simple are that all the
 internal defaults are used and that control is handed over to the
