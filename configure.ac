@@ -643,6 +643,11 @@ eval "export ${shlibpath_var}"
 ltout=`./libtool --config | grep '^striplib='`
 eval "${ltout}"
 AC_SUBST(striplib)
+## record how to strip static libraries.
+ltout=`./libtool --config | grep '^old_striplib='`
+eval "${ltout}"
+stripstaticlib=${old_striplib}
+AC_SUBST(stripstaticlib)
 
 ## <NOTE>
 ## This actually comes from libtool.m4.

@@ -935,6 +935,7 @@ CROSS_COMPILING_TRUE
 CROSS_COMPILING_FALSE
 shlibpath_var
 striplib
+stripstaticlib
 LIBM
 READLINE_LIBS
 FLIBS
@@ -8200,7 +8201,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 8203 "configure"' > conftest.$ac_ext
+  echo '#line 8204 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9686,11 +9687,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9689: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9690: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9693: \$? = $ac_status" >&5
+   echo "$as_me:9694: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -9919,11 +9920,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9922: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9923: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9926: \$? = $ac_status" >&5
+   echo "$as_me:9927: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -9979,11 +9980,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9982: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9983: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9986: \$? = $ac_status" >&5
+   echo "$as_me:9987: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12126,7 +12127,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12129 "configure"
+#line 12130 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12224,7 +12225,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12227 "configure"
+#line 12228 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14400,11 +14401,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14403: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14404: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14407: \$? = $ac_status" >&5
+   echo "$as_me:14408: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -14460,11 +14461,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14463: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14464: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14467: \$? = $ac_status" >&5
+   echo "$as_me:14468: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15788,7 +15789,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 15791 "configure"
+#line 15792 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15886,7 +15887,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 15889 "configure"
+#line 15890 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -16713,11 +16714,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16716: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16717: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16720: \$? = $ac_status" >&5
+   echo "$as_me:16721: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -16773,11 +16774,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16776: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16777: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16780: \$? = $ac_status" >&5
+   echo "$as_me:16781: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18802,11 +18803,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18805: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18806: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18809: \$? = $ac_status" >&5
+   echo "$as_me:18810: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -19035,11 +19036,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19038: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19039: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:19042: \$? = $ac_status" >&5
+   echo "$as_me:19043: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -19095,11 +19096,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19098: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19099: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:19102: \$? = $ac_status" >&5
+   echo "$as_me:19103: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -21242,7 +21243,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21245 "configure"
+#line 21246 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -21340,7 +21341,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21343 "configure"
+#line 21344 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -22463,6 +22464,11 @@ eval "export ${shlibpath_var}"
 ## record how to strip shared/dynamic libraries.
 ltout=`./libtool --config | grep '^striplib='`
 eval "${ltout}"
+
+## record how to strip static libraries.
+ltout=`./libtool --config | grep '^old_striplib='`
+eval "${ltout}"
+stripstaticlib=${old_striplib}
 
 
 ## <NOTE>
@@ -29086,7 +29092,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:29089: \"$ac_link\") >&5
+(eval echo $as_me:29095: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -29169,7 +29175,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:29172: \"$ac_link\") >&5
+(eval echo $as_me:29178: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -57078,6 +57084,7 @@ CROSS_COMPILING_TRUE!$CROSS_COMPILING_TRUE$ac_delim
 CROSS_COMPILING_FALSE!$CROSS_COMPILING_FALSE$ac_delim
 shlibpath_var!$shlibpath_var$ac_delim
 striplib!$striplib$ac_delim
+stripstaticlib!$stripstaticlib$ac_delim
 LIBM!$LIBM$ac_delim
 READLINE_LIBS!$READLINE_LIBS$ac_delim
 FLIBS!$FLIBS$ac_delim
@@ -57094,7 +57101,6 @@ R_XTRA_FFLAGS!$R_XTRA_FFLAGS$ac_delim
 R_XTRA_LIBS!$R_XTRA_LIBS$ac_delim
 OBJC_LIBS!$OBJC_LIBS$ac_delim
 OBJCXXFLAGS!$OBJCXXFLAGS$ac_delim
-XMKMF!$XMKMF$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -57136,6 +57142,7 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+XMKMF!$XMKMF$ac_delim
 DYLIB_UNDEFINED_ALLOWED_TRUE!$DYLIB_UNDEFINED_ALLOWED_TRUE$ac_delim
 DYLIB_UNDEFINED_ALLOWED_FALSE!$DYLIB_UNDEFINED_ALLOWED_FALSE$ac_delim
 BUILD_CYGWIN_TRUE!$BUILD_CYGWIN_TRUE$ac_delim
@@ -57232,7 +57239,6 @@ LTLIBMULTITHREAD!$LTLIBMULTITHREAD$ac_delim
 LIBICONV!$LIBICONV$ac_delim
 LTLIBICONV!$LTLIBICONV$ac_delim
 INTLBISON!$INTLBISON$ac_delim
-GLIBC21!$GLIBC21$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -57274,6 +57280,7 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+GLIBC21!$GLIBC21$ac_delim
 INTL_MACOSX_LIBS!$INTL_MACOSX_LIBS$ac_delim
 HAVE_POSIX_PRINTF!$HAVE_POSIX_PRINTF$ac_delim
 HAVE_ASPRINTF!$HAVE_ASPRINTF$ac_delim
@@ -57301,7 +57308,7 @@ OSF_SH_BUG!$OSF_SH_BUG$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 25; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 26; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
