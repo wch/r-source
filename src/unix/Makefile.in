@@ -9,6 +9,10 @@ top_builddir = ../..
 subdir = src/unix
 
 include $(top_builddir)/Makeconf
+# see note in src/main/Makefile.in
+LIBINTL= @BUILD_LIBINTL_FALSE@ @LIBINTL@
+R_HOME=$(rhome)
+STATIC_LIBR_PC = @WANT_R_STATIC_TRUE@ $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBINTL) @READLINE_LIBS@ $(LIBS)
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
@@ -70,6 +74,7 @@ install-Rscript:
 install-pc:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
 	@$(SED) -e "s:@rhome:$(rhome):" -e "s:@rincludedir:$(rincludedir):" \
+	  -e 's:@libsprivate:$(STATIC_LIBR_PC):' \
 	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
 	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
 install: install-Rscript @WANT_R_SHLIB_TRUE@ install-pc

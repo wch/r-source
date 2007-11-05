@@ -7,3 +7,4 @@ Description: The R shared library
 Version: @VERSION
 Libs: -L${rlibdir} -lR
 Cflags: -I${rincludedir}
+Libs.private:@libsprivate

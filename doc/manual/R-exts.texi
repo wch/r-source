@@ -9241,7 +9241,13 @@ pkg-config --cflags libR
 pkg-config --libs libR
 @end example
 
+@noindent
+and for a static @R{} library
 
+@example
+pkg-config --cflags libR
+pkg-config --libs --static libR
+@end example
 
 @node Setting R callbacks, Registering symbols, Compiling against the R library, Embedding R under Unix-alikes
 @subsection Setting R callbacks
