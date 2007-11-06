@@ -107,14 +107,19 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   locale (e.g. Fedora Core 3 lacks one for \code{ru_RU.utf8}).
 }
 \section{Resources}{
-  The standard X11 resource \code{geometry} can be use to specify the
+  The standard X11 resource \code{geometry} can be used to specify the
   window position and/or size, but will be overridden by values
-  specified as arguments.  The class looked for is \code{R_x11}. Note
+  specified as arguments.  The class looked for is \code{R_x11}.  Note
   that the resource specifies the width and height in pixels and not in
-  inches.
+  inches.  See for example
+  \url{http://web.mit.edu/answers/xwindows/xwindows_resources.html}.
+  An example line in \file{~/.Xresources} might be
+\preformatted{R_x11*geometry: 900x900-0+0
+}
+  that specifies a 900 x 900 pixel window at the top right of the screen.
 }
 
 \seealso{
-  \code{\link{Devices}},\code{\link{X11Fonts}}.
+  \code{\link{Devices}}, \code{\link{X11Fonts}}.
 }
 \keyword{device}
