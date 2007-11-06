@@ -6940,9 +6940,9 @@ value accepted is 100000.
 (Windows only) Specify a limit for the amount of memory to be used both
 for @R{} objects and working areas.  This is set by default to the
 smaller of 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb
-per process and have the support enabled: see the @file{rw-FAQ} Q2.9.}
-and the amount of physical RAM in the machine, and must be between 32Mb
-and 3Gb.
+per process and have the support enabled: see the @file{rw-FAQ} Q2.9;
+3.5Gb on some 64-bit versions of Windows..}  and the amount of physical
+RAM in the machine, and must be between 32Mb and 3Gb.
 
 @item --quiet
 @itemx --silent
