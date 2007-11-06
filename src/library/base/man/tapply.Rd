@@ -22,7 +22,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
     \code{+}, \code{\%*\%}, etc., the function name must be quoted.  If
     \code{FUN} is \code{NULL}, tapply returns a vector which can be used
     to subscript the multi-way array \code{tapply} normally produces.}
-  \item{\dots}{optional arguments to \code{FUN}.}
+  \item{\dots}{optional arguments to \code{FUN}: the Note section.}
   \item{simplify}{If \code{FALSE}, \code{tapply} always returns an array
     of mode \code{"list"}.  If \code{TRUE} (the default), then if
     \code{FUN} always returns a scalar, \code{tapply} returns an array
@@ -31,12 +31,13 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 \value{
   When \code{FUN} is present, \code{tapply} calls \code{FUN} for each
   cell that has any data in it.  If \code{FUN} returns a single atomic
-  value for each cell (e.g., functions \code{mean} or \code{var}) and
-  when \code{simplify} is \code{TRUE}, \code{tapply} returns a multi-way
-  \link{array} containing the values.  The array has the same number of
-  dimensions as \code{INDEX} has components; the number of levels in a
-  dimension is the number of levels (\code{nlevels()}) in the
-  corresponding component of \code{INDEX}.
+  value for each such cell (e.g., functions \code{mean} or \code{var})
+  and when \code{simplify} is \code{TRUE}, \code{tapply} returns a
+  multi-way \link{array} containing the values, and \code{NA} for the
+  empty cells.  The array has the same number of dimensions as
+  \code{INDEX} has components; the number of levels in a dimension is
+  the number of levels (\code{nlevels()}) in the corresponding component
+  of \code{INDEX}.
 
   Note that contrary to S, \code{simplify = TRUE} always returns an
   array, possibly 1-dimensional.
@@ -50,10 +51,14 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   the names of \code{INDEX} and are based on the levels of the grouping
   factors (possibly after coercion).
 
-  Note that optional arguments to \code{FUN} supplied by the
-  \code{...} argument are not divided into cells.  It is therefore
-  inappropriate for \code{FUN} to expect additional arguments with
-  the same length as \code{X}.
+  For a list result, the elements corresponding to empty cells are
+  \code{NULL}.
+}
+\note{
+  Optional arguments to \code{FUN} supplied by the \code{...} argument
+  are not divided into cells.  It is therefore inappropriate for
+  \code{FUN} to expect additional arguments with the same length as
+  \code{X}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
