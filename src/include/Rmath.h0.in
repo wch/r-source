@@ -237,6 +237,7 @@ double  Rlog1p(double);
 #define lbeta		Rf_lbeta
 #define lchoose		Rf_lchoose
 #define lgammafn	Rf_lgammafn
+#define lgammafn_sign	Rf_lgammafn_sign
 #define lgamma1p	Rf_lgamma1p
 #define log1pmx		Rf_log1pmx
 #define logspace_add	Rf_logspace_add
@@ -528,6 +529,7 @@ double rsignrank(double);
 	/* Gamma and Related Functions */
 double	gammafn(double);
 double	lgammafn(double);
+double	lgammafn_sign(double, int*);
 void    dpsifn(double, int, int, int, double*, int*, int*);
 double	psigamma(double, double);
 double	digamma(double);

@@ -20,14 +20,14 @@
  *  SYNOPSIS
  *
  *    #include <Rmath.h>
- *    extern int R_signgam;
+ *    double lgammafn_sign(double x, int *signgam);
  *    double lgammafn(double x);
  *
  *  DESCRIPTION
  *
- *    This function computes log|gamma(x)|.  At the same time
- *    the variable "R_signgam" is set to the sign of the gamma
- *    function.
+ *    The function lgammafn computes log|gamma(x)|.  The function
+ *    lgammafn_sign in addition assigns the sign of the gamma function
+ *    to the address in the second argument if this is not NULL.
  *
  *  NOTES
  *
@@ -41,9 +41,7 @@
 
 #include "nmath.h"
 
-int attribute_hidden R_signgam;
-
-double lgammafn(double x)
+double lgammafn_sign(double x, int *signgam)
 {
     double ans, y, sinpiy;
 
@@ -64,14 +62,14 @@ double lgammafn(double x)
 #define dxrel 1.490116119384765696e-8
 #endif
 
-    R_signgam = 1;
+    if (signgam != NULL) *signgam = 1;
 
 #ifdef IEEE_754
     if(ISNAN(x)) return x;
 #endif
 
     if (x < 0 && fmod(floor(-x), 2.) == 0)
-	R_signgam = -1;
+	if (signgam != NULL) *signgam = -1;
 
     if (x <= 0 && x == trunc(x)) { /* Negative integer argument */
 	ML_ERROR(ME_RANGE, "lgamma");
@@ -120,4 +118,9 @@ double lgammafn(double x)
     }
 
     return ans;
+}
+
+double lgammafn(double x)
+{
+    return lgammafn_sign(x, NULL);
 }
