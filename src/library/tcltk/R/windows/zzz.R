@@ -39,7 +39,7 @@
 }
 
 .onUnload <- function(libpath) {
-    if(is.loaded(symbol.C("tcltk_end"))) {
+    if(is.loaded("tcltk_end")) {
         .C("tcltk_end", PACKAGE="tcltk")
 ## unloading the DLL used to work, but it seems Tcl/Tk 8.4.1 does
 ## not like being reinitialized

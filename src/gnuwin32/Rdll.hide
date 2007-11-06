@@ -170,7 +170,6 @@
  R_TextBufferGetc
  R_TextBufferInit
  R_TmpvalSymbol
- R_ToplevelExec
  R_UseNamesSymbol
  R_VSize
  R_Verbose
