@@ -33,7 +33,7 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
 OPTFLAGS=-O3 -Wall -pedantic
-FOPTFLAGS=-O3 -Wall
+FOPTFLAGS=-O3
 ifdef DEBUG
  OPTFLAGS+=$(G_FLAG)
  FOPTFLAGS+=$(G_FLAG)
