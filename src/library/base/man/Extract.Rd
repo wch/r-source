@@ -35,10 +35,11 @@ x$name
     indices specifying elements to extract or replace.  Indices are
     \code{numeric} or \code{character} vectors or empty (missing) or
     \code{NULL}.  Numeric values are coerced to integer as by
-    \code{\link{as.integer}} (and hence truncated towards zero).  For
-    extraction with \code{[[}, character vectors will be partially
-    matched to the \code{\link{names}} of the object based on the value
-    of the \code{exact} argument (also see under Environments).
+    \code{\link{as.integer}} (and hence truncated towards zero).
+    Character vectors will be matched to the \code{\link{names}} of the
+    object (or for matrices/arrays, the \code{\link{dimnames}}:
+    see \code{\link{names}} for how \code{""} and \code{NA} names are
+    considered.
 
     For \code{[}-indexing only: \code{i, j, \dots} can be logical
     vectors, indicating elements/slices to select.  Such vectors are
@@ -62,8 +63,9 @@ x$name
     coerced to the lowest possible dimension (see the examples).  This
     only works for extracting elements, not for the replacement.
   }
-  \item{exact}{Controls partial matching of \code{[[} when indexing with
-    character vectors.  The default value, \code{NA}, allows partial
+  \item{exact}{Controls possible partial matching of \code{[[} when
+    extracting by a character vector (for most objects, but see under
+    Environments).  The default value, \code{NA}, allows partial
     matching, but issues a warning when it occurs.  When \code{TRUE}, no
     partial matching is performed.  When \code{FALSE}, partial matching
     is allowed and no warning is issued when it occurs.}
@@ -105,8 +107,7 @@ x$name
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
-  select a single element, but \code{"["} can also do so (but will not
-  partially match a character index).
+  select a single element, but \code{"["} can also do so.
 
   The index object \code{i} can be numeric, logical, character or empty.
   Indexing by factors is allowed and is equivalent to indexing by the
@@ -225,6 +226,9 @@ x$name
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{names}} for details of matching to names, and
+  \code{\link{pmatch}} for partial matching.
+  
   \code{\link{options}(warnPartialMatchAttr = TRUE)} causes partial
   matches in \code{$name} to give warnings.
 
