@@ -37,9 +37,8 @@ x$name
     \code{NULL}.  Numeric values are coerced to integer as by
     \code{\link{as.integer}} (and hence truncated towards zero).
     Character vectors will be matched to the \code{\link{names}} of the
-    object (or for matrices/arrays, the \code{\link{dimnames}}:
-    see \code{\link{names}} for how \code{""} and \code{NA} names are
-    considered.
+    object (or for matrices/arrays, the \code{\link{dimnames}}):
+    see \sQuote{Character indices} below for further details.
 
     For \code{[}-indexing only: \code{i, j, \dots} can be logical
     vectors, indicating elements/slices to select.  Such vectors are
@@ -56,8 +55,9 @@ x$name
   }
   \item{name}{
     A literal character string or a \link{name} (possibly \link{backtick}
-    quoted).  For extraction, this is normally (see under Environments)
-    partially matched to the \code{\link{names}} of the object.
+    quoted).  For extraction, this is normally (see under
+    \sQuote{Environments}) partially matched to the \code{\link{names}}
+    of the object.
   }
   \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
@@ -65,10 +65,10 @@ x$name
   }
   \item{exact}{Controls possible partial matching of \code{[[} when
     extracting by a character vector (for most objects, but see under
-    Environments).  The default value, \code{NA}, allows partial
-    matching, but issues a warning when it occurs.  When \code{TRUE}, no
-    partial matching is performed.  When \code{FALSE}, partial matching
-    is allowed and no warning is issued when it occurs.}
+    \sQuote{Environments}).  The default is no partial matching.  Value
+    \code{NA} allows partial matching but issues a warning when it
+    occurs.  Value \code{FALSE} allows partial matching without any
+    warning.}
 }
 \details{
   These operators are generic.  You can write methods to handle indexing
@@ -211,10 +211,25 @@ x$name
   vector: despite the message given by \code{getGeneric("$")} you cannot
   usefully write methods based on the class of \code{name}.
 }
-\note{
-  S uses partial matching when extracting by \code{[}
-  (Becker \emph{et al} p. 358) whereas \R does not.
+\section{Character indices}{
+  Character indices can in some circumstances be partially matched (see
+  \code{\link{pmatch}} to the names or dimnames of the object being
+  subsetted (but never for subassignment).  Unlike S (Becker \emph{et
+    al} p. 358)), \R has never used partial matching when extracting by
+  \code{[}.  As from \R 2.7.0, partial matching is not by default used
+  by \code{[[} (see argument \code{exact}).
 
+  Thus the default behaviour is to use partial matching only when
+  extracting from recursive objects (except environments) by \code{$}.
+  Even in that case, warnings can be switched on by
+  \code{\link{options}(warnPartialMatchAttr = TRUE)}.
+
+  Neither empty (\code{""}) nor \code{NA} indices match any names, not
+  even empty nor missing names.  If any object has no names or
+  appropriate dimnames, they are taken as all \code{""} and so match
+  nothing.
+}
+\note{
   The documented behaviour of S is that an \code{NA} replacement index
   \sQuote{goes nowhere} but uses up an element of \code{value}
   (Becker \emph{et al} p. 359).  However, that has not been true of
@@ -228,9 +243,6 @@ x$name
 \seealso{
   \code{\link{names}} for details of matching to names, and
   \code{\link{pmatch}} for partial matching.
-  
-  \code{\link{options}(warnPartialMatchAttr = TRUE)} causes partial
-  matches in \code{$name} to give warnings.
 
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
 
