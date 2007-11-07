@@ -43,6 +43,8 @@ JAVA_LD_LIBRARY_PATH =
 JAVA_LIBS = -L"$(JAVA_HOME)/bin/client" -ljvm
 JAVA_CPPFLAGS = -I"$(JAVA_HOME)/../include" -I"$(JAVA_HOME)/../include/win32"
 LAPACK_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRlapack
+## we only need this is if it is external, as otherwise link to R
+LIBINTL=
 LIBM = -lm
 LIBR = -L"$(R_HOME)/$(IMPDIR)" -lR
 LIBS =  -lm
@@ -75,6 +77,8 @@ SHLIB_LINK = $(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS)
 STRIP_LIBS =
 TCLTK_CPPFLAGS = -I "$(TCL_HOME)/include" -DWin32
 TCLTK_LIBS = -L"$(TCL_HOME)/bin" -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
+
+STATIC_LIBR =
 
 R_XTRA_CFLAGS =
 R_XTRA_CPPFLAGS =
