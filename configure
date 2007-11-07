@@ -55463,8 +55463,8 @@ echo "${ECHO_T}$ac_res" >&6; }
       if test "$nls_cv_use_gnu_gettext" = "yes"; then
                 BUILD_INCLUDED_LIBINTL=yes
         USE_INCLUDED_LIBINTL=yes
-        LIBINTL="../extra/intl/libintl.a $LIBICONV $LIBTHREAD"
-        LTLIBINTL="../extra/intl/libintl.a $LTLIBICONV $LTLIBTHREAD"
+		LIBINTL="$LIBICONV $LIBTHREAD"
+                LTLIBINTL="../extra/intl/libintl.a $LTLIBICONV $LTLIBTHREAD"
         LIBS=`echo " $LIBS " | sed -e 's/ -lintl / /' -e 's/^ //' -e 's/ $//'`
       fi
 

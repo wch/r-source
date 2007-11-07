@@ -91,12 +91,7 @@ MAIN_LIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRA_STATIC_LIBS = $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR)$(R_LIBINTL)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
-## <FIXME>
-## possibly @LIBINTL@ contains more than the static library, but the
-## main possibility is -liconv, which we would have in LIBS
-LIBINTL= @BUILD_LIBINTL_FALSE@ @LIBINTL@
-EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBINTL) $(READLINE_LIBS) $(LIBS)
-## </FIXME>
+EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(LIBS)
 
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o
