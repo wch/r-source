@@ -112,7 +112,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   specified as arguments.  The class looked for is \code{R_x11}.  Note
   that the resource specifies the width and height in pixels and not in
   inches.  See for example
-  \url{http://web.mit.edu/answers/xwindows/xwindows_resources.html}.
+  \url{http://web.mit.edu/answers/xwindows/xwindows_resources.html} and
+  perhaps \sampm{man X} (or \url{http://www.xfree86.org/current/X.7.html)}.
   An example line in \file{~/.Xresources} might be
 \preformatted{R_x11*geometry: 900x900-0+0
 }
