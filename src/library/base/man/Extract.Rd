@@ -37,7 +37,7 @@ x$name
     \code{NULL}.  Numeric values are coerced to integer as by
     \code{\link{as.integer}} (and hence truncated towards zero).
     Character vectors will be matched to the \code{\link{names}} of the
-    object (or for matrices/arrays, the \code{\link{dimnames}}:
+    object (or for matrices/arrays, the \code{\link{dimnames}}):
     see \code{\link{names}} for how \code{""} and \code{NA} names are
     considered.
 
