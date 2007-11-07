@@ -32,7 +32,7 @@ is.unsorted(x, na.rm = FALSE)
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
      Not available for partial sorting.}
   \item{\dots}{arguments to be passed to or from methods or (for the
-    default methods and objects without a class) to \code{sim.int}.}
+    default methods and objects without a class) to \code{sort.int}.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
