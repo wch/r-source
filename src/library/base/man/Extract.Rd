@@ -38,8 +38,7 @@ x$name
     \code{\link{as.integer}} (and hence truncated towards zero).
     Character vectors will be matched to the \code{\link{names}} of the
     object (or for matrices/arrays, the \code{\link{dimnames}}):
-    see \code{\link{names}} for how \code{""} and \code{NA} names are
-    considered.
+    see \sQuote{Character indices} below for further details.
 
     For \code{[}-indexing only: \code{i, j, \dots} can be logical
     vectors, indicating elements/slices to select.  Such vectors are
@@ -56,8 +55,9 @@ x$name
   }
   \item{name}{
     A literal character string or a \link{name} (possibly \link{backtick}
-    quoted).  For extraction, this is normally (see under Environments)
-    partially matched to the \code{\link{names}} of the object.
+    quoted).  For extraction, this is normally (see under
+    \sQuote{Environments}) partially matched to the \code{\link{names}}
+    of the object.
   }
   \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
@@ -65,7 +65,7 @@ x$name
   }
   \item{exact}{Controls possible partial matching of \code{[[} when
     extracting by a character vector (for most objects, but see under
-    Environments).  The default value, \code{NA}, allows partial
+    \sQuote{Environments}). The default value, \code{NA}, allows partial
     matching, but issues a warning when it occurs.  When \code{TRUE}, no
     partial matching is performed.  When \code{FALSE}, partial matching
     is allowed and no warning is issued when it occurs.}
@@ -88,7 +88,7 @@ x$name
   \code{\link{is.recursive}}) objects.  \code{$} returns \code{NULL}
   (with a warning) except for recursive objects, and is only discussed
   in the section below on recursive objects.  Its use on non-recursive
-  objects was deprecated in \R 2.5.0.
+  objects was deprecated in \R 2.5.0 and will be removed in \R 2.7.0.
 
   Subsetting (except by an empty index) will drop all attributes except
   \code{names}, \code{dim} and \code{dimnames}.
@@ -211,18 +211,33 @@ x$name
   vector: despite the message given by \code{getGeneric("$")} you cannot
   usefully write methods based on the class of \code{name}.
 }
-\note{
-  S uses partial matching when extracting by \code{[}
-  (Becker \emph{et al} p. 358) whereas \R does not.
+\section{Character indices}{
+  Character indices can in some circumstances be partially matched (see
+  \code{\link{pmatch}}) to the names or dimnames of the object being
+  subsetted (but never for subassignment).  Unlike S (Becker \emph{et
+    al} p. 358)), \R has never used partial matching when extracting by
+  \code{[}.  Partial matching is currently used by default for
+  extraction by \code{[[} (see argument \code{exact}).
 
+  Partial matching is used when extracting (only) from recursive objects
+  (except environments) by \code{$}.  In that case, warnings can be
+  switched on by \code{\link{options}(warnPartialMatchAttr = TRUE)}.
+
+  The intention is that neither empty (\code{""}) nor \code{NA} indices
+  match any names, not even empty nor missing names.  If any object has
+  no names or appropriate dimnames, they are taken as all \code{""} and
+  so match nothing.  The implementation for \code{""} is currently
+  incomplete (they do match empty names in some circumstances), but such
+  names should be avoided as this will be altered in future versions of \R.
+}
+\note{
   The documented behaviour of S is that an \code{NA} replacement index
   \sQuote{goes nowhere} but uses up an element of \code{value}
   (Becker \emph{et al} p. 359).  However, that is not the current
   behaviour of S-PLUS.
 
-  It is planned that the default for \code{exact} will become
-  \code{exact=TRUE} in \R 2.7.0: partial matching for \code{$} will
-  remain the default.
+  The default for \code{exact} will become \code{exact=TRUE} in \R
+  2.7.0: partial matching for \code{$} will remain the default.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
