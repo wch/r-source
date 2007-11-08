@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2007-10-20 r43227)
+R version 2.7.0 Under development (unstable) (2007-11-07 r43388)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -970,9 +970,8 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 +           rep(0.0498724412598364, length(x)), tol = 1e-13)# 7e-16 (i386)
 [1] TRUE
 > 
-> All.eq(dpois(  10, 2e-308, log=TRUE), -7100.13502718914)
-[1] TRUE
-> All.eq(dpois(  20, 3e-308, log=TRUE), -14204.2875435307)
+> All.eq(dpois(  10*1:2, 3e-308, log=TRUE),
++        c(-7096.08037610806, -14204.2875435307))
 [1] TRUE
 > All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
 [1] TRUE
@@ -1155,5 +1154,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  4.58 0.052 5.773 0 0 
+Time elapsed:  2.105 0.016 2.122 0 0 
 > 
