@@ -477,8 +477,8 @@ all.equal(pgamma(x, 10, log = TRUE) - 10*log(x),
 all.equal(pgamma(x, 0.1, log = TRUE) - 0.1*log(x),
           rep(0.0498724412598364, length(x)), tol = 1e-13)# 7e-16 (i386)
 
-All.eq(dpois(  10, 2e-308, log=TRUE), -7100.13502718914)
-All.eq(dpois(  20, 3e-308, log=TRUE), -14204.2875435307)
+All.eq(dpois(  10*1:2, 3e-308, log=TRUE),
+       c(-7096.08037610806, -14204.2875435307))
 All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
 ## all gave -Inf in R 2.0.1
 
