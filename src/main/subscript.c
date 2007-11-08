@@ -76,18 +76,21 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call
 	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
 	    /* Try for exact match */
-	    for (i = 0; i < nx; i++)
-		if (streql(translateChar(STRING_ELT(names, i)),
-			   translateChar(STRING_ELT(s, pos)))) {
+	    for (i = 0; i < nx; i++) {
+		const char *tmp = translateChar(STRING_ELT(names, i));
+		if (!tmp[0]) continue;
+		if (streql(tmp, translateChar(STRING_ELT(s, pos)))) {
 		    indx = i;
 		    break;
 		}
+	    }
 	    /* Try for partial match */
 	    if (partial && indx < 0) {
 		len = strlen(translateChar(STRING_ELT(s, pos)));
 		for(i = 0; i < nx; i++) {
-		    if(!strncmp(translateChar(STRING_ELT(names, i)),
-				translateChar(STRING_ELT(s, pos)), len)) {
+		    const char *tmp = translateChar(STRING_ELT(names, i));
+		    if (!tmp[0]) continue;
+		    if(!strncmp(tmp, translateChar(STRING_ELT(s, pos)), len)) {
 			if(indx == -1 )
 			    indx = i;
 			else
@@ -169,6 +172,8 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
     case STRSXP:
 	/* NA matches nothing */
 	if(STRING_ELT(s, pos) == NA_STRING) break;
+	/* "" matches nothing: see names.Rd */
+	if(!CHAR(STRING_ELT(s, pos))[0]) break;
 	
 	/* Try for exact match */
 	ss = translateChar(STRING_ELT(s, pos));

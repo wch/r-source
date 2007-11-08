@@ -4931,3 +4931,20 @@ n <- 2L; D(quote(psigamma(sin(x), n)),"x")
 iris[1, c(TRUE, FALSE, FALSE, FALSE, FALSE)]
 iris[1, c(FALSE, FALSE, FALSE, FALSE, TRUE)]
 ## failed in 2.6.0
+
+
+## indexing by "": documented as 'no name' and no match
+x <- structure(1:4, names=c(letters[1:3], ""))
+stopifnot(is.na(x[""])) # always so
+stopifnot(is.na(x[NA_character_]))
+z <- tryCatch(x[[NA_character_]], error=function(...) {})
+stopifnot(is.null(z))
+z <- tryCatch(x[[""]], error=function(...) {})
+stopifnot(is.null(z)) # x[[""]] == 4 < 2.7.0
+x[[""]] <- 5  # no match, so should add an element, but replaced.
+stopifnot(length(x) == 5)
+x[""] <- 6    # also add
+stopifnot(length(x) == 6)
+xx <- list(a=1, 2)
+stopifnot(is.null(xx[[""]])) # 2 < 2.7.0
+##

@@ -213,7 +213,7 @@ x$name
 }
 \section{Character indices}{
   Character indices can in some circumstances be partially matched (see
-  \code{\link{pmatch}} to the names or dimnames of the object being
+  \code{\link{pmatch}}) to the names or dimnames of the object being
   subsetted (but never for subassignment).  Unlike S (Becker \emph{et
     al} p. 358)), \R has never used partial matching when extracting by
   \code{[}.  As from \R 2.7.0, partial matching is not by default used

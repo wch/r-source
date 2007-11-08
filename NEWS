@@ -112,6 +112,9 @@ BUG FIXES
 	was completely missing for the rank methods but NA for the
 	Pearson method: it now gives NA in all cases.
 
+    o	[[""]] was matching a name of "", even though "" is documented
+	to match no name in indexing.
+
 
 
 	**************************************************
