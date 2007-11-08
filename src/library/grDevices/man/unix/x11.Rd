@@ -113,7 +113,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   that the resource specifies the width and height in pixels and not in
   inches.  See for example
   \url{http://web.mit.edu/answers/xwindows/xwindows_resources.html} and
-  perhaps \samp{man X} (or \url{http://www.xfree86.org/current/X.7.html)}.
+  perhaps \samp{man X} (or \url{http://www.xfree86.org/current/X.7.html}).
   An example line in \file{~/.Xresources} might be
 \preformatted{R_x11*geometry: 900x900-0+0
 }
