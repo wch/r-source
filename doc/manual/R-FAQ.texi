@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-11-03
+@set FAQ_DATE @value{FAQ_YEAR}-11-07
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2286,6 +2286,9 @@ Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004).
 @item ProbeR
 Reliability for gene expression from Affymetrix chip.
+@item ProfessR
+Programs to determine student grades and create examinations from
+question banks.
 @item QCA
 Qualitative Comparative Analysis for crisp sets.
 @item QCAGUI
@@ -2339,6 +2342,8 @@ Mouse/menu driven interactive plotting application.
 @item RGraphics
 Data and functions from the book ``R Graphics'' by Paul Murrell, 2005,
 Chapman & Hall/CRC.
+@item RHmm
+Hidden Markov Model simulations and estimations.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
@@ -2567,6 +2572,8 @@ A problem solving environment for fitting superposition models.
 @item TRAMPR
 Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
+@item TSMySQL
+Time Series Database Interface extensions for MySQL.
 @item TSP
 Traveling Salesperson Problem (TSP).
 @item TSSQLite
@@ -3128,6 +3135,8 @@ Earth: multivariate adaptive regression spline models.
 @item eba
 Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
+@item ecespa
+Functions and data for spatial point pattern analysis.
 @item eco
 Fitting Bayesian models of ecological inference in 2 by 2 tables.
 @item ecodist
@@ -3932,6 +3941,8 @@ Mode estimation and Chernoff distribution.
 Multiscale analysis for density functions.
 @item modeltools
 A collection of tools to deal with statistical models.
+@item mokken
+Mokken Scale Analysis for test and questionnaire data.
 @item moments
 Moments, skewness, kurtosis and related tests.
 @item monomvn
@@ -4277,6 +4288,9 @@ Distance based parametric bootstrap tests for clustering, mainly thought
 for presence-absence data (clustering of species distribution maps).
 Jaccard and Kulczynski distance measures, clustering of MDS scores, and
 nearest neighbor based noise detection.
+@item predbayescor
+Classification rule based on Bayesian naive Bayes models with feature
+selection bias corrected.
 @item prettyR
 Pretty descriptive stats.
 @item prim
@@ -4587,6 +4601,8 @@ regression models (GLMs).
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
+@item sendplot
+Tool for sending interactive plots.
 @item sensitivity
 Sensitivity analysis.
 @item seqinr
@@ -4805,6 +4821,8 @@ Sudoku puzzle solver.
 Methodology for supervised grouping of predictor variables.
 @item superpc
 Supervised principal components.
+@item surv2sample
+Two-sample tests for survival analysis.
 @item survBayes
 Fits a proportional hazards model to time to event data by a Bayesian
 approach.
