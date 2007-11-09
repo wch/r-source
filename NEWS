@@ -57,6 +57,11 @@ NEW FEATURES
 	of all(pr > 0) ).
 
     o	The parser limit on string size has been removed.
+    
+    o	stripchart() is now a generic function, with default and
+	formula methods defined.  Additional graphics parameters may
+	be included in the call.  Formula handling is now
+	similar to boxplot().
 
 
 DEPRECATED & DEFUNCT

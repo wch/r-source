@@ -6,26 +6,44 @@
 \name{stripchart}
 \title{1-D Scatter Plots}
 \alias{stripchart}
+\alias{stripchart.default}
+\alias{stripchart.formula}
+
 \description{
   \code{stripchart} produces one dimensional scatter plots (or dot
   plots) of the given data.  These plots are a good alternative to
   \code{\link{boxplot}}s when sample sizes are small.
 }
 \usage{
-stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
+stripchart(x, \dots)
+
+\method{stripchart}{formula}(x, data = NULL, dlab = NULL, \dots, subset, na.action = NULL)
+
+
+\method{stripchart}{default}(x, method = "overplot", jitter = 0.1, offset = 1/3,
            vertical = FALSE, group.names, add = FALSE,
            at = NULL, xlim = NULL, ylim = NULL,
-           main = "", ylab = "", xlab = "",
-           log = "", pch = 0, col = par("fg"), cex = par("cex"))
+           ylab=NULL, xlab=NULL, dlab="", glab="",
+           log = "", pch = 0, col = par("fg"), cex = par("cex"), \dots)
 }
 \arguments{
-  \item{x}{the data from which the plots are to be produced.  The data
-    can be specified as a single numeric vector, or as list of numeric
-    vectors, each corresponding to a component plot.  Alternatively a
-    symbolic specification of the form \code{x ~ g} can be given,
-    indicating the observations in the vector \code{x} are to be
+  \item{x}{the data from which the plots are to be produced.  In the default
+    method the data can be specified as a single numeric vector, or as list of numeric
+    vectors, each corresponding to a component plot.  In the \code{formula} 
+    method, a symbolic specification of the form \code{y ~ g} can be given,
+    indicating the observations in the vector \code{y} are to be
     grouped according to the levels of the factor \code{g}. \code{NA}s
     are allowed in the data.}
+  \item{data}{a data.frame (or list) from which the variables in
+    \code{x} should be taken.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used for plotting.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contain \code{NA}s.  The default is to ignore missing
+    values in either the response or the group.}
+  \item{\dots}{additional parameters passed to the default method, or by
+    it to \code{plot} and \code{axis} to control the appearance of the 
+    plot.}
   \item{method}{the method to be used to separate coincident points.
     The default method \code{"overplot"} causes such points to be
     overplotted, but it is also possible to specify \code{"jitter"} to
@@ -43,13 +61,21 @@ stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
   \item{at}{numeric vector giving the locations where the charts should
     be drawn, particularly when \code{add = TRUE};
     defaults to \code{1:n} where \code{n} is the number of boxes.}
-  \item{main, ylab, xlab}{labels: see \code{\link{title}}.}
+  \item{ylab, xlab}{labels: see \code{\link{title}}.}
+  \item{dlab, glab}{alternate way to specify axis labels: see Details.}
   \item{xlim, ylim}{plot limits: see \code{\link{plot.window}}.}
-  \item{log, pch, col, cex}{Graphical parameters: see \code{\link{par}}.}
+  \item{log}{on which axes to use a log scale:  see 
+    \code{\link{plot.default}}}
+  \item{pch, col, cex}{Graphical parameters: see \code{\link{par}}.}
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in
   Box, Hunter and Hunter or Seber and Wild.
+  
+  The \code{dlab} and \code{glab} labels may be used instead of \code{xlab}
+  and \code{ylab} if those are not specified.  \code{dlab} applies to the 
+  continuous data axis (the X axis unless \code{vertical} is \code{TRUE}),
+  \code{glab} to the group axis.
 }
 \examples{
 x <- stats::rnorm(50)
@@ -61,15 +87,12 @@ text(m, 1.35, "stripchart(round(x,1), \"stack\")")
 stripchart(xr, method = "jitter", add = TRUE, at = 0.7)
 text(m, 0.85, "stripchart(round(x,1), \"jitter\")")
 
-with(OrchardSprays,
-     stripchart(decrease ~ treatment,
-                main = "stripchart(Orchardsprays)", ylab = "decrease",
-                vertical = TRUE, log = "y"))
-% Fixme: ylab should have a non-""  default !
+stripchart(decrease ~ treatment,
+    main = "stripchart(OrchardSprays)", 
+    vertical = TRUE, log = "y", data = OrchardSprays)
 
-with(OrchardSprays,
-     stripchart(decrease ~ treatment, at = c(1:8)^2,
-                main = "stripchart(Orchardsprays)", ylab = "decrease",
-                vertical = TRUE, log = "y"))
+stripchart(decrease ~ treatment, at = c(1:8)^2,
+    main = "stripchart(OrchardSprays)", 
+    vertical = TRUE, log = "y", data = OrchardSprays)
 }
 \keyword{hplot}

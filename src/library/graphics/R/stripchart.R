@@ -16,24 +16,19 @@
 
 ## Dotplots a la Box, Hunter and Hunter
 
-stripchart <-
+stripchart <- function(x, ...) UseMethod("stripchart")
+
+stripchart.default <-
 function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	 group.names, add = FALSE, at = NULL,
-	 xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
-	 log="", pch=0, col=par("fg"), cex=par("cex"))
+	 xlim=NULL, ylim=NULL, ylab=NULL, xlab=NULL, dlab="", glab="",
+	 log="", pch=0, col=par("fg"), cex=par("cex"), ...)
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)
 	stop("invalid plotting method")
     groups <-
-	if(is.language(x)) {
-	    if (inherits(x, "formula") && length(x) == 3) {
-		groups <- eval(x[[3]], parent.frame())
-		x <- eval(x[[2]], parent.frame())
-		split(x, groups)
-	    }
-	}
-	else if(is.list(x)) x
+	if(is.list(x)) x
 	else if(is.numeric(x)) list(x)
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
@@ -46,6 +41,8 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
     else if(length(at) != n)
 	stop(gettextf("'at' must have length equal to the number %d of groups",
                       n), domain = NA)
+    if (is.null(dlab)) dlab <- deparse(substitute(x))
+
     if(!add) {
 	dlim <- c(NA, NA)
 	for(i in groups)
@@ -60,16 +57,21 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	    xlim <- if(vertical) glim else dlim
 	if(is.null(ylim))
 	    ylim <- if(vertical) dlim else glim
-	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log)
+	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log, ...)
 	box()
 	if(vertical) {
-	    if(n > 1) axis(1, at=at, labels=names(groups))
-	    Axis(x, side = 2)
+	    if(n > 1) axis(1, at=at, labels=names(groups), ...)
+	    Axis(x, side = 2, ...)
+	    if (is.null(ylab)) ylab <- dlab
+	    if (is.null(xlab)) xlab <- glab
 	}
 	else {
-	    Axis(x, side = 1)
-	    if(n > 1) axis(2, at=at, labels=names(groups))
-	}
+	    Axis(x, side = 1, ...)
+	    if(n > 1) axis(2, at=at, labels=names(groups), ...)
+	    if (is.null(xlab)) xlab <- dlab
+	    if (is.null(ylab)) ylab <- glab	    
+	}    
+	title(xlab=xlab, ylab=ylab)
     }
     csize <- cex*
 	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])
@@ -90,5 +92,24 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	else points(x, y, col=col[(i - 1)%%length(col) + 1],
 		    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)
     }
-    title(main=main, xlab=xlab, ylab=ylab)
+}
+
+stripchart.formula <-
+    function(x, data = NULL, dlab = NULL, ..., subset, na.action = NULL)
+{
+    if(missing(x) || (length(x) != 3))
+	stop("formula missing or incorrect")
+    m <- match.call(expand.dots = FALSE)
+    if(is.matrix(eval(m$data, parent.frame())))
+	m$data <- as.data.frame(data)
+    m$... <- NULL
+    m$formula <- m$x
+    m$x <- NULL
+    m$na.action <- na.action # force use of default for this method
+    require(stats, quietly = TRUE)
+    m[[1]] <- as.name("model.frame")
+    mf <- eval(m, parent.frame())
+    response <- attr(attr(mf, "terms"), "response")
+    if (is.null(dlab)) dlab <- names(mf)[response]
+    stripchart(split(mf[[response]], mf[-response]), dlab = dlab, ...)
 }
