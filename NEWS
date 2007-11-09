@@ -62,6 +62,10 @@ NEW FEATURES
 	formula methods defined.  Additional graphics parameters may
 	be included in the call.  Formula handling is now
 	similar to boxplot().
+    
+    o	tclServiceMode() (package tcltk) now works under Unix-alikes.
+	(Although undocumented, it used only to work under Windows.)
+
 
 
 DEPRECATED & DEFUNCT
