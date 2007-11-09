@@ -128,7 +128,6 @@ AWK=gawk
 ## alternative is -dw2, which currently fails building R, or empty
 ## for unofficial builds including TDM's and GFortran from the Wiki
 GCC4_SUFF=-sjlj
-GCC4_SUFF=
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
