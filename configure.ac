@@ -1239,6 +1239,16 @@ case "${host_os}" in
           R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic]) ;;
       esac
     fi
+    ## some linkers are broken and need to be restricted to a specific
+    ## Mac OS X version to work better
+    case $"{host_os}" in
+       darwin8*)
+          darwin_min_flag='Wl,-macosx_version_min -Wl,10.4'
+	  ;;
+       *)
+	  darwin_min_flag=''
+	  ;;
+    esac
     case "${host_os}" in
       ## According to Jan de Leeuw, OS X 10.1 is darwin 5, OS X 10.2 is
       ## darwin 6, and the real difference is between darwin < and >= 5.
@@ -1269,8 +1279,10 @@ case "${host_os}" in
         ## FIXME: strictly speaking it should be "yes" but libRblas still
 	## needs -lgfortran because the sharing is a one-way street
         ## dylib_undefined_allowed=yes
+
+	## we have to test this in case an outdated linker or non-Apple compiler is used
 	AC_MSG_CHECKING([whether linker supports dynamic lookup])
-	shlib_ldflags="-dynamiclib -Wl,-headerpad_max_install_names -Wl,-macosx_version_min -Wl,10.4 -undefined dynamic_lookup -single_module -multiply_defined suppress"
+	shlib_ldflags="-dynamiclib -Wl,-headerpad_max_install_names ${darwin_min_flag} -undefined dynamic_lookup -single_module -multiply_defined suppress"
 	AC_CACHE_VAL([r_cv_has_dynlookup],[
 [cat > conftest.c <<EOF
   void dummy() { }
