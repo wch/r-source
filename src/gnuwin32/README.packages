@@ -30,7 +30,7 @@ Using Visual C++
 You may if you prefer use Visual C++ to make the DLLs (unless they use
 Fortran source!). The notes here were tested with VC++6.
 
-First build the import library Rdll.lib by
+First build the import library Rdll.lib by (from the sources)
 
 	make R.exp
 
@@ -38,8 +38,8 @@ First build the import library Rdll.lib by
 or, depending on your version of VC++
 	link /lib /def:R.exp /machine:x86 /out:Rdll.lib
 
-(Another, less reliable, way to make R.exp is to use pexports.exe from
-mingw-utils.)
+Another way to make R.exp is to use pexports.exe from mingw-utils,
+e.g. pexports R.dll > R.exp.
 
 Then you can compile the objects and build the DLL by
 

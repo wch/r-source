@@ -2,6 +2,8 @@
 include ../gnuwin32/MkRules
 R_HOME=../..
 
+VER=$(shell sed -e 's/\([^ ]*\).*/\1/' ../../VERSION)
+
 ## keep these in step with ./Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rembedded.h Rgraphics.h \
   Rinternals.h
@@ -25,10 +27,10 @@ fixh: $(GW32_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS)
 
 ifeq ($(strip $(WIN)),64)
 config.h: ../gnuwin32/fixed/h/config64.h
-	@cp $< $@
+	@$(SED) 's/@VERSION@/$(VER)/' $< > $@
 else
 config.h: ../gnuwin32/fixed/h/config.h
-	@cp $< $@
+	@$(SED) 's/@VERSION@/$(VER)/' $< > $@
 endif
 
 iconv.h: ../gnuwin32/fixed/h/iconv.h
