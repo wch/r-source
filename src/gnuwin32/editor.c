@@ -85,7 +85,10 @@ static void editor_set_title(editor c, char *title)
     strncpy(wtitle, title, EDITORMAXTITLE);
     wtitle[EDITORMAXTITLE] = '\0';
     strcpy(p->title, wtitle);
-    strncat(wtitle, " - R Editor", EDITORMAXTITLE);
+    if (strlen(wtitle) + strlen(G_("R Editor")) + 3 < EDITORMAXTITLE) {
+    	strcat(wtitle, " - ");
+    	strcat(wtitle, G_("R Editor"));
+    }
     settext(c, wtitle);
 }
 
