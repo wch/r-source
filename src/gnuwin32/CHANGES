@@ -41,6 +41,10 @@ BUG FIXES
 
     o	Saving a plot to Postscript or PDF required the font database
 	to have been initialized: this is now done if necessary.
+	
+    o	Very long file or pathnames could cause a crash if opened in
+	the script editor. (PR#10402)
+ 
 		
 
 
