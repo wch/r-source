@@ -1135,7 +1135,6 @@
  libintl_vwprintf
  libintl_wprintf
  loadRconsole
- localeCP
  locale_charset
  mallinfo
  malloc_footprint
