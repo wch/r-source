@@ -20,17 +20,18 @@ tclServiceMode(on = NULL)
   If called with \code{on == NULL} (the default), no change is made.
 
   Note that this blocks all Tcl/Tk activity, including for widgets from
-  other packages.  It is better to manage mapping of windows individually.
+  other packages.  It may be better to manage mapping of windows individually.
 }
 \value{
 The value of the Tcl service mode before the call.
 }
 \examples{
+## see demo(tkcanvas) for an example
 \dontrun{    
     oldmode <- tclServiceMode(FALSE)
     # Do some work to create a nice picture.  Nothing will be displayed until...
     tclServiceMode(oldmode)
 }
-## a better idea is to use tkwm.withdraw() ... tkwm.deiconify()
+## another idea is to use tkwm.withdraw() ... tkwm.deiconify()
 }
 \keyword{ misc }

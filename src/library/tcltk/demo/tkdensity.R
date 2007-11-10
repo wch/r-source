@@ -34,7 +34,7 @@ local({
     }
 
 
-
+    tclServiceMode(FALSE)
     base <- tktoplevel()
     tkwm.title(base, "Density")
 
@@ -84,6 +84,7 @@ local({
                       command=function()tkdestroy(base))
 
     tkpack(spec.frm, q.but)
+    tclServiceMode(TRUE)
 
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n",
