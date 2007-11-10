@@ -51,6 +51,8 @@ tkStartGUI <- function() {
           command=quote(demo(tkttest)))
     tkadd(demoMenu,"command",label=gettext("Density"),
           command=quote(demo(tkdensity)))
+    tkadd(demoMenu,"command",label=gettext("Interactive linear fitting"),
+          command=quote(demo(tkcanvas)))
     tkadd(demoMenu,"command",label=gettext("R FAQ"),
           command=quote(demo(tkfaq)))
 
