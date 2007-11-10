@@ -22,13 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if (TCL_MAJOR_VERSION==8 && TCL_MINOR_VERSION==0)
-#define TCL80
-#endif
-#ifndef TCL80
-# define SUPPORT_MBCS 1
-/* Includes Nakama's internationalization patches */
-#endif
+#define SUPPORT_MBCS 1
 
 
 /* TclCmdProc was redefined to include const in Tcl 8.4 */

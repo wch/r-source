@@ -85,7 +85,9 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION
 
-    o	Perl (>= 5.8.0) is now required to build R.
+    o	Perl >= 5.8.0 (released in 2002) is now required to build R.
+
+    o	Tcl/Tk >= 8.3 (released in 2000) is now required to build R.
 
     o	The Windows build only supports Windows 2000 or later (XP,
 	Vista, Server 2003 and Server 2008).

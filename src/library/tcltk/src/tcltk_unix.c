@@ -155,7 +155,6 @@ void Tcl_unix_setup(void)
 
 
 
-#ifndef TCL80
 /* ----- Tcl/Tk console routines ----- */
 
 /* From former src/unix/devUI.h
@@ -276,4 +275,3 @@ void RTcl_ActivateConsole ()
     R_Consolefile = NULL;
     R_Outputfile = NULL;
 }
-#endif

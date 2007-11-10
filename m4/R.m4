@@ -2117,6 +2117,8 @@ if test -z "${TCLTK_CPPFLAGS}" \
   ## Note that in theory a system could have outdated versions of the
   ## *Config.sh scripts and yet up-to-date installations of Tcl/Tk in
   ## standard places ...
+  ## This doesn't make a great deal of sense: on past form 
+  ## we don't even expect future versions of 8.x to work, let alone 9.0
   if test -n "${TCL_CONFIG}"; then
     . ${TCL_CONFIG}
     if test ${TCL_MAJOR_VERSION} -lt 8; then
@@ -2155,7 +2157,9 @@ AC_DEFUN([_R_HEADER_TCL],
 [AC_CACHE_CHECK([for tcl.h], [r_cv_header_tcl_h],
 [AC_EGREP_CPP([yes],
 [#include <tcl.h>
-#if (TCL_MAJOR_VERSION >= 8)
+/* Revise if 9.x ever appears (and 8.x seems to increment only
+   every few years). */
+#if (TCL_MAJOR_VERSION >= 8) && (TCL_MINOR_VERSION >= 3)
   yes
 #endif
 ],
@@ -2171,7 +2175,9 @@ AC_DEFUN([_R_HEADER_TK],
 [AC_CACHE_CHECK([for tk.h], [r_cv_header_tk_h],
 [AC_EGREP_CPP([yes],
 [#include <tk.h>
-#if (TK_MAJOR_VERSION >= 8)
+/* Revise if 9.x ever appears (and 8.x seems to increment only
+   every few years). */
+#if (TK_MAJOR_VERSION >= 8) && (TK_MINOR_VERSION >= 3)
   yes
 #endif
 ],
