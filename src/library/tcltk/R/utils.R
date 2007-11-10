@@ -19,6 +19,7 @@ tk_select.list <-
 {
     lvar <- tclVar()
     tclObj(lvar) <- list
+    oldmode <- tclServiceMode(FALSE)
     dlg <- tktoplevel()
     tkwm.title(dlg, title)
     tkwm.deiconify(dlg)
@@ -77,6 +78,7 @@ tk_select.list <-
 
     tkbind(dlg, "<Destroy>", onCancel)
     tkfocus(box)
+    tclServiceMode(oldmode)
     tkwait.window(dlg)
     if(!multiple && !length(ans.select_list)) ans.select_list <- ""
     ans.select_list
