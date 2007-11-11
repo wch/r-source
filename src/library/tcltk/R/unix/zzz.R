@@ -21,20 +21,18 @@
     packageStartupMessage("Loading Tcl/Tk interface ...", " ",
                           domain = "R-tcltk", appendLF = FALSE)
 
-    ## Use local=FALSE to allow easy loading of Tcl extensions
-    library.dynam("tcltk", pkg, lib, local=FALSE)
+    ## Use local = FALSE to allow easy loading of Tcl extensions
+    library.dynam("tcltk", pkg, lib, local = FALSE)
     .C("tcltk_init", PACKAGE="tcltk")
     addTclPath(system.file("exec", package = "tcltk"))
     packageStartupMessage("done", domain = "R-tcltk")
-
-    ## This kind of stuff could be added to build a more extensive GUI ##
-    ##   not a good idea to do this unconditionally                    ##
-###    userpager <- getOption("tkpager")
-###    options(pager=if (is.null(userpager)) tkpager else userpager)
 }
 
 .onUnload <- function(libpath) {
-###    options(pager=NULL)
-    .C("delTcl", PACKAGE="tcltk")
-    ## library.dynam.unload("tcltk", libpath)
+    ## precaution in case the DLL has been unloaded without the namespace
+    if(is.loaded("delTcl", PACKAGE="tcltk")) {
+        .C("delTcl", PACKAGE="tcltk")
+        ## if we unload the DLL, get a segfault if we try to use tcltk again.
+        ## library.dynam.unload("tcltk", libpath)
+    }
 }

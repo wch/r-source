@@ -98,10 +98,15 @@ static void addTcl(void)
     }
 }
 
+/* Note that although this cleans up R's event loop, it does not attempt
+   to clean up Tcl's, to which Tcl_unix_setup added an event source.
+*/
 void delTcl(void)
 {
     if (!Tcl_loaded)
 	error(_("Tcl is not loaded"));
+    Tcl_DeleteInterp(RTcl_interp);
+    Tcl_Finalize();
     if (strcmp(R_GUIType, "GNOME") == 0) {
         R_timeout_handler = NULL;
         R_timeout_val = 0;
@@ -134,7 +139,7 @@ static void RTcl_checkProc(ClientData clientData, int flags)
 {
     fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
     RTcl_Event * evPtr;
-    if (readMask==NULL)
+    if (readMask == NULL)
 	return;
 
     evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event));
