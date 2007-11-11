@@ -1157,7 +1157,7 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 		      R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    BBOX glyphBBox;
+    BBOX glyphBBox = NullBBox(); /* might be use do italic corr on str="" */
     BBOX resultBBox = NullBBox();
 
     if (str) {
@@ -2447,7 +2447,7 @@ static BBOX RenderOpSymbol(SEXP op, int draw, mathContext *mc,
 static BBOX RenderOp(SEXP expr, int draw, mathContext *mc,
 		     R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    BBOX lowerBBox, upperBBox, bodyBBox;
+    BBOX lowerBBox = NullBBox() /* -Wall */, upperBBox = NullBBox(), bodyBBox;
     double savedX = mc->CurrentX;
     double savedY = mc->CurrentY;
     int nexpr = length(expr);
