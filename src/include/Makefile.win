@@ -9,10 +9,10 @@ SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rembedded.h Rgraphics.h \
   Rinternals.h
 ## this deliberately does not include Rinterfaces.h, which is Unix-only
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
-GW32_HEADERS = config.h iconv.h psignal.h
+GW32_HEADERS = iconv.h psignal.h
 RPROXY_HEADERS = SC_proxy.h SC_system.h rproxy.h bdx.h bdx_SEXP.h bdx_com.h bdx_util.h com_util.h
 
-all: fixh
+all: fixh config.h
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
 	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS) iconv.h $(R_HOME)/include
@@ -26,10 +26,10 @@ fixh: $(GW32_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS)
 	@$(ECHO) done > fixh
 
 ifeq ($(strip $(WIN)),64)
-config.h: ../gnuwin32/fixed/h/config64.h
+config.h: ../gnuwin32/fixed/h/config64.h ../../VERSION
 	@$(SED) 's/@VERSION@/$(VER)/' $< > $@
 else
-config.h: ../gnuwin32/fixed/h/config.h
+config.h: ../gnuwin32/fixed/h/config.h ../../VERSION
 	@$(SED) 's/@VERSION@/$(VER)/' $< > $@
 endif
 
