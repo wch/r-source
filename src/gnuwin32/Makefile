@@ -85,6 +85,7 @@ endif
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
 CFLAGS = $(OPTFLAGS)
 FFLAGS = $(FOPTFLAGS)
+extra-CPPFLAGS = -I../library/grDevices/src
 
 Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@
