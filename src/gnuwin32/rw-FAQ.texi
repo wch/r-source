@@ -1119,10 +1119,10 @@ installer and install them.
 Alternatively, if you have the environment variable @env{MY_TCLTK} set
 to a non-empty value, it is assumed that you want to use a different
 Tcl/Tk 8.4.x installation, and that this is set up correctly (with the
-DLLs in your path and @env{TCL_LIBRARY} set).  In that case you do not
-need the Tcl/Tk support files installed (but they can be).  Note that
-you do need 8.4.x and not 8.5.x.  (If you build R from the sources
-yourself you can configure it to use 8.5.x.)
+DLLs in your path and @env{TCL_LIBRARY} set if needed).  In that case
+you do not need the Tcl/Tk support files installed (but they can be).
+Note that you do need 8.4.x and not 8.5.x.  (If you build R from the
+sources yourself you can configure it to use 8.5.x.)
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
