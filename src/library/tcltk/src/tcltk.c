@@ -147,23 +147,17 @@ static int R_call_lang(ClientData clientData,
 
 static Tcl_Obj * tk_eval(const char *cmd)
 {
-#ifdef SUPPORT_MBCS
     char *cmd_utf8;
     Tcl_DString  cmd_utf8_ds;
 
     Tcl_DStringInit(&cmd_utf8_ds);
     cmd_utf8 = Tcl_ExternalToUtfDString(NULL, cmd, -1, &cmd_utf8_ds);
     if (Tcl_Eval(RTcl_interp, cmd_utf8) == TCL_ERROR)
-#else
-    if (Tcl_Eval(RTcl_interp, cmd) == TCL_ERROR)
-#endif
     {
 	char p[512];
 	if (strlen(Tcl_GetStringResult(RTcl_interp)) > 500)
 	    strcpy(p, _("tcl error.\n"));
-	else
-#ifdef SUPPORT_MBCS
-	{
+	else {
 	    char *res;
 	    Tcl_DString  res_ds;
 
@@ -174,15 +168,9 @@ static Tcl_Obj * tk_eval(const char *cmd)
 	    snprintf(p, sizeof(p), "[tcl] %s.\n", res);
 	    Tcl_DStringFree(&res_ds);
 	}
-#else
-            snprintf(p, sizeof(p), "[tcl] %s.\n",
-		     Tcl_GetStringResult(RTcl_interp));
-#endif
 	error(p);
     }
-#ifdef SUPPORT_MBCS
     Tcl_DStringFree(&cmd_utf8_ds);
-#endif
     return Tcl_GetObjResult(RTcl_interp);
 }
 
@@ -243,9 +231,7 @@ SEXP dotTclObjv(SEXP args)
 	char p[512];
 	if (strlen(Tcl_GetStringResult(RTcl_interp)) > 500)
 	    strcpy(p, _("tcl error.\n"));
-	else
-#ifdef SUPPORT_MBCS
-	{
+	else {
 	    char *res;
 	    Tcl_DString  res_ds;
 	    Tcl_DStringInit(&res_ds);
@@ -255,10 +241,6 @@ SEXP dotTclObjv(SEXP args)
 	    snprintf(p, sizeof(p), "[tcl] %s.\n", res);
 	    Tcl_DStringFree(&res_ds);
 	}
-#else
-	    snprintf(p, sizeof(p), "[tcl] %s.\n",
-		     Tcl_GetStringResult(RTcl_interp));
-#endif
 	error(p);
     }
 
@@ -293,7 +275,6 @@ SEXP RTcl_AssignObjToVar(SEXP args)
 SEXP RTcl_StringFromObj(SEXP args)
 {
     char *str;
-#ifdef SUPPORT_MBCS
     SEXP so;
     char *s;
     Tcl_DString s_ds;
@@ -305,12 +286,6 @@ SEXP RTcl_StringFromObj(SEXP args)
     so = mkString(s);
     Tcl_DStringFree(&s_ds);
     return(so);
-#else
-
-    str = Tcl_GetStringFromObj((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
-			       NULL);
-    return mkString(str);
-#endif
 }
 
 SEXP RTcl_ObjAsCharVector(SEXP args)
@@ -327,9 +302,7 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
 	return RTcl_StringFromObj(args);
 
     PROTECT(ans = allocVector(STRSXP, count));
-    for (i = 0 ; i < count ; i++)
-#ifdef SUPPORT_MBCS
-    {
+    for (i = 0 ; i < count ; i++) {
 	char *s;
 	Tcl_DString s_ds;
 	Tcl_DStringInit(&s_ds);
@@ -339,19 +312,14 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
 	SET_STRING_ELT(ans, i, mkChar(s));
 	Tcl_DStringFree(&s_ds);
     }
-#else
-	SET_STRING_ELT(ans, i, mkChar(Tcl_GetStringFromObj(elem[i], NULL)));
-#endif
     UNPROTECT(1);
     return ans;
 }
 
 SEXP RTcl_ObjFromCharVector(SEXP args)
 {
-#ifdef SUPPORT_MBCS
     char *s;
     Tcl_DString s_ds;
-#endif
     int count;
     Tcl_Obj *tclobj, *elem;
     int i;
@@ -363,30 +331,22 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
     tclobj = Tcl_NewObj();
 
     count = length(val);
-    if (count == 1 && LOGICAL(drop)[0])
-#ifdef SUPPORT_MBCS
-    {
+    if (count == 1 && LOGICAL(drop)[0]) {
 	Tcl_DStringInit(&s_ds);
 	s = Tcl_ExternalToUtfDString(NULL,
-				     translateChar(STRING_ELT(val, 0)), -1, &s_ds);
+				     translateChar(STRING_ELT(val, 0)), 
+				     -1, &s_ds);
 	Tcl_SetStringObj(tclobj, s, -1);
 	Tcl_DStringFree(&s_ds);
-    }
-#else
-	Tcl_SetStringObj(tclobj, translateChar(STRING_ELT(val, 0)), -1);
-#endif
-    else
+    } else
 	for ( i = 0 ; i < count ; i++) {
 	    elem = Tcl_NewObj();
-#ifdef SUPPORT_MBCS
 	    Tcl_DStringInit(&s_ds);
-	    s = Tcl_ExternalToUtfDString(NULL, translateChar(STRING_ELT(val, i)),
+	    s = Tcl_ExternalToUtfDString(NULL, 
+					 translateChar(STRING_ELT(val, i)),
 					 -1, &s_ds);
 	    Tcl_SetStringObj(elem, s, -1);
 	    Tcl_DStringFree(&s_ds);
-#else
-	    Tcl_SetStringObj(elem, translateChar(STRING_ELT(val, i)), -1);
-#endif
 	    Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
 	}
 
@@ -596,6 +556,8 @@ SEXP dotTclcallback(SEXP args)
 {
     SEXP ans, callback = CADR(args), env;
     char buff[BUFFLEN];
+    char *s;
+    Tcl_DString s_ds;
 
     if (isFunction(callback))
         callback_closure(buff, BUFFLEN, callback);
@@ -606,19 +568,10 @@ SEXP dotTclcallback(SEXP args)
     else
     	error(_("argument is not of correct type"));
 
-#ifdef SUPPORT_MBCS
-    {
-	char *s;
-	Tcl_DString s_ds;
-
-	Tcl_DStringInit(&s_ds);
-	s = Tcl_UtfToExternalDString(NULL, buff, -1, &s_ds);
-	ans = mkString(s);
-	Tcl_DStringFree(&s_ds);
-    }
-#else
-    ans = mkString(buff);
-#endif
+    Tcl_DStringInit(&s_ds);
+    s = Tcl_UtfToExternalDString(NULL, buff, -1, &s_ds);
+    ans = mkString(s);
+    Tcl_DStringFree(&s_ds);
     return ans;
 }
 

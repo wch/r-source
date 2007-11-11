@@ -26,8 +26,11 @@
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 
 void tcltk_init();
-static int Tcl_lock = 0; /* reentrancy guard */
 
+/* We don't need a re-entrancy guard on Windows as Tcl_ServiceAll
+   has one -- it uses serviceMode, setting it to TCL_SERVICE_NONE
+   whilst it is running.  Unlike TclDoOneEvent, it checks on entry.
+ */
 static void TclSpinLoop(void *data)
 {
     Tcl_ServiceAll();
@@ -35,11 +38,7 @@ static void TclSpinLoop(void *data)
 
 static void _R_tcldo(void)
 {
-    if (!Tcl_lock) {
-        Tcl_lock = 1;
-        (void) R_ToplevelExec(TclSpinLoop, NULL);
-        Tcl_lock = 0;
-    }
+    (void) R_ToplevelExec(TclSpinLoop, NULL);
 }
 
 /* import from src/gnuwin32/system.c */

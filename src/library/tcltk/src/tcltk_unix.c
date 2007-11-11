@@ -50,14 +50,14 @@ typedef struct {
 /* Add/delete Tcl/Tk event handler */
 
 static void (* OldHandler)(void);
-static int OldTimeout;
+static int OldRwait;
 static int Tcl_loaded = 0;
 static int Tcl_lock = 0; /* reentrancy guard */
 
 static void TclSpinLoop(void *data)
 {
-    while (Tcl_DoOneEvent(TCL_DONT_WAIT))
-	;
+    /* Tcl_ServiceAll is not enough here, for reasons that escape me */
+    while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
 }
 
 static void TclHandler(void)
@@ -67,7 +67,6 @@ static void TclHandler(void)
 	(void) R_ToplevelExec(TclSpinLoop, NULL);
 	Tcl_lock = 0;
     }
-    /* Tcl_ServiceAll is not enough here, for reasons that escape me */
     OldHandler();
 }
 
@@ -92,7 +91,7 @@ static void addTcl(void)
         R_timeout_val = 500;
     } else {
         OldHandler = R_PolledEvents;
-	OldTimeout = R_wait_usec;
+	OldRwait = R_wait_usec;
 	R_PolledEvents = TclHandler;
 	if ( R_wait_usec > 10000 || R_wait_usec == 0)
 	    R_wait_usec = 10000;
@@ -110,7 +109,7 @@ void delTcl(void)
         if (R_PolledEvents != TclHandler)
 	    error(_("Tcl is not last loaded handler"));
 	R_PolledEvents = OldHandler;
-	R_wait_usec = OldTimeout;
+	R_wait_usec = OldRwait;
     }
     Tcl_loaded = 0;
 }
@@ -157,14 +156,6 @@ void Tcl_unix_setup(void)
 
 /* ----- Tcl/Tk console routines ----- */
 
-/* From former src/unix/devUI.h
-extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
-extern void (*ptr_R_WriteConsole)(char *, int);
-extern void (*ptr_R_ResetConsole)();
-extern void (*ptr_R_FlushConsole)();
-extern void (*ptr_R_ClearerrConsole)();
-extern FILE * R_Consolefile;
-extern FILE * R_Outputfile; */
 
 /* Fill a text buffer with user typed console input. */
 
@@ -185,9 +176,7 @@ RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
     code = Tcl_EvalObjv(RTcl_interp, 3, cmd, 0);
     if (code != TCL_OK)
 	return 0;
-    else
-#ifdef SUPPORT_MBCS
-    {
+    else {
 	    char *buf_utf8;
 	    Tcl_DString buf_utf8_ds;
 	    Tcl_DStringInit(&buf_utf8_ds);
@@ -199,9 +188,6 @@ RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
             strncpy((char *)buf, buf_utf8, len);
 	    Tcl_DStringFree(&buf_utf8_ds);
     }
-#else /* SUPPORT_MBCS */
-	strncpy((char *)buf, (char *) Tcl_GetStringResult(RTcl_interp), len);
-#endif /* SUPPORT_MBCS */
 
     /* At some point we need to figure out what to do if the result is
      * longer than "len"... For now, just truncate. */
@@ -218,21 +204,15 @@ static void
 RTcl_WriteConsole (char *buf, int len)
 {
     Tcl_Obj *cmd[2];
-#ifdef SUPPORT_MBCS
     char *buf_utf8;
     Tcl_DString  buf_utf8_ds;
 
     Tcl_DStringInit(&buf_utf8_ds);
     buf_utf8 = Tcl_ExternalToUtfDString(NULL, buf, -1, &buf_utf8_ds);
-#endif /* SUPPORT_MBCS */
 
     /* Construct command */
     cmd[0] = Tcl_NewStringObj("Rc_write", -1);
-#ifdef SUPPORT_MBCS
     cmd[1] = Tcl_NewStringObj(buf_utf8, -1);
-#else /* SUPPORT_MBCS */
-    cmd[1] = Tcl_NewStringObj(buf, len);
-#endif /* SUPPORT_MBCS */
 
     Tcl_IncrRefCount(cmd[0]);
     Tcl_IncrRefCount(cmd[1]);
@@ -241,9 +221,7 @@ RTcl_WriteConsole (char *buf, int len)
 
     Tcl_DecrRefCount(cmd[0]);
     Tcl_DecrRefCount(cmd[1]);
-#ifdef SUPPORT_MBCS
     Tcl_DStringFree(&buf_utf8_ds);
-#endif /* SUPPORT_MBCS */
 }
 
 /* Indicate that input is coming from the console */

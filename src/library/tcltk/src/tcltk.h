@@ -22,9 +22,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define SUPPORT_MBCS 1
-
-
 /* TclCmdProc was redefined to include const in Tcl 8.4 */
 #ifndef CONST84
 #define CONST84
