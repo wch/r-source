@@ -59,7 +59,7 @@ BUG FIXES
 	such as aleph (obtained by symbol("\300")) in a UTF-8 locale.
 
     o   An event handling issue caused autorepeat functions to
-        misbehave with tcltk (notably scrollbars). 
+	misbehave with tcltk (notably scrollbars). 
 
     o	plot(sin, -5, 5) gives ylab 'sin(x)' again, where it resulted
 	in 'x(x)' in 2.6.0.  Further,  plot(sin)  again plots from
@@ -90,6 +90,9 @@ BUG FIXES
 
     o	help.search() would give an error if it found a badly
 	installed package, even if 'package' was not specified.
+    
+    o	tclServiceMode() (package tcltk) now works under Unix-alikes.
+	(Although documented, it used only to work under Windows.)
 
 
 
