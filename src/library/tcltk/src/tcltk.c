@@ -658,12 +658,11 @@ SEXP RTcl_ServiceMode(SEXP args)
     if (!isLogical(CADR(args)) || length(CADR(args)) > 1)
     	error(_("invalid argument"));
     
-    if (length(CADR(args))) value = Tcl_SetServiceMode(LOGICAL(CADR(args))[0] ? 
-    						TCL_SERVICE_ALL : TCL_SERVICE_NONE);
-    else {
-    	value = Tcl_SetServiceMode(TCL_SERVICE_NONE);
-    	if (value != TCL_SERVICE_NONE) Tcl_SetServiceMode(value); /* Tcl_GetServiceMode was not found */
-    }
+    if (length(CADR(args))) 
+	value = Tcl_SetServiceMode(LOGICAL(CADR(args))[0] ? 
+				   TCL_SERVICE_ALL : TCL_SERVICE_NONE);
+    else
+    	value = Tcl_GetServiceMode();
     
     return ScalarLogical(value == TCL_SERVICE_ALL);
 }

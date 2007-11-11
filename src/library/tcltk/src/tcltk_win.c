@@ -45,7 +45,7 @@ static void _R_tcldo(void)
 extern __declspec(dllimport) void (* R_tcldo)();
 static void (* old_R_tcldo)();
 
-void tcltk_start()
+void tcltk_start(void)
 {
     HWND active = GetForegroundWindow(); /* ActiveTCL steals the focus */
     tcltk_init(); /* won't return on error */
@@ -55,7 +55,9 @@ void tcltk_start()
     SetForegroundWindow(active); /* and fix it */
 }
 
-void tcltk_end()
+void tcltk_end(void)
 {
+    Tcl_DeleteInterp(RTcl_interp);
+    Tcl_Finalize();
     R_tcldo = old_R_tcldo;
 }
