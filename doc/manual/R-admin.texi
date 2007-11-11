@@ -2345,7 +2345,7 @@ the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 @node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
 @subsection Tcl/Tk
 
-The @pkg{tcltk} package needs Tcl/Tk installed: the sources are
+The @pkg{tcltk} package needs Tcl/Tk >= 8.3 installed: the sources are
 available at @url{http://www.tcl.tk/, @code{www.tcl.tk}}.  To specify
 the locations of the Tcl/Tk files you may need the configuration options
 
@@ -2364,10 +2364,10 @@ or use the configure variables @code{TCLTK_LIBS} and
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.  If you have both 32- and 64-bit
 versions of Tcl/Tk installed, setting the paths to the correct config
-files will most likely be necessary to avoid confusion between them.
+files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3 to 8.4.13 have been used successfully: 8.0 is
-no longer supported.
+Versions of Tcl/Tk from 8.3 to 8.4.16 have been used successfully and
+beta versions of 8.5 have been tested.
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support
@@ -2413,8 +2413,8 @@ JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -L$(JAVA_HOME)/lib/amd64
 @end example
 
 @noindent
-where @samp{JAVA_LIBS} contains flags necessary to link JNI
-programs. Some of the above variables can be queried using @code{R CMD config}.
+where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
+Some of the above variables can be queried using @code{R CMD config}.
 
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under Unix
