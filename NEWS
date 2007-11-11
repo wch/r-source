@@ -62,9 +62,6 @@ NEW FEATURES
 	formula methods defined.  Additional graphics parameters may
 	be included in the call.  Formula handling is now
 	similar to boxplot().
-    
-    o	tclServiceMode() (package tcltk) now works under Unix-alikes.
-	(Although undocumented, it used only to work under Windows.)
 
 
 
@@ -219,6 +216,9 @@ BUG FIXES
 
     o	help.search() would give an error if it found a badly
 	installed package, even if 'package' was not specified.
+    
+    o	tclServiceMode() (package tcltk) now works under Unix-alikes.
+	(Although documented, it used only to work under Windows.)
 
 
 

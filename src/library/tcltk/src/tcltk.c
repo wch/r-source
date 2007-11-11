@@ -634,9 +634,6 @@ void tcltk_init(void)
      * tcl 8.4 on all platforms, and is known to cause crashes under
      * Windows */
 
-    /* Unfortunately, *presence* of the line appears to cause crashes
-     * with tcl 8.0... */
-
     Tcl_FindExecutable(NULL);
 
     RTcl_interp = Tcl_CreateInterp();
