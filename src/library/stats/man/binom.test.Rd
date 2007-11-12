@@ -58,7 +58,7 @@ binom.test(x, n, p = 0.5,
   Pages 97--104.
 
   Myles Hollander & Douglas A. Wolfe (1973),
-  \emph{Nonparametric statistical inference}.
+  \emph{Nonparametric Statistical Methods.}
   New York: John Wiley & Sons.
   Pages 15--22.
 }
