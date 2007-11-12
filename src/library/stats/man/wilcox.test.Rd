@@ -137,7 +137,7 @@ wilcox.test(x, \dots)
   \bold{67}, 687--690.
 
   Myles Hollander & Douglas A. Wolfe (1973),
-  \emph{Nonparametric statistical inference}.
+  \emph{Nonparametric Statistical Methods.}
   New York: John Wiley & Sons.
   Pages 27--33 (one-sample), 68--75 (two-sample).\cr
   Or second edition (1999).

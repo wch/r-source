@@ -64,7 +64,7 @@ kruskal.test(x, \dots)
 }
 \references{
   Myles Hollander & Douglas A. Wolfe (1973),
-  \emph{Nonparametric statistical inference}.
+  \emph{Nonparametric Statistical Methods.}
   New York: John Wiley & Sons.
   Pages 115--120.
 }
