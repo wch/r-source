@@ -24,8 +24,9 @@ I(x)
   \itemize{
     \item In function \code{\link{data.frame}}.  Protecting an object by
     enclosing it in \code{I()} in a call to \code{data.frame} inhibits the
-    conversion of character vectors to factors, and the dropping of
-    names.  \code{I} can also be used to protect objects which are to be
+    conversion of character vectors to factors and the dropping of
+    names, and ensures that matrices are inserted as single columns.
+    \code{I} can also be used to protect objects which are to be
     added to a data frame, or converted to a data frame \emph{via}
     \code{\link{as.data.frame}}.
 
