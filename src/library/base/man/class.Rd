@@ -37,7 +37,8 @@ oldClass(x) <- value
   giving the names of the classes from which the object \emph{inherits}.
   If the object does not have a class attribute, it has an implicit
   class, \code{"matrix"}, \code{"array"} or the result of
-  \code{\link{mode}(x)}.  (Functions \code{oldClass} and
+  \code{\link{mode}(x)} (except that integer vectors have implicit class
+  \code{"integer"}).  (Functions \code{oldClass} and
   \code{oldClass<-} get and set the attribute, which can also be done
   directly.)
 
@@ -100,6 +101,8 @@ oldClass(x) <- value
 }
 \examples{
 x <- 10
+class(x) # "numeric"
+oldClass(x) # NULL
 inherits(x, "a") #FALSE
 class(x) <- c("a", "b")
 inherits(x,"a") #TRUE
