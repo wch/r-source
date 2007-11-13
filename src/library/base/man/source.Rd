@@ -32,8 +32,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
   \item{max.deparse.length}{integer; is used only if \code{echo} is
-    \code{TRUE} and gives the maximal length of the printout of a
-    single expression.}
+    \code{TRUE} and gives the maximal number of characters output for
+    the deparse of a single expression.}
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
@@ -56,7 +56,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
   or CR (as used on classic MacOS).  The final line can be incomplete, that
-  is missing the final EOL marker.
+  is missing the final end-of-line marker.
 
   If \code{\link{options}}("keep.source") is true (the default), the
   source of functions is kept so they can be listed exactly as input.
@@ -78,7 +78,10 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   the file will not be echoed.  This does not affect the execution of
   the code at all.  If there are executable lines within the first
   \code{skip.echo} lines, echoing will start with the first of them.
-  
+
+  If \code{echo} is true and a deparsed expression exceeds
+  \code{max.deparse.length}, that many characters are output followed by
+  \code{ .... [TRUNCATED] }.  
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
