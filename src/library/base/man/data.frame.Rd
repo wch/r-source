@@ -60,7 +60,9 @@ default.stringsAsFactors()
   Character variables passed to \code{data.frame} are converted to
   factor columns unless protected by \code{\link{I}}.  If a list or data
   frame or matrix is passed to \code{data.frame} it is as if each
-  component or column had been passed as a separate argument.
+  component or column had been passed as a separate argument (except for
+  matrices of class \code{"\link{model.matrix}"} and those protected by
+  \code{\link{I}}).
 
   Objects passed to \code{data.frame} should have the same number of
   rows, but atomic vectors, factors and character vectors protected by
