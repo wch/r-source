@@ -33,6 +33,10 @@ NEW FEATURES
     o	Deparsing will (if option warnIncomplete is set) warn on
 	strings longer than the parser limit (8192 bytes).
 
+    o	url() now uses the UserAgent header in http transactions in
+	the same way as download.file() (making use of option
+	"HTTPUserAgent").
+
 
 BUG FIXES
 

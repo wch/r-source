@@ -152,8 +152,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   method can return \code{1}, but will in most cases throw an error.
 }
 \seealso{
-  \code{\link{options}} to set the \code{timeout} and
-  \code{internet.info} options.
+  \code{\link{options}} to set the \code{HTTPUserAgent}, \code{timeout}
+  and \code{internet.info} options.
 
   \code{\link{url}} for a finer-grained way to read data from URLs.
 
