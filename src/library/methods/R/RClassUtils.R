@@ -1536,9 +1536,10 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         pkg <- paste("package", package, sep=":")
         ## need to allow for versioned installs: prefer exact match.
         m <- charmatch(pkg, search())
-        if(is.na(m))
-            stop(gettextf("Package \"%s\" is not loaded", package), domain = NA)
-        as.environment(search()[m])
+        if(is.na(m)) # not attached, better be an available namespace
+            getNamespace(package)
+        else
+          as.environment(search()[m])
     }
 }
 
