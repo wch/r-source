@@ -66,10 +66,6 @@ NEW FEATURES
     o	new.packages() now knows about front-end package gnomeGUI
 	(which does not install into a library).
 
-    o	url() now uses the UserAgent header in http transactions in
-	the same way as download.file() (making use of option
-	"HTTPUserAgent").
-
 
 DEPRECATED & DEFUNCT
 
@@ -168,6 +164,10 @@ NEW FEATURES
     o	Deparsing will (if option warnIncomplete is set) warn on
 	strings longer than the parser limit (8192 bytes).
 
+    o	url() now uses the UserAgent header in http transactions in
+	the same way as download.file() (making use of option
+	"HTTPUserAgent").
+
 
 BUG FIXES
 
@@ -194,7 +194,7 @@ BUG FIXES
 	such as aleph (obtained by symbol("\300")) in a UTF-8 locale.
 
     o   An event handling issue caused autorepeat functions to
-        misbehave with tcltk (notably scrollbars).
+	misbehave with tcltk (notably scrollbars).
 
     o	plot(sin, -5, 5) gives ylab 'sin(x)' again, where it resulted
 	in 'x(x)' in 2.6.0.  Further,  plot(sin)  again plots from
