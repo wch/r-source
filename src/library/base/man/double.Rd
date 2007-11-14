@@ -33,7 +33,8 @@ as.single(x, \dots)
   It is identical to \code{\link{numeric}} (and \code{real}).
 
   \code{as.double} is a generic function.  It is identical to
-  \code{as.numeric} (and \code{as.real}).
+  \code{as.numeric} (and \code{as.real}).  Methods should return an
+  object of base type \code{"double"}.
 
   \code{is.double} is a test of double \link{type}.
   
@@ -60,6 +61,25 @@ as.single(x, \dots)
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double \link{type} or not.
+}
+%% keep next the same in double.Rd & numeric.Rd
+\section{Note on names}{
+  It is a historical anomaly that \R has three names for its
+  floating-point vectors, \code{\link{double}}, \code{\link{numeric}}
+  and \code{\link{real}}.
+
+  \code{double} is the name of the \link{type}.
+  \code{numeric} is the name of the \link{mode} and also of the implicit
+  \link{class}.  As an S4 formal class, use \code{"numeric"} (there is a
+  deprecated formal class \code{"double"}).
+
+  \code{real} is deprecated and should not be used in new code.
+
+  The potential confusion is that \R has used \emph{\link{mode}}
+  \code{"numeric"} to mean \sQuote{double or integer}, which conflicts
+  with the S4 usage.  Thus \code{is.numeric} tests the mode, not the
+  class, but \code{as.numeric} (which is identical to \code{as.double})
+  coerces to the class.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

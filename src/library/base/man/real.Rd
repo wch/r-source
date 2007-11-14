@@ -14,8 +14,8 @@ as.real(x, \dots)
 is.real(x)
 }
 \description{
-  These functions are the same as their \code{double} equivalents and
-  are provided for backwards compatibility.
+  These functions are the same as their \code{\link{double}} equivalents
+  and are provided for backwards compatibility only.
 }
 \arguments{
   \item{length}{desired length.}
