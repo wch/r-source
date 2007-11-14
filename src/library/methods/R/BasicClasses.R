@@ -32,8 +32,9 @@
     setClass("ANY", where = envir); clList <- c(clList, "ANY")
     setClass("vector", where = envir); clList <- c(clList, "vector")
     setClass("missing", where = envir); clList <- c(clList, "missing")
+    ## "numeric" is the class returned by class() for double vectors
     vClasses <- c("logical", "numeric", "character",
-                  "complex", "integer", "single", "double", "raw",
+                  "complex", "integer", "double", "raw",
                   "expression", "list")
     ## now some pseudo-classes in base, marked specially for new()
     for(.class in vClasses) {

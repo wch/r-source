@@ -79,6 +79,10 @@ DEPRECATED & DEFUNCT
 	to package 'utils': the former no longer exists as a separate
 	package in the R distribution.
 
+    o	The S4 pesudo-class "single" has been removed.
+	["double" will follow shortly:  the S4 class for a REALSXP is
+	"double".]
+
 
 INSTALLATION
 
