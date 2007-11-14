@@ -61,6 +61,25 @@ is.numeric(x)
   To ensure that \code{as.numeric}, \code{as.double} and \code{as.real}
   remain identical, S4 methods can only be set for \code{as.numeric}.
 }
+%% keep next the same in double.Rd & numeric.Rd
+\section{Note on names}{
+  It is a historical anomaly that \R has three names for its
+  floating-point vectors, \code{\link{double}}, \code{\link{numeric}}
+  and \code{\link{real}}.
+
+  \code{double} is the name of the \link{type}.
+  \code{numeric} is the name of the \link{mode} and also of the implicit
+  \link{class}.  As an S4 formal class, use \code{"numeric"} (there was
+  a formal class \code{"double"} prior to \R 2.7.0).
+
+  \code{real} is deprecated and should not be used in new code.
+
+  The potential confusion is that \R has used \emph{\link{mode}}
+  \code{"numeric"} to mean \sQuote{double or integer}, which conflicts
+  with the S4 usage.  Thus \code{is.numeric} tests the mode, not the
+  class, but \code{as.numeric} (which is identical to \code{as.double})
+  coerces to the class.
+}
 \seealso{
   \code{\link{double}}, \code{\link{integer}}, \code{\link{storage.mode}}.
 }
