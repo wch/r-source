@@ -251,7 +251,8 @@ contrib.url(repos, type = getOption("pkgType"))
   zip files if \code{repos = NULL}. The zip files are then unpacked directly.
 #endif
 #ifdef unix
-  An attempt is made to install the packages in an order that respects
+  If a repository is used (rather than local \file{.tar.gz} files),
+  an attempt is made to install the packages in an order that respects
   their dependencies.  This does assume that all the entries in
   \code{lib} are on the default library path for installs (set by
   \code{R_LIBS}). 
@@ -327,6 +328,9 @@ contrib.url(repos, type = getOption("pkgType"))
 
   \code{\link{INSTALL}}, \code{\link{REMOVE}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
+
+  The \sQuote{R Installation and Administration} manual for how to 
+  set up a repository.
 }
 
 \examples{
