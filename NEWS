@@ -66,6 +66,9 @@ NEW FEATURES
     o	new.packages() now knows about front-end package gnomeGUI
 	(which does not install into a library).
 
+    o	url() now uses the UserAgent header in http transactions in
+	the same way as download.file() (making use of option
+	"HTTPUserAgent").
 
 
 DEPRECATED & DEFUNCT
@@ -82,14 +85,15 @@ DEPRECATED & DEFUNCT
 	to package 'utils': the former no longer exists as a separate
 	package in the R distribution.
 
-    o	The S4 pesudo-class "single" has been removed.
+    o	The S4 pseudo-class "single" has been removed.
 	["double" will follow shortly:  the S4 class for a REALSXP is
-	"double".]
+	"numeric".]
 
 
 INSTALLATION
 
-    o	Tcl/Tk >= 8.3 (released in 2000) is now required to build R.
+    o	Tcl/Tk >= 8.3 (released in 2000) is now required to build
+	package tcltk.
 
     o	The Windows build only supports Windows 2000 or later (XP,
 	Vista, Server 2003 and Server 2008).
