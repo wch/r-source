@@ -196,7 +196,8 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 
   \code{new.packages} does the same comparison but reports uninstalled
-  packages/bundles that are available at the repositories.  It will also
+  packages/bundles that are available at the repositories.  (It checks
+  the front-end package \pkg{gnomeGUI} separately.)  It will
   give warnings about incompletely installed bundles (provided the
   information is available) and bundles whose contents has changed.
   If \code{ask != FALSE} it asks which packages should be installed

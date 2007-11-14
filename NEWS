@@ -63,6 +63,9 @@ NEW FEATURES
 	be included in the call.  Formula handling is now
 	similar to boxplot().
 
+    o	new.packages() now knows about front-end package gnomeGUI
+	(which does not install into a library).
+
 
 
 DEPRECATED & DEFUNCT
