@@ -302,7 +302,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     ## We need to treat gnomeGUI separately
     if(.Platform$OS.type == "unix" &&
-       file.exists(paste(R.home(), "/bin/exec", Sys.getenv("R_ARCH"), "/Rgnome", sep=""))) res <- setdiff(poss, "gnomeGUI")
+       file.exists(paste(R.home(), "/bin/exec", Sys.getenv("R_ARCH"), "/Rgnome", sep=""))) res <- setdiff(res, "gnomeGUI")
 
     update <- character(0)
     if(is.character(ask) && ask == "graphics") {
