@@ -41,7 +41,7 @@ is.numeric(x)
   \code{"\link{Date}"} and \code{"\link{POSIXt}"} (in all three cases
   the result is false).  Methods for \code{is.numeric} should only
   return true if the base type of the class is \code{double} or
-  \code{integer} \emph{and} and values can reasonably be regarded as
+  \code{integer} \emph{and} values can reasonably be regarded as
   numeric (e.g. arithmetic on them makes sense).
 }
 \value{
