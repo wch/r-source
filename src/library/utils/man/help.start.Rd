@@ -23,7 +23,7 @@ help.start(update = TRUE, gui = "irrelevant",
 \arguments{
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
-    browser. It should be in the PATH, or a full path specified.
+    browser. It should be in the \env{PATH}, or a full path specified.
   }
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the \file{\$R\_HOME}
@@ -41,7 +41,10 @@ help.start(update = TRUE, gui = "irrelevant",
   re-made each time \code{help.start} is run, which should be done
   after packages are installed, updated or removed.
 
-  If the browser given by the \code{browser} argument is different from
+  A side effect is to set \code{options(htmlhelp = TRUE)} so that future
+  help requests (by default) are sent to the browser.
+
+  If the browser named by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
   default is changed to the given browser so that it gets used for all
   future help requests.
