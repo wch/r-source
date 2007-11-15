@@ -108,7 +108,11 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
             cat("<p><h3>Packages in ", lib,
                 '</h3>\n<p><table width="100%" summary="R Package list">\n',
                 sep = "", file=out)
-        pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        ## too slow
+        ## pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
+        pg <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
+                       "\\1", pg))
         for (i in pg) {
             ## links are set up to break ties of package names
             before <- sum(i %in% known)

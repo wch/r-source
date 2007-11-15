@@ -68,7 +68,7 @@ NEW FEATURES
 
     o	utils::make.packages.html() now now be used directly to set up
 	linked HTML help pages, optionally without creating the
-	package listing and search database.
+	package listing and search database (which can be much faster).
 
 
 DEPRECATED & DEFUNCT

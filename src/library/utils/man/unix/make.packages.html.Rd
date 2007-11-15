@@ -5,7 +5,7 @@
 
 \name{make.packages.html}
 \alias{make.packages.html}
-\title{Update HTML documentation files}
+\title{Update HTML Documentation Files}
 \usage{
 make.packages.html(lib.loc = .libPaths(), packages = TRUE)
 }
@@ -21,7 +21,8 @@ make.packages.html(lib.loc = .libPaths(), packages = TRUE)
   This sets up the links from packages in libraries to the \file{.R}
   subdirectory of the per-session directory (see \code{\link{tempdir}})
   and optionally creates the \file{packages.html} and \file{index.txt} files
-  to point to those links.
+  to point to those links.  The slow part is creating those files (as
+  all the package \file{DESCRIPTION} files are read).
 
   If a package is available in more than one library tree, all the
   copies are linked, after the first with suffix \code{.1} etc.
