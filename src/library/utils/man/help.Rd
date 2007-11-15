@@ -103,20 +103,25 @@ type?topic
   default.)
 
 #ifdef unix
+  HTML help works best if \code{\link{help.start}()} has been called in
+  the session.  Otherwise there will be a warning about
+  \sQuote{Using non-linked HTML file: style sheet and hyperlinks may be
+    incorrect} and cross-library links will most likely not be resolved.
+ 
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
-  \code{latex} (note that LaTeX 2e is needed) and \code{dvips}.
-  Depending on your \code{dvips} configuration, hardcopy will be sent to
-  the printer or saved in a file.  If the programs are in non-standard
-  locations and hence were not found at compile time, you can either set
-  the options \code{latexcmd} and \code{dvipscmd}, or the environment
-  variables \env{R\_LATEXCMD} and \env{R\_DVIPSCMD} appropriately.
+  \code{latex} and \code{dvips}.  Depending on your \code{dvips}
+  configuration, hardcopy will be sent to the printer or saved in a
+  file.  If the programs are in non-standard locations and hence were
+  not found at compile time, you can either set the options
+  \code{latexcmd} and \code{dvipscmd}, or the environment variables
+  \env{R\_LATEXCMD} and \env{R\_DVIPSCMD} appropriately.
 #endif
 #ifdef windows
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
-  \code{latex} (note that LaTeX 2e is needed).  You need to customize
-  the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.
+  \code{latex}.  You need to customize the file
+  \file{R\_HOME/bin/helpPRINT.bat} which contains an example.
 #endif
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
