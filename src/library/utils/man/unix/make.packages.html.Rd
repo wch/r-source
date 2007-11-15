@@ -7,28 +7,35 @@
 \alias{make.packages.html}
 \title{Update HTML documentation files}
 \usage{
-make.packages.html(lib.loc = .libPaths())
+make.packages.html(lib.loc = .libPaths(), packages = TRUE)
 }
 \description{
-  Functions to re-create the HTML documentation files to reflect all
-  installed packages.
+  Functions to link and (optionally) re-create the HTML documentation
+  files to reflect all installed packages.
 }
 \arguments{
   \item{lib.loc}{character vector. List of libraries to be included.}
+  \item{packages}{logical: should be package indices be create.}
 }
 \details{
   This sets up the links from packages in libraries to the \file{.R}
   subdirectory of the per-session directory (see \code{\link{tempdir}})
-  and then creates the \file{packages.html} and \file{index.txt} files
+  and optionally creates the \file{packages.html} and \file{index.txt} files
   to point to those links.
 
   If a package is available in more than one library tree, all the
   copies are linked, after the first with suffix \code{.1} etc.
 }
 \value{
-  Logical, whether the function succeeded in recreating the files.
+  Invisible logical, indicating if the files were created.
 }
 \seealso{
   \code{\link{help.start}}
 }
+\examples{\dontrun{
+# to prefer HTML help, put in your .Rprofile
+options(htmlhelp=TRUE)
+make.packages.html(packages=FALSE)
+# this can be slow for large numbers of installed packages.
+}}
 \keyword{utilities}

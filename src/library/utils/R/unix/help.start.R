@@ -24,13 +24,6 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         writeLines(strwrap(msg, exdent = 4))
         options(browser = browser)
     }
-#     sessiondir <- file.path(tempdir(), ".R")
-#     dir.create(sessiondir)
-#     dir.create(file.path(sessiondir, "doc"))
-#     dir.create(file.path(sessiondir, "doc", "html"))
-    cat(gettext("Making links in per-session dir ...\n"))
-    .Script("sh", "help-links.sh",
-            paste(tempdir(), paste(.libPaths(), collapse = " ")))
     make.packages.html()
     tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
@@ -85,31 +78,36 @@ browseURL <- function(url, browser = getOption("browser"))
                  browser, quotedUrl, "&"))
 }
 
-make.packages.html <- function(lib.loc=.libPaths())
+make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
 {
-    f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
-    if(!file.create(f.tg)) {
-        warning("cannot create HTML package index")
-        return(FALSE)
+    message("Making links in per-session dir ...", " ", appendLF = FALSE)
+    .Script("sh", "help-links.sh",tempdir())
+    if(packages) {
+        f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
+        if(!file.create(f.tg)) {
+            warning("cannot create HTML package index")
+            return(FALSE)
+        }
+        searchindex <- file.path(tempdir(), ".R/doc/html/search/index.txt")
+        if(!file.create(searchindex)) {
+            warning("cannot create HTML search index")
+            return(FALSE)
+        }
+        ## First we need to fathom out what encoding to use.
+        ## For now we assume that if we have iconv then UTF-8 is OK.
+        useUTF8 <- capabilities("iconv")
+        file.append(f.tg, file.path(R.home("doc"), "html",
+                                    if(useUTF8) "packages-head-utf8.html"
+                                    else "packages-head.html"))
+        out <- file(f.tg, open="a")
+        search <- file(searchindex, open="w")
     }
-    searchindex <- file.path(tempdir(), ".R/doc/html/search/index.txt")
-    if(!file.create(searchindex)) {
-        warning("cannot create HTML search index")
-        return(FALSE)
-    }
-    ## First we need to fathom out what encoding to use.
-    ## For now we assume that if we have iconv then UTF-8 is OK.
-    useUTF8 <- capabilities("iconv")
-    file.append(f.tg, file.path(R.home("doc"), "html",
-				if(useUTF8) "packages-head-utf8.html"
-				else "packages-head.html"))
-    out <- file(f.tg, open="a")
-    search <- file(searchindex, open="w")
     known <- character(0)
     for (lib in lib.loc) {
-        cat("<p><h3>Packages in ", lib,
-            '</h3>\n<p><table width="100%" summary="R Package list">\n',
-            sep = "", file=out)
+        if(packages)
+            cat("<p><h3>Packages in ", lib,
+                '</h3>\n<p><table width="100%" summary="R Package list">\n',
+                sep = "", file=out)
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         for (i in pg) {
             ## links are set up to break ties of package names
@@ -118,6 +116,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             from <- file.path(lib, i)
             to <- file.path(tempdir(), ".R", "library", link)
             file.symlink(from, to)
+            if(!packages) next
             title <- packageDescription(i, lib.loc = lib, field = "Title",
                                         encoding = ifelse(useUTF8,"UTF-8",""))
             if (is.na(title)) title <- "-- Title is missing --"
@@ -136,11 +135,14 @@ make.packages.html <- function(lib.loc=.libPaths())
                          contents[isURL], fixed = TRUE, useBytes = TRUE)
             writeLines(c(contents, ""), search)  # space between packages
         }
-        cat("</table>\n\n", file=out)
+        if(packages)cat("</table>\n\n", file=out)
         known <- c(known, pg)
     }
-    cat("</body></html>\n", file=out)
-    close(out)
-    close(search)
+    if(packages) {
+        cat("</body></html>\n", file=out)
+        close(out)
+        close(search)
+    }
+    message("done")
     invisible(TRUE)
 }

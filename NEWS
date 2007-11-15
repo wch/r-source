@@ -66,6 +66,10 @@ NEW FEATURES
     o	new.packages() now knows about front-end package gnomeGUI
 	(which does not install into a library).
 
+    o	utils::make.packages.html() now now be used directly to set up
+	linked HTML help pages, optionally without creating the
+	package listing and search database.
+
 
 DEPRECATED & DEFUNCT
 
