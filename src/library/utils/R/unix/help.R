@@ -30,8 +30,7 @@ function(file, topic)
         file <- lnkfile[ex][1]          # could be more than one
     }
     if(file == ofile) {
-        msg <- paste("Using non-linked HTML file:",
-                     "style sheet and hyperlinks may be incorrect")
+        msg <- gettext("Using non-linked HTML file: hyperlinks may be incorrect")
         warning(paste(strwrap(msg), collapse = "\n"))
     }
     file <- paste("file://", URLencode(file), sep = "")
