@@ -23,7 +23,7 @@ help.start(update = TRUE, gui = "irrelevant",
 \arguments{
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
-    browser. It should be in the \code{PATH}, or a full path specified.
+    browser. It should be in the \env{PATH}, or a full path specified.
     Alternatively, it can be a function which will be called with an
     URL as its only argument.
   }
