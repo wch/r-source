@@ -17,9 +17,12 @@
 
 addTclPath <- function(path = ".")
 {
+    ## Tcl uses Unix-style paths on Windows
+    if(.Platform$OS.type == "windows")
+        path <- gsub("\\\\", "/", path)
     a <- tclvalue(tcl("set", "auto_path"))
     paths <- strsplit(a, " ", fixed=TRUE)[[1]]
-    if (is.na(match(path, paths)))
+    if (! path %in% paths)
         tcl("lappend", "auto_path", path)
     invisible(paths)
 }
