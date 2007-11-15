@@ -70,6 +70,9 @@ NEW FEATURES
 	linked HTML help pages, optionally without creating the
 	package listing and search database (which can be much faster).
 
+    o	If a NEWS file is present in the root of a source package, it
+	is installed (analogously to LICENSE, LICENCE and COPYING).
+
 
 DEPRECATED & DEFUNCT
 

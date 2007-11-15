@@ -148,8 +148,8 @@ A package consists of a subdirectory containing a file
 @file{src}, and @file{tests} (some of which can be missing).  The
 package subdirectory may also contain files @file{INDEX},
 @file{NAMESPACE}, @file{configure}, @file{cleanup}, @file{LICENSE},
-@file{LICENCE}, and @file{COPYING}.  Other files such as @file{README},
-@file{NEWS} or @file{ChangeLog} will be ignored by @R{}, but may be
+@file{LICENCE}, @file{COPYING} and @file{NEWS}. Other files such as
+@file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
 useful to end-users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
@@ -620,14 +620,15 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{html}, @file{latex}, @file{R-ex}, @file{chtml}, and @file{Meta}).
 The copying of the @file{inst} happens after @file{src} is built so its
 @file{Makefile} can create files to be installed.  Note that with the
-exceptions of @file{INDEX}, @file{LICENSE}/@file{LICENCE} and
-@file{COPYING}, information files at the top level of the package will
-@emph{not} be installed and so not be known to users of Windows and
-MacOS X compiled packages (and not seen by those who use @command{R CMD
-INSTALL} or @command{install.packages} on the tarball).  So any
-information files you wish an end user to see should be included in
-@file{inst}.  One thing you might like to add to @file{inst} is a
-@file{CITATION} file for use by the @code{citation} function.
+exceptions of @file{INDEX}, @file{LICENSE}/@file{LICENCE},
+@file{COPYING} and @file{NEWS}, information files at the top level of
+the package will @emph{not} be installed and so not be known to users
+of Windows and MacOS X compiled packages (and not seen by those who
+use @command{R CMD INSTALL} or @command{install.packages} on the
+tarball).  So any information files you wish an end user to see should
+be included in @file{inst}.  One thing you might like to add to
+@file{inst} is a @file{CITATION} file for use by the @code{citation}
+function.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.

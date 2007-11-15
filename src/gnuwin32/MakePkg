@@ -216,7 +216,7 @@ frontmatter:
 	fi
 	@$(ECHO) "tools:::.install_package_description('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null
-	@for f in LICENSE LICENCE COPYING; do \
+	@for f in LICENSE LICENCE COPYING NEWS; do \
 	  if test -f ${SPKG}/$${f}; then \
 	    $(CP) ${SPKG}/$${f} $(DPKG)/$${f}; \
 	  fi; \
