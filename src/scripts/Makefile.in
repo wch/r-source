@@ -57,14 +57,14 @@ build: $(srcdir)/build.in $(top_builddir)/config.status
 check: $(srcdir)/check.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 ## The following target helps in automatically generating the above
-## target rules (provided that echo understands backslash escapes).
+## target rules (provided that $(ECHO) understands backslash escapes).
 Makerules:
 	@(dep="\$$(top_builddir)/config.status"; \
 	  cmd="@cd \$$(top_builddir)"; \
 	  cmd="$${cmd} && \$$(SHELL) ./config.status \$$(subdir)/\$$@"; \
 	  for f in $(SCRIPTS_B); do \
-	    echo "$${f}: \$$(srcdir)/$${f}.in $${dep}"; \
-	    echo "	$${cmd}"; \
+	    $(ECHO) "$${f}: \$$(srcdir)/$${f}.in $${dep}"; \
+	    $(ECHO) "	$${cmd}"; \
 	  done)
 ## </NOTE>
 
@@ -78,12 +78,12 @@ Makerules:
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 R.fe: R.sh $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
-	@echo "creating $(subdir)/$@"
+	@$(ECHO) "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  dat=`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`; \
 	  v="$${v} ($${dat})"; \
-	  y=`echo $${dat} | cut -d- -f1`; \
-	  d=`echo "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
+	  y=`$(ECHO) $${dat} | cut -d- -f1`; \
+	  d=`$(ECHO) "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
 	  sed "s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/; \
 	       s@REPLACE_BY_VERSION@$${v}@; \
 	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
@@ -95,7 +95,7 @@ $(top_builddir)/libtool:
 
 install: installdirs install-cmds
 	@rm -f $(DESTDIR)$(bindir)/R
-	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
+	@(d=`$(ECHO) '$(rhome)' | sed 's,/,\\\/,g';`; \
 	  sed -e "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharedir)+;" -e  "s+\\(R_INCLUDE_DIR=\\).*+\\1$(rincludedir)+;" -e "s+\\(R_DOC_DIR=\\).*+\\1$(rdocdir)+;"\
 	  < R.fe > "$(DESTDIR)$(Rexecbindir)/R")
 	@$(INSTALL_SCRIPT)  "$(DESTDIR)$(Rexecbindir)/R" "$(DESTDIR)$(bindir)/R"

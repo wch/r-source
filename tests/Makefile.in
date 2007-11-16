@@ -133,69 +133,69 @@ stamp-R: $(top_builddir)/bin/exec@R_ARCH@/R \
 Makedeps: Makefile
 	@(for f in $(test-src) $(test-src-reg) $(test-src-demo); do \
 	    if test -f $(srcdir)/$${f}out.save ; then \
-	      echo "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
+	      $(ECHO) "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
 	    else \
-	      echo "$${f}out: $${f} \$$(FORCE)"; \
+	      $(ECHO) "$${f}out: $${f} \$$(FORCE)"; \
 	    fi; \
 	    if test -f $(srcdir)/$${f}in; then \
-	      echo "$${f}: \$$(srcdir)/$${f}in stamp-R"; \
+	      $(ECHO) "$${f}: \$$(srcdir)/$${f}in stamp-R"; \
 	    fi; \
 	  done) >> Makefile
 	@touch $@
 FORCE:
 
 .Rin.R:
-	@echo "creating '$@'"
+	@$(ECHO) "creating '$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@echo "$(ECHO_T) OK"
+	@$(ECHO) "$(ECHO_T) OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
-	  echo $(ECHO_N) \
+	  $(ECHO) $(ECHO_N) \
 	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
-	  echo "$(ECHO_T) OK"; \
+	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
-	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@echo "$(ECHO_T) OK"
+	@$(ECHO) "$(ECHO_T) OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
-	  echo $(ECHO_N) \
+	  $(ECHO) $(ECHO_N) \
 	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
-	  echo "$(ECHO_T) OK"; \
+	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
-	@echo $(ECHO_N) \
+	@$(ECHO) $(ECHO_N) \
 	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
 	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
-	@echo "$(ECHO_T) OK"
+	@$(ECHO) "$(ECHO_T) OK"
 
 .R.Rout-gct:
-	@echo "running gctorture() + '$<'"
-	@(echo '.ptime <- proc.time(); gctorture()' ; \
+	@$(ECHO) "running gctorture() + '$<'"
+	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
-	  echo $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
+	  $(ECHO) $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
 	  mv $@.fail $@; \
-	  echo "$(ECHO_T) OK"
+	  $(ECHO) "$(ECHO_T) OK"
 
 R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 
 .R.Rout-valgct:
-	@echo "running gctorture() + valgrind + '$<'"
-	@(echo '.ptime <- proc.time(); gctorture()' ; \
+	@$(ECHO) "running gctorture() + valgrind + '$<'"
+	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
 	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
 	grep "==[0-9]*==" $@
 
@@ -219,18 +219,18 @@ test-Examples-Recommended:
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
-	@echo "updating test dependencies"
+	@$(ECHO) "updating test dependencies"
 	@$(MAKE) Makedeps
-	@echo "running strict specific tests"
+	@$(ECHO) "running strict specific tests"
 	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
-	@echo "running sloppy specific tests"
+	@$(ECHO) "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
 
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
-	  echo "checking package '$${p}'"; \
+	  $(ECHO) "checking package '$${p}'"; \
 	  $(top_builddir)/bin/R CMD check --install=skip \
-	    $(top_srcdir)/src/library/$${p} || echo; \
+	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
 test-Gct: $(test-out-gct)
@@ -238,7 +238,7 @@ test-Gct: $(test-out-gct)
 test-Vgct: $(test-out-valgct)
 
 test-Docs:
-	@echo "running tests of documentation examples"
+	@$(ECHO) "running tests of documentation examples"
 	@cp ${top_srcdir}/doc/manual/*.R .
 	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=0
 	@cp ${top_srcdir}/doc/manual/R-exts.c .
@@ -247,45 +247,45 @@ test-Docs:
 	@rm R-exts.*
 
 test-Demo:
-	@echo "running demos from base and stats"
+	@$(ECHO) "running demos from base and stats"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 
 test-Errormsgs:
-	@echo "running tests of error messages"
+	@$(ECHO) "running tests of error messages"
 	@$(MAKE) $(test-out-errmsgs) RVAL_IF_DIFF=0
 
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
-	@echo "running tests of Internet and socket functions"
-	@echo "  expect some differences"
+	@$(ECHO) "running tests of Internet and socket functions"
+	@$(ECHO) "  expect some differences"
 	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
 ## </NOTE>
 
 test-IsAs:
-	@echo "running tests of consistency of as/is.*"
+	@$(ECHO) "running tests of consistency of as/is.*"
 	@$(MAKE) $(test-out-isas) RVAL_IF_DIFF=1
 
 test-Primitive:
-	@echo "running tests of primitives"
+	@$(ECHO) "running tests of primitives"
 	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=1
 
 test-Random:
-	@echo "running tests of random deviate generation"
+	@$(ECHO) "running tests of random deviate generation"
 	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
 
 test-Reg:
-	@echo "running regression tests"
+	@$(ECHO) "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=1
 	@$(MAKE) $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Regexp:
-	@echo "running regexp regression tests"
+	@$(ECHO) "running regexp regression tests"
 	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
 
 test-Segfault:
-	@echo "running tests to possibly trigger segfaults"
+	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MAKE) $(test-out-segfault) RVAL_IF_DIFF=0
 	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
 
@@ -293,12 +293,12 @@ test-Segfault:
 ## Not all platforms can build standalone.
 ## So allow this to fail.
 test-Standalone:
-	@echo "testing building standalone Rmath"
+	@$(ECHO) "testing building standalone Rmath"
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 ## </NOTE>
 
 test-Rd: $(srcdir)/testit.Rd
-	@echo "testing Rd conversion"
+	@$(ECHO) "testing Rd conversion"
 	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
 	@diff -bw testit.txt $(srcdir)/testit.txt.save
 	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
@@ -309,95 +309,95 @@ test-Rd: $(srcdir)/testit.Rd
 	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
 
 test-DocFiles:
-	@echo "checking Rd usage sections"
+	@$(ECHO) "checking Rd usage sections"
 	@for p in $(R_PKGS_BASE); do \
-	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
-	  out=`(echo "library(\"tools\")"; \
-	         echo "checkDocFiles(package = \"$${p}\")") | \
+	  $(ECHO) $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`($(ECHO) "library(\"tools\")"; \
+	         $(ECHO) "checkDocFiles(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "$(ECHO_T) WARNING"; \
-	    echo; \
-	    echo "$${out}"; \
-	    echo; \
+	    $(ECHO) "$(ECHO_T) WARNING"; \
+	    $(ECHO); \
+	    $(ECHO) "$${out}"; \
+	    $(ECHO); \
 	  else \
-	    echo "$(ECHO_T) OK"; \
+	    $(ECHO) "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-DocStyle:
-	@echo "checking S3 method documentation style"
+	@$(ECHO) "checking S3 method documentation style"
 	@for p in $(R_PKGS_BASE); do \
-	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
-	  out=`(echo "library(\"tools\")"; \
-	         echo "checkDocStyle(package = \"$${p}\")") | \
+	  $(ECHO) $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`($(ECHO) "library(\"tools\")"; \
+	         $(ECHO) "checkDocStyle(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "$(ECHO_T) WARNING"; \
-	    echo; \
-	    echo "$${out}"; \
-	    echo; \
+	    $(ECHO) "$(ECHO_T) WARNING"; \
+	    $(ECHO); \
+	    $(ECHO) "$${out}"; \
+	    $(ECHO); \
 	  else \
-	    echo "$(ECHO_T) OK"; \
+	    $(ECHO) "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-FF:
-	@echo "checking foreign function calls"
+	@$(ECHO) "checking foreign function calls"
 	@for p in $(R_PKGS_BASE); do \
-	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
-	  out=`(echo "library(\"tools\")"; \
-	         echo "checkFF(package = \"$${p}\")") | \
+	  $(ECHO) $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`($(ECHO) "library(\"tools\")"; \
+	         $(ECHO) "checkFF(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "$(ECHO_T) WARNING"; \
-	    echo "$${out}"; \
+	    $(ECHO) "$(ECHO_T) WARNING"; \
+	    $(ECHO) "$${out}"; \
 	  else \
-	    echo "$(ECHO_T) OK"; \
+	    $(ECHO) "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-S3methods:
-	@echo "checking for S3 generic/method consistency"
+	@$(ECHO) "checking for S3 generic/method consistency"
 	@for p in $(R_PKGS_BASE); do \
-	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
-	  out=`(echo "library(\"tools\")"; \
-	         echo "checkS3methods(package = \"$${p}\")") | \
+	  $(ECHO) $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`($(ECHO) "library(\"tools\")"; \
+	         $(ECHO) "checkS3methods(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "$(ECHO_T) WARNING"; \
-	    echo; \
-	    echo "$${out}"; \
-	    echo; \
+	    $(ECHO) "$(ECHO_T) WARNING"; \
+	    $(ECHO); \
+	    $(ECHO) "$${out}"; \
+	    $(ECHO); \
 	  else \
-	    echo "$(ECHO_T) OK"; \
+	    $(ECHO) "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-codoc:
-	@echo "checking for code/documentation mismatches in functions"
+	@$(ECHO) "checking for code/documentation mismatches in functions"
 	@for p in $(R_PKGS_BASE); do \
-	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
-	  out=`(echo "library(\"tools\")"; \
-	         echo "codoc(package = \"$${p}\")") | \
+	  $(ECHO) $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`($(ECHO) "library(\"tools\")"; \
+	         $(ECHO) "codoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "$(ECHO_T) WARNING"; \
-	    echo; \
-	    echo "$${out}"; \
-	    echo; \
+	    $(ECHO) "$(ECHO_T) WARNING"; \
+	    $(ECHO); \
+	    $(ECHO) "$${out}"; \
+	    $(ECHO); \
 	  else \
-	    echo "$(ECHO_T) OK"; \
+	    $(ECHO) "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-undoc:
-	@echo "checking for missing documentation entries"
+	@$(ECHO) "checking for missing documentation entries"
 	@for p in $(R_PKGS_BASE); do \
-	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
-	  out=`(echo "library(\"tools\")"; \
-	         echo "undoc(package = \"$${p}\")") | \
+	  $(ECHO) $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`($(ECHO) "library(\"tools\")"; \
+	         $(ECHO) "undoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "$(ECHO_T) WARNING"; \
-	    echo "$${out}"; \
+	    $(ECHO) "$(ECHO_T) WARNING"; \
+	    $(ECHO) "$${out}"; \
 	  else \
-	    echo "$(ECHO_T) OK"; \
+	    $(ECHO) "$(ECHO_T) OK"; \
 	  fi; \
 	done
 
@@ -408,13 +408,13 @@ test-Packages-Recommended:
 	    (cd Packages && $(TAR) xf -) ; \
 	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
 	  then \
-	    echo "checking bundle '$${p}'"; \
+	    $(ECHO) "checking bundle '$${p}'"; \
 	  else \
-	    echo "checking package '$${p}'"; \
+	    $(ECHO) "checking package '$${p}'"; \
 	  fi; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
             $(top_builddir)/bin/R CMD check --install=skip \
-	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
+	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
 	done
 
 mostlyclean: clean

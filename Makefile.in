@@ -59,7 +59,7 @@ R: Makefile svnonly
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@test -f src/library/stamp-docs || \
-	  echo "you should 'make docs' now ..."
+	  $(ECHO) "you should 'make docs' now ..."
 
 docs: R FORCE
 	-@(cd doc && $(MAKE) $@)
@@ -98,7 +98,7 @@ svnonly:
 	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
 	  (cd doc/manual && $(MAKE) front-matter html-non-svn) ; \
 	  touch non-tarball ; \
-	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
+	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || $(ECHO) "Revision: unknown") 2> /dev/null \
 	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
 	    | cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
 	  $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
@@ -128,7 +128,7 @@ uninstall:
 	done
 	@rm -rf "$(DESTDIR)$(Rexecbindir)" "$(DESTDIR)$(rhome)/lib"
 	@rmdir "$(DESTDIR)$(rhome)" 2>/dev/null \
-          || echo "  dir $(DESTDIR)$(rhome) not removed"
+          || $(ECHO) "  dir $(DESTDIR)$(rhome) not removed"
 	@rm -f "$(DESTDIR)${libdir}/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
@@ -152,8 +152,8 @@ distclean: clean
 	  config.cache config.log config.status libtool \
 	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
 maintainer-clean: distclean
-	@echo "This command is intended for maintainers to use; it"
-	@echo "deletes files that may need special rules to rebuild"
+	@$(ECHO) "This command is intended for maintainers to use; it"
+	@$(ECHO) "deletes files that may need special rules to rebuild"
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@(cd $(srcdir) && rm -rf autom4te.cache)
@@ -163,7 +163,7 @@ dist-unix: distdir
 	-chmod -R a+r $(distdir)
 	-chmod -R go-w $(distdir)
 	distname=`$(srcdir)/tools/GETDISTNAME`; \
-	  dirname=`echo $${distname} | sed -e s/_.*//`; \
+	  dirname=`$(ECHO) $${distname} | sed -e s/_.*//`; \
           if test $(distdir) != $${dirname} ; then \
             mv $(distdir) $${dirname}; \
           fi ; \
@@ -213,7 +213,7 @@ reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
 install-R-framework:
-	@echo "Creating R framework ..."
+	@$(ECHO) "Creating R framework ..."
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)" && \
 	  ln -f -s -n Resources/include Headers && \
 	  ln -f -s -n Resources/lib/libR.dylib R)
@@ -230,7 +230,7 @@ install-R-framework:
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
 	@( otool=otool ; if otool -D "$(Rexeclibdir)/libR.dylib"|grep 'not an object'>/dev/null; then otool=otool64; fi; \
 	   for lib in Rlapack Rblas R; do \
-	   if test -e "$(Rexeclibdir)/lib$${lib}.dylib"; then echo "  lib$${lib}"; \
+	   if test -e "$(Rexeclibdir)/lib$${lib}.dylib"; then $(ECHO) "  lib$${lib}"; \
 	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
 	    xargs -n 1 install_name_tool -change \
 	    `$${otool} -L $(Rexeclibdir)/lib$${lib}.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
@@ -263,16 +263,16 @@ install-R-framework:
 	  chmod a+x "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
 	  mv "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R"; \
 	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 ]; then \
-	    echo "\
+	    $(ECHO) "\
 	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
 	  else \
 	    for f in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename`; do \
-	      echo "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#ifdef __x86_64__~#include <x86_64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
+	      $(ECHO) "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#ifdef __x86_64__~#include <x86_64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
 	    done; \
 	  fi; \
 	fi )
 	@( rm -f "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" && \
 	   ln -s bin/R "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" )
-	@( echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist)
+	@( $(ECHO) "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist)
 
 TAGS:

@@ -88,7 +88,7 @@ inc:
 check: all # clean
 
 Copy:
-	@echo "Copying source files"
+	@$(ECHO) "Copying source files"
 	@test -f std_unif.c || $(LN_S) $(srcdir)/sunif.c std_unif.c
 	@for f in $(SOURCES_NMATH); do \
 	  test -f $${f} || $(LN_S) $(srcdir)/../$${f} . ; \

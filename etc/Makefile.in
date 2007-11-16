@@ -53,7 +53,7 @@ R: $(OBJECTS)
 	fi
 
 install: installdirs
-	@echo "installing $(subdir) ..."
+	@$(ECHO) "installing $(subdir) ..."
 	@$(INSTALL_DATA) $(srcdir)/repositories "$(DESTDIR)$(rhome)/$(subdir)"
 	@for f in $(OBJECTS); do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)/$(subdir)$(R_ARCH)"; \
@@ -63,7 +63,7 @@ installdirs:
 install-strip: install
 
 uninstall:
-	@echo "uninstalling $(subdir) ..."
+	@$(ECHO) "uninstalling $(subdir) ..."
 	@if test -d "$(DESTDIR)$(rhome)/$(subdir)" \
 	  && test "`cd \"$(DESTDIR)$(rhome)\"; $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
@@ -73,7 +73,7 @@ uninstall:
 	    rmdir "$(DESTDIR)$(rhome)/$(subdir)$(R_ARCH)" 2> /dev/null ; \
 	  fi ; \
 	  rmdir "$(DESTDIR)$(rhome)/$(subdir)" 2> /dev/null \
-	    || echo "  subdir $(DESTDIR)$(subdir) not removed"; \
+	    || $(ECHO) "  subdir $(DESTDIR)$(subdir) not removed"; \
 	fi
 
 mostlyclean: clean

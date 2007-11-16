@@ -178,7 +178,7 @@ install-lib-local: $(libR_la)
 YFLAGS=-l
 
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
-	@echo "re-making gram.c"
+	@$(ECHO) "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
 	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
 
@@ -219,8 +219,8 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
-	@echo "This command is intended for maintainers to use; it"
-	@echo "deletes files that may need special rules to rebuild"
+	@$(ECHO) "This command is intended for maintainers to use; it"
+	@$(ECHO) "deletes files that may need special rules to rebuild"
 	@-rm -f $(srcdir)/gram.c
 
 tags: TAGS

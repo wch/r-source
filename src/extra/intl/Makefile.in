@@ -79,9 +79,9 @@ charset.alias: $(srcdir)/config.charset
 	@rm t-$@
 
 charsetalias.h: charset.alias
-	@echo "cp =" > $@
+	@$(ECHO) "cp =" > $@
 	@ @SED@ -e 's/\([^ ]\{1,\}\)/"\1" "\\0"/g' charset.alias >> $@
-	@echo ";" >> $@
+	@$(ECHO) ";" >> $@
 
 mostlyclean: clean
 clean:

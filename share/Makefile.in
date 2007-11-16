@@ -46,7 +46,7 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/sh"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf"
 install-message:
-	@echo "installing share ..."
+	@$(ECHO) "installing share ..."
 install-sources: installdirs
 	@for f in $(srcdir)/R/*.R; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/R"; \
@@ -81,7 +81,7 @@ install-sources: installdirs
 install-strip: install
 
 uninstall:
-	@echo "uninstalling share ..."
+	@$(ECHO) "uninstalling share ..."
 	@rm -rf "$(DESTDIR)$(rsharedir)"
 
 ## we cannot remove make/vars.mk until distclean as etc/Makeconf includes it.

@@ -68,14 +68,14 @@ install: svnonly install-message installdirs install-sources
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/html"
 install-message:
-	@echo "installing $(subdir) ..."
+	@$(ECHO) "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
 install-strip: install
 uninstall:
-	@echo "uninstalling $(subdir) ..."
+	@$(ECHO) "uninstalling $(subdir) ..."
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
@@ -83,7 +83,7 @@ uninstall:
 	  rm -f "$(DESTDIR)$(rdocdir)/html/$${f}"; \
 	done
 	@rmdir "$(DESTDIR)$(rdocdir)/html" 2>/dev/null \
-	  || echo "  subdir $(DESTDIR)$(subdir) not removed"
+	  || $(ECHO) "  subdir $(DESTDIR)$(subdir) not removed"
 
 mostlyclean:
 clean:

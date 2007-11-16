@@ -52,7 +52,7 @@ install-man: R.1 Rscript.1
 	@rm -f $(DESTDIR)$(mandir)/man1/Rscript.1
 	@@$(INSTALL_DATA) ${srcdir}/Rscript.1 $(DESTDIR)$(mandir)/man1
 install-message:
-	@echo "installing $(subdir) ..."
+	@$(ECHO) "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)"; \
@@ -65,7 +65,7 @@ install-sources2:
 install-strip: install
 
 uninstall:
-	@echo "uninstalling $(subdir) ..."
+	@$(ECHO) "uninstalling $(subdir) ..."
 	@if test -d "$(DESTDIR)$(rdocdir)" \
 	  && test "`cd \"$(DESTDIR)$(rhome)\"; $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
@@ -76,7 +76,7 @@ uninstall:
 	    rm -f "$(DESTDIR)$(rdocdir)"/$${f}; \
 	  done; \
 	  rmdir "$(DESTDIR)$(rdocdir)" 2>/dev/null \
-	    || echo "  subdir $(DESTDIR)$(subdir) not removed"; \
+	    || $(ECHO) "  subdir $(DESTDIR)$(subdir) not removed"; \
 	fi
 	@rm -f $(DESTDIR)$(mandir)/man1/R.1 $(DESTDIR)$(mandir)/man1/Rscript.1
 
