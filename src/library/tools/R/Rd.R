@@ -404,7 +404,7 @@ function(package, dir, lib.loc = NULL)
         for(f in docsFiles) {
             valid_lines <- lines <- .read_Rd_lines_quietly(f)
             valid_lines[is.na(nchar(lines, "c", TRUE))] <- ""
-            eofPos <- grep("\\eof$", valid_lines)
+            eofPos <- grep("^\\\\eof$", valid_lines)
             db <- c(db, split(lines[-eofPos],
                               rep(seq_along(eofPos),
                                   times = diff(c(0, eofPos)))[-eofPos]))
