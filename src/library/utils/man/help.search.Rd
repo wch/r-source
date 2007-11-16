@@ -77,6 +77,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
 
+  Searching with \code{agrep = FALSE} will be several times faster
+  than the default.
+
   If possible, the help data base is saved in memory or (if memory
   limits have been set: see \code{\link{mem.limits}}) to a file in the
   session temporary directory for use by subsequent calls in the
