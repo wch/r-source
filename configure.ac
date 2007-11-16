@@ -1239,11 +1239,21 @@ case "${host_os}" in
           R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic]) ;;
       esac
     fi
-    ## some linkers are broken and need to be restricted to a specific
+    ## some linkers are broken and need to be set to a specific
     ## Mac OS X version to work better
-    case $"{host_os}" in
+    case "${host_os}" in
        darwin8*)
-          darwin_min_flag='Wl,-macosx_version_min -Wl,10.4'
+          # this is the 'old' way and it doesn't work with recent gcc as the driver
+	  # prepends its own version
+	  ### darwin_min_flag='Wl,-macosx_version_min -Wl,10.4'
+	  # this is the 'new' way, but it's not clear which driver version
+	  # started to support it (Xcode 2.5 is known to work and 2.4 should)
+	  # A work-around for older Xcode is to set MACOSX_DEPLOYMENT_TARGET
+	  # environment variable. It has its own problems, but we may as well
+	  # honor it, assuming that it fixes things.
+	  if test -z "${MACOSX_DEPLOYMENT_TARGET}"; then
+	      darwin_min_flag='-mmacosx-version-min=10.4'
+	  fi
 	  ;;
        *)
 	  darwin_min_flag=''
