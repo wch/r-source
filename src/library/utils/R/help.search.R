@@ -123,10 +123,39 @@ function(pattern, fields = c("alias", "concept", "title"),
 		save_db <- TRUE
 	}
 
-	packages_in_hsearch_db <- if(!is.null(package))
-	    package
-	else
-	    .packages(all.available = TRUE, lib.loc = lib.loc)
+	if(!is.null(package)) {
+	    packages_in_hsearch_db <- package
+            package_paths <- NULL
+	} else {
+            ## local version of .packages(all.available = TRUE),
+            ## recording paths
+            ans <- character(0); paths <- character(0)
+            lib.loc <- lib.loc[file.exists(lib.loc)]
+            valid_package_version_regexp <-
+                .standard_regexps()$valid_package_version
+            for (lib in lib.loc) {
+                a <- list.files(lib, all.files = FALSE, full.names = FALSE)
+                for (nam in a) {
+                    if (!file.exists(file.path(lib, nam, "DESCRIPTION")))
+                        next
+                pfile <- file.path(lib, nam, "Meta", "package.rds")
+                    info <- if (file.exists(pfile))
+                        .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                    else try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
+                                      c("Package", "Version"))[1, ],
+                             silent = TRUE)
+                    if (inherits(info, "try-error") || (length(info) != 2) ||
+                        any(is.na(info))) next
+                    if (regexpr(valid_package_version_regexp, info["Version"]) == -1) next
+                    ans <- c(ans, nam)
+                    paths <- c(paths, file.path(lib, nam))
+                }
+            }
+            un <- !duplicated(ans)
+	    packages_in_hsearch_db <-  ans[un]
+            package_paths <- paths[un]
+            names(package_paths) <- ans[un]
+        }
 
 	## Create the hsearch db.
 	contents_DCF_fields <-
@@ -156,7 +185,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    np <- np + 1
 	    if(verbose)
 		message(" ", p, appendLF = ((np %% 5) == 0), domain=NA)
-	    path <- .find.package(p, lib.loc, quiet = TRUE)
+            path <- if(!is.null(package_paths)) package_paths[p]
+	    else .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0) {
                 if(is.null(package)) next
 		else stop(gettextf("could not find package '%s'", p), domain = NA)

@@ -66,15 +66,22 @@ NEW FEATURES
     o	new.packages() now knows about front-end package gnomeGUI
 	(which does not install into a library).
 
-    o	utils::make.packages.html() now now be used directly to set up
-	linked HTML help pages, optionally without creating the
-	package listing and search database (which can be much faster).
+    o	Under Unix, utils::make.packages.html() now now be used directly
+	to set up linked HTML help pages, optionally without creating
+	the package listing and search database (which can be much
+	faster).
 
     o	If a NEWS file is present in the root of a source package, it
 	is installed (analogously to LICENSE, LICENCE and COPYING).
 
     o	paste() and file.path are now completely internal, for speed.
-	(This speeds up make.packages.html severalfold, for example.)
+	(This speeds up make.packages.html(packages=FALSE)
+	severalfold, for example.)
+
+    o	packageDescription() makes use of installed metadata where
+	available (for speed, e.g. in make.packages.html()).
+
+    o	help.search() now builds the database about 3x times faster.
 
 
 DEPRECATED & DEFUNCT

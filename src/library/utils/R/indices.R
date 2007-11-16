@@ -55,16 +55,23 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
         }
     }
 
-    file <- file.path(pkgpath,"DESCRIPTION")
-    if(!file.exists(file)) file <- ""
+    ## New in 2.7.0: look for installed metadata first.
 
-
-    if(file != "") {
+    if(file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
+        desc <- .readRDS(file)$DESCRIPTION
+        if(length(desc) < 1)
+            stop(gettextf("metadata of package '%s' is corrupt", pkg),
+                 domain = NA)
+        desc <- as.list(desc)
+     } else if(file.exists(file <- file.path(pkgpath,"DESCRIPTION"))) {
         dcf <- read.dcf(file=file)
         if(NROW(dcf) < 1)
             stop(gettextf("DESCRIPTION file of package '%s' is corrupt", pkg),
                  domain = NA)
         desc <- as.list(dcf[1,])
+    } else file <- ""
+
+    if(file != "") {
         ## read the Encoding field if any
         enc <- desc[["Encoding"]]
         if(!is.null(enc) && !is.na(encoding)) {
