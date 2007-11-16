@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
+R version 2.6.1 RC (2007-11-16 r43478)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 1182
+[1] 1223
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -66,7 +66,7 @@ Type 'q()' to quit R.
 > try(zz <- url("http://foo.bar", "r"))
 Error in url("http://foo.bar", "r") : unable to open connection
 In addition: Warning message:
-In url("http://foo.bar", "r") : unable to resolve 'foo.bar' 
+In url("http://foo.bar", "r") : unable to resolve 'foo.bar'
 > 
 > # and via read.table, test http and ftp.
 > 
