@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Common.R Makefile.in Rprofile.unix Rprofile.windows
 
 all: Makefile $(srcdir)/Common.R $(srcdir)/Rprofile.$(R_OSTYPE)
-	@echo "building system startup profile"
+	@$(ECHO) "building system startup profile"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
 	@cat $(srcdir)/Common.R $(srcdir)/Rprofile.$(R_OSTYPE) \
 	  > $(top_builddir)/library/base/R/Rprofile

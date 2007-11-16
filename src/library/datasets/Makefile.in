@@ -20,7 +20,7 @@ RSRC = $(srcdir)/R/zzz.R
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
-	@echo "building package '$(pkg)'"
+	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat $(RSRC) >> $${f}; \
@@ -33,7 +33,7 @@ all: Makefile DESCRIPTION
 	  fi; \
 	done
 	@if test -f DESCRIPTION; then \
-	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/data; then \
@@ -42,7 +42,7 @@ all: Makefile DESCRIPTION
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	  done; \
 	  rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*; \
-	  echo "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
+	  $(ECHO) "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
 	    R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null; \
 	  $(INSTALL_DATA) $(srcdir)/data/morley.tab $(top_builddir)/library/$(pkg)/data;\
 	fi
@@ -50,8 +50,8 @@ all: Makefile DESCRIPTION
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
 	    for rdfile in $(srcdir)/man/*.Rd; do \
-	      echo "% --- Source file: $${rdfile} ---"; \
-	      cat $${rdfile}; echo '\eof'; \
+	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
+	      cat $${rdfile}; $(ECHO) '\eof'; \
 	    done >> $${f}; \
             $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
               $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \

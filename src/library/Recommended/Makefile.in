@@ -44,7 +44,7 @@ stamp-recommended: $(OBJECTS)
 INSTALL_OPTS=--no-lock
 
 .tgz.ts:
-	@echo "begin installing recommended package" `basename $< .tgz`
+	@$(ECHO) "begin installing recommended package" `basename $< .tgz`
 	@rm -f $@.out
 ## <FIXME>
 ## RG says that with FreeBSD Make calling INSTALL does not work without
@@ -73,7 +73,7 @@ maintainer-clean: distclean
 ## we need to check that the recommended packages have been downloaded.
 distdir: $(DISTFILES)
 	@if test `cd $(srcdir) && ls *.tar.gz | wc -l` -eq 0 ; then \
-	  echo "ERROR: no recommended packages" || exit 1 ; \
+	  $(ECHO) "ERROR: no recommended packages" || exit 1 ; \
 	fi
 	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz`; do \
 	  test -f $(distdir)/$${f} \

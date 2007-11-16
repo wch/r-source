@@ -18,10 +18,10 @@ pkg = stats4
 R_EXE = $(top_builddir)/bin/R --vanilla
 
 all: Makefile DESCRIPTION
-	@echo "building package '$(pkg)'"
+	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  echo ".packageName <- \"$(pkg)\"" >  $${f}; \
+	  $(ECHO) ".packageName <- \"$(pkg)\"" >  $${f}; \
 	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
@@ -32,7 +32,7 @@ all: Makefile DESCRIPTION
 	  fi; \
 	done
 	@if test -f DESCRIPTION; then \
-	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/inst/po; then \
@@ -47,8 +47,8 @@ all: Makefile DESCRIPTION
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
 	    for rdfile in $(srcdir)/man/*.Rd; do \
-	      echo "% --- Source file: $${rdfile} ---"; \
-	      cat $${rdfile}; echo '\eof'; \
+	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
+	      cat $${rdfile}; $(ECHO) '\eof'; \
 	    done >> $${f}; \
             $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
               $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
@@ -66,7 +66,7 @@ Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES="methods,graphics,stats" LC_ALL=C $(R_EXE) --slave > /dev/null
 
 

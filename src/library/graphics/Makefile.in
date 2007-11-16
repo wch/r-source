@@ -21,7 +21,7 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 RdSRC = $(srcdir)/man/*.Rd
 
 all: Makefile DESCRIPTION
-	@echo "building package '$(pkg)'"
+	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat $(RSRC) > $${f}; \
@@ -36,7 +36,7 @@ all: Makefile DESCRIPTION
 	  fi; \
 	done
 	@if test -f DESCRIPTION; then \
-	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/data; then \
@@ -63,8 +63,8 @@ all: Makefile DESCRIPTION
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
 	    for rdfile in $(RdSRC); do \
-	      echo "% --- Source file: $${rdfile} ---"; \
-	      cat $${rdfile}; echo '\eof'; \
+	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
+	      cat $${rdfile}; $(ECHO) '\eof'; \
 	    done >> $${f}; \
             $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
               $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
@@ -76,7 +76,7 @@ all: Makefile DESCRIPTION
 	fi
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
-	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
