@@ -80,9 +80,6 @@ browseURL <- function(url, browser = getOption("browser"))
 
 make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
 {
-    ## This is needed for speed: called for 1000s of packages
-    p0 <- function(...) .Internal(paste(list(...), "/", NULL))
-
     message("Making links in per-session dir ...", " ", appendLF = FALSE)
     .Script("sh", "help-links.sh",tempdir())
     if(packages) {
@@ -113,15 +110,15 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
                 sep = "", file=out)
         ## too slow
         ## pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
-        pg <- Sys.glob(p0(lib, "*", "DESCRIPTION"))
+        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
         pg <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
                        "\\1", pg))
         for (i in pg) {
             ## links are set up to break ties of package names
             before <- sum(i %in% known)
             link <- if(before == 0) i else paste(i, before, sep=".")
-            from <- p0(lib, i)
-            to <- p0(tempdir(), ".R", "library", link)
+            from <- file.path(lib, i)
+            to <- file.path(tempdir(), ".R", "library", link)
             file.symlink(from, to)
             if(!packages) next
             title <- packageDescription(i, lib.loc = lib, field = "Title",

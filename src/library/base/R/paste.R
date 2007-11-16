@@ -15,15 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 paste <- function (..., sep = " ", collapse = NULL)
-{
-    args <- list(...)
-    if(length(args) == 0)
-        if(length(collapse) == 0) character(0) else ""
-    else {
-	## using as.character() here {not in C} for method dispatch
-	.Internal(paste(lapply(args, as.character), sep, collapse))
-    }
-}
+    .Internal(paste(list(...), sep, collapse))
+
 
 ##=== Could we consider a  .Primitive  *fast*
 ##  paste2 <- function(x,y)  paste(x,y, sep='')

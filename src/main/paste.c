@@ -61,6 +61,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     if (!isVectorList(x))
 	error(_("invalid first argument"));
+    nx = length(x);
+	
 
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0)
@@ -73,15 +75,29 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0)
 	    error(_("invalid '%s' argument"), "collapse");
+    if(nx == 0)
+	return (!isNull(collapse)) ? mkString("") : allocVector(STRSXP, 0);
+    
 
-    /* Maximum argument length and */
-    /* check for arguments of list type */
+    /* Maximum argument length, coerce if needed */
 
-    nx = length(x);
     maxlen = 0;
     for (j = 0; j < nx; j++) {
-	if (!isString(VECTOR_ELT(x, j)))
-	    error(_("non-string argument to Internal paste"));
+	if (!isString(VECTOR_ELT(x, j))) {
+	    /* formerly in R code: moved to C for speed */
+	    SEXP call, xj = VECTOR_ELT(x, j);
+	    if(OBJECT(xj)) { /* method dispatch */
+		PROTECT(call = lang2(install("as.character"), xj));
+		SET_VECTOR_ELT(x, j, eval(call, env));
+		UNPROTECT(1);
+	    } else if (isSymbol(xj))
+		SET_VECTOR_ELT(x, j, ScalarString(PRINTNAME(xj)));
+	    else
+		SET_VECTOR_ELT(x, j, coerceVector(xj, STRSXP));
+
+	    if (!isString(VECTOR_ELT(x, j)))
+		error(_("non-string argument to Internal paste"));
+	}
 	if(length(VECTOR_ELT(x, j)) > maxlen)
 	    maxlen = length(VECTOR_ELT(x, j));
     }
@@ -143,6 +159,83 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     /* We would only know the encoding of an element of the answer 
        if we knew the encoding of all the components, so we don't
        bother to mark it here */
+    R_FreeStringBufferL(&cbuff);
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, sep, x;
+    int i, j, k, ln, maxlen, nx, nzero, pwidth, sepw;
+    const char *s, *csep, *cbuf; char *buf;
+
+    checkArity(op, args);
+
+    /* Check the arguments */
+
+    x = CAR(args);
+    if (!isVectorList(x))
+	error(_("invalid first argument"));
+    nx = length(x);
+    if(nx == 0) return allocVector(STRSXP, 0);
+	
+
+    sep = CADR(args);
+    if (!isString(sep) || LENGTH(sep) <= 0)
+	error(_("invalid separator"));
+    sep = STRING_ELT(sep, 0);
+    csep = CHAR(sep);
+    sepw = strlen(csep); /* hopefully 1 */
+
+    /* Any zero-length argument gives zero-length result */
+    maxlen = 0; nzero = 0;
+    for (j = 0; j < nx; j++) {
+	if (!isString(VECTOR_ELT(x, j))) {
+	    /* formerly in R code: moved to C for speed */
+	    SEXP call, xj = VECTOR_ELT(x, j);
+	    if(OBJECT(xj)) { /* method dispatch */
+		PROTECT(call = lang2(install("as.character"), xj));
+		SET_VECTOR_ELT(x, j, eval(call, env));
+		UNPROTECT(1);
+	    } else if (isSymbol(xj))
+		SET_VECTOR_ELT(x, j, ScalarString(PRINTNAME(xj)));
+	    else
+		SET_VECTOR_ELT(x, j, coerceVector(xj, STRSXP));
+
+	    if (!isString(VECTOR_ELT(x, j)))
+		error(_("non-string argument to Internal paste"));
+	}
+	ln = length(VECTOR_ELT(x, j));
+	if(ln > maxlen) maxlen = ln;
+	if(ln == 0) {nzero++; break;}
+    }
+    if(nzero || maxlen == 0) return allocVector(STRSXP, 0);
+
+    PROTECT(ans = allocVector(STRSXP, maxlen));
+
+    for (i = 0; i < maxlen; i++) {
+	pwidth = 0;
+	for (j = 0; j < nx; j++) {
+	    k = length(VECTOR_ELT(x, j));
+	    pwidth += strlen(CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+	}
+	pwidth += (nx - 1) * sepw;
+	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
+	for (j = 0; j < nx; j++) {
+	    k = length(VECTOR_ELT(x, j));
+	    if (k > 0) {
+		s = CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k));
+                strcpy(buf, s);
+		buf += strlen(s);
+	    }
+	    if (j != nx - 1 && sepw != 0) {
+	        strcpy(buf, csep);
+		buf += sepw;
+	    }
+	}
+	SET_STRING_ELT(ans, i, mkChar(cbuf));
+    }
     R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);
     return ans;

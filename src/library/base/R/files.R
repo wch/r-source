@@ -69,10 +69,7 @@ dir <- list.files
 
 file.path <-
 function(..., fsep=.Platform$file.sep)
-{
-    if(any(sapply(list(...), length) == 0)) return(character())
-    paste(..., sep = fsep)
-}
+    .Internal(file.path(list(...), fsep))
 
 
 file.exists <- function(...) .Internal(file.exists(c(...)))
