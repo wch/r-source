@@ -246,6 +246,9 @@ BUG FIXES
     o	tclServiceMode() (package tcltk) now works under Unix-alikes.
 	(Although documented, it used only to work under Windows.)
 
+    o	Mac OS X 10.5.0 comes with incompatible /bin/sh shell, we
+	force SHELL=/bin/bash (which is ok) in that case.
+
 
 
 		CHANGES IN R VERSION 2.6.0

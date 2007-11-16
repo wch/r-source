@@ -90,6 +90,15 @@ case "${host_os}" in
 esac
 AC_SUBST(R_OSTYPE)
 
+case "${host_os}" in
+  darwin9*) ## test for bad /bin/sh on Leopard
+    if test `echo '\eof'` != '\eof'; then
+      AC_MSG_RESULT([Note: forcing SHELL=/bin/bash, because ${SHELL} is incompatible])
+      SHELL=/bin/bash
+    fi
+    ;;
+esac
+
 ### ** Defaults.
 
 cfile="${srcdir}/config.site"
