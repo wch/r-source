@@ -223,6 +223,7 @@ install-R-framework:
 	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
 	  ln -f -s -n Versions/Current/Headers Headers&& \
 	  ln -f -s -n Versions/Current/R R && \
+	  ln -f -s -n Versions/Current/Resources/lib Libraries && \
 	  ln -f -s -n Versions/Current/Resources Resources)
 	@## the resulting libR will point dyld to the fat libR regardless of its origin
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
