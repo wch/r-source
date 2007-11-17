@@ -3,7 +3,7 @@
 
 ## ===== configuration macros for building packages or R  ===============
 
-# Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
+# Alternatives GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
 # or F2C (use suitable f2c rather than a Fortran compiler).
 # Use of GCC3 is no longer supported: use at your own risk.
 
