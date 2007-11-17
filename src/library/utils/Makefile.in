@@ -70,7 +70,7 @@ most: DESCRIPTION
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
 	    for rdfile in $(RdSRC); do \
 	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
-	      cat $${rdfile}; $(ECHO) '\eof'; \
+            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
 	    done >> $${f}; \
             $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
               $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
