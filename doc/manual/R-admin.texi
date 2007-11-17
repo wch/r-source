@@ -1960,7 +1960,7 @@ has long been true for UltraSparc and more recently for MIPS, PPC and
 Pentium/'Core' supporting EM64T).  Many OSes running on such CPUs offer
 the choice of building a 32-bit or a 64-bit version of R (and details
 are given below under specific OSes).  For most a 32-bit version is the
-default, but for some (e.g., @cputype{x86_64}) 64-bit is.
+default, but for some (e.g., @cputype{x86_64} Linux) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
 @acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559
@@ -1998,8 +1998,8 @@ Windows.)  64-bit builds have much larger limits.
 Because the pointers are larger, @R{}'s basic structure (the cons cell)
 is larger (normally twice the size).  This means that @R{} objects take
 more space and more time to manipulate, especially during garbage
-collection. So 64-bit versions of @R{} will typically run slower than
-32-bit versions. (On Sparc Solaris the difference was 15-20%, on
+collection.  So 64-bit versions of @R{} will typically run slower than
+32-bit versions.  (On Sparc Solaris the difference was 15-20%, on
 @cputype{x86_64} around 10%.)
 
 @end itemize
@@ -2028,7 +2028,9 @@ currently (mid-2007) that is not imminent.@footnote{It is likely that
 commercial 64-bit compilers could be used, but those we have looked at
 do not work in the same way as the MinGW compilers so extensive changes
 to the build system would be needed.  Also, end users would need to have
-the same compilers to install extension packages.}
+the same compilers to install extension packages.  There is an
+experimental version of MinGW for 64-bit Windows, but it is not yet good
+enough to build a working @R{}.}
 
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
@@ -3567,7 +3569,7 @@ with @command{gcc}@tie{}3.3 and later.
 @node 64-bit builds,  , Mac OS X, Mac OS X
 @subsection 64-bit builds
 
-64-bit builds are supported as from \R 2.7.0 on 10.5 (Leopard).  All
+64-bit builds are supported as from @R{} 2.7.0 on 10.5 (Leopard).  All
 that is needed is to select suitable compiler options, e.g. for recent
 Intel Macs
 
