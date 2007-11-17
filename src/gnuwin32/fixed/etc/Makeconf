@@ -21,6 +21,7 @@ DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
 DYLIB_LINK = $(DYLIB_LD) $(DYLIB_LDFLAGS) $(LDFLAGS)
+ECHO = echo
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
