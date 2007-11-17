@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-11-07
+@set FAQ_DATE @value{FAQ_YEAR}-11-17
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1983,10 +1983,16 @@ Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
 @item FKBL
 Fuzzy Knowledge Base Learning.
-@item FLCore
-Core package of FLR, fisheries modeling in R.
-@item FLEDA
-Exploratory Data Analysis for FLR.
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-17 as it fails R CMD check.
+@c @item FLCore
+@c Core package of FLR, fisheries modeling in R.
+@c </COMMENT>
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-17 as it depends on FLCore.
+@c @item FLEDA
+@c Exploratory Data Analysis for FLR.
+@c </COMMENT>
 @item FactoMineR
 Factor analysis and data mining with R.
 @item Fahrmeir
@@ -1998,8 +2004,11 @@ Random fields simulations.
 @item Flury
 Data sets from from ``A First Course in Multivariate Statistics'' by
 Bernard Flury (1997), Springer.
-@item FortranCallsR
-Simple Fortran/C/R interface example.
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-17 as it fails R CMD check.
+@c @item FortranCallsR
+@c Simple Fortran/C/R interface example.
+@c </COMMENT>
 @item FracSim
 Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
@@ -2030,8 +2039,11 @@ a range of R functions to match the interface metadata structures.
 Gene set analysis.
 @item GSM
 Gamma Shape Mixture.
-@item GammaTest
-Gamma Test data analysis.
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-17 as it fails R CMD check.
+@c @item GammaTest
+@c Gamma Test data analysis.
+@c </COMMENT>
 @item GenABEL
 Genome-wide SNP association analysis.
 @item GenKern
@@ -2075,6 +2087,8 @@ Utilities by H. Felix Wittmann: Excel connections, string matching, and
 passing by reference.
 @item HardyWeinberg
 Graphical tests for Hardy-Weinberg equilibrium.
+@item HiddenMarkov
+Hidden Markov Models.
 @item HighProbability
 Estimation of the alternative hypotheses having frequentist or Bayesian
 probabilities at least as great as a specified threshold, given a list
@@ -2114,8 +2128,11 @@ Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
 @item Icens
 Functions for computing the NPMLE for censored and truncated data.
-@item InfNet
-Function that simulates an epidemic in a network of contacts.
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-17 as it fails R CMD check.
+@c @item InfNet
+@c Function that simulates an epidemic in a network of contacts.
+@c </COMMENT>
 @item JADE
 JADE and ICA performance criteria.
 @item JLLprod
@@ -2382,6 +2399,8 @@ Provides access to (some) of the QuantLib functions from within R;
 currently limited to some Option pricing and analysis functions.  The
 QuantLib project aims to provide a comprehensive software framework for
 quantitative finance.
+@item RSAGA
+SAGA geoprocessing and terrain analysis in R.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
@@ -2553,10 +2572,18 @@ Basic linear algebra for sparse matrices.
 Multivariate nonparametric methods based on spatial signs and ranks.
 @item SpherWave
 Spherical Wavelets and SW-based spatially adaptive methods.
+@item StatDA
+Statistical analysis for environmental data, a companion to the book
+``Statistical Data Analysis Explained: Applied Environmental Statistics
+with R'' by C. Reimann, P. Filzmoser, R. G. Garrett, and R. Dutter,
+2008, John Wiley and Sons.
 @item StatDataML
 Read and write StatDataML.
-@item StoppingRules
-Stopping rules for microarray classifiers.
+@c <COMMENT>
+@c Removed on 2007-11-17 due to license problems.
+@c @item StoppingRules
+@c Stopping rules for microarray classifiers.
+@c </COMMENT>
 @item SuppDists
 Ten distributions supplementing those built into R (Inverse Gauss,
 Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
@@ -2685,6 +2712,8 @@ by S. Weisberg, 2005, Wiley.
 Another Multidimensional Analysis Package.
 @item analogue
 Analogue methods for palaeoecology.
+@item animation
+Demonstrate animations in statistics.
 @item anm
 Analog model for statistical/empirical downscaling.
 @item aod
@@ -2779,8 +2808,11 @@ Asymptotic simultaneous confidence intervals for many-to-one comparisons
 of proportions.
 @item bindata
 Generation of correlated artificial binary data.
-@item binom
-Binomial confidence intervals for several parameterizations.
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-17 as it fails R CMD check.
+@c @item binom
+@c Binomial confidence intervals for several parameterizations.
+@c </COMMENT>
 @item bio.infer
 Compute biological inferences.
 @item biopara
@@ -3763,6 +3795,8 @@ Local Regression, likelihood and density estimation.
 Assorted plots of location score versus genetic map position.
 @item logcondens
 Estimate a log-concave probability density from i.i.d.@: observations.
+@item logilasso
+Analysis of sparse contingency tables with penalization approaches.
 @item logistf
 Firth's bias reduced logistic regression approach with penalized profile
 likelihood based confidence intervals for parameter estimates.
@@ -3865,6 +3899,8 @@ additive regression splines (MARS), adaptive back-fitting splines
 @c </COMMENT>
 @item meboot
 Maximum entropy bootstrap for time series.
+@item mefa
+Faunistic count data handling and reporting.
 @item meifly
 Interactive model exploration using GGobi.
 @item memisc
@@ -3956,6 +3992,8 @@ Strictly monotone smoothing procedure.
 Mean Optimal Transformation Approach.
 @item mprobit
 Multivariate probit model for binary/ordinal response.
+@item mra
+Analysis of capture-recapture data.
 @item mratios
 Inferences for ratios of coefficients in the general linear model.
 @c <COMMENT>
@@ -3971,10 +4009,16 @@ misclassified responses, and covariates on transition or
 misclassification rates.
 @item muS2RC
 S-plus to R Compatibility for package @strong{muStat}.
-@item muStat
-Prentice rank sum test and McNemar test.
-@item muUtil
-Utility functions for package @strong{muStat}.
+@c <COMMENT>
+@c Removed on 2007-11-17 due to license problems.
+@c @item muStat
+@c Prentice rank sum test and McNemar test.
+@c </COMMENT>
+@c <COMMENT>
+@c Removed on 2007-11-17 due to license problems.
+@c @item muUtil
+@c Utility functions for package @strong{muStat}.
+@c </COMMENT>
 @item muhaz
 Hazard function estimation in survival analysis.
 @item multcomp
@@ -4291,6 +4335,9 @@ nearest neighbor based noise detection.
 @item predbayescor
 Classification rule based on Bayesian naive Bayes models with feature
 selection bias corrected.
+@item predmixcor
+Classification rule based on Bayesian mixture models with feature
+selection bias corrected.
 @item prettyR
 Pretty descriptive stats.
 @item prim
@@ -4328,10 +4375,13 @@ inter-rater reliability, and classical utility.
 Functions for analyzing psychophysical data in R.
 @item pwr
 Basic functions for power analysis.
-@item pwt
-The Penn World Table providing purchasing power parity and national
-income accounts converted to international prices for 168 countries for
-some or all of the years 1950--2000.
+@c <COMMENT>
+@c Removed on 2007-11-17 due to license problems.
+@c @item pwt
+@c The Penn World Table providing purchasing power parity and national
+@c income accounts converted to international prices for 168 countries for
+@c some or all of the years 1950--2000.
+@c </COMMENT>
 @item pvclust
 Hierarchical clustering with @math{p}-value.
 @item qcc
@@ -4414,6 +4464,8 @@ Completion generator for R.  @emph{Recommended} for R 2.5.0 or 2.6.0.
 @c </COMMENT>
 @item rda
 Shrunken Centroids Regularized Discriminant Analysis.
+@item realized
+Realized variance toolkit.
 @item ref
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
@@ -4867,8 +4919,11 @@ Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
 @item tdm
 A tool for Therapeutic Drug Monitoring.
-@item tdthap
-Transmission/disequilibrium tests for extended marker haplotypes.
+@c <COMMENT>
+@c Removed on 2007-11-17 due to license problems.
+@c @item tdthap
+@c Transmission/disequilibrium tests for extended marker haplotypes.
+@c </COMMENT>
 @item tensor
 Tensor product of arrays.
 @item tensorA
