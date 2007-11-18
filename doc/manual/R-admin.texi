@@ -3569,6 +3569,16 @@ with @command{gcc}@tie{}3.3 and later.
 
 64-bit builds are supported as from @R{} 2.7.0 on 10.5 (Leopard) only.
 
+For @R{} 2.6.1 (and patched) on 10.5 (Leopard) only, use
+
+@example
+CONFIG_SHELL=/bin/bash ./configure
+@end example
+
+@noindent
+since @R{} is built with @samp{SHELL=/bin/bash} to avoid some settings
+used for @file{/bin/sh} (in particular @samp{xpg_echo} is set).
+
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
 @section Solaris
