@@ -668,7 +668,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
     case CLOSXP:
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
-	if (isNull(t) || !R_print.useSource)
+	if (!isString(t) || !R_print.useSource)
 	    t = deparse1(s, 0, R_print.useSource | DEFAULTDEPARSE);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
