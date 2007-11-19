@@ -83,6 +83,9 @@ NEW FEATURES
 
     o	help.search() now builds the database about 3x times faster.
 
+    o	R CMD check and R CMD INSTALL now work with (some) directory
+	names containing spaces.
+
 
 DEPRECATED & DEFUNCT
 
