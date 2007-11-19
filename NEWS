@@ -250,6 +250,9 @@ BUG FIXES
 	force SHELL=/bin/bash (which is ok) in that case. [Only for
 	2.6.x: another solution is used in 2.7.0.]
 
+    o	Deliberately using malformed source attributes no longer
+	causes deparsing/printing of functions to crash R. (PR#10437)
+
 
 
 		CHANGES IN R VERSION 2.6.0

@@ -658,7 +658,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     case CLOSXP:
         if (localOpts & SHOWATTRIBUTES) attr1(s, d);
         if ((d->opts & USESOURCE) && 
-	    (n = length(t = getAttrib(s, R_SourceSymbol))) > 0) {
+	    (n = length(t = getAttrib(s, R_SourceSymbol))) > 0 
+	    && isString(t)) {
     	    for(i = 0 ; i < n ; i++) {
 	    	print2buff(translateChar(STRING_ELT(t, i)), d);
 	    	writeline(d);
@@ -864,7 +865,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_FUNCTION:
 		    printcomment(s, d);
-		    if (!(d->opts & USESOURCE) || isNull(CADDR(s))) {
+		    if (!(d->opts & USESOURCE) || !isString(CADDR(s))) {
 		    	print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    	print2buff("(", d);
 		    	args2buff(FORMALS(s), 0, 1, d);
