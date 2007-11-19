@@ -277,7 +277,10 @@ foreach my $pkg (@ARGV) {
 	    $pkg =~ s+^([A-Za-z]):+/cygdrive/\1+;
 	}
 	## this requires GNU tar: ATT 'tar x' does not support -C.
-	if(R_system("$gzip -dc '$pkg' | $tar -xf - -C $dir")) {
+	## Note that $pkg, $dir might contain spaces
+	my $pkgq = &shell_quote_file_path($pkg);
+	my $dirq = &shell_quote_file_path($dir);
+	if(R_system("$gzip -dc $pkgq | $tar -xf - -C $dirq")) {
 	    die "Error: cannot untar $pkg\n";}
 	$pkg = &file_path($dir, $pkgname);
     }

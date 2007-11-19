@@ -105,6 +105,9 @@ BUG FIXES
     o	Deliberately using malformed source attributes no longer
 	causes deparsing/printing of functions to crash R. (PR#10437)
 
+    o	R CMD check and R CMD INSTALL now work with (some) directory
+	names containing spaces.
+
 
 
 		CHANGES IN R VERSION 2.6.0

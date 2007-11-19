@@ -338,9 +338,10 @@ else
     do_cleanup_tmpdir;
     exit 2
   fi
-  cd ${lib}
+  cd "${lib}"
   lib=`${GETWD}`
-  cd ${startdir}
+  echo "$lib"
+  cd "${startdir}"
 fi
 
 
@@ -868,7 +869,7 @@ do_install_source () {
   ## Beware: the wc format is not portable -- some systems give
   ## size in a left-space-padded first field, and some do not pad.
   if test "x$thislazy" = "xauto" ; then
-    Rcodesize=`cat ${R_PACKAGE_DIR}/R/${pkg_name} | wc -c`
+    Rcodesize=`cat "${R_PACKAGE_DIR}/R/${pkg_name}" | wc -c`
     if test ${Rcodesize} -gt 25000 ; then
       thislazy=true
     else
