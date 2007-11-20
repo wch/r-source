@@ -767,7 +767,7 @@ AC_OUTPUT
 @end example
 
 @noindent
-in @file{configure.ac} (assuming Autoconf 2.50 or better).
+in @file{configure.ac} (assuming Autoconf 2.50 or later).
 
 The definition of the respective @R{} function in @file{foo.R.in} could be
 
@@ -5434,11 +5434,11 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 @c Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
 @c for more information.
 
-In addition to registering C routines to be called by @R{}, it can at times
-be useful for one package to make some of its C routines available to be
-called by C code in another package.  An experimental interface to
-support this has been provided in @R{} 2.4.0.  The interface consists of
-two routines declared as
+In addition to registering C routines to be called by @R{}, it can at
+times be useful for one package to make some of its C routines available
+to be called by C code in another package.  An interface to support this
+has been provided since @R{} 2.4.0.  The interface consists of two
+routines declared as
 
 @findex R_RegisterCCallable
 @findex R_GetCCallable
@@ -7486,12 +7486,12 @@ The vector accessors like @code{REAL} and @code{INTEGER} and
 from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
 functions.)
 
-As from @R{} 2.4.0 the accessor functions check that they are being used
-on an appropriate type of @code{SEXP}.  By default a certain amount of
-misuse is allowed where the internal representation is the same: for
-example @code{LOGICAL} can be used on a @code{INTSXP} and
-@code{SET_VECTOR_ELT} on a @code{STRSXP}.  Strict checking can be
-enabled by compiling @R{} (specifically @file{src/main/memory.c}) with
+The accessor functions check that they are being used on an appropriate
+type of @code{SEXP}.  By default a certain amount of misuse is allowed
+where the internal representation is the same: for example
+@code{LOGICAL} can be used on a @code{INTSXP} and @code{SET_VECTOR_ELT}
+on a @code{STRSXP}.  Strict checking can be enabled by compiling @R{}
+(specifically @file{src/main/memory.c}) with
 @samp{USE_TYPE_CHECKING_STRICT} defined (e.g. in as the configure
 variable @samp{DEFS} on a Unix-alike).
 
