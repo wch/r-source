@@ -148,7 +148,7 @@ A package consists of a subdirectory containing a file
 @file{src}, and @file{tests} (some of which can be missing).  The
 package subdirectory may also contain files @file{INDEX},
 @file{NAMESPACE}, @file{configure}, @file{cleanup}, @file{LICENSE},
-@file{LICENCE}, @file{COPYING} and @file{NEWS}. Other files such as
+@file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other files such as
 @file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
 useful to end-users.
 
@@ -176,6 +176,10 @@ please do not arrange to install yet another copy of the @acronym{GNU}
 @file{COPYING} or @file{COPYING.LIB} files but refer to the copies on
 @url{http://www.r-project.org/Licenses/} and included in the @R{}
 distribution (in directory @file{share/licenses}).
+
+For the conventions for files @file{NEWS} and @file{ChangeLog} in the
+GNU project see
+@uref{http://www.gnu.org/prep/standards/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -621,14 +625,17 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 The copying of the @file{inst} happens after @file{src} is built so its
 @file{Makefile} can create files to be installed.  Note that with the
 exceptions of @file{INDEX}, @file{LICENSE}/@file{LICENCE},
-@file{COPYING} and @file{NEWS}, information files at the top level of
-the package will @emph{not} be installed and so not be known to users
-of Windows and MacOS X compiled packages (and not seen by those who
-use @command{R CMD INSTALL} or @command{install.packages} on the
-tarball).  So any information files you wish an end user to see should
-be included in @file{inst}.  One thing you might like to add to
+@file{COPYING} and @file{NEWS} (from @R{} 2.7.0), information files at
+the top level of the package will @emph{not} be installed and so not be
+known to users of Windows and MacOS X compiled packages (and not seen by
+those who use @command{R CMD INSTALL} or @command{install.packages} on
+the tarball).  So any information files you wish an end user to see
+should be included in @file{inst}.  One thing you might like to add to
 @file{inst} is a @file{CITATION} file for use by the @code{citation}
-function.
+function.  Note that if the named exceptions also occur in @file{inst},
+the version in @file{inst} will be that seen in the installed package.
+If you want @file{NEWS} to be installed by your package in earlier
+versions of @R{}, you need to include it in @file{inst}.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
