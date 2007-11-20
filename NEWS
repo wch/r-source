@@ -74,7 +74,7 @@ NEW FEATURES
     o	If a NEWS file is present in the root of a source package, it
 	is installed (analogously to LICENSE, LICENCE and COPYING).
 
-    o	paste() and file.path are now completely internal, for speed.
+    o	paste() and file.path() are now completely internal, for speed.
 	(This speeds up make.packages.html(packages=FALSE)
 	severalfold, for example.)
 
