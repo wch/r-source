@@ -415,6 +415,7 @@ function(dir, installed = TRUE, primitive = FALSE)
             reqs <- intersect(c(depends, imports), loadedNamespaces())
             if(length(reqs))
                 env_list <- c(env_list, lapply(reqs, getNamespace))
+            ## note .packages give versioned names.
             reqs <- intersect(depends %w/o% loadedNamespaces(),
                               .packages())
             if(length(reqs))
