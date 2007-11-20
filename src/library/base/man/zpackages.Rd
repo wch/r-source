@@ -20,10 +20,13 @@
     of \code{NULL} corresponds to all libraries currently known.}
 }
 \details{
-  \code{.packages()} returns the base names of the currently
+  \code{.packages()} returns the names of the currently
   attached packages \emph{invisibly} whereas
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
+  If versioned installs have been used, the names returned will be of the
+  form \code{pkgname_version}. 
+  
   For a package to be regarded as being available it must have a
   \file{DESCRIPTION} file containing a valid \code{version} field.
 }
