@@ -255,7 +255,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   There is an exception.  Character 45 (\code{"-"}) is always set
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
-  0255) in all the Latin encodings, Cyrillic and Greek.  There are some
+  0255) in all the Latin encodings, Cyrillic and Greek.  (This can be
+  entered as \code{"\uad"} in a UTF-8 locale.)  There are some
   discrepancies in accounts of glyphs 39 and 96: the supplied encodings
   (except CP1250 and CP1251) treat these as \sQuote{quoteright} and
   \sQuote{quoteleft} (rather than \sQuote{quotesingle}/\sQuote{acute}

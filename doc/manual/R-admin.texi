@@ -1860,8 +1860,10 @@ to make this easier for users. See
 @code{developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}}
 
 @noindent
-for how users can set their locales. As with Windows, end users will
-generally only see lists of languages/territories.
+for how users can set their locales . As with Windows, end users will
+generally only see lists of languages/territories.  Users of @R{} in a
+terminal may need to set the locale to something like @samp{en_GB.UTF-8}
+if it defaults to @samp{C}.
 
 Internally Mac OS X uses a form similar to Linux but without
 specifying the encoding (which is @code{UTF-8}).  It is based on ICU
