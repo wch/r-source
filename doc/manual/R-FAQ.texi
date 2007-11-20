@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-11-17
+@set FAQ_DATE @value{FAQ_YEAR}-11-21
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2808,11 +2808,8 @@ Asymptotic simultaneous confidence intervals for many-to-one comparisons
 of proportions.
 @item bindata
 Generation of correlated artificial binary data.
-@c <COMMENT>
-@c Moved to the Archive on 2007-11-17 as it fails R CMD check.
-@c @item binom
-@c Binomial confidence intervals for several parameterizations.
-@c </COMMENT>
+@item binom
+Binomial confidence intervals for several parameterizations.
 @item bio.infer
 Compute biological inferences.
 @item biopara
@@ -4255,6 +4252,8 @@ Functions for import, export, plotting and other manipulations of
 bitmapped images.
 @item plRasch
 Log linear by linear asscociation models.
+@item playwith
+A @acronym{GUI} for interactive plots using GTK+.
 @item plink
 Separate calibration linking methods.
 @item plm
@@ -6918,7 +6917,9 @@ command line, the result is automatically printed, but in
 @section How can I sort the rows of a data frame?
 
 To sort the rows within a data frame, with respect to the values in one
-or more of the columns, simply use @code{order()}.
+or more of the columns, simply use @code{order()} (e.g.,
+@code{DF[order(DF$a, DF[["b"]]), ]} to sort the data frame @code{DF} on
+columns named @code{a} and @code{b}).
 
 @node Why does the help.start() search engine not work?, Why did my .Rprofile stop working when I updated R?, How can I sort the rows of a data frame?, R Miscellanea
 @section Why does the help.start() search engine not work?
