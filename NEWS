@@ -63,7 +63,7 @@ NEW FEATURES
 	be included in the call.  Formula handling is now
 	similar to boxplot().
 
-    o	new.packages() now knows about front-end package gnomeGUI
+    o	new.packages() now knows about the front-end package gnomeGUI
 	(which does not install into a library).
 
     o	Under Unix, utils::make.packages.html() now now be used directly
@@ -83,8 +83,8 @@ NEW FEATURES
 
     o	help.search() now builds the database about 3x times faster.
 
-    o	R CMD check and R CMD INSTALL now work with (some) directory
-	names containing spaces.
+    o	dev.copy2eps() uses dev.displaylist() to detect screen
+	devices, rather than list them in the function.
 
 
 DEPRECATED & DEFUNCT
@@ -255,6 +255,9 @@ BUG FIXES
 
     o	Deliberately using malformed source attributes no longer
 	causes deparsing/printing of functions to crash R. (PR#10437)
+
+    o	R CMD check and R CMD INSTALL now work with (some) directory
+	names containing spaces.
 
 
 
