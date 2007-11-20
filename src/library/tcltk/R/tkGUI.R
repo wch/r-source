@@ -58,7 +58,7 @@ tkStartGUI <- function() {
 
     loadpackageWidget <- function()
     {
-	pkglist <- .packages(all=TRUE)
+	pkglist <- .packages(all.available=TRUE)
         lvar <- tclVar()
 	tclObj(lvar) <- pkglist
 	box <- tklistbox(tt<-tktoplevel(),
