@@ -49,6 +49,10 @@ unique(x, incomparables = FALSE, \dots)
   \emph{duplicated} and not just \emph{repeated} elements/rows.  That
   is, an element is omitted if it is identical to any previous element
   and not just if it is the same as the immediately previous one.
+  (For the latter, see \code{\link{rle}}).
+
+  Missing values are regarded as equal, but \code{NaN} is not equal to
+  \code{NA_real_}.
 }
 \value{
   For a vector, an object of the same type of \code{x}, but with only

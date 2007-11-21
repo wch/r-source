@@ -18,19 +18,25 @@ rle(x)
 inverse.rle(x, \dots)
 }
 \arguments{
-  \item{x}{an atomic vector for \code{rle()} or an object of class
+  \item{x}{an atomic vector for \code{rle()}; an object of class
     \code{"rle"} for \code{inverse.rle()}.}
   \item{\dots}{further arguments which are ignored in \R.}
 }
+\details{
+  Missing values are regarded as unequal to the previous value, even if
+  that is also missing.
+
+  \code{inverse.rle()} is the inverse function of \code{rle()},
+  reconstructing \code{x} from the runs.
+}
 \value{
   \code{rle()} returns an object of class \code{"rle"} which is a list
-  with components
+  with components:
   \item{lengths}{an integer vector containing the length of each run.}
   \item{values}{a vector of the same length as \code{lengths} with the
     corresponding values.}
 
-  \code{inverse.rle()} is the inverse function of \code{rle()}, and so
-  returns an atomic vector.
+  \code{inverse.rle()} returns an atomic vector.
 }
 \examples{
 x <- rev(rep(6:10, 1:5))
