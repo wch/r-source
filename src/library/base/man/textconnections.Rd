@@ -61,7 +61,7 @@ textConnectionValue(con)
   For \code{textConnection}, a connection object of class
   \code{"textConnection"} which inherits from class \code{"connection"}.
 
-  For \code{textConnectionValue, a character vector.}
+  For \code{textConnectionValue}, a character vector.
 }
 
 \note{
