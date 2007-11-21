@@ -12,7 +12,7 @@
 \title{Extract Unique Elements}
 \description{
   \code{unique} returns a vector, data frame or array like \code{x}
-  but with duplicate elements removed.
+  but with duplicate elements/rows removed.
 }
 \usage{
 unique(x, incomparables = FALSE, \dots)
@@ -44,6 +44,11 @@ unique(x, incomparables = FALSE, \dots)
   to those for an earlier element (in row-major order).  This would most
   commonly be used for matrices to find unique rows (the default) or columns
   (with \code{MARGIN = 2}).
+
+  Note that unlike the Unix command \code{uniq} this omits
+  \emph{duplicated} and not just \emph{repeated} elements/rows.  That
+  is, an element is omitted if it is identical to any previous element
+  and not just if it is the same as the immediately previous one.
 }
 \value{
   For a vector, an object of the same type of \code{x}, but with only
@@ -71,6 +76,9 @@ unique(x, incomparables = FALSE, \dots)
 \seealso{
   \code{\link{duplicated}} which gives the indices of duplicated
   elements.
+
+  \code{\link{rle}} which is the equivalent of the Unix \code{uniq -c}
+  command.
 }
 \examples{
 x <- c(3:5, 11:8, 8 + 0:5)

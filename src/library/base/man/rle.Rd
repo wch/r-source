@@ -18,7 +18,7 @@ rle(x)
 inverse.rle(x, \dots)
 }
 \arguments{
-  \item{x}{a simple vector for \code{rle()} or an object of class
+  \item{x}{an atomic vector for \code{rle()} or an object of class
     \code{"rle"} for \code{inverse.rle()}.}
   \item{\dots}{further arguments which are ignored in \R.}
 }
@@ -29,7 +29,8 @@ inverse.rle(x, \dots)
   \item{values}{a vector of the same length as \code{lengths} with the
     corresponding values.}
 
-  \code{inverse.rle()} is the inverse function of \code{rle()}.
+  \code{inverse.rle()} is the inverse function of \code{rle()}, and so
+  returns an atomic vector.
 }
 \examples{
 x <- rev(rep(6:10, 1:5))
