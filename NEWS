@@ -86,6 +86,11 @@ NEW FEATURES
     o	dev.copy2eps() uses dev.displaylist() to detect screen
 	devices, rather than list them in the function.
 
+    o	spec.ar() now uses frequency(x) when calculating the
+	freqencies of the estimated spectrum, so that for monthly
+	series the frequencies are now per year (as for spec.pgram)
+	rather than per month as before.
+
 
 DEPRECATED & DEFUNCT
 
@@ -157,7 +162,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.6.0 patched
+		CHANGES IN R VERSION 2.6.1
 
 
 NEW FEATURES

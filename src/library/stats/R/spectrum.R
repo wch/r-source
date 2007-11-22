@@ -76,7 +76,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         } else
             spec <- rep(x$var.pred/(xfreq), length(freq))
     } else .NotYetImplemented()
-    spg.out <- list(freq = freq, spec = spec, coh = coh, phase = phase,
+    spg.out <- list(freq = freq*xfreq, spec = spec, coh = coh, phase = phase,
                     n.used = nrow(x), series = series,
                     method = paste("AR (", order, ") spectrum ", sep="")
                     )
