@@ -871,7 +871,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
                  options, " ", file, sep = "")
-    ret <- system(cmd, invisible = TRUE)
+    ret <- system(cmd)
     if(ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
              domain = NA)
