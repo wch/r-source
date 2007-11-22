@@ -33,6 +33,7 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Japan (Tokyo)",Japan,Tokyo,ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/,"University of Tokyo","Teru KAMOGASHIRA <teru@sodan.ecc.u-tokyo.ac.jp>",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme@gmail.com>",1,kr
+Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del Estado de Morelos","Sandra Espinoza Lopez <sandrae@buzon.uaem.mx>",1,mx
 "Netherlands (Amsterdam 2)",Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl,1,nl
 "Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.dsmirror.nl/,"Dsmirror, Amsterdam","Webmaster Dsmirror <webmaster@dsmirror.nl>",1,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University",webmaster@cs.uu.nl,1,nl
