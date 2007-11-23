@@ -107,6 +107,8 @@ BUG FIXES
 
     o	R CMD check and R CMD INSTALL now work with (some) directory
 	names containing spaces.
+	
+    o	choose(n, k) gave incorrect values for negative n and small k.
 
 
 
