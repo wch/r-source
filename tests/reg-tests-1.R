@@ -4948,3 +4948,8 @@ stopifnot(length(x) == 6)
 xx <- list(a=1, 2)
 stopifnot(is.null(xx[[""]])) # 2 < 2.7.0
 ##
+
+
+## negative n gave choose(n, k) == 0
+stopifnot(isTRUE(all.equal(choose(-1,3),-1)))
+##
