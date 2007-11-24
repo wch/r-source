@@ -111,7 +111,10 @@ BUG FIXES
     o	choose(n, k) gave incorrect values for negative n and small k.
 
     o	plot.ts(x,y) could use wrong default labels; fixed thanks to
-	Antonio Fabio di Narzo.
+	Antonio, Fabio di Narzo.
+
+    o   reshape() got column names out of sync with contents in some
+        cases; found by Antonio, Fabio Di Narzo.
 
 
 
