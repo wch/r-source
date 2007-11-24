@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2007-10-25 r43276)
+R version 2.7.0 Under development (unstable) (2007-11-23 r43524)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -155,4 +155,6 @@ Error in plot.xy(xy.coords(x, y), type = type, ...) :
 Warning in x(x) : NaNs produced
 > par(op)
 > 
+> ## plot.ts(x, y) could get the labels wrong in R <= 2.6.0:
+> x <- ts(1:5);x1 <- lag(x, 2); plot(x1, x, axes=FALSE)
 > 

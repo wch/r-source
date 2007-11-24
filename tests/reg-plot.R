@@ -127,3 +127,5 @@ op <- par(mar=c(5,4.123,4,2)+0.1)
 plot(gamma, yla = expression(Gamma(x)), n=11, yaxt="n")
 par(op)
 
+## plot.ts(x, y) could get the labels wrong in R <= 2.6.0:
+x <- ts(1:5);x1 <- lag(x, 2); plot(x1, x, axes=FALSE)

@@ -57,7 +57,7 @@ NEW FEATURES
 	of all(pr > 0) ).
 
     o	The parser limit on string size has been removed.
-    
+
     o	stripchart() is now a generic function, with default and
 	formula methods defined.  Additional graphics parameters may
 	be included in the call.  Formula handling is now
@@ -250,7 +250,7 @@ BUG FIXES
 
     o	help.search() would give an error if it found a badly
 	installed package, even if 'package' was not specified.
-    
+
     o	tclServiceMode() (package tcltk) now works under Unix-alikes.
 	(Although documented, it used only to work under Windows.)
 
@@ -263,8 +263,11 @@ BUG FIXES
 
     o	R CMD check and R CMD INSTALL now work with (some) directory
 	names containing spaces.
-	
+
     o	choose(n, k) gave incorrect values for negative n and small k.
+
+    o	plot.ts(x,y) could use wrong default labels; fixed thanks to
+	Antonio Fabio di Narzo.
 
 
 
