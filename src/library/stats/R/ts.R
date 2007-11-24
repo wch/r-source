@@ -530,7 +530,7 @@ plot.ts <-
 		text(xy, labels =
 		     if(is.character(xy.labels)) xy.labels
 		     else if(all(tsp(x) == tsp(y))) formatC(time(x), width = 1)
-		     else seq_along(x),
+		     else seq_along(xy$x),
 		     col = col, cex = cex)
 	    if(xy.lines)
 		lines(xy, col = col, lty = lty, lwd = lwd,
