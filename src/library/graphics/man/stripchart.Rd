@@ -24,7 +24,8 @@ stripchart(x, \dots)
            vertical = FALSE, group.names, add = FALSE,
            at = NULL, xlim = NULL, ylim = NULL,
            ylab=NULL, xlab=NULL, dlab="", glab="",
-           log = "", pch = 0, col = par("fg"), cex = par("cex"), \dots)
+           log = "", pch = 0, col = par("fg"), cex = par("cex"), 
+           axes = TRUE, frame.plot = axes, \dots)
 }
 \arguments{
   \item{x}{the data from which the plots are to be produced.  In the default
@@ -67,6 +68,7 @@ stripchart(x, \dots)
   \item{log}{on which axes to use a log scale:  see 
     \code{\link{plot.default}}}
   \item{pch, col, cex}{Graphical parameters: see \code{\link{par}}.}
+  \item{axes, frame.plot}{Axis control:  see \code{\link{plot.default}}}
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in

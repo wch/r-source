@@ -22,7 +22,8 @@ stripchart.default <-
 function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	 group.names, add = FALSE, at = NULL,
 	 xlim=NULL, ylim=NULL, ylab=NULL, xlab=NULL, dlab="", glab="",
-	 log="", pch=0, col=par("fg"), cex=par("cex"), ...)
+	 log="", pch=0, col=par("fg"), cex=par("cex"), axes=TRUE, 
+	 frame.plot=axes, ...)
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)
@@ -58,16 +59,20 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	if(is.null(ylim))
 	    ylim <- if(vertical) dlim else glim
 	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log, ...)
-	box()
+	if (frame.plot) box()
 	if(vertical) {
-	    if(n > 1) axis(1, at=at, labels=names(groups), ...)
-	    Axis(x, side = 2, ...)
+	    if (axes) {
+		if(n > 1) axis(1, at=at, labels=names(groups), ...)
+		Axis(x, side = 2, ...)
+	    }
 	    if (is.null(ylab)) ylab <- dlab
 	    if (is.null(xlab)) xlab <- glab
 	}
 	else {
-	    Axis(x, side = 1, ...)
-	    if(n > 1) axis(2, at=at, labels=names(groups), ...)
+	    if (axes) {
+		Axis(x, side = 1, ...)
+		if(n > 1) axis(2, at=at, labels=names(groups), ...)
+	    }
 	    if (is.null(xlab)) xlab <- dlab
 	    if (is.null(ylab)) ylab <- glab	    
 	}    
