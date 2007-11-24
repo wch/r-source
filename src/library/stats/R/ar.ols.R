@@ -34,10 +34,12 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         sc <- sqrt(drop(apply(x, 2, var)))
         x <- x/rep(sc, rep(n.used, nser))
     } else sc <- rep(1, nser)
-    order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
-    else round(order.max)
 
+    order.max <- if (is.null(order.max))
+	min(n.used-1, floor(10 * log10(n.used)))
+    else round(order.max)
     if (order.max < 0) stop ("'order.max' must be >= 0")
+    else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     if (aic) order.min <- 0
     else order.min <- order.max
     A <- vector("list", order.max - order.min + 1)

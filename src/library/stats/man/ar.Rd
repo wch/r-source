@@ -49,9 +49,10 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     fitted.}
 
   \item{order.max}{Maximum order (or order) of model to fit. Defaults
-    to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
-    of observations except for \code{method="mle"} where it is the
-    minimum of this quantity and 12.}
+    to the smaller of \eqn{N-1} and \eqn{10\log_{10}(N)}{10*log10(N)}
+    where \eqn{N} is the number of observations
+    except for \code{method="mle"} where it is the minimum of this
+    quantity and 12.}
 
   \item{method}{Character string giving the method used to fit the
     model.  Must be one of the strings in the default argument

@@ -269,8 +269,11 @@ BUG FIXES
     o	plot.ts(x,y) could use wrong default labels; fixed thanks to
 	Antonio, Fabio di Narzo.
 
-    o   reshape() got column names out of sync with contents in some
-        cases; found by Antonio, Fabio Di Narzo.
+    o	reshape() got column names out of sync with contents in some
+	cases; found by Antonio, Fabio Di Narzo.
+
+    o	ar(x) for short 'x' (i.e. length <= 10) could fail because the
+	default 'order.max' was >= length(x) which is non-sensical.
 
 
 
