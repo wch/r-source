@@ -34,9 +34,11 @@ ar.burg.default <-
         x <- x - x.mean
     } else x.mean <- 0
     n.used <- length(x)
-    order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
+    order.max <- if (is.null(order.max))
+	min(n.used-1, floor(10 * log10(n.used)))
     else floor(order.max)
     if (order.max < 1) stop("'order.max' must be >= 1")
+    else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     xaic <- numeric(order.max + 1)
     z <- .C(R_burg,
             as.integer(n.used),

@@ -29,10 +29,12 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     xfreq <- frequency(x)
     x <- as.vector(x)
     n.used <- length(x)
-    order.max <- if (is.null(order.max)) min(12, floor(10 * log10(n.used)))
+    order.max <- if (is.null(order.max))
+        min(n.used-1, 12, floor(10 * log10(n.used)))
     else round(order.max)
 
     if (order.max < 0) stop ("'order.max' must be >= 0")
+    else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     if (aic) {
         coefs <- matrix(NA, order.max+1, order.max+1)
         var.pred <- numeric(order.max+1)

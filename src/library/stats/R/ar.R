@@ -57,9 +57,10 @@ ar.yw.default <-
         x <- sweep(x, 2, xm, check.margin=FALSE)
     } else xm <- rep(0, nser)
     n.used <- nrow(x)
-    order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
-                 else round(order.max)
+    order.max <- if (is.null(order.max))
+	min(n.used-1, floor(10 * log10(n.used))) else round(order.max)
     if (order.max < 1) stop("'order.max' must be >= 1")
+    else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot = FALSE,
                 demean = demean)$acf
     if(nser > 1) {
