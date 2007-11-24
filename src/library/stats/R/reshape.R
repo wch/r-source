@@ -42,8 +42,8 @@ reshape <-
             stop("Failed to guess time-varying variables from their names")
 
 
-        v.names <- split(nms, nn[,1])
         vn <- unique(nn[,1])
+        v.names <- split(nms, factor(nn[,1], levels=vn))
         times <- unique(nn[,2])
         attr(v.names,"v.names") <- vn
         tt <- tryCatch({as.numeric(times)}, warning=function(w) times)
