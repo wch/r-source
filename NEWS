@@ -275,6 +275,9 @@ BUG FIXES
     o	ar(x) for short 'x' (i.e. length <= 10) could fail because the
 	default 'order.max' was >= length(x) which is non-sensical.
 
+    o	Keyboard events in getGraphicsEvent() could cause stack
+	imbalance errors (PR#10453)
+
 
 
 		CHANGES IN R VERSION 2.6.0
