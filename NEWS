@@ -6,6 +6,16 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.6.1 patched
+
+
+BUG FIXES
+
+    o	A compilation problem on one system where glob was not found
+	has been corrected.  (PR#10468)
+
+
+
 		CHANGES IN R VERSION 2.6.1
 
 

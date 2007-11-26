@@ -1138,7 +1138,9 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP  fn;
     int i, j, nfiles, res, failures = 0, recursive;
     const char *names;
+#if defined(HAVE_GLOB) || defined(Win32)
     glob_t globbuf;
+#endif
 
     checkArity(op, args);
     fn = CAR(args);
