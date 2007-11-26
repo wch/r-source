@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-11-21
+@set FAQ_DATE @value{FAQ_YEAR}-11-23
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -1967,6 +1967,8 @@ Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
 @item Devore7
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (7th ed)'' by Jay L. Devore, 2008, Thomson.
+@item EDR
+Estimation of the effective dimension reduction (EDR) space.
 @item EMV
 Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
@@ -1981,6 +1983,8 @@ Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
+@item FGN
+Fractional Gaussian Noise model fitting.
 @item FKBL
 Fuzzy Knowledge Base Learning.
 @c <COMMENT>
@@ -2561,6 +2565,9 @@ multiple-imputation approach to haplotypic analysis of population-based
 data.
 @item Snowball
 Snowball stemmers.
+@item SoDA
+Utilities and examples from the book ``Software for Data Analysis:
+Programming with R'' by John Chambers, Springer, 2008.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
@@ -2866,6 +2873,8 @@ Miscellaneous utility functions, including reading/writing ENVI binary
 files, a LogitBoost classifier, and a base64 encoder/decoder.
 @item cacheSweave
 Tools for caching Sweave computations.
+@item cacher
+Tools for caching and distributing statistical analyses.
 @item cairoDevice
 Loadable CAIRO/GTK device driver.
 @item calib
@@ -3820,6 +3829,8 @@ least-squares principle.
 @item ltm
 Analysis of multivariate Bernoulli data using latent trait models
 (including the Rasch model) under the Item Response Theory approach.
+@item ltsa
+Linear Time Series Analysis.
 @item luca
 Likelihood Under Covariate Assumptions (LUCA).
 @item lvplot
@@ -4918,11 +4929,8 @@ Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
 @item tdm
 A tool for Therapeutic Drug Monitoring.
-@c <COMMENT>
-@c Removed on 2007-11-17 due to license problems.
-@c @item tdthap
-@c Transmission/disequilibrium tests for extended marker haplotypes.
-@c </COMMENT>
+@item tdthap
+Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
 Tensor product of arrays.
 @item tensorA
