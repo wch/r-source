@@ -51,7 +51,19 @@ quit(save = "default", status = 0, runLast = TRUE)
     is recommended that users choose statuses of 10 or more.
 
     Valid values of \code{status} are system-dependent, but \code{0:255}
-    are normally valid.
+    are normally valid.  (Many OSes will report the last byte of the
+    value, that is report the number modulo 256.  But not all.)
+#ifdef windows
+% https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx?mfr=true
+% https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/if.mspx?mfr=true
+
+    Windows calls the status the \sQuote{error code} or \sQuote{exit
+      code}.  It is returned in the environment variable
+    \env{\%ERRORLEVEL\%} in \code{cmd.exe}, and in \env{$LASTEXITCODE}
+    in Windows PowerShell.  Note that the \code{Rterm} reliably reports
+    the \code{status} value, but \code{Rgui} may give an error code from
+    the GUI interface.
+#endif
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
