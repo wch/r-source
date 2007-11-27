@@ -2,39 +2,21 @@ R @FULLVERSION@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows 95, 98, ME, NT4, 2000, XP and 2003 Server on Intel/clone
-chips.  It is designed to be as close as possible to the
+Windows 2000 and later (including 64-bit versions of Windows) on ix86
+and x86_64 chips.  It is designed to be as close as possible to the
 implementation on Unix, but see the list of differences below.  The
 port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
 
 See the file `CHANGES' for the new features of this version.
 
-You will need MSVCRT.dll installed.  It is installed on all recent
-Windows installations, but not all Windows 95 machines.  You can
-download it from
-
-	ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe
-
-a self-extracting zip archive that contains instructions.
-
-For support for East Asian languages you also need mscvp60.dll
-installed: again all recent versions of Windows have it and many
-applications install it.  So first do a search on your machine and then
-on the internet.
-
 
 Installation
 ============
 
-The distribution is distributed as a 25Mb installer @RWVER@-win32.exe.
+The distribution is distributed as a 30Mb installer @RWVER@-win32.exe.
 
 Just run this for a Windows-XP style installer.  It contains all the R
-components, and you can select what want installed.  If you are using
-an East Asian version of Windows (certainly Chinese, Japanese, Korean
-and perhaps Thai and Vietnamese) you need to select the component
-which supplies support for those languages.  (This replace R.dll with
-a version that is aware of multi-byte locales and depends on
-mscvp60.dll.)
+components, and you can select what want installed.
 
 For more details, including command-line options for the installer
 and how to uninstall, see the rw-FAQ.  If you are reading this as part of
@@ -55,19 +37,20 @@ arguments; these are most easily set by making a shortcut to
 ...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to
 use as the working directory (where workspaces and files are saved to
-and loaded from).  The installers creates a shortcut on the desktop
-for you (by default).
+and loaded from).  The installer creates a shortcut on the desktop for
+you (by default).
 
 You have a choice of interface: SDI (separate windows) or MDI
 (multiple child windows in one large window).  MDI is the default:
-select SDI by adding --sdi in the Target field.
+select SDI by adding --sdi in the Target field: this can also be
+selected from the installer.
 
 Command-line editing is available: see Help | Console for details.
 
 The menus provide shortcuts to some R commands such as help, help.start,
 apropos, ls, load, save.image, search.
 
-The `load' menu items (Source R code, Display file, Load Workspace)
+The 'load' menu items (Source R code, Display file, Load Workspace)
 keep track of the directory that was last used, and start their dialog
 boxes from that directory the next time they are used.  That directory
 can be made the working directory by the File | Change dir menu item.
@@ -87,24 +70,23 @@ use it.]
 TERMINAL/BATCH:
 
 Rterm.exe will run from a command line such as an MS-DOS or Commands
-Window running the standard shells, command.com (9x/ME) and cmd.exe
-(NT4/2000/XP), as well as the ports of bash and tcsh that we use.  Its
-primary purpose is to allow batch operation, but it does provide all
-the facilities needed for interactive use, including command-line
-editing (see the file README.Rterm).
+Window running the standard shell, cmd.exe, as well as the ports of
+bash and tcsh that we use.  Its primary purpose is to allow batch
+operation, but it does provide all the facilities needed for
+interactive use, including command-line editing (see the file
+README.Rterm).
 
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
 
 Rterm.exe --no-restore --no-save < infile > outfile 2>&1
 
-(users of Windows 95/98/ME should omit 2>&1) although users will
-probably want to set up simple .bat or .cmd files to run batch
-jobs. You can also use it via R CMD BATCH: see ?BATCH or R CMD BATCH
---help.
+although users will probably want to set up simple .bat or .cmd files
+to run batch jobs. You can also use it via R CMD BATCH: see ?BATCH or
+R CMD BATCH --help.
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
-under NTEmacs, for example with ess-5.2.1.  The pager is
+under NTEmacs, for example with ess-5.3.x.  The pager is
 automatically set to "console" so text help will be displayed in emacs
 buffers.
 
@@ -139,16 +121,12 @@ HELP:
 There are several options for help, depending on which help files you
 installed.
 
-(i) Text help.  This is the default, and the fallback option.
-It will display in the currently set pager (use options(pager=) to change).
+(i) Text help.  This is the the fallback option.  It will display in
+the currently set pager (use options(pager=) to change).
 
-(ii) Compiled HTML files.  Set this as the default by
+(ii) Compiled HTML files (the default).  Set this as the default by
 options(chmhelp=TRUE) or for individual help items by help(topic,
 chmhelp=TRUE).  Full text search is available from the Search tab.
-According to Microsoft, to make use of this you will need to have IE3
-or later installed and a recent version of Windows or (not Windows
-XP or 2000 or ME) use the updater hhupd.exe at
-http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
 
 (iii) HTML help to be displayed in your normal browser.  Set this as
 the default by options(htmlhelp=TRUE) or for individual help items by
