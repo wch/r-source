@@ -49,6 +49,9 @@ OTHERS
 	Windows versions, including if they are running on a 64-bit
 	platform.
 
+    o	If Rterm is invoked as 'R', the status code (as passed to q())
+	is now returned (rather than 0 or 1).
+
 
 BUILDING R
 

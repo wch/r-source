@@ -17,10 +17,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#define NONAMELESSUNION
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
-#include <stdlib.h>
+#include <stdlib.h> /* for exit */
 #include <stdio.h>
 #include <Rversion.h>
 
@@ -81,7 +80,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
        set HOME if unset
        launch %R_HOME%\bin\$*
      */
-    int i, iused, res, status = 0;
+    int i, iused, status = 0;
     char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], BUFFER[10000],
 	RHOME[MAX_PATH], *p, cmd[CMD_LEN], Rversion[25], HOME[MAX_PATH + 10],
 	RSHARE[MAX_PATH];
@@ -330,8 +329,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else strcat(cmd, argv[i]);
 	}
 	/* printf("cmd is %s\n", cmd); */
-	res = system(cmd);
-	if (res) status = 1;
+	status = system(cmd);
     }
     return(status);
  }
