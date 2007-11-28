@@ -47,7 +47,7 @@
   \code{[[} are used with a single index (\code{x[i]} or \code{x[[i]]}),
   they index the data frame as if it were a list.  In this usage a
   \code{drop} argument is ignored, with a warning.  Using \code{$} is
-  equivalent to using \code{[[} with a single index.
+  equivalent to using \code{[[i, exact = FALSE]]}.
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
   and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can
@@ -87,7 +87,8 @@
   Both \code{[} and \code{[[} extraction methods partially match row
   names. \code{[[} partially matches column names (depending on the
   value of \code{exact}: the default is to allow partial matches with a
-  warning) whereas \code{[} does not.
+  warning) whereas \code{[} does not.  If you want to do exact
+  matching on row names use \code{\link{match}} as in the examples.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
@@ -148,6 +149,11 @@ sw[[1]]      # the same
 
 sw[1,]       # a one-row data frame
 sw[1,, drop=TRUE]  # a list
+
+sw["C", ] # partially matches
+sw[match("C", row.names(sw)), ] # no exact match
+
+
 \dontshow{
 stopifnot(identical(sw[,1], sw[[1]]),
           identical(sw[,1][1], 80.2),
