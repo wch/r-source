@@ -125,9 +125,9 @@ FLIBS=-lgfortran
 AWK=gawk
 ## for mingw-runtime <= 3.11
 # C99FLAG=-std=gnu99 -fgnu89-inline
-## alternative is -dw2, which currently fails building R, or empty
-## for unofficial builds including TDM's and GFortran from the Wiki
-GCC4_SUFF=-sjlj
+## earlier Rtools needs -sjlj
+## an alternative is -dw2, which currently fails building R.
+GCC4_SUFF=
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)

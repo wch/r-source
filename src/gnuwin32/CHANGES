@@ -59,6 +59,10 @@ BUILDING R
 	version of ACML 4.0.0 for gcc under Windows, and none at all
 	for gfortran).
 
+    o	We now presume Rtools27.exe, in which gcc is version 4.2.1.
+	If you still are using an earlier version, set GCC4_SUFF
+	in MkRules.
+
 
 
 	**************************************************
