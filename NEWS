@@ -170,6 +170,8 @@ BUG FIXES
     o	A compilation problem on one system where glob was not found
 	has been corrected.  (PR#10468)
 
+    o   plot.profile.nls() was losing the x axis labels
+
 
 
 		CHANGES IN R VERSION 2.6.1
