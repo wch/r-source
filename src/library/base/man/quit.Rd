@@ -59,7 +59,7 @@ quit(save = "default", status = 0, runLast = TRUE)
 
     Windows calls the status the \sQuote{error code} or \sQuote{exit
       code}.  It is returned in the environment variable
-    \env{\%ERRORLEVEL\%} in \code{cmd.exe}, and in \env{$LASTEXITCODE}
+    \env{\%ERRORLEVEL\%} in \code{cmd.exe}, and in \env{LASTEXITCODE}
     in Windows PowerShell.  Note that the \code{Rterm} reliably reports
     the \code{status} value, but \code{Rgui} may give an error code from
     the GUI interface.
