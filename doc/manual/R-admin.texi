@@ -693,7 +693,7 @@ script or a @file{src/Makefile} file.  In such cases you can install for
 extra builds by
 
 @example
-R --arch=@var{name} CMD INSTALL --libs-only @var{pkg(s)}
+R --arch=@var{name} CMD INSTALL --libs-only @var{pkg}(s)
 @end example
 
 If you want to mix sub-architectures compiled on different platforms
@@ -4123,7 +4123,7 @@ warnings about the use of auto-import.
 It almost passes @command{make check}: FIFOs are supposedly supported
 but hung in @samp{example(fifo)}.
 
-Note that this gives you a command-line application using @pkg{readline}
+Note that this gives you a command-line application using @code{readline}
 for command editing.  The @samp{X11} graphics device will work if a
 suitable X server is running, and the standard Unix-alike ways of
 installing source packages work.  There was a bug in the
