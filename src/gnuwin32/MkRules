@@ -159,16 +159,7 @@ IMPDIR=bin
 endif
 
 BLAS_LIBS= -L$(RHOME)/$(IMPDIR) -lRblas
-ifeq ($(strip $(USE_ACML_LAPACK)),YES)
-LAPACK_LIBS=-L"$(ACML_PATH)" -lacml -lg2c
-else
 LAPACK_LIBS= -L$(RHOME)/$(IMPDIR) -lRlapack
-endif
-
-ifdef USE_UNICOWS
-LIBEXTRAS+=-lunicows
-endif
-
 GRAPHAPP_LIB=-lgraphapp
 
 AR=$(BINPREF)ar
