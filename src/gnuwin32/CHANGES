@@ -9,7 +9,8 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.6.0 patched
+		CHANGES IN R VERSION 2.6.1
+
 
 PACKAGE INSTALLATION
 
@@ -46,7 +47,6 @@ BUG FIXES
 	the script editor. (PR#10402)
  
 		
-
 
 		CHANGES IN R VERSION 2.6.0
 		
