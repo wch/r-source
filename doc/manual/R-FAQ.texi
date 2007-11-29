@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-11-23
+@set FAQ_DATE @value{FAQ_YEAR}-11-29
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1899,6 +1899,8 @@ PNG, PDF, SVG, PostScript output and interactive display devices such as
 X11.
 @item CarbonEL
 Carbon Event Loop.
+@item CellularAutomaton
+One-dimensional cellular automata.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -2442,6 +2444,8 @@ Loglinear models in capture-recapture experiments.
 @item Rcmdr
 A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
+@item RcmdrPlugin.FactoMineR
+Rcmdr plug-in for the @strong{FactoMineR} package.
 @item RcmdrPlugin.HH
 Rcmdr support for the introductory course at Temple University.
 @item RcmdrPlugin.TeachingDemos
@@ -3179,8 +3183,11 @@ Functions and data for spatial point pattern analysis.
 Fitting Bayesian models of ecological inference in 2 by 2 tables.
 @item ecodist
 Dissimilarity-based functions for ecological analysis.
-@item edci
-Edge Detection and Clustering in Images.
+@c <COMMENT>
+@c Moved to the Archive on 2007-11-29 as it fails R CMD check.
+@c @item edci
+@c Edge Detection and Clustering in Images.
+@c </COMMENT>
 @item effects
 Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.
@@ -3478,6 +3485,8 @@ An implementation of the Grammar of Graphics in R.
 Univariate and multivariate generalized hyperbolic distributions.
 @item giRaph
 Data structures and algorithms for computations on graphs.
+@item glasso
+Graphical lasso.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
 @item gllm
@@ -4017,16 +4026,10 @@ misclassified responses, and covariates on transition or
 misclassification rates.
 @item muS2RC
 S-plus to R Compatibility for package @strong{muStat}.
-@c <COMMENT>
-@c Removed on 2007-11-17 due to license problems.
-@c @item muStat
-@c Prentice rank sum test and McNemar test.
-@c </COMMENT>
-@c <COMMENT>
-@c Removed on 2007-11-17 due to license problems.
-@c @item muUtil
-@c Utility functions for package @strong{muStat}.
-@c </COMMENT>
+@item muStat
+Prentice rank sum test and McNemar test.
+@item muUtil
+Utility functions for package @strong{muStat}.
 @item muhaz
 Hazard function estimation in survival analysis.
 @item multcomp
