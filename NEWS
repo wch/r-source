@@ -14,7 +14,10 @@ BUG FIXES
     o	A compilation problem on one system where glob was not found
 	has been corrected.  (PR#10468)
 
-    o   plot.profile.nls() was losing the x axis labels
+    o	plot.profile.nls() was losing the x axis labels
+
+    o	colnames(df) is now also fast for dataframes with long automatic
+	rownames.  (PR#10470)
 
 
 

@@ -35,7 +35,7 @@ colnames(x) <- value
   matrix-like object \code{x}.  If the object has \code{\link{dimnames}}
   the first component is used as the row names, and the second component
   (if any) is used for the column names.  For a data frame, \code{rownames}
-  and \code{colnames} are calls to \code{\link{row.names}} and
+  and \code{colnames} eventually call \code{\link{row.names}} and
   \code{\link{names}} respectively, but the latter are preferred.
 
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
@@ -46,7 +46,7 @@ colnames(x) <- value
   The replacement methods for arrays/matrices coerce vector and factor
   values of \code{value} to character, but do not dispatch methods for
   \code{as.character}.
-  
+
   For a data frame, \code{value} for \code{rownames} should be a
   character vector of non-duplicated and non-missing names (this is
   enforced), and for \code{colnames} a character vector of (preferably)
