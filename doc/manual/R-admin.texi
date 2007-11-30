@@ -3395,6 +3395,11 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 the additional flags being needed to problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
 
+On some@footnote{e.g. Fedora Core 5} @code{glibc} systems,
+@samp{-fgnu89-inline} needs to be added to @option{CFLAGS} when using
+the (currently unreleased) @command{gcc}@tie{}4.3.0, since
+@file{wchar.h} is not set up properly for C99-style inlines.
+
 @menu
 * Intel compilers::             
 * PGI compilers::               
