@@ -1128,16 +1128,16 @@ The preferred build environment is to use @command{gcc} 4.2.1: this can
 easily be built from the sources as a cross-compiler, but the
 MinGW-specific patches are not yet stable (and not needed to build @R{}).
 
-You will need suitable cross-compilers installed and in your path.
-There is currently a complete set of tools based on @command{gcc} 3.4.5
-at @url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
-@code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just unpack
-this into a directory somewhere and put its @file{bin} directory in your
-path.)  It is also straightforward to build a set of cross-compilers via
-the scripts available at
-@url{http://sourceforge.net/forum/forum.php?forum_id=632611}.
-Cross-compilers based on both @command{gcc 3} and @command{gcc 4} are
-supported: the flavour is selected by the macro @code{CROSS-GCC}.
+You will need suitable cross-compilers installed and in your path.  We
+do not at present distribute suitable cross-compilers.
+
+@c There is currently a complete set of tools based on @command{gcc} 3.4.5
+@c at @url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
+@c @code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just unpack
+@c this into a directory somewhere and put its @file{bin} directory in your
+@c path.)  It is also straightforward to build a set of cross-compilers via
+@c the scripts available at
+@c @url{http://sourceforge.net/forum/forum.php?forum_id=632611}.
 
 You will need Perl, @command{zip} and @command{unzip} installed and (to
 make the manuals) @command{makeinfo} version 4.7 or later (part of GNU
@@ -1154,9 +1154,8 @@ Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, unpack
 cd /somewhere/R-@value{VERSIONno}/src/gnuwin32
 @end example
 
-Edit @file{MkRules} to set @code{BUILD=CROSS}, @code{CROSS-GCC} as
-appropriate and the appropriate paths (including @code{HEADER} if
-needed).
+Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate paths
+(including @code{HEADER} if needed).
 
 Edit @file{MkRules} to set the type(s) of help that you want built. (You
 will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
@@ -4508,13 +4507,9 @@ are using a Windows shell, type @code{PATH} at the prompt to find out.
 @section The MinGW compilers
 
 This version of @R{} is set up to use @command{gcc} @code{4.2.1} for
-which MinGW compilers were released in August 2007.  For those
-compilers, use the default setting of @code{BUILD=GCC4} in file
-@file{src/gnuwin32/MkRules}.  For earlier MinGW compilers set
-@code{BUILD=GCC3} in file @file{src/gnuwin32/MkRules}.
-
-The @file{Rtools.exe} installer currently includes both versions @code{3.4.5} and
-@code{4.2.1} of the MinGW port of @command{gcc} from
+which MinGW compilers were released in August 2007.
+The @file{Rtools.exe} installer currently includes the @code{-sjlj}
+version of @code{4.2.1} of the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.
 
 If you would like to install your own copy, we recommed downloading from
@@ -4548,7 +4543,7 @@ tarball_name}).  (You may need to copy @file{bin/gcc-sjlj.exe} to
 @file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)  This compiler
 should work on Windows Vista without any workarounds.
 
-Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-3.4.5}
+Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-4.2.1}
 or later are needed to get a correct build of @R{} itself.  (The
 `Snapshot' @code{binutils-2.17.50-20070129-1.tar.gz} has also be
 tested.)  There are known problems with using other compiler sets on

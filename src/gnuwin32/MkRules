@@ -5,11 +5,8 @@
 
 # Alternatives GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
 # or F2C (use suitable f2c rather than a Fortran compiler).
-# Use of GCC3 is no longer supported: use at your own risk.
 
 BUILD=GCC4
-## if cross-building, is this gcc3 or gcc4?
-CROSS-GCC=gcc4
 
 ## These are overridden by R CMD INSTALL: they only apply to
 ## standard packages when building R and when using 'make pkg-foo'
@@ -109,14 +106,6 @@ DEPARG=-MM
 MINGW32LDFLAG=
 C99FLAG=-std=gnu99
 
-ifeq ($(strip $(BUILD)),GCC3)
-BINPREF=
-MINGW32CFLAG=
-F77=g77
-FLIBS=-lg2c
-AWK=gawk
-endif
-
 ifeq ($(strip $(BUILD)),GCC4)
 BINPREF=
 MINGW32CFLAG=
@@ -134,13 +123,8 @@ ifeq ($(strip $(BUILD)),CROSS)
 ifneq ($(strip $(HEADER)),)
 MINGW32CFLAG=-isystem $(HEADER)
 endif
-ifeq ($(strip $(CROSS-GCC)),gcc4)
 F77=$(BINPREF)gfortran
 FLIBS=-lgfortran
-else
-F77=$(BINPREF)g77
-FLIBS=-lg2c
-endif
 AWK=awk
 endif
 
