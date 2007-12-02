@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2007-12-02 19:24\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -662,10 +662,6 @@ msgstr ""
 #, fuzzy
 msgid "unable to find required package \"%s\""
 msgstr "필수의 패키지 '%s'를 검색해낼 수가 없습니다"
-
-#, fuzzy
-msgid "Package \"%s\" is not loaded"
-msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
@@ -1448,6 +1444,10 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid "Package \"%s\" is not loaded"
+#~ msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 
 #~ msgid "no generic function '%s' found"
 #~ msgstr "'%s'가 검색되어 일반적인 함수가 아닙니다"

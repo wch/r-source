@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2007-12-02 19:24\n"
 "PO-Revision-Date: 2007-04-13 12:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -652,9 +652,6 @@ msgstr ""
 
 msgid "unable to find required package \"%s\""
 msgstr "impossible de trouver le package \"%s\" nécessaire"
-
-msgid "Package \"%s\" is not loaded"
-msgstr "Le package \"%s\" n'est pas chargé"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "impossible de trouver un environnement contenant la classe \"%s\""
@@ -1482,6 +1479,9 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#~ msgid "Package \"%s\" is not loaded"
+#~ msgstr "Le package \"%s\" n'est pas chargé"
 
 #~ msgid ""
 #~ "The special case of printTo=FALSE only works when a single generic "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2007-12-02 19:24\n"
 "PO-Revision-Date: 2007-09-11 22:40+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -628,9 +628,6 @@ msgstr ""
 
 msgid "unable to find required package \"%s\""
 msgstr " 必要とされるパッケージ \"%s\" を見付けることが出来ません "
-
-msgid "Package \"%s\" is not loaded"
-msgstr " パッケージ \"%s\" はロードされていません "
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr " クラス \"%s\" を含む環境を見付けることが出来ません "
@@ -1398,6 +1395,9 @@ msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] ""
 " 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：% "
+
+#~ msgid "Package \"%s\" is not loaded"
+#~ msgstr " パッケージ \"%s\" はロードされていません "
 
 #~ msgid ""
 #~ "old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no "

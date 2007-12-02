@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2007-12-02 19:24\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -665,10 +665,6 @@ msgstr ""
 #, fuzzy
 msgid "unable to find required package \"%s\""
 msgstr "impossível encontrar o pacote necessário '%s'"
-
-#, fuzzy
-msgid "Package \"%s\" is not loaded"
-msgstr "Pacote '%s' não está carregado"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
@@ -1334,6 +1330,10 @@ msgstr[0] ""
 msgstr[1] ""
 "na assinatura do método da função '%s' nomes de argumentos inválidos na "
 "assinatura: %s"
+
+#, fuzzy
+#~ msgid "Package \"%s\" is not loaded"
+#~ msgstr "Pacote '%s' não está carregado"
 
 #~ msgid "no method found for function '%s' and signature %s"
 #~ msgstr "nenhum método encontrado para a função '%s' e assinatura %s"
