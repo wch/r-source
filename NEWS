@@ -177,6 +177,9 @@ BUG FIXES
 	
     o	array() computed the total number of entries in the array before
 	coercing the dimensions to integer.  (Reported by Allen McIntosh.)
+	
+    o	persp() misreported errors in the y parameter.  (Reported by Allen
+	McIntosh.)
 
 
 
