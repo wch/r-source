@@ -18,6 +18,7 @@ array <-
 function(data = NA, dim = length(data), dimnames = NULL)
 {
     data <- as.vector(data)
+    dim <- as.integer(dim)
     vl <- prod(dim)
     if(length(data) != vl) {
         if(vl > .Machine$integer.max)
