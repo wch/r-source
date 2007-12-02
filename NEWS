@@ -18,6 +18,9 @@ BUG FIXES
 
     o	colnames(df) is now also fast for dataframes with long automatic
 	rownames.  (PR#10470)
+	
+    o	array() computed the total number of entries in the array before
+	coercing the dimensions to integer.  (Reported by Allen McIntosh.)
 
 
 
