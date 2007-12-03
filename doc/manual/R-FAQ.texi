@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-11-29
+@set FAQ_DATE @value{FAQ_YEAR}-12-02
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -472,8 +472,8 @@ Murdoch} and @email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 For most installations the Windows installer program will be the easiest
 tool to use.
 
-See the @url{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
-Windows @acronym{FAQ}''} for more details.
+See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R
+for Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
@@ -2499,6 +2499,8 @@ to be sent to R.
 @c REMOVED 2001-12-08
 @c @item Rstreams
 @c Binary file stream support functions.
+@item Rsundials
+SUite of Nonlinear DIfferential ALgebraic equations Solvers in R.
 @item Runuran
 Interface to the UNU.RAN library for Universal Non-Uniform RANdom
 variate generators.
@@ -3158,6 +3160,8 @@ state space models) and @strong{dse2} (extensions for evaluating
 estimation techniques, forecasting, and for evaluating forecasting model).
 @item dtt
 Discrete Trigonometric Transforms.
+@item dtw
+Dynamic Time Warping algorithms.
 @item dyn
 Time series regression.
 @item dynamicGraph
