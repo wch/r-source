@@ -25,7 +25,7 @@ BUG FIXES
     o	persp() misreported errors in the y parameter.  (Reported by Allen
 	McIntosh.)
 	
-    o	source("clipboard", echo=TRUE) and file("clipboard", mode="rt")
+    o	source("clipboard", echo=TRUE) and file("clipboard", open="rt")
 	gave spurious errors.  (Reported by Fernando Saldanha.)
 
     o	attributes<-() stripped old attributes before checking that 
