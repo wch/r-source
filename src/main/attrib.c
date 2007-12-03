@@ -1003,6 +1003,20 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Of course, if we want backward compatibility we can't */
     /* make the change. :-( */
 
+    nattrs = length(attrs);
+
+    if (nattrs > 0) {
+	names = getAttrib(attrs, R_NamesSymbol);
+	if (names == R_NilValue)
+	    error(_("attributes must be named"));
+	for (i = 1; i < nattrs; i++) {
+	    if (STRING_ELT(names, i) == R_NilValue ||
+		CHAR(STRING_ELT(names, i))[0] == '\0') { /* all ASCII tests */
+		error(_("all attributes must have names [%d does not]"), i+1);
+	    }
+        }
+    }	
+
     if (isList(object))
 	setAttrib(object, R_NamesSymbol, R_NilValue);
     SET_ATTRIB(object, R_NilValue);
@@ -1010,7 +1024,6 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_OBJECT(object, 0);
     /* Probably need to fix up S4 bit in other cases, but
        definitely in this one */
-    nattrs = length(attrs);
     if(nattrs == 0) UNSET_S4_OBJECT(object);
 
     /* We do two passes through the attributes; the first */
@@ -1019,14 +1032,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* "dim" occurs in the attribute list before "dimnames". */
 
     if (nattrs > 0) {
-	names = getAttrib(attrs, R_NamesSymbol);
-	if (names == R_NilValue)
-	    error(_("attributes must be named"));
 	for (i = 0; i < nattrs; i++) {
-	    if (STRING_ELT(names, i) == R_NilValue ||
-		CHAR(STRING_ELT(names, i))[0] == '\0') { /* all ASCII tests */
-		error(_("all attributes must have names [%d does not]"), i+1);
-	    }
 	    if (!strcmp(CHAR(STRING_ELT(names, i)), "dim"))
 		setAttrib(object, R_DimSymbol, VECTOR_ELT(attrs, i));
 	}
