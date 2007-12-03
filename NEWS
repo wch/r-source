@@ -28,8 +28,8 @@ BUG FIXES
     o	source("clipboard", echo=TRUE) and file("clipboard", mode="rt")
 	gave spurious errors.  (Reported by Fernando Saldanha.)
 
-    o   attributes<-() stripped old attributes before checking that 
-	right hand side was well-formed.
+    o	attributes<-() stripped old attributes before checking that 
+	all elements of the right-hand side had names.
 
 
 

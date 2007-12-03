@@ -971,7 +971,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 /* brought to the front of the list.  This ensures that when both */
 /* "dim" and "dimnames" are set that the "dim" is attached first. */
 
-    SEXP object, attrs, names;
+    SEXP object, attrs, names = R_NilValue /* -Wall */;
     int i, nattrs;
 
     /* If there are multiple references to the object being mutated, */
