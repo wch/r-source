@@ -1635,10 +1635,10 @@ static Rconnection newclp(const char *url, const char *inmode)
     Rconnection new;
     const char *description;
     int sizeKB = 32;
-    char mode[3];
+    char mode[4];
     
-    mode[2] = '\0';
-    strncpy(mode, inmode, 2);
+    mode[3] = '\0';
+    strncpy(mode, inmode, 3);
     
     if(strlen(mode) == 2 && mode[1] == 't') mode[1] = '\0';
 
