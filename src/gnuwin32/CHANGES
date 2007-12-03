@@ -52,6 +52,13 @@ OTHERS
     o	If Rterm is invoked as 'R', the status code (as passed to q())
 	is now returned (rather than 0 or 1).
 
+    o	The default postscript() 'paper' argument for savePlot() and the
+	windows() graphics device menus is now "special" rather than
+	"default": it can still be overridden by setting ps.options().
+	(This changes the default output to be most suitable for
+	inclusion in other documents rather than to produce a page for
+	printing.)
+
 
 BUILDING R
 
