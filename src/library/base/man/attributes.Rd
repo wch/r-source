@@ -34,6 +34,12 @@ mostattributes(obj) <- value
   of as a set and not a vector.  They must have unique
   names (and \code{NA} is taken as \code{"NA"}, not a missing value).
 
+  Assigning attributes first removes all attributes, sets any \code{dim}
+  attribute and then the remaining attributes in the order given: this
+  ensures that \code{dim} attributes always precede \code{dimnames}
+  attributes.  If there is an error in assigning attributes, \code{obj}
+  can be left with none or some of the new attributes set.
+
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
   attributes, and assigns them only when valid whereas an
