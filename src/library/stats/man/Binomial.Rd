@@ -59,7 +59,7 @@ rbinom(n, size, prob)
 }
 \source{
   For \code{dbinom} a saddle-point expansion is used: see
-  
+
   Catherine Loader (2000). \emph{Fast and Accurate Computation of
     Binomial Probabilities}; available from
   \url{http://www.herine.net/stat/software/dbinom.html}.
@@ -69,7 +69,7 @@ rbinom(n, size, prob)
   \code{qbinom} uses the Cornish--Fisher Expansion to include a skewness
   correction to a normal approximation, followed by a search.
 
-  \code{rbinom} is based on
+  \code{rbinom} (for \code{size < .Machine$integer.max}) is based on
 
   Kachitvichyanukul, V. and Schmeiser, B. W. (1988)
   Binomial random variate generation.

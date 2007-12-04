@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2002 The R Development Core Team
+ *  Copyright (C) 2007 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,6 +37,7 @@
 
 #include "nmath.h"
 #include <stdlib.h>
+#include <limits.h>
 
 #define repeat for(;;)
 
@@ -55,15 +57,20 @@ double rbinom(double nin, double pp)
     int i,ix,k, n;
 
     if (!R_FINITE(nin)) ML_ERR_return_NAN;
-    n = floor(nin + 0.5);
-    if (n != nin) ML_ERR_return_NAN;
-
+    r = floor(nin + 0.5);
+    if (r != nin) ML_ERR_return_NAN;
     if (!R_FINITE(pp) ||
 	/* n=0, p=0, p=1 are not errors <TSL>*/
-	n < 0 || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
+	r < 0 || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
 
-    if (n == 0 || pp == 0.) return 0;
-    if (pp == 1.) return n;
+    if (r == 0 || pp == 0.) return 0;
+    if (pp == 1.) return r;
+
+    if (r >= INT_MAX)/* evade integer overflow,
+			and r == INT_MAX gave only even values */
+	return qbinom(unif_rand(), r, pp, /*lower_tail*/ 0, /*log_p*/ 0);
+    /* else */
+    n = r;
 
     p = fmin2(pp, 1. - pp);
     q = 1. - p;
