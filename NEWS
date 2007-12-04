@@ -153,6 +153,10 @@ BUG FIXES
     o	[[""]] was matching a name of "", even though "" is documented
 	to match no name in indexing.
 
+    o	attributes<-() could return a changed value if there was an
+	error in the computations, e.g. an invalid value for an
+	attribute being set.
+
 
 
 	**************************************************

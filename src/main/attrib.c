@@ -974,37 +974,15 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP object, attrs, names = R_NilValue /* -Wall */;
     int i, nattrs;
 
-    /* If there are multiple references to the object being mutated, */
-    /* we must duplicate so that the other references are unchanged. */
-
-    if (NAMED(CAR(args)) == 2)
-	SETCAR(args, duplicate(CAR(args)));
-
     /* Extract the arguments from the argument list */
 
     object = CAR(args);
     attrs = CADR(args);
-    if (object == R_NilValue) {
-	if (attrs == R_NilValue)
-	    return R_NilValue;
-	else
-	    PROTECT(object = allocVector(VECSXP, 0));
-    }
-    else PROTECT(object);
 
+    /* Do checks before duplication */
     if (!isNewList(attrs))
-	error(_("attributes must be in a list"));
-
-    /* Empty the existing attribute list */
-
-    /* FIXME: the code below treats pair-based structures */
-    /* in a special way.  This can probably be dropped down */
-    /* the road (users should never encounter pair-based lists). */
-    /* Of course, if we want backward compatibility we can't */
-    /* make the change. :-( */
-
+	error(_("attributes must be a list or NULL"));
     nattrs = length(attrs);
-
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
@@ -1015,7 +993,29 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		error(_("all attributes must have names [%d does not]"), i+1);
 	    }
         }
-    }	
+    }
+
+    if (object == R_NilValue) {
+	if (attrs == R_NilValue)
+	    return R_NilValue;
+	else
+	    PROTECT(object = allocVector(VECSXP, 0));
+    } else {
+	/* Unlikely to have NAMED == 0 here.
+	   As from R 2.7.0 we don't optimize NAMED == 1 here,
+	   as an error later on would leave 'x' changed */
+	if (NAMED(object)) object = duplicate(object);
+	PROTECT(object);
+    }
+    
+
+    /* Empty the existing attribute list */
+
+    /* FIXME: the code below treats pair-based structures */
+    /* in a special way.  This can probably be dropped down */
+    /* the road (users should never encounter pair-based lists). */
+    /* Of course, if we want backward compatibility we can't */
+    /* make the change. :-( */
 
     if (isList(object))
 	setAttrib(object, R_NamesSymbol, R_NilValue);
