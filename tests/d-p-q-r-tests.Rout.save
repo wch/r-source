@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2007-11-07 r43388)
+R version 2.7.0 Under development (unstable) (2007-12-04 r43590)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1152,7 +1152,15 @@ Warning messages:
 +        0.50000000036238542)# = .5+ integrate(dt, 0,2^-30, df=10, rel.tol=1e-20)
 [1] TRUE
 > 
+> ## rbinom(*, size) gave NaN for large size up to R <= 2.6.1
+> M <- .Machine$integer.max
+> set.seed(7)
+> tt <- table(rbinom(100,    M, pr = 1e-9)) # had values in {0,2} only
+> t2 <- table(rbinom(100, 10*M, pr = 1e-10))
+> stopifnot(names(tt) == 0:6, sum(tt) == 100, sum(t2) == 100) ## no NaN there
+> 
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  2.105 0.016 2.122 0 0 
+Time elapsed:  2.375 0.064 2.549 0 0 
 > 

@@ -617,5 +617,13 @@ for(nu in df.set) {
 All.eq(pt(2^-30, df=10),
        0.50000000036238542)# = .5+ integrate(dt, 0,2^-30, df=10, rel.tol=1e-20)
 
+## rbinom(*, size) gave NaN for large size up to R <= 2.6.1
+M <- .Machine$integer.max
+set.seed(7)
+tt <- table(rbinom(100,    M, pr = 1e-9)) # had values in {0,2} only
+t2 <- table(rbinom(100, 10*M, pr = 1e-10))
+stopifnot(names(tt) == 0:6, sum(tt) == 100, sum(t2) == 100) ## no NaN there
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
