@@ -79,6 +79,16 @@ BUILDING R
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.6.1 patched
+
+
+BUG FIXES
+
+    o	If a graphics window was opened in MDI mode while the console
+	was zoomed, it would not be initialized properly.
+    	
+    	
+    	
 		CHANGES IN R VERSION 2.6.1
 
 
