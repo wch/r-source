@@ -65,11 +65,12 @@ density(x, \dots)
     power of 2 for efficiency reasons (\code{\link{fft}}).}
 
   \item{from,to}{the left and right-most points of the grid at which the
-    density is to be estimated.}
+    density is to be estimated; the defaults are \code{cut * bw} outside
+    of \code{range(x)}.}
 
-  \item{cut}{by default, the values of \code{left} and \code{right} are
-    \code{cut} bandwidths beyond the extremes of the data. This allows the
-    estimated density to drop to approximately zero at the extremes.}
+  \item{cut}{by default, the values of \code{from} and \code{to} are
+    \code{cut} bandwidths beyond the extremes of the data.  This allows
+    the estimated density to drop to approximately zero at the extremes.}
 
   \item{na.rm}{logical; if \code{TRUE}, missing values are removed
     from \code{x}. If \code{FALSE} any missing values cause an error.}
