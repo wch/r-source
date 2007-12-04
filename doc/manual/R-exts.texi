@@ -5104,7 +5104,7 @@ unchecked.
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.  It is not possible
 to pass numeric vectors as @code{float *} or @code{REAL} if
-@code{DUP=FALSE}.
+@code{DUP=FALSE}, and character vectors cannot be used.
 
 Argument @code{PACKAGE} confines the search for the symbol name to a
 specific shared object (or use @code{"base"} for code compiled into
@@ -5166,6 +5166,26 @@ conv <- function(a, b)
 Note that we take care to coerce all the arguments to the correct @R{}
 storage mode before calling @code{.C}; mistakes in matching the types
 can lead to wrong results or hard-to-catch errors.
+
+Special care is needed in handling @code{character} vector arguments in
+C (or C++).  Since only @code{DUP = TRUE} is allowed, on entry the
+contents of the elements are duplicated and assigned to the elements of
+a @code{char **} array, and on exit the elements of the C array are
+copied to create new elements of a character vector.  This means that
+the contents of the character strings of the @code{char **} array can be
+changed, including to @code{\0} to shorten the string, but the strings
+cannot be lengthened.  It is possible to allocate a new string
+@emph{via} @code{R_alloc} and replace an entry in the @code{char **}
+array by the new string.  However, when character vectors are used other
+than in a read-only way, the @code{.Call} interface is much to be
+preferred.
+
+Passing character strings to FORTRAN code needs even more care, and
+should be avoided where possible.  Only the first element of the
+character vector is passed in, as a fixed-length (255) character array.
+Up to 255 characters are passed back to a length-one character vector.
+How well this works (or even if it works at all) depends on the C and
+FORTRAN compilers on each platform.
 
 
 @node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces

@@ -93,7 +93,8 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   \code{\link{grep}} and \code{\link{sub}} for string search and
   manipulation; further \code{\link{nchar}}, \code{\link{substr}}.
 
-  \link{regular expression} for the details of the pattern specification.
+  \sQuote{\link{regular expression}} for the details of the pattern
+  specification.
 }
 \examples{
 noquote(strsplit("A text I want to display with spaces", NULL)[[1]])
