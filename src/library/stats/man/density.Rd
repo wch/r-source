@@ -205,7 +205,7 @@ bw <- bw.SJ(precip) ## sensible automatic choice
 plot(density(precip, bw = bw),
      main = "same sd bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, kerniel =  kernels[i]), col = i)
+   lines(density(precip, bw = bw, kernel = kernels[i]), col = i)
 
 ## Bandwidth Adjustment for "Exactly Equivalent Kernels"
 h.f <- sapply(kernels, function(k)density(kernel = k, give.Rkern = TRUE))
