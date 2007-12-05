@@ -28,7 +28,6 @@
 #include <Defn.h>
 #include <Rmath.h>
 
-static void checkNames(SEXP, SEXP);
 static SEXP installAttrib(SEXP, SEXP, SEXP);
 static SEXP removeAttrib(SEXP, SEXP);
 
@@ -38,6 +37,9 @@ static SEXP commentgets(SEXP, SEXP);
 static SEXP row_names_gets(SEXP vec , SEXP val)
 {
     SEXP ans;
+
+    if (vec == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
 
     if(isReal(val) && length(val) == 2 && ISNAN(REAL(val)[0]) ) {
 	/* This should not happen, but if a careless user dput()s a
@@ -77,6 +79,7 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
     return ans;
 }
 
+/* used in removeAttrib, commentgets and classgets */
 static SEXP stripAttrib(SEXP tag, SEXP lst)
 {
     if(lst == R_NilValue) return lst;
@@ -214,6 +217,7 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
     if (val == R_NilValue)
 	return removeAttrib(vec, name);
 
+    /* We allow attempting to remove names from NULL */
     if (vec == R_NilValue)
 	error(_("attempt to set an attribute on NULL"));
 
@@ -249,6 +253,10 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 void copyMostAttrib(SEXP inp, SEXP ans)
 {
     SEXP s;
+
+    if (ans == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     PROTECT(ans);
     PROTECT(inp);
     for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
@@ -267,6 +275,10 @@ void copyMostAttrib(SEXP inp, SEXP ans)
 void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
 {
     SEXP s;
+
+    if (ans == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     PROTECT(ans);
     PROTECT(inp);
     for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
@@ -307,8 +319,7 @@ void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
 static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
     SEXP s, t;
-    if (vec == R_NilValue)
-	error(_("attempt to set an attribute on NULL"));
+
     PROTECT(vec);
     PROTECT(name);
     PROTECT(val);
@@ -375,6 +386,9 @@ SEXP tspgets(SEXP vec, SEXP val)
     double start, end, frequency;
     int n;
 
+    if (vec == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     if (!isNumeric(val) || length(val) != 3)
 	error(_("'tsp' attribute must be numeric of length three"));
 
@@ -412,6 +426,9 @@ SEXP tspgets(SEXP vec, SEXP val)
 
 static SEXP commentgets(SEXP vec, SEXP comment)
 {
+    if (vec == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     if (isNull(comment) || isString(comment)) {
 	if (length(comment) <= 0) {
 	    SET_ATTRIB(vec, stripAttrib(R_CommentSymbol, ATTRIB(vec)));
@@ -457,6 +474,10 @@ SEXP classgets(SEXP vec, SEXP klass)
 
 	    int i;
 	    Rboolean isfactor = FALSE;
+
+	    if (vec == R_NilValue)
+		error(_("attempt to set an attribute on NULL"));
+
 	    for(i = 0; i < length(klass); i++)
 		if(streql(CHAR(STRING_ELT(klass, i)), "factor")) { /* ASCII */
 		    isfactor = TRUE;
@@ -706,10 +727,9 @@ SEXP namesgets(SEXP vec, SEXP val)
 	}
     }
 
-    /* Cons-cell based objects */
-
     if (isList(vec) || isLanguage(vec)) {
-	i=0;
+	/* Cons-cell based objects */
+	i = 0;
 	for (s = vec; s != R_NilValue; s = CDR(s), i++)
 	    if (STRING_ELT(val, i) != R_NilValue
 		&& STRING_ELT(val, i) != R_NaString
@@ -719,6 +739,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 		SET_TAG(s, R_NilValue);
     }
     else if (isVector(vec))
+	/* Normal case */
 	installAttrib(vec, R_NamesSymbol, val);
     else
 	error(_("invalid type (%s) to set 'names' attribute"),
