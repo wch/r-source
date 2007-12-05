@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-23 r41677)
+R version 2.7.0 Under development (unstable) (2007-12-05 r43598)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -699,7 +699,7 @@ x             0.9653     0.0743   12.99  1.4e-10 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 1.92 on 18 degrees of freedom
-Multiple R-Squared: 0.904,	Adjusted R-squared: 0.898 
+Multiple R-squared: 0.904,	Adjusted R-squared: 0.898 
 F-statistic:  169 on 1 and 18 DF,  p-value: 1.39e-10 
 
 > fm1 <- lm(y ~ x, data=dummy, weight=1/w^2)
@@ -720,7 +720,7 @@ x             0.9721     0.0664   14.64  1.9e-11 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.72 on 18 degrees of freedom
-Multiple R-Squared: 0.922,	Adjusted R-squared: 0.918 
+Multiple R-squared: 0.922,	Adjusted R-squared: 0.918 
 F-statistic:  214 on 1 and 18 DF,  p-value: 1.94e-11 
 
 > attach(dummy)

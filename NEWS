@@ -33,6 +33,8 @@ BUG FIXES
 
     o	rbinom(n, size, *) gave NaN when 'size > .Machine$integer.max'.
 
+    o	print.summary.lm() is now consistent in spelling of "R-squared".
+
 
 
 		CHANGES IN R VERSION 2.6.1

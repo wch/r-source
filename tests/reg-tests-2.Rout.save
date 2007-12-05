@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2007-09-11 r42820)
+R version 2.6.1 Patched (2007-12-05 r43598)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2369,7 +2369,7 @@ x2                NA         NA      NA       NA
 x3            0.2587     0.3509   0.737    0.485
 
 Residual standard error: 0.8063 on 7 degrees of freedom
-Multiple R-Squared: 0.9326,	Adjusted R-squared: 0.9134 
+Multiple R-squared: 0.9326,	Adjusted R-squared: 0.9134 
 F-statistic: 48.43 on 2 and 7 DF,  p-value: 7.946e-05 
 
 Correlation of Coefficients:
