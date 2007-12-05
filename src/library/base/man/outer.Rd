@@ -26,13 +26,15 @@ X \%o\% Y
   \item{\dots}{optional arguments to be passed to \code{FUN}.}
 }
 \details{
-  \code{FUN} must be a function (or the name of it) which expects at
-  least two arguments and which operates elementwise.
-
   \code{X} and \code{Y} must be suitable arguments for \code{FUN}.  Each
   will be extended by \code{\link{rep}} to length the products of the
   lengths of \code{X} and \code{Y} before \code{FUN} is called.
     
+  \code{FUN} is called with these two extended vectors as
+  arguments. Therefore, it must be a vectorized function (or the
+  name of one), expecting at
+  least two arguments.
+
   Where they exist, the [dim]names of \code{X} and \code{Y} will be
   copied to the answer, and a dimension assigned which is the
   concatenation of the dimensions of \code{X} and \code{Y} (or lengths
@@ -54,7 +56,8 @@ X \%o\% Y
 \seealso{
   \code{\link{\%*\%}} for usual (\emph{inner}) matrix vector
   multiplication;
-  \code{\link{kronecker}} which is based on \code{outer}.
+  \code{\link{kronecker}} which is based on \code{outer};
+  \code{\link{Vectorize}} for vectorizing a non-vectorized function.
 }
 \examples{
 x <- 1:9; names(x) <- x
