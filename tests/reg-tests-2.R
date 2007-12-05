@@ -2252,3 +2252,13 @@ cor(X, use = "pair")
 cor(X, use = "pair", method="spearman")
 cor(X, use = "pair", method="kendall")
 ## not consistent in 2.6.x
+
+
+## confint on rank-deficient models (in part, PR#10494)
+junk <- data.frame(x = rep(1, 10L),
+                   u = factor(sample(c("Y", "N"), 10, replace=TRUE)),
+                   ans = rnorm(10))
+fit <-  lm(ans ~ x + u, data = junk)
+confint(fit)
+confint.default(fit)
+## Mismatch gave NA for 'u' in 2.6.1

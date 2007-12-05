@@ -195,6 +195,9 @@ BUG FIXES
 
     o	print.summary.lm() is now consistent in spelling of "R-squared".
 
+    o	confint() misreported on some rank-deficient lm() models.
+	(PR#10496)  Could also occur in the default method.
+
 
 
 		CHANGES IN R VERSION 2.6.1

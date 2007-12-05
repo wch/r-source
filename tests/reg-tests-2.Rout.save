@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2007-12-05 r43598)
+R version 2.7.0 Under development (unstable) (2007-12-05 r43599)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6124,4 +6124,22 @@ Error in cor(X, use = "complete", method = "kendall") :
 [2,]   NA  1.0000000 -0.3333333
 [3,]   NA -0.3333333  1.0000000
 > ## not consistent in 2.6.x
+> 
+> 
+> ## confint on rank-deficient models (in part, PR#10494)
+> junk <- data.frame(x = rep(1, 10L),
++                    u = factor(sample(c("Y", "N"), 10, replace=TRUE)),
++                    ans = rnorm(10))
+> fit <-  lm(ans ~ x + u, data = junk)
+> confint(fit)
+                2.5 %   97.5 %
+(Intercept) -1.442871 1.553126
+x                  NA       NA
+uY          -2.548846 1.688133
+> confint.default(fit)
+                2.5 %   97.5 %
+(Intercept) -1.218080 1.328335
+x                  NA       NA
+uY          -2.230944 1.370232
+> ## Mismatch gave NA for 'u' in 2.6.1
 > 
