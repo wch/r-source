@@ -31,7 +31,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   another or the same file.
   
   Profiling works by writing out the call stack every \code{interval}
-  seconds, to the file specified. Either the \code{\link{summaryRprof}}
+  seconds, to the file specified.  Either the \code{\link{summaryRprof}}
   function or the Perl script \code{R CMD Rprof} can be used to process
   the output file to produce a summary of the
   usage; use \code{R CMD Rprof --help} for usage information.
@@ -48,13 +48,14 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
 #endif
 #ifdef unix
   Note that the timing interval cannot be too small: once the timer goes
-  off, the information is not recorded until the timing click.
-  (probably every in the range 1--10msecs).
+  off, the information is not recorded until the next timing click
+  (probably in the range 1--10msecs).
 #endif
 }
 \note{
 #ifdef windows
-  Using \code{R CMD Rprof} needs Windows Perl to be installed.
+  Using \code{R CMD Rprof} needs Windows Perl to be installed: this can
+  be installed from \code{Rtools.exe}.
 #endif
 #ifdef unix
   Profiling is not available on all platforms.  By default, it is
