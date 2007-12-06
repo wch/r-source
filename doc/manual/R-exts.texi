@@ -589,22 +589,22 @@ The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
 can have one of three types as indicated by their extension: plain R
 code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
-@file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
-(All ports of @R{} use the same binary (XDR) format and can read
-compressed images.  Use images saved with @code{save(, compress =
-TRUE)}, the default, to save space.)  Note that R code should be
-``self-sufficient'' and not make use of extra functionality provided by
-the package, so that the data file can also be used without having to
-load the package.  It is no longer necessary to provide a @file{00Index}
-file in the @file{data} directory---the corresponding information is
-generated automatically from the documentation sources when installing
-from source, or when using the package builder (@pxref{Checking and
-building packages}).  If your data files are enormous you can speed up
-installation by providing a file @file{datalist} in the @file{data}
-subdirectory.  This should have one line per topic that @code{data()}
-will find, in the format @samp{foo} if @code{data(foo)} provides
-@samp{foo}, or @samp{foo: bar bah} if @code{data(foo)} provides
-@samp{bar} and @samp{bah}.
+@file{.csv}, see @command{?data} for the file formats), or @code{save()}
+images (@file{.RData} or @file{.rda}).  (All ports of @R{} use the same
+binary (XDR) format and can read compressed images.  Use images saved
+with @code{save(, compress = TRUE)}, the default, to save space.)  Note
+that R code should be ``self-sufficient'' and not make use of extra
+functionality provided by the package, so that the data file can also be
+used without having to load the package.  It is no longer necessary to
+provide a @file{00Index} file in the @file{data} directory---the
+corresponding information is generated automatically from the
+documentation sources when installing from source, or when using the
+package builder (@pxref{Checking and building packages}).  If your data
+files are enormous you can speed up installation by providing a file
+@file{datalist} in the @file{data} subdirectory.  This should have one
+line per topic that @code{data()} will find, in the format @samp{foo} if
+@code{data(foo)} provides @samp{foo}, or @samp{foo: bar bah} if
+@code{data(foo)} provides @samp{bar} and @samp{bah}.
 
 The @file{demo} subdirectory is for @R{} scripts (for running via
 @code{demo()}) that demonstrate some of the functionality of the

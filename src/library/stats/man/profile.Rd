@@ -29,6 +29,6 @@ profile(fitted, \dots)
   \code{\link[MASS:confint]{profile.glm}} in package \pkg{MASS},
   \ldots
 
-  For profiling code, see \code{\link{Rprof}}.
+  For profiling R code, see \code{\link{Rprof}}.
 }
 \keyword{models}
