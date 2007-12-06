@@ -1998,11 +1998,11 @@ Windows.)  64-bit builds have much larger limits.
 @item
 Because the pointers are larger, @R{}'s basic structure (the cons cell)
 is larger (normally twice the size).  This means that @R{} objects take
-more space and more time to manipulate, especially during garbage
-collection.  So 64-bit versions of @R{} will typically run slower than
-32-bit versions.  (On Sparc Solaris the difference was 15-20%, on
-@cputype{x86_64} around 10%.)
-
+more space and (usually) more time to manipulate.  So 64-bit versions of
+@R{} will typically run slower than 32-bit versions.  (On Sparc Solaris
+the difference was 15-20%, on Linux on Opteron around 10%.  The pattern
+is not universal on Intel Core 2 Duo the 64-bit version is around 10%
+faster on both Linux and Mac OS X.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
