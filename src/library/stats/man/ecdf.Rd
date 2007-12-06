@@ -61,12 +61,15 @@ ecdf(x)
   \code{\link{approxfun}} and \code{\link{splinefun}}.
 }
 \examples{
-##-- Simple didactical  ecdf  example:
-Fn <- ecdf(rnorm(12))
-Fn
+##-- Simple didactical  ecdf  example :
+x <- rnorm(12)
+Fn <- ecdf(x)
+Fn     # a *function*
+Fn(x)  # returns the percentiles for x
 tt <- seq(-2,2, by = 0.1)
-12* Fn(tt) # Fn is a 'simple' function {with values k/12}
+12 * Fn(tt) # Fn is a 'simple' function {with values k/12}
 summary(Fn)
+##--> see below for graphics
 knots(Fn)# the unique data values {12 of them if there were no ties}
 
 y <- round(rnorm(12),1); y[3] <- y[1]
