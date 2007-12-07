@@ -399,6 +399,12 @@ static RETSIGTYPE handleInterrupt(int dummy)
     signal(SIGINT, handleInterrupt);
 }
 
+static RETSIGTYPE handlePipe(int dummy)
+{
+    signal(SIGPIPE, handlePipe);
+    error("ignoring SIGPIPE signal");    
+}
+
 
 #ifdef Win32
 static int num_caught = 0;
@@ -617,7 +623,7 @@ static void init_signal_handlers()
     signal(SIGINT,  handleInterrupt);
     signal(SIGUSR1, onsigusr1);
     signal(SIGUSR2, onsigusr2);
-    signal(SIGPIPE, SIG_IGN);
+    signal(SIGPIPE, handlePipe);
 }
 
 #else /* not sigaltstack and sigaction and sigemptyset*/
@@ -627,7 +633,7 @@ static void init_signal_handlers()
     signal(SIGUSR1, onsigusr1);
     signal(SIGUSR2, onsigusr2);
 #ifndef Win32
-    signal(SIGPIPE, SIG_IGN);
+    signal(SIGPIPE, handlePipe);
 #else
     signal(SIGSEGV, win32_segv);
     signal(SIGILL, win32_segv);
