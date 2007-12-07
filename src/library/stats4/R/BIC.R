@@ -14,10 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## just setGeneric("AIC") should work, but gets into problems
-## with no methods to export
-setGeneric("AIC", useAsDefault=function(object, ..., k = 2)
-           stats::AIC(object, ..., k = k))
+## created for use in other packages, e.g. flexmix
+setGeneric("AIC")
 
 setGeneric("BIC", function(object, ...) standardGeneric("BIC"))
 

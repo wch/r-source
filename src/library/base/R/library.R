@@ -119,6 +119,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
             gen <- gen[from != ".GlobalEnv"]
+            ## kludge for implicit generic in package with no methods
+            if(package == "stats4") gen <- c("AIC", gen)
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
