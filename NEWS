@@ -157,6 +157,12 @@ BUG FIXES
 	error in the computations, e.g. an invalid value for an
 	attribute being set.
 
+    o	The AIC S4 generic in package stats4 no longer disables
+	dispatch of S3 methods for AIC.
+
+    o	Supplying edit.row.names = TRUE when editing a matrix without
+	row names is now an error and not a segfault. (PR#10500)
+
 
 
 	**************************************************

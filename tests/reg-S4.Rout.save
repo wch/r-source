@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-09-04 r42757)
+R version 2.7.0 Under development (unstable) (2007-12-06 r43609)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -625,4 +625,19 @@ Creating a new generic function for "as.vector" in ".GlobalEnv"
 In method for function "as.vector": expanding the signature 
 to include omitted arguments in definition: mode = "missing" 
 [1] "as.vector"
+> 
+> ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
+> pfit <- function(data) {
++     m <- mean(data)
++     loglik <- sum(dpois(data, m))
++     ans <- list(par = m, loglik = loglik)
++     class(ans) <- "pfit"
++     ans
++ }
+> AIC.pfit <- function(object, ..., k = 2) -2*object$loglik + k
+> AIC(pfit(1:10))
+[1] 0.05867604
+> library(stats4)
+> AIC(pfit(1:10)) # failed in R < 2.7.0
+[1] 0.05867604
 > 
