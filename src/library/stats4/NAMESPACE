@@ -1,6 +1,7 @@
 export(mle) # exporting methods implicitly exports the generics
 importFrom(graphics, plot)
-importFrom(stats, coef, confint, logLik, optim, profile,
+## need AIC to make an implicit generic from
+importFrom(stats, AIC, coef, confint, logLik, optim, profile,
 	   qchisq, update, vcov)
 
 ## S4
