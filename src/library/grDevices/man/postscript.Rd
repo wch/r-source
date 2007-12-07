@@ -107,30 +107,6 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   file.  This file can then be printed on a suitable device to obtain
   hard copy.
 
-  A postscript plot can be printed via \code{postscript} in two ways.
-  \enumerate{
-    \item Setting \code{print.it = TRUE} causes the command given in
-    argument \code{command} to be called with argument \code{"file"}
-    when the device is closed.  Note that the plot file is not deleted
-    unless \code{command} arranges to delete it.
-
-    \item \code{file=""} or \code{file="|cmd"} can be used to print
-    using a pipe on systems that support \file{popen}.  Failure to open the
-    command will probably be reported to the terminal but not to
-    \file{popen}, in which case close the device by \code{dev.off}
-    immediately.
-  }
-#ifdef windows
-  Only the first of these will work on Windows, and the default
-  \code{"printcmd"} is empty and will give an error if
-  \code{print.it=TRUE} is used.  Suitable commands to spool a PostScript
-  file to a printer can be found in \file{RedMon} suite available from
-  \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
-  run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
-  which may be even more convenient (it requires GhostScript version 6.0
-  or later).
-#endif
-
   The \code{file} argument is interpreted as a C integer format as used
   by \code{\link{sprintf}}, with integer argument the page number.
   The default gives files \file{Rplot001.ps}, \dots, \file{Rplot999.ps},
@@ -295,6 +271,32 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   interpretation of the RGB or CMYK color spaces, and the simplest
   possible conversion to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
+}
+
+\section{Printing}{
+  A postscript plot can be printed via \code{postscript} in two ways.
+  \enumerate{
+    \item Setting \code{print.it = TRUE} causes the command given in
+    argument \code{command} to be called with argument \code{"file"}
+    when the device is closed.  Note that the plot file is not deleted
+    unless \code{command} arranges to delete it.
+
+    \item \code{file=""} or \code{file="|cmd"} can be used to print
+    using a pipe on systems that support \file{popen}.  Failure to open the
+    command will probably be reported to the terminal but not to
+    \file{popen}, in which case close the device by \code{dev.off}
+    immediately.
+  }
+#ifdef windows
+  Only the first of these will work on Windows, and the default
+  \code{"printcmd"} is empty and will give an error if
+  \code{print.it=TRUE} is used.  Suitable commands to spool a PostScript
+  file to a printer can be found in \file{RedMon} suite available from
+  \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
+  run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
+  which may be more convenient (it requires GhostScript version 6.0
+  or later).
+#endif
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
