@@ -20,8 +20,9 @@
   \item{name}{A data frame or matrix.}
   \item{factor.mode}{How to handle factors (as integers or using
     character levels) in a data frame.}
-  \item{edit.row.names}{logical. Show the row names be displayed as
-    a separate editable column?}
+  \item{edit.row.names}{logical. Show the row names (if they exist) be
+    displayed as a separate editable column?  It is an error to ask for
+    this on a matrix with \code{NULL} row names.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
