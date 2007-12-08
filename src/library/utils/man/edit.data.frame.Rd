@@ -17,7 +17,7 @@
 \method{edit}{matrix}(name, edit.row.names = !is.null(dn[[1]]), \dots)
 }
 \arguments{
-  \item{name}{A data frame or matrix.}
+  \item{name}{A data frame or (numeric, logical or characer) matrix.}
   \item{factor.mode}{How to handle factors (as integers or using
     character levels) in a data frame.}
   \item{edit.row.names}{logical. Show the row names (if they exist) be
@@ -27,24 +27,29 @@
 }
 \details{
   At present, this only works on simple data frames containing numeric,
-  logical or character vectors and factors.  Factors are represented in the
-  spreadsheet as either numeric vectors (which is more suitable for data
-  entry) or character vectors (better for browsing). After editing,
-  vectors are padded with \code{NA} to have the same length and
-  factor attributes are restored.  The set of factor levels can not be
-  changed by editing in numeric mode; invalid levels are changed to
-  \code{NA} and a warning is issued.  If new factor levels are
-  introduced in character mode, they are added at the end of the list of
-  levels in the order in which they encountered.
+  logical or character vectors and factors, and numeric, logical or
+  character matrices.  Any other mode of matrix will give an error, and
+  a warnng is givne when the matrix has a class (which will be discarded).
+
+  Data frame columns are coerced on input to \bold{numeric} unless logical,
+  character or factor.  This may well not be what you want!  A warning is
+  given when classes are discarded.
+
+  Factors columns are represented in the spreadsheet as either numeric
+  vectors (which are more suitable for data entry) or character vectors
+  (better for browsing). After editing, vectors are padded with
+  \code{NA} to have the same length and factor attributes are restored.
+  The set of factor levels can not be changed by editing in numeric
+  mode; invalid levels are changed to \code{NA} and a warning is issued.
+  If new factor levels are introduced in character mode, they are added
+  at the end of the list of levels in the order in which they
+  encountered.
 
   It is possible to use the data-editor's facilities to select the mode
   of columns to swap between numerical and factor columns in a data
   frame.  Changing any column in a numerical matrix to character will
   cause the result to be coerced to a character matrix.  Changing 
   the mode of logical columns is not supported.
-
-  The columns are coerced on input to numeric unless logical, character
-  or factor (which may well not be what you want).
 
   For a data frame, the row names will be taken from the original object
   if \code{edit.row.names = FALSE} and the number of rows is unchanged,
