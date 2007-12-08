@@ -23,7 +23,9 @@ fix(x, \dots)
   for editing.
 
   Editing an \R object may change it in ways other than are obvious: see
-  the comment under \code{\link{edit}}.
+  the comment under \code{\link{edit}}.  See
+  \code{\link{edit.data.frame}} for changes that can occur when editing
+  a data frame or matrix.
 }
 \seealso{
   \code{\link{edit}},

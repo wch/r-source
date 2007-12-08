@@ -46,10 +46,10 @@ xedit(name = NULL, file = "")
   \code{data.entry} is available.
 
   It is important to realize that \code{edit} does not change the object
-  called \code{name}. Instead, a copy of name is made and it is that copy
-  which is changed. Should you want the changes to apply to the object
-  \code{name} you must assign the result of \code{edit} to
-  \code{name}. (Try \code{\link{fix}} if you want to make permanent
+  called \code{name}. Instead, a copy of name is made and it is that
+  copy which is changed.  Should you want the changes to apply to the
+  object \code{name} you must assign the result of \code{edit} to
+  \code{name}.  (Try \code{\link{fix}} if you want to make permanent
   changes to an object.)
   
   In the form \code{edit(name)},
@@ -64,7 +64,9 @@ xedit(name = NULL, file = "")
   editing can differ in subtle ways from that deparsed: see
   \code{\link{dput}} and \code{\link{.deparseOpts}}. (The deparse options
   used are the same as the defaults for \code{dump}.)  Editing a
-  function will preserve its environment.
+  function will preserve its environment.  See
+  \code{\link{edit.data.frame}} for further changes that can occur when
+  editing a data frame or matrix.
   
   Currently only the internal editor in Windows makes use of the 
   \code{title} option; it displays the given name in the window 
