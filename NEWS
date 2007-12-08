@@ -9,15 +9,19 @@
 		CHANGES IN R VERSION 2.6.1 patched
 
 
+NEW FEATURES
+
+    o	colnames(DF) is now also fast for large dataframes DF with
+	automatic row.names.  Note that the correct usage is
+	names(DF).  (PR#10470)
+
+
 BUG FIXES
 
     o	A compilation problem on one system where glob was not found
 	has been corrected.  (PR#10468)
 
-    o	plot.profile.nls() was losing the x axis labels
-
-    o	colnames(df) is now also fast for dataframes with long automatic
-	rownames.  (PR#10470)
+    o	The "profile.nls" method of plot() was losing the x axis labels.
 
     o	array() computed the total number of entries in the array before
 	coercing the dimensions to integer.  (Reported by Allen McIntosh.)
@@ -28,15 +32,16 @@ BUG FIXES
     o	source("clipboard", echo=TRUE) and file("clipboard", open="rt")
 	gave spurious errors.  (Reported by Fernando Saldanha.)
 
-    o	attributes<-() stripped old attributes before checking that
-	all elements of the right-hand side had names.
+    o	attributes<-() stripped any existing attributes before checking
+	that all elements of the right-hand side had names.
 
     o	rbinom(n, size, *) gave NaN when 'size > .Machine$integer.max'.
 
-    o	print.summary.lm() is now consistent in spelling of "R-squared".
+    o	print.summary.lm() is now consistent in the capitalization of
+	"R-squared".
 
     o	confint() misreported on some rank-deficient lm() models.
-	(PR#10496)  Could also occur in the default method.
+	(PR#10496)  This could also occur in the default method.
 
 
 
