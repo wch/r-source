@@ -38,6 +38,13 @@ OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/LGPL-3
 
+Name: GNU Affero General Public License
+Abbrev: AGPL
+Version: 3
+SSS: AGPL-3
+FSF: free_and_GPL_compatible
+URL: http://www.R-project.org/Licenses/AGPL-3
+
 Name: Apache License
 Version: 1.0
 OSI: open

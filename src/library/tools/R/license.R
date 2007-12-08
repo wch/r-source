@@ -47,8 +47,7 @@ function()
                  do.call(paste,
                          c(license_db[has_abbrev & has_version,
                                       c("Abbrev", "Version")],
-                           list(sep = "-"))),
-                 "AGPL-3"))
+                           list(sep = "-")))))
     license_names_or_abbrevs_without_version <-
         Filter(nzchar,
                unlist(subset(license_db, Version == "",
@@ -134,7 +133,6 @@ license_regexps <- .make_license_regexps()
       ## and GNU Lesser General Public License 2.1.
       "Lesser GPL Version 2 or later.",
       ## These are variants of GPL 2.0 which does not exist:
-      "GNU GPL v. 2.0 or later",
       "GNU GPL v2.0 or greater",
       "GNU General Public License 2.0.",
       "GNU Public Licence 2.0 or above at your convenience", 
@@ -148,9 +146,8 @@ license_regexps <- .make_license_regexps()
       "GPL 2.0 or newer",
       "GPL version 2.0",
       "GPL version 2.0 or later",
+      "GPL version 2.0 or newer",
       "GPL2.0",
-      ## These are variants of GPL 2.1 which does not exist:
-      "GPL version 2.1 or newer",
       ## CeCILL is a bit of a mess: the current version is referred to
       ## as "version 2" (http://www.cecill.info/licences.en.html) but
       ## internally uses "Version 2.0 dated 2006-09-05"
@@ -171,14 +168,12 @@ license_regexps <- .make_license_regexps()
       "GNU Public License",
       "GPL version 2 or later", 
       "GPL ( version 2 or later)",
-      "GPL (GNU Public Licence) version 2 or later", 
       "GPL (GNU Public Licence), Version 2 or later",
       "GPL (Version 2 or above)", 
       "GPL (Version 2 or later)",
       "GPL (see COPYING)", 
       "GPL (v.2 or later)",
       "GPL (version 2 or higher)",
-      "GPL (version 2 or higher; see LICENSE)", 
       "GPL (version 2 or later)",
       "GPL (version 2 or later).", 
       "GPL (version 2 or later, see the included file GPL)",
@@ -187,7 +182,6 @@ license_regexps <- .make_license_regexps()
       "GPL 2",
       "GPL 2 or above", 
       "GPL 2 or later",
-      "GPL 2 or newer",
       "GPL 3.0 Affero (with attribution)", 
       "GPL AFFERO 3.0 (with citation)",
       "GPL Version 2",
@@ -221,8 +215,6 @@ license_regexps <- .make_license_regexps()
       "GPL vesion 2 or newer",
       "GPL2", 
       "Gnu GPL",
-      "LGPL (Lesser GNU Public Licence)",
-      "LGPL (Lesser GNU Public License)", 
       "LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).", 
       "LGPL 2.1",
       "LGPL >= 2.0",
@@ -237,7 +229,6 @@ license_regexps <- .make_license_regexps()
       "X11 (http://www.x.org/Downloads_terms.html)",
       "use under GPL2, or see file LICENCE",
       "GNU GPL",
-      "GNU General Public License (GNU GPL)",
       "GPL (version 2 or later) See file LICENCE.",
       "GPL 2.",
       "GPL Version 2 (or later)",
@@ -251,7 +242,8 @@ license_regexps <- .make_license_regexps()
       "GPL version 2 or higher",
       "GPL, version 2",
       "GPL2 or later",
-      "LGPL version 2.1"
+      "LGPL version 2.1",
+      "caBIG"
 )
 
 analyze_license <-

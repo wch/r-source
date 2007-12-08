@@ -270,7 +270,7 @@ vertical bars.  Individual specifications must be one of
 @item
 One of the ``standard'' short specifications
 @example
-GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 Artistic-1.0 Artistic-2.0
+GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-1.0 Artistic-2.0
 @end example
 as made available via @url{http://@/www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the R source or home
