@@ -21,8 +21,8 @@ Rdindex(RdFiles, outFile = "", type = NULL,
     for creating the index, either by giving the paths to the files, or
     the path to a single directory with the sources of a package.}
   \item{outFile}{a connection, or a character string naming the output
-    file to print to.  \code{""} (the default) indicates output is to
-    the console.}
+    file to print to.  \code{""} (the default) indicates output to the
+    console.}
   \item{type}{a character string giving the documentation type of the Rd
     files to be included in the index, or \code{NULL} (the default).
     The type of an Rd file is typically specified via the

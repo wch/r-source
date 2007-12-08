@@ -33,7 +33,7 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
   \code{\link{regexpr}} for \sQuote{simple} pattern matching.
 }
 \examples{
-x <- c("\\value{foo}", "function(bar)")
+x <- c("\\\\value{foo}", "function(bar)")
 delimMatch(x)
 delimMatch(x, c("(", ")"))
 }

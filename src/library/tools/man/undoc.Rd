@@ -25,7 +25,7 @@ undoc(package, dir, lib.loc = NULL)
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
-    to search for \code{package}.}
+    search for \code{package}.}
 }
 \details{
   This function is useful for package maintainers mostly.  In principle,
@@ -34,7 +34,7 @@ undoc(package, dir, lib.loc = NULL)
   The \pkg{base} package is special as it contains the primitives and
   these do not have definitions available at code level.  We provide
   equivalent closures in environments \code{.ArgsEnv} and
-  \code{GenericArgsEnv} in the \pkg{base} package that are used
+  \code{.GenericArgsEnv} in the \pkg{base} package that are used
   for various purposes: \code{undoc("base")} checks that all the
   primitives that are not language constructs are prototyped in those
   environments and no others are.

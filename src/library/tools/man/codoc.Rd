@@ -34,7 +34,7 @@ codocData(package, lib.loc = NULL)
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
-    to search for \code{package}.}
+    search for \code{package}.}
   \item{use.values}{if \code{FALSE}, do not use function default values
     when comparing code and docs.  Otherwise, compare \emph{all} default
     values if \code{TRUE}, and only the ones documented in the usage
@@ -54,15 +54,16 @@ codocData(package, lib.loc = NULL)
   name of the generic rather than the method.
 
   The following algorithm is used.  If an installed package is used, it
-  is loaded (unless it is the base package), after possibly detaching an
-  already loaded version of the package.  Otherwise, if the sources are
-  used, the \R code files of the package are collected and sourced in a
-  new environment.  Then, the usage sections of the Rd files are
-  extracted and parsed \sQuote{as much as possible} to give the formals
-  documented.  For interpreted functions in the code environment, the
-  formals are compared between code and documentation according to the
-  values of the argument \code{use.values}.  Synopsis sections are used
-  if present; their occurrence is reported if \code{verbose} is true.
+  is loaded (unless it is the \pkg{base} package), after possibly
+  detaching an already loaded version of the package.  Otherwise, if the
+  sources are used, the \R code files of the package are collected and
+  sourced in a new environment.  Then, the usage sections of the Rd
+  files are extracted and parsed \sQuote{as much as possible} to give
+  the formals documented.  For interpreted functions in the code
+  environment, the formals are compared between code and documentation
+  according to the values of the argument \code{use.values}.  Synopsis
+  sections are used if present; their occurrence is reported if
+  \code{verbose} is true.
 
   If a package has a name space both exported and unexported objects are
   checked, as well as registered S3 methods.  (In the unlikely event of
@@ -80,9 +81,9 @@ codocData(package, lib.loc = NULL)
   handles slot names for classes in documentation objects obtained by
   editing shells created by \code{\link{promptClass}}.
 
-  Help files named \code{pkg_name-defunct.Rd} for the appropriate
-  \code{pkg_name} are checked more loosely, as they may have
-  undocumented arguments.
+  Help files named \file{\var{pkgname}-defunct.Rd} for the
+  appropriate \var{pkgname} are checked more loosely, as they may
+  have undocumented arguments.
 }
 \value{
   \code{codoc} returns an object of class \code{"codoc"}.  Currently,

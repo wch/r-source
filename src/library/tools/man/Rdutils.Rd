@@ -21,7 +21,7 @@ Rd_parse(file, text = NULL)
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
-    to search for \code{package}.}
+    search for \code{package}.}
   \item{file}{a connection, or a character string giving the name of a
     file or a URL to read documentation in Rd format from.}
   \item{text}{character vector with documentation in Rd format.

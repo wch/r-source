@@ -22,14 +22,14 @@ checkFF(package, dir, file, lib.loc = NULL,
   \item{package}{a character string naming an installed package.  If
     given, the installed R code of the package is checked.}
   \item{dir}{a character string specifying the path to a package's root
-    source directory.  This should contain the subdirectory \code{R}
+    source directory.  This should contain the subdirectory \file{R}
     (for R code).  Only used if \code{package} is not given.}
   \item{file}{the name of a file containing R code to be checked.  Used
     if neither \code{package} nor \code{dir} are given.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
-    to search for \code{package}.}
+    search for \code{package}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed (and the result is returned invisibly).}
 }

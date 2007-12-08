@@ -28,9 +28,9 @@ xgettext2pot(dir, potFile)
   \item{asCall}{logical: if \code{TRUE} each argument is returned whole,
     otherwise the strings within each argument are extracted.}
 
-  \item{potFile}{name of \code{po} template file to be
-    produced. Defaults to \code{"R-pkg.pot"} where \code{pkg} is the
-    basename of \code{dir}.}
+  \item{potFile}{name of \code{po} template file to be produced.
+    Defaults to \code{"R-\var{pkgname}.pot"} where
+    \var{pkgname} is the basename of \code{dir}.}
 }
 \details{
   Leading and trailing white space (space, tab and linefeed) is removed
@@ -50,13 +50,13 @@ xgettext2pot(dir, potFile)
   for \code{ngettext} calls (and the rules are not stated in the Gettext
   manual).
 
-  If applied to the \code{base} package, this also looks in the \code{.R}
+  If applied to the \pkg{base} package, this also looks in the \file{.R}
   files in \file{R\_HOME/share/R}.
 }
 \value{
   For \code{xgettext}, a list of objects of class \code{"xgettext"}
   (which has a \code{print} method), one per source file that
-  potentially contains translatable strings
+  potentially contains translatable strings.
 
   For \code{xngettext}, a list of objects of class \code{"xngettext"},
   which are themselves lists of length-2 character strings.
