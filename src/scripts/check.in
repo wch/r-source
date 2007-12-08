@@ -182,6 +182,7 @@ $R_check_force_suggests =
 $R_check_force_suggests =
     $R_check_force_suggests ? "true" : "false";
 $ENV{"_R_CHECK_FORCE_SUGGESTS_"} = $R_check_force_suggests;
+## </FIXME>
 ## </NOTE>
 
 $opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
@@ -281,7 +282,7 @@ foreach my $pkg (@ARGV) {
 	my $pkgq = &shell_quote_file_path($pkg);
 	my $dirq = &shell_quote_file_path($dir);
 	if(R_system("$gzip -dc $pkgq | $tar -xf - -C $dirq")) {
-	    die "Error: cannot untar $pkg\n";}
+	    die "Error: cannot untar '$pkg'\n";}
 	$pkg = &file_path($dir, $pkgname);
     }
 
@@ -613,7 +614,7 @@ foreach my $pkg (@ARGV) {
 			    @lines = &read_lines($out);
 			    open(FILE, "> $out")
 				or die "Error: cannot open file '$out' for re-writing\n";
-			    foreach $line (@lines) {
+			    foreach my $line (@lines) {
 				$line =~ s/\r$//;
 				print FILE $line, "\n";
 			    }
@@ -884,8 +885,7 @@ sub check_pkg {
 	    push(@bad_files, $file_path);
 	} elsif(dirname($file_path) =~ /man$/) {
 	    ## perhaps use ranges here, /([^ -~]|%)/ ?
-	    my $ch;
-	    foreach $ch (split //, $file_name) {
+	    foreach my $ch (split //, $file_name) {
 		## collation is ASCII as 'use locale' is not in effect.
 		if ($ch eq "%" || $ch lt " " || $ch gt "~")  {
 		    push(@bad_files, $file_path);
@@ -1521,11 +1521,8 @@ sub check_pkg {
 	}
     }
 
-    ## Check R code for possible problems using LT's codetools package
-    ## Activated only via setting the internal environment variable
-    ## _R_CHECK_USE_CODETOOLS_ to something "true".
-
-    ## Also do the library.dynam() tests here.
+    ## Check R code for possible problems, including tests based on LT's
+    ## codetools package.
 
     if(-d "R") {
 	$log->checking("R code for possible problems");
@@ -1944,13 +1941,12 @@ sub check_pkg {
 	    if (-f &file_path("src", "Makefile"));
 	push(@makefiles, &file_path("src", "Makefile.in")) 
 	    if (-f &file_path("src", "Makefile.in"));
-	foreach $f (@makefiles)
-	{
+	foreach my $f (@makefiles) {
 	    open(FILE, "< $f")
 		or die("Error: cannot open file '$f' for reading\n");
 	    while(<FILE>) {
 		if(/PKG_LIBS/ && /\$[\{\(]{0,1}BLAS_LIBS/ && !/FLIBS/) {
-		    $log->warning();
+		    $log->warning() unless $any;
 		    $any++;
 		    chomp;
 		    s/\r$//;  # some packages have CRLF terminators
