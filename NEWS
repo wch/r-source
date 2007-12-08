@@ -168,6 +168,9 @@ BUG FIXES
 	handler which will give an error message in circumstances
 	where none was given before.
 
+    o	The error handler in the parser reported unexpected 
+	& as && and | as ||.
+
 
 
 

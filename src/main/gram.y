@@ -1762,8 +1762,8 @@ static void yyerror(char *s)
 	"LE",		"'<='",
 	"EQ",		"'=='",
 	"NE",		"'!='",
-	"AND",		"'&&'",
-	"OR",		"'||'",
+	"AND",		"'& or &&'",
+	"OR",		"'| or ||'",
 	"NS_GET",	"'::'",
 	"NS_GET_INT",	"':::'",
 	0
