@@ -114,20 +114,19 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all.names = TRUE)
         if(!nogenerics) {
-            ## <FIXME>
-            ## this has traditionally excluded generics with methods.
+            ## this has traditionally excluded all generics with methods.
             ## But unless they are implicit generics, they are in conflict.
-            ## these <- objects(lib.pos, all.names = TRUE)
-            ## these <- these[substr(these, 1, 6) == ".__M__"]
-            ## gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
-            ## from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
-            ## gen <- gen[from != ".GlobalEnv"] # even same package!
-            ## </FIXME>
+            these <- objects(lib.pos, all.names = TRUE)
+            these <- these[substr(these, 1, 6) == ".__M__"]
+            gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
+            from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
+            gen <- gen[from != package]
             if(exists(".__IG__table", env, inherits = FALSE)) {
                 imp_gen <- ls(get(".__IG__table", env,inherits = FALSE),
                               all.names = TRUE)
-                ob <- ob[!(ob %in% imp_gen)]
+                gen <- c(gen, imp_gen)
             }
+            ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
 	ipos <- seq_along(sp)[-c(lib.pos,
