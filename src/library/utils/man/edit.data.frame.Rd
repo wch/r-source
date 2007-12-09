@@ -31,9 +31,9 @@
   character matrices.  Any other mode of matrix will give an error, and
   a warnng is givne when the matrix has a class (which will be discarded).
 
-  Data frame columns are coerced on input to \bold{numeric} unless logical,
-  character or factor.  This may well not be what you want!  A warning is
-  given when classes are discarded.
+  Data frame columns are coerced on input to \emph{character} unless
+  numeric (in the sense of \code{is.numeric}), logical or factor.  A
+  warning is given when classes are discarded.
 
   Factors columns are represented in the spreadsheet as either numeric
   vectors (which are more suitable for data entry) or character vectors

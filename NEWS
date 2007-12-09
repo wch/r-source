@@ -92,7 +92,11 @@ NEW FEATURES
 	rather than per month as before.
 
     o	The spreadsheet edit() methods (and used by fix()) for data
-	frames and matrices now warn when classes are discarded. 
+	frames and matrices now warn when classes are discarded.
+
+	When editing a data frame, columns of unknown type (that is
+	not numeric, logical, character or factor) are now converted
+	to character (instead of numeric).
 
 
 DEPRECATED & DEFUNCT
@@ -160,8 +164,8 @@ BUG FIXES
 	error in the computations, e.g. an invalid value for an
 	attribute being set.
 
-    o	The AIC S4 generic in package stats4 no longer disables
-	dispatch of S3 methods for AIC.
+    o	The AIC() S4 generic in package stats4 no longer disables
+	dispatch of S3 methods for AIC().
 
     o	Supplying edit.row.names = TRUE when editing a matrix without
 	row names is now an error and not a segfault. (PR#10500)

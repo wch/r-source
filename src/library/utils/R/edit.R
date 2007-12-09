@@ -30,7 +30,7 @@ View <- function (x, title)
     as.num.or.char <- function(x)
     {
         if (is.character(x)) x
-        else if(is.numeric(x)) {storage.mode(x) <- "double"; x}
+        else if (is.numeric(x)) {storage.mode(x) <- "double"; x}
         else as.character(x)
     }
     x0 <- as.data.frame(x)
@@ -77,10 +77,9 @@ edit.data.frame <-
 
     as.num.or.char <- function(x)
     {
-        ## Would as.character be a better default?  BDR 2000/5/3
-        if (is.character(x)) x
-        else if (is.logical(x) || (is.factor(x) && factor.mode == "character")) as.character(x)
-        else as.numeric(x)
+        if (is.numeric(x)) x
+        else if (is.factor(x) && factor.mode == "numeric") as.numeric(x)
+        else as.character(x)
     }
 
     attrlist <- lapply(name, attributes)
