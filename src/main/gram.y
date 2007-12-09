@@ -265,9 +265,10 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
 %token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
-%token		GT GE LT LE EQ NE AND OR
+%token		GT GE LT LE EQ NE AND OR AND2 OR2
 %token		NS_GET NS_GET_INT
 
+/* This is the precedence table, low to high */
 %left		'?'
 %left		LOW WHILE FOR REPEAT
 %right		IF
@@ -276,8 +277,8 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
 %left		'~' TILDE
-%left		OR
-%left		AND
+%left		OR OR2
+%left		AND AND2
 %left		UNOT NOT
 %nonassoc   	GT GE LT LE EQ NE
 %left		'+' '-'
@@ -338,6 +339,8 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	expr GT expr			{ $$ = xxbinary($2,$1,$3); }
 	|	expr AND expr			{ $$ = xxbinary($2,$1,$3); }
 	|	expr OR expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3); }
 
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1); }
@@ -1762,8 +1765,10 @@ static void yyerror(char *s)
 	"LE",		"'<='",
 	"EQ",		"'=='",
 	"NE",		"'!='",
-	"AND",		"'& or &&'",
-	"OR",		"'| or ||'",
+	"AND",		"'&'",
+	"OR",		"'|'",
+	"AND2",		"'&&'",
+	"OR2",		"'||'",
 	"NS_GET",	"'::'",
 	"NS_GET_INT",	"':::'",
 	0
@@ -2420,14 +2425,14 @@ static int token()
     case '&':
 	if (nextchar('&')) {
 	    yylval = install("&&");
-	    return AND;
+	    return AND2;
 	}
 	yylval = install("&");
 	return AND;
     case '|':
 	if (nextchar('|')) {
 	    yylval = install("||");
-	    return OR;
+	    return OR2;
 	}
 	yylval = install("|");
 	return OR;
@@ -2589,6 +2594,8 @@ static int yylex(void)
     case NE:
     case OR:
     case AND:
+    case OR2:
+    case AND2:
     case SPECIAL:
     case FUNCTION:
     case WHILE:
