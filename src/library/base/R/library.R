@@ -103,7 +103,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
     }
 
-    checkConflicts <- function(package, pkgname, pkgpath, nogenerics)
+    checkConflicts <- function(package, pkgname, pkgpath, nogenerics, env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
                        ".Random.seed", ".First.lib", ".Last.lib",
@@ -114,14 +114,20 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all.names = TRUE)
         if(!nogenerics) {
-            these <- objects(lib.pos, all.names = TRUE)
-            these <- these[substr(these, 1, 6) == ".__M__"]
-            gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
-            from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
-            gen <- gen[from != ".GlobalEnv"]
-            ## kludge for implicit generic in package with no methods
-            if(package == "stats4") gen <- c("AIC", gen)
-            ob <- ob[!(ob %in% gen)]
+            ## <FIXME>
+            ## this has traditionally excluded generics with methods.
+            ## But unless they are implicit generics, they are in conflict.
+            ## these <- objects(lib.pos, all.names = TRUE)
+            ## these <- these[substr(these, 1, 6) == ".__M__"]
+            ## gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
+            ## from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
+            ## gen <- gen[from != ".GlobalEnv"] # even same package!
+            ## </FIXME>
+            if(exists(".__IG__table", env, inherits = FALSE)) {
+                imp_gen <- ls(get(".__IG__table", env,inherits = FALSE),
+                              all.names = TRUE)
+                ob <- ob[!(ob %in% imp_gen)]
+            }
         }
         fst <- TRUE
 	ipos <- seq_along(sp)[-c(lib.pos,
@@ -321,13 +327,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               call. = FALSE, domain = NA)
                 else {
                     on.exit(do.call("detach", list(name = pkgname)))
-                    ## If there are generics then the package should
+                    ## If there are S4 generics then the package should
                     ## depend on methods
                     nogenerics <-
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
                     if(warn.conflicts &&
                        !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                        checkConflicts(package, pkgname, pkgpath, nogenerics)
+                        checkConflicts(package, pkgname, pkgpath,
+                                       nogenerics, ns)
 
                     if(!nogenerics && !identical(pkgname, "package:methods"))
                         methods::cacheMetaData(env, TRUE,
@@ -406,7 +413,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 !.isMethodsDispatchOn() || checkNoGenerics(env, package)
             if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                checkConflicts(package, pkgname, pkgpath, nogenerics)
+                checkConflicts(package, pkgname, pkgpath, nogenerics, env)
 
             if(!nogenerics && !identical(pkgname, "package:methods"))
                 methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)

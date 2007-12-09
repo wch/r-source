@@ -177,11 +177,12 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   functions as well as re-defining functions in other packages (notably
   \pkg{base}) to be generic, and this information is cached whenever
   such a package is loaded after \pkg{methods} and re-defined functions
-  are excluded from the list of conflicts.  The check requires looking
-  for a pattern of objects; the pattern search may be avoided by
-  defining an object \code{.noGenerics}
-  (with any value) in the package.  Naturally, if the package
-  \emph{does} have any such methods, this will prevent them from being used.
+  (\link{implicit generic}s) are excluded from the list of conflicts.
+  The caching  and check for conflicts require looking for a pattern of
+  objects; the search may be avoided by defining an object
+  \code{.noGenerics} (with any value) in the package.  Naturally, if the
+  package \emph{does} have any such methods, this will prevent them from
+  being used.
 }
 \section{Versioned installs}{
   Packages can be installed with version information by \code{R CMD

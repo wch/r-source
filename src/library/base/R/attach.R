@@ -32,6 +32,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
         }
         ob <- objects(db.pos, all.names = TRUE)
         if(.isMethodsDispatchOn()) {
+            ## <FIXME>: this is wrong-headed: see library().
             these <- objects(db.pos, all.names = TRUE)
             these <- these[substr(these, 1, 6) == ".__M__"]
             gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)

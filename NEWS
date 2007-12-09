@@ -178,6 +178,10 @@ BUG FIXES
     o	The error handler in the parser reported unexpected 
 	& as && and | as ||.
 
+    o	The conflicts check in library() excluded all S4 generics,
+	even where they were unrelated to the function masked.  It now
+	excludes only implicit generics.
+
 
 
 
