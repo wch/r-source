@@ -564,7 +564,7 @@ configured and recorded in @file{@var{R_HOME}/etc/Makeconf}), providing
 support for C, C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is
 not supported.  If you have Ratfor source code, you need to convert it
 to FORTRAN.  Only FORTRAN-77 (which we write in upper case) is supported
-on all platforms, but some also support Fortran-95 (for which we use
+on all platforms, but most also support Fortran-95 (for which we use
 title case).  If you want to ship Ratfor source files, please do so in a
 subdirectory of @file{src} and not in the main subdirectory.}, Objective
 C and Objective C++ with associated extensions @file{.c}, @file{.cc} or
@@ -956,7 +956,7 @@ A macro containing flags which are needed to circumvent
 over-optimization of FORTRAN code: it is typically @samp{-g -O2
 -ffloat-store} on @cputype{ix86} platforms using @command{g77} or
 @command{gfortran}.  Note that this is @strong{not} an additional flag
-to be used as part of @code{PKG_FFLAGS}, but a replacment for
+to be used as part of @code{PKG_FFLAGS}, but a replacement for
 @code{FFLAGS}, and that it is intended for the FORTRAN-77 compiler
 @samp{F77} and not necessarily for the Fortran 90/95 compiler @samp{FC}.
 See the example later in this section.
@@ -1177,8 +1177,8 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 code, and assumes all FORTRAN comes in source files with extension
 @file{.f}.  Commercial Unix systems typically use a F95 compiler, but
 only since the release of @code{gcc 4.0.0} in April 2005 have Linux and
-other non-commercial OSes had much support for F95.  The compiler used
-for @R{} on Windows is a F77 compiler.
+other non-commercial OSes had much support for F95.  Only wih @R{} 2.6.0
+did the Windows port adopt a Fortran 90 compiler.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
@@ -1197,16 +1197,6 @@ Fortran 90/95 features should use file extension @file{.f90} or
 specifies any special flags to be used.  There is no guarantee that
 compiled Fortran 90/95 code can be mixed with any other type of code,
 nor that a build of @R{} will have support for such packages.
-
-MinGW huilds of @command{gcc} @code{4.2.0} or later include a F95
-compiler.  For those using @command{gcc} @code{3.4.z}, there is a MinGW
-build of @command{gfortran} available from
-@url{http://@/gcc.gnu.org/@/wiki/@/GFortranBinaries} and a MinGW
-build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
-@file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
-Set @code{F95} in @code{MkRules} to point to the installed compiler.
-Then @command{R CMD SHLIB} and @command{R CMD INSTALL} will work for
-packages containing Fortran 90/95 source code.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
