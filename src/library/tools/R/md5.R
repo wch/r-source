@@ -29,9 +29,9 @@ md5sum <- function(files)
         file=file.path(outDir, "MD5"))
 }
 
-checkMD5sums <- function(pkg, dir)
+checkMD5sums <- function(package, dir)
 {
-    if(missing(dir)) dir <- .find.package(pkg, quiet=TRUE)
+    if(missing(dir)) dir <- .find.package(package, quiet=TRUE)
     if(!length(dir)) return(NA)
     md5file <- file.path(dir, "MD5")
     if(!file.exists(md5file)) return(NA)
