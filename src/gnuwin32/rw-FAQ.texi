@@ -137,9 +137,9 @@ release.
 @section How do I install R for Windows?
 
 We only support Windows 2000 or later.  There is no specific version for
-Windows 64, but the standard 32-bit version works well.  We only test on
+x64 Windows, but the standard 32-bit version works well.  We only test on
 versions of Windows currently supported by Microsoft, mainly on XP,
-Vista 64 and Windows Server 2003.
+Vista x64 and Windows Server 2003.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -1412,7 +1412,7 @@ To build R on 32-bit Windows you will need the tools from
 @uref{http://www.murdoch-sutherland.com/Rtools/} as well as some
 others.  See the `R Installation and Administration' manual.
 
-It is possible to cross-build R for Windows 64 using @code{binutils} and
+It is possible to cross-build R for Windows x64 using @code{binutils} and
 @code{gcc} with the @samp{x86_64-pc-mingw32} target, using suitable
 settings in @file{src/gnuwin32/MkRules} (see the comments there).
 However, at present that toolchain is experimental and the build does
