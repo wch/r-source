@@ -39,7 +39,7 @@
     values given via the \option{-g} command-line flag (\code{"X11"},
     \code{"Tk"}, \code{"none"} and perhaps others under alternative
     front-ends or embedded \R), \code{"AQUA"} (running under
-    \code{R.app} on MacOS X), \code{"RGui"} and \code{"RTerm"} (Windows).
+    \code{R.app} on MacOS X), \code{"Rgui"} and \code{"RTerm"} (Windows).
   }
   \item{endian}{
     character string, \code{"big"} or \code{"little"}, giving the
