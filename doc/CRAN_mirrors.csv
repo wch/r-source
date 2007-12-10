@@ -5,10 +5,11 @@ Argentina,Argentina,Mendoza,http://mirror.cricyt.edu.ar/r/,"CONICET, Mendoza",in
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien",CRAN@R-project.org,1,at
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association",patrick@wessa.net,1,be
 "Brazil (PR)",Brazil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>",1,br
-"Brazil (MG)",Brazil,Vicosa,http://www.insecta.ufv.br/CRAN/,"Federal University of Vicosa",,1,br
+"Brazil (MG)",Brazil,Vicosa,http://www.insecta.ufv.br/CRAN/,"Federal University of Vicosa",,0,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro",oswaldo@fiocruz.br,1,br
 "Brazil (SP 1)",Brazil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando@vps.fmvz.usp.br>",1,br
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",aafgarci@esalq.usp.br,1,br
+"Brazil (SP 3)",Brazil,Piracicaba,http://lmq.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",jlpolize@esalq.usp.br,1,br
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>",1,ca
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>",1,ca
 "Chile (Santiago)",Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana@mat.puc.cl>",1,cl
@@ -49,6 +50,7 @@ Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Com
 "Switzerland (Bern)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>",1,ch
 "Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung",hcchang@cs.pu.edu.tw,1,tw
 "Taiwan (Taipeh)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>",1,tw
+Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",thawachchai@bunditcenter.com,1,th
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>",1,uk
 "UK (London)",UK,London,http://www.sourcekeg.co.uk/cran/,"Sourcekeg, London",mirrors@sourcekeg.co.uk,1,uk
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu,1,us
