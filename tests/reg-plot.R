@@ -129,3 +129,9 @@ par(op)
 
 ## plot.ts(x, y) could get the labels wrong in R <= 2.6.0:
 x <- ts(1:5);x1 <- lag(x, 2); plot(x1, x, axes=FALSE)
+
+# adding a curve in log scale :
+curve(5*exp(-x), 0.1, 100, n = 3, log="x", ylab="", axes=FALSE)
+curve(5*exp(-x), add=TRUE, n = 3, col=2,lwd=3)
+## should fully overplot; wrong default xlim in 2.6.1
+## (and *slightly* wrong up to 2.6.0)

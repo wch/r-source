@@ -175,7 +175,7 @@ BUG FIXES
 	handler which will give an error message in circumstances
 	where none was given before.
 
-    o	The error handler in the parser reported unexpected 
+    o	The error handler in the parser reported unexpected
 	& as && and | as ||.
 
     o	The conflicts check in library() excluded all S4 generics,
@@ -231,6 +231,9 @@ BUG FIXES
 
     o	\code{\var{<name>}} was not rendered correctly to latex in Rd files
 	for non-alphabetic arguments <name>.
+
+    o	curve(*, add=TRUE) used a wrong default 'xlim' when x
+	coordinates where logged in 2.6.1.
 
 
 
