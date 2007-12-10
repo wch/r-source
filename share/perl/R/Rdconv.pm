@@ -2960,7 +2960,7 @@ sub latex_code_trans {
     $c0 = latex_link_trans0($c0);
     $c =~ s/HYPERLINK\([^)]*\)\([^)]*\)/\\LinkA{$link}{$c0}/go;
     $c =~ s/,,/,{},/g; # ,, is a ligature in the ae font.
-    $c =~ s/\\bsl{}var\\{([[:alpha:]]+)\\}/\\var{$1}/go;
+    $c =~ s/\\bsl{}var\\{([^}]+)\\}/\\var{$1}/go;
     $c;
 }
 
