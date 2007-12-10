@@ -40,52 +40,69 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \code{DocumentMedia} comment.}
   \item{family}{the initial font family to be used, normally as a
     character string.  See the section \sQuote{Families}.  This defaults
-    to \code{"Helvetica"}.}
+    to the setting given by \code{\link{ps.options}()}, which defaults to
+    \code{"Helvetica"}.}
   \item{title}{title string to embed as the \code{Title} comment in the file.}
   \item{fonts}{a character vector specifying additional \R graphics font
     family names for font families whose declarations will be included
     in the PostScript file and are available for use with the device.
     See Details.}
   \item{encoding}{the name of an encoding file.  Defaults to
+    to the setting given by \code{\link{ps.options}()}, which defaults
+    to \code{"default"}.  The latter is interpreted as
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as
-    corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U},
+    corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U}.
 #endif
 #ifdef windows
     \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
     \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
     of those codepages is in use, otherwise \file{"WinAnsi.enc"}
-    (codepage 1252),
+    (codepage 1252).
 #endif
-    in the \file{enc} directory of package \pkg{grDevices}, which is used
-    if the path does not contain a path separator.  An extension
-    \code{".enc"} can be omitted.
+    The file is looked forin the \file{enc} directory of package
+    \pkg{grDevices} if the path does not contain a path separator.  An
+    extension \code{".enc"} can be omitted.
   }
-  \item{bg}{the default background color to be used.
-    If \code{"transparent"} (or an equivalent specification), no
-    background is painted.}
-  \item{fg}{the default foreground color to be used.}
+  \item{bg}{the default background color to be used.  If
+    \code{"transparent"} (or an equivalent specification), no background
+    is painted.  Defaults to to the setting given by
+    \code{\link{ps.options}()}, which defaults to \code{"transparent"}.}
+  \item{fg}{the default foreground color to be used.  Defaults to
+    to the setting given by \code{\link{ps.options}()}, which defaults
+    to \code{"black"}.}
   \item{width, height}{the width and height of the graphics region in
-    inches.  The default is to use the entire page less a total 0.5 inch
-    margin: a 0.25 inch border on each side if \code{pagecentre} is
-    true, the default.}
-  \item{horizontal}{the orientation of the printed image, a
-    logical.  Defaults to true, that is landscape orientation on paper
-    sizes with width less than height.}
+    inches.  Default to the settings given by \code{\link{ps.options}()},
+    which default to \code{0}.
+
+    If \code{paper != "special"} and \code{width} or \code{height} is less
+    than \code{0.1} or too large to give a total margin of 0.5 inch, it is
+    reset to the corresponding paper dimension minus 0.5.
+  }
+  \item{horizontal}{the orientation of the printed image, a logical.
+    Defaults to to the setting given by \code{\link{ps.options}()},
+    which defaults to true, that is landscape orientation on paper sizes
+    with width less than height.}
   \item{pointsize}{the default point size to be used.  Strictly
-    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
+    speaking, in bp, that is 1/72 of an inch, but approximately in
+    points.  Defaults to the setting given by
+    \code{\link{ps.options}()}, which defaults to \code{12}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"} (or \code{"us"}), \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
-    Also, \code{"special"} can be used, when the \code{width}
+    Also, \code{"special"} can be used, when arguments \code{width}
     and \code{height} specify the paper size.  A further choice is
-    \code{"default"}, which is the default.  If this is selected, the
-    papersize is taken from the option \code{"papersize"}
-    if that is set and to \code{"a4"} if it is unset or empty.}
+    \code{"default"}: If this is selected, the papersize is taken from
+    the option \code{"papersize"} if that is set and to \code{"a4"} if
+    it is unset or empty.  Defaults to the setting given by
+    \code{\link{ps.options}()}, which defaults to \code{"default"}.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page? -- defaults to true.}
+    page? -- defaults to the setting given by
+    \code{\link{ps.options}()}, which defaults to true.}
   \item{print.it}{logical: should the file be printed when the device is
-    closed?  (This only applies if \code{file} is a real file name.)}
+    closed?  (This only applies if \code{file} is a real file name.)
+    Defaults to the setting given by \code{\link{ps.options}()}, which
+    defaults to false.}
   \item{command}{the command to be used for \sQuote{printing}.  Defaults to
     option \code{"printcmd"}; this can also be selected as
     \code{"default"}.  The length limit is \code{2*PATH_MAX},
@@ -97,9 +114,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 #endif
   }
   \item{colormodel}{a character string describing the color model:
-    currently allowed values as \code{"rgb"} (the default and the only
-    model prior to \R 2.5.0), \code{"rgb-nogray"}, \code{"gray"}
-    and \code{"cmyk"}.}
+    currently allowed values as \code{"rgb"}, \code{"rgb-nogray"},
+    \code{"gray"} and \code{"cmyk"}. Defaults to the setting given by
+    \code{\link{ps.options}()}, which defaults to \code{"rgb"}.}
 }
 \details{
   \code{postscript} opens the file \code{file} and the PostScript
@@ -139,10 +156,6 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{cex = 1} corresponds to a square of side 1/72 inch, which is
   also the \sQuote{pixel} size assumed for graphics parameters such as
   \code{"cra"}.
-
-  If \code{paper != "special"} and \code{width} or \code{height} is less
-  than \code{0.1} or too large to give a total margin of 0.5 inch, it is
-  reset to the corresponding paper dimension minus 0.5.
 }
 
 \section{Families}{

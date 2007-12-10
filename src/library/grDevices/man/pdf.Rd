@@ -46,14 +46,23 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     papersize is taken from the option \code{"papersize"}
     if that is set and as \code{"a4"} if it is unset or empty.}
   \item{encoding}{the name of an encoding file.  See
-    \code{\link{postscript}} for details.}
-  \item{bg}{the default background color to be used.}
-  \item{fg}{the default foreground color to be used.}
+    \code{\link{postscript}} for details. Defaults to
+    to the setting given by \code{\link{ps.options}()}, which defaults
+    to \code{"default"}.}
+  \item{bg}{the default background color to be used.  Defaults to to the
+    setting given by \code{\link{ps.options}()}, which defaults to
+    \code{"transparent"}.}
+  \item{fg}{the default foreground color to be used.  Defaults to
+    to the setting given by \code{\link{ps.options}()}, which defaults
+    to \code{"black"}.}
   \item{pointsize}{the default point size to be used.  Strictly
-    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
+    speaking, in bp, that is 1/72 of an inch, but approximately in
+    points.  Defaults to the setting given by
+    \code{\link{ps.options}()}, which defaults to \code{12}.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page? -- defaults to true, but is only relevant for
-    \code{paper != "special"}.}
+    page? -- is only relevant for \code{paper != "special"}.  Defaults
+    to the setting given by \code{\link{ps.options}()}, which defaults
+    to true.}
 }
 \details{
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
