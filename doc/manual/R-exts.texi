@@ -2120,8 +2120,9 @@ importFrom(graphics, plot)
 importFrom(stats, AIC, coef, confint, logLik, optim, profile, 
 	   qchisq, update, vcov)
 exportClasses(mle, profile.mle, summary.mle)
-exportMethods(AIC, BIC, coef, confint, logLik, plot, profile, 
+exportMethods(BIC, coef, confint, logLik, plot, profile, 
               summary, show, update, vcov)
+export(AIC)
 @end example
 
 @noindent
@@ -2137,7 +2138,9 @@ export the generic, and exporting a generic in the namespace will also
 export its methods.  Where a generic has been created in the package
 solely to add S4 methods to it, it can be declared @emph{via} either or
 both of @code{exports} or @code{exportMethods}, but the latter seems
-clearer (and is used in the @pkg{stats4} example above).
+clearer (and is used in the @pkg{stats4} example above).  On the other
+hand, where a generic is created in a package without methods (such as
+@code{AIC} in @pkg{stats4}), @code{exports} must be used.
 
 Further, a package using classes and methods defined in another package
 needs to import them, with directives

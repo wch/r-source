@@ -43,6 +43,9 @@ BUG FIXES
     o	confint() misreported on some rank-deficient lm() models.
 	(PR#10496)  This could also occur in the default method.
 
+    o	\code{\var{<name>}} was not rendered correctly to latex in Rd files
+	for non-alphabetic arguments <name>.
+
 
 
 		CHANGES IN R VERSION 2.6.1
