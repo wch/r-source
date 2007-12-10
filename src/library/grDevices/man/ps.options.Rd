@@ -22,7 +22,7 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   \item{\dots}{arguments \code{paper}, \code{horizontal}, \code{width},
     \code{height}, \code{family}, \code{encoding}, \code{pointsize},
     \code{bg}, \code{fg}, \code{onefile}, \code{print.it},
-    \code{colormodel}, \code{append} (ignored), \code{pagecentre},
+    \code{append} (ignored), \code{pagecentre},
     \code{command} and \code{colormodel} can be supplied.}
   \item{reset, override.check}{logical arguments passed to
     \code{\link{check.options}}.  See the Examples.}
@@ -32,6 +32,9 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   for some of the arguments for \code{\link{pdf}} and
   \code{\link{xfig}}, although not in all cases even when they have
   arguments of the same name.
+
+  For \code{postscript}, argument \code{onefile} is always taken from
+  the argument list (possibly as the default value there).
 
   For \code{pdf}, arguments \code{family}, \code{encoding}
   \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre} are used.
