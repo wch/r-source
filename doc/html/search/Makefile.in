@@ -34,9 +34,8 @@ DISTCLEANFILES = Makefile
 .SUFFIXES:
 .SUFFIXES: .class .java
 
-## <FIXME> test for validity of flags in configure
 .java.class:
-	(cd $(srcdir) && $(JAVAC) -source 1.4 -target 1.4 $(<F))
+	@BUILD_JAVA14_TRUE@(cd $(srcdir) && @JAVAC14@ $(<F))
 
 all: Makefile R
 
