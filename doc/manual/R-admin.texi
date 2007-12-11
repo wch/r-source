@@ -4221,8 +4221,8 @@ started}.) Then click on one of the keywords and after a short delay
 If this fails you should double-check that Java is enabled in your
 browser by visiting a page such as
 @url{http://www.java.com/en/download/help/testvm.jsp,
-@code{www.java.com/en/download/help/testvm.jsp}}.  Java 1.5 (aka 5) or
-later is needed as from @R{} 2.6.1.
+@code{www.java.com/en/download/help/testvm.jsp}}.  Java 1.4 or
+later is needed.
 
 On Mozilla-based browsers the links on the results page will
 become inactive if you return to it: to work around this you can open
@@ -4243,7 +4243,9 @@ enabling the Java search engine.
 
 We are aware of problems with certain older Java installations: Sun's
 Java Run-time Environment version 1.5.0 or later is strongly recommended
-for Mozilla-based browsers.
+for Mozilla-based browsers.  In particular, Sun's Java Run-time
+Environment @code{j2re}@tie{}1.4.2_02 to _05 do not work under
+@cputype{ix86} Linux.
 
 Note that there appears not to be a Sun Java plugin for 64-bit browsers
 on @cputype{x86_64} Linux:
@@ -4257,6 +4259,9 @@ does not work with the search applet.  On @cputype{ix86} the Sun JRE and
 plugin can be instaled: see
 @url{http://www.fedorafaq.org/#java, @code{www.fedorafaq.org/#java}}.
 (The same FAQ documents the use of 32-bit Firefox on @cputype{x86_64}.)
+
+Other Java installations, for example those from Blackdown and IBM, have
+been used.
 
 Older but still useful links are for Firefox/Mozilla,
 @url{http://plugindoc.mozdev.org/faqs/java.html,
@@ -4275,7 +4280,10 @@ and for Debian GNU/Linux
 @section Java Virtual Machines on Unix
 
 We have much less experience than under Linux, but we do know that Sun's
-Run-time Environment 1.5.0 worked on Sparc Solaris 8.
+Run-time Environment @code{j2re}@tie{}1.4.2_03 does not work under
+Sparc Solaris 8, whereas @code{jre}@tie{}1.5.0 and @code{j2re}@tie{}1.4.2_01
+(available from @url{http://java.sun.com/products/archive/,
+@code{java.sun.com/products/archive}}) do.
 
 @node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
@@ -4297,8 +4305,8 @@ and need the block removed @emph{via} the @emph{information bar}.
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X
 
-[This section is out of date: Java >= 1.5 is now required, and ships
-with recent versions of Mac OS X.]
+[This section is out of date: Java 1.5.0 ships with recent versions of
+Mac OS X.]
 
 The @HTML{} search engine does not work with Safari under Mac OS X, but
 @code{j2re}@tie{}1.4.x may work with Mozilla, Firefox and Camino if the

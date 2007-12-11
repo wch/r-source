@@ -187,9 +187,6 @@ BUG FIXES
 	even where they were unrelated to the function masked.  It now
 	excludes only implicit generics.
 
-    o	The Java-based search in help.start() now only requires a JVM
-	>= 1.4 (2.6.1 required >= 1.5).
-
 
 
 
@@ -242,6 +239,9 @@ BUG FIXES
 
     o	curve(*, add=TRUE) used a wrong default 'xlim' when x
 	coordinates where logged in 2.6.1.
+
+    o	The Java-based search in help.start() now only requires a
+	JVM >= 1.4 (2.6.1 accidentally required >= 1.5).
 
 
 
