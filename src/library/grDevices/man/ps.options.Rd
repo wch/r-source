@@ -22,7 +22,7 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   \item{\dots}{arguments \code{paper}, \code{horizontal}, \code{width},
     \code{height}, \code{family}, \code{encoding}, \code{pointsize},
     \code{bg}, \code{fg}, \code{onefile}, \code{print.it},
-    \code{colormodel}, \code{append} (ignored), \code{pagecentre},
+    \code{append} (ignored), \code{pagecentre},
     \code{command} and \code{colormodel} can be supplied.}
   \item{reset, override.check}{logical arguments passed to
     \code{\link{check.options}}.  See the Examples.}
