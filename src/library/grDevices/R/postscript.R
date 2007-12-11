@@ -91,11 +91,11 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     ## do initialization if needed
     initPSandPDFfonts()
     l... <- length(new <- list(...))
-    if(m <- match("append", names(new))) {
+    if(m <- match("append", names(new), 0)) {
         warning("argment 'append' is for back-compatibility and will be ignored", immediate.=TRUE)
         new <- new[-m]
     }
-    if(m <- match("onefile", names(new))) {
+    if(m <- match("onefile", names(new), 0)) {
         warning("argment 'onefile' is for back-compatibility and will be ignored", immediate.=TRUE)
         new <- new[-m]
     }
