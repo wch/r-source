@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-12-02
+@set FAQ_DATE @value{FAQ_YEAR}-12-11
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1901,6 +1901,8 @@ X11.
 Carbon Event Loop.
 @item CellularAutomaton
 One-dimensional cellular automata.
+@item ChainLadder
+Mack- and Munich-chain-ladder methods for insurance claims reserving.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -2324,6 +2326,8 @@ Fast and light-weight caching of objects.
 Methods for accessing huge amounts of data.
 @item R.matlab
 Read and write of MAT files together with R-to-Matlab connectivity.
+@item R.methodsS3
+Utility functions for defining S3 methods.
 @item R.oo
 R object-oriented programming with or without references.
 @item R.rsp
@@ -2806,9 +2810,13 @@ Beta regression for modeling rates and proportions.
 Utilities for the Birnbaum-Saunders distribution.
 @item biOps
 Basic image operations and image processing.
+@item biOpsGUI
+@acronym{GUI} for Basic image operations.
 @item bicreduc
 Reduction algorithm for the NPMLE for the distribution function of
 bivariate interval-censored data.
+@item bifactorial
+Inferences for bi- and trifactorial trial designs.
 @item biglm
 Linear regression for data too large to fit in memory.
 @item bim
@@ -2827,6 +2835,8 @@ Binomial confidence intervals for several parameterizations.
 Compute biological inferences.
 @item biopara
 Self-contained parallel system for R.
+@item bipartite
+Visualises bipartite networks and calculates some ecological indices.
 @item bitops
 Functions for Bitwise operations on integer vectors.
 @item bivpois
@@ -2870,6 +2880,8 @@ Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
 @item butler
 Unit testing, profiling and benchmarking for R.
+@item bvls
+The Stark-Parker algorithm for bounded-variable least squares.
 @item ca
 Simple, multiple and joint Correspondence Analysis.
 @item caMassClass
@@ -4066,6 +4078,8 @@ Resampling-based multiple hypothesis testing.
 Utilities by Mark V. Bravington for project organization, editing and
 backup, sourcing, documentation (formal and informal), package
 preparation, macro functions, and more.
+@item mvna
+Nelson-Aalen estimator of the cumulative hazard in multistate models.
 @item mvnmle
 ML estimation for multivariate normal data with missing values.
 @item mvnormtest
@@ -4125,6 +4139,8 @@ mixed-effects modelling using differential equations.
 @c @item nlrq
 @c Nonlinear quantile regression routines.  @emph{Defunct}.
 @c </COMMENT>
+@item nls2
+Non-linear regression with brute force.
 @item nlstools
 Tools for nonlinear regression diagnostics.
 @item nltm
@@ -4300,6 +4316,8 @@ Generate Predictive Modelling Markup Language (PMML) for various
 models.
 @item poLCA
 POlytomous variable Latent Class Analysis.
+@item poilog
+Poisson lognormal and bivariate Poisson lognormal distribution.
 @c <COMMENT>
 @c Outdated on CRAN along with 1.5.0 release as we do not have an active
 @c maintainer to fix outstanding quality problems.
@@ -4880,6 +4898,8 @@ models.
 Building and analyzing binary stream networks.
 @item strucchange
 Various tests on structural change in linear regression models.
+@item subplex
+The subplex algorithm for unconstrained optimization.
 @item subselect
 A collection of functions which assess the quality of variable subsets
 as surrogates for a full data set, and search for subsets which are
@@ -4927,8 +4947,11 @@ Three-Stage Least Squares (3SLS).
 @c @item tapiR
 @c Tools for accessing (UK) parliamentary information in R.
 @c </COMMENT>
-@item taskPR
-Task-Parallel R package.
+@c <COMMENT>
+@c Moved to the Archive on 2007-12-06 as requested by the maintainer.
+@c @item taskPR
+@c Task-Parallel R package.
+@c </COMMENT>
 @item tcltk2
 A series of widgets and functions to supplement @strong{tcltk}.
 @item tdist
