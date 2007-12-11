@@ -5,11 +5,11 @@
 
 \name{ps.options}
 \alias{ps.options}
-\title{Auxiliary Function to Set/View Argument of postscript}
+\title{Auxiliary Function to Set/View Defaults for Arguments of postscript}
 \description{
-  The auxiliary function \code{ps.options} can be used to set and view
-  (if called without arguments) default values for the arguments to
-  \code{\link{postscript}}.
+  The auxiliary function \code{ps.options} can be used to set or view
+  (if called without arguments) the default values for some of the
+  arguments to \code{\link{postscript}} and \code{\link{pdf}}.
   
   \code{ps.options} needs to be called before calling \code{postscript},
   and the default values it sets can be overridden by supplying
@@ -23,7 +23,8 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
     \code{height}, \code{family}, \code{encoding}, \code{pointsize},
     \code{bg}, \code{fg}, \code{print.it}, \code{pagecentre},
     \code{command} and \code{colormodel} can be supplied.}
-  \item{reset, override.check}{logical arguments passed to
+  \item{reset}{logical: should the defaults be reset to their defaults?}
+  \item{override.check}{logical argument passed to
     \code{\link{check.options}}.  See the Examples.}
 }
 \details{
@@ -38,19 +39,21 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre} are used.
 }
 \value{
-  A named list of arguments.
+  A named list of all the non-ignored arguments.  If \code{\dots} or
+  \code{reset = TRUE} is supplied these are the old values and the
+  result has the visibility flag turned off.
 }
 \seealso{
   \code{\link{postscript}}
 }
 \examples{
 ps.options(bg = "pink")
-utils::str(ps.options(reset = TRUE))
+utils::str(ps.options())
 
 ### ---- error checking of arguments: ----
 ps.options(width=0:12, onefile=0, bg=pi)
-# override the check for 'onefile', but not the others:
-utils::str(ps.options(width=0:12, onefile=1, bg=pi,
-                      override.check = c(FALSE,TRUE,FALSE)))
+# override the check for 'width', but not 'bg':
+utils::str(ps.options(width=0:12, bg=pi, override.check = c(TRUE,FALSE)))
+ps.options(reset = TRUE) # back to factory-fresh
 }
 \keyword{device}

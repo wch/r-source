@@ -187,6 +187,8 @@ BUG FIXES
 	even where they were unrelated to the function masked.  It now
 	excludes only implicit generics.
 
+    o	ps.options(reset = TRUE) has not reset for a long time.
+
 
 
 

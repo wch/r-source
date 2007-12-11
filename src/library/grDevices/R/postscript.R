@@ -90,6 +90,12 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 {
     ## do initialization if needed
     initPSandPDFfonts()
+    if(reset) {
+        old <- get(".PostScript.Options", envir = .PSenv)
+        new <- get(".PostScript.Options.default", envir = .PSenv)
+        assign(".PostScript.Options", new, envir = .PSenv)
+        return(invisible(old))
+    }
     l... <- length(new <- list(...))
     if(m <- match("append", names(new), 0)) {
         warning("argment 'append' is for back-compatibility and will be ignored", immediate.=TRUE)
@@ -101,10 +107,9 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     }
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
-			 reset = as.logical(reset), assign.opt = l... > 0,
-			 override.check= override.check)
-    if(reset || l... > 0) invisible(old)
-    else old
+			 assign.opt = l... > 0,
+			 override.check = override.check)
+    if(l... > 0) invisible(old) else old
 }
 
 guessEncoding <- function(family)
@@ -573,6 +578,9 @@ assign(".PostScript.Options",
 	 pagecentre = TRUE,
 	 command    = "default",
          colormodel = "rgb"), envir = .PSenv)
+assign(".PostScript.Options.default",
+       get(".PostScript.Options", envir = .PSenv),
+       envir = .PSenv)
 
 postscriptFonts(# Default Serif font is Times
                 serif=Type1Font("Times",
