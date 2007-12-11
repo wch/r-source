@@ -71,7 +71,7 @@ check.options <-
                                       gettext("NOT changing "),
                                       paste(sQuote(names(prev[do.keep])),
                                             collapse=" & "),
-                                      sep = "")},
+                                      sep = "")} else "",
                             domain = NA, call. = FALSE)
 		}
 	    names(new) <- NULL
