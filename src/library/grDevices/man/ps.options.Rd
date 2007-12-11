@@ -28,19 +28,14 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 }
 \details{
   Note that despite the name, these settings also provide the defaults
-  for some of the arguments for \code{\link{pdf}} and
-  \code{\link{xfig}}, although not in all cases even when they have
-  arguments of the same name.
+  for some of the arguments for \code{\link{pdf}}, although not in all
+  cases even when it has arguments of the same name.
 
   For backwards compatibility, \code{onefile} and \code{append} are
   accepted but ignored, with a warning.
 
   For \code{pdf}, arguments \code{family}, \code{encoding}
   \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre} are used.
-
-  For \code{xfig}, arguments \code{paper}, \code{horizontal},
-  \code{width}, \code{height}, \code{family}, \code{pointsize},
-  \code{bg}, \code{fg} and \code{pagecentre} are used.
 }
 \value{
   A named list of arguments.

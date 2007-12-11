@@ -16,7 +16,11 @@
 }
 \usage{
 xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
-     onefile = FALSE, encoding = "none", \dots)
+     onefile = FALSE, encoding = "none",
+     paper = "default", horizontal = TRUE,
+     width = 0, height = 0, family = "Helvetica",
+     pointsize = 12, bg = "transparent", fg = "black",
+     pagecentre = TRUE)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.   For use
@@ -33,33 +37,29 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
     select an 8-bit encoding such as \code{latin1}, and in an East Asian
     locale an \code{EUC} encoding.  If re-encoding fails, the text
     strings will be written in the current encoding with a warning.}
-  \item{\dots}{further arguments to \code{\link{ps.options}} accepted by
-    \code{xfig()}:
-    \describe{
-      \item{\code{paper}}{the size of paper region.  The choices
-	are \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these
-	can be lowercase).  A further choice is \code{"default"}, which
-	is the default.  If this is selected, the papersize is taken
-	from the option \code{"papersize"} if that is set to a non-empty
-	value, otherwise \code{"A4"}.}
-      \item{\code{horizontal}}{the orientation of the printed image, a
-	logical.  Defaults to true, that is landscape orientation.}
-      \item{\code{width}, \code{height}}{the width and height of the
-	graphics region in inches.  The default is to use the entire
-	page less a 0.5 inch overall margin.}
-      \item{\code{family}}{the font family to be used.  This must be one
-	of \code{"AvantGarde"}, \code{"Bookman"}, \code{"Courier"},
-	\code{"Helvetica"}, \code{"Helvetica-Narrow"},
-	\code{"NewCenturySchoolbook"}, \code{"Palatino"} or
-	\code{"Times"}.  Any other value is replaced by
-	\code{"Helvetica"}, with a warning.}
-      \item{\code{pointsize}}{the default point size to be used.}
-      \item{\code{bg}}{the default background color to be used.}
-      \item{\code{fg}}{the default foreground color to be used.}
-      \item{\code{pagecentre}}{logical: should the device region be
-	centred on the page: defaults to \code{TRUE}.}
-    }
-  }
+  \item{paper}{the size of paper region.  The choices
+    are \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these
+    can be lowercase).  A further choice is \code{"default"}, which
+    is the default.  If this is selected, the papersize is taken
+    from the option \code{"papersize"} if that is set to a non-empty
+    value, otherwise \code{"A4"}.}
+  \item{horizontal}{the orientation of the printed image, a
+    logical.  Defaults to true, that is landscape orientation.}
+  \item{width, height}{the width and height of the
+    graphics region in inches.  The default is to use the entire
+    page less a 0.5 inch overall margin in each direction.  (See
+    \code{\link{postscript}} for further details.)}
+  \item{family}{the font family to be used.  This must be one
+    of \code{"AvantGarde"}, \code{"Bookman"}, \code{"Courier"},
+    \code{"Helvetica"} (the default), \code{"Helvetica-Narrow"},
+    \code{"NewCenturySchoolbook"}, \code{"Palatino"} or
+    \code{"Times"}.  Any other value is replaced by
+    \code{"Helvetica"}, with a warning.}
+  \item{pointsize}{the default point size to be used.}
+  \item{bg}{the default background color to be used.}
+  \item{fg}{the default foreground color to be used.}
+  \item{pagecentre}{logical: should the device region be centred on the
+    page?}
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \details{

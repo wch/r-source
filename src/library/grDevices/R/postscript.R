@@ -227,19 +227,17 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
 }
 
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
-                  onefile = FALSE, encoding="none", ...)
+                  onefile = FALSE, encoding = "none",
+                  paper = "default", horizontal = TRUE,
+                  width = 0, height = 0, family = "Helvetica",
+                  pointsize = 12, bg = "transparent", fg = "black",
+                  pagecentre = TRUE)
 {
     ## do initialization if needed
     initPSandPDFfonts()
-    new <- list(...)# eval
-    old <- check.options(new = new, envir = .PSenv,
-                         name.opt = ".PostScript.Options",
-			 reset = FALSE, assign.opt = FALSE)
-
-    .External(XFig,
-              file, old$paper, old$family, old$bg, old$fg,
-              old$width, old$height, old$horizontal, old$pointsize,
-              onefile, old$pagecentre, encoding)
+    .External(XFig, file, paper, family, bg, fg,
+              width, height, horizontal, pointsize,
+              onefile, pagecentre, encoding)
     invisible()
 }
 

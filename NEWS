@@ -100,6 +100,9 @@ NEW FEATURES
 
     o	ps.options() now warns on unused options 'onefile' and 'append'.
 
+	xfig() no longer takes default arguments from ps.options().
+	(This was not documented prior to 2.6.1 patched.)
+
 
 DEPRECATED & DEFUNCT
 
