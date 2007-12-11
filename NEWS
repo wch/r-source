@@ -98,6 +98,8 @@ NEW FEATURES
 	not numeric, logical, character or factor) are now converted
 	to character (instead of numeric).
 
+    o	ps.options() now warns on unused options 'onefile' and 'append'.
+
 
 DEPRECATED & DEFUNCT
 

@@ -91,6 +91,14 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     ## do initialization if needed
     initPSandPDFfonts()
     l... <- length(new <- list(...))
+    if(m <- match("append", names(new))) {
+        warning("argment 'append' is for back-compatibility and will be ignored", immediate.=TRUE)
+        new <- new[-m]
+    }
+    if(m <- match("onefile", names(new))) {
+        warning("argment 'onefile' is for back-compatibility and will be ignored", immediate.=TRUE)
+        new <- new[-m]
+    }
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = as.logical(reset), assign.opt = l... > 0,
@@ -154,7 +162,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     ## do initialization if needed
     initPSandPDFfonts()
 
-    new <- list(onefile = onefile)
+    new <- list()
     if(!missing(paper)) new$paper <- paper
     if(!missing(encoding)) new$encoding <- encoding
     if(!missing(bg)) new$bg <- bg
@@ -212,7 +220,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     .External(PostScript,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
-              old$onefile, old$pagecentre, old$print.it, old$command,
+              onefile, old$pagecentre, old$print.it, old$command,
               title, fonts, old$colormodel)
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
@@ -223,7 +231,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 {
     ## do initialization if needed
     initPSandPDFfonts()
-    new <- list(onefile=onefile, ...)# eval
+    new <- list(...)# eval
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
@@ -231,7 +239,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     .External(XFig,
               file, old$paper, old$family, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
-              old$onefile, old$pagecentre, encoding)
+              onefile, old$pagecentre, encoding)
     invisible()
 }
 
@@ -243,7 +251,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     ## do initialization if needed
     initPSandPDFfonts()
 
-    new <- list(onefile = onefile)
+    new <- list()
     new$paper <- paper
     if(!missing(encoding)) new$encoding <- encoding
     if(!missing(bg)) new$bg <- bg
@@ -294,7 +302,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         stop("invalid PDF version")
     .External(PDF,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
-              width, height, old$pointsize, old$onefile, old$pagecentre, title,
+              width, height, old$pointsize, onefile, old$pagecentre, title,
               fonts, version[1], version[2])
     invisible()
 }
@@ -563,9 +571,7 @@ assign(".PostScript.Options",
 	 pointsize  = 12,
 	 bg	= "transparent",
 	 fg	= "black",
-	 onefile    = TRUE,
 	 print.it   = FALSE,
-	 append	    = FALSE,
 	 pagecentre = TRUE,
 	 command    = "default",
          colormodel = "rgb"), envir = .PSenv)
