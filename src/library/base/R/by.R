@@ -26,7 +26,7 @@ by.data.frame <- function(data, INDICES, FUN, ...)
         IND[[1]] <- INDICES
         names(IND) <- deparse(substitute(INDICES))[1]
     } else IND <- INDICES
-    FUNx <- function(x) FUN(data[x,], ...)
+    FUNx <- function(x) FUN(data[x,, drop=FALSE], ...)
     nd <- nrow(data)
     ans <- eval(substitute(tapply(1:nd, IND, FUNx)), data)
     attr(ans, "call") <- match.call()

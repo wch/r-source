@@ -20,6 +20,7 @@ range.default <- function(..., na.rm = FALSE, finite = FALSE)
     if(is.numeric(x)) {
         if(finite) x <- x[is.finite(x)]
         else if(na.rm) x <- x[!is.na(x)]
+	return (c(min(x), max(x)))
     }
-    c(min(x), max(x)) # even if x is empty from 1.5.0
+    c(min(x, na.rm=na.rm), max(x, na.rm=na.rm))
 }

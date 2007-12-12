@@ -4953,3 +4953,16 @@ stopifnot(is.null(xx[[""]])) # 2 < 2.7.0
 ## negative n gave choose(n, k) == 0
 stopifnot(isTRUE(all.equal(choose(-1,3),-1)))
 ##
+
+
+## by() on 1-column data frame (PR#10506)
+X <- data.frame(a=1:10)
+g <- gl(2,5)
+by(X, g, colMeans)
+## failed in 2.6.1
+
+
+## range.default omitted na.rm on non-numeric objects
+(z <- range(as.Date(c("2007-11-06", NA)), na.rm = TRUE))
+stopifnot(!is.na(z))
+## NAs in 2.6.1
