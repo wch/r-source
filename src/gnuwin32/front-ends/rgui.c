@@ -18,8 +18,8 @@
  */
 
 /* For AttachConsole: seems the MinGW headers are wrong and that
-   requires XP or later, not 2000 or later.
-#define _WIN32_WINNT 0x0501 */
+   requires XP or later, not 2000 or later. */
+#define _WIN32_WINNT 0x0501
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
@@ -43,8 +43,11 @@ char *getRVersion()
 }
 
 #include <wincon.h>
+typedef BOOL (*AC)(DWORD);
 int AppMain (int argc, char **argv)
 {
+    AC entry;
+
     CharacterMode = RGui;
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
 	MessageBox(0, "R.DLL version does not match", "Terminating",
@@ -58,17 +61,19 @@ int AppMain (int argc, char **argv)
         GA_exitapp();
     }
 
-/* If we had this, C writes to stdout/stderr would get set to the 
+/* If we have this, C writes to stdout/stderr would get set to the 
    launching terminal (if there was one).  Unfortunately needs XP, and
-   works for C but not Fortran.
+   works for C but not Fortran. */
 
-    if (AttachConsole(ATTACH_PARENT_PROCESS))
+    entry = (AC) GetProcAddress((HMODULE)GetModuleHandle("KERNEL32"),
+				"AttachConsole");
+    if (entry && entry(ATTACH_PARENT_PROCESS))
     {
 	freopen("CONIN$", "r", stdin);
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONOUT$", "w", stderr);
     }
-*/
+
     Rf_mainloop();
     /* NOTREACHED */
     return 0;

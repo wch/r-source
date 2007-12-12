@@ -24,6 +24,11 @@ GUI CHANGES
 	File | Change dir now has a status line showing the currently
 	selected path.
 
+    o	When Rgui is launched from a terminal, C output from
+	ill-formed packages that write to stdout or stderr rather than
+	use Rprintf will appear in the terminal rather than being
+	lost.  (Only on XP or later.)
+
 
 PACKAGE INSTALLATION
 
@@ -90,7 +95,9 @@ BUILDING R
 WORKAROUNDS
 
     o	We set some environment variables to work around hangs in Rgui
-	when packages (e.g. tseries) use Fortran I/O.
+	when packages (e.g. tseries) use Fortran WRITE calls.  The
+	Fortran output will be written to a file named 'fort.6' in the
+	working directory.
 
 
 BUG FIXES
