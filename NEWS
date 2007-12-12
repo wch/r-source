@@ -52,6 +52,11 @@ BUG FIXES
     o	The Java-based search in help.start() now only requires a
 	JVM >= 1.4 (2.6.1 accidentally required >= 1.5).
 
+    o	by() fails for 1-column matrices and dataframes.  (PR#10505)
+
+    o	The default method for range() was omitting na.rm for
+	non-numeric objects such as those of class "Date".  (PR#10508)
+
 
 
 		CHANGES IN R VERSION 2.6.1
