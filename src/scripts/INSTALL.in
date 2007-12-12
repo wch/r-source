@@ -331,7 +331,6 @@ else
   fi
   cd "${lib}"
   lib=`${GETWD}`
-  echo "$lib"
   cd "${startdir}"
 fi
 
