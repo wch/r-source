@@ -17,6 +17,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* For AttachConsole: seems the MinGW headers are wrong and that
+   requires XP or later, not 2000 or later.
+#define _WIN32_WINNT 0x0501 */
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
@@ -39,6 +42,7 @@ char *getRVersion()
     return(Rversion);
 }
 
+#include <wincon.h>
 int AppMain (int argc, char **argv)
 {
     CharacterMode = RGui;
@@ -53,6 +57,18 @@ int AppMain (int argc, char **argv)
                       "Terminating", MB_TASKMODAL | MB_ICONSTOP | MB_OK);
         GA_exitapp();
     }
+
+/* If we had this, C writes to stdout/stderr would get set to the 
+   launching terminal (if there was one).  Unfortunately needs XP, and
+   works for C but not Fortran.
+
+    if (AttachConsole(ATTACH_PARENT_PROCESS))
+    {
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+    }
+*/
     Rf_mainloop();
     /* NOTREACHED */
     return 0;
