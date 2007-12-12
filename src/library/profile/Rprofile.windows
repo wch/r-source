@@ -30,3 +30,8 @@ if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
 
 options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal")
 options(useFancyQuotes = (.Platform$GUI == "Rgui"))
+
+if(.Platform$GUI == "Rgui") {
+    Sys.setenv(GFORTRAN_STDOUT_UNIT= "-1")
+    Sys.setenv(GFORTRAN_STDERR_UNIT= "-1")
+}
