@@ -52,12 +52,18 @@ OTHERS
     o	If Rterm is invoked as 'R', the status code (as passed to q())
 	is now returned (rather than 0 or 1).
 
-    o	The default postscript() 'paper' argument for savePlot() and the
-	windows() graphics device menus is now "special" rather than
-	"default": it can still be overridden by setting ps.options().
-	(This changes the default output to be most suitable for
-	inclusion in other documents rather than to produce a page for
-	printing.)
+    o	The value of "default" for the postscript() 'paper' argument for
+	savePlot() and the windows() graphics device menus is now
+	interpreted as "special" (rather than "a4" or "letter"): it
+	can still be overridden by setting ps.options().  (This changes
+	the default output to be most suitable for inclusion in other
+	documents rather than to produce a page for printing.)
+
+    o	The windows() family of devices now always uses Unicode fonts
+	(except for the Symbol font), not just in multibyte locales.
+	This means it should be possble to plot in an 8-bit locale
+	other than the system locale (e.g. for R running in Russion
+	with Windows set to French).
 
 
 BUILDING R

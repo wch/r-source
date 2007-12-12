@@ -325,6 +325,9 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 
     ndd->displayList = R_NilValue;
 
+    /* need to initialize PS/PDF font database: 
+       also sets .PostScript.Options */
+    init_PS_PDF();
     /* Set default values and pad with zeroes ... */
     strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
@@ -344,6 +347,8 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
 		strncpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
+		if(strcmp("paper", "default") == 0) 
+		    strncpy(paper, "special", 255);
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
 		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
@@ -355,8 +360,6 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 	    }
 	}
     }
-    /* need to initialize PS/PDF font database */
-    init_PS_PDF();
     if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding,
                        bg, fg,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
@@ -392,6 +395,7 @@ static void SaveAsPDF(NewDevDesc *dd, const char *fn)
     ndd->displayList = R_NilValue;
 
     /* Set default values... */
+    init_PS_PDF();
     s = findVar(install(".PostScript.Options"), xd->psenv);
     strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
@@ -416,7 +420,6 @@ static void SaveAsPDF(NewDevDesc *dd, const char *fn)
 	    }
 	}
     }
-    init_PS_PDF();
     if (PDFDeviceDriver(ndd, fn, "special", family, afmpaths, encoding,
                         bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
@@ -1882,11 +1885,9 @@ static void GA_MetricInfo(int c,
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
-#ifdef SUPPORT_MBCS
     if(mbcslocale && gc->fontface != 5 && c > 127)
 	gwcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     else
-#endif
 	gcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     /* Some Windows systems report that space has height and depth,
        so we have a kludge.  Note that 32 is space in symbol font too */
@@ -2543,7 +2544,8 @@ static void GA_Text(double x, double y, const char *str,
     SetFont(gc->fontfamily, gc->fontface, size, rot, dd);
     SetColor(gc->col, gc->gamma, dd);
     if (R_OPAQUE(gc->col)) {
-	if(mbcslocale && gc->fontface != 5) {
+	/* As from 2.7.0 can use Unicode always */
+	if(gc->fontface != 5) {
 	    /* These macros need to be wrapped in braces */
 	    DRAW(gwdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
 	} else {
@@ -2555,7 +2557,7 @@ static void GA_Text(double x, double y, const char *str,
 	    rect r = xd->clip; 
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
-	    if(mbcslocale && gc->fontface != 5)
+	    if(gc->fontface != 5)
 		gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
 	    else
 		gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
