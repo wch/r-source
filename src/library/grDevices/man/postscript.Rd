@@ -16,9 +16,7 @@
 %% 	../../../main/devices.c  &   ../../../unix/devPS.c
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
-           onefile = TRUE, family,
-           title = "R Graphics Output", fonts = NULL,
-           encoding, bg, fg,
+           onefile, family, title, fonts, encoding, bg, fg,
            width, height, horizontal, pointsize,
            paper, pagecentre, print.it, command, colormodel)
 }
@@ -37,16 +35,20 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
     number for each page and use an EPSF header and no
-    \code{DocumentMedia} comment.}
+    \code{DocumentMedia} comment.  Defaults to the value given by
+    \code{\link{ps.options}()} which defaults to \code{TRUE}.}
   \item{family}{the initial font family to be used, normally as a
     character string.  See the section \sQuote{Families}.  This defaults
     to the setting given by \code{\link{ps.options}()}, which defaults to
     \code{"Helvetica"}.}
-  \item{title}{title string to embed as the \code{Title} comment in the file.}
+  \item{title}{title string to embed as the \code{Title} comment in the
+    file.  Defaults to the value  given by \code{\link{pdf.options}()}
+    which defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying additional \R graphics font
     family names for font families whose declarations will be included
     in the PostScript file and are available for use with the device.
-    See Details.}
+    See Details.  Defaults to the value given by
+    \code{\link{ps.options}()} which defaults to \code{NULL}.}
   \item{encoding}{the name of an encoding file.  Defaults to
     to the setting given by \code{\link{ps.options}()}, which defaults
     to \code{"default"}.  The latter is interpreted as

@@ -19,17 +19,19 @@
 ps.options(\dots, reset = FALSE, override.check = FALSE)
 }
 \arguments{
-  \item{\dots}{arguments \code{paper}, \code{horizontal}, \code{width},
-    \code{height}, \code{family}, \code{encoding}, \code{pointsize},
-    \code{bg}, \code{fg}, \code{print.it}, \code{pagecentre},
-    \code{command} and \code{colormodel} can be supplied.}
+  \item{\dots}{arguments \code{onefile}, \code{family}, \code{title},
+    \code{fonts},
+    \code{encoding}, \code{bg}, \code{fg}, \code{width}, \code{height},
+    \code{horizontal}, \code{pointsize},  \code{paper},
+    \code{pagecentre}, \code{print.it}, \code{command} and
+    \code{colormodel} can be supplied.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
   \item{override.check}{logical argument passed to
     \code{\link{check.options}}.  See the Examples.}
 }
 \details{
-  For backwards compatibility, \code{onefile} and \code{append} are
-  accepted but ignored, with a warning.
+  For backwards compatibility argument \code{append} is
+  accepted but ignored with a warning.
 }
 \value{
   A named list of all the defaults.  If \code{\dots} or

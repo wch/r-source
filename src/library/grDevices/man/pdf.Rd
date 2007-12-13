@@ -14,8 +14,7 @@
 }
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
-    width, height, onefile = TRUE, family,
-    title = "R Graphics Output", fonts = NULL, version = "1.1",
+    width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre)
 }
 \arguments{
@@ -29,16 +28,23 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     which default to \code{6}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
-    number for each page.}
+    number for each page.  Defaults to the value given by
+    \code{\link{pdf.options}()} which defaults to \code{TRUE}.}
   \item{family}{the font family to be used, see
     \code{\link{postscript}}.  The default value is given by
     \code{\link{pdf.options}()} which defaults to \code{"Helvetica"}. }
-  \item{title}{title string to embed as the \code{/Title} field in the file.}
+  \item{title}{title string to embed as the \code{/Title} field in the
+    file.  Defaults to the value  given by \code{\link{pdf.options}()}
+    which defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying \R graphics font family
-    names for fonts which will be included in the PDF file.}
+    names for fonts which will be included in the PDF file.  Defaults to
+    the value given by \code{\link{pdf.options}()} which defaults
+    to \code{NULL}.}
   \item{version}{a string describing the PDF version that will be
     required to view the output.  This is a minimum, and will be
-    increased (with a warning) if necessary.}
+    increased (with a warning) if necessary.  Defaults to the value
+    given by \code{\link{pdf.options}()} which defaults to
+    \code{"1.1"}. }
   \item{paper}{the target paper size.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} (or \code{"us"}) and
     \code{"executive"} (and these can be capitalized), or \code{"a4r"}
@@ -50,7 +56,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     if that is set and as \code{"a4"} if it is unset or empty.
 
     Defaults to the setting given by \code{\link{pdf.options}()}, which
-    defaults to \code{"special"}.}
+    defaults to \code{"special"}.
   }
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.  Defaults to

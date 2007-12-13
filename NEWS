@@ -98,15 +98,18 @@ NEW FEATURES
 	not numeric, logical, character or factor) are now converted
 	to character (instead of numeric).
 
-    o	ps.options() now warns on unused options 'onefile' and 'append'.
+    o	ps.options() now warns on unused option 'append'.
 
 	xfig() no longer takes default arguments from ps.options().
 	(This was not documented prior to 2.6.1 patched.)
 
 	pdf() now takes defaults from the new function pdf.options()
 	rather that from ps.options() (and the latter was not
-	documented prior to 2.6.1 patched).  This now allows the
-	setting of defaults for arguments 'paper', 'width' and 'height'.
+	documented prior to 2.6.1 patched).
+
+	The defaults for all arguments other than 'file' in
+	postscript() and pdf() can now be set by ps.options() or
+	pdf.options()
 
     o	Rd conversion to 'example' now quotes aliases which contain
 	spaces.

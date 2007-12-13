@@ -19,9 +19,10 @@
 pdf.options(\dots, reset = FALSE)
 }
 \arguments{
-  \item{\dots}{arguments \code{paper}, \code{width}, \code{height},
-    \code{family}, \code{encoding}, \code{pointsize},
-    \code{bg}, \code{fg} and \code{pagecentre} can be supplied.}
+  \item{\dots}{arguments \code{width}, \code{height}, \code{onefile},
+    \code{family}, \code{title}, \code{fonts}, \code{paper}, \code{encoding},
+    \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre}
+    can be supplied.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
 }
 \value{
