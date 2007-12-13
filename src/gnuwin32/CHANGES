@@ -14,7 +14,9 @@
 WORKAROUNDS
 
     o	We set some environment variables to work around hangs in Rgui
-	when packages (e.g. tseries) use Fortran I/O.
+	when packages (e.g. tseries) use Fortran WRITE calls.  The
+	Fortran output will be written to a file named 'fort.6' in the
+	working directory.
 
 
 BUG FIXES
