@@ -26,7 +26,7 @@ cut.default <-
 	    stop("invalid number of intervals")
 	nb <- as.integer(breaks + 1)# one more than #{intervals}
 	dx <- diff(rx <- range(x,na.rm=TRUE))
-	if(dx==0) dx <- rx[1]
+	if(dx==0) dx <- abs(rx[1])
 	breaks <- seq.int(rx[1] - dx/1000,
                           rx[2] + dx/1000, length.out = nb)
     } else nb <- length(breaks <- sort.int(as.double(breaks)))

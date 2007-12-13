@@ -57,6 +57,9 @@ BUG FIXES
     o	The default method for range() was omitting na.rm for
 	non-numeric objects such as those of class "Date".  (PR#10508)
 
+    o	cut(x, breaks=<n>) misbehaved on a constant vector of negative
+	values.
+
 
 
 		CHANGES IN R VERSION 2.6.1
