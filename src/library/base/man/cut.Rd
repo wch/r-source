@@ -77,6 +77,10 @@ cut(x, \dots)
   \code{\link{split}} for splitting a variable according to a group factor;
   \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}},
   \code{\link{findInterval}()}.
+
+  \code{\link{quantile}} for ways of choosing breaks of roughly equal
+  content (rather than length), \code{\link[Hmisc]{cut2}} in package
+  \pkg{hmisc} for a canned way to form quantile groups.
 }
 \examples{
 Z <- stats::rnorm(10000)
