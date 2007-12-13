@@ -103,6 +103,9 @@ NEW FEATURES
 	xfig() no longer takes default arguments from ps.options().
 	(This was not documented prior to 2.6.1 patched.)
 
+    o	Rd conversion to 'example' now quotes aliases which contain
+	spaces.
+
 
 DEPRECATED & DEFUNCT
 

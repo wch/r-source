@@ -2512,11 +2512,16 @@ sub rdoc2ex { # (filename)
 	    $Exout->print("### Encoding: ", $blocks{"encoding"}, "\n\n");
 	}
 
+	my $qaliases = "";
+	foreach my $a (@aliases) {
+	    $a = "'" . $a . "'" if $a =~ / / ;
+	    $qaliases = $qaliases . " " . $a;
+	}
 	$Exout->print(wrap("### Name: ", "###   ", $blocks{"name"}),
 		      "\n",
 		      wrap("### Title: ", "###   ", $tit),
 		      "\n",
-		      wrap("### Aliases: ", "###   ", @aliases),
+		      wrap("### Aliases:", "###   ", $qaliases),
 		      "\n",
 		      wrap("### Keywords: ", "###   ", @keywords),
 		      "\n\n");
