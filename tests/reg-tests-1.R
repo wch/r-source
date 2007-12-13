@@ -4966,3 +4966,9 @@ by(X, g, colMeans)
 (z <- range(as.Date(c("2007-11-06", NA)), na.rm = TRUE))
 stopifnot(!is.na(z))
 ## NAs in 2.6.1
+
+
+## cut() on constant values used the min, not abs(min)
+z <- cut(rep(-1,5), 2)
+stopifnot(!is.na(z))
+##
