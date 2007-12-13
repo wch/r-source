@@ -14,9 +14,9 @@
 }
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
-    width = 6, height = 6, onefile = TRUE, family = "Helvetica",
+    width, height, onefile = TRUE, family,
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper = "special", encoding, bg, fg, pointsize, pagecentre)
+    paper, encoding, bg, fg, pointsize, pagecentre)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -25,11 +25,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     (See \code{\link{postscript}} for further details.)
   }
   \item{width, height}{the width and height of the graphics region in
-    inches.}
+    inches.  The default values are given by \code{\link{pdf.options}()}
+    which default to \code{6}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
     number for each page.}
-  \item{family}{the font family to be used, see \code{\link{postscript}}.}
+  \item{family}{the font family to be used, see
+    \code{\link{postscript}}.  The default value is given by
+    \code{\link{pdf.options}()} which defaults to \code{"Helvetica"}. }
   \item{title}{title string to embed as the \code{/Title} field in the file.}
   \item{fonts}{a character vector specifying \R graphics font family
     names for fonts which will be included in the PDF file.}
@@ -44,24 +47,28 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     and \code{height} specify the paper size.  A further choice is
     \code{"default"}; if this is selected, the
     papersize is taken from the option \code{"papersize"}
-    if that is set and as \code{"a4"} if it is unset or empty.}
+    if that is set and as \code{"a4"} if it is unset or empty.
+
+    Defaults to the setting given by \code{\link{pdf.options}()}, which
+    defaults to \code{"special"}.}
+  }
   \item{encoding}{the name of an encoding file.  See
-    \code{\link{postscript}} for details. Defaults to
-    to the setting given by \code{\link{ps.options}()}, which defaults
+    \code{\link{postscript}} for details.  Defaults to
+    to the setting given by \code{\link{pdf.options}()}, which defaults
     to \code{"default"}.}
-  \item{bg}{the default background color to be used.  Defaults to to the
-    setting given by \code{\link{ps.options}()}, which defaults to
+  \item{bg}{the default background color to be used.  Defaults to the
+    setting given by \code{\link{pdf.options}()}, which defaults to
     \code{"transparent"}.}
   \item{fg}{the default foreground color to be used.  Defaults to
-    to the setting given by \code{\link{ps.options}()}, which defaults
+    to the setting given by \code{\link{pdf.options}()}, which defaults
     to \code{"black"}.}
   \item{pointsize}{the default point size to be used.  Strictly
     speaking, in bp, that is 1/72 of an inch, but approximately in
     points.  Defaults to the setting given by
-    \code{\link{ps.options}()}, which defaults to \code{12}.}
+    \code{\link{pdf.options}()}, which defaults to \code{12}.}
   \item{pagecentre}{logical: should the device region be centred on the
     page? -- is only relevant for \code{paper != "special"}.  Defaults
-    to the setting given by \code{\link{ps.options}()}, which defaults
+    to the setting given by \code{\link{pdf.options}()}, which defaults
     to true.}
 }
 \details{
@@ -155,7 +162,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
 }
 \seealso{
-  \code{\link{pdfFonts}},
+  \code{\link{pdfFonts}}, \code{\link{pdf.options}},
   \code{\link{embedFonts}},
   \code{\link{Devices}},
   \code{\link{postscript}}

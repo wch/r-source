@@ -9,7 +9,7 @@
 \description{
   The auxiliary function \code{ps.options} can be used to set or view
   (if called without arguments) the default values for some of the
-  arguments to \code{\link{postscript}} and \code{\link{pdf}}.
+  arguments to \code{\link{postscript}}.
   
   \code{ps.options} needs to be called before calling \code{postscript},
   and the default values it sets can be overridden by supplying
@@ -28,23 +28,16 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
     \code{\link{check.options}}.  See the Examples.}
 }
 \details{
-  Note that despite the name, these settings also provide the defaults
-  for some of the arguments for \code{\link{pdf}}, although not in all
-  cases even when it has arguments of the same name.
-
   For backwards compatibility, \code{onefile} and \code{append} are
   accepted but ignored, with a warning.
-
-  For \code{pdf}, arguments \code{family}, \code{encoding}
-  \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre} are used.
 }
 \value{
-  A named list of all the non-ignored arguments.  If \code{\dots} or
+  A named list of all the defaults.  If \code{\dots} or
   \code{reset = TRUE} is supplied these are the old values and the
   result has the visibility flag turned off.
 }
 \seealso{
-  \code{\link{postscript}}
+  \code{\link{postscript}}, \code{\link{pdf.options}}
 }
 \examples{
 ps.options(bg = "pink")

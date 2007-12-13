@@ -19,10 +19,11 @@ export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
        extendrange, getGraphicsEvent, graphics.off, gray, grey,
        gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb,
        n2mfrow, nclass.Sturges, nclass.FD, nclass.scott, palette, pdf,
-       pdfFonts, pictex, postscript, postscriptFont, postscriptFonts,
-       ps.options, rainbow, recordGraphics, recordPlot, replayPlot,
-       rgb, rgb2hsv, terrain.colors, topo.colors,
-       trans3d, Type1Font, xfig, xyTable, xy.coords, xyz.coords)
+       pdf.options, pdfFonts, pictex, postscript, postscriptFont,
+       postscriptFonts, ps.options, rainbow, recordGraphics,
+       recordPlot, replayPlot, rgb, rgb2hsv, terrain.colors,
+       topo.colors, trans3d, Type1Font, xfig, xyTable, xy.coords,
+       xyz.coords)
 
 export(X11, x11, bitmap, dev2bitmap, jpeg, png)
 

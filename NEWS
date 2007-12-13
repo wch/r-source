@@ -103,6 +103,11 @@ NEW FEATURES
 	xfig() no longer takes default arguments from ps.options().
 	(This was not documented prior to 2.6.1 patched.)
 
+	pdf() now takes defaults from the new function pdf.options()
+	rather that from ps.options() (and the latter was not
+	documented prior to 2.6.1 patched).  This now allows the
+	setting of defaults for arguments 'paper', 'width' and 'height'.
+
     o	Rd conversion to 'example' now quotes aliases which contain
 	spaces.
 

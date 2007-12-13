@@ -112,6 +112,23 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     if(l... > 0) invisible(old) else old
 }
 
+pdf.options <- function(..., reset=FALSE)
+{
+    ## do initialization if needed
+    initPSandPDFfonts()
+    if(reset) {
+        old <- get(".PDF.Options", envir = .PSenv)
+        new <- get(".PDF.Options.default", envir = .PSenv)
+        assign(".PDF.Options", new, envir = .PSenv)
+        return(invisible(old))
+    }
+    l... <- length(new <- list(...))
+    old <- check.options(new = new, envir = .PSenv,
+                         name.opt = ".PDF.Options",
+			 assign.opt = l... > 0)
+    if(l... > 0) invisible(old) else old
+}
+
 guessEncoding <- function(family)
 {
     # Three special families have special encodings, regardless of locale
@@ -247,7 +264,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 }
 
 pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
-                width = 6, height = 6, onefile = TRUE, family = "Helvetica",
+                width, height, onefile = TRUE, family,
                 title = "R Graphics Output", fonts = NULL, version = "1.1",
                 paper = "special", encoding, bg, fg, pointsize, pagecentre)
 {
@@ -255,7 +272,9 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     initPSandPDFfonts()
 
     new <- list()
-    new$paper <- paper
+    if(!missing(paper)) new$paper <- paper
+    if(!missing(width)) new$width <- width
+    if(!missing(height)) new$height <- height
     if(!missing(encoding)) new$encoding <- encoding
     if(!missing(bg)) new$bg <- bg
     if(!missing(fg)) new$fg <- fg
@@ -263,7 +282,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(pagecentre)) new$pagecentre <- pagecentre
 
     old <- check.options(new = new, envir = .PSenv,
-                         name.opt = ".PostScript.Options",
+                         name.opt = ".PDF.Options",
 			 reset = FALSE, assign.opt = FALSE)
     # need to handle this before encoding
     if(!missing(family) &&
@@ -305,8 +324,8 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         stop("invalid PDF version")
     .External(PDF,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
-              width, height, old$pointsize, onefile, old$pagecentre, title,
-              fonts, version[1], version[2])
+              old$width, old$height, old$pointsize, onefile, old$pagecentre,
+              title, fonts, version[1], version[2])
     invisible()
 }
 
@@ -581,6 +600,21 @@ assign(".PostScript.Options",
 assign(".PostScript.Options.default",
        get(".PostScript.Options", envir = .PSenv),
        envir = .PSenv)
+
+assign(".PDF.Options",
+    list(paper = "special",
+	 width	= 6,
+	 height = 6,
+         family = "Helvetica",
+	 encoding = "default",
+	 pointsize  = 12,
+	 bg	= "transparent",
+	 fg	= "black",
+	 pagecentre = TRUE), envir = .PSenv)
+assign(".PDF.Options.default",
+       get(".PDF.Options", envir = .PSenv),
+       envir = .PSenv)
+
 
 postscriptFonts(# Default Serif font is Times
                 serif=Type1Font("Times",
