@@ -66,7 +66,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
   \item{bg}{the default background color to be used.  If
     \code{"transparent"} (or an equivalent specification), no background
-    is painted.  Defaults to to the setting given by
+    is painted.  Defaults to the setting given by
     \code{\link{ps.options}()}, which defaults to \code{"transparent"}.}
   \item{fg}{the default foreground color to be used.  Defaults to
     to the setting given by \code{\link{ps.options}()}, which defaults
@@ -80,7 +80,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     reset to the corresponding paper dimension minus 0.5.
   }
   \item{horizontal}{the orientation of the printed image, a logical.
-    Defaults to to the setting given by \code{\link{ps.options}()},
+    Defaults to the setting given by \code{\link{ps.options}()},
     which defaults to true, that is landscape orientation on paper sizes
     with width less than height.}
   \item{pointsize}{the default point size to be used.  Strictly

@@ -44,7 +44,7 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   \code{bg}, \code{fg} and \code{pagecentre} are used.
 }
 \value{
-  A named list of arguments.
+  A named list of default values for arguments.
 }
 \seealso{
   \code{\link{postscript}}

@@ -49,7 +49,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{\link{postscript}} for details. Defaults to
     to the setting given by \code{\link{ps.options}()}, which defaults
     to \code{"default"}.}
-  \item{bg}{the default background color to be used.  Defaults to to the
+  \item{bg}{the default background color to be used.  Defaults to the
     setting given by \code{\link{ps.options}()}, which defaults to
     \code{"transparent"}.}
   \item{fg}{the default foreground color to be used.  Defaults to
