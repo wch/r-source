@@ -5738,21 +5738,23 @@ the @R{} headers, and include the appropriate headers yourself.
 @section Fortran I/O
 
 We have already warned against the use of C++ iostreams not least
-because output is not guaranteed to appear on the @R{} console, and
-this warning applies equally to Fortran output to units @code{*} and
-@code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
+because output is not guaranteed to appear on the @R{} console, and this
+warning applies equally to Fortran (77 or 9x) output to units @code{*}
+and @code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
 
 In the past most Fortran compilers implemented I/O on top of the C I/O
 system and so the two interworked successfully.  This was true of
 @command{g77}, but it is less true of @command{gfortran} as used in
-@code{gcc 4.y.x}.  In particular, any package that makes use of
-Fortran I/O will when compiled on Windows interfere with C I/O: when
-the Fortran I/O is initialized (typically when the package is loaded)
-the C @code{stdout} and @code{stderr} are switched to LF line endings.
-The @command{gfortran} I/O system assumes that it has exclusive access
-to @code{stdin}/@code{stdout}/@code{stderr} and so should be avoided
-if at all possible.  Function @code{La_Init} in file
-@file{src/main/lapack.c} shows how to mitigate the worst effects.
+@code{gcc 4.y.x}.  In particular, any package that makes use of Fortran
+I/O will when compiled on Windows interfere with C I/O: when the Fortran
+I/O is initialized (typically when the package is loaded) the C
+@code{stdout} and @code{stderr} are switched to LF line endings.
+(Function @code{La_Init} in file @file{src/main/lapack.c} shows how to
+mitigate this.)  Even worse, prior to @R{} 2.7.0 using Fortran output
+when running under the Windows GUI console (@code{Rgui}) would hang the
+@R{} session.  This is now avoided by ensuring that the Fortran output
+is written to a file (@file{fort.6} in the working directory).
+
 
 @node Handling R objects in C, Interface functions .Call and .External, Fortran I/O, System and foreign language interfaces
 @section Handling R objects in C
