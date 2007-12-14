@@ -2103,7 +2103,9 @@ Identify S3-style method definitions and write corresponding
 @code{S3method} declarations.
 @item
 Identify dependencies and replace any @code{require} calls by
-@code{import} directives (and make corresponding changes in the 
+@code{import} directives (and make appropriate changes in the
+@code{Depends} and @code{Imports} fields of the @file{DESCRIPTION} 
+file).
 @item
 Replace @code{.First.lib} functions with @code{.onLoad} functions or
 @code{useDynLib} directives.
