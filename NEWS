@@ -46,8 +46,8 @@ BUG FIXES
     o	\code{\var{<name>}} was not rendered correctly to latex in Rd files
 	for non-alphabetic arguments <name>.
 
-    o	curve(*, add=TRUE) used a wrong default 'xlim' when x
-	coordinates where logged in 2.6.1.
+    o	In 2.6.1, curve(*, add=TRUE) used a wrong default 'xlim' when x
+	coordinates were logged.
 
     o	The Java-based search in help.start() now only requires a
 	JVM >= 1.4 (2.6.1 accidentally required >= 1.5).
