@@ -60,6 +60,9 @@ BUG FIXES
     o	cut(x, breaks=<n>) misbehaved on a constant vector of negative
 	values.
 
+    o	bxp() {the plotting engine of boxplot()} no longer plots staple ticks
+	multiple times.	 (PR#10499)
+
 
 
 		CHANGES IN R VERSION 2.6.1
