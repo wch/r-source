@@ -141,8 +141,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	    xysegments(rep.int(x, 2), stats[c(1,5)],
 		       rep.int(x, 2), stats[c(2,4)],
 		       lty = whisklty[i], lwd = whisklwd[i], col = whiskcol[i])
-	    xysegments(rep.int(xP(x, -wid * staplewex), 2), stats[c(1,5)],
-		       rep.int(xP(x, +wid * staplewex), 2), stats[c(1,5)],
+	    xysegments(rep.int(xP(x, -wid * staplewex[i]), 2), stats[c(1,5)],
+		       rep.int(xP(x, +wid * staplewex[i]), 2), stats[c(1,5)],
 		       lty= staplelty[i], lwd= staplelwd[i], col= staplecol[i])
 	    ## finally the box borders
 	    xypolygon(xx, yy, lty= boxlty[i], lwd= boxlwd[i], border= boxcol[i])
