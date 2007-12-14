@@ -713,7 +713,10 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     else if(!is.null(main)) frame()
 
     ## title
-    if(!is.null(main)) title(main, cex.main = 1.5*op[["cex.main"]])
+    if(!is.null(main)) {
+        par(xpd = NA)# {we have room on the left}
+        title(main, cex.main = 1.5*op[["cex.main"]])
+    }
 
     invisible(list(rowInd = rowInd, colInd = colInd,
 		   Rowv = if(keep.dendro && doRdend) ddr,
