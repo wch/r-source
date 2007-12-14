@@ -58,6 +58,9 @@ check.options <-
 	    doubt <- rep.int(FALSE, length(prev))
 	    for(fn in check.attributes)
 		if(any(ii <- sapply(prev, fn) != sapply(new, fn))) {
+                    ## skip 'fonts';
+                    ii <- ii & (names(prev) != "fonts")
+                    if(!any(ii)) next
 		    doubt <- doubt | ii
 		    do.keep <- ii & !override.check
 		    warning(paste(sQuote(paste(fn,"(",names(prev[ii]),")",

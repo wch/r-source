@@ -35,23 +35,18 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
     number for each page and use an EPSF header and no
-    \code{DocumentMedia} comment.  Defaults to the value given by
-    \code{\link{ps.options}()} which defaults to \code{TRUE}.}
+    \code{DocumentMedia} comment.  Defaults to the \code{TRUE}.}
   \item{family}{the initial font family to be used, normally as a
-    character string.  See the section \sQuote{Families}.  This defaults
-    to the setting given by \code{\link{ps.options}()}, which defaults to
+    character string.  See the section \sQuote{Families}.  Defaults to
     \code{"Helvetica"}.}
   \item{title}{title string to embed as the \code{Title} comment in the
-    file.  Defaults to the value  given by \code{\link{pdf.options}()}
-    which defaults to \code{"R Graphics Output"}.}
+    file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying additional \R graphics font
     family names for font families whose declarations will be included
     in the PostScript file and are available for use with the device.
-    See Details.  Defaults to the value given by
-    \code{\link{ps.options}()} which defaults to \code{NULL}.}
+    See Details.  Defaults to \code{NULL}.}
   \item{encoding}{the name of an encoding file.  Defaults to
-    to the setting given by \code{\link{ps.options}()}, which defaults
-    to \code{"default"}.  The latter is interpreted as
+    \code{"default"}.  The latter is interpreted as
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as
     corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U}.
@@ -68,46 +63,38 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
   \item{bg}{the default background color to be used.  If
     \code{"transparent"} (or an equivalent specification), no background
-    is painted.  Defaults to the setting given by
-    \code{\link{ps.options}()}, which defaults to \code{"transparent"}.}
+    is painted.  Defaults to \code{"transparent"}.}
   \item{fg}{the default foreground color to be used.  Defaults to
-    to the setting given by \code{\link{ps.options}()}, which defaults
-    to \code{"black"}.}
+    \code{"black"}.}
   \item{width, height}{the width and height of the graphics region in
-    inches.  Default to the settings given by \code{\link{ps.options}()},
-    which default to \code{0}.
+    inches.  Default to t\code{0}.
 
     If \code{paper != "special"} and \code{width} or \code{height} is less
     than \code{0.1} or too large to give a total margin of 0.5 inch, it is
     reset to the corresponding paper dimension minus 0.5.
   }
   \item{horizontal}{the orientation of the printed image, a logical.
-    Defaults to the setting given by \code{\link{ps.options}()},
-    which defaults to true, that is landscape orientation on paper sizes
+    Defaults to true, that is landscape orientation on paper sizes
     with width less than height.}
   \item{pointsize}{the default point size to be used.  Strictly
     speaking, in bp, that is 1/72 of an inch, but approximately in
-    points.  Defaults to the setting given by
-    \code{\link{ps.options}()}, which defaults to \code{12}.}
+    points.  Defaults to \code{12}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"} (or \code{"us"}), \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
     Also, \code{"special"} can be used, when arguments \code{width}
     and \code{height} specify the paper size.  A further choice is
-    \code{"default"}: If this is selected, the papersize is taken from
-    the option \code{"papersize"} if that is set and to \code{"a4"} if
-    it is unset or empty.  Defaults to the setting given by
-    \code{\link{ps.options}()}, which defaults to \code{"default"}.}
+    \code{"default"} (the default): If this is selected, the papersize
+    is taken from the option \code{"papersize"} if that is set and to
+    \code{"a4"} if it is unset or empty.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page? -- defaults to the setting given by
-    \code{\link{ps.options}()}, which defaults to true.}
+    page?  Defaults to true.}
   \item{print.it}{logical: should the file be printed when the device is
     closed?  (This only applies if \code{file} is a real file name.)
-    Defaults to the setting given by \code{\link{ps.options}()}, which
-    defaults to false.}
-  \item{command}{the command to be used for \sQuote{printing}.  Defaults to
-    option \code{"printcmd"}; this can also be selected as
-    \code{"default"}.  The length limit is \code{2*PATH_MAX},
+    Defaults to false.}
+  \item{command}{the command to be used for \sQuote{printing}.  Defaults
+    to \code{"default"}, the value of option \code{"printcmd"}.  The
+    length limit is \code{2*PATH_MAX},
 #ifdef unix
     typically 8096 bytes.
 #endif
@@ -117,10 +104,13 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"rgb"}, \code{"rgb-nogray"},
-    \code{"gray"} and \code{"cmyk"}. Defaults to the setting given by
-    \code{\link{ps.options}()}, which defaults to \code{"rgb"}.}
+    \code{"gray"} and \code{"cmyk"}. Defaults to \code{"rgb"}.}
 }
 \details{
+  All arguments except \code{file} default to values given by
+  \code{\link{ps.options}()}.  The ultimate defaults are quoted in the
+  arguments section.
+    
   \code{postscript} opens the file \code{file} and the PostScript
   commands needed to plot any graphics requested are written to that
   file.  This file can then be printed on a suitable device to obtain

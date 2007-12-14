@@ -35,6 +35,11 @@ check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,
     For those \code{new[i]} where \code{override.check[i] == TRUE}, the
     checks are overridden and the changes made anyway.}
 }
+\note{
+  Option \code{"names"} is exempt from all the checks or warnings, as in
+  the application it can be \code{NULL} or a variable-length character
+  vector.
+}
 %% Source in ../R/postscript.R
 \value{
   A list of components with the same names as the one called
@@ -44,7 +49,10 @@ check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,
   according to \code{override.check}).
 }
 \author{Martin Maechler}
-\seealso{\code{\link{ps.options}} which uses \code{check.options}.}
+\seealso{
+  \code{\link{ps.options}} and \code{\link{pdf.options}},
+  which use \code{check.options}.
+}
 % 
 \examples{
 (L1 <- list(a=1:3, b=pi, ch="CH"))

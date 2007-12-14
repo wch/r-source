@@ -24,27 +24,20 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     (See \code{\link{postscript}} for further details.)
   }
   \item{width, height}{the width and height of the graphics region in
-    inches.  The default values are given by \code{\link{pdf.options}()}
-    which default to \code{6}.}
+    inches.  The default values are \code{6}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
-    number for each page.  Defaults to the value given by
-    \code{\link{pdf.options}()} which defaults to \code{TRUE}.}
+    number for each page.  Defaults to  \code{TRUE}.}
   \item{family}{the font family to be used, see
-    \code{\link{postscript}}.  The default value is given by
-    \code{\link{pdf.options}()} which defaults to \code{"Helvetica"}. }
+    \code{\link{postscript}}.  Defaults to \code{"Helvetica"}. }
   \item{title}{title string to embed as the \code{/Title} field in the
-    file.  Defaults to the value  given by \code{\link{pdf.options}()}
-    which defaults to \code{"R Graphics Output"}.}
+    file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying \R graphics font family
     names for fonts which will be included in the PDF file.  Defaults to
-    the value given by \code{\link{pdf.options}()} which defaults
-    to \code{NULL}.}
+    \code{NULL}.}
   \item{version}{a string describing the PDF version that will be
     required to view the output.  This is a minimum, and will be
-    increased (with a warning) if necessary.  Defaults to the value
-    given by \code{\link{pdf.options}()} which defaults to
-    \code{"1.1"}. }
+    increased (with a warning) if necessary.  Defaults to \code{"1.1"}. }
   \item{paper}{the target paper size.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} (or \code{"us"}) and
     \code{"executive"} (and these can be capitalized), or \code{"a4r"}
@@ -54,30 +47,26 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"default"}; if this is selected, the
     papersize is taken from the option \code{"papersize"}
     if that is set and as \code{"a4"} if it is unset or empty.
-
-    Defaults to the setting given by \code{\link{pdf.options}()}, which
-    defaults to \code{"special"}.
+    Defaults \code{"special"}.
   }
   \item{encoding}{the name of an encoding file.  See
-    \code{\link{postscript}} for details.  Defaults to
-    to the setting given by \code{\link{pdf.options}()}, which defaults
-    to \code{"default"}.}
-  \item{bg}{the default background color to be used.  Defaults to the
-    setting given by \code{\link{pdf.options}()}, which defaults to
+    \code{\link{postscript}} for details.  Defaults to \code{"default"}.}
+  \item{bg}{the default background color to be used.  Defaults to
     \code{"transparent"}.}
   \item{fg}{the default foreground color to be used.  Defaults to
-    to the setting given by \code{\link{pdf.options}()}, which defaults
-    to \code{"black"}.}
+   \code{"black"}.}
   \item{pointsize}{the default point size to be used.  Strictly
     speaking, in bp, that is 1/72 of an inch, but approximately in
-    points.  Defaults to the setting given by
-    \code{\link{pdf.options}()}, which defaults to \code{12}.}
+    points.  Defaults to \code{12}.}
   \item{pagecentre}{logical: should the device region be centred on the
     page? -- is only relevant for \code{paper != "special"}.  Defaults
-    to the setting given by \code{\link{pdf.options}()}, which defaults
     to true.}
 }
 \details{
+  All arguments except \code{file} default to values given by
+  \code{\link{pdf.options}()}.  The ultimate defaults are quoted in the
+  arguments section.
+    
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
   plot any graphics requested are sent to that file.
 
