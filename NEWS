@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 2.7.0
 
 
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o	The default graphics device in non-interactive use is now
+	pdf() rather than postscript().  [PDF viewers are now
+	more widely available than PostScript viewers.]
+
+
 NEW FEATURES
 
     o	identify() recycles its 'labels' argument if necessary.
@@ -114,6 +121,11 @@ NEW FEATURES
     o	Rd conversion to 'example' now quotes aliases which contain
 	spaces.
 
+    o	The default graphics devices in interactive and
+	non-interactive sessions are now configurable via environment
+	variables R_INTERACTIVE_DEVICE and R_DEFAULT_DEVICE
+	respectively.
+
 
 DEPRECATED & DEFUNCT
 
@@ -194,11 +206,12 @@ BUG FIXES
     o	The error handler in the parser reported unexpected
 	& as && and | as ||.
 
-    o	The conflicts check in library() excluded all S4 generics,
-	even where they were unrelated to the function masked.  It now
-	excludes only implicit generics.
+    o	The conflicts check in library() excluded all S4 generics, even
+	where they were unrelated to the function masked.  It is now
+	more selective (although still too generous to S4 generics).
 
-    o	ps.options(reset = TRUE) has not reset for a long time.
+
+    o	ps.options(reset = TRUE) had not reset for a long time.
 
 
 

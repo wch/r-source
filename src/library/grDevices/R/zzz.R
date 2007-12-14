@@ -22,22 +22,28 @@
     extras <- if(.Platform$OS.type == "windows")
         list(graphics.record = FALSE,
              windowsBuffered = TRUE,
-             windowsTimeouts = as.integer(c(100,500)))
+             windowsTimeouts = c(100L,500L))
     else
         ## these must be set for x11 to be used, even non-interactively
         list(X11colortype = "true",
              X11fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
              "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"))
+    defdev <- Sys.getenv("R_DEFAULT_DEVICE")
+    if(!nzchar(defdev)) defdev <- "pdf"
     device <- if(interactive()) {
-        if(.Platform$OS.type == "windows") "windows"
-        else if (.Platform$GUI == "AQUA") "quartz"
-        else if (!is.null(Sys.info) && (Sys.info()["sysname"] == "Darwin")
-                 && (Sys.getenv("DISPLAY") != "")) "X11"
-        else if (Sys.getenv("DISPLAY") != "")
-            switch(.Platform$GUI, "Tk" = "X11",
-                    "X11" = "X11", "GNOME" = "X11", "postscript")
-	else "postscript"
-    } else "postscript"
+        intdev <- Sys.getenv("R_INTERACTIVE_DEVICE")
+        if(nzchar(intdev)) intdev
+        else {
+            if(.Platform$OS.type == "windows") "windows"
+            else if (.Platform$GUI == "AQUA") "quartz"
+            else if (!is.null(Sys.info) && (Sys.info()["sysname"] == "Darwin")
+                     && (Sys.getenv("DISPLAY") != "")) "X11"
+            else if (Sys.getenv("DISPLAY") != "")
+                switch(.Platform$GUI, "Tk" = "X11",
+                       "X11" = "X11", "GNOME" = "X11", defdev)
+            else defdev
+        }
+    } else defdev
 
     op.utils <- c(list(locatorBell = TRUE, par.ask.default = FALSE),
                   extras, device=device)

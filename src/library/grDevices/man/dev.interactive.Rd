@@ -14,14 +14,15 @@
 \usage{
 dev.interactive(orNone = FALSE)
 
-deviceIsInteractive(name)
+deviceIsInteractive(name = NULL)
 }
 \arguments{
   \item{orNone}{logical; if \code{TRUE}, the function also returns
     \code{TRUE} when \code{\link{.Device} == "null device"} and
     \code{\link{getOption}("device")} is among the known
     interactive devices.}
-  \item{name}{one of more device names, as a character vector, or \code{NULL}.}
+  \item{name}{one or more device names as a character vector,
+    or \code{NULL} to give the existing list.}
 }
 \details{
   There is a list of known interactive devices, and in
@@ -30,8 +31,9 @@ deviceIsInteractive(name)
   
   The \code{X11} (Unix), \code{windows} (Windows) and \code{quartz}
   (MacOS X) are regarded as interactive, together with \code{GTK}
-  (available in package \pkg{gtkDevice}) and \code{JavaGD} (from the
-  package of the same name).  Packages can add their devices to the list
+  (available in package \pkg{gtkDevice}), \code{JavaGD} (from the
+  package of the same name) and \code{CairoWin} and \code{CairoX11}
+  (from package \pkg{Cairo}).  Packages can add their devices to the list
   by calling \code{deviceIsInteractive}.
 }
 \value{
@@ -39,7 +41,7 @@ deviceIsInteractive(name)
   interactive (screen) device is in use.
 
   \code{deviceIsInteractive} returns the updated list of known
-  interactive devices, invisibly.
+  interactive devices, invisibly unless \code{name = NULL}.
 }
 \seealso{
   \code{\link{Devices}} for the available devices on your platform.

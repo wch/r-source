@@ -328,11 +328,18 @@ getOption(x)
       the name of a function, or the function object itself,
       which when called creates a new graphics device of the default
       type for that session.  The value of this option defaults to the
-      normal screen device (e.g., \code{x11}, \code{windows} or
-      \code{quartz}) for an interactive session, and \code{postscript}
-      in batch use or if a screen is not available.  If named, it is
-      looked for first from the global environment and then in the
-      \pkg{grDevices} namespace.}
+      normal screen device (e.g., \code{X11}, \code{windows} or
+      \code{quartz}) for an interactive session, and \code{pdf}
+      in batch use or if a screen is not available.  If set to the name
+      of a device, the device is looked for first from the global
+      environment (that is down the usual search path) and then in the
+      \pkg{grDevices} namespace.
+
+      The default values in interactive and non-interactive sessions are
+      configurable via environment variables
+      \env{R\_INTERACTIVE\_DEVICE} and \env{R\_DEFAULT\_DEVICE}
+      respectively.
+    }
 
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
