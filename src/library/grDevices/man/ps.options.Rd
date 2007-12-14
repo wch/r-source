@@ -5,6 +5,8 @@
 
 \name{ps.options}
 \alias{ps.options}
+\alias{setEPS}
+\alias{setPS}
 \title{Auxiliary Function to Set/View Defaults for Arguments of postscript}
 \description{
   The auxiliary function \code{ps.options} can be used to set or view
@@ -17,6 +19,9 @@
   }
 \usage{
 ps.options(\dots, reset = FALSE, override.check = FALSE)
+
+setEPS()
+setPS()
 }
 \arguments{
   \item{\dots}{arguments \code{onefile}, \code{family}, \code{title},
@@ -32,6 +37,12 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \details{
   For backwards compatibility argument \code{append} is
   accepted but ignored with a warning.
+
+  \code{setEPS} and \code{setPS} are wrappers to set defaults
+  appropriate for figures for inclusion in documents (the default size
+  is 7 inches square) and for spooling to a PostScript printer
+  respectively.  For historical reasons the latter is the ultimate
+  default.
 }
 \value{
   A named list of all the defaults.  If \code{\dots} or

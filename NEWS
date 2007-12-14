@@ -118,6 +118,10 @@ NEW FEATURES
 	postscript() and pdf() can now be set by ps.options() or
 	pdf.options()
 
+    o	New functions setEPS() and setPS() as wrappers to ps.options()
+	to set appropriate defaults for figures for inclusion in other
+	documents and for spooling to a printer respectively.
+
     o	Rd conversion to 'example' now quotes aliases which contain
 	spaces.
 

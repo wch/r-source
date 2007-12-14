@@ -112,6 +112,14 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     if(l... > 0) invisible(old) else old
 }
 
+setEPS <- function()
+    ps.options(onefile = FALSE, horizontal = FALSE, paper = "special",
+               width = 7, height = 7)
+
+setPS <- function()
+    ps.options(onefile = TRUE, horizontal = TRUE, paper = "default",
+               width = 0, height = 0)
+
 pdf.options <- function(..., reset=FALSE)
 {
     ## do initialization if needed

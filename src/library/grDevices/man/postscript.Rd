@@ -124,11 +124,11 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   The postscript produced for a single \R plot is EPS (\emph{Encapsulated
     PostScript}) compatible, and can be included into other documents,
   e.g., into LaTeX, using \code{\includegraphics{<filename>}}.  For use
-  in this way you will probably want to set \code{horizontal = FALSE,
-    onefile = FALSE, paper = "special"}.  Note that the bounding box is
-  for the device region: if you find the white space around the plot
-  region excessive, reduce the margins of the figure region via
-  \code{\link{par}(mar=)}.
+  in this way you will probably want to use \code{\link{setEPS}()} to
+  set the defaults as \code{horizontal = FALSE, onefile = FALSE, paper =
+    "special"}.  Note that the bounding box is for the \emph{device}
+  region: if you find the white space around the plot region excessive,
+  reduce the margins of the figure region via \code{\link{par}(mar=)}.
 
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
