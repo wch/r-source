@@ -93,11 +93,11 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 {
     ## do initialization if needed
     initPSandPDFfonts()
+    old <- get(".PostScript.Options", envir = .PSenv)
     if(reset) {
-        old <- get(".PostScript.Options", envir = .PSenv)
-        new <- get(".PostScript.Options.default", envir = .PSenv)
-        assign(".PostScript.Options", new, envir = .PSenv)
-        return(invisible(old))
+        assign(".PostScript.Options",
+               get(".PostScript.Options.default", envir = .PSenv),
+               envir = .PSenv)
     }
     l... <- length(new <- list(...))
     if(m <- match("append", names(new), 0)) {
@@ -105,11 +105,11 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
                 immediate.=TRUE)
         new <- new[-m]
     }
-    old <- check.options(new = new, envir = .PSenv,
-                         name.opt = ".PostScript.Options",
-			 assign.opt = l... > 0,
-			 override.check = override.check)
-    if(l... > 0) invisible(old) else old
+    check.options(new = new, envir = .PSenv,
+                  name.opt = ".PostScript.Options",
+                  assign.opt = l... > 0,
+                  override.check = override.check)
+    if(reset || l... > 0) invisible(old) else old
 }
 
 setEPS <- function()
@@ -124,17 +124,16 @@ pdf.options <- function(..., reset=FALSE)
 {
     ## do initialization if needed
     initPSandPDFfonts()
+    old <- get(".PDF.Options", envir = .PSenv)
     if(reset) {
-        old <- get(".PDF.Options", envir = .PSenv)
-        new <- get(".PDF.Options.default", envir = .PSenv)
-        assign(".PDF.Options", new, envir = .PSenv)
-        return(invisible(old))
+        assign(".PDF.Options",
+               get(".PDF.Options.default", envir = .PSenv),
+               envir = .PSenv)
     }
     l... <- length(new <- list(...))
-    old <- check.options(new = new, envir = .PSenv,
-                         name.opt = ".PDF.Options",
-			 assign.opt = l... > 0)
-    if(l... > 0) invisible(old) else old
+    check.options(new = new, envir = .PSenv, name.opt = ".PDF.Options",
+                  assign.opt = l... > 0)
+    if(reset || l... > 0) invisible(old) else old
 }
 
 guessEncoding <- function(family)

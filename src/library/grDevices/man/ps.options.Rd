@@ -35,8 +35,12 @@ setPS()
     \code{\link{check.options}}.  See the Examples.}
 }
 \details{
-  For backwards compatibility argument \code{append} is
-  accepted but ignored with a warning.
+  If both \code{reset = TRUE} and \code{...} are supplied the defaults
+  are first reset to the \sQuote{factory-fresh} values and then the new
+  values are applied.
+  
+  For backwards compatibility argument \code{append} is accepted but
+  ignored with a warning.
 
   \code{setEPS} and \code{setPS} are wrappers to set defaults
   appropriate for figures for inclusion in documents (the default size
@@ -45,9 +49,9 @@ setPS()
   default.
 }
 \value{
-  A named list of all the defaults.  If \code{\dots} or
-  \code{reset = TRUE} is supplied these are the old values and the
-  result has the visibility flag turned off.
+  A named list of all the previous defaults.  If \code{\dots} or
+  \code{reset = TRUE} is supplied the result has the visibility flag
+  turned off.
 }
 \seealso{
   \code{\link{postscript}}, \code{\link{pdf.options}}
@@ -59,7 +63,8 @@ utils::str(ps.options())
 ### ---- error checking of arguments: ----
 ps.options(width=0:12, onefile=0, bg=pi)
 # override the check for 'width', but not 'bg':
-utils::str(ps.options(width=0:12, bg=pi, override.check = c(TRUE,FALSE)))
+ps.options(width=0:12, bg=pi, override.check = c(TRUE,FALSE))
+utils::str(ps.options())
 ps.options(reset = TRUE) # back to factory-fresh
 }
 \keyword{device}

@@ -104,12 +104,8 @@ assign("cleanEx",
 assign("ptime", proc.time(), pos = "CheckExEnv")
 ## force in the original defaults:
 ## at least one package changes these via ps.options().
-grDevices::postscript("$PKG-Ex.ps", paper = "default", onefile = TRUE,
-		      horizontal = TRUE, width = 0, height = 0,
-		      family = "Helvetica", encoding = "default",
-		      pointsize = 12, bg = "transparent", fg = "black",
-		      print.it = FALSE, pagecentre = TRUE,
-		      colormodel = "rgb")
+ps.options(reset = TRUE)
+grDevices::postscript("$PKG-Ex.ps")
 		      
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))

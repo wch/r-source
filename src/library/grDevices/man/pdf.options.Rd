@@ -25,6 +25,11 @@ pdf.options(\dots, reset = FALSE)
     can be supplied.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
 }
+\details{
+  If both \code{reset = TRUE} and \code{...} are supplied the defaults
+  are first reset to the \sQuote{factory-fresh} values and then the new
+  values are applied.
+}
 \value{
   A named list of all the defaults.  If any arguments are
   supplied the return values are the old values and the result has the
