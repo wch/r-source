@@ -130,6 +130,9 @@ NEW FEATURES
 	variables R_INTERACTIVE_DEVICE and R_DEFAULT_DEVICE
 	respectively.
 
+    o	The [dpq]signrank() functions now typically use considerably
+	less memory than previously, thanks to a patch from Ivo Ugrina.
+
 
 DEPRECATED & DEFUNCT
 

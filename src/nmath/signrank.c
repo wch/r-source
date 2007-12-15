@@ -38,22 +38,14 @@
 #include "nmath.h"
 #include "dpq.h"
 
-static double **w;
+static double *w;
 static int allocated_n;
 
-/* The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
-   to reallocate only for n > SIGNRANK_MAX, although for some reason
-   realloc is not used (possibly as it does not zero?) */
-
 static void
-w_free(int n)
+w_free()
 {
-    int i;
-
     if (!w) return;
-    n = imax2(n, SIGNRANK_MAX);
-    for (i = n; i >= 0; i--)
-	if (w[i]) free((void *) w[i]);
+
     free((void *) w);
     w = 0;
     allocated_n = 0;
@@ -61,18 +53,26 @@ w_free(int n)
 
 void signrank_free()
 {
-    if (allocated_n > SIGNRANK_MAX) w_free(allocated_n);
+    w_free();
 }
 
 static void
 w_init_maybe(int n)
 {
-    if (w && (n > allocated_n))
-	w_free(allocated_n);
+    int u, c;
 
-    if (!w) {
-	n = imax2(n, SIGNRANK_MAX);
-	w = (double **) calloc(n + 1, sizeof(double *));
+    u = n * (n + 1) / 2;
+    c = (u / 2);
+
+    if (w) {
+        if(n != allocated_n) {
+	    w_free();
+	}
+	else return;
+    }
+
+    if(!w) {
+	w = (double *) calloc(c + 1, sizeof(double));
 #ifdef MATHLIB_STANDALONE
 	if (!w) MATHLIB_ERROR("%s", _("signrank allocation error"));
 #endif
@@ -83,34 +83,34 @@ w_init_maybe(int n)
 static double
 csignrank(int k, int n)
 {
-    int c, u, i;
+    int c, u, j;
 
 #ifndef MATHLIB_STANDALONE
     R_CheckUserInterrupt();
 #endif
 
     u = n * (n + 1) / 2;
-    c = (int) (u / 2);
+    c = (u / 2);
 
-    if ((k < 0) || (k > u))
-	return(0);
+    if (k < 0 || k > u)
+	return 0;
     if (k > c)
 	k = u - k;
-    if (w[n] == 0) {
-	w[n] = (double *) calloc(c + 1, sizeof(double));
-#ifdef MATHLIB_STANDALONE
-	if (!w[n]) MATHLIB_ERROR("%s", _("signrank allocation error"));
-#endif
-	for (i = 0; i <= c; i++)
-	    w[n][i] = -1;
+
+    if (n == 1)
+        return 1.;
+    if (w[0] == 1.)
+        return w[k];
+
+    w[0] = w[1] = 1.;
+    for(j=2; j < n+1; ++j) {
+        int i, end = imin2(j*(j+1)/2, c);
+	for(i=end; i >= j; --i) {
+	    w[i] += w[i-j];
+	}
     }
-    if (w[n][k] < 0) {
-	if (n == 0)
-	    w[n][k] = (k == 0);
-	else
-	    w[n][k] = csignrank(k - n, n - 1) + csignrank(k, n - 1);
-    }
-    return(w[n][k]);
+
+    return w[k];
 }
 
 double dsignrank(double x, double n, int give_log)
