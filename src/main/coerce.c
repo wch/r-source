@@ -2454,6 +2454,7 @@ SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+/* storage.mode(obj) <- value */
     SEXP obj, value, ans;
     SEXPTYPE type;
     
