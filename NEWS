@@ -63,6 +63,10 @@ BUG FIXES
     o	bxp() {the plotting engine of boxplot()} no longer plots staple ticks
 	multiple times.	 (PR#10499)
 
+    o	The automatic detection of the domain for message translation
+	was not working correctly for messages in message(), warning()
+	and stop() in packages others than 'base'.
+
 
 
 		CHANGES IN R VERSION 2.6.1
