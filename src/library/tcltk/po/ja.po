@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-12-15 16:02+0000\n"
 "PO-Revision-Date: 2007-04-03 01:06+0900 \n"
 "Last-Translator: Ei-ji Nakama <nakama@ki.rim.or.jp> \n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net> \n"
@@ -18,38 +18,38 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 0.10.1 \n"
 
-#: tcltk.c:66
+#: tcltk.c:63
 msgid "parse error in R expression"
 msgstr " R expression 内に構文エラー "
 
-#: tcltk.c:166 tcltk.c:248
+#: tcltk.c:159 tcltk.c:233
 msgid "tcl error.\n"
 msgstr " tcl エラー \n"
 
-#: tcltk.c:202 tcltk.c:831
+#: tcltk.c:187 tcltk.c:659
 msgid "invalid argument"
 msgstr " 不正な引数 "
 
-#: tcltk.c:605
+#: tcltk.c:536
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr " 引数リストはtcltkの内部関数 `callback_closure' において長過ぎます "
 
-#: tcltk.c:636
+#: tcltk.c:569
 msgid "argument is not of correct type"
 msgstr " 引数は正しいタイプではありません "
 
-#: tcltk.c:683
+#: tcltk.c:618
+msgid "no DISPLAY variable so Tk is not available"
+msgstr " DISPLAY環境変数が無いのでTkは利用出来ません "
+
+#: tcltk_unix.c:86
 msgid "Tcl already loaded"
 msgstr " 既にTclはロード済です "
 
-#: tcltk.c:701
+#: tcltk_unix.c:107
 msgid "Tcl is not loaded"
 msgstr " Tclはロード出来ません "
 
-#: tcltk.c:707
+#: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
 msgstr " Tclはロードした最後のハンドラーではありません "
-
-#: tcltk.c:786
-msgid "no DISPLAY variable so Tk is not available"
-msgstr " DISPLAY環境変数が無いのでTkは利用出来ません "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:38\n"
+"POT-Creation-Date: 2007-12-15 16:02\n"
 "PO-Revision-Date: 2007-04-13 12:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -61,6 +61,9 @@ msgstr "Test t"
 msgid "Density"
 msgstr "Densité"
 
+msgid "Interactive linear fitting"
+msgstr ""
+
 msgid "R FAQ"
 msgstr "FAQ R"
 
@@ -102,4 +105,3 @@ msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
 
 #~ msgid "R-tcltk"
 #~ msgstr "R-tcltk"
-

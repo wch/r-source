@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-10-16 09:28\n"
+"POT-Creation-Date: 2007-12-15 15:58\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -126,6 +126,9 @@ msgstr "'%s'里的选择项出错"
 
 msgid "NOT changing"
 msgstr "不更换"
+
+msgid "argment 'append' is for back-compatibility and will be ignored"
+msgstr ""
 
 msgid "unknown family '%s'"
 msgstr "没有'%s'这样的系列"

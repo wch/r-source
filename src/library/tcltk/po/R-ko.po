@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:38\n"
+"POT-Creation-Date: 2007-12-15 16:02\n"
 "PO-Revision-Date: 2005-05-26 16:24+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -54,6 +54,9 @@ msgid "t test"
 msgstr ""
 
 msgid "Density"
+msgstr ""
+
+msgid "Interactive linear fitting"
 msgstr ""
 
 msgid "R FAQ"

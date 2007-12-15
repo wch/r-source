@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-10-16 09:28\n"
+"POT-Creation-Date: 2007-12-15 15:58\n"
 "PO-Revision-Date: 2007-04-13 12:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -128,6 +128,9 @@ msgstr "options incorrectes dans '%s'"
 
 msgid "NOT changing"
 msgstr "NE change(nt) PAS"
+
+msgid "argment 'append' is for back-compatibility and will be ignored"
+msgstr ""
 
 msgid "unknown family '%s'"
 msgstr "famille inconnue '%s'"

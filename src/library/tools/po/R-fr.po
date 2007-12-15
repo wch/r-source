@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: 2007-04-13 12:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -252,6 +252,10 @@ msgstr ""
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 
+#, fuzzy
+msgid "Rd files with empty sections:"
+msgstr "Fichiers Rd avec des sections inconnues :"
+
 msgid "Found invalid multi-byte character data."
 msgstr "Des chaînes de caractères multi-octets incorrectes sont détectées"
 
@@ -356,6 +360,15 @@ msgstr "le test '%s' n'est pas disponible"
 #, fuzzy
 msgid "Unknown encoding with non-ASCII data"
 msgstr "Champs avec des tags non ASCII :"
+
+msgid "Non-standard license specification:"
+msgstr ""
+
+msgid "Invalid license file pointers: %s"
+msgstr ""
+
+msgid "Verifiable as open source: %s"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"

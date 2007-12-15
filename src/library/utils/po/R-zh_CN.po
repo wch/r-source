@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 16:56\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -118,6 +118,9 @@ msgstr "n < m"
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN'的值必需是函数或NULL"
 
+msgid "Can't handle S4 methods yet"
+msgstr ""
+
 msgid "'package' must be a character string or NULL"
 msgstr "'package'的值必需是字符串或NULL"
 
@@ -218,6 +221,12 @@ msgstr "改过的行名中含有重复的名字，因此略过不用"
 msgid "invalid input matrix"
 msgstr "输入矩阵不对"
 
+msgid "class(es) of 'name' will be discarded"
+msgstr ""
+
+msgid "cannot edit NULL row names"
+msgstr ""
+
 msgid "no help file found for '%s'"
 msgstr "找不到与'%s'有关的帮助文件"
 
@@ -244,6 +253,10 @@ msgstr "'form'必需是双边公式"
 
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form'必需是双边公式，每一边至少带一项"
+
+#, fuzzy
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr "选项的值必需是字符串或NULL"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -363,6 +376,10 @@ msgstr "%d个匹配对象"
 
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"
+
+#, fuzzy
+msgid "metadata of package '%s' is corrupt"
+msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
@@ -831,6 +848,9 @@ msgstr "没有下载方法"
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
 
+msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+msgstr ""
+
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\")没有设好"
 
@@ -843,9 +863,6 @@ msgid ""
 msgstr ""
 "将默认浏览器(由'browser'选项设定)改成目前指定的浏览器，这样未来所有的帮助要求"
 "都会由这个浏览器来控制。"
-
-msgid "Making links in per-session dir ..."
-msgstr "在每會期文件目录里建立联结…"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -861,6 +878,9 @@ msgstr "url必需的非空字符串"
 
 msgid "'browser' must be a non-empty character string"
 msgstr "'browser'必需为非空字符串"
+
+msgid "Making links in per-session dir ..."
+msgstr "在每會期文件目录里建立联结…"
 
 msgid "cannot create HTML package index"
 msgstr "无法建立HTML程序包索引"
@@ -924,6 +944,10 @@ msgstr "'tar'退出码为%d"
 
 msgid "cannot remove prior installation of package"
 msgstr "无法拆除原来安装的程序包"
+
+msgid "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"

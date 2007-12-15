@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-10-16 09:28\n"
+"POT-Creation-Date: 2007-12-15 15:58\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -131,6 +131,9 @@ msgstr "이하의 부적절한 옵션입니다"
 
 msgid "NOT changing"
 msgstr "변경하지 않습니다"
+
+msgid "argment 'append' is for back-compatibility and will be ignored"
+msgstr ""
 
 msgid "unknown family '%s'"
 msgstr ""

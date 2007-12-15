@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 16:56\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -118,6 +118,9 @@ msgstr ""
 msgid "'FUN' must be a function or NULL"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
+msgid "Can't handle S4 methods yet"
+msgstr ""
+
 msgid "'package' must be a character string or NULL"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
@@ -228,6 +231,12 @@ msgstr "편집된 열명은 복사를 포함하고 있어 무시될것입니다"
 msgid "invalid input matrix"
 msgstr "무효의 입력 행렬입니다"
 
+msgid "class(es) of 'name' will be discarded"
+msgstr ""
+
+msgid "cannot edit NULL row names"
+msgstr ""
+
 msgid "no help file found for '%s'"
 msgstr "help file는 '%s'에 검색되어져 있지 않았습니다"
 
@@ -258,6 +267,10 @@ msgstr ""
 
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
+
+#, fuzzy
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "지정된 패키지 및 라이브러리에서 '%s'때문에 documentation는 없습니다"
@@ -380,6 +393,10 @@ msgstr ""
 
 msgid "no package '%s' was found"
 msgstr "패키지 '%s'는 검색되지 않았습니다"
+
+#, fuzzy
+msgid "metadata of package '%s' is corrupt"
+msgstr "패키지 '%s'의 DESCRIPTION 파일은 잘못되어지거나 파손되었습니다"
 
 #, fuzzy
 msgid "DESCRIPTION file of package '%s' is corrupt"
@@ -882,6 +899,9 @@ msgstr "다운로드 메소드는 검색되지 않았습니다"
 msgid "download had nonzero exit status"
 msgstr "다운로드는 non-zreo인 exit 상태를 가지고 있었습니다"
 
+msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+msgstr ""
+
 msgid "options(\"browser\") not set"
 msgstr "세트 되지않는 옵션(\"browser\")입니다"
 
@@ -895,9 +915,6 @@ msgstr ""
 "그것이 얻도록 주어진 브라우저('browser' 옵션에 의해서 지정되었습니다)를 변경"
 "하는 것은\n"
 "모든 미래의 help 요구를 위해서 사용했습니다"
-
-msgid "Making links in per-session dir ..."
-msgstr "\"per-session의 dir에서 link를 작성하는것..."
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -916,6 +933,9 @@ msgstr "url는 non-empty이어야만 합니다"
 #, fuzzy
 msgid "'browser' must be a non-empty character string"
 msgstr "브라우저는 non-empty 문자열이어야만 합니다"
+
+msgid "Making links in per-session dir ..."
+msgstr "\"per-session의 dir에서 link를 작성하는것..."
 
 msgid "cannot create HTML package index"
 msgstr "HTML 패키지 인덱스를 작성할 수 없습니다"
@@ -981,6 +1001,10 @@ msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
 
 msgid "cannot remove prior installation of package"
 msgstr "패키지의 전의 설치를 삭제할 수 없습니다"
+
+msgid "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"

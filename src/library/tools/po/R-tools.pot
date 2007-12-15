@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,6 +224,9 @@ msgstr ""
 msgid "Rd files with duplicated alias '%s':"
 msgstr ""
 
+msgid "Rd files with empty sections:"
+msgstr ""
+
 msgid "Found invalid multi-byte character data."
 msgstr ""
 
@@ -306,6 +309,15 @@ msgid "Encoding '%s' is not portable"
 msgstr ""
 
 msgid "Unknown encoding with non-ASCII data"
+msgstr ""
+
+msgid "Non-standard license specification:"
+msgstr ""
+
+msgid "Invalid license file pointers: %s"
+msgstr ""
+
+msgid "Verifiable as open source: %s"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"

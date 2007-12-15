@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-12-15 15:59\n"
 "PO-Revision-Date: 2007-04-13 12:19+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -389,6 +389,10 @@ msgstr "méthode graphique incorrecte"
 
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' doit être de même longueur que le nombre %d de groupes"
+
+#, fuzzy
+msgid "formula missing or incorrect"
+msgstr "'formula' manquante ou incorrecte"
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' doit être de même longueur que 'x' et 'y'"

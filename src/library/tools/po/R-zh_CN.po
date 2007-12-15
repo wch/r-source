@@ -2,12 +2,12 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -238,6 +238,10 @@ msgstr ""
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
 
+#, fuzzy
+msgid "Rd files with empty sections:"
+msgstr "Rd文件内有未知名的段:"
+
 msgid "Found invalid multi-byte character data."
 msgstr "遇到了错误多字节字符数据."
 
@@ -332,6 +336,15 @@ msgstr "编码'%s'不可便携"
 
 msgid "Unknown encoding with non-ASCII data"
 msgstr "没有这样的编码，带非ASCII数据:"
+
+msgid "Non-standard license specification:"
+msgstr ""
+
+msgid "Invalid license file pointers: %s"
+msgstr ""
+
+msgid "Verifiable as open source: %s"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -462,8 +475,7 @@ msgstr "只能用第一个"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
-msgstr ""
-"警告：略过不带版本需求的无意义'R'从属"
+msgstr "警告：略过不带版本需求的无意义'R'从属"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "无法通过LC_COLLATE来关掉地方化分类整理"
@@ -627,4 +639,3 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr "无法在'%s'上调用pdflatex"
-

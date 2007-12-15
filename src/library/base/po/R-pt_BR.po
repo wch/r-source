@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-10-12 06:06\n"
+"POT-Creation-Date: 2007-12-15 15:57\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -302,6 +302,10 @@ msgstr ""
 
 msgid "non-existent rows not allowed"
 msgstr "linhas não existentes não permitidas"
+
+#, fuzzy
+msgid "column name \"\" cannot match any column"
+msgstr "mais nomes de colunas que colunas"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "novas colunas deixariam buracos em cima das colunas existentes"
@@ -1225,7 +1229,8 @@ msgstr "'k' é muito grande"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "necessário valor maior de 'ncol', pois houve pivotamento"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x' deve ser um vetor"
 
 msgid "invalid 'rle' structure"
@@ -1578,9 +1583,6 @@ msgstr[1] "Mensagens de aviso:\n"
 
 #~ msgid "more columns than column names"
 #~ msgstr "mais colunas que nomes de colunas"
-
-#~ msgid "more column names than columns"
-#~ msgstr "mais nomes de colunas que colunas"
 
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "cinco primeiras linhas vazias: desistindo"

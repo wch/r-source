@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2007-12-15 16:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,38 +16,38 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: tcltk.c:66
+#: tcltk.c:63
 msgid "parse error in R expression"
 msgstr ""
 
-#: tcltk.c:166 tcltk.c:248
+#: tcltk.c:159 tcltk.c:233
 msgid "tcl error.\n"
 msgstr ""
 
-#: tcltk.c:202 tcltk.c:831
+#: tcltk.c:187 tcltk.c:659
 msgid "invalid argument"
 msgstr ""
 
-#: tcltk.c:605
+#: tcltk.c:536
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 
-#: tcltk.c:636
+#: tcltk.c:569
 msgid "argument is not of correct type"
 msgstr ""
 
-#: tcltk.c:683
+#: tcltk.c:618
+msgid "no DISPLAY variable so Tk is not available"
+msgstr ""
+
+#: tcltk_unix.c:86
 msgid "Tcl already loaded"
 msgstr ""
 
-#: tcltk.c:701
+#: tcltk_unix.c:107
 msgid "Tcl is not loaded"
 msgstr ""
 
-#: tcltk.c:707
+#: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
-msgstr ""
-
-#: tcltk.c:786
-msgid "no DISPLAY variable so Tk is not available"
 msgstr ""

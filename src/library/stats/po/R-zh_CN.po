@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:32\n"
+"POT-Creation-Date: 2007-12-15 16:01\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -252,6 +252,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'必需由小到大排序"
 
 msgid "'order.max' must be >= 1"
+msgstr "'order.max'必需大于等于一"
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max'必需大于等于一"
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -511,8 +515,8 @@ msgstr "不知如何處理'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V'不是正方形的数值矩阵"
 
-msgid "diagonal has non-finite entries"
-msgstr "矩阵对角含无限值"
+msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+msgstr ""
 
 msgid "not enough finite observations"
 msgstr "有限值的观察量不够"
@@ -2169,6 +2173,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "diagonal has non-finite entries"
+#~ msgstr "矩阵对角含无限值"
 
 #~ msgid "no 'time' or 'id' specified"
 #~ msgstr "没有设定'time'或'id'"

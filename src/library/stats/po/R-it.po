@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:32\n"
+"POT-Creation-Date: 2007-12-15 16:01\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -261,6 +261,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve essere ordinata in modo non-decrescente"
 
 msgid "'order.max' must be >= 1"
+msgstr "'order.max' deve essere >= 1"
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve essere >= 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -526,8 +530,8 @@ msgstr "non posso gestire 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' non è una matrice quadrata numerica"
 
-msgid "diagonal has non-finite entries"
-msgstr "la diagonale contiene elementi non finiti"
+msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+msgstr ""
 
 msgid "not enough finite observations"
 msgstr "non ci sono abbastanza osservazioni finite"
@@ -2296,6 +2300,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "diagonal has non-finite entries"
+#~ msgstr "la diagonale contiene elementi non finiti"
 
 #~ msgid "no 'time' or 'id' specified"
 #~ msgstr "nessun 'time' o 'id' specificati"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2007-12-15 15:59\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -375,6 +375,10 @@ msgstr "무효인 plot 메소드입니다"
 
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at'는 그룹의 %d 수와 동일 길이를 가지지 않으면 안됩니다"
+
+#, fuzzy
+msgid "formula missing or incorrect"
+msgstr "'formula'가 없거나 부적절합니다"
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number'는 'x' 그리고 'y'와 동일 길이가 나오지 않으면 되지 않습니다"

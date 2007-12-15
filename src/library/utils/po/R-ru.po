@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 16:56\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: 2007-09-18 00:46-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -125,6 +125,9 @@ msgstr "n < m"
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' должен быть функцией или NULL"
 
+msgid "Can't handle S4 methods yet"
+msgstr ""
+
 msgid "'package' must be a character string or NULL"
 msgstr "'package' должен быть текстовой строкой или NULL"
 
@@ -227,6 +230,12 @@ msgstr "отредактированные имена строк имеют дубли и будут пропущены"
 msgid "invalid input matrix"
 msgstr "неправильная вводная матрица"
 
+msgid "class(es) of 'name' will be discarded"
+msgstr ""
+
+msgid "cannot edit NULL row names"
+msgstr ""
+
 msgid "no help file found for '%s'"
 msgstr "в '%s' не найдено файла помощи"
 
@@ -254,6 +263,10 @@ msgstr "'form' должен быть двусторонней формулой"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 "'form' должен быть двусторонней формулой с одним термином на каждой стороне"
+
+#, fuzzy
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr "'option' должна быть длиной с один текстовый вектор или NULL"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
@@ -374,6 +387,10 @@ msgstr "соответствует %d объект(ам)."
 
 msgid "no package '%s' was found"
 msgstr "не найден пакет '%s'"
+
+#, fuzzy
+msgid "metadata of package '%s' is corrupt"
+msgstr "файл DESCRIPTION пакета '%s' поврежден"
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "файл DESCRIPTION пакета '%s' поврежден"
@@ -850,6 +867,9 @@ msgstr "не найдено метода скачивания"
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
 
+msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+msgstr ""
+
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") не установлены"
 
@@ -862,9 +882,6 @@ msgid ""
 msgstr ""
 "Изменяю броузер по умолчанию (который указан в опции 'browser') на заданный "
 "броузер, что отразится на всех следующих запросах помощи."
-
-msgid "Making links in per-session dir ..."
-msgstr "Делаю ссылки в папке сессии..."
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -881,6 +898,9 @@ msgstr "'url' должен быть непустой текстовой строкой"
 
 msgid "'browser' must be a non-empty character string"
 msgstr "'browser' должен быть непустой текстовой строкой"
+
+msgid "Making links in per-session dir ..."
+msgstr "Делаю ссылки в папке сессии..."
 
 msgid "cannot create HTML package index"
 msgstr "не могу создать HTML-индекс пакетов"
@@ -944,6 +964,12 @@ msgstr "'tar' вернул ненулевой код выхода %d"
 
 msgid "cannot remove prior installation of package"
 msgstr "не могу удалить прежнюю установку пакета"
+
+msgid "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"

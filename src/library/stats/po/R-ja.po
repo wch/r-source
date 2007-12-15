@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:32\n"
+"POT-Creation-Date: 2007-12-15 16:01\n"
 "PO-Revision-Date: 2007-09-12 00:31+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -253,6 +253,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければなりません "
 
 msgid "'order.max' must be >= 1"
+msgstr " 'order.max' は 1 以上でなければなりません "
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr " 'order.max' は 1 以上でなければなりません "
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -516,8 +520,8 @@ msgstr " 'pairwise.complete.obs' を扱うことができません "
 msgid "'V' is not a square numeric matrix"
 msgstr " 'V'は数値正方行列ではありません "
 
-msgid "diagonal has non-finite entries"
-msgstr " 対角成分に有限でない要素があります "
+msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+msgstr ""
 
 msgid "not enough finite observations"
 msgstr " 有限な観測値が十分にありません "
@@ -2217,6 +2221,9 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません "
+
+#~ msgid "diagonal has non-finite entries"
+#~ msgstr " 対角成分に有限でない要素があります "
 
 #~ msgid "no 'time' or 'id' specified"
 #~ msgstr " 'time' も 'id' も指定されていません "

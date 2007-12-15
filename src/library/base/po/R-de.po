@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-10-12 06:06\n"
+"POT-Creation-Date: 2007-12-15 15:57\n"
 "PO-Revision-Date: 2007-10-11 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -295,6 +295,9 @@ msgstr "Fehlende Werte sind in Teilzuweisungen von data frames nicht erlaubt"
 
 msgid "non-existent rows not allowed"
 msgstr "nicht existierende Zeilen sind nicht erlaubt"
+
+msgid "column name \"\" cannot match any column"
+msgstr ""
 
 msgid "new columns would leave holes after existing columns"
 msgstr "neue Spalten würden hinter den existierenden Spalten Lücken erzeugen"
@@ -1195,7 +1198,8 @@ msgstr "'k' ist zu groß"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x' muss ein Vektor sein"
 
 msgid "invalid 'rle' structure"

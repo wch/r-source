@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:32\n"
+"POT-Creation-Date: 2007-12-15 16:01\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -262,6 +262,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de maneira não decrescente"
 
 msgid "'order.max' must be >= 1"
+msgstr "'order.max' deve ser >= 1"
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve ser >= 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -524,8 +528,8 @@ msgstr "não é possível usar 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' não é uma matriz numérica quadrada"
 
-msgid "diagonal has non-finite entries"
-msgstr "diagonal tem elementos não finitos"
+msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+msgstr ""
 
 msgid "not enough finite observations"
 msgstr "não há um número suficiente de observações finitas"
@@ -2290,6 +2294,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parâmetro %s não ocorre na fórmula do modelo"
 msgstr[1] "parâmetros %s não ocorrem na fórmula do modelo"
+
+#~ msgid "diagonal has non-finite entries"
+#~ msgstr "diagonal tem elementos não finitos"
 
 #~ msgid "no 'time' or 'id' specified"
 #~ msgstr "nem 'time' nem 'id' especificado"

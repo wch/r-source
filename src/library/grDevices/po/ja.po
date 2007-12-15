@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-10-16 09:28+0100\n"
+"POT-Creation-Date: 2007-12-15 15:58+0000\n"
 "PO-Revision-Date: 2007-09-11 16:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -145,11 +145,11 @@ msgstr " デバイスのエンコーディングを記録することに失敗�
 msgid "Object .ps.prolog is not a character vector"
 msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません "
 
-#: devPS.c:2646 devPS.c:5737 devWindows.c:722
+#: devPS.c:2646 devPS.c:5737 devWindows.c:725
 msgid "Invalid line end"
 msgstr " 行末が不正です "
 
-#: devPS.c:2665 devPS.c:5756 devWindows.c:735
+#: devPS.c:2665 devPS.c:5756 devWindows.c:738
 msgid "Invalid line join"
 msgstr " 行のつながりが不正です "
 
@@ -202,7 +202,7 @@ msgstr " postscript(print.it=TRUE)　が空の描画命令とともに使われ�
 msgid "invalid page type '%s' (postscript)"
 msgstr " 不正なページ '%s'  (ポストスクリプト) "
 
-#: devPS.c:3348 devPS.c:4213 devWindows.c:2215
+#: devPS.c:3348 devPS.c:4213 devWindows.c:2216
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -446,160 +446,160 @@ msgstr ""
 msgid "Quartz device is not available on this platform."
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "
 
-#: devWindows.c:272 devWindows.c:316 devWindows.c:383
+#: devWindows.c:272 devWindows.c:316 devWindows.c:386
 msgid "Not enough memory to copy graphics window"
 msgstr " グラフィックスウィンドをコピーするのに十分なメモリがありません "
 
-#: devWindows.c:277 devWindows.c:321 devWindows.c:388
+#: devWindows.c:277 devWindows.c:321 devWindows.c:391
 msgid "No device available to copy graphics window"
 msgstr " グラフィックスウィンドをコピーするのに使えるデバイスがありません "
 
-#: devWindows.c:555
+#: devWindows.c:558
 msgid "Invalid font specification"
 msgstr " 不正なフォント指定 "
 
-#: devWindows.c:594
+#: devWindows.c:597
 msgid "Font family not found in Windows font database"
 msgstr " Windows のフォントデータベースにフォントファミリが見付かりません "
 
-#: devWindows.c:1011
+#: devWindows.c:1014
 msgid "plot history seems corrupted"
 msgstr " 描画履歴が破損しているようです "
 
-#: devWindows.c:1018
+#: devWindows.c:1021
 msgid "no plot history!"
 msgstr " 描画履歴がありません "
 
-#: devWindows.c:1728
+#: devWindows.c:1731
 #, c-format
 msgid "filename too long in %s() call"
 msgstr " 呼出し %s() 中に長すぎるファイル名  "
 
-#: devWindows.c:1732 devWindows.c:1761
+#: devWindows.c:1735 devWindows.c:1764
 msgid "Unable to load Rbitmap.dll"
 msgstr " Rbitmap.dll　をロードできませんでした "
 
-#: devWindows.c:1737 devWindows.c:1770
+#: devWindows.c:1740 devWindows.c:1773
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr " 'width=%d, height=%d' はピクセル単位でありそうもない値です "
 
-#: devWindows.c:1745 devWindows.c:1773
+#: devWindows.c:1748 devWindows.c:1776
 msgid "Unable to allocate bitmap"
 msgstr " ビットマップを割り当てられません "
 
-#: devWindows.c:1751 devWindows.c:1779 devWindows.c:2068
+#: devWindows.c:1754 devWindows.c:1782 devWindows.c:2069
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr " ファイル '%s' を書込み用に開くことができません "
 
-#: devWindows.c:1767
+#: devWindows.c:1770
 msgid "filename too long in jpeg() call"
 msgstr " 呼出し jpeg() 中に長すぎるファイル名 "
 
-#: devWindows.c:1797
+#: devWindows.c:1800
 msgid "filename too long in win.metafile() call"
 msgstr " 呼出し win.metafile() 中に長すぎるファイル名 "
 
-#: devWindows.c:1807
+#: devWindows.c:1810
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr " メタファイル '%s' を書込み用に開くことができません "
 
-#: devWindows.c:1809
+#: devWindows.c:1812
 msgid "Unable to open clipboard to write metafile"
 msgstr " メタファイルを書込むためにクリップボードを開くことができません "
 
-#: devWindows.c:1819
+#: devWindows.c:1822
 msgid "can't find any fonts"
 msgstr " いかなるフォントも見付かりません "
 
-#: devWindows.c:2017
+#: devWindows.c:2018
 msgid "Insufficient memory for resize. Killing device"
 msgstr " メモリ不足でサイズ変更できません。デバイスを停止します "
 
-#: devWindows.c:2024
+#: devWindows.c:2025
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr " メモリ不足でサイズ変更できません。alpha blending を停止します "
 
-#: devWindows.c:2053
+#: devWindows.c:2054
 msgid "A clipboard metafile can store only one figure."
 msgstr " クリップボードメタファイルは一つの図だけを保管できます "
 
-#: devWindows.c:2059
+#: devWindows.c:2060
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr " メタファイル '%s' を作成できませんでした "
 
-#: devWindows.c:2588 devWindows.c:3174
+#: devWindows.c:2590 devWindows.c:3176
 msgid "R Graphics"
 msgstr " R グラフィックス "
 
-#: devWindows.c:2835
+#: devWindows.c:2837
 msgid "option 'windowsTimeouts' should be integer"
 msgstr " オプション 'windowsTimeouts' は整数でなければなりません "
 
-#: devWindows.c:2857
+#: devWindows.c:2859
 msgid "invalid device number in savePlot"
 msgstr " savePlot　中に不正なデバイス番号 "
 
-#: devWindows.c:2859
+#: devWindows.c:2861
 msgid "invalid device in savePlot"
 msgstr " savePlot 中に不正なデバイス "
 
-#: devWindows.c:2862
+#: devWindows.c:2864
 msgid "invalid filename argument in savePlot"
 msgstr " savePlot 中に不正なファイル名引数 "
 
-#: devWindows.c:2866
+#: devWindows.c:2868
 msgid "invalid type argument in savePlot"
 msgstr " savePlot　に不正な型の引数 "
 
-#: devWindows.c:2889
+#: devWindows.c:2891
 msgid "unknown type in savePlot"
 msgstr " savePlot 中に未知の型 "
 
-#: devWindows.c:2961 devWindows.c:2997 devWindows.c:3029 devWindows.c:3064
+#: devWindows.c:2963 devWindows.c:2999 devWindows.c:3031 devWindows.c:3066
 msgid "processing of the plot ran out of memory"
 msgstr " プロット中にメモリ不足になりました "
 
-#: devWindows.c:2977 devWindows.c:3010 devWindows.c:3043
+#: devWindows.c:2979 devWindows.c:3012 devWindows.c:3045
 msgid "Impossible to load Rbitmap.dll"
 msgstr " Rbitmap.dll をロードできません "
 
-#: devWindows.c:3049
+#: devWindows.c:3051
 msgid "Impossible to open "
 msgstr " オープンできません "
 
-#: devWindows.c:3090
+#: devWindows.c:3092
 msgid "invalid width or height in devWindows"
 msgstr " devWindows 中に不正な幅か高さ "
 
-#: devWindows.c:3095
+#: devWindows.c:3097
 msgid "invalid value of 'recording' in devWindows"
 msgstr " devWindows 中の 'recording' の値が不正です "
 
-#: devWindows.c:3099
+#: devWindows.c:3101
 msgid "invalid value of 'resize' in devWindows"
 msgstr " devWindows 中の 'resize' の値が不正です "
 
-#: devWindows.c:3107
+#: devWindows.c:3109
 msgid "invalid value of 'canvas' in devWindows"
 msgstr " devWindows 中の 'canvas' の値が不正です "
 
-#: devWindows.c:3118
+#: devWindows.c:3120
 msgid "invalid value of 'buffered' in devWindows"
 msgstr " devWindows 中の 'buffered' の値が不正です "
 
-#: devWindows.c:3124
+#: devWindows.c:3126
 msgid "invalid value of 'bg' in devWindows"
 msgstr " devWindows 中の 'bg' の値が不正です "
 
-#: devWindows.c:3146
+#: devWindows.c:3148
 msgid "unable to start device devWindows"
 msgstr " devWindows デバイスを開始できません "
 
-#: devWindows.c:3219
+#: devWindows.c:3221
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr " getGraphicsEvent の再帰的な使用はサポートされていません "
 

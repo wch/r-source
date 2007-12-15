@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 16:56\n"
+"POT-Creation-Date: 2007-12-15 16:03\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,6 +107,9 @@ msgstr ""
 msgid "'FUN' must be a function or NULL"
 msgstr ""
 
+msgid "Can't handle S4 methods yet"
+msgstr ""
+
 msgid "'package' must be a character string or NULL"
 msgstr ""
 
@@ -203,6 +206,12 @@ msgstr ""
 msgid "invalid input matrix"
 msgstr ""
 
+msgid "class(es) of 'name' will be discarded"
+msgstr ""
+
+msgid "cannot edit NULL row names"
+msgstr ""
+
 msgid "no help file found for '%s'"
 msgstr ""
 
@@ -228,6 +237,9 @@ msgid "'form' must be a two-sided formula"
 msgstr ""
 
 msgid "'form' must be a two-sided formula with one term on each side"
+msgstr ""
+
+msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
@@ -327,6 +339,9 @@ msgid "matched %d objects."
 msgstr ""
 
 msgid "no package '%s' was found"
+msgstr ""
+
+msgid "metadata of package '%s' is corrupt"
 msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
@@ -764,6 +779,9 @@ msgstr ""
 msgid "download had nonzero exit status"
 msgstr ""
 
+msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+msgstr ""
+
 msgid "options(\"browser\") not set"
 msgstr ""
 
@@ -771,9 +789,6 @@ msgid "invalid browser name, check options(\"browser\")."
 msgstr ""
 
 msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
-msgstr ""
-
-msgid "Making links in per-session dir ..."
 msgstr ""
 
 msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
@@ -786,6 +801,9 @@ msgid "'url' must be a non-empty character string"
 msgstr ""
 
 msgid "'browser' must be a non-empty character string"
+msgstr ""
+
+msgid "Making links in per-session dir ..."
 msgstr ""
 
 msgid "cannot create HTML package index"
@@ -850,6 +868,11 @@ msgstr ""
 
 msgid "cannot remove prior installation of package"
 msgstr ""
+
+msgid        "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0]    ""
+msgstr[1]    ""
 
 msgid        "object '%s' not found"
 msgid_plural "objects '%s' not found"
