@@ -67,7 +67,7 @@ OTHERS
     o	The windows() family of devices now always uses Unicode fonts
 	(except for the Symbol font), not just in multibyte locales.
 	This means it should be possble to plot in an 8-bit locale
-	other than the system locale (e.g. for R running in Russion
+	other than the system locale (e.g. for R running in Russian
 	with Windows set to French).
 
 
