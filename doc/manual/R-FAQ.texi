@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-12-11
+@set FAQ_DATE @value{FAQ_YEAR}-12-16
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2017,6 +2017,8 @@ Bernard Flury (1997), Springer.
 @c @item FortranCallsR
 @c Simple Fortran/C/R interface example.
 @c </COMMENT>
+@item FrF2
+Analysis of fractional factorial designs with 2-level factors.
 @item FracSim
 Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
@@ -3703,6 +3705,8 @@ An S4 class for handling irregular time series.
 The ``laboratory for capacities'', an S4 tool box for capacity (or
 non-additive measure, fuzzy measure) and integral manipulation on a
 finite setting.
+@item kerfdr
+Semi-parametric kernel-based approach to local fdr estimations.
 @item kernelPop
 Spatially explicit population genetic simulations.
 @item kernlab
@@ -3961,6 +3965,8 @@ Tools for microeconomic analysis and microeconomic modelling.
 Multivariate Imputation by Chained Equations.
 @item mimR
 An R interface to MIM for graphical modeling in R.
+@item minet
+Mutual Information NETwork.
 @item minpack.lm
 R interface for two functions from the MINPACK least squares
 optimization library, solving the nonlinear least squares problem by a
