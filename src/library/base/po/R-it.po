@@ -316,7 +316,7 @@ msgid "duplicate subscripts for columns"
 msgstr "indici doppi nelle colonne"
 
 msgid "replacement has %d rows, data has %d"
-msgstr "dati sostitutivi con %righe, i dati ne hanno %d"
+msgstr "dati sostitutivi con %d righe, i dati ne hanno %d"
 
 msgid "replacement has %d items, need %d"
 msgstr "il sostituto ha %d elementi, ne servono %d"
