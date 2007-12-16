@@ -67,6 +67,9 @@ BUG FIXES
 	was not working correctly for messages in message(), warning()
 	and stop() in packages others than 'base'.
 
+    o   The profile.nls function misbehaved when encountering
+        non-convergence of the "port" algorithm.
+
 
 
 		CHANGES IN R VERSION 2.6.1

@@ -105,13 +105,17 @@ profiler.nls <- function(fitted, ...)
                  ## change fittedModel into profiledModel
 		 if(algorithm != "port") {
 		     if(sum(vary)) .Call(R_nls_iter, fittedModel, ctrl, trace)
+		     dev <- fittedModel$deviance()
 		 } else {
 		     iv <- nls_port_fit(fittedModel, startPars[vary],
 					lower[vary], upper[vary], ctrl, trace)
-		     if(!iv[1] %in% 3:6) fittedModel$deviance <- NA
+		     dev <- if(!iv[1] %in% 3:6) 
+			NA_real_ 
+		     else 
+			fittedModel$deviance()
 		 }
 		 profiledModel <- fittedModel
-                 fstat <- (profiledModel$deviance()-S.hat)/s2.hat
+                 fstat <- (dev - S.hat)/s2.hat
                  fittedModel$setVarying()
                  ans <- list(fstat = fstat,
                              parameters = profiledModel$getAllPars(),
