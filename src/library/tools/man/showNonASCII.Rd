@@ -17,13 +17,13 @@ showNonASCII(x)
 
   It prints all lines of the files which contain non-ACII characters,
   preceded by the line number and with non-ASCII bytes highlighted
-  \emph{via} \code{\link{iconv}(sub="byte")}.
+  \emph{via} \code{\link{iconv}(sub = "byte")}.
 }
 
 \examples{
 out <- c(
 "fa\xE7ile test of showNonASCII():",
-"\\details{",
+"\\\\details{",
 "   This is a good line",
 "   This has an \xfcmlaut in it.",
 "   OK again.",
