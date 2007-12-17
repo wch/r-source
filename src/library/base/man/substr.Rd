@@ -53,6 +53,11 @@ substring(text, first, last = 1000000) <- value
 
   If any argument is an \code{NA} element, the corresponding element of
   the answer is \code{NA}.
+
+  Elements of the result will be have the encoding declared as that of
+  the current locale (see \code{\link{Encoding}} if the corresponding
+  input had a declared encoding and the current locale is either Latin-1
+  or UTF-8.
 }
 \note{
   The S4 version of \code{substring<-} ignores \code{last}; this version
@@ -62,7 +67,7 @@ substring(text, first, last = 1000000) <- value
   display.  That does not really work (you want to limit the width, not
   the number of characters, so it would be better to use
   \code{\link{strtrim}}), but at least make sure you use
-  \code{nchar(type="c")}.
+  \code{nchar(type="c")} (the default since \R 2.6.0).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

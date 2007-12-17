@@ -53,6 +53,10 @@ iconvlist()
 
   Some versions of \code{iconv} will allow transliteration by appending
   \code{//TRANSLIT} to the \code{to} encoding: see the examples.
+
+  Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
+  are ignored: they will always be translated as if from \code{from}
+  even if declared otherwise.
 }
 \value{
   A character vector of the same length and the same attributes as

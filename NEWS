@@ -137,6 +137,10 @@ NEW FEATURES
     o	New function showNonASCII() in package tools to aid detsction
 	of non-ASCII characters in .Rd files.
 
+    o	[g]sub(useBytes=FALSE) now sets the encoding bit on changed
+	elements of the result when working on an elemnt of known
+	encoding.
+
 
 DEPRECATED & DEFUNCT
 

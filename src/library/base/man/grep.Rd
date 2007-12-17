@@ -102,6 +102,12 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 
   For \code{sub} and \code{gsub} a character vector of the same length
   and with the same attributes as \code{x} (after possible coercion).
+  Elements of character vectors \code{x} which are not subsituted will
+  be return unchanged (including any declared encoding).  If
+  \code{useBytes = FALSE}, changed elements of the result will be have
+  the encoding declared as that of the current locale (see
+  \code{\link{Encoding}} if the corresponding input had a declared
+  encoding and the current locale is either Latin-1 or UTF-8.
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
