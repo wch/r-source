@@ -139,7 +139,7 @@ NEW FEATURES
 
     o	[g]sub(useBytes=FALSE) now sets the encoding bit on changed
 	elements of the result when working on an elemnt of known
-	encoding.
+	encoding.  (This was previously done only for perl = TRUE.)
 
 
 DEPRECATED & DEFUNCT
