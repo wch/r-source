@@ -165,6 +165,17 @@ function(file, topic)
     lines[top:end]
 }
 
+### ** showNonASCII
+
+showNonASCII <-
+function(x)
+{
+    if(!capabilities("iconv")) stop("'iconv' is required")
+    ind <- is.na(iconv(x, "latin1", "ASCII"))
+    xxx <- iconv(x[ind], "latin1", "ASCII", sub="byte")
+    if(any(ind)) cat(which(ind), ": ", xxx, "\n", sep="")
+}
+
 ### * Text utilities.
 
 ### ** delimMatch

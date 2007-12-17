@@ -2314,6 +2314,10 @@ rendered incorrectly, or cause your @R{} code to give an error.
 For documentation, marking the encoding and including ASCII
 transliterations is likely to do a reasonable job.
 
+Function @code{showNonASCII} in package @pkg{tools} can help in
+finding non-ASCII bytes in files.
+
+
 The most favourable circumstance is using UTF-8-encoded text in a
 package that will only ever be used in a UTF-8 locale (and hence not on
 Windows, for example).  In that case it is likely that text will be
@@ -3630,11 +3634,12 @@ in Latin-1 (ISO-8859-1)) and to add comments to the text and examples
 conversions.  It is also used to indicate to @LaTeX{} how to process
 the file (see below).
 
-Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and even
-symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
+Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and
+even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
 @samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside verbatim
 environments (since they may disappear in fonts designed to render
-text).
+text).  (Function @code{showNonASCII} in package @pkg{tools} can help
+in finding non-ASCII bytes in the files.)
 
 For convenience, encoding names @samp{latin1} and @samp{latin2} are
 always recognized: these and @samp{UTF-8} are likely to work fairly
