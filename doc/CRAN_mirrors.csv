@@ -38,6 +38,7 @@ Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del
 "Netherlands (Amsterdam 2)",Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl,1,nl
 "Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.dsmirror.nl/,"Dsmirror, Amsterdam","Webmaster Dsmirror <webmaster@dsmirror.nl>",1,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University",webmaster@cs.uu.nl,1,nl
+"New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland",w.schmidt@auckland.ac.nz,1,nz
 Norway,Norway,Bergen,http://cran.ii.uib.no/,"University of Bergen",webmaster@ii.uib.no,1,no
 "Poland (Lublin)",Poland,Lublin,http://novum.am.lublin.pl/CRAN/,"Skubiszewski Medical University, Lublin","Lukasz Komsta <luke@novum.am.lublin.pl>",1,pl
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel@meteo.uni.wroc.pl>",1,pl
