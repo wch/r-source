@@ -79,16 +79,6 @@
 #include "RBufferUtils.h"
 static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-
-static SEXP mkCharCopyEnc(const char *name, SEXP ref)
-{
-    if(IS_LATIN1(ref) || IS_UTF8(ref)) {
-	if(known_to_be_latin1) return mkCharEnc(name, LATIN1_MASK);
-	if(known_to_be_utf8) return mkCharEnc(name, UTF8_MASK);
-    }
-    return mkChar(name);
-}
-
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
 
@@ -250,7 +240,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (stop > slen) stop = slen;
 		substr(buf, ss, start, stop);
 	    }
-	    SET_STRING_ELT(s, i, mkCharCopyEnc(buf, STRING_ELT(x, i)));
+	    SET_STRING_ELT(s, i, markKnown(buf, STRING_ELT(x, i)));
 	}
 	R_FreeStringBufferL(&cbuff);
     }
@@ -336,7 +326,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(stop > start + vlen - 1) stop = start + vlen - 1;
 		substrset(buf, translateChar(STRING_ELT(value, i % v)),
 			  start, stop);
-		SET_STRING_ELT(s, i, mkCharCopyEnc(buf, STRING_ELT(x, i)));
+		SET_STRING_ELT(s, i, markKnown(buf, STRING_ELT(x, i)));
 	    }
 	}
 	R_FreeStringBufferL(&cbuff);
@@ -409,7 +399,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(tlen > 0) {
 	    /* NA token doesn't split */
 	    if (STRING_ELT(tok, i % tlen) == NA_STRING) {
-		    SET_VECTOR_ELT(s, i, ScalarString(mkCharCopyEnc(buf, STRING_ELT(x, i))));
+		    SET_VECTOR_ELT(s, i, ScalarString(markKnown(buf, STRING_ELT(x, i))));
 		    continue;
 	    }
 	    /* find out how many splits there will be */
@@ -492,7 +482,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			bufp += MAX(slen-1, 0);
 			laststart = bufp+1;
-			SET_STRING_ELT(t, j, mkCharCopyEnc(pt, STRING_ELT(x, i)));
+			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 			break;
 		    }
 		    bufp = laststart;
@@ -511,7 +501,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    SET_STRING_ELT(t, j, mkCharCopyEnc(pt, STRING_ELT(x, i)));
+		    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		} else {
 		    regexec(&reg, bufp, 1, regmatch, 0);
 		    if(regmatch[0].rm_eo > 0) {
@@ -526,11 +516,11 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    SET_STRING_ELT(t, j, mkCharCopyEnc(pt, STRING_ELT(x, i)));
+		    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
 	    }
 	    if(*bufp != '\0')
-		SET_STRING_ELT(t, ntok, mkCharCopyEnc(bufp, STRING_ELT(x, i)));
+		SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
 	} else {
 	    /* split into individual characters (not bytes) */
 #ifdef SUPPORT_MBCS
@@ -550,7 +540,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* This is valid as we have already checked */
 			used = mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
 			memcpy(bf, p, used); bf[used] = '\0';
-			SET_STRING_ELT(t, j, mkCharCopyEnc(bf, STRING_ELT(x, i)));
+			SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
 		    }
 		}
 	    } else
@@ -562,7 +552,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bf[1] = '\0';
 		for (j = 0; j < ntok; j++) {
 		    bf[0] = buf[j];
-		    SET_STRING_ELT(t, j, mkCharCopyEnc(bf, STRING_ELT(x, i)));
+		    SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
 		}
 	    }
 	}
@@ -1284,8 +1274,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(useBytes) 
 		    SET_STRING_ELT(ans, i, mkChar(cbuf));
 		else
-		    SET_STRING_ELT(ans, i, 
-				   mkCharCopyEnc(cbuf, STRING_ELT(vec, i)));
+		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
                 Free(cbuf);
 	    }
 	} else {
@@ -1344,8 +1333,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(useBytes) 
 		    SET_STRING_ELT(ans, i, mkChar(cbuf));
 		else
-		    SET_STRING_ELT(ans, i, 
-				   mkCharCopyEnc(cbuf, STRING_ELT(vec, i)));
+		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
                 Free(cbuf);
 	    }
 	}
@@ -2824,7 +2812,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
         strncpy(buf, This, w);
         buf[w] = '\0';
 #endif
-        SET_STRING_ELT(s, i, mkCharCopyEnc(buf, STRING_ELT(x, i)));
+        SET_STRING_ELT(s, i, markKnown(buf, STRING_ELT(x, i)));
     }
     if(len > 0) R_FreeStringBufferL(&cbuff);
     DUPLICATE_ATTRIB(s, x);
@@ -2884,7 +2872,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
 	SET_STRING_ELT(ans, i, 
-		       mkCharCopyEnc(globbuf.gl_pathv[i], STRING_ELT(x, i)));
+		       markKnown(globbuf.gl_pathv[i], STRING_ELT(x, i)));
     UNPROTECT(1);
     globfree(&globbuf);
     return ans;
