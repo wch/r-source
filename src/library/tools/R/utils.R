@@ -172,8 +172,10 @@ function(x)
 {
     if(!capabilities("iconv")) stop("'iconv' is required")
     ind <- is.na(iconv(x, "latin1", "ASCII"))
-    xxx <- iconv(x[ind], "latin1", "ASCII", sub="byte")
-    if(any(ind)) cat(which(ind), ": ", xxx, "\n", sep="")
+    if(any(ind))
+        cat(which(ind), ": ",
+            iconv(x[ind], "latin1", "ASCII", sub="byte"),
+            "\n", sep="")
 }
 
 ### * Text utilities.
