@@ -248,7 +248,7 @@ built into the base @R{} environment, but many are supplied as
 @emph{packages}.  There are about 25 packages supplied with @R{} (called
 ``standard'' and ``recommended'' packages) and many more are available
 through the @acronym{CRAN} family of Internet sites (via
-@url{http://CRAN.R-project.org}) and elsewhere.  More details on
+@uref{http://CRAN.R-project.org}) and elsewhere.  More details on
 packages are given later (@pxref{Packages}).
 
 Most classical statistics and much of the latest methodology is
@@ -6379,12 +6379,12 @@ facilities are available in the system GGobi by Swayne, Cook and Buja
 available from
 
 @quotation
-@url{http://www.ggobi.org/}
+@uref{http://www.ggobi.org/}
 @end quotation
 
 @noindent
 and these can be accessed from @R{} via the package @pkg{rggobi}, described at
-@url{http://www.ggobi.org/rggobi}.
+@uref{http://www.ggobi.org/rggobi}.
 
 Also, package @pkg{rgl} provides ways to interact with 3D plots, for example
 of surfaces.
@@ -6476,8 +6476,8 @@ statistical methods, others give access to data or hardware, and others
 are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
-(@url{http://CRAN.R-project.org/} and its mirrors), and other
-repositories such as Bioconductor (@url{http://www.bioconductor.org/}).
+(@uref{http://CRAN.R-project.org/} and its mirrors), and other
+repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
 The @emph{R FAQ} contains a list that was current at the time of
 release, but the collection of available packages changes frequently.
 
@@ -7230,7 +7230,7 @@ is used.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
-@url{http://ESS.R-project.org}}) using the startup option
+@uref{http://ESS.R-project.org}}) using the startup option
 @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing: see

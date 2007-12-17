@@ -135,7 +135,7 @@ allow functionality developed in languages such as @code{Java},
 @code{perl} and @code{python} to be directly integrated with @R{} code,
 making the use of facilities in these languages even more
 appropriate.  (See the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython}
-packages from the Omegahat project, @url{http://www.omegahat.org}, and
+packages from the Omegahat project, @uref{http://www.omegahat.org}, and
 the @pkg{rJava} package from @acronym{CRAN}.)
 
 
@@ -352,7 +352,7 @@ data and code.
 
 A description of the facilities of the @pkg{XML} package is outside the
 scope of this document: see the package's Web page at
-@url{http://www.omegahat.org/RSXML} for details and examples.  Package
+@uref{http://www.omegahat.org/RSXML} for details and examples.  Package
 @pkg{StatDataML} on CRAN is one example building on @pkg{XML}.
 
 
@@ -946,7 +946,7 @@ or (more recently) @file{.syd}.
 @findex read.octave
 
 Octave is a numerical linear algebra system
-(@url{http://www.octave.org}), and function @code{read.octave} in
+(@uref{http://www.octave.org}), and function @code{read.octave} in
 package @pkg{foreign} can read in files in Octave text data format
 created using the Octave command @command{save -ascii}, with support for
 most of the common types of variables, including the standard atomic
@@ -1017,8 +1017,8 @@ from a database for separate analysis.
 @section Overview of RDBMSs
 
 Traditionally there have been large (and expensive) commercial RDBMSs
-(@url{http://www.informix.com, Informix}; @url{http://www.oracle.com,
-Oracle}; @url{http://www.sybase.com, Sybase}; IBM's DB/2; Microsoft
+(@uref{http://www.informix.com, Informix}; @uref{http://www.oracle.com,
+Oracle}; @uref{http://www.sybase.com, Sybase}; IBM's DB/2; Microsoft
 @acronym{SQL} Server on Windows) and academic and small-system databases
 (such as MySQL, PostgreSQL, Microsoft Access, @dots{}), the former
 marked out by much greater emphasis on data security features.  The line
@@ -1032,7 +1032,7 @@ There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
-@url{http://www.microsoft.com/data/odbc/}) but is also implemented on
+@uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
 Linux/Unix.
 
 All of the packages described later in this chapter provide clients to
@@ -1172,14 +1172,14 @@ data frame or in pieces (usually as groups of rows).
 
 All except @pkg{RODBC} are tied to one DBMS, but work is in progress
 towards a unified `front-end' package @pkg{DBI}
-(@url{http://developer.r-project.org/db}) in conjuction with a
+(@uref{http://developer.r-project.org/db}) in conjuction with a
 `back-end', the most developed of which is @pkg{RMySQL}.  Also on CRAN
 are the back-ends @pkg{ROracle} and @pkg{RSQLite} (which works with the
-included DBMS @code{SQLite}, @url{http://www.hwaci.com/sw/sqlite}).
+included DBMS @code{SQLite}, @uref{http://www.hwaci.com/sw/sqlite}).
 
 Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
 and in the development area on CRAN: the BioConductor project has
-@pkg{RdbiPgSQL}.  @pkg{PL/R} (@url{http://www.joeconway.com/plr/,
+@pkg{RdbiPgSQL}.  @pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
@@ -1195,7 +1195,7 @@ PostgreSQL.
 @cindex MySQL database system
 
 Package @pkg{RMySQL} on @acronym{CRAN} provides an interface to the
-MySQL database system (see @url{http://www.mysql.com} and Dubois,
+MySQL database system (see @uref{http://www.mysql.com} and Dubois,
 2000.).  The description here applies to version @code{0.5-0}: earlier
 versions had a substantially different interface.  The current version
 requires the @pkg{DBI} package, and this description will apply with
@@ -1295,11 +1295,11 @@ ODBC is a client-server system, and we have happily connected to a DBMS
 running on a Unix server from a Windows client, and @emph{vice versa}.
 
 On Windows ODBC support is normally installed, and current versions are
-available from @url{http://www.microsoft.com/data/odbc/} as part of MDAC.
+available from @uref{http://www.microsoft.com/data/odbc/} as part of MDAC.
 On Unix/Linux you will need an @acronym{ODBC} Driver Manager such as
-unixODBC (@url{http://www.unixODBC.org}) or iOBDC
-(@url{http://www.iODBC.org}) and an installed driver for your database
-system.  The FreeODBC project (@url{http://www.jepstone.net/FreeODBC/})
+unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
+(@uref{http://www.iODBC.org}) and an installed driver for your database
+system.  The FreeODBC project (@uref{http://www.jepstone.net/FreeODBC/})
 is a repository of information related to @acronym{ODBC}.
 
 @cindex Excel
@@ -1310,7 +1310,7 @@ Windows provides drivers not just for DBMSs but also for Excel (@file{.xls})
 spreadsheets, DBase (@file{.dbf}) files and even text files.  (The named
 applications do @emph{not} need to be installed.)  There are versions
 for Excel 2007 and Access 2007 (go to
-@url{http://download.microsoft.com}, select `Office' and search for
+@uref{http://download.microsoft.com}, select `Office' and search for
 `ODBC', which will lead to @file{AccessDatabaseEngine.exe}).
 
 @findex odbcConnect
@@ -1433,9 +1433,9 @@ differences.
 @c @subsection Package RPgSQL
 @c @cindex PostgreSQL database system
 
-@c Package @pkg{RPgSQL} at @url{http://rpgsql.sourceforge.net/} and in the
+@c Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and in the
 @c @code{Devel} area on @acronym{CRAN} provides an interface to
-@c @url{http://www.postgresql.org, PostgreSQL}.  Development appears to
+@c @uref{http://www.postgresql.org, PostgreSQL}.  Development appears to
 @c have ceased.
 
 @c PostgreSQL is described by its developers as `the most advanced open
@@ -1571,9 +1571,9 @@ handle binary files.
 
 Packages @pkg{hdf5}, @pkg{RNetCDF} and @pkg{ncdf} on @acronym{CRAN}
 provide interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format,
-see @url{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data
+see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data
 files (network Common Data Form, see
-@url{http://www.unidata.ucar.edu/packages/netcdf/}).
+@uref{http://www.unidata.ucar.edu/packages/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
 ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
@@ -1585,7 +1585,7 @@ Package @pkg{ncvar} on @acronym{CRAN} provides a higher-level @R{}
 interface to netCDF data files @emph{via} @pkg{RNetCDF}.
 
 There is also a package @pkg{rhdf5} available from
-@url{http://www.bioconductor.org}.
+@uref{http://www.bioconductor.org}.
 
 
 @node dBase files (DBF),  , Binary data formats, Binary files
@@ -1598,11 +1598,11 @@ Borland which has a binary flat-file format that became popular, with
 file extension @file{.dbf}.  It has been adopted for the 'Xbase' family
 of databases, covering dBase, Clipper, FoxPro and their Windows
 equivalents Visual dBase, Visual Objects and Visual FoxPro (see
-@url{http://www.e-bachmann.dk/docs/xbase.htm}).  A dBase file contains
+@uref{http://www.e-bachmann.dk/docs/xbase.htm}).  A dBase file contains
 a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
 character, logical and numeric fields, and other types in later versions
-(see @url{http://clicketyclick.dk/docs/data_types.html}).
+(see @uref{http://clicketyclick.dk/docs/data_types.html}).
 
 @findex read.dbf
 @findex write.dbf
@@ -2042,7 +2042,7 @@ to most of those considered here in that it is another application
 (Excel, or written in Visual Basic) that is the client and @R{} is the
 server.
 
-Another (D)COM server is available from @url{http://www.omegahat.org/},
+Another (D)COM server is available from @uref{http://www.omegahat.org/},
 which allows R objects to be exported as COM values.  That site also
 has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
 to act as a (D)COM client.
@@ -2057,7 +2057,7 @@ to @acronym{DCOM}, allowing applications to call methods, or operations,
 in server objects running in other applications, potentially programmed
 in different languages and running on different machines.  There is a
 @pkg{CORBA} package available from the Omegahat project (at
-@url{http://www.omegahat.org/RSCORBA/}), currently for Unix but a
+@uref{http://www.omegahat.org/RSCORBA/}), currently for Unix but a
 Windows version looks to be possible.
 
 This package allows @R{} commands to be used to locate available
@@ -2067,9 +2067,9 @@ these calls are exported in the call and made available to that
 operation invocation.  Primitive data types (vectors and lists) are
 exported by default, while more complex objects are exported by
 reference.  Examples of using this include communicating with the
-Gnumeric (@url{http://www.gnumeric.org}) spreadsheet, and also
+Gnumeric (@uref{http://www.gnumeric.org}) spreadsheet, and also
 interacting with the data visualization system
-@url{http://www.ggobi.org, ggobi}.
+@uref{http://www.ggobi.org, ggobi}.
 
 One can also create @acronym{CORBA} servers within @R{}, allowing other
 applications to call these methods.  For example, one might offer access
@@ -2082,7 +2082,7 @@ parallel computing in @R{}.  One @R{} session acts as a manager and
 dispatches tasks to different servers running in other @R{} worker
 sessions.  This uses the ability to invoke asynchronous or background
 CORBA calls in @R{}.  More information is available from the Omegahat
-project at @url{http://www.omegahat.org/RSCORBA/}.
+project at @uref{http://www.omegahat.org/RSCORBA/}.
 
 
 
@@ -2110,8 +2110,8 @@ decimal point.)  Exporting a DIF file and reading it using
 
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
-example Gnumeric (@url{http://www.gnome.org/projects/gnumeric/}) and
-OpenOffice (@url{http://www.openoffice.org}).  You can also
+example Gnumeric (@uref{http://www.gnome.org/projects/gnumeric/}) and
+OpenOffice (@uref{http://www.openoffice.org}).  You can also
 cut-and-paste between the display of a spreadsheet in such a program and
 R: @code{read.table} will read from the R console or, under Windows,
 from the clipboard (via @code{file = "clipboard"} or
@@ -2172,7 +2172,7 @@ K.@: Kline and D.@: Kline (2001) @emph{SQL in a Nutshell.} O'Reilly.
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
 Addison-Wesley.
-Also downloadable at @url{http://www.postgresql.org/docs/awbook.html}.
+Also downloadable at @uref{http://www.postgresql.org/docs/awbook.html}.
 
 @noindent
 T.@: M.@: Therneau and P.@: M.@: Grambsch (2000) @emph{Modeling Survival

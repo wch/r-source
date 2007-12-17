@@ -1082,8 +1082,8 @@ most of @R{} itself.  (There are some necessary exceptions: foremost
 structures.)
 
 For background papers see
-@url{http://www.stat.uiowa.edu/~luke/R/barrier.html} and
-@url{http://www.stat.uiowa.edu/~luke/R/gengcnotes.html}.
+@uref{http://www.stat.uiowa.edu/~luke/R/barrier.html} and
+@uref{http://www.stat.uiowa.edu/~luke/R/gengcnotes.html}.
 
 @node Serialization Formats, Encodings for CHARSXPs, The write barrier, R Internal Structures
 @section Serialization Formats
@@ -1389,7 +1389,7 @@ only the visible methods will be cached.
 @subsection Mechanics of S4 dispatch
 
 This subsection does not discuss how S4 methods are chosen: see
-@url{http://developer.r-project.org/howMethodsWork.pdf}.
+@uref{http://developer.r-project.org/howMethodsWork.pdf}.
 
 For all but primitive functions, setting a method on an existing
 function that is not itself S4 generic creates a new object in the
@@ -2197,7 +2197,7 @@ regexp, and is not supported by all versions of @command{grep} or
 @command{sed}.  The Open Group Base Specifications, Issue 6, which is
 technically identical to ISO/IEC 9945 and IEEE Std 1003.1 (POSIX), 2004,
 are available at
-@url{http://www.opengroup.org/onlinepubs/009695399/mindex.html}.
+@uref{http://www.opengroup.org/onlinepubs/009695399/mindex.html}.
 @end itemize
 
 Under Windows, most users will not have these tools installed, and you

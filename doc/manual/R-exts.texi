@@ -272,7 +272,7 @@ One of the ``standard'' short specifications
 @example
 GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-1.0 Artistic-2.0
 @end example
-as made available via @url{http://@/www.r-project.org/@/Licenses/} and
+as made available via @uref{http://@/www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the R source or home
 directory.
 @item
@@ -287,9 +287,9 @@ non-negative integers separated by @samp{.}), possibly combined via
 @samp{,} (see below for an example).  For versioned licenses, one can
 also specify the name followed by the version, or combine an existing
 abbreviation and the version with a @samp{-}.  Further free (see
-@url{http://@/www.fsf.org/@/licenses/@/license-list.html}) or open
+@uref{http://@/www.fsf.org/@/licenses/@/license-list.html}) or open
 software (see
-@url{http://@/www.opensource.org/@/licenses/@/bsd-license.php}) licenses
+@uref{http://@/www.opensource.org/@/licenses/@/bsd-license.php}) licenses
 will be added to this data base if necessary.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
@@ -1609,7 +1609,7 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
 
 @example
-@url{ftp://cran.R-project.org/incoming/}
+@uref{ftp://cran.R-project.org/incoming/}
 @end example
 
 @noindent
@@ -2015,7 +2015,7 @@ space.
 
 More information about this symbol lookup, along with some approaches
 for customizing it, is available from
-@url{http://www.omegahat.org/examples/RDotCall}.
+@uref{http://www.omegahat.org/examples/RDotCall}.
 
 @node An example, Summary -- converting an existing package, Load hooks, Package name spaces
 @subsection An example
@@ -2244,7 +2244,7 @@ example @R{} is still used on platforms where the C compiler does not
 accept C++/C99 comments (starting @code{//}).
 
 If you use FORTRAN, @code{ftnchek}
-(@url{http://www.dsm.fordham.edu/~ftnchek/}) provides thorough testing
+(@uref{http://www.dsm.fordham.edu/~ftnchek/}) provides thorough testing
 of conformance to the standard.
 
 @item
@@ -2479,7 +2479,7 @@ The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at the @acronym{GNU}
 archive mirrors and packaged with the @code{poEdit} package
-(@url{http://@/poedit.sourceforge.net/@/download.php#win32}).
+(@uref{http://@/poedit.sourceforge.net/@/download.php#win32}).
 
 
 @menu
@@ -2644,12 +2644,12 @@ Several members of the @R{} project have set up services to assist those
 writing @R{} packages, particularly those intended for public
 distribution.
 
-@url{http://win-builder.r-project.org, win-builder.r-project.org} offers
+@uref{http://win-builder.r-project.org, win-builder.r-project.org} offers
 the automated preparation of Windows binaries from well-tested source
 packages. 
 
-R-Forge (@url{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
-RForge (@url{http://www.rforge.net, www.rforge.net}) are similar
+R-Forge (@uref{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
+RForge (@uref{http://www.rforge.net, www.rforge.net}) are similar
 services with similar names.  Both provide source-code management
 through SVN, daily building and checking, mailing lists and a repository
 that can be accessed @emph{via} @code{install.packages}.  Package
@@ -2741,7 +2741,7 @@ function's arguments and return value, as in the above example).
 Finally, there is a footer with keyword information.  The header and
 footer are mandatory.
 
-See the @url{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
+See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
@@ -4104,7 +4104,7 @@ profile DLLs on Windows.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @url{http://oprofile.sourceforge.net/}) for any
+@command{oprofile} (see @uref{http://oprofile.sourceforge.net/}) for any
 executable or shared object.
 
 @subsubsection sprof
@@ -4194,8 +4194,8 @@ collects information from shared libraries compiled with @option{-pg}.
 
 Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version) and @command{Shark} (see
-@url{http://developer.apple.com/tools/sharkoptimize.html} and
-@url{http://developer.apple.com/tools/shark_optimize.html}).
+@uref{http://developer.apple.com/tools/sharkoptimize.html} and
+@uref{http://developer.apple.com/tools/shark_optimize.html}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
@@ -4205,9 +4205,9 @@ This chapter covers the debugging of @R{} extensions, starting with the
 ways to get useful error information and moving on to how to deal with
 errors that crash @R{}.  For those who prefer other styles there are
 contributed packages such as @pkg{debug} on CRAN (described in an
-article in @url{http://cran.r-project.org/doc/Rnews/Rnews_2003-3.pdf,
+article in @uref{http://cran.r-project.org/doc/Rnews/Rnews_2003-3.pdf,
 R-News 3/3}).  (There are notes from 2002 provided by Roger Peng at
-@url{http://www.biostat.jhsph.edu/~rpeng/docs/R-debug-tools.pdf} which
+@uref{http://www.biostat.jhsph.edu/~rpeng/docs/R-debug-tools.pdf} which
 provide complementary examples to those given here.)
 
 @menu
@@ -4661,7 +4661,7 @@ It is possible to run all the examples, tests and vignettes covered by
 
 If you have access to Linux on an @code{ix86}, @code{x86_64} or
 @code{ppc32} platform you can use @code{valgrind}
-(@url{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
 
@@ -5446,7 +5446,7 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 @c Additionally, there are (experimental) tools that can be used to
 @c automate the generation of the code to register the routines for a
 @c collection of C files. See the @code{GccTranslationUnit} module on the
-@c Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
+@c Omegahat Web site at @uref{http://www.omegahat.org/GccTranslationUnit/}
 @c for more information.
 
 In addition to registering C routines to be called by @R{}, it can at
@@ -5603,7 +5603,7 @@ work, but @file{Makevars.win} will be used in preference to
 @code{R CMD INSTALL} with @file{src/Makefile} being ignored.  For
 details of building DLLs with a variety of compilers, see file
 @samp{README.packages} and
-@url{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
+@uref{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
 .
 
 Under Windows you can supply an exports file called
@@ -7488,7 +7488,7 @@ void R_RunWeakRefFinalizer(SEXP w);
 @end example
 
 A toy example of the use of weak references can be found at
-@url{http://www.stat.uiowa.edu/~luke/R/references/weakfinex.html,
+@uref{http://www.stat.uiowa.edu/~luke/R/references/weakfinex.html,
 @code{www.@/stat.@/uiowa.@/edu/@/~luke/@/R/references/@/weakfinex.html}},
 but that is used to add finalizers to external pointers which can now be
 done more directly.
@@ -8790,7 +8790,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably: see
-@url{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
+@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
 configure code has checked is that  @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
 packages making extensive use of inlining include their own configure code.
@@ -9096,8 +9096,8 @@ mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @pkg{Rserve} (from CRAN, see also
-@url{http://www.rforge.net/Rserve/}) and connections to Java in
-@samp{SJava} (see @url{http://www.omegahat.org/RSJava/} and @samp{JRI},
+@uref{http://www.rforge.net/Rserve/}) and connections to Java in
+@samp{SJava} (see @uref{http://www.omegahat.org/RSJava/} and @samp{JRI},
 part of the @pkg{rJava} package on CRAN).
 
 @menu
@@ -9635,7 +9635,7 @@ currently available that interface directly with @R{} and provide a
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on CRAN
-(@url{http://@/cran.r-project.org/@/other-software.html}) which works
+(@uref{http://@/cran.r-project.org/@/other-software.html}) which works
 with @file{Rproxy.dll} (in the @R{} distribution) and @file{R.dll} to
 support transfer of data to and from @R{} and remote execution of R
 commands, as well as embedding of an @R{} graphics window.  The @pkg{rcom}
@@ -9643,8 +9643,8 @@ package on CRAN provides a (D)COM server in a running @R{} session.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
-@url{http://www.omegahat.org/}. Its philosophy is discussed in
-@url{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
+@uref{http://www.omegahat.org/}. Its philosophy is discussed in
+@uref{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
 very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly,  , Using (D)COM, Embedding R under Windows
