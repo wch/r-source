@@ -152,10 +152,6 @@ int R_finite(double);
 
 #define WILCOX_MAX 50
 
-/* Wilcoxon Signed Rank Distribution */
-
-#define SIGNRANK_MAX 50
-
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
 #else
