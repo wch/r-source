@@ -201,6 +201,30 @@ dev.copy2eps <- function(...)
     dev.set(current.device)
 }
 
+dev.copy2pdf <- function(...)
+{
+    current.device <- dev.cur()
+    nm <- names(current.device)[1]
+    if(nm == "null device") stop("no device to print from")
+    if(!dev.displaylist())
+        stop("can only print from screen device")
+    oc <- match.call()
+    oc[[1]] <- as.name("dev.copy")
+    oc$device <- pdf
+    ## the defaults in pdf are all customizable, so we override
+    ## even those which are the ultimate defaults.
+    oc$onefile <- FALSE
+    if(is.null(oc$paper)) oc$paper <- "special"
+    din <- graphics::par("din"); w <- din[1]; h <- din[2]
+    if(is.null(oc$width))
+        oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
+    if(is.null(oc$height))
+        oc$height <- if(!is.null(oc$width)) h/w * eval.parent(oc$width) else h
+    if(is.null(oc$file)) oc$file <- "Rplot.pdf"
+    dev.off(eval.parent(oc))
+    dev.set(current.device)
+}
+
 dev.control <- function(displaylist = c("inhibit", "enable"))
 {
     if(dev.cur() <= 1)

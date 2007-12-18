@@ -14,16 +14,16 @@ export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
        CIDFont, col2rgb, colors, colours, cm, colorRamp,
        colorRampPalette, contourLines, convertColor, colorConverter,
        colorspaces, cm.colors, dev.control, dev.copy, dev.copy2eps,
-       dev.cur, dev.interactive, dev.list, dev.new, dev.next, dev.off,
-       dev.prev, dev.print, dev.set, dev2bitmap, deviceIsInteractive,
-       embedFonts, extendrange, getGraphicsEvent, graphics.off, gray,
-       grey, gray.colors, grey.colors, heat.colors, hsv, hcl,
-       make.rgb, n2mfrow, nclass.Sturges, nclass.FD, nclass.scott,
-       palette, pdf, pdf.options, pdfFonts, pictex, postscript,
-       postscriptFont, postscriptFonts, ps.options, rainbow,
-       recordGraphics, recordPlot, replayPlot, rgb, rgb2hsv, setEPS,
-       setPS, terrain.colors, topo.colors, trans3d, Type1Font, xfig,
-       xyTable, xy.coords, xyz.coords)
+       dev.copy2pdf, dev.cur, dev.interactive, dev.list, dev.new,
+       dev.next, dev.off, dev.prev, dev.print, dev.set, dev2bitmap,
+       deviceIsInteractive, embedFonts, extendrange, getGraphicsEvent,
+       graphics.off, gray, grey, gray.colors, grey.colors,
+       heat.colors, hsv, hcl, make.rgb, n2mfrow, nclass.Sturges,
+       nclass.FD, nclass.scott, palette, pdf, pdf.options, pdfFonts,
+       pictex, postscript, postscriptFont, postscriptFonts,
+       ps.options, rainbow, recordGraphics, recordPlot, replayPlot,
+       rgb, rgb2hsv, setEPS, setPS, terrain.colors, topo.colors,
+       trans3d, Type1Font, xfig, xyTable, xy.coords, xyz.coords)
 
 ## devices common to all platforms
 export(X11, x11, bitmap, jpeg, png)

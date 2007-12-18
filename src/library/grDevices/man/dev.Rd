@@ -4,7 +4,18 @@
 % Distributed under GPL 2 or later
 
 \name{dev.xxx}
+\alias{dev.cur}
+\alias{dev.list}
+\alias{dev.next}
+\alias{dev.prev}
+\alias{dev.off}
+\alias{dev.set}
+\alias{dev.new}
+\alias{graphics.off}
 \title{Control Multiple Devices}
+\description{
+  These functions provide control over multiple graphics devices.
+}
 \usage{
 dev.cur()
 dev.list()
@@ -15,19 +26,9 @@ dev.set(which = dev.next())
 dev.new()
 graphics.off()
 }
-\alias{dev.cur}
-\alias{dev.list}
-\alias{dev.next}
-\alias{dev.prev}
-\alias{dev.off}
-\alias{dev.set}
-\alias{graphics.off}
 
 \arguments{
   \item{which}{An integer specifying a device number.}
-}
-\description{
-  These functions provide control over multiple graphics devices.
 }
 \details{
   Only one device is the \sQuote{active} device: this is the device in

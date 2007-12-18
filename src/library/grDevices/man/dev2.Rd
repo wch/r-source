@@ -7,12 +7,14 @@
 \alias{dev.copy}
 \alias{dev.print}
 \alias{dev.copy2eps}
+\alias{dev.copy2pdf}
 \alias{dev.control}
 \title{Copy Graphics Between Multiple Devices}
 \usage{
 dev.copy(device, \dots, which = dev.next())
 dev.print(device = postscript, \dots)
 dev.copy2eps(\dots)
+dev.copy2pdf(\dots)
 dev.control(displaylist = c("inhibit", "enable"))
 }
 \arguments{
@@ -39,7 +41,8 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{device} and then shuts the new device.
 
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
-  EPSF output file, in portrait orientation (\code{horizontal = FALSE})
+  EPSF output file, in portrait orientation (\code{horizontal = FALSE}).
+  \code{dev.copy2pdf} is the analogue for PDF output.
 
   \code{dev.control} allows the user to control the recording of
   graphics operations in a device.  If \code{displaylist} is \code{"inhibit"}
@@ -62,11 +65,12 @@ dev.control(displaylist = c("inhibit", "enable"))
   is probably not what is needed when copying to a device such as
   \code{\link{png}}.
   
-  For \code{dev.copy2eps}, \code{width} and \code{height} are taken
-  from the current device unless otherwise specified.  If just one of
-  \code{width} and \code{height} is specified, the other is adjusted
-  to preserve the aspect ratio of the device being copied.  The default
-  file name is \code{Rplot.eps}.
+  For \code{dev.copy2eps} and \code{dev.copy2pdf},  \code{width} and
+  \code{height} are taken from the current device unless otherwise
+  specified.  If just one of \code{width} and \code{height} is
+  specified, the other is adjusted to preserve the aspect ratio of the
+  device being copied.  The default file name is \code{Rplot.eps} or
+  \code{Rplot.pdf}.
 
 #ifdef unix
   The default for \code{dev.print} is to produce and print a postscript
@@ -99,7 +103,7 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{png} and \code{jpeg}.
 #endif
 #ifdef windows
-  \code{png}, \code{jpeg} and\code{bmp} unless \code{units="inches"}
+  \code{png}, \code{jpeg} and \code{bmp} unless \code{units="inches"}
   is specified.
 #endif
 }
@@ -121,7 +125,7 @@ dev.control(displaylist = c("inhibit", "enable"))
   useful if memory usage is an issue.
 }
 \seealso{
-  \code{\link{dev.cur}} and other \code{dev.xxx} functions
+  \code{\link{dev.cur}} and other \code{dev.xxx} functions.
 }
 \examples{
 \dontrun{
