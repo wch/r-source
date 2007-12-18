@@ -151,6 +151,8 @@ NEW FEATURES
 	graphics device (and taking care if it is "pdf" or
 	"postscript" not to trample on an already running copy).
 
+    o	New function dev.copy2pdf(), the analogue of dev.copy2eps().
+
 
 DEPRECATED & DEFUNCT
 
