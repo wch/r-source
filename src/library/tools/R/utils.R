@@ -173,9 +173,9 @@ function(x)
     if(!capabilities("iconv")) stop("'iconv' is required")
     ind <- is.na(iconv(x, "latin1", "ASCII"))
     if(any(ind))
-        cat(which(ind), ": ",
-            iconv(x[ind], "latin1", "ASCII", sub="byte"),
-            "\n", sep="")
+        cat(paste(which(ind), ": ",
+                  iconv(x[ind], "latin1", "ASCII", sub="byte"), sep=""),
+            sep="\n")
 }
 
 ### * Text utilities.
