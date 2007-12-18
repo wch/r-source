@@ -622,8 +622,8 @@ assign(".PostScript.Options.default",
        envir = .PSenv)
 
 assign(".PDF.Options",
-    list(width	= 6,
-	 height = 6,
+    list(width	= 7,
+	 height = 7,
          onefile = TRUE,
          family = "Helvetica",
          title = "R Graphics Output",

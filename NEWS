@@ -15,6 +15,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	pdf() rather than postscript().  [PDF viewers are now
 	more widely available than PostScript viewers.]
 
+	The default width and height for pdf() have been changed to
+	7 (inches) to match the screen devices.
+
 
 NEW FEATURES
 

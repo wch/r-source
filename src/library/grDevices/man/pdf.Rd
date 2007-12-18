@@ -24,7 +24,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     (See \code{\link{postscript}} for further details.)
   }
   \item{width, height}{the width and height of the graphics region in
-    inches.  The default values are \code{6}.}
+    inches.  The default values are \code{7}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
     number for each page.  Defaults to  \code{TRUE}.}
