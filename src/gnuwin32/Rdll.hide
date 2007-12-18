@@ -219,6 +219,7 @@
  R_restore_globals
  R_run_onexits
  R_seemsOldStyleS4Object
+ R_serialize
  R_serializeb
  R_signgam
  R_subset3_dflt
@@ -227,6 +228,7 @@
  R_sysfunction
  R_sysparent
  R_unary
+ R_unserialize
  R_warn_partial_match_args
  R_warn_partial_match_attr
  R_warn_partial_match_dollar
