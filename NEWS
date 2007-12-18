@@ -134,7 +134,7 @@ NEW FEATURES
 	less memory than previously, thanks to a patch from Ivo
 	Ugrina.
 
-    o	New function showNonASCII() in package tools to aid detsction
+    o	New function showNonASCII() in package tools to aid detection
 	of non-ASCII characters in .Rd files.
 
     o	[g]sub(useBytes=FALSE) now sets the encoding bit on changed
