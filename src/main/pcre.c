@@ -295,7 +295,10 @@ do_pgsub(const char *spat, const char *srep, SEXP vec, int global,
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
 	    *u = '\0';
-            SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
+	    if(useBytes)
+		SET_STRING_ELT(ans, i, mkChar(cbuf));
+	    else
+		SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
             Free(cbuf);
 	}
     }
