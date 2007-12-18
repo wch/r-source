@@ -880,7 +880,7 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden markKnown(const char *s, SEXP ref)
 {
     int ienc = 0;
-    if(IS_LATIN1(ref) || IS_UTF8(ref)) {
+    if(ENC_KNOWN(ref)) {
 	if(known_to_be_latin1) ienc = LATIN1_MASK;
 	if(known_to_be_utf8) ienc = UTF8_MASK;
     }

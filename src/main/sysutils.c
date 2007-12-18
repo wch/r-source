@@ -573,7 +573,7 @@ const char *translateChar(SEXP x)
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-    if(x == NA_STRING || !(IS_LATIN1(x) || IS_UTF8(x))) return ans;
+    if(x == NA_STRING || !(ENC_KNOWN(x))) return ans;
     if(utf8locale && IS_UTF8(x)) return ans;
     if(latin1locale && IS_LATIN1(x)) return ans;
     if(utf8strIsASCII(CHAR(x))) return ans;
