@@ -43,11 +43,16 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
  * The first pass calculates the width of the paste buffer,
  * then it is alloc-ed and the second pass stuffs the information in.
  */
+
+/* Note that NA_STRING is not handled separately here.  This is 
+   deliberate -- see ?paste -- and implicitly coerces it to "NA"
+*/
 SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x;
-    int i, j, k, maxlen, nx, pwidth, sepw;
+    int i, j, k, maxlen, nx, pwidth, sepw, ienc;
     const char *s, *csep, *cbuf; char *buf;
+    Rboolean allKnown, anyKnown, sepASCII, sepKnown;
 
     checkArity(op, args);
 
@@ -65,15 +70,18 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	
 
     sep = CADR(args);
-    if (!isString(sep) || LENGTH(sep) <= 0)
+    if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
 	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
     csep = translateChar(sep);
     sepw = strlen(csep); /* not LENGTH as might contain \0 */
+    sepASCII = utf8strIsASCII(csep);
+    sepKnown = ENC_KNOWN(sep) > 0;
 
     collapse = CADDR(args);
     if (!isNull(collapse))
-	if(!isString(collapse) || LENGTH(collapse) <= 0)
+	if(!isString(collapse) || LENGTH(collapse) <= 0 ||
+	   STRING_ELT(collapse, 0) == NA_STRING)
 	    error(_("invalid '%s' argument"), "collapse");
     if(nx == 0)
 	return (!isNull(collapse)) ? mkString("") : allocVector(STRSXP, 0);
@@ -107,6 +115,18 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, maxlen));
 
     for (i = 0; i < maxlen; i++) {
+	/* Strategy for marking the encoding: if all inputs (including
+	 * the separator) are ASCII, so is the output and we don't
+	 * need to mark.  Otherwise if all non-ASCII inputs are of
+	 * declared encoding, we should mark.
+	 * Need to be careful only to include separator if it is used.
+	 */
+	anyKnown = FALSE; allKnown = TRUE;
+	if(nx > 1) {
+	    allKnown = allKnown && (sepKnown || sepASCII);
+	    anyKnown = anyKnown || sepKnown;
+	}
+	
 	pwidth = 0;
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
@@ -119,24 +139,35 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
-		s = translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k));
+		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
+		s = translateChar(cs);
                 strcpy(buf, s);
 		buf += strlen(s);
+		allKnown = allKnown &&
+		    (utf8strIsASCII(s) || (ENC_KNOWN(cs)> 0));
+		anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 	    }
 	    if (j != nx - 1 && sepw != 0) {
 	        strcpy(buf, csep);
 		buf += sepw;
 	    }
 	}
-	SET_STRING_ELT(ans, i, mkChar(cbuf));
+	ienc = 0;
+	if(anyKnown && allKnown) {
+	    if(known_to_be_latin1) ienc = LATIN1_MASK;
+	    if(known_to_be_utf8) ienc = UTF8_MASK;
+	}
+	SET_STRING_ELT(ans, i, mkCharEnc(cbuf, ienc));
     }
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx = LENGTH(ans)) != 0) {
+    if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {
 	sep = STRING_ELT(collapse, 0);
 	csep = translateChar(sep);
 	sepw = strlen(csep);
+	anyKnown = ENC_KNOWN(sep) > 0;
+	allKnown = anyKnown || utf8strIsASCII(csep);
 	pwidth = 0;
 	/* 'ans' is already translated */
 	for (i = 0; i < nx; i++)
@@ -152,13 +183,19 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
             strcpy(buf, s);
 	    while (*buf)
 		buf++;
+	    allKnown = allKnown && 
+		(utf8strIsASCII(s) || (ENC_KNOWN(STRING_ELT(ans, i))> 0));
+	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i))> 0);
 	}
         UNPROTECT(1);
-        PROTECT(ans = mkString(cbuf));
+	ienc = 0;
+	if(anyKnown && allKnown) {
+	    if(known_to_be_latin1) ienc = LATIN1_MASK;
+	    if(known_to_be_utf8) ienc = UTF8_MASK;
+	}
+	PROTECT(ans = allocVector(STRSXP, 1));
+	SET_STRING_ELT(ans, 0, mkCharEnc(cbuf, ienc));
     }
-    /* We would only know the encoding of an element of the answer 
-       if we knew the encoding of all the components, so we don't
-       bother to mark it here */
     R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);
     return ans;
@@ -182,7 +219,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	
 
     sep = CADR(args);
-    if (!isString(sep) || LENGTH(sep) <= 0)
+    if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
 	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
     csep = CHAR(sep);

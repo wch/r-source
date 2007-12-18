@@ -137,9 +137,12 @@ NEW FEATURES
     o	New function showNonASCII() in package tools to aid detection
 	of non-ASCII characters in .Rd files.
 
-    o	[g]sub(useBytes=FALSE) now sets the encoding bit on changed
+    o	[g]sub(useBytes=FALSE) now sets the encoding on changed
 	elements of the result when working on an element of known
 	encoding.  (This was previously done only for perl = TRUE.)
+
+    o	paste() now sets the encoding on the result under some
+	circumstances (see ?paste).
 
 
 DEPRECATED & DEFUNCT
@@ -225,8 +228,10 @@ BUG FIXES
 	where they were unrelated to the function masked.  It is now
 	more selective (although still too generous to S4 generics).
 
-
     o	ps.options(reset = TRUE) had not reset for a long time.
+
+    o	passte() and file.path() no longer allow NA_character_ for
+	their 'sep' and 'collapse' arguments.
 
 
 

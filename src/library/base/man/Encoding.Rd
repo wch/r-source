@@ -37,16 +37,17 @@ Encoding(x) <- value
   declares encodings from its \code{from} argument, and console input in
   suitable locales is also declared.
 
-  Most (but not all) character manipulation functions will set the
-  encoding on output strings if it was declared on the corresponding input.
-  These include \code{\link{chartr}}, \code{\link{strsplit}},
-  \code{\link{strtrim}}, \code{\link{substr}}, \code{\link{Sys.glob}},
-  \code{\link{tolower}} and \code{\link{toupper}} as well as
-  \code{\link{sub}(useBytes = FALSE)} and \code{\link{gsub}(useBytes =
-    FALSE)}.  Note that such functions do not \emph{preserve} the
-  encoding, but if they know the input encoding and that the string has
-  been successfully re-encoded to the current encoding, they mark the
-  output with the latter (if it is \code{"latin1"} or \code{"UTF-8"}).
+  Most character manipulation functions will set the encoding on output
+  strings if it was declared on the corresponding input.  These include
+  \code{\link{chartr}}, \code{\link{strsplit}}, \code{\link{strtrim}},
+  \code{\link{substr}}, \code{\link{Sys.glob}}, \code{\link{tolower}}
+  and \code{\link{toupper}} as well as \code{\link{sub}(useBytes =
+    FALSE)} and \code{\link{gsub}(useBytes = FALSE)}.  (Also, under some
+  circumstances \code{\link{paste}} will set an encoding.)   Note that
+  such functions do not \emph{preserve} the encoding, but if they know
+  the input encoding and that the string has been successfully
+  re-encoded to the current encoding, they mark the output with the
+  latter (if it is \code{"latin1"} or \code{"UTF-8"}).
 }
 \value{
   A character vector.
