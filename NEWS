@@ -147,6 +147,10 @@ NEW FEATURES
     o	paste() now sets the encoding on the result under some
 	circumstances (see ?paste).
 
+    o	New function dev.new() to launch a new copy of the default
+	graphics device (and taking care if it is "pdf" or
+	"postscript" not to trample on an already running copy).
+
 
 DEPRECATED & DEFUNCT
 

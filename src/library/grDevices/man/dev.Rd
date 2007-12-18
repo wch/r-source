@@ -12,6 +12,7 @@ dev.next(which = dev.cur())
 dev.prev(which = dev.cur())
 dev.off(which = dev.cur())
 dev.set(which = dev.next())
+dev.new()
 graphics.off()
 }
 \alias{dev.cur}
@@ -23,7 +24,7 @@ graphics.off()
 \alias{graphics.off}
 
 \arguments{
-  \item{which}{An integer specifying a device number}
+  \item{which}{An integer specifying a device number.}
 }
 \description{
   These functions provide control over multiple graphics devices.
@@ -53,23 +54,37 @@ graphics.off()
   \code{dev.set} makes the specified device the active device.  If there
   is no device with that number, it is equivalent to \code{dev.next}.
   If \code{which = 1} it opens a new device and selects that.
+
+  \code{dev.new} opens a new device.  Normally \R will open a new device
+  automatically when needed, but this enables you to open further
+  devices in a platform-independent way.  (For which device is used see
+  \code{\link{getOption}("device")}.)  Note that care is needed with
+  file-based devices such as \code{\link{pdf}} and
+  \code{\link{postscript}} and in that case file names such as
+  \file{Rplots.pdf}, \file{Rplots1.pdf}, \dots, \file{Rplots999.pdf} are
+  tried in turn.
 }
 \value{
-  \code{dev.cur} returns the number and name of the active device,
-  or 1, the null device, if none is active.
+  \code{dev.cur} returns a length-one named integer vector giving the
+  number and name of the active device, or 1, the null device, if none
+  is active.
 
   \code{dev.list} returns the numbers of all open devices, except device
-  1, the null device.  This is a numeric vector with a names attribute
-  giving the names, or \code{NULL} is there is no open device.
+  1, the null device.  This is a numeric vector with a
+  \code{\link{names}} attribute giving the device names, or \code{NULL} is
+  there is no open device.
 
   \code{dev.next} and \code{dev.prev} return the number and name of the
   next / previous device in the list of devices.  This will be the null
   device if and only if there are no open devices.
 
-  \code{dev.off} returns the name and number of the new active device
+  \code{dev.off} returns the number and name of the new active device
   (after the specified device has been shut down).
 
-  \code{dev.set} returns the name and number of the new active device.
+  \code{dev.set} returns the number and name of the new active device.
+
+  \code{dev.new} returns the return value of the device opened, usually
+  invisible \code{NULL}.
 }
 \seealso{
   \code{\link{Devices}}, such as \code{\link{postscript}}, etc.

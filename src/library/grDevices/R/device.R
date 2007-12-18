@@ -228,3 +228,39 @@ graphics.off <- function ()
     while ((which <- dev.cur()) != 1)
 	dev.off(which)
 }
+
+dev.new <- function()
+{
+    dev <- getOption("device")
+    if(is.function(dev)) dev()
+    else if(!is.character(dev))
+        stop("invalid setting for 'getOption(\"device\")'")
+    else if(identical(dev, "pdf")) {
+        ## Take care not to open device on top of another.
+        if(!file.exists("Rplots.pdf")) pdf()
+        else {
+            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".pdf", sep=""))
+            if(all(fe)) stop("no suitable unused file name for pdf()")
+            message(gettextf("dev.new(): using pdf(file=\"%s\")", tmp[!fe][1]),
+                    domain=NA)
+            pdf(tmp[!fe][1])
+        }
+    } else if(identical(dev, "postscript")) {
+        ## Take care not to open device on top of another.
+        if(!file.exists("Rplots.ps")) postscript()
+        else {
+            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".ps", sep=""))
+            if(all(fe)) stop("no suitable unused file name for postscript()")
+            message(gettextf("dev.new(): using postscript(file=\"%s\")",
+                             tmp[!fe][1]), domain=NA)
+            postscript(tmp[!fe][1])
+        }
+    } else {
+        ## this is documented to be searched for from base,
+        ## then in graphics namespace.
+        if(exists(dev, .GlobalEnv)) get(dev, .GlobalEnv)()
+        else if(exists(dev, asNamespace("grDevices")))
+            get(dev, asNamespace("grDevices"))()
+        else stop(gettextf("device '%s' not found", dev), domain=NA)
+    }
+}
