@@ -13,7 +13,7 @@
   \code{x11} is recognized as a synonym for \code{X11}.
 }
 \usage{
-X11(display = "", width = 7, height = 7, pointsize = 12,
+X11(display = "", width, height, pointsize = 12,
     gamma = getOption("gamma"), colortype = getOption("X11colortype"),
     maxcubesize = 256, bg = "transparent", canvas = "white",
     fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
@@ -23,7 +23,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     The default is to use the value in the user's environment variable
     \env{DISPLAY}.}
   \item{width, height}{the width and height of the plotting window, in
-    inches.  See also Resources.}
+    inches.  If not specified, taken first from the resources, and if
+    not specified there defaults to \code{7} inches.}
   \item{pointsize}{the default pointsize to be used.}
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors perceived are linearly related to
@@ -80,7 +81,9 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   the larger of one pixel and 0.01 inch.
 
   The initial size and position are only hints, and may not be acted on
-  by the window manager.
+  by the window manager.  Also, some systems (especially laptops) are
+  deliberately set up to appear to have a screen of a different size to
+  the physical screen.
 }
 \section{Fonts}{
   An initial/default font family for the device can be specified via

@@ -18,7 +18,7 @@
 ## pass .X11.Fonts to the X11 device.
 .X11env <- new.env()
 
-X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
+X11 <- function(display = "", width, height, pointsize = 12,
                 gamma = getOption("gamma"),
                 colortype = getOption("X11colortype"),
                 maxcubesize = 256, bg = "transparent", canvas = "white",
@@ -28,8 +28,8 @@ X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
   if(display == "" && .Platform$GUI == "AQUA" &&
      is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
   ## we need to know internally if the user has overridden X11 resources
-  if(missing(width)) width <- as.double(NA)
-  if(missing(height)) height <- as.double(NA)
+  if(missing(width)) width <- NA_real_
+  if(missing(height)) height <- NA_real_
   .Internal(X11(display, width, height, pointsize,
                 if(is.null(gamma)) 1 else gamma, colortype,
                 maxcubesize, bg, canvas, fonts, NA, xpos, ypos))
