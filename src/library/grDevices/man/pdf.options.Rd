@@ -7,7 +7,7 @@
 \alias{pdf.options}
 \title{Auxiliary Function to Set/View Defaults for Arguments of pdf}
 \description{
-  The auxiliary function \code{ps.options} can be used to set or view
+  The auxiliary function \code{pdf.options} can be used to set or view
   (if called without arguments) the default values for some of the
   arguments to \code{\link{pdf}}.
   
