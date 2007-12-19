@@ -21,7 +21,6 @@ dev.interactive <- function(orNone = FALSE) {
     iDevs <- .known_interactive.devices
     interactive() &&
     (.Device %in% iDevs ||
-     (dev.cur() > 1 && dev.displaylist()) ||
      (orNone && .Device == "null device" &&
       is.character(newdev <- getOption("device")) &&
       newdev %in% iDevs))

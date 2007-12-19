@@ -13,7 +13,7 @@
 }
 \usage{
 \method{plot}{formula}(formula, data = parent.frame(), \dots, subset,
-             ylab = varnames[response], ask = TRUE)
+             ylab = varnames[response], ask = dev.interactive())
 
 \method{points}{formula}(formula, data = parent.frame(), \dots, subset)
 

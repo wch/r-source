@@ -135,7 +135,7 @@ plot.table <-
 
 plot.formula <-
 function(formula, data = parent.frame(), ..., subset,
-         ylab = varnames[response], ask = TRUE)
+         ylab = varnames[response], ask = dev.interactive())
 {
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))

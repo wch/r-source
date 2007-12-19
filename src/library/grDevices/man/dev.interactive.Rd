@@ -25,10 +25,6 @@ deviceIsInteractive(name = NULL)
     or \code{NULL} to give the existing list.}
 }
 \details{
-  There is a list of known interactive devices, and in
-  addition a current device is regarded as interactive if its
-  displaylist is enabled (see \code{\link{dev.control}}).
-  
   The \code{X11} (Unix), \code{windows} (Windows) and \code{quartz}
   (MacOS X) are regarded as interactive, together with \code{GTK}
   (available in package \pkg{gtkDevice}), \code{JavaGD} (from the

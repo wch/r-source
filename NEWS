@@ -153,6 +153,13 @@ NEW FEATURES
 
     o	New function dev.copy2pdf(), the analogue of dev.copy2eps().
 
+    o   dev.interactive() no longer treats a graphics device as
+        interactive if it has a display list (but devices can still
+        register themselves on the list of interactive devices).
+
+    o   plot.formula() only prompts between plots for interactive
+        devices (it used to prompt for all devices).
+
 
 DEPRECATED & DEFUNCT
 
