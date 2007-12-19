@@ -202,6 +202,8 @@ UTILITIES
     o	R CMD check now warns if spaces or non-ASCII characters are
 	used in file paths, since these are not in general portable.
 
+    o   R CMD INSTALL now also installs tangled versions of all vignettes.
+
 
 BUG FIXES
 

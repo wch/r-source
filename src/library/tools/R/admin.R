@@ -466,7 +466,19 @@ function(dir, outDir)
                 basename(file_path_sans_ext(vignetteIndex$File)))
         ind <- file_test("-f", file.path(outVignetteDir, vignettePDFs))
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
+
+        ## install tangled versions of all vignettes
+        cwd <- getwd()
+        setwd(outVignetteDir)
+        for(srcfile in vignetteIndex$File){
+            yy <- try(utils::Stangle(srcfile))
+            if(inherits(yy, "try-error")) stop(yy)
+        }
+        vignetteIndex$R <-
+            sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
+        setwd(cwd)
     }
+    
     if(!hasHtmlIndex)
         .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
 
