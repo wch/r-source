@@ -28,7 +28,10 @@ by(data, INDICES, FUN, \dots)
   subsetted by the values of one or more factors, and function
   \code{FUN} is applied to each subset in turn.
 
-  Object \code{data} will be coerced to a data frame by default.
+  Object \code{data} will be coerced to a data frame by the default
+  method, \emph{but} if this results in a 1-column data frame, the
+  objects passed to \code{FUN} are dropped to a subsets of that column.
+  (This was the long-term behaviour, but only documented since \R 2.7.0.)
 }
 \value{
   A list of class \code{"by"}, giving the results for each subset.

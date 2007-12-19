@@ -16,8 +16,27 @@
 
 by <- function(data, INDICES, FUN, ...) UseMethod("by")
 
+## prior to 2.7.0 this promoted vectors to data frames, but
+## the data frame method dropped to a single column.
 by.default <- function(data, INDICES, FUN, ...)
-    by(as.data.frame(data), INDICES, FUN, ...)
+{
+    dd <- as.data.frame(data)
+    if(length(dim(data)))
+        by(dd, INDICES, FUN, ...)
+    else {
+        if(!is.list(INDICES)) {        # record the names for print.by
+            IND <- vector("list", 1)
+            IND[[1]] <- INDICES
+            names(IND) <- deparse(substitute(INDICES))[1]
+        } else IND <- INDICES
+        FUNx <- function(x) FUN(dd[x,], ...)
+        nd <- nrow(dd)
+        ans <- eval(substitute(tapply(1:nd, IND, FUNx)), dd)
+        attr(ans, "call") <- match.call()
+        class(ans) <- "by"
+        ans
+    }
+}
 
 by.data.frame <- function(data, INDICES, FUN, ...)
 {
@@ -26,7 +45,7 @@ by.data.frame <- function(data, INDICES, FUN, ...)
         IND[[1]] <- INDICES
         names(IND) <- deparse(substitute(INDICES))[1]
     } else IND <- INDICES
-    FUNx <- function(x) FUN(data[x,, drop=FALSE], ...)
+    FUNx <- function(x) FUN(data[x,, drop=FALSE], ...) # (PR#10506)
     nd <- nrow(data)
     ans <- eval(substitute(tapply(1:nd, IND, FUNx)), data)
     attr(ans, "call") <- match.call()
