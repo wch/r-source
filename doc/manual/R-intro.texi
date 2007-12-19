@@ -7217,6 +7217,9 @@ EOF
 but here @code{stdin()} refers to the program source and
 @code{"stdin"} will not be usable.
 
+Very short scripts can be passed to @command{Rscript} on the
+command-line via the @option{-e} flag.
+
 
 @node The command-line editor, Function and variable index, Invoking R, Top
 @appendix The command-line editor
