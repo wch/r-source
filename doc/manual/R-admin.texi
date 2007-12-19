@@ -4296,16 +4296,8 @@ and need the block removed @emph{via} the @emph{information bar}.
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X
 
-[This section is out of date: Java 1.5.0 ships with recent versions of
-Mac OS X.]
-
-The @HTML{} search engine does not work with Safari under Mac OS X, but
-@code{j2re}@tie{}1.4.x may work with Mozilla, Firefox and Camino if the
-Java Embedding Plugin (@url{http://javaplugin.sourceforge.net/,
-@code{javaplugin.sourceforge.net}}) is used.
-
-The Aqua GUI provides an interface to @code{help.search} that may
-substitute for the Java search.
+Java 1.5.0 ships with recent versions of Mac OS X, and the @HTML{}
+search engine works with Safari under Mac OS 10.5.
 
 @node The Windows toolset, Function and variable index, Enabling search in HTML help, Top
 @appendix The Windows toolset
