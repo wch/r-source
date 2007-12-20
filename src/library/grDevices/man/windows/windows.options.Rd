@@ -1,0 +1,41 @@
+% File src/library/grDevices/man/pdf.options.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
+\name{windows.options}
+\alias{windows.options}
+\title{Auxiliary Function to Set/View Defaults for Arguments of windows()}
+\description{
+  The auxiliary function \code{windows.options} can be used to set or view
+  (if called without arguments) the default values for the arguments of
+  \code{\link{windows}}.
+  
+  \code{windows.options} needs to be called before calling \code{windows},
+  and the default values it sets can be overridden by supplying
+  arguments to \code{windows}.
+  }
+\usage{
+windows.options(\dots, reset = FALSE)
+}
+\arguments{
+  \item{\dots}{arguments \code{width}, \code{height}, \code{pointsize},
+    \code{record}, \code{rescale}, \code{xpinch}, \code{ypinch},
+    \code{bg}, \code{canvas}, \code{gamma}, \code{xpos}, \code{ypos},
+    \code{buffered}, \code{restoreConsole} and \code{title} can be supplied.}
+  \item{reset}{logical: should the defaults be reset to their defaults?}
+}
+\details{
+  If both \code{reset = TRUE} and \code{...} are supplied the defaults
+  are first reset to the \sQuote{factory-fresh} values and then the new
+  values are applied.
+}
+\value{
+  A named list of all the defaults.  If any arguments are
+  supplied the return values are the old values and the result has the
+  visibility flag turned off.
+}
+\seealso{
+  \code{\link{windows}}, \code{\link{ps.options}}.
+}
+\keyword{device}
