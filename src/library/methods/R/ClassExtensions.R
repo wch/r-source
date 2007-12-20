@@ -16,14 +16,15 @@
 
 .InitExtensions <- function(where) {
     ## to be called from the initialization
-    setClass("SClassExtension", representation(subClass = "character", superClass = "character", package = "character",
-                                               coerce = "function", test = "function",
-                                               replace = "function",
-                                               simple = "logical", by = "character",
-                                               dataPart = "logical",
-                                               distance = "numeric"),
-             where = where)
-    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"), where)
+    setClass("SClassExtension",
+	     representation(subClass = "character", superClass = "character",
+			    package = "character", coerce = "function",
+			    test = "function", replace = "function",
+			    simple = "logical", by = "character",
+			    dataPart = "logical", distance = "numeric"),
+	     where = where)
+    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"),
+	   where)
 }
 
 .simpleExtCoerce <- function(from, strict = TRUE)from
@@ -65,7 +66,8 @@
 }
 
 .ErrorReplace <- function(from, to, value)
-    stop(gettextf("no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\"", to, class(from)), domain = NA)
+    stop(gettextf("no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\"",
+                  to, class(from)), domain = NA)
 
 .objectSlotNames <- function(object) {
     ## a quick version that makes no attempt to check the class definition
@@ -122,7 +124,8 @@ makeExtends <- function(Class, to,
             coerce <- .ChangeFormals(coerce, .simpleExtCoerce, "'coerce' argument to setIs ")
 
     }
-    else stop(gettextf("the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class \"%s\"", class(coerce)), domain = NA)
+    else stop(gettextf("the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class \"%s\"",
+                       class(coerce)), domain = NA)
     if(is.null(test))
         test <- .simpleExtTest
     else
@@ -183,7 +186,8 @@ makeExtends <- function(Class, to,
         else
             replace <- .ErrorReplace
         if(identical(replace, .ErrorReplace))
-            warning(gettextf("there is no automatic definition for as(object, \"%s\") <- value when object has class \"%s\" and no 'replace' argument was supplied; replacement will be an error", to, Class), domain = NA)
+            warning(gettextf("there is no automatic definition for as(object, \"%s\") <- value when object has class \"%s\" and no 'replace' argument was supplied; replacement will be an error",
+                             to, Class), domain = NA)
     }
     else if(is(replace, "function")) {
         ## turn function of two or three arguments into correct 3-arg form
@@ -197,11 +201,12 @@ makeExtends <- function(Class, to,
             replace <- .ChangeFormals(replace, .ErrorReplace, "'replace' argument to setIs ")
     }
     else
-        stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\"", class(replace)), domain = NA)
-    new("SClassExtension", subClass = Class, superClass = to, package = package, coerce = coerce,
-               test = test, replace = replace, simple = simple, by = by, dataPart = dataPart, distance = distance)
+        stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\"",
+                      class(replace)), domain = NA)
 
-
+    new("SClassExtension", subClass = Class, superClass = to, package = package,
+	coerce = coerce, test = test, replace = replace, simple = simple,
+	by = by, dataPart = dataPart, distance = distance)
 }
 
 .findAll <- function(what, where = topenv(parent.frame())) {
@@ -226,10 +231,9 @@ makeExtends <- function(Class, to,
     ## FIXME:  namespaces don't seem to include methods package
     ## objects in their parent env., but they must be importing
     ## methods to get to this code
-    if(length(value)== 0 &&
-       isNamespace(where) && exists(what, .methodsNamespace, inherits
-                                    = FALSE))
-      value <- list(.methodsNamespace)
+    if(length(value)== 0 && isNamespace(where) &&
+       exists(what, .methodsNamespace, inherits = FALSE))
+	value <- list(.methodsNamespace)
     value
 }
 
