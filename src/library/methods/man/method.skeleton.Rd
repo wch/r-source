@@ -7,10 +7,10 @@
 \alias{method.skeleton}
 \title{Create a Skeleton File for a New Method}
 \description{
-  This function writes a source file containing a call to \code{\link{setMethod}} to define a method
-  for the generic function and signature supplied.  By default the
-  method definition is in line in the call, but can be made an
-  external function assigned in the same source file.
+  This function writes a source file containing a call to
+  \code{\link{setMethod}} to define a method for the generic function
+  and signature supplied.  By default the method definition is in line
+  in the call, but can be made an external (previously assigned) function.
 }
 \usage{
 method.skeleton(generic, signature, file, external = FALSE, where)
@@ -42,19 +42,21 @@ method.skeleton(generic, signature, file, external = FALSE, where)
 \value{
   The \code{file} argument, invisibly, but the function is used for its side effect.
 }
-\seealso{ \code{\link{setMethod}}, \code{\link{package.skeleton}}}
+\seealso{\code{\link{setMethod}}, \code{\link{package.skeleton}}
+}
 \examples{
-\dontrun{
+\dontshow{oWD <- setwd(tempdir())}
 setClass("track", representation(x ="numeric", y="numeric"))
-method.skeleton("show", "track")  ## writes show_track.R
-method.skeleton("Ops", c("track", "track")) ##writes "Ops_track_track.R"
+method.skeleton("show", "track")            ## writes show_track.R
+method.skeleton("Ops", c("track", "track")) ## writes "Ops_track_track.R"
+
 ## write multiple method skeletons to one file
-con = file("./Math_track.R", "w")
+con <- file("./Math_track.R", "w")
 method.skeleton("Math", "track", con)
 method.skeleton("exp", "track", con)
 method.skeleton("log", "track", con)
 close(con)
-}
+\dontshow{setwd(oWD)}
 }
 \keyword{programming}
 \keyword{methods}

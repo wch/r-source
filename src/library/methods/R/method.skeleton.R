@@ -14,19 +14,21 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-method.skeleton <- function (generic, signature, file, external = FALSE, where = topenv(parent.frame())) 
+method.skeleton <- function (generic, signature, file, external = FALSE,
+			     where = topenv(parent.frame()))
 {
     fdef <- getGeneric(generic, where = where)
     if (is.null(fdef)) {
         fdef <- implicitGeneric(generic, where = where)
         if(is.null(fdef))
-          stop(gettextf("No function definition found for \"%s\"", generic))
+            stop(gettextf("No function definition found for \"%s\"", generic))
     }
     else {
         generic <- fdef@generic
     }
+    paste0 <- function(...) paste(..., sep = '')
     signature <- matchSignature(signature, fdef)
-    if (length(signature) == 0) 
+    if (length(signature) == 0)
         signature <- "ANY"
     sigNames <- fdef@signature
     length(sigNames) <- length (signature)
@@ -37,26 +39,22 @@ method.skeleton <- function (generic, signature, file, external = FALSE, where =
         stop("Need a definition for the method here")
     })
     methodName <- paste(c(generic, signature), collapse = "_")
-    if (missing(file)) 
-        file <- paste(methodName, ".R", sep = "")
-    output <- c(paste("setMethod(\"", generic, "\",", sep = ""), 
-        paste("    signature(", paste(sigNames, " = \"", signature, "\"", 
-            sep = "", collapse = ", "), "),", sep = ""))
+    if (missing(file))
+        file <- paste0(methodName, ".R")
+    output <- c(paste0("setMethod(\"", generic, '",'),
+		paste0("    signature(", paste0(sigNames, ' = "', signature, '"',
+						collapse = ", "), "),"))
     method <- deparse(method)
-    if (identical(external, FALSE)) 
-        output <- c(output, paste("    ", method, sep = ""), 
-            ")")
+    if (identical(external, FALSE))
+        output <- c(output, paste0("    ", method), ")")
     else {
         if(is(external, "character") )
-          methodName <- toString(external)
-        method[[1]] <- paste("`", methodName, "` <- ", method[[1]], 
-            sep = "")
-        output <- c(method, "", output, paste("  `", methodName, 
-            "`)", sep = ""))
+            methodName <- toString(external)
+        method[[1]] <- paste0("`", methodName, "` <- ", method[[1]])
+        output <- c(method, "", output, paste0("  `", methodName, "`)"))
     }
     writeLines(output, file)
-    message("Skeleton of method written to ", if (is.character(file)) 
-        file
-    else "connection")
+    message("Skeleton of method written to ",
+	    if (is.character(file)) file else "connection")
     invisible(file)
 }
