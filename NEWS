@@ -160,6 +160,10 @@ NEW FEATURES
     o   plot.formula() only prompts between plots for interactive
         devices (it used to prompt for all devices).
 
+    o   New function browseVignettes() lists available vignettes in an
+        HTML browser with links to PDF, Rnw, and R files.
+
+
 
 DEPRECATED & DEFUNCT
 
@@ -248,7 +252,7 @@ BUG FIXES
 
     o	ps.options(reset = TRUE) had not reset for a long time.
 
-    o	passte() and file.path() no longer allow NA_character_ for
+    o	paste() and file.path() no longer allow NA_character_ for
 	their 'sep' and 'collapse' arguments.
 
     o	by() failed for 1-column matrices and dataframes.  (PR#10506)

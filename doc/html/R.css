@@ -35,3 +35,8 @@ span.file{font-family: monospace}
 span.option{font-family: monospace}
 span.pkg{font-weight: bold}
 span.samp{font-family: monospace}
+
+div.vignettes a:hover {
+  background: rgb(85%, 85%, 85%);
+}
+

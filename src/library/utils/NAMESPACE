@@ -1,7 +1,7 @@
 export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        URLdecode, URLencode, View, alarm, apropos, argsAnywhere,
        assignInNamespace, as.roman, as.person, as.personList, as.relistable,
-       available.packages, browseEnv, browseURL, bug.report,
+       available.packages, browseEnv, browseURL, browseVignettes, bug.report,
        capture.output, checkCRAN, chooseCRANmirror, citation,
        citEntry, citHeader, citFooter, close.socket, combn,
        compareVersion, contrib.url, count.fields, data, data.entry,
@@ -65,6 +65,7 @@ S3method(print, roman)
 S3method(print, sessionInfo)
 S3method(print, socket)
 S3method(print, vignette)
+S3method(print, browseVignettes)
 S3method(prompt, data.frame)
 S3method(prompt, default)
 S3method(relist, default)
