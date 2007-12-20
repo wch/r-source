@@ -60,7 +60,8 @@ typedef enum {
 
 Rboolean newX11DeviceDriver(DevDesc*, const char*, double, double, double,
 			    double, 
-			    X_COLORTYPE, int, int, int, SEXP, int, int, int);
+			    X_COLORTYPE, int, int, int, SEXP, 
+			    int, int, int, const char *);
 
 
 	/********************************************************/
@@ -134,6 +135,7 @@ typedef struct {
                                            or whether R is to handle the events (FALSE) */
     int res_dpi;			/* used for png/jpeg */
     Rboolean warn_trans;		/* have we warned about translucent cols? */
+    char title[101];
 } newX11Desc;
 
 

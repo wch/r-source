@@ -16,7 +16,9 @@
 X11(display = "", width, height, pointsize = 12,
     gamma = getOption("gamma"), colortype = getOption("X11colortype"),
     maxcubesize = 256, bg = "transparent", canvas = "white",
-    fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
+    fonts = getOption("X11fonts"),
+     xpos = NA_integer_, ypos = NA_integer_,
+    title = "")
 }
 \arguments{
   \item{display}{the display on which the graphics window will appear.
@@ -43,12 +45,14 @@ X11(display = "", width, height, pointsize = 12,
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font. See section Fonts.}
-  \item{xpos, ypos}{initial position of the top left corner of the
+  \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
     from the right edge of the screen.
     If \code{NA}, successive devices are cascaded in
     20 pixel steps from the top left.  See also Resources.}
+  \item{title}{character string, up to 100 bytes.  With the default
+    \code{""}, a suitable title is created internally.}
 }
 \details{
   By default, an X11 device will use the best color rendering

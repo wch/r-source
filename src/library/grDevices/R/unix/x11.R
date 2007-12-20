@@ -22,17 +22,20 @@ X11 <- function(display = "", width, height, pointsize = 12,
                 gamma = getOption("gamma"),
                 colortype = getOption("X11colortype"),
                 maxcubesize = 256, bg = "transparent", canvas = "white",
-                fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
+                fonts = getOption("X11fonts"),
+                xpos = NA_integer_, ypos = NA_integer_,
+                title="")
 {
-
   if(display == "" && .Platform$GUI == "AQUA" &&
      is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
   ## we need to know internally if the user has overridden X11 resources
+
   if(missing(width)) width <- NA_real_
   if(missing(height)) height <- NA_real_
   .Internal(X11(display, width, height, pointsize,
                 if(is.null(gamma)) 1 else gamma, colortype,
-                maxcubesize, bg, canvas, fonts, NA, xpos, ypos))
+                maxcubesize, bg, canvas, fonts, NA_integer_,
+                xpos, ypos, title))
 }
 
 x11 <- X11
@@ -40,20 +43,23 @@ x11 <- X11
 
 png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px",
-                pointsize = 12, bg = "white",  res = NA, ...)
+                pointsize = 12, bg = "white", res = NA, ...)
 {
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
-    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     dots <- list(...)
     d <- list(gamma = 1, colortype = getOption("X11colortype"),
               maxcubesize = 256, fonts = getOption("X11fonts"))
     d[names(dots)] <- dots[names(dots)]
     .Internal(X11(paste("png::", filename, sep=""),
                   width, height, pointsize, d$gamma,
-                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res, 0, 0))
+                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                  0L, 0L, ""))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -64,15 +70,18 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
-    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     dots <- list(...)
     d <- list(gamma = 1, colortype = getOption("X11colortype"),
               maxcubesize = 256, fonts = getOption("X11fonts"))
     d[names(dots)] <- dots[names(dots)]
     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                   width, height, pointsize, d$gamma,
-                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res, 0, 0))
+                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                  0L, 0L, ""))
 }
 
 ####################

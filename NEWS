@@ -163,6 +163,8 @@ NEW FEATURES
     o   New function browseVignettes() lists available vignettes in an
         HTML browser with links to PDF, Rnw, and R files.
 
+    o	The X11() and windows() graphics devices have a new argument
+	'title' to set the window title.
 
 
 DEPRECATED & DEFUNCT
