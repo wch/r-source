@@ -21,7 +21,8 @@ findGeneric <- function(fname, envir)
     f <- get(fname, mode = "function", envir = envir)
     if(.isMethodsDispatchOn() && methods::is(f, "genericFunction")) {
         ## maybe an S3 generic was turned into the S4 default
-        fdeflt <- methods::finalDefaultMethod(methods::getMethodsForDispatch(fname, f))
+        ## But (in 2.6.x), this no longer works!
+        fdeflt <- methods::finalDefaultMethod(methods::getMethodsForDispatch(f))
         if(methods::is(fdeflt, "derivedDefaultMethod"))
             f <- fdeflt
         else

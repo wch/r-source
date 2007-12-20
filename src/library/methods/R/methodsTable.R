@@ -518,22 +518,6 @@
     }
 }
 
-.UseMethodsTables <- TRUE
-
-.UsingMethodsTables <- function(onOff = .UseMethodsTables, where = .methodsNamespace)
-{
-    prev <- .UseMethodsTables
-    if(nargs()) {
-	onOff <- as.logical(onOff)	# TRUE, FALSE or NA
-	if(!is.na(onOff))
-	    .assignOverBinding(".UseMethodsTables", onOff, where = where, FALSE)
-	else
-	    stop(gettextf(".UsingMethodsTables: 'onOff' is not TRUE or FALSE"),
-                 domain = NA)
-    }
-    prev
-}
-
 ## In the following, consider separate "compute" and "print" functions/methods:
 ## Wish: alternative to 'classes' allow  "wild-card signature", e.g.,
 ##       showMethods("coerce", signature = c("dgeMatrix", "*"))

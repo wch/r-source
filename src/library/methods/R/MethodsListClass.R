@@ -92,7 +92,7 @@
 
         if(length(functionName) == 0)
           functionName = value@generic
-        
+
         if(sealed)
             value <- new("SealedMethodDefinition", value)
         ## this is really new("signature",  def, signature)
@@ -121,26 +121,14 @@
                                          mlist = getMethods(f), optional = FALSE, envir)
                standardGeneric("addNextMethod"), where = envir)
     setMethod("addNextMethod", "MethodDefinition",
-              function(method, f, mlist, optional, envir) {
-                if(.UsingMethodsTables())
-                  value <- .findNextFromTable(method, f, optional, envir)
-                else {
-                  value <- .findNextMethod(method, f, mlist, optional, list(method@defined), envir)
-                  new("MethodWithNext", method, nextMethod = value,
-                      excluded = list(method@defined))
-                }
-              }, where = envir)
+	      function(method, f, mlist, optional, envir) {
+		  .findNextFromTable(method, f, optional, envir)
+	      }, where = envir)
     setMethod("addNextMethod", "MethodWithNext",
-              function(method, f, mlist, optional, envir) {
-                if(.UsingMethodsTables())
-                  .findNextFromTable(method, f, optional, envir, method@excluded)
-                else {
-                  excluded <- c(method@excluded, list(method@defined))
-                  value <- .findNextMethod(method, f, mlist, optional, excluded, envir)
-                  new("MethodWithNext", method, nextMethod = value,
-                      excluded = excluded)
-                }
-              }, where = envir)
+	      function(method, f, mlist, optional, envir) {
+		  .findNextFromTable(method, f, optional, envir, method@excluded)
+	      }, where = envir)
+
     .initGeneric <- function(.Object, ...) {
             value <- standardGeneric("initialize")
             if(!identical(class(value), class(.Object))) {
@@ -276,7 +264,7 @@
               function(e1, e2)
                  callGeneric(e1@.Data, e2@.Data)
               )
-    
+
     setMethod("Math", "structure", where = where,
               function(x) {
                   x@.Data <- callGeneric(x@.Data)
@@ -303,7 +291,7 @@
         else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
             stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
                           paste(sigArgs, collapse = ", "),
-                          functionName,                          
+                          functionName,
                           paste(formalNames, collapse = ", ")),
                  domain = NA)
         ## the named classes become the signature object

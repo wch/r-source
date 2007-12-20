@@ -542,8 +542,8 @@ getGeneric <-
             prev[[i]] <- def # or, .makeGenericForCache(def) as above
         def <- prev
     }
-    if(.UsingMethodsTables())
-      .getMethodsTable(fdef) # force initialization
+
+    .getMethodsTable(fdef) # force initialization
     assign(name, def, envir = table)
     fdef
 }
@@ -819,24 +819,20 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
          fdef <- getGeneric(f, FALSE, searchWhere, pkg)
         ## silently ignores all generics not visible from searchWhere
         if(is(fdef, "genericFunction")) {
-          if(attach) {
-              env <- as.environment(where)
-              ## all instances of this generic in different attached packages must
-              ## be the cached version of the generic for consistent
-               ## method selection.
-             if(exists(f, envir = env, inherits = FALSE)) {
-                  def <- get(f, envir = env)
-                  if(!identical(def, fdef))
-                    .assignOverBinding(f, fdef,  env, FALSE)
-              }
-          }
+	  if(attach) {
+	      env <- as.environment(where)
+	      ## all instances of this generic in different attached packages must
+	      ## be the cached version of the generic for consistent
+	      ## method selection.
+	      if(exists(f, envir = env, inherits = FALSE)) {
+		  def <- get(f, envir = env)
+		  if(!identical(def, fdef))
+		      .assignOverBinding(f, fdef,  env, FALSE)
+	      }
+	  }
           else if(identical(fdef@package, pkg))
-            .uncacheGeneric(f, fdef)
-          if(.UsingMethodsTables())
-            methods <- .updateMethodsInTable(fdef, where, attach)
-          else
-            methods <- getAllMethods(f, fdef, if(attach) searchWhere
-            else .GlobalEnv)
+              .uncacheGeneric(f, fdef)
+	  methods <- .updateMethodsInTable(fdef, where, attach)
           cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
           }
         }
@@ -884,26 +880,19 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
                reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
                set = setPrimitiveMethods(f, deflt, code, fdef, methods),
 ##               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL),
-               stop(gettextf("internal error: bad code for 'setPrimitiveMethods': %s", code), domain = NA)
-               )
+	       stop(gettextf("internal error: bad code for 'setPrimitiveMethods': %s",
+			     code), domain = NA)
+	       )
     }
     else if(isGroup(f, fdef = fdef)) {
-        members <- fdef@groupMembers
-        ## do the computations for the members as well; important if the
-        ## members are primitive functions.
-        for(ff in members) {
-            ffdef <- getGeneric(ff, where = where)
-            if(is(ffdef, "genericFunction")) {
-              if(.UsingMethodsTables())
-                Recall(ff,ffdef, attach, where, methods = .getMethodsTable(ffdef))
-              else {
-                ## reform the methods list for the group member, to include
-                ## any group-inherited methods
-                mm <- getAllMethods(ff, ffdef, where = where)
-                Recall(ff, ffdef, attach, where, methods = mm)
-              }
-            }
-        }
+	members <- fdef@groupMembers
+	## do the computations for the members as well; important if the
+	## members are primitive functions.
+	for(ff in members) {
+	    ffdef <- getGeneric(ff, where = where)
+	    if(is(ffdef, "genericFunction"))
+		Recall(ff,ffdef, attach, where, methods = .getMethodsTable(ffdef))
+	}
     }
     TRUE
 }
@@ -1412,7 +1401,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
                 else if(is(x, "genericFunction"))
                     x@generic
                 else
-                    stop(gettextf("invalid element in the groupMembers slot (class \"%s\")", class(x)), domain = NA)
+		    stop(gettextf("invalid element in the groupMembers slot (class \"%s\")",
+				  class(x)), domain = NA)
             })
         else
             members

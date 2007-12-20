@@ -145,11 +145,7 @@ setGeneric <-
     }
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
-    if(!.UsingMethodsTables() &&
-       length(fdef@group)> 0 && !is.null(getGeneric(fdef@group[[1]], where = where)))
-        methods <- getAllMethods(name, fdef, where)
-    else
-        methods <- fdef@default # empty or containing the default
+    methods <- fdef@default # empty or containing the default
     assignMethodsMetaData(name, methods, fdef, where)
     name
 }
@@ -251,40 +247,30 @@ getMethods <-
         fdef <- getGeneric(f, where = where)
     else if(is(f, "genericFunction")) {
         if(nowhere)
-          where <- .genEnv(f)
+            where <- .genEnv(f)
         fdef <- f
         f <- fdef@generic
     }
     else
-        stop(gettextf("invalid argument \"f\", expected a function or its name, got an object of class \"%s\"", class(f)), domain = NA)
-    if(!is.null(fdef)) { # else NULL
+        stop(gettextf("invalid argument \"f\", expected a function or its name, got an object of class \"%s\"",
+                      class(f)), domain = NA)
+    if(!is.null(fdef)) {
         ## getMethods() always returns a methods  list.  When using
         ## methods tables, this only makes sense as the metadata from
         ## where (by default, the location of the generic)
-        if(.UsingMethodsTables()) {
-            gwhere <-  ( if(nowhere)
-                        findFunction(f, TRUE, where)[[1]] # can't be empty since fdef is nonnull
-                        else where)
-            value <- getMethodsMetaData(f, where = gwhere)
-            if(is.null(value)) # return empty methods list
-              new("MethodsList", argument = fdef@default@argument)
-            else
-              value
-        }
+        gwhere <- if(nowhere) findFunction(f, TRUE, where)[[1]] else where
+                                        # can't be empty since fdef is nonnull
+        value <- getMethodsMetaData(f, where = gwhere)
+        if(is.null(value))              # return empty methods list
+            new("MethodsList", argument = fdef@default@argument)
         else
-          getMethodsForDispatch(f, fdef)
-    }
+            value
+    } # else NULL
 }
 
-getMethodsForDispatch <- function(f, fdef)
+getMethodsForDispatch <- function(fdef)
 {
-  ev <- environment(fdef)
-    if(.UsingMethodsTables())
-        .getMethodsTable(fdef, ev)
-    else {
-        if(exists(".Methods", envir = ev, inherits = FALSE))
-            get(".Methods", envir = ev) ## else NULL
-    }
+    .getMethodsTable(fdef, environment(fdef))
 }
 
 ## some functions used in MethodsListSelect, that must be safe against recursive
@@ -309,7 +295,7 @@ getMethodsForDispatch <- function(f, fdef)
 
 ##NB used internally in MethodsListSelect.  Must NOT use the standard version
 ## to prevent recursion
-.getMethodsForDispatch <- function(f, fdef) {
+.getMethodsForDispatch <- function(fdef) {
     ev <- .evBasic(fdef)
     if(.existsBasic(".Methods", envir = ev)) {
         .getBasic(".Methods", envir = ev)
@@ -330,26 +316,16 @@ cacheMethod <-
   ## cache the given definition in the method metadata for f
   ## Support function:  DON'T USE DIRECTLY (does no checking)
   function(f, sig, def, args = names(sig), fdef, inherited = FALSE) {
-    ev <- environment(fdef)
-    if(.UsingMethodsTables()) {
-        .cacheMethodInTable(fdef, sig, def,
-                            .getMethodsTable(fdef, ev, inherited = inherited))
-        ## if this is not an inherited method, update the inherited table as well
-        ## TODO:  in this case, should uncache inherited methods, though the callin
-        ##  function will normally have done this.
-        if(!inherited)
-          .cacheMethodInTable(fdef, sig, def,
-                              .getMethodsTable(fdef, ev, inherited = TRUE))
-    }
-    else {
-      methods <- get(".Methods", envir = ev)
-      methods <- insertMethod(methods, sig, args, def, TRUE)
-      assign(".Methods", methods, envir = ev)
-      deflt <- finalDefaultMethod(methods)
-      if(is.primitive(deflt))
-        setPrimitiveMethods(f, deflt, "set", fdef, methods)
-      methods
-    }
+      ev <- environment(fdef)
+
+      .cacheMethodInTable(fdef, sig, def,
+			  .getMethodsTable(fdef, ev, inherited = inherited))
+      ## if this is not an inherited method, update the inherited table as well
+      ## TODO:	in this case, should uncache inherited methods, though the callin
+      ##  function will normally have done this.
+      if(!inherited)
+	  .cacheMethodInTable(fdef, sig, def,
+			      .getMethodsTable(fdef, ev, inherited = TRUE))
   }
 
 .removeCachedMethod <- function(f, sig, fdef = getGeneric(f))
@@ -510,7 +486,7 @@ setMethod <-
       definition@generic <- fdef@generic
     whereMethods <- .getOrMakeMethodsList(f, where, fdef)
     whereMethods <- insertMethod(whereMethods, signature, margs, definition)
-    allMethods <- getMethodsForDispatch(f, fdef)
+    allMethods <- getMethodsForDispatch(fdef)
     if(is.environment(allMethods)) {
         ## cache in both direct and inherited tables
       .cacheMethodInTable(fdef, signature, definition, allMethods) #direct
@@ -597,7 +573,7 @@ getMethod <-
         return(NULL)
     if(missing(mlist)) {
         if(missing(where))
-            mlist <- getMethodsForDispatch(f, fdef)
+            mlist <- getMethodsForDispatch(fdef)
         else
             mlist <- getMethods(f, where)
     }
@@ -679,7 +655,7 @@ selectMethod <-
   ## mlist = Optional MethodsList object to use in the search.
     function(f, signature, optional = FALSE,
              useInherited = TRUE,
-             mlist = (if(is.null(fdef)) NULL else getMethodsForDispatch(f, fdef)),
+	     mlist = if(!is.null(fdef)) getMethodsForDispatch(fdef),
              fdef = getGeneric(f, !optional),
              verbose = FALSE)
 {
@@ -959,7 +935,7 @@ removeMethods <-
         return(FALSE)
     }
 
-    methods <- getMethodsForDispatch(f, fdef) # list or table
+    methods <- getMethodsForDispatch(fdef) # list or table
     if(is.environment(methods)) {
 ##      remove(list=objects(methods, all.names=TRUE), envir = methods)
       mlist <- getMethods(fdef) # always a methods list
@@ -1016,7 +992,7 @@ removeMethods <-
 }
 
 
-resetGeneric <- function(f, fdef = getGeneric(f, where = where), mlist = getMethodsForDispatch(f, fdef), where = topenv(parent.frame()), deflt = finalDefaultMethod(mlist)) {
+resetGeneric <- function(f, fdef = getGeneric(f, where = where), mlist = getMethodsForDispatch(fdef), where = topenv(parent.frame()), deflt = finalDefaultMethod(mlist)) {
     if(!is(fdef, "genericFunction")) {
         if(missing(mlist)) {
             warning(gettextf("cannot reset \"%s\", the definition is not a generic function object", f), domain = NA)

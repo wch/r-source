@@ -1311,43 +1311,39 @@ setDataPart <- function(object, value) {
 .simpleCoerceExpr <- function(fromClass, toClass, fromSlots, toDef) {
     toSlots <- names(toDef@slots)
     sameSlots <- (length(fromSlots) == length(toSlots) &&
-                      !any(is.na(match(fromSlots, toSlots))))
+		  !any(is.na(match(fromSlots, toSlots))))
     if(sameSlots)
-        expr <- substitute({class(from)[[1]] <- CLASS; from},
-                   list(CLASS = toClass))
-    else {
-        if(length(toSlots)==0) {
-            ## either a basic class or something with the same representation
-            if(is.na(match(toClass, .BasicClasses)))
-                expr <- substitute({ attributes(from) <- NULL; class(from)[[1]] <- CLASS; from},
-                                   list(CLASS=toClass))
-            else if(isVirtualClass(toDef))
-                expr <- quote(from)
-            else {
-                ## a basic class; a vector type, matrix, array, or ts
-                switch(toClass,
-                       matrix = , array = {
-                           expr <- quote({.dm <- dim(from); .dn <- dimnames(from)
-                                    attributes(from) <- NULL; dim(from) <- .dm
-                                    dimnames(from) <- .dn; from})
-                       },
-                       ts = {
-                           expr <- quote({.tsp <- tsp(from); attributes(from) <- NULL
-                                          tsp(from) <- .tsp; class(from) <- "ts"; from})
-                       },
-                       expr <- quote({attributes(from) <- NULL; from})
-                       )
-            }
-        }
-        else {
-            expr <- substitute({
-            value <- new(CLASS)
-            for(what in TOSLOTS)
-                slot(value, what) <- slot(from, what)
-            value }, list(CLASS=toClass, TOSLOTS = toSlots))
-        }
+	substitute({class(from)[[1]] <- CLASS; from}, list(CLASS = toClass))
+    else if(length(toSlots)==0) {
+	## either a basic class or something with the same representation
+	if(is.na(match(toClass, .BasicClasses)))
+	    substitute({ attributes(from) <- NULL; class(from)[[1]] <- CLASS; from},
+		       list(CLASS = toClass))
+	else if(isVirtualClass(toDef))
+	    quote(from)
+	else {
+	    ## a basic class; a vector type, matrix, array, or ts
+	    switch(toClass,
+		   matrix = , array = {
+		       quote({.dm <- dim(from); .dn <- dimnames(from)
+			      attributes(from) <- NULL; dim(from) <- .dm
+			      dimnames(from) <- .dn; from})
+		   },
+		   ts = {
+		       quote({.tsp <- tsp(from); attributes(from) <- NULL
+			      tsp(from) <- .tsp; class(from) <- "ts"; from})
+		   },
+		   quote({attributes(from) <- NULL; from})
+		   )
+	}
     }
-    expr
+    else {
+	substitute({ value <- new(CLASS)
+		     for(what in TOSLOTS)
+			 slot(value, what) <- slot(from, what)
+		     value },
+		   list(CLASS = toClass, TOSLOTS = toSlots))
+    }
 }
 
 .simpleReplaceExpr <- function(toDef) {
@@ -1409,7 +1405,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     if(!identical(args, newArgs)) {
         if( !missing(functionName) )
             functionName = paste("for", functionName)
-        
+
         n <- length(args)
         if(n != length(newArgs))
             stop(gettextf("trying to change the argument list of %s with %d arguments to have arguments (%s)",

@@ -29,7 +29,7 @@ as <-
         return(object)
     where <- .classEnv(thisClass)
     coerceFun <- getGeneric("coerce", where = where)
-    coerceMethods <- getMethodsForDispatch("coerce", coerceFun)
+    coerceMethods <- getMethodsForDispatch(coerceFun)
     asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
@@ -146,7 +146,7 @@ as <-
       value <- as(value, Class)
     where <- .classEnv(class(object))
     coerceFun <- getGeneric("coerce<-", where = where)
-    coerceMethods <- getMethodsForDispatch("coerce<-", coerceFun)
+    coerceMethods <- getMethodsForDispatch(coerceFun)
     asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
