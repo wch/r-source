@@ -62,7 +62,8 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
-			SEXP psenv, Rboolean restoreConsole);
+			SEXP psenv, Rboolean restoreConsole, 
+			const char *title);
 
 
 /* a colour used to represent the background on png if transparent
@@ -286,7 +287,7 @@ static void SaveAsWin(NewDevDesc *dd, const char *display,
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
-		       R_GlobalEnv, restoreConsole))
+		       R_GlobalEnv, restoreConsole, ""))
         PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -577,7 +578,7 @@ static char* translateFontFamily(const char* family) {
     PROTECT_INDEX xpi;
 
     PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
-    PROTECT_WITH_INDEX(windowsenv = findVar(install(".Windowsenv"),
+    PROTECT_WITH_INDEX(windowsenv = findVar(install(".WindowsEnv"),
 					    graphicsNS), &xpi);
     if(TYPEOF(windowsenv) == PROMSXP)
 	REPROTECT(windowsenv = eval(windowsenv, graphicsNS), xpi);
@@ -1501,8 +1502,8 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 	if (!(xd->gawin = newwindow("R Graphics",
 				    rect(grx, gry, iw, ih),
 				    Document | StandardWindow | Menubar |
-				    VScrollbar | HScrollbar)))
-	    return 0;
+				    VScrollbar | HScrollbar | CanvasSize)
+		)) return 0;
     }
     gchangescrollbar(xd->gawin, VWINSB, 0, ih/SF-1, ih/SF, 0);
     gchangescrollbar(xd->gawin, HWINSB, 0, iw/SF-1, iw/SF, 0);
@@ -2170,8 +2171,6 @@ static void GA_Close(NewDevDesc *dd)
 	/* do anything						*/
 	/********************************************************/
 
-static unsigned char title[20] = "R Graphics";
-
 static void GA_Activate(NewDevDesc *dd)
 {
     char  t[50];
@@ -2180,10 +2179,13 @@ static void GA_Activate(NewDevDesc *dd)
 
     if (xd->replaying || (xd->kind!=SCREEN))
 	return;
-    strcpy(t, (char *) title);
-    strcat(t, ": Device ");
-    sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
-    strcat(t, num);
+    if(strlen(xd->title)) {
+	strcpy(t, xd->title);
+    } else {
+	strcpy(t, "R Grapics: Device ");
+	sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
+	strcat(t, num);
+    }
     strcat(t, " (ACTIVE)");
     settext(xd->gawin, t);
 }
@@ -2204,11 +2206,14 @@ static void GA_Deactivate(NewDevDesc *dd)
 
     if (xd->replaying || (xd->kind != SCREEN))
 	return;
-    strcpy(t, (char *) title);
-    strcat(t, ": Device ");
-    sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
-    strcat(t, num);
-    strcat(t, " (inactive)");
+    if(strlen(xd->title)) {
+	strcpy(t, xd->title);
+    } else {
+	strcpy(t, "R Grapics: Device ");
+	sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
+	strcat(t, num);
+	strcat(t, " (inactive)");
+    }
     settext(xd->gawin, t);
 }
 
@@ -2702,7 +2707,8 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
-			SEXP psenv, Rboolean restoreConsole)
+			SEXP psenv, Rboolean restoreConsole,
+			const char *title)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -2734,6 +2740,8 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     xd->bm2 = NULL;
     xd->have_alpha = FALSE; /* selectively overridden in GA_Open */
     xd->warn_trans = FALSE;
+    strncpy(xd->title, title, 101);
+    xd->title[100] = '\0';
 
     /* Start the Device Driver and Hardcopy.  */
 
@@ -3074,7 +3082,8 @@ SEXP devga(SEXP args)
 {
     NewDevDesc *dev;
     GEDevDesc* dd;
-    const char *display; char *vmax;
+    const char *display, *title;
+    char *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
     int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
     Rboolean restoreConsole;
@@ -3089,16 +3098,16 @@ SEXP devga(SEXP args)
     height = asReal(CAR(args));
     args = CDR(args);
     if (width <= 0 || height <= 0)
-	error(_("invalid width or height in devWindows"));
+	error(_("invalid 'width' or 'height' in devWindows"));
     ps = asReal(CAR(args));
     args = CDR(args);
     recording = asLogical(CAR(args));
     if (recording == NA_LOGICAL)
-	error(_("invalid value of 'recording' in devWindows"));
+	error(_("invalid value of 'record' in devWindows"));
     args = CDR(args);
     resize = asInteger(CAR(args));
     if (resize == NA_INTEGER)
-	error(_("invalid value of 'resize' in devWindows"));
+	error(_("invalid value of 'rescale' in devWindows"));
     args = CDR(args);
     xpinch = asReal(CAR(args));
     args = CDR(args);
@@ -3127,7 +3136,12 @@ SEXP devga(SEXP args)
     bg = RGBpar(sc, 0);
     args = CDR(args);
     restoreConsole = asLogical(CAR(args));
-
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) || LENGTH(sc) != 1)
+	error(_("invalid value of 'title' in devWindows"));
+    title = CHAR(STRING_ELT(sc, 0));
+    
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
@@ -3143,7 +3157,7 @@ SEXP devga(SEXP args)
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
-			    restoreConsole)) {
+			    restoreConsole, title)) {
 	    free(dev);
 	    error(_("unable to start device devWindows"));
 	}

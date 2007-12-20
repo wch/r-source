@@ -20,9 +20,7 @@
 {
     op <- options()
     extras <- if(.Platform$OS.type == "windows")
-        list(graphics.record = FALSE,
-             windowsBuffered = TRUE,
-             windowsTimeouts = c(100L,500L))
+        list(windowsTimeouts = c(100L,500L))
     else
         ## these must be set for x11 to be used, even non-interactively
         list(X11colortype = "true",

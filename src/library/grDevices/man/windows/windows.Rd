@@ -15,19 +15,22 @@
 
 \title{Windows graphics devices}
 
-\usage{
-windows(width = 7, height = 7, pointsize = 12,
-        record = getOption("graphics.record"),
-        rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        bg = "transparent", canvas = "white",
-        gamma = getOption("gamma"), xpos = NA, ypos = NA,
-        buffered = getOption("windowsBuffered"),
-        restoreConsole = FALSE)
+\description{
+  A graphics device is opened.  For \code{windows}, \code{win.graph},
+  \code{x11} and \code{X11} this is a graphics window on the current
+  Windows display: the multiple names are for compatibility with other
+  systems.  \code{win.metafile} prints to a file and \code{win.print} to
+  the Windows print system.
+}
 
-win.graph(width = 7, height = 7, pointsize = 12,
-          restoreConsole = FALSE)
-x11(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
-X11(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
+\usage{
+windows(width, height, pointsize, record, rescale, xpinch, ypinch,
+        bg, canvas, gamma, xpos, ypos, buffered, title,
+        restoreConsole)
+
+win.graph(width, height, pointsize)
+x11(width, height, pointsize)
+X11(width, height, pointsize)
 
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
              restoreConsole = TRUE)
@@ -38,71 +41,76 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
 \arguments{
   \item{width, height}{the (nominal) width and height of the canvas of
-    the plotting window in inches.}
+    the plotting window in inches.  Default \code{7}.}
   \item{pointsize}{the default pointsize of plotted text. Values are 
     rounded to the nearest integer: values less than or equal to zero
-    are reset to 12.}
+    are reset to \code{12}, the default.}
   \item{record}{logical: sets the initial state of the flag for
-    recording plots.}
-  \item{rescale}{controls the action for resizing plots.}
+    recording plots.  Default \code{FALSE}.}
+  \item{rescale}{character, one of \code{c("R", "fit", "fixed")}.
+    Controls the action for resizing of the device.  Default
+    \code{"R"}.  See Details.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and
-    vertically.}
-  \item{bg}{color.  The default background color.}
+    vertically.  Default \code{NA_real_}, which means to take the
+    value from Windows.}
+  \item{bg}{color.  The default background color.  Default
+    \code{"transparent"}.}
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.  Should be a solid color
-    (and any alpha value will be ignoed).}
+    (and any alpha value will be ignored).  Default \code{"white"}.}
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors perceived are linearly related to
-    RGB values (see \code{\link{hsv}}).  By default this is taken from
-    \code{\link{options}("gamma")}, or is 1 (no correction) if that is
-    unset (the usual case).}
+    RGB values (see \code{\link{hsv}}).  Default \code{1}.}
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
-    monitor.  Missing values meant take the default from the
+    monitor.  Missing values (the default) mean take the default from the
     \file{\link{Rconsole}} file, which in turn defaults to
     \code{xpos=-25, ypos=0}: this puts the right edge of the window 25
     pixels from the right edge of the monitor.}
-  \item{buffered}{logical.  Should the screen output be double-buffered?}
+  \item{buffered}{logical.  Should the screen output be double-buffered?
+    Default \code{TRUE}.}
+  \item{title}{character string, up to 100 bytes.  With the default
+    \code{""}, a suitable title is created internally.}
   \item{filename}{the name of the output file: it will be an enhanced
     Windows metafile, usually given extension \code{.emf} or
-    \code{.wmf}. Up to 511 characters are allowed.
+    \code{.wmf}.  Up to 511 characters are allowed.
     The page number is substituted if an integer format is included
     in the character string. (The result must be less than 600
     characters long.)  The default, \code{""}, means the clipboard.
   }
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
-  \item{restoreConsole}{logical:  see the Details below.}
-}
-
-\description{
-  A graphics device is opened. For \code{windows}, \code{win.graph},
-  \code{x11} and \code{X11} this is a graphics window on the current
-  Windows display: the multiple names are for compatibility with other
-  systems.  \code{win.metafile} prints to a file and \code{win.print} to
-  the Windows print system.
+  \item{restoreConsole}{logical:  see the Details below.  Defaults to
+    \code{FALSE} for screen devices.}
 }
 
 \details{
-  All these devices are implemented as \code{windows} devices.
+  All these devices are implemented as versions of the same device.
+
+  All arguments of \code{windows} have defaults set by
+  \code{\link{windows.options}}: the defaults given in the argument list
+  are the defaults for the defaults.  These defaults also apply to the
+  internal values of \code{gamma}, \code{xpinch}, \code{ypinch},
+  \code{buffered} and \code{restoreConsole} for \code{win.graph},
+  \code{x11} and \code{X11}.
 
   The size of a window is computed from information provided about the
   display: it depends on the system being configured accurately.
   By default a screen device asks Windows for the number of pixels per
   inch.  This can be overridden (it is often wrong) by specifying
-  \code{xpinch} and \code{ypinch} or the corresponding options
-  \code{"xpinch"} and \code{"ypinch"}.
+  \code{xpinch} and \code{ypinch}, most conveniently \emph{via}
+  \code{\link{windows.options}}.
 
   If the \code{filename} is omitted (or specified as \code{""} for a
   \code{win.metafile} device, the output is copied to the clipboard
   when the device is closed.
 
-  If a screen device is re-sized, the default behaviour is to redraw the
-  plot(s) as if the new size had been specified originally.  Using
-  \code{"fit"} will rescale the existing plot(s) to fit the new device
-  region, preserving the aspect ratio.  Using \code{"fixed"} will leave
-  the plot size unchanged, adding scrollbars if part of the
-  plot is obscured.
+  If a screen device is re-sized, the default behaviour (\code{"R"}) is
+  to redraw the plot(s) as if the new size had been specified
+  originally.  Using \code{"fit"} will rescale the existing plot(s) to
+  fit the new device region, preserving the aspect ratio.  Using
+  \code{"fixed"} will leave the plot size unchanged, adding scrollbars
+  if part of the plot is obscured.
 
   A graphics window will never be created at more that 85\% of
   the screen width or height, but can be resized to a larger size.
@@ -144,7 +152,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{options("windowsTimeout")} to a vector of two integers before
   opening the device.
 
-  The font used for text drawn in a Windows device may be controlled in
+  The fonts used for text drawn in a Windows device may be controlled in
   two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to specify
   mappings for \code{par(font=)} (in the graphics package).  Alternatively,
   a device-independent \R graphics font family can be specified (e.g.,
@@ -168,9 +176,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   device is opened.  
 
   There is support for semi-transparent colours of lines, fills and text
-  on the \code{windows()} device under Windows 2000, XP and later.
-  (Semi-transparent colours will be fully transparent on systems that do
-  not support alpha blending.  A warning is issued at first use.)
+  on the \code{windows()} device.
 }
 
 \value{

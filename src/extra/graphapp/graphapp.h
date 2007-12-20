@@ -962,6 +962,7 @@ rect    GetCurrentWinPos(window obj);
 #define Minimize		0x00000200L
 #define HScrollbar      	0x00000400L
 #define VScrollbar      	0x00000800L
+#define CanvasSize		0x00200000L
 
 #define Modal			0x00001000L
 #define Floating		0x00002000L

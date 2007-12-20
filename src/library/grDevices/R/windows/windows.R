@@ -14,59 +14,103 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-windows <- function(width = 7, height = 7, pointsize = 12,
-                    record = getOption("graphics.record"),
-                    rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-                    bg = "transparent", canvas = "white",
-                    gamma = getOption("gamma"),
-                    xpos = NA, ypos = NA,
-                    buffered = getOption("windowsBuffered"),
-                    restoreConsole = FALSE)
+.WindowsEnv <- new.env()
+
+assign(".Windows.Options",
+       list(width = 7, height = 7, pointsize = 12,
+            record = FALSE,
+            rescale = "R",
+            xpinch = NA_real_, ypinch = NA_real_,
+            bg = "transparent", canvas = "white",
+            gamma = 1,
+            xpos = NA_integer_, ypos = NA_integer_,
+            buffered = TRUE,
+            restoreConsole = FALSE,
+            title = ""),
+       envir = .WindowsEnv)
+
+assign(".Windows.Options.default",
+       get(".Windows.Options", envir = .WindowsEnv),
+       envir = .WindowsEnv)
+
+windows.options <- function(..., reset=FALSE)
 {
-    rescale <- match.arg(rescale)
-    rescale <- match(rescale, c("R", "fit", "fixed"))
-    if(missing(xpinch))
-        if(!length(xpinch <- getOption("xpinch"))) xpinch <- NA
-    xpinch <- as.double(xpinch)
-    if(missing(ypinch))
-        if(!length(ypinch <- getOption("ypinch"))) ypinch <- NA
-    ypinch <- as.double(ypinch)
-    invisible(.External("devga", "", width, height, pointsize, record,
-                        rescale, xpinch, ypinch, canvas,
-                        if(is.null(gamma)) 1 else gamma,
-                        as.integer(xpos), as.integer(ypos), buffered,
-                        .PSenv, bg, restoreConsole, PACKAGE = "grDevices"))
+    old <- get(".Windows.Options", envir = .WindowsEnv)
+    if(reset) {
+        assign(".Windows.Options",
+               get(".Windows.Options.default", envir = .WindowsEnv),
+               envir = .WindowsEnv)
+    }
+    l... <- length(new <- list(...))
+    check.options(new = new, envir = .WindowsEnv,
+                  name.opt = ".Windows.Options",
+                  assign.opt = l... > 0)
+    if(reset || l... > 0) invisible(old) else old
 }
 
-win.graph <- function(width = 7, height = 7, pointsize = 12,
-                      restoreConsole = FALSE)
+windows <- function(width, height, pointsize,
+                    record, rescale, xpinch, ypinch,
+                    bg, canvas, gamma, xpos, ypos,
+                    buffered, title, restoreConsole)
 {
-    gamma <- getOption("gamma")
-    if(!length(xpinch <- getOption("xpinch"))) xpinch <- NA
-    if(!length(ypinch <- getOption("ypinch"))) ypinch <- NA
-    invisible(.External("devga", "", width, height, pointsize,
-                        getOption("graphics.record"), 1,
-                        as.double(xpinch), as.double(ypinch), "white",
-                        if(is.null(gamma)) 1 else gamma,
-                        as.integer(NA), as.integer(NA),
-                        getOption("windowsBuffered"),
-                        .PSenv, NA, restoreConsole, PACKAGE = "grDevices"))
+    new <- list()
+    if(!missing(width)) new$width <- as.double(width)
+    if(!missing(height)) new$height <- as.double(height)
+    if(!missing(pointsize)) new$pointsize <- as.double(pointsize)
+    if(!missing(record)) new$record <- record
+    if(!missing(rescale)) new$rescale <- rescale
+    if(!missing(xpinch)) new$xpinch <- as.double(xpinch)
+    if(!missing(ypinch)) new$ypinch <- as.double(ypinch)
+    if(!missing(bg)) new$bg <- bg
+    if(!missing(canvas)) new$canvas <- canvas
+    if(!missing(canvas)) new$gamma <- gamma
+    if(!missing(xpos)) new$xpos <- as.integer(xpos)
+    if(!missing(ypos)) new$ypos <- as.integer(ypos)
+    if(!missing(buffered)) new$buffered <- buffered
+    if(!missing(title)) new$title <- title
+    if(!missing(restoreConsole)) new$restoreConsole <- restoreConsole
+    old <- check.options(new = new, envir = .WindowsEnv,
+                         name.opt = ".Windows.Options",
+			 reset = FALSE, assign.opt = FALSE)
+    rescale <- pmatch(old$rescale, c("R", "fit", "fixed"))
+    if(is.na(rescale)) stop("invalid value for 'rescale")
+    invisible(.External(Cdevga, "", old$width, old$height, old$pointsize,
+                        old$record, rescale, old$xpinch, old$ypinch,
+                        old$canvas, old$gamma, old$xpos, old$ypos,
+                        old$buffered, .PSenv, old$bg,
+                        old$restoreConsole, old$title))
+}
+
+win.graph <- function(width, height, pointsize)
+{
+    new <- list()
+    if(!missing(width)) new$width <- as.double(width)
+    if(!missing(height)) new$height <- as.double(height)
+    if(!missing(pointsize)) new$pointsize <- as.double(pointsize)
+    old <- check.options(new = new, envir = .WindowsEnv,
+                         name.opt = ".Windows.Options",
+			 reset = FALSE, assign.opt = FALSE)
+    invisible(.External(Cdevga, "", width, height, pointsize,
+                        FALSE, 1L, old$xpinch, old$ypinch, "white",
+                        old$gamma, NA_integer_, NA_integer_, old$buffered,
+                        .PSenv, NA, old$restoreConsole, ""))
 }
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
                       restoreConsole = TRUE)
-    invisible(.External("devga", paste("win.print:", printer, sep=""),
-                        width, height, pointsize, FALSE, 1,
-                        NA, NA, "white", 1, as.integer(NA), as.integer(NA),
-                        FALSE, .PSenv, NA, restoreConsole,
-                        PACKAGE = "grDevices"))
+    invisible(.External(Cdevga, paste("win.print:", printer, sep=""),
+                        width, height, pointsize, FALSE, 1L,
+                        NA_real_, NA_real_, "white", 1,
+                        NA_integer_, NA_integer_,
+                        FALSE, .PSenv, NA, restoreConsole, ""))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                          restoreConsole = TRUE)
-    invisible(.External("devga", paste("win.metafile:", filename, sep=""),
-                        width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
-                        as.integer(NA), as.integer(NA), FALSE, .PSenv, NA,
-                        restoreConsole, PACKAGE = "grDevices"))
+    invisible(.External(Cdevga, paste("win.metafile:", filename, sep=""),
+                        width, height, pointsize, FALSE, 1L,
+                        NA_real_, NA_real_, "white", 1,
+                        NA_integer_, NA_integer_, FALSE, .PSenv, NA,
+                        restoreConsole, ""))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 units = "px",
@@ -75,12 +119,15 @@ png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
-    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    invisible(.External("devga", paste("png:", filename, sep=""),
-                        width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
-                        restoreConsole, PACKAGE = "grDevices"))
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    invisible(.External(Cdevga, paste("png:", filename, sep=""),
+                        width, height, pointsize, FALSE, 1L,
+                        NA_real_, NA_real_, bg, 1,
+                        as.integer(res), NA_integer_, FALSE, .PSenv, NA,
+                        restoreConsole, ""))
 }
 
 bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
@@ -90,12 +137,15 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
-    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    invisible(.External("devga", paste("bmp:", filename, sep=""),
-                        width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
-                        restoreConsole, PACKAGE = "grDevices"))
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
+                        width, height, pointsize, FALSE, 1L,
+                        NA_real_, NA_real_, bg, 1,
+                        as.integer(res), NA_integer_, FALSE, .PSenv, NA,
+                        restoreConsole, ""))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
@@ -106,13 +156,15 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
-    height <- switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <- switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    invisible(.External("devga", paste("jpeg:", quality, ":",filename, sep=""),
-                        width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
-                        restoreConsole,
-                        PACKAGE = "grDevices"))
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    invisible(.External(Cdevga, paste("jpeg:", quality, ":",filename, sep=""),
+                        width, height, pointsize, FALSE, 1L,
+                        NA_real_, NA_real_, bg, 1,
+                        as.integer(res), NA_integer_, FALSE, .PSenv, NA,
+                        restoreConsole, ""))
 }
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)
@@ -139,8 +191,7 @@ savePlot <- function(filename = "Rplot",
     if(devname != "windows") stop("can only copy from 'windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
     if(nzchar(filename)) filename <- paste(filename, type, sep=".")
-    invisible(.External("savePlot", device, filename, type, restoreConsole,
-                        PACKAGE = "grDevices"))
+    invisible(.External(CsavePlot, device, filename, type, restoreConsole))
 }
 
 print.SavedPlots <- function(x, ...)
@@ -168,10 +219,8 @@ print.SavedPlots <- function(x, ...)
 # To map device-independent font to device-specific font
 #########
 
-.Windowsenv <- new.env()
-
 # Each font family has only a name
-assign(".Windows.Fonts", list(), envir = .Windowsenv)
+assign(".Windows.Fonts", list(), envir = .WindowsEnv)
 
 # Check that the font has the correct structure and information
 checkWindowsFont <- function(font)
@@ -187,13 +236,13 @@ checkWindowsFont <- function(font)
 setWindowsFonts <- function(fonts, fontNames)
 {
     fonts <- lapply(fonts, checkWindowsFont)
-    fontDB <- get(".Windows.Fonts", envir=.Windowsenv)
+    fontDB <- get(".Windows.Fonts", envir=.WindowsEnv)
     existingFonts <- fontNames %in% names(fontDB)
     if (sum(existingFonts) > 0)
         fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
     if (sum(existingFonts) < length(fontNames))
         fontDB <- c(fontDB, fonts[!existingFonts])
-    assign(".Windows.Fonts", fontDB, envir=.Windowsenv)
+    assign(".Windows.Fonts", fontDB, envir=.WindowsEnv)
 }
 
 printFont <- function(font) paste(font, "\n", sep="")
@@ -212,7 +261,7 @@ windowsFonts <- function(...)
 {
     ndots <- length(fonts <- list(...))
     if (ndots == 0)
-        get(".Windows.Fonts", envir=.Windowsenv)
+        get(".Windows.Fonts", envir=.WindowsEnv)
     else {
         fontNames <- names(fonts)
         nnames <- length(fontNames)
@@ -220,7 +269,7 @@ windowsFonts <- function(...)
             if (!all(sapply(fonts, is.character)))
                 stop("invalid arguments in 'windowsFonts' (must be font names)")
             else
-                get(".Windows.Fonts", envir=.Windowsenv)[unlist(fonts)]
+                get(".Windows.Fonts", envir=.WindowsEnv)[unlist(fonts)]
         } else {
             if (ndots != nnames)
                 stop("invalid arguments in 'windowsFonts' (need named args)")

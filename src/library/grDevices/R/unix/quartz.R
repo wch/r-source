@@ -19,8 +19,8 @@
 quartz <- function(title="Quartz %d", width=5, height=5, pointsize=12, family="Helvetica",
                    fontsmooth=TRUE, antialias=TRUE,  type=getOption('quartz.type'), file=NULL,
                    bg="transparent", dpi=getOption('quartz.dpi')) {
-    .External("Quartz", type, file, width, height, pointsize, family,
-              antialias, fontsmooth, title, bg, dpi, PACKAGE="grDevices")
+    .External(CQuartz, type, file, width, height, pointsize, family,
+              antialias, fontsmooth, title, bg, dpi)
     invisible()
 }
 

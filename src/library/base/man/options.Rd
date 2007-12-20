@@ -360,28 +360,12 @@ getOption(x)
       if unset (the default).}
 #endif
 #ifdef windows
-    \item{\code{gamma}:}{double. The default value of
-      \code{gamma} for \code{\link{windows}} devices, defaulting to 1
-      if unset (the default).}
-
-    \item{\code{graphics.record}:}{logical.  The default value of
-      \code{record} for \code{\link{windows}} devices.  Default
-      \code{FALSE}.}
-
-    \item{\code{windowsBuffered}:}{logical.  Should
-      \code{\link{windows}} devices be double-buffered?.  Default
-      \code{TRUE}.}
-
     \item{\code{windowsTimeout}:}{integer vector of length 2
       representing two times in milliseconds.  These control the
       double-buffering of \code{\link{windows}} devices when that is
       enabled: the first is the delay after plotting finishes
       (default 100) and the second is the update interval during
       continuous plotting (default 500).}
-
-    \item{\code{xpinch, ypinch}:}{double.  Pixels per inch, horizontally and
-      vertically, for the \code{\link{windows}} device.  If unset
-      (the default), taken from Windows.}
 #endif
   }
 }
