@@ -2173,7 +2173,7 @@ static void GA_Close(NewDevDesc *dd)
 
 static void GA_Activate(NewDevDesc *dd)
 {
-    char  t[50];
+    char  t[150];
     char  num[3];
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -2182,7 +2182,7 @@ static void GA_Activate(NewDevDesc *dd)
     if(strlen(xd->title)) {
 	strcpy(t, xd->title);
     } else {
-	strcpy(t, "R Grapics: Device ");
+	strcpy(t, "R Graphics: Device ");
 	sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
 	strcat(t, num);
     }
@@ -2200,7 +2200,7 @@ static void GA_Activate(NewDevDesc *dd)
 
 static void GA_Deactivate(NewDevDesc *dd)
 {
-    char  t[50];
+    char  t[150];
     char  num[3];
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -2209,7 +2209,7 @@ static void GA_Deactivate(NewDevDesc *dd)
     if(strlen(xd->title)) {
 	strcpy(t, xd->title);
     } else {
-	strcpy(t, "R Grapics: Device ");
+	strcpy(t, "R Graphics: Device ");
 	sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
 	strcat(t, num);
 	strcat(t, " (inactive)");
