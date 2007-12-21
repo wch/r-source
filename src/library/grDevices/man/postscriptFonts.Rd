@@ -31,7 +31,7 @@ pdfFonts(\dots)
   documentation for \code{\link{postscript}}), but it is also possible
   to specify a font family when drawing to the device (for example, see
   the documentation for \code{"family"} in \code{\link{par}} and for
-  \code{"fontfamily"} in \code{\link{gpar}} in the grid package).
+  \code{"fontfamily"} in \code{\link{gpar}} in the \pkg{grid} package).
 
   The font family sent to the device is a simple string name, which must be
   mapped to a set of PostScript fonts.  Separate lists of mappings for
