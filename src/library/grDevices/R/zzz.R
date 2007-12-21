@@ -20,12 +20,7 @@
 {
     op <- options()
     extras <- if(.Platform$OS.type == "windows")
-        list(windowsTimeouts = c(100L,500L))
-    else
-        ## these must be set for x11 to be used, even non-interactively
-        list(X11colortype = "true",
-             X11fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
-             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"))
+        list(windowsTimeouts = c(100L,500L)) else list()
     defdev <- Sys.getenv("R_DEFAULT_DEVICE")
     if(!nzchar(defdev)) defdev <- "pdf"
     device <- if(interactive()) {
@@ -44,7 +39,7 @@
     } else defdev
 
     op.utils <- c(list(locatorBell = TRUE, par.ask.default = FALSE),
-                  extras, device=device)
+                  extras, device = device)
     toset <- !(names(op.utils) %in% names(op))
     if(any(toset)) options(op.utils[toset])
 }

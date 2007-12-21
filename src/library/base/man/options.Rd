@@ -348,17 +348,6 @@ getOption(x)
     \item{\code{par.ask.default}:}{logical.  The default for
       \code{\link{par}("ask")} when a device is opened.}
 
-#ifdef unix
-    \item{\code{X11colortype}:}{The default colour type for
-      \code{\link{X11}} devices.  Default \code{"true"}.}
-
-    \item{\code{X11fonts}:}{character vector of length 2.
-      See \code{\link{X11}}.}
-
-    \item{\code{gamma}:}{double.  The default value of
-      \code{gamma} for \code{\link{X11}} devices, defaulting to 1
-      if unset (the default).}
-#endif
 #ifdef windows
     \item{\code{windowsTimeout}:}{integer vector of length 2
       representing two times in milliseconds.  These control the

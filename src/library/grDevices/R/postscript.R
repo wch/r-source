@@ -89,7 +89,7 @@ check.options <-
     old
 }
 
-ps.options <- function(..., reset=FALSE, override.check= FALSE)
+ps.options <- function(..., reset = FALSE, override.check = FALSE)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -102,13 +102,11 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     l... <- length(new <- list(...))
     if(m <- match("append", names(new), 0)) {
         warning("argment 'append' is for back-compatibility and will be ignored",
-                immediate.=TRUE)
+                immediate. = TRUE)
         new <- new[-m]
     }
-    check.options(new = new, envir = .PSenv,
-                  name.opt = ".PostScript.Options",
-                  assign.opt = l... > 0,
-                  override.check = override.check)
+    check.options(new, name.opt = ".PostScript.Options", envir = .PSenv,
+                  assign.opt = l... > 0, override.check = override.check)
     if(reset || l... > 0) invisible(old) else old
 }
 
@@ -131,7 +129,7 @@ pdf.options <- function(..., reset=FALSE)
                envir = .PSenv)
     }
     l... <- length(new <- list(...))
-    check.options(new = new, envir = .PSenv, name.opt = ".PDF.Options",
+    check.options(new, name.opt = ".PDF.Options", envir = .PSenv,
                   assign.opt = l... > 0)
     if(reset || l... > 0) invisible(old) else old
 }
@@ -207,9 +205,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     if(!missing(command)) new$command <- command
     if(!missing(colormodel)) new$colormodel <- colormodel
 
-    old <- check.options(new = new, envir = .PSenv,
-                         name.opt = ".PostScript.Options",
-			 reset = FALSE, assign.opt = FALSE)
+    old <- check.options(new, name.opt = ".PostScript.Options", envir = .PSenv)
 
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
@@ -295,10 +291,9 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(pointsize)) new$pointsize <- pointsize
     if(!missing(pagecentre)) new$pagecentre <- pagecentre
 
-    old <- check.options(new = new, envir = .PSenv,
-                         name.opt = ".PDF.Options",
-			 reset = FALSE, assign.opt = FALSE)
-    # need to handle this before encoding
+    old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)
+
+    ## need to handle this before encoding
     if(!missing(family) &&
        (inherits(family, "Type1Font") || inherits(family, "CIDFont"))) {
         enc <- family$encoding
@@ -370,12 +365,6 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "       closepath clip newpath } def",
 "/rgb { setrgbcolor } def",
 "/s   { scalefont setfont } def")
-# "/R   { /Font1 findfont } def",
-# "/B   { /Font2 findfont } def",
-# "/I   { /Font3 findfont } def",
-# "/BI  { /Font4 findfont } def",
-# "/S   { /Font5 findfont } def",
-# "1 setlinecap 1 setlinejoin")
 
 ####################
 # PostScript font database

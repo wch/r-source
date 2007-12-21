@@ -18,24 +18,57 @@
 ## pass .X11.Fonts to the X11 device.
 .X11env <- new.env()
 
-X11 <- function(display = "", width, height, pointsize = 12,
-                gamma = getOption("gamma"),
-                colortype = getOption("X11colortype"),
-                maxcubesize = 256, bg = "transparent", canvas = "white",
-                fonts = getOption("X11fonts"),
-                xpos = NA_integer_, ypos = NA_integer_,
-                title="")
+assign(".X11.Options",
+       list(display = "",
+            width = NA_real_, height = NA_real_, pointsize = 12,
+            bg = "transparent", canvas = "white",
+            gamma = 1,
+            colortype = "true", maxcubesize = 256,
+            fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
+            "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
+            xpos = NA_integer_, ypos = NA_integer_,
+            title = ""),
+       envir = .X11env)
+
+assign(".X11.Options.default",
+       get(".X11.Options", envir = .X11env),
+       envir = .X11env)
+
+X11.options <- function(..., reset = FALSE)
+{
+    old <- get(".X11.Options", envir = .X11env)
+    if(reset) {
+        assign(".X11.Options",
+               get(".X11.Options.default", envir = .X11env),
+               envir = .X11env)
+    }
+    l... <- length(new <- list(...))
+    check.options(new, name.opt = ".X11.Options", envir = .X11env,
+                  assign.opt = l... > 0)
+    if(reset || l... > 0) invisible(old) else old
+}
+
+X11 <- function(display = "", width, height, pointsize, gamma,
+                bg, canvas, fonts, xpos, ypos, title)
 {
   if(display == "" && .Platform$GUI == "AQUA" &&
      is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
-  ## we need to know internally if the user has overridden X11 resources
 
-  if(missing(width)) width <- NA_real_
-  if(missing(height)) height <- NA_real_
-  .Internal(X11(display, width, height, pointsize,
-                if(is.null(gamma)) 1 else gamma, colortype,
-                maxcubesize, bg, canvas, fonts, NA_integer_,
-                xpos, ypos, title))
+  new <- list()
+  if(!missing(display)) new$display <- display
+  if(!missing(width)) new$width <- width
+  if(!missing(height)) new$height <- height
+  if(!missing(gamma)) new$gamma <- gamma
+  if(!missing(pointsize)) new$pointsize <- pointsize
+  if(!missing(bg)) new$bg <- bg
+  if(!missing(canvas)) new$canvas <- canvas
+  if(!missing(xpos)) new$xpos <- xpos
+  if(!missing(ypos)) new$ypos <- ypos
+  if(!missing(title)) new$title <- title
+  d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+  .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
+                d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
+                NA_integer_, d$xpos, d$ypos, d$title))
 }
 
 x11 <- X11
@@ -52,10 +85,7 @@ png <- function(filename = "Rplot%03d.png",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    dots <- list(...)
-    d <- list(gamma = 1, colortype = getOption("X11colortype"),
-              maxcubesize = 256, fonts = getOption("X11fonts"))
-    d[names(dots)] <- dots[names(dots)]
+    d <- X11.options(...)
     .Internal(X11(paste("png::", filename, sep=""),
                   width, height, pointsize, d$gamma,
                   d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
@@ -74,10 +104,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    dots <- list(...)
-    d <- list(gamma = 1, colortype = getOption("X11colortype"),
-              maxcubesize = 256, fonts = getOption("X11fonts"))
-    d[names(dots)] <- dots[names(dots)]
+    d <- X11.options(...)
     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                   width, height, pointsize, d$gamma,
                   d$colortype, d$maxcubesize, bg, bg, d$fonts, res,

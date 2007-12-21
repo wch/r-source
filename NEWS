@@ -166,6 +166,10 @@ NEW FEATURES
     o	The X11() and windows() graphics devices have a new argument
 	'title' to set the window title.
 
+    o	X11() now has the defaults for all of its arguments set by the
+	new function X11.options(), inter alia replacing options
+	"gamma", "colortype" and "X11fonts".
+
 
 DEPRECATED & DEFUNCT
 

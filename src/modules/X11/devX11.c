@@ -1147,7 +1147,6 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, const char *dsp,
     XGCValues gcv;
     /* Indicates whether the display is created within this particular call: */
     Rboolean DisplayOpened = FALSE;
-    static const char *title = "R Graphics";
     XSizeHints *hint;
 
 #ifdef USE_FONTSET
@@ -1363,7 +1362,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, const char *dsp,
 				    CWBorderPixel | CWBackingStore,
 				    &attributes);
 
-	    XStoreName(display, xd->window, title);
+	    XStoreName(display, xd->window, xd->title);
 
 	    xd->gcursor = XCreateFontCursor(display, CURSOR);
 	    XDefineCursor(display, xd->window, xd->gcursor);

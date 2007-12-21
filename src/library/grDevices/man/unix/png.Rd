@@ -24,13 +24,13 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     than \code{PATH_MAX} characters long, and may be truncated if not.
     See \code{\link{postscript}} for further details.)  Tilde expansion
     is performed where supported by the platform.}
-  \item{width}{the width of the device in pixels.}
-  \item{height}{the height of the device in pixels.}
+  \item{width}{the width of the device.}
+  \item{height}{the height of the device.}
   \item{units}{The units in which \code{height} and \code{width} are
-    given.  Can be \code{in} (inches), \code{px} (pixels), \code{cm} or
-    \code{mm}.}
+    given.  Can be \code{px} (pixels, thedefault), \code{in} (inches),
+    \code{cm} or \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text, interpreted at
-    72 dpi, so one point is approximately one pixel.}
+    72 dpi so one point is approximately one pixel.}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
@@ -38,8 +38,8 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.  Also used for units other than
     the default.}
-  \item{\dots}{additional arguments to the underlying
-    \code{\link{X11}} device.}
+  \item{\dots}{additional arguments to the underlying \code{\link{X11}}
+    device, such as \code{gamma} and \code{fonts}.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
@@ -74,17 +74,17 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   A plot device is opened: nothing is returned to the \R interpreter.
 }
 \section{Warnings}{
-  Note that the \code{width} and \code{height} are in pixels not inches.
-  A warning will be issued if both are less than 20.
+  Note that by default the \code{width} and \code{height} are in pixels
+  not inches.  A warning will be issued if both are less than 20.
   
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
 }
 \note{
-  These are based on the \code{\link{X11}} device, so the additional
-  arguments to that device work, but are rarely appropriate.  The
-  colour handling will be that of the \code{X11} device in use.
+  These are based on the \code{\link{X11}} device.  The colour rendering
+  will be that set up by \code{X11.options} at the time the first
+  current \code{X11}, \code{jpeg} or \code{png} was opened.
 }
 \author{Guido Masarotto and Brian Ripley}
 

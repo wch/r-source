@@ -6,88 +6,68 @@
 \name{x11}
 \alias{x11}
 \alias{X11}
+\alias{X11.options}
 \title{X Window System Graphics}
 \description{
   \code{X11} starts a graphics device driver for the X Window System
-  (version 11).  This can only be done on machines that run X.
+  (version 11).  This can only be done on machines/accounts that have
+  access to an X server.
+  
   \code{x11} is recognized as a synonym for \code{X11}.
 }
 \usage{
-X11(display = "", width, height, pointsize = 12,
-    gamma = getOption("gamma"), colortype = getOption("X11colortype"),
-    maxcubesize = 256, bg = "transparent", canvas = "white",
-    fonts = getOption("X11fonts"),
-     xpos = NA_integer_, ypos = NA_integer_,
-    title = "")
+X11(display = "", width, height, pointsize, gamma, bg, canvas,
+    fonts, xpos, ypos, title)
+
+X11.options(\dots, reset = FALSE)
 }
 \arguments{
   \item{display}{the display on which the graphics window will appear.
     The default is to use the value in the user's environment variable
     \env{DISPLAY}.}
   \item{width, height}{the width and height of the plotting window, in
-    inches.  If not specified, taken first from the resources, and if
-    not specified there defaults to \code{7} inches.}
-  \item{pointsize}{the default pointsize to be used.}
+    inches.  If \code{NA}, taken from the resources and if
+    not specified there defaults to \code{7} inches.  See also
+    \sQuote{Resources}.}
+  \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors perceived are linearly related to
-    RGB values (see \code{\link{hsv}}).  By default this is taken from
-    \code{\link{options}("gamma")}, or is 1 (no correction) if that is
-    unset (which is the usual case). }
-  \item{colortype}{the kind of color model to be used.  The
-    possibilities are \code{"mono"}, \code{"gray"}, \code{"pseudo"},
-    \code{"pseudo.cube"} and \code{"true"}.  Ignored if an \code{X11}
-    device is already open.}
-  \item{maxcubesize}{can be used to limit the size of color
-    cube allocated for pseudocolor devices.}
-  \item{bg}{color.  The default background color.}
+    RGB values (see \code{\link{hsv}}).  By default 1 (no correction).}
+  \item{bg}{color.  The default background color.  Default
+    code{"transparent"}.}
   \item{canvas}{color.  The color of the canvas, which is visible only
-    when the background color is transparent.}
+    when the background color is transparent.  Defautl \code{"white"}.}
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font. See section Fonts.}
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
-    from the right edge of the screen.
-    If \code{NA}, successive devices are cascaded in
-    20 pixel steps from the top left.  See also Resources.}
-  \item{title}{character string, up to 100 bytes.  With the default
-    \code{""}, a suitable title is created internally.}
+    from the right edge of the screen.  If \code{NA} (the default),
+    successive devices are cascaded in 20 pixel steps from the top left.
+    See also \sQuote{Resources}.}
+  \item{title}{character string, up to 100 bytes.  With the default,
+    \code{""}, a suitable title is created internally.  How non-ASCII
+    titles are handled is implementation-dependent.}
+  \item{reset}{logical: should the defaults be reset to their defaults?}
+  \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
+    and \code{maxcubesize} (see section \sQuote{Color Rendering}).}
 }
 \details{
-  By default, an X11 device will use the best color rendering
-  strategy that it can.  The choice can be overridden with the
-  \code{colortype} parameter.  A value of \code{"mono"} results in
-  black and white graphics, \code{"gray"} in grayscale and
-  \code{"true"} in truecolor graphics (if this is possible).  The
-  values \code{"pseudo"} and \code{"pseudo.cube"} provide color
-  strategies for pseudocolor displays.  The first strategy provides
-  on-demand color allocation which produces exact colors until
-  the color resources of the display are exhausted.  The second
-  causes a standard color cube to be set up, and requested colors
-  are approximated by the closest value in the cube.  The default
-  strategy for pseudocolor displays is \code{"pseudo"}.
-
-  \bold{Note:} All \code{X11} devices share a \code{colortype} which is
-  set by the first device to be opened.  To change the \code{colortype}
-  you need to close \emph{all} open \code{X11} devices then open one
-  with the desired \code{colortype}.
-
-  With \code{colortype} equal to \code{"pseudo.cube"} or \code{"gray"}
-  successively smaller palettes are tried until one is completely
-  allocated. If allocation of the smallest attempt fails the device will
-  revert to \code{"mono"}.
+  The defaults for all of the arguments of \code{X11} are set by
+  \code{X11.options}: the \sQuote{Arguments} section gives the
+  \sQuote{factory-fresh} defaults.
+  
+  The initial size and position are only hints, and may not be acted on
+  by the window manager.  Also, some systems (especially laptops) are
+  set up to appear to have a screen of a different size to the physical
+  screen.
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of the
   pixel size, and multiples < 1 are silently converted to 1.
 
   \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
   the larger of one pixel and 0.01 inch.
-
-  The initial size and position are only hints, and may not be acted on
-  by the window manager.  Also, some systems (especially laptops) are
-  deliberately set up to appear to have a screen of a different size to
-  the physical screen.
 }
 \section{Fonts}{
   An initial/default font family for the device can be specified via
@@ -116,15 +96,54 @@ X11(display = "", width, height, pointsize = 12,
 \section{Resources}{
   The standard X11 resource \code{geometry} can be used to specify the
   window position and/or size, but will be overridden by values
-  specified as arguments.  The class looked for is \code{R_x11}.  Note
-  that the resource specifies the width and height in pixels and not in
+  specified as arguments or non-\code{NA} defaults set in
+  \code{X11.options}.  The class looked for is \code{R_x11}.  Note that
+  the resource specifies the width and height in pixels and not in
   inches.  See for example
   \url{http://web.mit.edu/answers/xwindows/xwindows_resources.html} and
   perhaps \samp{man X} (or \url{http://www.xfree86.org/current/X.7.html}).
   An example line in \file{~/.Xresources} might be
 \preformatted{R_x11*geometry: 900x900-0+0
 }
-  that specifies a 900 x 900 pixel window at the top right of the screen.
+  which specifies a 900 x 900 pixel window at the top right of the screen.
+}
+
+\section{Color Rendering}{
+  X11 supports several \sQuote{visual} types, and nowadays almost all
+  systems support \sQuote{truecolor} which \code{X11} will use by
+  default.  This uses a direct specification of any RGB color up to the
+  depth supported (usually 8 bits per color).  Other visuals make use
+  of a palette to support fewer colors, only grays or even only
+  black/white.  The palette is shared between all X11 clients, so it can
+  be necessary to limit the number of colors used by \R.
+
+  The default is to use the best possible color model for the visual of
+  the X11 server.  This can be overridden by the \code{colortype}
+  argument of \code{X11.options}.  \bold{Note:} All \code{X11},
+  \code{jpeg} and \code{png} devices share a \code{colortype} which is
+  set when the first device to be opened.  To change the
+  \code{colortype} you need to close \emph{all} open \code{X11},
+  \code{jpeg} and \code{png} devices, and then use
+  \code{X11.options(colortype=)}.
+
+  The colortype types are tried in the order \code{"true"},
+  \code{"pseudo"}, \code{"gray"} and \code{"mono"} (black or white
+  only).  The values \code{"pseudo"} and \code{"pseudo.cube"} provide
+  color strategies for a pseudocolor visual.  The first strategy
+  provides on-demand color allocation which produces exact colors until
+  the color resources of the display are exhausted (when plotting will
+  fail).  The second allocates (if possible) a standard color cube, and
+  requested colors are approximated by the closest value in the cube.
+
+  With \code{colortype} equal to \code{"pseudo.cube"} or \code{"gray"}
+  successively smaller palettes are tried until one is completely
+  allocated.  If allocation of the smallest attempt fails the device will
+  revert to \code{"mono"}.  For \code{"gray"} the search starts at 256
+  grays for a display with depth greater than 8, otherwise with half
+  the available colors.  For \code{"pseudo.cube"} the maximum cube size
+  is set by \code{X11.options(maxcolorsize=)} and defaults to
+  256.  With that setting the largest cube tried is 4 levels each for
+  RGB, using 64 colors in the palette.
 }
 
 \seealso{
