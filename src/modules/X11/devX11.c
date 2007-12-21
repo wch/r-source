@@ -1832,8 +1832,6 @@ static void newX11_Close(NewDevDesc *dd)
     inclose = FALSE;
 }
 
-static char title[11] = "R Graphics";
-
 static void newX11_Activate(NewDevDesc *dd)
 {
     char t[150];
