@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-12-16
+@set FAQ_DATE @value{FAQ_YEAR}-12-21
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2009,6 +2009,9 @@ on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
 (1994),  Springer.
 @item FieldSim
 Random fields simulations.
+@item FinTS
+Companion to the book ``Analysis of Financial Time Series'' by Ruey Tsay
+(2005), Wiley (2nd edition).
 @item Flury
 Data sets from from ``A First Course in Multivariate Statistics'' by
 Bernard Flury (1997), Springer.
@@ -2729,6 +2732,8 @@ Methods and data to accompany the textbook ``Applied Linear Regression''
 by S. Weisberg, 2005, Wiley.
 @item amap
 Another Multidimensional Analysis Package.
+@item anacor
+Simple and Canonical Correspondence Analysis.
 @item analogue
 Analogue methods for palaeoecology.
 @item animation
@@ -3412,8 +3417,14 @@ A package for graphical modelling in R.  Defines S4 classes for
 graphical meta data and graphical models, and illustrates how
 hierarchical log-linear models may be implemented and combined with
 @strong{dynamicGraph}.
-@item gRcox
-Inference in graphical gaussian models with edge and vertex symmetries.
+@item gRc
+Inference in graphical Gaussian models with edge and vertex symmetries.
+@c <COMMENT>
+@c Moved to the Archive (gRcox => gRc) as requested by the maintainer.
+@c @item gRcox
+@c Inference in graphical gaussian models with edge and vertex
+@c symmetries.
+@c </COMMENT>
 @item gWidgets
 gWidgets API for building toolkit-independent, interactive
 @acronym{GUI}s.
@@ -3826,6 +3837,8 @@ and H. Sonnberger, 1986, Physica.
 Computation of local false discovery rates.
 @item locfit
 Local Regression, likelihood and density estimation.
+@item locpol
+Kernel local polynomial regression.
 @item lodplot
 Assorted plots of location score versus genetic map position.
 @item logcondens
