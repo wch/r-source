@@ -7,7 +7,6 @@
 \alias{X11Font}
 \alias{X11Fonts}
 \concept{fonts}
-\concept{encoding}
 \title{X11 Fonts}
 \description{
   These functions handle the translation of a device-independent R graphics
@@ -24,11 +23,11 @@ X11Fonts(...)
     or new (named) mappings to define.}
 }
 \details{
-  An X11 device is created with a default font (see
-  the documentation for \code{X11}), but it is also possible
-  to specify a font family when drawing to the device
-  (for example, see the documentation for \code{gpar} in the
-  grid package).
+  An \code{X11} device is created with a default font (see
+  the documentation for \code{\link{X11}}), but it is also possible
+  to specify a font family when drawing to the device (for example, see
+  the documentation for \code{"family"} in \code{\link{par}} and for
+  \code{"fontfamily"} in \code{\link{gpar}} in the \pkg{grid} package).
 
   The font family sent to the device is a simple string name, which must be
   mapped to something more specific to X11 fonts.  A list of
@@ -38,11 +37,10 @@ X11Fonts(...)
   mappings and to define new mappings.  The \code{X11Font}
   function can be used to create a new mapping.
 
-  Default mappings are provided for four
-  device-independent font family names: \code{"sans"} for a
-  sans-serif font,
-  \code{"serif"} for a serif font, \code{"mono"} for a monospaced font,
-  and \code{"symbol"} for a symbol font.
+  Default mappings are provided for four device-independent font family
+  names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
+  font, \code{"mono"} for a monospaced font, and \code{"symbol"} for a
+  symbol font.
 }
 \seealso{
   \code{\link{X11}}
