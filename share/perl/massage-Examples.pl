@@ -102,9 +102,11 @@ assign("cleanEx",
        },
        pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")
-## force in the original defaults:
-## at least one package changes these via ps.options().
-ps.options(reset = TRUE)
+## at least one package changes these via ps.options(), so do this
+## before loading the package.
+## Use postscript as incomplete files may be viewable, unlike PDF.
+## Choose a size that is close to on-screen devices, fix paper
+ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
 grDevices::postscript("$PKG-Ex.ps")
 		      
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")

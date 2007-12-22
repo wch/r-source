@@ -214,6 +214,11 @@ UTILITIES
 
     o   R CMD INSTALL now also installs tangled versions of all vignettes.
 
+    o	R CMD check (via massage-examples.pl) now checks all examples
+	with a 7 inch square device region on A4 paper, for
+	locale-independence and to be similar to viewing examples on
+	an on-screen device.
+
 
 BUG FIXES
 
