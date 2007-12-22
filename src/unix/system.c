@@ -440,7 +440,7 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 
 #if defined(HAVE_AQUA)
 	if (ptr_R_EditFile)
-	    ptr_R_EditFile(file[0]);
+	    ptr_R_EditFile((char *) file[0]);
 	else
 #endif
 	{

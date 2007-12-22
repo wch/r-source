@@ -418,7 +418,11 @@ static void initialize_rlcompletion(void); /* forward declaration */
 attribute_hidden
 char *R_ExpandFileName_readline(const char *s, char *buff)
 {
+#if defined(__APPLE__)
+    char *s2 = tilde_expand((char *)s);
+#else
     char *s2 = tilde_expand(s);
+#endif
 
     strncpy(buff, s2, PATH_MAX);
     if(strlen(s2) >= PATH_MAX) buff[PATH_MAX-1] = '\0';
