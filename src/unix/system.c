@@ -172,14 +172,14 @@ int Rf_initialize_R(int ac, char **av)
     }
 #else
     if(R_running_as_main_program) {
-	/* This is not the main program, but unless embedded it is 
+	/* This is not the main program, but unless embedded it is
 	   near the top, 5540 bytes away when checked. */
 	R_CStackStart = (uintptr_t) &i + (6000 * R_CStackDir);
     }
 #endif
     if(R_CStackStart == -1) R_CStackLimit = -1; /* never set */
-    
-    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
+
+    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit,
               R_CStackStart, R_CStackDir); */
 }
 #endif
@@ -229,7 +229,7 @@ int Rf_initialize_R(int ac, char **av)
 #endif
     R_DefParams(Rp);
     /* Store the command line arguments before they are processed
-       by the R option handler. 
+       by the R option handler.
      */
     R_set_command_line_arguments(ac, av);
     cmdlines[0] = '\0';
@@ -334,13 +334,13 @@ int Rf_initialize_R(int ac, char **av)
 		} else {
 		    snprintf(msg, 1024, _("WARNING: '-e %s' omitted as input is too long\n"), *av);
 		    R_ShowMessage(msg);
-		}   
+		}
 	    } else if(!strcmp(*av, "--args")) {
 		break;
 	    } else {
 #ifdef HAVE_AQUA
-		if(!strncmp(*av, "-psn", 4)) 
-		    break; 
+		if(!strncmp(*av, "-psn", 4))
+		    break;
 		else
 #endif
 		snprintf(msg, 1024, _("WARNING: unknown option '%s'\n"), *av);
@@ -401,10 +401,10 @@ int Rf_initialize_R(int ac, char **av)
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
  */
-    if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
+    if (!R_Interactive && Rp->SaveAction != SA_SAVE &&
 	Rp->SaveAction != SA_NOSAVE)
 	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
-    
+
     R_setupHistory();
     if (R_RestoreHistory)
 	Rstd_read_history(R_HistoryFile);
@@ -426,17 +426,12 @@ int Rf_initialize_R(int ac, char **av)
      *     file    = array of filenames
      *     editor  = editor to be used.
      */
-/*#ifdef HAVE_AQUA
-extern DL_FUNC ptr_Raqua_Edit;
-#endif
-*/
-int R_EditFiles(int nfile, char **file, char **title, char *editor)
+int R_EditFiles(int nfile, comst char **file, const char **title,
+		const char *editor)
 {
     char  buf[1024];
 #if defined(HAVE_AQUA)
-	if (useaqua){
-		return(ptr_R_EditFiles(nfile, file, title, editor));		
-	}
+    if (useaqua) return(ptr_R_EditFiles(nfile, file, title, editor));
 #endif
 
     if (nfile > 0) {
@@ -446,17 +441,16 @@ int R_EditFiles(int nfile, char **file, char **title, char *editor)
 #if defined(HAVE_AQUA)
 	if (ptr_R_EditFile)
 	    ptr_R_EditFile(file[0]);
-	else {
+	else
 #endif
+	{
 	    /* Quote path if necessary */
 	    if (editor[0] != '"' && Rf_strchr(editor, ' '))
 		snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[0]);
 	    else
 		snprintf(buf, 1024, "%s \"%s\"", editor, file[0]);
 	    R_system(buf);
-#if defined(HAVE_AQUA)
 	}
-#endif
 	return 0;
     }
     return 1;

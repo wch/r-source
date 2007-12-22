@@ -52,7 +52,7 @@ static editor REditors[MAXNEDITORS];
 static int neditors  = 0;
 static Rboolean fix_editor_up = FALSE;
 
-static EditorData neweditordata (int file, char *filename)
+static EditorData neweditordata (int file, const char *filename)
 {
     EditorData p;
     p = (EditorData) malloc(sizeof(struct structEditorData));
@@ -77,7 +77,7 @@ void deleditordata(EditorData p)
     free(p);
 }
 
-static void editor_set_title(editor c, char *title)
+static void editor_set_title(editor c, const char *title)
 {
     char wtitle[EDITORMAXTITLE+1];
     textbox t = getdata(c);
@@ -94,7 +94,7 @@ static void editor_set_title(editor c, char *title)
 
 /*** FILE MANAGEMENT FUNCTIONS ***/
 
-static void editor_load_file(editor c, char *name)
+static void editor_load_file(editor c, const char *name)
 {
     textbox t = getdata(c);
     EditorData p = getdata(t);
@@ -128,7 +128,7 @@ static void editor_load_file(editor c, char *name)
     fclose(f);
 }
 
-static void editor_save_file(editor c, char *name)
+static void editor_save_file(editor c, const char *name)
 {
     textbox t = getdata(c);
     FILE *f;
@@ -336,7 +336,7 @@ void menueditornew(control m)
     editornew();
 }
 
-static void editoropen(char *default_name)
+static void editoropen(const char *default_name)
 {
     char *name;
     int i; textbox t; EditorData p;
@@ -795,7 +795,7 @@ static void eventloop(editor c)
 
 #include <unistd.h>
 
-int Rgui_Edit(char *filename, char *title, int stealconsole)
+int Rgui_Edit(const char *filename, const char *title, int stealconsole)
 {
     editor c;
     EditorData p;

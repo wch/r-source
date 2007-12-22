@@ -886,7 +886,7 @@ void	R_FlushConsole(void);
 void	R_ClearerrConsole(void);
 void	R_Busy(int);
 int	R_ShowFiles(int, char **, char **, char *, Rboolean, char *);
-int     R_EditFiles(int, char **, char **, char *);
+int     R_EditFiles(int, const char **, const char **, const char *);
 int	R_ChooseFile(int, char *, int);
 char	*R_HomeDir(void);
 Rboolean R_FileExists(const char *);
