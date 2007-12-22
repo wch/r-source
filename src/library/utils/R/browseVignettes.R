@@ -19,7 +19,7 @@
 browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 {
     ## adapted from vignette()
-    if (is.null(package)) 
+    if (is.null(package))
         package <- .packages(all.available = all, lib.loc)
     paths <- .find.package(package, lib.loc)
     paths <- paths[tools:::file_test("-d", file.path(paths, "doc"))]
@@ -30,14 +30,14 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
     getVinfo <- function(db) {
         dir <- dirname(dirname(db[1]))
         entries <- NULL
-        if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds"))) 
+        if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds")))
             entries <- .readRDS(INDEX)
         if (NROW(entries) > 0) {
             cbind(Dir = dir,
                   File = basename(entries$File),
                   Title = entries$Title,
                   ## FIXME: test unnecessary once packages are reinstalled
-                  R = if (is.null(entries$R)) "" else entries$R, 
+                  R = if (is.null(entries$R)) "" else entries$R,
                   PDF = entries$PDF)[order(entries$Title), , drop=FALSE]
         }
         else NULL
@@ -80,7 +80,7 @@ print.browseVignettes <- function(x, ...)
                 ifelse(nzchar(rcode),
                        sprintf("<a href='file://%s'>R</a>&nbsp;", rcode),
                        ""),
-                sprintf("<a href='file://%s'>LaTeX/Noweb</a>&nbsp;", src))
+                sprintf("<a href='file://%s'>LaTeX/noweb</a>&nbsp;", src))
     }
     file <- sprintf("%s.html", tempfile("Rvig."))
     sink(file)

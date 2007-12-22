@@ -9,7 +9,7 @@
 \title{List Vignettes in an HTML Browser}
 \description{
   List available vignettes in an HTML browser with links to PDF,
-  LaTeX/Noweb source, and (tangled) R code (if available).
+  LaTeX/noweb source, and (tangled) R code (if available).
 }
 \usage{
 browseVignettes(package = NULL, lib.loc = NULL, all = TRUE)
@@ -37,13 +37,13 @@ browseVignettes(package = NULL, lib.loc = NULL, all = TRUE)
 \seealso{
   \code{\link{browseURL}}, \code{\link{vignette}}
 }
-\examples{
+\examples{\dontrun{
 ## List vignettes from all *attached* packages
 browseVignettes(all = FALSE)
 
 ## List vignettes from a specific package
 browseVignettes("grid")
-}
+}}
 \keyword{documentation}
 
 
