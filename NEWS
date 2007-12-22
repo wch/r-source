@@ -328,15 +328,20 @@ BUG FIXES
     o	cut(x, breaks=<n>) misbehaved on a constant vector of negative
 	values.
 
-    o	bxp() {the plotting engine of boxplot()} no longer plots staple ticks
-	multiple times.	 (PR#10499)
+    o	bxp(), the plotting engine of boxplot(), no longer plots staple
+	ticks multiple times.  (PR#10499)
 
     o	The automatic detection of the domain for message translation
 	was not working correctly for messages in message(), warning()
 	and stop() in packages others than 'base'.
 
-    o   The profile.nls function misbehaved when encountering
+    o   The profile.nls() function misbehaved when encountering
         non-convergence of the "port" algorithm.
+
+   o	Under certain rare circumstances in R 2.6.x, log(), round()
+	and trunc() could alter their arguments in the caller.  This
+	involved passing of empty '...' arguments, and was spotted
+	when using apply(x, 2, log).
 
 
 

@@ -1317,13 +1317,13 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP res;
-    int n;
+    int n, nprotect = 1;
 
     if (length(args) >= 2 && 
         isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
         double digits = 0;
 	if(PRIMVAL(op) == 10004) digits = 6.0;
-	SETCAR(CDR(args), ScalarReal(digits));
+	PROTECT(args = list2(CAR(args), ScalarReal(digits))); nprotect++;
     }
 
     PROTECT(args = evalListKeepMissing(args, env));
@@ -1347,7 +1347,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
             errorcall(call, _("invalid second argument of length 0"));
 	res = do_math2(call, op, args, env);
     }
-    UNPROTECT(1);
+    UNPROTECT(nprotect);
     return res;
 }
 
@@ -1380,7 +1380,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
         double e = exp(1.);
 #endif
-	SETCAR(CDR(args), ScalarReal(e));
+	PROTECT(args = list2(CAR(args), ScalarReal(e))); nprotect++;
     }
     PROTECT(args = evalListKeepMissing(args, env));
     n = length(args);
