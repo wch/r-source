@@ -23,7 +23,8 @@ windows.options(\dots, reset = FALSE)
     \code{record}, \code{rescale}, \code{xpinch}, \code{ypinch},
     \code{bg}, \code{canvas}, \code{gamma}, \code{xpos}, \code{ypos},
     \code{buffered}, \code{restoreConsole} and \code{title} can be supplied.}
-  \item{reset}{logical: should the defaults be reset to their defaults?}
+  \item{reset}{logical: should the defaults be reset to their
+    \sQuote{factory-fresh} values?}
 }
 \details{
   If both \code{reset = TRUE} and \code{...} are supplied the defaults

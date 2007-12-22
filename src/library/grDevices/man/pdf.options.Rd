@@ -23,7 +23,8 @@ pdf.options(\dots, reset = FALSE)
     \code{family}, \code{title}, \code{fonts}, \code{paper}, \code{encoding},
     \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre}
     can be supplied.}
-  \item{reset}{logical: should the defaults be reset to their defaults?}
+  \item{reset}{logical: should the defaults be reset to their
+    \sQuote{factory-fresh} values?}
 }
 \details{
   If both \code{reset = TRUE} and \code{...} are supplied the defaults

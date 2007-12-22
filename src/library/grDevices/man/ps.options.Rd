@@ -30,7 +30,8 @@ setPS()
     \code{horizontal}, \code{pointsize},  \code{paper},
     \code{pagecentre}, \code{print.it}, \code{command} and
     \code{colormodel} can be supplied.}
-  \item{reset}{logical: should the defaults be reset to their defaults?}
+  \item{reset}{logical: should the defaults be reset to their
+    \sQuote{factory-fresh} values?}
   \item{override.check}{logical argument passed to
     \code{\link{check.options}}.  See the Examples.}
 }
