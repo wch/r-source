@@ -100,7 +100,8 @@ R_bin_OBJECTS = Rmain.o
 R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a
 
 libR_la = libR$(DYLIB_EXT)
-libR_la_OBJECTS = $(OBJECTS)
+## have to force in Rembedded.o
+libR_la_OBJECTS = $(OBJECTS) ../unix/Rembedded.o
 libR_la_LIBADD = $(STATIC_LIBS) $(EXTRA_LIBS)
 libR_la_DEPENDENCIES = $(STATIC_LIBS)
 
