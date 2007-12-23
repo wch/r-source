@@ -137,5 +137,5 @@ tkStartGUI <- function() {
     })
     #tkadd(helpMenu,"command", label=gettext("Help on topic..."), command=topicHelp)
     assign(".GUIenv", environment(), envir=.GlobalEnv)
-    tclServiceMode(TRUE)
+    invisible(tclServiceMode(TRUE))
 }
