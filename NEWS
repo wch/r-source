@@ -343,7 +343,7 @@ BUG FIXES
     o   The profile.nls() function misbehaved when encountering
         non-convergence of the "port" algorithm.
 
-   o	Under certain rare circumstances in R 2.6.x, log(), round()
+    o	Under certain rare circumstances in R 2.6.x, log(), round()
 	and trunc() could alter their arguments in the caller.  This
 	involved passing of empty '...' arguments, and was spotted
 	when using apply(x, 2, log).
