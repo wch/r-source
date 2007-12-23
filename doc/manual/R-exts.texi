@@ -9288,20 +9288,20 @@ documented way.  This defines pointers (if @code{R_INTERFACE_PTRS} is
 defined)
 
 @example
-extern void (*ptr_R_Suicide)(char *);
-extern void (*ptr_R_ShowMessage)(char *);
-extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
-extern void (*ptr_R_WriteConsole)(char *, int);
-extern void (*ptr_R_WriteConsoleEx)(char *, int, int);
+extern void (*ptr_R_Suicide)(const char *);
+extern void (*ptr_R_ShowMessage)(const char *);
+extern int  (*ptr_R_ReadConsole)(const char *, unsigned char *, int, int);
+extern void (*ptr_R_WriteConsole)(const char *, int);
+extern void (*ptr_R_WriteConsoleEx)(const char *, int, int);
 extern void (*ptr_R_ResetConsole)();
 extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
 extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
-extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *,
-                               Rboolean, char *);
+extern int  (*ptr_R_ShowFiles)(int, const char **, const char **,
+                               const char *, Rboolean, const char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
-extern int  (*ptr_R_EditFile)(char *);
+extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
@@ -9322,10 +9322,10 @@ embarks on an extended computation (@code{@var{which}=1}) and when such
 a state terminates (@code{@var{which}=0}).
 @end deftypefun
 
-@deftypefun int R_ReadConsole (char *@var{prompt}, unsigned char *@var{buf}, @
+@deftypefun int R_ReadConsole (const char *@var{prompt}, unsigned char *@var{buf}, @
   int @var{buflen}, int @var{hist})
-@deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen})
-@deftypefunx void R_WriteConsoleEx (char *@var{buf}, int @var{buflen}, int @var{otype})
+@deftypefunx void R_WriteConsole (const char *@var{buf}, int @var{buflen})
+@deftypefunx void R_WriteConsoleEx (const char *@var{buf}, int @var{buflen}, int @var{otype})
 @deftypefunx void R_ResetConsole ()
 @deftypefunx void R_FlushConsole ()
 @deftypefunx void R_ClearErrConsole ()
@@ -9359,9 +9359,9 @@ system console.  @code{R_ClearerrConsole} clears any errors associated
 with reading from the console.
 @end deftypefun
 
-@deftypefun int R_ShowFiles (int @var{nfile}, char **@var{file}, @
-  char **@var{headers}, char *@var{wtitle}, Rboolean @var{del}, @
-  char *@var{pager})
+@deftypefun int R_ShowFiles (int @var{nfile}, const char **@var{file}, @
+  const char **@var{headers}, const char *@var{wtitle}, Rboolean @var{del}, @
+  const char *@var{pager})
 
 This function is used to display the contents of files.
 @end deftypefun
@@ -9373,7 +9373,7 @@ Choose a file and return its name in @var{buf} of length @var{len}.
 Return value is 0 for success, > 0 otherwise.
 @end deftypefun
 
-@deftypefun int R_EditFile (char *@var{buf})
+@deftypefun int R_EditFile (const char *@var{buf})
 Send a file to an editor window.
 @end deftypefun
 
@@ -9410,12 +9410,12 @@ mechanism is present, as a user may be calling @code{timestamp} purely
 to write the time stamp to the console.
 @end deftypefun
 
-@deftypefun void R_Suicide (char *@var{message})
+@deftypefun void R_Suicide (const char *@var{message})
 This should abort @R{} as rapidly as possible, displaying the message.
 A possible implementation is
 
 @example
-void R_Suicide (char *message)
+void R_Suicide (const char *message)
 @{
     char  pp[1024];
     snprintf(pp, 1024, "Fatal error: %s\n", s);
@@ -9697,14 +9697,14 @@ whose code is
    frequently. See rterm.c and ../system.c for one approach using
    a separate thread for input.
 */
-int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
+int myReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 @{
     fputs(prompt, stdout);
     fflush(stdout);
     if(fgets(buf, len, stdin)) return 1; else return 0;
 @}
 
-void myWriteConsole(char *buf, int len)
+void myWriteConsole(const char *buf, int len)
 @{
     printf("%s", buf);
 @}

@@ -220,6 +220,11 @@ UTILITIES
 	an on-screen device.
 
 
+C-LEVEL FACILITIES
+
+    o	Both the Unix and Windows interfaces for embedding now make
+	use of 'const char *' declarations where appropriate.
+
 BUG FIXES
 
     o	pt(x, df) is now even more accurate in some cases (e.g. 12 instead

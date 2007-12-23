@@ -24,7 +24,8 @@
  *  The first group of functions is concerned with reading and
  *  writing to the system console.
  *
- *    int   R_ReadConsole(char *prompt, char *buf, int buflen, int hist)
+ *    int   R_ReadConsole(const char *prompt, unsigned char *buf, 
+ *                        int buflen, int hist)
  *
  *  This function prints the given prompt at the console and then
  *  does an fgets(3)-like operation, transferring up to "buflen" bytes
@@ -34,8 +35,8 @@
  *  the line is added to any command history which is being maintained.
  *  Note that this is one natural place from which to run an event loop.
  *
- *    void  R_WriteConsole(char *buf, int buflen)
- *    void  R_WriteConsoleEx(char *buf, int buflen, int otype)
+ *    void  R_WriteConsole(const char *buf, int buflen)
+ *    void  R_WriteConsoleEx(const char *buf, int buflen, int otype)
  *
  *  Those functions write the given buffer out to the console.  No
  *  special actions are required.  Under Unix the characters are
@@ -59,7 +60,7 @@
  *  console.  In Unix it is used to clear any EOF condition associated
  *  with stdin.
  *
- *    void R_ShowMessage(char *s)
+ *    void R_ShowMessage(const char *s)
  *
  *  Display the (multi-line) message in the string s. This might be
  *  printed on an error stream or displayed in a message dialog box:
@@ -98,20 +99,20 @@
  *
  *  5) FILESYSTEM INTERACTION
  *
- *    int FileExists(char *file)
+ *    int FileExists(const char *file)
  *
  *  This function returns 1 if the named file exists and 0 otherwise.
  *  On Unix/Windows this is just an interface to "stat".
  *
- *    int R_HiddenFile(char *file)
+ *    int R_HiddenFile(const char *file)
  *
  *  This function returns 1 if the named file is "hidden".  In Unix,
  *  this is the case if the file name begins with a '.'.  On the Mac
  *  a file is hidden if the file name ends in '\r'.
  *  More complex tests may be needed on other platforms.
  *
- *    int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
- *		      Rboolean del, char *pager)
+ *    int R_ShowFiles(int nfile, const char **file, const char **headers,
+ *                    const char *wtitle, Rboolean del, const char *pager)
  *
  *     nfile   = number of files
  *     file    = array of filenames
@@ -125,7 +126,7 @@
  *  the file would probably be displayed in a window with the given
  *  title.
  *
- *    int R_ChooseFile(int new, char *buf, int len)
+ *    int R_ChooseFile(int new, const char *buf, int len)
  *
  *  Choose a file and return its name in buf of length len. On
  *  command-line systems ask the user, on GUI platforms bring up a
@@ -135,7 +136,7 @@
  *  presented to the user: at present only new = 0 is used. (In 
  *  file.choose(new), new is logical.)
  *
- *    char* R_ExpandFileName(char *s)
+ *    char* R_ExpandFileName(const char *s)
  *
  *  This is a utility function which can be used to expand special
  *  characters in file names.  In Unix it's sole function is to expand

@@ -27,15 +27,15 @@ extern "C" {
 #endif
 
 #ifdef Win32
-typedef int (*blah1) (char *, char *, int, int);
-typedef void (*blah2) (char *, int);
+typedef int (*blah1) (const char *, char *, int, int);
+typedef void (*blah2) (const char *, int);
 typedef void (*blah3) ();
-typedef void (*blah4) (char *);
+typedef void (*blah4) (const char *);
 /* Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h */
-typedef int (*blah5) (char *);
+typedef int (*blah5) (const char *);
 typedef void (*blah6) (int);
-typedef void (*blah7) (char *, int, int);
+typedef void (*blah7) (const char *, int, int);
 typedef enum {RGui, RTerm, LinkDLL} UImode;
 #endif
 

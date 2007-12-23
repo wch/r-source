@@ -68,7 +68,7 @@ static int      gl_overwrite = 0;	/* overwrite mode */
 static int      gl_pos, gl_cnt = 0;     /* position and size of input */
 static char    *gl_buf;                 /* input buffer */
 static char    *gl_killbuf;             /* killed text */
-static char    *gl_prompt;		/* to save the prompt string */
+static const char    *gl_prompt;	/* to save the prompt string */
 #ifdef POSIX
 static char     gl_intrc = 0;		/* keyboard SIGINT char */
 static char     gl_quitc = 0;		/* keyboard SIGQUIT char */
@@ -514,7 +514,7 @@ gl_setwidth(int w)
 }
 
 int
-getline(char *prompt, char *buf, int buflen)
+getline(const char *prompt, char *buf, int buflen)
 {
     int             c, loc, tmp;
     int mb_len;

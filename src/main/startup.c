@@ -108,7 +108,7 @@ FILE *R_OpenSiteFile(void)
 static char workspace_name[100] = ".RData";
 
 #ifdef Win32
-void set_workspace_name(char *fn)
+void set_workspace_name(const char *fn)
 {
     strcpy(workspace_name, fn);
 }

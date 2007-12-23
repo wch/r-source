@@ -71,24 +71,24 @@ int R_Proxy_printf(char const* pFormat,...)
   return 0;
 }
 
-static void R_Proxy_askok (char* pMsg)
+static void R_Proxy_askok (const char* pMsg)
 {
   askok(pMsg);
   return;
 }
 
-static int R_Proxy_askyesnocancel (char* pMsg)
+static int R_Proxy_askyesnocancel (const char* pMsg)
 {
   return YES;
 }
 
 static int 
-R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
+R_Proxy_ReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 {
   return 0;
 }
 
-static void R_Proxy_WriteConsole(char *buf, int len)
+static void R_Proxy_WriteConsole(const char *buf, int len)
 {
   if (__output_device) {
     __output_device->vtbl->write_string (__output_device,buf);

@@ -75,9 +75,9 @@ int mb_char_len(char *buf, int clength)
 }
 
 /* <FIXME> replace by Ri18n_wcswidth */
-int mbswidth(char *buf)
+int mbswidth(const char *buf)
 {
-    char *p =buf;
+    const char *p =buf;
     int res = 0, used;
     wchar_t wc;
 
@@ -1611,7 +1611,8 @@ static void draweditline(control c)
 }
 
 /* Here multibyte characters will be entered as individual bytes */
-int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
+int consolereads(control c, const char *prompt, char *buf, int len, 
+		 int addtohistory)
 {
     ConsoleData p = getdata(c);
 

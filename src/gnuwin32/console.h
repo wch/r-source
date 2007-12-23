@@ -32,9 +32,10 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
 		  rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
 		  int bufbytes, int buflines, int buffered);
-pager newpager(char *title, char *filename, char *header, int unlinkonexit);
+pager newpager(const char *title, const char *filename, const char *header,
+	       int unlinkonexit);
 console newconsole(char *name, int flags);
-int  consolereads(console c, char *prompt, char *buf, int len,
+int  consolereads(console c, const char *prompt, char *buf, int len,
 		  int addtohistory);
 int  consolewrites(console c, const char *s);
 int  consolecancopy(console c);

@@ -217,7 +217,7 @@ SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
-    char **f, **h, *t, *pager;
+    const char **f, **h, *t, *pager;
     Rboolean dl;
     int i, n;
 
@@ -225,7 +225,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args); args = CDR(args);
     hd = CAR(args); args = CDR(args);
     tl = CAR(args); args = CDR(args);
-    dl = (Rboolean)asLogical(CAR(args)); args = CDR(args);
+    dl = (Rboolean) asLogical(CAR(args)); args = CDR(args);
     pg = CAR(args);
     n = 0;			/* -Wall */
     if (!isString(fn) || (n = length(fn)) < 1)
@@ -236,8 +236,8 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid 'title'"));
     if (!isString(pg))
         error(_("invalid '%s' specification"), "pager");
-    f = (char**)R_alloc(n, sizeof(char*));
-    h = (char**)R_alloc(n, sizeof(char*));
+    f = (const char**) R_alloc(n, sizeof(char*));
+    h = (const char**) R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
 	if (!isNull(STRING_ELT(fn, i)))
 	    /* Do better later for file names? */

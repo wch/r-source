@@ -878,14 +878,15 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
 /* The maximum length of input line which will be asked for */
 #define CONSOLE_BUFFER_SIZE 1024
-int	R_ReadConsole(char *, unsigned char *, int, int);
-void	R_WriteConsole(char *, int); /* equivalent to R_WriteConsoleEx(a, b, 0) */
-void	R_WriteConsoleEx(char *, int, int);
+int	R_ReadConsole(const char *, unsigned char *, int, int);
+void	R_WriteConsole(const char *, int); /* equivalent to R_WriteConsoleEx(a, b, 0) */
+void	R_WriteConsoleEx(const char *, int, int);
 void	R_ResetConsole(void);
 void	R_FlushConsole(void);
 void	R_ClearerrConsole(void);
 void	R_Busy(int);
-int	R_ShowFiles(int, char **, char **, char *, Rboolean, char *);
+int	R_ShowFiles(int, const char **, const char **, const char *,
+		    Rboolean, const char *);
 int     R_EditFiles(int, const char **, const char **, const char *);
 int	R_ChooseFile(int, char *, int);
 char	*R_HomeDir(void);
@@ -1034,7 +1035,7 @@ void R_SaveToFileV(SEXP, FILE*, int, int);
 Rboolean R_seemsOldStyleS4Object(SEXP object);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
-void R_Suicide(char *);
+void R_Suicide(const char *);
 void R_getProcTime(double *data);
 int R_isMissing(SEXP symbol, SEXP rho);
 void sortVector(SEXP, Rboolean);

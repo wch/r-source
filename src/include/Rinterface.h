@@ -45,7 +45,7 @@ extern void R_SaveGlobalEnv(void);
 extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
-extern void R_Suicide(char *);
+extern void R_Suicide(const char *);
 extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
@@ -97,19 +97,20 @@ extern uintptr_t R_CStackStart;	/* Initial stack address */
 # define extern
 #endif
 
-extern void (*ptr_R_Suicide)(char *);
-extern void (*ptr_R_ShowMessage)(char *);
-extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
-extern void (*ptr_R_WriteConsole)(char *, int);
-extern void (*ptr_R_WriteConsoleEx)(char *, int, int);
+extern void (*ptr_R_Suicide)(const char *);
+extern void (*ptr_R_ShowMessage)(const char *);
+extern int  (*ptr_R_ReadConsole)(const char *, unsigned char *, int, int);
+extern void (*ptr_R_WriteConsole)(const char *, int);
+extern void (*ptr_R_WriteConsoleEx)(const char *, int, int);
 extern void (*ptr_R_ResetConsole)();
 extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
 extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
-extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, Rboolean, char *);
+extern int  (*ptr_R_ShowFiles)(int, const char **, const char **,
+			       const char *, Rboolean, const char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
-extern int  (*ptr_R_EditFile)(char *);
+extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
