@@ -1835,7 +1835,6 @@ static void newX11_Close(NewDevDesc *dd)
 static void newX11_Activate(NewDevDesc *dd)
 {
     char t[150];
-    char num[3];
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     if (xd->type > WINDOW) return;
