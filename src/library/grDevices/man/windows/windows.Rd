@@ -49,7 +49,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     recording plots.  Default \code{FALSE}.}
   \item{rescale}{character, one of \code{c("R", "fit", "fixed")}.
     Controls the action for resizing of the device.  Default
-    \code{"R"}.  See Details.}
+    \code{"R"}.  See \sQuote{Details}.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and
     vertically.  Default \code{NA_real_}, which means to take the
     value from Windows.}
@@ -58,9 +58,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.  Should be a solid color
     (and any alpha value will be ignored).  Default \code{"white"}.}
-  \item{gamma}{the gamma correction factor.  This value is used
-    to ensure that the colors perceived are linearly related to
-    RGB values (see \code{\link{hsv}}).  Default \code{1}.}
+  \item{gamma}{the gamma correction factor to assume for the display.
+    This value is used to ensure that the colors perceived are linearly
+    related to RGB values (see \code{\link{hsv}}).  Default \code{1}.}
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values (the default) mean take the default from the
@@ -80,7 +80,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   }
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
-  \item{restoreConsole}{logical:  see the Details below.  Defaults to
+  \item{restoreConsole}{logical:  see the \sQuote{Details} below.  Defaults to
     \code{FALSE} for screen devices.}
 }
 
@@ -177,6 +177,12 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
   There is support for semi-transparent colours of lines, fills and text
   on the \code{windows()} device.
+}
+\section{Gamma}{
+  PC displays map RGB numbers non-linearly to luminosities (and the
+  eye/brain system also perceives non-linearly).  For a typical PC
+  display, a value of \code{gamma} of around \code{2.2} will result in
+  the unit steps in the RGB values are being perceived as roughly equal.
 }
 
 \value{

@@ -31,15 +31,16 @@ X11.options(\dots, reset = FALSE)
     \sQuote{Resources}.}
   \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
   \item{gamma}{the gamma correction factor.  This value is used
-    to ensure that the colors perceived are linearly related to
-    RGB values (see \code{\link{hsv}}).  By default 1 (no correction).}
+    to help ensure that the colors perceived are linearly related to
+    RGB values (see \code{\link{hsv}}).  By default 1 (default
+    correction).}
   \item{bg}{color.  The default background color.  Default
     code{"transparent"}.}
   \item{canvas}{color.  The color of the canvas, which is visible only
-    when the background color is transparent.  Defautl \code{"white"}.}
+    when the background color is transparent.  Default \code{"white"}.}
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
-    and the second for font 5, the symbol font. See section Fonts.}
+    and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
@@ -145,7 +146,15 @@ X11.options(\dots, reset = FALSE)
   256.  With that setting the largest cube tried is 4 levels each for
   RGB, using 64 colors in the palette.
 }
-
+\section{Gamma}{
+  PC displays map RGB numbers non-linearly to luminosities (and the
+  eye/brain system also perceives non-linearly).  By default \code{X11}
+  uses a non-linear transformation that assumes the display has a
+  \sQuote{gamma} value of \code{5/3}.  This is rather low: PC displays
+  are usually set up for a ganmma of 2.2 and older Macs were set up for
+  1.8.  The argument \code{gamma} \code{divides} 5/3, so use
+  \code{gamma=0.76} for a PC display.
+}
 \seealso{
   \code{\link{Devices}}, \code{\link{X11Fonts}}.
 }

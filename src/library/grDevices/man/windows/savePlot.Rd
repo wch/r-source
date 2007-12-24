@@ -20,7 +20,8 @@ savePlot(filename = "Rplot",
     (Windows bitmap format), PostScript or PDF.}
   \item{device}{A device number of a \code{windows} device, by default
     the current device.}
-  \item{restoreConsole}{See the Details section of \code{\link{windows}}.}
+  \item{restoreConsole}{See the \sQuote{Details} section
+    of \code{\link{windows}}.}
 }
 \description{
   Saves the current plot on a \code{windows} device to a file.
