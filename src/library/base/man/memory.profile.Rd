@@ -28,6 +28,8 @@ memory.profile()
 
 \seealso{
   \code{\link{gc}} for the overall usage of cons cells.
+  \code{\link{Rprofmem}} and \code{\link{tracemem}} allow memory profiling
+  of specific code or objects, but need to be enabled at compile time.
 }
 
 \examples{
