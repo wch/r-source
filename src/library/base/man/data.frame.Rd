@@ -35,7 +35,9 @@ default.stringsAsFactors()
     If necessary they are adjusted (by \code{\link{make.names}})
     so that they are.}
   \item{stringsAsFactors}{logical: should character vectors be converted
-    to factors?}
+    to factors?  The \sQuote{factory-fresh} default is \code{TRUE}, but
+    this can be changed by setting \code{\link{options}(stringsAsFactors
+      = FALSE}.}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of
@@ -85,7 +87,8 @@ default.stringsAsFactors()
 
   \code{default.stringsAsFactors} is a utility that takes
   \code{\link{getOption}("stringsAsFactors")} and ensures the result is
-  \code{TRUE} or \code{FALSE}.
+  \code{TRUE} or \code{FALSE} (or throws an error if the value is not
+  \code{NULL}).
 }
 \note{
   In versions of \R prior to 2.4.0 \code{row.names} had to be
