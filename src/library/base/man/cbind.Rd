@@ -69,7 +69,7 @@ rbind(\dots, deparse.level = 1)
   The \code{cbind} data frame method is just a wrapper for
   \code{\link{data.frame}(..., check.names = FALSE)}.  This means that
   it will split matrix columns in data frame arguments, and convert
-  character columns to factors unless \code{stringsAsFactors = TRUE} is
+  character columns to factors unless \code{stringsAsFactors = FALSE} is
   passed.
 
   The \code{rbind} data frame method first drops all zero-column and
