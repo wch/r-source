@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-12-21
+@set FAQ_DATE @value{FAQ_YEAR}-12-24
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2361,6 +2361,9 @@ R interface to the dieharder random number generator test suite.
 Regional Frequency Analysis.
 @item RFOC
 Graphics for spherical distributions and earthquake focal mechanisms.
+@item RFreak
+An R interface to a modified version of the Free Evolutionary Algorithm
+Kit FrEAK.
 @item RGtk2
 Facilities for programming graphical interfaces using Gtk (the Gimp Tool
 Kit) version 2.
@@ -2459,6 +2462,8 @@ Rcmdr plug-in for the @strong{FactoMineR} package.
 Rcmdr support for the introductory course at Temple University.
 @item RcmdrPlugin.TeachingDemos
 Rcmdr Teaching Demos plug-in.
+@item RcmdrPlugin.epack
+Rcmdr epack demos plug-in.
 @c <COMMENT>
 @c Moved to the Archive on 2007-09-25 as requested by the maintainer.
 @c @item RcppTemplate
