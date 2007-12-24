@@ -1840,7 +1840,8 @@ static void newX11_Activate(NewDevDesc *dd)
 
     if (xd->type > WINDOW) return;
     if(strlen(xd->title)) {
-	strcpy(t, xd->title);
+	snprintf(t, 140, xd->title, devNumber((DevDesc*) dd) + 1);
+	t[139] = '\0';
     } else {
 	strcpy(t, "R Graphics: Device ");
 	sprintf(num, "%i", devNumber((DevDesc*)(dd))+1);
@@ -1858,12 +1859,12 @@ static void newX11_Activate(NewDevDesc *dd)
 static void newX11_Deactivate(NewDevDesc *dd)
 {
     char t[150];
-    char num[3];
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     if (xd->type > WINDOW) return;
     if(strlen(xd->title)) {
-	strcpy(t, xd->title);
+	snprintf(t, 140, xd->title, devNumber((DevDesc*) dd) + 1);
+	t[139] = '\0';
     } else {
 	strcpy(t, "R Graphics: Device ");
 	sprintf(num, "%i", devNumber((DevDesc*)(dd))+1);
