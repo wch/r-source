@@ -2174,17 +2174,15 @@ static void GA_Close(NewDevDesc *dd)
 static void GA_Activate(NewDevDesc *dd)
 {
     char  t[150];
-    char  num[3];
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (xd->replaying || (xd->kind!=SCREEN))
 	return;
     if(strlen(xd->title)) {
-	strcpy(t, xd->title);
+	snprintf(t, 140, xd->title, devNumber((DevDesc*) dd) + 1);
+	t[139] = '\0';
     } else {
-	strcpy(t, "R Graphics: Device ");
-	sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
-	strcat(t, num);
+	sprintf(t, "R Graphics: Device %d", devNumber((DevDesc*) dd) + 1);
     }
     strcat(t, " (ACTIVE)");
     settext(xd->gawin, t);
@@ -2201,19 +2199,17 @@ static void GA_Activate(NewDevDesc *dd)
 static void GA_Deactivate(NewDevDesc *dd)
 {
     char  t[150];
-    char  num[3];
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (xd->replaying || (xd->kind != SCREEN))
 	return;
     if(strlen(xd->title)) {
-	strcpy(t, xd->title);
+	snprintf(t, 140, xd->title, devNumber((DevDesc*) dd) + 1);
+	t[139] = '\0';
     } else {
-	strcpy(t, "R Graphics: Device ");
-	sprintf(num, "%i", devNumber((DevDesc*) dd) + 1);
-	strcat(t, num);
-	strcat(t, " (inactive)");
+	sprintf(t, "R Graphics: Device %d", devNumber((DevDesc*) dd) + 1);
     }
+    strcat(t, " (inactive)");
     settext(xd->gawin, t);
 }
 

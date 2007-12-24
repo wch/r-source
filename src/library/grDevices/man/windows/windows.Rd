@@ -70,7 +70,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{buffered}{logical.  Should the screen output be double-buffered?
     Default \code{TRUE}.}
   \item{title}{character string, up to 100 bytes.  With the default
-    \code{""}, a suitable title is created internally.}
+    \code{""}, a suitable title is created internally.  A C-style format
+    for an integer will be substituted by the device number.}
   \item{filename}{the name of the output file: it will be an enhanced
     Windows metafile, usually given extension \code{.emf} or
     \code{.wmf}.  Up to 511 characters are allowed.
