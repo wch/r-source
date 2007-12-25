@@ -194,7 +194,7 @@ par(\dots, no.readonly = FALSE)
       non-screen devices.}
     \item{\code{bg}}{The color to be used for the background of plots.
       When called from \code{par()} it also sets \code{new=FALSE}.
-      A description of how colors are specified is given below.
+      See section \sQuote{Color Specification}.
       Note that some graphics functions such as
       \code{\link{plot.default}} and \code{\link{points}} have an
       \emph{argument} of this name with a different meaning.}
@@ -220,9 +220,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{cex.sub}}{The magnification to be used for sub-titles
       relative to the current setting of \code{cex}.}
     \item{\code{cin}}{\emph{\bold{R.O.}}; character size
-      \code{(width, height)} in inches.}
-    \item{\code{col}}{A specification for the default plotting color.  A
-      description of how colors are specified is given below.
+      \code{(width, height)} in inches.  These are the same measurements
+      as \code{cra}, expressed in different units.}
+    \item{\code{col}}{A specification for the default plotting color.  See
+      section \sQuote{Color Specification}.
       (Some functions such as \code{\link{lines}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
       a vector of length greater than one is supplied.)
@@ -234,13 +235,14 @@ par(\dots, no.readonly = FALSE)
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
       \code{(width, height)} in \sQuote{rasters} (pixels).  Some devices
       have no concept of pixels and so assume an arbitrary pixel size,
-      usually 1/72 inch.}
+      usually 1/72 inch.  These are the same measurements
+      as \code{cin}, expressed in different units.}
     \item{\code{crt}}{A numerical value specifying (in degrees) how
       single characters should be rotated.  It is unwise to expect
       values other than multiples of 90 to work.  Compare with
       \code{srt} which does string rotation.}
-    \item{\code{csi}}{\emph{\bold{R.O.}}; height of (default sized)
-      characters in inches.}
+    \item{\code{csi}}{\emph{\bold{R.O.}}; height of (default-sized)
+      characters in inches.  The same as \code{par("cin")[2]}.}
     \item{\code{cxy}}{\emph{\bold{R.O.}}; size of default character
       \code{(width, height)} in user coordinate units.
       \code{par("cxy")} is \code{par("cin")/par("pin")} scaled to user
@@ -254,8 +256,8 @@ par(\dots, no.readonly = FALSE)
       The degree of error reporting desired.}
     \item{\code{family}}{The name of a font family for drawing text.
       The maximum allowed length is 200 bytes.
-      This name gets mapped by each graphics device to device-specific
-      font descriptions.
+      This name gets mapped by each graphics device to a device-specific
+      font description.
       The default value is \code{""} which means that the
       default device fonts will be used.
       Standard values are \code{"serif"}, \code{"sans"},
@@ -267,9 +269,8 @@ par(\dots, no.readonly = FALSE)
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes
       around plots.  When called from \code{par()} this also sets
-      parameter \code{col} to the same value.
-
-      A description of how colors are specified is given below.}
+      parameter \code{col} to the same value.  See section \sQuote{Color
+	Specification}.}
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,
 	y2)} which gives the (NDC) coordinates of the figure region in
       the display region of the device. If you set this, unlike S, you
@@ -353,7 +354,7 @@ par(\dots, no.readonly = FALSE)
       Alternatively, a string of up to 8 characters (from \code{c(1:9,
 	"A":"F")}) may be given, giving the length of line segments
       which are alternatively drawn and skipped.  See section
-      \sQuote{Line Type Specification} below.
+      \sQuote{Line Type Specification}.
 
       Some functions such as \code{\link{lines}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
@@ -376,11 +377,11 @@ par(\dots, no.readonly = FALSE)
       specified on the four sides of the plot.
       The default is \code{c(5, 4, 4, 2) + 0.1}.}
     \item{\code{mex}}{
-      \code{mex} is a character size expansion factor
-      which is used to describe coordinates in the margins of plots.
-      Note that this does not change the font size, rather specifies the
-      size of font used to convert between \code{mar} and \code{mai},
-      and between \code{oma} and \code{omi}.
+      \code{mex} is a character size expansion factor which is used to
+      describe coordinates in the margins of plots. Note that this does
+      not change the font size, rather specifies the size of font (as a
+      multiple of \code{csi}) used to convert between \code{mar} and
+      \code{mai}, and between \code{oma} and \code{omi}.
     }
     \item{\code{mfcol, mfrow}}{A vector of the form \code{c(nr, nc)}.
       Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
@@ -460,7 +461,7 @@ par(\dots, no.readonly = FALSE)
       If \code{tck >= 0.5} it is interpreted as a fraction of the
       relevant side, so if
       \code{tck = 1} grid lines are drawn.  The default setting
-      (\code{tck = NA}) is to use \code{tcl = -0.5} (see below).}
+      (\code{tck = NA}) is to use \code{tcl = -0.5}.}
     \item{\code{tcl}}{The length of tick marks as a fraction of the
       height of a line of text.  The default value is \code{-0.5};
       setting \code{tcl = NA} sets \code{tck = -0.01} which is S' default.}
