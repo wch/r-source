@@ -2553,10 +2553,9 @@ the source files} when building from source, and
 @node ACML, Goto BLAS, ATLAS, BLAS
 @subsubsection ACML
 
-For @cputype{x86_64} and @cputype{ix86} processors under Linux and
-Solaris 10 there is the AMD Core Math Library (ACML)
-@uref{http://www.amd.com/acml, @code{www.amd.com/acml}}.  For the
-@command{gcc} version we could use
+For @cputype{x86_64} processors under Linux and Solaris 10 there is the
+AMD Core Math Library (ACML) @uref{http://www.amd.com/acml,
+@code{www.amd.com/acml}}.  For the @command{gcc} version we could use
 
 @example
 --with-blas="-lacml"
@@ -2565,20 +2564,21 @@ Solaris 10 there is the AMD Core Math Library (ACML)
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRRARY_PATH
-@file{/opt/acml4.0.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
+@file{/opt/acml4.0.1/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for @command{gfortran}
 which needs @command{gcc} >= 4.2.0 (or some RedHat versions of 4.1.1).
 To make use of this you will need something like
 
 @example
---with-blas="-L/opt/acml4.0.0/gfortran64_mp/lib -lacml_mp"
+--with-blas="-L/opt/acml4.0.1/gfortran64_mp/lib -lacml_mp"
 @end example
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use ACML.
 
-ACML can be used on Windows when building from source.
+Earlier versions of ACML are available for 32-bit Linux systems and for
+those using @command{g77}.
 
 @node Goto BLAS, MKL, ACML, BLAS
 @subsubsection Goto BLAS
