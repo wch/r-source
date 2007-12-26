@@ -14,7 +14,7 @@ eval_R_command(const char *funcName, int argc, char *argv[])
     PROTECT(arg = allocVector(INTSXP, 10));
     for(i = 0; i < LENGTH(arg); i++) INTEGER(arg)[i]  = i + 1;
 
-    PROTECT(e = lang2(install((char *)funcName), arg));
+    PROTECT(e = lang2(install(funcName), arg));
 
     /* Evaluate the call to the R function.
        Ignore the return value.
