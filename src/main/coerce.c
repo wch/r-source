@@ -2126,8 +2126,10 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP rest, evargs, rfun;
 
     PROTECT(rfun = eval(CAR(args), rho));
-    if (!isString(rfun) || length(rfun) <= 0 ||
-	streql(CHAR(STRING_ELT(rfun, 0)), "")) /* ASCII */
+    /* zero-length string check used to be here but install gives
+       better error message.
+     */
+    if (!isString(rfun) || length(rfun) != 1)
 	errorcall_return(call, R_MSG_A1_char);
     PROTECT(rfun = install(translateChar(STRING_ELT(rfun, 0))));
     PROTECT(evargs = duplicate(CDR(args)));
@@ -2150,13 +2152,12 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     envir = CADDR(args);
     args = CADR(args);
 
-    /* must be a string or a function */
-    if( isString(fun) ) {
-	if( length(fun) != 1 || CHAR(STRING_ELT(fun,0)) == '\0') /* ASCII */
-	    error(_("first argument must be a character string or a function"));
-    } else if (!isFunction(fun) )
-	error(_("first argument must be a character string or a function"));
-    
+    /* must be a string or a function:
+       zero-length string check used to be here but install gives
+       better error message.
+     */
+    if( !(isString(fun) && length(fun) == 1) && !isFunction(fun) )
+	error(_("'what' must be a character string or a function"));
 
     if (!isNull(args) && !isNewList(args))
 	error(R_MSG_A2_list);
