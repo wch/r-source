@@ -200,6 +200,8 @@ INSTALLATION
 
     o	New option --enable-R-static-lib installs libR.a which can
 	be linked to a front-end via 'R CMD config --ldflags'.
+	The tests/Embedding examples now work with a static R
+	library.
 
 
 UTILITIES

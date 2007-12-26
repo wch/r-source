@@ -51,6 +51,10 @@ LIBS = @LIBS@
 LIBnn = @LIBnn@
 LIBTOOL = $(SHELL) $(R_HOME)/bin/libtool
 LDFLAGS = @LDFLAGS@
+## needed to build applications linking to static libR
+MAIN_LD = @MAIN_LD@
+MAIN_LDFLAGS = @MAIN_LDFLAGS@
+MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 OBJC = @OBJC@
 OBJCFLAGS = @OBJCFLAGS@
 OBJC_LIBS = @OBJC_LIBS@
