@@ -61,7 +61,7 @@ match.arg <- function (arg, choices, several.ok = FALSE)
 }
 
 charmatch <- function(x, table, nomatch = NA_integer_)
-    y <- .Internal(charmatch(as.character(x), as.character(table), nomatch))
+    .Internal(charmatch(as.character(x), as.character(table), nomatch))
 
 char.expand <- function(input, target, nomatch = stop("no match"))
 {
