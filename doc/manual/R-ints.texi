@@ -68,7 +68,7 @@ The current version of this document is @value{VERSION}.
 @menu
 * R Internal Structures::       
 * .Internal vs .Primitive::     
-* Internationaliation in the R sources::  
+* Internationalization in the R sources::  
 * R coding standards::          
 * Testing R code::              
 * Function and variable index::  
@@ -612,7 +612,7 @@ the search path.
 The objects defined by the @R{} code in the package are symbols with
 bindings in the @code{namespace:@var{pkg}} environment.  The
 @code{package:@var{pkg}} environment is populated by selected symbols
-fron the @code{namespace:@var{pkg}} environment (the exports).  The
+from the @code{namespace:@var{pkg}} environment (the exports).  The
 enclosure of this environment is an environment populated with the
 explicit imports from other name spaces, and the enclosure of
 @emph{that} environment is the base name space.  (So the illusion of the
@@ -881,7 +881,7 @@ that the arguments of specials are not evaluated before the C code is
 called, and those of builtins are.  In each case positional matching of
 arguments is used.  Note that being a special/builtin is separate from
 being primitive or @code{.Internal}: @code{function} is a special
-primitive, @code{+} is a builtin primiitve, @code{switch} is a special
+primitive, @code{+} is a builtin primitive, @code{switch} is a special
 @code{.Internal} and @code{grep} is a builtin @code{.Internal}.
 
 @cindex generic, internal
@@ -1095,7 +1095,7 @@ and also at a lower level by @code{.saveRDS}/@code{.readRDS} and
 serialize to (a file, a connection, a raw vector) and whether they are
 intended to serialize a single object or a collection of objects
 (typically a workspace).  @code{save} writes a header indicating the
-format at the beginning of the file (a single LF-terninated line) which
+format at the beginning of the file (a single LF-terminated line) which
 the lower-level versions do not.
 
 @R{} has used the same serialization format since @R{} 1.4.0 in December
@@ -1163,7 +1163,7 @@ integer indicating if the environment is locked followed by the
 enclosure, frame, `tag' (the hash table) and attributes.
 
 In the `XDR' format integers and doubles are written in bigendian
-order: however the format is not fully XDR as defind in RFC 1832 as byte
+order: however the format is not fully XDR as defined in RFC 1832 as byte
 quantities (such as the contents of @code{CHARSXP} and @code{RAWSXP}
 types) are written as-is and not padded to a multiple of four bytes.
 
@@ -1262,7 +1262,7 @@ is not passed down).  However, there are two complications.  One is that
 code might be called from either a primitive or a @code{.Internal}, in
 which case probably @code{warningcall} is more appropriate.  The other
 involves replacement functions, where the call will be of the form
-(fron @R{} < 2.6.0)
+(from @R{} < 2.6.0)
 @example
 > length(x) <- y ~ x
 Error in "length<-"(`*tmp*`, value = y ~ x) : invalid value
@@ -1338,7 +1338,7 @@ objects without needing to know their internal `metaname' (although
 @subsection S4 methods
 
 Details of methods are stored in S4 objects of class
-@code{"MethodsList"}.  They have a non-syntatic name of the form
+@code{"MethodsList"}.  They have a non-syntactic name of the form
 @code{.__M__@var{generic}:@var{package}} for all methods defined in the
 current environment for the named generic derived from a specific
 package (which might be @code{.GlobalEnv}).
@@ -1712,7 +1712,7 @@ compiled against Internet Explorer internals (and so loads
 @file{wininet.dll} and @file{wsock32.dll}).
 @end table
 
-@node .Internal vs .Primitive, Internationaliation in the R sources, R Internal Structures, Top
+@node .Internal vs .Primitive, Internationalization in the R sources, R Internal Structures, Top
 @chapter @code{.Internal} vs @code{.Primitive}
 
 @findex .Internal
@@ -1960,7 +1960,7 @@ checking (e.g.@: by @code{tools::checkS3methods} and by package
 (and name space), @samp{.GenericArgsEnv} for those primitives which are
 internal S3 generics, and @samp{.ArgsEnv} for the rest.  Those
 environments contain closures with the same names as the primitives,
-formal argumnts derived (manually) from the help pages, a body which
+formal arguments derived (manually) from the help pages, a body which
 is a suitable call to @code{UseMethod} or @code{NULL} and environment the
 base name space.
 
@@ -2011,8 +2011,8 @@ know that if other @code{.Internal} or primitive functions are not
 internally generic except by reading the source code.
 
 
-@node Internationaliation in the R sources, R coding standards, .Internal vs .Primitive, Top
-@chapter Internationaliation in the R sources
+@node Internationalization in the R sources, R coding standards, .Internal vs .Primitive, Top
+@chapter Internationalization in the R sources
 
 The process of marking messages (errors, warnings etc) for translation
 in an @R{} package is described in 
@@ -2034,7 +2034,7 @@ packages.
 * Updating::                    
 @end menu
 
-@node R code, Main C code, Internationaliation in the R sources, Internationaliation in the R sources
+@node R code, Main C code, Internationalization in the R sources, Internationalization in the R sources
 @section R code
 
 Internationalization for @R{} code is done in exactly the same way as
@@ -2051,7 +2051,7 @@ translations under @file{inst/po} for installation to package directory
 @file{po} in the installed package.  This also applies to C code in
 packages.
 
-@node Main C code, Windows-GUI-specific code, R code, Internationaliation in the R sources
+@node Main C code, Windows-GUI-specific code, R code, Internationalization in the R sources
 @section Main C code
 
 The main C code (e.g.@: that in @file{src/*/*.c} and in
@@ -2096,7 +2096,7 @@ header for standalone @samp{nmath} skips possible translation.  (This
 does not apply to @code{N_} or @code{P_}).
 
 
-@node Windows-GUI-specific code, MacOS X GUI, Main C code, Internationaliation in the R sources
+@node Windows-GUI-specific code, MacOS X GUI, Main C code, Internationalization in the R sources
 @section Windows-GUI-specific code
 
 Messages for the Windows GUI are in a separate domain @samp{RGui}.  This
@@ -2126,19 +2126,19 @@ The template and message catalogs for the @samp{RGui} domain are in the
 top-level @file{po} directory.
 
 
-@node MacOS X GUI, Updating, Windows-GUI-specific code, Internationaliation in the R sources
+@node MacOS X GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
 @section MacOS X GUI
 
 This is handled separately: see
 @uref{http://developer.r-project.org/Translations.html}.
 
 
-@node Updating,  , MacOS X GUI, Internationaliation in the R sources
+@node Updating,  , MacOS X GUI, Internationalization in the R sources
 @section Updating
 
 See @file{po/README} for how to update the message templates and catalogs.
 
-@node R coding standards, Testing R code, Internationaliation in the R sources, Top
+@node R coding standards, Testing R code, Internationalization in the R sources, Top
 @chapter R coding standards
 
 @cindex coding standards
