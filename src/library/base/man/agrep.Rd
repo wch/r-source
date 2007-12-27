@@ -45,7 +45,9 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
 \details{
   The Levenshtein edit distance is used as measure of approximateness:
   it is the total number of insertions, deletions and substitutions
-  required to transform one string into another.
+  required to transform one string into another.  Note that this is
+  currently done at byte-level, and so is not wholly appropriate for
+  multibyte encodings such as UTF-8.
 
   The function is a simple interface to the \code{apse} library
   developed by Jarkko Hietaniemi (also used in the Perl String::Approx
@@ -57,8 +59,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   coercion, preserving names but no other attributes).
 }
 \author{
-  David Meyer \email{David.Meyer@wu-wien.ac.at} (based on C code
-  by Jarkko Hietaniemi);
+  David Meyer, based on C code by Jarkko Hietaniemi;
   modifications by Kurt Hornik.
 }
 \seealso{
