@@ -425,8 +425,8 @@ par(\dots, no.readonly = FALSE)
       \code{TRUE}, the next high-level plotting command (actually
       \code{\link{plot.new}}) should \emph{not clean} the frame before
       drawing \emph{as if it was on a \bold{\emph{new}} device}.  It is
-      an error to call this on a device that does not currently contain
-      a high-level plot.}
+      an error (ignored with a warning) to try to use \code{new=TRUE}
+      on a device that does not currently contain a high-level plot.}
     \item{\code{oma}}{A vector of the form \code{c(bottom, left, top,
 	right)} giving the size of the outer margins in lines of text.}
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
@@ -444,12 +444,12 @@ par(\dots, no.readonly = FALSE)
     \item{\code{plt}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the coordinates of the plot region as fractions of the
       current figure region.}
-    \item{\code{ps}}{integer; the pointsize of text (but not symbols).  Unlike
+    \item{\code{ps}}{integer; the point size of text (but not symbols).  Unlike
       the \code{pointsize} argument of most devices, this does not change
       the relationship between \code{mar} and \code{mai} (nor \code{oma}
-      and \code{omi}), but it does scale \code{cin} and \code{csi}.
+      and \code{omi}).
 
-      What is meant by \sQuote{pointsize} is device-specific, but most
+      What is meant by \sQuote{point size} is device-specific, but most
       devices mean a multiple of 1bp, that is 1/72 of an inch.
     }
     \item{\code{pty}}{A character specifying the type of plot region to

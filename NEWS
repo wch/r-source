@@ -227,6 +227,7 @@ C-LEVEL FACILITIES
     o	Both the Unix and Windows interfaces for embedding now make
 	use of 'const char *' declarations where appropriate.
 
+
 BUG FIXES
 
     o	pt(x, df) is now even more accurate in some cases (e.g. 12 instead
@@ -354,6 +355,9 @@ BUG FIXES
 	and trunc() could alter their arguments in the caller.  This
 	involved passing of empty '...' arguments, and was spotted
 	when using apply(x, 2, log).
+
+    o	par() no longer warns unnecessarily when asked to set new=FALSE
+	on an unused graphics device.
 
 
 

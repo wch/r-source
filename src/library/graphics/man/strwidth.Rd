@@ -33,7 +33,7 @@ strheight(s, units = "user", cex = NULL)
   newlines \code{\\n}), the width and height are of an enclosing
   rectangle of the string as plotted by \code{\link{text}} in the
   current font.  The inter-line spacing is controlled by \code{cex},
-  \code{\link{par}("lheight")} and the pointsize of the device (but not
+  \code{\link{par}("lheight")} and the \sQuote{point size} (but not
   the actual font in use).
 }
 \value{
