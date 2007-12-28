@@ -73,6 +73,9 @@ BUG FIXES
 	involved passing of empty '...' arguments, and was spotted
 	when using apply(x, 2, log).
 
+    o	par() no longer warns unnecessarily when asked to set new=FALSE
+	on an unused graphics device.
+
 
 
 		CHANGES IN R VERSION 2.6.1
