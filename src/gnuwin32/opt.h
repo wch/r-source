@@ -21,4 +21,4 @@ int optopenfile(const char *fname);
 void optclosefile();
 char *optfile();
 int optline();
-int optread(char *opt[], char sep);
+int optread(char *opt[], const char sep);

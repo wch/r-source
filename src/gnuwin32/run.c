@@ -40,7 +40,7 @@ static char * expandcmd(const char *cmd)
     char *buf;
     char  c;
     char *s, *p, *q, *f, *dest, *src, *fl, *fn;
-    int   d , ext, len = strlen(cmd)+1;
+    int   d, ext, len = strlen(cmd)+1;
 
     /* make a copy as we manipulate in place */
     buf = alloca(strlen(cmd) + 1);
@@ -86,7 +86,7 @@ static char * expandcmd(const char *cmd)
 	d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f);
     } else {
 	int iexts = 0;
-	char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
+	const char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
 	while (exts[iexts]) {
 	    strcpy(dest, exts[iexts]);
 	    if ((d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f))) break;

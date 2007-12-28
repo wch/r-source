@@ -178,7 +178,7 @@ static void editorsave(editor c)
     textbox t = getdata(c);
     EditorData p = getdata(t);
     if (p->file) {  /* save existing file without prompt */
-	char *current_name = p->filename;
+	const char *current_name = p->filename;
 	editor_save_file(c, current_name);
 	gsetmodified(t, 0);
     }
@@ -202,7 +202,7 @@ static void editorprint(control m)
     printer lpr;
     font f;
     textbox t = getdata(m);
-    char *contents = gettext(t);
+    const char *contents = gettext(t);
     char msg[LF_FACESIZE + 128];
     char *linebuf = NULL;
     int cc, rr, fh, page, linep, i, j, istartline;

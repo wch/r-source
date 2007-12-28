@@ -53,7 +53,7 @@ static void showDialog(Gui gui);
 
 extern __declspec(dllimport) const char *ColorName[]; /* from graphapp/rgb.c */
 
-static int cmatch(char *col, const char **list)
+static int cmatch(const char *col, const char **list)
 {
     int i=0;
     const char **pos = list;
@@ -123,7 +123,7 @@ void getActive(Gui gui)
     gui->MDI = ((RguiMDI & RW_MDI) != 0);
     gui->pagerMultiple = pagerMultiple;
     {
-	char *p = getenv("LANGUAGE");
+	const char *p = getenv("LANGUAGE");
 	strcpy(gui->language, p ? p : "");
     }
 
@@ -131,7 +131,7 @@ void getActive(Gui gui)
 
     gui->tt_font = FALSE;
     {
-	char *pf;
+	const char *pf;
 	if ((strlen(fontname) > 1) &&
 	    (fontname[0] == 'T') && (fontname[1] == 'T')) {
 	    gui->tt_font = TRUE;
@@ -466,7 +466,7 @@ int loadRconsole(Gui gui, const char *optf)
 		if(strlen(opt[1]) > 127) opt[1][127] = '\0';
 		gui->tt_font = FALSE;
 		{
-		    char *pf;
+		    const char *pf;
 		    if ((strlen(opt[1]) > 1) &&
 			(opt[1][0] == 'T') && (opt[1][1] == 'T')) {
 			gui->tt_font = TRUE;
