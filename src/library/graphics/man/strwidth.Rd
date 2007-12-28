@@ -28,6 +28,14 @@ strheight(s, units = "user", cex = NULL)
     by \code{\link{par}("cex")} yields the final character size; the
     default \code{NULL} is equivalent to \code{1}.}
 }
+\details{
+  Where an element of \code{s} is a multi-line string (that is, contains
+  newlines \code{\\n}), the width and height are of an enclosing
+  rectangle of the string as plotted by \code{\link{text}} in the
+  current font.  The inter-line spacing is controlled by \code{cex},
+  \code{\link{par}("lheight")} and the pointsize of the device (but not
+  the actual font in use).
+}
 \value{
   Numeric vector with the same length as \code{s}, giving the
   width or height for each \code{s[i]}.  \code{NA} strings are given
