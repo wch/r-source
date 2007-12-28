@@ -93,9 +93,6 @@ BUILDING R
 	version 4.2.1.  If you still are using an earlier version, set
 	GCC4_SUFF in MkRules.
 
-    o	We will assume Tcl/Tk 8.5.x: check that the version in MkRules
-	is set correctly.
-
 
 
 	**************************************************
