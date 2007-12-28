@@ -104,7 +104,7 @@ par(\dots, no.readonly = FALSE)
     below.}
   \item{no.readonly}{logical; if \code{TRUE} and there are no other
     arguments, only parameters are returned which can be set by a
-    subsequent \code{par()} call.}
+    subsequent \code{par()} call \emph{on the same device}.}
 }
 
 \details{
@@ -148,9 +148,12 @@ par(\dots, no.readonly = FALSE)
 
   The meaning of \sQuote{character size} is not well-defined: this is
   set up for the device taking \code{pointsize} into account but often
-  not the actual font family in use.  It can be considered to be an
-  estimate of the size of character \code{M} in a proportionally-spaced
-  font.
+  not the actual font family in use.  Internally the corresponding pars
+  (\code{cra}, \code{cin}, \code{cxy} and \code{csi}) are used only to
+  set the inter-line spacing used to convert \code{mar} and \code{oma}
+  to physical margins.  (The same inter-line spacing multiplied by
+  \code{lheight} is used for multi-line strings in \code{text} and
+  \code{strheight}.)
 }
 
 \value{
@@ -325,9 +328,10 @@ par(\dots, no.readonly = FALSE)
     }
     \item{\code{lheight}}{The line height multiplier.
       The height of a line of text (used to vertically space
-      multi-line text) is found by multiplying the current
-      font size both by the current character expansion and by the
-      line height multiplier.  Default value is 1.}
+      multi-line text) is found by multiplying the character height
+      both by the current character expansion and by the
+      line height multiplier.  Default value is 1.  Used in
+      \code{\link{text}} and \code{\link{strheight}}.}
     \item{\code{ljoin}}{The line join style.
       This can be specified as an integer or string:
       \describe{
@@ -420,7 +424,9 @@ par(\dots, no.readonly = FALSE)
     \item{\code{new}}{logical, defaulting to \code{FALSE}.  If set to
       \code{TRUE}, the next high-level plotting command (actually
       \code{\link{plot.new}}) should \emph{not clean} the frame before
-      drawing \emph{as if it was on a \bold{\emph{new}} device}.}
+      drawing \emph{as if it was on a \bold{\emph{new}} device}.  It is
+      an error to call this on a device that does not currently contain
+      a high-level plot.}
     \item{\code{oma}}{A vector of the form \code{c(bottom, left, top,
 	right)} giving the size of the outer margins in lines of text.}
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
