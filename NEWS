@@ -170,6 +170,9 @@ NEW FEATURES
 	new function X11.options(), inter alia replacing options
 	"gamma", "colortype" and "X11fonts".
 
+    o	The apse code used by agrep() has been updated to version
+	0.16, with various bugfixes.
+
 
 DEPRECATED & DEFUNCT
 
