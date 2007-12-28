@@ -64,7 +64,7 @@ static mbstate_t mb_st; /* use for char transpose as well */
    OTOH, we do allow stateful encodings, assuming the state is reset
    at the beginning of each line */
 
-int mb_char_len(char *buf, int clength)
+int mb_char_len(const char *buf, int clength)
 {
     int i, mb_len = 0;
 
@@ -1009,11 +1009,11 @@ static void deleteselected(ConsoleData p)
     }
 }
 
-void consolecmd(control c, char *cmd)
+void consolecmd(control c, const char *cmd)
 {
     ConsoleData p = getdata(c);
 
-    char *ch;
+    const char *ch;
     int i;
     if (p->sel) {
     	deleteselected(p);
@@ -1912,7 +1912,7 @@ int pagerMultiple = 1, haveusedapager = 0;
 int consolebufb = DIMLBUF, consolebufl = MLBUF, consolebuffered = 1;
 
 void
-setconsoleoptions(char *fnname,int fnsty, int fnpoints,
+setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
                   int rows, int cols, int consx, int consy,
 		  rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,

@@ -27,7 +27,7 @@ typedef window editor;
 
 
 void
-setconsoleoptions(char *fnname,int fnsty, int fnpoints,
+setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
 		  int rows, int cols, int consx, int consy,
 		  rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
@@ -44,7 +44,7 @@ void consolecopy(console c);
 void consolepaste(console c);
 void consolepastecmds(console c);
 void consoleselectall(console c);
-void consolecmd(console c, char *cmd);
+void consolecmd(console c, const char *cmd);
 void consolenewline(console c);
 void consolehelp();
 void consolesetbrk(console c, actionfn, char ch, char mod);
