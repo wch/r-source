@@ -76,6 +76,12 @@ BUG FIXES
     o	par() no longer warns unnecessarily when asked to set new=FALSE
 	on an unused graphics device.
 
+    o	plot.formula() was not passing '...' on when used with a
+	one-sided formula.
+
+	plot.formula() was not accepting expressions for annotations
+	passed to title().  (PR#10525)
+
 
 
 		CHANGES IN R VERSION 2.6.1

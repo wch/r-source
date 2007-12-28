@@ -137,11 +137,22 @@ plot.formula <-
 function(formula, data = parent.frame(), ..., subset,
          ylab = varnames[response], ask = TRUE)
 {
+    enquote <- function(x) as.call(list(as.name("quote"), x))
+
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
+
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
+    ## need to avoid evaluation of expressions in do.call later.
+    ## see PR#10525
+    nmdots <- names(dots)
+    if("main" %in% nmdots) dots[["main"]] <- enquote(dots[["main"]])
+    if("sub" %in% nmdots) dots[["sub"]] <- enquote(dots[["sub"]])
+    if("xlab" %in% nmdots) dots[["xlab"]] <- enquote(dots[["xlab"]])
+
+
     m$ylab <- m$... <- m$ask <- NULL
     subset.expr <- m$subset
     m$subset <- NULL
@@ -165,6 +176,8 @@ function(formula, data = parent.frame(), ..., subset,
 	varnames <- names(mf)
 	y <- mf[[response]]
 	funname <- NULL
+	xn <- varnames[-response]
+        ## <FIXME> why is this trying to do method dispatch?
 	if( is.object(y) ) {
 	    found <- FALSE
 	    for(j in class(y)) {
@@ -183,7 +196,6 @@ function(formula, data = parent.frame(), ..., subset,
 	    opar <- par(ask = ask)
 	    on.exit(par(opar))
 	}
-	xn <- varnames[-response]
         if(length(xn) > 0) {
             if( !is.null(xlab<- dots[["xlab"]]) )
                 dots <- dots[-match("xlab", names(dots))]
@@ -191,12 +203,12 @@ function(formula, data = parent.frame(), ..., subset,
                 xl <- if(is.null(xlab)) i else xlab
                 yl <- ylab
                 if(horizontal && is.factor(mf[[i]])) {yl <- xl; xl <- ylab}
-                   do.call(funname,
-                           c(list(mf[[i]], y, ylab = yl, xlab = xl), dots))
+                do.call(funname,
+                        c(list(mf[[i]], y, ylab = yl, xlab = xl), dots))
                }
 	} else do.call(funname, c(list(y, ylab = ylab), dots))
     }
-    else plot.data.frame(mf)
+    else do.call("plot.data.frame", c(list(mf), dots))
 }
 
 lines.formula <-
@@ -225,11 +237,9 @@ function(formula,  data = parent.frame(), ..., subset)
 	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
 	if (length(xn) == 0)
-	    do.call("lines",
-		    c(list(y), dots))
+	    do.call("lines", c(list(y), dots))
 	else
-	    do.call("lines",
-		    c(list(mf[[xn]], y), dots))
+	    do.call("lines", c(list(mf[[xn]], y), dots))
     }
     else
 	stop("must have a response variable")
@@ -268,11 +278,9 @@ function(formula, data = parent.frame(), ..., subset)
 	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
 	if (length(xn) == 0)
-	    do.call("points",
-		    c(list(y), dots))
+	    do.call("points", c(list(y), dots))
 	else
-	    do.call("points",
-		    c(list(mf[[xn]], y), dots))
+	    do.call("points", c(list(mf[[xn]], y), dots))
     }
     else
 	stop("must have a response variable")
