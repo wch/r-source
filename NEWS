@@ -284,6 +284,12 @@ BUG FIXES
 	when operating on a vector still passes subsets of the vector
 	to FUN, and this is now documented.
 
+    o	capture.output() completes an incomplete final line of
+	output when file = NULL.  (PR#10534)
+
+    o	capture.output() now returns invisibly if output is written to
+	a file/connection.
+
 
 
 

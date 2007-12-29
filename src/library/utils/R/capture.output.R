@@ -18,26 +18,20 @@ capture.output <- function(..., file=NULL, append=FALSE)
 {
     args <- substitute(list(...))[-1]
 
-    if (is.null(file)){
-        file <- textConnection("rval", ifelse(append, "a", "w"), local = TRUE)
-        sink(file)
-        on.exit({sink();close(file)})
-    } else if (inherits(file, "connection")) {
-	rval <- invisible(NULL)
-	if (!isOpen(file)){
-            open(file, ifelse(append, "a", "w"))
-            sink(file)
-            on.exit({sink();close(file)})
-	} else{
-            sink(file)
-            on.exit(sink())
-	}
-    } else {
+    rval <- NULL; closeit <- TRUE
+    if (is.null(file))
+        file <- textConnection("rval", "w", local = TRUE)
+    else if (is.character(file))
         file <- file(file, ifelse(append, "a", "w"))
-        rval <- invisible(NULL)
-        sink(file)
-        on.exit({sink();close(file)})
-    }
+    else if (inherits(file, "connection")) {
+	if (!isOpen(file)) open(file, ifelse(append, "a", "w"))
+	else closeit <- FALSE
+    } else
+        stop("'file' must be NULL, a character string or a connection")
+
+    sink(file)
+    ## for error recovery: all output will be lost if file=NULL
+    on.exit({sink(); if(closeit) close(file)})
 
     pf <- parent.frame()
     evalVis <- function(expr)
@@ -45,16 +39,16 @@ capture.output <- function(..., file=NULL, append=FALSE)
 
     for(i in seq_along(args)) {
         expr <- args[[i]]
-        if(mode(expr) == "expression")
-            tmp <- lapply(expr, evalVis)
-        else if (mode(expr) == "call")
-            tmp <- list(evalVis(expr))
-        else if (mode(expr) == "name")
-            tmp <- list(evalVis(expr))
-        else stop("bad argument")
-
+        tmp <- switch(mode(expr),
+                      "expression" = lapply(expr, evalVis),
+                      "call" =, "name" =  list(evalVis(expr)),
+                       stop("bad argument"))
         for(item in tmp)
             if (item$visible) print(item$value)
     }
-    rval
+    ## we need to close the text connection before returning 'rval'
+    on.exit()
+    sink()
+    if(closeit) close(file)
+    if(is.null(rval)) invisible(NULL) else rval
 }
