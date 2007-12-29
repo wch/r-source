@@ -26,7 +26,7 @@
    abbreviate needs to be fixed, if possible, but warns for now.
    Regex code should be OK, substitution does ASCII comparisons only.
    charToRaw/rawToChar should work at byte level, so is OK.
-   agrep needed to test for non-ASCII input.
+   agrep needed to work at char level.
    make.names worked at byte not char level.
    substr() should work at char not byte level.
    Semantics of nchar() have been fixed.
@@ -2295,6 +2295,11 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
     apse_t *aps;
     const char *str;
+#ifdef SUPPORT_MBCS
+    Rboolean useMBCS = FALSE;
+    int nc;
+    wchar_t *wstr, *wpat = NULL;
+#endif
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -2314,58 +2319,34 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!isString(pat) || length(pat) < 1 || !isString(vec)) error(R_MSG_IA);
 
-    /* NAs are removed in R code so this isn't used */
-    /* it's left in case we change our minds again */
-    /* special case: NA pattern matches only NAs in vector */
-    if (STRING_ELT(pat,0)==NA_STRING){
-        n = length(vec);
-        nmatches=0;
-        PROTECT(ind = allocVector(LGLSXP, n));
-        for(i=0; i<n; i++){
-            if(STRING_ELT(vec,i)==NA_STRING){
-                INTEGER(ind)[i]=1;
-                nmatches++;
-            }
-            else
-                INTEGER(ind)[i]=0;
-        }
-        if (value_opt) {
-            ans = allocVector(STRSXP, nmatches);
-            j = 0;
-            for (i = 0 ; i < n ; i++)
-                if (INTEGER(ind)[i]) {
-                    SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
-                }
-        }
-        else {
-            ans = allocVector(INTSXP, nmatches);
-            j = 0;
-            for (i = 0 ; i < n ; i++)
-                if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
-        }
-        UNPROTECT(1);
-        return ans;
-    }
-    /* end NA pattern handling */
-
-#ifdef SUPPORT_UTF8
-    /* test for non-ASCII strings */
-    if(mbcslocale) {
-        Rboolean warn = !utf8strIsASCII(CHAR(STRING_ELT(pat, 0)));
-        if(!warn)
-            for(i = 0 ; i < length(vec) ; i++)
-                if(!utf8strIsASCII(CHAR(STRING_ELT(vec, i)))) {
-                    warn = TRUE; break;
-                }
-        if(warn)
-            warning(_("use of agrep() in a UTF-8 locale may only work for ASCII strings"));
-    }
-#endif
-
     /* Create search pattern object. */
     str = translateChar(STRING_ELT(pat, 0));
-    aps = apse_create((unsigned char *)str, (apse_size_t)strlen(str),
-                      max_distance_opt);
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	useMBCS = !utf8strIsASCII(str);
+	if(!useMBCS) {
+	    for(i = 0 ; i < LENGTH(vec) ; i++) {
+		if (STRING_ELT(vec, i) == NA_STRING) continue;
+		if(!utf8strIsASCII(translateChar(STRING_ELT(vec, i)))) {
+		    useMBCS = TRUE;
+		    break;
+		}
+	    }
+	}
+    }
+    if(useMBCS) {
+	nc = mbstowcs(NULL, str, 0);
+	wpat = Calloc(nc+1, wchar_t);	
+	mbstowcs(wpat, str, nc+1);
+	aps = apse_create((unsigned char *) wpat, (apse_size_t) nc,
+			  max_distance_opt, 65536);
+    } else
+#endif
+    {
+	nc = strlen(str);
+	aps = apse_create((unsigned char *) str, (apse_size_t) nc,
+			  max_distance_opt, 256);
+    }
     if(!aps)
         error(_("could not allocate memory for approximate matching"));
 
@@ -2375,7 +2356,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     apse_set_substitutions(aps, max_substitutions_opt);
 
     /* Matching. */
-    n = length(vec);
+    n = LENGTH(vec);
     PROTECT(ind = allocVector(LGLSXP, n));
     nmatches = 0;
     for(i = 0 ; i < n ; i++) {
@@ -2385,22 +2366,29 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
         }
         str = translateChar(STRING_ELT(vec, i));
         /* Set case ignore flag for the whole string to be matched. */
-        if(!apse_set_caseignore_slice(aps, 0,
-                                      (apse_ssize_t)strlen(str),
-                                      (apse_bool_t)igcase_opt)) {
+        if(!apse_set_caseignore_slice(aps, 0, nc, (apse_bool_t) igcase_opt)) {
             /* Most likely, an error in apse_set_caseignore_slice()
              * means that allocating memory failed (as we ensure that
              * the slice is contained in the string) ... */
             error(_("could not perform case insensitive matching"));
         }
         /* Perform match. */
-        if(apse_match(aps,
-                      (unsigned char *)str,
-                      (apse_size_t)strlen(str))) {
-            LOGICAL(ind)[i] = 1;
-            nmatches++;
-        }
-        else LOGICAL(ind)[i] = 0;
+#ifdef SUPPORT_MBCS
+	if(useMBCS) {
+	    nc = mbstowcs(NULL, str, 0);
+	    wstr = Calloc(nc+1, wchar_t);
+	    mbstowcs(wstr, str, nc+1);
+	    if(apse_match(aps, (unsigned char *) wstr, (apse_size_t) nc)) {
+		LOGICAL(ind)[i] = 1;
+		nmatches++;
+	    } else LOGICAL(ind)[i] = 0;
+	    Free(wstr);
+	} else
+#endif
+	if(apse_match(aps, (unsigned char *) str, (apse_size_t) strlen(str))) {
+	    LOGICAL(ind)[i] = 1;
+	    nmatches++;
+	} else LOGICAL(ind)[i] = 0;
     }
     apse_destroy(aps);
 
@@ -2429,6 +2417,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
         }
     }
 
+    if(wpat) Free(wpat);
     UNPROTECT(2);
     return ans;
 }

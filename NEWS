@@ -173,6 +173,8 @@ NEW FEATURES
     o	The apse code used by agrep() has been updated to version
 	0.16, with various bugfixes.
 
+	agrep() now supports multibyte character sets.
+
 
 DEPRECATED & DEFUNCT
 

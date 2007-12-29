@@ -114,7 +114,8 @@ typedef struct apse_s {
 
 apse_t *apse_create(unsigned char*	pattern,
 		    apse_size_t		pattern_size,
-		    apse_size_t		edit_distance);
+		    apse_size_t		edit_distance,
+		    int                 n_alphabet);
 
 apse_bool_t apse_match(apse_t*		ap,
 		       unsigned char*	text,
