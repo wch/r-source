@@ -24,9 +24,9 @@ Furthermore:
 
 */
 
-/* <UTF8-FIXME> byte-level ops. 
-   Need to use wchar_t to work in characters.
-   That makes the tables large, even if we only work in UCS-2.
+/* 
+   Based on version 0.16 of apse.c, with unused code removed.
+   Modified by R-core to work with wchar_t and an alphabet of size 65536.
 */
 
 #ifdef HAVE_CONFIG_H
