@@ -850,7 +850,7 @@ graphics devices and not, say, to @code{pdf}.)
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
 language characters always being available, which is the case for
-so-called `Unicode' Windows applications.  However, R has to run on
+so-called `Unicode' Windows applications.  However, R used to run on
 Windows 9x and is not therefore `Unicode'.)  You can find suitable
 locale names from
 @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
