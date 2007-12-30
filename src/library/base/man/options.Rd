@@ -277,7 +277,7 @@ getOption(x)
       non-null it is called irrespective of the value of option
       \code{warn}.}
 
-    \item{\code{warnings.length}:}{sets the truncation limit for error
+    \item{\code{warning.length}:}{sets the truncation limit for error
       and warning messages.  A non-negative integer, with allowed values
       100\dots8170, default 1000.}
 
