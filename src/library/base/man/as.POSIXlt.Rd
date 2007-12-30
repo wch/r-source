@@ -106,7 +106,11 @@ as.POSIXlt(x, tz = "", \dots)
   the current timezone to a \sQuote{standard} name, following
   \url{http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html}.
   If this is not successful, it can be overridden by setting the
-  \env{TZ} environment variable.  
+  \env{TZ} environment variable.
+
+  The current version of the database will be file
+  \file{R\_HOME/share/zoneinfo/VERSION}.  Environment variable
+  \env{TZDIR} can be used to point to a later \file{zoneinfo} directory.
 #endif
 % #ifdef windows
 %   Windows documents a specification of the form \code{GST-1GDT}, but

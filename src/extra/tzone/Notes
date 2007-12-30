@@ -1,0 +1,18 @@
+localtime.c is a stripped-down version of that from tzcode2007j, from
+ftp://elsie.nci.nih.gov/pub/.  Apart from removing unused code and
+merging in the parts of private.h which are needed, the main changes
+are
+
+- to use environment variable TZDIR to point to the zoneinfo files, and
+  failing that, R_HOME/share/zoneinfo.
+
+- to call getTZinfo() to get the default timezone if TZ is unset.
+
+
+zoneinfo.zip was formed by installing tzcode/tzdata on x86_64 Linux,
+and zipping up the reults, after adding a file VERSION giving the
+version.  It should be possible to build the compiled databases on
+Windows, but zic.c assumes links and so would need a lot of work.
+(It look like the binary databases are byte streams, and so do not
+depend on the architecture.  There are some comments about whether
+time_t is signed, which it is on all sensible platforms.)
