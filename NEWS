@@ -208,6 +208,9 @@ INSTALLATION
 	The tests/Embedding examples now work with a static R
 	library.
 
+    o	Netscape (which was discontinued in Feb 2008) is no longer
+	considered when selecting a browser.
+
 
 UTILITIES
 
