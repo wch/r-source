@@ -13,6 +13,8 @@ R_SHARE_DIR=$(R_HOME)/share
 R_INCLUDE_DIR=$(R_HOME)/include
 include $(top_builddir)/etc/Makeconf
 
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
 SOURCES_R = error.R foo.R
