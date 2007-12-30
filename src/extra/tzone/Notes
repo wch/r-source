@@ -16,3 +16,10 @@ Windows, but zic.c assumes links and so would need a lot of work.
 (It look like the binary databases are byte streams, and so do not
 depend on the architecture.  There are some comments about whether
 time_t is signed, which it is on all sensible platforms.)
+
+To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
+Copy the current version of tzdataXXX.tar.gz to this directory and run
+
+make -f Make.zi VERSION=2007j
+
+for the appropriate version.

@@ -1,0 +1,32 @@
+## Makefile to be run on a unix box with zic in the path (/usr/sbin/zic?)
+
+VERSION = 2007j
+TZDIR = zoneinfo
+TZTMP = tz
+TARFILE=tzdata$(VERSION).tar.gz
+
+all:
+	rm -rf $(TZTMP)
+	mkdir $(TZTMP)
+	tar -C $(TZTMP) -zxf $(TARFILE)
+	rm -rf $(TZDIR)
+	mkdir $(TZDIR)
+	(cd $(TZTMP); make -f ../Make.zi install)
+	echo $(VERSION) > $(TZDIR)/VERSION
+	rm -f zoneinfo.zip
+	zip -qr9X zoneinfo.zip $(TZDIR)
+	rm -rf $(TZTMP) $(TZDIR)
+
+YEARISTYPE=	./yearistype
+TZDIR = zoneinfo
+
+PRIMARY_YDATA=	africa antarctica asia australasia \
+		europe northamerica southamerica
+YDATA=		$(PRIMARY_YDATA) pacificnew etcetera factory backward
+TABDATA=	iso3166.tab zone.tab
+DATA=		$(YDATA) $(TABDATA) yearistype.sh
+
+
+install: $(DATA)
+	zic -y $(YEARISTYPE) -d ../$(TZDIR) -L /dev/null $(YDATA)
+	cp iso3166.tab zone.tab ../$(TZDIR)
