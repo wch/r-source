@@ -67,7 +67,7 @@ endif
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
-   ../extra/intl/libintl.a ../extra/trio/libtrio.a
+   ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a
 
 R_PKGS0 = $(filter-out base tools, $(R_PKGS_BASE))
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
@@ -184,7 +184,7 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
-	@for ex in graphapp pcre bzip2 zlib xdr trio; do \
+	@for ex in graphapp pcre bzip2 zlib xdr trio tzone; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
 	done
 

@@ -30,6 +30,23 @@ GUI CHANGES
 	lost.  (Only on XP or later.)
 
 
+TIME ZONES
+
+	[This is work in progress.]
+
+    o	This version of R no longer makes use of Windows' bug-ridden
+	concept of timezones but replaces it by Arthur David Olson's
+	public-domain tzdata (which is widely used on Linux systems
+	and by Java).  This means that timezones are referred to by
+	their 'standard' names, and output correctly (e.g. not the
+	nonsensical 'GMT Daylight Time' used by Windows).
+
+	An attempt is made to identify the system timezone from the
+	Windows' Registry.  If this does not work or is incorrect, set
+	the 'TZ' environment variable appropriately: a list of known
+	timezones is given in share/zoneinfo/zones.tab.
+
+
 PACKAGE INSTALLATION
 
     o	Using PKG_C[XX]FLAGS instead of PKG_CPPFLAGS for -I and -D

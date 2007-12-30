@@ -78,7 +78,7 @@ as.POSIXlt(x, tz = "", \dots)
   epoch, see the examples.
 
   Where OSes describe their valid timezones can be obscure.  The help
-  for \code{tzset} (or \code{_tzset} on Windows) can be helpful, but it
+  for \code{tzset} can be helpful, but it
   can also be inaccurate.  There is a cumbersome POSIX specification
   (listed under environment variable \code{TZ} at
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html}),
@@ -94,18 +94,33 @@ as.POSIXlt(x, tz = "", \dots)
   references.
 #endif
 #ifdef windows
-  Windows documents a specification of the form \code{GST-1GDT}, but
-  always applies the \sQuote{US rules} for changing to/from DST with
-  such a specification.  (Further, the \sQuote{US rules} changed in
-  2007, which has caused errors even in US/Canadian timezones.)  So valid
-  time zone values are of the forms \code{EST5EDT} for a timezone 5
-  hours west of GMT called \code{EST} when daylight saving is in force
-  and \code{EDT} when it is not, \code{HST10} for
-  \sQuote{Hawaii-Aleutian Standard Time} (which has no DST), and
-  \code{CST-9:30} for the Northern Territory of Australia. The
-  abbreviations have to be exactly 3 letters, and have no meaning other
-  than as labels on the output.
+
+  As from \R 2.7.0, \R under Windows uses timezone names from the Olson
+  database (which are those that are commonly used on Unix-alikes): a
+  list can be found in file \file{R\_HOME/share/zoneinfo/zone.tab}.
+  Typical names are \file{EST5EDT} or \file{GB} or \file{Europe/Paris}.
+  See \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
+  references.
+
+  An attempt is made (once only in a session) to map Windows' idea of
+  the current timezone to a \sQuote{standard} name, following
+  \url{http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html}.
+  If this is not successful, it can be overridden by setting the
+  \env{TZ} environment variable.  
 #endif
+% #ifdef windows
+%   Windows documents a specification of the form \code{GST-1GDT}, but
+%   always applies the \sQuote{US rules} for changing to/from DST with
+%   such a specification.  (Further, the \sQuote{US rules} changed in
+%   2007, which has caused errors even in US/Canadian timezones.)  So valid
+%   time zone values are of the forms \code{EST5EDT} for a timezone 5
+%   hours west of GMT called \code{EST} when daylight saving is in force
+%   and \code{EDT} when it is not, \code{HST10} for
+%   \sQuote{Hawaii-Aleutian Standard Time} (which has no DST), and
+%   \code{CST-9:30} for the Northern Territory of Australia. The
+%   abbreviations have to be exactly 3 letters, and have no meaning other
+%   than as labels on the output.
+% #endif
 }
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the

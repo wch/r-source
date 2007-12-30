@@ -1,0 +1,35 @@
+#-*- Makefile -*-
+
+include ../../gnuwin32/MkRules
+
+.PHONY: makeMakedeps all zinfo clean distclean
+
+all: makeMakedeps libtz.a zinfo
+
+CPPFLAGS=-I../../include
+CFLAGS= $(OPTFLAGS)
+
+CSOURCES= localtime.c registryTZ.c
+OBJS=$(CSOURCES:.c=.o)
+libtz.a: $(OBJS)
+
+zinfo: ../../../share/zoneinfo
+
+../../../share/zoneinfo: zoneinfo.zip
+	@$(ECHO) "installing zoneinfo"
+	@unzip -qo zoneinfo.zip -d ../../../share
+
+clean:
+	@$(RM) *.o *~ *.d Makedeps
+distclean: clean
+	@$(RM) libtz.a
+	@$(RM) -rf ../../../share/zoneinfo
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

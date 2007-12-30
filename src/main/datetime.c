@@ -40,7 +40,11 @@
 # include <config.h>
 #endif
 
+/* needed on Windows to avoid redefinition of tzname as _tzname */
+#define _NO_OLDNAMES
 #include <time.h>
+#undef _NO_OLDNAMES
+
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
 
@@ -450,10 +454,11 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #ifdef Win32
-#define tzname _tzname
+extern void tzset(void);
+extern char *tzname[2];
 #elif defined(__CYGWIN__)
 extern __declspec(dllimport) char *tzname[2];
-#else /* Unix */
+#else
 extern char *tzname[2];
 #endif
 
