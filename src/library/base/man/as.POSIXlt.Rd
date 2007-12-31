@@ -40,9 +40,9 @@ as.POSIXlt(x, tz = "", \dots)
 \arguments{
   \item{x}{An object to be converted.}
   \item{tz}{A timezone specification to be used for the conversion,
-    \emph{if one is required}.  System-specific, but \code{""}
-    is the current timezone, and \code{"GMT"} is UTC
-    (Coordinated Universal Time, in French).}
+    \emph{if one is required}.  System-specific (see \link{time zones}),
+    but \code{""} is the current timezone, and \code{"GMT"} is UTC
+    (Universal Time, Coordinated).}
   \item{\dots}{further arguments to be passed to or from other methods.}
   \item{format}{character string giving a date-time format as used
     by \code{\link{strptime}}.}
@@ -78,71 +78,6 @@ as.POSIXlt(x, tz = "", \dots)
   epoch, see the examples.
 }
 
-\section{Time zone names}{
-  Where OSes describe their valid time zones can be obscure.  The help
-  for the C function \code{tzset} can be helpful, but it
-  can also be inaccurate.  There is a cumbersome POSIX specification
-  (listed under environment variable \code{TZ} at
-  \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html}),
-  which is often at least partially supported, but there usually are
-  other more user-friendly ways to specify timezones.
-
-  Many systems make use of a timezone database compiled by Arthur Olson,
-  in which the preferred way to refer to a time zone by a location
-  (typically of a city) e.g. \code{Europe/London},
-  \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
-  designations are also allowed such as \code{EST5EDT} or
-  \code{GB}.  (Beware that some of these designations may not be what you
-  think: in particular \code{EST} is a time zone used in Canada
-  \emph{without} daylight savings time, and not \code{EST5EDT} nor
-  Australian Eastern Standard Time.)  The designation can also be an
-  optional colon prepended to the path to a file giving complied zone
-  information (and the examples above are all files in a system-specific
-  location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.
-#ifdef unix
-  
-  For most Unix-alikes (including MacOS X) use the Olson databases.  The 
-  system-specific default location varies, e.g. 
-  \file{/usr/share/zoneinfo}, \file{/usr/etc/zoneinfo},
-  \file{/usr/lib/zoneinfo} or \file{/usr/share/lib/zoneinfo}
-#endif
-#ifdef windows
-
-  As from \R 2.7.0, \R under Windows uses the Olson database.  The
-  current version of the database will be given in file
-  \file{R\_HOME/share/zoneinfo/VERSION}.  Environment variable
-  \env{TZDIR} can be used to point to a later \file{zoneinfo} directory.
-  A file listing most known time zones can be found at
-  \file{R\_HOME/share/zoneinfo/zone.tab} (see \sQuote{Examples}).
-
-  An attempt is made (once only per session) to map Windows' idea of
-  the current time zone to a location, following
-  \url{http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html}.
-  If this is not successful, it can be overridden by setting the
-  \env{TZ} environment variable.
-
-  Windows documents a specification of the form \code{GST-1GDT}: this is
-  interpreted as POSIX-like and hence the \sQuote{US rules} for changing
-  to/from DST are applied (and are incorrect for Germany).  Versions of
-  \R prior to 2.7.0 used Windows' system functions and hence this form:
-  it is still accepted for backwards compatibility but was (and remains)
-  unreliable and now gives a warning.
-#endif
-% #ifdef windows
-%   Windows documents a specification of the form \code{GST-1GDT}, but
-%   always applies the \sQuote{US rules} for changing to/from DST with
-%   such a specification.  (Further, the \sQuote{US rules} changed in
-%   2007, which has caused errors even in US/Canadian timezones.)  So valid
-%   time zone values are of the forms \code{EST5EDT} for a timezone 5
-%   hours west of GMT called \code{EST} when daylight saving is in force
-%   and \code{EDT} when it is not, \code{HST10} for
-%   \sQuote{Hawaii-Aleutian Standard Time} (which has no DST), and
-%   \code{CST-9:30} for the Northern Territory of Australia. The
-%   abbreviations have to be exactly 3 letters, and have no meaning other
-%   than as labels on the output.
-% #endif
-}
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the
   appropriate class.  If \code{tz} was specified, \code{as.POSIXlt}
@@ -161,7 +96,8 @@ as.POSIXlt(x, tz = "", \dots)
 \seealso{
   \link{DateTimeClasses} for details of the classes;
   \code{\link{strptime}} for conversion to and from character
-  representations.
+  representations. \code{\link{Sys.timezone}} for details of the
+  (system-specific)naming of time zones.
 }
 \examples{
 (z <- Sys.time())             # the current datetime, as class "POSIXct"

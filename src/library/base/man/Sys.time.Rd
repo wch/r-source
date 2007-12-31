@@ -6,18 +6,15 @@
 \name{Sys.time}
 \alias{Sys.time}
 \alias{Sys.Date}
-\alias{Sys.timezone}
 
-\title{Get Current Date, Time and Timezone}
+\title{Get Current Date and Time}
 \description{
   \code{Sys.time} and \code{Sys.Date} returns the system's idea of the
-  current date with and without time, and \code{Sys.timezone} returns
-  the current time zone.
+  current date with and without time.
 }
 \usage{
 Sys.time()
 Sys.Date()
-Sys.timezone()
 }
 \details{
   \code{Sys.time} returns an absolute date-time value which can be
@@ -39,20 +36,13 @@ Sys.timezone()
 #endif
 
   \code{Sys.Date} returns an object of class \code{"Date"} (see \link{Date}).
-
-  \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string.  It may be possible to set the timezone via the
-  environment variable \code{"TZ"}: see \code{\link{as.POSIXlt}}.
-% now uses Olson 3-char names
-%#ifdef windows
-%  Windows is notorious for naming its timezones differently from the
-%  official names.
-%#endif
 }
 \seealso{
   \code{\link{date}} for the system time in a fixed-format character
   string; the elapsed time component of \code{\link{proc.time}} 
   for possibly finer resolution in changes in time.
+
+  \code{\link{Sys.timezone}}.
 }
 \examples{
 Sys.time()
@@ -65,8 +55,6 @@ options(op)
 format(Sys.time(), "\%a \%b \%d \%X \%Y")
 
 Sys.Date()
-
-Sys.timezone()
 }
 \keyword{utilities}
 \keyword{chron}
