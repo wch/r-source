@@ -48,18 +48,18 @@
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
 
-/* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01
-   do not exist. So does Windows, but at least there we do not need a
-   run-time test.  As from 1.6.2, test the actual mktime code and cache the
-   result on glibc >= 2.2. (It seems this started between 2.2.5 and 2.3,
-   and RH8.0 has an unreleased version in that gap.)
+/* The glibc in RH8.0 was broken and assumed that dates before
+   1970-01-01 do not exist.  So does Windows, but its code was replaced
+   in R 2.7.0.  As from 1.6.2, test the actual mktime code and cache
+   the result on glibc >= 2.2. (It seems this started between 2.2.5
+   and 2.3, and RH8.0 had an unreleased version in that gap.)
 
    Sometime in late 2004 this was reverted in glibc.
 */
 
 static Rboolean have_broken_mktime(void)
 {
-#if defined(Win32) || defined(_AIX)
+#if defined(_AIX)
     return TRUE;
 #elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
     static int test_result = -1;
@@ -248,13 +248,25 @@ static double guess_offset (struct tm *tm)
        the smaller offset at same day in Jan or July of a valid year.
        We don't know the timezone rules, but if we choose a year with
        July 1 on the same day of the week we will likely get guess
-       right (since they are usually on Sunday mornings).
+       right (since they are usually on Sunday mornings not in Jan/Feb).
+
+       Update for 2.7.0: no one had DST before 1916, so just use the offset
+       in 1902, if available.
     */
 
     memcpy(&oldtm, tm, sizeof(struct tm));
+    if(!have_broken_mktime() && tm->tm_year < 2) { /* no DST */
+	tm->tm_year = 2;
+	mktime(tm);
+	offset1 = (double) mktime(tm) - mktime00(tm);
+	memcpy(tm, &oldtm, sizeof(struct tm));
+	tm->tm_isdst = 0;
+	return offset1;
+    }
     oldmonth = tm->tm_mon;
     oldmday = tm->tm_mday;
-    oldisdst = tm->tm_isdst;
+    /* We know there was no DST prior to 1916 */
+    oldisdst = (tm->tm_year < 16) ? 0 : tm->tm_isdst;
 
     /* so now look for a suitable year */
     tm->tm_mon = 6;
@@ -262,12 +274,20 @@ static double guess_offset (struct tm *tm)
     tm->tm_isdst = -1;
     mktime00(tm);  /* to get wday valid */
     wday = tm->tm_wday;
-    /* We cannot use 1970 because of the Windows bug with 1970-01-01 east
-       of GMT. */
-    for(i = 71; i < 82; i++) { /* These cover all the possibilities */
-	tm->tm_year = i;
-	mktime(tm);
-	if(tm->tm_wday == wday) break;
+    if (oldtm.tm_year > 137) { /* in the unknown future */
+	for(i = 130; i < 137; i++) { /* These cover all the possibilities */
+	    tm->tm_year = i;
+	    mktime(tm);
+	    if(tm->tm_wday == wday) break;
+	}
+    } else { /* a benighted OS with date before 1970 */
+	/* We could not use 1970 because of the Windows bug with 
+	   1970-01-01 east of GMT. */
+	for(i = 71; i < 82; i++) { /* These cover all the possibilities */
+	    tm->tm_year = i;
+	    mktime(tm);
+	    if(tm->tm_wday == wday) break;
+	}
     }
     year = i;
 
@@ -315,11 +335,6 @@ static double mktime0 (struct tm *tm, const int local)
     if(!local) return mktime00(tm);
 
     OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
-#ifdef Win32
-    /* Microsoft's mktime regards times before 1970-01-01 00:00:00 GMT as
-       invalid! */
-    if(tm->tm_year == 70 && tm->tm_mon == 0 && tm->tm_mday <= 1) OK = FALSE;
-#endif
     if(OK) {
 	res = (double) mktime(tm);
 	if (res == (double)-1) return res;

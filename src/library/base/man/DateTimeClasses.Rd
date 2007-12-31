@@ -126,14 +126,16 @@
   zones and leap seconds (23 days have been 86401 seconds long so far:
   the times of the extra seconds are in the object \code{.leap.seconds}).
   The details of this are entrusted to the OS services where possible.
-  This will usually cover the period 1970--2037, and on Unix machines
+  This always cover the period 1970--2037, and on most machines
   back to 1902 (when time zones were in their infancy).  Outside those
   ranges we use our own C code.  This uses the offset from GMT in use
-  in the timezone in one of 1970 to 1978 (chosen so that the likely DST
-  transition days are Sundays), and uses the alternate (daylight-saving)
-  timezone only if \code{isdst} is positive.  (There is no reason to
-  suppose that the DST rules will remain the same in the future, and
-  indeed the US legislated in 2005 to change its rules as from 2007, with a
+  either for 1902 (when there was no DST) or that predicted for one of
+  2030 to 2037 (chosen so that the likely DST transition days are
+  Sundays), and uses the alternate (daylight-saving) timezone only if
+  \code{isdst} is positive or (if \code{-1}) if DST was predicted to be
+  in operation in the 2030s on that day.  (There is no reason to suppose
+  that the DST rules will remain the same in the future, and indeed the
+  US legislated in 2005 to change its rules as from 2007, with a
   possible future reversion.)
 
   It seems that some systems use leap seconds but most do not. This is
