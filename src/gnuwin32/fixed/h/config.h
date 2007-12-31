@@ -862,7 +862,7 @@
 #define SIZEOF_SIZE_T 4
 
 /* The size of `time_t', as computed by sizeof. */
-#define SIZEOF_TIME_T 4
+#define SIZEOF_TIME_T 8
 
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. */
