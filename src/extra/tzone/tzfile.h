@@ -28,7 +28,7 @@
 #endif /* !defined TZDEFAULT */
 
 #ifndef TZDEFRULES
-#define TZDEFRULES	"posixrules"
+#define TZDEFRULES	"America/New_York"
 #endif /* !defined TZDEFRULES */
 
 /*
