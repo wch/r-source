@@ -45,6 +45,17 @@
 #include <time.h>
 #undef _NO_OLDNAMES
 
+#ifdef Win32
+typedef __int64 R_time_t;
+#define time_t R_time_t
+#define gmtime R_gmtime
+#define localtime R_localtime
+#define mktime R_mktime
+extern struct tm*  gmtime (const time_t*);
+extern struct tm*  localtime (const time_t*);
+extern time_t mktime (struct tm*);
+#endif
+
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
 
@@ -201,6 +212,7 @@ static int validate_tm (struct tm *tm)
 }
 
 
+#if SIZEOF_TIME_R <= 4
 /* Substitute for mktime -- no checking, always in GMT */
 static double mktime00 (struct tm *tm)
 {
@@ -321,6 +333,7 @@ static double guess_offset (struct tm *tm)
     tm->tm_isdst = oldisdst;
     return offset;
 }
+#endif
 
 /* Interface to mktime or mktime00 */
 static double mktime0 (struct tm *tm, const int local)
@@ -334,8 +347,10 @@ static double mktime0 (struct tm *tm, const int local)
     if(validate_tm(tm) < 0) return (double)(-1);
     if(!local) return mktime00(tm);
 
+#if SIZE_TIME_T <= 4
     OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
     if(OK) {
+#endif
 	res = (double) mktime(tm);
 	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
@@ -344,19 +359,37 @@ static double mktime0 (struct tm *tm, const int local)
             if(res > leapseconds[i]) res -= 1.0;
 #endif
         return res;
+#if SIZE_TIME_T <= 4
 /* watch the side effect here: both calls alter their arg */
     } else return guess_offset(tm) + mktime00(tm);
+#endif
 }
 
 /* Interface for localtime or gmtime or internal substitute */
 static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
+    time_t t;
+#if SIZEOF_TIME_T <= 4
     int day;
     int y, tmp, mon, left, diff, diff2;
     struct tm *res= ltm;
-    time_t t;
+#endif
 
+#if SIZEOF_TIME_T > 4
+    {
+	t = (time_t) d;
+#ifndef HAVE_POSIX_LEAPSECONDS
+	{
+	    int y;
+	    if (n_leapseconds < 0) set_n_leapseconds();
+	    for(y = 0; y < n_leapseconds; y++) 
+		if(t > leapseconds[y] + y - 1) t++;
+	}
+#endif
+	return local ? localtime(&t) : gmtime(&t);
+    }
+#else
     if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
 	t = (time_t) d;
 #ifndef HAVE_POSIX_LEAPSECONDS
@@ -365,7 +398,6 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 #endif
 	return local ? localtime(&t) : gmtime(&t);
     }
-
     day = (int) floor(d/86400.0);
     left = (int) (d - day * 86400.0 + 0.5);
 
@@ -419,6 +451,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	res->tm_isdst = 0; /* no dst in GMT */
 	return res;
     }
+#endif
 }
 
 

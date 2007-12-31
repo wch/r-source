@@ -6,9 +6,19 @@
 #include "sys/types.h"	/* for time_t */
 #include "string.h"
 #include "limits.h"	/* for CHAR_BIT et al. */
+
 #define  _NO_OLDNAMES   /* avoid tznames */
 #include "time.h"
 #undef _NO_OLDNAMES
+
+#ifdef WIN32
+typedef __int64 R_time_t;
+#define time_t R_time_t
+#define gmtime R_gmtime
+#define localtime R_localtime
+#define mktime R_mktime
+#endif
+
 #include "stdlib.h"
 #include "stdint.h"
 #include "stdio.h"
