@@ -17,12 +17,12 @@ Sys.localeconv()
 }
 \details{
   These settings are usually controlled by the environment variables
-  \code{LC_NUMERIC} and \code{LC_MONETARY} and if not set the values of
-  \code{LC_ALL} or \code{LANG}.
+  \env{LC\_NUMERIC} and \env{LC\_MONETARY} and if not set the values of
+  \env{LC\_ALL} or \env{LANG}.
 
-  Normally \R is run without looking at the value of \code{LC_NUMERIC},
+  Normally \R is run without looking at the value of \env{LC\_NUMERIC},
   so the decimal point remains '\code{.}'.  So the first three of these
-  values will not be useful unless you have set \code{LC_NUMERIC} in
+  values will not be useful unless you have set \env{LC\_NUMERIC} in
   the current \R session.
 }
 \value{
