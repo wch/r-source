@@ -32,8 +32,6 @@ GUI CHANGES
 
 TIME ZONES
 
-	[This is work in progress.]
-
     o	This version of R no longer makes use of Windows' bug-ridden
 	concept of timezones but replaces it by Arthur David Olson's
 	public-domain tzdata (which is widely used on Linux systems

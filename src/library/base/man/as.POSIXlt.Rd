@@ -91,12 +91,15 @@ as.POSIXlt(x, tz = "", \dots)
   in which the preferred way to refer to a time zone by a location
   (typically of a city) e.g. \code{Europe/London},
   \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
-  designations are also allowed such as \file{EST5EDT} or \file{GB}. The
-  designation can also be an optional colon prepended to the path to a
-  file giving complied zone information (and the examples above are all
-  files in a system-specific location).  See
-  \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
-  references.
+  designations are also allowed such as \code{EST5EDT} or
+  \code{GB}.  (Beware that some of these designations may not be what you
+  think: in particular \code{EST} is a time zone used in Canada
+  \emph{without} daylight savings time, and not \code{EST5EDT} nor
+  Australian Eastern Standard Time.)  The designation can also be an
+  optional colon prepended to the path to a file giving complied zone
+  information (and the examples above are all files in a system-specific
+  location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
+  details and references.
 #ifdef unix
   
   For most Unix-alikes (including MacOS X) use the Olson databases.  The 
@@ -181,12 +184,14 @@ as.Date(as.POSIXct(z, origin="1582-10-14", tz="GMT"))
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
 \dontrun{## These may not be correct names on your system
-as.POSIXlt(Sys.time(), "EST5EDT")  # the current time in New York
-as.POSIXlt(Sys.time(), "EST" )     # ditto, ignoring DST
-as.POSIXlt(Sys.time(), "HST")      # the current time in Hawaii
+as.POSIXlt(Sys.time(), "America/New_York")  # in New York
+as.POSIXlt(Sys.time(), "EST5EDT")           # alternative.
+as.POSIXlt(Sys.time(), "EST" )   # somewhere in Eastern Canada
+as.POSIXlt(Sys.time(), "HST")    # in Hawaii
 as.POSIXlt(Sys.time(), "Australia/Darwin")
 }
 #ifdef windows
+
 cols <- c("code", "coordinates", "TZ", "comments")
 tmp <- read.delim(file.path(R.home(), "share", "zoneinfo", "zone.tab"),
                   header = FALSE, comment.char="#", col.names = cols)
