@@ -405,7 +405,7 @@ getOption(x)
       called with a file path as argument.
       Sets the default text editor, e.g., for
       \code{\link{edit}}.  Set from the environment variable
-      \code{VISUAL} on UNIX.}
+      \env{VISUAL} on UNIX.}
 
     \item{\code{example.ask}:}{default for the \code{ask} argument of
       \code{\link{example}}.}
