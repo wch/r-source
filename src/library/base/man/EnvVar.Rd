@@ -51,6 +51,8 @@
       \code{\link{tempdir}}.}
     \item{\code{TZ}:}{Optional. The current timezone.  See
       \code{\link{as.POSIXlt}} for the system-specific formats.}
+    \item{\code{no_proxy}, \code{http_proxy}, \code{ftp_proxy}:}{
+      (and more).  Optional.  Settings for \code{\link{download.file}}.}
   }
 }
 
@@ -77,8 +79,6 @@
     \item{\code{R_SHARE_DIR}:}{The location of the \R \code{share} directory.}
     \item{\code{R_UNZIPCMD}:}{The path to \code{unzip}.}
     \item{\code{R_ZIPCMD}:}{The path to \code{zip}.}
-    \item{\code{\code{no_proxy}, \code{http_proxy}, \code{ftp_proxy}}:}{
-      (and more).  Optional.  Settings for \code{\link{download.file}}.}
   }
 }
 #endif
