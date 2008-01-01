@@ -43,14 +43,19 @@ Sys.timezone()
   Time zones did not come into use until the second half of the
   nineteenth century, and DST was first introduced in the early
   twentieth century, most widely during the First World War (in 1916).
+#ifdef unix
   The most common implementation of \code{POSIXct} is a signed 32-bit
-  integers and so only goes back to the end of 1901: \R assumes that
-  dates prior to that are in the same time zone as they were in 1902. 
+  integers and so only goes back to the end of 1901: on such systems \R
+  assumes that dates prior to that are in the same time zone as they
+  were in 1902.
+#endif
 }
 
 \note{
   There is currently (2007/8) considerable disruption over changes to
   the timings of the DST transitions, aimed at energy conservation.
+  These often have short notice and time zone databases may not be up to
+  date (even if the OS has been updated recently).
 
   Note that except on Windows, the operation of time zones is an OS
   service, and even on Windows a third-party database is used and can be
@@ -90,9 +95,9 @@ Sys.timezone()
 #ifdef unix
   
   For most Unix-alikes use the Olson databases.  The 
-  system-specific default location varies, e.g. 
+  system-specific default location in the file system varies, e.g. 
   \file{/usr/share/zoneinfo}, \file{/usr/etc/zoneinfo},
-  \file{/usr/lib/zoneinfo} or \file{/usr/share/lib/zoneinfo}
+  \file{/usr/lib/zoneinfo} or \file{/usr/share/lib/zoneinfo}.
 #endif
 #ifdef windows
 

@@ -33,22 +33,22 @@ GUI CHANGES
 TIME ZONES
 
     o	This version of R no longer makes use of Windows' bug-ridden
-	concept of timezones but replaces it by Arthur David Olson's
-	public-domain tzdata (which is widely used on Linux systems
-	and by Java).  This means that timezones are referred to by
-	their 'standard' names, and output correctly (e.g. not the
+	concept of time zones but replaces it by Arthur David Olson's
+	public-domain tz database (which is widely used, including on
+	Linux, Mac OS X, Solaris, AIX, FreeBSD and by Java and Tcl).
+	This means that time zones should now be referred to by their
+	'standard' names, and output correctly (e.g. not the
 	nonsensical 'GMT Daylight Time' used by Windows).
 
 	An attempt is made to identify the system timezone from the
 	Windows' Registry.  If this does not work or is incorrect, set
 	the 'TZ' environment variable appropriately: a list of known
-	timezones is given in share/zoneinfo/zones.tab.
+	timezones is given in R_HOME/share/zoneinfo/zones.tab.
 
-	Since Windows C runtime does not think that times prior to
+	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
-	used for the timezones pre-1970.  Now the database is used
-	back to 1902, before the days of DST and when the concept of
-	time zones is rather vague.
+	used for the timezones pre-1970.  Now the database is used for
+	all years (even those prior to 1902 and after 2037).
 
 
 PACKAGE INSTALLATION
