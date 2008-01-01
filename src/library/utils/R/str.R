@@ -93,15 +93,20 @@ str.default <-
     oDefs <- c("vec.len", "digits.d", "strict.width")
     ## from
     strO <- getOption("str")
-    if(!is.list(strO) || !all(names(strO) %in% oDefs)) {
+    if (!is.list(strO)) {
 	warning("invalid options('str') -- using defaults instead")
 	strO <- strOptions()
     }
-
+    else {
+        if (!all(names(strO) %in% oDefs))
+            warning("invalid components in options('str'): ",
+                    paste(setdiff(names(strO), oDefs), collapse = ", "))
+        strO <- modifyList(strOptions(), strO)
+    }
     strict.width <- match.arg(strict.width, choices = c("no", "cut", "wrap"))
     if(strict.width != "no") {
 	## using eval() would be cleaner, but fails inside capture.output():
-	ss <- capture.output(str(object, max.level = max.level,
+	ss <- capture.output(str.default(object, max.level = max.level,
 				 vec.len = vec.len, digits.d = digits.d,
 				 nchar.max = nchar.max,
 				 give.attr= give.attr, give.head= give.head, give.length= give.length,

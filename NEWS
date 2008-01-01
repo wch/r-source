@@ -301,6 +301,9 @@ BUG FIXES
     o	capture.output() now returns invisibly if output is written to
 	a file/connection.
 
+    o   better behaviour of str.default() for non-default
+	'strict.width' (it was calling str() rather than str.default()
+	internally); also, more useful handling of options('str').
 
 
 
