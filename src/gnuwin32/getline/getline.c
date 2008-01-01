@@ -18,15 +18,8 @@
  */
 
 #include       "getline.h"
+
 static int      gl_tab();  /* forward reference needed for gl_tab_hook */
-
-/********************* exported interface ********************************/
-
-int             getline();		/* read a line of input */
-void            gl_setwidth();		/* specify width of screen */
-void            gl_histadd(const char *);	/* adds entries to hist */
-void		gl_strwidth();		/* to bind gl_strlen */
-
 int 		(*gl_in_hook)() = 0;
 int 		(*gl_out_hook)() = 0;
 int 		(*gl_tab_hook)() = gl_tab;
@@ -37,23 +30,12 @@ int 		(*gl_tab_hook)() = gl_tab;
 extern Rboolean mbcslocale;
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 
-/******************** imported interface *********************************/
-
 #include <string.h>
 #include <ctype.h>
-#include <errno.h>
 #include <setjmp.h>
-#ifdef __unix__
-#include <signal.h>
-#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <io.h>
-
-/*extern int     isatty();	
-extern void    *malloc();
-extern void    *calloc();
-extern void     free();*/
 
 /******************** internal interface *********************************/
 
@@ -69,12 +51,6 @@ static int      gl_pos, gl_cnt = 0;     /* position and size of input */
 static char    *gl_buf;                 /* input buffer */
 static char    *gl_killbuf;             /* killed text */
 static const char    *gl_prompt;	/* to save the prompt string */
-#ifdef POSIX
-static char     gl_intrc = 0;		/* keyboard SIGINT char */
-static char     gl_quitc = 0;		/* keyboard SIGQUIT char */
-static char     gl_suspc = 0;		/* keyboard SIGTSTP char */
-static char     gl_dsuspc = 0;		/* delayed SIGTSTP char */
-#endif
 static int      gl_search_mode = 0;	/* search mode flag */
 
 static jmp_buf  gl_jmp;
@@ -117,135 +93,14 @@ static void     gl_beep(void);          /* try to play a system beep sound */
 /*extern int      write();
  extern void     exit();*/
 
-#ifdef unix
-#ifndef __unix__
-#define __unix__
-#endif /* not __unix__ */
-#endif /* unix */
-
-#ifdef _IBMR2
-#ifndef __unix__
-#define __unix__
-#endif
-#endif
-
-#ifdef __GO32__
-#include <pc.h>
-#undef MSDOS
-#undef __unix__
-#endif
-
-#ifdef MSDOS
-#include <bios.h>
-#endif
-
-#ifdef Win32
-/* guido masarotto (3/12/98)*/
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 static HANDLE Win32OutputStream, Win32InputStream = NULL;
 static DWORD OldWin32Mode, AltIsDown;
-#endif
-
-#ifdef __unix__
-#ifndef __convexc__
-extern int      read();
-extern int      kill();
-extern int      ioctl();
-#endif /* not __convexc__ */
-#ifdef POSIX		/* use POSIX interface */
-#include <termios.h>
-struct termios  new_termios, old_termios;
-#else /* not POSIX */
-#include <sys/ioctl.h>
-#ifdef M_XENIX	/* does not really use bsd terminal interface */
-#undef TIOCSETN
-#endif /* M_XENIX */
-#ifdef TIOCSETN		/* use BSD interface */
-#include <sgtty.h>
-struct sgttyb   new_tty, old_tty;
-struct tchars   tch;
-struct ltchars  ltch;
-#else			/* use SYSV interface */
-#include <termio.h>
-struct termio   new_termio, old_termio;
-#endif /* TIOCSETN */
-#endif /* POSIX */
-#endif	/* __unix__ */
-
-#ifdef vms
-#include <descrip.h>
-#include <ttdef.h>
-#include <iodef.h>
-#include unixio
-   
-static int   setbuff[2];             /* buffer to set terminal attributes */
-static short chan = -1;              /* channel to terminal */
-struct dsc$descriptor_s descrip;     /* VMS descriptor */
-#endif
 
 static void
 gl_char_init()			/* turn off input echo */
 {
-#ifdef __unix__
-#ifdef POSIX
-    tcgetattr(0, &old_termios);
-    gl_intrc = old_termios.c_cc[VINTR];
-    gl_quitc = old_termios.c_cc[VQUIT];
-#ifdef VSUSP
-    gl_suspc = old_termios.c_cc[VSUSP];
-#endif
-#ifdef VDSUSP
-    gl_dsuspc = old_termios.c_cc[VDSUSP];
-#endif
-    new_termios = old_termios;
-    new_termios.c_iflag &= ~(BRKINT|ISTRIP|IXON|IXOFF);
-    new_termios.c_iflag |= (IGNBRK|IGNPAR);
-    new_termios.c_lflag &= ~(ICANON|ISIG|IEXTEN|ECHO);
-    new_termios.c_cc[VMIN] = 1;
-    new_termios.c_cc[VTIME] = 0;
-    tcsetattr(0, TCSANOW, &new_termios);
-#else				/* not POSIX */
-#ifdef TIOCSETN			/* BSD */
-    ioctl(0, TIOCGETC, &tch);
-    ioctl(0, TIOCGLTC, &ltch);
-    gl_intrc = tch.t_intrc;
-    gl_quitc = tch.t_quitc;
-    gl_suspc = ltch.t_suspc;
-    gl_dsuspc = ltch.t_dsuspc;
-    ioctl(0, TIOCGETP, &old_tty);
-    new_tty = old_tty;
-    new_tty.sg_flags |= RAW;
-    new_tty.sg_flags &= ~ECHO;
-    ioctl(0, TIOCSETN, &new_tty);
-#else				/* SYSV */
-    ioctl(0, TCGETA, &old_termio);
-    gl_intrc = old_termio.c_cc[VINTR];
-    gl_quitc = old_termio.c_cc[VQUIT];
-    new_termio = old_termio;
-    new_termio.c_iflag &= ~(BRKINT|ISTRIP|IXON|IXOFF);
-    new_termio.c_iflag |= (IGNBRK|IGNPAR);
-    new_termio.c_lflag &= ~(ICANON|ISIG|ECHO);
-    new_termio.c_cc[VMIN] = 1;
-    new_termio.c_cc[VTIME] = 0;
-    ioctl(0, TCSETA, &new_termio);
-#endif /* TIOCSETN */
-#endif /* POSIX */
-#endif /* __unix__ */
-
-#ifdef vms
-    descrip.dsc$w_length  = strlen("tt:");
-    descrip.dsc$b_dtype   = DSC$K_DTYPE_T;
-    descrip.dsc$b_class   = DSC$K_CLASS_S;
-    descrip.dsc$a_pointer = "tt:";
-    (void)sys$assign(&descrip,&chan,0,0);
-    (void)sys$qiow(0,chan,IO$_SENSEMODE,0,0,0,setbuff,8,0,0,0,0);
-    setbuff[1] |= TT$M_NOECHO;
-    (void)sys$qiow(0,chan,IO$_SETMODE,0,0,0,setbuff,8,0,0,0,0);
-#endif /* vms */
-
-#ifdef Win32
-/* guido masarotto (3/12/98)*/   
    if (!Win32InputStream) {
        Win32InputStream = GetStdHandle(STD_INPUT_HANDLE);
        Win32OutputStream = GetStdHandle(STD_OUTPUT_HANDLE);	
@@ -253,114 +108,25 @@ gl_char_init()			/* turn off input echo */
    GetConsoleMode(Win32InputStream,&OldWin32Mode);
    SetConsoleMode(Win32InputStream, ENABLE_PROCESSED_INPUT); /* So ^C works */
    AltIsDown = 0;
-#endif      
-   
 }
 
 static void
 gl_char_cleanup(void)		/* undo effects of gl_char_init */
 {
-#ifdef __unix__
-#ifdef POSIX 
-    tcsetattr(0, TCSANOW, &old_termios);
-#else 			/* not POSIX */
-#ifdef TIOCSETN		/* BSD */
-    ioctl(0, TIOCSETN, &old_tty);
-#else			/* SYSV */
-    ioctl(0, TCSETA, &old_termio);
-#endif /* TIOCSETN */
-#endif /* POSIX */
-#endif /* __unix__ */
-
-#ifdef vms
-    setbuff[1] &= ~TT$M_NOECHO;
-    (void)sys$qiow(0,chan,IO$_SETMODE,0,0,0,setbuff,8,0,0,0,0);
-    sys$dassgn(chan);
-    chan = -1;
-#endif
-   
-#ifdef Win32
-/* guido masarotto (3/12/98)*/
    SetConsoleMode(Win32InputStream,OldWin32Mode);
    AltIsDown = 0;
-#endif         
 }
-
-#if MSDOS || __EMX__ || __GO32__
-int pc_keymap(c)
-int c;
-{
-    switch (c) {
-    case 72: c = 16;   /* up -> ^P */
-        break;
-    case 80: c = 14;   /* down -> ^N */
-        break;
-    case 75: c = 2;    /* left -> ^B */
-        break;
-    case 77: c = 6;    /* right -> ^F */
-        break;
-    default: c = 0;    /* make it garbage */
-    }
-    return c;
-}
-#endif /* MSDOS || __EMX__ || __GO32__ */
 
 static int
 gl_getc(void)
 /* get a character without echoing it to screen */
 {
     int             c;
-#ifdef __unix__
-    char            ch;
-#endif
 
-#ifdef __unix__
-    while ((c = read(0, &ch, 1)) == -1) {
-	if (errno != EINTR)
-	    break;
-    }
-    c = (ch <= 0)? -1 : ch;
-#endif	/* __unix__ */
-#ifdef MSDOS
-    c = _bios_keybrd(_NKEYBRD_READ);
-#endif  /* MSDOS */
-#ifdef __GO32__
-    c = getkey () ;
-    if (c > 255) c = pc_keymap(c & 0377);
-#endif /* __GO32__ */
-#ifdef __TURBOC__
-    while(!bioskey(1))
-	;
-    c = bioskey(0);
-#endif
-#if MSDOS || __TURBOC__
-    if ((c & 0377) == 224) {
-	c = pc_keymap((c >> 8) & 0377);
-    } else {
-	c &= 0377;
-    }
-#endif /* MSDOS || __TURBOC__ */
-#ifdef __EMX__
-    c = _read_kbd(0, 1, 0);
-    if (c == 224 || c == 0) {
-        c = pc_keymap(_read_kbd(0, 1, 0));
-    } else {
-        c &= 0377;
-    }
-#endif
-#ifdef vms
-    if(chan < 0) {
-       c='\0';
-    }
-    (void)sys$qiow(0,chan,IO$_TTYREADALL,0,0,0,&c,1,0,0,0,0);
-    c &= 0177;                        /* get a char */
-#endif
-
-#ifdef Win32
 /* guido masarotto (3/12/98)
  * get Ansi char code from a Win32 console
-*/
-{   DWORD a;
+ */
+    DWORD a;
     INPUT_RECORD r;
     DWORD st;
     WORD vk;
@@ -433,20 +199,14 @@ gl_getc(void)
       if ((c < -127) || (c > 255)) c = 0; 
       if (c < 0) c = 256 + c;    
     }
-}
-#endif         
     return c;
 }
 
 static void
 gl_putc(int c)
 {
-#ifdef Win32
-/* guido masarotto (3/12/98)*/   
    int ch = c;
-#else   
-   char   ch = c;
-#endif    
+
     write(1, &ch, 1);
     if (ch == '\n') {
 	ch = '\r';
@@ -521,9 +281,7 @@ getline(const char *prompt, char *buf, int buflen)
     mbstate_t mb_st;
     int i;
     wchar_t wc;
-#ifdef __unix__
-    int	            sig;
-#endif
+
     BUF_SIZE = buflen;
     gl_buf = buf;
     gl_buf[0] = '\0';
@@ -715,30 +473,6 @@ getline(const char *prompt, char *buf, int buflen)
 		    gl_putc('\007');
 		break;
 	      default:		/* check for a terminal signal */
-#ifdef __unix__
-	        if (c > 0) {	/* ignore 0 (reset above) */
-	            sig = 0;
-#ifdef SIGINT
-	            if (c == gl_intrc)
-	                sig = SIGINT;
-#endif
-#ifdef SIGQUIT
-	            if (c == gl_quitc)
-	                sig = SIGQUIT;
-#endif
-#ifdef SIGTSTP
-	            if (c == gl_suspc || c == gl_dsuspc)
-	                sig = SIGTSTP;
-#endif
-                    if (sig != 0) {
-	                gl_cleanup();
-	                kill(0, sig);
-	                gl_init();
-	                gl_redraw();
-			c = 0;
-		    } 
-		}
-#endif /* __unix__ */
                 if (c > 0)
 		    gl_putc('\007');
 		break;
@@ -1481,9 +1215,5 @@ search_forw(int new_search)
 static void
 gl_beep(void)
 {
-#ifdef Win32
 	if(gl_beep_on) MessageBeep(MB_OK);
-#else
-	gl_putc('\007');
-#endif
 }	/* gl_beep */
