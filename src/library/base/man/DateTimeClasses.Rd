@@ -126,12 +126,8 @@
   zones and leap seconds (23 days have been 86401 seconds long so far:
   the times of the extra seconds are in the object \code{.leap.seconds}).
   The details of this are entrusted to the OS services where possible.
-  This always cover the period 1970--2037, and on most machines
-  back to 1902 (when time zones were in their infancy).  Some systems
-#ifdef windows
-  (including the code used on Windows)
-#endif
-  have 64-bit \code{time_t} and a very much larger time range.  Outside
+  This always covers the period 1970--2037, and on most machines
+  back to 1902 (when time zones were in their infancy).  Outside
   the platform limits we use our own C code.  This uses the offset from
   GMT in use either for 1902 (when there was no DST) or that predicted
   for one of 2030 to 2037 (chosen so that the likely DST transition days

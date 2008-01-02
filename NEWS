@@ -176,12 +176,10 @@ NEW FEATURES
 	agrep() now supports multibyte character sets.
 
     o	The handling of DST on dates outside the range 1902-2037 has
-	been improved.  Where time_t is 64-bit, native facilities are
-	used (as they are on Windows).  Otherwise dates after 2037 are
-	assumed to have the same DST rules as the 2030's (rather than
-	the 1970s), and dates prior to 1902 are assumed to have no DST
-	and the same offset as in 1902 (if known, otherwise as in the
-	1970s).
+	been improved.  Dates after 2037 are assumed to have the same
+	DST rules as the 2030's (rather than the 1970s), and dates
+	prior to 1902 are assumed to have no DST and the same offset
+	as in 1902 (if known, otherwise as in the 1970s).
 
 
 DEPRECATED & DEFUNCT
