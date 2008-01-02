@@ -4290,6 +4290,8 @@ may also be controlled by the Sun Java applet in the Control Panel.
 Recent versions of Internet Explorer may block the use of Java applets
 and need the block removed @emph{via} the @emph{information bar}.
 
+Apple's Safari 3.0.4 also works.
+
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X
 
