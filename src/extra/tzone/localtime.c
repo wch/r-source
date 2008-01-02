@@ -1779,6 +1779,14 @@ const long		offset;
 	if (okay || tmp->tm_isdst < 0)
 		return t;
 #endif /* !defined PCTS */
+
+	/* Try unknown DST setting, if it was set */
+	if (tmp->tm_isdst >= 0) {
+	    tmp->tm_isdst = -1;
+	    t = time2(tmp, funcp, offset, &okay);
+	    if (okay) return t;
+	}
+	
 	/*
 	** We're supposed to assume that somebody took a time of one type
 	** and did some math on it that yielded a "struct tm" that's bad.
