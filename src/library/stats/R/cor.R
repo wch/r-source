@@ -51,7 +51,8 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
          ## matrix
          if (is.null(y)) {
              ncy <- ncx <- ncol(x)
-             r <- matrix(0, nrow=ncx, ncol=ncy)
+             if(ncx == 0) stop("'x' is empty")
+             r <- matrix(0, nrow = ncx, ncol = ncy)
              ## 2.6.0 assumed the diagonal was 1, but not so for all NAs,
              ## nor single non-NA pairs.
              for (i in seq.int(1L, length.out = ncx)) {
@@ -70,13 +71,16 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
 	     colnames(r) <- colnames(x)
              r
          }
-         ## matrix x matrix
+         ## vector/matrix x vector/matrix
          else {
+             if(length(x) == 0 || length(y) == 0)
+                 stop("both 'x' and 'y' must be non-empty")
+             matrix_result <- is.matrix(x) || is.matrix(y)
 	     if (!is.matrix(x)) x <- matrix(x, ncol=1L)
 	     if (!is.matrix(y)) y <- matrix(y, ncol=1L)
              ncx <- ncol(x)
              ncy <- ncol(y)
-             r <- matrix(0, nrow=ncx, ncol=ncy)
+             r <- matrix(0, nrow = ncx, ncol = ncy)
              for (i in 1L:ncx) {
                  for (j in 1L:ncy) {
                      x2 <- x[,i]
@@ -89,7 +93,7 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
              }
 	     rownames(r) <- colnames(x)
 	     colnames(r) <- colnames(y)
-             r
+             if(matrix_result) r else drop(r)
          }
      }
 }

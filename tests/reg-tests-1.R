@@ -4979,3 +4979,17 @@ stopifnot(!is.na(z))
 ## normal approximation is way off here.
 wilcox.test(1, 2:60, conf.int=TRUE, exact=FALSE)
 ## failed in R < 2.7.0
+
+
+## more corner cases for cor()
+z <- cor(c(1,2,3),c(3,4,6),use="pairwise.complete.obs",method="kendall")
+stopifnot(!is.matrix(x)) # was 1x1 in R < 2.7.0
+Z <- cbind(c(1,2,3),c(3,4,6))
+# next gave 0x0 matrix < 2.7.0
+z <- try(cor(Z[, FALSE], use="pairwise.complete.obs",method="kendall"))
+stopifnot(inherits(z, "try-error"))
+# next gave NA < 2.7.0
+z <- try(cor(numeric(0), numeric(0), use="pairwise.complete.obs",
+             method="kendall"))
+stopifnot(inherits(z, "try-error"))
+##

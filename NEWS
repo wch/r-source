@@ -258,6 +258,9 @@ BUG FIXES
 	was completely missing for the rank methods but NA for the
 	Pearson method: it now gives NA in all cases.
 
+	cor(use="pair") for the rank methods gave a matrix result with
+	dimensions > 0 even if one of the inputs had 0 columns.
+
     o	[[""]] was matching a name of "", even though "" is documented
 	to match no name in indexing.
 
