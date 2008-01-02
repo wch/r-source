@@ -303,7 +303,11 @@ BUG FIXES
 
     o   better behaviour of str.default() for non-default
 	'strict.width' (it was calling str() rather than str.default()
-	internally); also, more useful handling of options('str').
+	internally); also, more useful handling of options("str").
+
+    o	wilcox.test(exact=FALSE, conf.int=TRUE) could fail in some
+	extreme two-sample problems.  (Reported by Wolfgang Huber.)
+
 
 
 
@@ -384,7 +388,7 @@ BUG FIXES
     o	par() no longer warns unnecessarily when asked to set new=FALSE
 	on an unused graphics device.
 
-    o	plot.formula() was not passing '...' on when used with a
+    o	plot.formula() was not passing on '...' when used with a
 	one-sided formula.
 
 	plot.formula() was not accepting expressions for annotations

@@ -4972,3 +4972,10 @@ stopifnot(!is.na(z))
 z <- cut(rep(-1,5), 2)
 stopifnot(!is.na(z))
 ##
+
+
+## extreme example of two-sample wilcox.test
+## reported by Wolfgang Huber to R-devel, 2008-01-01
+## normal approximation is way off here.
+wilcox.test(1, 2:60, conf.int=TRUE, exact=FALSE)
+## failed in R < 2.7.0
