@@ -40,7 +40,7 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
 {
     x <- unclass(x) # precaution PR7826
     if(!missing(format)) {
-        res <- strptime(x, format)
+        res <- strptime(x, format, tz=tz)
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
     }
@@ -52,14 +52,14 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
         if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
     }
     if(is.na(xx) ||
-       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS")) ||
-       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS")) ||
-       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
-       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
-       !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
-       !is.na(strptime(xx, f <- "%Y/%m/%d")))
+       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS", tz=tz)) ||
+       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS", tz=tz)) ||
+       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M", tz=tz)) ||
+       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M", tz=tz)) ||
+       !is.na(strptime(xx, f <- "%Y-%m-%d", tz=tz)) ||
+       !is.na(strptime(xx, f <- "%Y/%m/%d", tz=tz)))
     {
-        res <- strptime(x, f)
+        res <- strptime(x, f, tz=tz)
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
     }
@@ -129,7 +129,7 @@ as.POSIXct.default <- function(x, tz = "", ...)
 {
     if(inherits(x, "POSIXct")) return(x)
     if(is.character(x) || is.factor(x))
-	return(as.POSIXct(as.POSIXlt(x), tz, ...))
+	return(as.POSIXct(as.POSIXlt(x, tz), tz, ...))
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = c("POSIXt", "POSIXct")))
     stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
