@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-12-24
+@set FAQ_YEAR 2008
+@set FAQ_DATE @value{FAQ_YEAR}-01-02
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1971,6 +1971,9 @@ Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
 @item Devore7
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (7th ed)'' by Jay L. Devore, 2008, Thomson.
+@item DierckxSpline
+R companion to ``Curve and Surface Fitting with Splines'' by Paul
+Dierckx, 1993, Oxford University Press.
 @item EDR
 Estimation of the effective dimension reduction (EDR) space.
 @item EMV
@@ -2325,6 +2328,8 @@ Qualitative Comparative Analysis for crisp sets.
 QCA Graphical User Interface.
 @item QRMlib
 Code to examine Quantitative Risk Management concepts.
+@item QuantPsyc
+Quantitative Psychology tools.
 @item R.cache
 Fast and light-weight caching of objects.
 @item R.huge
@@ -2363,7 +2368,7 @@ Regional Frequency Analysis.
 Graphics for spherical distributions and earthquake focal mechanisms.
 @item RFreak
 An R interface to a modified version of the Free Evolutionary Algorithm
-Kit FrEAK.
+Kit FrEAK.g
 @item RGtk2
 Facilities for programming graphical interfaces using Gtk (the Gimp Tool
 Kit) version 2.
@@ -4045,6 +4050,8 @@ Estimation of monotone regression and variance functions in
 nonparametric models.
 @item monoProc
 Strictly monotone smoothing procedure.
+@item moonsun
+Basic astronomical calculations.
 @item mota
 Mean Optimal Transformation Approach.
 @item mprobit
@@ -5013,6 +5020,8 @@ Simple mechanism for placing R graphics in a Tk widget.
 Two-level normal independent sampling estimation.
 @item tm
 A framework for text mining applications within R.
+@item tpr
+Temporal Process Regression.
 @item trackObjs
 Track objects.
 @item tradeCosts
