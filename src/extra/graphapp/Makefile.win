@@ -32,7 +32,7 @@ graphapp.def: $(OBJECTS)
 	@$(ECHO) EXPORTS > $@
 	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq > g.def
 	@comm -23 g.def ga.hide >> $@
-	@(RM) g.def
+	@$(RM) g.def
 
 graphapp.dll: $(OBJECTS) dllversion.o graphapp.def
 	$(DLL) -shared -mwindows -o $@ graphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32
