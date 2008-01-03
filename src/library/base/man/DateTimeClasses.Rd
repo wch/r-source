@@ -175,7 +175,7 @@
   report errors separately and so are able to handle that time as
   valid.
 } 
-\section{Sub-section Accuracy}{
+\section{Sub-second Accuracy}{
   Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express
   fractions of a second.  (Conversion of fractions between the two forms
   may not be exact, but will have better than microsecond accuracy.)
