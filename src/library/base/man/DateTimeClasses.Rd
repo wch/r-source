@@ -145,7 +145,7 @@
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone.
 }
-\section{Sub-section Accuracy}{
+\section{Sub-second Accuracy}{
   Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express
   fractions of a second.
   (Conversion of fractions between the two forms may not be exact, but
