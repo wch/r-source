@@ -129,7 +129,7 @@ as.POSIXct.default <- function(x, tz = "", ...)
 {
     if(inherits(x, "POSIXct")) return(x)
     if(is.character(x) || is.factor(x))
-	return(as.POSIXct(as.POSIXlt(x, tz), tz, ...))
+	return(as.POSIXct(as.POSIXlt(x, tz, ...), tz, ...))
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = c("POSIXt", "POSIXct")))
     stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",

@@ -11,9 +11,12 @@
 #include "time.h"
 #undef _NO_OLDNAMES
 
+#include <errno.h>
+#ifndef EOVERFLOW
+# define EOVERFLOW 79
+#endif
+
 #ifdef WIN32
-typedef __int64 R_time_t;
-#define time_t R_time_t
 #define gmtime R_gmtime
 #define localtime R_localtime
 #define mktime R_mktime
@@ -1557,176 +1560,207 @@ const long		offset;
 int * const		okayp;
 const int		do_norm_secs;
 {
-	register const struct state *	sp;
-	register int			dir;
-	register int			i, j;
-	register int			saved_seconds;
-	register long			li;
-	register time_t			lo;
-	register time_t			hi;
-	long				y;
-	time_t				newt;
-	time_t				t;
-	struct tm			yourtm, mytm;
+    register const struct state *	sp;
+    register int			dir;
+    register int			i, j;
+    register int			saved_seconds;
+    register long			li;
+    register time_t			lo;
+    register time_t			hi;
+    long				y;
+    time_t				newt;
+    time_t				t;
+    struct tm			yourtm, mytm;
 
-	*okayp = FALSE;
-	yourtm = *tmp;
-	if (do_norm_secs) {
-		if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec,
-			SECSPERMIN))
-				return WRONG;
+    *okayp = FALSE;
+    yourtm = *tmp;
+    if (do_norm_secs) {
+	if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec, SECSPERMIN)) {
+	    errno = EOVERFLOW;
+	    return WRONG;
 	}
-	if (normalize_overflow(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR))
+    }
+    if (normalize_overflow(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR)) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY)) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    y = yourtm.tm_year;
+    if (long_normalize_overflow(&y, &yourtm.tm_mon, MONSPERYEAR)) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    /*
+    ** Turn y into an actual year number for now.
+    ** It is converted back to an offset from TM_YEAR_BASE later.
+    */
+    if (long_increment_overflow(&y, TM_YEAR_BASE)) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    while (yourtm.tm_mday <= 0) {
+	if (long_increment_overflow(&y, -1)) {
+	    errno = EOVERFLOW;
+	    return WRONG;
+	}
+	li = y + (1 < yourtm.tm_mon);
+	yourtm.tm_mday += year_lengths[isleap(li)];
+    }
+    while (yourtm.tm_mday > DAYSPERLYEAR) {
+	li = y + (1 < yourtm.tm_mon);
+	yourtm.tm_mday -= year_lengths[isleap(li)];
+	if (long_increment_overflow(&y, 1)) {
+	    errno = EOVERFLOW;
+	    return WRONG;
+	}
+    }
+    for ( ; ; ) {
+	i = mon_lengths[isleap(y)][yourtm.tm_mon];
+	if (yourtm.tm_mday <= i)
+	    break;
+	yourtm.tm_mday -= i;
+	if (++yourtm.tm_mon >= MONSPERYEAR) {
+	    yourtm.tm_mon = 0;
+	    if (long_increment_overflow(&y, 1)) {
+		errno = EOVERFLOW;
 		return WRONG;
-	if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY))
-		return WRONG;
-	y = yourtm.tm_year;
-	if (long_normalize_overflow(&y, &yourtm.tm_mon, MONSPERYEAR))
-		return WRONG;
+	    }
+	}
+    }
+    if (long_increment_overflow(&y, -TM_YEAR_BASE)) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    yourtm.tm_year = y;
+    if (yourtm.tm_year != y) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    if (yourtm.tm_sec >= 0 && yourtm.tm_sec < SECSPERMIN)
+	saved_seconds = 0;
+    else if (y + TM_YEAR_BASE < EPOCH_YEAR) {
 	/*
-	** Turn y into an actual year number for now.
-	** It is converted back to an offset from TM_YEAR_BASE later.
+	** We can't set tm_sec to 0, because that might push the
+	** time below the minimum representable time.
+	** Set tm_sec to 59 instead.
+	** This assumes that the minimum representable time is
+	** not in the same minute that a leap second was deleted from,
+	** which is a safer assumption than using 58 would be.
 	*/
-	if (long_increment_overflow(&y, TM_YEAR_BASE))
-		return WRONG;
-	while (yourtm.tm_mday <= 0) {
-		if (long_increment_overflow(&y, -1))
-			return WRONG;
-		li = y + (1 < yourtm.tm_mon);
-		yourtm.tm_mday += year_lengths[isleap(li)];
+	if (increment_overflow(&yourtm.tm_sec, 1 - SECSPERMIN)) {
+	    errno = EOVERFLOW;
+	    return WRONG;
 	}
-	while (yourtm.tm_mday > DAYSPERLYEAR) {
-		li = y + (1 < yourtm.tm_mon);
-		yourtm.tm_mday -= year_lengths[isleap(li)];
-		if (long_increment_overflow(&y, 1))
-			return WRONG;
-	}
-	for ( ; ; ) {
-		i = mon_lengths[isleap(y)][yourtm.tm_mon];
-		if (yourtm.tm_mday <= i)
-			break;
-		yourtm.tm_mday -= i;
-		if (++yourtm.tm_mon >= MONSPERYEAR) {
-			yourtm.tm_mon = 0;
-			if (long_increment_overflow(&y, 1))
-				return WRONG;
+	    
+	saved_seconds = yourtm.tm_sec;
+	yourtm.tm_sec = SECSPERMIN - 1;
+    } else {
+	saved_seconds = yourtm.tm_sec;
+	yourtm.tm_sec = 0;
+    }
+    /*
+    ** Do a binary search (this works whatever time_t's type is).
+    */
+    if (!TYPE_SIGNED(time_t)) {
+	lo = 0;
+	hi = lo - 1;
+    } else if (!TYPE_INTEGRAL(time_t)) {
+	if (sizeof(time_t) > sizeof(float))
+	    hi = (time_t) DBL_MAX;
+	else	hi = (time_t) FLT_MAX;
+	lo = -hi;
+    } else {
+	lo = 1;
+	for (i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)
+	    lo *= 2;
+	hi = -(lo + 1);
+    }
+    for ( ; ; ) {
+	t = lo / 2 + hi / 2;
+	if (t < lo)
+	    t = lo;
+	else if (t > hi)
+	    t = hi;
+	if ((*funcp)(&t, offset, &mytm) == NULL) {
+	    /*
+	    ** Assume that t is too extreme to be represented in
+	    ** a struct tm; arrange things so that it is less
+	    ** extreme on the next pass.
+	    */
+	    dir = (t > 0) ? 1 : -1;
+	} else	dir = tmcomp(&mytm, &yourtm);
+	if (dir != 0) {
+	    if (t == lo) {
+		++t;
+		if (t <= lo) {
+		    errno = EOVERFLOW;
+		    return WRONG;
 		}
-	}
-	if (long_increment_overflow(&y, -TM_YEAR_BASE))
+		++lo;
+	    } else if (t == hi) {
+		--t;
+		if (t >= hi) {
+		    errno = EOVERFLOW;
+		    return WRONG;
+		}
+		--hi;
+	    }
+	    if (lo > hi) {
+		errno = EOVERFLOW;
 		return WRONG;
-	yourtm.tm_year = y;
-	if (yourtm.tm_year != y)
-		return WRONG;
-	if (yourtm.tm_sec >= 0 && yourtm.tm_sec < SECSPERMIN)
-		saved_seconds = 0;
-	else if (y + TM_YEAR_BASE < EPOCH_YEAR) {
-		/*
-		** We can't set tm_sec to 0, because that might push the
-		** time below the minimum representable time.
-		** Set tm_sec to 59 instead.
-		** This assumes that the minimum representable time is
-		** not in the same minute that a leap second was deleted from,
-		** which is a safer assumption than using 58 would be.
-		*/
-		if (increment_overflow(&yourtm.tm_sec, 1 - SECSPERMIN))
-			return WRONG;
-		saved_seconds = yourtm.tm_sec;
-		yourtm.tm_sec = SECSPERMIN - 1;
-	} else {
-		saved_seconds = yourtm.tm_sec;
-		yourtm.tm_sec = 0;
+	    }
+	    if (dir > 0)
+		hi = t;
+	    else	lo = t;
+	    continue;
 	}
+	if (yourtm.tm_isdst < 0 || mytm.tm_isdst == yourtm.tm_isdst)
+	    break;
 	/*
-	** Do a binary search (this works whatever time_t's type is).
+	** Right time, wrong type.
+	** Hunt for right time, right type.
+	** It's okay to guess wrong since the guess
+	** gets checked.
 	*/
-	if (!TYPE_SIGNED(time_t)) {
-		lo = 0;
-		hi = lo - 1;
-	} else if (!TYPE_INTEGRAL(time_t)) {
-		if (sizeof(time_t) > sizeof(float))
-			hi = (time_t) DBL_MAX;
-		else	hi = (time_t) FLT_MAX;
-		lo = -hi;
-	} else {
-		lo = 1;
-		for (i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)
-			lo *= 2;
-		hi = -(lo + 1);
-	}
-	for ( ; ; ) {
-		t = lo / 2 + hi / 2;
-		if (t < lo)
-			t = lo;
-		else if (t > hi)
-			t = hi;
-		if ((*funcp)(&t, offset, &mytm) == NULL) {
-			/*
-			** Assume that t is too extreme to be represented in
-			** a struct tm; arrange things so that it is less
-			** extreme on the next pass.
-			*/
-			dir = (t > 0) ? 1 : -1;
-		} else	dir = tmcomp(&mytm, &yourtm);
-		if (dir != 0) {
-			if (t == lo) {
-				++t;
-				if (t <= lo)
-					return WRONG;
-				++lo;
-			} else if (t == hi) {
-				--t;
-				if (t >= hi)
-					return WRONG;
-				--hi;
-			}
-			if (lo > hi)
-				return WRONG;
-			if (dir > 0)
-				hi = t;
-			else	lo = t;
-			continue;
-		}
-		if (yourtm.tm_isdst < 0 || mytm.tm_isdst == yourtm.tm_isdst)
-			break;
+	sp = (const struct state *)
+	    ((funcp == localsub) ? lclptr : gmtptr);
+	for (i = sp->typecnt - 1; i >= 0; --i) {
+	    if (sp->ttis[i].tt_isdst != yourtm.tm_isdst)
+		continue;
+	    for (j = sp->typecnt - 1; j >= 0; --j) {
+		if (sp->ttis[j].tt_isdst == yourtm.tm_isdst)
+		    continue;
+		newt = t + sp->ttis[j].tt_gmtoff -
+		    sp->ttis[i].tt_gmtoff;
+		if ((*funcp)(&newt, offset, &mytm) == NULL)
+		    continue;
+		if (tmcomp(&mytm, &yourtm) != 0)
+		    continue;
+		if (mytm.tm_isdst != yourtm.tm_isdst)
+		    continue;
 		/*
-		** Right time, wrong type.
-		** Hunt for right time, right type.
-		** It's okay to guess wrong since the guess
-		** gets checked.
+		** We have a match.
 		*/
-		sp = (const struct state *)
-			((funcp == localsub) ? lclptr : gmtptr);
-		for (i = sp->typecnt - 1; i >= 0; --i) {
-			if (sp->ttis[i].tt_isdst != yourtm.tm_isdst)
-				continue;
-			for (j = sp->typecnt - 1; j >= 0; --j) {
-				if (sp->ttis[j].tt_isdst == yourtm.tm_isdst)
-					continue;
-				newt = t + sp->ttis[j].tt_gmtoff -
-					sp->ttis[i].tt_gmtoff;
-				if ((*funcp)(&newt, offset, &mytm) == NULL)
-					continue;
-				if (tmcomp(&mytm, &yourtm) != 0)
-					continue;
-				if (mytm.tm_isdst != yourtm.tm_isdst)
-					continue;
-				/*
-				** We have a match.
-				*/
-				t = newt;
-				goto label;
-			}
-		}
-		return WRONG;
+		t = newt;
+		goto label;
+	    }
 	}
+	errno = EOVERFLOW;
+	return WRONG;
+    }
 label:
-	newt = t + saved_seconds;
-	if ((newt < t) != (saved_seconds < 0))
-		return WRONG;
-	t = newt;
-	if ((*funcp)(&t, offset, tmp))
-		*okayp = TRUE;
-	return t;
+    newt = t + saved_seconds;
+    if ((newt < t) != (saved_seconds < 0)) {
+	errno = EOVERFLOW;
+	return WRONG;
+    }
+    t = newt;
+    if ((*funcp)(&t, offset, tmp))
+	*okayp = TRUE;
+    return t;
 }
 
 static time_t
@@ -1780,7 +1814,12 @@ const long		offset;
 		return t;
 #endif /* !defined PCTS */
 
-	/* Try unknown DST setting, if it was set */
+	/* R change.  This appears to be required by POSIX (it says
+	   the setting is used 'initially') and is documented for
+	   Solaris.
+	
+	   Try unknown DST setting, if it was set.
+	*/
 	if (tmp->tm_isdst >= 0) {
 	    tmp->tm_isdst = -1;
 	    t = time2(tmp, funcp, offset, &okay);
@@ -1821,6 +1860,7 @@ const long		offset;
 			tmp->tm_isdst = !tmp->tm_isdst;
 		}
 	}
+	errno = EOVERFLOW;
 	return WRONG;
 }
 
