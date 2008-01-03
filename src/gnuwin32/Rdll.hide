@@ -201,6 +201,7 @@
  R_getRegisteredRoutines
  R_getSymbolInfo
  R_getVarsFromFrame
+ R_gmtime
  R_init_base
  R_initialize_bcode
  R_isMissing
@@ -208,7 +209,9 @@
  R_lazyLoadDBfetch
  R_lazyLoadDBflush
  R_lazyLoadDBinsertValue
+ R_localtime
  R_max_memory
+ R_mktime
  R_moduleCdynload
  R_newsock
  R_newunz
@@ -1264,6 +1267,8 @@
  trio_vasprintf
  trio_vfprintf
  trio_vprintf
+ tzname
+ tzset
  uncompress
  utf8clen
  winAccess
