@@ -45,14 +45,7 @@
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
 
-#ifdef ENABLE_NLS
-#define G_(String) libintl_dgettext("RGui", String)
-#define GN_(String) gettext_noop (String)
-#else /* not NLS */
-#define G_(String) (String)
-#define GN_(String) String
-#endif
-
+#include "win-nls.h"
 
 void R_CleanTempDir();		/* from extra.c */
 void editorcleanall();                  /* from editor.c */
@@ -762,17 +755,6 @@ void R_setupHistory()
     }
 }
 
-static void wrap_askok(const char *info)
-{
-    askok(info);
-}
-
-static int wrap_askyesnocancel(const char *question)
-{
-    return askyesnocancel(question);    
-}
-
-
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
@@ -869,8 +851,8 @@ int cmdlineoptions(int ac, char **av)
 	Rp->R_Interactive = TRUE;
 	Rp->ReadConsole = GuiReadConsole;
 	Rp->WriteConsole = GuiWriteConsole;
-	Rp->ShowMessage = wrap_askok;
-	Rp->YesNoCancel = wrap_askyesnocancel;
+	Rp->ShowMessage = askok;
+	Rp->YesNoCancel = askyesnocancel;
 	Rp->Busy = GuiBusy;
     }
 

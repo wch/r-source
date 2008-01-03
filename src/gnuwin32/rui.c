@@ -1047,11 +1047,11 @@ int setupui()
           r.x += (btsize + 1) ;
 
           MCHECK(bt = newtoolbutton(open1_image, r, menuloadimage));
-          MCHECK(addtooltip(bt, G_("Load image")));
+          MCHECK(addtooltip(bt, G_("Load workspace")));
           r.x += (btsize + 1) ;
 
           MCHECK(bt = newtoolbutton(save_image, r, menusaveimage));
-          MCHECK(addtooltip(bt, G_("Save image")));
+          MCHECK(addtooltip(bt, G_("Save workspace")));
           r.x += (btsize + 6);
 
           MCHECK(bt = newtoolbutton(copy_image, r, buttoncopy));
