@@ -12,7 +12,7 @@ gimage-CFLAGS=-O2
 image-CFLAGS=-O2
 
 SOURCES=$(wildcard *.c)
-OBJECTS=$(foreach i, $(SOURCES), $(basename $i).o)
+OBJECTS=$(foreach i,$(SOURCES),$(basename $i).o)
 
 DLL: libR.dll.a graphapp.dll
 	@cp graphapp.dll ../../../bin
@@ -30,12 +30,12 @@ libgraphapp.dll.a: graphapp.def
 
 graphapp.def: $(OBJECTS)
 	@$(ECHO) EXPORTS > $@
-	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq >> $@
+	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq > g.def
+	@comm -23 g.def ga.hide >> $@
+	@(RM) g.def
 
-
-graphapp.dll: $(OBJECTS) dllversion.o
-graphapp-DLLFLAGS=-mwindows
-graphapp-DLLLIBS=-L. -lR -lcomctl32
+graphapp.dll: $(OBJECTS) dllversion.o graphapp.def
+	$(DLL) -shared -mwindows -o $@ graphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32
 
 ## need to break mutual dependence with R.dll
 libR.dll.a: R.def

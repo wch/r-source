@@ -5,3 +5,4 @@ EXPORTS
  localeCP
  libintl_dgettext
  libintl_gettext
+ Rprintf
