@@ -36,11 +36,15 @@
 #endif
 
 /* R defines */
-# define TRIO_FEATURE_SCANF 0
-# define TRIO_FEATURE_FD 0
-# define TRIO_FEATURE_CLOSURE 0
-# define TRIO_FEATURE_STRERR 0
-
+#define TRIO_FEATURE_SCANF 0
+#define TRIO_FEATURE_FD 0
+#define TRIO_FEATURE_CLOSURE 0
+#define TRIO_FEATURE_STRERR 0
+#define TRIO_FEATURE_LOCALE 0
+#define TRIO_FEATURE_USER_DEFINED 0
+#define TRIO_EMBED_NAN 1
+#define TRIO_EMBED_STRING 1
+#define TRIO_EXTENSION 0
 
 #ifdef __cplusplus
 extern "C" {
@@ -460,7 +464,7 @@ void trio_print_uint TRIO_PROTO((trio_pointer_t ref, unsigned int number));
 /*  void trio_print_ulong TRIO_PROTO((trio_pointer_t ref, unsigned long number)); */
 void trio_print_double TRIO_PROTO((trio_pointer_t ref, double number));
 void trio_print_string TRIO_PROTO((trio_pointer_t ref, char *string));
-void trio_print_pointer TRIO_PROTO((trio_pointer_t ref, trio_pointer_t pointer));
+static void trio_print_pointer TRIO_PROTO((trio_pointer_t ref, trio_pointer_t pointer));
 
 #ifdef __cplusplus
 } /* extern "C" */

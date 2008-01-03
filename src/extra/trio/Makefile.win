@@ -2,8 +2,12 @@
 include ../../gnuwin32/MkRules
 
 CFLAGS=$(OPTFLAGS)
+
+# triop.h says this does not work, but useful to debug wchar conversions.
 trio-CPPFLAGS=-DTRIO_FEATURE_WIDECHAR=1
-OBJS = compat.o triostr.o trio.o trionan.o
+
+# trionan.c and triostr.c are included by trio.o
+OBJS = compat.o trio.o
 TARGETLIB = libtrio.a
 
 all: $(TARGETLIB)
