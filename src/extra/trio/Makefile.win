@@ -2,6 +2,7 @@
 include ../../gnuwin32/MkRules
 
 CFLAGS=$(OPTFLAGS)
+trio-CPPFLAGS=-DTRIO_FEATURE_WIDECHAR=1
 OBJS = compat.o triostr.o trio.o trionan.o
 TARGETLIB = libtrio.a
 

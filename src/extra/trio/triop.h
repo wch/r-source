@@ -35,6 +35,13 @@
 # include <stdarg.h>
 #endif
 
+/* R defines */
+# define TRIO_FEATURE_SCANF 0
+# define TRIO_FEATURE_FD 0
+# define TRIO_FEATURE_CLOSURE 0
+# define TRIO_FEATURE_STRERR 0
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif

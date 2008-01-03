@@ -1288,7 +1288,7 @@ TRIO_ARGS5((type, format, parameters, arglist, argarray),
   int currentParam;
   int maxParam = -1;
   /* Utility variables */
-  trio_flags_t flags;
+  trio_flags_t flags = FLAGS_NEW;
   int width;
   int precision;
   int varsize;
