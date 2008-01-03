@@ -785,10 +785,10 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(double)
 AC_CHECK_SIZEOF(long double)
 AC_CHECK_SIZEOF(size_t)
-AC_CHECK_SIZEOF(time_t, [
-#include <stdio.h>
-#include <time.h>
-])
+dnl AC_CHECK_SIZEOF(time_t, [
+dnl #include <stdio.h>
+dnl #include <time.h>
+dnl ])
 
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
@@ -1783,6 +1783,7 @@ fi
 R_FUNC_LOG1P
 R_FUNC_FTELL
 R_FUNC_SIGACTION
+R_MKTIME_ERRNO
 
 R_C99_COMPLEX
 

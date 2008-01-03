@@ -181,6 +181,10 @@ NEW FEATURES
 	prior to 1902 are assumed to have no DST and the same offset
 	as in 1902 (if known, otherwise as in the 1970s).
 
+    o	On platforms where we can detect that mktime sets errno
+	(e.g. Solaris but not glibc), "1969-12-31 23:59:59" is
+	converted to POSIXct as -1 and not NA.
+
 
 DEPRECATED & DEFUNCT
 

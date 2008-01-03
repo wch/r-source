@@ -172,7 +172,7 @@
 #ifdef windows
   (including the code used by \R on Windows)
 #endif
-  differentiate errors separately and so are able to handle that time as
+  report errors separately and so are able to handle that time as
   valid.
 } 
 \section{Sub-section Accuracy}{

@@ -3636,6 +3636,38 @@ if test "${cross_compiling}" = yes; then
 fi
 ])
 
+## R_MKTIME_ERRNO
+## --------------
+## Check whether mktime sets errno
+AC_DEFUN([R_MKTIME_ERRNO],
+[AC_CACHE_CHECK([whether mktime sets errno], [r_cv_mktime_errno],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+#include <errno.h>
+
+int main()
+{
+    struct tm tm;
+    /* It's hard to know what is an error, since mktime is allowed to
+       fix up times and there are 64-bit time_t about.
+       But this works for now (yes on Solaris, no on glibc). */
+    tm.tm_year = 3000; tm.tm_mon = 0; tm.tm_mday = 0; 
+    tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
+    errno = 0;
+    mktime(&tm);
+    exit(errno == 0);
+}
+]])],
+              [r_cv_mktime_errno=yes],
+              [r_cv_mktime_errno=no],
+              [r_cv_mktime_errno=no])])
+if test "${r_cv_mktime_errno}" = yes; then
+  AC_DEFINE(MKTIME_SETS_ERRNO,, [Define if mktime sets errno.])
+fi
+])# R_MKTIME_ERRNO
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

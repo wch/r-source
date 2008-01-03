@@ -766,7 +766,7 @@
 /* Define if you have 32 bit ints. */
 #define INT_32_BITS 1
 
-/* Define if mktime sets errno */
+/* Define if mktime sets errno. */
 #define MKTIME_SETS_ERRNO 1
 
 /* Define if your system needs __setfpucw() to control FPU rounding. This was
@@ -863,9 +863,6 @@
 
 /* The size of `size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T 4
-
-/* The size of `time_t', as computed by sizeof. */
-#define SIZEOF_TIME_T 4
 
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. */
