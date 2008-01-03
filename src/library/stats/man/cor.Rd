@@ -70,9 +70,9 @@ cov2cor(V)
   all complete pairs of observations on those variables.  This can
   result in covariance or correlation matrices which are not positive
   semi-definite, as well as \code{NA} entries if there are no complete
-  pairs for that pair of variables.   \code{"pairwise.complete.obs"}
-  only works with the \code{"pearson"} method for \code{cov} and
-  \code{var}.
+  pairs for that pair of variables.    For \code{cov} and \code{var},
+  \code{"pairwise.complete.obs"} only works with the \code{"pearson"}
+  method.
 
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.

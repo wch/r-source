@@ -32,7 +32,7 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
 	}
     }
     if(method == "pearson")
-        .Internal(cor(x, y, na.method, method == "kendall"))
+        .Internal(cor(x, y, na.method, FALSE))
     else if (na.method != 3L) {
 	## Rank transform
 	Rank <- function(u) {
