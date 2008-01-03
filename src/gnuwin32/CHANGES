@@ -33,7 +33,7 @@ GUI CHANGES
 TIME ZONES
 
     o	This version of R no longer makes use of Windows' bug-ridden
-	concept of time zones but replaces it by Arthur David Olson's
+	concept of time zones but replaces it by Arthur Olson's
 	public-domain tz database (which is widely used, including on
 	Linux, Mac OS X, Solaris, AIX, FreeBSD and by Java and Tcl).
 	This means that time zones should now be referred to by their
@@ -48,7 +48,8 @@ TIME ZONES
 	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
 	used for the timezones pre-1970.  Now the database is used for
-	all years (even those prior to 1902 and after 2037).
+	1902-1969 (and nowhere had DST prior to 1902 and the time
+	offset is assumed to be the same as in 1902).
 
 
 PACKAGE INSTALLATION
