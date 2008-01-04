@@ -41,7 +41,7 @@ HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
 TCL_HOME = $(RHOME)/Tcl
-TCL_VERSION = 84
+TCL_VERSION = 85
 
 # Define to use svnversion to set SVN-REVISION (slow, but more informative
 # than without it because mixed or modified revisions will be indicated)
