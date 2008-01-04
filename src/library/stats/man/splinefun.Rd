@@ -16,7 +16,7 @@
 splinefun(x, y = NULL, method = "fmm", ties = mean)
 
 spline(x, y = NULL, n = 3*length(x), method = "fmm",
-       xmin = min(x), xmax = max(x), ties = mean)
+       xmin = min(x), xmax = max(x), xout, ties = mean)
 }
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
@@ -24,10 +24,13 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
     specified: see \code{\link{xy.coords}.}}
   \item{method}{specifies the type of spline to be used.  Possible
     values are \code{"fmm"}, \code{"natural"} and \code{"periodic"}.}
-  \item{n}{interpolation takes place at \code{n} equally spaced points
-    spanning the interval [\code{xmin}, \code{xmax}].}
-  \item{xmin}{left-hand endpoint of the interpolation interval.}
-  \item{xmax}{right-hand endpoint of the interpolation interval.}
+  \item{n}{if \code{xout} is left unspecified, interpolation takes place
+       at \code{n} equally spaced points spanning the interval
+       [\code{xmin}, \code{xmax}].}
+  \item{xmin, xmax}{left-hand and right-hand endpoint of the
+       interpolation interval (when \code{xout} is unspecified).}
+  \item{xout}{an optional set of values specifying where interpolation
+    is to take place.}
   \item{ties}{Handling of tied \code{x} values.  Either a function
     with a single vector argument returning a single number result or
     the string \code{"ordered"}.}
@@ -107,6 +110,15 @@ curve(f(x, deriv=1), 1, 10, col = 2, lwd = 1.5)
 curve(f(x, deriv=2), 1, 10, col = 2, lwd = 1.5, n = 401)
 curve(f(x, deriv=3), 1, 10, col = 2, lwd = 1.5, n = 401)
 par(op)
+
+## Manual spline evaluation --- demo the coefficients :
+.x <- get("ux", envir = environment(f))
+u <- seq(3,6, by = 0.25)
+(ii <- findInterval(u, .x))
+dx <- u - .x[ii]
+f.u <- with(splinecoef,
+            y[ii] + dx*(b[ii] + dx*(c[ii] + dx* d[ii])))
+stopifnot(all.equal(f(u), f.u))
 
 ## An example with ties (non-unique  x values):
 set.seed(1); x <- round(rnorm(30), 1); y <- sin(pi * x) + rnorm(30)/10

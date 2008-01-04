@@ -78,6 +78,10 @@ splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
 		       list(y= 6*z$d, b =    z0, c =	z0)) # deriv = 3
 	    z[["d"]] <- z0
 	}
+        ## yout[j] := y[i] + dx*(b[i] + dx*(c[i] + dx* d_i))
+        ##           where dx := (u[j]-x[i]); i such that x[i] <= u[j] <= x[i+1},
+        ##                u[j]:= xout[j] (unless sometimes for periodic spl.)
+        ##           and  d_i := d[i] unless for natural splines at left
 	.C("spline_eval",
 	   z$method,
 	   as.integer(length(x)),

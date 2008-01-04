@@ -185,6 +185,8 @@ NEW FEATURES
 	(e.g. Solaris but not glibc), "1969-12-31 23:59:59" is
 	converted to POSIXct as -1 and not NA.
 
+    o	spline() gets an 'xout' argument, analogously to approx().
+
 
 DEPRECATED & DEFUNCT
 
