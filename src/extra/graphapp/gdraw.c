@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2004  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2005-7      The R Development Core Team
+ *  Copyright (C) 2005-8      The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -547,6 +547,29 @@ int gdrawstr(drawing d, font f, rgb c, point p, const char *s)
     return width;
 }
 
+int gdrawwcs(drawing d, font f, rgb c, point p, const wchar_t *s)
+{
+    POINT curr_pos;
+    int width;
+    HFONT old;
+    HDC dc = GETHDC(d);
+
+    SetTextColor(dc, getwinrgb(d,c));
+    old = SelectObject(dc, f->handle);
+    MoveToEx(dc, p.x, p.y, NULL);
+    SetBkMode(dc, TRANSPARENT);
+    SetTextAlign(dc, TA_TOP | TA_LEFT | TA_UPDATECP);
+
+    TextOutW(dc, p.x, p.y, s, wcslen(s));
+
+    GetCurrentPositionEx(dc, &curr_pos);
+    width = curr_pos.x - p.x;
+    SelectObject(dc, old);
+
+    return width;
+}
+
+
 /* This version aligns on baseline, and allows hadj = 0, 0.5, 1 */
 void gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
@@ -640,6 +663,30 @@ point gstrsize(drawing d, font f, const char *s)
 int gstrwidth(drawing d, font f, const char *s)
 {
     rect r = gstrrect(d, f ,s);
+    return r.width;
+}
+
+static rect gwcsrect(drawing d, font f, const wchar_t *s)
+{
+    SIZE size;
+    HFONT old;
+    HDC dc;
+    if (! f)
+	f = SystemFont;
+    if (d)
+	dc = GETHDC(d);
+    else
+	dc = GetDC(0);
+    old = SelectObject(dc, f->handle);
+    GetTextExtentPoint32W(dc, (LPWSTR)s, wcslen(s), &size);
+    SelectObject(dc, old);
+    if (!d) ReleaseDC(0,dc);
+    return rect(0, 0, size.cx, size.cy);
+}
+
+int gwcswidth(drawing d, font f, const wchar_t *s)
+{
+    rect r = gwcsrect(d, f ,s);
     return r.width;
 }
 

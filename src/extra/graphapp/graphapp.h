@@ -5,7 +5,7 @@
  *  Version 2.4 (c) Lachlan Patrick 1996-1998.
  *  This header file is designed to be platform-independent.
  *
- *  Copyright 2006 	The R Foundation
+ *  Copyright 2006-8 	The R Foundation
  *
  */
 
@@ -337,6 +337,7 @@ typedef void (*dropfn)(control c, char *data);
 #define gdrawrect		GA_gdrawrect
 #define gdrawstr		GA_gdrawstr
 #define gdrawstr1		GA_gdrawstr1
+#define gdrawwcs		GA_gdrawwcs
 #define getHandle		GA_getHandle
 #define getSysFontSize		GA_getSysFontSize
 #define get_context		GAI_get_context
@@ -388,6 +389,7 @@ typedef void (*dropfn)(control c, char *data);
 #define gstrsize		GA_gstrsize
 #define gstrwidth		GA_gstrwidth
 #define gwcharmetric		GA_gwcharmetric
+#define gwcswidth		GA_gwcswidth
 #define gwdrawstr1		GA_gwdrawstr1
 #define handle_control		GAI_handle_control
 #define handle_findreplace	GAI_handle_findreplace
