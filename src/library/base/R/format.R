@@ -248,7 +248,13 @@ format.AsIs <- function(x, width = 12, ...)
     if(is.null(width)) width = 12
     n <- length(x)
     rvec <- rep.int(NA_character_, n)
-    for(i in 1:n) rvec[i] <- toString(x[[i]], width = width, ...)
+    for(i in 1:n) {
+        y <- x[[i]]
+        ## need to remove class AsIs to avoid an infinite loop.
+        cl <- oldClass(y)
+        if(m <- match("AsIs", cl, 0)) oldClass(y) <- cl[-m]
+        rvec[i] <- toString(y, width = width, ...)
+    }
     ## AsIs might be around a matrix, which is not a class.
     dim(rvec) <- dim(x)
     format.default(rvec, justify = "right")

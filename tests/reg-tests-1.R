@@ -4993,3 +4993,10 @@ z <- try(cor(numeric(0), numeric(0), use="pairwise.complete.obs",
              method="kendall"))
 stopifnot(inherits(z, "try-error"))
 ##
+
+
+## infinite loop in format.AsIs reported on R-help by Bert Gunter
+## https://stat.ethz.ch/pipermail/r-help/2008-January/149504.html
+z <- rep(Sys.time(),5)
+data.frame(I(z))
+##

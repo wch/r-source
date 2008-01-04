@@ -313,6 +313,9 @@ BUG FIXES
     o	wilcox.test(exact=FALSE, conf.int=TRUE) could fail in some
 	extreme two-sample problems.  (Reported by Wolfgang Huber.)
 
+    o	format.AsIs() did not remove the "AsIs" class and so could go
+	into an infinite loop.
+
 
 
 
