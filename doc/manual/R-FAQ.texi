@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-02
+@set FAQ_DATE @value{FAQ_YEAR}-01-05
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2631,6 +2631,10 @@ A problem solving environment for fitting superposition models.
 @item TRAMPR
 Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
+@item TSA
+Functions and datasets detailed in the book ``Time Series Analysis
+With Applications in R'' (second edition) by Jonathan Cryer and Kung-Sik
+Chan, 2008, Springer.
 @item TSMySQL
 Time Series Database Interface extensions for MySQL.
 @item TSP
@@ -3915,6 +3919,8 @@ ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
+@item marginTree
+Margin trees for high-dimensional classification.
 @item mathgraph
 Tools for constructing and manipulating objects from a class of directed
 and undirected graphs.
@@ -5146,6 +5152,8 @@ Interface to the XGobi and XGvis programs for graphical data analysis.
 Natively read and write Excel files.
 @item xtable
 Export data to @LaTeX{} and @HTML{} tables.
+@item xts
+Extensible time series.
 @item yaImpute
 Performs popular nearest neighbor routines.
 @item yest
