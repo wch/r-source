@@ -4441,9 +4441,11 @@ Note that the following operators are predefined
 @node Separators, Operator tokens, Special operators, Tokens
 @subsection Separators
 
-Although not strictly tokens, stretches of whitespace characters (spaces
-and tabs) serve to delimit tokens in case of ambiguity, (compare
-@code{x<-5} and @code{x < -5}).
+Although not strictly tokens, stretches of whitespace characters
+(spaces@footnote{Currently only ASCII spaces are regarded as whitespace,
+not other Unicode space characters.}, tabs and formfeeds) serve to
+delimit tokens in case of ambiguity, (compare @code{x<-5} and @code{x <
+-5}).
 
 
 Newlines have a function which is a combination of token separator and
