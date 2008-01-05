@@ -845,7 +845,12 @@ comments in the files: the system versions are in the @file{etc}
 folder); in the latter you can replace @code{Arial} by @code{Arial
 Unicode MS}, and we tried @code{FixedSys} and @code{MS Mincho} in
 @file{Rconsole}.  (Note that @file{Rdevga} only applies to Windows
-graphics devices and not, say, to @code{pdf}.)
+graphics devices and not, say, to @code{pdf}.)  
+
+Note that it is important that the console font uses double-width
+characters for all CJK characters (as that is what the width table used
+assumes): this is true for the fonts intended for CJK locales but not
+for example for Lucida Console.
 
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
