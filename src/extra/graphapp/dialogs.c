@@ -34,48 +34,30 @@
 
 #include <shlobj.h>
 
+typedef struct {
+    char default_str[MAX_PATH];
+    char question[40];
+} browserInfo;
+
+#define STATUSTEXT 14146
+
 static int CALLBACK
 InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
 {
-    char szDir[MAX_PATH];
+    char szDir[MAX_PATH], status[MAX_PATH + 40];
+    
     if (uMsg == BFFM_INITIALIZED) {
-	SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
+	SendMessage(hwnd, BFFM_SETSELECTION, 1, (LPARAM)&((browserInfo*)lpData)->default_str);
     } else if (uMsg == BFFM_SELCHANGED) {
-	if (SHGetPathFromIDList((LPITEMIDLIST) lp ,szDir))
-	    SendMessage(hwnd, BFFM_SETSTATUSTEXT, 0, (LPARAM) szDir);
+	if (SHGetPathFromIDList((LPITEMIDLIST) lp ,szDir)) {
+	    snprintf(status, MAX_PATH+40, "%s\n %s", ((browserInfo*)lpData)->question, szDir);
+	    SetDlgItemText(hwnd, STATUSTEXT, status);
+	    SendMessage(hwnd, BFFM_ENABLEOK, 0, TRUE);
+	} else
+	    SendMessage(hwnd, BFFM_ENABLEOK, 0, FALSE);
     }
     return(0);
 }
-
-/* browse for a folder under the Desktop, return the path in the argument */
-
-static void selectfolder(char *folder, const char *title)
-{
-    char buf[MAX_PATH];
-    LPMALLOC g_pMalloc;
-    BROWSEINFO bi;
-    LPITEMIDLIST pidlBrowse;
-
-    /* Get the shell's allocator. */
-    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
-
-    ZeroMemory(&bi, sizeof(bi));
-    bi.hwndOwner = 0;
-    bi.pidlRoot = NULL;
-    bi.pszDisplayName = buf;
-    bi.lpszTitle = title;
-    bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT;
-    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
-    bi.lParam = (LPARAM) folder;
-
-    /* Browse for a folder and return its PIDL. */
-    pidlBrowse = SHBrowseForFolder(&bi);
-    if (pidlBrowse != NULL) {
-	SHGetPathFromIDList(pidlBrowse, folder);
-        g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
-    }
-}
-
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];
@@ -362,7 +344,6 @@ char *askfilesavewithdir(const char *title, const char *default_name, const char
 
 	static const char * QUESTION_TITLE	= "Question";
 	static const char * PASSWORD_TITLE	= "Password Entry";
-	static const char * FINDDIR_TITLE	= "Choose directory";
 
 static void add_data(window w)
 {
@@ -397,16 +378,6 @@ static void hit_button(control c)
 
 	d->hit = value;
 	hide(w);
-}
-
-static void browse_button(control c)
-{
-    window w = parentwindow(c);
-    dialog_data *d = data(w);
-    char strbuf[MAX_PATH];
-    strcpy(strbuf, GA_gettext(d->text));
-    selectfolder(strbuf, G_("Choose a folder"));
-    if(strlen(strbuf)) settext(d->text, strbuf);
 }
 
 static void hit_key(window w, int key)
@@ -496,13 +467,7 @@ static window init_askstr_dialog(const char *title, const char *question,
 	d = data(win);
 	d->question = newlabel(question, rect(10,h,tw+4,h*2+2),
 			AlignLeft);
-	if (title == FINDDIR_TITLE) {
-	    bw = strwidth(SystemFont, G_("Browse")) * 3/2;
-	    d->text = newfield(default_str, rect(10,h*4,tw+4-bw,h*3/2));
-	    newbutton(G_("Browse"), rect(20+tw-bw, h*4-2, bw, h+10),
-		      browse_button);
-	}
-	else if (title == PASSWORD_TITLE)
+	if (title == PASSWORD_TITLE)
 		d->text = newpassword(default_str, rect(10,h*4,tw+4,h*3/2));
 	else
 		d->text = newfield(default_str, rect(10,h*4,tw+4,h*3/2));
@@ -544,21 +509,35 @@ char *askstring(const char *question, const char *default_str)
 
 char *askcdstring(const char *question, const char *default_str)
 {
-	static window win = NULL;
-	window prev = current_window;
+    LPMALLOC g_pMalloc;
+    BROWSEINFO bi;
+    LPITEMIDLIST pidlBrowse;
+    browserInfo info;
+    
+    strncpy(info.question, question, 40);
+    strncpy(info.default_str, default_str, MAX_PATH);
 
-	if (! win)
-		win = init_askstr_dialog(FINDDIR_TITLE, question, default_str);
-	else {
-		settext(data(win)->question, question);
-		settext(data(win)->text, default_str);
-	}
-	if (TopmostDialogs & MB_TOPMOST)
-	    BringToTop(win, 1);
-	handle_message_dialog(win);
-	current_window = prev;
+    /* Get the shell's allocator. */
+    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return NULL;
 
-	return get_dialog_string(win);
+    ZeroMemory(&bi, sizeof(bi));
+    bi.hwndOwner = 0;
+    bi.pidlRoot = NULL;
+    bi.pszDisplayName = strbuf;
+    bi.lpszTitle = question;
+    bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
+    bi.lParam = (LPARAM) &info;
+
+    /* Browse for a folder and return its PIDL. */
+    pidlBrowse = SHBrowseForFolder(&bi);
+    if (pidlBrowse != NULL) {
+	SHGetPathFromIDList(pidlBrowse, strbuf);
+        g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
+        if (strbuf[0]) 
+            return strbuf;
+    }
+    return NULL;
 }
 
 char *askpassword(const char *question, const char *default_str)
