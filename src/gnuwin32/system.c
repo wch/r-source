@@ -798,6 +798,7 @@ int cmdlineoptions(int ac, char **av)
        embedded applications get no limit */
     {    
 	MEMORYSTATUSEX ms;
+	ms.dwLength = sizeof(MEMORYSTATUSEX);
 	GlobalMemoryStatusEx(&ms); /* Win2k or later */
 	Virtual = ms.ullTotalVirtual; /* uint64 = DWORDLONG */
 #ifdef WIN64
