@@ -26,6 +26,7 @@ trace <- function(what, tracer, exit, at, print, signature, where = topenv(paren
     else if(nargs() == 1)
         return(.primTrace(what))
     tState <- tracingState(FALSE)
+    on.exit(tracingState(tState))
     ## now call the version in the methods package, to ensure we get
     ## the correct name space (e.g., correct version of class())
     call <- sys.call()
