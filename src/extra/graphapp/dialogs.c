@@ -523,6 +523,8 @@ char *askcdstring(const char *question, const char *default_str)
 
     ZeroMemory(&bi, sizeof(bi));
     bi.hwndOwner = 0;
+    /* CSIDL_DESKTOP gets mapped to the User's desktop in Vista
+       (a bug).  SHGetFolderLocation is Win2k or later */
     if (!SUCCEEDED(SHGetFolderLocation(NULL, CSIDL_DRIVES, NULL, 0, 
 				       (LPITEMIDLIST *) &bi.pidlRoot))) 
 	return NULL;
