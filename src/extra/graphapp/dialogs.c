@@ -522,7 +522,7 @@ char *askcdstring(const char *question, const char *default_str)
 
     ZeroMemory(&bi, sizeof(bi));
     bi.hwndOwner = 0;
-    bi.pidlRoot = NULL;
+    if (!SUCCEEDED(SHGetSpecialFolderLocation(0, CSIDL_DESKTOP, &bi.pidlRoot))) return NULL;
     bi.pszDisplayName = strbuf;
     bi.lpszTitle = question;
     bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
