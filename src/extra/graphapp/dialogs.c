@@ -23,7 +23,7 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Copyright (C) 2004--2006 	The R Foundation
+/* Copyright (C) 2004--2008 	The R Foundation
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
@@ -56,7 +56,9 @@ static void selectfolder(char *folder, const char *title)
     if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
 
     bi.hwndOwner = hwnd;
-    bi.pidlRoot = NULL;
+    //bi.pidlRoot = NULL;
+    SHGetSpecialFolderLocation(NULL, CSIDL_DRIVES, 
+			       (LPITEMIDLIST *) &bi.pidlRoot);
     bi.pszDisplayName = buf;
     bi.lpszTitle = title;
     bi.ulFlags = BIF_RETURNONLYFSDIRS;

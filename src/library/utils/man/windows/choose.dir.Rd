@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/choose.dir.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007 R Core Development Team
+% Copyright 2007-8 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{choose.dir}
@@ -24,13 +24,6 @@ choose.dir(default = "", caption = "Select folder")
   This brings up a dialog box with a text field to enter the folder path
   and a \sQuote{Browse} button to access the Windows shell folder
   selection widget.
-
-  Note: the folder selection widget appears broken on Vista when called
-  from the GUI (but not from \file{Rterm}): only the Desktop is shown
-  and it is impossible to navigate below it.
-
-  The \sQuote{Change dir ...} menu item uses the same dialog box, and so
-  has the same Vista issues.
 }
 \seealso{
   \code{\link{choose.files}}
