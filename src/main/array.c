@@ -239,7 +239,7 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 
 SEXP DropDims(SEXP x)
 {
-    SEXP q, dims, dimnames, newnames = R_NilValue;
+    SEXP dims, dimnames, newnames = R_NilValue;
     int i, n, ndims;
 
     PROTECT(x);
@@ -265,26 +265,27 @@ SEXP DropDims(SEXP x)
     }
 
     if (n <= 1) {
-	/* We have reduced to a vector result. */
+	/* We have reduced to a vector result.
+	   If that has length one, it is ambiguous which dimnames to use,
+	   so use it if there is only one (as from R 2.7.0).
+	 */
 	if (dimnames != R_NilValue) {
-	    n = length(dims);
-	    if (TYPEOF(dimnames) == VECSXP) {
-		for (i = 0; i < n; i++) {
+	    if(LENGTH(x) != 1) {
+		for (i = 0; i < LENGTH(dims); i++) {
 		    if (INTEGER(dims)[i] != 1) {
 			newnames = VECTOR_ELT(dimnames, i);
 			break;
 		    }
 		}
-	    }
-	    else {
-		q = dimnames;
-		for (i = 0; i < n; i++) {
-		    if (INTEGER(dims)[i] != 1) {
-			newnames = CAR(q);
-			break;
+	    } else { /* drop all dims: keep names if unambiguous */
+		int cnt;
+		for(i = 0, cnt = 0; i < LENGTH(dims); i++)
+		    if(VECTOR_ELT(dimnames, i) != R_NilValue) cnt++;
+		if(cnt == 1)
+		    for (i = 0; i < LENGTH(dims); i++) {
+			newnames = VECTOR_ELT(dimnames, i);
+			if(newnames != R_NilValue) break;
 		    }
-		    q = CDR(q);
-		}
 	    }
 	}
 	PROTECT(newnames);
@@ -292,8 +293,7 @@ SEXP DropDims(SEXP x)
 	setAttrib(x, R_DimSymbol, R_NilValue);
 	setAttrib(x, R_NamesSymbol, newnames);
 	UNPROTECT(1);
-    }
-    else {
+    } else {
 	/* We have a lower dimensional array. */
 	SEXP newdims, dnn, newnamesnames = R_NilValue;
 	dnn = getAttrib(dimnames, R_NamesSymbol);

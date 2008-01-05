@@ -61,7 +61,8 @@ x$name
   }
   \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
-    only works for extracting elements, not for the replacement.
+    only works for extracting elements, not for the replacement.  See
+    \code{\link{drop}} for further details.
   }
   \item{exact}{Controls possible partial matching of \code{[[} when
     extracting by a character vector (for most objects, but see under

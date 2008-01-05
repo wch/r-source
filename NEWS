@@ -187,6 +187,11 @@ NEW FEATURES
 
     o	spline() gets an 'xout' argument, analogously to approx().
 
+    o	Where an array is dropped to a length-one vector by drop() or
+	[, drop = TRUE], the result now has names if exactly one of
+	the dimensions was named.  (This is compatible with S.)
+	Previously there were no names.
+
 
 DEPRECATED & DEFUNCT
 
@@ -317,6 +322,9 @@ BUG FIXES
 
     o	format.AsIs() did not remove the "AsIs" class and so could go
 	into an infinite loop.
+
+    o	smmmary.mlm() lost the names of the coefficients when there
+	was only one.
 
 
 

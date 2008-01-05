@@ -1,6 +1,6 @@
 % File src/library/base/man/drop.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{drop}
@@ -20,7 +20,9 @@ drop(x)
   or \code{\link{array}}), then \code{drop} returns an object like
   \code{x}, but with any extents of length one removed.  Any
   accompanying \code{dimnames} attribute is adjusted and returned with
-  \code{x}.
+  \code{x}: if the result is a vector the \code{names} are taken from
+  the \code{dimnames} (if any).  If the result is a length-one vector,
+  the names are taken from the first dimension with a dimname.
 
   Array subsetting (\code{\link{[}}) performs this reduction unless used
   with \code{drop = FALSE}, but sometimes it is useful to invoke

@@ -5000,3 +5000,18 @@ stopifnot(inherits(z, "try-error"))
 z <- rep(Sys.time(),5)
 data.frame(I(z))
 ##
+
+
+## drop with length-one result
+x <- matrix(1:4, 4,1, dimnames=list(letters[1:4], NULL))
+stopifnot(identical(names(drop(x)), letters[1:4])) # was OK
+stopifnot(identical(names(drop(x[1,,drop=FALSE])), "a")) # was no names
+stopifnot(identical(names(x[1,]), "a")) # ditto
+# now consistency tests.
+x <- matrix(1, 1, 1, dimnames=list("a", NULL))
+stopifnot(identical(names(x[,]), "a"))
+x <- matrix(1, 1, 1, dimnames=list(NULL, "a"))
+stopifnot(identical(names(x[,]), "a"))
+x <- matrix(1, 1, 1, dimnames=list("a", "b"))
+stopifnot(is.null(names(x[,])))
+## names were dropped in R < 2.7.0 in all cases except the first.
