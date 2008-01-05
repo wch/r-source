@@ -813,6 +813,7 @@ int cmdlineoptions(int ac, char **av)
 #ifdef WIN64
     {    
 	MEMORYSTATUSEX ms;
+	ms.dwLength = sizeof(MEMORYSTATUSEX);
 	GlobalMemoryStatusEx(&ms); /* Win2k or later */
 	Virtual = ms.ullTotalVirtual; /* uint64 = DWORDLONG */
 	R_max_memory = ms.ullTotalPhys;
@@ -825,6 +826,7 @@ int cmdlineoptions(int ac, char **av)
 	   Since our applications are large-address aware, should return
 	   -1 on machines with >= 4Gb of RAM
 	*/
+	ms.dwLength = sizeof(MEMORYSTATUS);
 	GlobalMemoryStatus(&ms);
 	Virtual = ms.dwTotalVirtual; /* uint32 = DWORD */
 	Phys = ms.dwTotalPhys; /* -1 maps to just under 4Gb */
