@@ -2672,8 +2672,15 @@ function(db, def_enc = FALSE)
 
         tags <- sapply(x$data$tags, "[[", 1L)
         ## Let's not worry about named sections for the time being ...
-        bad_tags <- c(mandatory_tags %w/o% tags,
-                      if(!length(x$meta$aliases)) "alias")
+        bad_tags <-
+            c(mandatory_tags %w/o% tags,
+              ## Also catch empty mandatory sections.
+              Filter(Negate(is.na),
+                     mandatory_tags[regexpr("^[[:space:]]*$",
+                                            x$data$vals[match(mandatory_tags,
+                                                              tags, NA)])
+                                    > -1]),
+              if(!length(x$meta$aliases)) "alias")
         if(length(bad_tags))
             files_with_missing_mandatory_tags <-
                 rbind(files_with_missing_mandatory_tags,
