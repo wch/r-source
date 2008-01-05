@@ -131,8 +131,8 @@ printCoefmat <-
             warning("option \"show.signif.stars\" is invalid: assuming TRUE")
             signif.stars <- TRUE
         }
-	pv <- xm[, nc]
 	if(any(okP <- ok[,nc])) {
+	pv <- as.vector(xm[, nc]) # drop names
 	    Cf[okP, nc] <- format.pval(pv[okP],
                                        digits = dig.tst, eps = eps.Pvalue)
 	    signif.stars <- signif.stars && any(pv[okP] < .1)
