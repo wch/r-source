@@ -135,6 +135,10 @@ WORKAROUNDS
 	Fortran output will be written to a file named 'fort.6' in the
 	working directory.
 
+    o	Browsing for a directory in choose.dir() and the Rgui 
+	'Change Dir...' menu item now works around Vista's confusion
+	about 'desktop' by starting at 'My Computer'.
+
 
 BUG FIXES
 

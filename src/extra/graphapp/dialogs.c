@@ -23,11 +23,12 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Copyright (C) 2004--2006 	The R Foundation
+/* Copyright (C) 2004--2008 	The R Foundation
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
 
+#define _WIN32_WINNT 0x0500
 #include "win-nls.h"
 #include "internal.h"
 #include "ga.h"
@@ -522,7 +523,9 @@ char *askcdstring(const char *question, const char *default_str)
 
     ZeroMemory(&bi, sizeof(bi));
     bi.hwndOwner = 0;
-    if (!SUCCEEDED(SHGetSpecialFolderLocation(0, CSIDL_DESKTOP, &bi.pidlRoot))) return NULL;
+    if (!SUCCEEDED(SHGetFolderLocation(NULL, CSIDL_DRIVES, NULL, 0, 
+				       (LPITEMIDLIST *) &bi.pidlRoot))) 
+	return NULL;
     bi.pszDisplayName = strbuf;
     bi.lpszTitle = question;
     bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
