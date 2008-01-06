@@ -224,3 +224,70 @@ for package panel
 
 
 BDR 2007-08-20
+
+
+6) Conversion to Unicode/UTF-8.
+
+[Notes are a work in progress.  This has been discussed since 2003.]
+
+As from R 2.7.0, Rgui works internally in UCS-2.  Currently key strokes are
+recorded as bytes, but that could easily be changed if we had testers with CJK
+keyboards.  Input/output is converted to/from the current locale in
+R_ReadConsole/R_WriteConsole.
+
+The internal pager works in UCS-2.
+
+History files are currently written in the locale's charset, for
+compatibility with Rterm and past versions of R.  We could perhaps
+alleviate this by using a BOM when writing in UCS-2, and detecting
+that when loading history files.
+
+Chris Jackson's script editor is still MBCS.  Quite a bit of work will
+be needed to convert it, since e.g. GA_gettext() expects to work with
+char *.
+
+The only bar to converting Rterm to UCS-2 is the lack of CJK keyboards
+to test on, but there would be little advantage in doing so.
+
+6.1 Internal use of UTF-8
+
+- Internal mbcs<->wchar/UCS translations would need to be modified to
+  use UTF-8 and not the locale charset.  Several places
+  (e.g. Riconv_open) already have support for this.  The
+  gettext-runtime (src/extra/intl) does not.
+
+*All* I/O would need to be translated.  This includes
+
+- Rprintf and allies, error messaging.
+
+- file names.  Since Windows NTFS can have file names not valid in the
+  current locale, this needs to use wfopen and similar interfaces, as
+  well as GetFullPathNameW ... also _w* versions of mkdir, rmdir,
+  unlink, open, popen, stat, system.  Use with care, as not all file
+  systems use UCS-2 file names.
+
+  This needs to include bzlib and zlib, as well as file/folder
+  selection widgets.
+
+- environment variables.  Both values and names, since _wputenv is
+  needed to set name=value strings.  It would be better to use wmain
+  and only ever use _wgetenv and _wputenv to avoid maintaining
+  parallel environments.
+
+- graphics devices.  Calls to text() and points() (with pch as a
+  string) need either to be translated or, preferably, the device
+  adjusted to accept UTF-8 (and we would need a flag to know if it
+  could).  Note that this impacts third-party devices.
+
+- GetUserName, GetComputerName, [GS]etCurrentDirectory.
+
+Also:
+
+- There would be compatibility issues with saved workspaces, although
+  few for those working in CP1252 locales.
+
+- It is not clear what to do with strings passed to packages.  We
+  could force conversion in .C and .Fortran, but most
+  character-manipulation packages are likely to be using .Call.
+
+BDR 2008-01-06
