@@ -1317,9 +1317,9 @@ settings available use
 @noindent
 which also explains how the various types of completion work.
 
-This feature is quite similar to the completion available in the
-@code{readline}-based command line interface on Unix-alikes: the MacOS X
-Gui has a different completion scheme.
+This feature is very similar to the completion available in the
+@code{readline}-based command line interface on Unix-alikes: the Mac OS
+X Gui has a different completion scheme.
 
 @newchap{}
 @node Workspaces, The R Console, Windows Features, Top
@@ -1329,7 +1329,7 @@ Gui has a different completion scheme.
 @menu
 * My workspace gets saved in a strange place.  How do I stop this?::  
 * How do I store my workspace in a different place?::  
-* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::  
+* Can I load workspaces saved under Unix/GNU-Linux or Mac OS?::  
 @end menu
 
 
@@ -1339,7 +1339,7 @@ Gui has a different completion scheme.
 Have you changed the working directory?: see Q6.2.
 
 
-@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or MacOS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
+@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or Mac OS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
 @section How do I store my workspace in a different place?
 
 Use the `File | Change Dir...' menu item to select a new working
@@ -1351,11 +1351,20 @@ From the command line you can change the working directory by the
 function @code{setwd}: see its help page.
 
 
-@node Can I load workspaces saved under Unix/GNU-Linux or MacOS?,  , How do I store my workspace in a different place?, Workspaces
-@section Can I load workspaces saved under Unix/GNU-Linux or MacOS?
+@node Can I load workspaces saved under Unix/GNU-Linux or Mac OS?,  , How do I store my workspace in a different place?, Workspaces
+@section Can I load workspaces saved under Unix/GNU-Linux or Mac OS?
 
 Yes.  All ports of R use the same format for workspaces, so they are
 interchangeable (for the same 2.x.? version of R, at least).
+
+Note though that character data in a workspace will be in a particular
+encoding that is not recorded in the workspace, so workspaces containing
+non-ASCII character data may not be interchangeable even on the same OS.
+Since R marks character data when it knows it to be in UTF-8 or Latin-1
+(including its Windows superset, CP1252), strings in those encodings are
+likely to be transferred correctly: fortunately this covers most of the
+common cases (Mac OS X normally uses UTF-8, and Linux users are likely
+to use Latin-1 (its interpretation of the C locale) or UTF-8.)
 
 
 @newchap{}
