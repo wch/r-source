@@ -13,8 +13,8 @@
 choose.dir(default = "", caption = "Select folder")
 }
 \arguments{
-  \item{default}{which folder to show initially}
-  \item{caption}{the caption on the selection dialog}
+  \item{default}{which folder to show initially.}
+  \item{caption}{the caption on the selection dialog.}
 }
 \value{
   A length-one character vector, character \code{NA} if
@@ -23,7 +23,11 @@ choose.dir(default = "", caption = "Select folder")
 \details{
   This brings up a dialog box with a text field to enter the folder path
   and a \sQuote{Browse} button to access the Windows shell folder
-  selection widget.
+  selection widget.  With the default \code{default = ""}, \sQuote{My
+    Computer} (or similar) is initially selected.
+
+  To workaround a bug, on Vista and Server 2008 only folders under
+  \sQuote{Computer} are accessible via the widget.
 }
 \seealso{
   \code{\link{choose.files}}

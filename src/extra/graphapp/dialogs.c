@@ -48,10 +48,12 @@ InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
     char szDir[MAX_PATH], status[MAX_PATH + 40];
     
     if (uMsg == BFFM_INITIALIZED) {
-	SendMessage(hwnd, BFFM_SETSELECTION, 1, (LPARAM)&((browserInfo*)lpData)->default_str);
+	SendMessage(hwnd, BFFM_SETSELECTION, 1,
+		    (LPARAM)&((browserInfo*)lpData)->default_str);
     } else if (uMsg == BFFM_SELCHANGED) {
 	if (SHGetPathFromIDList((LPITEMIDLIST) lp ,szDir)) {
-	    snprintf(status, MAX_PATH+40, "%s\n %s", ((browserInfo*)lpData)->question, szDir);
+	    snprintf(status, MAX_PATH+40, "%s\n %s", 
+		     ((browserInfo*)lpData)->question, szDir);
 	    SetDlgItemText(hwnd, STATUSTEXT, status);
 	    SendMessage(hwnd, BFFM_ENABLEOK, 0, TRUE);
 	} else
@@ -514,6 +516,7 @@ char *askcdstring(const char *question, const char *default_str)
     BROWSEINFO bi;
     LPITEMIDLIST pidlBrowse;
     browserInfo info;
+    OSVERSIONINFOEX osvi;
     
     strncpy(info.question, question, 40);
     strncpy(info.default_str, default_str, MAX_PATH);
@@ -521,13 +524,18 @@ char *askcdstring(const char *question, const char *default_str)
     /* Get the shell's allocator. */
     if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return NULL;
 
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    GetVersionEx((OSVERSIONINFO *)&osvi);
+
     ZeroMemory(&bi, sizeof(bi));
     bi.hwndOwner = 0;
+    if(osvi.dwMajorVersion >= 6) { /* future proof */
     /* CSIDL_DESKTOP gets mapped to the User's desktop in Vista
        (a bug).  SHGetFolderLocation is Win2k or later */
     if (!SUCCEEDED(SHGetFolderLocation(NULL, CSIDL_DRIVES, NULL, 0, 
 				       (LPITEMIDLIST *) &bi.pidlRoot))) 
 	return NULL;
+    }  /* else it is 0, which is CSIDL_DESKTOP */
     bi.pszDisplayName = strbuf;
     bi.lpszTitle = question;
     bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
