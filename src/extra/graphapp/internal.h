@@ -79,7 +79,6 @@ extern "C" {
 
 
 #include <commdlg.h>
-#include <richedit.h>
 
 #ifdef __MWERKS__
 	/* Metrowerks Codewarrior Cross-Platform C/C++ Compiler */

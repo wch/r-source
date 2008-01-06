@@ -43,6 +43,7 @@
 
 #include "internal.h"
 #include "ga.h"
+#include <richedit.h>
 
 #define SHADOW_WIDTH 1
 

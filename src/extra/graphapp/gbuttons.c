@@ -108,22 +108,24 @@ void scrolltext(textbox c, int lines)
 
 int ggetkeystate()
 {
-  int k = 0;
-  if (GetKeyState(VK_CONTROL)&0x8000)
-    k |= CtrlKey;
-  if (GetKeyState(VK_MENU)&0x8000)
-    k |= AltKey;
-  if (GetKeyState(VK_SHIFT)&0x8000)
-    k |= ShiftKey;
-  return k;
+    int k = 0;
+    if (GetKeyState(VK_CONTROL)&0x8000)
+	k |= CtrlKey;
+    if (GetKeyState(VK_MENU)&0x8000)
+	k |= AltKey;
+    if (GetKeyState(VK_SHIFT)&0x8000)
+	k |= ShiftKey;
+    return k;
 }
 
 
 /* Extra text editing functions for R, Chris Jackson */
+#include <richedit.h>
 
-
-/* Move the editor caret position lines down. If lines is negative moves caret up.
-   Stops at the top or the bottom if lines is too big or small */
+/* Move the editor caret position lines down. 
+   If lines is negative moves caret up.
+   Stops at the top or the bottom if lines is too big or small.
+*/
 
 void scrollcaret(textbox t, int lines)
 {
@@ -244,4 +246,3 @@ void selecttextex(control obj, long start, long end)
 	sel.cpMax = (end < 0) ? length : end;
 	sendmessage(obj->handle, EM_EXSETSEL, 0, &sel);
 }
-

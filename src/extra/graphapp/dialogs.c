@@ -678,6 +678,7 @@ void replacedialog(textbox t){
 }
 
 
+#include <richedit.h>
 /* Find and select a string in a rich edit control */
 
 static int richeditfind(HWND hwnd, char *what, int matchcase,
