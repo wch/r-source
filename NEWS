@@ -323,7 +323,7 @@ BUG FIXES
     o	format.AsIs() did not remove the "AsIs" class and so could go
 	into an infinite loop.
 
-    o	smmmary.mlm() lost the names of the coefficients when there
+    o	summary.mlm() lost the names of the coefficients when there
 	was only one.
 
 
