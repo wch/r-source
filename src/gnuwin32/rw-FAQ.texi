@@ -850,7 +850,12 @@ comments in the files: the system versions are in the @file{etc}
 folder); in the latter you can replace @code{Arial} by @code{Arial
 Unicode MS}, and we tried @code{FixedSys} and @code{MS Mincho} in
 @file{Rconsole}.  (Note that @file{Rdevga} only applies to Windows
-graphics devices and not, say, to @code{pdf}.)
+graphics devices and not, say, to @code{pdf}.)  
+
+Note that it is important that the console font uses double-width
+characters for all CJK characters (as that is what the width table used
+assumes): this is true for the fonts intended for CJK locales but not
+for example for Lucida Console.
 
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
@@ -1318,9 +1323,9 @@ library(rcompgen)
 @noindent
 which also explains how the various types of completion work.
 
-This feature is quite similar to the completion available in the
-@code{readline}-based command line interface on Unix-alikes: the MacOS X
-Gui has a different completion scheme.
+This feature is very similar to the completion available in the
+@code{readline}-based command line interface on Unix-alikes: the Mac OS
+X Gui has a different completion scheme.
 
 @newchap{}
 @node Workspaces, The R Console, Windows Features, Top
@@ -1330,7 +1335,7 @@ Gui has a different completion scheme.
 @menu
 * My workspace gets saved in a strange place.  How do I stop this?::  
 * How do I store my workspace in a different place?::  
-* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::  
+* Can I load workspaces saved under Unix/GNU-Linux or Mac OS?::  
 @end menu
 
 
@@ -1340,7 +1345,7 @@ Gui has a different completion scheme.
 Have you changed the working directory?: see Q6.2.
 
 
-@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or MacOS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
+@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or Mac OS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
 @section How do I store my workspace in a different place?
 
 Use the `File | Change Dir...' menu item to select a new working
@@ -1352,11 +1357,20 @@ From the command line you can change the working directory by the
 function @code{setwd}: see its help page.
 
 
-@node Can I load workspaces saved under Unix/GNU-Linux or MacOS?,  , How do I store my workspace in a different place?, Workspaces
-@section Can I load workspaces saved under Unix/GNU-Linux or MacOS?
+@node Can I load workspaces saved under Unix/GNU-Linux or Mac OS?,  , How do I store my workspace in a different place?, Workspaces
+@section Can I load workspaces saved under Unix/GNU-Linux or Mac OS?
 
 Yes.  All ports of R use the same format for workspaces, so they are
 interchangeable (for the same 2.x.? version of R, at least).
+
+Note though that character data in a workspace will be in a particular
+encoding that is not recorded in the workspace, so workspaces containing
+non-ASCII character data may not be interchangeable even on the same OS.
+Since R marks character data when it knows it to be in UTF-8 or Latin-1
+(including its Windows superset, CP1252), strings in those encodings are
+likely to be transferred correctly: fortunately this covers most of the
+common cases (Mac OS X normally uses UTF-8, and Linux users are likely
+to use Latin-1 (its interpretation of the C locale) or UTF-8.)
 
 
 @newchap{}
@@ -1416,7 +1430,7 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 See the `R Installation and Administration' manual.
 
-It is possible to cross-build R for Windows 64 using @code{binutils} and
+It is possible to cross-build R for Windows x64 using @code{binutils} and
 @code{gcc} with the @samp{x86_64-pc-mingw32} target, using suitable
 settings in @file{src/gnuwin32/MkRules} (see the comments there).
 However, at present that toolchain is experimental and the build does
