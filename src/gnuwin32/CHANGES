@@ -22,7 +22,9 @@ GUI CHANGES
 
     o	The folder selection dialog used by choose.dir() and 
  	File | Change dir is now re-sizeable with a status line showing
-	the currently selected path.
+	the currently selected path.  The workaround for Vista
+ 	mentioned under '2.6.1 Patched' is now applied only on
+	Vista and later.
 
     o	When Rgui is launched from a terminal, C output from
 	ill-formed packages that write to stdout or stderr rather than
