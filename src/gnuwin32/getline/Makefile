@@ -1,10 +1,10 @@
 include ../MkRules
 
-CPPFLAGS=-DWin32 -I../../include
+CPPFLAGS=-DWin32 -I. -I../../include
 CFLAGS=$(OPTFLAGS)
 LINKFLAGS=-s
 
-gl.a: getline.o
+gl.a: getline.o wc_history.o
 
 test: testgl.exe
 	$(ECHO) starting testgl. Hit CRTL+BREAK to stop it.

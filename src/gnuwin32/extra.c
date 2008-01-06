@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2007  The R Development Core Team
+ *  Copyright (C) 2005--2008  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -348,7 +348,8 @@ void Rwin_fpset()
     __asm__ ( "fninit" ) ;
 }
 
-#include "getline/getline.h"  /* for gl_load/savehistory */
+#include "getline/getline.h"     /* for gl_load/savehistory */
+#include "getline/wc_history.h"  /* for wgl_load/savehistory */
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
@@ -357,7 +358,10 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm)) {
+    if (CharacterMode == RGui) {
+	R_setupHistory(); /* re-read the history size */
+	wgl_savehistory(CHAR(STRING_ELT(sfile, 0)), R_HistorySize);
+    } else if (R_Interactive && CharacterMode == RTerm) {
 	R_setupHistory(); /* re-read the history size */
 	gl_savehistory(CHAR(STRING_ELT(sfile, 0)), R_HistorySize);
     } else
@@ -373,7 +377,9 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
+    if (CharacterMode == RGui)
+	wgl_loadhistory(CHAR(STRING_ELT(sfile, 0)));
+    else if (R_Interactive && CharacterMode == RTerm)
 	gl_loadhistory(CHAR(STRING_ELT(sfile, 0)));
     else
 	errorcall(call, _("'loadhistory' can only be used in Rgui and Rterm"));

@@ -186,6 +186,7 @@ gl_getc(void)
 	  } 
 	} 
 	else 
+	    /* There is also UnicodeChar -- not clear how it works */
 	  c = r.Event.KeyEvent.uChar.AsciiChar;
       }
       else if (vk == VK_MENU && AltIsDown) { 
@@ -227,8 +228,7 @@ gl_puts(const char *const buf)
     }
 }
 
-static void
-gl_error(const char *const buf)
+void gl_error(const char *const buf)
 {
     int len = strlen(buf);
 
@@ -328,7 +328,7 @@ getline(const char *prompt, char *buf, int buflen)
 		if(mbcslocale) {
 		    mb_len = 0;
 		    mbs_init(&mb_st);
-		    for(i = 0; i< gl_pos ;) {
+		    for(i = 0; i < gl_pos ;) {
 			mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
 			mb_len = Ri18n_wcwidth(wc);
 			i += (wc==0) ? 0 : mb_len;
@@ -357,7 +357,7 @@ getline(const char *prompt, char *buf, int buflen)
 		break;
 		case '\006': /* ^F */
 		  if(mbcslocale) { 
-		      if(gl_pos >= gl_cnt)break;
+		      if(gl_pos >= gl_cnt) break;
 		      mb_len = 0;
 		      mbs_init(&mb_st);
 		      for(i = 0; i<= gl_pos ;){
@@ -440,7 +440,7 @@ getline(const char *prompt, char *buf, int buflen)
 			if(mbcslocale) { 
 			    mb_len = 0;
 			    mbs_init(&mb_st);
-			    for(i = 0; i<= gl_pos ;){
+			    for(i = 0; i <= gl_pos ;) {
 				mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
 				mb_len = Ri18n_wcwidth(wc);
 				i += (wc==0) ? 0 : mb_len;
@@ -453,7 +453,7 @@ getline(const char *prompt, char *buf, int buflen)
 		       if(mbcslocale) {
 			   mb_len = 0;
 			   mbs_init(&mb_st);
-			   for(i = 0; i <= gl_pos ;){
+			   for(i = 0; i <= gl_pos ;) {
 			       mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
 			       mb_len = Ri18n_wcwidth(wc);
 			       i += (wc==0) ? 0 :mb_len;
@@ -498,14 +498,17 @@ gl_addchar(int c)
     if(mbcslocale) {
 	mbstate_t mb_st;
 	wchar_t wc;
-	char s[9];
+	char s[9]; /* only 3 needed */
 	int res;
 	int clen ;
       
 	s[0] = c;
 	clen = 1;
 	res = 0;
-	if((unsigned int)c >= (unsigned int)0x80) {
+	/* This is a DBCS locale, so input is 1 or 2 bytes.
+	   This loop should not be necessary.
+	 */
+	if((unsigned int) c >= (unsigned int) 0x80) {
             while(clen <= MB_CUR_MAX) {
 	        mbs_init(&mb_st);
 	        res = mbrtowc(&wc, s, clen, &mb_st);
@@ -522,9 +525,9 @@ gl_addchar(int c)
 	if( res >= 0 ) {
 	    if (!(gl_overwrite == 0 || gl_pos == gl_cnt))  
 		gl_del(0); 
-	    for (i=gl_cnt; i >= gl_pos; i--)
+	    for (i = gl_cnt; i >= gl_pos; i--)
                 gl_buf[i+clen] = gl_buf[i];
-	    for (i=0; i<clen; i++)
+	    for (i = 0; i < clen; i++)
                 gl_buf[gl_pos + i] = s[i];
 	    gl_fixup(gl_prompt, gl_pos, gl_pos+clen);
 	}

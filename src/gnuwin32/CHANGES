@@ -21,13 +21,19 @@ WINDOWS VERSIONS
 GUI CHANGES
 
     o	The folder selection dialog used by choose.dir() and 
- 	File | Change dir is now resizeable with a status line showing
+ 	File | Change dir is now re-sizeable with a status line showing
 	the currently selected path.
 
     o	When Rgui is launched from a terminal, C output from
 	ill-formed packages that write to stdout or stderr rather than
 	use Rprintf will appear in the terminal rather than being
 	lost.  (Only on XP or later.)
+
+    o	Rgui has been re-written to work internally in Unicode.  This
+	means that copy and paste will be done in Unicode, and should
+	now work correctly if R is being run in a different locale
+	from other applications.  [Not all parts of CJK support have
+	yet been tested.]
 
 
 TIME ZONES
@@ -37,8 +43,9 @@ TIME ZONES
 	public-domain tz database (which is widely used, including on
 	Linux, Mac OS X, Solaris, AIX, FreeBSD and by Java and Tcl).
 	This means that time zones should now be referred to by their
-	'standard' names, and output correctly (e.g. not the
-	nonsensical 'GMT Daylight Time' used by Windows).
+	'standard' names, and output correctly (e.g. not the incorrect
+	'GMT Daylight Time' for 'British Summer Time' used by
+	Windows).
 
 	An attempt is made to identify the system timezone from the
 	Windows' Registry.  If this does not work or is incorrect, set
@@ -112,8 +119,7 @@ BUILDING R
 	for gfortran).
 
     o	We now presume version 2.7.0 of Rtools.exe, in which gcc is
-	version 4.2.1.  If you still are using an earlier version, set
-	GCC4_SUFF in MkRules.
+	version 4.2.1.
 
     o	We now assume Tcl/Tk version 8.5.x.
 

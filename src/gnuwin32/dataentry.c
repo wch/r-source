@@ -135,15 +135,21 @@ static void de_delete(control c);
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h> /* for Sleep */
 
-extern int mb_char_len(const char *, int, wchar_t *); /* from console.c */
+int mb_char_len(const char *buf, int clength)
+{
+    int i, mb_len = 0;
+
+    for(i = 0; i <= clength; i += mb_len)
+	mb_len = mbrtowc(NULL, buf+i, MB_CUR_MAX, NULL);
+    return mb_len;
+}
 
 static void moveback(DEstruct DE)
 {
     int mb_len;
-    wchar_t wc;
 
     if (DE->clength > 0) {
-	mb_len = mb_char_len(DE->buf, DE->clength-1, &wc);
+	mb_len = mb_char_len(DE->buf, DE->clength-1);
 	DE->clength -= mb_len;
 	DE->bufp -= mb_len;
 	printstring(DE, DE->buf, DE->clength, DE->crow, DE->ccol, 1);

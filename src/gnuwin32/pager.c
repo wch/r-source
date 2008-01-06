@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file pager.c
  *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004-8      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,10 +68,12 @@ static xbuf file2xbuf(const char *name, int del)
 {
     HANDLE f;
     DWORD rr, vv;
-    char *q, *p;
-    xlong dim;
+    char *p;
+    xlong dim, cnt;
     xint  ms;
     xbuf  xb;
+    wchar_t *wp, *q;
+
     f = CreateFile(name, GENERIC_READ, FILE_SHARE_READ,
 		   NULL, OPEN_EXISTING, 0, NULL);
     if (f == INVALID_HANDLE_VALUE) {
@@ -89,7 +91,10 @@ static xbuf file2xbuf(const char *name, int del)
     CloseHandle(f);
     if (del) DeleteFile(name);
     p[rr] = '\0';
-    for (q = p, ms = 1, dim = rr; *q; q++) {
+    cnt = mbstowcs(NULL, p, 0);
+    wp = (wchar_t *) malloc((cnt+1) * sizeof(wchar_t));
+    mbstowcs(wp, p, cnt+1);
+    for (q = wp, ms = 1, dim = cnt; *q; q++) {
 	if (*q == '\t')
 	    dim += TABSIZE;
 	else if (*q == '\n') {
@@ -97,17 +102,18 @@ static xbuf file2xbuf(const char *name, int del)
 	    ms++;
         }
     }
-    if ((xb = newxbuf(dim + 1, ms + 1, 1)))
-	for (q = p, ms = 0; *q; q++) {
-	    if (*q == '\r') continue;
-	    if (*q == '\n') {
-		ms++;
-		xbufaddc(xb, *q);
-		/* next line interprets underlining in help files */
-		if (q[1] == '_' && q[2] == '\b') xb->user[ms] = -2;
-	    } else xbufaddc(xb, *q);
-	}
     free(p);
+    if ((xb = newxbuf(dim + 1, ms + 1, 1)))
+	for (q = wp, ms = 0; *q; q++) {
+	    if (*q == L'\r') continue;
+	    if (*q == L'\n') {
+		ms++;
+		xbufaddxc(xb, *q);
+		/* next line interprets underlining in help files */
+		if (q[1] ==  L'_' && q[2] == L'\b') xb->user[ms] = -2;
+	    } else xbufaddxc(xb, *q);
+	}
+    free(wp);
     return xb;
 }
 
@@ -117,9 +123,7 @@ static void delpager(control m)
 
     ConsoleData p = getdata(m);
     if (!pagerMultiple) {
-	for (i = 0; i < pagerActualKept; i++) {
-	    xbufdel(pagerXbuf[i]);
-	}
+	for (i = 0; i < pagerActualKept; i++) xbufdel(pagerXbuf[i]);
 	pagerActualKept = 0;
     }
     else

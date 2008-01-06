@@ -34,6 +34,7 @@
 #include "rui.h"
 #include "editor.h"
 #include "getline/getline.h"
+#include "getline/wc_history.h"
 #define WIN32_LEAN_AND_MEAN 1
 #ifndef _WIN32_WINNT /* currently mingw does not define, mingw64 does */
 #define _WIN32_WINNT 0x0500     /* for MEMORYSTATUSEX */
@@ -413,8 +414,10 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     case SA_SAVE:
 	if(runLast) R_dot_Last();
 	if(R_DirtyImage) R_SaveGlobalEnv();
-	if (CharacterMode == RGui ||
-	    (R_Interactive && CharacterMode == RTerm)) {
+	if (CharacterMode == RGui) {
+	    R_setupHistory(); /* re-read the history size and filename */
+	    wgl_savehistory(R_HistoryFile, R_HistorySize);
+	} else if(R_Interactive && CharacterMode == RTerm) {
 	    R_setupHistory(); /* re-read the history size and filename */
 	    gl_savehistory(R_HistoryFile, R_HistorySize);
 	}
