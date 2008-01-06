@@ -836,6 +836,7 @@ int cmdlineoptions(int ac, char **av)
 	   so don't use that on those OSes */
 	{
 	    OSVERSIONINFO verinfo;
+    	    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	    GetVersionEx(&verinfo);
 	    switch(verinfo.dwPlatformId) {
 	    case VER_PLATFORM_WIN32_WINDOWS:
