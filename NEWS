@@ -192,6 +192,9 @@ NEW FEATURES
 	the dimensions was named.  (This is compatible with S.)
 	Previously there were no names.
 
+    o	[dpqr]gamma(*, shape=0) now work as limits of 'shape -> 0',
+	corresponding to the point distribution with all mass at 0.
+
 
 DEPRECATED & DEFUNCT
 

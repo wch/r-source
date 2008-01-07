@@ -30,7 +30,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{rate}{an alternative way to specify the scale.}
-  \item{shape, scale}{shape and scale parameters.  Must be strictly positive.}
+  \item{shape, scale}{shape and scale parameters.  Must be positive,
+    \code{scale} strictly.}
   \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities \eqn{p}
     are returned as \eqn{log(p)}.}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -54,7 +55,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
   for \eqn{x \ge 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
   (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the function implemented by \R's
-  \code{\link{gamma}()} and defined in its help.)
+  \code{\link{gamma}()} and defined in its help.  Note that \eqn{a=0}
+  corresponds to the trivial distribution with all point mass at 0.)
 
   The mean and variance are
   \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
@@ -91,7 +93,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 \source{
   \code{dgamma} is computed via the Poisson density, using code contributed
   by Catherine Loader (see \code{\link{dbinom}}).
-  
+
   \code{pgamma} uses an unpublished (and not otherwise documented)
   algorithm \sQuote{mainly by Morten Welinder}.
 
@@ -102,7 +104,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \emph{Applied Statistics},  \bold{24}, 385--388.
 
   plus a final Newton step to improve the approximation.
-  
+
   \code{rgamma} for \code{shape >= 1} uses
 
   Ahrens, J. H. and Dieter, U. (1982).

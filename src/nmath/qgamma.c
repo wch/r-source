@@ -140,7 +140,9 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #endif
     R_Q_P01_boundaries(p, 0., ML_POSINF);
 
-    if (alpha <= 0 || scale <= 0) ML_ERR_return_NAN;
+    if (alpha < 0 || scale <= 0) ML_ERR_return_NAN;
+
+    if (alpha == 0) /* all mass at 0 : */ return 0.;
 
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
 
