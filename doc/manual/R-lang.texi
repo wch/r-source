@@ -4442,10 +4442,10 @@ Note that the following operators are predefined
 @subsection Separators
 
 Although not strictly tokens, stretches of whitespace characters
-(spaces, tabs and formfeeds, in 8-bit Windows locales non-breaking
-spaces, and in UTF-8 locales other Unicode whitespace characters) serve
-to delimit tokens in case of ambiguity, (compare @code{x<-5} and @code{x
-< -5}).
+(spaces, tabs and formfeeds, on Windows and UTF-8 locales other Unicode
+whitespace characters@footnote{such as @code{U+A0}, non-breaking space,
+and @code{U+3000}, ideographic space.}) serve to delimit tokens in case of
+ambiguity, (compare @code{x<-5} and @code{x < -5}).
 
 
 Newlines have a function which is a combination of token separator and

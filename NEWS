@@ -196,10 +196,8 @@ NEW FEATURES
 	corresponding to the point distribution with all mass at 0.
 
    o	The definition of 'whitespace' used by the parser is slightly
-	wider: it includes non-breaking space in 8-bit Windows locales
-	and Unicode space characters in UTF-8 locales on machines
-	which use Unicode wide characters.
-
+	wider: it includes Unicode space characters on Windows and in
+	UTF-8 locales on machines which use Unicode wide characters.
 
 
 DEPRECATED & DEFUNCT
