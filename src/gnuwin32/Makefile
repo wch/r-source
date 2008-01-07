@@ -414,7 +414,7 @@ data-%:
 
 #                          ===== cleaning ======
 
-EXTRA_DIRS = blas bzip2 intl pcre trio xdr zlib
+EXTRA_DIRS = blas bzip2 intl pcre trio tzone xdr zlib
 
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o ../*/*.a *.a ../*/*.d ../*/Makedeps fixed/fixdesc
@@ -453,6 +453,7 @@ distclean: clean clean-recommended
 	../../etc/Rprofile.site ../../etc/rgb.txt \
 	../../share/make/wintests.mk \
 	../../tests/*.Rout ../../tests/*.Rout.fail
+	$(RM) -r ../../share/zoneinfo
 	$(MAKE) -C fixed distclean
 	$(MAKE) -C ../include -f Makefile.win distclean
 	-$(MAKE) -C installer distclean
