@@ -60,7 +60,12 @@ pnchisq_raw(double x, double f, double theta,
     static const double _dbl_min_exp = M_LN2 * DBL_MIN_EXP;
     /*= -708.3964 for IEEE double precision */
 
-    if (x <= 0.)	return lower_tail ? 0. : 1.;
+    if (x <= 0.) {
+	if(x == 0. && f == 0.)
+	    return lower_tail ? exp(-0.5*theta) : -expm1(-0.5*theta);
+	/* x < 0  or  x==0, f > 0 */
+	return lower_tail ? 0. : 1.;
+    }
     if(!R_FINITE(x))	return lower_tail ? 1. : 0.;
 
     /* This is principally for use from qnchisq */
