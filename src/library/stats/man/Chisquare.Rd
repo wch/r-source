@@ -41,8 +41,8 @@ rchisq(n, df, ncp=0)
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
-  The chi-squared distribution with \code{df}\eqn{= n > 0} degrees of
-  freedom has density
+  The chi-squared distribution with \code{df}\eqn{= n \ge 0}{= n >= 0}
+  degrees of freedom has density
   \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{%
     f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
   for \eqn{x > 0}.  The mean and variance are \eqn{n} and \eqn{2n}.
@@ -63,8 +63,8 @@ rchisq(n, df, ncp=0)
   \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}.
 
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
-  non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
-  see Johnson et al. (1995, chapter 29).
+  non-integer, and even \eqn{n = 0}, which is relevant for
+  non-centrality \eqn{\lambda > 0}, see Johnson et al. (1995, chapter~29).
 
   Note that \code{ncp} values larger than about 1e5 may give inaccurate
   results with many warnings for \code{pchisq} and \code{qchisq}.
@@ -85,7 +85,7 @@ rchisq(n, df, ncp=0)
 
   which computes the lower tail only (so the upper tail suffers from
   cancellation).
-  
+
   The non-central \code{qchisq} is based on inversion of \code{pchisq}.
 }
 \references{
@@ -134,5 +134,12 @@ mtext(expression("P-P plots : Noncentral  "*
                  chi^2 *"(n=1000, df=X, ncp= 1.2)"),
       cex = 1.5, font = 2, outer=TRUE)
 par(op)}
+
+## "analytical" test
+lam <- seq(0,100, by=.25)
+p00 <- pchisq(0,      df=0, ncp=lam)
+p.0 <- pchisq(1e-300, df=0, ncp=lam)
+stopifnot(all.equal(p00, exp(-lam/2)),
+          all.equal(p.0, exp(-lam/2)))
 }
 \keyword{distribution}
