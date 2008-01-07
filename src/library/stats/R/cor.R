@@ -55,7 +55,7 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
              r <- matrix(0, nrow = ncx, ncol = ncy)
              ## 2.6.0 assumed the diagonal was 1, but not so for all NAs,
              ## nor single non-NA pairs.
-             for (i in seq.int(1L, length.out = ncx)) {
+             for (i in seq_len(ncx)) {
                  for (j in seq_len(i)) {
                      x2 <- x[,i]
                      y2 <- x[,j]
@@ -81,8 +81,8 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
              ncx <- ncol(x)
              ncy <- ncol(y)
              r <- matrix(0, nrow = ncx, ncol = ncy)
-             for (i in 1L:ncx) {
-                 for (j in 1L:ncy) {
+             for (i in seq_len(ncx)) {
+                 for (j in seq_len(ncy)) {
                      x2 <- x[,i]
                      y2 <- y[,j]
                      ok <- complete.cases(x2, y2)
