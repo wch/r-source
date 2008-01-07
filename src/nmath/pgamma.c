@@ -673,13 +673,15 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(alph) || ISNAN(scale))
 	return x + alph + scale;
 #endif
-    if(alph <= 0. || scale <= 0.)
+    if(alph < 0. || scale <= 0.)
 	ML_ERR_return_NAN;
     x /= scale;
 #ifdef IEEE_754
     if (ISNAN(x)) /* eg. original x = scale = +Inf */
 	return x;
 #endif
+    if(alph == 0.) /* limit case; useful e.g. in pnchisq() */
+	return R_DT_1;
     return pgamma_raw (x, alph, lower_tail, log_p);
 }
 /* From: terra@gnome.org (Morten Welinder)
