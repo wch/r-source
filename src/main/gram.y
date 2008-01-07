@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -169,7 +169,9 @@ static int mbcs_get_next(int c, wchar_t *wc)
     mbstate_t mb_st;
 
     s[0] = c;
-    if((unsigned int)c < 0x80) {
+    /* This assumes (probably OK) that all MBCS embed ASCII as single-byte
+       lead bytes, including control chars */
+    if((unsigned int) c < 0x80) {
 	*wc = (wchar_t) c;
 	return 1;
     }
@@ -182,6 +184,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	res = mbrtowc(wc, s, clen, NULL);
 	if(res == -1) error(_("invalid multibyte character in mbcs_get_next"));
     } else {
+	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= MB_CUR_MAX) {
 	    mbs_init(&mb_st);
 	    res = mbrtowc(wc, s, clen, &mb_st);
@@ -873,6 +876,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 
 	    */
 	    end = SourcePtr - (xxcharcount - xxcharsave);
+	    /* FIXME: this should be whitespace */
 	    for (p = end ; p < SourcePtr && (*p == ' ' || *p == '\t') ; p++)
 		;
 	    if (*p == '#') {
@@ -1831,8 +1835,31 @@ static char yytext[MAXELTSIZE];
 static int SkipSpace(void)
 {
     int c;
-    while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f')
-	/* nothing */;
+
+#ifdef Win32
+    if(!mbcslocale) { /* 0xa0 is NBSP in all 8-bit Windows locales */
+	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f' || 
+	       (unsigned int) c == 0xa0) ;
+	return c;
+    }
+#endif
+#if defined(SUPPORT_UTF8) && defined(__STDC_ISO_10646__)
+    if(utf8locale) { /* Might work in other MBCS locales
+			but ctype functions need Unicode wchar_t */
+	int i, clen;
+	wchar_t wc;
+	while (1) {
+	    c = xxgetc();
+	    if (c == ' ' || c == '\t' || c == '\f') continue;
+	    if (c == '\n' || c == R_EOF) break;
+	    if ((unsigned int) c < 0x80) break;
+	    clen = mbcs_get_next(c, &wc);
+	    if(! Ri18n_iswctype(wc, Ri18n_wctype("blank")) ) break;
+	    for(i = 1; i < clen; i++) c = xxgetc();
+	}
+    } else
+#endif
+	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f') ;
     return c;
 }
 
