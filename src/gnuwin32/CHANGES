@@ -80,6 +80,10 @@ PACKAGE INSTALLATION
 	environment value MY_TCLTK: its value is now the path to the
 	directory containing tcl85.dll and tk85.dll.
 
+    o	The GraphApp DLL is now called Rgraphapp.dll to avoid any
+	confusion.  Packages using it (Cairo, RWinEdt) will need to be
+	re-installed for R 2.7.0.
+
 
 OTHERS
 
