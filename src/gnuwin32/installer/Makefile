@@ -107,7 +107,6 @@ fixups:
 	  $(RPREFIX)/doc/html/search/index.txt
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
-	$(RM) -f $(RPREFIX)/Tcl/doc/*.cnt $(RPREFIX)/Tcl/doc/*.HLP
 
 
 ## for Inno Setup installer
