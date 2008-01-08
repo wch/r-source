@@ -34,8 +34,8 @@ GUI CHANGES
     o	Rgui has been re-written to work internally in Unicode.  This
 	means that copy and paste will be done in Unicode, and should
 	now work correctly if R is being run in a different locale
-	from other applications.  [Not all parts of CJK support have
-	yet been tested.]
+	from other applications.  There is more support for input
+	methods, thanks to Ei-ji Nakama.
 
 
 TIME ZONES
