@@ -14,14 +14,14 @@ image-CFLAGS=-O2
 SOURCES=$(wildcard *.c)
 OBJECTS=$(foreach i,$(SOURCES),$(basename $i).o)
 
-DLL: libR.dll.a graphapp.dll
-	@cp graphapp.dll ../../../bin
+DLL: libR.dll.a Rgraphapp.dll
+	@cp Rgraphapp.dll ../../../bin
 
 
 ifeq ($(strip $(USE_IMPLIBS)),YES)
-implib: libgraphapp.dll.a
+implib: libRgraphapp.dll.a
 	@$(MKDIR) -p ../../../lib
-	@$(CP) libgraphapp.dll.a ../../../lib
+	@$(CP) libRgraphapp.dll.a ../../../lib
 else
 implib:
 endif
@@ -34,14 +34,17 @@ graphapp.def: $(OBJECTS)
 	@comm -23 g.def ga.hide >> $@
 	@$(RM) g.def
 
-graphapp.dll: $(OBJECTS) dllversion.o graphapp.def
+Rgraphapp.dll: $(OBJECTS) dllversion.o graphapp.def
 	$(DLL) -shared -mwindows -o $@ graphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32
 
 ## need to break mutual dependence with R.dll
 libR.dll.a: R.def
 
 clean:
-	$(RM) *.o *.a graphapp.def *.dll *~ \#*\# *.d Makedeps
+	$(RM) *.o graphapp.def *~ \#*\# *.d Makedeps
+
+distclean: clean
+	$(RM) *.a  *.dll
 
 # Dependencies
 dllversion.o: ../../include/Rversion.h

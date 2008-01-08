@@ -54,7 +54,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lgraphapp -liconv -lcomctl32 -lversion $(LIBEXTRAS)
+R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp -liconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
@@ -414,7 +414,7 @@ data-%:
 
 #                          ===== cleaning ======
 
-EXTRA_DIRS = blas bzip2 intl pcre trio tzone xdr zlib
+EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr zlib
 
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o ../*/*.a *.a ../*/*.d ../*/Makedeps fixed/fixdesc

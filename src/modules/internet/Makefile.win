@@ -15,14 +15,14 @@ WSOCK=-lws2_32
 	$(MKDIR) -p ../../../modules
 	@$(ECHO) "EXPORTS" > internet.def
 	@$(ECHO) " R_init_internet" >> internet.def
-	$(DLL) -shared  -o $@ $^ internet.def -L../../../$(IMPDIR) -lR -lgraphapp $(WSOCK)
+	$(DLL) -shared  -o $@ $^ internet.def -L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB) $(WSOCK)
 	@$(RM) internet.def
 
 ../../../modules/internet2.dll: internet2.o sockconn.o Rsock.o sock.o dllversion.o
 	$(MKDIR) -p ../../../modules
 	@$(ECHO) "EXPORTS" > internet.def
 	@$(ECHO) " R_init_internet2" >> internet.def
-	$(DLL) -shared  -o $@ $^ internet.def -L../../../$(IMPDIR) -lR -lgraphapp -lwininet $(WSOCK) 
+	$(DLL) -shared  -o $@ $^ internet.def -L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB) -lwininet $(WSOCK) 
 	@$(RM) internet.def
 
 internet2.o: internet.c

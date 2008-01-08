@@ -56,14 +56,13 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
-#graphappmain-CPPFLAGS=-I../../extra
 rgui-CPPFLAGS=-DWin32
 rterm-CPPFLAGS=-DWin32
 
 ## -luser32 -lkernel32 -ladvapi32 -lshell32 are now standard
-Rgui-LIBS=-L../../../$(IMPDIR) -lR -lgraphapp
-Rscript-LIBS=-L../../../$(IMPDIR) -lR -lgraphapp
-Rterm-LIBS=-L../../../$(IMPDIR) -lR -lgraphapp
+Rgui-LIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB)
+Rscript-LIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB)
+Rterm-LIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB)
 
 Rgui-LINKFLAGS=-mwindows $(LARGE_ADDR) $(LARGE_STACK)
 Rterm-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
@@ -107,7 +106,7 @@ bdx_SEXP-CFLAGS=-D_IN_RPROXY_
 ## for graphapp.h
 rproxy_impl-CFLAGS=-I../../../include
 Rproxy-DLLFLAGS=-mwindows
-Rproxy-DLLLIBS=-L../../../$(IMPDIR) -lR -lgraphapp -lole32 -luuid -loleaut32
+Rproxy-DLLLIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB) -lole32 -luuid -loleaut32
 ## this one needs Rproxy.dll as the LIBRARY line
 Rproxy.dll: Rproxy.def rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o

@@ -142,9 +142,9 @@ else
 IMPDIR=bin
 endif
 
-BLAS_LIBS= -L$(RHOME)/$(IMPDIR) -lRblas
-LAPACK_LIBS= -L$(RHOME)/$(IMPDIR) -lRlapack
-GRAPHAPP_LIB=-lgraphapp
+BLAS_LIBS=-L$(RHOME)/$(IMPDIR) -lRblas
+LAPACK_LIBS=-L$(RHOME)/$(IMPDIR) -lRlapack
+GRAPHAPP_LIB=-lRgraphapp
 
 AR=$(BINPREF)ar
 AS=$(BINPREF)as

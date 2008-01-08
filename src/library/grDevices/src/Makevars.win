@@ -9,7 +9,7 @@ ifdef SUPPORT_UTF8
 PKG_CPPFLAGS+=-DSUPPORT_UTF8
 endif
 
-PKG_LIBS=$(RHOME)/src/extra/zlib/libz.a -lgraphapp
+PKG_LIBS=$(RHOME)/src/extra/zlib/libz.a -lRgraphapp
 
 ## need to avoid quartz files added for 2.7.0
 OBJECTS=chull.o devNull.o devPicTeX.o devPS.o devWindows.o init.o
