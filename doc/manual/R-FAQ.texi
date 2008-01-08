@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-05
+@set FAQ_DATE @value{FAQ_YEAR}-01-08
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1840,6 +1840,8 @@ Bayesian prediction of complex computer codes, calibration of computer
 models, and emulation of computer programs, respectively.
 @item BARD
 Better Automated ReDistricting.
+@item BAYSTAR
+Bayesian analysis of threshold autoregressive models.
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -2322,6 +2324,8 @@ Reliability for gene expression from Affymetrix chip.
 @item ProfessR
 Programs to determine student grades and create examinations from
 question banks.
+@item PwrGSD
+Power in a Group Sequential Design.
 @item QCA
 Qualitative Comparative Analysis for crisp sets.
 @item QCAGUI
@@ -2690,6 +2694,8 @@ Map of weed intensity.
 Software for evaluating counterfactuals.
 @item XML
 Tools for reading @XML{} documents and DTDs.
+@item XReg
+Extreme regression.
 @item YaleToolkit
 Data exploration tools from Yale University.
 @item ZIGP
@@ -3668,6 +3674,8 @@ Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
 Computation on micro-arrays.
 @item howmany
 A lower bound for the number of correct rejections.
+@item hsmm
+Hidden Semi Markov Models.
 @item httpRequest
 Implements HTTP Request protocols (GET, POST, and multipart POST
 requests).
