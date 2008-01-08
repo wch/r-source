@@ -145,6 +145,11 @@ void setonfocus(control obj, actionfn fn)
 		obj->call->focus = fn;
 }
 
+void setim(control obj, imfn fn)
+{
+	if (obj)
+		obj->call->im = fn;
+}
 
 /*
  *  Drawing controls and windows.

@@ -250,6 +250,8 @@ struct callinfo
 	mousefn	mouserepeat;	/* mouse-down timer auto repeat */
 
 	dropfn drop;		/* drag-and-drop function */
+
+        imfn    im;             /* input method function */
     
 	actionfn focus;
   };

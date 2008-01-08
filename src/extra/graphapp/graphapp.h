@@ -130,6 +130,7 @@ typedef void (*keyfn)(control c, int key);
 typedef void (*menufn)(menuitem m);
 typedef void (*scrollfn)(scrollbar s, int position);
 typedef void (*dropfn)(control c, char *data);
+typedef void (*imfn)(control c, font *f, point *xy);
 
 /*
  *  Mouse buttons state (bit-fields).
@@ -536,6 +537,7 @@ typedef void (*dropfn)(control c, char *data);
 #define setforeground		GA_setforeground
 #define sethit		GA_sethit
 #define setimage		GA_setimage
+#define setim		GA_setim
 #define setkeyaction		GA_setkeyaction
 #define setkeydown		GA_setkeydown
 #define setlimittext		GA_setlimittext
@@ -1021,6 +1023,8 @@ void	setmouserepeat(control c, mousefn fn);
 void	setdrop(control c, dropfn fn);
 
 void	setonfocus(control c, actionfn fn);
+
+void    setim(control c, imfn fn);
 
 /*
  *  Using windows and controls.

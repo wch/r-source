@@ -120,6 +120,7 @@ void console_mousedown(control c, int button, point pt);
 void consoleresize(console c, rect r);
 void console_ctrlkeyin(control c, int key);
 void console_normalkeyin(control c, int k);
+void console_im(control c, font *f, point *pt);
 
 font consolefn;
 int fontsty, pointsize;

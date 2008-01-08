@@ -35,7 +35,7 @@ graphapp.def: $(OBJECTS)
 	@$(RM) g.def
 
 Rgraphapp.dll: $(OBJECTS) dllversion.o graphapp.def
-	$(DLL) -shared -mwindows -o $@ graphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32
+	$(DLL) -shared -mwindows -o $@ graphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32 -limm32
 
 ## need to break mutual dependence with R.dll
 libR.dll.a: R.def
