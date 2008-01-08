@@ -487,8 +487,15 @@ case) letter or digit and have one of the extensions @file{.R},
 It should be possible to read in the files using @code{source()}, so
 @R{} objects must be created by assignments.  Note that there need be no
 connection between the name of the file and the R objects created by it.
-The @R{} code files should only create @R{} objects and not call
-functions with side effects such as @code{require} and @code{options}.
+Ideally, the @R{} code files should only directly assign @R{} objects
+and definitely should not call functions with side effects such as
+@code{require} and @code{options}.  If computations are required to
+create objects these can use code `earlier' in the package (see the
+@samp{Collate} field) plus, @emph{only if lazyloading is used},
+functions in the @samp{Depends} packages provided that the objects
+created do not depend on those packages except @emph{via} name space
+imports.  (Packages without namespaces will work under somewhat less
+restrictive assumptions.)
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects) this will be
