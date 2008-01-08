@@ -31,7 +31,43 @@
 #include <Rmath.h>
 #include <direct.h>
 #define WIN32_LEAN_AND_MEAN 1
+/* Eventually #define _WIN32_WINNT 0x0502 for SetDllDirectoryA */
 #include <windows.h>
+
+/* SetDllDirectory is supported under XP SP1 and later.
+   If called with a non-NULL argument it sets the argument to be
+   the second item on the DLL search path (after the application
+   launch directory).  This is removed if called with NULL.
+
+   Prior to XP SP1 the second item was the current directory, but this
+   has (by default, 'safe DLL search mode') been moved below the
+   Windows dirs.  Using SetDllDirectory removes it altogether.
+
+   We fudge this via the current directory in earlier systems.
+ */
+typedef BOOL (WINAPI *PSDD)(LPCTSTR);
+
+int setDLLSearchPath(const char *path)
+{
+    int res = 0; /* failure */
+    PSDD p = (PSDD) -1;
+    static char wd[MAX_PATH] = "";  /* stored real current directory */
+    
+    if(p == (PSDD) -1)
+	p = (PSDD) GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
+				  "SetDllDirectoryA");
+    if(p) {
+	res = p(path);
+    } else { /* Windows 2000 */
+	if(path) {
+	    GetCurrentDirectory(MAX_PATH, wd);
+	} else if (wd[0]) {
+	    SetCurrentDirectory(wd);
+	    wd[0] = '\0';
+	}
+    }
+    return res;
+}
 
 #include <R_ext/Rdynload.h>
 #include <Rdynpriv.h>
@@ -48,7 +84,8 @@ static void fixPath(char *path)
     for(p = path; *p != '\0'; p++) if(*p == '\\') *p = '/';
 }
 
-static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now);
+static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now, 
+			       const char *search);
 static DL_FUNC getRoutine(DllInfo *info, char const *name);
 static void R_deleteCachedSymbols(DllInfo *dll);
 
@@ -98,21 +135,25 @@ _CRTIMP unsigned int __cdecl _clearfp (void);
 #define	_MCW_PC		0x00030000	/* Precision */
 #endif
 
-HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
+HINSTANCE R_loadLibrary(const char *path, int asLocal, int now, 
+			const char *search)
 {
     HINSTANCE tdlh;
     unsigned int dllcw, rcw;
+    int useSearch = search && search[0];
 
     rcw = _controlfp(0,0) & ~_MCW_IC;  /* Infinity control is ignored */
     _clearfp();
+    if(useSearch) setDLLSearchPath(search);
     tdlh = LoadLibrary(path);
+    if(useSearch) setDLLSearchPath(NULL);
     dllcw = _controlfp(0,0) & ~_MCW_IC;
     if (dllcw != rcw) {
-		_controlfp(rcw, _MCW_EM | _MCW_IC | _MCW_RC | _MCW_PC);
-		if (LOGICAL(GetOption(install("warn.FPU"), R_BaseEnv))[0])
-			warning(_("DLL attempted to change FPU control word from %x to %x"),
-					rcw,dllcw);
-	}
+	_controlfp(rcw, _MCW_EM | _MCW_IC | _MCW_RC | _MCW_PC);
+	if (LOGICAL(GetOption(install("warn.FPU"), R_BaseEnv))[0])
+	    warning(_("DLL attempted to change FPU control word from %x to %x"),
+		    rcw,dllcw);
+    }
     return(tdlh);
 }
 
@@ -156,3 +197,4 @@ static void GetFullDLLPath(SEXP call, char *buf, const char *path)
     /* fix slashes to allow inconsistent usage later */
     for (p = buf; *p; p++) if (*p == '\\') *p = '/';
 }
+

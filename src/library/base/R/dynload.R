@@ -14,8 +14,16 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-dyn.load <- function(x, local=TRUE, now=TRUE)
-    .Internal(dyn.load(x, as.logical(local), as.logical(now)))
+if(.Platform$OS.type == "windows") {
+    dyn.load <- function(x, local = TRUE, now = TRUE, ...) {
+        inDL <- function(x, local, now, ..., DLLpath = "")
+            .Internal(dyn.load(x, local, now, DLLpath))
+        inDL(x, as.logical(local), as.logical(now), ...)
+    }
+} else {
+    dyn.load <- function(x, local = TRUE, now = TRUE, ...)
+        .Internal(dyn.load(x, as.logical(local), as.logical(now), ""))
+}
 
 dyn.unload <- function(x)
     .Internal(dyn.unload(x))
@@ -40,7 +48,8 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
 
 
     syms = lapply(name, function(id) {
-       v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE, as.logical(withRegistrationInfo), PACKAGE = "base")
+       v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE,
+                  as.logical(withRegistrationInfo), PACKAGE = "base")
        if(is.null(v)) {
            msg <- paste("no such symbol", id)
            if(length(pkgName) && nzchar(pkgName))
@@ -204,9 +213,8 @@ print.DLLInfoList <- function(x, ...)
 
 
 `$.DLLInfo` <- function(x, name)
-{
-  getNativeSymbolInfo(as.character(name), PACKAGE = x)
-}
+    getNativeSymbolInfo(as.character(name), PACKAGE = x)
+
 
 
 

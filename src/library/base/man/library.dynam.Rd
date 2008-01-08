@@ -61,6 +61,10 @@ library.dynam.unload(chname, libpath,
   \code{chname} argument should not be set to the \code{pkgname}
   argument of \code{.First.lib} or \code{.onLoad}.
 
+  If \code{\dots} does not include a named argument \code{Dllpath},
+  \code{\link{dyn.load}} is called with \code{DLLpath} set to the
+  package's \file{libs} directory.  (Currently only used under Windows.)
+  
   \code{library.dynam.unload} is designed for use in
   \code{\link{.Last.lib}} or \code{\link{.onUnload}}: it unloads the
   shared object and updates the value of \code{.dynLibs()}

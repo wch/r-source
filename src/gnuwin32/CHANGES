@@ -74,6 +74,12 @@ PACKAGE INSTALLATION
     o	The header iconv.h is now installed, and can be used by
 	packages in conjunction with PKG_LIBS=-liconv .
 
+    o	The new argument dyn.load(DLLpath=) was implemented to make
+	DLL conflicts easier to manage on Windows (see ?dyn.load), and
+	is used by package tcltk.  This changes the meaning of the
+	environment value MY_TCLTK: its value is now the path to the
+	directory containing tcl85.dll and tk85.dll.
+
 
 OTHERS
 

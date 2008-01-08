@@ -18,18 +18,16 @@
 {
     packageStartupMessage("Loading Tcl/Tk interface ...",
                           domain = "R-tcltk", appendLF = FALSE)
-    if(nzchar(Sys.getenv("MY_TCLTK"))) {
-        library.dynam("tcltk", pkg, lib)
+    if(nzchar(tclbin <- Sys.getenv("MY_TCLTK"))) {
+        library.dynam("tcltk", pkg, lib, DLLpath = tclbin)
     } else {
         if(!file.exists(file.path(R.home(), "Tcl")))
             stop("Tcl/Tk support files were not installed", call.=FALSE)
-##        Sys.setenv("TCL_LIBRARY" =
-##                   file.path(gsub("\\\\", "/", R.home()), "Tcl/lib/tcl8.4"))
-        opath <-  Sys.getenv("PATH")
         tclbin <- file.path(R.home(), "Tcl/bin")
-        Sys.setenv(PATH=paste(tclbin, opath, sep=";"))
-        library.dynam("tcltk", pkg, lib)
-        Sys.setenv(PATH=opath)
+##        opath <-  Sys.getenv("PATH")
+##        Sys.setenv(PATH=paste(tclbin, opath, sep=";"))
+        library.dynam("tcltk", pkg, lib, DLLpath = tclbin)
+##        Sys.setenv(PATH=opath)
     }
     .C("tcltk_start", PACKAGE="tcltk")
     addTclPath(system.file("exec", package = "tcltk"))

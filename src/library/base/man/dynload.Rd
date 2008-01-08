@@ -13,7 +13,7 @@
   Fortran subroutine is available.
 }
 \usage{
-dyn.load(x, local = TRUE, now = TRUE)
+dyn.load(x, local = TRUE, now = TRUE, ...)
 dyn.unload(x)
 
 is.loaded(symbol, PACKAGE = "", type = "")
@@ -37,6 +37,11 @@ is.loaded(symbol, PACKAGE = "", type = "")
     to ignore missing symbols. Whether this has any effect is system-dependent.
 #ifdef windows
     It is ignored on Windows.
+#endif
+  }
+  \item{\dots}{other arguments for future expansion.
+#ifdef windows
+    See section \sQuote{Windows} below.
 #endif
   }
   \item{symbol}{a character string giving a symbol name.}
@@ -109,8 +114,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   example code available at
   \url{http://cm.bell-labs.com/stat/duncan/R/dynload}.
 #endif
-
 #ifdef windows
+
   External code must not change the floating point control word, but
   many DLLs do so.  Common changes are to set it to use 53 bit 
   precision instead of R's default 64 bit precision, or to unmask 
@@ -160,6 +165,41 @@ is.loaded(symbol, PACKAGE = "", type = "")
   Schwarte.  The compatibility code for HP-UX was provided by Luke
   Tierney.
 }
+#ifdef windows
+\section{Windows}{
+  The \sQuote{standard mechanisms for loading DLLs} include a
+  search order for where a DLL is found (if not given as an absolute
+  path, which is preferred), \emph{and} of where its dependent DLLs will
+  be found.  This search path depends on the version of Windows and its
+  security settings, but for versions since Windows XP SP1 it is
+  \itemize{
+    \item The directory from which the application was launched.
+    \item The various system directories,
+    e.g. \file{c:/Windows/system32}, \file{c:/Windows/system} and
+    \file{c:/Windows}.
+    \item The current directory.
+    \item Along the search path for executables given by the environment
+    variable \env{PATH}.
+  }
+  This means that for all but embedded uses of \R (but including use by
+  the RDCOM server), \file{iconv.dll} will be found in \file{R_HOME/bin}.
+
+  Packages often want to supply dependent DLLs in their \file{libs}
+  directory, and do this by setting the \env{PATH} variable
+  (\code{\link{library.dynam}} does that automatically in recent
+  versions of \R), but the DLL search order means that DLLs in the
+  launch directory and in system directories will be preferred.  As from
+  \R 2.7.0 and on Windows XP SP1 and later there is a way to modify the
+  search order.  If argument \code{DLLpath} is supplied to
+  \code{dyn.load}, the latter makes use of the Windows system call
+  \code{SetDllDirectory} to insert the value of \code{DLLpath} in second
+  place, and removes the current directory, for the duration of that
+  \code{dyn.load} call.  (Note that only one directory can be inserted
+  in this way.)  On Windows 2000, the second item in the search order is
+  the current directory, and the current directory is changed
+  temporarily to implement \code{DLLpath}.
+}
+#endif
 \section{Warning}{
   Do not use \code{dyn.unload} on a shared object loaded by
   \code{\link{library.dynam}}: use \code{\link{library.dynam.unload}}.
