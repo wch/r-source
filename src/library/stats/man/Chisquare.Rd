@@ -63,7 +63,7 @@ rchisq(n, df, ncp=0)
   \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}.
 
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
-  non-integer, and even \eqn{n = 0}, which is relevant for
+  non-integer, and also \eqn{n = 0} which is relevant for
   non-centrality \eqn{\lambda > 0}, see Johnson et al. (1995, chapter~29).
 
   Note that \code{ncp} values larger than about 1e5 may give inaccurate
@@ -115,7 +115,7 @@ x <- 1:10
 all.equal(dchisq(x, df=2), dexp(x, 1/2))
 all.equal(pchisq(x, df=2), pexp(x, 1/2))
 
-## non-central RNG -- df=0 is ok for ncp > 0:  Z0 has point mass at 0!
+## non-central RNG -- df=0 with ncp > 0:  Z0 has point mass at 0!
 Z0 <- rchisq(100, df = 0, ncp = 2.)
 graphics::stem(Z0)
 

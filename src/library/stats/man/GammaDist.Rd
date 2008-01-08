@@ -56,7 +56,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   for \eqn{x \ge 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
   (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the function implemented by \R's
   \code{\link{gamma}()} and defined in its help.  Note that \eqn{a=0}
-  corresponds to the trivial distribution with all point mass at 0.)
+  corresponds to the trivial distribution with all mass at point 0.)
 
   The mean and variance are
   \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
