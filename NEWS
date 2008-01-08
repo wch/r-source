@@ -195,7 +195,7 @@ NEW FEATURES
     o	[dpqr]gamma(*, shape=0) now work as limits of 'shape -> 0',
 	corresponding to the point distribution with all mass at 0.
 
-   o	The definition of 'whitespace' used by the parser is slightly
+    o	The definition of 'whitespace' used by the parser is slightly
 	wider: it includes Unicode space characters on Windows and in
 	UTF-8 locales on machines which use Unicode wide characters.
 
