@@ -34,7 +34,7 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
-HHWDIR=d:/Program Files/HTML Help Workshop
+HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Define this to enable memory profiling.
 # R_MEMORY_PROFILING=YES
