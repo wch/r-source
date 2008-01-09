@@ -21,10 +21,9 @@ choose.dir(default = "", caption = "Select folder")
   \sQuote{Cancel} was selected. 
 }
 \details{
-  This brings up a dialog box with a text field to enter the folder path
-  and a \sQuote{Browse} button to access the Windows shell folder
-  selection widget.  With the default \code{default = ""}, \sQuote{My
-    Computer} (or similar) is initially selected.
+  This brings up   the Windows shell folder selection widget.  With the
+  default \code{default = ""}, \sQuote{My Computer} (or similar) is
+  initially selected.
 
   To workaround a bug, on Vista and Server 2008 only folders under
   \sQuote{Computer} are accessible via the widget.
