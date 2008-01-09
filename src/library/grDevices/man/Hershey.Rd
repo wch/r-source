@@ -1,45 +1,43 @@
 % File src/library/grDevices/man/Hershey.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
-%% NB: Microsoft Help Compiler often crashes on this file
-%% Do not alter unless you have checked on Windows!
 \name{Hershey}
 \alias{Hershey}
 \title{Hershey Vector Fonts in R}
+\description{
+  If the \code{family} graphical parameter (see \code{\link{par}})
+  has been set to one of the Hershey fonts (see \sQuote{Details})
+  Hershey vector fonts are used to render text.
+
+  When using the \code{\link{text}} and \code{\link{contour}} functions
+  Hershey fonts may be selected via the \code{vfont} argument, which is
+  a character vector of length 2 (see \sQuote{Details} for valid
+  values).  This allows Cyrillic to be selected, which is not available
+  via the font families.
+}
 \usage{
 Hershey
 }
-\description{
-  If the \code{family} graphical parameter (see \code{\link{par}})
-  has been set to one of the Hershey fonts (see below)
-  Hershey vector fonts are used to render text.
-  
-  These fonts have two advantages:\cr
+\details{
+  The Hershey fonts have two advantages:\cr
   \enumerate{
     \item vector fonts describe each
     character in terms of a set of points;  \R renders the character by
     joining up the points with straight lines.  This intimate knowledge of
     the outline of each character means that \R can arbitrarily transform
     the characters, which can mean that the vector fonts look better
-    for rotated and 3d text.  This works for Latin-1 and Cyrillic
-    characters, only.
+    for rotated text.
     \item this implementation was adapted from the GNU libplot library
     which provides support for non-ASCII and non-English fonts.  This means
     that it is possible, for example, to produce weird plotting symbols and
     Japanese characters.
   }
-
-  For historical reasons, when using the \code{\link{text}} function,
-  Hershey fonts may also be selected via the \code{vfont} argument,
-  which is a character vector of length 2 (see below for valid values).
-
   Drawback:\cr
 You cannot use mathematical expressions (\code{\link{plotmath}}) with
   Hershey fonts.
-}
-\details{
+
   The Hershey characters are organised into a set of fonts.  A
   particular font is selected by specifying one of the following
   font families via \code{par(family)} and specifying the desired font
@@ -58,13 +56,14 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     "HersheySansSymbol" \tab plain, italic \cr
   }
 
-  In the old, \code{vfont} specification for the \code{text} function,
-  the Hershey font is specified by a typeface (e.g., \code{serif} or
-  \code{sans serif}) and a fontindex or \sQuote{style} (e.g.,
-  \code{plain} or \code{italic}). The first element of \code{vfont}
-  specifies the typeface and the second element specifies the fontindex.
-  The first table produced by \code{demo(Hershey)} shows the character
-  \code{a} produced by each of the different fonts.
+  In the \code{vfont} specification for the \code{text} and
+  \code{contour} functions, the Hershey font is specified by a typeface
+  (e.g., \code{serif} or \code{sans serif}) and a fontindex or
+  \sQuote{style} (e.g., \code{plain} or \code{italic}). The first
+  element of \code{vfont} specifies the typeface and the second element
+  specifies the fontindex.  The first table produced by
+  \code{demo(Hershey)} shows the character \code{a} produced by each of
+  the different fonts.
 
   The available \code{typeface} and \code{fontindex} values are
   available as list components of the variable \code{Hershey}.
@@ -119,11 +118,12 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     }
 
     \item{Symbols:}{an entire string of Greek symbols can be produced by
-      selecting the Serif Symbol or Sans Serif Symbol typeface.  To allow
+      selecting the HersheySymbol or HersheySansSymbol family or the
+      Serif Symbol or Sans Serif Symbol typeface.  To allow
       Greek symbols to be embedded in a string which uses a non-symbol
       typeface, there are a set of symbol escape sequences of the form
       \code{\\\\ab}. For example, the escape sequence \code{\\\\*a} produces a
-      Greek alpha. The second table in \code{demo(Hershey)} shows all of the
+      Greek alpha.  The second table in \code{demo(Hershey)} shows all of the
       symbol escape sequences and the symbols that they produce.
     }
 
@@ -152,7 +152,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       a locale using the Serif typeface and Cyrillic (or Oblique Cyrillic)
       fontindex.  Alternatively they can be specified via an octal code
       in the range 300 to 337 for lower case characters or 340 to 377 for
-      upper case characters. The fifth table in \code{demo(Hershey)} shows the
+      upper case characters.  The fifth table in \code{demo(Hershey)} shows the
       octal codes for the available cyrillic characters.
 
       Cyrillic has to be selected via a \code{("serif", fontindex)} pair
@@ -201,7 +201,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
 }
 \seealso{
-  \code{demo(Hershey)}, \code{\link{par}}, \code{\link{text}}, 
+  \code{\link{demo}(Hershey)}, \code{\link{par}}, \code{\link{text}}, 
   \code{\link{contour}}.
 
   \code{\link{Japanese}} for the Japanese characters in the Hershey fonts.

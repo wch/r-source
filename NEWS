@@ -92,6 +92,9 @@ BUG FIXES
     o	There were several errors in Hershey$allowed, but the help
 	page listed the allowed combinations correctly.
 
+    o	text() no longer attempts to use 'vfont' with an expression
+	for 'labels' (it was documented not to work).
+
 
 
 		CHANGES IN R VERSION 2.6.1
