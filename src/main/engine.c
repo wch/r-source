@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-7   The R Development Core Team.
+ *  Copyright (C) 2001-8   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1532,16 +1532,20 @@ VFontTable[] = {
 
 static int VFontFamilyCode(char *fontfamily)
 {
-    int i;
+    int i, j = fontfamily[3];
+
+    /* Inline vfont is passed down as familycode in fourth byte */
+    if (!strncmp(fontfamily, "Her", 3) && j < 9) return 100 + j;
     for (i = 0; VFontTable[i].minface; i++)
 	if (!strcmp(fontfamily, VFontTable[i].name)) {
-	    return i;
+	    return i+1;
 	}
     return -1;
 }
 
 static int VFontFaceCode(int familycode, int fontface) {
     int face = fontface;
+    familycode--;  /* Table is 0-based, coding is 1-based */
     /*
      * R's "font" par has historically made 2=bold and 3=italic
      * These must be switched to correspond to Hershey fontfaces
@@ -1606,11 +1610,12 @@ void GEText(double x, double y, const char * const str,
      * If the fontfamily is a Hershey font family, call R_GE_VText
      */
     int vfontcode = VFontFamilyCode(gc->fontfamily);
-    if (vfontcode >= 0) {
-	gc->fontfamily[0] = vfontcode;
+    if (vfontcode >= 100) {
+	R_GE_VText(x, y, str, xc, yc, rot, gc, dd);
+    } else if (vfontcode >= 0) {
+	gc->fontfamily[3] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	R_GE_VText(x, y, str, xc, yc, rot, gc, dd);
-
     } else {
 	/* PR#7397: this seems to reset R_Visible */
 	Rboolean savevis=R_Visible;
@@ -2297,7 +2302,9 @@ double GEStrWidth(const char *str,
      * If the fontfamily is a Hershey font family, call R_GE_VStrWidth
      */
     int vfontcode = VFontFamilyCode(gc->fontfamily);
-    if (vfontcode >= 0) {
+    if (vfontcode >= 100)
+	return R_GE_VStrWidth(str, gc, dd);
+    else if (vfontcode >= 0) {
 	gc->fontfamily[0] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrWidth(str, gc, dd);
@@ -2344,7 +2351,9 @@ double GEStrHeight(const char *str,
      * If the fontfamily is a Hershey font family, call R_GE_VStrHeight
      */
     int vfontcode = VFontFamilyCode(gc->fontfamily);
-    if (vfontcode >= 0) {
+    if (vfontcode >= 100)
+	return R_GE_VStrHeight(str, gc, dd);
+    else if (vfontcode >= 0) {
 	gc->fontfamily[0] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrHeight(str, gc, dd);

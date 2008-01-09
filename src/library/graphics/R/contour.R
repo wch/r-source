@@ -59,7 +59,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     if (!is.double(z)) storage.mode(z) <- "double"
     method <- pmatch(method[1], c("simple", "edge", "flattest"))
     if (!is.null(vfont))
-        vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
+        vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface),
                    fontindex= pmatch(vfont[2], Hershey$fontindex))
     if (!is.null(labels))
         labels <- as.character(labels)

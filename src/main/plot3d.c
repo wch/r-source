@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2007   Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2008   Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -917,7 +917,6 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		    double zc,
 		    SEXP labels, int cnum,
 		    Rboolean drawLabels, int method,
-		    Rboolean vectorFonts, int typeface, int fontindex,
 		    double atom, DevDesc *dd)
 {
 /* draw a contour for one given contour level 'zc' */
@@ -1061,19 +1060,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		buffer[strlen(buffer)+1] = '\0';
 		buffer[strlen(buffer)] = ' ';
 
-		if (vectorFonts) {
-		    /* 1, 1 => sans serif, basic font */
-		    labelDistance =
-			GVStrWidth(buffer, typeface,
-				   fontindex, INCHES, dd);
-		    labelHeight =
-			GVStrHeight(buffer, typeface,
-				    fontindex, INCHES, dd);
-		}
-		else {
-		    labelDistance = GStrWidth(buffer, INCHES, dd);
-		    labelHeight = GStrHeight(buffer, INCHES, dd);
-		}
+		labelDistance = GStrWidth(buffer, INCHES, dd);
+		labelHeight = GStrHeight(buffer, INCHES, dd);
 
 		if (labelDistance > 0) {
 		    /* Try to find somewhere to draw the label */
@@ -1201,13 +1189,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 
 		    if (method == 0) {
 			GPolyline(ns, xxx, yyy, USER, dd);
-			if (vectorFonts)
-			    GVText(xxx[indx], yyy[indx], USER, buffer,
-				   typeface, fontindex,
-				   .5, .5, 0, dd);
-			else
-			    GText(xxx[indx], yyy[indx], USER, buffer,
-				  .5, .5, 0, dd);
+			GText(xxx[indx], yyy[indx], USER, buffer,
+			      .5, .5, 0, dd);
 		    }
 		    else {
 			for (iii = 0; iii < indx; iii++)
@@ -1320,17 +1303,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 				*/
 				GConvert(&ux, &uy, USER, INCHES, dd);
 				GConvert(&vx, &vy, USER, INCHES, dd);
-				/* 1, 1 => sans serif, basic font
-				   0, .5 => left, centre justified */
-				if (vectorFonts)
-				    GVText(ux, uy, INCHES, buffer,
-					   typeface, fontindex, 0, .5,
-					   (180 / 3.14) * atan2(vy - uy, vx - ux),
-					   dd);
-				else
-				    GText (ux, uy, INCHES, buffer, 0, .5,
-					   (180 / 3.14) * atan2(vy - uy, vx - ux),
-					   dd);
+				/* 0, .5 => left, centre justified */
+				GText (ux, uy, INCHES, buffer, 0, .5,
+				       (180 / 3.14) * atan2(vy - uy, vx - ux),
+				       dd);
 			    }
 			} /* if (gotLabel) */
 		    } /* if (method == 0) else ... */
@@ -1358,15 +1334,12 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z, vfont, col, rawcol, lty, lwd, labels;
     int i, j, nx, ny, nc, ncol, nlty, nlwd;
-    int ltysave, colsave, lwdsave;
+    int ltysave, colsave, lwdsave, fontsave = 1 /* -Wall */;
     double cexsave;
     double atom, zmin, zmax;
-    char *vmax, *vmax0;
+    char *vmax, *vmax0, familysave[201];
     int method;
     Rboolean drawLabels;
-    Rboolean vectorFonts = FALSE;
-    int typeface = 0;
-    int fontindex = 0;
     double labcex;
     DevDesc *dd = CurrentDevice();
     SEXP result = R_NilValue;
@@ -1415,9 +1388,11 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont)) {
-	vectorFonts = TRUE;
-	typeface = INTEGER(vfont)[0];
-	fontindex = INTEGER(vfont)[1];
+	strncpy(familysave, Rf_gpptr(dd)->family, 201);
+	strncpy(Rf_gpptr(dd)->family, "Her ", 201);
+	Rf_gpptr(dd)->family[3] = INTEGER(vfont)[0];
+	fontsave = Rf_gpptr(dd)->font;
+	Rf_gpptr(dd)->font = INTEGER(vfont)[1];
     }
     args = CDR(args);
 
@@ -1522,8 +1497,7 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Rf_gpptr(dd)->lwd = lwdsave;
 	Rf_gpptr(dd)->cex = labcex;
 	contour(x, nx, y, ny, z, REAL(c)[i], labels, i,
-		drawLabels, method-1,
-		vectorFonts, typeface, fontindex, atom, dd);
+		drawLabels, method - 1, atom, dd);
 	vmaxset(vmax);
     }
     GMode(0, dd);
@@ -1532,6 +1506,10 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_gpptr(dd)->col = colsave;
     Rf_gpptr(dd)->lwd = lwdsave;
     Rf_gpptr(dd)->cex = cexsave;
+    if(!isNull(vfont)) {
+	strncpy(Rf_gpptr(dd)->family, familysave, 201);
+	Rf_gpptr(dd)->font = fontsave;
+    }
     UNPROTECT(5);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */

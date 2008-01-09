@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *  Copyright (C) 2002--2004  The R Foundation
  *
@@ -414,35 +414,35 @@ SEXP FixupVFont(SEXP vfont) {
 	if (length(vf) != 2)
 	    error(_("invalid '%s' value"), "vfont");
 	typeface = INTEGER(vf)[0];
-	if (typeface < 0 || typeface > 7)
+	if (typeface < 1 || typeface > 8)
 	    error(_("invalid 'vfont' value [typeface]"));
-	/* For each of the typefaces {0..7}, there are several fontindices
+	/* For each of the typefaces {1..8}, there are several fontindices
 	   available; how many depends on the typeface.
 	   The possible combinations are "given" in ./g_fontdb.c
 	   and also listed in help(Hershey).
 	 */
 	minindex = 1;
 	switch (typeface) {
-	case 0: /* serif */
+	case 1: /* serif */
 	    maxindex = 7;	    break;
-	case 1: /* sans serif */
-	case 6: /* serif symbol */
+	case 2: /* sans serif */
+	case 7: /* serif symbol */
 	    maxindex = 4;	    break;
-	case 2: /* script */
+	case 3: /* script */
 	    maxindex = 3;	    break;
-	case 3: /* gothic english */
-	case 4: /* gothic german */
-	case 5: /* gothic italian */
+	case 4: /* gothic english */
+	case 5: /* gothic german */
+	case 6: /* gothic italian */
 	    maxindex = 1;	    break;
-	case 7: /* sans serif symbol */
+	case 8: /* sans serif symbol */
 	    maxindex = 2;
 	}
 	fontindex = INTEGER(vf)[1];
 	if (fontindex < minindex || fontindex > maxindex)
-	    error(_("invalid 'vfont' value [fontindex]"));
+	    error(_("invalid 'vfont' value [typeface = %d, fontindex = %d]"),
+		  typeface, fontindex);
 	ans = allocVector(INTSXP, 2);
-	for (i=0; i<2; i++)
-	    INTEGER(ans)[i] = INTEGER(vf)[i];
+	for (i = 0; i < 2; i++) INTEGER(ans)[i] = INTEGER(vf)[i];
 	UNPROTECT(1);
     }
     return ans;
@@ -2196,8 +2196,6 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     PROTECT(vfont = FixupVFont(CAR(args)));
-    if (!isNull(vfont))
-	vectorFonts = TRUE;
     args = CDR(args);
 
     PROTECT(cex = FixupCex(CAR(args), 1.0));
@@ -2221,6 +2219,13 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
 
+    /* Done here so 'vfont' trumps inline 'family' */
+    if (!isNull(vfont) && !isExpression(txt)) {
+	strncpy(Rf_gpptr(dd)->family, "Her ", 201);
+	Rf_gpptr(dd)->family[3] = INTEGER(vfont)[0];
+	vectorFonts = TRUE;
+    }
+
     GMode(1, dd);
     if (n == 0 && ntxt > 0)
 	error(_("no coordinates were supplied"));
@@ -2237,10 +2242,13 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * REAL(cex)[i % ncex];
 	    else
 		Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
-	    if (nfont && INTEGER(font)[i % nfont] != NA_INTEGER)
+
+	    if (vectorFonts) Rf_gpptr(dd)->font = INTEGER(vfont)[1];
+	    else if (nfont && INTEGER(font)[i % nfont] != NA_INTEGER)
 		Rf_gpptr(dd)->font = INTEGER(font)[i % nfont];
 	    else
 		Rf_gpptr(dd)->font = Rf_dpptr(dd)->font;
+
 	    if (npos > 0) {
 		switch(INTEGER(pos)[i % npos]) {
 		case 1:
@@ -2268,12 +2276,6 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (isExpression(txt)) {
 		GMathText(xx, yy, INCHES, VECTOR_ELT(txt, i % ntxt),
 			  adjx, adjy, Rf_gpptr(dd)->srt, dd);
-	    } else if (vectorFonts) {
-		string = STRING_ELT(txt, i % ntxt);
-		if(string != NA_STRING)
-		    GVText(xx, yy, INCHES, translateChar(string),
-			   INTEGER(vfont)[0], INTEGER(vfont)[1],
-			   adjx, adjy, Rf_gpptr(dd)->srt, dd);
 	    } else {
 		string = STRING_ELT(txt, i % ntxt);
 		if(string != NA_STRING)

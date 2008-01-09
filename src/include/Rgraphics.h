@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2007  R Development Core Team
+ *  Copyright (C) 1998--2008  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -326,12 +326,14 @@ void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
+#ifdef UNUSED
 /* Called from do_text and do_contour */
 void GVText(double, double, int, const char *, int, int, double, double,
 	    double, DevDesc *);
 /* Called only from do_contour */
 double GVStrWidth(const char *, int, int, int, DevDesc *);
 double GVStrHeight(const char *, int, int, int, DevDesc *);
+#endif
 
 /*-------------------------------------------------------------------
  *

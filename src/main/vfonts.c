@@ -56,6 +56,7 @@ static void vfonts_Init(void)
     return;
 }
 
+#ifdef UNUSED
 attribute_hidden
 double GVStrWidth (const char *s, int typeface, int fontindex,
 		   int unit, DevDesc *dd)
@@ -64,10 +65,11 @@ double GVStrWidth (const char *s, int typeface, int fontindex,
  
     gcontextFromGP(&gc, dd);
     gc.fontface = typeface;
-    gc.fontfamily[0] = fontindex;
+    gc.fontfamily[1] = fontindex;
     return GConvertXUnits(R_GE_VStrWidth(s, &gc, (GEDevDesc *) dd),
 			  DEVICE, unit, dd);
 }
+#endif
 
 attribute_hidden
 double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
@@ -79,7 +81,7 @@ double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
 	char *buff;
 	Rboolean conv = mbcslocale;
 	if(gc->fontface == 0  && 
-	   (gc->fontfamily[0] == 5 || gc->fontfamily[0] == 6)) conv = FALSE;
+	   (gc->fontfamily[1] == 5 || gc->fontfamily[1] == 6)) conv = FALSE;
 	if(conv && !utf8strIsASCII(str)) {
 	    buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	    R_CheckStack();
@@ -95,6 +97,7 @@ double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
     }
 }
 
+#ifdef UNUSED
 attribute_hidden
 double GVStrHeight (const char *s, int typeface, int fontindex,
 		    int unit, DevDesc *dd)
@@ -103,10 +106,11 @@ double GVStrHeight (const char *s, int typeface, int fontindex,
 
     gcontextFromGP(&gc, dd);
     gc.fontface = typeface;
-    gc.fontfamily[0] = fontindex;
+    gc.fontfamily[1] = fontindex;
     return GConvertYUnits(R_GE_VStrHeight(s, &gc, (GEDevDesc *) dd),
 			  DEVICE, unit, dd);
 }
+#endif
 
 attribute_hidden
 double R_GE_VStrHeight(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
@@ -121,6 +125,7 @@ double R_GE_VStrHeight(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
     }
 }
 
+#ifdef UNUSED
 attribute_hidden
 void GVText (double x, double y, int unit, const char *s,
 	     int typeface, int fontindex,
@@ -136,10 +141,11 @@ void GVText (double x, double y, int unit, const char *s,
     GClip(dd);
     GConvert(&x, &y, unit, DEVICE, dd);
     gc.fontface = fontindex;
-    gc.fontfamily[0] = typeface;
+    gc.fontfamily[1] = typeface;
     R_GE_VText(x, y, s, x_justify, y_justify, rotation,
 	       &gc, (GEDevDesc *) dd);
 }
+#endif
 
 attribute_hidden
 void R_GE_VText(double x, double y, const char * const s,
@@ -154,7 +160,7 @@ void R_GE_VText(double x, double y, const char * const s,
 	char *buff;
 	Rboolean conv = mbcslocale;
 	if(gc->fontface == 0  && 
-	   (gc->fontfamily[0] == 5 || gc->fontfamily[0] == 6)) conv = FALSE;
+	   (gc->fontfamily[1] == 5 || gc->fontfamily[1] == 6)) conv = FALSE;
 	if(conv && !utf8strIsASCII(str)) {
 	    buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	    R_CheckStack();

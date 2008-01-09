@@ -49,11 +49,12 @@ contour(x, \dots)
   \item{method}{character string specifying where the labels will be
     located. Possible values are \code{"simple"}, \code{"edge"} and
     \code{"flattest"} (the default). See the Details section.}
-  \item{vfont}{if a character vector of length 2 is specified, then Hershey
-    vector fonts are used for the contour labels.
-    The first element of the vector
-    selects a typeface and the second element selects a fontindex
-    (see \code{\link{text}} for more information).}
+  \item{vfont}{if \code{NULL}, the current font family and face are used
+    for the contour labels.  If a character vector of length 2 (the
+    default), then Hershey vector fonts are used for the contour labels.
+    The first element of the vector selects a typeface and the second
+    element selects a fontindex (see \code{\link{text}} for more
+    information).}
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}
   \item{axes, frame.plot}{logical indicating whether axes or a box
     should be drawn, see \code{\link{plot.default}}.}

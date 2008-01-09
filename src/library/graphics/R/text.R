@@ -26,7 +26,7 @@ function(x, y = NULL, labels = seq_along(x),
     }
     labels <- as.graphicsAnnot(labels)
     if (!is.null(vfont))
-        vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
+        vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface),
                    fontindex= pmatch(vfont[2], Hershey$fontindex))
     .Internal(text(xy.coords(x,y, recycle = TRUE), labels,
                    adj, pos, offset, vfont, cex, col, font, ...))
