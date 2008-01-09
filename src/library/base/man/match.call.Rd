@@ -27,7 +27,7 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
   (also known as a \sQuote{closure}):  \code{match.call} does not support
   with primitive functions (where argument matching is normally
   positional).
-  
+
   \code{match.call} is most commonly used in two circumstances:
   \itemize{
     \item To record the call for later re-use: for example most
@@ -55,6 +55,8 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
   Springer.
 }
 \seealso{
+  \code{\link{sys.call}()} is similar, but does \emph{not} expand the
+  argument names;
   \code{\link{call}}, \code{\link{pmatch}}, \code{\link{match.arg}},
   \code{\link{match.fun}}.
 }
