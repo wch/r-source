@@ -1,6 +1,6 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{text}
@@ -36,15 +36,16 @@ text(x, \dots)
   \item{offset}{when \code{pos} is specified, this value gives the
     offset of the label from the specified coordinate in fractions
     of a character width.}
-  \item{vfont}{if a character vector of length 2 is specified, then Hershey
-    vector fonts are used.  The first element of the vector
-    selects a typeface and the second element selects a style.}
+  \item{vfont}{\code{NULL} for the current font family, or a character
+    vector of length 2 for Hershey vector fonts.  The first element of
+    the vector selects a typeface and the second element selects a
+    style.  Ignored if \code{labels} is an expression.}
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
     by \code{\link{par}("cex")} yields the final character size.
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
-  \item{col, font}{the color and font to be used, possibly vectors.
-    These default to the values of the global graphical parameters in
-    \code{\link{par}()}.}
+  \item{col, font}{the color and (if \code{vfont = NULL}) font to be
+    used, possibly vectors. These default to the values of the global
+    graphical parameters in \code{\link{par}()}.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}),
     such as \code{srt}, \code{family} and \code{xpd}.}
 }

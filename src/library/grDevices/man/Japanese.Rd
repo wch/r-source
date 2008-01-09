@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/Japanese.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Japanese}
@@ -20,14 +20,11 @@
   produced by \code{\\\\#J252b}.  The Kanji ideograph for "one" is
   produced by \code{\\\\#J306c} or \code{\\\\#N0001}.
 
-  The output from \code{demo(Japanese)} shows tables of the escape
+  The output from \code{\link{demo}(Japanese)} shows tables of the escape
   sequences for the available Japanese characters.
 }
 \seealso{
-  \code{demo(Japanese)},
-  \code{\link{Hershey}},
-  \code{\link{text}},
-  \code{\link{contour}}
+  \code{\link{demo}(Japanese)}, \code{\link{Hershey}}, \code{\link{text}}
 }
 \references{
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
