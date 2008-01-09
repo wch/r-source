@@ -1,7 +1,7 @@
 			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*	 Windows-specific changes to R		 *
-	*	 See the file NEWS for changes that	 * 
+	*	 See the file NEWS for changes that	 *
 	*        affect all versions of R.		 *
 	*						 *
 	*	       2.6 SERIES NEWS			 *
@@ -18,18 +18,18 @@ WORKAROUNDS
 	Fortran output will be written to a file named 'fort.6' in the
 	working directory.
 
-    o	Browsing for a directory in choose.dir() and the Rgui 
+    o	Browsing for a directory in choose.dir() and the Rgui
 	'Change Dir...' menu item now works around Vista's confusion
-	about 'desktop' by starting at 'My Computer'.
+	about 'desktop' by starting at 'Computer' on Vista/Server 2008.
 
 
 BUG FIXES
 
     o	If a graphics window was opened in MDI mode while the console
 	was zoomed, it would not be initialized properly.
-    	
-    	
-    	
+
+
+
 		CHANGES IN R VERSION 2.6.1
 
 
@@ -63,14 +63,14 @@ BUG FIXES
 
     o	Saving a plot to Postscript or PDF required the font database
 	to have been initialized: this is now done if necessary.
-	
+
     o	Very long file or pathnames could cause a crash if opened in
 	the script editor. (PR#10402)
- 
-		
+
+
 
 		CHANGES IN R VERSION 2.6.0
-		
+
 GUI CHANGES
 
     o	The console now handles cut and paste and mouse clicks in the
@@ -88,7 +88,7 @@ FUNCTION CHANGES
     o	file.info() has an additional column 'exe' saying if the file
 	is executable and if so what subsystem would be used to
 	execute it.
-	
+
     o	getWindowsHandle() now returns the handle as an external pointer.
     	It no longer returns the process ID.
 
@@ -96,7 +96,7 @@ FUNCTION CHANGES
 	only the bottom 16 bits of process error codes to protect
 	against executables with invalid error codes (such as -1 from
 	fc.exe, PR#9868).
-	
+
     o	pipe() in Rgui now runs the command through the shell specified
     	by the COMSPEC environment variable, as Rterm has always done.
 
@@ -142,13 +142,13 @@ PACKAGE INSTALLATION
 	the macro GRAPHAPP_LIB that you can include in PKG_LIBS in
 	Makevars.win (etc).  (GRAPHAPP_LIB is undefined in earlier
 	versions, so this is backwards compatible).
-	
+
     o	If the HTML Help Workshop fails when chm help is requested,
 	package installation will continue with a warning.
-	
+
     o	The C99 flag (-std=gnu99) is now used for compiling packages
 	as well as R itself.
-	
+
     o	If the TMPDIR environment variable is not set, Rcmd now tries
     	the TEMP variable before setting TMPDIR to C:/temp.
 
@@ -240,7 +240,7 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.5.1 patched
-		
+
 BUG FIXES
 
     o	.Platform$GUI would report "Rgui" when no GUI was present in
@@ -447,11 +447,11 @@ BUG FIXES
 
     o	md5check.exe works again (it was throwing spurious differences
 	after a compiler update).
-	
+
     o	Some links in .chm help files were not working.  (PR#9586)
-	
+
     o	rcmd Rdiff was not working (used by R CMD check).
-	
+
     o	Workaround a Windows' mktime bug that affected the POSIXct to
 	POSIXlt conversion during leap days in leap years prior to
 	1970 in timezones which were on DST at the time.  (PR#9572)
@@ -491,13 +491,13 @@ BUG FIXES
     o	menu.ttest2() in example package 'windlgs' was broken.
 
     o	CHM help is now converted with support for the \encoding{} section.
-    
+
     o	etc/Makeconf was being left out of builds of the installer.
 
 
 
 		CHANGES IN R VERSION 2.4.1
-		
+
 UNCATEGORIZED
 
     o	Inno Setup >= 5.1.7 is now required to build the installer.
@@ -531,7 +531,7 @@ UNCATEGORIZED
 
 
 		CHANGES IN R VERSION 2.4.0
-		
+
 UNCATEGORIZED
 
     o	The language for menus and messages can be set in the 'Rconsole'
@@ -649,7 +649,7 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.3.1 patched
-		
+
 BUG FIXES
 
     o	winMenuAdd() could crash when too many menus were added.  (PR#8961)
@@ -706,7 +706,7 @@ UNCATEGORIZED
 
 
 		CHANGES IN R VERSION 2.3.0
-		
+
 UNCATEGORIZED
 
     o	There is an error handler for access violations and illegal
@@ -899,7 +899,7 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.2.1 patched
-		
+
 BUG FIXES
 
     o	Opening any window (pager/editor/windows() device) was resetting
@@ -919,7 +919,7 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.2.1
-		
+
 UNCATEGORIZED
 
     o	Using the latest binutils allows us to distribute Rgui.exe and
@@ -970,7 +970,7 @@ UNCATEGORIZED
 
 
 		CHANGES IN R VERSION 2.2.0
-		
+
 UNCATEGORIZED
 
     o	The installer will be called R-2.2.0-win32.exe and by default
@@ -1038,7 +1038,7 @@ UNCATEGORIZED
 
 
 		CHANGES IN R VERSION 2.1.1 patched
-		
+
 BUG FIXES
 
     o	The progress bar was being left behind when a download was
@@ -1069,7 +1069,7 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.1.1
-		
+
 UNCATEGORIZED
 
     o	The installer allows a choice of languages.  Note that
@@ -1119,7 +1119,7 @@ UNCATEGORIZED
 
 
 		CHANGES IN R VERSION 2.1.0
-		
+
 UNCATEGORIZED
 
     o	There is no longer a miniR distribution.
@@ -1214,7 +1214,7 @@ UNCATEGORIZED
 
 
 		CHANGES IN R VERSION 2.0.1 patched
-		
+
 BUG FIXES
 
     o	We work around reported bugs in Windows XP as to which
@@ -1237,7 +1237,7 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.0.1
-		
+
 GUI CHANGES
 
     o	There is a new menu item to set a CRAN mirror.

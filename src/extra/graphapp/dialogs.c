@@ -48,17 +48,23 @@ static void selectfolder(char *folder, const char *title)
 {
     char buf[MAX_PATH];
     LPMALLOC g_pMalloc;
-    HWND hwnd=0;
     BROWSEINFO bi;
     LPITEMIDLIST pidlBrowse;
+    OSVERSIONINFO osvi;
 
     /* Get the shell's allocator. */
     if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
 
-    bi.hwndOwner = hwnd;
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+
+    ZeroMemory(&bi, sizeof(bi));
+    bi.hwndOwner = 0;
     //bi.pidlRoot = NULL;
-    SHGetSpecialFolderLocation(NULL, CSIDL_DRIVES, 
-			       (LPITEMIDLIST *) &bi.pidlRoot);
+    if(osvi.dwMajorVersion >= 6) { /* future proof */
+	SHGetSpecialFolderLocation(NULL, CSIDL_DRIVES, 
+				   (LPITEMIDLIST *) &bi.pidlRoot);
+    }  /* else it is 0, which is CSIDL_DESKTOP */
     bi.pszDisplayName = buf;
     bi.lpszTitle = title;
     bi.ulFlags = BIF_RETURNONLYFSDIRS;
