@@ -26,16 +26,16 @@ else
 implib:
 endif
 
-libgraphapp.dll.a: graphapp.def
+libRgraphapp.dll.a: Rgraphapp.def
 
-graphapp.def: $(OBJECTS)
+Rgraphapp.def: $(OBJECTS)
 	@$(ECHO) EXPORTS > $@
 	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq > g.def
 	@comm -23 g.def ga.hide >> $@
 	@$(RM) g.def
 
-Rgraphapp.dll: $(OBJECTS) dllversion.o graphapp.def
-	$(DLL) -shared -mwindows -o $@ graphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32 -limm32
+Rgraphapp.dll: $(OBJECTS) dllversion.o Rgraphapp.def
+	$(DLL) -shared -mwindows -o $@ Rgraphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32 -limm32
 
 ## need to break mutual dependence with R.dll
 libR.dll.a: R.def
