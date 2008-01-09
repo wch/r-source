@@ -942,7 +942,7 @@ void mbcsToLatin1(const char *in, char *out)
     }
     wbuff = (wchar_t *) alloca((res+1) * sizeof(wchar_t));
     R_CheckStack();
-    if(!wbuff) error(_("allocation failure in 'mbcsToLatin1'"));
+    if(!wbuff) error(_("allocation failure in '%s'"), "mbcsToLatin1");
     mres = mbstowcs(wbuff, in, res+1);
     if(mres == (size_t)-1)
 	error(_("invalid input in 'mbcsToLatin1'"));
