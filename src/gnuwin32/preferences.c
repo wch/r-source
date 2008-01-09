@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
- *  Copyright (C) 2000  Guido Masarotto and Brian Ripley
- *                2004-6  R Core Development Team
+ *  Copyright (C) 2000    Guido Masarotto and Brian Ripley
+ *                2004-8  R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -774,14 +774,14 @@ static void showDialog(Gui gui)
     l_cols = newlabel("Console and Pager Colours",
 		      rect(10, 300, 520, 20), AlignCenter);
     l_bgcol = newlabel("Background", rect(10, 330, 100, 20), AlignCenter);
-    bgcol = newlistbox(ColorName, rect(10, 350, 100, 50), NULL);
+    bgcol = newlistbox(ColorName, rect(10, 350, 100, 50), NULL, NULL);
     l_fgcol = newlabel("Output text", rect(150, 330, 100, 20), AlignCenter);
-    fgcol = newlistbox(ColorName, rect(150, 350, 100, 50), NULL);
+    fgcol = newlistbox(ColorName, rect(150, 350, 100, 50), NULL, NULL);
     l_usercol = newlabel("User input", rect(290, 330, 100, 20), AlignCenter);
-    usercol = newlistbox(ColorName, rect(290, 350, 100, 50), NULL);
+    usercol = newlistbox(ColorName, rect(290, 350, 100, 50), NULL, NULL);
     l_highlightcol = newlabel("Titles in pager", rect(430, 330, 100, 20),
 			      AlignCenter);
-    highlightcol = newlistbox(ColorName, rect(430, 350, 100, 50), NULL);
+    highlightcol = newlistbox(ColorName, rect(430, 350, 100, 50), NULL, NULL);
     setlistitem(bgcol, rgbtonum(gui->bg));
     setlistitem(fgcol, rgbtonum(gui->fg));
     setlistitem(usercol, rgbtonum(gui->user));

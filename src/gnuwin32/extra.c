@@ -705,9 +705,9 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 			Titlebar | Centered | Modal | Floating);
     setbackground(wselect, dialog_bg());
     if(multiple)
-	f_list = newmultilist(clist, rect(10, 10, xmax-25, ylist), NULL);
+	f_list = newmultilist(clist, rect(10, 10, xmax-25, ylist), NULL, finish);
     else
-	f_list = newlistbox(clist, rect(10, 10, xmax-25, ylist), NULL);
+	f_list = newlistbox(clist, rect(10, 10, xmax-25, ylist), NULL, finish);
     if(!isNull(preselect) && LENGTH(preselect)) {
 	for(i = 0; i < n; i++)
 	    for(j = 0; j < LENGTH(preselect); j++)

@@ -214,6 +214,7 @@ struct objinfo
 	rgb 	bg;	/* background colour */
 
 	actionfn action; /* button/checkbox action */
+	actionfn dble ; /* listbox double-click action */
 	intfn 	hit;	/* menuitem/scrollbar action */
 	int 	value;	/* current argument to hit() */
 	int 	key;	/* menuitem key equivalent */

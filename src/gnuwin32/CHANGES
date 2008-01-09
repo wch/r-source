@@ -122,6 +122,10 @@ OTHERS
 	means the default size really is 7 inches square and not 7.177
 	inches.
 
+    o	The listbox used by select.list() now responds to
+	double-clicking an item (as if the item had been selected and
+	then the OK button pressed).
+
 
 BUILDING R
 
