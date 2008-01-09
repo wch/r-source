@@ -425,6 +425,13 @@ BUG FIXES
     o	pchisq(x, df=0, ncp=L) now returns the correct limit exp(-L/2) for
 	x=0 and is no longer returning NaN for x > 0, L < 80.  (PR#10551)
 
+    o	Non-ASCII characters were only working correctly in Hershey
+	fonts if these were specified by the 'vfont' argument to
+	text() and not if specified as a font family.
+
+    o	There were several errors in Hershey$allowed, but the help
+	page listed the allowed combinations correctly.
+
 
 
 		CHANGES IN R VERSION 2.6.1
