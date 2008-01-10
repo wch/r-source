@@ -61,8 +61,8 @@ Sys.timezone()
   service, and even on Windows a third-party database is used and can be
   updated (see the section on \sQuote{Time zone names}).  Incorrect
   results will never be an \R issue, so please ensure that you have the
-  courtesy not blame \R for them.
-  % Unlike the 'diabolical' Tony Plate.
+  courtesy not to blame \R for them.
+  % Unlike Tony Plate.
 }
 
 \value{
