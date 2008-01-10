@@ -4911,16 +4911,8 @@ static void XFig_Text(double x, double y, const char *str,
 	/* color, depth, pen_style */
 	fprintf(fp, "%d %d %.4f 4 ", fontnum, (int)size, rot * DEG2RAD);
 	/* font pointsize angle flags (Postscript font) */
-	/* FIXME:  Why is this calling GStr[Height|Width] when it
-	 * presumably could be calling XFig_Str[Height|Width] ?
-	 */
-	fprintf(fp, "%d %d ",
-		(int)(16.667*GStrHeight(str, DEVICE,
-					GetDevice(devNumber((DevDesc*) dd)))
-		      +0.5),
-		(int)(16.667*GStrWidth(str, DEVICE,
-				       GetDevice(devNumber((DevDesc*) dd)))
-		      +0.5));
+	fprintf(fp, "%d %d ", (int)(size*12), 
+		(int)(16.667*XFig_StrWidth(str, gc, dd) +0.5));
 	fprintf(fp, "%d %d ", (int)x, (int)y);
 	if(strcmp(pd->encoding, "none") != 0) {
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
