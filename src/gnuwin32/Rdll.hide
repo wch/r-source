@@ -254,9 +254,6 @@
  Rf_FixupPch
  Rf_FixupVFont
  Rf_GInit
- Rf_GVStrHeight
- Rf_GVStrWidth
- Rf_GVText
  Rf_GetOptionParAsk
  Rf_IndexWidth
  Rf_InitArithmetic
@@ -1271,6 +1268,12 @@
  tzset
  uncompress
  utf8clen
+ wgl_hist_init
+ wgl_hist_next
+ wgl_hist_prev
+ wgl_histadd
+ wgl_loadhistory
+ wgl_savehistory
  winAccess
  winNewFrameConfirm
  winaddmenu
@@ -1280,6 +1283,8 @@
  windelmenus
  wingetmenuitems
  xbufaddc
+ xbufaddxc
+ xbufaddxs
  xbufdel
  xbufgrow
  xdr_bool
