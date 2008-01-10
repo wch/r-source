@@ -1420,7 +1420,7 @@ void GERect(double x0, double y0, double x1, double y1,
    0 means totally outside clip region
    1 means totally inside clip region
    2 means intersects clip region */
-static int clipTextCode(double x, double y, char *str,
+static int clipTextCode(double x, double y, char *str, int enc,
 			double rot, double hadj,
 			R_GE_gcontext *gc,
 			int toDevice, GEDevDesc *dd)
@@ -1428,8 +1428,8 @@ static int clipTextCode(double x, double y, char *str,
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
     double angle = DEG2RAD * rot;
     double theta1 = M_PI/2 - angle;
-    double width = GEStrWidth(str, gc, dd);
-    double height = GEStrHeight(str, gc, dd);
+    double width = GEStrWidth(str, enc, gc, dd);
+    double height = GEStrHeight(str, enc, gc, dd);
 #ifdef HAVE_HYPOT
     double length = hypot(width, height);
 #else
@@ -1453,11 +1453,12 @@ static int clipTextCode(double x, double y, char *str,
     return clipRectCode(left, bottom, right, top, toDevice, dd);
 }
 
-static void clipText(double x, double y, char *str, double rot, double hadj,
+static void clipText(double x, double y, char *str, int enc,
+		     double rot, double hadj,
 		     R_GE_gcontext *gc,
 		     int toDevice, GEDevDesc *dd)
 {
-    int result = clipTextCode(x, y, str, rot, hadj, gc,
+    int result = clipTextCode(x, y, str, enc, rot, hadj, gc,
 			      toDevice, dd);
     switch (result) {
     case 0:  /* text totally clipped; draw nothing */
@@ -1601,7 +1602,7 @@ static int VFontFaceCode(int familycode, int fontface) {
  */
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
-void GEText(double x, double y, const char * const str,
+void GEText(double x, double y, const char * const str, int enc,
 	    double xc, double yc, double rot,
 	    R_GE_gcontext *gc,
 	    GEDevDesc *dd)
@@ -1611,11 +1612,11 @@ void GEText(double x, double y, const char * const str,
      */
     int vfontcode = VFontFamilyCode(gc->fontfamily);
     if (vfontcode >= 100) {
-	R_GE_VText(x, y, str, xc, yc, rot, gc, dd);
+	R_GE_VText(x, y, str, enc, xc, yc, rot, gc, dd);
     } else if (vfontcode >= 0) {
 	gc->fontfamily[3] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
-	R_GE_VText(x, y, str, xc, yc, rot, gc, dd);
+	R_GE_VText(x, y, str, enc, xc, yc, rot, gc, dd);
     } else {
 	/* PR#7397: this seems to reset R_Visible */
 	Rboolean savevis=R_Visible;
@@ -1674,7 +1675,7 @@ void GEText(double x, double y, const char * const str,
 		    /* now determine bottom-left for THIS line */
 		    if(xc != 0.0 || yc != 0) {
 			double width, height;
-			width = fromDeviceWidth(GEStrWidth(sbuf, gc, dd),
+			width = fromDeviceWidth(GEStrWidth(sbuf, enc, gc, dd),
 						GE_INCHES, dd);
 			if (!R_FINITE(xc))
 			    xc = 0.5;
@@ -1686,8 +1687,7 @@ void GEText(double x, double y, const char * const str,
 			    double h, d, w;
 			    GEMetricInfo(0, gc, &h, &d, &w, dd);
 			    if (n > 1 || (h == 0 && d == 0 && w == 0)) {
-				height = fromDeviceHeight(GEStrHeight(sbuf, gc,
-								      dd),
+				height = fromDeviceHeight(GEStrHeight(sbuf, enc, gc, dd),
 							  GE_INCHES, dd);
 				yc = dd->dev->yCharOffset;
 			    } else {
@@ -1747,7 +1747,7 @@ void GEText(double x, double y, const char * const str,
 				yc = 0.5;
 			    }
 			} else {
-			    height = fromDeviceHeight(GEStrHeight(sbuf, gc, dd),
+			    height = fromDeviceHeight(GEStrHeight(sbuf, enc, gc, dd),
 						      GE_INCHES, dd);
 			}
 			if (dd->dev->canHAdj == 2) hadj = xc;
@@ -1769,9 +1769,11 @@ void GEText(double x, double y, const char * const str,
 		    xleft = toDeviceX(xleft, GE_INCHES, dd);
 		    ybottom = toDeviceY(ybottom, GE_INCHES, dd);
 		    if(dd->dev->canClip) {
-			clipText(xleft, ybottom, sbuf, rot, hadj, gc, 1, dd);
+			clipText(xleft, ybottom, sbuf, enc, rot, hadj, 
+				 gc, 1, dd);
 		    } else
-			clipText(xleft, ybottom, sbuf, rot, hadj, gc, 0, dd);
+			clipText(xleft, ybottom, sbuf, enc, rot, hadj, 
+				 gc, 0, dd);
 		    sb = sbuf;
 		    i += 1;
 		}
@@ -1927,7 +1929,7 @@ void GESymbol(double x, double y, int pch, double size,
 		str[0] = pch;
 		str[1] = '\0';
 	    }
-	    GEText(x, y, str, NA_REAL, NA_REAL, 0., gc, dd);
+	    GEText(x, y, str, 9/*FIX*/, NA_REAL, NA_REAL, 0., gc, dd);
 	}
     }
     else {
@@ -2294,7 +2296,7 @@ void GEMetricInfo(int c,
  * GEStrWidth
  ****************************************************************
  */
-double GEStrWidth(const char *str,
+double GEStrWidth(const char *str, int enc,
 		  R_GE_gcontext *gc,
 		  GEDevDesc *dd)
 {
@@ -2303,11 +2305,11 @@ double GEStrWidth(const char *str,
      */
     int vfontcode = VFontFamilyCode(gc->fontfamily);
     if (vfontcode >= 100)
-	return R_GE_VStrWidth(str, gc, dd);
+	return R_GE_VStrWidth(str, enc, gc, dd);
     else if (vfontcode >= 0) {
 	gc->fontfamily[0] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
-	return R_GE_VStrWidth(str, gc, dd);
+	return R_GE_VStrWidth(str, enc, gc, dd);
     } else {
 	double w;
 	char *sbuf = NULL;
@@ -2342,8 +2344,12 @@ double GEStrWidth(const char *str,
 /****************************************************************
  * GEStrHeight
  ****************************************************************
+
+ * This does not (currently) depend on the encoding.  It depends on
+ * the string only through the number of lines of text (via embedded
+ * \n) and we assume they are never part of an mbc.
  */
-double GEStrHeight(const char *str,
+double GEStrHeight(const char *str, int enc,
 		   R_GE_gcontext *gc,
 		   GEDevDesc *dd)
 {
@@ -2352,11 +2358,11 @@ double GEStrHeight(const char *str,
      */
     int vfontcode = VFontFamilyCode(gc->fontfamily);
     if (vfontcode >= 100)
-	return R_GE_VStrHeight(str, gc, dd);
+	return R_GE_VStrHeight(str, enc, gc, dd);
     else if (vfontcode >= 0) {
 	gc->fontfamily[0] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
-	return R_GE_VStrHeight(str, gc, dd);
+	return R_GE_VStrHeight(str, enc, gc, dd);
     } else {
 	double h;
 	const char *s;

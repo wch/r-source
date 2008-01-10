@@ -788,8 +788,9 @@ double transform(double value, int unit, SEXP data,
 		fromDeviceWidth(GEExpressionWidth(VECTOR_ELT(data, 0), gc, dd),
 				GE_INCHES, dd);
 	else
+	    /* FIXME: what encoding is this? */
 	    result = result*
-		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), gc, dd),
+		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), -1, gc, dd),
 				GE_INCHES, dd);
 	break;
     case L_STRINGHEIGHT:
@@ -800,8 +801,9 @@ double transform(double value, int unit, SEXP data,
 						    gc, dd),
 				 GE_INCHES, dd);
 	else
+	    /* FIXME: what encoding is this? */
 	    result = result*
-		fromDeviceHeight(GEStrHeight(CHAR(STRING_ELT(data, 0)),
+		fromDeviceHeight(GEStrHeight(CHAR(STRING_ELT(data, 0)), -1,
 					     gc, dd),
 				 GE_INCHES, dd);
 	break;

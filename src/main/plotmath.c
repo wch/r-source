@@ -1018,7 +1018,7 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
     if (draw) {
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, -1/*FIX*/,
 	       0.0, 0.0, mc->CurrentAngle, gc,
 	       dd);
 	PMoveAcross(bboxWidth(bbox), mc);
@@ -1077,8 +1077,8 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		    if(res == -1) error("invalid multibyte string");
 		    PMoveAcross(lastItalicCorr, mc);
 		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
-			   0.0, 0.0, mc->CurrentAngle, gc,
-			   dd);
+			   -1/*FIX*/,
+			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
 		}
 		bboxWidth(resultBBox) += lastItalicCorr;
@@ -1108,8 +1108,8 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		    chr[0] = *s;
 		    PMoveAcross(lastItalicCorr, mc);
 		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
-			   0.0, 0.0, mc->CurrentAngle, gc,
-			   dd);
+			   -1/*FIX*/,
+			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
 		}
 		bboxWidth(resultBBox) += lastItalicCorr;
@@ -1145,7 +1145,7 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 	} else
 #endif
 	    asciiStr[0] = ascii;
-	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, -1/*FIX*/,
 	       0.0, 0.0, mc->CurrentAngle, gc,
 	       dd);
 	PMoveAcross(bboxWidth(bbox), mc);
@@ -1185,7 +1185,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 	    }
 	}
 	if (draw) {
-	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str,
+	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str, -1/*FIX*/,
 		   0.0, 0.0, mc->CurrentAngle, gc, dd);
 	    PMoveAcross(bboxWidth(resultBBox), mc);
 	}

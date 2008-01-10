@@ -1283,7 +1283,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* Tickmark labels. */
 	Rf_gpptr(dd)->col = Rf_gpptr(dd)->colaxis;
-	gap = GStrWidth("m", NFC, dd);	/* FIXUP x/y distance */
+	gap = GStrWidth("m", -1, NFC, dd);	/* FIXUP x/y distance */
 	tlast = -1.0;
 	if (!R_FINITE(hadj)) {
 	    if (Rf_gpptr(dd)->las == 2 || Rf_gpptr(dd)->las == 3) {
@@ -1336,13 +1336,13 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			label = STRING_ELT(lab, ind[i]);
 			if(label != NA_STRING) {
 			    const char *ss = translateChar(label);
-			    labw = GStrWidth(ss, NFC, dd);
+			    labw = GStrWidth(ss, 0, NFC, dd);
 			    tnew = temp - 0.5 * labw;
 			    /* Check room for perpendicular labels. */
 			    if (Rf_gpptr(dd)->las == 2 ||
 				Rf_gpptr(dd)->las == 3 ||
 				tnew - tlast >= gap) {
-				GMtext(ss, side, axis_lab, 0, x,
+				GMtext(ss, 0/*FIX*/, side, axis_lab, 0, x,
 				       Rf_gpptr(dd)->las, padjval, dd);
 				tlast = temp + 0.5 *labw;
 			    }
@@ -1413,7 +1413,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* Tickmark labels. */
 	Rf_gpptr(dd)->col = Rf_gpptr(dd)->colaxis;
-	gap = GStrWidth("m", INCHES, dd);
+	gap = GStrWidth("m", -1, INCHES, dd);
 	gap = GConvertYUnits(gap, INCHES, NFC, dd);
 	tlast = -1.0;
 	if (!R_FINITE(hadj)) {
@@ -1467,14 +1467,14 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			label = STRING_ELT(lab, ind[i]);
 			if(label != NA_STRING) {
 			    const char *ss = translateChar(label);
-			    labw = GStrWidth(ss, INCHES, dd);
+			    labw = GStrWidth(ss, 0/* FIX */, INCHES, dd);
 			    labw = GConvertYUnits(labw, INCHES, NFC, dd);
 			    tnew = temp - 0.5 * labw;
 			    /* Check room for perpendicular labels. */
 			    if (Rf_gpptr(dd)->las == 1 ||
 				Rf_gpptr(dd)->las == 2 ||
 				tnew - tlast >= gap) {
-				GMtext(ss, side, axis_lab, 0, y,
+				GMtext(ss, 0/*FIX*/,side, axis_lab, 0, y,
 				       Rf_gpptr(dd)->las, padjval, dd);
 				tlast = temp + 0.5 *labw;
 			    }
@@ -2279,7 +2279,7 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else {
 		string = STRING_ELT(txt, i % ntxt);
 		if(string != NA_STRING)
-		    GText(xx, yy, INCHES, translateChar(string),
+		    GText(xx, yy, INCHES, translateChar(string), 0/*FIX*/,
 			  adjx, adjy, Rf_gpptr(dd)->srt, dd);
 	    }
 	}
@@ -2562,7 +2562,7 @@ SEXP attribute_hidden do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    string = STRING_ELT(text, i%ntext);
 	    if(string != NA_STRING)
-		GMtext(translateChar(string), sideval, lineval,
+		GMtext(translateChar(string), 0/*FIX*/, sideval, lineval,
 		       outerval, atval, Rf_gpptr(dd)->las, padjval, dd);
 	}
 
@@ -2685,7 +2685,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 		string = STRING_ELT(Main, i);
 		if(string != NA_STRING)
 		    GText(hpos, offset - i, where, translateChar(string),
-			  adj, adjy, 0.0, dd);
+			  0/*FIX*/, adj, adjy, 0.0, dd);
 	  }
 	}
 	UNPROTECT(1);
@@ -2720,7 +2720,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(sub, i);
 		if(string != NA_STRING)
-		    GMtext(translateChar(string), 1, vpos, where, 
+		    GMtext(translateChar(string), 0/*FIX*/, 1, vpos, where, 
 			   hpos, 0, 0.0, dd);
 	    }
 	}
@@ -2756,7 +2756,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(xlab, i);
 		if(string != NA_STRING)
-		    GMtext(translateChar(string), 1, vpos + i, 
+		    GMtext(translateChar(string), 0/*FIX*/, 1, vpos + i, 
 			   where, hpos, 0, 0.0, dd);
 	    }
 	}
@@ -2792,7 +2792,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(ylab, i);
 		if(string != NA_STRING)
-		    GMtext(translateChar(string), 2, vpos - i, 
+		    GMtext(translateChar(string), 0/*FIX*/, 2, vpos - i, 
 			   where, hpos, 0, 0.0, dd);
 	    }
 	}
@@ -3161,32 +3161,32 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 static void drawLabel(double xi, double yi, int pos, double offset,
-		      const char *l, DevDesc *dd)
+		      const char *l, int enc, DevDesc *dd)
 {
     switch (pos) {
     case 4:
 	xi = xi+offset;
-	GText(xi, yi, INCHES, l, 0.0,
+	GText(xi, yi, INCHES, l, enc, 0.0,
 	      Rf_gpptr(dd)->yCharOffset, 0.0, dd);
 	break;
     case 2:
 	xi = xi-offset;
-	GText(xi, yi, INCHES, l, 1.0,
+	GText(xi, yi, INCHES, l, enc, 1.0,
 	      Rf_gpptr(dd)->yCharOffset, 0.0, dd);
 	break;
     case 3:
 	yi = yi+offset;
-	GText(xi, yi, INCHES, l, 0.5,
+	GText(xi, yi, INCHES, l, enc, 0.5,
 	      0.0, 0.0, dd);
 	break;
     case 1:
 	yi = yi-offset;
-	GText(xi, yi, INCHES, l, 0.5,
+	GText(xi, yi, INCHES, l, enc, 0.5,
 	      1-(0.5-Rf_gpptr(dd)->yCharOffset),
 	      0.0, dd);
 	break;
     case 0:
-	GText(xi, yi, INCHES, l, 0.0, 0.0, 0.0, dd);
+	GText(xi, yi, INCHES, l, enc, 0.0, 0.0, 0.0, dd);
 	break;
     }
 }
@@ -3230,7 +3230,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		GConvert(&xi, &yi, USER, INCHES, dd);
 		posi = INTEGER(pos)[i];
 		drawLabel(xi, yi, posi, offset,
-			  translateChar(STRING_ELT(l, i % nl)), dd);
+			  translateChar(STRING_ELT(l, i % nl)), 0/*FIX*/, dd);
 	    }
 	}
 	return R_NilValue;
@@ -3356,7 +3356,8 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (plot)
 		    drawLabel(xi, yi, INTEGER(pos)[imin], offset,
-			      translateChar(STRING_ELT(l, imin % nl)), dd);
+			      translateChar(STRING_ELT(l, imin % nl)), 
+			      0/*FIX*/, dd);
 	    }
 	}
 	GMode(0, dd);
@@ -3422,7 +3423,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {								\
 	    ch = STRING_ELT(str, i);					\
 	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :			\
-		GStr ## KIND(CHAR(ch), GMapUnits(units), dd);		\
+		GStr ## KIND(CHAR(ch), 0/*FIX*/, GMapUnits(units), dd);		\
 	}								\
     Rf_gpptr(dd)->cex = cexsave;					\
     UNPROTECT(2);							\
@@ -3467,7 +3468,7 @@ static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
 	yl = (dnd_hang >= 0) ? *y - dnd_hang : 0;
 	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
 	    GText(xl, yl-dnd_offset, USER, 
-		  translateChar(STRING_ELT(dnd_llabels, -k-1)),
+		  translateChar(STRING_ELT(dnd_llabels, -k-1)), 0/*FIX*/,
 		  1.0, 0.3, 90.0, dd);
     }
     /* right part */
@@ -3478,7 +3479,7 @@ static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
 	yr = (dnd_hang >= 0) ? *y - dnd_hang : 0;
 	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
 	    GText(xr, yr-dnd_offset, USER, 
-		  translateChar(STRING_ELT(dnd_llabels, -k-1)),
+		  translateChar(STRING_ELT(dnd_llabels, -k-1)), 0/*FIX*/,
 		  1.0, 0.3, 90.0, dd);
     }
     xx[0] = xl; yy[0] = yl;
@@ -3547,7 +3548,8 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
     Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * Rf_gpptr(dd)->cex;
-    dnd_offset = GConvertYUnits(GStrWidth("m", INCHES, dd), INCHES, USER, dd);
+    dnd_offset = GConvertYUnits(GStrWidth("m", -1, INCHES, dd), INCHES, 
+				USER, dd);
 
     /* override par("xpd") and force clipping to figure region */
     /* NOTE: don't override to _reduce_ clipping region */
@@ -3609,7 +3611,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
     Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * Rf_gpptr(dd)->cex;
-    dnd_offset = GStrWidth("m", INCHES, dd);
+    dnd_offset = GStrWidth("m", -1, INCHES, dd);
     vmax = vmaxget();
     /* n is the number of merges, so the points are labelled 1 ... n+1 */
     y =  (double*)R_alloc(n+1, sizeof(double));
@@ -3628,7 +3630,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i <= n; i++) {
 	str = STRING_ELT(llabels, i);
 	ll[i] = (str == NA_STRING) ? 0.0 :
-	    GStrWidth(translateChar(str), INCHES, dd) + dnd_offset;
+	    GStrWidth(translateChar(str), 0/*FIX*/, INCHES, dd) + dnd_offset;
     }
 
     imax = -1; yval = -DBL_MAX;

@@ -311,12 +311,13 @@ void GPolyline(int, double*, double*, int, DevDesc*);
 /* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, DevDesc*);
 /* Return the height of the specified string in the specified units: */
-double GStrHeight(const char *, GUnit, DevDesc*);
+double GStrHeight(const char *, int, GUnit, DevDesc*);
 /* Return the width of the specified string in the specified units */
-double GStrWidth(const char *, GUnit, DevDesc*);
+double GStrWidth(const char *, int, GUnit, DevDesc*);
 /* Draw the specified text at location (x,y) with the specified
  * rotation and justification: */
-void GText(double, double, int, const char *, double, double, double, DevDesc*);
+void GText(double, double, int, const char *, int, double, double, double,
+	   DevDesc*);
 
 
 void GStartPath(DevDesc*);
@@ -354,7 +355,7 @@ void GBox(int, DevDesc*);
 void GPretty(double*, double*, int*);
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
-void GMtext(const char *, int, double, int, double, int, double, DevDesc*);
+void GMtext(const char *, int, int, double, int, double, int, double, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 

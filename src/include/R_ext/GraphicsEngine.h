@@ -315,7 +315,7 @@ void GECircle(double x, double y, double radius,
 	      R_GE_gcontext *gc, GEDevDesc *dd);
 void GERect(double x0, double y0, double x1, double y1,
 	    R_GE_gcontext *gc, GEDevDesc *dd);
-void GEText(double x, double y, const char * const str,
+void GEText(double x, double y, const char * const str, int enc,
 	    double xc, double yc, double rot,
 	    R_GE_gcontext *gc, GEDevDesc *dd);
 void GEMode(int mode, GEDevDesc* dd);
@@ -325,9 +325,9 @@ void GEPretty(double *lo, double *up, int *ndiv);
 void GEMetricInfo(int c, R_GE_gcontext *gc, 
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd);
-double GEStrWidth(const char *str, 
+double GEStrWidth(const char *str, int enc, 
 		  R_GE_gcontext *gc, GEDevDesc *dd);
-double GEStrHeight(const char *str, 
+double GEStrHeight(const char *str, int enc,
 		  R_GE_gcontext *gc, GEDevDesc *dd);
 
 /* 
@@ -356,11 +356,10 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 /* 
  * From vfonts.c
  */
-double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrWidth(const char *s, int enc, R_GE_gcontext *gc, GEDevDesc *dd);
 
-double R_GE_VStrHeight(const char *s, R_GE_gcontext *gc, GEDevDesc *dd);
-
-void R_GE_VText(double x, double y, const char * const s, 
+double R_GE_VStrHeight(const char *s, int enc, R_GE_gcontext *gc, GEDevDesc *dd);
+void R_GE_VText(double x, double y, const char * const s, int enc, 
 		double x_justify, double y_justify, double rotation,
 		R_GE_gcontext *gc, GEDevDesc *dd);
 /* 

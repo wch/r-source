@@ -179,9 +179,9 @@ void textRect(double x, double y, SEXP text, int i,
 			     GE_INCHES, dd);
     } else {
 	const char* string = translateChar(STRING_ELT(text, i % LENGTH(text)));
-	w = fromDeviceWidth(GEStrWidth(string, gc, dd),
+	w = fromDeviceWidth(GEStrWidth(string, 0/*FIX*/, gc, dd),
 			    GE_INCHES, dd);
-	h = fromDeviceHeight(GEStrHeight(string, gc, dd),
+	h = fromDeviceHeight(GEStrHeight(string, 0/*FIX*/, gc, dd),
 			     GE_INCHES, dd);
     }
     location(0, 0, bl);
