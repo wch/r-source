@@ -520,6 +520,14 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,dou
     QuartzCocoaDevice *dev = malloc(sizeof(QuartzCocoaDevice));
     memset(dev, 0, sizeof(QuartzCocoaDevice));
 
+    { /* check whether we have access to a display at all */
+	CGDisplayCount dcount = 0;
+	CGGetOnlineDisplayList(255, 0, &dcount);
+	warning("No displays are available");
+	free(dev);
+	if (dcount < 1) return FALSE;
+    }
+
     if (!dpi) {
         CGDirectDisplayID md = CGMainDisplayID();
         if (md) {
