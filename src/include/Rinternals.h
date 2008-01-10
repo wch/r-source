@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2007   The R Development Core Team.
+ *  Copyright (C) 1999-2008   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -586,6 +586,7 @@ SEXP Rf_findVarInFrame(SEXP, SEXP);
 SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean);
 SEXP Rf_getAttrib(SEXP, SEXP);
 SEXP Rf_GetArrayDimnames(SEXP);
+int Rf_getCharEnc(SEXP);
 SEXP Rf_GetColNames(SEXP);
 void Rf_GetMatrixDimnames(SEXP, SEXP*, SEXP*, const char**, const char**);
 SEXP Rf_GetOption(SEXP, SEXP);
@@ -613,6 +614,7 @@ Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_PrintValue(SEXP);
 SEXP Rf_protect(SEXP);
+const char *Rf_reEnc(const char *x, int ce_in, int ce_out);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
@@ -632,6 +634,11 @@ SEXP R_tryEval(SEXP, SEXP, int *);
 Rboolean Rf_isS4(SEXP);
 SEXP Rf_asS4(SEXP, Rboolean);
 
+#define CE_ANY -1
+#define CE_NATIVE 0
+#define CE_UTF8 1
+#define CE_LATIN1 2
+#define CE_SYMBOL 5
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
@@ -848,6 +855,7 @@ int R_system(const char *);
 #define findVarInFrame3		Rf_findVarInFrame3
 #define GetArrayDimnames	Rf_GetArrayDimnames
 #define getAttrib		Rf_getAttrib
+#define getCharEnc		Rf_getCharEnc
 #define GetColNames		Rf_GetColNames
 #define GetMatrixDimnames	Rf_GetMatrixDimnames
 #define GetOption		Rf_GetOption
@@ -920,6 +928,7 @@ int R_system(const char *);
 #define psmatch			Rf_psmatch
 #define PrintValue		Rf_PrintValue
 #define protect			Rf_protect
+#define reEnc			Rf_reEnc
 #define rownamesgets		Rf_rownamesgets
 #define ScalarComplex		Rf_ScalarComplex
 #define ScalarInteger		Rf_ScalarInteger

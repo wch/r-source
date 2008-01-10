@@ -1,11 +1,11 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2007	The R Development Core Team
+ *  Copyright (C) 1998-2008	The R Development Core Team
  *
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
- *  Copyright (C) 1998-2006	The R Development Core Team
+ *  Copyright (C) 1998-2008	The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1018,7 +1018,8 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
     if (draw) {
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, -1/*FIX*/,
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, 
+	       CE_SYMBOL,
 	       0.0, 0.0, mc->CurrentAngle, gc,
 	       dd);
 	PMoveAcross(bboxWidth(bbox), mc);
@@ -1073,11 +1074,9 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		    bboxItalic(glyphBBox) = 0;
 		if (draw) {
 		    memset(chr, 0, sizeof(chr));
-		    res  = wcrtomb(chr, wc, &mb_st);
-		    if(res == -1) error("invalid multibyte string");
+		    if(wcrtomb(chr, wc, &mb_st) == -1) error("invalid multibyte string");
 		    PMoveAcross(lastItalicCorr, mc);
-		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
-			   -1/*FIX*/,
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, CE_NATIVE,
 			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
 		}
@@ -1107,8 +1106,7 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		if (draw) {
 		    chr[0] = *s;
 		    PMoveAcross(lastItalicCorr, mc);
-		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
-			   -1/*FIX*/,
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, CE_NATIVE,
 			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
 		}
@@ -1145,7 +1143,7 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 	} else
 #endif
 	    asciiStr[0] = ascii;
-	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, -1/*FIX*/,
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, CE_NATIVE,
 	       0.0, 0.0, mc->CurrentAngle, gc,
 	       dd);
 	PMoveAcross(bboxWidth(bbox), mc);
@@ -1185,7 +1183,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 	    }
 	}
 	if (draw) {
-	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str, -1/*FIX*/,
+	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str, CE_NATIVE,
 		   0.0, 0.0, mc->CurrentAngle, gc, dd);
 	    PMoveAcross(bboxWidth(resultBBox), mc);
 	}

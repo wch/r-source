@@ -790,7 +790,8 @@ double transform(double value, int unit, SEXP data,
 	else
 	    /* FIXME: what encoding is this? */
 	    result = result*
-		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), -1, gc, dd),
+		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), 
+					   CE_ANY, gc, dd),
 				GE_INCHES, dd);
 	break;
     case L_STRINGHEIGHT:

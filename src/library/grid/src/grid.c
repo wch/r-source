@@ -2821,7 +2821,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 		    else
 			GEText(xx[i], yy[i], 
 			       translateChar(STRING_ELT(txt, i % LENGTH(txt))), 
-			       0/*FIX*/,
+			       CE_NATIVE/*FIX*/,
 			       REAL(hjust)[i % LENGTH(hjust)], 
 			       REAL(vjust)[i % LENGTH(vjust)], 
 			       numeric(rot, i % LENGTH(rot)) + 

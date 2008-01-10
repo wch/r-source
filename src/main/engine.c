@@ -1695,6 +1695,8 @@ void GEText(double x, double y, const char * const str, int enc,
 				double maxDepth = 0.0;
 				char *ss = sbuf;
 				int charNum = 0;
+
+				/* FIX: should re-encode here */
 #ifdef SUPPORT_MBCS
 				/* Symbol fonts are not encoded in MBCS ever */
 				if(gc->fontface != 5 && mbcslocale && !utf8strIsASCII(ss)) {
@@ -1768,6 +1770,7 @@ void GEText(double x, double y, const char * const str, int enc,
 		     */
 		    xleft = toDeviceX(xleft, GE_INCHES, dd);
 		    ybottom = toDeviceY(ybottom, GE_INCHES, dd);
+		    /* FIX make sure we are working with re-encoded text here */
 		    if(dd->dev->canClip) {
 			clipText(xleft, ybottom, sbuf, enc, rot, hadj, 
 				 gc, 1, dd);
@@ -1929,7 +1932,7 @@ void GESymbol(double x, double y, int pch, double size,
 		str[0] = pch;
 		str[1] = '\0';
 	    }
-	    GEText(x, y, str, 9/*FIX*/, NA_REAL, NA_REAL, 0., gc, dd);
+	    GEText(x, y, str, CE_NATIVE/*FIX*/, NA_REAL, NA_REAL, 0., gc, dd);
 	}
     }
     else {
@@ -2329,6 +2332,7 @@ double GEStrWidth(const char *str, int enc,
 		     * if it wants to.
 		     * NOTE: fontface corresponds to old "font"
 		     */
+		    /* FIX: encode to native */
 		    wdash = dd->dev->strWidth(sbuf, gc, dd->dev);
 		    if (wdash > w) w = wdash;
 		    sb = sbuf;
