@@ -46,25 +46,23 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
     } else
         stop("must pass a package name, DLLInfo or DllInfoReference object")
 
+    syms <- lapply(name, function(id) {
+	v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE,
+		   as.logical(withRegistrationInfo), PACKAGE = "base")
+	if(is.null(v)) {
+	    msg <- paste("no such symbol", id)
+	    if(length(pkgName) && nzchar(pkgName))
+		msg <- paste(msg, "in package", pkgName)
+	    stop(msg)
+	}
+	names(v) <- c("name", "address", "package", "numParameters")[seq_along(v)]
+	v
+    })
 
-    syms = lapply(name, function(id) {
-       v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE,
-                  as.logical(withRegistrationInfo), PACKAGE = "base")
-       if(is.null(v)) {
-           msg <- paste("no such symbol", id)
-           if(length(pkgName) && nzchar(pkgName))
-               msg <- paste(msg, "in package", pkgName)
-           stop(msg)
-       }
-       names(v) <- c("name", "address", "package", "numParameters")[1:length(v)]
-       v
-      })
-
-
-   if(length(name) == 1 && unlist == TRUE)
-     syms = syms[[1]]
+   if(length(name) == 1 && unlist)
+     syms <- syms[[1]]
    else
-     names(syms) = name
+     names(syms) <- name
 
    syms
 }
