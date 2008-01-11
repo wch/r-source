@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:58\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-11 16:32+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -111,6 +111,25 @@ msgid "dev.displaylist() called without an open graphics device"
 msgstr ""
 " dev.displaylist() が開かれたグラフィックスデバイスがないのに呼び出されまし"
 "た "
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr ""
+
+msgid "no suitable unused file name for pdf()"
+msgstr ""
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr ""
+
+msgid "no suitable unused file name for postscript()"
+msgstr ""
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr ""
+
+#, fuzzy
+msgid "device '%s' not found"
+msgstr " デバイス '%s' は有効ではありません "
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr " '%s' 中に不正な引数があります（名前付き引数が必要です） "
@@ -243,6 +262,9 @@ msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があ�
 
 msgid "invalid X11 font specification:"
 msgstr " 不正な X11 フォントの指定方法です "
+
+msgid "invalid value for 'rescale"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr " windows デバイスしか正面にもってくることが出来ません "

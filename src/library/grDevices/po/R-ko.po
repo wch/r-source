@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:58\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -114,6 +114,25 @@ msgstr "인수는 default 없음으로 결손이 되고 있습니다"
 msgid "dev.displaylist() called without an open graphics device"
 msgstr ""
 "dev.control()는 graphics 디바이스가 아무것도 열려 있지 않은데 호출되었습니다"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr ""
+
+msgid "no suitable unused file name for pdf()"
+msgstr ""
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr ""
+
+msgid "no suitable unused file name for postscript()"
+msgstr ""
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr ""
+
+#, fuzzy
+msgid "device '%s' not found"
+msgstr "디바이스 '%s'는 유효하지는 않습니다"
 
 #, fuzzy
 msgid "invalid arguments in '%s' (need named args)"
@@ -255,6 +274,9 @@ msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "부적절한 X11 폰트의 지정방법입니다"
+
+msgid "invalid value for 'rescale"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "windows 디바이스만을 그 전방으로 가져 올수가 없습니다"

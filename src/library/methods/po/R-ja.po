@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-02 19:22\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-11 22:40+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1225,9 +1225,6 @@ msgstr " 以下の総称(generic)に対するメソッドが見付かりませ�
 msgid "\" not found"
 msgstr " \" "
 
-msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr " .UsingMethodsTables: 'onOff' は TRUE でも FALSE でもありません "
-
 msgid "Failed to find expected group generic function:"
 msgstr " 期待されたグループ総称的関数を見付けることができませんでした: "
 
@@ -1383,18 +1380,23 @@ msgstr " \" はロックされています； base 環境を新しいクラス�
 msgid "not a package name: \"%s\""
 msgstr " パッケージ名ではありません: '%s' "
 
-msgid ""
-"apparently bad method or class metadata in saved environment; move the file "
-"or remove the class/method"
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
 " 保存された環境中に誤ったメソッドもしくはクラスメタデータがあるようです； "
 "ファイルを移動するかクラス/メソッドを取り除いてください "
+
+msgid "move the file or remove the class/method"
+msgstr ""
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] ""
 " 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：% "
+
+#~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+#~ msgstr " .UsingMethodsTables: 'onOff' は TRUE でも FALSE でもありません "
 
 #~ msgid "Package \"%s\" is not loaded"
 #~ msgstr " パッケージ \"%s\" はロードされていません "

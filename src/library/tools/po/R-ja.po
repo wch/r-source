@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:03\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-11 23:05+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -624,6 +624,9 @@ msgstr " テスト '%s' は利用出来ません "
 
 msgid "no or more than one match"
 msgstr " 0か複数のマッチ "
+
+msgid "'iconv' is required"
+msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr " 引数 'x' は文字型ベクトルでなければいけません "

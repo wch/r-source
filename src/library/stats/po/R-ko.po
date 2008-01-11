@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:01\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -515,6 +515,13 @@ msgstr "baseline의 그룹수가 범위를 넘어가고 있습니다"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "'x' 그리고 'y'의 양쪽 모두를 주어지거나, 행렬형태의 'x'를 주어집니다"
+
+msgid "'x' is empty"
+msgstr "'x'는 비어 있습니다"
+
+#, fuzzy
+msgid "both 'x' and 'y' must be non-empty"
+msgstr "'x'와 'w'의 길이는 일치하지 않으면 되지 않습니다"
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr "'pairwise.complete.obs'를 취급할 수가 없습니다"
@@ -1352,9 +1359,6 @@ msgstr "이것은 있을 수가 있지 않는 것입니다"
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table' 또는 'start'의 부정확한 지정입니다"
 
-msgid "'x' is empty"
-msgstr "'x'는 비어 있습니다"
-
 msgid "%d missing values deleted"
 msgstr "%d개의 결손값이 삭제되었습니다"
 
@@ -2013,6 +2017,10 @@ msgstr "coverage 확률이 범위 [0,1]외입니다"
 
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
+
+#, fuzzy
+msgid "'spline' requires n >= 1"
+msgstr "'approx'는 n >= 1 인것을 필요로 합니다"
 
 #, fuzzy
 msgid "'deriv' must be between 0 and 3"

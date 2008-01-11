@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-02 19:22\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-18 00:27-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1231,9 +1231,6 @@ msgstr "Список методов для общей \""
 msgid "\" not found"
 msgstr "\" не найдено"
 
-msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr ".UsingMethodsTables: 'onOff' не является TRUE либо FALSE"
-
 msgid "Failed to find expected group generic function:"
 msgstr "Не могу найти ожидаемую групповую общую функцию:"
 
@@ -1386,12 +1383,14 @@ msgstr "\" заблокировано; использую основное окружение для нового класса"
 msgid "not a package name: \"%s\""
 msgstr "не является именем пакета: \"%s\""
 
-msgid ""
-"apparently bad method or class metadata in saved environment; move the file "
-"or remove the class/method"
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
 "очевидно плохой метод или метаданные класса в сохраненном окружении; "
 "переместите файл либо удалите класс/метод"
+
+msgid "move the file or remove the class/method"
+msgstr ""
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
@@ -1402,6 +1401,9 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
+
+#~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+#~ msgstr ".UsingMethodsTables: 'onOff' не является TRUE либо FALSE"
 
 #~ msgid "Package \"%s\" is not loaded"
 #~ msgstr "Пакет \"%s\" не загружен"

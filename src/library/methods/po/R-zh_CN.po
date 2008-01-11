@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-02 19:22\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1051,9 +1051,6 @@ msgstr "方法串列于同屬"
 msgid "\" not found"
 msgstr "\"找不到"
 
-msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr ".UsingMethodsTables: 'onOff'的值只能是TRUE或FALSE"
-
 msgid "Failed to find expected group generic function:"
 msgstr "找不到团体同属函数："
 
@@ -1187,17 +1184,22 @@ msgstr "\"被锁住了；在新的类别上用基本环境"
 msgid "not a package name: \"%s\""
 msgstr "不程輯包名: '%s'"
 
-msgid ""
-"apparently bad method or class metadata in saved environment; move the file "
-"or remove the class/method"
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
 "保存了的环境中出现了不良方法或类别元数据；请移动文件或删除这些类别/方法"
+
+msgid "move the file or remove the class/method"
+msgstr ""
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 msgstr[1] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+#~ msgstr ".UsingMethodsTables: 'onOff'的值只能是TRUE或FALSE"
 
 #~ msgid "Package \"%s\" is not loaded"
 #~ msgstr "没有载入程辑包\"%s\""

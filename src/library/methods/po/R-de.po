@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-02 19:22\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-11-29 12:14\n"
 "Last-Translator: Dr. Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1258,9 +1258,6 @@ msgstr "Methodenliste für die Generische \""
 msgid "\" not found"
 msgstr "\" nicht gefunden"
 
-msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr ".UsingMethodsTables: 'onOff' ist weder TRUE noch FALSE"
-
 msgid "Failed to find expected group generic function:"
 msgstr "Konnte die erwartete gruppengenerische Funktion nicht finden"
 
@@ -1420,12 +1417,14 @@ msgstr "\" ist gesichert; nutze die Basisumgebung für die neue Klasse"
 msgid "not a package name: \"%s\""
 msgstr "kein Paketname: \"%s\""
 
-msgid ""
-"apparently bad method or class metadata in saved environment; move the file "
-"or remove the class/method"
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
 "anscheinend unbrauchbare Methoden- oder Klassenmetadaten in gespeicherter "
 "Umgebung; bitte Datei verschieben oder Klasse bzw. Methode entfernen"
+
+msgid "move the file or remove the class/method"
+msgstr ""
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
@@ -1434,6 +1433,9 @@ msgstr[0] ""
 "in der Methodensignatur für Funktion \"%s\" keine Definition für Klasse: %s"
 msgstr[1] ""
 "in der Methodensignatur für Funktion \"%s\" keine Definition für Klassen: %s"
+
+#~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+#~ msgstr ".UsingMethodsTables: 'onOff' ist weder TRUE noch FALSE"
 
 #~ msgid "Package \"%s\" is not loaded"
 #~ msgstr "Paket \"%s\" nicht geladen"

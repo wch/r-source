@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:58\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-10-15 14:54+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -111,6 +111,25 @@ msgstr "Argument fehlt ohne Standardwert"
 
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.displaylist() ohne geöffnetes Grafik-Device aufgerufen"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr ""
+
+msgid "no suitable unused file name for pdf()"
+msgstr ""
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr ""
+
+msgid "no suitable unused file name for postscript()"
+msgstr ""
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr ""
+
+#, fuzzy
+msgid "device '%s' not found"
+msgstr "Device '%s' steht nicht zur Verfügung"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt"
@@ -244,6 +263,9 @@ msgstr "'res' muss angegeben werden, außer 'units = \"px\"'"
 
 msgid "invalid X11 font specification:"
 msgstr "ungültige X11 Zeichensatzspezifikation"
+
+msgid "invalid value for 'rescale"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "kann nur windows-Devices nach Vorne bringen"

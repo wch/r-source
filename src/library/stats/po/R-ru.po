@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:01\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-18 00:33-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -521,6 +521,13 @@ msgstr "номер базовой группы -- вне диапазона"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "укажите и 'x', и 'y' или матрице-подобный 'x'"
+
+msgid "'x' is empty"
+msgstr "'x' пусто"
+
+#, fuzzy
+msgid "both 'x' and 'y' must be non-empty"
+msgstr "длины 'x' и 'w' должны соответствовать"
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr "не могу обработать 'pairwise.complete.obs'"
@@ -1324,9 +1331,6 @@ msgstr "это не должно случиться"
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "неправильное указание 'table' или 'start'"
 
-msgid "'x' is empty"
-msgstr "'x' пусто"
-
 msgid "%d missing values deleted"
 msgstr "%d пропущенных значений удалено"
 
@@ -1958,6 +1962,10 @@ msgstr "покрывающая вероятность вне [0,1)"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 "spline: первое и последнее значения y различны -- использую y[1] для обоих"
+
+#, fuzzy
+msgid "'spline' requires n >= 1"
+msgstr "'approx' требует n >= 1"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' должно быть между 0 и 3"

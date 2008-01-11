@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:01\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-12 00:31+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -513,6 +513,13 @@ msgstr " ベースラインのグループ数が範囲を越えています "
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr " 'x' to 'y' の両方を与えるか、行列形の 'x' を与えてください "
+
+msgid "'x' is empty"
+msgstr " x は空です "
+
+#, fuzzy
+msgid "both 'x' and 'y' must be non-empty"
+msgstr " 'x' と 'w' の長さは一致しなければなりません "
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr " 'pairwise.complete.obs' を扱うことができません "
@@ -1318,9 +1325,6 @@ msgstr " これはあり得ないことです "
 msgid "incorrect specification of 'table' or 'start'"
 msgstr " 'table' または 'start' の不正確な指定です "
 
-msgid "'x' is empty"
-msgstr " x は空です "
-
 msgid "%d missing values deleted"
 msgstr " %d個の欠損値が削除されました "
 
@@ -1953,6 +1957,10 @@ msgstr " 被覆確率が範囲 [0,1) 外です "
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 " spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します "
+
+#, fuzzy
+msgid "'spline' requires n >= 1"
+msgstr " 'approx' は n > = 1 であることを必要とします "
 
 msgid "'deriv' must be between 0 and 3"
 msgstr " 'deriv' は 0 と 3 の間になければなりません "

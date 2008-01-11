@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:58\n"
-"PO-Revision-Date: 2007-12-15 15:58\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
+"PO-Revision-Date: 2008-01-11 23:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -128,6 +128,24 @@ msgstr "argument is missing with no default"
 
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.displaylist() called without an open graphics device"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "invalid setting for ‘getOption(“device”)’"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "no suitable unused file name for pdf()"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): using pdf(file=“%s”)"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "no suitable unused file name for postscript()"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): using postscript(file=“%s”)"
+
+msgid "device '%s' not found"
+msgstr "device ‘%s’ not found"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "invalid arguments in ‘%s’ (need named args)"
@@ -260,6 +278,9 @@ msgstr "‘res’ must be specified unless ‘units = “px”’"
 
 msgid "invalid X11 font specification:"
 msgstr "invalid X11 font specification:"
+
+msgid "invalid value for 'rescale"
+msgstr "invalid value for 'rescale"
 
 msgid "can only bring windows devices to the front"
 msgstr "can only bring windows devices to the front"

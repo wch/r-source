@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:03\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -89,6 +89,22 @@ msgstr "'what' 요소의 첫번째가 무시될 것입니다"
 
 msgid "%d occurrences in %s"
 msgstr "%s에서 %d가 발생됩니다"
+
+msgid ""
+"Use <code> %s </code> \n"
+" to list the vignettes in all <strong>available</strong> packages."
+msgstr ""
+
+#, fuzzy
+msgid "No vignettes found by"
+msgstr "vignette(당초무늬) '%s' *not*는 검색되어졌습니다"
+
+msgid "call"
+msgstr ""
+
+#, fuzzy
+msgid "'file' must be NULL, a character string or a connection"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "bad argument"
 msgstr "불적절한 인수"
@@ -826,6 +842,12 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frmae() data.frame로 호출되었던것입니다 -- 1까지 강제입니다"
 
 msgid "invalid options('str') -- using defaults instead"
+msgstr ""
+
+msgid "invalid components in options('str'):"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

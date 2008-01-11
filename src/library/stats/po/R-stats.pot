@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:01\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -495,6 +495,12 @@ msgid "baseline group number out of range"
 msgstr ""
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
+msgstr ""
+
+msgid "'x' is empty"
+msgstr ""
+
+msgid "both 'x' and 'y' must be non-empty"
 msgstr ""
 
 msgid "cannot handle 'pairwise.complete.obs'"
@@ -1253,9 +1259,6 @@ msgstr ""
 msgid "incorrect specification of 'table' or 'start'"
 msgstr ""
 
-msgid "'x' is empty"
-msgstr ""
-
 msgid "%d missing values deleted"
 msgstr ""
 
@@ -1857,6 +1860,9 @@ msgid "coverage probability out of range [0,1)"
 msgstr ""
 
 msgid "spline: first and last y values differ - using y[1] for both"
+msgstr ""
+
+msgid "'spline' requires n >= 1"
 msgstr ""
 
 msgid "'deriv' must be between 0 and 3"

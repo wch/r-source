@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:58\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -114,6 +114,25 @@ msgstr "argomento mancante senza valore di default"
 #, fuzzy
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr ""
+
+msgid "no suitable unused file name for pdf()"
+msgstr ""
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr ""
+
+msgid "no suitable unused file name for postscript()"
+msgstr ""
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr ""
+
+#, fuzzy
+msgid "device '%s' not found"
+msgstr "device '%s' non disponibile"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
@@ -253,6 +272,9 @@ msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "specificazione font X11 non valida"
+
+msgid "invalid value for 'rescale"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "posso portare in primo piano dispositivi 'windows'"

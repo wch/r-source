@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-02 19:22\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1175,9 +1175,6 @@ msgstr "nenhum método encontrado para a genérica '%s'"
 msgid "\" not found"
 msgstr ""
 
-msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr ""
-
 msgid "Failed to find expected group generic function:"
 msgstr ""
 
@@ -1315,9 +1312,11 @@ msgstr ""
 msgid "not a package name: \"%s\""
 msgstr ""
 
-msgid ""
-"apparently bad method or class metadata in saved environment; move the file "
-"or remove the class/method"
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
+msgstr "assinatura deve ser um vetor de classes ou um ambiente"
+
+msgid "move the file or remove the class/method"
 msgstr ""
 
 #, fuzzy

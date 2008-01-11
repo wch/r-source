@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:03\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,6 +78,18 @@ msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
 msgid "%d occurrences in %s"
+msgstr ""
+
+msgid "Use <code> %s </code> \n to list the vignettes in all <strong>available</strong> packages."
+msgstr ""
+
+msgid "No vignettes found by"
+msgstr ""
+
+msgid "call"
+msgstr ""
+
+msgid "'file' must be NULL, a character string or a connection"
 msgstr ""
 
 msgid "bad argument"
@@ -714,6 +726,12 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
 
 msgid "invalid options('str') -- using defaults instead"
+msgstr ""
+
+msgid "invalid components in options('str'):"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:01\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -508,6 +508,13 @@ msgstr "基線组在值域外"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "要么同时设定'x'和'y'，要么只设定矩阵式的'x'"
+
+msgid "'x' is empty"
+msgstr "'x'是空的"
+
+#, fuzzy
+msgid "both 'x' and 'y' must be non-empty"
+msgstr "'x'和'w'的长度必需相等"
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr "不知如何處理'pairwise.complete.obs'"
@@ -1288,9 +1295,6 @@ msgstr "这不应该发生"
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "当'table'或'start'正确地被设定时"
 
-msgid "'x' is empty"
-msgstr "'x'是空的"
-
 msgid "%d missing values deleted"
 msgstr "删除了%d个遺漏值"
 
@@ -1907,6 +1911,10 @@ msgstr "覆蓋機率在值域[0,1) 外"
 
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
+
+#, fuzzy
+msgid "'spline' requires n >= 1"
+msgstr "'approx'需要n大于等于一"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv'必需在零和三之间"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:03\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2007-09-11 22:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -88,6 +88,22 @@ msgstr " 'what' の要素の最初のもの以降は無視されます "
 
 msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
+
+msgid ""
+"Use <code> %s </code> \n"
+" to list the vignettes in all <strong>available</strong> packages."
+msgstr ""
+
+#, fuzzy
+msgid "No vignettes found by"
+msgstr " ビニエット '%s' が見付かりません "
+
+msgid "call"
+msgstr ""
+
+#, fuzzy
+msgid "'file' must be NULL, a character string or a connection"
+msgstr " 'file' は文字列か NULL でなければなりません "
 
 msgid "bad argument"
 msgstr " 誤った引数 "
@@ -817,6 +833,12 @@ msgstr ""
 
 msgid "invalid options('str') -- using defaults instead"
 msgstr " 不正な options('str') -- 代わりに既定値を使います "
+
+msgid "invalid components in options('str'):"
+msgstr ""
+
+msgid ","
+msgstr ""
 
 msgid "'object' does not have valid levels()"
 msgstr " 'object' は有効な levels() を持ちません "

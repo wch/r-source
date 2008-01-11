@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:58\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -111,6 +111,25 @@ msgstr "没有设定变元，也没有默认值"
 
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.displaylist()的"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr ""
+
+msgid "no suitable unused file name for pdf()"
+msgstr ""
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr ""
+
+msgid "no suitable unused file name for postscript()"
+msgstr ""
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr ""
+
+#, fuzzy
+msgid "device '%s' not found"
+msgstr "没有'%s'这样的装置"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'里的变元不对(需要有带名变元)"
@@ -243,6 +262,9 @@ msgstr "除非'units = \"px\"'，否则必需设定'res'"
 
 msgid "invalid X11 font specification:"
 msgstr "X11字体设置出了错:"
+
+msgid "invalid value for 'rescale"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "只能把窗户装置带到前方去"

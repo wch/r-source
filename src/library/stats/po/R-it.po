@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:01\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -523,6 +523,13 @@ msgstr "numero gruppo di base fuori range"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "fornire sia 'x' che 'y' o una 'x' in forma matriciale"
+
+msgid "'x' is empty"
+msgstr "'x' è vuota"
+
+#, fuzzy
+msgid "both 'x' and 'y' must be non-empty"
+msgstr "le lunghezze di 'x' e 'w' devono coincidere"
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr "non posso gestire 'pairwise.complete.obs'"
@@ -1351,9 +1358,6 @@ msgstr "questo non dovrebbe accadere"
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "specificazione di 'table' o 'start' non correttaaaaaaaaaaaaaaaa"
 
-msgid "'x' is empty"
-msgstr "'x' è vuota"
-
 msgid "%d missing values deleted"
 msgstr "eliminati %d valori mancanti"
 
@@ -2011,6 +2015,10 @@ msgstr "probabilità di copertura oltre [0,1)"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 "spline: il primo e l'ultimo valore di y sono diversi - uso y[1] per entrambi"
+
+#, fuzzy
+msgid "'spline' requires n >= 1"
+msgstr "'approx' richiede n >= 1"
 
 #, fuzzy
 msgid "'deriv' must be between 0 and 3"

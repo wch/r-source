@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-02 19:22\n"
+"POT-Creation-Date: 2008-01-11 23:16\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1281,9 +1281,6 @@ msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
 msgid "\" not found"
 msgstr "검색되지 않는 오브젝트 '%s' 입니다"
 
-msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr ""
-
 msgid "Failed to find expected group generic function:"
 msgstr ""
 
@@ -1434,9 +1431,11 @@ msgstr ""
 msgid "not a package name: \"%s\""
 msgstr "패키지명이 아닙니다:'%s'"
 
-msgid ""
-"apparently bad method or class metadata in saved environment; move the file "
-"or remove the class/method"
+#, fuzzy
+msgid "apparently bad method or class metadata in saved environment;"
+msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
+
+msgid "move the file or remove the class/method"
 msgstr ""
 
 #, fuzzy
