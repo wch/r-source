@@ -1999,11 +1999,50 @@ static int NumericValue(int c)
 	    bp = stext+nc; }		    \
 	*bp++ = (c);                        \
 } while(0)
+
+
+/* The idea here is that if a string contains \u escapes that are not
+   valid in the current locale, we should switch to UTF-8 for that
+   string.  Needs wide-char support.
+*/
+#ifdef SUPPORT_MBCS
+# ifdef Win32
+#  define USE_UTF8_IF_POSSIBLE
+# endif
+#endif
+
+#ifdef USE_UTF8_IF_POSSIBLE
+#define WTEXT_PUSH(c) do { if(wcnt < 1000) wcs[wcnt++] = c; } while(0)
+
+extern ssize_t Rf_wctoutf8(char *s, const wchar_t *wc, size_t n);
+static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
+{
+    SEXP t;
+    char *s;
+
+/* NB: cnt includes the terminator */
+#ifdef Win32
+    s = alloca(cnt*4); /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
+#else
+    s = alloca(cnt*6); /* max 6 bytes per wchar_t */
+#endif
+    R_CheckStack();
+    Rf_wctoutf8(s, wcs, cnt);
+    PROTECT(t = allocVector(STRSXP, 1));
+    SET_STRING_ELT(t, 0, mkCharEnc(s, UTF8_MASK));
+    UNPROTECT(1);
+    return t;
+}
+#else
+#define WTEXT_PUSH(c)
+#endif
+
 #define CTEXT_PUSH(c) do { \
 	if (ct - currtext >= 1000) {memmove(currtext, currtext+100, 901); memmove(currtext, "... ", 4); ct -= 100;} \
 	*ct++ = (c); \
 } while(0)
 #define CTEXT_POP() ct--
+
 
 static int StringValue(int c, Rboolean forSymbol)
 {
@@ -2013,6 +2052,12 @@ static int StringValue(int c, Rboolean forSymbol)
     char st0[MAXELTSIZE];
     unsigned int nstext = MAXELTSIZE;
     char *stext = st0, *bp = st0;
+
+#ifdef USE_UTF8_IF_POSSIBLE
+    int wcnt = 0;
+    wchar_t wcs[1001];
+    Rboolean use_wcs = FALSE;
+#endif
 
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	CTEXT_PUSH(c);
@@ -2079,15 +2124,23 @@ static int StringValue(int c, Rboolean forSymbol)
 			error(_("invalid \\u{xxxx} sequence"));
 		    else CTEXT_PUSH(c);
 		}
+		WTEXT_PUSH(val);
 		res = ucstomb(buff, val, NULL);
-		if((int)res <= 0) {
-		    if(delim)
-			error(_("invalid \\u{xxxx} sequence"));
-		    else
-			error(_("invalid \\uxxxx sequence"));
-		}
-		for(i = 0; i <  res - 1; i++) STEXT_PUSH(buff[i]);
-		c = buff[res - 1]; /* pushed below */
+		if((int) res <= 0) {
+#ifdef USE_UTF8_IF_POSSIBLE
+		    if(!forSymbol) {
+			use_wcs = TRUE;
+		    } else
+#endif
+		    {
+			if(delim)
+			    error(_("invalid \\u{xxxx} sequence"));
+			else
+			    error(_("invalid \\uxxxx sequence"));
+		    }
+		} else
+		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
+		continue;
 #endif
 	    }
 	    else if(c == 'U') {
@@ -2121,8 +2174,9 @@ static int StringValue(int c, Rboolean forSymbol)
 			else
 			    error(_("invalid \\Uxxxxxxxx sequence"));
 		    }
-		    for(i = 0; i <  res - 1; i++) STEXT_PUSH(buff[i]);
-		    c = buff[res - 1]; /* pushed below */
+		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
+		    WTEXT_PUSH(val);
+		    continue;
 		}
 #endif
 	    }
@@ -2171,6 +2225,7 @@ static int StringValue(int c, Rboolean forSymbol)
            int i, clen;
            wchar_t wc = L'\0';
            clen = utf8locale ? utf8clen(c): mbcs_get_next(c, &wc);
+	   WTEXT_PUSH(wc);
            for(i = 0; i < clen - 1; i++){
                STEXT_PUSH(c);
                c = xxgetc();
@@ -2182,17 +2237,38 @@ static int StringValue(int c, Rboolean forSymbol)
                }
            }
            if (c == R_EOF) break;
+	   STEXT_PUSH(c);
+	   continue;
        }
 #endif /* SUPPORT_MBCS */
 	STEXT_PUSH(c);
+#ifdef USE_UTF8_IF_POSSIBLE
+	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
+	else { /* have an 8-bit char in the current encoding */
+	    wchar_t wc;
+	    char s[2] = " ";
+	    s[0] = c;
+	    mbrtowc(&wc, s, 1, NULL);
+	    WTEXT_PUSH(wc);
+	}
+#endif
     }
     STEXT_PUSH('\0');
+    WTEXT_PUSH(0);
     if(forSymbol) {
 	PROTECT(yylval = install(stext));
 	if(stext != st0) free(stext);
 	return SYMBOL;
     } else {
-	PROTECT(yylval = mkString2(stext));
+#ifdef USE_UTF8_IF_POSSIBLE
+	if(use_wcs) {
+	    if(wcnt < 1000)
+		PROTECT(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
+	    else
+		error(_("string containing Unicode escapes not in this locale is too long (max 1000 chars)"));
+	} else
+#endif
+	    PROTECT(yylval = mkString2(stext));
 	if(stext != st0) free(stext);
 	if(have_warned) {
 	    *ct = '\0';
