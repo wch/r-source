@@ -527,6 +527,16 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
+int getCharEnc(SEXP x)
+{
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "getEncChar");
+    if(IS_UTF8(x)) return CE_UTF8;
+    else if(IS_LATIN1(x)) return CE_LATIN1;
+    else return CE_NATIVE;
+}
+
+
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
@@ -573,6 +583,8 @@ const char *translateChar(SEXP x)
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "translateChar");
     if(x == NA_STRING || !(ENC_KNOWN(x))) return ans;
     if(utf8locale && IS_UTF8(x)) return ans;
     if(latin1locale && IS_LATIN1(x)) return ans;
@@ -625,6 +637,88 @@ next_char:
     R_FreeStringBuffer(&cbuff);
     return p;
 }
+
+const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
+{
+    void * obj;
+    const char *inbuf;
+    char *outbuf, *p;
+    size_t inb, outb, res, full;
+    char *tocode = NULL, *fromcode = NULL;
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+
+    /* Since no other encoding is compatible with Symbol, never try
+       to encode to or from it */
+    if(ce_in == ce_out || ce_in == CE_SYMBOL || ce_out == CE_SYMBOL || 
+       ce_in == CE_ANY || ce_out == CE_ANY) return x;
+    if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return x;
+    if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return x;
+    if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return x;
+    if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return x;
+
+    if(utf8strIsASCII(x)) return x;
+    
+    switch(ce_in) {
+    case CE_NATIVE: fromcode = ""; break;
+    case CE_LATIN1: fromcode = "latin1"; break;
+    case CE_UTF8:   fromcode = "UTF-8"; break;
+    default: return x;
+    }
+
+    switch(ce_out) {
+    case CE_NATIVE: tocode = ""; break;
+    case CE_LATIN1: tocode = "latin1"; break;
+    case CE_UTF8:   tocode = "UTF-8"; break;
+    default: return x;
+    }
+    
+    obj = Riconv_open(tocode, fromcode);
+    if(obj == (void *)(-1)) return x;
+    R_AllocStringBuffer(0, &cbuff);
+top_of_loop:
+    inbuf = x; inb = strlen(inbuf);
+    outbuf = cbuff.data; full = outb = cbuff.bufsize - 1;
+    /* First initialize output */
+    Riconv (obj, NULL, NULL, &outbuf, &outb);
+next_char:
+    /* Then convert input  */
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+    if(res == -1 && errno == E2BIG) {
+	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	goto top_of_loop;
+    } else if(res == -1 && errno == EILSEQ) {
+	switch(subst) {
+	case 1: /* substitute hex */
+	    if(outb < 5) {
+		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		goto top_of_loop;
+	    }
+	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+	    outbuf += 4; outb -= 4;
+	    inbuf++; inb--;
+	    goto next_char; 
+	    break;
+	case 2: /* substitute . */
+	    if(outb < 1) {
+		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		goto top_of_loop;
+	    }
+	    *outbuf++ = *inbuf++; outb--; inb--;
+	    goto next_char; 
+	    break;
+	default: /* skip byte */
+	    inbuf++; inb--;
+	    goto next_char; 
+	}
+    }
+    Riconv_close(obj);
+    *outbuf = '\0';
+    res = (full-outb)+1; /* strlen(cbuff.data) + 1; */
+    p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
 #else
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
@@ -648,6 +742,10 @@ int Riconv_close (void * cd)
 const char *translateChar(SEXP x)
 {
     return CHAR(x);
+}
+const char *reEnc(const char *x, int ce_in, int ce_out)
+{
+    return x;
 }
 #endif
 

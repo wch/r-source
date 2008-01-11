@@ -614,7 +614,7 @@ Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_PrintValue(SEXP);
 SEXP Rf_protect(SEXP);
-const char *Rf_reEnc(const char *x, int ce_in, int ce_out);
+const char *Rf_reEnc(const char *x, int ce_in, int ce_out, int subst);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);

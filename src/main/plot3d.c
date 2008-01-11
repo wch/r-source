@@ -1044,11 +1044,12 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    if (drawLabels) {
 		/* If user supplied labels, use i'th one of them
 		   Otherwise stringify the z-value of the contour */
+		int enc = CE_NATIVE;
 		buffer[0] = ' ';
 		if (!isNull(labels)) {
 		    int numl = length(labels);
-		    strcpy(&buffer[1], 
-			   translateChar(STRING_ELT(labels, cnum % numl)));
+		    strcpy(&buffer[1], CHAR(STRING_ELT(labels, cnum % numl)));
+		    enc = getCharEnc(STRING_ELT(labels, cnum % numl));
 		}
 		else {
 		    PROTECT(lab = allocVector(REALSXP, 1));
@@ -1060,8 +1061,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		buffer[strlen(buffer)+1] = '\0';
 		buffer[strlen(buffer)] = ' ';
 
-		labelDistance = GStrWidth(buffer, CE_NATIVE/*FIX*/, INCHES, dd);
-		labelHeight = GStrHeight(buffer, CE_NATIVE/*FIX*/, INCHES, dd);
+		labelDistance = GStrWidth(buffer, enc, INCHES, dd);
+		labelHeight = GStrHeight(buffer, enc, INCHES, dd);
 
 		if (labelDistance > 0) {
 		    /* Try to find somewhere to draw the label */
@@ -2348,8 +2349,8 @@ static void PerspAxis(double *x, double *y, double *z,
 		  v2[0]/v2[3], v2[1]/v2[3], USER, dd);
 	    /* Draw tick label */
 	    GText(v3[0]/v3[3], v3[1]/v3[3], USER,
-		  translateChar(STRING_ELT(lab, i)), 
-		  CE_NATIVE/* getCharEnc(STRING_ELT(lab, i)) */,
+		  CHAR(STRING_ELT(lab, i)), 
+		  getCharEnc(STRING_ELT(lab, i)),
 		  .5, .5, 0, dd);
 	}
 	UNPROTECT(2);
@@ -2602,9 +2603,9 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SEXP xl = STRING_ELT(xlab, 0), yl = STRING_ELT(ylab, 0),
 		zl = STRING_ELT(zlab, 0);
 	    PerspAxes(REAL(xlim), REAL(ylim), REAL(zlim),
-		      (xl == NA_STRING)? "" : translateChar(xl), CE_NATIVE,
-		      (yl == NA_STRING)? "" : translateChar(yl), CE_NATIVE,
-		      (zl == NA_STRING)? "" : translateChar(zl), CE_NATIVE,
+		      (xl == NA_STRING)? "" : CHAR(xl), getCharEnc(xl),
+		      (yl == NA_STRING)? "" : CHAR(yl), getCharEnc(yl),
+		      (zl == NA_STRING)? "" : CHAR(zl), getCharEnc(zl),
 		      nTicks, tickType, dd);
 	}
     }
