@@ -1451,6 +1451,8 @@ size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n)
 
 /* This is currently only used for faking UTF-8 locale conversions */
 
+#define FAKE_UTF8 1
+
 #ifdef SUPPORT_UTF8
 extern char *alloca(size_t);
 int Rstrcoll(const char *s1, const char *s2)
@@ -1463,8 +1465,6 @@ int Rstrcoll(const char *s1, const char *s2)
     Rmbstowcs(w2, s2, strlen(s2));
     return wcscoll(w1, w2);
 }
-
-#define FAKE_UTF8 1
 
 size_t Rmbrtowc(wchar_t *wc, const char *s)
 {
@@ -1503,34 +1503,6 @@ size_t Rmbrtowc(wchar_t *wc, const char *s)
 #endif
 }
 
-/* based on pcre.c, but will only be used for UCS-2 */
-static const int utf8_table1[] =
-  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
-static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
-
-size_t Rwcrtomb(char *s, const wchar_t wc)
-{
-#ifdef FAKE_UTF8
-    register int i, j;
-    unsigned int cvalue = wc;
-    char buf[10], *b;
-
-    b = s ? s : buf;
-    if(cvalue == 0) {*b = 0; return 0;}
-    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
-	if (cvalue <= utf8_table1[i]) break;
-    b += i;
-    for (j = i; j > 0; j--) {
-	*b-- = 0x80 | (cvalue & 0x3f);
-	cvalue >>= 6;
-    }
-    *b = utf8_table2[i] | cvalue;
-    return i + 1;
-#else
-    return wcrtomb(s, wc, NULL);
-#endif
-}
-
 size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
 {
 #ifdef FAKE_UTF8
@@ -1558,10 +1530,35 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
     return mbstowcs(wc, s, n);
 #endif
 }
+#endif
 
-size_t Rwcstombs(char *s, const wchar_t *wc, size_t n)
+
+/* based on pcre.c, but will only be used for UCS-2 */
+static const int utf8_table1[] =
+  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
+static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+
+static size_t Rwcrtomb(char *s, const wchar_t wc)
 {
-#ifdef FAKE_UTF8
+    register int i, j;
+    unsigned int cvalue = wc;
+    char buf[10], *b;
+
+    b = s ? s : buf;
+    if(cvalue == 0) {*b = 0; return 0;}
+    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
+	if (cvalue <= utf8_table1[i]) break;
+    b += i;
+    for (j = i; j > 0; j--) {
+	*b-- = 0x80 | (cvalue & 0x3f);
+	cvalue >>= 6;
+    }
+    *b = utf8_table2[i] | cvalue;
+    return i + 1;
+}
+
+size_t Rf_wctoutf8(char *s, const wchar_t *wc, size_t n)
+{
     int m, res=0;
     char *t;
     const wchar_t *p;
@@ -1581,8 +1578,4 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n)
 	}
     }
     return res;
-#else
-    return wcstombs(s, wc, n);
-#endif
 }
-#endif

@@ -132,6 +132,14 @@ OTHERS
 	double-clicking an item (as if the item had been selected and
 	then the OK button pressed).
 
+   o	If a string presented to the parser contains a \uxxxx escape
+	invalid in the current locale, the string is output in UTF-8
+	with the encoding declared.  This is likely to thow an error
+	if it is used later in the session, but it can be used for
+	e.g. plotting on the windows() device.  So "\u03b2" gives a
+	Greek letter beta (as distinct from  mathematical symbol), and
+	"\u2642" a 'male sign'.
+
 
 BUILDING R
 
@@ -142,7 +150,8 @@ BUILDING R
     o	We now presume version 2.7.0 of Rtools.exe, in which gcc is
 	version 4.2.1.
 
-    o	We now assume Tcl/Tk version 8.5.x.
+    o	We now assume Tcl/Tk version 8.5.x (included in version 2.7.0
+	of Rtools.exe).  Earlier versions can be selected in MkRules.
 
 
 
