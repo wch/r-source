@@ -1,8 +1,8 @@
 #include "grid.h"
 #include <string.h>
 
-/* Get the list element named str, or return NULL. 
- * Copied from the Writing R Extensions manual (which copied it from nls) 
+/* Get the list element named str, or return NULL.
+ * Copied from the Writing R Extensions manual (which copied it from nls)
  */
 SEXP getListElement(SEXP list, char *str)
 {
@@ -18,7 +18,7 @@ SEXP getListElement(SEXP list, char *str)
   return elmt;
 }
 
-void setListElement(SEXP list, char *str, SEXP value) 
+void setListElement(SEXP list, char *str, SEXP value)
 {
   SEXP names = getAttrib(list, R_NamesSymbol);
   int i;
@@ -29,7 +29,7 @@ void setListElement(SEXP list, char *str, SEXP value)
       break;
     }
 }
-    
+
 /* The lattice R code checks values to make sure that they are numeric
  * BUT we do not know whether the values are integer or real
  * SO we have to be careful when extracting numeric values.
@@ -50,8 +50,8 @@ double numeric(SEXP x, int index)
 
 /* Fill a rectangle struct
  */
-void rect(double x1, double x2, double x3, double x4, 
-	  double y1, double y2, double y3, double y4, 
+void rect(double x1, double x2, double x3, double x4,
+	  double y1, double y2, double y3, double y4,
 	  LRect *r)
 {
     r->x1 = x1;
@@ -64,7 +64,7 @@ void rect(double x1, double x2, double x3, double x4,
     r->y4 = y4;
 }
 
-void copyRect(LRect r1, LRect *r) 
+void copyRect(LRect r1, LRect *r)
 {
     r->x1 = r1.x1;
     r->x2 = r1.x2;
@@ -76,8 +76,8 @@ void copyRect(LRect r1, LRect *r)
     r->y4 = r1.y4;
 }
 
-/* Do two lines intersect ? 
- * Algorithm from Paul Bourke 
+/* Do two lines intersect ?
+ * Algorithm from Paul Bourke
  * (http://www.swin.edu.au/astronomy/pbourke/geometry/lineline2d/index.html)
  */
 int linesIntersect(double x1, double x2, double x3, double x4,
@@ -91,7 +91,7 @@ int linesIntersect(double x1, double x2, double x3, double x4,
     if (denom == 0) {
 	/* If the lines are coincident ...
 	 */
-	if (ua == 0) { 
+	if (ua == 0) {
 	    /* If the lines are vertical ...
 	     */
 	    if (x1 == x2) {
@@ -114,10 +114,10 @@ int linesIntersect(double x1, double x2, double x3, double x4,
     else {
 	double ub = ((x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3));
 	ua = ua/denom;
-	ub = ub/denom; 
-	/* Check for overlap 
+	ub = ub/denom;
+	/* Check for overlap
 	 */
-	if ((ua > 0 && ua < 1) && (ub > 0 && ub < 1)) 
+	if ((ua > 0 && ua < 1) && (ub > 0 && ub < 1))
 	    result = 1;
     }
     return result;
@@ -137,10 +137,10 @@ int edgesIntersect(double x1, double x2, double y1, double y2,
 
 /* Do two rects intersect ?
  * For each edge in r1, does the edge intersect with any edge in r2 ?
- * FIXME:  Should add first check for non-intersection of 
+ * FIXME:  Should add first check for non-intersection of
  * bounding boxes of rects (?)
  */
-int intersect(LRect r1, LRect r2) 
+int intersect(LRect r1, LRect r2)
 {
     int result = 0;
     if (edgesIntersect(r1.x1, r1.x2, r1.y1, r1.y2, r2) ||
@@ -162,7 +162,7 @@ int intersect(LRect r1, LRect r2)
 void textRect(double x, double y, SEXP text, int i,
 	      R_GE_gcontext *gc,
 	      double xadj, double yadj,
-	      double rot, GEDevDesc *dd, LRect *r) 
+	      double rot, GEDevDesc *dd, LRect *r)
 {
     /* NOTE that we must work in inches for the angles to be correct
      */
@@ -178,10 +178,14 @@ void textRect(double x, double y, SEXP text, int i,
 	h = fromDeviceHeight(GEExpressionHeight(expr, gc, dd),
 			     GE_INCHES, dd);
     } else {
-	const char* string = translateChar(STRING_ELT(text, i % LENGTH(text)));
-	w = fromDeviceWidth(GEStrWidth(string, CE_NATIVE/*FIX*/, gc, dd),
+	const char* string = CHAR(STRING_ELT(text, i % LENGTH(text)));
+	w = fromDeviceWidth(GEStrWidth(string,
+				       getCharEnc(STRING_ELT(text, i % LENGTH(text))),
+				       gc, dd),
 			    GE_INCHES, dd);
-	h = fromDeviceHeight(GEStrHeight(string, CE_NATIVE/*FIX*/, gc, dd),
+	h = fromDeviceHeight(GEStrHeight(string,
+					 getCharEnc(STRING_ELT(text, i % LENGTH(text))),
+					 gc, dd),
 			     GE_INCHES, dd);
     }
     location(0, 0, bl);
@@ -216,10 +220,10 @@ void textRect(double x, double y, SEXP text, int i,
 	 locationX(tbl),
 	 locationY(tbl), locationY(tbr), locationY(ttr), locationY(ttl),
 	 locationY(tbl)
-	 ); 
+	 );
     */
 }
-        
+
 /***********************
  * Stuff for making persistent graphical objects
  ***********************/
@@ -242,7 +246,7 @@ SEXP L_CreateSEXPPtr(SEXP s)
 
 SEXP L_GetSEXPPtr(SEXP sp)
 {
-    SEXP data = R_ExternalPtrAddr(sp); 
+    SEXP data = R_ExternalPtrAddr(sp);
     /* Check for NULL ptr
      * This can occur if, for example, a grid grob is saved
      * and then loaded.  The saved grob has its ptr null'ed
