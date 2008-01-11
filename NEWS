@@ -95,6 +95,9 @@ BUG FIXES
     o	text() no longer attempts to use 'vfont' with an expression
 	for 'labels' (it was documented not to work).
 
+    o	fisher.test(simulate.p.value = TRUE) gave incorrect answers
+	in some extremely degenerate problems.  (PR#10558)
+
 
 
 		CHANGES IN R VERSION 2.6.1

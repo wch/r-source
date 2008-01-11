@@ -106,7 +106,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 		      PACKAGE = "stats")$results
 	    ## use correct significance level for a Monte Carlo test
             almost.1 <- 1 + 64 * .Machine$double.eps
-	    PVAL <- (1 + sum(tmp <= almost.1 * STATISTIC)) / (B + 1)
+            ## PR#10558: STATISTIC is negative
+	    PVAL <- (1 + sum(tmp <= STATISTIC/almost.1)) / (B + 1)
         } else if(hybrid) {
             PVAL <- .C("fexact",
                        nr,
