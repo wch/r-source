@@ -5015,3 +5015,11 @@ stopifnot(identical(names(x[,]), "a"))
 x <- matrix(1, 1, 1, dimnames=list("a", "b"))
 stopifnot(is.null(names(x[,])))
 ## names were dropped in R < 2.7.0 in all cases except the first.
+
+
+## fisher.test with extreme degeneracy PR#10558
+a <- diag(1:3)
+p <- fisher.test(a, simulate.p.value=TRUE)$p.value
+# true value is 1/60, but should not be small
+stopifnot(p > 0.001)
+## was about 0.0005 in 2.6.1 patched
