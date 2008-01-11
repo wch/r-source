@@ -1,6 +1,6 @@
 % File src/library/base/man/utf8Conversion.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{utf8Conversion}
@@ -29,8 +29,13 @@ intToUtf8(x, multiple = FALSE)
 
   \code{intToUtf8} converts a vector of (numeric) UTF-8 code points
   either to a single character string or a character vector of single
-  characters.
-  (Note that a single character string could contain embedded nuls.)
+  characters.  (Note that a single character string could contain
+  embedded nuls.)  The \code{\link{Encoding}} is declared as
+  \code{"UTF-8"}.
 }
+\examples{\dontrun{
+## will only display in some locales
+intToUtf8(0x03B2L) # Greek beta
+}}
 \keyword{character}
 \keyword{utilities}

@@ -199,8 +199,10 @@ NEW FEATURES
 	wider: it includes Unicode space characters on Windows and in
 	UTF-8 locales on machines which use Unicode wide characters.
 
-    o	dyn.load() gains a 'DLLpath' to specify the path for dependent
-	DLLs: currrently only used on Windows.
+    o	dyn.load() gains a 'DLLpath' argument to specify the path for
+	dependent DLLs: currrently only used on Windows.
+
+    o	intToUtf8 now marks the Encoding of its output.
 
 
 DEPRECATED & DEFUNCT
