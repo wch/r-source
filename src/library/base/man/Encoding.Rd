@@ -36,7 +36,7 @@ Encoding(x) <- value
   argument that is used to declare encodings, \code{\link{iconv}}
   declares encodings from its \code{from} argument, and console input in
   suitable locales is also declared.  \code{\link{intToUtf8}} declares
-  its ouput as \code{"UTF-8"}.
+  its output as \code{"UTF-8"}.
 
   Most character manipulation functions will set the encoding on output
   strings if it was declared on the corresponding input.  These include
