@@ -158,18 +158,14 @@ font  gnewfont(drawing d, const char *face, int style, int size, double rot);
 int   ghasfixedwidth(font f);
 field newfield_no_border(const char *text, rect r);
 
-#ifdef SUPPORT_UTF8
-void gwdrawstr(drawing d, font f, rgb c, point p, const char *s, double hadj);
-int gwstrwidth(drawing d, font f, const char *s);
-#endif
-
 int gdrawwcs(drawing d, font f, rgb c, point p, const wchar_t *s);
 int gwcswidth(drawing d, font f, const wchar_t *s);
 
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-void gwdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj);
-
+void gwdrawstr1(drawing d, font f, rgb c, point p, const wchar_t *s, int cnt, 
+		double hadj);
+int   gstrwidth1(drawing d ,font f, const char *s, int enc);
 
 /* pixels */
 int   devicewidth(drawing dev);

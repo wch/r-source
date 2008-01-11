@@ -453,6 +453,13 @@ typedef struct {
      * static SEXP GA_getEvent(SEXP eventRho, const char *prompt);
      */
     SEXP (*getEvent)();
+
+    /* Optional features introduced in 2.7.0 */
+    /* Some devices can plot UTF-8 text directly without converting
+       to the native encoding.  E.g. windows() */
+    Rboolean hasTextUTF8; /* and strWidthUTF8 */
+    void (*textUTF8)();
+    double (*strWidthUTF8)();
     
 } NewDevDesc;
 

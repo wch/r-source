@@ -57,6 +57,9 @@ int	imin2(int, int);
 #define GN_(String) String
 #endif
 
+/* from extra.c */
+extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
+
 static
 Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
 			double height, double pointsize,
@@ -1848,19 +1851,28 @@ static double GA_StrWidth(const char *str,
 			  NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    double a;
     int   size = gc->cex * gc->ps + 0.5;
 
     SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
-#ifdef SUPPORT_UTF8
-    if(gc->fontface != 5)
-	a = (double) gwstrwidth(xd->gawin, xd->font, str);
-    else
-#endif
-	a = (double) gstrwidth(xd->gawin, xd->font, str);
-    return a;
+    return (double) gstrwidth1(xd->gawin, xd->font, str, CE_NATIVE);
 }
 
+static double GA_StrWidth_UTF8(const char *str,
+			      R_GE_gcontext *gc,
+			      NewDevDesc *dd)
+{
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
+    double a;
+    int   size = gc->cex * gc->ps + 0.5;
+
+    /* This should never be called for symbol fonts */
+    SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
+    if(gc->fontface != 5)
+	a = (double) gstrwidth1(xd->gawin, xd->font, str, CE_UTF8);
+    else
+	a = (double) gstrwidth1(xd->gawin, xd->font, str, CE_SYMBOL);
+    return a;
+}
 
 	/********************************************************/
 	/* device_MetricInfo should return height, depth, and 	*/
@@ -2525,10 +2537,10 @@ static void GA_Polygon(int n, double *x, double *y,
 	/* location to DEVICE coordinates using GConvert	*/
 	/********************************************************/
 
-static void GA_Text(double x, double y, const char *str,
-		    double rot, double hadj,
-		    R_GE_gcontext *gc,
-		    NewDevDesc *dd)
+static void GA_Text0(double x, double y, const char *str, int enc,
+		     double rot, double hadj,
+		     R_GE_gcontext *gc,
+		     NewDevDesc *dd)
 {
     int   size;
     double pixs, xl, yl, rot1;
@@ -2547,8 +2559,16 @@ static void GA_Text(double x, double y, const char *str,
     if (R_OPAQUE(gc->col)) {
 	/* As from 2.7.0 can use Unicode always */
 	if(gc->fontface != 5) {
+	    wchar_t *wc; 
+	    int n = strlen(str), cnt;
+	    wc = alloca((n+1) * sizeof(wchar_t)); /* only need terminator to
+						     debug */
+	    R_CheckStack();
+	    cnt = (enc == CE_UTF8) ?  
+		Rf_utf8towcs(wc, str, n+1): mbstowcs(wc, str, n);
 	    /* These macros need to be wrapped in braces */
-	    DRAW(gwdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
+	    DRAW(gwdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y),
+			    wc, cnt, hadj));
 	} else {
 	    DRAW(gdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
 	}
@@ -2558,15 +2578,39 @@ static void GA_Text(double x, double y, const char *str,
 	    rect r = xd->clip; 
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
-	    if(gc->fontface != 5)
-		gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
-	    else
+	    if(gc->fontface != 5) {
+		wchar_t *wc; 
+		int n = strlen(str), cnt;
+		wc = alloca((n+1) * sizeof(wchar_t));
+		R_CheckStack();
+		cnt = (enc == CE_UTF8) ?  
+		    Rf_utf8towcs(wc, str, n+1): mbstowcs(wc, str, n);
+		gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), 
+			   wc, cnt, hadj);
+	    } else
 		gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
 	    DRAW2(gc->col);
 	} else WARN_SEMI_TRANS;
     }
     SH;
 }
+
+static void GA_Text(double x, double y, const char *str,
+		    double rot, double hadj,
+		    R_GE_gcontext *gc,
+		    NewDevDesc *dd)
+{
+    GA_Text0(x, y, str, CE_NATIVE, rot, hadj, gc, dd);
+}
+
+static void GA_Text_UTF8(double x, double y, const char *str,
+			double rot, double hadj,
+			R_GE_gcontext *gc,
+			NewDevDesc *dd)
+{
+    GA_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
+}
+
 
 	/********************************************************/
 	/* device_Locator should return the location of the next*/
@@ -2770,6 +2814,9 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     dd->hold = GA_Hold;
     dd->metricInfo = GA_MetricInfo;
     xd->newFrameConfirm = GA_NewFrameConfirm;
+    dd->hasTextUTF8 = TRUE;
+    dd->strWidthUTF8 = GA_StrWidth_UTF8;
+    dd->textUTF8 = GA_Text_UTF8;    
     xd->cntxt = NULL;
 
     /* set graphics parameters that must be set by device driver */

@@ -1402,6 +1402,53 @@ char *getDLLVersion()
 
 /* UTF-8 support ----------------------------------------------- */
 
+static size_t Rf_utf8towc(wchar_t *wc, const char *s)
+{
+    unsigned int byte;
+    wchar_t local, *w;
+    byte = *((unsigned char *)s);
+    w = wc ? wc: &local;
+
+    if (byte == 0) {
+        *w = (wchar_t) 0;
+        return 0;
+    } else if (byte < 0xC0) {
+        *w = (wchar_t) byte;
+        return 1;
+    } else if (byte < 0xE0) {
+	if(strlen(s) < 2) return -2;
+        if ((s[1] & 0xC0) == 0x80) {
+            *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+            return 2;
+        } else return -1;
+    } else if (byte < 0xF0) {
+	if(strlen(s) < 3) return -2;
+        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+            *w = (wchar_t) (((byte & 0x0F) << 12)
+                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	    byte = *w;
+	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
+	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+            return 3;
+        } else return -1;
+    }
+    return -2;
+}
+
+size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n)
+{
+    int m, res = 0;
+    const char *p;
+
+    for(p = s; res < n; p += m) {
+	m = Rf_utf8towc(wc+res, p);
+	if (m < 0) error(_("invalid input in utf8towcs"));
+	if (m == 0) break;
+	res++;
+    }
+    return res;
+}
+
 /* This is currently only used for faking UTF-8 locale conversions */
 
 #ifdef SUPPORT_UTF8

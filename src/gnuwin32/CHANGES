@@ -104,11 +104,17 @@ OTHERS
 	the default output to be most suitable for inclusion in other
 	documents rather than to produce a page for printing.)
 
-    o	The windows() family of devices now always uses Unicode fonts
+    o	The windows() family of devices now always use Unicode fonts
 	(except for the Symbol font), not just in multibyte locales.
 	This means it should be possble to plot in an 8-bit locale
 	other than the system locale (e.g. for R running in Russian
 	with Windows set to French).
+
+	Further, they can handle UTF-8-encoded strings, so if a
+	character string in R is marked (see ?Encoding) as UTF-8, it
+	can be plotted (for a suitable font) even if it is not a valid
+	character in the current locale.  So one way to plot a Greek
+	beta (Unicode point U+03B2) is text(x, y, intToUtf8(0x03b2L)).
 
     o	Options "graphics.record", "windowsBuffered", "xpinch" and
 	"ypinch" have been replaced by a function windows.options() to

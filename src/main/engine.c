@@ -1460,16 +1460,20 @@ static void clipText(double x, double y, const char *str, int enc,
 {
     int result = clipTextCode(x, y, str, enc, rot, hadj, gc,
 			      toDevice, dd);
+    void (*textfn)();
+    textfn = dd->dev->hasTextUTF8 && enc == CE_UTF8 ? 
+	dd->dev->textUTF8 : dd->dev->text;
+
     switch (result) {
     case 0:  /* text totally clipped; draw nothing */
 	break;
     case 1:  /* text totally inside;  draw all */
-	dd->dev->text(x, y, str, rot, hadj, gc, dd->dev);
+	textfn(x, y, str, rot, hadj, gc, dd->dev);
 	break;
     case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
 	if (toDevice) /* Device will do clipping */
-	    dd->dev->text(x, y, str, rot, hadj, gc, dd->dev);
+	    textfn(x, y, str, rot, hadj, gc, dd->dev);
 	else /* don't draw anything; this could be made less crude :) */
 	    ;
     }
@@ -1624,10 +1628,14 @@ void GEText(double x, double y, const char * const str, int enc,
 	if(str && *str) {
 	    const char *s;
 	    char *sb;
-	    int i, n, enc2 = (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE;
+	    int i, n, enc2;
 	    double xoff, yoff, hadj;
 	    double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 	    double xleft, ybottom;
+
+	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : 
+		(dd->dev->hasTextUTF8 ? CE_UTF8 : CE_NATIVE);
+
 	    /* We work in GE_INCHES */
 	    x = fromDeviceX(x, GE_INCHES, dd);
 	    y = fromDeviceY(y, GE_INCHES, dd);
@@ -2315,20 +2323,26 @@ double GEStrWidth(const char *str, int enc,
 	    const char *s;
 	    char *sb;
 	    double wdash;
-	    int enc2 = (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE;
-	    sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
-	    sb = sbuf;
+	    int enc2;
+
+	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : 
+		(dd->dev->hasTextUTF8 ? CE_UTF8 : CE_NATIVE);
+	    sb = sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
 	    for(s = str; ; s++) {
 		if (*s == '\n' || *s == '\0') {
+		    const char *str;
 		    *sb = '\0';
+		    str = reEnc(sbuf, enc, enc2, 2);
 		    /*
 		     * FIXME:  Pass on the fontfamily, fontface, and
 		     * lineheight so that the device can use them
 		     * if it wants to.
 		     * NOTE: fontface corresponds to old "font"
 		     */
-		    wdash = dd->dev->strWidth(reEnc(sbuf, enc, enc2, 2),
-					      gc, dd->dev);
+		    if(enc2 == CE_UTF8)
+			wdash = dd->dev->strWidthUTF8(str, gc, dd->dev);
+		    else
+			wdash = dd->dev->strWidth(str, gc, dd->dev);
 		    if (wdash > w) w = wdash;
 		    sb = sbuf;
 		}
