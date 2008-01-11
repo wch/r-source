@@ -2312,7 +2312,7 @@ double GEStrWidth(const char *str, int enc,
     if (vfontcode >= 100)
 	return R_GE_VStrWidth(str, enc, gc, dd);
     else if (vfontcode >= 0) {
-	gc->fontfamily[0] = vfontcode;
+	gc->fontfamily[3] = vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrWidth(str, enc, gc, dd);
     } else {
