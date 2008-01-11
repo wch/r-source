@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2725,7 +2725,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
         for(i = 0; i < nc; i++) {
             used = inttomb(buf, INTEGER(x)[i]);
             buf[used] = '\0';
-            SET_STRING_ELT(ans, i, mkChar(buf));
+            SET_STRING_ELT(ans, i, mkCharEnc(buf, UTF8_MASK));
         }
         /* do we want to copy e.g. names here? */
     } else {
@@ -2738,6 +2738,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
         for(i = 0, len = 0; i < nc; i++) {
             used = inttomb(buf, INTEGER(x)[i]);
             strncpy(CHAR_RW(c) + len, buf, used);
+	    SET_UTF8(c);
             len += used;
         }
         SET_STRING_ELT(ans, 0, c);
