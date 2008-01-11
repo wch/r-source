@@ -373,7 +373,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if(extended_opt == NA_INTEGER) extended_opt = 1;
     if(perl_opt == NA_INTEGER) perl_opt = 0;
 
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_UTF8
     if(!fixed_opt && perl_opt) {
 	if(utf8locale) options = PCRE_UTF8;
 	else if(mbcslocale)
@@ -387,7 +387,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     len = LENGTH(x);
     tlen = LENGTH(tok);
     /* special case split="" for efficiency */
-    if(tlen == 1 && strlen(translateChar(STRING_ELT(tok, 0))) == 0) tlen = 0;
+    if(tlen == 1 && CHAR(STRING_ELT(tok, 0))[0] == 0) tlen = 0;
 
     PROTECT(s = allocVector(VECSXP, len));
     for(i = 0; i < len; i++) {
@@ -1141,9 +1141,9 @@ static char *string_adj(char *target, const char *orig, const char *repl,
     return t;
 }
 
-extern SEXP
-do_pgsub(const char *spat, const char *srep, SEXP vec,
-	 int global, int igcase_opt, int useBytes);
+/* From pcre.c */
+extern SEXP do_pgsub(const char *spat, const char *srep, SEXP vec,
+		     int global, int igcase_opt, int useBytes);
 
 SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1185,6 +1185,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = 0;
     }
 
+    if (length(pat) < 1 || length(rep) < 1) error(R_MSG_IA);
+
     n = length(vec);
     if (STRING_ELT(pat, 0) == NA_STRING) {
 	PROTECT(ans = allocVector(STRSXP, n));
@@ -1192,8 +1194,6 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	return ans;
     }
-
-    if (length(pat) < 1 || length(rep) < 1) error(R_MSG_IA);
 
     spat = translateChar(STRING_ELT(pat, 0));
     srep = translateChar(STRING_ELT(rep, 0));
