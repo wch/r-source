@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-08
+@set FAQ_DATE @value{FAQ_YEAR}-01-11
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1889,6 +1889,8 @@ Components of Canadian monetary aggregates.
 Facilities for the use of R to write CGI scripts.
 @item CORREP
 Multivariate correlation estimation.
+@item CPE
+Concordance probability estimates in survival analysis.
 @item CPGchron
 Create radiocarbon-dated depth chronologies.
 @item CTFS
@@ -1920,6 +1922,11 @@ Graphical modeling for contingency tables using CoCo.
 Compare phylogenetic or population genetic data alignments.
 @item CompetingRiskFrailty
 Competing risk model with frailties for right censored survival data.
+@item Containers
+Object-oriented data structures including stack, queue, and binary
+search tree.
+@item CoxBoost
+Cox survival models by likelihood based boosting.
 @item CreditMetrics
 Functions for calculating the CreditMetrics risk model.
 @item DAAG
@@ -4424,6 +4431,8 @@ Pretty descriptive stats.
 Patient Rule Induction Method (PRIM).
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
+@item prob
+Elementary probability on finite sample spaces.
 @item proftools
 Profile output processing tools for R.
 @item proj4
@@ -4464,6 +4473,8 @@ Basic functions for power analysis.
 @c </COMMENT>
 @item pvclust
 Hierarchical clustering with @math{p}-value.
+@item qAnalyst
+Variables and attributes control charts.
 @item qcc
 Quality Control Charts.  Shewhart quality control charts for continuous,
 attribute and count data.  Cusum and EWMA charts.  Operating
