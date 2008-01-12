@@ -73,6 +73,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE
+            ## We translated the file,
+            ## so don't want to mark the strings.as from that encoding
+            encoding <- "unknown"
 	}
     }
     exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
