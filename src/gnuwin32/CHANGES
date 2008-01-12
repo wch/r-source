@@ -132,7 +132,7 @@ OTHERS
 	double-clicking an item (as if the item had been selected and
 	then the OK button pressed).
 
-   o	If a string presented to the parser contains a \uxxxx escape
+    o	If a string presented to the parser contains a \uxxxx escape
 	invalid in the current locale, the string is output in UTF-8
 	with the encoding declared.  This is likely to thow an error
 	if it is used later in the session, but it can be used for
