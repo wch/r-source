@@ -825,6 +825,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define matchArgs		Rf_matchArgs
 # define matchPar		Rf_matchPar
 # define Mbrtowc		Rf_mbrtowc
+# define mbtoucs		Rf_mbtoucs
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkFalse		Rf_mkFalse
 # define mkPROMISE		Rf_mkPROMISE
@@ -862,6 +863,9 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
 # define usemethod		Rf_usemethod
+# define ucstomb		Rf_ucstomb
+# define ucstoutf8		Rf_ucstoutf8
+# define utf8toucs		Rf_utf8toucs
 # define vectorSubscript	Rf_vectorSubscript
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
@@ -1118,6 +1122,11 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
 size_t ucs2Mblen(ucs2_t *in); */
 int utf8clen(char c);
+size_t utf8toucs(wchar_t *wc, const char *s);
+size_t ucstomb(char *s, const unsigned int wc);
+size_t ucstoutf8(char *s, const unsigned int wc);
+size_t mbtoucs(unsigned int *wc, const char *s, size_t n);
+
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 void mbcsToLatin1(const char *in, char *out);

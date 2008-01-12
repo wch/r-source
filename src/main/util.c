@@ -912,6 +912,66 @@ int attribute_hidden utf8clen(char c)
     return 1 + utf8_table4[c & 0x3f];
 }
 
+/* This returns the result in wchar_t, but does not assume 
+   wchar_t is UCS-2/4 and so is for internal use only */
+size_t attribute_hidden 
+utf8toucs(wchar_t *wc, const char *s)
+{
+    unsigned int byte;
+    wchar_t local, *w;
+    byte = *((unsigned char *)s);
+    w = wc ? wc: &local;
+
+    if (byte == 0) {
+        *w = (wchar_t) 0;
+        return 0;
+    } else if (byte < 0xC0) {
+        *w = (wchar_t) byte;
+        return 1;
+    } else if (byte < 0xE0) {
+	if(strlen(s) < 2) return -2;
+        if ((s[1] & 0xC0) == 0x80) {
+            *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+            return 2;
+        } else return -1;
+    } else if (byte < 0xF0) {
+	if(strlen(s) < 3) return -2;
+        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+            *w = (wchar_t) (((byte & 0x0F) << 12)
+                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	    byte = *w;
+	    /* Surrogates range */
+	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1;
+	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+            return 3;
+        } else return -1;
+    }
+    if(sizeof(wchar_t) < 4) return -2;
+    /* So now handle 4,5.6 byte sequences with no testing */
+    if (byte < 0xf8) {
+	if(strlen(s) < 4) return -2;
+	*w = (wchar_t) (((byte & 0x0F) << 18)
+			| ((s[1] & 0x3F) << 12)
+			| ((s[2] & 0x3F) << 6)
+			| (s[3] & 0x3F));
+    } else if (byte < 0xFC) {
+	if(strlen(s) < 5) return -2;
+	*w = (wchar_t) (((byte & 0x0F) << 24)
+			| ((s[1] & 0x3F) << 12)
+			| ((s[2] & 0x3F) << 12)
+			| ((s[3] & 0x3F) << 6)
+			| (s[4] & 0x3F));
+    } else {
+	if(strlen(s) < 6) return -2;
+	*w = (wchar_t) (((byte & 0x0F) << 30)
+			| ((s[1] & 0x3F) << 24)
+			| ((s[2] & 0x3F) << 18)
+			| ((s[3] & 0x3F) << 12)
+			| ((s[4] & 0x3F) << 6)
+			| (s[5] & 0x3F));
+    }
+}
+
 /* A version that reports failure as an error */
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 {

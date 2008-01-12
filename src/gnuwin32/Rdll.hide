@@ -332,6 +332,7 @@
  Rf_matchArgExact
  Rf_matchArgs
  Rf_matchPar
+ Rf_mbtoucs
  Rf_mkCLOSXP
  Rf_mkPROMISE
  Rf_mkSYMSXP
@@ -352,6 +353,9 @@
  Rf_stirlerr
  Rf_substituteList
  Rf_unbindVar
+ Rf_ucstomb
+ Rf_ucstoutf8
+ Rf_utf8toucs
  Rf_vectorSubscript
  Rf_yychar
  Rf_yylval

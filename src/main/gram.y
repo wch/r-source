@@ -96,72 +96,12 @@ static SEXP	SrcRefs = NULL;
 static PROTECT_INDEX srindex;
 
 #if defined(SUPPORT_MBCS)
-# include <R_ext/Riconv.h>
 # include <R_ext/rlocale.h>
-# include <sys/param.h>
+/* # include <sys/param.h> what was this for? */
 #ifdef HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
 
-#ifdef WORDS_BIGENDIAN
-static const char UNICODE[] = "UCS-4BE";
-#else
-static const char UNICODE[] = "UCS-4LE";
-#endif
-#include <errno.h>
-
-static size_t ucstomb(char *s, const unsigned int wc, mbstate_t *ps)
-{
-    char     tocode[128];
-    char     buf[16];
-    void    *cd = NULL ;
-    unsigned int  wcs[2];
-    const char *inbuf = (const char *) wcs;
-    size_t   inbytesleft = sizeof(unsigned int); /* better be 4 */
-    char    *outbuf = buf;
-    size_t   outbytesleft = sizeof(buf);
-    size_t   status;
-    
-    if(wc == 0) {
-	*s = '\0';
-        return 1;
-    }
-    
-    strcpy(tocode, "");
-    memset(buf, 0, sizeof(buf));
-    memset(wcs, 0, sizeof(wcs));
-    wcs[0] = wc;
-
-    if((void *)(-1) == (cd = Riconv_open("", UNICODE))) {
-#ifndef  Win32
-        /* locale set fuzzy case */
-    	strncpy(tocode, locale2charset(NULL), sizeof(tocode));
-	if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
-            return (size_t)(-1); 
-#else
-        return (size_t)(-1);
-#endif
-    }
-    
-    status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
-    Riconv_close(cd);
-
-    if (status == (size_t) -1) {
-        switch(errno){
-        case EINVAL:
-            return (size_t) -2;
-        case EILSEQ:
-            return (size_t) -1;
-        case E2BIG:
-            break;
-        default:
-            errno = EILSEQ;
-            return (size_t) -1;
-        }
-    }
-    strncpy(s, buf, sizeof(buf) - 1); /* ensure 0-terminated */
-    return strlen(buf);
-}
 
 static int mbcs_get_next(int c, wchar_t *wc)
 {
@@ -2125,7 +2065,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else CTEXT_PUSH(c);
 		}
 		WTEXT_PUSH(val);
-		res = ucstomb(buff, val, NULL);
+		res = ucstomb(buff, val);
 		if((int) res <= 0) {
 #ifdef USE_UTF8_IF_POSSIBLE
 		    if(!forSymbol) {
@@ -2167,7 +2107,7 @@ static int StringValue(int c, Rboolean forSymbol)
 			    error(_("invalid \\U{xxxxxxxx} sequence"));
 			else CTEXT_PUSH(c);
 		    }
-		    res = ucstomb(buff, val, NULL);
+		    res = ucstomb(buff, val);
 		    if((int)res <= 0) {
 			if(delim)
 			    error(_("invalid \\U{xxxxxxxx} sequence"));

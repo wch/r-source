@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2007   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997-2008   Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -573,7 +573,7 @@ int Riconv_close (void *cd)
     return iconv_close((iconv_t) cd);
 }
 
-static void *latin1_obj = NULL, *utf8_obj=NULL;
+static void *latin1_obj = NULL, *utf8_obj=NULL, *ucsmb_obj=NULL;
 
 const char *translateChar(SEXP x)
 {
@@ -719,6 +719,125 @@ next_char:
     R_FreeStringBuffer(&cbuff);
     return p;
 }
+
+#ifdef WORDS_BIGENDIAN
+static const char UNICODE[] = "UCS-4BE";
+#else
+static const char UNICODE[] = "UCS-4LE";
+#endif
+
+size_t attribute_hidden 
+ucstomb(char *s, const unsigned int wc)
+{
+    char     buf[16];
+    void    *cd = NULL ;
+    unsigned int  wcs[2];
+    const char *inbuf = (const char *) wcs;
+    size_t   inbytesleft = sizeof(unsigned int); /* better be 4 */
+    char    *outbuf = buf;
+    size_t   outbytesleft = sizeof(buf);
+    size_t   status;
+    
+    if(wc == 0) {*s = '\0'; return 1;}
+    
+    memset(buf, 0, sizeof(buf));
+    memset(wcs, 0, sizeof(wcs));
+    wcs[0] = wc;
+
+    if(ucsmb_obj == NULL) {
+	if((void *)(-1) == (cd = Riconv_open("", UNICODE))) {
+#ifndef  Win32
+	    char tocode[128];
+	    /* locale set fuzzy case */
+	    strncpy(tocode, locale2charset(NULL), sizeof(tocode));
+	    if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
+		return (size_t)(-1); 
+#else
+	    return (size_t)(-1);
+#endif
+	}
+	ucsmb_obj = cd;
+    }
+    
+    status = Riconv(ucsmb_obj, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+
+    if (status == (size_t) -1) {
+        switch(errno){
+        case EINVAL:
+            return (size_t) -2;
+        case EILSEQ:
+            return (size_t) -1;
+        case E2BIG:
+            break;
+        default:
+            errno = EILSEQ;
+            return (size_t) -1;
+        }
+    }
+    strncpy(s, buf, sizeof(buf) - 1); /* ensure 0-terminated */
+    return strlen(buf);
+}
+
+size_t attribute_hidden
+mbtoucs(unsigned int *wc, const char *s, size_t n)
+{
+    unsigned int  wcs[2];
+    char     buf[16];
+    void    *cd;
+    const char *inbuf = s;
+    size_t   inbytesleft = strlen(s);
+    char    *outbuf = (char *) wcs;
+    size_t   outbytesleft = sizeof(buf);
+    size_t   status;
+    
+    if(s[0] == 0) {*wc = 0; return 1;}
+    
+    if((void *)(-1) == (cd = Riconv_open("", UNICODE))) return (size_t)(-1);
+    status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+
+    if (status == (size_t) -1) return status;
+    *wc = wcs[0];
+    return (size_t) 1;
+}
+
+size_t attribute_hidden 
+ucstoutf8(char *s, const unsigned int wc)
+{
+    char     buf[16];
+    void    *cd = NULL ;
+    unsigned int  wcs[2];
+    const char *inbuf = (const char *) wcs;
+    size_t   inbytesleft = sizeof(unsigned int); /* better be 4 */
+    char    *outbuf = buf;
+    size_t   outbytesleft = sizeof(buf);
+    size_t   status;
+    
+    if(wc == 0) {*s = '\0'; return 1;}
+    
+    memset(buf, 0, sizeof(buf));
+    wcs[0] = wc; wcs[1] = 0;
+
+    if((void *)(-1) == (cd = Riconv_open("UTF-8", UNICODE))) 
+	return (size_t)(-1); 
+    status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+
+    if (status == (size_t) -1) {
+        switch(errno){
+        case EINVAL:
+            return (size_t) -2;
+        case EILSEQ:
+            return (size_t) -1;
+        case E2BIG:
+            break;
+        default:
+            errno = EILSEQ;
+            return (size_t) -1;
+        }
+    }
+    strncpy(s, buf, sizeof(buf) - 1); /* ensure 0-terminated */
+    return strlen(buf);
+}
+
 #else
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
