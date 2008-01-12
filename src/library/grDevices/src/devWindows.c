@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-7      The R Development Core Team
+ *  Copyright (C) 2004-8      The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1896,9 +1896,11 @@ static void GA_MetricInfo(int c,
     int   a, d, w;
     int   size = gc->cex * gc->ps + 0.5;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-
+    Rboolean Unicode = mbcslocale;
+    
+    if (c < 0) { Unicode = TRUE; c = -c; } 
     SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
-    if(mbcslocale && gc->fontface != 5 && c > 127)
+    if(Unicode && gc->fontface != 5 && c > 127)
 	gwcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     else
 	gcharmetric(xd->gawin, xd->font, c, &a, &d, &w);

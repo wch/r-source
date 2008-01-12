@@ -1682,7 +1682,7 @@ void GEText(double x, double y, const char * const str, int enc,
 		    }
 		    /* now determine bottom-left for THIS line */
 		    if(xc != 0.0 || yc != 0) {
-			double width, height;
+			double width, height = 0 /* -Wall */;
 			width = fromDeviceWidth(GEStrWidth(str, enc2, gc, dd),
 						GE_INCHES, dd);
 			if (!R_FINITE(xc))
@@ -1699,41 +1699,60 @@ void GEText(double x, double y, const char * const str, int enc,
 							  GE_INCHES, dd);
 				yc = dd->dev->yCharOffset;
 			    } else {
-				/* FIXME: this is not yet correct if
-				   enc2 = CE_UTF8 */
 				double maxHeight = 0.0;
 				double maxDepth = 0.0;
 				const char *ss = str;
 				int charNum = 0;
-
+				Rboolean done = FALSE;
 #ifdef SUPPORT_MBCS
 				/* Symbol fonts are not encoded in MBCS ever */
-				if(gc->fontface != 5 && mbcslocale && !utf8strIsASCII(ss)) {
-				    int n = strlen(ss), used;
-				    wchar_t wc;
-				    mbstate_t mb_st;
-				    mbs_init(&mb_st);
-				    while ((used = mbrtowc(&wc, ss, n, &mb_st)) > 0) {
-					GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
-					h = fromDeviceHeight(h, GE_INCHES, dd);
-					d = fromDeviceHeight(d, GE_INCHES, dd);
-					/* Set maxHeight and maxDepth from height
-					   and depth of first char.
-					   Must NOT set to 0 in case there is
-					   only 1 char and it has negative
-					   height or depth
-					*/
-					if (charNum++ == 0) {
-					    maxHeight = h;
-					    maxDepth = d;
-					} else {
-					    if (h > maxHeight) maxHeight = h;
-					    if (d > maxDepth) maxDepth = d;
+				if(gc->fontface != 5 && !utf8strIsASCII(ss)) {
+				    if(mbcslocale && enc2 == CE_NATIVE) {
+					/* FIXME: This assumes that wchar_t is UCS-2/4,
+					   since that is what GEMetricInfo expects */
+					int n = strlen(ss), used;
+					wchar_t wc;
+					mbstate_t mb_st;
+					mbs_init(&mb_st);
+					while ((used = mbrtowc(&wc, ss, n, &mb_st)) > 0) {
+					    /* printf(" centring %s aka %d in MBCS\n", ss, wc); */
+					    GEMetricInfo((int) wc, gc, &h, &d, &w, dd);
+					    h = fromDeviceHeight(h, GE_INCHES, dd);
+					    d = fromDeviceHeight(d, GE_INCHES, dd);
+					    if (charNum++ == 0) {
+						maxHeight = h;
+						maxDepth = d;
+					    } else {
+						if (h > maxHeight) maxHeight = h;
+						if (d > maxDepth) maxDepth = d;
+					    }
+					    ss += used; n -=used;
 					}
-					ss += used; n -=used;
+					done = TRUE;
+				    } else if (enc2 == CE_UTF8) {
+					int used;
+					wchar_t wc;
+					while ((used = utf8toucs(&wc, ss)) > 0) {
+					    /* This is only used on Windows and hence
+					       we fudge this via a -ve number */
+					    /* printf(" centring %s aka %d in UTF-8\n", ss, wc); */
+					    GEMetricInfo(-(int) wc, gc, &h, &d, &w, dd);
+					    h = fromDeviceHeight(h, GE_INCHES, dd);
+					    d = fromDeviceHeight(d, GE_INCHES, dd);
+					    if (charNum++ == 0) {
+						maxHeight = h;
+						maxDepth = d;
+					    } else {
+						if (h > maxHeight) maxHeight = h;
+						if (d > maxDepth) maxDepth = d;
+					    }
+					    ss += used; n -=used;
+					}
+					done = TRUE;
 				    }
-				} else
+				}
 #endif
+				if(!done) {
 				    for (ss = str; *ss; ss++) {
 					GEMetricInfo((unsigned char) *ss, gc,
 						     &h, &d, &w, dd);
@@ -1753,7 +1772,7 @@ void GEText(double x, double y, const char * const str, int enc,
 					    if (d > maxDepth) maxDepth = d;
 					}
 				    }
-
+				}
 				height = maxHeight - maxDepth;
 				yc = 0.5;
 			    }
