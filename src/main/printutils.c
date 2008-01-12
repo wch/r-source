@@ -398,6 +398,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    strlen(CHAR(R_print.na_string_noquote));
 	quote = 0;
     } else {
+	/* FIXME: render declared strings directly, especially UTF-8 */ 
 	p = translateChar(s);
 	if(p == CHAR(s)) {
 	    i = Rstrlen(s, quote);

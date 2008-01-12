@@ -438,8 +438,8 @@ par(\dots, no.readonly = FALSE)
     \item{\code{pch}}{Either an integer specifying a symbol or a single
       character to be used as the default in plotting points.  See
       \code{\link{points}} for possible values and their interpretation.
-      Note that only non-negative integers and single-byte strings can
-      be set as a graphics parameter.
+      Note that only integers and single-character strings can
+      be set as a graphics parameter (and not \code{NA} nor \code{NULL}).
     }
     \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
       in inches.}

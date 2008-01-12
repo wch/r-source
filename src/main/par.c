@@ -986,14 +986,18 @@ static SEXP Query(const char *what, DevDesc *dd)
 	REAL(value)[3] = Rf_dpptr(dd)->omi[3];
     }
     else if (streql(what, "pch")) {
-	/* FIXME: see FixupPch */
-	if(Rf_dpptr(dd)->pch < ' ' || Rf_dpptr(dd)->pch > 255) {
-	    value = ScalarInteger(Rf_dpptr(dd)->pch);
-	} else {
+	int val = Rf_dpptr(dd)->pch;
+	/* we need to be careful that par("pch") is converted back
+	   to the same value */
+	if (known_to_be_latin1 && val <= -32 && val >= -255) val = -val;
+	if(val >= ' ' && val <= (mbcslocale ? 127 : 255)) {
 	    char buf[2];
-	    buf[0] = Rf_dpptr(dd)->pch;
+	    buf[0] = val;
 	    buf[1] = '\0';
 	    value = mkString(buf);
+	} else {
+	    /* Could return as UTF-8 string */
+	    value = ScalarInteger(val);
 	}
     }
     else if (streql(what, "pin")) {

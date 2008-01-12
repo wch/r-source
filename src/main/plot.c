@@ -224,24 +224,24 @@ static SEXP FixupPch(SEXP pch, int dflt)
 		/* New in 2.7.0: negative values indicate Unicode points. */
 #ifdef SUPPORT_MBCS
 		SEXP this = STRING_ELT(pch, i);
-		wchar_t wc;
-		unsigned int ucs;
 		INTEGER(ans)[i] = NA_INTEGER;
 		if (IS_LATIN1(this)) 
-		    INTEGER(ans)[i] = -(unsigned int) CHAR(this)[0];
+		    INTEGER(ans)[i] = -(unsigned char) CHAR(this)[0];
 		else if (IS_UTF8(this)) {
+		    wchar_t wc;
 		    if(utf8toucs(&wc, CHAR(this)) > 0)
 			INTEGER(ans)[i] = -wc;
 		    else
 			error(_("invalid multibyte char in pch=\"c\""));
 		} else if(mbcslocale) {
+		    unsigned int ucs;
 		    if(mbtoucs(&ucs, CHAR(this), MB_CUR_MAX) > 0)
 			INTEGER(ans)[i] = -ucs;
 		    else
 			error(_("invalid multibyte char in pch=\"c\""));
 		} else { /* single-byte locale */
 		    INTEGER(ans)[i] = 
-			(unsigned int) CHAR(STRING_ELT(pch, i))[0];
+			(unsigned char) CHAR(STRING_ELT(pch, i))[0];
 		}
 #else
 		INTEGER(ans)[i] = 
