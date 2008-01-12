@@ -332,6 +332,9 @@ void applyGUI(Gui newGUI)
 
     setWidthOnResize = newGUI->setWidthOnResize;
     consolebuffered = newGUI->buffered;
+    
+    Rwin_graphicsx = newGUI->grx;
+    Rwin_graphicsy = newGUI->gry;
 }
 
 static void do_apply()

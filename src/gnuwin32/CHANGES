@@ -27,6 +27,9 @@ BUG FIXES
 
     o	If a graphics window was opened in MDI mode while the console
 	was zoomed, it would not be initialized properly.
+	
+    o	The graphics window placement parameters on the GUI preferences
+    	dialog were being ignored.
 
 
 
