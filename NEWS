@@ -204,6 +204,14 @@ NEW FEATURES
 
     o	intToUtf8() now marks the Encoding of its output.
 
+    o	The meaning of numeric 'pch' has been extended where MBCSes are
+	supported.  Now negative integer values indicate Unicode
+	points, integer values in 32-127 represent ASCII characters,
+	and 128-255 are valid only in single-byte locales.
+	(Previously what happened with negative pch values was
+	undocumented: they were replaced by the current setting of
+	par("pch").)
+
 
 DEPRECATED & DEFUNCT
 

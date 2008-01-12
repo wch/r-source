@@ -31,11 +31,11 @@ points(x, \dots)
 
   Graphical parameters commonly used are
   \describe{
-    \item{\code{pch}}{plotting \sQuote{character}, i.e., symbol to use.  This can
-      either be a single character or an integer code for one of a set of
-      graphics symbols.  The full set of S symbols is available with
-      \code{pch=0:18}, see the last picture from \code{example(points)},
-      i.e., the examples below.
+    \item{\code{pch}}{plotting \sQuote{character}, i.e., symbol to use.
+      This can either be a single character or an integer code for one
+      of a set of graphics symbols.  The full set of S symbols is
+      available with \code{pch=0:18}, see the last picture from
+      \code{example(points)}, i.e., the examples below.
       % (currently, \R uses circles instead of octagons).
 
       In addition, there is a special set of \R plotting symbols which
@@ -50,14 +50,21 @@ points(x, \dots)
 	\item \code{pch=24}: triangle point-up,
 	\item \code{pch=25}: triangle point down.
       }
-      Values \code{pch=26:32} are currently unused, and \code{pch=32:255}
-      give the text symbol in a single-byte locale.  In a multi-byte locale
-      such as UTF-8, numeric values of \code{pch} greater than or equal to
-      32 specify a Unicode code point (except for the symbol font as
-      selected by \code{\link{par}(font = 5)}).
+      
+      Values \code{pch=26:32} are currently unused and \code{pch=32:127}
+      give the ASCII characters.  In a single-byte locale
+      \code{pch=128:255} give the corresponding character (if any) in
+      the locale's character set.  Where supported by the OS, negative
+      values specify a Unicode code point, so e.g. \code{-0x2642L}
+      is a \sQuote{male sign}.  (What is plotted for invalid code
+      points, e.g. in the control range, is OS-, device- and
+      font-dependent.)
 
-      If \code{pch} is an integer or character \code{NA} or an empty
-      character string, the point is omitted from the plot.
+      If \code{pch} is a logical, integer or character \code{NA} or an
+      empty character string the point is omitted from the plot.
+
+      If \code{pch} is \code{NULL} or otherwise of length 0,
+      \code{par("pch")} is used.
 
       Value \code{pch="."} is handled specially.  It is a rectangle of
       side 0.01 inch (scaled by \code{cex}).  In addition, if \code{cex =
@@ -65,10 +72,15 @@ points(x, \dots)
       the \code{\link{pdf}}, \code{\link{postscript}} and
       \code{\link{xfig}} devices).
 
-      For other text symbols, \code{cex=1} corresponds to the default fontsize
-      of the device, often specified by an argument \code{pointsize}.
-      For \code{pch} in \code{1:25} the default size is about 75\% of
-      the character height (see \code{par("cin")}).
+      For other text symbols, \code{cex=1} corresponds to the default
+      fontsize of the device, often specified by an argument
+      \code{pointsize}.  For \code{pch} in \code{1:25} the default size
+      is about 75\% of the character height (see \code{par("cin")}).
+
+      Characters should not be used when the symbol font
+      (\code{\link{par}(font = 5)} has been selected: the result is
+      unpredictable.  Unicode code points cannot be specified in that
+      font and attempting to do so will give an error.
     }
     \item{\code{col}}{color code or name, see \code{\link{par}}.}
     \item{\code{bg}}{background (fill) color for the open plot

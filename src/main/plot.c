@@ -190,64 +190,73 @@ static SEXP getInlinePar(SEXP s, char *name)
     return result;
 }
 
-attribute_hidden
-SEXP FixupPch(SEXP pch, int dflt)
+/* dflt used to be used for < 0 values in R < 2.7.0, 
+   now just used for NULL */
+static SEXP FixupPch(SEXP pch, int dflt)
 {
     int i, n;
     SEXP ans = R_NilValue;/* -Wall*/
 
     n = length(pch);
-    if (n == 0) {
-	ans = ScalarInteger(dflt);
-    }
-    else if (isList(pch)) {
-	ans = allocVector(INTSXP, n);
+    if (n == 0) return ans = ScalarInteger(dflt);
+
+    PROTECT(ans = allocVector(INTSXP, n));
+    if (isList(pch)) {
 	for (i = 0; pch != R_NilValue;	pch = CDR(pch))
 	    INTEGER(ans)[i++] = asInteger(CAR(pch));
     }
     else if (isInteger(pch)) {
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = INTEGER(pch)[i];
     }
     else if (isReal(pch)) {
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = R_FINITE(REAL(pch)[i]) ?
 		REAL(pch)[i] : NA_INTEGER;
     }
     else if (isString(pch)) {
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
 	    if(STRING_ELT(pch, i) == NA_STRING ||
 	       CHAR(STRING_ELT(pch, i))[0] == '\0') { /* pch = "" */
 		INTEGER(ans)[i] = NA_INTEGER;
 	    } else {
+		/* FIXME:  what about symbol font? */
+		/* New in 2.7.0: negative values indicate Unicode points. */
 #ifdef SUPPORT_MBCS
-		if(mbcslocale) {
-		    wchar_t wc;
-		    if(mbrtowc(&wc, translateChar(STRING_ELT(pch, i)),
-			       MB_CUR_MAX, NULL) > 0) INTEGER(ans)[i] = wc;
+		SEXP this = STRING_ELT(pch, i);
+		wchar_t wc;
+		unsigned int ucs;
+		INTEGER(ans)[i] = NA_INTEGER;
+		if (IS_LATIN1(this)) 
+		    INTEGER(ans)[i] = -(unsigned int) CHAR(this)[0];
+		else if (IS_UTF8(this)) {
+		    if(utf8toucs(&wc, CHAR(this)) > 0)
+			INTEGER(ans)[i] = -wc;
 		    else
 			error(_("invalid multibyte char in pch=\"c\""));
-		} else
+		} else if(mbcslocale) {
+		    if(mbtoucs(&ucs, CHAR(this), MB_CUR_MAX) > 0)
+			INTEGER(ans)[i] = -ucs;
+		    else
+			error(_("invalid multibyte char in pch=\"c\""));
+		} else { /* single-byte locale */
+		    INTEGER(ans)[i] = 
+			(unsigned int) CHAR(STRING_ELT(pch, i))[0];
+		}
+#else
+		INTEGER(ans)[i] = 
+		    (unsigned int) translateChar(STRING_ELT(pch, i))[0];
 #endif
-		    INTEGER(ans)[i] = translateChar(STRING_ELT(pch, i))[0];
 	    }
 	}
     }
     else if (isLogical(pch)) {/* NA, but not TRUE/FALSE */
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
-	    if(LOGICAL(pch)[i] == NA_LOGICAL)
-		INTEGER(ans)[i] = NA_INTEGER;
+	    if(LOGICAL(pch)[i] == NA_LOGICAL) INTEGER(ans)[i] = NA_INTEGER;
 	    else error(_("only NA allowed in logical plotting symbol"));
     }
     else error(_("invalid plotting symbol"));
-    for (i = 0; i < n; i++) {
-	if (INTEGER(ans)[i] < 0 && INTEGER(ans)[i] != NA_INTEGER)
-	    INTEGER(ans)[i] = dflt;
-    }
+    UNPROTECT(1);
     return ans;
 }
 
@@ -1552,11 +1561,12 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    PROTECT(pch = FixupPch(CAR(args), Rf_gpptr(dd)->pch));	args = CDR(args);
+    PROTECT(pch = FixupPch(CAR(args), Rf_gpptr(dd)->pch));
     npch = length(pch);
+    args = CDR(args);
 
-    PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));	args = CDR(args);
-    /* nlty = length(lty);*/
+    PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));	
+    args = CDR(args);
 
     /* Default col was NA_INTEGER (0x80000000) which was interpreted
        as zero (black) or "don't draw" depending on line/rect/circle
@@ -1591,9 +1601,6 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rf_gpptr(dd)->lwd = thislwd; /* but do recycle for "p" etc */
 
     GMode(1, dd);
-    /* removed by paul 26/5/99 because all clipping now happens in graphics.c
-     * GClip(dd);
-     */
 
     /* Line drawing :*/
     switch(type) {

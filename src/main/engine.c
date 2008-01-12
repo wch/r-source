@@ -1633,9 +1633,9 @@ void GEText(double x, double y, const char * const str, int enc,
 	    double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 	    double xleft, ybottom;
 
-	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : 
-		(dd->dev->hasTextUTF8 ? CE_UTF8 : CE_NATIVE);
-
+	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
+	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8) enc2 = CE_UTF8;
+	    
 	    /* We work in GE_INCHES */
 	    x = fromDeviceX(x, GE_INCHES, dd);
 	    y = fromDeviceY(y, GE_INCHES, dd);
@@ -1699,6 +1699,8 @@ void GEText(double x, double y, const char * const str, int enc,
 							  GE_INCHES, dd);
 				yc = dd->dev->yCharOffset;
 			    } else {
+				/* FIXME: this is not yet correct if
+				   enc2 = CE_UTF8 */
 				double maxHeight = 0.0;
 				double maxDepth = 0.0;
 				const char *ss = str;
@@ -1887,16 +1889,23 @@ void GESymbol(double x, double y, int pch, double size,
 {
     double r, xc, yc;
     double xx[4], yy[4];
-    char str[16];
 
     /* Special cases for plotting pch="." or pch=<character>
      */
     if(pch == NA_INTEGER) /* do nothing */;
 #ifdef SUPPORT_MBCS
-    else if(' ' <= pch && (mbcslocale || pch <= 255)) {
-#else
-    else if(' ' <= pch && pch <= 255) {
+    else if(pch < 0) {
+	int res;
+	char str[7];
+	if(gc->fontface == 5)
+	    error("use of negative pch with symbol font is invalid");
+	res = ucstoutf8(str, -pch);
+	if(res == -1) error("invalid multibyte string");
+	str[res] = '\0';
+	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);	
+    }
 #endif
+    else if(' ' <= pch && pch <= (mbcslocale ? 127 : 255)) {
 	if (pch == '.') {
 	    /*
 	     * NOTE:  we are *filling* a rect with the current
@@ -1922,19 +1931,10 @@ void GESymbol(double x, double y, int pch, double size,
 	    if(size == 1 && yc < 0.5) yc = 0.5;
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	} else {
-#ifdef SUPPORT_MBCS
-	    if(mbcslocale && gc->fontface != 5) {
-		int cnt = wcrtomb(str, pch, NULL);
-		if(cnt == -1)
-		    error("invalid multibyte string");
-		str[cnt] = '\0';
-	    } else
-#endif
-	    {
-		str[0] = pch;
-		str[1] = '\0';
-	    }
-	    GEText(x, y, str, CE_NATIVE, NA_REAL, NA_REAL, 0., gc, dd);
+	    char str[2];
+	    str[0] = pch;
+	    str[1] = '\0';
+	    GEText(x, y, str, CE_ANY, NA_REAL, NA_REAL, 0., gc, dd);
 	}
     }
     else {
@@ -2269,7 +2269,8 @@ void GEPretty(double *lo, double *up, int *ndiv)
  */
 /*
   We need to decide what c is.  In an 8-bit locale it is char,
-  otherwise it had better be wchar_t.  Something like uint32 would be better.
+  otherwise it had better be wchar_t (and the interpretation seems
+  to be UCS-2/4).  Something like uint32 would be better.
  */
 void GEMetricInfo(int c,
 		  R_GE_gcontext *gc,
@@ -2285,7 +2286,7 @@ void GEMetricInfo(int c,
 	 * It should be straightforward to figure this out, but
 	 * just haven't got around to it yet
 	 */
-	*ascent= 0;
+	*ascent = 0;
 	*descent = 0;
 	*width = 0;
     } else

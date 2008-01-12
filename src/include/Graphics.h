@@ -372,7 +372,6 @@ typedef struct {
 #define FixupFont		Rf_FixupFont
 #define FixupLty		Rf_FixupLty
 #define FixupLwd		Rf_FixupLwd
-#define FixupPch		Rf_FixupPch
 #define FixupVFont		Rf_FixupVFont
 #define GetDevice               Rf_GetDevice
 #define GInit			Rf_GInit
@@ -439,7 +438,6 @@ void Specify2(const char*, SEXP, DevDesc*, SEXP call);
 void RecordGraphicsCall(SEXP);
 #endif
 
-SEXP FixupPch(SEXP, int);
 SEXP FixupLty(SEXP, int);
 SEXP FixupFont(SEXP, int);
 SEXP FixupCol(SEXP, unsigned int);
