@@ -4670,10 +4670,10 @@ for(;;)
     if (first_byte_caseless)
       while (start_match < end_subject &&
              md->lcc[*start_match] != first_byte)
-        start_match++;
+        { NEXTCHAR(start_match); }
     else
       while (start_match < end_subject && *start_match != first_byte)
-        start_match++;
+        { NEXTCHAR(start_match); }
     }
 
   /* Or to just after a linebreak for a multiline match if possible */
@@ -4683,7 +4683,7 @@ for(;;)
     if (start_match > md->start_subject + start_offset)
       {
       while (start_match <= end_subject && !WAS_NEWLINE(start_match))
-        start_match++;
+        { NEXTCHAR(start_match); }
 
       /* If we have just passed a CR and the newline option is ANY or ANYCRLF,
       and we are now at a LF, advance the match position by one more character.
@@ -4704,7 +4704,9 @@ for(;;)
     while (start_match < end_subject)
       {
       register unsigned int c = *start_match;
-      if ((start_bits[c/8] & (1 << (c&7))) == 0) start_match++; else break;
+      if ((start_bits[c/8] & (1 << (c&7))) == 0)
+        { NEXTCHAR(start_match); }
+      else break;
       }
     }
 

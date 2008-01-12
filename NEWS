@@ -43,7 +43,7 @@ NEW FEATURES
 
     o	New higher-order function Negate().
 
-    o	PCRE has been updated to 7.4.
+    o	PCRE has been updated to 7.5.
 
     o	In addition to warning when 'pkgs' is not found,
 	install.packages() now reports if it finds a valid package
