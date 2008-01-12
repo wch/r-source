@@ -412,11 +412,8 @@ SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    if (CharacterMode == RGui) {
-    	getActive(&gui);
-	if (loadRconsole(&gui, (CHAR(STRING_ELT(sfile, 0))))) applyGUI(&gui);
-    } else
-	errorcall(call, _("'loadRconsole' can only be used in Rgui"));
+    getActive(&gui);  /* Will get defaults if there's no active console */
+    if (loadRconsole(&gui, (CHAR(STRING_ELT(sfile, 0))))) applyGUI(&gui);
     return R_NilValue;
 }
 

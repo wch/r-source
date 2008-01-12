@@ -748,35 +748,8 @@ void readconsolecfg()
     
     struct structGUI gui;
 
-    gui.crows = 25;
-    gui.ccols = 80;
-    gui.cx = gui.cy = 0;
-    gui.grx = Rwin_graphicsx;
-    gui.gry = Rwin_graphicsy;
-    gui.bg = White;
-    gui.fg = DarkBlue;
-    gui.user = gaRed;
-    gui.hlt = DarkRed;
-    gui.prows = 25;
-    gui.pcols = 80;
-    gui.pagerMultiple = 0;
-    gui.cbb = 65000;
-    gui.cbl = 8000;
-    gui.setWidthOnResize = 1;
-    strcpy(gui.font, "Courier New");
-    strcpy(gui.style, "normal");
-    gui.tt_font = 1;
-    gui.pointsize = 10;
-    strcpy(gui.language, "");
-    gui.buffered = 1;
+    getDefaults(&gui);
     
-#ifdef USE_MDI
-    gui.toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
-    gui.statusbar = ((RguiMDI & RW_STATUSBAR) != 0);
-    gui.MDI = ((RguiMDI & RW_MDI) != 0);
-    
-    gui.MDIsize = rect(0, 0, 0, 0);
-#endif
     if (R_LoadRconsole) {
 	sprintf(optf, "%s/Rconsole", getenv("R_USER"));
 	if (!loadRconsole(&gui, optf)) {

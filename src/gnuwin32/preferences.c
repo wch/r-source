@@ -113,66 +113,101 @@ static void getChoices(Gui p)
     /* MDIsize is not currently a choice in the dialog, only in the Rconsole file */
 }
 
-void getActive(Gui gui)
+void getDefaults(Gui gui)
 {
-    rect r;
-    ConsoleData p = (ConsoleData) getdata(RConsole);
-
+    gui->crows = 25;
+    gui->ccols = 80;
+    gui->cx = gui->cy = 0;
+    gui->grx = Rwin_graphicsx;
+    gui->gry = Rwin_graphicsy;
+    gui->bg = White;
+    gui->fg = DarkBlue;
+    gui->user = gaRed;
+    gui->hlt = DarkRed;
+    gui->prows = 25;
+    gui->pcols = 80;
+    gui->pagerMultiple = 0;
+    gui->cbb = 65000;
+    gui->cbl = 8000;
+    gui->setWidthOnResize = 1;
+    strcpy(gui->font, "Courier New");
+    strcpy(gui->style, "normal");
+    gui->tt_font = 1;
+    gui->pointsize = 10;
+    strcpy(gui->language, "");
+    gui->buffered = 1;
+    
+#ifdef USE_MDI
     gui->toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
     gui->statusbar = ((RguiMDI & RW_STATUSBAR) != 0);
     gui->MDI = ((RguiMDI & RW_MDI) != 0);
-    gui->pagerMultiple = pagerMultiple;
-    {
-	const char *p = getenv("LANGUAGE");
-	strcpy(gui->language, p ? p : "");
-    }
-
-/* Font, pointsize, style */
-
-    gui->tt_font = FALSE;
-    {
-	const char *pf;
-	if ((strlen(fontname) > 1) &&
-	    (fontname[0] == 'T') && (fontname[1] == 'T')) {
-	    gui->tt_font = TRUE;
-	    for (pf = fontname+2; isspace(*pf) ; pf++);
-	} else pf = fontname;
-	strcpy(gui->font, pf);
-    }
-
-    gui->pointsize = pointsize;
     
-    if (fontsty & Italic) strcpy(gui->style, "italic");
-    else if (fontsty & Bold) strcpy(gui->style, "Bold");
-    else strcpy(gui->style, "normal");
+    gui->MDIsize = rect(0, 0, 0, 0);
+#endif
+}
 
-/* Console size, set widthonresize */
-    gui->crows = ROWS;
-    gui->ccols = COLS;
-    r = GetCurrentWinPos(RConsole);
-    gui->cx = r.x;
-    gui->cy = r.y;
-    gui->setWidthOnResize = setWidthOnResize;
-    gui->cbb = p->lbuf->dim;
-    gui->cbl = p->lbuf->ms;
-    gui->buffered = consolebuffered;
+void getActive(Gui gui)
+{
+    rect r;
+    ConsoleData p;
+    if (RConsole && (p = (ConsoleData) getdata(RConsole))) {
 
-/* Pager size */
-    gui->prows = pagerrow;
-    gui->pcols = pagercol;
+	gui->toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
+	gui->statusbar = ((RguiMDI & RW_STATUSBAR) != 0);
+	gui->MDI = ((RguiMDI & RW_MDI) != 0);
+	gui->pagerMultiple = pagerMultiple;
+	{
+	    const char *p = getenv("LANGUAGE");
+	    strcpy(gui->language, p ? p : "");
+	}
 
-/* Graphics window */
-    gui->grx = Rwin_graphicsx;
-    gui->gry = Rwin_graphicsy;
+    /* Font, pointsize, style */
 
-/* Font colours */
-    gui->bg = consolebg;
-    gui->fg = consolefg;
-    gui->user = consoleuser;
-    gui->hlt = pagerhighlight;
-    
-/* MDIsize is not currently a choice in the dialog, only in the Rconsole file, so is not set here */
-    
+	gui->tt_font = FALSE;
+	{
+	    const char *pf;
+	    if ((strlen(fontname) > 1) &&
+		(fontname[0] == 'T') && (fontname[1] == 'T')) {
+		gui->tt_font = TRUE;
+		for (pf = fontname+2; isspace(*pf) ; pf++);
+	    } else pf = fontname;
+	    strcpy(gui->font, pf);
+	}
+
+	gui->pointsize = pointsize;
+
+	if (fontsty & Italic) strcpy(gui->style, "italic");
+	else if (fontsty & Bold) strcpy(gui->style, "Bold");
+	else strcpy(gui->style, "normal");
+
+    /* Console size, set widthonresize */
+	gui->crows = ROWS;
+	gui->ccols = COLS;
+	r = GetCurrentWinPos(RConsole);
+	gui->cx = r.x;
+	gui->cy = r.y;
+	gui->setWidthOnResize = setWidthOnResize;
+	gui->cbb = p->lbuf->dim;
+	gui->cbl = p->lbuf->ms;
+	gui->buffered = consolebuffered;
+
+    /* Pager size */
+	gui->prows = pagerrow;
+	gui->pcols = pagercol;
+
+    /* Graphics window */
+	gui->grx = Rwin_graphicsx;
+	gui->gry = Rwin_graphicsy;
+
+    /* Font colours */
+	gui->bg = consolebg;
+	gui->fg = consolefg;
+	gui->user = consoleuser;
+	gui->hlt = pagerhighlight;
+
+    /* MDIsize is not currently a choice in the dialog, only in the Rconsole file, so is not set here */
+    } else
+    	getDefaults(gui);
 }
 
 static int has_changed(Gui a, Gui b)

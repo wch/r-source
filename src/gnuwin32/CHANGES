@@ -139,6 +139,10 @@ OTHERS
 	e.g. plotting on the windows() device.  So "\u03b2" gives a
 	Greek letter beta (as distinct from  mathematical symbol), and
 	"\u2642" a 'male sign'.
+	
+    o	loadRconsole() may now be used in Rterm and embedded R
+	(where it affects graphics windows and pagers).  Embedded R
+	no longer reads the Rconsole file on startup.
 
 
 BUILDING R
