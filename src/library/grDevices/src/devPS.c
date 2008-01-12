@@ -842,7 +842,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 
 #ifdef SUPPORT_MBCS
     /* We don't need the restriction to 65536 here any more as we could
-       convert from  UCS4ENC, but there are no language chars about 65536. */
+       convert from  UCS4ENC, but there are few language chars above 65536. */
     if(mbcslocale && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
 	void *cd = NULL;
 	const char *i_buf; char *o_buf, out[2];

@@ -281,6 +281,9 @@ typedef struct {
      * device_MetricInfo should return height, depth, and	
      * width information for the given character in DEVICE	
      * units.
+     * Note: in an 8-bit locale, c is 'char'.
+     * In an mbcslocale, it is wchar_t, and at least some
+     * of code assumes that is UCS-2 (Windows, true) or UCS-4.
      * This is used for formatting mathematical expressions	
      * and for exact centering of text (see GText)		
      * If the device cannot provide metric information then 
