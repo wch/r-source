@@ -202,7 +202,7 @@ NEW FEATURES
     o	dyn.load() gains a 'DLLpath' argument to specify the path for
 	dependent DLLs: currrently only used on Windows.
 
-    o	intToUtf8 now marks the Encoding of its output.
+    o	intToUtf8() now marks the Encoding of its output.
 
 
 DEPRECATED & DEFUNCT
@@ -342,6 +342,10 @@ BUG FIXES
 
     o	summary.mlm() lost the names of the coefficients when there
 	was only one.
+
+    o	par(pch=) would accept a multi-byte string but only use the
+	first byte.  This would lead to incorrect results in an MBCS
+	locale if a non-ASCII character was supplied.
 
 
 

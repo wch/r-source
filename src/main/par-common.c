@@ -208,10 +208,18 @@
 	R_DEV__(mkh) = x;
     }
     else if (streql(what, "pch")) {
+	/* FIXME: see FixupPch */
 	if (!isVector(value) || LENGTH(value) < 1)
 	    par_error(what);
 	if (isString(value)) {
-	    ix = CHAR(STRING_ELT(value, 0))[0];
+	    const char *tmp = CHAR(STRING_ELT(value, 0));
+	    if(!tmp[0]  || strlen(tmp) > 1) {
+		if (mbcslocale) 
+		    error(_("value of par(pch=s) must be an ASCII character"));
+		else
+		    warning(_("only the first character in 'pch' will be used"));
+	    }
+	    ix = tmp[0];
 	}
 	else if (isNumeric(value)) {
 	    ix = asInteger(value);
