@@ -2378,7 +2378,7 @@ double GEStrWidth(const char *str, int enc,
 		     * if it wants to.
 		     * NOTE: fontface corresponds to old "font"
 		     */
-		    if(enc2 == CE_UTF8)
+		    if(dd->dev->hasTextUTF8 && enc2 == CE_UTF8)
 			wdash = dd->dev->strWidthUTF8(str, gc, dd->dev);
 		    else
 			wdash = dd->dev->strWidth(str, gc, dd->dev);
