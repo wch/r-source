@@ -18,6 +18,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	The default width and height for pdf() have been changed to
 	7 (inches) to match the screen devices.
 
+    o	Packages which include graphics devices need to be reinstalled
+	for this version of R.
+
 
 NEW FEATURES
 
