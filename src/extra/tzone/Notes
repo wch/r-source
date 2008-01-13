@@ -1,4 +1,4 @@
-localtime.c is a stripped-down version of that from tzcode2007j, from
+localtime.c is a stripped-down version of that from tzcode2007k, from
 ftp://elsie.nci.nih.gov/pub/.  Apart from removing unused code and
 merging in the parts of private.h which are needed, the main changes
 are
@@ -10,7 +10,7 @@ are
 
 
 zoneinfo.zip was formed by installing tzcode/tzdata on x86_64 Linux,
-and zipping up the reults, after adding a file VERSION giving the
+and zipping up the results, after adding a file VERSION giving the
 version.  It should be possible to build the compiled databases on
 Windows, but zic.c assumes links and so would need a lot of work.
 (It look like the binary databases are byte streams, and so do not
@@ -20,6 +20,6 @@ time_t is signed, which it is on all sensible platforms.)
 To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
 Copy the current version of tzdataXXX.tar.gz to this directory and run
 
-make -f Make.zi VERSION=2007j
+make -f Make.zi VERSION=2007k
 
 for the appropriate version.
