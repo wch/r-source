@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-7 The R Development Core Team
+ *                2003-8 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2935,6 +2935,9 @@ SEXP L_textBounds(SEXP label, SEXP x, SEXP y,
 		    REAL(theta)[0], FALSE);
 }
 
+/* from plot.c: part of FixupPch */
+extern int Rf_string_to_pch(SEXP pch);
+
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 {
     int i, nx, npch;
@@ -2981,7 +2984,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	    /* FIXME:  The symbols will not respond to viewport
 	     * rotations !!!
 	     */
-	    int ipch;
+	    int ipch = NA_INTEGER /* -Wall */;
 	    gcontextFromgpar(currentgp, i, &gc, dd);
 	    symbolSize = transformWidthtoINCHES(size, i, vpc, &gc,
 						vpWidthCM, vpHeightCM, dd);
@@ -2990,15 +2993,17 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	    symbolSize = toDeviceWidth(symbolSize, GE_INCHES, dd);
 	    if (R_FINITE(symbolSize)) {
 	        if (isString(pch)) {
-		    ipch = CHAR(STRING_ELT(pch, i % npch))[0];
-		    /*
-		     * special case for pch = "."
-		     */
-		    if (ipch == 46) 
-		      symbolSize = gpCex(currentgp, i);
-		} else {
+		    ipch = Rf_string_to_pch(STRING_ELT(pch, i % npch));
+		} else if (isInteger(pch)) {
 		    ipch = INTEGER(pch)[i % npch];
-		}
+		} else if (isReal(pch)) {
+		    ipch = R_FINITE(REAL(pch)[i % npch]) ? 
+			REAL(pch)[i % npch] : NA_INTEGER;
+		} else error(_("invalid plotting symbol"));
+		/*
+		 * special case for pch = "."
+		 */
+		if (ipch == 46) symbolSize = gpCex(currentgp, i);
 	        GESymbol(xx[i], yy[i], ipch, symbolSize, &gc, dd);
 	    }
 	}
