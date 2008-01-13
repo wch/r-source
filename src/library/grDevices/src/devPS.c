@@ -3335,6 +3335,7 @@ PSDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
     dd->locator    = PS_Locator;
     dd->mode	      = PS_Mode;
     dd->hold	      = PS_Hold;
+    dd->hasTextUTF8 = FALSE;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -4589,6 +4590,7 @@ XFigDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
     dd->locator    = XFig_Locator;
     dd->mode	   = XFig_Mode;
     dd->hold	   = XFig_Hold;
+    dd->hasTextUTF8 = FALSE;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -5583,6 +5585,7 @@ PDFDeviceDriver(NewDevDesc* dd, const char *file, const char *paper,
     dd->locator    = PDF_Locator;
     dd->mode	      = PDF_Mode;
     dd->hold	      = PDF_Hold;
+    dd->hasTextUTF8 = FALSE;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;

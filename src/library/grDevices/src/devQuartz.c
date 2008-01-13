@@ -356,6 +356,7 @@ void* QuartzDevice_Create(
     dev->mode         = RQuartz_Mode;
     dev->hold         = RQuartz_Hold;
     dev->metricInfo   = RQuartz_MetricInfo;
+    dev->hasTextUTF8  = FALSE;
     
     dev->left = 0;
     dev->top  = 0;
