@@ -205,7 +205,7 @@
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 7.4 as described here
+  from the sources within \R, the PCRE version is 7.5 as described here
   (version \eqn{\ge}{>=} 4.0 is required if \R is configured to use the
   system's PCRE library).
 
