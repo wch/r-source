@@ -1,5 +1,5 @@
 /* Plural expression evaluation.
-   Copyright (C) 2000-2003 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -24,7 +24,7 @@
 STATIC
 unsigned long int
 internal_function
-plural_eval (struct expression *pexp, unsigned long int n)
+plural_eval (const struct expression *pexp, unsigned long int n)
 {
   switch (pexp->nargs)
     {

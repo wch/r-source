@@ -1,5 +1,5 @@
 /* Description of GNU message catalog format: general file layout.
-   Copyright (C) 1995, 1997, 2000-2002, 2004 Free Software Foundation, Inc.
+   Copyright (C) 1995, 1997, 2000-2002, 2004, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -124,6 +124,15 @@ struct sysdep_segment
   nls_uint32 offset;
 };
 
+/* Pair of a static and a system dependent segment, in struct sysdep_string.  */
+struct segment_pair
+{
+  /* Size of static segment.  */
+  nls_uint32 segsize;
+  /* Reference to system dependent string segment, or ~0 at the end.  */
+  nls_uint32 sysdepref;
+};
+
 /* Descriptor for system dependent string.  */
 struct sysdep_string
 {
@@ -131,13 +140,7 @@ struct sysdep_string
   nls_uint32 offset;
   /* Alternating sequence of static and system dependent segments.
      The last segment is a static segment, including the trailing NUL.  */
-  struct segment_pair
-  {
-    /* Size of static segment.  */
-    nls_uint32 segsize;
-    /* Reference to system dependent string segment, or ~0 at the end.  */
-    nls_uint32 sysdepref;
-  } segments[1];
+  struct segment_pair segments[1];
 };
 
 /* Marker for the end of the segments[] array.  This has the value 0xFFFFFFFF,

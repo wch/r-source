@@ -1,5 +1,5 @@
 /* Header describing internals of libintl library.
-   Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2007 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@cygnus.com>, 1995.
 
    This program is free software; you can redistribute it and/or modify it
@@ -28,6 +28,14 @@
 # if HAVE_ICONV
 #  include <iconv.h>
 # endif
+#endif
+
+/* Handle multi-threaded applications.  */
+#ifdef _LIBC
+# include <bits/libc-lock.h>
+# define gl_rwlock_define __libc_rwlock_define
+#else
+# include "lock.h"
 #endif
 
 #ifdef _LIBC
@@ -106,8 +114,12 @@ extern char *libintl_dcigettext (const char *__domainname,
 # define SWAP(i) bswap_32 (i)
 #else
 static inline nls_uint32
+# ifdef __cplusplus
+SWAP (nls_uint32 i)
+# else
 SWAP (i)
      nls_uint32 i;
+# endif
 {
   return (i << 24) | ((i & 0xff00) << 8) | ((i >> 8) & 0xff00) | (i >> 24);
 }
@@ -181,8 +193,9 @@ struct loaded_domain
   /* Cache of charset conversions of the translated strings.  */
   struct converted_domain *conversions;
   size_t nconversions;
+  gl_rwlock_define (, conversions_lock)
 
-  struct expression *plural;
+  const struct expression *plural;
   unsigned long int nplurals;
 };
 
@@ -218,10 +231,16 @@ extern LIBINTL_DLL_EXPORTED int _nl_msg_cat_cntr;
 #endif
 
 #ifndef _LIBC
-const char *_nl_language_preferences_default (void);
-const char *_nl_locale_name_posix (int category, const char *categoryname);
-const char *_nl_locale_name_default (void);
-const char *_nl_locale_name (int category, const char *categoryname);
+extern const char *_nl_language_preferences_default (void);
+# define gl_locale_name_canonicalize _nl_locale_name_canonicalize
+extern void _nl_locale_name_canonicalize (char *name);
+# define gl_locale_name_posix _nl_locale_name_posix
+extern const char *_nl_locale_name_posix (int category,
+					  const char *categoryname);
+# define gl_locale_name_default _nl_locale_name_default
+extern const char *_nl_locale_name_default (void);
+# define gl_locale_name _nl_locale_name
+extern const char *_nl_locale_name (int category, const char *categoryname);
 #endif
 
 struct loaded_l10nfile *_nl_find_domain (const char *__dirname, char *__locale,
@@ -244,6 +263,37 @@ char *_nl_find_msg (struct loaded_l10nfile *domain_file,
 		    int convert, size_t *lengthp)
      internal_function;
 #endif
+
+/* The internal variables in the standalone libintl.a must have different
+   names than the internal variables in GNU libc, otherwise programs
+   using libintl.a cannot be linked statically.  */
+#if !defined _LIBC
+# define _nl_default_dirname libintl_nl_default_dirname
+# define _nl_domain_bindings libintl_nl_domain_bindings
+#endif
+
+/* Contains the default location of the message catalogs.  */
+extern const char _nl_default_dirname[];
+#ifdef _LIBC
+libc_hidden_proto (_nl_default_dirname)
+#endif
+
+/* List with bindings of specific domains.  */
+extern struct binding *_nl_domain_bindings;
+
+/* The internal variables in the standalone libintl.a must have different
+   names than the internal variables in GNU libc, otherwise programs
+   using libintl.a cannot be linked statically.  */
+#if !defined _LIBC
+# define _nl_default_default_domain libintl_nl_default_default_domain
+# define _nl_current_default_domain libintl_nl_current_default_domain
+#endif
+
+/* Name of the default text domain.  */
+extern const char _nl_default_default_domain[] attribute_hidden;
+
+/* Default text domain in which entries for gettext(3) are to be found.  */
+extern const char *_nl_current_default_domain attribute_hidden;
 
 /* @@ begin of epilog @@ */
 

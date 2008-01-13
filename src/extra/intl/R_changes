@@ -18,9 +18,10 @@ Various small changes were made to avoid warnings.
 
 BDR
 
---- ./dcigettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/dcigettext.c	2007-08-30 14:40:53.890625000 +0100
-@@ -159,7 +159,10 @@
+diff -ru intl/dcigettext.c ../extra/intl/dcigettext.c
+--- intl/dcigettext.c	2007-10-21 19:41:41.000000000 +0100
++++ ../extra/intl/dcigettext.c	2008-01-13 14:39:54.703125000 +0000
+@@ -152,7 +152,10 @@
  #  if VMS
  #   define getcwd(buf, max) (getcwd) (buf, max, 0)
  #  else
@@ -31,7 +32,7 @@ BDR
  #  endif
  # endif
  # ifndef HAVE_STPCPY
-@@ -260,6 +263,9 @@
+@@ -269,6 +272,9 @@
    size_t translation_length;
  
    /* Pointer to the string in question.  */
@@ -41,7 +42,7 @@ BDR
    char msgid[ZERO];
  };
  
-@@ -1503,6 +1523,22 @@
+@@ -1535,6 +1541,22 @@
  	  locale_defaulted = 1;
  	}
      }
@@ -64,8 +65,9 @@ BDR
  # endif
  #endif
  
---- ./dgettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/dgettext.c	2007-05-12 05:55:38.000000000 +0100
+diff -ru intl/dgettext.c ../extra/intl/dgettext.c
+--- intl/dgettext.c	2005-05-20 22:05:58.000000000 +0100
++++ ../extra/intl/dgettext.c	2007-05-12 05:55:38.000000000 +0100
 @@ -46,7 +46,10 @@
  
  /* Look up MSGID in the DOMAINNAME message catalog of the current
@@ -78,8 +80,9 @@ BDR
  DGETTEXT (const char *domainname, const char *msgid)
  {
    return DCGETTEXT (domainname, msgid, LC_MESSAGES);
---- ./finddomain.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/finddomain.c	2007-05-12 05:26:42.000000000 +0100
+diff -ru intl/finddomain.c ../extra/intl/finddomain.c
+--- intl/finddomain.c	2007-10-13 16:55:41.000000000 +0100
++++ ../extra/intl/finddomain.c	2008-01-13 15:02:30.468750000 +0000
 @@ -67,7 +67,9 @@
    const char *territory;
    const char *codeset;
@@ -106,7 +109,7 @@ BDR
  
    /* Now we determine the single parts of the locale name.  First
       look for the language.  Termination symbols are `_', '.', and `@'.  */
-@@ -175,9 +179,12 @@
+@@ -178,9 +182,12 @@
  	}
      }
  
@@ -117,10 +120,11 @@ BDR
      free (locale);
 +#endif
  
+ out:
    /* The space for normalized_codeset is dynamically allocated.  Free it.  */
-   if (mask & XPG_NORM_CODESET)
---- ./gettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/gettext.c	2007-05-12 05:56:24.000000000 +0100
+diff -ru intl/gettext.c ../extra/intl/gettext.c
+--- intl/gettext.c	2005-05-20 22:05:58.000000000 +0100
++++ ../extra/intl/gettext.c	2007-05-12 05:56:24.000000000 +0100
 @@ -51,6 +51,9 @@
  /* Look up MSGID in the current default message catalog for the current
     LC_MESSAGES locale.  If not found, returns MSGID itself (the default
@@ -131,9 +135,10 @@ BDR
  char *
  GETTEXT (const char *msgid)
  {
---- ./gettextP.h	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/gettextP.h	2007-05-12 04:02:42.000000000 +0100
-@@ -201,6 +201,9 @@
+diff -ru intl/gettextP.h ../extra/intl/gettextP.h
+--- intl/gettextP.h	2007-10-13 17:18:11.000000000 +0100
++++ ../extra/intl/gettextP.h	2008-01-13 14:36:23.671875000 +0000
+@@ -214,6 +214,9 @@
    struct binding *next;
    char *dirname;
    char *codeset;
@@ -143,8 +148,9 @@ BDR
    char domainname[ZERO];
  };
  
---- ./l10nflist.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/l10nflist.c	2007-08-21 09:38:31.656250000 +0100
+diff -ru intl/l10nflist.c ../extra/intl/l10nflist.c
+--- intl/l10nflist.c	2006-06-23 17:29:25.000000000 +0100
++++ ../extra/intl/l10nflist.c	2007-08-21 09:38:31.656250000 +0100
 @@ -318,10 +318,9 @@
  	if (dirlist_count > 1)
  	  {
@@ -158,8 +164,9 @@ BDR
  	      retval->successor[entries++]
  		= _nl_make_l10nflist (l10nfile_list, dir, strlen (dir) + 1,
  				      cnt, language, territory, codeset,
---- ./localcharset.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/localcharset.c	2007-08-30 10:16:31.703125000 +0100
+diff -ru intl/localcharset.c ../extra/intl/localcharset.c
+--- intl/localcharset.c	2006-10-18 12:56:41.000000000 +0100
++++ ../extra/intl/localcharset.c	2008-01-13 14:36:25.171875000 +0000
 @@ -19,7 +19,9 @@
  
  /* Written by Bruno Haible <bruno@clisp.org>.  */
@@ -224,37 +231,35 @@ BDR
    codeset = buf;
  
  #elif defined OS2
---- ./localename.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/localename.c	2007-05-12 04:28:12.000000000 +0100
-@@ -1142,7 +1142,7 @@
- 	switch (sub)
- 	  {
- 	  case SUBLANG_BENGALI_INDIA: return "bn_IN";
--	  case SUBLANG_BENGALI_BANGLADESH: return "bn_BD";
-+          // case SUBLANG_BENGALI_BANGLADESH: return "bn_BD";
- 	  }
- 	return "bn";
-       case LANG_BULGARIAN: return "bg_BG";
-@@ -1356,7 +1356,7 @@
- 	switch (sub)
- 	  {
- 	  case SUBLANG_PUNJABI_INDIA: return "pa_IN"; /* Gurmukhi script */
--	  case SUBLANG_PUNJABI_PAKISTAN: return "pa_PK"; /* Arabic script */
-+	  // case SUBLANG_PUNJABI_PAKISTAN: return "pa_PK"; /* Arabic script */
- 	  }
- 	return "pa";
-       case LANG_RHAETO_ROMANCE: return "rm_CH";
-@@ -1364,7 +1364,7 @@
- 	switch (sub)
- 	  {
- 	  case SUBLANG_ROMANIAN_ROMANIA: return "ro_RO";
--	  case SUBLANG_ROMANIAN_MOLDOVA: return "ro_MD";
-+	  // case SUBLANG_ROMANIAN_MOLDOVA: return "ro_MD";
- 	  }
- 	return "ro";
-       case LANG_RUSSIAN:
---- ./ngettext.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/ngettext.c	2007-05-12 07:34:56.562500000 +0100
+diff -ru intl/localename.c ../extra/intl/localename.c
+--- intl/localename.c	2007-06-07 20:49:32.000000000 +0100
++++ ../extra/intl/localename.c	2008-01-13 14:36:26.000000000 +0000
+@@ -20,7 +20,9 @@
+ /* Win32 code written by Tor Lillqvist <tml@iki.fi>.  */
+ /* MacOS X code written by Bruno Haible <bruno@clisp.org>.  */
+ 
+-#include <config.h>
++#ifdef HAVE_CONFIG_H
++# include <config.h>
++#endif
+ 
+ /* Specification.  */
+ #ifdef IN_LIBINTL
+diff -ru intl/lock.c ../extra/intl/lock.c
+--- intl/lock.c	2006-10-09 13:00:44.000000000 +0100
++++ ../extra/intl/lock.c	2007-09-02 04:56:00.338369300 +0100
+@@ -359,7 +359,7 @@
+ 
+ /* -------------------------- gl_once_t datatype -------------------------- */
+ 
+-static const pthread_once_t fresh_once = PTHREAD_ONCE_INIT;
++static const pthread_once_t fresh_once = {PTHREAD_ONCE_INIT};
+ 
+ int
+ glthread_once_singlethreaded (pthread_once_t *once_control)
+diff -ru intl/ngettext.c ../extra/intl/ngettext.c
+--- intl/ngettext.c	2005-05-20 22:05:58.000000000 +0100
++++ ../extra/intl/ngettext.c	2007-05-12 07:34:56.562500000 +0100
 @@ -53,6 +53,9 @@
  /* Look up MSGID in the current default message catalog for the current
     LC_MESSAGES locale.  If not found, returns MSGID itself (the default
@@ -265,43 +270,3 @@ BDR
  char *
  NGETTEXT (const char *msgid1, const char *msgid2, unsigned long int n)
  {
---- ./printf-args.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/printf-args.c	2007-05-12 06:30:01.000000000 +0100
-@@ -16,7 +16,9 @@
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-    USA.  */
- 
--#include <config.h>
-+#ifdef HAVE_CONFIG_H
-+# include <config.h>
-+#endif
- 
- /* Specification.  */
- #include "printf-args.h"
---- ./printf-parse.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/printf-parse.c	2007-05-12 06:29:52.000000000 +0100
-@@ -16,7 +16,9 @@
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-    USA.  */
- 
--#include <config.h>
-+#ifdef HAVE_CONFIG_H
-+# include <config.h>
-+#endif
- 
- /* Specification.  */
- #if WIDE_CHAR_VERSION
---- ./vasnprintf.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../../extra/intl/vasnprintf.c	2007-05-12 06:30:18.000000000 +0100
-@@ -23,7 +23,9 @@
- # define _GNU_SOURCE    1
- #endif
- 
--#include <config.h>
-+#ifdef HAVE_CONFIG_H
-+# include <config.h>
-+#endif
- #ifndef IN_LIBINTL
- # include <alloca.h>
- #endif
-

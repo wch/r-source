@@ -362,7 +362,7 @@ src/library/tools/src/md5.[ch]
 
 src/extra/intl/*
 
-Based on gettextize from gettext 0.16.1
+Based on gettextize from gettext 0.17
    Copyright (C) various dates Free Software Foundation, Inc.
    Distributed under the GNU Library General Public License
    version 2 or later.

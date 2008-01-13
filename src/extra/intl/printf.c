@@ -1,5 +1,5 @@
 /* Formatted output to strings, using POSIX/XSI format strings with positions.
-   Copyright (C) 2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify it
@@ -69,7 +69,7 @@ char *alloca ();
 #define STATIC static
 
 /* This needs to be consistent with libgnuintl.h.in.  */
-#if defined __NetBSD__ || defined __CYGWIN__ || defined __MINGW32__
+#if defined __NetBSD__ || defined __BEOS__ || defined __CYGWIN__ || defined __MINGW32__
 /* Don't break __attribute__((format(printf,M,N))).
    This redefinition is only possible because the libc in NetBSD, Cygwin,
    mingw does not have a function __printf__.  */
@@ -285,7 +285,12 @@ libintl_asprintf (char **resultp, const char *format, ...)
 
 #define WIDE_CHAR_VERSION 1
 
+#include "wprintf-parse.h"
 /* Define auxiliary functions declared in "wprintf-parse.h".  */
+#define CHAR_T wchar_t
+#define DIRECTIVE wchar_t_directive
+#define DIRECTIVES wchar_t_directives
+#define PRINTF_PARSE wprintf_parse
 #include "printf-parse.c"
 
 /* Define functions declared in "vasnprintf.h".  */

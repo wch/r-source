@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 1999-2000, 2002-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1999-2000, 2002-2003, 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -16,44 +16,63 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
-#ifdef HAVE_CONFIG_H
+/* This file can be parametrized with the following macros:
+     CHAR_T             The element type of the format string.
+     CHAR_T_ONLY_ASCII  Set to 1 to enable verification that all characters
+                        in the format string are ASCII.
+     DIRECTIVE          Structure denoting a format directive.
+                        Depends on CHAR_T.
+     DIRECTIVES         Structure denoting the set of format directives of a
+                        format string.  Depends on CHAR_T.
+     PRINTF_PARSE       Function that parses a format string.
+                        Depends on CHAR_T.
+     STATIC             Set to 'static' to declare the function static.
+     ENABLE_UNISTDIO    Set to 1 to enable the unistdio extensions.  */
+
+#ifndef PRINTF_PARSE
 # include <config.h>
 #endif
 
 /* Specification.  */
-#if WIDE_CHAR_VERSION
-# include "wprintf-parse.h"
-#else
+#ifndef PRINTF_PARSE
 # include "printf-parse.h"
+#endif
+
+/* Default parameters.  */
+#ifndef PRINTF_PARSE
+# define PRINTF_PARSE printf_parse
+# define CHAR_T char
+# define DIRECTIVE char_directive
+# define DIRECTIVES char_directives
 #endif
 
 /* Get size_t, NULL.  */
 #include <stddef.h>
 
 /* Get intmax_t.  */
-#if HAVE_STDINT_H_WITH_UINTMAX
+#if defined IN_LIBINTL || defined IN_LIBASPRINTF
+# if HAVE_STDINT_H_WITH_UINTMAX
+#  include <stdint.h>
+# endif
+# if HAVE_INTTYPES_H_WITH_UINTMAX
+#  include <inttypes.h>
+# endif
+#else
 # include <stdint.h>
-#endif
-#if HAVE_INTTYPES_H_WITH_UINTMAX
-# include <inttypes.h>
 #endif
 
 /* malloc(), realloc(), free().  */
 #include <stdlib.h>
 
+/* errno.  */
+#include <errno.h>
+
 /* Checked size_t computations.  */
 #include "xsize.h"
 
-#if WIDE_CHAR_VERSION
-# define PRINTF_PARSE wprintf_parse
-# define CHAR_T wchar_t
-# define DIRECTIVE wchar_t_directive
-# define DIRECTIVES wchar_t_directives
-#else
-# define PRINTF_PARSE printf_parse
-# define CHAR_T char
-# define DIRECTIVE char_directive
-# define DIRECTIVES char_directives
+#if CHAR_T_ONLY_ASCII
+/* c_isascii().  */
+# include "c-ctype.h"
 #endif
 
 #ifdef STATIC
@@ -71,10 +90,10 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 
   d->count = 0;
   d_allocated = 1;
-  d->dir = malloc (d_allocated * sizeof (DIRECTIVE));
+  d->dir = (DIRECTIVE *) malloc (d_allocated * sizeof (DIRECTIVE));
   if (d->dir == NULL)
     /* Out of memory.  */
-    return -1;
+    goto out_of_memory_1;
 
   a->count = 0;
   a_allocated = 0;
@@ -94,13 +113,13 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	memory_size = xtimes (a_allocated, sizeof (argument));		\
 	if (size_overflow_p (memory_size))				\
 	  /* Overflow, would lead to out of memory.  */			\
-	  goto error;							\
-	memory = (a->arg						\
-		  ? realloc (a->arg, memory_size)			\
-		  : malloc (memory_size));				\
+	  goto out_of_memory;						\
+	memory = (argument *) (a->arg					\
+			       ? realloc (a->arg, memory_size)		\
+			       : malloc (memory_size));			\
 	if (memory == NULL)						\
 	  /* Out of memory.  */						\
-	  goto error;							\
+	  goto out_of_memory;						\
 	a->arg = memory;						\
       }									\
     while (a->count <= n)						\
@@ -118,7 +137,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
       if (c == '%')
 	{
 	  size_t arg_index = ARG_NONE;
-	  DIRECTIVE *dp = &d->dir[d->count];/* pointer to next directive */
+	  DIRECTIVE *dp = &d->dir[d->count]; /* pointer to next directive */
 
 	  /* Initialize the next directive.  */
 	  dp->dir_start = cp - 1;
@@ -329,7 +348,6 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		      flags += 8;
 		      cp++;
 		    }
-#ifdef HAVE_INTMAX_T
 		  else if (*cp == 'j')
 		    {
 		      if (sizeof (intmax_t) > sizeof (long))
@@ -344,7 +362,6 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 			}
 		      cp++;
 		    }
-#endif
 		  else if (*cp == 'z' || *cp == 'Z')
 		    {
 		      /* 'z' is standardized in ISO C 99, but glibc uses 'Z'
@@ -385,7 +402,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	      switch (c)
 		{
 		case 'd': case 'i':
-#ifdef HAVE_LONG_LONG_INT
+#if HAVE_LONG_LONG_INT
 		  /* If 'long long' exists and is larger than 'long':  */
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_LONGLONGINT;
@@ -403,7 +420,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		    type = TYPE_INT;
 		  break;
 		case 'o': case 'u': case 'x': case 'X':
-#ifdef HAVE_LONG_LONG_INT
+#if HAVE_LONG_LONG_INT
 		  /* If 'long long' exists and is larger than 'long':  */
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_ULONGLONGINT;
@@ -422,16 +439,14 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  break;
 		case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
 		case 'a': case 'A':
-#ifdef HAVE_LONG_DOUBLE
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_LONGDOUBLE;
 		  else
-#endif
-		  type = TYPE_DOUBLE;
+		    type = TYPE_DOUBLE;
 		  break;
 		case 'c':
 		  if (flags >= 8)
-#ifdef HAVE_WINT_T
+#if HAVE_WINT_T
 		    type = TYPE_WIDE_CHAR;
 #else
 		    goto error;
@@ -439,7 +454,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  else
 		    type = TYPE_CHAR;
 		  break;
-#ifdef HAVE_WINT_T
+#if HAVE_WINT_T
 		case 'C':
 		  type = TYPE_WIDE_CHAR;
 		  c = 'c';
@@ -447,7 +462,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 #endif
 		case 's':
 		  if (flags >= 8)
-#ifdef HAVE_WCHAR_T
+#if HAVE_WCHAR_T
 		    type = TYPE_WIDE_STRING;
 #else
 		    goto error;
@@ -455,7 +470,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  else
 		    type = TYPE_STRING;
 		  break;
-#ifdef HAVE_WCHAR_T
+#if HAVE_WCHAR_T
 		case 'S':
 		  type = TYPE_WIDE_STRING;
 		  c = 's';
@@ -465,7 +480,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  type = TYPE_POINTER;
 		  break;
 		case 'n':
-#ifdef HAVE_LONG_LONG_INT
+#if HAVE_LONG_LONG_INT
 		  /* If 'long long' exists and is larger than 'long':  */
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_COUNT_LONGLONGINT_POINTER;
@@ -482,6 +497,17 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  else
 		    type = TYPE_COUNT_INT_POINTER;
 		  break;
+#if ENABLE_UNISTDIO
+		/* The unistdio extensions.  */
+		case 'U':
+		  if (flags >= 16)
+		    type = TYPE_U32_STRING;
+		  else if (flags >= 8)
+		    type = TYPE_U16_STRING;
+		  else
+		    type = TYPE_U8_STRING;
+		  break;
+#endif
 		case '%':
 		  type = TYPE_NONE;
 		  break;
@@ -517,14 +543,21 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	      memory_size = xtimes (d_allocated, sizeof (DIRECTIVE));
 	      if (size_overflow_p (memory_size))
 		/* Overflow, would lead to out of memory.  */
-		goto error;
-	      memory = realloc (d->dir, memory_size);
+		goto out_of_memory;
+	      memory = (DIRECTIVE *) realloc (d->dir, memory_size);
 	      if (memory == NULL)
 		/* Out of memory.  */
-		goto error;
+		goto out_of_memory;
 	      d->dir = memory;
 	    }
 	}
+#if CHAR_T_ONLY_ASCII
+      else if (!c_isascii (c))
+	{
+	  /* Non-ASCII character.  Not supported.  */
+	  goto error;
+	}
+#endif
     }
   d->dir[d->count].dir_start = cp;
 
@@ -537,10 +570,21 @@ error:
     free (a->arg);
   if (d->dir)
     free (d->dir);
+  errno = EINVAL;
+  return -1;
+
+out_of_memory:
+  if (a->arg)
+    free (a->arg);
+  if (d->dir)
+    free (d->dir);
+out_of_memory_1:
+  errno = ENOMEM;
   return -1;
 }
 
+#undef PRINTF_PARSE
 #undef DIRECTIVES
 #undef DIRECTIVE
+#undef CHAR_T_ONLY_ASCII
 #undef CHAR_T
-#undef PRINTF_PARSE

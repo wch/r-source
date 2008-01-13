@@ -210,6 +210,9 @@ NEW FEATURES
 	undocumented: they were replaced by the current setting of
 	par("pch").)
 
+    o	The src/extra/intl sources have been updated to those from
+	gettext 0.17.
+
 
 DEPRECATED & DEFUNCT
 

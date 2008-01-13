@@ -40,21 +40,7 @@
 # include "lock.h"
 #endif
 
-/* The internal variables in the standalone libintl.a must have different
-   names than the internal variables in GNU libc, otherwise programs
-   using libintl.a cannot be linked statically.  */
-#if !defined _LIBC
-# define _nl_default_default_domain libintl_nl_default_default_domain
-# define _nl_current_default_domain libintl_nl_current_default_domain
-#endif
-
 /* @@ end of prolog @@ */
-
-/* Name of the default text domain.  */
-extern const char _nl_default_default_domain[] attribute_hidden;
-
-/* Default text domain in which entries for gettext(3) are to be found.  */
-extern const char *_nl_current_default_domain attribute_hidden;
 
 
 /* Names for the libintl functions are a problem.  They must not clash
