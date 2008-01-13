@@ -138,6 +138,10 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       These characters can be used directly in a Latin-1 or locale or on
       a system with MBCS support.  (In the latter, characters not in
       Latin-1 are replaced by a dot.)
+
+      Several characters are missing, c-cedilla has no cedilla and
+      \sQuote{sharp s} (\code{U+00DF}, also known as \sQuote{esszett})
+      is rendered as \code{ss}.
     }
 
     \item{Special Characters:}{a set of characters are provided which

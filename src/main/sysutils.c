@@ -703,7 +703,7 @@ next_char:
 		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 		goto top_of_loop;
 	    }
-	    *outbuf++ = *inbuf++; outb--; inb--;
+	    *outbuf++ = '.'; inbuf++; outb--; inb--;
 	    goto next_char; 
 	    break;
 	default: /* skip byte */
