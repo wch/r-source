@@ -208,33 +208,13 @@
 	R_DEV__(mkh) = x;
     }
     else if (streql(what, "pch")) {
-	if (!isVector(value) || LENGTH(value) < 1)
-	    par_error(what);
+	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
 	if (isString(value)) {
-	    SEXP this = STRING_ELT(value, 0);
-	    const char *tmp = CHAR(this);
-	    if (STRING_ELT(value, 0) == NA_STRING) par_error(what);
-	    if(!tmp[0]) error(_("par(pch=\"\") is not valid"));
-#ifdef SUPPORT_MBCS
-	    if(IS_LATIN1(this)) {
-		ix = - (unsigned char) tmp[0];
-	    } else if (IS_UTF8(this)) {
-		wchar_t wc;
-		if(utf8toucs(&wc, CHAR(this)) > 0) ix = -wc;
-		else par_error(what);
-	    } else if (mbcslocale) {
-		unsigned int ucs;
-		if(mbtoucs(&ucs, CHAR(this), MB_CUR_MAX) > 0) ix = -ucs;
-		else par_error(what);
-	    } else
-#endif
-		ix = (unsigned char) tmp[0];
-	}
-	else if (isNumeric(value)) {
+	    ix = Rf_string_to_pch(STRING_ELT(value, 0));
+	} else if (isNumeric(value)) {
 	    ix = asInteger(value);
-	    /* nonnegIntCheck(ix, what); wrong as from 2.7.0 */
-	}
-	else par_error(what);
+	} else par_error(what);
+	if(ix == NA_INTEGER) par_error(what);
 	R_DEV__(pch) = ix;
     }
     else if (streql(what, "smo")) {

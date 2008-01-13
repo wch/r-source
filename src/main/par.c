@@ -49,6 +49,9 @@
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
 #include <Rdevices.h>
 
+/* from plot.c: part of FixupPch */
+extern int Rf_string_to_pch(SEXP pch);
+
 typedef struct {
     char *name;
     int code; /* 0 normal, 1 not inline, 2 read-only

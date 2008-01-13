@@ -190,6 +190,37 @@ static SEXP getInlinePar(SEXP s, char *name)
     return result;
 }
 
+/* This is also used in grid */
+
+int Rf_string_to_pch(SEXP pch)
+{
+    int res = NA_INTEGER;
+
+    if (pch == NA_STRING) return NA_INTEGER;
+    if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
+#ifdef SUPPORT_MBCS
+    if (IS_LATIN1(pch)) {
+	res = (unsigned char) CHAR(pch)[0];
+	if (res > 127) res = -res;  /* record as Unicode */
+    } else if (IS_UTF8(pch)) {
+	wchar_t wc;
+	if(utf8toucs(&wc, CHAR(pch)) > 0) res = wc;
+	else error(_("invalid multibyte char in pch=\"c\""));
+	if (res > 127) res = -res;
+    } else if(mbcslocale) {
+	unsigned int ucs;
+	if(mbtoucs(&ucs, CHAR(pch), MB_CUR_MAX) > 0) res = ucs;
+	else error(_("invalid multibyte char in pch=\"c\""));
+	if (res > 127) res = -res;
+    } else /* single-byte locale */
+	res = (unsigned char) CHAR(pch)[0];
+#else
+    res = (unsigned int) translateChar(pch)[0];
+#endif
+    return res;
+}
+
+
 /* dflt used to be used for < 0 values in R < 2.7.0, 
    now just used for NULL */
 static SEXP FixupPch(SEXP pch, int dflt)
@@ -216,38 +247,8 @@ static SEXP FixupPch(SEXP pch, int dflt)
     }
     else if (isString(pch)) {
 	for (i = 0; i < n; i++) {
-	    if(STRING_ELT(pch, i) == NA_STRING ||
-	       CHAR(STRING_ELT(pch, i))[0] == '\0') { /* pch = "" */
-		INTEGER(ans)[i] = NA_INTEGER;
-	    } else {
-		/* FIXME:  what about symbol font? */
-		/* New in 2.7.0: negative values indicate Unicode points. */
-#ifdef SUPPORT_MBCS
-		SEXP this = STRING_ELT(pch, i);
-		INTEGER(ans)[i] = NA_INTEGER;
-		if (IS_LATIN1(this)) 
-		    INTEGER(ans)[i] = -(unsigned char) CHAR(this)[0];
-		else if (IS_UTF8(this)) {
-		    wchar_t wc;
-		    if(utf8toucs(&wc, CHAR(this)) > 0)
-			INTEGER(ans)[i] = -wc;
-		    else
-			error(_("invalid multibyte char in pch=\"c\""));
-		} else if(mbcslocale) {
-		    unsigned int ucs;
-		    if(mbtoucs(&ucs, CHAR(this), MB_CUR_MAX) > 0)
-			INTEGER(ans)[i] = -ucs;
-		    else
-			error(_("invalid multibyte char in pch=\"c\""));
-		} else { /* single-byte locale */
-		    INTEGER(ans)[i] = 
-			(unsigned char) CHAR(STRING_ELT(pch, i))[0];
-		}
-#else
-		INTEGER(ans)[i] = 
-		    (unsigned int) translateChar(STRING_ELT(pch, i))[0];
-#endif
-	    }
+	    /* New in 2.7.0: negative values indicate Unicode points. */
+	    INTEGER(ans)[i] = Rf_string_to_pch(STRING_ELT(pch, i));
 	}
     }
     else if (isLogical(pch)) {/* NA, but not TRUE/FALSE */

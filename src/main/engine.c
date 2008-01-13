@@ -599,7 +599,7 @@ SEXP LJOINget(R_GE_linejoin ljoin)
 
 unsigned int R_GE_str2col(const char *s) {
     /*
-     * Call the one in graphics.c 
+     * Call the one in graphics.c
      * Ideally, move colour stuff from graphics.c to here
      * and have the traditional graphics code call this.
      */
@@ -1461,7 +1461,7 @@ static void clipText(double x, double y, const char *str, int enc,
     int result = clipTextCode(x, y, str, enc, rot, hadj, gc,
 			      toDevice, dd);
     void (*textfn)();
-    textfn = dd->dev->hasTextUTF8 && enc == CE_UTF8 ? 
+    textfn = dd->dev->hasTextUTF8 && enc == CE_UTF8 ?
 	dd->dev->textUTF8 : dd->dev->text;
 
     switch (result) {
@@ -1635,7 +1635,7 @@ void GEText(double x, double y, const char * const str, int enc,
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
 	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8) enc2 = CE_UTF8;
-	    
+
 	    /* We work in GE_INCHES */
 	    x = fromDeviceX(x, GE_INCHES, dd);
 	    y = fromDeviceY(y, GE_INCHES, dd);
@@ -1798,7 +1798,7 @@ void GEText(double x, double y, const char * const str, int enc,
 		     */
 		    xleft = toDeviceX(xleft, GE_INCHES, dd);
 		    ybottom = toDeviceY(ybottom, GE_INCHES, dd);
-		    clipText(xleft, ybottom, str, enc2, rot, hadj, gc, 
+		    clipText(xleft, ybottom, str, enc2, rot, hadj, gc,
 			     dd->dev->canClip, dd);
 		    sb = sbuf;
 		    i++;
@@ -1823,7 +1823,7 @@ void GEText(double x, double y, const char * const str, int enc,
  * Return the vertices of the line that gets drawn.
  */
 SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
-	       Rboolean repEnds, 
+	       Rboolean repEnds,
 	       Rboolean draw, /* May be called just to get points */
 	       R_GE_gcontext *gc, GEDevDesc *dd)
 {
@@ -1832,7 +1832,7 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
      * Draw polygon or polyline from points
      */
     SEXP result = R_NilValue;
-    /* 
+    /*
      * Save (and reset below) the heap pointer to clean up
      * after any R_alloc's done by functions I call.
      */
@@ -1860,7 +1860,7 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
 	SET_VECTOR_ELT(result, 0, xpts);
 	SET_VECTOR_ELT(result, 1, ypts);
 	UNPROTECT(3);
-    } 
+    }
     vmaxset(vmaxsave);
     return result;
 }
@@ -1921,7 +1921,7 @@ void GESymbol(double x, double y, int pch, double size,
 	res = ucstoutf8(str, -pch);
 	if(res == -1) error("invalid multibyte string");
 	str[res] = '\0';
-	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);	
+	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);
     }
 #endif
     else if(' ' <= pch && pch <= (mbcslocale ? 127 : 255)) {
@@ -1933,15 +1933,15 @@ void GESymbol(double x, double y, int pch, double size,
 	     */
 	    gc->fill = gc->col;
 	    gc->col = R_TRANWHITE;
-	    /* 
+	    /*
 	       The idea here is to use a 0.01" square, but to be of
-	       at least one device unit in each direction, 
+	       at least one device unit in each direction,
 	       assuming that corresponds to pixels. That may be odd if
-	       pixels are not square, but only on low resolution 
+	       pixels are not square, but only on low resolution
 	       devices where we can do nothing better.
 
 	       For this option only, size is cex (see engine.c).
-	       
+
 	       Prior to 2.1.0 the offsets were always 0.5.
 	    */
 	    xc = size * fabs(toDeviceWidth(0.005, GE_INCHES, dd));
@@ -2345,8 +2345,9 @@ double GEStrWidth(const char *str, int enc,
 	    double wdash;
 	    int enc2;
 
-	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : 
-		(dd->dev->hasTextUTF8 ? CE_UTF8 : CE_NATIVE);
+	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
+	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8) enc2 = CE_UTF8;
+
 	    sb = sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
 	    for(s = str; ; s++) {
 		if (*s == '\n' || *s == '\0') {
@@ -2749,7 +2750,7 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     if (isNull(parentenv)) {
 	error(_("use of NULL environment is defunct"));
 	parentenv = R_BaseEnv;
-    } else        
+    } else
     if (!isEnvironment(parentenv))
 	error(_("'env' argument must be an environment"));
     /*
