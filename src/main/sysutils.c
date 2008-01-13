@@ -792,7 +792,7 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
     
     if(s[0] == 0) {*wc = 0; return 1;}
     
-    if((void *)(-1) == (cd = Riconv_open("", UNICODE))) return (size_t)(-1);
+    if((void *)(-1) == (cd = Riconv_open(UNICODE, ""))) return (size_t)(-1);
     status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
 
     if (status == (size_t) -1) return status;
