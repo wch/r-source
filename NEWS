@@ -43,8 +43,6 @@ NEW FEATURES
 
     o	New higher-order function Negate().
 
-    o	PCRE has been updated to 7.5.
-
     o	In addition to warning when 'pkgs' is not found,
 	install.packages() now reports if it finds a valid package
 	with only a case mismatch in the name.
@@ -457,6 +455,8 @@ BUG FIXES
     o	fisher.test(simulate.p.value = TRUE) gave incorrect answers
 	in some extremely degenerate problems.  (PR#10558)
 
+    o	src/extra/pcre has been updated to PCRE 7.5 (bugfix release).
+
 
 
 		CHANGES IN R VERSION 2.6.1
@@ -551,7 +551,7 @@ BUG FIXES
     o	tclServiceMode() (package tcltk) now works under Unix-alikes.
 	(Although documented, it used only to work under Windows.)
 
-    o	As Mac OS X 10.5.0 comes with incompatible /bin/sh shell, we
+    o	As Mac OS X 10.5.x comes with incompatible /bin/sh shell, we
 	force SHELL=/bin/bash (which is ok) in that case. [Only for
 	2.6.x: another solution is used in 2.7.0.]
 
@@ -573,7 +573,7 @@ BUG FIXES
 	default 'order.max' was >= length(x) which is non-sensical.
 
     o	Keyboard events in getGraphicsEvent() could cause stack
-	imbalance errors (PR#10453)
+	imbalance errors. (PR#10453)
 
 
 
