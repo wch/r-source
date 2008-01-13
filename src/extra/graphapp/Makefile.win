@@ -41,7 +41,7 @@ Rgraphapp.dll: $(OBJECTS) dllversion.o Rgraphapp.def
 libR.dll.a: R.def
 
 clean:
-	$(RM) *.o graphapp.def *~ \#*\# *.d Makedeps
+	$(RM) *.o Rgraphapp.def *~ \#*\# *.d Makedeps
 
 distclean: clean
 	$(RM) *.a  *.dll
