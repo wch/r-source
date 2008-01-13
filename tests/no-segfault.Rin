@@ -25,7 +25,8 @@ edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
 ## warning: trace will load methods.
 ## warning: rm and remove zap c0, l0, m0, df0
 ## warning: parent.env(NULL) <- NULL creates a loop
-misc.int <- c("browser", "bug.report", "checkCRAN",
+## warning: browseVignettes lanuches many browser processes.
+misc.int <- c("browser", "browseVignettes", "bug.report", "checkCRAN",
               "menu", "repeat", "readLines",
               "package.skeleton", "trace", "recover", "rm", "remove",
               "parent.env<-")
