@@ -3,14 +3,15 @@ make.
 
 SUPPORT_UCP is only used for UTF-8 locales, so only built on Unix-alikes.
 
-diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
---- pcre-7.2/pcre_internal.h    2007-06-12 14:39:55.000000000 +0100
-+++ ../extra/pcre/pcre_internal.h       2007-07-01 12:22:07.000000000 +0100
-@@ -69,7 +69,18 @@
- 
- /* Get the definitions provided by running "configure" */
- 
--#include "config.h"
+diff -u /home/ripley/src/pcre-7.4/pcre_internal.h ./pcre_internal.h
+--- pcre_internal.h   2007-09-13 10:22:27.000000000 +0100
++++ ./pcre_internal.h   2007-10-03 14:48:02.000000000 +0100
+@@ -67,6 +67,24 @@
+ #endif
+
+
++/* Get the definitions provided by running "configure" */
++
 +#include <config.h>
 +#define HAVE_MEMMOVE 1
 +#ifndef NEWLINE
@@ -26,6 +27,8 @@ diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
 +#define SUPPORT_UCP
 +#endif
 +#endif
- 
++
  /* Standard C headers plus the external interface definition. The only time
  setjmp and stdarg are used is when NO_RECURSE is set. */
+
+
