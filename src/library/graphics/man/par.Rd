@@ -195,10 +195,10 @@ par(\dots, no.readonly = FALSE)
       drawn.  As this applies to the device, it also affects output by
       packages \pkg{grid} and \pkg{lattice}.  It can be set even on
       non-screen devices.}
-    \item{\code{bg}}{The color to be used for the background of plots.
-      When called from \code{par()} it also sets \code{new=FALSE}.
-      See section \sQuote{Color Specification}.
-      Note that some graphics functions such as
+    \item{\code{bg}}{The color to be used for the background of the
+      device region.  When called from \code{par()} it also sets
+      \code{new=FALSE}. See section \sQuote{Color Specification} for
+      suitable values. Note that some graphics functions such as
       \code{\link{plot.default}} and \code{\link{points}} have an
       \emph{argument} of this name with a different meaning.}
     \item{\code{bty}}{A character string which determined the type of
