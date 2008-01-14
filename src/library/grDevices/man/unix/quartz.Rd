@@ -5,6 +5,8 @@
 
 \name{quartz}
 \alias{quartz}
+\alias{quartz.options}
+
 \title{MacOS X Quartz device}
 \description{
   \code{quartz} starts a graphics device driver for the Mac OS X System.
@@ -12,30 +14,39 @@
   being the default.
 }
 \usage{
-quartz(title = "Quartz \%d", width = 5, height = 5, pointsize = 12,
-       family = "Helvetica", fontsmooth = TRUE, antialias = TRUE,
-       type = getOption("quartz.type"),
-       file = NULL, bg = "transparent", dpi = getOption("quartz.dpi"))
+quartz(title, width, height, pointsize, family, fontsmooth, antialias,
+       type, file = NULL, bg, dpi)
+
+quartz.options(\dots, reset = FALSE)
 }
 \arguments{
-  \item{title}{title for the Quartz window (applies to on-screen output only).}
-  \item{width}{the width of the plotting area in inches.}
-  \item{height}{the height of the plotting area in inches.}
-  \item{pointsize}{the default pointsize to be used.}
-  \item{family}{this is the family name of the Postscript font
-    that will be used by the device.}
-  \item{fontsmooth}{logical specifying if fonts should be smoothed.}
-  \item{antialias}{whether to use antialiasing.}
+  \item{title}{title for the Quartz window (applies to on-screen output
+    only). Default \code{"Quartz \%d"}.}
+  \item{width}{the width of the plotting area in inches.  Default \code{7}.}
+  \item{height}{the height of the plotting area in inches.  Default \code{7}.}
+  \item{pointsize}{the default pointsize to be used.  Default \code{12}.}
+  \item{family}{this is the family name of the font
+    that will be used by the device.  Default \code{"Helvetica"}.}
+  \item{fontsmooth}{logical specifying if fonts should be
+    smoothed. Default \code{TRUE}.}
+  \item{antialias}{whether to use antialiasing. Default \code{TRUE}.}
   \item{type}{the type of output to use.  See \sQuote{Details} for
     more information.}
   \item{file}{an optional target for the graphics device.  See
     \sQuote{Details} for more information.}
-  \item{bg}{background color to use for the device.}
-  \item{dpi}{resolution of the output. For on-screen display \code{NULL}
-    defaults to the resolution of the main screen, 72 dpi otherwise.  See
-    \sQuote{Details}.}
+  \item{bg}{background color to use for the device.  Default
+    \code{"transparent"}.}
+  \item{dpi}{resolution of the output.  The default (\code{NA_real_})
+    for an on-screen display defaults to the resolution of
+    the main screen, adn to 72 dpi otherwise.  See \sQuote{Details}.}
+  \item{\dots}{Any of the arguments to \code{quartz} except \code{file}.}
+  \item{reset}{logical: should the defaults be reset to their defaults?}
 }
 \details{
+  The defaults for all but one of the arguments of \code{quartz} are set
+  by \code{quartz.options}: the \sQuote{Arguments} section gives the
+  \sQuote{factory-fresh} defaults.
+
   The Quartz graphics device supports a variety of output
   types.  On-screen output types are \code{"native"} (picks the best
   possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and higher)
@@ -44,30 +55,10 @@ quartz(title = "Quartz \%d", width = 5, height = 5, pointsize = 12,
   following bitmap formats may be supported: \code{"png"},
   \code{"jpeg"}, \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe
   Photoshop), \code{"bmp"} (Windows bitmap), \code{"sgi"} and
-  \code{"pict"}. The availability of some formats is OS-dependent. In
-  addition, special types of the form \code{"bitmap:<uti>"} can be
-  used where \code{"<uti>"} specifies an Apple Core Graphics type.
-
-  \emph{Device resolution}. The Quartz device can be used at any output
-  resolution. The output resolution is specified by the \code{dpi}
-  parameter. It can be either a numeric vector specifying \code{x} and
-  \code{y} resolution in dots per inch (recycled as necessary) or
-  \code{NULL} requesting the native resolution of the output (e.g. for
-  screen output the resolution of the main screen is computed,
-  otherwise a default of 72dpi is assumed). The Quartz device uses its
-  own scaling in order to guarantee that output at different
-  resoultions will be exactly identical when scaled to a common
-  resolution.  This means that a high-resolution off-screen output will
-  look exactly the same when scaled down as the display output, no
-  unpleasant surprises.  It also handles devices with non-square pixels
-  properly (i.e. a circle should always look like a circle and not an
-  ellipse, even on 16:9 displays with 4:3 pixel layout).
-
-  \emph{Important note:} previous Quartz graphics devices were ignoring
-  the screen or output resolution by silenty setting it to 72 dpi.  In
-  order to replicate the behavior of older Quartz devices on-screen,
-  set \code{dpi=72} (for permanent solution set
-  \code{options(quartz.dpi=72)}.
+  \code{"pict"}.  The availability of some formats is
+  OS-version-dependent.  To reproduce the default of older Quartz
+  devices on-screen, set \code{dpi = 72} (for a permanent solution set
+  \code{quartz.options(dpi = 72)}.
 
   The \code{file} argument is used for off-screen drawing. The actual
   file is only created when the device is closed (e.g. using

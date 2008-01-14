@@ -16,11 +16,51 @@
 
 .Quartzenv <- new.env()
 
-quartz <- function(title="Quartz %d", width=5, height=5, pointsize=12, family="Helvetica",
-                   fontsmooth=TRUE, antialias=TRUE,  type=getOption('quartz.type'), file=NULL,
-                   bg="transparent", dpi=getOption('quartz.dpi')) {
-    .External(CQuartz, type, file, width, height, pointsize, family,
-              antialias, fontsmooth, title, bg, dpi)
+assign(".quartz.Options",
+       list(title = "Quartz %d",
+            width = 7, height = 7, pointsize=12,
+            family = "Helvetica",
+            fontsmooth = TRUE, antialias = TRUE,
+            type = "native", bg = "transparent", dpi = NA_real_),
+       envir = .Quartzenv)
+
+assign(".quartz.Options.default",
+       get(".quartz.Options", envir = .Quartzenv),
+       envir = .Quartzenv)
+
+quartz.options <- function(..., reset = FALSE)
+{
+    old <- get(".quartz.Options", envir = .Quartzenv)
+    if(reset) {
+        assign(".quartz.Options",
+               get(".quartz.Options.default", envir = .Quartzenv),
+               envir = .env)
+    }
+    l... <- length(new <- list(...))
+    check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv,
+                  assign.opt = l... > 0)
+    if(reset || l... > 0) invisible(old) else old
+}
+
+quartz <- function(title, width, height, pointsize, family,
+                   fontsmooth, antialias,
+                   type, file = NULL, bg, dpi)
+{
+    new <- list()
+    if(!missing(title)) new$title <- title
+    if(!missing(width)) new$width <- width
+    if(!missing(height)) new$height <- height
+    if(!missing(pointsize)) new$pointsize <- pointsize
+    if(!missing(family)) new$family <- family
+    if(!missing(fontsmooth)) new$fontsmooth <- fontsmooth
+    if(!missing(antialias)) new$antialias <- antialias
+    if(!missing(bg)) new$bg <- bg
+    if(!missing(type)) new$type <- type
+    if(!missing(dpi)) new$dpi <- dpi
+    d <- check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv)
+    .External(CQuartz, d$type, file, d$width, d$height, d$pointsize, d$family,
+              d$antialias, d$fontsmooth, d$title, d$bg,
+              if(is.na(d$dpi)) NULL else d$dpi)
     invisible()
 }
 
