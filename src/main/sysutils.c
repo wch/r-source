@@ -795,7 +795,19 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
     if((void *)(-1) == (cd = Riconv_open(UNICODE, ""))) return (size_t)(-1);
     status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
 
-    if (status == (size_t) -1) return status;
+    if (status == (size_t) -1) {
+        switch(errno){
+        case EINVAL:
+            return (size_t) -2;
+        case EILSEQ:
+            return (size_t) -1;
+        case E2BIG:
+            break;
+        default:
+            errno = EILSEQ;
+            return (size_t) -1;
+        }
+    }
     *wc = wcs[0];
     return (size_t) 1;
 }
