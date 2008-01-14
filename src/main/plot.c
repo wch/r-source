@@ -192,6 +192,7 @@ static SEXP getInlinePar(SEXP s, char *name)
 
 /* This is also used in grid */
 
+/* FIXME: should we warn on more than one character here? */
 int Rf_string_to_pch(SEXP pch)
 {
     int res = NA_INTEGER;
