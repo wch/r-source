@@ -1099,7 +1099,7 @@ listbox newdroplist(const char *list[], rect r, scrollfn fn)
 		r.height += h;
 
 	obj = newchildwin("combobox", NULL,
-			  CBS_DROPDOWNLIST |
+			  CBS_DROPDOWNLIST | CBS_AUTOHSCROLL |
 			  //CBS_DISABLENOSCROLL |
 			  WS_BORDER |
 			  WS_VSCROLL | WS_HSCROLL,
@@ -1126,7 +1126,7 @@ listbox newdropfield(const char *list[], rect r, scrollfn fn)
 		r.height += h;
 
 	obj = newchildwin("combobox", NULL,
-			  CBS_DROPDOWN |
+			  CBS_DROPDOWN | CBS_AUTOHSCROLL |
 			  // CBS_DISABLENOSCROLL |
 			  WS_BORDER |
 			  WS_VSCROLL | WS_HSCROLL,
