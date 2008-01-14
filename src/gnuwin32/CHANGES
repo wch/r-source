@@ -189,6 +189,10 @@ BUG FIXES
     o	The graphics window placement parameters on the GUI preferences
     	dialog were being ignored.
 
+    o	The text field in a drop-down list (as used in GUI preferences
+	for fonts) will now scroll horizontally when a user enters
+	text that exceeds the display width.
+
 
 
 		CHANGES IN R VERSION 2.6.1
