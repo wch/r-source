@@ -6,6 +6,7 @@
 \name{points}
 \alias{points}
 \alias{points.default}
+\alias{pch}
 \title{Add Points to a Plot}
 \description{
   \code{points} is a generic function to draw a sequence of points at
