@@ -48,10 +48,11 @@ TIME ZONES
 	'GMT Daylight Time' for 'British Summer Time' used by
 	Windows).
 
-	An attempt is made to identify the system timezone from the
-	Windows' Registry.  If this does not work or is incorrect, set
-	the 'TZ' environment variable appropriately: a list of known
-	timezones is given in R_HOME/share/zoneinfo/zones.tab.
+	An attempt is made (once per session) to identify the current
+	timezone from the Windows' Registry.  If this does not work or
+	is incorrect, set the 'TZ' environment variable appropriately:
+	a list of known timezones is given in
+	R_HOME/share/zoneinfo/zones.tab.
 
 	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
