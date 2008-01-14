@@ -51,24 +51,24 @@ X11.options <- function(..., reset = FALSE)
 X11 <- function(display = "", width, height, pointsize, gamma,
                 bg, canvas, fonts, xpos, ypos, title)
 {
-  if(display == "" && .Platform$GUI == "AQUA" &&
-     is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
+    if(display == "" && .Platform$GUI == "AQUA" &&
+       is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
 
-  new <- list()
-  if(!missing(display)) new$display <- display
-  if(!missing(width)) new$width <- width
-  if(!missing(height)) new$height <- height
-  if(!missing(gamma)) new$gamma <- gamma
-  if(!missing(pointsize)) new$pointsize <- pointsize
-  if(!missing(bg)) new$bg <- bg
-  if(!missing(canvas)) new$canvas <- canvas
-  if(!missing(xpos)) new$xpos <- xpos
-  if(!missing(ypos)) new$ypos <- ypos
-  if(!missing(title)) new$title <- title
-  d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
-  .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
-                d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                NA_integer_, d$xpos, d$ypos, d$title))
+    new <- list()
+    if(!missing(display)) new$display <- display
+    if(!missing(width)) new$width <- width
+    if(!missing(height)) new$height <- height
+    if(!missing(gamma)) new$gamma <- gamma
+    if(!missing(pointsize)) new$pointsize <- pointsize
+    if(!missing(bg)) new$bg <- bg
+    if(!missing(canvas)) new$canvas <- canvas
+    if(!missing(xpos)) new$xpos <- xpos
+    if(!missing(ypos)) new$ypos <- ypos
+    if(!missing(title)) new$title <- title
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
+                  d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
+                  NA_integer_, d$xpos, d$ypos, d$title))
 }
 
 x11 <- X11
@@ -125,39 +125,39 @@ X11FontError <- function(errDesc)
 
 # Check that the font has the correct structure and information
 # Already checked that it had a name
-checkX11Font <- function(font) {
-  if (!is.character(font))
-    X11FontError("must be a string")
-  # Check it has the right format
-  if (length(grep("(-[^-]+){14}", font)) > 0) {
-    # Force the %s and %d substitution formats into the right spots
-    font <- sub("((-[^-]+){2})(-[^-]+){2}((-[^-]+){2})(-[^-]+)((-[^-]+){7})",
-                "\\1-%s-%s\\4-%d\\7", font)
-  } else {
-    X11FontError("incorrect format")
-  }
-  font
+checkX11Font <- function(font)
+{
+    if (!is.character(font))
+        X11FontError("must be a string")
+    ## Check it has the right format
+    if (length(grep("(-[^-]+){14}", font)) > 0) {
+        ## Force the %s and %d substitution formats into the right spots
+        font <- sub("((-[^-]+){2})(-[^-]+){2}((-[^-]+){2})(-[^-]+)((-[^-]+){7})",
+                    "\\1-%s-%s\\4-%d\\7", font)
+    } else {
+        X11FontError("incorrect format")
+    }
+    font
 }
 
-setX11Fonts <- function(fonts, fontNames) {
-  fonts <- lapply(fonts, checkX11Font)
-  fontDB <- get(".X11.Fonts", envir=.X11env)
-  existingFonts <- fontNames %in% names(fontDB)
-  if (sum(existingFonts) > 0)
-    fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
-  if (sum(existingFonts) < length(fontNames))
-    fontDB <- c(fontDB, fonts[!existingFonts])
-  assign(".X11.Fonts", fontDB, envir=.X11env)
+setX11Fonts <- function(fonts, fontNames)
+{
+    fonts <- lapply(fonts, checkX11Font)
+    fontDB <- get(".X11.Fonts", envir=.X11env)
+    existingFonts <- fontNames %in% names(fontDB)
+    if (sum(existingFonts) > 0)
+        fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
+    if (sum(existingFonts) < length(fontNames))
+        fontDB <- c(fontDB, fonts[!existingFonts])
+    assign(".X11.Fonts", fontDB, envir=.X11env)
 }
 
-printFont <- function(font) {
-  paste(font, "\n", sep="")
-}
+printFont <- function(font) paste(font, "\n", sep="")
 
-printFonts <- function(fonts) {
-  cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
-            sep="", collapse=""))
-}
+
+printFonts <- function(fonts)
+    cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
+              sep="", collapse=""))
 
 # If no arguments spec'ed, return entire font database
 # If no named arguments spec'ed, all args should be font names
@@ -165,32 +165,31 @@ printFonts <- function(fonts) {
 # Else, must specify new fonts to enter into database (all
 # of which must be valid X11 font descriptions and
 # all of which must be named args)
-X11Fonts <- function(...) {
-  ndots <- length(fonts <- list(...))
-  if (ndots == 0)
-    get(".X11.Fonts", envir=.X11env)
-  else {
-    fontNames <- names(fonts)
-    nnames <- length(fontNames)
-    if (nnames == 0) {
-      if (!all(sapply(fonts, is.character)))
-          stop(gettextf("invalid arguments in '%s' (must be font names)",
-                        "X11Fonts"), domain = NA)
-      else
-        get(".X11.Fonts", envir=.X11env)[unlist(fonts)]
-    } else {
-      if (ndots != nnames)
-          stop(gettextf("invalid arguments in '%s' (need named args)",
-                        "X11Fonts"), domain = NA)
-      setX11Fonts(fonts, fontNames)
+X11Fonts <- function(...)
+{
+    ndots <- length(fonts <- list(...))
+    if (ndots == 0)
+        get(".X11.Fonts", envir=.X11env)
+    else {
+        fontNames <- names(fonts)
+        nnames <- length(fontNames)
+        if (nnames == 0) {
+            if (!all(sapply(fonts, is.character)))
+                stop(gettextf("invalid arguments in '%s' (must be font names)",
+                              "X11Fonts"), domain = NA)
+            else
+                get(".X11.Fonts", envir=.X11env)[unlist(fonts)]
+        } else {
+            if (ndots != nnames)
+                stop(gettextf("invalid arguments in '%s' (need named args)",
+                              "X11Fonts"), domain = NA)
+            setX11Fonts(fonts, fontNames)
+        }
     }
-  }
 }
 
 # Create a valid X11 font description
-X11Font <- function(font) {
-  checkX11Font(font)
-}
+X11Font <- function(font) checkX11Font(font)
 
 X11Fonts(# Default Serif font is Times
          serif=X11Font("-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
