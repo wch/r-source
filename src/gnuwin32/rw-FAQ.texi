@@ -136,10 +136,11 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-We only support Windows 2000 or later.  There is no specific version for
-x64 Windows, but the standard 32-bit version works well.  We only test on
-versions of Windows currently supported by Microsoft, mainly on XP,
-Vista x64 and Windows Server 2003.
+Versions of R as from 2.7.0 will only run on Windows 2000 or later.  (R
+2.6.1 was the last version for Windows 95. 98, ME and NT4.)  There is no
+specific version for x64 Windows, but the standard 32-bit version works
+well enough.  We only test on versions of Windows currently supported by
+Microsoft, mainly on XP, Vista x64 and Windows Server 2003.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
