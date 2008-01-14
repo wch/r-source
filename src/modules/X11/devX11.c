@@ -1562,6 +1562,7 @@ static void newX11_MetricInfo(int c,
 
 	wc[0] = (unsigned int) c;
 
+	/* FIXME should be ucstomb(buf, wc) */
 	wcsrtombs(buf, (const wchar_t **)&wcs, sizeof(wc), NULL);
 #ifdef HAVE_XUTF8TEXTEXTENTS
 	if(utf8locale)

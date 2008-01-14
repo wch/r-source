@@ -840,6 +840,9 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	return;
     }
 
+    if (c < 0)
+	error(_("invalid use of %d < 0 in PostScriptMetricInfo"), c);
+
 #ifdef SUPPORT_MBCS
     /* We don't need the restriction to 65536 here any more as we could
        convert from  UCS4ENC, but there are few language chars above 65536. */
