@@ -21,7 +21,7 @@
 
 /*
   From http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html
-  Added some entries from the XP Registry.
+  Added some entries from the XP Registry (and checked on Vista).
  */
 const static struct {
     const char * const reg;
@@ -301,25 +301,42 @@ const static struct {
 extern void Rf_warning(const char *, ...);
 
 static char basekey[] = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Time Zones\\";
+static char tzikey[] = "SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation";
+
 static const char *reg2Olson(const char *s)
 {
     int i;
+    LONG rc;
+    HKEY hkey;
+    DWORD type, size;
+    unsigned char regname[1000]; /* 64 was not enough on Vista */
+
 
     /* Try for English names first */
     for (i = 0; TZtable[i].reg; i++)
 	if (!strcmp(s, TZtable[i].reg)) return TZtable[i].Olson;
 
+    /* On Vista, the English name of the current timezone is in the registry */
+    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, tzikey, 0, KEY_QUERY_VALUE, &hkey)
+       == ERROR_SUCCESS) {
+	size = 1000;
+	rc = RegQueryValueEx(hkey, "TimeZoneKeyName", NULL, &type, 
+			     regname, &size);
+	RegCloseKey(hkey);
+	if(rc == ERROR_SUCCESS) {
+	    for (i = 0; TZtable[i].reg; i++)
+		if (!strcmp((char *) regname, TZtable[i].reg))
+		    return TZtable[i].Olson;
+	}
+    }
+
     {
-	LONG rc;
-	HKEY hkey;
-	DWORD type, size;
-	
 	char keyname[100];
-	unsigned char regname[64];
-	/* That failed, so we are not on English Windows, probably.
-	   However, the registry time zone key names are in English and a
-	   subset of the above list (and need to be for use to identify an
-	   Olson name). So try them all for a match to Standard Name.
+	/* That failed, so we are not on English Windows, nor on
+	   Vista, probably.  However, the registry time zone key names
+	   are in English and a subset of the above list (and need to
+	   be for use to identify an Olson name).  So try them all for
+	   a match to StandardName.
 	*/
 	for (i = 0; TZtable[i].reg; i++) {
 	    /* Retrieve
@@ -330,7 +347,7 @@ static const char *reg2Olson(const char *s)
 	    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
 			      KEY_QUERY_VALUE, &hkey);
 	    if (rc != ERROR_SUCCESS) continue;
-	    size = 64;
+	    size = 1000;
 	    rc = RegQueryValueEx(hkey, "Std", NULL, &type, regname, &size);
 	    RegCloseKey(hkey);
 	    if (rc != ERROR_SUCCESS) continue;
