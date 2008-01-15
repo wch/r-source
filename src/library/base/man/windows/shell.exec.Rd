@@ -1,6 +1,6 @@
 % File src/library/base/man/windows/shell.exec.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{shell.exec}
@@ -34,7 +34,7 @@ shell.exec(file)
 
 \examples{\dontrun{
 ## the space should not be encoded here
-shell.exec("C:\\Program Files\\BreezeSys\\BreezeBrowser\\Breezebrowser.htm")
+shell.exec("C:\\\\Program Files\\\\BreezeSys\\\\BreezeBrowser\\\\Breezebrowser.htm")
 shell.exec("C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
 shell.exec("file://C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
 }}
