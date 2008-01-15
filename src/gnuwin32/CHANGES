@@ -15,7 +15,8 @@
 WINDOWS VERSIONS
 
     o	Versions of Windows older than 2000 are no longer supported
-	(specifically, 95, 98, ME, NT4).
+	(specifically, 95, 98, ME, NT4).  Windows 2000 is untested,
+	and may not be supported at the release.
 
 
 GUI CHANGES
@@ -66,6 +67,44 @@ characters available to R for Windows users.
     o	Environment variables are read and set in Unicode by
 	Sys.getenv/Sys.setenv.
 
+    o	readClipboard() can read Unicode text (format = 13), and
+	writeClipboard() can write it.
+
+    o	The file functions
+
+	dir.create(),
+	DLL.version(),
+	file.access(),
+	file.copy(),
+	file.create(),
+	file.info(),
+	file.remove(),
+	file.rename(),
+	load(),
+	normalizePath(),
+	path.expand(),
+	save(),
+	shell.exec(),
+	shortPathName(),
+	Sys.chmod()
+
+	have been converted to use Unicode file names.  The following
+	have not (as yet)
+
+	file() connections
+	choose.files(),
+	choose.dir(),
+	dir()/list.files(), (problematic because of 'pattern')
+	file.choose(),
+	file.show(),
+	loadhistory(),
+	loadRconsole(),
+	savehistory(),
+	shell(),
+	Sys.glob(),
+	system(),
+	unlink() (needs glob)
+
 
 TIME ZONES
 
@@ -83,7 +122,9 @@ TIME ZONES
 	is incorrect, set the 'TZ' environment variable appropriately:
 	a list of known timezones is given in
 	R_HOME/share/zoneinfo/zones.tab (some alternative names will
-	also be recognized).
+	also be recognized).  (Thanks to Uwe Ligges for testing
+	various versions on German versions of Windows: time zone
+	names are stored in the language of the Windows install.)
 
 	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be

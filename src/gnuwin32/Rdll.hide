@@ -42,6 +42,7 @@
  DefaultPalette
  DialogSelectFile
  EhiWakeUp
+ ENC_KNOWN
  EncodeReal2
  GRecording
  GetCurrentWinPos
@@ -324,6 +325,7 @@
  Rf_labelformat
  Rf_lfastchoose
  Rf_lgammacor
+ Rf_lgammafn_sign
  Rf_lookupCachedSymbol
  Rf_makeSubscript
  Rf_markKnown
@@ -333,6 +335,7 @@
  Rf_matchArgs
  Rf_matchPar
  Rf_mbtoucs
+ Rf_mkCharLen
  Rf_mkCLOSXP
  Rf_mkPROMISE
  Rf_mkSYMSXP
@@ -344,6 +347,7 @@
  Rf_pbeta_raw
  Rf_promiseArgs
  Rf_qchisq_appr
+ Rf_reEnc
  Rf_regcomp
  Rf_regerror
  Rf_regexec
@@ -389,6 +393,7 @@
  Rsockselect
  Rsockwrite
  Rwin_rename
+ Rwin_wrename
  SET_ACTIVE_BINDING_BIT
  SET_LATIN1
  SET_PRIMOFFSET
@@ -479,6 +484,7 @@
  comqr2_
  comqr_
  console_ctrlkeyin
+ console_im
  console_mousedown
  console_mousedrag
  console_mouserep
@@ -679,6 +685,7 @@
  do_fileedit
  do_fileexists
  do_fileinfo
+ do_filepath
  do_fileremove
  do_filerename
  do_fileshow
@@ -1033,6 +1040,7 @@
  editorcleanall
  editorsetfont
  epslon_
+ filenameToWchar
  fontname
  fontsty
  framenames
@@ -1054,6 +1062,7 @@
  get_current_mem
  get_duplicate_counter
  getline
+ getTZinfo
  getusermenuname
  gl_hist_next
  gl_hist_prev
@@ -1225,6 +1234,7 @@
  rpipeOpen
  runerror
  setCURCOL
+ setDLLSearchPath
  setTitle
  setWidthOnResize
  set_completion_available
@@ -1279,6 +1289,7 @@
  wgl_loadhistory
  wgl_savehistory
  winAccess
+ winAccessW
  winNewFrameConfirm
  winaddmenu
  winaddmenuitem
@@ -1286,6 +1297,7 @@
  windelmenuitem
  windelmenus
  wingetmenuitems
+ wtransChar
  xbufaddc
  xbufaddxc
  xbufaddxs

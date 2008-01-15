@@ -29,14 +29,20 @@
 
 #include "win-nls.h"
 
+
 #include <stdio.h>
 #include "Defn.h"
 #include "Fileio.h"
 #include <direct.h>
 #include <time.h>
-#include <windows.h>
 #include "graphapp/ga.h"
+#define _WIN32_WINNT 0x0500 /* for GetLongPathName */
+#include <windows.h>
 #include "rui.h"
+
+size_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n);
+wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
+
 
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -133,6 +139,28 @@ void internal_shellexec(const char * file)
     }
 }
 
+static void internal_shellexecW(const wchar_t * file)
+{
+    const wchar_t *home;
+    uintptr_t ret;
+
+    home = _wgetenv(L"R_HOME");
+    if (home == NULL)
+	error(_("R_HOME not set"));
+    ret = (uintptr_t) ShellExecuteW(NULL, L"open", file, NULL, home, SW_SHOW);
+    if(ret <= 32) { /* an error condition */
+	if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND
+	   || ret == SE_ERR_FNF || ret == SE_ERR_PNF)
+	    error(_("'%s' not found"), file);
+	if(ret == SE_ERR_ASSOCINCOMPLETE || ret == SE_ERR_NOASSOC)
+	    error(_("file association for '%s' not available or invalid"),
+		  file);
+	if(ret == SE_ERR_ACCESSDENIED || ret == SE_ERR_SHARE)
+	    error(_("access to '%s' denied"), file);
+	error(_("problem in displaying '%s'"), file);
+    }
+}
+
 SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP file;
@@ -141,11 +169,9 @@ SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
     file = CAR(args);
     if (!isString(file) || length(file) != 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    internal_shellexec(CHAR(STRING_ELT(file, 0)));
+    internal_shellexecW(filenameToWchar(STRING_ELT(file, 0), FALSE));
     return R_NilValue;
 }
-
-int winAccess(const char *path, int mode);
 
 int check_doc_file(const char * file)
 {
@@ -159,7 +185,7 @@ int check_doc_file(const char * file)
     strcpy(path, home);
     strcat(path, "/");
     strcat(path, file);
-    return winAccess(path, 4) == 0;
+    return access(path, 4) == 0; /* read access */
 }
 
 SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -169,21 +195,21 @@ SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
     int res=YES;
 
     checkArity(op, args);
-    type = CHAR(STRING_ELT(CAR(args), 0));
+    type = translateChar(STRING_ELT(CAR(args), 0));
     message = CADR(args);
     if(!isString(message) || length(message) != 1 ||
-       strlen(CHAR(STRING_ELT(message, 0))) > 255)
+       strlen(translateChar(STRING_ELT(message, 0))) > 255)
 	error(_("invalid '%s' argument"), "message");
     if (strcmp(type, "ok")  == 0) {
-	askok(CHAR(STRING_ELT(message, 0)));
+	askok(translateChar(STRING_ELT(message, 0)));
 	res = 10;
     } else if (strcmp(type, "okcancel")  == 0) {
-	res = askokcancel(CHAR(STRING_ELT(message, 0)));
+	res = askokcancel(translateChar(STRING_ELT(message, 0)));
 	if(res == YES) res = 2;
     } else if (strcmp(type, "yesno")  == 0) {
-	res = askyesno(CHAR(STRING_ELT(message, 0)));
+	res = askyesno(translateChar(STRING_ELT(message, 0)));
     } else if (strcmp(type, "yesnocancel")  == 0) {
-	res = askyesnocancel(CHAR(STRING_ELT(message, 0)));
+	res = askyesnocancel(translateChar(STRING_ELT(message, 0)));
     } else
 	errorcall(call, _("unknown type"));
     return ScalarInteger(res);
@@ -197,12 +223,13 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     message = CAR(args);
     if(!isString(message) || length(message) != 1 ||
-       strlen(CHAR(STRING_ELT(message, 0))) > 255)
+       strlen(translateChar(STRING_ELT(message, 0))) > 255)
 	error(_("invalid '%s' argument"), "message");
     def = CADR(args);
     if(!isString(def) || length(def) != 1)
 	error(_("invalid '%s' argument"), "default");
-    string = askstring(CHAR(STRING_ELT(message, 0)), CHAR(STRING_ELT(def, 0)));
+    string = askstring(translateChar(STRING_ELT(message, 0)),
+		       translateChar(STRING_ELT(def, 0)));
     if (string) return mkString(string);
     else return R_NilValue;
 }
@@ -248,10 +275,10 @@ SEXP do_wingetmenuitems(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(mname) || length(mname) != 1)
 	error(_("invalid '%s' argument"), "menuname");
 
-    items = wingetmenuitems(CHAR(STRING_ELT(mname,0)), errmsg);
+    items = wingetmenuitems(translateChar(STRING_ELT(mname,0)), errmsg);
     if (items->numItems == 0) {
 	sprintf(msgbuf, _("unable to retrieve items for %s (%s)"),
-		CHAR(STRING_ELT(mname,0)), errmsg);
+		translateChar(STRING_ELT(mname,0)), errmsg);
 	freemenuitems(items);
 	errorcall(call, msgbuf);
     }
@@ -286,7 +313,7 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "menuname");
     sitem = CADR(args);
     if (isNull(sitem)) { /* add a menu */
-	res = winaddmenu (CHAR(STRING_ELT(smenu, 0)), errmsg);
+	res = winaddmenu (translateChar(STRING_ELT(smenu, 0)), errmsg);
 	if (res > 0) {
 	    sprintf(msgbuf, _("unable to add menu (%s)"), errmsg);
 	    errorcall(call, msgbuf);
@@ -295,9 +322,9 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
     } else { /* add an item */
 	if(!isString(sitem) || length(sitem) != 1)
 	    error(_("invalid '%s' argument"), "itemname");
-	res = winaddmenuitem (CHAR(STRING_ELT(sitem, 0)),
-			      CHAR(STRING_ELT(smenu, 0)),
-			      CHAR(STRING_ELT(CADDR(args), 0)),
+	res = winaddmenuitem (translateChar(STRING_ELT(sitem, 0)),
+			      translateChar(STRING_ELT(smenu, 0)),
+			      translateChar(STRING_ELT(CADDR(args), 0)),
 			      errmsg);
 	if (res > 0) {
 	    sprintf(msgbuf, _("unable to add menu item (%s)"), errmsg);
@@ -321,14 +348,14 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "menuname");
     sitem = CADR(args);
     if (isNull(sitem)) { /* delete a menu */
-	res = windelmenu (CHAR(STRING_ELT(smenu, 0)), errmsg);
+	res = windelmenu (translateChar(STRING_ELT(smenu, 0)), errmsg);
 	if (res > 0)
 	    errorcall(call, _("menu does not exist"));
     } else { /* delete an item */
 	if(!isString(sitem) || length(sitem) != 1)
 	    error(_("invalid '%s' argument"), "itemname");
-	res = windelmenuitem (CHAR(STRING_ELT(sitem, 0)),
-			      CHAR(STRING_ELT(smenu, 0)), errmsg);
+	res = windelmenuitem (translateChar(STRING_ELT(sitem, 0)),
+			      translateChar(STRING_ELT(smenu, 0)), errmsg);
 	if (res > 0) {
 	    sprintf(msgbuf, _("unable to delete menu item (%s)"), errmsg);
 	    errorcall(call, msgbuf);
@@ -360,10 +387,10 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "file");
     if (CharacterMode == RGui) {
 	R_setupHistory(); /* re-read the history size */
-	wgl_savehistory(CHAR(STRING_ELT(sfile, 0)), R_HistorySize);
+	wgl_savehistory(translateChar(STRING_ELT(sfile, 0)), R_HistorySize);
     } else if (R_Interactive && CharacterMode == RTerm) {
 	R_setupHistory(); /* re-read the history size */
-	gl_savehistory(CHAR(STRING_ELT(sfile, 0)), R_HistorySize);
+	gl_savehistory(translateChar(STRING_ELT(sfile, 0)), R_HistorySize);
     } else
 	errorcall(call, _("'savehistory' can only be used in Rgui and Rterm"));
     return R_NilValue;
@@ -378,9 +405,9 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
     if (CharacterMode == RGui)
-	wgl_loadhistory(CHAR(STRING_ELT(sfile, 0)));
+	wgl_loadhistory(translateChar(STRING_ELT(sfile, 0)));
     else if (R_Interactive && CharacterMode == RTerm)
-	gl_loadhistory(CHAR(STRING_ELT(sfile, 0)));
+	gl_loadhistory(translateChar(STRING_ELT(sfile, 0)));
     else
 	errorcall(call, _("'loadhistory' can only be used in Rgui and Rterm"));
     return R_NilValue;
@@ -397,7 +424,7 @@ SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     	errorcall(call, _("invalid timestamp"));
     if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
 	for (i = 0; i < LENGTH(stamp); i++)
-	    gl_histadd(CHAR(STRING_ELT(stamp, i)));
+	    gl_histadd(translateChar(STRING_ELT(stamp, i)));
     return R_NilValue;
 }
 
@@ -413,7 +440,7 @@ SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
     getActive(&gui);  /* Will get defaults if there's no active console */
-    if (loadRconsole(&gui, (CHAR(STRING_ELT(sfile, 0))))) applyGUI(&gui);
+    if (loadRconsole(&gui, translateChar(STRING_ELT(sfile, 0)))) applyGUI(&gui);
     return R_NilValue;
 }
 
@@ -576,7 +603,7 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP path=R_NilValue, ans;
-    const char *dll;
+    const wchar_t *dll;
     DWORD dwVerInfoSize;
     DWORD dwVerHnd;
 
@@ -584,8 +611,8 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     path = CAR(args);
     if(!isString(path) || LENGTH(path) != 1)
 	errorcall(call, _("invalid '%s' argument"), "path");
-    dll = CHAR(STRING_ELT(path, 0));
-    dwVerInfoSize = GetFileVersionInfoSize(dll, &dwVerHnd);
+    dll = filenameToWchar(STRING_ELT(path, 0), FALSE);
+    dwVerInfoSize = GetFileVersionInfoSizeW(dll, &dwVerHnd);
     PROTECT(ans = allocVector(STRSXP, 2));
     SET_STRING_ELT(ans, 0, mkChar(""));
     SET_STRING_ELT(ans, 1, mkChar(""));
@@ -596,7 +623,7 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UINT  cchVer = 0;
 
 	lpstrVffInfo = (LPSTR) malloc(dwVerInfoSize);
-	if (GetFileVersionInfo(dll, 0L, dwVerInfoSize, lpstrVffInfo))
+	if (GetFileVersionInfoW(dll, 0L, dwVerInfoSize, lpstrVffInfo))
 	{
 
 	    fRet = VerQueryValue(lpstrVffInfo,
@@ -680,7 +707,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = LENGTH(list);
     clist = (const char **) R_alloc(n + 1, sizeof(char *));
     for(i = 0; i < n; i++) {
-	clist[i] = CHAR(STRING_ELT(list, i));
+	clist[i] = translateChar(STRING_ELT(list, i));
 	mw = max(mw, gstrwidth(NULL, SystemFont, clist[i]));
     }
     clist[n] = NULL;
@@ -696,7 +723,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     ymax = min(80+fht*n, h0-100); /* allow for window widgets, toolbar */
     ylist = ymax - 60;
-    wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
+    wselect = newwindow(haveTitle ? translateChar(STRING_ELT(CADDDR(args), 0)):
 			(multiple ? _("Select one or more") : _("Select one")),
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal | Floating);
@@ -708,7 +735,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(preselect) && LENGTH(preselect)) {
 	for(i = 0; i < n; i++)
 	    for(j = 0; j < LENGTH(preselect); j++)
-		if(strcmp(clist[i], CHAR(STRING_ELT(preselect, j))) == 0) {
+		if(strcmp(clist[i], translateChar(STRING_ELT(preselect, j))) == 0) {
 		    setlistitem(f_list, i);
 		    break;
 		}
@@ -744,21 +771,12 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 int Rwin_rename(const char *from, const char *to)
 {
-    int res = 0;
-    OSVERSIONINFO verinfo;
+    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
+}
 
-    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-    GetVersionEx(&verinfo);
-    switch(verinfo.dwPlatformId) {
-    case VER_PLATFORM_WIN32_NT:
-	res = (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
-	break;
-    default:
-	if (!DeleteFile(to) && GetLastError() != ERROR_FILE_NOT_FOUND)
-	    return 1;
-	res = (MoveFile(from, to) == 0);
-    }
-    return res;
+int Rwin_wrename(const wchar_t *from, const wchar_t *to)
+{
+    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
 }
 
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -786,6 +804,7 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans = R_NilValue;
     HGLOBAL hglb;
     const char *pc;
+    const wchar_t *wpc;
     int j, format, raw, size;
 
     checkArity(op, args);
@@ -796,12 +815,20 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     	if(IsClipboardFormatAvailable(format) &&
     	   	(hglb = GetClipboardData(format)) &&
     	   	(pc = (const char *)GlobalLock(hglb))) {
-	    if(!raw) {
-		PROTECT(ans = mkString(pc));
-	    } else {
+	    if(raw) {
 		size = GlobalSize(hglb);
 		PROTECT(ans = allocVector(RAWSXP, size));
 		for (j = 0; j < size; j++) RAW(ans)[j] = *pc++;
+	    } else if (format == CF_UNICODETEXT) {
+		char *text; int n;
+		wpc = (wchar_t *) pc; n = wcslen(wpc);
+		text = alloca(2 * (n+1));  /* UTF-8 is at most 1.5x longer */
+		R_CheckStack();
+		Rf_wcstoutf8(text, wpc, n+1);
+		PROTECT(ans = allocVector(STRSXP, 1));
+		SET_STRING_ELT(ans, 0, mkCharEnc(text, UTF8_MASK));
+	    } else {
+		PROTECT(ans = mkString(pc));
 	    }
 	    GlobalUnlock(hglb);
 	    UNPROTECT(1);
@@ -831,20 +858,35 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(text);
     if(n > 0) {
     	int len = 1;
-    	if(!raw)
-    	    for(i = 0; i < n; i++) len += strlen(CHAR(STRING_ELT(text, i))) + 2;
-    	else len = n;
+    	if(raw) len = n;
+	else if (format == CF_UNICODETEXT) 
+    	    for(i = 0; i < n; i++) 
+		len += 2 * (wcslen(filenameToWchar(STRING_ELT(text, i), 
+						   FALSE)) + 2);
+	else
+    	    for(i = 0; i < n; i++) 
+		len += strlen(translateChar(STRING_ELT(text, i))) + 2;
+
 	if ( (hglb = GlobalAlloc(GHND, len)) &&
 	     (s = (char *)GlobalLock(hglb)) ) {
-	    if(!raw) {
+	    if(raw)
+	    	for(i = 0; i < n; i++) *s++ = RAW(text)[i];
+	    else if (format == CF_UNICODETEXT) {
+		wchar_t *wp, *ws = (wchar_t *) s;
 		for(i = 0; i < n; i++) {
-		    p = CHAR(STRING_ELT(text, i));
+		    wp = filenameToWchar(STRING_ELT(text, i), FALSE);
+		    while(*wp) *ws++ = *wp++;
+		    *ws++ = L'\r'; *ws++ = L'\n';
+		}
+		*ws = L'\0';
+	    } else {
+		for(i = 0; i < n; i++) {
+		    p = translateChar(STRING_ELT(text, i));
 		    while(*p) *s++ = *p++;
 		    *s++ = '\r'; *s++ = '\n';
 		}
 		*s = '\0';
-	    } else
-	    	for(i = 0; i < n; i++) *s++ = RAW(text)[i];
+	    }
 
 	    GlobalUnlock(hglb);
 	    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
@@ -863,90 +905,12 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarLogical(success);
 }
 
-/* We cannot use GetLongPathName (missing on W95/NT4) so write our own
-   based on that in Perl.  NB: may not be MBCS-correct.
- */
-
-#define isSLASH(c) ((c) == '/' || (c) == '\\')
-#define SKIP_SLASHES(s) while (*(s) && isSLASH(*(s))) ++(s);
-#define COPY_NONSLASHES(d,s) while (*(s) && !isSLASH(*(s))) *(d)++ = *(s)++;
-
-static void longpathname(char *path)
-{
-    WIN32_FIND_DATA fdata;
-    HANDLE fhand;
-    char tmpbuf[MAX_PATH+1], *tmpstart = tmpbuf, *start = path, sep;
-    if(!path) return;
-
-    /* drive prefix */
-    if (isalpha(path[0]) && path[1] == ':') {
-        start = path + 2;
-        *tmpstart++ = path[0];
-        *tmpstart++ = ':';
-    }
-    /* UNC prefix */
-    else if (isSLASH(path[0]) && isSLASH(path[1])) {
-        start = path + 2;
-        *tmpstart++ = path[0];
-        *tmpstart++ = path[1];
-        SKIP_SLASHES(start);
-        COPY_NONSLASHES(tmpstart,start);        /* copy machine name */
-        if (*start) {
-            *tmpstart++ = *start++;
-            SKIP_SLASHES(start);
-            COPY_NONSLASHES(tmpstart,start);    /* copy share name */
-        }
-    }
-    *tmpstart = '\0';
-    while (*start) {
-        /* copy initial slash, if any */
-        if (isSLASH(*start)) {
-            *tmpstart++ = *start++;
-            *tmpstart = '\0';
-            SKIP_SLASHES(start);
-        }
-
-        /* FindFirstFile() expands "." and "..", so we need to pass
-         * those through unmolested */
-        if (*start == '.'
-            && (!start[1] || isSLASH(start[1])
-                || (start[1] == '.' && (!start[2] || isSLASH(start[2]))))) {
-            COPY_NONSLASHES(tmpstart,start);    /* copy "." or ".." */
-            *tmpstart = '\0';
-            continue;
-        }
-
-        if (!*start) break;
-
-        /* now we're at a non-slash; walk up to next slash */
-        while (*start && !isSLASH(*start)) ++start;
-
-        /* stop and find full name of component */
-        sep = *start;
-        *start = '\0';
-        fhand = FindFirstFile(path,&fdata);
-        *start = sep;
-        if (fhand != INVALID_HANDLE_VALUE) {
-            size_t len = strlen(fdata.cFileName);
-            if ((size_t)(tmpbuf + sizeof(tmpbuf) - tmpstart) > len) {
-                strcpy(tmpstart, fdata.cFileName);
-                tmpstart += len;
-                FindClose(fhand);
-            } else {
-                FindClose(fhand);
-                return;
-            }
-        } else return;
-    }
-    strcpy(path, tmpbuf);
-}
-
-
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, paths = CAR(args);
+    SEXP ans, paths = CAR(args), el;
     int i, n = LENGTH(paths);
-    char tmp[MAX_PATH], *tmp2;
+    char tmp[MAX_PATH], longpath[MAX_PATH], *tmp2;
+    wchar_t wtmp[MAX_PATH], wlongpath[MAX_PATH], *wtmp2;
 
     checkArity(op, args);
     if(!isString(paths))
@@ -954,9 +918,18 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-	GetFullPathName(CHAR(STRING_ELT(paths, i)), MAX_PATH, tmp, &tmp2);
-	longpathname(tmp);
-	SET_STRING_ELT(ans, i, mkChar(tmp));
+	el = STRING_ELT(paths, i);
+	if(getCharEnc(el) == CE_UTF8) {
+	    GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH, 
+			     wtmp, &wtmp2);
+	    GetLongPathNameW(wtmp, wlongpath, MAX_PATH);
+	    Rf_wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
+	    SET_STRING_ELT(ans, i, mkCharEnc(longpath, UTF8_MASK));
+	} else {
+	    GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2);
+	    GetLongPathName(tmp, longpath, MAX_PATH);
+	    SET_STRING_ELT(ans, i, mkChar(longpath));
+	}
     }
     UNPROTECT(1);
     return ans;
@@ -964,9 +937,10 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, paths = CAR(args);
+    SEXP ans, paths = CAR(args), el;
     int i, n = LENGTH(paths);
     char tmp[MAX_PATH];
+    wchar_t wtmp[MAX_PATH];
 
     checkArity(op, args);
     if(!isString(paths))
@@ -974,11 +948,21 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-	GetShortPathName(CHAR(STRING_ELT(paths, i)), tmp, MAX_PATH);
-	/* documented to return paths using \, which the API call does
-	   not necessarily do */
-	R_fixbackslash(tmp);
-	SET_STRING_ELT(ans, i, mkChar(tmp));
+	el = STRING_ELT(paths, i);
+	if(getCharEnc(el) == CE_UTF8) {
+	    GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
+	    Rf_wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+	    /* documented to return paths using \, which the API call does
+	       not necessarily do */
+	    R_fixbackslash(tmp);
+	    SET_STRING_ELT(ans, i, mkCharEnc(tmp, UTF8_MASK));
+	} else {
+	    GetShortPathName(translateChar(el), tmp, MAX_PATH);
+	    /* documented to return paths using \, which the API call does
+	       not necessarily do */
+	    R_fixbackslash(tmp);
+	    SET_STRING_ELT(ans, i, mkChar(tmp));
+	}
     }
     UNPROTECT(1);
     return ans;
@@ -1000,7 +984,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     filterindex = asInteger(CAD4R(args));
     if(length(def) != 1 )
 	errorcall(call, _("'default' must be a character string"));
-    p = CHAR(STRING_ELT(def, 0));
+    p = translateChar(STRING_ELT(def, 0));
     if(strlen(p) >= MAX_PATH) errorcall(call, _("'default' is overlong"));
     strcpy(path, R_ExpandFileName(p));
     R_fixbackslash(path);
@@ -1017,19 +1001,19 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("'filterindex' must be an integer value"));
     lfilters = 1 + length(filters);
     for (i = 0; i < length(filters); i++)
-	lfilters += strlen(CHAR(STRING_ELT(filters,i)));
+	lfilters += strlen(translateChar(STRING_ELT(filters,i)));
     cfilters = R_alloc(lfilters, sizeof(char));
     temp = cfilters;
     for (i = 0; i < length(filters)/2; i++) {
-	strcpy(temp,CHAR(STRING_ELT(filters,i)));
+	strcpy(temp,translateChar(STRING_ELT(filters,i)));
 	temp += strlen(temp)+1;
-	strcpy(temp,CHAR(STRING_ELT(filters,i+length(filters)/2)));
+	strcpy(temp,translateChar(STRING_ELT(filters,i+length(filters)/2)));
 	temp += strlen(temp)+1;
     }
     *temp = 0;
 
     *list = '\0'; /* no initialization */
-    askfilenames(CHAR(STRING_ELT(caption, 0)), path,
+    askfilenames(translateChar(STRING_ELT(caption, 0)), path,
 		 multi, cfilters, filterindex,
                  list, 65500, NULL);  /* list declared larger to protect against overwrites */
 
@@ -1079,13 +1063,13 @@ SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
     caption = CADR(args);
     if(!isString(def) || length(def) != 1 )
 	errorcall(call, _("'default' must be a character string"));
-    p = CHAR(STRING_ELT(def, 0));
+    p = translateChar(STRING_ELT(def, 0));
     if(strlen(p) >= MAX_PATH) errorcall(call, _("'default' is overlong"));
     strcpy(path, R_ExpandFileName(p));
     R_fixbackslash(path);
     if(!isString(caption) || length(caption) != 1 )
 	errorcall(call, _("'caption' must be a character string"));
-    p = askcdstring(CHAR(STRING_ELT(caption, 0)), path);
+    p = askcdstring(translateChar(STRING_ELT(caption, 0)), path);
 
     PROTECT(ans = allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, p ? mkChar(p) : NA_STRING);
@@ -1167,7 +1151,7 @@ SEXP do_setTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isString(title)  || LENGTH(title) != 1 ||
        STRING_ELT(title, 0) == NA_STRING)
 	errorcall(call, _("'title' must be a character string"));
-    return setTitle(CHAR(STRING_ELT(title, 0)));
+    return setTitle(translateChar(STRING_ELT(title, 0)));
 }
 
 SEXP do_getWindowTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1185,7 +1169,7 @@ SEXP do_setStatusBar(SEXP call, SEXP op, SEXP args, SEXP rho)
        STRING_ELT(text, 0) == NA_STRING)
 	errorcall(call, _("'text' must be a character string"));
     showstatusbar();
-    setstatus(CHAR(STRING_ELT(text, 0)));
+    setstatus(translateChar(STRING_ELT(text, 0)));
     return R_NilValue;
 }
 
@@ -1309,9 +1293,9 @@ Rboolean winNewFrameConfirm(void)
    Coded looking at tcl's tclWinFile.c
 */
 
-int winAccess(const char *path, int mode)
+int winAccessW(const wchar_t *path, int mode)
 {
-    DWORD attr = GetFileAttributes(path);
+    DWORD attr = GetFileAttributesW(path);
 
     if(attr == 0xffffffff) return -1;
     if(mode == F_OK) return 0;
@@ -1319,10 +1303,10 @@ int winAccess(const char *path, int mode)
     if(mode & X_OK)
 	if(!(attr & FILE_ATTRIBUTE_DIRECTORY)) { /* Directory, so OK */
 	    /* Look at extension for executables */
-	    char *p = strrchr(path, '.');
+	    wchar_t *p = wcsrchr(path, '.');
 	    if(p == NULL ||
-	       !((stricmp(p, ".exe") == 0) || (stricmp(p, ".com") == 0) ||
-		 (stricmp(p, ".bat") == 0) || (stricmp(p, ".cmd") == 0)) )
+	       !((wcsicmp(p, L".exe") == 0) || (wcsicmp(p, L".com") == 0) ||
+		 (wcsicmp(p, L".bat") == 0) || (wcsicmp(p, L".cmd") == 0)) )
 		return -1;
 	}
     {
@@ -1339,13 +1323,13 @@ int winAccess(const char *path, int mode)
 	int error;
 
 	/* get size */
-	GetFileSecurity(path,
+	GetFileSecurityW(path,
 			OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
 			| DACL_SECURITY_INFORMATION, 0, 0, &size);
 	error = GetLastError();
 	if (error != ERROR_INSUFFICIENT_BUFFER) return -1;
 	sdPtr = (SECURITY_DESCRIPTOR *) alloca(size);
-	if(!GetFileSecurity(path,
+	if(!GetFileSecurityW(path,
 			    OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
 			    | DACL_SECURITY_INFORMATION, sdPtr, size, &size))
 	    return -1;
@@ -1522,7 +1506,7 @@ static size_t Rwcrtomb(char *s, const wchar_t wc)
     return i + 1;
 }
 
-size_t Rf_wctoutf8(char *s, const wchar_t *wc, size_t n)
+size_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n)
 {
     int m, res=0;
     char *t;
