@@ -1911,6 +1911,16 @@ static Rconnection newtext(const char *description, SEXP text)
     return new;
 }
 
+
+static SEXP mkCharLocal(const char *s)
+{
+    int ienc = 0;
+    if(known_to_be_latin1) ienc = LATIN1_MASK;
+    if(known_to_be_utf8) ienc = UTF8_MASK;
+    if(ienc > 0 && utf8strIsASCII(s)) ienc = 0;
+    return mkCharEnc(s, ienc);
+}
+
 static void outtext_close(Rconnection con)
 {
     Routtextconn this = (Routtextconn)con->private;
@@ -1922,7 +1932,7 @@ static void outtext_close(Rconnection con)
 	R_unLockBinding(this->namesymbol, env);
     if(strlen(this->lastline) > 0) {
 	PROTECT(tmp = lengthgets(this->data, ++this->len));
-	SET_STRING_ELT(tmp, this->len - 1, mkChar(this->lastline));
+	SET_STRING_ELT(tmp, this->len - 1, mkCharLocal(this->lastline));
 	if(this->namesymbol) defineVar(this->namesymbol, tmp, env);
 	SET_NAMED(tmp, 2);
 	this->data = tmp;
@@ -1993,7 +2003,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    SEXP env = VECTOR_ELT(OutTextData, idx);
 	    *q = '\0';
 	    PROTECT(tmp = lengthgets(this->data, ++this->len));
-	    SET_STRING_ELT(tmp, this->len - 1, mkChar(p));
+	    SET_STRING_ELT(tmp, this->len - 1, mkCharLocal(p));
 	    if(this->namesymbol) {
 		if(findVarInFrame3(env, this->namesymbol, FALSE) 
 		   != R_UnboundValue) R_unLockBinding(this->namesymbol, env);

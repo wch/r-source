@@ -41,11 +41,13 @@ textConnectionValue(con)
   \code{\link{isIncomplete}} will indicate if there is an incomplete
   final line.  Closing the connection will output the final line,
   complete or not.  (A line is complete once it has been terminated by
-  end-of-line, represented by \code{"\\n"} in \R.)  The output character
+  end-of-line, represented by \code{"\\n"} in \R.)   The output character
   vector has locked bindings (see \code{\link{lockBinding}}) until
   \code{close} is called on the connection.  The character vector can
   also be retrieved \emph{via} \code{textConnectionValue}, which is the
-  only way to do so if \code{object = NULL}.
+  only way to do so if \code{object = NULL}.  If the current locale is
+  detected as Latin-1 or UTF-8, non-ASCII elements of the character vector
+  will be marked accordingly (see \code{Encoding}).
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the
