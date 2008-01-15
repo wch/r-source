@@ -65,6 +65,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(xpos)) new$xpos <- xpos
     if(!missing(ypos)) new$ypos <- ypos
     if(!missing(title)) new$title <- title
+    if(!checkIntFormat(new$title)) stop("invalid 'title'")
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
@@ -78,6 +79,7 @@ png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px",
                 pointsize = 12, bg = "white", res = NA, ...)
 {
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
@@ -86,6 +88,7 @@ png <- function(filename = "Rplot%03d.png",
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     d <- X11.options(...)
+    checkIntFormat(filename)
     .Internal(X11(paste("png::", filename, sep=""),
                   width, height, pointsize, d$gamma,
                   d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
@@ -97,6 +100,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                  pointsize = 12, quality = 75,
                  bg = "white", res = NA, ...)
 {
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")

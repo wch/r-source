@@ -287,3 +287,14 @@ dev.new <- function()
         else stop(gettextf("device '%s' not found", dev), domain=NA)
     }
 }
+
+### Check for a single valid integer format
+checkIntFormat <- function(s)
+{
+    ## OK if no unescaped %, so first remove those
+    s <- gsub("%%", "", s)
+    if(length(grep("%", s)) == 0) return(TRUE)
+    ## now remove at most one valid(ish) integer format
+    s <- sub("%[#0 +=-]*[0-9]*[.][0-9]*[diouxX]", "", s)
+    length(grep("%", s)) == 0
+}

@@ -21,7 +21,9 @@ quartz.options(\dots, reset = FALSE)
 }
 \arguments{
   \item{title}{title for the Quartz window (applies to on-screen output
-    only). Default \code{"Quartz \%d"}.}
+    only). Default \code{"Quartz \%d"}.  A C-style format for an integer
+    will be substituted by the device number (see the \code{file}
+    argument to \code{\link{postscript}} for further details).}
   \item{width}{the width of the plotting area in inches.  Default \code{7}.}
   \item{height}{the height of the plotting area in inches.  Default \code{7}.}
   \item{pointsize}{the default pointsize to be used.  Default \code{12}.}

@@ -49,8 +49,10 @@ X11.options(\dots, reset = FALSE)
     See also \sQuote{Resources}.}
   \item{title}{character string, up to 100 bytes.  With the default,
     \code{""}, a suitable title is created internally.  A C-style format
-    for an integer will be substituted by the device number.  How
-    non-ASCII titles are handled is implementation-dependent.}
+    for an integer will be substituted by the device number (see the
+    \code{file} argument to \code{\link{postscript}} for further
+    details).  How non-ASCII titles are handled is
+    implementation-dependent.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
     and \code{maxcubesize} (see section \sQuote{Color Rendering}).}

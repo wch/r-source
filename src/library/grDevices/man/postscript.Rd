@@ -30,7 +30,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 #endif
 
     For use with \code{onefile = FALSE} give a \code{printf} format such
-    as \code{"Rplot\%03d.ps"} (the default in that case).
+    as \code{"Rplot\%03d.ps"} (the default in that case).  The string
+    should not otherwise contain a \code{\%}: if it is really necessary,
+    use \code{\%\%} in the string for \code{\%} in the file name.
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page

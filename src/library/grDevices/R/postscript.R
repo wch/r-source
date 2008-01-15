@@ -187,6 +187,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     ## do initialization if needed
     initPSandPDFfonts()
 
+    if(!checkIntFormat(file)) stop("invalid 'file'")
     new <- list()
     if(!missing(onefile)) new$onefile <- onefile
     ## 'family' is handled separately
@@ -263,6 +264,8 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 {
     ## do initialization if needed
     initPSandPDFfonts()
+
+    if(!checkIntFormat(file)) stop("invalid 'file'")
     .External(XFig, file, paper, family, bg, fg,
               width, height, horizontal, pointsize,
               onefile, pagecentre, encoding)
@@ -276,6 +279,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     ## do initialization if needed
     initPSandPDFfonts()
 
+    if(!checkIntFormat(file)) stop("invalid 'file'")
     new <- list()
     if(!missing(width)) new$width <- width
     if(!missing(height)) new$height <- height

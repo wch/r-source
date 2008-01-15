@@ -74,11 +74,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     for an integer will be substituted by the device number.}
   \item{filename}{the name of the output file: it will be an enhanced
     Windows metafile, usually given extension \code{.emf} or
-    \code{.wmf}.  Up to 511 characters are allowed.
-    The page number is substituted if an integer format is included
-    in the character string. (The result must be less than 600
-    characters long.)  The default, \code{""}, means the clipboard.
-  }
+    \code{.wmf}.  Up to 511 characters are allowed. The page number is
+    substituted if an integer format is included in the character
+    string: see \code{\link{postscript}} for further details. (The
+    result must be less than 600 characters long.)  The default,
+    \code{""}, means the clipboard.}
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
   \item{restoreConsole}{logical:  see the \sQuote{Details} below.  Defaults to

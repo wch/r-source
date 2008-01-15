@@ -106,16 +106,20 @@ win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                          restoreConsole = TRUE)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
     invisible(.External(Cdevga, paste("win.metafile:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_, FALSE, .PSenv, NA,
                         restoreConsole, ""))
+}
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 units = "px",
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 {
+    checkIntFormat(filename)
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
@@ -134,6 +138,7 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                 units = "px",
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 {
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
@@ -153,6 +158,7 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75, bg = "white", res = NA,
                  restoreConsole = TRUE)
 {
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")

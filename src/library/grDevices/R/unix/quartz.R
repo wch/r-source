@@ -57,6 +57,7 @@ quartz <- function(title, width, height, pointsize, family,
     if(!missing(bg)) new$bg <- bg
     if(!missing(type)) new$type <- type
     if(!missing(dpi)) new$dpi <- dpi
+    if(!checkIntFormat(new$title)) stop("invalid 'title'")
     d <- check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv)
     .External(CQuartz, d$type, file, d$width, d$height, d$pointsize, d$family,
               d$antialias, d$fontsmooth, d$title, d$bg,
