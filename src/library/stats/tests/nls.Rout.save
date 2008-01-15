@@ -1,6 +1,6 @@
 
-R version 2.6.0 Under development (unstable) (2007-07-27 r42337)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.7.0 Under development (unstable) (2008-01-15 r44001)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -116,7 +116,7 @@ x            0.99915    0.00119  841.38   <2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0132 on 7 degrees of freedom
-Multiple R-Squared:    1,	Adjusted R-squared:    1 
+Multiple R-squared:    1,	Adjusted R-squared:    1 
 F-statistic: 7.08e+05 on 1 and 7 DF,  p-value: <2e-16 
 
 Correlation of Coefficients:
