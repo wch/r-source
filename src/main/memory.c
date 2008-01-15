@@ -2940,11 +2940,11 @@ static void R_EndMemReporting()
     return;
 }
 
-static void R_InitMemReporting(const char *filename, int append,
+static void R_InitMemReporting(SEXP filename, int append,
 			       R_size_t threshold)
 {
     if(R_MemReportingOutfile != NULL) R_EndMemReporting();
-    R_MemReportingOutfile = fopen(filename, append ? "a" : "w");
+    R_MemReportingOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_MemReportingOutfile == NULL)
 	error(_("Rprofmem: cannot open output file '%s'"), filename);
     R_MemReportingThreshold = threshold;
@@ -2954,7 +2954,7 @@ static void R_InitMemReporting(const char *filename, int append,
 
 SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    const char *filename;
+    SEXP filename;
     R_size_t threshold;
     int append_mode;
 
@@ -2962,7 +2962,7 @@ SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
 	error(_("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
-    filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
+    filename = STRING_ELT(CAR(args), 0);
     threshold = REAL(CADDR(args))[0];
     if (strlen(filename))
 	R_InitMemReporting(filename, append_mode, threshold);
