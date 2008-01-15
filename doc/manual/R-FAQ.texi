@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-11
+@set FAQ_DATE @value{FAQ_YEAR}-01-14
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1985,9 +1985,13 @@ R companion to ``Curve and Surface Fitting with Splines'' by Paul
 Dierckx, 1993, Oxford University Press.
 @item EDR
 Estimation of the effective dimension reduction (EDR) space.
+@item EMC
+Evolutionary Monte Carlo (EMC) algorithm.
 @item EMV
 Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
+@item ETC
+Tests and simultaneous confidence intervals for equivalence to control.
 @item EbayesThresh
 Empirical Bayes thresholding and related methods.
 @item Ecdat
@@ -2148,6 +2152,9 @@ IDP/ZHW.
 @item IPSUR
 Accompanies ``Introduction to Probability and Statistics Using R'' by
 G. Andy Chang and G. Jay Kerns(in progress).
+@item ISA
+Functions to support ``Introduzione alla Statistica Applicata con esempi
+in R'' by Federico M. Stefanini, Pearson Education Milano, 2007.
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
@@ -2219,6 +2226,8 @@ Methods for the Behavioral, Educational, and Social Sciences.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
+@item MCPAN
+Multiple comparisons using normal approximation.
 @item MChtest
 Monte Carlo hypothesis tests.
 @item MEMSS
@@ -2264,6 +2273,9 @@ Multivariate and propensity score matching with formal tests of balance.
 A Matrix package.
 @item MiscPsycho
 Miscellaneous Psychometrics.
+@item MultEq
+Equivalence tests and simultaneous confidence intervals for multiple
+endpoints.
 @item NADA
 Methods described in ``Nondetects And Data Analysis: Statistics for
 Censored Environmental Data'' by Dennis R. Helsel, 2004, John Wiley and
@@ -3282,6 +3294,9 @@ Basic tools for applied epidemiology.
 Edge Preserving Smoothing for Images.
 @item equivalence
 Tests and graphics for assessing tests of equivalence.
+@item ergm
+An integrated set of tools to analyze and simulate networks based on
+exponential-family random graph models (ERGM).
 @item evd
 Functions for extreme value distributions.  Extends simulation,
 distribution, quantile and density functions to univariate, bivariate
@@ -3530,6 +3545,8 @@ methods.
 Functions for inference in generalised linear spatial models.
 @item geometry
 Mesh generation and surface tesselation, based on the Qhull library.
+@item geozoo
+Definition of geometric objects and display via @strong{rggobi}.
 @item ggm
 Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
@@ -4464,13 +4481,10 @@ inter-rater reliability, and classical utility.
 Functions for analyzing psychophysical data in R.
 @item pwr
 Basic functions for power analysis.
-@c <COMMENT>
-@c Removed on 2007-11-17 due to license problems.
-@c @item pwt
-@c The Penn World Table providing purchasing power parity and national
-@c income accounts converted to international prices for 168 countries for
-@c some or all of the years 1950--2000.
-@c </COMMENT>
+@item pwt
+The Penn World Table providing purchasing power parity and national
+income accounts converted to international prices for 168 countries for
+some or all of the years 1950--2000.
 @item pvclust
 Hierarchical clustering with @math{p}-value.
 @item qAnalyst
