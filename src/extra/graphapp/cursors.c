@@ -248,7 +248,7 @@ static point load_hotspot(const char *filename)
 	int i, x, y;
 	point p = pt(0,0);
 
-	file = fopen(filename, "r");
+	file = fopen(filename, "rt");
 	while (fgets(line, sizeof(line)-2, file)) {
 		if ( (! strncmp(line, "point", 5))
 		  || (! strncmp(line, "/* point", 8)) )
