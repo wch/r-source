@@ -1461,7 +1461,9 @@ static void clipText(double x, double y, const char *str, int enc,
     int result = clipTextCode(x, y, str, enc, rot, hadj, gc,
 			      toDevice, dd);
     void (*textfn)();
-    textfn = dd->dev->hasTextUTF8 && enc == CE_UTF8 ?
+    /* This guards against unitialized values, e.g. devices installed
+       in earlier versions of R */
+    textfn = (dd->dev->hasTextUTF8 ==TRUE) && enc == CE_UTF8 ?
 	dd->dev->textUTF8 : dd->dev->text;
 
     switch (result) {
@@ -1634,8 +1636,10 @@ void GEText(double x, double y, const char * const str, int enc,
 	    double xleft, ybottom;
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
-	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8) enc2 = CE_UTF8;
-	    else if(enc2 == CE_UTF8 && !dd->dev->hasTextUTF8) enc2 = CE_NATIVE;
+	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8 == TRUE)
+		enc2 = CE_UTF8;
+	    else if(enc2 == CE_UTF8 && !dd->dev->hasTextUTF8 == TRUE)
+		enc2 = CE_NATIVE;
 
 #ifdef DEBUG_MI
 	    printf("string %s, enc %d, %d\n", str, enc, enc2);
@@ -2365,7 +2369,8 @@ double GEStrWidth(const char *str, int enc,
 	    int enc2;
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
-	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8) enc2 = CE_UTF8;
+	    if(enc2 == CE_NATIVE && dd->dev->hasTextUTF8 == TRUE)
+		enc2 = CE_UTF8;
 
 	    sb = sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
 	    for(s = str; ; s++) {
@@ -2379,7 +2384,7 @@ double GEStrWidth(const char *str, int enc,
 		     * if it wants to.
 		     * NOTE: fontface corresponds to old "font"
 		     */
-		    if(dd->dev->hasTextUTF8 && enc2 == CE_UTF8)
+		    if(dd->dev->hasTextUTF8 == TRUE && enc2 == CE_UTF8)
 			wdash = dd->dev->strWidthUTF8(str, gc, dd->dev);
 		    else
 			wdash = dd->dev->strWidth(str, gc, dd->dev);
