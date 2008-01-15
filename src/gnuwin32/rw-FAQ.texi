@@ -579,22 +579,12 @@ informative error messages from the firewall program.
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
-This has not been reported for a couple of years, but used to happen
+This has not been reported for a few years, but used to happen
 regularly.  All the occurrences we have solved have been traced to
 faulty versions of @samp{msvcrt.dll}: we have installed a workaround
 that seems to avoid this.  A few other people have discovered this was
 caused by desktop switcher and keyboard macro programs, for example
 `Macro Magic' and `JS Pager'.
-
-If it still happens, try extracting the @samp{msvcrt.dll} to be found in
-the self-extracting archive
-@uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
-the @file{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
-directory reverts to the standard behaviour.
-
-This fix has solved other problems too, for example incorrect results in
-the date-time functions.  However, you are probably better off
-re-installing Windows.
 
 @node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
 @section What does 'DLL attempted to change FPU control word' mean?
