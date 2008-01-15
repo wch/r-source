@@ -30,11 +30,41 @@ GUI CHANGES
 	use Rprintf will appear in the terminal rather than being
 	lost.  (Only on XP or later.)
 
+
+INTERNATIONALIZATION
+
+This is another phase in the on-going effort to make Unicode
+characters available to R for Windows users.
+
+    o	If a string presented to the parser contains a \uxxxx escape
+	invalid in the current locale, the string is output in UTF-8
+	with the encoding declared.  This is likely to throw an error
+	if it is used later in the session, but it can be used for
+	e.g. plotting on the windows() device.  So "\u03b2" gives a
+	Greek letter beta (as distinct from  mathematical symbol), and
+	"\u2642" a 'male sign'.
+	
     o	Rgui has been re-written to work internally in Unicode.  This
 	means that copy and paste will be done in Unicode, and should
 	now work correctly if R is being run in a different locale
 	from other applications.  There is more support for input
 	methods, thanks to Ei-ji Nakama.
+
+    o	The windows() family of devices now always use Unicode fonts
+	(except for the Symbol font), not just in multibyte locales.
+	This means it should be possble to plot in an 8-bit locale
+	other than the system locale (e.g. for R running in Russian
+	with Windows set to French).
+
+	Further, they can handle UTF-8-encoded strings, so if a
+	character string in R is marked (see ?Encoding) as UTF-8, it
+	can be plotted (for a suitable font) even if it is not a valid
+	character in the current locale.  So one way to plot a Greek
+	beta (Unicode point U+03B2) is text(x, y, intToUtf8(0x03b2L)).
+	Another is to use "\u03b2".
+
+    o	Environment variables are read and set in Unicode by
+	Sys.getenv/Sys.setenv.
 
 
 TIME ZONES
@@ -52,7 +82,8 @@ TIME ZONES
 	timezone from the Windows' Registry.  If this does not work or
 	is incorrect, set the 'TZ' environment variable appropriately:
 	a list of known timezones is given in
-	R_HOME/share/zoneinfo/zones.tab.
+	R_HOME/share/zoneinfo/zones.tab (some alternative names will
+	also be recognized).
 
 	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
@@ -105,18 +136,6 @@ OTHERS
 	the default output to be most suitable for inclusion in other
 	documents rather than to produce a page for printing.)
 
-    o	The windows() family of devices now always use Unicode fonts
-	(except for the Symbol font), not just in multibyte locales.
-	This means it should be possble to plot in an 8-bit locale
-	other than the system locale (e.g. for R running in Russian
-	with Windows set to French).
-
-	Further, they can handle UTF-8-encoded strings, so if a
-	character string in R is marked (see ?Encoding) as UTF-8, it
-	can be plotted (for a suitable font) even if it is not a valid
-	character in the current locale.  So one way to plot a Greek
-	beta (Unicode point U+03B2) is text(x, y, intToUtf8(0x03b2L)).
-
     o	Options "graphics.record", "windowsBuffered", "xpinch" and
 	"ypinch" have been replaced by a function windows.options() to
 	set the defaults for the arguments of the windows() device.
@@ -133,14 +152,6 @@ OTHERS
 	double-clicking an item (as if the item had been selected and
 	then the OK button pressed).
 
-    o	If a string presented to the parser contains a \uxxxx escape
-	invalid in the current locale, the string is output in UTF-8
-	with the encoding declared.  This is likely to throw an error
-	if it is used later in the session, but it can be used for
-	e.g. plotting on the windows() device.  So "\u03b2" gives a
-	Greek letter beta (as distinct from  mathematical symbol), and
-	"\u2642" a 'male sign'.
-	
     o	loadRconsole() may now be used in Rterm and embedded R
 	(where it affects graphics windows and pagers).  Embedded R
 	no longer reads the Rconsole file on startup.

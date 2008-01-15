@@ -96,13 +96,12 @@ FILE *R_fopen(const char *filename, const char *mode)
 
    On NT-based versions of Windows, file names are stored in 'Unicode'
    (UCS-2), and _wfopen is provided to access them by UCS-2 names.
-   This requires NT, so is currently disabled.
 */
 
 #if 0 && defined(Win32)
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 {
-    wchar_t filename[MAX_PATH+1], wmode[10];
+    wchar_t wmode[10];
     void *obj;
     char *from = "", *inbuf, *outbuf;
     size_t inb, outb, res;
@@ -242,10 +241,20 @@ int R_system(const char *command)
 extern char ** environ;
 #endif
 
+#ifdef Win32
+# define WC_ENVIRON
+#endif
+
+#ifdef WC_ENVIRON
+/* _wenviron is declared in stdlib.h */
+# define WIN32_LEAN_AND_MEAN 1
+# include <windows.h> /* _wgetenv etc */
+const wchar_t *wtransChar(SEXP x);
+#endif
+
 SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j;
-    char *s;
     SEXP ans;
 
     checkArity(op, args);
@@ -258,15 +267,43 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     i = LENGTH(CAR(args));
     if (i == 0) {
+#ifdef WC_ENVIRON
+	char *buf;
+	int n = 0, N;
+	wchar_t **w;
+	for (i = 0, w = _wenviron; *w != NULL; i++, w++)
+	    n = max(n, wcslen(*w));
+	N = 3*n+1; buf = alloca(N);
+	R_CheckStack();
+	PROTECT(ans = allocVector(STRSXP, i));
+	for (i = 0, w = _wenviron; *w != NULL; i++, w++) {
+	    wcstombs(buf, *w, N); buf[N-1] = '\0';
+	    SET_STRING_ELT(ans, i, mkCharEnc(buf, UTF8_MASK));
+	}
+#else
 	char **e;
 	for (i = 0, e = environ; *e != NULL; i++, e++);
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, e = environ; *e != NULL; i++, e++)
 	    SET_STRING_ELT(ans, i, mkChar(*e));
+#endif
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {
-	    s = getenv(translateChar(STRING_ELT(CAR(args), j)));
+#ifdef WC_ENVIRON
+	    const wchar_t *wnm = wtransChar(STRING_ELT(CAR(args), j));
+	    wchar_t *w = _wgetenv(wnm);
+	    if (w == NULL)
+		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
+	    else {
+		int n = wcslen(w), N = 3*n+1; /* UCS-2 maps to <=3 UTF-8 */
+		char *buf = alloca(N); 
+		R_CheckStack();
+		wcstombs(buf, w, N); buf[N-1] = '\0'; /* safety */
+		SET_STRING_ELT(ans, j, mkCharEnc(buf, UTF8_MASK));
+	    }
+#else
+	    char *s = getenv(translateChar(STRING_ELT(CAR(args), j)));
 	    if (s == NULL)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
@@ -276,13 +313,25 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 		else tmp = mkChar(s);
 		SET_STRING_ELT(ans, j, tmp);
 	    }
+#endif
 	}
     }
     UNPROTECT(1);
     return (ans);
 }
 
-#if !defined(HAVE_SETENV) && defined(HAVE_PUTENV)
+#ifdef WC_ENVIRON
+static int Rwputenv(const wchar_t *nm, const wchar_t *val)
+{
+    wchar_t *buf;
+    buf = (wchar_t *) malloc((wcslen(nm) + wcslen(val) + 2) * sizeof(wchar_t));
+    if(!buf) return 1;
+    wsprintfW(buf, L"%s=%s", nm, val);
+    if(_wputenv(buf)) return 1;
+    /* no free here: storage remains in use */
+    return 0;
+}
+#elif !defined(HAVE_SETENV) && defined(HAVE_PUTENV)
 static int Rputenv(const char *nm, const char *val)
 {
     char *buf;
@@ -318,6 +367,10 @@ SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	LOGICAL(ans)[i] = setenv(translateChar(STRING_ELT(nm, i)),
 				 translateChar(STRING_ELT(vars, i)),
 				 1) == 0;
+#elif defined(WC_ENVIRON)
+    for (i = 0; i < n; i++)
+	LOGICAL(ans)[i] = Rwputenv(wtransChar(STRING_ELT(nm, i)),
+				   wtransChar(STRING_ELT(vars, i))) == 0;
 #else
     for (i = 0; i < n; i++)
 	LOGICAL(ans)[i] = Rputenv(translateChar(STRING_ELT(nm, i)),
@@ -352,11 +405,22 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	putenv(buf);
     }
 #elif defined(HAVE_PUTENV_UNSET2)
+# ifdef WC_ENVIRON
+    for (i = 0; i < n; i++) {
+	const wchar_t *w = wtransChar(STRING_ELT(vars, i));
+	wchar_t *buf = (wchar_t *) alloca(2*wcslen(w));
+	R_CheckStack();
+	wcscpy(buf, w);
+	wcscat(buf, L"=");
+	_wputenv(buf);
+    }
+# else
     for (i = 0; i < n; i++) {
 	char buf[1000];
 	snprintf(buf, 1000, "%s=", translateChar(STRING_ELT(vars, i)));
 	putenv(buf);
     }
+# endif
 #endif
 
 #elif defined(HAVE_PUTENV) || defined(HAVE_SETENV)
@@ -638,12 +702,77 @@ next_char:
     return p;
 }
 
+#ifdef Win32
+static void *latin1_wobj = NULL, *utf8_wobj=NULL;
+
+/* Translate from current encoding to wchar_t = UCS-2 on Windows
+   (using surrogates are turned on). NB: this is not general.
+*/
+const wchar_t *wtransChar(SEXP x)
+{
+    void * obj;
+    const char *inbuf, *ans = CHAR(x);
+    char *outbuf;
+    wchar_t *p;
+    size_t inb, outb, res, top;
+    Rboolean knownEnc = FALSE;
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "wtransChar");
+
+    if(IS_LATIN1(x)) {
+	if(!latin1_wobj) {
+	    obj = Riconv_open("UCS-2LE", "latin1");
+	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+	    latin1_wobj = obj;
+	} else
+	    obj = latin1_wobj;
+	knownEnc = TRUE;
+    } else if(IS_UTF8(x)) {
+	if(!utf8_obj) {
+	    obj = Riconv_open("UCS-2LE", "UTF-8");
+	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+	    utf8_wobj = obj;
+	} else
+	    obj = utf8_wobj;
+	knownEnc = TRUE;
+    } else {
+	obj = Riconv_open("UCS-2LE", "");
+	if(obj == (void *)(-1)) error(_("unsupported conversion"));
+    }
+
+    R_AllocStringBuffer(0, &cbuff);
+top_of_loop:
+    inbuf = ans; inb = strlen(inbuf);
+    outbuf = cbuff.data; top = outb = cbuff.bufsize - 1;
+    /* First initialize output */
+    Riconv (obj, NULL, NULL, &outbuf, &outb);
+    /* Then convert input: should always work  */
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+    if(res == -1 && errno == E2BIG) {
+	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	goto top_of_loop;
+    } else if(res == -1 && errno == EILSEQ) {
+	if(!knownEnc) Riconv_close(obj);
+	error(_("invalid input in wtransChar"));
+    }
+    if(!knownEnc) Riconv_close(obj);
+    res = (top - outb);
+    p = (wchar_t *) R_alloc(res+2, 1);
+    memset(p, 0, res+2);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
+#endif
+
 const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
 {
     void * obj;
     const char *inbuf;
     char *outbuf, *p;
-    size_t inb, outb, res, full;
+    size_t inb, outb, res, top;
     char *tocode = NULL, *fromcode = NULL;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
@@ -677,7 +806,7 @@ const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
     inbuf = x; inb = strlen(inbuf);
-    outbuf = cbuff.data; full = outb = cbuff.bufsize - 1;
+    outbuf = cbuff.data; top = outb = cbuff.bufsize - 1;
     /* First initialize output */
     Riconv (obj, NULL, NULL, &outbuf, &outb);
 next_char:
@@ -713,7 +842,7 @@ next_char:
     }
     Riconv_close(obj);
     *outbuf = '\0';
-    res = (full-outb)+1; /* strlen(cbuff.data) + 1; */
+    res = (top-outb)+1; /* strlen(cbuff.data) + 1; */
     p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
