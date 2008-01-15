@@ -854,6 +854,7 @@ DCIGETTEXT (const char *domainname, const char *msgid1, const char *msgid2,
   /* Return the untranslated MSGID.  */
   FREE_BLOCKS (block_list);
   gl_rwlock_unlock (_nl_state_lock);
+#if 0
 #ifndef _LIBC
   if (!ENABLE_SECURE)
     {
@@ -866,6 +867,7 @@ DCIGETTEXT (const char *domainname, const char *msgid1, const char *msgid2,
       if (logfilename != NULL && logfilename[0] != '\0')
 	_nl_log_untranslated (logfilename, domainname, msgid1, msgid2, plural);
     }
+#endif
 #endif
   __set_errno (saved_errno);
   return (plural == 0

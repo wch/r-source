@@ -24,7 +24,7 @@ SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
  textdomain.c l10nflist.c explodename.c dcigettext.c \
  dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
- localcharset.c localename.c log.c printf.c osdep.c intl-compat.c \
+ localcharset.c localename.c printf.c osdep.c intl-compat.c \
  hash-string.c lock.c
 
 DEPENDS = $(SOURCES:.c=.d)
