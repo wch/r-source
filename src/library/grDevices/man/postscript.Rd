@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -33,6 +33,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     as \code{"Rplot\%03d.ps"} (the default in that case).  The string
     should not otherwise contain a \code{\%}: if it is really necessary,
     use \code{\%\%} in the string for \code{\%} in the file name.
+    A single integer format matching the \link{regular expression}
+    \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed.
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page

@@ -343,7 +343,7 @@ R_newunz(const char *description, const char *const mode)
 	free(new->class); free(new);
 	error(_("allocation of unz connection failed"));
     }
-    init_con(new, description, mode);
+    init_con(new, description, CE_NATIVE, mode);
 
     new->canseek = TRUE;
     new->open = &unz_open;

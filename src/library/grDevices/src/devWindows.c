@@ -326,6 +326,7 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 	return;
     }
 
+    if(strchr(fn, '%')) error(_("'%' is not allowed in file name"));
 
     ndd->displayList = R_NilValue;
 
@@ -395,6 +396,8 @@ static void SaveAsPDF(NewDevDesc *dd, const char *fn)
 	R_ShowMessage(_("No device available to copy graphics window"));
 	return;
     }
+
+    if(strchr(fn, '%')) error(_("'%' is not allowed in file name"));
 
     ndd->displayList = R_NilValue;
 

@@ -218,7 +218,9 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
     }
     if (flag < 2) {
-	ll = runcmd(CHAR(STRING_ELT(CAR(args), 0)), flag, vis,
+	ll = runcmd(CHAR(STRING_ELT(CAR(args), 0)), 
+		    getCharEnc(STRING_ELT(CAR(args), 0)),
+		    flag, vis,
 		    CHAR(STRING_ELT(CADDR(args), 0)));
 	if (ll == NOLAUNCH)
 	    warning(runerror());
@@ -226,8 +228,9 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int m = 0;
 	if(flag == 2 /* show on console */ || CharacterMode == RGui) m = 2;
 	if(ignore_stderr) m = 0;
-	fp = rpipeOpen(CHAR(STRING_ELT(CAR(args), 0)), vis,
-		       CHAR(STRING_ELT(CADDR(args), 0)), m);
+	fp = rpipeOpen(CHAR(STRING_ELT(CAR(args), 0)), 
+		       getCharEnc(STRING_ELT(CAR(args), 0)),
+		       vis, CHAR(STRING_ELT(CADDR(args), 0)), m);
 	if (!fp) {
 	    /* If we are capturing standard output generate an error */
 	    if (flag == 3)

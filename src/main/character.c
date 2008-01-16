@@ -2822,9 +2822,11 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 # include <glob.h>
 #endif
 #ifdef Win32
-#include <dos_glob.h>
-#define glob dos_glob
-#define globfree dos_globfree
+# include <dos_wglob.h>
+# define globfree dos_wglobfree
+# define glob_t wglob_t
+wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
+size_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n);
 #else
 # ifndef GLOB_QUOTE
 #  define GLOB_QUOTE 0
@@ -2849,25 +2851,49 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     for(i = 0; i < LENGTH(x); i++) {
-	res = glob(translateChar(STRING_ELT(x, i)),
-#ifdef GLOB_MARK
-		   (dirmark ? GLOB_MARK : 0) |
-#endif
-		   GLOB_QUOTE | (i ? GLOB_APPEND : 0),
-		   NULL, &globbuf);
-#ifdef GLOB_ABORTED
-	if(res == GLOB_ABORTED)
-	    warning(_("read error on '%s'"), translateChar(STRING_ELT(x, i)));
-#endif
-#ifdef GLOB_NOSPACE
+	SEXP el = STRING_ELT(x, i);
+#ifdef Win32
+	res = dos_wglob(filenameToWchar(el, FALSE),
+			(dirmark ? GLOB_MARK : 0) |
+			GLOB_QUOTE | (i ? GLOB_APPEND : 0),
+			NULL, &globbuf);
 	if(res == GLOB_NOSPACE)
 	    error(_("internal out-of-memory condition"));
+#else
+	res = glob(translateChar(el),
+# ifdef GLOB_MARK
+		   (dirmark ? GLOB_MARK : 0) |
+# endif
+		   GLOB_QUOTE | (i ? GLOB_APPEND : 0),
+		   NULL, &globbuf);
+# ifdef GLOB_ABORTED
+	if(res == GLOB_ABORTED)
+	    warning(_("read error on '%s'"), translateChar(el));
+# endif
+# ifdef GLOB_NOSPACE
+	if(res == GLOB_NOSPACE)
+	    error(_("internal out-of-memory condition"));
+# endif
 #endif
     }
     n = globbuf.gl_pathc;
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
+#ifdef Win32
+    {
+	/* FIXME might be better to share a buffer here */
+	wchar_t *w = globbuf.gl_pathv[i];
+	char *buf;
+	int n = wcslen(w), ienc = 0;
+	buf = alloca(2*(n+1));
+	R_CheckStack();
+	Rf_wcstoutf8(buf, w, n+1);
+	if(!utf8strIsASCII(buf)) ienc = UTF8_MASK;
+	SET_STRING_ELT(ans, i, mkCharEnc(buf, ienc));
+    }
+#else
 	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
+#endif
     UNPROTECT(1);
     globfree(&globbuf);
     return ans;

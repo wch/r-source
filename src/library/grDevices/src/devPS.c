@@ -3608,7 +3608,7 @@ static void PostScriptClose(NewDevDesc *dd)
 	    err = R_system(buff);
 #endif
 #ifdef Win32
-	    err = Rf_runcmd(buff, 0, 0, NULL);
+	    err = Rf_runcmd(buff, CE_NATIVE, 0, 0, NULL);
 #endif
 	    if (err)
 		warning(_("error from postscript() in running:\n    %s"),

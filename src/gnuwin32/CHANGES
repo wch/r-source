@@ -35,7 +35,8 @@ GUI CHANGES
 INTERNATIONALIZATION
 
 This is another phase in the on-going effort to make Unicode
-characters available to R for Windows users.
+characters available to R for Windows users.  [Whilst this is going on
+R-devel will be comparatively unstable.]
 
     o	If a string presented to the parser contains a \uxxxx escape
 	invalid in the current locale, the string is output in UTF-8
@@ -70,40 +71,17 @@ characters available to R for Windows users.
     o	readClipboard() can read Unicode text (format = 13), and
 	writeClipboard() can write it.
 
-    o	The file functions
-
-	dir.create(),
-	DLL.version(),
-	file.access(),
-	file.copy(),
-	file.create(),
-	file.info(),
-	file.remove(),
-	file.rename(),
-	load(),
-	normalizePath(),
-	path.expand(),
-	save(),
-	shell.exec(),
-	shortPathName(),
-	Sys.chmod()
+    o	file() and pipe() connections and the functions dir.create(),
+	DLL.version(), file.access(), file.copy(), file.create(),
+	file.info(), file.remove(), file.rename(), load(),
+	normalizePath(), path.expand(), save(), shell(), shell.exec(),
+	shortPathName(), Sys.chmod(), Sys.glob(), system(), unlink().
 
 	have been converted to use Unicode file names.  The following
-	have not (as yet)
-
-	file() connections
-	choose.files(),
-	choose.dir(),
+	have not (as yet): choose.files(), choose.dir(),
 	dir()/list.files(), (problematic because of 'pattern')
-	file.choose(),
-	file.show(),
-	loadhistory(),
-	loadRconsole(),
+	file.choose(), file.show(), loadhistory(), loadRconsole(),
 	savehistory(),
-	shell(),
-	Sys.glob(),
-	system(),
-	unlink() (needs glob)
 
 
 TIME ZONES
@@ -117,7 +95,7 @@ TIME ZONES
 	'GMT Daylight Time' for 'British Summer Time' used by
 	Windows).
 
-	An attempt is made (once per session) to identify the current
+    o	An attempt is made (once per session) to identify the current
 	timezone from the Windows' Registry.  If this does not work or
 	is incorrect, set the 'TZ' environment variable appropriately:
 	a list of known timezones is given in
@@ -126,11 +104,14 @@ TIME ZONES
 	various versions on German versions of Windows: time zone
 	names are stored in the language of the Windows install.)
 
-	Since the Windows C runtime does not think that times prior to
+    o	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
-	used for the timezones pre-1970.  Now the database is used for
+	used for the time zones pre-1970.  Now the database is used for
 	1902-1969 (and nowhere had DST prior to 1902 and the time
-	offset is assumed to be the same as in 1902).
+	offset is assumed to be the same as in 1902) and so the
+	results are reliable from the onset of standard time (second
+	half of the nineteenth century) until the near future (since
+	legislators change time zones with little notice).
 
 
 PACKAGE INSTALLATION
@@ -196,6 +177,10 @@ OTHERS
     o	loadRconsole() may now be used in Rterm and embedded R
 	(where it affects graphics windows and pagers).  Embedded R
 	no longer reads the Rconsole file on startup.
+
+    o	getClipboardFormats() by default returns a human-readable
+	character vector, but will give numeric output with new
+	arguent 'numeric = TRUE'.
 
 
 BUILDING R

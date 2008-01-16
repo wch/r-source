@@ -799,12 +799,64 @@ SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#define STRICT_R_HEADERS
+#include <R_ext/RS.h>
+
+/* split on \r\n or just one */
+static SEXP splitClipboardText(const char *s, int ienc)
+{
+    int cnt_r= 0, cnt_n = 0, n, nc, nl, line_len = 0;
+    const char *p;
+    char *line, *q, eol = '\n';
+    Rboolean last = TRUE; /* does final line have EOL */
+    Rboolean CRLF = FALSE;
+    SEXP ans;
+
+    for(p = s, nc = 0; *p; p++, nc++)
+	switch(*p) {
+	case '\n':
+	    cnt_n++;
+	    last = TRUE;
+	    line_len = max(line_len, nc);
+	    nc = -1;
+	    break;
+	case '\r':
+	    cnt_r++;
+	    last = TRUE;
+	    break;
+	default:
+	    last = FALSE;
+	}
+    n = max(cnt_n, cnt_r) + (last ? 0 : 1);
+    if (cnt_n == 0 && cnt_r > 0) eol = '\r';
+    if (cnt_r == cnt_n) CRLF = TRUE;
+    /* over-allocate a line buffer */
+    line = R_chk_calloc(1+(line_len ? line_len :nc), 1);
+    PROTECT(ans = allocVector(STRSXP, n));
+    for(p = s, q = line, nl = 0; *p; p++) {
+	if (*p == eol) {
+	    *q = '\0';
+	    SET_STRING_ELT(ans, nl++, mkCharEnc(line, ienc));
+	    q = line;
+	    *q = '\0';
+	} else if(CRLF && *p == '\r') 
+	    ;
+	else *q++ = *p;
+    }
+    if (!last) {
+	*q = '\0';
+	SET_STRING_ELT(ans, nl, mkCharEnc(line, ienc));	
+    }
+    R_chk_free(line);
+    UNPROTECT(1);
+    return(ans);
+}
+
 SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue;
     HGLOBAL hglb;
     const char *pc;
-    const wchar_t *wpc;
     int j, format, raw, size;
 
     checkArity(op, args);
@@ -814,24 +866,28 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(OpenClipboard(NULL)) {
     	if(IsClipboardFormatAvailable(format) &&
     	   	(hglb = GetClipboardData(format)) &&
-    	   	(pc = (const char *)GlobalLock(hglb))) {
+    	   	(pc = (const char *) GlobalLock(hglb))) {
 	    if(raw) {
+		Rbyte *pans;
 		size = GlobalSize(hglb);
-		PROTECT(ans = allocVector(RAWSXP, size));
-		for (j = 0; j < size; j++) RAW(ans)[j] = *pc++;
+		ans = allocVector(RAWSXP, size); /* no R allocation below */
+		pans = RAW(ans);
+		for (j = 0; j < size; j++) pans[j] = *pc++;
 	    } else if (format == CF_UNICODETEXT) {
-		char *text; int n;
-		wpc = (wchar_t *) pc; n = wcslen(wpc);
+		char *text; int n, ienc = 0;
+		const wchar_t *wpc = (wchar_t *) pc;
+		n = wcslen(wpc);
 		text = alloca(2 * (n+1));  /* UTF-8 is at most 1.5x longer */
 		R_CheckStack();
 		Rf_wcstoutf8(text, wpc, n+1);
-		PROTECT(ans = allocVector(STRSXP, 1));
-		SET_STRING_ELT(ans, 0, mkCharEnc(text, UTF8_MASK));
-	    } else {
-		PROTECT(ans = mkString(pc));
-	    }
+		if(!utf8strIsASCII(text)) ienc = UTF8_MASK;
+		ans = splitClipboardText(text, ienc);
+	    } else if (format == CF_TEXT || format == CF_OEMTEXT) {
+		/* can we get the encoding out of a CF_LOCALE entry? */
+		ans = splitClipboardText(pc, 0);
+	    } else
+		error("'raw = FALSE' and format is a not a known text format");
 	    GlobalUnlock(hglb);
-	    UNPROTECT(1);
 	}
 	CloseClipboard();
     }
@@ -950,12 +1006,14 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	el = STRING_ELT(paths, i);
 	if(getCharEnc(el) == CE_UTF8) {
+	    int ienc = 0;
 	    GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
 	    Rf_wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
-	    SET_STRING_ELT(ans, i, mkCharEnc(tmp, UTF8_MASK));
+	    if(!utf8strIsASCII(tmp)) ienc = UTF8_MASK;
+	    SET_STRING_ELT(ans, i, mkCharEnc(tmp, ienc));
 	} else {
 	    GetShortPathName(translateChar(el), tmp, MAX_PATH);
 	    /* documented to return paths using \, which the API call does

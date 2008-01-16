@@ -20,18 +20,21 @@ memory.limit <- function(size = NA) .Internal(memory.size(size))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 
-getClipboardFormats <- function()
-    .Internal(getClipboardFormats())
-
-readClipboard <- function(format = 1, raw = FALSE) {
-    result <- .Internal(readClipboard(format, raw))
-    if (!is.null(result) && !raw) {
-    	result <- strsplit(result,"\r\n")[[1]]
-    	if (length(result) == 1) result <- strsplit(result,"\n")[[1]]
-    	if (length(result) == 1) result <- strsplit(result,"\r")[[1]]
+getClipboardFormats <- function(numeric = FALSE)
+{
+    known <- c("text", "bitmap", "metafile PICT", "SYLK", "DIF",
+    "TIFF", "OEM text", "DIB", "palette", "pendata", "RIFF", "audio",
+    "Unicode text", "enhanced metafile", "drag-and-drop", "locale", "shell")
+    ans <- sort(.Internal(getClipboardFormats()))
+    if(numeric) ans else {
+        res <- known[ans]
+        res[is.na(res)] <- ans[is.na(res)]
+        res
     }
-    result
 }
+
+readClipboard <- function(format = 1, raw = FALSE)
+    .Internal(readClipboard(format, raw))
 
 writeClipboard <- function(str, format = 1)
     .Internal(writeClipboard(str, format))

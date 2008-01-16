@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999-2001  Guido Masarotto  and Brian Ripley
- *            (C) 2007       the R Development Core Team
+ *            (C) 2007-8     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,16 +121,20 @@ static char * expandcmd(const char *cmd)
    inpipe != 0 to duplicate I/O handles
 */
 
-static HANDLE pcreate(const char* cmd, const char *finput,
+extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
+
+static HANDLE pcreate(const char* cmd, int enc, const char *finput,
 		      int newconsole, int visible, int inpipe)
 {
     DWORD ret;
     SECURITY_ATTRIBUTES sa;
     PROCESS_INFORMATION pi;
     STARTUPINFO si;
+    STARTUPINFOW wsi;
     HANDLE hIN = INVALID_HANDLE_VALUE,
 	hSAVED = INVALID_HANDLE_VALUE, hTHIS;
     char *ecmd;
+    wchar_t *wcmd;
 
     sa.nLength = sizeof(sa);
     sa.lpSecurityDescriptor = NULL;
@@ -150,36 +154,79 @@ static HANDLE pcreate(const char* cmd, const char *finput,
 	}
 	SetStdHandle(STD_INPUT_HANDLE, hIN);
     }
-    si.cb = sizeof(si);
-    si.lpReserved = NULL;
-    si.lpReserved2 = NULL;
-    si.cbReserved2 = 0;
-    si.lpDesktop = NULL;
-    si.lpTitle = NULL;
-    if ((finput && finput[0]) || inpipe) {
-	si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-	DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE),
-		      hTHIS, &si.hStdInput, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	DuplicateHandle(hTHIS, GetStdHandle(STD_OUTPUT_HANDLE),
-		     hTHIS, &si.hStdOutput, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	DuplicateHandle(hTHIS, GetStdHandle(STD_ERROR_HANDLE),
-		      hTHIS, &si.hStdError, 0, TRUE, DUPLICATE_SAME_ACCESS);
-    } else
-	si.dwFlags = STARTF_USESHOWWINDOW;
-    switch (visible) {
-      case -1:
-	si.wShowWindow = SW_HIDE;
-	break;
-      case 0:
-	si.wShowWindow = SW_SHOWMINIMIZED;
-	break;
-      case 1:
-	si.wShowWindow = SW_SHOWDEFAULT;
-	break;
+    if(enc == CE_UTF8) {
+	wsi.cb = sizeof(wsi);
+	wsi.lpReserved = NULL;
+	wsi.lpReserved2 = NULL;
+	wsi.cbReserved2 = 0;
+	wsi.lpDesktop = NULL;
+	wsi.lpTitle = NULL;
+	if ((finput && finput[0]) || inpipe) {
+	    wsi.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+	    DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE),
+			    hTHIS, &wsi.hStdInput, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	    DuplicateHandle(hTHIS, GetStdHandle(STD_OUTPUT_HANDLE),
+			    hTHIS, &wsi.hStdOutput, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	    DuplicateHandle(hTHIS, GetStdHandle(STD_ERROR_HANDLE),
+			    hTHIS, &wsi.hStdError, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	} else
+	    wsi.dwFlags = STARTF_USESHOWWINDOW;
+	switch (visible) {
+	case -1:
+	    wsi.wShowWindow = SW_HIDE;
+	    break;
+	case 0:
+	    wsi.wShowWindow = SW_SHOWMINIMIZED;
+	    break;
+	case 1:
+	    wsi.wShowWindow = SW_SHOWDEFAULT;
+	    break;
+	}	
+    } else {
+	si.cb = sizeof(si);
+	si.lpReserved = NULL;
+	si.lpReserved2 = NULL;
+	si.cbReserved2 = 0;
+	si.lpDesktop = NULL;
+	si.lpTitle = NULL;
+	if ((finput && finput[0]) || inpipe) {
+	    si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+	    DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE),
+			    hTHIS, &si.hStdInput, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	    DuplicateHandle(hTHIS, GetStdHandle(STD_OUTPUT_HANDLE),
+			    hTHIS, &si.hStdOutput, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	    DuplicateHandle(hTHIS, GetStdHandle(STD_ERROR_HANDLE),
+			    hTHIS, &si.hStdError, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	} else
+	    si.dwFlags = STARTF_USESHOWWINDOW;
+	switch (visible) {
+	case -1:
+	    si.wShowWindow = SW_HIDE;
+	    break;
+	case 0:
+	    si.wShowWindow = SW_SHOWMINIMIZED;
+	    break;
+	case 1:
+	    si.wShowWindow = SW_SHOWDEFAULT;
+	    break;
+	}
     }
-    ret = CreateProcess(NULL, ecmd, &sa, &sa, TRUE,
-			(newconsole && (visible == 1)) ? CREATE_NEW_CONSOLE : 0,
-			NULL, NULL, &si, &pi);
+    
+
+    if(enc == CE_UTF8) {
+	int n = strlen(ecmd); /* max no of chars */
+	wcmd = (wchar_t *) alloca(2 * (n+1));
+	Rf_utf8towcs(wcmd, ecmd, n+1);
+	ret = CreateProcessW(NULL, wcmd, &sa, &sa, TRUE,
+			     (newconsole && (visible == 1)) ? 
+			     CREATE_NEW_CONSOLE : 0,
+			     NULL, NULL, &wsi, &pi);
+    } else 
+	ret = CreateProcess(NULL, ecmd, &sa, &sa, TRUE,
+			    (newconsole && (visible == 1)) ? 
+			    CREATE_NEW_CONSOLE : 0,
+			    NULL, NULL, &si, &pi);
+
     CloseHandle(hTHIS);
     if (finput && finput[0]) {
 	SetStdHandle(STD_INPUT_HANDLE, hSAVED);
@@ -235,13 +282,13 @@ char *runerror()
    finput is either NULL or the name of a file from which to
      redirect stdin for the child.
  */
-int runcmd(const char *cmd, int wait, int visible, const char *finput)
+int runcmd(const char *cmd, int enc, int wait, int visible, const char *finput)
 {
     HANDLE p;
     int ret;
 
 /* I hope no program will use this as an error code */
-    if (!(p = pcreate(cmd, finput, !wait, visible, 0))) return NOLAUNCH;
+    if (!(p = pcreate(cmd, enc, finput, !wait, visible, 0))) return NOLAUNCH;
     if (wait) {
 	ret = pwait(p);
 	sprintf(RunError, _("Exit code was %d"), ret);
@@ -259,7 +306,8 @@ int runcmd(const char *cmd, int wait, int visible, const char *finput)
    io = 0 to read stdout from pipe, 1 to write to pipe,
    2 to read stdout and stderr from pipe.
  */
-rpipe * rpipeOpen(const char *cmd, int visible, const char *finput, int io)
+rpipe * rpipeOpen(const char *cmd, int enc, int visible, 
+		  const char *finput, int io)
 {
     rpipe *r;
     HANDLE hIN, hOUT, hERR, hThread, hTHIS, hTemp;
@@ -285,7 +333,7 @@ rpipe * rpipeOpen(const char *cmd, int visible, const char *finput, int io)
 	CloseHandle(hTemp);
 	CloseHandle(hTHIS);
 	SetStdHandle(STD_INPUT_HANDLE, r->read);
-	r->process = pcreate(cmd, NULL, 1, visible, 1);
+	r->process = pcreate(cmd, enc, NULL, 1, visible, 1);
 	r->active = 1;
 	SetStdHandle(STD_INPUT_HANDLE, hIN);
 	if (!r->process) return NULL; else return r;
@@ -305,7 +353,7 @@ rpipe * rpipeOpen(const char *cmd, int visible, const char *finput, int io)
     CloseHandle(hTHIS);
     SetStdHandle(STD_OUTPUT_HANDLE, r->write);
     if(io > 0) SetStdHandle(STD_ERROR_HANDLE, r->write);
-    r->process = pcreate(cmd, finput, 0, visible, 1);
+    r->process = pcreate(cmd, enc, finput, 0, visible, 1);
     r->active = 1;
     SetStdHandle(STD_OUTPUT_HANDLE, hOUT);
     if(io > 0) SetStdHandle(STD_ERROR_HANDLE, hERR);
@@ -414,7 +462,7 @@ static Rboolean Wpipe_open(Rconnection con)
 
     io = con->mode[0] == 'w';
     if(io) visible = 1; /* Somewhere to put the output */
-    rp = rpipeOpen(con->description, visible, NULL, io);
+    rp = rpipeOpen(con->description, con->enc, visible, NULL, io);
     if(!rp) {
 	warning("cannot open cmd `%s'", con->description);
 	return FALSE;
@@ -532,7 +580,7 @@ static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
     return res;
 }
 
-Rconnection newWpipe(const char *description, const char *mode)
+Rconnection newWpipe(const char *description, int ienc, const char *mode)
 {
     Rconnection new;
     char *command;
@@ -567,7 +615,7 @@ Rconnection newWpipe(const char *description, const char *mode)
     strcat(command, " /c ");
     strcat(command, description);
     
-    init_con(new, command, mode);
+    init_con(new, command, ienc, mode);
     free(command);
     
     new->open = &Wpipe_open;

@@ -185,7 +185,7 @@ Rconnection in_R_newsock(const char *host, int port, int server,
 	free(new->class); free(new);
 	error(_("allocation of socket connection failed"));
     }
-    init_con(new, host, mode);
+    init_con(new, host, CE_NATIVE, mode);
     new->open = &sock_open;
     new->close = &sock_close;
     new->vfprintf = &dummy_vfprintf;

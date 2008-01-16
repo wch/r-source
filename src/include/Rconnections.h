@@ -25,14 +25,16 @@
 #include <sys/types.h>
 #endif
 
-/* until we make connections more public this allows the opaque
-   pointer definition to be made available in Rinternals.h */
+/* until we make connections more public (which we never said we will)
+   this allows the opaque pointer definition to be made available 
+   in Rinternals.h */
 #ifndef HAVE_RCONNECTION_TYPEDEF
 typedef struct Rconn  *Rconnection;
 #endif
 struct Rconn {
     char* class;
     char* description;
+    int enc; /* the encoding of 'description' */
     char mode[5];
     Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking, 
 	isGzcon;
@@ -163,7 +165,8 @@ Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
 void con_close(int i);
-void init_con(Rconnection new, const char *description, const char * const mode);
+void init_con(Rconnection new, const char *description, int enc,
+	      const char * const mode);
 Rconnection R_newurl(const char *description, const char * const mode);
 Rconnection R_newsock(const char *host, int port, int server, const char * const mode);
 Rconnection in_R_newsock(const char *host, int port, int server, const char *const mode);
