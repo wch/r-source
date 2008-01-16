@@ -295,6 +295,6 @@ checkIntFormat <- function(s)
     s <- gsub("%%", "", s)
     if(length(grep("%", s)) == 0) return(TRUE)
     ## now remove at most one valid(ish) integer format
-    s <- sub("%[#0 +=-]*[0-9]*[.][0-9]*[diouxX]", "", s)
+    s <- sub("%[#0 +=-]*[0-9.]*[diouxX]", "", s)
     length(grep("%", s)) == 0
 }
