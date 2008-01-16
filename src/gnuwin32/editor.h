@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file editor.h
- *  Copyright (C) 1999-2007  The R Development Core Team
+ *  Copyright (C) 1999-2008  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ void menueditornew(control m);
 void menueditoropen(control m);
 int editorchecksave(editor c);
 void editorsetfont(font f);
-int Rgui_Edit(const char *filename, const char *title, int modal);
+int Rgui_Edit(const char *filename, int enc, const char *title, int modal);
 
 #define EDITORMAXTITLE 128
 #define MAXNEDITORS 50

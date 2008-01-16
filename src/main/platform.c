@@ -241,26 +241,34 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
         error(_("invalid '%s' specification"), "pager");
     f = (const char**) R_alloc(n, sizeof(char*));
     h = (const char**) R_alloc(n, sizeof(char*));
-    /* FIXME convert to UTF-8 on Windows */
     for (i = 0; i < n; i++) {
-	if (!isNull(STRING_ELT(fn, i)))
-	    /* Do better later for file names? */
-	    f[i] = acopy_string(translateChar(STRING_ELT(fn, i)));
+	SEXP el = STRING_ELT(fn, 0);
+	if (!isNull(el))
+#ifdef Win32
+	    f[i] = acopy_string(reEnc(CHAR(el), getCharEnc(el), CE_UTF8, 1));
+#else
+	    f[i] = acopy_string(translateChar(el));
+#endif
 	else
-	    f[i] = acopy_string(CHAR(R_BlankString));
+	    f[i] = "";
 	if (!isNull(STRING_ELT(hd, i)))
 	    h[i] = acopy_string(translateChar(STRING_ELT(hd, i)));
 	else
-	    h[i] = acopy_string(CHAR(R_BlankString));
+	    h[i] = "";
     }
     if (length(tl) >= 1 || !isNull(STRING_ELT(tl, 0)))
 	t = acopy_string(translateChar(STRING_ELT(tl, 0)));
     else
-	t = acopy_string(CHAR(R_BlankString));
-    if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0)))
-	pager = acopy_string(CHAR(STRING_ELT(pg, 0)));
-    else
-	pager = acopy_string(CHAR(R_BlankString));
+	t = "";
+    if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0))) {
+	SEXP pg0 = STRING_ELT(pg, 0);
+#ifdef Win32
+	pager = acopy_string(reEnc(CHAR(pg0), getCharEnc(pg0), CE_UTF8, 1));
+#else
+	pager = acopy_string(CHAR(pg0));
+#endif
+    } else
+	pager = "";
     R_ShowFiles(n, f, h, t, dl, pager);
     return R_NilValue;
 }
@@ -295,29 +303,38 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	title = (const char**) R_alloc(n, sizeof(char*));
 	/* FIXME convert to UTF-8 on Windows */
 	for (i = 0; i < n; i++) {
-	    if (!isNull(STRING_ELT(fn, i)))
-		/* Do better later for file names? */
-		f[i] = acopy_string(R_ExpandFileName(translateChar(STRING_ELT(fn, i))));
+	    SEXP el = STRING_ELT(fn, 0);
+	    if (!isNull(el))
+#ifdef Win32
+		f[i] = acopy_string(reEnc(CHAR(el), getCharEnc(el),
+					  CE_UTF8, 1));
+#else
+		f[i] = acopy_string(translateChar(el));
+#endif
 	    else
-		f[i] = acopy_string(CHAR(R_BlankString));
+		f[i] = "";
 	    if (!isNull(STRING_ELT(ti, i)))
 	    	title[i] = acopy_string(translateChar(STRING_ELT(ti, i)));
 	    else
-	    	title[i] = acopy_string(CHAR(R_BlankString));
+	    	title[i] = "";
 	}
     }
     else {  /* open a new file for editing */
 	n = 1;
 	f = (const char**) R_alloc(1, sizeof(char*));
-	f[0] = acopy_string(CHAR(R_BlankString));
+	f[0] = "";
 	title = (const char**) R_alloc(1, sizeof(char*));
-	title[0] = acopy_string(CHAR(R_BlankString));
+	title[0] = "";
     }
-    if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0)))
-	/* Do better later for file names? */
-	editor = acopy_string(translateChar(STRING_ELT(ed, 0)));
-    else
-	editor = acopy_string(CHAR(R_BlankString));
+    if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0))) {
+	SEXP ed0 = STRING_ELT(ed, 0);
+#ifdef Win32
+	editor = acopy_string(reEnc(CHAR(ed0), getCharEnc(ed0), CE_UTF8, 1));
+#else
+	editor = acopy_string(translateChar(ed0));
+#endif
+    } else
+	editor = "";
     R_EditFiles(n, f, title, editor);
     return R_NilValue;
 }
@@ -1047,7 +1064,11 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("file choice cancelled"));
     if (len >= CHOOSEBUFSIZE - 1)
 	error(_("file name too long"));
+#ifdef WIn32
+    return mkString(reEnc(R_ExpandFileName(buf), CE_NATIVE, CE_UTF8, 1));
+#else
     return mkString(R_ExpandFileName(buf));
+#endif
 }
 
 

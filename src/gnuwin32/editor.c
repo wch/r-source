@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2007  The R Development Core Team
+ *  Copyright (C) 1999-2008  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ static void editor_set_title(editor c, const char *title)
 
 /*** FILE MANAGEMENT FUNCTIONS ***/
 
-static void editor_load_file(editor c, const char *name)
+static void editor_load_file(editor c, const char *name, int enc)
 {
     textbox t = getdata(c);
     EditorData p = getdata(t);
@@ -320,15 +320,14 @@ void editorcleanall()
 {
     int i;
     for (i = neditors-1;  i >= 0; --i) {
-	if (editorchecksave(REditors[i]))
-	    jump_to_toplevel();
+	if (editorchecksave(REditors[i])) jump_to_toplevel();
 	del(REditors[i]);
     }
 }
 
 static void editornew()
 {
-    Rgui_Edit("", "", 0);
+    Rgui_Edit("", CE_NATIVE, "", 0);
 }
 
 void menueditornew(control m)
@@ -352,7 +351,7 @@ static void editoropen(const char *default_name)
 		break;
 	    }
 	}
-	Rgui_Edit(name, name, 0);
+	Rgui_Edit(name, CE_NATIVE, name, 0);
     }
 }
 
@@ -795,7 +794,9 @@ static void eventloop(editor c)
 
 #include <unistd.h>
 
-int Rgui_Edit(const char *filename, const char *title, int stealconsole)
+/* FIXME UTF-8 */
+int Rgui_Edit(const char *filename, int enc, const char *title,
+	      int modal)
 {
     editor c;
     EditorData p;
@@ -811,7 +812,7 @@ int Rgui_Edit(const char *filename, const char *title, int stealconsole)
     }
     if (strlen(filename) > 0) {
 	if (!access(filename, R_OK))
-	    editor_load_file(c, filename);
+	    editor_load_file(c, filename, enc);
 	else
 	    R_ShowMessage(G_("Unable to open file for reading"));
 	editor_set_title(c, title);
@@ -822,8 +823,8 @@ int Rgui_Edit(const char *filename, const char *title, int stealconsole)
     show(c);
     
     p = getdata(getdata(c));
-    p->stealconsole = stealconsole;
-    if (stealconsole) {
+    p->stealconsole = modal;
+    if (modal) {
     	fix_editor_up = TRUE;
     	eventloop(c);
     }

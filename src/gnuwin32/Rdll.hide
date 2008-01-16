@@ -392,6 +392,8 @@
  Rsockread
  Rsockselect
  Rsockwrite
+ Rstrlen
+ Rstrwid
  Rwin_rename
  Rwin_wrename
  SET_ACTIVE_BINDING_BIT

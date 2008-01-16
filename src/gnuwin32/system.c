@@ -466,11 +466,17 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
      *     pager   = pager to be used.
      */
 
+
+/* As from R 2.7.0 we assume file[i] and pager are in UTF-8 */
+extern FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode);
+extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
+
 int R_ShowFiles(int nfile, const char **file, const char **headers,
 		const char *wtitle, Rboolean del, const char *pager)
 {
     int   i;
     char  buf[1024];
+    wchar_t wfn[PATH_MAX+1];
 
     if (nfile > 0) {
 	if (pager == NULL || strlen(pager) == 0)
@@ -478,17 +484,19 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 	for (i = 0; i < nfile; i++) {
 	    if(!access(file[i], R_OK)) {
 		if (!strcmp(pager, "internal")) {
-		    newpager(wtitle, file[i], headers[i], del);
+		    newpager(wtitle, file[i], CE_UTF8, headers[i], del);
 		} else if (!strcmp(pager, "console")) {
 		    size_t len;
-		    FILE *f = R_fopen(file[i], "rt");
+		    FILE *f;
+		    Rf_utf8towcs(wfn, file[i], PATH_MAX+1);
+		    f = R_wfopen(wfn, L"rt");
 		    if(f) {
 			while((len = fread(buf, 1, 1023, f))) {
 			    buf[len] = '\0';
 			    R_WriteConsole(buf, strlen(buf));
 			}
 			fclose(f);
-			if (del) DeleteFile(file[i]);
+			if (del) DeleteFileW(wfn);
 		    }
 		    else {
 			snprintf(buf, 1024, _("Unable to open file '%s'"),
@@ -528,6 +536,7 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
      *     editor  = editor to be used.
      */
 
+/* As from R 2.7.0 we assume file, editor are in UTF-8 */
 int R_EditFiles(int nfile, const char **file, const char **title,
 		const char *editor)
 {
@@ -539,14 +548,14 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 	    editor = "internal";
 	for (i = 0; i < nfile; i++) {
 	    if (!strcmp(editor, "internal")) {
-		Rgui_Edit(file[i], title[i], 0);
+		Rgui_Edit(file[i], CE_UTF8, title[i], 0);
 	    } else {
 		/* Quote path if necessary */
 		if (editor[0] != '"' && Rf_strchr(editor, ' '))
 		    snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[i]);
 		else
 		    snprintf(buf, 1024, "%s \"%s\"", editor, file[i]);
-		runcmd(buf, CE_NATIVE, 0, 1, "");
+		runcmd(buf, CE_UTF8, 0, 1, "");
 	    }
 
 	}
@@ -563,7 +572,7 @@ extern int DialogSelectFile(char *buf, int len); /* from rui.c */
 
 int R_ChooseFile(int new, char *buf, int len)
 {
-    return (DialogSelectFile(buf, len));
+    return DialogSelectFile(buf, len);
 }
 
 /* code for R_ShowMessage, R_YesNoCancel */

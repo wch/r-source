@@ -76,12 +76,13 @@ R-devel will be comparatively unstable.]
 	file.info(), file.remove(), file.rename(), load(),
 	normalizePath(), path.expand(), save(), shell(), shell.exec(),
 	shortPathName(), Sys.chmod(), Sys.glob(), system(), unlink().
+	have been converted to use Unicode filenames.
 
-	have been converted to use Unicode file names.  The following
-	have not (as yet): choose.files(), choose.dir(),
-	dir()/list.files(), (problematic because of 'pattern')
-	file.choose(), file.show(), loadhistory(), loadRconsole(),
-	savehistory(),
+	Pathnames you select (choose.files, choose.dir, file.choose)
+	are returned in UTF-8.
+
+	The following functions have not (as yet) been addressed:
+	dir()/list.files() (problematic because of 'pattern')
 
 
 TIME ZONES

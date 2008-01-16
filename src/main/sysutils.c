@@ -128,6 +128,13 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     return filename;
 }
 
+extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
+
+FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode)
+{
+    return(filename ? _wfopen(filename, mode) : NULL );
+}
+
 
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 {

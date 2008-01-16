@@ -1026,6 +1026,11 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+static SEXP mkCharUTF8(const char *s)
+{
+    return mkCharEnc(reEnc(s, CE_NATIVE, CE_UTF8, 1), UTF8_MASK);
+}
+
 SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, def, caption, filters;
@@ -1097,12 +1102,12 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     	for (i = 0; i < count-1; i++) {
 	    temp += strlen(temp) + 1;
 	    if (Rf_strchr(temp,':') || *temp == '\\' || *temp == '/')
-		SET_STRING_ELT(ans, i, mkChar(temp));
+		SET_STRING_ELT(ans, i, mkCharUTF8(temp));
 	    else {
 		strncpy(filename, path, sizeof(filename));
 		filename[pathlen] = '\\';
 		strncpy(filename+pathlen+1, temp, sizeof(filename)-pathlen-1);
-		SET_STRING_ELT(ans, i, mkChar(filename));
+		SET_STRING_ELT(ans, i, mkCharUTF8(filename));
 	    }
 	}
     }
@@ -1128,9 +1133,9 @@ SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isString(caption) || length(caption) != 1 )
 	errorcall(call, _("'caption' must be a character string"));
     p = askcdstring(translateChar(STRING_ELT(caption, 0)), path);
-
+    
     PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, p ? mkChar(p) : NA_STRING);
+    SET_STRING_ELT(ans, 0, p ? mkCharUTF8(p): NA_STRING);
     UNPROTECT(1);
     return ans;
 }
