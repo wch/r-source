@@ -219,10 +219,10 @@ edit.matrix <-
 file.edit <-
   function (..., title = file, editor=getOption("editor"))
 {
-    file <- c(...)
-    if (is.function(editor))
-        invisible(editor(file = file, title = rep(as.character(title), len=length(file))))
-    else .Internal(file.edit(file, rep(as.character(title), len=length(file)), editor))
+    file <- path.expand(c(...))
+    title <- rep(as.character(title), len=length(file))
+    if (is.function(editor)) invisible(editor(file = file, title = title))
+    else .Internal(file.edit(file, title, editor))
 }
 
 vi <- function(name=NULL, file="")

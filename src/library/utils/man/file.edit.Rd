@@ -17,12 +17,16 @@ file.edit(\dots, title = file, editor = getOption("editor"))
   \item{editor}{the text editor to be used.}
 }
 \details{
-    The behaviour of this function is very system dependent.  Currently files can be opened 
-    only one at a time on Unix; on Windows, the internal editor allows multiple files to be
-    opened, but has a limit of 50 simultaneous edit windows.
+  Path expansion (see \code{\link{path.expand}} will be done on
+  \code{names}.
+
+  The behaviour of this function is very system dependent.  Currently
+  files can be opened only one at a time on Unix; on Windows, the
+  internal editor allows multiple files to be opened, but has a limit of
+  50 simultaneous edit windows.
     
-    The \code{title} argument is used for the window caption in Windows, and is ignored
-    on other platforms.
+  The \code{title} argument is used for the window caption in Windows,
+  and is ignored on other platforms.
 }
 \seealso{
   \code{\link{files}},
