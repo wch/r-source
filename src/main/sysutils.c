@@ -868,8 +868,8 @@ static const char UNICODE[] = "UCS-4BE";
 static const char UNICODE[] = "UCS-4LE";
 #endif
 
-size_t attribute_hidden 
-ucstomb(char *s, const unsigned int wc)
+/* used in devX11.c */
+size_t ucstomb(char *s, const unsigned int wc)
 {
     char     buf[16];
     void    *cd = NULL ;
