@@ -1277,7 +1277,7 @@ SEXP R_GetTraceback(int skip)
     UNPROTECT(1);
     return s;
 }
-\
+
 static char * R_ConciseTraceback(SEXP call, int skip)
 {
     static char buf[560];
