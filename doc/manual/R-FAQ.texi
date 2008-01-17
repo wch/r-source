@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-14
+@set FAQ_DATE @value{FAQ_YEAR}-01-17
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -500,67 +500,66 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2007-05-02:
+@c Linux binaries as of 2008-01-17:
 @c
 @c debian
 @c   oldstable
 @c           i386   2.4.1  Johannes Ranke
 @c           amd64  2.4.1  Johannes Ranke
-@c   stable  i386   2.5.0  Johannes Ranke
-@c           amd64  2.5.0  Johannes Ranke
+@c   stable  i386   2.6.1  Johannes Ranke
+@c           amd64  2.6.1  Johannes Ranke
 @c redhat
-@c   el3     i386   2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   el4     i386   2.4.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.4.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   fc3     i386   2.4.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.4.0  Brian Ripley
-@c   fc4     i386   2.4.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.4.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fc5     i386   2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   el4     i386   2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   el5     i386   2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   fc5     i386   2.5.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c           x86_64 2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fc6     i386   2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fc6     i386   2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora7 i386   2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora8 i386   2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c suse
-@c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   8.1     i386   1.9.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   8.2     i386   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.0     i586   2.0.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.1     i586   2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.2     i586   2.2.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.3     i586   2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.2.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   10.0    i586   2.3.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.3.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   10.1    i586   2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   10.0    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de
+@c   10.1    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.2    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.3    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de>
 @c ubuntu
-@c   dapper  i386   2.5.0  Vincent Goulet
-@c   edgy    i386   2.5.0  Vincent Goulet
-@c   feisty     2.5.0  Vincent Goulet
-@c           
+@c   gutsy   [Gutsy Gibbon, 7.10]
+@c           i386   2.6.1  Vincent Goulet
+@c           amd64  2.6.1  Michael Rutter
+@c   feisty  [Feisty Fawn,  7.04]
+@c           i386   2.6.1  Vincent Goulet
+@c           amd64  2.6.1  Michael Rutter
+@c   dapper  [Dapper Drake, 6.06]
+@c           i386   2.6.1  Vincent Goulet
+@c           amd64  2.6.1  Michael Rutter
 @c vinelinux
-@c   3.2     i386   2.3.1  Susumu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   4.0     i386   2.4.1  Susumu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {VineLinux} {x86_64} {9.0/9.1/9.2/9.3/10.0/10.1} {James Henstridge}
+@multitable {VineLinux} {i386/x86_64} {fc5/fc6/fedora7/fedora8} {Susumu Tanimura}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386 @tab stable/oldstable @tab Johannes Ranke
-@item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
-@item Red Hat  @tab i386 @tab FC3/FC4/FC5/FC6 @tab Martyn Plummer
-@item          @tab x86_64 @tab FC3 @tab Brian Ripley
-@item          @tab x86_64 @tab FC4/FC5/FC6 @tab Martyn Plummer
-@item          @tab i386   @tab Enterprise Linux @tab Matthew P. Cox
-@item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
-@item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
-@item          @tab i586   @tab 9.0/9.1/9.2/9.3/10.0/10.1 @tab Detlef Steuer
-@item          @tab x86_64 @tab 9.2/9.3/10.0/10.1 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper/edgy/feisty @tab Vincent Goulet
-@item VineLinux @tab i386 @tab 3.2 @tab Susumu Tanimura
+@item Debian   @tab i386/amd64 @tab stable/oldstable @tab Johannes Ranke
+@c @item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
+@item Red Hat  @tab i386/x86_64 @tab fc5/fc6/fedora7/fedora8 @tab Martyn Plummer
+@c @item          @tab x86_86 @tab fc5/fc6/fedora7/fedora8 @tab Martyn Plummer
+@item          @tab i386/x86_64 @tab el4/el5 @tab Bob Kinney
+@c @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
+@item SuSE     @tab i586/x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
+@c @item          @tab x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
+@item Ubuntu   @tab i386   @tab dapper/feisty/gutsy @tab Vincent Goulet
+@item          @tab amd64  @tab dapper/feisty/gutsy @tab Michael Rutter
+@item VineLinux @tab i386 @tab 4.0 @tab Susumu Tanimura
 @end multitable
 @end quotation
 
@@ -584,7 +583,18 @@ deb http://CRAN.R-project.org/bin/linux/debian stable/
 installing and administering R on Debian Linux can be found at
 @url{http://CRAN.R-project.org/bin/linux/debian/README}.  These
 backports should also be suitable for other Debian derivatives.  Native
-backports for Ubuntu are provided by Vincent Goulet.
+backports for Ubuntu are provided by Vincent Goulet and Michael Rutter.
+
+On SUSE, you can set up an installation source for R within Yast by
+setting (e.g.)
+
+@example
+Protocol: HTTP
+Server name: software.openSUSE.org
+Directory: /download/home:/dsteuer/openSUSE_10.2/
+@end example
+
+With this setting, online updates will check for new versions of R.
 
 @c Once you have added that line the programs @command{apt-get},
 @c @command{apt-cache}, and @command{dselect} (using the apt access
@@ -3101,6 +3111,8 @@ Cox regression with Firth's penalized likelihood.
 Robust Estimation in the Cox proportional hazards regression model.
 @item cramer
 Routine for the multivariate nonparametric Cramer test.
+@item crank
+Functions for completing and recalculating rankings.
 @item crossdes
 Functions for the construction and randomization of balanced carryover
 balanced designs, to check given designs for balance, and for simulation
@@ -3142,6 +3154,8 @@ learned and compared from data.
 Debugger for R functions, with code display, graceful error recovery,
 line-numbered conditional breakpoints, access to exit code, flow
 control, and full keyboard input.
+@item degreenet
+Models for skewed count distributions relevant to networks.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
@@ -4728,6 +4742,10 @@ Functions and datasets for math used in school.
 Scientific graphing functions for factorial designs.
 @item scope
 Data manipulation using arbitrary row and column criteria.
+@item scrime
+Tools for the analysis of high-dimensional data developed/implemented at
+the group ``Statistical Complexity Reduction In Molecular Epidemiology''
+(SCRIME), with main focus on SNP data.
 @item scuba
 Scuba diving calculations and decompression models.
 @item sdcMicro
@@ -4952,6 +4970,8 @@ A Set of Tools for Administering SHared Repositories.
 @c </COMMENT>
 @item statmod
 Miscellaneous biostatistical modelling functions.
+@item statnet
+Software tools for the statistical modeling of network data.
 @item stepPlr
 L2 penalized logistic regression with a stepwise variable selection.
 @item stepwise
