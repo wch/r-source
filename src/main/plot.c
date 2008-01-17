@@ -23,7 +23,7 @@
 /* <UTF8> char here is either ASCII or handled as a whole */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <Defn.h>
@@ -190,35 +190,41 @@ static SEXP getInlinePar(SEXP s, char *name)
     return result;
 }
 
-/* This is also used in grid */
+/* This is also used in grid. It may be used millions of times on the
+ * same character */
 
 /* FIXME: should we warn on more than one character here? */
 int Rf_string_to_pch(SEXP pch)
 {
-    int res = NA_INTEGER;
+    int ipch = NA_INTEGER, last_ipch = 0;
+    static SEXP last_pch = NULL;
 
     if (pch == NA_STRING) return NA_INTEGER;
     if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
+    if (pch == last_pch) return last_ipch;/* take advantage of CHARSXP cache */
+    ipch = (unsigned char) CHAR(pch)[0];
 #ifdef SUPPORT_MBCS
     if (IS_LATIN1(pch)) {
-	res = (unsigned char) CHAR(pch)[0];
-	if (res > 127) res = -res;  /* record as Unicode */
-    } else if (IS_UTF8(pch)) {
+	if (ipch > 127) ipch = -ipch;  /* record as Unicode */
+    } else if (IS_UTF8(pch) || utf8locale) {
 	wchar_t wc = 0;
-	if((int)utf8toucs(&wc, CHAR(pch)) > 0) res = wc;
-	else error(_("invalid multibyte char in pch=\"c\""));
-	if (res > 127) res = -res;
+	if (ipch > 127) {
+	    if ( (int) utf8toucs(&wc, CHAR(pch)) > 0) ipch = -wc;
+	    else error(_("invalid multibyte char in pch=\"c\""));
+	}
     } else if(mbcslocale) {
+	/* Could we safely assume that 7-bit first byte means ASCII?
+	   On Windows this only covers CJK locales, so we could.
+	 */ 
 	unsigned int ucs = 0;
-	if((int)mbtoucs(&ucs, CHAR(pch), MB_CUR_MAX) > 0) res = ucs;
+	if ( (int) mbtoucs(&ucs, CHAR(pch), MB_CUR_MAX) > 0) ipch = ucs;
 	else error(_("invalid multibyte char in pch=\"c\""));
-	if (res > 127) res = -res;
-    } else /* single-byte locale */
-	res = (unsigned char) CHAR(pch)[0];
-#else
-    res = (unsigned int) translateChar(pch)[0];
+	if (ipch > 127) ipch = -ipch;
+    }
 #endif
-    return res;
+
+    last_ipch = ipch; last_pch = pch;
+    return ipch;
 }
 
 
