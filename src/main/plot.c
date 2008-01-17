@@ -198,7 +198,7 @@ int Rf_string_to_pch(SEXP pch)
 {
     int ipch = NA_INTEGER;
     static SEXP last_pch = NULL;
-    static last_ipch = 0;
+    static int last_ipch = 0;
 
     if (pch == NA_STRING) return NA_INTEGER;
     if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
