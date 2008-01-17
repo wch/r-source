@@ -2826,7 +2826,6 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 # define globfree dos_wglobfree
 # define glob_t wglob_t
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
-size_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n);
 #else
 # ifndef GLOB_QUOTE
 #  define GLOB_QUOTE 0
@@ -2887,7 +2886,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 	int n = wcslen(w), ienc = 0;
 	buf = alloca(2*(n+1));
 	R_CheckStack();
-	Rf_wcstoutf8(buf, w, n+1);
+	wcstoutf8(buf, w, n+1);
 	if(!utf8strIsASCII(buf)) ienc = UTF8_MASK;
 	SET_STRING_ELT(ans, i, mkCharEnc(buf, ienc));
     }

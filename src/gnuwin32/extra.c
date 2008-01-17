@@ -40,7 +40,6 @@
 #include <windows.h>
 #include "rui.h"
 
-size_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 
 
@@ -879,7 +878,7 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 		n = wcslen(wpc);
 		text = alloca(2 * (n+1));  /* UTF-8 is at most 1.5x longer */
 		R_CheckStack();
-		Rf_wcstoutf8(text, wpc, n+1);
+		wcstoutf8(text, wpc, n+1);
 		if(!utf8strIsASCII(text)) ienc = UTF8_MASK;
 		ans = splitClipboardText(text, ienc);
 	    } else if (format == CF_TEXT || format == CF_OEMTEXT) {
@@ -979,7 +978,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH, 
 			     wtmp, &wtmp2);
 	    GetLongPathNameW(wtmp, wlongpath, MAX_PATH);
-	    Rf_wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
+	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
 	    SET_STRING_ELT(ans, i, mkCharEnc(longpath, UTF8_MASK));
 	} else {
 	    GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2);
@@ -1008,7 +1007,7 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(getCharEnc(el) == CE_UTF8) {
 	    int ienc = 0;
 	    GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
-	    Rf_wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+	    wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
@@ -1543,51 +1542,3 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
 #endif
 }
 #endif
-
-
-/* based on pcre.c, but will only be used for UCS-2 */
-static const int utf8_table1[] =
-  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
-static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
-
-static size_t Rwcrtomb(char *s, const wchar_t wc)
-{
-    register int i, j;
-    unsigned int cvalue = wc;
-    char buf[10], *b;
-
-    b = s ? s : buf;
-    if(cvalue == 0) {*b = 0; return 0;}
-    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
-	if (cvalue <= utf8_table1[i]) break;
-    b += i;
-    for (j = i; j > 0; j--) {
-	*b-- = 0x80 | (cvalue & 0x3f);
-	cvalue >>= 6;
-    }
-    *b = utf8_table2[i] | cvalue;
-    return i + 1;
-}
-
-size_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n)
-{
-    int m, res=0;
-    char *t;
-    const wchar_t *p;
-    if(s) {
-	for(p = wc, t = s; ; p++) {
-	    m  = Rwcrtomb(t, *p);
-	    if(m <= 0) break;
-	    res += m;
-	    if(res >= n) break;
-	    t += m;
-	}
-    } else {
-	for(p = wc; ; p++) {
-	    m  = Rwcrtomb(NULL, *p);
-	    if(m <= 0) break;
-	    res += m;
-	}
-    }
-    return res;
-}

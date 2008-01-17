@@ -1954,7 +1954,6 @@ static int NumericValue(int c)
 #ifdef USE_UTF8_IF_POSSIBLE
 #define WTEXT_PUSH(c) do { if(wcnt < 1000) wcs[wcnt++] = c; } while(0)
 
-extern ssize_t Rf_wcstoutf8(char *s, const wchar_t *wc, size_t n);
 static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
 {
     SEXP t;

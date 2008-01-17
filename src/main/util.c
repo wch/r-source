@@ -975,6 +975,53 @@ utf8toucs(wchar_t *wc, const char *s)
     }
 }
 
+/* based on pcre.c */
+static const int utf8_table1[] =
+  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
+static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+
+static size_t Rwcrtomb(char *s, const wchar_t wc)
+{
+    register int i, j;
+    unsigned int cvalue = wc;
+    char buf[10], *b;
+
+    b = s ? s : buf;
+    if(cvalue == 0) {*b = 0; return 0;}
+    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
+	if (cvalue <= utf8_table1[i]) break;
+    b += i;
+    for (j = i; j > 0; j--) {
+	*b-- = 0x80 | (cvalue & 0x3f);
+	cvalue >>= 6;
+    }
+    *b = utf8_table2[i] | cvalue;
+    return i + 1;
+}
+
+size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
+{
+    int m, res=0;
+    char *t;
+    const wchar_t *p;
+    if(s) {
+	for(p = wc, t = s; ; p++) {
+	    m  = Rwcrtomb(t, *p);
+	    if(m <= 0) break;
+	    res += m;
+	    if(res >= n) break;
+	    t += m;
+	}
+    } else {
+	for(p = wc; ; p++) {
+	    m  = Rwcrtomb(NULL, *p);
+	    if(m <= 0) break;
+	    res += m;
+	}
+    }
+    return res;
+}
+
 /* A version that reports failure as an error */
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 {
