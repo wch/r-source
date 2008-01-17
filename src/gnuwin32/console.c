@@ -234,13 +234,43 @@ void xbufaddxs(xbuf p, const wchar_t *s, int user)
     p->user[p->ns - 1] = l;
 }
 
+#ifdef Win32_UTF8
+extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
+static size_t enctowcs(wchar_t *wc, char *s, int n)
+{
+    size_t nc = 0;
+    /* NB Synchronize with EncodeString */
+    static char in[4] = "\002\377\376", out[4] = "\003\377\376";
+    char *pb, *pe;
+    if((pb = strchr(s, in[0])) && *(pb+1) == in[1] && *(pb+2) == in[2]) {
+	*pb = '\0';
+	nc += mbstowcs(wc, s, n);
+	pb += 3; pe = pb;
+	while(*pe && 
+	      !((pe = strchr(pb, out[0])) && *(pe+1) == out[1] &&
+	      *(pe+2) == out[2])) pe++;
+	if(!*pe) return nc; /* FIXME */;
+	*pe = '\0';
+	/* convert string starting at pb from UTF-8 */
+	nc += Rf_utf8towcs(wc+nc, pb, (pe-pb));
+	pe += 3;
+	nc += enctowcs(wc+nc, pe, n-nc);
+    } else nc = mbstowcs(wc, s, n);
+    return nc;
+}
+#endif
+
 static void xbufadds(xbuf p, const char *s, int user)
 {
-    int n = strlen(s) + 1;
+    int n = strlen(s) + 1; /* UCS-2 must be shorter */
     wchar_t *tmp;
     
     tmp = (wchar_t *) alloca(n * sizeof(wchar_t));
+#ifdef Win32_UTF8
+    enctowcs(tmp, (char *) s, n);
+#else
     mbstowcs(tmp, s, n);
+#endif
     xbufaddxs(p, tmp, user);
 }
 

@@ -11,6 +11,8 @@ CFLAGS=$(OPTFLAGS)
 ifdef SUPPORT_UTF8
 CFLAGS += -DSUPPORT_UTF8
 endif
+# printutils-CFLAGS+=-DWin32_UTF8
+
 FFLAGS=-O2
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \

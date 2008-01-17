@@ -78,6 +78,7 @@ extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
 OPTFLAGS_M+=-DLEA_MALLOC
 endif
+# console-CFLAGS=-DWin32_UTF8
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
 

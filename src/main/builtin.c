@@ -438,6 +438,9 @@ static void cat_cleanup(void *data)
     con->fflush(con);
     if(!wasopen) con->close(con);  /**** do this second? */
     if(changedcon) switch_stdout(-1, 0);
+#ifdef Win32
+    WinUTF8out = FALSE;
+#endif
 }
 
 SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -456,6 +459,9 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Use standard printing defaults */
     PrintDefaults(rho);
+#ifdef Win32
+    WinCheckUTF8();
+#endif
 
     objs = CAR(args);
     args = CDR(args);

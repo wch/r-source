@@ -692,6 +692,8 @@ LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
 extern0   Rboolean latin1locale INI_as(FALSE); /* is this a Latin-1 locale? */
 #ifdef Win32
 LibExtern unsigned int localeCP  INI_as(1252); /* the locale's codepage */
+extern0   Rboolean WinUTF8out  INI_as(FALSE);  /* Use UTF-8 for output */
+extern0   void WinCheckUTF8(void);
 #endif
 
 extern0 char OutDec	INI_as('.');  /* decimal point used for output */

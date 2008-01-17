@@ -39,9 +39,10 @@
 
 #include <stdlib.h> /* for div() */
 
+/* FIXME: sort out encodings */
 /* We need display width of a string */
-int Rstrwid(const char *str, int slen, int quote);  /* from printutils.c */
-#define strwidth(x) Rstrwid(x, strlen(x), 0)
+int Rstrwid(const char *str, int slen, int enc, int quote);  /* from printutils.c */
+#define strwidth(x) Rstrwid(x, strlen(x), CE_NATIVE, 0)
 
 /* ceil_DIV(a,b) :=  ceil(a / b)  in _int_ arithmetic : */
 static R_INLINE

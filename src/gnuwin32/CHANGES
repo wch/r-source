@@ -81,8 +81,12 @@ R-devel will be comparatively unstable.]
 	Pathnames you select (choose.files, choose.dir, file.choose)
 	are returned in UTF-8.
 
-	The following functions have not (as yet) been addressed:
+	The following functions have not as yet been addressed:
 	dir()/list.files() (problematic because of 'pattern')
+
+    o	The Rgui console can display UTF-8 encoded strings (provided
+	the font selected has the glyphs needed).
+	[Not yet live pending more extensive testing.]
 
 
 TIME ZONES

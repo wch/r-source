@@ -709,6 +709,7 @@ next_char:
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
 	}
+	/* FIXME if starting in UTF-8, use \uxxxx */
 	snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 	outbuf += 4; outb -= 4;
 	inbuf++; inb--;

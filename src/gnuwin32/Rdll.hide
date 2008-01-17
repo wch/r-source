@@ -405,6 +405,8 @@
  UNSET_LATIN1
  UNSET_UTF8
  UseInternet2
+ WinUTF8out
+ WinCheckUTF8
  WrongArgCount
  __printf__
  _dist_code

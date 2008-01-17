@@ -260,24 +260,34 @@ to test on, but there would be little advantage in doing so.
 
 - Rprintf and allies, error messaging.
 
+  [This one is really tricky: we don't want to be writing UTF-8 files
+   when sink() is in use, for example, and rterm/some embedded uses
+   run in environments that probably do not support UCS-2.
+
+   The current compromise is to encode UTF-8 character vector elements
+   in EncodeString, at least when called from printing and from cat(),
+   and if outputting to the Rgui console. This is done by surrounding
+   them by 3-byte escape sequences starting with STX/ETX.]
+
 - file names.  Since Windows NTFS can have file names not valid in the
   current locale, this needs to use wfopen and similar interfaces, as
   well as GetFullPathNameW ... also _w* versions of mkdir, rmdir,
   unlink, open, popen, stat, system.  Use with care, as not all file
-  systems use UCS-2 file names.
+  systems use UCS-2 file names.  [Largely done]
 
   This needs to include bzlib and zlib, as well as file/folder
-  selection widgets.
+  selection widgets. [Largely done]
 
 - environment variables.  Both values and names, since _wputenv is
   needed to set name=value strings.  It would be better to use wmain
   and only ever use _wgetenv and _wputenv to avoid maintaining
-  parallel environments.
+  parallel environments.  [Done]
 
 - graphics devices.  Calls to text() and points() (with pch as a
   string) need either to be translated or, preferably, the device
   adjusted to accept UTF-8 (and we would need a flag to know if it
   could).  Note that this impacts third-party devices.
+  [Done for windows() family, planned for postscript/pdf.]
 
 - GetUserName, GetComputerName, [GS]etCurrentDirectory.
 
