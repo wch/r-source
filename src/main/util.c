@@ -999,6 +999,7 @@ static size_t Rwcrtomb(char *s, const wchar_t wc)
     return i + 1;
 }
 
+/* attribute_hidden? */
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 {
     int m, res=0;

@@ -35,10 +35,6 @@
 # include <errno.h>
 #endif
 
-#ifdef Win32
-wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
-#endif
-
 /* Machine Constants */
 
 static void Init_R_Machine(SEXP rho)

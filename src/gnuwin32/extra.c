@@ -40,8 +40,6 @@
 #include <windows.h>
 #include "rui.h"
 
-wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
-
 
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {

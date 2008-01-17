@@ -665,6 +665,7 @@ const char *translateChar(SEXP x)
     const char *inbuf, *ans = CHAR(x);
     char *outbuf, *p;
     size_t inb, outb, res;
+    int ienc = getCharEnc(x);
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     if(TYPEOF(x) != CHARSXP)
@@ -705,14 +706,36 @@ next_char:
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
     } else if(res == -1 && errno == EILSEQ) {
-	if(outb < 5) {
+	if(outb < 13) {
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
 	}
-	/* FIXME if starting in UTF-8, use \uxxxx */
-	snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
-	outbuf += 4; outb -= 4;
-	inbuf++; inb--;
+#ifdef SUPPORT_MBCS
+	if (ienc == CE_UTF8) {
+	    /* if starting in UTF-8, use \uxxxx */
+	    /* This must be the first byte */
+	    int clen;
+	    wchar_t wc;
+	    clen = utf8toucs(&wc, inbuf);
+	    inbuf += clen; inb -= clen;
+# ifndef Win32
+	    if((unsigned int) wc < 65536) {
+# endif
+		snprintf(outbuf, 9, "<U+%04X>", (unsigned int) wc);
+		outbuf += 8; outb -= 8;
+# ifndef Win32
+	    } else {
+		snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
+		outbuf += 12; outb -= 12;		
+	    }
+# endif
+	} else
+#endif
+	{
+	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+	    outbuf += 4; outb -= 4;
+	    inbuf++; inb--;
+	}
 	goto next_char;
     }
     *outbuf = '\0';
@@ -727,7 +750,7 @@ next_char:
 static void *latin1_wobj = NULL, *utf8_wobj=NULL;
 
 /* Translate from current encoding to wchar_t = UCS-2 on Windows
-   (using surrogates are turned on). NB: this is not general.
+   (not using surrogates). NB: this is not general.
 */
 const wchar_t *wtransChar(SEXP x)
 {
@@ -876,7 +899,7 @@ static const char UNICODE[] = "UCS-4BE";
 static const char UNICODE[] = "UCS-4LE";
 #endif
 
-/* used in devX11.c */
+/* used in gram.c and devX11.c */
 size_t ucstomb(char *s, const unsigned int wc)
 {
     char     buf[16];
@@ -928,6 +951,7 @@ size_t ucstomb(char *s, const unsigned int wc)
     return strlen(buf);
 }
 
+/* used in plot.c for non-UTF-8 MBCS */
 size_t attribute_hidden
 mbtoucs(unsigned int *wc, const char *s, size_t n)
 {

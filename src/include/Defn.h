@@ -1144,6 +1144,7 @@ char *Rf_strrchr(const char *s, int c);
 #ifdef Win32
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
+wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 #endif
 #if defined(Win32) && defined(SUPPORT_UTF8)
 #define mbrtowc(a,b,c,d) Rmbrtowc(a,b)

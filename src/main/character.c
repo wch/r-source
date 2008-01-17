@@ -2825,7 +2825,6 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 # include <dos_wglob.h>
 # define globfree dos_wglobfree
 # define glob_t wglob_t
-wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 #else
 # ifndef GLOB_QUOTE
 #  define GLOB_QUOTE 0
