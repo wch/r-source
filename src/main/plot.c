@@ -197,27 +197,23 @@ SEXP FixupPch(SEXP pch, int dflt)
     SEXP ans = R_NilValue;/* -Wall*/
 
     n = length(pch);
-    if (n == 0) {
-	ans = ScalarInteger(dflt);
-    }
-    else if (isList(pch)) {
+    if (n == 0) return ScalarInteger(dflt);
+    PROTECT(ans = allocVector(INTSXP, n)); /* The string functions can allocate */
+    if (isList(pch)) {
 	ans = allocVector(INTSXP, n);
 	for (i = 0; pch != R_NilValue;	pch = CDR(pch))
 	    INTEGER(ans)[i++] = asInteger(CAR(pch));
     }
     else if (isInteger(pch)) {
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = INTEGER(pch)[i];
     }
     else if (isReal(pch)) {
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = R_FINITE(REAL(pch)[i]) ?
 		REAL(pch)[i] : NA_INTEGER;
     }
     else if (isString(pch)) {
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
 	    if(STRING_ELT(pch, i) == NA_STRING ||
 	       CHAR(STRING_ELT(pch, i))[0] == '\0') { /* pch = "" */
@@ -226,6 +222,8 @@ SEXP FixupPch(SEXP pch, int dflt)
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
 		    wchar_t wc;
+		    /* This assumes that wchar_t is Unicode, which
+		       is not universally true */
 		    if(mbrtowc(&wc, translateChar(STRING_ELT(pch, i)),
 			       MB_CUR_MAX, NULL) > 0) INTEGER(ans)[i] = wc;
 		    else
@@ -237,7 +235,6 @@ SEXP FixupPch(SEXP pch, int dflt)
 	}
     }
     else if (isLogical(pch)) {/* NA, but not TRUE/FALSE */
-	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
 	    if(LOGICAL(pch)[i] == NA_LOGICAL)
 		INTEGER(ans)[i] = NA_INTEGER;
@@ -248,6 +245,7 @@ SEXP FixupPch(SEXP pch, int dflt)
 	if (INTEGER(ans)[i] < 0 && INTEGER(ans)[i] != NA_INTEGER)
 	    INTEGER(ans)[i] = dflt;
     }
+    UNPROTECT(1);
     return ans;
 }
 

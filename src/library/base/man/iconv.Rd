@@ -63,8 +63,8 @@ iconvlist()
   current locale's encoding is detected as Latin-1 or UTF-8.
 }
 \note{
-  Not all platforms support these functions.  See also
-  \code{\link{capabilities}("iconv")}.
+  Not all platforms support these functions, although almost all
+  support \code{iconv}.  See also \code{\link{capabilities}("iconv")}.
 }
 \seealso{
   \code{\link{localeToCharset}}, \code{\link{file}}. 
@@ -79,7 +79,7 @@ iconv(x, "LATIN2", "UTF-8")
 }
 
 ## Both x below are in latin1 and will only display correctly in a
-## latin1 locale.
+## locale that can represent and display latin1.
 x <- "fa\xE7ile"
 Encoding(x) <- "latin1"
 x
