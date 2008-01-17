@@ -267,6 +267,7 @@ const char
    and allowing for embedded nuls.
    In MBCS locales it works in characters, and reports in display width.
  */
+attribute_hidden
 int Rstrwid(const char *str, int slen, int quote)
 {
     const char *p = str;
@@ -372,6 +373,7 @@ int Rstrwid(const char *str, int slen, int quote)
     return len;
 }
 
+attribute_hidden
 int Rstrlen(SEXP s, int quote)
 {
     return Rstrwid(CHAR(s), LENGTH(s), quote);
