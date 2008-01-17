@@ -196,8 +196,9 @@ static SEXP getInlinePar(SEXP s, char *name)
 /* FIXME: should we warn on more than one character here? */
 int Rf_string_to_pch(SEXP pch)
 {
-    int ipch = NA_INTEGER, last_ipch = 0;
+    int ipch = NA_INTEGER;
     static SEXP last_pch = NULL;
+    static last_ipch = 0;
 
     if (pch == NA_STRING) return NA_INTEGER;
     if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
