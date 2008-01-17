@@ -55,6 +55,11 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   Attempts to set an invalid locale are ignored.  There may or may not
   be a warning, depending on the OS.
+
+  Attempts to change the character set (by
+  \code{Sys.setlocale("LC_TYPE", )}, if that implies a different
+  character set) during a session may not work and are likely to lead to
+  some confusion.
 }
 \value{
   A character string of length one describing the locale in use (after

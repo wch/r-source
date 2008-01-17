@@ -1896,8 +1896,11 @@ to Estonian and the language to Spanish.)
 
 It is usually possible to change the language once @R{} is running
 @emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",
-"new_locale")}, or by setting environment variables such as
-@env{LANGUAGE}.
+"new_locale")}, or by setting an environment variable such as
+@env{LANGUAGE}, @emph{provided}@footnote{If you try changing from French
+to Russian except in a UTF-8 locale, you will find messages change to
+English.} the language you are changing to can be output in the current
+character set.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the
