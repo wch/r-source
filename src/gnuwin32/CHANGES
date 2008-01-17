@@ -34,9 +34,9 @@ GUI CHANGES
 
 INTERNATIONALIZATION
 
-This is another phase in the on-going effort to make Unicode
-characters available to R for Windows users.  [Whilst this is going on
-R-devel will be comparatively unstable.]
+ This is another phase in the on-going effort to make Unicode
+ characters available to R for Windows users.  [Whilst this is going on
+ R-devel will be comparatively unstable.]
 
     o	If a string presented to the parser contains a \uxxxx escape
 	invalid in the current locale, the string is output in UTF-8
