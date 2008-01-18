@@ -391,6 +391,7 @@ int Rstrlen(SEXP s, int quote)
    CHARSXPs.  It is also called by do_encodeString, but not from
    format().
  */
+
 const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
     int b, b0, i, j, cnt, ienc = CE_NATIVE;
@@ -409,7 +410,6 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    strlen(CHAR(R_print.na_string_noquote));
 	quote = 0;
     } else {
-#ifdef Win32_UTF8
 	if(WinUTF8out) {
 	    ienc = getCharEnc(s);
 	    if(ienc == CE_UTF8) {
@@ -422,9 +422,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		i = Rstrwid(p, cnt, CE_NATIVE, quote);
 		ienc = CE_NATIVE;
 	    }
-	} else
-#endif
-	{
+	} else {
 	    p = translateChar(s);
 	    if(p == CHAR(s)) {
 		i = Rstrlen(s, quote);
@@ -508,13 +506,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		} else {
 		    if(iswprint(wc)) {
 			/* The problem here is that wc may be
-			   printable according to the Unicode
-			   tables, but it may not be printable
-			   on the ouput device concerned.
-			   Not too much we can do about that, 
-			   but FIXME if this is UTF-8 on Windows
-			   we could try converting to the current
-			   charset and use \uxxx if that fails */ 
+			   printable according to the Unicode tables,
+			   but it may not be printable on the ouput
+			   device concerned. */ 
 			for(j = 0; j < res; j++) *q++ = *p++;
 		    } else {
 #ifndef Win32

@@ -44,7 +44,9 @@ INTERNATIONALIZATION
 	if it is used later in the session, but it can be used for
 	e.g. plotting on the windows() device.  So "\u03b2" gives a
 	Greek letter beta (as distinct from  mathematical symbol), and
-	"\u2642" a 'male sign'.
+	"\u2642" a 'male sign'.  Such strings can be printed: they
+	will appear as e.g. <U+2642> except in the Rgui console (see
+	below).
 	
     o	Rgui has been re-written to work internally in Unicode.  This
 	means that copy and paste will be done in Unicode, and should
@@ -61,12 +63,12 @@ INTERNATIONALIZATION
 	Further, they can handle UTF-8-encoded strings, so if a
 	character string in R is marked (see ?Encoding) as UTF-8, it
 	can be plotted (for a suitable font) even if it is not a valid
-	character in the current locale.  So one way to plot a Greek
+	character in the current locale.  Thus one way to plot a Greek
 	beta (Unicode point U+03B2) is text(x, y, intToUtf8(0x03b2L)).
 	Another is to use "\u03b2".
 
     o	Environment variables are read and set in Unicode by
-	Sys.getenv/Sys.setenv.
+	Sys.getenv()/Sys.setenv().
 
     o	readClipboard() can read Unicode text (format = 13), and
 	writeClipboard() can write it.
@@ -86,7 +88,6 @@ INTERNATIONALIZATION
 
     o	The Rgui console can display UTF-8 encoded strings (provided
 	the font selected has the glyphs needed).
-	[Not yet live pending more extensive testing.]
 
 
 TIME ZONES

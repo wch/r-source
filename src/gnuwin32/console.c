@@ -234,7 +234,6 @@ void xbufaddxs(xbuf p, const wchar_t *s, int user)
     p->user[p->ns - 1] = l;
 }
 
-#ifdef Win32_UTF8
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 static size_t enctowcs(wchar_t *wc, char *s, int n)
 {
@@ -258,7 +257,6 @@ static size_t enctowcs(wchar_t *wc, char *s, int n)
     } else nc = mbstowcs(wc, s, n);
     return nc;
 }
-#endif
 
 static void xbufadds(xbuf p, const char *s, int user)
 {
@@ -266,11 +264,7 @@ static void xbufadds(xbuf p, const char *s, int user)
     wchar_t *tmp;
     
     tmp = (wchar_t *) alloca(n * sizeof(wchar_t));
-#ifdef Win32_UTF8
     enctowcs(tmp, (char *) s, n);
-#else
-    mbstowcs(tmp, s, n);
-#endif
     xbufaddxs(p, tmp, user);
 }
 
