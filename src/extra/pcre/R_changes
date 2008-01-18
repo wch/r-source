@@ -1,8 +1,6 @@
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
-SUPPORT_UCP is only used for UTF-8 locales, so only built on Unix-alikes.
-
 diff -u /home/ripley/src/pcre-7.4/pcre_internal.h ./pcre_internal.h
 --- pcre_internal.h   2007-09-13 10:22:27.000000000 +0100
 +++ ./pcre_internal.h   2007-10-03 14:48:02.000000000 +0100
