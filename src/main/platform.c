@@ -760,30 +760,15 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
+#ifndef Win32
 #define CBUFSIZE 2*PATH_MAX+1
 static SEXP filename(const char *dir, const char *file)
 {
     SEXP ans;
     char cbuf[CBUFSIZE];
     if (dir) {
-#ifdef Win32
-	switch (dir[strlen(dir)-1])
-	{
-	case '/':
-	case '\\':
-	case ':':
-	{
-	    snprintf(cbuf, CBUFSIZE, "%s%s", dir, file);
-	    ans = mkChar(cbuf);
-	    break;
-	}
-	default:
-#endif
-	    snprintf(cbuf, CBUFSIZE, "%s%s%s", dir, R_FileSep, file);
-	    ans = mkChar(cbuf);
-#ifdef Win32
-    	}
-#endif
+        snprintf(cbuf, CBUFSIZE, "%s%s%s", dir, R_FileSep, file);
+	ans = mkChar(cbuf);
     } else {
 	snprintf(cbuf, CBUFSIZE, "%s", file);
         ans = mkChar(cbuf);
@@ -797,12 +782,7 @@ static void count_files(const char *dnp, int *count,
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX];
-#ifdef Windows
-    /* For consistency with other functions */
-    struct _stati64 sb;
-#else
     struct stat sb;
-#endif
 
     if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	error(_("directory/folder path name too long"));
@@ -814,11 +794,7 @@ static void count_files(const char *dnp, int *count,
 		if(recursive) {
 		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
-#ifdef Windows
-		    _stati64(p, &sb);
-#else
 		    stat(p, &sb);
-#endif
 		    if((sb.st_mode & S_IFDIR) > 0) {
 			if (strcmp(de->d_name, ".") && strcmp(de->d_name, ".."))
 				count_files(p, count, allfiles, recursive);
@@ -838,12 +814,7 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX], stem2[PATH_MAX];
-#ifdef Windows
-    /* > 2GB files might be skipped otherwise */
-    struct _stati64 sb;
-#else
     struct stat sb;
-#endif
 
     if ((dir = opendir(dnp)) != NULL) {
 	while ((de = readdir(dir))) {
@@ -851,11 +822,7 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 		if(recursive) {
 		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
-#ifdef Windows
-		    _stati64(p, &sb);
-#else
 		    stat(p, &sb);
-#endif
 		    if((sb.st_mode & S_IFDIR) > 0) {
 			if (strcmp(de->d_name, ".") && 
 			    strcmp(de->d_name, "..")) {
@@ -909,6 +876,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+#endif /* not Win32 */
 
 SEXP attribute_hidden do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
