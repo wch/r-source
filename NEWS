@@ -270,6 +270,9 @@ UTILITIES
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.
 
+    o	tools::texi2dvi() works around the failure of 'texi2dvi --quiet' 
+	to be quiet in texinfo 4.11.
+
 
 C-LEVEL FACILITIES
 
