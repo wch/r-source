@@ -410,6 +410,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    strlen(CHAR(R_print.na_string_noquote));
 	quote = 0;
     } else {
+#ifdef Win32
 	if(WinUTF8out) {
 	    ienc = getCharEnc(s);
 	    if(ienc == CE_UTF8) {
@@ -422,7 +423,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		i = Rstrwid(p, cnt, CE_NATIVE, quote);
 		ienc = CE_NATIVE;
 	    }
-	} else {
+	} else
+#endif
+        {
 	    p = translateChar(s);
 	    if(p == CHAR(s)) {
 		i = Rstrlen(s, quote);
