@@ -216,6 +216,10 @@ NEW FEATURES
     o	The src/extra/intl sources have been updated to those from
 	gettext 0.17.
 
+    o	list.file() gains a '...' argument, to allow
+	e.g. case-insensitive matching on some Windows/MacOS file
+	systems.
+
 
 DEPRECATED & DEFUNCT
 

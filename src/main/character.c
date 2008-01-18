@@ -914,6 +914,8 @@ static int fgrep_one_bytes(const char *pat, const char *target, int useBytes)
     return -1;
 }
 
+/* FIXME: this should be using UTF-8 when the strings concerned are
+   UTF-8 */
 SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
@@ -1145,6 +1147,8 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 extern SEXP do_pgsub(const char *spat, const char *srep, SEXP vec,
 		     int global, int igcase_opt, int useBytes);
 
+/* FIXME: this should be using UTF-8 when the strings concerned are
+   UTF-8 */
 SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
@@ -1346,6 +1350,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/* FIXME: this should be using UTF-8 when the strings concerned are
+   UTF-8 */
 SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchlen;
@@ -1716,6 +1722,8 @@ static SEXP gregexpr_BadStringAns(void)
 extern SEXP
 do_gpregexpr(const char *spat, SEXP vec, int igcase_opt, int useBytes);
 
+/* FIXME: this should be using UTF-8 when the strings concerned are
+   UTF-8 */
 SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ansList, ans;

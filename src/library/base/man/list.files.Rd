@@ -9,9 +9,9 @@
 \title{List the Files in a Directory/Folder}
 \usage{
 list.files(path = ".", pattern = NULL, all.files = FALSE,
-           full.names = FALSE, recursive = FALSE)
+           full.names = FALSE, recursive = FALSE, \dots)
        dir(path = ".", pattern = NULL, all.files = FALSE,
-           full.names = FALSE, recursive = FALSE)
+           full.names = FALSE, recursive = FALSE, \dots)
 }
 \arguments{
   \item{path}{a character vector of full path names; the default
@@ -25,6 +25,9 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
     path is prepended to the file names.  If \code{FALSE}, only
     the file names are returned.}
   \item{recursive}{logical. Should the listing recurse into directories?}
+  \item{\dots}{arguments to \code{\link{grep}} which affect the
+    interpretation of \code{pattern}.  E.g. \code{ignore.case = TRUE}
+    can be helpful on Windows and case-insensitive MacOS file systems.}
 }
 \description{
   These functions produce a character vector of the names of files
@@ -62,6 +65,9 @@ for interactive selection.
 \examples{
 list.files(R.home())
 ## Only files starting with a-l or r
-dir("../..", pattern = "^[a-lr]",full.names=TRUE)
+## Note that a-l is locale-dependent, but using case-insensitive
+## matching makes it unambiguous in English locales
+dir("../..", pattern = "^[a-lr]",
+    full.names = TRUE, ignore.case = TRUE)
 }
 \keyword{file}
