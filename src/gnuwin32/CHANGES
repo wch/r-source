@@ -16,7 +16,7 @@ WINDOWS VERSIONS
 
     o	Versions of Windows older than 2000 are no longer supported
 	(specifically, 95, 98, ME, NT4).  Windows 2000 is untested,
-	and may not be supported at the release.
+	but it is intended to be supported at release.
 
 
 GUI CHANGES
@@ -26,10 +26,11 @@ GUI CHANGES
 	the currently selected path, rather than having a separate
  	'Browse' button.
 
-    o	When Rgui is launched from a terminal, C output from
-	ill-formed packages that write to stdout or stderr rather than
-	use Rprintf will appear in the terminal rather than being
-	lost.  (Only on XP or later.)
+    o	When Rgui is launched from a terminal, C output from ill-formed
+	packages that write to stdout or stderr rather than use
+	Rprintf will appear in the terminal rather than being lost.
+	(Only on XP or later.)  This can be very handy for debugging C
+	code in packages: just write debugging messages to stdout.
 
 
 INTERNATIONALIZATION
@@ -39,13 +40,13 @@ INTERNATIONALIZATION
  R-devel will be comparatively unstable.]
 
     o	If a string presented to the parser contains a \uxxxx escape
-	invalid in the current locale, the string is output in UTF-8
+	invalid in the current locale, the string is recorded in UTF-8
 	with the encoding declared.  This is likely to throw an error
-	if it is used later in the session, but it can be used for
-	e.g. plotting on the windows() device.  So "\u03b2" gives a
-	Greek letter beta (as distinct from  mathematical symbol), and
-	"\u2642" a 'male sign'.  Such strings can be printed: they
-	will appear as e.g. <U+2642> except in the Rgui console (see
+	if it is used later in the session, but it can be printed, and
+	used for e.g. plotting on the windows() device.  So "\u03b2"
+	gives a Greek letter beta (as distinct from mathematical
+	symbol), and "\u2642" a 'male sign'.  Such strings will be
+	printed as e.g. <U+2642> except in the Rgui console (see
 	below).
 	
     o	Rgui has been re-written to work internally in Unicode.  This
@@ -73,18 +74,16 @@ INTERNATIONALIZATION
     o	readClipboard() can read Unicode text (format = 13), and
 	writeClipboard() can write it.
 
-    o	file() and pipe() connections and the functions dir.create(),
-	DLL.version(), file.access(), file.copy(), file.create(),
-	file.info(), file.remove(), file.rename(), load(),
-	normalizePath(), path.expand(), save(), shell(), shell.exec(),
-	shortPathName(), Sys.chmod(), Sys.glob(), system(), unlink().
-	have been converted to use Unicode filenames.
+    o	file() and pipe() connections and the functions dir(),
+	dir.create(), DLL.version(), file.access(), file.copy(),
+	file.create(), file.info(), file.remove(), file.rename(),
+	list.files(), load(), normalizePath(), path.expand(), save(),
+	shell(), shell.exec(), shortPathName(), Sys.chmod(),
+	Sys.glob(), system() and unlink() have been converted to use
+	Unicode filenames.
 
 	Pathnames you select (choose.files, choose.dir, file.choose)
 	are returned in UTF-8.
-
-	The following functions have not as yet been addressed:
-	dir()/list.files() (problematic because of 'pattern')
 
     o	The Rgui console can display UTF-8 encoded strings (provided
 	the font selected has the glyphs needed).
