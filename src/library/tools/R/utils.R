@@ -197,11 +197,18 @@ function(file, pdf = FALSE, clean = FALSE,
     if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
 
     if(nzchar(texi2dvi)) {
-        if(pdf) pdf <- "--pdf" else pdf <- ""
-        if(clean) clean <- "--clean" else clean <- ""
-        if(quiet) quiet <- "--quiet" else quiet <- ""
-        if(system(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file))))
-            stop(gettextf("running 'texi2dvi' on '%s' failed", file), domain = NA)
+        pdf <- if(pdf) "--pdf" else ""
+        clean <- if(clean) "--clean" else ""
+        if(quiet) {
+            quiet <- "--quiet"
+            extra <- " > /dev/null"
+        } else {
+            extra <- quiet <- ""
+        }
+        if(system( paste(shQuote(texi2dvi), quiet, pdf, clean,
+                         shQuote(file), extra) ))
+            stop(gettextf("running 'texi2dvi' on '%s' failed", file),
+                 domain = NA)
     } else {
         ## do not have texi2dvi
         ## needed at least on Windows except for MiKTeX
