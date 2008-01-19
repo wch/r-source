@@ -723,7 +723,9 @@ folder (which you would need to create with full control for the R
 installation account).  This will be used for installation in preference
 to the main library folder if it exists.
 
-This approach will not allow you to update the recommended packages.
+This approach will not allow you to update the recommended packages
+unless you `Run as administrator': we suggest you use an R session
+running under Administrator privileges when updating those.
 @end itemize
 
 
