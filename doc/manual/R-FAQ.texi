@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-17
+@set FAQ_DATE @value{FAQ_YEAR}-01-19
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -513,12 +513,8 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
 @c   el5     i386   2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
 @c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   fc5     i386   2.5.1  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.5.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fc6     i386   2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora7 i386   2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.6.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora7 i386   2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c   fedora8 i386   2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c           x86_64 2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c suse
@@ -547,11 +543,11 @@ The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {VineLinux} {i386/x86_64} {fc5/fc6/fedora7/fedora8} {Susumu Tanimura}
+@multitable {VineLinux} {i386/x86_64} {dapper/feisty/gutsy} {Susumu Tanimura}
 @headitem @tab CPU @tab Versions @tab Provider
 @item Debian   @tab i386/amd64 @tab stable/oldstable @tab Johannes Ranke
 @c @item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
-@item Red Hat  @tab i386/x86_64 @tab fc5/fc6/fedora7/fedora8 @tab Martyn Plummer
+@item Red Hat  @tab i386/x86_64 @tab fedora7/fedora8 @tab Martyn Plummer
 @c @item          @tab x86_86 @tab fc5/fc6/fedora7/fedora8 @tab Martyn Plummer
 @item          @tab i386/x86_64 @tab el4/el5 @tab Bob Kinney
 @c @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
@@ -895,7 +891,7 @@ Daily mirrors are available at @acronym{URL}s including
 @item @url{http://cran.au.R-project.org/}
 @tab (PlanetMirror, Australia)
 @item @url{http://cran.br.R-project.org/}
-@tab (Universidade Federal de Paran@'a, Brazil)
+@tab (Universidade Federal do Paran@'a, Brazil)
 @item @url{http://cran.ch.R-project.org/}
 @tab (ETH Z@"urich, Switzerland)
 @item @url{http://cran.dk.R-project.org/}
@@ -904,14 +900,14 @@ Daily mirrors are available at @acronym{URL}s including
 @tab (Spanish National Research Network, Madrid, Spain)
 @item @url{http://cran.fr.R-project.org/}
 @tab (INRA, Toulouse, France)
-@item @url{http://cran.hu.R-project.org/}
-@tab (Semmelweis U, Hungary)
+@c @item @url{http://cran.hu.R-project.org/}
+@c @tab (Semmelweis U, Hungary)
 @item @url{http://cran.pt.R-project.org/}
 @tab (Universidade do Porto, Portugal)
 @item @url{http://cran.uk.R-project.org/}
 @tab (U of Bristol, United Kingdom)
-@item @url{http://cran.us.R-project.org/}
-@tab (pair Networks, USA)
+@c @item @url{http://cran.us.R-project.org/}
+@c @tab (pair Networks, USA)
 @item @url{http://cran.za.R-project.org/}
 @tab (Rhodes U, South Africa)
 @end multitable
@@ -3601,6 +3597,8 @@ Interface between the GMT 4.0 map-making software and R.
 Functions to specify and fit generalized nonlinear models, including
 models with multiplicative interaction terms such as the UNIDIFF model
 from sociology and the AMMI model from crop science.
+@item goalprog
+Weighted and lexicographical goal programming and optimization.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
@@ -4536,6 +4534,9 @@ Q-value estimation for false discovery rate control.
 @item qvcalc
 Functions to compute quasi-variances and associated measures of
 approximation error.
+@item r2lUniv
+R to @LaTeX{} Univariate: perform basic analysis and generate
+corresponding @LaTeX{} code.
 @item rJava
 Low-level R to Java interface.  Allows creation of objects, calling
 methods and accessing fields.
