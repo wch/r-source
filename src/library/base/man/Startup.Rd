@@ -157,20 +157,20 @@
 }
 \examples{
 \dontrun{
-# Example ~/.Renviron on Unix
+## Example ~/.Renviron on Unix
 R_LIBS=~/R/library
 PAGER=/usr/local/bin/less
 
-# Example .Renviron on Windows
+## Example .Renviron on Windows
 R_LIBS=C:/R/library
 MY_TCLTK="c:/Program Files/Tcl/bin"
 
-# Example of setting R_DEFAULT_PACKAGES (from R CMD check)
+## Example of setting R_DEFAULT_PACKAGES (from R CMD check)
 R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'
 # this loads the packages in the order given, so they appear on
 # the search path in reverse order.
 
-# Example of .Rprofile
+## Example of .Rprofile
 options(width=65, digits=5)
 options(show.signif.stars=FALSE)
 setHook(packageEvent("grDevices", "onLoad"),
@@ -179,10 +179,12 @@ set.seed(1234)
 .First <- function() cat("\n   Welcome to R!\n\n")
 .Last <- function()  cat("\n   Goodbye!\n\n")
 
-# Example of Rprofile.site
+## Example of Rprofile.site
 local({
-  old <- getOption("defaultPackages")
-  options(defaultPackages = c(old, "MASS"))
+  # add MASS to the default packages, set a CRAN mirror
+  old <- getOption("defaultPackages"); r <- getOption("repos")
+  r["CRAN"] <- "http://my.local.cran"
+  options(defaultPackages = c(old, "MASS"), repos = r)
 })
 
 ## if .Renviron contains
