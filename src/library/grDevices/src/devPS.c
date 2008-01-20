@@ -833,7 +833,9 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		     Rboolean isSymbol,
 		     const char *encoding)
 {
+#ifdef SUPPORT_MBCS
     Rboolean Unicode = mbcslocale;
+#endif
 
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
@@ -3347,10 +3349,12 @@ PSDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
     dd->locator    = PS_Locator;
     dd->mode	      = PS_Mode;
     dd->hold	      = PS_Hold;
-    dd->hasTextUTF8   = TRUE;
 #ifdef SUPPORT_MBCS
+    dd->hasTextUTF8   = TRUE;
     dd->textUTF8      = PS_TextUTF8;
     dd->strWidthUTF8  = PS_StrWidthUTF8;
+#else
+    dd->hasTextUTF8   = FALSE;
 #endif
 
     dd->deviceSpecific = (void *) pd;
@@ -5672,10 +5676,12 @@ PDFDeviceDriver(NewDevDesc* dd, const char *file, const char *paper,
     dd->locator    = PDF_Locator;
     dd->mode	      = PDF_Mode;
     dd->hold	      = PDF_Hold;
-    dd->hasTextUTF8   = TRUE;
 #ifdef SUPPORT_MBCS
+    dd->hasTextUTF8   = TRUE;
     dd->textUTF8       = PDF_TextUTF8;
     dd->strWidthUTF8   = PDF_StrWidthUTF8;
+#else
+    dd->hasTextUTF8   = FALSE;
 #endif
 
     dd->deviceSpecific = (void *) pd;
