@@ -186,6 +186,11 @@ OTHERS
     o	getClipboardFormats() by default returns a human-readable
 	character vector, but will give numeric output with new
 	arguent 'numeric = TRUE'.
+	
+    o	The MSVC run-time (used by MinGW) has a global variable to
+	determine whether files default to text or binary mode. R now
+	overrides this setting so that files are always read in text mode by
+	default.
 
 
 BUILDING R

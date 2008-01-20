@@ -82,10 +82,44 @@ Rboolean attribute_hidden R_HiddenFile(const char *name)
     else return 1;
 }
 
+/* The MSVC runtime has a global to determine whether an unspecified file open
+   is in text or binary mode.  We force explicit text mode here to avoid depending 
+   on that global, which may have been changed by user code.
+*/
+
+#ifdef Win32
+char fixedmode[6]; /* Rconnection can have a mode of 4 chars plus a null; we might add one char */
+
+static char * fixmode(const char *mode)
+{
+    fixedmode[4] = '\0';
+    strncpy(fixedmode, mode, 4);
+    if (!strpbrk(fixedmode, "bt")) {
+    	strcat(fixedmode, "t");
+    }
+    return fixedmode;
+}
+
+wchar_t wcfixedmode[6];
+
+static wchar_t * wcfixmode(const wchar_t *mode)
+{
+    wcfixedmode[4] = L'\0';
+    wcsncpy(wcfixedmode, mode, 4);
+    if (!wcspbrk(wcfixedmode, L"bt")) {
+    	wcscat(wcfixedmode, L"t");
+    }
+    return wcfixedmode;
+}
+
+#else
+#define fixmode(mode) (mode)
+#define wcfixmode(mode) (mode)
+#endif
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
-    return(filename ? fopen(filename, mode) : NULL );
+    return(filename ? fopen(filename, fixmode(mode)) : NULL );
 }
 
 /* The point of this function is to allow file names in foreign
@@ -132,7 +166,7 @@ extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
 FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode)
 {
-    return(filename ? _wfopen(filename, mode) : NULL );
+    return(filename ? _wfopen(filename, wcfixmode(mode)) : NULL );
 }
 
 
@@ -140,7 +174,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 {
     wchar_t wmode[10];
 
-    mbstowcs(wmode, mode, 10);
+    mbstowcs(wmode, fixmode(mode), 10);
     return _wfopen(filenameToWchar(fn, expand), wmode);
 }
 #else
