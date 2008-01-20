@@ -217,7 +217,8 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "chm", "", "$destfile", $pkg, $version);
+		Rdconv($manfile, "chm", "", "$destfile", $pkg, $version, 
+		       $def_encoding);
 	    }
 	}
 
