@@ -886,9 +886,12 @@ void setup_Rmainloop(void)
      */
     if(!R_Quiet) {
 	PrintGreeting();
-#ifndef SUPPORT_UTF8
+#ifndef SUPPORT_MBCS
 	if(utf8locale)
 	    R_ShowMessage(_("WARNING: UTF-8 locales are not supported in this build of R\n"));
+	else if(mbcslocale)
+	    R_ShowMessage(_("WARNING: multibyte locales are not supported in this build of R\n"));
+
 #endif
     }
 

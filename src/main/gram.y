@@ -1796,9 +1796,8 @@ static int SkipSpace(void)
 	return c;
     }
 #endif
-#if defined(SUPPORT_UTF8) && defined(__STDC_ISO_10646__)
-    if(utf8locale) { /* Might work in other MBCS locales
-			but ctype functions need Unicode wchar_t */
+#if defined(SUPPORT_MBCS) && defined(__STDC_ISO_10646__)
+    if(mbcslocale) { /* wctype functions need Unicode wchar_t */
 	int i, clen;
 	wchar_t wc;
 	while (1) {
@@ -1966,7 +1965,7 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
     s = alloca(cnt*6); /* max 6 bytes per wchar_t */
 #endif
     R_CheckStack();
-    Rf_wcstoutf8(s, wcs, cnt);
+    wcstoutf8(s, wcs, cnt);
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharEnc(s, UTF8_MASK));
     UNPROTECT(1);

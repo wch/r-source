@@ -385,6 +385,9 @@ BUG FIXES
     o	Rdconv was not marking examples files with an encoding if
 	this was known from the package's DESCRIPTION file.
 
+    o	readChar() from a raw vector was reading a number of bytes,
+	not characters.
+
 
 
 

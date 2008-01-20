@@ -3985,9 +3985,8 @@ static int SkipSpace(void)
 	return c;
     }
 #endif
-#if defined(SUPPORT_UTF8) && defined(__STDC_ISO_10646__)
-    if(utf8locale) { /* Might work in other MBCS locales
-			but ctype functions need Unicode wchar_t */
+#if defined(SUPPORT_MBCS) && defined(__STDC_ISO_10646__)
+    if(mbcslocale) { /* wctype functions need Unicode wchar_t */
 	int i, clen;
 	wchar_t wc;
 	while (1) {

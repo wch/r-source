@@ -18,9 +18,10 @@ writeChar(object, con,
           nchars = nchar(object, type="chars"), eos = "")
 }
 \arguments{
-  \item{con}{A connection object, or a character string naming a file, or a raw vector.}
+  \item{con}{A connection object, or a character string naming a file,
+    or a raw vector.}
   \item{nchars}{integer, giving the lengths in characters of (unterminated)
-    character strings to be read or written. Must be >= 0 and not missing.}
+    character strings to be read or written.  Must be >= 0 and not missing.}
   \item{object}{A character vector to be written to the connection, at
     least as long as \code{nchars}.}
   \item{eos}{\sQuote{end of string}: character string .  The terminator
@@ -48,10 +49,9 @@ writeChar(object, con,
   \code{con} a raw vector, it is just an indication that a raw vector
   should be returned.  
 
-  In a single-byte locale, character strings containing ASCII
-  \code{nul}(s) will be read correctly by \code{readChar} and appear
-  with embedded nuls in the character vector returned.  This may not
-  work for multi-byte locales.  \code{writeChar} can write strings with
+  Character strings containing ASCII \code{nul}(s) will be read
+  correctly by \code{readChar} and appear with embedded nuls in the
+  character vector returned.  \code{writeChar} can write strings with
   embedded \code{nul}s, and for such strings inteprets \code{nchar} as
   the number of bytes to be written.
   
@@ -70,6 +70,14 @@ writeChar(object, con,
   For \code{writeChar}, a raw vector (if \code{con} is a raw vector) or
   invisibly \code{NULL}.
 }
+
+\note{
+  \code{nchars} will be interpreted in bytes not characters in a
+  non-UTF-8 multi-byte locale, with a warning.
+
+  There is little validity checking of UTF-8 reads.
+}
+
 \seealso{
   The \emph{R Data Import/Export} manual.
 

@@ -3300,6 +3300,7 @@ if test "$want_mbcs_support" = yes ; then
   fi
 fi
 if test "x${want_mbcs_support}" = xyes; then
+## SUPPORT_UTF8 is needed for PCRE, only
 AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
 AC_SUBST(SUPPORT_UTF8)
 AC_DEFINE(SUPPORT_MBCS, 1, [Define this to enable support for MBCS locales.])
