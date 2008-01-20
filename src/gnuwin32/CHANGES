@@ -68,6 +68,10 @@ INTERNATIONALIZATION
 	beta (Unicode point U+03B2) is text(x, y, intToUtf8(0x03b2L)).
 	Another is to use "\u03b2".
 
+	The postscript() and pdf() devices handle UTF-8-encoded
+	strings provided the characters used are in both the output
+	encoding and the PostScript font used.
+
     o	Environment variables are read and set in Unicode by
 	Sys.getenv()/Sys.setenv().
 

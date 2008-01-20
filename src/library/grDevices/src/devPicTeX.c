@@ -488,11 +488,11 @@ static double PicTeX_StrWidth(char *str,
 #if defined(SUPPORT_MBCS)
     if(mbcslocale && ptd->fontface != 5) {
 	/* This version at least uses the state of the MBCS */
-	int i, status, ucslen = mbcsToUcs2(str, NULL, 0);
+	int i, status, ucslen = mbcsToUcs2(str, NULL, 0, CE_NATIVE);
 	if (ucslen != (size_t)-1) {
 	    ucs2_t *ucs;
 	    ucs = (ucs2_t *) alloca(ucslen*sizeof(ucs2_t));
-	    status = (int) mbcsToUcs2(str, ucs, ucslen);
+	    status = (int) mbcsToUcs2(str, ucs, ucslen, CE_NATIVE);
 	    if (status >= 0) 
 		for (i = 0; i < ucslen; i++)
 		    if(ucs[i] < 128) sum += charwidth[ptd->fontface-1][ucs[i]];

@@ -868,6 +868,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define ucstomb		Rf_ucstomb
 # define ucstoutf8		Rf_ucstoutf8
 # define utf8toucs		Rf_utf8toucs
+# define utf8towcs		Rf_utf8towcs
 # define vectorSubscript	Rf_vectorSubscript
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
@@ -1120,16 +1121,18 @@ void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(const char *str);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
-size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout);
+size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
 /* size_t mbcsMblen(char *in);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
 size_t ucs2Mblen(ucs2_t *in); */
 int utf8clen(char c);
 size_t utf8toucs(wchar_t *wc, const char *s);
+size_t utf8towcs(wchar_t *wc, const char *s, size_t n);
 size_t ucstomb(char *s, const unsigned int wc);
 size_t ucstoutf8(char *s, const unsigned int wc);
 size_t mbtoucs(unsigned int *wc, const char *s, size_t n);
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
+const char * translateCharUTF8(SEXP);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);

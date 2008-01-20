@@ -1443,22 +1443,7 @@ char *getDLLVersion()
 
 /* UTF-8 support ----------------------------------------------- */
 
-/* NB: does not ensure terminator */
-size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n)
-{
-    int m, res = 0;
-    const char *p;
-
-    for(p = s; res < n; p += m) {
-	m = utf8toucs(wc+res, p);
-	if (m < 0) error(_("invalid input in utf8towcs"));
-	if (m == 0) break;
-	res++;
-    }
-    return res;
-}
-
-/* This is currently only used for faking UTF-8 locale conversions */
+/* This is currently unused: for faking UTF-8 locale conversions */
 
 #define FAKE_UTF8 1
 

@@ -24,15 +24,6 @@ substring(text, first, last = 1000000) <- value
 \description{
   Extract or replace substrings in a character vector.
 }
-\value{
-  For \code{substr}, a character vector of the same length and with the
-  same attributes as \code{x} (after possible coercion).
-
-  For \code{substring}, a character vector of length the longest of the
-  arguments.  This will have names taken from \code{x} (if it has any
-  after coercion, repeated as needed), and other attributes copied from
-  \code{x} if it is the longest of the arguments).
-}
 \details{
   \code{substring} is compatible with S, with \code{first} and
   \code{last} instead of \code{start} and \code{stop}.
@@ -58,6 +49,18 @@ substring(text, first, last = 1000000) <- value
   the current locale (see \code{\link{Encoding}} if the corresponding
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.
+}
+\value{
+  For \code{substr}, a character vector of the same length and with the
+  same attributes as \code{x} (after possible coercion).
+
+  For \code{substring}, a character vector of length the longest of the
+  arguments.  This will have names taken from \code{x} (if it has any
+  after coercion, repeated as needed), and other attributes copied from
+  \code{x} if it is the longest of the arguments).
+
+  Elements of \code{x} with a declared encoding (see
+  \code{\link{Encoding}}) will be returned with the same encoding.
 }
 \note{
   The S4 version of \code{substring<-} ignores \code{last}; this version

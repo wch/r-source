@@ -313,7 +313,7 @@ static const char UCS2ENC[] = "UCS-2LE";
 /* Note: this does not terminate out, as all current uses are to look
  * at 'out' a wchar at a time, and sometimes just one char.
  */
-size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout)
+size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
 {
     void   *cd = NULL ;
     const char *i_buf;
@@ -324,7 +324,7 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout)
     wc_len = mbstowcs(NULL, in, 0);
     if (out == NULL || (int)wc_len < 0) return wc_len;
 
-    if ((void*)-1 == (cd = Riconv_open(UCS2ENC, "")))
+    if ((void*)-1 == (cd = Riconv_open(UCS2ENC, (enc == CE_UTF8) ? "UTF-8": "")))
 	return (size_t) -1;
 
     i_buf = (char *)in;
@@ -973,6 +973,31 @@ utf8toucs(wchar_t *wc, const char *s)
 			| (s[5] & 0x3F));
 	return 6;
     }
+}
+
+size_t attribute_hidden 
+utf8towcs(wchar_t *wc, const char *s, size_t n)
+{
+    int m, res=0;
+    const char *t;
+    wchar_t *p;
+    wchar_t local;
+
+    if(wc)
+	for(p = wc, t = s; ; p++, t += m) {
+	    m  = utf8toucs(p, t);
+	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
+	    if(m == 0) break;
+	    res += m;
+	    if(res >= n) break;
+	}
+    else
+	for(t = s; ; res += m, t += m) {
+	    m  = utf8toucs(&local, t);
+	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
+	    if(m == 0) break;
+	}
+    return res;
 }
 
 /* based on pcre.c */

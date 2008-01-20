@@ -18,7 +18,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	The default width and height for pdf() have been changed to
 	7 (inches) to match the screen devices.
 
-    o	Packages which include graphics devices need to be reinstalled
+    o	Packages which include graphics devices need to be re-installed
 	for this version of R.
 
 
@@ -150,7 +150,8 @@ NEW FEATURES
 
     o	New function dev.new() to launch a new copy of the default
 	graphics device (and taking care if it is "pdf" or
-	"postscript" not to trample on an already running copy).
+	"postscript" not to trample on the file of an already running
+	copy).
 
     o	New function dev.copy2pdf(), the analogue of dev.copy2eps().
 
@@ -220,6 +221,14 @@ NEW FEATURES
 	e.g. case-insensitive matching on some Windows/MacOS file
 	systems.
 
+    o	An informative warning (in addition to the error message) will
+	be given when the basic, extended or perl mode of grep,
+	strsplit or friends fails to compile the pattern.
+
+    o	More study is done of perl=TRUE patterns in grep() and friends
+	when length(x) > 10: this should improve performance on long
+	vectors.
+
 
 DEPRECATED & DEFUNCT
 
@@ -274,9 +283,6 @@ UTILITIES
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.
 
-    o	tools::texi2dvi() works around the failure of 'texi2dvi --quiet' 
-	to be quiet in texinfo 4.11.
-
 
 C-LEVEL FACILITIES
 
@@ -285,8 +291,8 @@ C-LEVEL FACILITIES
 
     o	Graphics devices can now select to be sent text in UTF-8, even
 	if the current locale is not UTF-8 (and so enable text entered
-	in UTF-8 to be plotted).  This is used by the windows() family
-	of devices.
+	in UTF-8 to be plotted).  This is used by postscript(), pdf()
+	and the windows() family of devices.
 
 
 BUG FIXES
@@ -369,8 +375,8 @@ BUG FIXES
     o	There are some checks for valid C-style formats in, e.g. 
 	png(filename=).  (PR#10571)
 
-    o  slotNames() was erroneously treating classes that extend
-        "character" as strings.
+    o	slotNames() was erroneously treating classes that extend
+	"character" as strings.
 
 
 
@@ -390,6 +396,9 @@ NEW FEATURES
     o	colnames(DF) is now also fast for large dataframes DF with
 	automatic row.names.  Note that the correct usage is
 	names(DF).  (PR#10470)
+
+    o	tools::texi2dvi() works around the failure of 'texi2dvi --quiet' 
+	to be quiet in texinfo 4.11.
 
 
 BUG FIXES

@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -49,7 +49,12 @@ Encoding(x) <- value
   do not \emph{preserve} the encoding, but if they know the input
   encoding and that the string has been successfully re-encoded to the
   current encoding, they mark the output with the latter (if it is
-  \code{"latin1"} or \code{"UTF-8"}).
+  \code{"latin1"} or \code{"UTF-8"}).  However, as from \R 2.7.0
+  \code{\link{substr}} does preserve the encoding, and
+  \code{\link{chartr}}, \code{\link{tolower}} and \code{\link{toupper}}
+  preserve UTF-8 encoding on systems with Unicode wide characters.
+  With their \code{fixed} and \code{perl} options, \code{\link{sub}} and
+  \code{gsub} will give a UTF-8 result if any of the inputs are UTF-8.
 }
 \value{
   A character vector.

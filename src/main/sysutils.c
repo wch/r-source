@@ -130,9 +130,6 @@ FILE *R_fopen(const char *filename, const char *mode)
 
    On NT-based versions of Windows, file names are stored in 'Unicode'
    (UCS-2), and _wfopen is provided to access them by UCS-2 names.
-
-   Turned off until we have wide interfaces to dir.create,
-   file.exists, file.remove, file.info, Sys.chmod ...
 */
 
 #if defined(Win32)
@@ -146,7 +143,7 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     size_t inb, outb, res;
 
     if(IS_LATIN1(fn)) from = "latin1";
-    if(IS_UTF8(fn)) from = "UTF=8";
+    if(IS_UTF8(fn)) from = "UTF-8";
     obj = Riconv_open("UCS-2LE", from);
     if(obj == (void *)(-1))
 	error(_("unsupported conversion in 'filenameToWchar'"));
@@ -724,9 +721,9 @@ const char *translateChar(SEXP x)
 	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
 	    utf8_obj = obj;
 	}
-	obj = utf8_obj;
-	
+	obj = utf8_obj;	
     }
+
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
     inbuf = ans; inb = strlen(inbuf);
@@ -773,6 +770,53 @@ next_char:
 	goto next_char;
     }
     *outbuf = '\0';
+    res = strlen(cbuff.data) + 1;
+    p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
+
+const char *translateCharUTF8(SEXP x)
+{
+    void *obj;
+    const char *inbuf, *ans = CHAR(x);
+    char *outbuf, *p;
+    size_t inb, outb, res;
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "translateCharUTF8");
+    if(x == NA_STRING) return ans;
+    if(IS_UTF8(x)) return ans;
+    if(utf8strIsASCII(CHAR(x))) return ans;
+
+    obj = Riconv_open("UTF-8", IS_LATIN1(x) ? "latin1" : "");
+    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+    R_AllocStringBuffer(0, &cbuff);
+top_of_loop:
+    inbuf = ans; inb = strlen(inbuf);
+    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
+    /* First initialize output */
+    Riconv (obj, NULL, NULL, &outbuf, &outb);
+next_char:
+    /* Then convert input  */
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+    if(res == -1 && errno == E2BIG) {
+	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	goto top_of_loop;
+    } else if(res == -1 && errno == EILSEQ) {
+	if(outb < 5) {
+	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	    goto top_of_loop;
+	}
+	snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+	outbuf += 4; outb -= 4;
+	inbuf++; inb--;
+	goto next_char;
+    }
+    *outbuf = '\0';
+    Riconv_close(obj);
     res = strlen(cbuff.data) + 1;
     p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
@@ -1082,6 +1126,12 @@ const char *translateChar(SEXP x)
 {
     return CHAR(x);
 }
+
+const char *translateCharUTF8(SEXP x)
+{
+    return CHAR(x);
+}
+
 const char *reEnc(const char *x, int ce_in, int ce_out)
 {
     return x;
