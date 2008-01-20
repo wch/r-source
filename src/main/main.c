@@ -399,7 +399,7 @@ static RETSIGTYPE handleInterrupt(int dummy)
     signal(SIGINT, handleInterrupt);
 }
 
-#ifndef win32
+#ifndef Win32
 static RETSIGTYPE handlePipe(int dummy)
 {
     signal(SIGPIPE, handlePipe);
