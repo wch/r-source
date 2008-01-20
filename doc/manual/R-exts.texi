@@ -503,7 +503,7 @@ lazy-loaded into the name space/package environment -- this is intended
 for system datasets that are not intended to be user-accessible via
 @code{data}.  Also, files ending in @samp{.in} will be allowed in the
 @file{R} directory to allow a @file{configure} script to generate
-suitable files,
+suitable files.
 
 Only @acronym{ASCII} characters (and the control characters tab,
 formfeed, LF and CR) should be used in code files.  Other characters are
