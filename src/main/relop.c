@@ -435,7 +435,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
     return ans;
 }
 
-#if defined(Win32) && defined(SUPPORT_UTF8)
+#if defined(Win32) && defined(SUPPORT_WIN32_UTF8)
 #define STRCOLL Rstrcoll
 #else
 

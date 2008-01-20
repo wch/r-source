@@ -149,7 +149,7 @@ static Rboolean rmin(double *x, int n, double *value, Rboolean narm)
     return(updated);
 }
 
-#if defined(Win32) && defined(SUPPORT_UTF8)
+#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
 # define STRCOLL Rstrcoll
 #else
 # ifdef HAVE_STRCOLL

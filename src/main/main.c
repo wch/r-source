@@ -780,7 +780,7 @@ void setup_Rmainloop(void)
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
     }
 #endif
-#if defined(Win32) && defined(SUPPORT_UTF8)
+#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
     utf8locale = mbcslocale = TRUE;
 #endif
     /* gc_inhibit_torture = 0; */

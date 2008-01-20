@@ -39,7 +39,7 @@
 # include <pcre.h>
 #endif
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 # include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
@@ -231,7 +231,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
     if (igcase_opt) {
 	options |= PCRE_CASELESS;
 	if (useBytes && utf8locale && !utf8strIsASCII(spat))
-	    warning(_("ignore.case = TRUE, perl = TRUE in UTF-8 locales\n  only works caselessly for ASCII patterns"));
+	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
     }
 
     tables = pcre_maketables();
@@ -388,35 +388,51 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 /* FIXME: this should be using UTF-8 when the strings concerned are
    UTF-8 */
 SEXP attribute_hidden
-do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
+do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 {
     SEXP ansList, ans, matchlen;
     SEXP matchbuf, matchlenbuf;
     int bufsize = 1024;
-    int i, n, st, erroffset;
+    int i, n, st, erroffset, ienc;
     int options = 0;
-    const char *errorptr;
+    const char *spat, *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe = NULL;
     const unsigned char *tables;
+    Rboolean use_UTF8 = FALSE;
 
     /* To make this thread-safe remove static here use
        R_FreeStringBuffer below */
     static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-#ifdef SUPPORT_UTF8
+    n = LENGTH(text);
+    if (!useBytes) {
+	if (getCharEnc(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	for (i = 0; i < n; i++)
+	    if (getCharEnc(STRING_ELT(text, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    }
+
+    if (use_UTF8) {
+	spat = translateCharUTF8(STRING_ELT(pat, 0));
+	ienc = CE_UTF8;
+    } else {
+	spat = translateChar(STRING_ELT(pat, 0));
+	ienc = CE_NATIVE;
+    }
+
+#ifdef SUPPORT_MBCS
     if (useBytes) ;
-    else if (utf8locale) options = PCRE_UTF8;
+    else if (utf8locale || use_UTF8) options = PCRE_UTF8;
     else if (mbcslocale)
 	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
 #endif
     if (igcase_opt) {
 	options |= PCRE_CASELESS;
 	if (useBytes && utf8locale && !utf8strIsASCII(spat))
-	    warning(_("ignore.case = TRUE, perl = TRUE in UTF-8 locales\n  only works caselessly for ASCII patterns"));
+	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
     }
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if (!useBytes && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
 #endif
@@ -452,9 +468,12 @@ do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
             UNPROTECT(2);
 	    continue;
 	}
-	s = translateChar(STRING_ELT(text, i));
-#ifdef SUPPORT_UTF8
-	if (!useBytes && mbcslocale && !mbcsValid(s)) {
+	if (ienc == CE_UTF8) 
+	    s = translateCharUTF8(STRING_ELT(text, i));
+	else
+	    s = translateChar(STRING_ELT(text, i));
+#ifdef SUPPORT_MBCS
+	if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(s)) {
 	    warning(_("input string %d is invalid in this locale"), i+1);
             PROTECT(ans = allocVector(INTSXP, 1)); 
             PROTECT(matchlen = allocVector(INTSXP, 1));
@@ -498,8 +517,29 @@ do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
                     start = ovector[0] + 1;
                 else
                     start = ovector[1];
-#ifdef SUPPORT_UTF8
-                if (!useBytes && mbcslocale) {
+#ifdef SUPPORT_MBCS
+                if (!useBytes && ienc == CE_UTF8) {
+                    int mlen = ovector[1] - st;
+                    /* Unfortunately these are in bytes, so we need to
+                       use chars instead */
+                    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
+                    if (st > 0) {
+                        memcpy(cbuff.data, s, st);
+                        cbuff.data[st] = '\0';
+                        INTEGER(matchbuf)[matchIndex] = 1 + utf8towcs(NULL, cbuff.data, 0);
+                        if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
+                            INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
+                            foundAll = 1; /* if we get here, we are done */
+                        }
+                    }
+                    memcpy(cbuff.data, s+st, mlen);
+                    cbuff.data[mlen] = '\0';
+                    INTEGER(matchlenbuf)[matchIndex] = utf8towcs(NULL, cbuff.data, 0);
+                    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
+                        INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
+                        foundAll = 1; 
+                    }
+                } else if (!useBytes && mbcslocale) {
                     int mlen = ovector[1] - st;
                     /* Unfortunately these are in bytes, so we need to
                        use chars instead */

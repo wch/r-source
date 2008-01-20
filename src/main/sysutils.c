@@ -657,15 +657,13 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 {
 #ifdef Win32
     const char *cp = "UTF-8";
-#ifndef SUPPORT_UTF8
+#ifndef SUPPORT_UTF8_WIN32
     cp = locale2charset(NULL);
 #endif
     if(strcmp(tocode, "") == 0)  return iconv_open(cp, fromcode);
     else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
     else return iconv_open(tocode, fromcode);
 #else
-    /* const char * is right according to POSIX, but libiconv
-       plays games so that on Solaris 10 it needs the casts */
     return iconv_open(tocode, fromcode);
 #endif
 }
@@ -696,7 +694,9 @@ const char *translateChar(SEXP x)
     const char *inbuf, *ans = CHAR(x);
     char *outbuf, *p;
     size_t inb, outb, res;
+#ifdef SUPPORT_MBCS
     int ienc = getCharEnc(x);
+#endif
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     if(TYPEOF(x) != CHARSXP)

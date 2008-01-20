@@ -1119,20 +1119,20 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(const char *str);
+int utf8clen(char c);
+const char * translateCharUTF8(SEXP);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
 /* size_t mbcsMblen(char *in);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
 size_t ucs2Mblen(ucs2_t *in); */
-int utf8clen(char c);
 size_t utf8toucs(wchar_t *wc, const char *s);
 size_t utf8towcs(wchar_t *wc, const char *s, size_t n);
 size_t ucstomb(char *s, const unsigned int wc);
 size_t ucstoutf8(char *s, const unsigned int wc);
 size_t mbtoucs(unsigned int *wc, const char *s, size_t n);
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
-const char * translateCharUTF8(SEXP);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
@@ -1149,7 +1149,7 @@ void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 #endif
-#if defined(Win32) && defined(SUPPORT_UTF8)
+#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
 #define mbrtowc(a,b,c,d) Rmbrtowc(a,b)
 #define wcrtomb(a,b,c) Rwcrtomb(a,b)
 #define mbstowcs(a,b,c) Rmbstowcs(a,b,c)
@@ -1169,7 +1169,7 @@ void set_rl_word_breaks(const char *str);
 extern char *locale2charset(const char *);
 
 /* used in relop.c and sort.c */
-#if defined(Win32) && defined(SUPPORT_UTF8)
+#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
 #define STRCOLL Rstrcoll
 #else
 

@@ -36,8 +36,7 @@ GUI CHANGES
 INTERNATIONALIZATION
 
  This is another phase in the on-going effort to make Unicode
- characters available to R for Windows users.  [Whilst this is going on
- R-devel will be comparatively unstable.]
+ characters available to R for Windows users. [Close to complete.]
 
     o	If a string presented to the parser contains a \uxxxx escape
 	invalid in the current locale, the string is recorded in UTF-8
@@ -75,16 +74,18 @@ INTERNATIONALIZATION
     o	Environment variables are read and set in Unicode by
 	Sys.getenv()/Sys.setenv().
 
+    o	Sys.info() uses UTF-8 machine, login and user names.
+
     o	readClipboard() can read Unicode text (format = 13), and
 	writeClipboard() can write it.
 
     o	file() and pipe() connections and the functions dir(),
 	dir.create(), DLL.version(), file.access(), file.copy(),
 	file.create(), file.info(), file.remove(), file.rename(),
-	list.files(), load(), normalizePath(), path.expand(), save(),
-	shell(), shell.exec(), shortPathName(), Sys.chmod(),
-	Sys.glob(), system() and unlink() have been converted to use
-	Unicode filenames.
+	getwd(), list.files(), load(), normalizePath(), path.expand(),
+	save(), setwd(), shell(), shell.exec(), shortPathName(),
+	Sys.chmod(), Sys.glob(), system() and unlink() have been
+	converted to use Unicode filenames.
 
 	Pathnames you select (choose.files, choose.dir, file.choose)
 	are returned in UTF-8.

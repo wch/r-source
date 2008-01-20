@@ -447,7 +447,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     OSVERSIONINFOEX osvi;
-    char ver[256], name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
+    char ver[256], buf[1000]; 
+    wchar_t name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
     DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
 
     checkArity(op, args);
@@ -499,11 +500,13 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	sprintf(ver, "build %d, %s", LOWORD(osvi.dwBuildNumber),
 		osvi.szCSDVersion);
     SET_STRING_ELT(ans, 2, mkChar(ver));
-    GetComputerName(name, &namelen);
-    SET_STRING_ELT(ans, 3, mkChar(name));
+    GetComputerNameW(name, &namelen);
+    wcstoutf8(buf, name, 1000);
+    SET_STRING_ELT(ans, 3, mkCharEnc(buf, UTF8_MASK));
     SET_STRING_ELT(ans, 4, mkChar("x86"));
-    GetUserName(user, &userlen);
-    SET_STRING_ELT(ans, 5, mkChar(user));
+    GetUserNameW(user, &userlen);
+    wcstoutf8(buf, user, 1000);
+    SET_STRING_ELT(ans, 5, mkCharEnc(buf, UTF8_MASK));
     SET_STRING_ELT(ans, 6, STRING_ELT(ans, 5));
     PROTECT(ansnames = allocVector(STRSXP, 7));
     SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
@@ -1447,7 +1450,7 @@ char *getDLLVersion()
 
 #define FAKE_UTF8 1
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_UTF8_WIN32
 extern char *alloca(size_t);
 int Rstrcoll(const char *s1, const char *s2)
 {

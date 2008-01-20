@@ -2064,14 +2064,13 @@ SEXP attribute_hidden R_unserialize(SEXP icon, SEXP fun)
 	int length = LENGTH(STRING_ELT(icon, 0));
 	InitMemInPStream(&in, &mbs, data,  length, hook, fun);
 	return R_Unserialize(&in);
-    } else if (TYPEOF(icon) == RAWSXP) { /* for future use */
+    } else if (TYPEOF(icon) == RAWSXP) {
         struct membuf_st mbs;
 	void *data = RAW(icon);
 	int length = LENGTH(icon);
 	InitMemInPStream(&in, &mbs, data,  length, hook, fun);
 	return R_Unserialize(&in);
-    }
-    else {
+    } else {
 	Rconnection con = getConnection(asInteger(icon));
 	R_InitConnInPStream(&in, con, R_pstream_any_format, hook, fun);
 	return R_Unserialize(&in);

@@ -6,7 +6,7 @@ ifdef LEA_MALLOC
 DEFS+=-DLEA_MALLOC
 endif
 
-CPPFLAGS=-I../../include -I. $(DEFS) -DSUPPORT_UTF8
+CPPFLAGS=-I../../include -I. $(DEFS)
 CFLAGS= $(OPTFLAGS)
 
 ## done this way for parallel make

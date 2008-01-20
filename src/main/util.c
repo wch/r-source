@@ -644,10 +644,15 @@ SEXP static intern_getwd()
     char buf[PATH_MAX+1];
 
 #ifdef Win32
-    int res = GetCurrentDirectory(PATH_MAX, buf);
-    if(res > 0) {
-	R_fixslash(buf);
-	rval = mkString(buf);
+    {
+	wchar_t wbuf[PATH_MAX+1];
+	int res = GetCurrentDirectoryW(PATH_MAX, wbuf);
+	if(res > 0) {
+	    wcstoutf8(buf, wbuf, PATH_MAX+1);
+	    R_fixslash(buf);
+	    rval = allocVector(STRSXP, 1);
+	    SET_STRING_ELT(rval, 0, mkCharEnc(buf, UTF8_MASK));
+	}
     }
 #elif defined(HAVE_GETCWD)
     char *res = getcwd(buf, PATH_MAX);
@@ -671,7 +676,6 @@ SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s = R_NilValue, wd = R_NilValue;	/* -Wall */
-    const char *path;
 
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
@@ -680,11 +684,22 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* get current directory to return */
     wd = intern_getwd();
 
-    path = R_ExpandFileName(translateChar(STRING_ELT(s, 0)));
-#ifdef HAVE_CHDIR
+#ifdef Win32
+    {
+	const wchar_t *path = filenameToWchar(STRING_ELT(s, 0), FALSE);
+	if(_wchdir(path) < 0)
+	    error(_("cannot change working directory"));
+    }
+#else
+    {
+	const char *path 
+	    = R_ExpandFileName(translateChar(STRING_ELT(s, 0)));
+# ifdef HAVE_CHDIR
     if(chdir(path) < 0)
-#endif
+# endif
 	error(_("cannot change working directory"));
+    }
+#endif
     return(wd);
 }
 

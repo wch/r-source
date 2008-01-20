@@ -886,7 +886,7 @@
 #define SUPPORT_MBCS 1
 
 /* Define this to enable support for UTF-8 locales. */
-/* #undef SUPPORT_UTF8 */
+#define SUPPORT_UTF8 1
 
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */

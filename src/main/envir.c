@@ -3236,6 +3236,7 @@ SEXP mkCharEnc(const char *name, int enc)
 {
     SEXP c = allocString(strlen(name));
     strcpy(CHAR_RW(c), name);
+    if (utf8strIsASCII(name)) enc = 0;
     switch(enc) {
     case 0:
 	break;          /* don't set encoding */

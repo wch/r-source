@@ -18,7 +18,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	The default width and height for pdf() have been changed to
 	7 (inches) to match the screen devices.
 
-    o	Packages which include graphics devices need to be re-installed
+    o	Packages which include graphics devices should be re-installed
 	for this version of R.
 
 
@@ -222,12 +222,16 @@ NEW FEATURES
 	systems.
 
     o	An informative warning (in addition to the error message) will
-	be given when the basic, extended or perl mode of grep,
-	strsplit or friends fails to compile the pattern.
+	be given when the basic, extended or perl mode of grep(),
+	strsplit() and friends fails to compile the pattern.
 
     o	More study is done of perl=TRUE patterns in grep() and friends
 	when length(x) > 10: this should improve performance on long
 	vectors.
+
+    o	strsplit(), grep() and friends with fixed=TRUE or perl=TRUE
+	work in UTF-8 and preserve the UTF-8 encoding for UTF-8 inputs
+	where supported.
 
 
 DEPRECATED & DEFUNCT
@@ -377,6 +381,9 @@ BUG FIXES
 
     o	slotNames() was erroneously treating classes that extend
 	"character" as strings.
+
+    o	Rdconv was not marking examples files with an encoding if
+	this was known from the package's DESCRIPTION file.
 
 
 

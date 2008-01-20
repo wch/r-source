@@ -3260,6 +3260,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* FIXME: why not all mbcslocales? */
 static SEXP readFixedString(Rconnection con, int len)
 {
     char *buf;

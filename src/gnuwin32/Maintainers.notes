@@ -29,8 +29,6 @@ that differs only in that
  - it does not find the declarations of siglongjmp/sigsetjmp (in
    psignal.[ch])
 
- - SUPPORT_UTF8 is defined, but that is not true on Windows.
-
  - MinGW gcc 4.2.1 supports pthreads, but I left that undefined.
 
 Also, watch out for versions of the header files.  For example,
@@ -273,10 +271,10 @@ to test on, but there would be little advantage in doing so.
   current locale, this needs to use wfopen and similar interfaces, as
   well as GetFullPathNameW ... also _w* versions of mkdir, rmdir,
   unlink, open, popen, stat, system.  Use with care, as not all file
-  systems use UCS-2 file names.  [Largely done]
+  systems use UCS-2 file names.  [Done]
 
   This needs to include bzlib and zlib, as well as file/folder
-  selection widgets. [Largely done]
+  selection widgets. [Done]
 
 - environment variables.  Both values and names, since _wputenv is
   needed to set name=value strings.  It would be better to use wmain
@@ -287,9 +285,9 @@ to test on, but there would be little advantage in doing so.
   string) need either to be translated or, preferably, the device
   adjusted to accept UTF-8 (and we would need a flag to know if it
   could).  Note that this impacts third-party devices.
-  [Done for windows() family, planned for postscript/pdf.]
+  [Done for windows() family, postscript, pdf.]
 
-- GetUserName, GetComputerName, [GS]etCurrentDirectory.
+- GetUserName, GetComputerName, [GS]etCurrentDirectory. [Done]
 
 Also:
 

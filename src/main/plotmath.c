@@ -22,7 +22,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8-FIXME>
+/* <UTF8>
    byte-level access and use of ctype functions for symbol font
 
    Has encoding of symbol font hard-coded.  Not clear if this is enough.
