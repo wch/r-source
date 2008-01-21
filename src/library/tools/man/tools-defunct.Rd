@@ -11,8 +11,8 @@
   The functions or variables listed here are defunct, and may get
   removed as soon as of the next release.
 }
-\usage{
-}
+% \usage{
+% }
 \seealso{
   \code{\link{tools-deprecated}},
   \code{\link{Deprecated}},

@@ -18,14 +18,14 @@ dim(x) <- value
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
   \item{value}{For the default method, either \code{NULL} or
-    a numeric vector which coerced to integer (by truncation).}
+    a numeric vector, which is coerced to integer (by truncation).}
 }
 \details{
   The functions \code{dim} and \code{dim<-} are generic.
 
   \code{dim} has a method for \code{\link{data.frame}}s, which returns
-  the length of the \code{row.names} attribute of \code{x} and the
-  length of \code{x} (the numbers of rows and columns).
+  the lengths of the \code{row.names} attribute of \code{x} and
+  of \code{x} (as the numbers of rows and columns respecitvely).
 }
 \value{
   For an array (and hence in particular, for a matrix) \code{dim} retrieves

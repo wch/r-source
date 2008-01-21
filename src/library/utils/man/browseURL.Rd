@@ -27,7 +27,7 @@ browseURL(url, browser = getOption("browser"))
 #ifdef unix
 \details{
   The default browser is set by option \code{"browser"}, in turn set by
-  the environment variable \code{R_BROWSER} which is by default set
+  the environment variable \env{R\_BROWSER} which is by default set
   in file \file{R\_HOME/etc/Renviron} to a choice made manually or
   automatically when \R was configured.  (See \code{\link{Startup}} for
   where to override that default value.)
@@ -36,8 +36,7 @@ browseURL(url, browser = getOption("browser"))
   it, the URL is opened in any already running browser or a new one if
   necessary.  This mechanism currently is available for browsers which
   support the \code{"-remote openURL(...)"} interface (which includes
-  Netscape 4.x, 6.2.x (but not 6.0/1), 7.1, Opera 5/6, Mozilla >= 0.9.5
-  and Mozilla Firefox),
+  Opera 5/6, Mozilla >= 0.9.5 and Mozilla Firefox),
   Galeon, KDE konqueror (via kfmclient) and the GNOME interface to
   Mozilla.  Netscape 7.0 and Opera 7 behave slightly differently,
   and you will need

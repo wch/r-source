@@ -10,10 +10,10 @@
   \code{checkMD5sums} checks the files against a file \code{MD5}.
 }
 \usage{
-checkMD5sums(pkg, dir)
+checkMD5sums(package, dir)
 }
 \arguments{
-  \item{pkg}{the name of an installed package}
+  \item{package}{the name of an installed package}
   \item{dir}{the path to the top-level directory of an installed
     package.}
 }
@@ -23,15 +23,15 @@ checkMD5sums(pkg, dir)
   \code{md5sum} is available.  (One is supplied in the bundle at
   \url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.)
 
-  If \code{dir} is missing, an installed package of name \code{pkg} is
-  searched for.
+  If \code{dir} is missing, an installed package of name \code{package}
+  is searched for.
 
   The private function \code{tools:::.installMD5sums} is used to create
   \code{MD5} files in the Windows build.
 }
 \value{
   \code{checkMD5sums} returns a logical, \code{NA} if there is no
-  \code{MD5} file to be checked.
+  \file{MD5} file to be checked.
 }
 \seealso{\code{\link{md5sum}}}
 

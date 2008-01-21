@@ -105,8 +105,8 @@ type?topic
 #ifdef unix
   HTML help works best if \code{\link{help.start}()} has been called in
   the session.  Otherwise there will be a warning about
-  \sQuote{Using non-linked HTML file: style sheet and hyperlinks may be
-    incorrect} and cross-library links will most likely not be resolved.
+  \sQuote{Using non-linked HTML file: hyperlinks may be incorrect} and
+  cross-library links will most likely not be resolved.
  
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through

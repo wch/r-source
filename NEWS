@@ -46,8 +46,8 @@ BUG FIXES
     o	confint() misreported on some rank-deficient lm() models.
 	(PR#10496)  This could also occur in the default method.
 
-    o	\code{\var{<name>}} was not rendered correctly to latex in Rd files
-	for non-alphabetic arguments <name>.
+    o	\code{\var{<name>}} was not rendered correctly to latex in Rd
+	files for non-alphabetic arguments <name>.
 
     o	In 2.6.1, curve(*, add=TRUE) used a wrong default 'xlim' when x
 	coordinates were logged.
@@ -55,7 +55,7 @@ BUG FIXES
     o	The Java-based search in help.start() now only requires a
 	JVM >= 1.4 (2.6.1 accidentally required >= 1.5).
 
-    o	The default method for range() was omitting na.rm for
+    o	The default method for range() was omitting 'na.rm' for
 	non-numeric objects such as those of class "Date".  (PR#10508)
 
     o	cut(x, breaks=<n>) misbehaved on a constant vector of negative
@@ -66,7 +66,7 @@ BUG FIXES
 
     o	The automatic detection of the domain for message translation
 	was not working correctly for messages in message(), warning()
-	and stop() in packages others than 'base'.
+	and stop() in packages other than 'base'.
 
     o   The profile.nls() function misbehaved when encountering
         non-convergence of the "port" algorithm.

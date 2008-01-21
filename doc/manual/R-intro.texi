@@ -6574,8 +6574,9 @@ at it.
 
 @item fm <- lm(y ~ x, data=dummy)
 @itemx summary(fm)
-Fit a simple linear regression of @math{y} on @math{x} and look at the
-analysis.
+Fit a simple linear regression and look at the
+analysis.  With @code{y} to the left of the tilde,
+we are modelling @math{y} dependent on @math{x}.
 
 @item fm1 <- lm(y ~ x, data=dummy, weight=1/w^2)
 @itemx summary(fm1)
@@ -7216,6 +7217,9 @@ EOF
 @noindent
 but here @code{stdin()} refers to the program source and
 @code{"stdin"} will not be usable.
+
+Very short scripts can be passed to @command{Rscript} on the
+command-line via the @option{-e} flag.
 
 
 @node The command-line editor, Function and variable index, Invoking R, Top

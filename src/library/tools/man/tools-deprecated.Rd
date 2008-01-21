@@ -11,8 +11,8 @@
   with older versions of \R only, and may be defunct as soon as of the
   next release.
 }
-\usage{
-}
+% \usage{
+% }
 \seealso{
   \code{\link{Deprecated}},
   \code{\link{Defunct}}

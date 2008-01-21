@@ -44,14 +44,14 @@ xx[] <- encoded_text_to_latex(x, "latin1") # or latin2 or latin9
 xx <- apply(xx, 1, paste, collapse="&")
 con <- file("test-encoding.tex", "w")
 header <- c(
-"\\documentclass{article}",
-"\\usepackage[T1]{fontenc}",
-"\\usepackage{Rd}",
-"\\begin{document}",
-"\\HeaderA{test}{}{test}",
-"\\begin{Details}\\relax",
-"\\Tabular{cccccccccccccccc}{")
-trailer <- c("}", "\\end{Details}", "\\end{document}")
+"\\\\documentclass{article}",
+"\\\\usepackage[T1]{fontenc}",
+"\\\\usepackage{Rd}",
+"\\\\begin{document}",
+"\\\\HeaderA{test}{}{test}",
+"\\\\begin{Details}\\relax",
+"\\\\Tabular{cccccccccccccccc}{")
+trailer <- c("}", "\\\\end{Details}", "\\\\end{document}")
 writeLines(header, con)
 writeLines(paste(xx, "\\\\", sep=""), con)
 writeLines(trailer, con)
@@ -73,4 +73,3 @@ writeLines(trailer, con)
 close(con)
 }}
 \keyword{utilities}
-

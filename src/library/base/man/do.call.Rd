@@ -10,7 +10,7 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
 }
 \alias{do.call}
 \arguments{
-  \item{what}{either a function or a character string naming the
+  \item{what}{either a function or a non-empty character string naming the
     function to be called.}
   \item{args}{a \emph{list} of arguments to the function call.  The
     \code{names} attribute of \code{args} gives the argument names.}
@@ -29,7 +29,7 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
   evaluated (in the calling environment, not \code{envir}.).  If
   \code{quote} is \code{TRUE} then each argument is quoted (see
   \code{\link{quote}}) so that the effect of argument evaluation is to
-  remove the quote -- leaving the original argument unevaluated when the
+  remove the quotes -- leaving the original arguments unevaluated when the
   call is constructed.
 
   The behavior of some functions, such as \code{\link{substitute}},

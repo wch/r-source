@@ -2382,7 +2382,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3 to 8.4.16 have been used successfully: 8.0 is
+Versions of Tcl/Tk from 8.3 to 8.5.0 have been used successfully: 8.0 is
 no longer supported.
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
@@ -2515,10 +2515,11 @@ to be re-installed.
 
 ATLAS (@url{http://math-atlas.sourceforge.net/,
 @code{math-atlas.sourceforge.net}}) is a ``tuned'' BLAS that runs on a
-wide range of Unix-alike platforms.  If no more specific library is
-found, a @code{libblas} library in the library path will be used.  (The
-later may not be an enhanced BLAS and so may be less desirable than the
-internal BLAS.)
+wide range of Unix-alike platforms.  Unfortunately it is usually built
+as a static library that on some platforms cannot be used with shared
+libraries such as are used in @R{} packages.  Be careful when using
+pre-built versions of ATLAS (they seem to work on @cputype{ix86}
+platforms, but not on @cputype{x86_64} ones).
 
 The usual way to specify ATLAS will be via
 
@@ -2574,20 +2575,21 @@ Solaris 10 there is the AMD Core Math Library (ACML)
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRRARY_PATH
-@file{/opt/acml4.0.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
+@file{/opt/acml4.0.1/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for @command{gfortran}
-which needs @command{gcc} >= 4.2.0 (or some RedHat versions of 4.1.1).
+which needs @command{gcc} >= 4.2.0 (or some RedHat versions of 4.1.x).
 To make use of this you will need something like
 
 @example
---with-blas="-L/opt/acml4.0.0/gfortran64_mp/lib -lacml_mp"
+--with-blas="-L/opt/acml4.0.1/gfortran64_mp/lib -lacml_mp"
 @end example
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use ACML.
 
-ACML can be used on Windows when building from source.
+Earlier versions of ACML are available for 32-bit Linux systems and for
+those using @command{g77}.
 
 @node Goto BLAS, MKL, ACML, BLAS
 @subsubsection Goto BLAS
@@ -2606,19 +2608,18 @@ is built and installed, it can be used by configuring with
 --with-blas="-lgoto"
 @end example
 
-@noindent
-It has been reported that on some RedHat-based Linux systems it is
-necessary to set @code{GOTO_NUM_THREADS=1} or @code{OMP_NUM_THREADS=1}
-(to disable multiple threads) in the environment when using a
-multi-threaded Goto BLAS, but others run happily with multiple threads.
+See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
+way to use recent versions of the Goto BLAS.
 
 Note that currently (Nov 2007) a multi-threaded Goto BLAS will be built
 by default if and only if the building is on a multi-processor system
 (counting multiple cores and hyperthreading), and at run time the
 default number of threads is the number of CPUs detected.
 
-See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
-way to use recent versions of the Goto BLAS.
+It has been reported that on some RedHat-based Linux systems it is
+necessary to set @code{GOTO_NUM_THREADS=1} or @code{OMP_NUM_THREADS=1}
+(to disable multiple threads) in the environment when using a
+multi-threaded Goto BLAS, but ours run happily with multiple threads.
 
 
 @node MKL, Shared BLAS, Goto BLAS, BLAS
@@ -2654,8 +2655,8 @@ compiled into the @R{} executable and each BLAS-using package.
 @code{libRblas} stored in @file{@var{R_HOME}/lib} and linking both @R{}
 itself and all the add-on packages against that library.
 
-This is the default on most platforms unless an external BLAS is
-specified and found: for the latter it can be used by specifying the
+This is the default on all platforms except AIX unless an external BLAS
+is specified and found: for the latter it can be used by specifying the
 option @option{--enable-BLAS-shlib}, and it can always be disabled via
 @option{--disable-BLAS-shlib}.
 
@@ -2690,7 +2691,7 @@ For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml4.0.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
+ln -s /opt/acml4.0.1/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 
 will change the BLAS in use to multithreaded ACML.  A similar link
@@ -3403,6 +3404,11 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 @noindent
 the additional flags being needed to problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
+
+On some@footnote{e.g. Fedora Core 5} @code{glibc} systems,
+@samp{-fgnu89-inline} needs to be added to @option{CFLAGS} when using
+the (currently unreleased) @command{gcc}@tie{}4.3.0, since
+@file{wchar.h} is not set up properly for C99-style inlines.
 
 @menu
 * Intel compilers::             
@@ -4295,6 +4301,8 @@ may also be controlled by the Sun Java applet in the Control Panel.
 
 Recent versions of Internet Explorer may block the use of Java applets
 and need the block removed @emph{via} the @emph{information bar}.
+
+Apple's Safari 3.0.4 also works.
 
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X

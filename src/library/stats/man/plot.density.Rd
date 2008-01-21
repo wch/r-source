@@ -22,8 +22,6 @@
 \value{
   None.
 }
-\references{
-}
 \seealso{
   \code{\link{density}}.
 }

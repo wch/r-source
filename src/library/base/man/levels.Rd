@@ -34,6 +34,10 @@ levels(x) <- value
   For the factor replacement method, a \code{NA} in \code{value}
   causes that level to be removed from the levels and the elements
   formerly with that level to be replaced by \code{NA}.
+
+  Note that for a factor, replacing the levels via
+  \code{levels(x) <- value} is not the same as (and is preferred to)
+  \code{attr(x, "levels") <- value}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -170,11 +170,12 @@ you will only be able to install R in your own file area.  On Windows
 Vista you may need to confirm that you want to proceed with
 installing a program from an `unidentified publisher'.
 
-After installation you should choose a working directory for R.  You
-will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
-and/or somewhere on the Start menu file tree, and perhaps also in the
-Quick Launch part of the taskbar.  Right-click each shortcut, select
-Properties... and change the `Start in' field to your working directory.
+After installation you should choose a working directory for R (one
+where you have permission to create files).  You will have a shortcut to
+@file{@RWVER@\bin\Rgui.exe} on your desktop and/or somewhere on the
+Start menu file tree, and perhaps also in the Quick Launch part of the
+taskbar.  Right-click each shortcut, select Properties... and change the
+`Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the
 Target field (@emph{after} any final double quote, and separated by a
@@ -581,24 +582,12 @@ informative error messages from the firewall program.
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
-This has not been reported for a couple of years, but used to happen
+This has not been reported for a few years, but used to happen
 regularly.  All the occurrences we have solved have been traced to
 faulty versions of @samp{msvcrt.dll}: we have installed a workaround
 that seems to avoid this.  A few other people have discovered this was
 caused by desktop switcher and keyboard macro programs, for example
 `Macro Magic' and `JS Pager'.
-
-If it still happens, try extracting the @samp{msvcrt.dll} to be found in
-the self-extracting archive
-@uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
-the @file{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
-directory reverts to the standard behaviour.  It seems that on some
-versions of Windows (but not 2000 or later) you also need to put the
-@file{@RWVER@\bin} directory early in your path.
-
-This fix has solved other problems too, for example incorrect results in
-the date-time functions.  However, you are probably better off
-re-installing Windows.
 
 @node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
 @section What does 'DLL attempted to change FPU control word' mean?
@@ -737,7 +726,9 @@ folder (which you would need to create with full control for the R
 installation account).  This will be used for installation in preference
 to the main library folder if it exists.
 
-This approach will not allow you to update the recommended packages.
+This approach will not allow you to update the recommended packages
+unless you `Run as administrator': we suggest you use an R session
+running under Administrator privileges when updating those.
 @end itemize
 
 
@@ -1428,7 +1419,9 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 @node How can I compile R from source?, Can I use a fast BLAS?, Building from Source, Building from Source
 @section How can I compile R from source?
 
-See the `R Installation and Administration' manual.
+To build R on 32-bit Windows you will need the tools from 
+@uref{http://www.murdoch-sutherland.com/Rtools/} as well as some
+others.  See the `R Installation and Administration' manual.
 
 It is possible to cross-build R for Windows x64 using @code{binutils} and
 @code{gcc} with the @samp{x86_64-pc-mingw32} target, using suitable

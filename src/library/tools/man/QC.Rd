@@ -26,13 +26,13 @@ checkS3methods(package, dir, lib.loc = NULL)
 \arguments{
   \item{package}{a character string naming an installed package.}
   \item{dir}{a character string specifying the path to a package's root
-    source directory.  This should contain the subdirectories \code{R}
+    source directory.  This should contain the subdirectories \file{R}
     (for R code) and \file{man} with \R documentation sources (in Rd
     format).  Only used if \code{package} is not given.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
-    to search for \code{package}.}
+    search for \code{package}.}
 }
 \details{
   \code{checkDocFiles} checks, for all Rd files in a package, whether all
@@ -66,7 +66,7 @@ checkS3methods(package, dir, lib.loc = NULL)
   by the generic.  The rules when \code{\dots} is involved are subtle:
   see the source code.  Functions recognized as S3 generics are those
   with a call to \code{UseMethod} in their body, internal S3 generics
-  (see \code{\link[base]{InternalMethods}}), and S3 group generics (see
+  (see \link[base]{InternalMethods}), and S3 group generics (see
   \code{\link[base]{Math}}).  Possible dispatch under a different name
   is not taken into account.  The generics are sought first in the given
   package, then in the \pkg{base} package and (currently) the packages 
@@ -83,7 +83,7 @@ checkS3methods(package, dir, lib.loc = NULL)
 \value{
   The functions return objects of class the same as the respective
   function names containing the information about problems detected.
-  There is a \code{print} method for nicely displaying the information
+  There are \code{print} methods for nicely displaying the information
   contained in such objects.
 }
 \section{Warning}{

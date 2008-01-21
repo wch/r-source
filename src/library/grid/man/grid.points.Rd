@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.points.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.points}
@@ -15,18 +15,19 @@ grid.points(x = stats::runif(10),
             y = stats::runif(10),
             pch = 1, size = unit(1, "char"),
             default.units = "native", name = NULL,
-            gp=gpar(), draw = TRUE, vp = NULL)
+            gp = gpar(), draw = TRUE, vp = NULL)
 pointsGrob(x = stats::runif(10),
-            y = stats::runif(10),
-            pch = 1, size = unit(1, "char"),
-            default.units = "native", name = NULL,
-            gp=gpar(), vp = NULL)
+           y = stats::runif(10),
+           pch = 1, size = unit(1, "char"),
+           default.units = "native", name = NULL,
+           gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
-  \item{pch}{A numeric or character vector
-    indicating what sort of plotting symbol to use.}
+  \item{pch}{A numeric or character vector indicating what sort of
+    plotting symbol to use.  See \code{\link{points}} for the
+    interpretation of these values.}
   \item{size}{A unit object specifying the size of the plotting symbols.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}  
@@ -40,9 +41,8 @@ pointsGrob(x = stats::runif(10),
 }
 \details{
   Both functions create a points grob (a graphical object describing
-  points), but only \code{grid.points}
-  draws the points (and then only if \code{draw} is \code{TRUE}).
-  
+  points), but only \code{grid.points} draws the points (and then only
+  if \code{draw} is \code{TRUE}).
 }
 \value{
   A points grob.  \code{grid.points} returns the value invisibly.

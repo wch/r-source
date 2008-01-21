@@ -81,7 +81,4 @@ gList(...)
   \code{\link{grid.edit}},
   \code{\link{grid.get}}.
 }
-
-\examples{
-}
 \keyword{dplot}

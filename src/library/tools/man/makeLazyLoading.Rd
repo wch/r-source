@@ -17,18 +17,18 @@ makeLazyLoading(package, lib.loc = NULL, compress = TRUE,
   \item{compress}{logical; whether to compress entries on the database.}
 }
 \description{
-  Tools for Lazy Loading of Packages from a Database.
+  Tools for lazy loading of packages from a database.
 }
 \details{
   A tool to set up packages for lazy loading from a database.  For
-  packages other than base you can use \code{makeLazyLoading(package)}
-  to convert them to use lazy loading.
+  packages other than \pkg{base} you can use
+  \code{makeLazyLoading(package)} to convert them to use lazy loading.
 }
 \examples{
-  # set up package "splines" for lazy loading -- already done
-  \dontrun{
-    tools:::makeLazyLoading("splines")
-  }
+## set up package "splines" for lazy loading -- already done
+\dontrun{
+tools:::makeLazyLoading("splines")
+}
 }
 \keyword{utilities}
 \author{Luke Tierney and Brian Ripley}

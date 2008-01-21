@@ -12,9 +12,9 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 \arguments{
   \item{x}{a matrix whose spectral decomposition is to be computed.}
   \item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
-    (or Hermitian if complex) and only its lower triangle is used.
-    If \code{symmetric} is not specified, the matrix is inspected for
-    symmetry.}
+    (or Hermitian if complex) and only its lower triangle (diagonal
+    included) is used.  If \code{symmetric} is not specified, the matrix
+    is inspected for symmetry.}
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
@@ -29,7 +29,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   DGEEV, ZHEEV and ZGEEV whereas \code{eigen(EISPACK=TRUE)} provides an
   interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
   and \code{CG}.
-   
+
   If \code{symmetric} is unspecified, the code attempts to
   determine if the matrix is symmetric up to plausible numerical
   inaccuracies.  It is faster and surer to set the value yourself.
@@ -52,7 +52,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 \value{
   The spectral decomposition of \code{x} is returned as components of a
   list with components
-  
+
   \item{values}{a vector containing the \eqn{p} eigenvalues of \code{x},
     sorted in \emph{decreasing} order, according to \code{Mod(values)}
     in the asymmetric case when they might be complex (even for real
@@ -62,7 +62,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \item{vectors}{either a \eqn{p\times p}{p * p} matrix whose columns
     contain the eigenvectors of \code{x}, or \code{NULL} if
     \code{only.values} is \code{TRUE}.
-    
+
     For \code{eigen(, symmetric = FALSE, EISPACK =TRUE)} the choice of
     length of the eigenvectors is not defined by EISPACK.  In all other
     cases the vectors are normalized to unit length.

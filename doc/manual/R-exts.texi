@@ -177,6 +177,10 @@ please do not arrange to install yet another copy of the @acronym{GNU}
 @url{http://www.r-project.org/Licenses/} and included in the @R{}
 distribution (in directory @file{share/licenses}).
 
+For the conventions for files @file{NEWS} and @file{ChangeLog} in the
+GNU project see
+@uref{http://www.gnu.org/prep/standards/standards.html#Documentation}.
+
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
 case-sensitive, to maintain portability it is strongly recommended that
@@ -186,16 +190,21 @@ package named @file{Foo}.
 
 To ensure that file names are valid across file systems and supported
 operating system platforms, the @acronym{ASCII} control characters as
-well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
-@samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
-names.  In addition, files with names @samp{con}, @samp{prn},
+well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/},
+@samp{<}, @samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed
+in file names.  In addition, files with names @samp{con}, @samp{prn},
 @samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com9}, and
-@samp{lpt1} to @samp{lpt9} after conversion to lower case and stripping
-possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are disallowed.
-Also, file names in the same directory must not differ only by case (see
-the previous paragraph).  In addition, the names of @samp{.Rd} files
-will be used in URLs and so must be @acronym{ASCII} and not contain
-@code{%}.
+@samp{lpt1} to @samp{lpt9} after conversion to lower case and
+stripping possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are
+disallowed.  Also, file names in the same directory must not differ
+only by case (see the previous paragraph).  In addition, the names of
+@samp{.Rd} files will be used in URLs and so must be @acronym{ASCII}
+and not contain @code{%}.  For maximal portability filenames should
+only contain only @acronym{ASCII} characters not excluded already
+(that is @code{A-Za-z0-9._!#$%&+,;=@@^()@{@}'[]} we exclude space as 
+many utilities do not accept spaces in file paths): non-English alphabetic
+characters cannot be guaranteed to be supported in all locales.  It would
+be good practice to avoid the shell metacharacters @code{()@{@}'[]$}.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
@@ -261,7 +270,7 @@ vertical bars.  Individual specifications must be one of
 @item
 One of the ``standard'' short specifications
 @example
-GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 Artistic-1.0 Artistic-2.0
+GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-1.0 Artistic-2.0
 @end example
 as made available via @url{http://@/www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the R source or home
@@ -478,8 +487,15 @@ case) letter or digit and have one of the extensions @file{.R},
 It should be possible to read in the files using @code{source()}, so
 @R{} objects must be created by assignments.  Note that there need be no
 connection between the name of the file and the R objects created by it.
-The @R{} code files should only create @R{} objects and not call
-functions with side effects such as @code{require} and @code{options}.
+Ideally, the @R{} code files should only directly assign @R{} objects
+and definitely should not call functions with side effects such as
+@code{require} and @code{options}.  If computations are required to
+create objects these can use code `earlier' in the package (see the
+@samp{Collate} field) plus, @emph{only if lazyloading is used},
+functions in the @samp{Depends} packages provided that the objects
+created do not depend on those packages except @emph{via} name space
+imports.  (Packages without namespaces will work under somewhat less
+restrictive assumptions.)
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects) this will be
@@ -487,7 +503,7 @@ lazy-loaded into the name space/package environment -- this is intended
 for system datasets that are not intended to be user-accessible via
 @code{data}.  Also, files ending in @samp{.in} will be allowed in the
 @file{R} directory to allow a @file{configure} script to generate
-suitable files,
+suitable files.
 
 Only @acronym{ASCII} characters (and the control characters tab,
 formfeed, LF and CR) should be used in code files.  Other characters are
@@ -551,30 +567,30 @@ optionally file @file{Makevars} or @file{Makefile}.  When a package is
 installed using @code{R CMD INSTALL}, Make is used to control
 compilation and linking into a shared object for loading into @R{}.
 There are default variables and rules for this (determined when @R{} is
-configured and recorded in @file{@var{R_HOME}/etc/Makeconf}), providing
-support for C, C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is
-not supported.  If you have Ratfor source code, you need to convert it
-to FORTRAN.  Only FORTRAN-77 (which we write in upper case) is supported
-on all platforms, but most also support Fortran-95 (for which we use
-title case).  If you want to ship Ratfor source files, please do so in a
-subdirectory of @file{src} and not in the main subdirectory.}, Objective
-C and Objective C++ with associated extensions @file{.c}, @file{.cc} or
-@file{.cpp} or @file{.C}, @file{.f}, @file{.f90} or @file{.f95},
-@file{.m}, and @file{.mm} or @file{.M}, respectively.  We recommend
-using @file{.h} for headers, also for C++@footnote{Using @file{.hpp},
-although somewhat popular, is not guaranteed to be portable.} or Fortran
-9x include files.  The default rules can be tweaked by setting macros in
-a file @file{src/Makevars} (@pxref{Using Makevars}).  Note that this
-mechanism should be general enough to eliminate the need for a
-package-specific @file{src/Makefile}.  If such a file is to be
-distributed, considerable care is needed to make it general enough to
-work on all @R{} platforms.  It should have an appropriate first target
-(conventionally called @samp{all}) and a (possibly empty) target
-@samp{clean} which removes all files generated by Make (to be used by
-@samp{R CMD INSTALL --clean} and @samp{R CMD INSTALL --preclean}).
-There are platform-specific file names on Windows:
-@file{src/Makevars.win} takes precedence over @file{src/Makevars} and
-@file{src/Makefile.win} must be used.
+configured and recorded in
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
+C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is not supported.
+If you have Ratfor source code, you need to convert it to FORTRAN.  Only
+FORTRAN-77 (which we write in upper case) is supported on all platforms,
+but most also support Fortran-95 (for which we use title case).  If you
+want to ship Ratfor source files, please do so in a subdirectory of
+@file{src} and not in the main subdirectory.}, Objective C and Objective
+C++ with associated extensions @file{.c}, @file{.cc} or @file{.cpp} or
+@file{.C}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
+@file{.mm} or @file{.M}, respectively.  We recommend using @file{.h} for
+headers, also for C++@footnote{Using @file{.hpp}, although somewhat
+popular, is not guaranteed to be portable.} or Fortran 9x include files.
+The default rules can be tweaked by setting macros in a file
+@file{src/Makevars} (@pxref{Using Makevars}).  Note that this mechanism
+should be general enough to eliminate the need for a package-specific
+@file{src/Makefile}.  If such a file is to be distributed, considerable
+care is needed to make it general enough to work on all @R{} platforms.
+It should have an appropriate first target (conventionally called
+@samp{all}) and a (possibly empty) target @samp{clean} which removes all
+files generated by Make (to be used by @samp{R CMD INSTALL --clean} and
+@samp{R CMD INSTALL --preclean}).  There are platform-specific file
+names on Windows: @file{src/Makevars.win} takes precedence over
+@file{src/Makevars} and @file{src/Makefile.win} must be used.
 
 The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
@@ -754,7 +770,7 @@ AC_OUTPUT
 @end example
 
 @noindent
-in @file{configure.ac} (assuming Autoconf 2.50 or better).
+in @file{configure.ac} (assuming Autoconf 2.50 or later).
 
 The definition of the respective @R{} function in @file{foo.R.in} could be
 
@@ -813,11 +829,12 @@ part of @code{R CMD INSTALL}.)
 @findex R CMD config
 Note that earlier versions of this document recommended obtaining the
 configure information by direct extraction (using grep and sed) from
-@file{@var{R_HOME}/etc/Makeconf}, which only works for variables
-recorded there as literals.  You can use @code{R CMD config} for getting
-the value of the basic configuration variables, or the header and
-library flags necessary for linking against @R{}, see @kbd{R CMD config
---help} for details.  (This works on Windows as from @R{} 2.6.0.)
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}, which only works for
+variables recorded there as literals.  You can use @code{R CMD config}
+for getting the value of the basic configuration variables, or the
+header and library flags necessary for linking against @R{}, see @kbd{R
+CMD config --help} for details.  (This works on Windows as from @R{}
+2.6.0.)
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
@@ -901,8 +918,8 @@ GCC.
 
 There are some macros which are built whilst configuring the building of
 @R{} itself, are stored on Unix-alikes in
-@file{@var{R_HOME}/etc/Makeconf} and can be used in @file{Makevars}.
-These include
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf} and can be used in
+@file{Makevars}.  These include
 
 @table @code
 @item FLIBS
@@ -2205,6 +2222,10 @@ being imported from more than one namespace.
 * Encoding issues::             
 @end menu
 
+Portable packages should have simple file names: use only alphanumeric
+@acronym{ASCII} characters and @code{.}, and avoid those names not
+allowed under Windows which are mentioned above.
+
 @code{R CMD check} provides a basic set of checks, but often further
 problems emerge when people try to install and use packages submitted to
 @acronym{CRAN} -- many of these involve compiled code.  Here are some
@@ -2350,7 +2371,7 @@ locale via an environment variable.  The default is equivalent setting
 @end example
 
 @noindent
-which is appropriate for a system based on @code{glibc}, except if the
+(which is appropriate for a system based on @code{glibc}) except if the
 current locale is UTF-8 and @samp{iconv} is available, when the
 package code is translated to UTF-8 for syntax checking.
 
@@ -2528,13 +2549,14 @@ settings).
 @subsection R messages
 
 Mechanisms to support the automatic translation of @R{} @code{stop},
-@code{warning} and @code{message} messages are in place, provided the
-package has a name space.  They make use of message catalogs in the same
-way as C-level messages, but using domain @code{R-@var{pkg}} rather than
-@code{@var{pkg}}.  Translation of character strings inside @code{stop},
-@code{warning} and @code{message} calls is automatically enabled, as
-well as other messages enclosed in calls to @code{gettext} or
-@code{gettextf}.  (To suppress this, use argument @code{domain=NA}.)
+@code{warning} and @code{message} messages are in place, most easily
+if the package has a name space.  They make use of message catalogs in
+the same way as C-level messages, but using domain @code{R-@var{pkg}}
+rather than @code{@var{pkg}}.  Translation of character strings inside
+@code{stop}, @code{warning} and @code{message} calls is automatically
+enabled, as well as other messages enclosed in calls to @code{gettext}
+or @code{gettextf}.  (To suppress this, use argument
+@code{domain=NA}.)
 
 Tools to prepare the @file{R-@var{pkg}.pot} file are provided in package
 @pkg{tools}: @code{xgettext2pot} will prepare a file from all strings
@@ -5432,11 +5454,11 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 @c Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
 @c for more information.
 
-In addition to registering C routines to be called by @R{}, it can at times
-be useful for one package to make some of its C routines available to be
-called by C code in another package.  An experimental interface to
-support this has been provided in @R{} 2.4.0.  The interface consists of
-two routines declared as
+In addition to registering C routines to be called by @R{}, it can at
+times be useful for one package to make some of its C routines available
+to be called by C code in another package.  An interface to support this
+has been provided since @R{} 2.4.0.  The interface consists of two
+routines declared as
 
 @findex R_RegisterCCallable
 @findex R_GetCCallable
@@ -5521,10 +5543,10 @@ It is possible to arrange to include compiled code from other languages
 by setting the macro @samp{OBJECTS} in file @file{Makevars}, together
 with suitable rules to make the objects.
 
-Flags which are already set (for example in file @file{etc/Makeconf} on
-Unix-alikes) can be overridden by the environment variable
-@env{MAKEFLAGS} (at least for systems using a POSIX-compliant
-@code{make}), as in (Bourne shell syntax)
+Flags which are already set (for example in file
+@file{etc@var{R_ARCH}/Makeconf} on Unix-alikes) can be overridden by the
+environment variable @env{MAKEFLAGS} (at least for systems using a
+POSIX-compliant @code{make}), as in (Bourne shell syntax)
 
 @example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
@@ -5566,7 +5588,7 @@ system makefile and then any personal @file{Makevars} files.
 If the @file{src} subdirectory of package contains a file
 @file{Makefile}, this is used in place of the @code{R CMD SHLIB}
 mechanism.  @command{make} is called with makefiles
-@file{R_HOME/etc/Makeconf}@footnote{or the version specific to a
+@file{R_HOME/etc@var{R_ARCH}/Makeconf}@footnote{or the version specific to a
 sub-architecture}, @file{src/Makefile} and any personal @file{Makevars}
 files (in that order).  The first target found in @file{src/Makefile} is
 used.
@@ -5723,21 +5745,23 @@ the @R{} headers, and include the appropriate headers yourself.
 @section Fortran I/O
 
 We have already warned against the use of C++ iostreams not least
-because output is not guaranteed to appear on the @R{} console, and
-this warning applies equally to Fortran output to units @code{*} and
-@code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
+because output is not guaranteed to appear on the @R{} console, and this
+warning applies equally to Fortran (77 or 9x) output to units @code{*}
+and @code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
 
 In the past most Fortran compilers implemented I/O on top of the C I/O
 system and so the two interworked successfully.  This was true of
 @command{g77}, but it is less true of @command{gfortran} as used in
-@code{gcc 4.y.x}.  In particular, any package that makes use of
-Fortran I/O will when compiled on Windows interfere with C I/O: when
-the Fortran I/O is initialized (typically when the package is loaded)
-the C @code{stdout} and @code{stderr} are switched to LF line endings.
-The @command{gfortran} I/O system assumes that it has exclusive access
-to @code{stdin}/@code{stdout}/@code{stderr} and so should be avoided
-if at all possible.  Function @code{La_Init} in file
-@file{src/main/lapack.c} shows how to mitigate the worst effects.
+@code{gcc 4.y.x}.  In particular, any package that makes use of Fortran
+I/O will when compiled on Windows interfere with C I/O: when the Fortran
+I/O is initialized (typically when the package is loaded) the C
+@code{stdout} and @code{stderr} are switched to LF line endings.
+(Function @code{La_Init} in file @file{src/main/lapack.c} shows how to
+mitigate this.)  Even worse, prior to @R{} 2.6.2 using Fortran output
+when running under the Windows GUI console (@code{Rgui}) would hang the
+@R{} session.  This is now avoided by ensuring that the Fortran output
+is written to a file (@file{fort.6} in the working directory).
+
 
 @node Handling R objects in C, Interface functions .Call and .External, Fortran I/O, System and foreign language interfaces
 @section Handling R objects in C
@@ -7484,12 +7508,12 @@ The vector accessors like @code{REAL} and @code{INTEGER} and
 from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
 functions.)
 
-As from @R{} 2.4.0 the accessor functions check that they are being used
-on an appropriate type of @code{SEXP}.  By default a certain amount of
-misuse is allowed where the internal representation is the same: for
-example @code{LOGICAL} can be used on a @code{INTSXP} and
-@code{SET_VECTOR_ELT} on a @code{STRSXP}.  Strict checking can be
-enabled by compiling @R{} (specifically @file{src/main/memory.c}) with
+The accessor functions check that they are being used on an appropriate
+type of @code{SEXP}.  By default a certain amount of misuse is allowed
+where the internal representation is the same: for example
+@code{LOGICAL} can be used on a @code{INTSXP} and @code{SET_VECTOR_ELT}
+on a @code{STRSXP}.  Strict checking can be enabled by compiling @R{}
+(specifically @file{src/main/memory.c}) with
 @samp{USE_TYPE_CHECKING_STRICT} defined (e.g. in as the configure
 variable @samp{DEFS} on a Unix-alike).
 
@@ -9097,9 +9121,10 @@ programs.  We will assume this has been done for the rest of this
 section.
 
 The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
-such example, and the unbundled @acronym{GNOME} and MacOS X consoles are
-others.  The source for @file{@var{R_HOME}/bin/exec/R} is in file
-@file{src/main/Rmain.c} and is very simple
+such example, and the unbundled @acronym{GNOME} (see package
+@pkg{gnomeGUI} on CRAN) and MacOS X consoles are others.  The source for
+@file{@var{R_HOME}/bin/exec/R} is in file @file{src/main/Rmain.c} and is
+very simple
 
 @example
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
@@ -9131,7 +9156,8 @@ Setting @env{R_HOME} and checking it is valid, as well as the path
 @item
 Setting @env{LD_LIBRARY_PATH} to include the directories used in linking
 @R{}.  This is recorded as the default setting of
-@env{R_LD_LIBRARY_PATH} in the shell script @file{R_HOME/etc/ldpaths}.
+@env{R_LD_LIBRARY_PATH} in the shell script
+@file{R_HOME/etc@var{R_ARCH}/ldpaths}.
 
 @item
 Processing some of the arguments, for example to run @R{} under a

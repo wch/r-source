@@ -117,28 +117,28 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   This applies to the internal code only.
 
   Proxies can be specified via environment variables.
-  Setting \code{"no_proxy"} to \code{"*"} stops any proxy being tried.
-  Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
+  Setting \env{"no\_proxy"} to \code{"*"} stops any proxy being tried.
+  Otherwise the setting of \env{"http\_proxy"} or \env{"ftp\_proxy"}
   (or failing that, the all upper-case version) is consulted and if
   non-empty used as a proxy site.  For FTP transfers, the username
-  and password on the proxy can be specified by \code{"ftp_proxy_user"}
-  and \code{"ftp_proxy_password"}.  The form of \code{"http_proxy"}
+  and password on the proxy can be specified by \env{"ftp\_proxy\_user"}
+  and \env{"ftp\_proxy\_password"}.  The form of \env{"http\_proxy"}
   should be \code{"http://proxy.dom.com/"} or
   \code{"http://proxy.dom.com:8080/"} where the port defaults to
   \code{80} and the trailing slash may be omitted. For
-  \code{"ftp_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
+  \env{"ftp\_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
   where the default port is \code{21}.  These environment variables
   must be set before the download code is first used: they cannot be
   altered later by calling \code{\link{Sys.setenv}}.
 
   Usernames and passwords can be set for HTTP proxy transfers via
   environment variable \env{http\_proxy\_user} in the form
-  \code{user:passwd}.  Alternatively, \code{"http_proxy"} can be of the
+  \code{user:passwd}.  Alternatively, \env{http\_proxy} can be of the
   form \code{"http://user:pass@proxy.dom.com:8080/"} for compatibility
   with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
   supported.
 #ifdef windows
-  Under Windows, if \code{"http_proxy_user"} is set to \code{"ask"} then
+  Under Windows, if \env{http\_proxy\_user} is set to \code{"ask"} then
   a dialog box will come up for the user to enter the username and
   password.  \bold{NB:} you will be given only one opportunity to enter this,
   but if proxy authentication is required and fails there will be one

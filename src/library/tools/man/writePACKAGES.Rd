@@ -44,7 +44,7 @@ write_PACKAGES(dir, fields = NULL,
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages
   for Windows in the given directory \code{dir}, and builds
-  \file{PACKAGES} and \file{PACKAGES.gz} files from these information.
+  \file{PACKAGES} and \file{PACKAGES.gz} files from this information.
 }
 \value{
   Invisibly returns the number of packages described in the resulting
