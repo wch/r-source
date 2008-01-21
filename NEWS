@@ -318,23 +318,11 @@ BUG FIXES
 	cor(use="pair") for the rank methods gave a matrix result with
 	dimensions > 0 even if one of the inputs had 0 columns.
 
-    o	[[""]] was matching a name of "", even though "" is documented
-	to match no name in indexing.
-
-    o	attributes<-() could return a changed value if there was an
-	error in the computations, e.g. an invalid value for an
-	attribute being set.
-
     o	The AIC() S4 generic in package stats4 no longer disables
 	dispatch of S3 methods for AIC().
 
     o	Supplying edit.row.names = TRUE when editing a matrix without
 	row names is now an error and not a segfault. (PR#10500)
-
-    o	R no longer ignores SIGPIPE signals even in processes launched
-	by system().  Instead PR#1959 is handled by a simple error
-	handler which will give an error message in circumstances
-	where none was given before.
 
     o	The error handler in the parser reported unexpected
 	& as && and | as ||.
@@ -353,24 +341,12 @@ BUG FIXES
 	when operating on a vector still passes subsets of the vector
 	to FUN, and this is now documented.
 
-    o	capture.output() completes an incomplete final line of
-	output when file = NULL.  (PR#10534)
-
-    o	capture.output() now returns invisibly if output is written to
-	a file/connection.
-
-    o   better behaviour of str.default() for non-default
+    o   Better behaviour of str.default() for non-default
 	'strict.width' (it was calling str() rather than str.default()
 	internally); also, more useful handling of options("str").
 
     o	wilcox.test(exact=FALSE, conf.int=TRUE) could fail in some
 	extreme two-sample problems.  (Reported by Wolfgang Huber.)
-
-    o	format.AsIs() did not remove the "AsIs" class and so could go
-	into an infinite loop.
-
-    o	summary.mlm() lost the names of the coefficients when there
-	was only one.
 
     o	par(pch=) would accept a multi-byte string but only use the
 	first byte.  This would lead to incorrect results in an MBCS
@@ -378,15 +354,6 @@ BUG FIXES
 
     o	There are some checks for valid C-style formats in, e.g. 
 	png(filename=).  (PR#10571)
-
-    o	slotNames() was erroneously treating classes that extend
-	"character" as strings.
-
-    o	Rdconv was not marking examples files with an encoding if
-	this was known from the package's DESCRIPTION file.
-
-    o	readChar() from a raw vector was reading a number of bytes,
-	not characters.
 
     o	vector() was misinterpreting some real 'length' values, e.g,
 	NaN and NA_real_ were interpreted as zero.  Also, invalid
@@ -444,8 +411,8 @@ BUG FIXES
     o	confint() misreported on some rank-deficient lm() models.
 	(PR#10496)  This could also occur in the default method.
 
-    o	\code{\var{<name>}} was not rendered correctly to latex in Rd files
-	for non-alphabetic arguments <name>.
+    o	\code{\var{<name>}} was not rendered correctly to latex in Rd
+	files for non-alphabetic arguments <name>.
 
     o	In 2.6.1, curve(*, add=TRUE) used a wrong default 'xlim' when x
 	coordinates were logged.
@@ -453,7 +420,7 @@ BUG FIXES
     o	The Java-based search in help.start() now only requires a
 	JVM >= 1.4 (2.6.1 accidentally required >= 1.5).
 
-    o	The default method for range() was omitting na.rm for
+    o	The default method for range() was omitting 'na.rm' for
 	non-numeric objects such as those of class "Date".  (PR#10508)
 
     o	cut(x, breaks=<n>) misbehaved on a constant vector of negative
@@ -464,7 +431,7 @@ BUG FIXES
 
     o	The automatic detection of the domain for message translation
 	was not working correctly for messages in message(), warning()
-	and stop() in packages others than 'base'.
+	and stop() in packages other than 'base'.
 
     o   The profile.nls() function misbehaved when encountering
         non-convergence of the "port" algorithm.
@@ -500,6 +467,32 @@ BUG FIXES
 	in some extremely degenerate problems.  (PR#10558)
 
     o	src/extra/pcre has been updated to PCRE 7.5 (bugfix release).
+
+    o	capture.output() completes an incomplete final line of
+	output when file = NULL.  (PR#10534)
+
+    o	capture.output() now returns invisibly if output is written to
+	a file/connection.
+
+    o	format.AsIs() did not remove the "AsIs" class and so could go
+	into an infinite loop.
+
+    o	summary.mlm() lost the names of the coefficients when there
+	was only one.
+
+    o	Rdconv was not marking examples files with an encoding if
+	this was known from the package's DESCRIPTION file.
+
+    o	readChar() from a raw vector was reading a number of bytes,
+	not characters.
+
+    o	slotNames() was erroneously treating classes that extend
+    	"character" as strings.
+
+    o	R no longer ignores SIGPIPE signals even in processes launched
+	by system().  Instead PR#1959 is handled by a simple error
+	handler which will give an error message in circumstances
+	where none was given before.
 
 
 
