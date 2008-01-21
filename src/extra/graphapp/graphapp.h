@@ -1111,10 +1111,10 @@ textbox	  newtextbox(const char *text, rect r);
 textbox	  newtextarea(const char *text, rect r);
 textbox	  newrichtextarea(const char *text, rect r);
 
-listbox	  newlistbox(const char *list[], rect r, scrollfn fn);
+listbox	  newlistbox(const char *list[], rect r, scrollfn fn, actionfn dble);
 listbox	  newdroplist(const char *list[], rect r, scrollfn fn);
 listbox	  newdropfield(const char *list[], rect r, scrollfn fn);
-listbox	  newmultilist(const char *list[], rect r, scrollfn fn);
+listbox	  newmultilist(const char *list[], rect r, scrollfn fn, actionfn dble);
 int 	  isselected(listbox b, int index);
 void	  setlistitem(listbox b, int index);
 int 	  getlistitem(listbox b);

@@ -15,7 +15,7 @@ RPROXY_HEADERS = SC_proxy.h SC_system.h rproxy.h bdx.h bdx_SEXP.h bdx_com.h bdx_
 all: fixh config.h
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
-	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS) $(R_HOME)/include
+	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS) iconv.h $(R_HOME)/include
 	@cp -p R_ext/*.h $(R_HOME)/include/R_ext
 	@cp -p ../extra/graphapp/graphapp.h ../extra/graphapp/ga.h \
 	  $(R_HOME)/include

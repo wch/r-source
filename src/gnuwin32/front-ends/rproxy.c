@@ -18,7 +18,6 @@
  *
  ******************************************************************************/
 
-#define NONAMELESSUNION
 #include <windows.h>
 #include <stdio.h>
 #include <config.h>

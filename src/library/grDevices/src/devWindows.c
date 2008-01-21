@@ -328,7 +328,7 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
     /* Set default values and pad with zeroes ... */
     strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
-    strncpy(paper, "default", 256);
+    strncpy(paper, "special", 256);
     strncpy(bg, "transparent", 256);
     strncpy(fg, "black", 256);
     /* and then try to get it from .PostScript.Options */

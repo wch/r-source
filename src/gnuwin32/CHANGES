@@ -23,6 +23,27 @@ WORKAROUNDS
 	about 'desktop' by starting at 'Computer' on Vista/Server 2008.
 
 
+NEW FEATUES
+
+    o	win.version() and Sys.info() know about recent and upcoming
+	Windows versions, including if they are running on a 64-bit
+	platform.
+
+    o	The listbox used by select.list() now responds to
+	double-clicking an item (as if the item had been selected and
+	then the OK button pressed).
+
+    o	The header iconv.h is now installed, and can be used by
+	packages in conjunction with PKG_LIBS=-liconv .
+
+    o	The value of "default" for the postscript() 'paper' argument for
+	savePlot() and the windows() graphics device menus is now
+	interpreted as "special" (rather than "a4" or "letter"): it
+	can still be overridden by setting ps.options().  (This changes
+	the default output to be most suitable for inclusion in other
+	documents rather than to produce a page for printing.)
+
+
 BUG FIXES
 
     o	If a graphics window was opened in MDI mode while the console
@@ -34,6 +55,9 @@ BUG FIXES
     o	The text field in a drop-down list (as used in GUI preferences
 	for fonts) will now scroll horizontally when a user enters
 	text that exceeds the display width.
+
+    o	If Rterm is invoked as 'R', the status code (as passed to q())
+	is now returned (rather than 0 or 1).
 
 
 

@@ -17,7 +17,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#define NONAMELESSUNION
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
