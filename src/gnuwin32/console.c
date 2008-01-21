@@ -234,20 +234,21 @@ void xbufaddxs(xbuf p, const wchar_t *s, int user)
     p->user[p->ns - 1] = l;
 }
 
+#define IN_CONSOLE
+#include "rgui_UTF8.h"
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 static size_t enctowcs(wchar_t *wc, char *s, int n)
 {
     size_t nc = 0;
-    /* NB Synchronize with EncodeString */
-    static char in[4] = "\002\377\376", out[4] = "\003\377\376";
     char *pb, *pe;
-    if((pb = strchr(s, in[0])) && *(pb+1) == in[1] && *(pb+2) == in[2]) {
+    if((pb = strchr(s, UTF8in[0])) && *(pb+1) == UTF8in[1] &&
+       *(pb+2) == UTF8in[2]) {
 	*pb = '\0';
 	nc += mbstowcs(wc, s, n);
 	pb += 3; pe = pb;
 	while(*pe && 
-	      !((pe = strchr(pb, out[0])) && *(pe+1) == out[1] &&
-	      *(pe+2) == out[2])) pe++;
+	      !((pe = strchr(pb, UTF8out[0])) && *(pe+1) == UTF8out[1] &&
+	      *(pe+2) == UTF8out[2])) pe++;
 	if(!*pe) return nc; /* FIXME */;
 	*pe = '\0';
 	/* convert string starting at pb from UTF-8 */

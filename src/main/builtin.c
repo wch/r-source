@@ -393,22 +393,23 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32
+# include "rgui_UTF8.h"
 static const char *trChar(SEXP x)
 {
     char *p;
     static char buf[106];
     int n = strlen(CHAR(x));
+    /* Long strings will be rare, and few per cat() call so we
+       can afford to be profligate here: translateChar is */
     if (n < 100) p = buf; else p = R_alloc(n+7, 1);
     if (WinUTF8out && getCharEnc(x) == CE_UTF8) {
-	strcpy(p, "\002\377\376");
-	strcat(p, CHAR(x));
-	strcat(p, "\003\377\376");
+	strcpy(p, UTF8in); strcat(p, CHAR(x)); strcat(p, UTF8out);
 	return p;
     } else
 	return translateChar(x);
 }
 #else
-#define trChar(x) translateChar(x)
+# define trChar(x) translateChar(x)
 #endif
 
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
@@ -550,7 +551,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (labs != R_NilValue && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
 		Rprintf("%s ", trChar(STRING_ELT(labs, nlines % lablen)));
-		width += Rstrlen(translateChar(STRING_ELT(labs, nlines % lablen)), 0) + 1;
+		width += Rstrlen(STRING_ELT(labs, nlines % lablen), 0) + 1;
 		nlines++;
 	    }
 	    if (isString(s))

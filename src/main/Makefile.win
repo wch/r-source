@@ -8,11 +8,8 @@ all: makeMakedeps libmain.a
 ## there are headers and include files in this directory
 CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 CFLAGS=$(OPTFLAGS)
-ifdef SUPPORT_UTF8
-CFLAGS += -DSUPPORT_UTF8
-endif
-
 FFLAGS=-O2
+
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
@@ -49,6 +46,8 @@ dounzip-CPPFLAGS=-I../extra/zlib
 character-CPPFLAGS=-I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
 pcre-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
 platform-CPPFLAGS=-I../gnuwin32
+builtin-CPPFLAGS=-I../gnuwin32
+printutils-CPPFLAGS=-I../gnuwin32
 
 libmain.a: $(OBJS)
 
