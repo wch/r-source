@@ -175,9 +175,7 @@ OTHERS
 	determine whether files default to text or binary mode.  R now
 	overrides this setting so that files are always read in text
 	mode by default: this is relevant to embedded uses of R.
-	
-    o	The shortcuts created by the installer now start R in the user's
-	personal folder (typically 'My Documents').
+
 
 
 BUILDING R
@@ -213,6 +211,9 @@ WORKAROUNDS
     o	Browsing for a directory in choose.dir() and the Rgui
 	'Change Dir...' menu item now works around Vista's confusion
 	about 'desktop' by starting at 'Computer' on Vista/Server 2008.
+
+    o	The shortcuts created by the installer now start R in the user's
+	personal folder (typically 'My Documents' or 'Documents').
 
 
 NEW FEATUES
