@@ -993,7 +993,7 @@ utf8toucs(wchar_t *wc, const char *s)
 size_t attribute_hidden 
 utf8towcs(wchar_t *wc, const char *s, size_t n)
 {
-    int m, res=0;
+    int m, res = 0;
     const char *t;
     wchar_t *p;
     wchar_t local;
@@ -1002,15 +1002,15 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 	for(p = wc, t = s; ; p++, t += m) {
 	    m  = utf8toucs(p, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
-	    if(m == 0) break;
-	    res += m;
-	    if(res >= n) break;
+	    if (m == 0) break;
+	    res ++;
+	    if (res >= n) break;
 	}
     else
 	for(t = s; ; res += m, t += m) {
 	    m  = utf8toucs(&local, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
-	    if(m == 0) break;
+	    if (m == 0) break;
 	}
     return res;
 }

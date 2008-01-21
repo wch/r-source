@@ -18,7 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is handled as a whole string, 
+/* <UTF8> char here is handled as a whole string,
    except that there is an assumption that filesep is one byte.
 */
 
@@ -68,7 +68,7 @@ SEXP attribute_hidden do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isNull(env)) {
 	error(_("use of NULL environment is defunct"));
 	env = R_BaseEnv;
-    } else    
+    } else
     if (!isEnvironment(env))
 	errorcall(call, R_MSG_IA);
     return mkPROMISE(expr, env);
@@ -79,14 +79,14 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name = R_NilValue /* -Wall */, expr, eenv, aenv;
     checkArity(op, args);
-    
+
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
     	error(_("invalid first argument"));
     else
 	name = install(translateChar(STRING_ELT(CAR(args), 0)));
     args = CDR(args);
     expr = CAR(args);
-    
+
     args = CDR(args);
     eenv = CAR(args);
     if (isNull(eenv)) {
@@ -95,7 +95,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
     if (!isEnvironment(eenv))
 	errorcall(call, R_MSG_IA);
-	
+
     args = CDR(args);
     aenv = CAR(args);
     if (isNull(aenv)) {
@@ -104,7 +104,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
     if (!isEnvironment(aenv))
     	errorcall(call, R_MSG_IA);
-    	
+
     defineVar(name, mkPROMISE(expr, eenv), aenv);
     return R_NilValue;
 }
@@ -115,14 +115,14 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP names, values, val, expr, eenv, aenv, expr0;
     int i;
 
-    checkArity(op, args);    
+    checkArity(op, args);
     names = CAR(args); args = CDR(args);
     if (!isString(names))
     	error(_("invalid first argument"));
     values = CAR(args); args = CDR(args);
     expr = CAR(args); args = CDR(args);
     eenv = CAR(args); args = CDR(args);
-    if (!isEnvironment(eenv)) error(R_MSG_IA);	
+    if (!isEnvironment(eenv)) error(R_MSG_IA);
     aenv = CAR(args);
     if (!isEnvironment(aenv)) error(R_MSG_IA);
 
@@ -153,7 +153,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 2:
 	code = CAR(args);
 	add = eval(CADR(args), rho);
-	if ( TYPEOF(add) != LGLSXP || length(add) != 1 || 
+	if ( TYPEOF(add) != LGLSXP || length(add) != 1 ||
 	     LOGICAL(add)[0] == NA_INTEGER)
 	    errorcall(call, _("invalid '%s' argument"), "add");
 	addit = (LOGICAL(add)[0] == 1);
@@ -194,7 +194,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s;
-    
+
     checkArity(op,args);
     if (TYPEOF(CAR(args)) == STRSXP && length(CAR(args))==1) {
 	PROTECT(s = install(translateChar(STRING_ELT(CAR(args), 0))));
@@ -215,10 +215,10 @@ SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP env, s2;
 	PROTECT_INDEX xp;
 
-	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv, 
+	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv,
 						 install(".ArgsEnv"), TRUE),
 			   &xp);
-	
+
 	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
 	PROTECT(s2 = findVarInFrame3(env, install(nm), TRUE));
 	if(s2 != R_UnboundValue) {
@@ -286,7 +286,7 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     env = CADR(args);
 
-    if (TYPEOF(CAR(args)) == CLOSXP 
+    if (TYPEOF(CAR(args)) == CLOSXP
         && (isEnvironment(env) || isNull(env))) {
 	if (isNull(env))
 	    error(_("use of NULL environment is defunct"));
@@ -319,7 +319,7 @@ SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isNull(enclos)) {
 	error(_("use of NULL environment is defunct"));
 	enclos = R_BaseEnv;
-    } else    
+    } else
     if( !isEnvironment(enclos) )
 	error(_("'enclos' must be an environment"));
 
@@ -365,7 +365,7 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isNull(parent)) {
 	error(_("use of NULL environment is defunct"));
 	parent = R_BaseEnv;
-    } else    
+    } else
     if( !isEnvironment(parent) )
 	error(_("'parent' is not an environment"));
 
@@ -392,6 +392,25 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#ifdef Win32
+static const char *trChar(SEXP x)
+{
+    char *p;
+    static char buf[106];
+    int n = strlen(CHAR(x));
+    if (n < 100) p = buf; else p = R_alloc(n+7, 1);
+    if (WinUTF8out && getCharEnc(x) == CE_UTF8) {
+	strcpy(p, "\002\377\376");
+	strcat(p, CHAR(x));
+	strcat(p, "\003\377\376");
+	return p;
+    } else
+	return translateChar(x);
+}
+#else
+#define trChar(x) translateChar(x)
+#endif
+
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
 {
     Rprintf("\n");
@@ -417,7 +436,7 @@ static void cat_printsep(SEXP sep, int ntot)
     if (sep == R_NilValue || LENGTH(sep) == 0)
 	return;
 
-    sepchar = translateChar(STRING_ELT(sep, ntot % LENGTH(sep)));
+    sepchar = trChar(STRING_ELT(sep, ntot % LENGTH(sep)));
     Rprintf("%s", sepchar);
     return;
 }
@@ -530,12 +549,12 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n > 0) {
 	    if (labs != R_NilValue && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
-		Rprintf("%s ", translateChar(STRING_ELT(labs, nlines)));
-		width += strlen(translateChar(STRING_ELT(labs, nlines % lablen))) + 1;
+		Rprintf("%s ", trChar(STRING_ELT(labs, nlines % lablen)));
+		width += Rstrlen(translateChar(STRING_ELT(labs, nlines % lablen)), 0) + 1;
 		nlines++;
 	    }
 	    if (isString(s))
-		p = translateChar(STRING_ELT(s, 0));
+		p = trChar(STRING_ELT(s, 0));
             else if (isSymbol(s)) /* length 1 */
                 p = CHAR(PRINTNAME(s));
 	    else if (isVectorAtomic(s)) {
@@ -574,7 +593,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (i < (n - 1)) {
 		    cat_printsep(sepr, ntot);
 		    if (isString(s))
-			p = translateChar(STRING_ELT(s, i+1));
+			p = trChar(STRING_ELT(s, i+1));
 		    else {
 			p = EncodeElement(s, i+1, 0, OutDec);
 			strncpy(buf, p, 512); buf[511] = '\0';
