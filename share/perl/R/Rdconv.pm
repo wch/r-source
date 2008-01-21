@@ -1,7 +1,7 @@
 ## Subroutines for converting R documentation into text, HTML, LaTeX and
 ## R (Examples) format
 
-## Copyright (C) 1997-2007 R Development Core Team
+## Copyright (C) 1997-2008 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -212,7 +212,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	    $text =~ s/$EPREFORMAT$id/$ec/;
 	}
 
-	rdoc2ex($Exfile)	if $type =~ /example/i;
+	rdoc2ex($Exfile, $def_encoding)	if $type =~ /example/i;
 
     } else {
 	warn "\n*** Rdconv(): no type specified\n";
@@ -2467,6 +2467,8 @@ sub nroff_tables {
 
 sub rdoc2ex { # (filename)
 
+    local $encoding = $_[1];
+
     my $tit = striptitle($blocks{"title"});
 
     if(defined $blocks{"examples"}) {
@@ -2480,8 +2482,9 @@ sub rdoc2ex { # (filename)
 
 	$tit =~ s/\s+/ /g;
 
-	if (defined $blocks{"encoding"}) {
-	    $Exout->print("### Encoding: ", $blocks{"encoding"}, "\n\n");
+	$encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
+	if ($encoding ne "unknown") {
+	    $Exout->print("### Encoding: $encoding\n\n");
 	}
 
 	$Exout->print(wrap("### Name: ", "###   ", $blocks{"name"}),

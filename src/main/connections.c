@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-7   The R Development Core Team.
+ *  Copyright (C) 2000-8   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2771,24 +2771,6 @@ static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
     return res;
 }
 
-static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
-{
-    char *buf;
-    SEXP res;
-
-    if(*np + len > nbytes) {
-    	len = nbytes - *np;
-    	if(!len) return(R_NilValue);
-    }
-    /* no terminator */
-    buf = R_chk_calloc(len + 1, 1);
-    memcpy(buf, bytes+(*np), len);
-    *np += len;
-    res = mkChar(buf);
-    Free(buf);
-    return res;
-}
-
 /* readBin(con, what, n, swap) */
 SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -3219,11 +3201,22 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* 
+   Version for strings with embedded nuls:
+   these do not currently go in the cache,
+   and do not have an encoding. 
+*/
+static SEXP mkCharLen(const char *name, int len)
+{
+    SEXP c = allocString(len);
+    memcpy(CHAR_RW(c), name, len);
+    return c;
+}
+
 static SEXP readFixedString(Rconnection con, int len)
 {
     char *buf;
     int  pos, m;
-    SEXP ans;
 
 #ifdef SUPPORT_UTF8
     if(utf8locale) {
@@ -3255,9 +3248,48 @@ static SEXP readFixedString(Rconnection con, int len)
 	pos = m;
     }
     /* String may contain nuls so don't use mkChar */
-    ans = allocString(pos);
-    memcpy(CHAR_RW(ans), buf, pos);
-    return ans;
+    return mkCharLen(buf, pos);
+}
+
+static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
+{
+    char *buf;
+    SEXP res;
+
+    if(*np + len > nbytes) {
+    	len = nbytes - *np;
+    	if (!len) return(R_NilValue);
+    }
+
+#ifdef SUPPORT_MBCS
+    if(utf8locale) {
+	int i, clen, iread = *np;
+	char *p;
+	Rbyte *q;
+	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
+	for(i = 0; i < len; i++, p+=clen, iread += clen) {
+	    if (iread >= nbytes) break;
+	    q = bytes + iread;
+	    clen = utf8clen(*q);
+	    if (iread + clen > nbytes)
+		error(_("invalid UTF-8 input in readChar()"));
+	    memcpy(p, q, clen);
+	}
+	clen = iread - (*np);
+	*np = iread;
+	*p = '\0';
+	return mkCharLen(buf, clen);
+    } else
+#endif
+    {
+	/* no terminator */
+	buf = R_chk_calloc(len + 1, 1);
+	memcpy(buf, bytes + (*np), len);
+	*np += len;
+	res = mkCharLen(buf, len);
+	Free(buf);
+    }
+    return res;
 }
 
 
@@ -3291,6 +3323,8 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     	if(!wasopen)
 	    if(!con->open(con)) error(_("cannot open the connection"));
     }
+    if (mbcslocale && !utf8locale)
+	warning(_("can only read in bytes in a non-UTF-8 MBCS locale" ));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0, m = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
