@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-01-21 17:32\n"
 "PO-Revision-Date: 2007-09-18 00:12-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -159,6 +159,10 @@ msgstr "неизвестное семейство '%s'"
 msgid "invalid 'family' argument"
 msgstr "неправильный аргумент 'family'"
 
+#, fuzzy
+msgid "invalid 'file'"
+msgstr "неправильный аргумент 'family'"
+
 msgid "invalid PDF version"
 msgstr "неправильная версия PDF"
 
@@ -252,6 +256,10 @@ msgstr "устройство '%s' недоступно"
 msgid "Available devices are %s"
 msgstr "Доступные устройства: %s"
 
+#, fuzzy
+msgid "invalid 'title'"
+msgstr "Неправильный тип шрифта"
+
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "неправильный шрифт Quartz:  должно быть 4 строки"
 
@@ -260,6 +268,10 @@ msgstr "неправильные аргументы в quartzFonts (должен быть имена шрифтов)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "неправильные аргументы в quartzFonts (нужны именованные аргументы)"
+
+#, fuzzy
+msgid "invalid 'filename'"
+msgstr "неправильный аргумент 'family'"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' должен быть определен до тех пор пока 'units = \"px\"'"

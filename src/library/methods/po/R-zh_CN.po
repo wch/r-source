@@ -1196,7 +1196,6 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
-msgstr[1] "函数'%s'的方法标记中没有类别定义：%s"
 
 #~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
 #~ msgstr ".UsingMethodsTables: 'onOff'的值只能是TRUE或FALSE"

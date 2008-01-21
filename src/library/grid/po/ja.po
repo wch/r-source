@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16+0000\n"
+"POT-Creation-Date: 2008-01-21 17:32+0000\n"
 "PO-Revision-Date: 2005-06-02 16:09+0900 \n"
 "Last-Translator: Nobuo Funao \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -15,41 +15,46 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 
-#: grid.c:213
+#: grid.c:214
 msgid "Cannot clip to rotated viewport"
 msgstr " rotated viewport は省略することが出来ません "
 
-#: grid.c:652 grid.c:657 grid.c:746 grid.c:751
+#: grid.c:653 grid.c:658 grid.c:747 grid.c:752
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 " トップレベルの viewport は pop することが出来ません（grid と グラフィックス"
 "出力を混同していませんか？） "
 
-#: grid.c:942
+#: grid.c:943
 msgid "attempt to plot on null device"
 msgstr " ヌルデバイスに作図を試みる "
 
-#: grid.c:1222
+#: grid.c:1223
 msgid "There is no layout defined"
 msgstr " layout が定義されていません "
 
-#: grid.c:1442
+#: grid.c:1443
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr " 多角形頂点が見付かりません(幅もしくは高さがゼロ？) "
 
-#: grid.c:1451
+#: grid.c:1452
 msgid "Polygon edge not found"
 msgstr " 多角形の頂点が見付かりません "
 
-#: grid.c:1591
+#: grid.c:1592
 msgid "Require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
-#: grid.c:1905
+#: grid.c:1906
 msgid "Non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:3077
+#: grid.c:3007
+#, fuzzy
+msgid "invalid plotting symbol"
+msgstr " 不正な layout.pos.col です "
+
+#: grid.c:3087
 msgid "Unable to clip to rotated rectangle"
 msgstr " 回転矩形へクリップ出来ません "
 

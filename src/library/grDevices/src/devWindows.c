@@ -326,7 +326,7 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 	return;
     }
 
-    if(strchr(fn, '%')) error(_("'%' is not allowed in file name"));
+    if(strchr(fn, '%')) error(_("'%%' is not allowed in file name"));
 
     ndd->displayList = R_NilValue;
 
@@ -397,7 +397,7 @@ static void SaveAsPDF(NewDevDesc *dd, const char *fn)
 	return;
     }
 
-    if(strchr(fn, '%')) error(_("'%' is not allowed in file name"));
+    if(strchr(fn, '%')) error(_("'%%' is not allowed in file name"));
 
     ndd->displayList = R_NilValue;
 

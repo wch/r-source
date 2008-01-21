@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
-"PO-Revision-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-01-21 17:32\n"
+"PO-Revision-Date: 2008-01-21 17:32\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -171,6 +171,9 @@ msgstr "unknown family ‘%s’"
 msgid "invalid 'family' argument"
 msgstr "invalid ‘family’ argument"
 
+msgid "invalid 'file'"
+msgstr "invalid ‘file’"
+
 msgid "invalid PDF version"
 msgstr "invalid PDF version"
 
@@ -264,6 +267,9 @@ msgstr "device ‘%s’ is not available"
 msgid "Available devices are %s"
 msgstr "Available devices are %s"
 
+msgid "invalid 'title'"
+msgstr "invalid ‘title’"
+
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "invalid Quartz font:  must be 4 strings"
 
@@ -272,6 +278,9 @@ msgstr "invalid arguments in quartzFonts (must be font names)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "invalid arguments in quartzFonts (need named args)"
+
+msgid "invalid 'filename'"
+msgstr "invalid ‘filename’"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "‘res’ must be specified unless ‘units = “px”’"

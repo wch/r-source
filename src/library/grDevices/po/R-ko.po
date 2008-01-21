@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-01-21 17:32\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -160,6 +160,10 @@ msgstr ""
 msgid "invalid 'family' argument"
 msgstr "부적절한 'family' 인수입니다"
 
+#, fuzzy
+msgid "invalid 'file'"
+msgstr "부적절한 'family' 인수입니다"
+
 msgid "invalid PDF version"
 msgstr "부적절한 PDF의 버전입니다"
 
@@ -260,6 +264,10 @@ msgstr "디바이스 '%s'는 유효하지는 않습니다"
 msgid "Available devices are %s"
 msgstr "이용 가능한 디바이스는 %s입니다"
 
+#, fuzzy
+msgid "invalid 'title'"
+msgstr "부적절한 'family' 인수입니다"
+
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "부적절한 Quartz font입니다: 4개 문자열이 아니면 되지 않습니다"
 
@@ -268,6 +276,10 @@ msgstr "quartzFonts에서 부적절한 인수입니다(font명이 필요합니�
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "quartFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
+
+#, fuzzy
+msgid "invalid 'filename'"
+msgstr "부적절한 'family' 인수입니다"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr ""

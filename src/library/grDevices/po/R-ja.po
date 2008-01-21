@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-01-21 17:32\n"
 "PO-Revision-Date: 2007-09-11 16:32+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -155,6 +155,10 @@ msgstr " フォントファミリー'%s'は未知です "
 msgid "invalid 'family' argument"
 msgstr " 不正な 'family' 引数です "
 
+#, fuzzy
+msgid "invalid 'file'"
+msgstr " 不正な 'family' 引数です "
+
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
 
@@ -248,6 +252,10 @@ msgstr " デバイス '%s' は有効ではありません "
 msgid "Available devices are %s"
 msgstr " 利用可能なデバイスは %s です "
 
+#, fuzzy
+msgid "invalid 'title'"
+msgstr " 不正なフォント型です "
+
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr " 不正な Quartz font です: 4 つの文字列でなければなりません "
 
@@ -256,6 +264,10 @@ msgstr " quartzFonts 中の不正な引数です（フォント名が必要で�
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です） "
+
+#, fuzzy
+msgid "invalid 'filename'"
+msgstr " 不正な 'family' 引数です "
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があります "

@@ -2170,17 +2170,14 @@ msgstr "所有'x'的值都必需是非负的才能拟合Weibull成长模型"
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "有%d个错误项，但最多只允许有一个"
-msgstr[1] ""
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
 msgstr[0] "因为不存在，%d个观察量被删除了"
-msgstr[1] ""
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
-msgstr[1] ""
 
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr "矩阵对角含无限值"
