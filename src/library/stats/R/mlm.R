@@ -39,6 +39,8 @@ summary.mlm <- function(object, ...)
     class(object) <- cl[match("mlm", cl):length(cl)][-1]
     for(i in seq(ny)) {
 	object$coefficients <- coef[, i]
+        ## if there is one coef, above drops names
+        names(object$coefficients) <- rownames(coef)
 	object$residuals <- resid[, i]
 	object$fitted.values <- fitted[, i]
 	object$effects <- effects[, i]

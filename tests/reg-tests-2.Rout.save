@@ -1,6 +1,6 @@
 
-R version 2.6.1 Patched (2007-12-05 r43598)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.6.1 Patched (2008-01-19 r44061)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5529,8 +5529,8 @@ Residuals:
 -3.28057 -0.90572  0.04996  0.80200  2.54584 
 
 Coefficients:
-     Estimate Std. Error t value Pr(>|t|)    
-[1,]   1.1866     0.1797   6.602  4.4e-08 ***
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   1.1866     0.1797   6.602  4.4e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
@@ -5548,8 +5548,8 @@ Residuals:
 -4.4712 -0.6591  0.3364  1.0945  3.6686 
 
 Coefficients:
-     Estimate Std. Error t value Pr(>|t|)    
-[1,]   2.8988     0.2586   11.21 1.75e-14 ***
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   2.8988     0.2586   11.21 1.75e-14 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 

@@ -103,6 +103,18 @@ BUG FIXES
 
     o	src/extra/pcre has been updated to PCRE 7.5 (bugfix release).
 
+    o	capture.output() completes an incomplete final line of
+	output when file = NULL.  (PR#10534)
+
+    o	capture.output() now returns invisibly if output is written to
+	a file/connection.
+
+    o	format.AsIs() did not remove the "AsIs" class and so could go
+	into an infinite loop.
+
+    o	summary.mlm() lost the names of the coefficients when there
+	was only one.
+
     o	Rdconv was not marking examples files with an encoding if
 	this was known from the package's DESCRIPTION file.
 
