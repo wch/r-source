@@ -124,6 +124,12 @@ BUG FIXES
     o	slotNames() was erroneously treating classes that extend
     	"character" as strings.
 
+    o	R no longer ignores SIGPIPE signals even in processes launched
+	by system().  Instead PR#1959 is handled by a simple error
+	handler which will give an error message in circumstances
+	where none was given before.
+
+
 
 		CHANGES IN R VERSION 2.6.1
 
