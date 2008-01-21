@@ -24,21 +24,25 @@ mostattributes(obj) <- value
   \item{value}{an appropriate named list of attributes, or \code{NULL}.}
 }
 \details{
+  Unlike \code{\link{attr}} it is possible to set attributes on a
+  \code{NULL} object: it will first be coerced to an empty list.
+  
   Note that some attributes (namely \code{\link{class}},
   \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
   \code{\link{names}}, \code{\link{row.names}} and
   \code{\link{tsp}}) are treated specially and have restrictions on
-  the values which can be set.
+  the values which can be set.  (Note that this is not true of
+  \code{\link{levels}} which should be set for factors via the
+  \code{levels} replacement function.)
 
   Attributes are not stored internally as a list and should be thought
   of as a set and not a vector.  They must have unique
   names (and \code{NA} is taken as \code{"NA"}, not a missing value).
 
-  Assigning attributes first removes all attributes, sets any \code{dim}
-  attribute and then the remaining attributes in the order given: this
-  ensures that \code{dim} attributes always precede \code{dimnames}
-  attributes.  If there is an error in assigning attributes, \code{obj}
-  can be left with none or some of the new attributes set.
+  Assigning attributes first removes all attributes, then sets any
+  \code{dim} attribute and then the remaining attributes in the order
+  given: this ensures that setting a \code{dim} attribute always precedes
+  the \code{dimnames} attribute.
 
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}

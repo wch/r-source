@@ -39,6 +39,9 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
 {
     SEXP ans;
 
+    if (vec == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     if(isReal(val) && length(val) == 2 && ISNAN(REAL(val)[0]) ) {
 	/* This should not happen, but if a careless user dput()s a
 	   data frame and sources the result, it will */
@@ -77,6 +80,7 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
     return ans;
 }
 
+/* used in removeAttrib, commentgets and classgets */
 static SEXP stripAttrib(SEXP tag, SEXP lst)
 {
     if(lst == R_NilValue) return lst;
@@ -214,6 +218,7 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
     if (val == R_NilValue)
 	return removeAttrib(vec, name);
 
+    /* We allow attempting to remove names from NULL */
     if (vec == R_NilValue)
 	error(_("attempt to set an attribute on NULL"));
 
@@ -249,6 +254,10 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 void copyMostAttrib(SEXP inp, SEXP ans)
 {
     SEXP s;
+
+    if (ans == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     PROTECT(ans);
     PROTECT(inp);
     for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
@@ -267,6 +276,10 @@ void copyMostAttrib(SEXP inp, SEXP ans)
 void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
 {
     SEXP s;
+
+    if (ans == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     PROTECT(ans);
     PROTECT(inp);
     for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
@@ -307,8 +320,7 @@ void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
 static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
     SEXP s, t;
-    if (vec == R_NilValue)
-	error(_("attempt to set an attribute on NULL"));
+
     PROTECT(vec);
     PROTECT(name);
     PROTECT(val);
@@ -375,6 +387,9 @@ SEXP tspgets(SEXP vec, SEXP val)
     double start, end, frequency;
     int n;
 
+    if (vec == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     if (!isNumeric(val) || length(val) != 3)
 	error(_("'tsp' attribute must be numeric of length three"));
 
@@ -412,6 +427,9 @@ SEXP tspgets(SEXP vec, SEXP val)
 
 static SEXP commentgets(SEXP vec, SEXP comment)
 {
+    if (vec == R_NilValue)
+	error(_("attempt to set an attribute on NULL"));
+
     if (isNull(comment) || isString(comment)) {
 	if (length(comment) <= 0) {
 	    SET_ATTRIB(vec, stripAttrib(R_CommentSymbol, ATTRIB(vec)));
@@ -457,6 +475,10 @@ SEXP classgets(SEXP vec, SEXP klass)
 
 	    int i;
 	    Rboolean isfactor = FALSE;
+
+	    if (vec == R_NilValue)
+		error(_("attempt to set an attribute on NULL"));
+
 	    for(i = 0; i < length(klass); i++)
 		if(streql(CHAR(STRING_ELT(klass, i)), "factor")) { /* ASCII */
 		    isfactor = TRUE;
@@ -706,10 +728,9 @@ SEXP namesgets(SEXP vec, SEXP val)
 	}
     }
 
-    /* Cons-cell based objects */
-
     if (isList(vec) || isLanguage(vec)) {
-	i=0;
+	/* Cons-cell based objects */
+	i = 0;
 	for (s = vec; s != R_NilValue; s = CDR(s), i++)
 	    if (STRING_ELT(val, i) != R_NilValue
 		&& STRING_ELT(val, i) != R_NaString
@@ -719,6 +740,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 		SET_TAG(s, R_NilValue);
     }
     else if (isVector(vec))
+	/* Normal case */
 	installAttrib(vec, R_NamesSymbol, val);
     else
 	error(_("invalid type (%s) to set 'names' attribute"),
@@ -972,39 +994,17 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 /* "dim" and "dimnames" are set that the "dim" is attached first. */
 
     SEXP object, attrs, names = R_NilValue /* -Wall */;
-    int i, nattrs;
-
-    /* If there are multiple references to the object being mutated, */
-    /* we must duplicate so that the other references are unchanged. */
-
-    if (NAMED(CAR(args)) == 2)
-	SETCAR(args, duplicate(CAR(args)));
+    int i, i0 = -1, nattrs;
 
     /* Extract the arguments from the argument list */
 
     object = CAR(args);
     attrs = CADR(args);
-    if (object == R_NilValue) {
-	if (attrs == R_NilValue)
-	    return R_NilValue;
-	else
-	    PROTECT(object = allocVector(VECSXP, 0));
-    }
-    else PROTECT(object);
 
+    /* Do checks before duplication */
     if (!isNewList(attrs))
-	error(_("attributes must be in a list"));
-
-    /* Empty the existing attribute list */
-
-    /* FIXME: the code below treats pair-based structures */
-    /* in a special way.  This can probably be dropped down */
-    /* the road (users should never encounter pair-based lists). */
-    /* Of course, if we want backward compatibility we can't */
-    /* make the change. :-( */
-
+	error(_("attributes must be a list or NULL"));
     nattrs = length(attrs);
-
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
@@ -1015,7 +1015,31 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		error(_("all attributes must have names [%d does not]"), i+1);
 	    }
         }
-    }	
+    }
+
+    if (object == R_NilValue) {
+	if (attrs == R_NilValue)
+	    return R_NilValue;
+	else
+	    PROTECT(object = allocVector(VECSXP, 0));
+    } else {
+	/* Unlikely to have NAMED == 0 here.
+	   As from R 2.7.0 we don't optimize NAMED == 1 _if_ we are 
+	   setting any attributes as an error later on would leave 
+	   'obj' changed */
+	if (NAMED(object) > 1 || (NAMED(object) == 1 && nattrs))
+	    object = duplicate(object);
+	PROTECT(object);
+    }
+    
+
+    /* Empty the existing attribute list */
+
+    /* FIXME: the code below treats pair-based structures */
+    /* in a special way.  This can probably be dropped down */
+    /* the road (users should never encounter pair-based lists). */
+    /* Of course, if we want backward compatibility we can't */
+    /* make the change. :-( */
 
     if (isList(object))
 	setAttrib(object, R_NamesSymbol, R_NilValue);
@@ -1027,19 +1051,22 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if(nattrs == 0) UNSET_S4_OBJECT(object);
 
     /* We do two passes through the attributes; the first */
-    /* finding and transferring "dim"s and the second */
+    /* finding and transferring "dim" and the second */
     /* transferring the rest.  This is to ensure that */
     /* "dim" occurs in the attribute list before "dimnames". */
 
     if (nattrs > 0) {
 	for (i = 0; i < nattrs; i++) {
-	    if (!strcmp(CHAR(STRING_ELT(names, i)), "dim"))
+	    if (!strcmp(CHAR(STRING_ELT(names, i)), "dim")) {
+		i0 = i;
 		setAttrib(object, R_DimSymbol, VECTOR_ELT(attrs, i));
+		break;
+	    }
 	}
 	for (i = 0; i < nattrs; i++) {
-	    if (strcmp(CHAR(STRING_ELT(names, i)), "dim"))
-		setAttrib(object, install(translateChar(STRING_ELT(names, i))),
-			  VECTOR_ELT(attrs, i));
+	    if (i == i0) continue;
+	    setAttrib(object, install(translateChar(STRING_ELT(names, i))),
+		      VECTOR_ELT(attrs, i));
 	}
     }
     UNPROTECT(1);
