@@ -678,7 +678,8 @@ fi
 ## * It seems that g95 has been resurrected, see www.g95.org, hence we
 ##   add this to the list of F95 compilers.
 ## * Older versions of the Autoconf code used to have 'fc' as a wrapper
-##   around f2c (last in the list).  It no longer has, but we still do.
+##   around f2c (last in the list).  It no longer has, but we still do,
+##   in src/scripts, but it must be specified manually.
 ## <FIXME>
 ##   Is this still needed?
 ## </FIXME>
@@ -719,7 +720,7 @@ if test -n "${F77}"; then
   ## this does additional testing (GNU, '-g', ...).
   AC_PROG_F77
 else
-  AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
+  AC_MSG_ERROR([No F77 compiler found])
 fi
 ])# R_PROG_F77
 
