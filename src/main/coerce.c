@@ -1158,9 +1158,10 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     case STRSXP:
     case RAWSXP:
 
-#define COERCE_ERROR						\
-	error(_("cannot coerce type '%s' to vector of type '%s'"), \
-	      type2char(TYPEOF(v)), type2char(type))
+#define COERCE_ERROR_STRING "cannot coerce type '%s' to vector of type '%s'"
+
+#define COERCE_ERROR							\
+	error(_(COERCE_ERROR_STRING), type2char(TYPEOF(v)), type2char(type))
 
 	switch (type) {
 	case SYMSXP:
@@ -1281,8 +1282,8 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	SET_VECTOR_ELT(v, 0, u);
 	return v;
     }
-    else errorcall(call, _("cannot type '%s' coerce to vector"), 
-		   type2char(TYPEOF(u)));
+    else errorcall(call, _(COERCE_ERROR_STRING),
+		   type2char(TYPEOF(u)), type2char(type));
     return u;/* -Wall */
 }
 
@@ -1293,19 +1294,19 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     int type = STRSXP, op0 = PRIMVAL(op);
     char *name = NULL /* -Wall */;
-    
+
     switch(op0) {
-	case 0: 
+	case 0:
 	    name = "as.character"; break;
-	case 1: 
+	case 1:
 	    name = "as.integer"; type = INTSXP; break;
-	case 2: 
+	case 2:
 	    name = "as.double"; type = REALSXP; break;
-	case 3: 
+	case 3:
 	    name = "as.complex"; type = CPLXSXP; break;
-	case 4: 
+	case 4:
 	    name = "as.logical"; type = LGLSXP; break;
-	case 5: 
+	case 5:
 	    name = "as.raw"; type = RAWSXP; break;
     }
     if (DispatchOrEval(call, op, name, args, rho, &ans, 0, 1))
@@ -1894,7 +1895,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	break;
     default:
-	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"), 
+	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"),
 		    "is.na", type2char(TYPEOF(x)));
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
@@ -1992,7 +1993,7 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"), 
+	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"),
 		    "is.nan", type2char(TYPEOF(x)));
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
@@ -2458,7 +2459,7 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 /* storage.mode(obj) <- value */
     SEXP obj, value, ans;
     SEXPTYPE type;
-    
+
     checkArity(op, args);
     obj = CAR(args);
 
