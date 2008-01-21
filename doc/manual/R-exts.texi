@@ -5765,7 +5765,7 @@ I/O will when compiled on Windows interfere with C I/O: when the Fortran
 I/O is initialized (typically when the package is loaded) the C
 @code{stdout} and @code{stderr} are switched to LF line endings.
 (Function @code{La_Init} in file @file{src/main/lapack.c} shows how to
-mitigate this.)  Even worse, prior to @R{} 2.7.0 using Fortran output
+mitigate this.)  Even worse, prior to @R{} 2.6.2 using Fortran output
 when running under the Windows GUI console (@code{Rgui}) would hang the
 @R{} session.  This is now avoided by ensuring that the Fortran output
 is written to a file (@file{fort.6} in the working directory).
