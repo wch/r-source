@@ -584,7 +584,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    }
 	}
 
+#ifdef SUPPORT_MBCS
     if(ienc == CE_UTF8) { *q++ ='\003'; *q++ = '\377'; *q++ = '\376'; }
+#endif
     if(quote) *q++ = quote;
     if(b > 0 && justify != Rprt_adj_right) {
 	for(i = 0 ; i < b ; i++) *q++ = ' ';
