@@ -22,6 +22,9 @@ WORKAROUNDS
 	'Change Dir...' menu item now works around Vista's confusion
 	about 'desktop' by starting at 'Computer' on Vista/Server 2008.
 
+    o	The shortcuts created by the installer now start R in the user's
+	personal folder (typically 'My Documents' or 'Documents').
+
 
 NEW FEATUES
 
