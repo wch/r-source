@@ -991,7 +991,7 @@ appropriate setting can be extracted by the macro @code{PRIMPRINT}.
 
 @findex invisible
 The @R{} primitive function @code{invisible} makes use of this
-mechanism: it just sets @code{R_Visibility = FALSE} before entry and
+mechanism: it just sets @code{R_Visible = FALSE} before entry and
 returns its argument.
 
 For most functions the intention will be that the setting of
