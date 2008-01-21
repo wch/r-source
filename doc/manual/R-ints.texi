@@ -1369,7 +1369,7 @@ corresponding @code{"MethodsList"} and environment are exported and so
 will appear (as hidden objects) in the package environment.
 
 Methods for primitives which are internally S4 generic (see below) are
-always exported, whether mentioned in the @code{NAMESPACE} file or not.
+always exported, whether mentioned in the @file{NAMESPACE} file or not.
 
 Methods can be imported either via the directive
 @code{importMethodsFrom} or via importing a namespace by @code{import}.
