@@ -55,8 +55,16 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     }
     else if (length(value) != n)
 	stop("invalid 'row.names' length")
-    if (any(duplicated(value)))
+    if (any(duplicated(value))) {
+        nonuniq <- sort(unique(value[duplicated(value)]))
+        warning(ngettext(length(nonuniq),
+                         sprintf("non-unique value when setting 'row.names': %s",
+                                 sQuote(nonuniq[1])),
+                         sprintf("non-unique values when setting 'row.names': %s",
+                                 paste(sQuote(nonuniq), collapse = ", "))),
+                domain = NA, call. = FALSE)
 	stop("duplicate 'row.names' are not allowed")
+    }
     if (any(is.na(value)))
 	stop("missing values in 'row.names' are not allowed")
     attr(x, "row.names") <- value
