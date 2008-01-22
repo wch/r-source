@@ -823,7 +823,9 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef _R_HAVE_TIMING_
 {
-    SEXP ans = allocVector(REALSXP, 5), nm = allocVector(STRSXP, 5);
+    SEXP ans, nm;
+    PROTECT(ans = allocVector(REALSXP, 5));
+    PROTECT(nm = allocVector(STRSXP, 5));
     R_getProcTime(REAL(ans));
     SET_STRING_ELT(nm, 0, mkChar("user.self"));
     SET_STRING_ELT(nm, 1, mkChar("sys.self"));
@@ -832,6 +834,7 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nm, 4, mkChar("sys.child"));
     setAttrib(ans, R_NamesSymbol, nm);
     setAttrib(ans, R_ClassSymbol, mkString("proc_time"));
+    UNPROTECT(2);
     return ans;
 }
 #else
