@@ -1250,6 +1250,12 @@ UTF-8 strings to be printed in UTF-8, an escape convention is used (see
 header @file{rgui_UTF8.h}) which is used by @code{cat}, @code{print} and
 autoprinting.
 
+`Unicode' (UCS-2LE) files are common in the Windows world, and
+@code{readLines} and @code{scan} will read them into UTF-8 strings on
+Windows if the encoding is declared explicitly on an unopened
+connection passed to those functions.
+
+
 @node Warnings and errors, S4 objects, Encodings for CHARSXPs, R Internal Structures
 @section Warnings and errors
 
