@@ -41,6 +41,9 @@
 #include <unistd.h>
 #endif
 
+static void R_UTF8fixslash(char *s);
+static void R_wfixslash(wchar_t *s);
+
 #ifdef __cplusplus
 #include "Clinkage.h"
 
@@ -649,7 +652,7 @@ SEXP static intern_getwd()
 	int res = GetCurrentDirectoryW(PATH_MAX, wbuf);
 	if(res > 0) {
 	    wcstoutf8(buf, wbuf, PATH_MAX+1);
-	    R_fixslash(buf);
+	    R_UTF8fixslash(buf);
 	    rval = allocVector(STRSXP, 1);
 	    SET_STRING_ELT(rval, 0, mkCharEnc(buf, UTF8_MASK));
 	}
@@ -705,6 +708,37 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* remove portion of path before file separator if one exists */
 
+#ifdef Win32
+SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, s = R_NilValue;	/* -Wall */
+    char sp[PATH_MAX];
+    wchar_t  buf[PATH_MAX], *p;
+    const wchar_t *pp;
+    int i, n;
+
+    checkArity(op, args);
+    if (TYPEOF(s = CAR(args)) != STRSXP)
+	error(_("a character vector argument expected"));
+    PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
+    for(i = 0; i < n; i++) {
+	pp = filenameToWchar(STRING_ELT(s, i), TRUE);
+	if (wcslen(pp) > PATH_MAX - 1) error(_("path too long"));
+	wcscpy(buf, pp);
+	R_wfixslash(buf);
+	/* remove trailing file separator(s) */
+	if (*buf) {
+	    p = buf + wcslen(buf) - 1;
+	    while (p >= buf && *p == L'/') *(p--) = L'\0';
+	}
+	if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
+	wcstoutf8(sp, p, wcslen(p) + 1);
+	SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
+    }
+    UNPROTECT(1);
+    return(ans);
+}
+#else
 SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
@@ -721,10 +755,6 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (strlen(pp) > PATH_MAX - 1)
 	    error(_("path too long"));
 	strcpy (buf, pp);
-#ifdef Win32
-	R_fixslash(buf);
-#endif
-	/* remove trailing file separator(s) */
 	if (*buf) {
 	    p = buf + strlen(buf) - 1;
 	    while (p >= buf && *p == fsp) *(p--) = '\0';
@@ -738,11 +768,49 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return(ans);
 }
+#endif
 
 /* remove portion of path after last file separator if one exists, else
    return "."
    */
 
+#ifdef Win32
+SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, s = R_NilValue;	/* -Wall */
+    wchar_t buf[PATH_MAX], *p;
+    const wchar_t *pp;
+    char sp[PATH_MAX];
+    int i, n;
+
+    checkArity(op, args);
+    if (TYPEOF(s = CAR(args)) != STRSXP)
+	error(_("a character vector argument expected"));
+    PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
+    for(i = 0; i < n; i++) {
+	pp = filenameToWchar(STRING_ELT(s, i), TRUE);
+	if (wcslen(pp) > PATH_MAX - 1)
+	    error(_("path too long"));
+	wcscpy (buf, pp);
+	R_wfixslash(buf);
+	/* remove trailing file separator(s) */
+	while ( *(p = buf + wcslen(buf) - 1) == L'/'  && p > buf
+		&& (p > buf+2 || *(p-1) != L':')) *p = L'\0';
+	p = wcsrchr(buf, L'/');
+	if(p == NULL) wcscpy(buf, L".");
+	else {
+	    while(p > buf && *p == L'/'
+		  /* this covers both drives and network shares */
+		  && (p > buf+2 || *(p-1) != L':')) --p;
+	    p[1] = L'\0';
+	}
+	wcstoutf8(sp, buf, wcslen(buf)+1);
+	SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
+    }
+    UNPROTECT(1);
+    return(ans);
+}
+#else
 SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
@@ -759,25 +827,13 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (strlen(pp) > PATH_MAX - 1)
 	    error(_("path too long"));
 	strcpy (buf, pp);
-#ifdef Win32
-	R_fixslash(buf);
-#endif
 	/* remove trailing file separator(s) */
-	while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf
-#ifdef Win32
-		&& (p > buf+2 || *(p-1) != ':')
-#endif
-	    ) *p = '\0';
+	while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf) *p = '\0';
 	p = Rf_strrchr(buf, fsp);
 	if(p == NULL)
 	    strcpy(buf, ".");
 	else {
-	    while(p > buf && *p == fsp
-#ifdef Win32
-		  /* this covers both drives and network shares */
-		  && (p > buf+2 || *(p-1) != ':')
-#endif
-		) --p;
+	    while(p > buf && *p == fsp) --p;
 	    p[1] = '\0';
 	}
 	SET_STRING_ELT(ans, i, mkChar(buf));
@@ -785,7 +841,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return(ans);
 }
-
+#endif
 
 /* encodeString(x, w, quote, justify) */
 SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1174,6 +1230,25 @@ void R_fixslash(char *s)
 	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
 }
 
+static void R_UTF8fixslash(char *s)
+{
+    char *p = s;
+
+	for (; *p; p++) if (*p == '\\') *p = '/';
+	/* preserve network shares */
+	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
+}
+
+static void R_wfixslash(wchar_t *s)
+{
+    wchar_t *p = s;
+
+    for (; *p; p++) if (*p == L'\\') *p = L'/';
+    /* preserve network shares */
+    if(s[0] == L'/' && s[1] == L'/') s[0] = s[1] = L'\\';
+}
+
+
 void R_fixbackslash(char *s)
 {
     char *p = s;
@@ -1235,3 +1310,51 @@ char *acopy_string(const char *in)
         out = "";
     return out;
 }
+
+
+/* FIXME: consider inlining here */
+#ifdef Win32
+
+static int Rstrcoll(const char *s1, const char *s2)
+{
+    wchar_t *w1, *w2;
+    w1 = (wchar_t *) alloca((strlen(s1)+1)*sizeof(wchar_t));
+    w2 = (wchar_t *) alloca((strlen(s2)+1)*sizeof(wchar_t));
+    R_CheckStack();
+    utf8towcs(w1, s1, strlen(s1));
+    utf8towcs(w2, s2, strlen(s2));
+    return wcscoll(w1, w2);
+}
+
+int Scollate(SEXP a, SEXP b)
+{
+    if(getCharEnc(a) == CE_UTF8 || getCharEnc(b) == CE_UTF8)
+	return Rstrcoll(translateCharUTF8(a), translateCharUTF8(b));
+    else 
+	return strcoll(translateChar(a), translateChar(b));
+}
+
+int Seql(SEXP a, SEXP b)
+{
+    return (a == b) || !strcmp(translateCharUTF8(a), translateCharUTF8(b));
+}
+
+#else
+
+# ifdef HAVE_STRCOLL
+#  define STRCOLL strcoll
+# else
+#  define STRCOLL strcmp
+# endif
+
+int Scollate(SEXP a, SEXP b)
+{
+    return STRCOLL(translateChar(a), translateChar(b));
+}
+
+int Seql(SEXP a, SEXP b)
+{
+    return (a == b) || !strcmp(translateChar(a), translateChar(b));
+}
+
+#endif

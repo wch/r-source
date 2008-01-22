@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team.
+ *  Copyright (C) 1998-2008   R Development Core Team
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -79,7 +79,7 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     if (x == NA_STRING) return nalast?1:-1;
     if (y == NA_STRING) return nalast?-1:1;
     if (x == y) return 0;  /* same string in cache */
-    return STRCOLL(translateChar(x), translateChar(y));
+    return Scollate(x, y);
 }
 
 Rboolean isUnsorted(SEXP x)
@@ -762,11 +762,11 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 	break;
     case STRSXP:
 	if (decreasing)
-#define less(a, b) (c=STRCOLL(translateChar(sx[a]),translateChar(sx[b])), c < 0 || (c == 0 && a > b))
+#define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
         else
-#define less(a, b) (c=STRCOLL(translateChar(sx[a]),translateChar(sx[b])), c > 0 || (c == 0 && a > b))
+#define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
 	break;

@@ -166,8 +166,7 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	PROTECT(klass = R_data_class(X, FALSE));
 	for(i = 0; i < LENGTH(klass); i++)
 	    for(j = 0; j < length(classes); j++)
-		if(strcmp(translateChar(STRING_ELT(klass, i)),
-			  translateChar(STRING_ELT(classes, j))) == 0) 
+		if(Seql(STRING_ELT(klass, i), STRING_ELT(classes, j))) 
 		    matched = TRUE;
 	UNPROTECT(1);
     }

@@ -18,7 +18,10 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole */
+/* <UTF8> char here is either ASCII or handled as a whole 
+   Domain names could be non-native, but the message translation
+   systen is native.
+*/
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

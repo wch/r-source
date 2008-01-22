@@ -54,6 +54,9 @@ INTERNATIONALIZATION
 	from other applications.  There is more support for input
 	methods, thanks to Ei-ji Nakama.
 
+    o	The Rgui console can display UTF-8 encoded strings (provided
+	the font selected has the glyphs needed).
+
     o	The windows() family of devices now always use Unicode fonts
 	(except for the Symbol font), not just in multibyte locales.
 	This means it should be possble to plot in an 8-bit locale
@@ -79,19 +82,22 @@ INTERNATIONALIZATION
     o	readClipboard() can read Unicode text (format = 13), and
 	writeClipboard() can write it.
 
-    o	file() and pipe() connections and the functions dir(),
-	dir.create(), DLL.version(), file.access(), file.copy(),
-	file.create(), file.info(), file.remove(), file.rename(),
-	getwd(), list.files(), load(), normalizePath(), path.expand(),
-	save(), setwd(), shell(), shell.exec(), shortPathName(),
-	Sys.chmod(), Sys.glob(), system() and unlink() have been
-	converted to use Unicode filenames.
+    o	file() and pipe() connections and the functions basename(),
+	dir(), dirname(), dir.create(), DLL.version(), file.access(),
+	file.copy(), file.create(), file.exists(), file.info(),
+	file.remove(), file.rename(), getwd(), list.files(), load(),
+	normalizePath(), path.expand(), save(), setwd(), shell(),
+	shell.exec(), shortPathName(), Sys.chmod(), Sys.glob(),
+	system() and unlink() have been converted to use Unicode
+	filenames.
 
 	Pathnames you select (choose.files, choose.dir, file.choose)
 	are returned in UTF-8.
 
-    o	The Rgui console can display UTF-8 encoded strings (provided
-	the font selected has the glyphs needed).
+    o	Collating (e.g. <) and sorting is done in UTF-8 where one of
+	the items is in UTF-8.  It seems that MSVCRT's collation
+	order is different in widechar and in ASCII, so this
+	can lead to inconsistencies.
 
 
 TIME ZONES

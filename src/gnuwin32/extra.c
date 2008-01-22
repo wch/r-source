@@ -1446,22 +1446,22 @@ char *getDLLVersion()
 
 /* UTF-8 support ----------------------------------------------- */
 
-/* This is currently unused: for faking UTF-8 locale conversions */
-
-#define FAKE_UTF8 1
-
-#ifdef SUPPORT_UTF8_WIN32
-extern char *alloca(size_t);
 int Rstrcoll(const char *s1, const char *s2)
 {
     wchar_t *w1, *w2;
     w1 = (wchar_t *) alloca((strlen(s1)+1)*sizeof(wchar_t));
     w2 = (wchar_t *) alloca((strlen(s2)+1)*sizeof(wchar_t));
     R_CheckStack();
-    Rmbstowcs(w1, s1, strlen(s1));
-    Rmbstowcs(w2, s2, strlen(s2));
+    utf8towcs(w1, s1, strlen(s1));
+    utf8towcs(w2, s2, strlen(s2));
     return wcscoll(w1, w2);
 }
+
+#ifdef SUPPORT_UTF8_WIN32
+/* This is currently unused: for faking UTF-8 locale conversions */
+
+#define FAKE_UTF8 1
+
 
 size_t Rmbrtowc(wchar_t *wc, const char *s)
 {

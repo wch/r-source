@@ -55,8 +55,7 @@ Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
     /* "" or NA string matches nothing */
     if (s == NA_STRING || t == NA_STRING) return FALSE;
-    if (CHAR(s)[0] && CHAR(t)[0] && 
-	strcmp(translateChar(s), translateChar(t)) == 0)
+    if (CHAR(s)[0] && CHAR(t)[0] && Seql(s, t))
 	return TRUE;
     else
 	return FALSE;
@@ -81,6 +80,7 @@ Rboolean psmatch(const char *f, const char *t, Rboolean exact)
 
 /* Matching formals and arguments */
 
+/* Are these are always native charset? */
 Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 {
     const char *f, *t;

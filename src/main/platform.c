@@ -887,6 +887,14 @@ SEXP attribute_hidden do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString(path);
 }
 
+#ifdef Win32
+static Rboolean attribute_hidden R_WFileExists(const wchar_t *path)
+{
+    struct _stat sb;
+    return _wstat(path, &sb) == 0;
+}
+#endif
+
 SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, ans;
@@ -899,7 +907,12 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < nfile; i++) {
 	LOGICAL(ans)[i] = 0;
         if (STRING_ELT(file, i) != R_NilValue)
+#ifdef Win32
+	    LOGICAL(ans)[i] = 
+		R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
+#else
 	    LOGICAL(ans)[i] = R_FileExists(translateChar(STRING_ELT(file, i)));
+#endif
     }
     return ans;
 }

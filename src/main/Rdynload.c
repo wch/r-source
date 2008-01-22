@@ -18,7 +18,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is handled as a whole string */
+/* <UTF8> char here is handled as a whole string, but
+   use of translateChar assumes that strings are native.
+ */
 
 /*
   This is an effort to merge the 3 different dynload.c files in the

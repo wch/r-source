@@ -62,6 +62,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
     if (!isNull(ls) && !isNull(lt)) {
 	PROTECT(la = allocVector(STRSXP, nls * nlt));
 	k = 0;
+	/* FIXME: possibly UTF-8 version */
 	for (i = 0; i < nls; i++) {
 	    const char *vi = translateChar(STRING_ELT(ls, i));
 	    vs = strlen(vi);

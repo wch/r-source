@@ -125,8 +125,7 @@ static int MatchVar(SEXP var1, SEXP var2)
 	return (asReal(var1) == asReal(var2));
     /* Literal Strings */
     if (isString(var1) && isString(var2))
-	return (strcmp(translateChar(STRING_ELT(var1, 0)),
-		       translateChar(STRING_ELT(var2, 0))) == 0);
+	return Seql(STRING_ELT(var1, 0), STRING_ELT(var2, 0));
     /* Nothing else matches */
     return 0;
 }

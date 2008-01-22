@@ -316,6 +316,10 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
     return ans;
 }
 
+#ifdef Win32
+extern wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
+#endif
+
 SEXP RTcl_ObjFromCharVector(SEXP args)
 {
     char *s;
@@ -324,6 +328,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
     Tcl_Obj *tclobj, *elem;
     int i;
     SEXP val, drop;
+    Tcl_Encoding encoding;
 
     val = CADR(args);
     drop = CADDR(args);
@@ -331,10 +336,19 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
     tclobj = Tcl_NewObj();
 
     count = length(val);
+#ifdef Win32
+    encoding = Tcl_GetEncoding(RTcl_interp, "unicode");
+#else
+    encoding = NULL
+#endif
     if (count == 1 && LOGICAL(drop)[0]) {
 	Tcl_DStringInit(&s_ds);
-	s = Tcl_ExternalToUtfDString(NULL,
+	s = Tcl_ExternalToUtfDString(encoding,
+#ifdef Win32
+				     (char *) filenameToWchar(STRING_ELT(val, 0), FALSE), 
+#else
 				     translateChar(STRING_ELT(val, 0)), 
+#endif
 				     -1, &s_ds);
 	Tcl_SetStringObj(tclobj, s, -1);
 	Tcl_DStringFree(&s_ds);
@@ -342,14 +356,21 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 	for ( i = 0 ; i < count ; i++) {
 	    elem = Tcl_NewObj();
 	    Tcl_DStringInit(&s_ds);
-	    s = Tcl_ExternalToUtfDString(NULL, 
+	    s = Tcl_ExternalToUtfDString(encoding, 
+#ifdef Win32
+					 (char *) filenameToWchar(STRING_ELT(val, i), FALSE),
+#else
 					 translateChar(STRING_ELT(val, i)),
+#endif
 					 -1, &s_ds);
 	    Tcl_SetStringObj(elem, s, -1);
 	    Tcl_DStringFree(&s_ds);
 	    Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
 	}
 
+#ifdef Win32
+    Tcl_FreeEncoding(encoding);
+#endif
     return makeRTclObject(tclobj);
 }
 

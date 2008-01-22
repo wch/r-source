@@ -852,6 +852,8 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define RealFromInteger	Rf_RealFromInteger
 # define RealFromLogical	Rf_RealFromLogical
 # define RealFromString		Rf_RealFromString
+# define Seql			Rf_Seql
+# define Scollate		Rf_Scollate
 # define sortVector		Rf_sortVector
 # define ssort			Rf_ssort
 # define StringFromComplex	Rf_StringFromComplex
@@ -1161,25 +1163,15 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
 
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
+int Seql(SEXP a, SEXP b);
+int Scollate(SEXP a, SEXP b);
+
 
 /* unix/sys-std.c, main/options.c */
 void set_rl_word_breaks(const char *str);
 
 /* From localecharset.c */
 extern char *locale2charset(const char *);
-
-/* used in relop.c and sort.c */
-#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
-#define STRCOLL Rstrcoll
-#else
-
-#ifdef HAVE_STRCOLL
-#define STRCOLL strcoll
-#else
-#define STRCOLL strcmp
-#endif
-
-#endif
 
 /* Localization */
 

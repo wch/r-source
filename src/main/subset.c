@@ -914,7 +914,9 @@ enum pmatch {
     PARTIAL_MATCH
 };
 
-/* A helper to partially match tags against a candidate. */
+/* A helper to partially match tags against a candidate.
+   Tags are always in the native charset.
+ */
 /* Returns: */
 static
 enum pmatch

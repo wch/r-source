@@ -717,7 +717,7 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     default:
 	error(_("vector: cannot make a vector of mode \"%s\"."),
-	      translateChar(STRING_ELT(s, 0)));
+	      translateChar(STRING_ELT(s, 0))); /* should be ASCII */
     }
     if (mode == INTSXP || mode == LGLSXP)
 	memset(INTEGER(s), 0, len*sizeof(int));
