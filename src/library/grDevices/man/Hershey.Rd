@@ -135,7 +135,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       umlaut.  The third table in \code{demo(Hershey)} shows all of the
       ISO Latin-1 escape sequences.
 
-      These characters can be used directly in a Latin-1 or locale or on
+      These characters can be used directly in a Latin-1 locale or on
       a system with MBCS support.  (In the latter, characters not in
       Latin-1 are replaced by a dot.)
 
