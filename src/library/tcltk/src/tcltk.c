@@ -339,7 +339,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 #ifdef Win32
     encoding = Tcl_GetEncoding(RTcl_interp, "unicode");
 #else
-    encoding = NULL
+    encoding = NULL;
 #endif
     if (count == 1 && LOGICAL(drop)[0]) {
 	Tcl_DStringInit(&s_ds);

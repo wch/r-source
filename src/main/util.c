@@ -41,8 +41,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef Win32
 static void R_UTF8fixslash(char *s);
 static void R_wfixslash(wchar_t *s);
+#endif
 
 #ifdef __cplusplus
 #include "Clinkage.h"
