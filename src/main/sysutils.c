@@ -748,18 +748,24 @@ next_char:
 	    int clen;
 	    wchar_t wc;
 	    clen = utf8toucs(&wc, inbuf);
-	    inbuf += clen; inb -= clen;
+	    if(clen > 0 && inb >= clen) {
+		inbuf += clen; inb -= clen;
 # ifndef Win32
-	    if((unsigned int) wc < 65536) {
+		if((unsigned int) wc < 65536) {
 # endif
-		snprintf(outbuf, 9, "<U+%04X>", (unsigned int) wc);
-		outbuf += 8; outb -= 8;
+		    snprintf(outbuf, 9, "<U+%04X>", (unsigned int) wc);
+		    outbuf += 8; outb -= 8;
 # ifndef Win32
+		} else {
+		    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
+		    outbuf += 12; outb -= 12;		
+		}
+# endif
 	    } else {
-		snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
-		outbuf += 12; outb -= 12;		
+		snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+		outbuf += 4; outb -= 4;
+		inbuf++; inb--;
 	    }
-# endif
 	} else
 #endif
 	{
