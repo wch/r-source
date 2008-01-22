@@ -62,7 +62,6 @@ struct Rconn {
     char iconvbuff[25], oconvbuff[50], *next, init_out[25];
     short navail, inavail;
     Rboolean EOF_signalled;
-    Rboolean UTF8out;
     void *id;
     void *ex_ptr;
     void *private;

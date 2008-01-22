@@ -141,11 +141,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   }
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input.
-#ifdef windows
-    See also \sQuote{Details}.
-#endif
-  }
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
 }
 \details{
   The value of \code{what} can be a list of types, in which case
@@ -199,13 +195,6 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   There is a check for a user interrupt every 1000 lines if \code{what}
   is a list, otherwise every 10000 items.
-#ifdef windows
-
-  If \code{con} is a non-already-open \link{connection} with a non-default
-  \code{encoding} argument, the text is converted to UTF-8 and declared
-  as such (and the encoding argument to \code{scan} is ignored).
-  See the examples of \code{\link{readLines}}.
-#endif
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as
