@@ -772,7 +772,7 @@ static double
 	    return 0.0;
 	}
     } else
-	if(!utf8strIsASCII((char *) str) &&
+	if(!strIsASCII((char *) str) &&
 	   /*
 	    * Every fifth font is a symbol font:
 	    * see postscriptFonts()
@@ -4149,7 +4149,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
        It would be perverse (but possible) to write English in a
        CJK MBCS.
     */
-    if((enc == CE_UTF8 || mbcslocale) && !utf8strIsASCII(str)) {
+    if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str)) {
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	R_CheckStack();
 	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc);
@@ -6855,8 +6855,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
     fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 	    PDFfontNumber(gc->fontfamily, face, pd),
 	    a, b, -b, a, x, y);
-    if((enc == CE_UTF8 || mbcslocale) && 
-       !utf8strIsASCII(str1) && face < 5) { /* face 5 handled above */
+    if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str1) && face < 5) {
+	/* face 5 handled above */
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	R_CheckStack();
 	mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);

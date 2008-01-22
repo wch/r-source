@@ -194,7 +194,7 @@ static void substr(char *buf, const char *str, int ienc, int sa, int so)
 	for (str += (sa - 1), i = sa; i <= so; i++) *buf++ = *str++;
     } else {
 #ifdef SUPPORT_MBCS
-	if (mbcslocale && !utf8strIsASCII(str)) {
+	if (mbcslocale && !strIsASCII(str)) {
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
 	    for (i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
@@ -355,7 +355,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		v_ss = CHAR(v_el);
 		/* is the value in the same encoding? */
 		venc = getCharEnc(v_el);
-		if (venc != ienc && !utf8strIsASCII(v_ss)) {
+		if (venc != ienc && !strIsASCII(v_ss)) {
 		    ss = translateChar(el);
 		    slen = strlen(ss);
 		    v_ss = translateChar(v_el);
@@ -606,7 +606,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* split into individual characters (not bytes) */
 #ifdef SUPPORT_MBCS
-	    if ((use_UTF8 || mbcslocale) && !utf8strIsASCII(buf)) {
+	    if ((use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
 		char bf[20 /* > MB_CUR_MAX */];
 		const char *p = buf;
 		int used;
@@ -813,7 +813,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    s = translateChar(STRING_ELT(x, i));
-	    warn = warn | !utf8strIsASCII(s);
+	    warn = warn | !strIsASCII(s);
 	    R_AllocStringBuffer(strlen(s), &cbuff);
 	    SET_STRING_ELT(ans, i, stripchars(s, minlen));
 	}
@@ -1088,7 +1088,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (perl_opt) {
 	if (igcase_opt) {
 	    cflags |= PCRE_CASELESS;
-	    if (useBytes && utf8locale && !utf8strIsASCII(cpat))
+	    if (useBytes && utf8locale && !strIsASCII(cpat))
 		warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
 	}
 #ifdef SUPPORT_MBCS
@@ -1571,7 +1571,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	if (igcase_opt) {
 	    cflags |= PCRE_CASELESS;
-	    if (useBytes && utf8locale && !utf8strIsASCII(spat))
+	    if (useBytes && utf8locale && !strIsASCII(spat))
 		warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
 	}
     } else {
@@ -2634,11 +2634,11 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     str = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_MBCS
     if (mbcslocale) {
-	useMBCS = !utf8strIsASCII(str);
+	useMBCS = !strIsASCII(str);
 	if (!useMBCS) {
 	    for (i = 0 ; i < LENGTH(vec) ; i++) {
 		if (STRING_ELT(vec, i) == NA_STRING) continue;
-		if (!utf8strIsASCII(translateChar(STRING_ELT(vec, i)))) {
+		if (!strIsASCII(translateChar(STRING_ELT(vec, i)))) {
 		    useMBCS = TRUE;
 		    break;
 		}

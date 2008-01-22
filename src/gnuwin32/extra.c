@@ -880,7 +880,7 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 		text = alloca(2 * (n+1));  /* UTF-8 is at most 1.5x longer */
 		R_CheckStack();
 		wcstoutf8(text, wpc, n+1);
-		if(!utf8strIsASCII(text)) ienc = UTF8_MASK;
+		if(!strIsASCII(text)) ienc = UTF8_MASK;
 		ans = splitClipboardText(text, ienc);
 	    } else if (format == CF_TEXT || format == CF_OEMTEXT) {
 		/* can we get the encoding out of a CF_LOCALE entry? */
@@ -1012,7 +1012,6 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
-	    if(!utf8strIsASCII(tmp)) ienc = UTF8_MASK;
 	    SET_STRING_ELT(ans, i, mkCharEnc(tmp, ienc));
 	} else {
 	    GetShortPathName(translateChar(el), tmp, MAX_PATH);

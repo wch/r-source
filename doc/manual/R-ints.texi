@@ -1204,16 +1204,14 @@ preserve the declaration or re-encode the character string.
 
 Eventually strings that refer to the OS such as file names will need to
 be passed through a wide-character interface on some OSes
-(e.g. Windows), but currently they are just recoded to the current locale.
+(e.g. Windows), which is to a large extent done as from @R{} 2.7.0.
 
 When are character strings declared to be of known encoding?  One way is
 to do so directly via @code{Encoding}.  The parser declares the encoding
 if this is known, either via the @code{encoding} argument to
 @code{parse} or from the locale within which parsing is being done at
-the @R{} command line.  Functions @code{scan}, @code{read.table},
-@code{readLines} and @code{source} have an @code{encoding} argument, but
-do not assume anything about files from the current locale.  Also,
-@code{iconv} marks character strings it converts to Latin-1 or UTF-8.
+the @R{} command line.  (Other ways are recorded on the help page for
+@code{Encoding}.)
 
 It is not necessary to declare the encoding of ASCII strings as they
 will work in any locale, but the overhead in doing so is small since
@@ -1224,6 +1222,33 @@ systems are capable of producing UTF-8 strings and this is the nearest
 we have to a universal format.  For those that do not (for example those
 lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption.
+
+This was taken further in @R{} 2.7.0.  There the parser can return a
+UTF-8-encoded string if it encounters a @samp{\uxxx} escape for a
+Unicode point that cannot be represented in the current charset.  (This
+needs MBCS support, and is currently only enabled@footnote{See define
+@code{USE_UTF8_IF_POSSIBLE} in @file{gram.c}.} on Windows.)
+Many of the character manipulation functions now preserve UTF-8 encodings.
+
+Graphics devices are offered the possibility of handing UTF-8-encoded
+strings without re-encoding to the native character set, by setting
+@code{hasTextUTF8} to be @samp{TRUE}@footnote{To maximize
+back-compatibility with devices installed prior to @R{} 2.7.0 it has to
+be exactly that value: all others are equivalent to @samp{FALSE}.} and
+supplying functions @code{textUTF8} and @code{strWidthUTF8} that expect
+UTF-8-encoded inputs.
+
+Windows has no UTF-8 locales, but rather expects to work with
+UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
+which it is not normally at least for Western versions of Windows,
+despite some claims to the contrary on the Microsoft site.}  strings.
+@R{} (being written in standard C) will not work internally with UCS-2
+without extensive changes.  As from @R{} 2.7.0 the @file{Rgui}
+console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
+but communicates with the @R{} engine in the native encoding.  To allow
+UTF-8 strings to be printed in UTF-8, an escape convention is used (see
+header @file{rgui_UTF8.h}) which is used by @code{cat}, @code{print} and
+autoprinting.
 
 @node Warnings and errors, S4 objects, Encodings for CHARSXPs, R Internal Structures
 @section Warnings and errors

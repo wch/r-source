@@ -860,6 +860,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define StringFromInteger	Rf_StringFromInteger
 # define StringFromLogical	Rf_StringFromLogical
 # define StringFromReal		Rf_StringFromReal
+# define strIsASCII		Rf_strIsASCII
 # define StrToInternal		Rf_StrToInternal
 # define substituteList		Rf_substituteList
 # define tsConform		Rf_tsConform
@@ -1120,7 +1121,7 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
-Rboolean utf8strIsASCII(const char *str);
+Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
 const char * translateCharUTF8(SEXP);
 #ifdef SUPPORT_MBCS

@@ -1948,7 +1948,7 @@ static SEXP mkCharLocal(const char *s)
     int ienc = 0;
     if(known_to_be_latin1) ienc = LATIN1_MASK;
     if(known_to_be_utf8) ienc = UTF8_MASK;
-    if(ienc > 0 && utf8strIsASCII(s)) ienc = 0;
+    if(ienc > 0 && strIsASCII(s)) ienc = 0;
     return mkCharEnc(s, ienc);
 }
 

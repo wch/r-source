@@ -75,7 +75,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     sep = STRING_ELT(sep, 0);
     csep = translateChar(sep);
     sepw = strlen(csep); /* not LENGTH as might contain \0 */
-    sepASCII = utf8strIsASCII(csep);
+    sepASCII = strIsASCII(csep);
     sepKnown = ENC_KNOWN(sep) > 0;
 
     collapse = CADDR(args);
@@ -143,8 +143,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = translateChar(cs);
                 strcpy(buf, s);
 		buf += strlen(s);
-		allKnown = allKnown &&
-		    (utf8strIsASCII(s) || (ENC_KNOWN(cs)> 0));
+		allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
 		anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 	    }
 	    if (j != nx - 1 && sepw != 0) {
@@ -167,7 +166,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	csep = translateChar(sep);
 	sepw = strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
-	allKnown = anyKnown || utf8strIsASCII(csep);
+	allKnown = anyKnown || strIsASCII(csep);
 	pwidth = 0;
 	/* 'ans' is already translated */
 	for (i = 0; i < nx; i++)
@@ -184,7 +183,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while (*buf)
 		buf++;
 	    allKnown = allKnown && 
-		(utf8strIsASCII(s) || (ENC_KNOWN(STRING_ELT(ans, i))> 0));
+		(strIsASCII(s) || (ENC_KNOWN(STRING_ELT(ans, i))> 0));
 	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i))> 0);
 	}
         UNPROTECT(1);

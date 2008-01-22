@@ -1713,7 +1713,7 @@ void GEText(double x, double y, const char * const str, int enc,
 				Rboolean done = FALSE;
 #ifdef SUPPORT_MBCS
 				/* Symbol fonts are not encoded in MBCS ever */
-				if(gc->fontface != 5 && !utf8strIsASCII(ss)) {
+				if(gc->fontface != 5 && !strIsASCII(ss)) {
 				    if(mbcslocale && enc2 == CE_NATIVE) {
 					/* FIXME: This assumes that wchar_t is UCS-2/4,
 					   since that is what GEMetricInfo expects */

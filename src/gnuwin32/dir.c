@@ -55,7 +55,6 @@ static SEXP filename(const wchar_t *dir, const wchar_t *file)
     	}
     } else wcscpy(wb, file);
     wcstoutf8(cbuf, wb, wcslen(wb)+1);
-    if (utf8strIsASCII(cbuf)) ienc = 0;
     ans = mkCharEnc(cbuf, ienc);
     return ans;
 }
