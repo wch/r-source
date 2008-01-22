@@ -176,7 +176,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input.}
+    Latin-1 or UTF-8: it is not used to re-encode the input.  For an
+    example of how to do so, see the examples under \code{\link{file}}.
+  }
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }

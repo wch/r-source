@@ -141,7 +141,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   }
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input.
+    Latin-1 or UTF-8: it is not used to re-encode the input.  To do the
+    latter, specify the encoding as part of the connection \code{con} or
+    via \code{\link{options}(encoding=)}: see the example under
+    \code{\link{file}}.
 #ifdef windows
     See also \sQuote{Details}.
 #endif
@@ -191,11 +194,6 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   should be regarded as a comment and be discarded.  Lines beginning
   with a comment character (possibly after white space with the default
   separator) are treated as blank lines.
-
-  \code{scan} attempts to share storage with character strings that have
-  already been read in the call. If an upper bound on the number of
-  character strings cannot be deduced from \code{nmax} or \code{n},
-  sharing is used for the first 10000 unique strings which are read in.
 
   There is a check for a user interrupt every 1000 lines if \code{what}
   is a list, otherwise every 10000 items.

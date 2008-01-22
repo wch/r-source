@@ -470,7 +470,7 @@ while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
 close(con2)
 }
 
-\dontrun{ ## examples of use of encodings
+\dontrun{## examples of use of encodings
 cat(x, file = file("foo", "w", encoding="UTF-8"))
 # read a 'Windows Unicode' file including names
 A <- read.table(file("students", encoding="UCS-2LE"))
