@@ -36,7 +36,7 @@ GUI CHANGES
 INTERNATIONALIZATION
 
  This is another phase in the on-going effort to make Unicode
- characters available to R for Windows users. [Close to complete.]
+ characters available to R for Windows users.
 
     o	If a string presented to the parser contains a \uxxxx escape
 	invalid in the current locale, the string is recorded in UTF-8
@@ -98,6 +98,10 @@ INTERNATIONALIZATION
 	the items is in UTF-8.  It seems that MSVCRT's collation
 	order is different in widechar and in ASCII, so this
 	can lead to inconsistencies.
+
+    o	If readLines() or scan() is passed an unopened connection with
+	a non-default 'encoding' argument, it will re-encode to UTF-8
+	and declare the encoding on character columns.
 
 
 TIME ZONES

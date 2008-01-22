@@ -83,8 +83,8 @@ typedef struct {
 static SEXP insertString(char *str, LocalData *l)
 {
     if (!strIsASCII(str)) {
-        if (l->isLatin1) return mkCharEnc(str, LATIN1_MASK);
-        if (l->isUTF8)   return mkCharEnc(str, UTF8_MASK);
+        if (l->con->UTF8out || l->isUTF8) return mkCharEnc(str, UTF8_MASK);
+        else if (l->isLatin1) return mkCharEnc(str, LATIN1_MASK);
     }
     return mkCharEnc(str, 0);
 }
@@ -942,6 +942,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	data.ttyflag = 0;
 	data.wasopen = data.con->isopen;
 	if(!data.wasopen) {
+	    data.con->UTF8out = TRUE;  /* a request */
 	    strcpy(data.con->mode, "r");
 	    if(!data.con->open(data.con))
 		error(_("cannot open the connection"));
