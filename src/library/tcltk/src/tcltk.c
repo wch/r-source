@@ -316,6 +316,10 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
     return ans;
 }
 
+
+/* FIXME: we could look at encoding, and send UTF-8 in an
+   MBCS-supporting environment.  In which case, could convert to
+   UTF-8 and not UCS-2 on Windows. */
 #ifdef Win32
 extern wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 #endif
@@ -337,7 +341,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 
     count = length(val);
 #ifdef Win32
-    encoding = Tcl_GetEncoding(RTcl_interp, "unicode");
+    encoding = Tcl_GetEncoding(RTcl_interp, "unicode");  /* Needs NT */
 #else
     encoding = NULL;
 #endif
