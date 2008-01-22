@@ -494,6 +494,9 @@ BUG FIXES
 	where they were unrelated to the function masked.  It is now
 	more selective (although still too generous to S4 generics).
 
+    o	proc.time() was missing a protect and could misbehave if
+	provoked by gctorture().  (PR#10600)
+
 
 
 		CHANGES IN R VERSION 2.6.1
