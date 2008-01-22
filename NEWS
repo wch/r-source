@@ -318,18 +318,11 @@ BUG FIXES
 	cor(use="pair") for the rank methods gave a matrix result with
 	dimensions > 0 even if one of the inputs had 0 columns.
 
-    o	The AIC() S4 generic in package stats4 no longer disables
-	dispatch of S3 methods for AIC().
-
     o	Supplying edit.row.names = TRUE when editing a matrix without
 	row names is now an error and not a segfault. (PR#10500)
 
     o	The error handler in the parser reported unexpected
 	& as && and | as ||.
-
-    o	The conflicts check in library() excluded all S4 generics, even
-	where they were unrelated to the function masked.  It is now
-	more selective (although still too generous to S4 generics).
 
     o	ps.options(reset = TRUE) had not reset for a long time.
 
@@ -493,6 +486,13 @@ BUG FIXES
 	by system().  Instead PR#1959 is handled by a simple error
 	handler which will give an error message in circumstances
 	where none was given before.
+
+    o	The AIC() S4 generic in package stats4 no longer disables
+	dispatch of S3 methods for AIC().
+
+    o	The conflicts check in library() excluded all S4 generics, even
+	where they were unrelated to the function masked.  It is now
+	more selective (although still too generous to S4 generics).
 
 
 
