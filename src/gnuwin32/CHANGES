@@ -63,6 +63,14 @@ BUG FIXES
 	is now returned (rather than 0 or 1).
 
 
+OTHERS
+
+    o	The MSVC run-time (used by MinGW) has a global variable to
+	determine whether files default to text or binary mode.  R now
+	overrides this setting so that files are always read in text
+	mode by default: this is relevant to embedded uses of R.
+
+
 
 		CHANGES IN R VERSION 2.6.1
 

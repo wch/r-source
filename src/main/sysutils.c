@@ -82,10 +82,31 @@ Rboolean attribute_hidden R_HiddenFile(const char *name)
     else return 1;
 }
 
+/* The MSVC runtime has a global to determine whether an unspecified file open
+   is in text or binary mode.  We force explicit text mode here to avoid depending 
+   on that global, which may have been changed by user code.
+*/
+
+#ifdef Win32
+char fixedmode[6]; /* Rconnection can have a mode of 4 chars plus a null; we might add one char */
+
+static char * fixmode(const char *mode)
+{
+    fixedmode[4] = '\0';
+    strncpy(fixedmode, mode, 4);
+    if (!strpbrk(fixedmode, "bt")) {
+    	strcat(fixedmode, "t");
+    }
+    return fixedmode;
+}
+
+#else
+#define fixmode(mode) (mode)
+#endif
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
-    return(filename ? fopen(filename, mode) : NULL );
+    return(filename ? fopen(filename, fixmode(mode)) : NULL );
 }
 
 /* The point of this function is to allow file names in foreign
@@ -120,7 +141,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
     Riconv_close(obj);
     if(res == -1 || inb > 0) error(_("file name conversion problem"));
 
-    mbstowcs(wmode, mode, 10);
+    mbstowcs(wmode, fixmode(mode), 10);
     return _wfopen(filename, wmode);
 }
 
