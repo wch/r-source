@@ -59,8 +59,8 @@ truncate(con, \dots)
   \R keeps separate positions for reading and writing.  Which \code{seek}
   refers to can be set by its \code{rw} argument: the default is the
   last mode (reading or writing) which was used.  Most files are
-  only opened for reading or writing and so default to that state.
-  If a file is open for reading and writing but has not been used, the
+  only opened for reading or writing and so default to that state.  If a
+  file is open for both reading and writing but has not been used, the
   default is to give the reading position (0).
 
   The initial file position for reading is always at the beginning.
@@ -79,7 +79,7 @@ truncate(con, \dots)
 \value{
   \code{seek} returns the current position (before any move), as a
   (numeric) byte offset from the origin, if relevant, or \code{0} if
-  not. Note that the position can exceed the largest representable
+  not.  Note that the position can exceed the largest representable
   number in an \R \code{integer} on 64-bit OSes, and on some 32-bit
   OSes.
 

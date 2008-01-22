@@ -1,6 +1,6 @@
 % File src/library/utils/man/select.list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{select.list}
@@ -28,8 +28,9 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
   down whilst selecting, and shift-clicking can be used to select
   ranges.
 
-  Normal termination is via the \code{OK} button or by hitting Enter.
-  Selection can be aborted via the \code{Cancel} button or pressing Escape.
+  Normal termination is via the \sQuote{OK} button or by hitting Enter or
+  double-clicking an item.  Selection can be aborted via the
+  \sQuote{Cancel} button or pressing Escape.
 #endif
 #ifdef unix
   Under the AQUA interface for MacOS X this brings up a modal dialog box

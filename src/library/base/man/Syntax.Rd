@@ -57,3 +57,4 @@
   The \emph{R Language Definition} manual.
 }
 \keyword{documentation}
+\keyword{programming}

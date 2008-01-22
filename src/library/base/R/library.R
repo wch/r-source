@@ -103,7 +103,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
     }
 
-    checkConflicts <- function(package, pkgname, pkgpath, nogenerics)
+    checkConflicts <- function(package, pkgname, pkgpath, nogenerics, env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
                        ".Random.seed", ".First.lib", ".Last.lib",
@@ -114,11 +114,18 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all.names = TRUE)
         if(!nogenerics) {
+            ## this has traditionally excluded all generics with methods.
+            ## But unless they are implicit generics, they are in conflict.
             these <- objects(lib.pos, all.names = TRUE)
             these <- these[substr(these, 1, 6) == ".__M__"]
             gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
-            gen <- gen[from != ".GlobalEnv"]
+            gen <- gen[from != package]
+            if(exists(".__IG__table", env, inherits = FALSE)) {
+                imp_gen <- ls(get(".__IG__table", env,inherits = FALSE),
+                              all.names = TRUE)
+                gen <- c(gen, imp_gen)
+            }
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
@@ -319,13 +326,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               call. = FALSE, domain = NA)
                 else {
                     on.exit(do.call("detach", list(name = pkgname)))
-                    ## If there are generics then the package should
+                    ## If there are S4 generics then the package should
                     ## depend on methods
                     nogenerics <-
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
                     if(warn.conflicts &&
                        !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                        checkConflicts(package, pkgname, pkgpath, nogenerics)
+                        checkConflicts(package, pkgname, pkgpath,
+                                       nogenerics, ns)
 
                     if(!nogenerics && !identical(pkgname, "package:methods"))
                         methods::cacheMetaData(env, TRUE,
@@ -404,7 +412,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 !.isMethodsDispatchOn() || checkNoGenerics(env, package)
             if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                checkConflicts(package, pkgname, pkgpath, nogenerics)
+                checkConflicts(package, pkgname, pkgpath, nogenerics, env)
 
             if(!nogenerics && !identical(pkgname, "package:methods"))
                 methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
@@ -838,7 +846,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     out <- character(0)
 
     for(pkg in package) {
-        if(any(grep("_", pkg))) {
+        if(length(grep("_", pkg))) {
             ## The package "name" contains the version info.
             ## Note that .packages() is documented to return the "base
             ## names" of all currently attached packages.  In the case
@@ -866,9 +874,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                                                   "DESCRIPTION"))])
         }
         if(use_attached
-           && any(pos <- grep(paste("^package:", pkg_regexp,
-                                    sep = ""),
-                              search()))) {
+           && length(pos <- grep(paste("^package:", pkg_regexp, sep = ""),
+                                 search()))) {
             dirs <- sapply(pos, function(i) {
                 if(identical(env <- as.environment(i), baseenv()))
                     system.file()
@@ -938,7 +945,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             paths <- if(pkg_has_version) {
                 paths[1]
             }
-            else if(any(pos <- which(basename(paths) == pkg)))
+            else if(length(pos <- which(basename(paths) == pkg)))
                 paths[pos][1]
             else {
                 versions <- package_version(db[ok, "Version"])

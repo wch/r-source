@@ -26,10 +26,10 @@ AIC.logLik <- function(object, ..., k = 2)
 AIC.default <- function(object, ..., k = 2)
 {
     ## AIC for various fitted objects --- any for which there's a logLik() method:
-
+    ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
     if(length(list(...))) {# several objects: produce data.frame
 	object <- list(object, ...)
-	val <- lapply(object, logLik)
+	val <- lapply(object, ll)
 	val <- as.data.frame(t(sapply(val,
 				      function(el)
 				      c(attr(el, "df"), AIC(el, k = k)))))
@@ -38,5 +38,5 @@ AIC.default <- function(object, ..., k = 2)
         Call$k <- NULL
 	row.names(val) <- as.character(Call[-1])
 	val
-    } else AIC(logLik(object), k = k)
+    } else AIC(ll(object), k = k)
 }

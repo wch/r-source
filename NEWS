@@ -129,6 +129,13 @@ BUG FIXES
 	handler which will give an error message in circumstances
 	where none was given before.
 
+    o	The AIC() S4 generic in package stats4 no longer disables
+	dispatch of S3 methods for AIC().
+
+    o	The conflicts check in library() excluded all S4 generics, even
+	where they were unrelated to the function masked.  It is now
+	more selective (although still too generous to S4 generics).
+
 
 
 		CHANGES IN R VERSION 2.6.1

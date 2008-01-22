@@ -14,18 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## we need this stats4::logLik to avoid stats namespace issues
-setGeneric("AIC", useAsDefault=function(object, ..., k = 2)
-           stats::AIC(stats4::logLik(object),  ..., k = k))
+## created for use in other packages, e.g. flexmix
+setGeneric("AIC")
 
 setGeneric("BIC", function(object, ...) standardGeneric("BIC"))
 
 setMethod("BIC", signature(object="logLik"),
-function(object, ...){
-    -2 * c(object) + attr(object, "df") * log(attr(object, "nobs"))
-})
+          function(object, ...)
+          -2 * c(object) + attr(object, "df") * log(attr(object, "nobs")) )
 
 setMethod("BIC", signature(object="ANY"),
-function(object, ...){
-    BIC(object=logLik(object, ...))
-})
+          function(object, ...) BIC(object=logLik(object, ...)) )

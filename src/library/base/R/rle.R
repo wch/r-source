@@ -16,8 +16,8 @@
 
 rle <- function(x)
 {
-    if (!is.vector(x))
-        stop("'x' must be a vector")
+    if (!is.vector(x) && !is.list(x))
+        stop("'x' must be an atomic vector")
     n <- length(x)
     if (n == 0)
         return(list(lengths = integer(0), values = x))

@@ -70,7 +70,9 @@ lfactorial(x)
     \frac{\Gamma'(x)}{\Gamma(x)}}{%
     \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
   This is often called the \sQuote{polygamma} function, e.g. in
-  Abramowitz and Stegun (section 6.4.1, page 260).
+  Abramowitz and Stegun (section 6.4.1, page 260); and its higher
+  derivatives (\code{deriv = 2:4}) have occasionally been called
+  \sQuote{tetragamma}, \sQuote{pentagamma}, and \sQuote{hexagamma}.
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and their logarithms.  Note that \code{choose(n,k)} is

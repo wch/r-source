@@ -2,7 +2,7 @@ Name: GNU General Public License
 Abbrev: GPL
 Version: 2
 SSS: GPL-2
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/GPL-2
 
@@ -10,7 +10,7 @@ Name: GNU General Public License
 Abbrev: GPL
 Version: 3
 SSS: GPL-3
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/GPL-3
 
@@ -18,7 +18,7 @@ Name: GNU Library General Public License
 Abbrev: LGPL
 Version: 2
 SSS: LGPL-2
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/LGPL-2
 
@@ -26,7 +26,7 @@ Name: GNU Lesser General Public License
 Abbrev: LGPL
 Version: 2.1
 SSS: LGPL-2.1
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/LGPL-2.1
 
@@ -34,39 +34,46 @@ Name: GNU Lesser General Public License
 Abbrev: LGPL
 Version: 3
 SSS: LGPL-3
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/LGPL-3
 
+Name: GNU Affero General Public License
+Abbrev: AGPL
+Version: 3
+SSS: AGPL-3
+FSF: free_and_GPL_compatible
+URL: http://www.R-project.org/Licenses/AGPL-3
+
 Name: Apache License
 Version: 1.0
-OSF: open
+OSI: open
 FSF: free_and_GPL_incompatible
 URL: http://www.apache.org/LICENSE-1.0
 
 Name: Apache License
 Version: 1.1
-OSF: open
+OSI: open
 FSF: free_and_GPL_incompatible
 URL: http://www.apache.org/LICENSE-1.1
 
 Name: Apache License
 Version: 2.0
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.apache.org/licenses/LICENSE-2.0
 
 Name: Artistic License
 Version: 1.0
 SSS: Artistic-1.0
-OSF: open
+OSI: open
 FSF: non_free
 URL: http://www.R-project.org/Licenses/Artistic-1.0
 
 Name: Artistic License
 Version: 2.0
 SSS: Artistic-2.0
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.R-project.org/Licenses/Artistic-2.0
 
@@ -74,7 +81,7 @@ Name: CeCILL
 Abbrev: CeCILL
 Version: 2
 FSF: free_and_GPL_compatible
-URL: http://www.cecill.info/licences.en.html
+URL: http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 Name: FreeBSD License
 Abbrev: FreeBSD
@@ -83,26 +90,26 @@ URL: http://www.freebsd.org/copyright/freebsd-license.html
 
 Name: MIT License
 Abbrev: MIT
-OSF: open
+OSI: open
 URL: http://www.opensource.org/licenses/mit-license.php
 
 Name: Modified BSD License
 Abbrev: BSD
-OSF: open
+OSI: open
 FSF: free_and_GPL_compatible
 URL: http://www.opensource.org/licenses/bsd-license.php
 
 Name: Mozilla Public License
 Abbrev: MPL
 Version: 1.0
-OSF: open
+OSI: open
 FSF: free_and_GPL_incompatible
 URL: http://www.opensource.org/licenses/mozilla1.0.php
 
 Name: Mozilla Public License
 Abbrev: MPL
 Version: 1.1
-OSF: open
+OSI: open
 FSF: free_and_GPL_incompatible
 URL: http://www.opensource.org/licenses/mozilla1.1.php
 
@@ -110,3 +117,10 @@ Name: X11 License
 Abbrev: X11
 FSF: free_and_GPL_compatible
 URL: http://www.xfree86.org/3.3.6/COPYRIGHT2.html#3
+
+Name: Common Public License
+Abbrev: CPL
+Version: 1.0
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://www.eclipse.org/legal/cpl-v10.html

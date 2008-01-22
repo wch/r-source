@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005   The R Development Core Team
+ *  Copyright (C) 2005-8   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2099,11 +2099,12 @@ static const int table_walpha_count =
 static const struct interval table_wblank[] = {
   { 0x9, 0x9 },
   { 0x20, 0x20 },
-  { 0x1680, 0x1680 },
-  { 0x2000, 0x2006 },
+  { 0xa0, 0xa0 }, /* non-breaking space */
+  { 0x1680, 0x1680 }, /* ogham space mark */
+  { 0x2000, 0x2006 }, /* why not figure space, 2007? */
   { 0x2008, 0x200b },
-  { 0x205f, 0x205f },
-  { 0x3000, 0x3000 }
+  { 0x205f, 0x205f }, /* medium mathematical space */
+  { 0x3000, 0x3000 }  /* (CJK) ideographic space */
 };
 static const int table_wblank_count =
   (sizeof(table_wblank)/sizeof(struct interval));
@@ -3575,12 +3576,13 @@ static const int table_wpunct_count =
 static const struct interval table_wspace[] = {
     { 0x9, 0xd },
     { 0x20, 0x20 },
-    { 0x1680, 0x1680 },
-    { 0x2000, 0x2006 },
+    { 0xa0, 0xa0 }, /* non-breaking space */
+    { 0x1680, 0x1680 }, /* ogham space mark */
+    { 0x2000, 0x2006 }, /* why not figure space, 2007? */
     { 0x2008, 0x200b },
-    { 0x2028, 0x2029 },
-    { 0x205f, 0x205f },
-    { 0x3000, 0x3000 }
+    { 0x2028, 0x2029 }, /* line separator, para separator */
+    { 0x205f, 0x205f }, /* medium mathematical space */
+    { 0x3000, 0x3000 }  /* (CJK) ideographic space */
 };
 static const int table_wspace_count =
   (sizeof(table_wspace)/sizeof(struct interval));
