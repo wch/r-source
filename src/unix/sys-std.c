@@ -834,7 +834,8 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    *ob = '\0';
 	    err = res == (size_t)(-1);
 	    /* errors lead to part of the input line being ignored */
-	    if(err) fputs(_("<ERROR: invalid input in encoding> "), stdout);
+	    if(err) printf(_("<ERROR: invalid input in encoding '%s'>\n"),
+			   R_StdinEnc);
 	    strncpy((char *)buf, obuf, len);
 #else
 	    if(!cd) {

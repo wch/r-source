@@ -289,7 +289,8 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
 	*ob = '\0';
 	err = (res == (size_t)(-1));
 	/* errors lead to part of the input line being ignored */
-	if(err) fputs(_("<ERROR: invalid input in encoding>\n"), stdout);
+	if(err) printf(_("<ERROR: invalid input in encoding '%s'>\n"),
+		       R_StdinEnc);
 	strncpy(buf, obuf, len);
     }
 
