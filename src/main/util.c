@@ -1165,7 +1165,28 @@ void mbcsToLatin1(const char *in, char *out)
     size_t res = mbstowcs(NULL, in, 0), mres;
 
     if(res == (size_t)(-1)) {
-	warning(_("invalid input '%s' in mbcsToLatin1"), in);
+	/* let's try to print out a readable version */
+	size_t used, n = strlen(in);
+	char *err = alloca(4*n + 1), *q;
+	const char *p;
+	mbstate_t ps;
+	R_CheckStack();
+	for(p = in, q = err; *p; ) {
+	    used = mbrtowc(NULL, p, n, &ps);
+	    if(used == 0) break;
+	    else if((int) used > 0) {
+		memcpy(q, p, used);
+		p += used;
+		q += used;
+		n -= used;
+	    } else {
+		sprintf(q, "<%02x>", (unsigned char) *p++);
+		q += 4;
+		n--;
+	    }
+	}
+	*q = '\0';
+	warning(_("invalid input '%s' in mbcsToLatin1: omitted"), err);
 	*out = '\0';
 	return;
     }
