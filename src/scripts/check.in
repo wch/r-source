@@ -378,7 +378,7 @@ foreach my $pkg (@ARGV) {
 		      "'$package_or_bundle_name' " .
 		      "version '$description->{\"Version\"}'");
 
-        if(defined $encoding) {$log->message("package encoding: $encoding");
+        if(defined $encoding) {$log->message("package encoding: $encoding");}
 
 	## Check package dependencies.
 
