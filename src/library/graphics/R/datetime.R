@@ -150,11 +150,25 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                     start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
                 incr <- 7*86400
             }
-            if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
-            if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
-            maxx <- max(x, na.rm = TRUE)
-            breaks <- seq.int(start, maxx + incr, breaks)
-            breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+            if(valid == 6) {
+                start$mday <- 1
+                end <- as.POSIXlt(max(x, na.rm = TRUE))
+                end <- as.POSIXlt(end + (31 * 86400))
+                end$mday <- 1
+                breaks <- seq(start, end, "months") - 86400
+            } else if(valid == 7) {
+                start$mon <- 0
+                start$mday <- 1
+                end <- as.POSIXlt(max(x, na.rm = TRUE))
+                end <- as.POSIXlt(end + (366 * 86400))
+                end$mon <- 0
+                end$mday <- 1
+                breaks <- seq(start, end, "years") - 86400
+            } else {
+                maxx <- max(x, na.rm = TRUE)
+                breaks <- seq.int(start, maxx + incr, breaks)
+                breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+            }
         }
         else stop("invalid specification of 'breaks'")
     }
@@ -278,12 +292,26 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                     start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
                 incr <- 7
             }
-            if(valid == 3) { start$mday <- 1; incr <- 31 }
-            if(valid == 4) { start$mon <- 0; incr <- 366 }
-            start <- .Internal(POSIXlt2Date(start))
-            maxx <- max(x, na.rm = TRUE)
-            breaks <- seq.int(start, maxx + incr, breaks)
-            breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+            if(valid == 3) {
+                start$mday <- 1
+                end <- as.POSIXlt(max(x, na.rm = TRUE))
+                end <- as.POSIXlt(end + (31 * 86400))
+                end$mday <- 1
+                breaks <- as.Date(seq(start, end, "months")) - 1
+            } else if(valid == 4) {
+                start$mon <- 0
+                start$mday <- 1
+                end <- as.POSIXlt(max(x, na.rm = TRUE))
+                end <- as.POSIXlt(end + (366 * 86400))
+                end$mon <- 0
+                end$mday <- 1
+                breaks <- as.Date(seq(start, end, "years")) - 1
+            } else {
+                start <- .Internal(POSIXlt2Date(start))
+                maxx <- max(x, na.rm = TRUE)
+                breaks <- seq.int(start, maxx + incr, breaks)
+                breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+            }
         } else stop("invalid specification of 'breaks'")
     }
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)

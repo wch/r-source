@@ -502,6 +502,10 @@ BUG FIXES
     o	proc.time() was missing a protect and could misbehave if
 	provoked by gctorture().  (PR#10600)
 
+    o	The cut() and hist() methods for dates and datetimes are now
+	more accurate for intervals of "months" and "years", thanks to
+	Marc Schwartz.
+
 
 
 		CHANGES IN R VERSION 2.6.1

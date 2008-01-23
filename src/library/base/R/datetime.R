@@ -723,13 +723,27 @@ cut.POSIXt <-
 		start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
 	    incr <- 7*86400
 	}
-	if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
-	if(valid == 7) { start$mon <- 0; start$mday <- 1; incr <- 366*86400 }
         if(valid == 8) incr <- 25*3600
+	if(valid == 6) {
+        start$mday <- 1
+        end <- as.POSIXlt(max(x, na.rm = TRUE))
+        end <- as.POSIXlt(end + (31 * 86400))
+        end$mday <- 1
+        breaks <- seq(start, end, "months")
+    } else if(valid == 7) {
+        start$mon <- 0
+        start$mday <- 1
+        end <- as.POSIXlt(max(x, na.rm = TRUE))
+        end <- as.POSIXlt(end + (366 * 86400))
+        end$mon <- 0
+        end$mday <- 1
+        breaks <- seq(start, end, "years")
+    } else {
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
-	maxx <- max(x, na.rm = TRUE)
-	breaks <- seq.int(start, maxx + incr, breaks)
-	breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+	    maxx <- max(x, na.rm = TRUE)
+        breaks <- seq.int(start, maxx + incr, breaks)
+        breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+      }
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,
                right = right, ...)
