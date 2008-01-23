@@ -504,7 +504,7 @@ BUG FIXES
 
     o	The cut() and hist() methods for dates and datetimes are now
 	more accurate for intervals of "months" and "years", thanks to
-	Marc Schwartz.
+	Marc Schwarz.
 
 
 
