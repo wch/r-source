@@ -1936,7 +1936,7 @@ void GESymbol(double x, double y, int pch, double size,
 	if(gc->fontface == 5)
 	    error("use of negative pch with symbol font is invalid");
 	res = ucstoutf8(str, -pch);
-	if(res == -1) error("invalid multibyte string");
+	if(res == -1) error("invalid multibyte string '%s'", str);
 	str[res] = '\0';
 	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);
     }

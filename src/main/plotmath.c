@@ -1057,7 +1057,7 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 	    while (*s) {
 		wc = 0;
 		res = mbrtowc(&wc, s, MB_LEN_MAX, &mb_st);
-		if(res == -1) error("invalid multibyte string");
+		if(res == -1) error("invalid multibyte string '%s'", s);
 		if (iswdigit(wc) && font != PlainFont) {
 		    font = PlainFont;
 		    SetFont(PlainFont, gc);
@@ -1074,7 +1074,9 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		    bboxItalic(glyphBBox) = 0;
 		if (draw) {
 		    memset(chr, 0, sizeof(chr));
-		    if(wcrtomb(chr, wc, &mb_st) == -1) error("invalid multibyte string");
+		    /* should not be possible, as we just converted to wc */
+		    if(wcrtomb(chr, wc, &mb_st) == -1)
+			error("invalid multibyte string");
 		    PMoveAcross(lastItalicCorr, mc);
 		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, CE_NATIVE,
 			   0.0, 0.0, mc->CurrentAngle, gc, dd);
