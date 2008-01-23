@@ -310,6 +310,8 @@ foreach my $pkg (@ARGV) {
     my @out = R_runR("cat(R.version.string, '\\n', sep='')",
 		     "--slave --vanilla");
     $log->message("using @out");
+    @out = R_runR("tools:::.find_charset()", "--slave --vanilla");
+    $log->message("using session @out");
 
     if(!$opt_library) {
 	$library = $pkgoutdir;
