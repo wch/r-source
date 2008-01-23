@@ -5324,8 +5324,8 @@ most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX and
-@code{windows()} under Windows.
+to know that the command used is @code{X11()} under UNIX,
+@code{windows()} under Windows and @code{quartz()} under Mac OS X.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds
@@ -6943,7 +6943,8 @@ for @R{} objects and working areas.  This is set by default to the
 smaller of 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb
 per process and have the support enabled: see the @file{rw-FAQ} Q2.9;
 3.5Gb on some 64-bit versions of Windows.}  and the amount of physical
-RAM in the machine, and must be between 32Mb and 3Gb.
+RAM in the machine, and must be between 32Mb and the maximum allowed
+on that version of Windows.
 
 @item --quiet
 @itemx --silent
@@ -6991,7 +6992,7 @@ skipped: this can be useful to retrieve values from it with
 Note that input and output can be redirected in the usual way (using
 @samp{<} and @samp{>}), but the line length limit of 1024 bytes still
 applies.  Warning and error messages are sent to the error channel
-(@code{stderr}) except on Windows 9X/ME.
+(@code{stderr}).
 
 The command @code{R CMD} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
@@ -7059,19 +7060,18 @@ methods described in the previous section may be used, invoking by
 principally intended for batch use.)  For interactive use, there is a
 console-based GUI (@code{Rgui.exe}).
 
-The startup procedure under Windows is very similar to that under UNIX,
-but references to the `home directory' need to be clarified, as this is
-not always defined on Windows.  If the environment variable @env{R_USER}
-is defined, that gives the home directory.  Next, if the environment
-variable @env{HOME} is defined, that gives the home directory.  After
-those two user-controllable settings, @R{} tries to find system
-defined home directories.  It first tries to use the Windows "personal"
-directory (typically @code{C:\Documents and Settings\username\My Documents}
-in Windows XP).  If that fails,
-and environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined
-(and they normally are under Windows NT/2000/XP) these define the home
-directory.  Failing all those, the home directory is taken to be the
-starting directory.
+The startup procedure under Windows is very similar to that under
+UNIX, but references to the `home directory' need to be clarified, as
+this is not always defined on Windows.  If the environment variable
+@env{R_USER} is defined, that gives the home directory.  Next, if the
+environment variable @env{HOME} is defined, that gives the home
+directory.  After those two user-controllable settings, @R{} tries to
+find system defined home directories.  It first tries to use the
+Windows "personal" directory (typically @code{C:\Documents and
+Settings\username\My Documents} in Windows XP).  If that fails, and
+environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined
+(and they normally are) these define the home directory.  Failing all
+those, the home directory is taken to be the starting directory.
 
 You need to ensure that either the environment variables @env{TMPDIR},
 @env{TMP} and @env{TEMP} are either unset or one of them points to a
