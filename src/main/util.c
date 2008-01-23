@@ -919,7 +919,7 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 
     if(n <= 0 || !*s) return (size_t)0;
     used = mbrtowc(wc, s, n, ps);
-    if((int)used < 0) error(_("invalid multibyte string"));
+    if((int) used < 0) error(_("invalid multibyte string at '%s'"), s);
     return used;
 }
 
@@ -936,7 +936,7 @@ void mbcsToLatin1(const char *in, char *out)
     size_t res = mbstowcs(NULL, in, 0), mres;
 
     if(res == (size_t)(-1)) {
-	warning(_("invalid input in mbcsToLatin1"));
+	warning(_("invalid input '%s' in mbcsToLatin1"), in);
 	*out = '\0';
 	return;
     }
@@ -944,8 +944,8 @@ void mbcsToLatin1(const char *in, char *out)
     R_CheckStack();
     if(!wbuff) error(_("allocation failure in 'mbcsToLatin1'"));
     mres = mbstowcs(wbuff, in, res+1);
-    if(mres == (size_t)-1)
-	error(_("invalid input in 'mbcsToLatin1'"));
+    if(mres == (size_t)-1) /* we checked above, so should not get here */
+	error("invalid input in 'mbcsToLatin1'");
     for(i = 0; i < res; i++) {
 	/* here we do assume Unicode wchars */
 	if(wbuff[i] > 0xFF) out[i] = '.';
