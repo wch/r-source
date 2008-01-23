@@ -96,53 +96,10 @@ struct md5_ctx
  * the functions `md5_stream' and `md5_buffer'.
  */
 
-/* Initialize structure containing state of computation.
-   (RFC 1321, 3.3: Step 3)  */
-extern void md5_init_ctx __P ((struct md5_ctx *ctx));
-
-/* Starting with the result of former calls of this function (or the
-   initialization function update the context for the next LEN bytes
-   starting at BUFFER.
-   It is necessary that LEN is a multiple of 64!!! */
-extern void md5_process_block __P ((const void *buffer, size_t len,
-				    struct md5_ctx *ctx));
-
-/* Starting with the result of former calls of this function (or the
-   initialization function update the context for the next LEN bytes
-   starting at BUFFER.
-   It is NOT required that LEN is a multiple of 64.  */
-extern void md5_process_bytes __P ((const void *buffer, size_t len,
-				    struct md5_ctx *ctx));
-
-/* Process the remaining bytes in the buffer and put result from CTX
-   in first 16 bytes following RESBUF.  The result is always in little
-   endian byte order, so that a byte-wise output yields to the wanted
-   ASCII representation of the message digest.
-
-   IMPORTANT: On some systems it is required that RESBUF be correctly
-   aligned for a 32 bits value.  */
-extern void *md5_finish_ctx __P ((struct md5_ctx *ctx, void *resbuf));
-
-
-/* Put result from CTX in first 16 bytes following RESBUF.  The result is
-   always in little endian byte order, so that a byte-wise output yields
-   to the wanted ASCII representation of the message digest.
-
-   IMPORTANT: On some systems it is required that RESBUF is correctly
-   aligned for a 32 bits value.  */
-extern void *md5_read_ctx __P ((const struct md5_ctx *ctx, void *resbuf));
-
-
 /* Compute MD5 message digest for bytes read from STREAM.  The
    resulting message digest number will be written into the 16 bytes
    beginning at RESBLOCK.  */
 extern int md5_stream __P ((FILE *stream, void *resblock));
-
-/* Compute MD5 message digest for LEN bytes beginning at BUFFER.  The
-   result is always in little endian byte order, so that a byte-wise
-   output yields to the wanted ASCII representation of the message
-   digest.  */
-extern void *md5_buffer __P ((const char *buffer, size_t len, void *resblock));
 
 #ifndef ROL_UNUSED
 /* The following is from gnupg-1.0.2's cipher/bithelp.h.  */
