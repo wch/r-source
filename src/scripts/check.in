@@ -324,6 +324,7 @@ foreach my $pkg (@ARGV) {
     my $is_bundle = 0;
     my $package_or_bundle = "package";
     my $package_or_bundle_name;
+    my $encoding;
     ## Package sources from the R distribution are special.  They have a
     ## 'DESCRIPTION.in' file (instead of 'DESCRIPTION'), with Version
     ## field containing '@VERSION@' for substitution by configure.  We
@@ -349,6 +350,7 @@ foreach my $pkg (@ARGV) {
 	    $description =
 	      new R::Dcf(&file_path($pkgdir, "DESCRIPTION"));
 	    $log->result("OK");
+	    $encoding = $description->{"Encoding"};
 	}
 	else {
 	    $log->result("NO");
@@ -375,6 +377,8 @@ foreach my $pkg (@ARGV) {
 	$log->message("this is $package_or_bundle " .
 		      "'$package_or_bundle_name' " .
 		      "version '$description->{\"Version\"}'");
+
+        if(defined $encoding) {$log->message("package encoding: $encoding");
 
 	## Check package dependencies.
 
@@ -2018,17 +2022,21 @@ sub check_pkg {
 	$log->result("OK");
 	$log->checking("examples");
 
+	my $enc = "";
+	if(defined($description->{"Encoding"})) {
+	    $enc = "--encoding " . $description->{"Encoding"};
+        }
 	if($opt_use_gct) {
             $cmd = join(" ",
 			("(echo 'gctorture(TRUE)';",
 			 "cat ${pkgname}-Ex.R) |",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
-			 "${R_opts}",
+			 "${R_opts}", $enc,
 			 "> ${pkgname}-Ex.Rout 2>&1"));
 	} else {
 	    $cmd = join(" ",
 			(&shell_quote_file_path(${R::Vars::R_EXE}),
-			 "${R_opts}",
+			 "${R_opts}", $enc,
 			 "< ${pkgname}-Ex.R",
 			 "> ${pkgname}-Ex.Rout 2>&1"));
 	}

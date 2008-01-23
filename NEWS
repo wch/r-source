@@ -287,6 +287,11 @@ UTILITIES
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.
 
+    o	If a package declares an encoding in the DESCRIPTION file,
+	the examples are assumed to be in that encoding when running
+	the tests. (This avoids errors in running latin1 examples in a
+	UTF-8 locale.)
+
 
 C-LEVEL FACILITIES
 
