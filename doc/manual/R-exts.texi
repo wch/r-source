@@ -442,10 +442,12 @@ If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This
 is currently used as the encoding of the @file{DESCRIPTION} file
 itself and of the @file{R} and @file{NAMESPACE} files, and is taken as
-the default encoding of @file{.Rd} files as from @R{} 2.6.0.  Only
-encoding names @code{latin1}, @code{latin2} and @code{UTF-8} are known
-to be portable.  (Do not specify an encoding unless one is actually
-needed: doing so makes the package @emph{less} portable.)
+the default encoding of @file{.Rd} files as from @R{} 2.6.0.  As from
+@R{} 2.7.0, the examples are assumed to be in this encoding when
+running @command{R CMD check}.  Only encoding names @code{latin1},
+@code{latin2} and @code{UTF-8} are known to be portable.  (Do not
+specify an encoding unless one is actually needed: doing so makes the
+package @emph{less} portable.)
 
 
 The optional @samp{Type} field specifies the type of the package:
