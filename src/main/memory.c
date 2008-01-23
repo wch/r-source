@@ -2960,7 +2960,7 @@ SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
     append_mode = asLogical(CADR(args));
     filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     threshold = REAL(CADDR(args))[0];
-    if (strlen(CHAR(filename)))
+    if (strlen(filename))
 	R_InitMemReporting(filename, append_mode, threshold);
     else
 	R_EndMemReporting();
