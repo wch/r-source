@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-19
+@set FAQ_DATE @value{FAQ_YEAR}-01-23
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2057,6 +2057,8 @@ Generalized additive models by likelihood based boosting.
 @item GDD
 Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
+@item GEOmap
+Topographic and geologic mapping.
 @item GLDEX
 Fit RS and FMKL generalised lambda distributions using discretized and
 maximum likelihood methods.
@@ -2453,6 +2455,8 @@ QuantLib project aims to provide a comprehensive software framework for
 quantitative finance.
 @item RSAGA
 SAGA geoprocessing and terrain analysis in R.
+@item RSEIS
+Seismic time series analysis tools.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
@@ -2463,6 +2467,8 @@ An R @acronym{SVG} graphics device with dynamic tips and hyperlinks.
 @item RSvgDevice
 A graphics device for R that uses the new w3.org @XML{} standard for
 Scalable Vector Graphics.
+@item RTOMO
+Visualization for seismic tomography.
 @item RTisean
 R interface to Tisean algorithms.
 @item RUnit
@@ -2509,6 +2515,8 @@ Functions for estimating parameters in software reliability models.
 Electrical properties of resistor networks.
 @item Rfwdmv
 Forward Search for Multivariate Data.
+@item Rglpk
+R/GNU Linear Programming Kit interface.
 @item RiboSort
 Classification and analysis of microbial community profiles.
 @item Rigroup
@@ -2549,6 +2557,9 @@ to be sent to R.
 @c Binary file stream support functions.
 @item Rsundials
 SUite of Nonlinear DIfferential ALgebraic equations Solvers in R.
+@item Rsymphony
+An R interface to the SYMPHONY mixed integer linear program (MILP)
+solver.
 @item Runuran
 Interface to the UNU.RAN library for Universal Non-Uniform RANdom
 variate generators.
@@ -2758,6 +2769,8 @@ Genetic data handling for multivariate analysis using @strong{ade4}.
 A collection of tools for the analysis of habitat selection by animals.
 @item adimpro
 Adaptive smoothing of digital images.
+@item adk
+Anderson-Darling @math{K}-sample test and combinations of such tests.
 @item adlift
 Adaptive Wavelet transforms for signal denoising.
 @item ads
@@ -3464,6 +3477,8 @@ Exact calculation of fuzzy decision rules for multiple testing.
 Fuzzy rank tests and confidence intervals.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
+@item gRain
+Probability propagation in graphical independence networks.
 @item gRbase
 A package for graphical modelling in R.  Defines S4 classes for
 graphical meta data and graphical models, and illustrates how
@@ -3553,6 +3568,8 @@ Functions to perform geostatistical data analysis including model-based
 methods.
 @item geoRglm
 Functions for inference in generalised linear spatial models.
+@item geomapdata
+Data for topographic and geologic mapping.
 @item geometry
 Mesh generation and surface tesselation, based on the Qhull library.
 @item geozoo
@@ -3843,6 +3860,9 @@ imposing an L1 constraint on the estimates, based on the algorithm of
 Osborne et al.@: (1998).
 @item latentnet
 Latent position and cluster models for statistical networks.
+@item latentnetHRT
+Latent position and cluster models for statistical networks,
+implementing the original specification by Handcock, Raftery and Tantrum.
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
@@ -3891,6 +3911,9 @@ Linear mixed models.
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
 and H. Sonnberger, 1986, Physica.
+@item lnMLE
+Marginally specified logistic normal models for longitudinal binary
+data.
 @item locfdr
 Computation of local false discovery rates.
 @item locfit
