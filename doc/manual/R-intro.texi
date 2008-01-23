@@ -6955,6 +6955,11 @@ Make @R{} run as quietly as possible.  This option is intended to
 support programs which use @R{} to compute results for them.  It implies
 @option{--quiet} and @option{--no-save}.
 
+@item --interactive
+(UNIX only) Assert that @R{} really is being run interactively even if
+input has been redirected: use if input is from a FIFO or pipe and fed
+from an interactive program.
+
 @item --verbose
 Print more information about progress, and in particular set @R{}'s
 option @code{verbose} to @code{TRUE}.  @R{} code uses this option to

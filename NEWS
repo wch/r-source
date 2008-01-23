@@ -233,6 +233,9 @@ NEW FEATURES
 	work in UTF-8 and preserve the UTF-8 encoding for UTF-8 inputs
 	where supported.
 
+    o	New flag --interactive on Unix-alikes forces the session to be
+	interactive (as --ess does on Windows).
+
 
 DEPRECATED & DEFUNCT
 
