@@ -3205,9 +3205,9 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP fun = SYMVALUE(symbol);
 	int flag;
 	void *vmax = vmaxget();
-	if (TYPEOF(value) == PROMSXP) {
-	    value = forcePromise(value);
-	    SET_NAMED(value, 2);
+	if (TYPEOF(fun) == PROMSXP) {
+	    fun = forcePromise(fun);
+	    SET_NAMED(fun, 2);
 	}
 	if(TRACE(fun)) {
 	  Rprintf("trace: ");
