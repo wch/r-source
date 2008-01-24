@@ -74,8 +74,8 @@ $ENV{"R_DEFAULT_PACKAGES"} = "";
 my $startdir = R_cwd();
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $gzip = R_getenv("R_GZIPCMD", "gzip");
-## The tar.exe in Rtools has --force-local by default, but this 
-## enables people to use Cygwin or MSYS tar. 
+## The tar.exe in Rtools has --force-local by default, but this
+## enables people to use Cygwin or MSYS tar.
 my $tar_default = "tar";
 $tar_default = "tar --force-local" if $WINDOWS;
 my $tar = R_getenv("TAR", $tar_default);
@@ -214,6 +214,7 @@ foreach my $pkg (@ARGV) {
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.arch-ids$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.bzr$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.git$/);
 	## Windows DLL resource file
 	push(@exclude_patterns, "^src/" . $pkgname . "_res\\.rc");
@@ -257,7 +258,7 @@ foreach my $pkg (@ARGV) {
     unlink($filepath);
     ## Now correct the package name (PR#9266)
     if($pkgname ne $intname) {
-	rename $pkgname, $intname 
+	rename $pkgname, $intname
 	    or die "Error: cannot rename directory to '$intname'\n";
 	$pkgname = $intname;
     }
