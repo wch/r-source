@@ -3466,7 +3466,9 @@ SEXP R_bcDecode(SEXP code) {
     BCODE *pc;
     SEXP bytes;
 
-    n = LENGTH(code);
+    int m = (sizeof(BCODE) + sizeof(int) - 1) / sizeof(int);
+
+    n = LENGTH(code) / m;
     pc = (BCODE *) CHAR(code);
 
     bytes = allocVector(INTSXP, n);
