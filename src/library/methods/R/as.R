@@ -24,6 +24,8 @@ as <-
   ## no valid way to coerce the two objects).  Otherwise, `NULL' is returned.
   function(object, Class, strict = TRUE, ext = possibleExtends(thisClass, Class))
 {
+    ## prior to 2.7.0 there was a pseudo-class "double"
+    if(.identC(Class, "double")) Class <- "numeric"
     thisClass <- .class1(object) ## always one string
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)

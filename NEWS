@@ -251,9 +251,9 @@ DEPRECATED & DEFUNCT
 	to package 'utils': the former no longer exists as a separate
 	package in the R distribution.
 
-    o	The S4 pseudo-class "single" has been removed.
-	["double" will follow shortly:  the S4 class for a REALSXP is
-	"numeric".]
+    o	The S4 pseudo-classes "single" and double have been removed.
+	(The S4 class for a REALSXP is "numeric": for back-compatibility
+	as(x, "double") coerces to "numeric".)
 
 
 INSTALLATION

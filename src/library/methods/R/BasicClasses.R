@@ -34,7 +34,7 @@
     setClass("missing", where = envir); clList <- c(clList, "missing")
     ## "numeric" is the class returned by class() for double vectors
     vClasses <- c("logical", "numeric", "character",
-                  "complex", "integer", "double", "raw",
+                  "complex", "integer", "raw",
                   "expression", "list")
     ## now some pseudo-classes in base, marked specially for new()
     for(.class in vClasses) {
@@ -73,7 +73,6 @@
     for(.class in vClasses)
         setIs(.class, "vector", where = envir)
 
-    setIs("double", "numeric", where = envir)
     setIs("integer", "numeric", where = envir)
 
     setIs("structure", "vector", coerce = .gblEnv(function(object) as.vector(object)),
