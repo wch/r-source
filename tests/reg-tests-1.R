@@ -5023,3 +5023,31 @@ p <- fisher.test(a, simulate.p.value=TRUE)$p.value
 # true value is 1/60, but should not be small
 stopifnot(p > 0.001)
 ## was about 0.0005 in 2.6.1 patched
+
+
+## tests of problems fixed by Marc Schwarz's patch for
+## cut/hist for Dates and POSIXt
+Dates <- seq(as.Date("2005/01/01"), as.Date("2009/01/01"), "day")
+months <- format(Dates, format = "%m")
+years <- format(Dates, format = "%Y")
+mn <- as.vector(unlist(sapply(split(months, years), table)))
+ty <- as.vector(table(years))
+# Test hist.Date() for months
+stopifnot(identical(hist(Dates, "month", plot = FALSE)$counts, mn))
+# Test cut.Date() for months
+stopifnot(identical(as.vector(table(cut(Dates, "month"))), mn))
+# Test hist.Date() for years
+stopifnot(identical(hist(Dates, "year", plot = FALSE)$counts, ty))
+# Test cut.Date() for years
+stopifnot(identical(as.vector(table(cut(Dates, "years"))),ty))
+
+Dtimes <- as.POSIXlt(Dates)
+# Test hist.POSIXt() for months
+stopifnot(identical(hist(Dtimes, "month", plot = FALSE)$counts, mn))
+# Test cut.POSIXt() for months
+stopifnot(identical(as.vector(table(cut(Dtimes, "month"))), mn))
+# Test hist.POSIXt() for years
+stopifnot(identical(hist(Dtimes, "year", plot = FALSE)$counts, ty))
+# Test cut.POSIXt() for years
+stopifnot(identical(as.vector(table(cut(Dtimes, "years"))), ty))
+## changed in 2.6.2
