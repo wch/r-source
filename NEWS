@@ -143,6 +143,10 @@ BUG FIXES
 	more accurate for intervals of "months" and "years", thanks to
 	Marc Schwarz.
 
+    o	url()/download.file() could segfault if the HTTP interaction
+	involved a redirect to an address starting with '/' on the
+	same server.
+
 
 
 		CHANGES IN R VERSION 2.6.1

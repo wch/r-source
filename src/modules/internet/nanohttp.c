@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-6   The R Development Core Team.
+ *  Copyright (C) 2001-8   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -123,7 +123,6 @@ extern char *strdup(const char *s1);
 #define xmlMemStrdup strdup
 #define xmlStrndup(a, b) strdup(a)
 #define xmlStrstr(a, b) strstr((const char *)a, (const char *)b) 
-#define xmlStrcat strcat
 #define xmlStrdup(a) strdup((char *)a)
 
 static void RxmlNanoHTTPScanProxy(const char *URL);
@@ -872,11 +871,9 @@ RxmlNanoHTTPScanAnswer(RxmlNanoHTTPCtxtPtr ctxt, const char *line)
 	if (ctxt->location != NULL)
 	    xmlFree(ctxt->location);
 	if (*cur == '/') {
-	    char *tmp_http = xmlStrdup(BAD_CAST "http://");
-	    char *tmp_loc = 
-	        xmlStrcat(tmp_http, (const char *) ctxt->hostname);
-	    ctxt->location = 
-	        (char *) xmlStrcat (tmp_loc, (const char *) cur);
+	    char buf[1000];
+	    snprintf(buf, 1000, "http://%s%s", ctxt->hostname, cur);
+	    ctxt->location = xmlMemStrdup(buf);
 	} else {
 	    ctxt->location = xmlMemStrdup(cur);
 	}
@@ -1439,6 +1436,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
         if (nbRedirects < XML_NANO_HTTP_MAX_REDIR) {
 	    nbRedirects++;
 	    redirURL = xmlMemStrdup(ctxt->location);
+	    fflush(stdout);
 	    RxmlNanoHTTPFreeCtxt(ctxt);
 	    goto retry;
 	}
