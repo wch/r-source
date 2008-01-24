@@ -46,7 +46,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{fonts}{a character vector specifying additional \R graphics font
     family names for font families whose declarations will be included
     in the PostScript file and are available for use with the device.
-    See Details.}
+    See \sQuote{Families} below.}
   \item{encoding}{the name of an encoding file.  Defaults to
     to the setting given by \code{\link{ps.options}()}, which defaults
     to \code{"default"}.  The latter is interpreted as
