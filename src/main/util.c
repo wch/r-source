@@ -1063,7 +1063,7 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 	    if (res >= n) break;
 	}
     else
-	for(t = s; ; res += m, t += m) {
+	for(t = s; ; res++, t += m) {
 	    m  = utf8toucs(&local, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
 	    if (m == 0) break;
