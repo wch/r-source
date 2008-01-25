@@ -97,7 +97,7 @@ oldClass(x) <- value
 
 \seealso{
   \code{\link{UseMethod}}, \code{\link{NextMethod}},
-  \code{\link{group generic}}.
+  \sQuote{\link{group generic}}, \sQuote{\link{internal generic}}
 }
 \examples{
 x <- 10

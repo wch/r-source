@@ -66,6 +66,9 @@
 
   \code{.S3PrimitiveGenerics} is a character vector listing the
   primitives which are internal generic and not \link{group generic}.
+  Currently \code{\link{as.vector}}, \code{\link{cbind}},
+  \code{\link{rbind}} and \code{\link{unlist}} are the internal
+  non-primitive functions which are internally generic.
 
   For efficiency, internal dispatch only occurs on \emph{objects}, that
   is those for which \code{\link{is.object}} returns true.
