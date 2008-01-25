@@ -384,6 +384,8 @@ NEW FEATURES
     o	tools::texi2dvi() works around the failure of 'texi2dvi --quiet' 
 	to be quiet in texinfo 4.11.
 
+    o   On Linux, parallel 32/64-bit installations are supported using
+        multilib.
 
 BUG FIXES
 
