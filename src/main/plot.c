@@ -47,103 +47,6 @@ static R_INLINE double fmax2(double x, double y)
 	return (x < y) ? y : x;
 }
 
-#ifndef HAVE_HYPOT
-# define hypot pythag
-#endif
-
-/* FIXME:  NewFrameConfirm should be a standard device function */
-#ifdef Win32
-Rboolean winNewFrameConfirm(void);
-#endif
-
-void NewFrameConfirm(void)
-{
-    unsigned char buf[16];
-#ifdef Win32
-	int i;
-	Rboolean haveWindowsDevice;
-	SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
-#endif
-
-    if(!R_Interactive) return;
-#ifdef Win32
-    for(i = 0; i < curDevice(); i++)  /* 0-based */
-	dotDevices = CDR(dotDevices);
-    haveWindowsDevice =
-	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
-    
-    if (!haveWindowsDevice || !winNewFrameConfirm())
-#endif
-	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 16, 0);
-}
-
-	/* Remember: +1 and/or -1 because C arrays are */
-	/* zero-based and R-vectors are one-based. */
-
-#define checkArity_length					\
-    checkArity(op, args);					\
-    if(!LENGTH(CAR(args)))					\
-	error(_("argument must have positive length"))
-
-
-SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    int listFlag;
-
-    checkArity(op, args);
-    if(PRIMVAL(op) == 0) { /* dev.control */
-	listFlag = asLogical(CAR(args));
-	if(listFlag == NA_LOGICAL) error(_("invalid argument"));
-	if(listFlag)
-	    enableDisplayList(CurrentDevice());
-	else
-	    inhibitDisplayList(CurrentDevice());
-    } else { /* dev.displaylist */
-	GEDevDesc *dd = (GEDevDesc*)CurrentDevice();
-	listFlag = dd->dev->displayListOn;
-    }
-    return ScalarLogical(listFlag);
-}
-
-SEXP attribute_hidden do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    checkArity_length;
-    GEcopyDisplayList(INTEGER(CAR(args))[0] - 1);
-    return R_NilValue;
-}
-
-SEXP attribute_hidden do_devcur(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    checkArity(op, args);
-    return ScalarInteger(curDevice() + 1);
-}
-
-SEXP attribute_hidden do_devnext(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    checkArity_length;
-    return ScalarInteger( nextDevice(INTEGER(CAR(args))[0] - 1) + 1 );
-}
-
-SEXP attribute_hidden do_devprev(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    checkArity_length;
-    return ScalarInteger( prevDevice(INTEGER(CAR(args))[0] - 1) + 1 );
-}
-
-SEXP attribute_hidden do_devset(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    int devNum = INTEGER(CAR(args))[0] - 1;
-    checkArity(op, args);
-    return ScalarInteger( selectDevice(devNum) + 1 );
-}
-
-SEXP attribute_hidden do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    checkArity_length;
-    killDevice(INTEGER(CAR(args))[0] - 1);
-    return R_NilValue;
-}
-
 
 /*  P A R A M E T E R	 U T I L I T I E S  */
 
@@ -190,45 +93,6 @@ static SEXP getInlinePar(SEXP s, char *name)
     return result;
 }
 
-/* This is also used in grid. It may be used millions of times on the
- * same character */
-
-/* FIXME: should we warn on more than one character here? */
-int Rf_string_to_pch(SEXP pch)
-{
-    int ipch = NA_INTEGER;
-    static SEXP last_pch = NULL;
-    static int last_ipch = 0;
-
-    if (pch == NA_STRING) return NA_INTEGER;
-    if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
-    if (pch == last_pch) return last_ipch;/* take advantage of CHARSXP cache */
-    ipch = (unsigned char) CHAR(pch)[0];
-#ifdef SUPPORT_MBCS
-    if (IS_LATIN1(pch)) {
-	if (ipch > 127) ipch = -ipch;  /* record as Unicode */
-    } else if (IS_UTF8(pch) || utf8locale) {
-	wchar_t wc = 0;
-	if (ipch > 127) {
-	    if ( (int) utf8toucs(&wc, CHAR(pch)) > 0) ipch = -wc;
-	    else error(_("invalid multibyte char in pch=\"c\""));
-	}
-    } else if(mbcslocale) {
-	/* Could we safely assume that 7-bit first byte means ASCII?
-	   On Windows this only covers CJK locales, so we could.
-	 */ 
-	unsigned int ucs = 0;
-	if ( (int) mbtoucs(&ucs, CHAR(pch), MB_CUR_MAX) > 0) ipch = ucs;
-	else error(_("invalid multibyte char in pch=\"c\""));
-	if (ipch > 127) ipch = -ipch;
-    }
-#endif
-
-    last_ipch = ipch; last_pch = pch;
-    return ipch;
-}
-
-
 /* dflt used to be used for < 0 values in R < 2.7.0, 
    now just used for NULL */
 static SEXP FixupPch(SEXP pch, int dflt)
@@ -256,7 +120,7 @@ static SEXP FixupPch(SEXP pch, int dflt)
     else if (isString(pch)) {
 	for (i = 0; i < n; i++) {
 	    /* New in 2.7.0: negative values indicate Unicode points. */
-	    INTEGER(ans)[i] = Rf_string_to_pch(STRING_ELT(pch, i));
+	    INTEGER(ans)[i] = GEstring_to_pch(STRING_ELT(pch, i));
 	}
     }
     else if (isLogical(pch)) {/* NA, but not TRUE/FALSE */
@@ -281,7 +145,7 @@ SEXP FixupLty(SEXP lty, int dflt)
     else {
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
-	    INTEGER(ans)[i] = LTYpar(lty, i);
+	    INTEGER(ans)[i] = GE_LTYpar(lty, i);
     }
     return ans;
 }
@@ -1514,6 +1378,9 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     return at;
 }/* do_axis */
 
+#ifndef HAVE_HYPOT
+# define hypot pythag
+#endif
 
 SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 {

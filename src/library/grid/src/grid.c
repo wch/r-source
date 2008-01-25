@@ -2936,9 +2936,6 @@ SEXP L_textBounds(SEXP label, SEXP x, SEXP y,
 		    REAL(theta)[0], FALSE);
 }
 
-/* from plot.c: part of FixupPch */
-extern int Rf_string_to_pch(SEXP pch);
-
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 {
     int i, nx, npch;
@@ -2994,11 +2991,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	    symbolSize = toDeviceWidth(symbolSize, GE_INCHES, dd);
 	    if (R_FINITE(symbolSize)) {
 	        if (isString(pch)) {
-		    /* special case for efficiency: pch = "." */
-		    if(strcmp(CHAR(STRING_ELT(pch, i % npch)), ".") == 0)
-			ipch = 46;
-		    else
-			ipch = Rf_string_to_pch(STRING_ELT(pch, i % npch));
+		    ipch = GEstring_to_pch(STRING_ELT(pch, i % npch));
 		} else if (isInteger(pch)) {
 		    ipch = INTEGER(pch)[i % npch];
 		} else if (isReal(pch)) {

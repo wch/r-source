@@ -476,7 +476,7 @@ static LineEND lineend[] = {
 
 static int nlineend = (sizeof(lineend)/sizeof(LineEND)-2);
 
-R_GE_lineend LENDpar(SEXP value, int ind)
+R_GE_lineend GE_LENDpar(SEXP value, int ind)
 {
     int i, code;
     double rcode;
@@ -510,7 +510,7 @@ R_GE_lineend LENDpar(SEXP value, int ind)
     }
 }
 
-SEXP LENDget(R_GE_lineend lend)
+SEXP GE_LENDget(R_GE_lineend lend)
 {
     SEXP ans = R_NilValue;
     int i;
@@ -541,7 +541,7 @@ static LineJOIN linejoin[] = {
 
 static int nlinejoin = (sizeof(linejoin)/sizeof(LineJOIN)-2);
 
-R_GE_linejoin LJOINpar(SEXP value, int ind)
+R_GE_linejoin GE_LJOINpar(SEXP value, int ind)
 {
     int i, code;
     double rcode;
@@ -575,7 +575,7 @@ R_GE_linejoin LJOINpar(SEXP value, int ind)
     }
 }
 
-SEXP LJOINget(R_GE_linejoin ljoin)
+SEXP GE_LJOINget(R_GE_linejoin ljoin)
 {
     SEXP ans = R_NilValue;
     int i;
@@ -2833,4 +2833,154 @@ void GEonExit()
 	    devNum = nextDevice(devNum);
 	}
     }
+}
+
+/* This is also used in grid. It may be used millions of times on the
+ * same character */
+/* FIXME: should we warn on more than one character here? */
+int GEstring_to_pch(SEXP pch)
+{
+    int ipch = NA_INTEGER;
+    static SEXP last_pch = NULL;
+    static int last_ipch = 0;
+
+    if (pch == NA_STRING) return NA_INTEGER;
+    if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
+    if (pch == last_pch) return last_ipch;/* take advantage of CHARSXP cache */
+    ipch = (unsigned char) CHAR(pch)[0];
+#ifdef SUPPORT_MBCS
+    if (IS_LATIN1(pch)) {
+	if (ipch > 127) ipch = -ipch;  /* record as Unicode */
+    } else if (IS_UTF8(pch) || utf8locale) {
+	wchar_t wc = 0;
+	if (ipch > 127) {
+	    if ( (int) utf8toucs(&wc, CHAR(pch)) > 0) ipch = -wc;
+	    else error(_("invalid multibyte char in pch=\"c\""));
+	}
+    } else if(mbcslocale) {
+	/* Could we safely assume that 7-bit first byte means ASCII?
+	   On Windows this only covers CJK locales, so we could.
+	 */ 
+	unsigned int ucs = 0;
+	if ( (int) mbtoucs(&ucs, CHAR(pch), MB_CUR_MAX) > 0) ipch = ucs;
+	else error(_("invalid multibyte char in pch=\"c\""));
+	if (ipch > 127) ipch = -ipch;
+    }
+#endif
+
+    last_ipch = ipch; last_pch = pch;
+    return ipch;
+}
+
+/* moved from graphics.c as used by grid */
+/*  LINE TEXTURE CODE */
+
+/*
+ *  LINE TEXTURE SPECIFICATION
+ *
+ *  Linetypes are stored internally in integers.  An integer
+ *  is interpreted as containing a sequence of 8 4-bit integers
+ *  which give the lengths of up to 8 on-off line segments.
+ *  The lengths are typically interpreted as pixels on a screen
+ *  and as "points" in postscript.
+ *
+ *  more comments (and LTY_* def.s) in	../include/Rgraphics.h
+ *					----------------------
+ */
+
+typedef struct {
+    char *name;
+    int pattern;
+} LineTYPE;
+
+static LineTYPE linetype[] = {
+    { "blank",   LTY_BLANK   },/* -1 */
+    { "solid",	 LTY_SOLID   },/* 1 */
+    { "dashed",	 LTY_DASHED  },/* 2 */
+    { "dotted",	 LTY_DOTTED  },/* 3 */
+    { "dotdash", LTY_DOTDASH },/* 4 */
+    { "longdash",LTY_LONGDASH},/* 5 */
+    { "twodash", LTY_TWODASH },/* 6 */
+    { NULL,	 0	     },
+};
+
+/* Duplicated from graphics.c */
+static char HexDigits[] = "0123456789ABCDEF";
+static unsigned int hexdigit(int digit)
+{
+    if('0' <= digit && digit <= '9') return digit - '0';
+    if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
+    if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
+    /*else */ error(_("invalid hex digit in 'color' or 'lty'"));
+    return digit; /* never occurs (-Wall) */
+}
+
+static int nlinetype = (sizeof(linetype)/sizeof(LineTYPE)-2);
+
+unsigned int GE_LTYpar(SEXP value, int ind)
+{
+    const char *p;
+    int i, code, shift, digit, len;
+    double rcode;
+
+    if(isString(value)) {
+	for(i = 0; linetype[i].name; i++) { /* is it the i-th name ? */
+	    if(!strcmp(CHAR(STRING_ELT(value, ind)), linetype[i].name))
+		return linetype[i].pattern;
+	}
+	/* otherwise, a string of hex digits: */
+	code = 0;
+	shift = 0;
+	p = CHAR(STRING_ELT(value, ind));
+	len = strlen(p);
+	if(len < 2 || len > 8 || len % 2 == 1)
+	    error(_("invalid line type: must be length 2, 4, 6 or 8"));
+	for(; *p; p++) {
+	    digit = hexdigit(*p);
+	    if(digit == 0)
+		error(_("invalid line type: zeroes are not allowed"));
+	    code  |= (digit<<shift);
+	    shift += 4;
+	}
+	return code;
+    }
+    else if(isInteger(value)) {
+	code = INTEGER(value)[ind];
+	if(code == NA_INTEGER || code < 0)
+	    error(_("invalid line type"));
+	if (code > 0)
+	    code = (code-1) % nlinetype + 1;
+	return linetype[code].pattern;
+    }
+    else if(isReal(value)) {
+	rcode = REAL(value)[ind];
+	if(!R_FINITE(rcode) || rcode < 0)
+	    error(_("invalid line type"));
+	code = rcode;
+	if (code > 0)
+	    code = (code-1) % nlinetype + 1;
+	return linetype[code].pattern;
+    }
+    else {
+	error(_("invalid line type")); /*NOTREACHED, for -Wall : */ return 0;
+    }
+}
+
+SEXP GE_LTYget(unsigned int lty)
+{
+    int i, ndash;
+    unsigned char dash[8];
+    unsigned int l;
+    char cbuf[17]; /* 8 hex digits plus nul */
+
+    for (i = 0; linetype[i].name; i++)
+	if(linetype[i].pattern == lty) return mkString(linetype[i].name);
+
+    l = lty; ndash = 0;
+    for (i = 0; i < 8 && l & 15; i++) {
+	dash[ndash++] = l & 15;
+	l = l >> 4;
+    }
+    for(i = 0 ; i < ndash ; i++) cbuf[i] = HexDigits[dash[i]];
+    return mkString(cbuf);
 }

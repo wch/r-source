@@ -49,9 +49,6 @@
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
 #include <Rdevices.h>
 
-/* from plot.c: part of FixupPch */
-extern int Rf_string_to_pch(SEXP pch);
-
 typedef struct {
     char *name;
     int code; /* 0 normal, 1 not inline, 2 read-only
@@ -899,21 +896,21 @@ static SEXP Query(const char *what, DevDesc *dd)
 	INTEGER(value)[0] = Rf_dpptr(dd)->las;
     }
     else if (streql(what, "lend")) {
-	value = LENDget(Rf_dpptr(dd)->lend);
+	value = GE_LENDget(Rf_dpptr(dd)->lend);
     }
     else if (streql(what, "lheight")) {
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = Rf_dpptr(dd)->lheight;
     }
     else if (streql(what, "ljoin")) {
-	value = LJOINget(Rf_dpptr(dd)->ljoin);
+	value = GE_LJOINget(Rf_dpptr(dd)->ljoin);
     }
     else if (streql(what, "lmitre")) {
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = Rf_dpptr(dd)->lmitre;
     }
     else if (streql(what, "lty")) {
-	value = LTYget(Rf_dpptr(dd)->lty);
+	value = GE_LTYget(Rf_dpptr(dd)->lty);
     }
     else if (streql(what, "lwd")) {
 	value =	 allocVector(REALSXP, 1);

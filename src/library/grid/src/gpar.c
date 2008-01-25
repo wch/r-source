@@ -82,7 +82,7 @@ SEXP gpLineTypeSXP(SEXP gp) {
 
 int gpLineType(SEXP gp, int i) {
     SEXP linetype = gpLineTypeSXP(gp);
-    return LTYpar(linetype, i % LENGTH(linetype));
+    return GE_LTYpar(linetype, i % LENGTH(linetype));
 }
 
 SEXP gpLineWidthSXP(SEXP gp) {
@@ -136,7 +136,7 @@ SEXP gpLineEndSXP(SEXP gp) {
 
 R_GE_lineend gpLineEnd(SEXP gp, int i) {
     SEXP lineend = gpLineEndSXP(gp);
-    return LENDpar(lineend, i % LENGTH(lineend));
+    return GE_LENDpar(lineend, i % LENGTH(lineend));
 }
 
 SEXP gpLineJoinSXP(SEXP gp) {
@@ -145,7 +145,7 @@ SEXP gpLineJoinSXP(SEXP gp) {
 
 R_GE_linejoin gpLineJoin(SEXP gp, int i) {
     SEXP linejoin = gpLineJoinSXP(gp);
-    return LJOINpar(linejoin, i % LENGTH(linejoin));
+    return GE_LJOINpar(linejoin, i % LENGTH(linejoin));
 }
 
 SEXP gpLineMitreSXP(SEXP gp) {
@@ -300,7 +300,7 @@ void initGPar(GEDevDesc *dd)
     PROTECT(gpgamma = allocVector(REALSXP, 1));
     REAL(gpgamma)[0] = dev->startgamma;
     SET_VECTOR_ELT(gpar, GP_GAMMA, gpgamma);
-    PROTECT(gplty = LTYget(dev->startlty));
+    PROTECT(gplty = GE_LTYget(dev->startlty));
     SET_VECTOR_ELT(gpar, GP_LTY, gplty);
     PROTECT(gplwd = allocVector(REALSXP, 1));
     REAL(gplwd)[0] = 1;

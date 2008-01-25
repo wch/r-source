@@ -160,11 +160,11 @@
     }
     else if (streql(what, "lend")) {
 	lengthCheck(what, value, 1, call);
-	R_DEV__(lend) = LENDpar(value, 0);
+	R_DEV__(lend) = GE_LENDpar(value, 0);
     }
     else if (streql(what, "ljoin")) {
 	lengthCheck(what, value, 1, call);
-	R_DEV__(ljoin) = LJOINpar(value, 0);
+	R_DEV__(ljoin) = GE_LJOINpar(value, 0);
     }
     else if (streql(what, "lmitre")) {
 	lengthCheck(what, value, 1, call);
@@ -179,7 +179,7 @@
 	   (as e.g. pch always did) */
 	if (!isVector(value) || LENGTH(value) < 1)
 	    par_error(what);
-	R_DEV__(lty) = LTYpar(value, 0);
+	R_DEV__(lty) = GE_LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
 	/* lwd can be a vector of length > 1, so pick off first value
@@ -210,7 +210,7 @@
     else if (streql(what, "pch")) {
 	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
 	if (isString(value)) {
-	    ix = Rf_string_to_pch(STRING_ELT(value, 0));
+	    ix = GEstring_to_pch(STRING_ELT(value, 0));
 	} else if (isNumeric(value)) {
 	    ix = asInteger(value);
 	} else par_error(what);

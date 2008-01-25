@@ -21,6 +21,8 @@
 #ifndef GRAPHICS_H_
 #define GRAPHICS_H_
 
+/* This is a private header */
+
 #define R_GRAPHICS_INTERNAL 1
 
 #include <R_ext/Boolean.h>
@@ -348,17 +350,6 @@ typedef struct {
     SEXP displayList;	/* display list */
 } DevDesc;
 
-/* For easy reference: Here are the source files of
- * currently existing device drivers:
- * FILE				driver name prefix
- * ----------------------	------------------
- * ../main/devPS.c		PS , PDF _and_  XFig
- * ../main/devPicTeX.c		PicTeX
- * ../modules/X11/devX11.c	X11
- * ../gnuwin32/devga.c		GA
- * ../modules/gnome/devGTK.c	GTK
- * ../modules/gnome/devGNOME.c	Gnome
- */
 
 /* always remap private functions */
 #include <Rgraphics.h>
@@ -444,8 +435,6 @@ SEXP FixupCol(SEXP, unsigned int);
 SEXP FixupCex(SEXP, double);
 SEXP FixupLwd(SEXP, double);
 SEXP FixupVFont(SEXP);
-
-#include <R_ext/GraphicsBase.h>
 
 /* 
  * Function to generate an R_GE_gcontext from Rf_gpptr info

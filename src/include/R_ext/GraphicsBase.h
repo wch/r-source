@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-5 The R Development Core Team.
+ *  Copyright (C) 2001-8 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -32,9 +32,10 @@ typedef struct {
     Rboolean baseDevice;  
 } baseSystemState;
 
-void registerBase();
+void registerBase(); /* used in devices.c */
 
-Rboolean Rf_baseDevice(DevDesc *dd);
-void Rf_setBaseDevice(Rboolean val, DevDesc *dd);
+Rboolean Rf_baseDevice(DevDesc *dd); /* unused */
+void Rf_setBaseDevice(Rboolean val, DevDesc *dd); /* used in graphics.c */
+int baseRegisterIndex; /* used in devices.c */
 
 #endif /* R_GRAPHICSBASE_ */

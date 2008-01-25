@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-7 The R Development Core Team.
+ *  Copyright (C) 2001-8 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -293,10 +293,10 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 #define LTY_LONGDASH	7 + (3<<4)
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
 
-R_GE_lineend LENDpar(SEXP value, int ind);
-SEXP LENDget(R_GE_lineend lend);
-R_GE_linejoin LJOINpar(SEXP value, int ind);
-SEXP LJOINget(R_GE_linejoin ljoin);
+R_GE_lineend GE_LENDpar(SEXP value, int ind);
+SEXP GE_LENDget(R_GE_lineend lend);
+R_GE_linejoin GE_LJOINpar(SEXP value, int ind);
+SEXP GE_LJOINget(R_GE_linejoin ljoin);
 
 unsigned int R_GE_str2col(const char *s);
 
@@ -329,6 +329,15 @@ double GEStrWidth(const char *str, int enc,
 		  R_GE_gcontext *gc, GEDevDesc *dd);
 double GEStrHeight(const char *str, int enc,
 		  R_GE_gcontext *gc, GEDevDesc *dd);
+int GEstring_to_pch(SEXP pch);
+
+/*-------------------------------------------------------------------
+ *
+ *  LINE TEXTURE CODE is concerned with the internals of R
+ *  line texture representation.
+ */
+unsigned int GE_LTYpar(SEXP, int);
+SEXP GE_LTYget(unsigned int);
 
 /* 
  * From plotmath.c 

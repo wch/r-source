@@ -218,8 +218,6 @@ int dummy;
 #define GVText			Rf_GVText
 #define initDisplayList		Rf_initDisplayList
 #define labelformat		Rf_labelformat
-#define LTYget			Rf_LTYget
-#define LTYpar			Rf_LTYpar
 #define NewFrameConfirm		Rf_NewFrameConfirm
 #define NoDevices		Rf_NoDevices
 #define RGBpar			Rf_RGBpar
@@ -327,15 +325,6 @@ void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
-#ifdef UNUSED
-/* Called from do_text and do_contour */
-void GVText(double, double, int, const char *, int, int, double, double,
-	    double, DevDesc *);
-/* Called only from do_contour */
-double GVStrWidth(const char *, int, int, int, DevDesc *);
-double GVStrHeight(const char *, int, int, int, DevDesc *);
-#endif
-
 /*-------------------------------------------------------------------
  *
  *  GRAPHICAL UTILITIES are functions that produce graphical output
@@ -376,14 +365,6 @@ unsigned int RGBpar(SEXP, int);
     /* Convert an internal colour specification into a colour name */
 const char *col2name(unsigned int col); /* used in grid */
 
-
-/*-------------------------------------------------------------------
- *
- *  LINE TEXTURE CODE is concerned with the internals of R
- *  line texture representation.
- */
-unsigned int LTYpar(SEXP, int);
-SEXP LTYget(unsigned int);
 
 
 /*----------------------------------------------------------------------
