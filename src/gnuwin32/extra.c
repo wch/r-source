@@ -1271,7 +1271,8 @@ SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #include "devWindows.h"
-#include "Startup.h"
+#include <Startup.h>
+#include <Rdevices.h> /* for GetDevice */
 extern UImode CharacterMode;
 
 SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)

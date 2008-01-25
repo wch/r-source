@@ -15,8 +15,9 @@
 WINDOWS VERSIONS
 
     o	Versions of Windows older than 2000 are no longer supported
-	(specifically, 95, 98, ME, NT4).  Windows 2000 is untested,
-	but it is intended to be supported at release.
+	(specifically, 95, 98, ME, NT4).  Windows 2000 is minimnally
+	tested, but it is intended to be supported at release (it
+	seems that currently there are problems with Tcl/Tk, only).
 
 
 GUI CHANGES
