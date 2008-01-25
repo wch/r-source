@@ -704,6 +704,22 @@ If you want to mix sub-architectures compiled on different platforms
 wise to use explicit names for each, and you may also need to set
 @option{libdir} to ensure that they install into the same place.
 
+On Linux, there is an alternative mechanism for mixing 32-bit and
+64-bit libraries known as multilib. If a Linux distribution supports
+multilib, then parallel builds of R may be installed in the
+sub-directories @file{lib} (32-bit) and @file{lib64} (64-bit).  The
+build to be run may then be chosen using the @command{setarch}
+command. For example, a 32-bit build may be chosen by
+
+@example
+setarch i686 R
+@end example
+
+The @command{setarch} command is only operational if both 32-bit and
+64-bit builds are installed. If there is only one installation of R,
+then this will always be run regardless of the architecture specified
+by the @command{setarch} command.
+
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
