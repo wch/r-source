@@ -21,9 +21,18 @@
 #ifndef RGRAPHICS_H_
 #define RGRAPHICS_H_
 
+/* This is a public header */
+
 #ifdef  __cplusplus
 extern "C" {
 #endif
+
+/* Color handling is in colors.c: at least R_OPAQUE and R_ALPHA are
+   used by devices.
+
+   Line textures are in engine.c, used in graphics.c, plot3d.c, 
+   plotmath.c and in devices.
+*/
 
 /*
  *	Some Notes on Color
@@ -69,6 +78,8 @@ extern "C" {
      */
 #define R_TRANWHITE     (R_RGBA(255, 255, 255, 0))
 
+#ifdef UNUSED
+/* Now in GraphicsEngine.h */
 /*
  *	Some Notes on Line Textures
  *
@@ -108,6 +119,7 @@ extern "C" {
 #define LTY_DOTDASH	1 + (3<<4) + (4<<8) + (3<<12)
 #define LTY_LONGDASH	7 + (3<<4)
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
+#endif
 
 #ifndef R_GRAPHICS_INTERNAL
 	/* possible coordinate systems (for specifying locations) */
@@ -143,8 +155,8 @@ struct colorDataBaseEntry {
 	unsigned int code;  /* Internal R Color Code */
 };
 
+/* from colors.c, not used elsewhere */
 typedef struct colorDataBaseEntry ColorDataBaseEntry;
-
 extern int R_ColorTableSize;
 extern unsigned int R_ColorTable[];
 extern ColorDataBaseEntry ColorDataBase[];
@@ -181,8 +193,6 @@ int dummy;
 #define GConvertXUnits		Rf_GConvertXUnits
 #define GConvertY		Rf_GConvertY
 #define GConvertYUnits		Rf_GConvertYUnits
-#define GEndPath		Rf_GEndPath
-#define GetAxisLimits		Rf_GetAxisLimits
 #define GExpressionHeight	Rf_GExpressionHeight
 #define GExpressionWidth	Rf_GExpressionWidth
 #define GForceClip		Rf_GForceClip
@@ -208,7 +218,6 @@ int dummy;
 #define GScale			Rf_GScale
 #define GSetState		Rf_GSetState
 #define GSetupAxis		Rf_GSetupAxis
-#define GStartPath		Rf_GStartPath
 #define GStrHeight		Rf_GStrHeight
 #define GStrWidth		Rf_GStrWidth
 #define GSymbol			Rf_GSymbol
@@ -217,7 +226,6 @@ int dummy;
 #define GVStrWidth		Rf_GVStrWidth
 #define GVText			Rf_GVText
 #define initDisplayList		Rf_initDisplayList
-#define labelformat		Rf_labelformat
 #define NewFrameConfirm		Rf_NewFrameConfirm
 #define NoDevices		Rf_NoDevices
 #define RGBpar			Rf_RGBpar
@@ -244,6 +252,8 @@ int dummy;
  *  GPAR FUNCTIONS are concerned with operations on the
  *  entire set of graphics parameters for a device
  *  (e.g., initialisation, saving, and restoring)
+ *
+ *  From graphics.c, used in plot.c.
  */
 
 /* Reset the current graphical parameters from the default ones: */
@@ -258,6 +268,8 @@ void GRestorePars(DevDesc*);
  *
  *  DEVICE STATE FUNCTIONS are concerned with getting and setting
  *  the current state of the device;  is it ready to be drawn into?
+ *
+ *  From graphics.c, used in plot.c.
  */
 
 /* has plot.new been called yet? */
@@ -279,6 +291,7 @@ void GSetState(int, DevDesc*);
  *  version of the function is responsible for calling GConvert to get
  *  the location into device coordinates.
  *
+ *  From graphics.c, used in plot.c.
  */
 
 
@@ -317,10 +330,12 @@ double GStrWidth(const char *, int, GUnit, DevDesc*);
 void GText(double, double, int, const char *, int, double, double, double,
 	   DevDesc*);
 
-
+/* No longer exist
 void GStartPath(DevDesc*);
 void GEndPath(DevDesc*);
+*/
 
+/* From plotmath.c, used in plot.c */
 void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
@@ -331,6 +346,7 @@ void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
  *  using the graphical primitives (i.e., they are generic - NOT
  *  device-specific).
  *
+ *  From graphics.c, used in plot.c.
  */
 
 /* Draw a line from (x1,y1) to (x2,y2) with an arrow head
@@ -341,22 +357,23 @@ void GArrow(double, double, double, double, int, double, double, int, DevDesc*);
 void GBox(int, DevDesc*);
 /* Return a "nice" min, max and number of intervals for a given
  * range on a linear or _log_ scale, respectively: */
-void GPretty(double*, double*, int*);
+void GPretty(double*, double*, int*); /* used in plot3d.c */
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
 void GMtext(const char *, int, int, double, int, double, int, double, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 
+/* From plotmath.c, used in plot.c */
 double GExpressionHeight(SEXP, GUnit, DevDesc*);
 double GExpressionWidth(SEXP, GUnit, DevDesc*);
-
 
 
 /*-------------------------------------------------------------------
  *
  *  COLOUR CODE is concerned with the internals of R colour representation
  *
+ *  From colors.c, used in par.c, grid/src/gpar.c
  */
 
 /* Convert an R colour specification (which might be a number or */
@@ -371,6 +388,8 @@ const char *col2name(unsigned int col); /* used in grid */
  *
  *  TRANSFORMATIONS are concerned with converting locations between
  *  coordinate systems and dimensions between different units.
+ *
+ *  From graphics.c, used in plot.c, plot3d.c, plotmath.c
  */
 
 /* Convert an R unit (e.g., "user") into an internal unit (e.g., USER)> */
@@ -414,23 +433,21 @@ double yDevtoUsr(double, DevDesc*);
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
 
-/* Devices */
+
+/* Devices: from devices.c */
 
 /* Return the number of the current device. */
-int curDevice(void);
+int curDevice(void); /* used in engine.c */
 /* Return a pointer to the current device. */
-DevDesc* CurrentDevice(void);
+DevDesc* CurrentDevice(void); /* used in colors, graphics, par, plot, plot3d */
 /* Is the null device the current device? */
-int NoDevices(void);
-void NewFrameConfirm(void);
+int NoDevices(void); /* used in engine, graphics, plot, grid */
+void NewFrameConfirm(void); /* used in graphics.c, grid */
 
-void initDisplayList(DevDesc *dd);
+/* void initDisplayList(DevDesc *dd);  unused elsewhere? */
 
-/* some functions that plot.c needs to share with plot3d.c */
+/* From plot.c, used by grid/src/grid.c */
 SEXP CreateAtVector(double*, double*, int, Rboolean);
-void GetAxisLimits(double, double, double*, double*);
-SEXP labelformat(SEXP);
-
 
 #ifdef  __cplusplus
 }

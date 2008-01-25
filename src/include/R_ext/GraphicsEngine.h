@@ -17,7 +17,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* Used by third-party graphics devices */
+/* Used by graphics.c, grid and by third-party graphics devices */
 
 #ifndef R_GRAPHICSENGINE_H_
 #define R_GRAPHICSENGINE_H_
@@ -285,6 +285,7 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
   e.g. "dashed" == "44",  "dotdash" == "1343"
 */
 
+/* NB: was also in Rgraphics.h in R < 2.7.0 */
 #define LTY_BLANK	-1
 #define LTY_SOLID	0
 #define LTY_DASHED	4 + (4<<4)
@@ -375,6 +376,7 @@ void R_GE_VText(double x, double y, const char * const s, int enc,
  * (End from vfonts.c)
  */
 
+/* Also in Graphics.h */
 #define	DEG2RAD 0.01745329251994329576
 
 GEDevDesc* GEcurrentDevice();

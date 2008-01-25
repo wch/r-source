@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-7 The R Development Core Team.
+ *  Copyright (C) 2001-8 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,11 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* Used by third-party graphics devices */
+/* Used by third-party graphics devices.
+ *
+ * This defines NewDevDesc, whereas Graphics.h defines DevDesc.
+ * Also contains entry points from gevents.c
+ */
 
 #ifndef R_GRAPHICSDEVICE_H_
 #define R_GRAPHICSDEVICE_H_
@@ -497,7 +501,7 @@ typedef struct {
 	/********************************************************/
 
 
-/* Graphics events */
+/* Graphics events: defined in gevents.c */
 
 /* These give the indices of some known keys */    
 

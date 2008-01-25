@@ -459,237 +459,9 @@ void KillAllDevices(void)
     GEunregisterSystem(baseRegisterIndex);
 }
 
-
-/* Code for maintaining DISPLAY LISTS  (Generic list code from ./list.c) */
-
-void initDisplayList(DevDesc *dd)
-{
-    /* init saveParams */
-    copyGPar(Rf_dpptr(dd), Rf_dpSavedptr(dd));
-    ((GEDevDesc*) dd)->dev->displayList = R_NilValue;
-}
-
-
 void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 {
     GErecordGraphicOperation(op, args, ((GEDevDesc*) dd));
-}
-
-/* NOTE this is not declared static because it is also used in
- * base.c
- * Once graphics.c gets hacked to pieces and split into engine.c and base.c
- * then this can be made static again.
- */
-attribute_hidden
-void restoredpSaved(DevDesc *dd)
-{
-    /* NOTE that not all params should be restored before playing */
-    /* the display list (e.g., don't restore the device size) */
-
-    int i, j, nr, nc;
-
-    /* do NOT restore basic device driver properties;  they are */
-    /* either meant to be different (e.g., left, right, bottom, top */
-    /* changed because of window resize) or never change (e.g., ipr) */
-
-    Rf_dpptr(dd)->state = Rf_dpSavedptr(dd)->state;
-    Rf_dpptr(dd)->adj = Rf_dpSavedptr(dd)->adj;
-    Rf_dpptr(dd)->ann = Rf_dpSavedptr(dd)->ann;
-    Rf_dpptr(dd)->bg = Rf_dpSavedptr(dd)->bg;
-    Rf_dpptr(dd)->bty = Rf_dpSavedptr(dd)->bty;
-    Rf_dpptr(dd)->cex = Rf_dpSavedptr(dd)->cex;
-    Rf_gpptr(dd)->lheight = Rf_dpSavedptr(dd)->lheight;
-    Rf_dpptr(dd)->col = Rf_dpSavedptr(dd)->col;
-    Rf_dpptr(dd)->crt = Rf_dpSavedptr(dd)->crt;
-    Rf_dpptr(dd)->err = Rf_dpSavedptr(dd)->err;
-    Rf_dpptr(dd)->fg = Rf_dpSavedptr(dd)->fg;
-    Rf_dpptr(dd)->font = Rf_dpSavedptr(dd)->font;
-    strncpy(Rf_dpptr(dd)->family, Rf_dpSavedptr(dd)->family, 201);
-    Rf_dpptr(dd)->gamma = Rf_dpSavedptr(dd)->gamma;
-    Rf_dpptr(dd)->lab[0] = Rf_dpSavedptr(dd)->lab[0];
-    Rf_dpptr(dd)->lab[1] = Rf_dpSavedptr(dd)->lab[1];
-    Rf_dpptr(dd)->lab[2] = Rf_dpSavedptr(dd)->lab[2];
-    Rf_dpptr(dd)->las = Rf_dpSavedptr(dd)->las;
-    Rf_dpptr(dd)->lty = Rf_dpSavedptr(dd)->lty;
-    Rf_dpptr(dd)->lwd = Rf_dpSavedptr(dd)->lwd;
-    Rf_dpptr(dd)->lend = Rf_dpSavedptr(dd)->lend;
-    Rf_dpptr(dd)->ljoin = Rf_dpSavedptr(dd)->ljoin;
-    Rf_dpptr(dd)->lmitre = Rf_dpSavedptr(dd)->lmitre;
-    Rf_dpptr(dd)->mgp[0] = Rf_dpSavedptr(dd)->mgp[0];
-    Rf_dpptr(dd)->mgp[1] = Rf_dpSavedptr(dd)->mgp[1];
-    Rf_dpptr(dd)->mgp[2] = Rf_dpSavedptr(dd)->mgp[2];
-    Rf_dpptr(dd)->mkh = Rf_dpSavedptr(dd)->mkh;
-    Rf_dpptr(dd)->pch = Rf_dpSavedptr(dd)->pch;
-    Rf_dpptr(dd)->ps = Rf_dpSavedptr(dd)->ps; /*was commented out --why?*/
-    Rf_dpptr(dd)->smo = Rf_dpSavedptr(dd)->smo;
-    Rf_dpptr(dd)->srt = Rf_dpSavedptr(dd)->srt;
-    Rf_dpptr(dd)->tck = Rf_dpSavedptr(dd)->tck;
-    Rf_dpptr(dd)->tcl = Rf_dpSavedptr(dd)->tcl;
-    Rf_dpptr(dd)->xaxp[0] = Rf_dpSavedptr(dd)->xaxp[0];
-    Rf_dpptr(dd)->xaxp[1] = Rf_dpSavedptr(dd)->xaxp[1];
-    Rf_dpptr(dd)->xaxp[2] = Rf_dpSavedptr(dd)->xaxp[2];
-    Rf_dpptr(dd)->xaxs = Rf_dpSavedptr(dd)->xaxs;
-    Rf_dpptr(dd)->xaxt = Rf_dpSavedptr(dd)->xaxt;
-    Rf_dpptr(dd)->xpd = Rf_dpSavedptr(dd)->xpd;
-    Rf_dpptr(dd)->xlog = Rf_dpSavedptr(dd)->xlog;
-    Rf_dpptr(dd)->yaxp[0] = Rf_dpSavedptr(dd)->yaxp[0];
-    Rf_dpptr(dd)->yaxp[1] = Rf_dpSavedptr(dd)->yaxp[1];
-    Rf_dpptr(dd)->yaxp[2] = Rf_dpSavedptr(dd)->yaxp[2];
-    Rf_dpptr(dd)->yaxs = Rf_dpSavedptr(dd)->yaxs;
-    Rf_dpptr(dd)->yaxt = Rf_dpSavedptr(dd)->yaxt;
-    Rf_dpptr(dd)->ylog = Rf_dpSavedptr(dd)->ylog;
-    Rf_dpptr(dd)->cexbase = Rf_dpSavedptr(dd)->cexbase;
-    Rf_dpptr(dd)->cexmain = Rf_dpSavedptr(dd)->cexmain;
-    Rf_dpptr(dd)->cexlab = Rf_dpSavedptr(dd)->cexlab;
-    Rf_dpptr(dd)->cexsub = Rf_dpSavedptr(dd)->cexsub;
-    Rf_dpptr(dd)->cexaxis = Rf_dpSavedptr(dd)->cexaxis;
-    Rf_dpptr(dd)->fontmain = Rf_dpSavedptr(dd)->fontmain;
-    Rf_dpptr(dd)->fontlab = Rf_dpSavedptr(dd)->fontlab;
-    Rf_dpptr(dd)->fontsub = Rf_dpSavedptr(dd)->fontsub;
-    Rf_dpptr(dd)->fontaxis = Rf_dpSavedptr(dd)->fontaxis;
-    Rf_dpptr(dd)->colmain = Rf_dpSavedptr(dd)->colmain;
-    Rf_dpptr(dd)->collab = Rf_dpSavedptr(dd)->collab;
-    Rf_dpptr(dd)->colsub = Rf_dpSavedptr(dd)->colsub;
-    Rf_dpptr(dd)->colaxis = Rf_dpSavedptr(dd)->colaxis;
-
-    /* must restore layout parameters;	the different graphics */
-    /* regions and coordinate transformations will be recalculated */
-    /* but they need all of the layout information restored for this */
-    /* to happen correctly */
-
-    Rf_dpptr(dd)->devmode = Rf_dpSavedptr(dd)->devmode;
-    Rf_dpptr(dd)->fig[0] = Rf_dpSavedptr(dd)->fig[0];
-    Rf_dpptr(dd)->fig[1] = Rf_dpSavedptr(dd)->fig[1];
-    Rf_dpptr(dd)->fig[2] = Rf_dpSavedptr(dd)->fig[2];
-    Rf_dpptr(dd)->fig[3] = Rf_dpSavedptr(dd)->fig[3];
-    Rf_dpptr(dd)->fin[0] = Rf_dpSavedptr(dd)->fin[0];
-    Rf_dpptr(dd)->fin[1] = Rf_dpSavedptr(dd)->fin[1];
-    Rf_dpptr(dd)->fUnits = Rf_dpSavedptr(dd)->fUnits;
-    Rf_dpptr(dd)->defaultFigure = Rf_dpSavedptr(dd)->defaultFigure;
-    Rf_dpptr(dd)->mar[0] = Rf_dpSavedptr(dd)->mar[0];
-    Rf_dpptr(dd)->mar[1] = Rf_dpSavedptr(dd)->mar[1];
-    Rf_dpptr(dd)->mar[2] = Rf_dpSavedptr(dd)->mar[2];
-    Rf_dpptr(dd)->mar[3] = Rf_dpSavedptr(dd)->mar[3];
-    Rf_dpptr(dd)->mai[0] = Rf_dpSavedptr(dd)->mai[0];
-    Rf_dpptr(dd)->mai[1] = Rf_dpSavedptr(dd)->mai[1];
-    Rf_dpptr(dd)->mai[2] = Rf_dpSavedptr(dd)->mai[2];
-    Rf_dpptr(dd)->mai[3] = Rf_dpSavedptr(dd)->mai[3];
-    Rf_dpptr(dd)->mUnits = Rf_dpSavedptr(dd)->mUnits;
-    Rf_dpptr(dd)->mex = Rf_dpSavedptr(dd)->mex;
-    nr = Rf_dpptr(dd)->numrows = Rf_dpSavedptr(dd)->numrows;
-    nc = Rf_dpptr(dd)->numcols = Rf_dpSavedptr(dd)->numcols;
-    Rf_dpptr(dd)->currentFigure = Rf_dpSavedptr(dd)->currentFigure;
-    Rf_dpptr(dd)->lastFigure = Rf_dpSavedptr(dd)->lastFigure;
-    for (i = 0; i < nr && i < MAX_LAYOUT_ROWS; i++) {
-	Rf_dpptr(dd)->heights[i] = Rf_dpSavedptr(dd)->heights[i];
-	Rf_dpptr(dd)->cmHeights[i] = Rf_dpSavedptr(dd)->cmHeights[i];
-    }
-    for (j = 0; j < nc && j < MAX_LAYOUT_COLS; j++) {
-	Rf_dpptr(dd)->widths[j] = Rf_dpSavedptr(dd)->widths[j];
-	Rf_dpptr(dd)->cmWidths[j] = Rf_dpSavedptr(dd)->cmWidths[j];
-    }
-    for (i = 0; i < nr*nc && i < MAX_LAYOUT_CELLS; i++) {
-	Rf_dpptr(dd)->order[i] = Rf_dpSavedptr(dd)->order[i];
-	Rf_dpptr(dd)->respect[i] = Rf_dpSavedptr(dd)->respect[i];
-    }
-    Rf_dpptr(dd)->rspct = Rf_dpSavedptr(dd)->rspct;
-    Rf_dpptr(dd)->layout = Rf_dpSavedptr(dd)->layout;
-    Rf_dpptr(dd)->mfind = Rf_dpSavedptr(dd)->mfind;
-    Rf_dpptr(dd)->new = Rf_dpSavedptr(dd)->new;
-    Rf_dpptr(dd)->oma[0] = Rf_dpSavedptr(dd)->oma[0];
-    Rf_dpptr(dd)->oma[1] = Rf_dpSavedptr(dd)->oma[1];
-    Rf_dpptr(dd)->oma[2] = Rf_dpSavedptr(dd)->oma[2];
-    Rf_dpptr(dd)->oma[3] = Rf_dpSavedptr(dd)->oma[3];
-    Rf_dpptr(dd)->omi[0] = Rf_dpSavedptr(dd)->omi[0];
-    Rf_dpptr(dd)->omi[1] = Rf_dpSavedptr(dd)->omi[1];
-    Rf_dpptr(dd)->omi[2] = Rf_dpSavedptr(dd)->omi[2];
-    Rf_dpptr(dd)->omi[3] = Rf_dpSavedptr(dd)->omi[3];
-    Rf_dpptr(dd)->omd[0] = Rf_dpSavedptr(dd)->omd[0];
-    Rf_dpptr(dd)->omd[1] = Rf_dpSavedptr(dd)->omd[1];
-    Rf_dpptr(dd)->omd[2] = Rf_dpSavedptr(dd)->omd[2];
-    Rf_dpptr(dd)->omd[3] = Rf_dpSavedptr(dd)->omd[3];
-    Rf_dpptr(dd)->oUnits = Rf_dpSavedptr(dd)->oUnits;
-    Rf_dpptr(dd)->plt[0] = Rf_dpSavedptr(dd)->plt[0];
-    Rf_dpptr(dd)->plt[1] = Rf_dpSavedptr(dd)->plt[1];
-    Rf_dpptr(dd)->plt[2] = Rf_dpSavedptr(dd)->plt[2];
-    Rf_dpptr(dd)->plt[3] = Rf_dpSavedptr(dd)->plt[3];
-    Rf_dpptr(dd)->pin[0] = Rf_dpSavedptr(dd)->pin[0];
-    Rf_dpptr(dd)->pin[1] = Rf_dpSavedptr(dd)->pin[1];
-    Rf_dpptr(dd)->pUnits = Rf_dpSavedptr(dd)->pUnits;
-    Rf_dpptr(dd)->defaultPlot = Rf_dpSavedptr(dd)->defaultPlot;
-    Rf_dpptr(dd)->pty = Rf_dpSavedptr(dd)->pty;
-    Rf_dpptr(dd)->usr[0] = Rf_dpSavedptr(dd)->usr[0];
-    Rf_dpptr(dd)->usr[1] = Rf_dpSavedptr(dd)->usr[1];
-    Rf_dpptr(dd)->usr[2] = Rf_dpSavedptr(dd)->usr[2];
-    Rf_dpptr(dd)->usr[3] = Rf_dpSavedptr(dd)->usr[3];
-    Rf_dpptr(dd)->logusr[0] = Rf_dpSavedptr(dd)->logusr[0];
-    Rf_dpptr(dd)->logusr[1] = Rf_dpSavedptr(dd)->logusr[1];
-    Rf_dpptr(dd)->logusr[2] = Rf_dpSavedptr(dd)->logusr[2];
-    Rf_dpptr(dd)->logusr[3] = Rf_dpSavedptr(dd)->logusr[3];
-}
-
-
-/* FIXME : If a non-active window is resized to an invalid size */
-/* that window is left active.  */
-
-void playDisplayList(DevDesc *dd)
-{
-    int savedDevice;
-    Rboolean asksave;
-    SEXP theList;
-    theList = Rf_displayList(dd);
-    if (theList != R_NilValue) {
-	asksave = Rf_gpptr(dd)->ask;
-	Rf_gpptr(dd)->ask = TRUE;
-	restoredpSaved(dd);
-	copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-	GReset(dd);
-	savedDevice = curDevice();
-	selectDevice(deviceNumber(dd));
-	while (theList != R_NilValue) {
-	    SEXP theOperation = CAR(theList);
-	    SEXP op = CAR(theOperation);
-	    SEXP args = CDR(theOperation);
-	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
-	    if (!Rf_gpptr(dd)->valid) break;
-	    theList = CDR(theList);
-	}
-	Rf_gpptr(dd)->ask = asksave;
-	selectDevice(savedDevice);
-    }
-}
-
-
-/* FIXME:  This assumes that the only drawing is base graphics drawing.
- * For example, copying a display list containing grid drawing will
- * not work properly (grid drawing is not based on a Rf_dpSavedptr;  grid
- * drawing IS based on its own separate graphics state)
- * Once the conversion of device drivers is complete, this should just
- * be able to call GEcopyDisplayList
- */
-void copyDisplayList(int fromDevice)
-{
-    DevDesc *dd = CurrentDevice();
-    ((GEDevDesc*) dd)->dev->displayList =
-	Rf_displayList(R_Devices[fromDevice]);
-    copyGPar(Rf_dpSavedptr(R_Devices[fromDevice]),
-	     Rf_dpSavedptr(dd));
-    playDisplayList(dd);
-    if (!((GEDevDesc*) dd)->dev->displayListOn)
-	initDisplayList(dd);
-}
-
-
-void inhibitDisplayList(DevDesc *dd)
-{
-    GEinitDisplayList((GEDevDesc*) dd);
-    ((GEDevDesc*) dd)->dev->displayListOn = FALSE;
-}
-
-void enableDisplayList(DevDesc *dd)
-{
-    GEinitDisplayList((GEDevDesc*) dd);
-    ((GEDevDesc*) dd)->dev->displayListOn = TRUE;
 }
 
 /* FIXME:  NewFrameConfirm should be a standard device function */
@@ -726,17 +498,15 @@ void NewFrameConfirm(void)
 SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int listFlag;
+    GEDevDesc *dd = (GEDevDesc*)CurrentDevice();
 
     checkArity(op, args);
     if(PRIMVAL(op) == 0) { /* dev.control */
 	listFlag = asLogical(CAR(args));
 	if(listFlag == NA_LOGICAL) error(_("invalid argument"));
-	if(listFlag)
-	    enableDisplayList(CurrentDevice());
-	else
-	    inhibitDisplayList(CurrentDevice());
+	GEinitDisplayList(dd);
+	dd->dev->displayListOn = listFlag ? TRUE: FALSE;
     } else { /* dev.displaylist */
-	GEDevDesc *dd = (GEDevDesc*)CurrentDevice();
 	listFlag = dd->dev->displayListOn;
     }
     return ScalarLogical(listFlag);

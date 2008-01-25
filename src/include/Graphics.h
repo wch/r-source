@@ -32,10 +32,13 @@
 
 #define R_MaxDevices 64
 
+/* colors.c, engine.c, graphics.c */
 #define	DEG2RAD 0.01745329251994329576
 
+/* used in colors.c */
 #define COLOR_TABLE_SIZE 1024
 
+/* base.c, graphics.c, par.c */
 #define MAX_LAYOUT_ROWS 50
 #define MAX_LAYOUT_COLS 50
 #define MAX_LAYOUT_CELLS 500 /* must be less than 65535, 
@@ -355,7 +358,6 @@ typedef struct {
 #include <Rgraphics.h>
 #define char2col		Rf_char2col
 #define CheckColor		Rf_CheckColor
-#define col2name		Rf_col2name
 #define copyGPar		Rf_copyGPar
 #define curDevice               Rf_curDevice
 #define FixupCex		Rf_FixupCex
@@ -364,13 +366,17 @@ typedef struct {
 #define FixupLty		Rf_FixupLty
 #define FixupLwd		Rf_FixupLwd
 #define FixupVFont		Rf_FixupVFont
+#define GetAxisLimits		Rf_GetAxisLimits
 #define GetDevice               Rf_GetDevice
 #define GInit			Rf_GInit
+#define isNAcol                 Rf_isNAcol
+#define labelformat		Rf_labelformat
 #define name2col		Rf_name2col
 #define nextDevice              Rf_nextDevice
 #define number2col		Rf_number2col
 #define NumDevices              Rf_NumDevices
 #define ProcessInlinePars	Rf_ProcessInlinePars
+#define recordGraphicOperation	Rf_recordGraphicOperation
 #define rgb2col			Rf_rgb2col
 #define RGB2rgb			Rf_RGB2rgb
 #define RGBA2rgb		Rf_RGBA2rgb
@@ -378,7 +384,6 @@ typedef struct {
 #define Specify2		Rf_Specify2
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
-#define isNAcol                 Rf_isNAcol
 
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */
@@ -390,19 +395,17 @@ void GInit(GPar*);
 
 void copyGPar(GPar *, GPar *);
 
-int curDevice(void);
+int curDevice(void); /* from devices.c, used in engine.c */
 
-DevDesc* GetDevice(int i);
-
-int nextDevice(int from);
-
-int NumDevices(void);
-
+/* also in Rgraphics.h 
 int deviceNumber(DevDesc *dd);
-
 int devNumber(DevDesc *dd);
+DevDesc* GetDevice(int i);
+int nextDevice(int from);
+int NumDevices(void);
+*/
 
-		/* Miscellaneous (from graphics.c & colors.c) */
+		/* Miscellaneous (from colors.c) */
 
 unsigned int rgb2col(const char *);
 unsigned int name2col(const char *);
@@ -410,7 +413,7 @@ unsigned int number2col(const char *);
 unsigned int char2col(const char *);/* rgb2col() or name2col() */
 unsigned int str2col(const char *);
 
-const char *col2name(unsigned int);
+/* const char *col2name(unsigned int); in Rgraphics.h */
 
 unsigned int ScaleColor(double x);
 unsigned int CheckColor(int x);
@@ -421,32 +424,40 @@ char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
 
 int StrMatch(const char *s, const char *t);
 
-double R_Log10(double);
+double R_Log10(double); /* from graphics.c, used in par.c */
 
+/* from plot.c, called in plot3d.c */
 void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
+/* from par.c, called in plot.c */
 void Specify2(const char*, SEXP, DevDesc*, SEXP call);
-#ifdef UNUSED
-void RecordGraphicsCall(SEXP);
-#endif
 
+/* from device.c */
+void recordGraphicOperation(SEXP, SEXP, DevDesc*);
+
+
+/* some functions that plot.c needs to share with plot3d.c */
 SEXP FixupLty(SEXP, int);
 SEXP FixupFont(SEXP, int);
 SEXP FixupCol(SEXP, unsigned int);
 SEXP FixupCex(SEXP, double);
 SEXP FixupLwd(SEXP, double);
 SEXP FixupVFont(SEXP);
+void GetAxisLimits(double, double, double*, double*);
+SEXP labelformat(SEXP);
 
 /* 
  * Function to generate an R_GE_gcontext from Rf_gpptr info
+ *
+ * from graphics.c, used in plot.c, plotmath.c
  */
 void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd);
 
+/* From base.c */
 /* FIXME: Make this a macro to avoid function call overhead?
  */
 GPar* Rf_gpptr(DevDesc *dd);
 GPar* Rf_dpptr(DevDesc *dd);
 GPar* Rf_dpSavedptr(DevDesc *dd);
 SEXP Rf_displayList(DevDesc *dd);
-
 
 #endif /* GRAPHICS_H_ */

@@ -17,7 +17,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* Definitions for the base graphics system. Only used in <Graphics.h> */
+/* Definitions for the base graphics system. Only used in <Graphics.h>,
+   So should be private.
+ */
 
 #ifndef R_GRAPHICSBASE_H_
 #define R_GRAPHICSBASE_H_

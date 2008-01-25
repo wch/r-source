@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000  R Development Core Team
+ *  Copyright (C) 2000-8  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #ifndef DEVICES_H_
 #define DEVICES_H_
 
+/* A public header */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -28,12 +30,9 @@ extern "C" {
 #include <R_ext/Boolean.h>
 
 #define addDevice		Rf_addDevice
-#define copyDisplayList		Rf_copyDisplayList
 #define deviceNumber		Rf_deviceNumber
 #define devNumber		Rf_devNumber
 #define DevNull			Rf_DevNull
-#define enableDisplayList	Rf_enableDisplayList
-#define inhibitDisplayList	Rf_inhibitDisplayList
 #define InitGraphics		Rf_InitGraphics
 #define GetDevice		Rf_GetDevice
 #define KillAllDevices		Rf_KillAllDevices
@@ -42,7 +41,6 @@ extern "C" {
 #define nextDevice		Rf_nextDevice
 #define NumDevices		Rf_NumDevices
 #define StartDevice		Rf_StartDevice
-#define playDisplayList		Rf_playDisplayList
 #define prevDevice		Rf_prevDevice
 #define recordGraphicOperation	Rf_recordGraphicOperation
 
@@ -88,12 +86,18 @@ Rboolean R_CheckDeviceAvailableBool(void);
 
 void DevNull(void);
 
+#ifdef UNUSED
 /* Miscellaneous */
-void recordGraphicOperation(SEXP, SEXP, DevDesc*);
+/* Use GE versions these days */
+#define copyDisplayList		Rf_copyDisplayList
+#define enableDisplayList	Rf_enableDisplayList
+#define inhibitDisplayList	Rf_inhibitDisplayList
+#define playDisplayList		Rf_playDisplayList
 void copyDisplayList(int);
 void playDisplayList(DevDesc*);
 void enableDisplayList(DevDesc*);
 void inhibitDisplayList(DevDesc*);
+#endif
 
 /*-------------------------------------------------------------------
  *
