@@ -3227,7 +3227,7 @@ void GMtext(const char *str, int enc, int side, double line, int outer,
     /* Purely visual tuning. RI */
     /* This has been replaced by a new argument padj (=yadj here) to axis()
        and mtext() and that can either be set manually or is determined in
-       a somehow fuzzy manner in repsect to current side and las settings.
+       a somehow fuzzy manner with respect to current side and las settings.
        Uwe L.
     */
     switch(side) {
@@ -3270,3 +3270,150 @@ void GMtext(const char *str, int enc, int side, double line, int outer,
     }
     GText(at, line, coords, str, enc, xadj, yadj, angle, dd);
 }/* GMtext */
+
+/* ------------------------------------------------------------
+   code below here moved from plotmath.c, which said
+
+ *  This source code module:
+ *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
+ *  Copyright (C) 1998-2008  The R Development Core Team
+
+ */
+
+double GExpressionWidth(SEXP expr, GUnit units, DevDesc *dd)
+{
+    R_GE_gcontext gc;
+    double width;
+    gcontextFromGP(&gc, dd);
+    width = GEExpressionWidth(expr, &gc, (GEDevDesc*) dd);
+    if (units == DEVICE)
+	return width;
+    else
+	return GConvertXUnits(width, DEVICE, units, dd);
+}
+
+double GExpressionHeight(SEXP expr, GUnit units, DevDesc *dd)
+{
+    R_GE_gcontext gc;
+    double height;
+    gcontextFromGP(&gc, dd);
+    height = GEExpressionHeight(expr, &gc, (GEDevDesc*) dd);
+    if (units == DEVICE)
+	return height;
+    else
+	return GConvertYUnits(height, DEVICE, units, dd);
+}
+
+/* Comment is NOT true: used in plot.c for strwidth and strheight.
+ *
+ * This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code no longer calls this -- the base
+ * graphics system directly calls the graphics engine for mathematical
+ * annotation (GEMathText)
+ */
+void GMathText(double x, double y, int coords, SEXP expr,
+	       double xc, double yc, double rot,
+	       DevDesc *dd)
+{
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
+    GConvert(&x, &y, coords, DEVICE, dd);
+    GClip(dd);
+    GEMathText(x, y, expr, xc, yc, rot, &gc, (GEDevDesc*) dd);
+}
+
+void GMMathText(SEXP str, int side, double line, int outer,
+		double at, int las, double yadj, DevDesc *dd)
+{
+    int coords = 0, subcoords;
+    double xadj, angle = 0;
+
+    /* IF font metric information is not available for device */
+    /* then bail out */
+    double ascent, descent, width;
+    GMetricInfo(0, &ascent, &descent, &width, DEVICE, dd);
+    if ((ascent==0) && (descent==0) && (width==0))
+	error(_("Metric information not available for this device"));
+
+    xadj = Rf_gpptr(dd)->adj;
+
+    /* This is MOSTLY the same as the same section of GMtext
+     * BUT it differs because it sets different values for yadj for
+     * different situations.
+     * Paul
+     */
+     /* changed to unify behaviour with changes in GMText. Uwe */
+    if(outer) {
+	switch(side) {
+	case 1:	    coords = OMA1;	break;
+	case 2:	    coords = OMA2;	break;
+	case 3:	    coords = OMA3;	break;
+	case 4:	    coords = OMA4;	break;
+	}
+	subcoords = NIC;
+    }
+    else {
+	switch(side) {
+	case 1:	    coords = MAR1;	break;
+	case 2:	    coords = MAR2;	break;
+	case 3:	    coords = MAR3;	break;
+	case 4:	    coords = MAR4;	break;
+	}
+	subcoords = USER;
+    }
+    switch(side) {
+    case 1:
+	if(las == 2 || las == 3) {
+	    angle = 90;
+	}
+	else {
+	    /*	    line = line + 1 - Rf_gpptr(dd)->yLineBias;
+		    angle = 0;
+		    yadj = NA_REAL; */
+	    line = line + 1;
+	    angle = 0;
+	}
+	break;
+    case 2:
+	if(las == 1 || las == 2) {
+	    angle = 0;
+	}
+	else {
+	    /*	    line = line + Rf_gpptr(dd)->yLineBias;
+		    angle = 90;
+		    yadj = NA_REAL; */
+	    angle = 90;
+	}
+	break;
+    case 3:
+	if(las == 2 || las == 3) {
+	    angle = 90;
+	}
+	else {
+	    /*   line = line + Rf_gpptr(dd)->yLineBias;
+		 angle = 0;
+		 yadj = NA_REAL; */
+	    angle = 0;
+	}
+	break;
+    case 4:
+	if(las == 1 || las == 2) {
+	    angle = 0;
+	}
+	else {
+	    /*   line = line + 1 - Rf_gpptr(dd)->yLineBias;
+		 angle = 90;
+		 yadj = NA_REAL; */
+	    line = line + 1;
+	    angle = 90;
+	}
+	break;
+    }
+    GMathText(at, line, coords, str, xadj, yadj, angle, dd);
+}/* GMMathText */
+
+/* -------------------- end of code from plotmath ------------- */
+
