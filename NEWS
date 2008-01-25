@@ -146,6 +146,9 @@ BUG FIXES
     o	url()/download.file() could segfault if the HTTP interaction
 	involved a redirect to an address starting with '/' on the
 	same server.
+	
+    o	Memory allocations used in format() and in an internal utility
+    	function could be off by one byte. (PR#10635)
 
 
 

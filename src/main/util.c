@@ -1078,7 +1078,7 @@ char *acopy_string(const char *in)
     char *out;
     int len = strlen(in);
     if (len > 0) {
-        out = (char *) R_alloc(strlen(in), sizeof(char));
+        out = (char *) R_alloc(1+strlen(in), sizeof(char));
         strcpy(out, in);
     } else
         out = "";
