@@ -21,8 +21,7 @@ contour(x, \dots)
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
         labcex = 0.6, drawlabels = TRUE, method = "flattest",
-	vfont = c("sans serif", "plain"),
-        axes = TRUE, frame.plot = axes,
+	vfont, axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
 }
@@ -50,11 +49,12 @@ contour(x, \dots)
     located. Possible values are \code{"simple"}, \code{"edge"} and
     \code{"flattest"} (the default). See the Details section.}
   \item{vfont}{if \code{NULL}, the current font family and face are used
-    for the contour labels.  If a character vector of length 2 (the
-    default), then Hershey vector fonts are used for the contour labels.
-    The first element of the vector selects a typeface and the second
-    element selects a fontindex (see \code{\link{text}} for more
-    information).}
+    for the contour labels.  If a character vector of length 2 then
+    Hershey vector fonts are used for the contour labels. The first
+    element of the vector selects a typeface and the second element
+    selects a fontindex (see \code{\link{text}} for more information).
+    The default is \code{NULL} on graphics devices with high-quality
+    rotation of text and \code{c("sans serif", "plain")} otherwise.}
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}
   \item{axes, frame.plot}{logical indicating whether axes or a box
     should be drawn, see \code{\link{plot.default}}.}

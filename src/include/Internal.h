@@ -137,6 +137,7 @@ SEXP do_comment(SEXP, SEXP, SEXP, SEXP);
 SEXP do_commentgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_complex(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contour(SEXP, SEXP, SEXP, SEXP);
+SEXP do_contourDef(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contourLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_countfields(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Cstack_info(SEXP, SEXP, SEXP, SEXP);

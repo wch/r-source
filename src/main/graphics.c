@@ -2488,6 +2488,7 @@ void GForceClip(DevDesc *dd)
  * In some cases, the settings made here will need to be overridden
  * (eps. the fill setting)
  */
+/* Used here and in do_xspline */
 attribute_hidden
 void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
 {

@@ -30,9 +30,7 @@
 #include <Graphics.h>
 #include <Rmodules/Rvfonts.h>
 
-static VfontRoutines routines, *ptr = &routines;
-
-
+static VfontRoutines routines;
 static int initialized = 0;
 
 void
@@ -40,9 +38,9 @@ R_GE_setVFontRoutines(R_GE_VStrWidthRoutine vwidth,
 		      R_GE_VStrHeightRoutine vheight,
 		      R_GE_VTextRoutine vtext)
 {
-    ptr->GEVStrWidth = vwidth;
-    ptr->GEVStrHeight = vheight;
-    ptr->GEVText = vtext;
+    routines.GEVStrWidth = vwidth;
+    routines.GEVStrHeight = vheight;
+    routines.GEVText = vtext;
 }
 
 static void vfonts_Init(void)
@@ -50,7 +48,7 @@ static void vfonts_Init(void)
     int res = R_moduleCdynload("vfonts", 1, 1);
     initialized = -1;
     if(!res) return;
-    if(!ptr->GEVStrWidth)
+    if(!routines.GEVStrWidth)
 	error(_("vfont routines cannot be accessed in module"));
     initialized = 1;
     return;
@@ -62,7 +60,7 @@ double R_GE_VStrWidth(const char *s, int enc, R_GE_gcontext *gc, GEDevDesc *dd)
     if(!initialized) vfonts_Init();
     if(initialized > 0) {
 	const char *str = reEnc(s, enc, CE_LATIN1, 2 /* '.' */);
-	return (*ptr->GEVStrWidth)(str, gc, dd);
+	return (*routines.GEVStrWidth)(str, gc, dd);
     } else {
 	error(_("Hershey fonts cannot be loaded"));
 	return 0.0;
@@ -75,7 +73,7 @@ double R_GE_VStrHeight(const char *s, int enc, R_GE_gcontext *gc, GEDevDesc *dd)
     if(!initialized) vfonts_Init();
     if(initialized > 0) {
 	/* The strheight does not depend on the encoding. */
-	return (*ptr->GEVStrHeight)(s, gc, dd);
+	return (*routines.GEVStrHeight)(s, gc, dd);
     } else {
 	error(_("Hershey fonts cannot be loaded"));
 	return 0.0;
@@ -92,7 +90,7 @@ void R_GE_VText(double x, double y, const char * const s, int enc,
     if(!initialized) vfonts_Init();
     if(initialized > 0) {
 	const char *str = reEnc(s, enc, CE_LATIN1, 2 /* '.' */);
-	(*ptr->GEVText)(x, y, str, x_justify, y_justify, rotation, gc, dd);
+	(*routines.GEVText)(x, y, str, x_justify, y_justify, rotation, gc, dd);
     } else
 	error(_("Hershey fonts cannot be loaded"));
 }

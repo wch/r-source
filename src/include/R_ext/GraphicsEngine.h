@@ -41,9 +41,10 @@ extern "C" {
  * Version 1:  Introduction of the version number.
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  * Version 3:  R_GE_str2col() added to API.
+ * Version 4:  UTF-8 text hooks, useRotatedTextInContour to device interface.
  */
 
-#define R_GE_version 3
+#define R_GE_version 4
 
 int R_GE_getVersion();
 
@@ -355,7 +356,7 @@ void GEMathText(double x, double y, SEXP expr,
  */
 
 /* 
- * From plot3d.c 
+ * From plot3d.c : used in package clines
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 		    double *z, double *levels, int nl);

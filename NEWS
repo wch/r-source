@@ -236,6 +236,11 @@ NEW FEATURES
     o	New flag --interactive on Unix-alikes forces the session to be
 	interactive (as --ess does on Windows).
 
+    o	Graphics devices can say if they can rotate text well
+	(e.g. postscript() and PDF() can) and if so the device's
+	native text becomes the default for contour labels rather than
+	using Hershey fonts.
+
 
 DEPRECATED & DEFUNCT
 

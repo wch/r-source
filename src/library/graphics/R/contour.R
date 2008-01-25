@@ -24,8 +24,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
 	  xlim = range(x, finite = TRUE), ylim = range(y, finite = TRUE),
 	  zlim = range(z, finite = TRUE),
 	  labcex = 0.6, drawlabels = TRUE, method = "flattest",
-          vfont = c("sans serif", "plain"),
-          axes = TRUE, frame.plot = axes,
+          vfont, axes = TRUE, frame.plot = axes,
 	  col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	  add = FALSE, ...)
 {
@@ -58,6 +57,8 @@ function (x = seq(0, 1, length.out = nrow(z)),
     ##- don't lose  dim(.)
     if (!is.double(z)) storage.mode(z) <- "double"
     method <- pmatch(method[1], c("simple", "edge", "flattest"))
+    if (missing(vfont))
+       vfont <- if(.Internal(contourdef())) NULL else c("sans serif", "plain")
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface),
                    fontindex= pmatch(vfont[2], Hershey$fontindex))

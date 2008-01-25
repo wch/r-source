@@ -342,6 +342,8 @@ void Rf_setBaseDevice(Rboolean val, DevDesc *dd) {
 				      baseRegisterIndex))->baseDevice = val;
 }
 
+/*
 SEXP Rf_displayList(DevDesc *dd) {
     return ((GEDevDesc*) dd)->dev->displayList;
 }
+*/

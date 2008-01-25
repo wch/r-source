@@ -453,11 +453,8 @@ SEXP labelformat(SEXP);
 void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd);
 
 /* From base.c */
-/* FIXME: Make this a macro to avoid function call overhead?
- */
 GPar* Rf_gpptr(DevDesc *dd);
 GPar* Rf_dpptr(DevDesc *dd);
 GPar* Rf_dpSavedptr(DevDesc *dd);
-SEXP Rf_displayList(DevDesc *dd);
 
 #endif /* GRAPHICS_H_ */

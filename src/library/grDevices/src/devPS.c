@@ -3356,6 +3356,7 @@ PSDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
 #else
     dd->hasTextUTF8   = FALSE;
 #endif
+    dd->useRotatedTextInContour = TRUE;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -4679,6 +4680,7 @@ XFigDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
     dd->mode	   = XFig_Mode;
     dd->hold	   = XFig_Hold;
     dd->hasTextUTF8 = FALSE;
+    dd->useRotatedTextInContour = FALSE; /* maybe */
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -5689,6 +5691,7 @@ PDFDeviceDriver(NewDevDesc* dd, const char *file, const char *paper,
 #else
     dd->hasTextUTF8   = FALSE;
 #endif
+    dd->useRotatedTextInContour = TRUE;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;

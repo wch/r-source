@@ -467,7 +467,11 @@ typedef struct {
     Rboolean hasTextUTF8; /* and strWidthUTF8 */
     void (*textUTF8)();
     double (*strWidthUTF8)();
-    
+
+    /* Is rotated text good enough to be preferable to Hershey in
+       contour labels?
+    */
+    Rboolean useRotatedTextInContour;
 } NewDevDesc;
 
 	/********************************************************/

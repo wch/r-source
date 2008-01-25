@@ -777,6 +777,8 @@ int addContourLines(double *x, int nx, double *y, int ny,
  * ... produce a list of contour lines:
  *   list of sub-lists
  *     sub-list = x vector, y vector, and cut-value.
+
+ * Apart from here, used in package clines.
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 		    double *z, double *levels, int nl)
@@ -1328,6 +1330,15 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
     UNPROTECT_PTR(label1); /* pwwwargh! This is messy, but last thing
 			      protected is likely labelList, and that needs
 			      to be preserved across calls */
+}
+
+
+SEXP attribute_hidden do_contourDef(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd = CurrentDevice();
+
+    checkArity(op,args);
+    return ScalarLogical(((GEDevDesc *)dd)->dev->useRotatedTextInContour);
 }
 
 /* contour(x, y, z, levels, labels, labcex, drawlabels,
