@@ -1,6 +1,7 @@
 % File src/library/base/man/Sys.info.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2007 R Core Development Team
+% Copyright      2008 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{Sys.info}
@@ -52,6 +53,8 @@ Sys.info()
 
 \seealso{
   \code{\link{.Platform}}, and \code{\link{R.version}}.
+  \code{\link{sessionInfo}()} gives a synopsis of both your system and
+  the \R session.
 }
 
 \examples{
