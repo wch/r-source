@@ -1,6 +1,6 @@
 
-R version 2.7.0 Under development (unstable) (2007-12-09 r43632)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.7.0 Under development (unstable) (2008-01-25 r44149)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -48,7 +48,7 @@ List of 3
 > for(i in known) {
 +     x <- i %% 16
 +     y <- i %/% 16
-+     points(x, y, pch=i)
++     points(x, y, pch=-i)
 + }
 > 
 > par(pty="m")

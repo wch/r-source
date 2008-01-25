@@ -27,7 +27,7 @@ known <- c(32:126, 160:255)
 for(i in known) {
     x <- i %% 16
     y <- i %/% 16
-    points(x, y, pch=i)
+    points(x, y, pch=-i)
 }
 
 par(pty="m")
