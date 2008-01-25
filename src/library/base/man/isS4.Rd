@@ -38,6 +38,9 @@ asS4(object, value = TRUE)
   functions; \code{asS4} allows method dispatch of S4 methods on
   primitives for S3 classes. For all other purposes, an object will
   satisfy \code{isS4(x)} if and only if it should.
+
+  Note that S4 methods can only be set on those primitives which are
+  \sQuote{\link{internal generic}} and \code{\%*\%}.
 }
 \examples{
 \dontshow{require(methods)}
