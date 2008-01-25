@@ -2,6 +2,32 @@
 # Shell wrapper for R executable.
 
 R_HOME_DIR=
+if test "${R_HOME_DIR}" = "@prefix@/@LIBnn@/R"; then
+   case "@R_OS@" in
+   linux*)
+     run_arch=`uname -m`
+     case "$run_arch" in 
+        x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
+          libnn=lib64
+          libnn_fallback=lib
+        ;;
+        *)
+          libnn=lib
+          libnn_fallback=lib64
+        ;;
+     esac
+     if [ -x "@prefix@/${libnn}/R/bin/exec/R" ]; then
+        R_HOME_DIR="@prefix@/${libnn}/R"
+     elif [ -x "@prefix@/${libnn_fallback}/R/bin/exec/R" ]; then
+        R_HOME_DIR="@prefix@/${libnn_fallback}/R"
+     else 
+        echo "Error: R executable not found"
+        exit 1
+     fi
+     ;;
+  esac
+fi
+
 if test -n "${R_HOME}" && \
    test "${R_HOME}" != "${R_HOME_DIR}"; then
   echo "WARNING: ignoring environment value of R_HOME"

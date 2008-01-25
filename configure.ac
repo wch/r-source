@@ -75,6 +75,8 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 
 R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
+R_OS="${host_os}"
+AC_SUBST(R_OS)
 
 case "${host_os}" in
   mingw*|windows*|winnt)
