@@ -2044,7 +2044,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		error(_("\\uxxxx sequences not supported"));
 #else
 		unsigned int val = 0; int i, ext; size_t res;
-		char buff[16]; Rboolean delim = FALSE;
+		char buff[MB_CUR_MAX+1]; 
+		Rboolean delim = FALSE;
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE; 
 		    CTEXT_PUSH(c);
@@ -2087,7 +2088,8 @@ static int StringValue(int c, Rboolean forSymbol)
 #else
 		{
 		    unsigned int val = 0; int i, ext; size_t res;
-		    char buff[16]; Rboolean delim = FALSE;
+		    char buff[MB_CUR_MAX+1];
+		    Rboolean delim = FALSE;
 		    if((c = xxgetc()) == '{') {
 			delim = TRUE;
 			CTEXT_PUSH(c);

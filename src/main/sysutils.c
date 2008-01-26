@@ -1001,7 +1001,7 @@ static const char UNICODE[] = "UCS-4LE";
 /* used in gram.c and devX11.c */
 size_t ucstomb(char *s, const unsigned int wc)
 {
-    char     buf[16];
+    char     buf[MB_CUR_MAX+1];
     void    *cd = NULL ;
     unsigned int  wcs[2];
     const char *inbuf = (const char *) wcs;
@@ -1046,7 +1046,7 @@ size_t ucstomb(char *s, const unsigned int wc)
             return (size_t) -1;
         }
     }
-    *outbuf = 0;
+    buf[MB_CUR_MAX] = '\0'; /* safety measure */
     strcpy(s, buf);
     return strlen(buf);
 }

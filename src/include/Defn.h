@@ -1139,7 +1139,7 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
-void mbcsToLatin1(const char *in, char *out);
+/* void mbcsToLatin1(const char *in, char *out); */
 Rboolean mbcsValid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
