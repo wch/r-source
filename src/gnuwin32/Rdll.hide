@@ -33,7 +33,6 @@
  BZ2_hbAssignCodes
  BZ2_hbCreateDecodeTables
  BZ2_hbMakeCodeLengths
- BZ2_indexIntoF
  BZ2_rNums
  CPFun
  ColorDataBase
@@ -41,11 +40,10 @@
  DebugMenuitem
  DefaultPalette
  DialogSelectFile
- EhiWakeUp
  ENC_KNOWN
+ EhiWakeUp
  EncodeReal2
  GRecording
- GetCurrentWinPos
  IS_ACTIVE_BINDING
  IS_LATIN1
  IS_UTF8
@@ -159,8 +157,8 @@
  R_SetWin32
  R_ShowErrorCalls
  R_ShowErrorMessages
- R_ShowWarnCalls
  R_ShowFiles
+ R_ShowWarnCalls
  R_SourceSymbol
  R_SrcfileSymbol
  R_SrcrefSymbol
@@ -182,7 +180,6 @@
  R_XDRDecodeInteger
  R_XDREncodeDouble
  R_XDREncodeInteger
- R_YesNoCancel
  R_Zero_Hack
  R_binary
  R_compress1
@@ -207,7 +204,6 @@
  R_initialize_bcode
  R_isMissing
  R_is_running
- R_lazyLoadDBfetch
  R_lazyLoadDBflush
  R_lazyLoadDBinsertValue
  R_localtime
@@ -236,6 +232,7 @@
  R_warn_partial_match_args
  R_warn_partial_match_attr
  R_warn_partial_match_dollar
+ R_wfopen
  Rconsolesetwidth
  Rf_CheckFormals
  Rf_CoercionWarning
@@ -252,7 +249,6 @@
  Rf_FixupFont
  Rf_FixupLty
  Rf_FixupLwd
- Rf_FixupPch
  Rf_FixupVFont
  Rf_GInit
  Rf_GetOptionParAsk
@@ -267,7 +263,6 @@
  Rf_InitGraphics
  Rf_InitMemory
  Rf_InitOptions
- Rf_InitRand
  Rf_InitStringHash
  Rf_InitTempDir
  Rf_IntegerFromComplex
@@ -293,6 +288,8 @@
  Rf_RealFromInteger
  Rf_RealFromLogical
  Rf_RealFromString
+ Rf_Scollate
+ Rf_Seql
  Rf_Specify2
  Rf_StringFromComplex
  Rf_StringFromInteger
@@ -335,8 +332,8 @@
  Rf_matchArgs
  Rf_matchPar
  Rf_mbtoucs
- Rf_mkCharLen
  Rf_mkCLOSXP
+ Rf_mkCharLen
  Rf_mkPROMISE
  Rf_mkSYMSXP
  Rf_name2col
@@ -356,11 +353,12 @@
  Rf_ssort
  Rf_stirlerr
  Rf_substituteList
- Rf_unbindVar
  Rf_ucstomb
  Rf_ucstoutf8
+ Rf_unbindVar
  Rf_utf8toucs
  Rf_vectorSubscript
+ Rf_wcstoutf8
  Rf_yychar
  Rf_yylval
  Rf_yynerrs
@@ -374,14 +372,9 @@
  Ri18n_wcswidth
  Ri18n_wctype
  Rm_calloc
- Rm_cfree
  Rm_free
  Rm_malloc
- Rm_memalign
- Rm_pvalloc
  Rm_realloc
- Rm_strdup
- Rm_valloc
  Rregexec
  Rrowsum_df
  Rrowsum_matrix
@@ -392,6 +385,7 @@
  Rsockread
  Rsockselect
  Rsockwrite
+ Rstrcoll
  Rstrlen
  Rstrwid
  Rwin_rename
@@ -404,26 +398,23 @@
  UNLOCK_BINDING
  UNSET_LATIN1
  UNSET_UTF8
+ UTF8in
+ UTF8out
  UseInternet2
- WinUTF8out
  WinCheckUTF8
+ WinUTF8out
  WrongArgCount
  __printf__
  _dist_code
- _getextradata
  _length_code
  _nl_explode_name
  _nl_find_domain
- _nl_find_language
  _nl_find_msg
- _nl_free_domain_conv
- _nl_init_domain_conv
  _nl_language_preferences_default
  _nl_load_domain
  _nl_locale_name
  _nl_locale_name_default
  _nl_locale_name_posix
- _nl_log_untranslated
  _nl_make_l10nflist
  _nl_msg_cat_cntr
  _nl_normalize_codeset
@@ -432,18 +423,19 @@
  _pcre_is_newline
  _pcre_ord2utf8
  _pcre_try_flipped
- _pcre_ucp_findchar
+ _pcre_ucp_findprop
+ _pcre_ucp_othercase
  _pcre_utf8_table1
  _pcre_utf8_table1_size
  _pcre_utf8_table2
  _pcre_utf8_table3
  _pcre_utf8_table4
  _pcre_utt
+ _pcre_utt_names
  _pcre_utt_size
  _pcre_valid_utf8
  _pcre_was_newline
  _pcre_xclass
- _setextradata
  _tr_align
  _tr_flush_block
  _tr_init
@@ -452,9 +444,6 @@
  _vsnprintf
  adler32
  adler32_combine
- app_control_proc
- app_init_printf
- app_timer_proc
  applyGUI
  apse_create
  apse_destroy
@@ -471,7 +460,7 @@
  breaktodebugger
  cbabk2_
  cbal_
- cdiv
+ cdiv_
  cg_
  ch2inv_
  ch_
@@ -624,6 +613,7 @@
  do_compcases
  do_complex
  do_contour
+ do_contourDef
  do_contourLines
  do_countfields
  do_cov
@@ -856,7 +846,6 @@
  do_paste
  do_pathexpand
  do_persp
- do_pgrep
  do_pgsub
  do_pipe
  do_playDL
@@ -869,7 +858,6 @@
  do_polygon
  do_polyroot
  do_pos2env
- do_pregexpr
  do_primitive
  do_printDeferredWarnings
  do_printdefault
@@ -879,7 +867,6 @@
  do_pushback
  do_pushbacklength
  do_putconst
- do_putenv
  do_qsort
  do_quit
  do_quote
@@ -982,7 +969,6 @@
  do_sumconnection
  do_summary
  do_switch
- do_symbol
  do_symbols
  do_sys
  do_syschmod
@@ -1038,12 +1024,15 @@
  do_zeroin2
  dos_glob
  dos_globfree
+ dos_wglob
+ dos_wglobfree
  dpois_raw
  drawconsole
  editorchecksave
  editorcleanall
  editorsetfont
  epslon_
+ filenameToWchar
  fontname
  fontsty
  framenames
@@ -1055,17 +1044,17 @@
  getAttrib0
  getConnection
  getConnection_no_err
- getConsoleHandle
+ getDefaults
  getGraphMenu
  getIdentification
  getParseContext
  getParseFilename
+ getTZinfo
  getWindowTitle
  get_crc_table
  get_current_mem
  get_duplicate_counter
  getline
- getTZinfo
  getusermenuname
  gl_hist_next
  gl_hist_prev
@@ -1099,8 +1088,6 @@
  hqr_
  htribk_
  htridi_
- independent_calloc
- independent_comalloc
  inflateBack
  inflateBackEnd
  inflateBackInit_
@@ -1116,6 +1103,7 @@
  inflate_table
  internal_shellexec
  intpr0_
+ invalidate_cached_recodings
  isMethodsDispatchOn
  known_to_be_latin1
  known_to_be_utf8
@@ -1155,16 +1143,8 @@
  loadRconsole
  locale_charset
  mallinfo
- malloc_footprint
- malloc_max_footprint
- malloc_stats
- malloc_trim
- malloc_usable_size
- mallopt
  max_contour_segments
  mb_char_len
- mbswidth
- memalign
  memtrace_report
  menuclear
  menuconfig
@@ -1195,7 +1175,6 @@
  pcre_config
  pcre_copy_named_substring
  pcre_copy_substring
- pcre_dfa_exec
  pcre_exec
  pcre_free
  pcre_free_substring
@@ -1229,14 +1208,12 @@
  raise
  realp0_
  reset_duplicate_counter
- restoredpSaved
  rg_
  rpipeClose
  rpipeGetc
  rpipeGets
  rpipeOpen
  runerror
- setCURCOL
  setDLLSearchPath
  setTitle
  setWidthOnResize
@@ -1291,7 +1268,6 @@
  wgl_histadd
  wgl_loadhistory
  wgl_savehistory
- winAccess
  winAccessW
  winNewFrameConfirm
  winaddmenu
@@ -1301,7 +1277,6 @@
  windelmenus
  wingetmenuitems
  wtransChar
- xbufaddc
  xbufaddxc
  xbufaddxs
  xbufdel
