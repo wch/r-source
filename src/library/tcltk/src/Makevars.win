@@ -1,5 +1,5 @@
 ## TCL_VERSION is set in MkRules
 PKG_CFLAGS = -I "$(TCL_HOME)"/include -DWin32
 PKG_LIBS = -L"$(TCL_HOME)"/bin -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
-CSOURCES = tcltk.c tcltk_win.c
-OBJECTS = tcltk.o tcltk_win.o
+CSOURCES = init.c tcltk.c tcltk_win.c
+OBJECTS = init.o tcltk.o tcltk_win.o
