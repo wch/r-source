@@ -38,11 +38,11 @@ points(x, \dots)
       available with \code{pch=0:18}, see the examples below.
       % (currently, \R uses circles instead of octagons).
 
-      Value \code{pch="."} is handled specially.  It is a rectangle of
-      side 0.01 inch (scaled by \code{cex}).  In addition, if \code{cex =
-	1} (the default), each side is at least one pixel (1/72 inch on
-      the \code{\link{pdf}}, \code{\link{postscript}} and
-      \code{\link{xfig}} devices).
+      Value \code{pch="."} (equivalently \code{pch = 46}) is handled
+      specially.  It is a rectangle of side 0.01 inch (scaled by
+      \code{cex}).  In addition, if \code{cex = 1} (the default), each
+      side is at least one pixel (1/72 inch on the \code{\link{pdf}},
+      \code{\link{postscript}} and \code{\link{xfig}} devices).
 
       For other text symbols, \code{cex = 1} corresponds to the default
       fontsize of the device, often specified by an argument
