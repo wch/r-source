@@ -88,7 +88,7 @@ Rboolean attribute_hidden R_HiddenFile(const char *name)
 */
 
 #ifdef Win32
-char fixedmode[6]; /* Rconnection can have a mode of 4 chars plus a null; we might add one char */
+static char fixedmode[6]; /* Rconnection can have a mode of 4 chars plus a null; we might add one char */
 
 static char * fixmode(const char *mode)
 {
