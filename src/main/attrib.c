@@ -542,7 +542,7 @@ static SEXP lang2str(SEXP obj, SEXPTYPE t)
 
 /* the S4-style class: for dispatch required to be a single string;
    for the new class() function;
-   if(singleString) , keeps S3-style multiple classes.
+   if(!singleString) , keeps S3-style multiple classes.
    Called from the methods package, so exposed.
  */
 SEXP R_data_class(SEXP obj, Rboolean singleString)
@@ -648,6 +648,7 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
     }
 }
 
+/* class() : */
 SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   checkArity(op, args);
@@ -1023,14 +1024,14 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(object = allocVector(VECSXP, 0));
     } else {
 	/* Unlikely to have NAMED == 0 here.
-	   As from R 2.7.0 we don't optimize NAMED == 1 _if_ we are 
-	   setting any attributes as an error later on would leave 
+	   As from R 2.7.0 we don't optimize NAMED == 1 _if_ we are
+	   setting any attributes as an error later on would leave
 	   'obj' changed */
 	if (NAMED(object) > 1 || (NAMED(object) == 1 && nattrs))
 	    object = duplicate(object);
 	PROTECT(object);
     }
-    
+
 
     /* Empty the existing attribute list */
 
@@ -1098,7 +1099,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (nargs < 2 || nargs > 3)
 	errorcall(call, "either 2 or 3 arguments are required");
-    
+
     s = CAR(args);
     t = CADR(args);
     if(nargs == 3) {
@@ -1144,13 +1145,13 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     */
     if (match != FULL && strncmp("names", str, n) == 0) {
 	if (strlen("names") == n) {
-	    /* we have a full match on "names", if there is such an 
+	    /* we have a full match on "names", if there is such an
 	       attribute */
 	    tag = R_NamesSymbol;
 	    match = FULL;
 	}
 	else if (match == NONE && !exact) {
-	    /* no match on other attributes and a possible 
+	    /* no match on other attributes and a possible
 	       partial match on "names" */
 	    tag = R_NamesSymbol;
 	    t = getAttrib(s, tag);
@@ -1202,7 +1203,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 /* These provide useful shortcuts which give access to */
 /* the dimnames for matrices and arrays in a standard form. */
 
-void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl, 
+void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl,
 		       const char **rn, const char **cn)
 {
     SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
