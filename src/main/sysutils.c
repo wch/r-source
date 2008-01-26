@@ -82,16 +82,19 @@ Rboolean attribute_hidden R_HiddenFile(const char *name)
     else return 1;
 }
 
-/* The MSVC runtime has a global to determine whether an unspecified file open
-   is in text or binary mode.  We force explicit text mode here to avoid depending 
-   on that global, which may have been changed by user code.
+/* The MSVC runtime has a global to determine whether an unspecified
+   file open is in text or binary mode.  We force explicit text mode
+   here to avoid depending on that global, which may have been changed
+   by user code (most likely in embedded applications of R).
 */
 
 #ifdef Win32
-char fixedmode[6]; /* Rconnection can have a mode of 4 chars plus a null; we might add one char */
 
 static char * fixmode(const char *mode)
 {
+    /* Rconnection can have a mode of 4 chars plus a null; we might
+     * add one char */
+    static char fixedmode[6];
     fixedmode[4] = '\0';
     strncpy(fixedmode, mode, 4);
     if (!strpbrk(fixedmode, "bt")) {
@@ -100,10 +103,9 @@ static char * fixmode(const char *mode)
     return fixedmode;
 }
 
-wchar_t wcfixedmode[6];
-
 static wchar_t * wcfixmode(const wchar_t *mode)
 {
+    static wchar_t wcfixedmode[6];
     wcfixedmode[4] = L'\0';
     wcsncpy(wcfixedmode, mode, 4);
     if (!wcspbrk(wcfixedmode, L"bt")) {
