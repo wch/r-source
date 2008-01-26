@@ -61,6 +61,7 @@ int setDLLSearchPath(const char *path)
     } else { /* Windows 2000 */
 	if(path) {
 	    GetCurrentDirectory(MAX_PATH, wd);
+	    SetCurrentDirectory(path);
 	} else if (wd[0]) {
 	    SetCurrentDirectory(wd);
 	    wd[0] = '\0';
