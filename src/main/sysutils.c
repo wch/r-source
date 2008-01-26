@@ -577,7 +577,7 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
-    /* here libiconv has const char **, glibc has const ** for inbuf */
+    /* here libiconv has const char **, glibc has char ** for inbuf */
     return iconv((iconv_t) cd, (ICONV_CONST char **) inbuf, inbytesleft, 
 		 outbuf, outbytesleft);
 }
@@ -649,6 +649,14 @@ next_char:
     R_FreeStringBuffer(&cbuff);
     return p;
 }
+
+void attribute_hidden
+invalidate_cached_recodings(void)
+{
+    latin1_obj = NULL;
+    utf8_obj = NULL;
+}
+
 #else
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
@@ -673,6 +681,11 @@ const char *translateChar(SEXP x)
 {
     return CHAR(x);
 }
+
+void attribute_hidden
+invalidate_cached_recodings(void)
+{
+} 
 #endif
 
 /* moved from src/unix/sys-unix.c and src/gnuwin32/extra.c */

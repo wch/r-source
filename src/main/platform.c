@@ -1217,6 +1217,8 @@ SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
+extern void invalidate_cached_recodings(void);  /* from sysutils.c */
+
 /* Locale specs are always ASCII */
 SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1318,6 +1320,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #if defined(Win32) && defined(SUPPORT_UTF8)
     utf8locale = mbcslocale = TRUE;
 #endif
+    invalidate_cached_recodings();
     return ans;
 #else
     return R_NilValue;
