@@ -4105,7 +4105,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	    size_t status;
 
             cd = (void*) Riconv_open(cidfont->encoding, 
-				     (enc = CE_UTF8) ? "UTF-8" : "");
+				     (enc == CE_UTF8) ? "UTF-8" : "");
             if(cd == (void*)-1) {
 		warning(_("failed open converter to encoding '%s'"),
 			cidfont->encoding);		
