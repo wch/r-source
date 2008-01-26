@@ -85,7 +85,7 @@ INTERNATIONALIZATION
     o	file() and pipe() connections and the functions basename(),
 	dir(), dirname(), dir.create(), DLL.version(), file.access(),
 	file.copy(), file.create(), file.exists(), file.info(),
-	file.remove(), file.rename(), getwd(), list.files(), load(),
+	file.remove(), file.rename(), getwd(), load(),
 	normalizePath(), path.expand(), save(), setwd(), shell(),
 	shell.exec(), shortPathName(), Sys.chmod(), Sys.glob(),
 	system() and unlink() have been converted to use Unicode
@@ -93,6 +93,10 @@ INTERNATIONALIZATION
 
 	Pathnames you select (choose.files, choose.dir, file.choose)
 	are returned in UTF-8.
+
+	list.files() still works with the native charsets as we do not
+	have a Unicode regexp engine.  (The code for grep uses wide
+	chars internally but does not provide an interface.)
 
     o	Collating (e.g. <) and sorting is done in UTF-8 where one of
 	the items is in UTF-8.  It seems that MSVCRT's collation
