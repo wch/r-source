@@ -15,7 +15,7 @@ NEW FEATURES
 	automatic row.names.  Note that the correct usage is
 	names(DF).  (PR#10470)
 
-    o	tools::texi2dvi() works around the failure of 'texi2dvi --quiet' 
+    o	tools::texi2dvi() works around the failure of 'texi2dvi --quiet'
 	to be quiet in texinfo 4.11.
 
     o   On Linux, parallel 32/64-bit installations are supported using
@@ -148,9 +148,11 @@ BUG FIXES
     o	url()/download.file() could segfault if the HTTP interaction
 	involved a redirect to an address starting with '/' on the
 	same server.
-	
+
     o	Memory allocations used in format() and in an internal utility
     	function could be off by one byte. (PR#10635)
+
+    o	isoreg(x,y) no longer segfaults when y has NAs.
 
 
 
