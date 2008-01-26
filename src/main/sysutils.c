@@ -1155,6 +1155,11 @@ const char *reEnc(const char *x, int ce_in, int ce_out)
 {
     return x;
 }
+
+void attribute_hidden
+invalidate_cached_recodings(void)
+{
+}
 #endif
 
 /* moved from src/unix/sys-unix.c and src/gnuwin32/extra.c */
