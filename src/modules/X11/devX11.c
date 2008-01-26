@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1559,7 +1559,7 @@ static void newX11_MetricInfo(int c,
 
     if (xd->font->type != One_Font) {  /* so an MBCS */
 	XRectangle ink, log;
-	char buf[10];
+	char buf[16];
 
 	ucstomb(buf, (unsigned int) c);
 	/* wcsrtombs(buf, (const wchar_t **)&wcs, sizeof(wc), NULL); */
@@ -2216,6 +2216,7 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     dd->hold = newX11_Hold;
     dd->metricInfo = newX11_MetricInfo;
     dd->hasTextUTF8 = FALSE;
+    dd->useRotatedTextInContour = FALSE;
 
     /* Set required graphics parameters. */
 

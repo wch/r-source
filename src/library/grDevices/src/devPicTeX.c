@@ -690,6 +690,7 @@ Rboolean PicTeXDeviceDriver(NewDevDesc *dd, const char *filename,
     dd->hold = PicTeX_Hold;
     dd->metricInfo = PicTeX_MetricInfo;
     dd->hasTextUTF8 = FALSE;
+    dd->useRotatedTextInContour = FALSE;
 
     /* Screen Dimensions in Pixels */
 

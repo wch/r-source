@@ -1046,7 +1046,8 @@ size_t ucstomb(char *s, const unsigned int wc)
             return (size_t) -1;
         }
     }
-    strncpy(s, buf, sizeof(buf) - 1); /* ensure 0-terminated */
+    *outbuf = 0;
+    strcpy(s, buf);
     return strlen(buf);
 }
 
