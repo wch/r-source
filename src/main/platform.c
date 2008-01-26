@@ -760,7 +760,6 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
-#ifndef Win32
 #define CBUFSIZE 2*PATH_MAX+1
 static SEXP filename(const char *dir, const char *file)
 {
@@ -776,13 +775,21 @@ static SEXP filename(const char *dir, const char *file)
     return ans;
 }
 
+#include "Rregex.h"
+
 static void count_files(const char *dnp, int *count,
-			Rboolean allfiles, Rboolean recursive)
+			Rboolean allfiles, Rboolean recursive,
+			int pattern, regex_t reg)
 {
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX];
+#ifdef Windows
+    /* For consistency with other functions */
+    struct _stati64 sb;
+#else
     struct stat sb;
+#endif
 
     if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	error(_("directory/folder path name too long"));
@@ -794,14 +801,21 @@ static void count_files(const char *dnp, int *count,
 		if(recursive) {
 		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
+#ifdef Windows
+		    _stati64(p, &sb);
+#else
 		    stat(p, &sb);
+#endif
 		    if((sb.st_mode & S_IFDIR) > 0) {
 			if (strcmp(de->d_name, ".") && strcmp(de->d_name, ".."))
-				count_files(p, count, allfiles, recursive);
+				count_files(p, count, allfiles, recursive,
+				   	    pattern, reg);
 			continue;
 		    }
 		}
-		(*count)++;
+		if (pattern) {
+		    if(regexec(&reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
+		} else (*count)++;
 	    }
 	}
 	closedir(dir);
@@ -809,12 +823,18 @@ static void count_files(const char *dnp, int *count,
 }
 
 static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
-		       Rboolean allfiles, Rboolean recursive)
+		       Rboolean allfiles, Rboolean recursive,
+		       int pattern, regex_t reg)
 {
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX], stem2[PATH_MAX];
+#ifdef Windows
+    /* > 2GB files might be skipped otherwise */
+    struct _stati64 sb;
+#else
     struct stat sb;
+#endif
 
     if ((dir = opendir(dnp)) != NULL) {
 	while ((de = readdir(dir))) {
@@ -822,7 +842,11 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 		if(recursive) {
 		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
+#ifdef Windows
+		    _stati64(p, &sb);
+#else
 		    stat(p, &sb);
+#endif
 		    if((sb.st_mode & S_IFDIR) > 0) {
 			if (strcmp(de->d_name, ".") && 
 			    strcmp(de->d_name, "..")) {
@@ -831,12 +855,19 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 				         R_FileSep, de->d_name);
 			    else
 			    	strcpy(stem2, de->d_name);
-			    list_files(p, stem2, count, ans, allfiles, recursive);
+			    list_files(p, stem2, count, ans, allfiles, 
+				       recursive, pattern, reg);
 		    	}
 			continue;
 		    }
 		}
-		SET_STRING_ELT(ans, (*count)++, filename(stem, de->d_name));
+		if (pattern) {
+		    if (regexec(&reg, de->d_name, 0, NULL, 0) == 0)
+			SET_STRING_ELT(ans, (*count)++,
+				       filename(stem, de->d_name));
+		} else
+		    SET_STRING_ELT(ans, (*count)++,
+				   filename(stem, de->d_name));
 	    }
 	}
 	closedir(dir);
@@ -845,38 +876,54 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 
 SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP d, ans;
-    Rboolean allfiles, fullnames, recursive;
-    int i, count, ndir;
+    SEXP d, p, ans;
+    int allfiles, fullnames, count, pattern, recursive, igcase, flags;
+    int i, ndir;
     const char *dnp;
+    regex_t reg;
 
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d))
 	error(_("invalid '%s' argument"), "directory");
+    p = CAR(args);  args = CDR(args);
+    pattern = 0;
+    if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != R_NilValue)
+	pattern = 1;
+    else if (!isNull(p) && !(isString(p) && length(p) < 1))
+	error(_("invalid '%s' argument"), "pattern");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args)); args = CDR(args);
-    recursive = asLogical(CAR(args));
+    recursive = asLogical(CAR(args)); args = CDR(args);
+    igcase = asLogical(CAR(args));
     ndir = length(d);
+    flags = REG_EXTENDED;
+    if (igcase) flags |= REG_ICASE;
+    
+    if (pattern && regcomp(&reg, translateChar(STRING_ELT(p, 0)), flags))
+        error(_("invalid 'pattern' regular expression"));
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
-	count_files(dnp, &count, allfiles, recursive);
+	count_files(dnp, &count, allfiles, recursive, pattern, reg);
     }
     PROTECT(ans = allocVector(STRSXP, count));
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
 	if (fullnames)
-	    list_files(dnp, dnp, &count, ans, allfiles, recursive);
+	    list_files(dnp, dnp, &count, ans, allfiles, recursive,
+		       pattern, reg);
 	else
-	    list_files(dnp, NULL, &count, ans, allfiles, recursive);
+	    list_files(dnp, NULL, &count, ans, allfiles, recursive,
+		       pattern, reg);
     }
+    if (pattern)
+	regfree(&reg);
     ssort(STRING_PTR(ans), count);
     UNPROTECT(1);
     return ans;
 }
-#endif /* not Win32 */
 
 SEXP attribute_hidden do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

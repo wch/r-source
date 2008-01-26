@@ -217,9 +217,8 @@ NEW FEATURES
     o	The src/extra/intl sources have been updated to those from
 	gettext 0.17.
 
-    o	list.file() gains a '...' argument, to allow
-	e.g. case-insensitive matching on some Windows/MacOS file
-	systems.
+    o	list.file() gains a 'ignore.case' argument, to allow
+	case-insensitive matching on some Windows/MacOS file systems.
 
     o	An informative warning (in addition to the error message) will
 	be given when the basic, extended or perl mode of grep(),

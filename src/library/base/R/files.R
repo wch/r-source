@@ -61,13 +61,11 @@ file.remove <- function(...)
 file.rename <- function(from, to)
     .Internal(file.rename(from, to))
 
-list.files <- function(path=".", pattern=NULL, all.files=FALSE,
-                       full.names=FALSE, recursive=FALSE, ...)
-{
-    res <- .Internal(list.files(path, all.files, full.names, recursive))
-    if(is.null(pattern)) res
-    else res[grep(pattern, basename(res), ...)]
-}
+list.files <- function(path = ".", pattern = NULL, all.files = FALSE,
+                       full.names = FALSE, recursive = FALSE,
+                       ignore.case = FALSE)
+    .Internal(list.files(path, pattern, all.files, full.names,
+                         recursive, ignore.case))
 
 dir <- list.files
 

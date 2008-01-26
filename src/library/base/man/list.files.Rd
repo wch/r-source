@@ -1,6 +1,6 @@
 % File src/library/base/man/list.files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{list.files}
@@ -9,9 +9,9 @@
 \title{List the Files in a Directory/Folder}
 \usage{
 list.files(path = ".", pattern = NULL, all.files = FALSE,
-           full.names = FALSE, recursive = FALSE, \dots)
+           full.names = FALSE, recursive = FALSE, ignore.case = FALSE)
        dir(path = ".", pattern = NULL, all.files = FALSE,
-           full.names = FALSE, recursive = FALSE, \dots)
+           full.names = FALSE, recursive = FALSE, ignore.case = FALSE)
 }
 \arguments{
   \item{path}{a character vector of full path names; the default
@@ -25,9 +25,7 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
     path is prepended to the file names.  If \code{FALSE}, only
     the file names are returned.}
   \item{recursive}{logical. Should the listing recurse into directories?}
-  \item{\dots}{arguments to \code{\link{grep}} which affect the
-    interpretation of \code{pattern}.  E.g. \code{ignore.case = TRUE}
-    can be helpful on Windows and case-insensitive MacOS file systems.}
+  \item{ignore.case}{logical. Should pattern-matching be case-insensitive?}
 }
 \description{
   These functions produce a character vector of the names of files
@@ -67,7 +65,6 @@ list.files(R.home())
 ## Only files starting with a-l or r
 ## Note that a-l is locale-dependent, but using case-insensitive
 ## matching makes it unambiguous in English locales
-dir("../..", pattern = "^[a-lr]",
-    full.names = TRUE, ignore.case = TRUE)
+dir("../..", pattern = "^[a-lr]",full.names=TRUE, ignore.case = TRUE)
 }
 \keyword{file}
