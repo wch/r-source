@@ -26,7 +26,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{hybrid}{a logical. Only used for larger than \eqn{2 \times 2}{2 by 2}
     tables, in which cases it indicated whether the exact probabilities
     (default) or a hybrid approximation thereof should be computed.
-    See Details.}
+    See \sQuote{Details}.}
   \item{control}{a list with named components for low level algorithm
     control.  At present the only one used is \code{"mult"}, a positive
     integer \eqn{>= 2} with default 30 used only for larger than

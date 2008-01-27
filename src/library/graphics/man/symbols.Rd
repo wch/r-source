@@ -52,7 +52,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
     the proportion (with a warning if not in [0,1]) of the way up
     the box that the median line is drawn.}
   \item{inches}{\code{TRUE}, \code{FALSE} or a positive number.
-    See Details.}
+    See \sQuote{Details}.}
   \item{add}{if \code{add} is \code{TRUE}, the symbols are added to
     an existing plot, otherwise a new plot is created.}
   \item{fg}{colour(s) the symbols are to be drawn in.}

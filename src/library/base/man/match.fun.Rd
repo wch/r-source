@@ -16,7 +16,7 @@ match.fun(FUN, descend = TRUE)
 }
 \arguments{
  \item{FUN}{item to match as function: a function, symbol or
-    character string.  See Details.}
+    character string.  See \sQuote{Details}.}
  \item{descend}{logical; control whether to search past non-function
      objects.}
 }

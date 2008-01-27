@@ -23,7 +23,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
   \item{y}{a univariate time series.}
-  \item{mod}{A list describing the state-space model: see Details.}
+  \item{mod}{A list describing the state-space model: see \sQuote{Details}.}
   \item{nit}{The time at which the initialization is computed.
     \code{nit = 0} implies that the initialization is for a one-step
     prediction, so \code{Pn} should not be computed at the first step.}

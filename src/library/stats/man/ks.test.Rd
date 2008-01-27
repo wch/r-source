@@ -23,9 +23,9 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
     one of \code{"two.sided"} (default), \code{"less"}, or
     \code{"greater"}.  You can specify just the initial letter of the
     value, but the argument name must be give in full.
-    See Details for the meanings of the possible values.}
+    See \sQuote{Details} for the meanings of the possible values.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
-    p-value should be computed.  See Details for the meaning of
+    p-value should be computed.  See \sQuote{Details} for the meaning of
     \code{NULL}.  Not used for the one-sided two-sample case.}
 
 }

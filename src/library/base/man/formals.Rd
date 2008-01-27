@@ -15,7 +15,7 @@ formals(fun = sys.function(sys.parent()))
 formals(fun, envir = environment(fun)) <- value
 }
 \arguments{
-  \item{fun}{a function object, or see Details.}
+  \item{fun}{a function object, or see \sQuote{Details}.}
   \item{envir}{environment in which the function should be defined.}
   \item{value}{a list (or pairlist) of \R expressions.}
 }

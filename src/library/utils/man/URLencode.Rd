@@ -16,7 +16,8 @@ URLdecode(URL)
 }
 \arguments{
   \item{URL}{A character string.}
-  \item{reserved}{should reserved characters be encoded? See Details.}
+  \item{reserved}{should reserved characters be encoded?  See
+    \sQuote{Details}.}
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and

@@ -31,7 +31,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     computed and reordered.  Either a \code{\link{dendrogram}} or a
     vector of values used to reorder the row dendrogram or
     \code{\link{NA}} to suppress any row dendrogram (and reordering) or
-    by default, \code{\link{NULL}}, see \emph{Details} below.}
+    by default, \code{\link{NULL}}, see \sQuote{Details} below.}
   \item{Colv}{determines if and how the \emph{column} dendrogram should be
     reordered.	Has the same options as the \code{Rowv} argument above and
     \emph{additionally} when \code{x} is a square matrix, \code{Colv =

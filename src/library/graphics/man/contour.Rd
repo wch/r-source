@@ -48,7 +48,7 @@ contour(x, \dots)
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
   \item{method}{character string specifying where the labels will be
     located. Possible values are \code{"simple"}, \code{"edge"} and
-    \code{"flattest"} (the default). See the Details section.}
+    \code{"flattest"} (the default).  See the \sQuote{Details} section.}
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used for the contour labels.
     The first element of the vector

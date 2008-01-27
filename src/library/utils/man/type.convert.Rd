@@ -20,7 +20,7 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".")
     \code{\link{NA}} values.  Blank fields are also considered to be
     missing values in logical, integer, numeric or complex vectors.}
 
-  \item{as.is}{logical. See Details.}
+  \item{as.is}{logical.  See \sQuote{Details}.}
 
   \item{dec}{the character to be assumed for decimal points.}
 }

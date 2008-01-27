@@ -21,7 +21,7 @@ eval.parent(expr, n = 1)
 local(expr, envir = new.env())
 }
 \arguments{
-  \item{expr}{an object to be evaluated.  See Details.}
+  \item{expr}{an object to be evaluated.  See \sQuote{Details}.}
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to
     be evaluated.  May also be \code{NULL}, a list, a data frame,
     a pairlist or an integer as specified to \code{\link{sys.call}}.}

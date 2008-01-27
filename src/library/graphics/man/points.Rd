@@ -22,7 +22,7 @@ points(x, \dots)
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot.default}}.}
   \item{\dots}{Further graphical parameters may also be supplied as
-    arguments.  See Details.}
+    arguments.  See \sQuote{Details}.}
 }
 \details{
   The coordinates can be passed in a plotting structure

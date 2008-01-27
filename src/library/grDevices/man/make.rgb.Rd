@@ -18,7 +18,8 @@ colorConverter(toXYZ, fromXYZ, name, white=NULL)
 \arguments{
   \item{red,green,blue}{Chromaticity (xy or xyY) of RGB primaries}
   \item{name}{Name for the colour space}
-  \item{white}{Character string specifying the reference white (see Details)}
+  \item{white}{Character string specifying the reference white (see
+    \sQuote{Details}.)}
   \item{gamma}{Display gamma (nonlinearity). A positive number or the
     string \code{"sRGB"} }
   \item{fromXYZ}{Function to convert from XYZ tristimulus coordinates

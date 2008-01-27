@@ -16,7 +16,7 @@ contrasts(x, how.many) <- value
 }
 \arguments{
   \item{x}{a factor or a logical variable.}
-  \item{contrasts}{logical. See Details.}
+  \item{contrasts}{logical.  See \sQuote{Details}.}
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
     same as the number of columns of \code{ctr}.}

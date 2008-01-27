@@ -15,14 +15,15 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 }
 \arguments{
   \item{a, b}{the intercept and slope, single values.}
-  \item{untf}{logical asking whether to \emph{untransform}.  See Details.}
+  \item{untf}{logical asking whether to \emph{untransform}.  See
+    \sQuote{Details}.}
   \item{h}{the y-value(s) for horizontal line(s).}
   \item{v}{the x-value(s) for vertical line(s).}
   \item{coef}{a vector of length two giving the intercept and slope.}
-  \item{reg}{an object with a \code{\link{coef}} method.  See Details.}
+  \item{reg}{an object with a \code{\link{coef}} method.  See \sQuote{Details}.}
   \item{\dots}{graphical parameters such as
     \code{col}, \code{lty} and \code{lwd} (possibly as vectors: see
-    Details) and the line characteristics \code{lend}, \code{ljoin} and
+    \sQuote{Details}) and the line characteristics \code{lend}, \code{ljoin} and
     \code{lmitre}.}
 }
 \details{

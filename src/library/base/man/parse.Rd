@@ -28,7 +28,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
   \item{srcfile}{\code{NULL}, or a \code{\link{srcfile}} object.  See
-    the Details section.}
+    the \sQuote{Details} section.}
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
     Latin-1 or UTF-8: it is not used to re-encode the input.}

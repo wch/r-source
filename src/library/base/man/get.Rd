@@ -24,8 +24,9 @@ mget(x, envir, mode = "any",
     omitted, the function will search as if the name of the object
     appeared unquoted in an expression.}
   \item{envir}{an alternative way to specify an environment to look in;
-    see the Details section.}
-  \item{mode}{the mode or type of object sought: see the Details section.}
+    see the \sQuote{Details} section.}
+  \item{mode}{the mode or type of object sought: see the
+    \sQuote{Details} section.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
   \item{ifnotfound}{A \code{\link{list}} of values to be used if the item is

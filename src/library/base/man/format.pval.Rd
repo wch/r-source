@@ -16,7 +16,7 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 \arguments{
   \item{pv}{a numeric vector.}
   \item{digits}{how many significant digits are to be used.}
-  \item{eps}{a numerical tolerance: see Details.}
+  \item{eps}{a numerical tolerance: see \sQuote{Details}.}
   \item{na.form}{character representation of \code{NA}s.}
 }
 \value{

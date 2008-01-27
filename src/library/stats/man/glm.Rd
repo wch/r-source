@@ -35,7 +35,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{formula}{an object of class \code{"\link{formula}"} (or one that
     can be coerced to that class): a symbolic description of the
     model to be fitted.  The details of model specification are given
-    under Details.}
+    under \sQuote{Details}.}
 
   \item{family}{a description of the error distribution and link
     function to be used in the model. This can be a character string

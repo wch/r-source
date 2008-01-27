@@ -16,7 +16,8 @@ read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{file}{File or connection to read from}
-  \item{format}{Character vector or list of vectors. See Details below.}
+  \item{format}{Character vector or list of vectors.  See
+    \sQuote{Details} below.}
   \item{\dots}{Other arguments for \code{read.table}}
   \item{as.is}{Keep characters as characters?}
   \item{colClasses}{Variable classes to override defaults. See

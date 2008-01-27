@@ -39,7 +39,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   \code{rlnorm} generates random deviates.
 }
 \source{
-  \code{dlnorm} is calculated from the definition (in Details).
+  \code{dlnorm} is calculated from the definition (in \sQuote{Details}).
   \code{[pqr]lnorm} are based on the relationship to the normal.
 }
 \details{

@@ -24,7 +24,7 @@ lm(formula, data, subset, weights, na.action,
   \item{formula}{an object of class \code{"\link{formula}"} (or one that
     can be coerced to that class): a symbolic description of the
     model to be fitted.  The details of model specification are given
-    under Details.}
+    under \sQuote{Details}.}
 
   \item{data}{an optional data frame, list or environment (or object
     coercible by \code{\link{as.data.frame}} to a data frame) containing

@@ -40,7 +40,7 @@ type?topic
    on S4 method documentation.  Unlike \code{help}, all names are
    deparsed to give the desired topic.
 
-   See Details for what happens if this is omitted for \code{help}.
+   See \sQuote{Details} for what happens if this is omitted for \code{help}.
  }
  \item{offline}{a logical indicating whether documentation should be
    displayed on-line to the screen (the default) or hardcopy of it

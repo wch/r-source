@@ -32,7 +32,7 @@
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
   \item{pred.var}{the variance(s) for future observations to be assumed
-    for prediction intervals.  See Details.}
+    for prediction intervals.  See \sQuote{Details}.}
   \item{weights}{variance weights for prediction. This can be a numeric
     vector or a one-sided model formula. In the latter case, it is
     interpreted as an expression evaluated in \code{newdata}}

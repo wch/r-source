@@ -29,7 +29,7 @@ row.names(x) <- value
   \item{value}{an object to be coerced to character unless an integer
     vector.  It should have (after coercion) the same length as the
     number of rows of \code{x} with no duplicated nor missing values.
-    \code{NULL} is also allowed: see Details.}
+    \code{NULL} is also allowed: see \sQuote{Details}.}
 }
 \details{
   A data frame has (by definition) a vector of \emph{row names} which

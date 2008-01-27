@@ -19,7 +19,7 @@ gettextf(fmt, \dots, domain = NULL)
   \item{fmt}{a format string.  Up to 8192 bytes.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
     integer, real and character vectors are supported, but some coercion
-    will be done: see the Details section.}
+    will be done: see the \sQuote{Details} section.}
   \item{domain}{see \code{\link{gettext}}.}
 }
 \details{

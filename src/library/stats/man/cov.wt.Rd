@@ -27,7 +27,7 @@ cov.wt(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE,
     used.  If \code{center} is numeric, its length must equal the number
     of columns of \code{x}.}
   \item{method}{string specifying how the result is scaled, see
-    \emph{Details} below.}
+    \sQuote{Details} below.}
 }
 \value{
   A list containing the following named components:

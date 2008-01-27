@@ -13,7 +13,7 @@
 RShowDoc(what, type = c("pdf", "html", "txt"), package)
 }
 \arguments{
-  \item{what}{a character string: see Details.}
+  \item{what}{a character string: see \sQuote{Details}.}
   \item{type}{an optional character string giving the preferred format.}
   \item{package}{an optional character string specifying the name of a
     package within which to look for documentation.}

@@ -18,9 +18,9 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
 \arguments{
   \item{filename}{Name of a file produced by \code{Rprof()}}
   \item{chunksize}{Number of lines to read at a time}
-  \item{memory}{Summaries for memory information. See Details below}
+  \item{memory}{Summaries for memory information.  See \sQuote{Details} below}
   \item{index}{How to summarize the stack trace for memory
-    information. See Details below.}
+    information.  See \sQuote{Details} below.}
   \item{diff}{If \code{TRUE} memory summaries use change in memory
     rather than current memory}
   \item{exclude}{Functions to exclude when summarizing the stack trace

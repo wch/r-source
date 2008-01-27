@@ -147,7 +147,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     that there are no duplicates.}
 
   \item{fill}{logical. If \code{TRUE} then in case the rows have unequal
-    length, blank fields are implicitly added.  See Details.}
+    length, blank fields are implicitly added.  See \sQuote{Details}.}
 
   \item{strip.white}{logical. Used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing

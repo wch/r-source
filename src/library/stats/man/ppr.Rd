@@ -71,7 +71,8 @@ ppr(x, \dots)
   }
   \item{optlevel}{
     integer from 0 to 3 which determines the thoroughness of an
-    optimization routine in the SMART program. See the \bold{Details} section.
+    optimization routine in the SMART program. See the \sQuote{Details}
+    section.
   }
   \item{sm.method}{
     the method used for smoothing the ridge functions.  The default is to

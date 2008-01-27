@@ -20,7 +20,7 @@
 \arguments{
   \item{x}{an object of the type produced by \code{hclust}.}
   \item{FUN}{(optional) function to be applied to the index numbers of
-    the data points in a cluster (see Details below).}
+    the data points in a cluster (see \sQuote{Details} below).}
   \item{N}{the maximum number of clusters to be identified.}
   \item{MAXCLUSTER}{the maximum number of clusters that can be produced
     by a cut (limits the effective vertical range of the pointer). }
