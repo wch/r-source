@@ -187,7 +187,7 @@ static void doprof_null(int sig)
 #endif /* not Win32 */
 
 
-static void R_EndProfiling()
+static void R_EndProfiling(void)
 {
 #ifdef Win32
     SetEvent(ProfileEvent);

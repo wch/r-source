@@ -832,7 +832,7 @@ static R_stdGen_ptr_t R_standardGeneric_ptr = 0;
 static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef);
 #define NOT_METHODS_DISPATCH_PTR(ptr) (ptr == 0 || ptr == dispatchNonGeneric)
 
-R_stdGen_ptr_t R_get_standardGeneric_ptr()
+R_stdGen_ptr_t R_get_standardGeneric_ptr(void)
 {
     return R_standardGeneric_ptr;
 }

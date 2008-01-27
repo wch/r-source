@@ -1539,7 +1539,7 @@ static void mem_err_heap(R_size_t size)
 }
 
 
-static void mem_err_cons()
+static void mem_err_cons(void)
 {
     errorcall(R_NilValue, _("cons memory exhausted (limit reached?)"));
 }
@@ -2091,7 +2091,7 @@ SEXP allocList(int n)
     return result;
 }
 
-SEXP allocS4Object()
+SEXP allocS4Object(void)
 {
    SEXP s;
    GC_PROT(s = allocSExpNonCons(S4SXP));

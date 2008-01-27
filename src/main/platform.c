@@ -189,7 +189,7 @@ void attribute_hidden Init_R_Variables(SEXP rho)
 /* BDR 2000/7/20.
  *  time and ctime are in fact ANSI C calls, so we don't check them.
  */
-static char *R_Date()
+static char *R_Date(oid)
 {
     time_t t;
     static char s[26];		/* own space */
@@ -1549,7 +1549,7 @@ static int var_R_can_use_X11 = -1;
 
 extern Rboolean R_access_X11(void); /* from src/unix/X11.c */
 
-static Rboolean R_can_use_X11()
+static Rboolean R_can_use_X11(void)
 {
     if (var_R_can_use_X11 < 0) {
 #ifdef HAVE_X11

@@ -85,8 +85,8 @@ RNGTAB RNG_Table[] =
 #define I3 (RNG_Table[RNG_kind].i_seed[2])
 
 static void Randomize(RNGtype kind);
-static double MT_genrand();
-static Int32 KT_next();
+static double MT_genrand(void);
+static Int32 KT_next(void);
 static void RNG_Init_R_KT(Int32);
 static void RNG_Init_KT2(Int32);
 #define KT_pos (RNG_Table[KNUTH_TAOCP].i_seed[100])
@@ -553,7 +553,7 @@ MT_sgenrand(Int32 seed)
     (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1]
    can take any values except all zeros.                             */
 
-static double MT_genrand()
+static double MT_genrand(void)
 {
     Int32 y;
     static Int32 mag01[2]={0x0, MATRIX_A};
@@ -624,7 +624,7 @@ static long ran_arr_buf[QUALITY];
 static long ran_arr_sentinel=(long)-1;
 static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
-static long ran_arr_cycle()
+static long ran_arr_cycle(void)
 {
   ran_array(ran_arr_buf,QUALITY);
   ran_arr_buf[KK]=-1;
@@ -679,7 +679,7 @@ static void RNG_Init_KT2(Int32 seed)
     KT_pos = 100;
 }
 
-static Int32 KT_next()
+static Int32 KT_next(void)
 {
     if(KT_pos >= 100) {
 	ran_arr_cycle();

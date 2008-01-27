@@ -97,7 +97,7 @@ DllInfo *R_getDllInfo(const char *name);
 
 /* to be used by applications embedding R to register their symbols
    that are not related to any dynamic module */
-DllInfo *R_getEmbeddingDllInfo();
+DllInfo *R_getEmbeddingDllInfo(void);
 
 typedef struct Rf_RegisteredNativeSymbol R_RegisteredNativeSymbol;
 typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} NativeSymbolType;

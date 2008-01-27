@@ -231,24 +231,24 @@ RTcl_WriteConsole (const char *buf, int len)
 
 /* Indicate that input is coming from the console */
 static void
-RTcl_ResetConsole ()
+RTcl_ResetConsole (void)
 {
 }
 
 /* Stdio support to ensure the console file buffer is flushed */
 static void
-RTcl_FlushConsole ()
+RTcl_FlushConsole (void)
 {
 }
 
 
 /* Reset stdin if the user types EOF on the console. */
 static void
-RTcl_ClearerrConsole ()
+RTcl_ClearerrConsole (void)
 {
 }
 
-void RTcl_ActivateConsole ()
+void RTcl_ActivateConsole (void)
 {
     ptr_R_ReadConsole = RTcl_ReadConsole;
     ptr_R_WriteConsole = RTcl_WriteConsole;

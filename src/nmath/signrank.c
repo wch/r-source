@@ -42,7 +42,7 @@ static double *w;
 static int allocated_n;
 
 static void
-w_free()
+w_free(void)
 {
     if (!w) return;
 
@@ -51,7 +51,7 @@ w_free()
     allocated_n = 0;
 }
 
-void signrank_free()
+void signrank_free(void)
 {
     w_free();
 }

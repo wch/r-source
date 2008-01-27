@@ -376,7 +376,7 @@ static void checkNames(SEXP x, SEXP s)
 
 /* Time Series Parameters */
 
-static void badtsp()
+static void badtsp(void)
 {
     error(_("invalid time series parameters specified"));
 }
@@ -1248,7 +1248,7 @@ static SEXP s_dot_Data;
 static SEXP s_getDataPart;
 static SEXP s_setDataPart;
 
-static void init_slot_handling() {
+static void init_slot_handling(void) {
     s_dot_Data = install(".Data");
     s_getDataPart = install("getDataPart");
     s_setDataPart = install("setDataPart");

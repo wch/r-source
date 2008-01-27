@@ -284,7 +284,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 /* AllocTerm allocates an integer array for */
 /* bit string representation of a model term */
 
-static SEXP AllocTerm()
+static SEXP AllocTerm(void)
 {
     int i;
     SEXP term = allocVector(INTSXP, nwords);

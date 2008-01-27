@@ -80,7 +80,7 @@ static void assert(int bool)
 	error(("assert failed in src/library/ts/src/carray.c"));
 }
 
-static Array init_array()
+static Array init_array(void)
 {
     int i;
     Array a;

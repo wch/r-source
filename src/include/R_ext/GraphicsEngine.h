@@ -46,7 +46,7 @@ extern "C" {
 
 #define R_GE_version 4
 
-int R_GE_getVersion();
+int R_GE_getVersion(void);
 
 void R_GE_checkVersionOrDie(int version);
 
@@ -380,7 +380,7 @@ void R_GE_VText(double x, double y, const char * const s, int enc,
 /* Also in Graphics.h */
 #define	DEG2RAD 0.01745329251994329576
 
-GEDevDesc* GEcurrentDevice();
+GEDevDesc* GEcurrentDevice(void);
 Rboolean GEdeviceDirty(GEDevDesc *dd);
 void GEdirtyDevice(GEDevDesc *dd);
 Rboolean GEcheckState(GEDevDesc *dd);
@@ -391,8 +391,8 @@ void GEplayDisplayList(GEDevDesc *dd);
 void GEcopyDisplayList(int fromDevice);
 SEXP GEcreateSnapshot(GEDevDesc *dd);
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);
-void GEonExit();
-void GEnullDevice();
+void GEonExit(void);
+void GEnullDevice(void);
 
 
 #ifdef __cplusplus

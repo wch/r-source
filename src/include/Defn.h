@@ -672,7 +672,7 @@ extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
 LibExtern char *R_HistoryFile;	/* Name of the history file */
 LibExtern int	R_HistorySize;	/* Size of the history file */
 LibExtern int	R_RestoreHistory;	/* restore the history file? */
-extern void 	R_setupHistory();
+extern void 	R_setupHistory(void);
 
 /* Warnings/Errors */
 extern0 int	R_CollectWarnings INI_as(0);	/* the number of warnings */
@@ -719,7 +719,7 @@ typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP); /* typedef */
 R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
 R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t, SEXP); /* set method */
 LibExtern SEXP R_MethodsNamespace;
-SEXP R_deferred_default_method();
+SEXP R_deferred_default_method(void);
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 		       SEXP mlist);
 SEXP do_set_prim_method(SEXP op, const char *code_string, SEXP fundef,
@@ -978,7 +978,7 @@ void InitEd(void);
 void InitFunctionHashing(void);
 void InitBaseEnv(void);
 void InitGlobalEnv(void);
-Rboolean R_current_trace_state();
+Rboolean R_current_trace_state(void);
 Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, Rboolean);
@@ -1013,7 +1013,7 @@ SEXP mkQUOTE(SEXP);
 SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkTrue(void);
 SEXP NewEnvironment(SEXP, SEXP, SEXP);
-void onintr();
+void onintr(void);
 RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
 int OneIndex(SEXP, SEXP, int, int, SEXP*, int, SEXP);
@@ -1025,9 +1025,9 @@ void PrintValueRec(SEXP, SEXP);
 void PrintVersion(char *);
 void PrintVersionString(char *);
 void PrintWarnings(void);
-void process_site_Renviron();
-void process_system_Renviron();
-void process_user_Renviron();
+void process_site_Renviron(void);
+void process_system_Renviron(void);
+void process_user_Renviron(void);
 SEXP promiseArgs(SEXP, SEXP);
 void Rcons_vprintf(const char *, va_list);
 SEXP R_data_class(SEXP , Rboolean);
