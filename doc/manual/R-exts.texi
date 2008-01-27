@@ -7537,6 +7537,7 @@ provides a stricter test that the accessors have been used correctly.
 @section Character encoding issues
 
 @findex translateChar
+@findex translateCharUTF8
 As from @R{} 2.5.0 @code{CHARSXP}s can be marked as coming from a known
 encoding (Latin-1 or UTF-8).  This is mainly intended for human-readable
 output, and most packages can just treat such @code{CHARSXP}s as a
@@ -7547,6 +7548,17 @@ accessing the data in the @code{CHARSXP} by @code{translateChar} rather
 than by @code{CHAR}.  If re-encoding is needed this allocates memory
 with @code{R_alloc} which thus persists to the end of the
 @code{.Call}/@code{.External} call unless @code{vmaxset} is used.
+
+As from @R{} 2.7.0 there is a similar function @code{translateCharUTF8}
+which converts to UTF-8: this has the advatanage that a faithful
+translation is almost always possible (whereas only a few languages can
+be represented in the encoding of the current locale unless that is
+UTF-8).
+
+@R{} can be built without @code{iconv} (although this is very much
+discouraged) in which case these functions exist but do no translation:
+such a build of @R{} is in any case not suitable for handling non-ASCII
+data.
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code

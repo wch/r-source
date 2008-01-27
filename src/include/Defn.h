@@ -1123,7 +1123,6 @@ void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
-const char * translateCharUTF8(SEXP);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
