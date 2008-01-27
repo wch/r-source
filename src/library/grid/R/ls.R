@@ -324,6 +324,17 @@ gridList.vpTree <- function(x, grobs=TRUE, viewports=FALSE,
 gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
                             fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
+        # Have to account for top-level downViewports that are
+        # non-strict (i.e., they could navigate down quite a long way)
+        # In particular, when the vpPath navigates down more
+        # levels than there are names in the vpPath
+        recordedDepth <- attr(x, "depth")
+        if (!is.null(recordedDepth) && recordedDepth != depth(x)) {
+            # In this case, need to prepend a fake path on the front
+            # so that subsequent upViewport()s will work
+            x <- vpPathFromVector(c(rep("...", recordedDepth - depth(x)),
+                                    explodePath(as.character(x))))
+        }
         # This would be simpler if paths were kept as vectors
         # but that redesign is a bit of an undertaking
         if (depth(x) == 1) {
@@ -643,9 +654,13 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
     
     padPrefix <- function(path, maxLen) {
         numSpaces <- maxLen - nchar(path)
-        padding <- rep(" ", length(path))
-        padding <- mapply(rep, padding, numSpaces)
-        paste(path, sapply(padding, paste, collapse=""), sep="")
+        if (length(path) == 1) {
+            paste(path, paste(rep(" ", numSpaces), collapse=""), sep="")
+        } else {
+            padding <- rep(" ", length(path))
+            padding <- mapply(rep, padding, numSpaces)
+            paste(path, sapply(padding, paste, collapse=""), sep="")
+        }
     }
 
     if (!inherits(x, "flatGridListing"))

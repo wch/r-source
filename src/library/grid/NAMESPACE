@@ -173,6 +173,8 @@ S3method("gridList", "vpTree")
 S3method("gridList", "vpPath")
 S3method("gridList", "pop")
 S3method("gridList", "up")
+S3method("gridList", "frame")
+S3method("gridList", "cellGrob")
 
 S3method("grobHeight", "grob")
 S3method("grobHeight", "gList")

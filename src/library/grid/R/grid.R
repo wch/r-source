@@ -148,8 +148,10 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
     # Do not call set.gpar because set.gpar accumulates cex
     grid.Call.graphics("L_setGPar", pvp$gpar)
     # Record the viewport operation
+    # ... including the depth navigated down 
     if (recording) {
-      record(name)
+        attr(name, "depth") <- result
+        record(name)
     }
   } else {
     stop(gettextf("Viewport '%s' was not found", as.character(name)),
