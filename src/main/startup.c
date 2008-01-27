@@ -105,9 +105,12 @@ FILE *R_OpenSiteFile(void)
 
 	/* Saving and Restoring the Global Environment */
 
+#ifndef Win32
 static char workspace_name[100] = ".RData";
 
-#ifdef Win32
+#else
+static char workspace_name[MAX_PATH] = ".RData";
+
 void set_workspace_name(const char *fn)
 {
     strcpy(workspace_name, fn);
