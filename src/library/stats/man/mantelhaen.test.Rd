@@ -1,6 +1,6 @@
 % File src/library/stats/man/mantelhaen.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{mantelhaen.test}
@@ -101,7 +101,7 @@ Rabbits <-
 array(c(0, 0, 6, 5,
         3, 0, 3, 6,
         6, 2, 0, 4,
-        5, 1, 6, 0,
+        5, 6, 1, 0,
         2, 5, 0, 0),
       dim = c(2, 2, 5),
       dimnames = list(
