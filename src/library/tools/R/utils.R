@@ -214,7 +214,7 @@ function(file, pdf = FALSE, clean = FALSE,
         clean <- if(clean) "--clean" else ""
         if(quiet) {
             quiet <- "--quiet"
-            extra <- " > /dev/null"
+            extra <- if(.Platform$OS.type == "windows") "" else " > /dev/null"
         } else {
             extra <- quiet <- ""
         }
