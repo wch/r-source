@@ -8,7 +8,7 @@
 \alias{asS4}
 \title{ Test for an S4 object }
 \description{
-  Tests whether the object was created from a formally defined class.
+  Tests whether the object is an instance of an S4 class.
 }
 \usage{
 isS4(object)
@@ -42,6 +42,7 @@ asS4(object, value = TRUE)
   Note that S4 methods can only be set on those primitives which are
   \sQuote{\link{internal generic}} and \code{\%*\%}.
 }
+\seealso{\code{\link{is.object}}}
 \examples{
 \dontshow{require(methods)}
 isS4(pi) # FALSE
