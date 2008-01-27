@@ -13,7 +13,8 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 \arguments{
   \item{what}{\sQuote{database}.  This can be a
     \code{data.frame} or a \code{list} or a \R data file created with
-    \code{\link{save}} or \code{NULL} or an environment.  See also Details.}
+    \code{\link{save}} or \code{NULL} or an environment.  See also
+    \sQuote{Details}.}
   \item{pos}{integer specifying position in \code{\link{search}()} where
     to attach.}
   \item{name}{name to use for the attached database.}

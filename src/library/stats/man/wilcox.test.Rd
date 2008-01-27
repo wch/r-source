@@ -32,7 +32,7 @@ wilcox.test(x, \dots)
     \code{"greater"} or \code{"less"}.  You can specify just the initial
     letter.}
   \item{mu}{a number specifying an optional parameter used to form the
-    null hypothesis.  See Details.}
+    null hypothesis.  See \sQuote{Details}.}
   \item{paired}{a logical indicating whether you want a paired test.}
   \item{exact}{a logical indicating whether an exact \eqn{p}-value
     should be computed.}

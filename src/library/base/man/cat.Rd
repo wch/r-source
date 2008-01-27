@@ -15,7 +15,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   performs much less conversion than \code{\link{print}}.
 }
 \arguments{
-  \item{\dots}{\R objects (see Details for the types of objects allowed).}
+  \item{\dots}{\R objects (see \sQuote{Details} for the types of objects allowed).}
   \item{file}{A connection, or a character string naming the file
     to print to.  If \code{""} (the default), \code{cat} prints to the
     standard output connection, the console unless redirected by

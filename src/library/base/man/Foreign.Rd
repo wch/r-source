@@ -42,7 +42,7 @@
     that no other package can override their external symbols.  Use
     \code{PACKAGE="base"} for symbols linked in to \R.}
   \item{ENCODING}{optional name for an encoding to be assumed for
-    character vectors.}
+    character vectors.  See \sQuote{Details}.}
 }
 \value{
   The functions \code{.C} and \code{.Fortran} return a list similar to
@@ -62,7 +62,7 @@
 }
 \details{
   The functions \code{.C} and \code{.Fortran} can be used to make calls
-  to C and Fortran code.
+  to compiled C and Fortran code.
 
   \code{.External} and \code{.External.graphics} can be used to call
   compiled code that uses \R objects in the same way as internal
@@ -73,6 +73,10 @@
   the C code as a sequence of \R objects.  It is included to provide
   compatibility with S version 4.
 
+  Specifying \code{ENCODING} overrrides any declared encodings (see
+  \code{link{Encoding}}) which are otherwise used to translate to the
+  current locale before passing the strings to the compiled code.
+ 
   For details about how to write code to use with \code{.Call} and
   \code{.External}, see the chapter on \dQuote{System and foreign language
     interfaces} in the \dQuote{Writing \R Extensions} manual.

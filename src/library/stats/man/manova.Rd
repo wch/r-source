@@ -22,7 +22,7 @@ manova(\dots)
   object for each stratum.
 }
 \value{
-  See \code{\link{aov}} and the comments in Details here.
+  See \code{\link{aov}} and the comments in \sQuote{Details} here.
 }
 \note{
   \code{manova} does not support multistratum analysis of variance, so

@@ -32,9 +32,9 @@ optim(par, fn, gr = NULL, \dots,
    candidate point.  If it is \code{NULL} a default Gaussian Markov
    kernel is used.}
  \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
- \item{method}{The method to be used. See \bold{Details}.}
+ \item{method}{The method to be used. See \sQuote{Details}.}
  \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
- \item{control}{A list of control parameters. See \bold{Details}.}
+ \item{control}{A list of control parameters. See \sQuote{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
 }

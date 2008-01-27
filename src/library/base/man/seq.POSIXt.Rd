@@ -15,7 +15,7 @@
 \arguments{
   \item{from}{starting date. Required.}
   \item{to}{end date. Optional.}
-  \item{by}{increment of the sequence. Optional. See Details.}
+  \item{by}{increment of the sequence. Optional.  See \sQuote{Details}.}
   \item{length.out}{integer, optional. desired length of the sequence.}
   \item{along.with}{take the length from the length of this argument.}
   \item{\dots}{arguments passed to or from other methods.}

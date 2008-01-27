@@ -28,7 +28,7 @@ truncate(con, \dots)
   \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
   \item{origin}{character.  One of \code{"start"}, \code{"current"},
-    \code{"end"}: see Details.}
+    \code{"end"}: see \sQuote{Details}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{

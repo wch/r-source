@@ -41,7 +41,7 @@ cor.test(x, \dots)
   \item{exact}{a logical indicating whether an exact p-value should be
     computed.  Used for Kendall's \eqn{\tau}{tau} and
     Spearman's \eqn{\rho}{rho}.
-    See the Details for the meaning of \code{NULL} (the default).}
+    See \sQuote{Details} for the meaning of \code{NULL} (the default).}
   \item{conf.level}{confidence level for the returned confidence
     interval.  Currently only used for the Pearson product moment
     correlation coefficient if there are at least 4 complete pairs of

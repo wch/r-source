@@ -24,7 +24,8 @@ rbind(\dots, deparse.level = 1)
 \arguments{
   \item{\dots}{vectors or matrices.  These can be given as named
     arguments.  Other \R objects will be coerced as appropriate: see
-    section Details and Value.  (For the \code{"data.frame"} method of
+    sections \sQuote{Details} and \sQuote{Value}.  (For the
+    \code{"data.frame"} method of
     \code{cbind} these can be further arguments to
     \code{\link{data.frame}} such as \code{stringsAsFactors}.)}
   \item{deparse.level}{integer controlling the construction of labels in

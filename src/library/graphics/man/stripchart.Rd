@@ -63,7 +63,7 @@ stripchart(x, \dots)
     be drawn, particularly when \code{add = TRUE};
     defaults to \code{1:n} where \code{n} is the number of boxes.}
   \item{ylab, xlab}{labels: see \code{\link{title}}.}
-  \item{dlab, glab}{alternate way to specify axis labels: see Details.}
+  \item{dlab, glab}{alternate way to specify axis labels: see \sQuote{Details}.}
   \item{xlim, ylim}{plot limits: see \code{\link{plot.window}}.}
   \item{log}{on which axes to use a log scale:  see 
     \code{\link{plot.default}}}

@@ -24,7 +24,8 @@ lowess(x, y = NULL, f = 2/3, iter = 3,
   \item{iter}{the number of \sQuote{robustifying} iterations which should be
     performed.
     Using smaller values of \code{iter} will make \code{lowess} run faster.}
-  \item{delta}{See Details.  Defaults to 1/100th of the range of \code{x}.}
+  \item{delta}{See \sQuote{Details}.  Defaults to 1/100th of the range
+    of \code{x}.}
 }
 \details{
   \code{lowess} is defined by a complex algorithm, the Ratfor original

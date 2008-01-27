@@ -36,7 +36,7 @@
 #ifdef windows
   (See \sQuote{See also} for how the home directory is found on Windows.)
 #endif
-  See \bold{Details} for how the files are read.
+  See \sQuote{Details} for how the files are read.
 
   Then \R searches for the site-wide startup profile unless the command
   line option \option{--no-site-file} was given.  The name of this file

@@ -68,9 +68,9 @@ isIncomplete(con)
 }
 \arguments{
   \item{description}{character string. A description of the connection:
-    see Details.}
+    see \sQuote{Details}.}
   \item{open}{character.  A description of how to open the connection
-    (if at all).  See Details for possible values.}
+    (if at all).  See \sQuote{Details} for possible values.}
   \item{blocking}{logical.  See the \sQuote{Blocking} section below.}
   \item{encoding}{The name of the encoding to be used.  See the
     \sQuote{Encoding} section below.}

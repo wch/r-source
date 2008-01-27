@@ -35,7 +35,7 @@ attr.all.equal(target, current,
     following two, for numerical comparison:}
   \item{tolerance}{numeric \eqn{\ge}{>=} 0.  Differences smaller than
     \code{tolerance} are not considered.}
-  \item{scale}{numeric scalar > 0 (or \code{NULL}). See Details.}
+  \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}(.)} of \code{target} and \code{current}
     should be compared as well.}

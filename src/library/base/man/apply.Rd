@@ -19,7 +19,7 @@ apply(X, MARGIN, FUN, \dots)
     be applied over.
     \code{1} indicates rows, \code{2} indicates columns,
     \code{c(1,2)} indicates rows and columns.}
-  \item{FUN}{the function to be applied: see Details.
+  \item{FUN}{the function to be applied: see \sQuote{Details}.
     In the case of functions like \code{+}, \code{\%*\%}, etc., the
     function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}

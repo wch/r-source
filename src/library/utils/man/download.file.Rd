@@ -22,7 +22,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
-    are available, and there is a value \code{"auto"}: see Details.  The
+    are available, and there is a value \code{"auto"}: see \sQuote{Details}.  The
     method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.}
 

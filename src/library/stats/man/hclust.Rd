@@ -36,7 +36,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     \code{"centroid"}.}
 
   \item{members}{\code{NULL} or a vector with length size of
-    \code{d}. See the Details section.}
+    \code{d}. See the \sQuote{Details} section.}
 
   \item{x,tree}{an object of the type produced by \code{hclust}.}
 

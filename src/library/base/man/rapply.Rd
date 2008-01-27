@@ -20,7 +20,7 @@ rapply(object, f, classes = "ANY", deflt = NULL,
     \code{"ANY"} to match any class.}
   \item{deflt}{The default result (not used if \code{how = "replace"}).}
   \item{how}{A character string matching the three possibilities given:
-    see Details.}
+    see \sQuote{Details}.}
   \item{\dots}{additional arguments passed to the call to \code{f}.}
 }
 \details{

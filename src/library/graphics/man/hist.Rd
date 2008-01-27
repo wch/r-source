@@ -26,7 +26,7 @@ hist(x, \dots)
       \item a vector giving the breakpoints between histogram cells,
       \item a single number giving the number of cells for the histogram,
       \item a character string naming an algorithm to compute the
-      number of cells (see Details),
+      number of cells (see \sQuote{Details}),
       \item a function to compute the number of cells.
     }
     In the last three cases the number is a suggestion only.

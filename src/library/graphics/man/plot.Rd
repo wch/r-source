@@ -29,7 +29,7 @@ plot(x, y, \dots)
 	\item \code{"h"} for \sQuote{\bold{h}istogram} like (or
 	\sQuote{high-density}) vertical lines,
 	\item \code{"s"} for stair \bold{s}teps,
-	\item \code{"S"} for other \bold{s}teps, see \emph{Details} below,
+	\item \code{"S"} for other \bold{s}teps, see \sQuote{Details} below,
 	\item \code{"n"} for no plotting.
       }
       All other \code{type}s give a warning or an error; using, e.g.,

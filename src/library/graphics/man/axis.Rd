@@ -21,7 +21,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     2=left, 3=above and 4=right.}
   \item{at}{the points at which tick-marks are to be drawn.  Non-finite
     (infinite, \code{NaN} or \code{NA}) values are omitted.  By default,
-    when \code{NULL}, tickmark locations are computed, see Details below.}
+    when \code{NULL}, tickmark locations are computed, see \sQuote{Details} below.}
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a
     character or expression vector of labels to be placed at the
@@ -79,7 +79,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn
-  when the plot was first drawn (see Details).
+  when the plot was first drawn (see \sQuote{Details}).
   
   This function is usually invoked for its side effect, which is to add
   an axis to an already existing plot.

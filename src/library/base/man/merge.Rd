@@ -24,7 +24,8 @@ merge(x, y, \dots)
 }
 \arguments{
   \item{x, y}{data frames, or objects to be coerced to one.}
-  \item{by, by.x, by.y}{specifications of the common columns. See Details.}
+  \item{by, by.x, by.y}{specifications of the common columns.  See
+    \sQuote{Details}.}
   \item{all}{logical; \code{all = L} is shorthand for \code{all.x = L} and
     \code{all.y = L}.}
   \item{all.x}{logical; if \code{TRUE}, then extra rows will be added to

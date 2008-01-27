@@ -44,7 +44,7 @@ arima0(x, order = c(0, 0, 0),
     the fit nor predictions).}
 
   \item{delta}{A value to indicate at which point \sQuote{fast
-      recursions} should be used.  See the Details section.}
+      recursions} should be used.  See the \sQuote{Details} section.}
 
   \item{transform.pars}{Logical.  If true, the AR parameters are
     transformed to ensure that they remain in the region of

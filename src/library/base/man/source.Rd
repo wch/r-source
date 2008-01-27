@@ -39,7 +39,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     containing \code{file} for evaluating.}
   \item{encoding}{character vector.  The encoding(x) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
-    possible value is \code{"unknown"}: see the Details.}
+    possible value is \code{"unknown"}: see the \sQuote{Details}.}
   \item{continue.echo}{character; gives the prompt to use on
     continuation lines if \code{echo = TRUE}.}
   \item{skip.echo}{integer; how many comment lines at the start of the

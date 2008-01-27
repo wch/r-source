@@ -18,7 +18,7 @@ medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE,
 \arguments{
   \item{x}{a numeric matrix.}
   \item{eps}{real number greater than 0. A tolerance for convergence:
-    see \bold{Details}.}
+    see \sQuote{Details}.}
   \item{maxiter}{the maximum number of iterations}
   \item{trace.iter}{logical. Should progress in convergence be reported?}
   \item{na.rm}{logical. Should missing values be removed?}

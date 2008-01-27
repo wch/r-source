@@ -26,7 +26,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
 \arguments{
   \item{x, y}{the x and y co-ordinates to be used to position the legend.
     They can be specified by keyword or in any way which is accepted by
-    \code{\link{xy.coords}}: See Details.}
+    \code{\link{xy.coords}}: See \sQuote{Details}.}
   \item{legend}{a character or \link{expression} vector.
     of length \eqn{\ge 1}{>= 1} to appear in the legend.  Other
     objects will be coerced by \code{\link{as.graphicsAnnot}}.}

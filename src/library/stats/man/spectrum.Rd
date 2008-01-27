@@ -28,7 +28,7 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   \item{freq}{vector of frequencies at which the spectral
     density is estimated. (Possibly approximate Fourier frequencies.)
     The units are the reciprocal of cycles per unit time (and not per
-    observation spacing): see Details below.}
+    observation spacing): see \sQuote{Details} below.}
 
   \item{spec}{Vector (for univariate series) or matrix (for multivariate
     series) of estimates of the spectral density at frequencies

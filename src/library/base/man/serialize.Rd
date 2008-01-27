@@ -26,7 +26,7 @@ unserialize(connection, refhook = NULL)
   \item{object}{\R object to serialize.}
   \item{connection}{an open connection or (for \code{serialize})
     \code{NULL} or (for \code{unserialize}) a raw vector or a length-one
-    character vector (see Details).}
+    character vector (see \sQuote{Details}).}
   \item{file}{a connection or the name of the file where the R object
     is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is

@@ -67,7 +67,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     \code{deparse(substitute(x))}.}
 
   \item{var.method}{the method to estimate the innovations variance
-    (see Details).}
+    (see \sQuote{Details}).}
 
   \item{\dots}{additional arguments for specific methods.}
 

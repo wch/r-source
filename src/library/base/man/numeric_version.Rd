@@ -40,7 +40,7 @@ getRversion()
 }
 \arguments{
   \item{x}{a character vector with suitable numeric version strings (see
-    \bold{Details}); for \code{package_version}, alternatively an R
+    \sQuote{Details}); for \code{package_version}, alternatively an R
     version object as obtained by \code{\link{R.version}}.}
   \item{strict}{a logical indicating whether invalid numeric versions
     should results in an error (default) or not.}

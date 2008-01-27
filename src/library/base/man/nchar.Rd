@@ -24,7 +24,7 @@ nzchar(x)
   \item{x}{character vector, or a vector to be coerced to a character
     vector.}
   \item{type}{character string: partial matching to one of
-    \code{c("bytes", "chars", "width")}.  See Details.}
+    \code{c("bytes", "chars", "width")}.  See \sQuote{Details}.}
   \item{allowNA}{logical: show \code{NA} be returned for invalid
     multibyte strings (rather than throwing an error)?}
 }

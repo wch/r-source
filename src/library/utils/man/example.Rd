@@ -9,7 +9,7 @@
 \description{
   Run all the \R code from the \bold{Examples} part of \R's online help
   topic \code{topic} with two possible exceptions, \code{dontrun} and
-  \code{dontshow}, see Details below.
+  \code{dontshow}, see \sQuote{Details} below.
 }
 \usage{
 example(topic, package = NULL, lib.loc = NULL,

@@ -24,7 +24,7 @@
     call to \code{summary.glm}.}
   \item{dispersion}{the dispersion parameter for the family used.
     Either a single numerical value or \code{NULL} (the default), when
-    it is inferred from \code{object} (see Details).}
+    it is inferred from \code{object} (see \sQuote{Details}).}
   \item{correlation}{logical; if \code{TRUE}, the correlation matrix of
     the estimated parameters is returned and printed.}
   \item{digits}{the number of significant digits to use when printing.}

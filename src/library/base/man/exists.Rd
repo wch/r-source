@@ -22,7 +22,8 @@ exists(x, where = -1, envir = , frame, mode = "any",
     but it is usually simpler to just use the \code{where} argument.}
   \item{frame}{a frame in the calling list.  Equivalent to giving
     \code{where} as \code{sys.frame(frame)}.}
-  \item{mode}{the mode or type of object sought: see the Details section.}
+  \item{mode}{the mode or type of object sought: see the
+    \sQuote{Details} section.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
 }

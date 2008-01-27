@@ -38,7 +38,8 @@ parent.frame(n = 1)
 \arguments{
   \item{which}{the frame number if non-negative, the number of frames
     to go back if negative.}
-  \item{n}{the number of generations to go back. (See the Details section.)}
+  \item{n}{the number of generations to go back. (See the
+    \sQuote{Details} section.)}
 }
 \details{
   \code{\link{.GlobalEnv}} is given number 0 in the list of frames.
@@ -96,7 +97,7 @@ parent.frame(n = 1)
   definition, and \code{sys.frame} and \code{parent.frame} return an
   environment.
 
-  For the other functions, see the Details section.
+  For the other functions, see the \sQuote{Details} section.
 }
 
 \references{

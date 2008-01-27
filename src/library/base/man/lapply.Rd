@@ -20,7 +20,8 @@ replicate(n, expr, simplify = TRUE)
     objects (including classed objects) will be coerced by
     \code{\link{as.list}}.}
   \item{FUN}{the function to be applied to each element of \code{X}:
-    see Details.  In the case of functions like \code{+}, \code{\%*\%}, etc.,
+    see \sQuote{Details}.  In the case of functions like
+    \code{+}, \code{\%*\%}, etc.,
     the function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{logical; should the result be simplified to a vector

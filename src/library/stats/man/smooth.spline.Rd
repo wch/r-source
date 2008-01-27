@@ -142,7 +142,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 \value{
   An object of class \code{"smooth.spline"} with components
   \item{x}{the \emph{distinct} \code{x} values in increasing order, see
-  the \bold{Details} above.}
+  the \sQuote{Details} above.}
   \item{y}{the fitted values corresponding to \code{x}.}
   \item{w}{the weights used at the unique values of \code{x}.}
   \item{yin}{the y values used at the unique \code{y} values.}
