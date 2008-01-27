@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  R Development Core Team
+ *  Copyright (C) 1998--2008  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@
 
 #include <R_ext/Boolean.h>
 
-#include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h>
+/* needed for R_GE_lineend/join, R_GE_gcontext */
 
 #define R_MaxDevices 64
 

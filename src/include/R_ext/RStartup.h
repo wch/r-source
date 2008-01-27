@@ -29,7 +29,7 @@ extern "C" {
 #ifdef Win32
 typedef int (*blah1) (const char *, char *, int, int);
 typedef void (*blah2) (const char *, int);
-typedef void (*blah3) ();
+typedef void (*blah3) (void);
 typedef void (*blah4) (const char *);
 /* Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h */
