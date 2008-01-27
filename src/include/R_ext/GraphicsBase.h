@@ -34,7 +34,7 @@ typedef struct {
     Rboolean baseDevice;  
 } baseSystemState;
 
-void registerBase(); /* used in devices.c */
+void registerBase(void); /* used in devices.c */
 
 Rboolean Rf_baseDevice(DevDesc *dd); /* unused */
 void Rf_setBaseDevice(Rboolean val, DevDesc *dd); /* used in graphics.c */
