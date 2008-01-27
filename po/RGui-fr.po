@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:45+0000\n"
+"POT-Creation-Date: 2008-01-27 18:06+0000\n"
 "PO-Revision-Date: 2007-09-16 14:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -942,7 +942,7 @@ msgstr "menu introuvable"
 msgid "menu or item does not exist"
 msgstr "le menu ou l'entrée de menu n'existe pas"
 
-#: system.c:398
+#: system.c:399
 msgid "Save workspace image?"
 msgstr "Sauver une image de la session ?"
 
@@ -1042,7 +1042,7 @@ msgid "Enhanced metafiles"
 msgstr "Métafichier avancé EMF"
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:2937
+#: ../library/grDevices/src/devWindows.c:2938
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "chemin sélectionné trop long : 512 caractères maximum"
 
@@ -1215,11 +1215,11 @@ msgstr "Sauver comme postscript..."
 msgid "Locator is active"
 msgstr "Le mode de localisation à la souris est actif"
 
-#: ../library/grDevices/src/devWindows.c:3251
+#: ../library/grDevices/src/devWindows.c:3252
 msgid "Waiting to confirm page change..."
 msgstr "Changement de page : attente de confirmation..."
 
-#: ../library/grDevices/src/devWindows.c:3263
+#: ../library/grDevices/src/devWindows.c:3264
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
 

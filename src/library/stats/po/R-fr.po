@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-01-27 18:05\n"
 "PO-Revision-Date: 2007-04-13 12:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1144,6 +1144,10 @@ msgstr "valeurs des paramètres incorrectes"
 
 msgid "a limit is missing"
 msgstr "il manque une limite"
+
+#, fuzzy
+msgid "missing values not allowed"
+msgstr "valeurs manquantes non autorisées dans 'poly'"
 
 msgid "'r' is less than 1"
 msgstr "'r' est inférieur à 1"

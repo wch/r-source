@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:45+0000\n"
+"POT-Creation-Date: 2008-01-27 18:06+0000\n"
 "PO-Revision-Date: 2007-09-11 03:38+0900 \n"
 "Last-Translator: freeparis2 <freeparis2@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -937,7 +937,7 @@ msgstr " メニューが見つかりません "
 msgid "menu or item does not exist"
 msgstr " メニューまたはアイテムが存在しません "
 
-#: system.c:398
+#: system.c:399
 msgid "Save workspace image?"
 msgstr " 作業スペースを保存しますか? "
 
@@ -1038,7 +1038,7 @@ msgid "Enhanced metafiles"
 msgstr " Enhanced metafiles "
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:2937
+#: ../library/grDevices/src/devWindows.c:2938
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr " 選択されたファイルパスが長すぎます: 512 バイトまでです "
 
@@ -1211,11 +1211,11 @@ msgstr " ポストスクリプトに保存... "
 msgid "Locator is active"
 msgstr " Locator はアクティブです "
 
-#: ../library/grDevices/src/devWindows.c:3251
+#: ../library/grDevices/src/devWindows.c:3252
 msgid "Waiting to confirm page change..."
 msgstr " ページ変更を確認するまで待機中... "
 
-#: ../library/grDevices/src/devWindows.c:3263
+#: ../library/grDevices/src/devWindows.c:3264
 msgid "Click or hit ENTER for next page"
 msgstr " クリックまたは ENTER キーを押すと次のページに移ります "
 

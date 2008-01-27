@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:45+0000\n"
+"POT-Creation-Date: 2008-01-27 18:06+0000\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -929,7 +929,7 @@ msgstr "메뉴가 검색되지 못했습니다"
 msgid "menu or item does not exist"
 msgstr "menu 또는 item는 존재하지 않습니다"
 
-#: system.c:398
+#: system.c:399
 msgid "Save workspace image?"
 msgstr "workspace(imaga)를 보존하겠습니까?"
 
@@ -1029,7 +1029,7 @@ msgid "Enhanced metafiles"
 msgstr "강화된 metafiles"
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:2937
+#: ../library/grDevices/src/devWindows.c:2938
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "선택되어져 있는 파일경로는 너무 큽니다: 512의 바이트만 허용됩니다"
 
@@ -1202,11 +1202,11 @@ msgstr "postscript에 저장..."
 msgid "Locator is active"
 msgstr "전파이(가) 활발합니다"
 
-#: ../library/grDevices/src/devWindows.c:3251
+#: ../library/grDevices/src/devWindows.c:3252
 msgid "Waiting to confirm page change..."
 msgstr "페이지 변경을 확인하는까지 기다리는 중..."
 
-#: ../library/grDevices/src/devWindows.c:3263
+#: ../library/grDevices/src/devWindows.c:3264
 msgid "Click or hit ENTER for next page"
 msgstr "click 또는 ENTER 키를 누르는 것으로 다음 페이지로 이동됩니다"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32+0000\n"
+"POT-Creation-Date: 2008-01-27 18:05+0000\n"
 "PO-Revision-Date: 2005-06-02 16:09+0900 \n"
 "Last-Translator: Nobuo Funao \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -49,12 +49,12 @@ msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 msgid "Non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:3007
+#: grid.c:3000
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr " 不正な layout.pos.col です "
 
-#: grid.c:3087
+#: grid.c:3080
 msgid "Unable to clip to rotated rectangle"
 msgstr " 回転矩形へクリップ出来ません "
 

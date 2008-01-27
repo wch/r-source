@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-01-27 18:05\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1135,6 +1135,10 @@ msgstr "무효인 파라미터 값입니다"
 
 msgid "a limit is missing"
 msgstr "한계가 없습니다"
+
+#, fuzzy
+msgid "missing values not allowed"
+msgstr "결측치 'poly'에서는 허용되지 않습니다"
 
 msgid "'r' is less than 1"
 msgstr "'r'은 1미만입니다"

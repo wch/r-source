@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32+0000\n"
+"POT-Creation-Date: 2008-01-27 18:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,11 +48,11 @@ msgstr ""
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:3007
+#: grid.c:3000
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: grid.c:3087
+#: grid.c:3080
 msgid "Unable to clip to rotated rectangle"
 msgstr ""
 

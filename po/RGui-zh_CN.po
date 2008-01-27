@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:45+0000\n"
+"POT-Creation-Date: 2008-01-27 18:06+0000\n"
 "PO-Revision-Date: 2005-05-20 18:16+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -914,7 +914,7 @@ msgstr "找不到菜单"
 msgid "menu or item does not exist"
 msgstr "菜单或者项目不存在"
 
-#: system.c:398
+#: system.c:399
 msgid "Save workspace image?"
 msgstr "保存工作空间映像?"
 
@@ -1014,7 +1014,7 @@ msgid "Enhanced metafiles"
 msgstr "优化metafiles"
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:2937
+#: ../library/grDevices/src/devWindows.c:2938
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "选择文件路径太长：最多只能有512字节"
 
@@ -1187,11 +1187,11 @@ msgstr "保存成postscript..."
 msgid "Locator is active"
 msgstr "定位器待用"
 
-#: ../library/grDevices/src/devWindows.c:3251
+#: ../library/grDevices/src/devWindows.c:3252
 msgid "Waiting to confirm page change..."
 msgstr "等待页面改变的确认..."
 
-#: ../library/grDevices/src/devWindows.c:3263
+#: ../library/grDevices/src/devWindows.c:3264
 msgid "Click or hit ENTER for next page"
 msgstr "按ENTER来看下一页"
 
