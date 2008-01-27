@@ -61,6 +61,10 @@ BUG FIXES
 
     o	If Rterm is invoked as 'R', the status code (as passed to q())
 	is now returned (rather than 0 or 1).
+	
+    o	Double clicking on a saved workspace (or dragging and dropping it
+	onto Rgui.exe) failed to open it if the Rprofile or Rprofile.site file
+	changed the working directory.
 
 
 OTHERS
