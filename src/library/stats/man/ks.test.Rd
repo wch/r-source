@@ -1,6 +1,6 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
@@ -51,7 +51,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   case), respectively.  This is a comparison of cumulative distribution
   functions, and the test statistic is the maximum difference in value,
   with the statistic in the \code{"greater"} alternative being
-  \eqn{D^+ = max_u [ F_x(u) - F_y(u) ]}.   Thus in the two-sample case
+  \eqn{D^+ = \max_u [ F_x(u) - F_y(u) ]}.   Thus in the two-sample case
   \code{alternative="greater"} includes distributions for which \code{x}
   is stochastically \emph{smaller} than \code{y} (the CDF of \code{x} lies
   above and hence to the left of that for \code{y}), in contrast to
