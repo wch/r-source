@@ -74,7 +74,7 @@
 #endif
 
 #include <Defn.h>
-#include <Graphics.h> /* display lists */
+#include <Graphics.h> /* R_MaxDevices ... */
 #include <Rdevices.h> /* GetDevice */
 
 #if defined(Win32) && defined(LEA_MALLOC)

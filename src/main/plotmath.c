@@ -190,7 +190,7 @@ static double DescDepth(R_GE_gcontext *gc, GEDevDesc *dd)
 }
 
 /* Thickness of rules */
-static double RuleThickness()
+static double RuleThickness(void)
 {
     return 0.015;
 }
@@ -495,7 +495,7 @@ static BBOX MakeBBox(double height, double depth, double width)
     return bbox;
 }
 
-static BBOX NullBBox()
+static BBOX NullBBox(void)
 {
     BBOX bbox;
     bboxHeight(bbox) = 0;

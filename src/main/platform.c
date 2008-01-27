@@ -189,7 +189,7 @@ void attribute_hidden Init_R_Variables(SEXP rho)
 /* BDR 2000/7/20.
  *  time and ctime are in fact ANSI C calls, so we don't check them.
  */
-static char *R_Date(oid)
+static char *R_Date(void)
 {
     time_t t;
     static char s[26];		/* own space */
@@ -1172,7 +1172,7 @@ static int R_unlink(wchar_t *name, int recursive)
     return _wunlink(name) == 0 ? 0 : 1;
 }
 
-void R_CleanTempDir()
+void R_CleanTempDir(void)
 {
     if(Sys_TempDir) {
 	wchar_t *w;

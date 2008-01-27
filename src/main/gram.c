@@ -2704,7 +2704,7 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP xxexprlist0()
+static SEXP xxexprlist0(void)
 {
     SEXP ans;
     if (GenerateCode) {
@@ -2797,7 +2797,7 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP xxnullsub0()
+static SEXP xxnullsub0(void)
 {
     SEXP ans;
     UNPROTECT_PTR(R_NilValue);
@@ -3300,7 +3300,7 @@ static int	SavedToken;
 static SEXP	SavedLval;
 static char	contextstack[CONTEXTSTACK_SIZE], *contextp;
 
-static void ParseInit()
+static void ParseInit(void)
 {
     contextp = contextstack;
     *contextp = ' ';
@@ -3315,7 +3315,7 @@ static void ParseInit()
     npush = 0;
 }
 
-static void ParseContextInit()
+static void ParseContextInit(void)
 {
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
@@ -3365,7 +3365,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 
 static IoBuffer *iob;
 
-static int buffer_getc()
+static int buffer_getc(void)
 {
     return R_IoBufferGetc(iob);
 }
@@ -3385,7 +3385,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 
 static TextBuffer *txtb;
 
-static int text_getc()
+static int text_getc(void)
 {
     return R_TextBufferGetc(txtb);
 }
@@ -4531,7 +4531,7 @@ static int SymbolValue(int c)
 /* Split the input stream into tokens. */
 /* This is the lowest of the parsing levels. */
 
-static int token()
+static int token(void)
 {
     int c;
 #if defined(SUPPORT_MBCS)
@@ -4726,7 +4726,7 @@ static int token()
     }
 }
 
-static void setlastloc()
+static void setlastloc(void)
 {
     yylloc.last_line = xxlineno;
     yylloc.last_column = xxcolno;

@@ -92,7 +92,7 @@ static SEXP insertString(char *str, LocalData *l)
 #define Rspace(c) (c == ' ' || c == '\t' || c == '\n' || c == '\r')
 
 /* used by readline() and menu() */
-static int ConsoleGetchar()
+static int ConsoleGetchar(void)
 {
     if (--ConsoleBufCnt < 0) {
 	ConsoleBuf[CONSOLE_BUFFER_SIZE] = '\0';

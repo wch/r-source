@@ -38,7 +38,6 @@ extern void R_ProcessEvents(void);
 #include <Startup.h> /* rather cleanup ..*/
 #include <Rconnections.h>
 #include <Rinterface.h>
-#include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h> /* for GEonExit */
 #include <Rmath.h> /* for imax2 */
 #if  !( defined(HAVE_AQUA) || defined(Win32) )
@@ -1414,7 +1413,7 @@ SEXP attribute_hidden do_resetCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-static SEXP findSimpleErrorHandler()
+static SEXP findSimpleErrorHandler(void)
 {
     SEXP list;
     for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
@@ -1553,7 +1552,7 @@ SEXP attribute_hidden do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho
     return R_NilValue;
 }
 
-static SEXP findInterruptHandler()
+static SEXP findInterruptHandler(void)
 {
     SEXP list;
     for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
@@ -1565,7 +1564,7 @@ static SEXP findInterruptHandler()
     return R_NilValue;
 }
 
-static SEXP getInterruptCondition()
+static SEXP getInterruptCondition(void)
 {
     /**** FIXME: should probably pre-allocate this */
     SEXP cond, klass;

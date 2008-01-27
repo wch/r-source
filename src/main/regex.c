@@ -2838,8 +2838,7 @@ weak_alias (__re_set_syntax, re_set_syntax)
 #endif
 
 static int
-re_compile_fastmap (bufp)
-    struct re_pattern_buffer *bufp;
+re_compile_fastmap(struct re_pattern_buffer *bufp)
 {
   re_dfa_t *dfa = (re_dfa_t *) bufp->buffer;
   char *fastmap = bufp->fastmap;

@@ -957,7 +957,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 }
 
 #ifdef BYTECODE
-static SEXP MakeCircleHashTable()
+static SEXP MakeCircleHashTable(void)
 {
     return CONS(R_NilValue, allocVector(VECSXP, HASHSIZE));
 }

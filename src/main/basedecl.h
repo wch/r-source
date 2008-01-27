@@ -47,16 +47,16 @@ SEXP qr_coef_real(SEXP, SEXP);
 SEXP qr_qy_real(SEXP, SEXP, SEXP);
 SEXP det_ge_real(SEXP, SEXP);
 
-void signrank_free();
-void wilcox_free();
+void signrank_free(void);
+void wilcox_free(void);
 
-SEXP R_getTaskCallbackNames();
+SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
 
 SEXP R_getSymbolInfo(SEXP, SEXP, SEXP);
-SEXP R_getDllTable();
+SEXP R_getDllTable(void);
 SEXP R_getRegisteredRoutines(SEXP);
 
 SEXP R_isMethodsDispatchOn(SEXP);
@@ -94,7 +94,7 @@ SEXP R_lazyLoadDBflush(SEXP);
 SEXP R_get_primname(SEXP op) ;
 
 #ifdef BYTECODE
-SEXP R_getbcprofcounts();
-SEXP R_startbcprof();
-SEXP R_stopbcprof();
+SEXP R_getbcprofcounts(void);
+SEXP R_startbcprof(void);
+SEXP R_stopbcprof(void);
 #endif
