@@ -39,7 +39,7 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData);
 int R_Proxy_evaluate_noreturn (char const* pCmd);
 int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData);
 int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData);
-int R_Proxy_term ();
+int R_Proxy_term (void);
 
 /* 06-06-18 | baier | removed vsize and nsize, added dm, reuseR */
 struct _R_Proxy_init_parameters

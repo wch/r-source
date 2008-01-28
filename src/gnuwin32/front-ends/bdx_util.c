@@ -48,12 +48,12 @@ int bdx_trace_printf(char const* pFormat,...)
 #endif
 
 /* 05-05-15 | baier | now WINAPI */
-BDX_Data* WINAPI bdx_alloc()
+BDX_Data* WINAPI bdx_alloc(void)
 {
   BDX_Data* lData = NULL;
 
   lData = (BDX_Data*) malloc(sizeof(BDX_Data));
-  memset(lData,0,sizeof(BDX_Data));
+  memset(lData, 0, sizeof(BDX_Data));
   lData->version = BDX_VERSION;
 
   return lData;

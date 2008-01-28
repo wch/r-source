@@ -1,7 +1,7 @@
 /*******************************************************************************
  *  RProxy: Connector implementation between application and R language
  *  Copyright (C) 1999--2006 Thomas Baier
- *  Copyright 2006 R Development Core Team
+ *  Copyright 2006-8 R Development Core Team
  *
  *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--2000
  *                                  R Development Core Team
@@ -49,7 +49,7 @@
 struct _R_Proxy_init_parameters g_R_Proxy_init_parameters = { 0 };
 
 /* calls into the R DLL */
-extern char *getRHOME();
+extern char *getRHOME(void);
 
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
@@ -95,7 +95,7 @@ static void R_Proxy_WriteConsole(const char *buf, int len)
   }
 }
 
-static void R_Proxy_CallBack()
+static void R_Proxy_CallBack(void)
 {
     /* called during i/o, eval, graphics in ProcessEvents */
 }
@@ -383,7 +383,7 @@ int R_Proxy_set_symbol (char const* pSymbol, BDX_Data const* pData)
   return SC_PROXY_OK;
 }
 
-int R_Proxy_term ()
+int R_Proxy_term (void)
 {
   /* end_Rmainloop(); note, this never returns */
   Rf_endEmbeddedR(0);

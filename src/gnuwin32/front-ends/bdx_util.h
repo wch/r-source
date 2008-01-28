@@ -46,7 +46,7 @@ struct _BDX_Data;
 /*
  * allocate/release the BDX memory
  */
-struct _BDX_Data* WINAPI bdx_alloc();
+struct _BDX_Data* WINAPI bdx_alloc(void);
 void WINAPI bdx_free(struct _BDX_Data* data);
 void WINAPI bdx_trace(struct _BDX_Data* data); /* trace using OutputDebugString() */
 
@@ -54,7 +54,7 @@ void WINAPI bdx_trace(struct _BDX_Data* data); /* trace using OutputDebugString(
  * control BDX data conversion
  */
 void bdx_set_datamode(unsigned long pDM);
-unsigned long bdx_get_datamode();
+unsigned long bdx_get_datamode(void);
 
 #ifdef __cplusplus
 }

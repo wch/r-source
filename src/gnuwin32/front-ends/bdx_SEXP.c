@@ -594,7 +594,7 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
   return 0;
 }
 
-unsigned long bdx_get_datamode()
+unsigned long bdx_get_datamode(void)
 {
   return s_data_mode;
 }
