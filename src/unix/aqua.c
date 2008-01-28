@@ -34,6 +34,7 @@
 
 #include <Rdevices.h>
 #include <R_ext/GraphicsDevice.h> 
+#include <R_ext/Rdynload.h>
  
 extern Rboolean useaqua; /* from src/unix/system.c */
 
