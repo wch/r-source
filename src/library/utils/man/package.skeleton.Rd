@@ -1,6 +1,6 @@
 % File src/library/utils/man/package.skeleton.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{package.skeleton}
@@ -20,19 +20,20 @@ package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
 \arguments{
   \item{name}{character string: the directory name for your package.}
   \item{list}{character vector naming the \R objects to put in the
-    package.}
-  \item{environment}{if \code{list} is omitted and \code{code_files} is
-    empty, the contents of this environment are packaged.}
+    package.  Defaults to the non-hidden files in \code{environment}
+    (those whose name does not start with \code{.}).}
+  \item{environment}{an environment where objects are looked for
+    (unless \code{code_files} is used).}
   \item{path}{path to put the package directory in.}
   \item{force}{If \code{FALSE} will not overwrite an existing
     directory.}
   \item{namespace}{a logical indicating whether to add a name space for
     the package.}
   \item{code_files}{a character vector with the paths to R code files to
-    build the package around.}
+    build the package around.  Used only if \code{list} is missing.}
 }
 \value{
-  used for its side-effects.
+  Used for its side-effects.
 }
 \details{
   The package sources are placed in subdirectory \code{name} of
