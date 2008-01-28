@@ -132,7 +132,7 @@ cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 and proceed as above.  If you want the build to be usable by a group of
 users, set @code{umask} before unpacking so that the files will be
-readable by the target group (e.g., @code{umask 022} to be usable by all
+readable by the target group (e.g.,@: @code{umask 022} to be usable by all
 users).  (Keep this setting of @code{umask} whilst building and
 installing.)
 
@@ -306,8 +306,9 @@ functionality, but you should look carefully at any reported
 discrepancies.  (Note that the tests may not run successfully in all
 locales: we expect them to do so using an 8-bit or UTF-8 character set,
 but probably not using other multibyte character sets.  If you have
-problems try @code{C} or an English locale -- a UTF-8 locale if you
-usually use UTF-8.)
+problems try an English locale -- a UTF-8 locale if you
+usually use UTF-8.  On some systems they will not work in the @code{C}
+locale, since that may exclude all non-ASCII characters.)
 
 To re-run the tests including those successfully run you would need
 
@@ -705,8 +706,8 @@ wise to use explicit names for each, and you may also need to set
 @option{libdir} to ensure that they install into the same place.
 
 On Linux, there is an alternative mechanism for mixing 32-bit and
-64-bit libraries known as multilib. If a Linux distribution supports
-multilib, then parallel builds of R may be installed in the
+64-bit libraries known as @emph{multilib}. If a Linux distribution supports
+multilib, then parallel builds of @R{} may be installed in the
 sub-directories @file{lib} (32-bit) and @file{lib64} (64-bit).  The
 build to be run may then be chosen using the @command{setarch}
 command. For example, a 32-bit build may be chosen by
@@ -716,9 +717,28 @@ setarch i686 R
 @end example
 
 The @command{setarch} command is only operational if both 32-bit and
-64-bit builds are installed. If there is only one installation of R,
+64-bit builds are installed. If there is only one installation of @R{},
 then this will always be run regardless of the architecture specified
 by the @command{setarch} command.
+
+There can be problems with installing packages on the non-native
+architecture.  It is a good idea to run e.g.@: @code{setarch i686 R} for
+sessions in which packages are to be installed, even if that is the only
+version of @R{} installed (since this tells the package installation
+code the architecture needed).
+
+At present there is a protential problem with packages using Java, as
+the post-install for a @cputype{i386} RPM on @cputype{x86_64} Linux
+reconfigures Java and will find the @cputype{x86_64} Java.  If you know
+where a 32-bit Java is installed you may be able to run (as root)
+
+@example
+export JAVA_HOME=<path to jre directory of 32-bit Java>
+setarch i686 R CMD javareconf
+@end example
+
+@noindent
+to get a suitable setting.
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
@@ -775,7 +795,7 @@ The @file{Rtools.exe} executable installer described in @ref{The
 Windows toolset} also includes some additions to the @R{} source as
 noted below. You should run it first, to obtain a working @code{tar}
 and other necessities.  Choose a ``Full installation'', and install
-the extra files into your intended @R{} source directory, e.g.
+the extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @var{R_HOME} below.
 
@@ -2062,7 +2082,7 @@ enough to build a working @R{}.}
 @chapter The standalone Rmath library
 
 The routines supporting the distribution and
-special@footnote{e.g. Bessel, beta and gamma function} functions in @R{}
+special@footnote{e.g.@: Bessel, beta and gamma function} functions in @R{}
 and a few others are declared in C header file @file{Rmath.h}.  These
 can be compiled into a standalone library for linking to other
 applications.  (Note that they are not a separate library when @R{} is
@@ -2152,7 +2172,7 @@ will make standalone libraries @file{libRmath.a} and @file{libRmath.so}.
 @strong{NB:} certain compilers are unable to do compile-time IEEE-754
 arithmetic and so cannot compile @file{mlutils.c} and several other
 files.  The known example is earlier versions of Sun's @code{cc}
-(e.g. Forte 6 and 7): the Sun Studio 11 suite does work.
+(e.g.@: Forte 6 and 7): the Sun Studio 11 suite does work.
 
 
 To use the routines in your own C or C++ programs, include
@@ -3421,7 +3441,7 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 the additional flags being needed to problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
 
-On some@footnote{e.g. Fedora Core 5} @code{glibc} systems,
+On some@footnote{e.g.@: Fedora Core 5} @code{glibc} systems,
 @samp{-fgnu89-inline} needs to be added to @option{CFLAGS} when using
 the (currently unreleased) @command{gcc}@tie{}4.3.0, since
 @file{wchar.h} is not set up properly for C99-style inlines.
