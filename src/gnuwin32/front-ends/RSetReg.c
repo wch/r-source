@@ -24,7 +24,7 @@
 
 #define REG_KEY_NAME "Software\\R-core\\R"
 
-extern char *getRHOME(); /* in ../rhome.c */
+extern char *getRHOME(void); /* in ../rhome.c */
 
 int main (int argc, char **argv)
 {

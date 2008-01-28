@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <Rversion.h>
 
-extern char *getRHOME(), *getRUser(); /* in ../rhome.c */
+extern char *getRHOME(void), *getRUser(void); /* in ../rhome.c */
 
 void R_Suicide(char *s) /* for use in ../rhome.o */
 {

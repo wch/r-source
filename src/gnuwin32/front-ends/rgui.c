@@ -33,10 +33,10 @@ extern void Rf_mainloop(void);
 __declspec(dllimport) extern UImode CharacterMode;
 extern void GA_exitapp(void);
 
-extern char *getDLLVersion();
+extern char *getDLLVersion(void);
 
 static char Rversion[25];
-char *getRVersion()
+char *getRVersion(void)
 {
     snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     return(Rversion);
