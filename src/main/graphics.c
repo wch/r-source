@@ -2060,7 +2060,7 @@ void GSetupAxis(int axis, DevDesc *dd)
 
  * Called from baseCallback.
  */
-int Rf_GetOptionParAsk(); /* from options.c */
+int Rf_GetOptionParAsk(void); /* from options.c */
 
 void attribute_hidden GInit(GPar *dp)
 {

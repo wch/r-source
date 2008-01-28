@@ -65,7 +65,7 @@ typedef objinfo *object;
 rect getcliprect(void);
 void setcliprect(rect r);
 PROTECTED void updatestatus(const char *text);
-PROTECTED font new_font_object();
+PROTECTED font new_font_object(HFONT hf);
 
 #ifdef __cplusplus
 extern "C" {
@@ -344,7 +344,7 @@ struct callinfo
 /* Dialog event management */
 
   PROTECTED void handle_findreplace(HWND hwnd, LPFINDREPLACE pfr);
-  PROTECTED HWND get_modeless();
+  PROTECTED HWND get_modeless(void);
 
 /* Drawing context management. */
 

@@ -55,7 +55,7 @@ static xbuf pagerXbuf[PAGERMAXKEPT];
 static char pagerTitles[PAGERMAXKEPT][PAGERMAXTITLE+8];
 static menuitem pagerMenus[PAGERMAXKEPT];
 static int pagerRow[PAGERMAXKEPT];
-static void pagerupdateview();
+static void pagerupdateview(void);
 
 void menueditoropen(control m);
 void menueditornew(control m);
@@ -250,7 +250,7 @@ static void pagerchangeview(control m)
     pagerupdateview();
 }
 
-static void pagerupdateview()
+static void pagerupdateview(void)
 {
     control c = pagerInstance;
     ConsoleData p = getdata(c);
@@ -347,9 +347,9 @@ static void pagermenuact(control m)
 
 
 #define MCHECK(a) if (!(a)) {freeConsoleData(p);del(c);return NULL;}
-RECT *RgetMDIsize(); /* in rui.c */
+RECT *RgetMDIsize(void); /* in rui.c */
 
-static pager pagercreate()
+static pager pagercreate(void)
 {
     ConsoleData p;
     int w, h, i, x, y, w0, h0;

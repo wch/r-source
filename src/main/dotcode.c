@@ -1559,7 +1559,7 @@ SEXP attribute_hidden do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 static SEXP
-Rf_getCallingDLL()
+Rf_getCallingDLL(void)
 {
     SEXP e, ans;
     RCNTXT *cptr;

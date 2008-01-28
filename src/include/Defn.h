@@ -313,14 +313,12 @@ extern int putenv(char *string);
 # define _R_HAVE_TIMING_ 1
 #endif
 
-#include <R_ext/Rdynload.h>
-
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
 
 /* The type of the do_xxxx functions. */
 /* These are the built-in R functions. */
-typedef SEXP (*CCODE)();
+typedef SEXP (*CCODE)(SEXP, SEXP, SEXP, SEXP);
 
 /* Information for Deparsing Expressions */
 typedef enum {

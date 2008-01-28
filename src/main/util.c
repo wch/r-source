@@ -643,7 +643,7 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <windows.h>
 #endif
 
-SEXP static intern_getwd()
+SEXP static intern_getwd(void)
 {
     SEXP rval = R_NilValue;
     char buf[PATH_MAX+1];

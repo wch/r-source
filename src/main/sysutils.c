@@ -192,7 +192,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 
           /* The location of the R system files */
 
-char *R_HomeDir()
+char *R_HomeDir(void)
 {
     return getenv("R_HOME");
 }

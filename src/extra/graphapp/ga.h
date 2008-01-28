@@ -38,7 +38,7 @@ void 	gabeep(void);
 /* windows.c */
 #define Border      	0x10100000L
 void	app_cleanup(void);
-int 	ismdi();
+int 	ismdi(void);
 int	isiconic(window w);
 rect 	screen_coords(control c);
 
@@ -56,9 +56,9 @@ typedef struct {
 #define ENDSUBMENU {"#ENDSUBMENU", 0, 0}
 #define MDIMENU {"#MDIMENU", 0, 0}
 #define LASTMENUITEM {0, 0, 0}
-menu 	newmdimenu();
+menu 	newmdimenu(void);
 typedef menu popup;
-popup 	newpopup();
+popup 	newpopup(actionfn fn);
 menubar gmenubar(actionfn fn, MenuItem []);
 popup 	gpopup(actionfn fn, MenuItem []);
 void 	gchangepopup(window w, popup p);
@@ -70,13 +70,13 @@ void 	gchangemenubar(menubar mb);
 int 	addtooltip(control c, const char *tp);
 
 /* status.c */
-int 	addstatusbar();
-int 	delstatusbar();
+int 	addstatusbar(void);
+int 	delstatusbar(void);
 void 	setstatus(const char *text);
 
 /* dialogs.c */
 void 	setuserfilter(const char *);
-void    askchangedir();
+void    askchangedir(void);
 char *	askcdstring(const char *question, const char *default_string);
 char *	askfilesavewithdir(const char *title, const char *default_name, 
 			   const char *dir);
@@ -90,14 +90,14 @@ rgb     nametorgb(const char *colourname);
 const char *  rgbtoname(rgb in);
 int     rgbtonum(rgb in);
 rgb     myGetSysColor(int);
-rgb 	dialog_bg();
+rgb 	dialog_bg(void);
 
 
 /* clipboard.c */
 void    copytoclipboard(drawing src);
 int     copystringtoclipboard(const char *str);
 int     getstringfromclipboard(char * str, int n);
-int     clipboardhastext();
+int     clipboardhastext(void);
 
 /* gimage.c */
 image  bitmaptoimage(bitmap bm);
@@ -105,7 +105,7 @@ image  bitmaptoimage(bitmap bm);
 /* printer.c  */
 typedef objptr printer;
 printer newprinter(double w,  double h, const char *name);
-void    nextpage();
+void    nextpage(printer p);
 
 /* metafile.c */
 typedef objptr metafile;
@@ -192,7 +192,7 @@ void 	gsetcursor(drawing d, cursor c);
 control newtoolbar(int height);
 button  newtoolbutton(image img, rect r, actionfn fn);
 void 	scrolltext(textbox c, int lines);
-int 	ggetkeystate();
+int 	ggetkeystate(void);
 
 void 	scrollcaret(textbox c, int lines);
 void    gsetmodified(textbox c, int modified);
@@ -203,21 +203,21 @@ void getseltext(textbox c, char *text);
 void setlimittext(textbox t, long limit);
 long getlimittext(textbox t);
 void checklimittext(textbox t, long n);
-long getpastelength();
+long getpastelength(void);
 void textselectionex(control obj, long *start, long *end);
 void selecttextex(control obj, long start, long end);
 
 void finddialog(textbox t);
 void replacedialog(textbox t);
-int modeless_active();
+int modeless_active(void);
 
 
 /* menus.c */
 void 	remove_menu_item(menuitem obj);
 
 /* events.c */
-void toolbar_show();
-void toolbar_hide();
+void toolbar_show(void);
+void toolbar_hide(void);
 
 #endif /* __GA__VERSION */
 

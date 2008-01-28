@@ -46,7 +46,7 @@ void consolepastecmds(console c);
 void consoleselectall(console c);
 void consolecmd(console c, const char *cmd);
 void consolenewline(console c);
-void consolehelp();
+void consolehelp(void);
 void consolesetbrk(console c, actionfn, char ch, char mod);
 void consoletogglelazy(console c);
 int  consolegetlazy(console c);

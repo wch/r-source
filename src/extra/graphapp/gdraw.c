@@ -39,7 +39,7 @@ typedef BOOL
 
 static alpha_blend_t pAlphaBlend;
 
-static int haveAlpha()
+static int haveAlpha(void)
 {
     static int haveAlphaBlend = -1;
 

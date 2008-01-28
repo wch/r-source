@@ -30,7 +30,7 @@
 
 extern IoBuffer R_ConsoleIob;
 
-SEXP attribute_hidden getParseContext()
+SEXP attribute_hidden getParseContext(void)
 {
     int i, last = PARSE_CONTEXT_SIZE;
     char context[PARSE_CONTEXT_SIZE+1];

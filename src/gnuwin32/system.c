@@ -48,8 +48,8 @@
 
 #include "win-nls.h"
 
-void R_CleanTempDir();		/* from extra.c */
-void editorcleanall();                  /* from editor.c */
+void R_CleanTempDir(void);		/* from extra.c */
+void editorcleanall(void);                  /* from editor.c */
 
 int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
 
@@ -75,15 +75,15 @@ static char oldtitle[512];
 __declspec(dllexport) Rboolean UserBreak = FALSE;
 
 /* callbacks */
-static void (*R_CallBackHook) ();
-static void R_DoNothing() {}
+static void (*R_CallBackHook) (void);
+static void R_DoNothing(void) {}
 static void (*my_R_Busy)(int);
 
 /*
  *   Called at I/O, during eval etc to process GUI events.
  */
 
-void (* R_tcldo)() = NULL; /* Initialized to be sure */
+void (* R_tcldo)(void) = NULL; /* Initialized to be sure */
 
 void R_ProcessEvents(void)
 {
@@ -332,14 +332,14 @@ TermWriteConsole(const char *buf, int len)
 
 	/* Indicate that input is coming from the console */
 
-void R_ResetConsole()
+void R_ResetConsole(void)
 {
 }
 
 
 	/* Stdio support to ensure the console file buffer is flushed */
 
-void R_FlushConsole()
+void R_FlushConsole(void)
 {
     if (CharacterMode == RTerm && R_Interactive) fflush(stdin);
     else if (CharacterMode == RGui && RConsole) consoleflush(RConsole);
@@ -348,7 +348,7 @@ void R_FlushConsole()
 
 	/* Reset stdin if the user types EOF on the console. */
 
-void R_ClearerrConsole()
+void R_ClearerrConsole(void)
 {
     if (CharacterMode == RTerm)  clearerr(stdin);
 }
@@ -620,8 +620,8 @@ static int char_YesNoCancel(const char *s)
 
 static char RHome[MAX_PATH + 7];
 static char UserRHome[MAX_PATH + 7];
-extern char *getRHOME(), *getRUser(); /* in rhome.c */
-void R_setStartTime();
+extern char *getRHOME(void), *getRUser(void); /* in rhome.c */
+void R_setStartTime(void);
 
 
 void R_SetWin32(Rstart Rp)
@@ -751,7 +751,7 @@ char *PrintUsage(void)
     return msg;
 }
 
-void R_setupHistory()
+void R_setupHistory(void)
 {
     int value, ierr;
     char *p;
@@ -1035,13 +1035,13 @@ int cmdlineoptions(int ac, char **av)
 }
 
 /* only for back-compatibility: used by Rserve */
-void setup_term_ui()
+void setup_term_ui(void)
 {
     initapp(0, 0);
     readconsolecfg();
 }
 
-void saveConsoleTitle()
+void saveConsoleTitle(void)
 {
     GetConsoleTitle(oldtitle, 512);
 }

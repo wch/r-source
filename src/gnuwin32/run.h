@@ -42,6 +42,6 @@ char  *rpipeGets(rpipe *r, char *buf, int len);
 int rpipeGetc(rpipe *r);
 int rpipeClose(rpipe *r);
 
-char *runerror();
+char *runerror(void);
 
 #define NOLAUNCH -1

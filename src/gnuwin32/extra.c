@@ -362,7 +362,7 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-void Rwin_fpset()
+void Rwin_fpset(void)
 {
     /* Under recent MinGW this is what fpreset does.  It sets the
        control word to 0x37f which corresponds to 0x8001F as used by
@@ -556,7 +556,7 @@ struct mallinfo {
 };
 extern unsigned int R_max_memory;
 
-struct mallinfo mallinfo();
+struct mallinfo mallinfo(void);
 #endif
 
 SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -655,7 +655,7 @@ static listbox f_list;
 static char selected[100];
 static int done;
 
-static void cleanup()
+static void cleanup(void)
 {
     hide(wselect);
     delobj(f_list); delobj(bFinish); delobj(bCancel);
@@ -681,8 +681,8 @@ static void key1(control c, int ch)
     if(ch == ESC)  cancel(NULL);
 }
 
-rect getSysFontSize(); /* in graphapp/fonts.c */
-RECT *RgetMDIsize(); /* in rui.c */
+rect getSysFontSize(void); /* in graphapp/fonts.c */
+RECT *RgetMDIsize(void); /* in rui.c */
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1141,7 +1141,7 @@ SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 extern window RFrame; /* from rui.c */
 
-SEXP getIdentification()
+SEXP getIdentification(void)
 {
     const char *res = "" /* -Wall */;
 
@@ -1159,7 +1159,7 @@ SEXP getIdentification()
     return mkString(res);
 }
 
-SEXP getWindowTitle()
+SEXP getWindowTitle(void)
 {
     char buf[512], *res = "";
 
@@ -1429,7 +1429,7 @@ int winAccessW(const wchar_t *path, int mode)
 }
 
 #include <Rversion.h>
-char *getDLLVersion()
+char *getDLLVersion(void)
 {
     static char DLLversion[25];
     OSVERSIONINFO osvi;

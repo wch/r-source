@@ -75,26 +75,26 @@ char *getusermenuname(int pos);
 menuItems *wingetmenuitems(const char *mname, char *errmsg);
 void freemenuitems(menuItems *items);
 
-void Rwin_fpset();
+void Rwin_fpset(void);
 
-void Rgui_configure();
-void readconsolecfg();
-void breaktodebugger();
+void Rgui_configure(void);
+void readconsolecfg(void);
+void breaktodebugger(void);
 
 #define USE_MDI 1
 
 #ifdef USE_MDI
-int RgetMDIwidth();
-int RgetMDIheight();
+int RgetMDIwidth(void);
+int RgetMDIheight(void);
 #endif
 
-void menuconfig();
+void menuconfig(control m);
 void menuclear(control m);
-int RguiPackageMenu();
+int RguiPackageMenu(PkgMenuItems pmenu);
 void pkgmenuact(PkgMenuItems pmenu);
-int RguiCommonHelp();
+int RguiCommonHelp(menu m, HelpMenuItems hmenu);
 void helpmenuact(HelpMenuItems hmenu);
 void closeconsole(control m);
-void showstatusbar();
+void showstatusbar(void);
 
 menu getGraphMenu(const char *); /* from extra.c */

@@ -217,18 +217,18 @@ static void handle_char(object obj, int ch)
 }
 
 static int showMDIToolbar = 1;
-void toolbar_show()
+void toolbar_show(void)
 {
     showMDIToolbar = 1;
     SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
 }
-void toolbar_hide()
+void toolbar_hide(void)
 {
     showMDIToolbar = 0;
     SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
 }
 
-static void handle_mdiframesize() {
+static void handle_mdiframesize(void) {
      HWND tool=NULL ,status=NULL;
      RECT rFrame,rToolbar;
      int  fw, fh, th=0, sh=0;

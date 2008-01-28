@@ -983,6 +983,7 @@ void RxmlMessage(int level, const char *format, ...)
 #include "sock.h"
 #define STRICT_R_HEADERS
 #include <R_ext/RS.h> /* for R_Calloc */
+#include <Rdynpriv.h>
 
 void
 #ifdef HAVE_VISIBILITY_ATTRIBUTE

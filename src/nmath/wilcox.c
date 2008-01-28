@@ -320,7 +320,7 @@ double rwilcox(double m, double n)
     return(r - n * (n - 1) / 2);
 }
 
-void wilcox_free()
+void wilcox_free(void)
 {
     w_free_maybe(allocated_m, allocated_n);
 }

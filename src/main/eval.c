@@ -109,7 +109,7 @@ extern void reset_duplicate_counter(void);         /* in duplicate.c */
 HANDLE MainThread;
 HANDLE ProfileEvent;
 
-static void doprof()
+static void doprof(void)
 {
     RCNTXT *cptr;
     char buf[1100];

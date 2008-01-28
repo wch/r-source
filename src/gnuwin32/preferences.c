@@ -240,7 +240,7 @@ static int has_changed(Gui a, Gui b)
 }
 
 
-static void cleanup()
+static void cleanup(void)
 {
     hide(wconfig);
     delobj(l_mdi); delobj(rb_mdi); delobj(rb_sdi);
@@ -372,7 +372,7 @@ void applyGUI(Gui newGUI)
     Rwin_graphicsy = newGUI->gry;
 }
 
-static void do_apply()
+static void do_apply(void)
 {
     struct structGUI newGUI;
 

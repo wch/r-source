@@ -407,9 +407,9 @@ static void menukillall(control m)
     Rf_jump_to_toplevel();
 }
 
-static Rboolean isdebuggerpresent()
+static Rboolean isdebuggerpresent(void)
 {
-    typedef BOOL (*R_CheckDebugger)();
+    typedef BOOL (*R_CheckDebugger)(void);
     R_CheckDebugger entry;
     entry = 
 	(R_CheckDebugger) GetProcAddress((HMODULE)GetModuleHandle("KERNEL32"),
@@ -418,7 +418,7 @@ static Rboolean isdebuggerpresent()
     else return (Rboolean) entry();
 }
 
-void breaktodebugger()
+void breaktodebugger(void)
 {
     asm("int $3");
 }
@@ -896,7 +896,7 @@ int RguiPackageMenu(PkgMenuItems pmenu)
     return 0;
 }
 
-static void CheckForManuals()
+static void CheckForManuals(void)
 {
     lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
     lmanref = check_doc_file("doc\\manual\\refman.pdf");
@@ -972,7 +972,7 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 
 #include <locale.h>
 
-int setupui()
+int setupui(void)
 {
     char *p, *ctype, Rlocale[1000] = ""; /* Windows' locales can be very long */
 
@@ -1147,18 +1147,18 @@ int setupui()
 
 #ifdef USE_MDI
 static RECT RframeRect; /* for use by pagercreate */
-RECT *RgetMDIsize()
+RECT *RgetMDIsize(void)
 {
     GetClientRect(hwndClient, &RframeRect);
     return &RframeRect;
 }
 
-int RgetMDIwidth()
+int RgetMDIwidth(void)
 {
     return RgetMDIsize()->right;
 }
 
-int RgetMDIheight()
+int RgetMDIheight(void)
 {
     return RgetMDIsize()->bottom;
 }
