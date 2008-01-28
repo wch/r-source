@@ -23,6 +23,7 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
+#include <R_ext/Rdynload.h>
 
 #ifdef HAVE_X11
 
