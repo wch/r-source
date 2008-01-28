@@ -463,7 +463,11 @@ typedef struct {
 
     /* Optional features introduced in 2.7.0 */
     /* Some devices can plot UTF-8 text directly without converting
-       to the native encoding.  E.g. windows() */
+       to the native encoding.  E.g. windows().
+       If the flag is TRUE, the metricInfo entry point should
+       accept negative values for 'c' and treat them as indicating
+       Unicode points (as well as postive values in a MBCS locale).
+    */
     Rboolean hasTextUTF8; /* and strWidthUTF8 */
     void (*textUTF8)();
     double (*strWidthUTF8)();

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001  The R Development Core Team.
+ *  Copyright (C) 2001-8  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <R_ext/Boolean.h>
 
+/* called with a variable argument set */
 typedef void * (*DL_FUNC)();
 
 typedef unsigned int R_NativePrimitiveArgType;
