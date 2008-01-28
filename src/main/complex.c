@@ -785,7 +785,10 @@ static void z_tanh(Rcomplex *r, Rcomplex *z)
 }
 #endif
 
-static Rboolean cmath1(void (*f)(/* FIXME */), Rcomplex *x, Rcomplex *y, int n)
+/* If we use a prototype here we have to distinguish Rcomplex and
+   double complex cases */
+static Rboolean cmath1(void (*f)(), 
+		       Rcomplex *x, Rcomplex *y, int n)
 {
     int i;
     Rboolean naflag = FALSE;
@@ -850,7 +853,9 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */
 
-static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)(/* FIXME */))
+/* If we use a prototype here we have to distinguish Rcomplex and
+   double complex cases */
+static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
 {
     int i, n, na, nb;
     Rcomplex ai, bi, *a, *b, *y;
