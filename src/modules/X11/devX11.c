@@ -2644,6 +2644,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 
 extern SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
 
+#include <R_ext/Rdynload.h>
 void R_init_R_X11(DllInfo *info)
 {
     R_X11Routines *tmp;

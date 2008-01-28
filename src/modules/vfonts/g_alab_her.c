@@ -973,7 +973,7 @@ static bool _composite_char (unsigned char *composite,
   return found;
 }
 
-#include <Rdynpriv.h>
+#include <R_ext/Rdynload.h>
 void R_init_vfonts(DllInfo *dll)
 {
     R_GE_setVFontRoutines(R_VF_VStrWidth, R_VF_VStrHeight, R_VF_VText);
