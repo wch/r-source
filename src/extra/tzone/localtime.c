@@ -1288,9 +1288,7 @@ struct tm * const	tmp;
 	return result;
 }
 
-struct tm *
-localtime(timep)
-const time_t * const	timep;
+struct tm * localtime(const time_t * const timep)
 {
 	tzset();
 	return localsub(timep, 0L, &tm);
@@ -1302,10 +1300,7 @@ const time_t * const	timep;
 */
 
 static struct tm *
-gmtsub(timep, offset, tmp)
-const time_t * const	timep;
-const long		offset;
-struct tm * const	tmp;
+gmtsub(const time_t * const timep, const long offset, struct tm * const	tmp)
 {
 	register struct tm *	result;
 
@@ -1317,9 +1312,7 @@ struct tm * const	tmp;
 	return result;
 }
 
-struct tm *
-gmtime(timep)
-const time_t * const	timep;
+struct tm * gmtime(const time_t * const	timep)
 {
 	return gmtsub(timep, 0L, &tm);
 }
@@ -1330,20 +1323,17 @@ const time_t * const	timep;
 ** where, to make the math easy, the answer for year zero is defined as zero.
 */
 
-static int
-leaps_thru_end_of(y)
-register const int	y;
+static int leaps_thru_end_of(const int y)
 {
 	return (y >= 0) ? (y / 4 - y / 100 + y / 400) :
 		-(leaps_thru_end_of(-(y + 1)) + 1);
 }
 
 static struct tm *
-timesub(timep, offset, sp, tmp)
-const time_t * const			timep;
-const long				offset;
-register const struct state * const	sp;
-register struct tm * const		tmp;
+timesub(const time_t * const timep,
+	const long offset,
+	const struct state * const sp,
+	struct tm * const tmp)
 {
 	register const struct lsinfo *	lp;
 	register time_t			tdays;
@@ -1764,11 +1754,10 @@ label:
 }
 
 static time_t
-time2(tmp, funcp, offset, okayp)
-struct tm * const	tmp;
-struct tm * (* const	funcp)(const time_t*, long, struct tm*);
-const long		offset;
-int * const		okayp;
+time2(struct tm * const	tmp,
+      struct tm * (* const funcp)(const time_t*, long, struct tm*),
+      const long offset,
+      int * const okayp)
 {
 	time_t	t;
 
@@ -1864,9 +1853,7 @@ const long		offset;
 	return WRONG;
 }
 
-time_t
-mktime(tmp)
-struct tm * const	tmp;
+time_t mktime(struct tm * const	tmp)
 {
 	tzset();
 	return time1(tmp, localsub, 0L);
