@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006  The R Development Core Team.
+ *  Copyright (C) 2006-8  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,14 +40,14 @@ extern void Rf_endEmbeddedR(int fatal);
 int Rf_initialize_R(int ac, char **av);
 void setup_Rmainloop(void);
 extern void R_ReplDLLinit(void);
-extern int R_ReplDLLdo1();
+extern int R_ReplDLLdo1(void);
 
 void R_setStartTime(void);
-extern void R_RunExitFinalizers();
-extern void CleanEd();
-extern void Rf_KillAllDevices();
+extern void R_RunExitFinalizers(void);
+extern void CleanEd(void);
+extern void Rf_KillAllDevices(void);
 LibExtern int R_DirtyImage;
-extern void R_CleanTempDir();
+extern void R_CleanTempDir(void);
 LibExtern char *R_TempDir;    
 extern void R_SaveGlobalEnv(void);
 
@@ -57,14 +57,14 @@ void fpu_setup(Rboolean start);
 #endif
 
 #ifdef Win32
-extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
+extern char *getDLLVersion(void), *getRUser(void), *get_R_HOME(void);
 extern void setup_term_ui(void);
 LibExtern int UserBreak;
 extern Rboolean AllDevicesKilled;
-extern void editorcleanall();
+extern void editorcleanall(void);
 extern int GA_initapp(int, char **);
-extern void GA_appcleanup();
-extern void readconsolecfg();
+extern void GA_appcleanup(void);
+extern void readconsolecfg(void);
 #endif
 
 #ifdef __cplusplus
