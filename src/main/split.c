@@ -41,11 +41,9 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     nlevs = nlevels(f);
     nfac = LENGTH(CADR(args));
     nobs = LENGTH(CAR(args));
-    if (nobs <= 0)
-	return R_NilValue;
-    if (nfac <= 0)
+    if (nfac <= 0 && nobs > 0)
 	error(_("Group length is 0 but data length > 0"));
-    if (nobs % nfac != 0)
+    if (nfac > 0 && (nobs % nfac) != 0)
 	warning(_("data length is not a multiple of split variable"));
     nm = getAttrib(x, R_NamesSymbol);
     have_names = nm != R_NilValue;

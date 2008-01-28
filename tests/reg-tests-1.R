@@ -5051,3 +5051,8 @@ stopifnot(identical(hist(Dtimes, "year", plot = FALSE)$counts, ty))
 # Test cut.POSIXt() for years
 stopifnot(identical(as.vector(table(cut(Dtimes, "years"))), ty))
 ## changed in 2.6.2
+
+
+## zero-length args in tapply (PR#10644)
+tapply(character(0), factor(letters)[FALSE], length)
+## failed < 2.6.2

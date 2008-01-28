@@ -522,7 +522,13 @@ BUG FIXES
     o	Memory allocations used in format() and in an internal utility
     	function could be off by one byte. (PR#10635)
 
-    o	isoreg(x,y) no longer segfaults when y has NAs.
+    o	isoreg(x, y) no longer segfaults when y has NAs.
+
+    o	split(x, g) always returns a list as documented.  (It used to
+	return NULL for a zero-length 'x'.)
+
+    o	tapply(x, g, ...) misbehaved if the args were of zero length.
+	(PR#10644)
 
 
 
