@@ -169,7 +169,7 @@ reg-plot.Rout: reg-plot.R
 	@$(ECHO) "$(ECHO_T) OK"
 	@$(ECHO) $(ECHO_N) \
 	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
-	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@diff reg-plot.ps $(srcdir)/reg-plot.ps.save
 	@$(ECHO) "$(ECHO_T) OK"
 
 reg-plot-latin1.Rout: reg-plot-latin1.R
@@ -187,7 +187,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	fi
 	@$(ECHO) $(ECHO_N) \
 	  "comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"
-	@$(RDIFF) reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save $(RVAL_IF_DIFF)
+	@diff reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save
 	@$(ECHO) "$(ECHO_T) OK"
 
 .R.Rout-gct:
