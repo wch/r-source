@@ -373,6 +373,10 @@ BUG FIXES
 	negative.  (length<- shared the code and hence the same
 	misinterpretations.)
 
+    o  a basic class "S4" was added to correspond to the "S4" object
+        type, so that objects with this type will print, etc.  The
+        class is VIRTUAL, since all actual S4 objects must have a real class.
+
 
 
 

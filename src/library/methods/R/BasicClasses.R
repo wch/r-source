@@ -50,10 +50,13 @@
 
     .setBaseClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
 
+    ## S4 is a basic class, but virtual:  new("S4") is an error; must be an actual S4 class
+     tmp <- newClassRepresentation(className="S4", prototype = defaultPrototype(), virtual=TRUE, package = "methods")
+    assignClassDef("S4", tmp, where = envir); clList <- c(clList, "S4")
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
-    nullClass <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE, package = "methods")
-    assignClassDef("NULL", nullClass, where = envir); clList <- c(clList, "NULL")
+    tmp <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE, package = "methods")
+    assignClassDef("NULL", tmp, where = envir); clList <- c(clList, "NULL")
 
 
     setClass("structure", where = envir); clList <- c(clList, "structure")

@@ -22,9 +22,10 @@
 \alias{ANY-class}
 \alias{VIRTUAL-class}
 \alias{missing-class}
+\alias{S4-class}
 \title{Classes Corresponding to Basic Data Types }
 \description{
-  Formal classes exist corresponding to the basic R data types, allowing
+  Formal classes exist corresponding to the basic R object types, allowing
   these types to be used in method signatures, as slots in class
   definitions, and to be extended by new classes.}
 \usage{
@@ -45,6 +46,11 @@
 ### the class
 "vector"
 ### is a virtual class, extended by all the above
+
+### the class
+"S4"
+### is an object type for S4 objects that do not extend
+### any of the basic vector classes.  It is a virtual class.
 
 ### The following are additional basic classes
 "NULL"     #  NULL objects
