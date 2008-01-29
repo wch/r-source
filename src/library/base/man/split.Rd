@@ -57,8 +57,8 @@ unsplit(value, f, drop = FALSE)
 \value{
   The value returned from \code{split} is a list of vectors containing
   the values for the groups.  The components of the list are named by
-  the \emph{used} factor levels given by \code{f}.  (If \code{f} is
-  longer than \code{x} then some of the components will be of zero length.)
+  the levels of \code{f} (after converting to a factor, or if already a
+  factor and \code{drop=TRUE}, dropping unused levels).
 
   The replacement forms return their right hand side.  \code{unsplit}
   returns a vector or data frame for which \code{split(x, f)} equals
