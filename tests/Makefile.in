@@ -51,7 +51,7 @@ test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
   reg-plot.R reg-S4.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
-test-src-reg3 = reg-tests-3.R
+test-src-reg3 = reg-tests-3.R reg-plot-latin1.R 
 
 DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
@@ -167,6 +167,16 @@ reg-plot.Rout: reg-plot.R
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@$(ECHO) "$(ECHO_T) OK"
+	@$(ECHO) $(ECHO_N) \
+	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
+	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@$(ECHO) "$(ECHO_T) OK"
+
+reg-plot-latin1.Rout: reg-plot-latin1.R
+	@rm -f $@ $@.fail
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(R2) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@$(ECHO) "$(ECHO_T) OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
 	  $(ECHO) $(ECHO_N) \
@@ -176,8 +186,8 @@ reg-plot.Rout: reg-plot.R
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 	@$(ECHO) $(ECHO_N) \
-	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
-	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	  "comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"
+	@$(RDIFF) reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save $(RVAL_IF_DIFF)
 	@$(ECHO) "$(ECHO_T) OK"
 
 .R.Rout-gct:
