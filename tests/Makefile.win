@@ -11,6 +11,7 @@ srcdir = .
 ## Can't test when cross-building
 RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
 R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
+R2= $(RHOME)/bin/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
 RDIFF = $(RHOME)/bin/R CMD Rdiff
 RVAL_IF_DIFF=0
 RDCONV = $(RHOME)/bin/Rcmd Rdconv
@@ -54,7 +55,7 @@ test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
   reg-plot.R reg-S4.R reg-win.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
-test-src-reg3 = reg-tests-3.R
+test-src-reg3 = reg-tests-3.R reg-plot-latin1.R 
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -119,6 +120,22 @@ reg-plot.Rout: reg-plot.R
 	fi
 	@echo -n "  comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ..."
 	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@echo "OK"
+
+reg-plot-latin1.Rout: reg-plot-latin1.R
+	@rm -f $@ $@.fail
+	@echo -n "running code in '$<' ..."
+	@$(R2) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@echo "OK"
+	@if test -f $(srcdir)/$@.save ; then \
+	  mv $@ $@.fail; \
+	  echo "comparing '$@' to '$(srcdir)/$@.save' ..."; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+	@echo -n "  comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ..."
+	@$(RDIFF) reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save $(RVAL_IF_DIFF)
 	@echo "OK"
 
 test-all-basics:
