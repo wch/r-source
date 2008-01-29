@@ -76,24 +76,6 @@ R:
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
-## Need a translation step in an MBCS for graphics-Ex.Rout.
-## and to select Latin-1 for postscript in UTF-8 locales
-graphics-Ex.Rout: graphics-Ex.R
-	@if test -f $@; then mv $@ $@.prev; fi
-	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
-	@cp graphics-Ex.R graphics-Ex.R-locale
-	@sed -e 's/grDevices::postscript("graphics-Ex.ps")/grDevices::postscript("graphics-Ex.ps",encoding="ISOLatin1")/' graphics-Ex.R-locale \
-	  | $(R) --encoding latin1 > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@rm graphics-Ex.R-locale
-	@$(ECHO) "$(ECHO_T) OK"
-	@if test -f $@.prev; then \
-	  mv $@ $@.fail; \
-	  $(ECHO) $(ECHO_N) "comparing '$@' to '$@.prev' ...$(ECHO_C)"; \
-	  $(RDIFF) $@.fail $@.prev $(RVAL_IF_DIFF) || exit 1; \
-	  mv $@.fail $@; \
-	  $(ECHO) "$(ECHO_T) OK"; \
-	fi
-
 
 ## <NOTE>
 ## We need to update an ex_in file if it is older than any Rd file it

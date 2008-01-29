@@ -114,9 +114,9 @@ options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 options(warn = 1)    
 _EOF_
 
-if($PKG eq "tcltk") {
+if ($PKG eq "tcltk") {
     print "require('tcltk') || q()\n\n";
-} elsif($PKG ne "base") {
+} elsif ($PKG ne "base") {
     print "library('$PKG')\n\n";
 }
 print "assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n";
@@ -132,6 +132,7 @@ foreach my $file (@Rfiles) {
     $nm = basename $file, (".R");
     $nm =~ s/[^- .a-zA-Z0-9]/./g;
 
+    if ($PKG eq "graphics" && $file =~ /text\.R$/) { next; }
     open(FILE, "< $file") or die "file $file cannot be opened";
     while (<FILE>) {
 	$have_examples = 1
