@@ -517,15 +517,15 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,dou
     void *qd;
     double mydpi[2] = { 72.0, 72.0 };
     double scalex = 1.0, scaley = 1.0;
-    QuartzCocoaDevice *dev = malloc(sizeof(QuartzCocoaDevice));
-    memset(dev, 0, sizeof(QuartzCocoaDevice));
-
+    QuartzCocoaDevice *dev;
+	
     { /* check whether we have access to a display at all */
 	CGDisplayCount dcount = 0;
-	CGGetOnlineDisplayList(255, 0, &dcount);
-	warning("No displays are available");
-	free(dev);
-	if (dcount < 1) return FALSE;
+	CGGetOnlineDisplayList(255, NULL, &dcount);
+	if (dcount < 1) {
+	    warning("No displays are available");
+	    return FALSE;
+	}
     }
 
     if (!dpi) {
@@ -534,16 +534,19 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,dou
             CGSize ds = CGDisplayScreenSize(md);
             double width  = (double)CGDisplayPixelsWide(md);
             double height = (double)CGDisplayPixelsHigh(md);
-            mydpi[0] = width/ds.width*25.4;
-            mydpi[1] = height/ds.height*25.4;
+            mydpi[0] = width / ds.width*25.4;
+            mydpi[1] = height / ds.height*25.4;
             /* Rprintf("screen resolution %f x %f\n", mydpi[0], mydpi[1]); */
         }
         dpi = mydpi;
     }
     
-    scalex = dpi[0]/72.0;
-    scaley = dpi[1]/72.0;
-            
+    scalex = dpi[0] / 72.0;
+    scaley = dpi[1] / 72.0;
+
+    dev = malloc(sizeof(QuartzCocoaDevice));
+    memset(dev, 0, sizeof(QuartzCocoaDevice));
+
     qd = QuartzDevice_Create(dd,scalex,scaley,pointsize,width,height,bg,antialias,
                              QDFLAG_INTERACTIVE, /* we use our own history */
                              QuartzCocoa_GetCGContext,

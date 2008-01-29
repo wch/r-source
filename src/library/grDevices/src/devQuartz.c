@@ -777,33 +777,37 @@ static void RQuartz_MetricInfo(int c,R_GE_gcontext *gc,double *ascent,double *de
     }
     SET(RQUARTZ_FONT);
     {
-	/* FIXME: in a mbcslocale, c is a Unicode point */
-        char    text[2] = { c, 0 };
-        CGFontRef font = CGContextGetFont(ctx);
-        float aScale   = (gc->cex*gc->ps*xd->tscale)/CGFontGetUnitsPerEm(font);
-        UniChar *buffer;
-        CGGlyph   *glyphs;
-        int Free = 0,len,i;
-        CFStringRef str = prepareText(gc,dd,text,&buffer,&Free);
+	CGFontRef font = CGContextGetFont(ctx);
+        float aScale   = (gc->cex * gc->ps * xd->tscale) / CGFontGetUnitsPerEm(font);
+	UniChar  *buffer, single;
+        CGGlyph  glyphs[8];
+	CFStringRef str = NULL;
+        int free_buffer = 0, len;
+	if (c >= 0 && c < 127) {
+	    char    text[2] = { c, 0 };
+	    str = prepareText(gc, dd, text, &buffer, &free_buffer);
+	    len = CFStringGetLength(str);
+	    if (len > 7) return; /* this is basically impossible, but you never know */
+	} else {
+	    single = (UniChar) ((c<0)?-c:c);
+	    buffer = &single;
+	    len = 1;
+	}
         *width = 0.0;
-        len = CFStringGetLength(str);
-        glyphs = malloc(sizeof(CGGlyph)*len);
-        CGFontGetGlyphsForUnichars(font,buffer,glyphs,len);
+        CGFontGetGlyphsForUnichars(font, buffer, glyphs, len);
         {
-            int      *advances = malloc(sizeof(int)*len);
-            CGRect   *bboxes   = malloc(sizeof(CGRect)*len);
-            CGFontGetGlyphAdvances(font,glyphs,len,advances);
-            CGFontGetGlyphBBoxes(font,glyphs,len,bboxes);
-            for(i=0;i<len;i++)
-                *width += advances[i]*aScale;
-            *ascent  = aScale*(bboxes[0].size.height + bboxes[0].origin.y);
-            *descent = -aScale*bboxes[0].origin.y;
-            free(bboxes);
-            free(advances);
+	    int i;
+            int    advances[8];
+            CGRect bboxes[8];
+            CGFontGetGlyphAdvances(font, glyphs, len, advances);
+            CGFontGetGlyphBBoxes(font, glyphs, len, bboxes);
+            for(i = 0; i < len; i++)
+                *width += advances[i] * aScale;
+            *ascent  = aScale * (bboxes[0].size.height + bboxes[0].origin.y);
+            *descent = -aScale * bboxes[0].origin.y;
         }
-        free(glyphs);
-        if(Free) free(buffer);
-        CFRelease(str);
+        if (free_buffer) free(buffer);
+        if (str) CFRelease(str);
     }
 }
 
