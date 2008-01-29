@@ -240,6 +240,13 @@ NEW FEATURES
 	native text becomes the default for contour labels rather than
 	using Hershey fonts.
 
+    o	x[<zero-length>] <- NULL is always a no-op: previously
+	type-checking was done on the replacement value and so this
+	failed, whereas we now assume NULL can be promoted to any
+	zero-length vector-like object.
+
+	Other cases of a zero-length index are done more efficiently.
+
 
 DEPRECATED & DEFUNCT
 
