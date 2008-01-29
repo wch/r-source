@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-23
+@set FAQ_DATE @value{FAQ_YEAR}-01-28
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -536,14 +536,12 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   dapper  [Dapper Drake, 6.06]
 @c           i386   2.6.1  Vincent Goulet
 @c           amd64  2.6.1  Michael Rutter
-@c vinelinux
-@c   4.0     i386   2.4.1  Susumu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {VineLinux} {i386/x86_64} {dapper/feisty/gutsy} {Susumu Tanimura}
+@multitable {Red Hat} {i386/x86_64} {dapper/feisty/gutsy} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
 @item Debian   @tab i386/amd64 @tab stable/oldstable @tab Johannes Ranke
 @c @item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
@@ -555,7 +553,6 @@ packages.
 @c @item          @tab x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
 @item Ubuntu   @tab i386   @tab dapper/feisty/gutsy @tab Vincent Goulet
 @item          @tab amd64  @tab dapper/feisty/gutsy @tab Michael Rutter
-@item VineLinux @tab i386 @tab 4.0 @tab Susumu Tanimura
 @end multitable
 @end quotation
 
@@ -4247,6 +4244,8 @@ mixed-effects modelling using differential equations.
 Non-linear regression with brute force.
 @item nlstools
 Tools for nonlinear regression diagnostics.
+@item nlt
+A nondecimated lifting transform for signal denoising.
 @item nltm
 NonLinear Transformation Models for survival analysis.
 @item nnet
@@ -4299,6 +4298,8 @@ An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
 @item odfWeave
 Sweave processing of Open Document Format (ODF) files.
+@item ofw
+Optimal Feature Weighting algorithm.
 @item onion
 A collection of routines to manipulate and visualize quaternions and
 octonions.
