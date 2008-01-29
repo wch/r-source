@@ -182,14 +182,16 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                            right, include.lowest, labels = FALSE,
                            axes = TRUE, xaxt = par("xaxt"), ...)
         {
-            plot(res, xlab = xlab, axes = FALSE, freq = freq,
-                 labels = labels, ...)
-            if(axes && xaxt != "n") {
-                axis(2, ...)
-                if(num.br) breaks <- c.POSIXct(res$breaks)
-                axis.POSIXct(1, at = breaks,  format = format, ...)
-                                        # '...' : e.g. cex.axis
-            }
+	    plot(res, xlab = xlab, axes = FALSE, freq = freq,
+		 labels = labels, ...)
+	    if(axes) {
+		axis(2, ...)
+		if(xaxt != "n") {
+		    if(num.br) breaks <- c.POSIXct(res$breaks)
+		    axis.POSIXct(1, at = breaks,  format = format, ...)
+					# '...' : e.g. cex.axis
+		}
+	    }
         }
         myplot(res, xlab, freq, format, breaks, ...)
      }

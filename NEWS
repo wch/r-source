@@ -160,6 +160,8 @@ BUG FIXES
     o	tapply(x, g, ...) misbehaved if the args were of zero length.
 	(PR#10644)
 
+    o	hist.POSIXt(*, xaxt = "n") no longer suppresses the y-axis.
+
 
 
 		CHANGES IN R VERSION 2.6.1
