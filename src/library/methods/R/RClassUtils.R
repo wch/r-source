@@ -20,7 +20,7 @@ testVirtual <-
   ## extension, and prototype is a virtual class.
   ## Can be forced to be virtual by extending "VIRTUAL".  Otherwise, a class is
   ## virtual only if it has no slots, extends no non-virtual classes, and has a
-  ## NULL Prototype
+  ## NULL or default prototype
   function(properties, extends, prototype, where)
 {
     if(length(extends)) {
@@ -34,7 +34,8 @@ testVirtual <-
                 return(FALSE)
         }
     }
-    (length(properties)==0 && is.null(prototype))
+    (length(properties)==0 &&
+       (identical(prototype, defaultPrototype()) || is.null(prototype)))
 }
 
 makePrototypeFromClassDef <-

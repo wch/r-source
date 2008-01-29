@@ -377,6 +377,9 @@ BUG FIXES
         type, so that objects with this type will print, etc.  The
         class is VIRTUAL, since all actual S4 objects must have a real class.
 
+    o  classes with no slots that contain only VIRTUAL classes are now
+        VIRTUAL, as was intended but confused by having an empty S4
+        object as prototype.
 
 
 
