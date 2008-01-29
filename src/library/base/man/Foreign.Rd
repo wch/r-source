@@ -16,10 +16,11 @@
   Functions to make calls to compiled code that has been loaded into \R.
 }
 \usage{
-                .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
-          .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
-         .External(name, \dots, PACKAGE)
-             .Call(name, \dots, PACKAGE)
+       .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
+ .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
+.External(name, \dots, PACKAGE)
+    .Call(name, \dots, PACKAGE)
+
 .External.graphics(name, \dots, PACKAGE)
     .Call.graphics(name, \dots, PACKAGE)
 }

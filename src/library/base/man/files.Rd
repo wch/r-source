@@ -15,7 +15,8 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = FALSE)
 file.symlink(from, to)
-dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
+dir.create(path, showWarnings = TRUE, recursive = FALSE,
+           mode = "0777")
 Sys.chmod(paths, mode = "0777")
 }
 \alias{file.append}

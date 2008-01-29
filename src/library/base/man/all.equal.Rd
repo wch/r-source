@@ -88,7 +88,8 @@ attr.all.equal(target, current,
   \code{\link{all}} for exact equality testing.
 }
 \examples{
-all.equal(pi, 355/113) # not precise enough (default tol) > relative error
+all.equal(pi, 355/113)
+# not precise enough (default tol) > relative error
 
 d45 <- pi*(1/4 + 1:10)
 stopifnot(

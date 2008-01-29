@@ -69,7 +69,7 @@ col.sums <- apply(x, 2, sum)
 row.sums <- apply(x, 1, sum)
 rbind(cbind(x, Rtot = row.sums), Ctot = c(col.sums, sum(col.sums)))
 
-stopifnot( apply(x, 2, is.vector)) # not ok in R <= 0.63.2
+stopifnot( apply(x, 2, is.vector))
 
 ## Sort the columns of a matrix
 apply(x, 2, sort)
@@ -83,7 +83,7 @@ ma
 apply(ma, 1, table)  #--> a list of length 2
 apply(ma, 1, stats::quantile)# 5 x n matrix with rownames
 
-stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
+stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))
 
 ## Example with different lengths for each call
 z <- array(1:24, dim=2:4)
@@ -92,7 +92,8 @@ zseq         ## a 2 x 3 matrix
 typeof(zseq) ## list
 dim(zseq) ## 2 3
 zseq[1,]
-apply(z, 3, function(x) seq(length=max(x))) # a list without a dim attribute
+apply(z, 3, function(x) seq(length=max(x)))
+# a list without a dim attribute
 }
 \keyword{iteration}
 \keyword{array}

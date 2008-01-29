@@ -15,7 +15,8 @@
 }
 \usage{
 getHook(hookName)
-setHook(hookName, value, action = c("append", "prepend", "replace"))
+setHook(hookName, value,
+        action = c("append", "prepend", "replace"))
 
 packageEvent(pkgname,
              event = c("onLoad", "attach", "detach", "onUnload"))

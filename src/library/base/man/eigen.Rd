@@ -100,7 +100,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 }
 \examples{
 eigen(cbind(c(1,-1),c(-1,1)))
-eigen(cbind(c(1,-1),c(-1,1)), symmetric = FALSE)# same (different algorithm).
+eigen(cbind(c(1,-1),c(-1,1)), symmetric = FALSE)
+# same (different algorithm).
 
 eigen(cbind(1,c(1,-1)), only.values = TRUE)
 eigen(cbind(-1,2:1)) # complex values

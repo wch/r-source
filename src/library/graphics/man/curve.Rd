@@ -8,8 +8,8 @@
 \alias{curve}
 \alias{plot.function}
 \usage{
-curve(expr, from = NULL, to = NULL, n = 101, add = FALSE, type = "l",
-      ylab = NULL, log = NULL, xlim = NULL, \dots)
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", ylab = NULL, log = NULL, xlim = NULL, \dots)
 
 \method{plot}{function}(x, y = 0, to = 1, from = y, xlim = NULL, \dots)
 }

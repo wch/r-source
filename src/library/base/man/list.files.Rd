@@ -9,9 +9,12 @@
 \title{List the Files in a Directory/Folder}
 \usage{
 list.files(path = ".", pattern = NULL, all.files = FALSE,
-           full.names = FALSE, recursive = FALSE, ignore.case = FALSE)
+           full.names = FALSE, recursive = FALSE,
+           ignore.case = FALSE)
+
        dir(path = ".", pattern = NULL, all.files = FALSE,
-           full.names = FALSE, recursive = FALSE, ignore.case = FALSE)
+           full.names = FALSE, recursive = FALSE,
+           ignore.case = FALSE)
 }
 \arguments{
   \item{path}{a character vector of full path names; the default

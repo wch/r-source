@@ -174,7 +174,8 @@ sw$new4 <- 1:5
 sapply(sw, class)
 sw$new4 <- NULL              # delete the column
 sw
-sw[6:8] <- list(letters[10:14], NULL, aa=1:5) # delete col7, update 6, append
+sw[6:8] <- list(letters[10:14], NULL, aa=1:5)
+# delete col7, update 6, append
 sw
 
 ## matrices in a data frame

@@ -166,6 +166,7 @@ op <- par(mfrow=c(1,2))
 par(op)
 ## too many possibilities
 boxplot(z, boxfill= "light gray", outpch = 21:25, outlty = 2,
-        bg = "pink", lwd = 2, medcol = "dark blue", medcex = 2, medpch=20)
+        bg = "pink", lwd = 2,
+        medcol = "dark blue", medcex = 2, medpch = 20)
 }
 \keyword{aplot}

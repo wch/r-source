@@ -14,7 +14,8 @@
 readBin(con, what, n = 1, size = NA_integer_, signed = TRUE,
         endian = .Platform$endian)
 
-writeBin(object, con, size = NA_integer_, endian = .Platform$endian)
+writeBin(object, con, size = NA_integer_,
+         endian = .Platform$endian)
 }
 \arguments{
   \item{con}{A connection object or a character string naming a file or
