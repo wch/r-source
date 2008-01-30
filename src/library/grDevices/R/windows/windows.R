@@ -90,7 +90,7 @@ win.graph <- function(width, height, pointsize)
     old <- check.options(new = new, envir = .WindowsEnv,
                          name.opt = ".Windows.Options",
 			 reset = FALSE, assign.opt = FALSE)
-    invisible(.External(Cdevga, "", width, height, pointsize,
+    invisible(.External(Cdevga, "", old$width, old$height, old$pointsize,
                         FALSE, 1L, old$xpinch, old$ypinch, "white",
                         old$gamma, NA_integer_, NA_integer_, old$buffered,
                         .PSenv, NA, old$restoreConsole, ""))
