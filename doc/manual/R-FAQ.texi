@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-28
+@set FAQ_DATE @value{FAQ_YEAR}-01-30
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1948,6 +1948,8 @@ A set of functions for the detection of spatial clusters of diseases
 using count data.
 @item DDHFm
 Variance stabilization by Data-Driven Haar-Fisz (for microarrays).
+@item DEA
+Data Envelopment Analysis.
 @item DEoptim
 Differential Evolution Optimization.
 @item DICOM
@@ -2501,6 +2503,9 @@ Rcmdr support for the introductory course at Temple University.
 Rcmdr Teaching Demos plug-in.
 @item RcmdrPlugin.epack
 Rcmdr epack demos plug-in.
+@item Rcplex
+R interface to CPLEX solvers for linear, quadratic, and (linear and
+quadratic) mixed integer programs.
 @c <COMMENT>
 @c Moved to the Archive on 2007-09-25 as requested by the maintainer.
 @c @item RcppTemplate
@@ -2712,6 +2717,8 @@ Utilities supporting VDC, an open source digital library system for
 quantitative data.
 @item VGAM
 Vector Generalized Linear and Additive Models.
+@item VIM
+Visualization and Imputation of Missing Values.
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -4686,6 +4693,8 @@ two-sample comparison of binary outcomes.
 An interface between R and the metasim simulation engine.  Facilitates
 the use of the metasim engine to build and run individual based
 population genetics simulations.
+@item robfilter
+Robust time series filters.
 @c <COMMENT>
 @c Moved to the Archive o 2007-09-30 as requested by the maintainer.
 @c @item roblm
