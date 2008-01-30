@@ -69,6 +69,7 @@ The current version of this document is @value{VERSION}.
 * R Internal Structures::       
 * .Internal vs .Primitive::     
 * Internationalization in the R sources::  
+* Graphics Devices::            
 * R coding standards::          
 * Testing R code::              
 * Function and variable index::  
@@ -2042,7 +2043,7 @@ know that if other @code{.Internal} or primitive functions are not
 internally generic except by reading the source code.
 
 
-@node Internationalization in the R sources, R coding standards, .Internal vs .Primitive, Top
+@node Internationalization in the R sources, Graphics Devices, .Internal vs .Primitive, Top
 @chapter Internationalization in the R sources
 
 The process of marking messages (errors, warnings etc) for translation
@@ -2169,7 +2170,316 @@ This is handled separately: see
 
 See @file{po/README} for how to update the message templates and catalogs.
 
-@node R coding standards, Testing R code, Internationalization in the R sources, Top
+@node Graphics Devices, R coding standards, Internationalization in the R sources, Top
+@chapter Graphics Devices
+
+[Just some initial notes.]
+
+@R{}'s graphics internals were revised for version 1.4.0, but some parts
+of earlier structures remain.  This was to enable multiple graphics
+systems to be installed on top on the graphics `engine' -- currently
+there are two such systems, one supporting `base' graphics (based on
+that in S) and one implemented in package @pkg{grid}.
+
+@R{} ships with several graphics devices, and there is support for
+third-party packages to provide additional devices.  Several now do.
+This chapter describes the graphics internals from the viewpoint of a
+would-be writer of a graphics device.
+
+@menu
+* Graphics structures::         
+* The device driver structure::  
+* Handling text::               
+@end menu
+
+@node Graphics structures, The device driver structure, Graphics Devices, Graphics Devices
+@section Graphics structures
+
+There are three types used internally which are pointers to structures
+related to graphics devices.
+
+The @code{NewDevDesc} type is a structure defined in
+@file{R_ext/GraphicsDevice.h} (which is included by
+@file{R_ext/GraphicsEngine.h}).  This describes the physical
+characteristics of a device, the capabilities of the device driver and
+contains a set of callback functions that will be used by the graphics
+engine to obtain information about the device and initiate actions
+(e.g.@: a new page, plotting a line or some text).
+
+The @code{GEDevDesc} type is a structure defined in
+@file{R_ext/GraphicsEngine.h} (as commented in the file)
+
+@example
+struct _GEDevDesc @{
+    int newDevStruct;
+    NewDevDesc *dev;
+    Rboolean dirty;
+    Rboolean recordGraphics;
+    GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
+@}
+@end example
+
+@noindent
+The first entry is effectively a version number and is always 1.
+So this is essentially a device structure plus information about the
+device maintained by the graphics engine and visible only to the engine.
+
+The third type is @code{DevDesc}, and is rather confusing.  It is
+defined in the public header @file{Rgraphics.h} as
+
+@example
+typedef struct @{
+    /* opaque structure */
+   int dummy;
+@} DevDesc;
+@end example
+
+@noindent
+and also as a real structure in the private header @file{Graphics.h}.
+The confusion arises because @code{DevDesc *} is used as an opaque
+pointer to both @code{GEDevDesc} and @code{NewDevDesc} types.  Graphics
+devices will not nowadays ever see an instance of the real structure,
+and can consider @code{DevDesc *} to be an opaque pointer to either
+@code{GEDevDesc} or @code{NewDevDesc}.  Unfortunately these are not
+interchangeable and so which has to be deduced from the documentation
+(which is not 100% accurate).  Foe example, @file{Rdevices.h} contains
+
+@example
+int deviceNumber(DevDesc *);
+int devNumber(DevDesc *);
+@end example
+
+@noindent
+which really should be
+
+@example
+int deviceNumber(GEDevDesc *);
+int devNumber(NewDevDesc *);
+@end example
+
+Eventually graphics devices will only have to be concerned with
+@code{NewDevDesc} structures.
+
+The graphics engine maintains an array of devices, via pointers to
+@code{GEDevDesc} structures.  The array is of size 64 but the first
+element is always occupied by the @code{"null device"} and the final
+element is kept as NULL as a sentinel.@footnote{Calling
+@code{R_CheckDeviceAvailable()} ensures there is a free slot or throws
+an error.}  This array is reflected in the @R{} variables
+@samp{.Devices}.  Once a device is killed its element becomes available
+for reallocation (and its name will appear as @code{""} in
+@samp{.Devices}).  Exactly one of the devices is active: the null device
+if no other device has been opened and not killed.
+
+
+
+@node The device driver structure, Handling text, Graphics structures, Graphics Devices
+@section The device driver structure
+
+Each instance of a graphics device needs to set up a @code{GEDevDesc}
+structure by code very similar to
+
+@example
+    NewDevDesc *dev;
+    GEDevDesc* dd;
+
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS @{
+        /* Allocate and initialize the device driver data */
+        if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+            return 0;
+        dev->displayList = R_NilValue;
+        dev->savedSnapshot = R_NilValue;
+        /* set up device driver or free 'dev' and error() */
+        gsetVar(install(".Device"), mkString("devname"), R_BaseEnv);
+        dd = GEcreateDevDesc(dev);
+        addDevice((DevDesc*) dd);
+        GEinitDisplayList(dd);
+    @} END_SUSPEND_INTERRUPTS;
+@end example
+
+The @code{NewDevDesc} structure contains a @code{void *} pointer
+@samp{deviceSpecific} which is used to store data specific to the
+device.  Setting up the device driver includes initializing all the
+elements of the @code{NewDevDesc} structure.
+
+Note that the device structure is zeroed when allocated: this provides
+some protection against future expansion of the structure (provided the
+code is recompiled) since the graphics engine can add elements that need
+to nr non-NULL/zero to be `on'.
+
+Rather more protection is provided by the version number of the
+engine/device API, @code{R_GE_version} defined in
+@file{R_ext/GraphicsEngine.h} together with access functions
+
+@example
+int R_GE_getVersion(void);
+
+void R_GE_checkVersionOrDie(int version);
+@end example
+
+@noindent
+If a graphics device calls @code{R_GE_checkVersionOrDie(4)}, say, it can
+ensure it will only be used in versions of @R{} which provide the API it
+was designed for.
+
+The units the device handles are up to its developer: they can be in
+pixels, big points (1/72 inch), twips, @dots{}, and can differ in the
+@samp{x} and @samp{y} directions.  The relationship to physical
+dimensions is set by the element @code{ipr}: a double array of length 2.
+
+
+@node Handling text,  , The device driver structure, Graphics Devices
+@section Handling text
+
+Handling text is probably the hardest task for a graphics device, and
+the design allows for device to optionally indicate that they have
+additional capabilities.  (If they do not, these will if possible be
+handled in the graphics engine.)
+
+The three callbacks for handling text that must be in all graphics
+devices are structure elements @code{text}, @code{strWidth} and
+@code{metricInfo}.
+
+@example
+void text(double x, double y, const char *str, double rot, double hadj,
+          R_GE_gcontext *gc, NewDevDesc *dd);
+
+double
+strWidth(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
+
+void metricInfo(int c, R_GE_gcontext *gc,
+               double* ascent, double* descent, double* width,
+               NewDevDesc *dd);
+@end example
+
+@noindent
+The @samp{gc} parameter provides the graphics context, most importantly
+the current font and fontsize, and @samp{dd} is a pointer to the active
+device's stucture.
+
+The @code{text} callback should plot @samp{str} at @samp{(x,
+y)}@footnote{in device coordinates} with an anti-clockwise rotation of
+@samp{rot} degrees.  (For @samp{hadj} see below.) 
+
+The @code{strWidth} callback computes the width of the string which it
+would occupy if plotted horizontally in the current font.
+
+The @code{metricInfo} callback computes the size of a single character:
+@samp{ascent} is the distance it extends above the baseline and
+@code{descent} how far it extends below the baseline.  @code{width} is
+the amount by which the cursor should be advanced when the character is
+placed.  The @emph{interpretation} of @samp{c} depends on the locale.
+Using @code{c = 0} should give an indication of the size of the font: it
+often returns the measurements for character @code{"M"}.  In a
+single-byte locale values @code{32...255} indicate the corresponding
+character in the locale.  For the symbol font (as used by
+@samp{par(font=5)} in base graphics and by `plotmath'), values
+@code{32...126, 161...254} (except @code{240}) indicate glyphs in the
+Adobe Symbol encoding.  In a multibyte locale, @code{c} represents a
+Unicode point (except in the symbolfont).  So the function needs to
+include code like
+
+@example
+    Rboolean Unicode = mbcslocale;
+    if (c < 0) @{ Unicode = TRUE; c = -c; @} 
+    if(Unicode && gc->fontface != 5) UniCharMetric(c, ...);
+    else CharMetric(c, ...);
+@end example
+
+@noindent
+In addition, if @code{hasTextUTF8} is set, Unicode points will be passed
+as negative values and the code snippet above shows how to handle this.
+
+If possible, the graphics device should handle clipping of text.  It
+indicates this by the structure element @code{canClip} which if true
+will result in calls to the callback @code{clip} to set the clipping
+region. If this is not done, the engine will clip very crudely (but
+omitting an text that does not appear to be wholly inside the clipping
+region).
+
+The device structure has an integer element @code{canHadj}, which
+indicates if the device can do horizontal alignment of text.  If this is
+one, argument @samp{hadj} to @code{text} will be called a @code{0 ,0.5,
+1} to indicate left-, centre- and right-alignment at the indicated
+position.  It it is two, continuous values in the range @code{[0, 1]}
+are assumed to be supported.
+
+A new capability in @R{} 2.7.0 (graphics API version 4) is
+@code{hasTextUTF8}.  If this is true, it has two consequences.
+First, there are callbacks @code{textUTF8} and @code{strWidthUTF8} that
+should behave identically to @code{text} and @code{strWidth} except that
+@samp{str} is assumed to be in UTF-8 rather than the current locale's
+encoding.  The graphics engine will call these if it is more convenient
+to pass UTF-8-encoded text (and never for the symbol font).
+Second, Unicode points will be passed to the @code{metricInfo} callback
+as negative integers.
+
+Some devices can produce high-quality rotated text, but those based on
+bitmaps often cannot.  Those which can should set
+@code{useRotatedTextInContour} to be true in graphics API version 4.
+
+Several other elements relate to the precise placement of text by the
+graphics engine:
+
+@example
+double xCharOffset;
+double yCharOffset;
+double yLineBias;
+double cra[2];
+@end example
+
+@noindent
+These are more than a little mysterious.  Element @code{cra} provides an
+indication of the character size, @code{par("cra")} in base graphics, in
+device units.  The mystery is what is meant by `character size': which
+character, which font at which size.  Some help can be obtained by
+looking at what this is used for.  The first element, `width', is not
+used by @R{} except to set the graphical parameters.  The second,
+`height', is use to set the line spacing, that is the relationship
+between @code{par("mai")} and @code{par("mai")} and so on.  It is
+suggested that a good choice is
+
+@example
+dd->cra[0] = 0.9 * fnsize;
+dd->cra[1] = 1.2 * fnsize;
+@end example
+
+@noindent
+where @samp{fnsize} is the `size' of the standard font (@code{cex=1})
+on the device, in device units.  So for a 12-point font (the usual
+default for graphics devices), @samp{fnsize} should be 12 points in
+device units.
+
+The remaining elements are yet more mysterious.  The @code{postscript()}
+device says
+
+@example
+    /* Character Addressing Offsets */
+    /* These offsets should center a single */
+    /* plotting character over the plotting point. */
+    /* Pure guesswork and eyeballing ... */
+
+    dd->xCharOffset =  0.4900;
+    dd->yCharOffset =  0.3333;
+    dd->yLineBias = 0.2;
+@end example
+
+@noindent
+It seems that @code{xCharOffset} is not currently used, and
+@code{yCharOffset} is used by the base graphics system to set vertical
+alignment in @code{text()} when @code{pos} is specified, and in
+@code{identify()}.  It is occasionally used by the graphic engine when
+attempting exact centring of text, such as character string values of
+@code{pch} in @code{points()} or @code{grid.points()}---however, it is
+only used when precise character metric information is not available or
+for multi-line strings.
+
+@code{yLineBias} is used in the base graphics system in @code{axis()} and
+@code{mtext()} to provide a default for their @samp{padj} argument.
+
+
+@node R coding standards, Testing R code, Graphics Devices, Top
 @chapter R coding standards
 
 @cindex coding standards
