@@ -334,14 +334,21 @@ int deviceNumber(DevDesc *dd)
 /* This should be called if you have a NewDevDesc
  * and you want to find the corresponding device number
  */
-int devNumber(DevDesc *dd)
+int ndevNumber(NewDevDesc *dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
 	if (R_Devices[i] != NULL &&
-	    ((GEDevDesc*) R_Devices[i])->dev == (NewDevDesc*) dd)
+	    ((GEDevDesc*) R_Devices[i])->dev == dd)
 	    return i;
     return 0;
+}
+
+
+/* Incorrectly declared old version */
+int devNumber(DevDesc *dd)
+{
+    return ndevNumber((NewDevDesc *) dd);
 }
 
 int selectDevice(int devNum)

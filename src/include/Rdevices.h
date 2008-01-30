@@ -88,6 +88,7 @@ int deviceNumber(DevDesc*);
  * Here DevDesc * is being used as an opaque pointer to NewDevDesc.
  */
 int devNumber(DevDesc *);
+/* New, properly declared version in GraphicsDevices.h */
 
 /* Create a new device. */
 int StartDevice(SEXP, SEXP, int, SEXP, int);

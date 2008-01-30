@@ -513,6 +513,10 @@ typedef struct {
 
 typedef unsigned int rcolor;
 
+/* Properly declared version of devNumber */
+int ndevNumber(NewDevDesc *);
+
+
 /* Graphics events: defined in gevents.c */
 
 /* These give the indices of some known keys */    

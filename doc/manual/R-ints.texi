@@ -2241,8 +2241,9 @@ pointer to both @code{GEDevDesc} and @code{NewDevDesc} types.  Graphics
 devices will not nowadays ever see an instance of the real structure,
 and can consider @code{DevDesc *} to be an opaque pointer to either
 @code{GEDevDesc} or @code{NewDevDesc}.  Unfortunately these are not
-interchangeable and so which has to be deduced from the documentation
-(which is not 100% accurate).  Foe example, @file{Rdevices.h} contains
+interchangeable and so which had to be deduced from the documentation
+(which was not 100% accurate).  The main exception was
+@code{devNumber}, declared as
 
 @example
 int deviceNumber(DevDesc *);
@@ -2254,7 +2255,7 @@ which really should be
 
 @example
 int deviceNumber(GEDevDesc *);
-int devNumber(NewDevDesc *);
+int ndevNumber(NewDevDesc *);
 @end example
 
 Eventually graphics devices will only have to be concerned with
