@@ -18,7 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <Graphics.h>
+#include <R_ext/GraphicsEngine.h>
 #include <R_ext/Boolean.h>
 
 enum DeviceKinds {SCREEN=0, PRINTER, METAFILE, PNG, JPEG, BMP};
@@ -30,8 +30,9 @@ typedef struct {
     int   col;			   /* Color */
     int   bg;			   /* Background */
     int   fontface;		   /* Typeface */
-    int   fontsize, basefontsize;  /* Size in points.  fontsize has been adjusted
-    					for dpi diffs, basefontsize has not */
+    int   fontsize, basefontsize;  /* Size in points.  
+				      fontsize has been adjusted
+				      for dpi diffs, basefontsize has not */
     double fontangle;
 
     /* devga Driver Specific */

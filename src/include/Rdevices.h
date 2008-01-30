@@ -29,6 +29,9 @@ extern "C" {
 #include <Rgraphics.h>
 #include <R_ext/Boolean.h>
 
+#define R_MaxDevices 64
+
+
 #define addDevice		Rf_addDevice
 #define deviceNumber		Rf_deviceNumber
 #define devNumber		Rf_devNumber

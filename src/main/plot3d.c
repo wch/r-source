@@ -28,6 +28,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>
+#include <Colors.h> /* for isNAcol */
 #include <Rdevices.h>
 #include <Print.h>
 #include <R_ext/Boolean.h>

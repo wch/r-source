@@ -26,6 +26,8 @@
  *
  */
 
+/* This should be regarded as part of the graphics engine */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

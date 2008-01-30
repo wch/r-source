@@ -28,6 +28,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
+#include <Colors.h> /* for isNAcol */
 #include <Rdevices.h>
 #include <Print.h>
 

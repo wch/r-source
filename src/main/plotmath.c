@@ -42,7 +42,8 @@
 
 
 #include <Rmath.h>
-#include <Graphics.h>
+#include <R_ext/GraphicsEngine.h>
+#include <Colors.h> /* for name2col */
 
 
 /*

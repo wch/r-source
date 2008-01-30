@@ -30,21 +30,14 @@
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
 
-#define R_MaxDevices 64
-
-/* colors.c, engine.c, graphics.c */
+/* colors.c, engine.c, graphics.c  */
 #define	DEG2RAD 0.01745329251994329576
-
-/* used in colors.c */
-#define COLOR_TABLE_SIZE 1024
 
 /* base.c, graphics.c, par.c */
 #define MAX_LAYOUT_ROWS 50
 #define MAX_LAYOUT_COLS 50
 #define MAX_LAYOUT_CELLS 500 /* must be less than 65535, 
 				3 copies, 3bytes each */
-
-typedef unsigned int rcolor;
 
 typedef struct {
 	double ax;
@@ -356,10 +349,7 @@ typedef struct {
 
 /* always remap private functions */
 #include <Rgraphics.h>
-#define char2col		Rf_char2col
-#define CheckColor		Rf_CheckColor
 #define copyGPar		Rf_copyGPar
-#define curDevice               Rf_curDevice
 #define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
 #define FixupFont		Rf_FixupFont
@@ -367,23 +357,11 @@ typedef struct {
 #define FixupLwd		Rf_FixupLwd
 #define FixupVFont		Rf_FixupVFont
 #define GetAxisLimits		Rf_GetAxisLimits
-#define GetDevice               Rf_GetDevice
 #define GInit			Rf_GInit
-#define isNAcol                 Rf_isNAcol
 #define labelformat		Rf_labelformat
-#define name2col		Rf_name2col
-#define nextDevice              Rf_nextDevice
-#define number2col		Rf_number2col
-#define NumDevices              Rf_NumDevices
 #define ProcessInlinePars	Rf_ProcessInlinePars
 #define recordGraphicOperation	Rf_recordGraphicOperation
-#define rgb2col			Rf_rgb2col
-#define RGB2rgb			Rf_RGB2rgb
-#define RGBA2rgb		Rf_RGBA2rgb
-#define ScaleColor		Rf_ScaleColor
 #define Specify2		Rf_Specify2
-#define str2col			Rf_str2col
-#define StrMatch		Rf_StrMatch
 
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */
@@ -395,25 +373,6 @@ void GInit(GPar*);
 
 void copyGPar(GPar *, GPar *);
 
-int curDevice(void); /* from devices.c, used in engine.c */
-
-		/* Miscellaneous (from colors.c) */
-
-unsigned int rgb2col(const char *);
-unsigned int name2col(const char *);
-unsigned int number2col(const char *);
-unsigned int char2col(const char *);/* rgb2col() or name2col() */
-
-/* const char *col2name(unsigned int); in Rgraphics.h */
-
-unsigned int ScaleColor(double x);
-unsigned int CheckColor(int x);
-Rboolean isNAcol(SEXP col, int index, int ncol);
-
-char *RGB2rgb(unsigned int, unsigned int, unsigned int);
-char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
-
-int StrMatch(const char *s, const char *t);
 
 double R_Log10(double); /* from graphics.c, used in par.c */
 

@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* This should be regarded as part of the graphics engine */
+
 /* <UTF8> char here is either ASCII or handled as a whole.
    However, the interpretation is as ASCII or in some cases Latin-1
  */
@@ -27,7 +29,7 @@
 
 #include <Defn.h>
 #include <Rdynpriv.h>
-#include <Graphics.h>
+#include <R_ext/GraphicsEngine.h>
 #include <Rmodules/Rvfonts.h>
 
 static VfontRoutines routines;

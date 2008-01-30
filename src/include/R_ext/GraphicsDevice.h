@@ -508,6 +508,9 @@ typedef struct {
 	/* the clean-up itself					*/
 	/********************************************************/
 
+/* used in various devices */
+
+typedef unsigned int rcolor;
 
 /* Graphics events: defined in gevents.c */
 

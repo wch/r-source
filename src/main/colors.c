@@ -19,12 +19,15 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* This should be regarded as part of the graphics engine */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include <Defn.h>
 #include <Graphics.h>
+#include <Colors.h>
 #include <Rmath.h>
 
 unsigned int char2col(const char *s)
