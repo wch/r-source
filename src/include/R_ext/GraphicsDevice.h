@@ -90,6 +90,7 @@ typedef struct {
     double yCharOffset;	        /* y character addressing offset */
     double yLineBias;	        /* 1/2 interline space as frac of line hght */
     double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
+    /* It seems this is unused, and unset by all(?) devices */
     double asp;		        /* Pixel aspect ratio = ipr[1]/ipr[0] */
     /* I hate this guy too -- seems to assume that a device can only
      * have one font size during its lifetime
