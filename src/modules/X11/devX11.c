@@ -50,7 +50,7 @@
 #endif
 
 
-#include "Graphics.h"
+#include <R_ext/GraphicsEngine.h>
 #include "Fileio.h"		/* R_fopen */
 #include "rotated.h"		/* 'Public' routines from here */
 /* For the input handlers of the event loop mechanism: */

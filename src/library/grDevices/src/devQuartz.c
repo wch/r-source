@@ -28,13 +28,12 @@
 #if HAVE_AQUA
 
 #include <Defn.h>
-#include <Graphics.h>
 #include <Rdevices.h>
 #include <Rinternals.h>
 #include <Rgraphics.h>
 #include <R_ext/QuartzDevice.h>
 
-#include <R_ext/GraphicsDevice.h>
+/* included by next #include <R_ext/GraphicsDevice.h> */
 #include <R_ext/GraphicsEngine.h>
 
 #include "grDevices.h"
