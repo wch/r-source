@@ -1186,7 +1186,6 @@ SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
 static void RunGenCollect(R_size_t size_needed)
 {
     int i, gen, gens_collected;
-    DevDesc *dd;
     RCNTXT *ctxt;
     SEXP s;
     SEXP forwarded_nodes;
@@ -1279,14 +1278,10 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(R_CurrentExpr);
 
     for (i = 0; i < R_MaxDevices; i++) {   /* Device display lists */
-	dd = GetDevice(i);
-	if (dd) {
-	    if (dd->newDevStruct) {
-		FORWARD_NODE(((GEDevDesc*) dd)->dev->displayList);
-		FORWARD_NODE(((GEDevDesc*) dd)->dev->savedSnapshot);
-	    }
-	    else
-		FORWARD_NODE(dd->displayList);
+	GEDevDesc *gdd = (GEDevDesc *) GetDevice(i);
+	if (gdd && gdd->dev) {
+	    FORWARD_NODE(gdd->dev->displayList);
+	    FORWARD_NODE(gdd->dev->savedSnapshot);
 	}
     }
 

@@ -3591,26 +3591,18 @@ SEXP attribute_hidden do_erase(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_getSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd = CurrentDevice();
+    GEDevDesc *gdd = (GEDevDesc *) CurrentDevice();
 
     checkArity(op, args);
-    if (dd->newDevStruct) {
-	return GEcreateSnapshot((GEDevDesc*) dd);
-    } else {
-	error(_("cannot take snapshot of old-style device"));
-	return R_NilValue;
-    }
+    return GEcreateSnapshot(gdd);
 }
 
 SEXP attribute_hidden do_playSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd = CurrentDevice();
+    GEDevDesc *gdd = (GEDevDesc *) CurrentDevice();
 
     checkArity(op, args);
-    if (dd->newDevStruct)
-	GEplaySnapshot(CAR(args), (GEDevDesc*) dd);
-    else
-	error(_("cannot play snapshot on old-style device"));
+    GEplaySnapshot(CAR(args), gdd);
     return R_NilValue;
 }
 
@@ -3636,10 +3628,7 @@ SEXP attribute_hidden do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!isList(theList = CAR(args)))
        error(_("invalid argument"));
-    if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->displayList = theList;
-    else
-	dd->displayList = theList;
+    ((GEDevDesc*) dd)->dev->displayList = theList;
     if (theList != R_NilValue) {
 	ask = Rf_gpptr(dd)->ask;
 	Rf_gpptr(dd)->ask = 1;
