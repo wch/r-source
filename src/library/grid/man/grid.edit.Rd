@@ -13,8 +13,8 @@
  and redraws the grob.
 }
 \usage{
-grid.edit(gPath, ..., strict = FALSE, grep = FALSE, global = FALSE,
-          allDevices = FALSE, redraw = TRUE)
+grid.edit(gPath, ..., strict = FALSE, grep = FALSE,
+          global = FALSE, allDevices = FALSE, redraw = TRUE)
 
 grid.gedit(..., grep = TRUE, global = TRUE)
 

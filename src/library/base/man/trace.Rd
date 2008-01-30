@@ -216,38 +216,40 @@ untrace(sum)
 
 if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
 
- f <- function(x, y) {
-     y <- pmax(y, .001)
-     x ^ y
- }
+f <- function(x, y) {
+    y <- pmax(y, .001)
+    x ^ y
+}
 
- ## arrange to call the browser on entering and exiting
- ## function f
- trace("f", browser, exit = browser)
+## arrange to call the browser on entering and exiting
+## function f
+trace("f", browser, exit = browser)
 
- ## instead, conditionally assign some data, and then browse
- ## on exit, but only then.  Don't bother me otherwise
+## instead, conditionally assign some data, and then browse
+## on exit, but only then.  Don't bother me otherwise
 
- trace("f", quote(if(any(y < 0)) yOrig <- y),
-       exit = quote(if(exists("yOrig")) browser()),
-       print = FALSE)
+trace("f", quote(if(any(y < 0)) yOrig <- y),
+      exit = quote(if(exists("yOrig")) browser()),
+      print = FALSE)
 
- ## trace a utility function, with recover so we
- ## can browse in the calling functions as well.
+## trace a utility function, with recover so we
+## can browse in the calling functions as well.
 
- trace("as.matrix", recover)
+trace("as.matrix", recover)
 
- ## turn off the tracing
+## turn off the tracing
 
- untrace(c("f", "as.matrix"))
+untrace(c("f", "as.matrix"))
 
- \dontrun{
- ## trace calls to the function lm() that come from the nlme package
- ## (The function nlme is in that package, and the package has a name space,
- ## so the where= argument must be used to get the right version of lm)
+\dontrun{
+## trace calls to the function lm() that come from
+## the nlme package.
+## (The function nlme is in that package, and the package
+## has a name space, so the where= argument must be used
+## to get the right version of lm)
 
- trace(lm, exit = recover, where = nlme)
- }
+trace(lm, exit = recover, where = nlme)
+}
 }
 }
 \keyword{programming}

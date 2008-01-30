@@ -23,7 +23,8 @@
 \usage{
 symbols(x, y = NULL, circles, squares, rectangles, stars,
         thermometers, boxplots, inches = TRUE, add = FALSE,
-        fg = par("col"), bg = NA, xlab = NULL, ylab = NULL, main = NULL,
+        fg = par("col"), bg = NA,
+        xlab = NULL, ylab = NULL, main = NULL,
         xlim = NULL, ylim = NULL, \dots)
 }
 \arguments{

@@ -23,7 +23,8 @@
 }
 \usage{
 ### each of these classes corresponds to an unevaluated object
-### in the S language.  The class name can appear in method signatures,
+### in the S language.
+### The class name can appear in method signatures,
 ### and in a few other contexts (such as some calls to as()).
 
 "("

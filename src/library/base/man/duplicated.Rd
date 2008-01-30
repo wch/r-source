@@ -21,7 +21,8 @@ duplicated(x, incomparables = FALSE, \dots)
 \method{duplicated}{default}(x, incomparables = FALSE,
            fromLast = FALSE, \dots)
 
-\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
+\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1,
+           fromLast = FALSE, \dots)
 }
 \arguments{
   \item{x}{a vector or a data frame or an array or \code{NULL}.}

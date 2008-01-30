@@ -186,8 +186,10 @@ plot(dend1)
 ## "triangle" type and show inner nodes:
 plot(dend1, nodePar=list(pch = c(1,NA), cex=0.8, lab.cex = 0.8),
       type = "t", center=TRUE)
-plot(dend1, edgePar=list(col = 1:2, lty = 2:3), dLeaf=1, edge.root = TRUE)
-plot(dend1, nodePar=list(pch = 2:1,cex=.4*2:1, col = 2:3), horiz=TRUE)
+plot(dend1, edgePar=list(col = 1:2, lty = 2:3),
+     dLeaf=1, edge.root = TRUE)
+plot(dend1, nodePar=list(pch = 2:1,cex=.4*2:1, col = 2:3),
+     horiz=TRUE)
 
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
@@ -201,7 +203,8 @@ plot(dend2$lower[[2]], nodePar=list(col=1),# non empty list
 par(op)
 str(d3 <- dend2$lower[[2]][[2]][[1]])
 
-nP <- list(col=3:2, cex=c(2.0, 0.75), pch= 21:22, bg= c("light blue", "pink"),
+nP <- list(col=3:2, cex=c(2.0, 0.75), pch= 21:22,
+           bg= c("light blue", "pink"),
            lab.cex = 0.75, lab.col = "tomato")
 plot(d3, nodePar= nP, edgePar = list(col="gray", lwd=2), horiz = TRUE)
 %% now add some "edgetext" :

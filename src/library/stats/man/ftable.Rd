@@ -12,7 +12,8 @@
 \usage{
 ftable(x, \dots)
 
-\method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
+\method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL,
+       col.vars = NULL)
 }
 \arguments{
   \item{x, \dots}{\R objects which can be interpreted as factors (including

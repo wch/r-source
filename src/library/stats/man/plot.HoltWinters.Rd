@@ -16,8 +16,9 @@
         separator = TRUE, col = 1, col.predicted = 2,
         col.intervals = 4, col.separator = 1, lty = 1,
         lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
-        ylab = "Observed / Fitted", main = "Holt-Winters filtering",
-        ylim = NULL, ...)
+        ylab = "Observed / Fitted",
+        main = "Holt-Winters filtering",
+        ylim = NULL, \dots)
 }
 \arguments{
   \item{x}{Object of class \code{"HoltWinters"}}

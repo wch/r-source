@@ -172,7 +172,8 @@ require(graphics)
 lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 
 inflm.SR <- influence.measures(lm.SR)
-which(apply(inflm.SR$is.inf, 1, any)) # which observations 'are' influential
+which(apply(inflm.SR$is.inf, 1, any))
+# which observations 'are' influential
 summary(inflm.SR) # only these
 inflm.SR          # all
 plot(rstudent(lm.SR) ~ hatvalues(lm.SR)) # recommended by some

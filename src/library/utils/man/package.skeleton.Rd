@@ -13,7 +13,8 @@
   \file{Read-and-delete-me} file describing further steps in packaging. 
 }
 \usage{
-package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
+package.skeleton(name = "anRpackage", list,
+                 environment = .GlobalEnv,
 	         path = ".", force = FALSE, namespace = FALSE,
                  code_files = character())
 }

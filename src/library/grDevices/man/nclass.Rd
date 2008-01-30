@@ -67,8 +67,8 @@ x <- stats::rnorm(1111)
 nclass.Sturges(x)
 
 ## Compare them:
-NC <- function(x)
-    c(Sturges = nclass.Sturges(x), Scott = nclass.scott(x), FD = nclass.FD(x))
+NC <- function(x) c(Sturges = nclass.Sturges(x),
+      Scott = nclass.scott(x), FD = nclass.FD(x))
 NC(x)
 onePt <- rep(1, 11)
 NC(onePt) # no longer gives NaN

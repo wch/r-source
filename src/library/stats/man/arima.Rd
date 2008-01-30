@@ -16,8 +16,10 @@
 \usage{
 arima(x, order = c(0, 0, 0),
       seasonal = list(order = c(0, 0, 0), period = NA),
-      xreg = NULL, include.mean = TRUE, transform.pars = TRUE,
-      fixed = NULL, init = NULL, method = c("CSS-ML", "ML", "CSS"),
+      xreg = NULL, include.mean = TRUE,
+      transform.pars = TRUE,
+      fixed = NULL, init = NULL,
+      method = c("CSS-ML", "ML", "CSS"),
       n.cond, optim.control = list(), kappa = 1e6)
 }
 \arguments{

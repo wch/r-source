@@ -84,7 +84,7 @@ ruser <- Sys.getenv("R_USER")
 cat("\n\nLocation for personal configuration files is\n   R_USER = ",
     ruser, "\n\n", sep="")
 ## see if there are personal configuration files
-sapply(c("Rconsole", "Rdevga"), function(x) file.exists(file.path(ruser, x)))
+file.exists(file.path(ruser, c("Rconsole", "Rdevga")))
 
 ## show the configuration files used
 showConfig <- function(file)

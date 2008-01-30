@@ -7,11 +7,12 @@
 \alias{ksmooth}
 \title{Kernel Regression Smoother}
 \description{
-  The Nadaraya-Watson kernel regression estimate.
+  The Nadaraya--Watson kernel regression estimate.
 }
 \usage{
 ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
-        range.x = range(x), n.points = max(100, length(x)), x.points)
+        range.x = range(x),
+        n.points = max(100, length(x)), x.points)
 }
 \arguments{
  \item{x}{input x values}

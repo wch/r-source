@@ -20,7 +20,8 @@
 \usage{
 update.packages(lib.loc = NULL, repos = getOption("repos"),
                 contriburl = contrib.url(repos, type),
-                method, instlib = NULL, ask = TRUE, available = NULL,
+                method, instlib = NULL,
+                ask = TRUE, available = NULL,
                 \dots, checkBuilt = FALSE,
                 type = getOption("pkgType"))
 
@@ -336,11 +337,12 @@ contrib.url(repos, type = getOption("pkgType"))
 \examples{
 
 \dontrun{
-  install.packages(c("XML_0.99-5.tar.gz",
-                     "../../Interfaces/Perl/RSPerl_0.8-0.tar.gz"),
-                   repos = NULL,
-                   configure.args = c(XML = '--with-xml-config=xml-config',
-                                      RSPerl = "--with-modules='IO Fcntl'"))
+install.packages(
+    c("XML_0.99-5.tar.gz",
+      "../../Interfaces/Perl/RSPerl_0.8-0.tar.gz"),
+    repos = NULL,
+    configure.args = c(XML = '--with-xml-config=xml-config',
+                       RSPerl = "--with-modules='IO Fcntl'"))
 }
 }
 \keyword{utilities}

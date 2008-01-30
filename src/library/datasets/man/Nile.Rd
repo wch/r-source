@@ -42,11 +42,13 @@ NileNA <- Nile
 NileNA[c(21:40, 61:80)] <- NA
 arima(NileNA, c(2, 0, 0))
 plot(NileNA)
-pred <- predict(arima(window(NileNA, 1871, 1890), c(2,0,0)), n.ahead = 20)
+pred <-
+   predict(arima(window(NileNA, 1871, 1890), c(2,0,0)), n.ahead = 20)
 lines(pred$pred, lty = 3, col = "red")
 lines(pred$pred + 2*pred$se, lty=2, col="blue")
 lines(pred$pred - 2*pred$se, lty=2, col="blue")
-pred <- predict(arima(window(NileNA, 1871, 1930), c(2,0,0)), n.ahead = 20)
+pred <-
+   predict(arima(window(NileNA, 1871, 1930), c(2,0,0)), n.ahead = 20)
 lines(pred$pred, lty = 3, col = "red")
 lines(pred$pred + 2*pred$se, lty=2, col="blue")
 lines(pred$pred - 2*pred$se, lty=2, col="blue")
@@ -63,7 +65,8 @@ plot(residuals(fit)); abline(h = 0, lty = 3)
 (fit2 <- StructTS(Nile, type = "trend")) ## constant trend fitted
 pred <- predict(fit, n.ahead = 30)
 ## with 50\% confidence interval
-ts.plot(Nile, pred$pred, pred$pred + 0.67*pred$se, pred$pred -0.67*pred$se)
+ts.plot(Nile, pred$pred,
+        pred$pred + 0.67*pred$se, pred$pred -0.67*pred$se)
 
 ## Now consider missing values
 plot(NileNA)

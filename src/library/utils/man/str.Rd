@@ -109,7 +109,8 @@ str( lsfit(1:9,1:9), width = 60, strict.width = "cut")
 str( lsfit(1:9,1:9), width = 60, strict.width = "wrap")
 op <- options(); str(op) # save first;
                          # otherwise internal options() is used.
-need.dev <- !exists(".Device") || is.null(.Device) || .Device == "null device"
+need.dev <-
+  !exists(".Device") || is.null(.Device) || .Device == "null device"
 { if(need.dev) postscript()
   str(par())
   if(need.dev) graphics.off()

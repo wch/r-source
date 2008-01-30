@@ -103,7 +103,7 @@ qr(m)$rank # is 2, as it should be
 # chol() unlike qr() does not use a tolerance.
 try(chol(m))
 
-(Q <- chol(m, pivot = TRUE)) # NB wrong rank here ... see Warning section.
+(Q <- chol(m, pivot = TRUE)) # NB wrong rank here - see Warning section.
 ## we can use this by
 pivot <- attr(Q, "pivot")
 oo <- order(pivot)

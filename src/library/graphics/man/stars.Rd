@@ -8,15 +8,18 @@
 \title{Star (Spider/Radar) Plots and Segment Diagrams}
 \description{
   Draw star plots or segment diagrams of a multivariate data set.
-  With one single location, also draws \sQuote{spider} (or \sQuote{radar}) plots.
+  With one single location, also draws \sQuote{spider}
+  (or \sQuote{radar}) plots.
 }
 \usage{
 stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       labels = dimnames(x)[[1]], locations = NULL,
       nrow = NULL, ncol = NULL, len = 1,
-      key.loc = NULL, key.labels = dimnames(x)[[2]], key.xpd = TRUE,
+      key.loc = NULL, key.labels = dimnames(x)[[2]],
+      key.xpd = TRUE,
       xlim = NULL, ylim = NULL, flip.labels = NULL,
-      draw.segments = FALSE, col.segments = 1:n.seg, col.stars = NA,
+      draw.segments = FALSE,
+      col.segments = 1:n.seg, col.stars = NA,
       axes = FALSE, frame.plot = axes,
       main = NULL, sub = NULL, xlab = "", ylab = "",
       cex = 0.8, lwd = 0.25, lty = par("lty"), xpd = FALSE,

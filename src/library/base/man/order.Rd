@@ -99,7 +99,8 @@ set.seed(1)# reproducible example:
 d4 <- data.frame(x = round(   rnorm(100)), y = round(10*runif(100)),
                  z = round( 8*rnorm(100)), u = round(50*runif(100)))
 (d4s <- d4[ do.call(order, d4) ,])
-(i <- which(diff(d4s[,3]) == 0))# in 2 places, needed 3 cols to break ties:
+(i <- which(diff(d4s[,3]) == 0))
+#   in 2 places, needed 3 cols to break ties:
 d4s[ rbind(i,i+1), ]
 
 ## rearrange matched vectors so that the first is in ascending order

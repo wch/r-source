@@ -13,9 +13,10 @@
 }
 \usage{
 \method{anova}{mlm}(object, \dots,
-      test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy", "Spherical"),
-      Sigma = diag(nrow = p),
-      T = Thin.row(proj(M) - proj(X)), M = diag(nrow = p), X = ~0,
+      test =
+         c("Pillai", "Wilks", "Hotelling-Lawley", "Roy", "Spherical"),
+      Sigma = diag(nrow = p), T = Thin.row(proj(M) - proj(X)),
+       M = diag(nrow = p), X = ~0,
       idata = data.frame(index = seq_len(p)))
 }
 \arguments{
@@ -102,16 +103,18 @@ anova(mlmfit, mlmfit0, X=~1, test="Spherical")
 idata <- data.frame(deg=gl(3,1,6,labels=c(0,4,8)),
                     noise=gl(2,3,6,labels=c("A","P")))
 
-anova(mlmfit, mlmfit0, X = ~ deg + noise, idata = idata, test = "Spherical")
-anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ noise, idata = idata,
-          test="Spherical" )
-anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ deg, idata = idata,
-          test="Spherical" )
+anova(mlmfit, mlmfit0, X = ~ deg + noise,
+      idata = idata, test = "Spherical")
+anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ noise,
+      idata = idata, test="Spherical" )
+anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ deg,
+      idata = idata, test="Spherical" )
 
 f <- factor(rep(1:2,5)) # bogus, just for illustration
 mlmfit2 <- update(mlmfit, ~f)
-anova(mlmfit2, mlmfit, mlmfit0, X=~1, test="Spherical")
-anova(mlmfit2, X=~1, test="Spherical") # one-model form, eqiv. to previous 
+anova(mlmfit2, mlmfit, mlmfit0, X = ~1, test = "Spherical")
+anova(mlmfit2, X = ~1, test = "Spherical")
+# one-model form, eqiv. to previous 
 
 ### There seems to be a strong interaction in these data
 plot(colMeans(reacttime))

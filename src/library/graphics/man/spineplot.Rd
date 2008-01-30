@@ -17,14 +17,16 @@
 spineplot(x, \dots)
 
 \method{spineplot}{default}(x, y = NULL,
-          breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
-          col = NULL, main = "", xlab = NULL, ylab = NULL,
+          breaks = NULL, tol.ylab = 0.05, off = NULL,
+          ylevels = NULL, col = NULL,
+          main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), \dots)
 
 \method{spineplot}{formula}(formula, data = list(),
-          breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
-          col = NULL, main = "", xlab = NULL, ylab = NULL,
+          breaks = NULL, tol.ylab = 0.05, off = NULL,
+          ylevels = NULL, col = NULL,
+          main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), \dots,
           subset = NULL)
@@ -113,7 +115,8 @@ spineplot(x, \dots)
 treatment <- factor(rep(c(1, 2), c(43, 41)), levels = c(1, 2),
                     labels = c("placebo", "treated"))
 improved <- factor(rep(c(1, 2, 3, 1, 2, 3), c(29, 7, 7, 13, 7, 21)),
-                   levels = c(1, 2, 3), labels = c("none", "some", "marked"))
+                   levels = c(1, 2, 3),
+                   labels = c("none", "some", "marked"))
 
 ## (dependence on a categorical variable)
 (spineplot(improved ~ treatment))

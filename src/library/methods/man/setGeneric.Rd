@@ -14,8 +14,9 @@
   control.  See the details section.
 }
 \usage{
-setGeneric(name, def= , group=list(), valueClass=character(), where= ,
-           package= , signature= , useAsDefault= , genericFunction= )
+setGeneric(name, def= , group=list(), valueClass=character(),
+           where= , package= , signature= , useAsDefault= ,
+           genericFunction= )
 
 setGroupGeneric(name, def= , group=list(), valueClass=character(),
                 knownMembers=list(), package= , where= )

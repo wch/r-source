@@ -19,9 +19,11 @@ unique(x, incomparables = FALSE, \dots)
 
 \method{unique}{default}(x, incomparables = FALSE, fromLast = FALSE, \dots)
 
-\method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
+\method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1,
+       fromLast = FALSE, \dots)
 
-\method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
+\method{unique}{array}(x, incomparables = FALSE, MARGIN = 1,
+       fromLast = FALSE, \dots)
 }
 \arguments{
   \item{x}{a vector or a data frame or an array or \code{NULL}.}

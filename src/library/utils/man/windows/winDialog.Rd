@@ -13,7 +13,9 @@
   to edit a string.
 }
 \usage{
-winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"), message)
+winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"),
+          message)
+
 winDialogString(message, default)
 }
 \arguments{

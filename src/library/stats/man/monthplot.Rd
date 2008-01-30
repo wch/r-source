@@ -20,7 +20,8 @@
 \usage{
 monthplot(x, \dots)
 
-\method{monthplot}{stl}(x, labels = NULL, ylab = choice, choice = "seasonal", \dots)
+\method{monthplot}{stl}(x, labels = NULL, ylab = choice, choice = "seasonal",
+          \dots)
 
 \method{monthplot}{StructTS}(x, labels = NULL, ylab = choice, choice = "sea", \dots)
 
