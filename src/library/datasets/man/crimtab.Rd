@@ -105,13 +105,12 @@ d.hei$sample <- as.factor(rep(1:750, each = 4))
 
 # 4) Compute the means and standard deviations (n) for the 750 samples:
 
-% h.mean <- with(d.hei, by(data = height, INDICES = sample, FUN = mean))
-% h.sd   <- with(d.hei, by(data = height, INDICES = sample, FUN = sd)) *sqrt(3/4)
 h.mean <- with(d.hei, tapply(height, sample, FUN = mean))
 h.sd   <- with(d.hei, tapply(height, sample, FUN = sd)) * sqrt(3/4)
 
-# 5) Compute the difference between the mean of each sample and the mean of
-#    the population and then divide by the standard deviation of the sample:
+# 5) Compute the difference between the mean of each sample and
+#    the mean of the population and then divide by the
+#    standard deviation of the sample:
 
 zobs <- (h.mean - mean(d.hei[,"height"]))/h.sd
 

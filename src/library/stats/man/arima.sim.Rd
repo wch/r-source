@@ -11,7 +11,8 @@
 }
 \usage{
 arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
-          n.start = NA, start.innov = rand.gen(n.start, \dots), \dots)
+          n.start = NA, start.innov = rand.gen(n.start, \dots),
+          \dots)
 }
 \arguments{
   \item{model}{A list with component \code{ar} and/or \code{ma} giving

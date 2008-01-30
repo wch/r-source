@@ -13,7 +13,8 @@
 }
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
-        local = FALSE, echo = TRUE, verbose = getOption("verbose"),
+        local = FALSE, echo = TRUE,
+        verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
         prompt.prefix = abbreviate(topic, 6))
 }

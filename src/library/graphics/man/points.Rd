@@ -152,12 +152,13 @@ plot(x, sin(x), type="o", pch=21, bg=par("bg"), col = "blue", cex=.6,
  main='plot(..., type="o", pch=21, bg=par("bg"))')
 par(op)
 
-##-------- Showing all the extra & some char graphics symbols ------------
+##-------- Showing all the extra & some char graphics symbols ---------
 pchShow <-
   function(extras = c("*",".", "o","O","0","+","-","|","\%","#"),
            cex = 3, ## good for both .Device=="postscript" and "x11"
            col = "red3", bg = "gold", coltext = "brown", cextext = 1.2,
-           main = paste("plot symbols :  points (...  pch = *, cex =", cex,")"))
+           main = paste("plot symbols :  points (...  pch = *, cex =",
+                        cex,")"))
   {
     nex <- length(extras)
     np  <- 26 + nex
@@ -168,7 +169,8 @@ pchShow <-
     ry <- dd + range(iy <- 3 + (k-1)- ipch \%\% k)
     pch <- as.list(ipch) # list with integers & strings
     if(nex > 0) pch[26+ 1:nex] <- as.list(extras)
-    plot(rx, ry, type="n", axes = FALSE, xlab = "", ylab = "", main = main)
+    plot(rx, ry, type="n", axes = FALSE, xlab = "", ylab = "",
+         main = main)
     abline(v = ix, h = iy, col = "lightgray", lty = "dotted")
     for(i in 1:np) {
       pc <- pch[[i]]
@@ -184,14 +186,15 @@ pchShow(c("o","O","0"), cex = 2.5)
 pchShow(NULL, cex = 4, cextext = 0, main = NULL)
 
 \dontrun{
-## --------------- test code for various pch specifications ----------------
+## ------------ test code for various pch specifications -------------
 # Try this in various font families (including Hershey)
 # and locales.  Use sign=-1 asserts we want Latin-1.
 # Standard cases in a MBCS locale will not plot the top half.
 TestChars <- function(sign=1, ...)
 {
    par(pty="s")
-   plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
+   plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="",
+        xaxs="i", yaxs="i")
    grid(17, 17, lty=1)
    for(i in c(32:255)) try(points(i\%\%16, i\%/\%16, pch=sign*i, ...))
 }

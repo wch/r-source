@@ -21,7 +21,8 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            na.strings = "NA", colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
-           comment.char = "#", allowEscapes = FALSE, flush = FALSE,
+           comment.char = "#",
+           allowEscapes = FALSE, flush = FALSE,
            stringsAsFactors = default.stringsAsFactors(),
            encoding = "unknown")
 

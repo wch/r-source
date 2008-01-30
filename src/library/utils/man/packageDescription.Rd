@@ -11,8 +11,8 @@
   Parses and returns the \file{DESCRIPTION} file of a package.
 }
 \usage{
-packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE,
-                   encoding = "")
+packageDescription(pkg, lib.loc = NULL, fields = NULL,
+                   drop = TRUE, encoding = "")
 }
 \arguments{
   \item{pkg}{a character string with the package name.}

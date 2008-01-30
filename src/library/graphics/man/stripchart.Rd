@@ -17,7 +17,8 @@
 \usage{
 stripchart(x, \dots)
 
-\method{stripchart}{formula}(x, data = NULL, dlab = NULL, \dots, subset, na.action = NULL)
+\method{stripchart}{formula}(x, data = NULL, dlab = NULL, \dots,
+           subset, na.action = NULL)
 
 
 \method{stripchart}{default}(x, method = "overplot", jitter = 0.1, offset = 1/3,

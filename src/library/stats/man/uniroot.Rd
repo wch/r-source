@@ -6,7 +6,8 @@
 \name{uniroot}
 \title{One Dimensional Root (Zero) Finding}
 \usage{
-uniroot(f, interval, \dots, lower = min(interval), upper = max(interval),
+uniroot(f, interval, \dots,
+        lower = min(interval), upper = max(interval),
         f.lower = f(lower, ...), f.upper = f(upper, ...),
         tol = .Machine$double.eps^0.25, maxiter = 1000)
 }
@@ -79,10 +80,10 @@ require(utils) # for str
 
 f <- function (x,a) x - a
 str(xmin <- uniroot(f, c(0, 1), tol = 0.0001, a = 1/3))
-str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2, tol = 0.0001),
-    dig = 10)
-str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2, tol = 1e-10 ),
-    dig = 10)
+str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
+            tol = 0.0001), dig = 10)
+str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
+            tol = 1e-10 ), dig = 10)
 
 ## Find the smallest value x for which exp(x) > 0 (numerically):
 r <- uniroot(function(x) 1e80*exp(x)-1e-300, c(-1000,0), tol = 1e-15)

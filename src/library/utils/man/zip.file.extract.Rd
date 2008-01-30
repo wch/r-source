@@ -7,7 +7,8 @@
 \alias{zip.file.extract}
 \title{Extract File from a Zip Archive}
 \usage{
-zip.file.extract(file, zipname = "R.zip", unzip = getOption("unzip"))
+zip.file.extract(file, zipname = "R.zip",
+                 unzip = getOption("unzip"))
 }
 \arguments{
  \item{file}{A file name. (If a path is given, see \sQuote{Note}.)}

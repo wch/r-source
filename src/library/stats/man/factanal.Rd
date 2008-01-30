@@ -14,8 +14,8 @@
 }
 \usage{
 factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
-         subset, na.action,
-         start = NULL, scores = c("none", "regression", "Bartlett"),
+         subset, na.action, start = NULL,
+         scores = c("none", "regression", "Bartlett"),
          rotation = "varimax", control = NULL, \dots)
 }
 \arguments{

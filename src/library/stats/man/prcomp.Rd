@@ -22,7 +22,8 @@ prcomp(x, \dots)
 
 \method{prcomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 
-\method{prcomp}{default}(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, \dots)
+\method{prcomp}{default}(x, retx = TRUE, center = TRUE, scale. = FALSE,
+       tol = NULL, \dots)
 
 \method{predict}{prcomp}(object, newdata, \dots)
 }

@@ -12,7 +12,9 @@
   \code{\link{convertColor}}.
 }
 \usage{
-make.rgb(red, green, blue, name = NULL, white = "D65", gamma = 2.2)
+make.rgb(red, green, blue, name = NULL, white = "D65",
+         gamma = 2.2)
+
 colorConverter(toXYZ, fromXYZ, name, white=NULL)
 }
 \arguments{

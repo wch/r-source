@@ -17,7 +17,8 @@
      mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
      oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),
      mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
-     xpd = par("xpd"), cex.main = if(nser > 2) 1 else par("cex.main"),
+     xpd = par("xpd"),
+     cex.main = if(nser > 2) 1 else par("cex.main"),
      verbose = getOption("verbose"),
      \dots)
 }

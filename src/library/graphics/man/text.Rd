@@ -133,12 +133,14 @@ text(6, 2, "the text is CENTERED around (x,y) = (6,2) by default",
 text(2, 1, "or Left/Bottom - JUSTIFIED at (2,1) by 'adj = c(0,0)'",
      adj = c(0,0))
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
-text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .75)
+text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)",
+     cex = .75)
 text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
 
 ## Two more latin1 examples
 text(5,10.2,
      "Le français, c'est façile: Règles, Liberté, Egalité, Fraternité...")
-text(5,9.8, "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
+text(5,9.8,
+     "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
 }
 \keyword{aplot}

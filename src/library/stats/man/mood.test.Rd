@@ -14,7 +14,8 @@
 \usage{
 mood.test(x, \dots)
 
-\method{mood.test}{default}(x, y, alternative = c("two.sided", "less", "greater"), \dots)
+\method{mood.test}{default}(x, y,
+          alternative = c("two.sided", "less", "greater"), \dots)
 
 \method{mood.test}{formula}(formula, data, subset, na.action, \dots)
 }

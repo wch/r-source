@@ -13,9 +13,10 @@
 }
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
-    outline = TRUE, notch.frac = 0.5, log = "", border = par("fg"),
-    pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
-    at = NULL, show.names = NULL, \dots)
+    outline = TRUE, notch.frac = 0.5, log = "",
+    border = par("fg"), pars = NULL, frame.plot = axes,
+    horizontal = FALSE, add = FALSE, at = NULL, show.names = NULL,
+    \dots)
 }
 \arguments{
   \item{z}{a list containing data summaries to be used in constructing
@@ -128,10 +129,11 @@ set.seed(753)
 op <- par(mfrow= c(2,2))
 bxp(bx.p, xaxt = "n")
 bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4, boxfill=1:5)
-bxp(bx.p, notch = TRUE, boxfill= "lightblue", frame= FALSE, outl= FALSE,
-    main = "bxp(*, frame= FALSE, outl= FALSE)")
-bxp(bx.p, notch = TRUE, boxfill= "lightblue", border= 2:6, ylim = c(-4,4),
-    pch = 22, bg = "green", log = "x", main = "... log='x', ylim=*")
+bxp(bx.p, notch = TRUE, boxfill= "lightblue", frame= FALSE,
+    outl= FALSE, main = "bxp(*, frame= FALSE, outl= FALSE)")
+bxp(bx.p, notch = TRUE, boxfill= "lightblue", border= 2:6,
+    ylim = c(-4,4), pch = 22, bg = "green", log = "x",
+    main = "... log='x', ylim=*")
 par(op)
 op <- par(mfrow= c(1,2))
 
@@ -149,10 +151,10 @@ boxplot(z, whisklty=3, main="boxplot(z, whisklty = 3)")
 
 ## Colour support similar to plot.default:
 op <- par(mfrow=1:2, bg="light gray", fg="midnight blue")
- boxplot(z,   col.axis="skyblue3", main="boxplot(*, col.axis=..,main=..)")
- plot(z[[1]], col.axis="skyblue3", main=   "plot(*, col.axis=..,main=..)")
- mtext("par(bg=\"light gray\", fg=\"midnight blue\")",
-       outer = TRUE, line = -1.2)
+boxplot(z,   col.axis="skyblue3", main="boxplot(*, col.axis=..,main=..)")
+plot(z[[1]], col.axis="skyblue3", main=   "plot(*, col.axis=..,main=..)")
+mtext("par(bg=\"light gray\", fg=\"midnight blue\")",
+      outer = TRUE, line = -1.2)
 par(op)
 
 ## Mimic S-Plus:

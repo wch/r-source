@@ -14,7 +14,8 @@ K-Means Clustering
 }
 \usage{
 kmeans(x, centers, iter.max = 10, nstart = 1,
-       algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"))
+       algorithm = c("Hartigan-Wong", "Lloyd", "Forgy",
+                     "MacQueen"))
 }
 \arguments{
   \item{x}{A numeric matrix of data, or an object that can be coerced to

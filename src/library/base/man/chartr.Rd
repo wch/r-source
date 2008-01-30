@@ -65,8 +65,9 @@ toupper(x)
 ## "Mixed Case" Capitalizing - toupper( every first letter of a word ) :
 
 .simpleCap <- function(x) {
-  s <- strsplit(x, " ")[[1]]
-  paste(toupper(substring(s, 1,1)), substring(s, 2), sep="", collapse=" ")
+    s <- strsplit(x, " ")[[1]]
+    paste(toupper(substring(s, 1,1)), substring(s, 2),
+          sep="", collapse=" ")
 }
 .simpleCap("the quick red fox jumps over the lazy brown dog")
 ## ->  [1] "The Quick Red Fox Jumps Over The Lazy Brown Dog"

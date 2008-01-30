@@ -64,11 +64,13 @@ seemsS4Object(getClass(class(1)))  #TRUE
 
 ## how to test for an S4 object that is not a vector
 
-S4NotVector <- function(object) seemsS4Object(object) && !is(object, "vector")
+S4NotVector <-
+    function(object) seemsS4Object(object) && !is(object, "vector")
 
 setClass("classNotNumeric", representation(x="numeric", y="numeric"))
 
-setClass("classWithNumeric", representation(y="numeric"), contains = "numeric")
+setClass("classWithNumeric", representation(y="numeric"),
+         contains = "numeric")
 
 obj1 <- new("classNotNumeric", x=1, y=2)
 

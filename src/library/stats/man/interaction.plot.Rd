@@ -89,7 +89,8 @@ with(OrchardSprays, {
   interaction.plot(treatment, rowpos, decrease)
   interaction.plot(rowpos, treatment, decrease, cex.axis=0.8)
   ## order the rows by their mean effect
-  rowpos <- factor(rowpos, levels=sort.list(tapply(decrease, rowpos, mean)))
+  rowpos <- factor(rowpos,
+                   levels = sort.list(tapply(decrease, rowpos, mean)))
   interaction.plot(rowpos, treatment, decrease, col = 2:9, lty = 1)
 })
 

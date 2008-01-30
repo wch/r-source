@@ -12,7 +12,8 @@
 }
 \usage{
 showMethods(f = character(), where = topenv(parent.frame()),
-            classes = NULL, includeDefs = FALSE, inherited = !includeDefs,
+            classes = NULL, includeDefs = FALSE,
+            inherited = !includeDefs,
             showEmpty, printTo = stdout())
 }
 \arguments{

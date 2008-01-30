@@ -10,8 +10,9 @@
   Translate non-ASCII characters in text to LaTeX escape sequences.
 }
 \usage{
-encoded_text_to_latex(x, encoding = c("latin1", "latin2", "latin9",
-                                       "UTF-8", "utf8"))
+encoded_text_to_latex(x,
+                      encoding = c("latin1", "latin2", "latin9",
+                                   "UTF-8", "utf8"))
 }
 \arguments{
   \item{x}{a character vector.}

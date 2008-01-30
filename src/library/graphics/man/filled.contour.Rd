@@ -118,7 +118,8 @@ x <- y <- seq(-4*pi, 4*pi, len = 27)
 r <- sqrt(outer(x^2, y^2, "+"))
 filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
 ## rather, the key *should* be labeled:
-filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE, plot.axes = {})
+filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE,
+               plot.axes = {})
 }
 \keyword{hplot}
 \keyword{aplot}

@@ -22,7 +22,8 @@
 glm(formula, family = gaussian, data, weights, subset,
     na.action, start = NULL, etastart, mustart,
     offset, control = glm.control(\dots), model = TRUE,
-    method = "glm.fit", x = FALSE, y = TRUE, contrasts = NULL, \dots)
+    method = "glm.fit", x = FALSE, y = TRUE, contrasts = NULL,
+    \dots)
 
 glm.fit(x, y, weights = rep(1, nobs),
         start = NULL, etastart = NULL, mustart = NULL,

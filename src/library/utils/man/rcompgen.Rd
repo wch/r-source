@@ -17,10 +17,13 @@
   
 \usage{
 
-rc.settings(ops, ns, args, func, ipck, S3, data, help, argdb, files)
+rc.settings(ops, ns, args, func, ipck, S3, data, help,
+           argdb, files)
+
 rc.status()
 
 rc.getOption(name)
+
 rc.options(\dots)
 
 }

@@ -10,7 +10,8 @@
   Performs one or two sample Kolmogorov-Smirnov tests.
 }
 \usage{
-ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
+ks.test(x, y, \dots,
+        alternative = c("two.sided", "less", "greater"),
         exact = NULL)
 }
 \arguments{

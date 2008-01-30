@@ -16,7 +16,8 @@ RweaveLatex()
 
 RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
                  debug = FALSE, echo = TRUE, eval = TRUE,
-                 keep.source = FALSE, split = FALSE, stylepath = TRUE,
+                 keep.source = FALSE, split = FALSE,
+                 stylepath = TRUE,
                  pdf = TRUE, eps = TRUE)
 }
 \arguments{

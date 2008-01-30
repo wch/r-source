@@ -8,8 +8,9 @@
 \encoding{latin1}
 \title{Power calculations for balanced one-way analysis of variance tests}
 \usage{
-power.anova.test(groups = NULL, n = NULL, between.var = NULL,
-                 within.var = NULL, sig.level = 0.05, power = NULL)
+power.anova.test(groups = NULL, n = NULL,
+                 between.var = NULL, within.var = NULL,
+                 sig.level = 0.05, power = NULL)
 }
 \arguments{
  \item{groups}{Number of groups}

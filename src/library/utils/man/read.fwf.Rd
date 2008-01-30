@@ -76,7 +76,7 @@ cat(file=ff, "123", "987654", sep="\n")
 read.fwf(ff, widths=c(1,0, 2,3))    #> 1 NA 23 NA \\ 9 NA 87 654
 unlink(ff)
 cat(file=ff, "123456", "987654", sep="\n")
-read.fwf(ff, widths=list(c(1,0, 2,3), c(2,2,2)))    #> 1 NA 23 456 98 76 54
+read.fwf(ff, widths=list(c(1,0, 2,3), c(2,2,2))) #> 1 NA 23 456 98 76 54
 unlink(ff)
 }
 \keyword{file}

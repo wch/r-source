@@ -25,7 +25,8 @@
   The other functions are support functions: see the details below.
 }
 \usage{
-getMethod(f, signature=character(), where, optional=FALSE, mlist, fdef)
+getMethod(f, signature=character(), where, optional = FALSE,
+          mlist, fdef)
 
 findMethod(f, signature, where)
 

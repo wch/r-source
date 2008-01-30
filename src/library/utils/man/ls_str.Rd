@@ -6,7 +6,9 @@
 \name{ls.str}
 \title{List Objects and their Structure}
 \usage{
-ls.str(pos = -1, name, envir, all.names = FALSE, pattern, mode = "any")
+ls.str(pos = -1, name, envir, all.names = FALSE,
+       pattern, mode = "any")
+
 lsf.str(pos = -1, envir, \dots)
 
 \method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots)
@@ -65,7 +67,8 @@ print(ls.str(), max.level = 0)# don't show details
 ## which base functions have "file" in their name ?
 lsf.str(pos = length(search()), pattern = "file")
 
-## demonstrating that  ls.str() works inside functions ["browser/debug mode"]:
+## demonstrating that  ls.str() works inside functions
+## ["browser/debug mode"]:
 tt <- function(x, y=1) { aa <- 7; r <- x + y; ls.str() }
 (nms <- sapply(strsplit(capture.output(tt(2))," *: *"), `[`, 1))
 stopifnot(nms == c("aa", "r","x","y"))

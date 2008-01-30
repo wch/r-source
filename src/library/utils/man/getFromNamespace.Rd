@@ -14,7 +14,10 @@
 }
 \usage{
 getFromNamespace(x, ns, pos = -1, envir = as.environment(pos))
-assignInNamespace(x, value, ns, pos = -1, envir = as.environment(pos))
+
+assignInNamespace(x, value, ns, pos = -1,
+                  envir = as.environment(pos))
+
 fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 }
 \arguments{

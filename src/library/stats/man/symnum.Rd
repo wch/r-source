@@ -14,7 +14,8 @@
 }
 \usage{
 symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
-       symbols= if(numeric.x) c(" ", ".", ",", "+", "*", "B") else c(".", "|"),
+       symbols = if(numeric.x) c(" ", ".", ",", "+", "*", "B")
+                 else c(".", "|"),
        legend = length(symbols) >= 3,
        na = "?", eps = 1e-5, numeric.x = is.numeric(x),
        corr = missing(cutpoints) && numeric.x,

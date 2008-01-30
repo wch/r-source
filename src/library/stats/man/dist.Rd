@@ -25,7 +25,8 @@ as.dist(m, diag = FALSE, upper = FALSE)
 \method{as.dist}{default}(m, diag = FALSE, upper = FALSE)
 
 \method{print}{dist}(x, diag = NULL, upper = NULL,
-      digits = getOption("digits"), justify = "none", right = TRUE, \dots)
+      digits = getOption("digits"), justify = "none",
+      right = TRUE, \dots)
 
 \method{as.matrix}{dist}(x, \dots)
 }

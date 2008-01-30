@@ -118,7 +118,8 @@ pacf(lh)
 acf(ldeaths)
 acf(ldeaths, ci.type = "ma")
 acf(ts.union(mdeaths, fdeaths))
-ccf(mdeaths, fdeaths, ylab="cross-correlation") # just the cross-correlations.
+ccf(mdeaths, fdeaths, ylab="cross-correlation")
+# (just the cross-correlations)
 
 presidents # contains missing values
 acf(presidents, na.action = na.pass)

@@ -126,15 +126,15 @@ require(graphics)
 ## given in Belsley, Kuh and Welsch.
 plot(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings))
 
-## 4 plots on 1 page; allow room for printing model formula in outer margin:
+## 4 plots on 1 page;
+## allow room for printing model formula in outer margin:
 par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
 plot(lm.SR)
 plot(lm.SR, id.n = NULL)               # no id's
 plot(lm.SR, id.n = 5, labels.id = NULL)# 5 id numbers
 
-% ## Replace Cook's distance plot by Residual-Leverage plot
-% plot(lm.SR, which=c(1:3, 5))
-## Was default in R <= 2.1.x: Cook's distances instead of Residual-Leverage plot
+## Was default in R <= 2.1.x:
+## Cook's distances instead of Residual-Leverage plot
 plot(lm.SR, which = 1:4)
 
 ## Fit a smooth curve, where applicable:

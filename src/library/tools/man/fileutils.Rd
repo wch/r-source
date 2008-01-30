@@ -15,8 +15,11 @@
 \usage{
 file_path_as_absolute(x)
 file_path_sans_ext(x)
-list_files_with_exts(dir, exts, all.files = FALSE, full.names = TRUE)
-list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
+
+list_files_with_exts(dir, exts, all.files = FALSE,
+                     full.names = TRUE)
+list_files_with_type(dir, type, all.files = FALSE,
+                     full.names = TRUE,
                      OS_subdirs = .OStype())
 }
 \arguments{

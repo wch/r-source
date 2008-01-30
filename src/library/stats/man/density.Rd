@@ -12,7 +12,8 @@
 density(x, \dots)
 \method{density}{default}(x, bw = "nrd0", adjust = 1,
         kernel = c("gaussian", "epanechnikov", "rectangular",
-                   "triangular", "biweight", "cosine", "optcosine"),
+                   "triangular", "biweight",
+                   "cosine", "optcosine"),
         weights = NULL, window = kernel, width,
         give.Rkern = FALSE,
         n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
@@ -196,10 +197,11 @@ for(i in 2:length(kernels))
    lines(density(0, width = 2, kernel =  kernels[i]), col = i)
 legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 
-##-------- Semi-advanced theoretic from here on ---------------------------
+##-------- Semi-advanced theoretic from here on -------------
 %% i.e. "secondary example" in a new help system ...
 
-(RKs <- cbind(sapply(kernels, function(k)density(kernel = k, give.Rkern = TRUE))))
+(RKs <- cbind(sapply(kernels,
+                     function(k) density(kernel = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
 bw <- bw.SJ(precip) ## sensible automatic choice

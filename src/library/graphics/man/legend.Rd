@@ -232,8 +232,8 @@ x <- 0:64/64
 matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)),
         type = "o", col = 1:7, ylim = c(-1, 1.5), pch = "*")
 op <- par(bg="antiquewhite1")
-legend(0, 1.5, paste("sin(", 1:7, "pi * x)"), col=1:7, lty=1:7, pch = "*",
-       ncol = 4, cex = 0.8)
+legend(0, 1.5, paste("sin(", 1:7, "pi * x)"), col=1:7, lty=1:7,
+       pch = "*", ncol = 4, cex = 0.8)
 legend(.8,1.2, paste("sin(", 1:7, "pi * x)"), col=1:7, lty=1:7,
        pch = "*", cex = 0.8)
 legend(0, -.1, paste("sin(", 1:4, "pi * x)"), col=1:4, lty=1:4,
@@ -244,7 +244,8 @@ par(op)
 
 ## point covering line :
 y <- sin(3*pi*x)
-plot(x, y, type="l", col="blue", main = "points with bg & legend(*, pt.bg)")
+plot(x, y, type="l", col="blue",
+    main = "points with bg & legend(*, pt.bg)")
 points(x, y, pch=21, bg="white")
 legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
 
@@ -254,9 +255,11 @@ legend("bottomright", "(x,y)", pch=1, title="bottomright")
 legend("bottom", "(x,y)", pch=1, title="bottom")
 legend("bottomleft", "(x,y)", pch=1, title="bottomleft")
 legend("left", "(x,y)", pch=1, title="left")
-legend("topleft", "(x,y)", pch=1, title="topleft, inset = .05", inset = .05)
+legend("topleft", "(x,y)", pch=1, title="topleft, inset = .05",
+       inset = .05)
 legend("top", "(x,y)", pch=1, title="top")
-legend("topright", "(x,y)", pch=1, title="topright, inset = .02", inset = .02)
+legend("topright", "(x,y)", pch=1, title="topright, inset = .02",
+       inset = .02)
 legend("right", "(x,y)", pch=1, title="right")
 legend("center", "(x,y)", pch=1, title="center")
 }

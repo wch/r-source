@@ -214,7 +214,7 @@ help(help)              # the same
 help(lapply)
 ?lapply                 # the same
 
-help("for")             # or ?"for", but the quotes or backticks are needed
+help("for")             # or ?"for", but quotes/backticks are needed
 ?`+`
 
 help(package="splines") # get help even when package is not loaded
@@ -226,7 +226,8 @@ topi <- "women"
 help(topi)
 
 try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
-help("bs", try.all.packages=TRUE) # reports can be found in package 'splines'
+help("bs", try.all.packages=TRUE)       # reports can be found
+                                        # in package 'splines'
 
 \dontrun{
 require(methods)
@@ -235,7 +236,8 @@ combo <- function(x, y) c(x, y)
 setGeneric("combo")
 setMethod("combo", c("numeric", "numeric"), function(x, y) x+y)
 
-## assume we have written some documentation for combo, and its methods ....
+## assume we have written some documentation
+## for combo, and its methods ....
 
 ?combo  ## produces the function documentation
 

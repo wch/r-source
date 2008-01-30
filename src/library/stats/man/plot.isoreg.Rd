@@ -70,7 +70,8 @@ plot(ir4, plot.type = "ro",  ylab = "y4", xlab = "x = 1:n")
 plot(isoreg(sample(9),  y3), plot.type="row")
 plot(isoreg(sample(9),  y3), plot.type="col.wise")
 
-plot(ir <- isoreg(sample(10), sample(10, replace = TRUE)), plot.type = "r")
+plot(ir <- isoreg(sample(10), sample(10, replace = TRUE)),
+                  plot.type = "r")
 }
 \keyword{hplot}
 \keyword{print}
