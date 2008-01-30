@@ -2644,7 +2644,7 @@ multi-threaded Goto BLAS, but ours run happily with multiple threads.
 
 For Intel processors under Linux, Intel's Math Kernel Library
 (@uref{http://www.intel.com/software/products/mkl/,
-@code{www.intel.com/@/software/@/products/@/mkl}}) can be used
+@code{www.intel.com/@/software/@/products/@/mkl}}) version 9 can be used
 by
 
 @example
@@ -2655,6 +2655,22 @@ by
 This is multi-threaded, but the number of threads defaults to 1 (and can
 be increased by setting @code{OMP_NUM_THREADS}).
 (Thanks to Andy Liaw for the information.)
+
+For version 10 on @cputype{x86_64}, Ei-Ji Nakama used GCC compilers and
+
+@example
+MKL_LIB_PATH=/opt/intel/mkl/10.0.1.014/lib/em64t
+MKL="   -L$@{MKL_LIB_PATH@}                               \
+        -Wl,--start-group                               \
+                $@{MKL_LIB_PATH@}/libmkl_gf_lp64.a        \
+                $@{MKL_LIB_PATH@}/libmkl_gnu_thread.a     \
+                $@{MKL_LIB_PATH@}/libmkl_core.a           \
+        -Wl,--end-group                                 \
+        -liomp5 -lguide -lpthread -lgomp"
+
+./configure --with-lapack="$MKL" --with-blas="$MKL"
+@end example
+
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use MKL.
