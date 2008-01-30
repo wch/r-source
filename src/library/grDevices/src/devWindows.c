@@ -259,10 +259,9 @@ static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, const char *name)
 	    mkString(name), R_BaseEnv);
     gdd = GEcreateDevDesc(ndd);
     addDevice((DevDesc*) gdd);
-    GEcopyDisplayList(devNumber((DevDesc*) dd));
+    GEcopyDisplayList(ndevNumber(dd));
     KillDevice((DevDesc*) gdd);
     selectDevice(saveDev);
-/*    KillDevice(GetDevice(devNumber((DevDesc*) ndd))); */
     gsetcursor(xd->gawin, ArrowCursor);
     show(xd->gawin);
 }
@@ -271,7 +270,7 @@ static void SaveAsWin(NewDevDesc *dd, const char *display,
 		      Rboolean restoreConsole)
 {
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
-    GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
+    GEDevDesc *gdd = desc2GEDesc(dd);
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
 	return;
@@ -311,7 +310,7 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 {
     SEXP s;
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
-    GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
+    GEDevDesc *gdd = desc2GEDesc(dd);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], paper[256], bg[256], fg[256];
     const char **afmpaths = NULL;
@@ -382,7 +381,7 @@ static void SaveAsPDF(NewDevDesc *dd, const char *fn)
 {
     SEXP s;
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
-    GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
+    GEDevDesc *gdd = desc2GEDesc(dd);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], bg[256], fg[256];
     const char **afmpaths = NULL;
@@ -774,7 +773,7 @@ static void HelpClose(window w)
     if (AllDevicesKilled) return;
     {
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
-	KillDevice(GetDevice(devNumber((DevDesc*) dd)));
+	killDevice(ndevNumber(dd));
     }
 }
 
@@ -783,7 +782,7 @@ static void HelpExpose(window w, rect r)
     if (AllDevicesKilled) return;
     {
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
-	GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
+	GEDevDesc *gdd = desc2GEDesc(dd);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (xd->resize) {
@@ -1104,12 +1103,11 @@ static void AddtoPlotHistory(SEXP snapshot, int replace)
 
 static void Replay(NewDevDesc *dd, SEXP vDL)
 {
-    GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     xd->replaying = TRUE;
     gsetcursor(xd->gawin, WatchCursor);
-    GEplaySnapshot(pCURRENT, gdd);
+    GEplaySnapshot(pCURRENT, desc2GEDesc(dd));
     xd->replaying = FALSE;
     gsetcursor(xd->gawin, ArrowCursor);
 }
@@ -1132,17 +1130,15 @@ static void menurec(control m)
 static void menuadd(control m)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
-    GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
+    AddtoPlotHistory(GEcreateSnapshot(desc2GEDesc(dd)), 0);
     xd->needsave = FALSE;
 }
 
 static void menureplace(control m)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
-    GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
 
     GETDL;
     pMUSTEXIST;
@@ -1151,7 +1147,7 @@ static void menureplace(control m)
 	R_ShowMessage(G_("No plot to replace!"));
 	return;
     }
-    AddtoPlotHistory(GEcreateSnapshot(gdd), 1);
+    AddtoPlotHistory(GEcreateSnapshot(desc2GEDesc(dd)), 1);
 }
 
 static void menunext(control m)
@@ -1169,7 +1165,6 @@ static void menunext(control m)
 static void menuprev(control m)
 {
     NewDevDesc *dd = (NewDevDesc*) getdata(m);
-    GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     GETDL;
@@ -1177,7 +1172,7 @@ static void menuprev(control m)
     pCHECK;
     if (pNUMPLOTS) {
 	if (xd->recording && xd->needsave && (dd->displayList != R_NilValue)) {
-	    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
+	    AddtoPlotHistory(GEcreateSnapshot(desc2GEDesc(dd)), 0);
 	    xd->needsave = FALSE;
 	    vDL = findVar(install(".SavedPlots"), R_GlobalEnv);
 	    /* may have changed vDL pointer */
@@ -2034,7 +2029,7 @@ static void GA_Resize(NewDevDesc *dd)
 	    xd->bm = newbitmap(iw, ih, getdepth(xd->gawin));
 	    if (!xd->bm) {
 		R_ShowMessage(_("Insufficient memory for resize. Killing device"));
-		KillDevice(GetDevice(devNumber((DevDesc*) dd)));
+		killDevice(ndevNumber(dd));
 	    }
 	    if(xd->have_alpha) {
 		del(xd->bm2);
@@ -2143,7 +2138,6 @@ static void deleteGraphMenus(int devnum)
 static void GA_Close(NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
     SEXP vDL;
 
     if (dd->onExit) {
@@ -2153,7 +2147,7 @@ static void GA_Close(NewDevDesc *dd)
 
     if (xd->kind == SCREEN) {
 	if(xd->recording) {
-	    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
+	    AddtoPlotHistory(GEcreateSnapshot(desc2GEDesc(dd)), 0);
 	    /* May have changed vDL, so can't use GETDL above */
 	    vDL = findVar(install(".SavedPlots"), R_GlobalEnv);
 	    pCURRENTPOS++; /* so PgUp goes to the last saved plot
@@ -2196,10 +2190,10 @@ static void GA_Activate(NewDevDesc *dd)
     if (xd->replaying || (xd->kind!=SCREEN))
 	return;
     if(strlen(xd->title)) {
-	snprintf(t, 140, xd->title, devNumber((DevDesc*) dd) + 1);
+	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", devNumber((DevDesc*) dd) + 1);
+	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (ACTIVE)");
     settext(xd->gawin, t);
@@ -2221,10 +2215,10 @@ static void GA_Deactivate(NewDevDesc *dd)
     if (xd->replaying || (xd->kind != SCREEN))
 	return;
     if(strlen(xd->title)) {
-	snprintf(t, 140, xd->title, devNumber((DevDesc*) dd) + 1);
+	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", devNumber((DevDesc*) dd) + 1);
+	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (inactive)");
     settext(xd->gawin, t);

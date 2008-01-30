@@ -173,6 +173,9 @@ struct _GEDevDesc {
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
 
+/* map NewDevDesc to enclosing GEDevDesc */
+GEDevDesc *desc2GEDesc(NewDevDesc *dd);
+
 /*
  *  Some line end/join constants
  */

@@ -338,8 +338,7 @@ int ndevNumber(NewDevDesc *dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
-	if (R_Devices[i] != NULL &&
-	    ((GEDevDesc*) R_Devices[i])->dev == dd)
+	if (R_Devices[i] != NULL && ((GEDevDesc*) R_Devices[i])->dev == dd)
 	    return i;
     return 0;
 }
@@ -560,3 +559,13 @@ SEXP attribute_hidden do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+/* A common construction in some graphics devices */
+GEDevDesc *desc2GEDesc(NewDevDesc *dd)
+{
+    int i;
+    for (i = 1; i < R_MaxDevices; i++)
+	if (R_Devices[i] != NULL && ((GEDevDesc*) R_Devices[i])->dev == dd)
+	    return (GEDevDesc*) R_Devices[i];
+    /* shouldn't happen ... */
+    return (GEDevDesc*) R_Devices[0];
+}
