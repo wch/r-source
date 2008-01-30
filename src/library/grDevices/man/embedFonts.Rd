@@ -12,7 +12,8 @@
   embed all fonts in the file.
 }
 \usage{
-embedFonts(file, format, outfile = file, fontpaths = "", options = "")
+embedFonts(file, format, outfile = file, fontpaths = "",
+           options = "")
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}

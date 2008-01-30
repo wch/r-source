@@ -8,8 +8,10 @@
 \title{Display One or More Files}
 \description{Display one or more files.}
 \usage{
-file.show(\dots, header = rep("", nfiles), title = "R Information",
-          delete.file = FALSE, pager = getOption("pager"), encoding = "")
+file.show(\dots, header = rep("", nfiles),
+          title = "R Information",
+          delete.file = FALSE, pager = getOption("pager"),
+          encoding = "")
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the

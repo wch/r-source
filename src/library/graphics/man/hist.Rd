@@ -8,7 +8,8 @@
 \usage{
 hist(x, \dots)
 
-\method{hist}{default}(x, breaks = "Sturges", freq = NULL, probability = !freq,
+\method{hist}{default}(x, breaks = "Sturges",
+     freq = NULL, probability = !freq,
      include.lowest = TRUE, right = TRUE,
      density = NULL, angle = 45, col = NULL, border = NULL,
      main = paste("Histogram of" , xname),

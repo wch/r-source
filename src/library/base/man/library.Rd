@@ -26,7 +26,8 @@ library(package, help, pos = 2, lib.loc = NULL,
         verbose = getOption("verbose"),
         version)
 
-require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
+require(package, lib.loc = NULL, quietly = FALSE,
+        warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
         character.only = FALSE, version, save = TRUE)
 

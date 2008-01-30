@@ -11,7 +11,8 @@
   for three dimensional (3D) plots.
 }
 \usage{
-xyz.coords(x, y = NULL, z = NULL, xlab = NULL, ylab = NULL, zlab = NULL,
+xyz.coords(x, y = NULL, z = NULL,
+           xlab = NULL, ylab = NULL, zlab = NULL,
            log = NULL, recycle = FALSE)
 }
 \arguments{

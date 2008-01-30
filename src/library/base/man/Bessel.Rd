@@ -137,7 +137,8 @@ legend(25, -.5, legend = paste("nu=", nus), col = nus+2, lwd = 1)
 curve(besselY(x, -0.1), 0, 10, ylim = c(-3,1), ylab = '')
 for(nu in c(seq(-0.2, -2, by = -0.1)))
   curve(besselY(x, nu), add = TRUE)
-title(expression(besselY(x, nu) *"   "* {nu == list(-0.1, -0.2, ..., -2)}))
+title(expression(besselY(x, nu) * "   " *
+                 {nu == list(-0.1, -0.2, ..., -2)}))
 }
 \keyword{math}
 

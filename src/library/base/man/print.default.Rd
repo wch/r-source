@@ -11,8 +11,9 @@
 }
 \title{Default Printing}
 \usage{
-\method{print}{default}(x, digits = NULL, quote = TRUE, na.print = NULL,
-      print.gap = NULL, right = FALSE, max = NULL, useSource = TRUE, \dots)
+\method{print}{default}(x, digits = NULL, quote = TRUE,
+      na.print = NULL, print.gap = NULL, right = FALSE,
+      max = NULL, useSource = TRUE, \dots)
 }
 \arguments{
   \item{x}{the object to be printed.}

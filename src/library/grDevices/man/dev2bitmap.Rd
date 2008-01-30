@@ -12,7 +12,8 @@ bitmap(file, type = "png256", height = 6, width = 6, res = 72,
        units = "in", pointsize, \dots)
 
 dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
-           units = "in", pointsize, \dots, method = c("postscript", "pdf"))
+           units = "in", pointsize, \dots,
+           method = c("postscript", "pdf"))
 }
 \arguments{
   \item{file}{The output file name, with an appropriate extension.}

@@ -253,7 +253,7 @@ isIncomplete(con)
 #ifdef windows
   (including that used on Windows)
 #endif
-  will handle BOMs using encoding \code{"UCS2"} but many
+  will handle BOMs using encoding \code{"UCS-2"} but many
 #ifdef windows
   (including that in \code{glibc})
 #endif

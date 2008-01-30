@@ -30,8 +30,10 @@
   are the membership and coercion functions for these classes.
 }
 \usage{
-factor(x = character(), levels = sort(unique.default(x), na.last = TRUE),
+factor(x = character(),
+       levels = sort(unique.default(x), na.last = TRUE),
        labels = levels, exclude = NA, ordered = is.ordered(x))
+
 ordered(x, \dots)
 
 is.factor(x)

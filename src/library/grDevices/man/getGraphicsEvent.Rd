@@ -12,8 +12,8 @@ form of a mouse or keyboard event.
 }
 \usage{
 getGraphicsEvent(prompt = "Waiting for input", 
-	         onMouseDown = NULL, onMouseMove = NULL, onMouseUp = NULL, 
-	         onKeybd = NULL)
+	         onMouseDown = NULL, onMouseMove = NULL,
+                 onMouseUp = NULL, onKeybd = NULL)
 }
 \arguments{
   \item{prompt}{prompt to be displayed to the user}
