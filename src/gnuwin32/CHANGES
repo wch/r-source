@@ -26,7 +26,7 @@ WORKAROUNDS
 	personal folder (typically 'My Documents' or 'Documents').
 
 
-NEW FEATUES
+NEW FEATURES
 
     o	win.version() and Sys.info() know about recent and upcoming
 	Windows versions, including if they are running on a 64-bit
