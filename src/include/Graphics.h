@@ -397,21 +397,12 @@ void copyGPar(GPar *, GPar *);
 
 int curDevice(void); /* from devices.c, used in engine.c */
 
-/* also in Rgraphics.h 
-int deviceNumber(DevDesc *dd);
-int devNumber(DevDesc *dd);
-DevDesc* GetDevice(int i);
-int nextDevice(int from);
-int NumDevices(void);
-*/
-
 		/* Miscellaneous (from colors.c) */
 
 unsigned int rgb2col(const char *);
 unsigned int name2col(const char *);
 unsigned int number2col(const char *);
 unsigned int char2col(const char *);/* rgb2col() or name2col() */
-unsigned int str2col(const char *);
 
 /* const char *col2name(unsigned int); in Rgraphics.h */
 

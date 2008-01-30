@@ -43,9 +43,10 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding, int enc)
 
 #include <Rmath.h>		/* for rround */
 #include "Graphics.h"
+/* #include <R_ext/GraphicsEngine.h> */
+#include <Rdevices.h>
 #include <R_ext/Error.h>
 #include "Fileio.h"
-#include <Rdevices.h>
 #include "grDevices.h"
 
 #ifdef HAVE_ERRNO_H
@@ -3154,8 +3155,8 @@ PSDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
      * END Load fonts
      *****************************/
 
-    setbg = str2col(bg);
-    setfg = str2col(fg);
+    setbg = R_GE_str2col(bg);
+    setfg = R_GE_str2col(fg);
 
     pd->width = width;
     pd->height = height;
@@ -4470,8 +4471,8 @@ XFigDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
     pd->fontnum = XFigBaseNum(family);
     /* this might have changed the family, so update */
     if(pd->fontnum == 16) family = "Helvetica";
-    pd->bg = str2col(bg);
-    pd->col = str2col(fg);
+    pd->bg = R_GE_str2col(bg);
+    pd->col = R_GE_str2col(fg);
     pd->fill = R_TRANWHITE;
     pd->width = width;
     pd->height = height;
@@ -5502,8 +5503,8 @@ PDFDeviceDriver(NewDevDesc* dd, const char *file, const char *paper,
      * END Load fonts
      *****************************/
 
-    setbg = str2col(bg);
-    setfg = str2col(fg);
+    setbg = R_GE_str2col(bg);
+    setfg = R_GE_str2col(fg);
 
     /*
      * Initialise all alphas to -1
