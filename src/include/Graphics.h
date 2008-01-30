@@ -72,6 +72,7 @@ typedef enum {
  CHARS = 15	/* multiples of text height (cex) */
 } GUnit;
 
+
 typedef struct {
     /* Basic Device Driver Properties */
     /* These MUST be set by device drivers on open */
@@ -332,6 +333,20 @@ typedef struct {
     void (*metricInfo)();
 } GPar;
 
+typedef struct {
+    /* New flag to indicate that this is an "old" device
+     * structure.
+     */
+    int newDevStruct;
+    GPar dp;		/* current device default parameters */
+    GPar gp;		/* current device current parameters */
+    GPar dpSaved;		/* saved device default parameters */
+    void *deviceSpecific;	/* pointer to device specific parameters */
+    Rboolean displayListOn;	/* toggle for display list status */
+    SEXP displayList;	/* display list */
+} DevDesc;
+
+
 /* always remap private functions */
 #include <Rgraphics.h>
 #define copyGPar		Rf_copyGPar
@@ -347,8 +362,6 @@ typedef struct {
 #define ProcessInlinePars	Rf_ProcessInlinePars
 #define recordGraphicOperation	Rf_recordGraphicOperation
 #define Specify2		Rf_Specify2
-
-/* All DevDesc here are really GEDevDesc */
 
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */
