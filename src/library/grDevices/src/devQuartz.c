@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007  The R Foundation
+ *  Copyright (C) 2007-8  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,13 +28,11 @@
 #if HAVE_AQUA
 
 #include <Defn.h>
-#include <Rdevices.h>
+#include <Rdevices.h> /* for GetDevice */
 #include <Rinternals.h>
+#define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/QuartzDevice.h>
-
-/* included by next #include <R_ext/GraphicsDevice.h> */
-#include <R_ext/GraphicsEngine.h>
 
 #include "grDevices.h"
 #ifdef SUPPORT_MBCS
@@ -171,7 +169,7 @@ void QuartzDevice_SetScaledSize(QuartzDesc_t desc, double width, double height) 
 }
 
 int QuartzDevice_DevNumber(QuartzDesc_t desc) {
-    return devNumber((DevDesc*)(((QuartzDesc*)desc)->dev));
+    return ndevNumber((((QuartzDesc*)desc)->dev));
 }
 
 double QuartzDevice_GetWidth(QuartzDesc_t desc)	{ return ((QuartzDesc*)desc)->width;  }
@@ -224,8 +222,8 @@ void  QuartzDevice_SetAntialias(QuartzDesc_t desc,int aa) {
 }
 
 void QuartzDevice_Kill(QuartzDesc_t desc) {
-    DevDesc *dd=GetDevice(devNumber((DevDesc*)((QuartzDesc*)desc)->dev));
-    if (dd) KillDevice(dd);
+    GEDevDesc *dd=GEGetDevice(ndevNumber(((QuartzDesc*)desc)->dev));
+    if (dd) GEkillDevice(dd);
 }
 
 int   QuartzDesc_GetFontSmooth(QuartzDesc_t desc) { return ((QuartzDesc*)desc)->smooth; }
@@ -256,14 +254,14 @@ void QuartzDevice_ReplayDisplayList(QuartzDesc_t desc) {
 	int _dirty = qd->dirty;
     qd->redraw = 1;
     if(qd->dev->displayList != R_NilValue)
-        GEplayDisplayList((GEDevDesc*)GetDevice(devNumber((DevDesc*)qd->dev)));
+        GEplayDisplayList(GEGetDevice(ndevNumber(qd->dev)));
     qd->redraw = 0;
 	qd->dirty = _dirty; /* we do NOT change the dirty flag */
 }
 
 void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
     QuartzDesc *qd = (QuartzDesc*)desc;
-    GEDevDesc *gd  = (GEDevDesc*)GetDevice(devNumber((DevDesc*)qd->dev));
+    GEDevDesc *gd  = GEGetDevice(ndevNumber(qd->dev));
 	SEXP snap;
 	if (last)
 		snap = qd->dev->savedSnapshot;
@@ -276,7 +274,7 @@ void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
 
 void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
     QuartzDesc *qd = (QuartzDesc*)desc;
-    GEDevDesc *gd  = (GEDevDesc*)GetDevice(devNumber((DevDesc*)qd->dev));
+    GEDevDesc *gd  = GEGetDevice(ndevNumber(qd->dev));
     if(NULL == snap) return; /*Aw, hell no!*/
     PROTECT((SEXP)snap);
     if(R_NilValue == VECTOR_ELT(snap,0)) 
@@ -288,8 +286,14 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
     UNPROTECT(1);
 }
 
-double QuartzDevice_UserX(QuartzDesc_t desc,double x) { return GConvertX(x,GMapUnits(0),GMapUnits(1),GetDevice(devNumber((DevDesc*)((QuartzDesc*)desc)->dev))); }
-double QuartzDevice_UserY(QuartzDesc_t desc,double y) { return GConvertX(y,GMapUnits(0),GMapUnits(1),GetDevice(devNumber((DevDesc*)((QuartzDesc*)desc)->dev))); }
+double QuartzDevice_UserX(QuartzDesc_t desc,double x) { 
+    return GConvertX(x,GMapUnits(0),GMapUnits(1),
+		     GetDevice(ndevNumber(((QuartzDesc*)desc)->dev))); 
+}
+double QuartzDevice_UserY(QuartzDesc_t desc,double y) {
+    return GConvertX(y,GMapUnits(0),GMapUnits(1),
+		     GetDevice(ndevNumber(((QuartzDesc*)desc)->dev)));
+}
 
 
 #pragma mark RGD API Function Prototypes
@@ -301,8 +305,8 @@ static void     RQuartz_Deactivate(NewDevDesc*);
 static void     RQuartz_Size(double*,double*,double*,double*,NewDevDesc*);
 static void     RQuartz_NewPage(R_GE_gcontext*,NewDevDesc*);
 static void     RQuartz_Clip(double,double,double,double,NewDevDesc*);
-static double   RQuartz_StrWidth(char*,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Text(double,double,char*,double,double,R_GE_gcontext*,NewDevDesc*);
+static double   RQuartz_StrWidth(const char*,R_GE_gcontext*,NewDevDesc*);
+static void     RQuartz_Text(double,double,const char*,double,double,R_GE_gcontext*,NewDevDesc*);
 static void     RQuartz_Rect(double,double,double,double,R_GE_gcontext*,NewDevDesc*);
 static void     RQuartz_Circle(double,double,double,R_GE_gcontext*,NewDevDesc*);
 static void     RQuartz_Line(double,double,double,double,R_GE_gcontext*,NewDevDesc*);
@@ -606,7 +610,7 @@ static void RQuartz_Clip(double x0,double x1,double y0,double y1,DEVDESC) {
     CGContextClipToRect(ctx,xd->clipRect);
 }
 
-CFStringRef prepareText(CTXDESC,char *text,UniChar **buffer,int *free) {
+CFStringRef prepareText(CTXDESC,const char *text,UniChar **buffer,int *free) {
     CFStringRef str;
     if(gc->fontface == 5 || strcmp(gc->fontfamily,"symbol") == 0)
         str = CFStringCreateWithCString(NULL,text,kCFStringEncodingMacSymbol);
@@ -616,6 +620,7 @@ CFStringRef prepareText(CTXDESC,char *text,UniChar **buffer,int *free) {
         if(NULL == str)
             CFStringCreateWithCString(NULL,text,kCFStringEncodingISOLatin1);
     }
+    /* FIXME: this can fail, e.g. for 0x7f in the symbol font.  Why? */
     *buffer = (UniChar*)CFStringGetCharactersPtr(str);
     if (*buffer == NULL) {
         CFIndex length = CFStringGetLength(str);
@@ -626,7 +631,7 @@ CFStringRef prepareText(CTXDESC,char *text,UniChar **buffer,int *free) {
     return str;
 }
 
-static double RQuartz_StrWidth(char *text,CTXDESC) {
+static double RQuartz_StrWidth(const char *text,CTXDESC) {
     DEVSPEC;
     if (!ctx) NOCTXR(strlen(text)*10.0); /* for sanity reasons */
     SET(RQUARTZ_FONT);
@@ -655,7 +660,7 @@ static double RQuartz_StrWidth(char *text,CTXDESC) {
     }
 }
 
-static void RQuartz_Text(double x,double y,char *text,double rot,double hadj,CTXDESC) {
+static void RQuartz_Text(double x,double y,const char *text,double rot,double hadj,CTXDESC) {
     DRAWSPEC;
     if (!ctx) NOCTX;
     /* A stupid hack because R isn't consistent. */
@@ -764,7 +769,11 @@ static void RQuartz_Mode(int mode,DEVDESC) {
 static void RQuartz_Hold(DEVDESC) {
 }
 
-static void RQuartz_MetricInfo(int c,R_GE_gcontext *gc,double *ascent,double *descent,double *width,NewDevDesc *dd) {
+static void 
+RQuartz_MetricInfo(int c, R_GE_gcontext *gc, 
+		   double *ascent, double *descent, double *width,
+		   NewDevDesc *dd)
+{
     DRAWSPEC;
     if (!ctx) { /* dummy data if we have no context, for sanity reasons */
         *ascent = 10.0;
@@ -775,16 +784,18 @@ static void RQuartz_MetricInfo(int c,R_GE_gcontext *gc,double *ascent,double *de
     SET(RQUARTZ_FONT);
     {
 	CGFontRef font = CGContextGetFont(ctx);
-        float aScale   = (gc->cex * gc->ps * xd->tscale) / CGFontGetUnitsPerEm(font);
+        float aScale   = (gc->cex * gc->ps * xd->tscale) / 
+	    CGFontGetUnitsPerEm(font);
 	UniChar  *buffer, single;
         CGGlyph  glyphs[8];
 	CFStringRef str = NULL;
         int free_buffer = 0, len;
-	if (c >= 0 && c < 127) {
+	if (c >= 0 && c <= ((mbcslocale && gc->fontface != 5) ? 127 : 255)) {
 	    char    text[2] = { c, 0 };
 	    str = prepareText(gc, dd, text, &buffer, &free_buffer);
 	    len = CFStringGetLength(str);
-	    if (len > 7) return; /* this is basically impossible, but you never know */
+	    if (len > 7) return; /* this is basically impossible,
+				    but you never know */
 	} else {
 	    single = (UniChar) ((c<0)?-c:c);
 	    buffer = &single;
@@ -942,19 +953,20 @@ SEXP Quartz(SEXP args) {
     quartzpos = 1;
     
     R_CheckDeviceAvailable();
-    NewDevDesc *dev    = calloc(1,sizeof(NewDevDesc));
-    dev->displayList   = R_NilValue;
-    dev->savedSnapshot = R_NilValue;
+    BEGIN_SUSPEND_INTERRUPTS {
+	NewDevDesc *dev    = calloc(1,sizeof(NewDevDesc));
+	dev->displayList   = R_NilValue;
+	dev->savedSnapshot = R_NilValue;
     
-    if (!dev)
-        error(_("Unable to create device description."));
+	if (!dev)
+	    error(_("Unable to create device description."));
 
-    /* re-routed code has the first shot */
-    if (ptr_QuartzDeviceCreate)
-        succ = ptr_QuartzDeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
-    
-    if (!succ) { /* try internal modules next */
-        switch (module) {
+	/* re-routed code has the first shot */
+	if (ptr_QuartzDeviceCreate)
+	    succ = ptr_QuartzDeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
+	
+	if (!succ) { /* try internal modules next */
+	    switch (module) {
             case QBE_COCOA:
                 succ = QuartzCocoa_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
                 break;
@@ -971,18 +983,19 @@ SEXP Quartz(SEXP args) {
             case QBE_BITMAP:
                 succ = QuartzBitmap_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,dpi);
                 break;
-        }
-    }
+	    }
+	}
                     
-    if(!succ) {
-        vmaxset(vmax);
-        free(dev);
-        error(_("Unable to create Quartz device target, given type may not be supported."));
-    }
-    gsetVar(install(".Device"),mkString("quartz"),R_BaseEnv);
-    GEDevDesc *dd = GEcreateDevDesc(dev);
-    addDevice((DevDesc*)dd);
-    GEinitDisplayList(dd);
+	if(!succ) {
+	    vmaxset(vmax);
+	    free(dev);
+	    error(_("Unable to create Quartz device target, given type may not be supported."));
+	}
+	gsetVar(install(".Device"), mkString("quartz"), R_BaseEnv);
+	GEDevDesc *dd = GEcreateDevDesc(dev);
+	GEaddDevice(dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
 }
