@@ -200,6 +200,7 @@ typedef struct {
 } GESystemDesc;
 
 struct _GEDevDesc {
+    int newDevStruct;  /* unused, temporary */
     /* 
      * Stuff that the devices can see (and modify).
      * All detailed in GraphicsDevice.h
