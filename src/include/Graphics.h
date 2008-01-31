@@ -30,7 +30,7 @@
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
 
-/* colors.c, engine.c, graphics.c  */
+/* colors.c, engine.c, graphics.c, plot3d.c  */
 #define	DEG2RAD 0.01745329251994329576
 
 /* base.c, graphics.c, par.c */
@@ -370,7 +370,6 @@ void Specify2(const char*, SEXP, DevDesc*, SEXP call);
 
 /* from device.c */
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
-
 
 /* some functions that plot.c needs to share with plot3d.c */
 SEXP FixupLty(SEXP, int);

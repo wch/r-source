@@ -9,7 +9,6 @@
 #include <Defn.h>
 #include <Graphics.h>
 #include <Colors.h>
-#include <Rdevices.h>
 #include <R_ext/GraphicsBase.h>
 
 int attribute_hidden baseRegisterIndex = -1;

@@ -26,6 +26,8 @@
 #ifndef R_GRAPHICSDEVICE_H_
 #define R_GRAPHICSDEVICE_H_
 
+#define R_NEWDEVDESC 1
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -34,7 +34,6 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Rdevices.h>		/* KillAllDevices */
 #include <R_ext/GraphicsBase.h> /* registerBase */
 
 /*
@@ -71,8 +70,6 @@
  *  in plot.c).
  *
  */
-
-//void DevNull(void) {}
 
 static int R_CurrentDevice = 0;
 static int R_NumDevices = 1;
@@ -118,7 +115,7 @@ int NumDevices(void)
 }
 
 
-static GEDevDesc* GECurrentDevice(void)
+GEDevDesc* GEcurrentDevice(void)
 {
     /* If there are no active devices
      * check the options for a "default device".
@@ -165,7 +162,7 @@ static GEDevDesc* GECurrentDevice(void)
 /* FIXME: remove in due course */
 DevDesc * CurrentDevice(void)
 {
-    return (DevDesc *) GECurrentDevice();
+    return (DevDesc *) GEcurrentDevice();
 }
 
 GEDevDesc* GEGetDevice(int i)
@@ -281,7 +278,7 @@ void GEaddDevice(GEDevDesc *gdd)
     PROTECT(s = getSymbolValue(".Devices"));
 
     if (!NoDevices())  {
-	oldd = GECurrentDevice();
+	oldd = GEcurrentDevice();
 	oldd->dev->deactivate(oldd->dev);
     }
 
@@ -389,7 +386,7 @@ int selectDevice(int devNum)
 	GEDevDesc *gdd;
 
 	if (!NoDevices()) {
-	    GEDevDesc *oldd = GECurrentDevice();
+	    GEDevDesc *oldd = GEcurrentDevice();
 	    oldd->dev->deactivate(oldd->dev);
 	}
 
@@ -400,7 +397,7 @@ int selectDevice(int devNum)
 		elt(getSymbolValue(".Devices"), devNum),
 		R_BaseEnv);
 
-	gdd = GECurrentDevice(); /* will start a device if current is null */
+	gdd = GEcurrentDevice(); /* will start a device if current is null */
 	if (!NoDevices()) /* which it always will be */
 	    gdd->dev->activate(gdd->dev);
 	return devNum;
@@ -444,7 +441,7 @@ void removeDevice(int devNum, Rboolean findNext)
 
 		/* activate new current device */
 		if (R_CurrentDevice) {
-		    GEDevDesc *gdd = GECurrentDevice();
+		    GEDevDesc *gdd = GEcurrentDevice();
 		    DevDesc *dd = (DevDesc *) gdd;
 		    gdd->dev->activate(gdd->dev);
 		    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
@@ -541,7 +538,7 @@ void NewFrameConfirm(void)
 SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int listFlag;
-    GEDevDesc *gdd = GECurrentDevice();
+    GEDevDesc *gdd = GEcurrentDevice();
 
     checkArity(op, args);
     if(PRIMVAL(op) == 0) { /* dev.control */

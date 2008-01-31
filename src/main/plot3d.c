@@ -29,7 +29,6 @@
 #include <Rmath.h>
 #include <Graphics.h>
 #include <Colors.h> /* for isNAcol */
-#include <Rdevices.h>
 #include <Print.h>
 #include <R_ext/Boolean.h>
 
@@ -39,7 +38,7 @@
 
 /* Conversion of degrees to radians */
 
-#define DegToRad(x) (0.01745329251994329576 * x)
+#define DegToRad(x) (DEG2GRAD * x)
 
 /* Definitions of data structures for vectors and */
 /* transformations in homogeneous 3d coordinates */
