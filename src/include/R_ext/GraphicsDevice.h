@@ -563,7 +563,9 @@ typedef unsigned int rcolor;
 #define curDevice		Rf_curDevice
 #define killDevice		Rf_killDevice
 #define ndevNumber		Rf_ndevNumber
+#define NewFrameConfirm		Rf_NewFrameConfirm
 #define nextDevice		Rf_nextDevice
+#define NoDevices		Rf_NoDevices
 #define NumDevices		Rf_NumDevices
 #define prevDevice		Rf_prevDevice
 #define selectDevice		Rf_selectDevice
@@ -594,6 +596,10 @@ int selectDevice(int);
 
 /* Kill device which is identified by number. */
 void killDevice(int);
+
+int NoDevices(void); /* used in engine, graphics, plot, grid */
+
+void NewFrameConfirm(void); /* used in graphics.c, grid */
 
 
 /* Graphics events: defined in gevents.c */

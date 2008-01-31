@@ -29,7 +29,7 @@
 #endif
 
 #include <Defn.h>
-#include <Rgraphics.h> /* For RGBpar */
+#include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h>
 #include <Fileio.h>
 #include <stdio.h>

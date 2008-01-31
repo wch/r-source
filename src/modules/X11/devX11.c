@@ -51,7 +51,7 @@
 
 
 #include <R_ext/GraphicsEngine.h>
-#include <Rgraphics.h> /* RGBpar */
+#include <R_ext/GraphicsDevice.h>
 #include "Fileio.h"		/* R_fopen */
 #include "rotated.h"		/* 'Public' routines from here */
 /* For the input handlers of the event loop mechanism: */

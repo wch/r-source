@@ -279,20 +279,6 @@ double GExpressionHeight(SEXP, GUnit, DevDesc*);
 double GExpressionWidth(SEXP, GUnit, DevDesc*);
 
 
-/*-------------------------------------------------------------------
- *
- *  COLOUR CODE is concerned with the internals of R colour representation
- *
- *  From colors.c, used in par.c, grid/src/gpar.c
- */
-
-/* Convert an R colour specification (which might be a number or */
-/* a string) into an internal colour specification. */
-unsigned int RGBpar(SEXP, int);
-    /* Convert an internal colour specification into a colour name */
-const char *col2name(unsigned int col); /* used in grid */
-
-
 
 /*----------------------------------------------------------------------
  *
@@ -349,8 +335,6 @@ double yNPCtoUsr(double, DevDesc*);
 /* Return a pointer to the current device. */
 DevDesc* CurrentDevice(void); /* used in colors, graphics, par, plot, plot3d */
 /* Is the null device the current device? */
-int NoDevices(void); /* used in engine, graphics, plot, grid */
-void NewFrameConfirm(void); /* used in graphics.c, grid */
 
 /* void initDisplayList(DevDesc *dd);  unused elsewhere? */
 

@@ -263,6 +263,23 @@ double toDeviceWidth(double value, GEUnit from, GEDevDesc *dd);
 double fromDeviceHeight(double value, GEUnit to, GEDevDesc *dd); 
 double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 
+/*-------------------------------------------------------------------
+ *
+ *  COLOUR CODE is concerned with the internals of R colour representation
+ *
+ *  From colors.c, used in par.c, grid/src/gpar.c
+ */
+
+#define RGBpar			Rf_RGBpar
+#define col2name                Rf_col2name
+
+/* Convert an R colour specification (which might be a number or */
+/* a string) into an internal colour specification. */
+unsigned int RGBpar(SEXP, int);
+    /* Convert an internal colour specification into a colour name */
+const char *col2name(unsigned int col); /* used in grid */
+
+
 /*
  *	Some Notes on Line Textures
  *
