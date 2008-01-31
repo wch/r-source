@@ -2555,7 +2555,8 @@ also formatting it properly.  The @R{} Core Team recommends to use a
 basic indentation of 4 for @R{} and C (and most likely also Perl) code,
 and 2 for documentation in Rd format.  Emacs users can implement this
 indentation style by putting the following in one of their startup
-files.  (For @acronym{GNU} Emacs 20: for @acronym{GNU} Emacs 21 or later
+files.
+Alternatively, (for @acronym{GNU} Emacs 21 or later),
 use customization to set the @code{c-default-style} to @code{"bsd"} and
 @code{c-basic-offset} to @code{4}.)
 @findex emacs
@@ -2570,7 +2571,7 @@ use customization to set the @code{c-default-style} to @code{"bsd"} and
 ;;; ESS
 (add-hook 'ess-mode-hook
           (lambda ()
-            (ess-set-style 'C++)
+            (ess-set-style 'C++ 'quiet)
             ;; Because
             ;;                                 DEF GNU BSD K&R C++
             ;; ess-indent-level                  2   2   8   5   4
