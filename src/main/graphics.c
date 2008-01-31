@@ -2073,7 +2073,7 @@ void attribute_hidden GInit(GPar *dp)
     dp->bty = 'o';
 
     dp->mkh = .001;/* dummy value > 0  --- FIXME : */
-    /* GREset has Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * Rf_gpptr(dd)->ipr[0]; */
+    /* GReset has Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * Rf_gpptr(dd)->ipr[0]; */
     dp->cex = 1.0;
     dp->lheight = 1.0;
     dp->cexbase = 1.0;
@@ -2091,7 +2091,7 @@ void attribute_hidden GInit(GPar *dp)
 
     dp->scale = 1.0;
     /* dp->ps = 10; */	/* Device Specific */
-    dp->metricInfo = 0;
+    /* dp->metricInfo = 0; should have been NULL */
     strcpy(dp->family, "");
     dp->font = 1;
     dp->fontmain = 2;

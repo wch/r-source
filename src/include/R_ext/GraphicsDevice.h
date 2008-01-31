@@ -26,8 +26,6 @@
 #ifndef R_GRAPHICSDEVICE_H_
 #define R_GRAPHICSDEVICE_H_
 
-#define R_NEWDEVDESC 1
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -63,7 +61,13 @@ extern "C" {
  *    complement the size() function.)
  */
 
-typedef struct {
+typedef struct _NewDevDesc NewDevDesc;
+    
+/* FIXME: ideally we would use prototypes here.  But then
+   the old system used DevDesc*, and some devices have taken to
+   passing pointers to their own structure instead of NewDevDesc*
+*/
+struct _NewDevDesc {
     /* The first element is a boolean indicating whether this is 
      * a new device driver (always 1) -- the old device driver structure
      * has had a similar element added (which will always be 0)
@@ -462,7 +466,7 @@ typedef struct {
      *
      * static SEXP GA_getEvent(SEXP eventRho, const char *prompt);
      */
-    SEXP (*getEvent)();
+    SEXP (*getEvent)(SEXP, const char *);
 
     /* Optional features introduced in 2.7.0 */
     /* Some devices can plot UTF-8 text directly without converting
@@ -479,7 +483,7 @@ typedef struct {
        contour labels?
     */
     Rboolean useRotatedTextInContour;
-} NewDevDesc;
+};
 
 	/********************************************************/
 	/* the device-driver entry point is given a device	*/

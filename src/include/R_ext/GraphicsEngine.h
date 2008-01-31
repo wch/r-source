@@ -22,17 +22,7 @@
 #ifndef R_GRAPHICSENGINE_H_
 #define R_GRAPHICSENGINE_H_
 
-#if 0
-/* Defined if GraphicsDevice.h is included first */
-#ifndef R_NEWDEVDESC
-typedef struct {
-/* opaque structure */
-int dummy;
-} NewDevDesc;
-#endif
-#else
 #include <R_ext/GraphicsDevice.h> /* needed for NewDevDesc */
-#endif
 
 #ifdef __cplusplus
 extern "C" {

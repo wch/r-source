@@ -309,7 +309,7 @@ typedef struct {
 
     double scale;       /* An internal "zoom" factor to apply to ps and lwd */
                         /* (for fit-to-window resizing in Windows) */
-
+#if 0
     /* device operations */
     Rboolean (*open)();
     void (*close)();
@@ -330,6 +330,7 @@ typedef struct {
     void (*mode)();
     void (*hold)();
     void (*metricInfo)();
+#endif
 } GPar;
 
 /* always remap private functions */
