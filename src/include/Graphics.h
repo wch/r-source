@@ -25,9 +25,10 @@
 
 #include <R_ext/Boolean.h>
 
-#include <Rgraphics.h>
+#define R_GRAPHICS 1
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
+#include <Rgraphics.h>
 
 /* colors.c, engine.c, graphics.c, plot3d.c  */
 #define	DEG2RAD 0.01745329251994329576

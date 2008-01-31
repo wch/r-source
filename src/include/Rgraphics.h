@@ -30,7 +30,7 @@ extern "C" {
 /* Color handling is in colors.c: at least R_OPAQUE and R_ALPHA are
    used by devices.
 
-   Line textures are in engine.c, used in graphics.c, plot3d.c, 
+   Line textures are in engine.c, used in graphics.c, plot3d.c,
    plotmath.c and in devices.
 */
 
@@ -82,12 +82,18 @@ extern const char *DefaultPalette[];
  *
  */
 
+#ifdef R_GRAPHICS
+#define pGEDev pGEDevDesc
+#define DevDesc GEDevDesc
+#else
+/* Use opaque structure for back compatibility */
 typedef struct {
 /* opaque structure */
 int dummy;
 } DevDesc;
 
-typedef DevDesc * pGEDev;    
+typedef DevDesc * pGEDev;
+#endif
 
 #define CreateAtVector		Rf_CreateAtVector
 #define CurrentDevice		Rf_CurrentDevice
