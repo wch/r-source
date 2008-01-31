@@ -390,7 +390,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     SEXP ansList, ans, matchlen;
     SEXP matchbuf, matchlenbuf;
     int bufsize = 1024;
-    int i, n, st, erroffset, ienc, slen;
+    int i, n, st, erroffset, ienc;
     int options = 0;
     const char *spat, *errorptr;
     pcre *re_pcre;
