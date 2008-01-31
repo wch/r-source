@@ -26,7 +26,7 @@
 #endif
 
 #include <Defn.h>
-#include <Graphics.h>
+#include <Graphics.h> /* For R_ColorTable : FIXME */
 #include <Colors.h>
 #include <Rmath.h>
 

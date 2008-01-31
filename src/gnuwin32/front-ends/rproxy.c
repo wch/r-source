@@ -523,7 +523,7 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
     gsetVar(install(".Device"),
 	    mkString("ActiveXDevice 1"), R_BaseEnv);
     lDD = GEcreateDevDesc(DEVDESC(lDev));
-    addDevice((DevDesc*) lDD);
+    GEaddDevice(lDD);
     GEinitDisplayList(lDD);
   }
   return SC_PROXY_OK;

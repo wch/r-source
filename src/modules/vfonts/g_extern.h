@@ -42,8 +42,8 @@
    Added the following (to allow R declarations and definitions)
 */
 #include <config.h>
-#include "Defn.h"
-#include "Graphics.h"
+#include <Defn.h>
+#include <R_ext/GraphicsEngine.h>
 
 /* PAUL MURRELL
    This type def taken from sys-defines.h

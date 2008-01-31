@@ -29,21 +29,16 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <Graphics.h>
+#include <R_ext/GraphicsEngine.h>
 
 SEXP attribute_hidden 
 do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP prompt, onMouseDown, onMouseMove, onMouseUp, onKeybd;
-    GEDevDesc *dd;
-    NewDevDesc *nd;
+    NewDevDesc *nd = GEcurrentDevice()->dev;
     
     checkArity(op, args);
-    
-    dd = GEcurrentDevice();
-    nd = dd->dev;
-    
-    if (!nd->newDevStruct || !nd->getEvent) 
+    if (!nd->getEvent) 
     	error(_("graphics device does not support graphics events"));
     
     prompt = CAR(args);

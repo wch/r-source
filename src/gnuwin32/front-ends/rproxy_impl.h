@@ -28,7 +28,7 @@ extern "C" {
 #include "bdx.h"
 
 #include <Rinternals.h>
-#include <Graphics.h>
+#include <R_ext/GraphicsEngine.h>
 #include <Rdevices.h>
 
 /* exported functions for implementation */
