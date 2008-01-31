@@ -385,7 +385,7 @@ BUG FIXES
 
     o  classes with no slots that contain only VIRTUAL classes are now
         VIRTUAL, as was intended but confused by having an empty S4
-        object as prototype.
+        object as prototype. ## backed out temporarily ##
 
 
 
