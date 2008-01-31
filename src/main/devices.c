@@ -170,7 +170,7 @@ GEDevDesc* GEGetDevice(int i)
     return R_Devices[i];
 }
 
-DevDesc* GetDevice(int i)
+DevDesc* Rf_GetDevice(int i)
 {
     return (DevDesc *) R_Devices[i];
 }
@@ -456,7 +456,7 @@ void removeDevice(int devNum, Rboolean findNext)
 }
 
 /* FIXME; remove in due course */
-void KillDevice(DevDesc *dd)
+void Rf_KillDevice(DevDesc *dd)
 {
     removeDevice(deviceNumber(dd), TRUE);
 }
