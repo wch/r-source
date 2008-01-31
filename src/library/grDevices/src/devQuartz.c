@@ -846,6 +846,7 @@ int Quartz_C(const char *type, const char *file, double width, double height, do
         char    *vmax = vmaxget();
         R_CheckDeviceAvailable();
         {
+	    /* FIXME: check this allocation */
             NewDevDesc *dev    = calloc(1,sizeof(NewDevDesc));
             dev->displayList   = R_NilValue;
             dev->savedSnapshot = R_NilValue;
@@ -860,7 +861,7 @@ int Quartz_C(const char *type, const char *file, double width, double height, do
             }
             gsetVar(install(".Device"),mkString("quartz"),R_BaseEnv);
             GEDevDesc *dd = GEcreateDevDesc(dev);
-            addDevice((DevDesc*)dd);
+            GEaddDevice(dd);
             GEinitDisplayList(dd);
             vmaxset(vmax);
         }

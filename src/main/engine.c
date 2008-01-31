@@ -175,11 +175,7 @@ void GEregisterWithDevice(GEDevDesc *dd) {
  */
 void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
     int i, devNum;
-    /* Bit awkward, but I leave GetDevice to return DevDesc for now
-     * Can be fixed once device handling code is in here rather than
-     * in graphics.c
-     */
-    DevDesc *dd;
+    GEDevDesc *gdd;
     if (numGraphicsSystems + 1 == MAX_GRAPHICS_SYSTEMS)
 	error(_("too many graphics systems registered"));
     /* Set the system register index so that, if there are existing
@@ -194,8 +190,8 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-	    dd = GetDevice(devNum);
-	    registerOne((GEDevDesc*) dd, numGraphicsSystems, cb);
+	    gdd = GEGetDevice(devNum);
+	    registerOne(gdd, numGraphicsSystems, cb);
 	    devNum = nextDevice(devNum);
 	}
     }
@@ -217,11 +213,7 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
 void GEunregisterSystem(int registerIndex)
 {
     int i, devNum;
-    /* Bit awkward, but I leave GetDevice to return DevDesc for now
-     * Can be fixed once device handling code is in here rather than
-     * in graphics.c
-     */
-    DevDesc *dd;
+    GEDevDesc *gdd;
 
     /* safety check if called before Ginit() */
     if(registerIndex < 0) return;
@@ -234,8 +226,8 @@ void GEunregisterSystem(int registerIndex)
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-	    dd = GetDevice(devNum);
-	    unregisterOne((GEDevDesc*) dd, registerIndex);
+	    gdd = GEGetDevice(devNum);
+	    unregisterOne(gdd, registerIndex);
 	    devNum = nextDevice(devNum);
 	}
     }
@@ -275,11 +267,10 @@ void GEunregisterSystem(int registerIndex)
 SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data)
 {
     int i;
-    DevDesc* dd = GetDevice(devNumber((DevDesc*) dev));
-    for (i=0; i<numGraphicsSystems; i++)
+    GEDevDesc* gdd = desc2GEDesc(dev);
+    for (i = 0; i < numGraphicsSystems; i++)
 	if (registeredSystems[i] != NULL)
-	    (registeredSystems[i]->callback)(event, (GEDevDesc*) dd,
-					     data);
+	    (registeredSystems[i]->callback)(event, gdd, data);
     return R_NilValue;
 }
 
@@ -2550,7 +2541,7 @@ void GEplayDisplayList(GEDevDesc *dd)
     plotok = 1;
     if (theList != R_NilValue) {
 	savedDevice = curDevice();
-	selectDevice(deviceNumber((DevDesc*) dd));
+	selectDevice(GEdeviceNumber(dd));
 	while (theList != R_NilValue && plotok) {
 	    SEXP theOperation = CAR(theList);
 	    SEXP op = CAR(theOperation);
@@ -2592,8 +2583,7 @@ GEDevDesc* GEcurrentDevice()
 void GEcopyDisplayList(int fromDevice)
 {
     SEXP tmp;
-    GEDevDesc *dd = GEcurrentDevice(),
-	*gd = (GEDevDesc*) GetDevice(fromDevice);
+    GEDevDesc *dd = GEcurrentDevice(), *gd = GEGetDevice(fromDevice);
     int i;
     
     tmp = gd->dev->displayList;
@@ -2800,7 +2790,7 @@ void GEonExit()
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-  	    gd = (GEDevDesc*) GetDevice(devNum);
+  	    gd = GEGetDevice(devNum);
   	    gd->recordGraphics = TRUE;
   	    dd = gd->dev;
   	    if (dd->onExit) dd->onExit(dd);

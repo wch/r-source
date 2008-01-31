@@ -513,6 +513,7 @@ typedef struct {
 
 typedef unsigned int rcolor;
 
+#define ndevNumber		Rf_ndevNumber
 /* Properly declared version of devNumber */
 int ndevNumber(NewDevDesc *);
 

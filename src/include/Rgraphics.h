@@ -78,49 +78,6 @@ extern "C" {
      */
 #define R_TRANWHITE     (R_RGBA(255, 255, 255, 0))
 
-#ifdef UNUSED
-/* Now in GraphicsEngine.h */
-/*
- *	Some Notes on Line Textures
- *
- *	Line textures are stored as an array of 4-bit integers within
- *	a single 32-bit word.  These integers contain the lengths of
- *	lines to be drawn with the pen alternately down and then up.
- *	The device should try to arrange that these values are measured
- *	in points if possible, although pixels is ok on most displays.
- *
- *	If newlty contains a line texture description it is decoded
- *	as follows:
- *
- *		ndash = 0;
- *		for(i=0 ; i<8 && newlty & 15 ; i++) {
- *			dashlist[ndash++] = newlty & 15;
- *			newlty = newlty>>4;
- *		}
- *		dashlist[0] = length of pen-down segment
- *		dashlist[1] = length of pen-up segment
- *		etc
- *
- *	An integer containing a zero terminates the pattern.  Hence
- *	ndash in this code fragment gives the length of the texture
- *	description.  If a description contains an odd number of
- *	elements it is replicated to create a pattern with an
- *	even number of elements.  (If this is a pain, do something
- *	different its not crucial).
- */
-
-/* The basic numbered & named line types; here device-independent:
- * e.g. "dashed" == "44",  "dotdash" == "1343"
-*/
-#define LTY_BLANK	-1
-#define LTY_SOLID	0
-#define LTY_DASHED	4 + (4<<4)
-#define LTY_DOTTED	1 + (3<<4)
-#define LTY_DOTDASH	1 + (3<<4) + (4<<8) + (3<<12)
-#define LTY_LONGDASH	7 + (3<<4)
-#define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
-#endif
-
 #ifndef R_GRAPHICS_INTERNAL
 	/* possible coordinate systems (for specifying locations) */
 typedef enum {
@@ -171,12 +128,10 @@ extern const char *DefaultPalette[];
  *
  */
 
-#ifndef R_GRAPHICS_INTERNAL
 typedef struct {
 /* opaque structure */
 int dummy;
 } DevDesc;
-#endif /* R_GRAPHICS_INTERNAL */
 
 #define CreateAtVector		Rf_CreateAtVector
 #define curDevice		Rf_curDevice

@@ -80,6 +80,7 @@ int NumDevices(void);
  * This is used by the graphics engine to map from a *GEDevDesc to
  * a device number. 
  * Here DevDesc * is being used as an opaque pointer to GEDevDesc.
+ * Now unused.
  */
 int deviceNumber(DevDesc*);
 
@@ -121,6 +122,7 @@ void killDevice(int);
 
 /* ...NO DOC... */
 /* Here DevDesc * is being used as an opaque pointer to GEDevDesc. */
+/* Replaced by GEaddDevice */
 void addDevice(DevDesc *);
 
 #ifdef __cplusplus

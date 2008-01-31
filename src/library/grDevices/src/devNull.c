@@ -47,7 +47,7 @@ void GEnullDevice()
     }
     gsetVar(install(".Device"), mkString("NULL"), R_BaseEnv);
     dd = GEcreateDevDesc(dev);
-    Rf_addDevice((DevDesc*) dd);
+    GEaddDevice(dd);
     GEinitDisplayList(dd);
 }
 static void NULL_Circle(double x, double y, double r,

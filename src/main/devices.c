@@ -90,12 +90,12 @@ static int R_NumDevices = 1;
    process of being closed and destroyed.  We do this to allow for GUI
    callbacks starting to kill a device whilst another is being killed.
  */
-static DevDesc* R_Devices[R_MaxDevices];
+static GEDevDesc* R_Devices[R_MaxDevices];
 static Rboolean active[R_MaxDevices];
 
 /* a dummy description to point to when there are no active devices */
 
-static DevDesc nullDevice;
+static GEDevDesc nullDevice;
 
 /* In many cases this is used to mean that the current device is
    the null device, and in others to mean that there is no open device.
@@ -118,7 +118,7 @@ int NumDevices(void)
 }
 
 
-DevDesc* CurrentDevice(void)
+static GEDevDesc* GECurrentDevice(void)
 {
     /* If there are no active devices
      * check the options for a "default device".
@@ -162,10 +162,19 @@ DevDesc* CurrentDevice(void)
     return R_Devices[R_CurrentDevice];
 }
 
+DevDesc * CurrentDevice(void)
+{
+    return (DevDesc *) GECurrentDevice();
+}
+
+GEDevDesc* GEGetDevice(int i)
+{
+    return R_Devices[i];
+}
 
 DevDesc* GetDevice(int i)
 {
-    return R_Devices[i];
+    return (DevDesc *) R_Devices[i];
 }
 
 
@@ -260,17 +269,19 @@ int prevDevice(int from)
 }
 
 
-void addDevice(DevDesc *dd)
+void GEaddDevice(GEDevDesc *gdd)
 {
     int i;
     Rboolean appnd;
     SEXP s, t;
-    DevDesc *oldd;
+    GEDevDesc *oldd;
+    DevDesc *dd = (DevDesc *)gdd; /* temporary */
+
     PROTECT(s = getSymbolValue(".Devices"));
 
     if (!NoDevices())  {
-	oldd = CurrentDevice();
-	((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc*) oldd)->dev);
+	oldd = GECurrentDevice();
+	oldd->dev->deactivate(oldd->dev);
     }
 
     /* find empty slot for new descriptor */
@@ -290,11 +301,11 @@ void addDevice(DevDesc *dd)
     }
     R_CurrentDevice = i;
     R_NumDevices++;
-    R_Devices[i] = dd;
+    R_Devices[i] = gdd;
     active[i] = TRUE;
 
-    GEregisterWithDevice((GEDevDesc*) dd);
-    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
+    GEregisterWithDevice(gdd);
+    gdd->dev->activate(gdd->dev);
 
     /* maintain .Devices (.Device has already been set) */
     PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(".Device"), 0)));
@@ -319,6 +330,12 @@ void addDevice(DevDesc *dd)
     }
 }
 
+void addDevice(DevDesc *dd)
+{
+    GEaddDevice((GEDevDesc *) dd);
+}
+
+
 /* This should be called if you have a DevDesc or a GEDevDesc
  * and you want to find the corresponding device number
  */
@@ -326,8 +343,15 @@ int deviceNumber(DevDesc *dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
-	if (R_Devices[i] == dd)
-	    return i;
+	if (R_Devices[i] == (GEDevDesc *) dd) return i;
+    return 0;
+}
+
+int GEdeviceNumber(GEDevDesc *dd)
+{
+    int i;
+    for (i = 1; i < R_MaxDevices; i++)
+	if (R_Devices[i] == dd) return i;
     return 0;
 }
 
@@ -338,7 +362,7 @@ int ndevNumber(NewDevDesc *dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
-	if (R_Devices[i] != NULL && ((GEDevDesc*) R_Devices[i])->dev == dd)
+	if (R_Devices[i] != NULL && R_Devices[i]->dev == dd)
 	    return i;
     return 0;
 }
@@ -358,10 +382,10 @@ int selectDevice(int devNum)
     if((devNum >= 0) && (devNum < R_MaxDevices) && 
        (R_Devices[devNum] != NULL) && active[devNum]) 
     {
-	DevDesc *dd;
+	GEDevDesc *gdd;
 
 	if (!NoDevices()) {
-	    GEDevDesc *oldd = (GEDevDesc*) CurrentDevice();
+	    GEDevDesc *oldd = GECurrentDevice();
 	    oldd->dev->deactivate(oldd->dev);
 	}
 
@@ -372,9 +396,9 @@ int selectDevice(int devNum)
 		elt(getSymbolValue(".Devices"), devNum),
 		R_BaseEnv);
 
-	dd = CurrentDevice(); /* will start a device if current is null */
+	gdd = GECurrentDevice(); /* will start a device if current is null */
 	if (!NoDevices()) /* which it always will be */
-	    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
+	    gdd->dev->activate(gdd->dev);
 	return devNum;
     }
     else
@@ -394,7 +418,7 @@ void removeDevice(int devNum, Rboolean findNext)
     {
 	int i;
 	SEXP s;
-	GEDevDesc *g = (GEDevDesc*) R_Devices[devNum];
+	GEDevDesc *g = R_Devices[devNum];
 
 	active[devNum] = FALSE; /* stops it being selected again */
 	R_NumDevices--;
@@ -416,8 +440,9 @@ void removeDevice(int devNum, Rboolean findNext)
 
 		/* activate new current device */
 		if (R_CurrentDevice) {
-		    DevDesc *dd = CurrentDevice();
-		    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
+		    GEDevDesc *gdd = GECurrentDevice();
+		    DevDesc *dd = (DevDesc *) gdd;
+		    gdd->dev->activate(gdd->dev);
 		    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
 		    GReset(dd);
 		}
@@ -434,6 +459,10 @@ void KillDevice(DevDesc *dd)
     removeDevice(deviceNumber(dd), TRUE);
 }
 
+void GEkillDevice(GEDevDesc *gdd)
+{
+    removeDevice(GEdeviceNumber(gdd), TRUE);
+}
 
 void killDevice(int devNum)
 {
@@ -506,16 +535,16 @@ void NewFrameConfirm(void)
 SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int listFlag;
-    GEDevDesc *dd = (GEDevDesc*)CurrentDevice();
+    GEDevDesc *gdd = GECurrentDevice();
 
     checkArity(op, args);
     if(PRIMVAL(op) == 0) { /* dev.control */
 	listFlag = asLogical(CAR(args));
 	if(listFlag == NA_LOGICAL) error(_("invalid argument"));
-	GEinitDisplayList(dd);
-	dd->dev->displayListOn = listFlag ? TRUE: FALSE;
+	GEinitDisplayList(gdd);
+	gdd->dev->displayListOn = listFlag ? TRUE: FALSE;
     } else { /* dev.displaylist */
-	listFlag = dd->dev->displayListOn;
+	listFlag = gdd->dev->displayListOn;
     }
     return ScalarLogical(listFlag);
 }
@@ -564,8 +593,8 @@ GEDevDesc *desc2GEDesc(NewDevDesc *dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
-	if (R_Devices[i] != NULL && ((GEDevDesc*) R_Devices[i])->dev == dd)
-	    return (GEDevDesc*) R_Devices[i];
+	if (R_Devices[i] != NULL && R_Devices[i]->dev == dd)
+	    return R_Devices[i];
     /* shouldn't happen ... */
-    return (GEDevDesc*) R_Devices[0];
+    return R_Devices[0];
 }

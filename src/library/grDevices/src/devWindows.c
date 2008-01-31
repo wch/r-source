@@ -258,7 +258,7 @@ static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, const char *name)
     gsetVar(install(".Device"),
 	    mkString(name), R_BaseEnv);
     gdd = GEcreateDevDesc(ndd);
-    addDevice((DevDesc*) gdd);
+    GEaddDevice(gdd);
     GEcopyDisplayList(ndevNumber(dd));
     KillDevice((DevDesc*) gdd);
     selectDevice(saveDev);
@@ -3123,7 +3123,6 @@ static void SaveAsBmp(NewDevDesc *dd, const char *fn)
 
 SEXP devga(SEXP args)
 {
-    NewDevDesc *dev;
     GEDevDesc* dd;
     const char *display, *title;
     char *vmax;
@@ -3187,6 +3186,7 @@ SEXP devga(SEXP args)
     
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
+	NewDevDesc *dev;
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
@@ -3207,7 +3207,7 @@ SEXP devga(SEXP args)
 	gsetVar(install(".Device"),
 		mkString(display[0] ? display : "windows"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
-	addDevice((DevDesc*) dd);
+	GEaddDevice(dd);
 	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);

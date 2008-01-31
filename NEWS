@@ -317,6 +317,12 @@ C-LEVEL FACILITIES
 	in UTF-8 to be plotted).  This is used by postscript(), pdf()
 	and the windows() family of devices.
 
+    o	There is a new description of the interface for graphics
+	devices in the 'R Internals' manual, and several new entry
+	points.  Graphics devices no longer need to make use of (via
+	cast) DevDesc * pointers, and much cleaner code can now be
+	written without them.
+
 
 BUG FIXES
 

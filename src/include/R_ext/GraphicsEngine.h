@@ -173,8 +173,16 @@ struct _GEDevDesc {
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
 
+/* functions from devices.c for use by graphics devices */
+
+#define desc2GEDesc		Rf_desc2GEDesc
 /* map NewDevDesc to enclosing GEDevDesc */
 GEDevDesc *desc2GEDesc(NewDevDesc *dd);
+int GEdeviceNumber(GEDevDesc*);
+GEDevDesc* GEGetDevice(int);
+void GEaddDevice(GEDevDesc *);
+void GEkillDevice(GEDevDesc*);
+
 
 /*
  *  Some line end/join constants

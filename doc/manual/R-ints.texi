@@ -2186,6 +2186,10 @@ third-party packages to provide additional devices.  Several now do.
 This chapter describes the graphics internals from the viewpoint of a
 would-be writer of a graphics device.
 
+Some notes on the changes for 1.4.0 can be found at
+@uref{http://www.stat.auckland.ac.nz/~paul/R/basegraph.html} and
+@uref{http://www.stat.auckland.ac.nz/~paul/R/graphicsChanges.html}.
+
 @menu
 * Graphics structures::         
 * The device driver structure::  
@@ -2224,7 +2228,7 @@ The first entry is effectively a version number and is always 1.
 So this is essentially a device structure plus information about the
 device maintained by the graphics engine and visible only to the engine.
 
-The third type is @code{DevDesc}, and is rather confusing.  It is
+The third type is @code{DevDesc}, and has been rather confusing.  It is
 defined in the public header @file{Rgraphics.h} as
 
 @example
@@ -2235,33 +2239,13 @@ typedef struct @{
 @end example
 
 @noindent
-and also as a real structure in the private header @file{Graphics.h}.
-The confusion arises because @code{DevDesc *} is used as an opaque
-pointer to both @code{GEDevDesc} and @code{NewDevDesc} types.  Graphics
-devices will not nowadays ever see an instance of the real structure,
-and can consider @code{DevDesc *} to be an opaque pointer to either
-@code{GEDevDesc} or @code{NewDevDesc}.  Unfortunately these are not
-interchangeable and so which had to be deduced from the documentation
-(which was not 100% accurate).  The main exception was
-@code{devNumber}, declared as
+However, prior to @R{} 2.7.0 it was also as a real structure in the
+private header @file{Graphics.h}.  The confusion arises because
+@code{DevDesc *} was used as an opaque pointer to both @code{GEDevDesc}
+and @code{NewDevDesc} types.  Bur at present a @code{DevDesc *} was used
+as an opaque pointer to a @code{GEDevDesc} structure.
 
-@example
-int deviceNumber(DevDesc *);
-int devNumber(DevDesc *);
-@end example
-
-@noindent
-which really should be
-
-@example
-int deviceNumber(GEDevDesc *);
-int ndevNumber(NewDevDesc *);
-@end example
-
-Eventually graphics devices will only have to be concerned with
-@code{NewDevDesc} structures.
-
-The graphics engine maintains an array of devices, via pointers to
+The graphics engine maintains an array of devices, as pointers to
 @code{GEDevDesc} structures.  The array is of size 64 but the first
 element is always occupied by the @code{"null device"} and the final
 element is kept as NULL as a sentinel.@footnote{Calling
@@ -2281,11 +2265,11 @@ Each instance of a graphics device needs to set up a @code{GEDevDesc}
 structure by code very similar to
 
 @example
-    NewDevDesc *dev;
     GEDevDesc* dd;
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS @{
+        NewDevDesc *dev;
         /* Allocate and initialize the device driver data */
         if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
             return 0;
@@ -2294,7 +2278,7 @@ structure by code very similar to
         /* set up device driver or free 'dev' and error() */
         gsetVar(install(".Device"), mkString("devname"), R_BaseEnv);
         dd = GEcreateDevDesc(dev);
-        addDevice((DevDesc*) dd);
+        GEaddDevice(dd);
         GEinitDisplayList(dd);
     @} END_SUSPEND_INTERRUPTS;
 @end example
@@ -2376,10 +2360,10 @@ often returns the measurements for character @code{"M"}.  In a
 single-byte locale values @code{32...255} indicate the corresponding
 character in the locale.  For the symbol font (as used by
 @samp{par(font=5)} in base graphics and by `plotmath'), values
-@code{32...126, 161...254} (except @code{240}) indicate glyphs in the
-Adobe Symbol encoding.  In a multibyte locale, @code{c} represents a
-Unicode point (except in the symbolfont).  So the function needs to
-include code like
+@code{32...126, 161...239, 241...254} indicate glyphs in the Adobe
+Symbol encoding.  In a multibyte locale, @code{c} represents a Unicode
+point (except in the symbolfont).  So the function needs to include code
+like
 
 @example
     Rboolean Unicode = mbcslocale;
@@ -2434,7 +2418,7 @@ double cra[2];
 These are more than a little mysterious.  Element @code{cra} provides an
 indication of the character size, @code{par("cra")} in base graphics, in
 device units.  The mystery is what is meant by `character size': which
-character, which font at which size.  Some help can be obtained by
+character, which font at which size?  Some help can be obtained by
 looking at what this is used for.  The first element, `width', is not
 used by @R{} except to set the graphical parameters.  The second,
 `height', is use to set the line spacing, that is the relationship
