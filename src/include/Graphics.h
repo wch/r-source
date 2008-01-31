@@ -348,7 +348,7 @@ typedef struct {
 #define recordGraphicOperation	Rf_recordGraphicOperation
 #define Specify2		Rf_Specify2
 
-/* All DevDesc here are really GEDevDesc */
+/* All DevDesc* here are really GEDevDesc* */
 
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */

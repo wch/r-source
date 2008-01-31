@@ -28,7 +28,6 @@
 #include "Defn.h"
 #include <R_ext/Riconv.h>
 #include "Fileio.h"
-#include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
 #include "graphapp/ga.h"
 #include "console.h"
 #include "rui.h"

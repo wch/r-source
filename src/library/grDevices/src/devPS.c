@@ -43,7 +43,6 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding, int enc)
 
 #include <Rmath.h>		/* for rround */
 #include <R_ext/GraphicsEngine.h>
-#include <Rdevices.h>
 #include <R_ext/Error.h>
 #include "Fileio.h"
 #include "grDevices.h"

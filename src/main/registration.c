@@ -55,7 +55,6 @@
     a C++ compiler because the linkage changes as the declarations
     are (currently) within extern "C" blocks.
 */
-#include <Rdevices.h>       /* For declaration of InitGraphics() */
 #include <R_ext/Callbacks.h>
 #include <Rdynpriv.h>
 

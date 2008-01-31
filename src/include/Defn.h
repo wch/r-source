@@ -797,6 +797,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define InitFunctionHashing	Rf_InitFunctionHashing
 # define InitBaseEnv		Rf_InitBaseEnv
 # define InitGlobalEnv		Rf_InitGlobalEnv
+# define InitGraphics		Rf_InitGraphics
 # define InitMemory		Rf_InitMemory
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
@@ -811,6 +812,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define isValidName		Rf_isValidName
 # define ItemName		Rf_ItemName
 # define jump_to_toplevel	Rf_jump_to_toplevel
+# define KillAllDevices		Rf_KillAllDevices
 # define levelsgets		Rf_levelsgets
 # define LogicalFromComplex	Rf_LogicalFromComplex
 # define LogicalFromInteger	Rf_LogicalFromInteger
@@ -980,6 +982,7 @@ Rboolean R_current_trace_state(void);
 Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, Rboolean);
+void InitGraphics(void);
 void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);
@@ -993,6 +996,7 @@ Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);
 void R_JumpToContext(RCNTXT *, int, SEXP);
 void jump_to_toplevel(void);
+void KillAllDevices(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
 SEXP makeSubscript(SEXP, SEXP, int *, SEXP);
@@ -1084,6 +1088,9 @@ void R_SetPPSize(R_size_t);
 
 void R_run_onexits(RCNTXT *);
 void R_restore_globals(RCNTXT *);
+
+/* ../main/devices.c, used in memory.c, gnuwin32/extra.c */
+#define R_MaxDevices 64
 
 /* ../main/identical.c : */
 Rboolean compute_identical(SEXP x, SEXP y);

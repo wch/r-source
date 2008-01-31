@@ -75,7 +75,6 @@
 
 #include <Defn.h>
 #include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEGetDevice */
-#include <Rdevices.h> /* R_MaxDevices */
 #include <R_ext/Rdynload.h>
 
 #if defined(Win32) && defined(LEA_MALLOC)

@@ -1272,7 +1272,7 @@ SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include "devWindows.h"
 #include <Startup.h>
-#include <Rdevices.h> /* for GetDevice, R_MaxDevices */
+#include <R_ext/GraphicsEngine.h> /* GEGetDevice */
 extern UImode CharacterMode;
 
 SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1290,7 +1290,7 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
 	    errorcall(call, _("invalid value for '%s'"), "which");
-	gdd = (GEDevDesc *) GetDevice(dev - 1);
+	gdd = GEGetDevice(dev - 1);
 	if(!gdd) errorcall(call, _("invalid device"));
 	xd = (gadesc *) gdd->dev->deviceSpecific;
 	if(!xd) errorcall(call, _("invalid device"));
@@ -1307,7 +1307,7 @@ static void * getDeviceHandle(int dev)
 
     if (dev == -1) return(getHandle(RConsole));
     if (dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER) return(0);
-    gdd = (GEDevDesc *) GetDevice(dev - 1);
+    gdd = GEGetDevice(dev - 1);
     if (!gdd) return(NULL);
     xd = (gadesc *) gdd->dev->deviceSpecific;
     if (!xd) return(NULL);
@@ -1331,7 +1331,7 @@ menu getGraphMenu(const char* menuname)
 
     while (('0' <= *menuname) && (*menuname <= '9')) menuname++;
 
-    gdd = (GEDevDesc*) GetDevice(devnum - 1);
+    gdd = GEGetDevice(devnum - 1);
 
     if(!gdd) error(_("invalid device"));
 

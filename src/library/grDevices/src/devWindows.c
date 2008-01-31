@@ -29,7 +29,7 @@
 #endif
 
 #include <Defn.h>
-#include <Rdevices.h>
+#include <Rgraphics.h> /* For RGBpar */
 #include <R_ext/GraphicsEngine.h>
 #include <Fileio.h>
 #include <stdio.h>
@@ -260,7 +260,7 @@ static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, const char *name)
     gdd = GEcreateDevDesc(ndd);
     GEaddDevice(gdd);
     GEcopyDisplayList(ndevNumber(dd));
-    KillDevice((DevDesc*) gdd);
+    GEkillDevice(gdd);
     selectDevice(saveDev);
     gsetcursor(xd->gawin, ArrowCursor);
     show(xd->gawin);
@@ -2908,7 +2908,7 @@ SEXP savePlot(SEXP args)
     device = asInteger(CAR(args));
     if(device < 1 || device > NumDevices())
 	error(_("invalid device number in savePlot"));
-    dd = ((GEDevDesc*) GetDevice(device - 1))->dev;
+    dd = GEGetDevice(device - 1)->dev;
     if(!dd) error(_("invalid device in savePlot"));
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)

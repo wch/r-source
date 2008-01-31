@@ -34,7 +34,6 @@
 #define __MAIN__
 #include "Defn.h"
 #include "Rinterface.h"
-#include <Rdevices.h>		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Fileio.h"
 #include "Parse.h"

@@ -509,13 +509,91 @@ typedef struct {
 	/* the clean-up itself					*/
 	/********************************************************/
 
+/* moved from Rgraphics.h */
+
+/*
+ *	Some Notes on Color
+ *
+ *	R uses a 24-bit color model.  Colors are specified in 32-bit
+ *	integers which are partitioned into 4 bytes as follows.
+ *
+ *		<-- most sig	    least sig -->
+ *		+-------------------------------+
+ *		|   0	| blue	| green |  red	|
+ *		+-------------------------------+
+ *
+ *	The red, green and blue bytes can be extracted as follows.
+ *
+ *		red   = ((color	     ) & 255)
+ *		green = ((color >>  8) & 255)
+ *		blue  = ((color >> 16) & 255)
+ */
+/*
+ *	Changes as from 1.4.0: use top 8 bits as an alpha channel.
+ * 	0 = opaque, 255 = transparent.
+ *	At present only 0 and >0 are used, with no semi-transparent.
+ */
+/*
+ * Changes as from 2.0.0:  use top 8 bits as full alpha channel
+ *      1 = opaque, 0 = transparent
+ *      [to conform with SVG, PDF and others]
+ *      and everything in between is used
+ *      [which means that NA is not stored as an internal colour;
+ *       it is converted to R_RGBA(255, 255, 255, 0)]
+ */
+
+#define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16)|0xFF000000)
+#define R_RGBA(r,g,b,a)	((r)|((g)<<8)|((b)<<16)|((a)<<24))
+#define R_RED(col)	(((col)	   )&255)
+#define R_GREEN(col)	(((col)>> 8)&255)
+#define R_BLUE(col)	(((col)>>16)&255)
+#define R_ALPHA(col)	(((col)>>24)&255)
+#define R_OPAQUE(col)	(R_ALPHA(col) == 255)
+#define R_TRANSPARENT(col) (R_ALPHA(col) == 0)
+    /* 
+     * A transparent white
+     */
+#define R_TRANWHITE     (R_RGBA(255, 255, 255, 0))
+
+
 /* used in various devices */
 
 typedef unsigned int rcolor;
 
+#define curDevice		Rf_curDevice
+#define killDevice		Rf_killDevice
 #define ndevNumber		Rf_ndevNumber
+#define nextDevice		Rf_nextDevice
+#define NumDevices		Rf_NumDevices
+#define prevDevice		Rf_prevDevice
+#define selectDevice		Rf_selectDevice
+
 /* Properly declared version of devNumber */
 int ndevNumber(NewDevDesc *);
+
+/* Formerly in Rdevices.h */
+
+/* How many devices exist ? (>= 1) */
+int NumDevices(void);
+
+/* Check for an available device slot */
+void R_CheckDeviceAvailable(void);
+Rboolean R_CheckDeviceAvailableBool(void);
+
+/* Return the number of the current device. */
+int curDevice(void);
+
+/* Return the number of the next device. */
+int nextDevice(int);
+
+/* Return the number of the previous device. */
+int prevDevice(int);
+
+/* Make the specified device (specified by number) the current device */
+int selectDevice(int);
+
+/* Kill device which is identified by number. */
+void killDevice(int);
 
 
 /* Graphics events: defined in gevents.c */

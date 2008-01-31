@@ -32,7 +32,6 @@
 
 #include <R_ext/GraphicsEngine.h>
 #include "Fileio.h"
-#include <Rdevices.h>
 #include "grDevices.h"
 
 	/* device-specific information per picTeX device */

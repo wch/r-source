@@ -20,7 +20,10 @@
 #ifndef DEVICES_H_
 #define DEVICES_H_
 
-/* A public header */
+/* A public header.
+   This is almost entirely of historical interest: it was the 
+   interface for graphics device in R < 2.7.0
+ */
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,34 +32,15 @@ extern "C" {
 #include <Rgraphics.h>
 #include <R_ext/Boolean.h>
 
-#define R_MaxDevices 64
-
-
 #define addDevice		Rf_addDevice
 #define deviceNumber		Rf_deviceNumber
 #define devNumber		Rf_devNumber
-#define DevNull			Rf_DevNull
-#define InitGraphics		Rf_InitGraphics
 #define GetDevice		Rf_GetDevice
-#define KillAllDevices		Rf_KillAllDevices
 #define KillDevice		Rf_KillDevice
 #define killDevice		Rf_killDevice
 #define nextDevice		Rf_nextDevice
 #define NumDevices		Rf_NumDevices
-#define StartDevice		Rf_StartDevice
 #define prevDevice		Rf_prevDevice
-#define recordGraphicOperation	Rf_recordGraphicOperation
-
-/* Initialize internal device structures. */
-void InitGraphics(void);
-/* Kill all active devices (used at shutdown). */
-void KillAllDevices(void);
-/*
- * Free the font and encoding structures used by
- * PostScript, Xfig, and PDF devices
- */
-void freeType1Fonts(void);
-
 
 /*-------------------------------------------------------------------
  *
@@ -73,17 +57,6 @@ DevDesc* GetDevice(int);
  */
 void KillDevice(DevDesc*);
 
-/* How many devices exist ? (>= 1) */
-int NumDevices(void);
-
-/* Get the index of the specified device. 
- * This is used by the graphics engine to map from a *GEDevDesc to
- * a device number. 
- * Here DevDesc * is being used as an opaque pointer to GEDevDesc.
- * Now unused.
- */
-int deviceNumber(DevDesc*);
-
 /* Get the index of the specified device. 
  * This is used by a device to map from a *NewDevDesc to a device number.
  * Here DevDesc * is being used as an opaque pointer to NewDevDesc.
@@ -91,15 +64,19 @@ int deviceNumber(DevDesc*);
 int devNumber(DevDesc *);
 /* New, properly declared version in GraphicsDevices.h */
 
-/* Create a new device. */
-int StartDevice(SEXP, SEXP, int, SEXP, int);
+/* ...NO DOC... */
+/* Here DevDesc * is being used as an opaque pointer to GEDevDesc. */
+/* Replaced by GEaddDevice */
+void addDevice(DevDesc *);
+
+
+/* --- rest also in GraphicsDevice.h ---- */
+/* How many devices exist ? (>= 1) */
+int NumDevices(void);
 
 /* Check for an available device slot */
 void R_CheckDeviceAvailable(void);
 Rboolean R_CheckDeviceAvailableBool(void);
-
-void DevNull(void);
-
 
 /*-------------------------------------------------------------------
  *
@@ -119,11 +96,6 @@ int selectDevice(int);
 
 /* Kill device which is identified by number. */
 void killDevice(int);
-
-/* ...NO DOC... */
-/* Here DevDesc * is being used as an opaque pointer to GEDevDesc. */
-/* Replaced by GEaddDevice */
-void addDevice(DevDesc *);
 
 #ifdef __cplusplus
 }
