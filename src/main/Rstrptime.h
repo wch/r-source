@@ -1132,12 +1132,6 @@ static void get_locale_strings(void)
     struct tm tm;
     char buff[4];
 
-    static char *last_LC_TIME="unknown";
-    char *tmp;
-    tmp = setlocale(LC_TIME, NULL);
-    if (streql(tmp, last_LC_TIME)) return;
-    last_LC_TIME = tmp;
-
     tm.tm_sec = tm.tm_min = tm.tm_hour = tm.tm_mday = tm.tm_mon
 	= tm.tm_isdst = 0;
     tm.tm_year = 30;
@@ -1169,12 +1163,6 @@ static void get_locale_w_strings(void)
     int i;
     struct tm tm;
     wchar_t buff[4];
-
-    static char *last_LC_TIME="unknown";
-    char *tmp;
-    tmp = setlocale(LC_TIME, NULL);
-    if (streql(tmp, last_LC_TIME)) return;
-    last_LC_TIME = tmp;
 
     tm.tm_sec = tm.tm_min = tm.tm_hour = tm.tm_mday = tm.tm_mon
 	= tm.tm_isdst = 0;
