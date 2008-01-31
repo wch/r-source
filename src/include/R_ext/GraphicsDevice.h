@@ -67,6 +67,7 @@ typedef struct _NewDevDesc NewDevDesc;
    the old system used DevDesc*, and some devices have taken to
    passing pointers to their own structure instead of NewDevDesc*
 */
+
 struct _NewDevDesc {
     /* The first element is a boolean indicating whether this is 
      * a new device driver (always 1) -- the old device driver structure
@@ -195,7 +196,11 @@ struct _NewDevDesc {
      * static void   X11_Activate(NewDevDesc *dd);
      *
      */
+#ifdef R_USE_PROTOTYPES
+    void (*activate)(NewDevDesc *);
+#else
     void (*activate)();
+#endif
     /*
      * device_Circle should have the side-effect that a	
      * circle is drawn, centred at the given location, with 
@@ -214,7 +219,12 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
+#ifdef R_USE_PROTOTYPES
+    void (*circle)(double x, double y, double r,
+		   R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     void (*circle)();
+#endif
     /*
      * device_Clip is given the left, right, bottom, and	
      * top of a rectangle (in DEVICE coordinates).	
@@ -229,7 +239,11 @@ struct _NewDevDesc {
      * static void X11_Clip(double x0, double x1, double y0, double y1, 
      *                      NewDevDesc *dd)
      */
+#ifdef R_USE_PROTOTYPES
+    void (*clip)(double x0, double x1, double y0, double y1, NewDevDesc *dd);
+#else
     void (*clip)();
+#endif
     /*
      * device_Close is called when the device is killed.
      * This function is responsible for destroying any	
@@ -241,7 +255,11 @@ struct _NewDevDesc {
      * static void X11_Close(NewDevDesc *dd)
      *
      */
+#ifdef R_USE_PROTOTYPES
     void (*close)();
+#else
+    void (*close)();
+#endif
     /*
      * device_Deactivate is called when a device becomes	
      * inactive.  
@@ -253,7 +271,13 @@ struct _NewDevDesc {
      * static void X11_Deactivate(NewDevDesc *dd)
      *
      */
+#ifdef R_USE_PROTOTYPES
+    void (*deactivate)(NewDevDesc *);
+#else
     void (*deactivate)();
+#endif
+
+#ifdef UNUSED
     void (*dot)();
     /*
      * I don't know what this is for and i can't find it	
@@ -264,7 +288,14 @@ struct _NewDevDesc {
      * static void X11_Hold(NewDevDesc *dd)
      *
      */
+#endif
+
+#ifdef R_USE_PROTOTYPES
+    void (*hold)(NewDevDesc *);
+#else
     void (*hold)();
+#endif
+
     /*
      * device_Locator should return the location of the next
      * mouse click (in DEVICE coordinates)	
@@ -274,7 +305,11 @@ struct _NewDevDesc {
      * static Rboolean X11_Locator(double *x, double *y, NewDevDesc *dd)
      *
      */
+#ifdef R_USE_PROTOTYPES
+    Rboolean (*locator)(double *x, double *y, NewDevDesc *dd);
+#else
     Rboolean (*locator)();
+#endif
     /*
      * device_Line should have the side-effect that a single
      * line is drawn (from x1,y1 to x2,y2)			
@@ -287,7 +322,12 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
+#ifdef R_USE_PROTOTYPES
+    void (*line)(double x1, double y1, double x2, double y2,
+		 R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     void (*line)();
+#endif
     /*
      * device_MetricInfo should return height, depth, and	
      * width information for the given character in DEVICE	
@@ -309,7 +349,13 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
      */
+#ifdef R_USE_PROTOTYPES
+    void (*metricInfo)(int c, R_GE_gcontext *gc,
+		       double* ascent, double* descent, double* width,
+		       NewDevDesc *dd);
+#else
     void (*metricInfo)();
+#endif
     /*
      * device_Mode is called whenever the graphics engine	
      * starts drawing (mode=1) or stops drawing (mode=0)	
@@ -319,7 +365,11 @@ struct _NewDevDesc {
      * static void X11_Mode(int mode, NewDevDesc *dd);
      *
      */
+#ifdef R_USE_PROTOTYPES
+    void (*mode)(int mode, NewDevDesc *dd);
+#else
     void (*mode)();
+#endif
     /*
      * device_NewPage is called whenever a new plot requires
      * a new page.	
@@ -333,7 +383,11 @@ struct _NewDevDesc {
      *                         NewDevDesc *dd);
      *
      */
+#ifdef R_USE_PROTOTYPES
+    void (*newPage)(R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     void (*newPage)();
+#endif
     /*
      * device_Open is not usually called directly by the	
      * graphics engine;  it is usually only called from	
@@ -351,7 +405,7 @@ struct _NewDevDesc {
      *                   int maxcube, int canvascolor);
      *
      */
-    Rboolean (*open)();
+    Rboolean (*open)(/* args are device-specific */);
     /*
      * device_Polygon should have the side-effect that a	
      * polygon is drawn using the given x and y values	
@@ -368,7 +422,12 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
+#ifdef R_USE_PROTOTYPES
+    void (*polygon)(int n, double *x, double *y, R_GE_gcontext *gc,
+		    NewDevDesc *dd);
+#else
     void (*polygon)();
+#endif
     /*
      * device_Polyline should have the side-effect that a	
      * series of line segments are drawn using the given x	
@@ -382,7 +441,12 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
+#ifdef R_USE_PROTOTYPES
+    void (*polyline)(int n, double *x, double *y, R_GE_gcontext *gc,
+		     NewDevDesc *dd);
+#else
     void (*polyline)();
+#endif
     /*
      * device_Rect should have the side-effect that a	
      * rectangle is drawn with the given locations for its	
@@ -399,7 +463,12 @@ struct _NewDevDesc {
      *                      NewDevDesc *dd);
      *
      */
+#ifdef R_USE_PROTOTYPES
+    void (*rect)(double x0, double y0, double x1, double y1,
+		 R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     void (*rect)();
+#endif
     /*
      * device_Size is called whenever the device is	
      * resized.  
@@ -418,7 +487,12 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
+#ifdef R_USE_PROTOTYPES
+    void (*size)(double *left, double *right, double *bottom, double *top,
+		 NewDevDesc *dd);
+#else
     void (*size)();
+#endif
     /*
      * device_StrWidth should return the width of the given 
      * string in DEVICE units.				
@@ -431,7 +505,11 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
      */
+#ifdef R_USE_PROTOTYPES
+    double (*strWidth)(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     double (*strWidth)();
+#endif
     /*
      * device_Text should have the side-effect that the	
      * given text is drawn at the given location.
@@ -446,7 +524,12 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps, col, gamma
      */
+#ifdef R_USE_PROTOTYPES
+    void (*text)(double x, double y, const char *str, double rot,
+		 double hadj, R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     void (*text)();
+#endif
     /*
      * device_onExit is called by GEonExit when the user has aborted
      * some operation, and so an R_ProcessEvents call may not return normally.
@@ -456,7 +539,11 @@ struct _NewDevDesc {
      *
      * static void X11_onExit(NewDevDesc *dd);
     */    
+#ifdef R_USE_PROTOTYPES
+    void (*onExit)(NewDevDesc *dd);
+#else
     void (*onExit)();
+#endif
     /*
      * device_getEvent is called by do_getGraphicsEvent to get a modal
      * graphics event.  It should call R_ProcessEvents() until one
@@ -476,8 +563,14 @@ struct _NewDevDesc {
        Unicode points (as well as postive values in a MBCS locale).
     */
     Rboolean hasTextUTF8; /* and strWidthUTF8 */
+#ifdef R_USE_PROTOTYPES
+    void (*textUTF8)(double x, double y, const char *str, double rot,
+		     double hadj, R_GE_gcontext *gc, NewDevDesc *dd);
+    double (*strWidthUTF8)(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
+#else
     void (*textUTF8)();
     double (*strWidthUTF8)();
+#endif
 
     /* Is rotated text good enough to be preferable to Hershey in
        contour labels?

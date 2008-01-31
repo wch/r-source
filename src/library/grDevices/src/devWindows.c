@@ -29,8 +29,9 @@
 #endif
 
 #include <Defn.h>
-#include <R_ext/GraphicsDevice.h>
+#define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
+
 #include <Fileio.h>
 #include <stdio.h>
 #include "opt.h"

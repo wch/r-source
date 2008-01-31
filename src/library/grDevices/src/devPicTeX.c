@@ -2,7 +2,7 @@
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-7  The R Development Core Team
+ *  Copyright (C) 2001-8  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 # include <wchar.h>
 #endif /* SUPPORT_MBCS */
 
+#define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 #include "Fileio.h"
 #include "grDevices.h"
@@ -186,10 +187,10 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
 static void PicTeX_Size(double *left, double *right,
 			double *bottom, double *top,
 			NewDevDesc *dd);
-static double PicTeX_StrWidth(char *str, 
+static double PicTeX_StrWidth(const char *str, 
 			      R_GE_gcontext *gc,
 			      NewDevDesc *dd);
-static void PicTeX_Text(double x, double y, char *str, 
+static void PicTeX_Text(double x, double y, const char *str, 
 			double rot, double hadj, 
 			R_GE_gcontext *gc,
 			NewDevDesc *dd);
@@ -471,13 +472,13 @@ static void PicTeX_Polyline(int n, double *x, double *y,
 	/* String Width in Rasters */
 	/* For the current font in pointsize fontsize */
 
-static double PicTeX_StrWidth(char *str, 
+static double PicTeX_StrWidth(const char *str, 
 			      R_GE_gcontext *gc,
 			      NewDevDesc *dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-    char *p;
+    const char *p;
     int size;
     double sum;
 
@@ -563,7 +564,7 @@ static void PicTeX_Polygon(int n, double *x, double *y,
 }
 
 /* TeX Text Translations */
-static void textext(char *str, picTeXDesc *ptd)
+static void textext(const char *str, picTeXDesc *ptd)
 {
     fputc('{', ptd->texfp);
     for( ; *str ; str++)
@@ -597,7 +598,7 @@ static void textext(char *str, picTeXDesc *ptd)
 
 /* Rotated Text */
 
-static void PicTeX_Text(double x, double y, char *str, 
+static void PicTeX_Text(double x, double y, const char *str, 
 			double rot, double hadj, 
 			R_GE_gcontext *gc,
 			NewDevDesc *dd)
