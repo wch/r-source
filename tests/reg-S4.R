@@ -333,3 +333,12 @@ AIC.pfit <- function(object, ..., k = 2) -2*object$loglik + k
 AIC(pfit(1:10))
 library(stats4)
 AIC(pfit(1:10)) # failed in R < 2.7.0
+
+## For a few days (~ 2008-01-30), this failed to work without any notice:
+setClass("Mat",  representation(Dim = "integer","VIRTUAL"))
+setClass("dMat", representation(x = "numeric",  "VIRTUAL"), contains = "Mat")
+setClass("CMat", representation(dnames = "list","VIRTUAL"), contains = "Mat")
+setClass("dCMat", contains = c("dMat", "CMat"))
+stopifnot(!isVirtualClass("dCMat"),
+	  length(slotNames(new("dCMat"))) == 3)
+

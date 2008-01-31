@@ -1,6 +1,6 @@
 
-R version 2.7.0 Under development (unstable) (2007-12-06 r43609)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.7.0 Under development (unstable) (2008-01-31 r44280)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -640,4 +640,17 @@ to include omitted arguments in definition: mode = "missing"
 > library(stats4)
 > AIC(pfit(1:10)) # failed in R < 2.7.0
 [1] 0.05867604
+> 
+> ## For a few days (~ 2008-01-30), this failed to work without any notice:
+> setClass("Mat",  representation(Dim = "integer","VIRTUAL"))
+[1] "Mat"
+> setClass("dMat", representation(x = "numeric",  "VIRTUAL"), contains = "Mat")
+[1] "dMat"
+> setClass("CMat", representation(dnames = "list","VIRTUAL"), contains = "Mat")
+[1] "CMat"
+> setClass("dCMat", contains = c("dMat", "CMat"))
+[1] "dCMat"
+> stopifnot(!isVirtualClass("dCMat"),
++ 	  length(slotNames(new("dCMat"))) == 3)
+> 
 > 
