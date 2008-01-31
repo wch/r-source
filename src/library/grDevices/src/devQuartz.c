@@ -30,7 +30,7 @@
 #include <Defn.h>
 #include <Rdevices.h>
 #include <Rinternals.h>
-#include <Rgraphics.h>
+#include <R_ext/GraphicsEngine.h>
 #include <R_ext/QuartzDevice.h>
 
 /* included by next #include <R_ext/GraphicsDevice.h> */
