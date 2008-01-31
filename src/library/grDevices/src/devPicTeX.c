@@ -671,7 +671,6 @@ Rboolean PicTeXDeviceDriver(NewDevDesc *dd, const char *filename,
 
     dd->activate = PicTeX_Activate;
     dd->deactivate = PicTeX_Deactivate;
-    dd->open = PicTeX_Open;
     dd->close = PicTeX_Close;
     dd->clip = PicTeX_Clip;
     dd->size = PicTeX_Size;

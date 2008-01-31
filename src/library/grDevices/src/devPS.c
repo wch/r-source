@@ -3329,7 +3329,6 @@ PSDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
 	return FALSE;
     }
 
-    dd->open	      = PS_Open;
     dd->close      = PS_Close;
     dd->activate   = PS_Activate;
     dd->deactivate = PS_Deactivate;
@@ -4657,7 +4656,6 @@ XFigDeviceDriver(NewDevDesc *dd, const char *file, const char *paper,
 	return 0;
     }
 
-    dd->open       = XFig_Open;
     dd->close      = XFig_Close;
     dd->activate   = XFig_Activate;
     dd->deactivate = XFig_Deactivate;
@@ -5660,7 +5658,6 @@ PDFDeviceDriver(NewDevDesc* dd, const char *file, const char *paper,
 	return 0;
     }
 
-    dd->open	      = PDF_Open;
     dd->close      = PDF_Close;
     dd->activate   = PDF_Activate;
     dd->deactivate = PDF_Deactivate;

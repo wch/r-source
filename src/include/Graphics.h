@@ -23,10 +23,9 @@
 
 /* This is a private header */
 
-#define R_GRAPHICS_INTERNAL 1
-
 #include <R_ext/Boolean.h>
 
+#include <Rgraphics.h>
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
 
@@ -45,32 +44,6 @@ typedef struct {
 	double ay;
 	double by;
 } GTrans;
-
-	/* possible coordinate systems (for specifying locations) */
-typedef enum {
- DEVICE	= 0,	/* native device coordinates (rasters) */
- NDC	= 1,	/* normalised device coordinates x=(0,1), y=(0,1) */
- INCHES = 13,	/* inches x=(0,width), y=(0,height) */
- NIC	= 6,	/* normalised inner region coordinates (0,1) */
- OMA1	= 2,	/* outer margin 1 (bottom) x=NIC, y=LINES */
- OMA2	= 3,	/* outer margin 2 (left) */
- OMA3	= 4,	/* outer margin 3 (top) */
- OMA4	= 5,	/* outer margin 4 (right) */
- NFC	= 7,	/* normalised figure region coordinates (0,1) */
- NPC	= 16,	/* normalised plot region coordinates (0,1) */
- USER	= 12,	/* user/data/world coordinates;
-		 * x,=(xmin,xmax), y=(ymin,ymax) */
- MAR1	= 8,	/* figure margin 1 (bottom) x=USER(x), y=LINES */
- MAR2	= 9,	/* figure margin 2 (left)   x=USER(y), y=LINES */
- MAR3	= 10,	/* figure margin 3 (top)    x=USER(x), y=LINES */
- MAR4	= 11,	/* figure margin 4 (right)  x=USER(y), y=LINES */
-
-	/* possible, units (for specifying dimensions) */
-	/* all of the above, plus ... */
-
- LINES = 14,	/* multiples of a line in the margin (mex) */
- CHARS = 15	/* multiples of text height (cex) */
-} GUnit;
 
 typedef struct {
     /* Basic Device Driver Properties */
@@ -334,7 +307,7 @@ typedef struct {
 } GPar;
 
 /* always remap private functions */
-#include <Rgraphics.h>
+//#include <Rgraphics.h>
 #define copyGPar		Rf_copyGPar
 #define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
@@ -349,11 +322,9 @@ typedef struct {
 #define recordGraphicOperation	Rf_recordGraphicOperation
 #define Specify2		Rf_Specify2
 
-/* All DevDesc* here are really GEDevDesc* */
-
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */
-Rboolean GRecording(SEXP, DevDesc*);
+Rboolean GRecording(SEXP, pGEDev);
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
@@ -365,12 +336,12 @@ void copyGPar(GPar *, GPar *);
 double R_Log10(double); /* from graphics.c, used in par.c */
 
 /* from plot.c, called in plot3d.c */
-void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
+void ProcessInlinePars(SEXP, pGEDev, SEXP call);
 /* from par.c, called in plot.c */
-void Specify2(const char*, SEXP, DevDesc*, SEXP call);
+void Specify2(const char*, SEXP, pGEDev, SEXP call);
 
 /* from device.c */
-void recordGraphicOperation(SEXP, SEXP, DevDesc*);
+void recordGraphicOperation(SEXP, SEXP, pGEDev);
 
 /* some functions that plot.c needs to share with plot3d.c */
 SEXP FixupLty(SEXP, int);

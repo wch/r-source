@@ -41,6 +41,7 @@ extern "C" {
  * Version 3:  R_GE_str2col() added to API.
  * Version 4:  UTF-8 text hooks, useRotatedTextInContour to device interface.
  *             Remove dot() from NewDevDesc.
+ *             Remove newDevStruct from GEDevDesc, don't use it in NewDevDesc.
  */
 
 #define R_GE_version 4
@@ -199,7 +200,6 @@ typedef struct {
 } GESystemDesc;
 
 struct _GEDevDesc {
-    int newDevStruct;
     /* 
      * Stuff that the devices can see (and modify).
      * All detailed in GraphicsDevice.h
@@ -226,20 +226,22 @@ struct _GEDevDesc {
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
 
+typedef GEDevDesc* pGEDevDesc;
+
 /* functions from devices.c for use by graphics devices */
 
 #define desc2GEDesc		Rf_desc2GEDesc
 /* map NewDevDesc to enclosing GEDevDesc */
-GEDevDesc *desc2GEDesc(NewDevDesc *dd);
-int GEdeviceNumber(GEDevDesc*);
-GEDevDesc* GEGetDevice(int);
-void GEaddDevice(GEDevDesc *);
-void GEkillDevice(GEDevDesc*);
+pGEDevDesc desc2GEDesc(NewDevDesc *dd);
+int GEdeviceNumber(pGEDevDesc);
+pGEDevDesc GEGetDevice(int);
+void GEaddDevice(pGEDevDesc);
+void GEkillDevice(pGEDevDesc);
 
-GEDevDesc* GEcreateDevDesc(NewDevDesc* dev);
-void GEdestroyDevDesc(GEDevDesc* dd);
-void* GEsystemState(GEDevDesc *dd, int index);
-void GEregisterWithDevice(GEDevDesc *dd);
+pGEDevDesc GEcreateDevDesc(NewDevDesc* dev);
+void GEdestroyDevDesc(pGEDevDesc dd);
+void* GEsystemState(pGEDevDesc dd, int index);
+void GEregisterWithDevice(pGEDevDesc dd);
 void GEregisterSystem(GEcallback callback, int *systemRegisterIndex);
 void GEunregisterSystem(int registerIndex);
 
@@ -254,14 +256,14 @@ SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
 #define fromDeviceHeight	GEfromDeviceHeight
 #define toDeviceHeight		GEtoDeviceHeight
 
-double fromDeviceX(double value, GEUnit to, GEDevDesc *dd); 
-double toDeviceX(double value, GEUnit from, GEDevDesc *dd);
-double fromDeviceY(double value, GEUnit to, GEDevDesc *dd); 
-double toDeviceY(double value, GEUnit from, GEDevDesc *dd);
-double fromDeviceWidth(double value, GEUnit to, GEDevDesc *dd); 
-double toDeviceWidth(double value, GEUnit from, GEDevDesc *dd);
-double fromDeviceHeight(double value, GEUnit to, GEDevDesc *dd); 
-double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
+double fromDeviceX(double value, GEUnit to, pGEDevDesc dd); 
+double toDeviceX(double value, GEUnit from, pGEDevDesc dd);
+double fromDeviceY(double value, GEUnit to, pGEDevDesc dd); 
+double toDeviceY(double value, GEUnit from, pGEDevDesc dd);
+double fromDeviceWidth(double value, GEUnit to, pGEDevDesc dd); 
+double toDeviceWidth(double value, GEUnit from, pGEDevDesc dd);
+double fromDeviceHeight(double value, GEUnit to, pGEDevDesc dd); 
+double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
 
 /*-------------------------------------------------------------------
  *
@@ -330,35 +332,35 @@ SEXP GE_LJOINget(R_GE_linejoin ljoin);
 
 unsigned int R_GE_str2col(const char *s);
 
-void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
-void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);
+void GESetClip(double x1, double y1, double x2, double y2, pGEDevDesc dd);
+void GENewPage(R_GE_gcontext *gc, pGEDevDesc dd);
 void GELine(double x1, double y1, double x2, double y2, 
-	    R_GE_gcontext *gc, GEDevDesc *dd);
+	    R_GE_gcontext *gc, pGEDevDesc dd);
 void GEPolyline(int n, double *x, double *y, 
-		R_GE_gcontext *gc, GEDevDesc *dd);
+		R_GE_gcontext *gc, pGEDevDesc dd);
 void GEPolygon(int n, double *x, double *y, 
-	       R_GE_gcontext *gc, GEDevDesc *dd);
+	       R_GE_gcontext *gc, pGEDevDesc dd);
 SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open, 
 	       Rboolean repEnds, Rboolean draw,
-	       R_GE_gcontext *gc, GEDevDesc *dd);
+	       R_GE_gcontext *gc, pGEDevDesc dd);
 void GECircle(double x, double y, double radius,
-	      R_GE_gcontext *gc, GEDevDesc *dd);
+	      R_GE_gcontext *gc, pGEDevDesc dd);
 void GERect(double x0, double y0, double x1, double y1,
-	    R_GE_gcontext *gc, GEDevDesc *dd);
+	    R_GE_gcontext *gc, pGEDevDesc dd);
 void GEText(double x, double y, const char * const str, int enc,
 	    double xc, double yc, double rot,
-	    R_GE_gcontext *gc, GEDevDesc *dd);
-void GEMode(int mode, GEDevDesc* dd);
+	    R_GE_gcontext *gc, pGEDevDesc dd);
+void GEMode(int mode, pGEDevDesc dd);
 void GESymbol(double x, double y, int pch, double size,
-	      R_GE_gcontext *gc, GEDevDesc *dd);
+	      R_GE_gcontext *gc, pGEDevDesc dd);
 void GEPretty(double *lo, double *up, int *ndiv);
 void GEMetricInfo(int c, R_GE_gcontext *gc, 
 		  double *ascent, double *descent, double *width,
-		  GEDevDesc *dd);
+		  pGEDevDesc dd);
 double GEStrWidth(const char *str, int enc, 
-		  R_GE_gcontext *gc, GEDevDesc *dd);
+		  R_GE_gcontext *gc, pGEDevDesc dd);
 double GEStrHeight(const char *str, int enc,
-		  R_GE_gcontext *gc, GEDevDesc *dd);
+		  R_GE_gcontext *gc, pGEDevDesc dd);
 int GEstring_to_pch(SEXP pch);
 
 /*-------------------------------------------------------------------
@@ -373,12 +375,12 @@ SEXP GE_LTYget(unsigned int);
  * From plotmath.c 
  */
 double GEExpressionWidth(SEXP expr, 
-			 R_GE_gcontext *gc, GEDevDesc *dd);
+			 R_GE_gcontext *gc, pGEDevDesc dd);
 double GEExpressionHeight(SEXP expr, 
-			  R_GE_gcontext *gc, GEDevDesc *dd);
+			  R_GE_gcontext *gc, pGEDevDesc dd);
 void GEMathText(double x, double y, SEXP expr,
 		double xc, double yc, double rot, 
-		R_GE_gcontext *gc, GEDevDesc *dd);
+		R_GE_gcontext *gc, pGEDevDesc dd);
 /* 
  * (End from plotmath.c)
  */
@@ -395,12 +397,12 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 /* 
  * From vfonts.c
  */
-double R_GE_VStrWidth(const char *s, int enc, R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrWidth(const char *s, int enc, R_GE_gcontext *gc, pGEDevDesc dd);
 
-double R_GE_VStrHeight(const char *s, int enc, R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrHeight(const char *s, int enc, R_GE_gcontext *gc, pGEDevDesc dd);
 void R_GE_VText(double x, double y, const char * const s, int enc, 
 		double x_justify, double y_justify, double rotation,
-		R_GE_gcontext *gc, GEDevDesc *dd);
+		R_GE_gcontext *gc, pGEDevDesc dd);
 /* 
  * (End from vfonts.c)
  */
@@ -408,17 +410,17 @@ void R_GE_VText(double x, double y, const char * const s, int enc,
 /* Also in Graphics.h */
 #define	DEG2RAD 0.01745329251994329576
 
-GEDevDesc* GEcurrentDevice(void);
-Rboolean GEdeviceDirty(GEDevDesc *dd);
-void GEdirtyDevice(GEDevDesc *dd);
-Rboolean GEcheckState(GEDevDesc *dd);
-Rboolean GErecording(SEXP call, GEDevDesc *dd);
-void GErecordGraphicOperation(SEXP op, SEXP args, GEDevDesc *dd);
-void GEinitDisplayList(GEDevDesc *dd);
-void GEplayDisplayList(GEDevDesc *dd);
+pGEDevDesc GEcurrentDevice(void);
+Rboolean GEdeviceDirty(pGEDevDesc dd);
+void GEdirtyDevice(pGEDevDesc dd);
+Rboolean GEcheckState(pGEDevDesc dd);
+Rboolean GErecording(SEXP call, pGEDevDesc dd);
+void GErecordGraphicOperation(SEXP op, SEXP args, pGEDevDesc dd);
+void GEinitDisplayList(pGEDevDesc dd);
+void GEplayDisplayList(pGEDevDesc dd);
 void GEcopyDisplayList(int fromDevice);
-SEXP GEcreateSnapshot(GEDevDesc *dd);
-void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);
+SEXP GEcreateSnapshot(pGEDevDesc dd);
+void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd);
 void GEonExit(void);
 void GEnullDevice(void);
 

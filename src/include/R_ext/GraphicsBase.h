@@ -35,9 +35,8 @@ typedef struct {
 } baseSystemState;
 
 void registerBase(void); /* used in devices.c */
+void unregisterBase(void); /* used in devices.c */
 
-Rboolean Rf_baseDevice(DevDesc *dd); /* unused */
-void Rf_setBaseDevice(Rboolean val, DevDesc *dd); /* used in graphics.c */
-int baseRegisterIndex; /* used in devices.c */
+void Rf_setBaseDevice(Rboolean val, pGEDev dd); /* used in graphics.c */
 
 #endif /* R_GRAPHICSBASE_ */

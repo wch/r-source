@@ -38,14 +38,14 @@ extern "C" {
  *    replaced by a function to query the device for preferred gpars
  *    settings? (to be called when the device is initialised)
          *
-         * NOTE that it is perfectly acceptable for this	
-         * function to set generic graphics parameters too	
-         * (i.e., override the generic parameter settings	
-         * which GInit sets up) all at the author's own risk	
-         * of course :)						
+         * NOTE that it is perfectly acceptable for this
+         * function to set generic graphics parameters too
+         * (i.e., override the generic parameter settings
+         * which GInit sets up) all at the author's own risk
+         * of course :)
 	 *
  * 3. Do we really need dev_StrWidth as well as dev_MetricInfo?
- *    I can see the difference between the two -- its just a 
+ *    I can see the difference between the two -- its just a
  *    question of whether dev_MetricInfo should just return
  *    what dev_StrWidth would give if font metric information is
  *    not available.  I guess having both allows the developer
@@ -62,21 +62,21 @@ extern "C" {
  */
 
 typedef struct _NewDevDesc NewDevDesc;
-    
+
 /* FIXME: ideally we would use prototypes here.  But then
    the old system used DevDesc*, and some devices have taken to
    passing pointers to their own structure instead of NewDevDesc*
 */
 
 struct _NewDevDesc {
-    /* The first element is a boolean indicating whether this is 
+    /* The first element is a boolean indicating whether this is
      * a new device driver (always 1) -- the old device driver structure
      * has had a similar element added (which will always be 0)
      *
      * This needs to be removed once the old DevDesc structure has been
      * removed from the system.
      */
-    int newDevStruct; 
+    int newDevStruct;
     /********************************************************
      * Device physical characteristics
      ********************************************************/
@@ -124,7 +124,7 @@ struct _NewDevDesc {
      * The graphics system can modify them and track current values,
      * but some devices want to know what the original setting was.
      */
-    double startps;             
+    double startps;
     int startcol;
     int startfill;
     int startlty;
@@ -137,7 +137,7 @@ struct _NewDevDesc {
     /********************************************************
      * Device display list
      ********************************************************/
-    /* I think it would feel nicer if this stuff was part of the 
+    /* I think it would feel nicer if this stuff was part of the
      * graphics engine (GEDevDesc), but this is another thing that
      * needs more time to implement a change properly.
      */
@@ -149,19 +149,19 @@ struct _NewDevDesc {
 				 * was last initialised
 				 */
 
-    /********************************************************				 
+    /********************************************************
      * Event handling entries
      ********************************************************/
-     
+
     /* These determine whether getGraphicsEvent will try to set an event handler */
-    
+
     Rboolean canGenMouseDown; /* can the device generate mousedown events */
     Rboolean canGenMouseMove; /* can the device generate mousemove events */
     Rboolean canGenMouseUp;   /* can the device generate mouseup events */
     Rboolean canGenKeybd;     /* can the device generate keyboard events */
-    
+
     Rboolean gettingEvent;    /* This is set while getGraphicsEvent is actively looking for events */
-    
+
     /********************************************************
      * Device procedures.
      ********************************************************/
@@ -173,7 +173,7 @@ struct _NewDevDesc {
      * Graphical parameters are now passed in a graphics context
      * structure (R_GE_gcontext*) rather than individually.
      * Each device action should extract the parameters it needs
-     * and ignore the others.  Thought should be given to which 
+     * and ignore the others.  Thought should be given to which
      * parameters are relevant in each case -- the graphics engine
      * does not REQUIRE that each parameter is honoured, but if
      * a parameter is NOT honoured, it might be a good idea to
@@ -185,11 +185,11 @@ struct _NewDevDesc {
      */
 
     /*
-     * device_Activate is called when a device becomes the	
+     * device_Activate is called when a device becomes the
      * active device.  For example, it can be used to change the
-     * title of a window to indicate the active status of	
-     * the device to the user.  Not all device types will	
-     * do anything.			
+     * title of a window to indicate the active status of
+     * the device to the user.  Not all device types will
+     * do anything.
      * The only parameter is a device driver structure.
      * An example is ...
      *
@@ -202,13 +202,13 @@ struct _NewDevDesc {
     void (*activate)();
 #endif
     /*
-     * device_Circle should have the side-effect that a	
-     * circle is drawn, centred at the given location, with 
+     * device_Circle should have the side-effect that a
+     * circle is drawn, centred at the given location, with
      * the given radius.  The border of the circle should be
-     * drawn in the given "col", and the circle should be	
-     * filled with the given "fill" colour.		
+     * drawn in the given "col", and the circle should be
+     * filled with the given "fill" colour.
      * If "col" is NA_INTEGER then no border should be drawn
-     * If "fill" is NA_INTEGER then the circle should not 
+     * If "fill" is NA_INTEGER then the circle should not
      * be filled.
      * An example is ...
      *
@@ -226,17 +226,17 @@ struct _NewDevDesc {
     void (*circle)();
 #endif
     /*
-     * device_Clip is given the left, right, bottom, and	
-     * top of a rectangle (in DEVICE coordinates).	
-     * It should have the side-effect that subsequent output	
+     * device_Clip is given the left, right, bottom, and
+     * top of a rectangle (in DEVICE coordinates).
+     * It should have the side-effect that subsequent output
      * is clipped to the given rectangle.
-     * NOTE that R's graphics engine already clips to the 
+     * NOTE that R's graphics engine already clips to the
      * extent of the device.
      * NOTE also that this will probably only be called if
      * the flag canClip is true.
      * An example is ...
      *
-     * static void X11_Clip(double x0, double x1, double y0, double y1, 
+     * static void X11_Clip(double x0, double x1, double y0, double y1,
      *                      NewDevDesc *dd)
      */
 #ifdef R_USE_PROTOTYPES
@@ -246,10 +246,10 @@ struct _NewDevDesc {
 #endif
     /*
      * device_Close is called when the device is killed.
-     * This function is responsible for destroying any	
-     * device-specific resources that were created in	
-     * device_Open and for FREEing the device-specific	
-     * parameters structure.	
+     * This function is responsible for destroying any
+     * device-specific resources that were created in
+     * device_Open and for FREEing the device-specific
+     * parameters structure.
      * An example is ...
      *
      * static void X11_Close(NewDevDesc *dd)
@@ -261,9 +261,9 @@ struct _NewDevDesc {
     void (*close)();
 #endif
     /*
-     * device_Deactivate is called when a device becomes	
-     * inactive.  
-     * This allows the device to undo anything it did in 
+     * device_Deactivate is called when a device becomes
+     * inactive.
+     * This allows the device to undo anything it did in
      * dev_Activate.
      * Not all device types will do anything.
      * An example is ...
@@ -280,9 +280,9 @@ struct _NewDevDesc {
 #ifdef UNUSED
     void (*dot)();
     /*
-     * I don't know what this is for and i can't find it	
-     * being used anywhere, but i'm loath to kill it in	
-     * case i'm missing something important			
+     * I don't know what this is for and i can't find it
+     * being used anywhere, but i'm loath to kill it in
+     * case i'm missing something important
      * An example is ...
      *
      * static void X11_Hold(NewDevDesc *dd)
@@ -298,8 +298,8 @@ struct _NewDevDesc {
 
     /*
      * device_Locator should return the location of the next
-     * mouse click (in DEVICE coordinates)	
-     * Not all devices will do anything (e.g., postscript)	
+     * mouse click (in DEVICE coordinates)
+     * Not all devices will do anything (e.g., postscript)
      * An example is ...
      *
      * static Rboolean X11_Locator(double *x, double *y, NewDevDesc *dd)
@@ -312,7 +312,7 @@ struct _NewDevDesc {
 #endif
     /*
      * device_Line should have the side-effect that a single
-     * line is drawn (from x1,y1 to x2,y2)			
+     * line is drawn (from x1,y1 to x2,y2)
      * An example is ...
      *
      * static void X11_Line(double x1, double y1, double x2, double y2,
@@ -329,15 +329,15 @@ struct _NewDevDesc {
     void (*line)();
 #endif
     /*
-     * device_MetricInfo should return height, depth, and	
-     * width information for the given character in DEVICE	
+     * device_MetricInfo should return height, depth, and
+     * width information for the given character in DEVICE
      * units.
      * Note: in an 8-bit locale, c is 'char'.
      * In an mbcslocale, it is wchar_t, and at least some
      * of code assumes that is UCS-2 (Windows, true) or UCS-4.
-     * This is used for formatting mathematical expressions	
-     * and for exact centering of text (see GText)		
-     * If the device cannot provide metric information then 
+     * This is used for formatting mathematical expressions
+     * and for exact centering of text (see GText)
+     * If the device cannot provide metric information then
      * it MUST return 0.0 for ascent, descent, and width.
      * An example is ...
      *
@@ -357,9 +357,9 @@ struct _NewDevDesc {
     void (*metricInfo)();
 #endif
     /*
-     * device_Mode is called whenever the graphics engine	
-     * starts drawing (mode=1) or stops drawing (mode=0)	
-     * The device is not required to do anything		
+     * device_Mode is called whenever the graphics engine
+     * starts drawing (mode=1) or stops drawing (mode=0)
+     * The device is not required to do anything
      * An example is ...
      *
      * static void X11_Mode(int mode, NewDevDesc *dd);
@@ -372,10 +372,10 @@ struct _NewDevDesc {
 #endif
     /*
      * device_NewPage is called whenever a new plot requires
-     * a new page.	
-     * A new page might mean just clearing the	
-     * device (e.g., X11) or moving to a new page	
-     * (e.g., postscript)					
+     * a new page.
+     * A new page might mean just clearing the
+     * device (e.g., X11) or moving to a new page
+     * (e.g., postscript)
      * An example is ...
      *
      *
@@ -389,33 +389,37 @@ struct _NewDevDesc {
     void (*newPage)();
 #endif
     /*
-     * device_Open is not usually called directly by the	
-     * graphics engine;  it is usually only called from	
-     * the device-driver entry point.			
-     * This function should set up all of the device-	
-     * specific resources for a new device			
-     * This function is given a newly-allocated NewDevDesc structure 
+     * device_Open is not called directly by the
+     * graphics engine;  it is only called from
+     * the device-driver entry point.
+     *
+     * Its presence is a historical anomaly, and it should
+     * no longer be set.
+     *
+     * This function should set up all of the device-
+     * specific resources for a new device
+     * This function is given a newly-allocated NewDevDesc structure
      * and it must FREE the structure if anything goes seriously wrong.
      * NOTE that different devices will accept different parameter
      * lists, corresponding to different device-specific preferences.
      * An example is ...
      *
-     * Rboolean X11_Open(NewDevDesc *dd, const char *dsp, double w, double h, 
-     *                   double gamma_fac, X_COLORTYPE colormodel, 
+     * Rboolean X11_Open(NewDevDesc *dd, const char *dsp, double w, double h,
+     *                   double gamma_fac, X_COLORTYPE colormodel,
      *                   int maxcube, int canvascolor);
      *
      */
     Rboolean (*open)(/* args are device-specific */);
     /*
-     * device_Polygon should have the side-effect that a	
-     * polygon is drawn using the given x and y values	
-     * the polygon border should be drawn in the "col"	
+     * device_Polygon should have the side-effect that a
+     * polygon is drawn using the given x and y values
+     * the polygon border should be drawn in the "col"
      * colour and filled with the "fill" colour.
-     * If "col" is NA_INTEGER don't draw the border		
-     * If "fill" is NA_INTEGER don't fill the polygon		
+     * If "col" is NA_INTEGER don't draw the border
+     * If "fill" is NA_INTEGER don't fill the polygon
      * An example is ...
      *
-     * static void X11_Polygon(int n, double *x, double *y, 
+     * static void X11_Polygon(int n, double *x, double *y,
      *                         R_GE_gcontext *gc,
      *                         NewDevDesc *dd);
      *
@@ -429,12 +433,12 @@ struct _NewDevDesc {
     void (*polygon)();
 #endif
     /*
-     * device_Polyline should have the side-effect that a	
-     * series of line segments are drawn using the given x	
+     * device_Polyline should have the side-effect that a
+     * series of line segments are drawn using the given x
      * and y values.
      * An example is ...
      *
-     * static void X11_Polyline(int n, double *x, double *y, 
+     * static void X11_Polyline(int n, double *x, double *y,
      *                          R_GE_gcontext *gc,
      *                          NewDevDesc *dd);
      *
@@ -448,14 +452,14 @@ struct _NewDevDesc {
     void (*polyline)();
 #endif
     /*
-     * device_Rect should have the side-effect that a	
-     * rectangle is drawn with the given locations for its	
-     * opposite corners.  The border of the rectangle	
-     * should be in the given "col" colour and the rectangle	
+     * device_Rect should have the side-effect that a
+     * rectangle is drawn with the given locations for its
+     * opposite corners.  The border of the rectangle
+     * should be in the given "col" colour and the rectangle
      * should be filled with the given "fill" colour.
-     * If "col" is NA_INTEGER then no border should be drawn 
-     * If "fill" is NA_INTEGER then the rectangle should not	
-     * be filled.						
+     * If "col" is NA_INTEGER then no border should be drawn
+     * If "fill" is NA_INTEGER then the rectangle should not
+     * be filled.
      * An example is ...
      *
      * static void X11_Rect(double x0, double y0, double x1, double y1,
@@ -470,13 +474,13 @@ struct _NewDevDesc {
     void (*rect)();
 #endif
     /*
-     * device_Size is called whenever the device is	
-     * resized.  
-     * The function returns (left, right, bottom, and top) for the	
-     * new device size.					
-     * This is not usually called directly by the graphics	
-     * engine because the detection of device resizes	
-     * (e.g., a window resize) are usually detected by	
+     * device_Size is called whenever the device is
+     * resized.
+     * The function returns (left, right, bottom, and top) for the
+     * new device size.
+     * This is not usually called directly by the graphics
+     * engine because the detection of device resizes
+     * (e.g., a window resize) are usually detected by
      * device-specific code.
      * An example is ...
      *
@@ -494,11 +498,11 @@ struct _NewDevDesc {
     void (*size)();
 #endif
     /*
-     * device_StrWidth should return the width of the given 
-     * string in DEVICE units.				
+     * device_StrWidth should return the width of the given
+     * string in DEVICE units.
      * An example is ...
      *
-     * static double X11_StrWidth(const char *str, 
+     * static double X11_StrWidth(const char *str,
      *                            R_GE_gcontext *gc,
      *                            NewDevDesc *dd)
      *
@@ -511,13 +515,13 @@ struct _NewDevDesc {
     double (*strWidth)();
 #endif
     /*
-     * device_Text should have the side-effect that the	
+     * device_Text should have the side-effect that the
      * given text is drawn at the given location.
      * The text should be rotated according to rot (degrees)
      * An example is ...
      *
-     * static void X11_Text(double x, double y, const char *str, 
-     *                      double rot, double hadj, 
+     * static void X11_Text(double x, double y, const char *str,
+     *                      double rot, double hadj,
      *                      R_GE_gcontext *gc,
      * 	                    NewDevDesc *dd);
      *
@@ -534,11 +538,11 @@ struct _NewDevDesc {
      * device_onExit is called by GEonExit when the user has aborted
      * some operation, and so an R_ProcessEvents call may not return normally.
      * It need not be set to any value; if null, it will not be called.
-     * 
+     *
      * An example is ...
      *
      * static void X11_onExit(NewDevDesc *dd);
-    */    
+    */
 #ifdef R_USE_PROTOTYPES
     void (*onExit)(NewDevDesc *dd);
 #else
@@ -649,7 +653,7 @@ struct _NewDevDesc {
 #define R_ALPHA(col)	(((col)>>24)&255)
 #define R_OPAQUE(col)	(R_ALPHA(col) == 255)
 #define R_TRANSPARENT(col) (R_ALPHA(col) == 0)
-    /* 
+    /*
      * A transparent white
      */
 #define R_TRANWHITE     (R_RGBA(255, 255, 255, 0))
@@ -703,14 +707,14 @@ void NewFrameConfirm(void); /* used in graphics.c, grid */
 
 /* Graphics events: defined in gevents.c */
 
-/* These give the indices of some known keys */    
+/* These give the indices of some known keys */
 
 typedef enum {knUNKNOWN = -1,
               knLEFT = 0, knUP, knRIGHT, knDOWN,
               knF1, knF2, knF3, knF4, knF5, knF6, knF7, knF8, knF9, knF10,
               knF11, knF12,
               knPGUP, knPGDN, knEND, knHOME, knINS, knDEL} R_KeyName;
-              
+
 /* These are the three possible mouse events */
 
 typedef enum {meMouseDown = 0,
@@ -724,9 +728,9 @@ typedef enum {meMouseDown = 0,
 #define doKeybd			Rf_doKeybd
 #define doMouseEvent		Rf_doMouseEvent
 
-SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event, 
+SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event,
                   int buttons, double x, double y);
-SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, 
+SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey,
 	     const char *keyname);
 
 

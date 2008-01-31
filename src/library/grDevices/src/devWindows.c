@@ -2793,7 +2793,6 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     dd->deviceSpecific = (void *) xd;
     /* Set up Data Structures  */
 
-    dd->open = GA_Open;
     dd->close = GA_Close;
     dd->activate = GA_Activate;
     dd->deactivate = GA_Deactivate;

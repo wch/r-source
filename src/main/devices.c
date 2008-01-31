@@ -87,7 +87,7 @@ static int R_NumDevices = 1;
    process of being closed and destroyed.  We do this to allow for GUI
    callbacks starting to kill a device whilst another is being killed.
  */
-static GEDevDesc* R_Devices[R_MaxDevices];
+static pGEDevDesc R_Devices[R_MaxDevices];
 static Rboolean active[R_MaxDevices];
 
 /* a dummy description to point to when there are no active devices */
@@ -115,7 +115,7 @@ int NumDevices(void)
 }
 
 
-GEDevDesc* GEcurrentDevice(void)
+pGEDevDesc GEcurrentDevice(void)
 {
     /* If there are no active devices
      * check the options for a "default device".
@@ -160,19 +160,19 @@ GEDevDesc* GEcurrentDevice(void)
 }
 
 /* FIXME: remove in due course */
-DevDesc *Rf_CurrentDevice(void)
+pGEDev Rf_CurrentDevice(void)
 {
-    return (DevDesc *) GEcurrentDevice();
+    return (pGEDev) GEcurrentDevice();
 }
 
-GEDevDesc* GEGetDevice(int i)
+pGEDevDesc GEGetDevice(int i)
 {
     return R_Devices[i];
 }
 
 DevDesc* Rf_GetDevice(int i)
 {
-    return (DevDesc *) R_Devices[i];
+    return (pGEDev) R_Devices[i];
 }
 
 
@@ -267,13 +267,13 @@ int prevDevice(int from)
 }
 
 
-void GEaddDevice(GEDevDesc *gdd)
+void GEaddDevice(pGEDevDesc gdd)
 {
     int i;
     Rboolean appnd;
     SEXP s, t;
-    GEDevDesc *oldd;
-    DevDesc *dd = (DevDesc *)gdd; /* temporary */
+    pGEDevDesc oldd;
+    pGEDev dd = (pGEDev) gdd; /* temporary */
 
     PROTECT(s = getSymbolValue(".Devices"));
 
@@ -329,9 +329,9 @@ void GEaddDevice(GEDevDesc *gdd)
 }
 
 /* FIXME; remove in due course */
-void Rf_addDevice(DevDesc *dd)
+void Rf_addDevice(pGEDev dd)
 {
-    GEaddDevice((GEDevDesc *) dd);
+    GEaddDevice((pGEDevDesc) dd);
 }
 
 
@@ -339,7 +339,7 @@ void Rf_addDevice(DevDesc *dd)
  * and you want to find the corresponding device number
  */
 
-int GEdeviceNumber(GEDevDesc *dd)
+int GEdeviceNumber(pGEDevDesc dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
@@ -348,11 +348,11 @@ int GEdeviceNumber(GEDevDesc *dd)
 }
 
 /* FIXME when KillDevice is removed */
-static int deviceNumber(DevDesc *dd)
+static int deviceNumber(pGEDev dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
-	if (R_Devices[i] == (GEDevDesc *) dd) return i;
+	if (R_Devices[i] == (pGEDevDesc) dd) return i;
     return 0;
 }
 
@@ -370,7 +370,7 @@ int ndevNumber(NewDevDesc *dd)
 
 
 /* Incorrectly declared old version */
-int Rf_devNumber(DevDesc *dd)
+int Rf_devNumber(pGEDev dd)
 {
     return ndevNumber((NewDevDesc *) dd);
 }
@@ -383,10 +383,10 @@ int selectDevice(int devNum)
     if((devNum >= 0) && (devNum < R_MaxDevices) && 
        (R_Devices[devNum] != NULL) && active[devNum]) 
     {
-	GEDevDesc *gdd;
+	pGEDevDesc gdd;
 
 	if (!NoDevices()) {
-	    GEDevDesc *oldd = GEcurrentDevice();
+	    pGEDevDesc oldd = GEcurrentDevice();
 	    oldd->dev->deactivate(oldd->dev);
 	}
 
@@ -419,7 +419,7 @@ void removeDevice(int devNum, Rboolean findNext)
     {
 	int i;
 	SEXP s;
-	GEDevDesc *g = R_Devices[devNum];
+	pGEDevDesc g = R_Devices[devNum];
 
 	active[devNum] = FALSE; /* stops it being selected again */
 	R_NumDevices--;
@@ -441,8 +441,8 @@ void removeDevice(int devNum, Rboolean findNext)
 
 		/* activate new current device */
 		if (R_CurrentDevice) {
-		    GEDevDesc *gdd = GEcurrentDevice();
-		    DevDesc *dd = (DevDesc *) gdd;
+		    pGEDevDesc gdd = GEcurrentDevice();
+		    pGEDev dd = (pGEDev) gdd;
 		    gdd->dev->activate(gdd->dev);
 		    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
 		    GReset(dd);
@@ -456,12 +456,12 @@ void removeDevice(int devNum, Rboolean findNext)
 }
 
 /* FIXME; remove in due course */
-void Rf_KillDevice(DevDesc *dd)
+void Rf_KillDevice(pGEDev dd)
 {
     removeDevice(deviceNumber(dd), TRUE);
 }
 
-void GEkillDevice(GEDevDesc *gdd)
+void GEkillDevice(pGEDevDesc gdd)
 {
     removeDevice(GEdeviceNumber(gdd), TRUE);
 }
@@ -495,13 +495,13 @@ void KillAllDevices(void)
     /* FIXME: There should really be a formal graphics finaliser
      * but this is a good proxy for now.
      */
-    GEunregisterSystem(baseRegisterIndex);
+    unregisterBase();
 }
 
 /* FIXME: remove in due course */
-void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
+void recordGraphicOperation(SEXP op, SEXP args, pGEDev dd)
 {
-    GErecordGraphicOperation(op, args, ((GEDevDesc*) dd));
+    GErecordGraphicOperation(op, args, ((pGEDevDesc) dd));
 }
 
 /* FIXME:  NewFrameConfirm should be a standard device function */
@@ -538,7 +538,7 @@ void NewFrameConfirm(void)
 SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int listFlag;
-    GEDevDesc *gdd = GEcurrentDevice();
+    pGEDevDesc gdd = GEcurrentDevice();
 
     checkArity(op, args);
     if(PRIMVAL(op) == 0) { /* dev.control */
@@ -592,7 +592,7 @@ SEXP attribute_hidden do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* A common construction in some graphics devices */
-GEDevDesc *desc2GEDesc(NewDevDesc *dd)
+pGEDevDesc desc2GEDesc(NewDevDesc *dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)

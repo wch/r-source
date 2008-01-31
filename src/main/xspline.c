@@ -46,7 +46,7 @@ static double *ypoints;
 /************* Code begins here *************/
 
 static Rboolean
-add_point(double x, double y, GEDevDesc *dd)
+add_point(double x, double y, pGEDevDesc dd)
 {
     if (npoints >= max_points) {
 	int tmp_n;
@@ -196,7 +196,7 @@ positive_s2_influence(double k, double t, double s2, double *A1, double *A3)
 
 static void
 point_adding(double *A_blend, double *px, double *py, 
-	     GEDevDesc *dd) 
+	     pGEDevDesc dd) 
 {
   double weights_sum;
 
@@ -326,7 +326,7 @@ static void
 spline_segment_computing(float step, int k, 
 			 double *px, double *py,
 			 double s1, double s2, 
-			 GEDevDesc *dd)
+			 pGEDevDesc dd)
 {
   double A_blend[4];
   double t;
@@ -373,7 +373,7 @@ static void
 spline_last_segment_computing(float step, int k, 
 			      double *px, double *py,
 			      double s1, double s2, 
-			      GEDevDesc *dd)
+			      pGEDevDesc dd)
 {
   double A_blend[4];
   double t = 1;
@@ -436,7 +436,7 @@ static Rboolean
 compute_open_spline(int n, double *x, double *y, double *s,
 		    Rboolean repEnds,
 		    float precision, 
-		    GEDevDesc *dd)
+		    pGEDevDesc dd)
 {
   int       k;
   float     step = 0.0 /* -Wall */;
@@ -495,7 +495,7 @@ compute_open_spline(int n, double *x, double *y, double *s,
 static Rboolean
 compute_closed_spline(int n, double *x, double *y, double *s,
 		      float precision, 
-		      GEDevDesc *dd)
+		      pGEDevDesc dd)
 {
   int k;
   float     step;

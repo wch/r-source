@@ -13,7 +13,7 @@
 
 int attribute_hidden baseRegisterIndex = -1;
 
-static void restoredpSaved(DevDesc *dd)
+static void restoredpSaved(pGEDev dd)
 {
     /* NOTE that not all params should be restored before playing */
     /* the display list (e.g., don't restore the device size) */
@@ -160,8 +160,8 @@ static void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->logusr[3] = Rf_dpSavedptr(dd)->logusr[3];
 }
 
-static SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
-    GEDevDesc *curdd;
+static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data) {
+    pGEDevDesc curdd;
     GESystemDesc *sd;
     NewDevDesc *dev;
     GPar *ddp;
@@ -223,12 +223,12 @@ static SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
 		 &(((baseSystemState*) 
 		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dpSaved));
-	restoredpSaved((DevDesc*) curdd);
+	restoredpSaved((pGEDev) curdd);
 	copyGPar(&(((baseSystemState*) 
 		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dp),
 		 &(((baseSystemState*) 
 		    curdd->gesd[baseRegisterIndex]->systemSpecific)->gp));
-	GReset((DevDesc*) curdd);
+	GReset((pGEDev) curdd);
 	break;
     case GE_SaveState:
 	sd = dd->gesd[baseRegisterIndex];
@@ -237,10 +237,10 @@ static SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	break;
     case GE_RestoreState:
 	sd = dd->gesd[baseRegisterIndex];
-	restoredpSaved((DevDesc*) dd);
+	restoredpSaved((pGEDev) dd);
 	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dp),
 		 &(((baseSystemState*) sd->systemSpecific)->gp));
-	GReset((DevDesc*) dd);
+	GReset((pGEDev) dd);
 	break;
     case GE_SaveSnapshotState:
 	sd = dd->gesd[baseRegisterIndex];
@@ -259,10 +259,10 @@ static SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	sd = dd->gesd[baseRegisterIndex];
 	copyGPar((GPar*) INTEGER(data),
 		 &(((baseSystemState*) sd->systemSpecific)->dpSaved));	
-	restoredpSaved((DevDesc*) dd);
+	restoredpSaved((pGEDev) dd);
 	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dp),
 		 &(((baseSystemState*) sd->systemSpecific)->gp));
-	GReset((DevDesc*) dd);
+	GReset((pGEDev) dd);
 	break;
     case GE_CheckPlot:
 	/* Check that the current plotting state is "valid"
@@ -306,44 +306,41 @@ static SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     return result;
 }
 
-/* Register the base graphics system with the graphics engine
+/* (un)Register the base graphics system with the graphics engine
  */
-void registerBase(void) {
+void attribute_hidden
+registerBase(void) {
     GEregisterSystem(baseCallback, &baseRegisterIndex);
 }
 
+void attribute_hidden
+unregisterBase(void) {
+    GEunregisterSystem(baseRegisterIndex);
+}
+
 /* FIXME: Make this a macro to avoid function call overhead?
+   Inline it if you really think it matters.
  */
 attribute_hidden
-GPar* Rf_gpptr(DevDesc *dd) {
-    return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+GPar* Rf_gpptr(pGEDev dd) {
+    return &(((baseSystemState*) GEsystemState((pGEDevDesc) dd, 
 					       baseRegisterIndex))->gp);
 }
 
 attribute_hidden
-GPar* Rf_dpptr(DevDesc *dd) {
-    return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+GPar* Rf_dpptr(pGEDev dd) {
+    return &(((baseSystemState*) GEsystemState((pGEDevDesc) dd, 
 					       baseRegisterIndex))->dp);
 }
 
 attribute_hidden
-GPar* Rf_dpSavedptr(DevDesc *dd) {
-    return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+GPar* Rf_dpSavedptr(pGEDev dd) {
+    return &(((baseSystemState*) GEsystemState((pGEDevDesc) dd, 
 					       baseRegisterIndex))->dpSaved);
 }
 
-Rboolean Rf_baseDevice(DevDesc *dd) {
-    return ((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
-					     baseRegisterIndex))->baseDevice;
-}
-
-void Rf_setBaseDevice(Rboolean val, DevDesc *dd) {
-    ((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+void Rf_setBaseDevice(Rboolean val, pGEDev dd) {
+    ((baseSystemState*) GEsystemState((pGEDevDesc) dd, 
 				      baseRegisterIndex))->baseDevice = val;
 }
 
-/*
-SEXP Rf_displayList(DevDesc *dd) {
-    return ((GEDevDesc*) dd)->dev->displayList;
-}
-*/

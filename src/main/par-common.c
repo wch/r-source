@@ -137,7 +137,7 @@
     else if(streql(what, "gamma")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
-	if (((GEDevDesc*) dd)->dev->canChangeGamma)
+	if (((pGEDevDesc) dd)->dev->canChangeGamma)
 	    R_DEV__(gamma) = x;
 	else
 	    warning(_("'gamma' cannot be modified on this device"));

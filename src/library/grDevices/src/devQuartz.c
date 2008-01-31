@@ -346,7 +346,6 @@ void* QuartzDevice_Create(
     dev->startgamma= 1;
     
     /* Set up some happy pointers */
-    dev->open         = RQuartz_Open;
     dev->close        = RQuartz_Close;
     dev->activate     = RQuartz_Activate;
     dev->deactivate   = RQuartz_Deactivate;

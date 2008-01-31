@@ -2195,7 +2195,6 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
 {
     /*	Set up Data Structures. */
 
-    dd->open = newX11_Open;
     dd->close = newX11_Close;
     dd->activate = newX11_Activate;
     dd->deactivate = newX11_Deactivate;

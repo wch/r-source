@@ -815,7 +815,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"image",	do_image,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"dend",	do_dend,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"dend.window",	do_dendwindow,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"replay",	do_replay,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"erase",	do_erase,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"persp",	do_persp,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"filledcontour",do_filledcontour,0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},

@@ -2215,7 +2215,6 @@ The @code{GEDevDesc} type is a structure defined in
 
 @example
 struct _GEDevDesc @{
-    int newDevStruct;
     NewDevDesc *dev;
     Rboolean dirty;
     Rboolean recordGraphics;
@@ -2228,22 +2227,12 @@ The first entry is effectively a version number and is always 1.
 So this is essentially a device structure plus information about the
 device maintained by the graphics engine and visible only to the engine.
 
-The third type is @code{DevDesc}, and has been rather confusing.  It is
-defined in the public header @file{Rgraphics.h} as
+The third type is @code{pGEDev} which is an opaque pointer to a
+@code{GEDevDesc} structure.
 
-@example
-typedef struct @{
-    /* opaque structure */
-   int dummy;
-@} DevDesc;
-@end example
-
-@noindent
-However, prior to @R{} 2.7.0 it was also as a real structure in the
-private header @file{Graphics.h}.  The confusion arises because
-@code{DevDesc *} was used as an opaque pointer to both @code{GEDevDesc}
-and @code{NewDevDesc} types.  Bur at present a @code{DevDesc *} was used
-as an opaque pointer to a @code{GEDevDesc} structure.
+(In earlier code you will also find @code{DevDesc *}, which in
+post-1.4.0 versions of @R{} was also an opaque pointer to a
+@code{GEDevDesc} structure.)
 
 The graphics engine maintains an array of devices, as pointers to
 @code{GEDevDesc} structures.  The array is of size 64 but the first
@@ -2291,7 +2280,7 @@ elements of the @code{NewDevDesc} structure.
 Note that the device structure is zeroed when allocated: this provides
 some protection against future expansion of the structure (provided the
 code is recompiled) since the graphics engine can add elements that need
-to nr non-NULL/zero to be `on'.
+to be non-NULL/zero to be `on'.
 
 Rather more protection is provided by the version number of the
 engine/device API, @code{R_GE_version} defined in
