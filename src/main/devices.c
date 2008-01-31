@@ -160,7 +160,7 @@ GEDevDesc* GEcurrentDevice(void)
 }
 
 /* FIXME: remove in due course */
-DevDesc * CurrentDevice(void)
+DevDesc *Rf_CurrentDevice(void)
 {
     return (DevDesc *) GEcurrentDevice();
 }
@@ -329,7 +329,7 @@ void GEaddDevice(GEDevDesc *gdd)
 }
 
 /* FIXME; remove in due course */
-void addDevice(DevDesc *dd)
+void Rf_addDevice(DevDesc *dd)
 {
     GEaddDevice((GEDevDesc *) dd);
 }
