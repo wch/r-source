@@ -5056,3 +5056,9 @@ stopifnot(identical(as.vector(table(cut(Dtimes, "years"))), ty))
 ## zero-length args in tapply (PR#10644)
 tapply(character(0), factor(letters)[FALSE], length)
 ## failed < 2.6.2
+
+## zero-length patterns in gregexpr
+expect <- structure(1:3, match.length=rep(0L, 3))
+stopifnot(identical(expect, gregexpr("", "abc")[[1]]))
+stopifnot(identical(expect, gregexpr("", "abc", fixed=TRUE)[[1]]))
+stopifnot(identical(expect, gregexpr("", "abc", perl=TRUE)[[1]]))
