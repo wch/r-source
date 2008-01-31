@@ -370,7 +370,7 @@ int ndevNumber(NewDevDesc *dd)
 
 
 /* Incorrectly declared old version */
-int devNumber(DevDesc *dd)
+int Rf_devNumber(DevDesc *dd)
 {
     return ndevNumber((NewDevDesc *) dd);
 }
