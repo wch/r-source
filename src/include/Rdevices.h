@@ -30,17 +30,13 @@ extern "C" {
 #endif
 
 #include <Rgraphics.h>
+#include <R_ext/GraphicsDevice.h> /* modern version */
 #include <R_ext/Boolean.h>
 
 #define addDevice		Rf_addDevice
-#define deviceNumber		Rf_deviceNumber
 #define devNumber		Rf_devNumber
 #define GetDevice		Rf_GetDevice
 #define KillDevice		Rf_KillDevice
-#define killDevice		Rf_killDevice
-#define nextDevice		Rf_nextDevice
-#define NumDevices		Rf_NumDevices
-#define prevDevice		Rf_prevDevice
 
 /*-------------------------------------------------------------------
  *
@@ -69,33 +65,6 @@ int devNumber(DevDesc *);
 /* Replaced by GEaddDevice */
 void addDevice(DevDesc *);
 
-
-/* --- rest also in GraphicsDevice.h ---- */
-/* How many devices exist ? (>= 1) */
-int NumDevices(void);
-
-/* Check for an available device slot */
-void R_CheckDeviceAvailable(void);
-Rboolean R_CheckDeviceAvailableBool(void);
-
-/*-------------------------------------------------------------------
- *
- *  DEVICE UTILITIES are concerned with providing information
- *  for R interpreted functions.
- *
- */
-
-/* Return the number of the next device. */
-int nextDevice(int);
-
-/* Return the number of the previous device. */
-int prevDevice(int);
-
-/* Make the specified device (specified by number) the current device */
-int selectDevice(int);
-
-/* Kill device which is identified by number. */
-void killDevice(int);
 
 #ifdef __cplusplus
 }

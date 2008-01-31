@@ -32,7 +32,7 @@
 
 #if defined(HAVE_AQUA)
 
-#include <Rdevices.h>
+/* #include <Rdevices.h> */
 #include <R_ext/GraphicsDevice.h> 
 #include <R_ext/Rdynload.h>
  

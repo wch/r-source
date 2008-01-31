@@ -25,7 +25,6 @@
 # include <config.h>
 #endif
 #include <Defn.h>
-#include <Rdevices.h> /* KillAllDevices */
 
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 void setup_Rmainloop(void); /* in main.c */

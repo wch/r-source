@@ -58,7 +58,7 @@ typedef enum {
 
 
 
-Rboolean newX11DeviceDriver(DevDesc*, const char*, double, double, double,
+Rboolean newX11DeviceDriver(NewDevDesc*, const char*, double, double, double,
 			    double, 
 			    X_COLORTYPE, int, int, int, SEXP, 
 			    int, int, int, const char *);
