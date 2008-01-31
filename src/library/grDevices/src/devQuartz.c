@@ -28,7 +28,6 @@
 #if HAVE_AQUA
 
 #include <Defn.h>
-#include <Rdevices.h> /* for GetDevice */
 #include <Rinternals.h>
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
@@ -133,6 +132,9 @@ Quartz tells R), but the canvas is specified in pixels. The scalex/y factors
 specify the conversion factor between pixels and points.
 We are *not* using R's scaling facilities, because R doesn't work with
 non-square pixels (e.g. circles become ellipses).
+
+FIXME: yes it does -- ipr is a two-element array.
+Actually, dp not points are used.
 */
 
 #pragma mark QuartzDevice API (for modules)
@@ -286,6 +288,10 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
     UNPROTECT(1);
 }
 
+#if 0
+/* FIXME: these are concepts in base graphics, and so should not
+   be present in a graphics device */
+#include <Rdevices.h> /* for GetDevice */
 double QuartzDevice_UserX(QuartzDesc_t desc,double x) { 
     return GConvertX(x,GMapUnits(0),GMapUnits(1),
 		     GetDevice(ndevNumber(((QuartzDesc*)desc)->dev))); 
@@ -294,7 +300,7 @@ double QuartzDevice_UserY(QuartzDesc_t desc,double y) {
     return GConvertX(y,GMapUnits(0),GMapUnits(1),
 		     GetDevice(ndevNumber(((QuartzDesc*)desc)->dev)));
 }
-
+#endif
 
 #pragma mark RGD API Function Prototypes
 
