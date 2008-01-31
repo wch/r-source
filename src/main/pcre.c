@@ -390,7 +390,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     SEXP ansList, ans, matchlen;
     SEXP matchbuf, matchlenbuf;
     int bufsize = 1024;
-    int i, n, st, erroffset, ienc;
+    int i, n, st, erroffset, ienc, slen;
     int options = 0;
     const char *spat, *errorptr;
     pcre *re_pcre;
@@ -482,8 +482,8 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	}
 #endif
         while (!foundAll) {
-            int rc, ovector[3];
-            rc = pcre_exec(re_pcre, re_pe, s, strlen(s), start, 0, ovector, 3);
+            int rc, ovector[3], slen = strlen(s);
+            rc = pcre_exec(re_pcre, re_pe, s, slen, start, 0, ovector, 3);
             if (rc >= 0) {
                 if ((matchIndex + 1) == bufsize) {
                     /* Reallocate match buffers */
@@ -559,6 +559,8 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
                     }
                 }
 #endif
+                if (start >= slen)
+                    foundAll = 1;
             } else {
                 foundAll = 1;
                 if (!foundAny)
