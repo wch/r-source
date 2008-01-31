@@ -552,6 +552,8 @@ BUG FIXES
 
     o	hist.POSIXt(*, xaxt = "n") no longer suppresses the y-axis.
 
+    o	strptime crashed under certain locales on Mac OS X.
+
 
 
 		CHANGES IN R VERSION 2.6.1
