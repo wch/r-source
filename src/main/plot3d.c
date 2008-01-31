@@ -38,7 +38,7 @@
 
 /* Conversion of degrees to radians */
 
-#define DegToRad(x) (DEG2GRAD * x)
+#define DegToRad(x) (DEG2RAD * x)
 
 /* Definitions of data structures for vectors and */
 /* transformations in homogeneous 3d coordinates */
