@@ -1944,7 +1944,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes, 
 	cflags = 0, rc, ienc;
     const char *spat, *s;
-    Rboolean use_UTF8;
+    Rboolean use_UTF8 = FALSE;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
