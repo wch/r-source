@@ -483,8 +483,6 @@ int R_Proxy_Graphics_Driver_CB(R_Proxy_Graphics_CB* pDD,
   }
   /* Set up Data Structures  */
 
-  DEVDESC(pDD)->newDevStruct = 1;
-
   DEVDESC(pDD)->open = R_Proxy_Graphics_Open_CB;
   DEVDESC(pDD)->close = R_Proxy_Graphics_Close_CB;
   DEVDESC(pDD)->activate = R_Proxy_Graphics_Activate_CB;
@@ -964,8 +962,6 @@ int R_Proxy_Graphics_Driver_Recorder(R_Proxy_Graphics_Recorder* pDD,
     return 0;
   }
   /* Set up Data Structures  */
-
-  DEVDESC(pDD)->newDevStruct = 1;
 
   DEVDESC(pDD)->open = R_Proxy_Graphics_Open_Recorder;
   DEVDESC(pDD)->close = R_Proxy_Graphics_Close_Recorder;

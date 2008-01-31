@@ -2193,8 +2193,6 @@ Rboolean newX11DeviceDriver(NewDevDesc *dd,
 int
 Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
 {
-    dd->newDevStruct = 1;
-
     /*	Set up Data Structures. */
 
     dd->open = newX11_Open;

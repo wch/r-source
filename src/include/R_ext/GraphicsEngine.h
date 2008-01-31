@@ -40,6 +40,7 @@ extern "C" {
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  * Version 3:  R_GE_str2col() added to API.
  * Version 4:  UTF-8 text hooks, useRotatedTextInContour to device interface.
+ *             Remove dot() from NewDevDesc.
  */
 
 #define R_GE_version 4
