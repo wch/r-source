@@ -19,7 +19,7 @@
 
 #include <Rinternals.h>
 #include <R_ext/Boolean.h>
-#include <R_ext/GraphicsDevice.h> /* for NewDevDesc */
+#include <R_ext/GraphicsEngine.h> /* for NewDevDesc */
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
