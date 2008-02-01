@@ -308,7 +308,6 @@ typedef struct {
 } GPar;
 
 /* always remap private functions */
-//#include <Rgraphics.h>
 #define copyGPar		Rf_copyGPar
 #define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
