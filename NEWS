@@ -98,7 +98,7 @@ NEW FEATURES
 	devices, rather than list them in the function.
 
     o	spec.ar() now uses frequency(x) when calculating the
-	freqencies of the estimated spectrum, so that for monthly
+	frequencies of the estimated spectrum, so that for monthly
 	series the frequencies are now per year (as for spec.pgram)
 	rather than per month as before.
 
@@ -173,7 +173,7 @@ NEW FEATURES
 	"gamma", "colortype" and "X11fonts".
 
     o	The apse code used by agrep() has been updated to version
-	0.16, with various bugfixes.
+	0.16, with various bug fixes.
 
 	agrep() now supports multibyte character sets.
 
@@ -202,7 +202,7 @@ NEW FEATURES
 	UTF-8 locales on machines which use Unicode wide characters.
 
     o	dyn.load() gains a 'DLLpath' argument to specify the path for
-	dependent DLLs: currrently only used on Windows.
+	dependent DLLs: currently only used on Windows.
 
     o	intToUtf8() now marks the Encoding of its output.
 
@@ -533,7 +533,7 @@ BUG FIXES
 
     o	The cut() and hist() methods for dates and datetimes are now
 	more accurate for intervals of "months" and "years", thanks to
-	Marc Schwarz.
+	Marc Schwartz.
 
     o	url()/download.file() could segfault if the HTTP interaction
 	involved a redirect to an address starting with '/' on the
@@ -731,9 +731,9 @@ NEW FEATURES
 	is not.)
 
 	The Math2 and Summary groups (round, signif, all, any, max, min,
-	summ, prod, range) are now primitive.
+	sum, prod, range) are now primitive.
 
-	See under METHODS PACKAGE below for some consquences for S4 methods.
+	See under METHODS PACKAGE below for some consequences for S4 methods.
 
     o	apropos() now sorts by name and not by position on the search
 	path.
