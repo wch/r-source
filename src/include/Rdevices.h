@@ -25,12 +25,16 @@
    interface for graphics device in R < 2.7.0
  */
 
+#ifdef EVENTUALLY
+#error Rdevices.h is obsolete
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include <Rgraphics.h>
-#include <R_ext/GraphicsDevice.h> /* modern version */
+#include <R_ext/GraphicsEngine.h> /* modern version */
 #include <R_ext/Boolean.h>
 
 #define addDevice		Rf_addDevice

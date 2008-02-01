@@ -26,6 +26,21 @@
 #ifndef R_GRAPHICSDEVICE_H_
 #define R_GRAPHICSDEVICE_H_
 
+/* until 2.7.0 alpha */
+#define OLD 1
+
+#ifndef  R_USE_PROTOTYPES
+# ifdef OLD
+#  define R_USE_PROTOTYPES 0
+# else
+#  define R_USE_PROTOTYPES 1
+/* This looks recursive, but the guards will force
+ * GraphicsEngine.h and then this file (and no more)
+ */
+#  include <R_ext/GraphicsEngine.h> /* needed for R_GE_gcontext */
+# endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,6 +84,7 @@ typedef struct _NewDevDesc NewDevDesc;
 */
 
 struct _NewDevDesc {
+#ifdef OLD
     /* The first element is a boolean indicating whether this is
      * a new device driver (always 1) -- the old device driver structure
      * has had a similar element added (which will always be 0)
@@ -77,6 +93,7 @@ struct _NewDevDesc {
      * removed from the system.
      */
     int newDevStruct;
+#endif
     /********************************************************
      * Device physical characteristics
      ********************************************************/
@@ -196,7 +213,7 @@ struct _NewDevDesc {
      * static void   X11_Activate(NewDevDesc *dd);
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*activate)(NewDevDesc *);
 #else
     void (*activate)();
@@ -219,7 +236,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*circle)(double x, double y, double r,
 		   R_GE_gcontext *gc, NewDevDesc *dd);
 #else
@@ -239,7 +256,7 @@ struct _NewDevDesc {
      * static void X11_Clip(double x0, double x1, double y0, double y1,
      *                      NewDevDesc *dd)
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*clip)(double x0, double x1, double y0, double y1, NewDevDesc *dd);
 #else
     void (*clip)();
@@ -255,7 +272,7 @@ struct _NewDevDesc {
      * static void X11_Close(NewDevDesc *dd)
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*close)();
 #else
     void (*close)();
@@ -271,13 +288,13 @@ struct _NewDevDesc {
      * static void X11_Deactivate(NewDevDesc *dd)
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*deactivate)(NewDevDesc *);
 #else
     void (*deactivate)();
 #endif
 
-#ifdef UNUSED
+#ifdef OLD
     void (*dot)();
     /*
      * I don't know what this is for and i can't find it
@@ -288,12 +305,12 @@ struct _NewDevDesc {
      * static void X11_Hold(NewDevDesc *dd)
      *
      */
-#endif
 
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*hold)(NewDevDesc *);
 #else
     void (*hold)();
+#endif
 #endif
 
     /*
@@ -305,7 +322,7 @@ struct _NewDevDesc {
      * static Rboolean X11_Locator(double *x, double *y, NewDevDesc *dd)
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     Rboolean (*locator)(double *x, double *y, NewDevDesc *dd);
 #else
     Rboolean (*locator)();
@@ -322,7 +339,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*line)(double x1, double y1, double x2, double y2,
 		 R_GE_gcontext *gc, NewDevDesc *dd);
 #else
@@ -349,7 +366,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*metricInfo)(int c, R_GE_gcontext *gc,
 		       double* ascent, double* descent, double* width,
 		       NewDevDesc *dd);
@@ -365,7 +382,7 @@ struct _NewDevDesc {
      * static void X11_Mode(int mode, NewDevDesc *dd);
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*mode)(int mode, NewDevDesc *dd);
 #else
     void (*mode)();
@@ -383,7 +400,7 @@ struct _NewDevDesc {
      *                         NewDevDesc *dd);
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*newPage)(R_GE_gcontext *gc, NewDevDesc *dd);
 #else
     void (*newPage)();
@@ -426,7 +443,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*polygon)(int n, double *x, double *y, R_GE_gcontext *gc,
 		    NewDevDesc *dd);
 #else
@@ -445,7 +462,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*polyline)(int n, double *x, double *y, R_GE_gcontext *gc,
 		     NewDevDesc *dd);
 #else
@@ -467,7 +484,7 @@ struct _NewDevDesc {
      *                      NewDevDesc *dd);
      *
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*rect)(double x0, double y0, double x1, double y1,
 		 R_GE_gcontext *gc, NewDevDesc *dd);
 #else
@@ -491,7 +508,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*size)(double *left, double *right, double *bottom, double *top,
 		 NewDevDesc *dd);
 #else
@@ -509,7 +526,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     double (*strWidth)(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
 #else
     double (*strWidth)();
@@ -528,7 +545,7 @@ struct _NewDevDesc {
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps, col, gamma
      */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*text)(double x, double y, const char *str, double rot,
 		 double hadj, R_GE_gcontext *gc, NewDevDesc *dd);
 #else
@@ -543,7 +560,7 @@ struct _NewDevDesc {
      *
      * static void X11_onExit(NewDevDesc *dd);
     */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*onExit)(NewDevDesc *dd);
 #else
     void (*onExit)();
@@ -567,7 +584,7 @@ struct _NewDevDesc {
        Unicode points (as well as postive values in a MBCS locale).
     */
     Rboolean hasTextUTF8; /* and strWidthUTF8 */
-#ifdef R_USE_PROTOTYPES
+#if R_USE_PROTOTYPES
     void (*textUTF8)(double x, double y, const char *str, double rot,
 		     double hadj, R_GE_gcontext *gc, NewDevDesc *dd);
     double (*strWidthUTF8)(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
