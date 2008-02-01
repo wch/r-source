@@ -147,7 +147,6 @@ static void newX11_Clip(double x0, double x1, double y0, double y1,
 			NewDevDesc *dd);
 static void newX11_Close(NewDevDesc *dd);
 static void newX11_Deactivate(NewDevDesc *dd);
-static void newX11_Hold(NewDevDesc *dd);
 static Rboolean newX11_Locator(double *x, double *y, NewDevDesc *dd);
 static void newX11_Line(double x1, double y1, double x2, double y2,
 			R_GE_gcontext *gc,
@@ -2109,11 +2108,6 @@ static void newX11_Mode(int mode, NewDevDesc *dd)
 #endif
 }
 
-/* Hold the Picture Onscreen - not needed for X11 */
-static void newX11_Hold(NewDevDesc *dd)
-{
-}
-
 
 	/*  X11 Device Driver Arguments	:	*/
 	/*	1) display name			*/
@@ -2210,7 +2204,6 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     dd->polygon = newX11_Polygon;
     dd->locator = newX11_Locator;
     dd->mode = newX11_Mode;
-    dd->hold = newX11_Hold;
     dd->metricInfo = newX11_MetricInfo;
     dd->hasTextUTF8 = FALSE;
     dd->useRotatedTextInContour = FALSE;
@@ -2442,7 +2435,6 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (NewDevDesc*)calloc(1, sizeof(NewDevDesc)))) return;
 	/* Do this for early redraw attempts */
-	dev->newDevStruct = 1;
 	dev->displayList = R_NilValue;
 	/* Make sure that this is initialised before a GC can occur.
 	 * This (and displayList) get protected during GC

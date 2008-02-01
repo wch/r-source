@@ -195,7 +195,6 @@ static void GA_Clip(double x0, double x1, double y0, double y1,
 static void GA_Close(NewDevDesc *dd);
 static void GA_Deactivate(NewDevDesc *dd);
 static SEXP GA_getEvent(SEXP eventRho, const char* prompt);
-static void GA_Hold(NewDevDesc *dd);
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
 		    R_GE_gcontext *gc,
@@ -2699,17 +2698,6 @@ static void GA_Mode(int mode, NewDevDesc *dd)
 {
 }
 
-	/********************************************************/
-	/* i don't know what this is for and i can't find it	*/
-	/* being used anywhere, but i'm loath to kill it in	*/
-	/* case i'm missing something important			*/
-	/********************************************************/
-
-/* Hold the Picture Onscreen - not needed for X11 */
-static void GA_Hold(NewDevDesc *dd)
-{
-}
-
 
 	/********************************************************/
 	/* the device-driver entry point is given a device 	*/
@@ -2808,7 +2796,6 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     dd->polygon = GA_Polygon;
     dd->locator = GA_Locator;
     dd->mode = GA_Mode;
-    dd->hold = GA_Hold;
     dd->metricInfo = GA_MetricInfo;
     xd->newFrameConfirm = GA_NewFrameConfirm;
     dd->hasTextUTF8 = TRUE;

@@ -48,7 +48,6 @@ static void R_Proxy_Graphics_Clip_CB(double x0, double x1, double y0, double y1,
 		     R_Proxy_Graphics_CB* dd);
 static void R_Proxy_Graphics_Close_CB(R_Proxy_Graphics_CB* dd);
 static void R_Proxy_Graphics_Deactivate_CB(R_Proxy_Graphics_CB* dd);
-static void R_Proxy_Graphics_Hold_CB(R_Proxy_Graphics_CB* dd);
 static Rboolean R_Proxy_Graphics_Locator_CB(double *x, double *y, R_Proxy_Graphics_CB* dd);
 static void R_Proxy_Graphics_Line_CB(double x1, double y1, double x2, double y2,
 				  R_GE_gcontext *gc,
@@ -167,17 +166,6 @@ static void R_Proxy_Graphics_Deactivate_CB(R_Proxy_Graphics_CB* pDD)
   MessageBox (GetDesktopWindow (),"Deactivate()","R_Proxy_Graphics",MB_OK);
 }
 
-/* 06-05-17 | baier | use GFX access macros */
-/* 06-08-20 | baier | R_Proxy_Graphics instead of NewDevDesc, Recorder device */
-static void R_Proxy_Graphics_Hold_CB(R_Proxy_Graphics_CB* pDD)
-{
-  if(HASGFXDEV()) {
-    GFXDEV()->vtbl->hold (GFXDEV());
-    return;
-  }
-
-  MessageBox (GetDesktopWindow (),"Hold()","R_Proxy_Graphics",MB_OK);
-}
 
 /* 00-06-22 | baier | added color, line type and width */
 /* 06-05-17 | baier | use GFX access macros */
@@ -499,7 +487,6 @@ int R_Proxy_Graphics_Driver_CB(R_Proxy_Graphics_CB* pDD,
   DEVDESC(pDD)->polygon = R_Proxy_Graphics_Polygon_CB;
   DEVDESC(pDD)->locator = R_Proxy_Graphics_Locator_CB;
   DEVDESC(pDD)->mode = R_Proxy_Graphics_Mode_CB;
-  DEVDESC(pDD)->hold = R_Proxy_Graphics_Hold_CB;
   DEVDESC(pDD)->metricInfo = R_Proxy_Graphics_MetricInfo_CB;
 
     /* set graphics parameters that must be set by device driver */
@@ -553,7 +540,6 @@ static void R_Proxy_Graphics_Clip_Recorder(double x0, double x1, double y0, doub
 		     R_Proxy_Graphics_Recorder* dd);
 static void R_Proxy_Graphics_Close_Recorder(R_Proxy_Graphics_Recorder* dd);
 static void R_Proxy_Graphics_Deactivate_Recorder(R_Proxy_Graphics_Recorder* dd);
-static void R_Proxy_Graphics_Hold_Recorder(R_Proxy_Graphics_Recorder* dd);
 static Rboolean R_Proxy_Graphics_Locator_Recorder(double *x, double *y, R_Proxy_Graphics_Recorder* dd);
 static void R_Proxy_Graphics_Line_Recorder(double x1, double y1, double x2, double y2,
 				  R_GE_gcontext *gc,
@@ -639,18 +625,6 @@ static void R_Proxy_Graphics_Deactivate_Recorder(R_Proxy_Graphics_Recorder* pDD)
   }
 
   MessageBox (GetDesktopWindow (),"Deactivate()","R_Proxy_Graphics",MB_OK);
-}
-
-/* 06-05-17 | baier | use GFX access macros */
-/* 06-08-20 | baier | R_Proxy_Graphics instead of NewDevDesc, Recorder device */
-static void R_Proxy_Graphics_Hold_Recorder(R_Proxy_Graphics_Recorder* pDD)
-{
-  if(HASGFXDEV()) {
-    GFXDEV()->vtbl->hold (GFXDEV());
-    return;
-  }
-
-  MessageBox (GetDesktopWindow (),"Hold()","R_Proxy_Graphics",MB_OK);
 }
 
 /* 00-06-22 | baier | added color, line type and width */
@@ -979,7 +953,6 @@ int R_Proxy_Graphics_Driver_Recorder(R_Proxy_Graphics_Recorder* pDD,
   DEVDESC(pDD)->polygon = R_Proxy_Graphics_Polygon_Recorder;
   DEVDESC(pDD)->locator = R_Proxy_Graphics_Locator_Recorder;
   DEVDESC(pDD)->mode = R_Proxy_Graphics_Mode_Recorder;
-  DEVDESC(pDD)->hold = R_Proxy_Graphics_Hold_Recorder;
   DEVDESC(pDD)->metricInfo = R_Proxy_Graphics_MetricInfo_Recorder;
 
     /* set graphics parameters that must be set by device driver */

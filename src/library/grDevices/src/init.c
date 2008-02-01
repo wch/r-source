@@ -20,7 +20,6 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/GraphicsEngine.h>
-#include <Rdevices.h>
 
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>

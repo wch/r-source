@@ -116,14 +116,6 @@ static double NULL_StrWidth(const char *str,
     return 0.0;
 }
 
-#if 0 /* unused */
-static void NULL_dot(NewDevDesc *dev) {
-}
-#endif
-
-static void NULL_Hold(NewDevDesc *dev) {
-}
-
 static Rboolean nullDeviceDriver(NewDevDesc *dev) {
     dev->deviceSpecific = NULL;
     /*
@@ -144,7 +136,6 @@ static Rboolean nullDeviceDriver(NewDevDesc *dev) {
     dev->polygon = NULL_Polygon;
     dev->locator = NULL_Locator;
     dev->mode = NULL_Mode;
-    dev->hold = NULL_Hold;
     dev->metricInfo = NULL_MetricInfo;
     dev->hasTextUTF8 = FALSE;
     dev->useRotatedTextInContour = FALSE;

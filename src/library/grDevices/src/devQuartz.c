@@ -170,8 +170,9 @@ void QuartzDevice_SetScaledSize(QuartzDesc_t desc, double width, double height) 
     QuartzDevice_SetHeight(desc, height/qd->scaley/72.0);
 }
 
+/* Uses (e.g. in window title) seems to assume this is 1-based */
 int QuartzDevice_DevNumber(QuartzDesc_t desc) {
-    return ndevNumber((((QuartzDesc*)desc)->dev));
+    return 1 + ndevNumber((((QuartzDesc*)desc)->dev));
 }
 
 double QuartzDevice_GetWidth(QuartzDesc_t desc)	{ return ((QuartzDesc*)desc)->width;  }
@@ -320,7 +321,6 @@ static void     RQuartz_Polyline(int,double*,double*,R_GE_gcontext*,NewDevDesc*)
 static void     RQuartz_Polygon(int,double*,double*,R_GE_gcontext*,NewDevDesc*);
 static Rboolean RQuartz_Locator(double*,double*,NewDevDesc*);
 static void     RQuartz_Mode(int mode,NewDevDesc*);
-static void     RQuartz_Hold(NewDevDesc*);
 static void     RQuartz_MetricInfo(int,R_GE_gcontext *,double*,double*,double*,NewDevDesc*);
 
 #pragma mark Quartz device implementation
@@ -361,7 +361,6 @@ void* QuartzDevice_Create(
     dev->polygon      = RQuartz_Polygon;
     dev->locator      = RQuartz_Locator;
     dev->mode         = RQuartz_Mode;
-    dev->hold         = RQuartz_Hold;
     dev->metricInfo   = RQuartz_MetricInfo;
     dev->hasTextUTF8  = FALSE;
     
@@ -770,9 +769,6 @@ static void RQuartz_Mode(int mode,DEVDESC) {
     }
 }
 
-static void RQuartz_Hold(DEVDESC) {
-}
-
 static void 
 RQuartz_MetricInfo(int c, R_GE_gcontext *gc, 
 		   double *ascent, double *descent, double *width,
@@ -1006,14 +1002,6 @@ SEXP Quartz(SEXP args) {
 
 #else 
 /* --- no AQUA support = no Quartz --- */
-
-#include <Defn.h>
-#include <Graphics.h>
-#include <Rdevices.h>
-#include <Rinternals.h>
-#include <Rgraphics.h>
-#include <R_ext/GraphicsDevice.h>
-#include <R_ext/GraphicsEngine.h>
 
 #include "grDevices.h"
 
