@@ -24,7 +24,6 @@
 #include <Rmath.h>
 
 #include <R_ext/Constants.h>
-#include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h>
 
 #include <Rinternals.h>
