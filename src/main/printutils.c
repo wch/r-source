@@ -399,8 +399,11 @@ int Rstrlen(SEXP s, int quote)
 
 const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
-    int b, b0, i, j, cnt, ienc = CE_NATIVE;
+    int b, b0, i, j, cnt;
     const char *p; char *q, buf[11];
+#ifdef SUPPORT_MBCS /* always true on Win32 */
+    int ienc = CE_NATIVE;
+#endif
 
     /* We have to do something like this as the result is returned, and
        passed on by EncodeElement -- so no way could be end user be
