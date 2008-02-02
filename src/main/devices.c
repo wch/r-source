@@ -36,6 +36,11 @@
 #include <Graphics.h>
 #include <R_ext/GraphicsBase.h> /* registerBase */
 
+static SEXP R_INLINE getSymbolValue(const char *symbolName)
+{
+    return findVar(install(symbolName), R_BaseEnv);
+}
+
 /*
  *  DEVICE FUNCTIONS
  *
@@ -108,12 +113,10 @@ int NoDevices(void)
     return (R_NumDevices == 1 || R_CurrentDevice == 0);
 }
 
-
 int NumDevices(void)
 {
     return R_NumDevices;
 }
-
 
 pGEDevDesc GEcurrentDevice(void)
 {
@@ -177,51 +180,6 @@ DevDesc* Rf_GetDevice(int i)
 }
 
 
-void R_CheckDeviceAvailable(void)
-{
-    if (R_NumDevices >= R_MaxDevices - 1)
-	error(_("too many open devices"));
-}
-
-Rboolean R_CheckDeviceAvailableBool(void)
-{
-    if (R_NumDevices >= R_MaxDevices - 1) return FALSE;
-    else return TRUE;
-}
-
-void attribute_hidden InitGraphics(void)
-{
-    int i;
-    SEXP s, t;
-
-    R_Devices[0] = &nullDevice;
-    active[0] = TRUE;
-    for (i = 1; i < R_MaxDevices; i++) {
-	R_Devices[i] = NULL;
-	active[i] = FALSE;
-    }
-
-    /* init .Device and .Devices */
-    PROTECT(s = mkString("null device"));
-    gsetVar(install(".Device"), s, R_BaseEnv);
-    PROTECT(t = mkString("null device"));
-    gsetVar(install(".Devices"), CONS(t, R_NilValue), R_BaseEnv);
-    UNPROTECT(2);
-
-    /* Register the base graphics system with the graphics engine
-     */
-    registerBase();
-}
-
-
-static SEXP getSymbolValue(char *symbolName)
-{
-    SEXP t;
-    t = findVar(install(symbolName), R_BaseEnv);
-    return t;
-}
-
-
 int curDevice(void)
 {
     return R_CurrentDevice;
@@ -247,7 +205,6 @@ int nextDevice(int from)
     }
 }
 
-
 int prevDevice(int from)
 {
     if (R_NumDevices == 1)
@@ -267,78 +224,7 @@ int prevDevice(int from)
     }
 }
 
-
-void GEaddDevice(pGEDevDesc gdd)
-{
-    int i;
-    Rboolean appnd;
-    SEXP s, t;
-    pGEDevDesc oldd;
-
-    PROTECT(s = getSymbolValue(".Devices"));
-
-    if (!NoDevices())  {
-	oldd = GEcurrentDevice();
-	oldd->dev->deactivate(oldd->dev);
-    }
-
-    /* find empty slot for new descriptor */
-    i = 1;
-    if (CDR(s) == R_NilValue)
-	appnd = TRUE;
-    else {
-	s = CDR(s);
-	appnd = FALSE;
-    }
-    while (R_Devices[i] != NULL) {
-	i++;
-	if (CDR(s) == R_NilValue)
-	    appnd = TRUE;
-	else
-	    s = CDR(s);
-    }
-    R_CurrentDevice = i;
-    R_NumDevices++;
-    R_Devices[i] = gdd;
-    active[i] = TRUE;
-
-    GEregisterWithDevice(gdd);
-    gdd->dev->activate(gdd->dev);
-
-    /* maintain .Devices (.Device has already been set) */
-    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(".Device"), 0)));
-    if (appnd)
-	SETCDR(s, CONS(t, R_NilValue));
-    else
-	SETCAR(s, t);
-
-    UNPROTECT(2);
-
-#if 1
-    /* FIXME this section depends on base system */
-    copyGPar(Rf_dpptr(gdd), Rf_gpptr(gdd));
-    GReset(gdd);
-#endif
-
-    /* In case a device driver did not call R_CheckDeviceAvailable
-       before starting its allocation, we complete the allocation and
-       then call killDevice here.  This ensures that the device gets a
-       chance to deallocate its resources and the current active
-       device is restored to a sane value. */
-    if (i == R_MaxDevices - 1) {
-        killDevice(i);
-        error(_("too many open devices"));
-    }
-}
-
-/* FIXME; remove in due course */
-void Rf_addDevice(pGEDev dd)
-{
-    GEaddDevice(dd);
-}
-
-
-/* This should be called if you have a DevDesc or a GEDevDesc
+/* This should be called if you have a pointer to a GEDevDesc
  * and you want to find the corresponding device number
  */
 
@@ -359,10 +245,10 @@ static int deviceNumber(pGEDev dd)
     return 0;
 }
 
-/* This should be called if you have a NewDevDesc
+/* This should be called if you have a pointer to a NewDevDesc
  * and you want to find the corresponding device number
  */
-int ndevNumber(NewDevDesc *dd)
+int ndevNumber(pDevDesc dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
@@ -372,10 +258,11 @@ int ndevNumber(NewDevDesc *dd)
 }
 
 
-/* Incorrectly declared old version */
+/* FIXME: remove in due course.
+   Incorrectly declared old version */
 int Rf_devNumber(pGEDev dd)
 {
-    return ndevNumber((NewDevDesc *) dd);
+    return ndevNumber((pDevDesc ) dd);
 }
 
 int selectDevice(int devNum)
@@ -446,7 +333,7 @@ void removeDevice(int devNum, Rboolean findNext)
 		if (R_CurrentDevice) {
 		    pGEDevDesc gdd = GEcurrentDevice();
 		    gdd->dev->activate(gdd->dev);
-#if 1
+#if 0
 		    /* FIXME this section depends on base system.
 		       It's strange to do this: it is not done when
 		       the current device is changed in any other way.
@@ -506,31 +393,6 @@ void KillAllDevices(void)
     unregisterBase();
 }
 
-/* FIXME:  NewFrameConfirm should be a standard device function */
-#ifdef Win32
-Rboolean winNewFrameConfirm(void);
-#endif
-
-void NewFrameConfirm(void)
-{
-    unsigned char buf[16];
-#ifdef Win32
-	int i;
-	Rboolean haveWindowsDevice;
-	SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
-#endif
-
-    if(!R_Interactive) return;
-#ifdef Win32
-    for(i = 0; i < curDevice(); i++)  /* 0-based */
-	dotDevices = CDR(dotDevices);
-    haveWindowsDevice =
-	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
-    
-    if (!haveWindowsDevice || !winNewFrameConfirm())
-#endif
-	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 16, 0);
-}
 
 #define checkArity_length					\
     checkArity(op, args);					\
@@ -594,7 +456,7 @@ SEXP attribute_hidden do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* A common construction in some graphics devices */
-pGEDevDesc desc2GEDesc(NewDevDesc *dd)
+pGEDevDesc desc2GEDesc(pDevDesc dd)
 {
     int i;
     for (i = 1; i < R_MaxDevices; i++)
@@ -602,4 +464,159 @@ pGEDevDesc desc2GEDesc(NewDevDesc *dd)
 	    return R_Devices[i];
     /* shouldn't happen ... */
     return R_Devices[0];
+}
+
+/* ------- interface for creating devices ---------- */
+
+void R_CheckDeviceAvailable(void)
+{
+    if (R_NumDevices >= R_MaxDevices - 1)
+	error(_("too many open devices"));
+}
+
+Rboolean R_CheckDeviceAvailableBool(void)
+{
+    if (R_NumDevices >= R_MaxDevices - 1) return FALSE;
+    else return TRUE;
+}
+
+void GEaddDevice(pGEDevDesc gdd)
+{
+    int i;
+    Rboolean appnd;
+    SEXP s, t;
+    pGEDevDesc oldd;
+
+    PROTECT(s = getSymbolValue(".Devices"));
+
+    if (!NoDevices())  {
+	oldd = GEcurrentDevice();
+	oldd->dev->deactivate(oldd->dev);
+    }
+
+    /* find empty slot for new descriptor */
+    i = 1;
+    if (CDR(s) == R_NilValue)
+	appnd = TRUE;
+    else {
+	s = CDR(s);
+	appnd = FALSE;
+    }
+    while (R_Devices[i] != NULL) {
+	i++;
+	if (CDR(s) == R_NilValue)
+	    appnd = TRUE;
+	else
+	    s = CDR(s);
+    }
+    R_CurrentDevice = i;
+    R_NumDevices++;
+    R_Devices[i] = gdd;
+    active[i] = TRUE;
+
+    GEregisterWithDevice(gdd);
+    gdd->dev->activate(gdd->dev);
+
+    /* maintain .Devices (.Device has already been set) */
+    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(".Device"), 0)));
+    if (appnd)
+	SETCDR(s, CONS(t, R_NilValue));
+    else
+	SETCAR(s, t);
+
+    UNPROTECT(2);
+
+#if 1
+    /* FIXME this section depends on base system */
+    copyGPar(Rf_dpptr(gdd), Rf_gpptr(gdd));
+    GReset(gdd);
+#endif
+
+    /* In case a device driver did not call R_CheckDeviceAvailable
+       before starting its allocation, we complete the allocation and
+       then call killDevice here.  This ensures that the device gets a
+       chance to deallocate its resources and the current active
+       device is restored to a sane value. */
+    if (i == R_MaxDevices - 1) {
+        killDevice(i);
+        error(_("too many open devices"));
+    }
+}
+
+/* FIXME; remove in due course */
+void Rf_addDevice(pGEDev dd)
+{
+    GEaddDevice(dd);
+}
+
+/* Create a GEDevDesc, given a NewDevDesc*
+ */
+pGEDevDesc GEcreateDevDesc(NewDevDesc* dev)
+{
+    /* Wrap the device description within a graphics engine
+     * device description (add graphics engine information
+     * to the device description).
+     */
+    pGEDevDesc dd = (GEDevDesc*) calloc(1, sizeof(GEDevDesc));
+    /* NULL the gesd array
+     */
+    int i;
+    if (!dd) error(_("not enough memory to allocate device (in addDevice)"));
+    for (i = 0; i < MAX_GRAPHICS_SYSTEMS; i++) dd->gesd[i] = NULL;
+    dd->dev = dev;
+    dd->dirty = FALSE;
+    dd->recordGraphics = TRUE;
+    return dd;
+}
+
+
+void attribute_hidden InitGraphics(void)
+{
+    int i;
+    SEXP s, t;
+
+    R_Devices[0] = &nullDevice;
+    active[0] = TRUE;
+    for (i = 1; i < R_MaxDevices; i++) {
+	R_Devices[i] = NULL;
+	active[i] = FALSE;
+    }
+
+    /* init .Device and .Devices */
+    PROTECT(s = mkString("null device"));
+    gsetVar(install(".Device"), s, R_BaseEnv);
+    PROTECT(t = mkString("null device"));
+    gsetVar(install(".Devices"), CONS(t, R_NilValue), R_BaseEnv);
+    UNPROTECT(2);
+
+    /* Register the base graphics system with the graphics engine
+     */
+    registerBase();
+}
+
+
+/* FIXME:  NewFrameConfirm should be a standard device function */
+#ifdef Win32
+Rboolean winNewFrameConfirm(void);
+#endif
+
+void NewFrameConfirm(void)
+{
+    unsigned char buf[16];
+#ifdef Win32
+	int i;
+	Rboolean haveWindowsDevice;
+	SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
+#endif
+
+    if(!R_Interactive) return;
+#ifdef Win32
+    for(i = 0; i < curDevice(); i++)  /* 0-based */
+	dotDevices = CDR(dotDevices);
+    haveWindowsDevice =
+	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
+    
+    if (!haveWindowsDevice || !winNewFrameConfirm())
+#endif
+	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 16, 0);
 }

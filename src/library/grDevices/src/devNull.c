@@ -29,15 +29,15 @@
 #include "grDevices.h"
 #include <stdlib.h>
 
-static Rboolean nullDeviceDriver(NewDevDesc *dev);
+static Rboolean nullDeviceDriver(pDevDesc dev);
 
 void GEnullDevice()
 {
-    NewDevDesc *dev = NULL;
+    pDevDesc dev = NULL;
     GEDevDesc *dd;
 
     R_CheckDeviceAvailable();
-    if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+    if (!(dev = (pDevDesc ) calloc(1, sizeof(NewDevDesc))))
        error(_("unable to start NULL device"));
     dev->displayList = R_NilValue;
     if (!nullDeviceDriver(dev)) {
@@ -51,60 +51,60 @@ void GEnullDevice()
 }
 static void NULL_Circle(double x, double y, double r,
                         R_GE_gcontext *gc,
-                        NewDevDesc *dev) {
+                        pDevDesc dev) {
 }
 static void NULL_Line(double x1, double y1, double x2, double y2,
                       R_GE_gcontext *gc,
-                      NewDevDesc *dev) {
+                      pDevDesc dev) {
 }
 static void NULL_Polygon(int n, double *x, double *y,
                          R_GE_gcontext *gc,
-                         NewDevDesc *dev) {
+                         pDevDesc dev) {
 }
 static void NULL_Polyline(int n, double *x, double *y,
                           R_GE_gcontext *gc,
-                          NewDevDesc *dev) {
+                          pDevDesc dev) {
 }
 static void NULL_Rect(double x0, double y0, double x1, double y1,
                       R_GE_gcontext *gc,
-                      NewDevDesc *dev) {
+                      pDevDesc dev) {
 }
 static void NULL_Text(double x, double y, const char *str,
                       double rot, double hadj,
                       R_GE_gcontext *gc,
-                      NewDevDesc *dev) {
+                      pDevDesc dev) {
 }
 static void NULL_NewPage(R_GE_gcontext *gc,
-                         NewDevDesc *dev) {
+                         pDevDesc dev) {
 }
-static void NULL_Close(NewDevDesc *dev) {
+static void NULL_Close(pDevDesc dev) {
 }
-static Rboolean NULL_Open(NewDevDesc *dev) {
+static Rboolean NULL_Open(pDevDesc dev) {
     return TRUE;
 }
-static void NULL_Activate(NewDevDesc *dev) {
+static void NULL_Activate(pDevDesc dev) {
 }
 static void NULL_Clip(double x0, double x1, double y0, double y1,
-                      NewDevDesc *dev) {
+                      pDevDesc dev) {
 }
-static void NULL_Deactivate(NewDevDesc *dev) {
+static void NULL_Deactivate(pDevDesc dev) {
 }
-static void NULL_Mode(int mode, NewDevDesc *dev) {
+static void NULL_Mode(int mode, pDevDesc dev) {
 }
-static Rboolean NULL_Locator(double *x, double *y, NewDevDesc *dev) {
+static Rboolean NULL_Locator(double *x, double *y, pDevDesc dev) {
     return FALSE;
 }
 static void NULL_MetricInfo(int c,
                             R_GE_gcontext *gc,
                             double* ascent, double* descent,
-                            double* width, NewDevDesc *dev) {
+                            double* width, pDevDesc dev) {
     *ascent = 0.0;
     *descent = 0.0;
     *width = 0.0;
 }
 static void NULL_Size(double *left, double *right,
                       double *bottom, double *top,
-                      NewDevDesc *dev) {
+                      pDevDesc dev) {
     *left = dev->left;
     *right = dev->right;
     *bottom = dev->bottom;
@@ -112,11 +112,11 @@ static void NULL_Size(double *left, double *right,
 }
 static double NULL_StrWidth(const char *str,
                             R_GE_gcontext *gc,
-                            NewDevDesc *dev) {
+                            pDevDesc dev) {
     return 0.0;
 }
 
-static Rboolean nullDeviceDriver(NewDevDesc *dev) {
+static Rboolean nullDeviceDriver(pDevDesc dev) {
     dev->deviceSpecific = NULL;
     /*
      * Device functions

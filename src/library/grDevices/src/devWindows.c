@@ -62,7 +62,7 @@ int	imin2(int, int);
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
 static
-Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
+Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
@@ -186,47 +186,47 @@ static void GA_Timer(gadesc *xd)
 
 	/* Device Driver Actions */
 
-static void GA_Activate(NewDevDesc *dd);
+static void GA_Activate(pDevDesc dd);
 static void GA_Circle(double x, double y, double r,
 		      R_GE_gcontext *gc,
-		      NewDevDesc *dd);
+		      pDevDesc dd);
 static void GA_Clip(double x0, double x1, double y0, double y1,
-		     NewDevDesc *dd);
-static void GA_Close(NewDevDesc *dd);
-static void GA_Deactivate(NewDevDesc *dd);
+		     pDevDesc dd);
+static void GA_Close(pDevDesc dd);
+static void GA_Deactivate(pDevDesc dd);
 static SEXP GA_getEvent(SEXP eventRho, const char* prompt);
-static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
+static Rboolean GA_Locator(double *x, double *y, pDevDesc dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
 		    R_GE_gcontext *gc,
-		    NewDevDesc *dd);
+		    pDevDesc dd);
 static void GA_MetricInfo(int c,
 			  R_GE_gcontext *gc,
 			  double* ascent, double* descent,
-			  double* width, NewDevDesc *dd);
-static void GA_Mode(int mode, NewDevDesc *dd);
+			  double* width, pDevDesc dd);
+static void GA_Mode(int mode, pDevDesc dd);
 static void GA_NewPage(R_GE_gcontext *gc,
-		       NewDevDesc *dd);
+		       pDevDesc dd);
 static void GA_Polygon(int n, double *x, double *y,
 		       R_GE_gcontext *gc,
-		       NewDevDesc *dd);
+		       pDevDesc dd);
 static void GA_Polyline(int n, double *x, double *y,
 			R_GE_gcontext *gc,
-			NewDevDesc *dd);
+			pDevDesc dd);
 static void GA_Rect(double x0, double y0, double x1, double y1,
 		    R_GE_gcontext *gc,
-		    NewDevDesc *dd);
+		    pDevDesc dd);
 static void GA_Size(double *left, double *right,
 		    double *bottom, double *top,
-		    NewDevDesc *dd);
-static void GA_Resize(NewDevDesc *dd);
+		    pDevDesc dd);
+static void GA_Resize(pDevDesc dd);
 static double GA_StrWidth(const char *str,
 			  R_GE_gcontext *gc,
-			  NewDevDesc *dd);
+			  pDevDesc dd);
 static void GA_Text(double x, double y, const char *str,
 		    double rot, double hadj,
 		    R_GE_gcontext *gc,
-		    NewDevDesc *dd);
-static Rboolean GA_Open(NewDevDesc*, gadesc*, const char*, double, double,
+		    pDevDesc dd);
+static Rboolean GA_Open(pDevDesc, gadesc*, const char*, double, double,
 			Rboolean, int, int, double, int, int, int);
 static Rboolean GA_NewFrameConfirm();
 
@@ -241,15 +241,15 @@ Rboolean winNewFrameConfirm();
 
 static double pixelHeight(drawing  d);
 static double pixelWidth(drawing d);
-static void SetColor(int, double, NewDevDesc *);
-static void SetFont(const char*, int, int, double, NewDevDesc *);
+static void SetColor(int, double, pDevDesc);
+static void SetFont(const char*, int, int, double, pDevDesc);
 static int Load_Rbitmap_Dll();
-static void SaveAsPng(NewDevDesc *dd, const char *fn);
-static void SaveAsJpeg(NewDevDesc *dd, int quality, const char *fn);
-static void SaveAsBmp(NewDevDesc *dd, const char *fn);
-static void SaveAsBitmap(NewDevDesc *dd, int res);
+static void SaveAsPng(pDevDesc dd, const char *fn);
+static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn);
+static void SaveAsBmp(pDevDesc dd, const char *fn);
+static void SaveAsBitmap(pDevDesc dd, int res);
 
-static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, const char *name)
+static void PrivateCopyDevice(pDevDesc dd, pDevDesc ndd, const char *name)
 {
     GEDevDesc* gdd;
     int saveDev = curDevice();
@@ -266,10 +266,10 @@ static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, const char *name)
     show(xd->gawin);
 }
 
-static void SaveAsWin(NewDevDesc *dd, const char *display,
+static void SaveAsWin(pDevDesc dd, const char *display,
 		      Rboolean restoreConsole)
 {
-    NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
+    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
     GEDevDesc *gdd = desc2GEDesc(dd);
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -306,10 +306,10 @@ static void init_PS_PDF(void)
 }
 
 
-static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
+static void SaveAsPostscript(pDevDesc dd, const char *fn)
 {
     SEXP s;
-    NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
+    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
     GEDevDesc *gdd = desc2GEDesc(dd);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], paper[256], bg[256], fg[256];
@@ -377,10 +377,10 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
 }
 
 
-static void SaveAsPDF(NewDevDesc *dd, const char *fn)
+static void SaveAsPDF(pDevDesc dd, const char *fn)
 {
     SEXP s;
-    NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
+    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
     GEDevDesc *gdd = desc2GEDesc(dd);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], bg[256], fg[256];
@@ -615,7 +615,7 @@ static char* translateFontFamily(const char* family) {
 #define SMALLEST 1
 
 static void SetFont(const char *family, int face, int size, double rot,
-		    NewDevDesc *dd)
+		    pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char* fontfamily;
@@ -659,7 +659,7 @@ static void SetFont(const char *family, int face, int size, double rot,
 }
 
 
-static void SetColor(int color, double gamma, NewDevDesc *dd)
+static void SetColor(int color, double gamma, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -707,7 +707,7 @@ static void SetColor(int color, double gamma, NewDevDesc *dd)
  *      In this driver, done in graphapp/gdraw.c
  */
 
-static void SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
+static void SetLineStyle(R_GE_gcontext *gc, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -754,7 +754,7 @@ static void HelpResize(window w, rect r)
 {
     if (AllDevicesKilled) return;
     {
-	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	pDevDesc dd = (pDevDesc) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (r.width) {
@@ -772,7 +772,7 @@ static void HelpClose(window w)
 {
     if (AllDevicesKilled) return;
     {
-	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	pDevDesc dd = (pDevDesc) getdata(w);
 	killDevice(ndevNumber(dd));
     }
 }
@@ -781,7 +781,7 @@ static void HelpExpose(window w, rect r)
 {
     if (AllDevicesKilled) return;
     {
-	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	pDevDesc dd = (pDevDesc) getdata(w);
 	GEDevDesc *gdd = desc2GEDesc(dd);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -803,7 +803,7 @@ static void HelpMouseClick(window w, int button, point pt)
 {
     if (AllDevicesKilled) return;
     {
-	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	pDevDesc dd = (pDevDesc) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (!xd->locator && !xd->confirmation && !dd->gettingEvent)
@@ -829,7 +829,7 @@ static void HelpMouseMove(window w, int button, point pt)
 {
     if (AllDevicesKilled) return;
     {
-	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	pDevDesc dd = (pDevDesc) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (dd->gettingEvent) {
@@ -844,7 +844,7 @@ static void HelpMouseUp(window w, int button, point pt)
 {
     if (AllDevicesKilled) return;
     {
-	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	pDevDesc dd = (pDevDesc) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (dd->gettingEvent) {
@@ -857,7 +857,7 @@ static void HelpMouseUp(window w, int button, point pt)
 
 static void menustop(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     if (!xd->locator)
 	return;
@@ -866,14 +866,14 @@ static void menustop(control m)
 
 static void menunextplot(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     xd->clicked = 2;
 }
 
 static void menufilebitmap(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char *fn;
     /* the following use a private hook to set the default extension */
@@ -902,7 +902,7 @@ static void menufilebitmap(control m)
 
 static void menups(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     char  *fn;
 
     setuserfilter(G_("Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0"));
@@ -914,7 +914,7 @@ static void menups(control m)
 
 static void menupdf(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     char  *fn;
 
     setuserfilter(G_("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0"));
@@ -926,7 +926,7 @@ static void menupdf(control m)
 
 static void menuwm(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     char  display[550], *fn;
 
     setuserfilter(G_("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0"));
@@ -943,13 +943,13 @@ static void menuwm(control m)
 
 static void menuclpwm(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     SaveAsWin(dd, "win.metafile", TRUE);
 }
 
 static void menuclpbm(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     show(xd->gawin);
@@ -960,7 +960,7 @@ static void menuclpbm(control m)
 
 static void menustayontop(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     BringToTop(xd->gawin, 2);
@@ -968,13 +968,13 @@ static void menustayontop(control m)
 
 static void menuprint(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     SaveAsWin(dd, "win.print:", TRUE);
 }
 
 static void menuclose(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     HelpClose(xd->gawin);
@@ -982,7 +982,7 @@ static void menuclose(control m)
 
 static void grpopupact(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (ismdi())
@@ -1101,7 +1101,7 @@ static void AddtoPlotHistory(SEXP snapshot, int replace)
 }
 
 
-static void Replay(NewDevDesc *dd, SEXP vDL)
+static void Replay(pDevDesc dd, SEXP vDL)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -1114,7 +1114,7 @@ static void Replay(NewDevDesc *dd, SEXP vDL)
 
 static void menurec(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (xd->recording) {
@@ -1129,7 +1129,7 @@ static void menurec(control m)
 
 static void menuadd(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     AddtoPlotHistory(GEcreateSnapshot(desc2GEDesc(dd)), 0);
@@ -1138,7 +1138,7 @@ static void menuadd(control m)
 
 static void menureplace(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
 
     GETDL;
     pMUSTEXIST;
@@ -1152,7 +1152,7 @@ static void menureplace(control m)
 
 static void menunext(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     GETDL;
@@ -1164,7 +1164,7 @@ static void menunext(control m)
 
 static void menuprev(control m)
 {
-    NewDevDesc *dd = (NewDevDesc*) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     GETDL;
@@ -1190,7 +1190,7 @@ static void menugvar(control m)
 {
     SEXP  vDL;
     char *v = askstring(G_("Variable name"), "");
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
 
     if (!v)
 	return;
@@ -1226,7 +1226,7 @@ static void menuconsole(control m)
 
 static void menuR(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     check(xd->mR);
     uncheck(xd->mfix);
@@ -1238,7 +1238,7 @@ static void menuR(control m)
 
 static void menufit(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     uncheck(xd->mR);
@@ -1251,7 +1251,7 @@ static void menufit(control m)
 
 static void menufix(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     uncheck(xd->mR);
@@ -1282,7 +1282,7 @@ static R_KeyName getKeyName(int key)
 
 static void CHelpKeyIn(control w, int key)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(w);
+    pDevDesc dd = (pDevDesc) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     R_KeyName keyname;
@@ -1318,7 +1318,7 @@ static void NHelpKeyIn(control w, int key)
 {
     char keyname[7];
 
-    NewDevDesc *dd = (NewDevDesc *) getdata(w);
+    pDevDesc dd = (pDevDesc) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (dd->gettingEvent) {
@@ -1357,7 +1357,7 @@ static void NHelpKeyIn(control w, int key)
 
 static void mbarf(control m)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    pDevDesc dd = (pDevDesc) getdata(m);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     GETDL;
@@ -1433,7 +1433,7 @@ static void mbarf(control m)
 
 static void devga_sbf(control c, int pos)
 {
-    NewDevDesc *dd = (NewDevDesc *) getdata(c);
+    pDevDesc dd = (pDevDesc) getdata(c);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     if (pos < 0) {
 	pos = -pos-1;
@@ -1449,7 +1449,7 @@ static void devga_sbf(control c, int pos)
 
 
 static int
-setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
+setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
 		  Rboolean recording, int resize, int xpos, int ypos)
 {
     menu  m;
@@ -1691,7 +1691,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     return 1;
 }
 
-static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, const char *dsp,
+static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 			double w, double h, Rboolean recording,
 			int resize, int canvascolor, double gamma,
 			int xpos, int ypos, int bg)
@@ -1846,7 +1846,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, const char *dsp,
 
 static double GA_StrWidth(const char *str,
 			  R_GE_gcontext *gc,
-			  NewDevDesc *dd)
+			  pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     int   size = gc->cex * gc->ps + 0.5;
@@ -1857,7 +1857,7 @@ static double GA_StrWidth(const char *str,
 
 static double GA_StrWidth_UTF8(const char *str,
 			      R_GE_gcontext *gc,
-			      NewDevDesc *dd)
+			      pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     double a;
@@ -1889,7 +1889,7 @@ static double GA_StrWidth_UTF8(const char *str,
 static void GA_MetricInfo(int c,
 			  R_GE_gcontext *gc,
 			  double* ascent, double* descent,
-			  double* width, NewDevDesc *dd)
+			  double* width, pDevDesc dd)
 {
     int   a, d, w;
     int   size = gc->cex * gc->ps + 0.5;
@@ -1921,7 +1921,7 @@ static void GA_MetricInfo(int c,
 	/* is clipped to the given rectangle			*/
 	/********************************************************/
 
-static void GA_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
+static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -1943,7 +1943,7 @@ static void GA_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
 
 static void GA_Size(double *left, double *right,
 		     double *bottom, double *top,
-		     NewDevDesc *dd)
+		     pDevDesc dd)
 {
     *left = dd->left;
     *top = dd->top;
@@ -1951,7 +1951,7 @@ static void GA_Size(double *left, double *right,
     *bottom = dd->bottom;
 }
 
-static void GA_Resize(NewDevDesc *dd)
+static void GA_Resize(pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -2054,7 +2054,7 @@ static void GA_Resize(NewDevDesc *dd)
 	/********************************************************/
 
 static void GA_NewPage(R_GE_gcontext *gc,
-		       NewDevDesc *dd)
+		       pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -2135,7 +2135,7 @@ static void deleteGraphMenus(int devnum)
 	/* parameters structure					*/
 	/********************************************************/
 
-static void GA_Close(NewDevDesc *dd)
+static void GA_Close(pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     SEXP vDL;
@@ -2182,7 +2182,7 @@ static void GA_Close(NewDevDesc *dd)
 	/* do anything						*/
 	/********************************************************/
 
-static void GA_Activate(NewDevDesc *dd)
+static void GA_Activate(pDevDesc dd)
 {
     char  t[150];
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2207,7 +2207,7 @@ static void GA_Activate(NewDevDesc *dd)
 	/* do anything						*/
 	/********************************************************/
 
-static void GA_Deactivate(NewDevDesc *dd)
+static void GA_Deactivate(pDevDesc dd)
 {
     char  t[150];
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2247,7 +2247,7 @@ static void GA_Deactivate(NewDevDesc *dd)
 
 static void GA_Rect(double x0, double y0, double x1, double y1,
 		    R_GE_gcontext *gc,
-		    NewDevDesc *dd)
+		    pDevDesc dd)
 {
     int   tmp;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2320,7 +2320,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 
 static void GA_Circle(double x, double y, double radius,
 		      R_GE_gcontext *gc,
-		      NewDevDesc *dd)
+		      pDevDesc dd)
 {
     int   ir, ix, iy;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2376,7 +2376,7 @@ static void GA_Circle(double x, double y, double radius,
 
 static void GA_Line(double x1, double y1, double x2, double y2,
 		    R_GE_gcontext *gc,
-		    NewDevDesc *dd)
+		    pDevDesc dd)
 {
     int   xx1, yy1, xx2, yy2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2420,7 +2420,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 
 static void GA_Polyline(int n, double *x, double *y,
 			R_GE_gcontext *gc,
-			NewDevDesc *dd)
+			pDevDesc dd)
 {
     char *vmax = vmaxget();
     point *p = (point *) R_alloc(n, sizeof(point));
@@ -2469,7 +2469,7 @@ static void GA_Polyline(int n, double *x, double *y,
 
 static void GA_Polygon(int n, double *x, double *y,
 		       R_GE_gcontext *gc,
-		       NewDevDesc *dd)
+		       pDevDesc dd)
 {
     char *vmax = vmaxget();
     point *points;
@@ -2539,7 +2539,7 @@ static void GA_Polygon(int n, double *x, double *y,
 static void GA_Text0(double x, double y, const char *str, int enc,
 		     double rot, double hadj,
 		     R_GE_gcontext *gc,
-		     NewDevDesc *dd)
+		     pDevDesc dd)
 {
     int   size;
     double pixs, xl, yl, rot1;
@@ -2597,7 +2597,7 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 static void GA_Text(double x, double y, const char *str,
 		    double rot, double hadj,
 		    R_GE_gcontext *gc,
-		    NewDevDesc *dd)
+		    pDevDesc dd)
 {
     GA_Text0(x, y, str, CE_NATIVE, rot, hadj, gc, dd);
 }
@@ -2605,7 +2605,7 @@ static void GA_Text(double x, double y, const char *str,
 static void GA_Text_UTF8(double x, double y, const char *str,
 			double rot, double hadj,
 			R_GE_gcontext *gc,
-			NewDevDesc *dd)
+			pDevDesc dd)
 {
     GA_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
 }
@@ -2635,9 +2635,9 @@ static void donelocator(void *data)
     xd->locator = FALSE;
 }
 
-static void GA_onExit(NewDevDesc *dd);
+static void GA_onExit(pDevDesc dd);
 
-static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
+static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     RCNTXT cntxt;
@@ -2694,7 +2694,7 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
 	/********************************************************/
 
 /* Set Graphics mode - not needed for X11 */
-static void GA_Mode(int mode, NewDevDesc *dd)
+static void GA_Mode(int mode, pDevDesc dd)
 {
 }
 
@@ -2731,7 +2731,7 @@ static void GA_Mode(int mode, NewDevDesc *dd)
 
 
 static
-Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
+Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
@@ -2886,7 +2886,7 @@ SEXP savePlot(SEXP args)
     SEXP filename, type;
     const char *fn, *tp; char display[550];
     int device;
-    NewDevDesc* dd;
+    pDevDesc dd;
     Rboolean restoreConsole;
 
     args = CDR(args); /* skip entry point name */
@@ -2972,7 +2972,7 @@ static unsigned long privategetpixel2(void *d,int i, int j)
 }
 
 /* This is the device version */
-static void SaveAsBitmap(NewDevDesc *dd, int res)
+static void SaveAsBitmap(pDevDesc dd, int res)
 {
     rect r, r2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -3004,7 +3004,7 @@ static void SaveAsBitmap(NewDevDesc *dd, int res)
 }
 
 /* These are the menu item versions */
-static void SaveAsPng(NewDevDesc *dd, const char *fn)
+static void SaveAsPng(pDevDesc dd, const char *fn)
 {
     FILE *fp;
     rect r, r2;
@@ -3037,7 +3037,7 @@ static void SaveAsPng(NewDevDesc *dd, const char *fn)
     fclose(fp);
 }
 
-static void SaveAsJpeg(NewDevDesc *dd, int quality, const char *fn)
+static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn)
 {
     FILE *fp;
     rect r, r2;
@@ -3070,7 +3070,7 @@ static void SaveAsJpeg(NewDevDesc *dd, int quality, const char *fn)
 }
 
 
-static void SaveAsBmp(NewDevDesc *dd, const char *fn)
+static void SaveAsBmp(pDevDesc dd, const char *fn)
 {
     FILE *fp;
     rect r, r2;
@@ -3171,9 +3171,9 @@ SEXP devga(SEXP args)
     
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	NewDevDesc *dev;
+	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;
@@ -3199,7 +3199,7 @@ SEXP devga(SEXP args)
     return R_NilValue;
 }
 
-static void GA_onExit(NewDevDesc *dd)
+static void GA_onExit(pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 

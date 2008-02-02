@@ -19,7 +19,7 @@
 
 /* Used by third-party graphics devices.
  *
- * This defines NewDevDesc, whereas Graphics.h defines DevDesc.
+ * This defines NewDevDesc, whereas GraphicsEngine.h defines GEDevDesc.
  * Also contains entry points from gevents.c
  */
 
@@ -28,6 +28,13 @@
 
 /* until 2.7.0 alpha */
 #define OLD 1
+
+/* ideally we would use prototypes in NewDevDesc.  
+   But the pre-1.4.0 system used DevDesc*, and some devices
+   have taken to passing pointers to their own structure
+   instead of NewDevDesc* , defining R_USE_PROTOTYPES 0 allows them to
+   opt out.
+*/
 
 #ifndef  R_USE_PROTOTYPES
 # ifdef OLD
@@ -45,7 +52,7 @@
 extern "C" {
 #endif
 
-/* New device driver structure
+/* --------- New (in 1.4.0) device driver structure ---------
  * NOTES:
  * 1. All locations and dimensions are in device coordinates.
  * 2. I found this comment in the doc for dev_Open -- looks nasty
@@ -77,11 +84,7 @@ extern "C" {
  */
 
 typedef struct _NewDevDesc NewDevDesc;
-
-/* FIXME: ideally we would use prototypes here.  But then
-   the old system used DevDesc*, and some devices have taken to
-   passing pointers to their own structure instead of NewDevDesc*
-*/
+typedef NewDevDesc* pDevDesc;
 
 struct _NewDevDesc {
 #ifdef OLD
@@ -177,7 +180,8 @@ struct _NewDevDesc {
     Rboolean canGenMouseUp;   /* can the device generate mouseup events */
     Rboolean canGenKeybd;     /* can the device generate keyboard events */
 
-    Rboolean gettingEvent;    /* This is set while getGraphicsEvent is actively looking for events */
+    Rboolean gettingEvent;    /* This is set while getGraphicsEvent
+				 is actively looking for events */
 
     /********************************************************
      * Device procedures.
@@ -210,11 +214,11 @@ struct _NewDevDesc {
      * The only parameter is a device driver structure.
      * An example is ...
      *
-     * static void   X11_Activate(NewDevDesc *dd);
+     * static void   X11_Activate(pDevDesc dd);
      *
      */
 #if R_USE_PROTOTYPES
-    void (*activate)(NewDevDesc *);
+    void (*activate)(pDevDesc );
 #else
     void (*activate)();
 #endif
@@ -231,14 +235,14 @@ struct _NewDevDesc {
      *
      * static void X11_Circle(double x, double y, double r,
      *                        R_GE_gcontext *gc,
-     *                        NewDevDesc *dd);
+     *                        pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
     void (*circle)(double x, double y, double r,
-		   R_GE_gcontext *gc, NewDevDesc *dd);
+		   R_GE_gcontext *gc, pDevDesc dd);
 #else
     void (*circle)();
 #endif
@@ -254,10 +258,10 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static void X11_Clip(double x0, double x1, double y0, double y1,
-     *                      NewDevDesc *dd)
+     *                      pDevDesc dd)
      */
 #if R_USE_PROTOTYPES
-    void (*clip)(double x0, double x1, double y0, double y1, NewDevDesc *dd);
+    void (*clip)(double x0, double x1, double y0, double y1, pDevDesc dd);
 #else
     void (*clip)();
 #endif
@@ -269,7 +273,7 @@ struct _NewDevDesc {
      * parameters structure.
      * An example is ...
      *
-     * static void X11_Close(NewDevDesc *dd)
+     * static void X11_Close(pDevDesc dd)
      *
      */
 #if R_USE_PROTOTYPES
@@ -285,11 +289,11 @@ struct _NewDevDesc {
      * Not all device types will do anything.
      * An example is ...
      *
-     * static void X11_Deactivate(NewDevDesc *dd)
+     * static void X11_Deactivate(pDevDesc dd)
      *
      */
 #if R_USE_PROTOTYPES
-    void (*deactivate)(NewDevDesc *);
+    void (*deactivate)(pDevDesc );
 #else
     void (*deactivate)();
 #endif
@@ -302,12 +306,12 @@ struct _NewDevDesc {
      * case i'm missing something important
      * An example is ...
      *
-     * static void X11_Hold(NewDevDesc *dd)
+     * static void X11_Hold(pDevDesc dd)
      *
      */
 
 #if R_USE_PROTOTYPES
-    void (*hold)(NewDevDesc *);
+    void (*hold)(pDevDesc );
 #else
     void (*hold)();
 #endif
@@ -319,11 +323,11 @@ struct _NewDevDesc {
      * Not all devices will do anything (e.g., postscript)
      * An example is ...
      *
-     * static Rboolean X11_Locator(double *x, double *y, NewDevDesc *dd)
+     * static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
      *
      */
 #if R_USE_PROTOTYPES
-    Rboolean (*locator)(double *x, double *y, NewDevDesc *dd);
+    Rboolean (*locator)(double *x, double *y, pDevDesc dd);
 #else
     Rboolean (*locator)();
 #endif
@@ -334,14 +338,14 @@ struct _NewDevDesc {
      *
      * static void X11_Line(double x1, double y1, double x2, double y2,
      *                      R_GE_gcontext *gc,
-     *                      NewDevDesc *dd);
+     *                      pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
     void (*line)(double x1, double y1, double x2, double y2,
-		 R_GE_gcontext *gc, NewDevDesc *dd);
+		 R_GE_gcontext *gc, pDevDesc dd);
 #else
     void (*line)();
 #endif
@@ -361,7 +365,7 @@ struct _NewDevDesc {
      * static void X11_MetricInfo(int c,
      *                            R_GE_gcontext *gc,
      *                            double* ascent, double* descent,
-     *                            double* width, NewDevDesc *dd);
+     *                            double* width, pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
@@ -369,7 +373,7 @@ struct _NewDevDesc {
 #if R_USE_PROTOTYPES
     void (*metricInfo)(int c, R_GE_gcontext *gc,
 		       double* ascent, double* descent, double* width,
-		       NewDevDesc *dd);
+		       pDevDesc dd);
 #else
     void (*metricInfo)();
 #endif
@@ -379,11 +383,11 @@ struct _NewDevDesc {
      * The device is not required to do anything
      * An example is ...
      *
-     * static void X11_Mode(int mode, NewDevDesc *dd);
+     * static void X11_Mode(int mode, pDevDesc dd);
      *
      */
 #if R_USE_PROTOTYPES
-    void (*mode)(int mode, NewDevDesc *dd);
+    void (*mode)(int mode, pDevDesc dd);
 #else
     void (*mode)();
 #endif
@@ -397,11 +401,11 @@ struct _NewDevDesc {
      *
      *
      * static void X11_NewPage(R_GE_gcontext *gc,
-     *                         NewDevDesc *dd);
+     *                         pDevDesc dd);
      *
      */
 #if R_USE_PROTOTYPES
-    void (*newPage)(R_GE_gcontext *gc, NewDevDesc *dd);
+    void (*newPage)(R_GE_gcontext *gc, pDevDesc dd);
 #else
     void (*newPage)();
 #endif
@@ -421,7 +425,7 @@ struct _NewDevDesc {
      * lists, corresponding to different device-specific preferences.
      * An example is ...
      *
-     * Rboolean X11_Open(NewDevDesc *dd, const char *dsp, double w, double h,
+     * Rboolean X11_Open(pDevDesc dd, const char *dsp, double w, double h,
      *                   double gamma_fac, X_COLORTYPE colormodel,
      *                   int maxcube, int canvascolor);
      *
@@ -438,14 +442,14 @@ struct _NewDevDesc {
      *
      * static void X11_Polygon(int n, double *x, double *y,
      *                         R_GE_gcontext *gc,
-     *                         NewDevDesc *dd);
+     *                         pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
     void (*polygon)(int n, double *x, double *y, R_GE_gcontext *gc,
-		    NewDevDesc *dd);
+		    pDevDesc dd);
 #else
     void (*polygon)();
 #endif
@@ -457,14 +461,14 @@ struct _NewDevDesc {
      *
      * static void X11_Polyline(int n, double *x, double *y,
      *                          R_GE_gcontext *gc,
-     *                          NewDevDesc *dd);
+     *                          pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
     void (*polyline)(int n, double *x, double *y, R_GE_gcontext *gc,
-		     NewDevDesc *dd);
+		     pDevDesc dd);
 #else
     void (*polyline)();
 #endif
@@ -481,12 +485,12 @@ struct _NewDevDesc {
      *
      * static void X11_Rect(double x0, double y0, double x1, double y1,
      *                      R_GE_gcontext *gc,
-     *                      NewDevDesc *dd);
+     *                      pDevDesc dd);
      *
      */
 #if R_USE_PROTOTYPES
     void (*rect)(double x0, double y0, double x1, double y1,
-		 R_GE_gcontext *gc, NewDevDesc *dd);
+		 R_GE_gcontext *gc, pDevDesc dd);
 #else
     void (*rect)();
 #endif
@@ -503,14 +507,14 @@ struct _NewDevDesc {
      *
      * static void X11_Size(double *left, double *right,
      *                      double *bottom, double *top,
-     *                      NewDevDesc *dd);
+     *                      pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
     void (*size)(double *left, double *right, double *bottom, double *top,
-		 NewDevDesc *dd);
+		 pDevDesc dd);
 #else
     void (*size)();
 #endif
@@ -521,13 +525,13 @@ struct _NewDevDesc {
      *
      * static double X11_StrWidth(const char *str,
      *                            R_GE_gcontext *gc,
-     *                            NewDevDesc *dd)
+     *                            pDevDesc dd)
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
      */
 #if R_USE_PROTOTYPES
-    double (*strWidth)(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
+    double (*strWidth)(const char *str, R_GE_gcontext *gc, pDevDesc dd);
 #else
     double (*strWidth)();
 #endif
@@ -540,14 +544,14 @@ struct _NewDevDesc {
      * static void X11_Text(double x, double y, const char *str,
      *                      double rot, double hadj,
      *                      R_GE_gcontext *gc,
-     * 	                    NewDevDesc *dd);
+     * 	                    pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps, col, gamma
      */
 #if R_USE_PROTOTYPES
     void (*text)(double x, double y, const char *str, double rot,
-		 double hadj, R_GE_gcontext *gc, NewDevDesc *dd);
+		 double hadj, R_GE_gcontext *gc, pDevDesc dd);
 #else
     void (*text)();
 #endif
@@ -558,10 +562,10 @@ struct _NewDevDesc {
      *
      * An example is ...
      *
-     * static void X11_onExit(NewDevDesc *dd);
+     * static void X11_onExit(pDevDesc dd);
     */
 #if R_USE_PROTOTYPES
-    void (*onExit)(NewDevDesc *dd);
+    void (*onExit)(pDevDesc dd);
 #else
     void (*onExit)();
 #endif
@@ -586,8 +590,8 @@ struct _NewDevDesc {
     Rboolean hasTextUTF8; /* and strWidthUTF8 */
 #if R_USE_PROTOTYPES
     void (*textUTF8)(double x, double y, const char *str, double rot,
-		     double hadj, R_GE_gcontext *gc, NewDevDesc *dd);
-    double (*strWidthUTF8)(const char *str, R_GE_gcontext *gc, NewDevDesc *dd);
+		     double hadj, R_GE_gcontext *gc, pDevDesc dd);
+    double (*strWidthUTF8)(const char *str, R_GE_gcontext *gc, pDevDesc dd);
 #else
     void (*textUTF8)();
     double (*strWidthUTF8)();
@@ -691,7 +695,7 @@ typedef unsigned int rcolor;
 #define selectDevice		Rf_selectDevice
 
 /* Properly declared version of devNumber */
-int ndevNumber(NewDevDesc *);
+int ndevNumber(pDevDesc );
 
 /* Formerly in Rdevices.h */
 
@@ -745,9 +749,9 @@ typedef enum {meMouseDown = 0,
 #define doKeybd			Rf_doKeybd
 #define doMouseEvent		Rf_doMouseEvent
 
-SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event,
+SEXP doMouseEvent(SEXP eventRho, pDevDesc dd, R_MouseEvent event,
                   int buttons, double x, double y);
-SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey,
+SEXP doKeybd(SEXP eventRho, pDevDesc dd, R_KeyName rkey,
 	     const char *keyname);
 
 

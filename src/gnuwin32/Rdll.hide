@@ -288,8 +288,6 @@
  Rf_RealFromInteger
  Rf_RealFromLogical
  Rf_RealFromString
- Rf_Scollate
- Rf_Seql
  Rf_Specify2
  Rf_StringFromComplex
  Rf_StringFromInteger
@@ -322,7 +320,6 @@
  Rf_labelformat
  Rf_lfastchoose
  Rf_lgammacor
- Rf_lgammafn_sign
  Rf_lookupCachedSymbol
  Rf_makeSubscript
  Rf_markKnown
@@ -333,7 +330,6 @@
  Rf_matchPar
  Rf_mbtoucs
  Rf_mkCLOSXP
- Rf_mkCharLen
  Rf_mkPROMISE
  Rf_mkSYMSXP
  Rf_name2col
@@ -344,10 +340,10 @@
  Rf_pbeta_raw
  Rf_promiseArgs
  Rf_qchisq_appr
- Rf_reEnc
  Rf_regcomp
  Rf_regerror
  Rf_regexec
+ Rf_setBaseDevice
  Rf_setIVector
  Rf_setRVector
  Rf_ssort
@@ -1206,6 +1202,7 @@
  qr_qy_real
  raise
  realp0_
+ registerBase
  reset_duplicate_counter
  rg_
  rpipeClose
@@ -1260,6 +1257,7 @@
  tzname
  tzset
  uncompress
+ unregisterBase
  utf8clen
  wgl_hist_init
  wgl_hist_next

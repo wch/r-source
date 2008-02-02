@@ -103,7 +103,7 @@ typedef struct QuartzSpecific_s {
     int           redraw;          /* redraw flag is set when replaying
 		                              and inhibits syncs on Mode */
     CGRect        clipRect;        /* clipping rectangle */
-    NewDevDesc    *dev;            /* device structure holding this one */
+    pDevDesc      dev;            /* device structure holding this one */
 
     void*         userInfo;        /* pointer to a module-dependent space */
     
@@ -241,7 +241,7 @@ int   QuartzDevice_GetBackground(QuartzDesc_t desc) { return ((QuartzDesc*)desc)
 
 static void   QuartzDevice_Update(QuartzDesc_t desc) {
     QuartzDesc *qd = (QuartzDesc*)desc;
-    NewDevDesc *dev= qd->dev;
+    pDevDesc dev= qd->dev;
     
     /* pre-scaling happens in Quartz (using CTM), so scales should not be
        reflected in R measurements. We tell R to use 72dpi which corresponds
@@ -305,23 +305,23 @@ double QuartzDevice_UserY(QuartzDesc_t desc,double y) {
 
 #pragma mark RGD API Function Prototypes
 
-static Rboolean RQuartz_Open(NewDevDesc*,QuartzDesc*,char*,double,double,int);
-static void     RQuartz_Close(NewDevDesc*);
-static void     RQuartz_Activate(NewDevDesc*);
-static void     RQuartz_Deactivate(NewDevDesc*);
-static void     RQuartz_Size(double*,double*,double*,double*,NewDevDesc*);
-static void     RQuartz_NewPage(R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Clip(double,double,double,double,NewDevDesc*);
-static double   RQuartz_StrWidth(const char*,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Text(double,double,const char*,double,double,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Rect(double,double,double,double,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Circle(double,double,double,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Line(double,double,double,double,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Polyline(int,double*,double*,R_GE_gcontext*,NewDevDesc*);
-static void     RQuartz_Polygon(int,double*,double*,R_GE_gcontext*,NewDevDesc*);
-static Rboolean RQuartz_Locator(double*,double*,NewDevDesc*);
-static void     RQuartz_Mode(int mode,NewDevDesc*);
-static void     RQuartz_MetricInfo(int,R_GE_gcontext *,double*,double*,double*,NewDevDesc*);
+static Rboolean RQuartz_Open(pDevDesc,QuartzDesc*,char*,double,double,int);
+static void     RQuartz_Close(pDevDesc);
+static void     RQuartz_Activate(pDevDesc);
+static void     RQuartz_Deactivate(pDevDesc);
+static void     RQuartz_Size(double*,double*,double*,double*,pDevDesc);
+static void     RQuartz_NewPage(R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Clip(double,double,double,double,pDevDesc);
+static double   RQuartz_StrWidth(const char*,R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Text(double,double,const char*,double,double,R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Rect(double,double,double,double,R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Circle(double,double,double,R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Line(double,double,double,double,R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Polyline(int,double*,double*,R_GE_gcontext*,pDevDesc);
+static void     RQuartz_Polygon(int,double*,double*,R_GE_gcontext*,pDevDesc);
+static Rboolean RQuartz_Locator(double*,double*,pDevDesc);
+static void     RQuartz_Mode(int mode,pDevDesc);
+static void     RQuartz_MetricInfo(int,R_GE_gcontext *,double*,double*,double*,pDevDesc);
 
 #pragma mark Quartz device implementation
 
@@ -334,8 +334,8 @@ void* QuartzDevice_Create(
                           void         (*state)(QuartzDesc_t dev,void*userInfo, int state),
                           void*        (*par)(QuartzDesc_t dev,void*userInfo,void*par),
                           void         (*sync)(QuartzDesc_t dev,void*userInfo),
-                          void*userInfo) {
-    NewDevDesc *dev = (NewDevDesc*)_dev;
+                          void*userInfo) 
+{
     dev->displayList = R_NilValue;
     
     dev->startfill = R_RGB(255,255,255);
@@ -433,8 +433,8 @@ extern CGFontRef CGContextGetFont(CGContextRef);
 extern void CGFontGetGlyphsForUnichars(CGFontRef,const UniChar[],const CGGlyph[],size_t);
 
 
-#define DEVDESC NewDevDesc *dd
-#define CTXDESC R_GE_gcontext*gc,NewDevDesc*dd
+#define DEVDESC pDevDesc dd
+#define CTXDESC R_GE_gcontext*gc,pDevDesc dd
 
 #define DEVSPEC QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;CGContextRef ctx = xd->getCGContext(xd,xd->userInfo)
 #define DRAWSPEC QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;CGContextRef ctx = xd->getCGContext(xd,xd->userInfo); xd->dirty = 1
@@ -772,7 +772,7 @@ static void RQuartz_Mode(int mode,DEVDESC) {
 static void 
 RQuartz_MetricInfo(int c, R_GE_gcontext *gc, 
 		   double *ascent, double *descent, double *width,
-		   NewDevDesc *dd)
+		   pDevDesc dd)
 {
     DRAWSPEC;
     if (!ctx) { /* dummy data if we have no context, for sanity reasons */
@@ -840,7 +840,7 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC) {
 /* disabled for now until we get to test in on 10.3 #include "qdCarbon.h" */
 
 /* current fake */
-Rboolean QuartzCarbon_DeviceCreate(NewDevDesc *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
+Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
                                    Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg, const char *title, double *dpi) {
     return FALSE;
 }
@@ -858,7 +858,7 @@ int Quartz_C(const char *type, const char *file, double width, double height, do
         R_CheckDeviceAvailable();
         {
 	    /* FIXME: check this allocation */
-            NewDevDesc *dev    = calloc(1,sizeof(NewDevDesc));
+            pDevDesc dev    = calloc(1,sizeof(NewDevDesc));
             dev->displayList   = R_NilValue;
             dev->savedSnapshot = R_NilValue;
     
@@ -954,7 +954,7 @@ SEXP Quartz(SEXP args) {
     
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	NewDevDesc *dev    = calloc(1,sizeof(NewDevDesc));
+	pDevDesc dev       = calloc(1,sizeof(NewDevDesc));
 	dev->displayList   = R_NilValue;
 	dev->savedSnapshot = R_NilValue;
     

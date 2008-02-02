@@ -243,10 +243,10 @@ int GEdeviceNumber(pGEDevDesc);
 pGEDevDesc GEGetDevice(int);
 void GEaddDevice(pGEDevDesc);
 void GEkillDevice(pGEDevDesc);
-
 pGEDevDesc GEcreateDevDesc(NewDevDesc* dev);
+
 void GEdestroyDevDesc(pGEDevDesc dd);
-void* GEsystemState(pGEDevDesc dd, int index);
+void *GEsystemState(pGEDevDesc dd, int index);
 void GEregisterWithDevice(pGEDevDesc dd);
 void GEregisterSystem(GEcallback callback, int *systemRegisterIndex);
 void GEunregisterSystem(int registerIndex);
