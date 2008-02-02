@@ -2233,9 +2233,9 @@ SEXP attribute_hidden do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, nms;
     int i, tmp;
 
-    PROTECT(ans = allocVector(INTSXP, 23));
-    PROTECT(nms = allocVector(STRSXP, 23));
-    for (i = 0; i < 23; i++) {
+    PROTECT(ans = allocVector(INTSXP, 24));
+    PROTECT(nms = allocVector(STRSXP, 24));
+    for (i = 0; i < 24; i++) {
         INTEGER(ans)[i] = 0;
 	SET_STRING_ELT(nms, i, type2str(i > LGLSXP? i+2 : i));
     }
