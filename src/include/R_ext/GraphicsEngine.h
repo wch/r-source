@@ -173,6 +173,9 @@ typedef struct {
     char fontfamily[201]; /* Font family */
 } R_GE_gcontext;
 
+typedef R_GE_gcontext* pGEcontext;
+    
+
 #include <R_ext/GraphicsDevice.h> /* needed for NewDevDesc */
 
 typedef struct _GEDevDesc GEDevDesc;

@@ -2835,7 +2835,7 @@ static void PostScriptHexText(FILE *fp, double x, double y,
 
 static void PS_Activate(pDevDesc dd);
 static void PS_Circle(double x, double y, double r,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd);
 static void PS_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
@@ -2843,42 +2843,42 @@ static void PS_Close(pDevDesc dd);
 static void PS_Deactivate(pDevDesc dd);
 static Rboolean PS_Locator(double *x, double *y, pDevDesc dd);
 static void PS_Line(double x1, double y1, double x2, double y2,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd);
 static void PS_MetricInfo(int c,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  double* ascent, double* descent,
 			  double* width, pDevDesc dd);
 static void PS_Mode(int mode, pDevDesc dd);
-static void PS_NewPage(R_GE_gcontext *gc,
+static void PS_NewPage(pGEcontext gc,
 		       pDevDesc dd);
 static Rboolean PS_Open(pDevDesc, PostScriptDesc*);
 static void PS_Polygon(int n, double *x, double *y,
-		       R_GE_gcontext *gc,
+		       pGEcontext gc,
 		       pDevDesc dd);
 static void PS_Polyline(int n, double *x, double *y,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd);
 static void PS_Rect(double x0, double y0, double x1, double y1,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd);
 static void PS_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
 static double PS_StrWidth(const char *str,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd);
 static void PS_Text(double x, double y, const char *str,
 		    double rot, double hadj,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd);
 #ifdef SUPPORT_MBCS
 static double PS_StrWidthUTF8(const char *str,
-			      R_GE_gcontext *gc,
+			      pGEcontext gc,
 			      pDevDesc dd);
 static void PS_TextUTF8(double x, double y, const char *str,
 			double rot, double hadj,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd);
 #endif
 
@@ -2944,7 +2944,7 @@ static void PostScriptSetFill(FILE *fp, double r, double g, double b,
 static void SetColor(int, pDevDesc);
 static void SetFill(int, pDevDesc);
 static void SetFont(int, int, pDevDesc);
-static void SetLineStyle(R_GE_gcontext*, pDevDesc dd);
+static void SetLineStyle(pGEcontext, pDevDesc dd);
 static void Invalidate(pDevDesc);
 
 
@@ -3394,7 +3394,7 @@ static void SetFill(int color, pDevDesc dd)
 
 /* Note that the line texture is scaled by the line width. */
 
-static void SetLineStyle(R_GE_gcontext *gc, pDevDesc dd)
+static void SetLineStyle(pGEcontext gc, pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     char dashlist[8];
@@ -3564,7 +3564,7 @@ static void PS_Size(double *left, double *right,
 
 static void PostScriptClose(pDevDesc dd);
 
-static void PS_NewPage(R_GE_gcontext *gc,
+static void PS_NewPage(pGEcontext gc,
 		       pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -3688,7 +3688,7 @@ static char *convname(const char *family, PostScriptDesc *pd) {
 }
 
 static double PS_StrWidth(const char *str,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -3719,7 +3719,7 @@ static double PS_StrWidth(const char *str,
 
 #ifdef SUPPORT_MBCS
 static double PS_StrWidthUTF8(const char *str,
-			      R_GE_gcontext *gc,
+			      pGEcontext gc,
 			      pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -3750,7 +3750,7 @@ static double PS_StrWidthUTF8(const char *str,
 #endif
 
 static void PS_MetricInfo(int c,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  double* ascent, double* descent,
 			  double* width, pDevDesc dd)
 {
@@ -3778,7 +3778,7 @@ static void PS_MetricInfo(int c,
 }
 
 static void PS_Rect(double x0, double y0, double x1, double y1,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     int code;
@@ -3807,7 +3807,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void PS_Circle(double x, double y, double r,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     int code;
@@ -3836,7 +3836,7 @@ static void PS_Circle(double x, double y, double r,
 }
 
 static void PS_Line(double x1, double y1, double x2, double y2,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -3855,7 +3855,7 @@ static void PS_Line(double x1, double y1, double x2, double y2,
 }
 
 static void PS_Polygon(int n, double *x, double *y,
-		       R_GE_gcontext *gc,
+		       pGEcontext gc,
 		       pDevDesc dd)
 {
     PostScriptDesc *pd;
@@ -3892,7 +3892,7 @@ static void PS_Polygon(int n, double *x, double *y,
 }
 
 static void PS_Polyline(int n, double *x, double *y,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd)
 {
     PostScriptDesc *pd;
@@ -3971,7 +3971,7 @@ static int translateCIDFont(char *family, int style, PostScriptDesc *pd)
 static void drawSimpleText(double x, double y, const char *str,
 			   double rot, double hadj,
 			   int font,
-			   R_GE_gcontext *gc,
+			   pGEcontext gc,
 			   pDevDesc dd) {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
@@ -3987,7 +3987,7 @@ static void drawSimpleText(double x, double y, const char *str,
 #ifndef SUPPORT_MBCS
 static void PS_Text(double x, double y, const char *str,
 		    double rot, double hadj,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -4040,7 +4040,7 @@ next_char:
 
 static void PS_Text0(double x, double y, const char *str, int enc,
 		     double rot, double hadj,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd)
 {
     const char *str1 = str;
@@ -4160,7 +4160,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 
 static void PS_Text(double x, double y, const char *str,
 		    double rot, double hadj,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     PS_Text0(x, y, str, CE_NATIVE, rot, hadj, gc, dd);
@@ -4168,7 +4168,7 @@ static void PS_Text(double x, double y, const char *str,
 
 static void PS_TextUTF8(double x, double y, const char *str,
 			double rot, double hadj,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd)
 {
     PS_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
@@ -4344,7 +4344,7 @@ static int XF_SetLty(int lty)
 
 static void XFig_Activate(pDevDesc dd);
 static void XFig_Circle(double x, double y, double r,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd);
 static void XFig_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
@@ -4352,32 +4352,32 @@ static void XFig_Close(pDevDesc dd);
 static void XFig_Deactivate(pDevDesc dd);
 static Rboolean XFig_Locator(double *x, double *y, pDevDesc dd);
 static void XFig_Line(double x1, double y1, double x2, double y2,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd);
 static void XFig_MetricInfo(int c,
-			    R_GE_gcontext *gc,
+			    pGEcontext gc,
 			    double* ascent, double* descent,
 			    double* width, pDevDesc dd);
 static void XFig_Mode(int mode, pDevDesc dd);
-static void XFig_NewPage(R_GE_gcontext *gc, pDevDesc dd);
+static void XFig_NewPage(pGEcontext gc, pDevDesc dd);
 static void XFig_Polygon(int n, double *x, double *y,
-			 R_GE_gcontext *gc,
+			 pGEcontext gc,
 			 pDevDesc dd);
 static void XFig_Polyline(int n, double *x, double *y,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd);
 static void XFig_Rect(double x0, double y0, double x1, double y1,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd);
 static void XFig_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
 static double XFig_StrWidth(const char *str,
-			    R_GE_gcontext *gc,
+			    pGEcontext gc,
 			    pDevDesc dd);
 static void XFig_Text(double x, double y, const char *str,
 		      double rot, double hadj,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd);
 static Rboolean XFig_Open(pDevDesc, XFigDesc*);
 
@@ -4716,7 +4716,7 @@ static void XFig_Size(double *left, double *right,
 }
 
 #define CHUNK 10000
-static void XFig_NewPage(R_GE_gcontext *gc,
+static void XFig_NewPage(pGEcontext gc,
 			 pDevDesc dd)
 {
     char buf[PATH_MAX];
@@ -4803,7 +4803,7 @@ static void XFig_Activate(pDevDesc dd) {}
 static void XFig_Deactivate(pDevDesc dd) {}
 
 static void XFig_Rect(double x0, double y0, double x1, double y1,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -4836,7 +4836,7 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void XFig_Circle(double x, double y, double r,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -4865,7 +4865,7 @@ static void XFig_Circle(double x, double y, double r,
 }
 
 static void XFig_Line(double x1, double y1, double x2, double y2,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -4890,7 +4890,7 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
 }
 
 static void XFig_Polygon(int n, double *x, double *y,
-			 R_GE_gcontext *gc,
+			 pGEcontext gc,
 			 pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -4923,7 +4923,7 @@ static void XFig_Polygon(int n, double *x, double *y,
 }
 
 static void XFig_Polyline(int n, double *x, double *y,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc*) dd->deviceSpecific;
@@ -4952,7 +4952,7 @@ static const int styles[4] = {0,2,1,3};
 
 static void XFig_Text(double x, double y, const char *str,
 		      double rot, double hadj,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -5036,7 +5036,7 @@ static void XFig_Mode(int mode, pDevDesc dd)
 }
 
 static double XFig_StrWidth(const char *str,
-			    R_GE_gcontext *gc,
+			    pGEcontext gc,
 			    pDevDesc dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -5051,7 +5051,7 @@ static double XFig_StrWidth(const char *str,
 }
 
 static void XFig_MetricInfo(int c,
-			    R_GE_gcontext *gc,
+			    pGEcontext gc,
 			    double* ascent, double* descent,
 			    double* width, pDevDesc dd)
 {
@@ -5163,7 +5163,7 @@ PDFDesc;
 static Rboolean PDF_Open(pDevDesc, PDFDesc*);
 static void PDF_Activate(pDevDesc dd);
 static void PDF_Circle(double x, double y, double r,
-		       R_GE_gcontext *gc,
+		       pGEcontext gc,
 		       pDevDesc dd);
 static void PDF_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
@@ -5171,40 +5171,40 @@ static void PDF_Close(pDevDesc dd);
 static void PDF_Deactivate(pDevDesc dd);
 static Rboolean PDF_Locator(double *x, double *y, pDevDesc dd);
 static void PDF_Line(double x1, double y1, double x2, double y2,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd);
 static void PDF_MetricInfo(int c,
-			   R_GE_gcontext *gc,
+			   pGEcontext gc,
 			   double* ascent, double* descent,
 			   double* width, pDevDesc dd);
 static void PDF_Mode(int mode, pDevDesc dd);
-static void PDF_NewPage(R_GE_gcontext *gc, pDevDesc dd);
+static void PDF_NewPage(pGEcontext gc, pDevDesc dd);
 static void PDF_Polygon(int n, double *x, double *y,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd);
 static void PDF_Polyline(int n, double *x, double *y,
-			 R_GE_gcontext *gc,
+			 pGEcontext gc,
 			 pDevDesc dd);
 static void PDF_Rect(double x0, double y0, double x1, double y1,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd);
 static void PDF_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
 static double PDF_StrWidth(const char *str,
-			   R_GE_gcontext *gc,
+			   pGEcontext gc,
 			   pDevDesc dd);
 static void PDF_Text(double x, double y, const char *str,
 		     double rot, double hadj,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd);
 #ifdef SUPPORT_MBCS
 static double PDF_StrWidthUTF8(const char *str,
-			       R_GE_gcontext *gc,
+			       pGEcontext gc,
 			       pDevDesc dd);
 static void PDF_TextUTF8(double x, double y, const char *str,
 			 double rot, double hadj,
-			 R_GE_gcontext *gc,
+			 pGEcontext gc,
 			 pDevDesc dd);
 #endif
 
@@ -5843,7 +5843,7 @@ static void PDFSetLineTexture(FILE *fp, const char *dashlist, int nlty,
     PP_SetLineTexture("d");
 }
 
-static void PDF_SetLineStyle(R_GE_gcontext *gc, pDevDesc dd)
+static void PDF_SetLineStyle(pGEcontext gc, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     char dashlist[8];
@@ -6357,7 +6357,7 @@ static void PDF_endpage(PDFDesc *pd)
 
 #define R_VIS(col) (R_ALPHA(col) > 0)
 
-static void PDF_NewPage(R_GE_gcontext *gc,
+static void PDF_NewPage(pGEcontext gc,
 			pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6428,7 +6428,7 @@ static void PDF_Activate(pDevDesc dd) {}
 static void PDF_Deactivate(pDevDesc dd) {}
 
 static void PDF_Rect(double x0, double y0, double x1, double y1,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6454,7 +6454,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 
 /* r is in device coords */
 static void PDF_Circle(double x, double y, double r,
-		       R_GE_gcontext *gc,
+		       pGEcontext gc,
 		       pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6517,7 +6517,7 @@ static void PDF_Circle(double x, double y, double r,
 }
 
 static void PDF_Line(double x1, double y1, double x2, double y2,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6531,7 +6531,7 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 }
 
 static void PDF_Polygon(int n, double *x, double *y,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6564,7 +6564,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 }
 
 static void PDF_Polyline(int n, double *x, double *y,
-			 R_GE_gcontext *gc,
+			 pGEcontext gc,
 			 pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc*) dd->deviceSpecific;
@@ -6666,7 +6666,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 static void PDFSimpleText(double x, double y, const char *str,
 			  double rot, double hadj,
 			  int font,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int size = (int)floor(gc->cex * gc->ps + 0.5);
@@ -6698,7 +6698,7 @@ static void PDFSimpleText(double x, double y, const char *str,
 #ifndef SUPPORT_MBCS
 static void PDF_Text(double x, double y, const char *str,
 		     double rot, double hadj,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6712,7 +6712,7 @@ static char *PDFconvname(const char *family, PDFDesc *pd);
 
 static void PDF_Text0(double x, double y, const char *str, int enc,
 		      double rot, double hadj,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6850,7 +6850,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 
 static void PDF_Text(double x, double y, const char *str,
 		      double rot, double hadj,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     PDF_Text0(x, y, str, CE_NATIVE, rot, hadj, gc, dd);
@@ -6858,7 +6858,7 @@ static void PDF_Text(double x, double y, const char *str,
 
 static void PDF_TextUTF8(double x, double y, const char *str,
 			 double rot, double hadj,
-			 R_GE_gcontext *gc,
+			 pGEcontext gc,
 			 pDevDesc dd)
 {
     PDF_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
@@ -6995,7 +6995,7 @@ static char
 }
 
 static double PDF_StrWidth(const char *str,
-			   R_GE_gcontext *gc,
+			   pGEcontext gc,
 			   pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -7027,7 +7027,7 @@ static double PDF_StrWidth(const char *str,
 
 #ifdef SUPPORT_MBCS
 static double PDF_StrWidthUTF8(const char *str,
-			       R_GE_gcontext *gc,
+			       pGEcontext gc,
 			       pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -7059,7 +7059,7 @@ static double PDF_StrWidthUTF8(const char *str,
 #endif
 
 static void PDF_MetricInfo(int c,
-			   R_GE_gcontext *gc,
+			   pGEcontext gc,
 			   double* ascent, double* descent,
 			   double* width, pDevDesc dd)
 {

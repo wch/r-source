@@ -188,7 +188,7 @@ static void GA_Timer(gadesc *xd)
 
 static void GA_Activate(pDevDesc dd);
 static void GA_Circle(double x, double y, double r,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd);
 static void GA_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
@@ -197,34 +197,34 @@ static void GA_Deactivate(pDevDesc dd);
 static SEXP GA_getEvent(SEXP eventRho, const char* prompt);
 static Rboolean GA_Locator(double *x, double *y, pDevDesc dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd);
 static void GA_MetricInfo(int c,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  double* ascent, double* descent,
 			  double* width, pDevDesc dd);
 static void GA_Mode(int mode, pDevDesc dd);
-static void GA_NewPage(R_GE_gcontext *gc,
+static void GA_NewPage(pGEcontext gc,
 		       pDevDesc dd);
 static void GA_Polygon(int n, double *x, double *y,
-		       R_GE_gcontext *gc,
+		       pGEcontext gc,
 		       pDevDesc dd);
 static void GA_Polyline(int n, double *x, double *y,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd);
 static void GA_Rect(double x0, double y0, double x1, double y1,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd);
 static void GA_Size(double *left, double *right,
 		    double *bottom, double *top,
 		    pDevDesc dd);
 static void GA_Resize(pDevDesc dd);
 static double GA_StrWidth(const char *str,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd);
 static void GA_Text(double x, double y, const char *str,
 		    double rot, double hadj,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd);
 static Rboolean GA_Open(pDevDesc, gadesc*, const char*, double, double,
 			Rboolean, int, int, double, int, int, int);
@@ -707,7 +707,7 @@ static void SetColor(int color, double gamma, pDevDesc dd)
  *      In this driver, done in graphapp/gdraw.c
  */
 
-static void SetLineStyle(R_GE_gcontext *gc, pDevDesc dd)
+static void SetLineStyle(pGEcontext gc, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -1845,7 +1845,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	/********************************************************/
 
 static double GA_StrWidth(const char *str,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -1856,7 +1856,7 @@ static double GA_StrWidth(const char *str,
 }
 
 static double GA_StrWidth_UTF8(const char *str,
-			      R_GE_gcontext *gc,
+			      pGEcontext gc,
 			      pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -1887,7 +1887,7 @@ static double GA_StrWidth_UTF8(const char *str,
 	 */
 
 static void GA_MetricInfo(int c,
-			  R_GE_gcontext *gc,
+			  pGEcontext gc,
 			  double* ascent, double* descent,
 			  double* width, pDevDesc dd)
 {
@@ -2053,7 +2053,7 @@ static void GA_Resize(pDevDesc dd)
 	/* (e.g., postscript)					*/
 	/********************************************************/
 
-static void GA_NewPage(R_GE_gcontext *gc,
+static void GA_NewPage(pGEcontext gc,
 		       pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2246,7 +2246,7 @@ static void GA_Deactivate(pDevDesc dd)
 	/********************************************************/
 
 static void GA_Rect(double x0, double y0, double x1, double y1,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     int   tmp;
@@ -2319,7 +2319,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	/********************************************************/
 
 static void GA_Circle(double x, double y, double radius,
-		      R_GE_gcontext *gc,
+		      pGEcontext gc,
 		      pDevDesc dd)
 {
     int   ir, ix, iy;
@@ -2375,7 +2375,7 @@ static void GA_Circle(double x, double y, double radius,
 	/********************************************************/
 
 static void GA_Line(double x1, double y1, double x2, double y2,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     int   xx1, yy1, xx2, yy2;
@@ -2419,7 +2419,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 	/********************************************************/
 
 static void GA_Polyline(int n, double *x, double *y,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd)
 {
     char *vmax = vmaxget();
@@ -2468,7 +2468,7 @@ static void GA_Polyline(int n, double *x, double *y,
 	/********************************************************/
 
 static void GA_Polygon(int n, double *x, double *y,
-		       R_GE_gcontext *gc,
+		       pGEcontext gc,
 		       pDevDesc dd)
 {
     char *vmax = vmaxget();
@@ -2538,7 +2538,7 @@ static void GA_Polygon(int n, double *x, double *y,
 
 static void GA_Text0(double x, double y, const char *str, int enc,
 		     double rot, double hadj,
-		     R_GE_gcontext *gc,
+		     pGEcontext gc,
 		     pDevDesc dd)
 {
     int   size;
@@ -2596,7 +2596,7 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 
 static void GA_Text(double x, double y, const char *str,
 		    double rot, double hadj,
-		    R_GE_gcontext *gc,
+		    pGEcontext gc,
 		    pDevDesc dd)
 {
     GA_Text0(x, y, str, CE_NATIVE, rot, hadj, gc, dd);
@@ -2604,7 +2604,7 @@ static void GA_Text(double x, double y, const char *str,
 
 static void GA_Text_UTF8(double x, double y, const char *str,
 			double rot, double hadj,
-			R_GE_gcontext *gc,
+			pGEcontext gc,
 			pDevDesc dd)
 {
     GA_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
