@@ -22,7 +22,6 @@
 #endif
 
 #include <Rinternals.h>
-#include <Rgraphics.h>
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 
@@ -37,17 +36,19 @@ void GEnullDevice()
     GEDevDesc *dd;
 
     R_CheckDeviceAvailable();
-    if (!(dev = (pDevDesc ) calloc(1, sizeof(NewDevDesc))))
-       error(_("unable to start NULL device"));
-    dev->displayList = R_NilValue;
-    if (!nullDeviceDriver(dev)) {
-       free(dev);
-       error(_("unable to start NULL device"));
-    }
-    gsetVar(install(".Device"), mkString("NULL"), R_BaseEnv);
-    dd = GEcreateDevDesc(dev);
-    GEaddDevice(dd);
-    GEinitDisplayList(dd);
+    BEGIN_SUSPEND_INTERRUPTS {
+	if (!(dev = (pDevDesc ) calloc(1, sizeof(NewDevDesc))))
+	    error(_("unable to start NULL device"));
+	dev->displayList = R_NilValue;
+	if (!nullDeviceDriver(dev)) {
+	    free(dev);
+	    error(_("unable to start NULL device"));
+	}
+	gsetVar(install(".Device"), mkString("NULL"), R_BaseEnv);
+	dd = GEcreateDevDesc(dev);
+	GEaddDevice(dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
 }
 static void NULL_Circle(double x, double y, double r,
                         R_GE_gcontext *gc,
@@ -94,13 +95,23 @@ static void NULL_Mode(int mode, pDevDesc dev) {
 static Rboolean NULL_Locator(double *x, double *y, pDevDesc dev) {
     return FALSE;
 }
-static void NULL_MetricInfo(int c,
-                            R_GE_gcontext *gc,
+static void NULL_MetricInfo(int c, R_GE_gcontext *gc,
                             double* ascent, double* descent,
-                            double* width, pDevDesc dev) {
+                            double* width, pDevDesc dev) 
+{
+    Rboolean Unicode = mbcslocale;
+
     *ascent = 0.0;
     *descent = 0.0;
     *width = 0.0;
+
+    /* dummy, as a test of the headers */
+    if (c < 0) { Unicode = TRUE; c = -c; }
+    if(Unicode && gc->fontface != 5 && c >= 128) {
+	/* Unicode case */ ;
+    } else {
+	/* single-byte case */ ;
+    }
 }
 static void NULL_Size(double *left, double *right,
                       double *bottom, double *top,

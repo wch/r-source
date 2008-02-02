@@ -48,6 +48,8 @@
 # endif
 #endif
 
+#include <R_ext/Boolean.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -754,6 +756,28 @@ SEXP doMouseEvent(SEXP eventRho, pDevDesc dd, R_MouseEvent event,
 SEXP doKeybd(SEXP eventRho, pDevDesc dd, R_KeyName rkey,
 	     const char *keyname);
 
+
+/* For use in third-party devices when setting up a device:
+ * duplicates Defn.h which is used internally.
+ * (Tested in devNull.c)
+ */
+
+#ifndef BEGIN_SUSPEND_INTERRUPTS
+/* Macros for suspending interrupts */
+#define BEGIN_SUSPEND_INTERRUPTS do { \
+    Rboolean __oldsusp__ = R_interrupts_suspended; \
+    R_interrupts_suspended = TRUE;
+#define END_SUSPEND_INTERRUPTS R_interrupts_suspended = __oldsusp__; \
+    if (R_interrupts_pending && ! R_interrupts_suspended) \
+        Rf_onintr(); \
+} while(0)
+    
+#include <R_ext/libextern.h>
+LibExtern Rboolean R_interrupts_suspended;    
+LibExtern int R_interrupts_pending;
+extern void Rf_onintr(void);
+LibExtern Rboolean mbcslocale;
+#endif
 
 #ifdef __cplusplus
 }

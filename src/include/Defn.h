@@ -1198,7 +1198,7 @@ extern char *locale2charset(const char *);
 #endif
 
 
-/* Macros for suspending interrupts */
+/* Macros for suspending interrupts: also in GraphicsDevice.h */
 #define BEGIN_SUSPEND_INTERRUPTS do { \
     Rboolean __oldsusp__ = R_interrupts_suspended; \
     R_interrupts_suspended = TRUE;

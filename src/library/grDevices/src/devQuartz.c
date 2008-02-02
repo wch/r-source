@@ -336,6 +336,8 @@ void* QuartzDevice_Create(
                           void         (*sync)(QuartzDesc_t dev,void*userInfo),
                           void*userInfo) 
 {
+    pDevDesc dev = _dev;
+
     dev->displayList = R_NilValue;
     
     dev->startfill = R_RGB(255,255,255);
