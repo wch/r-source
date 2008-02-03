@@ -34,7 +34,9 @@ void *getQuartzAPI();
 
 static R_CMethodDef CEntries [] = {
     CDEF(R_chull),
+#ifndef WIN32
     {"getQuartzAPI", (DL_FUNC) getQuartzAPI, 0},
+#endif
     {NULL, NULL, 0}
 };
 
