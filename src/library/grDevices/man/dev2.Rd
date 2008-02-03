@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev2}
@@ -20,10 +20,12 @@ dev.control(displaylist = c("inhibit", "enable"))
 \arguments{
   \item{device}{A device function (e.g., \code{x11},
     \code{postscript}, \ldots)}
-  \item{\dots}{Arguments to the \code{device} function above.
+  \item{\dots}{Arguments to the \code{device} function above: for
+    \code{dev.copy2eps} arguments to \code{\link{postscript}} and for
+    \code{dev.copy2pdf}, arguments to \code{\link{pdf}}.
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}
-  \item{which}{A device number specifying the device to copy to}
+  \item{which}{A device number specifying the device to copy to.}
   \item{displaylist}{A character string: the only valid values are
     \code{"inhibit"} and \code{"enable"}.}
 }
@@ -55,8 +57,8 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{dev.copy} returns the name and number of the device which has
   been copied to.
 
-  \code{dev.print} and \code{dev.copy2eps} return the name and number of
-  the device which has been copied from.
+  \code{dev.print}, \code{dev.copy2eps} and \code{dev.copy2pdf} return
+  the name and number of the device which has been copied from.
 }
 \details{
   Note that these functions copy the \emph{device region} and not a
@@ -70,7 +72,8 @@ dev.control(displaylist = c("inhibit", "enable"))
   specified.  If just one of \code{width} and \code{height} is
   specified, the other is adjusted to preserve the aspect ratio of the
   device being copied.  The default file name is \code{Rplot.eps} or
-  \code{Rplot.pdf}.
+  \code{Rplot.pdf}, and can be overridden by specifying a \code{file}
+  argument.
 
 #ifdef unix
   The default for \code{dev.print} is to produce and print a postscript
