@@ -1870,9 +1870,12 @@ inside other functions), such as
 @group
 nargs        missing
 interactive  is.@emph{xxx}
+as.call      as.character as.complex  as.double
+as.environment
+as.integer   as.logical   as.raw
 .Primitive   .Internal
-globalenv    baseenv     emptyenv     pos.to.env
-unclass
+globalenv    baseenv      emptyenv     pos.to.env
+unclass      invisible
 seq_along    seq_len
 @end group
 @end example
@@ -1928,13 +1931,12 @@ efficiency reasons:
 @example
 @group
 :          ~          c           list
-call       as.call    as.character as.complex  as.double
-as.integer as.logical as.raw
-expression substitute as.environment
-UseMethod  invisible  standardGeneric
+call       expression substitute
+UseMethod  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
+round      signif
 rep        seq.int
 lazyLoadDBfetch
 @end group
@@ -1942,7 +1944,8 @@ lazyLoadDBfetch
 
 @noindent
 @code{rep} and @code{seq.int} manage their own argument matching and so
-do work in the standard way.
+do work in the standard way.  @code{round} and @code{signif} are
+primitive to work around scoping bugs in S4 dispatch on non-primitives.
 
 @end enumerate
 
