@@ -21,6 +21,7 @@
  */
 
 #include <R.h>
+#include <R_ext/QuartzDevice.h>
 
 /* inofficial API that can be used by other applications */
 
@@ -31,9 +32,7 @@ void QuartzCocoa_SetupEventLoop(int flags, unsigned long latency);
 int  QuartzCocoa_SetLatency(unsigned long latency);
 
 /* this is the designated creator, used by the Quartz dispatcher */
-Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
-                                  Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg,const char *title, double *dpi);
-
+Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
 #ifdef __OBJC__
 

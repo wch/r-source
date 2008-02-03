@@ -1,5 +1,5 @@
 #include <R.h>
+#include <R_ext/QuartzDevice.h>
 
-Rboolean QuartzBitmap_DeviceCreate(void *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
-                                   Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg, double *dpi);
+Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 

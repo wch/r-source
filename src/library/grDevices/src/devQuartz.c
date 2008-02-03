@@ -93,7 +93,7 @@ typedef struct QuartzSpecific_s {
     int           dirty;           /* dirtly flag. Not acted upon by the Quartz
                                       core, but QC sets it whenever a drawing
                                       operation is performed (see detailed
-									  description in R_ext/QuartzDevice.h) */
+				      description in R_ext/QuartzDevice.h) */
     int           gstate;          /* gstate counter */
     int           async;           /* asynchronous drawing (i.e. context was
                                       not ready for an operation) */
@@ -103,7 +103,7 @@ typedef struct QuartzSpecific_s {
     int           redraw;          /* redraw flag is set when replaying
 		                              and inhibits syncs on Mode */
     CGRect        clipRect;        /* clipping rectangle */
-    pDevDesc      dev;            /* device structure holding this one */
+    pDevDesc      dev;             /* device structure holding this one */
 
     void*         userInfo;        /* pointer to a module-dependent space */
     
@@ -133,7 +133,9 @@ specify the conversion factor between pixels and points.
 We are *not* using R's scaling facilities, because R doesn't work with
 non-square pixels (e.g. circles become ellipses).
 
-FIXME: yes it does -- ipr is a two-element array.
+FIXME: yes it does -- ipr is a two-element array. 
+ -- not entirely, because it uses text (e.g. "o") as symbols which is rendered
+ in 1:1 aspect ratio and thus is squished on displays with non-square pixels
 Actually, dp not points are used.
 */
 
@@ -162,29 +164,26 @@ void QuartzDevice_ResetContext(QuartzDesc_t desc) {
     }
 }
 
-double QuartzDevice_GetScaledWidth(QuartzDesc_t desc)   { QuartzDesc *qd=((QuartzDesc*)desc); return qd->scalex*qd->width*72.0; }
-double QuartzDevice_GetScaledHeight(QuartzDesc_t desc)  { QuartzDesc *qd=((QuartzDesc*)desc); return qd->scaley*qd->height*72.0; }
-void QuartzDevice_SetScaledSize(QuartzDesc_t desc, double width, double height) {
-    QuartzDesc *qd=((QuartzDesc*)desc);
-    QuartzDevice_SetWidth(desc, width/qd->scalex/72.0);
-    QuartzDevice_SetHeight(desc, height/qd->scaley/72.0);
-}
-
 /* Uses (e.g. in window title) seems to assume this is 1-based */
 int QuartzDevice_DevNumber(QuartzDesc_t desc) {
     return 1 + ndevNumber((((QuartzDesc*)desc)->dev));
 }
 
 double QuartzDevice_GetWidth(QuartzDesc_t desc)	{ return ((QuartzDesc*)desc)->width;  }
-void   QuartzDevice_SetWidth(QuartzDesc_t desc,double width) {
-    ((QuartzDesc*)desc)->width = width;
-    ((QuartzDesc*)desc)->dev->right = width*72.0;
+double QuartzDevice_GetHeight(QuartzDesc_t desc) { return ((QuartzDesc*)desc)->height;   }
+void   QuartzDevice_SetSize(QuartzDesc_t desc, double width, double height) {
+    QuartzDesc *qd=((QuartzDesc*)desc);
+    qd->width = width;
+    qd->height = height;
+    qd->dev->right = width*72.0;
+    qd->dev->bottom = height*72.0;
 }
 
-double QuartzDevice_GetHeight(QuartzDesc_t desc) { return ((QuartzDesc*)desc)->height;   }
-void   QuartzDevice_SetHeight(QuartzDesc_t desc,double height) {
-    ((QuartzDesc*)desc)->height = height;
-    ((QuartzDesc*)desc)->dev->bottom = height*72.0;
+double QuartzDevice_GetScaledWidth(QuartzDesc_t desc)   { QuartzDesc *qd=((QuartzDesc*)desc); return qd->scalex*qd->width*72.0; }
+double QuartzDevice_GetScaledHeight(QuartzDesc_t desc)  { QuartzDesc *qd=((QuartzDesc*)desc); return qd->scaley*qd->height*72.0; }
+void QuartzDevice_SetScaledSize(QuartzDesc_t desc, double width, double height) {
+    QuartzDesc *qd=((QuartzDesc*)desc);
+    QuartzDevice_SetSize(desc, width/qd->scalex/72.0, height/qd->scaley/72.0);
 }
 
 double QuartzDevice_GetXScale(QuartzDesc_t desc) { return ((QuartzDesc*)desc)->scalex;  }
@@ -289,20 +288,6 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
     UNPROTECT(1);
 }
 
-#if 0
-/* FIXME: these are concepts in base graphics, and so should not
-   be present in a graphics device */
-#include <Rdevices.h> /* for GetDevice */
-double QuartzDevice_UserX(QuartzDesc_t desc,double x) { 
-    return GConvertX(x,GMapUnits(0),GMapUnits(1),
-		     GetDevice(ndevNumber(((QuartzDesc*)desc)->dev))); 
-}
-double QuartzDevice_UserY(QuartzDesc_t desc,double y) {
-    return GConvertX(y,GMapUnits(0),GMapUnits(1),
-		     GetDevice(ndevNumber(((QuartzDesc*)desc)->dev)));
-}
-#endif
-
 #pragma mark RGD API Function Prototypes
 
 static Rboolean RQuartz_Open(pDevDesc,QuartzDesc*,char*,double,double,int);
@@ -325,16 +310,7 @@ static void     RQuartz_MetricInfo(int,pGEcontext ,double*,double*,double*,pDevD
 
 #pragma mark Quartz device implementation
 
-void* QuartzDevice_Create(
-                          void *_dev,double scalex, double scaley,double ps,double width,double height,int bg,int aa,int fs,
-                          CGContextRef (*getCGContext)(QuartzDesc_t dev,void*userInfo), /* Get the context for this device */
-                          int          (*locatePoint)(QuartzDesc_t dev,void*userInfo,double*x,double*y),
-                          void         (*close)(QuartzDesc_t dev,void*userInfo),
-                          void         (*newPage)(QuartzDesc_t dev,void*userInfo, int flags),
-                          void         (*state)(QuartzDesc_t dev,void*userInfo, int state),
-                          void*        (*par)(QuartzDesc_t dev,void*userInfo,void*par),
-                          void         (*sync)(QuartzDesc_t dev,void*userInfo),
-                          void*userInfo) 
+void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def) 
 {
     pDevDesc dev = _dev;
 
@@ -342,7 +318,7 @@ void* QuartzDevice_Create(
     
     dev->startfill = R_RGB(255,255,255);
     dev->startcol  = R_RGB(0,0,0);
-    dev->startps   = ps;
+    dev->startps   = def->pointsize;
     dev->startfont = 1;
     dev->startlty  = LTY_SOLID;
     dev->startgamma= 1;
@@ -385,22 +361,22 @@ void* QuartzDevice_Create(
     dev->displayListOn = TRUE;       
     
     QuartzDesc *qd = calloc(1,sizeof(QuartzDesc));
-    qd->width      = width;
-    qd->height     = height;
-    qd->userInfo   = userInfo;
-    qd->getCGContext=getCGContext;
-    qd->locatePoint= locatePoint;
-    qd->close      = close;
-    qd->newPage    = newPage;
-    qd->state      = state;
-    qd->sync       = sync;
-    qd->scalex     = scalex;
-    qd->scaley     = scaley;
+    qd->width      = def->width;
+    qd->height     = def->height;
+    qd->userInfo   = def->userInfo;
+    qd->getCGContext=def->getCGContext;
+    qd->locatePoint= def->locatePoint;
+    qd->close      = def->close;
+    qd->newPage    = def->newPage;
+    qd->state      = def->state;
+    qd->sync       = def->sync;
+    qd->scalex     = def->scalex;
+    qd->scaley     = def->scaley;
     qd->tscale     = 1.0;
-    qd->ps         = ps;
-    qd->bg         = bg;
-    qd->antialias  = aa;
-    qd->flags      = fs;
+    qd->ps         = def->pointsize;
+    qd->bg         = def->bg;
+    qd->antialias  = /* FIXME: aa as a flag */ 1;
+    qd->flags      = def->flags;
     qd->gstate     = 0;
     
     dev->deviceSpecific = qd;
@@ -408,14 +384,46 @@ void* QuartzDevice_Create(
     
     QuartzDevice_Update(qd);
     
-    dev->right = width*72.0;
-    dev->bottom= height*72.0;
+    dev->right = def->width*72.0;
+    dev->bottom= def->height*72.0;
     qd->clipRect = CGRectMake(0,0,dev->right,dev->bottom);
     
     qd->dirty = 0;
     qd->redraw= 0;
     qd->async = 0;
     return (QuartzDesc_t)qd;
+}
+
+static QuartzFunctions_t qfn = {
+    QuartzDevice_Create,
+    QuartzDevice_DevNumber,
+    QuartzDevice_Kill,
+    QuartzDevice_ResetContext,
+    QuartzDevice_GetWidth,
+    QuartzDevice_GetHeight,
+    QuartzDevice_SetSize,
+    QuartzDevice_GetScaledWidth,
+    QuartzDevice_GetScaledHeight,
+    QuartzDevice_SetScaledSize,
+    QuartzDevice_GetXScale,
+    QuartzDevice_GetYScale,
+    QuartzDevice_SetScale,
+    QuartzDevice_SetTextScale,
+    QuartzDevice_GetTextScale,
+    QuartzDevice_SetPointSize,
+    QuartzDevice_GetPointSize,
+    QuartzDevice_GetDirty,
+    QuartzDevice_SetDirty,
+    QuartzDevice_ReplayDisplayList,
+    QuartzDevice_GetSnapshot,
+    QuartzDevice_RestoreSnapshot,
+    QuartzDevice_GetAntialias,
+    QuartzDevice_SetAntialias,
+    QuartzDevice_GetBackground
+};
+
+QuartzFunctions_t *getQuartzAPI() {
+    return &qfn;
 }
 
 /* old OS X versions has different names for some of the CGFont stuff */
@@ -615,17 +623,17 @@ static void RQuartz_Clip(double x0,double x1,double y0,double y1,DEVDESC) {
     CGContextClipToRect(ctx,xd->clipRect);
 }
 
-CFStringRef prepareText(CTXDESC,const char *text,UniChar **buffer,int *free) {
+static CFStringRef text2unichar(CTXDESC,const char *text,UniChar **buffer,int *free) {
     CFStringRef str;
     if(gc->fontface == 5 || strcmp(gc->fontfamily,"symbol") == 0)
         str = CFStringCreateWithCString(NULL,text,kCFStringEncodingMacSymbol);
     else {
         str = CFStringCreateWithCString(NULL,text,kCFStringEncodingUTF8);
         /* Try fallback Latin1 encoding if UTF8 doesn't work. */
-        if(NULL == str)
+        if(!str)
             CFStringCreateWithCString(NULL,text,kCFStringEncodingISOLatin1);
     }
-    /* FIXME: this can fail, e.g. for 0x7f in the symbol font.  Why? */
+    if (!str) return NULL;
     *buffer = (UniChar*)CFStringGetCharactersPtr(str);
     if (*buffer == NULL) {
         CFIndex length = CFStringGetLength(str);
@@ -647,7 +655,8 @@ static double RQuartz_StrWidth(const char *text,CTXDESC) {
         CGGlyph   *glyphs;
         int      *advances;
         int Free = 0,len,i;
-        CFStringRef str = prepareText(gc,dd,text,&buffer,&Free);
+        CFStringRef str = text2unichar(gc,dd,text,&buffer,&Free);
+	if (!str) return 0.0; /* invalid text contents */
         len = CFStringGetLength(str);
         glyphs = malloc(sizeof(CGGlyph)*len);
         advances = malloc(sizeof(int)*len);
@@ -680,7 +689,8 @@ static void RQuartz_Text(double x,double y,const char *text,double rot,double ha
     
     int Free = 0,len,i;
     float width = 0.0;
-    CFStringRef str = prepareText(gc,dd,text,&buffer,&Free);
+    CFStringRef str = text2unichar(gc,dd,text,&buffer,&Free);
+    if (!str) return; /* invalid text contents */
     len = CFStringGetLength(str);
     glyphs = malloc(sizeof(CGGlyph)*len);
     CGFontGetGlyphsForUnichars(font,buffer,glyphs,len);
@@ -794,7 +804,7 @@ RQuartz_MetricInfo(int c, pGEcontext gc,
         int free_buffer = 0, len;
 	if (c >= 0 && c <= ((mbcslocale && gc->fontface != 5) ? 127 : 255)) {
 	    char    text[2] = { c, 0 };
-	    str = prepareText(gc, dd, text, &buffer, &free_buffer);
+	    str = text2unichar(gc, dd, text, &buffer, &free_buffer);
 	    len = CFStringGetLength(str);
 	    if (len > 7) return; /* this is basically impossible,
 				    but you never know */
@@ -842,8 +852,7 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC) {
 /* disabled for now until we get to test in on 10.3 #include "qdCarbon.h" */
 
 /* current fake */
-Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
-                                   Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg, const char *title, double *dpi) {
+Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd, QuartzFunctions_t *fn, QuartzParameters_t *par) {
     return FALSE;
 }
 
@@ -851,10 +860,8 @@ Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd,const char *type,const char *file
 
 /* C version of the Quartz call (experimental)
    returns 0 on success, error code on failure */
-int Quartz_C(const char *type, const char *file, double width, double height, double ps,
-             const char *family, int aa, int fsm, const char *title, int bg, double *dpi,
-             quartz_create_fn_t q_create) {
-    if (!q_create) return -3;
+int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create) {
+    if (!q_create || !par) return -3;
     {
         char    *vmax = vmaxget();
         R_CheckDeviceAvailable();
@@ -867,7 +874,7 @@ int Quartz_C(const char *type, const char *file, double width, double height, do
             if (!dev)
                 return -1;
             
-            if (!q_create(dev,type,file,width,height,ps,family,aa,fsm,TRUE,1,bg,title,dpi)) {
+            if (!q_create(dev, par)) {
                 vmaxset(vmax);
                 free(dev);
                 return -2;
@@ -963,27 +970,38 @@ SEXP Quartz(SEXP args) {
 	if (!dev)
 	    error(_("Unable to create device description."));
 
+	QuartzParameters_t qpar = {
+	    sizeof(qpar),
+	    type, file, title,
+	    -1.0, -1.0, width, height, ps,
+	    family,
+	    antialias?QPFLAG_ANTIALIAS:0,
+	    -1,
+	    bg, 0xffffff,
+	    dpi
+	};
+	
 	/* re-routed code has the first shot */
-	if (ptr_QuartzDeviceCreate)
-	    succ = ptr_QuartzDeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
+	if (ptr_QuartzBackend)
+	    succ = ptr_QuartzBackend(dev, &qfn, &qpar);
 	
 	if (!succ) { /* try internal modules next */
 	    switch (module) {
             case QBE_COCOA:
-                succ = QuartzCocoa_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
+                succ = QuartzCocoa_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_NATIVE:
                 /* native is essentially cocoa with carbon fall-back */
-                succ = QuartzCocoa_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
+                succ = QuartzCocoa_DeviceCreate(dev, &qfn, &qpar);
                 if (succ) break;
             case QBE_CARBON:
-                succ = QuartzCarbon_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
+                succ = QuartzCarbon_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_PDF:
-                succ = QuartzPDF_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,title,dpi);
+                succ = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_BITMAP:
-                succ = QuartzBitmap_DeviceCreate(dev,type,file,width,height,ps,family,antialias,smooth,autorefresh,quartzpos,bg,dpi);
+                succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
                 break;
 	    }
 	}
@@ -1010,6 +1028,10 @@ SEXP Quartz(SEXP args) {
 SEXP Quartz(SEXP args) {
     warning(_("Quartz device is not available on this platform."));
     return R_NilValue;
+}
+
+void *getQuartzAPI() {
+    return NULL;
 }
 
 #endif

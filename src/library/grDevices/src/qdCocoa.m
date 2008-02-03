@@ -45,12 +45,14 @@ struct sQuartzCocoaDevice {
     BOOL            closing;
     int             inLocator;
     double          locator[2]; /* locaton click position (x,y) */
-	BOOL            inHistoryRecall;
+    BOOL            inHistoryRecall;
     int             inHistory;
-	SEXP            history[histsize];
-	int             histptr;
+    SEXP            history[histsize];
+    int             histptr;
     const char *title;
 };
+
+static QuartzFunctions_t *qf;
 
 /* --- QuartzCocoa view class --- */
 
@@ -148,12 +150,12 @@ struct sQuartzCocoaDevice {
         /* Rprintf(" - have no layer, creating one (%f x %f)\n", ci->bounds.size.width, ci->bounds.size.height); */
         ci->layer = CGLayerCreateWithContext(ctx, size, 0);
         ci->layerContext = CGLayerGetContext(ci->layer);
-        QuartzDevice_ResetContext(ci->qd);
+        qf->ResetContext(ci->qd);
         if (ci->inHistoryRecall && ci->inHistory >= 0) {
-            QuartzDevice_RestoreSnapshot(ci->qd, ci->history[ci->inHistory]);
+            qf->RestoreSnapshot(ci->qd, ci->history[ci->inHistory]);
             ci->inHistoryRecall = NO;
         } else
-            QuartzDevice_ReplayDisplayList(ci->qd);
+            qf->ReplayDisplayList(ci->qd);
     } else {
         CGSize size = CGLayerGetSize(ci->layer);
         /* Rprintf(" - have layer %p\n", ci->layer); */
@@ -169,13 +171,13 @@ struct sQuartzCocoaDevice {
                 ci->layer = 0;
                 ci->layerContext = 0;
                 /* set size */
-                QuartzDevice_SetScaledSize(ci->qd, ci->bounds.size.width, ci->bounds.size.height);
+                qf->SetScaledSize(ci->qd, ci->bounds.size.width, ci->bounds.size.height);
                 /* issue replay */
                 if (ci->inHistoryRecall && ci->inHistory >= 0) {
-                    QuartzDevice_RestoreSnapshot(ci->qd, ci->history[ci->inHistory]);
+                    qf->RestoreSnapshot(ci->qd, ci->history[ci->inHistory]);
                     ci->inHistoryRecall = NO;
                 } else
-                    QuartzDevice_ReplayDisplayList(ci->qd);
+                    qf->ReplayDisplayList(ci->qd);
             }
         }
     }
@@ -199,7 +201,7 @@ struct sQuartzCocoaDevice {
 }
 
 static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
-    SEXP ss = (SEXP) QuartzDevice_GetSnapshot(ci->qd, last);
+    SEXP ss = (SEXP) qf->GetSnapshot(ci->qd, last);
     if (ss) { /* ss will be NULL if there is no content, e.g. during the first call */
         R_PreserveObject(ss);
         if (ci->inHistory != -1) { /* if we are editing an existing snapshot, replace it */
@@ -223,7 +225,7 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
     hp &= histsize - 1;
     if (hp == ci->histptr || !ci->history[hp])
         return;	
-    if (QuartzDevice_GetDirty(ci->qd)) /* save the current snapshot if it is dirty */
+    if (qf->GetDirty(ci->qd)) /* save the current snapshot if it is dirty */
         QuartzCocoa_SaveHistory(ci, 0);
     ci->inHistory = hp;
     ci->inHistoryRecall = YES;
@@ -242,7 +244,7 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
     hp &= histsize - 1;
     if (hp == ci->histptr || !ci->history[hp]) /* we can't really get past the last entry */
         return;
-    if (QuartzDevice_GetDirty(ci->qd)) /* save the current snapshot if it is dirty */
+    if (qf->GetDirty(ci->qd)) /* save the current snapshot if it is dirty */
         QuartzCocoa_SaveHistory(ci, 0);
     
     ci->inHistory = hp;
@@ -282,7 +284,7 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
 
 - (void)windowWillClose:(NSNotification *)aNotification {
     ci->closing = YES;
-    QuartzDevice_Kill(ci->qd);
+    qf->Kill(ci->qd);
 }
 
 - (void)resetCursorRects
@@ -490,7 +492,7 @@ static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
         CGSize size = CGSizeMake(ci->bounds.size.width, ci->bounds.size.height);
         ci->layer = CGLayerCreateWithContext(ci->context, size, 0);
         ci->layerContext = CGLayerGetContext(ci->layer);
-        QuartzDevice_ResetContext(dev);
+        qf->ResetContext(dev);
         /* Rprintf(" - creating new layer (%p - ctx: %p, %f x %f)\n", ci->layer, ci->layerContext,  size.width, size.height); */
     }
 }
@@ -506,19 +508,21 @@ static void QuartzCocoa_State(QuartzDesc_t dev, void *userInfo, int state) {
     NSString *title;
     if (!ci || !ci->view) return;
     if (!ci->title) ci->title=strdup("Quartz %d");
-    title = [NSString stringWithFormat: [NSString stringWithUTF8String: ci->title], QuartzDevice_DevNumber(dev)];
+    title = [NSString stringWithFormat: [NSString stringWithUTF8String: ci->title], qf->DevNumber(dev)];
     if (state) title = [title stringByAppendingString: @" [*]"];
     [[ci->view window] setTitle: title];
 }
 
-Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
-                                  Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg,const char *title, double *dpi)
+Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
     void *qd;
+    double *dpi = par->dpi, width = par->width, height = par->height;
     double mydpi[2] = { 72.0, 72.0 };
     double scalex = 1.0, scaley = 1.0;
     QuartzCocoaDevice *dev;
 	
+    if (!qf) qf = fn;
+    
     { /* check whether we have access to a display at all */
 	CGDisplayCount dcount = 0;
 	CGGetOnlineDisplayList(255, NULL, &dcount);
@@ -547,23 +551,27 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd,const char *type,const char *file,dou
     dev = malloc(sizeof(QuartzCocoaDevice));
     memset(dev, 0, sizeof(QuartzCocoaDevice));
 
-    qd = QuartzDevice_Create(dd,scalex,scaley,pointsize,width,height,bg,antialias,
-                             QDFLAG_INTERACTIVE, /* we use our own history */
-                             QuartzCocoa_GetCGContext,
-                             QuartzCocoa_Locator,
-                             QuartzCocoa_Close,
-                             QuartzCocoa_NewPage,
-                             QuartzCocoa_State,
-                             NULL,/* par */
-                             QuartzCocoa_Sync,
-                             dev);
+    QuartzBackend_t qdef = {
+	sizeof(qdef), width, height, scalex, scaley, par->pointsize,
+	par->bg, par->canvas, par->flags | QDFLAG_INTERACTIVE,
+	dev,
+	QuartzCocoa_GetCGContext,
+	QuartzCocoa_Locator,
+	QuartzCocoa_Close,
+	QuartzCocoa_NewPage,
+	QuartzCocoa_State,
+	NULL,/* par */
+	QuartzCocoa_Sync,
+    };
+    
+    qd = qf->Create(dd, &qdef);
     if (!qd) return FALSE;
     dev->qd = qd;
     /* we cannot substitute the device number as it is not yet known at this point */
-    dev->title = strdup(title);
+    dev->title = strdup(par->title);
     {
         NSRect rect = NSMakeRect(20.0, 20.0, /* FIXME: proper position */
-                                 QuartzDevice_GetScaledWidth(qd), QuartzDevice_GetScaledHeight(qd));
+                                 qf->GetScaledWidth(qd), qf->GetScaledHeight(qd));
         if (!cocoa_initialized) initialize_cocoa();
         /* Rprintf("scale=%f/%f; size=%f x %f\n", scalex, scaley, rect.size.width, rect.size.height); */
         [QuartzCocoaView quartzWindowWithRect: rect andInfo: dev];

@@ -86,92 +86,105 @@ extern "C" {
 
 typedef void* QuartzDesc_t;
 
-/* embedded Quartz support hook (defined in unix/aqua.c):
-    dd = should be passed-through to QuartzDevice_Create
-    type = name of the desired Quartz output type
-    file = filename (optional)
-    width, height = size (in inches)
-    pointsize, family = initial text properties
-    antialias, smooth, autorefresh = flags
-    quartzpos = desired initial position specification
-    bg = background color
-    title = window title (optional)
-    dpi = either NULL (auto-detect) or double[2] with x and y DPI
-    */
-extern Rboolean (*ptr_QuartzDeviceCreate)(void *dd,const char *type,
-       const char *file, double width, double height, double pointsize,
-       const char *family, Rboolean antialias, Rboolean smooth,
-       Rboolean autorefresh,int quartzpos, int bg, const char *title,
-       double *dpi);
+typedef struct QuartzBackend_s {
+    int    size;                          /* structure size */
+    double width, height;
+    double scalex, scaley, pointsize;
+    int    bg, canvas;
+    int    flags;
+    void*  userInfo;
+    CGContextRef (*getCGContext)(QuartzDesc_t dev,void*userInfo); /* Get the context for this device */
+    int          (*locatePoint)(QuartzDesc_t dev,void*userInfo,double*x,double*y);
+    void         (*close)(QuartzDesc_t dev,void*userInfo);
+    void         (*newPage)(QuartzDesc_t dev,void*userInfo, int flags);
+    void         (*state)(QuartzDesc_t dev,void*userInfo, int state);
+    void*        (*par)(QuartzDesc_t dev,void*userInfo,void*par);
+    void         (*sync)(QuartzDesc_t dev,void*userInfo);
+} QuartzBackend_t;
 
+#define QPFLAG_ANTIALIAS 0x0100
+
+/* parameters that are passed to functions that create backends */
+typedef struct QuartzParameters_s {
+    int        size;                   /* structure size */
+    const char *type, *file, *title;
+    double     x, y, width, height, pointsize;
+    const char *family;
+    int        flags;
+    int        connection;
+    int        bg, canvas;
+    double     *dpi;
+    /* the following parameters can be used to pass custom parameters when desired */
+    double     pard1, pard2;
+    int        pari1, pari2;
+    const char *pars1, *pars2;
+    void       *parv;
+} QuartzParameters_t;
+    
 /* all device implementations have to call this general Quartz device constructor at some point */
-QuartzDesc_t QuartzDevice_Create(
-	void *dd,
-	double scalex, double scaley, double ps,
-        double width,double height,
-        int bg,int aa,int fs,
-	CGContextRef (*getCGContext)(QuartzDesc_t dev,void*userInfo), 			/* Get the context for this device (mandatory) */
-	int          (*locatePoint)(QuartzDesc_t dev,void*userInfo,double*x,double*y),	/* Locate a point on the device */
-	void         (*close)(QuartzDesc_t dev,void*userInfo),				/* Close the device */
-	void         (*newPage)(QuartzDesc_t dev,void*userInfo, int flags),			/* Start a new page */
-	void         (*state)(QuartzDesc_t dev,void*userInfo, int state),		/* Change state (active/inactive) */
-	void*        (*par)(QuartzDesc_t dev,void*userInfo, void*par),			/* Change graphics parameters */
-	void         (*sync)(QuartzDesc_t dev,void*userInfo),				/* synchronize display with backing plane */
-	void* userInfo);  /* pointer that will be available to all calls for backend-specific data */
+QuartzDesc_t QuartzDevice_Create(void *dd, QuartzBackend_t* def);
+    
+typedef struct QuartzFunctons_s {
+    void*  (*Create)(void *, QuartzBackend_t *);  /* create a new device */
+    int    (*DevNumber)(QuartzDesc_t desc);       /* returns device number */
+    void   (*Kill)(QuartzDesc_t desc);            /* call to close the device */
+    void   (*ResetContext)(QuartzDesc_t desc);    /* notifies Q back-end that the implementation has created a new context */
+    double (*GetWidth)(QuartzDesc_t desc);        /* get device width (in inches) */
+    double (*GetHeight)(QuartzDesc_t desc);       /* get device height (in inches) */
+    void   (*SetSize)(QuartzDesc_t desc, double width, double height); /* set device size (in inches) */
+    
+    double (*GetScaledWidth)(QuartzDesc_t desc);  /* get device width (in pixels) */
+    double (*GetScaledHeight)(QuartzDesc_t desc); /* get device height (in pixels) */
+    void   (*SetScaledSize)(QuartzDesc_t desc, double width, double height); /* set device size (in pixels) */
 
-int  QuartzDevice_DevNumber(QuartzDesc_t desc);       /* returns device number */
-void QuartzDevice_Kill(QuartzDesc_t desc);            /* call to close the device */
-void QuartzDevice_ResetContext(QuartzDesc_t desc);    /* notifies Q back-end that the implementation has created a new context */
+    double (*GetXScale)(QuartzDesc_t desc);     /* get x scale factor (px/pt ratio) */
+    double (*GetYScale)(QuartzDesc_t desc);     /* get y scale factor (px/pt ratio) */
+    void   (*SetScale)(QuartzDesc_t desc,double scalex, double scaley); /* sets both scale factors (px/pt ratio) */
 
-double QuartzDevice_GetWidth(QuartzDesc_t desc);      /* get device width (in inches) */
-void   QuartzDevice_SetWidth(QuartzDesc_t desc,double width); /* set device width (in inches) */
+    void   (*SetTextScale)(QuartzDesc_t desc,double scale); /* sets text scale factor */
+    double (*GetTextScale)(QuartzDesc_t desc);  /* sets text scale factor */
 
-double QuartzDevice_GetHeight(QuartzDesc_t desc);     /* get device height (in inches) */
-void   QuartzDevice_SetHeight(QuartzDesc_t desc,double height); /* get device height (in inches) */
+    void   (*SetPointSize)(QuartzDesc_t desc,double ps); /* sets point size */
+    double (*GetPointSize)(QuartzDesc_t desc);  /* gets point size */
 
-double QuartzDevice_GetScaledWidth(QuartzDesc_t desc);/* get device width (in pixels) */
-double QuartzDevice_GetScaledHeight(QuartzDesc_t desc);/* get device height (in pixels) */
-void   QuartzDevice_SetScaledSize(QuartzDesc_t desc, double width, double height); /* set device size (in pixels) */
+    int    (*GetDirty)(QuartzDesc_t desc);        /* sets dirty flag */
+    void   (*SetDirty)(QuartzDesc_t desc,int dirty); /* gets dirty flag */
 
-double QuartzDevice_GetXScale(QuartzDesc_t desc);     /* get x scale factor (px/pt ratio) */
-double QuartzDevice_GetYScale(QuartzDesc_t desc);     /* get y scale factor (px/pt ratio) */
-void   QuartzDevice_SetScale(QuartzDesc_t desc,double scalex, double scaley); /* sets both scale factors (px/pt ratio) */
+    void   (*ReplayDisplayList)(QuartzDesc_t desc); /* replay display list
+     Note: it inhibits sync calls during repaint,
+     the caller is responsible for calling sync if needed.
+     Dirty flag is kept unmodified */
+    void*  (*GetSnapshot)(QuartzDesc_t desc, int last);    /* create a (replayable) snapshot of the device contents. when last is set then the last stored display list is used, otherwise a new snapshot is created */
+    void   (*RestoreSnapshot)(QuartzDesc_t desc,void* snapshot); /* restore a snapshot. also clears the dirty flag */
 
-void   QuartzDevice_SetTextScale(QuartzDesc_t desc,double scale); /* sets text scale factor */
-double QuartzDevice_GetTextScale(QuartzDesc_t desc);  /* sets text scale factor */
+    int    (*GetAntialias)(QuartzDesc_t desc);    /* get anti-alias flag */
+    void   (*SetAntialias)(QuartzDesc_t desc,int aa); /* set anti-alias flag */
 
-void   QuartzDevice_SetPointSize(QuartzDesc_t desc,double ps); /* sets point size */
-double QuartzDevice_GetPointSize(QuartzDesc_t desc);  /* gets point size */
+    int    (*GetBackground)(QuartzDesc_t desc);   /* get background color */
+} QuartzFunctions_t;
 
-int  QuartzDevice_GetDirty(QuartzDesc_t desc);        /* sets dirty flag */
-void QuartzDevice_SetDirty(QuartzDesc_t desc,int dirty); /* gets dirty flag */
+    /* from aqua */
+QuartzFunctions_t *getQuartzAPI();
 
-void  QuartzDevice_ReplayDisplayList(QuartzDesc_t desc); /* replay display list
-                                 Note: it inhibits sync calls during repaint,
-                                 the caller is responsible for calling sync if needed.
-                                 Dirty flag is kept unmodified */
-void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last);    /* create a (replayable) snapshot of the device contents. when last is set then the last stored display list is used, otherwise a new snapshot is created */
-void  QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snapshot); /* restore a snapshot. also clears the dirty flag */
-
-int  QuartzDevice_GetAntialias(QuartzDesc_t desc);    /* get anti-alias flag */
-void QuartzDevice_SetAntialias(QuartzDesc_t desc,int aa); /* set anti-alias flag */
-
-int  QuartzDevice_GetFontSmooth(QuartzDesc_t desc);   /* get font smoothing flag */
-void QuartzDevice_SetFontSmooth(QuartzDesc_t desc,int fs); /* get font smoothing flag */
-
-int  QuartzDevice_GetBackground(QuartzDesc_t desc);   /* get background color */
-
-double QuartzDevice_UserX(QuartzDesc_t desc,double x);
-double QuartzDevice_UserY(QuartzDesc_t desc,double y);
-
+/* embedded Quartz support hook (defined in unix/aqua.c):
+     dd = should be passed-through to QuartzDevice_Create
+     type = name of the desired Quartz output type
+     file = filename (optional)
+     width, height = size (in inches)
+     pointsize, family = initial text properties
+     antialias, smooth, autorefresh = flags
+     quartzpos = desired initial position specification
+     bg = background color
+     title = window title (optional)
+     dpi = either NULL (auto-detect) or double[2] with x and y DPI
+     */
+extern Rboolean (*ptr_QuartzBackend)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
+    
 /* this is an experimental interface that allows to start a Quartz device from C code instead of going through the Quartz R function */
-typedef int (*quartz_create_fn_t)(void *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
-                                  int antialias,int smooth,int autorefresh,int quartzpos,int bg, const char *title, double *dpi);
+typedef int (*quartz_create_fn_t)(void *dd, QuartzParameters_t *par);
 /* C version of the Quartz call (experimental)
    returns 0 on success, error code on failure */
-int Quartz_C(const char *type, const char *file, double width, double height, double ps,
-             const char *family, int aa, int fsm, const char *title, int bg, double *dpi,
-             quartz_create_fn_t q_create);
+int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create);
 /* R supplied q_create values available: QuartzCocoa_DeviceCreate, QuartzCarbon_DeviceCreate, QuartzBitmap_DeviceCreate, QuartzPDF_DeviceCreate or the value of ptr_QuartzDeviceCreate */
 #ifdef __cplusplus
 }

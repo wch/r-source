@@ -38,6 +38,8 @@ typedef struct {
     char data[1];		/* Actual bitmap bytes */
 } QuartzBitmapDevice;
 
+static QuartzFunctions_t *qf;
+
 CGContextRef QuartzBitmap_GetCGContext(QuartzDesc_t dev,void *userInfo) {
     return ((QuartzBitmapDevice*)userInfo)->bitmap;
 }
@@ -97,11 +99,14 @@ void QuartzBitmap_Close(QuartzDesc_t dev,void *userInfo) {
     free(qbd);
 }
 
-Rboolean QuartzBitmap_DeviceCreate(void *dd,const char *type,const char *file,double width,double height,double pointsize,const char *family,
-                                   Rboolean antialias,Rboolean smooth,Rboolean autorefresh,int quartzpos,int bg, double *dpi) {
+Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par) {
     /* In the case of a zero length string we default to PNG presently. This 
        should probably be an option somewhere. */
+    double *dpi = par->dpi;
+    double width = par->width, height = par->height;
+    const char *type = par->type;
     double mydpi[2] = { 72.0, 72.0 };
+    if (!qf) qf = fn;
     if(!type || strlen(type) == 0) type = "public.png";
     Rboolean ret = FALSE;
     if (!dpi) dpi=mydpi;
@@ -111,35 +116,42 @@ Rboolean QuartzBitmap_DeviceCreate(void *dd,const char *type,const char *file,do
     CFArrayRef  types = CGImageDestinationCopyTypeIdentifiers();
     CFStringRef mine  = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)type,strlen(type),kCFStringEncodingUTF8,FALSE);
     if(CFArrayContainsValue(types,CFRangeMake(0,CFArrayGetCount(types)),mine)) {
-        size_t w = dpi[0]*width;
-        size_t h = dpi[1]*height;
+        size_t w = dpi[0] * width;
+        size_t h = dpi[1] * height;
         size_t rb= (w*8*4+7)/8; /* Bytes per row */
         size_t s = h*rb;
         QuartzDesc_t qd;
         /* Allocate sufficient space */
         QuartzBitmapDevice *dev = malloc(sizeof(QuartzBitmapDevice)+s);
         dev->length = s;
-        dev->uti  = (NULL == type) ? NULL : strdup(type);
-        dev->path = (NULL == file) ? NULL : strdup(file);
-        memset(dev->data,0,s);
-        dev->bitmap = CGBitmapContextCreate(dev->data,w,h,8,rb,CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),kCGImageAlphaPremultipliedLast);
-        CGContextTranslateCTM(dev->bitmap,0.0,height*dpi[1]);
-        CGContextScaleCTM(dev->bitmap,1.0,-1.0);
+        dev->uti  = type ? strdup(type) : NULL;
+        dev->path = par->file ? strdup(par->file) : NULL;
+        memset(dev->data, 0, s);
+        dev->bitmap = CGBitmapContextCreate(dev->data, w, h, 8, rb ,
+					    CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
+					    kCGImageAlphaPremultipliedLast);
+        CGContextTranslateCTM(dev->bitmap, 0.0, height*dpi[1]);
+        CGContextScaleCTM(dev->bitmap, 1.0, -1.0);
         /* Rprintf("dpi=%f/%f, scale=%f/%f, wh=%f/%f\n", dpi[0], dpi[1], dpi[0]/72.0, dpi[1]/72.0, width, height); */
-        if(!(qd=QuartzDevice_Create(dd,dpi[0]/72.0,dpi[1]/72.0,pointsize,width,height,bg,antialias,
-                                       0, /* no flags */
-                                       QuartzBitmap_GetCGContext,
-                                       NULL,	/* locate */
-                                       QuartzBitmap_Close,
-                                       NULL,	/* new page */
-                                       NULL,	/* state */
-                                       NULL,	/* par */
-                                       NULL,    /* sync */
-                                       dev)))
+	QuartzBackend_t qdef = {
+	    sizeof(qdef), width, height, dpi[0]/72.0, dpi[1]/72.0, par->pointsize,
+	    par->bg, par->canvas, par->flags,
+	    dev,
+	    QuartzBitmap_GetCGContext,
+	    NULL,	/* locate */
+	    QuartzBitmap_Close,
+	    NULL,	/* new page */
+	    NULL,	/* state */
+	    NULL,	/* par */
+	    NULL,    /* sync */
+	};
+	
+	
+	if (!qf->Create(dd, &qdef))
             QuartzBitmap_Close(NULL,dev);
         else {
             ret = TRUE;
-            QuartzDevice_ResetContext(qd);
+            qf->ResetContext(qd);
         }
     }
     CFRelease(mine);

@@ -34,7 +34,8 @@
 
 #include <R_ext/GraphicsEngine.h> 
 #include <R_ext/Rdynload.h>
- 
+#include <R_ext/QuartzDevice.h>
+
 extern Rboolean useaqua; /* from src/unix/system.c */
 
 
@@ -43,22 +44,31 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
     ptr_do_selectlist;
 
-DL_FUNC ptr_R_ProcessEvents, ptr_CocoaInnerQuartzDevice, 
-    ptr_CocoaGetQuartzParameters, ptr_CocoaSystem;
+DL_FUNC ptr_R_ProcessEvents, ptr_CocoaSystem;
+
+/* deprecated pointers, not used anymore */
+DL_FUNC ptr_CocoaInnerQuartzDevice, ptr_CocoaGetQuartzParameters;
 
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
-DL_FUNC ptr_QuartzDeviceCreate;
+/* new quartz hook */
+Rboolean (*ptr_QuartzBackend)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
-/* new general Quartz call */
-Rboolean QuartzDeviceCreate(NewDevDesc *dd,const char *type,const char *file,
-	double width,double height,double pointsize,const char *family,Rboolean antialias,Rboolean smooth,
-	Rboolean autorefresh,int quartzpos, int bg, const char *title, double *dpi)
-{
-  if(NULL == ptr_QuartzDeviceCreate) return FALSE;
-  return (Rboolean)ptr_QuartzDeviceCreate(dd, type, file, width, height,
-					  pointsize, family, antialias, smooth, autorefresh,
-					  quartzpos, bg, title, dpi);
+static QuartzFunctions_t* qfn;
+
+QuartzFunctions_t *getQuartzAPI(void) {
+    if (qfn) return qfn;
+    {
+	QuartzFunctions_t *(*fn)(void);
+	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
+	if (!fn) {
+	    /* we need to load grDevices - not sure if this is the best way, though ... */
+	    eval(LCONS(install("library"),CONS(install("grDevices"),R_NilValue)),R_GlobalEnv);
+	    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
+	    if (!fn) error(_("unable to load Quartz"));
+	}
+	return fn();
+    }
 }
 
 /* obsolete Quartz Cocoa call */
