@@ -285,12 +285,17 @@ double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
 
 #define RGBpar			Rf_RGBpar
 #define col2name                Rf_col2name
+#define name2col		Rf_name2col
 
-/* Convert an R colour specification (which might be a number or */
-/* a string) into an internal colour specification. */
+/* Convert an element of a R colour specification (which might be a
+   number or a string) into an internal colour specification. */
 unsigned int RGBpar(SEXP, int);
-    /* Convert an internal colour specification into a colour name */
-const char *col2name(unsigned int col); /* used in grid */
+/* Convert an internal colour specification to/from a colour name */
+const char *col2name(unsigned int col); /* used in par.c, grid */
+unsigned int name2col(const char *);    /* used by plotmath.c */
+/* Convert either a name or a #RRGGBB[AA] string to internal */
+unsigned int R_GE_str2col(const char *s);
+
 
 
 /*
@@ -340,8 +345,6 @@ R_GE_lineend GE_LENDpar(SEXP value, int ind);
 SEXP GE_LENDget(R_GE_lineend lend);
 R_GE_linejoin GE_LJOINpar(SEXP value, int ind);
 SEXP GE_LJOINget(R_GE_linejoin ljoin);
-
-unsigned int R_GE_str2col(const char *s);
 
 void GESetClip(double x1, double y1, double x2, double y2, pGEDevDesc dd);
 void GENewPage(R_GE_gcontext *gc, pGEDevDesc dd);

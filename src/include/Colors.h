@@ -25,34 +25,29 @@
 #define COLOR_TABLE_SIZE 1024
 
 /* always remap private functions */
-#define char2col		Rf_char2col
-#define CheckColor		Rf_CheckColor
 #define isNAcol			Rf_isNAcol
-#define labelformat		Rf_labelformat
-#define name2col		Rf_name2col
-#define number2col		Rf_number2col
-#define rgb2col			Rf_rgb2col
-#define RGB2rgb			Rf_RGB2rgb
-#define RGBA2rgb		Rf_RGBA2rgb
-#define ScaleColor		Rf_ScaleColor
-#define StrMatch		Rf_StrMatch
 
 /* hsv2rgb and rgb2hsv are in Utils.h */
 
 		/* Miscellaneous (from colors.c) */
 
+Rboolean isNAcol(SEXP col, int index, int ncol); /* used in plot[3d].c */
+
+
+#ifdef UNUSED
+#define char2col		Rf_char2col
+#define CheckColor		Rf_CheckColor
+#define rgb2col			Rf_rgb2col
+#define RGB2rgb			Rf_RGB2rgb
+#define RGBA2rgb		Rf_RGBA2rgb
+#define ScaleColor		Rf_ScaleColor
+unsigned int char2col(const char *); /* rgb2col() or name2col() */
 unsigned int rgb2col(const char *);
-unsigned int name2col(const char *);
-unsigned int number2col(const char *);
-unsigned int char2col(const char *);/* rgb2col() or name2col() */
 unsigned int ScaleColor(double x);
 unsigned int CheckColor(int x);
-Rboolean isNAcol(SEXP col, int index, int ncol);
-
 char *RGB2rgb(unsigned int, unsigned int, unsigned int);
 char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
-
-int StrMatch(const char *s, const char *t);
+#endif
 
 #endif
 

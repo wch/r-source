@@ -60,19 +60,6 @@ typedef enum {
  CHARS = 15	/* multiples of text height (cex) */
 } GUnit;
 
-struct colorDataBaseEntry {
-	char *name;	/* X11 Color Name */
-	char *rgb;	/* #RRGGBB String */
-	unsigned int code;  /* Internal R Color Code */
-};
-
-/* from colors.c, not used elsewhere */
-typedef struct colorDataBaseEntry ColorDataBaseEntry;
-extern int R_ColorTableSize;
-extern unsigned int R_ColorTable[];
-extern ColorDataBaseEntry ColorDataBase[];
-extern const char *DefaultPalette[];
-
 /* Graphics State:
  *
  * The following structure defines state for a graphics device driver.

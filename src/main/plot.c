@@ -50,24 +50,6 @@ static R_INLINE double fmax2(double x, double y)
 
 /*  P A R A M E T E R	 U T I L I T I E S  */
 
-
-/* ProcessInLinePars handles inline par specifications in graphics functions.
- * It does this by calling Specify2() from ./par.c */
-
-attribute_hidden
-void ProcessInlinePars(SEXP s, pGEDevDesc dd, SEXP call)
-{
-    if (isList(s)) {
-	while (s != R_NilValue) {
-	    if (isList(CAR(s)))
-		ProcessInlinePars(CAR(s), dd, call);
-	    else if (TAG(s) != R_NilValue)
-		Specify2(CHAR(PRINTNAME(TAG(s))), CAR(s), dd, call);
-	    s = CDR(s);
-	}
-    }
-}
-
 /*
  * Extract specified par from list of inline pars
  */
@@ -175,8 +157,7 @@ SEXP FixupLwd(SEXP lwd, double dflt)
     return ans;
 }
 
-attribute_hidden
-SEXP FixupFont(SEXP font, int dflt)
+static SEXP FixupFont(SEXP font, int dflt)
 {
     int i, k, n;
     SEXP ans = R_NilValue;/* -Wall*/
@@ -248,8 +229,7 @@ SEXP FixupCol(SEXP col, unsigned int dflt)
     return ans;
 }
 
-attribute_hidden
-SEXP FixupCex(SEXP cex, double dflt)
+static SEXP FixupCex(SEXP cex, double dflt)
 {
     SEXP ans;
     int i, n;
@@ -588,7 +568,7 @@ SEXP attribute_hidden do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-void GetAxisLimits(double left, double right, double *low, double *high)
+static void GetAxisLimits(double left, double right, double *low, double *high)
 {
 /*	Called from do_axis()	such as
  *	GetAxisLimits(Rf_gpptr(dd)->usr[0], Rf_gpptr(dd)->usr[1], &low, &high)

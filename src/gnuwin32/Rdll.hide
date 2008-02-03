@@ -244,9 +244,7 @@
  Rf_DispatchGroup
  Rf_DispatchOrEval
  Rf_EnsureString
- Rf_FixupCex
  Rf_FixupCol
- Rf_FixupFont
  Rf_FixupLty
  Rf_FixupLwd
  Rf_FixupVFont
@@ -288,7 +286,6 @@
  Rf_RealFromInteger
  Rf_RealFromLogical
  Rf_RealFromString
- Rf_Specify2
  Rf_StringFromComplex
  Rf_StringFromInteger
  Rf_StringFromLogical

@@ -28,6 +28,7 @@
 #define R_GRAPHICS 1
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
+
 #include <Rgraphics.h>
 
 /* colors.c, engine.c, graphics.c, plot3d.c  */
@@ -283,44 +284,18 @@ typedef struct {
 
     double scale;       /* An internal "zoom" factor to apply to ps and lwd */
                         /* (for fit-to-window resizing in Windows) */
-#if 0
-    /* device operations */
-    Rboolean (*open)();
-    void (*close)();
-    void (*activate)();
-    void (*deactivate)();
-    void (*resize)();
-    void (*newPage)();
-    void (*clip)();
-    double (*strWidth)();
-    void (*line)();
-    void (*polyline)();
-    void (*text)();
-    void (*dot)();
-    void (*rect)();
-    void (*circle)();
-    void (*polygon)();
-    Rboolean (*locator)();
-    void (*mode)();
-    void (*hold)();
-    void (*metricInfo)();
-#endif
 } GPar;
 
 /* always remap private functions */
 #define copyGPar		Rf_copyGPar
-#define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
-#define FixupFont		Rf_FixupFont
 #define FixupLty		Rf_FixupLty
 #define FixupLwd		Rf_FixupLwd
 #define FixupVFont		Rf_FixupVFont
-#define GetAxisLimits		Rf_GetAxisLimits
 #define GInit			Rf_GInit
 #define labelformat		Rf_labelformat
 #define ProcessInlinePars	Rf_ProcessInlinePars
 #define recordGraphicOperation	Rf_recordGraphicOperation
-#define Specify2		Rf_Specify2
 
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */
@@ -332,25 +307,20 @@ void GInit(GPar*);
 
 void copyGPar(GPar *, GPar *);
 
+ /* from graphics.c, used in par.c */
+double R_Log10(double);
 
-double R_Log10(double); /* from graphics.c, used in par.c */
-
-/* from plot.c, called in plot3d.c */
+/* from par.c, called in plot.c, plot3d.c */
 void ProcessInlinePars(SEXP, pGEDev, SEXP call);
-/* from par.c, called in plot.c */
-void Specify2(const char*, SEXP, pGEDev, SEXP call);
 
 /* from device.c */
 void recordGraphicOperation(SEXP, SEXP, pGEDev);
 
 /* some functions that plot.c needs to share with plot3d.c */
-SEXP FixupLty(SEXP, int);
-SEXP FixupFont(SEXP, int);
 SEXP FixupCol(SEXP, unsigned int);
-SEXP FixupCex(SEXP, double);
+SEXP FixupLty(SEXP, int);
 SEXP FixupLwd(SEXP, double);
 SEXP FixupVFont(SEXP);
-void GetAxisLimits(double, double, double*, double*);
 SEXP labelformat(SEXP);
 
 /* 

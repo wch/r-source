@@ -26,24 +26,55 @@
 #endif
 
 #include <Defn.h>
-#include <Graphics.h> /* For R_ColorTable : FIXME */
+#include <Graphics.h>  /* for Rf_dpptr, CurrentDevice : FIXME */
 #include <Colors.h>
+#include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
 
-unsigned int char2col(const char *s)
+/* FIXME
+   The use of '0' for the background colour in a palette is
+   applicable only to base graphics (and calls back into the base
+   graphics system).
+*/
+
+static unsigned int rgb2col(const char *);
+static char *RGB2rgb(unsigned int, unsigned int, unsigned int);
+static char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
+
+
+/* String Comparison Ignoring Case and Squeezing Out Blanks */
+static int StrMatch(const char *s, const char *t)
+{
+    for(;;) {
+	if(*s == '\0' && *t == '\0') {
+	    return 1;
+	}
+	if(*s == ' ') {
+	    s++; continue;
+	}
+	if(*t == ' ') {
+	    t++; continue;
+	}
+	if(tolower(*s++) != tolower(*t++))
+	    return 0;
+    }
+}
+
+
+static unsigned int char2col(const char *s)
 {
     if (s[0] == '#') return rgb2col(s);
     else return name2col(s);
 }
 
-unsigned int ScaleColor(double x)
+static unsigned int ScaleColor(double x)
 {
     if (!R_FINITE(x) || x < 0.0 || x > 1.0)
 	error(_("color intensity %g, not in [0,1]"), x);
     return (unsigned int)(255*x + 0.5);
 }
 
-unsigned int CheckColor(int x)
+static unsigned int CheckColor(int x)
 {
     if (x == NA_INTEGER || x < 0 || x > 255)
 	error(_("color intensity %d, not in 0:255"), x);
@@ -64,60 +95,6 @@ static unsigned int CheckAlpha(int x)
     return (unsigned int)x;
 }
 
-static void setpalette(const char **palette)
-{
-    int i;
-    for (i = 0; (i<COLOR_TABLE_SIZE) && palette[i]; i++)
-	R_ColorTable[i] = name2col(palette[i]);
-    R_ColorTableSize = i;
-}
-
-SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP val, ans;
-    unsigned int color[COLOR_TABLE_SIZE];
-    int i, n;
-    checkArity(op,args);
-    /* Record the current palette */
-    PROTECT(ans = allocVector(STRSXP, R_ColorTableSize));
-    for (i = 0; i < R_ColorTableSize; i++)
-	SET_STRING_ELT(ans, i, mkChar(col2name(R_ColorTable[i])));
-    val = CAR(args);
-    if (!isString(val)) error(_("invalid argument type"));
-    if ((n=length(val)) == 1) {
-	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) /* ASCII */
-	    setpalette(DefaultPalette);
-	else error(_("unknown palette (need >= 2 colors)"));
-    }
-    else if (n > 1) {
-	if (n > COLOR_TABLE_SIZE)
-	     error(_("maximum number of colors exceeded"));
-	for (i = 0; i < n; i++)
-	    color[i] = char2col(CHAR(STRING_ELT(val, i)));
-	for (i = 0; i < n; i++)
-	    R_ColorTable[i] = color[i];
-	R_ColorTableSize = n;
-    }
-    UNPROTECT(1);
-    return ans;
-}
-
-SEXP attribute_hidden do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP ans;
-    int n;
-    n = 0;
-    while (ColorDataBase[n].name!=NULL)
-	n++;
-    PROTECT(ans = allocVector(STRSXP, n));
-    n = 0;
-    while (ColorDataBase[n].name!=NULL) {
-	SET_STRING_ELT(ans, n, mkChar(ColorDataBase[n].name));
-	n++;
-    }
-    UNPROTECT(1);
-    return ans;
-}
 
 SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -456,6 +433,7 @@ SEXP attribute_hidden do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static char HexDigits[] = "0123456789ABCDEF";
 
+/* rgb2hsv and hsv2rgb are in Utils.h ! */
 void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
 {
     double f, p, q, t;
@@ -551,7 +529,7 @@ void rgb2hsv(double r, double g, double b,
  */
 
 /* Default Color Palette */
-/* Paul Murrell 05/06/02
+/* Paul Murrell 05/06/02 (2002, probably)
  * Changed "white" to "grey" in the default palette
  * in response to user suggestion
  */
@@ -575,10 +553,16 @@ const char *DefaultPalette[] = {
 /* to the top of the database to avoid */
 /* its being known as "gray100" */
 
+typedef 
+struct colorDataBaseEntry {
+	char *name;	/* X11 Color Name */
+	char *rgb;	/* #RRGGBB String */
+	unsigned int code;  /* Internal R Color Code */
+} ColorDataBaseEntry;
+
 static int ColorDataBaseSize;
 
-attribute_hidden
-ColorDataBaseEntry ColorDataBase[] = {
+static ColorDataBaseEntry ColorDataBase[] = {
     /* name		rgb         code -- filled in by InitColors() */
     {"white",		"#FFFFFF",	0},
     {"aliceblue",	"#F0F8FF",	0},
@@ -1241,8 +1225,63 @@ ColorDataBaseEntry ColorDataBase[] = {
 };
 
 
-int R_ColorTableSize;
-unsigned int R_ColorTable[COLOR_TABLE_SIZE];
+static int R_ColorTableSize;
+static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
+
+static void setpalette(const char **palette)
+{
+    int i;
+    for (i = 0; (i<COLOR_TABLE_SIZE) && palette[i]; i++)
+	R_ColorTable[i] = name2col(palette[i]);
+    R_ColorTableSize = i;
+}
+
+SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP val, ans;
+    unsigned int color[COLOR_TABLE_SIZE];
+    int i, n;
+    checkArity(op,args);
+    /* Record the current palette */
+    PROTECT(ans = allocVector(STRSXP, R_ColorTableSize));
+    for (i = 0; i < R_ColorTableSize; i++)
+	SET_STRING_ELT(ans, i, mkChar(col2name(R_ColorTable[i])));
+    val = CAR(args);
+    if (!isString(val)) error(_("invalid argument type"));
+    if ((n=length(val)) == 1) {
+	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) /* ASCII */
+	    setpalette(DefaultPalette);
+	else error(_("unknown palette (need >= 2 colors)"));
+    }
+    else if (n > 1) {
+	if (n > COLOR_TABLE_SIZE)
+	     error(_("maximum number of colors exceeded"));
+	for (i = 0; i < n; i++)
+	    color[i] = char2col(CHAR(STRING_ELT(val, i)));
+	for (i = 0; i < n; i++)
+	    R_ColorTable[i] = color[i];
+	R_ColorTableSize = n;
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP attribute_hidden do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans;
+    int n;
+    n = 0;
+    while (ColorDataBase[n].name!=NULL)
+	n++;
+    PROTECT(ans = allocVector(STRSXP, n));
+    n = 0;
+    while (ColorDataBase[n].name!=NULL) {
+	SET_STRING_ELT(ans, n, mkChar(ColorDataBase[n].name));
+	n++;
+    }
+    UNPROTECT(1);
+    return ans;
+}
 
 /* Hex Digit to Integer Conversion */
 
@@ -1264,31 +1303,11 @@ static unsigned int digithex(int digit)
 }
 #endif
 
-
-/* String Comparison Ignoring Case and Squeezing Out Blanks */
-int StrMatch(const char *s, const char *t)
-{
-    for(;;) {
-	if(*s == '\0' && *t == '\0') {
-	    return 1;
-	}
-	if(*s == ' ') {
-	    s++; continue;
-	}
-	if(*t == ' ') {
-	    t++; continue;
-	}
-	if(tolower(*s++) != tolower(*t++))
-	    return 0;
-    }
-}
-
-
 /* #RRGGBB String to Internal Color Code */
 /*
  * Paul:  Add ability to handle #RRGGBBAA
  */
-unsigned int rgb2col(const char *rgb)
+static unsigned int rgb2col(const char *rgb)
 {
     unsigned int r=0, g=0, b=0, a=0; /* -Wall */
     if(rgb[0] != '#')
@@ -1339,14 +1358,13 @@ unsigned int attribute_hidden name2col(const char *nm)
     return 0;		/* never occurs but avoid compiler warnings */
 }
 
-/* Index (as string) to Internal Color Code */
-
-unsigned int attribute_hidden number2col(const char *nm)
+static unsigned int number2col(const char *nm)
 {
     int indx;
     char *ptr;
     indx = strtod(nm, &ptr);
     if(*ptr) error(_("invalid color specification"));
+    /* FIXME depends on base graphics */
     if(indx == 0) return Rf_dpptr(CurrentDevice())->bg;
     else return R_ColorTable[(indx-1) % R_ColorTableSize];
 }
@@ -1354,7 +1372,8 @@ unsigned int attribute_hidden number2col(const char *nm)
 
 static char ColBuf[10];
 
-attribute_hidden char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
+static 
+char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
 {
     ColBuf[0] = '#';
     ColBuf[1] = HexDigits[(r >> 4) & 15];
@@ -1367,8 +1386,8 @@ attribute_hidden char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
     return &ColBuf[0];
 }
 
-attribute_hidden char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
-	       unsigned int a)
+static
+char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b, unsigned int a)
 {
     ColBuf[0] = '#';
     ColBuf[1] = HexDigits[(r >> 4) & 15];
@@ -1424,20 +1443,16 @@ const char *col2name(unsigned int col)
     }
 }
 
-/* NOTE that this is called with dd == NULL by */
-/* the initialisation code in which case, str2col */
-/* assumes that `s' is a name */
-
-
 /* used in grDevices */
 unsigned int R_GE_str2col(const char *s)
 {
     if(s[0] == '#') return rgb2col(s);
+    /* This seems rather strange, and makes this depend on base graphics */
     else if(isdigit((int)s[0])) return number2col(s);
     else return name2col(s);
 }
 
-/* Convert a sexp element to an R  color desc */
+/* Convert a sexp element to an R color desc */
 /* We Assume that Checks Have Been Done */
 
 /* used in grid */
@@ -1455,6 +1470,7 @@ unsigned int RGBpar(SEXP x, int i)
              */
             return R_TRANWHITE;
         indx = LOGICAL(x)[i] - 1;
+	/* FIXME depends on base graphics */
         if(indx < 0) return Rf_dpptr(CurrentDevice())->bg;
         else return R_ColorTable[indx % R_ColorTableSize];
     }
@@ -1515,12 +1531,12 @@ void attribute_hidden InitColors(void)
     int i;
 
     /* Initialize the Color Database */
-    for(i=0 ; ColorDataBase[i].name ; i++)
+    for(i = 0 ; ColorDataBase[i].name ; i++)
 	ColorDataBase[i].code = rgb2col(ColorDataBase[i].rgb);
     ColorDataBaseSize = i;
 
     /* Install Default Palette */
-    for(i=0 ; DefaultPalette[i] ; i++)
+    for(i = 0 ; DefaultPalette[i] ; i++)
 	R_ColorTable[i] = R_GE_str2col(DefaultPalette[i]);
     R_ColorTableSize = i;
 }

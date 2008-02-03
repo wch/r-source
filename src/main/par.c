@@ -684,7 +684,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 /* Now defined differently in Specify2() : */
 #define R_DEV__(_P_) Rf_gpptr(dd)->_P_
 
-void attribute_hidden Specify2(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
+static void Specify2(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 {
     double x;
     int ix = 0, ptype = ParCode(what);
@@ -1308,6 +1308,26 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 	GErecordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
+
+
+/* ProcessInLinePars handles inline par specifications 
+   in graphics functions. */
+
+attribute_hidden
+void ProcessInlinePars(SEXP s, pGEDevDesc dd, SEXP call)
+{
+    if (isList(s)) {
+	while (s != R_NilValue) {
+	    if (isList(CAR(s)))
+		ProcessInlinePars(CAR(s), dd, call);
+	    else if (TAG(s) != R_NilValue)
+		Specify2(CHAR(PRINTNAME(TAG(s))), CAR(s), dd, call);
+	    s = CDR(s);
+	}
+    }
+}
+
+
 
 /*= Local Variables: **/
 /*= mode: C **/
