@@ -141,11 +141,6 @@ typedef DevDesc * pGEDev;
 #define GVStrHeight		Rf_GVStrHeight
 #define GVStrWidth		Rf_GVStrWidth
 #define GVText			Rf_GVText
-#define initDisplayList		Rf_initDisplayList
-#define NewFrameConfirm		Rf_NewFrameConfirm
-#define NoDevices		Rf_NoDevices
-#define RGBpar			Rf_RGBpar
-#define col2name                Rf_col2name
 /* which of these conversions should be public? maybe all?*/
 #define xDevtoNDC		Rf_xDevtoNDC
 #define xDevtoNFC		Rf_xDevtoNFC
@@ -339,7 +334,6 @@ double yNPCtoUsr(double, pGEDev);
 
 /* Return a pointer to the current device. */
 pGEDev CurrentDevice(void); /* used in colors, graphics, par, plot, plot3d */
-/* Is the null device the current device? */
 
 /* From plot.c, used by grid/src/grid.c */
 SEXP CreateAtVector(double*, double*, int, Rboolean);
