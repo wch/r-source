@@ -600,6 +600,25 @@ struct _NewDevDesc {
        contour labels?
     */
     Rboolean useRotatedTextInContour;
+
+    /* Does the device have a device-specific way to confirm a 
+       new frame (for e.g. par(ask=TRUE))?
+       This should be NULL if it does not.
+       If it does, it returns TRUE if the device handled this, and
+       FALSE if it wants the engine to do so. 
+
+       There is an example in the windows() device.
+    */
+#if R_USE_PROTOTYPES
+    Rboolean (*newFrameConfirm)(pDevDesc dd);
+#else
+    Rboolean (*newFrameConfirm)();
+#endif
+    /* Area for future expansion.
+       By zeroing this, devices are more likely to work if loaded
+       into a later version of R than they they are compiled under.
+    */
+    char reserved[100];
 };
 
 	/********************************************************/
@@ -722,7 +741,7 @@ void killDevice(int);
 
 int NoDevices(void); /* used in engine, graphics, plot, grid */
 
-void NewFrameConfirm(void); /* used in graphics.c, grid */
+void NewFrameConfirm(pDevDesc); /* used in graphics.c, grid */
 
 
 /* Graphics events: defined in gevents.c */

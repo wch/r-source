@@ -320,8 +320,10 @@ C-LEVEL FACILITIES
     o	There is a new description of the interface for graphics
 	devices in the 'R Internals' manual, and several new entry
 	points.  Graphics devices no longer need to make use of (via
-	cast) DevDesc * pointers, and much cleaner code can now be
+	casts) DevDesc * pointers and much cleaner code can now be
 	written without them.
+
+    o	Use of the headers Rdevices.h and Rgraphics.h is now deprecated.
 
 
 BUG FIXES

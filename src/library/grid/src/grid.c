@@ -935,7 +935,7 @@ SEXP L_newpagerecording()
 {
     GEDevDesc *dd = getDevice();
     if (LOGICAL(gridStateElement(dd, GSS_ASK))[0]) {
-	NewFrameConfirm();
+	NewFrameConfirm(dd->dev);
 	/*
 	 * User may have killed device during pause for prompt
 	 */

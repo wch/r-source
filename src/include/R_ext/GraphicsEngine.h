@@ -42,9 +42,11 @@ extern "C" {
  * Version 1:  Introduction of the version number.
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  * Version 3:  R_GE_str2col() added to API.
- * Version 4:  UTF-8 text hooks, useRotatedTextInContour to device interface.
- *             Remove dot() from NewDevDesc.
- *             Remove newDevStruct from GEDevDesc, don't use it in NewDevDesc.
+ * Version 4:  UTF-8 text hooks, useRotatedTextInContour,
+ *             newFrameConfirm() to device interface.
+ *             Remove dot(), hold(), open() from NewDevDesc.
+ *             Add newFrameConfrim() to NewDevDesc.
+ *             Remove newDevStruct from GEDevDesc and NewDevDesc.
  */
 
 #define R_GE_version 4

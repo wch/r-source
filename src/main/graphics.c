@@ -1772,7 +1772,7 @@ pGEDevDesc GNewPlot(Rboolean recording)
 	if (Rf_gpptr(dd)->currentFigure > Rf_gpptr(dd)->lastFigure) {
 	    if (recording) {
 		if (Rf_gpptr(dd)->ask) {
-		    NewFrameConfirm();
+		    NewFrameConfirm(dd->dev);
 		    if (NoDevices())
 			error(_("attempt to plot on null device"));
 		    else
@@ -1791,7 +1791,7 @@ pGEDevDesc GNewPlot(Rboolean recording)
 	gcontextFromGP(&gc, dd);
 	if (recording) {
 	    if (Rf_gpptr(dd)->ask) {
-		NewFrameConfirm();
+		NewFrameConfirm(dd->dev);
 		if (NoDevices())
 		    error(_("attempt to plot on null device"));
 		else

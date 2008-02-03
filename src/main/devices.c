@@ -334,9 +334,10 @@ void removeDevice(int devNum, Rboolean findNext)
 		    pGEDevDesc gdd = GEcurrentDevice();
 		    gdd->dev->activate(gdd->dev);
 #if 0
-		    /* FIXME this section depends on base system.
+		    /* This section depends on base system.
 		       It's strange to do this: it is not done when
 		       the current device is changed in any other way.
+		       So no longer do it in 2.7.0.
 		     */
 		    copyGPar(Rf_dpptr(gdd), Rf_gpptr(gdd));
 		    GReset(gdd);
@@ -595,28 +596,11 @@ void attribute_hidden InitGraphics(void)
 }
 
 
-/* FIXME:  NewFrameConfirm should be a standard device function */
-#ifdef Win32
-Rboolean winNewFrameConfirm(void);
-#endif
-
-void NewFrameConfirm(void)
+void NewFrameConfirm(pDevDesc dd)
 {
-    unsigned char buf[16];
-#ifdef Win32
-	int i;
-	Rboolean haveWindowsDevice;
-	SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
-#endif
-
-    if(!R_Interactive) return;
-#ifdef Win32
-    for(i = 0; i < curDevice(); i++)  /* 0-based */
-	dotDevices = CDR(dotDevices);
-    haveWindowsDevice =
-	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
-    
-    if (!haveWindowsDevice || !winNewFrameConfirm())
-#endif
-	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 16, 0);
+    if(dd->newFrameConfirm && dd->newFrameConfirm(dd)) ;
+    else {
+	unsigned char buf[1024];
+	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 1024, 0);
+    }
 }
