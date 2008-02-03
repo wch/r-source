@@ -5057,8 +5057,15 @@ stopifnot(identical(as.vector(table(cut(Dtimes, "years"))), ty))
 tapply(character(0), factor(letters)[FALSE], length)
 ## failed < 2.6.2
 
+
 ## zero-length patterns in gregexpr
 expect <- structure(1:3, match.length=rep(0L, 3))
 stopifnot(identical(expect, gregexpr("", "abc")[[1]]))
 stopifnot(identical(expect, gregexpr("", "abc", fixed=TRUE)[[1]]))
 stopifnot(identical(expect, gregexpr("", "abc", perl=TRUE)[[1]]))
+## segfaulted < 2.6.2
+
+
+## test of internal argument matching
+stopifnot(all.equal(round(d=2, x=pi), 3.14))
+## used positional matching in 2.6.x

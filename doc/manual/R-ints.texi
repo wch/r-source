@@ -1936,16 +1936,14 @@ UseMethod  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
-round      signif
-rep        seq.int
+round      signif      rep        seq.int
 lazyLoadDBfetch
 @end group
 @end example
 
 @noindent
-@code{rep} and @code{seq.int} manage their own argument matching and so
-do work in the standard way.  @code{round} and @code{signif} are
-primitive to work around scoping bugs in S4 dispatch on non-primitives.
+@code{round}, @code{signif}, @code{rep} and @code{seq.int} manage their
+own argument matching and so do work in the standard way.
 
 @end enumerate
 

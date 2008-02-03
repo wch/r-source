@@ -69,9 +69,10 @@ zapsmall(x, digits = getOption("digits"))
   the specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
 
-  All except \code{zapsmall} are primitive, so positional argument
-  matching is used for the default methods of \code{round} and
-  \code{signif}.
+  All except \code{zapsmall} are primitive, but as from \R 2.7.0
+  arguments are matched by name in \code{round} and \code{signif}
+  (whereas the default method for \code{ceiling}, \code{floor} and
+  \code{trunc} ignore argument names).
 }
 \section{S4 methods}{
   \code{ceiling}, \code{floor} and \code{trunc} are S4 generic and

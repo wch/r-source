@@ -247,6 +247,9 @@ NEW FEATURES
 
 	Other cases of a zero-length index are done more efficiently.
 
+    o	round() and signif() now do internal argument matching if
+	supplied with two arguments and at least one is named.
+
 
 DEPRECATED & DEFUNCT
 
