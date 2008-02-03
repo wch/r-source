@@ -527,8 +527,8 @@ void GEaddDevice(pGEDevDesc gdd)
 
     UNPROTECT(2);
 
-#if 1
-    /* FIXME this section depends on base system */
+#if 0
+    /* This section depended on base system: moved to GE_InitState */
     copyGPar(Rf_dpptr(gdd), Rf_gpptr(gdd));
     GReset(gdd);
 #endif

@@ -160,9 +160,11 @@ static void restoredpSaved(pGEDevDesc dd)
     Rf_dpptr(dd)->logusr[3] = Rf_dpSavedptr(dd)->logusr[3];
 }
 
-static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data) {
+static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
+{
     pGEDevDesc curdd;
     GESystemDesc *sd;
+    baseSystemState *bss, *bss2;
     pDevDesc dev;
     GPar *ddp;
     GPar *ddpSaved;
@@ -178,8 +180,8 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data) {
     case GE_InitState:
 	sd = dd->gesd[baseRegisterIndex];
 	dev = dd->dev;
-	sd->systemSpecific = malloc(sizeof(baseSystemState));
-	ddp = &(((baseSystemState*) sd->systemSpecific)->dp);
+	bss = sd->systemSpecific = malloc(sizeof(baseSystemState));
+	ddp = &(bss->dp);
 	GInit(ddp);
 	/* Some things are set by the device, so copy them across now.
 	 */
@@ -209,59 +211,49 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	ddp->font = dev->startfont; 
 	ddp->lty = dev->startlty; 
 	ddp->gamma = dev->startgamma;
-	/* Initialise the gp settings too.
-	 */
-	/* copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp)); */
+	/* Initialise the gp settings too: formerly in addDevice. */
+	copyGPar(ddp, &(bss->gp));
+	GReset(dd);
 	/*
 	 * The device has not yet received any base output
 	 */
-	((baseSystemState*) sd->systemSpecific)->baseDevice = FALSE;
+	bss->baseDevice = FALSE;
 	break;
     case GE_CopyState:
-	sd = dd->gesd[baseRegisterIndex];
-	curdd = GEcurrentDevice();
-	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
-		 &(((baseSystemState*) 
-		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dpSaved));
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+	bss2 = GEcurrentDevice()->gesd[baseRegisterIndex]->systemSpecific;
+	copyGPar(&(bss->dpSaved), &(bss2->dpSaved)); 
 	restoredpSaved(curdd);
-	copyGPar(&(((baseSystemState*) 
-		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dp),
-		 &(((baseSystemState*) 
-		    curdd->gesd[baseRegisterIndex]->systemSpecific)->gp));
+	copyGPar(&(bss2->dp), &(bss2->gp));
 	GReset(curdd);
 	break;
     case GE_SaveState:
-	sd = dd->gesd[baseRegisterIndex];
-	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dp),
-		 &(((baseSystemState*) sd->systemSpecific)->dpSaved));
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+	copyGPar(&(bss->dp), &(bss->dpSaved));
 	break;
     case GE_RestoreState:
-	sd = dd->gesd[baseRegisterIndex];
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	restoredpSaved(dd);
-	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dp),
-		 &(((baseSystemState*) sd->systemSpecific)->gp));
+	copyGPar(&(bss->dp), &(bss->gp));
 	GReset(dd);
 	break;
     case GE_SaveSnapshotState:
-	sd = dd->gesd[baseRegisterIndex];
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	PROTECT(state = allocVector(INTSXP,
 				    /* Got this formula from devga.c
 				     * Not sure why the "+ 1"
-				     * Rounding up?
+				     * Rounding up? Yes!
 				     */
 				    1 + sizeof(GPar) / sizeof(int)));
-	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
-		 (GPar*) INTEGER(state));
+	copyGPar(&(bss->dpSaved), (GPar*) INTEGER(state));
 	result = state;
 	UNPROTECT(1);
 	break;
     case GE_RestoreSnapshotState:
-	sd = dd->gesd[baseRegisterIndex];
-	copyGPar((GPar*) INTEGER(data),
-		 &(((baseSystemState*) sd->systemSpecific)->dpSaved));	
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+	copyGPar((GPar*) INTEGER(data), &(bss->dpSaved));	
 	restoredpSaved(dd);
-	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dp),
-		 &(((baseSystemState*) sd->systemSpecific)->gp));
+	copyGPar(&(bss->dp), &(bss->gp));
 	GReset(dd);
 	break;
     case GE_CheckPlot:
@@ -284,10 +276,10 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	result = valid;
 	break;
     case GE_ScalePS:
-        sd = dd->gesd[baseRegisterIndex];
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
         dev = dd->dev;
-	ddp = &(((baseSystemState*) sd->systemSpecific)->dp);
-	ddpSaved = &(((baseSystemState*) sd->systemSpecific)->dpSaved);
+	ddp = &(bss->dp);
+	ddpSaved = &(bss->dpSaved);
 	if (isReal(data) && LENGTH(data) == 1) {
 	  double rf = REAL(data)[0];
 	  ddp->scale *= rf;
@@ -319,31 +311,29 @@ unregisterBase(void) {
 }
 
 
-static baseSystemState *baseGEsystemState(pGEDevDesc dd)
-{
-    return dd->gesd[baseRegisterIndex]->systemSpecific;
-}
-
-
 /* FIXME: Make this a macro to avoid function call overhead?
    Inline it if you really think it matters.
  */
 attribute_hidden
 GPar* Rf_gpptr(pGEDevDesc dd) {
-    return &(baseGEsystemState(dd)->gp);
+    baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+    return &(bss->gp);
 }
 
 attribute_hidden
 GPar* Rf_dpptr(pGEDevDesc dd) {
-    return &(baseGEsystemState(dd)->dp);
+    baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+    return &(bss->dp);
 }
 
 attribute_hidden
 GPar* Rf_dpSavedptr(pGEDevDesc dd) {
-    return &(baseGEsystemState(dd)->dpSaved);
+    baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+    return &(bss->dpSaved);
 }
 
 attribute_hidden /* used in GNewPlot */
 void Rf_setBaseDevice(Rboolean val, pGEDevDesc dd) {
-    baseGEsystemState(dd)->baseDevice = val;
+    baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+    bss->baseDevice = val;
 }

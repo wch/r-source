@@ -579,27 +579,7 @@ struct _NewDevDesc {
      */
     SEXP (*getEvent)(SEXP, const char *);
 
-    /* Optional features introduced in 2.7.0 */
-    /* Some devices can plot UTF-8 text directly without converting
-       to the native encoding.  E.g. windows().
-       If the flag is TRUE, the metricInfo entry point should
-       accept negative values for 'c' and treat them as indicating
-       Unicode points (as well as postive values in a MBCS locale).
-    */
-    Rboolean hasTextUTF8; /* and strWidthUTF8 */
-#if R_USE_PROTOTYPES
-    void (*textUTF8)(double x, double y, const char *str, double rot,
-		     double hadj, pGEcontext gc, pDevDesc dd);
-    double (*strWidthUTF8)(const char *str, pGEcontext gc, pDevDesc dd);
-#else
-    void (*textUTF8)();
-    double (*strWidthUTF8)();
-#endif
-
-    /* Is rotated text good enough to be preferable to Hershey in
-       contour labels?
-    */
-    Rboolean useRotatedTextInContour;
+    /* --------- Optional features introduced in 2.7.0 --------- */
 
     /* Does the device have a device-specific way to confirm a 
        new frame (for e.g. par(ask=TRUE))?
@@ -614,12 +594,41 @@ struct _NewDevDesc {
 #else
     Rboolean (*newFrameConfirm)();
 #endif
+
+    /* Some devices can plot UTF-8 text directly without converting
+       to the native encoding, e.g. windows(), quartz() ....
+
+       If this flag is true, all text *not in the symbol font* is sent
+       in UTF8 to the textUTF8/strWidthUTF8 entry points.
+
+       If the flag is TRUE, the metricInfo entry point should
+       accept negative values for 'c' and treat them as indicating
+       Unicode points (as well as positive values in a MBCS locale).
+    */
+    Rboolean hasTextUTF8; /* and strWidthUTF8 */
+#if R_USE_PROTOTYPES
+    void (*textUTF8)(double x, double y, const char *str, double rot,
+		     double hadj, pGEcontext gc, pDevDesc dd);
+    double (*strWidthUTF8)(const char *str, pGEcontext gc, pDevDesc dd);
+#else
+    void (*textUTF8)();
+    double (*strWidthUTF8)();
+#endif
+
+    /* Is rotated text good enough to be preferable to Hershey in
+       contour labels?  Old default was FALSE.
+    */
+    Rboolean useRotatedTextInContour;
+
+    /* --------- Post-2.7.0 features --------- */
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
-       into a later version of R than they they are compiled under.
+       into a later version of R than that they were compiled under.
     */
-    char reserved[100];
+    char reserved[64];
 };
+
 
 	/********************************************************/
 	/* the device-driver entry point is given a device	*/

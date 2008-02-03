@@ -285,7 +285,7 @@ double GExpressionWidth(SEXP, GUnit, pGEDev);
  *  TRANSFORMATIONS are concerned with converting locations between
  *  coordinate systems and dimensions between different units.
  *
- *  From graphics.c, used in plot.c, plot3d.c, plotmath.c
+ *  From graphics.c, used in par.c, plot.c, plot3d.c
  */
 
 /* Convert an R unit (e.g., "user") into an internal unit (e.g., USER)> */
