@@ -2443,8 +2443,7 @@ void GErecordGraphicOperation(SEXP op, SEXP args, pGEDevDesc dd)
     if (dd->dev->displayListOn) {
 	SEXP newOperation = list2(op, args);
 	if (lastOperation == R_NilValue) {
-	    dd->dev->displayList = CONS(newOperation,
-						       R_NilValue);
+	    dd->dev->displayList = CONS(newOperation, R_NilValue);
 	    dd->dev->DLlastElt = dd->dev->displayList;
 	} else {
 	    SETCDR(lastOperation, CONS(newOperation, R_NilValue));

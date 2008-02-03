@@ -1511,8 +1511,9 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     return retval;
 }
 
-/*  Call dynamically loaded "internal" graphics functions */
-/*  .External.gr  and  .Call.gr */
+/*  Call dynamically loaded "internal" graphics functions
+    .External.graphics (unused) and  .Call.graphics (used in grid).
+*/
 
 SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {

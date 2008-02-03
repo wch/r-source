@@ -42,7 +42,7 @@ par <- function (..., no.readonly = FALSE)
     args <- list(...)
     if (!length(args))
 	args <- as.list(if (no.readonly)
-                        .Pars[-match(.Internal(readonly.pars()), .Pars)]
+                        .Pars[-match(.Call("Rg_readonlypars", PACKAGE="base"), .Pars)]
         else .Pars)
     else {
 	if (all(unlist(lapply(args, is.character))))
@@ -55,7 +55,7 @@ par <- function (..., no.readonly = FALSE)
 		    single <- TRUE
 	}
     }
-    value <-
-        if (single) .Internal(par(args))[[1]] else .Internal(par(args))
+    value <- .Internal(par(args))
+    if(single) value <- value[[1]]
     if(!is.null(names(args))) invisible(value) else value
 }

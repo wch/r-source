@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -137,7 +137,6 @@ SEXP do_comment(SEXP, SEXP, SEXP, SEXP);
 SEXP do_commentgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_complex(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contour(SEXP, SEXP, SEXP, SEXP);
-SEXP do_contourDef(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contourLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_countfields(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Cstack_info(SEXP, SEXP, SEXP, SEXP);
@@ -373,7 +372,6 @@ SEXP do_rawToChar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readDCF(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readln(SEXP, SEXP, SEXP, SEXP);
-SEXP do_readonlypars(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readtablehead(SEXP, SEXP, SEXP, SEXP);
 SEXP do_recall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_recordGraphics(SEXP, SEXP, SEXP, SEXP);

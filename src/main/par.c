@@ -1175,30 +1175,19 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
-SEXP attribute_hidden do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden Rg_readonlypars(void)
 {
     SEXP result;
-    pGEDevDesc dd;
-    Rboolean canChangeGamma;
-    int nreadonly;
+    Rboolean canChangeGamma = GEcurrentDevice()->dev->canChangeGamma;
+    int nreadonly = canChangeGamma ? 5 : 6;
 
-    checkArity(op, args);
-
-    dd = GEcurrentDevice();
-    canChangeGamma = dd->dev->canChangeGamma;
-
-    if (canChangeGamma)
-	nreadonly = 5;
-    else
-	nreadonly = 6;
     PROTECT(result = allocVector(STRSXP, nreadonly));
     SET_STRING_ELT(result, 0, mkChar("cin"));
     SET_STRING_ELT(result, 1, mkChar("cra"));
     SET_STRING_ELT(result, 2, mkChar("csi"));
     SET_STRING_ELT(result, 3, mkChar("cxy"));
     SET_STRING_ELT(result, 4, mkChar("din"));
-    if (!canChangeGamma)
-	SET_STRING_ELT(result, 5, mkChar("gamma"));
+    if (!canChangeGamma) SET_STRING_ELT(result, 5, mkChar("gamma"));
     UNPROTECT(1);
     return result;
 }

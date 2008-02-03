@@ -58,7 +58,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     if (!is.double(z)) storage.mode(z) <- "double"
     method <- pmatch(method[1], c("simple", "edge", "flattest"))
     if (missing(vfont))
-       vfont <- if(.Internal(contourdef())) NULL else c("sans serif", "plain")
+       vfont <- if(.Call("Rg_contourDef", PACKAGE="base")) NULL else c("sans serif", "plain")
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface),
                    fontindex= pmatch(vfont[2], Hershey$fontindex))
