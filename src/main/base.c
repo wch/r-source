@@ -162,22 +162,20 @@ static void restoredpSaved(pGEDevDesc dd)
 
 static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 {
-    pGEDevDesc curdd;
     GESystemDesc *sd;
     baseSystemState *bss, *bss2;
-    pDevDesc dev;
-    GPar *ddp;
-    GPar *ddpSaved;
-    SEXP state;
-    SEXP valid;
     SEXP result = R_NilValue;
+
     switch (task) {
     case GE_FinaliseState:
 	sd = dd->gesd[baseRegisterIndex];
-	free((baseSystemState*) sd->systemSpecific);
+	free(sd->systemSpecific);
 	sd->systemSpecific = NULL;
 	break;
     case GE_InitState:
+    {
+	pDevDesc dev;
+	GPar *ddp;
 	sd = dd->gesd[baseRegisterIndex];
 	dev = dd->dev;
 	bss = sd->systemSpecific = malloc(sizeof(baseSystemState));
@@ -219,14 +217,18 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	 */
 	bss->baseDevice = FALSE;
 	break;
+    }
     case GE_CopyState:
+    {
+	GEDevDesc *curdd = GEcurrentDevice();
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-	bss2 = GEcurrentDevice()->gesd[baseRegisterIndex]->systemSpecific;
+	bss2 = curdd->gesd[baseRegisterIndex]->systemSpecific;
 	copyGPar(&(bss->dpSaved), &(bss2->dpSaved)); 
 	restoredpSaved(curdd);
 	copyGPar(&(bss2->dp), &(bss2->gp));
 	GReset(curdd);
 	break;
+    }
     case GE_SaveState:
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	copyGPar(&(bss->dp), &(bss->dpSaved));
@@ -238,6 +240,8 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	GReset(dd);
 	break;
     case GE_SaveSnapshotState:
+    {
+	SEXP state;
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	PROTECT(state = allocVector(INTSXP,
 				    /* Got this formula from devga.c
@@ -249,6 +253,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	result = state;
 	UNPROTECT(1);
 	break;
+    }
     case GE_RestoreSnapshotState:
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	copyGPar((GPar*) INTEGER(data), &(bss->dpSaved));	
@@ -259,25 +264,15 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
     case GE_CheckPlot:
 	/* Check that the current plotting state is "valid"
 	 */
-	sd = dd->gesd[baseRegisterIndex];
-	PROTECT(valid = allocVector(LGLSXP, 1));
-	/*
-	 * If there has not been any base output on the device
-	 * then ignore "valid" setting
-	 */
-	if (((baseSystemState*) sd->systemSpecific)->baseDevice) {
-	    LOGICAL(valid)[0] = 
-		(((baseSystemState*) sd->systemSpecific)->gp.state == 1) &&
-		((baseSystemState*) sd->systemSpecific)->gp.valid;
-	} else {
-	    LOGICAL(valid)[0] = TRUE;
-	}
-	UNPROTECT(1);
-	result = valid;
+	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+	result = ScalarLogical(bss->baseDevice ?
+			       (bss->gp.state == 1) && bss->gp.valid :
+			       TRUE);
 	break;
     case GE_ScalePS:
+    {
+	GPar *ddp, *ddpSaved;
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-        dev = dd->dev;
 	ddp = &(bss->dp);
 	ddpSaved = &(bss->dpSaved);
 	if (isReal(data) && LENGTH(data) == 1) {
@@ -285,15 +280,14 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	  ddp->scale *= rf;
 	  ddp->cra[0] *= rf; 
 	  ddp->cra[1] *= rf;
-	  /* Modify the saved settings so effects dislpay list too
-	   */
+	  /* Modify the saved settings so effect display list too */
 	  ddpSaved->scale *= rf;
 	  ddpSaved->cra[0] *= rf; 
 	  ddpSaved->cra[1] *= rf;
-	}
-	else 
+	} else 
 	  error(_("Event UpdatePS requires a single numeric value"));
 	break;
+    }
     }
     return result;
 }
