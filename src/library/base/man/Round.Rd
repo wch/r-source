@@ -1,6 +1,6 @@
 % File src/library/base/man/Round.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Round}
@@ -68,6 +68,10 @@ zapsmall(x, digits = getOption("digits"))
   \code{1...22}.  Complex numbers are rounded to retain
   the specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
+
+  All except \code{zapsmall} are primitive, so positional argument
+  matching is used for the default methods of \code{round} and
+  \code{signif}.
 }
 \section{S4 methods}{
   \code{ceiling}, \code{floor} and \code{trunc} are S4 generic and
