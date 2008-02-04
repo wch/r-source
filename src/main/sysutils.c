@@ -161,8 +161,6 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     return filename;
 }
 
-extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
-
 FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode)
 {
     return(filename ? _wfopen(filename, wcfixmode(mode)) : NULL );
@@ -911,9 +909,9 @@ const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
     /* We can only encode from Symbol to UTF-8 */
     if(ce_in == ce_out || ce_out == CE_SYMBOL || 
        ce_in == CE_ANY || ce_out == CE_ANY) return x;
-    if(ce_in == CE_SYMBOL && ce_out == CE_UTF8) 
-	return Rf_AdobeSymbol2utf8(x);
-    else return x;
+    if(ce_in == CE_SYMBOL) {
+	if(ce_out == CE_UTF8) return Rf_AdobeSymbol2utf8(x); else return x;
+    }
     if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return x;
     if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return x;
     if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return x;
