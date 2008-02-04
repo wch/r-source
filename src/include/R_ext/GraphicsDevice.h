@@ -614,6 +614,7 @@ struct _NewDevDesc {
     void (*textUTF8)();
     double (*strWidthUTF8)();
 #endif
+    Rboolean wantSymbolUTF8;
 
     /* Is rotated text good enough to be preferable to Hershey in
        contour labels?  Old default was FALSE.
@@ -720,6 +721,7 @@ typedef unsigned int rcolor;
 #define NumDevices		Rf_NumDevices
 #define prevDevice		Rf_prevDevice
 #define selectDevice		Rf_selectDevice
+#define AdobeSymbol2utf8	Rf_AdobeSymbol2utf8
 
 /* Properly declared version of devNumber */
 int ndevNumber(pDevDesc );
@@ -803,6 +805,11 @@ LibExtern int R_interrupts_pending;
 extern void Rf_onintr(void);
 LibExtern Rboolean mbcslocale;
 #endif
+
+/* Useful for devices: translates Adobe symbol encoding to UTF-8 */
+extern const char *AdobeSymbol2utf8(const char *);
+/* Translates Unicode point to UTF-8 */
+extern size_t Rf_ucstoutf8(char *s, const unsigned int c);
 
 #ifdef __cplusplus
 }

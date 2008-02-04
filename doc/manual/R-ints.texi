@@ -1237,7 +1237,9 @@ strings without re-encoding to the native character set, by setting
 back-compatibility with devices installed prior to @R{} 2.7.0 it has to
 be exactly that value: all others are equivalent to @samp{FALSE}.} and
 supplying functions @code{textUTF8} and @code{strWidthUTF8} that expect
-UTF-8-encoded inputs.
+UTF-8-encoded inputs.  Normally the symbol font is encoded in Adobe
+Symbol encoding, but that can be re-encoded to UTF-8 by setting
+@code{wantSymbolUTF8} to @samp{TRUE}.
 
 Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,

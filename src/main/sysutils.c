@@ -897,6 +897,8 @@ top_of_loop:
 }
 #endif
 
+extern const char *Rf_AdobeSymbol2utf8(const char *c0); /* from util.c */
+
 const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
 {
     void * obj;
@@ -906,10 +908,12 @@ const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
     char *tocode = NULL, *fromcode = NULL;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-    /* Since no other encoding is compatible with Symbol, never try
-       to encode to or from it */
-    if(ce_in == ce_out || ce_in == CE_SYMBOL || ce_out == CE_SYMBOL || 
+    /* We can only encode from Symbol to UTF-8 */
+    if(ce_in == ce_out || ce_out == CE_SYMBOL || 
        ce_in == CE_ANY || ce_out == CE_ANY) return x;
+    if(ce_in == CE_SYMBOL && ce_out == CE_UTF8) 
+	return Rf_AdobeSymbol2utf8(x);
+    else return x;
     if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return x;
     if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return x;
     if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return x;
@@ -1086,7 +1090,7 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
     return (size_t) 1;
 }
 
-size_t attribute_hidden 
+size_t
 ucstoutf8(char *s, const unsigned int wc)
 {
     char     buf[16];
@@ -1120,7 +1124,8 @@ ucstoutf8(char *s, const unsigned int wc)
             return (size_t) -1;
         }
     }
-    strncpy(s, buf, sizeof(buf) - 1); /* ensure 0-terminated */
+    *outbuf = '\0';
+    strcpy(s, buf);
     return strlen(buf);
 }
 
