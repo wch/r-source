@@ -810,9 +810,11 @@ data.frame <-
     ncolv <- dimv[2L]
     jvseq <- seq_len(p)
     if(ncolv < p) jvseq <- rep(seq_len(ncolv), length.out = p)
-    else if(ncolv > p)
+    else if(ncolv > p) {
 	warning(gettextf("provided %d variables to replace %d variables",
                          ncolv, p), domain = NA)
+        new.cols <- new.cols[seq_len(p)]
+    }
     if(length(new.cols)) {
         ## extend and name now, as assignment of NULL may delete cols later.
         nm <- names(x)

@@ -2262,3 +2262,10 @@ fit <-  lm(ans ~ x + u, data = junk)
 confint(fit)
 confint.default(fit)
 ## Mismatch gave NA for 'u' in 2.6.1
+
+
+## corrupt data frame produced by subsetting (PR#10574)
+x <- data.frame(a=1:3, b=2:4)
+x[,3] <- x
+x
+## warning during printing < 2.7.0
