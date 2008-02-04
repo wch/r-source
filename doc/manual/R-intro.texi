@@ -3529,7 +3529,7 @@ anywhere a function call is legitimate.
 * Simple examples::             
 * Defining new binary operators::  
 * Named arguments and defaults::  
-* The ellipsis argument (...)::  
+* The three dots argument::     
 * Assignment within functions::  
 * More advanced examples::      
 * Scope::                       
@@ -3638,7 +3638,7 @@ The matrix multiplication operator, @code{%*%}, and the outer product
 matrix operator @code{%o%} are other examples of binary operators
 defined in this way.
 
-@node Named arguments and defaults, The ellipsis argument (...), Defining new binary operators, Writing your own functions
+@node Named arguments and defaults, The three dots argument, Defining new binary operators, Writing your own functions
 @section Named arguments and defaults
 @cindex Named arguments
 @cindex Default values
@@ -3699,7 +3699,7 @@ It is important to note that defaults may be arbitrary expressions, even
 involving other arguments to the same function; they are not restricted
 to be constants as in our simple example here.
 
-@node The ellipsis argument (...), Assignment within functions, Named arguments and defaults, Writing your own functions
+@node The three dots argument, Assignment within functions, Named arguments and defaults, Writing your own functions
 @section The @samp{@dots{}} argument
 
 Another frequent requirement is to allow one function to pass on
@@ -3720,7 +3720,7 @@ fun1 <- function(data, data.frame, graph=TRUE, limit=20, ...) @{
 @}
 @end example
 
-@node Assignment within functions, More advanced examples, The ellipsis argument (...), Writing your own functions
+@node Assignment within functions, More advanced examples, The three dots argument, Writing your own functions
 @section Assignments within functions
 
 Note that @emph{any ordinary assignments done within the function are
