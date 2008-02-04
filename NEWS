@@ -559,6 +559,8 @@ BUG FIXES
 
     o	strptime crashed under certain locales on Mac OS X.
 
+    o	matplot(x, *) with default 'pch' did not plot columns from column
+	number 37 on (because the default pch was NA for those). (PR#10676)
 
 
 		CHANGES IN R VERSION 2.6.1

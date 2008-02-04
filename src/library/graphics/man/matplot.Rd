@@ -41,7 +41,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     plotting characters, see \code{\link{points}}.
     The first character is the plotting-character for the first plot,
     the second for the second, etc.  The default is the digits (1
-    through 9, 0) then the letters.
+    through 9, 0) then the lowercase and uppercase letters.
 %%__FIXME__ Which of the following is still true; what's the "right" UI ?
 %  To mix special plotting symbols (those specified by integers) and
 %  plotting characters, either use character escapes \code{pch="Xe002"}
