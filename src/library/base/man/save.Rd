@@ -78,6 +78,17 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 }
 
 \note{
+  The most common reason for failure is lack of write permission in the
+  current directory.  For \code{save.image} and for saving at the end of
+  a session this will shown by messages like
+\preformatted{
+    Error in gzfile(file, "wb") : unable to open connection
+    In addition: Warning message:
+    In gzfile(file, "wb") :
+      cannot open compressed file '.RDataTmp',
+      probable reason 'Permission denied'
+}
+  
   The defaults were changed to use compressed saves for \code{save} in
   2.3.0 and for \code{save.image} in 2.4.0.  Any recent version of \R
   can read compressed save files, and a compressed file can be
