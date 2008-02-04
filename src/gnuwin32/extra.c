@@ -1439,17 +1439,6 @@ char *getDLLVersion(void)
 
 /* UTF-8 support ----------------------------------------------- */
 
-int Rstrcoll(const char *s1, const char *s2)
-{
-    wchar_t *w1, *w2;
-    w1 = (wchar_t *) alloca((strlen(s1)+1)*sizeof(wchar_t));
-    w2 = (wchar_t *) alloca((strlen(s2)+1)*sizeof(wchar_t));
-    R_CheckStack();
-    utf8towcs(w1, s1, strlen(s1));
-    utf8towcs(w2, s2, strlen(s2));
-    return wcscoll(w1, w2);
-}
-
 #ifdef SUPPORT_UTF8_WIN32
 /* This is currently unused: for faking UTF-8 locale conversions */
 
