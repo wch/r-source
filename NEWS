@@ -167,6 +167,9 @@ BUG FIXES
     o	gregexpr no longer segfaults when "" is given as the search
 	pattern.  Thanks to Herve Pages for the bug report.
 
+    o	matplot(x, *) with default 'pch' did not plot columns from column
+	number 37 on (because the default pch was NA for those). (PR#10676)
+
 
 
 		CHANGES IN R VERSION 2.6.1

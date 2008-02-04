@@ -59,9 +59,11 @@ matplot <- function(x, y, type = "p",
     k <- max(kx,ky)## k == kx == ky
 
     type <- str2vec(type)
-    if(is.null(pch))
-	pch <- c(paste(c(1:9,0)),letters)[1:k]
-    else if(is.character(pch))
+    if(is.null(pch)) {
+	pch <- c(1:9, 0, letters, LETTERS)
+	if(k > length(pch))
+	    warning("default 'pch' is smaller than number of columns and hence recycled")
+    } else if(is.character(pch))
 	pch <- str2vec(pch)
     ## else pch is numeric supposedly
     if(verbose)
