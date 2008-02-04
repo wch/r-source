@@ -378,8 +378,8 @@ do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
 	}
 #endif
         while (!foundAll) {
-            int rc, ovector[3];
-            rc = pcre_exec(re_pcre, NULL, s, strlen(s), start, 0, ovector, 3);
+            int rc, ovector[3], slen = strlen(s);
+            rc = pcre_exec(re_pcre, NULL, s, slen, start, 0, ovector, 3);
             if (rc >= 0) {
                 if ((matchIndex + 1) == bufsize) {
                     /* Reallocate match buffers */
@@ -434,6 +434,8 @@ do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
                     }
                 }
 #endif
+                if (start >= slen)
+                    foundAll = 1;
             } else {
                 foundAll = 1;
                 if (!foundAny)

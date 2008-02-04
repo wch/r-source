@@ -164,6 +164,9 @@ BUG FIXES
 
     o	strptime crashed under certain locales on Mac OS X.
 
+    o	gregexpr no longer segfaults when "" is given as the search
+	pattern.  Thanks to Herve Pages for the bug report.
+
 
 
 		CHANGES IN R VERSION 2.6.1

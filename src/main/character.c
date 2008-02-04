@@ -1624,6 +1624,7 @@ static SEXP
 gregexpr_fixed(const char *pattern, const char *string, int useBytes)
 {
     int patlen, matchIndex, st, foundAll, foundAny, curpos, j, ansSize, nb=0;
+    int slen;
     SEXP ans, matchlen;         /* return vect and its attribute */
     SEXP matchbuf, matchlenbuf; /* buffers for storing multiple matches */
     int bufsize = 1024;         /* starting size for buffers */
@@ -1635,6 +1636,7 @@ gregexpr_fixed(const char *pattern, const char *string, int useBytes)
     else
 #endif
         patlen = strlen(pattern);
+    slen = strlen(string);
     foundAll = curpos = st = foundAny = 0;
     st = fgrep_one(pattern, string, useBytes, &nb);
     matchIndex = -1;
@@ -1648,7 +1650,12 @@ gregexpr_fixed(const char *pattern, const char *string, int useBytes)
         INTEGER(matchlenbuf)[matchIndex] = patlen;
         while(!foundAll) {
             string += nb;
-            curpos += st + patlen;
+            if (patlen == 0)
+                curpos += st + 1;
+            else
+                curpos += st + patlen;
+            if (curpos >= slen)
+                break;
             st = fgrep_one(pattern, string, useBytes, &nb);
             if (st >= 0) {
                 if ((matchIndex + 1) == bufsize) {
