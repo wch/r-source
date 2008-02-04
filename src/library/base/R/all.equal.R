@@ -88,9 +88,9 @@ all.equal.numeric <-
 	    "scaled"
 	}
 
+    if (cplx) what <- paste(what, "Mod") # PR#10575
     if(is.na(xy) || xy > tolerance)
-       msg <- c(msg, paste("Mean", what, if(cplx)"Mod", "difference:",
-                           format(xy)))
+        msg <- c(msg, paste("Mean", what, "difference:", format(xy)))
 
     if(is.null(msg)) TRUE else msg
 }
