@@ -598,6 +598,9 @@ void attribute_hidden InitGraphics(void)
 
 void NewFrameConfirm(pDevDesc dd)
 {
+    if(!R_Interactive) return;
+    /* dd->newFrameConfirm(dd) will either handle this, or return
+       FALSE to ask for the engine to do so. */
     if(dd->newFrameConfirm && dd->newFrameConfirm(dd)) ;
     else {
 	unsigned char buf[1024];
