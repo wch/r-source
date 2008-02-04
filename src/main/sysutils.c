@@ -904,6 +904,9 @@ const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
     char *outbuf, *p;
     size_t inb, outb, res, top;
     char *tocode = NULL, *fromcode = NULL;
+#ifdef Win32
+    char buf[20];
+#endif
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     /* We can only encode from Symbol to UTF-8 */
@@ -920,7 +923,17 @@ const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
     if(strIsASCII(x)) return x;
     
     switch(ce_in) {
+#ifdef Win32
+    case CE_NATIVE: 
+	{
+	    /* Looks like CP1252 is treated a Latin-1 by iconv */
+	    sprintf(buf, "CP%d", localeCP);
+	    fromcode = buf; 
+	    break;
+	}
+#else
     case CE_NATIVE: fromcode = ""; break;
+#endif
     case CE_LATIN1: fromcode = "latin1"; break;
     case CE_UTF8:   fromcode = "UTF-8"; break;
     default: return x;
@@ -1088,8 +1101,8 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
     return (size_t) 1;
 }
 
-size_t
-ucstoutf8(char *s, const unsigned int wc)
+/* made available for use in graphics devices */
+size_t ucstoutf8(char *s, const unsigned int wc)
 {
     char     buf[16];
     void    *cd = NULL ;
@@ -1164,6 +1177,10 @@ const char *reEnc(const char *x, int ce_in, int ce_out)
 
 void attribute_hidden
 invalidate_cached_recodings(void)
+{
+}
+size_t
+ucstoutf8(char *s, const unsigned int wc)
 {
 }
 #endif

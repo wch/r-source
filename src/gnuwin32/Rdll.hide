@@ -347,7 +347,6 @@
  Rf_stirlerr
  Rf_substituteList
  Rf_ucstomb
- Rf_ucstoutf8
  Rf_unbindVar
  Rf_utf8toucs
  Rf_vectorSubscript
