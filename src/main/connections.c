@@ -1126,8 +1126,13 @@ static Rboolean gzfile_open(Rconnection con)
 
     fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
+#ifdef HAVE_STRERROR
+	warning(_("cannot open compressed file '%s', probable reason '%s'"),
+	      R_ExpandFileName(con->description), strerror(errno));
+#else
 	warning(_("cannot open compressed file '%s'"),
 	      R_ExpandFileName(con->description));
+#endif
 	return FALSE;
     }
     ((Rgzfileconn)(con->private))->fp = fp;
@@ -1313,8 +1318,13 @@ static Rboolean bzfile_open(Rconnection con)
     mode[0] = con->mode[0];
     fp = R_fopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
+#ifdef HAVE_STRERROR
+	warning(_("cannot open bzip2-ed file '%s', probable reason '%s'"),
+		R_ExpandFileName(con->description), strerror(errno));
+#else
 	warning(_("cannot open bzip2-ed file '%s'"),
 		R_ExpandFileName(con->description));
+#endif
 	return FALSE;
     }
     if(con->canread) {
