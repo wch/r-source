@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-01-30
+@set FAQ_DATE @value{FAQ_YEAR}-02-05
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2008,6 +2008,8 @@ Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
+@item FAiR
+Factor Analysis in R, using genetic algorithms.
 @item FGN
 Fractional Gaussian Noise model fitting.
 @item FKBL
@@ -2592,6 +2594,8 @@ A SINful approach to selection of Gaussian Graphical Markov Models.
 @item SLmisc
 Miscellaneous Functions for analysis of gene expression data at SIRS-Lab
 GmbH.
+@item SMC
+Sequential Monte Carlo (SMC) Algorithm.
 @item SMPracticals
 Data sets and a few functions for use with the practicals outlined in
 Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
@@ -2881,6 +2885,8 @@ Utilities for the Birnbaum-Saunders distribution.
 Basic image operations and image processing.
 @item biOpsGUI
 @acronym{GUI} for Basic image operations.
+@item biclust
+BiCluster algorithms.
 @item bicreduc
 Reduction algorithm for the NPMLE for the distribution function of
 bivariate interval-censored data.
@@ -3016,6 +3022,9 @@ Choplump tests (permutation tests for comparing two groups with some
 positive but many zero responses).
 @item chron
 A package for working with chronological objects (times and dates).
+@item cir
+Nonparametric estimation of monotone functions via isotonic regression
+and centered isotonic regression.
 @item circular
 Circular statistics, from ``Topics in Circular Statistics'' by Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -3741,6 +3750,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item hybridHclust
 Hybrid hierarchical clustering via mutual clusters.
+@item hydrogeo
+Groundwater data presentation and interpretation.
 @item hydrosanity
 Graphical user interface for exploring hydrological time series.
 @item ibdreg
