@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -34,10 +34,10 @@ wilcox.test(x, \dots)
   \item{mu}{a number specifying an optional parameter used to form the
     null hypothesis.  See \sQuote{Details}.}
   \item{paired}{a logical indicating whether you want a paired test.}
-  \item{exact}{a logical indicating whether an exact \eqn{p}-value
+  \item{exact}{a logical indicating whether an exact p-value
     should be computed.}
   \item{correct}{a logical indicating whether to apply continuity
-    correction in the normal approximation for the \eqn{p}-value.}
+    correction in the normal approximation for the p-value.}
   \item{conf.int}{a logical indicating whether a confidence interval
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
@@ -73,7 +73,7 @@ wilcox.test(x, \dots)
   alternative \code{"greater"} is that \code{x} is shifted to the right
   of \code{y}).
 
-  By default (if \code{exact} is not specified), an exact \eqn{p}-value
+  By default (if \code{exact} is not specified), an exact p-value
   is computed if the samples contain less than 50 finite values and
   there are no ties.  Otherwise, a normal approximation is used.
 
@@ -84,7 +84,7 @@ wilcox.test(x, \dots)
   of the distribution of \eqn{(u+v)/2}, where \eqn{u} and \eqn{v} are
   independent, each with distribution \eqn{F}.  If \eqn{F} is symmetric,
   then the pseudomedian and median coincide.  See Hollander & Wolfe
-  (1973), page 34.)  If exact \eqn{p}-values are available, an exact
+  (1973), page 34.)  If exact p-values are available, an exact
   confidence interval is obtained by the algorithm described in Bauer
   (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
   returned confidence interval and point estimate are based on normal
@@ -100,7 +100,7 @@ wilcox.test(x, \dots)
     describing it.}
   \item{parameter}{the parameter(s) for the exact distribution of the
     test statistic.}
-  \item{p.value}{the \eqn{p}-value for the test.}
+  \item{p.value}{the p-value for the test.}
   \item{null.value}{the location parameter \code{mu}.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
@@ -147,10 +147,10 @@ wilcox.test(x, \dots)
 
   \code{\link[exactRankTests]{wilcox.exact}}
   in \pkg{exactRankTests} covers much of the same ground, but also
-  produces exact \eqn{p}-values in the presence of ties.
+  produces exact p-values in the presence of ties.
 
   \code{\link[coin]{wilcox_test}} in package \pkg{coin} for exact and
-  approximate \emph{conditional} \eqn{p}-values for the Wilcoxon tests.
+  approximate \emph{conditional} p-values for the Wilcoxon tests.
   
   \code{\link{kruskal.test}} for testing homogeneity in location
   parameters in the case of two or more samples;
