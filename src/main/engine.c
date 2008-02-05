@@ -1551,6 +1551,7 @@ void GEText(double x, double y, const char * const str, int enc,
     } else {
 	/* PR#7397: this seems to reset R_Visible */
 	Rboolean savevis = R_Visible;
+	int noMetricInfo = -1;
 	char *sbuf = NULL;
 	if(str && *str) {
 	    const char *s;
@@ -1626,8 +1627,11 @@ void GEText(double x, double y, const char * const str, int enc,
 			    /* there is only one line, use GMetricInfo & yc=0.5 */
 			    /* Otherwise use GEStrHeight and fiddle yc */
 			    double h, d, w;
-			    GEMetricInfo(0, gc, &h, &d, &w, dd);
-			    if (n > 1 || (h == 0 && d == 0 && w == 0)) {
+			    if (noMetricInfo < 0) {
+				GEMetricInfo('M', gc, &h, &d, &w, dd);
+				noMetricInfo = (h == 0 && d == 0 && w == 0) ? 1 : 0;
+			    }
+			    if (n > 1 || noMetricInfo) {
 				height = fromDeviceHeight(GEStrHeight(str, enc2, gc, dd),
 							  GE_INCHES, dd);
 				yc = dd->dev->yCharOffset;

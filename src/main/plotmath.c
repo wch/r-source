@@ -142,32 +142,28 @@ static void PMoveTo(double x, double y, mathContext *mc)
 static double xHeight(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
-    GEMetricInfo('x', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('x', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(height, MetricUnit, dd);
 }
 
 static double XHeight(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
-    GEMetricInfo('X', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('X', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(height, MetricUnit, dd);
 }
 
 static double AxisHeight(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
-    GEMetricInfo('+', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('+', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(0.5 * height, MetricUnit, dd);
 }
 
 static double Quad(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
-    GEMetricInfo('M', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('M', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(width, MetricUnit, dd);
 }
 
@@ -175,8 +171,7 @@ static double Quad(pGEcontext gc, pGEDevDesc dd)
 static double FigHeight(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
-    GEMetricInfo('0', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('0', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(height, MetricUnit, dd);
 }
 
@@ -184,8 +179,7 @@ static double FigHeight(pGEcontext gc, pGEDevDesc dd)
 static double DescDepth(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
-    GEMetricInfo('g', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('g', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(depth, MetricUnit, dd);
 }
 
@@ -199,8 +193,7 @@ static double ThinSpace(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
     static double OneSixth = 0.16666666666666666666;
-    GEMetricInfo('M', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('M', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(OneSixth * width, MetricUnit, dd);
 }
 
@@ -208,8 +201,7 @@ static double MediumSpace(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
     static double TwoNinths = 0.22222222222222222222;
-    GEMetricInfo('M', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('M', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(TwoNinths * width, MetricUnit, dd);
 }
 
@@ -217,8 +209,7 @@ static double ThickSpace(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
     static double FiveEighteenths = 0.27777777777777777777;
-    GEMetricInfo('M', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('M', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(FiveEighteenths * width, MetricUnit, dd);
 }
 
@@ -226,8 +217,7 @@ static double MuSpace(pGEcontext gc, pGEDevDesc dd)
 {
     double height, depth, width;
     static double OneEighteenth = 0.05555555555555555555;
-    GEMetricInfo('M', gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo('M', gc, &height, &depth, &width, dd);
     return fromDeviceHeight(OneEighteenth * width, MetricUnit, dd);
 }
 
@@ -958,8 +948,7 @@ static BBOX GlyphBBox(int chr, pGEcontext gc, pGEDevDesc dd)
 {
     BBOX bbox;
     double height, depth, width;
-    GEMetricInfo(chr, gc,
-		&height, &depth, &width, dd);
+    GEMetricInfo(chr, gc, &height, &depth, &width, dd);
     bboxHeight(bbox) = fromDeviceHeight(height, MetricUnit, dd);
     bboxDepth(bbox)  = fromDeviceHeight(depth, MetricUnit, dd);
     bboxWidth(bbox)  = fromDeviceHeight(width, MetricUnit, dd);
@@ -3259,16 +3248,12 @@ void GEMathText(double x, double y, SEXP expr,
     BBOX bbox;
     mathContext mc;
 
-#ifdef BUG61
-#else
-    /* IF font metric information is not available for device */
-    /* then bail out */
+    /* If font metric information is not available for device
+       then bail out */
     double ascent, descent, width;
-    GEMetricInfo(0, gc,
-		&ascent, &descent, &width, dd);
-    if ((ascent==0) && (descent==0) && (width==0))
-	error(_("Metric information not available for this device"));
-#endif
+    GEMetricInfo('M', gc, &ascent, &descent, &width, dd);
+    if ((ascent == 0.0) && (descent == 0.0) && (width == 0.0))
+	error(_("Metric information not available for this family/device"));
 
     /*
      * Build a "drawing context" for the current expression
@@ -3276,6 +3261,7 @@ void GEMathText(double x, double y, SEXP expr,
     mc.BaseCex = gc->cex;
     mc.BoxColor = name2col("pink");
     mc.CurrentStyle = STYLE_D;
+
     /*
      * Some "empty" values.  Will be filled in after BBox is calc'ed
      */
@@ -3294,7 +3280,7 @@ void GEMathText(double x, double y, SEXP expr,
     if (R_FINITE(xc))
 	mc.CurrentX = mc.ReferenceX - xc * bboxWidth(bbox);
     else
-	/* Paul 11/2/02
+	/* Paul 2002-02-11
 	 * If xc == NA then should centre horizontally.
 	 * Used to left-adjust.
 	 */
