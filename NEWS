@@ -269,6 +269,11 @@ DEPRECATED & DEFUNCT
 	["double" will follow shortly:  the S4 class for a REALSXP is
 	"numeric".]
 
+    o	Use of the graphics headers Rgraphics.h and Rdevices.h is
+	deprecated, and these will be unavailable in R 2.8.0.
+	(They are hardly used except in graphics devices, for which
+	there is an updated API in this version of R.)
+
 
 INSTALLATION
 
