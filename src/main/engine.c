@@ -2489,7 +2489,7 @@ void GEplayDisplayList(pGEDevDesc dd)
     /* Get each graphics system to restore state required for
      * replaying the display list
      */
-    for (i=0; i<numGraphicsSystems; i++)
+    for (i = 0; i < numGraphicsSystems; i++)
 	if (dd->gesd[i] != NULL)
 	    (dd->gesd[i]->callback)(GE_RestoreState, dd, R_NilValue);
     /* Play the display list

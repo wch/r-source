@@ -550,9 +550,9 @@ void Rf_addDevice(pGEDev dd)
     GEaddDevice(dd);
 }
 
-/* Create a GEDevDesc, given a NewDevDesc*
+/* Create a GEDevDesc, given a pDevDesc
  */
-pGEDevDesc GEcreateDevDesc(NewDevDesc* dev)
+pGEDevDesc GEcreateDevDesc(pDevDesc dev)
 {
     /* Wrap the device description within a graphics engine
      * device description (add graphics engine information

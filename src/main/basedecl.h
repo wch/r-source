@@ -77,8 +77,10 @@ void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);
 void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);
 
+#if 0
 void Rf_InitGraphics(void);
 void Rf_InitColors(void);
+#endif
 
 SEXP R_compress1(SEXP);
 SEXP R_decompress1(SEXP);
