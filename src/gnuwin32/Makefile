@@ -45,7 +45,7 @@ ifdef R_MEMORY_PROFILING
  OPTFLAGS+=-DR_MEMORY_PROFILING
 endif
 
-# used when compiling src/main: needed for memory.c
+# used when compiling src/main: needed for memory.c, regex.c
 OPTFLAGS_M=$(OPTFLAGS)
 
 ifneq ($(strip $(BUILD)),CROSS)
@@ -59,7 +59,7 @@ dllversion-RESFLAGS =-I../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
-  rui.c run.c shext.c sys-win32.c system.c dos_glob.c dos_wglob.c
+  rui.c run.c shext.c sys-win32.c system.c dos_wglob.c
 OBJS = $(SOURCES:.c=.o)
 ifeq ($(strip $(WIN)),32)
  OBJS += e_pow.o

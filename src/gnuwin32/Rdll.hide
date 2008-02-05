@@ -507,6 +507,7 @@
  consolex
  consoley
  corth_
+ crc32
  crc32_combine
  csduplicated
  csroot_
@@ -514,8 +515,10 @@
  dblep0_
  deflateBound
  deflateCopy
+ deflateInit2_
  deflateParams
  deflatePrime
+ deflateReset
  deflateSetDictionary
  deflateSetHeader
  deflateTune
@@ -1086,6 +1089,7 @@
  inflateGetHeader
  inflateInit2_
  inflatePrime
+ inflateReset
  inflateSetDictionary
  inflateSync
  inflateSyncPoint
