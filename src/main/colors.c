@@ -40,6 +40,7 @@
 static unsigned int rgb2col(const char *);
 static char *RGB2rgb(unsigned int, unsigned int, unsigned int);
 static char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
+static unsigned int str2col(const char *s, unsigned int bg);
 
 static int R_ColorTableSize;
 static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
@@ -380,7 +381,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     bg = dpptr(CurrentDevice())->bg;
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
-	    col = R_GE_str2col(CHAR(STRING_ELT(colors, i)), bg);
+	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
 	    INTEGER(ans)[i4 +0] = R_RED(col);
 	    INTEGER(ans)[i4 +1] = R_GREEN(col);
 	    INTEGER(ans)[i4 +2] = R_BLUE(col);
@@ -1463,7 +1464,7 @@ static unsigned int str2col(const char *s, unsigned int bg)
 /* used in grDevices, public */
 unsigned int R_GE_str2col(const char *s)
 {
-    return str2col(s, R_TRANSWHITE);
+    return str2col(s, R_TRANWHITE);
 }
 
 /* Convert a sexp element to an R color desc */
