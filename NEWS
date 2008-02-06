@@ -170,6 +170,8 @@ BUG FIXES
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
 
+    o	Setting par(col.main=) also set par("col") to the same colour.
+
 
 
 		CHANGES IN R VERSION 2.6.1

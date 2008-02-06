@@ -80,10 +80,8 @@
 	R_DEV__(col) = RGBpar(value, 0);
     }
     else if (streql(what, "col.main")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(colmain) = ix;
-	R_DEV__(col) = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);
+	R_DEV__(colmain) = RGBpar(value, 0);
     }
     else if (streql(what, "col.lab")) {
 	lengthCheck(what, value, 1, call);
