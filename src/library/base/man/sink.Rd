@@ -41,7 +41,7 @@ sink.number(type = c("output", "message"))
   Normal \R output (to connection \code{\link{stdout}))} is diverted by
   the default \code{type = "output"}.  Only prompts and (most)
   messages continue to appear on the console.  Messages sent to
-  \code{\link{stdout}()} (including those from \code{\link{message}},
+  \code{\link{stderr}()} (including those from \code{\link{message}},
   \code{\link{warning}} and \code{\link{stop}}) can be diverted by
   \code{sink(type = "message")} (see below).
 
@@ -51,6 +51,10 @@ sink.number(type = c("output", "message"))
   one).  The stack is of up to 21 connections (20 diversions).
 
   If \code{file} is a connection it will be opened if necessary.
+
+  If \code{split = TRUE} only splits \R output (via \code{Rvprintf}) and
+  the default output from \code{\link{writeLines}}: it does not split
+  all output that might be sent to \code{\link{stdout}()}.
 
   Sink-ing the messages stream should be done only with great care.
   For that stream \code{file} must be an already open connection, and

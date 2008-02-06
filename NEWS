@@ -250,6 +250,10 @@ NEW FEATURES
     o	round() and signif() now do internal argument matching if
 	supplied with two arguments and at least one is named.
 
+    o	If writeLines(con = stdout()) is used (the default) and
+	sink(split=TRUE) has been used, the output is now sent to all
+	the active sink connections.
+
 
 DEPRECATED & DEFUNCT
 
