@@ -2246,12 +2246,31 @@ adjusting) text, rendering expressions (`plotmath'), mapping colour
 descriptions such as names to the internal representation and recording
 and replaying graphics.
 
-@c graphics.c looks are device dimensions, locator, metricinfo, mode
+@c graphics.c looks at device dimensions, locator, metricinfo, mode
 @c memory.c looks at displayList and saveSnapshot
-@c par.c looks at canChangeGamma
-@c plot.c looks at the displayList
+@c par.c looks at various device pars
 @c plot3d.c looks at useRotatedTextInContour
 @c grid looks at size, clipping, locator, ipr
+
+Another function of the engine is to manage display lists and
+snapshots.  Some but not all graphics devices maintain display lists, a
+`list' of operations that have been performed on the device to produce
+the current plot (since the device was opened or the plot was last
+cleared, e.g.@: by @code{plot.new}).  Screen devices generally maintain
+a display list to handle repaint and resize events where as save formats
+do not---display lists are also used to implement @code{dev.copy()} and
+friends.  The display list is a pairlist of @code{.Internal} (base
+graphics) or @code{.Call.graphics} (grid graphics) calls, which means
+that the C code implementing a graphics operation will be re-called when
+the display list is replayed: apart from the part which records the
+operation if successful.
+
+Snapshots of the current graphics state are taken by
+@code{GEcreateSnapshot} and replayed later in the session by
+@code{GEplaySnapshot}.  These are used by @code{recordPlot()},
+@code{replayPlot()} and the GUI menus of the @code{windows()} device.
+The `state' includes the display list.
+
 
 At the top are the graphics subsystems. Although there is provision for
 24 subsystems, after 6 years only two exist, `base' and `grid'.
@@ -2259,6 +2278,8 @@ The base subsystem is registered with the engine when @R{} is
 initialized, and unregistered (via @code{KillAllDevices}) when an @R{}
 session is shut down.  The grid subsystem is registered in its
 @code{.onLoad} function and unregistered in the @code{.onUnload} function.
+The graphics subsystem may also have `state' information saved in a
+snapshot (currently base does and grid does not).
 
 Package @pkg{grDevices} was originally created to contain the basic
 graphics devices (although @code{X11} is in a load-on-demand module
@@ -2596,7 +2617,43 @@ with @code{G} and declared in header @file{Rgraphics.h} in file
 functions almost all have names starting with @code{GE}.
 
 Again for historical reasons, @file{Rgraphics.h} is a public header, but
-it is almost unused and it is intended to withdraw it by @R{} 2.8.0.
+it is almost unused outside @R{} and it is intended to withdraw it by
+@R{} 2.8.0.
+
+A large part of the infrastructure of the base graphics subsystem are
+the graphics parameters (as set/read by @code{par()}).  These are stored
+in a @code{GPar} structure declared in the private header
+@file{Graphics.h}.  This structure is something of a mixture: the first
+part duplicates parameters and capabilities from the device driver.
+Then there are two variables (@code{state} and @code{valid} tracking the
+state of the base subsystem on the device, and finally many variables
+recording the graphics parameters and functions of them.
+
+The base system state is contained in @code{baseSystemState} structure
+defined in @file{R_ext/GraphicsBase.h}.  This contains three @code{GPar}
+structures and a Boolean variable used to record if @code{plot.new()}
+(or @code{persp}) has been used successfully on the device.
+
+The three copies of the @code{GPar} structure are used to store the
+current parameters (accessed via @code{gpptr}), the `device copy'
+(accessed via @code{dpptr}) and space for a saved copy of the `device
+copy' parameters.  The current parameters are, clearly, those currently
+in use and are copied from the `device copy' whenever @code{plot.new()}
+is called (whether or not that advances to the next `page'). The saved
+copy keeps the state when the device was last completely cleared (e.g.@:
+when @code{plot.new()} was called with @code{par(new=TRUE)}), and is
+used to replay the display list.
+
+The separation is not completely clean: the `device copy' is altered if
+a plot with log scale(s) is set up via @code{plot.window()}.
+
+There is yet another copy of most of the graphics parameters in
+@code{static} variables in @file{graphics.c} which are used to preserve
+the current parameters across the processing of inline parameters in
+high-level graphics calls (handled by @code{ProcessInlinePars}).
+
+Snapshots of the base subsystem record the `saved device copy' of the
+@code{GPar} structure.
 
 There remain quite a number of anomalies.  For example, function
 @code{GEcontourLines} is (despite its name) coded in file

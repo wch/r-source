@@ -61,7 +61,7 @@ static SEXP R_INLINE getSymbolValue(const char *symbolName)
  *  resources such as X11 windows).
  *
  *  Each device has a display list which records every
- *  graphical operation since the last Rf_dpptr(dd)->newPage;
+ *  graphical operation since the last dpptr(dd)->newPage;
  *  this is used to redraw the output on the device
  *  when it is resized and to copy output from one device
  *  to another (this can be disabled, which is the default
@@ -339,7 +339,7 @@ void removeDevice(int devNum, Rboolean findNext)
 		       the current device is changed in any other way.
 		       So no longer do it in 2.7.0.
 		     */
-		    copyGPar(Rf_dpptr(gdd), Rf_gpptr(gdd));
+		    copyGPar(dpptr(gdd), gpptr(gdd));
 		    GReset(gdd);
 #endif
 		}
@@ -526,12 +526,6 @@ void GEaddDevice(pGEDevDesc gdd)
 	SETCAR(s, t);
 
     UNPROTECT(2);
-
-#if 0
-    /* This section depended on base system: moved to GE_InitState */
-    copyGPar(Rf_dpptr(gdd), Rf_gpptr(gdd));
-    GReset(gdd);
-#endif
 
     /* In case a device driver did not call R_CheckDeviceAvailable
        before starting its allocation, we complete the allocation and

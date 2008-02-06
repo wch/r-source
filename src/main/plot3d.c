@@ -400,8 +400,8 @@ static SEXP labelList;
 
 static
 double distFromEdge(double *xxx, double *yyy, int iii, pGEDevDesc dd) {
-    return fmin2(fmin2(xxx[iii]-Rf_gpptr(dd)->usr[0], Rf_gpptr(dd)->usr[1]-xxx[iii]),
-		 fmin2(yyy[iii]-Rf_gpptr(dd)->usr[2], Rf_gpptr(dd)->usr[3]-yyy[iii]));
+    return fmin2(fmin2(xxx[iii]-gpptr(dd)->usr[0], gpptr(dd)->usr[1]-xxx[iii]),
+		 fmin2(yyy[iii]-gpptr(dd)->usr[2], gpptr(dd)->usr[3]-yyy[iii]));
 }
 
 static
@@ -1208,10 +1208,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			    /* find which plot edge we are closest to */
 			    int closest; /* 0 = indx,  1 = indx+range */
 			    double dx1, dx2, dy1, dy2, dmin;
-			    dx1 = fmin2((xxx[indx] - Rf_gpptr(dd)->usr[0]),
-					(Rf_gpptr(dd)->usr[1] - xxx[indx]));
-			    dx2 = fmin2((Rf_gpptr(dd)->usr[1] - xxx[indx+range]),
-					(xxx[indx+range] - Rf_gpptr(dd)->usr[0]));
+			    dx1 = fmin2((xxx[indx] - gpptr(dd)->usr[0]),
+					(gpptr(dd)->usr[1] - xxx[indx]));
+			    dx2 = fmin2((gpptr(dd)->usr[1] - xxx[indx+range]),
+					(xxx[indx+range] - gpptr(dd)->usr[0]));
 			    if (dx1 < dx2) {
 				closest = 0;
 				dmin = dx1;
@@ -1219,15 +1219,15 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 				closest = 1;
 				dmin = dx2;
 			    }
-			    dy1 = fmin2((yyy[indx] - Rf_gpptr(dd)->usr[2]),
-					(Rf_gpptr(dd)->usr[3] - yyy[indx]));
+			    dy1 = fmin2((yyy[indx] - gpptr(dd)->usr[2]),
+					(gpptr(dd)->usr[3] - yyy[indx]));
 			    if (closest && (dy1 < dmin)) {
 				closest = 0;
 				dmin = dy1;
 			    } else if (dy1 < dmin)
 				dmin = dy1;
-			    dy2 = fmin2((Rf_gpptr(dd)->usr[3] - yyy[indx+range]),
-					(yyy[indx+range] - Rf_gpptr(dd)->usr[2]));
+			    dy2 = fmin2((gpptr(dd)->usr[3] - yyy[indx+range]),
+					(yyy[indx+range] - gpptr(dd)->usr[2]));
 			    if (!closest && (dy2 < dmin))
 				closest = 1;
 
@@ -1399,11 +1399,11 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont)) {
-	strncpy(familysave, Rf_gpptr(dd)->family, 201);
-	strncpy(Rf_gpptr(dd)->family, "Her ", 201);
-	Rf_gpptr(dd)->family[3] = INTEGER(vfont)[0];
-	fontsave = Rf_gpptr(dd)->font;
-	Rf_gpptr(dd)->font = INTEGER(vfont)[1];
+	strncpy(familysave, gpptr(dd)->family, 201);
+	strncpy(gpptr(dd)->family, "Her ", 201);
+	gpptr(dd)->family[3] = INTEGER(vfont)[0];
+	fontsave = gpptr(dd)->font;
+	gpptr(dd)->font = INTEGER(vfont)[1];
     }
     args = CDR(args);
 
@@ -1412,11 +1412,11 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     ncol = length(col);
     args = CDR(args);
 
-    PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));
+    PROTECT(lty = FixupLty(CAR(args), gpptr(dd)->lty));
     nlty = length(lty);
     args = CDR(args);
 
-    PROTECT(lwd = FixupLwd(CAR(args), Rf_gpptr(dd)->lwd));
+    PROTECT(lwd = FixupLwd(CAR(args), gpptr(dd)->lwd));
     nlwd = length(lwd);
     args = CDR(args);
 
@@ -1485,10 +1485,10 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Draw the contours -- note the heap release */
 
-    ltysave = Rf_gpptr(dd)->lty;
-    colsave = Rf_gpptr(dd)->col;
-    lwdsave = Rf_gpptr(dd)->lwd;
-    cexsave = Rf_gpptr(dd)->cex;
+    ltysave = gpptr(dd)->lty;
+    colsave = gpptr(dd)->col;
+    lwdsave = gpptr(dd)->lwd;
+    cexsave = gpptr(dd)->cex;
     labelList = PROTECT(R_NilValue);
 
 
@@ -1496,30 +1496,30 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(1, dd);
     for (i = 0; i < nc; i++) {
 	vmax = vmaxget();
-	Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
-	if (Rf_gpptr(dd)->lty == NA_INTEGER)
-	    Rf_gpptr(dd)->lty = ltysave;
+	gpptr(dd)->lty = INTEGER(lty)[i % nlty];
+	if (gpptr(dd)->lty == NA_INTEGER)
+	    gpptr(dd)->lty = ltysave;
 	if (isNAcol(rawcol, i, ncol))
-	    Rf_gpptr(dd)->col = colsave;
+	    gpptr(dd)->col = colsave;
 	else
-	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
-	Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
-	if (!R_FINITE(Rf_gpptr(dd)->lwd))
-	    Rf_gpptr(dd)->lwd = lwdsave;
-	Rf_gpptr(dd)->cex = labcex;
+	    gpptr(dd)->col = INTEGER(col)[i % ncol];
+	gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
+	if (!R_FINITE(gpptr(dd)->lwd))
+	    gpptr(dd)->lwd = lwdsave;
+	gpptr(dd)->cex = labcex;
 	contour(x, nx, y, ny, z, REAL(c)[i], labels, i,
 		drawLabels, method - 1, atom, dd);
 	vmaxset(vmax);
     }
     GMode(0, dd);
     vmaxset(vmax0);
-    Rf_gpptr(dd)->lty = ltysave;
-    Rf_gpptr(dd)->col = colsave;
-    Rf_gpptr(dd)->lwd = lwdsave;
-    Rf_gpptr(dd)->cex = cexsave;
+    gpptr(dd)->lty = ltysave;
+    gpptr(dd)->col = colsave;
+    gpptr(dd)->lwd = lwdsave;
+    gpptr(dd)->cex = cexsave;
     if(!isNull(vfont)) {
-	strncpy(Rf_gpptr(dd)->family, familysave, 201);
-	Rf_gpptr(dd)->font = fontsave;
+	strncpy(gpptr(dd)->family, familysave, 201);
+	gpptr(dd)->font = fontsave;
     }
     UNPROTECT(5);
     /* NOTE: only record operation if no "error"  */
@@ -1714,10 +1714,10 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     for (k = 1; k < nc; k++)
 	if (!R_FINITE(c[k]) || c[k] <= c[k - 1]) goto badlev;
 
-    colsave = Rf_gpptr(dd)->col;
-    xpdsave = Rf_gpptr(dd)->xpd;
+    colsave = gpptr(dd)->col;
+    xpdsave = gpptr(dd)->xpd;
     /* override par("xpd") and force clipping to plot region */
-    Rf_gpptr(dd)->xpd = 0;
+    gpptr(dd)->xpd = 0;
 
     GMode(1, dd);
 
@@ -1739,8 +1739,8 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     GMode(0, dd);
-    Rf_gpptr(dd)->col = colsave;
-    Rf_gpptr(dd)->xpd = xpdsave;
+    gpptr(dd)->col = colsave;
+    gpptr(dd)->xpd = xpdsave;
     UNPROTECT(1);
     if (GRecording(call, dd))
 	GErecordGraphicOperation(op, oargs, dd);
@@ -1798,10 +1798,10 @@ SEXP attribute_hidden do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Check of grid coordinates now done in C code */
 
-    colsave = Rf_gpptr(dd)->col;
-    xpdsave = Rf_gpptr(dd)->xpd;
+    colsave = gpptr(dd)->col;
+    xpdsave = gpptr(dd)->xpd;
     /* override par("xpd") and force clipping to plot region */
-    Rf_gpptr(dd)->xpd = 0;
+    gpptr(dd)->xpd = 0;
 
     GMode(1, dd);
 
@@ -1814,8 +1814,8 @@ SEXP attribute_hidden do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     GMode(0, dd);
-    Rf_gpptr(dd)->col = colsave;
-    Rf_gpptr(dd)->xpd = xpdsave;
+    gpptr(dd)->col = colsave;
+    gpptr(dd)->xpd = xpdsave;
     UNPROTECT(1);
     if (GRecording(call, dd))
 	GErecordGraphicOperation(op, oargs, dd);
@@ -2090,11 +2090,11 @@ static void PerspBox(int front, double *x, double *y, double *z, pGEDevDesc dd)
     Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
     double d[3], e[3];
     int f, i, p0, p1, p2, p3, nearby;
-    int ltysave = Rf_gpptr(dd)->lty;
+    int ltysave = gpptr(dd)->lty;
     if (front)
-	Rf_gpptr(dd)->lty = LTY_DOTTED;
+	gpptr(dd)->lty = LTY_DOTTED;
     else
-	Rf_gpptr(dd)->lty = LTY_SOLID;
+	gpptr(dd)->lty = LTY_SOLID;
     for (f = 0; f < 6; f++) {
         p0 = Face[f][0];
         p1 = Face[f][1];
@@ -2148,7 +2148,7 @@ static void PerspBox(int front, double *x, double *y, double *z, pGEDevDesc dd)
 		      v0[0]/v0[3], v0[1]/v0[3], USER, dd);
 	}
     }
-    Rf_gpptr(dd)->lty = ltysave;
+    gpptr(dd)->lty = ltysave;
 }
 
 /* PerspAxes:
@@ -2202,8 +2202,8 @@ static void PerspAxis(double *x, double *y, double *z,
     double axp[3];
     int nint, i;
     SEXP at, lab;
-    double cexsave = Rf_gpptr(dd)->cex;
-    int fontsave = Rf_gpptr(dd)->font;
+    double cexsave = gpptr(dd)->cex;
+    int fontsave = gpptr(dd)->font;
 
 
     switch (axisType) {
@@ -2301,15 +2301,15 @@ static void PerspAxis(double *x, double *y, double *z,
     TransVector(u3, VT, v3);
     /* Draw axis label */
     /* change in 2.5.0 to use cex.lab and font.lab */
-    Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * Rf_gpptr(dd)->cexlab;
-    Rf_gpptr(dd)->font = Rf_gpptr(dd)->fontlab;
+    gpptr(dd)->cex = gpptr(dd)->cexbase * gpptr(dd)->cexlab;
+    gpptr(dd)->font = gpptr(dd)->fontlab;
     GText(v3[0]/v3[3], v3[1]/v3[3], USER, label, enc, .5, .5,
 	  labelAngle(v1[0]/v1[3], v1[1]/v1[3], v2[0]/v2[3], v2[1]/v2[3]),
 	  dd);
     /* Draw axis ticks */
     /* change in 2.5.0 to use cex.axis and font.axis */
-    Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * Rf_gpptr(dd)->cexaxis;
-    Rf_gpptr(dd)->font = Rf_gpptr(dd)->fontaxis;
+    gpptr(dd)->cex = gpptr(dd)->cexbase * gpptr(dd)->cexaxis;
+    gpptr(dd)->font = gpptr(dd)->fontaxis;
     switch (tickType) {
     case 1: /* "simple": just an arrow parallel to axis, indicating direction
 	       of increase */
@@ -2364,8 +2364,8 @@ static void PerspAxis(double *x, double *y, double *z,
 	UNPROTECT(2);
 	break;
     }
-    Rf_gpptr(dd)->cex = cexsave;
-    Rf_gpptr(dd)->font = fontsave;
+    gpptr(dd)->cex = cexsave;
+    gpptr(dd)->font = fontsave;
 }
 
 /* Determine the transformed (x, y) coordinates (in USER space)
@@ -2408,8 +2408,8 @@ static void PerspAxes(double *x, double *y, double *z,
     TransVector(u3, VT, v3);
 
     /* to fit in the axis labels */
-    xpdsave = Rf_gpptr(dd)->xpd;
-    Rf_gpptr(dd)->xpd = 1;
+    xpdsave = gpptr(dd)->xpd;
+    gpptr(dd)->xpd = 1;
 
     /* Figure out which X and Y axis to draw */
     if (lowest(v0[1]/v0[3], v1[1]/v1[3], v2[1]/v2[3], v3[1]/v3[3])) {
@@ -2441,7 +2441,7 @@ static void PerspAxes(double *x, double *y, double *z,
 	warning(_("Axis orientation not calculated"));
     PerspAxis(x, y, z, zAxis, 2, nTicks, tickType, zlab, zenc, dd);
 
-    Rf_gpptr(dd)->xpd = xpdsave;
+    gpptr(dd)->xpd = xpdsave;
 }
 
 SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -2551,11 +2551,11 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GNewPlot(GRecording(call, dd));
 
-    PROTECT(col = FixupCol(col, Rf_gpptr(dd)->bg));
+    PROTECT(col = FixupCol(col, gpptr(dd)->bg));
     ncol = LENGTH(col);
     if (ncol < 1) error(_("invalid '%s' specification"), "col");
     if(!R_OPAQUE(INTEGER(col)[0])) DoLighting = FALSE;
-    PROTECT(border = FixupCol(border, Rf_gpptr(dd)->fg));
+    PROTECT(border = FixupCol(border, gpptr(dd)->fg));
     if (length(border) < 1) 
 	error(_("invalid '%s' specification"), "border");
 
@@ -2563,8 +2563,8 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
     if (length(border) > 1)
-	Rf_gpptr(dd)->fg = INTEGER(border)[0];
-    Rf_gpptr(dd)->xlog = Rf_gpptr(dd)->ylog = FALSE;
+	gpptr(dd)->fg = INTEGER(border)[0];
+    gpptr(dd)->xlog = gpptr(dd)->ylog = FALSE;
 
     /* Set up the light vector (if any) */
     if (DoLighting)

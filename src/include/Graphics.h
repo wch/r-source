@@ -50,43 +50,6 @@ typedef struct {
 } GTrans;
 
 typedef struct {
-#if 0
-    /* FIXME: why not talk to the device rather than having
-       multiple copies of these? */
-    /* Basic Device Driver Properties */
-    /* These MUST be set by device drivers on open */
-
-    /* These parameters cannot be set by the user */
-    /* although left, right, bottom, and top can be */
-    /* interrogated indirectly (i.e., par("din")) */
-    /* and cra can be interrogated directly (i.e., par("cra")) */
-
-    double left;	/* left raster coordinate */
-    double right;	/* right raster coordinate */
-    double bottom;	/* bottom raster coordinate */
-    double top;		/* top raster coordinate */
-    double xCharOffset;	/* x character addressing offset: unused */
-    double yCharOffset;	/* y character addressing offset */
-    double yLineBias;	/* 1/2 interline space as fraction of line height */
-    Rboolean canResizePlot;	/* can the graphics surface be resized */
-    Rboolean canChangeFont;	/* device has multiple fonts */
-    Rboolean canRotateText;	/* text can be rotated */
-    Rboolean canResizeText;	/* text can be resized */
-    Rboolean canClip;		/* Hardware clipping */
-    int canHAdj;	/* Can do at least some horizontal adjustment of text
-			   0 = none, 1 = {0,0.5, 1}, 2 = [0,1] */
-
-    /* a couple of the GRZ-like parameters that have to be */
-    /* set by the device */
-
-    double ipr[2];	/* Inches per raster; [0]=x, [1]=y */
-    double asp;		/* Pixel aspect ratio = ipr[1]/ipr[0] */
-#endif
-    /* This may get changed if the device is resized, in the 
-       GE_ScalePS action */ 
-    double cra[2];	/* Character size in rasters; [0]=x, [1]=y */
-
-
     /* Plot State */
     /* 
        When the device driver is started this is 0
@@ -97,8 +60,9 @@ typedef struct {
        level (e.g., do_lines, do_axis, do_plot_xy, ...) 
     */
 
-    int	state;		/* Plot State */
-    Rboolean valid;	/* valid layout ? */
+    int	state;		/* plot state: 1 if GNewPlot has been called 
+			   (by plot.new or persp) */
+    Rboolean valid;	/* valid layout ?  Used in GCheckState & do_playDL */
 
     /* GRZ-like Graphics Parameters */
     /* ``The horror, the horror ... '' */
@@ -144,14 +108,13 @@ typedef struct {
 			/* [2] = location of axis line */
     double mkh;		/* Mark size in inches */
     int	pch;		/* Plotting character */
+    /* Note that ps is never changed, so always the same as dev->startps.
+       However, the ps in the graphics context is changed */
     int ps;		/* Text & symbol pointsize */
     int	smo;		/* Curve smoothness */
     double srt;		/* String Rotation */
     double tck;		/* Tick size as in S */
     double tcl;		/* Tick size in "lines" */
-    /* kept to avoid changing the structure */
-    double tmag;	/* **DEFUNCT** Title Magnification */
-    /* int	type;	    type of plot desired -- removed in 2.3.0 */
     double xaxp[3];	/* X Axis annotation */
 			/* [0] = coordinate of lower tick */
 			/* [1] = coordinate of upper tick */
@@ -159,12 +122,12 @@ typedef struct {
 			/* almost always used internally */
     int	xaxs;		/* X Axis style */
     int	xaxt;		/* X Axis type */
+    Rboolean xlog;	/* Log Axis for X */
     int	xpd;		/* Clip to plot region indicator */
     int	oldxpd;
     double yaxp[3];	/* Y Axis annotation */
     int	yaxs;		/* Y Axis style */
     int	yaxt;		/* Y Axis type */
-    Rboolean xlog;	/* Log Axis for X */
     Rboolean ylog;	/* Log Axis for Y */
 
     /* Annotation Parameters */
@@ -263,7 +226,7 @@ typedef struct {
     /* The reliability of these parameters relies on */
     /* the fact that plot.new is the */
     /* first graphics operation called in the creation */
-    /* of a graph */
+    /* of a graph  (unless it is a call to persp) */
 
     /* udpated per plot.new */
 
@@ -342,8 +305,9 @@ SEXP labelformat(SEXP);
 void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd);
 
 /* From base.c */
+#define gpptr Rf_gpptr
+#define dpptr Rf_dpptr
 GPar* Rf_gpptr(DevDesc *dd);
 GPar* Rf_dpptr(DevDesc *dd);
-GPar* Rf_dpSavedptr(DevDesc *dd);
 
 #endif /* GRAPHICS_H_ */

@@ -34,19 +34,13 @@ replayPlot <- function(x)
     if(class(x) != "recordedplot")
         stop("argument is not of class \"recordedplot\"")
     nm <- names(x)
-    if(length(nm) == 2 && nm == c("displaylist", "gpar")) {
-        ## pre-1.4.0 save
-        .Internal(setGPar(x[[2]]))
-        .Internal(playDL(x[[1]]))
-    } else {
-      version <- attr(x, "version")
-      if (is.null(version))
+    version <- attr(x, "version")
+    if (is.null(version))
         warning("loading snapshot from pre-2.0.0 R version")
-      else if (version != rversion())
+    else if (version != rversion())
         warning(gettext("loading snapshot from different R version"),
                 " (", version, ")", domain = NA)
-      .Internal(playSnapshot(x))
-    }
+    .Internal(playSnapshot(x))
 }
 
 print.recordedplot <- function(x, ...)
