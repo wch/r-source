@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2007  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2008  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -198,7 +198,7 @@ static Status           status;
 static XFontSet         font_set;
 static XFontStruct	**fs_list;
 static int		font_set_cnt;
-static char             *fontset_name="-*-fixed-medium-r-normal--13-*-*-*-*-*-*-*";
+static char             fontset_name[]="-*-fixed-medium-r-*-*-*-120-*-*-*-*-*-*";
 static XIM		ioim;
 static XIMStyle         ioim_style;
 static XIMStyles        *ioim_styles;
@@ -1919,27 +1919,21 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 	int  missing_charset_count;
 	char **missing_charset_list;
 	char *def_string;
-
 	char opt_fontset_name[512];
 
-	/*
-	  options("X11fonts")[1] read font name
-	*/
-	const char *s = CHAR(STRING_ELT(GetOption(install("X11fonts"),
-                                                  R_NilValue), 0));
-
-	if (s == NULL) {
-	    strcpy(opt_fontset_name,fontset_name);
-	} else {
-	    sprintf(opt_fontset_name,s,"medium","r",12);
-	}
+	/* options("X11fonts")[1] read font name */
+	SEXP opt = GetOption(install("X11fonts"), R_NilValue);
+	if(isString(opt)) {
+	    const char *s = CHAR(STRING_ELT(opt, 0));
+	    sprintf(opt_fontset_name, s, "medium", "r", 12);
+	} else strcpy(opt_fontset_name, fontset_name);
 
 	font_set = XCreateFontSet(iodisplay, opt_fontset_name,
 				  &missing_charset_list,
 				  &missing_charset_count, &def_string);
 	if (missing_charset_count) XFreeStringList(missing_charset_list);
 	if (font_set == NULL) {
-	    warning("unable to create fontset %s", fontset_name);
+	    warning("unable to create fontset %s", opt_fontset_name);
 	    return TRUE; /* ERROR */
 	}
     } else
