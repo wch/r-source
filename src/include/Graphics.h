@@ -28,7 +28,8 @@
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
 
-#include <Rgraphics.h> /* GUnit */
+#define R_GRAPHICS 1
+#include <Rgraphics.h> /* RUnit */
 
 typedef unsigned int rcolor;
 
@@ -272,7 +273,7 @@ typedef struct {
 
 /* NOTE: during replays, call == R_NilValue;
    ----  the following adds readability: */
-Rboolean GRecording(SEXP, pGEDev);
+Rboolean GRecording(SEXP, pGEDevDesc);
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
@@ -284,10 +285,10 @@ void copyGPar(GPar *, GPar *);
 double R_Log10(double);
 
 /* from par.c, called in plot.c, plot3d.c */
-void ProcessInlinePars(SEXP, pGEDev, SEXP call);
+void ProcessInlinePars(SEXP, pGEDevDesc, SEXP call);
 
 /* from device.c */
-void recordGraphicOperation(SEXP, SEXP, pGEDev);
+void recordGraphicOperation(SEXP, SEXP, pGEDevDesc);
 
 /* some functions that plot.c needs to share with plot3d.c */
 SEXP FixupCol(SEXP, unsigned int);
@@ -301,12 +302,12 @@ SEXP labelformat(SEXP);
  *
  * from graphics.c, used in plot.c, plotmath.c
  */
-void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd);
+void gcontextFromGP(pGEcontext gc, pGEDevDesc dd);
 
 /* From base.c */
 #define gpptr Rf_gpptr
 #define dpptr Rf_dpptr
-GPar* Rf_gpptr(DevDesc *dd);
-GPar* Rf_dpptr(DevDesc *dd);
+GPar* Rf_gpptr(pGEDevDesc dd);
+GPar* Rf_dpptr(pGEDevDesc dd);
 
 #endif /* GRAPHICS_H_ */
