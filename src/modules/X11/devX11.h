@@ -19,8 +19,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#ifndef _DEV_X11_H
-#define _DEV_X11_H
+#ifndef R_DEV_X11_H
+#define R_DEV_X11_H
 
 #define SYMBOL_FONTFACE 5
 
@@ -41,13 +41,6 @@ typedef enum {
 } X_GTYPE;
 
 
-/*
-  For the moment, we just conditionally activate the remainder of this
-  section iff we are in devX11.c which defines R_X11_DEVICE.
-  This is purely historical: it was once included by devUI.h
- */
-#if R_X11_DEVICE
-
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -58,10 +51,9 @@ typedef enum {
 
 
 
-Rboolean newX11DeviceDriver(NewDevDesc*, const char*, double, double, double,
-			    double, 
-			    X_COLORTYPE, int, int, int, SEXP, 
-			    int, int, int, const char *);
+Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
+			 double, X_COLORTYPE, int, int, int, SEXP, 
+			 int, int, int, const char *);
 
 
 	/********************************************************/
@@ -86,16 +78,12 @@ typedef struct {
      * its too much work to change at this time (?)
      */
     double cex;				/* Character expansion */
-    /* srt removed -- its a GRZ parameter and is not used in devX11.c
-     */
     int lty;				/* Line type */
     double lwd;
     R_GE_lineend lend;
     R_GE_linejoin ljoin;
     double lmitre;
     int col;				/* Color */
-    /* fg and bg removed -- only use col and new param fill
-     */
     int fill;
     int canvas;				/* Canvas */
     int fontface;			/* Typeface */
@@ -131,25 +119,30 @@ typedef struct {
     char filename[PATH_MAX];		/* filename for a bitmap device */
     int quality;			/* JPEG quality */
 
-    Rboolean handleOwnEvents;           /* Flag indicating whether events will be handled externally from R (TRUE),
-                                           or whether R is to handle the events (FALSE) */
+    Rboolean handleOwnEvents;           /* Flag indicating whether events will
+					   be handled externally from R (TRUE),
+                                           or whether R is to handle the events
+					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
     Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
-} newX11Desc;
+} X11Desc;
+
+typedef X11Desc* pX11Desc;
 
 
+X11Desc *Rf_allocX11DeviceDesc(double ps);
 
-newX11Desc *Rf_allocNewX11DeviceDesc(double ps);
-int      Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel, int maxcube, Rboolean setHandlers);
-int      Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd);
-Rboolean newX11_Open(NewDevDesc *dd, newX11Desc *xd, 
-		     const char *dsp, double w, double h, 
-		     double gamma_fac, X_COLORTYPE colormodel, 
-		     int maxcube, int bgcolor, int canvascolor, 
-		     int res, int xpos, int ypos);
+int Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
+		     int maxcube, Rboolean setHandlers);
 
-#endif /* R_X11_DEVICE */
+int Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, X11Desc *xd);
+
+Rboolean X11_Open(pDevDesc dd, pX11Desc xd, 
+		  const char *dsp, double w, double h, 
+		  double gamma_fac, X_COLORTYPE colormodel, 
+		  int maxcube, int bgcolor, int canvascolor, 
+		  int res, int xpos, int ypos);
 
 #endif
 
