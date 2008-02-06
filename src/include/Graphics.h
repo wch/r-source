@@ -25,11 +25,10 @@
 
 #include <R_ext/Boolean.h>
 
-#define R_GRAPHICS 1
 #include <R_ext/GraphicsEngine.h>
 /* needed for R_GE_lineend/join, R_GE_gcontext */
 
-#include <Rgraphics.h>
+#include <Rgraphics.h> /* GUnit */
 
 typedef unsigned int rcolor;
 

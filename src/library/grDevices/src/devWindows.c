@@ -1982,7 +1982,7 @@ static void GA_Resize(pDevDesc dd)
 	    {
 		SEXP scale;
 		PROTECT(scale = ScalarReal(rf));
-		GEHandleEvent(GE_ScalePS, dd, scale);
+		GEhandleEvent(GE_ScalePS, dd, scale);
 		UNPROTECT(1);
 	    }
 	    if (fw < fh) {
@@ -2890,16 +2890,16 @@ SEXP savePlot(SEXP args)
     args = CDR(args); /* skip entry point name */
     device = asInteger(CAR(args));
     if(device < 1 || device > NumDevices())
-	error(_("invalid device number in savePlot"));
+	error(_("invalid device number in 'savePlot'"));
     dd = GEGetDevice(device - 1)->dev;
-    if(!dd) error(_("invalid device in savePlot"));
+    if(!dd) error(_("invalid device in 'savePlot'"));
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
 	error(_("invalid filename argument in savePlot"));
     fn = CHAR(STRING_ELT(filename, 0));
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
-	error(_("invalid type argument in savePlot"));
+	error(_("invalid type argument in 'savePlot'"));
     tp = CHAR(STRING_ELT(type, 0));
     restoreConsole = asLogical(CADDDR(args));
 

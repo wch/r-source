@@ -23,9 +23,6 @@
  *  This is an extensive reworking by Paul Murrell of an original
  *  quick hack by Ross Ihaka designed to give a superset of the
  *  functionality in the AT&T Bell Laboratories GRZ library.
- *
- *  NOTE : ./plotmath.c	 has partly similar functionality for "math graphics"
-	    ~~~~~~~~~~~
  */
 
 /* <UTF8>
@@ -38,7 +35,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <R_ext/GraphicsBase.h> /* setBaseDevice */
+#include <GraphicsBase.h>       /* setBaseDevice */
 #include <Rmath.h>		/* eg. fmax2() */
 
 /*--->> Documentation now in  ../include/Rgraphics.h  "API" ----- */

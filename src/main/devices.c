@@ -34,7 +34,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <R_ext/GraphicsBase.h> /* registerBase */
+#include <GraphicsBase.h> /* registerBase */
 
 static SEXP R_INLINE getSymbolValue(const char *symbolName)
 {

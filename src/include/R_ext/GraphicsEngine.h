@@ -255,8 +255,7 @@ void *GEsystemState(pGEDevDesc dd, int index);
 void GEregisterWithDevice(pGEDevDesc dd);
 void GEregisterSystem(GEcallback callback, int *systemRegisterIndex);
 void GEunregisterSystem(int registerIndex);
-
-SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
+SEXP GEhandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
 
 #define fromDeviceX		GEfromDeviceX
 #define toDeviceX		GEtoDeviceX

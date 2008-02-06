@@ -9,7 +9,7 @@
 #include <Defn.h>
 #include <Graphics.h>
 #include <Colors.h>
-#include <R_ext/GraphicsBase.h>
+#include <GraphicsBase.h>
 
 int attribute_hidden baseRegisterIndex = -1;
 
@@ -172,12 +172,14 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 
     switch (task) {
     case GE_FinaliseState:
+	/* called from unregisterOne */
 	sd = dd->gesd[baseRegisterIndex];
 	free(sd->systemSpecific);
 	sd->systemSpecific = NULL;
 	break;
     case GE_InitState:
     {
+	/* called from registerOne */
 	pDevDesc dev;
 	GPar *ddp;
 	sd = dd->gesd[baseRegisterIndex];
@@ -204,6 +206,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
     }
     case GE_CopyState:
     {
+	/* called from GEcopyDisplayList */
 	GEDevDesc *curdd = GEcurrentDevice();
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	bss2 = curdd->gesd[baseRegisterIndex]->systemSpecific;
@@ -214,36 +217,37 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	break;
     }
     case GE_SaveState:
+	/* called from GEinitDisplayList */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	copyGPar(&(bss->dp), &(bss->dpSaved));
 	break;
     case GE_RestoreState:
+	/* called from GEplayDisplayList */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	restoredpSaved(dd);
 	copyGPar(&(bss->dp), &(bss->gp));
 	GReset(dd);
 	break;
     case GE_SaveSnapshotState:
-    {
-	SEXP state;
+	/* called from GEcreateSnapshot */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-	/* FIXME: use RAWSXP */
-	PROTECT(state = allocVector(INTSXP, /* round up size */
-				    1 + sizeof(GPar) / sizeof(int)));
-	copyGPar(&(bss->dpSaved), (GPar*) INTEGER(state));
-	result = state;
+	/* Changed from INTSXP in 2.7.0: but saved graphics lists
+	   are protected by an R version number */
+	PROTECT(result = allocVector(RAWSXP, sizeof(GPar)));
+	copyGPar(&(bss->dpSaved), (GPar*) RAW(result));
 	UNPROTECT(1);
 	break;
-    }
     case GE_RestoreSnapshotState:
+	/* called from GEplaySnapshot */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-	copyGPar((GPar*) INTEGER(data), &(bss->dpSaved));	
+	copyGPar((GPar*) RAW(data), &(bss->dpSaved));	
 	restoredpSaved(dd);
 	copyGPar(&(bss->dp), &(bss->gp));
 	GReset(dd);
 	break;
     case GE_CheckPlot:
-	/* Check that the current plotting state is "valid"
+	/* called from GEcheckState:
+	   Check that the current plotting state is "valid"
 	 */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	result = ScalarLogical(bss->baseDevice ?
@@ -252,6 +256,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	break;
     case GE_ScalePS:
     {
+	/* called from GEhandleEvent in devWindows.c */
 	GPar *ddp, *ddpSaved;
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	ddp = &(bss->dp);
