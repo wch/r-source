@@ -25,13 +25,15 @@
 #define R_GRAPHICSBASE_H_
 
 typedef struct {
-    GPar dp;		/* current device default parameters */
-    GPar gp;		/* current device current parameters */
-    GPar dpSaved;		/* saved device default parameters */
-    /*
-     * Has the device received base output?
-     */
-    Rboolean baseDevice;  
+    GPar dp;		  /* current device default parameters: 
+			     those which will be used at the next GNewPage */
+    GPar gp;		  /* current device current parameters */
+    GPar dpSaved;	  /* saved device default parameters:
+			     graphics state at the time that the currently
+			     displayed plot was started, so we can replay
+			     the display list.
+			  */
+    Rboolean baseDevice;  /* Has the device received base output? */
 } baseSystemState;
 
 void registerBase(void); /* used in devices.c */
