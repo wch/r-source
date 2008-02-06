@@ -215,11 +215,10 @@ struct _GEDevDesc {
      * Stuff that the devices can see (and modify).
      * All detailed in GraphicsDevice.h
      */
-    NewDevDesc *dev;
+    pDevDesc dev;
     /*
      * Stuff about the device that only the graphics engine sees
      * (the devices don't see it).
-     * Display list stuff should come here from NewDevDesc struct.
      */
     Rboolean displayListOn;  /* toggle for display list status */
     SEXP displayList;        /* display list */
@@ -251,19 +250,19 @@ typedef GEDevDesc* pGEDevDesc;
 
 #define desc2GEDesc		Rf_desc2GEDesc
 /* map NewDevDesc to enclosing GEDevDesc */
-pGEDevDesc desc2GEDesc(NewDevDesc *dd);
+pGEDevDesc desc2GEDesc(pDevDesc dd);
 int GEdeviceNumber(pGEDevDesc);
 pGEDevDesc GEGetDevice(int);
 void GEaddDevice(pGEDevDesc);
 void GEkillDevice(pGEDevDesc);
-pGEDevDesc GEcreateDevDesc(NewDevDesc* dev);
+pGEDevDesc GEcreateDevDesc(pDevDesc dev);
 
 void GEdestroyDevDesc(pGEDevDesc dd);
 void *GEsystemState(pGEDevDesc dd, int index);
 void GEregisterWithDevice(pGEDevDesc dd);
 void GEregisterSystem(GEcallback callback, int *systemRegisterIndex);
 void GEunregisterSystem(int registerIndex);
-SEXP GEhandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
+SEXP GEhandleEvent(GEevent event, pDevDesc dev, SEXP data);
 
 #define fromDeviceX		GEfromDeviceX
 #define toDeviceX		GEtoDeviceX

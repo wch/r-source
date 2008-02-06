@@ -269,7 +269,7 @@ SEXP L_setGPsaved(SEXP gpars)
 
 void initGPar(GEDevDesc *dd)
 {
-    NewDevDesc *dev = dd->dev;
+    pDevDesc dev = dd->dev;
     SEXP gpar, gparnames, class;
     SEXP gpfill, gpcol, gpgamma, gplty, gplwd, gpcex, gpfs, gplh, gpfont;
     SEXP gpfontfamily, gpalpha, gplineend, gplinejoin, gplinemitre, gplex;

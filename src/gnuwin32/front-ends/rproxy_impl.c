@@ -51,7 +51,7 @@ struct _R_Proxy_init_parameters g_R_Proxy_init_parameters = { 0 };
 /* calls into the R DLL */
 extern char *getRHOME(void);
 
-int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
+int R_Proxy_Graphics_Driver (pDevDesc pDD,
 			     char* pDisplay,
 			     double pWidth,
 			     double pHeight,
