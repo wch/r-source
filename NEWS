@@ -162,9 +162,9 @@ BUG FIXES
 
     o	hist.POSIXt(*, xaxt = "n") no longer suppresses the y-axis.
 
-    o	strptime crashed under certain locales on Mac OS X.
+    o	strptime() crashed under certain locales on Mac OS X.
 
-    o	gregexpr no longer segfaults when "" is given as the search
+    o	gregexpr() no longer segfaults when "" is given as the search
 	pattern.  Thanks to Herve Pages for the bug report.
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
@@ -349,9 +349,9 @@ NEW FEATURES
 	is not.)
 
 	The Math2 and Summary groups (round, signif, all, any, max, min,
-	summ, prod, range) are now primitive.
+	sum, prod, range) are now primitive.
 
-	See under METHODS PACKAGE below for some consquences for S4 methods.
+	See under METHODS PACKAGE below for some consequences for S4 methods.
 
     o	apropos() now sorts by name and not by position on the search
 	path.
