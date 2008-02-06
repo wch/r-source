@@ -17,7 +17,7 @@
 print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
 {
     cat("\n")
-    writeLines(strwrap(x$method, prefix = "\t"))
+    cat(strwrap(x$method, prefix = "\t"), sep="\n")
     cat("\n")
     cat("data: ", x$data.name, "\n")
     out <- character()
@@ -32,7 +32,7 @@ print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
 	out <- c(out, paste("p-value",
 			    if(substr(fp,1,1) == "<") fp else paste("=",fp)))
     }
-    writeLines(strwrap(paste(out, collapse = ", ")))
+    cat(strwrap(paste(out, collapse = ", ")), sep="\n")
     if(!is.null(x$alternative)) {
 	cat("alternative hypothesis: ")
 	if(!is.null(x$null.value)) {
