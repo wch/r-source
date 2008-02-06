@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -285,6 +285,9 @@ msgid "missing values are not allowed in subscripted assignments of data frames"
 msgstr ""
 
 msgid "non-existent rows not allowed"
+msgstr ""
+
+msgid "column name \"\" cannot match any column"
 msgstr ""
 
 msgid "new columns would leave holes after existing columns"
@@ -1133,7 +1136,7 @@ msgstr ""
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 
-msgid "'x' must be a vector"
+msgid "'x' must be an atomic vector"
 msgstr ""
 
 msgid "invalid 'rle' structure"

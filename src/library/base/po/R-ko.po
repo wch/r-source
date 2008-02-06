@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -293,6 +293,10 @@ msgstr "데이터 프레임의 첨자에 의한 대입에서는 결손값은 허
 
 msgid "non-existent rows not allowed"
 msgstr "존재하지 않는 행은 허용되지 않습니다"
+
+#, fuzzy
+msgid "column name \"\" cannot match any column"
+msgstr "열보다 많은 열명이 있습니다"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "새로운 열은 기존의 열에서 holes이 있을지도 모릅니다"
@@ -1200,7 +1204,8 @@ msgstr "'k'는 너무 큽니다"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "pivoting 조작이 발생하도록 큰'ncol'이 필요합니다"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x'는 벡터가 아니면 되지 않습니다"
 
 msgid "invalid 'rle' structure"
@@ -1555,9 +1560,6 @@ msgstr[0] ""
 
 #~ msgid "more columns than column names"
 #~ msgstr "열명보다 많은 열이 있습니다"
-
-#~ msgid "more column names than columns"
-#~ msgstr "열보다 많은 열명이 있습니다"
 
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "최초의 5행이 비어 있습니다: 그만둡니다"

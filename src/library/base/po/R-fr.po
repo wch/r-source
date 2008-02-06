@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-09-16 17:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -306,6 +306,10 @@ msgstr ""
 
 msgid "non-existent rows not allowed"
 msgstr "les lignes inexistantes ne sont pas permises"
+
+#, fuzzy
+msgid "column name \"\" cannot match any column"
+msgstr "plus de noms de colonnes que de colonnes"
 
 msgid "new columns would leave holes after existing columns"
 msgstr ""
@@ -1223,7 +1227,8 @@ msgstr ""
 "une valeur plus grande de 'ncol' est nécessaire car un pivotement s'est "
 "produit"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x' doit être un vecteur"
 
 msgid "invalid 'rle' structure"
@@ -1567,9 +1572,6 @@ msgstr[1] "Messages d'avis :\n"
 
 #~ msgid "more columns than column names"
 #~ msgstr "plus de colonnes que de noms de colonnes"
-
-#~ msgid "more column names than columns"
-#~ msgstr "plus de noms de colonnes que de colonnes"
 
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "les cinq premières lignes sont vides : abandon"

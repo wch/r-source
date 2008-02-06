@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -304,6 +304,10 @@ msgstr ""
 
 msgid "non-existent rows not allowed"
 msgstr "righe non esistenti non ammissibili"
+
+#, fuzzy
+msgid "column name \"\" cannot match any column"
+msgstr "più nomi colonna che colonne"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "le nuove colonne lasceranno dei buchi dopo le colonne già esistenti"
@@ -1210,7 +1214,8 @@ msgstr ""
 "c'è bisogno di un valore più grande di 'ncol' poiché si utilizzato il "
 "pivoting"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x' deve essere un vettore"
 
 msgid "invalid 'rle' structure"
@@ -1555,9 +1560,6 @@ msgstr[1] "Messaggi di avvertimento:\n"
 
 #~ msgid "more columns than column names"
 #~ msgstr "più colonne dei nomi colonna"
-
-#~ msgid "more column names than columns"
-#~ msgstr "più nomi colonna che colonne"
 
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "le prime cinque righe sono vuote: ci rinuncio"

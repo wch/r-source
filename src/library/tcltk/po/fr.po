@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2008-02-06 06:53+0000\n"
 "PO-Revision-Date: 2007-04-13 12:33+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,40 +18,40 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: tcltk.c:66
+#: tcltk.c:84
 msgid "parse error in R expression"
 msgstr "erreur d'analyse de code dans l'expression R"
 
-#: tcltk.c:166 tcltk.c:248
+#: tcltk.c:184 tcltk.c:266
 msgid "tcl error.\n"
 msgstr "erreur Tcl.\n"
 
-#: tcltk.c:202 tcltk.c:831
+#: tcltk.c:220 tcltk.c:861
 msgid "invalid argument"
 msgstr "argument incorrect"
 
-#: tcltk.c:605
+#: tcltk.c:623
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "la liste d'arguments est trop longue dans la fonction interne tcltk "
 "'callback_closure'"
 
-#: tcltk.c:636
+#: tcltk.c:654
 msgid "argument is not of correct type"
 msgstr "l'argument n'est pas d'un type correct"
 
-#: tcltk.c:683
+#: tcltk.c:714
 msgid "Tcl already loaded"
 msgstr "Tcl déjà chargé"
 
-#: tcltk.c:701
+#: tcltk.c:732
 msgid "Tcl is not loaded"
 msgstr "Tcl n'est pas chargé"
 
-#: tcltk.c:707
+#: tcltk.c:738
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl n'est pas le dernier pointeur de chargement"
 
-#: tcltk.c:786
+#: tcltk.c:817
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "pas de variable DISPLAY, donc Tk n'est pas disponible"

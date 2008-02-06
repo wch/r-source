@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -255,6 +255,9 @@ msgstr "'x'和'y'的行数必需相等"
 msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x'和'y'要么是一，要么有相等的列数"
 
+msgid "default 'pch' is smaller than number of columns and hence recycled"
+msgstr ""
+
 msgid "missing values in contingency table"
 msgstr "列联表里有缺少值"
 
@@ -396,4 +399,3 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个变元"
 msgstr[1] "没有用%s这个变元"
-

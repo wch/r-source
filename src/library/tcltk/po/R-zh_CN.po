@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:38\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -61,6 +61,9 @@ msgstr "t检验"
 msgid "Density"
 msgstr "密度"
 
+msgid "Interactive linear fitting"
+msgstr ""
+
 msgid "R FAQ"
 msgstr "R FAQ"
 
@@ -99,4 +102,3 @@ msgstr "这个系统不支持Tcl/Tk"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "没有安装Tcl/Tk支持文件"
-

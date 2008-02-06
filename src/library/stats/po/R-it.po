@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:19\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -261,6 +261,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve essere ordinata in modo non-decrescente"
 
 msgid "'order.max' must be >= 1"
+msgstr "'order.max' deve essere >= 1"
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve essere >= 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -1129,6 +1133,10 @@ msgstr "valori dei parametri non validi"
 
 msgid "a limit is missing"
 msgstr "manca un limite"
+
+#, fuzzy
+msgid "missing values not allowed"
+msgstr "valori mancanti non ammessi in 'poly'"
 
 msgid "'r' is less than 1"
 msgstr "'r' è minori di 1"

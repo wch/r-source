@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 09:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-09-18 00:46-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -97,6 +97,10 @@ msgstr "элементы 'what' после первого будут пропущены"
 
 msgid "%d occurrences in %s"
 msgstr "%d вхождений в %s"
+
+#, fuzzy
+msgid "'file' must be NULL, a character string or a connection"
+msgstr "'file' должен быть текстовой строкой строка или соединением"
 
 msgid "bad argument"
 msgstr "неправильный аргумент"

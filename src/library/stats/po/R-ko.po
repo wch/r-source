@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:19\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -256,6 +256,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
 
 msgid "'order.max' must be >= 1"
+msgstr "'order.max'는 1 이상의 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max'는 1 이상의 아니면 되지 않습니다"
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -1124,6 +1128,10 @@ msgstr "무효인 파라미터 값입니다"
 
 msgid "a limit is missing"
 msgstr "한계가 없습니다"
+
+#, fuzzy
+msgid "missing values not allowed"
+msgstr "결측치 'poly'에서는 허용되지 않습니다"
 
 msgid "'r' is less than 1"
 msgstr "'r'은 1미만입니다"

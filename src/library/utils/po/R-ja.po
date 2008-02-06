@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 09:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-09-11 22:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -88,6 +88,10 @@ msgstr " 'what' の要素の最初のもの以降は無視されます "
 
 msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
+
+#, fuzzy
+msgid "'file' must be NULL, a character string or a connection"
+msgstr " 'file' は文字列か NULL でなければなりません "
 
 msgid "bad argument"
 msgstr " 誤った引数 "

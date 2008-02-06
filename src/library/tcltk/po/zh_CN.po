@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2008-02-06 06:53+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -16,38 +16,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: tcltk.c:66
+#: tcltk.c:84
 msgid "parse error in R expression"
 msgstr "R表达式里句法分析错误"
 
-#: tcltk.c:166 tcltk.c:248
+#: tcltk.c:184 tcltk.c:266
 msgid "tcl error.\n"
 msgstr "tcl错误。\n"
 
-#: tcltk.c:202 tcltk.c:831
+#: tcltk.c:220 tcltk.c:861
 msgid "invalid argument"
 msgstr "变元不对"
 
-#: tcltk.c:605
+#: tcltk.c:623
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "tcltk内部函数'callback_closure'的变元串列太长"
 
-#: tcltk.c:636
+#: tcltk.c:654
 msgid "argument is not of correct type"
 msgstr "变元的种类不对"
 
-#: tcltk.c:683
+#: tcltk.c:714
 msgid "Tcl already loaded"
 msgstr "已经载入了Tcl"
 
-#: tcltk.c:701
+#: tcltk.c:732
 msgid "Tcl is not loaded"
 msgstr "还没有载入Tcl"
 
-#: tcltk.c:707
+#: tcltk.c:738
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl不是最后载入的处理器"
 
-#: tcltk.c:786
+#: tcltk.c:817
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "没有DISPLAY变量，因此没有Tk这个功能"

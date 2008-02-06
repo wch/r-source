@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-10-16 09:28+0100\n"
+"POT-Creation-Date: 2008-02-06 06:53+0000\n"
 "PO-Revision-Date: 2007-09-11 16:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -447,7 +447,13 @@ msgstr " 不正なフォント指定 "
 msgid "Font family not found in Quartz font database"
 msgstr " Quartz フォントのデータベースにフォントファミリが見付かりません "
 
-#: devQuartz.c:1717
+#: devQuartz.c:1718
+msgid ""
+"This Quartz device does not support 64-bit, use R 2.7.0 for 64-bit Quartz "
+"support"
+msgstr ""
+
+#: devQuartz.c:1720
 msgid "Quartz device not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "
 

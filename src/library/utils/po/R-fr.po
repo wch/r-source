@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-19 09:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-04-13 12:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -94,6 +94,10 @@ msgstr "les éléments suivants de 'what' seront ignorés"
 
 msgid "%d occurrences in %s"
 msgstr "%d occurences dans %s"
+
+#, fuzzy
+msgid "'file' must be NULL, a character string or a connection"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
 
 msgid "bad argument"
 msgstr "argument incorrect"

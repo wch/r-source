@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-09-18 00:11-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -297,6 +297,10 @@ msgstr ""
 
 msgid "non-existent rows not allowed"
 msgstr "несуществующие строки не разрешены"
+
+#, fuzzy
+msgid "column name \"\" cannot match any column"
+msgstr "больше имен, чем колонок"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "новые колонки создадут дыры после существующих колонок"
@@ -1168,7 +1172,8 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x' должен быть вектором"
 
 msgid "invalid 'rle' structure"
@@ -1521,9 +1526,6 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "more columns than column names"
 #~ msgstr "больше колонок, чем их имен"
-
-#~ msgid "more column names than columns"
-#~ msgstr "больше имен, чем колонок"
 
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "первые пять строк пустые: отказ"

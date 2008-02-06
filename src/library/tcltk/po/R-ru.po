@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:38\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-04-07 01:52-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "cannot handle object of mode '%s'"
 msgstr "не могу работать с объектом вида '%s'"
@@ -64,6 +65,9 @@ msgstr "t тест"
 msgid "Density"
 msgstr "Плотность"
 
+msgid "Interactive linear fitting"
+msgstr ""
+
 msgid "R FAQ"
 msgstr "R FAQ"
 
@@ -102,4 +106,3 @@ msgstr "Эта система не пододдерживает Tcl/Tk"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "файлы поддержки Tcl/Tk не установлены"
-

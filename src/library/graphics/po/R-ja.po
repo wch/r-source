@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-06-06 11:24\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-09-11 22:42+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -260,6 +260,9 @@ msgstr " 'x' と 'y' は同じ数の行を持たなければなりません "
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr " 'x' と 'y' は一つだけか、または同じ数の列を持たなければなりません "
+
+msgid "default 'pch' is smaller than number of columns and hence recycled"
+msgstr ""
 
 msgid "missing values in contingency table"
 msgstr " 分割表中に欠測値があります "

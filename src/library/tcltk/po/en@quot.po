@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2007.
+# Automatically generated, 2008.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.6.2\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
-"PO-Revision-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2008-02-06 06:53+0000\n"
+"PO-Revision-Date: 2008-02-06 06:53+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -38,39 +38,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tcltk.c:66
+#: tcltk.c:84
 msgid "parse error in R expression"
 msgstr "parse error in R expression"
 
-#: tcltk.c:166 tcltk.c:248
+#: tcltk.c:184 tcltk.c:266
 msgid "tcl error.\n"
 msgstr "tcl error.\n"
 
-#: tcltk.c:202 tcltk.c:831
+#: tcltk.c:220 tcltk.c:861
 msgid "invalid argument"
 msgstr "invalid argument"
 
-#: tcltk.c:605
+#: tcltk.c:623
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "argument list is too long in tcltk internal function ‘callback_closure’"
 
-#: tcltk.c:636
+#: tcltk.c:654
 msgid "argument is not of correct type"
 msgstr "argument is not of correct type"
 
-#: tcltk.c:683
+#: tcltk.c:714
 msgid "Tcl already loaded"
 msgstr "Tcl already loaded"
 
-#: tcltk.c:701
+#: tcltk.c:732
 msgid "Tcl is not loaded"
 msgstr "Tcl is not loaded"
 
-#: tcltk.c:707
+#: tcltk.c:738
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl is not last loaded handler"
 
-#: tcltk.c:786
+#: tcltk.c:817
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "no DISPLAY variable so Tk is not available"

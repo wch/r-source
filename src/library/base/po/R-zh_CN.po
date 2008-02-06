@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:18\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -292,6 +292,10 @@ msgstr "执行数据框下标赋值时是不允许遗漏值的"
 
 msgid "non-existent rows not allowed"
 msgstr "不能有不存在的行"
+
+#, fuzzy
+msgid "column name \"\" cannot match any column"
+msgstr "列名比列数多"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "新的列会在旧的列里留下洞"
@@ -1154,7 +1158,8 @@ msgstr "'k'值太大"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "因为产生了主轴，需要大一点的'ncol'值"
 
-msgid "'x' must be a vector"
+#, fuzzy
+msgid "'x' must be an atomic vector"
 msgstr "'x'必需为矢量"
 
 msgid "invalid 'rle' structure"
@@ -1492,9 +1497,6 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "more columns than column names"
 #~ msgstr "列数比列名多"
-
-#~ msgid "more column names than columns"
-#~ msgstr "列名比列数多"
 
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "最先的五行都是空白的：停止工作"

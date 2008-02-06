@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-09-17 10:19\n"
+"POT-Creation-Date: 2008-02-06 06:53\n"
 "PO-Revision-Date: 2007-09-12 00:31+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -253,6 +253,10 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければなりません "
 
 msgid "'order.max' must be >= 1"
+msgstr " 'order.max' は 1 以上でなければなりません "
+
+#, fuzzy
+msgid "'order.max' must be < 'n.used'"
 msgstr " 'order.max' は 1 以上でなければなりません "
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -1100,6 +1104,10 @@ msgstr " 無効なパラメータ値です "
 
 msgid "a limit is missing"
 msgstr " 限界がありません "
+
+#, fuzzy
+msgid "missing values not allowed"
+msgstr " 欠測値は 'poly' では許されません "
 
 msgid "'r' is less than 1"
 msgstr " 'r' は 1 未満です "

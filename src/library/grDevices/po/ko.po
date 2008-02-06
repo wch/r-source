@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-10-16 09:28+0100\n"
+"POT-Creation-Date: 2008-02-06 06:53+0000\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -457,7 +457,13 @@ msgstr "무효의 font 명세입니다"
 msgid "Font family not found in Quartz font database"
 msgstr "font family는 Quartz font 데이타베이스로 검색되지 않았습니다"
 
-#: devQuartz.c:1717
+#: devQuartz.c:1718
+msgid ""
+"This Quartz device does not support 64-bit, use R 2.7.0 for 64-bit Quartz "
+"support"
+msgstr ""
+
+#: devQuartz.c:1720
 msgid "Quartz device not available on this platform"
 msgstr "Quartz 디바이스는 이 platform에서 이용 가능하지는 않습니다"
 
