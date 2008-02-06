@@ -767,12 +767,6 @@ SEXP PicTeX(SEXP args)
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
 	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height, debug)) {
 	    free(dev);
 	    error(_("unable to start device PicTeX"));

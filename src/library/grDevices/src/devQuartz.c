@@ -253,12 +253,13 @@ static void   QuartzDevice_Update(QuartzDesc_t desc) {
 
 void QuartzDevice_ReplayDisplayList(QuartzDesc_t desc) {
     QuartzDesc *qd = (QuartzDesc*)desc;
-	int _dirty = qd->dirty;
+    int _dirty = qd->dirty;
+    pGEDevDesc gdd = desc2GEDesc(qd->dev);
     qd->redraw = 1;
-    if(qd->dev->displayList != R_NilValue)
-        GEplayDisplayList(GEGetDevice(ndevNumber(qd->dev)));
+    /* CHECK this */
+    if(gdd->displayList != R_NilValue) GEplayDisplayList(gdd);
     qd->redraw = 0;
-	qd->dirty = _dirty; /* we do NOT change the dirty flag */
+    qd->dirty = _dirty; /* we do NOT change the dirty flag */
 }
 
 void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
@@ -266,7 +267,7 @@ void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
     GEDevDesc *gd  = GEGetDevice(ndevNumber(qd->dev));
 	SEXP snap;
 	if (last)
-		snap = qd->dev->savedSnapshot;
+		snap = desc2GEDesc(qd->dev)->savedSnapshot;
 	else
 		snap = GEcreateSnapshot(gd);
     if (R_NilValue == VECTOR_ELT(snap,0))
@@ -314,8 +315,6 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 {
     pDevDesc dev = _dev;
 
-    dev->displayList = R_NilValue;
-    
     dev->startfill = R_RGB(255,255,255);
     dev->startcol  = R_RGB(0,0,0);
     dev->startps   = def->pointsize;
@@ -868,8 +867,6 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create) {
         {
 	    /* FIXME: check this allocation */
             pDevDesc dev    = calloc(1,sizeof(NewDevDesc));
-            dev->displayList   = R_NilValue;
-            dev->savedSnapshot = R_NilValue;
     
             if (!dev)
                 return -1;
@@ -964,8 +961,6 @@ SEXP Quartz(SEXP args) {
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev       = calloc(1,sizeof(NewDevDesc));
-	dev->displayList   = R_NilValue;
-	dev->savedSnapshot = R_NilValue;
     
 	if (!dev)
 	    error(_("Unable to create device description."));

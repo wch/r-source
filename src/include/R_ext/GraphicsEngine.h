@@ -221,7 +221,15 @@ struct _GEDevDesc {
      * (the devices don't see it).
      * Display list stuff should come here from NewDevDesc struct.
      */
-    Rboolean dirty;  /* Has the device received any output? */
+    Rboolean displayListOn;  /* toggle for display list status */
+    SEXP displayList;        /* display list */
+    SEXP DLlastElt;          /* A pointer to the end of the display list
+				to avoid tranversing pairlists */
+    SEXP savedSnapshot;      /* The last element of the display list
+			      * just prior to when the display list
+			      * was last initialised
+			      */
+    Rboolean dirty;          /* Has the device received any output? */
     Rboolean recordGraphics; /* Should a graphics call be stored
 			      * on the display list?
 			      * Set to FALSE by do_recordGraphics,

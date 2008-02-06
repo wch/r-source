@@ -1278,9 +1278,9 @@ static void RunGenCollect(R_size_t size_needed)
 
     for (i = 0; i < R_MaxDevices; i++) {   /* Device display lists */
 	pGEDevDesc gdd = GEGetDevice(i);
-	if (gdd && gdd->dev) {
-	    FORWARD_NODE(gdd->dev->displayList);
-	    FORWARD_NODE(gdd->dev->savedSnapshot);
+	if (gdd) {
+	    FORWARD_NODE(gdd->displayList);
+	    FORWARD_NODE(gdd->savedSnapshot);
 	}
     }
 

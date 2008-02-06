@@ -2412,12 +2412,6 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (pDevDesc)calloc(1, sizeof(NewDevDesc)))) return;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
 	if (!X11DeviceDriver(dev, display, width, height,
 				ps, gamma, colormodel, maxcubesize,
 				bgcolor, canvascolor, sfonts, res,

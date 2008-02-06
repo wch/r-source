@@ -255,6 +255,7 @@ static void PrivateCopyDevice(pDevDesc dd, pDevDesc ndd, const char *name)
     gsetcursor(xd->gawin, WatchCursor);
     gsetVar(install(".Device"),
 	    mkString(name), R_BaseEnv);
+    ndd->displayListOn = FALSE;
     gdd = GEcreateDevDesc(ndd);
     GEaddDevice(gdd);
     GEcopyDisplayList(ndevNumber(dd));
@@ -268,7 +269,6 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 		      Rboolean restoreConsole)
 {
     pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
-    GEDevDesc *gdd = desc2GEDesc(dd);
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
 	return;
@@ -279,7 +279,7 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 	return;
     }
 
-    ndd->displayList = R_NilValue;
+    GEDevDesc *gdd = desc2GEDesc(dd);
     if (GADeviceDriver(ndd, display,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
@@ -324,8 +324,6 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
     }
 
     if(strchr(fn, '%')) error(_("'%%' is not allowed in file name"));
-
-    ndd->displayList = R_NilValue;
 
     /* need to initialize PS/PDF font database: 
        also sets .PostScript.Options */
@@ -395,8 +393,6 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
     }
 
     if(strchr(fn, '%')) error(_("'%%' is not allowed in file name"));
-
-    ndd->displayList = R_NilValue;
 
     /* Set default values... */
     init_PS_PDF();
@@ -1169,11 +1165,14 @@ static void menuprev(control m)
     pMUSTEXIST;
     pCHECK;
     if (pNUMPLOTS) {
-	if (xd->recording && xd->needsave && (dd->displayList != R_NilValue)) {
-	    AddtoPlotHistory(GEcreateSnapshot(desc2GEDesc(dd)), 0);
-	    xd->needsave = FALSE;
-	    vDL = findVar(install(".SavedPlots"), R_GlobalEnv);
-	    /* may have changed vDL pointer */
+	if (xd->recording && xd->needsave) {
+	    pGEDevDesc gdd = desc2GEDesc(dd);
+	    if (gdd->displayList != R_NilValue) {
+		AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
+		xd->needsave = FALSE;
+		vDL = findVar(install(".SavedPlots"), R_GlobalEnv);
+		/* may have changed vDL pointer */
+	    }
 	}
 	pMOVE((xd->needsave) ? 0 : -1);
     }
@@ -1339,17 +1338,12 @@ static void NHelpKeyIn(control w, int key)
 	    UserBreak = TRUE;
 	    return;
 	}
-	if (ggetkeystate() != CtrlKey)
-	    return;
+	if (ggetkeystate() != CtrlKey) return;
 	key = 'A' + key - 1;
-	if (key == 'C')
-	    menuclpbm(xd->mclpbm);
-	if (dd->displayList == R_NilValue)
-	    return;
-	if (key == 'W')
-	    menuclpwm(xd->mclpwm);
-	else if (key == 'P')
-	    menuprint(xd->mprint);
+	if (key == 'C') menuclpbm(xd->mclpbm);
+	if (desc2GEDesc(dd)->displayList == R_NilValue) return;
+	if (key == 'W') menuclpwm(xd->mclpwm);
+	else if (key == 'P') menuprint(xd->mprint);
     }
 }
 
@@ -1362,7 +1356,7 @@ static void mbarf(control m)
     if (pEXIST && !xd->replaying) {
 	enable(xd->mnext);
 	enable(xd->mprev);
-	if ((pCURRENTPOS >= 0) && (dd->displayList != R_NilValue))
+	if (pCURRENTPOS >= 0 && desc2GEDesc(dd)->displayList != R_NilValue)
 	    enable(xd->mreplace);
 	else
 	    disable(xd->mreplace);
@@ -1379,7 +1373,7 @@ static void mbarf(control m)
 	enable(xd->mgvar);
     else
 	disable(xd->mgvar);
-    if ((dd->displayList != R_NilValue) && !xd->replaying) {
+    if (!xd->replaying && desc2GEDesc(dd)->displayList != R_NilValue) {
 	enable(xd->madd);
 	enable(xd->mprint);
 	enable(xd->mpng);
@@ -2082,7 +2076,7 @@ static void GA_NewPage(pGEcontext gc,
     if (xd->kind == SCREEN) {
         if(xd->buffered) SHOW;
 	if (xd->recording && xd->needsave)
-	    AddtoPlotHistory(dd->savedSnapshot, 0);
+	    AddtoPlotHistory(desc2GEDesc(dd)->savedSnapshot, 0);
 	if (xd->replaying)
 	    xd->needsave = FALSE;
 	else
@@ -3171,14 +3165,7 @@ SEXP devga(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
-	    return 0;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
 	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,

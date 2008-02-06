@@ -161,17 +161,20 @@ struct _NewDevDesc {
     /********************************************************
      * Device display list
      ********************************************************/
+    Rboolean displayListOn;     /* toggle for initial display list status */
+
+#ifdef OLD
     /* I think it would feel nicer if this stuff was part of the
      * graphics engine (GEDevDesc), but this is another thing that
      * needs more time to implement a change properly.
      */
-    Rboolean displayListOn;     /* toggle for display list status */
     SEXP displayList;           /* display list */
     SEXP DLlastElt;
-    SEXP savedSnapshot;         /* The last value of the display list
+    SEXP savedSnapshot;         /* The last element of the display list
 				 * just prior to when the display list
 				 * was last initialised
 				 */
+#endif
 
     /********************************************************
      * Event handling entries

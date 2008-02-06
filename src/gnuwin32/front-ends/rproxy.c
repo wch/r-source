@@ -507,12 +507,6 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
     R_Proxy_Graphics_CB* lDev =
       (R_Proxy_Graphics_CB*) calloc (1,sizeof (R_Proxy_Graphics_CB));
 
-    /* Do this for early redraw attempts */
-    DEVDESC(lDev)->displayList = R_NilValue;
-    /* Make sure that this is initialised before a GC can occur.
-     * This (and displayList) get protected during GC
-     */
-    DEVDESC(lDev)->savedSnapshot = R_NilValue;
     R_Proxy_Graphics_Driver_CB (lDev,
 				"ActiveXDevice 1",
 				100.0,

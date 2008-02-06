@@ -410,9 +410,9 @@ SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 	listFlag = asLogical(CAR(args));
 	if(listFlag == NA_LOGICAL) error(_("invalid argument"));
 	GEinitDisplayList(gdd);
-	gdd->dev->displayListOn = listFlag ? TRUE: FALSE;
+	gdd->displayListOn = listFlag ? TRUE: FALSE;
     } else { /* dev.displaylist */
-	listFlag = gdd->dev->displayListOn;
+	listFlag = gdd->displayListOn;
     }
     return ScalarLogical(listFlag);
 }
@@ -559,6 +559,9 @@ pGEDevDesc GEcreateDevDesc(pDevDesc dev)
     if (!dd) error(_("not enough memory to allocate device (in addDevice)"));
     for (i = 0; i < MAX_GRAPHICS_SYSTEMS; i++) dd->gesd[i] = NULL;
     dd->dev = dev;
+    dd->displayListOn = dev->displayListOn;
+    dd->displayList = R_NilValue; /* gc needs this */
+    dd->savedSnapshot = R_NilValue; /* gc needs this */
     dd->dirty = FALSE;
     dd->recordGraphics = TRUE;
     return dd;

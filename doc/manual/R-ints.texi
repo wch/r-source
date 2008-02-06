@@ -2374,8 +2374,6 @@ structure by code very similar to
         /* Allocate and initialize the device driver data */
         if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
             return 0;
-        dev->displayList = R_NilValue;
-        dev->savedSnapshot = R_NilValue;
         /* set up device driver or free 'dev' and error() */
         gsetVar(install(".Device"), mkString("devname"), R_BaseEnv);
         dd = GEcreateDevDesc(dev);

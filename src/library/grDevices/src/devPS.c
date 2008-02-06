@@ -7160,12 +7160,6 @@ SEXP PostScript(SEXP args)
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd, title, fonts,
@@ -7230,12 +7224,6 @@ SEXP XFig(SEXP args)
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
 	if(!XFigDeviceDriver(dev, file, paper, family, bg, fg, width, height,
 			     (double) horizontal, ps, onefile, pagecentre,
 			     encoding)) {
@@ -7315,12 +7303,6 @@ SEXP PDF(SEXP args)
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
 	    return 0;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor)) {
