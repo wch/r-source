@@ -35,7 +35,6 @@
  BZ2_hbMakeCodeLengths
  BZ2_rNums
  CPFun
- ColorDataBase
  ConsoleAcceptCmd
  DebugMenuitem
  DefaultPalette
@@ -280,8 +279,6 @@
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_ProcessInlinePars
- Rf_RGB2rgb
- Rf_RGBA2rgb
  Rf_RealFromComplex
  Rf_RealFromInteger
  Rf_RealFromLogical
@@ -330,7 +327,6 @@
  Rf_mkPROMISE
  Rf_mkSYMSXP
  Rf_name2col
- Rf_number2col
  Rf_onsigusr1
  Rf_onsigusr2
  Rf_osDynSymbol
@@ -377,7 +373,6 @@
  Rsockread
  Rsockselect
  Rsockwrite
- Rstrcoll
  Rstrlen
  Rstrwid
  Rwin_rename
@@ -396,7 +391,6 @@
  WinCheckUTF8
  WinUTF8out
  WrongArgCount
- __printf__
  _dist_code
  _length_code
  _nl_explode_name
@@ -608,7 +602,6 @@
  do_compcases
  do_complex
  do_contour
- do_contourDef
  do_contourLines
  do_countfields
  do_cov
@@ -843,7 +836,6 @@
  do_persp
  do_pgsub
  do_pipe
- do_playDL
  do_playSnapshot
  do_plot_new
  do_plot_window
@@ -881,7 +873,6 @@
  do_readbin
  do_readchar
  do_readln
- do_readonlypars
  do_readtablehead
  do_recall
  do_recordGraphics
@@ -895,7 +886,6 @@
  do_rep
  do_rep_int
  do_repeat
- do_replay
  do_resetCondHands
  do_restart
  do_return
@@ -917,7 +907,6 @@
  do_seq_len
  do_serializeToConn
  do_set
- do_setGPar
  do_setStatusBar
  do_setTitle
  do_setToCConverterActiveStatus
@@ -1017,8 +1006,6 @@
  do_xspline
  do_zeroin
  do_zeroin2
- dos_glob
- dos_globfree
  dos_wglob
  dos_wglobfree
  dpois_raw
@@ -1266,7 +1253,6 @@
  wgl_loadhistory
  wgl_savehistory
  winAccessW
- winNewFrameConfirm
  winaddmenu
  winaddmenuitem
  windelmenu
