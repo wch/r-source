@@ -547,7 +547,7 @@ BUG FIXES
 
     o	The cut() and hist() methods for dates and datetimes are now
 	more accurate for intervals of "months" and "years", thanks to
-	Marc Schwartz.
+	Marc Schwarz.
 
     o	url()/download.file() could segfault if the HTTP interaction
 	involved a redirect to an address starting with '/' on the
@@ -566,10 +566,16 @@ BUG FIXES
 
     o	hist.POSIXt(*, xaxt = "n") no longer suppresses the y-axis.
 
-    o	strptime crashed under certain locales on Mac OS X.
+    o	strptime() crashed under certain locales on Mac OS X.
+
+    o	gregexpr() no longer segfaults when "" is given as the search
+	pattern.  Thanks to Herve Pages for the bug report.
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
+
+    o	Setting par(col.main=) also set par("col") to the same colour.
+
 
 
 		CHANGES IN R VERSION 2.6.1
