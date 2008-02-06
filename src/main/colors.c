@@ -356,7 +356,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
     SEXP colors, ans, names, dmns, icol;
-    unsigned int col;
+    unsigned int col, bg;
     int n, i, i4;
 
     checkArity(op, args);
@@ -377,9 +377,10 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dmns, 1, names);
     setAttrib(ans, R_DimNamesSymbol, dmns);
 
+    bg = dpptr(CurrentDevice())->bg;
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
-	    col = char2col(CHAR(STRING_ELT(colors, i)));
+	    col = R_GE_str2col(CHAR(STRING_ELT(colors, i)), bg);
 	    INTEGER(ans)[i4 +0] = R_RED(col);
 	    INTEGER(ans)[i4 +1] = R_GREEN(col);
 	    INTEGER(ans)[i4 +2] = R_BLUE(col);
@@ -389,8 +390,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(icol = coerceVector(colors, INTSXP));
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = INTEGER(icol)[i];
-	    col =  (col > 0) ? R_ColorTable[(col-1) % R_ColorTableSize] :
-		dpptr(CurrentDevice())->bg;
+	    col =  (col > 0) ? R_ColorTable[(col-1) % R_ColorTableSize] : bg;
 	    INTEGER(ans)[i4 +0] = R_RED(col);
 	    INTEGER(ans)[i4 +1] = R_GREEN(col);
 	    INTEGER(ans)[i4 +2] = R_BLUE(col);
@@ -1364,6 +1364,17 @@ unsigned int attribute_hidden name2col(const char *nm)
     return 0;		/* never occurs but avoid compiler warnings */
 }
 
+static unsigned int number2col(const char *nm, unsigned int bg)
+{
+    int indx;
+    char *ptr;
+    indx = strtod(nm, &ptr);
+    if(*ptr) error(_("invalid color specification"));
+    /* FIXME depends on base graphics */
+    if(indx == 0) return dpptr(CurrentDevice())->bg;
+    else return R_ColorTable[(indx-1) % R_ColorTableSize];
+}
+
 
 static char ColBuf[10];
 
@@ -1438,19 +1449,21 @@ const char *col2name(unsigned int col)
     }
 }
 
-/* used in grDevices, public */
-unsigned int R_GE_str2col(const char *s)
+static unsigned int str2col(const char *s, unsigned int bg)
 {
-    return char2col(s);
-#if 0
     if(s[0] == '#') return rgb2col(s);
     /* This seems rather strange, 
        and made this depend on base graphics.
        Looks like it was an artefact of conversion in col2rgb().
     */
-    else if(isdigit((int)s[0])) return number2col(s);
+    else if(isdigit((int)s[0])) return number2col(s, bg);
     else return name2col(s);
-#endif
+}
+
+/* used in grDevices, public */
+unsigned int R_GE_str2col(const char *s)
+{
+    return str2col(s, R_TRANSWHITE);
 }
 
 /* Convert a sexp element to an R color desc */
@@ -1463,7 +1476,7 @@ unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
     switch(TYPEOF(x)) 
     {
     case STRSXP:
-	return char2col(CHAR(STRING_ELT(x, i)));
+	return str2col(CHAR(STRING_ELT(x, i)), bg);
     case LGLSXP:
         indx = LOGICAL(x)[i];
 	if (indx == NA_LOGICAL) return R_TRANWHITE;

@@ -44,6 +44,8 @@ col2rgb(1:8)# the ones from the palette() :
 col2rgb(paste("gold", 1:4, sep=""))
 
 col2rgb("#08a0ff")
+## all three kind of colors mixed :
+col2rgb(c(red="red", palette= 1:3, hex="#abcdef"))
 
 ##-- NON-INTRODUCTORY examples --
 
