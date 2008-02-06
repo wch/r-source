@@ -297,9 +297,12 @@ double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
 /* Convert an element of a R colour specification (which might be a
    number or a string) into an internal colour specification. */
 unsigned int RGBpar(SEXP, int);
+unsigned int RGBpar3(SEXP, int, unsigned int);
+
 /* Convert an internal colour specification to/from a colour name */
 const char *col2name(unsigned int col); /* used in par.c, grid */
 unsigned int name2col(const char *);    /* used by plotmath.c */
+
 /* Convert either a name or a #RRGGBB[AA] string to internal */
 unsigned int R_GE_str2col(const char *s);
 

@@ -41,6 +41,8 @@ static unsigned int rgb2col(const char *);
 static char *RGB2rgb(unsigned int, unsigned int, unsigned int);
 static char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
 
+static int R_ColorTableSize;
+static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 
 /* String Comparison Ignoring Case and Squeezing Out Blanks */
 static int StrMatch(const char *s, const char *t)
@@ -59,7 +61,6 @@ static int StrMatch(const char *s, const char *t)
 	    return 0;
     }
 }
-
 
 static unsigned int char2col(const char *s)
 {
@@ -354,35 +355,50 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
-    SEXP colors, ans, names, dmns;
+    SEXP colors, ans, names, dmns, icol;
     unsigned int col;
     int n, i, i4;
 
     checkArity(op, args);
-
-    PROTECT(colors = coerceVector(CAR(args),STRSXP));
+    colors = CAR(args);
     n = LENGTH(colors);
+
+    /* First set up the output matrix */
     PROTECT(ans = allocMatrix(INTSXP, 4, n));
     PROTECT(dmns = allocVector(VECSXP, 2));
-
     PROTECT(names = allocVector(STRSXP, 4));
     SET_STRING_ELT(names, 0, mkChar("red"));
     SET_STRING_ELT(names, 1, mkChar("green"));
     SET_STRING_ELT(names, 2, mkChar("blue"));
     SET_STRING_ELT(names, 3, mkChar("alpha"));
     SET_VECTOR_ELT(dmns, 0, names);
-    UNPROTECT(1);/*names*/
+    UNPROTECT(1); /*names*/
     if ((names = getAttrib(colors, R_NamesSymbol)) != R_NilValue)
 	SET_VECTOR_ELT(dmns, 1, names);
     setAttrib(ans, R_DimNamesSymbol, dmns);
-    for(i = i4 = 0; i < n; i++, i4 += 4) {
-	col = R_GE_str2col(CHAR(STRING_ELT(colors, i)));
-	INTEGER(ans)[i4 +0] = R_RED(col);
-	INTEGER(ans)[i4 +1] = R_GREEN(col);
-	INTEGER(ans)[i4 +2] = R_BLUE(col);
-	INTEGER(ans)[i4 +3] = R_ALPHA(col);
+
+    if(isString(colors)) {
+	for(i = i4 = 0; i < n; i++, i4 += 4) {
+	    col = char2col(CHAR(STRING_ELT(colors, i)));
+	    INTEGER(ans)[i4 +0] = R_RED(col);
+	    INTEGER(ans)[i4 +1] = R_GREEN(col);
+	    INTEGER(ans)[i4 +2] = R_BLUE(col);
+	    INTEGER(ans)[i4 +3] = R_ALPHA(col);
+	}
+    } else {
+	PROTECT(icol = coerceVector(colors, INTSXP));
+	for(i = i4 = 0; i < n; i++, i4 += 4) {
+	    col = INTEGER(icol)[i];
+	    col =  (col > 0) ? R_ColorTable[(col-1) % R_ColorTableSize] :
+		dpptr(CurrentDevice())->bg;
+	    INTEGER(ans)[i4 +0] = R_RED(col);
+	    INTEGER(ans)[i4 +1] = R_GREEN(col);
+	    INTEGER(ans)[i4 +2] = R_BLUE(col);
+	    INTEGER(ans)[i4 +3] = R_ALPHA(col);
+	}
+	UNPROTECT(1);
     }
-    UNPROTECT(3);
+    UNPROTECT(2);
     return ans;
 }
 
@@ -1225,13 +1241,10 @@ static ColorDataBaseEntry ColorDataBase[] = {
 };
 
 
-static int R_ColorTableSize;
-static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
-
 static void setpalette(const char **palette)
 {
     int i;
-    for (i = 0; (i<COLOR_TABLE_SIZE) && palette[i]; i++)
+    for (i = 0; (i < COLOR_TABLE_SIZE) && palette[i]; i++)
 	R_ColorTable[i] = name2col(palette[i]);
     R_ColorTableSize = i;
 }
@@ -1270,15 +1283,11 @@ SEXP attribute_hidden do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     int n;
-    n = 0;
-    while (ColorDataBase[n].name!=NULL)
-	n++;
+
+    for (n = 0; ColorDataBase[n].name != NULL; n++) ;
     PROTECT(ans = allocVector(STRSXP, n));
-    n = 0;
-    while (ColorDataBase[n].name!=NULL) {
+    for (n = 0; ColorDataBase[n].name != NULL; n++)
 	SET_STRING_ELT(ans, n, mkChar(ColorDataBase[n].name));
-	n++;
-    }
     UNPROTECT(1);
     return ans;
 }
@@ -1355,17 +1364,6 @@ unsigned int attribute_hidden name2col(const char *nm)
     return 0;		/* never occurs but avoid compiler warnings */
 }
 
-static unsigned int number2col(const char *nm)
-{
-    int indx;
-    char *ptr;
-    indx = strtod(nm, &ptr);
-    if(*ptr) error(_("invalid color specification"));
-    /* FIXME depends on base graphics */
-    if(indx == 0) return dpptr(CurrentDevice())->bg;
-    else return R_ColorTable[(indx-1) % R_ColorTableSize];
-}
-
 
 static char ColBuf[10];
 
@@ -1440,62 +1438,57 @@ const char *col2name(unsigned int col)
     }
 }
 
-/* used in grDevices */
+/* used in grDevices, public */
 unsigned int R_GE_str2col(const char *s)
 {
+    return char2col(s);
+#if 0
     if(s[0] == '#') return rgb2col(s);
-    /* This seems rather strange, and makes this depend on base graphics */
+    /* This seems rather strange, 
+       and made this depend on base graphics.
+       Looks like it was an artefact of conversion in col2rgb().
+    */
     else if(isdigit((int)s[0])) return number2col(s);
     else return name2col(s);
+#endif
 }
 
 /* Convert a sexp element to an R color desc */
 /* We Assume that Checks Have Been Done */
 
-/* used in grid */
-unsigned int RGBpar(SEXP x, int i)
+/* used in grid/src/gpar.c */
+unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 {
     int indx;
-    if(isString(x)) {
-	return R_GE_str2col(CHAR(STRING_ELT(x, i)));
+    switch(TYPEOF(x)) 
+    {
+    case STRSXP:
+	return char2col(CHAR(STRING_ELT(x, i)));
+    case LGLSXP:
+        indx = LOGICAL(x)[i];
+	if (indx == NA_LOGICAL) return R_TRANWHITE;
+	break;
+    case INTSXP:
+	indx = INTEGER(x)[i];
+	if (indx == NA_INTEGER) return R_TRANWHITE;
+	break;
+    case REALSXP:
+	if(!R_FINITE(REAL(x)[i])) return R_TRANWHITE;
+	indx = REAL(x)[i];
+	break;
+	   default:
+	   warning(_("supplied color is not numeric nor character"));
+	   return bg;
     }
-    else if(isLogical(x)) {
-        if(LOGICAL(x)[i] == NA_LOGICAL)
-            /*
-             * Paul 01/07/04
-             * Used to be set to NA_INTEGER (see comment in name2col).
-             */
-            return R_TRANWHITE;
-        indx = LOGICAL(x)[i] - 1;
-	/* FIXME depends on base graphics */
-        if(indx < 0) return dpptr(CurrentDevice())->bg;
-        else return R_ColorTable[indx % R_ColorTableSize];
-    }
-    else if(isInteger(x)) {
-	if(INTEGER(x)[i] == NA_INTEGER)
-	    /*
-	     * Paul 01/07/04
-	     * Used to be set to NA_INTEGER (see comment in name2col).
-	     */
-	    return R_TRANWHITE;
-	indx = INTEGER(x)[i] - 1;
-	if(indx < 0) return dpptr(CurrentDevice())->bg;
-	else return R_ColorTable[indx % R_ColorTableSize];
-    }
-    else if(isReal(x)) {
-	if(!R_FINITE(REAL(x)[i]))
-	    /*
-	     * Paul 01/07/04
-	     * Used to be set to NA_INTEGER (see comment in name2col).
-	     */
-	    return R_TRANWHITE;
-	indx = REAL(x)[i] - 1;
-	if(indx < 0) return dpptr(CurrentDevice())->bg;
-	else return R_ColorTable[indx % R_ColorTableSize];
-    }
-    warning(_("supplied color is not numeric nor character"));
-    return 0;
+    if (indx <= 0) return bg;
+    else return R_ColorTable[(indx-1) % R_ColorTableSize];
 }
+
+unsigned int RGBpar(SEXP x, int i)
+{
+    return RGBpar3(x, i, R_TRANWHITE);
+}
+
 
 /*
  * Is element i of a colour object NA (or NULL)?
@@ -1534,6 +1527,6 @@ void attribute_hidden InitColors(void)
 
     /* Install Default Palette */
     for(i = 0 ; DefaultPalette[i] ; i++)
-	R_ColorTable[i] = R_GE_str2col(DefaultPalette[i]);
+	R_ColorTable[i] = name2col(DefaultPalette[i]);
     R_ColorTableSize = i;
 }

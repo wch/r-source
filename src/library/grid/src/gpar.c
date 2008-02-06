@@ -43,13 +43,14 @@ double gpLineHeight(SEXP gp, int i) {
     return REAL(lineheight)[i % LENGTH(lineheight)];
 }
 
+/* grid has no concept of 'colour 0' (bg in base) */
 int gpCol(SEXP gp, int i) {
     SEXP col = VECTOR_ELT(gp, GP_COL);
     int result;
     if (isNull(col))
 	result = R_TRANWHITE;
     else
-	result = RGBpar(col, i % LENGTH(col));
+	result = RGBpar3(col, i % LENGTH(col), R_TRANWHITE);
     return result;
 }
 
@@ -63,7 +64,7 @@ int gpFill(SEXP gp, int i) {
     if (isNull(fill))
 	result = R_TRANWHITE;
     else
-	result = RGBpar(fill, i % LENGTH(fill));
+	result = RGBpar3(fill, i % LENGTH(fill), R_TRANWHITE);
     return result;
 }
 

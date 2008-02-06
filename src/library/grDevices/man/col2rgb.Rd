@@ -22,8 +22,8 @@ col2rgb(col, alpha = FALSE)
 }
 \details{
   For integer colors, \code{0} is shorthand for the current
-  \code{par("bg")}, and \code{\link{NA}} means \sQuote{nothing} which
-  effectively does not draw the corresponding item.
+  \code{par("bg")} (and hence is only relevant to base graphics), and
+  \code{\link{NA}} means transparent.
 
   For character colors, \code{"NA"} is equivalent to \code{NA} above.
 }
@@ -32,7 +32,9 @@ col2rgb(col, alpha = FALSE)
   (and names if any) as \code{col}.
 }
 \author{Martin Maechler}
-\seealso{\code{\link{rgb}}, \code{\link{colors}}, \code{\link{palette}}, etc.}
+\seealso{
+  \code{\link{rgb}}, \code{\link{colors}}, \code{\link{palette}}, etc.
+}
 \examples{
 col2rgb("peachpuff")
 col2rgb(c(blu = "royalblue", reddish = "tomato")) # names kept
@@ -42,8 +44,6 @@ col2rgb(1:8)# the ones from the palette() :
 col2rgb(paste("gold", 1:4, sep=""))
 
 col2rgb("#08a0ff")
-## all three kind of colors mixed :
-col2rgb(c(red="red", palette= 1:3, hex="#abcdef"))
 
 ##-- NON-INTRODUCTORY examples --
 

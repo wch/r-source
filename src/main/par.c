@@ -282,7 +282,8 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 /*	  ------------
  *--- now, these are *different* from  "Specify2() use" : */
     else if (streql(what, "bg")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	
+	ix = RGBpar3(value, 0, dpptr(dd)->bg);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(bg) = ix;
 	R_DEV__(new) = FALSE;
@@ -296,7 +297,8 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 
     else if (streql(what, "fg")) {
 	/* par(fg=) sets BOTH "fg" and "col" */
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	
+	ix = RGBpar3(value, 0, dpptr(dd)->bg);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(col) = R_DEV__(fg) = ix;
     }
@@ -715,7 +717,7 @@ static void Specify2(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 	   (as e.g. pch always did) */
 	if (!isVector(value) || LENGTH(value) < 1)
 	    par_error(what);
-	R_DEV__(bg) = RGBpar(value, 0);
+	R_DEV__(bg) = RGBpar3(value, 0, dpptr(dd)->bg);
     }
     else if (streql(what, "cex")) {
 	/* cex can be a vector of length > 1, so pick off first value
@@ -736,7 +738,8 @@ static void Specify2(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
     }
     else if (streql(what, "fg")) {
 	/* highlevel arg `fg = ' does *not* set `col' (as par(fg=.) does!*/
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	
+	ix = RGBpar3(value, 0, dpptr(dd)->bg);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
     }
