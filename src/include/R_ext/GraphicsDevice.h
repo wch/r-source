@@ -119,8 +119,10 @@ struct _NewDevDesc {
     double yCharOffset;	        /* y character addressing offset */
     double yLineBias;	        /* 1/2 interline space as frac of line hght */
     double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
+#ifdef OLD
     /* It seems this is unused, and unset by all(?) devices */
     double asp;		        /* Pixel aspect ratio = ipr[1]/ipr[0] */
+#endif
     /* I hate this guy too -- seems to assume that a device can only
      * have one font size during its lifetime
      * BUT removing/replacing it would take quite a lot of work
@@ -194,7 +196,7 @@ struct _NewDevDesc {
      * GENERAL COMMENT ON GRAPHICS PARAMETERS:
      * ---------------------------------------
      * Graphical parameters are now passed in a graphics context
-     * structure (R_GE_gcontext*) rather than individually.
+     * structure (pGEcontext) rather than individually.
      * Each device action should extract the parameters it needs
      * and ignore the others.  Thought should be given to which
      * parameters are relevant in each case -- the graphics engine
@@ -381,6 +383,8 @@ struct _NewDevDesc {
     /*
      * device_Mode is called whenever the graphics engine
      * starts drawing (mode=1) or stops drawing (mode=0)
+     * GMode (in graphics.c) also ways that 
+     * mode = 2 (graphical input on) exists.
      * The device is not required to do anything
      * An example is ...
      *
@@ -561,7 +565,7 @@ struct _NewDevDesc {
      *
      * An example is ...
      *
-     * static void X11_onExit(pDevDesc dd);
+     * static void GA_onExit(pDevDesc dd);
     */
 #if R_USE_PROTOTYPES
     void (*onExit)(pDevDesc dd);
@@ -683,11 +687,10 @@ struct _NewDevDesc {
 /*
  *	Changes as from 1.4.0: use top 8 bits as an alpha channel.
  * 	0 = opaque, 255 = transparent.
- *	At present only 0 and >0 are used, with no semi-transparent.
  */
 /*
  * Changes as from 2.0.0:  use top 8 bits as full alpha channel
- *      1 = opaque, 0 = transparent
+ *      255 = opaque, 0 = transparent
  *      [to conform with SVG, PDF and others]
  *      and everything in between is used
  *      [which means that NA is not stored as an internal colour;
@@ -709,8 +712,6 @@ struct _NewDevDesc {
 
 
 /* used in various devices */
-
-typedef unsigned int rcolor;
 
 #define curDevice		Rf_curDevice
 #define killDevice		Rf_killDevice

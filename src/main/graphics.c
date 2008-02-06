@@ -1348,6 +1348,8 @@ static void mapNDC2Dev(pGEDevDesc dd)
     /* For new devices, have to check the device's idea of its size
      * in case there has been a resize.
      */
+    double asp = dd->dev->ipr[1] / dd->dev->ipr[0];
+
     Rf_gpptr(dd)->ndc2dev.bx = Rf_dpptr(dd)->ndc2dev.bx =
 	dd->dev->right - dd->dev->left;
     Rf_gpptr(dd)->ndc2dev.ax = Rf_dpptr(dd)->ndc2dev.ax = dd->dev->left;
@@ -1357,18 +1359,18 @@ static void mapNDC2Dev(pGEDevDesc dd)
     /* Units Conversion */
 
     Rf_gpptr(dd)->xNDCPerInch = Rf_dpptr(dd)->xNDCPerInch =
-	1.0/fabs(Rf_gpptr(dd)->ndc2dev.bx * Rf_gpptr(dd)->ipr[0]);
+	1.0/fabs(Rf_gpptr(dd)->ndc2dev.bx * dd->dev->ipr[0]);
     Rf_gpptr(dd)->yNDCPerInch = Rf_dpptr(dd)->yNDCPerInch =
-	1.0/fabs(Rf_gpptr(dd)->ndc2dev.by * Rf_gpptr(dd)->ipr[1]);
+	1.0/fabs(Rf_gpptr(dd)->ndc2dev.by * dd->dev->ipr[1]);
     Rf_gpptr(dd)->xNDCPerChar = Rf_dpptr(dd)->xNDCPerChar =
 	fabs(Rf_gpptr(dd)->cexbase *
-	     Rf_gpptr(dd)->cra[1] * Rf_gpptr(dd)->asp / Rf_gpptr(dd)->ndc2dev.bx);
+	     Rf_gpptr(dd)->cra[1] * asp / Rf_gpptr(dd)->ndc2dev.bx);
     Rf_gpptr(dd)->yNDCPerChar = Rf_dpptr(dd)->yNDCPerChar =
 	fabs(Rf_gpptr(dd)->cexbase *
 	     Rf_gpptr(dd)->cra[1] / Rf_gpptr(dd)->ndc2dev.by);
     Rf_gpptr(dd)->xNDCPerLine = Rf_dpptr(dd)->xNDCPerLine =
 	fabs(Rf_gpptr(dd)->mex * Rf_gpptr(dd)->cexbase *
-	     Rf_gpptr(dd)->cra[1] * Rf_gpptr(dd)->asp / Rf_gpptr(dd)->ndc2dev.bx);
+	     Rf_gpptr(dd)->cra[1] * asp / Rf_gpptr(dd)->ndc2dev.bx);
     Rf_gpptr(dd)->yNDCPerLine = Rf_dpptr(dd)->yNDCPerLine =
 	fabs(Rf_gpptr(dd)->mex * Rf_gpptr(dd)->cexbase *
 	     Rf_gpptr(dd)->cra[1] / Rf_gpptr(dd)->ndc2dev.by);
@@ -1686,8 +1688,7 @@ void mapping(pGEDevDesc dd, int which)
 void GReset(pGEDevDesc dd)
 {
     /* Character extents are based on the raster size */
-    Rf_gpptr(dd)->asp = Rf_gpptr(dd)->ipr[1] / Rf_gpptr(dd)->ipr[0];
-    Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * Rf_gpptr(dd)->ipr[0];
+    Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * dd->dev->ipr[0];
 
     /* Recompute Mappings */
     mapping(dd, 0);
@@ -2053,7 +2054,7 @@ void GSetupAxis(int axis, pGEDevDesc dd)
 
 
 /* Set default graphics parameter values in a GPar.
- * This initialises the plot state, plus the other graphical
+ * This initialises the plot state, plus the graphical
  * parameters that are not the responsibility of the device initialisation.
 
  * Called from baseCallback.
@@ -2071,7 +2072,7 @@ void attribute_hidden GInit(GPar *dp)
     dp->bty = 'o';
 
     dp->mkh = .001;/* dummy value > 0  --- FIXME : */
-    /* GReset has Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * Rf_gpptr(dd)->ipr[0]; */
+    /* GReset has Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * dd->dev->ipr[0]; */
     dp->cex = 1.0;
     dp->lheight = 1.0;
     dp->cexbase = 1.0;
@@ -2872,7 +2873,7 @@ void GCircle(double x, double y, int coords,
     double ir;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
-    ir = radius/Rf_gpptr(dd)->ipr[0];
+    ir = radius/dd->dev->ipr[0];
     ir = (ir > 0) ? ir : 1;
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
@@ -3152,7 +3153,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 #define TRC1	1.34677368708859836060		/* TRC0 * sqrt(3) / 2 */
 #define TRC2	0.77756015077810708036		/* TRC0 / 2 */
 #define CMAG	1.0				/* Circle magnifier, now defunct */
-#define GSTR_0  Rf_dpptr(dd)->cra[1] * 0.5 * Rf_gpptr(dd)->ipr[0] * Rf_gpptr(dd)->cex
+#define GSTR_0  Rf_dpptr(dd)->cra[1] * 0.5 * dd->dev->ipr[0] * Rf_gpptr(dd)->cex
 /* NOTE: This cex is already multiplied with cexbase */
 
 /* Draw one of the R special symbols. */
@@ -3231,7 +3232,7 @@ void GMtext(const char *str, int enc, int side, double line, int outer,
 	    angle = 90;
 	}
 	else {
-	    line = line + 1 - Rf_gpptr(dd)->yLineBias;
+	    line = line + 1 - dd->dev->yLineBias;
 	    angle = 0;
 	}
 	break;
@@ -3240,7 +3241,7 @@ void GMtext(const char *str, int enc, int side, double line, int outer,
 	    angle = 0;
 	}
 	else {
-	    line = line + Rf_gpptr(dd)->yLineBias;
+	    line = line + dd->dev->yLineBias;
 	    angle = 90;
 	}
 	break;
@@ -3249,7 +3250,7 @@ void GMtext(const char *str, int enc, int side, double line, int outer,
 	    angle = 90;
 	}
 	else {
-	    line = line + Rf_gpptr(dd)->yLineBias;
+	    line = line + dd->dev->yLineBias;
 	    angle = 0;
 	}
 	break;
@@ -3258,7 +3259,7 @@ void GMtext(const char *str, int enc, int side, double line, int outer,
 	    angle = 0;
 	}
 	else {
-	    line = line + 1 - Rf_gpptr(dd)->yLineBias;
+	    line = line + 1 - dd->dev->yLineBias;
 	    angle = 90;
 	}
 	break;

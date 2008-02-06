@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <Defn.h>
@@ -28,12 +28,15 @@
 #ifdef SUPPORT_MBCS
 # include <R_ext/rlocale.h>
 # include <wchar.h>
-#endif /* SUPPORT_MBCS */
+#endif
 
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 #include "Fileio.h"
 #include "grDevices.h"
+
+/* Formerly in headers, but only used in some devices */
+typedef unsigned int rcolor;
 
 	/* device-specific information per picTeX device */
 

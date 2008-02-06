@@ -2119,12 +2119,12 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		case 1:
 		    yy = yy - offset;
 		    adjx = 0.5;
-		    adjy = 1 - (0.5 - Rf_gpptr(dd)->yCharOffset);
+		    adjy = 1 - (0.5 - dd->dev->yCharOffset);
 		    break;
 		case 2:
 		    xx = xx - offset;
 		    adjx = 1;
-		    adjy = Rf_gpptr(dd)->yCharOffset;
+		    adjy = dd->dev->yCharOffset;
 		    break;
 		case 3:
 		    yy = yy + offset;
@@ -2134,7 +2134,7 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		case 4:
 		    xx = xx + offset;
 		    adjx = 0;
-		    adjy = Rf_gpptr(dd)->yCharOffset;
+		    adjy = dd->dev->yCharOffset;
 		    break;
 		}
 	    }
@@ -3032,12 +3032,12 @@ static void drawLabel(double xi, double yi, int pos, double offset,
     case 4:
 	xi = xi+offset;
 	GText(xi, yi, INCHES, l, enc, 0.0,
-	      Rf_gpptr(dd)->yCharOffset, 0.0, dd);
+	      dd->dev->yCharOffset, 0.0, dd);
 	break;
     case 2:
 	xi = xi-offset;
 	GText(xi, yi, INCHES, l, enc, 1.0,
-	      Rf_gpptr(dd)->yCharOffset, 0.0, dd);
+	      dd->dev->yCharOffset, 0.0, dd);
 	break;
     case 3:
 	yi = yi+offset;
@@ -3047,7 +3047,7 @@ static void drawLabel(double xi, double yi, int pos, double offset,
     case 1:
 	yi = yi-offset;
 	GText(xi, yi, INCHES, l, enc, 0.5,
-	      1-(0.5-Rf_gpptr(dd)->yCharOffset),
+	      1-(0.5-dd->dev->yCharOffset),
 	      0.0, dd);
 	break;
     case 0:
@@ -3608,6 +3608,7 @@ SEXP attribute_hidden do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+/* used in replayPlot */
 SEXP attribute_hidden do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     pGEDevDesc dd = CurrentDevice();

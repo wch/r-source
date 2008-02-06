@@ -505,8 +505,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 	R_DEV_2(new) = TRUE;
 	GReset(dd);
 	/* Force a device clip */
-	if (Rf_dpptr(dd)->canClip)
-	    GForceClip(dd);
+	if (dd->dev->canClip) GForceClip(dd);
     } /* mfg */
 
     else if (streql(what, "new")) {
@@ -794,8 +793,8 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     }
     else if (streql(what, "cin")) {
 	value = allocVector(REALSXP, 2);
-	REAL(value)[0] = Rf_dpptr(dd)->cra[0]*Rf_dpptr(dd)->ipr[0];
-	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*Rf_dpptr(dd)->ipr[1];
+	REAL(value)[0] = Rf_dpptr(dd)->cra[0]*dd->dev->ipr[0];
+	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*dd->dev->ipr[1];
     }
     else if (streql(what, "col")) {
 	value = mkString(col2name(Rf_dpptr(dd)->col));
@@ -828,9 +827,9 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     else if (streql(what, "cxy")) {
 	value = allocVector(REALSXP, 2);
 	/* == par("cin") / par("pin") : */
-	REAL(value)[0] = Rf_dpptr(dd)->cra[0]*Rf_dpptr(dd)->ipr[0] / Rf_dpptr(dd)->pin[0]
+	REAL(value)[0] = Rf_dpptr(dd)->cra[0]*dd->dev->ipr[0] / Rf_dpptr(dd)->pin[0]
 	    * (Rf_dpptr(dd)->usr[1] - Rf_dpptr(dd)->usr[0]);
-	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*Rf_dpptr(dd)->ipr[1] / Rf_dpptr(dd)->pin[1]
+	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*dd->dev->ipr[1] / Rf_dpptr(dd)->pin[1]
 	    * (Rf_dpptr(dd)->usr[3] - Rf_dpptr(dd)->usr[2]);
     }
     else if (streql(what, "din")) {

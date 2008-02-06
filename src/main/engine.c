@@ -2471,7 +2471,7 @@ void GEinitDisplayList(pGEDevDesc dd)
     /* Get each graphics system to save state required for
      * replaying the display list
      */
-    for (i=0; i<numGraphicsSystems; i++)
+    for (i = 0; i < numGraphicsSystems; i++)
 	if (dd->gesd[i] != NULL)
 	    (dd->gesd[i]->callback)(GE_SaveState, dd, R_NilValue);
     dd->dev->displayList = dd->dev->DLlastElt = R_NilValue;

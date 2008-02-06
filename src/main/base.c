@@ -181,6 +181,9 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	bss = sd->systemSpecific = malloc(sizeof(baseSystemState));
 	ddp = &(bss->dp);
 	GInit(ddp);
+	ddp->cra[0] = dev->cra[0];
+	ddp->cra[1] = dev->cra[1];
+#if 0
 	/* Some things are set by the device, so copy them across now.
 	 */
 	ddp->ipr[0] = dev->ipr[0];
@@ -201,6 +204,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	ddp->canResizeText = dev->canResizeText;
 	ddp->canClip = dev->canClip;
 	ddp->canHAdj = dev->canHAdj;
+#endif
 	/* For some things, the device sets the starting value at least.
 	 */
 	ddp->ps = dev->startps;
@@ -276,16 +280,16 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	ddp = &(bss->dp);
 	ddpSaved = &(bss->dpSaved);
 	if (isReal(data) && LENGTH(data) == 1) {
-	  double rf = REAL(data)[0];
-	  ddp->scale *= rf;
-	  ddp->cra[0] *= rf; 
-	  ddp->cra[1] *= rf;
-	  /* Modify the saved settings so effect display list too */
-	  ddpSaved->scale *= rf;
-	  ddpSaved->cra[0] *= rf; 
-	  ddpSaved->cra[1] *= rf;
+	    double rf = REAL(data)[0];
+	    ddp->scale *= rf;
+	    ddp->cra[0] *= rf; 
+	    ddp->cra[1] *= rf;
+	    /* Modify the saved settings so effect display list too */
+	    ddpSaved->scale *= rf;
+	    ddpSaved->cra[0] *= rf; 
+	    ddpSaved->cra[1] *= rf;
 	} else 
-	  error(_("Event UpdatePS requires a single numeric value"));
+	  error(_("Event GE_ScalePS requires a single numeric value"));
 	break;
     }
     }

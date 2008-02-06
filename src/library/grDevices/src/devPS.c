@@ -30,6 +30,8 @@
 #include <ctype.h>
 #include <limits.h> /* required for MB_LEN_MAX */
 
+/* Formerly in headers, but only used in some devices */
+typedef unsigned int rcolor;
 
 #ifdef SUPPORT_MBCS
 #include <wchar.h>

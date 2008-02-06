@@ -31,6 +31,8 @@
 
 #include <Rgraphics.h>
 
+typedef unsigned int rcolor;
+
 /* colors.c, engine.c, graphics.c, plot3d.c  */
 #define	DEG2RAD 0.01745329251994329576
 
@@ -48,6 +50,9 @@ typedef struct {
 } GTrans;
 
 typedef struct {
+#if 0
+    /* FIXME: why not talk to the device rather than having
+       multiple copies of these? */
     /* Basic Device Driver Properties */
     /* These MUST be set by device drivers on open */
 
@@ -60,7 +65,7 @@ typedef struct {
     double right;	/* right raster coordinate */
     double bottom;	/* bottom raster coordinate */
     double top;		/* top raster coordinate */
-    double xCharOffset;	/* x character addressing offset */
+    double xCharOffset;	/* x character addressing offset: unused */
     double yCharOffset;	/* y character addressing offset */
     double yLineBias;	/* 1/2 interline space as fraction of line height */
     Rboolean canResizePlot;	/* can the graphics surface be resized */
@@ -76,15 +81,21 @@ typedef struct {
 
     double ipr[2];	/* Inches per raster; [0]=x, [1]=y */
     double asp;		/* Pixel aspect ratio = ipr[1]/ipr[0] */
+#endif
+    /* This may get changed if the device is resized, in the 
+       GE_ScalePS action */ 
     double cra[2];	/* Character size in rasters; [0]=x, [1]=y */
 
+
     /* Plot State */
-    /* When the device driver is started this is 0 */
-    /* After the first call to plot.new it is 1 */
-    /* Every graphics operation except plot.new */
-    /* should fail if state = 0 */
-    /* This is checked at the highest internal function */
-    /* level (e.g., do_lines, do_axis, do_plot_xy, ...) */
+    /* 
+       When the device driver is started this is 0
+       After the first call to plot.new/perps it is 1
+       Every graphics operation except plot.new/persp
+       should fail if state = 0 
+       This is checked at the highest internal function
+       level (e.g., do_lines, do_axis, do_plot_xy, ...) 
+    */
 
     int	state;		/* Plot State */
     Rboolean valid;	/* valid layout ? */
