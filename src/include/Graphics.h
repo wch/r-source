@@ -143,10 +143,10 @@ typedef struct {
     int	fontsub;	/* Subtitle font */
     int	fontaxis;	/* Axis label fonts */
 
-    int	colmain;	/* Main title color */
-    int	collab;		/* Xlab and ylab color */
-    int	colsub;		/* Subtitle color */
-    int	colaxis;	/* Axis label color */
+    rcolor colmain;	/* Main title color */
+    rcolor collab;	/* Xlab and ylab color */
+    rcolor colsub;	/* Subtitle color */
+    rcolor colaxis;	/* Axis label color */
 
     /* Layout Parameters */
 

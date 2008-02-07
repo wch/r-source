@@ -290,6 +290,7 @@ double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
  */
 
 #define RGBpar			Rf_RGBpar
+#define RGBpar3			Rf_RGBpar3
 #define col2name                Rf_col2name
 #define name2col		Rf_name2col
 
@@ -302,7 +303,10 @@ unsigned int RGBpar3(SEXP, int, unsigned int);
 const char *col2name(unsigned int col); /* used in par.c, grid */
 unsigned int name2col(const char *);    /* used by plotmath.c */
 
-/* Convert either a name or a #RRGGBB[AA] string to internal */
+/* Convert either a name or a #RRGGBB[AA] string to internal.
+   Because people were using it, it also converts "1", "2" ...
+   to a colour in the palette, and "0" to transparent white.
+*/
 unsigned int R_GE_str2col(const char *s);
 
 

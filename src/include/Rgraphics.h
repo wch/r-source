@@ -60,25 +60,17 @@ typedef enum {
  CHARS = 15	/* multiples of text height (cex) */
 } GUnit;
 
-/* Graphics State:
- *
- * The following structure defines state for a graphics device driver.
- * Two copies are kept; the ``default'' set of values, and a set which
- * can be modified during calls to an application program.  When a
- * new graphics frame is started, the values revert to the defaults
- *
- */
 
 #ifdef R_GRAPHICS
-#define pGEDev pGEDevDesc
-#define DevDesc GEDevDesc
+/* Foe use inside R: point to the real structure */
+# define pGEDev pGEDevDesc
+# define DevDesc GEDevDesc
 #else
 /* Use opaque structure for back compatibility */
 typedef struct {
 /* opaque structure */
 int dummy;
 } DevDesc;
-
 typedef DevDesc * pGEDev;
 #endif
 
@@ -128,7 +120,7 @@ typedef DevDesc * pGEDev;
 #define GVStrHeight		Rf_GVStrHeight
 #define GVStrWidth		Rf_GVStrWidth
 #define GVText			Rf_GVText
-/* which of these conversions should be public? maybe all?*/
+
 #define xDevtoNDC		Rf_xDevtoNDC
 #define xDevtoNFC		Rf_xDevtoNFC
 #define xDevtoNPC		Rf_xDevtoNPC

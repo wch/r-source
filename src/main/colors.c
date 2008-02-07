@@ -31,11 +31,6 @@
 #include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
 
-/* FIXME
-   The use of '0' for the background colour in a palette is
-   applicable only to base graphics (and calls back into the base
-   graphics system).
-*/
 
 static unsigned int rgb2col(const char *);
 static char *RGB2rgb(unsigned int, unsigned int, unsigned int);
