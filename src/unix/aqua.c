@@ -1,6 +1,6 @@
 /* 
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2007 The R Development Core Team
+ *  Copyright (C) 1999-2008 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ QuartzFunctions_t *getQuartzAPI(void) {
 }
 
 /* obsolete Quartz Cocoa call */
-Rboolean CocoaInnerQuartzDevice(NewDevDesc *dd,char *display,
+Rboolean CocoaInnerQuartzDevice(pDevDesc dd,char *display,
 				double width,double height,
 				double pointsize,char *family,
 				Rboolean antialias,
