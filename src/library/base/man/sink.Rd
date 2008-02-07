@@ -1,6 +1,6 @@
 % File src/library/base/man/sink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sink}
@@ -75,7 +75,7 @@ sink.number(type = c("output", "message"))
   but we know of no current systems which do not.
 }
 \section{Warning}{
-  Don't use a connection that is open for \code{sink} for any other
+  Do not use a connection that is open for \code{sink} for any other
   purpose.  The software will stop you closing one such inadvertently.
 
   Do not sink the messages stream unless you understand the source code
