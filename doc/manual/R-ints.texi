@@ -2241,10 +2241,9 @@ directions.
 The next layer up is the graphics `engine' that is the main interface to
 the device (although the graphics subsystems do talk directly to
 devices).  This is responsible for clipping, converting the @code{pch}
-types @code{0...26} to sets of lines/circles, centring (and otherwise
-adjusting) text, rendering expressions (`plotmath'), mapping colour
-descriptions such as names to the internal representation and recording
-and replaying graphics.
+values @code{0...26} to sets of lines/circles, centring (and otherwise
+adjusting) text, rendering expressions (`plotmath') and mapping colour
+descriptions such as names to the internal representation.
 
 @c graphics.c looks at device dimensions, locator, metricinfo, mode
 @c memory.c looks at displayList and saveSnapshot
@@ -2252,13 +2251,13 @@ and replaying graphics.
 @c plot3d.c looks at useRotatedTextInContour
 @c grid looks at size, clipping, locator, ipr
 
-Another function of the engine is to manage display lists and
-snapshots.  Some but not all graphics devices maintain display lists, a
-`list' of operations that have been performed on the device to produce
-the current plot (since the device was opened or the plot was last
-cleared, e.g.@: by @code{plot.new}).  Screen devices generally maintain
-a display list to handle repaint and resize events where as save formats
-do not---display lists are also used to implement @code{dev.copy()} and
+Another function of the engine is to manage display lists and snapshots.
+Some but not all graphics devices maintain display lists, a `list' of
+operations that have been performed on the device to produce the current
+plot (since the device was opened or the plot was last cleared, e.g.@:
+by @code{plot.new}).  Screen devices generally maintain a display list
+to handle repaint and resize events where as file-based formats do
+not---display lists are also used to implement @code{dev.copy()} and
 friends.  The display list is a pairlist of @code{.Internal} (base
 graphics) or @code{.Call.graphics} (grid graphics) calls, which means
 that the C code implementing a graphics operation will be re-called when
@@ -2272,20 +2271,20 @@ Snapshots of the current graphics state are taken by
 The `state' includes the display list.
 
 
-At the top are the graphics subsystems. Although there is provision for
-24 subsystems, after 6 years only two exist, `base' and `grid'.
-The base subsystem is registered with the engine when @R{} is
+The top layer comprises the graphics subsystems. Although there is
+provision for 24 subsystems, after 6 years only two exist, `base' and
+`grid'.  The base subsystem is registered with the engine when @R{} is
 initialized, and unregistered (via @code{KillAllDevices}) when an @R{}
 session is shut down.  The grid subsystem is registered in its
-@code{.onLoad} function and unregistered in the @code{.onUnload} function.
-The graphics subsystem may also have `state' information saved in a
-snapshot (currently base does and grid does not).
+@code{.onLoad} function and unregistered in the @code{.onUnload}
+function.  The graphics subsystem may also have `state' information
+saved in a snapshot (currently base does and grid does not).
 
 Package @pkg{grDevices} was originally created to contain the basic
-graphics devices (although @code{X11} is in a load-on-demand module
-because of the volume of external libraries it brings in).  Since then
-it has been used for other functionality that was thought desirable for
-use with @pkg{grid}, and hence has been transferred from package
+graphics devices (although @code{X11} is in a separate load-on-demand
+module because of the volume of external libraries it brings in).  Since
+then it has been used for other functionality that was thought desirable
+for use with @pkg{grid}, and hence has been transferred from package
 @pkg{graphics} to @pkg{grDevices}.  This is principally concerned with
 the handling of colours and recording and replaying plots.
 
@@ -2315,7 +2314,8 @@ of a would-be writer of a graphics device.
 There are three types used internally which are pointers to structures
 related to graphics devices.
 
-The @code{NewDevDesc} type is a structure defined in
+The @code{NewDevDesc} type@footnote{`new' in @R 1.4.0 and scheduled to
+be renamed in @R 2.8.0.} is a structure defined in the header file
 @file{R_ext/GraphicsDevice.h} (which is included by
 @file{R_ext/GraphicsEngine.h}).  This describes the physical
 characteristics of a device, the capabilities of the device driver and
@@ -2330,11 +2330,15 @@ array of length 2.
 
 
 The @code{GEDevDesc} type is a structure defined in
-@file{R_ext/GraphicsEngine.h} (as commented in the file)
+@file{R_ext/GraphicsEngine.h} (with comments in the file)
 
 @example
 struct _GEDevDesc @{
     NewDevDesc *dev;
+    Rboolean displayListOn;
+    SEXP displayList;
+    SEXP DLlastElt;
+    SEXP savedSnapshot;
     Rboolean dirty;
     Rboolean recordGraphics;
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
@@ -2348,19 +2352,19 @@ Type @code{pGEDevDesc} is a pointer to this type.
 
 The third type is @code{pGEDev} which is an opaque pointer to a
 @code{GEDevDesc} structure.  (In earlier code you will also find
-@code{DevDesc *}, which in post-1.4.0 versions of @R{} was also an
-opaque pointer to a @code{GEDevDesc} structure.)
+@code{DevDesc *}, which in post-1.4.0 versions of @R{} was,
+confusinngly, also an opaque pointer to a @code{GEDevDesc} structure.)
 
 The graphics engine maintains an array of devices, as pointers to
 @code{GEDevDesc} structures.  The array is of size 64 but the first
 element is always occupied by the @code{"null device"} and the final
 element is kept as NULL as a sentinel.@footnote{Calling
 @code{R_CheckDeviceAvailable()} ensures there is a free slot or throws
-an error.}  This array is reflected in the @R{} variables
+an error.}  This array is reflected in the @R{} variable
 @samp{.Devices}.  Once a device is killed its element becomes available
 for reallocation (and its name will appear as @code{""} in
-@samp{.Devices}).  Exactly one of the devices is active: the null device
-if no other device has been opened and not killed.
+@samp{.Devices}).  Exactly one of the devices is `active': this is the
+the null device if no other device has been opened and not killed.
 
 Each instance of a graphics device needs to set up a @code{GEDevDesc}
 structure by code very similar to
@@ -2374,8 +2378,7 @@ structure by code very similar to
         /* Allocate and initialize the device driver data */
         if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
             return 0; /* or error() */
-        /* set up device driver 
-           or free 'dev' and error() */
+        /* set up device driver or free 'dev' and error() */
         gdd = GEcreateDevDesc(dev);
         GEaddDevice2(gdd, "dev_name");
     @} END_SUSPEND_INTERRUPTS;
@@ -2389,7 +2392,7 @@ non-zero elements of the @code{NewDevDesc} structure.
 Note that the device structure is zeroed when allocated: this provides
 some protection against future expansion of the structure since the
 graphics engine can add elements that need to be non-NULL/non-zero to be
-`on' (and the structure contains 64 reserved bytes which will be zeroed
+`on' (and the structure ends with 64 reserved bytes which will be zeroed
 and allow for future expansion).
 
 Rather more protection is provided by the version number of the
@@ -2398,7 +2401,6 @@ engine/device API, @code{R_GE_version} defined in
 
 @example
 int R_GE_getVersion(void);
-
 void R_GE_checkVersionOrDie(int version);
 @end example
 
@@ -2413,19 +2415,18 @@ was designed for.
 
 Handling text is probably the hardest task for a graphics device, and
 the design allows for device to optionally indicate that they have
-additional capabilities.  (If they do not, these will if possible be
-handled in the graphics engine.)
+additional capabilities.  (If the device does not, these will if
+possible be handled in the graphics engine.)
 
 The three callbacks for handling text that must be in all graphics
 devices are structure elements @code{text}, @code{strWidth} and
-@code{metricInfo}.
+@code{metricInfo} with declarations
 
 @example
 void text(double x, double y, const char *str, double rot, double hadj,
           pGgcontext gc, pDevDesc dd);
 
-double
-strWidth(const char *str, pGEcontext gc, pDevDesc dd);
+double strWidth(const char *str, pGEcontext gc, pDevDesc dd);
 
 void metricInfo(int c, pGEcontext gc,
                double* ascent, double* descent, double* width,
@@ -2456,7 +2457,7 @@ is not longer used as from @R{} 2.7.0.  In a single-byte locale values
 present).  For the symbol font (as used by @samp{par(font=5)} in base
 graphics and by `plotmath'), values @code{32...126, 161...239,
 241...254} indicate glyphs in the Adobe Symbol encoding.  In a multibyte
-locale, @code{c} represents a Unicode point (except in the symbolfont).
+locale, @code{c} represents a Unicode point (except in the symbol font).
 So the function needs to include code like
 
 @example
@@ -2467,19 +2468,20 @@ So the function needs to include code like
 @end example
 
 @noindent
-In addition, if @code{hasTextUTF8} is set, Unicode points will be passed
-as negative values and the code snippet above shows how to handle this.
+In addition, if device capability @code{hasTextUTF8} (see below) is
+true, Unicode points will be passed as negative values: the code snippet
+above shows how to handle this.
 
 If possible, the graphics device should handle clipping of text.  It
 indicates this by the structure element @code{canClip} which if true
 will result in calls to the callback @code{clip} to set the clipping
-region. If this is not done, the engine will clip very crudely (but
-omitting an text that does not appear to be wholly inside the clipping
+region. If this is not done, the engine will clip very crudely (and
+omitting any text that does not appear to be wholly inside the clipping
 region).
 
 The device structure has an integer element @code{canHadj}, which
 indicates if the device can do horizontal alignment of text.  If this is
-one, argument @samp{hadj} to @code{text} will be called a @code{0 ,0.5,
+one, argument @samp{hadj} to @code{text} will be called as @code{0 ,0.5,
 1} to indicate left-, centre- and right-alignment at the indicated
 position.  It it is two, continuous values in the range @code{[0, 1]}
 are assumed to be supported.
@@ -2610,8 +2612,8 @@ Files @file{plot.c}, @code{plot3d.c} and @code{par.c} contain the code
 for the around 30 @code{.Internal} calls that implement the basic
 graphics operations.  This code then calls functions with names starting
 with @code{G} and declared in header @file{Rgraphics.h} in file
-@file{graphics.h}, which in turn call the graphics engine (whose
-functions almost all have names starting with @code{GE}.
+@file{graphics.c}, which in turn call the graphics engine (whose
+functions almost all have names starting with @code{GE}).
 
 Again for historical reasons, @file{Rgraphics.h} is a public header, but
 it is almost unused outside @R{} and it is intended to withdraw it by
@@ -2620,11 +2622,9 @@ it is almost unused outside @R{} and it is intended to withdraw it by
 A large part of the infrastructure of the base graphics subsystem are
 the graphics parameters (as set/read by @code{par()}).  These are stored
 in a @code{GPar} structure declared in the private header
-@file{Graphics.h}.  This structure is something of a mixture: the first
-part duplicates parameters and capabilities from the device driver.
-Then there are two variables (@code{state} and @code{valid} tracking the
-state of the base subsystem on the device, and finally many variables
-recording the graphics parameters and functions of them.
+@file{Graphics.h}.  This structure has two variables (@code{state} and
+@code{valid} tracking the state of the base subsystem on the device, and
+many variables recording the graphics parameters and functions of them.
 
 The base system state is contained in @code{baseSystemState} structure
 defined in @file{R_ext/GraphicsBase.h}.  This contains three @code{GPar}
