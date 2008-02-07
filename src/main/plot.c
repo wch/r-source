@@ -320,9 +320,10 @@ SEXP FixupVFont(SEXP vfont) {
  */
 static void
 GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
-	   int *pcol, double *pcex, int *pfont)
+	   rcolor *pcol, double *pcex, int *pfont)
 {
-    int i, n, col, font, colspecd;
+    int i, n, font, colspecd;
+    rcolor col;
     double cex;
     SEXP txt, nms;
     PROTECT_INDEX pi;
@@ -846,7 +847,8 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
      *	    outer, font, lty, lwd, col, padj, ...) */
 
     SEXP at, lab, padj;
-    int col, font, lty, npadj;
+    int font, lty, npadj;
+    rcolor col;
     int i, n, nint = 0, ntmp, side, *ind, outer, lineoff = 0;
     int istart, iend, incr;
     Rboolean dolabels, doticks, logflag = FALSE;
@@ -1371,8 +1373,8 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
  */
     SEXP sxy, sx, sy, pch, cex, col, bg, lty, lwd;
     double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
-    int i, n, npch, ncex, ncol, nbg, /*nlty,*/ nlwd,
-	type=0, start=0, thispch, thiscol;
+    int i, n, npch, ncex, ncol, nbg, nlwd, type=0, start=0, thispch;
+    rcolor thiscol;
     void *vmax = NULL /* -Wall */;
 
     SEXP originalArgs = args;
@@ -1829,7 +1831,8 @@ SEXP attribute_hidden do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     double xx0, yy0, xx1, yy1;
     double hlength, angle;
     int code;
-    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd, thiscol;
+    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd;
+    rcolor thiscol;
     SEXP originalArgs = args;
     pGEDevDesc dd = CurrentDevice();
 
@@ -2460,8 +2463,8 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP Main, xlab, ylab, sub, string;
     double adj, adjy, cex, offset, line, hpos, vpos, where;
-    int col, font, outer;
-    int i, n;
+    int i, n, font, outer;
+    rcolor col;
     SEXP originalArgs = args;
     pGEDevDesc dd = CurrentDevice();
 

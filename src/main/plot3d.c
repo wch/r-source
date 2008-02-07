@@ -1345,7 +1345,8 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z, vfont, col, rawcol, lty, lwd, labels;
     int i, j, nx, ny, nc, ncol, nlty, nlwd;
-    int ltysave, colsave, lwdsave, fontsave = 1 /* -Wall */;
+    int ltysave, lwdsave, fontsave = 1 /* -Wall */;
+    rcolor colsave;
     double cexsave;
     double atom, zmin, zmax;
     char *vmax, *vmax0, familysave[201];
@@ -1646,7 +1647,7 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, sx, sy, sz, sc, scol;
     double *x, *y, *z, *c;
-    unsigned *col;
+    rcolor *col;
     int i, j, k, npt, nx, ny, nz, nc, ncol, colsave, xpdsave;
     double px[8], py[8], pz[8];
     pGEDevDesc dd = CurrentDevice();
@@ -1694,7 +1695,7 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     y = REAL(sy);
     z = REAL(sz);
     c = REAL(sc);
-    col = (unsigned*)INTEGER(scol);
+    col = (rcolor *) INTEGER(scol);
 
     /* Check of grid coordinates */
     /* We want them to all be finite */
@@ -1764,7 +1765,8 @@ SEXP attribute_hidden do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     double *x, *y;
     int *z, tmp;
     unsigned *c;
-    int i, j, nx, ny, nc, colsave, xpdsave;
+    int i, j, nx, ny, nc, xpdsave;
+    rcolor colsave;
     pGEDevDesc dd = CurrentDevice();
 
     GCheckState(dd);
