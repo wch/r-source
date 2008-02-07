@@ -1,6 +1,6 @@
 % File src/library/base/man/sink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sink}
@@ -69,6 +69,9 @@ sink.number(type = c("output", "message"))
   \code{sink(split = TRUE)} is only available on systems which support
   the C99 function \code{va_copy} (or under the name \code{__va_copy}),
   but we know of no current systems which do not.
+
+  It only splits internal \R output, not that from \R-level use of
+  \code{\link{stdout}}.
 }
 \section{Warning}{
   Don't use a connection that is open for \code{sink} for any other

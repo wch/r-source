@@ -1,6 +1,6 @@
 % File src/library/base/man/showConnections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{showConnections}
@@ -39,7 +39,8 @@ stderr()
   connections of class \code{"terminal"} which cannot be opened or
   closed, and are read-only, write-only and write-only respectively.
   The \code{stdout()} and \code{stderr()} connections can be
-  re-directed by \code{\link{sink}}.
+  re-directed by \code{\link{sink}} (and in some circumstances the
+  output from \code{stdout()} can be split: see the help page).
 
   The encoding for \code{\link{stdin}()} when redirected can
   be set by the command-line flag \code{--encoding}.
