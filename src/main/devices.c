@@ -539,6 +539,16 @@ void GEaddDevice(pGEDevDesc gdd)
     }
 }
 
+/* conveniende wrapper */
+void GEaddDevice2(pGEDevDesc gdd, const char *name)
+{
+    gsetVar(install(".Device"), mkString(name), R_BaseEnv);
+    GEaddDevice(gdd);
+    GEinitDisplayList(gdd);    
+}
+
+
+
 /* FIXME; remove in due course */
 void Rf_addDevice(pGEDev dd)
 {

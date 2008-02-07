@@ -2415,7 +2415,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc)calloc(1, sizeof(NewDevDesc)))) return;
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return;
 	if (!X11DeviceDriver(dev, display, width, height,
 				ps, gamma, colormodel, maxcubesize,
 				bgcolor, canvascolor, sfonts, res,
@@ -2423,10 +2423,8 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 	    free(dev);
 	    errorcall(gcall, _("unable to start device %s"), devname);
        	}
-	gsetVar(install(".Device"), mkString(devname), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	GEaddDevice2(dd, devname);
     } END_SUSPEND_INTERRUPTS;
 }
 

@@ -254,6 +254,7 @@ pGEDevDesc desc2GEDesc(pDevDesc dd);
 int GEdeviceNumber(pGEDevDesc);
 pGEDevDesc GEGetDevice(int);
 void GEaddDevice(pGEDevDesc);
+void GEaddDevice2(pGEDevDesc, const char *);
 void GEkillDevice(pGEDevDesc);
 pGEDevDesc GEcreateDevDesc(pDevDesc dev);
 

@@ -3100,7 +3100,7 @@ static void SaveAsBmp(pDevDesc dd, const char *fn)
 
 SEXP devga(SEXP args)
 {
-    GEDevDesc* dd;
+    GEDevDesc* gdd;
     const char *display, *title;
     char *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
@@ -3174,11 +3174,8 @@ SEXP devga(SEXP args)
 	    free(dev);
 	    error(_("unable to start device devWindows"));
 	}
-	gsetVar(install(".Device"),
-		mkString(display[0] ? display : "windows"), R_BaseEnv);
-	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, display[0] ? display : "windows");
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;

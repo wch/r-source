@@ -7111,7 +7111,7 @@ static void PDF_MetricInfo(int c,
 
 SEXP PostScript(SEXP args)
 {
-    GEDevDesc *dd;
+    GEDevDesc *gdd;
     char *vmax;
     const char *file, *paper, *family=NULL, *bg, *fg, *cmd;
     const char *afms[5];
@@ -7167,10 +7167,8 @@ SEXP PostScript(SEXP args)
 	    /* free(dev); No, dev freed inside PSDeviceDrive */
 	    error(_("unable to start device PostScript"));
 	}
-	gsetVar(install(".Device"), mkString("postscript"), R_BaseEnv);
-	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "postscript");
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -7196,7 +7194,7 @@ SEXP PostScript(SEXP args)
 
 SEXP XFig(SEXP args)
 {
-    GEDevDesc *dd;
+    GEDevDesc *gdd;
     char *vmax;
     const char *file, *paper, *family, *bg, *fg, *encoding;
     int horizontal, onefile, pagecentre;
@@ -7230,10 +7228,8 @@ SEXP XFig(SEXP args)
 	    /* free(dev); No, freed inside XFigDeviceDriver */
 	    error(_("unable to start device xfig"));
 	}
-	gsetVar(install(".Device"), mkString("xfig"), R_BaseEnv);
-	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "xfig");
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -7261,7 +7257,7 @@ SEXP XFig(SEXP args)
 
 SEXP PDF(SEXP args)
 {
-    GEDevDesc *dd;
+    GEDevDesc *gdd;
     char *vmax;
     const char *file, *paper, *encoding, *family = NULL /* -Wall */,
 	*bg, *fg, *title, call[] = "PDF";
@@ -7309,10 +7305,8 @@ SEXP PDF(SEXP args)
 	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}
-	gsetVar(install(".Device"), mkString("pdf"), R_BaseEnv);
-	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "pdf");
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;

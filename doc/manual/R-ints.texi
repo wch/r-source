@@ -2366,19 +2366,18 @@ Each instance of a graphics device needs to set up a @code{GEDevDesc}
 structure by code very similar to
 
 @example
-    pGEDevDesc dd;
+    pGEDevDesc gdd;
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS @{
         pDevDesc dev;
         /* Allocate and initialize the device driver data */
         if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
-            return 0;
-        /* set up device driver or free 'dev' and error() */
-        gsetVar(install(".Device"), mkString("devname"), R_BaseEnv);
-        dd = GEcreateDevDesc(dev);
-        GEaddDevice(dd);
-        GEinitDisplayList(dd);
+            return 0; /* or error() */
+        /* set up device driver 
+           or free 'dev' and error() */
+        gdd = GEcreateDevDesc(dev);
+        GEaddDevice2(gdd, "dev_name");
     @} END_SUSPEND_INTERRUPTS;
 @end example
 
