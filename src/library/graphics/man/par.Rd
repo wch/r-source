@@ -557,7 +557,9 @@ par(\dots, no.readonly = FALSE)
   hexadecimal digits giving a value in the range \code{00} to \code{FF}.
   Colors can also be specified by giving an index into a small table of
   colors, the \code{\link{palette}}.  This provides compatibility with
-  S.  Index \code{0} corresponds to the background color.
+  S.  Index \code{0} corresponds to the background color.  (Because
+  apparently some people have been assuming it, it is also possible to
+  specify integers as character strings, e.g. \code{"3"}.)
 
   Additionally, \code{"transparent"} or (integer) \code{NA} is
   \emph{transparent}, useful for filled areas (such as the background!),
