@@ -482,7 +482,7 @@ Rboolean R_CheckDeviceAvailableBool(void)
     else return TRUE;
 }
 
-static void GEaddDevice0(pGEDevDesc gdd)
+void GEaddDevice(pGEDevDesc gdd)
 {
     int i;
     Rboolean appnd;
@@ -542,14 +542,7 @@ static void GEaddDevice0(pGEDevDesc gdd)
 /* FIXME; remove in due course */
 void Rf_addDevice(pGEDev dd)
 {
-    GEaddDevice0(dd);
-}
-
-void GEaddDevice(pGEDevDesc gdd, const char *name)
-{
-    gsetVar(install(".Device"), mkString(name), R_BaseEnv);
-    GEaddDevice0(gdd);
-    GEinitDisplayList(gdd);
+    GEaddDevice(dd);
 }
 
 

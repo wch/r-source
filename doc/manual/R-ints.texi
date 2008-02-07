@@ -2375,8 +2375,10 @@ structure by code very similar to
         if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
             return 0;
         /* set up device driver or free 'dev' and error() */
+        gsetVar(install(".Device"), mkString("devname"), R_BaseEnv);
         dd = GEcreateDevDesc(dev);
-        GEaddDevice(dd, "devname");
+        GEaddDevice(dd);
+        GEinitDisplayList(dd);
     @} END_SUSPEND_INTERRUPTS;
 @end example
 
