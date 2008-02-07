@@ -2466,7 +2466,7 @@ void GErecordGraphicOperation(SEXP op, SEXP args, pGEDevDesc dd)
 void GEinitDisplayList(pGEDevDesc dd)
 {
     int i;
-    /* Save the current dislpayList so that, for example, a device
+    /* Save the current displayList so that, for example, a device
      * can maintain a plot history
      */
     dd->savedSnapshot = GEcreateSnapshot(dd);
@@ -2486,8 +2486,22 @@ void GEinitDisplayList(pGEDevDesc dd)
 
 void GEplayDisplayList(pGEDevDesc dd)
 {
-    int i, savedDevice, plotok;
+    int i, this, savedDevice, plotok;
     SEXP theList;
+
+    /* If the device is not registered with the engine (which might
+       happen in a device callback before it has been registered or
+       while it is being killed) we might get the null device and 
+       should do nothing.
+
+       Also do nothing if displayList is empty (which should be the
+       case for the null device).
+    */
+    this = GEdeviceNumber(dd);
+    if (this == 0) return;
+    theList = dd->displayList;
+    if (theList == R_NilValue) return;
+    
     /* Get each graphics system to restore state required for
      * replaying the display list
      */
@@ -2496,11 +2510,11 @@ void GEplayDisplayList(pGEDevDesc dd)
 	    (dd->gesd[i]->callback)(GE_RestoreState, dd, R_NilValue);
     /* Play the display list
      */
-    PROTECT(theList = dd->displayList);
+    PROTECT(theList);
     plotok = 1;
     if (theList != R_NilValue) {
 	savedDevice = curDevice();
-	selectDevice(GEdeviceNumber(dd));
+	selectDevice(this);
 	while (theList != R_NilValue && plotok) {
 	    SEXP theOperation = CAR(theList);
 	    SEXP op = CAR(theOperation);

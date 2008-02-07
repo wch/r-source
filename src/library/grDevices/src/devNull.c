@@ -43,10 +43,8 @@ void GEnullDevice()
 	    free(dev);
 	    error(_("unable to start NULL device"));
 	}
-	gsetVar(install(".Device"), mkString("NULL"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	GEaddDevice(dd, "NULL");
     } END_SUSPEND_INTERRUPTS;
 }
 static void NULL_Circle(double x, double y, double r,
@@ -188,7 +186,7 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
     dev->canClip = TRUE;
     dev->canHAdj = 2;
     dev->canChangeGamma = FALSE;
-    dev->displayListOn = TRUE;
+    dev->displayListOn = FALSE; /* irrelevant as you cannot plot to it */
 
     return TRUE;
 }

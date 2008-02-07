@@ -253,11 +253,9 @@ static void PrivateCopyDevice(pDevDesc dd, pDevDesc ndd, const char *name)
     int saveDev = curDevice();
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     gsetcursor(xd->gawin, WatchCursor);
-    gsetVar(install(".Device"),
-	    mkString(name), R_BaseEnv);
     ndd->displayListOn = FALSE;
     gdd = GEcreateDevDesc(ndd);
-    GEaddDevice(gdd);
+    GEaddDevice(gdd, name);
     GEcopyDisplayList(ndevNumber(dd));
     GEkillDevice(gdd);
     selectDevice(saveDev);
@@ -3174,11 +3172,8 @@ SEXP devga(SEXP args)
 	    free(dev);
 	    error(_("unable to start device devWindows"));
 	}
-	gsetVar(install(".Device"),
-		mkString(display[0] ? display : "windows"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
-	GEaddDevice(dd);
-	GEinitDisplayList(dd);
+	GEaddDevice(dd, display[0] ? display : "windows");
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
