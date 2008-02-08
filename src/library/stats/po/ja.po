@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2008-02-08 14:27+0000\n"
 "PO-Revision-Date: 2007-09-11 17:13+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -75,7 +75,7 @@ msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければな
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr " sm.method=\"spline\" では 2500 行までしか扱えません "
 
-#: loessc.c:228
+#: loessc.c:235
 msgid "span is too small"
 msgstr " 範囲(span)が小さすぎます "
 

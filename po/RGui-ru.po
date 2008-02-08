@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:06+0000\n"
+"POT-Creation-Date: 2008-02-08 14:27+0000\n"
 "PO-Revision-Date: 2007-09-17 20:36-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -322,7 +322,7 @@ msgid "Autosize column"
 msgstr "Автоподбор ширины колонки"
 
 #: dataentry.c:1642 pager.c:310 rui.c:838
-#: ../library/grDevices/src/devWindows.c:1632
+#: ../library/grDevices/src/devWindows.c:1619
 msgid "Stay on top"
 msgstr "Расположить сверху"
 
@@ -331,7 +331,7 @@ msgid "Close"
 msgstr "Закрыть"
 
 #: dataentry.c:1729 editor.c:691 pager.c:467 rui.c:1066
-#: ../library/grDevices/src/devWindows.c:1573
+#: ../library/grDevices/src/devWindows.c:1560
 msgid "File"
 msgstr "Файл"
 
@@ -462,7 +462,7 @@ msgstr "Открыть скрипт"
 msgid "Save script"
 msgstr "Сохранить скрипт"
 
-#: editor.c:668 pager.c:451 ../library/grDevices/src/devWindows.c:1541
+#: editor.c:668 pager.c:451 ../library/grDevices/src/devWindows.c:1528
 msgid "Return focus to Console"
 msgstr "Вернуть фокус в консоль"
 
@@ -471,7 +471,7 @@ msgid "Print script"
 msgstr "Печатать скрипт"
 
 #: editor.c:673 pager.c:446 rui.c:1047
-#: ../library/grDevices/src/devWindows.c:1535
+#: ../library/grDevices/src/devWindows.c:1522
 msgid "Print"
 msgstr "Печать"
 
@@ -492,7 +492,7 @@ msgid "Save as..."
 msgstr "Сохранить как..."
 
 #: editor.c:701 pager.c:470 rui.c:1082
-#: ../library/grDevices/src/devWindows.c:1635
+#: ../library/grDevices/src/devWindows.c:1622
 msgid "Print..."
 msgstr "Печать..."
 
@@ -927,7 +927,7 @@ msgstr "меню не найдено"
 msgid "menu or item does not exist"
 msgstr "меню или пункт меню не существует"
 
-#: system.c:399
+#: system.c:398
 msgid "Save workspace image?"
 msgstr "Сохранить рабочее пространство?"
 
@@ -978,233 +978,233 @@ msgstr "Заполнить"
 msgid "Arrange Icons"
 msgstr "Упорядочить пиктограммы"
 
-#: ../library/grDevices/src/devWindows.c:882
+#: ../library/grDevices/src/devWindows.c:875
 msgid "Png files (*.png)"
 msgstr "PNG-файлы (*.png)"
 
-#: ../library/grDevices/src/devWindows.c:883
+#: ../library/grDevices/src/devWindows.c:876
 msgid "Portable network graphics file"
 msgstr "Файл PNG"
 
-#: ../library/grDevices/src/devWindows.c:885
+#: ../library/grDevices/src/devWindows.c:878
 msgid "Windows bitmap files (*.bmp)"
 msgstr "Растровые файлы Windows (*.bmp)"
 
-#: ../library/grDevices/src/devWindows.c:886
+#: ../library/grDevices/src/devWindows.c:879
 msgid "Windows bitmap file"
 msgstr "Растровый файл Windows"
 
-#: ../library/grDevices/src/devWindows.c:888
+#: ../library/grDevices/src/devWindows.c:881
 msgid "Jpeg files (*.jpeg,*jpg)"
 msgstr "Файлы JPEG (*.jpeg, *.jpg)"
 
-#: ../library/grDevices/src/devWindows.c:889
+#: ../library/grDevices/src/devWindows.c:882
 msgid "Jpeg file"
 msgstr "Файл JPEG"
 
-#: ../library/grDevices/src/devWindows.c:909
+#: ../library/grDevices/src/devWindows.c:902
 msgid "Postscript files (*.ps)"
 msgstr "Файлы PostScript (*.ps)"
 
-#: ../library/grDevices/src/devWindows.c:910
+#: ../library/grDevices/src/devWindows.c:903
 msgid "Postscript file"
 msgstr "Файл PostScript"
 
-#: ../library/grDevices/src/devWindows.c:921
+#: ../library/grDevices/src/devWindows.c:914
 msgid "PDF files (*.pdf)"
 msgstr "Файлы PDF (*.pdf)"
 
-#: ../library/grDevices/src/devWindows.c:922
+#: ../library/grDevices/src/devWindows.c:915
 msgid "PDF file"
 msgstr "Файл PDF"
 
-#: ../library/grDevices/src/devWindows.c:933
+#: ../library/grDevices/src/devWindows.c:926
 msgid "Enhanced metafiles (*.emf)"
 msgstr "Улучшенные метафайлы Windows (*.emf)"
 
-#: ../library/grDevices/src/devWindows.c:934
+#: ../library/grDevices/src/devWindows.c:927
 msgid "Enhanced metafiles"
 msgstr "Улучшенные метафайлы Windows"
 
-#: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:2938
+#: ../library/grDevices/src/devWindows.c:930
+#: ../library/grDevices/src/devWindows.c:2909
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "выбранный файловый путь слишком длинный: можно только 512 байт"
 
-#: ../library/grDevices/src/devWindows.c:1151
+#: ../library/grDevices/src/devWindows.c:1141
 msgid "No plot to replace!"
 msgstr "Нет графика для замены!"
 
-#: ../library/grDevices/src/devWindows.c:1197
+#: ../library/grDevices/src/devWindows.c:1189
 msgid "Variable name"
 msgstr "Имя переменной"
 
-#: ../library/grDevices/src/devWindows.c:1204
+#: ../library/grDevices/src/devWindows.c:1196
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "Переменная не существует или не содержит графиков!"
 
-#: ../library/grDevices/src/devWindows.c:1220
+#: ../library/grDevices/src/devWindows.c:1212
 msgid "Name of variable to save to"
 msgstr "Имя переменной для сохранения в"
 
-#: ../library/grDevices/src/devWindows.c:1529
+#: ../library/grDevices/src/devWindows.c:1516
 msgid "Copy to the clipboard as a metafile"
 msgstr "Копировать в буфер обмена как метафайл"
 
-#: ../library/grDevices/src/devWindows.c:1547
-#: ../library/grDevices/src/devWindows.c:1558
+#: ../library/grDevices/src/devWindows.c:1534
+#: ../library/grDevices/src/devWindows.c:1545
 msgid "Stop locator"
 msgstr "Остановить локатор"
 
-#: ../library/grDevices/src/devWindows.c:1557
-#: ../library/grDevices/src/devWindows.c:1561
+#: ../library/grDevices/src/devWindows.c:1544
+#: ../library/grDevices/src/devWindows.c:1548
 msgid "Stop"
 msgstr "Остановить"
 
-#: ../library/grDevices/src/devWindows.c:1563
+#: ../library/grDevices/src/devWindows.c:1550
 msgid "Continue"
 msgstr "Продолжить"
 
-#: ../library/grDevices/src/devWindows.c:1567
+#: ../library/grDevices/src/devWindows.c:1554
 msgid "Next"
 msgstr "Следующий"
 
-#: ../library/grDevices/src/devWindows.c:1568
+#: ../library/grDevices/src/devWindows.c:1555
 msgid "Next plot"
 msgstr "Следующий график"
 
-#: ../library/grDevices/src/devWindows.c:1574
+#: ../library/grDevices/src/devWindows.c:1561
 msgid "Save as"
 msgstr "Сохранить как"
 
-#: ../library/grDevices/src/devWindows.c:1575
+#: ../library/grDevices/src/devWindows.c:1562
 msgid "Metafile..."
 msgstr "Метафайл..."
 
-#: ../library/grDevices/src/devWindows.c:1576
+#: ../library/grDevices/src/devWindows.c:1563
 msgid "Postscript..."
 msgstr "PostScript..."
 
-#: ../library/grDevices/src/devWindows.c:1577
+#: ../library/grDevices/src/devWindows.c:1564
 msgid "PDF..."
 msgstr "PDF..."
 
-#: ../library/grDevices/src/devWindows.c:1578
+#: ../library/grDevices/src/devWindows.c:1565
 msgid "Png..."
 msgstr "PNG..."
 
-#: ../library/grDevices/src/devWindows.c:1579
+#: ../library/grDevices/src/devWindows.c:1566
 msgid "Bmp..."
 msgstr "BMP..."
 
-#: ../library/grDevices/src/devWindows.c:1580
+#: ../library/grDevices/src/devWindows.c:1567
 msgid "Jpeg"
 msgstr "JPEG..."
 
-#: ../library/grDevices/src/devWindows.c:1582
-#: ../library/grDevices/src/devWindows.c:1584
-#: ../library/grDevices/src/devWindows.c:1586
+#: ../library/grDevices/src/devWindows.c:1569
+#: ../library/grDevices/src/devWindows.c:1571
+#: ../library/grDevices/src/devWindows.c:1573
 #, c-format
 msgid "%s quality..."
 msgstr "качество %s..."
 
-#: ../library/grDevices/src/devWindows.c:1588
+#: ../library/grDevices/src/devWindows.c:1575
 msgid "Copy to the clipboard"
 msgstr "Копировать в буфер обмена"
 
-#: ../library/grDevices/src/devWindows.c:1589
+#: ../library/grDevices/src/devWindows.c:1576
 msgid "as a Bitmap\tCTRL+C"
 msgstr "как растровый файл Windows\tCTRL+C"
 
-#: ../library/grDevices/src/devWindows.c:1590
+#: ../library/grDevices/src/devWindows.c:1577
 msgid "as a Metafile\tCTRL+W"
 msgstr "как метафайл\tCTRL+W"
 
-#: ../library/grDevices/src/devWindows.c:1593
+#: ../library/grDevices/src/devWindows.c:1580
 msgid "Print...\tCTRL+P"
 msgstr "Печатать...\tCTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1595
+#: ../library/grDevices/src/devWindows.c:1582
 msgid "close Device"
 msgstr "закрыть устройство"
 
-#: ../library/grDevices/src/devWindows.c:1596
+#: ../library/grDevices/src/devWindows.c:1583
 msgid "History"
 msgstr "История команд"
 
-#: ../library/grDevices/src/devWindows.c:1597
+#: ../library/grDevices/src/devWindows.c:1584
 msgid "Recording"
 msgstr "Запись"
 
-#: ../library/grDevices/src/devWindows.c:1600
+#: ../library/grDevices/src/devWindows.c:1587
 msgid "Add\tINS"
 msgstr "Добавлять\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1601
+#: ../library/grDevices/src/devWindows.c:1588
 msgid "Replace"
 msgstr "Заменять"
 
-#: ../library/grDevices/src/devWindows.c:1603
+#: ../library/grDevices/src/devWindows.c:1590
 msgid "Previous\tPgUp"
 msgstr "Предыдущий\tPgUp"
 
-#: ../library/grDevices/src/devWindows.c:1604
+#: ../library/grDevices/src/devWindows.c:1591
 msgid "Next\tPgDown"
 msgstr "Следующий\tPgDn"
 
-#: ../library/grDevices/src/devWindows.c:1606
+#: ../library/grDevices/src/devWindows.c:1593
 msgid "Save to variable..."
 msgstr "Сохранить в переменную..."
 
-#: ../library/grDevices/src/devWindows.c:1607
+#: ../library/grDevices/src/devWindows.c:1594
 msgid "Get from variable..."
 msgstr "Взять из переменной..."
 
-#: ../library/grDevices/src/devWindows.c:1609
+#: ../library/grDevices/src/devWindows.c:1596
 msgid "Clear history"
 msgstr "Очистить историю"
 
-#: ../library/grDevices/src/devWindows.c:1610
+#: ../library/grDevices/src/devWindows.c:1597
 msgid "Resize"
 msgstr "Изменить размер"
 
-#: ../library/grDevices/src/devWindows.c:1611
+#: ../library/grDevices/src/devWindows.c:1598
 msgid "R mode"
 msgstr "Режим R"
 
-#: ../library/grDevices/src/devWindows.c:1613
+#: ../library/grDevices/src/devWindows.c:1600
 msgid "Fit to window"
 msgstr "Подогнать под окно"
 
-#: ../library/grDevices/src/devWindows.c:1615
+#: ../library/grDevices/src/devWindows.c:1602
 msgid "Fixed size"
 msgstr "Фиксированный размер"
 
-#: ../library/grDevices/src/devWindows.c:1622
+#: ../library/grDevices/src/devWindows.c:1609
 msgid "Copy as metafile"
 msgstr "Скопировать как метафайл"
 
-#: ../library/grDevices/src/devWindows.c:1624
+#: ../library/grDevices/src/devWindows.c:1611
 msgid "Copy as bitmap"
 msgstr "Скопировать как растровый файл Windows"
 
-#: ../library/grDevices/src/devWindows.c:1627
+#: ../library/grDevices/src/devWindows.c:1614
 msgid "Save as metafile..."
 msgstr "Сохранить как метафайл..."
 
-#: ../library/grDevices/src/devWindows.c:1629
+#: ../library/grDevices/src/devWindows.c:1616
 msgid "Save as postscript..."
 msgstr "Сохранить как PostScript..."
 
-#: ../library/grDevices/src/devWindows.c:2664
+#: ../library/grDevices/src/devWindows.c:2650
 msgid "Locator is active"
 msgstr "Локатор активен"
 
-#: ../library/grDevices/src/devWindows.c:3252
+#: ../library/grDevices/src/devWindows.c:3212
 msgid "Waiting to confirm page change..."
 msgstr "Ожидаю подтверждения смены страницы..."
 
-#: ../library/grDevices/src/devWindows.c:3264
+#: ../library/grDevices/src/devWindows.c:3224
 msgid "Click or hit ENTER for next page"
 msgstr "Следующая страница: щелкните или нажмите ENTER "
 

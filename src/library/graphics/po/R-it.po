@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:59\n"
+"POT-Creation-Date: 2008-02-08 14:26\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -262,6 +262,9 @@ msgstr "'x' ed 'y' devono avere lo stesso numero di righe"
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x' e 'y' devono avere solo 1 o lo stesso numero di colonne"
+
+msgid "default 'pch' is smaller than number of columns and hence recycled"
+msgstr ""
 
 msgid "missing values in contingency table"
 msgstr "valori mancanti nella tabella di contingenza"
