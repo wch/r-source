@@ -71,11 +71,11 @@ summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, len = 200)
 lines(ht, predict(fm1, data.frame(height=ht)))
-
+\dontrun{
 ## Consistency:
 x <- c(1:3,5:6)
 stopifnot(identical(bs(x), bs(x, df = 3)),
           !is.null(kk <- attr(bs(x), "knots")),# not true till 1.5.1
           length(kk) == 0)
-}
+}}
 \keyword{smooth}

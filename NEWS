@@ -254,6 +254,10 @@ NEW FEATURES
 	sink(split=TRUE) has been used, the output is now sent to all
 	the active sink connections.
 
+    o	There is a new option in Rd markup of \donttest{} to mark
+	example code that should be run by example() but not tested
+	(e.g. because it might fail in some locales).
+
 
 DEPRECATED & DEFUNCT
 

@@ -1159,6 +1159,7 @@ sub code2html {
 				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
+    $text = undefine_command($text, "donttest");
     $text =~ s/\\\\/\\/go;
 
     $text = unmark_brackets($text);
@@ -1702,6 +1703,7 @@ sub code2txt {
 				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
+    $text = undefine_command($text, "donttest");
 
     $text = unmark_brackets($text);
 
@@ -2417,6 +2419,7 @@ sub code2nroff {
 				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
+    $text = undefine_command($text, "donttest");
 
     $text = unmark_brackets($text);
 
@@ -2566,6 +2569,8 @@ sub code2examp {
     $text = replace_prepend_command($text, "dontrun",
 				    "## Not run: ", "## End(Not run)",
 				    "##D ");
+    $text = replace_addnl_command($text, "donttest",
+				  "## No test: ", "## End(No test)");
     $text =~ s/\\\\/\\/g;
 
     $text = unmark_brackets($text);
@@ -2765,6 +2770,7 @@ sub code2latex {
 				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
+    $text = undefine_command($text, "donttest");
 
     $text = unmark_brackets($text);
 
@@ -3316,6 +3322,7 @@ sub code2Ssgm {
 				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
+    $text = undefine_command($text, "donttest");
     $text =~ s/\\\\/\\/go;
 
     $text = unmark_brackets($text);

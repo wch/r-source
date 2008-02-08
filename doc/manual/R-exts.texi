@@ -3004,13 +3004,14 @@ text}, and @ref{Cross-references}).
 Examples of how to use the function.  These are set as formatted in
 typewriter font: see @ref{Insertions} for when characters need to be
 escaped.  (Markup @code{\link} and @code{\var} will be interpreted, but
-no other.)
+no other.)  Code in this section is run by @code{example()} unless
+marked otherswise (see below).
 
 Examples are not only useful for documentation purposes, but also
 provide test code used for diagnostic checking of @R{}.  By default,
 text inside @code{\examples@{@}} will be displayed in the output of the
-help page and run by @code{R CMD check}.  You can use
-@code{\dontrun@{@}}
+help page and run by @code{example()} and by @code{R CMD check}.  You
+can use @code{\dontrun@{@}}
 @findex \dontrun
 for commands that should only be shown, but not run, and
 @code{\dontshow@{@}}
@@ -3039,6 +3040,11 @@ Data needed for making the examples executable can be obtained by random
 number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets listed by @code{data()} (see @code{?data} for more
 info).
+
+Finally, there is @code{\donttest}, used to mark code that should be run
+by @code{examples()} but not by @code{R CMD check}.  This should be
+needed only occasionally but can be used for code which might fail, for
+example in some locales.
 
 @findex \keyword
 @item \keyword@{@var{key}@}

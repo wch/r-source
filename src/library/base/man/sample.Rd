@@ -43,7 +43,7 @@ sample(x, size, replace = FALSE, prob = NULL)
 
   If \code{replace} is false, these probabilities are applied
   sequentially, that is the probability of choosing the next item is
-  proportional to the probabilities amongst the remaining items.  The number
+  proportional to the weights amongst the remaining items.  The number
   of nonzero weights must be at least \code{size} in this case.
 }
 \references{

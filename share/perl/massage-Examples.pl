@@ -149,7 +149,13 @@ foreach my $file (@Rfiles) {
     print "### * $nm\n\n";
     print "flush(stderr()); flush(stdout())\n\n";
     open(FILE, "< $file") or die "file $file cannot be opened";
-    while (<FILE>) { print $_; }
+    my $dont_test = 0;	
+    while (<FILE>) {
+	## process \donttest
+	$dont_test = 1 if /^## No test:/;
+	print $_ unless $dont_test;
+	$dont_test = 0 if /^## End\(No test\)/;
+    }
     close(FILE);
 
     if($have_par) {
