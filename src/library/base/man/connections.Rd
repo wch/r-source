@@ -290,7 +290,7 @@ isIncomplete(con)
   was opened).
 }
 \section{Fifos}{
-  Fifos default to non-blocking.  That follows Svr4 and is probably most
+  Fifos default to non-blocking.  That follows S versin 4 and is probably most
   natural, but it does have some implications.
   In particular, opening a non-blocking fifo connection for writing
   (only) will fail unless some other process is reading on the fifo.
@@ -320,12 +320,10 @@ isIncomplete(con)
   When writing to the clipboard, the output is copied to the clipboard
   only when the connection is closed or flushed.  There is a 32Kb limit
   on the text to be written to the clipboard. This can be raised by
-  using e.g. \code{file("clipboard-128")} on NT-based versions of
-  Windows, to give 128Kb.
+  using e.g. \code{file("clipboard-128")} to give 128Kb.
 
-  At least on NT-based versions of Windows the clipboard works in
-  Unicode wide characters, so encodings are likely not to work
-  as one might expect.
+  The clipboard works in Unicode wide characters, so encodings might
+  not work as one might expect.
 #endif
 #ifdef unix
   Unix users wishing to \emph{write} to one of the selections may be
@@ -340,12 +338,12 @@ isIncomplete(con)
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
-  1998).  However \R goes well beyond the Svr4 model, for example in
+  1998).  However \R goes well beyond the S model, for example in
   output text connections and URL, \code{gzfile}, \code{bzfile} and socket
   connections.
 
   The default mode in \R is \code{"r"} except for socket connections.
-  This differs from Svr4, where it is the equivalent of \code{"r+"},
+  This differs from S, where it is the equivalent of \code{"r+"},
   known as \code{"*"}.
 
   On platforms where \code{vsnprintf} does not return the needed length
@@ -421,42 +419,44 @@ if(capabilities("fifo")) {
   unlink("foo-fifo")
 }
 
-\dontrun{## Unix examples of use of pipes
+#ifdef unix
+\donttest{
+## Unix examples of use of pipes
 
 # read listing of current directory
 readLines(pipe("ls -1"))
 
 # remove trailing commas. Suppose
-\% cat data2
+\dontshow{
+writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
+"357, 497, 493, 550, 549, 467, 575, 578, 342,",
+"446, 547, 534, 495, 979, 479"), "data2_")}
+\dontrun{\% cat data2
 450, 390, 467, 654,  30, 542, 334, 432, 421,
 357, 497, 493, 550, 549, 467, 575, 578, 342,
-446, 547, 534, 495, 979, 479
+446, 547, 534, 495, 979, 479}
 # Then read this by
-scan(pipe("sed -e s/,$// data2"), sep=",")
+scan(pipe("sed -e s/,$// data2_"), sep=",")
+\dontshow{unlink{"data2_")}
 
-# convert decimal point to comma in output
+# convert decimal point to comma in output: see also write.table
 # both R strings and (probably) the shell need \ doubled
 zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
-cat(format(round(stats::rnorm(100), 4)), sep = "\n", file = zz)
+cat(format(round(stats::rnorm(48), 4)), fill=70, file = zz)
 close(zz)
-file.show("outfile", delete.file=TRUE)}
+file.show("outfile", delete.file=TRUE)
 
-\dontrun{## example for Unix machine running a finger daemon
+## example for a machine running a finger daemon
 
 con <- socketConnection(port = 79, blocking = TRUE)
 writeLines(paste(system("whoami", intern=TRUE), "\r", sep=""), con)
 gsub(" *$", "", readLines(con))
-close(con)}
-
-\dontrun{## Unix examples of use of anonymous fifo
-con <- fifo("")  # file("") would also work
-writeLines(letters, con)
-readLines(con, n=3)
-readLines(con, n=5)
 close(con)
 }
+#endif
 
-\dontrun{## two R processes communicating via non-blocking sockets
+\dontrun{
+## two R processes communicating via non-blocking sockets
 # R process 1
 con1 <- socketConnection(port = 6011, server=TRUE)
 writeLines(LETTERS, con1)
@@ -468,11 +468,10 @@ con2 <- socketConnection(Sys.info()["nodename"], port = 6011)
 readLines(con2)
 while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
 close(con2)
-}
 
-\dontrun{## examples of use of encodings
+## examples of use of encodings
 cat(x, file = file("foo", "w", encoding="UTF-8"))
-# read a 'Windows Unicode' file including names
+# read a 'Windows Unicode' file including personal names
 A <- read.table(file("students", encoding="UCS-2LE"))
 }}
 \keyword{file}
