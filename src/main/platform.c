@@ -1108,10 +1108,10 @@ static int R_unlink(char *name, int recursive)
 		    } else
 			ans += (unlink(p) == 0) ? 0 : 1;
 		}
+		closedir(dir);
 	    } else { /* we were unable to read a dir */
 		ans++;
 	    }
-	    closedir(dir);
 	    ans += (R_rmdir(name) == 0) ? 0 : 1;
 	    return ans;
 	}
