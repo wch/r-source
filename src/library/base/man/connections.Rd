@@ -437,7 +437,7 @@ writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 446, 547, 534, 495, 979, 479}
 # Then read this by
 scan(pipe("sed -e s/,$// data2_"), sep=",")
-\dontshow{unlink{"data2_")}
+\dontshow{unlink("data2_")}
 
 # convert decimal point to comma in output: see also write.table
 # both R strings and (probably) the shell need \ doubled
