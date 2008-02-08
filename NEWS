@@ -422,6 +422,10 @@ BUG FIXES
 
     o	src/extra/pcre has been updated to PCRE 7.6 (bugfix release).
 
+    o	unlink(..., recursive=TRUE) no longer crashes if a directory
+	cannot be opened.
+
+
 
 
 		CHANGES IN R VERSION 2.6.2
