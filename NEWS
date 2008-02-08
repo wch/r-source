@@ -414,6 +414,16 @@ BUG FIXES
 	**************************************************
 
 
+
+		CHANGES IN R VERSION 2.6.2 patched
+
+
+BUG FIXES
+
+    o	src/extra/pcre has been updated to PCRE 7.6 (bugfix release).
+
+
+
 		CHANGES IN R VERSION 2.6.2
 
 
