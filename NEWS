@@ -582,6 +582,8 @@ BUG FIXES
 
     o	Setting par(col.main=) also set par("col") to the same colour.
 
+    o	Anonymous fifos were broken (again).
+
 
 
 		CHANGES IN R VERSION 2.6.1

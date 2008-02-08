@@ -781,10 +781,6 @@ static Rboolean fifo_open(Rconnection con)
                 warning(_("cannot create fifo '%s'"), name);
 #endif
 	    }
-	    if(temp) {
-		unlink(name);
-		free((char *) name); /* only free if allocated by R_tmpnam */
-	    }
 	    if(res) return FALSE;
 	} else {
 	    if(!(sb.st_mode & S_IFIFO)) {
@@ -804,6 +800,10 @@ static Rboolean fifo_open(Rconnection con)
 	if(errno == ENXIO) warning(_("fifo '%s' is not ready"), name);
 	else warning(_("cannot open fifo '%s'"), name);
 	return FALSE;
+    }
+    if(temp) {
+	unlink(name);
+	free((char *) name); /* allocated by R_tmpnam */
     }
 
     this->fd = fd;
