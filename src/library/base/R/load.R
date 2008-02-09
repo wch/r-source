@@ -23,7 +23,7 @@ load <-
         ## is compressed or not; zlib works either way.
         con <- gzfile(file)
         on.exit(close(con))
-        magic <- readChar(con, 5)
+        suppressWarnings(magic <- readChar(con, 5))
         if (regexpr("RD[AX]2\n", magic) == -1) {
             ## a check while we still know the args
             if(regexpr("RD[ABX][12]\r", magic) == 1)
