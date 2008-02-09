@@ -2372,6 +2372,7 @@ structure by code very similar to
 @example
     pGEDevDesc gdd;
 
+    R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS @{
         pDevDesc dev;

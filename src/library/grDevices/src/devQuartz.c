@@ -865,6 +865,7 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create) {
     if (!q_create || !par) return -3;
     {
         char    *vmax = vmaxget();
+	R_GE_checkVersionOrDie(R_GE_version);
         R_CheckDeviceAvailable();
         {
 	    /* FIXME: check this allocation */
@@ -960,6 +961,7 @@ SEXP Quartz(SEXP args) {
     bg        = 0xffffffff;
     quartzpos = 1;
     
+    R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev       = calloc(1,sizeof(NewDevDesc));

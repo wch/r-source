@@ -3161,6 +3161,7 @@ SEXP devga(SEXP args)
 	error(_("invalid value of 'title' in devWindows"));
     title = CHAR(STRING_ELT(sc, 0));
     
+    R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;

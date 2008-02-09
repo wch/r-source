@@ -504,18 +504,17 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 
   /* add the graphics device to the set of drivers */
   if(!lDD) {
-    R_Proxy_Graphics_CB* lDev =
-      (R_Proxy_Graphics_CB*) calloc (1,sizeof (R_Proxy_Graphics_CB));
+      R_GE_checkVersionOrDie(R_GE_version);
+      R_CheckDeviceAvailable();
+      BEGIN_SUSPEND_INTERRUPTS {
+	  R_Proxy_Graphics_CB* lDev =
+	      (R_Proxy_Graphics_CB*) calloc (1, sizeof(R_Proxy_Graphics_CB));
 
-    R_Proxy_Graphics_Driver_CB (lDev,
-				"ActiveXDevice 1",
-				100.0,
-				100.0,
-				10.0,
-				0,
-				0);
-    lDD = GEcreateDevDesc(DEVDESC(lDev));
-    GEaddDevice2(lDD,"ActiveXDevice 1" );
+	  R_Proxy_Graphics_Driver_CB (lDev, "ActiveXDevice 1",
+				      100.0, 100.0, 10.0, 0, 0);
+	  lDD = GEcreateDevDesc(DEVDESC(lDev));
+	  GEaddDevice2(lDD, "ActiveXDevice 1" );
+      } END_SUSPEND_INTERRUPTS;
   }
   return SC_PROXY_OK;
 }
