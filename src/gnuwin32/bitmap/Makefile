@@ -39,8 +39,8 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -I../../extra/zlib -I./libpng -I$(JPEGDIR) -I../../include
 CFLAGS=-O3 -Wall -pedantic 
 
-../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a ../../extra/zlib/libz.a
-	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR
+../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
+	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR -lRzlib
 
 clean:
 	$(RM) *.o *.a *.dll *.def *~ \#*\#

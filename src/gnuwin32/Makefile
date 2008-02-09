@@ -54,7 +54,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp -liconv -lcomctl32 -lversion $(LIBEXTRAS)
+R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -liconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
@@ -66,7 +66,7 @@ ifeq ($(strip $(WIN)),32)
 endif
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
-   ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
+   ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a
 
 R_PKGS0 = $(filter-out base tools, $(R_PKGS_BASE))

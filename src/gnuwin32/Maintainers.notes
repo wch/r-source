@@ -178,14 +178,6 @@ R_cumsum
 
 for package DCluster
 
-deflate
-deflateEnd
-deflateInit_
-inflate
-inflateEnd
-inflateInit_
-
-for package GRASS
 
 fft_factor
 fft_work

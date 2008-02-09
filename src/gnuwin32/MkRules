@@ -145,6 +145,7 @@ endif
 BLAS_LIBS=-L$(RHOME)/$(IMPDIR) -lRblas
 LAPACK_LIBS=-L$(RHOME)/$(IMPDIR) -lRlapack
 GRAPHAPP_LIB=-lRgraphapp
+ZLIB_LIBS=-lRzlib
 
 AR=$(BINPREF)ar
 AS=$(BINPREF)as
