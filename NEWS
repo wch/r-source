@@ -425,6 +425,10 @@ BUG FIXES
     o	unlink(..., recursive=TRUE) no longer crashes if a directory
 	cannot be opened.
 
+    o	Loading in 2.6.2 a saved workspace could give an unimportant
+	warning in a non-UTF-8 multibyte locale (in particular a CJK
+	locale on Windows) which is now suppressed.
+
 
 
 
