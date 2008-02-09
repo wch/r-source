@@ -2462,16 +2462,16 @@ locale, @code{c} represents a Unicode point (except in the symbol font).
 So the function needs to include code like
 
 @example
-    Rboolean Unicode = mbcslocale;
+    Rboolean Unicode = mbcslocale && (gc->fontface != 5);
     if (c < 0) @{ Unicode = TRUE; c = -c; @} 
-    if(Unicode && gc->fontface != 5) UniCharMetric(c, ...);
-    else CharMetric(c, ...);
+    if(Unicode) UniCharMetric(c, ...); else CharMetric(c, ...);
 @end example
 
 @noindent
 In addition, if device capability @code{hasTextUTF8} (see below) is
 true, Unicode points will be passed as negative values: the code snippet
-above shows how to handle this.
+above shows how to handle this.  (This applies to the symbol font only
+if device capability @code{wantSymbolUTF8} is true.)
 
 If possible, the graphics device should handle clipping of text.  It
 indicates this by the structure element @code{canClip} which if true
@@ -2497,9 +2497,7 @@ the symbol font.  Second, Unicode points will be passed to the
 @code{metricInfo} callback as negative integers.  If your device would
 prefer to have UTF-8-encoded symbols, define @code{wantSymbolUTF8} as
 well as @code{hasTextUTF8}.  In that case text in the symbol font is
-sent to @code{textUTF8} and @code{strWidthUTF8} (but @code{metricInfo}
-is still sent characters in the symbol font as positive integers
-indicating the position in the Adobe Symbol encoding).
+sent to @code{textUTF8} and @code{strWidthUTF8}.
 
 Some devices can produce high-quality rotated text, but those based on
 bitmaps often cannot.  Those which can should set
