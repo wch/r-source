@@ -257,6 +257,7 @@ format.AsIs <- function(x, width = 12, ...)
     }
     ## AsIs might be around a matrix, which is not a class.
     dim(rvec) <- dim(x)
+    dimnames(rvec) <- dimnames(x)
     format.default(rvec, justify = "right")
 }
 

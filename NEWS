@@ -405,6 +405,10 @@ BUG FIXES
 	VIRTUAL, as was intended but confused by having an empty S4
 	object as prototype. ## backed out temporarily ##
 
+    o   format.AsIs() discarded dimnames, causing dataframes with matrix
+        variables to be printed without using the column names,  unlike 
+        what happens in S-PLUS (Tim Hesterberg, PR#10730).
+
 
 
 	**************************************************
