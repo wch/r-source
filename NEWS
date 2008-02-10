@@ -18,7 +18,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	The default width and height for pdf() have been changed to
 	7 (inches) to match the screen devices.
 
-    o	Packages which include graphics devices should be re-installed
+    o	Packages which include graphics devices need to be re-installed
 	for this version of R.
 
 
@@ -338,8 +338,6 @@ C-LEVEL FACILITIES
 	points.  Graphics devices no longer need to make use of (via
 	casts) DevDesc * pointers and much cleaner code can now be
 	written without them.
-
-    o	Use of the headers Rdevices.h and Rgraphics.h is now deprecated.
 
 
 BUG FIXES
