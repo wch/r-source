@@ -70,6 +70,7 @@ formula.character <- function(x, env = parent.frame(), ...)
 print.formula <- function(x, ...) {
     attr(x, ".Environment") <- NULL
     print.default(unclass(x), ...)
+    invisible(x)
 }
 
 "[.formula" <- function(x,i) {
@@ -103,7 +104,10 @@ terms.default <- function(x, ...) {
 }
 
 terms.terms <- function(x, ...) x
-print.terms <- function(x, ...) print.default(unclass(x))
+print.terms <- function(x, ...) { 
+    print.default(unclass(x))
+    invisible(x)
+}
 
 ## moved from base/R/labels.R
 labels.terms <- function(object, ...) attr(object, "term.labels")

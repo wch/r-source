@@ -199,6 +199,7 @@ print.hclust <- function(x, ...)
         cat("Distance         :", x$dist.method, "\n")
     cat("Number of objects:", length(x$height)+1, "\n")
     cat("\n")
+    invisible(x)
 }
 
 cophenetic <-

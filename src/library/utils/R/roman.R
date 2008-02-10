@@ -44,7 +44,7 @@ print.roman <-
 function(x, ...)
 {
     print(noquote(as.character(x)))
-    x
+    invisible(x)
 }
 "[.roman" <-
 function(x, i)

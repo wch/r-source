@@ -133,6 +133,7 @@ print.vignette <- function(x, ...){
         warning(gettextf("vignette '%s' has no PDF", x$topic),
                 call. = FALSE, domain = NA)
     }
+    invisible(x)
 }
 
 edit.vignette <- function(name, ...){

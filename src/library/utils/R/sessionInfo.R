@@ -69,7 +69,7 @@ print.sessionInfo <- function(x, ...)
         cat("\nloaded via a namespace (and not attached):\n")
         print(mkLabel(x, "loadedOnly"), quote=FALSE)
     }
-    x
+    invisible(x)
 }
 
 toLatex.sessionInfo <- function(object, ...)

@@ -323,6 +323,7 @@ print.HoltWinters <- function (x, ...)
 
     cat ("Coefficients:\n")
     print(t(t(x$coefficients)))
+    invisible(x)
 }
 
 # decompose additive/multiplicative series into trend/seasonal figures/noise

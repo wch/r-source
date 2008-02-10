@@ -89,6 +89,8 @@ print.citation <- function(x, bibtex=TRUE, ...){
         cat("\n")
         writeLines(strwrap(attr(x, "footer")))
     }
+    
+    invisible(x)
 }
 
 print.citationList <- function(x, bibtex=length(x)==1, ...)
@@ -106,6 +108,7 @@ print.citationList <- function(x, bibtex=length(x)==1, ...)
         writeLines(strwrap(attr(x, "footer")))
     }
     cat("\n")
+    invisible(x)
 }
 
 ###**********************************************************

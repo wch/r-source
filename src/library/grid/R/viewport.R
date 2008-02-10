@@ -147,6 +147,7 @@ as.character.vpTree <- function(x, ...) {
 
 print.viewport <- function(x, ...) {
   cat(as.character(x), "\n")
+  invisible(x)
 }
 
 width.details.viewport <- function(x) {
@@ -342,6 +343,7 @@ as.character.path <- function(x, ...) {
 
 print.path <- function(x, ...) {
   cat(as.character(x), "\n")
+  invisible(x)
 }
 
 "[.vpPath" <- function(x, index, ...) {

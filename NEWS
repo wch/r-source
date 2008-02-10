@@ -21,6 +21,9 @@ BUG FIXES
 	warning in a non-UTF-8 multibyte locale (in particular a CJK
 	locale on Windows) which is now suppressed.
 
+    o	print() methods are more consistent in returning the original
+	argument invisibly.
+
 
 
 
