@@ -41,10 +41,9 @@
 #  define R_USE_PROTOTYPES 0
 # else
 #  define R_USE_PROTOTYPES 1
-/* This looks recursive, but the guards will force
- * GraphicsEngine.h and then this file (and no more)
- */
-#  include <R_ext/GraphicsEngine.h> /* needed for pGEcontext */
+#  ifndef R_GRAPHICSENGINE_H_
+#   error R_ext/GraphicsEngine.h must be included first, and includes this header
+#  endif
 # endif
 #endif
 
