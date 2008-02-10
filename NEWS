@@ -424,8 +424,8 @@ BUG FIXES
 
     o	src/extra/pcre has been updated to PCRE 7.6 (bugfix release).
 
-    o	unlink(..., recursive=TRUE) no longer crashes if a directory
-	cannot be opened.
+    o	unlink(..., recursive=TRUE) no longer crashes on some platforms
+	if a directory cannot be opened.
 
     o	Loading in 2.6.2 a saved workspace could give an unimportant
 	warning in a non-UTF-8 multibyte locale (in particular a CJK
@@ -433,6 +433,10 @@ BUG FIXES
 
     o	print() methods are more consistent in returning the original
 	argument invisibly.
+
+    o	Using the X11 data editor (e.g. via edit(), fix() or View())
+	could crash if the 'End' key was used and all the columns
+	would have fitted into the window.
 
 
 
