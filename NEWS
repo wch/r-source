@@ -258,6 +258,10 @@ NEW FEATURES
 	example code that should be run by example() but not tested
 	(e.g. because it might fail in some locales).
 
+    o	strwidth() and strheight() gain 'font' and 'vfont' arguments and
+	accept in-line pars such as 'family' in the same way as text()
+	does.  (PR#776)
+
 
 DEPRECATED & DEFUNCT
 

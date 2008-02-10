@@ -14,11 +14,24 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-strwidth <- function(s, units="user", cex=NULL)
+strwidth <-
+    function(s, units="user", cex=NULL, font = NULL, vfont = NULL,...)
+{
+    if (!is.null(vfont))
+        vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface),
+                   fontindex= pmatch(vfont[2], Hershey$fontindex))
     .Internal(strwidth(as.graphicsAnnot(s),
-                       pmatch(units, c("user", "figure", "inches")), cex))
+                       pmatch(units, c("user", "figure", "inches")),
+                       cex, font, vfont, ...))
+}
 
-strheight <- function(s, units="user", cex=NULL)
+strheight <-
+    function(s, units="user", cex=NULL, font = NULL, vfont = NULL, ...)
+{
+    if (!is.null(vfont))
+        vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface),
+                   fontindex= pmatch(vfont[2], Hershey$fontindex))
     .Internal(strheight(as.graphicsAnnot(s),
-                        pmatch(units, c("user", "figure", "inches")), cex))
-
+                        pmatch(units, c("user", "figure", "inches")),
+                        cex, font, vfont, ...))
+}
