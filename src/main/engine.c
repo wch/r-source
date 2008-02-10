@@ -1350,20 +1350,23 @@ void GERect(double x0, double y0, double x1, double y1,
    1 means totally inside clip region
    2 means intersects clip region */
 static int clipTextCode(double x, double y, const char *str, int enc,
-			double rot, double hadj,
+			double width, double height, double rot, double hadj,
 			pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
+    double length, theta2;
     double angle = DEG2RAD * rot;
     double theta1 = M_PI/2 - angle;
-    double width = GEStrWidth(str, enc, gc, dd);
-    double height = GEStrHeight(str, enc, gc, dd);
+
+    if (!R_FINITE(width)) width = GEStrWidth(str, enc, gc, dd);
+    if (!R_FINITE(height)) height = GEStrHeight(str, enc, gc, dd);
 #ifdef HAVE_HYPOT
-    double length = hypot(width, height);
+    length = hypot(width, height);
 #else
-    double length = pythag(width, height);
+    length = pythag(width, height);
 #endif
-    double theta2 = angle + atan2(height, width);
+    theta2 = angle + atan2(height, width);
+    
     x -= hadj*width*cos(angle);
     y -= hadj*width*sin(angle);
     x0 = x + height*cos(theta1);
@@ -1382,11 +1385,11 @@ static int clipTextCode(double x, double y, const char *str, int enc,
 }
 
 static void clipText(double x, double y, const char *str, int enc,
-		     double rot, double hadj,
+		     double width, double height, double rot, double hadj,
 		     pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
-    int result = clipTextCode(x, y, str, enc, rot, hadj, gc,
-			      toDevice, dd);
+    int result = clipTextCode(x, y, str, enc, width, height, rot, hadj,
+			      gc, toDevice, dd);
     void (*textfn)(double x, double y, const char *str, double rot, 
 		   double hadj, pGEcontext gc, pDevDesc dd);
     /* This guards against uninitialized values, e.g. devices installed
@@ -1587,6 +1590,7 @@ void GEText(double x, double y, const char * const str, int enc,
 	    sin_rot = sin(sin_rot);
 	    for(s = str; ; s++) {
 		if (*s == '\n' || *s == '\0') {
+		    double w = NA_REAL, h = NA_REAL;
 		    const char *str;
 		    *sb = '\0';
 		    str = reEnc(sbuf, enc, enc2, 2);
@@ -1617,10 +1621,10 @@ void GEText(double x, double y, const char * const str, int enc,
 			yoff = y;
 		    }
 		    /* now determine bottom-left for THIS line */
-		    if(xc != 0.0 || yc != 0) {
-			double width, height = 0 /* -Wall */;
-			width = fromDeviceWidth(GEStrWidth(str, enc2, gc, dd),
-						GE_INCHES, dd);
+		    if(xc != 0.0 || yc != 0.0) {
+			double width, height = 0.0 /* -Wall */;
+			w  = GEStrWidth(str, enc2, gc, dd);
+			width = fromDeviceWidth(w, GE_INCHES, dd);
 			if (!R_FINITE(xc))
 			    xc = 0.5;
 			if (!R_FINITE(yc)) {
@@ -1634,8 +1638,8 @@ void GEText(double x, double y, const char * const str, int enc,
 				noMetricInfo = (h == 0 && d == 0 && w == 0) ? 1 : 0;
 			    }
 			    if (n > 1 || noMetricInfo) {
-				height = fromDeviceHeight(GEStrHeight(str, enc2, gc, dd),
-							  GE_INCHES, dd);
+				h = GEStrHeight(str, enc2, gc, dd);
+				height = fromDeviceHeight(h, GE_INCHES, dd);
 				yc = dd->dev->yCharOffset;
 			    } else {
 				double maxHeight = 0.0;
@@ -1722,8 +1726,8 @@ void GEText(double x, double y, const char * const str, int enc,
 				yc = 0.5;
 			    }
 			} else {
-			    height = fromDeviceHeight(GEStrHeight(str, CE_NATIVE, gc, dd),
-						      GE_INCHES, dd);
+			    h = GEStrHeight(str, CE_NATIVE, gc, dd);
+			    height = fromDeviceHeight(h, GE_INCHES, dd);
 			}
 			if (dd->dev->canHAdj == 2) hadj = xc;
 			else if (dd->dev->canHAdj == 1) {
@@ -1743,8 +1747,8 @@ void GEText(double x, double y, const char * const str, int enc,
 		     */
 		    xleft = toDeviceX(xleft, GE_INCHES, dd);
 		    ybottom = toDeviceY(ybottom, GE_INCHES, dd);
-		    clipText(xleft, ybottom, str, enc2, rot, hadj, gc,
-			     dd->dev->canClip, dd);
+		    clipText(xleft, ybottom, str, enc2, w, h, rot, hadj,
+			     gc, dd->dev->canClip, dd);
 		    sb = sbuf;
 		    i++;
 		}
@@ -2237,9 +2241,10 @@ void GEPretty(double *lo, double *up, int *ndiv)
  ****************************************************************
  */
 /*
-  We need to decide what c is.  In an 8-bit locale it is char,
-  otherwise it had better be wchar_t (and the interpretation seems
-  to be UCS-2/4).  Something like uint32 would be better.
+  If c is negative, -c is a Unicode point.
+  In a MBCS locale, values > 127 are Unicode points (and so really are
+  values 32 ... 126, 127 being unused).
+  In a SBCS locale, values 32 ... 255 are the characters in the encoding.
  */
 void GEMetricInfo(int c, pGEcontext gc,
 		  double *ascent, double *descent, double *width,
@@ -2254,16 +2259,34 @@ void GEMetricInfo(int c, pGEcontext gc,
 	 * It should be straightforward to figure this out, but
 	 * just haven't got around to it yet
 	 */
-	*ascent = 0;
-	*descent = 0;
-	*width = 0;
-    } else
-#ifdef SUPPORT_MBCS
-	if(mbcslocale)
-	    dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
-	else
-#endif
-	    dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
+	*ascent = 0.0;
+	*descent = 0.0;
+	*width = 0.0;
+    } else {
+	/* c = 'M' gets called very often, usually to see if there are
+	   any char metrics available but also in plotmath.  So we
+	   cache that value.  Depends on the context through cex, ps,
+	   fontface, family, and also on the device.
+	*/
+	static pGEDevDesc last_dd= NULL;
+	static int last_face = 1;
+	static double last_cex = 0.0, last_ps = 0.0, 
+	    a = 0.0 , d = 0.0, w = 0.0;
+	static char last_family[201];
+	if (dd == last_dd && abs(c) == 77 
+	    && gc->cex == last_cex && gc->ps == last_ps 
+	    && gc->fontface == last_face 
+	    && streql(gc->fontfamily, last_family)) {
+	    *ascent = a; *descent = d; *width = w; return;
+	}
+	dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
+	if(abs(c) == 77) {
+	    last_dd = dd;  last_cex = gc->cex; last_ps = gc->ps;
+	    last_face = gc->fontface;
+	    strcpy(last_family, gc->fontfamily);
+	    a = *ascent; d = *descent; w = *width;
+	}
+    }
 }
 
 /****************************************************************
@@ -2303,12 +2326,6 @@ double GEStrWidth(const char *str, int enc, pGEcontext gc, pGEDevDesc dd)
 		    const char *str;
 		    *sb = '\0';
 		    str = reEnc(sbuf, enc, enc2, 2);
-		    /*
-		     * FIXME:  Pass on the fontfamily, fontface, and
-		     * lineheight so that the device can use them
-		     * if it wants to.
-		     * NOTE: fontface corresponds to old "font"
-		     */
 		    if(dd->dev->hasTextUTF8 == TRUE && enc2 == CE_UTF8)
 			wdash = dd->dev->strWidthUTF8(str, gc, dd->dev);
 		    else
