@@ -59,7 +59,7 @@ print.browseVignettes <- function(x, ...)
     if (length(x) == 0) {
         message("No vignettes found by ",
                 paste(deparse(attr(x, "call")), collapse=" "))
-        return()
+        return(invisible(x))
     }
     oneLink <- function(s)
     {
@@ -113,6 +113,7 @@ print.browseVignettes <- function(x, ...)
     ## browseURL(URLencode(file))
     browseURL(sprintf("file://%s", file))
     ## browseURL(file)
+    invisible(x)
 }
 
 
