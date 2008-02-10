@@ -162,7 +162,7 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-	    gdd = GEGetDevice(devNum);
+	    gdd = GEgetDevice(devNum);
 	    registerOne(gdd, numGraphicsSystems, cb);
 	    devNum = nextDevice(devNum);
 	}
@@ -198,7 +198,7 @@ void GEunregisterSystem(int registerIndex)
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-	    gdd = GEGetDevice(devNum);
+	    gdd = GEgetDevice(devNum);
 	    unregisterOne(gdd, registerIndex);
 	    devNum = nextDevice(devNum);
 	}
@@ -2561,7 +2561,7 @@ void GEplayDisplayList(pGEDevDesc dd)
 void GEcopyDisplayList(int fromDevice)
 {
     SEXP tmp;
-    pGEDevDesc dd = GEcurrentDevice(), gd = GEGetDevice(fromDevice);
+    pGEDevDesc dd = GEcurrentDevice(), gd = GEgetDevice(fromDevice);
     int i;
     
     tmp = gd->displayList;
@@ -2785,7 +2785,7 @@ void GEonExit()
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-  	    gd = GEGetDevice(devNum);
+  	    gd = GEgetDevice(devNum);
   	    gd->recordGraphics = TRUE;
   	    dd = gd->dev;
   	    if (dd->onExit) dd->onExit(dd);

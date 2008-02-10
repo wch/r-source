@@ -168,7 +168,7 @@ pGEDev Rf_CurrentDevice(void)
     return (pGEDev) GEcurrentDevice();
 }
 
-pGEDevDesc GEGetDevice(int i)
+pGEDevDesc GEgetDevice(int i)
 {
     return R_Devices[i];
 }

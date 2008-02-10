@@ -224,7 +224,7 @@ void  QuartzDevice_SetAntialias(QuartzDesc_t desc,int aa) {
 }
 
 void QuartzDevice_Kill(QuartzDesc_t desc) {
-    GEDevDesc *dd=GEGetDevice(ndevNumber(((QuartzDesc*)desc)->dev));
+    GEDevDesc *dd = GEgetDevice(ndevNumber(((QuartzDesc*)desc)->dev));
     if (dd) GEkillDevice(dd);
 }
 
@@ -264,7 +264,7 @@ void QuartzDevice_ReplayDisplayList(QuartzDesc_t desc) {
 
 void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
     QuartzDesc *qd = (QuartzDesc*)desc;
-    GEDevDesc *gd  = GEGetDevice(ndevNumber(qd->dev));
+    GEDevDesc *gd  = GEgetDevice(ndevNumber(qd->dev));
 	SEXP snap;
 	if (last)
 		snap = desc2GEDesc(qd->dev)->savedSnapshot;
@@ -277,7 +277,7 @@ void* QuartzDevice_GetSnapshot(QuartzDesc_t desc, int last) {
 
 void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc,void* snap) {
     QuartzDesc *qd = (QuartzDesc*)desc;
-    GEDevDesc *gd  = GEGetDevice(ndevNumber(qd->dev));
+    GEDevDesc *gd  = GEgetDevice(ndevNumber(qd->dev));
     if(NULL == snap) return; /*Aw, hell no!*/
     PROTECT((SEXP)snap);
     if(R_NilValue == VECTOR_ELT(snap,0)) 

@@ -74,7 +74,7 @@
 #endif
 
 #include <Defn.h>
-#include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEGetDevice */
+#include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEgetDevice */
 #include <R_ext/Rdynload.h>
 
 #if defined(Win32) && defined(LEA_MALLOC)
@@ -1277,7 +1277,7 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(R_CurrentExpr);
 
     for (i = 0; i < R_MaxDevices; i++) {   /* Device display lists */
-	pGEDevDesc gdd = GEGetDevice(i);
+	pGEDevDesc gdd = GEgetDevice(i);
 	if (gdd) {
 	    FORWARD_NODE(gdd->displayList);
 	    FORWARD_NODE(gdd->savedSnapshot);

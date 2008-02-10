@@ -44,7 +44,7 @@ extern "C" {
  * Version 3:  R_GE_str2col() added to API.
  * Version 4:  UTF-8 text hooks, useRotatedTextInContour,
  *             add newFrameConfrim() to NewDevDesc.
- *             New API: GEaddDevice[2] GEGetDevice, GEkillDevice,
+ *             New API: GEaddDevice[2] GEgetDevice, GEkillDevice,
  *             ndevNumber.
  * Version 5:  Clean up 1.4.0/2.0.0 changes!
  *             Remove newDevStruct from GEDevDesc and NewDevDesc.
@@ -260,7 +260,7 @@ typedef GEDevDesc* pGEDevDesc;
 /* map NewDevDesc to enclosing GEDevDesc */
 pGEDevDesc desc2GEDesc(pDevDesc dd);
 int GEdeviceNumber(pGEDevDesc);
-pGEDevDesc GEGetDevice(int);
+pGEDevDesc GEgetDevice(int);
 void GEaddDevice(pGEDevDesc);
 void GEaddDevice2(pGEDevDesc, const char *);
 void GEkillDevice(pGEDevDesc);

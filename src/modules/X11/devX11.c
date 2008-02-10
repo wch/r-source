@@ -619,7 +619,7 @@ static void handleEvent(XEvent event)
 	 */
 	devNum = ndevNumber(dd);
 	if (devNum > 0) {
-	    pGEDevDesc gdd = GEGetDevice(devNum);
+	    pGEDevDesc gdd = GEgetDevice(devNum);
 	    /* avoid replying a device list until something has been drawn */
 	    if(gdd->dirty) GEplayDisplayList(gdd);
 	}
@@ -2319,7 +2319,7 @@ Rboolean in_R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 	  strncmp(CHAR(STRING_ELT(dev, 0)), "X11", 3) == 0))
 	return FALSE;
     else {
-	pX11Desc xd = GEGetDevice(d)->dev->deviceSpecific;
+	pX11Desc xd = GEgetDevice(d)->dev->deviceSpecific;
 
 	*((XImage**) pximage) =
             XGetImage(display, xd->window, 0, 0,

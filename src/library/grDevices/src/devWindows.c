@@ -2885,7 +2885,7 @@ SEXP savePlot(SEXP args)
     device = asInteger(CAR(args));
     if(device < 1 || device > NumDevices())
 	error(_("invalid device number in 'savePlot'"));
-    dd = GEGetDevice(device - 1)->dev;
+    dd = GEgetDevice(device - 1)->dev;
     if(!dd) error(_("invalid device in 'savePlot'"));
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
