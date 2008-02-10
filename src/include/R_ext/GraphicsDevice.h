@@ -417,6 +417,7 @@ struct _NewDevDesc {
 #else
     void (*newPage)();
 #endif
+#ifdef OLD
     /*
      * device_Open is not called directly by the
      * graphics engine;  it is only called from
@@ -439,6 +440,7 @@ struct _NewDevDesc {
      *
      */
     Rboolean (*open)(/* args are device-specific */);
+#endif
     /*
      * device_Polygon should have the side-effect that a
      * polygon is drawn using the given x and y values

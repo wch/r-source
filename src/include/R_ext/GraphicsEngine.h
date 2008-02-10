@@ -43,13 +43,21 @@ extern "C" {
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  * Version 3:  R_GE_str2col() added to API.
  * Version 4:  UTF-8 text hooks, useRotatedTextInContour,
- *             newFrameConfirm() to device interface.
- *             Remove dot(), hold(), open() from NewDevDesc.
- *             Add newFrameConfrim() to NewDevDesc.
+ *             add newFrameConfrim() to NewDevDesc.
+ *             New API: GEaddDevice[2] GEGetDevice, GEkillDevice,
+ *             ndevNumber.
+ * Version 5:  Clean up 1.4.0/2.0.0 changes!
  *             Remove newDevStruct from GEDevDesc and NewDevDesc.
+ *             Remove asp, dot(), hold(), open() from NewDevDesc.
+ *             Move displayList, DLlastElt, savedSnapshot from
+ *             NewDevDesc to GEDevDesc.
  */
 
+#ifdef OLD
 #define R_GE_version 4
+#else
+#define R_GE_version 5
+#endif
 
 int R_GE_getVersion(void);
 
