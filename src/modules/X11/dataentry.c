@@ -1698,7 +1698,7 @@ static void doSpreadKey(DEstruct DE, int key, DEEvent * event)
 	    w += BOXW(j);
 	    if(w > DE->fullwindowWidth) break;
 	}
-	jumpwin(DE, min(j+1, DE->xmaxused), max(i, 1));
+	jumpwin(DE, min(1 + max(j, 0), DE->xmaxused), max(i, 1));
 	downlightrect(DE);
 	DE->crow = DE->ymaxused - DE->rowmin + 1;
 	DE->ccol = DE->xmaxused - DE->colmin + 1;
