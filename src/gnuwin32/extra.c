@@ -1435,6 +1435,211 @@ char *getDLLVersion(void)
     return (DLLversion);
 }
 
+#include <winreg.h>
+
+const static struct {
+    const char * reg;
+    HKEY key;
+} KeyTable[] = {
+    { "HCC", HKEY_CURRENT_CONFIG },
+    { "HCR", HKEY_CLASSES_ROOT },
+    { "HCU", HKEY_CURRENT_USER },
+    { "HLM", HKEY_LOCAL_MACHINE },
+    { "HPD", HKEY_PERFORMANCE_DATA },
+    { "HU" , HKEY_USERS },
+    {NULL, NULL}
+};
+    
+const char *formatError(DWORD res)
+{
+    static char buf[1000], *p;
+    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		  NULL, res, 
+		  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+		  buf, 1000, NULL);
+    p = buf+strlen(buf) -1;
+    if(*p == '\n') *p = '\0';
+    p = buf+strlen(buf) -1;
+    if(*p == '\r') *p = '\0';
+    p = buf+strlen(buf) -1;
+    if(*p == '.') *p = '\0';
+    return buf;
+}
+
+
+static HKEY find_hive(const char *hkey)
+{
+    int i;
+    for(i = 0;  KeyTable[i].reg; i++)
+	if(!strcmp(hkey, KeyTable[i].reg)) return KeyTable[i].key;
+    error(_("invalid '%s' value"),  "hive");
+    return HKEY_LOCAL_MACHINE; /* -Wall */
+}
+
+static SEXP mkCharUcs(wchar_t *name)
+{
+    int n = wcslen(name), N = 3*n+1;
+    char *buf;
+    buf = alloca(N);
+    R_CheckStack();    
+    wcstombs(buf, name, N); buf[N-1] = '\0';
+    return mkCharEnc(buf, UTF8_MASK);
+}
+
+static SEXP readRegistryKey1(HKEY hkey, const wchar_t *name)
+{
+    SEXP ans = R_NilValue;
+    LONG res;
+    DWORD type, size0 = 10000, size = size0;
+    BYTE data[10000], *d = data;
+
+    res = RegQueryValueExW(hkey, name, NULL, &type, d, &size);
+    while (res == ERROR_MORE_DATA) {
+	size0 *= 10;
+	size = size0;
+	d = (BYTE *) R_alloc(size0, sizeof(char));
+	res = RegQueryValueExW(hkey, name, NULL, &type, d, &size);
+    }
+    if (res != ERROR_SUCCESS) return ans;
+
+    switch(type) {
+    case REG_NONE:
+	/* NULL */
+	break;
+    case REG_DWORD:
+	ans = allocVector(INTSXP, 1);
+	memcpy(INTEGER(ans), d, 4);
+	break;
+    case REG_DWORD_BIG_ENDIAN:
+    {
+	BYTE d4[4];
+	int i;
+	for(i = 0; i < 4; i++) d4[3-i] = d[i];
+	ans = allocVector(INTSXP, 1);
+	memcpy(INTEGER(ans), d4, 4);
+	break;
+    }
+    case REG_SZ:
+    case REG_EXPAND_SZ:
+    {
+	PROTECT(ans = allocVector(STRSXP, 1));
+	SET_STRING_ELT(ans, 0, mkCharUcs((wchar_t *)d));
+	UNPROTECT(1);
+	break;
+    }
+    case REG_BINARY:
+	ans = allocVector(RAWSXP, size);
+	memcpy(RAW(ans), d, size);
+	break;
+    case REG_MULTI_SZ:
+    {
+	int i, n;
+	wchar_t *p = (wchar_t *)d;
+	for (n = 0; *p; n++) { for(; *p; p++) {}; p++; }
+	PROTECT(ans = allocVector(STRSXP, n));
+	for (i = 0, p = (wchar_t *)d; i < n; i++) {
+	    SET_STRING_ELT(ans, i, mkCharUcs(p));
+	    for(; *p; p++) {};
+	    p++;
+	}
+	UNPROTECT(1);
+	break;
+    }
+    case REG_LINK:
+	warning("unhandled key type %s\n", "REG_LINK");
+	ans = mkString("<REG_LINK>");
+	break;
+    case REG_RESOURCE_LIST:
+	warning("unhandled key type %s\n", "REG_RESOURCE_LIST");
+	ans = mkString("<REG_RESOURCE_LIST>");
+	break;
+    default:
+	warning("unhandled key type %d\n", type);
+    }
+    return ans;
+}
+
+static SEXP readRegistryKey(HKEY hkey, int depth)
+{
+    int i, k = 0, size0;
+    SEXP ans, nm, tmp;
+    DWORD res, nsubkeys, maxsubkeylen, nval, maxvalnamlen, size;
+    wchar_t *name;
+    HKEY sub;
+
+    if (depth <= 0) return mkString("<subkey>");
+    res = RegQueryInfoKey(hkey, NULL, NULL, NULL,
+			  &nsubkeys, &maxsubkeylen, NULL, &nval,
+			  &maxvalnamlen, NULL, NULL, NULL);
+    if (res != ERROR_SUCCESS)
+	error("RegQueryInfoKey error code %d: '%s'", (int) res,
+	      formatError(res));
+    size0 = max(maxsubkeylen, maxvalnamlen) + 1;
+    name = (wchar_t *) R_alloc(size0, sizeof(wchar_t));
+    tmp = readRegistryKey1(hkey, L"");
+    if (tmp != R_NilValue) {
+	PROTECT(ans = allocVector(VECSXP, nval + nsubkeys + 1));
+	PROTECT(nm = allocVector(STRSXP, nval+ nsubkeys + 1));
+	SET_VECTOR_ELT(ans, 0, tmp);
+	SET_STRING_ELT(nm, 0, mkChar("(Default)"));
+	k++;
+    } else {
+	PROTECT(ans = allocVector(VECSXP, nval + nsubkeys));
+	PROTECT(nm = allocVector(STRSXP, nval+ nsubkeys));
+    }
+    for (i = 0; i < nval; i++, k++) {
+	size = size0;
+	res  = RegEnumValueW(hkey, i, (LPWSTR) name, &size,
+			     NULL, NULL, NULL, NULL);
+	if (res != ERROR_SUCCESS) break;
+	SET_VECTOR_ELT(ans, k, readRegistryKey1(hkey, name));
+	SET_STRING_ELT(nm, k, mkCharUcs(name));
+    }
+    for (i = 0; i < nsubkeys; i++, k++) {
+	size = size0;
+	res = RegEnumKeyExW(hkey, i, (LPWSTR) name, &size,
+			   NULL, NULL, NULL, NULL);
+	if (res != ERROR_SUCCESS) break;
+	res = RegOpenKeyExW(hkey, (LPWSTR) name, 0, KEY_READ, &sub);
+	if (res != ERROR_SUCCESS) break;
+	SET_VECTOR_ELT(ans, k, readRegistryKey(sub, depth-1));
+	SET_STRING_ELT(nm, k, mkCharUcs(name));
+	RegCloseKey(sub);
+    }
+    setAttrib(ans, R_NamesSymbol, nm);
+    UNPROTECT(2);
+    return ans;
+}
+
+
+SEXP do_readRegistry(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+    HKEY hive, hkey;
+    LONG res;
+    const wchar_t *key;
+    int maxdepth;
+
+    checkArity(op, args);
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+	error(_("invalid '%s' value"),  "key");
+    key = filenameToWchar(STRING_ELT(CAR(args), 0), 0);
+    if(!isString(CADR(args)) || LENGTH(CADR(args)) != 1)
+	error(_("invalid '%s' value"),  "hive");
+    maxdepth = asInteger(CADDR(args));
+    if(maxdepth == NA_INTEGER || maxdepth < 1)
+	error(_("invalid '%s' value"),  "maxdepth");
+    hive = find_hive(CHAR(STRING_ELT(CADR(args), 0)));
+    res = RegOpenKeyExW(hive, key, 0, KEY_READ, &hkey);
+    if (res == ERROR_FILE_NOT_FOUND)
+	error(_("Registry key '%s' not found"), key);
+    if (res != ERROR_SUCCESS)
+	error("RegOpenKeyEx error code %d: '%s'", (int) res, formatError(res));
+    ans = readRegistryKey(hkey, maxdepth);
+    RegCloseKey(hkey);
+    return ans;
+}
+
 
 
 /* UTF-8 support ----------------------------------------------- */

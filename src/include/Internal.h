@@ -60,6 +60,7 @@ SEXP do_getWindowTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_loadRconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readClipboard(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readRegistry(SEXP, SEXP, SEXP, SEXP);
 SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setStatusBar(SEXP, SEXP, SEXP, SEXP);
