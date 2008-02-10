@@ -211,6 +211,7 @@ print.SavedPlots <- function(x, ...)
     lens <- sapply(x[[5]], length)[1:x[[2]]]
     cat("  #plot calls are", paste(lens, collapse=", "), "\n")
     cat("  Current position is plot", 1 + x[[4]], "\n")
+    invisible(x)
 }
 
 "[.SavedPlots" <- function(x, i, ...)

@@ -131,6 +131,7 @@ as.character.grob <- function(x, ...) {
 
 print.grob <- function(x, ...) {
   cat(as.character(x), "\n")
+  invisible(x)
 }
 
 ################
@@ -238,6 +239,7 @@ as.character.gList <- function(x, ...) {
 
 print.gList <- function(x, ...) {
   cat(as.character(x), "\n")
+  invisible(x)
 }
 
 "[.gList" <- function(x, index, ...) {

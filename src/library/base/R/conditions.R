@@ -111,6 +111,7 @@ print.condition <- function(x, ...) {
         cat("<", cl, " in ", deparse(call), ": ", msg, ">\n", sep="")
     else
         cat("<", cl, ": ", msg, ">\n", sep="")
+    invisible(x)
 }
 
 as.character.condition <- function(x, ...) {
@@ -148,8 +149,10 @@ signalCondition <- function(cond) {
 restartDescription <- function(r) r$description
 restartFormals <- function(r) formals(r$handler)
 
-print.restart <- function(x, ...)
-     cat(paste("<restart:", x[[1]], ">\n"))
+print.restart <- function(x, ...) {
+    cat(paste("<restart:", x[[1]], ">\n"))
+    invisible(x)
+}
 
 isRestart <- function(x) inherits(x, "restart")
 

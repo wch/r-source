@@ -95,7 +95,7 @@ print.TukeyHSD <- function(x, digits=getOption("digits"), ...)
                {z[, "p adj"] <- round(z[, "p adj"], digits); z},
                    digits=digits)
     print.default(xx, digits, ...)
-    x
+    invisible(x)
 }
 
 plot.TukeyHSD <- function (x, ...)

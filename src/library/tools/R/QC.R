@@ -3554,7 +3554,7 @@ function(x, ...)
         ## eventually ...
         ## </FIXME>
     }
-    x
+    invisible(x)
 }
 
 
@@ -3624,7 +3624,7 @@ print.check_package_datasets <- function(x, ...)
         cat("Warning: found non-ASCII string(s)\n")
         cat(iconv0(x$unknown, "", "ASCII", sub="byte"), sep="  ", fill=70)
     }
-    x
+    invisible(x)
 }
 
 ### * .check_package_subdirs

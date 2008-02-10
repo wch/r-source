@@ -129,4 +129,5 @@ function(x, ...)
     attributes(pp) <- attributes(x$p.value)
     print(pp, quote=FALSE)
     cat("\nP value adjustment method:", x$p.adjust.method, "\n")
+    invisible(x)
 }

@@ -621,6 +621,7 @@ flattenListing <- function(x) {
 
 print.flatGridListing <- function(x, ...) {
     nestedListing(x, ...)
+    invisible(x)
 }
 
 ######################

@@ -232,6 +232,7 @@ tclvalue.tclObj <- function(x) .External("RTcl_StringFromObj", x,
 print.tclObj <- function(x,...) {
     z <- tclvalue(x)
     if (length(z) > 0) cat("<Tcl>", z, "\n")
+    invisible(x)
 }
 
 "tclvalue<-.tclVar" <- function(x, value) {

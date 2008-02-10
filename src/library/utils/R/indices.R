@@ -120,6 +120,7 @@ print.packageDescription <- function(x, ...)
         cat(attr(x, "fields"), sep=", ")
         cat("\n")
     }
+    invisible(x)
 }
 
 index.search <- function(topic, path, file = "AnIndex", type = "help")

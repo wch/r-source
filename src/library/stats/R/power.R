@@ -149,4 +149,5 @@ function(x, ...)
 	cat("\n", "NOTE:", note, "\n\n")
     else
 	cat("\n")
+    invisible(x)
 }
