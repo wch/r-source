@@ -12,8 +12,8 @@
   or as fraction of the figure width \code{par("fin")}.
 }
 \usage{
-strwidth(s, units = "user", cex = NULL)
-strheight(s, units = "user", cex = NULL)
+strwidth(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
+strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
 }
 \alias{strwidth}
 \alias{strheight}
@@ -27,14 +27,17 @@ strheight(s, units = "user", cex = NULL)
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
     by \code{\link{par}("cex")} yields the final character size; the
     default \code{NULL} is equivalent to \code{1}.}
+  \item{font, vfont, \dots}{additional information about the font,
+    possibly including the graphics parameter \code{"family"}:
+    see \code{\link{text}}.}
 }
 \details{
   Where an element of \code{s} is a multi-line string (that is, contains
   newlines \code{\\n}), the width and height are of an enclosing
-  rectangle of the string as plotted by \code{\link{text}} in the
-  current font.  The inter-line spacing is controlled by \code{cex},
-  \code{\link{par}("lheight")} and the \sQuote{point size} (but not
-  the actual font in use).
+  rectangle of the string as plotted by \code{\link{text}}.  The
+  inter-line spacing is controlled by \code{cex},
+  \code{\link{par}("lheight")} and the \sQuote{point size} (but not the
+  actual font in use).
 }
 \value{
   Numeric vector with the same length as \code{s}, giving the
