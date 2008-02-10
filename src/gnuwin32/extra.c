@@ -1561,8 +1561,8 @@ static SEXP readRegistryKey1(HKEY hkey, const wchar_t *name)
 
 static SEXP readRegistryKey(HKEY hkey, int depth)
 {
-    int i, k = 0, size0;
-    SEXP ans, nm, tmp;
+    int i, k = 0, size0, *indx;
+    SEXP ans, nm, ans0, nm0, tmp, sind;
     DWORD res, nsubkeys, maxsubkeylen, nval, maxvalnamlen, size;
     wchar_t *name;
     HKEY sub;
@@ -1587,24 +1587,50 @@ static SEXP readRegistryKey(HKEY hkey, int depth)
 	PROTECT(ans = allocVector(VECSXP, nval + nsubkeys));
 	PROTECT(nm = allocVector(STRSXP, nval+ nsubkeys));
     }
-    for (i = 0; i < nval; i++, k++) {
-	size = size0;
-	res  = RegEnumValueW(hkey, i, (LPWSTR) name, &size,
-			     NULL, NULL, NULL, NULL);
-	if (res != ERROR_SUCCESS) break;
-	SET_VECTOR_ELT(ans, k, readRegistryKey1(hkey, name));
-	SET_STRING_ELT(nm, k, mkCharUcs(name));
+    if (nval > 0) {
+	PROTECT(ans0 = allocVector(VECSXP, nval));
+	PROTECT(nm0 = allocVector(STRSXP, nval));
+	for (i = 0; i < nval; i++) {
+	    size = size0;
+	    res  = RegEnumValueW(hkey, i, (LPWSTR) name, &size,
+				 NULL, NULL, NULL, NULL);
+	    if (res != ERROR_SUCCESS) break;
+	    SET_VECTOR_ELT(ans0, i, readRegistryKey1(hkey, name));
+	    SET_STRING_ELT(nm0, i, mkCharUcs(name));
+	}
+	/* now sort by name */
+	PROTECT(sind = allocVector(INTSXP, nval));  indx = INTEGER(sind);
+	for (i = 0; i < nval; i++) indx[i] = i;
+	orderVector1(indx, nval, nm0, TRUE, FALSE);
+	for (i = 0; i < nval; i++, k++) {
+	    SET_VECTOR_ELT(ans, k, VECTOR_ELT(ans0, indx[i]));
+	    SET_STRING_ELT(nm, k, STRING_ELT(nm0, indx[i]));
+	}
+	UNPROTECT(3);
     }
-    for (i = 0; i < nsubkeys; i++, k++) {
-	size = size0;
-	res = RegEnumKeyExW(hkey, i, (LPWSTR) name, &size,
-			   NULL, NULL, NULL, NULL);
-	if (res != ERROR_SUCCESS) break;
-	res = RegOpenKeyExW(hkey, (LPWSTR) name, 0, KEY_READ, &sub);
-	if (res != ERROR_SUCCESS) break;
-	SET_VECTOR_ELT(ans, k, readRegistryKey(sub, depth-1));
-	SET_STRING_ELT(nm, k, mkCharUcs(name));
-	RegCloseKey(sub);
+    if (nsubkeys > 0) {
+	PROTECT(ans0 = allocVector(VECSXP, nsubkeys));
+	PROTECT(nm0 = allocVector(STRSXP, nsubkeys));
+	for (i = 0; i < nsubkeys; i++) {
+	    size = size0;
+	    res = RegEnumKeyExW(hkey, i, (LPWSTR) name, &size,
+				NULL, NULL, NULL, NULL);
+	    if (res != ERROR_SUCCESS) break;
+	    res = RegOpenKeyExW(hkey, (LPWSTR) name, 0, KEY_READ, &sub);
+	    if (res != ERROR_SUCCESS) break;
+	    SET_VECTOR_ELT(ans0, i, readRegistryKey(sub, depth-1));
+	    SET_STRING_ELT(nm0, i, mkCharUcs(name));
+	    RegCloseKey(sub);
+	}
+	/* now sort by name */
+	PROTECT(sind = allocVector(INTSXP, nsubkeys));  indx = INTEGER(sind);
+	for (i = 0; i < nsubkeys; i++) indx[i] = i;
+	orderVector1(indx, nsubkeys, nm0, TRUE, FALSE);
+	for (i = 0; i < nsubkeys; i++, k++) {
+	    SET_VECTOR_ELT(ans, k, VECTOR_ELT(ans0, indx[i]));
+	    SET_STRING_ELT(nm, k, STRING_ELT(nm0, indx[i]));
+	}
+	UNPROTECT(3);
     }
     setAttrib(ans, R_NamesSymbol, nm);
     UNPROTECT(2);
