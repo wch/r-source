@@ -25,8 +25,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
     the curve. Ignored for closed X-splines.}
   \item{draw}{logical: should the X-spline be drawn?  If false, a set of
     line segments to draw the curve is returned, and nothing is drawn.}
-  \item{border}{the color to draw the curve.  The default, \code{NULL},
-    means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
+  \item{border}{the color to draw the curve.   Use \code{border = NA} to
     omit borders.}
   \item{col}{the color for filling the shape. The default,
     \code{NA}, is to leave unfilled.}
@@ -47,12 +46,12 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
   forms a sharp corner at that control point.
 
   For open X-splines, the start and end control points must have a shape
-  of 0 (and non-zero values are silently converted to zero without warning).
+  of 0 (and non-zero values are silently converted to zero).
 
   For open X-splines, by default the start and end control points are
-  actually replicated before the curve is drawn.  A curve is drawn
-  between (interpolating or approximating) the second and third of each
-  set of four control points, so this default behaviour ensures that the
+  replicated before the curve is drawn.  A curve is drawn between
+  (interpolating or approximating) the second and third of each set of
+  four control points, so this default behaviour ensures that the
   resulting curve starts at the first control point you have specified
   and ends at the last control point.  The default behaviour can be
   turned off via the \code{repEnds} argument.
@@ -63,6 +62,11 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
   \code{\link{polygon}} and so on.
 
   Invisible in both cases.
+}
+\note{
+  Two-dimensional splines need to be created in an isotropic coordinate
+  system.  Device coordinates are used (with an anisotropy correction if
+  needed.)
 }
 \references{
   Blanc, C. and Schlick, C. (1995),

@@ -411,6 +411,9 @@ BUG FIXES
         variables to be printed without using the column names,  unlike 
         what happens in S-PLUS (Tim Hesterberg, PR#10730).
 
+    o	xspline() and grid::grid.xpline() work in device coordinates
+	and now correct for anisotropy in the device coordinate system.
+
 
 
 	**************************************************

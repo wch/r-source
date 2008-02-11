@@ -1770,6 +1770,9 @@ void GEText(double x, double y, const char * const str, int enc,
 /*
  * Draws a "curve" through the specified control points.
  * Return the vertices of the line that gets drawn.
+
+ * NB: this works in device coordinates.  To make it work correctly
+ * with non-square 'pixels' we use the x-dimensions only.
  */
 SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
 	       Rboolean repEnds,
@@ -1781,18 +1784,22 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
      * Draw polygon or polyline from points
      */
     SEXP result = R_NilValue;
+    int i;
+    double *ipr = dd->dev->ipr, asp = ipr[0]/ipr[1], *ys;
     /*
      * Save (and reset below) the heap pointer to clean up
      * after any R_alloc's done by functions I call.
      */
     void *vmaxsave = vmaxget();
+    ys = (double *) R_alloc(n, sizeof(double));
+    for (i = 0; i < n; i++) ys[i] = y[i]*asp;
     if (open) {
-      compute_open_spline(n, x, y, s, repEnds, LOW_PRECISION, dd);
+      compute_open_spline(n, x, ys, s, repEnds, LOW_PRECISION, dd);
       if (draw) {
 	  GEPolyline(npoints, xpoints, ypoints, gc, dd);
       }
     } else {
-      compute_closed_spline(n, x, y, s, LOW_PRECISION, dd);
+      compute_closed_spline(n, x, ys, s, LOW_PRECISION, dd);
       if (draw)
 	  GEPolygon(npoints, xpoints, ypoints, gc, dd);
     }
@@ -1801,9 +1808,9 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
 	int i;
 	PROTECT(xpts = allocVector(REALSXP, npoints));
 	PROTECT(ypts = allocVector(REALSXP, npoints));
-	for (i=0; i<npoints; i++) {
+	for (i = 0; i < npoints; i++) {
 	    REAL(xpts)[i] = xpoints[i];
-	    REAL(ypts)[i] = ypoints[i];
+	    REAL(ypts)[i] = ypoints[i]/asp;
 	}
 	PROTECT(result = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(result, 0, xpts);
