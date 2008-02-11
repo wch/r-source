@@ -265,6 +265,10 @@ NEW FEATURES
     o	example(ask=TRUE) now applies to grid graphics (e.g. from
 	lattice) as well as to base graphics. 
 
+    o	xdg-open (the freedesktop.org interface to kfmclient/gnome-open/...)
+	is now considered as a possible browser, after real browsers
+	such as firefox, mozilla and opera.
+
 
 DEPRECATED & DEFUNCT
 
