@@ -2234,8 +2234,11 @@ error or by the user).
 The device also sets a number of variables, mainly Boolean flags
 indicating its capabilities.  Devices work entirely in `device units'
 which are up to its developer: they can be in pixels, big points (1/72
-inch), twips, @dots{}, and can differ in the @samp{x} and @samp{y}
-directions.
+inch), twips, @dots{}, and can differ@footnote{although that needs to be
+handled carefully, as for example the @code{xspline} functions used to
+depend on the aspect ratio of the pixels, and the @code{circle} callback
+is given a radius (and that should be interpreted as in the x units).}
+in the @samp{x} and @samp{y} directions.
 
 @c think of the engine as colors.c, devices.c, engine.c, plotmath.c, vfonts.c
 The next layer up is the graphics `engine' that is the main interface to
@@ -2246,7 +2249,6 @@ adjusting) text, rendering expressions (`plotmath') and mapping colour
 descriptions such as names to the internal representation.
 
 @c graphics.c looks at device dimensions, locator, metricinfo, mode
-@c memory.c looks at displayList and saveSnapshot
 @c par.c looks at various device pars
 @c plot3d.c looks at useRotatedTextInContour
 @c grid looks at size, clipping, locator, ipr
@@ -2290,12 +2292,13 @@ the handling of colours and recording and replaying plots.
 
 @menu
 * Graphics devices::            
+* Device capabilities::         
 * Colours::                     
 * Base graphics::               
 * Grid graphics::               
 @end menu
 
-@node Graphics devices, Colours, Graphics Devices, Graphics Devices
+@node Graphics devices, Device capabilities, Graphics Devices, Graphics Devices
 @section Graphics Devices
 
 @R{} ships with several graphics devices, and there is support for
@@ -2305,10 +2308,9 @@ of a would-be writer of a graphics device.
 
 @menu
 * Device structures::           
-* Handling text::               
 @end menu
 
-@node Device structures, Handling text, Graphics devices, Graphics devices
+@node Device structures,  , Graphics devices, Graphics devices
 @subsection Device structures
 
 There are three types used internally which are pointers to structures
@@ -2410,12 +2412,48 @@ If a graphics device calls @code{R_GE_checkVersionOrDie(4)}, say, it can
 ensure it will only be used in versions of @R{} which provide the API it
 was designed for.
 
+@node Device capabilities, Colours, Graphics devices, Graphics Devices
+@section Device capabilities
 
-@node Handling text,  , Device structures, Graphics devices
+The following `capabilities' can be defined for the device's
+@code{NewDevDesc} structure.
+
+@itemize
+@item canChangeGamma --
+@code{Rboolean}: can the display gamma be adjusted?
+@item canHadj --
+@code{integer}: can the device do horizontal adjustment of text
+@emph{via} the @code{text} callback, and if so, how precisely? 0 = no
+adjustment, 1 = @{0, 0.5, 1@} (left, centre, right justification) or 2 =
+continuously variable (in [0,1]) between left and right justification.
+@item canGenMouseDown -- 
+@code{Rboolean}: should mouse down events be sent to the @code{getEvent}
+callback?
+@item canGenMouseMove -- 
+@code{Rboolean}: ditto for mouse move events.
+@item canGenMouseup -- 
+@code{Rboolean}: ditto for mouse up events.
+@item canGenKeybd -- 
+@code{Rboolean}: ditto for keyboard events.
+@item hasTextUTF8 --
+@code{Rboolean}: should non-symbol text be sent (in UTF-8) to the
+@code{textUTF8} and @code{strWidthUTF8} callbacks, and sent as Unicode
+points (negative values) to the @code{metricInfo} callback
+@item wantSymbolUTF8 --
+@code{Rboolean}: should symbol text be handled in UTF-8 in the same way
+as other text?  Requires @code{textUTF8 = TRUE}.
+@end itemize
+
+
+@menu
+* Handling text::               
+@end menu
+
+@node Handling text,  , Device capabilities, Device capabilities
 @subsection Handling text
 
 Handling text is probably the hardest task for a graphics device, and
-the design allows for device to optionally indicate that they have
+the design allows for the device to optionally indicate that they have
 additional capabilities.  (If the device does not, these will if
 possible be handled in the graphics engine.)
 
@@ -2563,7 +2601,7 @@ for multi-line strings.
 @code{mtext()} to provide a default for their @samp{padj} argument.
 
 
-@node Colours, Base graphics, Graphics devices, Graphics Devices
+@node Colours, Base graphics, Device capabilities, Graphics Devices
 @section Colours
 
 Devices receive colours as an @code{unsigned int} (in the @code{GPar}
@@ -2581,14 +2619,14 @@ macros are defined in @file{R_ext/GraphicsDevice.h} to extract the
 various components.
 
 Colours in the base graphics system were originally borrowed from S (and
-before that the GRZ library from Bell Labs), with the concept a palette
-of colours referenced by numbers @samp{1...@var{N}} with @samp{0}
-representing the background colour.  @R{} introduced the idea of
-referring to colours by character strings, either of the forms
-@samp{#RRGGBB} or @samp{#RRGGBBAA} (representing the bytes in hex) as
-given by function @code{rgb()} or via names: the 657 known names are
-given in the character vector @code{colors} (and in a table in file
-@file{colors.c})
+before that the GRZ library from Bell Labs), with the concept of a
+(variable-sized) palette of colours referenced by numbers
+@samp{1...@var{N}} plus @samp{0} (the background colour).  @R{}
+introduced the idea of referring to colours by character strings, either
+in the forms @samp{#RRGGBB} or @samp{#RRGGBBAA} (representing the bytes
+in hex) as given by function @code{rgb()} or via names: the 657 known
+names are given in the character vector @code{colors} and in a table in
+file @file{colors.c}.
 
 What is not clear is how the RGB values are to be mapped to display
 colours in the graphics device.  There is a proposal
