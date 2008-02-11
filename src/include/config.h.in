@@ -729,6 +729,9 @@
 /* Define if you have the 'wint_t' type. */
 #undef HAVE_WINT_T
 
+/* Define to 1 if you have Cairo including freetype2. */
+#undef HAVE_WORKING_CAIRO
+
 /* Define if calloc(0) returns a null pointer. */
 #undef HAVE_WORKING_CALLOC
 
