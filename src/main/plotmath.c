@@ -944,11 +944,14 @@ static int UsingItalics(pGEcontext gc)
 	    gc->fontface == BoldItalicFont);
 }
 
+extern int Rf_AdobeSymbol2ucs2(int n);
 static BBOX GlyphBBox(int chr, pGEcontext gc, pGEDevDesc dd)
 {
     BBOX bbox;
     double height, depth, width;
-    GEMetricInfo(chr, gc, &height, &depth, &width, dd);
+    int chr1 = chr;
+    if(dd->dev->wantSymbolUTF8) chr1 = -Rf_AdobeSymbol2ucs2(chr);
+    GEMetricInfo(chr1, gc, &height, &depth, &width, dd);
     bboxHeight(bbox) = fromDeviceHeight(height, MetricUnit, dd);
     bboxDepth(bbox)  = fromDeviceHeight(depth, MetricUnit, dd);
     bboxWidth(bbox)  = fromDeviceHeight(width, MetricUnit, dd);

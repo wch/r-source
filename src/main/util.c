@@ -1460,3 +1460,9 @@ void *Rf_AdobeSymbol2utf8(char *work, const char *c0, int nwork)
     *t = '\0';
     return (char*) work;
 }
+
+int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
+{
+    if(n >= 32 && n < 256) return s2u[n-32];
+    else return 0;
+}
