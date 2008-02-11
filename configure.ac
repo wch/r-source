@@ -559,6 +559,9 @@ R_PROG_BROWSER
 ## PDF viewer
 R_PROG_PDFVIEWER
 
+## Cairo needs pkg-config
+AC_PATH_PROG(PKGCONF,pkg-config,[],[$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
+
 AC_PROG_CC
 
 AC_PROG_GCC_TRADITIONAL
@@ -1969,6 +1972,8 @@ fi
 R_TYPE_KEYSYM
 ## check if Xmu is supported
 R_X11_Xmu
+
+R_CAIRO
 
 ## check for CoreFoundation framework (chances are much higher
 ## that we can build AQUA if this one is present)
