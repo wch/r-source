@@ -94,6 +94,8 @@ void initOtherState(GEDevDesc* dd)
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
 }
 
+extern Rf_GetOptionParAsk(void);
+
 void fillGridSystemState(SEXP state, GEDevDesc* dd) 
 {
     SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
@@ -136,7 +138,7 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     LOGICAL(griddev)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_GRIDDEVICE, griddev);
     PROTECT(gridask = allocVector(LGLSXP, 1));
-    LOGICAL(gridask)[0] = FALSE;
+    LOGICAL(gridask)[0] = Rf_GetOptionParAsk();
     SET_VECTOR_ELT(state, GSS_ASK, gridask);
     PROTECT(gridscale = allocVector(REALSXP, 1));
     REAL(gridscale)[0] = 1.0;

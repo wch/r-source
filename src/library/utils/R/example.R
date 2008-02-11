@@ -90,6 +90,13 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
             ## changed during the example.
 	    opar <- graphics::par(ask = TRUE)
             on.exit(graphics::par(opar), add = TRUE)
+            ## if grid is already loaded we want to set grid.prompt.
+            ## if it is not, the device will pick up the default setting
+            ## when grid is loaded.
+            if("grid" %in% loadedNamespaces()) {
+                og <- grid::grid.prompt(ask=TRUE)
+                on.exit(grid::grid.prompt(og), add = TRUE)
+            }
         }
         op <- options(par.ask.default = TRUE)
         on.exit(options(op), add = TRUE)

@@ -248,7 +248,6 @@
  Rf_FixupLwd
  Rf_FixupVFont
  Rf_GInit
- Rf_GetOptionParAsk
  Rf_IndexWidth
  Rf_InitArithmetic
  Rf_InitBaseEnv

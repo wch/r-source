@@ -262,6 +262,9 @@ NEW FEATURES
 	accept in-line pars such as 'family' in the same way as text()
 	does.  (PR#776)
 
+    o	example(ask=TRUE) now applies to grid graphics (e.g. from
+	lattice) as well as to base graphics. 
+
 
 DEPRECATED & DEFUNCT
 
