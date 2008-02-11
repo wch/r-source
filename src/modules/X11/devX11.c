@@ -2251,10 +2251,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* Device capabilities */
 
-    dd->canResizePlot = TRUE;
-    dd->canChangeFont = FALSE;
-    dd->canRotateText = TRUE;
-    dd->canResizeText = TRUE;
     dd->canClip = TRUE;
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;

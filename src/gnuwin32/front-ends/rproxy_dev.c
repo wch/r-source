@@ -514,16 +514,10 @@ int R_Proxy_Graphics_Driver_CB(R_Proxy_Graphics_CB* pDD,
   DEVDESC(pDD)->ipr[1] = 1.0 / 72.0;
 
     /* Device capabilities */
-    /* Clipping is problematic for X11 */
-    /* Graphics is clipped, text is not */
 
-  DEVDESC(pDD)->canResizePlot = 1;
-  DEVDESC(pDD)->canChangeFont = 1;
-  DEVDESC(pDD)->canRotateText = 1;
-  DEVDESC(pDD)->canResizeText = 1;
-  DEVDESC(pDD)->canClip = 1;
-  DEVDESC(pDD)->displayListOn = 1;
-  DEVDESC(pDD)->canChangeGamma = 1;
+  DEVDESC(pDD)->canClip = TRUE;
+  DEVDESC(pDD)->displayListOn = TRUE;
+  DEVDESC(pDD)->canChangeGamma = TRUE;
 
   return 1;
 }
@@ -983,13 +977,9 @@ int R_Proxy_Graphics_Driver_Recorder(R_Proxy_Graphics_Recorder* pDD,
     /* Clipping is problematic for X11 */
     /* Graphics is clipped, text is not */
 
-  DEVDESC(pDD)->canResizePlot = 1;
-  DEVDESC(pDD)->canChangeFont = 1;
-  DEVDESC(pDD)->canRotateText = 1;
-  DEVDESC(pDD)->canResizeText = 1;
-  DEVDESC(pDD)->canClip = 1;
-  DEVDESC(pDD)->displayListOn = 1;
-  DEVDESC(pDD)->canChangeGamma = 1;
+  DEVDESC(pDD)->canClip = TRUE;
+  DEVDESC(pDD)->displayListOn = TRUE;
+  DEVDESC(pDD)->canChangeGamma = TRUE;
 
   return 1;
 }

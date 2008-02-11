@@ -114,9 +114,9 @@ struct _NewDevDesc {
     /* I hate these next three -- they seem like a real fudge
      * BUT I'm not sure what to replace them with so they stay for now.
      */
-    double xCharOffset;	        /* x character addressing offset */
+    double xCharOffset;	        /* x character addressing offset - unused */
     double yCharOffset;	        /* y character addressing offset */
-    double yLineBias;	        /* 1/2 interline space as frac of line hght */
+    double yLineBias;	        /* 1/2 interline space as frac of line height */
     double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
 #ifdef OLD
     /* It seems this is unused, and unset by all(?) devices */
@@ -128,18 +128,20 @@ struct _NewDevDesc {
      * to design and insert a good replacement so it stays for now.
      */
     double cra[2];	        /* Character size in rasters; [0]=x, [1]=y */
-    double gamma;	        /* Device Gamma Correction */
+    double gamma;	        /* (initial) Device Gamma Correction */
     /********************************************************
      * Device capabilities
      ********************************************************/
-    Rboolean canResizePlot;	/* can the graphics surface be resized */
+#ifdef OLD
+    Rboolean canResizePlot;	/* can the graphics surface be resized? */
     Rboolean canChangeFont;	/* device has multiple fonts */
     Rboolean canRotateText;	/* text can be rotated */
     Rboolean canResizeText;	/* text can be resized */
-    Rboolean canClip;		/* Hardware clipping */
-    Rboolean canChangeGamma;    /* can the gamma factor be modified */
+#endif
+    Rboolean canClip;		/* Device-level clipping */
+    Rboolean canChangeGamma;    /* can the gamma factor be modified? */
     int canHAdj;	        /* Can do at least some horiz adjust of text
-			           0 = none, 1 = {0,0.5, 1}, 2 = [0,1] */
+			           0 = none, 1 = {0,0.5,1}, 2 = [0,1] */
     /********************************************************
      * Device initial settings
      ********************************************************/
@@ -231,7 +233,10 @@ struct _NewDevDesc {
     /*
      * device_Circle should have the side-effect that a
      * circle is drawn, centred at the given location, with
-     * the given radius.  The border of the circle should be
+     * the given radius.
+     * (If the device has non-square pixels, 'radius' should
+     * be interpreted in the units of the x direction.)
+     * The border of the circle should be
      * drawn in the given "col", and the circle should be
      * filled with the given "fill" colour.
      * If "col" is NA_INTEGER then no border should be drawn

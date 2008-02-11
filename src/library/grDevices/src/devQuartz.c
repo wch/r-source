@@ -350,10 +350,6 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->yCharOffset = 0.3333;
     dev->yLineBias   = 0.20; /* This is .2 for PS/PDF devices... */
     
-    dev->canResizePlot = TRUE;
-    dev->canChangeFont = TRUE;
-    dev->canRotateText = TRUE;
-    dev->canResizeText = TRUE;
     dev->canClip       = TRUE;
     dev->canHAdj       = 2;
     dev->canChangeGamma= TRUE;

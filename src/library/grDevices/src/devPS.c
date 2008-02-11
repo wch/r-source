@@ -3308,11 +3308,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->ipr[1] = 1.0/72.0;
     /* GREset(.)  dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 
-    dd->canResizePlot = 0;
-    dd->canChangeFont = 1;
-    dd->canRotateText = 1;
-    dd->canResizeText = 1;
-    dd->canClip = 1;
+    dd->canClip = TRUE;
     dd->canHAdj = 2;
     dd->canChangeGamma = FALSE;
 
@@ -4628,11 +4624,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->ipr[0] = 1.0/72.0;
     dd->ipr[1] = 1.0/72.0;
 
-    dd->canResizePlot = 0;
-    dd->canChangeFont = 1;
-    dd->canRotateText = 1;
-    dd->canResizeText = 1;
-    dd->canClip = 0;
+    dd->canClip = FALSE;
     dd->canHAdj = 1; /* 0, 0.5, 1 */
     dd->canChangeGamma = FALSE;
     strncpy(pd->encoding, encoding, 50);
@@ -5625,11 +5617,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->ipr[0] = 1.0/72.0;
     dd->ipr[1] = 1.0/72.0;
 
-    dd->canResizePlot = 0;
-    dd->canChangeFont = 1;
-    dd->canRotateText = 1;
-    dd->canResizeText = 1;
-    dd->canClip = 1;
+    dd->canClip = TRUE;
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 

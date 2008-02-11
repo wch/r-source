@@ -717,10 +717,6 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     /* We use printer points, i.e. 72.27 dots per inch : */
     dd->ipr[0] = dd->ipr[1] = 1./DOTSperIN;
 
-    dd->canResizePlot = FALSE;
-    dd->canChangeFont = TRUE;
-    dd->canRotateText = FALSE;
-    dd->canResizeText = TRUE;
     dd->canClip = TRUE;
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;

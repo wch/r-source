@@ -43,7 +43,7 @@ extern "C" {
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  * Version 3:  R_GE_str2col() added to API.
  * Version 4:  UTF-8 text hooks, useRotatedTextInContour,
- *             add newFrameConfrim() to NewDevDesc.
+ *             add newFrameConfirm() to NewDevDesc.
  *             New API: GEaddDevice[2] GEgetDevice, GEkillDevice,
  *             ndevNumber.
  * Version 5:  Clean up 1.4.0/2.0.0 changes!
