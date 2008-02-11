@@ -94,7 +94,7 @@ void initOtherState(GEDevDesc* dd)
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
 }
 
-extern Rf_GetOptionParAsk(void);
+extern int Rf_GetOptionParAsk(void);
 
 void fillGridSystemState(SEXP state, GEDevDesc* dd) 
 {
