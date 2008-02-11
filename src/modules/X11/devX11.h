@@ -75,7 +75,7 @@ typedef struct {
     /* when parameter changes. */
 
     /* cex retained -- its a GRZ way of specifying text size, but
-     * its too much work to change at this time (?)
+     * it's too much work to change at this time (?)
      */
     double cex;				/* Character expansion */
     int lty;				/* Line type */
@@ -85,6 +85,7 @@ typedef struct {
     double lmitre;
     int col;				/* Color */
     int fill;
+    int bg;				/* bg */
     int canvas;				/* Canvas */
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
@@ -102,10 +103,6 @@ typedef struct {
     GC wgc;				/* GC for window */
     Cursor gcursor;			/* Graphics Cursor */
     XSetWindowAttributes attributes;	/* Window attributes */
-#if 0
-    XColor fgcolor;			/* Foreground color */
-    XColor bgcolor;			/* Background color */
-#endif
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
@@ -126,10 +123,11 @@ typedef struct {
     int res_dpi;			/* used for png/jpeg */
     Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
+    cairo_t *cc;
+    cairo_surface_t *cs;
 } X11Desc;
 
 typedef X11Desc* pX11Desc;
-
 
 X11Desc *Rf_allocX11DeviceDesc(double ps);
 
@@ -137,12 +135,6 @@ int Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
 		     int maxcube, Rboolean setHandlers);
 
 int Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, X11Desc *xd);
-
-Rboolean X11_Open(pDevDesc dd, pX11Desc xd, 
-		  const char *dsp, double w, double h, 
-		  double gamma_fac, X_COLORTYPE colormodel, 
-		  int maxcube, int bgcolor, int canvascolor, 
-		  int res, int xpos, int ypos);
 
 #endif
 

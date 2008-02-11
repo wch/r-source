@@ -68,6 +68,16 @@
 # endif */
 #endif
 
+#ifdef HAVE_WORKING_CAIRO
+#include <cairo.h>
+#include <cairo-xlib.h>
+#include <cairo-ft.h>
+#include <fontconfig/fontconfig.h>
+#include <freetype2/freetype/ttnameid.h>
+
+static int has_initd_fc=0;
+#endif
+
 #include "devX11.h"
 
 #include <Rmodules/RX11.h>
@@ -153,11 +163,6 @@ static void X11_MetricInfo(int c, pGEcontext gc,
 			   double* width, pDevDesc dd);
 static void X11_Mode(int mode, pDevDesc dd);
 static void X11_NewPage(pGEcontext gc, pDevDesc dd);
-/* declared in devX11.h
-Rboolean X11_Open(pDevDesc dd, pX11Desc xd,
-		  char *dsp, double w, double h,
-		  double gamma_fac, X_COLORTYPE colormodel,
-		  int maxcube, int bgcolor, int canvascolor, int res); */
 static void X11_Polygon(int n, double *x, double *y,
 			pGEcontext gc, pDevDesc dd);
 static void X11_Polyline(int n, double *x, double *y,
@@ -178,13 +183,11 @@ static void X11_Text(double x, double y, const char *str,
 
 	/* Support Routines */
 
-static void *RLoadFont(X11Desc*, char*, int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
-static int SetBaseFont(X11Desc*);
 static void SetColor(int, pDevDesc);
-static void SetFont(char*, int, int, pDevDesc);
-static void SetLinetype(R_GE_gcontext*, pDevDesc);
+static void SetFont(char*, int, double, pDevDesc);
+static void SetLinetype(R_GE_gcontext*, pX11Desc);
 static void X11_Close_bitmap(pX11Desc xd);
 
 
@@ -620,6 +623,11 @@ static void handleEvent(XEvent event)
 	devNum = ndevNumber(dd);
 	if (devNum > 0) {
 	    pGEDevDesc gdd = GEgetDevice(devNum);
+	    dd = (pDevDesc) temp;
+	    xd = (pX11Desc) dd->deviceSpecific;
+	    if (xd->cs)
+		cairo_xlib_surface_set_size(xd->cs, xd->windowWidth, 
+					    xd->windowHeight);
 	    /* avoid replying a device list until something has been drawn */
 	    if(gdd->dirty) GEplayDisplayList(gdd);
 	}
@@ -637,428 +645,161 @@ static void R_ProcessX11Events(void *data)
     }
 }
 
-static char *fontname = "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
-static char *symbolname	 = "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*";
-
-static char *slant[]  = {"r", "o"};
-static char *weight[] = {"medium", "bold"};
-
-/* Bitmap of the Adobe design sizes */
-
-static unsigned int adobe_sizes = 0x0403165D;
-
-#define MAXFONTS 64
-#define CLRFONTS 16 /* Number to free when cache runs full */
+static FT_Library Rcairo_ft_library = NULL;
 
 typedef struct {
-    char family[500];
-    int face, size;
-    R_XFont *font;
-} cacheentry;
+    cairo_font_face_t *face;
+    int updated;
+} Rcairo_font_face;
 
-static cacheentry fontcache[MAXFONTS];
-static int nfonts = 0;
-static int force_nonscalable = 0; /* for testing */
+static Rcairo_font_face Rcairo_fonts[5] = {
+    { NULL, 0 },
+    { NULL, 0 },
+    { NULL, 0 },
+    { NULL, 0 },
+    { NULL, 0 }
+};
 
-#define ADOBE_SIZE(I) ((I) > 7 && (I) < 35 && (adobe_sizes & (1<<((I)-8))))
-#define SMALLEST 2
-
-
-static R_XFont *R_XLoadQueryFont(Display *display, char *name)
+static cairo_font_face_t *Rcairo_set_font_face(int i, const char *file)
 {
-    R_XFont *tmp;
-    tmp = (R_XFont *) malloc(sizeof(R_XFont));
-    tmp->type = One_Font;
-    tmp->font = XLoadQueryFont(display, name);
-    if(tmp->font)
-	return tmp;
+    FT_Face face;
+    FT_Error er;
+    FT_CharMap found = 0; 
+    FT_CharMap charmap; 
+    int n; 
+
+    /* Ensure that freetype library is ready */
+    if (!Rcairo_ft_library &&
+	FT_Init_FreeType(&Rcairo_ft_library))
+	error("Failed to initialize freetype library in Rcairo_set_font_face");
+
+    er = FT_New_Face(Rcairo_ft_library, file, 0, &face);
+    if (er == FT_Err_Unknown_File_Format)
+	error("Unsupported font file format");
+    else if (er) error("Unknown font problem");
+
+    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
+}
+
+static void Rcairo_set_font(int i, const char *fcname)
+{
+    FcFontSet	*fs;
+    FcPattern   *pat, *match;
+    FcResult	result;
+    FcChar8	*file;
+    int j;
+
+    if (Rcairo_fonts[i].face != NULL) {
+	cairo_font_face_destroy(Rcairo_fonts[i].face);
+	Rcairo_fonts[i].face = NULL;
+    }
+
+    pat = FcNameParse((FcChar8 *)fcname);
+    if (!pat)
+	error("Problem with font config library in Rcairo_set_font");
+
+    FcConfigSubstitute (0, pat, FcMatchPattern);
+    FcDefaultSubstitute (pat);
+
+    fs = FcFontSetCreate ();
+    match = FcFontMatch (0, pat, &result);
+    FcPatternDestroy (pat);
+    if (match)
+	FcFontSetAdd (fs, match);
     else {
-	free(tmp);
-	return NULL;
-    }
-}
-
-static void R_XFreeFont(Display *display, R_XFont *font)
-{
-    if(font->type == Font_Set) XFreeFontSet(display, font->fontset);
-    else XFreeFont(display, font->font);
-    free(font);
-}
-
-
-/*
- * Can't load Symbolfont to XFontSet!!
- */
-#ifdef USE_FONTSET
-static R_XFont *R_XLoadQueryFontSet(Display *display,
-				    const char *fontset_name)
-{
-    R_XFont *tmp = (R_XFont *) malloc(sizeof(R_XFont));
-    XFontSet fontset;
-    int  /*i,*/ missing_charset_count;
-    char **missing_charset_list, *def_string;
-
-#ifdef DEBUG_X11
-    printf("loading fontset %s\n", fontset_name);
-#endif
-    fontset = XCreateFontSet(display, fontset_name, &missing_charset_list,
-			     &missing_charset_count, &def_string);
-    if(!fontset) {
-	free(tmp);
-	return NULL;
-    }
-    if (missing_charset_count) {
-#ifdef DEBUG_X11
-	int i;
-	for(i = 0; i < missing_charset_count; i++)
-	   warning("font for charset %s is lacking.", missing_charset_list[i]);
-	XFreeStringList(missing_charset_list);
-#endif
-    }
-    tmp->type = Font_Set;
-    tmp->fontset = fontset;
-    return tmp;
-}
-#endif
-
-static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
-{
-    int pixelsize, i, dpi;
-    cacheentry *f;
-    char buf[BUFSIZ];
-#ifdef USE_FONTSET
-    char buf1[BUFSIZ];
-#endif
-    R_XFont *tmp = NULL;
-
-#ifdef DEBUG_X11
-    printf("trying face %d size %d\n", face, size);
-#endif
-
-    if (size < SMALLEST) size = SMALLEST;
-    face--;
-
-    dpi = (1./pixelHeight() + 0.5);
-    if(dpi < 80) {
-	/* use pointsize as pixel size */
-    } else if(abs(dpi - 100) < 5) {
-    /* Here's a 1st class fudge: make sure that the Adobe design sizes
-       8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
-       an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
-       14, 17, 18, 24 points. It's almost y = x * 100/72, but not
-       quite. The constants were found using lm(). --pd */
- 	size = R_rint(size * 1.43 - 0.4);
-    } else size = R_rint(size * dpi/72);
-
-    /* search fontcache */
-    for ( i = nfonts ; i-- ; ) {
-	f = &fontcache[i];
-	if ( strcmp(f->family, family) == 0 &&
-	     f->face == face &&
-	     f->size == size )
-	    return f->font;
+	FcFontSetDestroy (fs);
+	error("No font found in Rcairo_set_font");
     }
 
-    /* 'size' is the requested size, 'pixelsize'  the size of the
-       actually allocated font*/
-    pixelsize = size;
-
-    /*
-     * The symbol font face is a historical oddity
-     * Always use a standard font for font face 5
-     */
-    if (face == SYMBOL_FONTFACE - 1) /* NB: face-- above */
-        sprintf(buf, xd->symbolfamily,  pixelsize);
-    else
-#ifdef USE_FONTSET
-      if (mbcslocale && *slant[(face & 2) >> 1] == 'o') {
-        sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
-		pixelsize);
-        sprintf(buf1, family, weight[face & 1], "i",  pixelsize);
-	strcat(buf,",");
-	strcat(buf,buf1);
-      } else
-#endif
-	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
-		pixelsize);
-#ifdef DEBUG_X11
-    Rprintf("loading:\n%s\n",buf);
-#endif
-    if (!mbcslocale || face == SYMBOL_FONTFACE - 1)
-      tmp = R_XLoadQueryFont(display, buf);
-#ifdef USE_FONTSET
-    else
-      tmp = R_XLoadQueryFontSet(display, buf);
-#endif
-
-#ifdef DEBUG_X11
-    if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
-#endif
-    /*
-     * IF can't find the font specified then
-     * go to great lengths to find something else to use.
-     */
-    if (!tmp || (force_nonscalable && !ADOBE_SIZE(size)) ){
-	static int near[]=
-	  {14,14,14,17,17,18,20,20,20,20,24,24,24,25,25,25,25};
-	/* 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  */
-
-	/* If ADOBE_SIZE(pixelsize) is true at this point then
-	   the user's system does not have the standard ADOBE font set
-	   so we just have to use a "fixed" font.
-	   If we can't find a "fixed" font then something is seriously
-	   wrong */
-	if ( ADOBE_SIZE(pixelsize) ) {
-#ifdef USE_FONTSET
-	    if(mbcslocale)
-		tmp = (void*) R_XLoadQueryFontSet(display,
-                   "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
-	    else
-#endif
-		tmp = (void*) R_XLoadQueryFont(display, "fixed");
-
-	    if (tmp)
-		return tmp;
-	    else
-		error(_("could not find any X11 fonts\nCheck that the Font Path is correct."));
+    /* should be at least one font face in fontset */
+    if (fs) {
+	for (j = 0; j < fs->nfont; j++) {
+	    /* Need to make sure a real font file exists */
+	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file) 
+		== FcResultMatch) {
+		Rcairo_fonts[i].face = 
+		    Rcairo_set_font_face(i, (const char *)file);
+		break;
+	    }
 	}
-
-	if ( pixelsize < 8 )
-	    pixelsize = 8;
-	else if (pixelsize == 9)
-	    pixelsize = 8;
-	else if (pixelsize < 30) /* must be at least 13 */
-	    pixelsize = near[size-13];
-	else
-	    pixelsize = 34;
-
-
-	if (face == SYMBOL_FONTFACE - 1)
-	    sprintf(buf, symbolname, pixelsize);
-	else
-	    sprintf(buf, fontname,
-		    weight[face & 1],
-		    slant[(face & 2) >> 1 ],  pixelsize);
-#ifdef DEBUG_X11
-	Rprintf("loading:\n%s\n",buf);
-#endif
-	if (!mbcslocale || face == SYMBOL_FONTFACE - 1)
-	    tmp = R_XLoadQueryFont(display, buf);
-#ifdef USE_FONTSET
-	else
-	    tmp = R_XLoadQueryFontSet(display, buf);
-#endif
-#ifdef DEBUG_X11
-	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
-#endif
-    }
-    if(!tmp && size > 24) {
-	/* final try, size 24 */
-	pixelsize = 24;
-	if (face == 4)
-	    sprintf(buf, symbolname, 24);
-	else
-	    sprintf(buf, fontname,
-		    weight[face & 1],
-		    slant[(face & 2) >> 1 ],  24);
-#ifdef DEBUG_X11
-	Rprintf("loading:\n%s\n",buf);
-#endif
-
-	if (!mbcslocale || face == SYMBOL_FONTFACE - 1)
-	    tmp = R_XLoadQueryFont(display, buf);
-#ifdef USE_FONTSET
-	else
-	    tmp = R_XLoadQueryFontSet(display, buf);
-#endif
-
-#ifdef DEBUG_X11
-	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
-#endif
-    }
-
-    if (tmp){
-	f = &fontcache[nfonts++];
-	strcpy(f->family, family);
-	f->face = face;
-	f->size = size;
-	f->font = tmp;
-	if (fabs( (pixelsize - size)/(double)size ) > 0.1)
-	    warning(_("X11 used font size %d when %d was requested"),
-		    pixelsize, size);
-    }
-    if (nfonts == MAXFONTS) /* make room in the font cache */
-    {
-	for (i = 0 ; i < CLRFONTS ; i++)
-	      R_XFreeFont(display, fontcache[i].font);
-	for (i = CLRFONTS ; i < MAXFONTS ; i++)
-	    fontcache[i - CLRFONTS] = fontcache[i];
-	nfonts -= CLRFONTS;
-    }
-    return tmp;
+	FcFontSetDestroy (fs);
+	Rcairo_fonts[i].updated = 1;
+    } else
+	error("No font found Rcairo_set_font");
 }
 
-/* This should never be used for a Symbol face */
-static int SetBaseFont(pX11Desc xd)
-{
-    xd->fontface = xd->basefontface;
-    if (xd->fontface < 1 || xd->fontface > 5) xd->fontface = 1;
-    xd->fontsize = xd->basefontsize;
-    xd->usefixed = 0;
-    xd->font = RLoadFont(xd, xd->fontfamily, xd->fontface, xd->fontsize);
-    if (!xd->font) {
-	xd->usefixed = 1;
-#ifdef USE_FONTSET
-	if(mbcslocale)
-	    xd->font = xd->fixedfont =
-		R_XLoadQueryFontSet(display,
-				    "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
-	else
-#endif
-	    xd->font = xd->fixedfont = R_XLoadQueryFont(display, "fixed");
-	if (!xd->fixedfont)
-	    return 0;
-    }
-    return 1;
-}
-
-static void SetFont(char* family, int face, int size, pDevDesc dd)
+static void SetFont(char* family, int face, double size, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    R_XFont *tmp;
+    char *Cfontface = "Helvetica";
+    int slant = CAIRO_FONT_SLANT_NORMAL;
+    int wght  = CAIRO_FONT_WEIGHT_NORMAL;
 
     if (face < 1 || face > 5) face = 1;
 
-    if (!xd->usefixed &&
-	(size != xd->fontsize	||
-	 face != xd->fontface ||
-	 strcmp(family, xd->fontfamily) != 0)) {
-
-	tmp = RLoadFont(xd, family, face, size);
-	if(tmp) {
-	    xd->font = tmp;
-	    strcpy(xd->fontfamily, family);
-	    xd->fontface = face;
-	    xd->fontsize = size;
-            /* if (xd->font == One_Font)
-	       XSetFont(display, xd->wgc, (xd->font->font)->fid);*/
-	} else
-	    error(_("X11 font at size %d could not be loaded"), size);
-    }
+    if (face == 5) Cfontface="Symbol";
+    if (face == 2 || face == 4) slant=CAIRO_FONT_SLANT_ITALIC;
+    if (face == 3 || face == 4) wght=CAIRO_FONT_WEIGHT_BOLD;
+  
+    cairo_select_font_face (xd->cc, Cfontface, slant, wght);
+#if 0
+    cairo_set_font_face(xd->cc, Rcairo_fonts[face].face);
+#endif
+    cairo_set_font_size (xd->cc, size/(dd->ipr[0]*72.0));
 }
 
-static void CheckAlpha(int color, pX11Desc xd)
-{
-    unsigned int alpha = R_ALPHA(color);
-    if (alpha > 0 && alpha < 255 && !xd->warn_trans) {
-	warning(_("semi-transparency is not supported on this device: reported only once per page"));
-	xd->warn_trans = TRUE;
-    }
-}
+#define CREDC(C) (((unsigned int)(C))&0xff)
+#define CGREENC(C) ((((unsigned int)(C))&0xff00)>>8)
+#define CBLUEC(C) ((((unsigned int)(C))&0xff0000)>>16)
+#define CALPHA(C) ((((unsigned int)(C))&0xff000000)>>24)
 
-static void SetColor(int color, pDevDesc dd)
+static void SetColor(int col, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    if (color != xd->col) {
-	blackpixel = GetX11Pixel(R_RED(color), R_GREEN(color), R_BLUE(color));
-	xd->col = color;
-	XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
-    }
+    if (CALPHA(col) == 255) 
+	cairo_set_source_rgb (xd->cc, 
+			      ((double)CREDC(col))/255.,
+			      ((double)CGREENC(col))/255., 
+			      ((double)CBLUEC(col))/255.); 
+    else
+	cairo_set_source_rgba (xd->cc,
+			       ((double)CREDC(col))/255.,
+			       ((double)CGREENC(col))/255.,
+			       ((double)CBLUEC(col))/255.,
+			       ((double)CALPHA(col))/255.); 
 }
 
-static int gcToX11lend(R_GE_lineend lend) {
-    int newend = CapRound; /* -Wall */
-    switch (lend) {
-    case GE_ROUND_CAP:
-        newend = CapRound;
-	break;
-    case GE_BUTT_CAP:
-        newend = CapButt;
-	break;
-    case GE_SQUARE_CAP:
-        newend = CapProjecting;
-	break;
-    default:
-        error(_("invalid line end"));
-    }
-    return newend;
-}
 
-static int gcToX11ljoin(R_GE_linejoin ljoin) {
-    int newjoin = JoinRound; /* -Wall */
-    switch (ljoin) {
-    case GE_ROUND_JOIN:
-        newjoin = JoinRound;
-	break;
-    case GE_MITRE_JOIN:
-        newjoin = JoinMiter;
-	break;
-    case GE_BEVEL_JOIN:
-        newjoin = JoinBevel;
-	break;
-    default:
-        error(_("invalid line join"));
-    }
-    return newjoin;
-}
-
-/* --> See "Notes on Line Textures" in ../../include/Rgraphics.h
- *
- *	27/5/98 Paul - change to allow lty and lwd to interact:
- *	the line texture is now scaled by the line width so that,
- *	for example, a wide (lwd=2) dotted line (lty=2) has bigger
- *	dots which are more widely spaced.  Previously, such a line
- *	would have "dots" which were wide, but not long, nor widely
- *	spaced.
- */
-static void SetLinetype(pGEcontext gc, pDevDesc dd)
+static void SetLinetype(pGEcontext gc, pX11Desc xd)
 {
-    static char dashlist[8];
-    int i, newlty, newlwd, newlend, newljoin;
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    cairo_t *cc = xd->cc;
+    R_GE_lineend lend = CAIRO_LINE_CAP_SQUARE;
+    R_GE_linejoin ljoin = CAIRO_LINE_JOIN_ROUND;
+    cairo_set_line_width(cc, gc->lwd);
+    switch(gc->lend){
+    case GE_ROUND_CAP: lend = CAIRO_LINE_CAP_ROUND; break;
+    case GE_BUTT_CAP: lend = CAIRO_LINE_CAP_BUTT; break;
+    case GE_SQUARE_CAP: lend = CAIRO_LINE_CAP_SQUARE; break;
+    }
+    cairo_set_line_cap(cc, lend);
+    switch(gc->ljoin){
+    case GE_ROUND_JOIN: ljoin = CAIRO_LINE_JOIN_ROUND; break;
+    case GE_MITRE_JOIN: ljoin = CAIRO_LINE_JOIN_MITER; break;
+    case GE_BEVEL_JOIN: ljoin = CAIRO_LINE_JOIN_BEVEL; break;
+    } 
+    cairo_set_line_join(cc, ljoin);
 
-    newlty = gc->lty;
-    newlwd = gc->lwd;/*cast*/
-    newlend = gcToX11lend(gc->lend);
-    newljoin = gcToX11ljoin(gc->ljoin);
-    if (newlwd < 1)/* not less than 1 pixel */
-	newlwd = 1;
-    if (newlty != xd->lty || newlwd != xd->lwd ||
-	newlend!= xd->lend || newljoin!= xd->ljoin) {
-	xd->lty = newlty;
-	xd->lwd = newlwd;
-	xd->lend = newlend;
-	xd->ljoin = newljoin;
-	if (newlty == 0) {/* special hack for lty = 0 -- only for X11 */
-	    XSetLineAttributes(display,
-			       xd->wgc,
-			       newlwd,
-			       LineSolid,
-			       xd->lend, /* CapRound, */
-			       xd->ljoin); /* JoinRound); */
+    if (gc->lty == 0 || gc->lty == -1)
+	cairo_set_dash(cc, 0, 0, 0);
+    else {
+	double ls[16]; /* max 16x4=64 bit */
+	int l = 0, dt = gc->lty;
+	while (dt > 0) {
+	    ls[l] = (double)(dt&15);
+	    dt >>= 4;
+	    l++;
 	}
-	else {
-	    for(i = 0 ; i < 8 && (newlty != 0); i++) {
-		int j = newlty & 15;
-		if (j == 0) j = 1; /* Or we die with an X Error */
-		/* scale line texture for line width */
-		j = j*newlwd;
-		/* make sure that scaled line texture */
-		/* does not exceed X11 storage limits */
-		if (j > 255) j=255;
-		dashlist[i] = j;
-		newlty = newlty >> 4;
-	    }
-	    /* NB if i is odd the pattern will be interpreted as
-	       the original pattern concatenated with itself */
-	    XSetDashes(display, xd->wgc, 0, dashlist, i);
-	    XSetLineAttributes(display,
-			       xd->wgc,
-			       newlwd,
-			       LineOnOffDash,
-			       xd->lend, /* CapButt */
-			       xd->ljoin); /* JoinRound); */
-	}
+	cairo_set_dash(cc, ls, l, 0);
     }
 }
 
@@ -1221,11 +962,6 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			     R_BLUE(canvascolor));
     blackpixel = GetX11Pixel(0, 0, 0);
 
-    if (!SetBaseFont(xd)) {
-	Rprintf("can't find X11 font\n");
-	return FALSE;
-    }
-
     /* Foreground and Background Colors */
 
     xd->fill = bgcolor; /* was transparent */
@@ -1365,7 +1101,38 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    _XA_WM_PROTOCOLS = XInternAtom(display, "WM_PROTOCOLS", 0);
 	    protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
 	    XSetWMProtocols(display, xd->window, &protocol, 1);
+	    xd->cs = cairo_xlib_surface_create(display, xd->window, 
+					       visual,
+					       (double)xd->windowWidth,
+					       (double)xd->windowHeight);
+	    if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+		/* bail out */
+	    }
+	    xd->cc = cairo_create(xd->cs);
+	    if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+		/* bail out */
+	    }
+	    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
+	    cairo_reset_clip(xd->cc);
+	    /* Ensure that fontconfig library is ready */
+	    if (!has_initd_fc && !FcInit ())
+		error ("cannot init fontconfig library");
+	    has_initd_fc = 1;
 
+	    /* Ensure that freetype library is ready */
+	    if (!Rcairo_ft_library && FT_Init_FreeType(&Rcairo_ft_library))
+		error("Failed to initialize freetype library");
+	    
+	    if (Rcairo_fonts[0].face == NULL) 
+		Rcairo_set_font(0,"Helvetica:style=Regular");
+	    if (Rcairo_fonts[1].face == NULL) 
+		Rcairo_set_font(1,"Helvetica:style=Bold");
+	    if (Rcairo_fonts[2].face == NULL)
+		Rcairo_set_font(2,"Helvetica:style=Italic");
+	    if (Rcairo_fonts[3].face == NULL)
+		Rcairo_set_font(3,"Helvetica:style=Bold Italic,BoldItalic");
+	    if (Rcairo_fonts[4].face == NULL)
+		Rcairo_set_font(4,"Symbol");
 	}
 	/* Save the pDevDesc with the window for event dispatching */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);
@@ -1412,11 +1179,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     gcv.arc_mode = ArcChord;
     xd->wgc = XCreateGC(display, xd->window, GCArcMode, &gcv);
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
-    /* if ( xd->font->type == One_Font )
-       XSetFont(display, xd->wgc, (xd->font->font)->fid);*/
 
-    /* ensure that line drawing is set up at the first */
-    /* graphics call */
     xd->lty = -1;
     xd->lwd = -1;
     xd->lend = 0;
@@ -1426,219 +1189,19 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     return TRUE;
 }
 
-/* Return a non-relocatable copy of a string */
-
-static char *SaveFontSpec(SEXP sxp, int offset)
-{
-    char *s;
-    if(!isString(sxp) || length(sxp) <= offset)
-	error(_("invalid font specification"));
-    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
-    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
-    return s;
-}
-
-/*
- * Take the fontfamily from a gcontext (which is device-independent)
- * and convert it into an X11-specific font description using
- * the X11 font database (see src/library/graphics/R/unix/x11.R)
- *
- * IF gcontext fontfamily is empty ("")
- * OR IF can't find gcontext fontfamily in font database
- * THEN return xd->basefontfamily (the family set up when the
- *   device was created)
- */
-static char* translateFontFamily(char* family, X11Desc* xd) {
-    SEXP graphicsNS, x11env, fontdb, fontnames;
-    int i, nfonts;
-    char* result = xd->basefontfamily;
-    PROTECT_INDEX xpi;
-
-    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
-    PROTECT_WITH_INDEX(x11env = findVar(install(".X11env"), graphicsNS), &xpi);
-    if(TYPEOF(x11env) == PROMSXP)
-	REPROTECT(x11env = eval(x11env, graphicsNS), xpi);
-    PROTECT(fontdb = findVar(install(".X11.Fonts"), x11env));
-    PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
-    nfonts = LENGTH(fontdb);
-    if (strlen(family) > 0) {
-	int found = 0;
-	for (i=0; i<nfonts && !found; i++) {
-	    const char* fontFamily = CHAR(STRING_ELT(fontnames, i));
-	    if (strcmp(family, fontFamily) == 0) {
-		found = 1;
-		result = SaveFontSpec(VECTOR_ELT(fontdb, i), 0);
-	    }
-	}
-	if (!found)
-	    warning(_("font family not found in X11 font database"));
-    }
-    UNPROTECT(4);
-    return result;
-}
-
-static double X11_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
-{
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-
-    int size = gc->cex * gc->ps + 0.5;
-    SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
-
-#ifdef USE_FONTSET
-    if (xd->font->type == One_Font)
-	return (double) XTextWidth(xd->font->font, str, strlen(str));
-    else  {
-#ifdef HAVE_XUTF8TEXTESCAPEMENT
-	if(utf8locale)
-	    return (double) Xutf8TextEscapement(xd->font->fontset,
-						str, strlen(str));
-	else
-#endif
-	    return (double) XmbTextEscapement(xd->font->fontset,
-					      str, strlen(str));
-    }
-#else
-    return (double) XTextWidth(xd->font->font, str, strlen(str));
-#endif
-}
-
-
-	/* Character Metric Information */
-	/* Passing c == 0 gets font information */
-
-static void X11_MetricInfo(int c, pGEcontext gc,
-			   double* ascent, double* descent,
-			   double* width, pDevDesc dd)
-{
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    int first = 0, last = 0;
-    int size = gc->cex * gc->ps + 0.5;
-    XFontStruct *f = NULL;
-
-    if (c < 0)
-	error(_("invalid use of %d < 0 in '%s'"), c, "X11_MetricInfo");
-
-    SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
-
-#ifdef USE_FONTSET
-    *ascent = 0; *descent = 0; *width = 0; /* fallback position */
-    if (xd->font) {
-	if (xd->font->type != One_Font) {
-	    char **ml; XFontStruct **fs_list;
-#ifdef DEBUG_X11
-	    int i, cnt = XFontsOfFontSet(xd->font->fontset, &fs_list, &ml);
-
-	    for (i = 0; i < cnt; i++) printf("%s\n", ml[i]);
-	    printf("--- end of fontlist ---\n\n");
-#else
-	    XFontsOfFontSet(xd->font->fontset, &fs_list, &ml);
-#endif
-
-	    f = fs_list[0];
-	} else f = xd->font->font;
-	first = f->min_char_or_byte2;
-	last = f->max_char_or_byte2;
-    } else return;
-
-    if (c == 0) {
-        *ascent = f->ascent;
-        *descent = f->descent;
-        *width = f->max_bounds.width;
-	return;
-    }
-
-    if (xd->font->type != One_Font) {  /* so an MBCS */
-	XRectangle ink, log;
-	char buf[16];
-
-	ucstomb(buf, (unsigned int) c);
-	/* wcsrtombs(buf, (const wchar_t **)&wcs, sizeof(wc), NULL); */
-#ifdef HAVE_XUTF8TEXTEXTENTS
-	if(utf8locale)
-	    Xutf8TextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
-	else
-#endif
-	    XmbTextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
-	/* Rprintf("%d %d %d %d\n", ink.x, ink.y, ink.width, ink.height);
-	   Rprintf("%d %d %d %d\n", log.x, log.y, log.width, log.height); */
-	*ascent = -ink.y;
-	*descent = ink.y + ink.height;
-	*width = log.width;
-	/* Rprintf("%d %lc w=%f a=%f d=%f\n", c, wc[0],
-	            *width, *ascent, *descent);*/
-    } else { /* symbol font */
-	if(first <= c && c <= last) {
-	  /*
-	   * <MBCS-FIXED>: try demo(lm.glm,package="stats")
-	   * per_char is NULL case.
-	   */
-	  if(f->per_char) {
-	    *ascent = f->per_char[c-first].ascent;
-	    *descent = f->per_char[c-first].descent;
-	    *width = f->per_char[c-first].width;
-	  } else {
-	    *ascent = f->max_bounds.ascent;
-	    *descent = f->max_bounds.descent;
-	    *width = f->max_bounds.width;
-	  }
-	}
-    }
-#else
-    f = xd->font->font;
-    first = f->min_char_or_byte2;
-    last = f->max_char_or_byte2;
-    if (c == 0) {
-	*ascent = f->ascent;
-	*descent = f->descent;
-	*width = f->max_bounds.width;
-    } else if (first <= c && c <= last) {
-    /* It seems that per_char could be NULL
-       http://www.ac3.edu.au/SGI_Developer/books/XLib_PG/sgi_html/ch06.html
-    */
-	if(f->per_char) {
-	    *ascent = f->per_char[c-first].ascent;
-	    *descent = f->per_char[c-first].descent;
-	    *width = f->per_char[c-first].width;
-	} else {
-	    *ascent = f->max_bounds.ascent;
-	    *descent = f->max_bounds.descent;
-	    *width = f->max_bounds.width;
-	}
-    } else {
-	*ascent = 0;
-	*descent = 0;
-	*width = 0;
-    }
-#endif
-}
-
 static void X11_Clip(double x0, double x1, double y0, double y1,
 			pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    if (x0 < x1) {
-	xd->clip.x = (int) x0 ;
-	xd->clip.width = (int) x1 - (int) x0 + 1;
-    }
-    else {
-	xd->clip.x = (int) x1;
-	xd->clip.width = (int) x0 - (int) x1 + 1;
-    }
+    if (x1 < x0) { double h = x1; x1 = x0; x0 = h; };
+    if (y1 < y0) { double h = y1; y1 = y0; y0 = h; };
 
-    if (y0 < y1) {
-	xd->clip.y = (int) y0;
-	xd->clip.height = (int) y1 -  (int) y0 + 1;
-    }
-    else {
-	xd->clip.y = (int) y1;
-	xd->clip.height = (int) y0 - (int) y1 + 1;
-    }
-
-    XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
-#ifdef XSYNC
-    if (xd->type == WINDOW) XSync(display, 0);
-#endif
+    cairo_reset_clip(xd->cc);
+    cairo_new_path(xd->cc);
+    cairo_rectangle(xd->cc, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
+    /* Add 1 per X11_Clip */
+    cairo_clip(xd->cc);
 }
 
 static void X11_Size(double *left, double *right,
@@ -1656,49 +1219,13 @@ static void X11_Size(double *left, double *right,
 static void X11_NewPage(pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    
+    cairo_reset_clip(xd->cc);
+    if (R_TRANSPARENT(xd->bg)) SetColor(xd->canvas, dd); 
+    else SetColor(xd->bg, dd);
+    cairo_new_path(xd->cc);
+    cairo_paint(xd->cc);
 
-    xd->warn_trans = FALSE;
-    if (xd->type > WINDOW) {
-	if (xd->npages++) {
-	    /* try to preserve the page we do have */
-	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
-	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
-	    if (xd->type == PNG) {
-		char buf[PATH_MAX];
-		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
-		if (!xd->fp)
-		    error(_("could not open PNG file '%s'"), buf);
-	    }
-	    if (xd->type == JPEG) {
-		char buf[PATH_MAX];
-		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
-		if (!xd->fp)
-		    error(_("could not open JPEG file '%s'"), buf);
-	    }
-	    /* error("attempt to draw second page on pixmap device");*/
-	}
-/* we want to override the default bg="transparent" */
-/*	xd->fill = R_OPAQUE(dd->bg) ? dd->bg : xd->canvas; */
-	CheckAlpha(gc->fill, xd);
-	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
-	SetColor(xd->fill, dd);
-	xd->clip.x = 0; xd->clip.width = xd->windowWidth;
-	xd->clip.y = 0; xd->clip.height = xd->windowHeight;
-	XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
-	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
-		       xd->windowWidth, xd->windowHeight);
-	return;
-    }
-
-    FreeX11Colors();
-    if ( (model == PSEUDOCOLOR2) || (xd->fill != gc->fill)) {
-	xd->fill = R_OPAQUE(gc->fill) ? gc->fill : xd->canvas;
-	whitepixel = GetX11Pixel(R_RED(xd->fill),R_GREEN(xd->fill),R_BLUE(xd->fill));
-	XSetWindowBackground(display, xd->window, whitepixel);
-    }
-    XClearWindow(display, xd->window);
 #ifdef XSYNC
     XSync(display, 0);
 #endif
@@ -1788,6 +1315,9 @@ static void X11_Close(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (xd->type == WINDOW) {
+	cairo_surface_destroy(xd->cs);
+	cairo_destroy(xd->cc);
+
 	/* process pending events */
 	/* set block on destroy events */
 	inclose = TRUE;
@@ -1807,9 +1337,6 @@ static void X11_Close(pDevDesc dd)
     if (numX11Devices == 0)  {
       int fd = ConnectionNumber(display);
 	/* Free Resources Here */
-	while (nfonts--)
-	      R_XFreeFont(display, fontcache[nfonts].font);
-	nfonts = 0;
         if(xd->handleOwnEvents == FALSE)
 	    removeInputHandler(&R_InputHandlers,
 			       getInputHandler(R_InputHandlers,fd));
@@ -1834,10 +1361,6 @@ static void X11_Activate(pDevDesc dd)
 	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (ACTIVE)");
-    /**
-    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
-		    8, PropModeReplace, (unsigned char*)t, strlen(t));
-    **/
     XStoreName(display, xd->window, t);
     XSync(display, 0);
 }
@@ -1855,10 +1378,6 @@ static void X11_Deactivate(pDevDesc dd)
 	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (inactive)");
-    /**
-    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
-		    8, PropModeReplace, (unsigned char*)t, strlen(t));
-    **/
     XStoreName(display, xd->window, t);
     XSync(display, 0);
 }
@@ -1866,32 +1385,22 @@ static void X11_Deactivate(pDevDesc dd)
 static void X11_Rect(double x0, double y0, double x1, double y1,
 		     pGEcontext gc, pDevDesc dd)
 {
-    int tmp;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    if (x0 > x1) {
-	tmp = x0;
-	x0 = x1;
-	x1 = tmp;
-    }
-    if (y0 > y1) {
-	tmp = y0;
-	y0 = y1;
-	y1 = tmp;
-    }
-    CheckAlpha(gc->fill, xd);
-    if (R_OPAQUE(gc->fill)) {
+    cairo_new_path(xd->cc);
+    cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
+
+    if (R_ALPHA(gc->fill) > 0) {
 	SetColor(gc->fill, dd);
-	XFillRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
-		       (int)x1 - (int)x0, (int)y1 - (int)y0);
+	cairo_fill_preserve(xd->cc);
     }
-    CheckAlpha(gc->col, xd);
-    if (R_OPAQUE(gc->col)) {
+
+    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
-	XDrawRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
-		       (int)x1 - (int)x0, (int)y1 - (int)y0);
-    }
+	SetLinetype(gc, xd);
+	cairo_stroke(xd->cc);
+    } else cairo_new_path(xd->cc);
+
 #ifdef XSYNC
     if (xd->type == WINDOW) XSync(display, 0);
 #endif
@@ -1900,46 +1409,34 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
 static void X11_Circle(double x, double y, double r,
 		       pGEcontext gc, pDevDesc dd)
 {
-    int ir, ix, iy;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    ir = floor(r + 0.5);
+    cairo_new_path(xd->cc);
+    cairo_arc(xd->cc, x, y, r + 0.5 , 0.0, 2 * M_PI);
 
-    ix = (int)x;
-    iy = (int)y;
-    CheckAlpha(gc->fill, xd);
-    if (R_OPAQUE(gc->fill)) {
+    if (R_ALPHA(gc->fill) > 0) {
 	SetColor(gc->fill, dd);
-	XFillArc(display, xd->window, xd->wgc,
-		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
+	cairo_fill_preserve(xd->cc);
     }
-    CheckAlpha(gc->col, xd);
-    if (R_OPAQUE(gc->col)) {
-	SetLinetype(gc, dd);
+    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
+	SetLinetype(gc, xd);
 	SetColor(gc->col, dd);
-	XDrawArc(display, xd->window, xd->wgc,
-		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
-    }
+	cairo_stroke(xd->cc);
+    } else cairo_new_path(xd->cc);
 }
 
 static void X11_Line(double x1, double y1, double x2, double y2,
 		     pGEcontext gc, pDevDesc dd)
 {
-    int xx1, yy1, xx2, yy2;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    /* In-place conversion ok */
-
-    xx1 = (int) x1;
-    yy1 = (int) y1;
-    xx2 = (int) x2;
-    yy2 = (int) y2;
-
-    CheckAlpha(gc->col, xd);
-    if (R_OPAQUE(gc->col)) {
+    if (R_ALPHA(gc->col) > 0) { /* FIXME */
+	cairo_new_path(xd->cc);
+	cairo_move_to(xd->cc, x1, y1);
+	cairo_line_to(xd->cc, x2, y2);
 	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
-	XDrawLine(display, xd->window, xd->wgc, xx1, yy1, xx2, yy2);
+	SetLinetype(gc, xd);
+	cairo_stroke(xd->cc);
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);
 #endif
@@ -1949,90 +1446,112 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 static void X11_Polyline(int n, double *x, double *y,
 			 pGEcontext gc, pDevDesc dd)
 {
-    char *vmax = vmaxget();
-    XPoint *points;
-    int i, j;
+    int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    points = (XPoint *) R_alloc(n, sizeof(XPoint));
-
-    for(i=0 ; i<n ; i++) {
-	points[i].x = (int)(x[i]);
-	points[i].y = (int)(y[i]);
-    }
-
-    CheckAlpha(gc->col, xd);
-    if (R_OPAQUE(gc->col)) {
+    if (R_ALPHA(gc->col) > 0) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
-/* Some X servers need npoints < 64K */
-	for(i = 0; i < n; i+= 10000-1) {
-	    j = n - i;
-	    j = (j <= 10000) ? j: 10000; /* allow for overlap */
-	    XDrawLines(display, xd->window, xd->wgc, points+i, j,
-		       CoordModeOrigin);
-	}
+	SetLinetype(gc, xd);
+	cairo_new_path(xd->cc);
+	cairo_move_to(xd->cc, x[0], y[0]);
+	for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
+	cairo_stroke(xd->cc);
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);
 #endif
     }
-
-    vmaxset(vmax);
 }
 
 static void X11_Polygon(int n, double *x, double *y,
 			pGEcontext gc, pDevDesc dd)
 {
-    char *vmax = vmaxget();
-    XPoint *points;
     int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    
+    cairo_new_path(xd->cc);
+    cairo_move_to(xd->cc, x[0], y[0]);
+    for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
+    cairo_close_path(xd->cc);
 
-    points = (XPoint *) R_alloc(n+1, sizeof(XPoint));
-
-    for (i=0 ; i<n ; i++) {
-	points[i].x = (int)(x[i]);
-	points[i].y = (int)(y[i]);
-    }
-    points[n].x = (int)(x[0]);
-    points[n].y = (int)(y[0]);
-    CheckAlpha(gc->fill, xd);
-    if (R_OPAQUE(gc->fill)) {
+    if (R_ALPHA(gc->fill) > 0) {
 	SetColor(gc->fill, dd);
-	XFillPolygon(display, xd->window, xd->wgc, points, n, 
-		     Complex, CoordModeOrigin);
-#ifdef XSYNC
-	if (xd->type == WINDOW) XSync(display, 0);
-#endif
+	cairo_fill_preserve(xd->cc);
     }
-    CheckAlpha(gc->col, xd);
-    if (R_OPAQUE(gc->col)) {
+    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
-	XDrawLines(display, xd->window, xd->wgc, points, n+1, CoordModeOrigin);
-#ifdef XSYNC
-	if (xd->type == WINDOW) XSync(display, 0);
-#endif
-    }
+	SetLinetype(gc, xd);
+	cairo_stroke(xd->cc);
+    } else cairo_new_path(xd->cc);
 
-    vmaxset(vmax);
+#ifdef XSYNC
+    if (xd->type == WINDOW) XSync(display, 0);
+#endif
 }
 
+
+static void X11_MetricInfo(int c, pGEcontext gc,
+			   double* ascent, double* descent,
+			   double* width, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    cairo_text_extents_t te;
+    char str[16];
+    int c0 = c, Unicode = mbcslocale;
+	
+    if(c == 0) c = 77;
+    if(c < 0) {c = -c; Unicode = 1;}
+
+    if(Unicode) {
+	Rf_ucstoutf8(str, (unsigned int) c);
+    } else {
+	str[0] = c; str[1] = 0;
+	/* Here, we assume that c < 256 */
+    }
+    
+    SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
+    cairo_text_extents(xd->cc, str, &te);
+    *ascent  = -te.y_bearing; 
+    *descent = te.height+te.y_bearing;
+    *width = te.x_advance;
+    printf("c = %d, '%s', face %d %f %f %f\n", 
+	   c0, str, gc->fontface, *width, *ascent, *descent);
+}
+
+
+static double X11_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    cairo_text_extents_t te;
+
+    SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
+    cairo_text_extents(xd->cc, str, &te);
+    return te.x_advance;
+    
+}
 
 static void X11_Text(double x, double y,
 		     const char *str, double rot, double hadj,
 		     pGEcontext gc, pDevDesc dd)
 {
-    int size;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-
-    size = gc->cex * gc->ps + 0.5;
-    SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
-    CheckAlpha(gc->col, xd);
-    if (R_OPAQUE(gc->col)) {
+    
+    printf("'%s' in face %d\n", str, gc->fontface);
+    SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
+    if (R_ALPHA(gc->col) > 0) {
+	cairo_save(xd->cc);
+	cairo_move_to(xd->cc, x, y);
+	if (hadj != 0.0 || rot != 0.0) {
+	    cairo_text_extents_t te;
+	    cairo_text_extents(xd->cc, str, &te);
+	    if (rot != 0.0) {
+		cairo_rotate(xd->cc, -rot/180.*M_PI);
+	    }
+	    if (hadj != 0.0) 
+		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
+	}
 	SetColor(gc->col, dd);
-	XRfRotDrawString(display, xd->font, rot, xd->window,
-			 xd->wgc, (int)x, (int)y, str);
+	cairo_show_text(xd->cc, str);
+	cairo_restore(xd->cc);
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);
 #endif
@@ -2122,21 +1641,17 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 
     xd = Rf_allocX11DeviceDesc(pointsize);
     if(!xd) return FALSE;
-
-    /* Used to set dd->dp.font=1 and dd->dp.ps=pointsize,
-     * but Paul removed that.
-     * This sort of initialisation occurs in R base graphics now.
-     */
+    xd->bg = bgcolor;
 
     if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499) {
-	strcpy(xd->basefontfamily, fontname);
-	strcpy(xd->fontfamily, fontname);
+	strcpy(xd->basefontfamily, "Helvetica");
+	strcpy(xd->fontfamily, "Helvetica");
     } else {
 	strcpy(xd->basefontfamily,fn);
 	strcpy(xd->fontfamily,fn);
     }
     if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
-	strcpy(xd->symbolfamily, symbolname);
+	strcpy(xd->symbolfamily, "Symbol");
     else strcpy(xd->symbolfamily,fn);
 
     /*	Start the Device Driver and Hardcopy.  */
@@ -2188,7 +1703,10 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->locator = X11_Locator;
     dd->mode = X11_Mode;
     dd->metricInfo = X11_MetricInfo;
-    dd->hasTextUTF8 = FALSE;
+    dd->hasTextUTF8 = TRUE;
+    dd->strWidthUTF8 = X11_StrWidth;
+    dd->textUTF8 = X11_Text;
+    dd->wantSymbolUTF8 = TRUE;
     dd->useRotatedTextInContour = FALSE;
 
     /* Set required graphics parameters. */
@@ -2203,38 +1721,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* Nominal Character Sizes in Pixels */
 
-    SetBaseFont(xd);
-    {
-	XFontStruct *f;
-#ifdef USE_FONTSET
-	/* Use fudge size of M, not the max of the first font or the
-	   whole fontset which may have very wide characters if it contains
-	   a comprehensive ISO 10646 font.
-	 */
-	if(xd->font->type == Font_Set) {
-	    char buf[10];
-	    XRectangle ink, log;
-
-	    wcstombs(buf, L"M", 10);
-#ifdef HAVE_XUTF8TEXTEXTENTS
-	    if(utf8locale)
-		Xutf8TextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
-	    else
-#endif
-		XmbTextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
-	    dd->cra[0] = 2+log.width; /* fudge to allow some space */
-	    dd->cra[1] = 2+log.height;/* M has no descenders */
-	} else
-#endif
-	{
-	    f = xd->font->font;
-	    dd->cra[0] = f->max_bounds.rbearing - f->min_bounds.lbearing;
-	    dd->cra[1] = f->max_bounds.ascent + f->max_bounds.descent;
-	}
+    dd->cra[0] = xd->basefontsize*1.25;
+    dd->cra[1] = xd->basefontsize*1.5;
 #ifdef DEBUG_X11
-	printf("cra = %f %f\n", dd->cra[0], dd->cra[1]);
+    printf("cra = %f %f\n", dd->cra[0], dd->cra[1]);
 #endif
-    }
 
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
@@ -2367,10 +1858,6 @@ Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
     depth = DefaultDepth(display, screen);
     visual = DefaultVisual(display, screen);
     colormap = DefaultColormap(display, screen);
-    Vclass = visual->class;
-    model = colormodel;
-    maxcubesize = maxcube;
-    SetupX11Color();
     devPtrContext = XUniqueContext();
     displayOpen = TRUE;
     /* set error handlers */
