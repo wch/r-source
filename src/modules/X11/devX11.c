@@ -58,21 +58,16 @@
 #include <R_ext/eventloop.h>
 #include <R_ext/Memory.h>	/* vmaxget */
 
-#ifdef SUPPORT_MBCS
-/* This uses fontsets only in mbcslocales */
-# define USE_FONTSET 1
-/* In theory we should do this, but it works less well
-# ifdef X_HAVE_UTF8_STRING
-#  define HAVE_XUTF8TEXTESCAPEMENT 1
-#  define HAVE_XUTF8TEXTEXTENTS 1
-# endif */
-#endif
 
 #ifdef HAVE_WORKING_CAIRO
 #include <cairo.h>
 #include <cairo-xlib.h>
 #include <cairo-ft.h>
+#endif
+
+#if 0
 #include <fontconfig/fontconfig.h>
+
 #include <freetype2/freetype/ttnameid.h>
 
 static int has_initd_fc=0;
@@ -111,13 +106,8 @@ static int screen;				/* Screen */
 static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
 static int depth;				/* Pixmap depth */
-static int Vclass;				/* Visual class */
-static X_COLORTYPE model;			/* User color model */
-static int maxcubesize;				/* Max colorcube size */
 static XSetWindowAttributes attributes;		/* Window attributes */
 static Colormap colormap;			/* Default color map */
-static int blackpixel;				/* Black */
-static int whitepixel;				/* White */
 static XContext devPtrContext;
 static Atom _XA_WM_PROTOCOLS, protocol;
 
@@ -185,10 +175,9 @@ static void X11_Text(double x, double y, const char *str,
 
 static double pixelHeight(void);
 static double pixelWidth(void);
-static void SetColor(int, pDevDesc);
+static void SetColor(unsigned int, pDevDesc);
 static void SetFont(char*, int, double, pDevDesc);
 static void SetLinetype(R_GE_gcontext*, pX11Desc);
-static void X11_Close_bitmap(pX11Desc xd);
 
 
 
@@ -199,354 +188,6 @@ static void X11_Close_bitmap(pX11Desc xd);
 static double RedGamma	 = 0.6;
 static double GreenGamma = 0.6;
 static double BlueGamma	 = 0.6;
-
-
-/* Variables Used To Store Colormap Information */
-static struct { int red; int green; int blue; } RPalette[512];
-static XColor XPalette[512];
-static int PaletteSize;
-
-
-/* Monochome Displays : Compute pixel values by converting */
-/* RGB values to luminance and then thresholding. */
-/* See: Foley & van Damm. */
-
-static void SetupMonochrome(void)
-{
-    depth = 1;
-}
-
-static unsigned GetMonochromePixel(int r, int g, int b)
-{
-    if ((int)(0.299 * r + 0.587 * g + 0.114 * b) > 127)
-	return WhitePixel(display, screen);
-    else
-	return BlackPixel(display, screen);
-}
-
-
-/* Grayscale Displays : Compute pixel values by converting */
-/* RGB values to luminance.  See: Foley & van Damm. */
-
-static unsigned GetGrayScalePixel(int r, int g, int b)
-{
-    unsigned int d, dmin = 0xFFFFFFFF;
-    unsigned int dr;
-    int i;
-    unsigned int pixel = 0;  /* -Wall */
-    int gray = (0.299 * r + 0.587 * g + 0.114 * b) + 0.0001;
-    for (i = 0; i < PaletteSize; i++) {
-	dr = (RPalette[i].red - gray);
-	d = dr * dr;
-	if (d < dmin) {
-	    pixel = XPalette[i].pixel;
-	    dmin = d;
-	}
-    }
-    return pixel;
-}
-
-static Rboolean GetGrayPalette(Display *displ, Colormap cmap, int n)
-{
-    int status, i, m;
-    m = 0;
-    i = 0;
-    for (i = 0; i < n; i++) {
-	RPalette[i].red	  = (i * 0xff) / (n - 1);
-	RPalette[i].green = RPalette[i].red;
-	RPalette[i].blue  = RPalette[i].red;
-	/* Gamma correct here */
-	XPalette[i].red	  = (i * 0xffff) / (n - 1);
-	XPalette[i].green = XPalette[i].red;
-	XPalette[i].blue  = XPalette[i].red;
-	status = XAllocColor(displ, cmap, &XPalette[i]);
-	if (status == 0) {
-	    XPalette[i].flags = 0;
-	    m++;
-	}
-	else
-	    XPalette[i].flags = DoRed|DoGreen|DoBlue;
-    }
-    PaletteSize = n;
-    if (m > 0) {
-	for (i = 0; i < PaletteSize; i++) {
-	    if (XPalette[i].flags != 0)
-		XFreeColors(displ, cmap, &(XPalette[i].pixel), 1, 0);
-	}
-	PaletteSize = 0;
-	return FALSE;
-    }
-    else return TRUE;
-}
-
-static void SetupGrayScale(void)
-{
-    int res = 0, d;
-    PaletteSize = 0;
-    /* try for 128 grays on an 8-bit display */
-    if (depth > 8) d = depth = 8; else d = depth - 1;
-    /* try (256), 128, 64, 32, 16 grays */
-    while (d >= 4 && !(res = GetGrayPalette(display, colormap, 1 << d)))
-	d--;
-    if (!res) {
-	/* Can't find a sensible grayscale, so revert to monochrome */
-	warning(_("cannot set grayscale: reverting to monochrome"));
-	model = MONOCHROME;
-	SetupMonochrome();
-    }
-}
-
-/* PseudoColor Displays : There are two strategies here. */
-/* 1) allocate a standard color cube and match colors */
-/* within that based on (weighted) distances in RGB space. */
-/* 2) allocate colors exactly as they are requested until */
-/* all color cells are used.  Fail with an error message */
-/* when this happens. */
-
-static int RGBlevels[][3] = {  /* PseudoColor Palettes */
-    { 8, 8, 4 },
-    { 6, 7, 6 },
-    { 6, 6, 6 },
-    { 6, 6, 5 },
-    { 6, 6, 4 },
-    { 5, 5, 5 },
-    { 5, 5, 4 },
-    { 4, 4, 4 },
-    { 4, 4, 3 },
-    { 3, 3, 3 },
-    { 2, 2, 2 }
-};
-static int NRGBlevels = sizeof(RGBlevels) / (3 * sizeof(int));
-
-
-static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
-{
-    int status, i, m, r, g, b;
-    m = 0;
-    i = 0;
-    for (r = 0; r < nr; r++) {
-	for (g = 0; g < ng; g++) {
-	    for (b = 0; b < nb; b++) {
-		RPalette[i].red	  = (r * 0xff) / (nr - 1);
-		RPalette[i].green = (g * 0xff) / (ng - 1);
-		RPalette[i].blue  = (b * 0xff) / (nb - 1);
-		/* Perform Gamma Correction Here */
-		XPalette[i].red	  = pow(r / (nr - 1.0), RedGamma) * 0xffff;
-		XPalette[i].green = pow(g / (ng - 1.0), GreenGamma) * 0xffff;
-		XPalette[i].blue  = pow(b / (nb - 1.0), BlueGamma) * 0xffff;
-		/* End Gamma Correction */
-		status = XAllocColor(dpy, cmap, &XPalette[i]);
-		if (status == 0) {
-		    XPalette[i].flags = 0;
-		    m++;
-		}
-		else
-		    XPalette[i].flags = DoRed|DoGreen|DoBlue;
-		i++;
-	    }
-	}
-    }
-    PaletteSize = nr * ng * nb;
-    if (m > 0) {
-	for (i = 0; i < PaletteSize; i++) {
-	    if (XPalette[i].flags != 0)
-		XFreeColors(dpy, cmap, &(XPalette[i].pixel), 1, 0);
-	}
-	PaletteSize = 0;
-	return 0;
-    }
-    else
-	return 1;
-}
-
-static void SetupPseudoColor(void)
-{
-    int i, size;
-    PaletteSize = 0;
-    if (model == PSEUDOCOLOR1) {
-	for (i = 0; i < NRGBlevels; i++) {
-	    size = RGBlevels[i][0] * RGBlevels[i][1] * RGBlevels[i][2];
-	    if (size < maxcubesize && GetColorPalette(display, colormap,
-				RGBlevels[i][0],
-				RGBlevels[i][1],
-				RGBlevels[i][2]))
-		break;
-	}
-	if (PaletteSize == 0) {
-	    warning(_("X11 driver unable to obtain color cube\n  reverting to monochrome"));
-	    model = MONOCHROME;
-	    SetupMonochrome();
-	}
-    }
-    else {
-	PaletteSize = 0;
-    }
-}
-
-static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
-{
-    unsigned int d, dmin = 0xFFFFFFFF;
-    unsigned int dr, dg, db;
-    unsigned int pixel;
-    int i;
-    pixel = 0;			/* -Wall */
-    for (i = 0; i < PaletteSize; i++) {
-	dr = (RPalette[i].red - r);
-	dg = (RPalette[i].green - g);
-	db = (RPalette[i].blue - b);
-	d = dr * dr + dg * dg + db * db;
-	if (d < dmin) {
-	    pixel = XPalette[i].pixel;
-	    dmin = d;
-	}
-    }
-    return pixel;
-}
-
-static unsigned int GetPseudoColor2Pixel(int r, int g, int b)
-{
-    int i;
-    /* Search for previously allocated color */
-    for (i = 0; i < PaletteSize ; i++) {
-	if (r == RPalette[i].red &&
-	    g == RPalette[i].green &&
-	    b == RPalette[i].blue) return XPalette[i].pixel;
-    }
-    /* Attempt to allocate a new color */
-    XPalette[PaletteSize].red	= pow(r / 255.0, RedGamma) * 0xffff;
-    XPalette[PaletteSize].green = pow(g / 255.0, GreenGamma) * 0xffff;
-    XPalette[PaletteSize].blue	= pow(b / 255.0, BlueGamma) * 0xffff;
-    if (PaletteSize == 256 ||
-	XAllocColor(display, colormap, &XPalette[PaletteSize]) == 0) {
-	error(_("Error: X11 cannot allocate additional graphics colors.\n\
-Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."));
-    }
-    RPalette[PaletteSize].red = r;
-    RPalette[PaletteSize].green = g;
-    RPalette[PaletteSize].blue = b;
-    PaletteSize++;
-    return XPalette[PaletteSize - 1].pixel;
-}
-
-static unsigned int GetPseudoColorPixel(int r, int g, int b)
-{
-    if (model == PSEUDOCOLOR1)
-	return GetPseudoColor1Pixel(r, g, b);
-    else
-	return GetPseudoColor2Pixel(r, g, b);
-}
-
-/* Truecolor Displays : Allocate the colors as they are requested */
-
-static unsigned int RMask, RShift;
-static unsigned int GMask, GShift;
-static unsigned int BMask, BShift;
-
-static void SetupTrueColor(void)
-{
-    RMask = visual->red_mask;
-    GMask = visual->green_mask;
-    BMask = visual->blue_mask;
-    RShift = 0; while ((RMask & 1) == 0) { RShift++; RMask >>= 1; }
-    GShift = 0; while ((GMask & 1) == 0) { GShift++; GMask >>= 1; }
-    BShift = 0; while ((BMask & 1) == 0) { BShift++; BMask >>= 1; }
-}
-
-static unsigned GetTrueColorPixel(int r, int g, int b)
-{
-    r = pow((r / 255.0), RedGamma) * 255;
-    g = pow((g / 255.0), GreenGamma) * 255;
-    b = pow((b / 255.0), BlueGamma) * 255;
-    return
-	(((r * RMask) / 255) << RShift) |
-	(((g * GMask) / 255) << GShift) |
-	(((b * BMask) / 255) << BShift);
-}
-
-/* Interface for General Visual */
-
-static unsigned int GetX11Pixel(int r, int g, int b)
-{
-    switch(model) {
-    case MONOCHROME:
-	return GetMonochromePixel(r, g, b);
-    case GRAYSCALE:
-	return GetGrayScalePixel(r, g, b);
-    case PSEUDOCOLOR1:
-    case PSEUDOCOLOR2:
-	return GetPseudoColorPixel(r, g, b);
-    case TRUECOLOR:
-	return GetTrueColorPixel(r, g, b);
-    default:
-	printf("Unknown Visual\n");
-    }
-    return 0;
-}
-
-static void FreeX11Colors(void)
-{
-    int i;
-    if (model == PSEUDOCOLOR2) {
-	for (i = 0; i < PaletteSize; i++)
-	    XFreeColors(display, colormap, &(XPalette[i].pixel), 1, 0);
-	PaletteSize = 0;
-    }
-}
-
-static Rboolean SetupX11Color(void)
-{
-    if (depth <= 1) {
-	/* On monchome displays we must use black/white */
-	model = MONOCHROME;
-	SetupMonochrome();
-    }
-    else if (Vclass ==	StaticGray || Vclass == GrayScale) {
-	if (model == MONOCHROME)
-	    SetupMonochrome();
-	else {
-	    model = GRAYSCALE;
-	    SetupGrayScale();
-	}
-    }
-    else if (Vclass == StaticColor) {
-	/* FIXME : Currently revert to mono. */
-	/* Should do the real thing. */
-	model = MONOCHROME;
-	SetupMonochrome();
-    }
-    else if (Vclass ==	PseudoColor) {
-	if (model == MONOCHROME)
-	    SetupMonochrome();
-	else if (model == GRAYSCALE)
-	    SetupGrayScale();
-	else {
-	    if (model == TRUECOLOR)
-		model = PSEUDOCOLOR2;
-	    SetupPseudoColor();
-	}
-    }
-    else if (Vclass == TrueColor) {
-	if (model == MONOCHROME)
-	    SetupMonochrome();
-	else if (model == GRAYSCALE)
-	    SetupGrayScale();
-	else if (model == PSEUDOCOLOR1 || model == PSEUDOCOLOR2)
-	    SetupPseudoColor();
-	else
-	    SetupTrueColor();
-    }
-    else if (Vclass == DirectColor) {
-	/* FIXME : Currently revert to mono. */
-	/* Should do the real thing. */
-	model = MONOCHROME;
-	SetupMonochrome();
-    }
-    else {
-	printf("Unknown Visual\n");
-	return FALSE;
-    }
-    return TRUE;
-}
 
 	/* Pixel Dimensions (Inches) */
 
@@ -645,6 +286,7 @@ static void R_ProcessX11Events(void *data)
     }
 }
 
+#if 0
 static FT_Library Rcairo_ft_library = NULL;
 
 typedef struct {
@@ -727,6 +369,7 @@ static void Rcairo_set_font(int i, const char *fcname)
     } else
 	error("No font found Rcairo_set_font");
 }
+#endif
 
 static void SetFont(char* family, int face, double size, pDevDesc dd)
 {
@@ -738,8 +381,9 @@ static void SetFont(char* family, int face, double size, pDevDesc dd)
     if (face < 1 || face > 5) face = 1;
 
     if (face == 5) Cfontface="Symbol";
-    if (face == 2 || face == 4) slant=CAIRO_FONT_SLANT_ITALIC;
-    if (face == 3 || face == 4) wght=CAIRO_FONT_WEIGHT_BOLD;
+    else if (family[0]) Cfontface = family;
+    if (face == 2 || face == 4) wght = CAIRO_FONT_WEIGHT_BOLD;
+    if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
   
     cairo_select_font_face (xd->cc, Cfontface, slant, wght);
 #if 0
@@ -748,25 +392,27 @@ static void SetFont(char* family, int face, double size, pDevDesc dd)
     cairo_set_font_size (xd->cc, size/(dd->ipr[0]*72.0));
 }
 
-#define CREDC(C) (((unsigned int)(C))&0xff)
+#define CREDC(C)   (((unsigned int)(C))&0xff)
 #define CGREENC(C) ((((unsigned int)(C))&0xff00)>>8)
-#define CBLUEC(C) ((((unsigned int)(C))&0xff0000)>>16)
-#define CALPHA(C) ((((unsigned int)(C))&0xff000000)>>24)
+#define CBLUEC(C)  ((((unsigned int)(C))&0xff0000)>>16)
+#define CALPHA(C)  ((((unsigned int)(C))&0xff000000)>>24)
 
-static void SetColor(int col, pDevDesc dd)
+static void SetColor(unsigned int col, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    if (CALPHA(col) == 255) 
-	cairo_set_source_rgb (xd->cc, 
-			      ((double)CREDC(col))/255.,
-			      ((double)CGREENC(col))/255., 
-			      ((double)CBLUEC(col))/255.); 
+    unsigned int alpha = R_ALPHA(col);
+
+    if (alpha == 255) 
+	cairo_set_source_rgb(xd->cc, 
+			     ((double)R_RED(col))/255.,
+			     ((double)R_GREEN(col))/255., 
+			     ((double)R_BLUE(col))/255.); 
     else
-	cairo_set_source_rgba (xd->cc,
-			       ((double)CREDC(col))/255.,
-			       ((double)CGREENC(col))/255.,
-			       ((double)CBLUEC(col))/255.,
-			       ((double)CALPHA(col))/255.); 
+	cairo_set_source_rgba(xd->cc,
+			      ((double)R_RED(col))/255.,
+			      ((double)R_GREEN(col))/255.,
+			      ((double)R_BLUE(col))/255.,
+			      ((double)alpha)/255.); 
 }
 
 
@@ -875,7 +521,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
 
     XEvent event;
-    int iw, ih;
+    int iw, ih, blackpixel, whitepixel;
     X_GTYPE type;
     const char *p = dsp;
     XGCValues gcv;
@@ -883,11 +529,9 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     Rboolean DisplayOpened = FALSE;
     XSizeHints *hint;
 
-#ifdef USE_FONTSET
     if (!XSupportsLocale ())
 	warning(_("locale not supported by Xlib: some X ops will operate in C locale"));
     if (!XSetLocaleModifiers ("")) warning(_("X cannot set locale modifiers"));
-#endif
 
     if (!strncmp(dsp, "png::", 5)) {
 #ifndef HAVE_PNG
@@ -957,10 +601,13 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			    R_ProcessX11Events, XActivity);
     }
-    /* whitepixel = GetX11Pixel(255, 255, 255); */
-    whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor),
-			     R_BLUE(canvascolor));
-    blackpixel = GetX11Pixel(0, 0, 0);
+
+    whitepixel = blackpixel = 0;
+    { 
+	int d; 
+	for (d=DefaultDepth(display, screen); d; d--)
+	    whitepixel=(whitepixel << 1)|1; 
+    }
 
     /* Foreground and Background Colors */
 
@@ -1114,6 +761,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    }
 	    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
 	    cairo_reset_clip(xd->cc);
+
+#if 0
 	    /* Ensure that fontconfig library is ready */
 	    if (!has_initd_fc && !FcInit ())
 		error ("cannot init fontconfig library");
@@ -1133,6 +782,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		Rcairo_set_font(3,"Helvetica:style=Bold Italic,BoldItalic");
 	    if (Rcairo_fonts[4].face == NULL)
 		Rcairo_set_font(4,"Symbol");
+#endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);
@@ -1239,7 +889,7 @@ extern int R_SaveAsJpeg(void  *d, int width, int height,
 			unsigned long (*gp)(XImage *, int, int),
 			int bgr, int quality, FILE *outfile, int res);
 
-
+#if 0
 static long knowncols[512];
 
 
@@ -1309,6 +959,7 @@ static void X11_Close_bitmap(pX11Desc xd)
 		     bitgp, 0, xd->quality, xd->fp, xd->res_dpi);
     XDestroyImage(xi);
 }
+#endif
 
 static void X11_Close(pDevDesc dd)
 {
@@ -1326,11 +977,13 @@ static void X11_Close(pDevDesc dd)
 	XFreeCursor(display, xd->gcursor);
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
+#if 0
     } else {
 	if (xd->npages && xd->type != XIMAGE) X11_Close_bitmap(xd);
 	XFreeGC(display, xd->wgc);
 	XFreePixmap(display, xd->window);
 	if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
+#endif
     }
 
     numX11Devices--;
@@ -1513,8 +1166,7 @@ static void X11_MetricInfo(int c, pGEcontext gc,
     *ascent  = -te.y_bearing; 
     *descent = te.height+te.y_bearing;
     *width = te.x_advance;
-    printf("c = %d, '%s', face %d %f %f %f\n", 
-	   c0, str, gc->fontface, *width, *ascent, *descent);
+    //printf("c = %d, '%s', face %d %f %f %f\n", c0, str, gc->fontface, *width, *ascent, *descent);
 }
 
 
@@ -1535,7 +1187,7 @@ static void X11_Text(double x, double y,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
-    printf("'%s' in face %d\n", str, gc->fontface);
+    //printf("'%s' in face %d\n", str, gc->fontface);
     SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
