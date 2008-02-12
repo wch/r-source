@@ -162,6 +162,9 @@ x$name
   equivalent to \code{alist[[i1]]\dots[[ip]]} providing all but the
   final indexing results in a list.
 
+  When either \code{[[} or \code{$} is used for replacement, a value of
+  \code{NULL} deletes the corresponding item of the list.
+
   When \code{$<-} is applied to a \code{NULL} \code{x}, it first coerces
   \code{x} to \code{list()}.  This is what also happens with \code{[[<-}
   if the replacement value \code{value} is of length greater than one:
