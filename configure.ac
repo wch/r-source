@@ -1973,7 +1973,7 @@ R_TYPE_KEYSYM
 ## check if Xmu is supported
 R_X11_Xmu
 
-R_CAIRO
+R_PANGO_CAIRO
 
 ## check for CoreFoundation framework (chances are much higher
 ## that we can build AQUA if this one is present)

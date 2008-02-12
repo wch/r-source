@@ -60,18 +60,11 @@
 
 
 #ifdef HAVE_WORKING_CAIRO
-#include <cairo.h>
+#include <pango/pango.h>
+#include <pango/pangocairo.h>
 #include <cairo-xlib.h>
-#include <cairo-ft.h>
 #endif
 
-#if 0
-#include <fontconfig/fontconfig.h>
-
-#include <freetype2/freetype/ttnameid.h>
-
-static int has_initd_fc=0;
-#endif
 
 #include "devX11.h"
 
@@ -176,7 +169,6 @@ static void X11_Text(double x, double y, const char *str,
 static double pixelHeight(void);
 static double pixelWidth(void);
 static void SetColor(unsigned int, pDevDesc);
-static void SetFont(char*, int, double, pDevDesc);
 static void SetLinetype(R_GE_gcontext*, pX11Desc);
 
 
@@ -285,117 +277,6 @@ static void R_ProcessX11Events(void *data)
 	handleEvent(event);
     }
 }
-
-#if 0
-static FT_Library Rcairo_ft_library = NULL;
-
-typedef struct {
-    cairo_font_face_t *face;
-    int updated;
-} Rcairo_font_face;
-
-static Rcairo_font_face Rcairo_fonts[5] = {
-    { NULL, 0 },
-    { NULL, 0 },
-    { NULL, 0 },
-    { NULL, 0 },
-    { NULL, 0 }
-};
-
-static cairo_font_face_t *Rcairo_set_font_face(int i, const char *file)
-{
-    FT_Face face;
-    FT_Error er;
-    FT_CharMap found = 0; 
-    FT_CharMap charmap; 
-    int n; 
-
-    /* Ensure that freetype library is ready */
-    if (!Rcairo_ft_library &&
-	FT_Init_FreeType(&Rcairo_ft_library))
-	error("Failed to initialize freetype library in Rcairo_set_font_face");
-
-    er = FT_New_Face(Rcairo_ft_library, file, 0, &face);
-    if (er == FT_Err_Unknown_File_Format)
-	error("Unsupported font file format");
-    else if (er) error("Unknown font problem");
-
-    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
-}
-
-static void Rcairo_set_font(int i, const char *fcname)
-{
-    FcFontSet	*fs;
-    FcPattern   *pat, *match;
-    FcResult	result;
-    FcChar8	*file;
-    int j;
-
-    if (Rcairo_fonts[i].face != NULL) {
-	cairo_font_face_destroy(Rcairo_fonts[i].face);
-	Rcairo_fonts[i].face = NULL;
-    }
-
-    pat = FcNameParse((FcChar8 *)fcname);
-    if (!pat)
-	error("Problem with font config library in Rcairo_set_font");
-
-    FcConfigSubstitute (0, pat, FcMatchPattern);
-    FcDefaultSubstitute (pat);
-
-    fs = FcFontSetCreate ();
-    match = FcFontMatch (0, pat, &result);
-    FcPatternDestroy (pat);
-    if (match)
-	FcFontSetAdd (fs, match);
-    else {
-	FcFontSetDestroy (fs);
-	error("No font found in Rcairo_set_font");
-    }
-
-    /* should be at least one font face in fontset */
-    if (fs) {
-	for (j = 0; j < fs->nfont; j++) {
-	    /* Need to make sure a real font file exists */
-	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file) 
-		== FcResultMatch) {
-		Rcairo_fonts[i].face = 
-		    Rcairo_set_font_face(i, (const char *)file);
-		break;
-	    }
-	}
-	FcFontSetDestroy (fs);
-	Rcairo_fonts[i].updated = 1;
-    } else
-	error("No font found Rcairo_set_font");
-}
-#endif
-
-static void SetFont(char* family, int face, double size, pDevDesc dd)
-{
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    char *Cfontface = "Helvetica";
-    int slant = CAIRO_FONT_SLANT_NORMAL;
-    int wght  = CAIRO_FONT_WEIGHT_NORMAL;
-
-    if (face < 1 || face > 5) face = 1;
-
-    if (face == 5) Cfontface="Symbol";
-    else if (family[0]) Cfontface = family;
-    if (face == 2 || face == 4) wght = CAIRO_FONT_WEIGHT_BOLD;
-    if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
-  
-    cairo_select_font_face (xd->cc, Cfontface, slant, wght);
-#if 0
-    cairo_set_font_face(xd->cc, Rcairo_fonts[face].face);
-#endif
-    cairo_set_font_size (xd->cc, size/(dd->ipr[0]*72.0));
-}
-
-#define CREDC(C)   (((unsigned int)(C))&0xff)
-#define CGREENC(C) ((((unsigned int)(C))&0xff00)>>8)
-#define CBLUEC(C)  ((((unsigned int)(C))&0xff0000)>>16)
-#define CALPHA(C)  ((((unsigned int)(C))&0xff000000)>>24)
 
 static void SetColor(unsigned int col, pDevDesc dd)
 {
@@ -762,27 +643,6 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
 	    cairo_reset_clip(xd->cc);
 
-#if 0
-	    /* Ensure that fontconfig library is ready */
-	    if (!has_initd_fc && !FcInit ())
-		error ("cannot init fontconfig library");
-	    has_initd_fc = 1;
-
-	    /* Ensure that freetype library is ready */
-	    if (!Rcairo_ft_library && FT_Init_FreeType(&Rcairo_ft_library))
-		error("Failed to initialize freetype library");
-	    
-	    if (Rcairo_fonts[0].face == NULL) 
-		Rcairo_set_font(0,"Helvetica:style=Regular");
-	    if (Rcairo_fonts[1].face == NULL) 
-		Rcairo_set_font(1,"Helvetica:style=Bold");
-	    if (Rcairo_fonts[2].face == NULL)
-		Rcairo_set_font(2,"Helvetica:style=Italic");
-	    if (Rcairo_fonts[3].face == NULL)
-		Rcairo_set_font(3,"Helvetica:style=Bold Italic,BoldItalic");
-	    if (Rcairo_fonts[4].face == NULL)
-		Rcairo_set_font(4,"Symbol");
-#endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);
@@ -889,77 +749,6 @@ extern int R_SaveAsJpeg(void  *d, int width, int height,
 			unsigned long (*gp)(XImage *, int, int),
 			int bgr, int quality, FILE *outfile, int res);
 
-#if 0
-static long knowncols[512];
-
-
-static unsigned long bitgp(XImage *xi, int x, int y)
-{
-    int i, r, g, b;
-    XColor xcol;
-    /*	returns the colour of the (x,y) pixel stored as RGB */
-    i = XGetPixel(xi, y, x);
-    switch(model) {
-    case MONOCHROME:
-	return (i==0)?0xFFFFFF:0;
-    case GRAYSCALE:
-    case PSEUDOCOLOR1:
-    case PSEUDOCOLOR2:
-	if (i < 512) {
-	    if (knowncols[i] < 0) {
-		xcol.pixel = i;
-		XQueryColor(display, colormap, &xcol);
-		knowncols[i] = ((xcol.red>>8)<<16) | ((xcol.green>>8)<<8)
-		    | (xcol.blue>>8);
-	    }
-	    return knowncols[i];
-	}
-	else {
-	    xcol.pixel = i;
-	    XQueryColor(display, colormap, &xcol);
-	    return ((xcol.red>>8)<<16) | ((xcol.green>>8)<<8) | (xcol.blue>>8);
-	}
-    case TRUECOLOR:
-	r = ((i>>RShift)&RMask) * 255 /(RMask);
-	g = ((i>>GShift)&GMask) * 255 /(GMask);
-	b = ((i>>BShift)&BMask) * 255 /(BMask);
-	return (r<<16) | (g<<8) | b;
-    default:
-	return 0;
-    }
-    /* return 0;  not reached, needed for some compilers */
-}
-
-static void X11_Close_bitmap(pX11Desc xd)
-{
-    int i;
-    XImage *xi;
-    for (i = 0; i < 512; i++) knowncols[i] = -1;
-    xi = XGetImage(display, xd->window, 0, 0,
-		   xd->windowWidth, xd->windowHeight,
-		   AllPlanes, ZPixmap);
-    if (xd->type == PNG) {
-	unsigned int pngtrans = PNG_TRANS;
-	if(model == TRUECOLOR) {
-	    int i, r, g, b;
-	    /* some 'truecolor' displays distort colours */
-	    i = GetX11Pixel(R_RED(PNG_TRANS),
-			    R_GREEN(PNG_TRANS),
-			    R_BLUE(PNG_TRANS));
-	    r = ((i>>RShift)&RMask) * 255 /(RMask);
-	    g = ((i>>GShift)&GMask) * 255 /(GMask);
-	    b = ((i>>BShift)&BMask) * 255 /(BMask);
-	    pngtrans = (r<<16) | (g<<8) | b;
-	}
-	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
-		    bitgp, 0, xd->fp,
-		    (xd->fill != PNG_TRANS) ? 0 : pngtrans, xd->res_dpi);
-    } else if (xd->type == JPEG)
-	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
-		     bitgp, 0, xd->quality, xd->fp, xd->res_dpi);
-    XDestroyImage(xi);
-}
-#endif
 
 static void X11_Close(pDevDesc dd)
 {
@@ -1141,15 +930,72 @@ static void X11_Polygon(int n, double *x, double *y,
 #endif
 }
 
+static PangoFontDescription *getFont(pDevDesc dd, pGEcontext gc)
+{
+    PangoFontDescription *fontdesc;
+    gint size, face = gc->fontface;
+    
+    if (face < 1 || face > 5) face = 1;
+
+    size = gc->cex * gc->ps + 0.5;
+	
+    fontdesc = pango_font_description_new();
+    if (face == 5)
+	pango_font_description_set_family(fontdesc, "symbol");
+    else {
+	char *fm = gc->fontfamily;
+	pango_font_description_set_family(fontdesc, fm[0] ? fm : "helvetica");
+	if(face == 2 || face == 4)
+	    pango_font_description_set_weight(fontdesc, PANGO_WEIGHT_BOLD);
+	if(face == 3 || face == 4)
+	    pango_font_description_set_style(fontdesc, PANGO_STYLE_OBLIQUE);
+    }
+    pango_font_description_set_size(fontdesc, PANGO_SCALE * size);
+	
+    return fontdesc;
+}
+
+static PangoLayout 
+*layoutText(PangoFontDescription *desc, cairo_t *cc, const char *str)
+{
+    PangoLayout *layout;
+	
+    layout = pango_cairo_create_layout(cc);
+    pango_layout_set_font_description(layout, desc);
+    pango_layout_set_text(layout, str, -1);
+    return layout;
+}
+
+static void
+text_extents(PangoFontDescription *desc, cairo_t *cc,
+	     pGEcontext gc, const gchar *str,
+	     gint *lbearing, gint *rbearing, 
+	     gint *width, gint *ascent, gint *descent)
+{
+    PangoLayout *layout;
+    PangoRectangle rect;
+	
+    layout = layoutText(desc, cc, str);
+    pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
+					NULL, &rect);
+
+    if(ascent) *ascent = PANGO_ASCENT(rect);
+    if(descent) *descent = PANGO_DESCENT(rect);
+    if(width) *width = rect.width;
+    if(lbearing) *lbearing = PANGO_LBEARING(rect);
+    if(rbearing) *rbearing = PANGO_RBEARING(rect);
+    g_object_unref(layout);
+}
 
 static void X11_MetricInfo(int c, pGEcontext gc,
 			   double* ascent, double* descent,
 			   double* width, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    cairo_text_extents_t te;
     char str[16];
-    int c0 = c, Unicode = mbcslocale;
+    int Unicode = mbcslocale;
+    PangoFontDescription *desc = getFont(dd, gc);
+    gint iascent, idescent, iwidth;
 	
     if(c == 0) c = 77;
     if(c < 0) {c = -c; Unicode = 1;}
@@ -1160,25 +1006,25 @@ static void X11_MetricInfo(int c, pGEcontext gc,
 	str[0] = c; str[1] = 0;
 	/* Here, we assume that c < 256 */
     }
-    
-    SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
-    cairo_text_extents(xd->cc, str, &te);
-    *ascent  = -te.y_bearing; 
-    *descent = te.height+te.y_bearing;
-    *width = te.x_advance;
-    //printf("c = %d, '%s', face %d %f %f %f\n", c0, str, gc->fontface, *width, *ascent, *descent);
+    text_extents(desc, xd->cc, gc, str, NULL, NULL, 
+		 &iwidth, &iascent, &idescent);
+    *ascent = iascent;
+    *descent = idescent;
+    *width = iwidth;
+    //printf("c = %d, '%s', face %d %f %f %f\n", 
+//	   c, str, gc->fontface, *width, *ascent, *descent);
 }
 
 
 static double X11_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    cairo_text_extents_t te;
+    gint width;
+    PangoFontDescription *desc = getFont(dd, gc);
 
-    SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
-    cairo_text_extents(xd->cc, str, &te);
-    return te.x_advance;
-    
+    text_extents(desc, xd-> cc, gc, str, NULL, NULL, &width, NULL, NULL);
+    pango_font_description_free(desc);
+    return (double) width;
 }
 
 static void X11_Text(double x, double y,
@@ -1186,23 +1032,23 @@ static void X11_Text(double x, double y,
 		     pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    gint ascent, lbearing, width;
+    PangoLayout *layout;
+    PangoFontDescription *desc = getFont(dd, gc);
     
-    //printf("'%s' in face %d\n", str, gc->fontface);
-    SetFont(gc->fontfamily, gc->fontface, gc->cex * gc->ps, dd);
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
+	text_extents(desc, xd->cc, gc, str, &lbearing, NULL, &width, 
+		     &ascent, NULL);
 	cairo_move_to(xd->cc, x, y);
-	if (hadj != 0.0 || rot != 0.0) {
-	    cairo_text_extents_t te;
-	    cairo_text_extents(xd->cc, str, &te);
-	    if (rot != 0.0) {
-		cairo_rotate(xd->cc, -rot/180.*M_PI);
-	    }
-	    if (hadj != 0.0) 
-		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
-	}
+	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
+	/* pango has a coord system at top left */
+	cairo_rel_move_to(xd->cc, -lbearing - width*hadj, -ascent);
 	SetColor(gc->col, dd);
-	cairo_show_text(xd->cc, str);
+	layout = layoutText(desc, xd->cc, str);
+	pango_cairo_show_layout(xd->cc, layout);
+	g_object_unref(layout);
+	pango_font_description_free(desc);
 	cairo_restore(xd->cc);
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);
@@ -1395,7 +1241,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     /* Device capabilities */
 
     dd->canClip = TRUE;
-    dd->canHAdj = 0;
+    dd->canHAdj = 2;
     dd->canChangeGamma = FALSE;
 
     dd->startps = xd->basefontsize;

@@ -43446,12 +43446,12 @@ echo "$as_me: not checking for Cairo as pkg-config is not present" >&6;}
 else
   save_CPPFLAGS=${CPPFLAGS}
   save_LIBS=${LIBS}
-  { echo "$as_me:$LINENO: checking whether pkg-config knows about Cairo" >&5
-echo $ECHO_N "checking whether pkg-config knows about Cairo... $ECHO_C" >&6; }
+  { echo "$as_me:$LINENO: checking whether pkg-config knows about Cairo and pango" >&5
+echo $ECHO_N "checking whether pkg-config knows about Cairo and pango... $ECHO_C" >&6; }
 if test "${r_cv_has_cairo+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  if "${PKGCONF}" --exists cairo; then
+  if "${PKGCONF}" --exists pangocairo; then
          r_cv_has_cairo="yes"
        else
          r_cv_has_cairo="no"
@@ -43461,7 +43461,7 @@ fi
 { echo "$as_me:$LINENO: result: $r_cv_has_cairo" >&5
 echo "${ECHO_T}$r_cv_has_cairo" >&6; }
   if test "x${r_cv_has_cairo}" = "xyes"; then
-     modlist="cairo"
+     modlist="pangocairo"
      for module in cairo-ft cairo-xlib cairo-xlib-xrender; do
        if "${PKGCONF}" --exists ${module}; then
 	 modlist="${modlist} ${module}"
