@@ -172,7 +172,6 @@ static void SetColor(unsigned int, pDevDesc);
 static void SetLinetype(R_GE_gcontext*, pX11Desc);
 
 
-
 	/************************/
 	/* X11 Color Management */
 	/************************/
@@ -258,6 +257,7 @@ static void handleEvent(XEvent event)
 	    pGEDevDesc gdd = GEgetDevice(devNum);
 	    dd = (pDevDesc) temp;
 	    xd = (pX11Desc) dd->deviceSpecific;
+	    /* could check existing size here */
 	    if (xd->cs)
 		cairo_xlib_surface_set_size(xd->cs, xd->windowWidth, 
 					    xd->windowHeight);
@@ -318,6 +318,7 @@ static void SetLinetype(pGEcontext gc, pX11Desc xd)
     case GE_BEVEL_JOIN: ljoin = CAIRO_LINE_JOIN_BEVEL; break;
     } 
     cairo_set_line_join(cc, ljoin);
+    cairo_set_miter_limit(cc, gc->lmitre);
 
     if (gc->lty == 0 || gc->lty == -1)
 	cairo_set_dash(cc, 0, 0, 0);
@@ -696,6 +697,19 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    warning(_("unable to create pixmap"));
 	    return FALSE;
 	}
+	xd->cs = cairo_xlib_surface_create(display, xd->window, 
+					   visual,
+					   (double)xd->windowWidth,
+					   (double)xd->windowHeight);
+	if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+	    /* bail out */
+	}
+	xd->cc = cairo_create(xd->cs);
+	if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+		/* bail out */
+	}
+	cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
+	cairo_reset_clip(xd->cc);
 	/* Save the pDevDesc with the window for event dispatching */
 	/* Is this needed? */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);
@@ -707,11 +721,6 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     gcv.arc_mode = ArcChord;
     xd->wgc = XCreateGC(display, xd->window, GCArcMode, &gcv);
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
-
-    xd->lty = -1;
-    xd->lwd = -1;
-    xd->lend = 0;
-    xd->ljoin = 0;
 
     numX11Devices++;
     return TRUE;
@@ -749,8 +758,8 @@ static void X11_NewPage(pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
     cairo_reset_clip(xd->cc);
-    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
-SetColor(xd->fill, dd);
+    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
+    SetColor(xd->fill, dd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
 
@@ -784,13 +793,11 @@ static void X11_Close(pDevDesc dd)
 	XFreeCursor(display, xd->gcursor);
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
-#if 0
     } else {
 	if (xd->npages && xd->type != XIMAGE) X11_Close_bitmap(xd);
 	XFreeGC(display, xd->wgc);
 	XFreePixmap(display, xd->window);
 	if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
-#endif
     }
 
     numX11Devices--;
@@ -1277,9 +1284,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* initialise x11 device description */
     /* (most of the work has been done in X11_Open) */
-
-    xd->cex = 1.0;
-    xd->lty = 0;
     xd->resize = 0;
 
     dd->deviceSpecific = (void *) xd;

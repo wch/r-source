@@ -74,15 +74,6 @@ typedef struct {
     /* Local device copy so that we can detect */
     /* when parameter changes. */
 
-    /* cex retained -- its a GRZ way of specifying text size, but
-     * it's too much work to change at this time (?)
-     */
-    double cex;				/* Character expansion */
-    int lty;				/* Line type */
-    double lwd;
-    R_GE_lineend lend;
-    R_GE_linejoin ljoin;
-    double lmitre;
     int col;				/* Color */
     int fill;
     int bg;				/* bg */
@@ -106,8 +97,6 @@ typedef struct {
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
-    R_XFont *fixedfont;
-    R_XFont *font;
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
@@ -121,7 +110,6 @@ typedef struct {
                                            or whether R is to handle the events
 					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
-    Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
     cairo_t *cc;
     cairo_surface_t *cs;
