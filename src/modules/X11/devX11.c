@@ -282,18 +282,21 @@ static void SetColor(unsigned int col, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     unsigned int alpha = R_ALPHA(col);
+    double red, blue, green;
 
+    red = R_RED(col)/255.0;
+    green = R_GREEN(col)/255.0;
+    blue = R_BLUE(col)/255.0;
+    /* NB: this uses display gamma 0.6 for historical reasons,
+       to match the previous X11 device */
+    red = pow(red, RedGamma);
+    green = pow(green, GreenGamma);
+    blue = pow(blue, BlueGamma);
+    
     if (alpha == 255) 
-	cairo_set_source_rgb(xd->cc, 
-			     ((double)R_RED(col))/255.,
-			     ((double)R_GREEN(col))/255., 
-			     ((double)R_BLUE(col))/255.); 
+	cairo_set_source_rgb(xd->cc, red, green, blue); 
     else
-	cairo_set_source_rgba(xd->cc,
-			      ((double)R_RED(col))/255.,
-			      ((double)R_GREEN(col))/255.,
-			      ((double)R_BLUE(col))/255.,
-			      ((double)alpha)/255.); 
+	cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0); 
 }
 
 
@@ -483,12 +486,27 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			    R_ProcessX11Events, XActivity);
     }
 
-    whitepixel = blackpixel = 0;
-    { 
-	int d; 
-	for (d=DefaultDepth(display, screen); d; d--)
-	    whitepixel=(whitepixel << 1)|1; 
+    blackpixel = 0;
+    {
+	static unsigned int RMask, RShift;
+	static unsigned int GMask, GShift;
+	static unsigned int BMask, BShift;
+	unsigned int r = R_RED(canvascolor), g = R_GREEN(canvascolor),
+	    b = R_BLUE(canvascolor);
+	r = pow((r / 255.0), RedGamma) * 255;
+	g = pow((g / 255.0), GreenGamma) * 255;
+	b = pow((b / 255.0), BlueGamma) * 255;
+	RMask = visual->red_mask;
+	GMask = visual->green_mask;
+	BMask = visual->blue_mask;
+	RShift = 0; while ((RMask & 1) == 0) { RShift++; RMask >>= 1; }
+	GShift = 0; while ((GMask & 1) == 0) { GShift++; GMask >>= 1; }
+	BShift = 0; while ((BMask & 1) == 0) { BShift++; BMask >>= 1; }
+	whitepixel = (((r * RMask) / 255) << RShift) |
+	    (((g * GMask) / 255) << GShift) |
+	    (((b * BMask) / 255) << BShift);
     }
+    
 
     /* Foreground and Background Colors */
 
@@ -731,8 +749,8 @@ static void X11_NewPage(pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
     cairo_reset_clip(xd->cc);
-    if (R_TRANSPARENT(xd->bg)) SetColor(xd->canvas, dd); 
-    else SetColor(xd->bg, dd);
+    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
+SetColor(xd->fill, dd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
 
@@ -970,14 +988,18 @@ static void
 text_extents(PangoFontDescription *desc, cairo_t *cc,
 	     pGEcontext gc, const gchar *str,
 	     gint *lbearing, gint *rbearing, 
-	     gint *width, gint *ascent, gint *descent)
+	     gint *width, gint *ascent, gint *descent, int ink)
 {
     PangoLayout *layout;
     PangoRectangle rect;
 	
     layout = layoutText(desc, cc, str);
-    pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
-					NULL, &rect);
+    if(ink) 
+	pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
+					    &rect, NULL);
+    else
+	pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
+					    NULL, &rect);
 
     if(ascent) *ascent = PANGO_ASCENT(rect);
     if(descent) *descent = PANGO_DESCENT(rect);
@@ -1007,12 +1029,14 @@ static void X11_MetricInfo(int c, pGEcontext gc,
 	/* Here, we assume that c < 256 */
     }
     text_extents(desc, xd->cc, gc, str, NULL, NULL, 
-		 &iwidth, &iascent, &idescent);
+		 &iwidth, &iascent, &idescent, 1);
     *ascent = iascent;
     *descent = idescent;
     *width = iwidth;
-    //printf("c = %d, '%s', face %d %f %f %f\n", 
-//	   c, str, gc->fontface, *width, *ascent, *descent);
+#if 0
+    printf("c = %d, '%s', face %d %f %f %f\n", 
+	   c, str, gc->fontface, *width, *ascent, *descent);
+#endif
 }
 
 
@@ -1022,7 +1046,7 @@ static double X11_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
     gint width;
     PangoFontDescription *desc = getFont(dd, gc);
 
-    text_extents(desc, xd-> cc, gc, str, NULL, NULL, &width, NULL, NULL);
+    text_extents(desc, xd-> cc, gc, str, NULL, NULL, &width, NULL, NULL, 0);
     pango_font_description_free(desc);
     return (double) width;
 }
@@ -1039,7 +1063,7 @@ static void X11_Text(double x, double y,
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
 	text_extents(desc, xd->cc, gc, str, &lbearing, NULL, &width, 
-		     &ascent, NULL);
+		     &ascent, NULL, 0);
 	cairo_move_to(xd->cc, x, y);
 	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 	/* pango has a coord system at top left */
@@ -1345,6 +1369,7 @@ Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
     alreadyDone = 1; */
     display = dpy;
 
+/* Note: this sets a global gamma, not just for the current device */
 #define SETGAMMA
 #ifdef SETGAMMA
     RedGamma   = gamma_fac;
