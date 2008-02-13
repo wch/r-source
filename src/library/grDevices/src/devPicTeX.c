@@ -701,8 +701,8 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
 
-    dd->cra[0] =	 (6.0/12.0) * 10.0;
-    dd->cra[1] =	(10.0/12.0) * 10.0;
+    dd->cra[0] =  9;
+    dd->cra[1] = 12;
 
     /* Character Addressing Offsets */
     /* These offsets should center a single */
