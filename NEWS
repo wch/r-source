@@ -465,6 +465,10 @@ BUG FIXES
 	could crash if the 'End' key was used and all the columns
 	would have fitted into the window.
 
+    o	Creating a new page on an X11() device (by plot.new() or
+	grid.newpage()) did not flush out the XClearWindow call, so
+	the X11 window might not be refreshed immediately.
+
 
 
 
