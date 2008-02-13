@@ -55,7 +55,7 @@ MinVersion=0,5.0
 END
 
 my $lines=<<END;
-AppName=R for Windows
+AppName=R for Windows $RVER
 AppVerName=R for Windows $RVER
 AppPublisher=R Development Core Team
 AppPublisherURL=http://www.r-project.org

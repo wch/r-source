@@ -218,6 +218,16 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.6.2 patched
+
+INSTALLER
+
+    o	The installer now uses version-specific identifiers so that
+	multiple versions of R can be installed and uninstalled
+	separately. (PR#10746)
+
+
+
 		CHANGES IN R VERSION 2.6.2
 
 WORKAROUNDS

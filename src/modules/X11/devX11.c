@@ -1672,6 +1672,7 @@ static void X11_NewPage(pGEcontext gc, pDevDesc dd)
 	XSetWindowBackground(display, xd->window, whitepixel);
     }
     XClearWindow(display, xd->window);
+    XSync(display, 0);
 }
 
 extern int R_SaveAsPng(void  *d, int width, int height,

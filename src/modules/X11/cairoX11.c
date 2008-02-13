@@ -185,6 +185,8 @@ static void Cairo_NewPage(pGEcontext gc, pDevDesc dd)
     CairoColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
+    /* Apparently needed */
+    XSync(display, 0);
 }
 
 static void Cairo_Rect(double x0, double y0, double x1, double y1,
