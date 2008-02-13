@@ -1094,8 +1094,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
 
     XEvent event;
-    int iw, ih;
-    int blackpixel;
+    int iw, ih, blackpixel;
     X_GTYPE type;
     const char *p = dsp;
     XGCValues gcv;
@@ -2295,9 +2294,9 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return;
 	if (!X11DeviceDriver(dev, display, width, height,
-				ps, gamma, colormodel, maxcubesize,
-				bgcolor, canvascolor, sfonts, res,
-				xpos, ypos, title)) {
+			     ps, gamma, colormodel, maxcubesize,
+			     bgcolor, canvascolor, sfonts, res,
+			     xpos, ypos, title)) {
 	    free(dev);
 	    errorcall(gcall, _("unable to start device %s"), devname);
        	}
@@ -2374,7 +2373,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) || LENGTH(sc) != 1)
-	error(_("invalid value of 'title' in devWindows"));
+	errorcall(call, _("invalid '%s' value"), "title");
     title = CHAR(STRING_ELT(sc, 0));
 
     devname = "X11";

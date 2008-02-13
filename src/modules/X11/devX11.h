@@ -100,8 +100,6 @@ typedef struct {
     XSetWindowAttributes attributes;	/* Window attributes */
     XRectangle clip;			/* The clipping rectangle */
 
-    int usefixed;
-    R_XFont *fixedfont;
     R_XFont *font;
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
