@@ -3138,7 +3138,7 @@ SEXP L_locator() {
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
-    GEmode(2, dd);
+    GEMode(2, dd);
     PROTECT(answer = allocVector(REALSXP, 2));
     /*
      * Get a mouse click
@@ -3152,7 +3152,7 @@ SEXP L_locator() {
 	REAL(answer)[1] = NA_REAL;	
     }
     UNPROTECT(1);
-    GEmode(0, dd);
+    GEMode(0, dd);
     return answer;
 }
 
