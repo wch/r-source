@@ -74,15 +74,13 @@ typedef struct {
     /* Local device copy so that we can detect */
     /* when parameter changes. */
 
-    /* cex retained -- its a GRZ way of specifying text size, but
-     * its too much work to change at this time (?)
-     */
-    double cex;				/* Character expansion */
+    /* Used to detect changes */ 
     int lty;				/* Line type */
     double lwd;
     R_GE_lineend lend;
     R_GE_linejoin ljoin;
-    double lmitre;
+    /* double lmitre; not yet used: Xlib has no way to set this */
+
     int col;				/* Color */
     int fill;
     int canvas;				/* Canvas */
@@ -102,10 +100,6 @@ typedef struct {
     GC wgc;				/* GC for window */
     Cursor gcursor;			/* Graphics Cursor */
     XSetWindowAttributes attributes;	/* Window attributes */
-#if 0
-    XColor fgcolor;			/* Foreground color */
-    XColor bgcolor;			/* Background color */
-#endif
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
@@ -137,12 +131,6 @@ int Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
 		     int maxcube, Rboolean setHandlers);
 
 int Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, X11Desc *xd);
-
-Rboolean X11_Open(pDevDesc dd, pX11Desc xd, 
-		  const char *dsp, double w, double h, 
-		  double gamma_fac, X_COLORTYPE colormodel, 
-		  int maxcube, int bgcolor, int canvascolor, 
-		  int res, int xpos, int ypos);
 
 #endif
 
