@@ -419,7 +419,13 @@ BUG FIXES
         what happens in S-PLUS (Tim Hesterberg, PR#10730).
 
     o	xspline() and grid::grid.xpline() work in device coordinates
-	and now correct for anisotropy in the device coordinate system.
+	and now correct for anisotropy in the device coordinate
+	system.
+
+    o	grid.locator() now indicates to the graphics device that it is
+	is in 'graphics input' mode (as locator() and identify()
+	always have).  This means that devices can now indicate the
+	'graphics input' mode by e.g. a change of cursor.
 
 
 

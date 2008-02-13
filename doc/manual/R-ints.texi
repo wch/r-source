@@ -1244,7 +1244,7 @@ Symbol encoding, but that can be re-encoded to UTF-8 by setting
 Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it is not normally at least for Western versions of Windows,
-despite some claims to the contrary on the Microsoft site.}  strings.
+despite some claims to the contrary on the Microsoft site.} strings.
 @R{} (being written in standard C) will not work internally with UCS-2
 without extensive changes.  As from @R{} 2.7.0 the @file{Rgui}
 console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
@@ -2292,13 +2292,12 @@ the handling of colours and recording and replaying plots.
 
 @menu
 * Graphics devices::            
-* Device capabilities::         
 * Colours::                     
 * Base graphics::               
 * Grid graphics::               
 @end menu
 
-@node Graphics devices, Device capabilities, Graphics Devices, Graphics Devices
+@node Graphics devices, Colours, Graphics Devices, Graphics Devices
 @section Graphics Devices
 
 @R{} ships with several graphics devices, and there is support for
@@ -2308,9 +2307,12 @@ of a would-be writer of a graphics device.
 
 @menu
 * Device structures::           
+* Device capabilities::         
+* Handling text::               
+* 'Mode'::                      
 @end menu
 
-@node Device structures,  , Graphics devices, Graphics devices
+@node Device structures, Device capabilities, Graphics devices, Graphics devices
 @subsection Device structures
 
 There are three types used internally which are pointers to structures
@@ -2332,11 +2334,12 @@ array of length 2.
 
 
 The @code{GEDevDesc} type is a structure defined in
-@file{R_ext/GraphicsEngine.h} (with comments in the file)
+@file{R_ext/GraphicsEngine.h} (with comments in the file) as
 
 @example
+typedef struct _GEDevDesc GEDevDesc;
 struct _GEDevDesc @{
-    NewDevDesc *dev;
+    DevDesc dev;
     Rboolean displayListOn;
     SEXP displayList;
     SEXP DLlastElt;
@@ -2349,8 +2352,12 @@ struct _GEDevDesc @{
 
 @noindent
 So this is essentially a device structure plus information about the
-device maintained by the graphics engine and visible only to the engine.
-Type @code{pGEDevDesc} is a pointer to this type.
+device maintained by the graphics engine and normally@footnote{It is
+possible for the device to find the @code{GEDevDesc} which points to its
+@code{NewDevSec}, and this is done often enough that there is a
+convenience function @code{desc2GEDesc} to do so.} visible to the engine
+and not to the device.  Type @code{pGEDevDesc} is a pointer to this
+type.
 
 The third type is @code{pGEDev} which is an opaque pointer to a
 @code{GEDevDesc} structure.  (In earlier code you will also find
@@ -2412,8 +2419,8 @@ If a graphics device calls @code{R_GE_checkVersionOrDie(4)}, say, it can
 ensure it will only be used in versions of @R{} which provide the API it
 was designed for.
 
-@node Device capabilities, Colours, Graphics devices, Graphics Devices
-@section Device capabilities
+@node Device capabilities, Handling text, Device structures, Graphics devices
+@subsection Device capabilities
 
 The following `capabilities' can be defined for the device's
 @code{NewDevDesc} structure.
@@ -2444,12 +2451,7 @@ points (negative values) to the @code{metricInfo} callback
 as other text?  Requires @code{textUTF8 = TRUE}.
 @end itemize
 
-
-@menu
-* Handling text::               
-@end menu
-
-@node Handling text,  , Device capabilities, Device capabilities
+@node Handling text, 'Mode', Device capabilities, Graphics devices
 @subsection Handling text
 
 Handling text is probably the hardest task for a graphics device, and
@@ -2600,8 +2602,36 @@ for multi-line strings.
 @code{yLineBias} is used in the base graphics system in @code{axis()} and
 @code{mtext()} to provide a default for their @samp{padj} argument.
 
+@node 'Mode',  , Handling text, Graphics devices
+@subsection `Mode'
 
-@node Colours, Base graphics, Device capabilities, Graphics Devices
+One of the device callbacks is a function @code{mode}, documented in
+the header as
+
+@example
+     * device_Mode is called whenever the graphics engine
+     * starts drawing (mode=1) or stops drawing (mode=0)
+     * GMode (in graphics.c) also ways that 
+     * mode = 2 (graphical input on) exists.
+     * The device is not required to do anything
+@end example
+
+@noindent
+Since @code{mode = 2} has only recently been documented at device level,
+it is not surprising that was it not used by any device: prior to @R{}
+2.7.0 it was not set by @code{grid::grid.locator}.  It could be used to
+change the graphics cursor, but devices currently do that in the
+@code{locator} callback.  (In base graphics the mode is set for the
+duration of a @code{locator} call, but if @code{type != "n"} is switched
+back for each point whilst annotation is being done.)
+
+Many devices do indeed do nothing on this call, but some screen devices
+ensure that drawing is flushed to the screen when called with @code{mode
+= 0}.  It is tempting to use it for some sort of buffering, but note
+that `drawing' is interpreted at quite a low level and a typical single
+figure will stop and start drawing many times.
+
+@node Colours, Base graphics, Graphics devices, Graphics Devices
 @section Colours
 
 Devices receive colours as an @code{unsigned int} (in the @code{GPar}
