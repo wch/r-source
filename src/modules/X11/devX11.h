@@ -53,7 +53,7 @@ typedef enum {
 
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 			 double, X_COLORTYPE, int, int, int, SEXP, 
-			 int, int, int, const char *);
+			 int, int, int, const char *, int);
 
 
 	/********************************************************/
@@ -116,9 +116,13 @@ typedef struct {
 					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
      Rboolean warn_trans;		/* have we warned about translucent cols? */
-   char title[101];
+    char title[101];
+
+#ifdef HAVE_WORKING_CAIRO
+    Rboolean useCairo;
     cairo_t *cc;
     cairo_surface_t *cs;
+#endif
 } X11Desc;
 
 typedef X11Desc* pX11Desc;

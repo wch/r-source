@@ -103,32 +103,31 @@ else
 
   CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
   LIBS="${LIBS} ${CAIRO_LIBS}"
-  AC_CHECK_HEADERS(cairo.h cairo-ft.h)
 
-  if test "x${ac_cv_header_cairo_h}" = xyes; then
-    if test "x${ac_cv_header_cairo_ft_h}" = xyes; then
-      AC_CACHE_CHECK([whether freetype2 support in Cairo works], 
-		     [r_cv_cairo_works], [AC_LINK_IFELSE([
- #include <cairo.h>
- #include <cairo-ft.h>
- int main(void) {
-     cairo_ft_font_face_create_for_pattern(0);
-     return 0;
+  AC_CACHE_CHECK([whether Cairo including pango works], 
+		  [r_cv_cairo_works], [AC_LINK_IFELSE([
+#include <pango/pango.h>
+#include <pango/pangocairo.h>
+#include <cairo-xlib.h>
+int main(void) {
+    cairo_t  *CC;    
+    cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
+    pango_cairo_create_layout(CC);
+    pango_font_description_new();
+    return 0;
  }
 	],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
           CAIRO_LIBS=
           CAIRO_CFLAGS=
         ])])
-    fi
-  fi
   CPPFLAGS=${save_CPPFLAGS}
   LIBS=${save_LIBS}
 fi
 if test "x${r_cv_cairo_works}" = xyes; then
    AC_DEFINE(HAVE_WORKING_CAIRO, 1,
-            [Define to 1 if you have Cairo including pango and freetype2.]) 
+            [Define to 1 if you have Cairo including pango.]) 
 fi
-AM_CONDITIONAL(BUILD_WITH_CAIRO, [test "x${r_cv_cairo_works}" = xyes])
+dnl AM_CONDITIONAL(BUILD_WITH_CAIRO, [test "x${r_cv_cairo_works}" = xyes])
 AC_SUBST(CAIRO_CPPFLAGS)
 AC_SUBST(CAIRO_LIBS)
 ])

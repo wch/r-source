@@ -79,12 +79,6 @@
 /* Define this if you have support for C99 complex types. */
 #undef HAVE_C99_COMPLEX
 
-/* Define to 1 if you have the <cairo-ft.h> header file. */
-#undef HAVE_CAIRO_FT_H
-
-/* Define to 1 if you have the <cairo.h> header file. */
-#undef HAVE_CAIRO_H
-
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
 #undef HAVE_CFLOCALECOPYCURRENT
@@ -729,7 +723,7 @@
 /* Define if you have the 'wint_t' type. */
 #undef HAVE_WINT_T
 
-/* Define to 1 if you have Cairo including pango and freetype2. */
+/* Define to 1 if you have Cairo including pango. */
 #undef HAVE_WORKING_CAIRO
 
 /* Define if calloc(0) returns a null pointer. */

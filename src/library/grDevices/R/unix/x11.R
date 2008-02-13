@@ -27,7 +27,7 @@ assign(".X11.Options",
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             xpos = NA_integer_, ypos = NA_integer_,
-            title = ""),
+            title = "", type = "Cairo"), # change to "Xlib" for 2.7.0?
        envir = .X11env)
 
 assign(".X11.Options.default",
@@ -49,7 +49,7 @@ X11.options <- function(..., reset = FALSE)
 }
 
 X11 <- function(display = "", width, height, pointsize, gamma,
-                bg, canvas, fonts, xpos, ypos, title)
+                bg, canvas, fonts, xpos, ypos, title, type)
 {
     if(display == "" && .Platform$GUI == "AQUA" &&
        is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
@@ -66,10 +66,11 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(ypos)) new$ypos <- ypos
     if(!missing(title)) new$title <- title
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                  NA_integer_, d$xpos, d$ypos, d$title))
+                  NA_integer_, d$xpos, d$ypos, d$title, d$type=="Cairo"))
 }
 
 x11 <- X11
@@ -92,7 +93,7 @@ png <- function(filename = "Rplot%03d.png",
     .Internal(X11(paste("png::", filename, sep=""),
                   width, height, pointsize, d$gamma,
                   d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                  0L, 0L, ""))
+                  0L, 0L, "", "Xlib"))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -112,7 +113,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                   width, height, pointsize, d$gamma,
                   d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                  0L, 0L, ""))
+                  0L, 0L, "", "Xlib"))
 }
 
 ####################
