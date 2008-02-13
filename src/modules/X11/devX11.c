@@ -65,7 +65,6 @@
 #include <cairo-xlib.h>
 #endif
 
-
 #include "devX11.h"
 
 #include <Rmodules/RX11.h>
@@ -168,7 +167,7 @@ static void X11_Text(double x, double y, const char *str,
 
 static double pixelHeight(void);
 static double pixelWidth(void);
-static void SetColor(unsigned int, pDevDesc);
+static void SetColor(unsigned int, pX11Desc);
 static void SetLinetype(R_GE_gcontext*, pX11Desc);
 
 
@@ -278,9 +277,8 @@ static void R_ProcessX11Events(void *data)
     }
 }
 
-static void SetColor(unsigned int col, pDevDesc dd)
+static void SetColor(unsigned int col, pX11Desc xd)
 {
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     unsigned int alpha = R_ALPHA(col);
     double red, blue, green;
 
@@ -300,6 +298,17 @@ static void SetColor(unsigned int col, pDevDesc dd)
 }
 
 
+/* --> See "Notes on Line Textures" in GraphicsEngine.h
+ *
+ *	27/5/98 Paul - change to allow lty and lwd to interact:
+ *	the line texture is now scaled by the line width so that,
+ *	for example, a wide (lwd=2) dotted line (lty=2) has bigger
+ *	dots which are more widely spaced.  Previously, such a line
+ *	would have "dots" which were wide, but not long, nor widely
+ *	spaced.
+ */
+
+/* Not at all clear the optimization here is worth it */
 static void SetLinetype(pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
@@ -722,6 +731,12 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     xd->wgc = XCreateGC(display, xd->window, GCArcMode, &gcv);
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
 
+    /* ensure that line drawing is set up at the first graphics call */
+    xd->lty = -1;
+    xd->lwd = -1;
+    xd->lend = 0;
+    xd->ljoin = 0;
+
     numX11Devices++;
     return TRUE;
 }
@@ -759,13 +774,9 @@ static void X11_NewPage(pGEcontext gc, pDevDesc dd)
     
     cairo_reset_clip(xd->cc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
-    SetColor(xd->fill, dd);
+    SetColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
-
-#ifdef XSYNC
-    XSync(display, 0);
-#endif
 }
 
 extern int R_SaveAsPng(void  *d, int width, int height,
@@ -793,11 +804,13 @@ static void X11_Close(pDevDesc dd)
 	XFreeCursor(display, xd->gcursor);
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
+#if 0
     } else {
 	if (xd->npages && xd->type != XIMAGE) X11_Close_bitmap(xd);
 	XFreeGC(display, xd->wgc);
 	XFreePixmap(display, xd->window);
 	if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
+#endif
     }
 
     numX11Devices--;
@@ -821,7 +834,7 @@ static void X11_Activate(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (xd->type > WINDOW) return;
-    if(strlen(xd->title)) {
+    if(xd->title[0]) {
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
@@ -838,7 +851,7 @@ static void X11_Deactivate(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (xd->type > WINDOW) return;
-    if(strlen(xd->title)) {
+    if(xd->title[0]) {
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
@@ -858,19 +871,15 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
     cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
 
     if (R_ALPHA(gc->fill) > 0) {
-	SetColor(gc->fill, dd);
+	SetColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
     }
 
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	SetLinetype(gc, xd);
 	cairo_stroke(xd->cc);
     } else cairo_new_path(xd->cc);
-
-#ifdef XSYNC
-    if (xd->type == WINDOW) XSync(display, 0);
-#endif
 }
 
 static void X11_Circle(double x, double y, double r,
@@ -882,12 +891,12 @@ static void X11_Circle(double x, double y, double r,
     cairo_arc(xd->cc, x, y, r + 0.5 , 0.0, 2 * M_PI);
 
     if (R_ALPHA(gc->fill) > 0) {
-	SetColor(gc->fill, dd);
+	SetColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
     }
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
 	SetLinetype(gc, xd);
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	cairo_stroke(xd->cc);
     } else cairo_new_path(xd->cc);
 }
@@ -897,16 +906,13 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    if (R_ALPHA(gc->col) > 0) { /* FIXME */
+    if (R_ALPHA(gc->col) > 0) {
 	cairo_new_path(xd->cc);
 	cairo_move_to(xd->cc, x1, y1);
 	cairo_line_to(xd->cc, x2, y2);
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	SetLinetype(gc, xd);
 	cairo_stroke(xd->cc);
-#ifdef XSYNC
-	if (xd->type == WINDOW) XSync(display, 0);
-#endif
     }
 }
 
@@ -917,15 +923,12 @@ static void X11_Polyline(int n, double *x, double *y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (R_ALPHA(gc->col) > 0) {
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	SetLinetype(gc, xd);
 	cairo_new_path(xd->cc);
 	cairo_move_to(xd->cc, x[0], y[0]);
 	for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
 	cairo_stroke(xd->cc);
-#ifdef XSYNC
-	if (xd->type == WINDOW) XSync(display, 0);
-#endif
     }
 }
 
@@ -941,21 +944,17 @@ static void X11_Polygon(int n, double *x, double *y,
     cairo_close_path(xd->cc);
 
     if (R_ALPHA(gc->fill) > 0) {
-	SetColor(gc->fill, dd);
+	SetColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
     }
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	SetLinetype(gc, xd);
 	cairo_stroke(xd->cc);
     } else cairo_new_path(xd->cc);
-
-#ifdef XSYNC
-    if (xd->type == WINDOW) XSync(display, 0);
-#endif
 }
 
-static PangoFontDescription *getFont(pDevDesc dd, pGEcontext gc)
+static PangoFontDescription *getFont(pGEcontext gc)
 {
     PangoFontDescription *fontdesc;
     gint size, face = gc->fontface;
@@ -1023,7 +1022,7 @@ static void X11_MetricInfo(int c, pGEcontext gc,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     char str[16];
     int Unicode = mbcslocale;
-    PangoFontDescription *desc = getFont(dd, gc);
+    PangoFontDescription *desc = getFont(gc);
     gint iascent, idescent, iwidth;
 	
     if(c == 0) c = 77;
@@ -1051,7 +1050,7 @@ static double X11_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
-    PangoFontDescription *desc = getFont(dd, gc);
+    PangoFontDescription *desc = getFont(gc);
 
     text_extents(desc, xd-> cc, gc, str, NULL, NULL, &width, NULL, NULL, 0);
     pango_font_description_free(desc);
@@ -1065,7 +1064,7 @@ static void X11_Text(double x, double y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint ascent, lbearing, width;
     PangoLayout *layout;
-    PangoFontDescription *desc = getFont(dd, gc);
+    PangoFontDescription *desc = getFont(gc);
     
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
@@ -1075,15 +1074,12 @@ static void X11_Text(double x, double y,
 	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 	/* pango has a coord system at top left */
 	cairo_rel_move_to(xd->cc, -lbearing - width*hadj, -ascent);
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	layout = layoutText(desc, xd->cc, str);
 	pango_cairo_show_layout(xd->cc, layout);
 	g_object_unref(layout);
 	pango_font_description_free(desc);
 	cairo_restore(xd->cc);
-#ifdef XSYNC
-	if (xd->type == WINDOW) XSync(display, 0);
-#endif
     }
 }
 
@@ -1130,13 +1126,16 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
     return (done == 1);
 }
 
+	/********************************************************/
+	/* device_Mode is called whenever the graphics engine 	*/
+	/* starts drawing (mode=1) or stops drawing (mode=0)	*/
+	/* the device is not required to do anything		*/
+	/********************************************************/
+
 static void X11_Mode(int mode, pDevDesc dd)
 {
-#ifdef XSYNC
-    if (mode == 0) XSync(display, 0);
-#else
-    XSync(display, 0);
-#endif
+    /* Why? */
+    if(mode == 0) XSync(display, 0);
 }
 
 
@@ -1250,11 +1249,9 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* Nominal Character Sizes in Pixels */
 
-    dd->cra[0] = xd->basefontsize*1.25;
-    dd->cra[1] = xd->basefontsize*1.5;
-#ifdef DEBUG_X11
-    printf("cra = %f %f\n", dd->cra[0], dd->cra[1]);
-#endif
+    /* Recommendation from 'R internals': changed for 2.7.0 */
+    dd->cra[0] = 0.9*xd->pointsize;
+    dd->cra[1] = 1.2*xd->pointsize;
 
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
@@ -1275,11 +1272,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->canHAdj = 2;
     dd->canChangeGamma = FALSE;
 
-    dd->startps = xd->basefontsize;
+    dd->startps = xd->pointsize;
     dd->startcol = xd->col;
     dd->startfill = xd->fill;
     dd->startlty = LTY_SOLID;
-    dd->startfont = xd->basefontface;
+    dd->startfont = 1;
     dd->startgamma = gamma_fac;
 
     /* initialise x11 device description */
@@ -1290,18 +1287,18 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     dd->displayListOn = TRUE;
 
-  return(TRUE);
+    return TRUE;
 }
 
 
 /**
  This allocates an X11Desc instance  and sets its default values.
  */
-pX11Desc  Rf_allocX11DeviceDesc(double ps)
+pX11Desc Rf_allocX11DeviceDesc(double ps)
 {
     pX11Desc xd;
     /* allocate new device description */
-    if (!(xd = (X11Desc*)calloc(1, sizeof(X11Desc))))
+    if (!(xd = (pX11Desc)calloc(1, sizeof(X11Desc))))
 	return NULL;
 
     /* From here on, if we need to bail out with "error", */
@@ -1312,12 +1309,11 @@ pX11Desc  Rf_allocX11DeviceDesc(double ps)
     if (ps < 6 || ps > 24) ps = 12;
     xd->fontface = -1;
     xd->fontsize = -1;
-    xd->basefontface = 1;
-    xd->basefontsize = ps;
+    xd->pointsize = ps;
     xd->handleOwnEvents = FALSE;
     xd->window = (Window) NULL;
 
-    return(xd);
+    return xd;
 }
 
 

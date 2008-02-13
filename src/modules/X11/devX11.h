@@ -74,14 +74,19 @@ typedef struct {
     /* Local device copy so that we can detect */
     /* when parameter changes. */
 
+    /* Used to detect changes */ 
+    int lty;				/* Line type */
+    double lwd;
+    R_GE_lineend lend;
+    R_GE_linejoin ljoin;
+
     int col;				/* Color */
     int fill;
     int bg;				/* bg */
     int canvas;				/* Canvas */
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
-    int basefontface;			/* Typeface */
-    int basefontsize;			/* Size in points */
+    int pointsize;			/* Size in points */
     char basefontfamily[500];           /* Initial font family */
 
     /* X11 Driver Specific */
@@ -96,7 +101,7 @@ typedef struct {
     XSetWindowAttributes attributes;	/* Window attributes */
     XRectangle clip;			/* The clipping rectangle */
 
-    int usefixed;
+    R_XFont *font;
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
@@ -110,12 +115,16 @@ typedef struct {
                                            or whether R is to handle the events
 					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
-    char title[101];
+     Rboolean warn_trans;		/* have we warned about translucent cols? */
+   char title[101];
     cairo_t *cc;
     cairo_surface_t *cs;
 } X11Desc;
 
 typedef X11Desc* pX11Desc;
+
+
+/* This is a private header, so why are these here? */
 
 X11Desc *Rf_allocX11DeviceDesc(double ps);
 
