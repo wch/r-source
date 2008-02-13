@@ -2562,7 +2562,7 @@ void GMode(int mode, pGEDevDesc dd)
 {
     if (NoDevices())
 	error(_("No graphics device is active"));
-    if(mode != gpptr(dd)->devmode) dd->dev->mode(mode, dd->dev);
+    if(mode != gpptr(dd)->devmode) GEMode(mode, dd); /* dd->dev->mode(mode, dd->dev); */
     gpptr(dd)->new = dpptr(dd)->new = FALSE;
     gpptr(dd)->devmode = dpptr(dd)->devmode = mode;
 }
