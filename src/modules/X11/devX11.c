@@ -106,8 +106,7 @@ static X_COLORTYPE model;			/* User color model */
 static int maxcubesize;				/* Max colorcube size */
 static XSetWindowAttributes attributes;		/* Window attributes */
 static Colormap colormap;			/* Default color map */
-static int blackpixel;				/* Black */
-static int whitepixel;				/* White */
+static int whitepixel;				/* bg overlaying canvas */
 static XContext devPtrContext;
 static Atom _XA_WM_PROTOCOLS, protocol;
 
@@ -176,10 +175,9 @@ static void X11_Text(double x, double y, const char *str,
 static void *RLoadFont(pX11Desc, char*, int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
-static int SetBaseFont(pX11Desc);
-static void SetColor(int, pDevDesc);
-static void SetFont(pGEcontext, pDevDesc);
-static void SetLinetype(pGEcontext, pDevDesc);
+static void SetColor(unsigned int, pX11Desc);
+static void SetFont(pGEcontext, pX11Desc);
+static void SetLinetype(pGEcontext, pX11Desc);
 static void X11_Close_bitmap(pX11Desc xd);
 static char* translateFontFamily(char* family, pX11Desc xd);
 
@@ -894,41 +892,17 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     return tmp;
 }
 
-static int SetBaseFont(pX11Desc xd)
-{
-    xd->fontface = 1;
-    xd->fontsize = xd->pointsize;
-    xd->usefixed = 0;
-    xd->font = RLoadFont(xd, xd->fontfamily, xd->fontface, xd->fontsize);
-    if (!xd->font) {
-	xd->usefixed = 1;
-#ifdef USE_FONTSET
-	if(mbcslocale)
-	    xd->font = xd->fixedfont =
-		R_XLoadQueryFontSet(display,
-				    "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
-	else
-#endif
-	    xd->font = xd->fixedfont = R_XLoadQueryFont(display, "fixed");
-	if (!xd->fixedfont)
-	    return 0;
-    }
-    return 1;
-}
 
-static void SetFont(pGEcontext gc, pDevDesc dd)
+static void SetFont(pGEcontext gc, pX11Desc xd)
 {
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     R_XFont *tmp;
     char *family = translateFontFamily(gc->fontfamily, xd);
     int size = gc->cex * gc->ps + 0.5, face = gc->fontface;
 
     if (face < 1 || face > 5) face = 1;
 
-    if (!xd->usefixed &&
-	(size != xd->fontsize	||
-	 face != xd->fontface ||
-	 strcmp(family, xd->fontfamily) != 0)) {
+    if (size != xd->fontsize	|| face != xd->fontface ||
+	strcmp(family, xd->fontfamily) != 0) {
 
 	tmp = RLoadFont(xd, family, face, size);
 	if(tmp) {
@@ -937,7 +911,8 @@ static void SetFont(pGEcontext gc, pDevDesc dd)
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	} else
-	    error(_("X11 font at size %d could not be loaded"), size);
+	    error(_("X11 font %s, face %d at size %d could not be loaded"), 
+		  family, face, size);
     }
 }
 
@@ -950,13 +925,12 @@ static void CheckAlpha(int color, pX11Desc xd)
     }
 }
 
-static void SetColor(int color, pDevDesc dd)
+static void SetColor(unsigned int color, pX11Desc xd)
 {
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     if (color != xd->col) {
-	blackpixel = GetX11Pixel(R_RED(color), R_GREEN(color), R_BLUE(color));
+	int col = GetX11Pixel(R_RED(color), R_GREEN(color), R_BLUE(color));
 	xd->col = color;
-	XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
+	XSetState(display, xd->wgc, col, whitepixel, GXcopy, AllPlanes);
     }
 }
 
@@ -1007,11 +981,9 @@ static int gcToX11ljoin(R_GE_linejoin ljoin) {
  */
 
 /* Not at all clear the optimization here is worth it */
-static void SetLinetype(pGEcontext gc, pDevDesc dd)
+static void SetLinetype(pGEcontext gc, pX11Desc xd)
 {
-    static char dashlist[8];
     int i, newlty, newlwd, newlend, newljoin;
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     newlty = gc->lty;
     newlwd = (int) gc->lwd;
@@ -1029,6 +1001,7 @@ static void SetLinetype(pGEcontext gc, pDevDesc dd)
 	    XSetLineAttributes(display, xd->wgc,
 			       newlwd, LineSolid, newlend, newljoin);
 	} else {
+	    static char dashlist[8];
 	    for(i = 0 ; i < 8 && (newlty != 0); i++) {
 		int j = newlty & 15;
 		if (j == 0) j = 1; /* Or we die with an X Error */
@@ -1122,6 +1095,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 
     XEvent event;
     int iw, ih;
+    int blackpixel;
     X_GTYPE type;
     const char *p = dsp;
     XGCValues gcv;
@@ -1203,15 +1177,9 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			    R_ProcessX11Events, XActivity);
     }
-    /* whitepixel = GetX11Pixel(255, 255, 255); */
     whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor),
 			     R_BLUE(canvascolor));
     blackpixel = GetX11Pixel(0, 0, 0);
-
-    if (!SetBaseFont(xd)) {
-	Rprintf("can't find X11 font\n");
-	return FALSE;
-    }
 
     /* Foreground and Background Colors */
 
@@ -1466,7 +1434,7 @@ static double X11_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    SetFont(gc, dd);
+    SetFont(gc, xd);
 
 #ifdef USE_FONTSET
     if (xd->font->type == One_Font)
@@ -1501,7 +1469,7 @@ static void X11_MetricInfo(int c, pGEcontext gc,
     if (c < 0)
 	error(_("invalid use of %d < 0 in '%s'"), c, "X11_MetricInfo");
 
-    SetFont(gc, dd);
+    SetFont(gc, xd);
 
 #ifdef USE_FONTSET
     *ascent = 0; *descent = 0; *width = 0; /* fallback position */
@@ -1658,11 +1626,9 @@ static void X11_NewPage(pGEcontext gc, pDevDesc dd)
 		    error(_("could not open JPEG file '%s'"), buf);
 	    }
 	}
-/* we want to override the default bg="transparent" */
-/*	xd->fill = R_OPAQUE(dd->bg) ? dd->bg : xd->canvas; */
 	CheckAlpha(gc->fill, xd);
 	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
-	SetColor(xd->fill, dd);
+	SetColor(xd->fill, xd);
 	xd->clip.x = 0; xd->clip.width = xd->windowWidth;
 	xd->clip.y = 0; xd->clip.height = xd->windowHeight;
 	XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
@@ -1810,10 +1776,6 @@ static void X11_Activate(pDevDesc dd)
 	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (ACTIVE)");
-    /**
-    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
-		    8, PropModeReplace, (unsigned char*)t, strlen(t));
-    **/
     XStoreName(display, xd->window, t);
     XSync(display, 0);
 }
@@ -1831,10 +1793,6 @@ static void X11_Deactivate(pDevDesc dd)
 	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (inactive)");
-    /**
-    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
-		    8, PropModeReplace, (unsigned char*)t, strlen(t));
-    **/
     XStoreName(display, xd->window, t);
     XSync(display, 0);
 }
@@ -1857,14 +1815,14 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
     }
     CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
-	SetColor(gc->fill, dd);
+	SetColor(gc->fill, xd);
 	XFillRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
     CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
+	SetColor(gc->col, xd);
+	SetLinetype(gc, xd);
 	XDrawRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
@@ -1882,14 +1840,14 @@ static void X11_Circle(double x, double y, double r,
     iy = (int)y;
     CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
-	SetColor(gc->fill, dd);
+	SetColor(gc->fill, xd);
 	XFillArc(display, xd->window, xd->wgc,
 		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
     }
     CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
-	SetLinetype(gc, dd);
-	SetColor(gc->col, dd);
+	SetLinetype(gc, xd);
+	SetColor(gc->col, xd);
 	XDrawArc(display, xd->window, xd->wgc,
 		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
     }
@@ -1910,8 +1868,8 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 
     CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
+	SetColor(gc->col, xd);
+	SetLinetype(gc, xd);
 	XDrawLine(display, xd->window, xd->wgc, xx1, yy1, xx2, yy2);
     }
 }
@@ -1933,8 +1891,8 @@ static void X11_Polyline(int n, double *x, double *y,
 
     CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
+	SetColor(gc->col, xd);
+	SetLinetype(gc, xd);
 /* Some X servers need npoints < 64K */
 	for(i = 0; i < n; i+= 10000-1) {
 	    j = n - i;
@@ -1965,14 +1923,14 @@ static void X11_Polygon(int n, double *x, double *y,
     points[n].y = (int)(y[0]);
     CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
-	SetColor(gc->fill, dd);
+	SetColor(gc->fill, xd);
 	XFillPolygon(display, xd->window, xd->wgc, points, n, 
 		     Complex, CoordModeOrigin);
     }
     CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, dd);
-	SetLinetype(gc, dd);
+	SetColor(gc->col, xd);
+	SetLinetype(gc, xd);
 	XDrawLines(display, xd->window, xd->wgc, points, n+1, CoordModeOrigin);
     }
 
@@ -1986,10 +1944,10 @@ static void X11_Text(double x, double y,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    SetFont(gc, dd);
+    SetFont(gc, xd);
     CheckAlpha(gc->col, xd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, dd);
+	SetColor(gc->col, xd);
 	XRfRotDrawString(display, xd->font, rot, xd->window,
 			 xd->wgc, (int)x, (int)y, str);
     }
@@ -2082,11 +2040,6 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     xd = Rf_allocX11DeviceDesc(pointsize);
     if(!xd) return FALSE;
 
-    /* Used to set dd->dp.font=1 and dd->dp.ps=pointsize,
-     * but Paul removed that.
-     * This sort of initialisation occurs in R base graphics now.
-     */
-
     if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499) {
 	strcpy(xd->basefontfamily, fontname);
 	strcpy(xd->fontfamily, fontname);
@@ -2162,41 +2115,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* Nominal Character Sizes in Pixels */
 
-#if 0
-    SetBaseFont(xd);
-    {
-	XFontStruct *f;
-#ifdef USE_FONTSET
-	/* Use fudge size of M, not the max of the first font or the
-	   whole fontset which may have very wide characters if it contains
-	   a comprehensive ISO 10646 font.
-	 */
-	if(xd->font->type == Font_Set) {
-	    char buf[10];
-	    XRectangle ink, log;
-
-	    wcstombs(buf, L"M", 10);
-#ifdef HAVE_XUTF8TEXTEXTENTS
-	    if(utf8locale)
-		Xutf8TextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
-	    else
-#endif
-		XmbTextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
-	    dd->cra[0] = 2+log.width; /* fudge to allow some space */
-	    dd->cra[1] = 2+log.height;/* M has no descenders */
-	} else
-#endif
-	{
-	    f = xd->font->font;
-	    dd->cra[0] = f->max_bounds.rbearing - f->min_bounds.lbearing;
-	    dd->cra[1] = f->max_bounds.ascent + f->max_bounds.descent;
-	}
-#ifdef DEBUG_X11
-	printf("cra = %f %f\n", dd->cra[0], dd->cra[1]);
-#endif
-    }
-#endif
-
     /* Recommendation from 'R internals': changed for 2.7.0 */
     dd->cra[0] = 0.9*xd->pointsize;
     dd->cra[1] = 1.2*xd->pointsize;
@@ -2229,8 +2147,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* initialise x11 device description */
     /* (most of the work has been done in X11_Open) */
-
-    xd->lty = 0;
     xd->resize = 0;
 
     dd->deviceSpecific = (void *) xd;
@@ -2319,6 +2235,7 @@ Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
     alreadyDone = 1; */
     display = dpy;
 
+/* Note: this sets a global gamma, not just for the current device */
 #define SETGAMMA
 #ifdef SETGAMMA
     RedGamma   = gamma_fac;
