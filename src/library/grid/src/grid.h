@@ -586,6 +586,7 @@ SEXP doSetViewport(SEXP vp,
 
 void getDeviceSize(GEDevDesc *dd, double *devWidthCM, double *devHeightCM); 
 
+/* This is, confusingly, a wrapper for GEcurrentDevice */
 GEDevDesc* getDevice();
 
 void getViewportTransform(SEXP currentvp, 

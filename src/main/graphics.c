@@ -2562,7 +2562,7 @@ void GMode(int mode, pGEDevDesc dd)
 {
     if (NoDevices())
 	error(_("No graphics device is active"));
-    if(mode != gpptr(dd)->devmode) dd->dev->mode(mode, dd->dev);
+    if(mode != gpptr(dd)->devmode) GEMode(mode, dd); /* dd->dev->mode(mode, dd->dev); */
     gpptr(dd)->new = dpptr(dd)->new = FALSE;
     gpptr(dd)->devmode = dpptr(dd)->devmode = mode;
 }
@@ -3321,8 +3321,8 @@ void GMMathText(SEXP str, int side, double line, int outer,
     /* IF font metric information is not available for device */
     /* then bail out */
     double ascent, descent, width;
-    GMetricInfo(0, &ascent, &descent, &width, DEVICE, dd);
-    if ((ascent==0) && (descent==0) && (width==0))
+    GMetricInfo('M', &ascent, &descent, &width, DEVICE, dd);
+    if ((ascent == 0) && (descent == 0) && (width == 0))
 	error(_("Metric information not available for this device"));
 
     xadj = gpptr(dd)->adj;

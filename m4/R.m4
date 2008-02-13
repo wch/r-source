@@ -237,9 +237,10 @@ fi])
 
 ## R_PROG_BROWSER
 ## --------------
+## xdg-open is the freedesktop.org interface to kfmclient/gnome-open
 AC_DEFUN([R_PROG_BROWSER],
 [if test -z "${R_BROWSER}"; then
-  AC_PATH_PROGS(R_BROWSER, [firefox mozilla galeon kfmclient opera gnome-moz-remote open])
+  AC_PATH_PROGS(R_BROWSER, [firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open])
 fi
 if test -z "${R_BROWSER}"; then
   warn_browser="I could not determine a browser"

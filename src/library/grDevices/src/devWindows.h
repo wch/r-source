@@ -25,8 +25,7 @@ enum DeviceKinds {SCREEN=0, PRINTER, METAFILE, PNG, JPEG, BMP};
 
 typedef struct {
     /* R Graphics Parameters */
-    /* local device copy so that we can detect */
-    /* when parameter changes */
+    /* local device copy so that we can detect when parameter changes */
     int   col;			   /* Color */
     int   bg;			   /* Background */
     int   fontface;		   /* Typeface */
@@ -72,8 +71,6 @@ typedef struct {
     rgb   canvascolor;		/* Canvas color */
     rgb   outcolor;		/* Outside canvas color */
     rect  clip;			/* The clipping rectangle */
-    Rboolean usefixed;
-    font  fixedfont;
     font  font;
     char fontfamily[50];
 

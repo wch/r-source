@@ -170,8 +170,8 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
     dev->right = 1000;
     dev->bottom = 0;
     dev->top = 1000;
-    dev->cra[0] = 10;
-    dev->cra[1] = 10;
+    dev->cra[0] = 9;
+    dev->cra[1] = 12;
     dev->xCharOffset = 0.4900;
     dev->yCharOffset = 0.3333;
     dev->yLineBias = 0.1;

@@ -203,6 +203,13 @@ BUILDING R
 	of Rtools.exe).  Earlier versions can be selected in MkRules.
 
 
+BUG FIXES
+
+    o	If a windows(rescale="fit") device as shrunk initially to fit
+	on screen, the font size was not rescaled to take account of
+	the initial shrink factor.
+
+
 
 	**************************************************
 	*						 *
