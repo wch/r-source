@@ -153,11 +153,6 @@ static void X11_MetricInfo(int c, pGEcontext gc,
 			   double* width, pDevDesc dd);
 static void X11_Mode(int mode, pDevDesc dd);
 static void X11_NewPage(pGEcontext gc, pDevDesc dd);
-/* declared in devX11.h
-Rboolean X11_Open(pDevDesc dd, pX11Desc xd,
-		  char *dsp, double w, double h,
-		  double gamma_fac, X_COLORTYPE colormodel,
-		  int maxcube, int bgcolor, int canvascolor, int res); */
 static void X11_Polygon(int n, double *x, double *y,
 			pGEcontext gc, pDevDesc dd);
 static void X11_Polyline(int n, double *x, double *y,
@@ -178,15 +173,15 @@ static void X11_Text(double x, double y, const char *str,
 
 	/* Support Routines */
 
-static void *RLoadFont(X11Desc*, char*, int, int);
+static void *RLoadFont(pX11Desc, char*, int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
-static int SetBaseFont(X11Desc*);
+static int SetBaseFont(pX11Desc);
 static void SetColor(int, pDevDesc);
 static void SetFont(pGEcontext, pDevDesc);
 static void SetLinetype(pGEcontext, pDevDesc);
 static void X11_Close_bitmap(pX11Desc xd);
-static char* translateFontFamily(char* family, X11Desc* xd);
+static char* translateFontFamily(char* family, pX11Desc xd);
 
 
 
@@ -899,12 +894,10 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     return tmp;
 }
 
-/* This should never be used for a Symbol face */
 static int SetBaseFont(pX11Desc xd)
 {
-    xd->fontface = xd->basefontface;
-    if (xd->fontface < 1 || xd->fontface > 5) xd->fontface = 1;
-    xd->fontsize = xd->basefontsize;
+    xd->fontface = 1;
+    xd->fontsize = xd->pointsize;
     xd->usefixed = 0;
     xd->font = RLoadFont(xd, xd->fontfamily, xd->fontface, xd->fontsize);
     if (!xd->font) {
@@ -1439,7 +1432,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
  * THEN return xd->basefontfamily (the family set up when the
  *   device was created)
  */
-static char* translateFontFamily(char* family, X11Desc* xd) 
+static char* translateFontFamily(char* family, pX11Desc xd) 
 {
     SEXP graphicsNS, x11env, fontdb, fontnames;
     int i, nfonts;
@@ -2169,6 +2162,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* Nominal Character Sizes in Pixels */
 
+#if 0
     SetBaseFont(xd);
     {
 	XFontStruct *f;
@@ -2201,6 +2195,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	printf("cra = %f %f\n", dd->cra[0], dd->cra[1]);
 #endif
     }
+#endif
+
+    /* Recommendation from 'R internals': changed for 2.7.0 */
+    dd->cra[0] = 0.9*xd->pointsize;
+    dd->cra[1] = 1.2*xd->pointsize;
 
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
@@ -2221,11 +2220,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 
-    dd->startps = xd->basefontsize;
+    dd->startps = xd->pointsize;
     dd->startcol = xd->col;
     dd->startfill = xd->fill;
     dd->startlty = LTY_SOLID;
-    dd->startfont = xd->basefontface;
+    dd->startfont = 1;
     dd->startgamma = gamma_fac;
 
     /* initialise x11 device description */
@@ -2238,18 +2237,18 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     dd->displayListOn = TRUE;
 
-  return(TRUE);
+    return TRUE;
 }
 
 
 /**
  This allocates an X11Desc instance  and sets its default values.
  */
-pX11Desc  Rf_allocX11DeviceDesc(double ps)
+pX11Desc Rf_allocX11DeviceDesc(double ps)
 {
     pX11Desc xd;
     /* allocate new device description */
-    if (!(xd = (X11Desc*)calloc(1, sizeof(X11Desc))))
+    if (!(xd = (pX11Desc)calloc(1, sizeof(X11Desc))))
 	return NULL;
 
     /* From here on, if we need to bail out with "error", */
@@ -2260,12 +2259,11 @@ pX11Desc  Rf_allocX11DeviceDesc(double ps)
     if (ps < 6 || ps > 24) ps = 12;
     xd->fontface = -1;
     xd->fontsize = -1;
-    xd->basefontface = 1;
-    xd->basefontsize = ps;
+    xd->pointsize = ps;
     xd->handleOwnEvents = FALSE;
     xd->window = (Window) NULL;
 
-    return(xd);
+    return xd;
 }
 
 

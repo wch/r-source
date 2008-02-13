@@ -79,15 +79,13 @@ typedef struct {
     double lwd;
     R_GE_lineend lend;
     R_GE_linejoin ljoin;
-    /* double lmitre; not yet used: Xlib has no way to set this */
 
     int col;				/* Color */
     int fill;
     int canvas;				/* Canvas */
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
-    int basefontface;			/* Typeface */
-    int basefontsize;			/* Size in points */
+    int pointsize;			/* Size in points */
     char basefontfamily[500];           /* Initial font family */
 
     /* X11 Driver Specific */
@@ -124,6 +122,8 @@ typedef struct {
 
 typedef X11Desc* pX11Desc;
 
+
+/* This is a private header, so why are these here? */
 
 X11Desc *Rf_allocX11DeviceDesc(double ps);
 

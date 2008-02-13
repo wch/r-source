@@ -269,6 +269,13 @@ NEW FEATURES
 	is now considered as a possible browser, after real browsers
 	such as firefox, mozilla and opera.
 
+    o	The setting of the line spacing (par("cra")[2]) on the X11() and
+	windows() device is now comparable with postscript() etc, and
+	roughly 20% smaller than before (it used to depend on the
+	locale for X11).  (So is the pictex() device, now 20% larger.)
+	This affects the margin size in plots, and should result in
+	better-looking plots.
+
 
 DEPRECATED & DEFUNCT
 
