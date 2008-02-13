@@ -1711,9 +1711,7 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 	XSetWindowBackground(display, xd->window, whitepixel);
     }
     XClearWindow(display, xd->window);
-#ifdef XSYNC
     XSync(display, 0);
-#endif
 }
 
 extern int R_SaveAsPng(void  *d, int width, int height,
@@ -2099,15 +2097,15 @@ static Rboolean newX11_Locator(double *x, double *y, NewDevDesc *dd)
     return (done == 1);
 }
 
-/* Set Graphics mode - not needed for X11 */
+	/********************************************************/
+	/* device_Mode is called whenever the graphics engine 	*/
+	/* starts drawing (mode=1) or stops drawing (mode=0)	*/
+	/* the device is not required to do anything		*/
+	/********************************************************/
+
 static void newX11_Mode(int mode, NewDevDesc *dd)
 {
-
-#ifdef XSYNC
     if (mode == 0) XSync(display, 0);
-#else
-    XSync(display, 0);
-#endif
 }
 
 /* Hold the Picture Onscreen - not needed for X11 */
