@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-# Copyright (C) 2000-2007 R Development Core Team
+# Copyright (C) 2000-2008 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -393,10 +393,10 @@ foreach my $pkg (@ARGV) {
 
 	if($opt_install) { 
 	    ## Try figuring out whether the package dependencies can be 
-	    ## resolved at run time.  
-	    ## Ideally, the installation mechanism would do this,
-	    ## and we also do not check versions ... also see whether vignette
-	    ## and namespace package dependencies are recorded in DESCRIPTION.
+	    ## resolved at run time.  Ideally, the installation
+	    ## mechanism would do this, and we also do not check
+	    ## versions ... also see whether vignette and namespace
+	    ## package dependencies are recorded in DESCRIPTION.
 	    
 	    ## <NOTE>
 	    ## We are not checking base packages here, so all packages do 
@@ -2429,6 +2429,40 @@ sub check_pkg {
 	    }
 	}
     }
+
+    ## Run Rd2dvi on the DESCRIPTION.
+
+    ## Note that currently (2008-02-14) passing this and the above test
+    ## still does not ensure that R CMD Rd2dvi can produce the package
+    ## reference manual, as the above does not use makeindex.
+    
+    if($opt_latex && $ENV{"_R_CHECK_RD2DVI_DESCRIPTION_"}) {
+	$log->checking("DVI version of DESCRIPTION");
+	my $cmd = join(" ",
+		       (&shell_quote_file_path("${R::Vars::R_EXE}"),
+			"CMD Rd2dvi --batch --no-preview --only-meta",
+			"-o ${pkgname}-header.dvi >/dev/null 2>&1",
+			"$pkgdir"));
+	if(R_system($cmd)) {
+	    ## This is certainly not perfect.
+	    ## R CMD Rd2dvi builds in a "random" subdirectory of the
+	    ## current working directory (.Rd2dvi${$}).  We could try
+	    ## keeping this (using --no-clean), getting the log file and
+	    ## then cleaning up.
+	    ## But in the very few cases this causes a problem, we can
+	    ## simply run R CMD Rd2dvi --no-clean on the whole package
+	    ## sources.
+	    ## Ideally, we would improve/refactor Rd2dvi so that we can
+	    ## directly call the code for converting DESCRIPTION files
+	    ## to LaTeX.
+	    $log->warning();
+	    $log->print("Problems when creating DVI version of DESCRIPTION.");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+	
 }
 
 
