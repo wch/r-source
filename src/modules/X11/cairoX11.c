@@ -129,15 +129,15 @@ static void CairoColor(unsigned int col, pX11Desc xd)
 static void CairoLineType(pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
-    R_GE_lineend lend = CAIRO_LINE_CAP_SQUARE;
-    R_GE_linejoin ljoin = CAIRO_LINE_JOIN_ROUND;
+    cairo_line_cap_t lcap = CAIRO_LINE_CAP_SQUARE;
+    cairo_line_join_t ljoin = CAIRO_LINE_JOIN_ROUND;
     cairo_set_line_width(cc, gc->lwd);
     switch(gc->lend){
-    case GE_ROUND_CAP: lend = CAIRO_LINE_CAP_ROUND; break;
-    case GE_BUTT_CAP: lend = CAIRO_LINE_CAP_BUTT; break;
-    case GE_SQUARE_CAP: lend = CAIRO_LINE_CAP_SQUARE; break;
+    case GE_ROUND_CAP: lcap = CAIRO_LINE_CAP_ROUND; break;
+    case GE_BUTT_CAP: lcap = CAIRO_LINE_CAP_BUTT; break;
+    case GE_SQUARE_CAP: lcap = CAIRO_LINE_CAP_SQUARE; break;
     }
-    cairo_set_line_cap(cc, lend);
+    cairo_set_line_cap(cc, lcap);
     switch(gc->ljoin){
     case GE_ROUND_JOIN: ljoin = CAIRO_LINE_JOIN_ROUND; break;
     case GE_MITRE_JOIN: ljoin = CAIRO_LINE_JOIN_MITER; break;
