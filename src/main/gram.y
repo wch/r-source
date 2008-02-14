@@ -63,14 +63,14 @@ typedef struct yyltype
 
 /* Functions used in the parsing process */
 
-static void	CheckFormalArgs(SEXP, SEXP);
+static void	CheckFormalArgs(SEXP, SEXP, YYLTYPE *);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
 static void	IfPush(void);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
-static SEXP	TagArg(SEXP, SEXP);
+static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 
 /* These routines allocate constants */
 
@@ -119,10 +119,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	clen = utf8clen(c);
 	for(i = 1; i < clen; i++) {
 	    s[i] = xxgetc();
-	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char"));
+	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
 	}
 	res = mbrtowc(wc, s, clen, NULL);
-	if(res == -1) error(_("invalid multibyte character in mbcs_get_next"));
+	if(res == -1) error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= MB_CUR_MAX) {
@@ -130,7 +130,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    res = mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
 	    if(res == -1) 
-		error(_("invalid multibyte character in mbcs_get_next"));
+		error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
 	    /* so res == -2 */
 	    c = xxgetc();
 	    if(c == R_EOF) error(_("EOF whilst reading MBCS char"));
@@ -169,17 +169,17 @@ int		R_fgetc(FILE*);
 static SEXP	xxnullformal(void);
 static SEXP	xxfirstformal0(SEXP);
 static SEXP	xxfirstformal1(SEXP, SEXP);
-static SEXP	xxaddformal0(SEXP, SEXP);
-static SEXP	xxaddformal1(SEXP, SEXP, SEXP);
+static SEXP	xxaddformal0(SEXP, SEXP, YYLTYPE *);
+static SEXP	xxaddformal1(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxexprlist0();
 static SEXP	xxexprlist1(SEXP, YYLTYPE *);
 static SEXP	xxexprlist2(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxsub0(void);
-static SEXP	xxsub1(SEXP);
-static SEXP	xxsymsub0(SEXP);
-static SEXP	xxsymsub1(SEXP, SEXP);
-static SEXP	xxnullsub0();
-static SEXP	xxnullsub1(SEXP);
+static SEXP	xxsub1(SEXP, YYLTYPE *);
+static SEXP	xxsymsub0(SEXP, YYLTYPE *);
+static SEXP	xxsymsub1(SEXP, SEXP, YYLTYPE *);
+static SEXP	xxnullsub0(YYLTYPE *);
+static SEXP	xxnullsub1(SEXP, YYLTYPE *);
 static SEXP	xxsublist1(SEXP);
 static SEXP	xxsublist2(SEXP, SEXP);
 static SEXP	xxcond(SEXP);
@@ -337,20 +337,20 @@ sublist	:	sub				{ $$ = xxsublist1($1); }
 	;
 
 sub	:					{ $$ = xxsub0(); }
-	|	expr				{ $$ = xxsub1($1); }
-	|	SYMBOL EQ_ASSIGN 			{ $$ = xxsymsub0($1); }
-	|	SYMBOL EQ_ASSIGN expr			{ $$ = xxsymsub1($1,$3); }
-	|	STR_CONST EQ_ASSIGN 			{ $$ = xxsymsub0($1); }
-	|	STR_CONST EQ_ASSIGN expr		{ $$ = xxsymsub1($1,$3); }
-	|	NULL_CONST EQ_ASSIGN 			{ $$ = xxnullsub0(); }
-	|	NULL_CONST EQ_ASSIGN expr		{ $$ = xxnullsub1($3); }
+	|	expr				{ $$ = xxsub1($1, &@1); }
+	|	SYMBOL EQ_ASSIGN 			{ $$ = xxsymsub0($1, &@1); }
+	|	SYMBOL EQ_ASSIGN expr			{ $$ = xxsymsub1($1,$3, &@1); }
+	|	STR_CONST EQ_ASSIGN 			{ $$ = xxsymsub0($1, &@1); }
+	|	STR_CONST EQ_ASSIGN expr		{ $$ = xxsymsub1($1,$3, &@1); }
+	|	NULL_CONST EQ_ASSIGN 			{ $$ = xxnullsub0(&@1); }
+	|	NULL_CONST EQ_ASSIGN expr		{ $$ = xxnullsub1($3, &@1); }
 	;
 
 formlist:					{ $$ = xxnullformal(); }
 	|	SYMBOL				{ $$ = xxfirstformal0($1); }
 	|	SYMBOL EQ_ASSIGN expr			{ $$ = xxfirstformal1($1,$3); }
-	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3); }
-	|	formlist ',' SYMBOL EQ_ASSIGN expr	{ $$ = xxaddformal1($1,$3,$5); }
+	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3, &@3); }
+	|	formlist ',' SYMBOL EQ_ASSIGN expr	{ $$ = xxaddformal1($1,$3,$5,&@3); }
 	;
 
 cr	:					{ EatLines = 1; }
@@ -389,7 +389,7 @@ static int xxgetc(void)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
 	    *SourcePtr++ = c;
-	else  error(_("function is too long to keep source"));
+	else  error(_("function is too long to keep source (at line %d)"), xxlineno);
     }
     xxcharcount++;
     return c;
@@ -486,11 +486,11 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP xxaddformal0(SEXP formlist, SEXP sym)
+static SEXP xxaddformal0(SEXP formlist, SEXP sym, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-	CheckFormalArgs(formlist ,sym);
+	CheckFormalArgs(formlist, sym, lloc);
 	PROTECT(ans = NextArg(formlist, R_MissingArg, sym));
     }
     else
@@ -500,11 +500,11 @@ static SEXP xxaddformal0(SEXP formlist, SEXP sym)
     return ans;
 }
 
-static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
+static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-	CheckFormalArgs(formlist, sym);
+	CheckFormalArgs(formlist, sym, lloc);
 	PROTECT(ans = NextArg(formlist, expr, sym));
     }
     else
@@ -574,33 +574,33 @@ static SEXP xxsub0(void)
     return ans;
 }
 
-static SEXP xxsub1(SEXP expr)
+static SEXP xxsub1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode)
-	PROTECT(ans = TagArg(expr, R_NilValue));
+	PROTECT(ans = TagArg(expr, R_NilValue, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
     return ans;
 }
 
-static SEXP xxsymsub0(SEXP sym)
+static SEXP xxsymsub0(SEXP sym, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode)
-	PROTECT(ans = TagArg(R_MissingArg, sym));
+	PROTECT(ans = TagArg(R_MissingArg, sym, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(sym);
     return ans;
 }
 
-static SEXP xxsymsub1(SEXP sym, SEXP expr)
+static SEXP xxsymsub1(SEXP sym, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode)
-	PROTECT(ans = TagArg(expr, sym));
+	PROTECT(ans = TagArg(expr, sym, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -608,23 +608,23 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP xxnullsub0(void)
+static SEXP xxnullsub0(YYLTYPE *lloc)
 {
     SEXP ans;
     UNPROTECT_PTR(R_NilValue);
     if (GenerateCode)
-	PROTECT(ans = TagArg(R_MissingArg, install("NULL")));
+	PROTECT(ans = TagArg(R_MissingArg, install("NULL"), lloc));
     else
 	PROTECT(ans = R_NilValue);
     return ans;
 }
 
-static SEXP xxnullsub1(SEXP expr)
+static SEXP xxnullsub1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans = install("NULL");
     UNPROTECT_PTR(R_NilValue);
     if (GenerateCode)
-	PROTECT(ans = TagArg(expr, ans));
+	PROTECT(ans = TagArg(expr, ans, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -844,7 +844,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		    } else { /* over-long line */
 			char *LongLine = (char *) malloc(nc);
 			if(!LongLine) 
-			    error(("unable to allocate space for source line"));
+			    error(_("unable to allocate space for source line %d"), xxlineno);
 			strncpy(LongLine, (char *)p0, nc);
 			LongLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
@@ -945,7 +945,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 
 /*--------------------------------------------------------------------------*/
 
-static SEXP TagArg(SEXP arg, SEXP tag)
+static SEXP TagArg(SEXP arg, SEXP tag, YYLTYPE *lloc)
 {
     switch (TYPEOF(tag)) {
     case STRSXP:
@@ -954,7 +954,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
     case SYMSXP:
 	return lang2(arg, tag);
     default:
-	error(_("incorrect tag type")); return R_NilValue/* -Wall */;
+	error(_("incorrect tag type at line %d"), lloc->first_line); return R_NilValue/* -Wall */;
     }
 }
 
@@ -1181,10 +1181,12 @@ static int buffer_getc(void)
     return R_IoBufferGetc(iob);
 }
 
-/* Used only in main.c, rproxy_impl.c  and this file */
+/* Used only in main.c, rproxy_impl.c */
 attribute_hidden
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
+    xxlineno = 1;
+    xxcolno = 0;
     ParseInit();
     ParseContextInit();
     GenerateCode = gencode;
@@ -1379,6 +1381,10 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     
     xxlineno = 1;
     xxcolno = 0;      
+    GenerateCode = 1;
+    iob = buffer;
+    ptr_getc = buffer_getc;    
+
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
@@ -1400,6 +1406,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 
 	rval = R_Parse1Buffer(buffer, 1, status);
 	
+	/* Was a call to R_Parse1Buffer, but we don't want to reset xxlineno and xxcolno */
+	ParseInit();
+	ParseContextInit();
+	R_Parse1(status);
+        rval = R_CurrentExpr;
+    
 	switch(*status) {
 	case PARSE_NULL:
 	    break;
@@ -1464,7 +1476,7 @@ static void IfPush(void)
 	*contextp=='('    ||
 	*contextp == 'i') {
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
-	    error("contextstack overflow");
+	    error(_("contextstack overflow"));
 	*++contextp = 'i';
     }
     
@@ -1753,11 +1765,11 @@ static void yyerror(char *s)
     }	
 }
 
-static void CheckFormalArgs(SEXP formlist, SEXP _new)
+static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == _new) {
-	    error(_("Repeated formal argument"));
+	    error(_("Repeated formal argument on line %d"), lloc->first_line);
 	}
 	formlist = CDR(formlist);
     }
@@ -1768,7 +1780,7 @@ static char yytext[MAXELTSIZE];
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
 #define YYTEXT_PUSH(c, bp) do { \
     if ((bp) - yytext >= sizeof(yytext) - 1) \
-        error(_("input buffer overflow")); \
+        error(_("input buffer overflow at line %d"), xxlineno); \
 	*(bp)++ = (c); \
 } while(0)
 
@@ -1932,7 +1944,7 @@ static int NumericValue(int c)
 	    char *old = stext;              \
             nstext *= 2;                    \
 	    stext = malloc(nstext);         \
-	    if(!stext) error(_("unable to allocate buffer for long string"));\
+	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), xxlineno);\
 	    memmove(stext, old, nc);        \
 	    if(old != st0) free(old);	    \
 	    bp = stext+nc; }		    \
@@ -2041,7 +2053,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    }
 	    else if(c == 'u') {
 #ifndef SUPPORT_MBCS
-		error(_("\\uxxxx sequences not supported"));
+		error(_("\\uxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		unsigned int val = 0; int i, ext; size_t res;
 		char buff[MB_CUR_MAX+1]; 
@@ -2060,7 +2072,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if(delim) {
 		    if((c = xxgetc()) != '}')
-			error(_("invalid \\u{xxxx} sequence"));
+			error(_("invalid \\u{xxxx} sequence (line %d)"), xxlineno);
 		    else CTEXT_PUSH(c);
 		}
 		WTEXT_PUSH(val);
@@ -2073,9 +2085,9 @@ static int StringValue(int c, Rboolean forSymbol)
 #endif
 		    {
 			if(delim)
-			    error(_("invalid \\u{xxxx} sequence"));
+			    error(_("invalid \\u{xxxx} sequence (line %d)"), xxlineno);
 			else
-			    error(_("invalid \\uxxxx sequence"));
+			    error(_("invalid \\uxxxx sequence (line %d)"), xxlineno);
 		    }
 		} else
 		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
@@ -2084,7 +2096,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    }
 	    else if(c == 'U') {
 #ifndef SUPPORT_MBCS
-		error(_("\\Uxxxxxxxx sequences not supported"));
+		error(_("\\Uxxxxxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		{
 		    unsigned int val = 0; int i, ext; size_t res;
@@ -2104,15 +2116,15 @@ static int StringValue(int c, Rboolean forSymbol)
 		    }
 		    if(delim) {
 			if((c = xxgetc()) != '}')
-			    error(_("invalid \\U{xxxxxxxx} sequence"));
+			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 			else CTEXT_PUSH(c);
 		    }
 		    res = ucstomb(buff, val);
 		    if((int)res <= 0) {
 			if(delim)
-			    error(_("invalid \\U{xxxxxxxx} sequence"));
+			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 			else
-			    error(_("invalid \\Uxxxxxxxx sequence"));
+			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
 		    }
 		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
 		    WTEXT_PUSH(val);
@@ -2205,7 +2217,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    if(wcnt < 1000)
 		PROTECT(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	    else
-		error(_("string containing Unicode escapes not in this locale is too long (max 1000 chars)"));
+		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 1000 chars)"), xxlineno);
 	} else
 #endif
 	    PROTECT(yylval = mkString2(stext));
@@ -2323,7 +2335,7 @@ static int SymbolValue(int c)
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
 	    if (FunctionLevel >= MAXNEST)
-		error(_("functions nested too deeply in source code"));
+		error(_("functions nested too deeply in source code at line %d"), xxlineno);
 	    if ( FunctionLevel++ == 0 && GenerateCode) {
 		strcpy((char *)FunctionSource, "function");
 		SourcePtr = FunctionSource + 8;
@@ -2712,27 +2724,27 @@ static int yylex(void)
 
     case LBB:
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = '[';
 	*++contextp = '[';
 	break;
 
     case '[':
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	break;
 
     case LBRACE:
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	EatLines = 1;
 	break;
 
     case '(':
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	break;
 

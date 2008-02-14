@@ -150,7 +150,7 @@
 
 
 /* Copy the first part of user declarations.  */
-
+#line 1 "gram.y"
 
 /*
  *  R : A Computer Langage for Statistical Data Analysis
@@ -216,14 +216,14 @@ typedef struct yyltype
 
 /* Functions used in the parsing process */
 
-static void	CheckFormalArgs(SEXP, SEXP);
+static void	CheckFormalArgs(SEXP, SEXP, YYLTYPE *);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
 static void	IfPush(void);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
-static SEXP	TagArg(SEXP, SEXP);
+static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 
 /* These routines allocate constants */
 
@@ -272,10 +272,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	clen = utf8clen(c);
 	for(i = 1; i < clen; i++) {
 	    s[i] = xxgetc();
-	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char"));
+	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
 	}
 	res = mbrtowc(wc, s, clen, NULL);
-	if(res == -1) error(_("invalid multibyte character in mbcs_get_next"));
+	if(res == -1) error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= MB_CUR_MAX) {
@@ -283,7 +283,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    res = mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
 	    if(res == -1) 
-		error(_("invalid multibyte character in mbcs_get_next"));
+		error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
 	    /* so res == -2 */
 	    c = xxgetc();
 	    if(c == R_EOF) error(_("EOF whilst reading MBCS char"));
@@ -322,17 +322,17 @@ int		R_fgetc(FILE*);
 static SEXP	xxnullformal(void);
 static SEXP	xxfirstformal0(SEXP);
 static SEXP	xxfirstformal1(SEXP, SEXP);
-static SEXP	xxaddformal0(SEXP, SEXP);
-static SEXP	xxaddformal1(SEXP, SEXP, SEXP);
+static SEXP	xxaddformal0(SEXP, SEXP, YYLTYPE *);
+static SEXP	xxaddformal1(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxexprlist0();
 static SEXP	xxexprlist1(SEXP, YYLTYPE *);
 static SEXP	xxexprlist2(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxsub0(void);
-static SEXP	xxsub1(SEXP);
-static SEXP	xxsymsub0(SEXP);
-static SEXP	xxsymsub1(SEXP, SEXP);
-static SEXP	xxnullsub0();
-static SEXP	xxnullsub1(SEXP);
+static SEXP	xxsub1(SEXP, YYLTYPE *);
+static SEXP	xxsymsub0(SEXP, YYLTYPE *);
+static SEXP	xxsymsub1(SEXP, SEXP, YYLTYPE *);
+static SEXP	xxnullsub0(YYLTYPE *);
+static SEXP	xxnullsub1(SEXP, YYLTYPE *);
 static SEXP	xxsublist1(SEXP);
 static SEXP	xxsublist2(SEXP, SEXP);
 static SEXP	xxcond(SEXP);
@@ -400,7 +400,7 @@ typedef struct YYLTYPE
 
 
 /* Line 216 of yacc.c.  */
-
+#line 404 "gram.c"
 
 #ifdef short
 # undef short
@@ -727,16 +727,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   296,   296,   297,   298,   299,   300,   303,   304,   307,
-     310,   311,   312,   313,   315,   316,   318,   319,   320,   321,
-     322,   324,   325,   326,   327,   328,   329,   330,   331,   332,
-     333,   334,   335,   336,   337,   338,   339,   340,   341,   342,
-     343,   345,   346,   347,   349,   350,   351,   352,   353,   354,
-     355,   356,   357,   358,   359,   360,   361,   362,   363,   364,
-     365,   366,   367,   368,   369,   370,   374,   377,   380,   384,
-     385,   386,   387,   388,   389,   392,   393,   396,   397,   398,
-     399,   400,   401,   402,   403,   406,   407,   408,   409,   410,
-     413
+       0,   239,   239,   240,   241,   242,   243,   246,   247,   250,
+     253,   254,   255,   256,   258,   259,   261,   262,   263,   264,
+     265,   267,   268,   269,   270,   271,   272,   273,   274,   275,
+     276,   277,   278,   279,   280,   281,   282,   283,   284,   285,
+     286,   288,   289,   290,   292,   293,   294,   295,   296,   297,
+     298,   299,   300,   301,   302,   303,   304,   305,   306,   307,
+     308,   309,   310,   311,   312,   313,   317,   320,   323,   327,
+     328,   329,   330,   331,   332,   335,   336,   339,   340,   341,
+     342,   343,   344,   345,   346,   349,   350,   351,   352,   353,
+     356
 };
 #endif
 
@@ -1877,453 +1877,453 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-
-    { return 0; }
+#line 239 "gram.y"
+    { return 0; ;}
     break;
 
   case 3:
-
-    { return xxvalue(NULL,2,NULL); }
+#line 240 "gram.y"
+    { return xxvalue(NULL,2,NULL); ;}
     break;
 
   case 4:
-
-    { return xxvalue((yyvsp[(1) - (2)]),3,&(yylsp[(1) - (2)])); }
+#line 241 "gram.y"
+    { return xxvalue((yyvsp[(1) - (2)]),3,&(yylsp[(1) - (2)])); ;}
     break;
 
   case 5:
-
-    { return xxvalue((yyvsp[(1) - (2)]),4,&(yylsp[(1) - (2)])); }
+#line 242 "gram.y"
+    { return xxvalue((yyvsp[(1) - (2)]),4,&(yylsp[(1) - (2)])); ;}
     break;
 
   case 6:
-
-    { YYABORT; }
+#line 243 "gram.y"
+    { YYABORT; ;}
     break;
 
   case 7:
-
-    { (yyval) = (yyvsp[(1) - (1)]); }
+#line 246 "gram.y"
+    { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 8:
-
-    { (yyval) = (yyvsp[(1) - (1)]); }
+#line 247 "gram.y"
+    { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 9:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 250 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 10:
-
-    { (yyval) = (yyvsp[(1) - (1)]); }
+#line 253 "gram.y"
+    { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 11:
-
-    { (yyval) = (yyvsp[(1) - (1)]); }
+#line 254 "gram.y"
+    { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 12:
-
-    { (yyval) = (yyvsp[(1) - (1)]); }
+#line 255 "gram.y"
+    { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 13:
-
-    { (yyval) = (yyvsp[(1) - (1)]); }
+#line 256 "gram.y"
+    { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 14:
-
-    { (yyval) = xxexprlist((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)])); }
+#line 258 "gram.y"
+    { (yyval) = xxexprlist((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)])); ;}
     break;
 
   case 15:
-
-    { (yyval) = xxparen((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)])); }
+#line 259 "gram.y"
+    { (yyval) = xxparen((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)])); ;}
     break;
 
   case 16:
-
-    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); }
+#line 261 "gram.y"
+    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 17:
-
-    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); }
+#line 262 "gram.y"
+    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 18:
-
-    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); }
+#line 263 "gram.y"
+    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 19:
-
-    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); }
+#line 264 "gram.y"
+    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 20:
-
-    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); }
+#line 265 "gram.y"
+    { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 21:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 267 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 22:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 268 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 23:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 269 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 24:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 270 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 25:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 271 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 26:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 272 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 27:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 273 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 28:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 274 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 29:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 275 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 30:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 276 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 31:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 277 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 32:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 278 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 33:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 279 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 34:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 280 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 35:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 281 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 36:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 282 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 37:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 283 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 38:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 284 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 39:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 285 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 40:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 286 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 41:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 288 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 42:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(3) - (3)]),(yyvsp[(1) - (3)])); }
+#line 289 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(3) - (3)]),(yyvsp[(1) - (3)])); ;}
     break;
 
   case 43:
-
-    { (yyval) = xxdefun((yyvsp[(1) - (6)]),(yyvsp[(3) - (6)]),(yyvsp[(6) - (6)])); }
+#line 291 "gram.y"
+    { (yyval) = xxdefun((yyvsp[(1) - (6)]),(yyvsp[(3) - (6)]),(yyvsp[(6) - (6)])); ;}
     break;
 
   case 44:
-
-    { (yyval) = xxfuncall((yyvsp[(1) - (4)]),(yyvsp[(3) - (4)])); }
+#line 292 "gram.y"
+    { (yyval) = xxfuncall((yyvsp[(1) - (4)]),(yyvsp[(3) - (4)])); ;}
     break;
 
   case 45:
-
-    { (yyval) = xxif((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); }
+#line 293 "gram.y"
+    { (yyval) = xxif((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 46:
-
-    { (yyval) = xxifelse((yyvsp[(1) - (5)]),(yyvsp[(2) - (5)]),(yyvsp[(3) - (5)]),(yyvsp[(5) - (5)])); }
+#line 294 "gram.y"
+    { (yyval) = xxifelse((yyvsp[(1) - (5)]),(yyvsp[(2) - (5)]),(yyvsp[(3) - (5)]),(yyvsp[(5) - (5)])); ;}
     break;
 
   case 47:
-
-    { (yyval) = xxfor((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); }
+#line 295 "gram.y"
+    { (yyval) = xxfor((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 48:
-
-    { (yyval) = xxwhile((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); }
+#line 296 "gram.y"
+    { (yyval) = xxwhile((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 49:
-
-    { (yyval) = xxrepeat((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); }
+#line 297 "gram.y"
+    { (yyval) = xxrepeat((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 50:
-
-    { (yyval) = xxsubscript((yyvsp[(1) - (5)]),(yyvsp[(2) - (5)]),(yyvsp[(3) - (5)])); }
+#line 298 "gram.y"
+    { (yyval) = xxsubscript((yyvsp[(1) - (5)]),(yyvsp[(2) - (5)]),(yyvsp[(3) - (5)])); ;}
     break;
 
   case 51:
-
-    { (yyval) = xxsubscript((yyvsp[(1) - (4)]),(yyvsp[(2) - (4)]),(yyvsp[(3) - (4)])); }
+#line 299 "gram.y"
+    { (yyval) = xxsubscript((yyvsp[(1) - (4)]),(yyvsp[(2) - (4)]),(yyvsp[(3) - (4)])); ;}
     break;
 
   case 52:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 300 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 53:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 301 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 54:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 302 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 55:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 303 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 56:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 304 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 57:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 305 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 58:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 306 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 59:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 307 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 60:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 308 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 61:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 309 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 62:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 310 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 63:
-
-    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 311 "gram.y"
+    { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 64:
-
-    { (yyval) = xxnxtbrk((yyvsp[(1) - (1)])); }
+#line 312 "gram.y"
+    { (yyval) = xxnxtbrk((yyvsp[(1) - (1)])); ;}
     break;
 
   case 65:
-
-    { (yyval) = xxnxtbrk((yyvsp[(1) - (1)])); }
+#line 313 "gram.y"
+    { (yyval) = xxnxtbrk((yyvsp[(1) - (1)])); ;}
     break;
 
   case 66:
-
-    { (yyval) = xxcond((yyvsp[(2) - (3)])); }
+#line 317 "gram.y"
+    { (yyval) = xxcond((yyvsp[(2) - (3)])); ;}
     break;
 
   case 67:
-
-    { (yyval) = xxifcond((yyvsp[(2) - (3)])); }
+#line 320 "gram.y"
+    { (yyval) = xxifcond((yyvsp[(2) - (3)])); ;}
     break;
 
   case 68:
-
-    { (yyval) = xxforcond((yyvsp[(2) - (5)]),(yyvsp[(4) - (5)])); }
+#line 323 "gram.y"
+    { (yyval) = xxforcond((yyvsp[(2) - (5)]),(yyvsp[(4) - (5)])); ;}
     break;
 
   case 69:
-
-    { (yyval) = xxexprlist0(); }
+#line 327 "gram.y"
+    { (yyval) = xxexprlist0(); ;}
     break;
 
   case 70:
-
-    { (yyval) = xxexprlist1((yyvsp[(1) - (1)]), &(yylsp[(1) - (1)])); }
+#line 328 "gram.y"
+    { (yyval) = xxexprlist1((yyvsp[(1) - (1)]), &(yylsp[(1) - (1)])); ;}
     break;
 
   case 71:
-
-    { (yyval) = xxexprlist2((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); }
+#line 329 "gram.y"
+    { (yyval) = xxexprlist2((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); ;}
     break;
 
   case 72:
-
-    { (yyval) = (yyvsp[(1) - (2)]); }
+#line 330 "gram.y"
+    { (yyval) = (yyvsp[(1) - (2)]); ;}
     break;
 
   case 73:
-
-    { (yyval) = xxexprlist2((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); }
+#line 331 "gram.y"
+    { (yyval) = xxexprlist2((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); ;}
     break;
 
   case 74:
-
-    { (yyval) = (yyvsp[(1) - (2)]);}
+#line 332 "gram.y"
+    { (yyval) = (yyvsp[(1) - (2)]);;}
     break;
 
   case 75:
-
-    { (yyval) = xxsublist1((yyvsp[(1) - (1)])); }
+#line 335 "gram.y"
+    { (yyval) = xxsublist1((yyvsp[(1) - (1)])); ;}
     break;
 
   case 76:
-
-    { (yyval) = xxsublist2((yyvsp[(1) - (4)]),(yyvsp[(4) - (4)])); }
+#line 336 "gram.y"
+    { (yyval) = xxsublist2((yyvsp[(1) - (4)]),(yyvsp[(4) - (4)])); ;}
     break;
 
   case 77:
-
-    { (yyval) = xxsub0(); }
+#line 339 "gram.y"
+    { (yyval) = xxsub0(); ;}
     break;
 
   case 78:
-
-    { (yyval) = xxsub1((yyvsp[(1) - (1)])); }
+#line 340 "gram.y"
+    { (yyval) = xxsub1((yyvsp[(1) - (1)]), &(yylsp[(1) - (1)])); ;}
     break;
 
   case 79:
-
-    { (yyval) = xxsymsub0((yyvsp[(1) - (2)])); }
+#line 341 "gram.y"
+    { (yyval) = xxsymsub0((yyvsp[(1) - (2)]), &(yylsp[(1) - (2)])); ;}
     break;
 
   case 80:
-
-    { (yyval) = xxsymsub1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 342 "gram.y"
+    { (yyval) = xxsymsub1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
     break;
 
   case 81:
-
-    { (yyval) = xxsymsub0((yyvsp[(1) - (2)])); }
+#line 343 "gram.y"
+    { (yyval) = xxsymsub0((yyvsp[(1) - (2)]), &(yylsp[(1) - (2)])); ;}
     break;
 
   case 82:
-
-    { (yyval) = xxsymsub1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 344 "gram.y"
+    { (yyval) = xxsymsub1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
     break;
 
   case 83:
-
-    { (yyval) = xxnullsub0(); }
+#line 345 "gram.y"
+    { (yyval) = xxnullsub0(&(yylsp[(1) - (2)])); ;}
     break;
 
   case 84:
-
-    { (yyval) = xxnullsub1((yyvsp[(3) - (3)])); }
+#line 346 "gram.y"
+    { (yyval) = xxnullsub1((yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
     break;
 
   case 85:
-
-    { (yyval) = xxnullformal(); }
+#line 349 "gram.y"
+    { (yyval) = xxnullformal(); ;}
     break;
 
   case 86:
-
-    { (yyval) = xxfirstformal0((yyvsp[(1) - (1)])); }
+#line 350 "gram.y"
+    { (yyval) = xxfirstformal0((yyvsp[(1) - (1)])); ;}
     break;
 
   case 87:
-
-    { (yyval) = xxfirstformal1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 351 "gram.y"
+    { (yyval) = xxfirstformal1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 88:
-
-    { (yyval) = xxaddformal0((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); }
+#line 352 "gram.y"
+    { (yyval) = xxaddformal0((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); ;}
     break;
 
   case 89:
-
-    { (yyval) = xxaddformal1((yyvsp[(1) - (5)]),(yyvsp[(3) - (5)]),(yyvsp[(5) - (5)])); }
+#line 353 "gram.y"
+    { (yyval) = xxaddformal1((yyvsp[(1) - (5)]),(yyvsp[(3) - (5)]),(yyvsp[(5) - (5)]),&(yylsp[(3) - (5)])); ;}
     break;
 
   case 90:
-
-    { EatLines = 1; }
+#line 356 "gram.y"
+    { EatLines = 1; ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-
+#line 2327 "gram.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2543,7 +2543,7 @@ yyreturn:
 }
 
 
-
+#line 358 "gram.y"
 
 
 
@@ -2578,7 +2578,7 @@ static int xxgetc(void)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
 	    *SourcePtr++ = c;
-	else  error(_("function is too long to keep source"));
+	else  error(_("function is too long to keep source (at line %d)"), xxlineno);
     }
     xxcharcount++;
     return c;
@@ -2675,11 +2675,11 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP xxaddformal0(SEXP formlist, SEXP sym)
+static SEXP xxaddformal0(SEXP formlist, SEXP sym, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-	CheckFormalArgs(formlist ,sym);
+	CheckFormalArgs(formlist, sym, lloc);
 	PROTECT(ans = NextArg(formlist, R_MissingArg, sym));
     }
     else
@@ -2689,11 +2689,11 @@ static SEXP xxaddformal0(SEXP formlist, SEXP sym)
     return ans;
 }
 
-static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
+static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-	CheckFormalArgs(formlist, sym);
+	CheckFormalArgs(formlist, sym, lloc);
 	PROTECT(ans = NextArg(formlist, expr, sym));
     }
     else
@@ -2763,33 +2763,33 @@ static SEXP xxsub0(void)
     return ans;
 }
 
-static SEXP xxsub1(SEXP expr)
+static SEXP xxsub1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode)
-	PROTECT(ans = TagArg(expr, R_NilValue));
+	PROTECT(ans = TagArg(expr, R_NilValue, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
     return ans;
 }
 
-static SEXP xxsymsub0(SEXP sym)
+static SEXP xxsymsub0(SEXP sym, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode)
-	PROTECT(ans = TagArg(R_MissingArg, sym));
+	PROTECT(ans = TagArg(R_MissingArg, sym, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(sym);
     return ans;
 }
 
-static SEXP xxsymsub1(SEXP sym, SEXP expr)
+static SEXP xxsymsub1(SEXP sym, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode)
-	PROTECT(ans = TagArg(expr, sym));
+	PROTECT(ans = TagArg(expr, sym, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -2797,23 +2797,23 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP xxnullsub0(void)
+static SEXP xxnullsub0(YYLTYPE *lloc)
 {
     SEXP ans;
     UNPROTECT_PTR(R_NilValue);
     if (GenerateCode)
-	PROTECT(ans = TagArg(R_MissingArg, install("NULL")));
+	PROTECT(ans = TagArg(R_MissingArg, install("NULL"), lloc));
     else
 	PROTECT(ans = R_NilValue);
     return ans;
 }
 
-static SEXP xxnullsub1(SEXP expr)
+static SEXP xxnullsub1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans = install("NULL");
     UNPROTECT_PTR(R_NilValue);
     if (GenerateCode)
-	PROTECT(ans = TagArg(expr, ans));
+	PROTECT(ans = TagArg(expr, ans, lloc));
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -3033,7 +3033,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		    } else { /* over-long line */
 			char *LongLine = (char *) malloc(nc);
 			if(!LongLine) 
-			    error(("unable to allocate space for source line"));
+			    error(_("unable to allocate space for source line %d"), xxlineno);
 			strncpy(LongLine, (char *)p0, nc);
 			LongLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
@@ -3134,7 +3134,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 
 /*--------------------------------------------------------------------------*/
 
-static SEXP TagArg(SEXP arg, SEXP tag)
+static SEXP TagArg(SEXP arg, SEXP tag, YYLTYPE *lloc)
 {
     switch (TYPEOF(tag)) {
     case STRSXP:
@@ -3143,7 +3143,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
     case SYMSXP:
 	return lang2(arg, tag);
     default:
-	error(_("incorrect tag type")); return R_NilValue/* -Wall */;
+	error(_("incorrect tag type at line %d"), lloc->first_line); return R_NilValue/* -Wall */;
     }
 }
 
@@ -3370,10 +3370,12 @@ static int buffer_getc(void)
     return R_IoBufferGetc(iob);
 }
 
-/* Used only in main.c, rproxy_impl.c  and this file */
+/* Used only in main.c, rproxy_impl.c */
 attribute_hidden
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
+    xxlineno = 1;
+    xxcolno = 0;
     ParseInit();
     ParseContextInit();
     GenerateCode = gencode;
@@ -3568,6 +3570,10 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     
     xxlineno = 1;
     xxcolno = 0;      
+    GenerateCode = 1;
+    iob = buffer;
+    ptr_getc = buffer_getc;    
+
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
@@ -3589,6 +3595,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 
 	rval = R_Parse1Buffer(buffer, 1, status);
 	
+	/* Was a call to R_Parse1Buffer, but we don't want to reset xxlineno and xxcolno */
+	ParseInit();
+	ParseContextInit();
+	R_Parse1(status);
+        rval = R_CurrentExpr;
+    
 	switch(*status) {
 	case PARSE_NULL:
 	    break;
@@ -3653,7 +3665,7 @@ static void IfPush(void)
 	*contextp=='('    ||
 	*contextp == 'i') {
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
-	    error("contextstack overflow");
+	    error(_("contextstack overflow"));
 	*++contextp = 'i';
     }
     
@@ -3942,11 +3954,11 @@ static void yyerror(char *s)
     }	
 }
 
-static void CheckFormalArgs(SEXP formlist, SEXP _new)
+static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == _new) {
-	    error(_("Repeated formal argument"));
+	    error(_("Repeated formal argument on line %d"), lloc->first_line);
 	}
 	formlist = CDR(formlist);
     }
@@ -3957,7 +3969,7 @@ static char yytext[MAXELTSIZE];
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
 #define YYTEXT_PUSH(c, bp) do { \
     if ((bp) - yytext >= sizeof(yytext) - 1) \
-        error(_("input buffer overflow")); \
+        error(_("input buffer overflow at line %d"), xxlineno); \
 	*(bp)++ = (c); \
 } while(0)
 
@@ -4121,7 +4133,7 @@ static int NumericValue(int c)
 	    char *old = stext;              \
             nstext *= 2;                    \
 	    stext = malloc(nstext);         \
-	    if(!stext) error(_("unable to allocate buffer for long string"));\
+	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), xxlineno);\
 	    memmove(stext, old, nc);        \
 	    if(old != st0) free(old);	    \
 	    bp = stext+nc; }		    \
@@ -4230,7 +4242,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    }
 	    else if(c == 'u') {
 #ifndef SUPPORT_MBCS
-		error(_("\\uxxxx sequences not supported"));
+		error(_("\\uxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		unsigned int val = 0; int i, ext; size_t res;
 		char buff[MB_CUR_MAX+1]; 
@@ -4249,7 +4261,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if(delim) {
 		    if((c = xxgetc()) != '}')
-			error(_("invalid \\u{xxxx} sequence"));
+			error(_("invalid \\u{xxxx} sequence (line %d)"), xxlineno);
 		    else CTEXT_PUSH(c);
 		}
 		WTEXT_PUSH(val);
@@ -4262,9 +4274,9 @@ static int StringValue(int c, Rboolean forSymbol)
 #endif
 		    {
 			if(delim)
-			    error(_("invalid \\u{xxxx} sequence"));
+			    error(_("invalid \\u{xxxx} sequence (line %d)"), xxlineno);
 			else
-			    error(_("invalid \\uxxxx sequence"));
+			    error(_("invalid \\uxxxx sequence (line %d)"), xxlineno);
 		    }
 		} else
 		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
@@ -4273,7 +4285,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    }
 	    else if(c == 'U') {
 #ifndef SUPPORT_MBCS
-		error(_("\\Uxxxxxxxx sequences not supported"));
+		error(_("\\Uxxxxxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		{
 		    unsigned int val = 0; int i, ext; size_t res;
@@ -4293,15 +4305,15 @@ static int StringValue(int c, Rboolean forSymbol)
 		    }
 		    if(delim) {
 			if((c = xxgetc()) != '}')
-			    error(_("invalid \\U{xxxxxxxx} sequence"));
+			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 			else CTEXT_PUSH(c);
 		    }
 		    res = ucstomb(buff, val);
 		    if((int)res <= 0) {
 			if(delim)
-			    error(_("invalid \\U{xxxxxxxx} sequence"));
+			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 			else
-			    error(_("invalid \\Uxxxxxxxx sequence"));
+			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
 		    }
 		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
 		    WTEXT_PUSH(val);
@@ -4394,7 +4406,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    if(wcnt < 1000)
 		PROTECT(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	    else
-		error(_("string containing Unicode escapes not in this locale is too long (max 1000 chars)"));
+		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 1000 chars)"), xxlineno);
 	} else
 #endif
 	    PROTECT(yylval = mkString2(stext));
@@ -4512,7 +4524,7 @@ static int SymbolValue(int c)
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
 	    if (FunctionLevel >= MAXNEST)
-		error(_("functions nested too deeply in source code"));
+		error(_("functions nested too deeply in source code at line %d"), xxlineno);
 	    if ( FunctionLevel++ == 0 && GenerateCode) {
 		strcpy((char *)FunctionSource, "function");
 		SourcePtr = FunctionSource + 8;
@@ -4901,27 +4913,27 @@ static int yylex(void)
 
     case LBB:
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = '[';
 	*++contextp = '[';
 	break;
 
     case '[':
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	break;
 
     case LBRACE:
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	EatLines = 1;
 	break;
 
     case '(':
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
-	    error("contextstack overflow");
+	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	break;
 

@@ -287,6 +287,11 @@ NEW FEATURES
    o	readChar() gains an argument 'useBytes' to allows it to read a
 	fixed number of bytes in an MBCS locale.
 
+    o	The error handler in the parser now reports line numbers for
+	more syntax errors (MBCS and Unicode encoding errors, line
+	length and context stack overflows, and mis-specified argument
+	lists to functions).
+
 
 DEPRECATED & DEFUNCT
 
