@@ -205,7 +205,7 @@ BUILDING R
 
 BUG FIXES
 
-    o	If a windows(rescale="fit") device as shrunk initially to fit
+    o	If a windows(rescale="fit") device was shrunk initially to fit
 	on screen, the font size was not rescaled to take account of
 	the initial shrink factor.
 
