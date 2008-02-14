@@ -2681,6 +2681,11 @@ function(db, def_enc = FALSE)
                                                               tags, NA)])
                                     > -1]),
               if(!length(x$meta$aliases)) "alias")
+        ## R-exts says that the only requirement for this page is that
+        ## it includes \docType{package}, all other "content" being
+        ## optional, so these files need no \description section.
+        if(length(bad_tags) && identical(x$meta$doc_type, "package"))
+            bad_tags <- bad_tags[bad_tags != "description"]
         if(length(bad_tags))
             files_with_missing_mandatory_tags <-
                 rbind(files_with_missing_mandatory_tags,
@@ -2959,8 +2964,8 @@ function(dfile)
         out$fields_with_non_ASCII_tags <- names(db)[ind]
     ## For all fields used by the R package management system, values
     ## must be ASCII as well (so that the RPM works in a C locale).
-    ASCII_fields <- c("Package", "Version", "Depends", "Suggests",
-                      "Imports", "Priority", "Encoding", "License")
+    ASCII_fields <- c(.get_standard_repository_db_fields(),
+                      "Encoding", "Enhances", "License")
     ASCII_fields <- intersect(ASCII_fields, names(db))
     if(any(ind <- !.is_ASCII(db[ASCII_fields])))
         out$fields_with_non_ASCII_values <- ASCII_fields[ind]
