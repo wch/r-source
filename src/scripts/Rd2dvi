@@ -11,7 +11,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
-Copyright (C) 2000-2006 The R Core Development Team.
+Copyright (C) 2000-2008 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty." 
 
@@ -48,6 +48,7 @@ start_dir=`pwd`
 batch=false
 clean=true
 debug=false
+only_meta=false
 out_ext="dvi"
 output=""
 preview=xdvi
@@ -88,6 +89,8 @@ while test -n "${1}"; do
 	exit 1
       fi
       ;;
+    --only-meta)
+      only_meta=true ;;
     --output=*)
       output=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     --OS=*|--os=*)
@@ -117,16 +120,20 @@ Rdconv_dir_or_files_to_LaTeX () {
   shift
 
   if test -d ${1}; then
-    files=`ls ${1}/*.[Rr]d`
-    if test -d ${1}/${OSdir}; then
-      files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
+    if ${only_meta}; then
+      files=
+    else  
+      files=`ls ${1}/*.[Rr]d`
+      if test -d ${1}/${OSdir}; then
+        files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
+      fi
+      files=`LC_ALL=C ${echo} ${files} | sort`
     fi
-    files=`LC_ALL=C ${echo} ${files} | sort`
   else
     files="${@}"
   fi
 
-  echo "Converting Rd files to LaTeX ..."
+  ${only_meta} || echo "Converting Rd files to LaTeX ..."
 
   for f in ${files}; do
     ${echo} ${f}
@@ -147,7 +154,10 @@ Rd_DESCRIPTION_to_LaTeX () {
   for f in `${echo} "${fields}" | ${SED-sed} '/Package/d; /Bundle/d;'`; do
     text=`get_dcf_field ${f} ${1} | \
       tr '\n' ' ' | \
-      ${SED-sed} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g"`
+      ${SED-sed} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
+                  s/\\\\\\\\/\\\\\\\\textbackslash /g
+                  s/{/\\\\\\\\{/g
+		  s/}/\\\\\\\\}/g"`
     ${echo} "\\item[${f}] \\AsIs{${text}}"
   done
   ${echo} "\\end{description}"
@@ -276,7 +286,7 @@ fi
   
 ## Rd2.tex part 2: body
 if test "${is_bundle}" = no; then
-  ${echo} ${toc} >> ${build_dir}/Rd2.tex
+  ${only_meta} || ${echo} ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
