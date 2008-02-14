@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.prompt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.prompt}
@@ -13,14 +13,17 @@
 \usage{
 grid.prompt(ask)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ask}{ a logical value.  If \code{TRUE}, the user
     is prompted before a new page of output is started. }
+}
+\details{
+  The default value when a device is opened is taken from the
+  setting of \code{\link{options}("device.ask.default")}.
 }
 \value{
   The current prompt setting \emph{before} any new setting is applied.
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{grid.newpage}} }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

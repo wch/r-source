@@ -913,12 +913,16 @@ SEXP L_setEngineRecording(SEXP value)
 SEXP L_getAsk() 
 {
     GEDevDesc *dd = getDevice();
-    return gridStateElement(dd, GSS_ASK);
+/*    return gridStateElement(dd, GSS_ASK); */
+    return ScalarLogical(dd->ask);
 }
 
 SEXP L_setAsk(SEXP value)
 {
     GEDevDesc *dd = getDevice();
+    int val = asLogical(value);
+    if (val != NA_LOGICAL) dd->ask = val;
+    else error("invalid value for argunent 'ask'");
     setGridStateElement(dd, GSS_ASK, value);
     return R_NilValue;
 }
@@ -934,7 +938,7 @@ SEXP L_currentGPar()
 SEXP L_newpagerecording()
 {
     GEDevDesc *dd = getDevice();
-    if (LOGICAL(gridStateElement(dd, GSS_ASK))[0]) {
+    if (dd->ask) {
 	NewFrameConfirm(dd->dev);
 	/*
 	 * User may have killed device during pause for prompt

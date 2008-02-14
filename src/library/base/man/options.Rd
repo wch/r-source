@@ -345,8 +345,9 @@ getOption(x)
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
-    \item{\code{par.ask.default}:}{logical.  The default for
-      \code{\link{par}("ask")} when a device is opened.}
+    \item{\code{device.ask.default}:}{logical.  The default for
+      \code{\link{par}("ask")} and \code{\link{grid.prompt}} when a
+      device is opened.}
 
 #ifdef windows
     \item{\code{windowsTimeout}:}{integer vector of length 2

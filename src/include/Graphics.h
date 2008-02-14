@@ -72,7 +72,6 @@ typedef struct {
 
     double adj;		/* String adjustment */
     Rboolean ann;	/* Should annotation take place */
-    Rboolean ask;	/* User confirmation of ``page eject'' */
     rcolor bg;		/* **R ONLY** Background color */
     int	bty;		/* Box type */
     double cex;		/* Character expansion */
