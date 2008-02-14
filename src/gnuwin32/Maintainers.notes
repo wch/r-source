@@ -291,3 +291,10 @@ Also:
   character-manipulation packages are likely to be using .Call.
 
 BDR 2008-01-06
+
+7) Changing the parser
+
+By default the parser in gram.y is only processed in maintainer mode, 
+which isn't supported in Windows builds.  Defining RUN_BISON will 
+cause src/main/Makefile.win to process it (and correct for the erroneous
+line number records caused by our renaming of the output).
