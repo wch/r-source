@@ -3282,13 +3282,14 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* FIXME: could do any MBCS locale, but would need pushback */
-static SEXP readFixedString(Rconnection con, int len)
+static SEXP
+readFixedString(Rconnection con, int len, int useBytes)
 {
     char *buf;
     int  pos, m;
 
 #ifdef SUPPORT_MBCS
-    if(utf8locale) {
+    if(utf8locale && !useBytes) {
 	int i, clen;
 	char *p, *q;
 	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
@@ -3321,7 +3322,8 @@ static SEXP readFixedString(Rconnection con, int len)
     return mkCharLen(buf, pos);
 }
 
-static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
+static SEXP 
+rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 {
     char *buf;
     SEXP res;
@@ -3332,7 +3334,7 @@ static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
     }
 
 #ifdef SUPPORT_MBCS
-    if(utf8locale) {
+    if(utf8locale && !useBytes) {
 	int i, clen, iread = *np;
 	char *p;
 	Rbyte *q;
@@ -3367,9 +3369,8 @@ static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
 SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, onechar, nchars;
-    int i, len, n, m = 0, nbytes = 0, np = 0;
-    Rboolean wasopen = TRUE;
-    Rboolean isRaw = FALSE;
+    int i, len, n, m = 0, nbytes = 0, np = 0, useBytes;
+    Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
     Rbyte *bytes = NULL;
 
@@ -3387,21 +3388,24 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     nchars = CADR(args);
     n = LENGTH(nchars);
     if(n == 0) return allocVector(STRSXP, 0);
+    useBytes = asLogical(CADDR(args));
+    if(useBytes == NA_LOGICAL)
+	error(_("invalid value for '%s'"), "useBytes");
   
     if (!isRaw) {
     	wasopen = con->isopen;
     	if(!wasopen)
 	    if(!con->open(con)) error(_("cannot open the connection"));
     }
-    if (mbcslocale && !utf8locale)
+    if (mbcslocale && !utf8locale && !useBytes)
 	warning(_("can only read in bytes in a non-UTF-8 MBCS locale" ));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0, m = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
 	    error(_("invalid value for '%s'"), "nchar");
-	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np)
-	    : readFixedString(con, len);
+	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np, useBytes)
+	    : readFixedString(con, len, useBytes);
 	if(onechar != R_NilValue) {
 	    SET_STRING_ELT(ans, i, onechar);
 	    m++;

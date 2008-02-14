@@ -284,6 +284,9 @@ NEW FEATURES
     o	option("device.ask.default") replaces "par.ask.default" now it
 	applies also to grid.prompt().
 
+   o	readChar() gains an argument 'useBytes' to allows it to read a
+	fixed number of bytes in an MBCS locale.
+
 
 DEPRECATED & DEFUNCT
 

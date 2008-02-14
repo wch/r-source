@@ -205,13 +205,13 @@ writeBin <-
     .Internal(writeBin(object, con, size, swap))
 }
 
-readChar <- function(con, nchars)
+readChar <- function(con, nchars, useBytes = FALSE)
 {
     if(is.character(con)) {
         con <- file(con, "rb")
         on.exit(close(con))
     }
-    .Internal(readChar(con, as.integer(nchars)))
+    .Internal(readChar(con, as.integer(nchars), useBytes))
 }
 
 writeChar <- function(object, con, nchars = nchar(object, type="chars"),
