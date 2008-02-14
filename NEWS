@@ -480,6 +480,9 @@ BUG FIXES
 	grid.newpage()) did not flush out the XClearWindow call, so
 	the X11 window might not be refreshed immediately.
 
+    o	libtool has been updated to version 1.5.26, which avoids
+	many spurious configure warnings on Darwin/Mac OS X.
+
 
 
 
