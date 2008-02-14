@@ -38,10 +38,10 @@
         }
     } else defdev
 
-    op.utils <- c(list(locatorBell = TRUE, par.ask.default = FALSE),
+    op.grDevices <- c(list(locatorBell = TRUE, device.ask.default = FALSE),
                   extras, device = device)
-    toset <- !(names(op.utils) %in% names(op))
-    if(any(toset)) options(op.utils[toset])
+    toset <- !(names(op.grDevices) %in% names(op))
+    if(any(toset)) options(op.grDevices[toset])
 }
 
 ### Used by text, mtext, strwidth, strheight, title, axis,

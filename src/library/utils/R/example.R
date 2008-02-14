@@ -86,19 +86,12 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
 	if(.Device != "null device") {
-            ## NB, this is somewhat dangerous as the device may have
-            ## changed during the example.
+            ## NB, this is somewhat dangerous as the active
+            ## device may be changed during the example.
 	    opar <- graphics::par(ask = TRUE)
             on.exit(graphics::par(opar), add = TRUE)
-            ## if grid is already loaded we want to set grid.prompt.
-            ## if it is not, the device will pick up the default setting
-            ## when grid is loaded.
-            if("grid" %in% loadedNamespaces()) {
-                og <- grid::grid.prompt(ask=TRUE)
-                on.exit(grid::grid.prompt(og), add = TRUE)
-            }
         }
-        op <- options(par.ask.default = TRUE)
+        op <- options(device.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
     source(zfile, local, echo = echo,

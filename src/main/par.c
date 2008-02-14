@@ -307,7 +307,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 /*--- and these are "Specify() only" {i.e. par(nam = val)} : */
     else if (streql(what, "ask")) {
 	lengthCheck(what, value, 1, call);	ix = asLogical(value);
-	R_DEV__(ask) = (ix == 1);/* NA |-> FALSE */
+	dd->ask = (ix == 1);/* NA |-> FALSE */
     }
     else if (streql(what, "fig")) {
 	value = coerceVector(value, REALSXP);
@@ -763,7 +763,7 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     }
     else if (streql(what, "ask")) {
 	value = allocVector(LGLSXP, 1);
-	LOGICAL(value)[0] = dpptr(dd)->ask;
+	LOGICAL(value)[0] = dd->ask;
     }
     else if (streql(what, "bg")) {
 	value = mkString(col2name(dpptr(dd)->bg));

@@ -1770,7 +1770,7 @@ pGEDevDesc GNewPlot(Rboolean recording)
 	gpptr(dd)->currentFigure = dpptr(dd)->currentFigure;
 	if (gpptr(dd)->currentFigure > gpptr(dd)->lastFigure) {
 	    if (recording) {
-		if (gpptr(dd)->ask) {
+		if (dd->ask) {
 		    NewFrameConfirm(dd->dev);
 		    if (NoDevices())
 			error(_("attempt to plot on null device"));
@@ -1789,7 +1789,7 @@ pGEDevDesc GNewPlot(Rboolean recording)
 	R_GE_gcontext gc;
 	gcontextFromGP(&gc, dd);
 	if (recording) {
-	    if (gpptr(dd)->ask) {
+	    if (dd->ask) {
 		NewFrameConfirm(dd->dev);
 		if (NoDevices())
 		    error(_("attempt to plot on null device"));
@@ -2057,7 +2057,6 @@ void GSetupAxis(int axis, pGEDevDesc dd)
 
  * Called from baseCallback.
  */
-int Rf_GetOptionParAsk(void); /* from options.c */
 
 void attribute_hidden GInit(GPar *dp)
 {
@@ -2065,7 +2064,6 @@ void attribute_hidden GInit(GPar *dp)
     dp->valid = FALSE;
 
     dp->ann = TRUE;
-    dp->ask = Rf_GetOptionParAsk();
     dp->err = 0;
     dp->bty = 'o';
 

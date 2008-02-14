@@ -2347,6 +2347,7 @@ struct _GEDevDesc @{
     Rboolean dirty;
     Rboolean recordGraphics;
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
+    Rboolean ask;
 @}
 @end example
 
@@ -2415,9 +2416,9 @@ void R_GE_checkVersionOrDie(int version);
 @end example
 
 @noindent
-If a graphics device calls @code{R_GE_checkVersionOrDie(4)}, say, it can
-ensure it will only be used in versions of @R{} which provide the API it
-was designed for.
+If a graphics device calls @code{R_GE_checkVersionOrDie(R_GE_version)}
+it can ensure it will only be used in versions of @R{} which provide the
+API it was designed for and compiled against.
 
 @node Device capabilities, Handling text, Device structures, Graphics devices
 @subsection Device capabilities

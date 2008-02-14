@@ -41,7 +41,8 @@ int gridRegisterIndex;
  * GSS_ENGINERECORDING 13 = are we already inside a .Call.graphics call?
  *   Used by grid.Call.graphics to avoid unnecessary recording on 
  *   engine display list
- * GSS_ASK 14 = should we prompt the user before starting a new page?
+ * [GSS_ASK 14 = should we prompt the user before starting a new page?
+ *  Replaced by per-device setting as from R 2.7.0.]
  * GSS_SCALE 15 = a scale or "zoom" factor for all output 
  *   (to support "fit to window" resizing on windows device)
  * 
@@ -94,8 +95,6 @@ void initOtherState(GEDevDesc* dd)
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
 }
 
-extern int Rf_GetOptionParAsk(void);
-
 void fillGridSystemState(SEXP state, GEDevDesc* dd) 
 {
     SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
@@ -138,7 +137,7 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     LOGICAL(griddev)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_GRIDDEVICE, griddev);
     PROTECT(gridask = allocVector(LGLSXP, 1));
-    LOGICAL(gridask)[0] = Rf_GetOptionParAsk();
+    LOGICAL(gridask)[0] = dd->ask;
     SET_VECTOR_ELT(state, GSS_ASK, gridask);
     PROTECT(gridscale = allocVector(REALSXP, 1));
     REAL(gridscale)[0] = 1.0;

@@ -555,7 +555,7 @@ void Rf_addDevice(pGEDev dd)
     GEaddDevice(dd);
 }
 
-
+Rboolean Rf_GetOptionDeviceAsk(void); /* from options.c */
 
 /* Create a GEDevDesc, given a pDevDesc
  */
@@ -578,6 +578,7 @@ pGEDevDesc GEcreateDevDesc(pDevDesc dev)
     gdd->savedSnapshot = R_NilValue; /* gc needs this */
     gdd->dirty = FALSE;
     gdd->recordGraphics = TRUE;
+    gdd->ask = Rf_GetOptionDeviceAsk();
     return gdd;
 }
 

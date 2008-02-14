@@ -597,8 +597,9 @@ static void SetFont(const char *family, int face, int size, double rot,
 	face = 1;
     if (size < SMALLEST) size = SMALLEST;
     if (size != xd->fontsize || face != xd->fontface ||
-	rot != xd->fontangle || strcmp(family, xd->fontfamily)) {
-        del(xd->font); doevent();
+	 rot != xd->fontangle || strcmp(family, xd->fontfamily)) {
+        if(xd->font) del(xd->font); 
+	doevent();
 	/*
 	 * If specify family = "", get family from face via Rdevga
 	 *
@@ -2730,9 +2731,11 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     ps = pointsize;
     if (ps < 1) ps = 12;
     /* Ensures a font is selected at first use */
+    xd->font = NULL;
     xd->fontface = -1;
     xd->fontsize = -1;
     xd->fontangle = 0.0;
+    xd->fontfamily[0] = '\0';
     xd->basefontsize = ps ;
     dd->startfont = 1;
     dd->startps = ps;
@@ -2792,17 +2795,6 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 	xd->origHeight = dd->bottom = ih;
     }
     dd->startps = ps * xd->rescale_factor;
-
-#if 0
-    {
-	/* What font was this supposed to be? */
-	int a=0, d=0, w=0;
-	/* Nominal Character Sizes in Pixels */
-	gcharmetric(xd->gawin, xd->font, -1, &a, &d, &w);
-	dd->cra[0] = w * xd->rescale_factor;
-	dd->cra[1] = (a + d) * xd->rescale_factor;
-    }
-#endif
     dd->cra[0] = 0.9 * ps * xd->rescale_factor;
     dd->cra[1] = 1.2 * ps * xd->rescale_factor;
 

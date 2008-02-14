@@ -48,6 +48,7 @@ extern "C" {
  *             Remove asp, dot(), hold(), open() from NewDevDesc.
  *             Move displayList, DLlastElt, savedSnapshot from
  *             NewDevDesc to GEDevDesc.
+ *             Add 'ask' to GEDevDesc.
  */
 
 #ifdef OLD
@@ -247,6 +248,9 @@ struct _GEDevDesc {
      * Used by graphics systems to store system state per device.
      */
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
+
+    /* per-device setting for 'ask' (use NewFrameConfirm) */
+    Rboolean ask;
 };
 
 typedef GEDevDesc* pGEDevDesc;
