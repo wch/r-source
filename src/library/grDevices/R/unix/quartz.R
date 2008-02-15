@@ -34,7 +34,7 @@ quartz.options <- function(..., reset = FALSE)
     if(reset) {
         assign(".quartz.Options",
                get(".quartz.Options.default", envir = .Quartzenv),
-               envir = .env)
+               envir = .Quartzenv)
     }
     l... <- length(new <- list(...))
     check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv,
