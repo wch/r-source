@@ -262,12 +262,11 @@ par(\dots, no.readonly = FALSE)
       This name gets mapped by each graphics device to a device-specific
       font description.
       The default value is \code{""} which means that the
-      default device fonts will be used.
-      Standard values are \code{"serif"}, \code{"sans"},
-      \code{"mono"}, and \code{"symbol"} and the \link{Hershey}
-      font families are also available.  (Different devices
-      may define others, and some devices will ignore this setting
-      completely.)  This can be specified inline for
+      default device fonts will be used.  Standard values are
+      \code{"serif"}, \code{"sans"} and \code{"mono"}, and the
+      \link{Hershey} font families are also available.  (Different
+      devices may define others, and some devices will ignore this
+      setting completely.)  This can be specified inline for
       \code{\link{text}}.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes

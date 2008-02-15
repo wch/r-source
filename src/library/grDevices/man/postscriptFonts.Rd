@@ -44,10 +44,10 @@ pdfFonts(\dots)
   used to create new mappings, when the \code{xxxFonts} function is used
   to add them to the database.  See the examples.
 
-  Default mappings are provided for four device-independent family
-  names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
-  font, \code{"mono"} for a monospaced font, and \code{"symbol"} for a
-  symbol font.
+  Default mappings are provided for three device-independent family
+  names: \code{"sans"} for a sans-serif font (to \code{"Helvetica"}),
+  \code{"serif"} for a serif font (to \code{"Times"}) and \code{"mono"}
+  for a monospaced font (to \code{"Courier"}).
 
   Mappings for a number of standard Adobe fonts (and URW equivalents)
   are also provided: \code{"AvantGarde"},

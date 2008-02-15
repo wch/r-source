@@ -649,6 +649,7 @@ postscriptFonts(# Default Serif font is Times
                     "Courier-Oblique.afm", "Courier-BoldOblique.afm",
                     "Symbol.afm")),
                 # Default Symbol font is Symbol
+                # Deprecated: remove in R 2.8.0
                 symbol=Type1Font("Symbol",
                   c("Symbol.afm", "Symbol.afm", "Symbol.afm", "Symbol.afm",
                     "Symbol.afm"), encoding="AdobeSym.enc"),

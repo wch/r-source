@@ -286,7 +286,8 @@ windowsFonts <- function(...)
 }
 
 # Create a valid windows font description
-windowsFont <- function(family) checkWindowsFont(family)
+windowsFont <- function(family)
+    checkWindowsFont(family)
 
 
 windowsFonts(# Default Serif font is Times
@@ -296,4 +297,5 @@ windowsFonts(# Default Serif font is Times
              # Default Monospace font is Courier
              mono = windowsFont("TT Courier New"),
              # Default Symbol font is Symbol
+             # Deprecated: remove in 2.8.0
              symbol = windowsFont("TT Symbol"))
