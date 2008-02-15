@@ -5,7 +5,7 @@
 
 \name{grid.prompt}
 \alias{grid.prompt}
-\title{ Prompt before new page }
+\title{ Prompt before New Page }
 \description{
   This function can be used to control whether the user
   is prompted before starting a new page of output.
@@ -18,6 +18,10 @@ grid.prompt(ask)
     is prompted before a new page of output is started. }
 }
 \details{
+  As from \R 2.7.0 this is deprecated in favour of
+  \code{\link{defaultAskNewPage}} as a single setting affects both the
+  base and grid graphics systems.
+  
   The default value when a device is opened is taken from the
   setting of \code{\link{options}("device.ask.default")}.
 }

@@ -619,3 +619,19 @@ void NewFrameConfirm(pDevDesc dd)
 	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 1024, 0);
     }
 }
+
+SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int ask;
+    pGEDevDesc gdd = GEcurrentDevice();
+    Rboolean oldask = gdd->ask;
+    
+    checkArity(op, args);
+    if (!isNull(CAR(args))) {
+	ask = asLogical(CAR(args));
+	if (ask == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "ask");
+	gdd->ask = ask;
+    }
+    return ScalarLogical(oldask);
+}
