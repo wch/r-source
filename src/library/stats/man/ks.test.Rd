@@ -17,7 +17,8 @@ ks.test(x, y, \dots,
 \arguments{
   \item{x}{a numeric vector of data values.}
   \item{y}{either a numeric vector of data values, or a character string
-    naming a distribution function.}
+    naming a cumulative distribution function or an actual cumulative
+    distribtution function such as \code{pnorm}.}
   \item{\dots}{parameters of the distribution specified (as a character
     string) by \code{y}.}
   \item{alternative}{indicates the alternative hypothesis and must be
@@ -36,10 +37,10 @@ ks.test(x, y, \dots,
   distribution is performed.
 
   Alternatively, \code{y} can be a character string naming a continuous
-  distribution function.  In this case, a one-sample test is carried
-  out of the null that the distribution function which generated
-  \code{x} is distribution \code{y} with parameters specified by
-  \code{\dots}.
+  (cumulative) distribution function, or such a function.  In this case,
+  a one-sample test is carried out of the null that the distribution
+  function which generated \code{x} is distribution \code{y} with
+  parameters specified by \code{\dots}.
 
   The presence of ties generates a warning, since continuous
   distributions do not generate them.
