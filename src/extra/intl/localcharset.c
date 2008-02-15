@@ -288,6 +288,9 @@ get_charset_aliases (void)
    name.  */
 
 extern unsigned int localeCP; /* from Defn.h */
+#if __APPLE__ /* others could use this, too ... */
+extern char *locale2charset(char*);
+#endif
 
 #ifdef STATIC
 STATIC
@@ -295,6 +298,9 @@ STATIC
 const char *
 locale_charset (void)
 {
+#if __APPLE__
+  return locale2charset(NULL);
+#else
   const char *codeset;
   const char *aliases;
 
@@ -468,4 +474,5 @@ locale_charset (void)
     codeset = "ASCII";
 
   return codeset;
+#endif /* ! __APPLE__ */
 }
