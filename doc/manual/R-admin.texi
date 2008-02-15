@@ -2903,9 +2903,8 @@ If you need to re-configure @R{} with different options you may need to run
 
 @R{} can be compiled with support for multi-byte character sets
 (@acronym{MBCS}), in particular for UTF-8 locales (which are usually
-identified by suffix @samp{.utf8}, something like
-@samp{en_GB.utf8}@footnote{AIX has to be different: it has
-@samp{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
+identified by suffix @samp{.utf8} or @samp{UTF-8}, something like
+@samp{en_GB.utf8}.  UTF-8 is an encoding of Unicode and in principle
 covers all human languages simultaneously: however, a given system may
 not have fonts capable of displaying more than a few of these languages.
 
