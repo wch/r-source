@@ -19,7 +19,7 @@ grid.prompt(ask)
 }
 \details{
   As from \R 2.7.0 this is deprecated in favour of
-  \code{\link{defaultAskNewPage}} as a single setting affects both the
+  \code{\link{devAskNewPage}} as a single setting affects both the
   base and grid graphics systems.
   
   The default value when a device is opened is taken from the
