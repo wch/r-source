@@ -465,6 +465,15 @@ BUG FIXES
 	always have).  This means that devices can now indicate the
 	'graphics input' mode by e.g. a change of cursor.
 
+    o	Locales without encoding specification and non-UTF-8 locales
+	now work properly on Mac OS X. Note that locales without
+	encoding specification always use UTF-8 encoding in Mac OS X
+	(except for specials "POSIX" and "C") - this is different from
+	other operating systems.
+
+    o	iconv() now correctly handles to="" and from="" on Mac OS X.
+
+
 
 
 	**************************************************
