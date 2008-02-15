@@ -52,6 +52,7 @@ package R::Vars;
 
     MAKE       command string for 'make' [MAKE]
     LATEX      command string for 'latex' [LATEX]
+    PDFLATEX   command string for 'pdflatex' [PDFLATEX]
 
     Most have sensible defaults for all platforms.
 
@@ -69,12 +70,12 @@ else{
 
 getenv("LATEX", "LATEX", "latex");
 getenv("MAKE", "MAKE", "make");
+getenv("PDFLATEX", "PDFLATEX", "pdflatex");
 getenv("R_HOME", "R_HOME");
 getenv("R_SHARE_DIR", "R_SHARE_DIR", "$R_HOME/share");
 
 if($OSTYPE eq "windows"){
-    ## DON'T add R_HOME/bin here: it might contain spaces and will not
-    ## work using system() under Windows 98. 
+    ## DON'T add R_HOME/bin here: it might contain spaces
     $R_EXE = "Rterm.exe";
     $R_CMD = "Rcmd.exe";
     getenv("TMPDIR", "TMPDIR", "C:/TEMP");

@@ -350,20 +350,25 @@ UTILITIES
 
     o	Keyword entries are no longer mandatory in Rd files.
 
+    o	R CMD INSTALL now also installs tangled versions of all vignettes.
+
     o	R CMD check now warns if spaces or non-ASCII characters are
 	used in file paths, since these are not in general portable.
-
-    o   R CMD INSTALL now also installs tangled versions of all vignettes.
 
     o	R CMD check (via massage-examples.pl) now checks all examples
 	with a 7 inch square device region on A4 paper, for
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.
 
-    o	If a package declares an encoding in the DESCRIPTION file,
+	If a package declares an encoding in the DESCRIPTION file,
 	the examples are assumed to be in that encoding when running
 	the tests. (This avoids errors in running latin1 examples in a
 	UTF-8 locale.)
+
+    o	R CMD check uses pdflatex (if available) to check the typeset
+	version of the manual, producing PDF rather than DVI.  (This
+	is a better check since the package reference manuals on CRAN
+	are in PDF.)
 
 
 C-LEVEL FACILITIES

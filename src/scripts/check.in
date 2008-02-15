@@ -56,6 +56,8 @@ my $opt_rcfile = "";		# Only set this if $ENV{"HOME"} is set.
 $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf")
     if defined($ENV{"HOME"});
 my $opt_subdirs;
+my $HAVE_LATEX = 0;
+my $HAVE_PDFLATEX = 0;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -212,7 +214,7 @@ my $R_opts = "--vanilla";
 
 if($opt_latex) {
     my $log = new R::Logfile();
-    $log->checking("for working latex");
+    $log->checking("for working pdflatex");
     open(TEXFILE,
 	 "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
       or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
@@ -220,14 +222,31 @@ if($opt_latex) {
 	"test\\end\{document\}\n";
     close(TEXFILE);
     chdir($R::Vars::TMPDIR);
-    if(R_system("${R::Vars::LATEX} Rtextest$$ > Rtextest$$.out")) {
+    if(R_system("${R::Vars::PDFLATEX} Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
-	$HAVE_LATEX = 0;
     } else {
 	$log->result("OK");
+	$HAVE_PDFLATEX = 1;
 	$HAVE_LATEX = 1;
     }
     unlink(<Rtextest$$.*>);
+    if(!$HAVE_PDFLATEX) {
+	$log->checking("for working latex");
+	open(TEXFILE,
+	     "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
+	  or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
+	print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
+	    "test\\end\{document\}\n";
+	close(TEXFILE);
+	chdir($R::Vars::TMPDIR);
+	if(R_system("${R::Vars::LATEX} Rtextest$$ > Rtextest$$.out")) {
+	    $log->result("NO");
+	} else {
+	    $log->result("OK");
+	    $HAVE_LATEX = 1;
+	}
+	unlink(<Rtextest$$.*>);
+    }
     chdir($startdir);
     $log->close();
 }
@@ -2346,7 +2365,15 @@ sub check_pkg {
             }
 	    $log->result("OK");
 	    if($HAVE_LATEX) {
-		$log->checking("${pkgname}-manual.tex");
+		my $cmd;
+		if($HAVE_PDFLATEX) {
+		    $cmd = "${R::Vars::PDFLATEX}";
+		    $cmd_name = "pdflatex";
+		} else {
+		    $cmd = "${R::Vars::LATEX}";
+		    $cmd_name = "latex";
+		}
+		$log->checking("${pkgname}-manual.tex using $cmd_name");
 		## <NOTE>
 		## We use \nonstopmode{} so that LaTeX really gives an
 	        ## error (and returns) if something is wrong, and all
@@ -2354,7 +2381,6 @@ sub check_pkg {
 		## We also suppress all output from running LaTeX.
                 ## We could also write stdout to a tempfile and replay
                 ## this in case of problems.  But does this really help?
-		my $cmd = "${R::Vars::LATEX}";
 		if($WINDOWS) {
 		    ## check if we have MiKTeX and call latex accordingly
 		    ## (can't do this in R::Vars::LATEX as we need R::Utils.)
@@ -2380,7 +2406,11 @@ sub check_pkg {
 		## </NOTE>
 		if(R_system($cmd)) {
 		    $log->error();
-		    $log->print("LaTeX errors when creating DVI version.\n");
+		    if($HAVE_PDFLATEX) {
+			$log->print("LaTeX errors when creating PDF version.\n");
+		    } else {
+			$log->print("LaTeX errors when creating DVI version.\n");
+		    }
 		    $log->print("This typically indicates Rd problems.\n");
 		    ## If possible, indicate the problems found.
 		    ## GNU grep rather usefully has a '-A' option for
@@ -2403,13 +2433,19 @@ sub check_pkg {
 		$log->result("OK");
 	    }
 	}
-	else {
+	else { # no latex dir
 	    if($HAVE_LATEX) {
-		$log->checking("DVI version of manual");
+		my $Rd2dvi_opts = "--batch --no-preview";
+		if($HAVE_PDFLATEX) {
+		    $log->checking("PDF version of manual");
+		    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
+		} else {
+		    $log->checking("DVI version of manual");
+		}
 		my $cmd;
 		if($WINDOWS) {
 		    $cmd = join(" ",
-				("Rcmd.exe Rd2dvi --batch --no-preview",
+				("Rcmd.exe Rd2dvi $Rd2dvi_opts",
 				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
 				 "$pkgdir"));
 		} else {
@@ -2421,7 +2457,11 @@ sub check_pkg {
 		}
 		if(R_system($cmd)) {
 		    $log->error();
-		    $log->print("LaTeX errors when creating DVI version.\n");
+		    if($HAVE_PDFLATEX) {
+			$log->print("LaTeX errors when creating PDF version.\n");
+		    } else {
+			$log->print("LaTeX errors when creating DVI version.\n");
+		    }
 		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
 		}
@@ -2437,10 +2477,16 @@ sub check_pkg {
     ## reference manual, as the above does not use makeindex.
     
     if($opt_latex && $ENV{"_R_CHECK_RD2DVI_DESCRIPTION_"}) {
-	$log->checking("DVI version of DESCRIPTION");
+	my $Rd2dvi_opts = "--batch --no-preview --only-meta";
+	if($HAVE_PDFLATEX) {
+	    $log->checking("PDF version of DESCRIPTION");
+	    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
+	} else {
+	    $log->checking("DVI version of DESCRIPTION");
+	}
 	my $cmd = join(" ",
 		       (&shell_quote_file_path("${R::Vars::R_EXE}"),
-			"CMD Rd2dvi --batch --no-preview --only-meta",
+			"CMD Rd2dvi $Rd2dvi_opts",
 			"-o ${pkgname}-header.dvi >/dev/null 2>&1",
 			"$pkgdir"));
 	if(R_system($cmd)) {
