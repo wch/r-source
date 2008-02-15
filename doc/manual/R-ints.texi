@@ -2310,6 +2310,7 @@ of a would-be writer of a graphics device.
 * Device capabilities::         
 * Handling text::               
 * 'Mode'::                      
+* Specific devices::            
 @end menu
 
 @node Device structures, Device capabilities, Graphics devices, Graphics devices
@@ -2612,7 +2613,7 @@ for multi-line strings.
 @code{yLineBias} is used in the base graphics system in @code{axis()} and
 @code{mtext()} to provide a default for their @samp{padj} argument.
 
-@node 'Mode',  , Handling text, Graphics devices
+@node 'Mode', Specific devices, Handling text, Graphics devices
 @subsection `Mode'
 
 One of the device callbacks is a function @code{mode}, documented in
@@ -2640,6 +2641,122 @@ ensure that drawing is flushed to the screen when called with @code{mode
 = 0}.  It is tempting to use it for some sort of buffering, but note
 that `drawing' is interpreted at quite a low level and a typical single
 figure will stop and start drawing many times.
+
+@node Specific devices,  , 'Mode', Graphics devices
+@subsection Specific devices
+
+Specific devices are mostly documented by comments in their sources,
+although for devices of many years' standing those comments can be in
+need of updating.  This subsection is a repository of notes on design
+decisions.
+
+@menu
+* X11()::                       
+* windows()::                   
+@end menu
+
+@node X11(), windows(), Specific devices, Specific devices
+@subsubsection X11()
+
+The @code{X11()} device dates back to the mid 1990's and was written
+then in @code{Xlib}, the most basic X11 toolkit.  It has since
+optionally made use of a few features from other toolkits: @code{libXt} is
+used to read X11 resources, and @code{libXmu} is used in the handling of
+clipboard selections.
+
+Using basic @code{Xlib} code makes drawing fast, but is limiting.  There
+is no support of translucent colours (that came in the @code{Xrender}
+toolkit of 2000) nor for rotated text (which @R{} implements by
+rendering text to a bitmap and rotating the latter).
+
+The hinting for the X11 window asks for backing store to be used, and
+some windows managers may use it to handle repaints, but it seems that
+most repainting is done by replaying the display list (and here the fast
+drawing is very helpful).
+
+There are perennial problems with finding fonts.  Many users fail to
+realize that fonts are a function of the X server and not of the machine
+that @R{} is running on.  After many difficulties, @R{} tries first to
+find the nearest size match in the sizes provided for Adobe fonts in the
+standard 75dpi and 100dpi X11 font packages---even that will fail to
+work when users of near-100dpi screens have only the 75dpi set
+installed.  The 75dpi set allows sizes down to 6 points on a 100dpi
+screen, but some users do try to use smaller sizes and even 6 and 8
+point bitmapped fonts do not look good.
+
+Introduction of UTF-8 locales has caused another wave of difficulties.
+X11 has very few genuine UTF-8 fonts, and produces composite fontsets
+for the @code{iso10646-1} encoding.  Unfortunately these seem to have
+low coverage apart from a few monospaced fonts in a few sizes (which are
+not suitable for graph annotation), and where glyphs are missing what is
+plotted is often quite unsatisfactory.
+
+The approach being taken experimentally for @R 2.7.0 (not yet in the
+trunk) is to make use of more modern toolkits, namely @code{cairo} for
+rendering and @code{pango} for font management---because these are
+associated with @code{Gtk+2} they are widely available.  Cairo supports
+translucent colours and alpha-blending (@emph{via} @code{Xrender}), and
+anti-aliasing for the display of lines and text.  Pango's font
+management is somewhat mysterious, but it seems mainly to use TrueType
+fonts on the machine running @R{} and send grayscale bitmaps to cairo.
+It does pay to check the results carefully: a Solaris cairo
+implementation had several incorrect glyphs for the symbol font.
+
+
+@node windows(),  , X11(), Specific devices
+@subsubsection windows()
+
+The @code{windows()} device is a family of devices: it supports plotting
+to Windows (enhanced) metafiles, @code{JPEG} and @code{PNG} files as
+well as to Windows printers.
+
+In most of these cases the primary plotting is to a bitmap: this is used
+for the (default) buffering of the screen device, which also enables the
+current plot to be saved to BMP, JPEG or PNG (it is the internal bitmap
+which is copied to the file in the appropriate format).
+
+The code was originally written by Guido Masarotto with extensive use of
+macros, which can make it hard to disentangle.
+
+For a screen device, @code{xd->gawin} is the canvas of the screen, and
+@code{xd->bm} is the off-screen bitmap.  So macro @code{DRAW} arranges
+to plot to @code{xd->bm}, and if buffering is off, also to
+@code{xd->gawin}.  For all other device, @code{xd->gawin} is the canvas,
+a bitmap for the @code{jpeg()} and @code{png()} device, and an internal
+representation of a Windows metafile for the @code{win.metafile()} and
+@code{win.print} device.  Since `plotting' is done by Windows GDI calls
+to the appropriate canvas, its precise nature is hidden by the GDI
+system.
+
+Buffering on the screen device is achieved by running a timer, which
+when it fires copies the internal bitmap to the screen.  This is set to
+fire every 500ms (by default) and is reset to 100ms after plotting
+activity.
+
+Repaint events are handled by copying the internal bitmap to the screen
+canvas (and then reinitializing the timer), unless there has been a resize.
+Resizes are handled by replaying the display list: this might not be
+necessary if a fixed canvas with scrollbars is being used, but that is
+the least popular of the three forms of resizing.
+
+Text on the device has moved to `Unicode' (UCS-2) in recent years.  As
+from  @R{} 2.7.0, UTF-8 is requested (@code{hasTextUTF8 = TRUE}) for
+standard text, and converted to UCS-2 in the plotting functions in file
+@file{src/extra/graphapp/gdraw.c}.  However, GDI has no support for
+Unicode symbol fonts, and symbols are handled in Adobe Symbol encoding.
+
+Support for translucent colours (with alpha channel between 0 and 255)
+was introduced in @R{} 2.6.0 for the screen device only.  This is done
+by drawing on a further internal bitmap, @code{xd->bm2}, in the opaque
+version of the colour then alpha-blending that bitmap to @code{xd->bm}.
+The alpha-blending routine is in a separate DLL, @file{msimg32.dll} that
+is available on Windows 2000 or later and is loaded on first use.  As
+small a rectangular region as reasonably possible is alpha-blended (this
+is rectangle @code{r} in the code), but things like mitre joins make
+estimation of a tight bounding box too much work for lines and polygonal
+boundaries.  Translucent-coloured lines are not common, and the
+performance seems acceptable.
+
 
 @node Colours, Base graphics, Graphics devices, Graphics Devices
 @section Colours
