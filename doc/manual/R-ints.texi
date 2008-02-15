@@ -2191,7 +2191,7 @@ Some notes on the changes for 1.4.0 can be found at
 
 At the lowest level is a graphics device, which manages a plotting
 surface (a screen window or a representation to be written to a file).
-This implements a fairly small set of graphics primitives, to `draw'
+This implements a set of graphics primitives, to `draw'
 
 @itemize
 @item a circle, optionally filled
@@ -2223,8 +2223,7 @@ the user for confirmation.
 device (this is usually used to change the window title on a screen
 device).
 @item when drawing starts or finishes (e.g. used to flush graphics to
-the screen when drawing stops).  Note that this is currently only used
-in the base graphics system (and not in grid).
+the screen when drawing stops).
 @item wait for an event, for example a mouse click or keypress.
 @item an `onexit' action, to clean up if plotting is interrupted (by an
 error or by the user).
@@ -2245,26 +2244,27 @@ The next layer up is the graphics `engine' that is the main interface to
 the device (although the graphics subsystems do talk directly to
 devices).  This is responsible for clipping, converting the @code{pch}
 values @code{0...26} to sets of lines/circles, centring (and otherwise
-adjusting) text, rendering expressions (`plotmath') and mapping colour
-descriptions such as names to the internal representation.
+adjusting) text, rendering mathematical expressions (`plotmath') and
+mapping colour descriptions such as names to the internal
+representation.
 
-@c graphics.c looks at device dimensions, locator, metricinfo, mode
+@c graphics.c looks at device dimensions, locator, metricinfo
 @c par.c looks at various device pars
 @c plot3d.c looks at useRotatedTextInContour
 @c grid looks at size, clipping, locator, ipr
 
 Another function of the engine is to manage display lists and snapshots.
-Some but not all graphics devices maintain display lists, a `list' of
-operations that have been performed on the device to produce the current
-plot (since the device was opened or the plot was last cleared, e.g.@:
-by @code{plot.new}).  Screen devices generally maintain a display list
-to handle repaint and resize events where as file-based formats do
-not---display lists are also used to implement @code{dev.copy()} and
-friends.  The display list is a pairlist of @code{.Internal} (base
-graphics) or @code{.Call.graphics} (grid graphics) calls, which means
-that the C code implementing a graphics operation will be re-called when
-the display list is replayed: apart from the part which records the
-operation if successful.
+Some but not all instances of graphics devices maintain display lists, a
+`list' of operations that have been performed on the device to produce
+the current plot (since the device was opened or the plot was last
+cleared, e.g.@: by @code{plot.new}).  Screen devices generally maintain
+a display list to handle repaint and resize events where as file-based
+formats do not---display lists are also used to implement
+@code{dev.copy()} and friends.  The display list is a pairlist of
+@code{.Internal} (base graphics) or @code{.Call.graphics} (grid
+graphics) calls, which means that the C code implementing a graphics
+operation will be re-called when the display list is replayed: apart
+from the part which records the operation if successful.
 
 Snapshots of the current graphics state are taken by
 @code{GEcreateSnapshot} and replayed later in the session by
@@ -2439,14 +2439,14 @@ continuously variable (in [0,1]) between left and right justification.
 callback?
 @item canGenMouseMove -- 
 @code{Rboolean}: ditto for mouse move events.
-@item canGenMouseup -- 
+@item canGenMouseUp -- 
 @code{Rboolean}: ditto for mouse up events.
 @item canGenKeybd -- 
 @code{Rboolean}: ditto for keyboard events.
 @item hasTextUTF8 --
 @code{Rboolean}: should non-symbol text be sent (in UTF-8) to the
 @code{textUTF8} and @code{strWidthUTF8} callbacks, and sent as Unicode
-points (negative values) to the @code{metricInfo} callback
+points (negative values) to the @code{metricInfo} callback?
 @item wantSymbolUTF8 --
 @code{Rboolean}: should symbol text be handled in UTF-8 in the same way
 as other text?  Requires @code{textUTF8 = TRUE}.
@@ -2461,8 +2461,8 @@ additional capabilities.  (If the device does not, these will if
 possible be handled in the graphics engine.)
 
 The three callbacks for handling text that must be in all graphics
-devices are structure elements @code{text}, @code{strWidth} and
-@code{metricInfo} with declarations
+devices are @code{text}, @code{strWidth} and @code{metricInfo} with
+declarations
 
 @example
 void text(double x, double y, const char *str, double rot, double hadj,
@@ -2482,25 +2482,34 @@ device's structure.
 
 The @code{text} callback should plot @samp{str} at @samp{(x,
 y)}@footnote{in device coordinates} with an anti-clockwise rotation of
-@samp{rot} degrees.  (For @samp{hadj} see below.) 
+@samp{rot} degrees.  (For @samp{hadj} see below.)  The interpretation
+for horizontal text is that the baseline is at @code{y} and the start is
+a @code{x}, so any left bearing for the first character will start at
+@code{x}.
 
 The @code{strWidth} callback computes the width of the string which it
-would occupy if plotted horizontally in the current font.
+would occupy if plotted horizontally in the current font.  (Width here
+is expected to include both (preferably) or neither of left and right
+bearings.)
 
 The @code{metricInfo} callback computes the size of a single character:
 @samp{ascent} is the distance it extends above the baseline and
 @code{descent} how far it extends below the baseline.  @code{width} is
 the amount by which the cursor should be advanced when the character is
-placed.  The @emph{interpretation} of @samp{c} depends on the locale.
-Using @code{c = 0} used to give an indication of the size of the font:
-it often returned the measurements for character @code{"M"}---however it
-is not longer used as from @R{} 2.7.0.  In a single-byte locale values
+placed.  This is intended to be the bounding box of the `ink' put down
+by the glyph and not the box which might be used when assembling a line
+of conventional text.
+ 
+The @emph{interpretation} of @samp{c} depends on the locale.  Using
+@code{c = 0} used to give an indication of the size of the font: it
+often returned the measurements for character @code{"M"}---however it is
+not longer used as from @R{} 2.7.0.  In a single-byte locale values
 @code{32...255} indicate the corresponding character in the locale (if
-present).  For the symbol font (as used by @samp{par(font=5)} in base
-graphics and by `plotmath'), values @code{32...126, 161...239,
-241...254} indicate glyphs in the Adobe Symbol encoding.  In a multibyte
-locale, @code{c} represents a Unicode point (except in the symbol font).
-So the function needs to include code like
+present).  For the symbol font (as used by @samp{graphics::par(font=5)},
+@samp{grid::gpar(fontface=5}) and by `plotmath'), values @code{32...126,
+161...239, 241...254} indicate glyphs in the Adobe Symbol encoding.  In
+a multibyte locale, @code{c} represents a Unicode point (except in the
+symbol font).  So the function needs to include code like
 
 @example
     Rboolean Unicode = mbcslocale && (gc->fontface != 5);
@@ -2517,7 +2526,7 @@ if device capability @code{wantSymbolUTF8} is true.)
 If possible, the graphics device should handle clipping of text.  It
 indicates this by the structure element @code{canClip} which if true
 will result in calls to the callback @code{clip} to set the clipping
-region. If this is not done, the engine will clip very crudely (and
+region. If this is not done, the engine will clip very crudely (by
 omitting any text that does not appear to be wholly inside the clipping
 region).
 
@@ -2542,7 +2551,7 @@ sent to @code{textUTF8} and @code{strWidthUTF8}.
 
 Some devices can produce high-quality rotated text, but those based on
 bitmaps often cannot.  Those which can should set
-@code{useRotatedTextInContour} to be true in graphics API version 4.
+@code{useRotatedTextInContour} to be true from graphics API version 4.
 
 Several other elements relate to the precise placement of text by the
 graphics engine:
@@ -2691,8 +2700,9 @@ A large part of the infrastructure of the base graphics subsystem are
 the graphics parameters (as set/read by @code{par()}).  These are stored
 in a @code{GPar} structure declared in the private header
 @file{Graphics.h}.  This structure has two variables (@code{state} and
-@code{valid} tracking the state of the base subsystem on the device, and
-many variables recording the graphics parameters and functions of them.
+@code{valid}) tracking the state of the base subsystem on the device,
+and many variables recording the graphics parameters and functions of
+them.
 
 The base system state is contained in @code{baseSystemState} structure
 defined in @file{R_ext/GraphicsBase.h}.  This contains three @code{GPar}
