@@ -2234,10 +2234,10 @@ The device also sets a number of variables, mainly Boolean flags
 indicating its capabilities.  Devices work entirely in `device units'
 which are up to its developer: they can be in pixels, big points (1/72
 inch), twips, @dots{}, and can differ@footnote{although that needs to be
-handled carefully, as for example the @code{xspline} functions used to
-depend on the aspect ratio of the pixels, and the @code{circle} callback
-is given a radius (and that should be interpreted as in the x units).}
-in the @samp{x} and @samp{y} directions.
+handled carefully, as for example the @code{xspline} functions used
+prior to @R{} 2.7.0 to depend on the aspect ratio of the pixels, and the
+@code{circle} callback is given a radius (and that should be interpreted
+as in the x units).}  in the @samp{x} and @samp{y} directions.
 
 @c think of the engine as colors.c, devices.c, engine.c, plotmath.c, vfonts.c
 The next layer up is the graphics `engine' that is the main interface to
@@ -2756,6 +2756,22 @@ is rectangle @code{r} in the code), but things like mitre joins make
 estimation of a tight bounding box too much work for lines and polygonal
 boundaries.  Translucent-coloured lines are not common, and the
 performance seems acceptable.
+
+The support for a transparent background in @code{png()} predates full
+alpha-channel support in @code{libpng} (let alone in PNG viewers), so
+makes use of the limited transparency support in earlier versions of
+PNG.  Where 24-bit colour is used, this is done by marking a single
+colour to be rendered as transparent.  @R{} chose @samp{#d6d3d6}, and
+uses this as the background colour (in @code{GA_NewPage} if the
+specified background colour is transparent (and all non-opaque
+background colours are treated as transparent).  So this works by
+marking that colour in the PNG file, and viewer without transparency
+support see a slighlty-off-grey background, as if there were a near-grey
+canvas.  Where a palette is used in the PNG file (if less than 256
+colours were used) then this colour is recorded with full transparency
+and the remaining colours as opaque.  Handling background transparency
+with a false canvas colour is incompatible with alpha-blending, so
+translucent colours are disabled with a transparent background.
 
 
 @node Colours, Base graphics, Graphics devices, Graphics Devices

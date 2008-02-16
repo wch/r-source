@@ -63,7 +63,7 @@ windows <- function(width, height, pointsize,
     if(!missing(ypinch)) new$ypinch <- as.double(ypinch)
     if(!missing(bg)) new$bg <- bg
     if(!missing(canvas)) new$canvas <- canvas
-    if(!missing(canvas)) new$gamma <- gamma
+    if(!missing(gamma)) new$gamma <- gamma
     if(!missing(xpos)) new$xpos <- as.integer(xpos)
     if(!missing(ypos)) new$ypos <- as.integer(ypos)
     if(!missing(buffered)) new$buffered <- buffered

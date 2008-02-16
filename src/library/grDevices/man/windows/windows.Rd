@@ -86,7 +86,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 }
 
 \details{
-  All these devices are implemented as versions of the same device.
+  All these devices are implemented as variants of the same device.
 
   All arguments of \code{windows} have defaults set by
   \code{\link{windows.options}}: the defaults given in the argument list
@@ -177,7 +177,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   device is opened.  
 
   There is support for semi-transparent colours of lines, fills and text
-  on the \code{windows()} device.
+  on the \code{windows()} device.  These work for saving (from the
+  \sQuote{File} menu) to PDF, PNG, BMP and JPEG, but will be ignored if
+  saving to Metafile and PostScript.
 }
 \section{Gamma}{
   PC displays map RGB numbers non-linearly to luminosities (and the

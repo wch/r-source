@@ -1685,7 +1685,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	RFontInit();
 
     /* Foreground and Background Colors */
-    xd->bg = dd->startfill = bg; /* 0xffffffff; transparent */
+    xd->bg = dd->startfill = bg;
     xd->col = dd->startcol = R_RGB(0, 0, 0);
 
     xd->fgcolor = Black;
@@ -1710,7 +1710,6 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:", 4)) {
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
 	xd->bg = dd->startfill = canvascolor;
-	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
 	if(strlen(dsp+4) >= 512) error(_("filename too long in %s() call"),
 				       (dsp[0]=='p') ? "png" : "bmp");
@@ -1732,12 +1731,18 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	    warning(_("Unable to allocate bitmap"));
 	    return FALSE;
 	}
+	xd->bm = xd->gawin;
+	if ((xd->bm2 = newbitmap(w, h, 256)) == NULL) {
+	    warning(_("Unable to allocate bitmap"));
+	    return FALSE;
+	}
 	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = R_fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
 	    warning(_("Unable to open file '%s' for writing"), buf);
 	    return FALSE;
 	}
+	xd->have_alpha = TRUE;
     } else if (!strncmp(dsp, "jpeg:", 5)) {
         char *p = strchr(&dsp[5], ':');
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
@@ -1760,12 +1765,18 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	    warning(_("Unable to allocate bitmap"));
 	    return FALSE;
 	}
+	xd->bm = xd->gawin;
+	if ((xd->bm2 = newbitmap(w, h, 256)) == NULL) {
+	    warning(_("Unable to allocate bitmap"));
+	    return FALSE;
+	}
 	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = R_fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
 	    warning(_("Unable to open file '%s' for writing"), buf);
 	    return FALSE;
 	}
+	xd->have_alpha = TRUE;
     } else {
 	/*
 	 * win.metafile[:] in memory (for the clipboard)
@@ -2083,8 +2094,12 @@ static void GA_NewPage(pGEcontext gc,
 	xd->clip = getrect(xd->gawin);
 	if(R_OPAQUE(xd->bg) || xd->kind == BMP || xd->kind == JPEG) {
 	    DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
-	} else if(xd->kind == PNG)
+	} else if(xd->kind == PNG) {
 	    DRAW(gfillrect(_d, PNG_TRANS, xd->clip));
+	    /* disable support for semi-transparency as alpha-blending
+	       with this false colour does not work */
+	    xd->have_alpha = FALSE;
+	}
 	if(xd->kind == PNG) xd->pngtrans = ggetpixel(xd->gawin, pt(0,0));
     } else {
 	xd->clip = getregion(xd);
@@ -2132,13 +2147,13 @@ static void GA_Close(pDevDesc dd)
 	hide(xd->gawin);
 
 	del(xd->bm);
-	if(xd->bm2) del(xd->bm2);
 	/* If this is the active device and buffered, shut updates off */
 	if (xd == GA_xd) GA_xd = NULL;
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
 	SaveAsBitmap(dd, xd->res_dpi);
     }
     del(xd->font);
+    if(xd->bm2) del(xd->bm2);
     del(xd->gawin);
 /*
  * this is needed since the GraphApp delayed clean-up
@@ -2205,7 +2220,9 @@ static void GA_Deactivate(pDevDesc dd)
 	    xd->warn_trans = TRUE; \
 	}
 
-#define DRAW2(col) {gcopyalpha(xd->bm,xd->bm2,r,R_ALPHA(col)); if(!xd->buffered) gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));} 
+#define DRAW2(col) {if(xd->kind != SCREEN) gcopyalpha(xd->gawin,xd->bm2,r,R_ALPHA(col)); else {gcopyalpha(xd->bm,xd->bm2,r,R_ALPHA(col)); if(!xd->buffered) gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));}}
+
+
 
 	/********************************************************/
 	/* device_Rect should have the side-effect that a 	*/
@@ -2741,6 +2758,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->startps = ps;
     dd->startlty = LTY_SOLID;
     dd->startgamma = gamma;
+    xd->bm = NULL;
     xd->bm2 = NULL;
     xd->have_alpha = FALSE; /* selectively overridden in GA_Open */
     xd->warn_trans = FALSE;
@@ -2899,7 +2917,7 @@ SEXP savePlot(SEXP args)
 
 /* Rbitmap  */
 #define BITMAP_DLL_NAME "\\library\\grDevices\\libs\\Rbitmap.dll"
-typedef int (*R_SaveAsBitmap)();
+typedef int (*R_SaveAsBitmap)(/* variable set of args */);
 static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp;
 
 static int RbitmapAlreadyLoaded = 0;
@@ -2932,11 +2950,11 @@ static int Load_Rbitmap_Dll()
 
 static int png_rows = 0;
 
-static unsigned long privategetpixel2(void *d,int i, int j)
+static unsigned int privategetpixel2(void *d,int i, int j)
 {
     rgb c;
     c = ((rgb *)d)[i*png_rows + j];
-    return c;
+    return c & 0x00ffffff ; /* exclude alpha channel */
 }
 
 /* This is the device version */

@@ -75,6 +75,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   
   Both \code{bmp} and \code{png} will use a palette if there are less
   than 256 colours on the page, and record a 24-bit RGB file otherwise.
+
+  There is support for semi-transparent colours of lines, fills and
+  text, but as they would do not work correctly with a transparent
+  background for PNGs that case is disabled.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
