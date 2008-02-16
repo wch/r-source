@@ -657,18 +657,15 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 {
 #if defined Win32 || __APPLE__
     const char *cp = "UTF-8";
-#ifdef Win32
-#ifndef SUPPORT_UTF8_WIN32
+# ifdef Win32
+#  ifndef SUPPORT_UTF8_WIN32
     cp = locale2charset(NULL);
-#endif
-#else /* __APPLE__ */
+#  endif
+# else /* __APPLE__ */
     if (latin1locale) cp = "ISO-8859-1";
-    else if (!utf8locale)
-      cp = locale2charset(NULL);
-    /* [SU] I'm not sure why the Windows code excludes this case -
-       although it's pathological, it is valid when specified directly */
+    else if (!utf8locale) cp = locale2charset(NULL);
+# endif
     if (!*tocode && !*fromcode) return iconv_open(cp, cp);
-#endif
     if(strcmp(tocode, "") == 0)  return iconv_open(cp, fromcode);
     else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
     else return iconv_open(tocode, fromcode);
