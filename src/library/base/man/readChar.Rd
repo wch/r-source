@@ -12,7 +12,7 @@
   they are null-terminated on the connection.
 }
 \usage{
-readChar(con, nchars)
+readChar(con, nchars, useBytes = FALSE)
 
 writeChar(object, con,
           nchars = nchar(object, type="chars"), eos = "")
@@ -21,7 +21,10 @@ writeChar(object, con,
   \item{con}{A connection object, or a character string naming a file,
     or a raw vector.}
   \item{nchars}{integer, giving the lengths in characters of (unterminated)
-    character strings to be read or written.  Must be >= 0 and not missing.}
+    character strings to be read or written.  Must be >= 0 and not
+    missing.}
+  \item{useBytes}{logical: should \code{nchars} be regarded as a number
+    of bytes not characters in a multi-byte locale?}
   \item{object}{A character vector to be written to the connection, at
     least as long as \code{nchars}.}
   \item{eos}{\sQuote{end of string}: character string .  The terminator

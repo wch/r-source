@@ -821,6 +821,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"playSnapshot",do_playSnapshot,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"symbols",	do_symbols,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getGraphicsEvent",do_getGraphicsEvent,0,  11, 5,      {PP_FUNCALL, PREC_FN,   0}},
+{"devAskNewPage",do_devAskNewPage,0,	11,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
@@ -877,7 +878,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"writeLines", 	do_writelines,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"readBin", 	do_readbin,	0,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeBin", 	do_writebin,	0,      211,     4,      {PP_FUNCALL, PREC_FN,	0}},
-{"readChar", 	do_readchar,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
+{"readChar", 	do_readchar,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeChar", 	do_writechar,	0,      211,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"open", 	do_open,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"isOpen", 	do_isopen,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},

@@ -23,10 +23,10 @@ load <-
         ## is compressed or not; zlib works either way.
         con <- gzfile(file)
         on.exit(close(con))
-        suppressWarnings(magic <- readChar(con, 5))
-        if (regexpr("RD[AX]2\n", magic) == -1) {
+        magic <- readChar(con, 5L, useBytes = TRUE)
+        if (regexpr("RD[AX]2\n", magic) == -1L) {
             ## a check while we still know the args
-            if(regexpr("RD[ABX][12]\r", magic) == 1)
+            if(regexpr("RD[ABX][12]\r", magic) == 1L)
                 stop("input has been corrupted, with LF replaced by CR")
             ## Not a version 2 magic number, so try the old way.
             warning(gettextf("file '%s' has magic number '%s'\n   Use of save versions prior to 2 is deprecated",

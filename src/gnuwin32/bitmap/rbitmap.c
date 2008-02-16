@@ -41,9 +41,9 @@
 
 /* 8 bits red, green and blue channel */
 #define DECLARESHIFTS int RSHIFT=(bgr)?0:16, GSHIFT=8, BSHIFT=(bgr)?16:0
-#define GETRED(col)    (((col) >> RSHIFT) & 0xFFUL)
-#define GETGREEN(col)  (((col) >> GSHIFT) & 0xFFUL)
-#define GETBLUE(col)   (((col) >> BSHIFT) & 0xFFUL)
+#define GETRED(col)    (((col) >> RSHIFT) & 0xFFU)
+#define GETGREEN(col)  (((col) >> GSHIFT) & 0xFFU)
+#define GETBLUE(col)   (((col) >> BSHIFT) & 0xFFU)
 
 #include <R_ext/Error.h>
 
@@ -76,12 +76,12 @@ static void my_png_warning(png_structp png_ptr, png_const_charp msg)
 
 __declspec(dllexport)
 int R_SaveAsPng(void  *d, int width, int height, 
-		unsigned long (*gp)(void *, int, int),
+		unsigned int (*gp)(void *, int, int),
 		int bgr, FILE *fp, unsigned int transparent, int res) 
 {
   png_structp png_ptr;
   png_infop info_ptr;
-  unsigned long  col, palette[256];
+  unsigned int  col, palette[256];
   png_color pngpalette[256];
   png_bytep pscanline, scanline = calloc(3*width,sizeof(png_byte));
   png_byte trans[256];
@@ -133,7 +133,7 @@ int R_SaveAsPng(void  *d, int width, int height,
   withpalette = 1;
   for (i = 0; (i < height) && withpalette ; i++) {
     for (j = 0; (j < width) && withpalette ; j++) {
-      col = gp(d,i,j) & 0xFFFFFFUL ;
+      col = gp(d,i,j) & 0xFFFFFFU ;
       /* binary search the palette: */
       low = 0;  
       high = ncols - 1;
@@ -183,7 +183,7 @@ int R_SaveAsPng(void  *d, int width, int height,
   if(transparent) {
       if(withpalette) {
 	  for (i = 0; i < ncols ; i++)
-	      trans[i] = (palette[i] == (transparent & 0xFFFFFFUL)) ? 0:255;
+	      trans[i] = (palette[i] == (transparent & 0xFFFFFFU)) ? 0:255;
       } else {
 	  trans_values[0].red = GETRED(transparent);
 	  trans_values[0].blue = GETBLUE(transparent);
@@ -206,7 +206,7 @@ int R_SaveAsPng(void  *d, int width, int height,
     /* Build the scanline */
     pscanline = scanline;
     for ( j=0 ; j<width ; j++) {
-      col = gp(d, i, j);
+      col = gp(d, i, j) & 0xFFFFFFU;
       if (withpalette) { 
 	    /* binary search the palette (the colour must be there): */
 	    low = 0;  high = ncols - 1;
@@ -285,7 +285,7 @@ static void my_output_message (j_common_ptr cinfo)
 
 __declspec(dllexport)
 int R_SaveAsJpeg(void  *d, int width, int height, 
-		unsigned long (*gp)(void *, int, int),
+		unsigned int (*gp)(void *, int, int),
 		int bgr, int quality, FILE *outfile, int res) 
 {
   struct jpeg_compress_struct cinfo;
@@ -293,7 +293,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
   /* More stuff */
   JSAMPLE *pscanline, *scanline = calloc(3*width,sizeof(JSAMPLE));
   int i, j;
-  unsigned long col;
+  unsigned int col;
   DECLARESHIFTS;
 
   /* Have we enough memory?*/
@@ -349,7 +349,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
   /* Build the scanline */
     pscanline = scanline;
     for ( j=0 ; j<width ; j++) {
-      col = gp(d, i, j);
+      col = gp(d, i, j) & 0xFFFFFFU;
       *pscanline++ = GETRED(col) ;
       *pscanline++ = GETGREEN(col) ;
       *pscanline++ = GETBLUE(col) ;
@@ -382,21 +382,21 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 
 #define BMPERROR {R_ShowMessage("Problems writing to 'bmp' file");return 0;} 
 #define BMPW(a) {wrd=a;if(fwrite(&wrd,sizeof(unsigned short),1,fp)!=1) BMPERROR}
-#define BMPDW(a) {dwrd=a;if(fwrite(&dwrd,sizeof(unsigned long),1,fp)!=1) BMPERROR}
+#define BMPDW(a) {dwrd=a;if(fwrite(&dwrd,sizeof(unsigned int),1,fp)!=1) BMPERROR}
 #define BMPLONG(a) {lng=a;if(fwrite(&lng,sizeof(long),1,fp)!=1) BMPERROR}
 #define BMPPUTC(a) if(fputc(a,fp)==EOF) BMPERROR;
 #define HEADERSIZE 54
 
 __declspec(dllexport)
 int R_SaveAsBmp(void  *d, int width, int height, 
-		unsigned long (*gp)(void *, int, int), int bgr, FILE *fp,
+		unsigned int (*gp)(void *, int, int), int bgr, FILE *fp,
 		int res) 
 {
-  unsigned long  col, palette[256];
+  unsigned int  col, palette[256];
   int i, j, r, ncols, mid, high, low, withpalette;
   int bfOffBits, bfSize, biBitCount, biClrUsed , pad;
   unsigned short wrd;
-  unsigned long dwrd;
+  unsigned int dwrd;
   long lng, lres;
   DECLARESHIFTS;
 
@@ -406,7 +406,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
   for (i=0; i<256 ; i++) palette[i] = 0;
   for (i = 0; (i < height) && withpalette ; i++) {
     for (j = 0; (j < width) && withpalette ; j++) {
-      col = gp(d,i,j) & 0xFFFFFFUL ;
+      col = gp(d,i,j) & 0xFFFFFFU ;
       /* binary search the palette: */
       low = 0;  
       high = ncols - 1;
@@ -475,7 +475,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     /* and then the pixels */
     for (i=height-1 ; i>=0 ; i--) { 
       for ( j=0 ; j<width ; j++) {
-	col = gp(d, i, j)&0xFFFFFFUL;
+	col = gp(d, i, j)&0xFFFFFFU;
 	/* binary search the palette (the colour must be there): */
 	low = 0;  high = ncols - 1;
 	while (low <= high) {
@@ -494,7 +494,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     for ( pad=0 ; ((3*width+pad) & 3) != 0; pad++); /*padding*/    
     for (i=height-1 ; i>=0 ; i--) { 
       for ( j=0 ; j<width ; j++) {
-	col = gp(d, i, j)&0xFFFFFFUL;
+	col = gp(d, i, j)&0xFFFFFFU;
 	BMPPUTC(GETBLUE(col));
 	BMPPUTC(GETGREEN(col));
 	BMPPUTC(GETRED(col));

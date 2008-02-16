@@ -151,6 +151,7 @@ SEXP do_dataframe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dataviewer(SEXP, SEXP, SEXP, SEXP);
 SEXP do_date(SEXP, SEXP, SEXP, SEXP);
 SEXP do_debug(SEXP, SEXP, SEXP, SEXP);
+SEXP do_devAskNewPage(SEXP, SEXP, SEXP, SEXP);
 SEXP do_delayed(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dend(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dendwindow(SEXP, SEXP, SEXP, SEXP);

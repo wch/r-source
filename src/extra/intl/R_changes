@@ -18,6 +18,12 @@ Various small changes were made to avoid warnings.
 
 BDR
 
+One more change for Mac OS X: the locale detection is simply off-loaded
+to locale2charset, because the built-in detection in gettext doesn't work.
+This also ensures that R and gettext are in sync wrt the charset used.
+
+SU
+
 diff -ru intl/dcigettext.c ../extra/intl/dcigettext.c
 --- intl/dcigettext.c	2007-10-21 19:41:41.000000000 +0100
 +++ ../extra/intl/dcigettext.c	2008-01-13 14:39:54.703125000 +0000
@@ -270,3 +276,34 @@ diff -ru intl/ngettext.c ../extra/intl/ngettext.c
  char *
  NGETTEXT (const char *msgid1, const char *msgid2, unsigned long int n)
  {
+
+Index: localcharset.c
+===================================================================
+--- localcharset.c	(revision 44486)
++++ localcharset.c	(working copy)
+@@ -288,6 +288,9 @@
+    name.  */
+ 
+ extern unsigned int localeCP; /* from Defn.h */
++#if __APPLE__ /* others could use this, too ... */
++extern char *locale2charset(char*);
++#endif
+ 
+ #ifdef STATIC
+ STATIC
+@@ -295,6 +298,9 @@
+ const char *
+ locale_charset (void)
+ {
++#if __APPLE__
++  return locale2charset(NULL);
++#else
+   const char *codeset;
+   const char *aliases;
+ 
+@@ -468,4 +474,5 @@
+     codeset = "ASCII";
+ 
+   return codeset;
++#endif /* ! __APPLE__ */
+ }

@@ -16,7 +16,7 @@ col2rgb(col, alpha = FALSE)
   \item{col}{vector of any of the three kind of \R colors, i.e., either
     a color name (an element of \code{\link{colors}()}), a hexadecimal
     string of the form \code{"#rrggbb"}, or an integer \code{i} meaning
-    \code{palette()[i]}.}
+    \code{palette()[i]}.  Non-string values are coerced to integer.}
   \item{alpha}{logical value indicating whether alpha channel
     values should be returned.}
 }

@@ -187,7 +187,12 @@ OTHERS
 	character vector, but will give numeric output with new
 	arguent 'numeric = TRUE'.
 
-    o	New function readRegistry() to read registry hives.	
+    o	New function readRegistry() to read registry hives.
+
+    o	Saving a graphics window containing semi-transparent colours
+	to BMP, JPEG or PNG now works.
+
+    o	The jpeg() and png() devices support semi-transparent colours.
 
 
 BUILDING R

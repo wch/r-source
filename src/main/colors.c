@@ -351,12 +351,18 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
-    SEXP colors, ans, names, dmns, icol;
+    SEXP colors, ans, names, dmns;
     unsigned int col, bg;
     int n, i, i4;
 
     checkArity(op, args);
     colors = CAR(args);
+    if(isString(colors)) PROTECT(colors);
+    else {
+	PROTECT(colors = coerceVector(colors, INTSXP));
+	if (TYPEOF(colors) != INTSXP)
+	    error(_("invalid value of '%s'"), "col");
+    }
     n = LENGTH(colors);
 
     /* First set up the output matrix */
@@ -383,18 +389,16 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	    INTEGER(ans)[i4 +3] = R_ALPHA(col);
 	}
     } else {
-	PROTECT(icol = coerceVector(colors, INTSXP));
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
-	    col = INTEGER(icol)[i];
+	    col = INTEGER(colors)[i];
 	    col =  (col > 0) ? R_ColorTable[(col-1) % R_ColorTableSize] : bg;
 	    INTEGER(ans)[i4 +0] = R_RED(col);
 	    INTEGER(ans)[i4 +1] = R_GREEN(col);
 	    INTEGER(ans)[i4 +2] = R_BLUE(col);
 	    INTEGER(ans)[i4 +3] = R_ALPHA(col);
 	}
-	UNPROTECT(1);
     }
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }
 

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -75,13 +75,19 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   
   Both \code{bmp} and \code{png} will use a palette if there are less
   than 256 colours on the page, and record a 24-bit RGB file otherwise.
+
+  There is support for semi-transparent colours of lines, fills and
+  text.  However, as the version of PNG used allows only one non-opaque
+  colour, if there is a transparent background, semi-transparent colours
+  are painted onto a slightly off-white background and hence the pixels
+  are opague.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
 \section{Warnings}{
-  Note that the \code{width} and \code{height} are in pixels not inches.
-  A warning will be issued if both are less than 20.
+  Note that the \code{width} and \code{height} are by  default in pixels
+  not inches.  A warning will be issued if both are less than 20.
   
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in

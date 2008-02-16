@@ -108,6 +108,11 @@ par(\dots, no.readonly = FALSE)
 }
 
 \details{
+  Each device has its own set of graphical parameters.  If the current
+  device is the null device, \code{par} will open a new device before
+  querying/setting parameters.  (What device is controlled by
+  \code{\link{options}("device")}.)
+  
   Parameters are queried by giving one or more character vectors to
   \code{par}.
 
@@ -194,7 +199,11 @@ par(\dots, no.readonly = FALSE)
       interactive) the user is asked for input, before a new figure is
       drawn.  As this applies to the device, it also affects output by
       packages \pkg{grid} and \pkg{lattice}.  It can be set even on
-      non-screen devices.}
+      non-screen devices but may have no effect there.
+
+      This not really a graphics parameter, and its use is deprecated in
+      favour of \code{\link{devAskNewPage}}.
+    }
     \item{\code{bg}}{The color to be used for the background of the
       device region.  When called from \code{par()} it also sets
       \code{new=FALSE}. See section \sQuote{Color Specification} for
@@ -262,12 +271,11 @@ par(\dots, no.readonly = FALSE)
       This name gets mapped by each graphics device to a device-specific
       font description.
       The default value is \code{""} which means that the
-      default device fonts will be used.
-      Standard values are \code{"serif"}, \code{"sans"},
-      \code{"mono"}, and \code{"symbol"} and the \link{Hershey}
-      font families are also available.  (Different devices
-      may define others, and some devices will ignore this setting
-      completely.)  This can be specified inline for
+      default device fonts will be used.  Standard values are
+      \code{"serif"}, \code{"sans"} and \code{"mono"}, and the
+      \link{Hershey} font families are also available.  (Different
+      devices may define others, and some devices will ignore this
+      setting completely.)  This can be specified inline for
       \code{\link{text}}.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes
@@ -296,7 +304,7 @@ par(\dots, no.readonly = FALSE)
       to \code{\link{hsv}}.  This is only accepted if the current device
       has support for changing the gamma correction: currently only
       \code{windows} and \code{quartz} do.  (\code{X11} has support for
-      setting the gamma correction when opening the device, but not for
+      setting the gamma correction when opening the first device, but not for
       changing it.)}
     \item{\code{lab}}{A numerical vector of the form \code{c(x, y, len)}
       which modifies the default way that axes are annotated.  The values of

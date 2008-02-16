@@ -179,6 +179,62 @@ void attribute_hidden Init_R_Variables(SEXP rho)
     Init_R_Platform(rho);
 }
 
+#ifdef HAVE_LANGINFO_CODESET
+/* case-insensitive string comparison (needed for locale check) */
+int static R_strieql(const char *a, const char *b)
+{
+    while (*a && *b && toupper(*a) == toupper(*b)) { a++; b++; }
+    return (*a == 0 && *b == 0);
+}
+#endif
+
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#endif
+#ifdef HAVE_LANGINFO_CODESET
+# include <langinfo.h>
+#endif
+
+/* retrieves information about the current locale and
+   sets the corresponding variables (known_to_be_utf8,
+   known_to_be_latin1, utf8locale, latin1locale and mbcslocale) */
+void attribute_hidden R_check_locale(void)
+{
+    known_to_be_utf8 = utf8locale = FALSE;
+    known_to_be_latin1 = latin1locale = FALSE;
+    mbcslocale = FALSE;
+#ifdef HAVE_LANGINFO_CODESET
+    {
+        char  *p = nl_langinfo(CODESET);
+	/* more relaxed due to Darwin: CODESET is case-insensitive and
+	   latin1 is ISO8859-1 */
+	if(R_strieql(p, "UTF-8")) known_to_be_utf8 = utf8locale = TRUE;
+	if(streql(p, "ISO-8859-1")) known_to_be_latin1 = latin1locale = TRUE;
+	if(R_strieql(p, "ISO8859-1")) known_to_be_latin1 = latin1locale = TRUE;
+#if __APPLE__
+	/* On Darwin 'regular' locales such as 'en_US' are UTF-8 (hence
+	   MB_CUR_MAX == 6), but CODESET is "" */
+	if (*p == 0 && MB_CUR_MAX == 6)
+	    known_to_be_utf8 = utf8locale = TRUE;
+#endif
+    }
+#endif
+#ifdef SUPPORT_MBCS
+    mbcslocale = MB_CUR_MAX > 1;
+#endif
+#ifdef Win32
+    {
+        char *ctype = setlocale(LC_CTYPE, NULL), *p;
+	p = strrchr(ctype, '.');
+	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 0;
+	/* Not 100% correct, but CP1252 is a superset */
+	known_to_be_latin1 = latin1locale = (localeCP == 1252);
+    }
+#endif
+#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
+    utf8locale = mbcslocale = TRUE;
+#endif
+}
 
 /*  date
  *
@@ -1307,13 +1363,6 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#endif
-#ifdef HAVE_LANGINFO_CODESET
-# include <langinfo.h>
-#endif
-
 SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef HAVE_LOCALE_H
@@ -1432,26 +1481,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 		CHAR(STRING_ELT(locale, 0)));
     }
     UNPROTECT(1);
-#ifdef HAVE_LANGINFO_CODESET
-    p = nl_langinfo(CODESET);
-    known_to_be_utf8 = utf8locale = streql(p, "UTF-8") ? TRUE : FALSE;
-    known_to_be_latin1 = latin1locale = streql(p, "ISO-8859-1") ? TRUE : FALSE;
-#endif
-#ifdef SUPPORT_MBCS
-    mbcslocale = MB_CUR_MAX > 1;
-#endif
-#ifdef Win32
-    {
-	char *ctype = setlocale(LC_CTYPE, NULL);
-	p = strrchr(ctype, '.');
-	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 0;
-	/* Not 100% correct */
-	known_to_be_latin1 = latin1locale = (localeCP == 1252);
-    }
-#endif
-#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
-    utf8locale = mbcslocale = TRUE;
-#endif
+    R_check_locale();
     invalidate_cached_recodings();
     return ans;
 #else
@@ -1821,19 +1851,19 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     recursive = asLogical(CADDR(args));
     if(recursive == NA_LOGICAL) recursive = 0;
     wcscpy(dir, filenameToWchar(STRING_ELT(path, 0), TRUE));
-    /* need DOS paths on Win 9x R_fixbackslash(dir); */
+    for(p = dir; *p; p++) if(*p == L'/') *p = L'\\';
     /* remove trailing slashes */
     p = dir + wcslen(dir) - 1;
-    while(*p == '\\' && wcslen(dir) > 1 && *(p-1) != ':') *p-- = '\0';
+    while(*p == L'\\' && wcslen(dir) > 1 && *(p-1) != L':') *p-- = L'\0';
     if(recursive) {
 	p = dir;
-	while((p = wcschr(p+1, '\\'))) {
-	    *p = '\0';
-	    if(*(p-1) != ':') {
+	while((p = wcschr(p+1, L'\\'))) {
+	    *p = L'\0';
+	    if(*(p-1) != L':') {
 		res = _wmkdir(dir);
 		if(res && errno != EEXIST) goto end;
 	    }
-	    *p = '\\';
+	    *p = L'\\';
 	}
     }
     res = _wmkdir(dir);

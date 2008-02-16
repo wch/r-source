@@ -655,11 +655,17 @@ int getCharEnc(SEXP x)
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
-#ifdef Win32
+#if defined Win32 || __APPLE__
     const char *cp = "UTF-8";
-#ifndef SUPPORT_UTF8_WIN32
+# ifdef Win32
+#  ifndef SUPPORT_UTF8_WIN32
     cp = locale2charset(NULL);
-#endif
+#  endif
+# else /* __APPLE__ */
+    if (latin1locale) cp = "ISO-8859-1";
+    else if (!utf8locale) cp = locale2charset(NULL);
+# endif
+    if (!*tocode && !*fromcode) return iconv_open(cp, cp);
     if(strcmp(tocode, "") == 0)  return iconv_open(cp, fromcode);
     else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
     else return iconv_open(tocode, fromcode);

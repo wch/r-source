@@ -218,6 +218,8 @@ install-R-framework:
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)" && \
 	  ln -f -s -n Resources/include Headers && \
 	  ln -f -s -n Resources/lib/libR.dylib R)
+	@if [ ! -e "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/PrivateHeaders" ]; then \
+	 mkdir "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/PrivateHeaders"; fi
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
 	  ln -f -s -n $(FW_VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
@@ -252,23 +254,29 @@ install-R-framework:
 	    done; \
            fi; \
           done)
-	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
+	@(cp -R $(srcdir)/src/include/* $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/ && \
 	  cp src/include/config.h $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/ && \
+	  chmod a+r $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/config.h; \
 	  find $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders -name .svn | xargs rm -rf)
 	@(install_name_tool -change libR.dylib \
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
 	    $(Rexecbindir2)/R)
 	@(if [ -n "${R_ARCH}" ]; then \
+	  rm -rf $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH} && \
+	  mkdir $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH} && \
+	  cp src/include/config.h $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}/config.h; \
+	  chmod a+r $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}/config.h; \
 	  sed -e "s|R_ARCH=${R_ARCH}|R_ARCH=/\`arch\`|" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R" \
 	  > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
 	  chmod a+x "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
 	  mv "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R"; \
-	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 ]; then \
+	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 -a "${R_ARCH}" != /arm ]; then \
 	    $(ECHO) "\
-	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
+	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc, ppc64 or arm as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
 	  else \
-	    for f in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename`; do \
-	      $(ECHO) "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#ifdef __x86_64__~#include <x86_64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
+	    for f in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename` config.h; do \
+	      fn="Headers/$$f"; if [ "$$f" = "config.h" ]; then fn="PrivateHeaders/config.h"; fi; \
+	      $(ECHO) "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include \"i386/$$f\"~#elif defined __ppc__~#include \"ppc/$$f\"~#elif defined __ppc64__~#include \"ppc64/$$f\"~#elif defined __x86_64__~#include \"x86_64/$$f\"~#elif defined __arm__~#include \"arm/$$f\"~#else~#error \"Unsupported architecture.\"~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/$$fn"; \
 	    done; \
 	  fi; \
 	fi )

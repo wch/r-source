@@ -77,7 +77,7 @@ NEW FEATURES
     o	new.packages() now knows about the front-end package gnomeGUI
 	(which does not install into a library).
 
-    o	Under Unix, utils::make.packages.html() now now be used directly
+    o	Under Unix, utils::make.packages.html() can now be used directly
 	to set up linked HTML help pages, optionally without creating
 	the package listing and search database (which can be much
 	faster).
@@ -179,9 +179,10 @@ NEW FEATURES
 
     o	The handling of DST on dates outside the range 1902-2037 has
 	been improved.  Dates after 2037 are assumed to have the same
-	DST rules as the 2030's (rather than the 1970s), and dates
-	prior to 1902 are assumed to have no DST and the same offset
-	as in 1902 (if known, otherwise as in the 1970s).
+	DST rules as currently predicted for the 2030's (rather than
+	the 1970s), and dates prior to 1902 are assumed to have no DST
+	and the same offset as in 1902 (if known, otherwise as in the
+	1970s).
 
     o	On platforms where we can detect that mktime sets errno
 	(e.g. Solaris but not glibc), "1969-12-31 23:59:59" is
@@ -292,6 +293,14 @@ NEW FEATURES
     o	option("device.ask.default") replaces "par.ask.default" now it
 	applies also to grid.prompt().
 
+    o	readChar() gains an argument 'useBytes' to allow it to read a
+	fixed number of bytes in an MBCS locale.
+
+    o	The error handler in the parser now reports line numbers for
+	more syntax errors (MBCS and Unicode encoding errors, line
+	length and context stack overflows, and mis-specified argument
+	lists to functions).
+
 
 DEPRECATED & DEFUNCT
 
@@ -319,6 +328,11 @@ DEPRECATED & DEFUNCT
     o	options("par.ask.default") is deprecated in favour of
 	"device.ask.default".
 
+    o	The 'device-independent' family "symbol" is deprecated as it
+	was highly locale-dependent (it only did something useful in
+	single-byte locales) and font=5 (base) or fontface=5 (grid) did
+	the job it was intended to do more reliably.
+
 
 INSTALLATION
 
@@ -344,20 +358,25 @@ UTILITIES
 
     o	Keyword entries are no longer mandatory in Rd files.
 
+    o	R CMD INSTALL now also installs tangled versions of all vignettes.
+
     o	R CMD check now warns if spaces or non-ASCII characters are
 	used in file paths, since these are not in general portable.
-
-    o   R CMD INSTALL now also installs tangled versions of all vignettes.
 
     o	R CMD check (via massage-examples.pl) now checks all examples
 	with a 7 inch square device region on A4 paper, for
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.
 
-    o	If a package declares an encoding in the DESCRIPTION file,
+	If a package declares an encoding in the DESCRIPTION file,
 	the examples are assumed to be in that encoding when running
 	the tests. (This avoids errors in running latin1 examples in a
 	UTF-8 locale.)
+
+    o	R CMD check uses pdflatex (if available) to check the typeset
+	version of the manual, producing PDF rather than DVI.  (This
+	is a better check since the package reference manuals on CRAN
+	are in PDF.)
 
 
 C-LEVEL FACILITIES
@@ -426,7 +445,7 @@ BUG FIXES
     o	There are some checks for valid C-style formats in, e.g.
 	png(filename=).  (PR#10571)
 
-    o	vector() was misinterpreting some real 'length' values, e.g,
+    o	vector() was misinterpreting some double 'length' values, e.g,
 	NaN and NA_real_ were interpreted as zero.  Also, invalid
 	types of 'length' were interpreted as -1 and hence reported as
 	negative.  (length<- shared the code and hence the same
@@ -434,7 +453,8 @@ BUG FIXES
 
     o	A basic class "S4" was added to correspond to the "S4" object
 	type, so that objects with this type will print, etc.  The
-	class is VIRTUAL, since all actual S4 objects must have a real class.
+	class is VIRTUAL, since all actual S4 objects must have a real
+	class.
 
     o	Classes with no slots that contain only VIRTUAL classes are now
 	VIRTUAL, as was intended but confused by having an empty S4
@@ -452,6 +472,15 @@ BUG FIXES
 	is in 'graphics input' mode (as locator() and identify()
 	always have).  This means that devices can now indicate the
 	'graphics input' mode by e.g. a change of cursor.
+
+    o	Locales without encoding specification and non-UTF-8 locales
+	now work properly on Mac OS X. Note that locales without
+	encoding specification always use UTF-8 encoding in Mac OS X
+	(except for specials "POSIX" and "C") - this is different from
+	other operating systems.
+
+    o	iconv() now correctly handles to="" and from="" on Mac OS X.
+
 
 
 
@@ -488,6 +517,11 @@ BUG FIXES
 	grid.newpage()) did not flush out the XClearWindow call, so
 	the X11 window might not be refreshed immediately.
 
+    o	libtool has been updated to version 1.5.26, which avoids
+	many spurious configure warnings on Darwin/Mac OS X.
+
+    o	l10n_info() now recognizes how Darwin/Mac OS X reports
+	Latin-1 locales (as charset ISO8859-1 rather than ISO-8859-1).
 
 
 

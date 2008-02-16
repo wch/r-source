@@ -203,4 +203,5 @@ X11Fonts(# Default Serif font is Times
          # Default Monospace font is Courier
          mono=X11Font("-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
          # Default Symbol font is Symbol
+         # Deprecated: renove in 2.8.0
          symbol=X11Font("-*-symbol-%s-%s-*-*-%d-*-*-*-*-*-*-*"))

@@ -298,3 +298,5 @@ checkIntFormat <- function(s)
     s <- sub("%[#0 ,+-]*[0-9.]*[diouxX]", "", s)
     length(grep("%", s)) == 0
 }
+
+devAskNewPage <- function(ask=NULL) .Internal(devAskNewPage(ask))

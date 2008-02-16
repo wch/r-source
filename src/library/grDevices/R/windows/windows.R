@@ -63,7 +63,7 @@ windows <- function(width, height, pointsize,
     if(!missing(ypinch)) new$ypinch <- as.double(ypinch)
     if(!missing(bg)) new$bg <- bg
     if(!missing(canvas)) new$canvas <- canvas
-    if(!missing(canvas)) new$gamma <- gamma
+    if(!missing(gamma)) new$gamma <- gamma
     if(!missing(xpos)) new$xpos <- as.integer(xpos)
     if(!missing(ypos)) new$ypos <- as.integer(ypos)
     if(!missing(buffered)) new$buffered <- buffered
@@ -286,7 +286,8 @@ windowsFonts <- function(...)
 }
 
 # Create a valid windows font description
-windowsFont <- function(family) checkWindowsFont(family)
+windowsFont <- function(family)
+    checkWindowsFont(family)
 
 
 windowsFonts(# Default Serif font is Times
@@ -296,4 +297,5 @@ windowsFonts(# Default Serif font is Times
              # Default Monospace font is Courier
              mono = windowsFont("TT Courier New"),
              # Default Symbol font is Symbol
+             # Deprecated: remove in 2.8.0
              symbol = windowsFont("TT Symbol"))
