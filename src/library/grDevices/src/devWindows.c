@@ -73,7 +73,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 /* a colour used to represent the background on png if transparent
    NB: used as RGB and BGR
 */
-#define PNG_TRANS 0xd6d3d6
+//#define PNG_TRANS 0xd6d3d6
+#define PNG_TRANS 0xfdfefd
 
 /* these really are globals: per machine, not per window */
 static double user_xpinch = 0.0, user_ypinch = 0.0;
@@ -2098,7 +2099,7 @@ static void GA_NewPage(pGEcontext gc,
 	    DRAW(gfillrect(_d, PNG_TRANS, xd->clip));
 	    /* disable support for semi-transparency as alpha-blending
 	       with this false colour does not work */
-	    xd->have_alpha = FALSE;
+	    //xd->have_alpha = FALSE;
 	}
 	if(xd->kind == PNG) xd->pngtrans = ggetpixel(xd->gawin, pt(0,0));
     } else {
@@ -2954,7 +2955,7 @@ static unsigned int privategetpixel2(void *d,int i, int j)
 {
     rgb c;
     c = ((rgb *)d)[i*png_rows + j];
-    return c & 0x00ffffff ; /* exclude alpha channel */
+    return c; /* exclude alpha channel */
 }
 
 /* This is the device version */
