@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-diag <- function(x = 1, nrow, ncol = n)
+diag <- function(x = 1, nrow, ncol)
 {
     if (is.matrix(x) && nargs() == 1) {
         if((m <- min(dim(x))) == 0)
@@ -39,6 +39,8 @@ diag <- function(x = 1, nrow, ncol = n)
     else n <- length(x)
     if(!missing(nrow))
 	n <- nrow
+    if(missing(ncol))
+	ncol <- n
     p <- ncol
     y <- array(0, c(n, p))
     if((m <- min(n, p)) > 0) y[1 + 0:(m - 1) * (n + 1)] <- x

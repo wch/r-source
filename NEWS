@@ -453,7 +453,7 @@ BUG FIXES
 	object as prototype. ## backed out temporarily ##
 
     o   format.AsIs() discarded dimnames, causing dataframes with matrix
-        variables to be printed without using the column names,  unlike 
+        variables to be printed without using the column names, unlike
         what happens in S-PLUS (Tim Hesterberg, PR#10730).
 
     o	xspline() and grid::grid.xpline() work in device coordinates
@@ -472,6 +472,9 @@ BUG FIXES
 	other operating systems.
 
     o	iconv() now correctly handles to="" and from="" on Mac OS X.
+
+    o	In diag()'s argument list, drop the explicit default (' = n')
+	for 'ncol' which is ugly when making diag() generic.
 
 
 
@@ -680,7 +683,7 @@ BUG FIXES
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
-	
+
     o	print.htest() lost output when used within sink(file, split=TRUE).
 
     o	Setting par(col.main=) also set par("col") to the same colour.

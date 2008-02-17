@@ -6,7 +6,7 @@
 \name{diag}
 \title{Matrix Diagonals}
 \usage{
-diag(x = 1, nrow, ncol = n)
+diag(x = 1, nrow, ncol)
 diag(x) <- value
 }
 \alias{diag}
