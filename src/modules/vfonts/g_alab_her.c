@@ -75,13 +75,13 @@ typedef struct {
 static bool _composite_char (unsigned char *composite, 
 			     unsigned char *character, 
 			     unsigned char *accent);
-static void _draw_stroke (vfontContext *vc, R_GE_gcontext *gc, 
-			  GEDevDesc *dd, 
+static void _draw_stroke (vfontContext *vc, const pGEcontext gc, 
+			  pGEDevDesc dd, 
 			  bool pendown, double deltax, double deltay);
-static double _label_width_hershey (R_GE_gcontext *gc, GEDevDesc *dd, 
+static double _label_width_hershey (const pGEcontext gc, pGEDevDesc dd, 
 				    const unsigned short *label); 
-static void _draw_hershey_string (vfontContext *vc, R_GE_gcontext *gc, 
-				  GEDevDesc *dd, 
+static void _draw_hershey_string (vfontContext *vc, const pGEcontext gc, 
+				  pGEDevDesc dd, 
 				  const unsigned short *string);
 
 /* _draw_hershey_stroke() draws a stroke, taking into account the
@@ -94,7 +94,7 @@ static void _draw_hershey_string (vfontContext *vc, R_GE_gcontext *gc,
 */
 
 static
-void _draw_hershey_stroke (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd, 
+void _draw_hershey_stroke (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd, 
 			   bool pendown, double deltax, double deltay)
 {
     _draw_stroke(vc, gc, dd, pendown, 
@@ -110,8 +110,8 @@ static void moverel(double dx, double dy, vfontContext *vc) {
 }
 
 static void linerel(double dx, double dy, 
-		    vfontContext *vc, R_GE_gcontext *gc, 
-		    GEDevDesc *dd) {
+		    vfontContext *vc, const pGEcontext gc, 
+		    pGEDevDesc dd) {
     GELine(toDeviceX(vc->currX, GE_INCHES, dd), 
 	   toDeviceY(vc->currY, GE_INCHES, dd),
 	   toDeviceX(vc->currX+dx, GE_INCHES, dd), 
@@ -126,7 +126,7 @@ static void linerel(double dx, double dy,
 #define M_PI		3.141592653589793238462643383279502884197169399375
 #endif
 
-static void _draw_stroke (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd, 
+static void _draw_stroke (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd, 
 			  bool pendown, double deltax, double deltay)
 {
   double dx, dy;
@@ -153,7 +153,7 @@ static void _draw_stroke (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
    case when the current Plotter font is a Hershey font; called in
    g_flabelwidth () */
 static double R_VF_VStrWidth (const char *s, 
-			      R_GE_gcontext *gc, GEDevDesc *dd)
+			      const pGEcontext gc, pGEDevDesc dd)
 {
   double label_width;
   unsigned short *codestring;
@@ -181,14 +181,14 @@ static double R_VF_VStrWidth (const char *s,
    Added _label_height_hershey and GVStrHeight function
 */
 
-static double _label_height_hershey (R_GE_gcontext *gc, 
-				     GEDevDesc *dd, 
+static double _label_height_hershey (const pGEcontext gc, 
+				     pGEDevDesc dd, 
 				     const unsigned short *label)
 {
     return( HERSHEY_Y_UNITS_TO_USER_UNITS(HERSHEY_LARGE_CAPHEIGHT) );
 }
 
-static double R_VF_VStrHeight (const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
+static double R_VF_VStrHeight (const char *s, const pGEcontext gc, pGEDevDesc dd)
 {
   double label_height;
   unsigned short *codestring;
@@ -220,8 +220,8 @@ static double R_VF_VStrHeight (const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
    to the case when the current Plotter font is a Hershey font */
 static void R_VF_VText (double x, double y, const char *s, 
 			double x_justify, double y_justify, double rotation,
-			R_GE_gcontext *gc,
-			GEDevDesc *dd)
+			const pGEcontext gc,
+			pGEDevDesc dd)
 {
   unsigned short *codestring;
   double label_width, label_height;
@@ -383,7 +383,7 @@ static void R_VF_VText (double x, double y, const char *s,
 /* _label_width_hershey() computes the width (total delta x) of a
    controlified character string to be rendered in a vector font, in user
    units */
-static double _label_width_hershey (R_GE_gcontext *gc, GEDevDesc *dd, 
+static double _label_width_hershey (const pGEcontext gc, pGEDevDesc dd, 
 				    const unsigned short *label) 
 { 
   const unsigned short *ptr = label;
@@ -542,8 +542,8 @@ static double _label_width_hershey (R_GE_gcontext *gc, GEDevDesc *dd,
    specified.  This is used for repositioning during rendering of
    composite (accented) characters. */
 static
-void _draw_hershey_penup_stroke(vfontContext *vc, R_GE_gcontext *gc, 
-				GEDevDesc *dd,
+void _draw_hershey_penup_stroke(vfontContext *vc, const pGEcontext gc, 
+				pGEDevDesc dd,
 				double dx, double dy, 
 				double charsize, bool oblique)
 {
@@ -560,7 +560,7 @@ void _draw_hershey_penup_stroke(vfontContext *vc, R_GE_gcontext *gc,
    glyph, specified by index in the occidental or oriental glyph arrays.
    Size scaling and obliquing (true/false) are specified. */
 static 
-void _draw_hershey_glyph (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
+void _draw_hershey_glyph (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
 			  int glyphnum, 
 			  double charsize, int type, bool oblique)
 {
@@ -627,7 +627,7 @@ void _draw_hershey_glyph (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
    which is taken to be on the string's baseline.  Besides invoking move()
    and cont(), it invokes linewidth(). */
 static
-void _draw_hershey_string (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
+void _draw_hershey_string (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
 			   const unsigned short *string)
 {
   unsigned short c;

@@ -57,7 +57,7 @@ static void vfonts_Init(void)
 }
 
 attribute_hidden
-double R_GE_VStrWidth(const char *s, int enc, pGEcontext gc, pGEDevDesc dd)
+double R_GE_VStrWidth(const char *s, int enc, const pGEcontext gc, pGEDevDesc dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0) {
@@ -70,7 +70,7 @@ double R_GE_VStrWidth(const char *s, int enc, pGEcontext gc, pGEDevDesc dd)
 }
 
 attribute_hidden
-double R_GE_VStrHeight(const char *s, int enc, pGEcontext gc, pGEDevDesc dd)
+double R_GE_VStrHeight(const char *s, int enc, const pGEcontext gc, pGEDevDesc dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0) {
@@ -86,7 +86,7 @@ double R_GE_VStrHeight(const char *s, int enc, pGEcontext gc, pGEDevDesc dd)
 attribute_hidden
 void R_GE_VText(double x, double y, const char * const s, int enc,
 		double x_justify, double y_justify, double rotation,
-		pGEcontext gc, pGEDevDesc dd)
+		const pGEcontext gc, pGEDevDesc dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0) {

@@ -75,25 +75,26 @@
 #include <cairo-xlib.h>
 
 static void Cairo_Circle(double x, double y, double r,
-		       pGEcontext gc, pDevDesc dd);
+			 const pGEcontext gc, pDevDesc dd);
 static void Cairo_Clip(double x0, double x1, double y0, double y1,
-		     pDevDesc dd);
+		       pDevDesc dd);
 static void Cairo_Line(double x1, double y1, double x2, double y2,
-		     pGEcontext gc, pDevDesc dd);
-static void Cairo_MetricInfo(int c, pGEcontext gc,
-			   double* ascent, double* descent,
-			   double* width, pDevDesc dd);
-static void Cairo_NewPage(pGEcontext gc, pDevDesc dd);
+		       const pGEcontext gc, pDevDesc dd);
+static void Cairo_MetricInfo(int c, const pGEcontext gc,
+			     double* ascent, double* descent,
+			     double* width, pDevDesc dd);
+static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd);
 static void Cairo_Polygon(int n, double *x, double *y,
-			pGEcontext gc, pDevDesc dd);
+			  const pGEcontext gc, pDevDesc dd);
 static void Cairo_Polyline(int n, double *x, double *y,
-			 pGEcontext gc, pDevDesc dd);
+			   const pGEcontext gc, pDevDesc dd);
 static void Cairo_Rect(double x0, double y0, double x1, double y1,
-		     pGEcontext gc, pDevDesc dd);
-static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd);
+		       const pGEcontext gc, pDevDesc dd);
+static double Cairo_StrWidth(const char *str, const pGEcontext gc,
+			     pDevDesc dd);
 static void Cairo_Text(double x, double y, const char *str,
-		     double rot, double hadj,
-		     pGEcontext gc, pDevDesc dd);
+		       double rot, double hadj,
+		       const pGEcontext gc, pDevDesc dd);
 
 static void CairoColor(unsigned int col, pX11Desc xd)
 {
@@ -126,7 +127,7 @@ static void CairoColor(unsigned int col, pX11Desc xd)
  *	spaced.
  */
 
-static void CairoLineType(pGEcontext gc, pX11Desc xd)
+static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
     cairo_line_cap_t lcap = CAIRO_LINE_CAP_SQUARE;
@@ -176,7 +177,7 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
 }
 
 
-static void Cairo_NewPage(pGEcontext gc, pDevDesc dd)
+static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
@@ -190,7 +191,7 @@ static void Cairo_NewPage(pGEcontext gc, pDevDesc dd)
 }
 
 static void Cairo_Rect(double x0, double y0, double x1, double y1,
-		     pGEcontext gc, pDevDesc dd)
+		       const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
@@ -210,7 +211,7 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void Cairo_Circle(double x, double y, double r,
-		       pGEcontext gc, pDevDesc dd)
+			 const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
@@ -229,7 +230,7 @@ static void Cairo_Circle(double x, double y, double r,
 }
 
 static void Cairo_Line(double x1, double y1, double x2, double y2,
-		     pGEcontext gc, pDevDesc dd)
+		       const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
@@ -244,7 +245,7 @@ static void Cairo_Line(double x1, double y1, double x2, double y2,
 }
 
 static void Cairo_Polyline(int n, double *x, double *y,
-			 pGEcontext gc, pDevDesc dd)
+			   const pGEcontext gc, pDevDesc dd)
 {
     int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -260,7 +261,7 @@ static void Cairo_Polyline(int n, double *x, double *y,
 }
 
 static void Cairo_Polygon(int n, double *x, double *y,
-			pGEcontext gc, pDevDesc dd)
+			  const pGEcontext gc, pDevDesc dd)
 {
     int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -281,7 +282,7 @@ static void Cairo_Polygon(int n, double *x, double *y,
     } else cairo_new_path(xd->cc);
 }
 
-static PangoFontDescription *getFont(pGEcontext gc)
+static PangoFontDescription *getFont(const pGEcontext gc)
 {
     PangoFontDescription *fontdesc;
     gint size, face = gc->fontface;
@@ -322,7 +323,7 @@ static PangoLayout
 
 static void
 text_extents(PangoFontDescription *desc, cairo_t *cc,
-	     pGEcontext gc, const gchar *str,
+	     const pGEcontext gc, const gchar *str,
 	     gint *lbearing, gint *rbearing, 
 	     gint *width, gint *ascent, gint *descent, int ink)
 {
@@ -345,7 +346,7 @@ text_extents(PangoFontDescription *desc, cairo_t *cc,
     g_object_unref(layout);
 }
 
-static void Cairo_MetricInfo(int c, pGEcontext gc,
+static void Cairo_MetricInfo(int c, const pGEcontext gc,
 			   double* ascent, double* descent,
 			   double* width, pDevDesc dd)
 {
@@ -376,7 +377,7 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
 }
 
 
-static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
+static double Cairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
@@ -388,8 +389,8 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
 }
 
 static void Cairo_Text(double x, double y,
-		     const char *str, double rot, double hadj,
-		     pGEcontext gc, pDevDesc dd)
+		       const char *str, double rot, double hadj,
+		       const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint ascent, lbearing, width;

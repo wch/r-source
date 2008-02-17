@@ -196,8 +196,8 @@ struct _NewDevDesc {
      * ---------------------------------------
      * GENERAL COMMENT ON GRAPHICS PARAMETERS:
      * ---------------------------------------
-     * Graphical parameters are now passed in a graphics context
-     * structure (pGEcontext) rather than individually.
+     * Graphical parameters are now passed in a pointer to a 
+     * graphics context structure (pGEcontext) rather than individually.
      * Each device action should extract the parameters it needs
      * and ignore the others.  Thought should be given to which
      * parameters are relevant in each case -- the graphics engine
@@ -223,7 +223,7 @@ struct _NewDevDesc {
      *
      */
 #if R_USE_PROTOTYPES
-    void (*activate)(pDevDesc );
+    void (*activate)(const pDevDesc );
 #else
     void (*activate)();
 #endif
@@ -249,7 +249,7 @@ struct _NewDevDesc {
      *   col, fill, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
-    void (*circle)(double x, double y, double r, pGEcontext gc, pDevDesc dd);
+    void (*circle)(double x, double y, double r, const pGEcontext gc, pDevDesc dd);
 #else
     void (*circle)();
 #endif
@@ -344,7 +344,7 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static void X11_Line(double x1, double y1, double x2, double y2,
-     *                      pGEcontext gc,
+     *                      const pGEcontext gc,
      *                      pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
@@ -352,7 +352,7 @@ struct _NewDevDesc {
      */
 #if R_USE_PROTOTYPES
     void (*line)(double x1, double y1, double x2, double y2,
-		 pGEcontext gc, pDevDesc dd);
+		 const pGEcontext gc, pDevDesc dd);
 #else
     void (*line)();
 #endif
@@ -370,7 +370,7 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static void X11_MetricInfo(int c,
-     *                            pGEcontext gc,
+     *                            const pGEcontext gc,
      *                            double* ascent, double* descent,
      *                            double* width, pDevDesc dd);
      *
@@ -378,7 +378,7 @@ struct _NewDevDesc {
      *   font, cex, ps
      */
 #if R_USE_PROTOTYPES
-    void (*metricInfo)(int c, pGEcontext gc,
+    void (*metricInfo)(int c, const pGEcontext gc,
 		       double* ascent, double* descent, double* width,
 		       pDevDesc dd);
 #else
@@ -409,12 +409,12 @@ struct _NewDevDesc {
      * An example is ...
      *
      *
-     * static void X11_NewPage(pGEcontext gc,
+     * static void X11_NewPage(const pGEcontext gc,
      *                         pDevDesc dd);
      *
      */
 #if R_USE_PROTOTYPES
-    void (*newPage)(pGEcontext gc, pDevDesc dd);
+    void (*newPage)(const pGEcontext gc, pDevDesc dd);
 #else
     void (*newPage)();
 #endif
@@ -452,14 +452,14 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static void X11_Polygon(int n, double *x, double *y,
-     *                         pGEcontext gc,
+     *                         const pGEcontext gc,
      *                         pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
-    void (*polygon)(int n, double *x, double *y, pGEcontext gc, pDevDesc dd);
+    void (*polygon)(int n, double *x, double *y, const pGEcontext gc, pDevDesc dd);
 #else
     void (*polygon)();
 #endif
@@ -470,14 +470,14 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static void X11_Polyline(int n, double *x, double *y,
-     *                          pGEcontext gc,
+     *                          const pGEcontext gc,
      *                          pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, gamma, lty, lwd
      */
 #if R_USE_PROTOTYPES
-    void (*polyline)(int n, double *x, double *y, pGEcontext gc, pDevDesc dd);
+    void (*polyline)(int n, double *x, double *y, const pGEcontext gc, pDevDesc dd);
 #else
     void (*polyline)();
 #endif
@@ -493,13 +493,13 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static void X11_Rect(double x0, double y0, double x1, double y1,
-     *                      pGEcontext gc,
+     *                      const pGEcontext gc,
      *                      pDevDesc dd);
      *
      */
 #if R_USE_PROTOTYPES
     void (*rect)(double x0, double y0, double x1, double y1,
-		 pGEcontext gc, pDevDesc dd);
+		 const pGEcontext gc, pDevDesc dd);
 #else
     void (*rect)();
 #endif
@@ -533,14 +533,14 @@ struct _NewDevDesc {
      * An example is ...
      *
      * static double X11_StrWidth(const char *str,
-     *                            pGEcontext gc,
+     *                            const pGEcontext gc,
      *                            pDevDesc dd)
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   font, cex, ps
      */
 #if R_USE_PROTOTYPES
-    double (*strWidth)(const char *str, pGEcontext gc, pDevDesc dd);
+    double (*strWidth)(const char *str, const pGEcontext gc, pDevDesc dd);
 #else
     double (*strWidth)();
 #endif
@@ -552,7 +552,7 @@ struct _NewDevDesc {
      *
      * static void X11_Text(double x, double y, const char *str,
      *                      double rot, double hadj,
-     *                      pGEcontext gc,
+     *                      const pGEcontext gc,
      * 	                    pDevDesc dd);
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
@@ -560,7 +560,7 @@ struct _NewDevDesc {
      */
 #if R_USE_PROTOTYPES
     void (*text)(double x, double y, const char *str, double rot,
-		 double hadj, pGEcontext gc, pDevDesc dd);
+		 double hadj, const pGEcontext gc, pDevDesc dd);
 #else
     void (*text)();
 #endif
@@ -618,8 +618,8 @@ struct _NewDevDesc {
     Rboolean hasTextUTF8; /* and strWidthUTF8 */
 #if R_USE_PROTOTYPES
     void (*textUTF8)(double x, double y, const char *str, double rot,
-		     double hadj, pGEcontext gc, pDevDesc dd);
-    double (*strWidthUTF8)(const char *str, pGEcontext gc, pDevDesc dd);
+		     double hadj, const pGEcontext gc, pDevDesc dd);
+    double (*strWidthUTF8)(const char *str, const pGEcontext gc, pDevDesc dd);
 #else
     void (*textUTF8)();
     double (*strWidthUTF8)();

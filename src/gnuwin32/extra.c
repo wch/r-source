@@ -1278,7 +1278,7 @@ extern UImode CharacterMode;
 SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int dev, stay;
-    GEDevDesc *gdd;
+    pGEDevDesc gdd;
     gadesc *xd;
 
     checkArity(op, args);
@@ -1302,7 +1302,7 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void * getDeviceHandle(int dev)
 {
-    GEDevDesc *gdd;
+    pGEDevDesc gdd;
     gadesc *xd;
 
     if (dev == -1) return(getHandle(RConsole));
@@ -1321,7 +1321,7 @@ static void * getDeviceHandle(int dev)
 menu getGraphMenu(const char* menuname)
 {
     int devnum;
-    GEDevDesc *gdd;
+    pGEDevDesc gdd;
     gadesc *xd;
 
     menuname = menuname + 6;

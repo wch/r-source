@@ -470,7 +470,7 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 				   struct _SC_GraphicsDevice* device)
 {
   unsigned long lCurrentVersion = 0;
-  static GEDevDesc* lDD = NULL;
+  static pGEDevDesc lDD = NULL;
 
   if (object == NULL)
     {

@@ -164,7 +164,7 @@ static const char * const fontname[] = {
 
 static void PicTeX_Activate(pDevDesc dd);
 static void PicTeX_Circle(double x, double y, double r,
-			  pGEcontext gc,
+			  const pGEcontext gc,
 			  pDevDesc dd);
 static void PicTeX_Clip(double x0, double x1, double y0, double y1, 
 			pDevDesc dd);
@@ -172,29 +172,29 @@ static void PicTeX_Close(pDevDesc dd);
 static void PicTeX_Deactivate(pDevDesc dd);
 static Rboolean PicTeX_Locator(double *x, double *y, pDevDesc dd);
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
-			pGEcontext gc,
+			const pGEcontext gc,
 			pDevDesc dd);
 static void PicTeX_MetricInfo(int c,
-			      pGEcontext gc,
+			      const pGEcontext gc,
 			      double* ascent, double* descent,
 			      double* width, pDevDesc dd);
 static void PicTeX_Mode(int mode, pDevDesc dd);
-static void PicTeX_NewPage(pGEcontext gc, pDevDesc dd);
+static void PicTeX_NewPage(const pGEcontext gc, pDevDesc dd);
 static void PicTeX_Polygon(int n, double *x, double *y, 
-			   pGEcontext gc,
+			   const pGEcontext gc,
 			   pDevDesc dd);
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
-			pGEcontext gc,
+			const pGEcontext gc,
 			pDevDesc dd);
 static void PicTeX_Size(double *left, double *right,
 			double *bottom, double *top,
 			pDevDesc dd);
 static double PicTeX_StrWidth(const char *str, 
-			      pGEcontext gc,
+			      const pGEcontext gc,
 			      pDevDesc dd);
 static void PicTeX_Text(double x, double y, const char *str, 
 			double rot, double hadj, 
-			pGEcontext gc,
+			const pGEcontext gc,
 			pDevDesc dd);
 static Rboolean PicTeX_Open(pDevDesc, picTeXDesc*);
 
@@ -241,7 +241,7 @@ static void PicTeX_Deactivate(pDevDesc dd)
 }
 
 static void PicTeX_MetricInfo(int c, 
-			      pGEcontext gc,
+			      const pGEcontext gc,
 			      double* ascent, double* descent,
 			      double* width, pDevDesc dd)
 {
@@ -301,7 +301,7 @@ static void PicTeX_Clip(double x0, double x1, double y0, double y1,
 
 	/* Start a new page */
 
-static void PicTeX_NewPage(pGEcontext gc,
+static void PicTeX_NewPage(const pGEcontext gc,
 			   pDevDesc dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
@@ -425,7 +425,7 @@ static void PicTeX_ClipLine(double x0, double y0, double x1, double y1,
 }
 
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
-			pGEcontext gc,
+			const pGEcontext gc,
 			pDevDesc dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
@@ -449,7 +449,7 @@ static void PicTeX_Line(double x1, double y1, double x2, double y2,
 }
 
 static void PicTeX_Polyline(int n, double *x, double *y, 
-			    pGEcontext gc,
+			    const pGEcontext gc,
 			    pDevDesc dd)
 {
     double x1, y1, x2, y2;
@@ -475,7 +475,7 @@ static void PicTeX_Polyline(int n, double *x, double *y,
 	/* For the current font in pointsize fontsize */
 
 static double PicTeX_StrWidth(const char *str, 
-			      pGEcontext gc,
+			      const pGEcontext gc,
 			      pDevDesc dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
@@ -513,7 +513,7 @@ static double PicTeX_StrWidth(const char *str,
 
 /* Possibly Filled Rectangle */
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
-			pGEcontext gc,
+			const pGEcontext gc,
 			pDevDesc dd)
 {
     double x[4], y[4];
@@ -526,7 +526,7 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void PicTeX_Circle(double x, double y, double r,
-			  pGEcontext gc,
+			  const pGEcontext gc,
 			  pDevDesc dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
@@ -537,7 +537,7 @@ static void PicTeX_Circle(double x, double y, double r,
 }
 
 static void PicTeX_Polygon(int n, double *x, double *y, 
-			   pGEcontext gc,
+			   const pGEcontext gc,
 			   pDevDesc dd)
 {
     double x1, y1, x2, y2;
@@ -602,7 +602,7 @@ static void textext(const char *str, picTeXDesc *ptd)
 
 static void PicTeX_Text(double x, double y, const char *str, 
 			double rot, double hadj, 
-			pGEcontext gc,
+			const pGEcontext gc,
 			pDevDesc dd)
 {
     int size;
@@ -742,7 +742,7 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
 
 SEXP PicTeX(SEXP args)
 {
-    GEDevDesc *dd;
+    pGEDevDesc dd;
     char *vmax;
     const char *file, *bg, *fg;
     double height, width;

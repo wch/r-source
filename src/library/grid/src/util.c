@@ -180,9 +180,9 @@ int intersect(LRect r1, LRect r2)
  * x and y assumed to be in INCHES.
  */
 void textRect(double x, double y, SEXP text, int i,
-	      R_GE_gcontext *gc,
+	      const pGEcontext gc,
 	      double xadj, double yadj,
-	      double rot, GEDevDesc *dd, LRect *r)
+	      double rot, pGEDevDesc dd, LRect *r)
 {
     /* NOTE that we must work in inches for the angles to be correct
      */
