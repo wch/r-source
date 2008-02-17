@@ -20,7 +20,7 @@ callNextMethod(...)
   \item{\dots}{
     Optionally, the arguments to the function in its next call
     (but note that the dispatch is as in the detailed description below;
-    the arguments have no effect on selecting the next method.) 
+    the arguments have no effect on selecting the next method.)
 
     If no arguments are included in the call to \code{callNextMethod}, the
     effect is to call the method with the current arguments.
@@ -40,7 +40,7 @@ callNextMethod(...)
   and \code{\link{selectMethod}} is called to find the next method (the
   result is cached in a special object, so the search only typically
   happens once per session per combination of argument classes).
-  
+
   Note that the preceding definition means that the next method is
   defined uniquely when \code{setMethod} inserts the method containing
   the \code{callNextMethod} call, given the definitions of the classes
@@ -84,7 +84,7 @@ callNextMethod(...)
   While the programming interface for the \pkg{methods} package follows
   the reference, the R software is an original implementation, so
   details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming 
+  differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
   discussion of details see \code{?\link{Methods}}
   and the links from that documentation.
@@ -113,13 +113,16 @@ b1 <- new("B1", b0 = 2, b1 = "Testing")
 b2 <- new("B2", b2 = FALSE, b1 = "More testing", b0 = 10)
 
 f(b2)
+stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), b2@b0^2, "B2")))
 
 f(b1)
 
+## a sneakier method: the *changed* x is used:
+setMethod("f", "B2", function(x) {x@b0 <- 111; c(x@b2, callNextMethod())})
+f(b2)
+stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), 111^2, "B2")))
+
 \dontshow{
-
-stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), b2@b0^2, "B2")))
-
 ## a version of the example with 1 more layer of nesting
 
 ## next methods calling next methods, with arguments; using group generics
