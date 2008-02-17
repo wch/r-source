@@ -177,7 +177,7 @@ reg-plot.Rout: reg-plot.R
 	fi
 	@echo $(ECHO_N) \
 	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
-	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	-@diff reg-plot.ps $(srcdir)/reg-plot.ps.save
 	@echo "$(ECHO_T) OK"
 
 .R.Rout-gct:
