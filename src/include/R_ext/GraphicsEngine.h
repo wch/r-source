@@ -373,34 +373,34 @@ R_GE_linejoin GE_LJOINpar(SEXP value, int ind);
 SEXP GE_LJOINget(R_GE_linejoin ljoin);
 
 void GESetClip(double x1, double y1, double x2, double y2, pGEDevDesc dd);
-void GENewPage(R_GE_gcontext *gc, pGEDevDesc dd);
+void GENewPage(const pGEcontext gc, pGEDevDesc dd);
 void GELine(double x1, double y1, double x2, double y2, 
-	    R_GE_gcontext *gc, pGEDevDesc dd);
+	    const pGEcontext gc, pGEDevDesc dd);
 void GEPolyline(int n, double *x, double *y, 
-		R_GE_gcontext *gc, pGEDevDesc dd);
+		const pGEcontext gc, pGEDevDesc dd);
 void GEPolygon(int n, double *x, double *y, 
-	       R_GE_gcontext *gc, pGEDevDesc dd);
+	       const pGEcontext gc, pGEDevDesc dd);
 SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open, 
 	       Rboolean repEnds, Rboolean draw,
-	       R_GE_gcontext *gc, pGEDevDesc dd);
+	       const pGEcontext gc, pGEDevDesc dd);
 void GECircle(double x, double y, double radius,
-	      R_GE_gcontext *gc, pGEDevDesc dd);
+	      const pGEcontext gc, pGEDevDesc dd);
 void GERect(double x0, double y0, double x1, double y1,
-	    R_GE_gcontext *gc, pGEDevDesc dd);
+	    const pGEcontext gc, pGEDevDesc dd);
 void GEText(double x, double y, const char * const str, int enc,
 	    double xc, double yc, double rot,
-	    R_GE_gcontext *gc, pGEDevDesc dd);
+	    const pGEcontext gc, pGEDevDesc dd);
 void GEMode(int mode, pGEDevDesc dd);
 void GESymbol(double x, double y, int pch, double size,
-	      R_GE_gcontext *gc, pGEDevDesc dd);
+	      const pGEcontext gc, pGEDevDesc dd);
 void GEPretty(double *lo, double *up, int *ndiv);
-void GEMetricInfo(int c, R_GE_gcontext *gc, 
+void GEMetricInfo(int c, const pGEcontext gc, 
 		  double *ascent, double *descent, double *width,
 		  pGEDevDesc dd);
 double GEStrWidth(const char *str, int enc, 
-		  R_GE_gcontext *gc, pGEDevDesc dd);
+		  const pGEcontext gc, pGEDevDesc dd);
 double GEStrHeight(const char *str, int enc,
-		  R_GE_gcontext *gc, pGEDevDesc dd);
+		  const pGEcontext gc, pGEDevDesc dd);
 int GEstring_to_pch(SEXP pch);
 
 /*-------------------------------------------------------------------
@@ -415,12 +415,12 @@ SEXP GE_LTYget(unsigned int);
  * From plotmath.c 
  */
 double GEExpressionWidth(SEXP expr, 
-			 R_GE_gcontext *gc, pGEDevDesc dd);
+			 const pGEcontext gc, pGEDevDesc dd);
 double GEExpressionHeight(SEXP expr, 
-			  R_GE_gcontext *gc, pGEDevDesc dd);
+			  const pGEcontext gc, pGEDevDesc dd);
 void GEMathText(double x, double y, SEXP expr,
 		double xc, double yc, double rot, 
-		R_GE_gcontext *gc, pGEDevDesc dd);
+		const pGEcontext gc, pGEDevDesc dd);
 /* 
  * (End from plotmath.c)
  */
@@ -437,12 +437,12 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 /* 
  * From vfonts.c
  */
-double R_GE_VStrWidth(const char *s, int enc, R_GE_gcontext *gc, pGEDevDesc dd);
+double R_GE_VStrWidth(const char *s, int enc, const pGEcontext gc, pGEDevDesc dd);
 
-double R_GE_VStrHeight(const char *s, int enc, R_GE_gcontext *gc, pGEDevDesc dd);
+double R_GE_VStrHeight(const char *s, int enc, const pGEcontext gc, pGEDevDesc dd);
 void R_GE_VText(double x, double y, const char * const s, int enc, 
 		double x_justify, double y_justify, double rotation,
-		R_GE_gcontext *gc, pGEDevDesc dd);
+		const pGEcontext gc, pGEDevDesc dd);
 /* 
  * (End from vfonts.c)
  */

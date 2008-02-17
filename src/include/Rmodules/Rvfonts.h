@@ -4,13 +4,13 @@
 typedef void (*R_GE_VTextRoutine)(double x, double y, const char * const s, 
 				  double x_justify, double y_justify, 
 				  double rotation,
-				  R_GE_gcontext *gc, GEDevDesc *dd);
+				  const pGEcontext gc, pGEDevDesc dd);
 
 typedef double (*R_GE_VStrWidthRoutine)(const char *s, 
-					R_GE_gcontext *gc, GEDevDesc *dd);
+					const pGEcontext gc, pGEDevDesc dd);
 
 typedef double (*R_GE_VStrHeightRoutine)(const char *s, 
-					 R_GE_gcontext *gc, GEDevDesc *dd);
+					 const pGEcontext gc, pGEDevDesc dd);
 
 typedef struct {
     R_GE_VTextRoutine GEVText;

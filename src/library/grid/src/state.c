@@ -55,7 +55,7 @@ SEXP createGridSystemState()
     return allocVector(VECSXP, 16);
 }
 
-void initDL(GEDevDesc *dd)
+void initDL(pGEDevDesc dd)
 {
     SEXP dl, dlindex;
     SEXP vp = gridStateElement(dd, GSS_VP);
@@ -79,7 +79,7 @@ void initDL(GEDevDesc *dd)
  * nor is the ROOT viewport (see initVP),
  * nor is the current gpar (see initGP)
  */
-void initOtherState(GEDevDesc* dd)
+void initOtherState(pGEDevDesc dd)
 {
     SEXP currloc, prevloc, recording;
     SEXP state = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
@@ -95,7 +95,7 @@ void initOtherState(GEDevDesc* dd)
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
 }
 
-void fillGridSystemState(SEXP state, GEDevDesc* dd) 
+void fillGridSystemState(SEXP state, pGEDevDesc dd) 
 {
     SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
     SEXP griddev, gridask, gridscale;
@@ -145,13 +145,13 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     UNPROTECT(9);
 }
 
-SEXP gridStateElement(GEDevDesc *dd, int elementIndex)
+SEXP gridStateElement(pGEDevDesc dd, int elementIndex)
 {
     return VECTOR_ELT((SEXP) dd->gesd[gridRegisterIndex]->systemSpecific, 
 		      elementIndex);
 }
 
-void setGridStateElement(GEDevDesc *dd, int elementIndex, SEXP value)
+void setGridStateElement(pGEDevDesc dd, int elementIndex, SEXP value)
 {
     SET_VECTOR_ELT((SEXP) dd->gesd[gridRegisterIndex]->systemSpecific, 
 		   elementIndex, value);
@@ -193,7 +193,7 @@ static void globaliseState(SEXP state)
     UNPROTECT(2);
 }
 
-SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
+SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
     SEXP result = R_NilValue;
     SEXP valid, scale;
     SEXP gridState;
