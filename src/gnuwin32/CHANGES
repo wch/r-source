@@ -15,7 +15,7 @@
 WINDOWS VERSIONS
 
     o	Versions of Windows older than 2000 are no longer supported
-	(specifically, 95, 98, ME, NT4).  Windows 2000 is minimnally
+	(specifically, 95, 98, ME, NT4).  Windows 2000 is minimally
 	tested, but those tests are successful.
 
 
@@ -192,7 +192,8 @@ OTHERS
     o	Saving a graphics window containing semi-transparent colours
 	to BMP, JPEG or PNG now works.
 
-    o	The jpeg() and png() devices support semi-transparent colours.
+    o	The bmp(), jpeg() and png() devices support semi-transparent
+	colours.  See ?png for use with transparent backgrounds.
 
 
 BUILDING R

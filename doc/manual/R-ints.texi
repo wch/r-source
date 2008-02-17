@@ -2707,8 +2707,8 @@ implementation had several incorrect glyphs for the symbol font.
 @subsubsection windows()
 
 The @code{windows()} device is a family of devices: it supports plotting
-to Windows (enhanced) metafiles, @code{JPEG} and @code{PNG} files as
-well as to Windows printers.
+to Windows (enhanced) metafiles, @code{BMP}, @code{JPEG} and @code{PNG}
+files as well as to Windows printers.
 
 In most of these cases the primary plotting is to a bitmap: this is used
 for the (default) buffering of the screen device, which also enables the
@@ -2761,17 +2761,17 @@ The support for a transparent background in @code{png()} predates full
 alpha-channel support in @code{libpng} (let alone in PNG viewers), so
 makes use of the limited transparency support in earlier versions of
 PNG.  Where 24-bit colour is used, this is done by marking a single
-colour to be rendered as transparent.  @R{} chose @samp{#d6d3d6}, and
+colour to be rendered as transparent.  @R{} chose @samp{#fdfefd}, and
 uses this as the background colour (in @code{GA_NewPage} if the
 specified background colour is transparent (and all non-opaque
 background colours are treated as transparent).  So this works by
-marking that colour in the PNG file, and viewer without transparency
-support see a slighlty-off-grey background, as if there were a near-grey
+marking that colour in the PNG file, and viewers without transparency
+support see a slightly-off-white background, as if there were a near-white
 canvas.  Where a palette is used in the PNG file (if less than 256
 colours were used) then this colour is recorded with full transparency
-and the remaining colours as opaque.  Handling background transparency
-with a false canvas colour is incompatible with alpha-blending, so
-translucent colours are disabled with a transparent background.
+and the remaining colours as opaque.  If 32-bit colour was available
+then we could add a full alpha channel, but this is dependent on the
+graphics hardware and undocumented properties of GDI.
 
 
 @node Colours, Base graphics, Graphics devices, Graphics Devices

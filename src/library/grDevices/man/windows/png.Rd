@@ -86,7 +86,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   A plot device is opened: nothing is returned to the \R interpreter.
 }
 \section{Warnings}{
-  Note that the \code{width} and \code{height} are by  default in pixels
+  Note that the \code{width} and \code{height} are by default in pixels
   not inches.  A warning will be issued if both are less than 20.
   
   If you plot more than one page on one of these devices and do not
