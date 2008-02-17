@@ -80,7 +80,7 @@
 */
 
 attribute_hidden
-unsigned short * _controlify (GEDevDesc *dd, const unsigned char *src,
+unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			      int typeface, int fontindex)
 {     
   unsigned short *dest;
