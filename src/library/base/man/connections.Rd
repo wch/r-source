@@ -172,6 +172,11 @@ isIncomplete(con)
   for file-like connections on Windows, and \code{\link{pushBack}} is
   text-oriented and is only allowed on connections open for reading in
   text mode.
+#ifdef unix
+  If a file or fifo is created on a Unix-alike, its permissions will be
+  the maximal allowed by the current setting of \code{umask} (see
+  \code{\link{Sys.umask}}).
+#endif
 
   \code{close} closes and destroys a connection.  Note that this will
   happen automatically in due course if there is no \R object referring

@@ -26,6 +26,9 @@
 #ifndef R_GRAPHICSDEVICE_H_
 #define R_GRAPHICSDEVICE_H_
 
+/* until 2.7.0 alpha */
+#define OLD 1
+
 /* ideally we would use prototypes in NewDevDesc.  
    But the pre-1.4.0 system used DevDesc*, and some devices
    have taken to passing pointers to their own structure

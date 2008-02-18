@@ -22,6 +22,9 @@
 #ifndef R_GRAPHICSENGINE_H_
 #define R_GRAPHICSENGINE_H_
 
+/* until 2.7.0 alpha */
+#define OLD 1
+
 #ifdef __cplusplus
 extern "C" {
 #endif

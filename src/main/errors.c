@@ -955,7 +955,7 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     int n = asInteger(CAR(args));
     
     checkArity(op, args);
-    if(n == NA_INTEGER || n < 0) error(_("invalid 'n'"));
+    if(n == NA_INTEGER || n < 0) error(_("invalid '%s' arguemnt"), "n");
     if(!isString(msg1) || LENGTH(msg1) != 1)
 	error(_("'msg1' must be a character string"));
     if(!isString(msg2) || LENGTH(msg2) != 1)

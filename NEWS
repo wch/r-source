@@ -301,6 +301,9 @@ NEW FEATURES
 	length and context stack overflows, and mis-specified argument
 	lists to functions).
 
+    o	New function Sys.umask(), a wrapper for 'umask' on platforms
+	which support it.
+
 
 DEPRECATED & DEFUNCT
 
@@ -377,6 +380,12 @@ UTILITIES
 	version of the manual, producing PDF rather than DVI.  (This
 	is a better check since the package reference manuals on CRAN
 	are in PDF.)
+
+    o	R CMD Rd2dvi gains a --encoding argument to be passed to
+	R CMD Rdconv, to set the default encoding for conversions.
+	If this is not supplied and the files are package sources and
+	the DESCRIPTION file contains an Encoding field, that is used
+	for the default encoding.
 
 
 C-LEVEL FACILITIES
@@ -461,7 +470,7 @@ BUG FIXES
 	object as prototype. ## backed out temporarily ##
 
     o   format.AsIs() discarded dimnames, causing dataframes with matrix
-        variables to be printed without using the column names,  unlike 
+        variables to be printed without using the column names, unlike
         what happens in S-PLUS (Tim Hesterberg, PR#10730).
 
     o	xspline() and grid::grid.xpline() work in device coordinates
@@ -480,6 +489,9 @@ BUG FIXES
 	other operating systems.
 
     o	iconv() now correctly handles to="" and from="" on Mac OS X.
+
+    o	In diag()'s argument list, drop the explicit default (' = n')
+	for 'ncol' which is ugly when making diag() generic.
 
 
 
@@ -688,7 +700,7 @@ BUG FIXES
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
-	
+
     o	print.htest() lost output when used within sink(file, split=TRUE).
 
     o	Setting par(col.main=) also set par("col") to the same colour.

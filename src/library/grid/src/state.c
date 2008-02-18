@@ -97,9 +97,10 @@ void initOtherState(pGEDevDesc dd)
 
 void fillGridSystemState(SEXP state, pGEDevDesc dd) 
 {
-    SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
-    SEXP griddev, gridask, gridscale;
-    PROTECT(devsize = allocVector(REALSXP, 2));
+    SEXP devsize, currloc, prevloc;
+
+    PROTECT(state);
+    devsize = allocVector(REALSXP, 2);
     REAL(devsize)[0] = 0;
     REAL(devsize)[1] = 0;
     SET_VECTOR_ELT(state, GSS_DEVSIZE, devsize);
@@ -107,24 +108,18 @@ void fillGridSystemState(SEXP state, pGEDevDesc dd)
      * Initial setting relies on the fact that all values sent to devices
      * are in INCHES;  so (0, 0) is the bottom-left corner of the device.
      */
-    PROTECT(currloc = allocVector(REALSXP, 2));
+    currloc = allocVector(REALSXP, 2);
     REAL(currloc)[0] = NA_REAL;
     REAL(currloc)[1] = NA_REAL;    
     SET_VECTOR_ELT(state, GSS_CURRLOC, currloc);
-    PROTECT(prevloc = allocVector(REALSXP, 2));
+    prevloc = allocVector(REALSXP, 2);
     REAL(prevloc)[0] = NA_REAL;
     REAL(prevloc)[1] = NA_REAL;    
     SET_VECTOR_ELT(state, GSS_PREVLOC, prevloc);
-    PROTECT(dlon = allocVector(LGLSXP, 1));
-    LOGICAL(dlon)[0] = TRUE;
-    SET_VECTOR_ELT(state, GSS_DLON, dlon);
-    PROTECT(enginedlon = allocVector(LGLSXP, 1));
-    LOGICAL(enginedlon)[0] = TRUE;
-    SET_VECTOR_ELT(state, GSS_ENGINEDLON, enginedlon);
+    SET_VECTOR_ELT(state, GSS_DLON, ScalarLogical(TRUE));
+    SET_VECTOR_ELT(state, GSS_ENGINEDLON, ScalarLogical(TRUE));
     SET_VECTOR_ELT(state, GSS_CURRGROB, R_NilValue);
-    PROTECT(recording = allocVector(LGLSXP, 1));    
-    LOGICAL(recording)[0] = FALSE;
-    SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
+    SET_VECTOR_ELT(state, GSS_ENGINERECORDING, ScalarLogical(FALSE));
     initGPar(dd);
     SET_VECTOR_ELT(state, GSS_GPSAVED, R_NilValue);
     /* Do NOT initialise top-level viewport or grid display list for
@@ -133,16 +128,12 @@ void fillGridSystemState(SEXP state, pGEDevDesc dd)
     SET_VECTOR_ELT(state, GSS_GLOBALINDEX, R_NilValue);
     /* Note that no grid output has occurred on the device yet.
      */
-    PROTECT(griddev = allocVector(LGLSXP, 1));
-    LOGICAL(griddev)[0] = FALSE;
-    SET_VECTOR_ELT(state, GSS_GRIDDEVICE, griddev);
-    PROTECT(gridask = allocVector(LGLSXP, 1));
-    LOGICAL(gridask)[0] = dd->ask;
-    SET_VECTOR_ELT(state, GSS_ASK, gridask);
-    PROTECT(gridscale = allocVector(REALSXP, 1));
-    REAL(gridscale)[0] = 1.0;
-    SET_VECTOR_ELT(state, GSS_SCALE, gridscale);
-    UNPROTECT(9);
+    SET_VECTOR_ELT(state, GSS_GRIDDEVICE, ScalarLogical(FALSE));
+#if 0
+    SET_VECTOR_ELT(state, GSS_ASK, ScalarLogical(dd->ask));
+#endif
+    SET_VECTOR_ELT(state, GSS_SCALE, ScalarReal(1.0));
+    UNPROTECT(1);
 }
 
 SEXP gridStateElement(pGEDevDesc dd, int elementIndex)

@@ -257,3 +257,5 @@ unlink <- function(x, recursive = FALSE)
 Sys.chmod <- function(paths, mode = "0777")
     .Internal(Sys.chmod(paths, as.octmode(mode)))
 
+Sys.umask <- function(mode = "0000")
+    .Internal(Sys.umask(as.octmode(mode)))

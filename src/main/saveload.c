@@ -1968,13 +1968,13 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	version = asInteger(CADDDR(args));
     if (version == NA_INTEGER || version <= 0)
-	error(_("invalid value for '%s'"), "version");
+	error(_("invalid '%s' argument"), "version");
     source = CAR(nthcdr(args,4));
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error(_("invalid value for '%s'"), "environment");
+	error(_("invalid '%s' argument"), "environment");
     ep = asLogical(CAR(nthcdr(args,5)));
     if (ep == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "eval.promises");
+	error(_("invalid '%s' argument"), "eval.promises");
 
     fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
     if (!fp)
@@ -2255,15 +2255,15 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	version = asInteger(CADDDR(args));
     if (version == NA_INTEGER || version <= 0)
-	error(_("invalid value for '%s'"), "version");
+	error(_("invalid '%s' argument"), "version");
     if (version < 2)
 	error(_("cannot save to connections in version %d format"), version);
     source = CAR(nthcdr(args,4));
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error(_("invalid value for '%s'"), "environment");
+	error(_("invalid '%s' argument"), "environment");
     ep = asLogical(CAR(nthcdr(args,5)));
     if (ep == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "eval.promises");
+	error(_("invalid '%s' argument"), "eval.promises");
 
     source = CAR(nthcdr(args,4));
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)

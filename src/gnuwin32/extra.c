@@ -1289,7 +1289,7 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(CharacterMode == RGui) BringToTop(RConsole, stay);
     } else {
 	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "which");
+	    errorcall(call, _("invalid '%s' argument"), "which");
 	gdd = GEgetDevice(dev - 1);
 	if(!gdd) errorcall(call, _("invalid device"));
 	xd = (gadesc *) gdd->dev->deviceSpecific;

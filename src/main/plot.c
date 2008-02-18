@@ -2910,7 +2910,7 @@ SEXP attribute_hidden do_box(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     which = asInteger(CAR(args)); args = CDR(args);
     if (which < 1 || which > 4)
-	error(_("invalid 'which' specification"));
+	error(_("invalid '%s' argument"), "which");
     /*
      * If specified non-NA col then use that, else ...
      *

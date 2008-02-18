@@ -910,23 +910,6 @@ SEXP L_setEngineRecording(SEXP value)
     return R_NilValue;
 }
 
-SEXP L_getAsk() 
-{
-    pGEDevDesc dd = getDevice();
-/*    return gridStateElement(dd, GSS_ASK); */
-    return ScalarLogical(dd->ask);
-}
-
-SEXP L_setAsk(SEXP value)
-{
-    pGEDevDesc dd = getDevice();
-    int val = asLogical(value);
-    if (val != NA_LOGICAL) dd->ask = val;
-    else error("invalid value for argunent 'ask'");
-    setGridStateElement(dd, GSS_ASK, value);
-    return R_NilValue;
-}
-
 SEXP L_currentGPar()
 {
     /* Get the current device 
