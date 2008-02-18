@@ -57,7 +57,7 @@
 #define GSS_ENGINEDLON 11
 #define GSS_CURRGROB 12
 #define GSS_ENGINERECORDING 13
-#define GSS_ASK 14
+/* #define GSS_ASK 14 unused in R >= 2.7.0 */
 #define GSS_SCALE 15
 
 /*
@@ -271,8 +271,6 @@ SEXP L_getCurrentGrob();
 SEXP L_setCurrentGrob(SEXP value);
 SEXP L_getEngineRecording();
 SEXP L_setEngineRecording(SEXP value);
-SEXP L_getAsk();
-SEXP L_setAsk(SEXP value);
 SEXP L_currentGPar();
 SEXP L_newpagerecording();
 SEXP L_newpage();

@@ -43,8 +43,6 @@ static const R_CallMethodDef callMethods[] = {
     {"L_setDLon", (DL_FUNC) &L_setDLon, 1},
     {"L_getEngineDLon", (DL_FUNC) &L_getEngineDLon, 0},
     {"L_setEngineDLon", (DL_FUNC) &L_setEngineDLon, 1},
-    {"L_getAsk", (DL_FUNC) &L_getAsk, 0},
-    {"L_setAsk", (DL_FUNC) &L_setAsk, 1},
     {"L_getCurrentGrob", (DL_FUNC) &L_getCurrentGrob, 0},
     {"L_setCurrentGrob", (DL_FUNC) &L_setCurrentGrob, 1},
     {"L_getEngineRecording", (DL_FUNC) &L_getEngineRecording, 0},
