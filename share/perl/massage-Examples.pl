@@ -69,9 +69,9 @@ assign("base_plot_hook",
        pos = "CheckExEnv")
 assign("grid_plot_hook",
        function() {
-           pushViewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
+           grid::pushViewport(grid::viewport(width=unit(1, "npc") - unit(1, "lines"),
                                  x=0, just="left"))
-           grid.text(sprintf("help(\\"%s\\")", nameEx()),
+           grid::grid.text(sprintf("help(\\"%s\\")", nameEx()),
                      x=unit(1, "npc") + unit(0.5, "lines"),
                      y=unit(0.8, "npc"), rot=90,
                      gp=gpar(col="orchid"))
