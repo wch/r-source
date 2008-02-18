@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-02-07
+@set FAQ_DATE @value{FAQ_YEAR}-02-17
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2162,7 +2162,7 @@ Utilities from the Institute of Data Analyses and Process Design,
 IDP/ZHW.
 @item IPSUR
 Accompanies ``Introduction to Probability and Statistics Using R'' by
-G. Andy Chang and G. Jay Kerns(in progress).
+G. Andy Chang and G. Jay Kerns (in progress).
 @item ISA
 Functions to support ``Introduzione alla Statistica Applicata con esempi
 in R'' by Federico M. Stefanini, Pearson Education Milano, 2007.
@@ -2309,6 +2309,9 @@ Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
 @item Oarray
 Arrays with arbitrary offsets.
+@item PASWR
+Data and functions for the book ``Probability and Statistics with R'' by
+M. D. Ugarte, A. F. Militino and A. T. Arnholt, 2008, Chapman & Hall/CRC.
 @item PBSmapping
 Software evolved from fisheries research conducted at the Pacific
 Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
@@ -2492,6 +2495,8 @@ balloon-borne instrument).
 Implementation of random variables by means of S4 classes and methods.
 @item RandomFields
 Creating random fields using various methods.
+@item RankAggreg
+Weighted rank aggregation.
 @item RaschSampler
 Sampling binary matrices with fixed margins.
 @item Rcapture
@@ -2503,6 +2508,8 @@ interface) for R, based on the @strong{tcltk} package.
 Rcmdr plug-in for the @strong{FactoMineR} package.
 @item RcmdrPlugin.HH
 Rcmdr support for the introductory course at Temple University.
+@item RcmdrPlugin.IPSUR
+Rcmdr plugin for ``Introduction to Probability and Statistics Using R''.
 @item RcmdrPlugin.TeachingDemos
 Rcmdr Teaching Demos plug-in.
 @item RcmdrPlugin.epack
@@ -3100,6 +3107,8 @@ Builds single and double gradient color maps.
 Mapping between assorted color spaces.
 @item combinat
 Combinatorics utilities.
+@item compHclust
+Complementary hierarchical clustering.
 @item compOverlapCorr
 Comparing overlapping correlation coefficients.
 @item compositions
@@ -3315,6 +3324,8 @@ Functions to read from and write to an EMME/2 databank.
 @item emplik
 Empirical likelihood ratio for means/quantiles/hazards from possibly
 right censored data.
+@item emu
+Interface to the Emu speech database system.
 @item energy
 E-statistics (energy) tests for comparing distributions: multivariate
 normality, Poisson test, multivariate @math{k}-sample test for equal
@@ -4323,6 +4334,14 @@ Optimal Feature Weighting algorithm.
 @item onion
 A collection of routines to manipulate and visualize quaternions and
 octonions.
+@item openNLP
+An interface to @url{http://opennlp.sourceforge.net/, openNLP}, a
+collection of natural language processing tools including a sentence
+detector, tokenizer, pos-tagger, shallow and full syntactic parser, and
+named-entity detector, using the @url{http://maxent.sourceforge.net/,
+Maxent} Java package for training and using maximum entropy models.
+@item openNLPmodels
+English and spanish models for @strong{openNLP}.
 @item optmatch
 Functions to perform optimal matching, particularly full matching.
 @item orientlib
@@ -4554,6 +4573,8 @@ cause-and-effect chart.
 Quantitative Genetics using R.
 @item qp
 @math{q}-order partial correlation graph search algorithm.
+@item qpcR
+Modelling and analysis of real-time PCR data.
 @item qtl
 Analysis of experimental crosses to identify QTLs.
 @item qtlDesign
@@ -4690,6 +4711,8 @@ Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
 @item rindex
 Indexing for R.
+@item risksetROC
+Riskset ROC curve estimation from censored survival data.
 @item riv
 Robust Instrumental Variables estimators based on high breakpoint point
 S-estimators of multivariate location and scatter matrices.
@@ -4750,6 +4773,8 @@ Simulation-based random variable object class.
 @item rwt
 Rice Wavelet Toolbox wrapper, providing a set of functions for
 performing digital signal processing.
+@item s20x
+Stats 20x functions.
 @item sac
 Semiparametric empirical likelihood ratio based test of changepoint with
 one-change or epidemic alternatives with data-based model diagnostic.
@@ -4816,6 +4841,8 @@ Calculates parameters of the seawater carbonate system.
 Detailed seasonal plots of temperature and precipitation data.
 @item seewave
 Time wave analysis and graphical representation.
+@item segclust
+Segmentation and segmentation/clustering.
 @item segmented
 Functions to estimate break-points of segmented relationships in
 regression models (GLMs).
@@ -5066,6 +5093,8 @@ Complex survey samples: database interface, sparse matrices.
 @item survival
 Functions for survival analysis, including penalised likelihood.
 @emph{Recommended}.
+@item survivalROC
+Time-dependent ROC curve estimation from censored survival data.
 @item survrec
 Survival analysis for recurrent event data.
 @item svcR
