@@ -435,6 +435,7 @@ SEXP do_strtrim(SEXP,SEXP,SEXP,SEXP);
 SEXP do_syschmod(SEXP,SEXP,SEXP,SEXP);
 SEXP do_sysinfo(SEXP,SEXP,SEXP,SEXP);
 SEXP do_syssleep(SEXP,SEXP,SEXP,SEXP);
+SEXP do_sysumask(SEXP,SEXP,SEXP,SEXP);
 SEXP do_subassign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2(SEXP, SEXP, SEXP, SEXP);

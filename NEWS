@@ -293,6 +293,9 @@ NEW FEATURES
 	length and context stack overflows, and mis-specified argument
 	lists to functions).
 
+    o	New function Sys.umask(), a wrapper for 'umask' on platforms
+	which support it.
+
 
 DEPRECATED & DEFUNCT
 

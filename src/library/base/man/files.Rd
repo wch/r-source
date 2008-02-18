@@ -18,6 +18,7 @@ file.symlink(from, to)
 dir.create(path, showWarnings = TRUE, recursive = FALSE,
            mode = "0777")
 Sys.chmod(paths, mode = "0777")
+Sys.umask(mode = "0000")
 }
 \alias{file.append}
 \alias{file.copy}
@@ -28,6 +29,7 @@ Sys.chmod(paths, mode = "0777")
 \alias{file.symlink}
 \alias{dir.create}
 \alias{Sys.chmod}
+\alias{Sys.umask}
 \arguments{
   \item{\dots, file1, file2, from, to, paths}{character vectors,
     containing file names or paths.}
@@ -118,10 +120,27 @@ Sys.chmod(paths, mode = "0777")
   more extensive system of file permissions on some file systems
   (e.g. versions of NTFS) which are unrelated to this system call.
 #endif
+
+  \code{Sys.umask} sets the \code{umask}.
+#ifdef unix
+  It may not be supported (when a warning is issued and \code{"0000"}
+  returned).
+  See the comments for \code{dir.create} for how modes are interpreted.
+  Changing mode on a symbolic link is unlikely to work (nor be
+  necessary).  For more details see your OS's documentation on the
+  system call \code{umask}. 
+#endif
+#ifdef windows
+  This is not a Windows concept, and a warning is issued and
+  \code{"0000"} returned.
+#endif  
 }
 \value{
   \code{dir.create} and \code{file.rename} return a logical,
   true for success.
+
+  \code{Sys.umask} returns the previous value of the \code{umask},
+  invisibly,, as a length-one object of class \code{"octmode"}.
 
   The remaining functions return a logical vector indicating which
   operation succeeded for each of the files attempted.

@@ -1991,6 +1991,31 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_UMASK
+    SEXP ans;
+    int mode;
+    mode_t res;
+
+    checkArity(op, args);
+    mode = asInteger(CAR(args));
+    if(mode == NA_LOGICAL) 
+	error(_("invalid '%s' value"), "umask");
+    res = umask(mode);
+    PROTECT(ans = ScalarInteger(res));
+#else
+    SEXP ans = R_NilValue;
+    
+    checkArity(op, args);
+    warning(_("insufficient OS support on this platform"));
+    PROTECT(ans = ScalarInteger(0));
+#endif
+    setAttrib(ans, R_ClassSymbol, mkString("octmode"));
+    UNPROTECT(1);
+    return ans;
+}
+
 
 SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
