@@ -370,6 +370,12 @@ UTILITIES
 	is a better check since the package reference manuals on CRAN
 	are in PDF.)
 
+    o	R CMD Rd2dvi gains a --encoding argument to be passed to
+	R CMD Rdconv, to set the default encoding for conversions.
+	If this is not supplied and the files are package sources and
+	the DESCRIPTION file contains an Encoding field, that is used
+	for the default encoding.
+
 
 C-LEVEL FACILITIES
 
