@@ -527,6 +527,9 @@ BUG FIXES
     o	l10n_info() now recognizes how Darwin/Mac OS X reports
 	Latin-1 locales (as charset ISO8859-1 rather than ISO-8859-1).
 
+    o	Checking examples which used gird (e.g. via lattice) without
+	attaching grid no longer give errors from grid_plot_hook().
+
 
 
 		CHANGES IN R VERSION 2.6.2
