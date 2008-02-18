@@ -111,7 +111,6 @@ static void CairoColor(unsigned int col, pX11Desc xd)
     blue = pow(blue, BlueGamma);
     
     cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0); 
-    cairo_set_source_rgba(xd->bcc, red, green, blue, alpha/255.0); 
 }
 
 
@@ -128,11 +127,8 @@ static void CairoColor(unsigned int col, pX11Desc xd)
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
-    cairo_t *bcc = xd->bcc;
     cairo_line_cap_t lcap = CAIRO_LINE_CAP_SQUARE;
     cairo_line_join_t ljoin = CAIRO_LINE_JOIN_ROUND;
-    cairo_set_line_width(cc, gc->lwd);
-    cairo_set_line_width(bcc, gc->lwd);
     switch(gc->lend){
     case GE_ROUND_CAP: lcap = CAIRO_LINE_CAP_ROUND; break;
     case GE_BUTT_CAP: lcap = CAIRO_LINE_CAP_BUTT; break;
@@ -143,17 +139,14 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     case GE_MITRE_JOIN: ljoin = CAIRO_LINE_JOIN_MITER; break;
     case GE_BEVEL_JOIN: ljoin = CAIRO_LINE_JOIN_BEVEL; break;
     } 
+    cairo_set_line_width(cc, gc->lwd);
     cairo_set_line_cap(cc, lcap);
     cairo_set_line_join(cc, ljoin);
     cairo_set_miter_limit(cc, gc->lmitre);
-    cairo_set_line_cap(bcc, lcap);
-    cairo_set_line_join(bcc, ljoin);
-    cairo_set_miter_limit(bcc, gc->lmitre);
 
-    if (gc->lty == 0 || gc->lty == -1) {
+    if (gc->lty == 0 || gc->lty == -1)
 	cairo_set_dash(cc, 0, 0, 0);
- 	cairo_set_dash(bcc, 0, 0, 0);
-   } else {
+    else {
 	double ls[16]; /* max 16x4=64 bit */
 	int l = 0, dt = gc->lty;
 	while (dt > 0) {
@@ -162,7 +155,6 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 	    l++;
 	}
 	cairo_set_dash(cc, ls, l, 0);
-	cairo_set_dash(bcc, ls, l, 0);
     }
 }
 
@@ -178,12 +170,7 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
     cairo_new_path(xd->cc);
     cairo_rectangle(xd->cc, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
     /* Add 1 per X11_Clip */
-    cairo_clip(xd->bcc);
-    cairo_reset_clip(xd->bcc);
-    cairo_new_path(xd->bcc);
-    cairo_rectangle(xd->bcc, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
-    /* Add 1 per X11_Clip */
-    cairo_clip(xd->bcc);
+    cairo_clip(xd->cc);
 }
 
 
@@ -192,15 +179,13 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
     cairo_reset_clip(xd->cc);
-    cairo_reset_clip(xd->bcc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
     CairoColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
+    Cairo_update(xd);
     /* Apparently needed */
     XSync(display, 0);
-    cairo_new_path(xd->bcc);
-    cairo_paint(xd->bcc);
 }
 
 static void Cairo_Rect(double x0, double y0, double x1, double y1,
@@ -210,20 +195,18 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
 
     cairo_new_path(xd->cc);
     cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
-    cairo_new_path(xd->bcc);
-    cairo_rectangle(xd->bcc, x0, y0, x1 - x0, y1 - y0);
 
     if (R_ALPHA(gc->fill) > 0) {
+	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
-	cairo_fill_preserve(xd->bcc);
+	cairo_set_antialias(xd->cc, xd->antialias);
     }
 
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
 	CairoColor(gc->col, xd);
 	CairoLineType(gc, xd);
 	cairo_stroke(xd->cc);
-	cairo_stroke(xd->bcc);
     }
 }
 
@@ -234,19 +217,17 @@ static void Cairo_Circle(double x, double y, double r,
 
     cairo_new_path(xd->cc);
     cairo_arc(xd->cc, x, y, r + 0.5 , 0.0, 2 * M_PI);
-    cairo_new_path(xd->bcc);
-    cairo_arc(xd->bcc, x, y, r + 0.5 , 0.0, 2 * M_PI);
 
     if (R_ALPHA(gc->fill) > 0) {
+	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
- 	cairo_fill_preserve(xd->bcc);
+	cairo_set_antialias(xd->cc, xd->antialias);
    }
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
 	CairoLineType(gc, xd);
 	CairoColor(gc->col, xd);
 	cairo_stroke(xd->cc);
-	cairo_stroke(xd->bcc);
     }
 }
 
@@ -262,9 +243,6 @@ static void Cairo_Line(double x1, double y1, double x2, double y2,
 	cairo_move_to(xd->cc, x1, y1);
 	cairo_line_to(xd->cc, x2, y2);
 	cairo_stroke(xd->cc);
-	cairo_move_to(xd->bcc, x1, y1);
-	cairo_line_to(xd->bcc, x2, y2);
-	cairo_stroke(xd->bcc);
     }
 }
 
@@ -281,11 +259,6 @@ static void Cairo_Polyline(int n, double *x, double *y,
 	cairo_move_to(xd->cc, x[0], y[0]);
 	for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
 	cairo_stroke(xd->cc);
-
-	cairo_new_path(xd->bcc);
-	cairo_move_to(xd->bcc, x[0], y[0]);
-	for(i = 0; i < n; i++) cairo_line_to(xd->bcc, x[i], y[i]);
-	cairo_stroke(xd->bcc);
     }
 }
 
@@ -301,15 +274,15 @@ static void Cairo_Polygon(int n, double *x, double *y,
     cairo_close_path(xd->cc);
 
     if (R_ALPHA(gc->fill) > 0) {
+	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
-	cairo_fill_preserve(xd->bcc);
+	cairo_set_antialias(xd->cc, xd->antialias);
     }
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
 	CairoColor(gc->col, xd);
 	CairoLineType(gc, xd);
 	cairo_stroke(xd->cc);
-	cairo_stroke(xd->bcc);
     }
 }
 
@@ -359,25 +332,21 @@ text_extents(PangoFontDescription *desc, cairo_t *cc,
 	     gint *width, gint *ascent, gint *descent, int ink)
 {
     PangoLayout *layout;
-    PangoRectangle rect, lrect;
+    PangoRectangle rect;
 	
     layout = layoutText(desc, cc, str);
-    pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
-					    &rect, &lrect);
+    if(ink) 
+	pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
+					    &rect, NULL);
+    else
+	pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
+					    NULL, &rect);
 
-    if(ink) {
-	if(ascent) *ascent = PANGO_ASCENT(rect);
-	if(descent) *descent = PANGO_DESCENT(rect);
-	if(width) *width = lrect.width;
-	if(lbearing) *lbearing = PANGO_LBEARING(rect);
-	if(rbearing) *rbearing = PANGO_RBEARING(rect);
-    } else {
-	if(ascent) *ascent = PANGO_ASCENT(lrect);
-	if(descent) *descent = PANGO_DESCENT(lrect);
-	if(width) *width = lrect.width;
-	if(lbearing) *lbearing = PANGO_LBEARING(lrect);
-	if(rbearing) *rbearing = PANGO_RBEARING(lrect);	
-    }
+    if(ascent) *ascent = PANGO_ASCENT(rect);
+    if(descent) *descent = PANGO_DESCENT(rect);
+    if(width) *width = rect.width;
+    if(lbearing) *lbearing = PANGO_LBEARING(rect);
+    if(rbearing) *rbearing = PANGO_RBEARING(rect);
     g_object_unref(layout);
 }
 
@@ -434,24 +403,16 @@ static void Cairo_Text(double x, double y,
     if (R_ALPHA(gc->col) > 0) {
 	PangoFontDescription *desc = getFont(gc);
 	cairo_save(xd->cc);
-	cairo_save(xd->bcc);
 	text_extents(desc, xd->cc, gc, str, &lbearing, NULL, &width, 
 		     &ascent, NULL, 0);
 	cairo_move_to(xd->cc, x, y);
 	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 	/* pango has a coord system at top left */
 	cairo_rel_move_to(xd->cc, -lbearing - width*hadj, -ascent);
-	cairo_move_to(xd->bcc, x, y);
-	if (rot != 0.0) cairo_rotate(xd->bcc, -rot/180.*M_PI);
-	/* pango has a coord system at top left */
-	cairo_rel_move_to(xd->bcc, -lbearing - width*hadj, -ascent);
 	CairoColor(gc->col, xd);
 	layout = layoutText(desc, xd->cc, str);
 	pango_cairo_show_layout(xd->cc, layout);
-	layout = layoutText(desc, xd->bcc, str);
-	pango_cairo_show_layout(xd->bcc, layout);
 	cairo_restore(xd->cc);
-	cairo_restore(xd->bcc);
 	g_object_unref(layout);
 	pango_font_description_free(desc);
     }

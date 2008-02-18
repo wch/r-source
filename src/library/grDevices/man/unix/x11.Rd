@@ -169,6 +169,15 @@ X11.options(\dots, reset = FALSE)
   1.8.  The argument \code{gamma} \code{divides} 5/3, so use
   \code{gamma=0.76} for a PC display.
 }
+\section{Anti-aliasing}{
+  Anti-aliasing is only supported in \code{type="Cairo"}, and applies to
+  graphics and to fonts.  It is generally preferable for lines and text,
+  but can lead to undesirable effects for fills, e.g. for
+  \code{\link{image}} plots, and is always off for those.
+
+  \code{antialias = "default"} is in principle platform-dependent, but
+  seems most often equivalent to \code{antialias = "gray"}.
+}
 \seealso{
   \code{\link{Devices}}, \code{\link{X11Fonts}}.
 }
