@@ -841,7 +841,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     n = length(arg);
     allow_ = asLogical(CADR(args));
     if (allow_ == NA_LOGICAL)
-	error(_("invalid value of 'allow_'"));
+	error(_("invalid '%s' value"), "allow_");
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
 	This = translateChar(STRING_ELT(arg, i));

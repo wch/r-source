@@ -72,7 +72,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("non-numeric matrix extent"));
     byrow = asLogical(CADDDR(args));
     if (byrow == NA_INTEGER)
-	error(_("invalid 'byrow' value"));
+	error(_("invalid '%s' argument"), "byrow");
     if(nargs == 5) dimnames = CAD4R(args);
 
 
@@ -1024,7 +1024,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("value out of range in 'perm'"));
     for (i = 0; i < n; i++)
 	if (iip[i] == 0)
-	    error(_("invalid permutation ('perm')"));
+	    error(_("invalid '%s' argument"), "perm");
 
     /* create the stride object and permute */
 
@@ -1157,10 +1157,10 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = asInteger(CAR(args)); args = CDR(args);
     NaRm = asLogical(CAR(args));
     if (n == NA_INTEGER || n < 0)
-	error(_("invalid value of 'n'"));
+	error(_("invalid '%s' argument"), "n");
     if (p == NA_INTEGER || p < 0)
-	error(_("invalid value of 'p'"));
-    if (NaRm == NA_LOGICAL) error(_("invalid value of 'na.rm'"));
+	error(_("invalid '%s' argument"), "p");
+    if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
     keepNA = !NaRm;
 
     OP = PRIMVAL(op);

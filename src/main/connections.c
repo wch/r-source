@@ -2637,13 +2637,13 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     n = asInteger(CADR(args));
     if(n == NA_INTEGER)
-	error(_("invalid value for '%s'"), "n");
+	error(_("invalid '%s' argument"), "n");
     ok = asLogical(CADDR(args));
     if(ok == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "ok");
+	error(_("invalid '%s' argument"), "ok");
     warn = asLogical(CADDDR(args));
     if(warn == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "warn");
+	error(_("invalid '%s' argument"), "warn");
     if(!con->canread)
 	error(_("cannot read from this connection"));
     if(!isString(CAD4R(args)) || LENGTH(CAD4R(args)) != 1)
@@ -2877,17 +2877,17 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     swhat = CAR(args); args = CDR(args);
     if(!isString(swhat) || length(swhat) != 1)
-	error(_("invalid value for '%s'"), "what");
+	error(_("invalid '%s' argument"), "what");
     what = CHAR(STRING_ELT(swhat, 0)); /* ASCII */
     n = asInteger(CAR(args)); args = CDR(args);
-    if(n == NA_INTEGER || n < 0) error(_("invalid value for '%s'"), "n");
+    if(n == NA_INTEGER || n < 0) error(_("invalid '%s' argument"), "n");
     size = asInteger(CAR(args)); args = CDR(args);
     signd = asLogical(CAR(args)); args = CDR(args);
     if(signd == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "signed");
+	error(_("invalid '%s' argument"), "signed");
     swap = asLogical(CAR(args));
     if(swap == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "swap");
+	error(_("invalid '%s' argument"), "swap");
     if(!isRaw) {
 	if(!con->canread)
 	    error(_("cannot read from this connection"));
@@ -2984,7 +2984,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(ans = allocVector(REALSXP, n));
 	    p = (void *) REAL(ans);
 	} else
-	    error(_("invalid value for '%s'"), "what");
+	    error(_("invalid '%s' argument"), "what");
 	    
 	if(size == sizedef) {
 	    m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np) 
@@ -3087,7 +3087,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     size = asInteger(CADDR(args));
     swap = asLogical(CADDDR(args));
     if(swap == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "swap");
+	error(_("invalid '%s' argument"), "swap");
     len = LENGTH(object);
     if(len == 0) {
 	if(isRaw) return allocVector(RAWSXP, 0); else return R_NilValue;
@@ -3390,7 +3390,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n == 0) return allocVector(STRSXP, 0);
     useBytes = asLogical(CADDR(args));
     if(useBytes == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "useBytes");
+	error(_("invalid '%s' argument"), "useBytes");
   
     if (!isRaw) {
     	wasopen = con->isopen;
@@ -3403,7 +3403,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0, m = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
-	    error(_("invalid value for '%s'"), "nchar");
+	    error(_("invalid '%s' argument"), "nchar");
 	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np, useBytes)
 	    : readFixedString(con, len, useBytes);
 	if(onechar != R_NilValue) {
@@ -3436,7 +3436,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     object = CAR(args);
     if(TYPEOF(object) != STRSXP)
-	error(_("invalid value for '%s'"), "object");
+	error(_("invalid '%s' argument"), "object");
     if(TYPEOF(CADR(args)) == RAWSXP) {
     	isRaw = TRUE;
     } else {
@@ -3454,7 +3454,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	usesep = TRUE;
 	if (!isString(sep) || length(sep) != 1)
-	    error(_("invalid value for '%s'"), "sep");
+	    error(_("invalid '%s' argument"), "sep");
 	ssep = translateChar(STRING_ELT(sep, 0));
 	slen = strlen(ssep) + 1;
     }
@@ -3474,7 +3474,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (tlen > len) len = tlen;
 	    tlen = INTEGER(nchars)[i];
 	    if(tlen == NA_INTEGER || tlen < 0)
-		error(_("invalid value for '%s'"), "nchar");
+		error(_("invalid '%s' argument"), "nchar");
 	    if (tlen > len) len = tlen;
 	}
 	buf = (char *) R_alloc(len + slen, sizeof(char));
@@ -3729,11 +3729,11 @@ SEXP attribute_hidden do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     icon = asInteger(CAR(args));
     closeOnExit = asLogical(CADR(args));
     if(closeOnExit == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "closeOnExit");
+	error(_("invalid '%s' argument"), "closeOnExit");
     errcon = asLogical(CADDR(args));
-    if(errcon == NA_LOGICAL) error(_("invalid value for '%s'"), "type");
+    if(errcon == NA_LOGICAL) error(_("invalid '%s' argument"), "type");
     tee = asLogical(CADDDR(args));
-    if(tee == NA_LOGICAL) error(_("invalid value for '%s'"), "split");
+    if(tee == NA_LOGICAL) error(_("invalid '%s' argument"), "split");
 
 #ifndef HAVE_VA_COPY
     if(tee) error(_("this platform does not support 'split=TRUE'"));
@@ -3765,7 +3765,7 @@ SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     errcon = asLogical(CAR(args));
     if(errcon == NA_LOGICAL)
-	error(_("invalid value for '%s'"), "type");
+	error(_("invalid '%s' argument"), "type");
     return ScalarInteger(errcon ? R_SinkNumber : R_ErrorCon);
 }
 

@@ -132,7 +132,7 @@ SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	aa = REAL(a)[i % na];
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1 ||
 	    aa < 0 || aa > 1)
-	    error(_("invalid HSV color"));
+	    error(_("invalid hsv color"));
 	hsv2rgb(hh, ss, vv, &r, &g, &b);
 	r = pow(r, gg);
 	g = pow(g, gg);
@@ -295,7 +295,7 @@ SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(nam = coerceVector(CAR(args), STRSXP)); args = CDR(args);
     if (length(nam) != 0 && length(nam) != l_max)
-	error(_("invalid names vector"));
+	error(_("invalid 'names' vector"));
     PROTECT(c = allocVector(STRSXP, l_max));
 
 #define _R_set_c_RGBA(_R,_G,_B,_A)				\
@@ -361,7 +361,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	PROTECT(colors = coerceVector(colors, INTSXP));
 	if (TYPEOF(colors) != INTSXP)
-	    error(_("invalid value of '%s'"), "col");
+	    error(_("invalid '%s' value"), "col");
     }
     n = LENGTH(colors);
 

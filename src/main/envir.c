@@ -1970,7 +1970,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 
     name = CADDR(args);
     if (!isValidStringF(name))
-	error(_("invalid value for '%s'"), "name");
+	error(_("invalid '%s' argument"), "name");
 
     isSpecial = IS_USER_DATABASE(CAR(args));
 

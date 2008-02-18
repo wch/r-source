@@ -286,11 +286,11 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(fn) || (n = length(fn)) < 1)
 	error(_("invalid filename specification"));
     if (!isString(hd) || length(hd) != n)
-	error(_("invalid 'headers'"));
+	error(_("invalid '%s' argument"), "headers");
     if (!isString(tl))
-	error(_("invalid 'title'"));
+	error(_("invalid '%s' argument"), "title");
     if (!isString(pg))
-        error(_("invalid '%s' specification"), "pager");
+        error(_("invalid '%s' argument"), "pager");
     f = (const char**) R_alloc(n, sizeof(char*));
     h = (const char**) R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -1148,7 +1148,7 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
         error(_("invalid '%s' argument"), "names");
     n = length(fn);
     mode = asInteger(CADR(args));
-    if(mode < 0 || mode > 7) error(_("invalid '%s' value"), "mode");
+    if(mode < 0 || mode > 7) error(_("invalid '%s' argument"), "mode");
     modemask = 0;
     if (mode & 1) modemask |= X_OK;
     if (mode & 2) modemask |= W_OK;
@@ -1611,7 +1611,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     what = CAR(args);
     if(!isNull(what) && !isString(what))
-	error(_("invalid value of 'what' argument"));
+	error(_("invalid '%s' argument"), "what");
 
 #if defined(Unix) && defined(HAVE_X11)
     /* Don't load the module and contact the X11 display
