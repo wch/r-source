@@ -53,7 +53,7 @@ typedef enum {
 
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 			 double, X_COLORTYPE, int, int, int, SEXP, 
-			 int, int, int, const char *, int);
+			 int, int, int, const char *, int, int);
 
 
 	/********************************************************/
@@ -120,8 +120,9 @@ typedef struct {
 
 #ifdef HAVE_WORKING_CAIRO
     Rboolean useCairo;
-    cairo_t *cc;
-    cairo_surface_t *cs;
+    cairo_t *cc, *bcc;
+    cairo_surface_t *cs, *bcs;
+    cairo_antialias_t antialias;
 #endif
 } X11Desc;
 

@@ -17,7 +17,7 @@
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
-    fonts, xpos, ypos, title, type)
+    fonts, xpos, ypos, title, type, antialias)
 
 X11.options(\dots, reset = FALSE)
 }
@@ -56,6 +56,9 @@ X11.options(\dots, reset = FALSE)
   \item{type}{character string, one of \code{"Xlib"} (the only type
     prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
     available if the system was compiled with support for Cairo.}
+  \item{antialias}{for \code{type = "Cairo"}, giving the type of
+    anti-aliasing (if any) to be used.  One of
+    \code{c("default", "none", "gray", "subpixel")}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
     and \code{maxcubesize} (see section \sQuote{Color Rendering}).}

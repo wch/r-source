@@ -592,8 +592,26 @@ static void handleEvent(XEvent event)
 	dd = (pDevDesc) temp;
 	xd = (pX11Desc) dd->deviceSpecific;
 	if (xd->windowWidth != event.xconfigure.width ||
-	    xd->windowHeight != event.xconfigure.height)
-	    do_update = 1;
+	    xd->windowHeight != event.xconfigure.height) {
+	    do_update = 2;
+#if defined HAVE_WORKING_CAIRO
+	    if(xd->useCairo) {
+		cairo_xlib_surface_set_size(xd->cs, xd->windowWidth,
+					    xd->windowHeight);
+		if (xd->bcs) {
+		    cairo_surface_destroy(xd->bcs);
+		    cairo_destroy(xd->bcc);
+		    xd->bcs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+							 (double)xd->windowWidth,
+							 (double)xd->windowHeight);
+		    xd->bcc = cairo_create(xd->bcs);
+		    cairo_set_operator(xd->bcc, CAIRO_OPERATOR_ATOP);
+		    cairo_reset_clip(xd->bcc);
+		    cairo_set_antialias(xd->bcc, xd->antialias);
+		}
+	    }
+#endif
+	}
 	xd->windowWidth = event.xconfigure.width;
 	xd->windowHeight = event.xconfigure.height;
         dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
@@ -623,16 +641,18 @@ static void handleEvent(XEvent event)
 	devNum = ndevNumber(dd);
 	if (devNum > 0) {
 	    pGEDevDesc gdd = GEgetDevice(devNum);
-#ifdef HAVE_WORKING_CAIRO
 	    dd = (pDevDesc) temp;
 	    xd = (pX11Desc) dd->deviceSpecific;
-	    /* could check existing size here */
-	    if (xd->cs)
-		cairo_xlib_surface_set_size(xd->cs, xd->windowWidth, 
-					    xd->windowHeight);
-#endif
-	    /* avoid replying a device list until something has been drawn */
-	    if(gdd->dirty) GEplayDisplayList(gdd);
+	    /* avoid replaying a display list until something has been drawn */
+	    if(gdd->dirty) {
+		if(xd->useCairo && do_update == 1) {
+		    //cairo_surface_write_to_png(xd->bcs, "foo.png");
+		    cairo_set_source_surface (xd->cc, xd->bcs, 0, 0);
+		    cairo_reset_clip(xd->cc);
+		    cairo_paint(xd->cc);
+		} else GEplayDisplayList(gdd);
+		XSync(display, 0);
+	    }
 	}
     }
 }
@@ -928,7 +948,7 @@ static void SetFont(const pGEcontext gc, pX11Desc xd)
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	} else
-	    error(_("X11 font %s, face %d at size %d could not be loaded"), 
+	    error(_("X11 font %s, face %d at size %d could not be loaded"),
 		  family, face, size);
     }
 }
@@ -1335,7 +1355,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
 	    XSetWMProtocols(display, xd->window, &protocol, 1);
 #ifdef HAVE_WORKING_CAIRO
-	    xd->cs = cairo_xlib_surface_create(display, xd->window, 
+	    xd->cs = cairo_xlib_surface_create(display, xd->window,
 					       visual,
 					       (double)xd->windowWidth,
 					       (double)xd->windowHeight);
@@ -1348,6 +1368,21 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    }
 	    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
 	    cairo_reset_clip(xd->cc);
+	    cairo_set_antialias(xd->cc, xd->antialias);
+
+	    xd->bcs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						 (double)xd->windowWidth,
+						 (double)xd->windowHeight);
+	    if (cairo_surface_status(xd->bcs) != CAIRO_STATUS_SUCCESS) {
+		/* bail out */
+	    }
+	    xd->bcc = cairo_create(xd->bcs);
+	    if (cairo_status(xd->bcc) != CAIRO_STATUS_SUCCESS) {
+		/* bail out */
+	    }
+	    cairo_set_operator(xd->bcc, CAIRO_OPERATOR_ATOP);
+	    cairo_reset_clip(xd->bcc);
+	    cairo_set_antialias(xd->bcc, xd->antialias);
 #endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
@@ -1428,7 +1463,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
  * THEN return xd->basefontfamily (the family set up when the
  *   device was created)
  */
-static char* translateFontFamily(char* family, pX11Desc xd) 
+static char* translateFontFamily(char* family, pX11Desc xd)
 {
     SEXP graphicsNS, x11env, fontdb, fontnames;
     int i, nfonts;
@@ -1767,6 +1802,8 @@ static void X11_Close(pDevDesc dd)
 #ifdef HAVE_WORKING_CAIRO
 	cairo_surface_destroy(xd->cs);
 	cairo_destroy(xd->cc);
+	cairo_surface_destroy(xd->bcs);
+	cairo_destroy(xd->bcc);
 #endif
 
 	XFreeCursor(display, xd->gcursor);
@@ -1958,7 +1995,7 @@ static void X11_Polygon(int n, double *x, double *y,
     CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, xd);
-	XFillPolygon(display, xd->window, xd->wgc, points, n, 
+	XFillPolygon(display, xd->window, xd->wgc, points, n,
 		     Complex, CoordModeOrigin);
     }
     CheckAlpha(gc->col, xd);
@@ -2067,7 +2104,8 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 			 int res,
 			 int xpos, int ypos,
 			 const char *title,
-			 int useCairo)
+			 int useCairo,
+			 int antialias)
 {
     pX11Desc xd;
     const char *fn;
@@ -2077,6 +2115,12 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     xd->bg = bgcolor;
 #ifdef HAVE_WORKING_CAIRO
     xd->useCairo = useCairo;
+    switch(antialias){
+    case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
+    case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
+    case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
+    case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+    }
 #else
     if(useCairo) {
 	warning(_("type=\"Cairo\" is not supported on this build -- using \"Xlib\""));
@@ -2146,7 +2190,8 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->strWidthUTF8 = Cairo_StrWidth;
 	dd->textUTF8 = Cairo_Text;
 	dd->wantSymbolUTF8 = TRUE;
-    } else 
+	dd->useRotatedTextInContour = FALSE;
+    } else
 #endif
     {
 	dd->newPage = X11_NewPage;
@@ -2160,6 +2205,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->polygon = X11_Polygon;
 	dd->metricInfo = X11_MetricInfo;
 	dd->hasTextUTF8 = FALSE;
+	dd->useRotatedTextInContour = FALSE;
     }
 
     dd->activate = X11_Activate;
@@ -2168,7 +2214,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->size = X11_Size;
     dd->locator = X11_Locator;
     dd->mode = X11_Mode;
-    dd->useRotatedTextInContour = FALSE;
 
     /* Set required graphics parameters. */
 
@@ -2355,7 +2400,8 @@ static void
 Rf_addX11Device(const char *display, double width, double height, double ps,
 		double gamma, int colormodel, int maxcubesize,
 		int bgcolor, int canvascolor, const char *devname, SEXP sfonts,
-		int res, int xpos, int ypos, const char *title, int useCairo)
+		int res, int xpos, int ypos, const char *title,
+		int useCairo, int antialias)
 {
     pDevDesc dev = NULL;
     pGEDevDesc dd;
@@ -2368,7 +2414,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 	if (!X11DeviceDriver(dev, display, width, height,
 			     ps, gamma, colormodel, maxcubesize,
 			     bgcolor, canvascolor, sfonts, res,
-			     xpos, ypos, title, useCairo)) {
+			     xpos, ypos, title, useCairo, antialias)) {
 	    free(dev);
 	    errorcall(gcall, _("unable to start device %s"), devname);
        	}
@@ -2382,8 +2428,8 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *display, *cname, *devname, *title;
     char *vmax;
     double height, width, ps, gamma;
-    int colormodel, maxcubesize, bgcolor, canvascolor, res, xpos, ypos, 
-	useCairo;
+    int colormodel, maxcubesize, bgcolor, canvascolor, res, xpos, ypos,
+	useCairo, antialias;
     SEXP sc, sfonts;
 
     checkArity(op, args);
@@ -2451,8 +2497,12 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     useCairo = asLogical(CAR(args));
     if (useCairo == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' value"), "type");
-	
+	errorcall(call, _("invalid '%s' value"), "useCairo");
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if (antialias == NA_INTEGER)
+	errorcall(call, _("invalid '%s' value"), "antialias");
+
 
     devname = "X11";
     if (!strncmp(display, "png::", 5)) devname = "PNG";
@@ -2461,7 +2511,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel,
 		    maxcubesize, bgcolor, canvascolor, devname, sfonts,
-		    res, xpos, ypos, title, useCairo);
+		    res, xpos, ypos, title, useCairo, antialias);
     vmaxset(vmax);
     return R_NilValue;
 }
@@ -2508,7 +2558,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 
     clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display),
 				 0, 0, 1, 1, 0, 0, 0);
-    /* <FIXME> this is not optimal in a UTF-8 locale. 
+    /* <FIXME> this is not optimal in a UTF-8 locale.
        What we should do is see if UTF-8 extensions are available
        (via X_HAVE_UTF8_STRING) then ask with target TARGETS and see if
        UTF8_STRING is available.  See
