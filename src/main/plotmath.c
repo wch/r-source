@@ -1149,6 +1149,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 {
     BBOX glyphBBox = NullBBox(); /* might be use do italic corr on str="" */
     BBOX resultBBox = NullBBox();
+    int nc = 0;
 
     if (str) {
 #ifdef SUPPORT_MBCS
@@ -1162,7 +1163,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 	    while ((used = Mbrtowc(&wc, p, n, &mb_st)) > 0) {
 		glyphBBox = GlyphBBox(wc, gc, dd);
 		resultBBox = CombineBBoxes(resultBBox, glyphBBox);
-		p += used; n -= used;
+		p += used; n -= used; nc++;
 	    }
 	} else
 #endif
@@ -1171,8 +1172,13 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 	    while (*s) {
 		glyphBBox = GlyphBBox(*s, gc, dd);
 		resultBBox = CombineBBoxes(resultBBox, glyphBBox);
-		s++;
+		s++; nc++;
 	    }
+	}
+	if(nc > 1) {
+	    /* Finding the width by adding up boxes is incorrect (kerning) */
+	    double wd = GEStrWidth(str, CE_NATIVE, gc, dd);
+	    bboxWidth(resultBBox) = fromDeviceHeight(wd, MetricUnit, dd);
 	}
 	if (draw) {
 	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str, CE_NATIVE,
