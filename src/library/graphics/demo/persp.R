@@ -3,7 +3,8 @@
 
 require(datasets)
 require(grDevices); require(graphics)
-opar <- par(ask = dev.interactive(orNone = TRUE))
+oask <- devAskNewPage(dev.interactive(orNone = TRUE))
+oldpar <- par("bg")
 
 
 ## (1) The Obligatory Mathematical surface.
@@ -84,4 +85,5 @@ persp(x, y, 2*z, theta = 110, phi = 40, col = fcol, scale = FALSE,
 
 
 ## reset par():
-par(opar)
+par(oldpar)
+devAskNewPage(oask)

@@ -1,18 +1,18 @@
 require(datasets)
 require(grDevices); require(graphics)
-opar <- par(ask = dev.interactive(orNone = TRUE))
+oask <- devAskNewPage(dev.interactive(orNone = TRUE))
 
 
 ## Here is some code which illustrates some of the differences between
 ## R and S graphics capabilities.  Note that colors are generally specified
 ## by a character string name (taken from the X11 rgb.txt file) and that line
-## textures are given similarly.	 The parameter "bg" sets the background
+## textures are given similarly.  The parameter "bg" sets the background
 ## parameter for the plot and there is also an "fg" parameter which sets
 ## the foreground color.
 
 
 x <- stats::rnorm(50)
-opar <- c(opar, par(bg = "white"))
+opar <- par(bg = "white")
 plot(x, ann = FALSE, type = "n")
 abline(h = 0, col = gray(.90))
 lines(x, col = "green4", lty = "dotted")
@@ -143,3 +143,4 @@ par(bg="cornsilk")
 coplot(lat ~ long | depth, data = quakes, pch = 21, bg = "green3")
 
 par(opar)
+devAskNewPage(oask)

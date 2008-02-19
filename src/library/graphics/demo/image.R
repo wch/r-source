@@ -1,6 +1,6 @@
 require(datasets)
 require(grDevices); require(graphics)
-opar <- par(ask = dev.interactive(orNone = TRUE))
+oask <- devAskNewPage(dev.interactive(orNone = TRUE))
 
 
 x <- 10*(1:nrow(volcano)); x.at <- seq(100, 800, by=100)
@@ -36,4 +36,4 @@ title(main="Maunga Whau Volcano \n col=gray(100:200/200)", font.main=4)
 ## Filled Contours are even nicer sometimes :
 example(filled.contour)
 
-par(opar)
+devAskNewPage(oask)
