@@ -2556,6 +2556,33 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+#ifdef HAVE_WORKING_CAIRO
+/* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    return R_NilValue;
+}
+
+/* png(filename, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    return R_NilValue;
+}
+#else
+/* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+
+/* png(filename, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+#endif
 
 static int in_R_X11_access(void)
 {
@@ -2655,6 +2682,8 @@ void R_init_R_X11(DllInfo *info)
 	return;
     }
     tmp->X11 = in_do_X11;
+    tmp->jpeg = in_do_jpeg;
+    tmp->png = in_do_png;
     tmp->saveplot = in_do_saveplot;
     tmp->de = in_RX11_dataentry;
     tmp->image = in_R_GetX11Image;

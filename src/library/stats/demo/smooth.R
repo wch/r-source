@@ -1,7 +1,8 @@
 ### This used to be in   example(smooth) before we had package-specific demos
 
 require(stats); require(graphics); require(datasets)
-op <- par(ask = interactive(), mfrow = c(1,1))
+oask <- devAskNewPage(dev.interactive(orNone = TRUE))
+op <- par(mfrow = c(1,1))
 
 ## The help(smooth) examples:
 example(smooth, package="stats")
@@ -36,3 +37,4 @@ for(x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2),
     print(t(showSmooth(x)))
 
 par(op)
+devAskNewPage(oask)

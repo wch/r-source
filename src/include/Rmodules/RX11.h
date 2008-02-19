@@ -26,7 +26,6 @@
 #include <Rconnections.h>
 
 typedef SEXP (*R_do_X11)(SEXP call, SEXP op, SEXP args, SEXP rho);
-typedef SEXP (*R_do_saveplot)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef SEXP (*R_X11DataEntryRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef SEXP (*R_X11DataViewer)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef Rboolean (*R_GetX11ImageRoutine)(int d, void *pximage, 
@@ -38,7 +37,9 @@ typedef Rboolean (*R_X11clp)(Rclpconn, char*);
 
 typedef struct {
     R_do_X11 X11;
-    R_do_saveplot saveplot;
+    R_do_X11 jpeg;
+    R_do_X11 png;
+    R_do_X11 saveplot;
     R_X11DataEntryRoutine de;
     R_GetX11ImageRoutine  image;
     R_X11_access access;

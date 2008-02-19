@@ -174,9 +174,8 @@ plot.ppr <- function(x, ask, type="o", ...)
     }
     obj <- ppr.funs(x)
     if(!missing(ask)) {
-	oldpar <- par()
-	on.exit(par(oldpar))
-	par(ask = ask)
+        oask <- devAskNewPage(ask)
+        on.exit(devAskNewPage(oask))
     }
     for(i in 1:x$mu) {
 	ord <- order(obj$x[ ,i])

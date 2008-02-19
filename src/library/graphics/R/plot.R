@@ -193,8 +193,8 @@ function(formula, data = parent.frame(), ..., subset,
 	if( is.null(funname) )
 	    funname <- "plot"
 	if (length(varnames) > 2) {
-	    opar <- par(ask = ask)
-	    on.exit(par(opar))
+            oask <- devAskNewPage(ask)
+            on.exit(devAskNewPage(oask))
 	}
         if(length(xn) > 0) {
             if( !is.null(xlab<- dots[["xlab"]]) )

@@ -85,8 +85,8 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 
     nb.fig <- prod(par("mfcol"))
     if (ask) {
-        op <- par(ask = TRUE)
-        on.exit(par(op))
+	oask <- devAskNewPage(TRUE)
+	on.exit(devAskNewPage(oask))
     }
 
     ylims <- ylim

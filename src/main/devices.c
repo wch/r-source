@@ -620,6 +620,7 @@ void NewFrameConfirm(pDevDesc dd)
     }
 }
 
+/* This needs to manage R_Visible */
 SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int ask;
@@ -632,6 +633,8 @@ SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (ask == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "ask");
 	gdd->ask = ask;
-    }
+	R_Visible = FALSE;
+    } else R_Visible = TRUE;
+    
     return ScalarLogical(oldask);
 }

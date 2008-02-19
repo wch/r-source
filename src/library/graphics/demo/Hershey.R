@@ -1,7 +1,7 @@
 #### --- Hershey Vector Fonts ---
 
 require(grDevices); require(graphics)
-opar <- par(ask = dev.interactive(orNone = TRUE))
+oask <- devAskNewPage(dev.interactive(orNone = TRUE))
 
 
 ######
@@ -392,4 +392,4 @@ for (i in 1:73)
                  i-1, nr)
 
 par(oldpar)
-par(opar)
+devAskNewPage(oask)

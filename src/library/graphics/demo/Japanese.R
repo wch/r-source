@@ -1,5 +1,5 @@
 require(grDevices); require(graphics)
-opar <- par(ask = dev.interactive(orNone = TRUE))
+oask <- devAskNewPage(dev.interactive(orNone = TRUE))
 
 ## --- Japanese characters in the Hershey Vector Fonts
 
@@ -713,4 +713,4 @@ draw.vf.cell2("#J6647", "#N5083", i, nr); i <- i + 1
 draw.vf.cell2("#J6d55", "#N4633", i, nr); i <- i + 1
 
 par(oldpar)
-par(opar)
+devAskNewPage(oask)

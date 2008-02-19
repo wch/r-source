@@ -770,6 +770,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	16,	{PP_FUNCALL, PREC_FN,	0}},
 {"savePlot",	do_saveplot,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"png",		do_png,		0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"jpeg",	do_jpeg,	0,	111,	8,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 /* Graphics */
@@ -823,7 +825,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"playSnapshot",do_playSnapshot,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"symbols",	do_symbols,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getGraphicsEvent",do_getGraphicsEvent,0,  11, 5,      {PP_FUNCALL, PREC_FN,   0}},
-{"devAskNewPage",do_devAskNewPage,0,	11,	1,      {PP_FUNCALL, PREC_FN,   0}},
+{"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
