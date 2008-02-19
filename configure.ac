@@ -891,8 +891,8 @@ case "${host_os}" in
     ## http://fink.sourceforge.net/doc/porting/basics.php.
     if test "${GCC}" = yes; then
       ## only old Apple builds of gcc support (and need?) -no-cpp-precomp
-      APPLEBLD=`${CC} --version|sed -n -e 's:.*Apple.*build \([0-9]\{1,\}\).*:\1:p' 2>/dev/null`
-      if test -n "${APPLEBLD}" -a "${APPLEBLD}" -lt 5300; then
+      APPLEBLD=`${CC} --version|sed -n -e 's:.*Apple.*build \([[0-9]]\{1,\}\).*:\1:p' 2>/dev/null`
+      if test -n "${APPLEBLD}" -a "${APPLEBLD}" -lt 5300 2>/dev/null; then
         R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])
       fi
     fi

@@ -1358,7 +1358,7 @@ EOF
 echo "running: $1 -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&AS_MESSAGE_LOG_FD
 if $1 -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&AS_MESSAGE_LOG_FD 2>&1; then
    AC_MSG_RESULT([yes])
-   rm -f conftest.mm conftest.o
+   rm -rf conftest conftest.* core
    m4_default([$2], OBJCXX=$1)
 else
    AC_MSG_RESULT([no])
@@ -1380,7 +1380,7 @@ AC_BEFORE([AC_PROG_OBJC], [$0])
 
 r_cached_objcxx=yes
 AC_MSG_CHECKING([for cached ObjC++ compiler])
-AC_CACHE_VAL([r_ac_OBJCXX],[
+AC_CACHE_VAL([r_cv_OBJCXX],[
  AC_MSG_RESULT([none])
  r_cached_objcxx=no
 if test -n "${OBJCXX}"; then
@@ -1401,12 +1401,12 @@ if test -z "${OBJCXX}"; then
 else
   AC_MSG_RESULT([${OBJCXX}])
 fi
-r_ac_OBJCXX="${OBJCXX}"
+r_cv_OBJCXX="${OBJCXX}"
 if test "${r_cached_objcxx}" = yes; then
-  AC_MSG_RESULT(["${r_ac_OBJCXX}"])
+  AC_MSG_RESULT(["${r_cv_OBJCXX}"])
 fi
 ])
-OBJCXX="${r_ac_OBJCXX}"
+OBJCXX="${r_cv_OBJCXX}"
 AC_SUBST(OBJCXX)
 ])# R_PROG_OBJCXX
 
@@ -1745,14 +1745,14 @@ fi])# R_X11_XMu
 # HAVE_..._FW if present
 
 AC_DEFUN([R_CHECK_FRAMEWORK],
-[ AC_CACHE_CHECK([for $1 in $2 framework], [r_check_fw_$2],
-  r_check_fw_save_LIBS=$LIBS
-  r_check_fw_$2=no
+[ AC_CACHE_CHECK([for $1 in $2 framework], [r_cv_check_fw_$2],
+  r_cv_check_fw_save_LIBS=$LIBS
+  r_cv_check_fw_$2=no
   LIBS="-framework $2 $5 $LIBS"
   AC_LINK_IFELSE([AC_LANG_CALL([],[$1])],
-                 [r_check_fw_$2="-framework $2"],[])
-  LIBS=$r_check_fw_save_LIBS
-  AS_IF([test "$r_check_fw_$2" != no],
+                 [r_cv_check_fw_$2="-framework $2"],[])
+  LIBS=$r_cv_check_fw_save_LIBS
+  AS_IF([test "$r_cv_check_fw_$2" != no],
         [m4_default([$3], [AC_DEFINE_UNQUOTED(AS_TR_CPP(HAVE_$2_FW), 1, [Defined if framework $2 is present])
 	AS_TR_SH(have_$2_fw)=yes])],
 	[m4_default([$4], AS_TR_SH(have_$2_fw)=no)])
@@ -2979,7 +2979,7 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-AC_CACHE_CHECK([if PCRE version >= 4.0], [r_have_pcre4],
+AC_CACHE_CHECK([if PCRE version >= 4.0], [r_cv_have_pcre4],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -2995,18 +2995,18 @@ int main() {
   exit(1);
 #endif
 }
-]])], [r_have_pcre4=yes], [r_have_pcre4=no], [r_have_pcre4=no])])
+]])], [r_cv_have_pcre4=yes], [r_cv_have_pcre4=no], [r_cv_have_pcre4=no])])
 fi
-if test "x${r_have_pcre4}" = xyes; then
+if test "x${r_cv_have_pcre4}" = xyes; then
   LIBS="-lpcre ${LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
-if test "x${r_have_pcre4}" = xyes; then
+if test "x${r_cv_have_pcre4}" = xyes; then
   AC_MSG_RESULT([no])
 else
   AC_MSG_RESULT([yes])
 fi
-AM_CONDITIONAL(BUILD_PCRE, [test "x${r_have_pcre4}" != xyes])
+AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre4}" != xyes])
 ])# R_PCRE
 
 ## R_BZLIB
@@ -3623,6 +3623,7 @@ if test "${cross_compiling}" = yes; then
       fi
     done
   fi
+  rm -rf conftest conftest.* core
   if test "${build_cc_works}" = no; then
     AC_MSG_RESULT(none)
     AC_MSG_ERROR([Build C compiler doesn't work. Set BUILD_CC to a compiler capable of creating a binary native to the build machine.])
