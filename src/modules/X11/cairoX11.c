@@ -332,21 +332,25 @@ text_extents(PangoFontDescription *desc, cairo_t *cc,
 	     gint *width, gint *ascent, gint *descent, int ink)
 {
     PangoLayout *layout;
-    PangoRectangle rect;
+    PangoRectangle rect, lrect;
 	
     layout = layoutText(desc, cc, str);
-    if(ink) 
-	pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
-					    &rect, NULL);
-    else
-	pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
-					    NULL, &rect);
 
-    if(ascent) *ascent = PANGO_ASCENT(rect);
-    if(descent) *descent = PANGO_DESCENT(rect);
-    if(width) *width = rect.width;
-    if(lbearing) *lbearing = PANGO_LBEARING(rect);
-    if(rbearing) *rbearing = PANGO_RBEARING(rect);
+    pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
+					&rect, &lrect);
+
+    if(width) *width = lrect.width;
+    if(ink) {
+	if(ascent) *ascent = PANGO_ASCENT(rect);
+	if(descent) *descent = PANGO_DESCENT(rect);
+	if(lbearing) *lbearing = PANGO_LBEARING(rect);
+	if(rbearing) *rbearing = PANGO_RBEARING(rect);	
+    } else {
+	if(ascent) *ascent = PANGO_ASCENT(lrect);
+	if(descent) *descent = PANGO_DESCENT(lrect);
+	if(lbearing) *lbearing = PANGO_LBEARING(lrect);
+	if(rbearing) *rbearing = PANGO_RBEARING(lrect);
+    }
     g_object_unref(layout);
 }
 

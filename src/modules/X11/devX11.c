@@ -2560,6 +2560,44 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 /* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
 static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#if 0
+    char buf[PATH_MAX]; /* allow for pageno formats */
+
+    pX11Desc xd;
+    pDevDesc dev = NULL;
+    pGEDevDesc gdd;
+
+    R_GE_checkVersionOrDie(R_GE_version);
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return;
+	if (/* FIXME */) {
+	    free(dev);
+	    errorcall(gcall, _("unable to start device %s"), devname);
+       	}
+	dd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, devname);
+    } END_SUSPEND_INTERRUPTS;
+
+    if (!(xd = (pX11Desc)calloc(1, sizeof(X11Desc)))) {
+	free(dev);
+	free(gdd);
+    }
+    dev->deviceSpecific = xd;
+
+    if(strlen(filename+1) >= PATH_MAX)
+	error(_("filename too long in jpeg() call"));
+    strcpy(xd->filename, pp+1);
+    snprintf(buf, PATH_MAX, pp+1, 1); /* page 1 to start */
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
+	error(_("could not open JPEG file '%s'"), buf);
+	return R_NilValue;
+    }
+    xd->fp = fp;
+
+#endif
+
     return R_NilValue;
 }
 
