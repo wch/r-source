@@ -37,4 +37,4 @@ gmt <- file.path("SOFTWARE", "Microsoft", "Windows NT",
                  "GMT Standard Time", fsep="\\\\")
 readRegistry(gmt, "HLM")
 }}
-\keyword{ utility }
+\keyword{ utilities }
