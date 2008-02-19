@@ -7533,7 +7533,7 @@ fi
 r_cached_objcxx=yes
 { echo "$as_me:$LINENO: checking for cached ObjC++ compiler" >&5
 echo $ECHO_N "checking for cached ObjC++ compiler... $ECHO_C" >&6; }
-if test "${r_ac_OBJCXX+set}" = set; then
+if test "${r_cv_OBJCXX+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
 
@@ -7569,7 +7569,7 @@ echo "running: ${OBJCXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
 if ${OBJCXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
    { echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6; }
-   rm -f conftest.mm conftest.o
+   rm -rf conftest conftest.* core
    OBJCXX=${OBJCXX}
 else
    { echo "$as_me:$LINENO: result: no" >&5
@@ -7607,7 +7607,7 @@ echo "running: ${CXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
 if ${CXX} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
    { echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6; }
-   rm -f conftest.mm conftest.o
+   rm -rf conftest conftest.* core
    OBJCXX=${CXX}
 else
    { echo "$as_me:$LINENO: result: no" >&5
@@ -7640,7 +7640,7 @@ echo "running: ${OBJC} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&5
 if ${OBJC} -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&5 2>&1; then
    { echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6; }
-   rm -f conftest.mm conftest.o
+   rm -rf conftest conftest.* core
    OBJCXX=${OBJC}
 else
    { echo "$as_me:$LINENO: result: no" >&5
@@ -7663,15 +7663,15 @@ else
   { echo "$as_me:$LINENO: result: ${OBJCXX}" >&5
 echo "${ECHO_T}${OBJCXX}" >&6; }
 fi
-r_ac_OBJCXX="${OBJCXX}"
+r_cv_OBJCXX="${OBJCXX}"
 if test "${r_cached_objcxx}" = yes; then
-  { echo "$as_me:$LINENO: result: \"${r_ac_OBJCXX}\"" >&5
-echo "${ECHO_T}\"${r_ac_OBJCXX}\"" >&6; }
+  { echo "$as_me:$LINENO: result: \"${r_cv_OBJCXX}\"" >&5
+echo "${ECHO_T}\"${r_cv_OBJCXX}\"" >&6; }
 fi
 
 fi
 
-OBJCXX="${r_ac_OBJCXX}"
+OBJCXX="${r_cv_OBJCXX}"
 
 
 
@@ -22675,6 +22675,7 @@ echo $ECHO_N "checking for build C compiler... $ECHO_C" >&6; }
       fi
     done
   fi
+  rm -rf conftest conftest.* core
   if test "${build_cc_works}" = no; then
     { echo "$as_me:$LINENO: result: none" >&5
 echo "${ECHO_T}none" >&6; }
@@ -29394,7 +29395,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:29397: \"$ac_link\") >&5
+(eval echo $as_me:29398: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -29477,7 +29478,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:29480: \"$ac_link\") >&5
+(eval echo $as_me:29481: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -32120,8 +32121,8 @@ _ACEOF
     ## http://fink.sourceforge.net/doc/porting/basics.php.
     if test "${GCC}" = yes; then
       ## only old Apple builds of gcc support (and need?) -no-cpp-precomp
-      APPLEBLD=`${CC} --version|sed -n -e 's:.*Apple.*build \(0-9\{1,\}\).*:\1:p' 2>/dev/null`
-      if test -n "${APPLEBLD}" -a "${APPLEBLD}" -lt 5300; then
+      APPLEBLD=`${CC} --version|sed -n -e 's:.*Apple.*build \([0-9]\{1,\}\).*:\1:p' 2>/dev/null`
+      if test -n "${APPLEBLD}" -a "${APPLEBLD}" -lt 5300 2>/dev/null; then
         separator=""
 test -z "${separator}" && separator=" "
 if test -z "${R_XTRA_CPPFLAGS}"; then
@@ -38714,11 +38715,11 @@ fi
 ## Apple's Mac OS X is known to provide it
  { echo "$as_me:$LINENO: checking for cblas_cdotu_sub in vecLib framework" >&5
 echo $ECHO_N "checking for cblas_cdotu_sub in vecLib framework... $ECHO_C" >&6; }
-if test "${r_check_fw_vecLib+set}" = set; then
+if test "${r_cv_check_fw_vecLib+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  r_check_fw_save_LIBS=$LIBS
-  r_check_fw_vecLib=no
+  r_cv_check_fw_save_LIBS=$LIBS
+  r_cv_check_fw_vecLib=no
   LIBS="-framework vecLib  $LIBS"
   cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
@@ -38768,7 +38769,7 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
 	 test ! -s conftest.err
        } && test -s conftest$ac_exeext &&
        $as_test_x conftest$ac_exeext; then
-  r_check_fw_vecLib="-framework vecLib"
+  r_cv_check_fw_vecLib="-framework vecLib"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
@@ -38778,8 +38779,8 @@ fi
 
 rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
       conftest$ac_exeext conftest.$ac_ext
-  LIBS=$r_check_fw_save_LIBS
-  if test "$r_check_fw_vecLib" != no; then
+  LIBS=$r_cv_check_fw_save_LIBS
+  if test "$r_cv_check_fw_vecLib" != no; then
 
 cat >>confdefs.h <<_ACEOF
 #define HAVE_VECLIB_FW 1
@@ -38792,8 +38793,8 @@ fi
 
 
 fi
-{ echo "$as_me:$LINENO: result: $r_check_fw_vecLib" >&5
-echo "${ECHO_T}$r_check_fw_vecLib" >&6; }
+{ echo "$as_me:$LINENO: result: $r_cv_check_fw_vecLib" >&5
+echo "${ECHO_T}$r_cv_check_fw_vecLib" >&6; }
 
 
 ## BLAS.
@@ -43424,11 +43425,11 @@ fi
 ## that we can build AQUA if this one is present)
  { echo "$as_me:$LINENO: checking for CFStringGetSystemEncoding in CoreFoundation framework" >&5
 echo $ECHO_N "checking for CFStringGetSystemEncoding in CoreFoundation framework... $ECHO_C" >&6; }
-if test "${r_check_fw_CoreFoundation+set}" = set; then
+if test "${r_cv_check_fw_CoreFoundation+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  r_check_fw_save_LIBS=$LIBS
-  r_check_fw_CoreFoundation=no
+  r_cv_check_fw_save_LIBS=$LIBS
+  r_cv_check_fw_CoreFoundation=no
   LIBS="-framework CoreFoundation  $LIBS"
   cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
@@ -43478,7 +43479,7 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
 	 test ! -s conftest.err
        } && test -s conftest$ac_exeext &&
        $as_test_x conftest$ac_exeext; then
-  r_check_fw_CoreFoundation="-framework CoreFoundation"
+  r_cv_check_fw_CoreFoundation="-framework CoreFoundation"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
@@ -43488,8 +43489,8 @@ fi
 
 rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
       conftest$ac_exeext conftest.$ac_ext
-  LIBS=$r_check_fw_save_LIBS
-  if test "$r_check_fw_CoreFoundation" != no; then
+  LIBS=$r_cv_check_fw_save_LIBS
+  if test "$r_cv_check_fw_CoreFoundation" != no; then
 
 cat >>confdefs.h <<_ACEOF
 #define HAVE_COREFOUNDATION_FW 1
@@ -43502,8 +43503,8 @@ fi
 
 
 fi
-{ echo "$as_me:$LINENO: result: $r_check_fw_CoreFoundation" >&5
-echo "${ECHO_T}$r_check_fw_CoreFoundation" >&6; }
+{ echo "$as_me:$LINENO: result: $r_cv_check_fw_CoreFoundation" >&5
+echo "${ECHO_T}$r_cv_check_fw_CoreFoundation" >&6; }
 
 
 ## Aqua
@@ -45960,11 +45961,11 @@ fi
 if test "x${have_pcre}" = xyes; then
 { echo "$as_me:$LINENO: checking if PCRE version >= 4.0" >&5
 echo $ECHO_N "checking if PCRE version >= 4.0... $ECHO_C" >&6; }
-if test "${r_have_pcre4+set}" = set; then
+if test "${r_cv_have_pcre4+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   if test "$cross_compiling" = yes; then
-  r_have_pcre4=no
+  r_cv_have_pcre4=no
 else
   cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
@@ -46009,29 +46010,29 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  r_have_pcre4=yes
+  r_cv_have_pcre4=yes
 else
   echo "$as_me: program exited with status $ac_status" >&5
 echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
 ( exit $ac_status )
-r_have_pcre4=no
+r_cv_have_pcre4=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 
 
 fi
-{ echo "$as_me:$LINENO: result: $r_have_pcre4" >&5
-echo "${ECHO_T}$r_have_pcre4" >&6; }
+{ echo "$as_me:$LINENO: result: $r_cv_have_pcre4" >&5
+echo "${ECHO_T}$r_cv_have_pcre4" >&6; }
 fi
-if test "x${r_have_pcre4}" = xyes; then
+if test "x${r_cv_have_pcre4}" = xyes; then
   LIBS="-lpcre ${LIBS}"
 fi
 { echo "$as_me:$LINENO: checking whether PCRE support needs to be compiled" >&5
 echo $ECHO_N "checking whether PCRE support needs to be compiled... $ECHO_C" >&6; }
-if test "x${r_have_pcre4}" = xyes; then
+if test "x${r_cv_have_pcre4}" = xyes; then
   { echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6; }
 else
@@ -46040,7 +46041,7 @@ echo "${ECHO_T}yes" >&6; }
 fi
 
 
-if test "x${r_have_pcre4}" != xyes; then
+if test "x${r_cv_have_pcre4}" != xyes; then
   BUILD_PCRE_TRUE=
   BUILD_PCRE_FALSE='#'
 else
