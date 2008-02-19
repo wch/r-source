@@ -1,6 +1,6 @@
 % File src/library/base/man/with.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{with}
@@ -22,8 +22,7 @@ within(data, expr, \dots)
   \item{data}{data to use for constructing an environment. For the
     default \code{with} method this may be an environment, a list, a
     data frame, or an integer as in \code{sys.call}. For \code{within},
-    it can be a list or a data
-    frame.}
+    it can be a list or a data frame.}
   \item{expr}{expression to evaluate.}
   \item{\dots}{arguments to be passed to future methods.}
 }
@@ -31,7 +30,8 @@ within(data, expr, \dots)
   \code{with} is a generic function that evaluates \code{expr} in a
   local environment constructed from \code{data}.  The environment has
   the caller's environment as its parent.  This is useful for
-  simplifying calls to modeling functions.
+  simplifying calls to modeling functions.  (Note: if \code{data} is
+  already an environment then this is used with its existing parent.)
 
   Note that assignments within \code{expr} take place in the constructed
   environment and not in the user's workspace.
@@ -40,14 +40,12 @@ within(data, expr, \dots)
   after the evaluation of \code{expr} and makes the corresponding
   modifications to \code{data} (this may fail in the data frame case if
   objects are created which cannot be stored in a data frame), and
-  returns it. \code{within} can be used as
-  an alternative to \code{transform}.
-  
+  returns it.  \code{within} can be used as an alternative to
+  \code{transform}.
 }
 \value{
-  For \code{with}, the value
-  of the evaluated \code{expr}. For \code{within},
-  the modified object.
+  For \code{with}, the value of the evaluated \code{expr}.  For
+  \code{within}, the modified object.
 }
 \seealso{
   \code{\link{evalq}}, \code{\link{attach}}, \code{\link{assign}},

@@ -3443,7 +3443,7 @@ display, is as follows:
 > xc <- split(x, ind)
 > yc <- split(y, ind)
 > for (i in 1:length(yc)) @{
-    plot(xc[[i]], yc[[i]]);
+    plot(xc[[i]], yc[[i]])
     abline(lsfit(xc[[i]], yc[[i]]))
   @}
 @end example

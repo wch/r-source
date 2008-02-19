@@ -63,18 +63,18 @@ assign("base_plot_hook",
                outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
                mtext(sprintf("help(\\"%s\\")", nameEx()), side = 4,
                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-              outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
+               outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
            }
        },
        pos = "CheckExEnv")
 assign("grid_plot_hook",
        function() {
-           grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") - grid::unit(1, "lines"),
-                                 x=0, just="left"))
+           grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") - 
+                              grid::unit(1, "lines"), x=0, just="left"))
            grid::grid.text(sprintf("help(\\"%s\\")", nameEx()),
-                     x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
-                     y=grid::unit(0.8, "npc"), rot=90,
-                     gp=grid::gpar(col="orchid"))
+                           x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
+                           y=grid::unit(0.8, "npc"), rot=90,
+                           gp=grid::gpar(col="orchid"))
        },
        pos = "CheckExEnv")
 setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))

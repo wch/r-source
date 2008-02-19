@@ -1722,26 +1722,25 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
 }
 
 extern int R_SaveAsPng(void  *d, int width, int height,
-		       unsigned long (*gp)(XImage *, int, int),
+		       unsigned int (*gp)(void *, int, int),
 		       int bgr, FILE *fp, unsigned int transparent, int res);
 
 extern int R_SaveAsJpeg(void  *d, int width, int height,
-			unsigned long (*gp)(XImage *, int, int),
+			unsigned int (*gp)(void *, int, int),
 			int bgr, int quality, FILE *outfile, int res);
 
+static int knowncols[512];
 
-static long knowncols[512];
-
-
-static unsigned long bitgp(XImage *xi, int x, int y)
+static unsigned int bitgp(void *xi, int x, int y)
 {
     int i, r, g, b;
     XColor xcol;
+
     /*	returns the colour of the (x,y) pixel stored as RGB */
-    i = XGetPixel(xi, y, x);
+    i = XGetPixel((XImage *) xi, y, x);
     switch(model) {
     case MONOCHROME:
-	return (i==0)?0xFFFFFF:0;
+	return i == 0 ? 0xFFFFFF : 0;
     case GRAYSCALE:
     case PSEUDOCOLOR1:
     case PSEUDOCOLOR2:
@@ -1753,8 +1752,7 @@ static unsigned long bitgp(XImage *xi, int x, int y)
 		    | (xcol.blue>>8);
 	    }
 	    return knowncols[i];
-	}
-	else {
+	} else {
 	    xcol.pixel = i;
 	    XQueryColor(display, colormap, &xcol);
 	    return ((xcol.red>>8)<<16) | ((xcol.green>>8)<<8) | (xcol.blue>>8);
