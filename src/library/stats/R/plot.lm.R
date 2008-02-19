@@ -107,8 +107,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     }
     one.fig <- prod(par("mfcol")) == 1
     if (ask) {
-	op <- par(ask = TRUE)
-	on.exit(par(op))
+	oask <- devAskNewPage(TRUE)
+	on.exit(devAskNewPage(oask))
     }
     ##---------- Do the individual plots : ----------
     if (show[1]) {

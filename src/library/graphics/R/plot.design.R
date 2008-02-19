@@ -111,11 +111,11 @@ plot.design <-
     }
     xf <- x[, i.fac, drop = FALSE]
     if (is.null(ask))
-	ask <- prod(par("mfcol")) < nResp && dev.interactive()
+	ask <- prod(par("mfcol")) < nResp && dev.interactive(orNone = TRUE)
     if (ask) {
-        op <- par(ask = ask); on.exit(par(op))
+	oask <- devAskNewPage(ask)
+	on.exit(devAskNewPage(oask))
     }
-    for(j in 1:nResp) {
+    for(j in 1:nResp)
 	.plot.des(xf, ydata[,j], fun = fun, ylab = ylab[j], ylim = ylim, ...)
-    }
 }
