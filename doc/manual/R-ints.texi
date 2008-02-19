@@ -2493,13 +2493,16 @@ would occupy if plotted horizontally in the current font.  (Width here
 is expected to include both (preferably) or neither of left and right
 bearings.)
 
-The @code{metricInfo} callback computes the size of a single character:
-@samp{ascent} is the distance it extends above the baseline and
-@code{descent} how far it extends below the baseline.  @code{width} is
-the amount by which the cursor should be advanced when the character is
-placed.  This is intended to be the bounding box of the `ink' put down
-by the glyph and not the box which might be used when assembling a line
-of conventional text.
+The @code{metricInfo} callback computes the size of a single
+character: @code{ascent} is the distance it extends above the baseline
+and @code{descent} how far it extends below the baseline.
+@code{width} is the amount by which the cursor should be advanced when
+the character is placed.  For @code{ascent} and @code{descent} this is
+intended to be the bounding box of the `ink' put down by the glyph and
+not the box which might be used when assembling a line of conventional
+text (it needs to be for e.g. @code{hat(beta)} to work correctly).
+However, the @code{width} is used in plotmath to advance to the next
+character, and so needs to include left and right bearings.
  
 The @emph{interpretation} of @samp{c} depends on the locale.  Using
 @code{c = 0} used to give an indication of the size of the font: it
