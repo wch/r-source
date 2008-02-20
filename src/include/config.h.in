@@ -726,7 +726,7 @@
 /* Define if you have the 'wint_t' type. */
 #undef HAVE_WINT_T
 
-/* Define to 1 if you have Cairo including pango. */
+/* Define to 1 if you have cairo including pango. */
 #undef HAVE_WORKING_CAIRO
 
 /* Define if calloc(0) returns a null pointer. */

@@ -35,7 +35,7 @@ else
   ])
   if test "x${r_cv_has_cairo}" = "xyes"; then
      modlist="pangocairo"
-     for module in cairo-ft cairo-xlib cairo-xlib-xrender; do
+     for module in cairo-xlib cairo-xlib-xrender; do
        if "${PKGCONF}" --exists ${module}; then
 	 modlist="${modlist} ${module}"
        fi
