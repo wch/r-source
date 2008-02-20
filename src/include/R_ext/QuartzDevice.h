@@ -16,8 +16,10 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  *
- *  This header file constitutes the (inofficial) API to the Quartz device.
- *  Being inofficial, the API may change at any point without warning.
+ *---------------------------------------------------------------------
+ *  This header file constitutes the (inofficial) API to the Quartz
+ *  device. Being inofficial, the API may change at any point without
+ *  warning.
  *
  *  Quartz is a general device-independent way of drawing in Mac OS X,
  *  therefore the Quartz device modularizes the actual drawing target
@@ -28,43 +30,46 @@
  *
  *  Key functions are listed here:
  *  QuartzDevice_Create - creates a Quartz device
- *  QuartzDevice_ResetContext - should be called after the target context has
- *               been created to initialize it.
+ *  QuartzDevice_ResetContext - should be called after the target
+ *    context has been created to initialize it.
  *  QuartzDevice_Kill - closes the Quartz device (e.g. on window close)
- *  QuartzDevice_SetScaledSize - resize device (does not include re-painting,
- *               it should be followed by QuartzDevice_ReplayDisplayList)
+ *  QuartzDevice_SetScaledSize - resize device (does not include
+ *    re-painting, it should be followed by a call to
+ *    QuartzDevice_ReplayDisplayList)
  *  QuartzDevice_ReplayDisplayList - replays all plot commands
  *
  *  Key concepts
  *  - all Quartz modules are expected to provide a device context
- *    (CGContextRef) for drawing. A device can temporarily return NULL (e.g.
- *    if the context is not available immediately) and replay the display list
- *    later to catch up.
- *  - interactive devices can use QuartzDevice_SetScaledSize to resize the
- *    device (no context is necessary), then prepare the context (call
- *    QuartzDevice_ResetContext if a new context was created) and finally
- *    re-draw using QuartzDevice_ReplayDisplayList.
- *  - snapshots can be created either off the current display list (last=0)
- *    or off the last known one (last=1). NewPage callback can only use
- *    last=1 as there is no display list during that call. Restored
- *    snapshots become the current display list and thus can be extended
- *    by further painting (yet the original saved copy is not influenced).
- *    Also note that all snapshots are SEXPs (the declaration doesn't use
- *    SEXP as to not depend on Rinternals.h) and must be protected or preserved
- *    immediately (i.e. the Quartz device does NOT protect them).
- *  - dirty flag: the dirty flag is not used internally by the Quartz device,
- *    but can be useful for the modules to determine whether the current
- *    graphics is a restored copy or in-progress drawing. The Quartz device
- *    manages the flag as follows: a) display list replay does NOT change the
- *    flag, b) snapshot restoration resets the flag, c) all other paint
- *    operations (i.e. outside of restore/replay) set the flag. Most common
- *    use is to determine whether restored snapshots have been subsequently
- *    modified.
- *  - history: currently the history management is not used by any modules and
- *    as such is untested and strictly experimental. It may be removed in the
- *    future as it is not clear whether it makes sense to be part of the
- *    device. See Cocoa module for a module-internal implementation of the
- *    display history.
+ *    (CGContextRef) for drawing. A device can temporarily return NULL
+ *    (e.g. if the context is not available immediately) and replay
+ *    the display list later to catch up.
+ *  - interactive devices can use QuartzDevice_SetScaledSize to resize
+ *    the device (no context is necessary), then prepare the context
+ *    (call QuartzDevice_ResetContext if a new context was created)
+ *    and finally re-draw using QuartzDevice_ReplayDisplayList.
+ *  - snapshots can be created either off the current display list
+ *    (last=0) or off the last known one (last=1). NewPage callback
+ *    can only use last=1 as there is no display list during that
+ *    call. Restored snapshots become the current display list and
+ *    thus can be extended by further painting (yet the original saved
+ *    copy is not influenced). Also note that all snapshots are SEXPs
+ *    (the declaration doesn't use SEXP as to not depend on
+ *    Rinternals.h) and must be protected or preserved immediately
+ *    (i.e. the Quartz device does NOT protect them).
+ *  - dirty flag: the dirty flag is not used internally by the Quartz
+ *    device, but can be useful for the modules to determine whether
+ *    the current graphics is a restored copy or in-progress
+ *    drawing. The Quartz device manages the flag as follows: a)
+ *    display list replay does NOT change the flag, b) snapshot
+ *    restoration resets the flag, c) all other paint operations
+ *    (i.e. outside of restore/replay) set the flag. Most common use
+ *    is to determine whether restored snapshots have been
+ *    subsequently modified.
+ *  - history: currently the history management is not used by any
+ *    modules and as such is untested and strictly experimental. It
+ *    may be removed in the future as it is not clear whether it makes
+ *    sense to be part of the device. See Cocoa module for a
+ *    module-internal implementation of the display history.
  */
 
 #ifndef R_EXT_QUARTZDEVICE_H_
@@ -163,31 +168,27 @@ typedef struct QuartzFunctons_s {
     int    (*GetBackground)(QuartzDesc_t desc);   /* get background color */
 } QuartzFunctions_t;
 
-    /* from aqua */
-QuartzFunctions_t *getQuartzAPI();
+/* from unix/aqua.c - loads grDevices if necessary and returns NULL on failure */
+QuartzFunctions_t *getQuartzFunctions();
+
+/* type of a Quartz contructor */
+typedef int (*quartz_create_fn_t)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
+
+/* grDevices currently supply following constructors:
+   QuartzCocoa_DeviceCreate, QuartzCarbon_DeviceCreate, QuartzBitmap_DeviceCreate, QuartzPDF_DeviceCreate */
 
 /* embedded Quartz support hook (defined in unix/aqua.c):
      dd = should be passed-through to QuartzDevice_Create
-     type = name of the desired Quartz output type
-     file = filename (optional)
-     width, height = size (in inches)
-     pointsize, family = initial text properties
-     antialias, smooth, autorefresh = flags
-     quartzpos = desired initial position specification
-     bg = background color
-     title = window title (optional)
-     dpi = either NULL (auto-detect) or double[2] with x and y DPI
-     */
+     fn = Quartz API functions
+     par = parameters (see above) */
 extern Rboolean (*ptr_QuartzBackend)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
-    
-/* this is an experimental interface that allows to start a Quartz device from C code instead of going through the Quartz R function */
-typedef int (*quartz_create_fn_t)(void *dd, QuartzParameters_t *par);
+
 /* C version of the Quartz call (experimental)
    returns 0 on success, error code on failure */
 int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create);
-/* R supplied q_create values available: QuartzCocoa_DeviceCreate, QuartzCarbon_DeviceCreate, QuartzBitmap_DeviceCreate, QuartzPDF_DeviceCreate or the value of ptr_QuartzDeviceCreate */
+
 #ifdef __cplusplus
 }
 #endif   
-    
+
 #endif

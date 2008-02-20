@@ -870,7 +870,7 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create) {
             if (!dev)
                 return -1;
             
-            if (!q_create(dev, par)) {
+            if (!q_create(dev, &qfn, par)) {
                 vmaxset(vmax);
                 free(dev);
                 return -2;
