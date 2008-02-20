@@ -12,10 +12,12 @@
 }
 \usage{
 jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
-     pointsize = 12, quality = 75, bg = "white", res = NA, \dots)
+     pointsize = 12, quality = 75, bg = "white", res = NA, \dots,
+     type = c("Cairo", "Xlib"), antialias)
 
 png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
-    pointsize = 12, bg = "white",  res = NA, \dots)
+    pointsize = 12, bg = "white",  res = NA, \dots,
+    type = c("Cairo", "Xlib"), antialias)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -40,6 +42,11 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     the default.}
   \item{\dots}{additional arguments to the underlying \code{\link{X11}}
     device, such as \code{gamma} and \code{fonts}.}
+  \item{type}{character string, one of \code{"Xlib"} (the only type
+    prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
+    available if the system was compiled with support for Cairo.}
+  \item{antialias}{for \code{type = "Cairo"}, giving the type of
+    anti-aliasing (if any) to be used.  See \code{\link{X11}}.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
@@ -52,12 +59,13 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   Not all PNG viewers render files with transparency correctly.
   When transparency is in use a very light grey is used as the
   background and so will appear as transparent if used in the plot.
-  This allows opaque white to be used, as on the example.
+  This allows opaque white to be used, as in the example.
 
   \R can be compiled without support for either or both of these
   devices: this will be reported if you attempt to use them on a system
-  where they are not supported.  They may not be usable unless the X11
-  display is available to the owner of the \R process.
+  where they are not supported.  for \code{type = "Xlib"} they may not
+  be usable unless the X11 display is available to the owner of the \R
+  process.
 
   By default no resolution is recorded in the file.  Readers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
@@ -82,9 +90,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \code{file}, the file will contain the last page plotted.
 }
 \note{
-  These are based on the \code{\link{X11}} device.  The colour rendering
-  will be that set up by \code{X11.options} at the time the first
-  current \code{X11}, \code{jpeg} or \code{png} was opened.
+  For \code{type = "Xlib"} these are based on the \code{\link{X11}}
+  device.  The colour rendering will be that set up by
+  \code{X11.options} at the time the first current \code{X11},
+  \code{jpeg} or \code{png} was opened.
 }
 \author{Guido Masarotto and Brian Ripley}
 

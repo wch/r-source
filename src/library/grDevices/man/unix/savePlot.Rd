@@ -1,11 +1,11 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
 \alias{savePlot}
-\title{Save Cairo X11 Plot to File.}
+\title{Save Cairo X11 Plot to File}
 \description{
   Save the current page of a Cairo \code{\link{X11}()} device to a file. 
 }
@@ -34,5 +34,4 @@ savePlot(filename = "Rplot.png", type = "png", device = dev.cur())
 \seealso{
   \code{\link{X11}}, \code{\link{dev.print}}
 }
-\references{ ~put references to the literature/web site here ~ }
-\keyword{misc}
+\keyword{utilities}

@@ -7,6 +7,7 @@
 \alias{x11}
 \alias{X11}
 \alias{X11.options}
+
 \title{X Window System Graphics}
 \description{
   \code{X11} starts a graphics device driver for the X Window System
@@ -179,6 +180,6 @@ X11.options(\dots, reset = FALSE)
   seems most often equivalent to \code{antialias = "gray"}.
 }
 \seealso{
-  \code{\link{Devices}}, \code{\link{X11Fonts}}.
+  \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }
 \keyword{device}

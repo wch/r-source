@@ -123,9 +123,6 @@ typedef struct {
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
-#if 0
-    cairo_font_options_t *fo;
-#endif
 #endif
 } X11Desc;
 

@@ -1369,7 +1369,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    }
 	    xd->xcc = cairo_create(xd->xcs);
 	    if (cairo_status(xd->xcc) != CAIRO_STATUS_SUCCESS) {
-		/* bail out */
+		return FALSE;
 	    }
 	    cairo_set_operator(xd->xcc, CAIRO_OPERATOR_ATOP);
 	    cairo_reset_clip(xd->xcc);
@@ -1378,7 +1378,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 						(double)xd->windowWidth,
 						(double)xd->windowHeight);
 	    if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
-		/* bail out */
+		return FALSE;
 	    }
 	    xd->cc = cairo_create(xd->cs);
 	    if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
@@ -1386,14 +1386,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    }
 	    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
 	    cairo_reset_clip(xd->cc);
-	    //cairo_set_antialias(xd->xcc, xd->antialias);
 	    cairo_set_antialias(xd->cc, xd->antialias);
-#if 0
-	    xd->fo = cairo_font_options_create();
-	    cairo_font_options_set_antialias(xd->fo, CAIRO_ANTIALIAS_GRAY);
-	    cairo_set_font_options(xd->cc, xd->fo);
-	    cairo_set_font_options(xd->xcc, xd->fo);
-#endif
 #endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
@@ -1813,9 +1806,6 @@ static void X11_Close(pDevDesc dd)
 	cairo_destroy(xd->cc);
 	cairo_surface_destroy(xd->xcs);
 	cairo_destroy(xd->xcc);
-#if 0
-	cairo_font_options_destroy(xd->fo);
-#endif
 #endif
 
 	XFreeCursor(display, xd->gcursor);
@@ -2555,46 +2545,250 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifdef HAVE_WORKING_CAIRO
+
+static void null_Activate(pDevDesc dd)
+{
+}
+
+static void null_Deactivate(pDevDesc dd)
+{
+}
+
+static Rboolean null_Locator(double *x, double *y, pDevDesc dd)
+{
+    return FALSE;
+}
+
+
+static void null_Mode(int mode, pDevDesc dd)
+{
+}
+
+static Rboolean 
+BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
+{
+    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+					(double)xd->windowWidth,
+					(double)xd->windowHeight);
+    if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+	return FALSE;
+    }
+    xd->cc = cairo_create(xd->cs);
+    if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+	return FALSE;
+    }
+    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
+    cairo_reset_clip(xd->cc);
+    cairo_set_antialias(xd->cc, xd->antialias);
+    return TRUE;
+}
+
+static int stride;
+
+static unsigned int Cbitgp(void *xi, int x, int y)
+{
+    unsigned int *data = xi;
+    return data[x*stride+y];
+}
+
+static void BM_Close_bitmap(pX11Desc xd)
+{
+    int i;
+    /* cairo_surface_write_to_png(xd->cs, "foo.png"); */
+    void *xi = cairo_image_surface_get_data(xd->cs);
+
+    for (i = 0; i < 512; i++) knowncols[i] = -1;
+
+    stride = xd->windowWidth;
+    if (xd->type == PNG) {
+	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
+		    Cbitgp, 0, xd->fp, 0, xd->res_dpi);
+    } else if (xd->type == JPEG)
+	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
+		     Cbitgp, 0, xd->quality, xd->fp, xd->res_dpi);
+}
+
+static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    char buf[PATH_MAX];
+
+    if (xd->npages++) {
+	/* try to preserve the page we do have */
+	BM_Close_bitmap(xd);
+	if (xd->fp) fclose(xd->fp);
+    }
+    
+    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+    xd->fp = R_fopen(R_ExpandFileName(buf), "w");
+    if (!xd->fp) {
+	if(xd->type == PNG)
+	    error(_("could not open PNG file '%s'"), buf);
+	else 
+	    error(_("could not open JPEG file '%s'"), buf);
+    }
+
+    cairo_reset_clip(xd->cc);
+    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
+    CairoColor(xd->fill, xd);
+    cairo_new_path(xd->cc);
+    cairo_paint(xd->cc);
+}
+
+
+static void BM_Close(pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+    if (xd->npages) BM_Close_bitmap(xd);
+    if (xd->fp) fclose(xd->fp);
+    cairo_surface_destroy(xd->cs);
+    cairo_destroy(xd->cc);
+}
+
+
+
+static Rboolean 
+BMDeviceDriver(pDevDesc dd, int kind, const char * filename, 
+	       int quality, int width, int height, int ps, 
+	       int bg, int res, int antialias)
+{
+    pX11Desc xd;
+
+    /* allocate new device description */
+    if (!(xd = (pX11Desc) malloc(sizeof(X11Desc)))) return FALSE;
+    strcpy(xd->filename, filename);
+    xd->quality = quality;
+    xd->windowWidth = width;
+    xd->windowHeight = height;
+    xd->pointsize = ps;
+    xd->bg = bg;
+    xd->res_dpi = res;
+    switch(antialias){
+    case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
+    case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
+    case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
+    case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+    }
+    xd->npages = 0;
+    xd->col = R_RGB(0, 0, 0);
+    xd->fill = xd->canvas = bg;
+    xd->type = kind;
+    xd->fp = NULL;
+    xd->lty = -1;
+    xd->lwd = -1;
+    xd->lend = 0;
+    xd->ljoin = 0;
+
+    if (!BM_Open(dd, xd, width, height)) {
+	free(xd);
+	return FALSE;
+    }
+    dd->deviceSpecific = (void *) xd;
+
+    /* Set up Data Structures  */
+    dd->close = BM_Close;
+    dd->activate = null_Activate;
+    dd->deactivate = null_Deactivate;
+    dd->size = X11_Size;
+    dd->newPage = BM_NewPage;
+    dd->clip = Cairo_Clip;
+    dd->strWidth = Cairo_StrWidth;
+    dd->text = Cairo_Text;
+    dd->rect = Cairo_Rect;
+    dd->circle = Cairo_Circle;
+    dd->line = Cairo_Line;
+    dd->polyline = Cairo_Polyline;
+    dd->polygon = Cairo_Polygon;
+    dd->locator = null_Locator;
+    dd->mode = null_Mode;
+    dd->metricInfo = Cairo_MetricInfo;
+    dd->strWidth = Cairo_StrWidth;
+    dd->text = Cairo_Text;
+    dd->hasTextUTF8 = TRUE;
+    dd->wantSymbolUTF8 = TRUE;
+    dd->strWidthUTF8 = Cairo_StrWidth;
+    dd->textUTF8 = Cairo_Text;    
+    dd->useRotatedTextInContour = FALSE;
+ 
+    dd->left = 0;
+    dd->right = width;
+    dd->top = 0;
+    dd->bottom = height;
+    dd->startps = ps;
+    dd->cra[0] = 0.9 * ps;
+    dd->cra[1] = 1.2 * ps;
+    dd->xCharOffset = 0.4900;
+    dd->yCharOffset = 0.3333;
+    dd->yLineBias = 0.1;
+    dd->ipr[0] = dd->ipr[1] = 1.0/(res == NA_INTEGER ? 72 : res);  
+    dd->canClip= TRUE;
+    dd->canHAdj = 2;
+    dd->canChangeGamma = FALSE;
+    dd->startps = ps;
+    dd->startcol = xd->col;
+    dd->startfill = xd->fill;
+    dd->startlty = LTY_SOLID;
+    dd->startfont = 1;
+    dd->displayListOn = FALSE;
+
+    return TRUE;    
+}
+
 /* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
 static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#if 0
-    char buf[PATH_MAX]; /* allow for pageno formats */
-
-    pX11Desc xd;
-    pDevDesc dev = NULL;
     pGEDevDesc gdd;
+    SEXP sc;
+    const char *filename;
+    int quality, width, height, pointsize, bgcolor, res, antialias;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
+	error(_("invalid '%s' argument"), "filename");
+    filename = translateChar(STRING_ELT(CAR(args), 0));
+    args = CDR(args);
+    quality = asInteger(CAR(args));
+    if(quality == NA_INTEGER || quality < 0 || quality > 100)
+	error(_("invalid '%s' argument"), "quality");
+    args = CDR(args);
+    width = asInteger(CAR(args));
+    if(width == NA_INTEGER || width <= 0)
+	error(_("invalid '%s' argument"), "width");
+    args = CDR(args);
+    height = asInteger(CAR(args));
+    if(height == NA_INTEGER || height <= 0)
+	error(_("invalid '%s' argument"), "height");
+    args = CDR(args);
+    pointsize = asInteger(CAR(args));
+    if(pointsize == NA_INTEGER || pointsize <= 0)
+	error(_("invalid '%s' argument"), "pointsize");
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, _("invalid '%s' value"), "bg");
+    bgcolor = RGBpar(sc, 0);
+    args = CDR(args);
+    res = asInteger(CAR(args));
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if(antialias == NA_INTEGER)
+	error(_("invalid '%s' argument"), "antialias");
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
+	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return;
-	if (/* FIXME */) {
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
+	if (!BMDeviceDriver(dev, JPEG, filename, quality, width, height, 
+			    pointsize, bgcolor, res, antialias)) {
 	    free(dev);
-	    errorcall(gcall, _("unable to start device %s"), devname);
-       	}
-	dd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, devname);
+	    error(_("unable to start device jpeg"));
+	}
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "jpeg");
     } END_SUSPEND_INTERRUPTS;
-
-    if (!(xd = (pX11Desc)calloc(1, sizeof(X11Desc)))) {
-	free(dev);
-	free(gdd);
-    }
-    dev->deviceSpecific = xd;
-
-    if(strlen(filename+1) >= PATH_MAX)
-	error(_("filename too long in jpeg() call"));
-    strcpy(xd->filename, pp+1);
-    snprintf(buf, PATH_MAX, pp+1, 1); /* page 1 to start */
-    if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
-	error(_("could not open JPEG file '%s'"), buf);
-	return R_NilValue;
-    }
-    xd->fp = fp;
-
-#endif
 
     return R_NilValue;
 }
@@ -2602,6 +2796,54 @@ static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
 /* png(filename, width, height, pointsize, bg, res, antialias) */
 static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    pGEDevDesc gdd;
+    SEXP sc;
+    const char *filename;
+    int width, height, pointsize, bgcolor, res, antialias;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
+	error(_("invalid '%s' argument"), "filename");
+    filename = translateChar(STRING_ELT(CAR(args), 0));
+    args = CDR(args);
+    width = asInteger(CAR(args));
+    if(width == NA_INTEGER || width <= 0)
+	error(_("invalid '%s' argument"), "width");
+    args = CDR(args);
+    height = asInteger(CAR(args));
+    if(height == NA_INTEGER || height <= 0)
+	error(_("invalid '%s' argument"), "height");
+    args = CDR(args);
+    pointsize = asInteger(CAR(args));
+    if(pointsize == NA_INTEGER || pointsize <= 0)
+	error(_("invalid '%s' argument"), "pointsize");
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, _("invalid '%s' value"), "bg");
+    bgcolor = RGBpar(sc, 0);
+    args = CDR(args);
+    res = asInteger(CAR(args));
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if(antialias == NA_INTEGER)
+	error(_("invalid '%s' argument"), "antialias");
+
+    R_GE_checkVersionOrDie(R_GE_version);
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	pDevDesc dev;
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
+	if (!BMDeviceDriver(dev, PNG, filename, 0, width, height, 
+			    pointsize, bgcolor, res, (Rboolean) antialias)) {
+	    free(dev);
+	    error(_("unable to start device jpeg"));
+	}
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "jpeg");
+    } END_SUSPEND_INTERRUPTS;
+
     return R_NilValue;
 }
 #else

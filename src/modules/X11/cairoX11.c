@@ -168,8 +168,8 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
 
     cairo_reset_clip(xd->cc);
     cairo_new_path(xd->cc);
-    cairo_rectangle(xd->cc, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
     /* Add 1 per X11_Clip */
+    cairo_rectangle(xd->cc, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
     cairo_clip(xd->cc);
 }
 
@@ -225,8 +225,8 @@ static void Cairo_Circle(double x, double y, double r,
 	cairo_set_antialias(xd->cc, xd->antialias);
    }
     if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	CairoLineType(gc, xd);
 	CairoColor(gc->col, xd);
+	CairoLineType(gc, xd);
 	cairo_stroke(xd->cc);
     }
 }

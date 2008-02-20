@@ -285,6 +285,11 @@ NEW FEATURES
 	There is a companion function, savePlot(), to save the current
 	plot to a PNG file.
 
+	On Unix-alikes, devices jpeg() and png() also accept
+	type = "Cairo", and with that option do not need a running
+	X server.  The meaning of capabilities("jpeg") and 
+	capabilities("png") has changed to reflect this.
+
     o	There is a per-device setting for whether new frames need
 	confirmation. This is controlled by either par("ask") or
 	grid.prompt() and affects all subsequent plots on the device

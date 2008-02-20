@@ -28,7 +28,7 @@ assign(".X11.Options",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             xpos = NA_integer_, ypos = NA_integer_,
             title = "", type = "Cairo", # change to "Xlib" for 2.7.0?
-            antialias = 0),
+            antialias = 1),
        envir = .X11env)
 
 assign(".X11.Options.default",
@@ -103,14 +103,15 @@ png <- function(filename = "Rplot%03d.png",
                                 c("default", "none", "gray", "subpixel"))
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
-    d <- X11.options(new)
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     if (d$type == "Cairo")
-        .Internal(png(filename, width, height, pointsize, bg, res, antialias))
+        .Internal(png(filename, width, height, pointsize, bg, res,
+                      d$antialias))
     else
         .Internal(X11(paste("png::", filename, sep=""),
                       width, height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", "Xlib", 0))
+                      0L, 0L, "", 0, 0))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -134,15 +135,15 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                                 c("default", "none", "gray", "subpixel"))
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
-    d <- X11.options(new)
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     if (d$type == "Cairo")
         .Internal(jpeg(filename, quality, width, height, pointsize, bg,
-                       res, antialias))
+                       res, d$antialias))
     else
         .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", "Xlib", 0))
+                      0L, 0L, "", 0, 0))
 }
 
 ####################
