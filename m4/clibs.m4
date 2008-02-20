@@ -44,7 +44,7 @@ r_c_v_output=`eval $ac_link AS_MESSAGE_LOG_FD>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&AS_MESSAGE_LOG_FD
 CFLAGS=$r_save_CFLAGS
 
-rm -f conftest*
+rm -rf conftest*
 
 # On HP/UX there is a line like: "LPATH is: /foo:/bar:/baz" where
 # /foo, /bar, and /baz are search directories for the Fortran linker.

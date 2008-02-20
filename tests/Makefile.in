@@ -433,7 +433,8 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out data dumpdata.R \
-	  reg-plot.ps reg-tests-?.ps R-exts.* R-intro.R R-intro.Rout \
+	  reg-plot-latin1.ps reg-plot.ps reg-tests-?.ps \
+	  R-exts.* R-intro.R R-intro.Rout \
 	  FALSE.R FALSE.tex mirrors.html
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -rf anRpackage
