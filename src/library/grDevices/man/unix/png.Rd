@@ -44,7 +44,9 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     device, such as \code{gamma} and \code{fonts}.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
     prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
-    available if the system was compiled with support for Cairo.}
+    available if the system was compiled with support for Cairo --
+    otherwise \code{"Xlib"} will be used.  The default is set by
+    \code{\link{X11.options}}. }
   \item{antialias}{for \code{type = "Cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.}
 }
@@ -60,10 +62,12 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   When transparency is in use a very light grey is used as the
   background and so will appear as transparent if used in the plot.
   This allows opaque white to be used, as in the example.
+  The \code{type = "Cairo"} variant allows semi-transparent colours,
+  including  on a transparent or semi-transparent background.
 
   \R can be compiled without support for either or both of these
   devices: this will be reported if you attempt to use them on a system
-  where they are not supported.  for \code{type = "Xlib"} they may not
+  where they are not supported.  For \code{type = "Xlib"} they may not
   be usable unless the X11 display is available to the owner of the \R
   process.
 
@@ -73,7 +77,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches, a
-  resolution of 96dpi is assumed.
+  resolution of 72dpi is assumed if \code{res} is not given.
 
   \code{png} will use a palette if there are less than 256 colours on
   the page, and record a 24-bit RGB file otherwise.
@@ -90,7 +94,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \code{file}, the file will contain the last page plotted.
 }
 \note{
-  For \code{type = "Xlib"} these are based on the \code{\link{X11}}
+  For \code{type = "Xlib"} these devices are based on the \code{\link{X11}}
   device.  The colour rendering will be that set up by
   \code{X11.options} at the time the first current \code{X11},
   \code{jpeg} or \code{png} was opened.
@@ -101,7 +105,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \code{\link{Devices}}, \code{\link{dev.print}}
 
   \code{\link{capabilities}} to see if these devices are
-  supported by this build of \R.
+  supported by this build of \R, and if \code{type = "Cairo"} is supported.
 
   \code{\link{bitmap}} provides an alternative way to generate PNG and
   JPEG plots that does not depend on accessing the X11 display but does
@@ -112,17 +116,18 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
 }
 \examples{
 ## these examples will work only if the devices are available
-## and the X11 display is available.
+## and either cairo or an X11 display is available.
 
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)
-
+\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)}
+\donttest{
 png(file="myplot.png", bg="transparent")
 plot(1:10)
 rect(1, 5, 3, 7, col="white")
 dev.off()
 
-jpeg(file="myplot.jpeg")
+## will make myplot1.jpeg and myplot2.jpeg
+jpeg(file="myplot\%d.jpeg")
 example(rect)
 dev.off()
 }}

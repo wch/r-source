@@ -1632,8 +1632,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 	        break;
 	    }
 #endif
-    PROTECT(ans = allocVector(LGLSXP, 12));
-    PROTECT(ansnames = allocVector(STRSXP, 12));
+    PROTECT(ans = allocVector(LGLSXP, 13));
+    PROTECT(ansnames = allocVector(STRSXP, 13));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1739,6 +1739,13 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("profmem"));
 #ifdef R_MEMORY_PROFILING
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("cairo"));
+#ifdef HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;

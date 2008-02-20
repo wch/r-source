@@ -69,11 +69,6 @@
 
 */
 
-
-#include <pango/pango.h>
-#include <pango/pangocairo.h>
-#include <cairo-xlib.h>
-
 static void Cairo_Circle(double x, double y, double r,
 			 const pGEcontext gc, pDevDesc dd);
 static void Cairo_Clip(double x0, double x1, double y0, double y1,
@@ -95,6 +90,12 @@ static double Cairo_StrWidth(const char *str, const pGEcontext gc,
 static void Cairo_Text(double x, double y, const char *str,
 		       double rot, double hadj,
 		       const pGEcontext gc, pDevDesc dd);
+
+static void Cairo_update(pX11Desc xd)
+{
+    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+    cairo_paint(xd->xcc);
+}
 
 static void CairoColor(unsigned int col, pX11Desc xd)
 {

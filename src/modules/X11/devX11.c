@@ -68,12 +68,6 @@
 # endif */
 #endif
 
-#ifdef HAVE_WORKING_CAIRO
-#include <pango/pango.h>
-#include <pango/pangocairo.h>
-#include <cairo-xlib.h>
-#endif
-
 #include "devX11.h"
 
 #include <Rmodules/RX11.h>
@@ -187,13 +181,6 @@ static void SetLinetype(const pGEcontext, pX11Desc);
 static void X11_Close_bitmap(pX11Desc xd);
 static char* translateFontFamily(char* family, pX11Desc xd);
 
-
-
-static void Cairo_update(pX11Desc xd)
-{
-    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-    cairo_paint(xd->xcc);
-}
 
 	/************************/
 	/* X11 Color Management */
@@ -608,11 +595,11 @@ static void handleEvent(XEvent event)
 		    cairo_surface_destroy(xd->cs);
 		    cairo_destroy(xd->cc);
 		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-							 (double)xd->windowWidth,
-							 (double)xd->windowHeight);
+							(double)xd->windowWidth,
+							(double)xd->windowHeight);
 		    xd->cc = cairo_create(xd->cs);
-		    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
-		    cairo_reset_clip(xd->cc);
+		    /* cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
+		       cairo_reset_clip(xd->cc); */
 		    cairo_set_antialias(xd->cc, xd->antialias);
 		}
 	    }
@@ -651,11 +638,13 @@ static void handleEvent(XEvent event)
 	    xd = (pX11Desc) dd->deviceSpecific;
 	    /* avoid replaying a display list until something has been drawn */
 	    if(gdd->dirty) {
+#ifdef HAVE_WORKING_CAIRO
 		if(xd->useCairo && do_update == 1) {
 		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-		    cairo_reset_clip(xd->xcc);
 		    cairo_paint(xd->xcc);
-		} else GEplayDisplayList(gdd);
+		} else 
+#endif
+		    GEplayDisplayList(gdd);
 		XSync(display, 0);
 	    }
 	}
@@ -1360,33 +1349,36 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
 	    XSetWMProtocols(display, xd->window, &protocol, 1);
 #ifdef HAVE_WORKING_CAIRO
-	    xd->xcs = cairo_xlib_surface_create(display, xd->window,
-						visual,
-						(double)xd->windowWidth,
-						(double)xd->windowHeight);
-	    if (cairo_surface_status(xd->xcs) != CAIRO_STATUS_SUCCESS) {
-		/* bail out */
-	    }
-	    xd->xcc = cairo_create(xd->xcs);
-	    if (cairo_status(xd->xcc) != CAIRO_STATUS_SUCCESS) {
-		return FALSE;
-	    }
-	    cairo_set_operator(xd->xcc, CAIRO_OPERATOR_ATOP);
-	    cairo_reset_clip(xd->xcc);
+	    if(xd->useCairo) {
+		xd->xcs = cairo_xlib_surface_create(display, xd->window,
+						    visual,
+						    (double)xd->windowWidth,
+						    (double)xd->windowHeight);
+		if (cairo_surface_status(xd->xcs) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
+		xd->xcc = cairo_create(xd->xcs);
+		if (cairo_status(xd->xcc) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
 
-	    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						(double)xd->windowWidth,
-						(double)xd->windowHeight);
-	    if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
-		return FALSE;
+		xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						    (double)xd->windowWidth,
+						    (double)xd->windowHeight);
+		if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
+		xd->cc = cairo_create(xd->cs);
+		if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
+		cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
+		cairo_set_antialias(xd->cc, xd->antialias);
 	    }
-	    xd->cc = cairo_create(xd->cs);
-	    if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
-		/* bail out */
-	    }
-	    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
-	    cairo_reset_clip(xd->cc);
-	    cairo_set_antialias(xd->cc, xd->antialias);
 #endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
@@ -1733,7 +1725,7 @@ static unsigned int bitgp(void *xi, int x, int y)
     i = XGetPixel((XImage *) xi, y, x);
     switch(model) {
     case MONOCHROME:
-	return i == 0 ? 0xFFFFFF : 0;
+	return i == 0 ? 0xFFFFFFFF : 0;
     case GRAYSCALE:
     case PSEUDOCOLOR1:
     case PSEUDOCOLOR2:
@@ -1744,7 +1736,7 @@ static unsigned int bitgp(void *xi, int x, int y)
 		knowncols[i] = ((xcol.red>>8)<<16) | ((xcol.green>>8)<<8)
 		    | (xcol.blue>>8);
 	    }
-	    return knowncols[i];
+	    return knowncols[i] | 0xFF000000;
 	} else {
 	    xcol.pixel = i;
 	    XQueryColor(display, colormap, &xcol);
@@ -1754,7 +1746,7 @@ static unsigned int bitgp(void *xi, int x, int y)
 	r = ((i>>RShift)&RMask) * 255 /(RMask);
 	g = ((i>>GShift)&GMask) * 255 /(GMask);
 	b = ((i>>BShift)&BMask) * 255 /(BMask);
-	return (r<<16) | (g<<8) | b;
+	return (r<<16) | (g<<8) | b | 0xFF000000;
     default:
 	return 0;
     }
@@ -1780,7 +1772,7 @@ static void X11_Close_bitmap(pX11Desc xd)
 	    r = ((i>>RShift)&RMask) * 255 /(RMask);
 	    g = ((i>>GShift)&GMask) * 255 /(GMask);
 	    b = ((i>>BShift)&BMask) * 255 /(BMask);
-	    pngtrans = (r<<16) | (g<<8) | b;
+	    pngtrans = (r<<16) | (g<<8) | b | 0xFF000000;
 	}
 	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
 		    bitgp, 0, xd->fp,
@@ -1802,10 +1794,12 @@ static void X11_Close(pDevDesc dd)
 	R_ProcessX11Events((void*) NULL);
 
 #ifdef HAVE_WORKING_CAIRO
-	cairo_surface_destroy(xd->cs);
-	cairo_destroy(xd->cc);
-	cairo_surface_destroy(xd->xcs);
-	cairo_destroy(xd->xcc);
+	if(xd->useCairo) {
+	    cairo_surface_destroy(xd->cs);
+	    cairo_destroy(xd->cc);
+	    cairo_surface_destroy(xd->xcs);
+	    cairo_destroy(xd->xcc);
+	}
 #endif
 
 	XFreeCursor(display, xd->gcursor);
@@ -2077,9 +2071,11 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
 
 static void X11_Mode(int mode, pDevDesc dd)
 {
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     if(mode == 0) {
+#ifdef HAVE_WORKING_CAIRO
+	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	if(xd->useCairo) Cairo_update(xd);
+#endif
 	XSync(display, 0);
     }
 }
@@ -2120,11 +2116,13 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     xd->bg = bgcolor;
 #ifdef HAVE_WORKING_CAIRO
     xd->useCairo = useCairo;
-    switch(antialias){
-    case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
-    case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
-    case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
-    case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+    if(useCairo) {
+	switch(antialias){
+	case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
+	case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
+	case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
+	case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+	}
     }
 #else
     if(useCairo) {
@@ -2521,6 +2519,8 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+
+#ifdef HAVE_WORKING_CAIRO
 /* savePlot(filename, type, device) */
 static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -2544,8 +2544,6 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-#ifdef HAVE_WORKING_CAIRO
-
 static void null_Activate(pDevDesc dd)
 {
 }
@@ -2567,7 +2565,7 @@ static void null_Mode(int mode, pDevDesc dd)
 static Rboolean 
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
-    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 					(double)xd->windowWidth,
 					(double)xd->windowHeight);
     if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
@@ -2577,7 +2575,7 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
     if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
 	return FALSE;
     }
-    cairo_set_operator(xd->cc, CAIRO_OPERATOR_ATOP);
+    cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
     cairo_reset_clip(xd->cc);
     cairo_set_antialias(xd->cc, xd->antialias);
     return TRUE;
@@ -2600,10 +2598,10 @@ static void BM_Close_bitmap(pX11Desc xd)
     for (i = 0; i < 512; i++) knowncols[i] = -1;
 
     stride = xd->windowWidth;
-    if (xd->type == PNG) {
+    if (xd->type == PNG)
 	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
 		    Cbitgp, 0, xd->fp, 0, xd->res_dpi);
-    } else if (xd->type == JPEG)
+    else
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
 		     Cbitgp, 0, xd->quality, xd->fp, xd->res_dpi);
 }
@@ -2629,7 +2627,14 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
     }
 
     cairo_reset_clip(xd->cc);
-    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
+    if (xd->type == PNG) {
+	/* First clear it */
+	cairo_set_operator (xd->cc, CAIRO_OPERATOR_CLEAR);
+	cairo_paint (xd->cc);
+	cairo_set_operator (xd->cc, CAIRO_OPERATOR_OVER);
+	xd->fill = gc->fill;
+    } else
+	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
     CairoColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
@@ -2847,6 +2852,12 @@ static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 #else
+static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+
 /* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
 static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
 {

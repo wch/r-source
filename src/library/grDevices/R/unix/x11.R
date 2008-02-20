@@ -104,7 +104,8 @@ png <- function(filename = "Rplot%03d.png",
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
-    if (d$type == "Cairo")
+    ## do this separately so can remove from X11 module in due course
+    if (d$type == "Cairo" && capabilities("cairo"))
         .Internal(png(filename, width, height, pointsize, bg, res,
                       d$antialias))
     else
@@ -136,7 +137,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
-    if (d$type == "Cairo")
+    ## do this separately so can remove from X11 module in due course
+    if (d$type == "Cairo" && capabilities("cairo"))
         .Internal(jpeg(filename, quality, width, height, pointsize, bg,
                        res, d$antialias))
     else
