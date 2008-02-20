@@ -485,6 +485,9 @@ BUG FIXES
     o	In diag()'s argument list, drop the explicit default (' = n')
 	for 'ncol' which is ugly when making diag() generic.
 
+   o  Classes with the same name from different packages were not
+       recognized  because of a bug in caching the new definition.
+
 
 
 

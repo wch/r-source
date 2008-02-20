@@ -838,7 +838,8 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
         }
     classes <- getClasses(where)
     for(cl in classes) {
-        cldef <- getClassDef(cl, searchWhere)
+        cldef <- (if(attach) get(classMetaName(cl), where) # NOT getClassDef, it will use cache
+                  else  getClassDef(cl, searchWhere))
         if(is(cldef, "classRepresentation")) {
             if(attach) {
               .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"))
