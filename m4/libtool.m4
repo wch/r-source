@@ -130,7 +130,7 @@ delay_variable_subst='s/\\\\\\\\\\\$/\\\\\\$/g'
 no_glob_subst='s/\*/\\\*/g'
 
 # Constants:
-rm="rm -f"
+rm="rm -rf"
 
 # Global variables:
 default_ofile=libtool
