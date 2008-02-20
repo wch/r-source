@@ -75,6 +75,10 @@ SEXP do_winmenunames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_wingetmenuitems(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
+#else
+SEXP do_jpeg(SEXP, SEXP, SEXP, SEXP);
+SEXP do_png(SEXP, SEXP, SEXP, SEXP);
+SEXP do_saveplot(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);

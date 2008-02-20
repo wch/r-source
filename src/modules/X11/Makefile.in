@@ -11,14 +11,14 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIRO_CPPFLAGS@ $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
-ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS)
+ALL_X_LIBS = $(X_PRE_LIBS) @CAIRO_LIBS@ $(X_LIBS) $(X_EXTRA_LIBS)
 
 SOURCES = dataentry.c devX11.c rotated.c rbitmap.c 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = devX11.h rotated.h
+HEADERS = cairoX11.c devX11.h rotated.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \

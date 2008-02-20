@@ -77,6 +77,39 @@ SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+SEXP attribute_hidden do_jpeg(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_X11_Init();
+    if(initialized > 0)
+	return (*ptr->jpeg)(call, op, args, rho);
+    else {
+	error(_("X11 module cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
+SEXP attribute_hidden do_png(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_X11_Init();
+    if(initialized > 0)
+	return (*ptr->png)(call, op, args, rho);
+    else {
+	error(_("X11 module cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
+SEXP attribute_hidden do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_X11_Init();
+    if(initialized > 0)
+	return (*ptr->saveplot)(call, op, args, rho);
+    else {
+	error(_("X11 module cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
 #ifndef HAVE_AQUA
 SEXP attribute_hidden do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
@@ -136,6 +169,24 @@ Rboolean attribute_hidden R_access_X11(void)
 }
 
 SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
+}
+
+SEXP attribute_hidden do_jpeg(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
+}
+
+SEXP attribute_hidden do_png(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
+}
+
+SEXP attribute_hidden do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("X11 is not available"));
     return R_NilValue;

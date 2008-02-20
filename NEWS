@@ -296,6 +296,22 @@ NEW FEATURES
     o	New function Sys.umask(), a wrapper for 'umask' on platforms
 	which support it.
 
+    o	There is a new version of the X11() device based on cairo
+	graphics which is selected by type = "Cairo", and is available
+	on machines with pango and cairo installed (which most
+	machines with gtk+2.0 will have).  This version supports
+	translucent colours and normally does a better job of font
+	selection so it has been possible to display (e.g.) English,
+	Polish, Russian and Japanese text on a single X11() window.
+
+	There is a companion function, savePlot(), to save the current
+	plot to a PNG file.
+
+	On Unix-alikes, devices jpeg() and png() also accept
+	type = "Cairo", and with that option do not need a running
+	X server.  The meaning of capabilities("jpeg") and 
+	capabilities("png") has changed to reflect this.
+
 
 DEPRECATED & DEFUNCT
 
@@ -485,8 +501,11 @@ BUG FIXES
     o	In diag()'s argument list, drop the explicit default (' = n')
 	for 'ncol' which is ugly when making diag() generic.
 
-   o  Classes with the same name from different packages were not
-       recognized  because of a bug in caching the new definition.
+    o	S4 classes with the same name from different packages were not
+	recognized because of a bug in caching the new definition.
+
+    o	jpeg() and png() no longer maintain a display list, as they
+	are not interactive.
 
 
 

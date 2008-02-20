@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-02-19 r44526)
+R version 2.7.0 Under development (unstable) (2008-02-20 r44548)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -61,8 +61,8 @@ Type 'q()' to quit R.
 +     "\n\t starting with 'is.' :\t  ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1162 
-Number of functions in base:	 1133 
+Number of base objects:		 1163 
+Number of functions in base:	 1134 
 	 starting with 'is.' :	   48 
 
 > ## 0.14  : 31
@@ -939,8 +939,6 @@ flld.c+                plot.axes = {})
 
 > oask <- devAskNewPage(dev.interactive(orNone = TRUE))
 
-> oldpar <- par("bg")
-
 > ## (1) The Obligatory Mathematical surface.
 > ##     Rotated sinc function.
 > 
@@ -958,7 +956,7 @@ flld.c+                plot.axes = {})
 
 > z <- outer(x, y, rotsinc)
 
-> par(bg = "white")
+> oldpar <- par(bg = "white")
 
 > persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue")
 
@@ -1039,7 +1037,6 @@ flld.c+                plot.axes = {})
 
 > ## reset par():
 > par(oldpar)
-NULL
 
 > devAskNewPage(oask)
 
@@ -1349,9 +1346,7 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 
 > devAskNewPage(oask)
-Warning message:
-In par(oldpar) : "transparent" is not a graphical parameter
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.642 0.076 1.726 0 0 
+Time elapsed:  1.672 0.063 1.865 0 0 
 > 

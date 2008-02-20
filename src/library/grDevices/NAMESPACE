@@ -25,7 +25,7 @@ export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
        n2mfrow, nclass.Sturges, nclass.FD, nclass.scott, palette, pdf,
        pdf.options, pdfFonts, pictex, postscript, postscriptFont,
        postscriptFonts, ps.options, rainbow, recordGraphics,
-       recordPlot, replayPlot, rgb, rgb2hsv, setEPS, setPS,
+       recordPlot, replayPlot, rgb, rgb2hsv, savePlot, setEPS, setPS,
        terrain.colors, topo.colors, trans3d, Type1Font, xfig, xyTable,
        xy.coords, xyz.coords)
 
@@ -48,7 +48,7 @@ if(tools:::.OStype() == "unix") {
 }
 
 if(tools:::.OStype() == "windows") {
-    export(bmp, bringToTop, savePlot, win.graph, win.metafile, win.print,
+    export(bmp, bringToTop, win.graph, win.metafile, win.print,
            windows, windows.options, windowsFont, windowsFonts)
 
     S3method("[", SavedPlots)

@@ -768,7 +768,10 @@ attribute_hidden FUNTAB R_FunTab[] =
 /* Device Drivers */
 
 #ifdef Unix
-{"X11",		do_X11,		0,	111,	14,	{PP_FUNCALL, PREC_FN,	0}},
+{"X11",		do_X11,		0,	111,	16,	{PP_FUNCALL, PREC_FN,	0}},
+{"savePlot",	do_saveplot,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"png",		do_png,		0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"jpeg",	do_jpeg,	0,	111,	8,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 /* Graphics */

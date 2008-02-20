@@ -369,6 +369,16 @@ AC_ARG_WITH([tk-config],
 [TK_CONFIG="${withval}"],
 [TK_CONFIG=""])
 
+## Cairo etc
+AC_ARG_WITH([cairo],
+[AC_HELP_STRING([--with-cairo],
+                [use cairo (and pango) if available @<:@yes@:>@])],
+[if test "${withval}" = no; then
+  want_cairo=no
+else
+  want_cairo=yes
+fi], [want_cairo=yes])
+
 ## other libraries
 AC_ARG_WITH([libpng],
 [AC_HELP_STRING([--with-libpng],
@@ -558,6 +568,9 @@ AC_PATH_PROGS(R_GZIPCMD, [${GZIP} gzip], true)
 R_PROG_BROWSER
 ## PDF viewer
 R_PROG_PDFVIEWER
+
+## Cairo needs pkg-config
+AC_PATH_PROG(PKGCONF,pkg-config,[],[$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
 
 AC_PROG_CC
 
@@ -1970,6 +1983,10 @@ R_TYPE_KEYSYM
 ## check if Xmu is supported
 R_X11_Xmu
 
+if test "x${want_cairo}" = "xyes"; then
+R_PANGO_CAIRO
+fi
+
 ## check for CoreFoundation framework (chances are much higher
 ## that we can build AQUA if this one is present)
 R_CHECK_FRAMEWORK(CFStringGetSystemEncoding, CoreFoundation)
@@ -2464,6 +2481,9 @@ if test "${want_mbcs_support}" = yes; then
 fi
 if test "${USE_NLS}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [NLS], [, ])
+fi
+if test "${r_cv_cairo_works}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [cairo], [, ])
 fi
 r_options=
 if test "${want_R_framework}" = yes; then

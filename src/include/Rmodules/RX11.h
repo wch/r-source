@@ -37,6 +37,9 @@ typedef Rboolean (*R_X11clp)(Rclpconn, char*);
 
 typedef struct {
     R_do_X11 X11;
+    R_do_X11 jpeg;
+    R_do_X11 png;
+    R_do_X11 saveplot;
     R_X11DataEntryRoutine de;
     R_GetX11ImageRoutine  image;
     R_X11_access access;

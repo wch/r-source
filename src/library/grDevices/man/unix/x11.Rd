@@ -1,12 +1,13 @@
 % File src/library/grDevices/man/unix/x11.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{x11}
 \alias{x11}
 \alias{X11}
 \alias{X11.options}
+
 \title{X Window System Graphics}
 \description{
   \code{X11} starts a graphics device driver for the X Window System
@@ -17,7 +18,7 @@
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
-    fonts, xpos, ypos, title)
+    fonts, xpos, ypos, title, type, antialias)
 
 X11.options(\dots, reset = FALSE)
 }
@@ -53,6 +54,12 @@ X11.options(\dots, reset = FALSE)
     \code{file} argument to \code{\link{postscript}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
+  \item{type}{character string, one of \code{"Xlib"} (the only type
+    prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
+    available if the system was compiled with support for Cairo.}
+  \item{antialias}{for \code{type = "Cairo"}, giving the type of
+    anti-aliasing (if any) to be used.  One of
+    \code{c("default", "none", "gray", "subpixel")}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
     and \code{maxcubesize} (see section \sQuote{Color Rendering}).}
@@ -74,6 +81,11 @@ X11.options(\dots, reset = FALSE)
   the larger of one pixel and 0.01 inch.
 }
 \section{Fonts}{
+  This section applies only to \code{type = "Xlib"}: the Cairo-based
+  version uses \sQuote{pango} to select fonts, and works directly
+  with family names such as \code{"Helvetica"} which should be selected
+  by \code{\link{par}} or \code{\link{gpar}}.
+
   An initial/default font family for the device can be specified via
   the \code{fonts} argument, but if a device-independent R graphics font
   family is specified (e.g., via \code{par(family=)} in the graphics
@@ -158,7 +170,16 @@ X11.options(\dots, reset = FALSE)
   1.8.  The argument \code{gamma} \code{divides} 5/3, so use
   \code{gamma=0.76} for a PC display.
 }
+\section{Anti-aliasing}{
+  Anti-aliasing is only supported in \code{type="Cairo"}, and applies to
+  graphics and to fonts.  It is generally preferable for lines and text,
+  but can lead to undesirable effects for fills, e.g. for
+  \code{\link{image}} plots, and is always off for those.
+
+  \code{antialias = "default"} is in principle platform-dependent, but
+  seems most often equivalent to \code{antialias = "gray"}.
+}
 \seealso{
-  \code{\link{Devices}}, \code{\link{X11Fonts}}.
+  \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }
 \keyword{device}

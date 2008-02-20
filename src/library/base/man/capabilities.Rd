@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -46,6 +46,13 @@ capabilities(what = NULL)
       \code{\link{iconv}} supported?}
     \item{NLS}{is there Natural Language Support (for message translations)?}
     \item{profmem}{is there support for memory profiling?}
+#ifdef windows
+    \item{cairo}{applies to Unix-alikes -- always \code{FALSE}.}
+#endif
+#ifdef unix
+    \item{cairo}{is there support \code{type="Cairo"} in
+      \code{\link{X11}}, \code{\link{png}} and \code{\link{jpeg}}.}
+#endif    
 }
 \seealso{\code{\link{.Platform}}}
 

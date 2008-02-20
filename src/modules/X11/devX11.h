@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -49,11 +49,16 @@ typedef enum {
 #include <X11/cursorfont.h>
 #include <X11/Intrinsic.h>  /*->	Xlib.h	Xutil.h Xresource.h .. */
 
+#ifdef HAVE_WORKING_CAIRO
+# include <pango/pango.h>
+# include <pango/pangocairo.h>
+# include <cairo-xlib.h>
+#endif
 
 
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 			 double, X_COLORTYPE, int, int, int, SEXP, 
-			 int, int, int, const char *);
+			 int, int, int, const char *, int, int);
 
 
 	/********************************************************/
@@ -82,6 +87,7 @@ typedef struct {
 
     int col;				/* Color */
     int fill;
+    int bg;				/* bg */
     int canvas;				/* Canvas */
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
@@ -114,8 +120,15 @@ typedef struct {
                                            or whether R is to handle the events
 					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
-    Rboolean warn_trans;		/* have we warned about translucent cols? */
+     Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
+
+#ifdef HAVE_WORKING_CAIRO
+    Rboolean useCairo;
+    cairo_t *cc, *xcc;
+    cairo_surface_t *cs, *xcs;
+    cairo_antialias_t antialias;
+#endif
 } X11Desc;
 
 typedef X11Desc* pX11Desc;

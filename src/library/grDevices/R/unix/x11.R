@@ -27,7 +27,8 @@ assign(".X11.Options",
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             xpos = NA_integer_, ypos = NA_integer_,
-            title = ""),
+            title = "", type = "Xlib", # change to "Cairo" for 2.7.0?
+            antialias = 1),
        envir = .X11env)
 
 assign(".X11.Options.default",
@@ -49,7 +50,7 @@ X11.options <- function(..., reset = FALSE)
 }
 
 X11 <- function(display = "", width, height, pointsize, gamma,
-                bg, canvas, fonts, xpos, ypos, title)
+                bg, canvas, fonts, xpos, ypos, title, type, antialias)
 {
     if(display == "" && .Platform$GUI == "AQUA" &&
        is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
@@ -66,10 +67,17 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(ypos)) new$ypos <- ypos
     if(!missing(title)) new$title <- title
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(antialias)) {
+        new$antialias <- pmatch(antialias,
+                                c("default", "none", "gray", "subpixel"))
+        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
+    }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                  NA_integer_, d$xpos, d$ypos, d$title))
+                  NA_integer_, d$xpos, d$ypos, d$title,
+                  d$type == "Cairo", d$antialias))
 }
 
 x11 <- X11
@@ -77,7 +85,8 @@ x11 <- X11
 
 png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px",
-                pointsize = 12, bg = "white", res = NA, ...)
+                pointsize = 12, bg = "white", res = NA, ...,
+                type = c("Cairo", "Xlib"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -87,18 +96,30 @@ png <- function(filename = "Rplot%03d.png",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    d <- X11.options(...)
-    checkIntFormat(filename)
-    .Internal(X11(paste("png::", filename, sep=""),
-                  width, height, pointsize, d$gamma,
-                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                  0L, 0L, ""))
+    new <- list(...)
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(antialias)) {
+        new$antialias <- pmatch(antialias,
+                                c("default", "none", "gray", "subpixel"))
+        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
+    }
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    ## do this separately so can remove from X11 module in due course
+    if (d$type == "Cairo" && capabilities("cairo"))
+        .Internal(png(filename, width, height, pointsize, bg, res,
+                      d$antialias))
+    else
+        .Internal(X11(paste("png::", filename, sep=""),
+                      width, height, pointsize, d$gamma,
+                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                      0L, 0L, "", 0, 0))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
                  width = 480, height = 480, units = "px",
                  pointsize = 12, quality = 75,
-                 bg = "white", res = NA, ...)
+                 bg = "white", res = NA, ...,
+                 type = c("Cairo", "Xlib"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -108,11 +129,23 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    d <- X11.options(...)
-    .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
-                  width, height, pointsize, d$gamma,
-                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                  0L, 0L, ""))
+    new <- list(...)
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(antialias)) {
+        new$antialias <- pmatch(antialias,
+                                c("default", "none", "gray", "subpixel"))
+        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
+    }
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    ## do this separately so can remove from X11 module in due course
+    if (d$type == "Cairo" && capabilities("cairo"))
+        .Internal(jpeg(filename, quality, width, height, pointsize, bg,
+                       res, d$antialias))
+    else
+        .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
+                      width, height, pointsize, d$gamma,
+                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                      0L, 0L, "", 0, 0))
 }
 
 ####################
@@ -202,5 +235,17 @@ X11Fonts(# Default Serif font is Times
          # Default Monospace font is Courier
          mono=X11Font("-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
          # Default Symbol font is Symbol
-         # Deprecated: renove in 2.8.0
+         # Deprecated: remove in 2.8.0
          symbol=X11Font("-*-symbol-%s-%s-*-*-%d-*-*-*-*-*-*-*"))
+
+savePlot <- function(filename = "Rplot.png", type = "png", device = dev.cur())
+{
+    type <- match.arg(type)
+    devlist <- dev.list()
+    devcur <- match(device, devlist, NA)
+    if(is.na(devcur)) stop("no such device")
+    devname <- names(devlist)[devcur]
+    if(devname != "X11cairo")
+        stop("can only copy from 'X11(type=\"Cairo\")' devices")
+    .Internal(savePlot(filename, type, device))
+}

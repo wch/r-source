@@ -182,7 +182,6 @@ static void X11_Close_bitmap(pX11Desc xd);
 static char* translateFontFamily(char* family, pX11Desc xd);
 
 
-
 	/************************/
 	/* X11 Color Management */
 	/************************/
@@ -191,6 +190,9 @@ static double RedGamma	 = 0.6;
 static double GreenGamma = 0.6;
 static double BlueGamma	 = 0.6;
 
+#ifdef HAVE_WORKING_CAIRO
+#include "cairoX11.c"
+#endif
 
 /* Variables Used To Store Colormap Information */
 static struct { int red; int green; int blue; } RPalette[512];
@@ -583,8 +585,26 @@ static void handleEvent(XEvent event)
 	dd = (pDevDesc) temp;
 	xd = (pX11Desc) dd->deviceSpecific;
 	if (xd->windowWidth != event.xconfigure.width ||
-	    xd->windowHeight != event.xconfigure.height)
-	    do_update = 1;
+	    xd->windowHeight != event.xconfigure.height) {
+	    do_update = 2;
+#if defined HAVE_WORKING_CAIRO
+	    if(xd->useCairo) {
+		cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
+					    xd->windowHeight);
+		if (xd->cs) {
+		    cairo_surface_destroy(xd->cs);
+		    cairo_destroy(xd->cc);
+		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+							(double)xd->windowWidth,
+							(double)xd->windowHeight);
+		    xd->cc = cairo_create(xd->cs);
+		    /* cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
+		       cairo_reset_clip(xd->cc); */
+		    cairo_set_antialias(xd->cc, xd->antialias);
+		}
+	    }
+#endif
+	}
 	xd->windowWidth = event.xconfigure.width;
 	xd->windowHeight = event.xconfigure.height;
         dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
@@ -614,8 +634,19 @@ static void handleEvent(XEvent event)
 	devNum = ndevNumber(dd);
 	if (devNum > 0) {
 	    pGEDevDesc gdd = GEgetDevice(devNum);
-	    /* avoid replying a device list until something has been drawn */
-	    if(gdd->dirty) GEplayDisplayList(gdd);
+	    dd = (pDevDesc) temp;
+	    xd = (pX11Desc) dd->deviceSpecific;
+	    /* avoid replaying a display list until something has been drawn */
+	    if(gdd->dirty) {
+#ifdef HAVE_WORKING_CAIRO
+		if(xd->useCairo && do_update == 1) {
+		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+		    cairo_paint(xd->xcc);
+		} else 
+#endif
+		    GEplayDisplayList(gdd);
+		XSync(display, 0);
+	    }
 	}
     }
 }
@@ -911,7 +942,7 @@ static void SetFont(const pGEcontext gc, pX11Desc xd)
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	} else
-	    error(_("X11 font %s, face %d at size %d could not be loaded"), 
+	    error(_("X11 font %s, face %d at size %d could not be loaded"),
 		  family, face, size);
     }
 }
@@ -1102,11 +1133,9 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     Rboolean DisplayOpened = FALSE;
     XSizeHints *hint;
 
-#ifdef USE_FONTSET
     if (!XSupportsLocale ())
 	warning(_("locale not supported by Xlib: some X ops will operate in C locale"));
     if (!XSetLocaleModifiers ("")) warning(_("X cannot set locale modifiers"));
-#endif
 
     if (!strncmp(dsp, "png::", 5)) {
 #ifndef HAVE_PNG
@@ -1127,6 +1156,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	type = PNG;
 	p = "";
 	xd->res_dpi = res; /* place holder */
+	dd->displayListOn = FALSE;
 #endif
     }
     else if (!strncmp(dsp, "jpeg::", 6)) {
@@ -1152,6 +1182,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	type = JPEG;
 	p = "";
 	xd->res_dpi = res; /* place holder */
+	dd->displayListOn = FALSE;
 #endif
     } else if (!strcmp(dsp, "XImage")) {
 	type = XIMAGE;
@@ -1319,7 +1350,38 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    _XA_WM_PROTOCOLS = XInternAtom(display, "WM_PROTOCOLS", 0);
 	    protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
 	    XSetWMProtocols(display, xd->window, &protocol, 1);
+#ifdef HAVE_WORKING_CAIRO
+	    if(xd->useCairo) {
+		xd->xcs = cairo_xlib_surface_create(display, xd->window,
+						    visual,
+						    (double)xd->windowWidth,
+						    (double)xd->windowHeight);
+		if (cairo_surface_status(xd->xcs) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
+		xd->xcc = cairo_create(xd->xcs);
+		if (cairo_status(xd->xcc) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
 
+		xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						    (double)xd->windowWidth,
+						    (double)xd->windowHeight);
+		if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
+		xd->cc = cairo_create(xd->cs);
+		if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+		    /* bail out */
+		    return FALSE;
+		}
+		cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
+		cairo_set_antialias(xd->cc, xd->antialias);
+	    }
+#endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);
@@ -1399,7 +1461,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
  * THEN return xd->basefontfamily (the family set up when the
  *   device was created)
  */
-static char* translateFontFamily(char* family, pX11Desc xd) 
+static char* translateFontFamily(char* family, pX11Desc xd)
 {
     SEXP graphicsNS, x11env, fontdb, fontnames;
     int i, nfonts;
@@ -1665,7 +1727,7 @@ static unsigned int bitgp(void *xi, int x, int y)
     i = XGetPixel((XImage *) xi, y, x);
     switch(model) {
     case MONOCHROME:
-	return i == 0 ? 0xFFFFFF : 0;
+	return i == 0 ? 0xFFFFFFFF : 0;
     case GRAYSCALE:
     case PSEUDOCOLOR1:
     case PSEUDOCOLOR2:
@@ -1676,7 +1738,7 @@ static unsigned int bitgp(void *xi, int x, int y)
 		knowncols[i] = ((xcol.red>>8)<<16) | ((xcol.green>>8)<<8)
 		    | (xcol.blue>>8);
 	    }
-	    return knowncols[i];
+	    return knowncols[i] | 0xFF000000;
 	} else {
 	    xcol.pixel = i;
 	    XQueryColor(display, colormap, &xcol);
@@ -1686,7 +1748,7 @@ static unsigned int bitgp(void *xi, int x, int y)
 	r = ((i>>RShift)&RMask) * 255 /(RMask);
 	g = ((i>>GShift)&GMask) * 255 /(GMask);
 	b = ((i>>BShift)&BMask) * 255 /(BMask);
-	return (r<<16) | (g<<8) | b;
+	return (r<<16) | (g<<8) | b | 0xFF000000;
     default:
 	return 0;
     }
@@ -1712,7 +1774,7 @@ static void X11_Close_bitmap(pX11Desc xd)
 	    r = ((i>>RShift)&RMask) * 255 /(RMask);
 	    g = ((i>>GShift)&GMask) * 255 /(GMask);
 	    b = ((i>>BShift)&BMask) * 255 /(BMask);
-	    pngtrans = (r<<16) | (g<<8) | b;
+	    pngtrans = (r<<16) | (g<<8) | b | 0xFF000000;
 	}
 	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
 		    bitgp, 0, xd->fp,
@@ -1732,6 +1794,15 @@ static void X11_Close(pDevDesc dd)
 	/* set block on destroy events */
 	inclose = TRUE;
 	R_ProcessX11Events((void*) NULL);
+
+#ifdef HAVE_WORKING_CAIRO
+	if(xd->useCairo) {
+	    cairo_surface_destroy(xd->cs);
+	    cairo_destroy(xd->cc);
+	    cairo_surface_destroy(xd->xcs);
+	    cairo_destroy(xd->xcc);
+	}
+#endif
 
 	XFreeCursor(display, xd->gcursor);
 	XDestroyWindow(display, xd->window);
@@ -1922,7 +1993,7 @@ static void X11_Polygon(int n, double *x, double *y,
     CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, xd);
-	XFillPolygon(display, xd->window, xd->wgc, points, n, 
+	XFillPolygon(display, xd->window, xd->wgc, points, n,
 		     Complex, CoordModeOrigin);
     }
     CheckAlpha(gc->col, xd);
@@ -2002,8 +2073,13 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
 
 static void X11_Mode(int mode, pDevDesc dd)
 {
-    /* Why? */
-    if(mode == 0) XSync(display, 0);
+    if(mode == 0) {
+#ifdef HAVE_WORKING_CAIRO
+	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+	if(xd->useCairo) Cairo_update(xd);
+#endif
+	XSync(display, 0);
+    }
 }
 
 
@@ -2030,24 +2106,45 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 			 SEXP sfonts,
 			 int res,
 			 int xpos, int ypos,
-			 const char *title)
+			 const char *title,
+			 int useCairo,
+			 int antialias)
 {
     pX11Desc xd;
     const char *fn;
 
     xd = Rf_allocX11DeviceDesc(pointsize);
     if(!xd) return FALSE;
-
-    if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499) {
-	strcpy(xd->basefontfamily, fontname);
-	strcpy(xd->fontfamily, fontname);
-    } else {
-	strcpy(xd->basefontfamily,fn);
-	strcpy(xd->fontfamily,fn);
+    xd->bg = bgcolor;
+#ifdef HAVE_WORKING_CAIRO
+    xd->useCairo = useCairo;
+    if(useCairo) {
+	switch(antialias){
+	case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
+	case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
+	case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
+	case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+	}
     }
-    if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
-	strcpy(xd->symbolfamily, symbolname);
-    else strcpy(xd->symbolfamily,fn);
+#else
+    if(useCairo) {
+	warning(_("type=\"Cairo\" is not supported on this build -- using \"Xlib\""));
+	useCairo = FALSE;
+    }
+#endif
+
+    if(!useCairo) {
+	if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499) {
+	    strcpy(xd->basefontfamily, fontname);
+	    strcpy(xd->fontfamily, fontname);
+	} else {
+	    strcpy(xd->basefontfamily,fn);
+	    strcpy(xd->fontfamily,fn);
+	}
+	if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
+	    strcpy(xd->symbolfamily, symbolname);
+	else strcpy(xd->symbolfamily,fn);
+    }
 
     /*	Start the Device Driver and Hardcopy.  */
 
@@ -2082,23 +2179,44 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 {
     /*	Set up Data Structures. */
 
-    dd->close = X11_Close;
+#ifdef HAVE_WORKING_CAIRO
+    if(xd->useCairo) {
+	dd->newPage = Cairo_NewPage;
+	dd->clip = Cairo_Clip;
+	dd->strWidth = Cairo_StrWidth;
+	dd->text = Cairo_Text;
+	dd->rect = Cairo_Rect;
+	dd->circle = Cairo_Circle;
+	dd->line = Cairo_Line;
+	dd->polyline = Cairo_Polyline;
+	dd->polygon = Cairo_Polygon;
+	dd->metricInfo = Cairo_MetricInfo;
+	dd->hasTextUTF8 = TRUE;
+	dd->strWidthUTF8 = Cairo_StrWidth;
+	dd->textUTF8 = Cairo_Text;
+	dd->wantSymbolUTF8 = TRUE;
+    } else
+#endif
+    {
+	dd->newPage = X11_NewPage;
+	dd->clip = X11_Clip;
+	dd->strWidth = X11_StrWidth;
+	dd->text = X11_Text;
+	dd->rect = X11_Rect;
+	dd->circle = X11_Circle;
+	dd->line = X11_Line;
+	dd->polyline = X11_Polyline;
+	dd->polygon = X11_Polygon;
+	dd->metricInfo = X11_MetricInfo;
+	dd->hasTextUTF8 = FALSE;
+    }
+
     dd->activate = X11_Activate;
+    dd->close = X11_Close;
     dd->deactivate = X11_Deactivate;
     dd->size = X11_Size;
-    dd->newPage = X11_NewPage;
-    dd->clip = X11_Clip;
-    dd->strWidth = X11_StrWidth;
-    dd->text = X11_Text;
-    dd->rect = X11_Rect;
-    dd->circle = X11_Circle;
-    dd->line = X11_Line;
-    dd->polyline = X11_Polyline;
-    dd->polygon = X11_Polygon;
     dd->locator = X11_Locator;
     dd->mode = X11_Mode;
-    dd->metricInfo = X11_MetricInfo;
-    dd->hasTextUTF8 = FALSE;
     dd->useRotatedTextInContour = FALSE;
 
     /* Set required graphics parameters. */
@@ -2133,7 +2251,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     /* Device capabilities */
 
     dd->canClip = TRUE;
+#ifdef HAVE_WORKING_CAIRO
+    dd->canHAdj = xd->useCairo ? 2 : 0;
+#else
     dd->canHAdj = 0;
+#endif
     dd->canChangeGamma = FALSE;
 
     dd->startps = xd->pointsize;
@@ -2282,7 +2404,8 @@ static void
 Rf_addX11Device(const char *display, double width, double height, double ps,
 		double gamma, int colormodel, int maxcubesize,
 		int bgcolor, int canvascolor, const char *devname, SEXP sfonts,
-		int res, int xpos, int ypos, const char *title)
+		int res, int xpos, int ypos, const char *title,
+		int useCairo, int antialias)
 {
     pDevDesc dev = NULL;
     pGEDevDesc dd;
@@ -2295,7 +2418,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 	if (!X11DeviceDriver(dev, display, width, height,
 			     ps, gamma, colormodel, maxcubesize,
 			     bgcolor, canvascolor, sfonts, res,
-			     xpos, ypos, title)) {
+			     xpos, ypos, title, useCairo, antialias)) {
 	    free(dev);
 	    errorcall(gcall, _("unable to start device %s"), devname);
        	}
@@ -2309,7 +2432,8 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *display, *cname, *devname, *title;
     char *vmax;
     double height, width, ps, gamma;
-    int colormodel, maxcubesize, bgcolor, canvascolor, res, xpos, ypos;
+    int colormodel, maxcubesize, bgcolor, canvascolor, res, xpos, ypos,
+	useCairo, antialias;
     SEXP sc, sfonts;
 
     checkArity(op, args);
@@ -2374,18 +2498,382 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(sc) || LENGTH(sc) != 1)
 	errorcall(call, _("invalid '%s' value"), "title");
     title = CHAR(STRING_ELT(sc, 0));
+    args = CDR(args);
+    useCairo = asLogical(CAR(args));
+    if (useCairo == NA_LOGICAL)
+	errorcall(call, _("invalid '%s' value"), "useCairo");
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if (antialias == NA_INTEGER)
+	errorcall(call, _("invalid '%s' value"), "antialias");
 
-    devname = "X11";
+
     if (!strncmp(display, "png::", 5)) devname = "PNG";
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
     else if (!strcmp(display, "XImage")) devname = "XImage";
+    else if (useCairo) devname = "X11cairo";
+    else devname = "X11";
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel,
 		    maxcubesize, bgcolor, canvascolor, devname, sfonts,
-		    res, xpos, ypos, title);
+		    res, xpos, ypos, title, useCairo, antialias);
     vmaxset(vmax);
     return R_NilValue;
 }
+
+
+#ifdef HAVE_WORKING_CAIRO
+/* savePlot(filename, type, device) */
+static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int devNr;
+    const char *fn;
+    pGEDevDesc gdd;
+    pX11Desc xd;
+    
+    checkArity(op, args);
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
+	error(_("invalid '%s' argument"), "filename");
+    fn = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
+    /* ignore 'type' for now */
+    devNr = asInteger(CADDR(args));
+    if(devNr == NA_INTEGER) error(_("invalid '%s' argument"), "device");
+    gdd = GEgetDevice(devNr-1); /* 0-based */
+    if(!gdd->dirty) error(_("no plot on device to save"));
+    xd = gdd->dev->deviceSpecific;
+    cairo_surface_write_to_png(xd->cs, fn);
+    
+    return R_NilValue;
+}
+
+static void null_Activate(pDevDesc dd)
+{
+}
+
+static void null_Deactivate(pDevDesc dd)
+{
+}
+
+static Rboolean null_Locator(double *x, double *y, pDevDesc dd)
+{
+    return FALSE;
+}
+
+
+static void null_Mode(int mode, pDevDesc dd)
+{
+}
+
+static Rboolean 
+BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
+{
+    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+					(double)xd->windowWidth,
+					(double)xd->windowHeight);
+    if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+	return FALSE;
+    }
+    xd->cc = cairo_create(xd->cs);
+    if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+	return FALSE;
+    }
+    cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
+    cairo_reset_clip(xd->cc);
+    cairo_set_antialias(xd->cc, xd->antialias);
+    return TRUE;
+}
+
+static int stride;
+
+static unsigned int Cbitgp(void *xi, int x, int y)
+{
+    unsigned int *data = xi;
+    return data[x*stride+y];
+}
+
+static void BM_Close_bitmap(pX11Desc xd)
+{
+    int i;
+    /* cairo_surface_write_to_png(xd->cs, "foo.png"); */
+    void *xi = cairo_image_surface_get_data(xd->cs);
+
+    for (i = 0; i < 512; i++) knowncols[i] = -1;
+
+    stride = xd->windowWidth;
+    if (xd->type == PNG)
+	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
+		    Cbitgp, 0, xd->fp, 0, xd->res_dpi);
+    else
+	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
+		     Cbitgp, 0, xd->quality, xd->fp, xd->res_dpi);
+}
+
+static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    char buf[PATH_MAX];
+
+    if (xd->npages++) {
+	/* try to preserve the page we do have */
+	BM_Close_bitmap(xd);
+	if (xd->fp) fclose(xd->fp);
+    }
+    
+    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+    xd->fp = R_fopen(R_ExpandFileName(buf), "w");
+    if (!xd->fp) {
+	if(xd->type == PNG)
+	    error(_("could not open PNG file '%s'"), buf);
+	else 
+	    error(_("could not open JPEG file '%s'"), buf);
+    }
+
+    cairo_reset_clip(xd->cc);
+    if (xd->type == PNG) {
+	/* First clear it */
+	cairo_set_operator (xd->cc, CAIRO_OPERATOR_CLEAR);
+	cairo_paint (xd->cc);
+	cairo_set_operator (xd->cc, CAIRO_OPERATOR_OVER);
+	xd->fill = gc->fill;
+    } else
+	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
+    CairoColor(xd->fill, xd);
+    cairo_new_path(xd->cc);
+    cairo_paint(xd->cc);
+}
+
+
+static void BM_Close(pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+    if (xd->npages) BM_Close_bitmap(xd);
+    if (xd->fp) fclose(xd->fp);
+    cairo_surface_destroy(xd->cs);
+    cairo_destroy(xd->cc);
+}
+
+
+
+static Rboolean 
+BMDeviceDriver(pDevDesc dd, int kind, const char * filename, 
+	       int quality, int width, int height, int ps, 
+	       int bg, int res, int antialias)
+{
+    pX11Desc xd;
+
+    /* allocate new device description */
+    if (!(xd = (pX11Desc) malloc(sizeof(X11Desc)))) return FALSE;
+    strcpy(xd->filename, filename);
+    xd->quality = quality;
+    xd->windowWidth = width;
+    xd->windowHeight = height;
+    xd->pointsize = ps;
+    xd->bg = bg;
+    xd->res_dpi = res;
+    switch(antialias){
+    case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
+    case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
+    case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
+    case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+    }
+    xd->npages = 0;
+    xd->col = R_RGB(0, 0, 0);
+    xd->fill = xd->canvas = bg;
+    xd->type = kind;
+    xd->fp = NULL;
+    xd->lty = -1;
+    xd->lwd = -1;
+    xd->lend = 0;
+    xd->ljoin = 0;
+
+    if (!BM_Open(dd, xd, width, height)) {
+	free(xd);
+	return FALSE;
+    }
+    dd->deviceSpecific = (void *) xd;
+
+    /* Set up Data Structures  */
+    dd->close = BM_Close;
+    dd->activate = null_Activate;
+    dd->deactivate = null_Deactivate;
+    dd->size = X11_Size;
+    dd->newPage = BM_NewPage;
+    dd->clip = Cairo_Clip;
+    dd->strWidth = Cairo_StrWidth;
+    dd->text = Cairo_Text;
+    dd->rect = Cairo_Rect;
+    dd->circle = Cairo_Circle;
+    dd->line = Cairo_Line;
+    dd->polyline = Cairo_Polyline;
+    dd->polygon = Cairo_Polygon;
+    dd->locator = null_Locator;
+    dd->mode = null_Mode;
+    dd->metricInfo = Cairo_MetricInfo;
+    dd->strWidth = Cairo_StrWidth;
+    dd->text = Cairo_Text;
+    dd->hasTextUTF8 = TRUE;
+    dd->wantSymbolUTF8 = TRUE;
+    dd->strWidthUTF8 = Cairo_StrWidth;
+    dd->textUTF8 = Cairo_Text;    
+    dd->useRotatedTextInContour = FALSE;
+ 
+    dd->left = 0;
+    dd->right = width;
+    dd->top = 0;
+    dd->bottom = height;
+    dd->startps = ps;
+    dd->cra[0] = 0.9 * ps;
+    dd->cra[1] = 1.2 * ps;
+    dd->xCharOffset = 0.4900;
+    dd->yCharOffset = 0.3333;
+    dd->yLineBias = 0.1;
+    dd->ipr[0] = dd->ipr[1] = 1.0/(res == NA_INTEGER ? 72 : res);  
+    dd->canClip= TRUE;
+    dd->canHAdj = 2;
+    dd->canChangeGamma = FALSE;
+    dd->startps = ps;
+    dd->startcol = xd->col;
+    dd->startfill = xd->fill;
+    dd->startlty = LTY_SOLID;
+    dd->startfont = 1;
+    dd->displayListOn = FALSE;
+
+    return TRUE;    
+}
+
+/* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    pGEDevDesc gdd;
+    SEXP sc;
+    const char *filename;
+    int quality, width, height, pointsize, bgcolor, res, antialias;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
+	error(_("invalid '%s' argument"), "filename");
+    filename = translateChar(STRING_ELT(CAR(args), 0));
+    args = CDR(args);
+    quality = asInteger(CAR(args));
+    if(quality == NA_INTEGER || quality < 0 || quality > 100)
+	error(_("invalid '%s' argument"), "quality");
+    args = CDR(args);
+    width = asInteger(CAR(args));
+    if(width == NA_INTEGER || width <= 0)
+	error(_("invalid '%s' argument"), "width");
+    args = CDR(args);
+    height = asInteger(CAR(args));
+    if(height == NA_INTEGER || height <= 0)
+	error(_("invalid '%s' argument"), "height");
+    args = CDR(args);
+    pointsize = asInteger(CAR(args));
+    if(pointsize == NA_INTEGER || pointsize <= 0)
+	error(_("invalid '%s' argument"), "pointsize");
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, _("invalid '%s' value"), "bg");
+    bgcolor = RGBpar(sc, 0);
+    args = CDR(args);
+    res = asInteger(CAR(args));
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if(antialias == NA_INTEGER)
+	error(_("invalid '%s' argument"), "antialias");
+
+    R_GE_checkVersionOrDie(R_GE_version);
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	pDevDesc dev;
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
+	if (!BMDeviceDriver(dev, JPEG, filename, quality, width, height, 
+			    pointsize, bgcolor, res, antialias)) {
+	    free(dev);
+	    error(_("unable to start device jpeg"));
+	}
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "jpeg");
+    } END_SUSPEND_INTERRUPTS;
+
+    return R_NilValue;
+}
+
+/* png(filename, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    pGEDevDesc gdd;
+    SEXP sc;
+    const char *filename;
+    int width, height, pointsize, bgcolor, res, antialias;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
+	error(_("invalid '%s' argument"), "filename");
+    filename = translateChar(STRING_ELT(CAR(args), 0));
+    args = CDR(args);
+    width = asInteger(CAR(args));
+    if(width == NA_INTEGER || width <= 0)
+	error(_("invalid '%s' argument"), "width");
+    args = CDR(args);
+    height = asInteger(CAR(args));
+    if(height == NA_INTEGER || height <= 0)
+	error(_("invalid '%s' argument"), "height");
+    args = CDR(args);
+    pointsize = asInteger(CAR(args));
+    if(pointsize == NA_INTEGER || pointsize <= 0)
+	error(_("invalid '%s' argument"), "pointsize");
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, _("invalid '%s' value"), "bg");
+    bgcolor = RGBpar(sc, 0);
+    args = CDR(args);
+    res = asInteger(CAR(args));
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if(antialias == NA_INTEGER)
+	error(_("invalid '%s' argument"), "antialias");
+
+    R_GE_checkVersionOrDie(R_GE_version);
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	pDevDesc dev;
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
+	if (!BMDeviceDriver(dev, PNG, filename, 0, width, height, 
+			    pointsize, bgcolor, res, (Rboolean) antialias)) {
+	    free(dev);
+	    error(_("unable to start device jpeg"));
+	}
+	gdd = GEcreateDevDesc(dev);
+	GEaddDevice2(gdd, "jpeg");
+    } END_SUSPEND_INTERRUPTS;
+
+    return R_NilValue;
+}
+#else
+static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+
+/* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+
+/* png(filename, width, height, pointsize, bg, res, antialias) */
+static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+#endif
 
 static int in_R_X11_access(void)
 {
@@ -2429,7 +2917,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 
     clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display),
 				 0, 0, 1, 1, 0, 0, 0);
-    /* <FIXME> this is not optimal in a UTF-8 locale. 
+    /* <FIXME> this is not optimal in a UTF-8 locale.
        What we should do is see if UTF-8 extensions are available
        (via X_HAVE_UTF8_STRING) then ask with target TARGETS and see if
        UTF8_STRING is available.  See
@@ -2485,6 +2973,9 @@ void R_init_R_X11(DllInfo *info)
 	return;
     }
     tmp->X11 = in_do_X11;
+    tmp->jpeg = in_do_jpeg;
+    tmp->png = in_do_png;
+    tmp->saveplot = in_do_saveplot;
     tmp->de = in_RX11_dataentry;
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
