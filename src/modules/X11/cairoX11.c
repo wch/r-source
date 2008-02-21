@@ -105,8 +105,6 @@ static void CairoColor(unsigned int col, pX11Desc xd)
     red = R_RED(col)/255.0;
     green = R_GREEN(col)/255.0;
     blue = R_BLUE(col)/255.0;
-    /* NB: this uses display gamma 0.6 for historical reasons,
-       to match the previous X11 device */
     red = pow(red, RedGamma);
     green = pow(green, GreenGamma);
     blue = pow(blue, BlueGamma);

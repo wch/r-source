@@ -161,15 +161,6 @@ X11.options(\dots, reset = FALSE)
   256.  With that setting the largest cube tried is 4 levels each for
   RGB, using 64 colors in the palette.
 }
-\section{Gamma}{
-  PC displays map RGB numbers non-linearly to luminosities (and the
-  eye/brain system also perceives non-linearly).  By default \code{X11}
-  uses a non-linear transformation that assumes the display has a
-  \sQuote{gamma} value of \code{5/3}.  This is rather low: PC displays
-  are usually set up for a ganmma of 2.2 and older Macs were set up for
-  1.8.  The argument \code{gamma} \code{divides} 5/3, so use
-  \code{gamma=0.76} for a PC display.
-}
 \section{Anti-aliasing}{
   Anti-aliasing is only supported in \code{type="Cairo"}, and applies to
   graphics and to fonts.  It is generally preferable for lines and text,

@@ -186,9 +186,9 @@ static char* translateFontFamily(char* family, pX11Desc xd);
 	/* X11 Color Management */
 	/************************/
 
-static double RedGamma	 = 0.6;
-static double GreenGamma = 0.6;
-static double BlueGamma	 = 0.6;
+static double RedGamma	 = 1.0;
+static double GreenGamma = 1.0;
+static double BlueGamma	 = 1.0;
 
 #ifdef HAVE_WORKING_CAIRO
 #include "cairoX11.c"
