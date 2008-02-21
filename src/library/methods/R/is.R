@@ -20,7 +20,9 @@ is <-
   # With one argument, returns all the super-classes of this object's class.
 function(object, class2)
 {
-    cl <- .class1(object)
+    cl <- class(object)
+    if(length(cl) > 1) # must be an S3 class
+      return(class2 %in% cl)
     if(missing(class2))
         return(extends(cl))
     if(.identC(cl, class2) || .identC(class2, "ANY"))

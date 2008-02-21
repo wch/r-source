@@ -312,6 +312,9 @@ NEW FEATURES
 	X server.  The meaning of capabilities("jpeg") and 
 	capabilities("png") has changed to reflect this.
 
+   o  The function is() now works with S3 inheritance; that is, with
+       objects having multiple strings in the class attribute.
+
 
 DEPRECATED & DEFUNCT
 
