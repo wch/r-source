@@ -207,6 +207,7 @@ BUILDING R
 
     o	We now assume Tcl/Tk version 8.5.x (included in version 2.7.0
 	of Rtools.exe).  Earlier versions can be selected in MkRules.
+	The distribution will include the BWidget and Tktable extensions.
 
 
 BUG FIXES
