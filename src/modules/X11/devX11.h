@@ -91,7 +91,7 @@ typedef struct {
     int canvas;				/* Canvas */
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
-    int pointsize;			/* Size in points */
+    double pointsize;			/* Size in points */
     char basefontfamily[500];           /* Initial font family */
 
     /* X11 Driver Specific */

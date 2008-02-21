@@ -8,7 +8,7 @@
 \alias{jpeg}
 \title{JPEG and PNG graphics devices}
 \description{
-  A graphics device for JPEG or PNG format bitmap files.
+  Graphics devices for JPEG or PNG format bitmap files.
 }
 \usage{
 jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
@@ -29,41 +29,42 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \item{width}{the width of the device.}
   \item{height}{the height of the device.}
   \item{units}{The units in which \code{height} and \code{width} are
-    given.  Can be \code{px} (pixels, thedefault), \code{in} (inches),
+    given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
-  \item{pointsize}{the default pointsize of plotted text, interpreted at
-    72 dpi so one point is approximately one pixel.}
+  \item{pointsize}{the default pointsize of plotted text.}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
   \item{bg}{default background colour.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
-    bitmap file, if a positive integer.  Also used for units other than
-    the default.}
+    bitmap file, if a positive integer.  Also used for \cdoe{units}
+    other than the default.}
   \item{\dots}{additional arguments to the underlying \code{\link{X11}}
     device, such as \code{gamma} and \code{fonts}.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
     prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
     available if the system was compiled with support for Cairo --
     otherwise \code{"Xlib"} will be used.  The default is set by
-    \code{\link{X11.options}}. }
+    \code{\link{X11.options}}.}
   \item{antialias}{for \code{type = "Cairo"}, giving the type of
-    anti-aliasing (if any) to be used.  See \code{\link{X11}}.}
+    anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
+    default is set by \code{\link{X11.options}}.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
   bitmap formats, and both can be displayed in modern web
   browsers.  The PNG format is lossless and is best for line
-  diagrams and blocks of solid colour.  The JPEG format is lossy,
+  diagrams and blocks of colour.  The JPEG format is lossy,
   but may be useful for image plots, for example.
 
-  \code{png} supports transparent backgrounds: use \code{bg = "transparent"}.
-  Not all PNG viewers render files with transparency correctly.
-  When transparency is in use a very light grey is used as the
-  background and so will appear as transparent if used in the plot.
-  This allows opaque white to be used, as in the example.
-  The \code{type = "Cairo"} variant allows semi-transparent colours,
-  including  on a transparent or semi-transparent background.
+  \code{png} supports transparent backgrounds: use \code{bg =
+    "transparent"}.  Not all PNG viewers render files with transparency
+  correctly. When transparency is in use  in the \code{type = "Xlib"}
+  variant a very light grey is used as the background and so appear as
+  transparent if used in the plot. This allows opaque white to be used,
+  as in the example.  The \code{type = "Cairo"} variant allows
+  semi-transparent colours, including on a transparent or
+  semi-transparent background.
 
   \R can be compiled without support for either or both of these
   devices: this will be reported if you attempt to use them on a system
@@ -76,11 +77,14 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   resolutions in PNG files are recorded in pixels/metre, the dpi value
   will be changed slightly.
 
-  For graphics parameters that make use of dimensions in inches, a
-  resolution of 72dpi is assumed if \code{res} is not given.
+  For graphics parameters that make use of dimensions in inches
+  (including font sizes in points) the resolution of the X server is
+  used for the Xlib version, and \code{res} (or 72dpi if unset) for the
+  cairo version.
 
   \code{png} will use a palette if there are less than 256 colours on
-  the page, and record a 24-bit RGB file otherwise.
+  the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
+  file if \code{type = "Cairo"} and non-opaque colours are used).
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
@@ -95,9 +99,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
 }
 \note{
   For \code{type = "Xlib"} these devices are based on the \code{\link{X11}}
-  device.  The colour rendering will be that set up by
-  \code{X11.options} at the time the first current \code{X11},
-  \code{jpeg} or \code{png} was opened.
+  device.  The colour model used will be that set up by
+  \code{X11.options} at the time the first \code{X11},
+  \code{jpeg} or \code{png} device was opened (or the first after all
+  such devices have been closed).
 }
 \author{Guido Masarotto and Brian Ripley}
 

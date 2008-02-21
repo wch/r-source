@@ -290,11 +290,10 @@ static void Cairo_Polygon(int n, double *x, double *y,
 static PangoFontDescription *getFont(const pGEcontext gc)
 {
     PangoFontDescription *fontdesc;
-    gint size, face = gc->fontface;
+    gint face = gc->fontface;
+    double size = gc->cex * gc->ps;
     
     if (face < 1 || face > 5) face = 1;
-
-    size = gc->cex * gc->ps + 0.5;
 	
     fontdesc = pango_font_description_new();
     if (face == 5)
