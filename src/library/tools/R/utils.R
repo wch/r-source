@@ -750,6 +750,7 @@ function(package)
              boot = "exp.tilt",
              car = "scatterplot.matrix",
 	     calibrator = "t.fun",
+             ctv = "update.views",
              equivalence = "sign.boot",
              fields = c("qr.q2ty", "qr.yq2"),
              grDevices = "boxplot.stats",
