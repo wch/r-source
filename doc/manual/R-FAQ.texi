@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-02-17
+@set FAQ_DATE @value{FAQ_YEAR}-02-21
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1852,6 +1852,8 @@ Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
 @item BMA
 Bayesian Model Averaging for linear models, generalizable linear models
 and survival models (Cox regression).
+@item BPHO
+Bayesian Prediction with High-order Interactions.
 @item BRugs
 OpenBUGS and its R interface BRugs.
 @item BayHaz
@@ -1860,6 +1862,9 @@ Functions for Bayesian Hazard rate estimation.
 Bayesian methods for tree based models.
 @item BayesValidate
 Bayesian software validation using posterior quantiles.
+@item Bchron
+Create chronologies based on radiocarbon and non-radiocarbon dated
+depths.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item BiasedUrn
@@ -1894,8 +1899,12 @@ Facilities for the use of R to write CGI scripts.
 Multivariate correlation estimation.
 @item CPE
 Concordance probability estimates in survival analysis.
-@item CPGchron
-Create radiocarbon-dated depth chronologies.
+@c <COMMENT>
+@c Moved to the Archive on 2008-02-21 as requested by the maintainer.
+@c Replaced by Bchron.
+@c @item CPGchron
+@c Create radiocarbon-dated depth chronologies.
+@c </COMMENT>
 @item CTFS
 The CTFS large plot forest dynamics analyses.
 @item CVThresh
@@ -2160,9 +2169,13 @@ Tools for multivariate nonparametrics.
 @item IDPmisc
 Utilities from the Institute of Data Analyses and Process Design,
 IDP/ZHW.
-@item IPSUR
-Accompanies ``Introduction to Probability and Statistics Using R'' by
-G. Andy Chang and G. Jay Kerns (in progress).
+@c <COMMENT>
+@c Moved to the Archive on 2008-02-21 as requested by the maintainer.
+@c Replaced by RcmdrPlugin.IPSUR.
+@c @item IPSUR
+@c Accompanies ``Introduction to Probability and Statistics Using R'' by
+@c G. Andy Chang and G. Jay Kerns (in progress).
+@c </COMMENT>
 @item ISA
 Functions to support ``Introduzione alla Statistica Applicata con esempi
 in R'' by Federico M. Stefanini, Pearson Education Milano, 2007.
@@ -2183,6 +2196,8 @@ Nonparametric estimation of homothetic and generalized homothetic
 production functions.
 @item JGR
 Java Gui for R.
+@item JM
+Joint Modeling of longitudinal and survival data.
 @item JavaGD
 Java Graphics Device.
 @item JointGLM
@@ -3024,6 +3039,8 @@ Augmented convex hull plots: informative and nice plots for grouped
 bivariate data.
 @item changeLOS
 Change in length of hospital stay (LOS).
+@item cheb
+Discrete linear Chebyshev approximation.
 @item chemCal
 Calibration functions for analytical chemistry.
 @item choplump
@@ -3207,6 +3224,9 @@ models on mixed categorical and continuous (time series) data.
 Desirabiliy function optimization and ranking.
 @item dglm
 Double generalized linear models.
+@item diagram
+Functions for visualising simple graphs (networks) and plotting flow
+diagrams.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
@@ -4293,6 +4313,8 @@ estimation or clustering algorithms research and teaching; providing the
 widely used Marron-Wand densities.
 @item norm
 Analysis of multivariate normal datasets with missing values.
+@item normwm.test
+Normality and white noise testing.
 @item normalp
 A collection of utilities for normal of order @math{p} distributions
 (General Error Distributions).
@@ -4320,6 +4342,8 @@ Non-supervised Regional Frequency Analysis.
 Accurate numerical derivatives.
 @item nws
 Functions for NetWorkSpaces and Sleigh.
+@item obsSens
+Sensitivity analysis for observational studies.
 @item oc
 Optimal Classification roll call analysis.
 @item oce
@@ -4878,6 +4902,8 @@ generalizations such as fuzzy sets, multisets, and fuzzy multisets.
 Utilities from Seminar fuer Statistik ETH Zurich.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
+@item shape
+Functions for plotting graphical shapes.
 @item shapefiles
 Functions to read and write ESRI shapefiles.
 @item shapes
@@ -6210,22 +6236,24 @@ base          The R Base package
 boot          Bootstrap R (S-Plus) Functions (Canty)
 class         Functions for Classification
 cluster       Functions for clustering (by Rousseeuw et al.)
-datasets      The R datasets Package
-foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+codetools     Code Analysis Tools for R
+datasets      The R Datasets Package
+foreign       Read Data Stored by Minitab, S, SAS, SPSS, Stata, Systat,
+              dBase, ...
 grDevices     The R Graphics Devices and Support for Colours and Fonts
 graphics      The R Graphics Package
 grid          The Grid Graphics Package
 lattice       Lattice Graphics
 methods       Formal Methods and Classes
 mgcv          GAMs with GCV smoothness estimation and GAMMs by REML/PQ
-nlme          Linear and nonlinear mixed effects models
+nlme          Linear and Nonlinear Mixed Effects Models
 nnet          Feed-forward Neural Networks and Multinomial Log-Linear
               Models
-rpart         Recursive partitioning
+rpart         Recursive Partitioning
 spatial       Functions for Kriging and Point Pattern Analysis
 splines       Regression Spline Functions and Classes
 stats         The R Stats Package
-stats4        Statistical functions using S4 classes
+stats4        Statistical functions using S4 Classes
 survival      Survival analysis, including penalised likelihood
 tcltk         Tcl/Tk Interface
 tools         Tools for Package Development
@@ -7292,6 +7320,14 @@ For more information, see e.g.@: David Goldberg (1991), ``What Every
 Computer Scientist Should Know About Floating-Point Arithmetic'',
 @emph{ACM Computing Surveys}, @strong{23/1}, 5--48, also available via
 @url{http://docs.sun.com/source/806-3568/ncg_goldberg.html}.
+
+To quote from ``The Elements of Programming Style'' by Kernighan and
+Plauger:
+
+@quotation
+@emph{10.0 times 0.1 is hardly ever 1.0}.
+@end quotation
+
 
 @node How can I capture or ignore errors in a long simulation?, Why are powers of negative numbers wrong?, Why doesn't R think these numbers are equal?, R Miscellanea
 @section How can I capture or ignore errors in a long simulation?
