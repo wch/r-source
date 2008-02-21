@@ -354,6 +354,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP colors, ans, names, dmns;
     unsigned int col, bg;
     int n, i, i4;
+    Rboolean bg_needed = FALSE;
 
     checkArity(op, args);
     colors = CAR(args);
@@ -379,7 +380,17 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dmns, 1, names);
     setAttrib(ans, R_DimNamesSymbol, dmns);
 
-    bg = dpptr(CurrentDevice())->bg;
+    /* avoid looking up the background unless we will need it;
+       this may avoid opening a new window */
+
+    bg_needed = !isString(colors);
+    for (i = 0; !bg_needed && i < n; i++) 
+    	bg_needed = isdigit((int)CHAR(STRING_ELT(colors, i))[0]);
+    if (bg_needed)
+    	bg = dpptr(CurrentDevice())->bg;
+    else
+    	bg = R_TRANWHITE;	
+
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
