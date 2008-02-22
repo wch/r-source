@@ -133,7 +133,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
 
   \itemize{
     \item The default device size is in pixels.
-    \item Font sizes are in big points interpreted at \code(res) dpi.
+    \item Font sizes are in big points interpreted at \code{res} dpi.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch (interpreted at
     \code{res} dpi), with a minimum of one pixel. 
