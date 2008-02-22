@@ -74,11 +74,24 @@ X11.options(\dots, reset = FALSE)
   set up to appear to have a screen of a different size to the physical
   screen.
 
-  Line widths as controlled by \code{par(lwd=)} are in multiples of the
-  pixel size, and multiples < 1 are silently converted to 1.
-
-  \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
-  the larger of one pixel and 0.01 inch.
+  Option \code{type} selects between two separate devices: \R can be
+  built with support for neither, \code{type = "Xlib"} or both.  Where
+  both are available, \code{type = "Cairo"} offers
+  \itemize{
+    \item
+    antialiasing of text and lines.
+    \item
+    translucent colours.
+    \item
+    scalable text, including to sizes like 4.5 pt.
+    \item
+    full support for UTF-8, so on systems with suitable fonts you can
+    plot in many languages on a single figure (and this will work even
+    in non-UTF-8 locales).  The output should be locale-independent.
+  }
+  but can be slower (and will be much slower on a slow X11 connection as
+  all the rendering is done on the machine running \R rather than in the
+  X server).
 }
 \section{Fonts}{
   This section applies only to \code{type = "Xlib"}: the Cairo-based
@@ -133,13 +146,15 @@ X11.options(\dots, reset = FALSE)
   black/white.  The palette is shared between all X11 clients, so it can
   be necessary to limit the number of colors used by \R.
 
-  The default is to use the best possible color model for the visual of
-  the X11 server.  This can be overridden by the \code{colortype}
-  argument of \code{X11.options}.  \bold{Note:} All \code{X11},
-  \code{jpeg} and \code{png} devices share a \code{colortype} which is
-  set when the first device to be opened.  To change the
-  \code{colortype} you need to close \emph{all} open \code{X11},
-  \code{jpeg} and \code{png} devices, and then use
+  \code{type="Cairo"} supports only \sQuote{truecolor} visuals.
+
+  The default for \code{type="Xlib"} is to use the best possible color
+  model for the visual of the X11 server.  This can be overridden by the
+  \code{colortype} argument of \code{X11.options}.  \bold{Note:} All
+  \code{X11}, \code{jpeg} and \code{png} devices share a
+  \code{colortype} which is set when the first device to be opened.  To
+  change the \code{colortype} you need to close \emph{all} open
+  \code{X11}, \code{jpeg} and \code{png} devices, and then use
   \code{X11.options(colortype=)}.
 
   The colortype types are tried in the order \code{"true"},
@@ -165,14 +180,12 @@ X11.options(\dots, reset = FALSE)
   Anti-aliasing is only supported in \code{type="Cairo"}, and applies to
   graphics and to fonts.  It is generally preferable for lines and text,
   but can lead to undesirable effects for fills, e.g. for
-  \code{\link{image}} plots, and is always off for those.
+  \code{\link{image}} plots, and so is never used for fills.
 
   \code{antialias = "default"} is in principle platform-dependent, but
   seems most often equivalent to \code{antialias = "gray"}.
 }
 \section{Conventions}{
-  Currently a place-holder!
-  
   This section describes the implementation of the conventions for
   graphics devices set out in the \dQuote{R Internals Manual}.
 
