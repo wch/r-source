@@ -87,6 +87,20 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 
   There is a limit of 512 colours (plus white and black) per file.
 }
+\section{Conventions}{
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is the paper size with a 0.25 inch
+    border on all sides.
+    \item Font sizes are in big points.
+    \item The default font family is Helvetica.
+    \item Line widths are integers, multiples of 1/96 inch.
+    \item Circle radii are multiples of 1/1200 inch.
+    \item Colours are interpreted by the viewing/printing application.
+  }
+}
 \seealso{
   \code{\link{Devices}},
   \code{\link{postscript}},

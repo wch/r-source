@@ -170,6 +170,23 @@ X11.options(\dots, reset = FALSE)
   \code{antialias = "default"} is in principle platform-dependent, but
   seems most often equivalent to \code{antialias = "gray"}.
 }
+\section{Conventions}{
+  Currently a place-holder!
+  
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is 7 inches square.
+    \item Font sizes are in big points.
+    \item The default font family is Helvetica.
+    \item Line widths are in pixels, minimum one for \code{type = "Xlib"}.
+    \item For \code{type = "Xlib"} circles radii are in pixels with
+    minimum one.
+    \item Colours are interpreted by the X11 server, normally in a good
+    approximation to sRGB.
+  }
+}
 \seealso{
   \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }

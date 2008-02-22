@@ -83,6 +83,21 @@ quartz.options(\dots, reset = FALSE)
   Line widths as controlled by \code{par(lwd=)} are in multiples of a
   point (1/72 inch) and values < 1 are silently converted to 1.
 }
+\section{Conventions}{
+  Currently a place-holder!
+  
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is 7 inches square.
+    \item Font sizes are in big points.
+    \item The default font family is Helvetica.
+    \item Line widths are in points, minimum one.
+    \item Circle radii?
+    \item Colour interpretation?
+  }
+}
 \seealso{
   \code{\link{quartzFonts}},
   \code{\link{Devices}}.

@@ -144,6 +144,19 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{pdf(paper="a4r", width=0, height=0)} to centre the device region
   on a landscape A4 page with 0.25 inch margins.
 }
+\section{Conventions}{
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is 7 inches square.
+    \item Font sizes are in big points.
+    \item The default font family is Helvetica.
+    \item Line widths are as a multiple of 1/96 inch, with no minimum. 
+    \item Circle of any radius are allowed.
+    \item Colours are interpreted by the viewing/printing application.
+  }
+}
 \note{
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise

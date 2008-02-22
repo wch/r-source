@@ -52,6 +52,20 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \email{valerio@svpop.com.dist.unige.it}
   of the Department of Internal Medicine, University of Genoa, Italy.
 }
+\section{Conventions}{
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is 5 inches by 5 inches.
+    \item There is no \code{pointsize} argument: the default size is
+    interpreted as 10 point.
+    \item The only font family is \code{cmss10}.
+    \item Line widths are only used when setting the spacing on line textures.
+    \item Circle of any radius are allowed.
+    \item Colour is not supported.
+  }
+}
 \seealso{
   \code{\link{postscript}}, \code{\link{Devices}}.
 }

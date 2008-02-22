@@ -274,7 +274,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 }
 \section{Color models}{
   The default color model is RGB, with pure gray colors expressed as
-  greyscales.  Color model \code{"rgb-nogray"} uses only  RGB, model
+  greyscales.  Color model \code{"rgb-nogray"} uses only RGB, model
   \code{"cmyk"} only CMYK, and model \code{"gray"} only greyscales (and
   selecting any other colour is an error).  Nothing in \R specifies the
   interpretation of the RGB or CMYK color spaces, and the simplest
@@ -307,6 +307,20 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   or later).
 #endif
 }
+\section{Conventions}{
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is 7 inches square.
+    \item Font sizes are in big points.
+    \item The default font family is Helvetica.
+    \item Line widths are as a multiple of 1/96 inch, with no minimum. 
+    \item Circle of any radius are allowed.
+    \item Colours are interpreted by the viewing/printing application.
+  }
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

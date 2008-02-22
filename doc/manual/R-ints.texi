@@ -2309,6 +2309,7 @@ of a would-be writer of a graphics device.
 * Device structures::           
 * Device capabilities::         
 * Handling text::               
+* Conventions::                 
 * 'Mode'::                      
 * Specific devices::            
 @end menu
@@ -2453,7 +2454,7 @@ points (negative values) to the @code{metricInfo} callback?
 as other text?  Requires @code{textUTF8 = TRUE}.
 @end itemize
 
-@node Handling text, 'Mode', Device capabilities, Graphics devices
+@node Handling text, Conventions, Device capabilities, Graphics devices
 @subsection Handling text
 
 Handling text is probably the hardest task for a graphics device, and
@@ -2616,7 +2617,58 @@ for multi-line strings.
 @code{yLineBias} is used in the base graphics system in @code{axis()} and
 @code{mtext()} to provide a default for their @samp{padj} argument.
 
-@node 'Mode', Specific devices, Handling text, Graphics devices
+@node Conventions, 'Mode', Handling text, Graphics devices
+@subsection Conventions
+
+The aim is to make the (default) output from graphics devices as similar
+as possible, and further steps were taken in that direction in @R{}
+2.7.0.  Generally people follow the model of the @code{postscript} and
+@code{pdf} devices (which share most of their internal code).
+
+The following conventions have become established:
+
+@itemize
+
+@item
+The default size of a device should be 7 inches square.
+
+@item
+There should be a @samp{pointsize} argument which defaults to 12, and it
+should give the pointsize in big points (1/72 inch).  How exactly this
+is interpreted is font-specific, but it should use a font which works
+with lines packed 1/6 inch apart, and looks good with lines 1/5 inch
+apart (that is with 2pt leading).
+
+@item
+The default font famuily should be a sans serif font, e.g Helvetica or
+similar (e.g.@: Arial on Windows).
+
+@item
+@code{lwd = 1} should correspond to a line width of 1/96 inch.  This
+will be a problem with pixel-based devices, and generally there is a
+minimum line width of 1 pixel (although this may not be appropriate
+where anti-aliasing of lines is used, and @code{cairo} prefers a minimum
+of 2 pixels).
+
+@item
+Even very small circles should be visible, e.g.@: by using a minimum
+radius of 1 pixel or replacing very small circles by a single filled
+pixel.
+
+@item
+How RGB colour values will be interpreted should be documented, and
+preferably be sRGB.
+
+@item
+The help page should describe its policy on these conventions.
+
+@end itemize
+
+These conventions are less clear-cut for bitmap devices, especially
+where the bitmap format does not have a design resolution.
+
+
+@node 'Mode', Specific devices, Conventions, Graphics devices
 @subsection `Mode'
 
 One of the device callbacks is a function @code{mode}, documented in

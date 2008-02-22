@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/windows.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{windows}
@@ -89,7 +89,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   All these devices are implemented as variants of the same device.
 
   All arguments of \code{windows} have defaults set by
-  \code{\link{windows.options}}: the defaults given in the argument list
+  \code{\link{windows.options}}: the defaults given in the arguments section
   are the defaults for the defaults.  These defaults also apply to the
   internal values of \code{gamma}, \code{xpinch}, \code{ypinch},
   \code{buffered} and \code{restoreConsole} for \code{win.graph},
@@ -100,7 +100,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   By default a screen device asks Windows for the number of pixels per
   inch.  This can be overridden (it is often wrong) by specifying
   \code{xpinch} and \code{ypinch}, most conveniently \emph{via}
-  \code{\link{windows.options}}.
+  \code{\link{windows.options}}.  For example, a 13.3 inch 1280x800
+  screen (a typical laptop display) was reported as 96 dpi even though
+  it is phyiscally about 114 dpi.
 
   If the \code{filename} is omitted (or specified as \code{""} for a
   \code{win.metafile} device, the output is copied to the clipboard
@@ -180,6 +182,22 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   on the \code{windows()} device.  These work for saving (from the
   \sQuote{File} menu) to PDF, PNG, BMP and JPEG, but will be ignored if
   saving to Metafile and PostScript.
+}
+\section{Conventions}{
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is 7 inches square, although this is
+    often incorrectly implemented by Windows.
+    \item Font sizes are in big points.
+    \item The default font family is Arial.
+    \item Line widths are as a multiple of 1/96 inch, with a minimum of
+    one pixel. 
+    \item The minimum radius of a circle is 1 pixel.
+    \item Colours are interpreted via the unprofiled colour mapping of
+    the graphics card -- this is likely to be close to sRGB.
+  }
 }
 \section{Gamma}{
   PC displays map RGB numbers non-linearly to luminosities (and the
