@@ -3148,7 +3148,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 #define TRC1	1.34677368708859836060		/* TRC0 * sqrt(3) / 2 */
 #define TRC2	0.77756015077810708036		/* TRC0 / 2 */
 #define CMAG	1.0				/* Circle magnifier, now defunct */
-#define GSTR_0  dpptr(dd)->scale * dd->dev->cra[1] * 0.5 * dd->dev->ipr[0] * gpptr(dd)->cex
+#define GSTR_0  dpptr(dd)->scale * dd->dev->cra[1] * 0.5 * dd->dev->ipr[1] * gpptr(dd)->cex
 /* NOTE: This cex is already multiplied with cexbase */
 
 /* Draw one of the R special symbols. */
