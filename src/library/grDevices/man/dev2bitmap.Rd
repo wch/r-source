@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2bitmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
@@ -8,10 +8,10 @@
 \alias{bitmap}
 \title{Graphics Device for Bitmap Files via GhostScript}
 \usage{
-bitmap(file, type = "png256", height = 6, width = 6, res = 72,
+bitmap(file, type = "png256", height = 7, width = 7, res = 72,
        units = "in", pointsize, \dots)
 
-dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
+dev2bitmap(file, type = "png256", height = 7, width = 7, res = 72,
            units = "in", pointsize, \dots,
            method = c("postscript", "pdf"))
 }
@@ -97,7 +97,28 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 }
 #endif
 
+\section{Conventions}{
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.  These
+  devices follow the underlying device, so when viewed at the stated
+  \code{res}:
+
+  \itemize{
+    \item The default device size is 7 inches square.
+    \item Font sizes are in big points.
+    \item The default font family is (for the standard GhostScript
+    setup) URW Nimbus Sans.
+    \item Line widths are as a multiple of 1/96 inch, with no minimum. 
+    \item Circle of any radius are allowed.
+    \item Colours are interpreted by the viewing/printing application.
+  }
+}
+
 \seealso{
+  \code{\link{savePlot}}, which for \code{windows} and
+  \code{X11(type = "Cairo")} provides a simple way to record a PNG
+  record of the current plot.
+  
   \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{png}} and
   \code{\link{jpeg}} and on Windows \code{bmp}.
 

@@ -15,8 +15,8 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	pdf() rather than postscript().  [PDF viewers are now
 	more widely available than PostScript viewers.]
 
-	The default width and height for pdf() have been changed to
-	7 (inches) to match the screen devices.
+	The default width and height for pdf() and bitmap() have been
+	changed to 7 (inches) to match the screen devices.
 
     o	Packages which include graphics devices need to be re-installed
 	for this version of R.
