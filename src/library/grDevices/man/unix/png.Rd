@@ -38,7 +38,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
-    bitmap file, if a positive integer.  Also used for \cdoe{units}
+    bitmap file, if a positive integer.  Also used for \code{units}
     other than the default.}
   \item{\dots}{additional arguments to the underlying \code{\link{X11}}
     device, such as \code{gamma} and \code{fonts}.}
@@ -133,10 +133,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
 
   \itemize{
     \item The default device size is in pixels.
-    \item Font sizes are in big points interpreted at 72dpi.
+    \item Font sizes are in big points interpreted at \code(res) dpi.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch (interpreted at
-    72dpi), with a minimum of one pixel. 
+    \code{res} dpi), with a minimum of one pixel. 
     \item The minimum radius of a circle is 1 pixel.
     \item Colours are interpreted by the viewing application.
   }

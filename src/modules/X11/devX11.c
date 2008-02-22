@@ -2230,18 +2230,12 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->bottom = dd->clipBottom = xd->windowHeight;	/* bottom */
     dd->top = dd->clipTop = 0;			/* top */
 
-
-#ifdef HAVE_WORKING_CAIRO
-    if (xd->useCairo) {
-	ps *= 1/(96.0*pixelWidth());
-	xd->pointsize = ps;
-    }
-#endif
     /* Nominal Character Sizes in Pixels */
-
     /* Recommendation from 'R internals': changed for 2.7.0 */
-    dd->cra[0] = 0.9*ps;
-    dd->cra[1] = 1.2*ps;
+
+    /* ps is in points, we want this in device units */
+    dd->cra[0] = 0.9*ps * 1/(72.0*pixelWidth());
+    dd->cra[1] = 1.2*ps * 1/(72.0*pixelHeight());
 
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
@@ -2669,14 +2663,17 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
 	       int bg, int res, int antialias)
 {
     pX11Desc xd;
-
+    int res0 = (res > 0) ? res : 72;
+    double ps0 = ps;
+    
     /* allocate new device description */
     if (!(xd = (pX11Desc) malloc(sizeof(X11Desc)))) return FALSE;
     strcpy(xd->filename, filename);
     xd->quality = quality;
     xd->windowWidth = width;
     xd->windowHeight = height;
-    ps *= (res == NA_INTEGER ? 72 : res)/96.0; 
+    /* What is Pango doing?  Looks like screen res or 96 dpi */ 
+    ps *= res0/96.0;
     xd->pointsize = ps;
     xd->bg = bg;
     xd->res_dpi = res;
@@ -2731,13 +2728,14 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->right = width;
     dd->top = 0;
     dd->bottom = height;
+    /* rescale points to pixels */
+    dd->cra[0] = 0.9 * ps0 * res/72.0;
+    dd->cra[1] = 1.2 * ps0 * res/72.0;
     dd->startps = ps;
-    dd->cra[0] = 0.9 * ps;
-    dd->cra[1] = 1.2 * ps;
+    dd->ipr[0] = dd->ipr[1] = 1.0/res0;  
     dd->xCharOffset = 0.4900;
     dd->yCharOffset = 0.3333;
     dd->yLineBias = 0.1;
-    dd->ipr[0] = dd->ipr[1] = 1.0/(res == NA_INTEGER ? 72 : res);  
     dd->canClip= TRUE;
     dd->canHAdj = 2;
     dd->canChangeGamma = FALSE;
