@@ -7,8 +7,7 @@
 \alias{dev.size}
 \title{ Find Size of Device Surface }
 \description{
-  This function can be used to control (for the current device)
-  whether the user is prompted before starting a new page of output.
+  Find the dimensions of the device surface of the current device.
 }
 \usage{
 dev.size(units = c("in", "px"))
@@ -20,6 +19,11 @@ dev.size(units = c("in", "px"))
 \value{
   A two-element numeric vector giving width and height of the current
   device.  It is an error to request the size of the null device.
+}
+\seealso{
+  The size information in inches can be obtained by
+  \code{\link{par}("din")}, but this provides a way to access it
+  independent of the graphics sub-system in use.
 }
 
 \keyword{ dplot }
