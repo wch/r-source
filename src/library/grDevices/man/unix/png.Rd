@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -32,10 +32,11 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text.}
+  \item{bg}{the initial background colour: can be overridden by setting
+    par("bg").}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
-  \item{bg}{default background colour.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \cdoe{units}
     other than the default.}
@@ -59,7 +60,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
 
   \code{png} supports transparent backgrounds: use \code{bg =
     "transparent"}.  Not all PNG viewers render files with transparency
-  correctly. When transparency is in use  in the \code{type = "Xlib"}
+  correctly.  When transparency is in use  in the \code{type = "Xlib"}
   variant a very light grey is used as the background and so appear as
   transparent if used in the plot. This allows opaque white to be used,
   as in the example.  The \code{type = "Cairo"} variant allows
@@ -72,10 +73,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   be usable unless the X11 display is available to the owner of the \R
   process.
 
-  By default no resolution is recorded in the file.  Readers will often
+  By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
-  resolutions in PNG files are recorded in pixels/metre, the dpi value
-  will be changed slightly.
+  resolutions in PNG files are recorded in pixels/metre, the reported
+  dpi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
   (including font sizes in points) the resolution of the X server is
@@ -86,9 +87,11 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
   file if \code{type = "Cairo"} and non-opaque colours are used).
 }
+
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
+
 \section{Warnings}{
   Note that by default the \code{width} and \code{height} are in pixels
   not inches.  A warning will be issued if both are less than 20.
@@ -97,6 +100,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
 }
+
 \note{
   For \code{type = "Xlib"} these devices are based on the \code{\link{X11}}
   device.  The colour model used will be that set up by
@@ -104,6 +108,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \code{jpeg} or \code{png} device was opened (or the first after all
   such devices have been closed).
 }
+
 \author{Guido Masarotto and Brian Ripley}
 
 \seealso{
@@ -116,9 +121,27 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   JPEG plots that does not depend on accessing the X11 display but does
   depend on having GhostScript installed.  (Devices \code{GDD} in
   CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
-  package \pkg{Cairo} are alternatives using several other additional
-  pieces of software.)
+  package \pkg{Cairo} are further alternatives using several other
+  additional pieces of software.)
 }
+
+\section{Conventions}{
+  This is a placholder, copied from Windows!
+  
+  This section describes the implementation of the conventions for
+  graphics devices set out in the \dQuote{R Internals Manual}.
+
+  \itemize{
+    \item The default device size is in pixels.
+    \item Font sizes are in big points interpreted at 72dpi.
+    \item The default font family is Helvetica.
+    \item Line widths are as a multiple of 1/96 inch (interpreted at
+    72dpi), with a minimum of one pixel. 
+    \item The minimum radius of a circle is 1 pixel.
+    \item Colours are interpreted by the viewing application.
+  }
+}
+
 \examples{
 ## these examples will work only if the devices are available
 ## and either cairo or an X11 display is available.

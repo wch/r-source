@@ -5,6 +5,8 @@
 
 \name{pdf}
 \alias{pdf}
+\encoding{latin1}
+
 \title{PDF Graphics Device}
 %% The definitive doc is the source :-)
 %% 	../../../main/devices.c  &   ../../../main/devPS.c
@@ -153,7 +155,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with no minimum. 
-    \item Circle of any radius are allowed.
+    \item Circle of any radius are allowed.  Opaque circles of less than 10
+    points radius are rendered using char 108 in the Dingbats font:
+    all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
+    curve for each quadrant.
     \item Colours are interpreted by the viewing/printing application.
   }
 }
