@@ -144,13 +144,17 @@ rgb ggetpixel(drawing d, point p)
 static COLORREF getwinrgb(drawing d, rgb c)
 {
     int r, g, b;
+#ifdef UNUSED
     long luminance;
     int depth;
+#endif
 
-    r = (int) ((c >> 16) & 0x000000FFL);
-    g = (int) ((c >>  8) & 0x000000FFL);
-    b = (int) ((c >>  0) & 0x000000FFL);
+    r = (int) ((c >> 16) & 0x000000FF);
+    g = (int) ((c >>  8) & 0x000000FF);
+    b = (int) ((c >>  0) & 0x000000FF);
+#ifdef UNUSED
     depth = getdepth(d);
+    /* note: next is unused! */
     if (depth <= 2)	/* map to black or white, or grey if c == Grey */
     {
 	luminance = (r*3 + g*5 + b) / 9;
@@ -159,6 +163,7 @@ static COLORREF getwinrgb(drawing d, rgb c)
 	else				r = g = b = 0x0080;
 	c = rgb(r, g, b);
     }
+#endif
     return RGB(r, g, b);
 }
 
