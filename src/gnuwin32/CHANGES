@@ -198,6 +198,12 @@ OTHERS
 	Specifying 'res' to these devices now scales the text size and
 	line width.
 
+    o	Drawing circles is now done with an integer diameter rather
+	than radius and so can be more accurate for small circles.
+	You can see this in the pairs plot and coplot examples in
+	demo(graphics) which on a 96dpi system use diameter 5 rather
+	than radius 2.
+
 
 BUILDING R
 

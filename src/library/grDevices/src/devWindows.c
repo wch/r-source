@@ -2312,18 +2312,17 @@ static void GA_Circle(double x, double y, double radius,
 		      const pGEcontext gc,
 		      pDevDesc dd)
 {
-    int   ir, ix, iy;
+    int   id, ix, iy;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     rect  r, rr;
 
     TRACEDEVGA("circle");
-    ir = floor(radius + 0.5);
-    if (ir < 1) ir = 1;
-    /* In-place conversion ok */
+    id = 2*radius + 0.5;
+    if (id < 2) id = 2; /* diameter 1 is near-invisible */
 
     ix = (int) x;
     iy = (int) y;
-    r = rr = rect(ix - ir, iy - ir, 2 * ir, 2 * ir);
+    r = rr = rect(ix - id/2, iy - id/2, id, id);
 
     SetColor(gc->fill, gc->gamma, xd);
     if (R_OPAQUE(gc->fill)) {
