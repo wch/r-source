@@ -26,9 +26,9 @@
  * structures only using:
  * void *d : an 'opaque' view of the source of the pixels;
  * int width, height: dimensions in pixels;
- * unsigned long (*gp)(void *d, int x, int y): a function which
+ * unsigned int (*gp)(void *d, int x, int y): a function which
  *     returns the colour of the (x,y) pixels stored either as
- *     BGR (R model, see include/Graphics.h) or as RGB in the
+ *     BGR (R model, see GraphicsDevice.h) or as RGB in the
  *     24 least sig. bits (8 bit for channel).
  *     (0,0) is the left-top corner. (3,2) is the third pixel
  *     in the fourth scanline.
@@ -69,8 +69,8 @@
 */
 static void my_png_error(png_structp png_ptr, png_const_charp msg)
 {
-  R_ShowMessage((char *) msg);
-  longjmp(png_ptr->jmpbuf,1);
+    R_ShowMessage((char *) msg);
+    longjmp(png_ptr->jmpbuf,1);
 }
 
 static void my_png_warning(png_structp png_ptr, png_const_charp msg)
