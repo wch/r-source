@@ -590,9 +590,11 @@ static char* translateFontFamily(const char* family) {
 
 static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 {
-    int size = gc->cex * gc->ps + 0.5, face = gc->fontface;
+    int size = gc->cex * gc->ps + 0.5, face = gc->fontface, usePoints;
     char* fontfamily;
 
+    usePoints = xd->kind <= METAFILE;
+    
     if (face < 1 || face > fontnum)
 	face = 1;
     if (size < SMALLEST) size = SMALLEST;
@@ -613,13 +615,13 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	if (fontfamily && face <= 4) {
 	    xd->font = gnewfont(xd->gawin,
 				fontfamily, fontstyle[face - 1],
-				size, rot);
+				size, rot, usePoints);
 	    if (xd->font)
                 strcpy(xd->fontfamily, gc->fontfamily);
 	} else {
             xd->font = gnewfont(xd->gawin,
 				fontname[face - 1], fontstyle[face - 1],
-				size, rot);
+				size, rot, usePoints);
 	}
 	if (xd->font) {
 	    xd->fontface = face;
@@ -630,7 +632,7 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	    if (face > 4) face = 1;
             xd->font = gnewfont(xd->gawin,
 				"Arial", fontstyle[face - 1],
-				size, rot);
+				size, rot, usePoints);
 	    if (!xd->font)
 		error("unable to set or substitute a suitable font");
 	    xd->fontface = face;
@@ -695,8 +697,7 @@ static void SetLineStyle(const pGEcontext gc, pDevDesc dd)
 
     xd->lty = gc->lty;
     if(xd->lwdscale != 1.0)
-	/* will round to nearest integer */
-	xd->lwd = xd->lwdscale * gc->lwd + 0.5;
+	xd->lwd = xd->lwdscale * gc->lwd;
     else xd->lwd = gc->lwd;
     if(xd->lwd < 1) xd->lwd = 1;
     switch (gc->lend) {
@@ -1444,7 +1445,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     else
 	dw = dw0 = (int) (w / pixelWidth(NULL));
     if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
-	dh = (int) (w * user_ypinch);
+	dh = (int) (h * user_ypinch);
     else
 	dh = (int) (h / pixelHeight(NULL));
 
@@ -1806,12 +1807,13 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	    return FALSE;
 	}
     }
-    xd->truedpi = devicepixelsy(xd->gawin);
-    if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP))
-      xd->wanteddpi = 72 ;
+
+    if (xd->kind <= METAFILE)
+	xd->lwdscale = devicepixelsy(xd->gawin)/96.0; /* matches ps/pdf */
+    else if (xd->res_dpi > 0)
+	xd->lwdscale = xd->res_dpi/96.0;
     else
-      xd->wanteddpi = xd->truedpi;
-    xd->lwdscale = xd->truedpi/96.0; /* matches ps/pdf */
+	xd->lwdscale = 72.0/96.0;
     if(xd->lwdscale < 1.0) xd->lwdscale = 1.0; /* at least one pixel */
     rr = getrect(xd->gawin);
     xd->origWidth = xd->showWidth = xd->windowWidth = rr.width;
@@ -1920,17 +1922,18 @@ static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 	/* this is not usually called directly by the graphics	*/
 	/* engine because the detection of device resizes	*/
 	/* (e.g., a window resize) are usually detected by	*/
-	/* device-specific code	(see R_ProcessEvents in ./system.c)*/
+	/* device-specific code	(see R_ProcessEvents)           */
 	/********************************************************/
 
 static void GA_Size(double *left, double *right,
-		     double *bottom, double *top,
-		     pDevDesc dd)
+		    double *bottom, double *top,
+		    pDevDesc dd)
 {
     *left = dd->left;
     *top = dd->top;
-    *right = dd->right;
-    *bottom = dd->bottom;
+    /* There's a mysterious -0.0001 in the setting */
+    *right = ceil(dd->right);
+    *bottom = ceil(dd->bottom);
 }
 
 static void GA_Resize(pDevDesc dd)
@@ -1962,7 +1965,6 @@ static void GA_Resize(pDevDesc dd)
 	    fh = (ih + 0.5)/(ih0 + 0.5);
 	    rf = min(fw, fh);
 	    xd->rescale_factor *= rf;
-	    xd->wanteddpi = xd->rescale_factor * xd->truedpi;
 	    {
 		SEXP scale;
 		PROTECT(scale = ScalarReal(rf));
@@ -2727,7 +2729,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
 
-    int   ps;
+    int   ps; /* This really is in (big) points */
     gadesc *xd;
     rect  rr;
 
@@ -2805,12 +2807,19 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 	xd->origWidth = dd->right = iw;
 	xd->origHeight = dd->bottom = ih;
     }
-    dd->startps = ps * xd->rescale_factor;
-    dd->cra[0] = 0.9 * ps * xd->rescale_factor;
-    dd->cra[1] = 1.2 * ps * xd->rescale_factor;
 
-    /* Set basefont to full size: now allow for initial re-scale */
-    xd->wanteddpi = xd->truedpi * xd->rescale_factor;
+    if (xd->kind > METAFILE && xd->res_dpi > 0) ps *= xd->res_dpi/72.0;
+    dd->startps = ps * xd->rescale_factor;
+
+    if (xd->kind <= METAFILE) {
+	/* it is 12 *point*, not 12 pixel */
+	double ps0 = ps * xd->rescale_factor;
+	dd->cra[0] = 0.9 * ps0 * devicepixelsx(xd->gawin) / 72.0;
+	dd->cra[1] = 1.2 * ps0 * devicepixelsy(xd->gawin) / 72.0;
+    } else {
+	dd->cra[0] = 0.9 * ps;
+	dd->cra[1] = 1.2 * ps;
+    }
 
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
@@ -2822,14 +2831,21 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 
     /* Inches per raster unit */
 
-    if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
-	dd->ipr[0] = 1.0/user_xpinch;
-    else
-	dd->ipr[0] = pixelWidth(xd->gawin);
-    if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
-	dd->ipr[1] = 1.0/user_ypinch;
-    else
-	dd->ipr[1] = pixelHeight(xd->gawin);
+    if (xd->kind <= METAFILE) { /* non-screen devices set NA_real_ */
+	if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
+	    dd->ipr[0] = 1.0/user_xpinch;
+	else
+	    dd->ipr[0] = pixelWidth(xd->gawin);
+	if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
+	    dd->ipr[1] = 1.0/user_ypinch;
+	else
+	    dd->ipr[1] = pixelHeight(xd->gawin);
+    } else if (xd->res_dpi > 0) {
+	dd->ipr[0] = dd->ipr[1] = 1.0/xd->res_dpi;
+    } else {
+	dd->ipr[0] = dd->ipr[1] = 1.0/72.0;
+    }
+    
 
     /* Device capabilities */
     dd->canClip= TRUE;
@@ -2947,10 +2963,11 @@ static unsigned int privategetpixel2(void *d,int i, int j)
 {
     rgb c;
     c = ((rgb *)d)[i*png_rows + j];
-    return c; /* exclude alpha channel */
+    return c;
 }
 
 /* This is the device version */
+/* Values of res > 0 are used to set the resolution in the file */
 static void SaveAsBitmap(pDevDesc dd, int res)
 {
     rect r, r2;
@@ -3126,7 +3143,7 @@ SEXP devga(SEXP args)
     args = CDR(args);
     gamma = asReal(CAR(args));
     args = CDR(args);
-    xpos = asInteger(CAR(args));
+    xpos = asInteger(CAR(args)); /* used for res in png/jpeg/bmp */
     args = CDR(args);
     ypos = asInteger(CAR(args));
     args = CDR(args);

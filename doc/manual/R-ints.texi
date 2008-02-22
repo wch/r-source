@@ -2770,6 +2770,8 @@ for the (default) buffering of the screen device, which also enables the
 current plot to be saved to BMP, JPEG or PNG (it is the internal bitmap
 which is copied to the file in the appropriate format).
 
+The device units are pixels (logical ones on a metafile device).
+
 The code was originally written by Guido Masarotto with extensive use of
 macros, which can make it hard to disentangle.
 

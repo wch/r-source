@@ -195,6 +195,9 @@ OTHERS
     o	The bmp(), jpeg() and png() devices support semi-transparent
 	colours.  See ?png for use with transparent backgrounds.
 
+	Specifying 'res' to these devices now scales the text size and
+	line width.
+
 
 BUILDING R
 
@@ -215,6 +218,9 @@ BUG FIXES
     o	If a windows(rescale="fit") device was shrunk initially to fit
 	on screen, the font size was not rescaled to take account of
 	the initial shrink factor.
+
+    o	If windows(ypinch=) was specified, the width value was used
+	 for the height.
 
 
 

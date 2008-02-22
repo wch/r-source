@@ -58,14 +58,15 @@ typedef struct {
     menuitem mR, mfit, mfix, grmenustayontop, mnextplot;
     Rboolean recording, replaying, needsave;
     bitmap bm, bm2;
-  /* PNG and JPEG section */
+
+  /* PNG, JPEG, BMP section */
     FILE *fp;
     char filename[512];
     int quality;
     int npage;
+    int res_dpi;  /* Values >0 recorded in the file */
+
     double w, h;
-  /* Used to rescale font size so that bitmap devices have 72dpi */
-    int truedpi, wanteddpi;
     rgb   fgcolor;		/* Foreground color */
     rgb   bgcolor;		/* Background color */
     rgb   canvascolor;		/* Canvas color */
@@ -86,7 +87,6 @@ typedef struct {
     Rboolean buffered;
     int timeafter, timesince;
     SEXP psenv;
-    double res_dpi;
     R_GE_lineend lend;
     R_GE_linejoin ljoin;
     float lmitre;

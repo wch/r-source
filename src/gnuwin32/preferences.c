@@ -305,7 +305,7 @@ void applyGUI(Gui newGUI)
 
 	/* Don't delete font: open pagers may be using it */
 	if (strcmp(fontname, "FixedFont"))
-	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0);
+	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0, 1);
 	else consolefn = FixedFont;
 	if (!consolefn) {
 	    sprintf(msg,

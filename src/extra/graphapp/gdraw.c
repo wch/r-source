@@ -803,16 +803,19 @@ void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     SelectObject(dc, old);
 }
 
-font gnewfont(drawing d, const char *face, int style, int size, double rot)
+font gnewfont(drawing d, const char *face, int style, int size,
+	      double rot, int usePoints)
 {
     font obj;
     HFONT hf;
     LOGFONT lf;
 
-    if ((rot <= 45.0) || ((rot > 135) && (rot <= 225)) || (rot > 315))
-	lf.lfHeight = -MulDiv(size, devicepixelsy(d), 72);
-    else
-	lf.lfHeight = -MulDiv(size, devicepixelsx(d), 72);
+    if (usePoints) {
+	if ((rot <= 45.0) || ((rot > 135) && (rot <= 225)) || (rot > 315))
+	    lf.lfHeight = -MulDiv(size, devicepixelsy(d), 72);
+	else
+	    lf.lfHeight = -MulDiv(size, devicepixelsx(d), 72);
+    } else lf.lfHeight = -size;
 
     lf.lfWidth = 0 ;
     lf.lfEscapement = lf.lfOrientation = (int) 10*rot;

@@ -1826,7 +1826,7 @@ setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
     if (consolefn) del(consolefn);
     consolefn = NULL;
     if (strcmp(fontname, "FixedFont")) {
-	consolefn = gnewfont(NULL, fnname, fnsty | FixedWidth, fnpoints, 0.0);
+	consolefn = gnewfont(NULL, fnname, fnsty | FixedWidth, fnpoints, 0.0, 1);
 	if (!consolefn) {
 	    /* This is unlikely to happen: it will find some match */
 	    sprintf(msg,
@@ -1881,7 +1881,7 @@ void consoleprint(console c)
  * right size
  */
     f = gnewfont(lpr, strcmp(fontname, "FixedFont") ? fontname : "Courier New",
-		 fontsty, pointsize, 0.0);
+		 fontsty, pointsize, 0.0, 1);
     if (!f) {
 	/* Should not happen but....*/
 	sprintf(msg, G_("Font %s-%d-%d  not found.\nUsing system fixed font"),

@@ -42,9 +42,10 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 \arguments{
   \item{width, height}{the (nominal) width and height of the canvas of
     the plotting window in inches.  Default \code{7}.}
-  \item{pointsize}{the default pointsize of plotted text. Values are 
-    rounded to the nearest integer: values less than or equal to zero
-    are reset to \code{12}, the default.}
+  \item{pointsize}{the default pointsize of plotted text, interpreted as
+    big points (1/72 inch).  Values are rounded to the nearest integer:
+    values less than or equal to zero are reset to \code{12}, the
+    default.}
   \item{record}{logical: sets the initial state of the flag for
     recording plots.  Default \code{FALSE}.}
   \item{rescale}{character, one of \code{c("R", "fit", "fixed")}.
