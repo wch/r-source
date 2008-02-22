@@ -77,8 +77,8 @@ static void unregisterOne(pGEDevDesc dd, int systemNumber) {
     }
 }
 
-/* NOTE that the pDevDesc dd.dev has been shut down by a call
- * to dev->close within graphics.c
+/* NOTE that dd->dev has been shut down by a call
+ * to dev->close within devices.c
  */
 void GEdestroyDevDesc(pGEDevDesc dd)
 {
