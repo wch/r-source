@@ -1285,9 +1285,6 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 					  x_resources,
 					  x_resource_count,
 					  NULL, 0);
-		XtDestroyWidget(toplevel);
-		XtCloseDisplay(xtdpy);
-		XtDestroyApplicationContext(app_con);
 		if (xdev.geometry != NULL) {
 		    char gstr[40];
 		    int bitmask;
@@ -1316,6 +1313,9 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    if(!ISNA(w)) hint->width = iw;
 		    if(!ISNA(h)) hint->height = ih;
 		}
+		XtDestroyWidget(toplevel);
+		XtCloseDisplay(xtdpy);
+		XtDestroyApplicationContext(app_con);
 	    }
 #endif
 	    xd->windowWidth = hint->width;
@@ -1805,6 +1805,7 @@ static void X11_Close(pDevDesc dd)
 #endif
 
 	XFreeCursor(display, xd->gcursor);
+	XFreeGC(display, xd->wgc);
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
     } else {
@@ -2653,6 +2654,7 @@ static void BM_Close(pDevDesc dd)
     if (xd->fp) fclose(xd->fp);
     cairo_surface_destroy(xd->cs);
     cairo_destroy(xd->cc);
+    free(xd);
 }
 
 
@@ -2729,8 +2731,8 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->top = 0;
     dd->bottom = height;
     /* rescale points to pixels */
-    dd->cra[0] = 0.9 * ps0 * res/72.0;
-    dd->cra[1] = 1.2 * ps0 * res/72.0;
+    dd->cra[0] = 0.9 * ps0 * res0/72.0;
+    dd->cra[1] = 1.2 * ps0 * res0/72.0;
     dd->startps = ps;
     dd->ipr[0] = dd->ipr[1] = 1.0/res0;  
     dd->xCharOffset = 0.4900;
