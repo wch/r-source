@@ -638,3 +638,20 @@ SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
     
     return ScalarLogical(oldask);
 }
+
+SEXP do_devsize(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+    int devNr = curDevice();
+    pDevDesc dd;
+    double left, right, bottom, top;
+
+    if(devNr < 1)
+	error(_("cannot obtain size for the null device"));
+    dd = GEcurrentDevice()->dev;
+    dd->size(&left, &right, &bottom, &top, dd);
+    ans = allocVector(REALSXP, 2);
+    REAL(ans)[0] = fabs(right - left);
+    REAL(ans)[1] = fabs(bottom - top);
+    return(ans);
+}

@@ -300,3 +300,10 @@ checkIntFormat <- function(s)
 }
 
 devAskNewPage <- function(ask=NULL) .Internal(devAskNewPage(ask))
+
+dev.size <- function(units = c("in", "px"))
+{
+    units <- match.arg(units)
+    size <- .Internal(dev.size())
+    if(units == "in") size * par("cin")/par("cra") else size
+}

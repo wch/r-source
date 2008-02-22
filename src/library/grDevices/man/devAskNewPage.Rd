@@ -1,4 +1,4 @@
-% File src/library/grid/man/grid.prompt.Rd
+% File src/library/grDevices/man/devAskNewPage.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later

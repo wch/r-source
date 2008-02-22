@@ -289,9 +289,9 @@ static rect fix_win_rect(rect r, long flags)
 		win_rect = growr(win_rect, border_width, border_height);
 	}
 
-	if (flags & HScrollbar & ~CanvasSize)
+	if ((flags & HScrollbar) && !(flags & CanvasSize))
 		win_rect.height += scrollbar_height;
-	if (flags & VScrollbar & ~CanvasSize)
+	if ((flags & VScrollbar) && !(flags & CanvasSize))
 		win_rect.width += scrollbar_width;
 
 	if (flags & Titlebar)

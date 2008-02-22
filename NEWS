@@ -315,6 +315,9 @@ NEW FEATURES
     o	The function is() now works with S3 inheritance; that is, with
 	objects having multiple strings in the class attribute.
 
+    o	New function devSize() to report the size of the current
+	graphics device surface (in inches or device units).
+
 
 DEPRECATED & DEFUNCT
 
