@@ -25,26 +25,26 @@ Expect these functions to become deprecated in the near future.
 
 }
 \usage{
-getAccess(ClassDef) 
+getAccess(ClassDef)
 
-getClassName(ClassDef) 
+getClassName(ClassDef)
 
-getClassPackage(ClassDef) 
+getClassPackage(ClassDef)
 
-getExtends(ClassDef) 
+getExtends(ClassDef)
 
-getProperties(ClassDef) 
+getProperties(ClassDef)
 
-getPrototype(ClassDef) 
+getPrototype(ClassDef)
 
-getSubclasses(ClassDef) 
+getSubclasses(ClassDef)
 
-getValidity(ClassDef) 
+getValidity(ClassDef)
+%^^^^^^^^^^  is explicitly mentioned in ./validObject.Rd
 
-getVirtual(ClassDef) 
+getVirtual(ClassDef)
 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ClassDef}{ the class definition object }
 }
@@ -52,7 +52,7 @@ getVirtual(ClassDef)
   The functions should be replaced by direct access to the slots, or
   by use of higher-level alternatives.
 
-The functions and corresponding slots are: 
+The functions and corresponding slots are:
 \tabular{ll}{
 \code{getAccess} \tab \code{"access"} \cr
 \code{getClassName} \tab \code{"className"} \cr

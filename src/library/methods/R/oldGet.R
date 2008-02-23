@@ -16,38 +16,62 @@
 
 ## old access functions that do nothing but get a slot
 ## likely to be made defunct & disappear.
+
+## The above comment is there since May 2003, R 1.8.0
+## similarly in the help file ../man/oldGet.Rd
+## Finally (2008-02) made deprecated formally for 2.7.0
 "getAccess" <-
-function (ClassDef) 
-ClassDef@access
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@access
+}
 
 "getClassName" <-
-function (ClassDef) 
-ClassDef@className
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@className
+}
 
 "getClassPackage" <-
-function (ClassDef) 
-ClassDef@package
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@package
+}
 
 "getExtends" <-
-function (ClassDef) 
-ClassDef@contains
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@contains
+}
 
 "getProperties" <-
-function (ClassDef) 
-ClassDef@slots
+function (ClassDef)  {
+    .Deprecated()
+    ClassDef@slots
+}
 
 "getPrototype" <-
-function (ClassDef) 
-ClassDef@prototype
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@prototype
+}
 
 "getSubclasses" <-
-function (ClassDef) 
-ClassDef@subclasses
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@subclasses
+}
 
+## Hmm: this is explicitly mentioned as needed,
+## .... in ../man/validObject.Rd
 "getValidity" <-
-function (ClassDef) 
-ClassDef@validity
+function (ClassDef) {
+    ## "needed" according to validObject.Rd, hence *not* .Deprecated()
+    ClassDef@validity
+}
 
 "getVirtual" <-
-function (ClassDef) 
-ClassDef@virtual
+function (ClassDef) {
+    .Deprecated()
+    ClassDef@virtual
+}

@@ -315,7 +315,7 @@ NEW FEATURES
 
 	On Unix-alikes, devices jpeg() and png() also accept
 	type = "Cairo", and with that option do not need a running
-	X server.  The meaning of capabilities("jpeg") and 
+	X server.  The meaning of capabilities("jpeg") and
 	capabilities("png") has changed to reflect this.
 
     o	The function is() now works with S3 inheritance; that is, with
@@ -342,6 +342,9 @@ DEPRECATED & DEFUNCT
     o	The S4 pseudo-class "single" has been removed.
 	["double" will follow shortly:  the S4 class for a REALSXP is
 	"numeric".]
+
+    o 	several S4 class definition utilities have been said to be
+    	deprecated since R 1.8.0; these are now formally deprecated.
 
     o	Use of the graphics headers Rgraphics.h and Rdevices.h is
 	deprecated, and these will be unavailable in R 2.8.0.
