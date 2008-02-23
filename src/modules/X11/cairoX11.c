@@ -69,28 +69,6 @@
 
 */
 
-static void Cairo_Circle(double x, double y, double r,
-			 const pGEcontext gc, pDevDesc dd);
-static void Cairo_Clip(double x0, double x1, double y0, double y1,
-		       pDevDesc dd);
-static void Cairo_Line(double x1, double y1, double x2, double y2,
-		       const pGEcontext gc, pDevDesc dd);
-static void Cairo_MetricInfo(int c, const pGEcontext gc,
-			     double* ascent, double* descent,
-			     double* width, pDevDesc dd);
-static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd);
-static void Cairo_Polygon(int n, double *x, double *y,
-			  const pGEcontext gc, pDevDesc dd);
-static void Cairo_Polyline(int n, double *x, double *y,
-			   const pGEcontext gc, pDevDesc dd);
-static void Cairo_Rect(double x0, double y0, double x1, double y1,
-		       const pGEcontext gc, pDevDesc dd);
-static double Cairo_StrWidth(const char *str, const pGEcontext gc,
-			     pDevDesc dd);
-static void Cairo_Text(double x, double y, const char *str,
-		       double rot, double hadj,
-		       const pGEcontext gc, pDevDesc dd);
-
 static void Cairo_update(pX11Desc xd)
 {
     cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
@@ -111,17 +89,6 @@ static void CairoColor(unsigned int col, pX11Desc xd)
     
     cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0); 
 }
-
-
-/* --> See "Notes on Line Textures" in GraphicsEngine.h
- *
- *	27/5/98 Paul - change to allow lty and lwd to interact:
- *	the line texture is now scaled by the line width so that,
- *	for example, a wide (lwd=2) dotted line (lty=2) has bigger
- *	dots which are more widely spaced.  Previously, such a line
- *	would have "dots" which were wide, but not long, nor widely
- *	spaced.
- */
 
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 {
@@ -158,7 +125,7 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 }
 
 static void Cairo_Clip(double x0, double x1, double y0, double y1,
-			pDevDesc dd)
+		       pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
@@ -215,8 +182,8 @@ static void Cairo_Circle(double x, double y, double r,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     cairo_new_path(xd->cc);
-    /* FIXME: do we want +0.5, or minimum 0.5 or 1? */
-    cairo_arc(xd->cc, x, y, r + 0.5, 0.0, 2 * M_PI);
+    /* radius 0.5 seems to be visible */
+    cairo_arc(xd->cc, x, y, (r > 0.5 ? r : 0.5), 0.0, 2 * M_PI);
 
     if (R_ALPHA(gc->fill) > 0) {
 	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
@@ -325,15 +292,11 @@ static PangoLayout
 }
 
 static void
-text_extents(PangoFontDescription *desc, cairo_t *cc,
-	     const pGEcontext gc, const gchar *str,
+text_extents(cairo_t *cc, PangoLayout *layout,
 	     gint *lbearing, gint *rbearing, 
 	     gint *width, gint *ascent, gint *descent, int ink)
 {
-    PangoLayout *layout;
     PangoRectangle rect, lrect;
-	
-    layout = layoutText(desc, cc, str);
 
     pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
 					&rect, &lrect);
@@ -350,17 +313,18 @@ text_extents(PangoFontDescription *desc, cairo_t *cc,
 	if(lbearing) *lbearing = PANGO_LBEARING(lrect);
 	if(rbearing) *rbearing = PANGO_RBEARING(lrect);
     }
-    g_object_unref(layout);
 }
 
-static void Cairo_MetricInfo(int c, const pGEcontext gc,
-			   double* ascent, double* descent,
-			   double* width, pDevDesc dd)
+static void 
+PangoCairo_MetricInfo(int c, const pGEcontext gc,
+		      double* ascent, double* descent,
+		      double* width, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     char str[16];
     int Unicode = mbcslocale;
     PangoFontDescription *desc = getFont(gc);
+    PangoLayout *layout;
     gint iascent, idescent, iwidth;
 	
     if(c == 0) c = 77;
@@ -369,11 +333,13 @@ static void Cairo_MetricInfo(int c, const pGEcontext gc,
     if(Unicode) {
 	Rf_ucstoutf8(str, (unsigned int) c);
     } else {
+	/* Here we assume that c < 256 */
 	str[0] = c; str[1] = 0;
-	/* Here, we assume that c < 256 */
     }
-    text_extents(desc, xd->cc, gc, str, NULL, NULL, 
-		 &iwidth, &iascent, &idescent, 1);
+    layout = layoutText(desc, xd->cc, str);
+    text_extents(xd->cc, layout, NULL, NULL, &iwidth, &iascent, &idescent, 1);
+    g_object_unref(layout);
+    pango_font_description_free(desc);
     *ascent = iascent;
     *descent = idescent;
     *width = iwidth;
@@ -384,20 +350,24 @@ static void Cairo_MetricInfo(int c, const pGEcontext gc,
 }
 
 
-static double Cairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
+static double
+PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
     PangoFontDescription *desc = getFont(gc);
+    PangoLayout *layout = layoutText(desc, xd->cc, str);
 
-    text_extents(desc, xd-> cc, gc, str, NULL, NULL, &width, NULL, NULL, 0);
+    text_extents(xd->cc, layout, NULL, NULL, &width, NULL, NULL, 0);
+    g_object_unref(layout);
     pango_font_description_free(desc);
     return (double) width;
 }
 
-static void Cairo_Text(double x, double y,
-		       const char *str, double rot, double hadj,
-		       const pGEcontext gc, pDevDesc dd)
+static void
+PangoCairo_Text(double x, double y,
+		const char *str, double rot, double hadj,
+		const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint ascent, lbearing, width;
@@ -406,14 +376,14 @@ static void Cairo_Text(double x, double y,
     if (R_ALPHA(gc->col) > 0) {
 	PangoFontDescription *desc = getFont(gc);
 	cairo_save(xd->cc);
-	text_extents(desc, xd->cc, gc, str, &lbearing, NULL, &width, 
-		     &ascent, NULL, 0);
+	layout = layoutText(desc, xd->cc, str);
+	text_extents(xd->cc, layout, &lbearing, NULL, &width, &ascent,
+		     NULL, 0);
 	cairo_move_to(xd->cc, x, y);
 	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 	/* pango has a coord system at top left */
 	cairo_rel_move_to(xd->cc, -lbearing - width*hadj, -ascent);
 	CairoColor(gc->col, xd);
-	layout = layoutText(desc, xd->cc, str);
 	pango_cairo_show_layout(xd->cc, layout);
 	cairo_restore(xd->cc);
 	g_object_unref(layout);

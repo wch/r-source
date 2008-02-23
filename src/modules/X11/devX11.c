@@ -2185,18 +2185,18 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     if(xd->useCairo) {
 	dd->newPage = Cairo_NewPage;
 	dd->clip = Cairo_Clip;
-	dd->strWidth = Cairo_StrWidth;
-	dd->text = Cairo_Text;
+	dd->strWidth = PangoCairo_StrWidth;
+	dd->text = PangoCairo_Text;
 	dd->rect = Cairo_Rect;
 	dd->circle = Cairo_Circle;
 	dd->line = Cairo_Line;
 	dd->polyline = Cairo_Polyline;
 	dd->polygon = Cairo_Polygon;
-	dd->metricInfo = Cairo_MetricInfo;
 	dd->hasTextUTF8 = TRUE;
-	dd->strWidthUTF8 = Cairo_StrWidth;
-	dd->textUTF8 = Cairo_Text;
 	dd->wantSymbolUTF8 = TRUE;
+	dd->metricInfo = PangoCairo_MetricInfo;
+	dd->strWidthUTF8 = PangoCairo_StrWidth;
+	dd->textUTF8 = PangoCairo_Text;
     } else
 #endif
     {
@@ -2708,8 +2708,6 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->size = X11_Size;
     dd->newPage = BM_NewPage;
     dd->clip = Cairo_Clip;
-    dd->strWidth = Cairo_StrWidth;
-    dd->text = Cairo_Text;
     dd->rect = Cairo_Rect;
     dd->circle = Cairo_Circle;
     dd->line = Cairo_Line;
@@ -2717,13 +2715,13 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->polygon = Cairo_Polygon;
     dd->locator = null_Locator;
     dd->mode = null_Mode;
-    dd->metricInfo = Cairo_MetricInfo;
-    dd->strWidth = Cairo_StrWidth;
-    dd->text = Cairo_Text;
+    dd->metricInfo = PangoCairo_MetricInfo;
+    dd->strWidth = PangoCairo_StrWidth;
+    dd->text = PangoCairo_Text;
     dd->hasTextUTF8 = TRUE;
     dd->wantSymbolUTF8 = TRUE;
-    dd->strWidthUTF8 = Cairo_StrWidth;
-    dd->textUTF8 = Cairo_Text;    
+    dd->strWidthUTF8 = PangoCairo_StrWidth;
+    dd->textUTF8 = PangoCairo_Text;    
     dd->useRotatedTextInContour = FALSE;
  
     dd->left = 0;
