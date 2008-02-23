@@ -68,10 +68,6 @@ Sys.umask(mode = "0000")
   argument.
 
   \code{file.rename} attempts to rename a single file.
-#ifdef windows
-  On Windows 9x/ME rename is not atomic, so it is possible that
-  \code{to} will be deleted but \code{from} will not be renamed.
-#endif
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
@@ -86,6 +82,10 @@ Sys.umask(mode = "0000")
   \code{file.symlink} makes symbolic links on those Unix-like platforms
   which support them.  The \code{to} argument can specify a single
   existing directory.
+#ifdef windows
+  (Windows Vista/Server 2008 have a version of symbolic links on NTFS
+  filesystems, but this seems too limited to be worth implementing.)
+#endif
   
   \code{dir.create} creates the last element of the path, unless
   \code{recursive = TRUE}.  Trailing path separators are removed.
@@ -140,7 +140,7 @@ Sys.umask(mode = "0000")
   true for success.
 
   \code{Sys.umask} returns the previous value of the \code{umask},
-  invisibly,, as a length-one object of class \code{"octmode"}.
+  invisibly, as a length-one object of class \code{"octmode"}.
 
   The remaining functions return a logical vector indicating which
   operation succeeded for each of the files attempted.

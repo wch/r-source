@@ -41,9 +41,6 @@
 }
 #ifdef windows
 \note{
-  These may not work correctly under Windows 95/98/ME because of
-  problems Perl has launching programs on those limited OSes.
-
   They make use of a temporary directory specified by the environment
   variable \code{TMPDIR} and defaulting to \code{c:/TEMP}.  Do ensure
   that if set forward slashes are used.

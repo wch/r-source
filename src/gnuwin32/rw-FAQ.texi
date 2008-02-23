@@ -914,14 +914,9 @@ This may be a problem in other locales, especially for non-Western
 European languages.
 
 Support for these characters within @command{Rterm} depends on the
-environment (the terminal window and shell, including locale settings)
-within which it is run as well as the font used by the terminal window.
-
-If you are using a non-Latin-1 language, you do need to ensure that the
-fonts you selected support the language.  For example, it was found by
-one Czech user (under Windows 98) that he had to select @code{Times New
-Roman CE} or @code{Courier} (not @code{Courier New}) to get certain
-Czech characters displayed correctly.
+environment (the terminal window and shell, including locale and
+codepage settings) within which it is run as well as the font used by
+the terminal window.
 
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated.
@@ -974,7 +969,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.5.? the files are in @file{bin/windows/contrib/2.5}.  You can try
+2.7.? the files are in @file{bin/windows/contrib/2.7}.  You can try
 those compiled for earlier versions (but not before 2.0.0), at your own
 risk.
 
@@ -1052,11 +1047,12 @@ package, run at the R prompt.
 > link.html.help()
 @end example
 
-This is done automatically when installing from the Packages menu or
-by @code{install.packages()}, and when @code{help.start} is run,
-@emph{provided} you have write permission in @file{@RWVER@}.  If you do not
-have sufficient permission, you will get warnings and the packages you
-install will not appear in the list of packages or the search system.
+This is done automatically when installing from the Packages menu or by
+@code{install.packages()}, and when @code{help.start} is run,
+@emph{provided} you have write permission on @file{@RWVER@/library}.  If
+you do not have sufficient permission, you will get warnings and the
+packages you install will not appear in the list of packages or the
+search system.
 
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
@@ -1077,9 +1073,10 @@ update the indices (for which you need write permission in the
 the main library will be found.
 
 If the help search system does not work @emph{at all}, this probably
-indicates that Java support is either not installed or not enabled in
-your browser.  The search page contains a link to the appropriate
-section in the @emph{R Installation and Administration} manual.
+indicates that Java support is either not installed or Java or
+JavaScript is not enabled in your browser.  The search page contains a
+link to the appropriate section in the @emph{R Installation and
+Administration} manual.
 
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
@@ -1118,13 +1115,28 @@ the Tcl/Tk support files installed (but they can be).  Note that you do
 need 8.5.x and not 8.4.x.  (If you build R from the sources yourself you
 can configure it to use 8.4.x.)
 
+Several ackage authors have often suggested using ActiveTcl
+(@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
+Tcl/Tk extensions.  This could be used by setting (for a default install)
+
+@example
+MT_TCLTK=c:/Tcl/bin
+@end example
+
+@noindent
+@strong{but} current versions (e.g.@: 8.5.1.0) do not contain any extra
+extensions.  Some extensions can be copied over from an ActiveTcl
+install of Tcl/Tk 8.4 (e.g.@: to the @file{Tcl} folder in the R
+installation).
+
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
 @section Hyperlinks in HTML sometimes do not work.
 
 They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
-does not implement.
+does not implement (except on NTFS file systems under Vista/Server 2008
+-- where they may need Administrator privileges).
 
 With HTML, @code{help.start()} fixes up links to the most of the
 standard packages if it has write permission in the main library tree.
