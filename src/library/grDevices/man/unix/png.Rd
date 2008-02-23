@@ -39,7 +39,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     degradation of the image.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
-    other than the default.}
+    other than the default, and to convert points to pixels.}
   \item{\dots}{additional arguments to the underlying \code{\link{X11}}
     device, such as \code{gamma} and \code{fonts}.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
@@ -79,9 +79,8 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   dpi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
-  (including font sizes in points) the resolution of the X server is
-  used for the Xlib version, and \code{res} (or 72dpi if unset) for the
-  cairo version.
+  (including font sizes in points) the resolution used is  \code{res} (or
+  72dpi if unset).
 
   \code{png} will use a palette if there are less than 256 colours on
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
@@ -126,8 +125,6 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
 }
 
 \section{Conventions}{
-  This is a placholder, copied from Windows!
-  
   This section describes the implementation of the conventions for
   graphics devices set out in the \dQuote{R Internals Manual}.
 
@@ -135,9 +132,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     \item The default device size is in pixels.
     \item Font sizes are in big points interpreted at \code{res} dpi.
     \item The default font family is Helvetica.
-    \item Line widths are as a multiple of 1/96 inch (interpreted at
-    \code{res} dpi), with a minimum of one pixel. 
-    \item The minimum radius of a circle is 1 pixel.
+    \item Line widths in 1/96 inch, minimum one pixel for \code{type =
+      "Xlib"}.
+    \item For \code{type = "Xlib"} circle radii are in pixels with
+    minimum one.
     \item Colours are interpreted by the viewing application.
   }
 }

@@ -105,7 +105,7 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     case GE_MITRE_JOIN: ljoin = CAIRO_LINE_JOIN_MITER; break;
     case GE_BEVEL_JOIN: ljoin = CAIRO_LINE_JOIN_BEVEL; break;
     } 
-    cairo_set_line_width(cc, gc->lwd);
+    cairo_set_line_width(cc, gc->lwd * xd->lwdscale);
     cairo_set_line_cap(cc, lcap);
     cairo_set_line_join(cc, ljoin);
     cairo_set_miter_limit(cc, gc->lmitre);
@@ -113,13 +113,10 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     if (gc->lty == 0 || gc->lty == -1)
 	cairo_set_dash(cc, 0, 0, 0);
     else {
-	double ls[16]; /* max 16x4=64 bit */
-	int l = 0, dt = gc->lty;
-	while (dt > 0) {
-	    ls[l] = (double)(dt&15);
-	    dt >>= 4;
-	    l++;
-	}
+	double ls[16], lwd = (gc->lwd > 1) ? gc->lwd : 1;
+	int l, dt = gc->lty;
+	for (l = 0; dt != 0; dt >>= 4, l++)  
+	    ls[l] = (dt & 0xF) * lwd * xd->lwdscale;
 	cairo_set_dash(cc, ls, l, 0);
     }
 }

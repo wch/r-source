@@ -748,6 +748,7 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
 
 static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 {
+    /* size is in points here */
     int pixelsize, i, dpi;
     cacheentry *f;
     char buf[BUFSIZ];
@@ -763,8 +764,13 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     if (size < SMALLEST) size = SMALLEST;
     face--;
 
-    dpi = (1./pixelHeight() + 0.5);
-    if(dpi < 80) {
+    if(xd->type == PNG || xd->type == JPEG) {
+	dpi = (xd->res_dpi > 0) ? xd->res_dpi : 0.5;
+    } else {
+	dpi = (1./pixelHeight() + 0.5);
+    }
+    
+    if(abs(dpi - 75) < 5) {
 	/* use pointsize as pixel size */
     } else if(abs(dpi - 100) < 5) {
     /* Here's a 1st class fudge: make sure that the Adobe design sizes
@@ -928,6 +934,7 @@ static void SetFont(const pGEcontext gc, pX11Desc xd)
 {
     R_XFont *tmp;
     char *family = translateFontFamily(gc->fontfamily, xd);
+    /* size is in points here */
     int size = gc->cex * gc->ps + 0.5, face = gc->fontface;
 
     if (face < 1 || face > 5) face = 1;
@@ -1017,7 +1024,7 @@ static void SetLinetype(const pGEcontext gc, pX11Desc xd)
     int i, newlty, newlwd, newlend, newljoin;
 
     newlty = gc->lty;
-    newlwd = (int) gc->lwd;
+    newlwd = gc->lwd;
     if (newlwd < 1)/* not less than 1 pixel */
 	newlwd = 1;
     if (newlty != xd->lty || newlwd != xd->lwd ||
@@ -1030,25 +1037,27 @@ static void SetLinetype(const pGEcontext gc, pX11Desc xd)
 	newljoin = gcToX11ljoin(gc->ljoin);
 	if (newlty == 0) {/* special hack for lty = 0 -- only for X11 */
 	    XSetLineAttributes(display, xd->wgc,
-			       newlwd, LineSolid, newlend, newljoin);
+			       (int)(newlwd*xd->lwdscale+0.5),
+			       LineSolid, newlend, newljoin);
 	} else {
 	    static char dashlist[8];
 	    for(i = 0 ; i < 8 && (newlty != 0); i++) {
 		int j = newlty & 15;
 		if (j == 0) j = 1; /* Or we die with an X Error */
 		/* scale line texture for line width */
-		j = j*newlwd;
+		j = j*newlwd*xd->lwdscale+0.5;
 		/* make sure that scaled line texture */
 		/* does not exceed X11 storage limits */
 		if (j > 255) j = 255;
 		dashlist[i] = j;
-		newlty = newlty >> 4;
+		newlty >>= 4;
 	    }
 	    /* NB if i is odd the pattern will be interpreted as
 	       the original pattern concatenated with itself */
 	    XSetDashes(display, xd->wgc, 0, dashlist, i);
 	    XSetLineAttributes(display, xd->wgc,
-			       newlwd, LineOnOffDash, newlend, newljoin);
+			       (int)(newlwd*xd->lwdscale+0.5),
+			       LineOnOffDash, newlend, newljoin);
 	}
     }
 }
@@ -2179,6 +2188,7 @@ int
 Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 {
     double ps = xd->pointsize;
+    int res0 = (xd->res_dpi > 0) ? xd->res_dpi : 72;
     /*	Set up Data Structures. */
 
 #ifdef HAVE_WORKING_CAIRO
@@ -2233,11 +2243,22 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 
     /* Nominal Character Sizes in Pixels */
     /* Recommendation from 'R internals': changed for 2.7.0 */
+    /* Inches per raster unit */
 
     /* ps is in points, we want this in device units */
-    dd->cra[0] = 0.9*ps * 1/(72.0*pixelWidth());
-    dd->cra[1] = 1.2*ps * 1/(72.0*pixelHeight());
-
+    if(xd->type == PNG || xd->type == JPEG) {
+	dd->cra[0] = 0.9*ps * res0/72.0;
+	dd->cra[1] = 1.2*ps * res0/72.0;
+	dd->ipr[0] =  dd->ipr[1] = 1.0/res0;
+	xd->lwdscale = res0/96.0;
+   } else {
+	dd->cra[0] = 0.9*ps * 1.0/(72.0*pixelWidth());
+	dd->cra[1] = 1.2*ps * 1.0/(72.0*pixelHeight());
+	dd->ipr[0] = pixelWidth();
+	dd->ipr[1] = pixelHeight();
+	xd->lwdscale = 1.0/(96.0*pixelWidth());
+    }
+    
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
     /* so that it is exactly over the plotting point */
@@ -2246,10 +2267,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->yCharOffset = 0.3333;
     dd->yLineBias = 0.1;
 
-    /* Inches per raster unit */
-
-    dd->ipr[0] = pixelWidth();
-    dd->ipr[1] = pixelHeight();
 
     /* Device capabilities */
 
@@ -2733,6 +2750,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->cra[1] = 1.2 * ps0 * res0/72.0;
     dd->startps = ps;
     dd->ipr[0] = dd->ipr[1] = 1.0/res0;  
+    xd->lwdscale = res0/96.0;
     dd->xCharOffset = 0.4900;
     dd->yCharOffset = 0.3333;
     dd->yLineBias = 0.1;

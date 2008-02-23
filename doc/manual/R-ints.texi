@@ -2640,7 +2640,7 @@ with lines packed 1/6 inch apart, and looks good with lines 1/5 inch
 apart (that is with 2pt leading).
 
 @item
-The default font famuily should be a sans serif font, e.g Helvetica or
+The default font family should be a sans serif font, e.g Helvetica or
 similar (e.g.@: Arial on Windows).
 
 @item
@@ -2666,6 +2666,11 @@ The help page should describe its policy on these conventions.
 
 These conventions are less clear-cut for bitmap devices, especially
 where the bitmap format does not have a design resolution.
+
+The interpretation of the line texture (@code{par("lty"}) is described
+in the header @file{} and in the help for @code{par}: note that the
+`scale' of the pattern should be proportional to the line width (at
+least for widths above the default).
 
 
 @node 'Mode', Specific devices, Conventions, Graphics devices

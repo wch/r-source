@@ -85,11 +85,14 @@ typedef struct {
     R_GE_lineend lend;
     R_GE_linejoin ljoin;
 
+    double lwdscale;                    /* scaling to get a multiple
+					   of 1/96" */
+
     int col;				/* Color */
     int fill;
     int bg;				/* bg */
-    int canvas;				/* Canvas */
-    int fontface;			/* Typeface */
+    int canvas;				/* Canvas colour */
+    int fontface;			/* Typeface 1:5 */
     int fontsize;			/* Size in points */
     double pointsize;			/* Size in points */
     char basefontfamily[500];           /* Initial font family */
