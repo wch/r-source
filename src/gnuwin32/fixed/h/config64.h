@@ -78,6 +78,15 @@
 /* Define this if you have support for C99 complex types. */
 #define HAVE_C99_COMPLEX 1
 
+/* Define to 1 if you have cairo-ps. */
+/* #undef HAVE_CAIRO_PDF */
+
+/* Define to 1 if you have cairo-pdf. */
+/* #undef HAVE_CAIRO_PS */
+
+/* Define to 1 if you have cairo-svg. */
+/* #undef HAVE_CAIRO_SVG */
+
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
 /* #undef HAVE_CFLOCALECOPYCURRENT */
@@ -453,6 +462,9 @@
 /* Define if you have off_t, fseeko and ftello. */
 #define HAVE_OFF_T 1
 
+/* Define to 1 if you have pangocairo. */
+/* #undef HAVE_PANGOCAIRO */
+
 /* Define to 1 if you have the <pcre.h> header file. */
 /* #undef HAVE_PCRE_H */
 
@@ -725,6 +737,9 @@
 
 /* Define if you have the 'wint_t' type. */
 #define HAVE_WINT_T 1
+
+/* Define to 1 if you have cairo. */
+/* #undef HAVE_WORKING_CAIRO */
 
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1

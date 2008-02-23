@@ -30,6 +30,8 @@
 # include <config.h>
 #endif
 
+//#define HAVE_PANGOCAIRO
+
 #include <Defn.h>
 
 #ifdef HAVE_RINT
@@ -2195,8 +2197,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     if(xd->useCairo) {
 	dd->newPage = Cairo_NewPage;
 	dd->clip = Cairo_Clip;
-	dd->strWidth = PangoCairo_StrWidth;
-	dd->text = PangoCairo_Text;
 	dd->rect = Cairo_Rect;
 	dd->circle = Cairo_Circle;
 	dd->line = Cairo_Line;
@@ -2204,9 +2204,15 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->polygon = Cairo_Polygon;
 	dd->hasTextUTF8 = TRUE;
 	dd->wantSymbolUTF8 = TRUE;
+#ifdef HAVE_PANGOCAIRO
 	dd->metricInfo = PangoCairo_MetricInfo;
-	dd->strWidthUTF8 = PangoCairo_StrWidth;
-	dd->textUTF8 = PangoCairo_Text;
+	dd->strWidth = dd->strWidthUTF8 = PangoCairo_StrWidth;
+	dd->text = dd->textUTF8 = PangoCairo_Text;
+#else
+	dd->metricInfo = Cairo_MetricInfo;
+	dd->strWidth = dd->strWidthUTF8 = Cairo_StrWidth;
+	dd->text = dd->textUTF8 = Cairo_Text;
+#endif
     } else
 #endif
     {
@@ -2257,6 +2263,9 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->ipr[0] = pixelWidth();
 	dd->ipr[1] = pixelHeight();
 	xd->lwdscale = 1.0/(96.0*pixelWidth());
+#ifndef HAVE_PANGOCAIRO
+	ps *= 1.0/(72.0*pixelWidth());
+#endif
     }
     
     /* Character Addressing Offsets */
@@ -2691,8 +2700,12 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     xd->quality = quality;
     xd->windowWidth = width;
     xd->windowHeight = height;
+#ifdef HAVE_PANGOCAIRO
     /* What is Pango doing?  Looks like screen res or 96 dpi */ 
     ps *= res0/96.0;
+#else
+    ps *= res0/72.0;
+#endif
     xd->pointsize = ps;
     xd->bg = bg;
     xd->res_dpi = res;
@@ -2732,13 +2745,17 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->polygon = Cairo_Polygon;
     dd->locator = null_Locator;
     dd->mode = null_Mode;
+#ifdef HAVE_PANGOCAIRO
     dd->metricInfo = PangoCairo_MetricInfo;
-    dd->strWidth = PangoCairo_StrWidth;
-    dd->text = PangoCairo_Text;
+    dd->strWidth = dd->strWidthUTF8 = PangoCairo_StrWidth;
+    dd->text = dd->textUTF8 = PangoCairo_Text;
+#else
+    dd->metricInfo = Cairo_MetricInfo;
+    dd->strWidth = dd->strWidthUTF8 = Cairo_StrWidth;
+    dd->text = dd->textUTF8 = Cairo_Text;
+#endif
     dd->hasTextUTF8 = TRUE;
     dd->wantSymbolUTF8 = TRUE;
-    dd->strWidthUTF8 = PangoCairo_StrWidth;
-    dd->textUTF8 = PangoCairo_Text;    
     dd->useRotatedTextInContour = FALSE;
  
     dd->left = 0;

@@ -43492,33 +43492,44 @@ else
   save_LIBS=${LIBS}
   { echo "$as_me:$LINENO: checking whether pkg-config knows about cairo and pango" >&5
 echo $ECHO_N "checking whether pkg-config knows about cairo and pango... $ECHO_C" >&6; }
-if test "${r_cv_has_cairo+set}" = set; then
+if test "${r_cv_has_pangocairo+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   if "${PKGCONF}" --exists pangocairo; then
-         r_cv_has_cairo="yes"
+         r_cv_has_pangocairo="yes"
        else
-         r_cv_has_cairo="no"
+         r_cv_has_pangocairo="no"
        fi
 
 fi
-{ echo "$as_me:$LINENO: result: $r_cv_has_cairo" >&5
-echo "${ECHO_T}$r_cv_has_cairo" >&6; }
-  if test "x${r_cv_has_cairo}" = "xyes"; then
-     modlist="pangocairo"
-     for module in cairo-xlib cairo-xlib-xrender; do
-       if "${PKGCONF}" --exists ${module}; then
-	 modlist="${modlist} ${module}"
-       fi
-     done
-     CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
-     CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
-   fi
+{ echo "$as_me:$LINENO: result: $r_cv_has_pangocairo" >&5
+echo "${ECHO_T}$r_cv_has_pangocairo" >&6; }
+  if test "x${r_cv_has_pangocairo}" = "xyes"; then
+    modlist="pangocairo"
+    for module in cairo-xlib cairo-png; do
+      if "${PKGCONF}" --exists ${module}; then
+	modlist="${modlist} ${module}"
+      fi
+    done
+    if "${PKGCONF}" --exists cairo-pdf; then
+       modlist="${modlist} cairo-pdf"
+       r_cairo_pdf=yes
+    fi
+    if "${PKGCONF}" --exists cairo-ps; then
+       modlist="${modlist} cairo-ps"
+       r_cairo_ps=yes
+    fi
+    if "${PKGCONF}" --exists cairo-svg; then
+       modlist="${modlist} cairo-svg"
+       r_cairo_svg=yes
+    fi
+    CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
+    CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
 
-  CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
-  LIBS="${LIBS} ${CAIRO_LIBS}"
+    CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
+    LIBS="${LIBS} ${CAIRO_LIBS}"
 
-  { echo "$as_me:$LINENO: checking whether cairo including pango works" >&5
+     { echo "$as_me:$LINENO: checking whether cairo including pango works" >&5
 echo $ECHO_N "checking whether cairo including pango works... $ECHO_C" >&6; }
 if test "${r_cv_cairo_works+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -43571,13 +43582,138 @@ rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
 fi
 { echo "$as_me:$LINENO: result: $r_cv_cairo_works" >&5
 echo "${ECHO_T}$r_cv_cairo_works" >&6; }
-  CPPFLAGS=${save_CPPFLAGS}
-  LIBS=${save_LIBS}
+    CPPFLAGS=${save_CPPFLAGS}
+    LIBS=${save_LIBS}
+  else  ## no pangocairo, check for just cairo
+    { echo "$as_me:$LINENO: checking whether pkg-config knows about cairo" >&5
+echo $ECHO_N "checking whether pkg-config knows about cairo... $ECHO_C" >&6; }
+if test "${r_cv_has_cairo+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if "${PKGCONF}" --exists cairo; then
+	   r_cv_has_cairo="yes"
+	 else
+	   r_cv_has_cairo="no"
+	 fi
+
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_has_cairo" >&5
+echo "${ECHO_T}$r_cv_has_cairo" >&6; }
+    if test "x${r_cv_has_cairo}" = "xyes"; then
+      modlist="cairo"
+      for module in cairo-xlib cairo-png; do
+	if "${PKGCONF}" --exists ${module}; then
+	  modlist="${modlist} ${module}"
+	fi
+      done
+      if "${PKGCONF}" --exists cairo-pdf; then
+         modlist="${modlist} cairo-pdf"
+         r_cairo_pdf=yes
+      fi
+      if "${PKGCONF}" --exists cairo-ps; then
+         modlist="${modlist} cairo-ps"
+         r_cairo_ps=yes
+      fi
+      if "${PKGCONF}" --exists cairo-svg; then
+         modlist="${modlist} cairo-svg"
+         r_cairo_svg=yes
+      fi
+      CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
+      CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
+
+      CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
+      LIBS="${LIBS} ${CAIRO_LIBS}"
+
+      { echo "$as_me:$LINENO: checking whether cairo including pango works" >&5
+echo $ECHO_N "checking whether cairo including pango works... $ECHO_C" >&6; }
+if test "${r_cv_cairo_works+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+#include <cairo.h>
+#include <cairo-xlib.h>
+int main(void) {
+    cairo_t  *CC;
+    cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
+    cairo_select_font_face (CC, "Helvetica", CAIRO_FONT_SLANT_NORMAL,
+                            CAIRO_FONT_WEIGHT_BOLD);
+    return 0;
+ }
+
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext &&
+       $as_test_x conftest$ac_exeext; then
+  r_cv_cairo_works=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	r_cv_cairo_works=no
+          CAIRO_LIBS=
+          CAIRO_CFLAGS=
+
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext conftest.$ac_ext
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_cairo_works" >&5
+echo "${ECHO_T}$r_cv_cairo_works" >&6; }
+      CPPFLAGS=${save_CPPFLAGS}
+      LIBS=${save_LIBS}
+    fi
+  fi
+fi
+
+if test "x${r_cv_has_pangocairo}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_PANGOCAIRO 1
+_ACEOF
+
 fi
 if test "x${r_cv_cairo_works}" = xyes; then
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_WORKING_CAIRO 1
+_ACEOF
+
+fi
+if test "x${r_cairo_pdf}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CAIRO_PDF 1
+_ACEOF
+
+fi
+if test "x${r_cairo_ps}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CAIRO_PS 1
+_ACEOF
+
+fi
+if test "x${r_cairo_svg}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CAIRO_SVG 1
 _ACEOF
 
 fi

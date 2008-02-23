@@ -26,29 +26,40 @@ else
   save_CPPFLAGS=${CPPFLAGS}
   save_LIBS=${LIBS}
   AC_CACHE_CHECK([whether pkg-config knows about cairo and pango], 
-      [r_cv_has_cairo],
+      [r_cv_has_pangocairo],
       [if "${PKGCONF}" --exists pangocairo; then
-         r_cv_has_cairo="yes"
+         r_cv_has_pangocairo="yes"
        else
-         r_cv_has_cairo="no"
+         r_cv_has_pangocairo="no"
        fi
   ])
-  if test "x${r_cv_has_cairo}" = "xyes"; then
-     modlist="pangocairo"
-     for module in cairo-xlib cairo-xlib-xrender; do
-       if "${PKGCONF}" --exists ${module}; then
-	 modlist="${modlist} ${module}"
-       fi
-     done
-     CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
-     CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
-   fi
+  if test "x${r_cv_has_pangocairo}" = "xyes"; then
+    modlist="pangocairo"
+    for module in cairo-xlib cairo-png; do
+      if "${PKGCONF}" --exists ${module}; then
+	modlist="${modlist} ${module}"
+      fi
+    done
+    if "${PKGCONF}" --exists cairo-pdf; then
+       modlist="${modlist} cairo-pdf"
+       r_cairo_pdf=yes
+    fi
+    if "${PKGCONF}" --exists cairo-ps; then
+       modlist="${modlist} cairo-ps"
+       r_cairo_ps=yes
+    fi
+    if "${PKGCONF}" --exists cairo-svg; then
+       modlist="${modlist} cairo-svg"
+       r_cairo_svg=yes
+    fi
+    CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
+    CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
 
-  CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
-  LIBS="${LIBS} ${CAIRO_LIBS}"
+    CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
+    LIBS="${LIBS} ${CAIRO_LIBS}"
 
-  AC_CACHE_CHECK([whether cairo including pango works], 
-		  [r_cv_cairo_works], [AC_LINK_IFELSE([
+     AC_CACHE_CHECK([whether cairo including pango works], 
+		    [r_cv_cairo_works], [AC_LINK_IFELSE([
 #include <pango/pango.h>
 #include <pango/pangocairo.h>
 #include <cairo-xlib.h>
@@ -63,14 +74,77 @@ int main(void) {
           CAIRO_LIBS=
           CAIRO_CFLAGS=
         ])])
-  CPPFLAGS=${save_CPPFLAGS}
-  LIBS=${save_LIBS}
+    CPPFLAGS=${save_CPPFLAGS}
+    LIBS=${save_LIBS}
+  else  ## no pangocairo, check for just cairo
+    AC_CACHE_CHECK([whether pkg-config knows about cairo], [r_cv_has_cairo],
+	[if "${PKGCONF}" --exists cairo; then
+	   r_cv_has_cairo="yes"
+	 else
+	   r_cv_has_cairo="no"
+	 fi
+    ])
+    if test "x${r_cv_has_cairo}" = "xyes"; then
+      modlist="cairo"
+      for module in cairo-xlib cairo-png; do
+	if "${PKGCONF}" --exists ${module}; then
+	  modlist="${modlist} ${module}"
+	fi
+      done
+      if "${PKGCONF}" --exists cairo-pdf; then
+         modlist="${modlist} cairo-pdf"
+         r_cairo_pdf=yes
+      fi
+      if "${PKGCONF}" --exists cairo-ps; then
+         modlist="${modlist} cairo-ps"
+         r_cairo_ps=yes
+      fi
+      if "${PKGCONF}" --exists cairo-svg; then
+         modlist="${modlist} cairo-svg"
+         r_cairo_svg=yes
+      fi
+      CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
+      CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
+
+      CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
+      LIBS="${LIBS} ${CAIRO_LIBS}"
+
+      AC_CACHE_CHECK([whether cairo including pango works], 
+		     [r_cv_cairo_works], [AC_LINK_IFELSE([
+#include <cairo.h>
+#include <cairo-xlib.h>
+int main(void) {
+    cairo_t  *CC;    
+    cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
+    cairo_select_font_face (CC, "Helvetica", CAIRO_FONT_SLANT_NORMAL, 
+                            CAIRO_FONT_WEIGHT_BOLD);
+    return 0;
+ }
+	],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
+          CAIRO_LIBS=
+          CAIRO_CFLAGS=
+        ])])
+      CPPFLAGS=${save_CPPFLAGS}
+      LIBS=${save_LIBS}
+    fi
+  fi
+fi
+
+if test "x${r_cv_has_pangocairo}" = xyes; then
+   AC_DEFINE(HAVE_PANGOCAIRO, 1, [Define to 1 if you have pangocairo.]) 
 fi
 if test "x${r_cv_cairo_works}" = xyes; then
-   AC_DEFINE(HAVE_WORKING_CAIRO, 1,
-            [Define to 1 if you have cairo including pango.]) 
+   AC_DEFINE(HAVE_WORKING_CAIRO, 1, [Define to 1 if you have cairo.]) 
 fi
-dnl AM_CONDITIONAL(BUILD_WITH_CAIRO, [test "x${r_cv_cairo_works}" = xyes])
+if test "x${r_cairo_pdf}" = xyes; then
+   AC_DEFINE(HAVE_CAIRO_PDF, 1, [Define to 1 if you have cairo-ps.]) 
+fi
+if test "x${r_cairo_ps}" = xyes; then
+   AC_DEFINE(HAVE_CAIRO_PS, 1, [Define to 1 if you have cairo-pdf.]) 
+fi
+if test "x${r_cairo_svg}" = xyes; then
+   AC_DEFINE(HAVE_CAIRO_SVG, 1, [Define to 1 if you have cairo-svg.]) 
+fi
 AC_SUBST(CAIRO_CPPFLAGS)
 AC_SUBST(CAIRO_LIBS)
 ])
