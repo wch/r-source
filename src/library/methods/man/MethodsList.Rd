@@ -138,8 +138,9 @@ loadMethod(method, fname, envir)
       The true default method for the methods list object \code{mlist}
       (the method that matches class \code{"ANY"} for as many arguments
       as are used in methods matching for this generic function).  If
-      \code{mlist} is null, returns the function called \code{fname}, or
-      \code{NULL} if there is no such function.
+      \code{mlist} is null or no matching method is found, returns the
+      function called \code{fname}, or \code{NULL} if there is no such
+      function.
     }
 
     \item{\code{mergeMethods}:}{
@@ -167,7 +168,7 @@ loadMethod(method, fname, envir)
     }
   }
 }
-\details{
+\note{
   Note that \code{MethodsList} objects represent methods only in the \R
   implementation.  You can use them to find or manipulate information about
   methods, but avoid doing so if you want your code to port to S-Plus.
