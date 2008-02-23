@@ -152,7 +152,8 @@ insertMethod <-
         if(is.null(current))
             current <- new("MethodsList", argument = as.name(args[2]))
         else if(is.function(current))
-            current <- new("MethodsList", argument = as.name(args[2]), methods = list(ANY = current))
+            current <- new("MethodsList", argument = as.name(args[2]),
+			   methods = list(ANY = current))
         elNamed(methods, Class) <-
             Recall(current, signature[-1], args[-1], def, cacheOnly)
     }
@@ -290,7 +291,8 @@ MethodsListSelect <-
                 else if(is(selection, "MethodsList")) {
                     ## go on to try matching further arguments
                     method <- Recall(NULL, env, selection, finalDefault = finalDefault,
-                                     evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
+                                     evalArgs = evalArgs,
+                                     useInherited = nextUseInherited, fdef = fdef)
                     if(is(method, "EmptyMethodsList"))
                         selection <- method   ## recursive selection failed
                 }
