@@ -1,10 +1,12 @@
 % File src/library/methods/man/RClassUtils.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2007 R Core Development Team
+% Copyright 2008      The R Foundation
 % Distributed under GPL 2 or later
 
 \name{RClassUtils}
 %% NOTE: This is {internal} for a good reason
+
 %% FIXME the following are undocumented utilities (Sep 23, 2002)
 \alias{completeSubclasses}
 \alias{newClassRepresentation}
@@ -267,6 +269,10 @@ setDataPart(object, value)
 
       If \code{complete} is \code{TRUE}, include the indirect
       information about extensions.
+
+      It is the utility called from \code{\link{show}(\link{getClass}(.))},
+      and the user should typically use \code{getClass(.)} for looking
+      at class definitions.
     }
 
     \item{\code{showExtends}:}{
@@ -341,9 +347,9 @@ setDataPart(object, value)
 
     \item{\code{defaultPrototype}:}{
       The prototype for a class which will have slots, is not a virtual
-      class, and does not extend one of the basic classes.  In future
-      releases, this will likely be a non-vector R object type, but none
-      of the current types (as of release 1.4) is suitable.
+      class, and does not extend one of the basic classes. Both its
+      \code{\link{class}} and its (\R internal) type,
+      \code{\link{typeof}()}, are \code{"S4"}.
     }
 
     \item{\code{.InitBasicClasses}, \code{.InitMethodsListClass}, \code{.setCoerceGeneric}:}{
@@ -366,5 +372,8 @@ setDataPart(object, value)
     }
 
   }
+}
+\examples{
+typeof(defaultPrototype()) #-> "S4"
 }
 \keyword{internal}
