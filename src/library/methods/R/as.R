@@ -36,8 +36,8 @@ as <-
         packageSlot(sig) <- where
         ## try first for an explicit (not inherited) method
         ## ?? Can this ever succeed if .quickCoerceSelect failed?
-        asMethod <- selectMethod("coerce", sig, TRUE,
-                                 FALSE, #optional, no inheritance
+        asMethod <- selectMethod("coerce", sig, optional = TRUE,
+                                 useInherited = FALSE, #optional, no inheritance
                                  fdef = coerceFun, mlist = coerceMethods)
         canCache <- TRUE
         if(is.null(asMethod)) {
@@ -62,10 +62,9 @@ as <-
             ## if none of these applies, look for an inherited method
             ## but only on the from argument
             if(is.null(asMethod)) {
-                asMethod <- selectMethod("coerce", sig, TRUE,
+                asMethod <- selectMethod("coerce", sig, optional = TRUE,
                                          c(from = TRUE, to = FALSE),
-                                         fdef = coerceFun, mlist =
-                                         coerceMethods)
+                                         fdef = coerceFun, mlist = coerceMethods)
                 inherited <- TRUE
             }
             else if(canCache)  # make into method definition
