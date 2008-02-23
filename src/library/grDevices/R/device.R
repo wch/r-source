@@ -182,7 +182,7 @@ dev.copy2eps <- function(...)
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
     if(!dev.displaylist())
-        stop("can only print from screen device")
+        stop("can only print from a screen device")
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")
     oc$device <- postscript
@@ -190,7 +190,7 @@ dev.copy2eps <- function(...)
     oc$horizontal <- FALSE
     if(is.null(oc$paper))
         oc$paper <- "special"
-    din <- graphics::par("din"); w <- din[1]; h <- din[2]
+    din <- dev.size("in"); w <- din[1]; h <- din[2]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if(is.null(oc$height))
@@ -206,7 +206,7 @@ dev.copy2pdf <- function(...)
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
     if(!dev.displaylist())
-        stop("can only print from screen device")
+        stop("can only print from a screen device")
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")
     oc$device <- pdf
@@ -214,7 +214,7 @@ dev.copy2pdf <- function(...)
     ## even those which are the ultimate defaults.
     oc$onefile <- FALSE
     if(is.null(oc$paper)) oc$paper <- "special"
-    din <- graphics::par("din"); w <- din[1]; h <- din[2]
+    din <- dev.size("in"); w <- din[1]; h <- din[2]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if(is.null(oc$height))

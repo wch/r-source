@@ -18,6 +18,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	The default width and height for pdf() and bitmap() have been
 	changed to 7 (inches) to match the screen devices.
 
+    o	Considerable efforts have been made to make the default output
+	from graphics devices as similar as possible (and in
+	particular close to that from postscript/pdf).  Many devices
+	were misinterpreting 'pointsize' in some ways, for example as
+	being in device units (pixels) rather than in points.
+
     o	Packages which include graphics devices need to be re-installed
 	for this version of R.
 

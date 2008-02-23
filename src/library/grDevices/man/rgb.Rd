@@ -41,14 +41,16 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   the \code{red}, \code{green} and \code{blue} values.
 
   Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
-  some devices: at the time of writing only on the \code{\link{pdf}},
-  \code{windows} and \code{quartz} devices as well as
-  several third-party devices such as those in packages \pkg{Cairo},
-  \pkg{cairoDevice}, \pkg{JavaGD} and \pkg{RSvgDevice}.  On most of
-  these devices the actual alpha values used are multiples of 1/255.
+  some devices: at the time of writing on the \code{\link{pdf}},
+  \code{windows}, \code{quartz} and \code{X11(type="Cairo")} devices and
+  associated bitmap devices (\code{jpeg}, \code{png} and \code{bitmap}).
+  They are supported by several third-party devices such as those in
+  packages \pkg{Cairo}, \pkg{cairoDevice} and \pkg{JavaGD}.  On most of
+  these devices the actual alpha values used are multiples of 1/255, and
+  few of these devices fully support semi-transparent backgrounds.
 
-  Typically other graphics devices silently plot semi-transparent colors
-  as fully transparent.
+  Most other graphics devices plot semi-transparent colors as fully
+  transparent, usually with a warning when first encountered.
 }
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}
@@ -62,10 +64,8 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 }
 \examples{
 rgb(0,1,0)
-(u01 <- seq(0,1, length=11))
-stopifnot(rgb(u01,u01,u01) == gray(u01))
-reds <- rgb((0:15)/15, green=0, blue=0, names=paste("red",0:15,sep="."))
-reds
+
+rgb((0:15)/15, green=0, blue=0, names=paste("red",0:15,sep="."))
 
 rgb(0, 0:12, 0, max = 255)# integer input
 
