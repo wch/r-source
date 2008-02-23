@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-18 11:37+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -129,7 +129,7 @@ msgstr ""
 #: src/main/context.c:510 src/main/datetime.c:649 src/main/datetime.c:724
 #: src/main/datetime.c:726 src/main/datetime.c:730 src/main/datetime.c:863
 #: src/main/datetime.c:865 src/main/datetime.c:1011 src/main/debug.c:208
-#: src/main/deparse.c:314 src/main/devices.c:633 src/main/dounzip.c:184
+#: src/main/deparse.c:314 src/main/devices.c:634 src/main/dounzip.c:184
 #: src/main/dounzip.c:190 src/main/envir.c:1462 src/main/envir.c:1465
 #: src/main/envir.c:1554 src/main/envir.c:1559 src/main/envir.c:1625
 #: src/main/envir.c:1641 src/main/envir.c:1647 src/main/envir.c:1738
@@ -150,8 +150,8 @@ msgstr ""
 #: src/main/platform.c:1301 src/main/platform.c:1304 src/main/platform.c:1337
 #: src/main/platform.c:1340 src/main/platform.c:1375 src/main/platform.c:1414
 #: src/main/platform.c:1416 src/main/platform.c:1474 src/main/platform.c:1565
-#: src/main/platform.c:1614 src/main/platform.c:1811 src/main/platform.c:1848
-#: src/main/platform.c:1958 src/main/platform.c:1984 src/main/plot.c:2913
+#: src/main/platform.c:1614 src/main/platform.c:1818 src/main/platform.c:1855
+#: src/main/platform.c:1965 src/main/platform.c:1991 src/main/plot.c:2913
 #: src/main/plot3d.c:2466 src/main/plot3d.c:2470 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2483 src/main/plot3d.c:2487
 #: src/main/print.c:177 src/main/print.c:183 src/main/print.c:205
@@ -178,8 +178,14 @@ msgstr ""
 #: src/modules/internet/internet.c:296 src/modules/lapack/Lapack.c:109
 #: src/modules/lapack/Lapack.c:199 src/modules/lapack/Lapack.c:409
 #: src/modules/lapack/Lapack.c:505 src/modules/lapack/Lapack.c:562
-#: src/modules/lapack/Lapack.c:814 src/unix/sys-std.c:1180
-#: src/unix/sys-std.c:1203
+#: src/modules/lapack/Lapack.c:814 src/modules/X11/devX11.c:2565
+#: src/modules/X11/devX11.c:2569 src/modules/X11/devX11.c:2797
+#: src/modules/X11/devX11.c:2802 src/modules/X11/devX11.c:2806
+#: src/modules/X11/devX11.c:2810 src/modules/X11/devX11.c:2814
+#: src/modules/X11/devX11.c:2825 src/modules/X11/devX11.c:2855
+#: src/modules/X11/devX11.c:2860 src/modules/X11/devX11.c:2864
+#: src/modules/X11/devX11.c:2868 src/modules/X11/devX11.c:2879
+#: src/unix/sys-std.c:1180 src/unix/sys-std.c:1203
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
@@ -231,24 +237,26 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:533 src/gnuwin32/extra.c:1475
 #: src/gnuwin32/extra.c:1651 src/gnuwin32/extra.c:1654
-#: src/gnuwin32/extra.c:1657 src/main/character.c:844 src/main/colors.c:364
+#: src/gnuwin32/extra.c:1657 src/main/character.c:844 src/main/colors.c:365
 #: src/main/connections.c:2650 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:585 src/main/datetime.c:651 src/main/datetime.c:867
 #: src/main/dotcode.c:199 src/main/errors.c:859 src/main/errors.c:890
 #: src/main/errors.c:991 src/main/errors.c:1016 src/main/errors.c:1021
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2004 src/main/plot.c:278 src/main/plot.c:472
+#: src/main/platform.c:2011 src/main/plot.c:278 src/main/plot.c:472
 #: src/main/plot.c:477 src/main/plot.c:2054 src/main/plot.c:2061
-#: src/main/plot.c:3125 src/main/plot.c:3127 src/main/plot.c:3129
-#: src/main/plot.c:3283 src/main/plot3d.c:1399 src/main/plot3d.c:2544
+#: src/main/plot.c:3126 src/main/plot.c:3128 src/main/plot.c:3130
+#: src/main/plot.c:3287 src/main/plot3d.c:1399 src/main/plot3d.c:2544
 #: src/main/plot3d.c:2548 src/main/plot3d.c:2550 src/main/seq.c:154
 #: src/main/seq.c:245 src/main/seq.c:248 src/main/sort.c:790
 #: src/main/sort.c:890 src/main/source.c:172 src/main/summary.c:977
 #: src/main/sysutils.c:224 src/main/util.c:863 src/main/util.c:868
-#: src/main/util.c:875 src/main/util.c:878 src/modules/X11/devX11.c:2330
-#: src/modules/X11/devX11.c:2357 src/modules/X11/devX11.c:2362
-#: src/modules/X11/devX11.c:2367 src/modules/X11/devX11.c:2377
+#: src/main/util.c:875 src/main/util.c:878 src/modules/X11/devX11.c:2481
+#: src/modules/X11/devX11.c:2508 src/modules/X11/devX11.c:2513
+#: src/modules/X11/devX11.c:2518 src/modules/X11/devX11.c:2528
+#: src/modules/X11/devX11.c:2533 src/modules/X11/devX11.c:2537
+#: src/modules/X11/devX11.c:2818 src/modules/X11/devX11.c:2872
 #: src/unix/sys-std.c:1276
 #, c-format
 msgid "invalid '%s' value"
@@ -1649,53 +1657,53 @@ msgstr ""
 msgid "invalid gray level, must be in [0,1]."
 msgstr ""
 
-#: src/main/colors.c:415
+#: src/main/colors.c:426
 msgid "rgb is not a matrix (internally)"
 msgstr ""
 
-#: src/main/colors.c:418
+#: src/main/colors.c:429
 msgid "rgb must have 3 rows (internally)"
 msgstr ""
 
-#: src/main/colors.c:472
+#: src/main/colors.c:483
 msgid "bad hsv to rgb color conversion"
 msgstr ""
 
-#: src/main/colors.c:1263 src/main/errors.c:1114 src/main/logic.c:164
+#: src/main/colors.c:1274 src/main/errors.c:1114 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr ""
 
-#: src/main/colors.c:1267
+#: src/main/colors.c:1278
 msgid "unknown palette (need >= 2 colors)"
 msgstr ""
 
-#: src/main/colors.c:1271
+#: src/main/colors.c:1282
 msgid "maximum number of colors exceeded"
 msgstr ""
 
-#: src/main/colors.c:1302 src/main/engine.c:2880
+#: src/main/colors.c:1313 src/main/engine.c:2880
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
-#: src/main/colors.c:1320 src/main/colors.c:1330
+#: src/main/colors.c:1331 src/main/colors.c:1341
 msgid "invalid RGB specification"
 msgstr ""
 
-#: src/main/colors.c:1363
+#: src/main/colors.c:1374
 #, c-format
 msgid "invalid color name '%s'"
 msgstr ""
 
-#: src/main/colors.c:1372
+#: src/main/colors.c:1383
 #, c-format
 msgid "invalid color specification '%s'"
 msgstr ""
 
-#: src/main/colors.c:1492
+#: src/main/colors.c:1503
 msgid "supplied color is not numeric nor character"
 msgstr ""
 
-#: src/main/colors.c:1524
+#: src/main/colors.c:1535
 msgid "Invalid color specification"
 msgstr ""
 
@@ -1911,11 +1919,11 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr ""
 
-#: src/main/connections.c:1530 src/modules/X11/devX11.c:2467
+#: src/main/connections.c:1530 src/modules/X11/devX11.c:2995
 msgid "memory allocation to copy clipboard failed"
 msgstr ""
 
-#: src/main/connections.c:1535 src/modules/X11/devX11.c:2455
+#: src/main/connections.c:1535 src/modules/X11/devX11.c:2983
 msgid "clipboard cannot be opened or contains no text"
 msgstr ""
 
@@ -2371,9 +2379,9 @@ msgstr ""
 #: src/main/deparse.c:150 src/main/plot.c:869 src/main/plot.c:1386
 #: src/main/plot.c:1695 src/main/plot.c:1762 src/main/plot.c:1839
 #: src/main/plot.c:1936 src/main/plot.c:2014 src/main/plot.c:2295
-#: src/main/plot.c:2473 src/main/plot.c:2731 src/main/plot.c:3265
-#: src/main/plot.c:3392 src/main/plot.c:3471 src/main/plot.c:3642
-#: src/main/plot.c:3920 src/main/plot3d.c:1362 src/main/sprintf.c:145
+#: src/main/plot.c:2473 src/main/plot.c:2731 src/main/plot.c:3269
+#: src/main/plot.c:3396 src/main/plot.c:3475 src/main/plot.c:3646
+#: src/main/plot.c:3924 src/main/plot3d.c:1362 src/main/sprintf.c:145
 #: src/main/sprintf.c:170
 msgid "too few arguments"
 msgstr ""
@@ -2463,6 +2471,10 @@ msgstr ""
 
 #: src/main/devices.c:619
 msgid "Hit <Return> to see next plot: "
+msgstr ""
+
+#: src/main/devices.c:650
+msgid "cannot obtain size for the null device"
 msgstr ""
 
 #: src/main/dotcode.c:109 src/main/dotcode.c:139
@@ -2733,12 +2745,12 @@ msgid "no graphics system to unregister"
 msgstr ""
 
 #: src/main/engine.c:441 src/main/engine.c:446 src/main/engine.c:454
-#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:950
+#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:990
 msgid "invalid line end"
 msgstr ""
 
 #: src/main/engine.c:506 src/main/engine.c:511 src/main/engine.c:519
-#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:968
+#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1008
 msgid "invalid line join"
 msgstr ""
 
@@ -4207,31 +4219,31 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 
-#: src/main/names.c:955
+#: src/main/names.c:959
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:963
+#: src/main/names.c:967
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1077
+#: src/main/names.c:1081
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1079
+#: src/main/names.c:1083
 msgid "symbol print-name too long"
 msgstr ""
 
-#: src/main/names.c:1108
+#: src/main/names.c:1112
 msgid "invalid .Internal() argument"
 msgstr ""
 
-#: src/main/names.c:1111
+#: src/main/names.c:1115
 msgid "invalid internal function"
 msgstr ""
 
-#: src/main/names.c:1113
+#: src/main/names.c:1117
 #, c-format
 msgid "no internal function \"%s\""
 msgstr ""
@@ -4904,29 +4916,29 @@ msgstr ""
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:1766
+#: src/main/platform.c:1773
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:1772
+#: src/main/platform.c:1779
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:1779
+#: src/main/platform.c:1786
 msgid "unknown format returned by gethostbyname"
 msgstr ""
 
-#: src/main/platform.c:1788
+#: src/main/platform.c:1795
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:1833 src/main/platform.c:1871
+#: src/main/platform.c:1840 src/main/platform.c:1878
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
 
-#: src/main/platform.c:2011
+#: src/main/platform.c:2018
 msgid "insufficient OS support on this platform"
 msgstr ""
 
@@ -4938,7 +4950,7 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: src/main/plot.c:204 src/modules/X11/devX11.c:1386
+#: src/main/plot.c:204 src/modules/X11/devX11.c:1459
 msgid "invalid font specification"
 msgstr ""
 
@@ -5061,7 +5073,7 @@ msgstr ""
 msgid "invalid arrow head specification"
 msgstr ""
 
-#: src/main/plot.c:2026 src/main/plot.c:3132
+#: src/main/plot.c:2026 src/main/plot.c:3133
 msgid "zero length 'labels'"
 msgstr ""
 
@@ -5117,113 +5129,113 @@ msgstr ""
 msgid "invalid number of points in locator()"
 msgstr ""
 
-#: src/main/plot.c:3121
+#: src/main/plot.c:3122
 msgid "invalid number of points in identify()"
 msgstr ""
 
-#: src/main/plot.c:3123
+#: src/main/plot.c:3124
 msgid "incorrect argument type"
 msgstr ""
 
-#: src/main/plot.c:3135
+#: src/main/plot.c:3136
 msgid "different argument lengths"
 msgstr ""
 
-#: src/main/plot.c:3137
+#: src/main/plot.c:3138
 msgid "more 'labels' than points"
 msgstr ""
 
-#: src/main/plot.c:3190
+#: src/main/plot.c:3191
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr ""
 
-#: src/main/plot.c:3196
+#: src/main/plot.c:3197
 msgid "warning: nearest point already identified\n"
 msgstr ""
 
-#: src/main/plot.c:3277
+#: src/main/plot.c:3281
 msgid "invalid units"
 msgstr ""
 
-#: src/main/plot.c:3455 src/main/plot.c:3565
+#: src/main/plot.c:3459 src/main/plot.c:3569
 msgid "invalid dendrogram input"
 msgstr ""
 
-#: src/main/plot.c:3624
+#: src/main/plot.c:3628
 msgid "invalid symbol parameter vector"
 msgstr ""
 
-#: src/main/plot.c:3647
+#: src/main/plot.c:3651
 msgid "invalid symbol coordinates"
 msgstr ""
 
-#: src/main/plot.c:3655
+#: src/main/plot.c:3659
 msgid "x/y/parameter length mismatch"
 msgstr ""
 
-#: src/main/plot.c:3674
+#: src/main/plot.c:3678
 msgid "invalid circles data"
 msgstr ""
 
-#: src/main/plot.c:3676 src/main/plot.c:3695 src/main/plot.c:3719
-#: src/main/plot.c:3748
+#: src/main/plot.c:3680 src/main/plot.c:3699 src/main/plot.c:3723
+#: src/main/plot.c:3752
 msgid "invalid symbol parameter"
 msgstr ""
 
-#: src/main/plot.c:3693
+#: src/main/plot.c:3697
 msgid "invalid squares data"
 msgstr ""
 
-#: src/main/plot.c:3717
+#: src/main/plot.c:3721
 msgid "invalid rectangles data (need 2 columns)"
 msgstr ""
 
-#: src/main/plot.c:3746
+#: src/main/plot.c:3750
 msgid "invalid stars data"
 msgstr ""
 
-#: src/main/plot.c:3787
+#: src/main/plot.c:3791
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr ""
 
-#: src/main/plot.c:3790
+#: src/main/plot.c:3794
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr ""
 
-#: src/main/plot.c:3793
+#: src/main/plot.c:3797
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr ""
 
-#: src/main/plot.c:3796
+#: src/main/plot.c:3800
 msgid "invalid thermometers[,1:2]"
 msgstr ""
 
-#: src/main/plot.c:3835
+#: src/main/plot.c:3839
 msgid "invalid boxplots data (need 5 columns)"
 msgstr ""
 
-#: src/main/plot.c:3844
+#: src/main/plot.c:3848
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr ""
 
-#: src/main/plot.c:3846
+#: src/main/plot.c:3850
 msgid "invalid boxplots[, 1:4]"
 msgstr ""
 
-#: src/main/plot.c:3892
+#: src/main/plot.c:3896
 msgid "invalid symbol type"
 msgstr ""
 
-#: src/main/plot.c:3933 src/main/plot.c:3935 src/main/plot.c:3940
-#: src/main/plot.c:3942
+#: src/main/plot.c:3937 src/main/plot.c:3939 src/main/plot.c:3944
+#: src/main/plot.c:3946
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr ""
 
-#: src/main/plot.c:3955
+#: src/main/plot.c:3959
 msgid "unable to allocate memory (in do_xspline)"
 msgstr ""
 
@@ -5327,27 +5339,27 @@ msgstr ""
 msgid "invalid math style encountered"
 msgstr ""
 
-#: src/main/plotmath.c:1325 src/main/plotmath.c:1474 src/main/plotmath.c:2773
+#: src/main/plotmath.c:1331 src/main/plotmath.c:1480 src/main/plotmath.c:2779
 msgid "invalid mathematical annotation"
 msgstr ""
 
-#: src/main/plotmath.c:1779
+#: src/main/plotmath.c:1785
 msgid "invalid accent"
 msgstr ""
 
-#: src/main/plotmath.c:2073
+#: src/main/plotmath.c:2079
 msgid "invalid group delimiter"
 msgstr ""
 
-#: src/main/plotmath.c:2100 src/main/plotmath.c:2246
+#: src/main/plotmath.c:2106 src/main/plotmath.c:2252
 msgid "invalid group specification"
 msgstr ""
 
-#: src/main/plotmath.c:2171
+#: src/main/plotmath.c:2177
 msgid "group is incomplete"
 msgstr ""
 
-#: src/main/plotmath.c:3260
+#: src/main/plotmath.c:3266
 msgid "Metric information not available for this family/device"
 msgstr ""
 
@@ -7075,144 +7087,163 @@ msgstr ""
 msgid "argument 'logarithm' must be logical"
 msgstr ""
 
-#: src/modules/X11/devX11.c:284
+#: src/modules/X11/devX11.c:288
 msgid "cannot set grayscale: reverting to monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:367
+#: src/modules/X11/devX11.c:371
 msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:412
+#: src/modules/X11/devX11.c:416
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
 
-#: src/modules/X11/devX11.c:817
+#: src/modules/X11/devX11.c:856
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
 msgstr ""
 
-#: src/modules/X11/devX11.c:881
+#: src/modules/X11/devX11.c:920
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr ""
 
-#: src/modules/X11/devX11.c:914
+#: src/modules/X11/devX11.c:954
 #, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
 msgstr ""
 
-#: src/modules/X11/devX11.c:923
+#: src/modules/X11/devX11.c:963
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1031
+#: src/modules/X11/devX11.c:1073
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1048
+#: src/modules/X11/devX11.c:1090
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1107
+#: src/modules/X11/devX11.c:1148
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1108
+#: src/modules/X11/devX11.c:1149
 msgid "X cannot set locale modifiers"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1113
+#: src/modules/X11/devX11.c:1153
 msgid "no png support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1119
+#: src/modules/X11/devX11.c:1159
 msgid "filename too long in png() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1123 src/modules/X11/devX11.c:1618
+#: src/modules/X11/devX11.c:1163 src/modules/X11/devX11.c:1691
+#: src/modules/X11/devX11.c:2655
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1134
+#: src/modules/X11/devX11.c:1175
 msgid "no jpeg support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1144
+#: src/modules/X11/devX11.c:1185
 msgid "filename too long in jpeg() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1148 src/modules/X11/devX11.c:1625
+#: src/modules/X11/devX11.c:1189 src/modules/X11/devX11.c:1698
+#: src/modules/X11/devX11.c:2657
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1169
+#: src/modules/X11/devX11.c:1211
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1189
+#: src/modules/X11/devX11.c:1231
 msgid "jpeg() does not support transparency: using white bg"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1302
+#: src/modules/X11/devX11.c:1344
 msgid "unable to create X11 window"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1350
+#: src/modules/X11/devX11.c:1423
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1355
+#: src/modules/X11/devX11.c:1428
 msgid "unable to create pixmap"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1426
+#: src/modules/X11/devX11.c:1499
 msgid "font family not found in X11 font database"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1469
+#: src/modules/X11/devX11.c:1542
 #, c-format
 msgid "invalid use of %d < 0 in '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2277
+#: src/modules/X11/devX11.c:2143
+msgid "type=\"Cairo\" is not supported on this build -- using \"Xlib\""
+msgstr ""
+
+#: src/modules/X11/devX11.c:2426
 msgid "invalid string argument"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2302
+#: src/modules/X11/devX11.c:2452
 #, c-format
 msgid "unable to start device %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2326
+#: src/modules/X11/devX11.c:2477
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2333
+#: src/modules/X11/devX11.c:2484
 msgid "invalid colortype passed to X11 driver"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2347
+#: src/modules/X11/devX11.c:2498
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2418
+#: src/modules/X11/devX11.c:2571
+msgid "no plot on device to save"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2836 src/modules/X11/devX11.c:2890
+msgid "unable to start device jpeg"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2901 src/modules/X11/devX11.c:2908
+#: src/modules/X11/devX11.c:2915
+msgid "type=\"Cairo\" is not supported on this build"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2946
 msgid "unable to contact X11 display"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2486
+#: src/modules/X11/devX11.c:3014
 msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 
@@ -7463,12 +7494,12 @@ msgstr ""
 msgid "X11 routines cannot be accessed in module"
 msgstr ""
 
-#: src/unix/X11.c:75 src/unix/X11.c:94 src/unix/X11.c:105 src/unix/X11.c:116
-#: src/unix/X11.c:127
+#: src/unix/X11.c:75 src/unix/X11.c:86 src/unix/X11.c:97 src/unix/X11.c:108
+#: src/unix/X11.c:127 src/unix/X11.c:138 src/unix/X11.c:149 src/unix/X11.c:160
 msgid "X11 module cannot be loaded"
 msgstr ""
 
-#: src/unix/X11.c:140 src/unix/X11.c:147 src/unix/X11.c:154 src/unix/X11.c:160
-#: src/unix/X11.c:166
+#: src/unix/X11.c:173 src/unix/X11.c:179 src/unix/X11.c:185 src/unix/X11.c:191
+#: src/unix/X11.c:198 src/unix/X11.c:205 src/unix/X11.c:211 src/unix/X11.c:217
 msgid "X11 is not available"
 msgstr ""

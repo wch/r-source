@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -95,6 +95,9 @@ msgid "can only print from screen device"
 msgstr ""
 
 msgid "need to specify one of 'width' and 'height'"
+msgstr ""
+
+msgid "can only print from a screen device"
 msgstr ""
 
 msgid "dev.control() called without an open graphics device"
@@ -256,6 +259,9 @@ msgstr ""
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr ""
 
+msgid "invalid value for 'antialias'"
+msgstr ""
+
 msgid "invalid 'filename'"
 msgstr ""
 
@@ -265,13 +271,16 @@ msgstr ""
 msgid "invalid X11 font specification:"
 msgstr ""
 
+msgid "no such device"
+msgstr ""
+
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr ""
+
 msgid "invalid value for 'rescale"
 msgstr ""
 
 msgid "can only bring windows devices to the front"
-msgstr ""
-
-msgid "no such device"
 msgstr ""
 
 msgid "can only copy from 'windows' devices"

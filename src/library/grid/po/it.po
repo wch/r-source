@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -26,36 +26,36 @@ msgstr ""
 "Non posso mostrare la view-port di livello massimo (grid e graphics output "
 "mischiato?)"
 
-#: grid.c:943
+#: grid.c:930
 msgid "attempt to plot on null device"
 msgstr "tentativo di scrivere sul dispositivo null"
 
-#: grid.c:1223
+#: grid.c:1210
 msgid "There is no layout defined"
 msgstr "Il layout non è definito"
 
-#: grid.c:1443
+#: grid.c:1430
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1452
+#: grid.c:1439
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1592
+#: grid.c:1579
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1906
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:3000
+#: grid.c:2987
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col non valido"
 
-#: grid.c:3080
+#: grid.c:3067
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"
 
@@ -71,7 +71,7 @@ msgstr "layout.pos.col non valido"
 msgid "singular transformation matrix"
 msgstr ""
 
-#: state.c:177
+#: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Impossibile memorizzare lo stato di grid. Troppi dispositivi aperti?"
 

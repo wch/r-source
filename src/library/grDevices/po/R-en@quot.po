@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
-"PO-Revision-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
+"PO-Revision-Date: 2008-02-23 21:23\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -119,6 +119,9 @@ msgstr "can only print from screen device"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "need to specify one of ‘width’ and ‘height’"
+
+msgid "can only print from a screen device"
+msgstr "can only print from a screen device"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() called without an open graphics device"
@@ -279,6 +282,9 @@ msgstr "invalid arguments in quartzFonts (must be font names)"
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "invalid arguments in quartzFonts (need named args)"
 
+msgid "invalid value for 'antialias'"
+msgstr "invalid value for ‘antialias’"
+
 msgid "invalid 'filename'"
 msgstr "invalid ‘filename’"
 
@@ -288,14 +294,17 @@ msgstr "‘res’ must be specified unless ‘units = “px”’"
 msgid "invalid X11 font specification:"
 msgstr "invalid X11 font specification:"
 
+msgid "no such device"
+msgstr "no such device"
+
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr "can only copy from ‘X11(type=“Cairo”)’ devices"
+
 msgid "invalid value for 'rescale"
 msgstr "invalid value for 'rescale"
 
 msgid "can only bring windows devices to the front"
 msgstr "can only bring windows devices to the front"
-
-msgid "no such device"
-msgstr "no such device"
 
 msgid "can only copy from 'windows' devices"
 msgstr "can only copy from ‘windows’ devices"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
 "PO-Revision-Date: 2007-04-13 12:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -103,6 +103,10 @@ msgstr "seul un périphérique écran peut être imprimé"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "il faut spécifier 'width' ou 'height'"
+
+#, fuzzy
+msgid "can only print from a screen device"
+msgstr "seul un périphérique écran peut être imprimé"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() appelé sans périphérique graphique ouvert"
@@ -270,6 +274,9 @@ msgid "invalid arguments in quartzFonts (need named args)"
 msgstr ""
 "arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
 
+msgid "invalid value for 'antialias'"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'filename'"
 msgstr "argument 'family' incorrect"
@@ -280,6 +287,13 @@ msgstr ""
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"
 
+msgid "no such device"
+msgstr "aucun périphérique ne correspond"
+
+#, fuzzy
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr "il n'est possible de copier qu'à partir d'un périphérique 'windows'"
+
 msgid "invalid value for 'rescale"
 msgstr ""
 
@@ -287,9 +301,6 @@ msgid "can only bring windows devices to the front"
 msgstr ""
 "seules les fenêtres des périphériques graphiques peuvent être amenées au "
 "premier plan"
-
-msgid "no such device"
-msgstr "aucun périphérique ne correspond"
 
 msgid "can only copy from 'windows' devices"
 msgstr "il n'est possible de copier qu'à partir d'un périphérique 'windows'"

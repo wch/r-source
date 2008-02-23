@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
 "PO-Revision-Date: 2007-04-13 12:20+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -26,36 +26,36 @@ msgstr ""
 "Impossible de rendre la vue de plus haut niveau active (grid et sorties "
 "graphiques mixées ?)"
 
-#: grid.c:943
+#: grid.c:930
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1223
+#: grid.c:1210
 msgid "There is no layout defined"
 msgstr "Aucune mise en page définie"
 
-#: grid.c:1443
+#: grid.c:1430
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygône non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1452
+#: grid.c:1439
 msgid "Polygon edge not found"
 msgstr "Extrémités de polygône non trouvées"
 
-#: grid.c:1592
+#: grid.c:1579
 msgid "Require at least two points to draw arrow"
 msgstr "Il faut au moins deux points pour tracer une flêche"
 
-#: grid.c:1906
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr "Point de contrôle non fini dans Xspline"
 
-#: grid.c:3000
+#: grid.c:2987
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col incorrect"
 
-#: grid.c:3080
+#: grid.c:3067
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossible de couper au rectangle pivoté"
 
@@ -71,7 +71,7 @@ msgstr "layout.pos.col incorrect"
 msgid "singular transformation matrix"
 msgstr "matrice de transformation singulière"
 
-#: state.c:177
+#: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 "Impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"

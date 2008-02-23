@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
 "PO-Revision-Date: 2005-06-02 16:09+0900 \n"
 "Last-Translator: Nobuo Funao \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,36 +25,36 @@ msgstr ""
 " トップレベルの viewport は pop することが出来ません（grid と グラフィックス"
 "出力を混同していませんか？） "
 
-#: grid.c:943
+#: grid.c:930
 msgid "attempt to plot on null device"
 msgstr " ヌルデバイスに作図を試みる "
 
-#: grid.c:1223
+#: grid.c:1210
 msgid "There is no layout defined"
 msgstr " layout が定義されていません "
 
-#: grid.c:1443
+#: grid.c:1430
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr " 多角形頂点が見付かりません(幅もしくは高さがゼロ？) "
 
-#: grid.c:1452
+#: grid.c:1439
 msgid "Polygon edge not found"
 msgstr " 多角形の頂点が見付かりません "
 
-#: grid.c:1592
+#: grid.c:1579
 msgid "Require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
-#: grid.c:1906
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:3000
+#: grid.c:2987
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr " 不正な layout.pos.col です "
 
-#: grid.c:3080
+#: grid.c:3067
 msgid "Unable to clip to rotated rectangle"
 msgstr " 回転矩形へクリップ出来ません "
 
@@ -70,7 +70,7 @@ msgstr " 不正な layout.pos.col です "
 msgid "singular transformation matrix"
 msgstr " 特異な変換行列です "
 
-#: state.c:177
+#: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 " 現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"

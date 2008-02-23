@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -102,6 +102,10 @@ msgstr "screen 디바이스로부터만 print가 할수 없습니다"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr ""
+
+#, fuzzy
+msgid "can only print from a screen device"
+msgstr "screen 디바이스로부터만 print가 할수 없습니다"
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
@@ -277,6 +281,9 @@ msgstr "quartzFonts에서 부적절한 인수입니다(font명이 필요합니�
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "quartFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
+msgid "invalid value for 'antialias'"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'filename'"
 msgstr "부적절한 'family' 인수입니다"
@@ -287,14 +294,18 @@ msgstr ""
 msgid "invalid X11 font specification:"
 msgstr "부적절한 X11 폰트의 지정방법입니다"
 
+msgid "no such device"
+msgstr "그러한 디바이스는 없습니다"
+
+#, fuzzy
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr "'windows' 디바이스로부터만 복사할수 없습니다"
+
 msgid "invalid value for 'rescale"
 msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "windows 디바이스만을 그 전방으로 가져 올수가 없습니다"
-
-msgid "no such device"
-msgstr "그러한 디바이스는 없습니다"
 
 msgid "can only copy from 'windows' devices"
 msgstr "'windows' 디바이스로부터만 복사할수 없습니다"

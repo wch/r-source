@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -104,6 +104,10 @@ msgstr "posso stampare solo da dispositivi schermo"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr ""
+
+#, fuzzy
+msgid "can only print from a screen device"
+msgstr "posso stampare solo da dispositivi schermo"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
@@ -275,6 +279,9 @@ msgstr "argomenti non validi in quartzFonts (deve essere 'font names')"
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "argomenti non validi in quartzFonts (necessita argomenti con nome)"
 
+msgid "invalid value for 'antialias'"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'filename'"
 msgstr "argomento 'family' non valido"
@@ -285,14 +292,18 @@ msgstr ""
 msgid "invalid X11 font specification:"
 msgstr "specificazione font X11 non valida"
 
+msgid "no such device"
+msgstr "dispositivo non trovato"
+
+#, fuzzy
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr "posso copiare solo da dispositivi 'windows'"
+
 msgid "invalid value for 'rescale"
 msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "posso portare in primo piano dispositivi 'windows'"
-
-msgid "no such device"
-msgstr "dispositivo non trovato"
 
 msgid "can only copy from 'windows' devices"
 msgstr "posso copiare solo da dispositivi 'windows'"

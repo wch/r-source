@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
 "PO-Revision-Date: 2007-09-18 00:12-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -106,6 +106,10 @@ msgstr "могу печатать только с экранного устройства"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "надо указать либо 'width', либо 'height'"
+
+#, fuzzy
+msgid "can only print from a screen device"
+msgstr "могу печатать только с экранного устройства"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() вызван без открытия графического устройства"
@@ -269,6 +273,9 @@ msgstr "неправильные аргументы в quartzFonts (должен быть имена шрифтов)"
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "неправильные аргументы в quartzFonts (нужны именованные аргументы)"
 
+msgid "invalid value for 'antialias'"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'filename'"
 msgstr "неправильный аргумент 'family'"
@@ -279,14 +286,18 @@ msgstr "'res' должен быть определен до тех пор пока 'units = \"px\"'"
 msgid "invalid X11 font specification:"
 msgstr "неправильное указание шрифта X11:"
 
+msgid "no such device"
+msgstr "нет такого устройства"
+
+#, fuzzy
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr "могу копировать лишь с 'windows'-устройств"
+
 msgid "invalid value for 'rescale"
 msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "могу лишь переместить устройства windows на первый план"
-
-msgid "no such device"
-msgstr "нет такого устройства"
 
 msgid "can only copy from 'windows' devices"
 msgstr "могу копировать лишь с 'windows'-устройств"

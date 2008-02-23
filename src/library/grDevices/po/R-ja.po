@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-21 17:32\n"
+"POT-Creation-Date: 2008-02-23 21:23\n"
 "PO-Revision-Date: 2007-09-11 16:32+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -99,6 +99,10 @@ msgstr " スクリーンデバイスからしかプリントすることが出�
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr " 'width' と 'height' のどちらか一つを指定する必要があります "
+
+#, fuzzy
+msgid "can only print from a screen device"
+msgstr " スクリーンデバイスからしかプリントすることが出来ません "
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
@@ -265,6 +269,9 @@ msgstr " quartzFonts 中の不正な引数です（フォント名が必要で�
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です） "
 
+msgid "invalid value for 'antialias'"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'filename'"
 msgstr " 不正な 'family' 引数です "
@@ -275,14 +282,18 @@ msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があ�
 msgid "invalid X11 font specification:"
 msgstr " 不正な X11 フォントの指定方法です "
 
+msgid "no such device"
+msgstr " そのようなデバイスはありません "
+
+#, fuzzy
+msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgstr " 'windows' デバイスからしかコピーできません "
+
 msgid "invalid value for 'rescale"
 msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr " windows デバイスしか正面にもってくることが出来ません "
-
-msgid "no such device"
-msgstr " そのようなデバイスはありません "
 
 msgid "can only copy from 'windows' devices"
 msgstr " 'windows' デバイスからしかコピーできません "

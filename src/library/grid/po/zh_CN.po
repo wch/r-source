@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -24,36 +24,36 @@ msgstr "无法修剪到旋转了的視窗中"
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "无法弹到最上层的視窗(栅格和图像输出有混合？)"
 
-#: grid.c:943
+#: grid.c:930
 msgid "attempt to plot on null device"
 msgstr "不能在无效装置上画图"
 
-#: grid.c:1223
+#: grid.c:1210
 msgid "There is no layout defined"
 msgstr "需要设定布局"
 
-#: grid.c:1443
+#: grid.c:1430
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "找不到多边形的边(零宽度或是零高度？)"
 
-#: grid.c:1452
+#: grid.c:1439
 msgid "Polygon edge not found"
 msgstr "找不到多边形的边"
 
-#: grid.c:1592
+#: grid.c:1579
 msgid "Require at least two points to draw arrow"
 msgstr "至少需要两点才能画一个箭头"
 
-#: grid.c:1906
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr "用Xspline时不能有无限值的控制点"
 
-#: grid.c:3000
+#: grid.c:2987
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col的值不对"
 
-#: grid.c:3080
+#: grid.c:3067
 msgid "Unable to clip to rotated rectangle"
 msgstr "无法修剪到旋转了的长方形上"
 
@@ -69,7 +69,7 @@ msgstr "layout.pos.col的值不对"
 msgid "singular transformation matrix"
 msgstr "奇异转换矩阵"
 
-#: state.c:177
+#: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "无法保留栅格的状况。是不是因为你打开了太多的装置?"
 

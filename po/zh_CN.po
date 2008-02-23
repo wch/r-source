@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-18 11:37+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -132,7 +132,7 @@ msgstr "在显示'%s'时出了问题"
 #: src/main/context.c:510 src/main/datetime.c:649 src/main/datetime.c:724
 #: src/main/datetime.c:726 src/main/datetime.c:730 src/main/datetime.c:863
 #: src/main/datetime.c:865 src/main/datetime.c:1011 src/main/debug.c:208
-#: src/main/deparse.c:314 src/main/devices.c:633 src/main/dounzip.c:184
+#: src/main/deparse.c:314 src/main/devices.c:634 src/main/dounzip.c:184
 #: src/main/dounzip.c:190 src/main/envir.c:1462 src/main/envir.c:1465
 #: src/main/envir.c:1554 src/main/envir.c:1559 src/main/envir.c:1625
 #: src/main/envir.c:1641 src/main/envir.c:1647 src/main/envir.c:1738
@@ -153,8 +153,8 @@ msgstr "在显示'%s'时出了问题"
 #: src/main/platform.c:1301 src/main/platform.c:1304 src/main/platform.c:1337
 #: src/main/platform.c:1340 src/main/platform.c:1375 src/main/platform.c:1414
 #: src/main/platform.c:1416 src/main/platform.c:1474 src/main/platform.c:1565
-#: src/main/platform.c:1614 src/main/platform.c:1811 src/main/platform.c:1848
-#: src/main/platform.c:1958 src/main/platform.c:1984 src/main/plot.c:2913
+#: src/main/platform.c:1614 src/main/platform.c:1818 src/main/platform.c:1855
+#: src/main/platform.c:1965 src/main/platform.c:1991 src/main/plot.c:2913
 #: src/main/plot3d.c:2466 src/main/plot3d.c:2470 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2483 src/main/plot3d.c:2487
 #: src/main/print.c:177 src/main/print.c:183 src/main/print.c:205
@@ -181,8 +181,14 @@ msgstr "在显示'%s'时出了问题"
 #: src/modules/internet/internet.c:296 src/modules/lapack/Lapack.c:109
 #: src/modules/lapack/Lapack.c:199 src/modules/lapack/Lapack.c:409
 #: src/modules/lapack/Lapack.c:505 src/modules/lapack/Lapack.c:562
-#: src/modules/lapack/Lapack.c:814 src/unix/sys-std.c:1180
-#: src/unix/sys-std.c:1203
+#: src/modules/lapack/Lapack.c:814 src/modules/X11/devX11.c:2565
+#: src/modules/X11/devX11.c:2569 src/modules/X11/devX11.c:2797
+#: src/modules/X11/devX11.c:2802 src/modules/X11/devX11.c:2806
+#: src/modules/X11/devX11.c:2810 src/modules/X11/devX11.c:2814
+#: src/modules/X11/devX11.c:2825 src/modules/X11/devX11.c:2855
+#: src/modules/X11/devX11.c:2860 src/modules/X11/devX11.c:2864
+#: src/modules/X11/devX11.c:2868 src/modules/X11/devX11.c:2879
+#: src/unix/sys-std.c:1180 src/unix/sys-std.c:1203
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'变元不对"
@@ -234,24 +240,26 @@ msgstr "时间标签不对"
 
 #: src/gnuwin32/extra.c:533 src/gnuwin32/extra.c:1475
 #: src/gnuwin32/extra.c:1651 src/gnuwin32/extra.c:1654
-#: src/gnuwin32/extra.c:1657 src/main/character.c:844 src/main/colors.c:364
+#: src/gnuwin32/extra.c:1657 src/main/character.c:844 src/main/colors.c:365
 #: src/main/connections.c:2650 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:585 src/main/datetime.c:651 src/main/datetime.c:867
 #: src/main/dotcode.c:199 src/main/errors.c:859 src/main/errors.c:890
 #: src/main/errors.c:991 src/main/errors.c:1016 src/main/errors.c:1021
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2004 src/main/plot.c:278 src/main/plot.c:472
+#: src/main/platform.c:2011 src/main/plot.c:278 src/main/plot.c:472
 #: src/main/plot.c:477 src/main/plot.c:2054 src/main/plot.c:2061
-#: src/main/plot.c:3125 src/main/plot.c:3127 src/main/plot.c:3129
-#: src/main/plot.c:3283 src/main/plot3d.c:1399 src/main/plot3d.c:2544
+#: src/main/plot.c:3126 src/main/plot.c:3128 src/main/plot.c:3130
+#: src/main/plot.c:3287 src/main/plot3d.c:1399 src/main/plot3d.c:2544
 #: src/main/plot3d.c:2548 src/main/plot3d.c:2550 src/main/seq.c:154
 #: src/main/seq.c:245 src/main/seq.c:248 src/main/sort.c:790
 #: src/main/sort.c:890 src/main/source.c:172 src/main/summary.c:977
 #: src/main/sysutils.c:224 src/main/util.c:863 src/main/util.c:868
-#: src/main/util.c:875 src/main/util.c:878 src/modules/X11/devX11.c:2330
-#: src/modules/X11/devX11.c:2357 src/modules/X11/devX11.c:2362
-#: src/modules/X11/devX11.c:2367 src/modules/X11/devX11.c:2377
+#: src/main/util.c:875 src/main/util.c:878 src/modules/X11/devX11.c:2481
+#: src/modules/X11/devX11.c:2508 src/modules/X11/devX11.c:2513
+#: src/modules/X11/devX11.c:2518 src/modules/X11/devX11.c:2528
+#: src/modules/X11/devX11.c:2533 src/modules/X11/devX11.c:2537
+#: src/modules/X11/devX11.c:2818 src/modules/X11/devX11.c:2872
 #: src/unix/sys-std.c:1276
 #, c-format
 msgid "invalid '%s' value"
@@ -1666,53 +1674,53 @@ msgstr "名字矢量不对"
 msgid "invalid gray level, must be in [0,1]."
 msgstr "灰度必需在[0,1] 之间."
 
-#: src/main/colors.c:415
+#: src/main/colors.c:426
 msgid "rgb is not a matrix (internally)"
 msgstr "rgb不是矩阵(内部)"
 
-#: src/main/colors.c:418
+#: src/main/colors.c:429
 msgid "rgb must have 3 rows (internally)"
 msgstr "rgb必需有三行(内部)"
 
-#: src/main/colors.c:472
+#: src/main/colors.c:483
 msgid "bad hsv to rgb color conversion"
 msgstr "hsv到rgb颜色转换不对"
 
-#: src/main/colors.c:1263 src/main/errors.c:1114 src/main/logic.c:164
+#: src/main/colors.c:1274 src/main/errors.c:1114 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "变元种类不对"
 
-#: src/main/colors.c:1267
+#: src/main/colors.c:1278
 msgid "unknown palette (need >= 2 colors)"
 msgstr "没有这种调色(至少需要两种颜色)"
 
-#: src/main/colors.c:1271
+#: src/main/colors.c:1282
 msgid "maximum number of colors exceeded"
 msgstr "颜色的数目已超过最大值"
 
-#: src/main/colors.c:1302 src/main/engine.c:2880
+#: src/main/colors.c:1313 src/main/engine.c:2880
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "十六进制'color'设定或lty设定不对"
 
-#: src/main/colors.c:1320 src/main/colors.c:1330
+#: src/main/colors.c:1331 src/main/colors.c:1341
 msgid "invalid RGB specification"
 msgstr "RGB设定不对"
 
-#: src/main/colors.c:1363
+#: src/main/colors.c:1374
 #, fuzzy, c-format
 msgid "invalid color name '%s'"
 msgstr "颜色名字不对"
 
-#: src/main/colors.c:1372
+#: src/main/colors.c:1383
 #, fuzzy, c-format
 msgid "invalid color specification '%s'"
 msgstr "颜色设定不对"
 
-#: src/main/colors.c:1492
+#: src/main/colors.c:1503
 msgid "supplied color is not numeric nor character"
 msgstr "所提供的颜色值不是数值，也不是字符串"
 
-#: src/main/colors.c:1524
+#: src/main/colors.c:1535
 #, fuzzy
 msgid "Invalid color specification"
 msgstr "颜色设定不对"
@@ -1929,11 +1937,11 @@ msgstr "文件'%s'看起来不象是bzip2类"
 msgid "allocation of bzfile connection failed"
 msgstr "分配bz文件链结失败"
 
-#: src/main/connections.c:1530 src/modules/X11/devX11.c:2467
+#: src/main/connections.c:1530 src/modules/X11/devX11.c:2995
 msgid "memory allocation to copy clipboard failed"
 msgstr "抄写裁剪板时内存分配失败"
 
-#: src/main/connections.c:1535 src/modules/X11/devX11.c:2455
+#: src/main/connections.c:1535 src/modules/X11/devX11.c:2983
 msgid "clipboard cannot be opened or contains no text"
 msgstr "打不开裁剪板，或是裁剪板不含文字"
 
@@ -2392,9 +2400,9 @@ msgstr "在编译R程序时没有建立存储轮廓这一功能"
 #: src/main/deparse.c:150 src/main/plot.c:869 src/main/plot.c:1386
 #: src/main/plot.c:1695 src/main/plot.c:1762 src/main/plot.c:1839
 #: src/main/plot.c:1936 src/main/plot.c:2014 src/main/plot.c:2295
-#: src/main/plot.c:2473 src/main/plot.c:2731 src/main/plot.c:3265
-#: src/main/plot.c:3392 src/main/plot.c:3471 src/main/plot.c:3642
-#: src/main/plot.c:3920 src/main/plot3d.c:1362 src/main/sprintf.c:145
+#: src/main/plot.c:2473 src/main/plot.c:2731 src/main/plot.c:3269
+#: src/main/plot.c:3396 src/main/plot.c:3475 src/main/plot.c:3646
+#: src/main/plot.c:3924 src/main/plot3d.c:1362 src/main/sprintf.c:145
 #: src/main/sprintf.c:170
 msgid "too few arguments"
 msgstr "变元数目太少"
@@ -2486,6 +2494,11 @@ msgstr "分配设备内存不够(addDevice)"
 #: src/main/devices.c:619
 msgid "Hit <Return> to see next plot: "
 msgstr "按<Return>键来看下一个图: "
+
+#: src/main/devices.c:650
+#, fuzzy
+msgid "cannot obtain size for the null device"
+msgstr "没有在使用中的或缺省的设备"
 
 #: src/main/dotcode.c:109 src/main/dotcode.c:139
 msgid "NULL value passed as symbol address"
@@ -2755,12 +2768,12 @@ msgid "no graphics system to unregister"
 msgstr "没有可以取消注册的图形系统"
 
 #: src/main/engine.c:441 src/main/engine.c:446 src/main/engine.c:454
-#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:950
+#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:990
 msgid "invalid line end"
 msgstr "行终点出错"
 
 #: src/main/engine.c:506 src/main/engine.c:511 src/main/engine.c:519
-#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:968
+#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1008
 msgid "invalid line join"
 msgstr "行接合出错"
 
@@ -4239,31 +4252,31 @@ msgstr "模型矩阵里目前不能有复数"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "模型矩阵里不能有种类为'%s'的变元"
 
-#: src/main/names.c:955
+#: src/main/names.c:959
 msgid "string argument required"
 msgstr "需要字符串变元"
 
-#: src/main/names.c:963
+#: src/main/names.c:967
 msgid "no such primitive function"
 msgstr "没有这种原始函数"
 
-#: src/main/names.c:1077
+#: src/main/names.c:1081
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零长度变数名"
 
-#: src/main/names.c:1079
+#: src/main/names.c:1083
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1108
+#: src/main/names.c:1112
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1111
+#: src/main/names.c:1115
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1113
+#: src/main/names.c:1117
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"
@@ -4945,29 +4958,29 @@ msgstr "设定'LC_NUMERIC'后有可能会使R运转出现问题"
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "操作系统报告说无法执行将本地化设成\"%s\"的请求"
 
-#: src/main/platform.c:1766
+#: src/main/platform.c:1773
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'必需是长度为一的字符矢量"
 
-#: src/main/platform.c:1772
+#: src/main/platform.c:1779
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
-#: src/main/platform.c:1779
+#: src/main/platform.c:1786
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname回覆了错误的格式"
 
-#: src/main/platform.c:1788
+#: src/main/platform.c:1795
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支持nsl()"
 
-#: src/main/platform.c:1833 src/main/platform.c:1871
+#: src/main/platform.c:1840 src/main/platform.c:1878
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'已存在"
 
-#: src/main/platform.c:2011
+#: src/main/platform.c:2018
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "本平台不支持nsl()"
@@ -4980,7 +4993,7 @@ msgstr "逻辑绘图符号里只允许用NA"
 msgid "invalid plotting symbol"
 msgstr "绘图符号不对"
 
-#: src/main/plot.c:204 src/modules/X11/devX11.c:1386
+#: src/main/plot.c:204 src/modules/X11/devX11.c:1459
 msgid "invalid font specification"
 msgstr "字形设定不对"
 
@@ -5103,7 +5116,7 @@ msgstr "箭头角度不对"
 msgid "invalid arrow head specification"
 msgstr "箭头设定不对"
 
-#: src/main/plot.c:2026 src/main/plot.c:3132
+#: src/main/plot.c:2026 src/main/plot.c:3133
 msgid "zero length 'labels'"
 msgstr "'labels'的长度不能为零"
 
@@ -5159,113 +5172,113 @@ msgstr "'a'和'b'的值必需是有限的"
 msgid "invalid number of points in locator()"
 msgstr "locator()里点的数目不对"
 
-#: src/main/plot.c:3121
+#: src/main/plot.c:3122
 msgid "invalid number of points in identify()"
 msgstr "identify()里点的数目不对"
 
-#: src/main/plot.c:3123
+#: src/main/plot.c:3124
 msgid "incorrect argument type"
 msgstr "变元种类不对"
 
-#: src/main/plot.c:3135
+#: src/main/plot.c:3136
 msgid "different argument lengths"
 msgstr "变元长度不一样"
 
-#: src/main/plot.c:3137
+#: src/main/plot.c:3138
 msgid "more 'labels' than points"
 msgstr ""
 
-#: src/main/plot.c:3190
+#: src/main/plot.c:3191
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "警告: 没有%.2f英尺的点\n"
 
-#: src/main/plot.c:3196
+#: src/main/plot.c:3197
 msgid "warning: nearest point already identified\n"
 msgstr "警告: 已经找到了最近的点\n"
 
-#: src/main/plot.c:3277
+#: src/main/plot.c:3281
 msgid "invalid units"
 msgstr "单位不对"
 
-#: src/main/plot.c:3455 src/main/plot.c:3565
+#: src/main/plot.c:3459 src/main/plot.c:3569
 msgid "invalid dendrogram input"
 msgstr "谱系图输入不对"
 
-#: src/main/plot.c:3624
+#: src/main/plot.c:3628
 msgid "invalid symbol parameter vector"
 msgstr "符号参数矢量不对"
 
-#: src/main/plot.c:3647
+#: src/main/plot.c:3651
 msgid "invalid symbol coordinates"
 msgstr "符号座标不对"
 
-#: src/main/plot.c:3655
+#: src/main/plot.c:3659
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/参数长度不一样"
 
-#: src/main/plot.c:3674
+#: src/main/plot.c:3678
 msgid "invalid circles data"
 msgstr "圆圈数据不对"
 
-#: src/main/plot.c:3676 src/main/plot.c:3695 src/main/plot.c:3719
-#: src/main/plot.c:3748
+#: src/main/plot.c:3680 src/main/plot.c:3699 src/main/plot.c:3723
+#: src/main/plot.c:3752
 msgid "invalid symbol parameter"
 msgstr "符号参数不对"
 
-#: src/main/plot.c:3693
+#: src/main/plot.c:3697
 msgid "invalid squares data"
 msgstr "正方形数据不对"
 
-#: src/main/plot.c:3717
+#: src/main/plot.c:3721
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "长方形数据不对(需要两个列)"
 
-#: src/main/plot.c:3746
+#: src/main/plot.c:3750
 msgid "invalid stars data"
 msgstr "星形数据不对"
 
-#: src/main/plot.c:3787
+#: src/main/plot.c:3791
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
-#: src/main/plot.c:3790
+#: src/main/plot.c:3794
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "温度计[,%s]不对"
 
-#: src/main/plot.c:3793
+#: src/main/plot.c:3797
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "温度计[,%s]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:3796
+#: src/main/plot.c:3800
 msgid "invalid thermometers[,1:2]"
 msgstr "温度计[,1:2]"
 
-#: src/main/plot.c:3835
+#: src/main/plot.c:3839
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "盒形图数据不对(需要五个列)"
 
-#: src/main/plot.c:3844
+#: src/main/plot.c:3848
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "盒形图[,5]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:3846
+#: src/main/plot.c:3850
 msgid "invalid boxplots[, 1:4]"
 msgstr "盒形图[, 1:4]不对"
 
-#: src/main/plot.c:3892
+#: src/main/plot.c:3896
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
-#: src/main/plot.c:3933 src/main/plot.c:3935 src/main/plot.c:3940
-#: src/main/plot.c:3942
+#: src/main/plot.c:3937 src/main/plot.c:3939 src/main/plot.c:3944
+#: src/main/plot.c:3946
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s'变元的长度不对"
 
-#: src/main/plot.c:3955
+#: src/main/plot.c:3959
 msgid "unable to allocate memory (in do_xspline)"
 msgstr "无法分配内存(do_xspline)"
 
@@ -5371,32 +5384,32 @@ msgstr "'which'设定不对"
 msgid "invalid math style encountered"
 msgstr "座标数目%d不对"
 
-#: src/main/plotmath.c:1325 src/main/plotmath.c:1474 src/main/plotmath.c:2773
+#: src/main/plotmath.c:1331 src/main/plotmath.c:1480 src/main/plotmath.c:2779
 #, fuzzy
 msgid "invalid mathematical annotation"
 msgstr "内部函数不对"
 
-#: src/main/plotmath.c:1779
+#: src/main/plotmath.c:1785
 #, fuzzy
 msgid "invalid accent"
 msgstr "变元不对"
 
-#: src/main/plotmath.c:2073
+#: src/main/plotmath.c:2079
 #, fuzzy
 msgid "invalid group delimiter"
 msgstr "'x'极限不对"
 
-#: src/main/plotmath.c:2100 src/main/plotmath.c:2246
+#: src/main/plotmath.c:2106 src/main/plotmath.c:2252
 #, fuzzy
 msgid "invalid group specification"
 msgstr "字形设定不对"
 
-#: src/main/plotmath.c:2171
+#: src/main/plotmath.c:2177
 #, fuzzy
 msgid "group is incomplete"
 msgstr "显示串列没有完全被刷新"
 
-#: src/main/plotmath.c:3260
+#: src/main/plotmath.c:3266
 #, fuzzy
 msgid "Metric information not available for this family/device"
 msgstr "此链结不能被缩短"
@@ -7146,17 +7159,17 @@ msgstr "系统计算上是奇异的: 倒条件数=%g"
 msgid "argument 'logarithm' must be logical"
 msgstr "变元'logarithm'必需是逻辑值"
 
-#: src/modules/X11/devX11.c:284
+#: src/modules/X11/devX11.c:288
 msgid "cannot set grayscale: reverting to monochrome"
 msgstr "无法设灰度: 用黑白颜色"
 
-#: src/modules/X11/devX11.c:367
+#: src/modules/X11/devX11.c:371
 msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
 msgstr "X11驱动程序无法打开颜色文块，转用黑白色。"
 
-#: src/modules/X11/devX11.c:412
+#: src/modules/X11/devX11.c:416
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
@@ -7164,7 +7177,7 @@ msgstr ""
 "错误：X11无法分配额外的图案颜色。\n"
 "请考虑用colortype=\"pseudo.cube\"或\"gray\"选项来调用X11。"
 
-#: src/modules/X11/devX11.c:817
+#: src/modules/X11/devX11.c:856
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
@@ -7172,122 +7185,144 @@ msgstr ""
 "找不到任何X11字形\n"
 "请检查字形路径设得是不是对。"
 
-#: src/modules/X11/devX11.c:881
+#: src/modules/X11/devX11.c:920
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr "虽然需要的是%2$d，但X11却大小为%1$d的字形"
 
-#: src/modules/X11/devX11.c:914
+#: src/modules/X11/devX11.c:954
 #, fuzzy, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
 msgstr "无法载入X11大小为%d的字形"
 
-#: src/modules/X11/devX11.c:923
+#: src/modules/X11/devX11.c:963
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr "这装置不支持半透明输出：每一页只提醒一次"
 
-#: src/modules/X11/devX11.c:1031
+#: src/modules/X11/devX11.c:1073
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11協定错误:%s"
 
-#: src/modules/X11/devX11.c:1048
+#: src/modules/X11/devX11.c:1090
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11致命的IO错误: 请保存工作数据，然后重新启动R"
 
-#: src/modules/X11/devX11.c:1107
+#: src/modules/X11/devX11.c:1148
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr "Xlib不支持语言环境: 某些X操作指令将在C语言环境中起动"
 
-#: src/modules/X11/devX11.c:1108
+#: src/modules/X11/devX11.c:1149
 msgid "X cannot set locale modifiers"
 msgstr "X无法设定语言环境修飾器"
 
-#: src/modules/X11/devX11.c:1113
+#: src/modules/X11/devX11.c:1153
 msgid "no png support in this version of R"
 msgstr "本R版本不支持png"
 
-#: src/modules/X11/devX11.c:1119
+#: src/modules/X11/devX11.c:1159
 msgid "filename too long in png() call"
 msgstr "png()调用时文件名字太长"
 
-#: src/modules/X11/devX11.c:1123 src/modules/X11/devX11.c:1618
+#: src/modules/X11/devX11.c:1163 src/modules/X11/devX11.c:1691
+#: src/modules/X11/devX11.c:2655
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "无法打开PNG文件'%s'"
 
-#: src/modules/X11/devX11.c:1134
+#: src/modules/X11/devX11.c:1175
 msgid "no jpeg support in this version of R"
 msgstr "本R版本不支持jpeg"
 
-#: src/modules/X11/devX11.c:1144
+#: src/modules/X11/devX11.c:1185
 msgid "filename too long in jpeg() call"
 msgstr "jpeg()调用时文件名字太长"
 
-#: src/modules/X11/devX11.c:1148 src/modules/X11/devX11.c:1625
+#: src/modules/X11/devX11.c:1189 src/modules/X11/devX11.c:1698
+#: src/modules/X11/devX11.c:2657
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "无法打开JPEG文件'%s'"
 
-#: src/modules/X11/devX11.c:1169
+#: src/modules/X11/devX11.c:1211
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "无法打开链结到X11显示'%s'"
 
-#: src/modules/X11/devX11.c:1189
+#: src/modules/X11/devX11.c:1231
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg()不支持透明绘图: 用白色的背景"
 
-#: src/modules/X11/devX11.c:1302
+#: src/modules/X11/devX11.c:1344
 msgid "unable to create X11 window"
 msgstr "无法建立X11窗口"
 
-#: src/modules/X11/devX11.c:1350
+#: src/modules/X11/devX11.c:1423
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d'作为象素值很有可能不对"
 
-#: src/modules/X11/devX11.c:1355
+#: src/modules/X11/devX11.c:1428
 msgid "unable to create pixmap"
 msgstr "无法建立像映"
 
-#: src/modules/X11/devX11.c:1426
+#: src/modules/X11/devX11.c:1499
 msgid "font family not found in X11 font database"
 msgstr "X11字形数据库里没有这一字形家族"
 
-#: src/modules/X11/devX11.c:1469
+#: src/modules/X11/devX11.c:1542
 #, fuzzy, c-format
 msgid "invalid use of %d < 0 in '%s'"
 msgstr "'%s'的值不对"
 
-#: src/modules/X11/devX11.c:2277
+#: src/modules/X11/devX11.c:2143
+msgid "type=\"Cairo\" is not supported on this build -- using \"Xlib\""
+msgstr ""
+
+#: src/modules/X11/devX11.c:2426
 msgid "invalid string argument"
 msgstr "字符串变元不对"
 
-#: src/modules/X11/devX11.c:2302
+#: src/modules/X11/devX11.c:2452
 #, c-format
 msgid "unable to start device %s"
 msgstr "无法打开%s设备"
 
-#: src/modules/X11/devX11.c:2326
+#: src/modules/X11/devX11.c:2477
 msgid "invalid 'width' or 'height'"
 msgstr "'width'或'height'不对"
 
-#: src/modules/X11/devX11.c:2333
+#: src/modules/X11/devX11.c:2484
 msgid "invalid colortype passed to X11 driver"
 msgstr "传给X11驅動器的颜色种类不对"
 
-#: src/modules/X11/devX11.c:2347
+#: src/modules/X11/devX11.c:2498
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "没有这种X11颜色/颜色模型 --用黑白色的"
 
-#: src/modules/X11/devX11.c:2418
+#: src/modules/X11/devX11.c:2571
+#, fuzzy
+msgid "no plot on device to save"
+msgstr "没有可以保存的历史"
+
+#: src/modules/X11/devX11.c:2836 src/modules/X11/devX11.c:2890
+#, fuzzy
+msgid "unable to start device jpeg"
+msgstr "无法打开%s设备"
+
+#: src/modules/X11/devX11.c:2901 src/modules/X11/devX11.c:2908
+#: src/modules/X11/devX11.c:2915
+#, fuzzy
+msgid "type=\"Cairo\" is not supported on this build"
+msgstr "本平台不支持nsl()"
+
+#: src/modules/X11/devX11.c:2946
 msgid "unable to contact X11 display"
 msgstr "无法链结到X11显示"
 
-#: src/modules/X11/devX11.c:2486
+#: src/modules/X11/devX11.c:3014
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "无法为X11Routines结构分配内存"
 
@@ -7538,13 +7573,13 @@ msgstr "GUI里没有X11模块"
 msgid "X11 routines cannot be accessed in module"
 msgstr "模块没有X11例行程序"
 
-#: src/unix/X11.c:75 src/unix/X11.c:94 src/unix/X11.c:105 src/unix/X11.c:116
-#: src/unix/X11.c:127
+#: src/unix/X11.c:75 src/unix/X11.c:86 src/unix/X11.c:97 src/unix/X11.c:108
+#: src/unix/X11.c:127 src/unix/X11.c:138 src/unix/X11.c:149 src/unix/X11.c:160
 msgid "X11 module cannot be loaded"
 msgstr "无法载入X11模块"
 
-#: src/unix/X11.c:140 src/unix/X11.c:147 src/unix/X11.c:154 src/unix/X11.c:160
-#: src/unix/X11.c:166
+#: src/unix/X11.c:173 src/unix/X11.c:179 src/unix/X11.c:185 src/unix/X11.c:191
+#: src/unix/X11.c:198 src/unix/X11.c:205 src/unix/X11.c:211 src/unix/X11.c:217
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
 

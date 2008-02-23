@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05+0000\n"
-"PO-Revision-Date: 2008-01-27 18:05+0000\n"
+"POT-Creation-Date: 2008-02-23 21:23+0000\n"
+"PO-Revision-Date: 2008-02-23 21:23+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -46,35 +46,35 @@ msgstr "Cannot clip to rotated viewport"
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 
-#: grid.c:943
+#: grid.c:930
 msgid "attempt to plot on null device"
 msgstr "attempt to plot on null device"
 
-#: grid.c:1223
+#: grid.c:1210
 msgid "There is no layout defined"
 msgstr "There is no layout defined"
 
-#: grid.c:1443
+#: grid.c:1430
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygon edge not found (zero-width or zero-height?)"
 
-#: grid.c:1452
+#: grid.c:1439
 msgid "Polygon edge not found"
 msgstr "Polygon edge not found"
 
-#: grid.c:1592
+#: grid.c:1579
 msgid "Require at least two points to draw arrow"
 msgstr "Require at least two points to draw arrow"
 
-#: grid.c:1906
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr "Non-finite control point in Xspline"
 
-#: grid.c:3000
+#: grid.c:2987
 msgid "invalid plotting symbol"
 msgstr "invalid plotting symbol"
 
-#: grid.c:3080
+#: grid.c:3067
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 
@@ -90,7 +90,7 @@ msgstr "invalid layout.pos.col"
 msgid "singular transformation matrix"
 msgstr "singular transformation matrix"
 
-#: state.c:177
+#: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Unable to store grid state.  Too many devices open?"
 
