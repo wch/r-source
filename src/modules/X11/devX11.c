@@ -30,7 +30,7 @@
 # include <config.h>
 #endif
 
-//#define HAVE_PANGOCAIRO
+/* #undef HAVE_PANGOCAIRO */
 
 #include <Defn.h>
 

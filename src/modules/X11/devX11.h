@@ -50,9 +50,13 @@ typedef enum {
 #include <X11/Intrinsic.h>  /*->	Xlib.h	Xutil.h Xresource.h .. */
 
 #ifdef HAVE_WORKING_CAIRO
-# include <pango/pango.h>
-# include <pango/pangocairo.h>
-# include <cairo-xlib.h>
+# ifdef HAVE_PANGOCAIRO
+#  include <pango/pango.h>
+#  include <pango/pangocairo.h>
+# else
+#  include <cairo.h>
+# endif
+#  include <cairo-xlib.h>
 #endif
 
 
