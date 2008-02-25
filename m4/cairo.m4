@@ -58,13 +58,16 @@ else
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
 
-     AC_CACHE_CHECK([whether cairo including pango works], 
+     AC_CACHE_CHECK([whether cairo including pango is >= 1.2 and works], 
 		    [r_cv_cairo_works], [AC_LINK_IFELSE([
 #include <pango/pango.h>
 #include <pango/pangocairo.h>
 #include <cairo-xlib.h>
+#if CAIRO_VERSION  < 10200
+#error cairo version >= 1.2 required
+#endif
 int main(void) {
-    cairo_t  *CC;    
+    cairo_t  *CC;
     cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
     pango_cairo_create_layout(CC);
     pango_font_description_new();
@@ -104,15 +107,19 @@ int main(void) {
          r_cairo_svg=yes
       fi
       CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
-      CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
+      ## This is for static MacOS build
+      CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
 
       CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
       LIBS="${LIBS} ${CAIRO_LIBS}"
 
-      AC_CACHE_CHECK([whether cairo including pango works], 
+      AC_CACHE_CHECK([whether cairo is >= 1.2 and works], 
 		     [r_cv_cairo_works], [AC_LINK_IFELSE([
 #include <cairo.h>
 #include <cairo-xlib.h>
+#if CAIRO_VERSION  < 10200
+#error cairo version >= 1.2 required
+#endif
 int main(void) {
     cairo_t  *CC;    
     cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);

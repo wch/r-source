@@ -27,6 +27,8 @@
     cairo_create
     cairo_destroy
     cairo_fill_preserve
+    cairo_image_surface_create
+    cairo_image_surface_get_data (1.2)
     cairo_line_to
     cairo_move_to
     cairo_new_path
@@ -37,6 +39,7 @@
     cairo_restore
     cairo_rotate
     cairo_save
+    cairo_set_antialias
     cairo_set_dash
     cairo_set_line_cap
     cairo_set_line_join
@@ -45,20 +48,26 @@
     cairo_set_operator
     cairo_set_source_rgb
     cairo_set_source_rgba
+    cairo_set_source_surface
     cairo_status
     cairo_stroke
     cairo_surface_destroy
     cairo_surface_status
+    cairo_surface_write_to_png
     cairo_xlib_surface_create
     cairo_xlib_surface_set_size
 
     cairo_show_text
     cairo_text_extents
 
+    cairo_pdf_surface_create (1.2)
+    cairo_ps_surface_create  (1.2)
+    cairo_svg_surface_create (1.2)
+
     g_object_unref  (glib)
 
-    pango_cairo_create_layout
-    pango_cairo_show_layout
+    pango_cairo_create_layout (1.10)
+    pango_cairo_show_layout (1.10)
     pango_font_description_free
     pango_font_description_new
     pango_font_description_set_family

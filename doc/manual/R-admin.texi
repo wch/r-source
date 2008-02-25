@@ -2363,7 +2363,7 @@ sources will be used if no suitable external @code{gettext} is found.
 
 The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
 @code{tiff()} uses the @code{cairo} and (optionally) @code{pango}
-libraries.  Cairo version 1.0 (from August 2005) suffices.  @R{} checks
+libraries.  Cairo version 1.2 is required.  @R{} checks
 for @command{pkg-config}, and uses that to check first that the
 @samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
 additional flags are needed for the @samp{cairo-xlib} package, then if
