@@ -80,8 +80,8 @@ static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REAL
 static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
 						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 
-static R_NativePrimitiveArgType lowesp_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
-static R_NativePrimitiveArgType lowesw_t[] = {
+static R_NativePrimitiveArgType lowesw_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType lowesp_t[] = {
     INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, REALSXP};
 
 

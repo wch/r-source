@@ -165,7 +165,7 @@ simpleLoess <-
 			       as.double(fitted.residuals),
 			       as.integer(N),
 			       robust = double(N),
-			       double(N))$robust
+			       integer(N))$robust
     }
     if(surface == "interpolate")
     {
@@ -182,7 +182,7 @@ simpleLoess <-
 				 as.double(z$fitted.values),
 				 as.double(weights),
 				 as.double(robust),
-				 double(N),
+				 integer(N),
 				 pseudovalues = double(N))$pseudovalues
 	zz <- .C(R_loess_raw,
 		as.double(pseudovalues),
