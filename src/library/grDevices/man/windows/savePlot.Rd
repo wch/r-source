@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
@@ -9,7 +9,7 @@
 \usage{
 savePlot(filename = "Rplot",
          type = c("wmf", "emf", "png", "jpeg", "jpg", "bmp",
-                  "ps", "eps", "pdf"),
+                  "tiff", "tif", "ps", "eps", "pdf"),
          device = dev.cur(),
          restoreConsole = TRUE)
 }
@@ -17,7 +17,7 @@ savePlot(filename = "Rplot",
   \item{filename}{The filename under which to save the plot, without
     the extension.}
   \item{type}{The type of plot, Windows metafile, PNG, JPEG, BMP
-    (Windows bitmap format), PostScript or PDF.}
+    (Windows bitmap format), TIFF, PostScript or PDF.}
   \item{device}{A device number of a \code{windows} device, by default
     the current device.}
   \item{restoreConsole}{See the \sQuote{Details} section
@@ -34,15 +34,17 @@ savePlot(filename = "Rplot",
   \code{type = "wmf"} will copy to the clipboard.
 
   Types \code{"eps"} and \code{"ps"} are the same thing apart from the
-  extension.  Similarly \code{"wmf"}/\code{"emf"} and
-  \code{"jpeg"}/\code{"jpg"}.
+  extension.  Similarly \code{"wmf"}/\code{"emf"},
+  \code{"jpeg"}/\code{"jpg"} and \code{"tiff"}/\code{"tif"}.
+
+  JPEG quality is 75\%, and TIFF is saved without compression.
 }
 \value{
   None, but a plot file will be created.
 }
 
 \seealso{
-  \code{\link{windows}}, \code{\link{dev.print}}
+  \code{\link{png}}, \code{\link{dev.print}}
 }
 
 \keyword{misc}

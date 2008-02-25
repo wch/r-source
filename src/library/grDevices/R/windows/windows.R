@@ -208,7 +208,7 @@ bringToTop <- function(which = dev.cur(), stay = FALSE)
 
 savePlot <- function(filename = "Rplot",
                      type = c("wmf", "emf", "png", "jpeg", "jpg", "bmp",
-                     "ps", "eps", "pdf"),
+                     "tiff", "tif", "ps", "eps", "pdf"),
                      device = dev.cur(),
                      restoreConsole = TRUE)
 {

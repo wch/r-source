@@ -204,10 +204,10 @@ OTHERS
 	demo(graphics) which on a 96dpi system use diameter 5 rather
 	than radius 2.
 
-    o	There is a new tiff() graphics device, and an option to save
-	to TIFF from the graphics device menu.  (The only advantage of
-	(simple) TIFF over PNG is that some journals are unable to cope with
-	more recent formats.)
+    o	There is a new tiff() graphics device, and an option to save to
+	TIFF from the graphics device menu and in savePlot().  (The
+	only advantage of (simple) TIFF over PNG is that some journals
+	are unable to cope with formats from as recently as the 1990s.)
 
 
 BUILDING R
