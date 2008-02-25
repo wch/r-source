@@ -134,7 +134,7 @@ typedef struct {
     int npages;				/* counter for a pixmap */
     FILE *fp;				/* file for a bitmap device */
     char filename[PATH_MAX];		/* filename for a bitmap device */
-    int quality;			/* JPEG quality */
+    int quality;			/* JPEG quality/TIFF compression */
 
     Rboolean handleOwnEvents;           /* Flag indicating whether events will
 					   be handled externally from R (TRUE),

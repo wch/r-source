@@ -437,7 +437,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 
 int R_SaveAsTIFF(void  *d, int width, int height,
 		unsigned int (*gp)(void *, int, int),
-		int bgr, const char *outfile, int res)
+		int bgr, const char *outfile, int res, int compression)
 {
     TIFF *out;
     int sampleperpixel;
@@ -470,6 +470,22 @@ int R_SaveAsTIFF(void  *d, int width, int height,
     TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
     TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
     TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+#if 0
+    /* Possible compression values
+       COMPRESSION_NONE = 1;
+       COMPRESSION_CCITTRLE = 2;
+       COMPRESSION_CCITTFAX3 = COMPRESSION_CCITT_T4 = 3;
+       COMPRESSION_CCITTFAX4 = COMPRESSION_CCITT_T6 = 4;
+       COMPRESSION_LZW = 5;
+       COMPRESSION_JPEG = 7;
+       COMPRESSION_DEFLATE = 32946;
+       COMPRESSION_ADOBE_DEFLATE = 8;  
+    */
+    TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
+#endif
+    if(compression > 1)
+	TIFFSetField(out, TIFFTAG_COMPRESSION, compression);
+
     if (res > 0) {
 	TIFFSetField(out, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
 	TIFFSetField(out, TIFFTAG_XRESOLUTION, (float) res);
@@ -500,7 +516,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 #else
 int R_SaveAsTIFF(void  *d, int width, int height,
 		unsigned int (*gp)(void *, int, int),
-		int bgr, const char *outfile, int res)
+		 int bgr, const char *outfile, int res, int compression)
 {
     warning("No TIFF support in this version of R");
     return 0;

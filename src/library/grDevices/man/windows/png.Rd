@@ -23,10 +23,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
     restoreConsole = TRUE)
 tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
-    units = "px", pointsize = 12,
-    compression = c("none", "rle", "lzw", "jpeg", "zip"),
-    bg = "white", res = NA,
-    restoreConsole = TRUE)
+     units = "px", pointsize = 12,
+     compression = c("none", "rle", "lzw", "jpeg", "zip"),
+     bg = "white", res = NA,
+     restoreConsole = TRUE)
 }
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.  The
@@ -63,9 +63,8 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
   but may be useful for image plots, for example.  The BMP format is
   standard on Windows, and supported by most viewers elsewhere.
   TIFF is a meta-format: the default format written by \code{tiff} is lossless
-  and stores RGB (and alpha where appropriate) values
-  uncompressed---such files are widely accepted, which is their main
-  virtue over PNG.
+  and stores RGB values uncompressed---such files are widely accepted,
+  which is their main virtue over PNG.
 
   Windows imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.

@@ -152,8 +152,9 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
 }
 
 tiff <- function(filename = "Rplot%03d.tiff",
-                 width = 480, height = 480, units = "px",
-                 pointsize = 12, bg = "white", res = NA, ...,
+                 width = 480, height = 480, units = "px", pointsize = 12,
+                 compression = c("none", "rle", "lzw", "jpeg", "zip"),
+                 bg = "white", res = NA, ...,
                  type = c("Cairo", "Xlib"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
@@ -172,11 +173,13 @@ tiff <- function(filename = "Rplot%03d.tiff",
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    comp <- switch( match.arg(compression),
+                   "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     if (d$type == "Cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 8L, width, height, pointsize, bg,
-                        res, d$antialias, 100L))
+                        res, d$antialias, comp))
     else
-        .Internal(X11(paste("tiff::", filename, sep=""),
+        .Internal(X11(paste("tiff::", comp, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                       0L, 0L, "", 0, 0))

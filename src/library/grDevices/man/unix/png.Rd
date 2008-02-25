@@ -21,7 +21,9 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     type = c("Cairo", "Xlib", "dCairo"), antialias)
 
 tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
-     pointsize = 12, bg = "white", res = NA,  \dots,
+     pointsize = 12,
+     compression = c("none", "rle", "lzw", "jpeg", "zip"),
+     bg = "white", res = NA,  \dots,
      type = c("Cairo", "Xlib"), antialias)
 }
 \arguments{
@@ -36,12 +38,14 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
   \item{units}{The units in which \code{height} and \code{width} are
     given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
-  \item{pointsize}{the default pointsize of plotted text.}
+  \item{pointsize}{the default pointsize of plotted text, interpreted as
+    big points (1/72 inch) at \code{res} dpi.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
+  \item{compression}{the type of compression to be used.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
@@ -63,7 +67,7 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
   browsers.  The PNG format is lossless and is best for line
   diagrams and blocks of colour.  The JPEG format is lossy,
   but may be useful for image plots, for example.  TIFF is a meta-format:
-  the format written by \code{tiff} is lossless and stores RGB (and
+  the default format written by \code{tiff} is lossless and stores RGB (and
   alpha where appropriate) values uncompressed---such files are widely
   accepted, which is their main virtue over PNG.
 
