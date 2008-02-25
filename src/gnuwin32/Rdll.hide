@@ -589,6 +589,7 @@
  do_class
  do_classgets
  do_clearpushback
+ do_clip
  do_close
  do_cmathfuns
  do_col2RGB

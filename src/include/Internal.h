@@ -131,6 +131,7 @@ SEXP do_charToRaw(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chartr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_class(SEXP, SEXP, SEXP, SEXP);
 SEXP do_classgets(SEXP, SEXP, SEXP, SEXP);
+SEXP do_clip(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colon(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colors(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colsum(SEXP, SEXP, SEXP, SEXP);

@@ -4001,3 +4001,34 @@ SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
 	GErecordGraphicOperation(op, originalArgs, dd);
     return ans;
 }
+
+/* clip(x1, x2, y1, y2) */
+SEXP attribute_hidden do_clip(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = R_NilValue;
+    double x1, x2, y1, y2;
+    SEXP originalArgs = args;
+    pGEDevDesc dd = CurrentDevice();
+    
+    checkArity(op, args);
+    x1 = asReal(CAR(args));
+    if(!R_FINITE(x1)) error("invalid '%s' argument", "x1");
+    args = CDR(args);
+    x2 = asReal(CAR(args));
+    if(!R_FINITE(x2)) error("invalid '%s' argument", "x2");
+    args = CDR(args);
+    y1 = asReal(CAR(args));
+    if(!R_FINITE(y1)) error("invalid '%s' argument", "y1");
+    args = CDR(args);
+    y2 = asReal(CAR(args));
+    if(!R_FINITE(y2)) error("invalid '%s' argument", "y2");
+    
+    GConvert(&x1, &y1, USER, DEVICE, dd);
+    GConvert(&x2, &y2, USER, DEVICE, dd);
+    GESetClip(x1, y1, x2, y2, dd);
+
+    /* NOTE: only record operation if no "error"  */
+    if (GRecording(call, dd))
+	GErecordGraphicOperation(op, originalArgs, dd);
+    return ans;    
+}

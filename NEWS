@@ -331,6 +331,9 @@ NEW FEATURES
 	gives the same information as par("din"), but independent of
 	the graphics subsystem.
 
+    o	New graphics function clip() to set the clipping region (in
+	user coordinates).
+
 
 DEPRECATED & DEFUNCT
 

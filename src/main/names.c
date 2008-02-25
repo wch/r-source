@@ -60,8 +60,7 @@
  * offset:	the 'op' (offset pointer) above; used for C functions
  *		which deal with more than one R function...
  *
- * eval:	= XYZ (three digits)  [New Apr 9/96, before only had "YZ"].
- *		  --- where e.g. '1' means '001'
+ * eval:	= XYZ (three digits) --- where e.g. '1' means '001'
  *		X=1 says that we should force R_Visible off
  *		X=0 says that we should force R_Visible on
  *		X=2 says that we should switch R_Visible on but let the C
@@ -826,6 +825,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"getGraphicsEvent",do_getGraphicsEvent,0,  11, 5,      {PP_FUNCALL, PREC_FN,   0}},
 {"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
 {"dev.size",	do_devsize,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
+{"clip",	do_clip,	0,	111,	4,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
