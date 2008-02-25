@@ -50,6 +50,7 @@ clean:
 	$(RM) *.o *.a *.dll *.def *~ \#*\#
 	-$(MAKE) CC='$(CC)' -C $(PNGDIR) -f scripts/makefile.std clean
 	-$(MAKE) CC='$(CC)' -C $(JPEGDIR) -f ../Makefile.jpeg clean
+	-$(MAKE) CC='$(CC)' -C $(TIFFDIR) -f ../Makefile.tiff clean
 
 
 
