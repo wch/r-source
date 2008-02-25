@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-02-21
+@set FAQ_DATE @value{FAQ_YEAR}-02-25
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2156,6 +2156,8 @@ Basic functions for the hyperbolic distribution: probability density
 function, distribution function, quantile function, a routine for
 generating observations from the hyperbolic, and a function for fitting
 the hyperbolic distribution to data.
+@item IBrokers
+R API to Interactive Brokers Trader Workstation.
 @item ICE
 Iterated Conditional Expectation: kernel estimators for
 interval-censored data.
@@ -2705,6 +2707,8 @@ Matching Package for R.
 Functions and datasets detailed in the book ``Time Series Analysis
 With Applications in R'' (second edition) by Jonathan Cryer and Kung-Sik
 Chan, 2008, Springer.
+@item TSHRC
+Two Stage Hazard Rate Comparison.
 @item TSMySQL
 Time Series Database Interface extensions for MySQL.
 @item TSP
@@ -2936,6 +2940,8 @@ Compute biological inferences.
 Self-contained parallel system for R.
 @item bipartite
 Visualises bipartite networks and calculates some ecological indices.
+@item birch
+Dealing with very large datasets using BIRCH.
 @item bitops
 Functions for Bitwise operations on integer vectors.
 @item bivpois
@@ -2974,6 +2980,8 @@ Basic wavelet analysis of multivariate time series with a vizualisation
 and parametrization using graph theory.
 @item brew
 Templating framework for report generation.
+@item brglm
+Bias-reduction in binomial-response GLMs.
 @item brlr
 Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
@@ -4549,6 +4557,8 @@ Patient Rule Induction Method (PRIM).
 Fits a principal curve to a matrix of points in arbitrary dimension.
 @item prob
 Elementary probability on finite sample spaces.
+@item profileModel
+Tools for profiling inference functions for various model classes.
 @item proftools
 Profile output processing tools for R.
 @item proj4
