@@ -2361,20 +2361,22 @@ most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
-The `modern' version of @code{X11}, @code{jpeg()} and @code{png()}
-uses the @code{cairo} and @code{pango} libraries.  @R{} checks for
-@command{pkg-config}, and uses that to establish that the
-@samp{pangocairo} package is installed and if additional flags are
-needed for the @samp{cairo-xlib} and @samp{cairo-xlib-xrender}
-packages, then if suitable code can be compiled.  Most systems wiht
-@code{Gtk2} installed will have suitable libraries, but some (e.g.@:
-Solaris 10) may need @code{cairo} added separately (and that includes
-the @samp{pangocairo} package in all examples we have encountered).
+The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
+@code{tiff()} uses the @code{cairo} and (optionally) @code{pango}
+libraries.  Cairo version 1.0 suffices.  @R{} checks for
+@command{pkg-config}, and uses that to check first that the
+@samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
+additional flags are needed for the @samp{cairo-xlib} package, then if
+suitable code can be compiled.  Most systems with @code{Gtk2} installed
+will have suitable libraries, but some (e.g.@: Solaris 10) may need
+@code{cairo} added separately.  Mac OS X comes with none of these
+libraries, but @code{cairo} support will be added to the binary version.
 
-The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
-appropriate headers and libraries installed: @code{jpeg} (version 6b or
-later) or @code{libpng} (version 1.2.3 or later) and @code{zlib}
-(version 1.1.3 or later) respectively.
+The bitmapped graphics devices @code{jpeg()}, @code{png()} and
+@code{tiff()} need the appropriate headers and libraries installed:
+@code{jpeg} (version 6b or later) or @code{libpng} (version 1.2.3 or
+later) and @code{zlib} (version 1.1.3 or later) or @code{libtiff} (any
+recent version -- 3.8.2 was tested) respectively.
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript (@uref{http://www.cs.wisc.edu/~ghost,
