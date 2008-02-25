@@ -2591,26 +2591,52 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #ifdef HAVE_WORKING_CAIRO
+static int stride;
+static unsigned int Sbitgp(void *xi, int x, int y)
+{
+    unsigned int *data = xi;
+    return data[x*stride+y] | 0xFF000000; /* force opaque */
+}
+
+
 /* savePlot(filename, type, device) */
 static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int devNr;
-    const char *fn;
+    const char *fn, *type;
     pGEDevDesc gdd;
     pX11Desc xd;
     
     checkArity(op, args);
-    if(!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
 	error(_("invalid '%s' argument"), "filename");
     fn = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
-    /* ignore 'type' for now */
+    if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
+	error(_("invalid '%s' argument"), "type");
+    type = CHAR(STRING_ELT(CADR(args), 0));
     devNr = asInteger(CADDR(args));
-    if(devNr == NA_INTEGER) error(_("invalid '%s' argument"), "device");
-    gdd = GEgetDevice(devNr-1); /* 0-based */
-    if(!gdd->dirty) error(_("no plot on device to save"));
+    if (devNr == NA_INTEGER) error(_("invalid '%s' argument"), "device");
+    gdd = GEgetDevice(devNr - 1); /* 0-based */
+    if (!gdd->dirty) error(_("no plot on device to save"));
     xd = gdd->dev->deviceSpecific;
-    cairo_surface_write_to_png(xd->cs, fn);
-    
+    if (!xd->cs || !xd->useCairo) error(_("not an open X11cairo device"));
+    if (streql(type, "png"))
+	cairo_surface_write_to_png(xd->cs, fn);
+    else if (streql(type, "jpeg")) {
+	void *xi = cairo_image_surface_get_data(xd->cs);
+	FILE *fp = R_fopen(fn, "w");
+	if (!fp) error(_("cannot open file '%s'"), fn);
+	stride = xd->windowWidth;
+	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
+		     Sbitgp, 0, 75, fp, 0);
+	fclose(fp);
+    } else if (streql(type, "tiff")) {
+	void *xi = cairo_image_surface_get_data(xd->cs);
+	stride = xd->windowWidth;
+        R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
+		     Sbitgp, 0, fn, 0, 1L);
+    } else
+	error(_("invalid '%s' argument"));
     return R_NilValue;
 }
 
@@ -2659,7 +2685,6 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
     return TRUE;
 }
 
-static int stride;
 
 static unsigned int Cbitgp(void *xi, int x, int y)
 {
@@ -2669,11 +2694,7 @@ static unsigned int Cbitgp(void *xi, int x, int y)
 
 static void BM_Close_bitmap(pX11Desc xd)
 {
-    int i;
-    /* cairo_surface_write_to_png(xd->cs, "foo.png"); */
     void *xi = cairo_image_surface_get_data(xd->cs);
-
-    for (i = 0; i < 512; i++) knowncols[i] = -1;
 
     stride = xd->windowWidth;
     if (xd->type == PNG)

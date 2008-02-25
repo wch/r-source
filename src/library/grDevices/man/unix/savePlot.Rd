@@ -10,7 +10,8 @@
   Save the current page of a Cairo \code{\link{X11}()} device to a file. 
 }
 \usage{
-savePlot(filename = "Rplot.png", type = "png", device = dev.cur())
+savePlot(filename = paste("Rplot", type, sep="."),
+         type = c("png", "jpeg", "tiff"), device = dev.cur())
 }
 \arguments{
   \item{filename}{filename to save to.}
@@ -20,13 +21,12 @@ savePlot(filename = "Rplot.png", type = "png", device = dev.cur())
 \details{
   Only \code{X11} devices of type \code{type = "Cairo"} are supported.
 
-  This works by using a cairo function to copy the backing image surface
-  to a file.  This will always be a 24-bit per pixel PNG
-  \sQuote{DirectClass} file, and transparency is not supported.
+  This works by copying the backing image surface to a file.  For PNG
+  will always be a 24-bit per pixel PNG \sQuote{DirectClass} file, for
+  JPEG the quality is 75\% and for TIFF there is no compression.
 
-  If the current plot had a transparent or translucent background, the
-  saved plot will have background colour the plot background
-  alpha-blended with the device's canvas colour.
+  All transparency information is discarded: if the plot has
+  \code{bg="transparent"} (the default) this is regarded as opaque white.
 }
 \value{
   Invisible \code{NULL}.

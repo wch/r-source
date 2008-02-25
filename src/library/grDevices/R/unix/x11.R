@@ -323,7 +323,9 @@ X11Fonts(# Default Serif font is Times
          # Deprecated: remove in 2.8.0
          symbol=X11Font("-*-symbol-%s-%s-*-*-%d-*-*-*-*-*-*-*"))
 
-savePlot <- function(filename = "Rplot.png", type = "png", device = dev.cur())
+savePlot <- function(filename = paste("Rplot", type, sep="."),
+                     type = c("png", "jpeg", "tiff"),
+                     device = dev.cur())
 {
     type <- match.arg(type)
     devlist <- dev.list()
