@@ -86,7 +86,7 @@ x11 <- X11
 png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px",
                 pointsize = 12, bg = "white", res = NA, ...,
-                type = c("Cairo", "Xlib"), antialias)
+                type = c("Cairo", "Xlib", "dCairo"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -97,7 +97,7 @@ png <- function(filename = "Rplot%03d.png",
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     new <- list(...)
-    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo", "dCairo"))
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
@@ -106,8 +106,11 @@ png <- function(filename = "Rplot%03d.png",
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     ## do this separately so can remove from X11 module in due course
     if (d$type == "Cairo" && capabilities("cairo"))
-        .Internal(png(filename, width, height, pointsize, bg, res,
-                      d$antialias))
+        .Internal(cairo(filename, 2L, width, height, pointsize, bg,
+                        res, d$antialias, 100L))
+    else if (d$type == "dCairo" && capabilities("cairo"))
+        .Internal(cairo(filename, 5L, width, height, pointsize, bg,
+                        res, d$antialias, 100L))
     else
         .Internal(X11(paste("png::", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -139,13 +142,92 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     ## do this separately so can remove from X11 module in due course
     if (d$type == "Cairo" && capabilities("cairo"))
-        .Internal(jpeg(filename, quality, width, height, pointsize, bg,
-                       res, d$antialias))
+        .Internal(cairo(filename, 3L, width, height, pointsize, bg,
+                        res, d$antialias, quality))
     else
         .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                       0L, 0L, "", 0, 0))
+}
+
+tiff <- function(filename = "Rplot%03d.tiff",
+                 width = 480, height = 480, units = "px",
+                 pointsize = 12, bg = "white", res = NA, ...,
+                 type = c("Cairo", "Xlib"), antialias)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    if(units != "px" && is.na(res))
+        stop("'res' must be specified unless 'units = \"px\"'")
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    new <- list(...)
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(antialias)) {
+        new$antialias <- pmatch(antialias,
+                                c("default", "none", "gray", "subpixel"))
+        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
+    }
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    if (d$type == "Cairo" && capabilities("cairo"))
+        .Internal(cairo(filename, 8L, width, height, pointsize, bg,
+                        res, d$antialias, 100L))
+    else
+        .Internal(X11(paste("tiff::", filename, sep=""),
+                      width, height, pointsize, d$gamma,
+                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                      0L, 0L, "", 0, 0))
+}
+
+svg <- function(filename = "Rplot%03d.svg",
+                width = 480, height = 480, units = "px", res = 72,
+                pointsize = 12, bg = "white", antialias)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    new <- list()
+    if(!missing(antialias)) {
+        new$antialias <- pmatch(antialias,
+                                c("default", "none", "gray", "subpixel"))
+        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
+    } else antialias <- 1
+    .Internal(cairo(filename, 4L, width, height, pointsize, bg,
+                    NA_integer_, antialias, 100L))
+}
+
+cairo_pdf <- function(filename = "Rplot%03d.pdf",
+                      width = 7, height = 7, pointsize = 12,
+                      bg = "white", antialias)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    if(!missing(antialias)) {
+        antialias <- pmatch(antialias,
+                            c("default", "none", "gray", "subpixel"))
+        if(is.na(antialias)) stop("invalid value for 'antialias'")
+    } else antialias <- 1
+    .Internal(cairo(filename, 6L, 72*width, 72*height, pointsize, bg,
+                    NA_integer_, antialias, 100L))
+}
+
+cairo_ps <- function(filename = "Rplot%03d.eps",
+                      width = 7, height = 7, pointsize = 12,
+                      bg = "white", antialias)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    if(!missing(antialias)) {
+        antialias <- pmatch(antialias,
+                            c("default", "none", "gray", "subpixel"))
+        if(is.na(antialias)) stop("invalid value for 'antialias'")
+    } else antialias <- 1
+    .Internal(cairo(filename, 7L, 72*width, 72*height, pointsize, bg,
+                    NA_integer_, antialias, 100L))
 }
 
 ####################

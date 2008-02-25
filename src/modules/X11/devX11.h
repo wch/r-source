@@ -35,9 +35,14 @@ typedef enum {
 
 typedef enum {
     WINDOW, /* NB: have "type > WINDOW" below ... */
+    XIMAGE,
     PNG,
     JPEG,
-    XIMAGE
+    TIFF,
+    PNGdirect,
+    SVG,
+    PDF,
+    PS
 } X_GTYPE;
 
 
@@ -57,6 +62,15 @@ typedef enum {
 #  include <cairo.h>
 # endif
 #  include <cairo-xlib.h>
+# ifdef HAVE_CAIRO_SVG
+#  include <cairo-svg.h>
+# endif
+# ifdef HAVE_CAIRO_PDF
+#  include <cairo-pdf.h>
+# endif
+# ifdef HAVE_CAIRO_PS
+#  include <cairo-ps.h>
+# endif
 #endif
 
 
@@ -127,7 +141,7 @@ typedef struct {
                                            or whether R is to handle the events
 					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
-     Rboolean warn_trans;		/* have we warned about translucent cols? */
+    Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
 
 #ifdef HAVE_WORKING_CAIRO

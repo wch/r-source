@@ -647,6 +647,12 @@
    to be built. */
 #define HAVE_TCLTK 1
 
+/* Define this if libtiff is available. */
+/* #undef HAVE_TIFF */
+
+/* Define to 1 if you have the <tiffio.h> header file. */
+/* #undef HAVE_TIFFIO_H */
+
 /* Define to 1 if you have the `time' function. */
 #define HAVE_TIME 1
 

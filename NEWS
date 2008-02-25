@@ -304,8 +304,8 @@ NEW FEATURES
 
     o	There is a new version of the X11() device based on cairo
 	graphics which is selected by type = "Cairo", and is available
-	on machines with pango and cairo installed (which most
-	machines with gtk+2.0 will have).  This version supports
+	on machines with cairo installed and preferably pango (which
+	most machines with gtk+2.0 will have).  This version supports
 	translucent colours and normally does a better job of font
 	selection so it has been possible to display (e.g.) English,
 	Polish, Russian and Japanese text on a single X11() window.
@@ -318,11 +318,18 @@ NEW FEATURES
 	X server.  The meaning of capabilities("jpeg") and
 	capabilities("png") has changed to reflect this.
 
+	Where Cairo is supported, there is a svg() device to write SVG
+	files, tiff() to write TIFF bitmap files, and cairo_pdf() and
+	cairo_ps() to write (bitmap) PDF and postscript files via
+	Cairo.
+
     o	The function is() now works with S3 inheritance; that is, with
 	objects having multiple strings in the class attribute.
 
     o	New function devSize() to report the size of the current
-	graphics device surface (in inches or device units).
+	graphics device surface (in inches or device units).  This
+	gives the same information as par("din"), but independent of
+	the graphics subsystem.
 
 
 DEPRECATED & DEFUNCT

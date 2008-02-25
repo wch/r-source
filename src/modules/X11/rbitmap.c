@@ -41,17 +41,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef HAVE_PNG
-#include "png.h"
-#include <setjmp.h>
-#endif
-
 /* 8 bits red, green and blue channel */
 #define DECLARESHIFTS int RSHIFT=(bgr)?0:16, GSHIFT=8, BSHIFT=(bgr)?16:0
 #define GETRED(col)    (((col) >> RSHIFT) & 0xFF)
 #define GETGREEN(col)  (((col) >> GSHIFT) & 0xFF)
 #define GETBLUE(col)   (((col) >> BSHIFT) & 0xFF)
 #define GETALPHA(col)   (((col) >> 24) & 0xFF)
+
+#ifdef HAVE_PNG
+#include "png.h"
+#include <setjmp.h>
+#endif
 
 #include <R_ext/Error.h>
 
@@ -276,7 +276,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 }
 #else
 int R_SaveAsPng(void  *d, int width, int height,
-		unsigned long (*gp)(void *, int, int),
+		unsigned int (*gp)(void *, int, int),
 		int bgr, FILE *fp, unsigned int transparent)
 {
     warning("No png support in this version of R");
@@ -423,11 +423,86 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 
 #else
 int R_SaveAsJpeg(void  *d, int width, int height,
-		unsigned long (*gp)(void *, int, int),
-		int bgr, int quality, FILE *outfile)
+		unsigned int (*gp)(void *, int, int),
+		int bgr, int quality, FILE *outfile, int res)
 {
     warning("No jpeg support in this version of R");
     return 0;
 }
 #endif /* HAVE_JPEG */
 
+#ifdef HAVE_TIFF
+
+#include <tiffio.h>
+
+int R_SaveAsTIFF(void  *d, int width, int height,
+		unsigned int (*gp)(void *, int, int),
+		int bgr, const char *outfile, int res)
+{
+    TIFF *out;
+    int sampleperpixel;
+    tsize_t linebytes;
+    unsigned char *buf, *pscanline;
+    unsigned int col, i, j;
+    int have_alpha = 0;
+
+    DECLARESHIFTS;
+
+    for (i = 0; i < height; i++)
+	for (j = 0; j < width; j++) {
+	    col = gp(d,i,j);
+	    if (GETALPHA(col) < 255) {
+		have_alpha = 1;
+		break;
+	    }
+	}
+    sampleperpixel = 3 + have_alpha;
+    
+    out = TIFFOpen(outfile, "w");
+    if (!out) {
+	warning("unable to open TIFF file '%s'", outfile);
+	return 0;
+    }
+    TIFFSetField(out, TIFFTAG_IMAGEWIDTH, width);
+    TIFFSetField(out, TIFFTAG_IMAGELENGTH, height);
+    TIFFSetField(out, TIFFTAG_SAMPLESPERPIXEL, sampleperpixel);
+    TIFFSetField(out, TIFFTAG_BITSPERSAMPLE, 8);
+    TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
+    TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    if (res > 0) {
+	TIFFSetField(out, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
+	TIFFSetField(out, TIFFTAG_XRESOLUTION, (float) res);
+	TIFFSetField(out, TIFFTAG_YRESOLUTION, (float) res);
+    }
+
+    linebytes = sampleperpixel * width;
+    if (TIFFScanlineSize(out))
+	buf =(unsigned char *)_TIFFmalloc(linebytes);
+    else
+	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
+ 
+    for (i = 0; i < height; i++) {
+	pscanline = buf;
+	for(j = 0; j < width; j++) {
+	    col = gp(d, i, j);
+	    *pscanline++ = GETRED(col) ;
+	    *pscanline++ = GETGREEN(col) ;
+	    *pscanline++ = GETBLUE(col) ;
+	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
+	}
+	TIFFWriteScanline(out, buf, i, 0);
+    }
+    TIFFClose(out);
+    _TIFFfree(buf);
+    return 1;
+}
+#else
+int R_SaveAsTIFF(void  *d, int width, int height,
+		unsigned int (*gp)(void *, int, int),
+		int bgr, const char *outfile, int res)
+{
+    warning("No TIFF support in this version of R");
+    return 0;
+}
+#endif  /* HAVE_TIFF */

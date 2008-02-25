@@ -43,8 +43,9 @@ S3method("matchEncoding", "Type1Font")
 S3method("matchEncoding", "CIDFont")
 
 if(tools:::.OStype() == "unix") {
-    export(X11.options, X11Font, X11Fonts, quartz, quartz.options,
-           quartzFont, quartzFonts)
+    export(cairo_pdf, cairo_ps, X11.options, X11Font, X11Fonts,
+           quartz, quartz.options, quartzFont, quartzFonts,
+           svg, tiff)
 }
 
 if(tools:::.OStype() == "windows") {

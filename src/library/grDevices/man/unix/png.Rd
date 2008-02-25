@@ -6,9 +6,10 @@
 \name{png}
 \alias{png}
 \alias{jpeg}
-\title{JPEG and PNG graphics devices}
+\alias{tiff}
+\title{JPEG, PNG and TIFF graphics devices}
 \description{
-  Graphics devices for JPEG or PNG format bitmap files.
+  Graphics devices for JPEG, PNG or TIFF format bitmap files.
 }
 \usage{
 jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
@@ -17,7 +18,11 @@ jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
 
 png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots,
-    type = c("Cairo", "Xlib"), antialias)
+    type = c("Cairo", "Xlib", "dCairo"), antialias)
+
+tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
+     pointsize = 12, bg = "white", res = NA,  \dots,
+     type = c("Cairo", "Xlib"), antialias)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -40,13 +45,14 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
-  \item{\dots}{additional arguments to the underlying \code{\link{X11}}
-    device, such as \code{gamma} and \code{fonts}.}
+  \item{\dots}{for \code{type = "Xlib"} only, additional arguments to
+    the underlying \code{\link{X11}} device, such as \code{gamma} and
+    \code{fonts}.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
-    available if the system was compiled with support for Cairo --
-    otherwise \code{"Xlib"} will be used.  The default is set by
-    \code{\link{X11.options}}.}
+    prior to \R 2.7.0) or \code{"Cairo"} or \code{"dCairo"}.  The latter
+    two will only be available if the system was compiled with support
+    for Cairo -- otherwise \code{"Xlib"} will be used.  The default is
+    set by \code{\link{X11.options}}.}
   \item{antialias}{for \code{type = "Cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
     default is set by \code{\link{X11.options}}.}
@@ -56,7 +62,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   bitmap formats, and both can be displayed in modern web
   browsers.  The PNG format is lossless and is best for line
   diagrams and blocks of colour.  The JPEG format is lossy,
-  but may be useful for image plots, for example.
+  but may be useful for image plots, for example.  TIFF is a meta-format:
+  the format written by \code{tiff} is lossless and stores RGB (and
+  alpha where appropriate) values uncompressed---such files are widely
+  accepted, which is their main virtue over PNG.
 
   \code{png} supports transparent backgrounds: use \code{bg =
     "transparent"}.  Not all PNG viewers render files with transparency
@@ -67,7 +76,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   semi-transparent colours, including on a transparent or
   semi-transparent background.
 
-  \R can be compiled without support for either or both of these
+  \code{tiff(type = "Cairo")} supports semi-transparent colours,
+  including on a transparent or semi-transparent background.
+
+  \R can be compiled without support for each of these
   devices: this will be reported if you attempt to use them on a system
   where they are not supported.  For \code{type = "Xlib"} they may not
   be usable unless the X11 display is available to the owner of the \R
@@ -85,6 +97,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
   \code{png} will use a palette if there are less than 256 colours on
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
   file if \code{type = "Cairo"} and non-opaque colours are used).
+
+  \code{png(type = "dCairo"} uses Cairo directly to output the file --
+  the resolution is not recorded and the PNG format used is chosen by
+  Cairo (and undocumented).
 }
 
 \value{

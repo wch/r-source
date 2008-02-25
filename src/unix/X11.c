@@ -77,22 +77,11 @@ SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-SEXP attribute_hidden do_jpeg(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_cairo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
     if(initialized > 0)
-	return (*ptr->jpeg)(call, op, args, rho);
-    else {
-	error(_("X11 module cannot be loaded"));
-	return R_NilValue;
-    }
-}
-
-SEXP attribute_hidden do_png(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    R_X11_Init();
-    if(initialized > 0)
-	return (*ptr->png)(call, op, args, rho);
+	return (*ptr->cairo)(call, op, args, rho);
     else {
 	error(_("X11 module cannot be loaded"));
 	return R_NilValue;
@@ -174,13 +163,7 @@ SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_jpeg(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error(_("X11 is not available"));
-    return R_NilValue;
-}
-
-SEXP attribute_hidden do_png(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_cairo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("X11 is not available"));
     return R_NilValue;

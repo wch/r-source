@@ -766,8 +766,8 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     if (size < SMALLEST) size = SMALLEST;
     face--;
 
-    if(xd->type == PNG || xd->type == JPEG) {
-	dpi = (xd->res_dpi > 0) ? xd->res_dpi : 0.5;
+    if(xd->type == PNG || xd->type == JPEG || xd->type == TIFF) {
+	dpi = (xd->res_dpi > 0) ? xd->res_dpi + 0.5 : 72;
     } else {
 	dpi = (1./pixelHeight() + 0.5);
     }
@@ -1191,6 +1191,21 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	}
 	xd->fp = fp;
 	type = JPEG;
+	p = "";
+	xd->res_dpi = res; /* place holder */
+	dd->displayListOn = FALSE;
+#endif
+    } 
+    else if (!strncmp(dsp, "tiff::", 5)) {
+#ifndef HAVE_TIFF
+	warning(_("no tiff support in this version of R"));
+	return FALSE;
+#else
+	if(strlen(dsp+6) >= PATH_MAX)
+	    error(_("filename too long in tiff() call"));
+	strcpy(xd->filename, dsp+6);
+	xd->fp = NULL;
+	type = TIFF;
 	p = "";
 	xd->res_dpi = res; /* place holder */
 	dd->displayListOn = FALSE;
@@ -1727,6 +1742,10 @@ extern int R_SaveAsJpeg(void  *d, int width, int height,
 			unsigned int (*gp)(void *, int, int),
 			int bgr, int quality, FILE *outfile, int res);
 
+extern int R_SaveAsTIFF(void  *d, int width, int height,
+			unsigned int (*gp)(void *, int, int),
+			int bgr, const char *outfile, int res);
+
 static int knowncols[512];
 
 static unsigned int bitgp(void *xi, int x, int y)
@@ -1793,6 +1812,13 @@ static void X11_Close_bitmap(pX11Desc xd)
     } else if (xd->type == JPEG)
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
 		     bitgp, 0, xd->quality, xd->fp, xd->res_dpi);
+    else if (xd->type == TIFF) {
+	char buf[PATH_MAX];
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+        R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
+		     bitgp, 0, R_ExpandFileName(buf), xd->res_dpi);
+    }
+
     XDestroyImage(xi);
 }
 
@@ -2257,6 +2283,12 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->cra[1] = 1.2*ps * res0/72.0;
 	dd->ipr[0] =  dd->ipr[1] = 1.0/res0;
 	xd->lwdscale = res0/96.0;
+    } else if(xd->type >= SVG) {
+	/* Device units are bp */
+	dd->cra[0] = 0.9*ps;
+	dd->cra[1] = 1.2*ps;
+	dd->ipr[0] =  dd->ipr[1] = 1.0/72.0;
+	xd->lwdscale = 1.0/96.0;
    } else {
 	dd->cra[0] = 0.9*ps * 1.0/(72.0*pixelWidth());
 	dd->cra[1] = 1.2*ps * 1.0/(72.0*pixelHeight());
@@ -2539,6 +2571,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!strncmp(display, "png::", 5)) devname = "PNG";
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
+    else if (!strncmp(display, "tiff::", 6)) devname = "TIFF";
     else if (!strcmp(display, "XImage")) devname = "XImage";
     else if (useCairo) devname = "X11cairo";
     else devname = "X11";
@@ -2596,9 +2629,17 @@ static void null_Mode(int mode, pDevDesc dd)
 static Rboolean 
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
-    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-					(double)xd->windowWidth,
-					(double)xd->windowHeight);
+    if (xd->type == PNG || xd->type == JPEG 
+	|| xd->type == PNGdirect || xd->type == TIFF)
+	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+					    (double)xd->windowWidth,
+					    (double)xd->windowHeight);
+    else if(xd->type == SVG || xd->type == PDF || xd->type == PS) {
+	/* leave creation to BM_Newpage */
+	return TRUE;
+    } else
+	error(_("unimplemented cairo-based device"));
+
     if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
 	return FALSE;
     }
@@ -2632,9 +2673,15 @@ static void BM_Close_bitmap(pX11Desc xd)
     if (xd->type == PNG)
 	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
 		    Cbitgp, 0, xd->fp, 0, xd->res_dpi);
-    else
+    else if(xd->type == JPEG)
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
 		     Cbitgp, 0, xd->quality, xd->fp, xd->res_dpi);
+    else {
+	char buf[PATH_MAX];
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
+		     Cbitgp, 0, R_ExpandFileName(buf), xd->res_dpi);
+    }
 }
 
 static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
@@ -2642,23 +2689,79 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     char buf[PATH_MAX];
 
-    if (xd->npages++) {
-	/* try to preserve the page we do have */
-	BM_Close_bitmap(xd);
-	if (xd->fp) fclose(xd->fp);
+    xd->npages++;
+    if (xd->type == PNG || xd->type == JPEG) {
+	if (xd->npages > 1) {
+	    /* try to preserve the page we do have */
+	    BM_Close_bitmap(xd);
+	    if (xd->fp) fclose(xd->fp);
+	}
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	xd->fp = R_fopen(R_ExpandFileName(buf), "w");
+	if (!xd->fp) {
+	    if(xd->type == PNG)
+		error(_("could not open PNG file '%s'"), buf);
+	    else 
+		error(_("could not open JPEG file '%s'"), buf);
+	}
+    } else if(xd->type == PNGdirect) {
+	if (xd->npages > 1) {
+	    snprintf(buf, PATH_MAX, xd->filename, xd->npages - 1);
+	    cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));
+	}
     }
-    
-    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-    xd->fp = R_fopen(R_ExpandFileName(buf), "w");
-    if (!xd->fp) {
-	if(xd->type == PNG)
-	    error(_("could not open PNG file '%s'"), buf);
-	else 
-	    error(_("could not open JPEG file '%s'"), buf);
+#ifdef HAVE_TIFF
+    else if(xd->type == TIFF) {
+	if (xd->npages > 1) BM_Close_bitmap(xd);
     }
+#endif
+#ifdef HAVE_CAIRO_SVG
+    else if(xd->type == SVG) {
+	if (xd->npages > 1) {
+	    cairo_surface_destroy(xd->cs);
+	    cairo_destroy(xd->cc);
+	}
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	xd->cs = cairo_svg_surface_create(R_ExpandFileName(buf),
+					  (double)xd->windowWidth,
+					  (double)xd->windowHeight);
+	xd->cc = cairo_create(xd->cs);
+	cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#endif
+#ifdef HAVE_CAIRO_PDF
+    else if(xd->type == PDF) {
+	if (xd->npages > 1) {
+	    cairo_surface_destroy(xd->cs);
+	    cairo_destroy(xd->cc);
+	}
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	xd->cs = cairo_pdf_surface_create(R_ExpandFileName(buf),
+					  (double)xd->windowWidth,
+					  (double)xd->windowHeight);
+	xd->cc = cairo_create(xd->cs);
+	cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#endif
+#ifdef HAVE_CAIRO_PS
+    else if(xd->type == PS) {
+	if (xd->npages > 1) {
+	    cairo_surface_destroy(xd->cs);
+	    cairo_destroy(xd->cc);
+	}
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	xd->cs = cairo_ps_surface_create(R_ExpandFileName(buf),
+					 (double)xd->windowWidth,
+					 (double)xd->windowHeight);
+	xd->cc = cairo_create(xd->cs);
+	cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#endif
+    else
+	error(_("unimplemented cairo-based device"));
 
     cairo_reset_clip(xd->cc);
-    if (xd->type == PNG) {
+    if (xd->type == PNG  || xd->type == TIFF) {
 	/* First clear it */
 	cairo_set_operator (xd->cc, CAIRO_OPERATOR_CLEAR);
 	cairo_paint (xd->cc);
@@ -2676,7 +2779,15 @@ static void BM_Close(pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    if (xd->npages) BM_Close_bitmap(xd);
+    if (xd->npages) {
+	if (xd->type == PNG || xd->type == JPEG 
+	    || xd->type == TIFF ) BM_Close_bitmap(xd);
+	if (xd->type == PNGdirect) {
+	    char buf[PATH_MAX];
+	    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	    cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));	    
+	}
+    }
     if (xd->fp) fclose(xd->fp);
     cairo_surface_destroy(xd->cs);
     cairo_destroy(xd->cc);
@@ -2729,14 +2840,11 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
 	free(xd);
 	return FALSE;
     }
-    dd->deviceSpecific = (void *) xd;
 
     /* Set up Data Structures  */
-    dd->close = BM_Close;
     dd->activate = null_Activate;
     dd->deactivate = null_Deactivate;
     dd->size = X11_Size;
-    dd->newPage = BM_NewPage;
     dd->clip = Cairo_Clip;
     dd->rect = Cairo_Rect;
     dd->circle = Cairo_Circle;
@@ -2757,6 +2865,9 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->hasTextUTF8 = TRUE;
     dd->wantSymbolUTF8 = TRUE;
     dd->useRotatedTextInContour = FALSE;
+
+    dd->newPage = BM_NewPage;
+    dd->close = BM_Close;
  
     dd->left = 0;
     dd->right = width;
@@ -2780,49 +2891,71 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->startlty = LTY_SOLID;
     dd->startfont = 1;
     dd->displayListOn = FALSE;
+    dd->deviceSpecific = (void *) xd;
 
     return TRUE;    
 }
 
-/* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
-static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
+const static struct {
+    const char * const name;
+    X_GTYPE gtype;
+} devtable[] = {
+    { "", WINDOW },
+    { "", XIMAGE },
+    { "png", PNG },
+    { "jpeg", JPEG },
+    { "svg", SVG },
+    { "png", PNGdirect },
+    { "cairo_pdf", PDF },
+    { "cairo_ps", PS },
+    { "tiff", TIFF }
+};
+      
+/* 
+   cairo(filename, type, width, height, pointsize, bg, res, antialias, quality)
+*/
+static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     pGEDevDesc gdd;
     SEXP sc;
     const char *filename;
-    int quality, width, height, pointsize, bgcolor, res, antialias;
+    int type, quality, width, height, pointsize, bgcolor, res, antialias;
 
     checkArity(op, args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
 	error(_("invalid '%s' argument"), "filename");
     filename = translateChar(STRING_ELT(CAR(args), 0));
+    args = CDR(args);
+    type = asInteger(CAR(args));
+    if(type == NA_INTEGER || type <= 0)
+	error(_("invalid '%s' argument"), "type");
+    args = CDR(args);
+    width = asInteger(CAR(args));
+    if(width == NA_INTEGER || width <= 0)
+	error(_("invalid '%s' argument"), "width");
+    args = CDR(args);
+    height = asInteger(CAR(args));
+    if(height == NA_INTEGER || height <= 0)
+	error(_("invalid '%s' argument"), "height");
+    args = CDR(args);
+    pointsize = asInteger(CAR(args));
+    if(pointsize == NA_INTEGER || pointsize <= 0)
+	error(_("invalid '%s' argument"), "pointsize");
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, _("invalid '%s' value"), "bg");
+    bgcolor = RGBpar(sc, 0);
+    args = CDR(args);
+    res = asInteger(CAR(args));
+    args = CDR(args);
+    antialias = asInteger(CAR(args));
+    if(antialias == NA_INTEGER)
+	error(_("invalid '%s' argument"), "antialias");
     args = CDR(args);
     quality = asInteger(CAR(args));
     if(quality == NA_INTEGER || quality < 0 || quality > 100)
 	error(_("invalid '%s' argument"), "quality");
-    args = CDR(args);
-    width = asInteger(CAR(args));
-    if(width == NA_INTEGER || width <= 0)
-	error(_("invalid '%s' argument"), "width");
-    args = CDR(args);
-    height = asInteger(CAR(args));
-    if(height == NA_INTEGER || height <= 0)
-	error(_("invalid '%s' argument"), "height");
-    args = CDR(args);
-    pointsize = asInteger(CAR(args));
-    if(pointsize == NA_INTEGER || pointsize <= 0)
-	error(_("invalid '%s' argument"), "pointsize");
-    args = CDR(args);
-    sc = CAR(args);
-    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, _("invalid '%s' value"), "bg");
-    bgcolor = RGBpar(sc, 0);
-    args = CDR(args);
-    res = asInteger(CAR(args));
-    args = CDR(args);
-    antialias = asInteger(CAR(args));
-    if(antialias == NA_INTEGER)
-	error(_("invalid '%s' argument"), "antialias");
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -2830,71 +2963,19 @@ static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
 	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
-	if (!BMDeviceDriver(dev, JPEG, filename, quality, width, height, 
-			    pointsize, bgcolor, res, antialias)) {
+	if (!BMDeviceDriver(dev, devtable[type].gtype, filename, quality,
+			    width, height, pointsize, 
+			    bgcolor, res, antialias)) {
 	    free(dev);
-	    error(_("unable to start device jpeg"));
+	    error(_("unable to start device '%s'"), devtable[type].name);
 	}
 	gdd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, "jpeg");
+	GEaddDevice2(gdd, devtable[type].name);
     } END_SUSPEND_INTERRUPTS;
 
     return R_NilValue;
 }
 
-/* png(filename, width, height, pointsize, bg, res, antialias) */
-static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    pGEDevDesc gdd;
-    SEXP sc;
-    const char *filename;
-    int width, height, pointsize, bgcolor, res, antialias;
-
-    checkArity(op, args);
-    if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
-	error(_("invalid '%s' argument"), "filename");
-    filename = translateChar(STRING_ELT(CAR(args), 0));
-    args = CDR(args);
-    width = asInteger(CAR(args));
-    if(width == NA_INTEGER || width <= 0)
-	error(_("invalid '%s' argument"), "width");
-    args = CDR(args);
-    height = asInteger(CAR(args));
-    if(height == NA_INTEGER || height <= 0)
-	error(_("invalid '%s' argument"), "height");
-    args = CDR(args);
-    pointsize = asInteger(CAR(args));
-    if(pointsize == NA_INTEGER || pointsize <= 0)
-	error(_("invalid '%s' argument"), "pointsize");
-    args = CDR(args);
-    sc = CAR(args);
-    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, _("invalid '%s' value"), "bg");
-    bgcolor = RGBpar(sc, 0);
-    args = CDR(args);
-    res = asInteger(CAR(args));
-    args = CDR(args);
-    antialias = asInteger(CAR(args));
-    if(antialias == NA_INTEGER)
-	error(_("invalid '%s' argument"), "antialias");
-
-    R_GE_checkVersionOrDie(R_GE_version);
-    R_CheckDeviceAvailable();
-    BEGIN_SUSPEND_INTERRUPTS {
-	pDevDesc dev;
-	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
-	if (!BMDeviceDriver(dev, PNG, filename, 0, width, height, 
-			    pointsize, bgcolor, res, (Rboolean) antialias)) {
-	    free(dev);
-	    error(_("unable to start device jpeg"));
-	}
-	gdd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, "jpeg");
-    } END_SUSPEND_INTERRUPTS;
-
-    return R_NilValue;
-}
 #else
 static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -2902,17 +2983,9 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-/* jpeg(filename, quality, width, height, pointsize, bg, res, antialias) */
-static SEXP in_do_jpeg(SEXP call, SEXP op, SEXP args, SEXP env)
+static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error(_("type=\"Cairo\" is not supported on this build"));
-    return R_NilValue;
-}
-
-/* png(filename, width, height, pointsize, bg, res, antialias) */
-static SEXP in_do_png(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error(_("type=\"Cairo\" is not supported on this build"));
+    error(_("cairo-based devices are not supported on this build"));
     return R_NilValue;
 }
 #endif
@@ -3015,8 +3088,7 @@ void R_init_R_X11(DllInfo *info)
 	return;
     }
     tmp->X11 = in_do_X11;
-    tmp->jpeg = in_do_jpeg;
-    tmp->png = in_do_png;
+    tmp->cairo = in_do_cairo;
     tmp->saveplot = in_do_saveplot;
     tmp->de = in_RX11_dataentry;
     tmp->image = in_R_GetX11Image;

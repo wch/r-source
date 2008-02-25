@@ -2016,6 +2016,18 @@ R_BZLIB
 
 ## PCRE headers and libraries.
 R_PCRE
+
+## libtiff
+AC_CHECK_HEADERS(tiffio.h)
+AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [])
+if test "x${ac_cv_header_tiffio_h}" = xyes ; then
+  if test "x${have_tiff}" = xyes; then
+    AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+    TIFF_LIBS=-ltiff
+  fi
+fi
+AC_SUBST(TIFF_LIBS)
+
  
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
