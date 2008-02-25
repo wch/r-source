@@ -2363,14 +2363,17 @@ sources will be used if no suitable external @code{gettext} is found.
 
 The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
 @code{tiff()} uses the @code{cairo} and (optionally) @code{pango}
-libraries.  Cairo version 1.0 suffices.  @R{} checks for
-@command{pkg-config}, and uses that to check first that the
+libraries.  Cairo version 1.0 (from August 2005) suffices.  @R{} checks
+for @command{pkg-config}, and uses that to check first that the
 @samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
 additional flags are needed for the @samp{cairo-xlib} package, then if
-suitable code can be compiled.  Most systems with @code{Gtk2} installed
-will have suitable libraries, but some (e.g.@: Solaris 10) may need
-@code{cairo} added separately.  Mac OS X comes with none of these
-libraries, but @code{cairo} support will be added to the binary version.
+suitable code can be compiled.  These tests will fail if
+@command{pkg-config} is not installed, and are likely to fail if
+@code{cairo} was built statically (unusual).  Most systems with
+@code{Gtk2} installed will have suitable libraries, but some (e.g.@:
+Solaris 10) may need @code{cairo} added separately.  Mac OS X comes with
+none of these libraries, but @code{cairo} support will be added to the
+binary version.
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:

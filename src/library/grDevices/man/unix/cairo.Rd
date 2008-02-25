@@ -9,7 +9,7 @@
 \alias{cairo_ps}
 \title{Cairo-based SVG, PDF and PostScript Graphics Devices}
 \description{
-  Graphics devices for SVG and bitmap PDF and PostScript graphics files.
+  Graphics devices for SVG and PDF and PostScript graphics files.
 }
 \usage{
 svg(filename = "Rplot\%03d.svg",
@@ -20,7 +20,7 @@ cairo_pdf(filename = "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
           bg = "white", antialias)
 
-cairo_ps(filename = "Rplot\%03d.eps",
+cairo_ps(filename = "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
          bg = "white", antialias)
 }
@@ -50,11 +50,14 @@ cairo_ps(filename = "Rplot\%03d.eps",
   SVG version 1.1.
   
   Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
-  \code{cairo_pdf} and \code{cairo_ps} record \emph{bitmaps} and not
-  vector graphics.  This can occasionally be useful (bitmaps of very
-  complex plots can be more compact, and a much wider range of
+  \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
+  and not vector graphics.  This can occasionally be useful (bitmaps of
+  very complex plots can be more compact, and a much wider range of
   characters can be rendered), but the more usual vector format is
-  normally much preferred.  A resolution of 72dpi is used.
+  normally much preferred.  A resolution of 72dpi is used.  On the other
+  hand, they can (on suitable platforms) include a much wider range of
+  UTF-8 glyphs, and embed the fonts used.
+  They are experimental (until tne cairo support is better).
   
   \R can be compiled without support for any of these
   devices: this will be reported if you attempt to use them on a system
@@ -63,6 +66,10 @@ cairo_ps(filename = "Rplot\%03d.eps",
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
+
+  %http://lwn.net/Articles/256590/
+  The \code{cairo_ps} output is not yet encapsulated (that is coming in
+  cairo 1.6).
 }
 
 \value{
@@ -74,7 +81,7 @@ cairo_ps(filename = "Rplot\%03d.eps",
   \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{pdf}},
   \code{\link{postscript}}
 
-  \code{\link{capabilities}} to see if Cairo is supported.
+  \code{\link{capabilities}} to see if cairo is supported.
 }
 
 \section{Conventions}{

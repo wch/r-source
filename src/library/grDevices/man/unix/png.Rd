@@ -102,9 +102,9 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
   file if \code{type = "Cairo"} and non-opaque colours are used).
 
-  \code{png(type = "dCairo"} uses Cairo directly to output the file --
+  \code{png(type = "dCairo"} uses cairo directly to output the file --
   the resolution is not recorded and the PNG format used is chosen by
-  Cairo (and undocumented).
+  cairo (and undocumented).
 }
 
 \value{

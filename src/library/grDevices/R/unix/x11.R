@@ -219,7 +219,7 @@ cairo_pdf <- function(filename = "Rplot%03d.pdf",
                     NA_integer_, antialias, 100L))
 }
 
-cairo_ps <- function(filename = "Rplot%03d.eps",
+cairo_ps <- function(filename = "Rplot%03d.ps",
                       width = 7, height = 7, pointsize = 12,
                       bg = "white", antialias)
 {

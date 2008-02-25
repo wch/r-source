@@ -56,7 +56,7 @@ X11.options(\dots, reset = FALSE)
     implementation-dependent.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
     prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
-    available if the system was compiled with support for Cairo.}
+    available if the system was compiled with support for cairo.}
   \item{antialias}{for \code{type = "Cairo"}, giving the type of
     anti-aliasing (if any) to be used.  One of
     \code{c("default", "none", "gray", "subpixel")}.}
@@ -94,7 +94,7 @@ X11.options(\dots, reset = FALSE)
   X server).
 }
 \section{Fonts}{
-  This section applies only to \code{type = "Xlib"}: the Cairo-based
+  This section applies only to \code{type = "Xlib"}: the cairo-based
   version uses \sQuote{pango} to select fonts, and works directly
   with family names such as \code{"Helvetica"} which should be selected
   by \code{\link{par}} or \code{\link{gpar}}.

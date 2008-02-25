@@ -51,7 +51,9 @@ capabilities(what = NULL)
 #endif
 #ifdef unix
     \item{cairo}{is there support \code{type="Cairo"} in
-      \code{\link{X11}}, \code{\link{png}} and \code{\link{jpeg}}.}
+      \code{\link{X11}}, \code{\link{png}} and \code{\link{jpeg}}, and
+      for the \code{\link{svg}}, \code{\link{cairo_pdf}} and
+      \code{\link{cairo_pdf}} devices?}
 #endif    
 }
 \seealso{\code{\link{.Platform}}}
