@@ -296,15 +296,17 @@ was installed.
 That's a matter of taste.  For most people the best thing to do is to
 uninstall R (see the previous Q), install the new version, copy any
 installed packages to the library folder in the new installation, run
-@code{update.packages()} in the new R (`Update packages...' from
-the Packages menu, if you prefer) and then delete anything left of the
-old installation.  Different versions of R are quite deliberately
-installed in parallel folders so you can keep old versions around if you
-wish.
+@code{update.packages(checkBuilt=TRUE, ask=FALSE)} in the new R and then
+delete anything left of the old installation.  Different versions of R
+are quite deliberately installed in parallel folders so you can keep old
+versions around if you wish.
 
-Upgrading from R 1.x.y to R 2.x.y is special as all the packages
-need to be reinstalled.  Rather than copy them across, make a note of
-their names and re-install them from CRAN.
+For those with a personal library (folder @file{R\win-library\@var{x.y}}
+of your home directory), you will need to update that too when the minor
+version of R changes (e.g.@: from 2.6.2 to 2.7.0).  A simple way
+to do so is to copy (say) @file{R\win-library\2.6} to
+@file{R\win-library\2.7} before running
+@code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
 @node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, What's the best way to upgrade?, Installation and Usage
