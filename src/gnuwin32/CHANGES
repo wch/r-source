@@ -209,6 +209,7 @@ OTHERS
 	only advantage of (simple) TIFF over PNG is that some journals
 	are unable to cope with formats from as recently as the 1990s.)
 
+    o	savePlot() no longer automatically adds an extension to the filename.
 
 BUILDING R
 
