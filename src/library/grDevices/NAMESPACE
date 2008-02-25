@@ -30,7 +30,7 @@ export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
        xy.coords, xyz.coords)
 
 ## devices common to all platforms
-export(X11, x11, bitmap, jpeg, png)
+export(X11, x11, bitmap, jpeg, png, tiff)
 
 S3method(print, recordedplot)
 S3method(print, colorConverter)

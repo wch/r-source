@@ -373,6 +373,93 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 
 #endif /* HAVE_JPEG */
 
+#ifdef HAVE_TIFF
+#include <tiffio.h>
+
+__declspec(dllexport)
+int R_SaveAsTIFF(void  *d, int width, int height,
+		unsigned int (*gp)(void *, int, int),
+		int bgr, const char *outfile, int res, int compression)
+{
+    TIFF *out;
+    int sampleperpixel;
+    tsize_t linebytes;
+    unsigned char *buf, *pscanline;
+    unsigned int col, i, j;
+    int have_alpha = 0;
+
+    DECLARESHIFTS;
+
+#if 0
+    for (i = 0; i < height; i++)
+	for (j = 0; j < width; j++) {
+	    col = gp(d,i,j);
+	    if (GETALPHA(col) < 255) {
+		have_alpha = 1;
+		break;
+	    }
+	}
+#endif
+    sampleperpixel = 3 + have_alpha;
+    
+    out = TIFFOpen(outfile, "w");
+    if (!out) {
+	warning("unable to open TIFF file '%s'", outfile);
+	return 0;
+    }
+    TIFFSetField(out, TIFFTAG_IMAGEWIDTH, width);
+    TIFFSetField(out, TIFFTAG_IMAGELENGTH, height);
+    TIFFSetField(out, TIFFTAG_SAMPLESPERPIXEL, sampleperpixel);
+    TIFFSetField(out, TIFFTAG_BITSPERSAMPLE, 8);
+    TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
+    TIFFSetField(out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+#if 0
+    /* Possible compression values
+       COMPRESSION_NONE = 1;
+       COMPRESSION_CCITTRLE = 2;
+       COMPRESSION_CCITTFAX3 = COMPRESSION_CCITT_T4 = 3;
+       COMPRESSION_CCITTFAX4 = COMPRESSION_CCITT_T6 = 4;
+       COMPRESSION_LZW = 5;
+       COMPRESSION_JPEG = 7;
+       COMPRESSION_DEFLATE = 32946;
+       COMPRESSION_ADOBE_DEFLATE = 8;  
+    */
+    TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
+#endif
+    if(compression > 1)
+	TIFFSetField(out, TIFFTAG_COMPRESSION, compression);
+
+    if (res > 0) {
+	TIFFSetField(out, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
+	TIFFSetField(out, TIFFTAG_XRESOLUTION, (float) res);
+	TIFFSetField(out, TIFFTAG_YRESOLUTION, (float) res);
+    }
+
+    linebytes = sampleperpixel * width;
+    if (TIFFScanlineSize(out))
+	buf =(unsigned char *)_TIFFmalloc(linebytes);
+    else
+	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
+ 
+    for (i = 0; i < height; i++) {
+	pscanline = buf;
+	for(j = 0; j < width; j++) {
+	    col = gp(d, i, j);
+	    *pscanline++ = GETRED(col) ;
+	    *pscanline++ = GETGREEN(col) ;
+	    *pscanline++ = GETBLUE(col) ;
+	    if(have_alpha) *pscanline++ = GETALPHA(col) ;
+	}
+	TIFFWriteScanline(out, buf, i, 0);
+    }
+    TIFFClose(out);
+    _TIFFfree(buf);
+    return 1;
+}
+#endif  /* HAVE_TIFF */
+
+
 /*
  * Try to save the content of the device 'd' in 'filename' as Windows BMP.
  * If numbers of colors is less than 256 we use a 'palette' BMP.

@@ -21,7 +21,7 @@
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Boolean.h>
 
-enum DeviceKinds {SCREEN=0, PRINTER, METAFILE, PNG, JPEG, BMP};
+enum DeviceKinds {SCREEN=0, PRINTER, METAFILE, PNG, JPEG, BMP, TIFF};
 
 typedef struct {
     /* R Graphics Parameters */
@@ -52,14 +52,14 @@ typedef struct {
     button  stoploc;
     menubar mbar, mbarloc, mbarconfirm;
     menu  msubsave;
-    menuitem mpng, mbmp, mjpeg50, mjpeg75, mjpeg100;
+    menuitem mpng, mbmp, mjpeg50, mjpeg75, mjpeg100, mtiff;
     menuitem mps, mpdf, mwm, mclpbm, mclpwm, mprint, mclose;
     menuitem mrec, madd, mreplace, mprev, mnext, mclear, msvar, mgvar;
     menuitem mR, mfit, mfix, grmenustayontop, mnextplot;
     Rboolean recording, replaying, needsave;
     bitmap bm, bm2;
 
-  /* PNG, JPEG, BMP section */
+  /* PNG, JPEG, BMP, TIFF section */
     FILE *fp;
     char filename[512];
     int quality;

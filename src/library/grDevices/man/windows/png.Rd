@@ -7,9 +7,10 @@
 \alias{bmp}
 \alias{png}
 \alias{jpeg}
-\title{BMP, JPEG and PNG graphics devices}
+\alias{tiff}
+\title{BMP, JPEG, PNG and TIFF graphics devices}
 \description{
-  Graphics devices for BMP, JPEG or PNG format bitmap files.
+  Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
@@ -20,6 +21,11 @@ jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
      res = NA, restoreConsole = TRUE)
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
+    restoreConsole = TRUE)
+tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
+    units = "px", pointsize = 12,
+    compression = c("none", "rle", "lzw", "jpeg", "zip"),
+    bg = "white", res = NA,
     restoreConsole = TRUE)
 }
 \arguments{
@@ -41,6 +47,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
+  \item{compression}{the type of compression to be used.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.  Also used for units other than
     the default.  If not specified, taken as 72 dpi to set the size of
@@ -55,6 +62,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   diagrams and blocks of colour.  The JPEG format is lossy,
   but may be useful for image plots, for example.  The BMP format is
   standard on Windows, and supported by most viewers elsewhere.
+  TIFF is a meta-format: the default format written by \code{tiff} is lossless
+  and stores RGB (and alpha where appropriate) values
+  uncompressed---such files are widely accepted, which is their main
+  virtue over PNG.
 
   Windows imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.

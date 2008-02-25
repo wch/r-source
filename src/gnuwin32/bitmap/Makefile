@@ -2,11 +2,12 @@ include ../MkRules
 
 JPEGDIR=jpeg-6b
 PNGDIR=libpng
+TIFFDIR=libtiff
 
-.PHONY: all DLL buildzlib buildpng buildjpeg clean
+.PHONY: all DLL buildzlib buildpng buildjpeg buildtiff clean
 
 all:
-	@$(MAKE) --no-print-directory buildzlib buildpng buildjpeg rbitmap.o
+	@$(MAKE) --no-print-directory buildzlib buildpng buildjpeg buildtiff rbitmap.o
 	@$(MKDIR) -p ../../../library/grDevices/libs
 	@$(MAKE) --no-print-directory DLL
 
@@ -36,10 +37,13 @@ buildjpeg: $(JPEGDIR)/jconfig.h Makefile.jpeg
 $(JPEGDIR)/jconfig.h: jconfig.h 
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
-rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -I../../extra/zlib -I./libpng -I$(JPEGDIR) -I../../include
+buildtiff: $(JPEGDIR)/jconfig.h Makefile.tiff
+	$(MAKE) -C $(TIFFDIR) -f ../Makefile.tiff
+
+rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I../../extra/zlib -I./$(PNGDIR) -I$(JPEGDIR) -I./$(TIFFDIR) -I../../include
 CFLAGS=-O3 -Wall -pedantic 
 
-../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
+../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(TIFFDIR)/libtiff.a $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
 	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR -lRzlib
 
 clean:

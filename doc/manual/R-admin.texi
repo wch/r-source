@@ -889,8 +889,10 @@ The Tcl/Tk support files are in
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @uref{http://www.libpng.org, @code{www.libpng.org}},
-@uref{ftp://ftp.uu.net/graphics/}[png,jpeg].  You will need files
-@file{libpng-1.2.18.tar.gz} and @file{jpegsrc.v6b.tar.gz} or later.
+@uref{ftp://ftp.uu.net/graphics/}[png,jpeg],
+@uref{http://www.libtiff.org}.  You will need files
+@file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
+@file{tiff-3.8.0.tar.gz} or later.
 
 Working in the directory @file{@var{R_HOME}
 /src/gnuwin32/bitmap}, install the @code{libpng} and
@@ -906,6 +908,9 @@ Example:
 > tar xzvf libpng-1.2.20.tar.gz
 > mv libpng-1.2.20 libpng
 > tar xzvf jpegsrc.v6b.tar.gz
+> tar xzvf tiff-3.8.2.tar.gz
+> mv tiff-3.8.2/libtiff .
+> rm -rf libtiff-3.8.2
 @end example
 
 @end itemize

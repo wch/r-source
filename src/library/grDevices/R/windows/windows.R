@@ -173,6 +173,29 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                         restoreConsole, ""))
 }
 
+tiff <- function(filename = "Rplot%03d.tif", width = 480, height = 480,
+                 units = "px", pointsize = 12,
+                 compression = c("none", "rle", "lzw", "jpeg", "zip"),
+                 bg = "white", res = NA,
+                 restoreConsole = TRUE)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    if(units != "px" && is.na(res))
+        stop("'res' must be specified unless 'units = \"px\"'")
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    comp <- switch( match.arg(compression),
+                   "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
+    invisible(.External(Cdevga, paste("tiff:", comp, ":", filename, sep=""),
+                        width, height, pointsize, FALSE, 1L,
+                        NA_real_, NA_real_, bg, 1,
+                        as.integer(res), NA_integer_, FALSE, .PSenv, NA,
+                        restoreConsole, ""))
+}
+
 bringToTop <- function(which = dev.cur(), stay = FALSE)
 {
     if(!exists(".Devices")) {
