@@ -407,6 +407,112 @@ PangoCairo_Text(double x, double y,
 #else
 /* ------------- cairo-ft section --------------- */
 
+/* FIXME: although this should work on all platforms, I didn't get to
+   test it (yet) anywhere else, hence the __APPLE__ condition for now [SU] */
+#if CAIRO_HAS_FT_FONT && __APPLE__
+/* FT implies FC in Cairo */
+#include <cairo-ft.h>
+
+static cairo_font_face_t *default_faces[5];
+static const char *default_patterns[5] = { "Helvetica:style=Regular", "Helvetica:style=Bold",
+					   "Helvetica:style=Italic", "Helvetica:style=Bold Italic,BoldItalic",
+					   "Symbol" };
+static int fc_loaded;
+static FT_Library ft_library;
+
+/* font encodings - we can probably remove this if MacRoman is really dead */
+#define FE_MacRoman 1 /* TT_PLATFORM_MACINTOSH */
+#define FE_Unicode  0
+
+/* use FC to find a font, load it in FT and return the Cairo FT font face */
+static cairo_font_face_t *FC_getFont(const char *fcname, int encoding) {
+    FcFontSet *fs;
+    FcPattern *pat, *match;
+    FcResult  result;
+    FcChar8   *file;
+  
+    /* find candidate fonts via FontConfig */
+    if (!fc_loaded) {
+        if (!FcInit()) return NULL;
+	fc_loaded = 1;
+    }
+    pat = FcNameParse((FcChar8 *)fcname);
+    if (!pat) return NULL;
+    FcConfigSubstitute (0, pat, FcMatchPattern);
+    FcDefaultSubstitute (pat);
+    /* printf(" - resulting pattern: \"%s\"\n", FcNameUnparse(pat)); */
+    fs = FcFontSetCreate ();
+    match = FcFontMatch (0, pat, &result);
+    FcPatternDestroy (pat);
+    if (!match) { 
+        FcFontSetDestroy (fs);
+	return NULL;
+    }
+    FcFontSetAdd (fs, match);
+
+    /* then try to load the font into FT */
+    if (fs) {
+        int j = 0;
+	while (j < fs->nfont) /* find the font file and use it with FreeType */
+	    if (FcPatternGetString (fs->fonts[j++], FC_FILE, 0, &file) == FcResultMatch) {
+	        FT_Face face;
+		FT_Error er;
+		FT_CharMap charmap;
+		int n;
+		
+		/* printf(" - file: \"%s\"\n", file); */
+		if (!ft_library && FT_Init_FreeType(&ft_library)) {
+		    FcFontSetDestroy (fs);  
+		    return NULL;
+		}
+		if (!FT_New_Face(ft_library, file, 0, &face)) {
+#if 0
+		  for (n = 0; n < face->num_charmaps; n++ ) {
+		    charmap = face->charmaps[n];
+		    printf("   charmap%d: enc=%d platf=%d\n", n, charmap->encoding_id, charmap->platform_id);
+		  }
+#endif
+
+		    if (encoding)
+		        for (n = 0; n < face->num_charmaps; n++ ) {
+			    charmap = face->charmaps[n];
+			    if (charmap->platform_id == encoding) {
+			        FT_Set_Charmap( face, charmap );
+				break;
+			    }
+			}
+		    FcFontSetDestroy (fs);
+		    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
+		}
+	    }
+	FcFontSetDestroy (fs);
+    }
+    return NULL;
+}
+
+static void FT_getFont(pGEcontext gc, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    int face = gc->fontface;
+    double size = gc->cex * gc->ps;
+    cairo_font_face_t *cairo_face;
+
+    if (face < 1 || face > 5) face = 1;
+    face--;
+    /* FIXME: support gc->fontfamily */
+    cairo_face = default_faces[face];
+    if (!cairo_face) {
+        cairo_face = FC_getFont(default_patterns[face], FE_Unicode);
+	if (!cairo_face) return;
+	default_faces[face] = cairo_face;
+    }
+  
+    cairo_set_font_face (xd->cc, cairo_face);
+    /* FIXME: this should really use a matrix if pixels are non-square */
+    cairo_set_font_size (xd->cc, size);
+}
+
+#else
 
 static void FT_getFont(pGEcontext gc, pDevDesc dd)
 {
@@ -426,6 +532,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd)
     /* FIXME: this should really use a matrix if pixels are non-square */
     cairo_set_font_size (xd->cc, size);
 }
+#endif
 
 static void Cairo_MetricInfo(int c, pGEcontext gc,
 			  double* ascent, double* descent,
