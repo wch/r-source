@@ -80,9 +80,14 @@ static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REAL
 static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
 						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 
+static R_NativePrimitiveArgType lowesp_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType lowesw_t[] = {
+    INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, REALSXP};
+
 
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
+#define FDEF(name)  {#name, (DL_FUNC) &F77_SUB(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 static const R_CMethodDef CEntries[]  = {
     {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
@@ -181,8 +186,8 @@ static const R_CallMethodDef CallEntries[] = {
 };
 
 static const R_FortranMethodDef FortEntries[] = {
-    {"lowesw", (DL_FUNC) &F77_SUB(lowesw), 4},
-    {"lowesp", (DL_FUNC) &F77_SUB(lowesp), 7},
+    FDEF(lowesw),
+    FDEF(lowesp),
     {"setppr", (DL_FUNC) &F77_SUB(setppr), 6},
     {"smart", (DL_FUNC) &F77_SUB(smart), 16},
     {"pppred", (DL_FUNC) &F77_SUB(pppred), 5},
