@@ -61,7 +61,8 @@ cairo_ps(filename = "Rplot\%03d.ps",
   
   \R can be compiled without support for any of these
   devices: this will be reported if you attempt to use them on a system
-  where they are not supported.
+  where they are not supported.  They all require cairo version 1.2 or
+  later.
   
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in

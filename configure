@@ -43502,8 +43502,8 @@ echo "${ECHO_T}$r_cv_has_pangocairo" >&6; }
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
 
-     { echo "$as_me:$LINENO: checking whether cairo including pango is >= 1.2 and works" >&5
-echo $ECHO_N "checking whether cairo including pango is >= 1.2 and works... $ECHO_C" >&6; }
+     { echo "$as_me:$LINENO: checking whether cairo including pango is >= 1.0 and works" >&5
+echo $ECHO_N "checking whether cairo including pango is >= 1.0 and works... $ECHO_C" >&6; }
 if test "${r_cv_cairo_works+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -43512,8 +43512,8 @@ else
 #include <pango/pango.h>
 #include <pango/pangocairo.h>
 #include <cairo-xlib.h>
-#if CAIRO_VERSION  < 10200
-#error cairo version >= 1.2 required
+#if CAIRO_VERSION  < 10000
+#error cairo version >= 1.0 required
 #endif
 int main(void) {
     cairo_t  *CC;
@@ -43577,7 +43577,8 @@ fi
 echo "${ECHO_T}$r_cv_has_cairo" >&6; }
     if test "x${r_cv_has_cairo}" = "xyes"; then
       modlist="cairo"
-      for module in cairo-xlib cairo-png; do
+      ## on Linux, cairo-ft brings in header paths <cairo-ft.h> needs
+      for module in cairo-xlib cairo-png cairo-ft; do
 	if "${PKGCONF}" --exists ${module}; then
 	  modlist="${modlist} ${module}"
 	fi
@@ -43601,8 +43602,8 @@ echo "${ECHO_T}$r_cv_has_cairo" >&6; }
       CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
       LIBS="${LIBS} ${CAIRO_LIBS}"
 
-      { echo "$as_me:$LINENO: checking whether cairo is >= 1.2 and works" >&5
-echo $ECHO_N "checking whether cairo is >= 1.2 and works... $ECHO_C" >&6; }
+      { echo "$as_me:$LINENO: checking whether cairo is >= 1.0 and works" >&5
+echo $ECHO_N "checking whether cairo is >= 1.0 and works... $ECHO_C" >&6; }
 if test "${r_cv_cairo_works+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -43610,8 +43611,8 @@ else
 
 #include <cairo.h>
 #include <cairo-xlib.h>
-#if CAIRO_VERSION  < 10200
-#error cairo version >= 1.2 required
+#if CAIRO_VERSION  < 10000
+#error cairo version >= 1.0 required
 #endif
 int main(void) {
     cairo_t  *CC;

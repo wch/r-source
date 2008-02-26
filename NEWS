@@ -323,6 +323,10 @@ NEW FEATURES
 	cairo_ps() to write (bitmap) PDF and postscript files via
 	Cairo.
 
+	Some features require cairo >= 1.2, and some which are
+	nominally supported under 1.2 seem to need 1.4 to work
+	correctly.
+
     o	The function is() now works with S3 inheritance; that is, with
 	objects having multiple strings in the class attribute.
 

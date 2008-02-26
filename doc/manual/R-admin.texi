@@ -2363,8 +2363,14 @@ sources will be used if no suitable external @code{gettext} is found.
 
 The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
 @code{tiff()} uses the @code{cairo} and (optionally) @code{pango}
-libraries.  Cairo version 1.2 is required.  @R{} checks
-for @command{pkg-config}, and uses that to check first that the
+libraries.  Cairo version 1.0 is required@footnote{We recommend that
+people with cairo 1.0.x, e.g.@: on Fedora Core 5, install 1.4.x from the
+sources which works well}, and some features reguire 1.2 or later (and
+may not work before 1.4).
+Pango needs to be at least version 1.10, and 1.12 is the earliest
+version we have tested.  (For Fedora users we believe the
+@code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
+@command{pkg-config}, and uses that to check first that the
 @samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
 additional flags are needed for the @samp{cairo-xlib} package, then if
 suitable code can be compiled.  These tests will fail if

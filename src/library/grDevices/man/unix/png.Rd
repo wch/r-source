@@ -83,11 +83,12 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
   \code{tiff(type = "Cairo")} supports semi-transparent colours,
   including on a transparent or semi-transparent background.
 
-  \R can be compiled without support for each of these
-  devices: this will be reported if you attempt to use them on a system
-  where they are not supported.  For \code{type = "Xlib"} they may not
-  be usable unless the X11 display is available to the owner of the \R
-  process.
+  \R can be compiled without support for each of these devices: this
+  will be reported if you attempt to use them on a system where they are
+  not supported.  For \code{type = "Xlib"} they may not be usable unless
+  the X11 display is available to the owner of the \R process.  With
+  cairo version 1.0, \code{type = "Cairo"} is unavailable (but
+  \code{type="bCairo"} works).
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
@@ -95,7 +96,7 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
   dpi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
-  (including font sizes in points) the resolution used is  \code{res} (or
+  (including font sizes in points) the resolution used is \code{res} (or
   72dpi if unset).
 
   \code{png} will use a palette if there are less than 256 colours on
@@ -104,7 +105,8 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
 
   \code{png(type = "dCairo"} uses cairo directly to output the file --
   the resolution is not recorded and the PNG format used is chosen by
-  cairo (and undocumented -- it is currently 24-bit RGB).
+  cairo (and undocumented -- it is currently 32-bit RGBA, that is with
+  an alpha channel whether used or not).
 }
 
 \value{

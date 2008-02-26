@@ -193,7 +193,7 @@ static double GreenGamma = 1.0;
 static double BlueGamma	 = 1.0;
 
 #ifdef HAVE_WORKING_CAIRO
-#include "cairoX11.c"
+# include "cairoX11.c"
 #endif
 
 /* Variables Used To Store Colormap Information */
@@ -1382,16 +1382,21 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    XSetWMProtocols(display, xd->window, &protocol, 1);
 #ifdef HAVE_WORKING_CAIRO
 	    if(xd->useCairo) {
+		cairo_status_t res;
 		xd->xcs = cairo_xlib_surface_create(display, xd->window,
 						    visual,
 						    (double)xd->windowWidth,
 						    (double)xd->windowHeight);
-		if (cairo_surface_status(xd->xcs) != CAIRO_STATUS_SUCCESS) {
+		res = cairo_surface_status(xd->xcs);
+		if (res != CAIRO_STATUS_SUCCESS) {
+		    warning("cairo error '%s'", cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
 		xd->xcc = cairo_create(xd->xcs);
-		if (cairo_status(xd->xcc) != CAIRO_STATUS_SUCCESS) {
+		res = cairo_status(xd->xcc);
+		if (res != CAIRO_STATUS_SUCCESS) {
+		    warning("cairo error '%s'", cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
@@ -1399,12 +1404,16 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
 						    (double)xd->windowWidth,
 						    (double)xd->windowHeight);
-		if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+		res = cairo_surface_status(xd->cs);
+		if (res != CAIRO_STATUS_SUCCESS) {
+		    warning("cairo error '%s'", cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
 		xd->cc = cairo_create(xd->cs);
-		if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+		res = cairo_status(xd->cc);
+		if (res != CAIRO_STATUS_SUCCESS) {
+		    warning("cairo error '%s'", cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
@@ -2620,8 +2629,13 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!gdd->dirty) error(_("no plot on device to save"));
     xd = gdd->dev->deviceSpecific;
     if (!xd->cs || !xd->useCairo) error(_("not an open X11cairo device"));
-    if (streql(type, "png"))
-	cairo_surface_write_to_png(xd->cs, fn);
+    if (streql(type, "png")) {
+	cairo_status_t res = cairo_surface_write_to_png(xd->cs, fn);
+	if (res != CAIRO_STATUS_SUCCESS)
+	    error("cairo error '%s'", cairo_status_to_string(res));
+    }
+#if CAIRO_VERSION >= 10200
+    /* cairo_image_surface_get_data is from 1.2 */
     else if (streql(type, "jpeg")) {
 	void *xi = cairo_image_surface_get_data(xd->cs);
 	FILE *fp = R_fopen(fn, "w");
@@ -2635,11 +2649,26 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 	stride = xd->windowWidth;
         R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
 		     Sbitgp, 0, fn, 0, 1L);
-    } else
-	error(_("invalid '%s' argument"));
+    }
+#else
+    else if (streql(type, "jpeg"))
+	error(_("type = \"%s\" requires cairo >= 1.2"), "jpeg");
+    else if (streql(type, "tiff"))
+	error(_("type = \"%s\" requires cairo >= 1.2"), "tiff");
+#endif
+    else
+	error(_("invalid '%s' argument"), "type");
     return R_NilValue;
 }
+#else
+static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error(_("type=\"Cairo\" is not supported on this build"));
+    return R_NilValue;
+}
+#endif
 
+#ifdef HAVE_WORKING_CAIRO
 static void null_Activate(pDevDesc dd)
 {
 }
@@ -2661,6 +2690,7 @@ static void null_Mode(int mode, pDevDesc dd)
 static Rboolean 
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
+    cairo_status_t res;
     if (xd->type == PNG || xd->type == JPEG 
 	|| xd->type == PNGdirect || xd->type == TIFF)
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
@@ -2672,11 +2702,15 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
     } else
 	error(_("unimplemented cairo-based device"));
 
-    if (cairo_surface_status(xd->cs) != CAIRO_STATUS_SUCCESS) {
+    res = cairo_surface_status(xd->cs);
+    if (res != CAIRO_STATUS_SUCCESS) {
+	warning("cairo error '%s'", cairo_status_to_string(res));
 	return FALSE;
     }
     xd->cc = cairo_create(xd->cs);
-    if (cairo_status(xd->cc) != CAIRO_STATUS_SUCCESS) {
+    res = cairo_status(xd->cc);
+    if (res != CAIRO_STATUS_SUCCESS) {
+	warning("cairo error '%s'", cairo_status_to_string(res));
 	return FALSE;
     }
     cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
@@ -2692,9 +2726,14 @@ static unsigned int Cbitgp(void *xi, int x, int y)
     return data[x*stride+y];
 }
 
+#if CAIRO_VERSION >= 10200
 static void BM_Close_bitmap(pX11Desc xd)
 {
     void *xi = cairo_image_surface_get_data(xd->cs);
+    if (!xi) {
+	warning("BM_Close_bitmap called on non-surface");
+	return;
+    }
 
     stride = xd->windowWidth;
     if (xd->type == PNG)
@@ -2711,13 +2750,16 @@ static void BM_Close_bitmap(pX11Desc xd)
 		     xd->quality);
     }
 }
+#endif
 
 static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     char buf[PATH_MAX];
+    cairo_status_t res;
 
     xd->npages++;
+#if CAIRO_VERSION >= 10200
     if (xd->type == PNG || xd->type == JPEG) {
 	if (xd->npages > 1) {
 	    /* try to preserve the page we do have */
@@ -2734,8 +2776,11 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	}
     } else if(xd->type == PNGdirect) {
 	if (xd->npages > 1) {
+	    cairo_status_t res;
 	    snprintf(buf, PATH_MAX, xd->filename, xd->npages - 1);
-	    cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));
+	    res = cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));
+	    if (res != CAIRO_STATUS_SUCCESS)
+		warning("cairo error '%s'", cairo_status_to_string(res));
 	}
     }
 #ifdef HAVE_TIFF
@@ -2753,7 +2798,15 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	xd->cs = cairo_svg_surface_create(R_ExpandFileName(buf),
 					  (double)xd->windowWidth,
 					  (double)xd->windowHeight);
+	res = cairo_surface_status(xd->cs);
+	if (res != CAIRO_STATUS_SUCCESS) {
+	    error("cairo error '%s'", cairo_status_to_string(res));
+	}
 	xd->cc = cairo_create(xd->cs);
+	res = cairo_status(xd->cc);
+	if (res != CAIRO_STATUS_SUCCESS) {
+	    error("cairo error '%s'", cairo_status_to_string(res));
+	}
 	cairo_set_antialias(xd->cc, xd->antialias);
     }
 #endif
@@ -2787,6 +2840,18 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 #endif
     else
 	error(_("unimplemented cairo-based device"));
+#else /* cairo 1.0 */
+    if(xd->type == PNGdirect) {
+	if (xd->npages > 1) {
+	    cairo_status_t res;
+	    snprintf(buf, PATH_MAX, xd->filename, xd->npages - 1);
+	    res = cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));
+	    if (res != CAIRO_STATUS_SUCCESS)
+		warning("cairo error '%s'", cairo_status_to_string(res));
+	}
+    } else
+	error(_("unimplemented cairo-based device"));
+#endif
 
     cairo_reset_clip(xd->cc);
     if (xd->type == PNG  || xd->type == TIFF) {
@@ -2808,12 +2873,15 @@ static void BM_Close(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (xd->npages) {
+#if CAIRO_VERSION >= 10200
 	if (xd->type == PNG || xd->type == JPEG 
 	    || xd->type == TIFF ) BM_Close_bitmap(xd);
+#endif
 	if (xd->type == PNGdirect) {
+	    cairo_status_t res;
 	    char buf[PATH_MAX];
 	    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-	    cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));	    
+	    res = cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));
 	}
     }
     if (xd->fp) fclose(xd->fp);
@@ -2985,6 +3053,10 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
     if(quality == NA_INTEGER || quality < 0 || quality > 100)
 	error(_("invalid '%s' argument"), "quality");
 
+#if CAIRO_VERSION < 10200
+    if (type != 5)
+	error(_("device '%s' requires cairo >= 1.2"), devtable[type]);
+#endif
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -3005,12 +3077,6 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #else
-static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error(_("type=\"Cairo\" is not supported on this build"));
-    return R_NilValue;
-}
-
 static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     error(_("cairo-based devices are not supported on this build"));
