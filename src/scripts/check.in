@@ -2478,16 +2478,19 @@ sub check_pkg {
     
     if($opt_latex && $ENV{"_R_CHECK_RD2DVI_DESCRIPTION_"}) {
 	my $Rd2dvi_opts = "--batch --no-preview --only-meta";
+	my $ext;
 	if($HAVE_PDFLATEX) {
 	    $log->checking("PDF version of DESCRIPTION");
 	    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
+	    $ext = "pdf";
 	} else {
 	    $log->checking("DVI version of DESCRIPTION");
+	    $ext = "dvi";
 	}
 	my $cmd = join(" ",
 		       (&shell_quote_file_path("${R::Vars::R_EXE}"),
 			"CMD Rd2dvi $Rd2dvi_opts",
-			"-o ${pkgname}-header.dvi >/dev/null 2>&1",
+			"-o ${pkgname}-header.${ext} >/dev/null 2>&1",
 			"$pkgdir"));
 	if(R_system($cmd)) {
 	    ## This is certainly not perfect.
