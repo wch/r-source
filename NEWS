@@ -353,8 +353,8 @@ DEPRECATED & DEFUNCT
 	["double" will follow shortly:  the S4 class for a REALSXP is
 	"numeric".]
 
-    o 	several S4 class definition utilities have been said to be
-    	deprecated since R 1.8.0; these are now formally deprecated.
+    o	Several S4 class definition utilities have been said to be
+	deprecated since R 1.8.0; these are now formally deprecated.
 
     o	Use of the graphics headers Rgraphics.h and Rdevices.h is
 	deprecated, and these will be unavailable in R 2.8.0.
