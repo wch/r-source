@@ -104,7 +104,7 @@ tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
 
   \code{png(type = "dCairo"} uses cairo directly to output the file --
   the resolution is not recorded and the PNG format used is chosen by
-  cairo (and undocumented).
+  cairo (and undocumented -- it is currently 24-bit RGB).
 }
 
 \value{
