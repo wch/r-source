@@ -2381,6 +2381,9 @@ Solaris 10) may need @code{cairo} added separately.  Mac OS X comes with
 none of these libraries, but @code{cairo} support will be added to the
 binary version.
 
+For the best font experience with these devices you need suitable fonts
+installed: Linux users will want the @code{urw-fonts} package.
+
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later) or @code{libpng} (version 1.2.3 or
