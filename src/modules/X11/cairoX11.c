@@ -460,30 +460,33 @@ static void Rc_addFont(const char *family, int face, cairo_font_face_t* font)
 }
 
 /* FC patterns to append to font family names */
-static const char *face_styles[5] = {
+static const char *face_styles[4] = {
     ":style=Regular", 
     ":style=Bold",
     ":style=Italic", 
-    ":style=Bold Italic,BoldItalic",
-    ""
+    ":style=Bold Italic,BoldItalic"
 };
 
 static int fc_loaded;
 static FT_Library ft_library;
 
 /* use FC to find a font, load it in FT and return the Cairo FT font face */
-static cairo_font_face_t *FC_getFont(const char *fcname) 
+static cairo_font_face_t *FC_getFont(const char *family, int style) 
 {
     FcFontSet *fs;
     FcPattern *pat, *match;
     FcResult  result;
     FcChar8   *file;
-  
+    char      fcname[250]; /* 200 for family + 50 for style */
+
     /* find candidate fonts via FontConfig */
     if (!fc_loaded) {
         if (!FcInit()) return NULL;
 	fc_loaded = 1;
     }
+    style &= 3;
+    strcpy(fcname, family);
+    strcat(fcname, face_styles[style]);
     pat = FcNameParse((FcChar8 *)fcname);
     if (!pat) return NULL;
     FcConfigSubstitute (0, pat, FcMatchPattern);
@@ -514,6 +517,22 @@ static cairo_font_face_t *FC_getFont(const char *fcname)
 		if (!FT_New_Face(ft_library, (const char *) file, index, &face) ||
 		    (index && !FT_New_Face(ft_library, (const char *) file, 0, &face))) {
 		    FcFontSetDestroy (fs);
+#ifdef __APPLE__ /* FreeType is broken on OS X in that face index is often wrong (unfortunately
+		    even for Helvetica!) - we try to find the best match through enumeration */
+		    if (face->num_faces > 1 && (face->style_flags & 3) != style) {
+			FT_Face alt_face;
+			int i = 0;
+			while (i < face->num_faces)
+			    if (!FT_New_Face(ft_library, (const char *) file, i++, &alt_face)) {
+				if ((alt_face->style_flags & 3) == style) {
+				    FT_Done_Face(face);
+				    face = alt_face;
+				    break;
+				} else
+				    FT_Done_Face(alt_face);
+			    }
+		    }
+#endif
 		    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
 		}
 	    }
@@ -543,10 +562,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd)
     }
     cairo_face = Rc_findFont(family, face);
     if (!cairo_face) {
-	char fp[250]; /* 200 family + 50 styles */
-	strcpy(fp, family);
-	strcat(fp, face_styles[face - 1]);
-        cairo_face = FC_getFont(fp);
+	cairo_face = FC_getFont(family, face - 1);
 	if (!cairo_face) return;
 	Rc_addFont(family, face, cairo_face);
     }
