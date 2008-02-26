@@ -202,12 +202,12 @@ svg <- function(filename = "Rplot%03d.svg",
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     } else antialias <- 1
     .Internal(cairo(filename, 4L, width, height, pointsize, bg,
-                    NA_integer_, antialias, 100L))
+                    NA_integer_, antialias, 0L))
 }
 
-cairo_pdf <- function(filename = "Rplot%03d.pdf",
+cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
                       width = 7, height = 7, pointsize = 12,
-                      bg = "white", antialias)
+                      onefile = FALSE, bg = "white", antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     if(!missing(antialias)) {
@@ -216,12 +216,12 @@ cairo_pdf <- function(filename = "Rplot%03d.pdf",
         if(is.na(antialias)) stop("invalid value for 'antialias'")
     } else antialias <- 1
     .Internal(cairo(filename, 6L, 72*width, 72*height, pointsize, bg,
-                    NA_integer_, antialias, 100L))
+                    NA_integer_, antialias, onefile))
 }
 
-cairo_ps <- function(filename = "Rplot%03d.ps",
-                      width = 7, height = 7, pointsize = 12,
-                      bg = "white", antialias)
+cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
+                     width = 7, height = 7, pointsize = 12,
+                     onefile = FALSE, bg = "white", antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     if(!missing(antialias)) {
@@ -230,7 +230,7 @@ cairo_ps <- function(filename = "Rplot%03d.ps",
         if(is.na(antialias)) stop("invalid value for 'antialias'")
     } else antialias <- 1
     .Internal(cairo(filename, 7L, 72*width, 72*height, pointsize, bg,
-                    NA_integer_, antialias, 100L))
+                    NA_integer_, antialias, onefile))
 }
 
 ####################

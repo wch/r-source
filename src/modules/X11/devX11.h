@@ -143,6 +143,7 @@ typedef struct {
     int res_dpi;			/* used for png/jpeg */
     Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
+    Rboolean onefile;
 
 #ifdef HAVE_WORKING_CAIRO
     Rboolean useCairo;

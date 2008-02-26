@@ -16,13 +16,13 @@ svg(filename = "Rplot\%03d.svg",
     width = 480, height = 480, units = "px", res = 72,
     pointsize = 12, bg = "white", antialias)
 
-cairo_pdf(filename = "Rplot\%03d.pdf",
+cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
-          bg = "white", antialias)
+          onefile = FALSE, bg = "white", antialias)
 
-cairo_ps(filename = "Rplot\%03d.ps",
+cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
-         bg = "white", antialias)
+         onefile = FALSE, bg = "white", antialias)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -39,6 +39,7 @@ cairo_ps(filename = "Rplot\%03d.ps",
   \item{res}{The resolution used to convert points and other
     device-size units to pixels.}
   \item{pointsize}{the default pointsize of plotted text.}
+  \item{onefile}{should all plots appear in one file or in separate files?}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{antialias}{the type of anti-aliasing (if any) to be used.
@@ -66,7 +67,8 @@ cairo_ps(filename = "Rplot\%03d.ps",
   
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
-  \code{file}, the file will contain the last page plotted.
+  \code{file} (or set \code{onefile=TRUE}, the file will contain the
+  last page plotted.
 
   %http://lwn.net/Articles/256590/
   The \code{cairo_ps} output is not yet encapsulated (that is coming in

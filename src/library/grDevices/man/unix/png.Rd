@@ -20,7 +20,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots,
     type = c("Cairo", "Xlib", "dCairo"), antialias)
 
-tiff(filename = "Rplot%03d.tiff",width = 480, height = 480, units = "px",
+tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
      pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
      bg = "white", res = NA,  \dots,
