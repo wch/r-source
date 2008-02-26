@@ -141,6 +141,10 @@ function(x, y, style = c("table", "list"),
         else
             stop("incorrect value for 'x'")
     }
+    else if(missing(y) && !is.null(nms <- names(x))) {
+        y <- x
+        x <- nms
+    }
     else if(length(x) != length(y))
         stop("'x' and 'y' must have the same length")
     x <- as.character(x)
