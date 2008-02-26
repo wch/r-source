@@ -65,6 +65,8 @@
     cairo_ps_surface_create  (1.2)
     cairo_svg_surface_create (1.2)
 
+    cairo_ft_font_face_create_for_ft_face [OSX]
+
     g_object_unref  (glib)
 
     pango_cairo_create_layout (1.10)
@@ -418,27 +420,59 @@ PangoCairo_Text(double x, double y,
    r44621: now works on Linux, just finds the same fonts as before. [BDR]
 */
 #if CAIRO_HAS_FT_FONT && __APPLE__
+
 /* FT implies FC in Cairo */
 #include <cairo-ft.h>
 
-static cairo_font_face_t *default_faces[5];
-static const char *default_patterns[5] = {
-    "Helvetica:style=Regular", 
-    "Helvetica:style=Bold",
-    "Helvetica:style=Italic", 
-    "Helvetica:style=Bold Italic,BoldItalic",
-    "Symbol" 
+/* cairo font cache - to prevent unnecessary font look ups */
+typedef struct Rc_font_cache_s {
+    const char *family;
+    int face;
+    cairo_font_face_t *font;
+    struct Rc_font_cache_s *next;
+} Rc_font_cache_t;
+
+static Rc_font_cache_t *cache, *cache_tail;
+
+static cairo_font_face_t *Rc_findFont(const char *family, int face)
+{
+    Rc_font_cache_t *here = cache;
+    while (here) {
+	if (here->face == face && streql(here->family, family))
+	    return here->font;
+	here = here->next;
+    }
+    return NULL;
+}
+
+static void Rc_addFont(const char *family, int face, cairo_font_face_t* font)
+{
+    Rc_font_cache_t *fc = (Rc_font_cache_t*) malloc(sizeof(Rc_font_cache_t));
+    if (!fc) return;
+    fc->family = strdup(family);
+    fc->face = face;
+    fc->font = font;
+    fc->next = NULL;
+    if (cache)
+	cache_tail = cache_tail->next = fc;
+    else
+	cache = cache_tail = fc;
+}
+
+/* FC patterns to append to font family names */
+static const char *face_styles[5] = {
+    ":style=Regular", 
+    ":style=Bold",
+    ":style=Italic", 
+    ":style=Bold Italic,BoldItalic",
+    ""
 };
 
 static int fc_loaded;
 static FT_Library ft_library;
 
-/* font encodings - we can probably remove this if MacRoman is really dead */
-#define FE_MacRoman 1 /* TT_PLATFORM_MACINTOSH */
-#define FE_Unicode  0
-
 /* use FC to find a font, load it in FT and return the Cairo FT font face */
-static cairo_font_face_t *FC_getFont(const char *fcname, int encoding) 
+static cairo_font_face_t *FC_getFont(const char *fcname) 
 {
     FcFontSet *fs;
     FcPattern *pat, *match;
@@ -454,7 +488,6 @@ static cairo_font_face_t *FC_getFont(const char *fcname, int encoding)
     if (!pat) return NULL;
     FcConfigSubstitute (0, pat, FcMatchPattern);
     FcDefaultSubstitute (pat);
-    /* printf(" - resulting pattern: \"%s\"\n", FcNameUnparse(pat)); */
     fs = FcFontSetCreate ();
     match = FcFontMatch (0, pat, &result);
     FcPatternDestroy (pat);
@@ -466,40 +499,26 @@ static cairo_font_face_t *FC_getFont(const char *fcname, int encoding)
 
     /* then try to load the font into FT */
     if (fs) {
-        int j = 0;
-	while (j < fs->nfont) /* find the font file and use it with FreeType */
-	    if (FcPatternGetString (fs->fonts[j++], FC_FILE, 0, &file) 
+	int j = 0, index = 0;
+	while (j < fs->nfont) { /* find the font file + face index and use it with FreeType */
+	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file) 
+		== FcResultMatch &&
+		FcPatternGetInteger(fs->fonts[j], FC_INDEX, 0, &index)
 		== FcResultMatch) {
 	        FT_Face face;
-		FT_CharMap charmap;
-		int n;
-		
-		/* printf(" - file: \"%s\"\n", file); */
 		if (!ft_library && FT_Init_FreeType(&ft_library)) {
 		    FcFontSetDestroy (fs);  
 		    return NULL;
 		}
-		if (!FT_New_Face(ft_library, (const char *) file, 0, &face)) {
-#if 0
-		    for (n = 0; n < face->num_charmaps; n++) {
-			charmap = face->charmaps[n];
-			printf("   charmap%d: enc=%d platf=%d\n", n, 
-			       charmap->encoding_id, charmap->platform_id);
-		    }
-#endif
-
-		    if (encoding)
-		        for (n = 0; n < face->num_charmaps; n++) {
-			    charmap = face->charmaps[n];
-			    if (charmap->platform_id == encoding) {
-			        FT_Set_Charmap( face, charmap );
-				break;
-			    }
-			}
+		/* some FreeType versions have broken index support, fall back to index 0 */
+		if (!FT_New_Face(ft_library, (const char *) file, index, &face) ||
+		    (index && !FT_New_Face(ft_library, (const char *) file, 0, &face))) {
 		    FcFontSetDestroy (fs);
 		    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
 		}
 	    }
+	    j++;
+	}
 	FcFontSetDestroy (fs);
     }
     return NULL;
@@ -510,18 +529,27 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     int face = gc->fontface;
     double size = gc->cex * gc->ps;
-    cairo_font_face_t *cairo_face;
+    cairo_font_face_t *cairo_face = NULL;
+    const char *family;
 
     if (face < 1 || face > 5) face = 1;
-    face--;
-    /* FIXME: support gc->fontfamily */
-    cairo_face = default_faces[face];
-    if (!cairo_face) {
-        cairo_face = FC_getFont(default_patterns[face], FE_Unicode);
-	if (!cairo_face) return;
-	default_faces[face] = cairo_face;
+    family = gc->fontfamily;
+    if (face == 5) {
+	if (!*family) family = "Symbol";
+    } else {
+	if (!*family || streql(family, "sans")) family = "Helvetica";
+	else if (streql(family, "serif")) family = "Times";
+	else if (streql(family, "mono")) family = "Courier";
     }
-  
+    cairo_face = Rc_findFont(family, face);
+    if (!cairo_face) {
+	char fp[250]; /* 200 family + 50 styles */
+	strcpy(fp, family);
+	strcat(fp, face_styles[face - 1]);
+        cairo_face = FC_getFont(fp);
+	if (!cairo_face) return;
+	Rc_addFont(family, face, cairo_face);
+    }
     cairo_set_font_face (xd->cc, cairo_face);
     /* FIXME: this should really use a matrix if pixels are non-square */
     cairo_set_font_size (xd->cc, size);
