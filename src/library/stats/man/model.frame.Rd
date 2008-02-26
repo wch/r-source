@@ -66,18 +66,18 @@ get_all_vars(formula, data, \dots)
 \details{
   Exactly what happens depends on the class and attributes of the object
   \code{formula}.  If this is an object of fitted-model class such as
-  \code{"lm"}, the method will either returned the saved model frame
+  \code{"lm"}, the method will either return the saved model frame
   used when fitting the model (if any, often selected by argument
   \code{model = TRUE}) or pass the call used when fitting on to the
   default method.  The default method itself can cope with rather
   standard model objects such as those of class
   \code{"\link[MASS]{lqs}"} from package \pkg{MASS} if no other
   arguments are supplied.
-  
+
   The rest of this section applies only to the default method.
 
   If either \code{formula} or \code{data} is already a model frame (a
-  data frame with a \code{"terms"} attribute and the other is missing,
+  data frame with a \code{"terms"} attribute) and the other is missing,
   the model frame is returned.  Unless \code{formula} is a terms object,
   \code{as.formula} and then \code{terms} is called on it.  (If you wish
   to use the \code{keep.order} argument of \code{terms.formula}, pass a
@@ -91,7 +91,7 @@ get_all_vars(formula, data, \dots)
   are looked for first in \code{data} and then in the environment of
   \code{formula} (see the help for \code{\link{formula}()} for further
   details) and collected into a data frame.  Then the \code{subset}
-  expression is evaluated, and it is is used as a row index to the data
+  expression is evaluated, and it is used as a row index to the data
   frame.  Then the \code{na.action} function is applied to the data frame
   (and may well add attributes).  The levels of any factors in the data
   frame are adjusted according to the \code{drop.unused.levels} and
