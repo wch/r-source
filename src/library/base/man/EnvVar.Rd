@@ -65,9 +65,9 @@
     \item{\code{EDITOR}:}{The path to default editor.}
     \item{\code{PAGER}:}{The path to default pager.}
     \item{\code{R_BROWSER}:}{The path to default browser.}
-    \item{\code{R_DOC_DIR}:}{The location of the \R \code{doc} directory.}
+    \item{\code{R_DOC_DIR}:}{The location of the \R \file{doc} directory.}
     \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}.}
-    \item{\code{R_INCLUDE_DIR}:}{The location of the \R \code{include}
+    \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.}
     \item{\code{R_LATEXCMD}:}{The path to \code{latex}.}
     \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.}
@@ -76,7 +76,8 @@
     \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\code{R_PRINTCMD}:}{Print command to be used by
       \code{\link{postscript}}.}
-    \item{\code{R_SHARE_DIR}:}{The location of the \R \code{share} directory.}
+    \item{\code{R_SHARE_DIR}:}{The location of the \R \file{share}
+      directory.} 
     \item{\code{R_UNZIPCMD}:}{The path to \code{unzip}.}
     \item{\code{R_ZIPCMD}:}{The path to \code{zip}.}
   }

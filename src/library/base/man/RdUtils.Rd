@@ -52,7 +52,7 @@
 }
 \note{
   Conversion to S version 3/4 formats is rough: there are some
-  \code{.Rd} constructs for which there is no natural analogue.
+  \file{.Rd} constructs for which there is no natural analogue.
   They are intended as a starting point for hand-tuning.
 }
 \seealso{

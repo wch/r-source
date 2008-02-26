@@ -26,10 +26,10 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
 \arguments{
   \item{dll}{a character string or \code{DLLInfo} object.
     The character string specifies the file name of the DLL
-    of interest, and is given without the file name extension (e.g. the
-    \code{.dll} or \code{.so}) and with no directory/path information.
-    So a file \code{MyPackage/libs/MyPackage.so} would be specified as
-    \code{MyPackage}.
+    of interest, and is given without the file name extension (e.g., the
+    \file{.dll} or \file{.so}) and with no directory/path information.
+    So a file \file{MyPackage/libs/MyPackage.so} would be specified as
+    \samp{MyPackage}.
     
     The \code{DLLInfo} objects can be obtained directly
     in calls to \code{\link{dyn.load}} and  \code{\link{library.dynam}},

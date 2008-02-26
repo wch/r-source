@@ -59,8 +59,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 
   How the command is run differs by platform: Unix-alikes use a shell
   (\file{/bin/sh} by default), and Windows executes the command directly
-  (extensions \code{.exe}, \code{.com}) or as a batch file (extensions
-  \code{.cmd} and \code{.bat}).
+  (extensions \file{.exe}, \file{.com}) or as a batch file (extensions
+  \file{.cmd} and \file{.bat}).
 #ifdef windows
   (These extensions are tried in turn if none is supplied.)
   This means that redirection, pipes, \dots cannot be used: see
@@ -68,7 +68,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   \code{paste(Sys.getenv("COMSPEC"),"/c", cmd)}.)
   
   The search path for \code{command} may be system-dependent: it will
-  include the \R \code{bin} directory, the working directory and the
+  include the \R \file{bin} directory, the working directory and the
   Windows system directories before \code{PATH}.
 #endif
 

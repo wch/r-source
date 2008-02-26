@@ -35,8 +35,8 @@ file.info(\dots)
   File modes are probably only useful on NTFS file systems, and it seems
   all three digits refer to the file's owner.
   The execute/search bits are set for directories, and for files based
-  on their extensions (e.g. \code{.exe}, \code{.com}, \code{.cmd}
-  and \code{.bat} files).  \code{\link{file.access}} will give a more
+  on their extensions (e.g., \file{.exe}, \file{.com}, \file{.cmd}
+  and \file{.bat} files).  \code{\link{file.access}} will give a more
   reliable view of read/write access availability to the \R process.
 #endif
 }

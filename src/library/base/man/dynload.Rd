@@ -47,7 +47,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \item{symbol}{a character string giving a symbol name.}
   \item{PACKAGE}{if supplied, confine the search for the \code{name} to
     the DLL given by this argument (plus the conventional extension,
-    \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
+    \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
     that no other package can override their external symbols.  Use
     \code{PACKAGE="base"} for symbols linked in to \R.  This is used in the

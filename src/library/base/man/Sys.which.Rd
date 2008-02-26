@@ -20,8 +20,8 @@ Sys.which(names)
   executable (including an executable script) found on the current path.
 
 #ifdef windows
-  An \sQuote{executable} has extension \code{".exe"}, \code{".com"},
-  \code{".cmd"} or \code{".bat"}.  Such files need not actually be
+  An \sQuote{executable} has extension \file{.exe}, \file{.com},
+  \file{.cmd} or \file{.bat}.  Such files need not actually be
   executable, but this is what \code{\link{system}} tries.
 #endif
 }
