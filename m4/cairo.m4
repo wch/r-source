@@ -90,6 +90,7 @@ int main(void) {
     if test "x${r_cv_has_cairo}" = "xyes"; then
       modlist="cairo"
       ## on Linux, cairo-ft brings in header paths <cairo-ft.h> needs
+      ## the code which needs this is currently conditionalized
       for module in cairo-xlib cairo-png cairo-ft; do
 	if "${PKGCONF}" --exists ${module}; then
 	  modlist="${modlist} ${module}"
@@ -108,8 +109,15 @@ int main(void) {
          r_cairo_svg=yes
       fi
       CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
-      ## This is for static MacOS build
-      CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
+      case "${host_os}" in
+        darwin*)
+          ## This is for static MacOS build
+          CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
+          ;;
+        *)
+          CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
+          ;;
+      esac
 
       CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
       LIBS="${LIBS} ${CAIRO_LIBS}"
