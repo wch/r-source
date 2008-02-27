@@ -75,7 +75,7 @@ static SEXP getInlinePar(SEXP s, char *name)
     return result;
 }
 
-/* dflt used to be used for < 0 values in R < 2.7.0, 
+/* dflt used to be used for < 0 values in R < 2.7.0,
    now just used for NULL */
 static SEXP FixupPch(SEXP pch, int dflt)
 {
@@ -1207,7 +1207,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if (gpptr(dd)->las == 2 ||
 				gpptr(dd)->las == 3 ||
 				tnew - tlast >= gap) {
-				GMtext(ss, getCharEnc(label), 
+				GMtext(ss, getCharEnc(label),
 				       side, axis_lab, 0, x,
 				       gpptr(dd)->las, padjval, dd);
 				tlast = temp + 0.5 *labw;
@@ -1424,7 +1424,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     npch = length(pch);
     args = CDR(args);
 
-    PROTECT(lty = FixupLty(CAR(args), gpptr(dd)->lty));	
+    PROTECT(lty = FixupLty(CAR(args), gpptr(dd)->lty));
     args = CDR(args);
 
     /* Default col was NA_INTEGER (0x80000000) which was interpreted
@@ -2515,7 +2515,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	font = gpptr(dd)->fontmain;
 	/* GetTextArg may coerce, so protect the result */
 	GetTextArg(call, Main, &Main, &col, &cex, &font);
-	PROTECT(Main);	
+	PROTECT(Main);
 	gpptr(dd)->col = col;
 	gpptr(dd)->cex = gpptr(dd)->cexbase * cex;
 	gpptr(dd)->font = font;
@@ -2589,7 +2589,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(sub, i);
 		if(string != NA_STRING)
-		    GMtext(CHAR(string), getCharEnc(string), 1, vpos, where, 
+		    GMtext(CHAR(string), getCharEnc(string), 1, vpos, where,
 			   hpos, 0, 0.0, dd);
 	    }
 	}
@@ -2625,7 +2625,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(xlab, i);
 		if(string != NA_STRING)
-		    GMtext(CHAR(string), getCharEnc(string), 1, vpos + i, 
+		    GMtext(CHAR(string), getCharEnc(string), 1, vpos + i,
 			   where, hpos, 0, 0.0, dd);
 	    }
 	}
@@ -2661,7 +2661,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(ylab, i);
 		if(string != NA_STRING)
-		    GMtext(CHAR(string), getCharEnc(string), 2, vpos - i, 
+		    GMtext(CHAR(string), getCharEnc(string), 2, vpos - i,
 			   where, hpos, 0, 0.0, dd);
 	    }
 	}
@@ -3100,7 +3100,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		GConvert(&xi, &yi, USER, INCHES, dd);
 		posi = INTEGER(pos)[i];
 		drawLabel(xi, yi, posi, offset,
-			  CHAR(STRING_ELT(l, i % nl)), 
+			  CHAR(STRING_ELT(l, i % nl)),
 			  getCharEnc(STRING_ELT(l, i % nl)), dd);
 	    }
 	}
@@ -3131,7 +3131,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	nl = LENGTH(l);
 	if (nl <= 0)
 	    error(_("zero length 'labels'"));
-	n = LENGTH(x);	
+	n = LENGTH(x);
 	if (n != LENGTH(y))
 	    error(_("different argument lengths"));
 	if (nl > n)
@@ -3188,7 +3188,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    warn = asInteger(GetOption(install("warn"), R_BaseEnv));
 	    if (dmin > tol) {
 	        if(warn >= 0) {
-		    REprintf(_("warning: no point with %.2f inches\n"), tol);
+		    REprintf(_("warning: no point within %.2f inches\n"), tol);
 		    R_FlushConsole();
 		}
 	    }
@@ -3227,7 +3227,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (plot) {
 		    drawLabel(xi, yi, INTEGER(pos)[imin], offset,
-			      CHAR(STRING_ELT(l, imin % nl)), 
+			      CHAR(STRING_ELT(l, imin % nl)),
 			      getCharEnc(STRING_ELT(l, imin % nl)), dd);
 		    GMode(0, dd);
 		    GMode(2, dd);
@@ -3354,8 +3354,8 @@ static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
 	xl = dnd_xpos[-k-1];
 	yl = (dnd_hang >= 0) ? *y - dnd_hang : 0;
 	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
-	    GText(xl, yl-dnd_offset, USER, 
-		  CHAR(STRING_ELT(dnd_llabels, -k-1)), 
+	    GText(xl, yl-dnd_offset, USER,
+		  CHAR(STRING_ELT(dnd_llabels, -k-1)),
 		  getCharEnc(STRING_ELT(dnd_llabels, -k-1)),
 		  1.0, 0.3, 90.0, dd);
     }
@@ -3366,8 +3366,8 @@ static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
 	xr = dnd_xpos[-k-1];
 	yr = (dnd_hang >= 0) ? *y - dnd_hang : 0;
 	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
-	    GText(xr, yr-dnd_offset, USER, 
-		  CHAR(STRING_ELT(dnd_llabels, -k-1)), 
+	    GText(xr, yr-dnd_offset, USER,
+		  CHAR(STRING_ELT(dnd_llabels, -k-1)),
 		  getCharEnc(STRING_ELT(dnd_llabels, -k-1)),
 		  1.0, 0.3, 90.0, dd);
     }
@@ -3437,7 +3437,7 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
     gpptr(dd)->cex = gpptr(dd)->cexbase * gpptr(dd)->cex;
-    dnd_offset = GConvertYUnits(GStrWidth("m", CE_ANY, INCHES, dd), INCHES, 
+    dnd_offset = GConvertYUnits(GStrWidth("m", CE_ANY, INCHES, dd), INCHES,
 				USER, dd);
 
     /* override par("xpd") and force clipping to figure region */
@@ -3993,7 +3993,7 @@ SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(ans, 1, tmpy);
 	UNPROTECT(4);
     }
-    
+
     GMode(0, dd);
     GRestorePars(dd);
     /* NOTE: only record operation if no "error"  */
@@ -4009,7 +4009,7 @@ SEXP attribute_hidden do_clip(SEXP call, SEXP op, SEXP args, SEXP env)
     double x1, x2, y1, y2;
     SEXP originalArgs = args;
     pGEDevDesc dd = CurrentDevice();
-    
+
     checkArity(op, args);
     x1 = asReal(CAR(args));
     if(!R_FINITE(x1)) error("invalid '%s' argument", "x1");
@@ -4022,7 +4022,7 @@ SEXP attribute_hidden do_clip(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     y2 = asReal(CAR(args));
     if(!R_FINITE(y2)) error("invalid '%s' argument", "y2");
-    
+
     GConvert(&x1, &y1, USER, DEVICE, dd);
     GConvert(&x2, &y2, USER, DEVICE, dd);
     GESetClip(x1, y1, x2, y2, dd);
@@ -4030,5 +4030,5 @@ SEXP attribute_hidden do_clip(SEXP call, SEXP op, SEXP args, SEXP env)
     /* NOTE: only record operation if no "error"  */
     if (GRecording(call, dd))
 	GErecordGraphicOperation(op, originalArgs, dd);
-    return ans;    
+    return ans;
 }
