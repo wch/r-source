@@ -41,6 +41,10 @@ BUG FIXES
     o	Checking examples which used grid (e.g. via lattice) without
 	attaching grid no longer give errors from grid_plot_hook().
 
+    o	kappa(m, exact=TRUE) no longer wrongly uses 'exact=FALSE' when m
+	is an 'lm' or 'qr' object because the kappa.tri(x, exact=TRUE)
+	now works correctly.
+
 
 
 		CHANGES IN R VERSION 2.6.2
