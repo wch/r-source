@@ -62,14 +62,6 @@ function (ClassDef) {
     ClassDef@subclasses
 }
 
-## Hmm: this is explicitly mentioned as needed,
-## .... in ../man/validObject.Rd
-"getValidity" <-
-function (ClassDef) {
-    ## "needed" according to validObject.Rd, hence *not* .Deprecated()
-    ClassDef@validity
-}
-
 "getVirtual" <-
 function (ClassDef) {
     .Deprecated()

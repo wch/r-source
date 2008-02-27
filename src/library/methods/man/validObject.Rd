@@ -5,6 +5,7 @@
 
 \name{validObject}
 \alias{validObject}
+\alias{getValidity}
 \alias{setValidity}
 \title{ Test the Validity of an Object }
 \description{
@@ -24,6 +25,8 @@
 validObject(object, test = FALSE, complete = FALSE)
 
 setValidity(Class, method, where = topenv(parent.frame()) )
+
+getValidity(ClassDef)
 }
 \arguments{
   \item{object}{ any object, but not much will happen unless the
@@ -36,6 +39,8 @@ setValidity(Class, method, where = topenv(parent.frame()) )
     applied recursively to any of the slots that have such methods.}
   \item{Class}{the name or class definition of the class whose validity
     method is to be set.}
+  \item{ClassDef}{a class definition object, as from
+    \code{\link{getClassDef}}.}
   \item{method}{a validity method;  that is, either \code{NULL} or a
     function of one argument (\code{object}).  Like
     \code{validObject}, the function should return \code{TRUE} if the
@@ -50,7 +55,7 @@ setValidity(Class, method, where = topenv(parent.frame()) )
   superclasses: the logic of \code{validObject} ensures these tests are
   done once only.  As a consequence, if one validity method wants to use
   another, it should extract and call the method from the other
-  definition of the other class by calling \code{\link{getValidity}}: it
+  definition of the other class by calling \code{getValidity()}: it
   should \emph{not} call \code{validObject}.
 }
 \details{
@@ -93,8 +98,9 @@ setValidity(Class, method, where = topenv(parent.frame()) )
   discussion of details see \code{?\link{Methods}}
   and the links from that documentation.
 }
-\seealso{ \code{\link{setClass}}. }
-
+\seealso{\code{\link{setClass}};
+  class \code{\linkS4class{classRepresentation}}.
+}
 \examples{
 setClass("track",
           representation(x="numeric", y = "numeric"))

@@ -11,7 +11,6 @@
 \alias{getProperties}
 \alias{getPrototype}
 \alias{getSubclasses}
-\alias{getValidity}
 \alias{getVirtual}
 \title{Old functions to access slots in a class definition }
 \description{
@@ -39,9 +38,6 @@ getPrototype(ClassDef)
 
 getSubclasses(ClassDef)
 
-getValidity(ClassDef)
-%^^^^^^^^^^  is explicitly mentioned in ./validObject.Rd
-
 getVirtual(ClassDef)
 
 }
@@ -61,10 +57,9 @@ The functions and corresponding slots are:
 \code{getProperties} \tab \code{"slots"} \cr
 \code{getPrototype} \tab \code{"prototype"} \cr
 \code{getSubclasses} \tab \code{"subclasses"} \cr
-\code{getValidity} \tab \code{"validity"} \cr
 \code{getVirtual} \tab \code{"virtual"}
 }
 
 }
-\seealso{ \code{\link{classRepresentation-class}} }
+\seealso{Class \code{\linkS4class{classRepresentation}}.}
 \keyword{internal}
