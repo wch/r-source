@@ -42,7 +42,7 @@ kappa.qr <- function(z, ...)
 
 kappa.tri <- function(z, exact = FALSE, ...)
 {
-    if(exact) kappa.default(z)
+    if(exact) kappa.default(z, exact = TRUE)
     else {
 	p <- nrow(z)
 	if(p != ncol(z)) stop("matrix should be square")

@@ -5069,3 +5069,8 @@ stopifnot(identical(expect, gregexpr("", "abc", perl=TRUE)[[1]]))
 ## test of internal argument matching
 stopifnot(all.equal(round(d=2, x=pi), 3.14))
 ## used positional matching in 2.6.x
+
+## kappa.tri(x, exact=TRUE) wrongly ended using exact=FALSE:
+data(longley)
+fm1 <- lm(Employed ~ ., data = longley)
+stopifnot(all.equal(23845862, kappa(fm1, exact=TRUE)))
