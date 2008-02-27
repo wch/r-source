@@ -2382,7 +2382,10 @@ none of these libraries, but @code{cairo} support will be added to the
 binary version.
 
 For the best font experience with these devices you need suitable fonts
-installed: Linux users will want the @code{urw-fonts} package.
+installed: Linux users will want the @code{urw-fonts} package.  Another
+useful set of fonts are the `liberation' truetype fonts available at
+@uref{https://www.redhat.com/promo/fonts/}, which cover the Latin, Greek
+and Cyrillic alphabets plus a fair range of signs.
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
