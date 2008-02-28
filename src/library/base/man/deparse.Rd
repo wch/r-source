@@ -1,6 +1,6 @@
 % File src/library/base/man/deparse.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{deparse}
@@ -12,7 +12,8 @@
 \usage{
 deparse(expr, width.cutoff = 60,
         backtick = mode(expr) \%in\% c("call", "expression", "("),
-        control = c("keepInteger", "showAttributes", "keepNA") )
+        control = c("keepInteger", "showAttributes", "keepNA"),
+        nlines = -1)
 }
 \arguments{
   \item{expr}{any \R expression.}
@@ -22,12 +23,14 @@ deparse(expr, width.cutoff = 60,
     enclosed in backticks if they do not follow the standard syntax.}
   \item{control}{character vector of deparsing options.  See
     \code{\link{.deparseOpts}}.}
+  \item{nlines}{the maximum number of lines to produce.  Negative values
+    indicate no limit.}
 }
 \details{
   This function turns unevaluated expressions (where \sQuote{expression}
   is taken in a wider sense than the strict concept of a vector of mode
   \code{"expression"} used in \code{\link{expression}}) into character
-  strings (a kind of inverse \code{\link{parse}}).
+  strings (a kind of inverse to \code{\link{parse}}).
 
   A typical use of this is to create informative labels for data sets
   and plots.  The example shows a simple use of this facility.  It uses

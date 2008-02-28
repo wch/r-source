@@ -338,6 +338,10 @@ NEW FEATURES
     o	New graphics function clip() to set the clipping region (in
 	user coordinates).
 
+    o	deparse() gains a new argument 'nlines' to limit the number of
+    	lines of output, and this is used internally to make several
+    	functions more efficient.
+
 
 DEPRECATED & DEFUNCT
 

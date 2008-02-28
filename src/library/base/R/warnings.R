@@ -31,7 +31,7 @@ print.warnings <- function(x, ...)
             ind <- if(n == 1) "" else paste(i, ": ", sep="")
             out <- if(length(x[[i]])) {
                 ## deparse can overshoot cutoff
-                temp <- deparse(x[[i]], width.cutoff = 50)
+                temp <- deparse(x[[i]], width.cutoff = 50, nlines = 2)
                 ## Put on one line if narrow enough.
                 sm <- strsplit(msgs[i], "\n")[[1]]
                 nl <- if(nchar(ind, "w") + nchar(temp[1], "w") +
