@@ -45,6 +45,9 @@ BUG FIXES
 	is an 'lm' or 'qr' object because the kappa.tri(x, exact=TRUE)
 	now works correctly.
 
+    o	help(topic, offline=TRUE) misbehaved when there were multiple
+    	matches to 'topic'.  (PR#10859)
+
 
 
 		CHANGES IN R VERSION 2.6.2

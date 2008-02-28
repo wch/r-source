@@ -135,7 +135,8 @@ function(x, ...)
                 fp <- file.path(paths, "Meta", "Rd.rds")
                 tp <- basename(p)
                 titles <- tp
-                if(type == "html") tp <- tools::file_path_sans_ext(tp)
+                if(type == "html" || type == "latex")
+                    tp <- tools::file_path_sans_ext(tp)
                 for (i in seq_along(fp)) {
                     tmp <- try(.readRDS(fp[i]))
                     titles[i] <- if(inherits(tmp, "try-error"))
