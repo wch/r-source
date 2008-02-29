@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-5 The R Development Core Team.
+ *  Copyright (C) 2003-8 The R Development Core Team.
+ *  Copyright (C) 2008   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,11 +27,11 @@
 #include <R_ext/Complex.h>	/* for Rcomplex */
 #include <R_ext/BLAS.h>
 
-#ifdef  __cplusplus
+#ifdef	__cplusplus
 extern "C" {
 #endif
 
-/* Selected Double Precision Lapack Routines 
+/* Selected Double Precision Lapack Routines
    ========
  */
 
@@ -91,7 +92,7 @@ F77_NAME(dgbrfs)(const char* trans, const int* n, const int* kl,
 /* equations A * X = B, where A is a band matrix of order N with */
 /* KL subdiagonals and KU superdiagonals, and X and B are */
 /* N-by-NRHS matrices */
-extern void 
+extern void
 F77_NAME(dgbsv)(const int* n, const int* kl,const int* ku,
 		const int* nrhs, double* ab, const int* ldab,
 		int* ipiv, double* b, const int* ldb, int* info);
@@ -102,7 +103,7 @@ F77_NAME(dgbsvx)(const int* fact, const char* trans,
 		 const int* n, const int* kl,const int* ku,
 		 const int* nrhs, double* ab, const int* ldab,
 		 double* afb, const int* ldafb, int* ipiv,
-		 const char* equed, double* r, double* c, 
+		 const char* equed, double* r, double* c,
 		 double* b, const int* ldb,
 		 double* x, const int* ldx,
 		 double* rcond, double* ferr, double* berr,
@@ -116,8 +117,8 @@ F77_NAME(dgbtf2)(const int* m, const int* n, const int* kl,const int* ku,
 /* matrix A using partial pivoting with row interchanges */
 extern void
 F77_NAME(dgbtrf)(const int* m, const int* n, const int* kl,const int* ku,
-    		  double* ab, const int* ldab, int* ipiv, int* info);
-/* DGBTRS - solve a system of linear equations  A * X = B or  */
+		  double* ab, const int* ldab, int* ipiv, int* info);
+/* DGBTRS - solve a system of linear equations	A * X = B or  */
 /* A' * X = B with a general band matrix A using the LU */
 /* factorization computed by DGBTRF */
 extern void
@@ -138,7 +139,7 @@ F77_NAME(dgebak)(const char* job, const char* side, const int* n,
 /* DGEBAL - balance a general real matrix A */
 extern void
 F77_NAME(dgebal)(const char* job, const int* n, double* a, const int* lda,
-    		  int* ilo, int* ihi, double* scale, int* info);
+		  int* ilo, int* ihi, double* scale, int* info);
 /* DGEBD2 - reduce a real general m by n matrix A to upper or */
 /* lower bidiagonal form B by an orthogonal transformation */
 extern void
@@ -343,7 +344,7 @@ F77_NAME(dgetrf)(const int* m, const int* n, double* a, const int* lda,
 extern void
 F77_NAME(dgetri)(const int* n, double* a, const int* lda,
 		 int* ipiv, double* work, const int* lwork, int* info);
-/* DGETRS - solve a system of linear equations  A * X = B or A' * */
+/* DGETRS - solve a system of linear equations	A * X = B or A' * */
 /* X = B with a general N-by-N matrix A using the LU factorization */
 /* computed by DGETRF */
 extern void
@@ -450,7 +451,7 @@ F77_NAME(dgtrfs)(const char* trans, const int* n, const int* nrhs,
 		 double* x, const int* ldx,
 		 double* ferr, double* berr,
 		 double* work, int* iwork, int* info);
-/* DGTSV - solve the equation   A*X = B, */
+/* DGTSV - solve the equation	A*X = B, */
 extern void
 F77_NAME(dgtsv)(const int* n, const int* nrhs,
 		double* dl, double* d, double* du,
@@ -570,7 +571,7 @@ F77_NAME(dorgtr)(const char* uplo, const int* n,
 		 double* a, const int* lda, const double* tau,
 		 double* work, const int* lwork, int* info);
 /* DORM2L - overwrite the general real m by n matrix C with   Q * */
-/* C if SIDE = 'L' and TRANS = 'N', or   Q'* C if SIDE = 'L' and */
+/* C if SIDE = 'L' and TRANS = 'N', or	 Q'* C if SIDE = 'L' and */
 /* TRANS = 'T', or   C * Q if SIDE = 'R' and TRANS = 'N', or   C * */
 /* Q' if SIDE = 'R' and TRANS = 'T', */
 extern void
@@ -605,7 +606,7 @@ F77_NAME(dormhr)(const char* side, const char* trans, const int* m,
 		 double* c, const int* ldc,
 		 double* work, const int* lwork, int* info);
 /* DORML2 - overwrite the general real m by n matrix C with   Q * */
-/* C if SIDE = 'L' and TRANS = 'N', or   Q'* C if SIDE = 'L' and */
+/* C if SIDE = 'L' and TRANS = 'N', or	 Q'* C if SIDE = 'L' and */
 /* TRANS = 'T', or   C * Q if SIDE = 'R' and TRANS = 'N', or   C * */
 /* Q' if SIDE = 'R' and TRANS = 'T', */
 extern void
@@ -638,7 +639,7 @@ F77_NAME(dormqr)(const char* side, const char* trans,
 		 const double* tau, double* c, const int* ldc,
 		 double* work, const int* lwork, int* info);
 /* DORMR2 - overwrite the general real m by n matrix C with   Q * */
-/* C if SIDE = 'L' and TRANS = 'N', or   Q'* C if SIDE = 'L' and */
+/* C if SIDE = 'L' and TRANS = 'N', or	 Q'* C if SIDE = 'L' and */
 /* TRANS = 'T', or   C * Q if SIDE = 'R' and TRANS = 'N', or   C * */
 /* Q' if SIDE = 'R' and TRANS = 'T', */
 extern void
@@ -664,7 +665,7 @@ F77_NAME(dormtr)(const char* side, const char* uplo,
 		 const double* tau, double* c, const int* ldc,
 		 double* work, const int* lwork, int* info);
 
-/* Double precision Positive definite Band matrices */ 
+/* Double precision Positive definite Band matrices */
 
 /* DPBCON - estimate the reciprocal of the condition number (in */
 /* the 1-norm); of a real symmetric positive definite band matrix */
@@ -871,7 +872,7 @@ F77_NAME(dpptri)(const char* uplo, const int* n, double* ap, int* info);
 extern void
 F77_NAME(dpptrs)(const char* uplo, const int* n,
 		 const int* nrhs, const double* ap,
-    		 double* b, const int* ldb, int* info);
+		 double* b, const int* ldb, int* info);
 
 /* Double precision symmetric Positive definite Tridiagonal matrices */
 
@@ -882,8 +883,8 @@ F77_NAME(dpptrs)(const char* uplo, const int* n,
 extern void
 F77_NAME(dptcon)(const int* n,
 		 const double* d, const double* e,
-    		 const double* anorm, double* rcond,
-    		 double* work, int* info);
+		 const double* anorm, double* rcond,
+		 double* work, int* info);
 /* DPTEQR - compute all eigenvalues and, optionally, eigenvectors */
 /* of a symmetric positive definite tridiagonal matrix by first */
 /* factoring the matrix using DPTTRF, and then calling DBDSQR to */
@@ -891,38 +892,38 @@ F77_NAME(dptcon)(const int* n,
 extern void
 F77_NAME(dpteqr)(const char* compz, const int* n, double* d,
 		 double* e, double* z, const int* ldz,
-    		 double* work, int* info);
+		 double* work, int* info);
 /* DPTRFS - improve the computed solution to a system of linear */
 /* equations when the coefficient matrix is symmetric positive */
 /* definite and tridiagonal, and provides error bounds and */
 /* backward error estimates for the solution */
 extern void
 F77_NAME(dptrfs)(const int* n, const int* nrhs,
-    		 const double* d, const double* e,
-    		 const double* df, const double* ef,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* ferr, double* berr,
-    		 double* work, int* info);
+		 const double* d, const double* e,
+		 const double* df, const double* ef,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* ferr, double* berr,
+		 double* work, int* info);
 /* DPTSV - compute the solution to a real system of linear */
 /* equations A*X = B, where A is an N-by-N symmetric positive */
 /* definite tridiagonal matrix, and X and B are N-by-NRHS matrices */
 extern void
 F77_NAME(dptsv)(const int* n, const int* nrhs, double* d,
-    		double* e, double* b, const int* ldb, int* info);
+		double* e, double* b, const int* ldb, int* info);
 /* DPTSVX - use the factorization A = L*D*L**T to compute the */
 /* solution to a real system of linear equations A*X = B, where A */
 /* is an N-by-N symmetric positive definite tridiagonal matrix and */
 /* X and B are N-by-NRHS matrices */
 extern void
 F77_NAME(dptsvx)(const int* fact, const int* n,
-    		 const int* nrhs,
-    		 const double* d, const double* e,
-    		 double* df, double* ef,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx, double* rcond,
-    		 double* ferr, double* berr,
-    		 double* work, int* info);
+		 const int* nrhs,
+		 const double* d, const double* e,
+		 double* df, double* ef,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx, double* rcond,
+		 double* ferr, double* berr,
+		 double* work, int* info);
 /* DPTTRF - compute the factorization of a real symmetric */
 /* positive definite tridiagonal matrix A */
 extern void
@@ -932,13 +933,13 @@ F77_NAME(dpttrf)(const int* n, double* d, double* e, int* info);
 /* factorization A = L*D*L**T or A = U**T*D*U computed by DPTTRF */
 extern void
 F77_NAME(dpttrs)(const int* n, const int* nrhs,
-    		 const double* d, const double* e,
-    		 double* b, const int* ldb, int* info); 
+		 const double* d, const double* e,
+		 double* b, const int* ldb, int* info);
 /* DRSCL - multiply an n-element real vector x by the real scalar */
 /* 1/a */
 extern void
 F77_NAME(drscl)(const int* n, const double* da,
-    		double* x, const int* incx);
+		double* x, const int* incx);
 
 /* Double precision Symmetric Band matrices */
 
@@ -946,61 +947,61 @@ F77_NAME(drscl)(const int* n, const double* da,
 /* eigenvectors of a real symmetric band matrix A */
 extern void
 F77_NAME(dsbev)(const char* jobz, const char* uplo,
-    		const int* n, const int* kd,
-    		double* ab, const int* ldab,
-    		double* w, double* z, const int* ldz,
-    		double* work, int* info);
+		const int* n, const int* kd,
+		double* ab, const int* ldab,
+		double* w, double* z, const int* ldz,
+		double* work, int* info);
 /* DSBEVD - compute all the eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric band matrix A */
 extern void
 F77_NAME(dsbevd)(const char* jobz, const char* uplo,
-    		 const int* n, const int* kd,
-    		 double* ab, const int* ldab,
-    		 double* w, double* z, const int* ldz,
-    		 double* work, const int* lwork,
-    		 int* iwork, const int* liwork, int* info);
+		 const int* n, const int* kd,
+		 double* ab, const int* ldab,
+		 double* w, double* z, const int* ldz,
+		 double* work, const int* lwork,
+		 int* iwork, const int* liwork, int* info);
 /* DSBEVX - compute selected eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric band matrix A */
 extern void
 F77_NAME(dsbevx)(const char* jobz, const char* range,
-    		 const char* uplo, const int* n, const int* kd,
-    		 double* ab, const int* ldab,
-    		 double* q, const int* ldq,
-    		 const double* vl, const double* vu,
-    		 const int* il, const int* iu,
-    		 const double* abstol,
-    		 int* m, double* w,
-    		 double* z, const int* ldz,
-    		 double* work, int* iwork,
-    		 int* ifail, int* info);
+		 const char* uplo, const int* n, const int* kd,
+		 double* ab, const int* ldab,
+		 double* q, const int* ldq,
+		 const double* vl, const double* vu,
+		 const int* il, const int* iu,
+		 const double* abstol,
+		 int* m, double* w,
+		 double* z, const int* ldz,
+		 double* work, int* iwork,
+		 int* ifail, int* info);
 /* DSBGST - reduce a real symmetric-definite banded generalized */
 /* eigenproblem A*x = lambda*B*x to standard form C*y = lambda*y, */
 extern void
 F77_NAME(dsbgst)(const char* vect, const char* uplo,
-    		 const int* n, const int* ka, const int* kb,
-    		 double* ab, const int* ldab,
-    		 double* bb, const int* ldbb,
-    		 double* x, const int* ldx,
-    		 double* work, int* info);
+		 const int* n, const int* ka, const int* kb,
+		 double* ab, const int* ldab,
+		 double* bb, const int* ldbb,
+		 double* x, const int* ldx,
+		 double* work, int* info);
 /* DSBGV - compute all the eigenvalues, and optionally, the */
 /* eigenvectors of a real generalized symmetric-definite banded */
 /* eigenproblem, of the form A*x=(lambda);*B*x */
 extern void
 F77_NAME(dsbgv)(const char* jobz, const char* uplo,
-    		const int* n, const int* ka, const int* kb,
-    		double* ab, const int* ldab,
-    		double* bb, const int* ldbb,
-    		double* w, double* z, const int* ldz,
-    		double* work, int* info);
+		const int* n, const int* ka, const int* kb,
+		double* ab, const int* ldab,
+		double* bb, const int* ldbb,
+		double* w, double* z, const int* ldz,
+		double* work, int* info);
 /* DSBTRD - reduce a real symmetric band matrix A to symmetric */
 /* tridiagonal form T by an orthogonal similarity transformation */
 extern void
 F77_NAME(dsbtrd)(const char* vect, const char* uplo,
-    		 const int* n, const int* kd,
-    		 double* ab, const int* ldab,
-    		 double* d, double* e,
-    		 double* q, const int* ldq,
-    		 double* work, int* info);
+		 const int* n, const int* kd,
+		 double* ab, const int* ldab,
+		 double* d, double* e,
+		 double* q, const int* ldq,
+		 double* work, int* info);
 
 /* Double precision Symmetric Packed matrices */
 
@@ -1009,50 +1010,50 @@ F77_NAME(dsbtrd)(const char* vect, const char* uplo,
 /* factorization A = U*D*U**T or A = L*D*L**T computed by DSPTRF */
 extern void
 F77_NAME(dspcon)(const char* uplo, const int* n,
-    		 const double* ap, const int* ipiv,
-    		 const double* anorm, double* rcond,
-    		 double* work, int* iwork, int* info);
+		 const double* ap, const int* ipiv,
+		 const double* anorm, double* rcond,
+		 double* work, int* iwork, int* info);
 /* DSPEV - compute all the eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric matrix A in packed storage */
 extern void
 F77_NAME(dspev)(const char* jobz, const char* uplo, const int* n,
-    		double* ap, double* w, double* z, const int* ldz,
-    		double* work, int* info);
+		double* ap, double* w, double* z, const int* ldz,
+		double* work, int* info);
 /* DSPEVD - compute all the eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric matrix A in packed storage */
 extern void
 F77_NAME(dspevd)(const char* jobz, const char* uplo,
-    		 const int* n, double* ap, double* w,
-    		 double* z, const int* ldz,
-    		 double* work, const int* lwork,
-    		 int* iwork, const int* liwork, int* info);
+		 const int* n, double* ap, double* w,
+		 double* z, const int* ldz,
+		 double* work, const int* lwork,
+		 int* iwork, const int* liwork, int* info);
 /* DSPEVX - compute selected eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric matrix A in packed storage */
 extern void
 F77_NAME(dspevx)(const char* jobz, const char* range,
-    		 const char* uplo, const int* n, double* ap,
-    		 const double* vl, const double* vu,
-    		 const int* il, const int* iu,
-    		 const double* abstol,
-    		 int* m, double* w,
-    		 double* z, const int* ldz,
-    		 double* work, int* iwork,
-    		 int* ifail, int* info);
+		 const char* uplo, const int* n, double* ap,
+		 const double* vl, const double* vu,
+		 const int* il, const int* iu,
+		 const double* abstol,
+		 int* m, double* w,
+		 double* z, const int* ldz,
+		 double* work, int* iwork,
+		 int* ifail, int* info);
 /* DSPGST - reduce a real symmetric-definite generalized */
 /* eigenproblem to standard form, using packed storage */
 extern void
 F77_NAME(dspgst)(const int* itype, const char* uplo,
-    		 const int* n, double* ap, double* bp, int* info);
+		 const int* n, double* ap, double* bp, int* info);
 /* DSPGV - compute all the eigenvalues and, optionally, the */
 /* eigenvectors of a real generalized symmetric-definite */
 /* eigenproblem, of the form A*x=(lambda)*B*x, A*Bx=(lambda)*x, */
 /* or B*A*x=(lambda)*x */
 extern void
 F77_NAME(dspgv)(const int* itype, const char* jobz,
-    		const char* uplo, const int* n,
-    		double* ap, double* bp, double* w,
-    		double* z, const int* ldz,
-    		double* work, int* info);
+		const char* uplo, const int* n,
+		double* ap, double* bp, double* w,
+		double* z, const int* ldz,
+		double* work, int* info);
 
 /* DSPRFS - improve the computed solution to a system of linear */
 /* equations when the coefficient matrix is symmetric indefinite */
@@ -1060,19 +1061,19 @@ F77_NAME(dspgv)(const int* itype, const char* jobz,
 /* estimates for the solution */
 extern void
 F77_NAME(dsprfs)(const char* uplo, const int* n,
-    		 const int* nrhs, const double* ap,
-    		 const double* afp, const int* ipiv,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* ferr, double* berr,
-    		 double* work, int* iwork, int* info);
+		 const int* nrhs, const double* ap,
+		 const double* afp, const int* ipiv,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* ferr, double* berr,
+		 double* work, int* iwork, int* info);
 
 /* DSPSV - compute the solution to a real system of linear */
 /* equations  A * X = B, */
 extern void
 F77_NAME(dspsv)(const char* uplo, const int* n,
-    		const int* nrhs, double* ap, int* ipiv,
-    		double* b, const int* ldb, int* info);
+		const int* nrhs, double* ap, int* ipiv,
+		double* b, const int* ldb, int* info);
 
 /* DSPSVX - use the diagonal pivoting factorization A = U*D*U**T */
 /* or A = L*D*L**T to compute the solution to a real system of */
@@ -1081,43 +1082,43 @@ F77_NAME(dspsv)(const char* uplo, const int* n,
 /* matrices */
 extern void
 F77_NAME(dspsvx)(const int* fact, const char* uplo,
-    		 const int* n, const int* nrhs,
-    		 const double* ap, double* afp, int* ipiv,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* rcond, double* ferr, double* berr,
-    		 double* work, int* iwork, int* info);
+		 const int* n, const int* nrhs,
+		 const double* ap, double* afp, int* ipiv,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* rcond, double* ferr, double* berr,
+		 double* work, int* iwork, int* info);
 
 /* DSPTRD - reduce a real symmetric matrix A stored in packed */
 /* form to symmetric tridiagonal form T by an orthogonal */
 /* similarity transformation */
 extern void
 F77_NAME(dsptrd)(const char* uplo, const int* n,
-    		 double* ap, double* d, double* e,
-    		 double* tau, int* info);
+		 double* ap, double* d, double* e,
+		 double* tau, int* info);
 
 /* DSPTRF - compute the factorization of a real symmetric matrix */
 /* A stored in packed format using the Bunch-Kaufman diagonal */
 /* pivoting method */
 extern void
 F77_NAME(dsptrf)(const char* uplo, const int* n,
-    		 double* ap, int* ipiv, int* info);
+		 double* ap, int* ipiv, int* info);
 
 /* DSPTRI - compute the inverse of a real symmetric indefinite */
 /* matrix A in packed storage using the factorization A = U*D*U**T */
 /* or A = L*D*L**T computed by DSPTRF */
 extern void
 F77_NAME(dsptri)(const char* uplo, const int* n,
-    		 double* ap, const int* ipiv,
-    		 double* work, int* info);
+		 double* ap, const int* ipiv,
+		 double* work, int* info);
 
 /* DSPTRS - solve a system of linear equations A*X = B with a */
 /* real symmetric matrix A stored in packed format using the */
 /* factorization A = U*D*U**T or A = L*D*L**T computed by DSPTRF */
 extern void
 F77_NAME(dsptrs)(const char* uplo, const int* n,
-    		 const int* nrhs, const double* ap,
-    		 const int* ipiv, double* b, const int* ldb, int* info);
+		 const int* nrhs, const double* ap,
+		 const int* ipiv, double* b, const int* ldb, int* info);
 
 /* Double precision Symmetric Tridiagonal matrices */
 
@@ -1125,33 +1126,33 @@ F77_NAME(dsptrs)(const char* uplo, const int* n,
 /* matrix T */
 extern void
 F77_NAME(dstebz)(const char* range, const char* order, const int* n,
-    		 const double* vl, const double* vu,
-    		 const int* il, const int* iu,
-    		 const double *abstol,
-    		 const double* d, const double* e,
-    		 int* m, int* nsplit, double* w,
-    		 int* iblock, int* isplit,
-    		 double* work, int* iwork,
-    		 int* info);
+		 const double* vl, const double* vu,
+		 const int* il, const int* iu,
+		 const double *abstol,
+		 const double* d, const double* e,
+		 int* m, int* nsplit, double* w,
+		 int* iblock, int* isplit,
+		 double* work, int* iwork,
+		 int* info);
 /* DSTEDC - compute all eigenvalues and, optionally, eigenvectors */
 /* of a symmetric tridiagonal matrix using the divide and conquer */
 /* method */
 extern void
 F77_NAME(dstedc)(const char* compz, const int* n,
-    		 double* d, double* e,
-    		 double* z, const int* ldz,
-    		 double* work, const int* lwork,
-    		 int* iwork, const int* liwork, int* info);
+		 double* d, double* e,
+		 double* z, const int* ldz,
+		 double* work, const int* lwork,
+		 int* iwork, const int* liwork, int* info);
 /* DSTEIN - compute the eigenvectors of a real symmetric */
 /* tridiagonal matrix T corresponding to specified eigenvalues, */
 /* using inverse iteration */
 extern void
 F77_NAME(dstein)(const int* n, const double* d, const double* e,
-    		 const int* m, const double* w,
-    		 const int* iblock, const int* isplit,
-    		 double* z, const int* ldz,
-    		 double* work, int* iwork,
-    		 int* ifail, int* info);
+		 const int* m, const double* w,
+		 const int* iblock, const int* isplit,
+		 double* z, const int* ldz,
+		 double* work, int* iwork,
+		 int* ifail, int* info);
 /* DSTEQR - compute all eigenvalues and, optionally, eigenvectors */
 /* of a symmetric tridiagonal matrix using the implicit QL or QR */
 /* method */
@@ -1167,29 +1168,29 @@ F77_NAME(dsterf)(const int* n, double* d, double* e, int* info);
 /* of a real symmetric tridiagonal matrix A */
 extern void
 F77_NAME(dstev)(const char* jobz, const int* n,
-    		double* d, double* e,
-    		double* z, const int* ldz,
-    		double* work, int* info);
+		double* d, double* e,
+		double* z, const int* ldz,
+		double* work, int* info);
 /* DSTEVD - compute all eigenvalues and, optionally, eigenvectors */
 /* of a real symmetric tridiagonal matrix */
 extern void
 F77_NAME(dstevd)(const char* jobz, const int* n,
-    		 double* d, double* e,
-    		 double* z, const int* ldz,
-    		 double* work, const int* lwork,
-    		 int* iwork, const int* liwork, int* info);
+		 double* d, double* e,
+		 double* z, const int* ldz,
+		 double* work, const int* lwork,
+		 int* iwork, const int* liwork, int* info);
 /* DSTEVX - compute selected eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric tridiagonal matrix A */
 extern void
 F77_NAME(dstevx)(const char* jobz, const char* range,
-    		 const int* n, double* d, double* e,
-    		 const double* vl, const double* vu,
-    		 const int* il, const int* iu,
-    		 const double* abstol,
-    		 int* m, double* w,
-    		 double* z, const int* ldz,
-    		 double* work, int* iwork,
-    		 int* ifail, int* info);
+		 const int* n, double* d, double* e,
+		 const double* vl, const double* vu,
+		 const int* il, const int* iu,
+		 const double* abstol,
+		 int* m, double* w,
+		 double* z, const int* ldz,
+		 double* work, int* iwork,
+		 int* ifail, int* info);
 
 /* Double precision SYmmetric matrices */
 
@@ -1198,45 +1199,45 @@ F77_NAME(dstevx)(const char* jobz, const char* range,
 /* factorization A = U*D*U**T or A = L*D*L**T computed by DSYTRF */
 extern void
 F77_NAME(dsycon)(const char* uplo, const int* n,
-    		 const double* a, const int* lda,
-    		 const int* ipiv,
-    		 const double* anorm, double* rcond,
-    		 double* work, int* iwork, int* info);
+		 const double* a, const int* lda,
+		 const int* ipiv,
+		 const double* anorm, double* rcond,
+		 double* work, int* iwork, int* info);
 /* DSYEV - compute all eigenvalues and, optionally, eigenvectors */
 /* of a real symmetric matrix A */
 extern void
 F77_NAME(dsyev)(const char* jobz, const char* uplo,
-    		const int* n, double* a, const int* lda,
-    		double* w, double* work, const int* lwork, int* info);
+		const int* n, double* a, const int* lda,
+		double* w, double* work, const int* lwork, int* info);
 /* DSYEVD - compute all eigenvalues and, optionally, eigenvectors */
 /* of a real symmetric matrix A */
 extern void
 F77_NAME(dsyevd)(const char* jobz, const char* uplo,
-    		 const int* n, double* a, const int* lda,
-    		 double* w, double* work, const int* lwork,
-    		 int* iwork, const int* liwork, int* info);
+		 const int* n, double* a, const int* lda,
+		 double* w, double* work, const int* lwork,
+		 int* iwork, const int* liwork, int* info);
 /* DSYEVX - compute selected eigenvalues and, optionally, */
 /* eigenvectors of a real symmetric matrix A */
 extern void
 F77_NAME(dsyevx)(const char* jobz, const char* range,
-    		 const char* uplo, const int* n,
-    		 double* a, const int* lda,
-    		 const double* vl, const double* vu,
-    		 const int* il, const int* iu,
-    		 const double* abstol,
-    		 int* m, double* w,
-    		 double* z, const int* ldz,
-    		 double* work, const int* lwork, int* iwork,
+		 const char* uplo, const int* n,
+		 double* a, const int* lda,
+		 const double* vl, const double* vu,
+		 const int* il, const int* iu,
+		 const double* abstol,
+		 int* m, double* w,
+		 double* z, const int* ldz,
+		 double* work, const int* lwork, int* iwork,
 		 int* ifail, int* info);
 /* DSYEVR - compute all eigenvalues and, optionally, eigenvectors   */
-/* of a real symmetric matrix A                                    */
-extern void 
+/* of a real symmetric matrix A					   */
+extern void
 F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
 		 const int *n, double *a, const int *lda,
 		 const double *vl, const double *vu,
 		 const int *il, const int *iu,
-		 const double *abstol, int *m, double *w, 
-		 double *z, const int *ldz, int *isuppz, 
+		 const double *abstol, int *m, double *w,
+		 double *z, const int *ldz, int *isuppz,
 		 double *work, const int *lwork,
 		 int *iwork, const int *liwork,
 		 int *info);
@@ -1244,109 +1245,109 @@ F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
 /* eigenproblem to standard form */
 extern void
 F77_NAME(dsygs2)(const int* itype, const char* uplo,
-    		 const int* n, double* a, const int* lda,
-    		 const double* b, const int* ldb, int* info);
+		 const int* n, double* a, const int* lda,
+		 const double* b, const int* ldb, int* info);
 /* DSYGST - reduce a real symmetric-definite generalized */
 /* eigenproblem to standard form */
 extern void
 F77_NAME(dsygst)(const int* itype, const char* uplo,
-    		 const int* n, double* a, const int* lda,
-    		 const double* b, const int* ldb, int* info);
+		 const int* n, double* a, const int* lda,
+		 const double* b, const int* ldb, int* info);
 /* DSYGV - compute all the eigenvalues, and optionally, the */
 /* eigenvectors of a real generalized symmetric-definite */
 /* eigenproblem, of the form A*x=(lambda);*B*x, A*Bx=(lambda);*x, */
 /* or B*A*x=(lambda);*x */
 extern void
 F77_NAME(dsygv)(const int* itype, const char* jobz,
-    		const char* uplo, const int* n,
-    		double* a, const int* lda,
-    		double* b, const int* ldb,
-    		double* w, double* work, const int* lwork,
-    		int* info);
+		const char* uplo, const int* n,
+		double* a, const int* lda,
+		double* b, const int* ldb,
+		double* w, double* work, const int* lwork,
+		int* info);
 /* DSYRFS - improve the computed solution to a system of linear */
 /* equations when the coefficient matrix is symmetric indefinite, */
 /* and provides error bounds and backward error estimates for the */
 /* solution */
 extern void
 F77_NAME(dsyrfs)(const char* uplo, const int* n,
-    		 const int* nrhs,
-    		 const double* a, const int* lda,
-    		 const double* af, const int* ldaf,
-    		 const int* ipiv,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* ferr, double* berr,
-    		 double* work, int* iwork, int* info);
+		 const int* nrhs,
+		 const double* a, const int* lda,
+		 const double* af, const int* ldaf,
+		 const int* ipiv,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* ferr, double* berr,
+		 double* work, int* iwork, int* info);
 
 /* DSYSV - compute the solution to a real system of linear */
 /* equations  A * X = B, */
 extern void
 F77_NAME(dsysv)(const char* uplo, const int* n,
-    		const int* nrhs,
-    		double* a, const int* lda, int* ipiv,
-    		double* b, const int* ldb,
-    		double* work, const int* lwork, int* info);
+		const int* nrhs,
+		double* a, const int* lda, int* ipiv,
+		double* b, const int* ldb,
+		double* work, const int* lwork, int* info);
 
 /* DSYSVX - use the diagonal pivoting factorization to compute */
 /* the solution to a real system of linear equations A * X = B, */
 extern void
 F77_NAME(dsysvx)(const int* fact, const char* uplo,
-    		 const int* n, const int* nrhs,
-    		 const double* a, const int* lda,
-    		 double* af, const int* ldaf, int* ipiv,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx, double* rcond,
-    		 double* ferr, double* berr,
-    		 double* work, const int* lwork,
-    		 int* iwork, int* info);
+		 const int* n, const int* nrhs,
+		 const double* a, const int* lda,
+		 double* af, const int* ldaf, int* ipiv,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx, double* rcond,
+		 double* ferr, double* berr,
+		 double* work, const int* lwork,
+		 int* iwork, int* info);
 
 /* DSYTD2 - reduce a real symmetric matrix A to symmetric */
 /* tridiagonal form T by an orthogonal similarity transformation */
 extern void
 F77_NAME(dsytd2)(const char* uplo, const int* n,
-    		 double* a, const int* lda,
-    		 double* d, double* e, double* tau,
-    		 int* info);
+		 double* a, const int* lda,
+		 double* d, double* e, double* tau,
+		 int* info);
 
 /* DSYTF2 - compute the factorization of a real symmetric matrix */
 /* A using the Bunch-Kaufman diagonal pivoting method */
 extern void
 F77_NAME(dsytf2)(const char* uplo, const int* n,
-    		 double* a, const int* lda,
-    		 int* ipiv, int* info);
+		 double* a, const int* lda,
+		 int* ipiv, int* info);
 
 /* DSYTRD - reduce a real symmetric matrix A to real symmetric */
 /* tridiagonal form T by an orthogonal similarity transformation */
 extern void
 F77_NAME(dsytrd)(const char* uplo, const int* n,
-    		 double* a, const int* lda,
-    		 double* d, double* e, double* tau,
-    		 double* work, const int* lwork, int* info);
+		 double* a, const int* lda,
+		 double* d, double* e, double* tau,
+		 double* work, const int* lwork, int* info);
 
 /* DSYTRF - compute the factorization of a real symmetric matrix */
 /* A using the Bunch-Kaufman diagonal pivoting method */
 extern void
 F77_NAME(dsytrf)(const char* uplo, const int* n,
-    		 double* a, const int* lda, int* ipiv,
-    		 double* work, const int* lwork, int* info);
+		 double* a, const int* lda, int* ipiv,
+		 double* work, const int* lwork, int* info);
 
 /* DSYTRI - compute the inverse of a real symmetric indefinite */
 /* matrix A using the factorization A = U*D*U**T or A = L*D*L**T */
 /* computed by DSYTRF */
 extern void
 F77_NAME(dsytri)(const char* uplo, const int* n,
-    		 double* a, const int* lda, const int* ipiv,
-    		 double* work, int* info); 
+		 double* a, const int* lda, const int* ipiv,
+		 double* work, int* info);
 
 /* DSYTRS - solve a system of linear equations A*X = B with a */
 /* real symmetric matrix A using the factorization A = U*D*U**T or */
 /* A = L*D*L**T computed by DSYTRF */
 extern void
 F77_NAME(dsytrs)(const char* uplo, const int* n,
-    		 const int* nrhs,
-    		 const double* a, const int* lda,
-    		 const int* ipiv,
-    		 double* b, const int* ldb, int* info);
+		 const int* nrhs,
+		 const double* a, const int* lda,
+		 const int* ipiv,
+		 double* b, const int* ldb, int* info);
 
 /* Double precision Triangular Band matrices */
 
@@ -1355,30 +1356,30 @@ F77_NAME(dsytrs)(const char* uplo, const int* n,
 /* infinity-norm */
 extern void
 F77_NAME(dtbcon)(const char* norm, const char* uplo,
-    		 const char* diag, const int* n, const int* kd,
-    		 const double* ab, const int* ldab,
-    		 double* rcond, double* work,
-    		 int* iwork, int* info); 
+		 const char* diag, const int* n, const int* kd,
+		 const double* ab, const int* ldab,
+		 double* rcond, double* work,
+		 int* iwork, int* info);
 /* DTBRFS - provide error bounds and backward error estimates for */
 /* the solution to a system of linear equations with a triangular */
 /* band coefficient matrix */
 extern void
 F77_NAME(dtbrfs)(const char* uplo, const char* trans,
-    		 const char* diag, const int* n, const int* kd,
-    		 const int* nrhs,
-    		 const double* ab, const int* ldab,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* ferr, double* berr,
-    		 double* work, int* iwork, int* info);  
+		 const char* diag, const int* n, const int* kd,
+		 const int* nrhs,
+		 const double* ab, const int* ldab,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* ferr, double* berr,
+		 double* work, int* iwork, int* info);
 /* DTBTRS - solve a triangular system of the form   A * X = B or */
 /* A**T * X = B,  */
 extern void
 F77_NAME(dtbtrs)(const char* uplo, const char* trans,
-    		 const char* diag, const int* n,
-    		 const int* kd, const int* nrhs,
-    		 const double* ab, const int* ldab,
-    		 double* b, const int* ldb, int* info); 
+		 const char* diag, const int* n,
+		 const int* kd, const int* nrhs,
+		 const double* ab, const int* ldab,
+		 double* b, const int* ldb, int* info);
 
 /* Double precision Triangular matrices Generalized problems */
 
@@ -1387,28 +1388,28 @@ F77_NAME(dtbtrs)(const char* uplo, const char* trans,
 /* matrices (A,B); */
 extern void
 F77_NAME(dtgevc)(const char* side, const char* howmny,
-    		 const int* select, const int* n,
-    		 const double* a, const int* lda,
-    		 const double* b, const int* ldb,
-    		 double* vl, const int* ldvl,
-    		 double* vr, const int* ldvr,
-    		 const int* mm, int* m, double* work, int* info);
+		 const int* select, const int* n,
+		 const double* a, const int* lda,
+		 const double* b, const int* ldb,
+		 double* vl, const int* ldvl,
+		 double* vr, const int* ldvr,
+		 const int* mm, int* m, double* work, int* info);
 
 /* DTGSJA - compute the generalized singular value decomposition */
 /* (GSVD); of two real upper triangular (or trapezoidal); matrices */
 /* A and B */
 extern void
 F77_NAME(dtgsja)(const char* jobu, const char* jobv, const char* jobq,
-    		 const int* m, const int* p, const int* n,
-    		 const int* k, const int* l,
-    		 double* a, const int* lda,
-    		 double* b, const int* ldb,
-    		 const double* tola, const double* tolb,
-    		 double* alpha, double* beta,
-    		 double* u, const int* ldu,
-    		 double* v, const int* ldv,
-    		 double* q, const int* ldq,
-    		 double* work, int* ncycle, int* info);
+		 const int* m, const int* p, const int* n,
+		 const int* k, const int* l,
+		 double* a, const int* lda,
+		 double* b, const int* ldb,
+		 const double* tola, const double* tolb,
+		 double* alpha, double* beta,
+		 double* u, const int* ldu,
+		 double* v, const int* ldv,
+		 double* q, const int* ldq,
+		 double* work, int* ncycle, int* info);
 
 /* Double precision Triangular matrices Packed storage */
 
@@ -1417,21 +1418,21 @@ F77_NAME(dtgsja)(const char* jobu, const char* jobv, const char* jobq,
 /* infinity-norm */
 extern void
 F77_NAME(dtpcon)(const char* norm, const char* uplo,
-    		 const char* diag, const int* n,
-    		 const double* ap, double* rcond,
-    		 double* work, int* iwork, int* info);
+		 const char* diag, const int* n,
+		 const double* ap, double* rcond,
+		 double* work, int* iwork, int* info);
 
 /* DTPRFS - provide error bounds and backward error estimates for */
 /* the solution to a system of linear equations with a triangular */
 /* packed coefficient matrix */
 extern void
 F77_NAME(dtprfs)(const char* uplo, const char* trans,
-    		 const char* diag, const int* n,
-    		 const int* nrhs, const double* ap,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* ferr, double* berr,
-    		 double* work, int* iwork, int* info);
+		 const char* diag, const int* n,
+		 const int* nrhs, const double* ap,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* ferr, double* berr,
+		 double* work, int* iwork, int* info);
 
 /* Double precision TRiangular matrices */
 
@@ -1439,56 +1440,56 @@ F77_NAME(dtprfs)(const char* uplo, const char* trans,
 /* triangular matrix A stored in packed format */
 extern void
 F77_NAME(dtptri)(const char* uplo, const char* diag,
-    		 const int* n, double* ap, int* info);
+		 const int* n, double* ap, int* info);
 
 /* DTPTRS - solve a triangular system of the form   A * X = B or */
 /* A**T * X = B, */
 extern void
 F77_NAME(dtptrs)(const char* uplo, const char* trans,
-    		 const char* diag, const int* n,
-    		 const int* nrhs, const double* ap,
-    		 double* b, const int* ldb, int* info); 
+		 const char* diag, const int* n,
+		 const int* nrhs, const double* ap,
+		 double* b, const int* ldb, int* info);
 
 /* DTRCON - estimate the reciprocal of the condition number of a */
 /* triangular matrix A, in either the 1-norm or the infinity-norm */
 extern void
 F77_NAME(dtrcon)(const char* norm, const char* uplo,
-    		 const char* diag, const int* n,
-    		 const double* a, const int* lda,
-    		 double* rcond, double* work,
-    		 int* iwork, int* info);
+		 const char* diag, const int* n,
+		 const double* a, const int* lda,
+		 double* rcond, double* work,
+		 int* iwork, int* info);
 
 /* DTREVC - compute some or all of the right and/or left */
 /* eigenvectors of a real upper quasi-triangular matrix T */
 extern void
 F77_NAME(dtrevc)(const char* side, const char* howmny,
-    		 const int* select, const int* n,
-    		 const double* t, const int* ldt,
-    		 double* vl, const int* ldvl,
-    		 double* vr, const int* ldvr,
-    		 const int* mm, int* m, double* work, int* info);
+		 const int* select, const int* n,
+		 const double* t, const int* ldt,
+		 double* vl, const int* ldvl,
+		 double* vr, const int* ldvr,
+		 const int* mm, int* m, double* work, int* info);
 
 /* DTREXC - reorder the real Schur factorization of a real matrix */
 /* A = Q*T*Q**T, so that the diagonal block of T with row index */
 /* IFST is moved to row ILST */
 extern void
 F77_NAME(dtrexc)(const char* compq, const int* n,
-    		 double* t, const int* ldt,
-    		 double* q, const int* ldq,
-    		 int* ifst, int* ILST,
-    		 double* work, int* info);
+		 double* t, const int* ldt,
+		 double* q, const int* ldq,
+		 int* ifst, int* ILST,
+		 double* work, int* info);
 
 /* DTRRFS - provide error bounds and backward error estimates for */
 /* the solution to a system of linear equations with a triangular */
 /* coefficient matrix */
 extern void
 F77_NAME(dtrrfs)(const char* uplo, const char* trans,
-    		 const char* diag, const int* n, const int* nrhs,
-    		 const double* a, const int* lda,
-    		 const double* b, const int* ldb,
-    		 double* x, const int* ldx,
-    		 double* ferr, double* berr,
-    		 double* work, int* iwork, int* info); 
+		 const char* diag, const int* n, const int* nrhs,
+		 const double* a, const int* lda,
+		 const double* b, const int* ldb,
+		 double* x, const int* ldx,
+		 double* ferr, double* berr,
+		 double* work, int* iwork, int* info);
 
 /* DTRSEN - reorder the real Schur factorization of a real matrix */
 /* A = Q*T*Q**T, so that a selected cluster of eigenvalues appears */
@@ -1496,13 +1497,13 @@ F77_NAME(dtrrfs)(const char* uplo, const char* trans,
 /* matrix T, */
 extern void
 F77_NAME(dtrsen)(const char* job, const char* compq,
-    		 const int* select, const int* n,
-    		 double* t, const int* ldt,
-    		 double* q, const int* ldq,
-    		 double* wr, double* wi,
-    		 int* m, double* s, double* sep,
-    		 double* work, const int* lwork,
-    		 int* iwork, const int* liwork, int* info);
+		 const int* select, const int* n,
+		 double* t, const int* ldt,
+		 double* q, const int* ldq,
+		 double* wr, double* wi,
+		 int* m, double* s, double* sep,
+		 double* work, const int* lwork,
+		 int* iwork, const int* liwork, int* info);
 
 /* DTRSNA - estimate reciprocal condition numbers for specified */
 /* eigenvalues and/or right eigenvectors of a real upper */
@@ -1510,52 +1511,52 @@ F77_NAME(dtrsen)(const char* job, const char* compq,
 /* orthogonal); */
 extern void
 F77_NAME(dtrsna)(const char* job, const char* howmny,
-    		 const int* select, const int* n,
-    		 const double* t, const int* ldt,
-    		 const double* vl, const int* ldvl,
-    		 const double* vr, const int* ldvr,
-    		 double* s, double* sep, const int* mm,
-    		 int* m, double* work, const int* lwork,
-    		 int* iwork, int* info);
+		 const int* select, const int* n,
+		 const double* t, const int* ldt,
+		 const double* vl, const int* ldvl,
+		 const double* vr, const int* ldvr,
+		 double* s, double* sep, const int* mm,
+		 int* m, double* work, const int* lwork,
+		 int* iwork, int* info);
 
 /* DTRSYL - solve the real Sylvester matrix equation */
 extern void
 F77_NAME(dtrsyl)(const char* trana, const char* tranb,
-    		 const int* isgn, const int* m, const int* n,
-    		 const double* a, const int* lda,
-    		 const double* b, const int* ldb,
-    		 double* c, const int* ldc,
-    		 double* scale, int* info);  
+		 const int* isgn, const int* m, const int* n,
+		 const double* a, const int* lda,
+		 const double* b, const int* ldb,
+		 double* c, const int* ldc,
+		 double* scale, int* info);
 
 /* DTRTI2 - compute the inverse of a real upper or lower */
 /* triangular matrix */
 extern void
 F77_NAME(dtrti2)(const char* uplo, const char* diag,
-    		 const int* n, double* a, const int* lda,
-    		 int* info); 
+		 const int* n, double* a, const int* lda,
+		 int* info);
 
 /* DTRTRI - compute the inverse of a real upper or lower */
 /* triangular matrix A */
 extern void
 F77_NAME(dtrtri)(const char* uplo, const char* diag,
-    		 const int* n, double* a, const int* lda,
-    		 int* info); 
+		 const int* n, double* a, const int* lda,
+		 int* info);
 
 /* DTRTRS - solve a triangular system of the form   A * X = B or */
-/* A**T * X = B  */
+/* A**T * X = B	 */
 extern void
 F77_NAME(dtrtrs)(const char* uplo, const char* trans,
-    		 const char* diag, const int* n, const int* nrhs,
-    		 const double* a, const int* lda,
-    		 double* b, const int* ldb, int* info); 
+		 const char* diag, const int* n, const int* nrhs,
+		 const double* a, const int* lda,
+		 double* b, const int* ldb, int* info);
 
 /* DTZRQF - reduce the M-by-N ( M<=N ); real upper trapezoidal */
 /* matrix A to upper triangular form by means of orthogonal */
 /* transformations  */
 extern void
 F77_NAME(dtzrqf)(const int* m, const int* n,
-    		 double* a, const int* lda,
-    		 double* tau, int* info);
+		 double* a, const int* lda,
+		 double* tau, int* info);
 
 
 
@@ -1622,13 +1623,13 @@ extern void
 F77_NAME(dlacpy)(const char* uplo, const int* m, const int* n,
 		 const double* a, const int* lda,
 		 double* b, const int* ldb);
-/* DLADIV - perform complex division in real arithmetic  */
+/* DLADIV - perform complex division in real arithmetic	 */
 extern void
 F77_NAME(dladiv)(const double* a, const double* b,
 		 const double* c, const double* d,
 		 double* p, double* q);
 /* DLAE2 - compute the eigenvalues of a 2-by-2 symmetric matrix [ A B ] */
-/*                                                              [ B C ] */
+/*								[ B C ] */
 extern void
 F77_NAME(dlae2)(const double* a, const double* b, const double* c,
 		double* rt1, double* rt2);
@@ -1679,7 +1680,7 @@ F77_NAME(dlaed3)(const int* k, const int* kstart,
 		 double* s, const int* lds, int* info);
 /* DLAED4 - subroutine computes the I-th updated eigenvalue of a */
 /* symmetric rank-one modification to a diagonal matrix whose */
-/* elements are given in the array d, and that   D(i); < D(j); for */
+/* elements are given in the array d, and that	 D(i); < D(j); for */
 /* i < j  and that RHO > 0 */
 extern void
 F77_NAME(dlaed4)(const int* n, const int* i, const double* d,
@@ -1688,14 +1689,14 @@ F77_NAME(dlaed4)(const int* n, const int* i, const double* d,
 /* DLAED5 - subroutine computes the I-th eigenvalue of a */
 /* symmetric rank-one modification of a 2-by-2 diagonal matrix */
 /* diag( D ); + RHO  The diagonal elements in the array D are */
-/* assumed to satisfy   D(i); < D(j); for i < j  */
+/* assumed to satisfy	D(i); < D(j); for i < j	 */
 extern void
 F77_NAME(dlaed5)(const int* i, const double* d, const double* z,
 		 double* delta, const double* rho, double* dlam);
 /* DLAED6 - compute the positive or negative root (closest to the */
-/* origin); of  z(1); z(2); z(3); f(x); = rho + --------- + */
+/* origin); of	z(1); z(2); z(3); f(x); = rho + --------- + */
 /* ---------- + ---------  d(1);-x d(2);-x d(3);-x  It is assumed */
-/* that   if ORGATI = .true  */
+/* that	  if ORGATI = .true  */
 extern void
 F77_NAME(dlaed6)(const int* kniter, const int* orgati,
 		 const double* rho, const double* d,
@@ -1755,14 +1756,14 @@ F77_NAME(dlaein)(const int* rightv, const int* noinit, const int* n,
 /* DLAEV2 - compute the eigendecomposition of a 2-by-2 symmetric */
 /* matrix  [ A B ]  [ B C ] */
 extern void
-F77_NAME(dlaev2)(const double* a, const double* b, const double* c, 
+F77_NAME(dlaev2)(const double* a, const double* b, const double* c,
 		 double* rt1, double* rt2, double* cs1, double *sn1);
 /* DLAEXC - swap adjacent diagonal blocks T11 and T22 of order 1 */
 /* or 2 in an upper quasi-triangular matrix T by an orthogonal */
 /* similarity transformation */
 extern void
 F77_NAME(dlaexc)(const int* wantq, const int* n, double* t, const int* ldt,
-    		  double* q, const int* ldq, const int* j1,
+		  double* q, const int* ldq, const int* j1,
 		 const int* n1, const int* n2, double* work, int* info);
 /* DLAG2 - compute the eigenvalues of a 2 x 2 generalized */
 /* eigenvalue problem A - w B, with scaling as necessary to aextern void */
@@ -1774,13 +1775,13 @@ F77_NAME(dlag2)(const double* a, const int* lda, const double* b,
 		double* wr1, double* wr2, double* wi);
 /* DLAGS2 - compute 2-by-2 orthogonal matrices U, V and Q, such */
 /* that if ( UPPER ); then   U'*A*Q = U'*( A1 A2 );*Q = ( x 0 ); */
-/* ( 0 A3 ); ( x x ); and  V'*B*Q = V'*( B1 B2 );*Q = ( x 0 );  ( */
-/* 0 B3 ); ( x x );  or if ( .NOT.UPPER ); then   U'*A*Q = U'*( A1 */
+/* ( 0 A3 ); ( x x ); and  V'*B*Q = V'*( B1 B2 );*Q = ( x 0 );	( */
+/* 0 B3 ); ( x x );  or if ( .NOT.UPPER ); then	  U'*A*Q = U'*( A1 */
 /* 0 );*Q = ( x x );  ( A2 A3 ); ( 0 x ); and  V'*B*Q = V'*( B1 0 */
-/* );*Q = ( x x );  ( B2 B3 ); ( 0 x );  The rows of the */
+/* );*Q = ( x x );  ( B2 B3 ); ( 0 x );	 The rows of the */
 /* transformed A and B are parallel, where   U = ( CSU SNU );, V = */
 /* ( CSV SNV );, Q = ( CSQ SNQ );  ( -SNU CSU ); ( -SNV CSV ); ( */
-/* -SNQ CSQ );  Z' denotes the transpose of Z */
+/* -SNQ CSQ );	Z' denotes the transpose of Z */
 extern void
 F77_NAME(dlags2)(const int* upper,
 		 const double* a1, const double* a2, const double* a3,
@@ -1788,13 +1789,13 @@ F77_NAME(dlags2)(const int* upper,
 		 double* csu, double* snu,
 		 double* csv, double* snv, double *csq, double *snq);
 /* DLAGTF - factorize the matrix (T - lambda*I);, where T is an n */
-/* by n tridiagonal matrix and lambda is a scalar, as   T - */
+/* by n tridiagonal matrix and lambda is a scalar, as	T - */
 /* lambda*I = PLU, */
 extern void
 F77_NAME(dlagtf)(const int* n, double* a, const double* lambda,
 		 double* b, double* c, const double *tol,
 		 double* d, int* in, int* info);
-/* DLAGTM - perform a matrix-vector product of the form   B := */
+/* DLAGTM - perform a matrix-vector product of the form	  B := */
 /* alpha * A * X + beta * B  where A is a tridiagonal matrix of */
 /* order N, B and X are N by NRHS matrices, and alpha and beta are */
 /* real scalars, each of which may be 0., 1., or -1 */
@@ -1989,7 +1990,7 @@ F77_NAME(dlaqsp)(const char* uplo, const int* n,
 extern void
 F77_NAME(dlaqsy)(const char* uplo, const int* n,
 		 double* a, const int* lda,
-		 const double* s, const double* scond, 
+		 const double* s, const double* scond,
 		 const double* amax, int* equed);
 /* DLAQTR - solve the real quasi-triangular system   */
 /* op(T) * p = scale*c */
@@ -2049,7 +2050,7 @@ F77_NAME(dlargv)(const int* n, double* x, const int* incx,
 /* uniform or normal distribution */
 extern void
 F77_NAME(dlarnv)(const int* idist, int* iseed, const int* n, double* x);
-/* DLARTG - generate a plane rotation so that   [ CS SN ]  */
+/* DLARTG - generate a plane rotation so that	[ CS SN ]  */
 extern void
 F77_NAME(dlartg)(const double* f, const double* g, double* cs,
 		 double* sn, double *r);
@@ -2069,7 +2070,7 @@ F77_NAME(dlaruv)(int* iseed, const int* n, double* x);
 /* [ F G ]  [ 0 H ] */
 extern void
 F77_NAME(dlas2)(const double* f, const double* g, const double* h,
-    		 double* ssmin, double* ssmax);
+		 double* ssmin, double* ssmax);
 
 /* DLASCL - multiply the M by N real matrix A by the real scalar */
 /* CTO/CFROM */
@@ -2079,7 +2080,7 @@ F77_NAME(dlascl)(const char* type,
 		 double* cfrom, double* cto,
 		 const int* m, const int* n,
 		 double* a, const int* lda, int* info);
-    
+
 /* DLASET - initialize an m-by-n matrix A to BETA on the diagonal */
 /* and ALPHA on the offdiagonals */
 extern void
@@ -2112,9 +2113,9 @@ F77_NAME(dlasq3)(int* n, double* q, double* e, double* qq,
 extern void
 F77_NAME(dlasq4)(const int* n, const double* q, const double* e,
 		 double* tau, double* sup);
-/* DLASR - perform the transformation   A := P*A, when SIDE = 'L' */
-/* or 'l' ( Left-hand side );   A := A*P', when SIDE = 'R' or 'r' */
-/* ( Right-hand side );  where A is an m by n real matrix and P is */
+/* DLASR - perform the transformation	A := P*A, when SIDE = 'L' */
+/* or 'l' ( Left-hand side );	A := A*P', when SIDE = 'R' or 'r' */
+/* ( Right-hand side );	 where A is an m by n real matrix and P is */
 /* an orthogonal matrix, */
 extern void
 F77_NAME(dlasr)(const char* side, const char* pivot,
@@ -2158,7 +2159,7 @@ F77_NAME(dlasyf)(const char* uplo, const int* n,
 		 const int* nb, const int* kb,
 		 double* a, const int* lda, int* ipiv,
 		 double* w, const int* ldw, int* info);
-/* DLATBS - solve one of the triangular systems   A *x = s*b or */
+/* DLATBS - solve one of the triangular systems	  A *x = s*b or */
 /* A'*x = s*b  with scaling to prevent overflow, where A is an */
 /* upper or lower triangular band matrix */
 extern void
@@ -2167,7 +2168,7 @@ F77_NAME(dlatbs)(const char* uplo, const char* trans,
 		 const int* n, const int* kd,
 		 const double* ab, const int* ldab,
 		 double* x, double* scale, double* cnorm, int* info);
-/* DLATPS - solve one of the triangular systems   A *x = s*b or */
+/* DLATPS - solve one of the triangular systems	  A *x = s*b or */
 /* A'*x = s*b  with scaling to prevent overflow, where A is an */
 /* upper or lower triangular matrix stored in packed form */
 extern void
@@ -2184,7 +2185,7 @@ extern void
 F77_NAME(dlatrd)(const char* uplo, const int* n, const int* nb,
 		 double* a, const int* lda, double* e, double* tau,
 		 double* w, const int* ldw);
-/* DLATRS - solve one of the triangular systems   A *x = s*b or */
+/* DLATRS - solve one of the triangular systems	  A *x = s*b or */
 /* A'*x = s*b  with scaling to prevent overflow */
 extern void
 F77_NAME(dlatrs)(const char* uplo, const char* trans,
@@ -2214,7 +2215,7 @@ F77_NAME(dlauum)(const char* uplo, const int* n,
 
 /* ======================================================================== */
 
-/* Selected Double Complex Lapack Routines 
+/* Selected Double Complex Lapack Routines
    ========
  */
 
@@ -2248,8 +2249,8 @@ F77_NAME(ztrtrs)(const char *uplo, const char *trans, const char *diag,
 		 Rcomplex *a, const int *lda,
 		 Rcomplex *b, const int *ldb, int *info);
 /* ZGESVD - compute the singular value decomposition (SVD); of a   */
-/* real M-by-N matrix A, optionally computing the left and/or      */
-/* right singular vectors                                          */
+/* real M-by-N matrix A, optionally computing the left and/or	   */
+/* right singular vectors					   */
 extern void
 F77_NAME(zgesvd)(const char *jobu, const char *jobvt,
 		 const int *m, const int *n,
@@ -2259,7 +2260,7 @@ F77_NAME(zgesvd)(const char *jobu, const char *jobvt,
 		 Rcomplex *work, const int *lwork, double *rwork,
 		 int *info);
 
-/* ZGHEEV - compute all eigenvalues and, optionally, eigenvectors */ 
+/* ZGHEEV - compute all eigenvalues and, optionally, eigenvectors */
 /* of a Hermitian matrix A */
 extern void
 F77_NAME(zheev)(const char *jobz, const char *uplo,
@@ -2274,7 +2275,7 @@ F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
 		const int *n, Rcomplex *a, const int *lda,
 		Rcomplex *wr, Rcomplex *vl, const int *ldvl,
 		Rcomplex *vr, const int *ldvr,
-		Rcomplex *work, const int *lwork, 
+		Rcomplex *work, const int *lwork,
 		double *rwork, int *info);
 
 
@@ -2282,7 +2283,7 @@ F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
    but are not provided by R's libRlapack */
 
 /* DZSUM1 - take the sum of the absolute values of a complex */
-/* vector and returns a double precision result  */
+/* vector and returns a double precision result	 */
 extern double
 F77_NAME(dzsum1)(const int* n, Rcomplex *CX, const int* incx);
 
@@ -2304,22 +2305,22 @@ F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
 
 extern void
 F77_NAME(dbdsdc)(char *uplo, char *compq, int *n, double *
-	d, double *e, double *u, int *ldu, double *vt, 
+	d, double *e, double *u, int *ldu, double *vt,
 	int *ldvt, double *q, int *iq, double *work, int * iwork, int *info);
 
 extern void
-F77_NAME(dgegs)(char *jobvsl, char *jobvsr, int *n, 
+F77_NAME(dgegs)(char *jobvsl, char *jobvsr, int *n,
 	double *a, int *lda, double *b, int *ldb, double *
-	alphar, double *alphai, double *beta, double *vsl, 
-	int *ldvsl, double *vsr, int *ldvsr, double *work, 
+	alphar, double *alphai, double *beta, double *vsl,
+	int *ldvsl, double *vsr, int *ldvsr, double *work,
 	int *lwork, int *info);
- 
+
 extern void
-F77_NAME(dgelsd)(int *m, int *n, int *nrhs, 
+F77_NAME(dgelsd)(int *m, int *n, int *nrhs,
 	double *a, int *lda, double *b, int *ldb, double *
 	s, double *rcond, int *rank, double *work, int *lwork,
 	 int *iwork, int *info);
- 
+
 extern void
 F77_NAME(dgelsx)(int *m, int *n, int *nrhs,
 	double *a, int *lda, double *b, int *ldb, int *
@@ -2327,13 +2328,13 @@ F77_NAME(dgelsx)(int *m, int *n, int *nrhs,
 	info);
 
 extern void
-F77_NAME(dgesc2)(int *n, double *a, int *lda, 
+F77_NAME(dgesc2)(int *n, double *a, int *lda,
 	double *rhs, int *ipiv, int *jpiv, double *scale);
- 
+
 /* DGESDD - compute the singular value decomposition (SVD); of a   */
-/* real M-by-N matrix A, optionally computing the left and/or      */
+/* real M-by-N matrix A, optionally computing the left and/or	   */
 /* right singular vectors.  If singular vectors are desired, it uses a */
-/* divide-and-conquer algorithm.                                   */
+/* divide-and-conquer algorithm.				   */
 extern void
 F77_NAME(dgesdd)(const char *jobz,
 		 const int *m, const int *n,
@@ -2341,260 +2342,260 @@ F77_NAME(dgesdd)(const char *jobz,
 		 double *u, const int *ldu,
 		 double *vt, const int *ldvt,
 		 double *work, const int *lwork, int *iwork, int *info);
- 
+
 extern void
-F77_NAME(dgetc2)(int *n, double *a, int *lda, int 
+F77_NAME(dgetc2)(int *n, double *a, int *lda, int
 	*ipiv, int *jpiv, int *info);
 
 typedef int (*L_fp)();
 extern void
-F77_NAME(dggesx)(char *jobvsl, char *jobvsr, char *sort, L_fp 
-	delctg, char *sense, int *n, double *a, int *lda, 
-	double *b, int *ldb, int *sdim, double *alphar, 
+F77_NAME(dggesx)(char *jobvsl, char *jobvsr, char *sort, L_fp
+	delctg, char *sense, int *n, double *a, int *lda,
+	double *b, int *ldb, int *sdim, double *alphar,
 	double *alphai, double *beta, double *vsl, int *ldvsl,
 	 double *vsr, int *ldvsr, double *rconde, double *
 	rcondv, double *work, int *lwork, int *iwork, int *
 	liwork, int *bwork, int *info);
- 
+
 extern void
 F77_NAME(dggev)(char *jobvl, char *jobvr, int *n, double *
-	a, int *lda, double *b, int *ldb, double *alphar, 
-	double *alphai, double *beta, double *vl, int *ldvl, 
-	double *vr, int *ldvr, double *work, int *lwork, 
+	a, int *lda, double *b, int *ldb, double *alphar,
+	double *alphai, double *beta, double *vl, int *ldvl,
+	double *vr, int *ldvr, double *work, int *lwork,
 	int *info);
- 
+
 extern void
 F77_NAME(dggevx)(char *balanc, char *jobvl, char *jobvr, char *
-	sense, int *n, double *a, int *lda, double *b, 
+	sense, int *n, double *a, int *lda, double *b,
 	int *ldb, double *alphar, double *alphai, double *
-	beta, double *vl, int *ldvl, double *vr, int *ldvr, 
-	int *ilo, int *ihi, double *lscale, double *rscale, 
+	beta, double *vl, int *ldvl, double *vr, int *ldvr,
+	int *ilo, int *ihi, double *lscale, double *rscale,
 	double *abnrm, double *bbnrm, double *rconde, double *
 	rcondv, double *work, int *lwork, int *iwork, int *
 	bwork, int *info);
- 
+
 extern void
-F77_NAME(dggsvp)(char *jobu, char *jobv, char *jobq, int *m, 
-	int *p, int *n, double *a, int *lda, double *b, 
-	int *ldb, double *tola, double *tolb, int *k, int 
-	*l, double *u, int *ldu, double *v, int *ldv, 
-	double *q, int *ldq, int *iwork, double *tau, 
+F77_NAME(dggsvp)(char *jobu, char *jobv, char *jobq, int *m,
+	int *p, int *n, double *a, int *lda, double *b,
+	int *ldb, double *tola, double *tolb, int *k, int
+	*l, double *u, int *ldu, double *v, int *ldv,
+	double *q, int *ldq, int *iwork, double *tau,
 	double *work, int *info);
- 
+
 extern void
-F77_NAME(dgtts2)(int *itrans, int *n, int *nrhs, 
-	double *dl, double *d, double *du, double *du2, 
+F77_NAME(dgtts2)(int *itrans, int *n, int *nrhs,
+	double *dl, double *d, double *du, double *du2,
 	int *ipiv, double *b, int *ldb);
 extern void
-F77_NAME(dlagv2)(double *a, int *lda, double *b, int *ldb, double *alphar, 
-		 double *alphai, double * beta, double *csl, double *snl, 
+F77_NAME(dlagv2)(double *a, int *lda, double *b, int *ldb, double *alphar,
+		 double *alphai, double * beta, double *csl, double *snl,
 		 double *csr, double * snr);
 
 extern void
-F77_NAME(dlals0)(int *icompq, int *nl, int *nr, 
-	int *sqre, int *nrhs, double *b, int *ldb, double 
-	*bx, int *ldbx, int *perm, int *givptr, int *givcol, 
+F77_NAME(dlals0)(int *icompq, int *nl, int *nr,
+	int *sqre, int *nrhs, double *b, int *ldb, double
+	*bx, int *ldbx, int *perm, int *givptr, int *givcol,
 	int *ldgcol, double *givnum, int *ldgnum, double *
 	poles, double *difl, double *difr, double *z, int *
 	k, double *c, double *s, double *work, int *info);
- 
+
 extern void
-F77_NAME(dlalsa)(int *icompq, int *smlsiz, int *n, 
+F77_NAME(dlalsa)(int *icompq, int *smlsiz, int *n,
 	int *nrhs, double *b, int *ldb, double *bx, int *
-	ldbx, double *u, int *ldu, double *vt, int *k, 
+	ldbx, double *u, int *ldu, double *vt, int *k,
 	double *difl, double *difr, double *z, double *
 	poles, int *givptr, int *givcol, int *ldgcol, int *
 	perm, double *givnum, double *c, double *s, double *
 	work, int *iwork, int *info);
- 
+
 extern void
-F77_NAME(dlalsd)(char *uplo, int *smlsiz, int *n, int 
-	*nrhs, double *d, double *e, double *b, int *ldb, 
-	double *rcond, int *rank, double *work, int *iwork, 
+F77_NAME(dlalsd)(char *uplo, int *smlsiz, int *n, int
+	*nrhs, double *d, double *e, double *b, int *ldb,
+	double *rcond, int *rank, double *work, int *iwork,
 	int *info);
- 
+
 extern void
-F77_NAME(dlamc1)(int *beta, int *t, int *rnd, int 
+F77_NAME(dlamc1)(int *beta, int *t, int *rnd, int
 	*ieee1);
- 
+
 extern void
-F77_NAME(dlamc2)(int *beta, int *t, int *rnd, 
-	double *eps, int *emin, double *rmin, int *emax, 
+F77_NAME(dlamc2)(int *beta, int *t, int *rnd,
+	double *eps, int *emin, double *rmin, int *emax,
 	double *rmax);
- 
+
 extern void
 F77_NAME(dlamc3)(double *a, double *b);
- 
+
 extern void
 F77_NAME(dlamc4)(int *emin, double *start, int *base);
- 
+
 extern void
-F77_NAME(dlamc5)(int *beta, int *p, int *emin, 
+F77_NAME(dlamc5)(int *beta, int *p, int *emin,
 	int *ieee, int *emax, double *rmax);
 
 extern void
-F77_NAME(dlaqp2)(int *m, int *n, int *offset, 
-	double *a, int *lda, int *jpvt, double *tau, 
+F77_NAME(dlaqp2)(int *m, int *n, int *offset,
+	double *a, int *lda, int *jpvt, double *tau,
 	double *vn1, double *vn2, double *work);
- 
+
 extern void
-F77_NAME(dlaqps)(int *m, int *n, int *offset, int 
-	*nb, int *kb, double *a, int *lda, int *jpvt, 
-	double *tau, double *vn1, double *vn2, double *auxv, 
+F77_NAME(dlaqps)(int *m, int *n, int *offset, int
+	*nb, int *kb, double *a, int *lda, int *jpvt,
+	double *tau, double *vn1, double *vn2, double *auxv,
 	double *f, int *ldf);
 
 extern void
-F77_NAME(dlar1v)(int *n, int *b1, int *bn, double 
+F77_NAME(dlar1v)(int *n, int *b1, int *bn, double
 	*sigma, double *d, double *l, double *ld, double *
-	lld, double *gersch, double *z, double *ztz, double 
+	lld, double *gersch, double *z, double *ztz, double
 	*mingma, int *r, int *isuppz, double *work);
- 
+
 extern void
-F77_NAME(dlarrb)(int *n, double *d, double *l, 
-	double *ld, double *lld, int *ifirst, int *ilast, 
+F77_NAME(dlarrb)(int *n, double *d, double *l,
+	double *ld, double *lld, int *ifirst, int *ilast,
 	double *sigma, double *reltol, double *w, double *
 	wgap, double *werr, double *work, int *iwork, int *
 	info);
- 
+
 extern void
-F77_NAME(dlarre)(int *n, double *d, double *e, 
-	double *tol, int *nsplit, int *isplit, int *m, 
+F77_NAME(dlarre)(int *n, double *d, double *e,
+	double *tol, int *nsplit, int *isplit, int *m,
 	double *w, double *woff, double *gersch, double *work,
 	 int *info);
- 
+
 extern void
-F77_NAME(dlarrf)(int *n, double *d, double *l, 
-	double *ld, double *lld, int *ifirst, int *ilast, 
+F77_NAME(dlarrf)(int *n, double *d, double *l,
+	double *ld, double *lld, int *ifirst, int *ilast,
 	double *w, double *dplus, double *lplus, double *work,
 	 int *iwork, int *info);
- 
+
 extern void
-F77_NAME(dlarrv)(int *n, double *d, double *l, 
-	int *isplit, int *m, double *w, int *iblock, 
-	double *gersch, double *tol, double *z, int *ldz, 
+F77_NAME(dlarrv)(int *n, double *d, double *l,
+	int *isplit, int *m, double *w, int *iblock,
+	double *gersch, double *tol, double *z, int *ldz,
 	int *isuppz, double *work, int *iwork, int *info);
 
 extern void
-F77_NAME(dlarz)(char *side, int *m, int *n, int *l, 
-	double *v, int *incv, double *tau, double *c, 
+F77_NAME(dlarz)(char *side, int *m, int *n, int *l,
+	double *v, int *incv, double *tau, double *c,
 	int *ldc, double *work);
- 
+
 extern void
 F77_NAME(dlarzb)(char *side, char *trans, char *direct, char *
 	storev, int *m, int *n, int *k, int *l, double *v,
 	 int *ldv, double *t, int *ldt, double *c, int *
 	ldc, double *work, int *ldwork);
- 
+
 extern void
 F77_NAME(dlarzt)(char *direct, char *storev, int *n, int *
-	k, double *v, int *ldv, double *tau, double *t, 
+	k, double *v, int *ldv, double *tau, double *t,
 	int *ldt);
- 
+
 extern void
-F77_NAME(dlasd0)(int *n, int *sqre, double *d, 
+F77_NAME(dlasd0)(int *n, int *sqre, double *d,
 	double *e, double *u, int *ldu, double *vt, int *
 	ldvt, int *smlsiz, int *iwork, double *work, int *
 	info);
- 
+
 extern void
-F77_NAME(dlasd1)(int *nl, int *nr, int *sqre, 
-	double *d, double *alpha, double *beta, double *u, 
+F77_NAME(dlasd1)(int *nl, int *nr, int *sqre,
+	double *d, double *alpha, double *beta, double *u,
 	int *ldu, double *vt, int *ldvt, int *idxq, int *
 	iwork, double *work, int *info);
- 
+
 extern void
-F77_NAME(dlasd2)(int *nl, int *nr, int *sqre, int 
+F77_NAME(dlasd2)(int *nl, int *nr, int *sqre, int
 	*k, double *d, double *z, double *alpha, double *
-	beta, double *u, int *ldu, double *vt, int *ldvt, 
-	double *dsigma, double *u2, int *ldu2, double *vt2, 
+	beta, double *u, int *ldu, double *vt, int *ldvt,
+	double *dsigma, double *u2, int *ldu2, double *vt2,
 	int *ldvt2, int *idxp, int *idx, int *idxc, int *
 	idxq, int *coltyp, int *info);
- 
+
 extern void
-F77_NAME(dlasd3)(int *nl, int *nr, int *sqre, int 
-	*k, double *d, double *q, int *ldq, double *dsigma, 
-	double *u, int *ldu, double *u2, int *ldu2, 
-	double *vt, int *ldvt, double *vt2, int *ldvt2, 
+F77_NAME(dlasd3)(int *nl, int *nr, int *sqre, int
+	*k, double *d, double *q, int *ldq, double *dsigma,
+	double *u, int *ldu, double *u2, int *ldu2,
+	double *vt, int *ldvt, double *vt2, int *ldvt2,
 	int *idxc, int *ctot, double *z, int *info);
- 
+
 extern void
-F77_NAME(dlasd4)(int *n, int *i, double *d, 
+F77_NAME(dlasd4)(int *n, int *i, double *d,
 	double *z, double *delta, double *rho, double *
 	sigma, double *work, int *info);
- 
+
 extern void
-F77_NAME(dlasd5)(int *i, double *d, double *z, 
+F77_NAME(dlasd5)(int *i, double *d, double *z,
 	double *delta, double *rho, double *dsigma, double *
 	work);
- 
+
 extern void
-F77_NAME(dlasd6)(int *icompq, int *nl, int *nr, 
-	int *sqre, double *d, double *vf, double *vl, 
-	double *alpha, double *beta, int *idxq, int *perm, 
+F77_NAME(dlasd6)(int *icompq, int *nl, int *nr,
+	int *sqre, double *d, double *vf, double *vl,
+	double *alpha, double *beta, int *idxq, int *perm,
 	int *givptr, int *givcol, int *ldgcol, double *givnum,
 	 int *ldgnum, double *poles, double *difl, double *
-	difr, double *z, int *k, double *c, double *s, 
+	difr, double *z, int *k, double *c, double *s,
 	double *work, int *iwork, int *info);
- 
+
 extern void
-F77_NAME(dlasd7)(int *icompq, int *nl, int *nr, 
-	int *sqre, int *k, double *d, double *z, 
-	double *zw, double *vf, double *vfw, double *vl, 
+F77_NAME(dlasd7)(int *icompq, int *nl, int *nr,
+	int *sqre, int *k, double *d, double *z,
+	double *zw, double *vf, double *vfw, double *vl,
 	double *vlw, double *alpha, double *beta, double *
-	dsigma, int *idx, int *idxp, int *idxq, int *perm, 
+	dsigma, int *idx, int *idxp, int *idxq, int *perm,
 	int *givptr, int *givcol, int *ldgcol, double *givnum,
 	 int *ldgnum, double *c, double *s, int *info);
- 
+
 extern void
-F77_NAME(dlasd8)(int *icompq, int *k, double *d, 
-	double *z, double *vf, double *vl, double *difl, 
+F77_NAME(dlasd8)(int *icompq, int *k, double *d,
+	double *z, double *vf, double *vl, double *difl,
 	double *difr, int *lddifr, double *dsigma, double *
 	work, int *info);
- 
+
 extern void
-F77_NAME(dlasd9)(int *icompq, int *ldu, int *k, 
-	double *d, double *z, double *vf, double *vl, 
+F77_NAME(dlasd9)(int *icompq, int *ldu, int *k,
+	double *d, double *z, double *vf, double *vl,
 	double *difl, double *difr, double *dsigma, double *
 	work, int *info);
 
 extern void
-F77_NAME(dlasda)(int *icompq, int *smlsiz, int *n, 
-	int *sqre, double *d, double *e, double *u, int 
-	*ldu, double *vt, int *k, double *difl, double *difr, 
-	double *z, double *poles, int *givptr, int *givcol, 
-	int *ldgcol, int *perm, double *givnum, double *c, 
+F77_NAME(dlasda)(int *icompq, int *smlsiz, int *n,
+	int *sqre, double *d, double *e, double *u, int
+	*ldu, double *vt, int *k, double *difl, double *difr,
+	double *z, double *poles, int *givptr, int *givcol,
+	int *ldgcol, int *perm, double *givnum, double *c,
 	double *s, double *work, int *iwork, int *info);
- 
+
 extern void
 F77_NAME(dlasdq)(char *uplo, int *sqre, int *n, int *
-	ncvt, int *nru, int *ncc, double *d, double *e, 
-	double *vt, int *ldvt, double *u, int *ldu, 
+	ncvt, int *nru, int *ncc, double *d, double *e,
+	double *vt, int *ldvt, double *u, int *ldu,
 	double *c, int *ldc, double *work, int *info);
- 
+
 extern void
 F77_NAME(dlasdt)(int *n, int *lvl, int *nd, int *
 	inode, int *ndiml, int *ndimr, int *msub);
- 
+
 extern void
-F77_NAME(dlasq5)(int *i0, int *n0, double *z, 
-	int *pp, double *tau, double *dmin, double *dmin1, 
+F77_NAME(dlasq5)(int *i0, int *n0, double *z,
+	int *pp, double *tau, double *dmin, double *dmin1,
 	double *dmin2, double *dn, double *dnm1, double *dnm2,
 	 int *ieee);
- 
+
 extern void
-F77_NAME(dlasq6)(int *i0, int *n0, double *z, 
+F77_NAME(dlasq6)(int *i0, int *n0, double *z,
 	int *pp, double *dmin, double *dmin1, double *dmin2,
 	 double *dn, double *dnm1, double *dnm2);
- 
+
 extern void
-F77_NAME(dlatdf)(int *ijob, int *n, double *z, 
-	int *ldz, double *rhs, double *rdsum, double *rdscal, 
+F77_NAME(dlatdf)(int *ijob, int *n, double *z,
+	int *ldz, double *rhs, double *rdsum, double *rdscal,
 	int *ipiv, int *jpiv);
- 
+
 extern void
 F77_NAME(dlatrz)(int *m, int *n, int *l, double *
 	a, int *lda, double *tau, double *work);
- 
+
 extern void
 F77_NAME(dormr3)(char *side, char *trans, int *m, int *n,
 	int *k, int *l, double *a, int *lda, double *tau,
@@ -2607,21 +2608,21 @@ F77_NAME(dormrz)(char *side, char *trans, int *m, int *n,
 	int *info);
 
 extern void
-F77_NAME(dptts2)(int *n, int *nrhs, double *d, 
+F77_NAME(dptts2)(int *n, int *nrhs, double *d,
 	double *e, double *b, int *ldb);
- 
+
 extern void
-F77_NAME(dsbgvd)(char *jobz, char *uplo, int *n, int *ka, 
+F77_NAME(dsbgvd)(char *jobz, char *uplo, int *n, int *ka,
 	int *kb, double *ab, int *ldab, double *bb, int *
-	ldbb, double *w, double *z, int *ldz, double *work, 
+	ldbb, double *w, double *z, int *ldz, double *work,
 	int *lwork, int *iwork, int *liwork, int *info);
- 
+
 extern void
-F77_NAME(dsbgvx)(char *jobz, char *range, char *uplo, int *n, 
+F77_NAME(dsbgvx)(char *jobz, char *range, char *uplo, int *n,
 	int *ka, int *kb, double *ab, int *ldab, double *
-	bb, int *ldbb, double *q, int *ldq, double *vl, 
-	double *vu, int *il, int *iu, double *abstol, int 
-	*m, double *w, double *z, int *ldz, double *work, 
+	bb, int *ldbb, double *q, int *ldq, double *vl,
+	double *vu, int *il, int *iu, double *abstol, int
+	*m, double *w, double *z, int *ldz, double *work,
 	int *iwork, int *ifail, int *info);
 
 extern void
@@ -2639,94 +2640,94 @@ F77_NAME(dspgvx)(int *itype, char *jobz, char *range, char *
 
 extern void
 F77_NAME(dstegr)(char *jobz, char *range, int *n, double *
-	d, double *e, double *vl, double *vu, int *il, 
-	int *iu, double *abstol, int *m, double *w, 
-	double *z, int *ldz, int *isuppz, double *work, 
+	d, double *e, double *vl, double *vu, int *il,
+	int *iu, double *abstol, int *m, double *w,
+	double *z, int *ldz, int *isuppz, double *work,
 	int *lwork, int *iwork, int *liwork, int *info);
- 
+
 extern void
 F77_NAME(dstevr)(char *jobz, char *range, int *n, double *
-	d, double *e, double *vl, double *vu, int *il, 
-	int *iu, double *abstol, int *m, double *w, 
-	double *z, int *ldz, int *isuppz, double *work, 
+	d, double *e, double *vl, double *vu, int *il,
+	int *iu, double *abstol, int *m, double *w,
+	double *z, int *ldz, int *isuppz, double *work,
 	int *lwork, int *iwork, int *liwork, int *info);
- 
+
 extern void
 F77_NAME(dsygvd)(int *itype, char *jobz, char *uplo, int *
-	n, double *a, int *lda, double *b, int *ldb, 
-	double *w, double *work, int *lwork, int *iwork, 
+	n, double *a, int *lda, double *b, int *ldb,
+	double *w, double *work, int *lwork, int *iwork,
 	int *liwork, int *info);
- 
+
 extern void
 F77_NAME(dsygvx)(int *itype, char *jobz, char *range, char *
-	uplo, int *n, double *a, int *lda, double *b, int 
-	*ldb, double *vl, double *vu, int *il, int *iu, 
-	double *abstol, int *m, double *w, double *z, 
-	int *ldz, double *work, int *lwork, int *iwork, 
+	uplo, int *n, double *a, int *lda, double *b, int
+	*ldb, double *vl, double *vu, int *il, int *iu,
+	double *abstol, int *m, double *w, double *z,
+	int *ldz, double *work, int *lwork, int *iwork,
 	int *ifail, int *info);
- 
+
 extern void
-F77_NAME(dtgex2)(int *wantq, int *wantz, int *n, 
+F77_NAME(dtgex2)(int *wantq, int *wantz, int *n,
 	double *a, int *lda, double *b, int *ldb, double *
 	q, int *ldq, double *z, int *ldz, int *j1, int *
 	n1, int *n2, double *work, int *lwork, int *info);
- 
+
 extern void
-F77_NAME(dtgexc)(int *wantq, int *wantz, int *n, 
+F77_NAME(dtgexc)(int *wantq, int *wantz, int *n,
 	double *a, int *lda, double *b, int *ldb, double *
-	q, int *ldq, double *z, int *ldz, int *ifst, 
+	q, int *ldq, double *z, int *ldz, int *ifst,
 	int *ilst, double *work, int *lwork, int *info);
- 
+
 extern void
-F77_NAME(dtgsen)(int *ijob, int *wantq, int *wantz, 
+F77_NAME(dtgsen)(int *ijob, int *wantq, int *wantz,
 	int *select, int *n, double *a, int *lda, double *
 	b, int *ldb, double *alphar, double *alphai, double *
-	beta, double *q, int *ldq, double *z, int *ldz, 
-	int *m, double *pl, double *pr, double *dif, 
-	double *work, int *lwork, int *iwork, int *liwork, 
+	beta, double *q, int *ldq, double *z, int *ldz,
+	int *m, double *pl, double *pr, double *dif,
+	double *work, int *lwork, int *iwork, int *liwork,
 	int *info);
- 
+
 extern void
-F77_NAME(dtgsna)(char *job, char *howmny, int *select, 
-	int *n, double *a, int *lda, double *b, int *ldb, 
-	double *vl, int *ldvl, double *vr, int *ldvr, 
+F77_NAME(dtgsna)(char *job, char *howmny, int *select,
+	int *n, double *a, int *lda, double *b, int *ldb,
+	double *vl, int *ldvl, double *vr, int *ldvr,
 	double *s, double *dif, int *mm, int *m, double *
 	work, int *lwork, int *iwork, int *info);
- 
+
 extern void
 F77_NAME(dtgsy2)(char *trans, int *ijob, int *m, int *
-	n, double *a, int *lda, double *b, int *ldb, 
-	double *c, int *ldc, double *d, int *ldd, 
+	n, double *a, int *lda, double *b, int *ldb,
+	double *c, int *ldc, double *d, int *ldd,
 	double *e, int *lde, double *f, int *ldf, double *
-	scale, double *rdsum, double *rdscal, int *iwork, int 
+	scale, double *rdsum, double *rdscal, int *iwork, int
 	*pq, int *info);
- 
+
 extern void
 F77_NAME(dtgsyl)(char *trans, int *ijob, int *m, int *
-	n, double *a, int *lda, double *b, int *ldb, 
-	double *c, int *ldc, double *d, int *ldd, 
+	n, double *a, int *lda, double *b, int *ldb,
+	double *c, int *ldc, double *d, int *ldd,
 	double *e, int *lde, double *f, int *ldf, double *
 	scale, double *dif, double *work, int *lwork, int *
 	iwork, int *info);
- 
+
 extern void
 F77_NAME(dtzrzf)(int *m, int *n, double *a, int *
 	lda, double *tau, double *work, int *lwork, int *info);
- 
+
 
 extern int
 F77_NAME(lsame)(char *ca, char *cb);
 
 extern void
 F77_NAME(zbdsqr)(char *uplo, int *n, int *ncvt, int *
-	nru, int *ncc, double *d, double *e, Rcomplex *vt, 
-	int *ldvt, Rcomplex *u, int *ldu, Rcomplex *c, 
+	nru, int *ncc, double *d, double *e, Rcomplex *vt,
+	int *ldvt, Rcomplex *u, int *ldu, Rcomplex *c,
 	int *ldc, double *rwork, int *info);
- 
+
 extern void
-F77_NAME(zdrot)(int *n, Rcomplex *cx, int *incx, 
+F77_NAME(zdrot)(int *n, Rcomplex *cx, int *incx,
 	Rcomplex *cy, int *incy, double *c, double *s);
- 
+
 extern void
 F77_NAME(zgebak)(char *job, char *side, int *n, int *ilo,
 	int *ihi, double *scale, int *m, Rcomplex *v,
@@ -2827,15 +2828,15 @@ F77_NAME(zlahrd)(int *n, int *k, int *nb,
 	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *t,
 	int *ldt, Rcomplex *y, int *ldy);
 
-extern void
-F77_NAME(zlange)(char *norm, int *m, int *n, Rcomplex *a, int *lda, 
+extern double
+F77_NAME(zlange)(char *norm, int *m, int *n, Rcomplex *a, int *lda,
 		 double *work);
 
-extern void
+extern double
 F77_NAME(zlanhe)(char *norm,  char *uplo, int *n, Rcomplex *a,
-		   int *lda, double *work);
+		 int *lda, double *work);
 
-extern void
+extern double
 F77_NAME(zlanhs)(char *norm, int *n, Rcomplex *a, int *lda, double *work);
 
 
@@ -2996,7 +2997,7 @@ F77_NAME(zunmlq)(char *side, char *trans, int *m, int *n,
 	Rcomplex *c, int *ldc, Rcomplex *work, int *lwork,
 	 int *info);
 
-#ifdef  __cplusplus
+#ifdef	__cplusplus
 }
 #endif
 
