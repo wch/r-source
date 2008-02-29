@@ -593,6 +593,7 @@ static void handleEvent(XEvent event)
 	    if(xd->useCairo) {
 		cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
 					    xd->windowHeight);
+		cairo_reset_clip(xd->xcc); /* needed? */
 		if (xd->cs) {
 		    cairo_surface_destroy(xd->cs);
 		    cairo_destroy(xd->cc);
@@ -2316,21 +2317,29 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->cra[1] = 1.2*ps * res0/72.0;
 	dd->ipr[0] =  dd->ipr[1] = 1.0/res0;
 	xd->lwdscale = res0/96.0;
-    } else if(xd->type >= SVG) {
+    } else if(xd->type >= SVG) { /* SVG, PDF, PS -- unused */
 	/* Device units are bp */
 	dd->cra[0] = 0.9*ps;
 	dd->cra[1] = 1.2*ps;
 	dd->ipr[0] =  dd->ipr[1] = 1.0/72.0;
 	xd->lwdscale = 1.0/96.0;
-   } else {
+    } else {
 	dd->cra[0] = 0.9*ps * 1.0/(72.0*pixelWidth());
 	dd->cra[1] = 1.2*ps * 1.0/(72.0*pixelHeight());
 	dd->ipr[0] = pixelWidth();
 	dd->ipr[1] = pixelHeight();
 	xd->lwdscale = 1.0/(96.0*pixelWidth());
-#ifndef HAVE_PANGOCAIRO
-	ps *= 1.0/(72.0*pixelWidth());
+#ifdef HAVE_WORKING_CAIRO
+	if(xd->useCairo) {
+# ifdef HAVE_PANGOCAIRO
+	    /* Pango's default resolution is 96 dpi */ 
+	    ps *= 1.0/(96.0*pixelWidth());
+# else
+	    /* Cairo's default resolution is 96 dpi */ 
+	    ps *= 1.0/(72.0*pixelWidth());
+# endif
 #endif
+	}
     }
     
     /* Character Addressing Offsets */
@@ -2948,7 +2957,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
 {
     pX11Desc xd;
     int res0 = (res > 0) ? res : 72;
-    double ps0 = ps;
+    double dps = ps;
     
     /* allocate new device description */
     if (!(xd = (pX11Desc) calloc(1, sizeof(X11Desc)))) return FALSE;
@@ -2957,12 +2966,13 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     xd->windowWidth = width;
     xd->windowHeight = height;
 #ifdef HAVE_PANGOCAIRO
-    /* What is Pango doing?  Looks like screen res or 96 dpi */ 
-    ps *= res0/96.0;
+    /* Pango's default resolution is 96 dpi */ 
+    dps *= res0/96.0;
 #else
-    ps *= res0/72.0;
+    dps *= res0/72.0;
 #endif
-    xd->pointsize = ps;
+    xd->pointsize = dps;
+    printf("pointsize was %d now %f\n", ps, xd->pointsize);
     xd->bg = bg;
     xd->res_dpi = res;
     switch(antialias){
@@ -3021,8 +3031,8 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->top = 0;
     dd->bottom = height;
     /* rescale points to pixels */
-    dd->cra[0] = 0.9 * ps0 * res0/72.0;
-    dd->cra[1] = 1.2 * ps0 * res0/72.0;
+    dd->cra[0] = 0.9 * ps * res0/72.0;
+    dd->cra[1] = 1.2 * ps * res0/72.0;
     dd->startps = ps;
     dd->ipr[0] = dd->ipr[1] = 1.0/res0;  
     xd->lwdscale = res0/96.0;

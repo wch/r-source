@@ -109,7 +109,7 @@ typedef struct {
     int	pch;		/* Plotting character */
     /* Note that ps is never changed, so always the same as dev->startps.
        However, the ps in the graphics context is changed */
-    int ps;		/* Text & symbol pointsize */
+    double ps;		/* Text & symbol pointsize */
     int	smo;		/* Curve smoothness */
     double srt;		/* String Rotation */
     double tck;		/* Tick size as in S */
