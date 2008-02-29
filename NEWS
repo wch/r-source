@@ -319,13 +319,14 @@ NEW FEATURES
 	capabilities("png") has changed to reflect this.
 
 	Where Cairo is supported, there is a svg() device to write SVG
-	files, tiff() to write TIFF bitmap files, and cairo_pdf() and
-	cairo_ps() to write (bitmap) PDF and postscript files via
-	Cairo.
+	files, and cairo_pdf() and cairo_ps() to write (possibly
+	bitmap) PDF and postscript files via Cairo.
 
 	Some features require cairo >= 1.2, and some which are
 	nominally supported under 1.2 seem to need 1.4 to work
 	correctly.
+
+    o	There are new bmp() and tiff() devices.
 
     o	The function is() now works with S3 inheritance; that is, with
 	objects having multiple strings in the class attribute.

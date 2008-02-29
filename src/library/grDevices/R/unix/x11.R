@@ -185,6 +185,37 @@ tiff <- function(filename = "Rplot%03d.tiff",
                       0L, 0L, "", 0, 0))
 }
 
+bmp <- function(filename = "Rplot%03d.bmp",
+                width = 480, height = 480, units = "px", pointsize = 12,
+                bg = "white", res = NA, ...,
+                type = c("Cairo", "Xlib"), antialias)
+{
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    units <- match.arg(units, c("in", "px", "cm", "mm"))
+    if(units != "px" && is.na(res))
+        stop("'res' must be specified unless 'units = \"px\"'")
+    height <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
+    width <-
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    new <- list(...)
+    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(antialias)) {
+        new$antialias <- pmatch(antialias,
+                                c("default", "none", "gray", "subpixel"))
+        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
+    }
+    d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    if (d$type == "Cairo" && capabilities("cairo"))
+        .Internal(cairo(filename, 9L, width, height, pointsize, bg,
+                        res, d$antialias, 100L))
+    else
+        .Internal(X11(paste("bmp::", filename, sep=""),
+                      width, height, pointsize, d$gamma,
+                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                      0L, 0L, "", 0, 0))
+}
+
 svg <- function(filename = "Rplot%03d.svg",
                 width = 480, height = 480, units = "px", res = 72,
                 pointsize = 12, bg = "white", antialias)
@@ -324,7 +355,7 @@ X11Fonts(# Default Serif font is Times
          symbol=X11Font("-*-symbol-%s-%s-*-*-%d-*-*-*-*-*-*-*"))
 
 savePlot <- function(filename = paste("Rplot", type, sep="."),
-                     type = c("png", "jpeg", "tiff"),
+                     type = c("png", "jpeg", "tiff", "bmp"),
                      device = dev.cur())
 {
     type <- match.arg(type)

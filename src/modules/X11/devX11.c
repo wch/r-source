@@ -766,7 +766,8 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     if (size < SMALLEST) size = SMALLEST;
     face--;
 
-    if(xd->type == PNG || xd->type == JPEG || xd->type == TIFF) {
+    if(xd->type == PNG || xd->type == JPEG || 
+       xd->type == TIFF || xd->type == BMP) {
 	dpi = (xd->res_dpi > 0) ? xd->res_dpi + 0.5 : 72;
     } else {
 	dpi = (1./pixelHeight() + 0.5);
@@ -1214,6 +1215,22 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	xd->res_dpi = res; /* place holder */
 	dd->displayListOn = FALSE;
 #endif
+    } else if (!strncmp(dsp, "bmp::", 5)) {
+	char buf[PATH_MAX]; /* allow for pageno formats */
+	FILE *fp;
+	if(strlen(dsp+5) >= PATH_MAX)
+	    error(_("filename too long in bmp() call"));
+	strcpy(xd->filename, dsp+5);
+	snprintf(buf, PATH_MAX, dsp+5, 1); /* page 1 to start */
+	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
+	    warning(_("could not open BMP file '%s'"), buf);
+	    return FALSE;
+	}
+	xd->fp = fp;
+	type = BMP;
+	p = "";
+	xd->res_dpi = res; /* place holder */
+	dd->displayListOn = FALSE;
     } else if (!strcmp(dsp, "XImage")) {
 	type = XIMAGE;
 	xd->fp = NULL;
@@ -1711,19 +1728,12 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
 	    /* try to preserve the page we do have */
 	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
 	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
-	    if (xd->type == PNG) {
+	    if (xd->type == PNG || xd->type == JPEG || xd->type == BMP) {
 		char buf[PATH_MAX];
 		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
-		    error(_("could not open PNG file '%s'"), buf);
-	    }
-	    if (xd->type == JPEG) {
-		char buf[PATH_MAX];
-		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
-		if (!xd->fp)
-		    error(_("could not open JPEG file '%s'"), buf);
+		    error(_("could not open file '%s'"), buf);
 	    }
 	}
 	CheckAlpha(gc->fill, xd);
@@ -1759,6 +1769,10 @@ extern int R_SaveAsTIFF(void  *d, int width, int height,
 			unsigned int (*gp)(void *, int, int),
 			int bgr, const char *outfile, int res,
 			int compression);
+
+extern int R_SaveAsBmp(void  *d, int width, int height,
+		       unsigned int (*gp)(void *, int, int), 
+		       int bgr, FILE *fp, int res);
 
 static int knowncols[512];
 
@@ -1826,6 +1840,9 @@ static void X11_Close_bitmap(pX11Desc xd)
     } else if (xd->type == JPEG)
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
 		     bitgp, 0, xd->quality, xd->fp, xd->res_dpi);
+    else if (xd->type == BMP)
+	R_SaveAsBmp(xi, xd->windowWidth, xd->windowHeight,
+		    bitgp, 0, xd->fp, xd->res_dpi);
     else if (xd->type == TIFF) {
 	char buf[PATH_MAX];
 	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
@@ -2293,7 +2310,8 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     /* Inches per raster unit */
 
     /* ps is in points, we want this in device units */
-    if(xd->type == PNG || xd->type == JPEG) {
+    if(xd->type == PNG || xd->type == JPEG ||
+       xd->type == BMP || xd->type == TIFF) {
 	dd->cra[0] = 0.9*ps * res0/72.0;
 	dd->cra[1] = 1.2*ps * res0/72.0;
 	dd->ipr[0] =  dd->ipr[1] = 1.0/res0;
@@ -2587,6 +2605,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!strncmp(display, "png::", 5)) devname = "PNG";
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
     else if (!strncmp(display, "tiff::", 6)) devname = "TIFF";
+    else if (!strncmp(display, "bmp::", 5)) devname = "BMP";
     else if (!strcmp(display, "XImage")) devname = "XImage";
     else if (useCairo) devname = "X11cairo";
     else devname = "X11";
@@ -2691,8 +2710,8 @@ static Rboolean
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
     cairo_status_t res;
-    if (xd->type == PNG || xd->type == JPEG 
-	|| xd->type == PNGdirect || xd->type == TIFF)
+    if (xd->type == PNG || xd->type == JPEG ||
+	xd->type == PNGdirect || xd->type == TIFF || xd->type == BMP)
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 					    (double)xd->windowWidth,
 					    (double)xd->windowHeight);
@@ -2742,6 +2761,9 @@ static void BM_Close_bitmap(pX11Desc xd)
     else if(xd->type == JPEG)
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
 		     Cbitgp, 0, xd->quality, xd->fp, xd->res_dpi);
+    else if(xd->type == BMP)
+	R_SaveAsBmp(xi, xd->windowWidth, xd->windowHeight,
+		    Cbitgp, 0, xd->fp, xd->res_dpi);
     else {
 	char buf[PATH_MAX];
 	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
@@ -2760,7 +2782,7 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 
     xd->npages++;
 #if CAIRO_VERSION >= 10200
-    if (xd->type == PNG || xd->type == JPEG) {
+    if (xd->type == PNG || xd->type == JPEG || xd->type == BMP) {
 	if (xd->npages > 1) {
 	    /* try to preserve the page we do have */
 	    BM_Close_bitmap(xd);
@@ -2768,12 +2790,8 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	}
 	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
 	xd->fp = R_fopen(R_ExpandFileName(buf), "w");
-	if (!xd->fp) {
-	    if(xd->type == PNG)
-		error(_("could not open PNG file '%s'"), buf);
-	    else 
-		error(_("could not open JPEG file '%s'"), buf);
-	}
+	if (!xd->fp)
+	    error(_("could not open file '%s'"), buf);
     } else if(xd->type == PNGdirect) {
 	if (xd->npages > 1) {
 	    cairo_status_t res;
@@ -2903,8 +2921,9 @@ static void BM_Close(pDevDesc dd)
 
     if (xd->npages) {
 #if CAIRO_VERSION >= 10200
-	if (xd->type == PNG || xd->type == JPEG 
-	    || xd->type == TIFF ) BM_Close_bitmap(xd);
+	if (xd->type == PNG || xd->type == JPEG ||
+	    xd->type == TIFF || xd->type == BMP)
+	    BM_Close_bitmap(xd);
 #endif
 	if (xd->type == PNGdirect) {
 	    cairo_status_t res;
@@ -3036,7 +3055,8 @@ const static struct {
     { "png", PNGdirect },
     { "cairo_pdf", PDF },
     { "cairo_ps", PS },
-    { "tiff", TIFF }
+    { "tiff", TIFF },
+    { "bmp", BMP }
 };
       
 /* 

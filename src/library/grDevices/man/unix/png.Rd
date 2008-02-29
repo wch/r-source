@@ -7,11 +7,16 @@
 \alias{png}
 \alias{jpeg}
 \alias{tiff}
-\title{JPEG, PNG and TIFF graphics devices}
+\alias{bmp}
+\title{BMP, JPEG, PNG and TIFF graphics devices}
 \description{
   Graphics devices for JPEG, PNG or TIFF format bitmap files.
 }
 \usage{
+bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480, units = "px",
+    pointsize = 12, bg = "white", res = NA, \dots,
+    type = c("Cairo", "Xlib"), antialias)
+
 jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots,
      type = c("Cairo", "Xlib"), antialias)
@@ -66,10 +71,11 @@ tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
   bitmap formats, and both can be displayed in modern web
   browsers.  The PNG format is lossless and is best for line
   diagrams and blocks of colour.  The JPEG format is lossy,
-  but may be useful for image plots, for example.  TIFF is a meta-format:
-  the default format written by \code{tiff} is lossless and stores RGB (and
-  alpha where appropriate) values uncompressed---such files are widely
-  accepted, which is their main virtue over PNG.
+  but may be useful for image plots, for example.  BMP is a standard
+  format on Windows.  TIFF is a meta-format: the default format written
+  by \code{tiff} is lossless and stores RGB (and alpha where
+  appropriate) values uncompressed---such files are widely accepted,
+  which is their main virtue over PNG.   
 
   \code{png} supports transparent backgrounds: use \code{bg =
     "transparent"}.  Not all PNG viewers render files with transparency

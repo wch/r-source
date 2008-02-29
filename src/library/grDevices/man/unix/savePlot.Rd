@@ -11,7 +11,8 @@
 }
 \usage{
 savePlot(filename = paste("Rplot", type, sep="."),
-         type = c("png", "jpeg", "tiff"), device = dev.cur())
+         type = c("png", "jpeg", "tiff", "bmp"),
+         device = dev.cur())
 }
 \arguments{
   \item{filename}{filename to save to.}
@@ -27,7 +28,7 @@ savePlot(filename = paste("Rplot", type, sep="."),
   JPEG the quality is 75\% and for TIFF there is no compression.
 
   All transparency information is discarded: if the plot has
-  \code{bg="transparent"} (the default) this is regarded as opaque white.
+  \code{bg = "transparent"} (the default) this is regarded as opaque white.
 }
 \value{
   Invisible \code{NULL}.

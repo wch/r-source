@@ -42,7 +42,8 @@ typedef enum {
     PNGdirect,
     SVG,
     PDF,
-    PS
+    PS,
+    BMP
 } X_GTYPE;
 
 
