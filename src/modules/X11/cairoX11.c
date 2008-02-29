@@ -86,8 +86,10 @@
 
 static void Cairo_update(pX11Desc xd)
 {
-    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-    cairo_paint(xd->xcc);
+    if(xd->xcc) {
+	cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+	cairo_paint(xd->xcc);
+    }
 }
 
 static void CairoColor(unsigned int col, pX11Desc xd)

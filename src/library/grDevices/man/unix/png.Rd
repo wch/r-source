@@ -94,7 +94,7 @@ tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
   not supported.  For \code{type = "Xlib"} they may not be usable unless
   the X11 display is available to the owner of the \R process.  With
   cairo version 1.0, \code{type = "Cairo"} is unavailable (but
-  \code{type="bCairo"} works).
+  \code{type="dCairo"} works).
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As

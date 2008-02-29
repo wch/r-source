@@ -55,11 +55,11 @@ X11.options(\dots, reset = FALSE)
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"Cairo"}.  The latter will only be
-    available if the system was compiled with support for cairo.}
-  \item{antialias}{for \code{type = "Cairo"}, giving the type of
-    anti-aliasing (if any) to be used.  One of
-    \code{c("default", "none", "gray", "subpixel")}.}
+    prior to \R 2.7.0) or \code{"Cairo"} or \code{"nbCairo"}.  The
+    latter two will only be available if the system was compiled with
+    support for cairo.}
+  \item{antialias}{for cairo types, the type of anti-aliasing (if any)
+    to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
     and \code{maxcubesize} (see section \sQuote{Color Rendering}).}
@@ -91,7 +91,10 @@ X11.options(\dots, reset = FALSE)
   }
   but can be slower (and will be much slower on a slow X11 connection as
   all the rendering is done on the machine running \R rather than in the
-  X server).
+  X server). \code{type = "nbCairo"} is the same device without
+  buffering, and will run faster on a mchine with a slow X11 connection
+  (although still not as fast as \code{type = "Xlib"}) -- also,
+  \code{\link{savePlot}} is not supported.
 }
 \section{Fonts}{
   This section applies only to \code{type = "Xlib"}: the cairo-based
@@ -146,7 +149,7 @@ X11.options(\dots, reset = FALSE)
   black/white.  The palette is shared between all X11 clients, so it can
   be necessary to limit the number of colors used by \R.
 
-  \code{type="Cairo"} supports only \sQuote{truecolor} visuals.
+  Cairo-based devices support only \sQuote{truecolor} visuals.
 
   The default for \code{type="Xlib"} is to use the best possible color
   model for the visual of the X11 server.  This can be overridden by the
@@ -177,7 +180,7 @@ X11.options(\dots, reset = FALSE)
   RGB, using 64 colors in the palette.
 }
 \section{Anti-aliasing}{
-  Anti-aliasing is only supported in \code{type="Cairo"}, and applies to
+  Anti-aliasing is only supported for cairo-based devices, and applies to
   graphics and to fonts.  It is generally preferable for lines and text,
   but can lead to undesirable effects for fills, e.g. for
   \code{\link{image}} plots, and so is never used for fills.

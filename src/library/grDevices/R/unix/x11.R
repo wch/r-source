@@ -67,17 +67,22 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(ypos)) new$ypos <- ypos
     if(!missing(title)) new$title <- title
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
-    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "Cairo"))
+    if(!missing(type))
+        new$type <- match.arg(type, c("Xlib", "Cairo", "nbCairo"))
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    if(capabilities("cairo")) {
+        if(d$type == "Cairo") type <- 1
+        else if(d$type == "nbCairo") type <- 2
+        else type <- 0;
+    } else type = 0;
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                  NA_integer_, d$xpos, d$ypos, d$title,
-                  d$type == "Cairo" && capabilities("cairo"), d$antialias))
+                  NA_integer_, d$xpos, d$ypos, d$title, type, d$antialias))
 }
 
 x11 <- X11

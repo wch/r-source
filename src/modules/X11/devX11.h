@@ -147,7 +147,7 @@ typedef struct {
     Rboolean onefile;
 
 #ifdef HAVE_WORKING_CAIRO
-    Rboolean useCairo;
+    Rboolean useCairo, buffered;
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;

@@ -591,10 +591,9 @@ static void handleEvent(XEvent event)
 	    do_update = 2;
 #if defined HAVE_WORKING_CAIRO
 	    if(xd->useCairo) {
-		cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
-					    xd->windowHeight);
-		cairo_reset_clip(xd->xcc); /* needed? */
-		if (xd->cs) {
+		if(xd->xcc) {
+		    cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
+						xd->windowHeight);
 		    cairo_surface_destroy(xd->cs);
 		    cairo_destroy(xd->cc);
 		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
@@ -604,6 +603,9 @@ static void handleEvent(XEvent event)
 		    /* cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
 		       cairo_reset_clip(xd->cc); */
 		    cairo_set_antialias(xd->cc, xd->antialias);
+		} else {
+		    cairo_xlib_surface_set_size(xd->cs, xd->windowWidth,
+						xd->windowHeight);
 		}
 	    }
 #endif
@@ -642,7 +644,7 @@ static void handleEvent(XEvent event)
 	    /* avoid replaying a display list until something has been drawn */
 	    if(gdd->dirty) {
 #ifdef HAVE_WORKING_CAIRO
-		if(xd->useCairo && do_update == 1) {
+		if(xd->useCairo && xd->xcc && do_update == 1) {
 		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    cairo_paint(xd->xcc);
 		} else 
@@ -1401,30 +1403,36 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 #ifdef HAVE_WORKING_CAIRO
 	    if(xd->useCairo) {
 		cairo_status_t res;
-		xd->xcs = cairo_xlib_surface_create(display, xd->window,
-						    visual,
-						    (double)xd->windowWidth,
-						    (double)xd->windowHeight);
-		res = cairo_surface_status(xd->xcs);
-		if (res != CAIRO_STATUS_SUCCESS) {
-		    warning("cairo error '%s'", cairo_status_to_string(res));
-		    /* bail out */
-		    return FALSE;
-		}
-		xd->xcc = cairo_create(xd->xcs);
-		res = cairo_status(xd->xcc);
-		if (res != CAIRO_STATUS_SUCCESS) {
-		    warning("cairo error '%s'", cairo_status_to_string(res));
-		    /* bail out */
-		    return FALSE;
-		}
+		if(xd->buffered) {
+		    xd->xcs = cairo_xlib_surface_create(display, xd->window,
+							visual,
+							(double)xd->windowWidth,
+							(double)xd->windowHeight);
+		    res = cairo_surface_status(xd->xcs);
+		    if (res != CAIRO_STATUS_SUCCESS) {
+			warning("cairo error '%s'", cairo_status_to_string(res));
+			/* bail out */
+			return FALSE;
+		    }
+		    xd->xcc = cairo_create(xd->xcs);
+		    res = cairo_status(xd->xcc);
+		    if (res != CAIRO_STATUS_SUCCESS) {
+			warning("cairo error '%s'", cairo_status_to_string(res));
+			/* bail out */
+			return FALSE;
+		    }
 
-		xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
 						    (double)xd->windowWidth,
 						    (double)xd->windowHeight);
+		} else
+		    xd->cs = cairo_xlib_surface_create(display, xd->window,
+						       visual,
+						       (double)xd->windowWidth,
+						       (double)xd->windowHeight);
 		res = cairo_surface_status(xd->cs);
-		if (res != CAIRO_STATUS_SUCCESS) {
-		    warning("cairo error '%s'", cairo_status_to_string(res));
+		    if (res != CAIRO_STATUS_SUCCESS) {
+			warning("cairo error '%s'", cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
@@ -1869,8 +1877,8 @@ static void X11_Close(pDevDesc dd)
 	if(xd->useCairo) {
 	    cairo_surface_destroy(xd->cs);
 	    cairo_destroy(xd->cc);
-	    cairo_surface_destroy(xd->xcs);
-	    cairo_destroy(xd->xcc);
+	    if(xd->xcs) cairo_surface_destroy(xd->xcs);
+	    if(xd->xcc) cairo_destroy(xd->xcc);
 	}
 #endif
 
@@ -2188,7 +2196,8 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     if(!xd) return FALSE;
     xd->bg = bgcolor;
 #ifdef HAVE_WORKING_CAIRO
-    xd->useCairo = useCairo;
+    xd->useCairo = useCairo != 0;
+    xd->buffered = useCairo == 1;
     if(useCairo) {
 	switch(antialias){
 	case 1: xd->antialias = CAIRO_ANTIALIAS_DEFAULT; break;
@@ -2616,7 +2625,8 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strncmp(display, "tiff::", 6)) devname = "TIFF";
     else if (!strncmp(display, "bmp::", 5)) devname = "BMP";
     else if (!strcmp(display, "XImage")) devname = "XImage";
-    else if (useCairo) devname = "X11cairo";
+    else if (useCairo == 1) devname = "X11cairo";
+    else if (useCairo == 2) devname = "X11cairo_nob";
     else devname = "X11";
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel,

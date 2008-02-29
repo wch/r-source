@@ -318,9 +318,9 @@ NEW FEATURES
 	X server.  The meaning of capabilities("jpeg") and
 	capabilities("png") has changed to reflect this.
 
-	Where Cairo is supported, there is a svg() device to write SVG
+	Where cairo is supported, there is a svg() device to write SVG
 	files, and cairo_pdf() and cairo_ps() to write (possibly
-	bitmap) PDF and postscript files via Cairo.
+	bitmap) PDF and postscript files via cairo.
 
 	Some features require cairo >= 1.2, and some which are
 	nominally supported under 1.2 seem to need 1.4 to work
