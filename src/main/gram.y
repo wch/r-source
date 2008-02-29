@@ -2057,7 +2057,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		error(_("\\uxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		unsigned int val = 0; int i, ext; size_t res;
-		char buff[MB_CUR_MAX+1]; 
+		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */ 
 		Rboolean delim = FALSE;
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE; 
@@ -2101,7 +2101,7 @@ static int StringValue(int c, Rboolean forSymbol)
 #else
 		{
 		    unsigned int val = 0; int i, ext; size_t res;
-		    char buff[MB_CUR_MAX+1];
+		    char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */ 
 		    Rboolean delim = FALSE;
 		    if((c = xxgetc()) == '{') {
 			delim = TRUE;
