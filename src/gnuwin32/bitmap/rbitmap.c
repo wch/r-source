@@ -469,7 +469,6 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 #define BMPERROR {R_ShowMessage("Problems writing to 'bmp' file");return 0;}
 #define BMPW(a) {wrd=a;if(fwrite(&wrd,sizeof(unsigned short),1,fp)!=1) BMPERROR}
 #define BMPDW(a) {dwrd=a;if(fwrite(&dwrd,sizeof(unsigned int),1,fp)!=1) BMPERROR}
-#define BMPLONG(a) {lng=a;if(fwrite(&lng,sizeof(long),1,fp)!=1) BMPERROR}
 #define BMPPUTC(a) if(fputc(a,fp)==EOF) BMPERROR;
 #define HEADERSIZE 54
 
@@ -483,7 +482,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     int bfOffBits, bfSize, biBitCount, biClrUsed , pad;
     unsigned short wrd;
     unsigned int dwrd;
-    long lng, lres;
+    int lres;
     DECLARESHIFTS;
 
     /* Have we less than 256 different colors? */
@@ -529,20 +528,21 @@ int R_SaveAsBmp(void  *d, int width, int height,
     }
 
     /* write the header */
-    BMPW(0x4D42); /* bfType must be "BM" */
+    
+    BMPPUTC('B');BMPPUTC('M');
     BMPDW(bfSize); /*bfSize*/
     BMPW(0);BMPW(0); /* bfReserved1 and bfReserved2 must be 0*/
     BMPDW(bfOffBits); /* bfOffBits */
-    BMPDW(40);	/* biSize */
-    BMPLONG(width); /* biWidth */
-    BMPLONG(height); /* biHeight */
+    BMPDW(40);	/* Windows V3. size 40 bytes */
+    BMPDW(width); /* biWidth */
+    BMPDW(height); /* biHeight */
     BMPW(1);	/* biPlanes - must be 1 */
     BMPW(biBitCount); /* biBitCount */
     BMPDW(0); /* biCompression=BI_RGB */
     BMPDW(0); /* biSizeImage (with BI_RGB not needed)*/
-    lres = (long)(0.5 + res/0.0254);
-    BMPLONG(lres); /* XPels/M <- used only by Windows?*/
-    BMPLONG(lres); /* XPels/M */
+    lres = (int)(0.5 + res/0.0254);
+    BMPDW(lres); /* XPels/M */
+    BMPDW(lres); /* XPels/M */
     BMPDW(biClrUsed); /* biClrUsed */
     BMPDW(0) ; /* biClrImportant All colours are important */
 
