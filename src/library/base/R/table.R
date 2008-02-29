@@ -25,7 +25,7 @@ table <- function (..., exclude = c(NA, NaN),
 	    switch (deparse.level + 1,
 		    "", ## 0
 		    if (is.symbol(x)) as.character(x) else "", ## 1
-		    deparse(x)[1]) ## 2
+		    deparse(x, nlines=1)[1]) ## 2
 		      )
 	if (is.null(nm))
 	    dep

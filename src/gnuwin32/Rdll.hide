@@ -296,6 +296,7 @@
  Rf_copyListMatrix
  Rf_copyMostAttribNoTs
  Rf_d1mach
+ Rf_deparse1s
  Rf_dpSavedptr
  Rf_dpptr
  Rf_evalList

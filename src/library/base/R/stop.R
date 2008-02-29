@@ -37,7 +37,7 @@ stopifnot <- function(...)
     mc <- match.call()
     for(i in 1:n)
 	if(!(is.logical(r <- eval(ll[[i]])) && !any(is.na(r)) && all(r))) {
-	    ch <- deparse(mc[[i+1]], width.cutoff = 60)
+	    ch <- deparse(mc[[i+1]], width.cutoff = 60, nlines = 2)
 	    if(length(ch) > 1) ch <- paste(ch[1], "....")
 	    stop(paste(ch, " is not ", if(length(r) > 1)"all ", "TRUE", sep=''),
 		 call.= FALSE)

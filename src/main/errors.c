@@ -44,9 +44,6 @@ extern void R_ProcessEvents(void);
 #include <R_ext/eventloop.h> /* for R_PolledEvents */
 #endif
 
-extern SEXP deparse1s(SEXP call);
-
-
 #ifndef min
 #define min(a, b) (a<b?a:b)
 #endif
