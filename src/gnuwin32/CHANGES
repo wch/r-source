@@ -211,6 +211,7 @@ OTHERS
 
     o	savePlot() no longer automatically adds an extension to the filename.
 
+
 BUILDING R
 
     o	Support for the ACML BLAS has been withdrawn (there is no
@@ -232,7 +233,7 @@ BUG FIXES
 	the initial shrink factor.
 
     o	If windows(ypinch=) was specified, the width value was used
-	 for the height.
+	for the height.
 
 
 
