@@ -318,6 +318,7 @@ export(isoreg, ksmooth, loess, loess.control, loess.smooth, ppr,
 S3method(anova, loess)
 S3method(fitted, isoreg)
 S3method(fitted, smooth.spline)
+S3method(lines, isoreg)
 S3method(plot, isoreg)
 S3method(plot, ppr)
 S3method(ppr, default)
