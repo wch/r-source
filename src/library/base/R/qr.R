@@ -250,7 +250,7 @@ qr.X <- function (qr, complete = FALSE,
 		  ncol = if (complete) nrow(R) else min(dim(R)))
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    pivoted <- !identical(qr$pivot, seq_along(qr$pivot))
+    pivoted <- !identical(qr$pivot, ip <- seq_along(qr$pivot))
     R <- qr.R(qr, complete = TRUE)
     if(pivoted && ncol < length(qr$pivot))
         stop("need larger value of 'ncol' as pivoting occurred")
@@ -264,6 +264,7 @@ qr.X <- function (qr, complete = FALSE,
 	R <- tmp
     }
     res <- qr.qy(qr, R)
-    if(pivoted) res[, qr$pivot] <- res[, seq_along(qr$pivot)]
+    if(pivoted) # res may have more columns than length(qr$pivot)
+	res[, qr$pivot] <- res[, ip]
     res
 }

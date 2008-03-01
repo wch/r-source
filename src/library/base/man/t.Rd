@@ -21,7 +21,7 @@ t(x)
 \details{
   This is a generic function for which methods can be written.  The
   description here applies to the default and \code{"data.frame"} methods.
-  
+
   A data frame is first coerced to a matrix: see \code{\link{as.matrix}}.
   When \code{x} is a vector, it is treated as a column, i.e., the
   result is a 1-row matrix.
@@ -30,6 +30,10 @@ t(x)
   A matrix, with \code{dim} and \code{dimnames} constructed
   appropriately from those of \code{x}, and other attributes except
   names copied across.
+}
+\note{
+  The \emph{conjugate} transpose of a complex matrix \eqn{A}, denoted
+  \eqn{A^H} or \eqn{A^*}, is computed as \code{\link{Conj}(t(A))}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
