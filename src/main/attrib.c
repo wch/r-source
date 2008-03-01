@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -681,7 +681,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP namesgets(SEXP vec, SEXP val)
 {
     int i;
-    SEXP s, rval;
+    SEXP s, rval, tval;
 
     PROTECT(vec);
     PROTECT(val);
@@ -695,8 +695,11 @@ SEXP namesgets(SEXP vec, SEXP val)
 	else {
 	    rval = allocVector(STRSXP, length(vec));
 	    PROTECT(rval);
-	    for (i = 0; i < length(vec); i++) {
-		s = coerceVector(CAR(val), STRSXP);
+	    /* See PR#10807 */
+	    for (i = 0, tval = val; 
+		 i < length(vec) && tval != R_NilValue;
+		 i++, tval = CDR(tval)) {
+		s = coerceVector(CAR(tval), STRSXP);
 		SET_STRING_ELT(rval, i, STRING_ELT(s, 0));
 	    }
 	    UNPROTECT(1);

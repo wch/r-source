@@ -544,6 +544,9 @@ BUG FIXES
     o	jpeg() and png() no longer maintain a display list, as they
 	are not interactive.
 
+    o	Using attr(x, "names") <- value (instead of the correct
+    	names<-) with 'value' a pairlist (instead of the correct
+    	character vector) worked incorrectly.  (PR#10807)
 
 
 

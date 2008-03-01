@@ -5074,3 +5074,15 @@ stopifnot(all.equal(round(d=2, x=pi), 3.14))
 data(longley)
 fm1 <- lm(Employed ~ ., data = longley)
 stopifnot(all.equal(23845862, kappa(fm1, exact=TRUE)))
+
+
+## names from pairlists (PR#10807, esoteric)
+m <- c("a", "b", "c")
+mp <- pairlist("a", "b", "c")
+x <- 1:3
+names(x) <- mp
+stopifnot(identical(names(x), m)) # OK before
+x <- 1:3
+attr(x, "names") <- mp
+stopifnot(identical(names(x), m)) # rep("a", 3) in 2.6.x
+##

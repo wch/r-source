@@ -1557,7 +1557,7 @@ void attribute_hidden InitMemory()
 	R_Suicide("couldn't allocate memory for pointer stack");
     R_PPStackTop = 0;
 #if VALGRIND_LEVEL > 1
-    VALGRIND_MAKE_NOACCESS(R_PPStackTop+R_PPStackSize,PP_REDZONE_SIZE);
+    VALGRIND_MAKE_NOACCESS(R_PPStack+R_PPStackSize,PP_REDZONE_SIZE);
 #endif
     vsfac = sizeof(VECREC);
     R_VSize = (((R_VSize + 1)/ vsfac));
@@ -2329,11 +2329,9 @@ void unprotect_ptr(SEXP s)
     } while ( R_PPStack[--i] != s );
 
     /* OK, got it, and  i  is indexing its location */
-    /* Now drop stack above it */
+    /* Now drop stack above it, if any */
 
-    do {
-    	R_PPStack[i] = R_PPStack[i + 1];
-    } while ( i++ < R_PPStackTop );
+    while (++i < R_PPStackTop) R_PPStack[i - 1] = R_PPStack[i];
 
     R_PPStackTop--;
 }
