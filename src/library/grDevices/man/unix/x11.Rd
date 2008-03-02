@@ -91,16 +91,13 @@ X11.options(\dots, reset = FALSE)
   }
   but can be slower (and will be much slower on a slow X11 connection as
   all the rendering is done on the machine running \R rather than in the
-  X server). \code{type = "nbCairo"} is the same device without
+  X server).  \code{type = "nbCairo"} is the same device without
   buffering, and will run faster on a mchine with a slow X11 connection
   (although still not as fast as \code{type = "Xlib"}) -- also,
   \code{\link{savePlot}} is not supported.
 }
-\section{Fonts}{
-  This section applies only to \code{type = "Xlib"}: the cairo-based
-  version uses \sQuote{pango} to select fonts, and works directly
-  with family names such as \code{"Helvetica"} which should be selected
-  by \code{\link{par}} or \code{\link{gpar}}.
+\section{X11 Fonts}{
+  This section applies only to \code{type = "Xlib"}.
 
   An initial/default font family for the device can be specified via
   the \code{fonts} argument, but if a device-independent R graphics font
@@ -125,6 +122,29 @@ X11.options(\dots, reset = FALSE)
   between character encodings, and you may need to add an entry for your
   locale (e.g. Fedora Core 3 lacked one for \code{ru_RU.utf8}).
 }
+
+\section{Cairo Fonts}{
+  The cairo-based device works directly with font family names such as
+  \code{"Helvetica"} which should be selected by \code{\link{par}} or
+  \code{\link{gpar}}.  There are mappings for the three
+  device-independent font families, \code{"sans"} for a sans-serif font
+  (to \code{"Helvetica"}), \code{"serif"} for a serif font (to
+  \code{"Times"}) and \code{"mono"} for a monospaced font (to
+  \code{"Courier"}).
+
+  The font selection is handled by \code{pango} (usually) or
+  \code{cairo} (on Mac OS X and perhaps elsewhere).  Both make use of
+  \code{fontconfig} (\url{http://wwww.fontconfig.org}) to select fonts
+  and so the results depend on the fonts installed on the system running
+  \R -- setting the environmnent variable \env{FC_DEBUG} to 1 allows
+  some tracing of the selection process.
+
+  This works best when high-quality scalable fonts are installed,
+  usually in Type 1 or TrueType formats: see the \dQuote{R Installation
+  and Administration Manual} for advice on how to obtain and install
+  such fonts.
+}
+
 \section{Resources}{
   The standard X11 resource \code{geometry} can be used to specify the
   window position and/or size, but will be overridden by values
@@ -154,11 +174,11 @@ X11.options(\dots, reset = FALSE)
   The default for \code{type="Xlib"} is to use the best possible color
   model for the visual of the X11 server.  This can be overridden by the
   \code{colortype} argument of \code{X11.options}.  \bold{Note:} All
-  \code{X11}, \code{jpeg} and \code{png} devices share a
-  \code{colortype} which is set when the first device to be opened.  To
-  change the \code{colortype} you need to close \emph{all} open
-  \code{X11}, \code{jpeg} and \code{png} devices, and then use
-  \code{X11.options(colortype=)}.
+  \code{X11} and \code{type = "Xlib"} \code{\link{bmp}}, \code{jpeg},
+  \code{png} and \code{tiff} devices share a \code{colortype} which is
+  set when the first device to be opened.  To change the
+  \code{colortype} you need to close \emph{all} open such devices, and
+  then use \code{X11.options(colortype=)}.
 
   The colortype types are tried in the order \code{"true"},
   \code{"pseudo"}, \code{"gray"} and \code{"mono"} (black or white
@@ -200,7 +220,7 @@ X11.options(\dots, reset = FALSE)
       "Xlib"}.
     \item For \code{type = "Xlib"} circle radii are in pixels with
     minimum one.
-    \item Colours are interpreted by the X11 server, normally in a good
+    \item Colours are interpreted by the X11 server, normally in a fair
     approximation to sRGB.
   }
 }

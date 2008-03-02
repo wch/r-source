@@ -23,7 +23,11 @@ X11Fonts(...)
     or new (named) mappings to define.}
 }
 \details{
-  An \code{X11} device is created with a default font (see
+  These functions apply only to an \code{\link{X11}} device with
+  \code{type = "Xlib"} -- \code{X11(type = "Cairo"} uses a different
+  mechanism to select fonts.
+
+  Such a  device is created with a default font (see
   the documentation for \code{\link{X11}}), but it is also possible
   to specify a font family when drawing to the device (for example, see
   the documentation for \code{"family"} in \code{\link{par}} and for
@@ -37,7 +41,7 @@ X11Fonts(...)
   mappings and to define new mappings.  The \code{X11Font}
   function can be used to create a new mapping.
 
-  Default mappings are provided for four device-independent font family
+  Default mappings are provided for three device-independent font family
   names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
   font and \code{"mono"} for a monospaced font.
 }
