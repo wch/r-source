@@ -2344,11 +2344,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	    /* Pango's default resolution is 96 dpi */ 
 	    ps *= 1.0/(96.0*pixelWidth());
 # else
-	    /* Cairo's default resolution is 96 dpi */ 
+	    /* Cairo's default resolution is 72 dpi */ 
 	    ps *= 1.0/(72.0*pixelWidth());
 # endif
-#endif
 	}
+#endif
     }
     
     /* Character Addressing Offsets */
