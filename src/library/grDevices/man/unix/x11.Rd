@@ -132,7 +132,7 @@ X11.options(\dots, reset = FALSE)
   \code{"Times"}) and \code{"mono"} for a monospaced font (to
   \code{"Courier"}).
 
-  The font selection is handled by \code{pango} (usually) or
+  The font selection is handled by \code{Pango} (usually) or
   \code{cairo} (on Mac OS X and perhaps elsewhere).  Both make use of
   \code{fontconfig} (\url{http://wwww.fontconfig.org}) to select fonts
   and so the results depend on the fonts installed on the system running

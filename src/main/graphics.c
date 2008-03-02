@@ -2919,7 +2919,7 @@ double GStrWidth(const char *str, int enc, GUnit units, pGEDevDesc dd)
 {
     double w;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
-    w = GEStrWidth(str, enc, &gc, dd);
+    w = GEStrWidth(str, (gc.fontface == 5) ? CE_SYMBOL:enc, &gc, dd);
     if (units != DEVICE)
 	w = GConvertXUnits(w, DEVICE, units, dd);
     return w;
@@ -2932,7 +2932,7 @@ double GStrHeight(const char *str, int enc, GUnit units, pGEDevDesc dd)
 {
     double h;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
-    h = GEStrHeight(str, enc, &gc, dd);
+    h = GEStrHeight(str, (gc.fontface == 5) ? CE_SYMBOL:enc, &gc, dd);
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
     return h;
@@ -2954,7 +2954,7 @@ void GText(double x, double y, int coords, const char *str, int enc,
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GEText(x, y, str, enc, xc, yc, rot, &gc, dd);
+    GEText(x, y, str, (gc.fontface == 5) ? CE_SYMBOL:enc, xc, yc, rot, &gc, dd);
 }
 
 /*-------------------------------------------------------------------

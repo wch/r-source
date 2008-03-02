@@ -83,11 +83,16 @@ text(x, \dots)
 
   Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
   value is \code{NA} are omitted from the plot.
+
+  What happens when \code{font = 5} (the symbol font) is selected can be
+  both device- and locale-dependent.  Most often \code{labels} will be
+  interpreted in the Adobe symbol encoding, so e.g. \code{"d"} is delta,
+  and \code{"\300"} is aleph.
 }
 \section{Euro symbol}{
   The Euro symbol was introduced relatively recently, and may not be
   available in older fonts.  In recent versions of Adobe symbol fonts it
-  is character 160, so \code{text(x, y, "\xA0", font = 5)} will work.
+  is character 160, so \code{text(x, y, "\xA0", font = 5)} may work.
   People using Western European locales on Unix-alikes can probably
   select ISO-8895-15 (Latin-9) which has the Euro as character 165: this
   can also be used for \code{\link{postscript}} and \code{\link{pdf}}.
@@ -95,12 +100,12 @@ text(x, \dots)
 
   The Euro should be rendered correctly by \code{\link{X11}} in UTF-8
   locales, but the corresponding single-byte encoding in
-  \code{\link{postscript}} and \code{\link{pdf}} will be to be selected
+  \code{\link{postscript}} and \code{\link{pdf}} will need to be selected
   as \code{ISOLatin9.enc}.
 #endif
 #ifdef windows
 
-  In all the European Windows encoding the Euro is symbol 128, although
+  In all the European Windows encodings the Euro is symbol 128, although
   not all fonts support it.  It is not in the symbol font used for
   \code{\link{windows}} and related devices, including the Windows printer.
 #endif
