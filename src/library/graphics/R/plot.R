@@ -340,16 +340,16 @@ plot.data.frame <- function (x, ...)
 .units <- c("device", "ndc", "", "", "", "", "nic", "nfc", "", "", "", "",
             "user", "inches", "", "", "npc")
 
-convertX <- function(x, from = "user", to = "user")
+grconvertX <- function(x, from = "user", to = "user")
 {
     from <- pmatch(from, .units)
     to <- pmatch(to, .units)
-    .Internal(convertX(as.double(x), from, to))
+    .Internal(grconvertX(as.double(x), from, to))
 }
 
-convertY <- function(y, from = "user", to = "user")
+grconvertY <- function(y, from = "user", to = "user")
 {
     from <- pmatch(from, .units)
     to <- pmatch(to, .units)
-    .Internal(convertY(as.double(y), from, to))
+    .Internal(grconvertY(as.double(y), from, to))
 }

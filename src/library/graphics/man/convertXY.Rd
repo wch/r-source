@@ -1,13 +1,13 @@
 \name{convertXY}
-\alias{convertX}
-\alias{convertY}
+\alias{grconvertX}
+\alias{grconvertY}
 \title{Convert between Graphics Coordinate Systems}
 \description{
   Convert between graphics coordinate systems.
 }
 \usage{
-convertX(x, from = "user", to = "user")
-convertY(y, from = "user", to = "user")
+grconvertX(x, from = "user", to = "user")
+grconvertY(y, from = "user", to = "user")
 }
 \arguments{
   \item{x, y}{numeric vector of coordinates.}
@@ -42,7 +42,7 @@ convertY(y, from = "user", to = "user")
 op <- par(omd=c(0.1, 0.9, 0.1, 0.9), mfrow = c(1, 2))
 plot(1:4)
 for(tp in c("in", "dev", "ndc", "nfc", "npc", "nic"))
-    print(convertX(c(1.0, 4.0), "user", tp))
+    print(grconvertX(c(1.0, 4.0), "user", tp))
 par(op)
 }
 \keyword{ dplot }

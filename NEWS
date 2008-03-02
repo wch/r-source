@@ -342,7 +342,7 @@ NEW FEATURES
     o	print(<data.frame>)'s new argument 'row.names' allows to suppress
 	printing rownames.
 
-    o	New functions convertX() and convertY() to convert between
+    o	New functions grconvertX() and grconvertY() to convert between
     	coordinate systems in base graphics.
 
 

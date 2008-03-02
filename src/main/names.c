@@ -826,8 +826,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
 {"dev.size",	do_devsize,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
 {"clip",	do_clip,	0,	111,	4,      {PP_FUNCALL, PREC_FN,   0}},
-{"convertX",	do_convertXY,	0,	11,	3,      {PP_FUNCALL, PREC_FN,   0}},
-{"convertY",	do_convertXY,	1,	11,	3,      {PP_FUNCALL, PREC_FN,   0}},
+{"grconvertX",	do_convertXY,	0,	11,	3,      {PP_FUNCALL, PREC_FN,   0}},
+{"grconvertY",	do_convertXY,	1,	11,	3,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
