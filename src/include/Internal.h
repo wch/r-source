@@ -143,6 +143,7 @@ SEXP do_complex(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contourLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_countfields(SEXP, SEXP, SEXP, SEXP);
+SEXP do_convertXY(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Cstack_info(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cum(SEXP, SEXP, SEXP, SEXP);
 SEXP do_compcases(SEXP, SEXP, SEXP, SEXP);

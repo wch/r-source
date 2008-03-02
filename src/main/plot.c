@@ -4032,3 +4032,34 @@ SEXP attribute_hidden do_clip(SEXP call, SEXP op, SEXP args, SEXP env)
 	GErecordGraphicOperation(op, originalArgs, dd);
     return ans;
 }
+
+/* convert[XY](x, from to) */
+SEXP attribute_hidden do_convertXY(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = R_NilValue, x;
+    int from, to, i, n;
+    double *rx;
+    pGEDevDesc gdd = GEcurrentDevice();
+
+    checkArity(op, args);
+    x = CAR(args);
+    if (TYPEOF(x) != REALSXP) error(_("invalid '%s' argument"), "x");
+    n = LENGTH(x);
+    from = asInteger(CADR(args));
+    if (from == NA_INTEGER || from <= 0 || from > 17 ) 
+	error(_("invalid '%s' argument"), "from");
+    to = asInteger(CADDR(args));
+    if (to == NA_INTEGER || to <= 0 || to > 17 ) 
+	error(_("invalid '%s' argument"), "to");
+    from--; to--;
+
+    PROTECT(ans = duplicate(x));
+    rx = REAL(ans);
+    if (PRIMVAL(op) == 1) 
+	for (i = 0; i < n; i++) rx[i] = GConvertY(rx[i], from, to, gdd);
+    else
+	for (i = 0; i < n; i++) rx[i] = GConvertX(rx[i], from, to, gdd);
+    UNPROTECT(1);
+
+    return ans;
+}

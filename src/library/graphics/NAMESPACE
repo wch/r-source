@@ -2,15 +2,16 @@ import(grDevices)
 
 export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, bxp, cdplot,
-       clip, close.screen, co.intervals, contour, coplot, curve,
-       dotchart, erase.screen, filled.contour, fourfoldplot, frame,
-       grid, hist, hist.default, identify, image, layout, layout.show,
-       lcm, legend, lines, lines.default, locator, matlines, matplot,
-       matpoints, mosaicplot, mtext, pairs, panel.smooth, par, persp,
-       pie, plot, plot.design, plot.new, plot.window, plot.xy, points,
-       polygon, rect, rug, screen, segments, spineplot, split.screen,
-       stars, stem, strheight, stripchart, strwidth, sunflowerplot,
-       symbols, text, title, xinch, xspline, xyinch, yinch)
+       clip, close.screen, co.intervals, contour, convertX, convertY,
+       coplot, curve, dotchart, erase.screen, filled.contour,
+       fourfoldplot, frame, grid, hist, hist.default, identify, image,
+       layout, layout.show, lcm, legend, lines, lines.default,
+       locator, matlines, matplot, matpoints, mosaicplot, mtext,
+       pairs, panel.smooth, par, persp, pie, plot, plot.design,
+       plot.new, plot.window, plot.xy, points, polygon, rect, rug,
+       screen, segments, spineplot, split.screen, stars, stem,
+       strheight, stripchart, strwidth, sunflowerplot, symbols, text,
+       title, xinch, xspline, xyinch, yinch)
 
 # leave most of the default methods visible as people seem to call them.
 export(barplot.default, boxplot.default, contour.default, image.default,

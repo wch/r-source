@@ -336,3 +336,20 @@ plot.data.frame <- function (x, ...)
 ##               outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
 ##     }
 ## }
+
+.units <- c("device", "ndc", "", "", "", "", "nic", "nfc", "", "", "", "",
+            "user", "inches", "", "", "npc")
+
+convertX <- function(x, from = "user", to = "user")
+{
+    from <- pmatch(from, .units)
+    to <- pmatch(to, .units)
+    .Internal(convertX(as.double(x), from, to))
+}
+
+convertY <- function(y, from = "user", to = "user")
+{
+    from <- pmatch(from, .units)
+    to <- pmatch(to, .units)
+    .Internal(convertY(as.double(y), from, to))
+}
