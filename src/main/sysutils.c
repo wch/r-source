@@ -566,7 +566,8 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	to = CHAR(STRING_ELT(CADDR(args), 0));
 	/* Should we do something about marked CHARSXPs in 'from = ""'? */
 	if(streql(to, "UTF-8")) isUTF8 = TRUE;
-	if(streql(to, "latin1") || streql(to, "ISO_8859-1")) isLatin1 = TRUE;
+	if(streql(to, "latin1") || streql(to, "ISO_8859-1")
+	    || streql(to, "CP1252")) isLatin1 = TRUE;
 	if(streql(to, "") && known_to_be_latin1) isLatin1 = TRUE;
 	if(streql(to, "") && known_to_be_utf8) isUTF8 = TRUE;
 	obj = Riconv_open(to, from);
@@ -937,15 +938,16 @@ const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
 #ifdef Win32
     case CE_NATIVE: 
 	{
-	    /* Looks like CP1252 is treated a Latin-1 by iconv */
+	    /* Looks like CP1252 is treated as Latin-1 by iconv */
 	    sprintf(buf, "CP%d", localeCP);
 	    fromcode = buf; 
 	    break;
 	}
+    case CE_LATIN1: fromcode = "CP1252"; break;
 #else
     case CE_NATIVE: fromcode = ""; break;
-#endif
     case CE_LATIN1: fromcode = "latin1"; break;
+#endif
     case CE_UTF8:   fromcode = "UTF-8"; break;
     default: return x;
     }
