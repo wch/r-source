@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-02-25
+@set FAQ_DATE @value{FAQ_YEAR}-03-02
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1932,6 +1932,8 @@ Graphical modeling for contingency tables using CoCo.
 @c </COMMENT>
 @item ComPairWise
 Compare phylogenetic or population genetic data alignments.
+@item CombMSC
+Combined Model Selection Criteria.
 @item CompetingRiskFrailty
 Competing risk model with frailties for right censored survival data.
 @item Containers
@@ -2046,6 +2048,8 @@ Random fields simulations.
 @item FinTS
 Companion to the book ``Analysis of Financial Time Series'' by Ruey Tsay
 (2005), Wiley (2nd edition).
+@item FitAR
+Subset AR model fitting.
 @item Flury
 Data sets from from ``A First Course in Multivariate Statistics'' by
 Bernard Flury (1997), Springer.
@@ -4051,6 +4055,8 @@ and undirected graphs.
 Emulate MATLAB code using R.
 @item matrixcalc
 Collection of functions for matrix differential calculus.
+@item maxLik
+Tools for Maximum Likelihood Estimation.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
@@ -4812,13 +4818,15 @@ Stats 20x functions.
 @item sac
 Semiparametric empirical likelihood ratio based test of changepoint with
 one-change or epidemic alternatives with data-based model diagnostic.
-@item sampling
-A set of tools to select and to calibrate samples.
 @item sampfling
 Implements a modified version of the Sampford sampling algorithm.  Given
 a quantity assigned to each unit in the population, samples are drawn
 with probability proportional to te product of the quantities of the
 units included in the sample.
+@item sampleSelection
+Estimation of sample selection models.
+@item sampling
+A set of tools to select and to calibrate samples.
 @item samr
 Significance Analysis of Microarrays.
 @item sandwich
@@ -4921,6 +4929,8 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item siar
+Stable Isotope Analysis in R.
 @item sigma2tools
 Test of hypothesis about sigma2.
 @item signal
