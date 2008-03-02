@@ -2753,14 +2753,15 @@ plotted is often quite unsatisfactory.
 
 The approach being taken experimentally for @R 2.7.0 (not yet in the
 trunk) is to make use of more modern toolkits, namely @code{cairo} for
-rendering and @code{pango} for font management---because these are
+rendering and @code{Pango} for font management---because these are
 associated with @code{Gtk+2} they are widely available.  Cairo supports
 translucent colours and alpha-blending (@emph{via} @code{Xrender}), and
 anti-aliasing for the display of lines and text.  Pango's font
-management is somewhat mysterious, but it seems mainly to use TrueType
-fonts on the machine running @R{} and send grayscale bitmaps to cairo.
-It does pay to check the results carefully: a Solaris cairo
-implementation had several incorrect glyphs for the symbol font.
+management is based on @code{fontconfig} and somewhat mysterious, but
+it seems mainly to use Type 1 and TrueType fonts on the machine running
+@R{} and send grayscale bitmaps to cairo.  It does pay to check the
+results carefully: a Solaris cairo implementation had several incorrect
+glyphs for the symbol font.
 
 
 @node windows(),  , X11(), Specific devices
