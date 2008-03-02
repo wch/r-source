@@ -269,10 +269,6 @@ NEW FEATURES
 	accept in-line pars such as 'family' in the same way as text()
 	does.  (PR#776)
 
-    o	xdg-open (the freedesktop.org interface to kfmclient/gnome-open/...)
-	is now considered as a possible browser, after real browsers
-	such as firefox, mozilla and opera.
-
     o	The setting of the line spacing (par("cra")[2]) on the X11() and
 	windows() device is now comparable with postscript() etc, and
 	roughly 20% smaller than before (it used to depend on the
@@ -397,6 +393,10 @@ INSTALLATION
 
     o	Netscape (which was discontinued in Feb 2008) is no longer
 	considered when selecting a browser.
+
+    o	xdg-open (the freedesktop.org interface to
+	kfmclient/gnome-open/...)  is onsidered as a possible browser,
+	after real browsers such as firefox, mozilla and opera.
 
 
 UTILITIES
