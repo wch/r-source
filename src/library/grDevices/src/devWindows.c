@@ -862,16 +862,16 @@ static void menufilebitmap(control m)
     char *fn;
     /* the following use a private hook to set the default extension */
     if (m == xd->mpng) {
-	setuserfilter(G_("Png files (*.png)\0*.png\0\0"));
+	setuserfilter("Png files (*.png)\0*.png\0\0");
 	fn = askfilesave(G_("Portable network graphics file"), "|.png");
     } else if (m == xd->mbmp) {
-	setuserfilter(G_("Windows bitmap files (*.bmp)\0*.bmp\0\0"));
+	setuserfilter("Windows bitmap files (*.bmp)\0*.bmp\0\0");
 	fn = askfilesave(G_("Windows bitmap file"), "|.bmp");
     } else if (m == xd->mtiff) {
-	setuserfilter(G_("TIFF files (*.tiff,*tif)\0*.tiff;*.tif\0\0"));
+	setuserfilter("TIFF files (*.tiff,*.tif)\0*.tiff;*.tif\0\0");
 	fn = askfilesave(G_("TIFF file"), "|.tif");
     } else {
-	setuserfilter(G_("Jpeg files (*.jpeg,*jpg)\0*.jpeg;*.jpg\0\0"));
+	setuserfilter("Jpeg files (*.jpeg,*.jpg)\0*.jpeg;*.jpg\0\0");
 	fn = askfilesave(G_("Jpeg file"), "|.jpg");
     }
     if (!fn) return;
@@ -1555,13 +1555,13 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     MCHECK(xd->mbar = newmenubar(mbarf));
     MCHECK(m = newmenu(G_("File")));
     MCHECK(xd->msubsave = newsubmenu(m, G_("Save as")));
-    MCHECK(xd->mwm = newmenuitem(G_("Metafile..."), 0, menuwm));
-    MCHECK(xd->mps = newmenuitem(G_("Postscript..."), 0, menups));
-    MCHECK(xd->mpdf = newmenuitem(G_("PDF..."), 0, menupdf));
-    MCHECK(xd->mpng = newmenuitem(G_("Png..."), 0, menufilebitmap));
-    MCHECK(xd->mbmp = newmenuitem(G_("Bmp..."), 0, menufilebitmap));
-    MCHECK(xd->mtiff = newmenuitem(G_("TIFF..."), 0, menufilebitmap));
-    MCHECK(newsubmenu(xd->msubsave,G_("Jpeg")));
+    MCHECK(xd->mwm = newmenuitem("Metafile...", 0, menuwm));
+    MCHECK(xd->mps = newmenuitem("Postscript...", 0, menups));
+    MCHECK(xd->mpdf = newmenuitem("PDF...", 0, menupdf));
+    MCHECK(xd->mpng = newmenuitem("Png...", 0, menufilebitmap));
+    MCHECK(xd->mbmp = newmenuitem("Bmp...", 0, menufilebitmap));
+    MCHECK(xd->mtiff = newmenuitem("TIFF...", 0, menufilebitmap));
+    MCHECK(newsubmenu(xd->msubsave, "Jpeg"));
     /* avoid gettext confusion with % */
     snprintf(buf, 100, G_("%s quality..."), "50%");
     MCHECK(xd->mjpeg50 = newmenuitem(buf, 0, menufilebitmap));
