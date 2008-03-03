@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-23 21:23+0000\n"
+"POT-Creation-Date: 2008-03-03 19:13+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -48,12 +48,12 @@ msgstr "至少需要两点才能画一个箭头"
 msgid "Non-finite control point in Xspline"
 msgstr "用Xspline时不能有无限值的控制点"
 
-#: grid.c:2987
+#: grid.c:2988
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col的值不对"
 
-#: grid.c:3067
+#: grid.c:3068
 msgid "Unable to clip to rotated rectangle"
 msgstr "无法修剪到旋转了的长方形上"
 

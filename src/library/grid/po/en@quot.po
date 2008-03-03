@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-23 21:23+0000\n"
-"PO-Revision-Date: 2008-02-23 21:23+0000\n"
+"POT-Creation-Date: 2008-03-03 19:13+0000\n"
+"PO-Revision-Date: 2008-03-03 19:13+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -70,11 +70,11 @@ msgstr "Require at least two points to draw arrow"
 msgid "Non-finite control point in Xspline"
 msgstr "Non-finite control point in Xspline"
 
-#: grid.c:2987
+#: grid.c:2988
 msgid "invalid plotting symbol"
 msgstr "invalid plotting symbol"
 
-#: grid.c:3067
+#: grid.c:3068
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 

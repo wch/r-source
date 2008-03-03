@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-23 21:23+0000\n"
+"POT-Creation-Date: 2008-03-03 19:13+0000\n"
 "PO-Revision-Date: 2007-09-18 00:14-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -143,11 +143,11 @@ msgstr "Не вышло записать кодировку устройства"
 msgid "Object .ps.prolog is not a character vector"
 msgstr "Объект .ps.prolog не является символьным вектором"
 
-#: devPS.c:2653 devPS.c:5805 devWindows.c:714
+#: devPS.c:2653 devPS.c:5805 devWindows.c:715
 msgid "Invalid line end"
 msgstr "Неправильный конец строки"
 
-#: devPS.c:2672 devPS.c:5824 devWindows.c:727
+#: devPS.c:2672 devPS.c:5824 devWindows.c:728
 msgid "Invalid line join"
 msgstr "Неправильное соединение линий"
 
@@ -200,7 +200,7 @@ msgstr "postscript(print.it=TRUE) использован с пустой командой печати"
 msgid "invalid page type '%s' (postscript)"
 msgstr "неправильный тип страницы '%s' (postscript)"
 
-#: devPS.c:3363 devPS.c:4292 devWindows.c:2216
+#: devPS.c:3363 devPS.c:4292 devWindows.c:2258
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -447,172 +447,179 @@ msgstr ""
 msgid "Quartz device is not available on this platform."
 msgstr "Устройство Quartz на этой платформе недоступно"
 
-#: devWindows.c:274 devWindows.c:318 devWindows.c:387
+#: devWindows.c:275 devWindows.c:319 devWindows.c:388
 msgid "Not enough memory to copy graphics window"
 msgstr "Не хватает памяти, чтобы скопировать окно графики"
 
-#: devWindows.c:279 devWindows.c:323 devWindows.c:392
+#: devWindows.c:280 devWindows.c:324 devWindows.c:393
 msgid "No device available to copy graphics window"
 msgstr "Нет устройства, чтобы скопировать окно графики"
 
-#: devWindows.c:327 devWindows.c:396
+#: devWindows.c:328 devWindows.c:397
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr ""
 
-#: devWindows.c:538
+#: devWindows.c:539
 msgid "Invalid font specification"
 msgstr "Неправильное указание шрифта"
 
-#: devWindows.c:577
+#: devWindows.c:578
 msgid "Font family not found in Windows font database"
 msgstr "Семейство шрифтов не найдено в базе данных шрифтов Windows"
 
-#: devWindows.c:1003
+#: devWindows.c:1008
 msgid "plot history seems corrupted"
 msgstr "история графиков, похоже, повреждена"
 
-#: devWindows.c:1010
+#: devWindows.c:1015
 msgid "no plot history!"
 msgstr "нет истории графиков!"
 
-#: devWindows.c:1713
+#: devWindows.c:1722
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "слишком длинное имя файла в вызове %s()"
 
-#: devWindows.c:1717 devWindows.c:1752
+#: devWindows.c:1726 devWindows.c:1761 devWindows.c:1795
 msgid "Unable to load Rbitmap.dll"
 msgstr "Не могу загрузить Rbitmap.dll"
 
-#: devWindows.c:1722 devWindows.c:1761
+#: devWindows.c:1731 devWindows.c:1770 devWindows.c:1804
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "не похоже, что 'width=%d, height=%d' в пикселях"
 
-#: devWindows.c:1730 devWindows.c:1735 devWindows.c:1764 devWindows.c:1769
+#: devWindows.c:1739 devWindows.c:1744 devWindows.c:1773 devWindows.c:1778
+#: devWindows.c:1807 devWindows.c:1812
 msgid "Unable to allocate bitmap"
 msgstr "Не могу разместить bitmap"
 
-#: devWindows.c:1741 devWindows.c:1775 devWindows.c:2066
+#: devWindows.c:1750 devWindows.c:1784 devWindows.c:2103
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Не могу открыть файл '%s' для записи"
 
-#: devWindows.c:1758
+#: devWindows.c:1767
 msgid "filename too long in jpeg() call"
 msgstr "слишком длинное имя файла в вызове jpeg()"
 
-#: devWindows.c:1794
+#: devWindows.c:1801
+#, fuzzy
+msgid "filename too long in tiff() call"
+msgstr "слишком длинное имя файла в вызове %s()"
+
+#: devWindows.c:1831
 msgid "filename too long in win.metafile() call"
 msgstr "слишком длинное имя файла в вызове win.metafile()"
 
-#: devWindows.c:1804
+#: devWindows.c:1841
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr "Не могу открыть метафайл '%s' для записи"
 
-#: devWindows.c:1806
+#: devWindows.c:1843
 msgid "Unable to open clipboard to write metafile"
 msgstr "Не могу открыть буфер обмена для записи метафайла"
 
-#: devWindows.c:2015
+#: devWindows.c:2052
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
 
-#: devWindows.c:2022
+#: devWindows.c:2059
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
-#: devWindows.c:2051
+#: devWindows.c:2088
 msgid "A clipboard metafile can store only one figure."
 msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 
-#: devWindows.c:2057
+#: devWindows.c:2094
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "метафайл '%s' не получается создать"
 
-#: devWindows.c:2621 devWindows.c:3204
+#: devWindows.c:2663 devWindows.c:3283
 msgid "R Graphics"
 msgstr "R-графика"
 
-#: devWindows.c:2867
+#: devWindows.c:2909
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
-#: devWindows.c:2889
+#: devWindows.c:2931
 #, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr "неправильный номер устройства в savePlot"
 
-#: devWindows.c:2891
+#: devWindows.c:2933
 #, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr "неправильное устройство в savePlot"
 
-#: devWindows.c:2894
+#: devWindows.c:2936
 msgid "invalid filename argument in savePlot"
 msgstr "неправильный аргумент имени файла в savePlot"
 
-#: devWindows.c:2898
+#: devWindows.c:2940
 #, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr "неправильный тип аргумента в savePlot"
 
-#: devWindows.c:2921
+#: devWindows.c:2967
 msgid "unknown type in savePlot"
 msgstr "неизвестный тип в savePlot"
 
-#: devWindows.c:2994 devWindows.c:3030 devWindows.c:3062 devWindows.c:3097
+#: devWindows.c:3049 devWindows.c:3085 devWindows.c:3117 devWindows.c:3152
+#: devWindows.c:3177
 msgid "processing of the plot ran out of memory"
 msgstr "обработка графика исчерпала память"
 
-#: devWindows.c:3010 devWindows.c:3043 devWindows.c:3076
+#: devWindows.c:3065 devWindows.c:3098 devWindows.c:3131 devWindows.c:3164
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Невозможно загрузить Rbitmap.dll"
 
-#: devWindows.c:3082
+#: devWindows.c:3137
 msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
-#: devWindows.c:3123
+#: devWindows.c:3202
 #, fuzzy
 msgid "invalid 'width' or 'height' in devWindows"
 msgstr "неправильная ширина или длина в devWindows"
 
-#: devWindows.c:3128
+#: devWindows.c:3207
 #, fuzzy
 msgid "invalid value of 'record' in devWindows"
 msgstr "неправильное значение 'recording' в devWindows"
 
-#: devWindows.c:3132
+#: devWindows.c:3211
 #, fuzzy
 msgid "invalid value of 'rescale' in devWindows"
 msgstr "неправильное значение 'resize' в devWindows"
 
-#: devWindows.c:3140
+#: devWindows.c:3219
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "неправильное значение 'canvas' в devWindows"
 
-#: devWindows.c:3151
+#: devWindows.c:3230
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "неправильное значение 'buffered' в devWindows"
 
-#: devWindows.c:3157
+#: devWindows.c:3236
 msgid "invalid value of 'bg' in devWindows"
 msgstr "неправильное значение 'bg' в devWindows"
 
-#: devWindows.c:3164
+#: devWindows.c:3243
 #, fuzzy
 msgid "invalid value of 'title' in devWindows"
 msgstr "неправильное значение 'resize' в devWindows"
 
-#: devWindows.c:3179
+#: devWindows.c:3258
 msgid "unable to start device devWindows"
 msgstr "не могу запустить устройство devWindows"
 
-#: devWindows.c:3248
+#: devWindows.c:3327
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 
