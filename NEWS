@@ -345,6 +345,9 @@ NEW FEATURES
     o	New functions grconvertX() and grconvertY() to convert between
     	coordinate systems in base graphics.
 
+    o	print() and str() now also "work" for 'logLik' vectors longer than
+	one.
+
 
 DEPRECATED & DEFUNCT
 
