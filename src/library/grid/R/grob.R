@@ -318,6 +318,15 @@ gTree <- function(..., name=NULL, gp=NULL, vp=NULL,
   return(gt)
 }
 
+# A basic gTree that is JUST a collection of grobs
+# (simply interface to gTree)
+grobTree <- function(..., name=NULL, gp=NULL, vp=NULL,
+                     childrenvp=NULL, cl=NULL) {
+    gTree(children=gList(...),
+          name=name, gp=gp, vp=vp,
+          childrenvp=childrenvp, cl=cl)
+}
+
 ################
 # Getting just the names of the top-level grobs on the DL
 ################

@@ -7,6 +7,7 @@
 \alias{grid.grob}
 \alias{grob}
 \alias{gTree}
+\alias{grobTree}
 \alias{childNames}
 \alias{gList}
 \title{Create a Grid Graphical Object}
@@ -18,13 +19,16 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
 grob(..., name = NULL, gp = NULL, vp = NULL, cl = NULL) 
 gTree(..., name = NULL, gp = NULL, vp = NULL, children = NULL, 
       childrenvp = NULL, cl = NULL)
+grobTree(..., name = NULL, gp = NULL, vp = NULL, 
+         childrenvp = NULL, cl = NULL)
 childNames(gTree)
 gList(...)
 }
 \arguments{
   \item{...}{ For \code{grob} and \code{gTree}, the
     named slots describing important features of
-    the graphical object. For \code{gList}, a series of grob objects. }
+    the graphical object. For \code{gList} and \code{grobTree},
+    a series of grob objects. }
   \item{list.struct}{A list (preferably with each element named).}
   \item{name}{ A character identifier for the grob.  Used to find the
     grob on the display list and/or as a child of another grob. }
@@ -69,6 +73,10 @@ gList(...)
   some higher-level grid components (e.g., \code{grid.xaxis} and
   \code{grid.yaxis}) are derived from these classes.
 
+  \code{grobTree} is just a convenient wrapper for \code{gTree}
+  when the only components of the gTree are grobs (so all
+  unnamed arguments become children of the gTree).
+  
   \code{grid.grob} is deprecated.
 
 }
