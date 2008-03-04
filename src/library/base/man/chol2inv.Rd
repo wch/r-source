@@ -5,10 +5,11 @@
 
 \name{chol2inv}
 \alias{chol2inv}
-\title{Inverse from Choleski Decomposition}
+\title{Inverse from Choleski (or QR) Decomposition}
 \description{
   Invert a symmetric, positive definite square matrix from its Choleski
-  decomposition.
+  decomposition.  Equivalently, compute \eqn{(X'X)^{-1}}{(X'X)^(-1)}
+  from the (\eqn{R} part) of the QR decomposition of \eqn{X}.
 }
 \usage{
 chol2inv(x, size = NCOL(x), LINPACK = FALSE)
