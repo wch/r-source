@@ -20,9 +20,7 @@ if test "${R_HOME_DIR}" = "@prefix@/@LIBnn@/R"; then
         R_HOME_DIR="@prefix@/${libnn}/R"
      elif [ -x "@prefix@/${libnn_fallback}/R/bin/exec/R" ]; then
         R_HOME_DIR="@prefix@/${libnn_fallback}/R"
-     else 
-        echo "Error: R executable not found"
-        exit 1
+     ## else -- leave alone (might be a sub-arch)
      fi
      ;;
   esac

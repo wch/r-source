@@ -3401,7 +3401,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora Core 5 we used
+on @cputype{x86_64} with Fedora Core 5 and Fedora 8 we used
 
 @example
 CC="gcc -m32"
@@ -3419,8 +3419,7 @@ Fedora Core 3 also needed
 @end example
 
 @noindent
-and in both cases various @cputype{i386} @samp{-devel} RPMs had to be
-added.
+and various @cputype{i386} @samp{-devel} RPMs had to be added.
 
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
