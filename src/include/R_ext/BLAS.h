@@ -225,7 +225,7 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
 */
 
 /* Double complex BLAS routines added for 2.3.0 */
-#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+/* #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX */
     extern double
     F77_NAME(dcabs1)(double *z);
     extern double
@@ -352,7 +352,7 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
     extern void 
     F77_NAME(ztrsv)(char *uplo, char *trans, char *diag, int *n,
 		    Rcomplex *a, int *lda, Rcomplex *x, int *incx);
-#endif
+/* #endif */
 
 #ifdef  __cplusplus
 }
