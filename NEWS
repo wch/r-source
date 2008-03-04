@@ -407,6 +407,11 @@ INSTALLATION
 	kfmclient/gnome-open/...)  is onsidered as a possible browser,
 	after real browsers such as firefox, mozilla and opera.
 
+    o	The search for tclConfig.sh and tkConfig.sh now only looks in
+    	containing directories $(LIBnn) in the hope of finding the
+    	version for the appropriate architecture (e.g. x86_64 or
+    	i386).
+
 
 UTILITIES
 

@@ -2044,10 +2044,11 @@ AC_EGREP_CPP([yes],
 ## tcl$x.$y subdirectories.  Set shell variable r_cv_path_TCL_CONFIG
 ## to the entire path of the script if found, and leave it empty
 ## otherwise.
+## We want to look in LIBnn only here.
 AC_DEFUN([_R_PATH_TCL_CONFIG],
 [AC_MSG_CHECKING([for tclConfig.sh in library (sub)directories])
 AC_CACHE_VAL([r_cv_path_TCL_CONFIG],
-[for ldir in /opt/lib /sw/lib /usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /lib64 /lib ; do
+[for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tcl[[8-9]].[[0-9]]* 2>/dev/null | sort -r`; do
@@ -2073,7 +2074,7 @@ fi
 AC_DEFUN([_R_PATH_TK_CONFIG],
 [AC_MSG_CHECKING([for tkConfig.sh in library (sub)directories])
 AC_CACHE_VAL([r_cv_path_TK_CONFIG],
-[for ldir in /opt/lib /sw/lib /usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /lib64 /lib ; do
+[for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tk[[8-9]].[[0-9]]* 2>/dev/null | sort -r`; do
