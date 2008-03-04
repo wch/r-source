@@ -1,7 +1,22 @@
-/* C declarations of principal Lapack routines */
+/* C declarations of principal Lapack routines,
+ * i.e.,
+ * those with a .Call() interface defined via ./Lapack.c
+ * (and half a dozen more declaration/interface/registration files
+ */
 
 #include <R_ext/Complex.h>
 #include <R_ext/RS.h>
+
+/* Utilities for Lapack using packages : */
+
+/* matrix norms: converting typstr[]  to one of {'M', 'O', 'I', 'F'}
+ * or signal error(): */
+char La_norm_type(const char *typstr);
+
+/* matrix (reciprocal) condition numbers: convert typstr[]  to 'O'(ne) or 'I'(nf)
+ * or signal error(): */
+char La_rcond_type(const char *typstr);
+
 
 
 /* Level 3 BLAS */
@@ -15,10 +30,17 @@ void F77_NAME(dgemm)(const char *transa, const char *transb,
 		     const double *b, const int *ldb,
 		     const double *beta, double *c, const int *ldc);
 
+/* DGECON - estimate the reciprocal of the condition number .... */
+extern void
+F77_NAME(dgecon)(const char* norm, const int* n,
+		 const double* a, const int* lda,
+		 const double* anorm, double* rcond,
+		 double* work, int* iwork, int* info);
+
 /* DGESVD - compute the singular value decomposition (SVD); of a   */
 /* real M-by-N matrix A, optionally computing the left and/or      */
 /* right singular vectors                                          */
-void F77_NAME(dgesvd)(const char *jobu, const char *jobvt,
+void F77_NAME(dgesvdu)(const char *jobu, const char *jobvt,
 		      const int *m, const int *n,
 		      double *a, const int *lda, double *s,
 		      double *u, const int *ldu,
@@ -63,8 +85,8 @@ void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
 		      const int *n, double *a, const int *lda,
 		      const double *vl, const double *vu,
 		      const int *il, const int *iu,
-		      const double *abstol, int *m, double *w, 
-		      double *z, const int *ldz, int *isuppz, 
+		      const double *abstol, int *m, double *w,
+		      double *z, const int *ldz, int *isuppz,
 		      double *work, const int *lwork,
 		      int *iwork, const int *liwork,
 		      int *info);
@@ -88,6 +110,13 @@ void F77_NAME(dpotrs)(const char *uplo, const int *n,
 		      const double* a, const int *lda,
 		      double* b, const int *ldb, int *info);
 
+/* ZGECON estimates the reciprocal of the condition number ..... */
+extern void
+F77_NAME(zgecon)(const char *norm, const int *n,
+		 const Rcomplex *a, const int *lda,
+		 const double *anorm, double *rcond,
+		 Rcomplex *work, double *rwork, int *info);
+
 /* ZGESV computes the solution to a complex system of linear equations */
 void F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
 		     const int *lda, int *ipiv, Rcomplex *b,
@@ -100,6 +129,12 @@ void F77_NAME(zgeqp3)(const int *m, const int *n,
 		      Rcomplex *work, const int *lwork,
 		      double *rwork, int *info);
 
+void F77_NAME(zgetrf)(int *m, int *n, Rcomplex *a,
+		      int *lda, int *ipiv, int *info);
+
+double F77_NAME(zlange)(char *norm, int *m, int *n,
+			Rcomplex *a, int *lda, double *work);
+
 /* ZUNMQR applies Q or Q**H from the Left or Right */
 void F77_NAME(zunmqr)(const char *side, const char *trans,
 		      const int *m, const int *n, const int *k,
@@ -107,6 +142,13 @@ void F77_NAME(zunmqr)(const char *side, const char *trans,
 		      Rcomplex *tau,
 		      Rcomplex *c, const int *ldc,
 		      Rcomplex *work, const int *lwork, int *info);
+
+/* ZTRCON estimates the reciprocal of the condition number of a
+ * triangular matrix A ... */
+void
+F77_NAME(ztrcon)(const char *norm, const char *uplo, const char *diag,
+                 const int *n, const Rcomplex *a, const int *lda,
+		 double *rcond, Rcomplex *work, double *rwork, int *info);
 
 /*  ZTRTRS solves triangular systems */
 void F77_NAME(ztrtrs)(const char *uplo, const char *trans, const char *diag,
@@ -139,7 +181,7 @@ void F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
 		     Rcomplex *wr,
 		     Rcomplex *vl, const int *ldvl,
 		     Rcomplex *vr, const int *ldvr,
-		     Rcomplex *work, const int *lwork, 
+		     Rcomplex *work, const int *lwork,
 		     double *rwork, int *info);
 
 /* DGECON - estimate the reciprocal of the condition number of a */
@@ -168,6 +210,15 @@ void F77_NAME(dormqr)(const char *side, const char *trans,
 		      double *tau,
 		      double *c, const int *ldc,
 		      double *work, const int *lwork, int *info);
+
+/* DTRCON - estimate the reciprocal of the condition number of a */
+/* triangular matrix A, in either the 1-norm or the infinity-norm */
+extern void
+F77_NAME(dtrcon)(const char* norm, const char* uplo,
+		 const char* diag, const int* n,
+		 const double* a, const int* lda,
+		 double* rcond, double* work,
+		 int* iwork, int* info);
 
 /*  DTRTRS solves triangular systems */
 void F77_NAME(dtrtrs)(const char *uplo, const char *trans, const char *diag,

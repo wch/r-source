@@ -24,10 +24,14 @@
 
 #include <Rinternals.h>
 
-typedef SEXP (*Rf_La_svd)(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, 
+typedef SEXP (*Rf_La_svd)(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u,
 			  SEXP v, SEXP method);
 typedef SEXP (*Rf_La_rs)(SEXP x, SEXP only_values);
 typedef SEXP (*Rf_La_rg)(SEXP x, SEXP only_values);
+typedef SEXP (*Rf_La_dtrcon)(SEXP A, SEXP norm);
+typedef SEXP (*Rf_La_dgecon)(SEXP A, SEXP norm);
+typedef SEXP (*Rf_La_zgecon)(SEXP A, SEXP norm);
+typedef SEXP (*Rf_La_ztrcon)(SEXP A, SEXP norm);
 typedef SEXP (*Rf_La_zgesv)(SEXP A, SEXP B);
 typedef SEXP (*Rf_La_zgeqp3)(SEXP A);
 typedef SEXP (*Rf_qr_coef_cmplx)(SEXP Q, SEXP B);
@@ -47,6 +51,10 @@ typedef struct {
     Rf_La_svd svd;
     Rf_La_rs  rs;
     Rf_La_rg  rg;
+    Rf_La_dgecon dgecon;
+    Rf_La_dgecon dtrcon;
+    Rf_La_zgecon zgecon;
+    Rf_La_zgecon ztrcon;
     Rf_La_zgesv zgesv;
     Rf_La_zgeqp3 zgeqp3;
     Rf_qr_coef_cmplx qr_coef_cmplx;

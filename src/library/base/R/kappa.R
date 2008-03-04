@@ -16,6 +16,39 @@
 
 kappa <- function(z, ...) UseMethod("kappa")
 
+
+### FIXMEs :
+
+### 1)  The condition number is defined WRT to a *norm* !!
+
+###     for exact=TRUE we use the "2-Norm"
+
+### 2)  The  m |--> QR(m)  way is *not* equivalent to using Lapack's *gecon()
+
+## ===> use new argument  'norm = c("2","1","I{nf}")' ,
+##       and/or   'method = c("qr","direct")
+
+## Note that  all 4 Lapack version now work in the following
+.rcond <- function(x, norm = c("1","I","O"), triangular = FALSE) {
+    norm <- match.arg(norm)
+    stopifnot(is.matrix(x))
+    if(is.complex(x)) {
+        if(triangular)
+            .Call("La_ztrcon", x, norm)
+        else .Call("La_zgecon", x, norm)
+    }
+    else {
+        storage.mode(x) <- "double"
+        if(triangular)
+            .Call("La_dtrcon", x, norm)
+        else .Call("La_dgecon", x, norm)
+    }
+}
+
+## Further note that  dtrcon ("1") differs quite a bit
+## from Linpack's dtrco, which also says to compute the
+## 1-norm reciprocal condition
+
 kappa.lm <- function(z, ...)
 {
     kappa.qr(z$qr, ...)
@@ -45,7 +78,10 @@ kappa.tri <- function(z, exact = FALSE, ...)
     if(exact) kappa.default(z, exact = TRUE)
     else {
 	p <- nrow(z)
-	if(p != ncol(z)) stop("matrix should be square")
+	if(p != ncol(z)) stop("triangular matrix should be square")
+### FIXME: use Lapack's "ztrcon" when z is complex
+
+        ## Note: Linpack's  dtrco  *differs*  from Lapack's dtrcon() !!
 	1 / .Fortran("dtrco",
 		     as.double(z),
 		     p,

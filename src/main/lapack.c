@@ -166,6 +166,52 @@ SEXP La_chol2inv(SEXP x, SEXP size)
 }
 
 attribute_hidden
+SEXP La_dgecon(SEXP A, SEXP norm)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->dgecon)(A, norm);
+    else {
+	error(_("lapack routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+attribute_hidden
+SEXP La_dtrcon(SEXP A, SEXP norm)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->dtrcon)(A, norm);
+    else {
+	error(_("lapack routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+attribute_hidden
+SEXP La_zgecon(SEXP A, SEXP norm)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->zgecon)(A, norm);
+    else {
+	error(_("lapack routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+attribute_hidden
+SEXP La_ztrcon(SEXP A, SEXP norm)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->ztrcon)(A, norm);
+    else {
+	error(_("lapack routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
+
+attribute_hidden
 SEXP La_zgesv(SEXP A, SEXP B)
 {
     if(!initialized) La_Init();

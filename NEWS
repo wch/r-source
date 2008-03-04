@@ -348,6 +348,9 @@ NEW FEATURES
     o	print() and str() now also "work" for 'logLik' vectors longer than
 	one.
 
+    o	Extensions to condition number computation for matrices, notably
+        complex ones are provided ... currently via experimental .rcond().
+
 
 DEPRECATED & DEFUNCT
 
@@ -454,6 +457,10 @@ C-LEVEL FACILITIES
 	points.  Graphics devices no longer need to make use of (via
 	casts) DevDesc * pointers and much cleaner code can now be
 	written without them.
+
+    o	More Lapack routines are available (and declared in R_Ext/Lapack.h),
+    	notably for (reciprocal) condition number estimation of complex
+    	matrices.
 
 
 BUG FIXES

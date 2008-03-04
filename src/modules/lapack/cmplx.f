@@ -1,3 +1,98 @@
+      INTEGER          FUNCTION IZMAX1( N, CX, INCX )
+*
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     .. Scalar Arguments ..
+      INTEGER            INCX, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         CX( * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  IZMAX1 finds the index of the element whose real part has maximum
+*  absolute value.
+*
+*  Based on IZAMAX from Level 1 BLAS.
+*  The change is to use the 'genuine' absolute value.
+*
+*  Contributed by Nick Higham for use with ZLACON.
+*
+*  Arguments
+*  =========
+*
+*  N       (input) INTEGER
+*          The number of elements in the vector CX.
+*
+*  CX      (input) COMPLEX*16 array, dimension (N)
+*          The vector whose elements will be summed.
+*
+*  INCX    (input) INTEGER
+*          The spacing between successive values of CX.  INCX >= 1.
+*
+* =====================================================================
+*
+*     .. Local Scalars ..
+      INTEGER            I, IX
+      DOUBLE PRECISION   SMAX
+      COMPLEX*16         ZDUM
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+*
+*     NEXT LINE IS THE ONLY MODIFICATION.
+      CABS1( ZDUM ) = ABS( ZDUM )
+*     ..
+*     .. Executable Statements ..
+*
+      IZMAX1 = 0
+      IF( N.LT.1 )
+     $   RETURN
+      IZMAX1 = 1
+      IF( N.EQ.1 )
+     $   RETURN
+      IF( INCX.EQ.1 )
+     $   GO TO 30
+*
+*     CODE FOR INCREMENT NOT EQUAL TO 1
+*
+      IX = 1
+      SMAX = CABS1( CX( 1 ) )
+      IX = IX + INCX
+      DO 20 I = 2, N
+         IF( CABS1( CX( IX ) ).LE.SMAX )
+     $      GO TO 10
+         IZMAX1 = I
+         SMAX = CABS1( CX( IX ) )
+   10    CONTINUE
+         IX = IX + INCX
+   20 CONTINUE
+      RETURN
+*
+*     CODE FOR INCREMENT EQUAL TO 1
+*
+   30 CONTINUE
+      SMAX = CABS1( CX( 1 ) )
+      DO 40 I = 2, N
+         IF( CABS1( CX( I ) ).LE.SMAX )
+     $      GO TO 40
+         IZMAX1 = I
+         SMAX = CABS1( CX( I ) )
+   40 CONTINUE
+      RETURN
+*
+*     End of IZMAX1
+*
+      END
       SUBROUTINE ZBDSQR( UPLO, N, NCVT, NRU, NCC, D, E, VT, LDVT, U,
      $                   LDU, C, LDC, RWORK, INFO )
 *
@@ -21,9 +116,9 @@
 *  left singular vectors from the singular value decomposition (SVD) of
 *  a real N-by-N (upper or lower) bidiagonal matrix B using the implicit
 *  zero-shift QR algorithm.  The SVD of B has the form
-* 
+*
 *     B = Q * S * P**H
-* 
+*
 *  where S is the diagonal matrix of singular values, Q is an orthogonal
 *  matrix of left singular vectors, and P is an orthogonal matrix of
 *  right singular vectors.  If left singular vectors are requested, this
@@ -32,9 +127,9 @@
 *  P**H, for given complex input matrices U and VT.  When U and VT are
 *  the unitary matrices that reduce a general matrix A to bidiagonal
 *  form: A = U*B*VT, as computed by ZGEBRD, then
-* 
+*
 *     A = (U*Q) * S * (P**H*VT)
-* 
+*
 *  is the SVD of A.  Optionally, the subroutine may also compute Q**H*C
 *  for a given complex input matrix C.
 *
@@ -738,6 +833,120 @@
       RETURN
 *
 *     End of ZBDSQR
+*
+      END
+      SUBROUTINE ZDRSCL( N, SA, SX, INCX )
+*
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     .. Scalar Arguments ..
+      INTEGER            INCX, N
+      DOUBLE PRECISION   SA
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         SX( * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  ZDRSCL multiplies an n-element complex vector x by the real scalar
+*  1/a.  This is done without overflow or underflow as long as
+*  the final result x/a does not overflow or underflow.
+*
+*  Arguments
+*  =========
+*
+*  N       (input) INTEGER
+*          The number of components of the vector x.
+*
+*  SA      (input) DOUBLE PRECISION
+*          The scalar a which is used to divide each component of x.
+*          SA must be >= 0, or the subroutine will divide by zero.
+*
+*  SX      (input/output) COMPLEX*16 array, dimension
+*                         (1+(N-1)*abs(INCX))
+*          The n-element vector x.
+*
+*  INCX    (input) INTEGER
+*          The increment between successive values of the vector SX.
+*          > 0:  SX(1) = X(1) and SX(1+(i-1)*INCX) = x(i),     1< i<= n
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            DONE
+      DOUBLE PRECISION   BIGNUM, CDEN, CDEN1, CNUM, CNUM1, MUL, SMLNUM
+*     ..
+*     .. External Functions ..
+      DOUBLE PRECISION   DLAMCH
+      EXTERNAL           DLAMCH
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DLABAD, ZDSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS
+*     ..
+*     .. Executable Statements ..
+*
+*     Quick return if possible
+*
+      IF( N.LE.0 )
+     $   RETURN
+*
+*     Get machine parameters
+*
+      SMLNUM = DLAMCH( 'S' )
+      BIGNUM = ONE / SMLNUM
+      CALL DLABAD( SMLNUM, BIGNUM )
+*
+*     Initialize the denominator to SA and the numerator to 1.
+*
+      CDEN = SA
+      CNUM = ONE
+*
+   10 CONTINUE
+      CDEN1 = CDEN*SMLNUM
+      CNUM1 = CNUM / BIGNUM
+      IF( ABS( CDEN1 ).GT.ABS( CNUM ) .AND. CNUM.NE.ZERO ) THEN
+*
+*        Pre-multiply X by SMLNUM if CDEN is large compared to CNUM.
+*
+         MUL = SMLNUM
+         DONE = .FALSE.
+         CDEN = CDEN1
+      ELSE IF( ABS( CNUM1 ).GT.ABS( CDEN ) ) THEN
+*
+*        Pre-multiply X by BIGNUM if CDEN is small compared to CNUM.
+*
+         MUL = BIGNUM
+         DONE = .FALSE.
+         CNUM = CNUM1
+      ELSE
+*
+*        Multiply X by CNUM / CDEN and return.
+*
+         MUL = CNUM / CDEN
+         DONE = .TRUE.
+      END IF
+*
+*     Scale the vector X by MUL
+*
+      CALL ZDSCAL( N, MUL, SX, INCX )
+*
+      IF( .NOT.DONE )
+     $   GO TO 10
+*
+      RETURN
+*
+*     End of ZDRSCL
 *
       END
       SUBROUTINE ZGEBAK( JOB, SIDE, N, ILO, IHI, SCALE, M, V, LDV,
@@ -1777,6 +1986,199 @@
 *     End of ZGEBRD
 *
       END
+      SUBROUTINE ZGECON( NORM, N, A, LDA, ANORM, RCOND, WORK, RWORK,
+     $                   INFO )
+*
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call ZLACN2 in place of ZLACON, 10 Feb 03, SJH.
+*
+*     .. Scalar Arguments ..
+      CHARACTER          NORM
+      INTEGER            INFO, LDA, N
+      DOUBLE PRECISION   ANORM, RCOND
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   RWORK( * )
+      COMPLEX*16         A( LDA, * ), WORK( * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  ZGECON estimates the reciprocal of the condition number of a general
+*  complex matrix A, in either the 1-norm or the infinity-norm, using
+*  the LU factorization computed by ZGETRF.
+*
+*  An estimate is obtained for norm(inv(A)), and the reciprocal of the
+*  condition number is computed as
+*     RCOND = 1 / ( norm(A) * norm(inv(A)) ).
+*
+*  Arguments
+*  =========
+*
+*  NORM    (input) CHARACTER*1
+*          Specifies whether the 1-norm condition number or the
+*          infinity-norm condition number is required:
+*          = '1' or 'O':  1-norm;
+*          = 'I':         Infinity-norm.
+*
+*  N       (input) INTEGER
+*          The order of the matrix A.  N >= 0.
+*
+*  A       (input) COMPLEX*16 array, dimension (LDA,N)
+*          The factors L and U from the factorization A = P*L*U
+*          as computed by ZGETRF.
+*
+*  LDA     (input) INTEGER
+*          The leading dimension of the array A.  LDA >= max(1,N).
+*
+*  ANORM   (input) DOUBLE PRECISION
+*          If NORM = '1' or 'O', the 1-norm of the original matrix A.
+*          If NORM = 'I', the infinity-norm of the original matrix A.
+*
+*  RCOND   (output) DOUBLE PRECISION
+*          The reciprocal of the condition number of the matrix A,
+*          computed as RCOND = 1/(norm(A) * norm(inv(A))).
+*
+*  WORK    (workspace) COMPLEX*16 array, dimension (2*N)
+*
+*  RWORK   (workspace) DOUBLE PRECISION array, dimension (2*N)
+*
+*  INFO    (output) INTEGER
+*          = 0:  successful exit
+*          < 0:  if INFO = -i, the i-th argument had an illegal value
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            ONENRM
+      CHARACTER          NORMIN
+      INTEGER            IX, KASE, KASE1
+      DOUBLE PRECISION   AINVNM, SCALE, SL, SMLNUM, SU
+      COMPLEX*16         ZDUM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      DOUBLE PRECISION   DLAMCH
+      EXTERNAL           LSAME, IZAMAX, DLAMCH
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLATRS
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DIMAG, MAX
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      ONENRM = NORM.EQ.'1' .OR. LSAME( NORM, 'O' )
+      IF( .NOT.ONENRM .AND. .NOT.LSAME( NORM, 'I' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      ELSE IF( ANORM.LT.ZERO ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZGECON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      RCOND = ZERO
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      ELSE IF( ANORM.EQ.ZERO ) THEN
+         RETURN
+      END IF
+*
+      SMLNUM = DLAMCH( 'Safe minimum' )
+*
+*     Estimate the norm of inv(A).
+*
+      AINVNM = ZERO
+      NORMIN = 'N'
+      IF( ONENRM ) THEN
+         KASE1 = 1
+      ELSE
+         KASE1 = 2
+      END IF
+      KASE = 0
+   10 CONTINUE
+      CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+      IF( KASE.NE.0 ) THEN
+         IF( KASE.EQ.KASE1 ) THEN
+*
+*           Multiply by inv(L).
+*
+            CALL ZLATRS( 'Lower', 'No transpose', 'Unit', NORMIN, N, A,
+     $                   LDA, WORK, SL, RWORK, INFO )
+*
+*           Multiply by inv(U).
+*
+            CALL ZLATRS( 'Upper', 'No transpose', 'Non-unit', NORMIN, N,
+     $                   A, LDA, WORK, SU, RWORK( N+1 ), INFO )
+         ELSE
+*
+*           Multiply by inv(U').
+*
+            CALL ZLATRS( 'Upper', 'Conjugate transpose', 'Non-unit',
+     $                   NORMIN, N, A, LDA, WORK, SU, RWORK( N+1 ),
+     $                   INFO )
+*
+*           Multiply by inv(L').
+*
+            CALL ZLATRS( 'Lower', 'Conjugate transpose', 'Unit', NORMIN,
+     $                   N, A, LDA, WORK, SL, RWORK, INFO )
+         END IF
+*
+*        Divide X by 1/(SL*SU) if doing so will not cause overflow.
+*
+         SCALE = SL*SU
+         NORMIN = 'Y'
+         IF( SCALE.NE.ONE ) THEN
+            IX = IZAMAX( N, WORK, 1 )
+            IF( SCALE.LT.CABS1( WORK( IX ) )*SMLNUM .OR. SCALE.EQ.ZERO )
+     $         GO TO 20
+            CALL ZDRSCL( N, SCALE, WORK, 1 )
+         END IF
+         GO TO 10
+      END IF
+*
+*     Compute the estimate of the reciprocal condition number.
+*
+      IF( AINVNM.NE.ZERO )
+     $   RCOND = ( ONE / AINVNM ) / ANORM
+*
+   20 CONTINUE
+      RETURN
+*
+*     End of ZGECON
+*
+      END
       SUBROUTINE ZGEEV( JOBVL, JOBVR, N, A, LDA, W, VL, LDVL, VR, LDVR,
      $                  WORK, LWORK, RWORK, INFO )
 *
@@ -2422,7 +2824,7 @@
 *
 *  This file is a slight modification of LAPACK-3.0's ZGEHRD
 *  subroutine incorporating improvements proposed by Quintana-Orti and
-*  Van de Geijn (2005). 
+*  Van de Geijn (2005).
 *
 *  =====================================================================
 *
@@ -2430,7 +2832,7 @@
       INTEGER            NBMAX, LDT
       PARAMETER          ( NBMAX = 64, LDT = NBMAX+1 )
       COMPLEX*16        ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ), 
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
      $                     ONE = ( 1.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Local Scalars ..
@@ -2557,7 +2959,7 @@
 *
             EI = A( I+IB, I+IB-1 )
             A( I+IB, I+IB-1 ) = ONE
-            CALL ZGEMM( 'No transpose', 'Conjugate transpose', 
+            CALL ZGEMM( 'No transpose', 'Conjugate transpose',
      $                  IHI, IHI-I-IB+1,
      $                  IB, -ONE, WORK, LDWORK, A( I+IB, I ), LDA, ONE,
      $                  A( 1, I+IB ), LDA )
@@ -7334,7 +7736,7 @@
 *
 *     Compute machine safe minimum
 *
-      SFMIN = DLAMCH('S') 
+      SFMIN = DLAMCH('S')
 *
       DO 10 J = 1, MIN( M, N )
 *
@@ -8643,9 +9045,9 @@
 *                        3000             6000          NS = 128
 *                        6000             infinity      NS = 256
 *
-*                  (+)  By default some or all matrices of this order 
+*                  (+)  By default some or all matrices of this order
 *                       are passed to the implicit double shift routine
-*                       ZLAHQR and NS is ignored.  See ISPEC=1 above 
+*                       ZLAHQR and NS is ignored.  See ISPEC=1 above
 *                       and comments in IPARM for details.
 *
 *                       The asterisks (**) indicate an ad-hoc
@@ -9240,6 +9642,227 @@
       RETURN
 *
 *     End of ZLACGV
+*
+      END
+      SUBROUTINE ZLACN2( N, V, X, EST, KASE, ISAVE )
+*
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     .. Scalar Arguments ..
+      INTEGER            KASE, N
+      DOUBLE PRECISION   EST
+*     ..
+*     .. Array Arguments ..
+      INTEGER            ISAVE( 3 )
+      COMPLEX*16         V( * ), X( * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  ZLACN2 estimates the 1-norm of a square, complex matrix A.
+*  Reverse communication is used for evaluating matrix-vector products.
+*
+*  Arguments
+*  =========
+*
+*  N      (input) INTEGER
+*         The order of the matrix.  N >= 1.
+*
+*  V      (workspace) COMPLEX*16 array, dimension (N)
+*         On the final return, V = A*W,  where  EST = norm(V)/norm(W)
+*         (W is not returned).
+*
+*  X      (input/output) COMPLEX*16 array, dimension (N)
+*         On an intermediate return, X should be overwritten by
+*               A * X,   if KASE=1,
+*               A' * X,  if KASE=2,
+*         where A' is the conjugate transpose of A, and ZLACN2 must be
+*         re-called with all the other parameters unchanged.
+*
+*  EST    (input/output) DOUBLE PRECISION
+*         On entry with KASE = 1 or 2 and ISAVE(1) = 3, EST should be
+*         unchanged from the previous call to ZLACN2.
+*         On exit, EST is an estimate (a lower bound) for norm(A).
+*
+*  KASE   (input/output) INTEGER
+*         On the initial call to ZLACN2, KASE should be 0.
+*         On an intermediate return, KASE will be 1 or 2, indicating
+*         whether X should be overwritten by A * X  or A' * X.
+*         On the final return from ZLACN2, KASE will again be 0.
+*
+*  ISAVE  (input/output) INTEGER array, dimension (3)
+*         ISAVE is used to save variables between calls to ZLACN2
+*
+*  Further Details
+*  ======= =======
+*
+*  Contributed by Nick Higham, University of Manchester.
+*  Originally named CONEST, dated March 16, 1988.
+*
+*  Reference: N.J. Higham, "FORTRAN codes for estimating the one-norm of
+*  a real or complex matrix, with applications to condition estimation",
+*  ACM Trans. Math. Soft., vol. 14, no. 4, pp. 381-396, December 1988.
+*
+*  Last modified:  April, 1999
+*
+*  This is a thread safe version of ZLACON, which uses the array ISAVE
+*  in place of a SAVE statement, as follows:
+*
+*     ZLACON     ZLACN2
+*      JUMP     ISAVE(1)
+*      J        ISAVE(2)
+*      ITER     ISAVE(3)
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      INTEGER              ITMAX
+      PARAMETER          ( ITMAX = 5 )
+      DOUBLE PRECISION     ONE,         TWO
+      PARAMETER          ( ONE = 1.0D0, TWO = 2.0D0 )
+      COMPLEX*16           CZERO, CONE
+      PARAMETER          ( CZERO = ( 0.0D0, 0.0D0 ),
+     $                            CONE = ( 1.0D0, 0.0D0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, JLAST
+      DOUBLE PRECISION   ABSXI, ALTSGN, ESTOLD, SAFMIN, TEMP
+*     ..
+*     .. External Functions ..
+      INTEGER            IZMAX1
+      DOUBLE PRECISION   DLAMCH, DZSUM1
+      EXTERNAL           IZMAX1, DLAMCH, DZSUM1
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZCOPY
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCMPLX, DIMAG
+*     ..
+*     .. Executable Statements ..
+*
+      SAFMIN = DLAMCH( 'Safe minimum' )
+      IF( KASE.EQ.0 ) THEN
+         DO 10 I = 1, N
+            X( I ) = DCMPLX( ONE / DBLE( N ) )
+   10    CONTINUE
+         KASE = 1
+         ISAVE( 1 ) = 1
+         RETURN
+      END IF
+*
+      GO TO ( 20, 40, 70, 90, 120 )ISAVE( 1 )
+*
+*     ................ ENTRY   (ISAVE( 1 ) = 1)
+*     FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY A*X.
+*
+   20 CONTINUE
+      IF( N.EQ.1 ) THEN
+         V( 1 ) = X( 1 )
+         EST = ABS( V( 1 ) )
+*        ... QUIT
+         GO TO 130
+      END IF
+      EST = DZSUM1( N, X, 1 )
+*
+      DO 30 I = 1, N
+         ABSXI = ABS( X( I ) )
+         IF( ABSXI.GT.SAFMIN ) THEN
+            X( I ) = DCMPLX( DBLE( X( I ) ) / ABSXI,
+     $               DIMAG( X( I ) ) / ABSXI )
+         ELSE
+            X( I ) = CONE
+         END IF
+   30 CONTINUE
+      KASE = 2
+      ISAVE( 1 ) = 2
+      RETURN
+*
+*     ................ ENTRY   (ISAVE( 1 ) = 2)
+*     FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY CTRANS(A)*X.
+*
+   40 CONTINUE
+      ISAVE( 2 ) = IZMAX1( N, X, 1 )
+      ISAVE( 3 ) = 2
+*
+*     MAIN LOOP - ITERATIONS 2,3,...,ITMAX.
+*
+   50 CONTINUE
+      DO 60 I = 1, N
+         X( I ) = CZERO
+   60 CONTINUE
+      X( ISAVE( 2 ) ) = CONE
+      KASE = 1
+      ISAVE( 1 ) = 3
+      RETURN
+*
+*     ................ ENTRY   (ISAVE( 1 ) = 3)
+*     X HAS BEEN OVERWRITTEN BY A*X.
+*
+   70 CONTINUE
+      CALL ZCOPY( N, X, 1, V, 1 )
+      ESTOLD = EST
+      EST = DZSUM1( N, V, 1 )
+*
+*     TEST FOR CYCLING.
+      IF( EST.LE.ESTOLD )
+     $   GO TO 100
+*
+      DO 80 I = 1, N
+         ABSXI = ABS( X( I ) )
+         IF( ABSXI.GT.SAFMIN ) THEN
+            X( I ) = DCMPLX( DBLE( X( I ) ) / ABSXI,
+     $               DIMAG( X( I ) ) / ABSXI )
+         ELSE
+            X( I ) = CONE
+         END IF
+   80 CONTINUE
+      KASE = 2
+      ISAVE( 1 ) = 4
+      RETURN
+*
+*     ................ ENTRY   (ISAVE( 1 ) = 4)
+*     X HAS BEEN OVERWRITTEN BY CTRANS(A)*X.
+*
+   90 CONTINUE
+      JLAST = ISAVE( 2 )
+      ISAVE( 2 ) = IZMAX1( N, X, 1 )
+      IF( ( ABS( X( JLAST ) ).NE.ABS( X( ISAVE( 2 ) ) ) ) .AND.
+     $    ( ISAVE( 3 ).LT.ITMAX ) ) THEN
+         ISAVE( 3 ) = ISAVE( 3 ) + 1
+         GO TO 50
+      END IF
+*
+*     ITERATION COMPLETE.  FINAL STAGE.
+*
+  100 CONTINUE
+      ALTSGN = ONE
+      DO 110 I = 1, N
+         X( I ) = DCMPLX( ALTSGN*( ONE+DBLE( I-1 ) / DBLE( N-1 ) ) )
+         ALTSGN = -ALTSGN
+  110 CONTINUE
+      KASE = 1
+      ISAVE( 1 ) = 5
+      RETURN
+*
+*     ................ ENTRY   (ISAVE( 1 ) = 5)
+*     X HAS BEEN OVERWRITTEN BY A*X.
+*
+  120 CONTINUE
+      TEMP = TWO*( DZSUM1( N, X, 1 ) / DBLE( 3*N ) )
+      IF( TEMP.GT.EST ) THEN
+         CALL ZCOPY( N, X, 1, V, 1 )
+         EST = TEMP
+      END IF
+*
+  130 CONTINUE
+      KASE = 0
+      RETURN
+*
+*     End of ZLACN2
 *
       END
       SUBROUTINE ZLACPY( UPLO, M, N, A, LDA, B, LDB )
@@ -9960,7 +10583,7 @@
 *
 *     .. Parameters ..
       COMPLEX*16        ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ), 
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
      $                     ONE = ( 1.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Local Scalars ..
@@ -9988,10 +10611,10 @@
 *
 *           Update I-th column of A - Y * V'
 *
-            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA ) 
+            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA )
             CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE, Y(K+1,1), LDY,
      $                  A( K+I-1, 1 ), LDA, ONE, A( K+1, I ), 1 )
-            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA ) 
+            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA )
 *
 *           Apply I - V * T' * V' to this column (call it b) from the
 *           left, using the last column of T as workspace
@@ -10004,31 +10627,31 @@
 *           w := V1' * b1
 *
             CALL ZCOPY( I-1, A( K+1, I ), 1, T( 1, NB ), 1 )
-            CALL ZTRMV( 'Lower', 'Conjugate transpose', 'UNIT', 
+            CALL ZTRMV( 'Lower', 'Conjugate transpose', 'UNIT',
      $                  I-1, A( K+1, 1 ),
      $                  LDA, T( 1, NB ), 1 )
 *
 *           w := w + V2'*b2
 *
-            CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1, 
+            CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1,
      $                  ONE, A( K+I, 1 ),
      $                  LDA, A( K+I, I ), 1, ONE, T( 1, NB ), 1 )
 *
 *           w := T'*w
 *
-            CALL ZTRMV( 'Upper', 'Conjugate transpose', 'NON-UNIT', 
+            CALL ZTRMV( 'Upper', 'Conjugate transpose', 'NON-UNIT',
      $                  I-1, T, LDT,
      $                  T( 1, NB ), 1 )
 *
 *           b2 := b2 - V2*w
 *
-            CALL ZGEMV( 'NO TRANSPOSE', N-K-I+1, I-1, -ONE, 
+            CALL ZGEMV( 'NO TRANSPOSE', N-K-I+1, I-1, -ONE,
      $                  A( K+I, 1 ),
      $                  LDA, T( 1, NB ), 1, ONE, A( K+I, I ), 1 )
 *
 *           b1 := b1 - V1*w
 *
-            CALL ZTRMV( 'Lower', 'NO TRANSPOSE', 
+            CALL ZTRMV( 'Lower', 'NO TRANSPOSE',
      $                  'UNIT', I-1,
      $                  A( K+1, 1 ), LDA, T( 1, NB ), 1 )
             CALL ZAXPY( I-1, -ONE, T( 1, NB ), 1, A( K+1, I ), 1 )
@@ -10046,13 +10669,13 @@
 *
 *        Compute  Y(K+1:N,I)
 *
-         CALL ZGEMV( 'NO TRANSPOSE', N-K, N-K-I+1, 
+         CALL ZGEMV( 'NO TRANSPOSE', N-K, N-K-I+1,
      $               ONE, A( K+1, I+1 ),
      $               LDA, A( K+I, I ), 1, ZERO, Y( K+1, I ), 1 )
-         CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1, 
+         CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1,
      $               ONE, A( K+I, 1 ), LDA,
      $               A( K+I, I ), 1, ZERO, T( 1, I ), 1 )
-         CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE, 
+         CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE,
      $               Y( K+1, 1 ), LDY,
      $               T( 1, I ), 1, ONE, Y( K+1, I ), 1 )
          CALL ZSCAL( N-K, TAU( I ), Y( K+1, I ), 1 )
@@ -10060,7 +10683,7 @@
 *        Compute T(1:I,I)
 *
          CALL ZSCAL( I-1, -TAU( I ), T( 1, I ), 1 )
-         CALL ZTRMV( 'Upper', 'No Transpose', 'NON-UNIT', 
+         CALL ZTRMV( 'Upper', 'No Transpose', 'NON-UNIT',
      $               I-1, T, LDT,
      $               T( 1, I ), 1 )
          T( I, I ) = TAU( I )
@@ -10071,15 +10694,15 @@
 *     Compute Y(1:K,1:NB)
 *
       CALL ZLACPY( 'ALL', K, NB, A( 1, 2 ), LDA, Y, LDY )
-      CALL ZTRMM( 'RIGHT', 'Lower', 'NO TRANSPOSE', 
+      CALL ZTRMM( 'RIGHT', 'Lower', 'NO TRANSPOSE',
      $            'UNIT', K, NB,
      $            ONE, A( K+1, 1 ), LDA, Y, LDY )
       IF( N.GT.K+NB )
-     $   CALL ZGEMM( 'NO TRANSPOSE', 'NO TRANSPOSE', K, 
+     $   CALL ZGEMM( 'NO TRANSPOSE', 'NO TRANSPOSE', K,
      $               NB, N-K-NB, ONE,
      $               A( 1, 2+NB ), LDA, A( K+1+NB, 1 ), LDA, ONE, Y,
      $               LDY )
-      CALL ZTRMM( 'RIGHT', 'Upper', 'NO TRANSPOSE', 
+      CALL ZTRMM( 'RIGHT', 'Upper', 'NO TRANSPOSE',
      $            'NON-UNIT', K, NB,
      $            ONE, T, LDT, Y, LDY )
 *
@@ -10111,7 +10734,7 @@
 *  Q' * A * Q. The routine returns the matrices V and T which determine
 *  Q as a block reflector I - V*T*V', and also the matrix Y = A * V * T.
 *
-*  This is an OBSOLETE auxiliary routine. 
+*  This is an OBSOLETE auxiliary routine.
 *  This routine will be 'deprecated' in a  future release.
 *  Please use the new routine ZLAHR2 instead.
 *
@@ -10775,6 +11398,283 @@
 *     End of ZLANHS
 *
       END
+      DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
+     $                 WORK )
+*
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, NORM, UPLO
+      INTEGER            LDA, M, N
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   WORK( * )
+      COMPLEX*16         A( LDA, * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  ZLANTR  returns the value of the one norm,  or the Frobenius norm, or
+*  the  infinity norm,  or the  element of  largest absolute value  of a
+*  trapezoidal or triangular matrix A.
+*
+*  Description
+*  ===========
+*
+*  ZLANTR returns the value
+*
+*     ZLANTR = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+*              (
+*              ( norm1(A),         NORM = '1', 'O' or 'o'
+*              (
+*              ( normI(A),         NORM = 'I' or 'i'
+*              (
+*              ( normF(A),         NORM = 'F', 'f', 'E' or 'e'
+*
+*  where  norm1  denotes the  one norm of a matrix (maximum column sum),
+*  normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
+*  normF  denotes the  Frobenius norm of a matrix (square root of sum of
+*  squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+*
+*  Arguments
+*  =========
+*
+*  NORM    (input) CHARACTER*1
+*          Specifies the value to be returned in ZLANTR as described
+*          above.
+*
+*  UPLO    (input) CHARACTER*1
+*          Specifies whether the matrix A is upper or lower trapezoidal.
+*          = 'U':  Upper trapezoidal
+*          = 'L':  Lower trapezoidal
+*          Note that A is triangular instead of trapezoidal if M = N.
+*
+*  DIAG    (input) CHARACTER*1
+*          Specifies whether or not the matrix A has unit diagonal.
+*          = 'N':  Non-unit diagonal
+*          = 'U':  Unit diagonal
+*
+*  M       (input) INTEGER
+*          The number of rows of the matrix A.  M >= 0, and if
+*          UPLO = 'U', M <= N.  When M = 0, ZLANTR is set to zero.
+*
+*  N       (input) INTEGER
+*          The number of columns of the matrix A.  N >= 0, and if
+*          UPLO = 'L', N <= M.  When N = 0, ZLANTR is set to zero.
+*
+*  A       (input) COMPLEX*16 array, dimension (LDA,N)
+*          The trapezoidal matrix A (A is triangular if M = N).
+*          If UPLO = 'U', the leading m by n upper trapezoidal part of
+*          the array A contains the upper trapezoidal matrix, and the
+*          strictly lower triangular part of A is not referenced.
+*          If UPLO = 'L', the leading m by n lower trapezoidal part of
+*          the array A contains the lower trapezoidal matrix, and the
+*          strictly upper triangular part of A is not referenced.  Note
+*          that when DIAG = 'U', the diagonal elements of A are not
+*          referenced and are assumed to be one.
+*
+*  LDA     (input) INTEGER
+*          The leading dimension of the array A.  LDA >= max(M,1).
+*
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
+*          where LWORK >= M when NORM = 'I'; otherwise, WORK is not
+*          referenced.
+*
+* =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            UDIAG
+      INTEGER            I, J
+      DOUBLE PRECISION   SCALE, SUM, VALUE
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           ZLASSQ
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, MAX, MIN, SQRT
+*     ..
+*     .. Executable Statements ..
+*
+      IF( MIN( M, N ).EQ.0 ) THEN
+         VALUE = ZERO
+      ELSE IF( LSAME( NORM, 'M' ) ) THEN
+*
+*        Find max(abs(A(i,j))).
+*
+         IF( LSAME( DIAG, 'U' ) ) THEN
+            VALUE = ONE
+            IF( LSAME( UPLO, 'U' ) ) THEN
+               DO 20 J = 1, N
+                  DO 10 I = 1, MIN( M, J-1 )
+                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+   10             CONTINUE
+   20          CONTINUE
+            ELSE
+               DO 40 J = 1, N
+                  DO 30 I = J + 1, M
+                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+   30             CONTINUE
+   40          CONTINUE
+            END IF
+         ELSE
+            VALUE = ZERO
+            IF( LSAME( UPLO, 'U' ) ) THEN
+               DO 60 J = 1, N
+                  DO 50 I = 1, MIN( M, J )
+                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+   50             CONTINUE
+   60          CONTINUE
+            ELSE
+               DO 80 J = 1, N
+                  DO 70 I = J, M
+                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+   70             CONTINUE
+   80          CONTINUE
+            END IF
+         END IF
+      ELSE IF( ( LSAME( NORM, 'O' ) ) .OR. ( NORM.EQ.'1' ) ) THEN
+*
+*        Find norm1(A).
+*
+         VALUE = ZERO
+         UDIAG = LSAME( DIAG, 'U' )
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            DO 110 J = 1, N
+               IF( ( UDIAG ) .AND. ( J.LE.M ) ) THEN
+                  SUM = ONE
+                  DO 90 I = 1, J - 1
+                     SUM = SUM + ABS( A( I, J ) )
+   90             CONTINUE
+               ELSE
+                  SUM = ZERO
+                  DO 100 I = 1, MIN( M, J )
+                     SUM = SUM + ABS( A( I, J ) )
+  100             CONTINUE
+               END IF
+               VALUE = MAX( VALUE, SUM )
+  110       CONTINUE
+         ELSE
+            DO 140 J = 1, N
+               IF( UDIAG ) THEN
+                  SUM = ONE
+                  DO 120 I = J + 1, M
+                     SUM = SUM + ABS( A( I, J ) )
+  120             CONTINUE
+               ELSE
+                  SUM = ZERO
+                  DO 130 I = J, M
+                     SUM = SUM + ABS( A( I, J ) )
+  130             CONTINUE
+               END IF
+               VALUE = MAX( VALUE, SUM )
+  140       CONTINUE
+         END IF
+      ELSE IF( LSAME( NORM, 'I' ) ) THEN
+*
+*        Find normI(A).
+*
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               DO 150 I = 1, M
+                  WORK( I ) = ONE
+  150          CONTINUE
+               DO 170 J = 1, N
+                  DO 160 I = 1, MIN( M, J-1 )
+                     WORK( I ) = WORK( I ) + ABS( A( I, J ) )
+  160             CONTINUE
+  170          CONTINUE
+            ELSE
+               DO 180 I = 1, M
+                  WORK( I ) = ZERO
+  180          CONTINUE
+               DO 200 J = 1, N
+                  DO 190 I = 1, MIN( M, J )
+                     WORK( I ) = WORK( I ) + ABS( A( I, J ) )
+  190             CONTINUE
+  200          CONTINUE
+            END IF
+         ELSE
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               DO 210 I = 1, N
+                  WORK( I ) = ONE
+  210          CONTINUE
+               DO 220 I = N + 1, M
+                  WORK( I ) = ZERO
+  220          CONTINUE
+               DO 240 J = 1, N
+                  DO 230 I = J + 1, M
+                     WORK( I ) = WORK( I ) + ABS( A( I, J ) )
+  230             CONTINUE
+  240          CONTINUE
+            ELSE
+               DO 250 I = 1, M
+                  WORK( I ) = ZERO
+  250          CONTINUE
+               DO 270 J = 1, N
+                  DO 260 I = J, M
+                     WORK( I ) = WORK( I ) + ABS( A( I, J ) )
+  260             CONTINUE
+  270          CONTINUE
+            END IF
+         END IF
+         VALUE = ZERO
+         DO 280 I = 1, M
+            VALUE = MAX( VALUE, WORK( I ) )
+  280    CONTINUE
+      ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
+*
+*        Find normF(A).
+*
+         IF( LSAME( UPLO, 'U' ) ) THEN
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               SCALE = ONE
+               SUM = MIN( M, N )
+               DO 290 J = 2, N
+                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1, SCALE, SUM )
+  290          CONTINUE
+            ELSE
+               SCALE = ZERO
+               SUM = ONE
+               DO 300 J = 1, N
+                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1, SCALE, SUM )
+  300          CONTINUE
+            END IF
+         ELSE
+            IF( LSAME( DIAG, 'U' ) ) THEN
+               SCALE = ONE
+               SUM = MIN( M, N )
+               DO 310 J = 1, N
+                  CALL ZLASSQ( M-J, A( MIN( M, J+1 ), J ), 1, SCALE,
+     $                         SUM )
+  310          CONTINUE
+            ELSE
+               SCALE = ZERO
+               SUM = ONE
+               DO 320 J = 1, N
+                  CALL ZLASSQ( M-J+1, A( J, J ), 1, SCALE, SUM )
+  320          CONTINUE
+            END IF
+         END IF
+         VALUE = SCALE*SQRT( SUM )
+      END IF
+*
+      ZLANTR = VALUE
+      RETURN
+*
+*     End of ZLANTR
+*
+      END
       SUBROUTINE ZLAQP2( M, N, OFFSET, A, LDA, JPVT, TAU, VN1, VN2,
      $                   WORK )
 *
@@ -11206,9 +12106,9 @@
          ITEMP = NINT( VN2( LSTICC ) )
          VN1( LSTICC ) = DZNRM2( M-RK, A( RK+1, LSTICC ), 1 )
 *
-*        NOTE: The computation of VN1( LSTICC ) relies on the fact that 
+*        NOTE: The computation of VN1( LSTICC ) relies on the fact that
 *        SNRM2 does not fail on vectors with norm below the value of
-*        SQRT(DLAMCH('S')) 
+*        SQRT(DLAMCH('S'))
 *
          VN2( LSTICC ) = VN1( LSTICC )
          LSTICC = ITEMP
@@ -16560,23 +17460,23 @@
 *  where P is an orthogonal matrix consisting of a sequence of z plane
 *  rotations, with z = M when SIDE = 'L' and z = N when SIDE = 'R',
 *  and P**T is the transpose of P.
-*  
+*
 *  When DIRECT = 'F' (Forward sequence), then
-*  
+*
 *     P = P(z-1) * ... * P(2) * P(1)
-*  
+*
 *  and when DIRECT = 'B' (Backward sequence), then
-*  
+*
 *     P = P(1) * P(2) * ... * P(z-1)
-*  
+*
 *  where P(k) is a plane rotation matrix defined by the 2-by-2 rotation
-*  
+*
 *     R(k) = (  c(k)  s(k) )
 *          = ( -s(k)  c(k) ).
-*  
+*
 *  When PIVOT = 'V' (Variable pivot), the rotation is performed
 *  for the plane (k,k+1), i.e., P(k) has the form
-*  
+*
 *     P(k) = (  1                                            )
 *            (       ...                                     )
 *            (              1                                )
@@ -16585,13 +17485,13 @@
 *            (                                1              )
 *            (                                     ...       )
 *            (                                            1  )
-*  
+*
 *  where R(k) appears as a rank-2 modification to the identity matrix in
 *  rows and columns k and k+1.
-*  
+*
 *  When PIVOT = 'T' (Top pivot), the rotation is performed for the
 *  plane (1,k+1), so P(k) has the form
-*  
+*
 *     P(k) = (  c(k)                    s(k)                 )
 *            (         1                                     )
 *            (              ...                              )
@@ -16600,12 +17500,12 @@
 *            (                                 1             )
 *            (                                      ...      )
 *            (                                             1 )
-*  
+*
 *  where R(k) appears in rows and columns 1 and k+1.
-*  
+*
 *  Similarly, when PIVOT = 'B' (Bottom pivot), the rotation is
 *  performed for the plane (k,z), giving P(k) the form
-*  
+*
 *     P(k) = ( 1                                             )
 *            (      ...                                      )
 *            (             1                                 )
@@ -16614,7 +17514,7 @@
 *            (                              ...              )
 *            (                                     1         )
 *            (                 -s(k)                    c(k) )
-*  
+*
 *  where R(k) appears in rows and columns k and z.  The rotations are
 *  performed without ever forming P(k) explicitly.
 *
@@ -19223,6 +20123,210 @@
 *     End of ZSTEQR
 *
       END
+      SUBROUTINE ZTRCON( NORM, UPLO, DIAG, N, A, LDA, RCOND, WORK,
+     $                   RWORK, INFO )
+*
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call ZLACN2 in place of ZLACON, 10 Feb 03, SJH.
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, NORM, UPLO
+      INTEGER            INFO, LDA, N
+      DOUBLE PRECISION   RCOND
+*     ..
+*     .. Array Arguments ..
+      DOUBLE PRECISION   RWORK( * )
+      COMPLEX*16         A( LDA, * ), WORK( * )
+*     ..
+*
+*  Purpose
+*  =======
+*
+*  ZTRCON estimates the reciprocal of the condition number of a
+*  triangular matrix A, in either the 1-norm or the infinity-norm.
+*
+*  The norm of A is computed and an estimate is obtained for
+*  norm(inv(A)), then the reciprocal of the condition number is
+*  computed as
+*     RCOND = 1 / ( norm(A) * norm(inv(A)) ).
+*
+*  Arguments
+*  =========
+*
+*  NORM    (input) CHARACTER*1
+*          Specifies whether the 1-norm condition number or the
+*          infinity-norm condition number is required:
+*          = '1' or 'O':  1-norm;
+*          = 'I':         Infinity-norm.
+*
+*  UPLO    (input) CHARACTER*1
+*          = 'U':  A is upper triangular;
+*          = 'L':  A is lower triangular.
+*
+*  DIAG    (input) CHARACTER*1
+*          = 'N':  A is non-unit triangular;
+*          = 'U':  A is unit triangular.
+*
+*  N       (input) INTEGER
+*          The order of the matrix A.  N >= 0.
+*
+*  A       (input) COMPLEX*16 array, dimension (LDA,N)
+*          The triangular matrix A.  If UPLO = 'U', the leading N-by-N
+*          upper triangular part of the array A contains the upper
+*          triangular matrix, and the strictly lower triangular part of
+*          A is not referenced.  If UPLO = 'L', the leading N-by-N lower
+*          triangular part of the array A contains the lower triangular
+*          matrix, and the strictly upper triangular part of A is not
+*          referenced.  If DIAG = 'U', the diagonal elements of A are
+*          also not referenced and are assumed to be 1.
+*
+*  LDA     (input) INTEGER
+*          The leading dimension of the array A.  LDA >= max(1,N).
+*
+*  RCOND   (output) DOUBLE PRECISION
+*          The reciprocal of the condition number of the matrix A,
+*          computed as RCOND = 1/(norm(A) * norm(inv(A))).
+*
+*  WORK    (workspace) COMPLEX*16 array, dimension (2*N)
+*
+*  RWORK   (workspace) DOUBLE PRECISION array, dimension (N)
+*
+*  INFO    (output) INTEGER
+*          = 0:  successful exit
+*          < 0:  if INFO = -i, the i-th argument had an illegal value
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE, ZERO
+      PARAMETER          ( ONE = 1.0D+0, ZERO = 0.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT, ONENRM, UPPER
+      CHARACTER          NORMIN
+      INTEGER            IX, KASE, KASE1
+      DOUBLE PRECISION   AINVNM, ANORM, SCALE, SMLNUM, XNORM
+      COMPLEX*16         ZDUM
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            IZAMAX
+      DOUBLE PRECISION   DLAMCH, ZLANTR
+      EXTERNAL           LSAME, IZAMAX, DLAMCH, ZLANTR
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZDRSCL, ZLACN2, ZLATRS
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DIMAG, MAX
+*     ..
+*     .. Statement Functions ..
+      DOUBLE PRECISION   CABS1
+*     ..
+*     .. Statement Function definitions ..
+      CABS1( ZDUM ) = ABS( DBLE( ZDUM ) ) + ABS( DIMAG( ZDUM ) )
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      ONENRM = NORM.EQ.'1' .OR. LSAME( NORM, 'O' )
+      NOUNIT = LSAME( DIAG, 'N' )
+*
+      IF( .NOT.ONENRM .AND. .NOT.LSAME( NORM, 'I' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -6
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTRCON', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 ) THEN
+         RCOND = ONE
+         RETURN
+      END IF
+*
+      RCOND = ZERO
+      SMLNUM = DLAMCH( 'Safe minimum' )*DBLE( MAX( 1, N ) )
+*
+*     Compute the norm of the triangular matrix A.
+*
+      ANORM = ZLANTR( NORM, UPLO, DIAG, N, N, A, LDA, RWORK )
+*
+*     Continue only if ANORM > 0.
+*
+      IF( ANORM.GT.ZERO ) THEN
+*
+*        Estimate the norm of the inverse of A.
+*
+         AINVNM = ZERO
+         NORMIN = 'N'
+         IF( ONENRM ) THEN
+            KASE1 = 1
+         ELSE
+            KASE1 = 2
+         END IF
+         KASE = 0
+   10    CONTINUE
+         CALL ZLACN2( N, WORK( N+1 ), WORK, AINVNM, KASE, ISAVE )
+         IF( KASE.NE.0 ) THEN
+            IF( KASE.EQ.KASE1 ) THEN
+*
+*              Multiply by inv(A).
+*
+               CALL ZLATRS( UPLO, 'No transpose', DIAG, NORMIN, N, A,
+     $                      LDA, WORK, SCALE, RWORK, INFO )
+            ELSE
+*
+*              Multiply by inv(A').
+*
+               CALL ZLATRS( UPLO, 'Conjugate transpose', DIAG, NORMIN,
+     $                      N, A, LDA, WORK, SCALE, RWORK, INFO )
+            END IF
+            NORMIN = 'Y'
+*
+*           Multiply by 1/SCALE if doing so will not cause overflow.
+*
+            IF( SCALE.NE.ONE ) THEN
+               IX = IZAMAX( N, WORK, 1 )
+               XNORM = CABS1( WORK( IX ) )
+               IF( SCALE.LT.XNORM*SMLNUM .OR. SCALE.EQ.ZERO )
+     $            GO TO 20
+               CALL ZDRSCL( N, SCALE, WORK, 1 )
+            END IF
+            GO TO 10
+         END IF
+*
+*        Compute the estimate of the reciprocal condition number.
+*
+         IF( AINVNM.NE.ZERO )
+     $      RCOND = ( ONE / ANORM ) / AINVNM
+      END IF
+*
+   20 CONTINUE
+      RETURN
+*
+*     End of ZTRCON
+*
+      END
       SUBROUTINE ZTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
      $                   LDVR, MM, M, WORK, RWORK, INFO )
 *
@@ -19248,16 +20352,16 @@
 *  a complex upper triangular matrix T.
 *  Matrices of this type are produced by the Schur factorization of
 *  a complex general matrix:  A = Q*T*Q**H, as computed by ZHSEQR.
-*  
+*
 *  The right eigenvector x and the left eigenvector y of T corresponding
 *  to an eigenvalue w are defined by:
-*  
+*
 *               T*x = w*x,     (y**H)*T = w*(y**H)
-*  
+*
 *  where y**H denotes the conjugate transpose of the vector y.
 *  The eigenvalues are not input to this routine, but are read directly
 *  from the diagonal of T.
-*  
+*
 *  This routine returns the matrices X and/or Y of right and left
 *  eigenvectors of T, or the products Q*X and/or Q*Y, where Q is an
 *  input matrix.  If Q is the unitary factor that reduces a matrix A to

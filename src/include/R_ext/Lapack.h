@@ -31,6 +31,19 @@
 extern "C" {
 #endif
 
+/* Utilities for Lapack using packages : */
+
+/* matrix norms: converting typstr[]  to one of {'M', 'O', 'I', 'F'}
+ * or signal error():
+*/
+extern char La_norm_type(const char *typstr);
+
+/* matrix (reciprocal) condition numbers: convert typstr[]  to 'O'(ne) or 'I'(nf)
+ * or signal error():
+*/
+extern char La_rcond_type(const char *typstr);
+
+
 /* Selected Double Precision Lapack Routines
    ========
  */
@@ -2219,6 +2232,22 @@ F77_NAME(dlauum)(const char* uplo, const int* n,
    ========
  */
 
+/* IZMAX1 finds the index of the element whose real part has maximum
+ * absolute value. */
+extern int
+F77_NAME(izmax1)(const int *n, Rcomplex *cx, const int *incx);
+
+
+/*  ZGECON estimates the reciprocal of the condition number of a general
+ *  complex matrix A, in either the 1-norm or the infinity-norm, using
+ *  the LU factorization computed by ZGETRF.
+ */
+extern void
+F77_NAME(zgecon)(const char *norm, const int *n,
+		 const Rcomplex *a, const int *lda,
+		 const double *anorm, double *rcond,
+		 Rcomplex *work, double *rwork, int *info);
+
 /* ZGESV computes the solution to a complex system of linear equations */
 extern void
 F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
@@ -2285,15 +2314,22 @@ F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
 /* DZSUM1 - take the sum of the absolute values of a complex */
 /* vector and returns a double precision result	 */
 extern double
-F77_NAME(dzsum1)(const int* n, Rcomplex *CX, const int* incx);
+F77_NAME(dzsum1)(const int *n, Rcomplex *CX, const int *incx);
+
+/*  ZLACN2 estimates the 1-norm of a square, complex matrix A.
+ *  Reverse communication is used for evaluating matrix-vector products.
+*/
+extern void
+F77_NAME(zlacn2)(const int *n, Rcomplex *v, Rcomplex *x,
+                 double *est, int *kase, int *isave);
 
 /* ZLANTR  -  return the value of the one norm, or the Frobenius norm, */
 /* or the infinity norm, or the element of largest absolute value of */
 /* a trapezoidal or triangular matrix A */
 extern double
-F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
-		 const int* m, const int* n, Rcomplex *a,
-		 const int* lda, double *work);
+F77_NAME(zlantr)(const char *norm, const char *uplo, const char *diag,
+		 const int *m, const int *n, Rcomplex *a,
+		 const int *lda, double *work);
 
 /* ======================================================================== */
 
@@ -2913,6 +2949,14 @@ extern void
 F77_NAME(zsteqr)(char *compz, int *n, double *d,
 	double *e, Rcomplex *z, int *ldz, double *work,
 	int *info);
+
+/* ZTRCON estimates the reciprocal of the condition number of a
+ * triangular matrix A, in either the 1-norm or the infinity-norm.
+ */
+extern void
+F77_NAME(ztrcon)(const char *norm, const char *uplo, const char *diag,
+                 const int *n, const Rcomplex *a, const int *lda,
+		 double *rcond, Rcomplex *work, double *rwork, int *info);
 
 extern void
 F77_NAME(ztrevc)(char *side, char *howmny, int *select,

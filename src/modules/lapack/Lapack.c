@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2006  The R Development Core Team.
- *  Copyright (C) 2003-5      The R Foundation
+ *  Copyright (C) 2001--2008  The R Development Core Team.
+ *  Copyright (C) 2003--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,43 @@
 #include <Defn.h>
 
 #include "Lapack.h"
+
+/* Utilities , also useful in packages :*/
+char La_norm_type(const char *typstr)
+{
+    char typup;
+
+    if (strlen(typstr) != 1)
+	error(
+	    _("argument type[1]='%s' must be a character string of string length 1"),
+	    typstr);
+    typup = toupper(*typstr);
+    if (typup == '1')
+	typup = 'O'; /* aliases */
+    else if (typup == 'E')
+	typup = 'F';
+    else if (typup != 'M' && typup != 'O' && typup != 'I' && typup != 'F')
+	error(_("argument type[1]='%s' must be one of 'M','1','O','I','F' or 'E'"),
+	      typstr);
+    return typup;
+}
+
+/* Lapack condition number approximation: currently only supports _1 or _Inf norm : */
+char La_rcond_type(const char *typstr)
+{
+    char typup;
+
+    if (strlen(typstr) != 1)
+	error(_("argument type[1]='%s' must be a character string of string length 1"),
+	      typstr);
+    typup = toupper(*typstr);
+    if (typup == '1')
+	typup = 'O'; /* alias */
+    else if (typup != 'O' && typup != 'I')
+	error(_("argument type[1]='%s' must be one of '1','O', or 'I'"),
+	      typstr);
+    return typup; /* 'O' or 'I' */
+}
 
 static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 		      SEXP method)
@@ -259,6 +296,178 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
 }
 
 /* ------------------------------------------------------------ */
+static SEXP modLa_dgecon(SEXP A, SEXP norm)
+{
+    SEXP x, val;
+    int *xdims, m, n, info, *iwork;
+    double anorm, *work;
+    char typNorm[] = {'\0', '\0'};
+
+    if (!isString(norm))
+	error(_("'norm' must be a character string"));
+    if (!isReal(A) && isNumeric(A))
+	x = PROTECT(coerceVector(A, REALSXP));
+    else
+	x = PROTECT(duplicate(A)); /* will be overwritten by LU */
+    if (!(isMatrix(x) && isReal(x))) {
+	UNPROTECT(1);
+	error(_("'A' must be a numeric matrix"));
+    }
+
+    xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
+    m = xdims[0];
+    n = xdims[1]; /* m x n  matrix {using Lapack naming convention} */
+
+    typNorm[0] = La_rcond_type(CHAR(asChar(norm)));
+
+    val = PROTECT(allocVector(REALSXP, 1));
+    work = (double *) R_alloc((*typNorm == 'I' && m > 4*n) ? m : 4*n,
+			      sizeof(double));
+    iwork = (int *) R_alloc(m, sizeof(int));
+
+    anorm = F77_CALL(dlange)(typNorm, &m, &n, REAL(x), &m, work);
+
+    /* Compute the LU-decomposition and overwrite 'x' with result :*/
+    F77_CALL(dgetrf)(&m, &n, REAL(x), &m, iwork, &info);
+    if (info) {
+	UNPROTECT(2);
+	error(_("error [%d] from Lapack 'dgetrf()'"), info);
+    }
+    F77_CALL(dgecon)(typNorm, &n, REAL(x), &n, &anorm,
+		     /* rcond = */ REAL(val),
+		     work, iwork, &info);
+    UNPROTECT(2);
+    if (info) error(_("error [%d] from Lapack 'dgecon()'"), info);
+    return val;
+}
+
+static SEXP modLa_dtrcon(SEXP A, SEXP norm)
+{
+    SEXP x, val;
+    int *xdims, n, nprot = 0, info;
+    char typNorm[] = {'\0', '\0'};
+
+    if (!isString(norm))
+	error(_("'norm' must be a character string"));
+    if (!isReal(A) && isNumeric(A)) {
+	nprot++;
+	x = PROTECT(coerceVector(A, REALSXP));
+    } else
+	x = A; /* no copy needed */
+    if (!(isMatrix(x) && isReal(x))) {
+	UNPROTECT(nprot);
+	error(_("'A' must be a numeric matrix"));
+    }
+    xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
+    n = xdims[0];
+    if(n != xdims[1]) {
+	UNPROTECT(nprot);
+	error(_("'A' must be a *square* matrix"));
+    }
+
+    typNorm[0] = La_rcond_type(CHAR(asChar(norm)));
+
+    nprot++;
+    val = PROTECT(allocVector(REALSXP, 1));
+
+    F77_CALL(dtrcon)(typNorm, "U", "N", &n, REAL(x), &n,
+		     REAL(val),
+		     /* work : */ (double *) R_alloc(3*n, sizeof(double)),
+		     /* iwork: */ (int *)    R_alloc(n, sizeof(int)),
+		     &info);
+    UNPROTECT(nprot);
+    if (info) error(_("error [%d] from Lapack 'dtrcon()'"), info);
+    return val;
+}
+
+static SEXP modLa_zgecon(SEXP A, SEXP norm)
+{
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+    SEXP val;
+    Rcomplex *avals; /* copy of A, to be modified */
+    int *dims, n, info;
+    double anorm, *rwork;
+    char typNorm[] = {'\0', '\0'};
+
+    if (!isString(norm))
+	error(_("'norm' must be a character string"));
+    if (!(isMatrix(A) && isComplex(A)))
+	error(_("'A' must be a complex matrix"));
+    dims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    n = dims[0];
+    if(n != dims[1])
+	error(_("'A' must be a *square* matrix"));
+
+    typNorm[0] = La_rcond_type(CHAR(asChar(norm)));
+
+    val = PROTECT(allocVector(REALSXP, 1));
+
+    rwork = (double *) R_alloc(2*n, sizeof(Rcomplex));
+    anorm = F77_CALL(zlange)(typNorm, &n, &n, COMPLEX(A), &n, rwork);
+
+    /* Compute the LU-decomposition and overwrite 'x' with result;
+     * working on a copy of A : */
+    avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
+    Memcpy(avals, COMPLEX(A), (size_t) (n * n));
+    F77_CALL(zgetrf)(&n, &n, avals, &n,
+		     /* iwork: */(int *) R_alloc(n, sizeof(int)),
+		     &info);
+    if (info) {
+	UNPROTECT(1);
+	error(_("error [%d] from Lapack 'zgetrf()'"), info);
+    }
+
+    F77_CALL(zgecon)(typNorm, &n, avals, &n, &anorm,
+		     /* rcond = */ REAL(val),
+		     /* work : */ (Rcomplex *) R_alloc(4*n, sizeof(Rcomplex)),
+		     rwork, &info);
+    UNPROTECT(1);
+    if (info) error(_("error [%d] from Lapack 'zgecon()'"), info);
+    return val;
+
+#else
+    error(_("Fortran complex functions are not available on this platform"));
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+static SEXP modLa_ztrcon(SEXP A, SEXP norm)
+{
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+    SEXP val;
+    Rcomplex *avals; /* copy of A, to be modified */
+    int *dims, n, info;
+    double anorm, *rwork;
+    char typNorm[] = {'\0', '\0'};
+
+    if (!isString(norm))
+	error(_("'norm' must be a character string"));
+    if (!(isMatrix(A) && isComplex(A)))
+	error(_("'A' must be a complex matrix"));
+    dims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    n = dims[0];
+    if(n != dims[1])
+	error(_("'A' must be a *square* matrix"));
+
+    typNorm[0] = La_rcond_type(CHAR(asChar(norm)));
+
+    val = PROTECT(allocVector(REALSXP, 1));
+
+    F77_CALL(ztrcon)(typNorm, "U", "N", &n, COMPLEX(A), &n,
+		     REAL(val),
+		     /* work : */ (Rcomplex *) R_alloc(2*n, sizeof(Rcomplex)),
+		     /* rwork: */ (double *)   R_alloc(n, sizeof(double)),
+		     &info);
+    UNPROTECT(1);
+    if (info) error(_("error [%d] from Lapack 'ztrcon()'"), info);
+    return val;
+#else
+    error(_("Fortran complex functions are not available on this platform"));
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+
 
 static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 {
@@ -908,6 +1117,10 @@ R_init_lapack(DllInfo *info)
     tmp->svd = modLa_svd;
     tmp->rs = modLa_rs;
     tmp->rg = modLa_rg;
+    tmp->dgecon = modLa_dgecon;
+    tmp->dtrcon = modLa_dtrcon;
+    tmp->zgecon = modLa_zgecon;
+    tmp->ztrcon = modLa_ztrcon;
     tmp->zgesv = modLa_zgesv;
     tmp->zgeqp3 = modLa_zgeqp3;
     tmp->qr_coef_cmplx = modqr_coef_cmplx;
