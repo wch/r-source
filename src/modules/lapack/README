@@ -18,4 +18,4 @@ all these files must be updated {path relative to R's topdir}:
   src/main/registration.c
   src/modules/lapack/Lapack.c
   src/modules/lapack/Lapack.h
-  src/modules/lapack/cmplx.f
+  src/modules/lapack/cmplx.f or dlapack<n>.f

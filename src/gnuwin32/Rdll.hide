@@ -53,6 +53,8 @@
  La_chol2inv
  La_dgeqp3
  La_dgesv
+ La_dgecon
+ La_dtrcon
  La_rg
  La_rg_cmplx
  La_rs
@@ -60,6 +62,8 @@
  La_svd_cmplx
  La_zgeqp3
  La_zgesv
+ La_zgecon
+ La_ztrcon
  LoadInitFile
  MDIset
  MDIsize
