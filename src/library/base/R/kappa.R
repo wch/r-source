@@ -34,14 +34,14 @@ kappa <- function(z, ...) UseMethod("kappa")
     stopifnot(is.matrix(x))
     if(is.complex(x)) {
         if(triangular)
-            .Call("La_ztrcon", x, norm)
-        else .Call("La_zgecon", x, norm)
+            .Call("La_ztrcon", x, norm, PACKAGE="base")
+        else .Call("La_zgecon", x, norm, PACKAGE="base")
     }
     else {
         storage.mode(x) <- "double"
         if(triangular)
-            .Call("La_dtrcon", x, norm)
-        else .Call("La_dgecon", x, norm)
+            .Call("La_dtrcon", x, norm, PACKAGE="base")
+        else .Call("La_dgecon", x, norm, PACKAGE="base")
     }
 }
 
