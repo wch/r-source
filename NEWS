@@ -48,6 +48,9 @@ BUG FIXES
     o	help(topic, offline=TRUE) misbehaved when there were multiple
     	matches to 'topic'.  (PR#10859)
 
+    o	The 'multilib' changes on Linux broke the use of
+    	sub-architectures without a main architecture.
+
 
 
 		CHANGES IN R VERSION 2.6.2
