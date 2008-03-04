@@ -5086,3 +5086,11 @@ x <- 1:3
 attr(x, "names") <- mp
 stopifnot(identical(names(x), m)) # rep("a", 3) in 2.6.x
 ##
+
+
+## preserving attributes in [<-.data.frame (PR#10873)
+df <- data.frame(a=1:3, b=letters[1:3])
+attr(df,"foo") <- 10
+df[, "b"] <- 10:12
+stopifnot(identical(attr(df, "foo"), 10))
+## dropped attributes < 2.7.0

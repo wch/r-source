@@ -819,7 +819,9 @@ data.frame <-
         ## extend and name now, as assignment of NULL may delete cols later.
         nm <- names(x)
         rows <- .row_names_info(x, 0L)
+        a <- attributes(x); a["names"] <- NULL
         x <- c(x, vector("list", length(new.cols)))
+        attributes(x) <- a
         names(x) <- c(nm, new.cols)
         attr(x, "row.names") <- rows
     }

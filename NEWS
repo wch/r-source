@@ -548,11 +548,15 @@ BUG FIXES
 	recognized because of a bug in caching the new definition.
 
     o	jpeg() and png() no longer maintain a display list, as they
-	are not interactive.
+	are not interactive devices.
 
     o	Using attr(x, "names") <- value (instead of the correct
     	names<-) with 'value' a pairlist (instead of the correct
     	character vector) worked incorrectly.  (PR#10807)
+
+    o	Using [<- to add a column to a data frame dropped other
+    	attributes whereas [[<- and $<- did not: now all preserve
+    	attributes.  (PR#10873)
 
 
 
