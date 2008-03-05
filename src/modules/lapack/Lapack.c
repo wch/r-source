@@ -435,9 +435,7 @@ static SEXP modLa_ztrcon(SEXP A, SEXP norm)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     SEXP val;
-    Rcomplex *avals; /* copy of A, to be modified */
     int *dims, n, info;
-    double anorm, *rwork;
     char typNorm[] = {'\0', '\0'};
 
     if (!isString(norm))
