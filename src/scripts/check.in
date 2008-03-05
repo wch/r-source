@@ -637,6 +637,9 @@ foreach my $pkg (@ARGV) {
 			    my $line;
 			    ## read_lines does chomp.
 			    @lines = &read_lines($out);
+			    ## error codes seem unreliable, so check here
+			    $install_error =
+				(scalar(grep(/^\* DONE/, @lines)) == 0);
 			    open(FILE, "> $out")
 				or die "Error: cannot open file '$out' for re-writing\n";
 			    foreach my $line (@lines) {
