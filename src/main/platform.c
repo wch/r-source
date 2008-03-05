@@ -1011,8 +1011,15 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[i] = 0;
         if (STRING_ELT(file, i) != R_NilValue)
 #ifdef Win32
-	    LOGICAL(ans)[i] = 
-		R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
+	{
+	    /* Package XML sends arbitrarily long strings to file.exists! */
+	    int len = strlen(CHAR(STRING_ELT(file, i)));
+	    if (len > MAX_PATH) 
+		LOGICAL(ans)[i] = FALSE;
+	    else
+		LOGICAL(ans)[i] = 
+		    R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
+	}
 #else
 	    LOGICAL(ans)[i] = R_FileExists(translateChar(STRING_ELT(file, i)));
 #endif
