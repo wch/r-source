@@ -26,8 +26,6 @@
 #ifndef R_GRAPHICSDEVICE_H_
 #define R_GRAPHICSDEVICE_H_
 
-/* until 2.7.0 alpha */
-#define OLD 1
 
 /* ideally we would use prototypes in NewDevDesc.  
    But the pre-1.4.0 system used DevDesc*, and some devices
@@ -37,13 +35,9 @@
 */
 
 #ifndef  R_USE_PROTOTYPES
-# ifdef OLD
-#  define R_USE_PROTOTYPES 0
-# else
-#  define R_USE_PROTOTYPES 1
-#  ifndef R_GRAPHICSENGINE_H_
-#   error R_ext/GraphicsEngine.h must be included first, and includes this header
-#  endif
+# define R_USE_PROTOTYPES 1
+# ifndef R_GRAPHICSENGINE_H_
+#  error R_ext/GraphicsEngine.h must be included first, and includes this header
 # endif
 #endif
 
@@ -88,16 +82,6 @@ typedef struct _NewDevDesc NewDevDesc;
 typedef NewDevDesc* pDevDesc;
 
 struct _NewDevDesc {
-#ifdef OLD
-    /* The first element is a boolean indicating whether this is
-     * a new device driver (always 1) -- the old device driver structure
-     * has had a similar element added (which will always be 0)
-     *
-     * This needs to be removed once the old DevDesc structure has been
-     * removed from the system.
-     */
-    int newDevStruct;
-#endif
     /********************************************************
      * Device physical characteristics
      ********************************************************/
@@ -118,10 +102,6 @@ struct _NewDevDesc {
     double yCharOffset;	        /* y character addressing offset */
     double yLineBias;	        /* 1/2 interline space as frac of line height */
     double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
-#ifdef OLD
-    /* It seems this is unused, and unset by all(?) devices */
-    double asp;		        /* Pixel aspect ratio = ipr[1]/ipr[0] */
-#endif
     /* I hate this guy too -- seems to assume that a device can only
      * have one font size during its lifetime
      * BUT removing/replacing it would take quite a lot of work
@@ -132,12 +112,6 @@ struct _NewDevDesc {
     /********************************************************
      * Device capabilities
      ********************************************************/
-#ifdef OLD
-    Rboolean canResizePlot;	/* can the graphics surface be resized? */
-    Rboolean canChangeFont;	/* device has multiple fonts */
-    Rboolean canRotateText;	/* text can be rotated */
-    Rboolean canResizeText;	/* text can be resized */
-#endif
     Rboolean canClip;		/* Device-level clipping */
     Rboolean canChangeGamma;    /* can the gamma factor be modified? */
     int canHAdj;	        /* Can do at least some horiz adjust of text
@@ -164,18 +138,6 @@ struct _NewDevDesc {
      ********************************************************/
     Rboolean displayListOn;     /* toggle for initial display list status */
 
-#ifdef OLD
-    /* I think it would feel nicer if this stuff was part of the
-     * graphics engine (GEDevDesc), but this is another thing that
-     * needs more time to implement a change properly.
-     */
-    SEXP displayList;           /* display list */
-    SEXP DLlastElt;
-    SEXP savedSnapshot;         /* The last element of the display list
-				 * just prior to when the display list
-				 * was last initialised
-				 */
-#endif
 
     /********************************************************
      * Event handling entries
@@ -308,24 +270,6 @@ struct _NewDevDesc {
     void (*deactivate)();
 #endif
 
-#ifdef OLD
-    void (*dot)();
-    /*
-     * I don't know what this is for and i can't find it
-     * being used anywhere, but i'm loath to kill it in
-     * case i'm missing something important
-     * An example is ...
-     *
-     * static void X11_Hold(pDevDesc dd)
-     *
-     */
-
-#if R_USE_PROTOTYPES
-    void (*hold)(pDevDesc );
-#else
-    void (*hold)();
-#endif
-#endif
 
     /*
      * device_Locator should return the location of the next
@@ -420,30 +364,6 @@ struct _NewDevDesc {
     void (*newPage)(const pGEcontext gc, pDevDesc dd);
 #else
     void (*newPage)();
-#endif
-#ifdef OLD
-    /*
-     * device_Open is not called directly by the
-     * graphics engine;  it is only called from
-     * the device-driver entry point.
-     *
-     * Its presence is a historical anomaly, and it should
-     * no longer be set.
-     *
-     * This function should set up all of the device-
-     * specific resources for a new device
-     * This function is given a newly-allocated NewDevDesc structure
-     * and it must FREE the structure if anything goes seriously wrong.
-     * NOTE that different devices will accept different parameter
-     * lists, corresponding to different device-specific preferences.
-     * An example is ...
-     *
-     * Rboolean X11_Open(pDevDesc dd, const char *dsp, double w, double h,
-     *                   double gamma_fac, X_COLORTYPE colormodel,
-     *                   int maxcube, int canvascolor);
-     *
-     */
-    Rboolean (*open)(/* args are device-specific */);
 #endif
     /*
      * device_Polygon should have the side-effect that a

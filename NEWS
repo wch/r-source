@@ -459,9 +459,8 @@ C-LEVEL FACILITIES
 
     o	There is a new description of the interface for graphics
 	devices in the 'R Internals' manual, and several new entry
-	points.  Graphics devices no longer need to make use of (via
-	casts) DevDesc * pointers and much cleaner code can now be
-	written without them.
+	points.  The API has been updated to version R_GE_version = 5,
+	and graphics devices will need to be updated accordingly.
 
     o	More Lapack routines are available (and declared in R_Ext/Lapack.h),
     	notably for (reciprocal) condition number estimation of complex

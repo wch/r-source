@@ -22,9 +22,6 @@
 #ifndef R_GRAPHICSENGINE_H_
 #define R_GRAPHICSENGINE_H_
 
-/* until 2.7.0 alpha */
-#define OLD 1
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,11 +51,7 @@ extern "C" {
  *             Add 'ask' to GEDevDesc.
  */
 
-#ifdef OLD
-#define R_GE_version 4
-#else
 #define R_GE_version 5
-#endif
 
 int R_GE_getVersion(void);
 
@@ -217,9 +210,6 @@ typedef struct {
 } GESystemDesc;
 
 struct _GEDevDesc {
-#ifdef OLD
-    int newDevStruct;  /* unused, temporary */
-#endif
     /* 
      * Stuff that the devices can see (and modify).
      * All detailed in GraphicsDevice.h
