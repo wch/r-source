@@ -136,7 +136,7 @@ X11.options(\dots, reset = FALSE)
   \code{cairo} (on Mac OS X and perhaps elsewhere).  Both make use of
   \code{fontconfig} (\url{http://wwww.fontconfig.org}) to select fonts
   and so the results depend on the fonts installed on the system running
-  \R -- setting the environmnent variable \env{FC_DEBUG} to 1 allows
+  \R -- setting the environmnent variable \env{FC\_DEBUG} to 1 allows
   some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
