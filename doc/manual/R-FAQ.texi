@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-03-02
+@set FAQ_DATE @value{FAQ_YEAR}-03-04
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2014,6 +2014,9 @@ Tests and simultaneous confidence intervals for equivalence to control.
 Empirical Bayes thresholding and related methods.
 @item Ecdat
 Data sets from econometrics textbooks.
+@item EffectiveDose
+Estimate the effective dose level for quantal bioassay data by
+nonparametric techniques.
 @item ElemStatLearn
 Data sets, functions and examples from the book ``The Elements of
 Statistical Learning: Data Mining, Inference, and Prediction'' by Trevor
@@ -3713,10 +3716,13 @@ point or block (co)kriging, sequential Gaussian or indicator
 (co)simulation, and map plotting functions.
 @item gsubfn
 Miscellaneous string utilities.
-@item gtkDevice
-GTK graphics device driver that may be used independently of the R-GNOME
-interface and can be used to create R devices as embedded components in
-a @acronym{GUI} using a Gtk drawing area widget, e.g., using RGtk.
+@c <COMMENT>
+@c Moved to Archive on 2008-03-04 as requested by the maintainer.
+@c @item gtkDevice
+@c GTK graphics device driver that may be used independently of the R-GNOME
+@c interface and can be used to create R devices as embedded components in
+@c a @acronym{GUI} using a Gtk drawing area widget, e.g., using RGtk.
+@c </COMMENT>
 @item gtools
 Various functions to help manipulate data.
 @item gvlma
@@ -5201,6 +5207,8 @@ Simple mechanism for placing R graphics in a Tk widget.
 Two-level normal independent sampling estimation.
 @item tm
 A framework for text mining applications within R.
+@item torus
+Torus algorithm for quasi random number generation.
 @item tpr
 Temporal Process Regression.
 @item trackObjs
