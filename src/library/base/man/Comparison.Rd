@@ -37,7 +37,12 @@ x != y
   strings using the collating sequence of the locale in use: see
   \code{\link{locales}}.  The collating sequence of locales such as
   \samp{en\_US} is normally different from \samp{C} (which should use
-  ASCII) and can be surprising.
+  ASCII) and can be surprising.  Beware of making \emph{any} assumptions
+  about the collation order: e.g. in Estonian \code{Z} comes between
+  \code{S} and \code{T}, and collation is not necessarily
+  character-by-character -- in Danish \code{aa} sorts as a single
+  letter, after \code{z}.  Some platforms may not respect the locale and
+  always sort in ASCII.
 
   At least one of \code{x} and \code{y} must be an atomic vector, but if
   the other is a list \R attempts to coerce it to the type of the atomic
