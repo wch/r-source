@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:57\n"
+"POT-Creation-Date: 2008-03-06 16:52\n"
 "PO-Revision-Date: 2007-10-11 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -693,7 +693,8 @@ msgstr "unbekannte Komponenten in der match-distance Matrix ignoriert"
 msgid "'max.distance' components must be non-negative"
 msgstr "'max.distance' Komponenten dürfen nicht negativ sein"
 
-msgid "matrix should be square"
+#, fuzzy
+msgid "triangular matrix should be square"
 msgstr "Matrix sollte quadratisch sein"
 
 msgid "'object' must be a list"

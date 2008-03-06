@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 15:57\n"
+"POT-Creation-Date: 2008-03-06 16:52\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -682,7 +682,8 @@ msgstr "匹配位距的組成部分不存在，因此忽略不计"
 msgid "'max.distance' components must be non-negative"
 msgstr "'max.distance'的组成部分不能有负值"
 
-msgid "matrix should be square"
+#, fuzzy
+msgid "triangular matrix should be square"
 msgstr "矩阵必需的正方形的"
 
 msgid "'object' must be a list"
