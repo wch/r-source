@@ -3038,8 +3038,7 @@ function(dfile)
                    val) == -1))
         out$bad_version <- val
     if(!is.na(val <- db["Maintainer"])
-       && (regexpr("(^[^<>]*<[^<>@]+@[^<>@]+> *$|ORPHANED)", val)
-           == -1L))
+       && (regexpr(.valid_maintainer_field_regexp, val) == -1L))
         out$bad_maintainer <- val
 
     ## Optional entries in DESCRIPTION:
@@ -4635,6 +4634,32 @@ function(x)
     sprintf("(\\\\S4method\\{(%s)\\}\\{(%s)\\})",
             "[._[:alnum:]]*",
             "[._[:alnum:],]*")
+
+### ** .valid_maintainer_field_regexp
+
+.make_RFC_2822_email_address_regexp <-
+function()
+{
+    ## Local part consists of ASCII letters and digits, the characters
+    ##   ! # $ % * / ? | ^ { } ` ~ & ' + = _ -
+    ## and . provided it is not leading or trailing or repeated, or must
+    ## be a quoted string.
+    ## Domain part consists of dot-separated elements consisting of
+    ## ASCII letters, digits and hyphen.
+    ## We could also check that the local and domain parts are no longer
+    ## than 64 and 255 characters, respectively.
+    ## See http://en.wikipedia.org/wiki/Email_address.
+    ASCII_letters_and_digits <-
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    l <- sprintf("[%s%s]", ASCII_letters_and_digits, "!#$%*/?|^{}`~&'+=_-")
+    d <- sprintf("[%s%s]", ASCII_letters_and_digits, "-")
+    ## Be careful to arrange the hyphens to come last in the range spec.
+    sprintf("(\\\".+\\\"|(%s+\\.)*%s+)@(%s+\\.)*%s+", l, l, d, d)
+}
+
+.valid_maintainer_field_regexp <-
+    sprintf("^[[:space:]]*(.*<%s>|ORPHANED)[[:space:]]*$",
+            .make_RFC_2822_email_address_regexp())
 
 
 ### Local variables: ***
