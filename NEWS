@@ -466,6 +466,8 @@ C-LEVEL FACILITIES
     	notably for (reciprocal) condition number estimation of complex
     	matrices.
 
+    o	Experimental  R_has_slot() utility supplementing R_do_slot()
+
 
 BUG FIXES
 
