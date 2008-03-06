@@ -29,7 +29,11 @@
 
 #include "Lapack.h"
 
-/* Utilities , also useful in packages :*/
+/* FIXME: Would want to make these available to packages;
+ * BUT:  1) cannot be in libRlapack {since that may be external}
+ *       2) Pkgs cannot get it from the C-Lapack interface code {lapack.so}
+ *          since that is R-internal
+ */
 char La_norm_type(const char *typstr)
 {
     char typup;
@@ -65,6 +69,7 @@ char La_rcond_type(const char *typstr)
 	      typstr);
     return typup; /* 'O' or 'I' */
 }
+
 
 static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 		      SEXP method)
