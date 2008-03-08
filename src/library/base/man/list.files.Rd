@@ -18,7 +18,8 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
 }
 \arguments{
   \item{path}{a character vector of full path names; the default
-    corresponds to the working directory \code{\link{getwd}()}.}
+    corresponds to the working directory \code{\link{getwd}()}.  Missing
+    values will be ignored.}
   \item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}
   \item{all.files}{a logical value. If \code{FALSE}, only the
