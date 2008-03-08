@@ -571,6 +571,10 @@ BUG FIXES
     	attributes whereas [[<- and $<- did not: now all preserve
     	attributes.  (PR#10873)
 
+    o	File access functions such as file.exists(), file.info() and
+    	unlink() now treat an NA filename as a non-existent file and
+    	not the file "NA".
+
 
 
 	**************************************************
