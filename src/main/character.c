@@ -3168,6 +3168,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0; i < LENGTH(x); i++) {
 	SEXP el = STRING_ELT(x, i);
+	if (el == NA_STRING) continue;
 #ifdef Win32
 	res = dos_wglob(filenameToWchar(el, FALSE),
 			(dirmark ? GLOB_MARK : 0) |

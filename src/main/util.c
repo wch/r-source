@@ -685,13 +685,15 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
 	error(_("character argument expected"));
+    if (STRING_ELT(s, 0) == NA_STRING)
+	error(_("missing value is invalid"));
 
     /* get current directory to return */
     wd = intern_getwd();
 
 #ifdef Win32
     {
-	const wchar_t *path = filenameToWchar(STRING_ELT(s, 0), FALSE);
+	const wchar_t *path = filenameToWchar(STRING_ELT(s, 0), TRUE);
 	if(_wchdir(path) < 0)
 	    error(_("cannot change working directory"));
     }
@@ -724,18 +726,22 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	pp = filenameToWchar(STRING_ELT(s, i), TRUE);
-	if (wcslen(pp) > PATH_MAX - 1) error(_("path too long"));
-	wcscpy(buf, pp);
-	R_wfixslash(buf);
-	/* remove trailing file separator(s) */
-	if (*buf) {
-	    p = buf + wcslen(buf) - 1;
-	    while (p >= buf && *p == L'/') *(p--) = L'\0';
+	if (STRING_ELT(s, i) == NA_STRING) 
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	else {
+	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
+	    if (wcslen(pp) > PATH_MAX - 1) error(_("path too long"));
+	    wcscpy(buf, pp);
+	    R_wfixslash(buf);
+	    /* remove trailing file separator(s) */
+	    if (*buf) {
+		p = buf + wcslen(buf) - 1;
+		while (p >= buf && *p == L'/') *(p--) = L'\0';
+	    }
+	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
+	    wcstoutf8(sp, p, wcslen(p) + 1);
+	    SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
 	}
-	if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
-	wcstoutf8(sp, p, wcslen(p) + 1);
-	SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
     }
     UNPROTECT(1);
     return(ans);
@@ -753,19 +759,23 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
-	if (strlen(pp) > PATH_MAX - 1)
-	    error(_("path too long"));
-	strcpy (buf, pp);
-	if (*buf) {
-	    p = buf + strlen(buf) - 1;
-	    while (p >= buf && *p == fsp) *(p--) = '\0';
+	if (STRING_ELT(s, i) == NA_STRING) 
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	else {
+	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
+	    if (strlen(pp) > PATH_MAX - 1)
+		error(_("path too long"));
+	    strcpy (buf, pp);
+	    if (*buf) {
+		p = buf + strlen(buf) - 1;
+		while (p >= buf && *p == fsp) *(p--) = '\0';
+	    }
+	    if ((p = Rf_strrchr(buf, fsp)))
+		p++;
+	    else
+		p = buf;
+	    SET_STRING_ELT(ans, i, mkChar(p));
 	}
-	if ((p = Rf_strrchr(buf, fsp)))
-	    p++;
-	else
-	    p = buf;
-	SET_STRING_ELT(ans, i, mkChar(p));
     }
     UNPROTECT(1);
     return(ans);
@@ -790,24 +800,28 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	pp = filenameToWchar(STRING_ELT(s, i), TRUE);
-	if (wcslen(pp) > PATH_MAX - 1)
-	    error(_("path too long"));
-	wcscpy (buf, pp);
-	R_wfixslash(buf);
-	/* remove trailing file separator(s) */
-	while ( *(p = buf + wcslen(buf) - 1) == L'/'  && p > buf
-		&& (p > buf+2 || *(p-1) != L':')) *p = L'\0';
-	p = wcsrchr(buf, L'/');
-	if(p == NULL) wcscpy(buf, L".");
+	if (STRING_ELT(s, i) == NA_STRING) 
+	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    while(p > buf && *p == L'/'
-		  /* this covers both drives and network shares */
-		  && (p > buf+2 || *(p-1) != L':')) --p;
-	    p[1] = L'\0';
+	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
+	    if (wcslen(pp) > PATH_MAX - 1)
+		error(_("path too long"));
+	    wcscpy (buf, pp);
+	    R_wfixslash(buf);
+	    /* remove trailing file separator(s) */
+	    while ( *(p = buf + wcslen(buf) - 1) == L'/'  && p > buf
+		    && (p > buf+2 || *(p-1) != L':')) *p = L'\0';
+	    p = wcsrchr(buf, L'/');
+	    if(p == NULL) wcscpy(buf, L".");
+	    else {
+		while(p > buf && *p == L'/'
+		      /* this covers both drives and network shares */
+		      && (p > buf+2 || *(p-1) != L':')) --p;
+		p[1] = L'\0';
+	    }
+	    wcstoutf8(sp, buf, wcslen(buf)+1);
+	    SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
 	}
-	wcstoutf8(sp, buf, wcslen(buf)+1);
-	SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
     }
     UNPROTECT(1);
     return(ans);
@@ -825,20 +839,24 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
-	if (strlen(pp) > PATH_MAX - 1)
-	    error(_("path too long"));
-	strcpy (buf, pp);
-	/* remove trailing file separator(s) */
-	while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf) *p = '\0';
-	p = Rf_strrchr(buf, fsp);
-	if(p == NULL)
-	    strcpy(buf, ".");
+	if (STRING_ELT(s, i) == NA_STRING) 
+	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    while(p > buf && *p == fsp) --p;
-	    p[1] = '\0';
+	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
+	    if (strlen(pp) > PATH_MAX - 1)
+		error(_("path too long"));
+	    strcpy (buf, pp);
+	    /* remove trailing file separator(s) */
+	    while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf) *p = '\0';
+	    p = Rf_strrchr(buf, fsp);
+	    if(p == NULL)
+		strcpy(buf, ".");
+	    else {
+		while(p > buf && *p == fsp) --p;
+		p[1] = '\0';
+	    }
+	    SET_STRING_ELT(ans, i, mkChar(buf));
 	}
-	SET_STRING_ELT(ans, i, mkChar(buf));
     }
     UNPROTECT(1);
     return(ans);

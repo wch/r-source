@@ -19,7 +19,7 @@ Sys.glob(paths, dirmark = FALSE)
 }
 \arguments{
   \item{paths}{character vector of patterns for relative or absolute
-    filepaths.}
+    filepaths.  Missing value will be ignored.}
   \item{dirmark}{logical: should matches to directories from patterns
     that do not already end in \code{/}
 #ifdef windows
@@ -63,11 +63,10 @@ Sys.glob(paths, dirmark = FALSE)
 #endif
 #ifdef windows
   The \code{glob} system call is not part of Windows, and we supply an
-  emulation that works in bytes (and not in characters): it may not work
-  correctly in CJK locales.
+  emulation.
 
   Wildcards are \code{*} (match zero or more characters) and \code{?} (match
-  a single character). If a filename starts with \code{.} this must be
+  a single character).  If a filename starts with \code{.} this must be
   matched explicitly.
 
   In addition, \code{[} begins a character class.  If the first
@@ -80,7 +79,7 @@ Sys.glob(paths, dirmark = FALSE)
   
   Character classes can include ranges such as \code{[A-Z]}: include
   \code{-} as a character by having it first or last in a class.  (In the
-  current implementation ranges are in numeric order of bytes.)
+  current implementation ranges are in numeric order of Unicode points.)
 
   One can remove the special meaning of \code{?}, \code{*}  and
   \code{[} by preceding them by a backslash (except within a
@@ -95,16 +94,20 @@ Sys.glob(paths, dirmark = FALSE)
 }
 \value{
   A character vector of matched file paths.  The order is
-  system-specific (but in the order of the elements of \code{paths}): it
-  is normally collated in either the current locale or in byte (ASCII)
-  order.
-
+  system-specific (but in the order of the elements of \code{paths}):
+#ifdef unix
+  it is normally collated in either the current locale or in byte (ASCII) order.
+#endif
+#ifdef windows
+  on Windows collation is in the order of Unicode points.
+#endif
+  
   Directory errors are normally ignored, so the matches are to
   accessible file paths (but not necessarily accessible files).
 #ifdef unix
   
   On platforms which do not have the \code{glob} system call (nor, as for
-  R under Windows, an emulation), \code{paths} is returned unchanged.
+  \R under Windows, an emulation), \code{paths} is returned unchanged.
 #endif
 }
 \seealso{
