@@ -216,7 +216,7 @@ BUG FIXES
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
-	
+
     o	print.htest() lost output when used within sink(file, split=TRUE).
 
     o	Setting par(col.main=) also set par("col") to the same colour.
@@ -3349,13 +3349,13 @@ BUG FIXES
     o	Only genuinely empty statements act as 'return' in the
 	browser, not say those starting with a comment char.  (PR#9063)
 
-   o	summary.mlm() incorrectly used accessor functions to fake an
+    o	summary.mlm() incorrectly used accessor functions to fake an
 	"lm" object.  (PR#9191)
 
-   o	prettyNum() was not preserving attributes, despite being
+    o	prettyNum() was not preserving attributes, despite being
 	explicitly documented to. (PR#8695)
 
-   o	It was previously undocumented what happened if a graphical
+    o	It was previously undocumented what happened if a graphical
 	parameter was passed in both '...' and 'pars' to boxplot()
 	and bxp(), and they behaved differently.  Now those passed in
 	'...' have precedence in both cases.
@@ -4114,10 +4114,10 @@ INTERNATIONALIZATION
 	provided for use on Windows, AIX and MacOS X to replace
 	deficient OS-supplied ones.
 
-   o	There is support for MBCS charsets in the pictex() graphics
+    o	There is support for MBCS charsets in the pictex() graphics
 	device, and rotated (by 90 degrees) text may work better.
 
-   o	The \u (and \U except on Windows) notation for characters which
+    o	The \u (and \U except on Windows) notation for characters which
 	is supported by the parser in all MBCS charsets is now always
 	interpreted as a Unicode point, even on platforms which do not
 	encode wchar_t in Unicode.  These are now a syntax error in
