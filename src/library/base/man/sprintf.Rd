@@ -37,21 +37,25 @@ gettextf(fmt, \dots, domain = NULL)
   
   The following is abstracted from Kernighan and Ritchie
   (see References).  The string \code{fmt} contains normal characters,
-  which are passed through to the output string, and also special
-  characters that operate on the arguments provided through
-  \code{\dots}.  Special characters start with a \code{\%} and end with
-  one of the letters in the set \code{difeEgGsxX\%}.  These letters
-  denote the following types:
+  which are passed through to the output string, and also conversion
+  specifications which operate on the arguments provided through
+  \code{\dots}.  The allowed conversion specifications start with a
+  \code{\%} and end with one of the letters in the set
+  \code{difeEgGsxX\%}.  These letters denote the following types:
 
   \describe{
     \item{\code{d, i, x, X}}{Integer value, \code{x} and \code{X}
       being hexadecimal (using the same case for \code{a-f} as the code).
-      Numeric variables with exactly integer values will be coerced to integer.
+      Numeric variables with exactly integer values will be coerced to
+      integer. Formats \code{d} and \code{i} can also be used for
+      logical variables, which will be converted to \code{0}, \code{1}
+      or \code{NA}.
     }
     \item{\code{f}}{Double precision value, in decimal notation of the
       form "[-]mmm.ddd".  The number of decimal places is specified by
       the precision: the default is 6; a precision of 0 suppresses the
-      decimal point.
+      decimal point.  Non-finite values are converted to \code{NA},
+      \code{NaN} or (perhaps a sign followed by) \code{Inf}.
     }
     \item{\code{e, E}}{Double precision value, in decimal notation of the
       form \code{[-]m.ddde[+-]xx} or \code{[-]m.dddE[+-]xx}.
@@ -60,47 +64,55 @@ gettextf(fmt, \dots, domain = NULL)
       \code{\%E} format if the exponent is less than -4 or greater than or
       equal to the precision, and \code{\%f} format otherwise.
     }
-    \item{\code{s}}{Character string.}
-    \item{\code{\%}}{Literal \code{\%} (none of the formatting
-      characters given below are permitted in this case).}
+    \item{\code{s}}{Character string.   Character \code{NA}s are
+      converted to \code{"NA"}.
+    }
+    \item{\code{\%}}{Literal \code{\%} (none of the extra formatting
+      characters given below are permitted in this case).
+    }
   }
-  \code{\link{as.character}} is used for non-character arguments with
-  \code{s} and \code{\link{as.double}} for non-double arguments with
-  \code{f, e, E, g, G}.  NB: the length is determined before conversion,
-  so do not rely on the internal coercion if this would change the
-  length.  Also, the coercion has to be done for each line of output (as
-  the format string may differ between lines), so it is more efficient
-  not to rely on internal coercion.
+  Conversion by \code{\link{as.character}} is used for non-character
+  arguments with \code{s} and by \code{\link{as.double}} for
+  non-double arguments with \code{f, e, E, g, G}.  NB: the length is
+  determined before conversion, so do not rely on the internal
+  coercion if this would change the length.  Also, if
+  \code{length(fmt) > 1} the coercion has to be done for each line of
+  output so it can be much more efficient not to rely on internal
+  coercion.  
   
   In addition, between the initial \code{\%} and the terminating
   conversion character there may be, in any order:
 
   \describe{
     \item{\code{m.n}}{Two numbers separated by a period, denoting the
-      field width (\code{m}) and the precision (\code{n})}
-    \item{\code{-}}{Left adjustment of converted argument in its field}
-    \item{\code{+}}{Always print number with sign}
-    \item{a space}{Prefix a space if the first number is not a sign}
-    \item{\code{0}}{For numbers, pad to the field width with leading zeros}
+      field width (\code{m}) and the precision (\code{n}).}
+    \item{\code{-}}{Left adjustment of converted argument in its field.}
+    \item{\code{+}}{Always print number with sign: by default only
+      negative numbers are printed with a sign.}
+    \item{a space}{Prefix a space if the first character is not a sign.}
+    \item{\code{0}}{For numbers, pad to the field width with leading zeros.}
   }
   Further, immediately after \code{\%} may come \code{1$} to \code{99$}
-  to refer to the numbered argument: this allows arguments to be
+  to refer to numbered argument: this allows arguments to be
   referenced out of order and is mainly intended for translators of
   error messages.  If this is done it is best if all formats are
   numbered: if not the unnumbered ones process the arguments in order.
-  See the examples.
+  See the examples.  This notation allows arguments to be used more than
+  once, in which case they must be used as the same type (integer,
+  double or character).
 
   A field width or precision (but not both) may be indicated by an
-  asterisk \code{*}. In this case an argument specifies the desired
-  number. A negative field width is taken as a '-' flag followed by a
-  positive field width. A negative precision is taken as if the
-  precision were omitted. The \code{*1$} to \code{*99$} notation for
-  arguments referenced out of order is also supported.
+  asterisk \code{*}: in this case an argument specifies the desired
+  number.  A negative field width is taken as a '-' flag followed by a
+  positive field width.  A negative precision is treated as if the
+  precision were omitted.
+
+  There is a limit of 8192 bytes on elements of \code{fmt} and also on
+  strings includes by a \code{\%s} conversion specification.
 }
 
 \value{
   A character vector of length that of the longest input.
-  Character \code{NA}s are converted to \code{"NA"}.
 }
 
 \references{

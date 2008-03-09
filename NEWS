@@ -351,6 +351,9 @@ NEW FEATURES
     o	Extensions to condition number computation for matrices, notably
         complex ones are provided ... currently via experimental .rcond().
 
+   o	sprintf() now does all the conversions needed in a first pass if
+   	length(fmt) == 1, and so can be many times faster.
+
 
 DEPRECATED & DEFUNCT
 
