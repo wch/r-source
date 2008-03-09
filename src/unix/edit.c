@@ -36,7 +36,7 @@
 #include <stdio.h>
 #ifdef Win32
 # include "run.h"
-int Rgui_Edit(char *filename, char *title, int modal);
+int Rgui_Edit(char *filename, int enc, char *title, int modal);
 #endif
 
 #ifdef Unix
@@ -149,7 +149,7 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    title = R_alloc(strlen(filename)+1, sizeof(char));
 	    strcpy(title, filename);
 	}
-	Rgui_Edit(filename, title, 1);
+	Rgui_Edit(filename, CE_NATIVE, title, 1);
     }
     else {
 	/* Quote path if necessary */
