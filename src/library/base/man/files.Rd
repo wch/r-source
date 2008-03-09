@@ -145,7 +145,10 @@ Sys.umask(mode = "0000")
   The remaining functions return a logical vector indicating which
   operation succeeded for each of the files attempted.
 
-  \code{dir.create} will return failure if the directory already exists. 
+  \code{dir.create} will return failure if the directory already exists.
+
+  Using a missing value for a file or path name will always be regarded
+  as a failure.
 }
 \author{
   Ross Ihaka, Brian Ripley

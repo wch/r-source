@@ -35,6 +35,8 @@ dirname(path)
   separator, but \code{dirname} will return a path using \code{/}
   (except if a network share, when the leading \code{\\\\} will be preserved).
 #endif
+
+  If an element of \code{path} is \code{\link{NA}}, so is the result.
 }
 \value{
   A character vector of the same length as \code{path}.  A zero-length

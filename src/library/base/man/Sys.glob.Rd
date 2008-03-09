@@ -19,7 +19,7 @@ Sys.glob(paths, dirmark = FALSE)
 }
 \arguments{
   \item{paths}{character vector of patterns for relative or absolute
-    filepaths.  Missing value will be ignored.}
+    filepaths.  Missing values will be ignored.}
   \item{dirmark}{logical: should matches to directories from patterns
     that do not already end in \code{/}
 #ifdef windows
