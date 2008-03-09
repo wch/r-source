@@ -174,3 +174,19 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     class(series) <- "newsTree"
     series
 }
+
+# Check for common formatting errors in a NEWS file.
+
+checkNEWS <- function(file = file.path(R.home(), "NEWS")) {
+    check <- function(item) {
+	if (is.list(item)) return(all(unlist(lapply(item, check))))
+	
+	if (length(grep("^ o[[:blank:]]", item))) {
+	    cat("Item marker found within item:\n", paste(item, collapse="\n"), "\n\n")
+	    return(FALSE)
+	}
+	return(TRUE)
+    }
+              
+    check(readNEWS(file, chop="keepAll") )
+}

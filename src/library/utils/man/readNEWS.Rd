@@ -5,7 +5,8 @@
 
 \name{readNEWS}
 \alias{readNEWS}
-\title{Read R's NEWS file or a Similar One}
+\alias{checkNEWS}
+\title{Read R's NEWS file or a similar one}
 \description{
   Read \R's NEWS file or a similarly formatted one.
   This is an experimental feature, new in R 2.4.0
@@ -14,6 +15,7 @@
 \usage{
 readNEWS(file = file.path(R.home(), "NEWS"), trace = FALSE,
          chop = c("first", "1", "par1", "keepAll"))
+checkNEWS(file = file.path(R.home(), "NEWS"))
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -25,13 +27,18 @@ readNEWS(file = file.path(R.home(), "NEWS"), trace = FALSE,
   \item{chop}{a character string specifying how the news entries should
     be \emph{chopped}; \code{chop = "keepAll"} saves the full entries.}
 }
-% \details{
-%   ~~ If necessary, more details than the description above ~~
-% }
+\details{
+\code{readNEWS()} reads a NEWS file; \code{checkNEWS()} checks for common
+errors in formatting.  Currently it detects an incorrect number of spaces before
+the \code{"o"} item marker.
+}
 \value{
-  An (S3) object of class \code{"newsTree"}; effectively
+  \code{readNEWS()} returns an (S3) object of class \code{"newsTree"}; effectively
   a \code{\link{list}} of lists which is a tree of NEWS entries.
 
+ \code{checkNEWS()} returns \code{TRUE} if no suspected errors are found,
+ or prints a message for each suspected error and returns \code{FALSE}.
+ 
   Note that this is still experimental and may change in the future.
 }
 %\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }

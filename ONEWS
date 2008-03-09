@@ -4585,42 +4585,42 @@ BUG FIXES
     o	try() could fail in BATCH use due to use of fflush(stdin).
 	Only seen on Solaris. (PR#1934)
 
-   o	title(main=list("main")) printed garbage, as did similar calls
+    o	title(main=list("main")) printed garbage, as did similar calls
 	using quote() instead of expression() for plotmath. (PR#1939)
 
-   o	deparse() dropped parentheses in some case where they were
+    o	deparse() dropped parentheses in some case where they were
 	needed. (PR#1119, 1737, 1928, at least)
 
-   o	pdf(onefile = FALSE) never incremented the file number beyond
+    o	pdf(onefile = FALSE) never incremented the file number beyond
 	two.
 
-   o	On Unix, protect against broken pipes where popen calls succeed
+    o	On Unix, protect against broken pipes where popen calls succeed
 	even though the command does not exist (and the glibc manual
 	says it should return NULL).  (PR#1959)
 
-   o	data.frame() was allowing explicit row.names with missing
+    o	data.frame() was allowing explicit row.names with missing
 	values, but row names are required to be unique.
 
-   o	as.character(expression) was silently truncating to 60
+    o	as.character(expression) was silently truncating to 60
 	characters: the help page claimed 500 which is now true.
 
-   o	as.hclust(x) now also works (as identity) for "hclust" objects.
+    o	as.hclust(x) now also works (as identity) for "hclust" objects.
 
-   o	NextMethod didn't work right in Ops.
+    o	NextMethod didn't work right in Ops.
 
-   o	dotchart() now obeys `xlim ='.
+    o	dotchart() now obeys `xlim ='.
 
-   o	t(x) behaves when x is a (multivariate) time series. (PR#1998)
+    o	t(x) behaves when x is a (multivariate) time series. (PR#1998)
 
-   o	parse(text=x) no longer parses from stdin if length(x) is zero
+    o	parse(text=x) no longer parses from stdin if length(x) is zero
 
-   o	binom.test() miscalculated p-value in some extreme cases
+    o	binom.test() miscalculated p-value in some extreme cases
 
-   o	get("print.ts")(1) would segfault. It's now just an error.
+    o	get("print.ts")(1) would segfault. It's now just an error.
 
-   o	cbind(NULL) {and similar} gave an error instead of NULL.
+    o	cbind(NULL) {and similar} gave an error instead of NULL.
 
-   o	the complex version of solve(a,b) now also works if b is a
+    o	the complex version of solve(a,b) now also works if b is a
 	vector
 
 
@@ -7518,10 +7518,10 @@ NEW FEATURES
     o	The L-BFGS-B method of optim() now support tracing, at several
 	levels of detail.
 
-     o	options(check.bounds = TRUE)  makes each vector extension
+    o	options(check.bounds = TRUE)  makes each vector extension
 	by sub-assignment ("x[.] <- .") produce a warning.
 
-   o	options(width) now admits to a limit (previously 200, now
+    o	options(width) now admits to a limit (previously 200, now
 	10000) and gives a more informative message if out of range
 	(as it does now for digits and expressions).
 
