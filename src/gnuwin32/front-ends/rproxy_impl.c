@@ -33,7 +33,6 @@
 #include <Rversion.h>
 #include <Rembedded.h>
 #include <R_ext/RStartup.h>
-#include <R_ext/GraphicsEngine.h>
 #include <graphapp.h>
 
 #include "bdx_SEXP.h"
