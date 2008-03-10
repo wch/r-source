@@ -32,11 +32,10 @@
 
 double rnorm(double mu, double sigma)
 {
-    if(!R_FINITE(mu) || !R_FINITE(sigma) || sigma < 0.)	
+    if (ISNAN(mu) || !R_FINITE(sigma) || sigma < 0.)
 	ML_ERR_return_NAN;
-
-    if (sigma == 0.)
-	return mu;
+    if (sigma == 0. || !R_FINITE(mu))
+	return mu; /* includes mu = +/- Inf with finite sigma */
     else
 	return mu + sigma * norm_rand();
 }
