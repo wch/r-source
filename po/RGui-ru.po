@@ -777,14 +777,12 @@ msgid "About"
 msgstr "О программе"
 
 #: rui.c:1023
-#, fuzzy
 msgid "Load workspace"
-msgstr "Загрузить рабочее пространство..."
+msgstr "Загрузить рабочее пространство"
 
 #: rui.c:1027
-#, fuzzy
 msgid "Save workspace"
-msgstr "Сохранить рабочее пространство..."
+msgstr "Сохранить рабочее пространство"
 
 #: rui.c:1043
 msgid "Stop current computation"
@@ -987,9 +985,8 @@ msgid "Windows bitmap file"
 msgstr "Растровый файл Windows"
 
 #: ../library/grDevices/src/devWindows.c:872
-#, fuzzy
 msgid "TIFF file"
-msgstr "Файл PDF"
+msgstr "Файл TIFF"
 
 #: ../library/grDevices/src/devWindows.c:875
 msgid "Jpeg file"

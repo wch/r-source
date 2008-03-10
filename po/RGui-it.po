@@ -363,9 +363,8 @@ msgid "Data editor"
 msgstr "Editor dei dati"
 
 #: editor.c:88 editor.c:90
-#, fuzzy
 msgid "R Editor"
-msgstr "Editor"
+msgstr "Editor di R"
 
 #: editor.c:119
 #, c-format
@@ -787,14 +786,12 @@ msgid "About"
 msgstr "Informazioni su"
 
 #: rui.c:1023
-#, fuzzy
 msgid "Load workspace"
-msgstr "Carica area di lavoro..."
+msgstr "Carica area di lavoro"
 
 #: rui.c:1027
-#, fuzzy
 msgid "Save workspace"
-msgstr "Salva area di lavoro..."
+msgstr "Salva area di lavoro"
 
 #: rui.c:1043
 msgid "Stop current computation"
@@ -998,9 +995,8 @@ msgid "Windows bitmap file"
 msgstr "File bitmap per Windows"
 
 #: ../library/grDevices/src/devWindows.c:872
-#, fuzzy
 msgid "TIFF file"
-msgstr "File PDF"
+msgstr "File TIFF"
 
 #: ../library/grDevices/src/devWindows.c:875
 msgid "Jpeg file"

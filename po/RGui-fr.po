@@ -368,9 +368,8 @@ msgid "Data editor"
 msgstr "Editeur de données"
 
 #: editor.c:88 editor.c:90
-#, fuzzy
 msgid "R Editor"
-msgstr "Editeur"
+msgstr "Editeur R"
 
 #: editor.c:119
 #, c-format
