@@ -1,0 +1,104 @@
+# German translation of src/library/tcltk/po/R-tcltk.pot
+# Copyright (C) 2008 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.6.2\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-12-15 16:02\n"
+"PO-Revision-Date: 2008-03-07 08:07+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R Core <r-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "kann object mit Modus '%s' nicht bedienen"
+
+msgid "cannot change names on Tcl array"
+msgstr "kann Namen eines Tcl Arrays nicht ändern"
+
+msgid "cannot set length of Tcl array"
+msgstr "kann die Länge eines Tcl Arrays nicht setzen"
+
+msgid "Tcl package '%s' not found"
+msgstr "Tcl-Paket '%s' nicht gefunden"
+
+msgid "The tkGUI is not available under Windows"
+msgstr "tkGui unter Windows nicht verfügbar"
+
+msgid "File"
+msgstr "Datei"
+
+msgid "Demos"
+msgstr "Demos"
+
+msgid "Packages"
+msgstr "Pakete"
+
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "Source R code"
+msgstr "R Code einlesen"
+
+msgid "Quit"
+msgstr "Beenden"
+
+msgid "Save workspace"
+msgstr "Workspace sichern"
+
+msgid "Don't save workspace"
+msgstr "Workspace nicht sichern"
+
+msgid "t test"
+msgstr "t-Test"
+
+msgid "Density"
+msgstr "Dichte"
+
+msgid "Interactive linear fitting"
+msgstr "Interaktive lineare Anpassung"
+
+msgid "R FAQ"
+msgstr "R FAQ"
+
+msgid "Load"
+msgstr "Laden"
+
+msgid "Go get them!"
+msgstr "Los, hole sie Dir"
+
+msgid "Load packages"
+msgstr "Lade Pakete"
+
+msgid "Install packages from CRAN"
+msgstr "Installiere Pakete vom CRAN"
+
+msgid "Help topic:"
+msgstr "Hilfethema:"
+
+msgid "Manuals in PDF format"
+msgstr "Handbücher im PDF Format"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr "Lade Tcl/Tk Interface ..."
+
+msgid "done"
+msgstr "fertig"
+
+msgid "Tcl/Tk support is not available on this system"
+msgstr "Tcl/Tk auf diesem System nicht verfügbar"
+
+msgid "Tcl/Tk support files were not installed"
+msgstr "Tcl/TK Unterstützung nciht installiert"
