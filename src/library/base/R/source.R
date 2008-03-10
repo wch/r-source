@@ -133,7 +133,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
 	    	leading <- srcref[1]-lastshown
 	    	lastshown <- srcref[3]
-	    	while (length(dep) && length(grep("^[ \\t]*$", dep[1]))) {
+	    	while (length(dep) && length(grep("^[[:blank:]]*$", dep[1]))) {
 	    	    dep <- dep[-1]
 	    	    leading <- leading - 1
 	    	}

@@ -634,6 +634,9 @@ BUG FIXES
 
     o	The 'multilib' changes on Linux broke the use of
     	sub-architectures without a main architecture.
+    	
+    o	source(echo=TRUE) would skip lines consisting entirely of the
+    	letter t. (PR#10923)
 
 
 
