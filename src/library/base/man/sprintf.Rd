@@ -16,7 +16,7 @@ sprintf(fmt, \dots)
 gettextf(fmt, \dots, domain = NULL)
 }
 \arguments{
-  \item{fmt}{a format string.  Up to 8192 bytes.}
+  \item{fmt}{a character vector of format strings, each of up to 8192 bytes.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
     integer, real and character vectors are supported, but some coercion
     will be done: see the \sQuote{Details} section.}
