@@ -1434,11 +1434,11 @@ To build R on 32-bit Windows you will need the tools from
 @uref{http://www.murdoch-sutherland.com/Rtools/} as well as some
 others.  See the `R Installation and Administration' manual.
 
-It is possible to cross-build R for Windows x64 using @code{binutils} and
-@code{gcc} with the @samp{x86_64-pc-mingw32} target, using suitable
-settings in @file{src/gnuwin32/MkRules} (see the comments there).
-However, at present that toolchain is experimental and the build does
-not run.
+It has been possible to cross-build R for Windows x64 using
+@code{binutils} and @code{gcc} with the @samp{x86_64-pc-mingw32} target,
+using suitable settings in @file{src/gnuwin32/MkRules} (see the comments
+there).  However, that toolchain is experimental and the support for
+Unicode file functions needed for R 2.7.x is at present incomplete.
  
 You are of course welcome to try a commercial compiler, but we will not
 be distributing a port to which users cannot easily add packages.
