@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-03 19:26+0000\n"
+"POT-Creation-Date: 2008-03-10 22:25+0000\n"
 "PO-Revision-Date: 2007-09-17 20:36-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -540,11 +540,11 @@ msgstr "Не могу открыть файл для чтения"
 msgid "Untitled"
 msgstr "Безымянный"
 
-#: extra.c:743 ../extra/graphapp/dialogs.c:481 ../extra/graphapp/dialogs.c:600
+#: extra.c:745 ../extra/graphapp/dialogs.c:481 ../extra/graphapp/dialogs.c:600
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:744 ../extra/graphapp/dialogs.c:461 ../extra/graphapp/dialogs.c:479
+#: extra.c:746 ../extra/graphapp/dialogs.c:461 ../extra/graphapp/dialogs.c:479
 #: ../extra/graphapp/dialogs.c:485 ../extra/graphapp/dialogs.c:584
 #: ../extra/graphapp/dialogs.c:598 ../extra/graphapp/dialogs.c:604
 msgid "Cancel"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-03 19:26+0000\n"
+"POT-Creation-Date: 2008-03-10 22:25+0000\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -556,11 +556,11 @@ msgstr "Não foi possível abrir a área de transferência"
 msgid "Untitled"
 msgstr "Sem nome"
 
-#: extra.c:743 ../extra/graphapp/dialogs.c:481 ../extra/graphapp/dialogs.c:600
+#: extra.c:745 ../extra/graphapp/dialogs.c:481 ../extra/graphapp/dialogs.c:600
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:744 ../extra/graphapp/dialogs.c:461 ../extra/graphapp/dialogs.c:479
+#: extra.c:746 ../extra/graphapp/dialogs.c:461 ../extra/graphapp/dialogs.c:479
 #: ../extra/graphapp/dialogs.c:485 ../extra/graphapp/dialogs.c:584
 #: ../extra/graphapp/dialogs.c:598 ../extra/graphapp/dialogs.c:604
 msgid "Cancel"
