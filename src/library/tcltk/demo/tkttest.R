@@ -2,7 +2,15 @@ require(tcltk) || stop("tcltk support is absent")
 require(stats)
 
 local({
-
+    have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
+    if(have_ttk) {
+        tkbutton <- ttkbutton
+        tkcheckbutton <- ttkcheckbutton
+        tkentry <- ttkentry
+        tkframe <- ttkframe
+        tklabel <- ttklabel
+        tkradiobutton <- ttkradiobutton
+    }
     dialog.t.test <- function(){
         tt <- tktoplevel()
         tkwm.title(tt,"t test")
@@ -35,12 +43,12 @@ local({
             vv <- as.logical(tclObj(eqvar))
             substitute(t.test(x,y,alternative=a,var.equal=vv))
         }
-        var.cbut <- tkcheckbutton(tt,text="Equal variance", variable=eqvar)
+        var.cbut <- tkcheckbutton(tt, text="Equal variance", variable=eqvar)
         alt.rbuts <- tkframe(tt)
 
         tkpack(tklabel(alt.rbuts, text="Alternative"))
         for ( i in c("two.sided", "less", "greater")){
-            tmp<-tkradiobutton(alt.rbuts, text=i, variable=alt, value=i)
+            tmp <- tkradiobutton(alt.rbuts, text=i, variable=alt, value=i)
             tkpack(tmp,anchor="w")
         }
 

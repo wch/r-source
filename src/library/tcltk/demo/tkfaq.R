@@ -1,13 +1,15 @@
 require(tcltk) || stop("tcltk support is absent")
 local({
+    have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
 
     tt <- tktoplevel()
     tkwm.title(tt, "R FAQ")
 #    Gave tiny font on some systems
 #    txt <- tktext(tt, bg="white", font="courier")
     txt <- tktext(tt, bg="white")
-    scr <- tkscrollbar(tt, repeatinterval=5,
-                       command=function(...)tkyview(txt,...))
+    scr <- if(have_ttk) ttkscrollbar(tt, command=function(...)tkyview(txt,...))
+    else tkscrollbar(tt, repeatinterval=5,
+                     command=function(...)tkyview(txt,...))
     ## Safest to make sure scr exists before setting yscrollcommand
     tkconfigure(txt, yscrollcommand=function(...)tkset(scr,...))
     tkpack(txt, side="left", fill="both", expand=TRUE)

@@ -3,8 +3,16 @@
 require(tcltk) || stop("tcltk support is absent")
 require(graphics); require(stats)
 local({
+    have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
+    if(have_ttk) {
+        tkbutton <- ttkbutton
+        tkframe <- ttkframe
+        tklabel <- ttklabel
+        tkradiobutton <- ttkradiobutton
+    }
+
     y <- NULL
-    xlim <-NULL
+    xlim <- NULL
     size  <- tclVar(50)
     dist  <- tclVar(1)
     kernel<- tclVar("gaussian")
@@ -16,8 +24,7 @@ local({
         bw.sav <<- b <- as.numeric(tclObj(bw))
         k <- as.character(tclObj(kernel))
         sz <- as.numeric(tclObj(size))
-        eval(substitute(plot(density(y, bw=b,
-                     kernel=k),xlim=xlim)))
+        eval(substitute(plot(density(y, bw=b, kernel=k),xlim=xlim)))
         points(y,rep(0,sz))
     }
 
@@ -72,7 +79,7 @@ local({
     frame4 <-tkframe(right.frm, relief="groove", borderwidth=2)
     tkpack(tklabel (frame4, text="Bandwidth"))
     tkpack(tkscale(frame4, command=replot.maybe, from=0.05, to=2.00,
-                   showvalue=F, variable=bw,
+                   showvalue=FALSE, variable=bw,
                    resolution=0.05, orient="horiz"))
 
     tkpack(frame1, frame2, fill="x")
@@ -81,7 +88,7 @@ local({
 
     ## `Bottom frame' (on base):
     q.but <- tkbutton(base,text="Quit",
-                      command=function()tkdestroy(base))
+                      command=function() tkdestroy(base))
 
     tkpack(spec.frm, q.but)
     tclServiceMode(TRUE)

@@ -8,6 +8,12 @@
 require(tcltk) || stop("tcl/tk library not available")
 require(graphics); require(stats)
 local({
+    have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
+    if(have_ttk) {
+        tkbutton <- ttkbutton
+        tkframe <- ttkframe
+        tklabel <- ttklabel
+    }
     tclServiceMode(FALSE) # don't display until complete
     top <- tktoplevel()
     tktitle(top) <- "Plot Demonstration"

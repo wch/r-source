@@ -358,7 +358,8 @@ NEW FEATURES
 	file formatting.
 
     o	New bindings ttk*() in package tcltk for the 'themed widgets'
-    	of Tk 8.5.
+    	of Tk 8.5.  The tcltk demos have use of these widgets where
+    	available.
 
 
 DEPRECATED & DEFUNCT
