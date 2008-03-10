@@ -17,6 +17,8 @@
 tk_select.list <-
     function(list, preselect = NULL, multiple = FALSE, title = NULL)
 {
+    have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
+    if(!have_ttk) ttkbutton <- tkbutton
     lvar <- tclVar()
     tclObj(lvar) <- list
     oldmode <- tclServiceMode(FALSE)
@@ -26,7 +28,8 @@ tk_select.list <-
     tkgrab.set(dlg)
     tkfocus(dlg)
     if(!is.null(title) && nzchar(title)) {
-        lab <- tklabel(dlg, text = title, fg = "blue")
+        lab <- if(have_ttk) ttklabel(dlg, text = title, foreground = "blue")
+        else tklabel(dlg, text = title, fg = "blue")
         tkpack(lab, side="top")
     }
     onOK <- function() {
@@ -41,8 +44,8 @@ tk_select.list <-
     }
     buttons <- tkframe(dlg)
     tkpack(buttons, side="bottom")
-    OK <- tkbutton(buttons, text = gettext("OK"), width = 6, command = onOK)
-    Cancel <- tkbutton(buttons, text = gettext("Cancel"), command = onCancel)
+    OK <- ttkbutton(buttons, text = gettext("OK"), width = 6, command = onOK)
+    Cancel <- ttkbutton(buttons, text = gettext("Cancel"), command = onCancel)
     tkpack(OK, Cancel, side="left", fill="x", padx="2m")
 
     scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 200
@@ -57,8 +60,8 @@ tk_select.list <-
     ht <- min(length(list), scht %/% tmp)
     tkdestroy(box)
     if(ht < length(list)) {
-        scr <- tkscrollbar(dlg, repeatinterval = 5,
-                           command = function(...) tkyview(box, ...))
+        scr <- if(have_ttk) ttkscrollbar(dlg, command = function(...) tkyview(box, ...))
+        else tkscrollbar(dlg, repeatinterval=5, command = function(...) tkyview(box, ...))
         box <- tklistbox(dlg, height = ht, width = 0,
                          listvariable = lvar, bg = "white",
                          selectmode = ifelse(multiple, "multiple", "single"),

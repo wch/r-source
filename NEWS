@@ -357,6 +357,9 @@ NEW FEATURES
     o	New function checkNEWS() that detects common errors in NEWS
 	file formatting.
 
+    o	New bindings ttk*() in package tcltk for the 'themed widgets'
+    	of Tk 8.5.
+
 
 DEPRECATED & DEFUNCT
 

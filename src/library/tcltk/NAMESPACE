@@ -1,5 +1,6 @@
 exportPattern("^tcl[[:alnum:]]*($|<-)") # skip S3 methods
 exportPattern("^tk")
+exportPattern("^ttk")
 exportPattern("^.Tcl")
 exportPattern("^.Tk")
 export(addTclPath, as.tclObj, is.tclObj, is.tkwin)

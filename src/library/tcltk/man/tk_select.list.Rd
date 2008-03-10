@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/tk_select.list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tk_select.list}
@@ -27,6 +27,8 @@ tk_select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 
   The dialog box is \emph{modal}, so a selection must be made or
   cancelled before the \R session can proceed.
+
+  If Tk is version 8.5 or later, themed widgets will be used.
 }
 \value{
   A character vector of selected items.  If \code{multiple} is false and
