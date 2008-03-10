@@ -24,13 +24,19 @@ else
 implib:
 endif
 
+libRzlib.dll.a: Rzlib.def
+
+Rzlib.def: $(OBJECTS)
+	@$(ECHO) EXPORTS > $@
+	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq >> $@
+
 headers:
 	@$(CP) zlib.h zconf.h ../../../include
 
 clean:
-	@$(RM) *.o *~ *.d Makedeps
+	@$(RM) *.o *~ *.d Makedeps Rzlib.def
 distclean: clean
-	@$(RM) libz.a Rzlib.dll
+	@$(RM) libz.a Rzlib.dll libRzlib.dll.a
 
 # Dependencies
 DEPS=$(SOURCES:.c=.d)
