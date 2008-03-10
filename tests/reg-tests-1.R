@@ -5094,3 +5094,17 @@ attr(df,"foo") <- 10
 df[, "b"] <- 10:12
 stopifnot(identical(attr(df, "foo"), 10))
 ## dropped attributes < 2.7.0
+
+## r<foo> NA warnings, and rnorm(*, mu = +- Inf) consistency
+op <- options(warn=2)
+m <- c(-Inf,Inf)
+stopifnot(rnorm(2, mean = m) == m)
+rt(1, Inf)
+R <- list(try(rnorm(2, numeric())),
+          try(rexp (2, numeric())),
+          try(rexp (2, Inf)),# already gave warning
+          try(rnorm(2, c(1,NA))),
+          try(rnorm(1, sd = Inf)) )
+options(op)
+stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
+                 "(converted from warning) NAs produced\n"))

@@ -353,7 +353,7 @@ NEW FEATURES
 
     o	sprintf() now does all the conversions needed in a first pass if
    	length(fmt) == 1, and so can be many times faster.
-   	
+
     o	New function checkNEWS() that detects common errors in NEWS
 	file formatting.
 
@@ -580,6 +580,11 @@ BUG FIXES
     o	File access functions such as file.exists(), file.info(),
     	dirname() and unlink() now treat an NA filename as a
     	non-existent file and not the file "NA".
+
+    o	r<foo>(), the random number generators, are now more consistent in
+	warning when NA's (specifically NaN's) are generated.
+
+    o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN.
 
 
 
