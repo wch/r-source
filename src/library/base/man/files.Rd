@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -50,10 +50,9 @@ Sys.umask(mode = "0000")
   string: you can specify the files separately or as one vector.
   All of these functions expand path names: see \code{\link{path.expand}}.
 
-  \code{file.create} creates files with the given names if they
-  do not already exist and truncates them if they do.  On a Unix-alike
-  they are created with the maximal permissions allowed by the
-  \code{umask} setting.
+  \code{file.create} creates files with the given names if they do not
+  already exist and truncates them if they do.  They are created with the
+  maximal permissions allowed by the \code{umask} setting.
 
   \code{file.exists} returns a logical vector indicating whether
   the files named by its argument exist.  (Here \sQuote{exists} is in the
@@ -124,15 +123,14 @@ Sys.umask(mode = "0000")
   \code{Sys.umask} sets the \code{umask}.
 #ifdef unix
   It may not be supported (when a warning is issued and \code{"0000"}
-  returned).
-  See the comments for \code{dir.create} for how modes are interpreted.
-  Changing mode on a symbolic link is unlikely to work (nor be
-  necessary).  For more details see your OS's documentation on the
+  returned).  For more details see your OS's documentation on the
   system call \code{umask}. 
 #endif
 #ifdef windows
-  This is not a Windows concept, and a warning is issued and
-  \code{"0000"} returned.
+  All files on Windows are readable, and files being executable is not a
+  Windows concept.  So \code{umask} only controls whether a file is
+  writable: a setting of \code{"200"} makes files (but not directories)
+  created subsequently read-only.
 #endif  
 }
 \value{

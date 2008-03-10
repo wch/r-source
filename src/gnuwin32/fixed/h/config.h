@@ -672,7 +672,7 @@
 #define HAVE_UINTPTR_T 1
 
 /* Define to 1 if you have the `umask' function. */
-/* #undef HAVE_UMASK */
+#define HAVE_UMASK 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
