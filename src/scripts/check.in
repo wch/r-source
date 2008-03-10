@@ -267,6 +267,7 @@ foreach my $pkg (@ARGV) {
     chdir($startdir);
     $pkg =~ s+/$++;  # strip any trailing '/'
     my $pkgname = basename($pkg);
+    $is_ascii = 0;
 
     my $thispkg_subdirs = $opt_subdirs;
     ## is this a tar archive?
@@ -331,6 +332,7 @@ foreach my $pkg (@ARGV) {
     $log->message("using @out");
     @out = R_runR("tools:::.find_charset()", "--slave --vanilla");
     $log->message("using session @out");
+    $is_ascii = 1 if $out[0] =~ /ASCII$/;
 
     if(!$opt_library) {
 	$library = $pkgoutdir;
@@ -2049,6 +2051,12 @@ sub check_pkg {
 	my $enc = "";
 	if(defined($description->{"Encoding"})) {
 	    $enc = "--encoding " . $description->{"Encoding"};
+	    if ($is_ascii) {
+		print "\n* WARNING: ",
+		    "checking a package with encoding '",
+		    $description->{"Encoding"},
+		    "' in an ASCII locale.\n";
+	    }
         }
 	if($opt_use_gct) {
             $cmd = join(" ",
