@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-7     the R Development Core Team
+ *  Copyright (C) 2002-8     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,6 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1], 
 	*outputString;
     size_t n, cur, chunk;
-    Rboolean need_coercion = TRUE;
 
     SEXP format, ans, _this, a[100], tmp;
     int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
@@ -70,148 +69,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(maxlen % lens[i])
 	    error(_("arguments cannot be recycled to the same length"));
 
-    /* It there is only one format string used multiple times,
-       do the coercion in advance */
-    if (nfmt == 1  && maxlen > 1) {
-	need_coercion = FALSE;
-	/* now do any necessary coercions */
-	formatString = translateChar(STRING_ELT(format, 0));
-	n = strlen(formatString);
-	if (n > MAXLINE)
-	    error(_("'fmt' length exceeds maximal format length %d"), MAXLINE);
-	for (cur = 0, cnt = 0; cur < n; cur += chunk) {
-	    if (formatString[cur] == '%') {
-		if (cur < n - 1 && formatString[cur + 1] == '%') {
-		    /* take care of %% in the format */
-		    chunk = 2;
-		} else {
-		    /* recognise selected types from Table B-1 of K&R */
-		    chunk = strcspn(formatString + cur + 1, "disfeEgGxX%") + 2;
-		    if (cur + chunk > n)
-			error(_("unrecognised format at end of string"));
-
-		    strncpy(fmt, formatString + cur, chunk);
-		    fmt[chunk] = '\0';
-
-		    nthis = -1;
-		    /* now look for %n$ or %nn$ form */
-		    if (strlen(fmt) > 3 && fmt[1] >= '1' && fmt[1] <= '9') {
-			v = fmt[1] - '0';
-			if(fmt[2] == '$') {
-			    if(v > nargs)
-				error(_("reference to non-existent argument %d"), v);
-			    nthis = v-1;
-			    memmove(fmt+1, fmt+3, strlen(fmt)-2);
-			} else if(fmt[2] >= '1' && fmt[2] <= '9' 
-				  && fmt[3] == '$') {
-			    v = 10*v + fmt[2] - '0';
-			    if(v > nargs)
-				error(_("reference to non-existent argument %d"), v);
-			    nthis = v-1;
-			    memmove(fmt+1, fmt+4, strlen(fmt)-3);
-			}
-		    }
-
-		    has_star = 0;
-		    starc = Rf_strchr(fmt, '*');
-		    if (starc) { /* handle * format if present */
-			nstar = -1;
-			if (strlen(starc) > 3 && starc[1] >= '1' && starc[1] <= '9') {
-			    v = starc[1] - '0';
-			    if(starc[2] == '$') {
-				if(v > nargs)
-				    error(_("reference to non-existent argument %d"), v);
-				nstar = v-1;
-				memmove(starc+1, starc+3, strlen(starc)-2);
-			    } else if(starc[2] >= '1' && starc[2] <= '9' && starc[3] == '$') {
-				v = 10*v + starc[2] - '0';
-				if(v > nargs)
-				    error(_("reference to non-existent argument %d"), v);
-				nstar = v-1;
-				memmove(starc+1, starc+4, strlen(starc)-3);
-			    }
-			}
-
-			if(nstar < 0) {
-			    if (cnt >= nargs) error(_("too few arguments"));
-			    nstar = cnt++;
-			}
-
-			if (Rf_strchr(starc+1, '*'))
-			    error(_("at most one asterisk `*' is supported in each conversion specification"));
-
-			_this = a[nstar];
-			if(TYPEOF(_this) == REALSXP) {
-			    _this = coerceVector(_this, INTSXP);
-			    PROTECT(a[nstar] = _this);
-			    nprotect++;
-			}
-			if(TYPEOF(_this) != INTSXP || LENGTH(_this) < 1)
-			    error(_("argument for `*' conversion specification must be a number"));
-		    }
-
-		    if (fmt[strlen(fmt) - 1] != '%') {
-			if(nthis < 0) {
-			    if (cnt >= nargs) error(_("too few arguments"));
-			    nthis = cnt++;
-			}
-			_this = a[nthis];
-
-			/* Now let us see if some minimal coercion 
-			   would be sensible. */
-			switch(fmt[strlen(fmt) - 1]) {
-			case 'd':
-			case 'i':
-			case 'x':
-			case 'X':
-			    if(TYPEOF(_this) == REALSXP) {
-				double r = REAL(_this)[0];
-				if((double)((int) r) == r) {
-				    _this = coerceVector(_this, INTSXP);
-				    PROTECT(a[nthis] = _this);
-				    nprotect++;
-				}
-			    }
-			    break;
-			case 'e':
-			case 'f':
-			case 'g':
-			case 'E':
-			case 'G':
-			    if(TYPEOF(_this) != REALSXP) {
-				PROTECT(tmp = lang2(install("as.double"), _this));
-				_this = eval(tmp, env);
-				UNPROTECT(1);
-				PROTECT(a[nthis] = _this);
-				nprotect++;
-				
-			    }
-			    break;
-			case 's':
-			    if(TYPEOF(_this) != STRSXP) {
-				PROTECT(tmp = 
-					lang2(install("as.character"), _this));
-				_this = eval(tmp, env);
-				UNPROTECT(1);
-				PROTECT(a[nthis] = _this);
-				nprotect++;
-			    }
-			    break;
-			default:
-			    break;
-			}
-		    }
-		}
-	    } else { /* not '%' : handle string part */
-		char *ch = Rf_strchr(formatString + cur, '%'); /* MBCS-aware
-								  version used */
-		if(ch) chunk = ch - formatString - cur;
-		else chunk = strlen(formatString + cur);
-	    }
-	}
-    }
-
-    /* Here we do the format analysis a row at a time */
+    /* We do the format analysis a row at a time */
     PROTECT(ans = allocVector(STRSXP, maxlen));
     for(ns = 0; ns < maxlen; ns++) {
 	outputString[0] = '\0';
@@ -285,14 +143,17 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 
 			if (Rf_strchr(starc+1, '*'))
-			    error(_("at most one asterisk `*' is supported in each conversion specification"));
+			    error(_("at most one asterisk '*' is supported in each conversion specification"));
 
 			_this = a[nstar];
-			if(need_coercion && TYPEOF(_this) == REALSXP)
+			if(ns == 0 && TYPEOF(_this) == REALSXP) {
 			    _this = coerceVector(_this, INTSXP);
+			    PROTECT(a[nstar] = _this);
+			    nprotect++;
+			}
 			if(TYPEOF(_this) != INTSXP || LENGTH(_this)<1 ||
 			   INTEGER(_this)[ns % LENGTH(_this)] == NA_INTEGER)
-			    error(_("argument for `*' conversion specification must be a number"));
+			    error(_("argument for '*' conversion specification must be a number"));
 			has_star = 1;
 			star_arg = INTEGER(_this)[ns % LENGTH(_this)];
 		    }
@@ -318,9 +179,9 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    fmtp = fmt2;
 			} else fmtp = fmt;
 			
-			if (need_coercion) {
+			if(ns == 0) {
 			    /* Now let us see if some minimal coercion 
-			       would be sensible. */
+			       would be sensible, but only do so once. */
 			    switch(fmtp[strlen(fmtp) - 1]) {
 			    case 'd':
 			    case 'i':
@@ -330,6 +191,8 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    double r = REAL(_this)[0];
 				    if((double)((int) r) == r)
 					_this = coerceVector(_this, INTSXP);
+				    PROTECT(a[nthis] = _this);
+				    nprotect++;
 				}
 				break;
 			    case 'e':
@@ -341,14 +204,17 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    PROTECT(tmp = lang2(install("as.double"), _this));
 				    _this = eval(tmp, env);
 				    UNPROTECT(1);
+				    PROTECT(a[nthis] = _this);
+				    nprotect++;
 				}
 				break;
 			    case 's':
 				if(TYPEOF(_this) != STRSXP) {
-				    PROTECT(tmp = 
-					    lang2(install("as.character"), _this));
+				    PROTECT(tmp = lang2(install("as.character"), _this));
 				    _this = eval(tmp, env);
 				    UNPROTECT(1);
+				    PROTECT(a[nthis] = _this);
+				    nprotect++;
 				}
 				break;
 			    default:
@@ -427,13 +293,14 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				break;
 			    }
 			case STRSXP:
-			    /* NA_STRING will be printed as `NA' */
+			    /* NA_STRING will be printed as 'NA' */
 			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
 			    ss = translateChar(STRING_ELT(_this, ns % thislen));
 			    if(fmtp[1] != 's') {
 				if(strlen(ss) > MAXLINE)
-				    warning(_("Likely truncation of character string"));
+				    warning(_("likely truncation of character string to %d characters"),
+					    MAXLINE-1);
 				snprintf(bit, MAXLINE, fmtp, ss);
 				bit[MAXLINE] = '\0';
 				ss = NULL;

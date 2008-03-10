@@ -1,6 +1,6 @@
 % File src/library/base/man/sprintf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sprintf}
@@ -75,10 +75,9 @@ gettextf(fmt, \dots, domain = NULL)
   arguments with \code{s} and by \code{\link{as.double}} for
   non-double arguments with \code{f, e, E, g, G}.  NB: the length is
   determined before conversion, so do not rely on the internal
-  coercion if this would change the length.  Also, if
-  \code{length(fmt) > 1} the coercion has to be done for each line of
-  output so it can be much more efficient not to rely on internal
-  coercion.  
+  coercion if this would change the length.  The coercion is done only
+  once, so if \code{length(fmt) > 1} then all elements must expect the
+  same types of arguments. 
   
   In addition, between the initial \code{\%} and the terminating
   conversion character there may be, in any order:
@@ -105,10 +104,11 @@ gettextf(fmt, \dots, domain = NULL)
   asterisk \code{*}: in this case an argument specifies the desired
   number.  A negative field width is taken as a '-' flag followed by a
   positive field width.  A negative precision is treated as if the
-  precision were omitted.
+  precision were omitted.  The argument should be integer, but a double
+  argument will be coerced to integer.
 
   There is a limit of 8192 bytes on elements of \code{fmt} and also on
-  strings includes by a \code{\%s} conversion specification.
+  strings included by a \code{\%s} conversion specification.
 }
 
 \value{
