@@ -36,7 +36,9 @@
 #include <direct.h>
 #include <time.h>
 #include "graphapp/ga.h"
-#define _WIN32_WINNT 0x0500 /* for GetLongPathName */
+#ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x0500 /* for GetLongPathName */
+#endif
 #include <windows.h>
 #include "rui.h"
 

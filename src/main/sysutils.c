@@ -138,7 +138,7 @@ FILE *R_fopen(const char *filename, const char *mode)
 
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
 {
-    static wchar_t filename[MAX_PATH+1];
+    static wchar_t filename[PATH_MAX+1];
     void *obj;
     const char *from = "", *inbuf;
     char *outbuf;
@@ -152,7 +152,7 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
 
     if(expand) inbuf = R_ExpandFileName(CHAR(fn)); else inbuf = CHAR(fn);
 
-    inb = strlen(inbuf)+1; outb = 2*(MAX_PATH+1);
+    inb = strlen(inbuf)+1; outb = 2*PATH_MAX+1;
     outbuf = (char *) filename;
     res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
     Riconv_close(obj);
@@ -1248,7 +1248,7 @@ void attribute_hidden InitTempDir()
     char *tmp, *tm, tmp1[PATH_MAX+11], *p;
     int len;
 #ifdef Win32
-    char tmp2[MAX_PATH];
+    char tmp2[PATH_MAX];
     int hasspace = 0;
 #endif
 
