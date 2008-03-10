@@ -468,7 +468,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	    	    leading <- showfrom-lastshown
 	    	    lastshown <- showto
                     srcline <- srclines[srcref[3]]
-                    while (length(dce) && length(grep("^[ \\t]*$", dce[1]))) {
+                    while (length(dce) && length(grep("^[[:blank:]]*$", dce[1]))) {
 	    		dce <- dce[-1]
 	    		leading <- leading - 1
 	    	    }
