@@ -881,8 +881,8 @@ Get @file{iconv.dll} from
 @file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
 
 @item
-The Tcl/Tk support files are in
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/R_Tcl.zip}: unzip this in
+The Tcl/Tk support files are in a zip file at
+@uref{http://www.stats.ox.ac.uk/pub/Rtools/}: unzip this in
 @var{R_HOME}, and it will add directories @file{@var{R_HOME}/Tcl},
 @file{@var{R_HOME}/Tcl/bin}, etc.
 
