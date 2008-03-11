@@ -2435,7 +2435,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (use_UTF8 && getCharEnc(STRING_ELT(old, 0)) == CE_UTF8) {
 	    s = CHAR(STRING_ELT(old, 0));
 	    nc = utf8towcs(NULL, s, 0);
-	    if (nc < 0) error(_("invalid UTF8 string 'old'"));
+	    if (nc < 0) error(_("invalid UTF-8 string 'old'"));
 	    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 	    utf8towcs(wc, s, nc + 1);
 	} else {
@@ -2454,7 +2454,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (use_UTF8 && getCharEnc(STRING_ELT(_new, 0)) == CE_UTF8) {
 	    s = CHAR(STRING_ELT(_new, 0));
 	    nc = utf8towcs(NULL, s, 0);
-	    if (nc < 0) error(_("invalid UTF8 string 'new'"));
+	    if (nc < 0) error(_("invalid UTF-8 string 'new'"));
 	    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 	    utf8towcs(wc, s, nc + 1);
 	} else {
