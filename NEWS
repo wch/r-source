@@ -361,6 +361,10 @@ NEW FEATURES
     	of Tk 8.5.  The tcltk demos have use of these widgets where
     	available.
 
+    o	write.table(row.names=FALSE) is faster in the unusual case of
+    	a data frame with few columns, millions of rows and automatic
+    	row names.  (Suggestion from Martin Morgan.)
+
 
 DEPRECATED & DEFUNCT
 

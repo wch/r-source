@@ -27,13 +27,18 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if(!is.data.frame(x) && !is.matrix(x)) x <- data.frame(x)
 
+    makeRownames <- is.logical(row.names) && !is.na(row.names) &&
+                    row.names==TRUE
+    makeColnames <- is.logical(col.names) && !is.na(col.names) &&
+                    col.names==TRUE
     if(is.matrix(x)) {
         ## fix up dimnames as as.data.frame would
         p <- ncol(x)
         d <- dimnames(x)
         if(is.null(d)) d <- list(NULL, NULL)
-        if(is.null(d[[1]])) d[[1]] <- seq_len(nrow(x))
-        if(is.null(d[[2]]) && p > 0) d[[2]] <-  paste("V", 1:p, sep="")
+        if (is.null(d[[1]]) && makeRownames) d[[1]] <- seq_len(nrow(x))
+        if(is.null(d[[2]]) && p > 0 && makeColnames)
+            d[[2]] <-  paste("V", 1:p, sep="")
         if(is.logical(quote) && quote)
             quote <- if(is.character(x)) seq_len(p) else numeric(0)
     } else {
@@ -53,8 +58,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                 quote <- ord[quote]; quote <- quote[quote > 0]
             }
         }
-        d <- dimnames(x)
-        if(is.null(d[[1]])) d[[1]] <- seq_len(nrow(x))
+        d <- list(if (makeRownames==TRUE) row.names(x) else NULL,
+                  if (makeColnames==TRUE) names(x) else NULL)
         p <- ncol(x)
     }
     nocols <- p==0
