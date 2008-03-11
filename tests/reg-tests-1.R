@@ -5098,11 +5098,11 @@ stopifnot(identical(attr(df, "foo"), 10))
 ## r<foo> NA warnings, and rnorm(*, mu = +- Inf) consistency
 op <- options(warn=2)
 m <- c(-Inf,Inf)
-stopifnot(rnorm(2, mean = m) == m)
+stopifnot(rnorm(2, mean = m) == m,
+          rexp (2, Inf) == 0)
 rt(1, Inf)
 R <- list(try(rnorm(2, numeric())),
           try(rexp (2, numeric())),
-          try(rexp (2, Inf)),# already gave warning
           try(rnorm(2, c(1,NA))),
           try(rnorm(1, sd = Inf)) )
 options(op)

@@ -26,9 +26,11 @@
 
 double rweibull(double shape, double scale)
 {
-    if (
-	!R_FINITE(shape) || !R_FINITE(scale) ||
-	shape <= 0. || scale <= 0.)	ML_ERR_return_NAN;
+    if (!R_FINITE(shape) || !R_FINITE(scale) || shape <= 0. || scale <= 0.) {
+	if(scale == 0.) return 0.;
+	/* else */
+	ML_ERR_return_NAN;
+    }
 
     return scale * pow(-log(unif_rand()), 1.0 / shape);
 }

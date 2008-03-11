@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2005 The R Development Core Team
+ *  Copyright (C) 2000--2008 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,8 +85,10 @@ double rgamma(double a, double scale)
 
     double e, p, q, r, t, u, v, w, x, ret_val;
 
-    if (!R_FINITE(a) || !R_FINITE(scale) || a < 0.0 || scale <= 0.0)
+    if (!R_FINITE(a) || !R_FINITE(scale) || a < 0.0 || scale <= 0.0) {
+	if(scale == 0.) return 0.;
 	ML_ERR_return_NAN;
+    }
 
     if (a < 1.) { /* GS algorithm for parameters a < 1 */
 	if(a == 0)

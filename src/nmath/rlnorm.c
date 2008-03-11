@@ -31,7 +31,7 @@
 
 double rlnorm(double logmean, double logsd)
 {
-    if(!R_FINITE(logmean) || !R_FINITE(logsd) || logsd < 0.)
+    if(ISNAN(logmean) || !R_FINITE(logsd) || logsd < 0.)
 	ML_ERR_return_NAN;
 
     return exp(rnorm(logmean, logsd));

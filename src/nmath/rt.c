@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2000-2008 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@
 
 double rt(double df)
 {
-    double num;
     if (ISNAN(df) || df <= 0.0)	ML_ERR_return_NAN;
 
     if(!R_FINITE(df))
@@ -38,7 +37,7 @@ double rt(double df)
     else {
 /* Some compilers (including MW6) evaluated this from right to left
 	return norm_rand() / sqrt(rchisq(df) / df); */
-	num = norm_rand();
+	double num = norm_rand();
 	return num / sqrt(rchisq(df) / df);
     }
 }

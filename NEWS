@@ -592,7 +592,8 @@ BUG FIXES
     o	r<foo>(), the random number generators, are now more consistent in
 	warning when NA's (specifically NaN's) are generated.
 
-    o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN.
+    o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN; similar
+	sensible changes are applied to rlnorm(), rexp(), etc.
 
 
 
