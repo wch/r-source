@@ -149,6 +149,10 @@ glm.fit(x, y, weights = rep(1, nobs),
   and \code{mustart} are evaluated in the same way as variables in
   \code{formula}, that is first in \code{data} and then in the
   environment of \code{formula}.
+
+  For the background to warning messages about \sQuote{fitted probabilities
+    numerically 0 or 1 occurred} for binomial GLMs, see Venables &
+  Ripley (2002, pp. 197--8).
 }
 \value{
   \code{glm} returns an object of class inheriting from \code{"glm"}
