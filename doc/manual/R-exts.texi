@@ -1365,6 +1365,14 @@ Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  A subset of the checking steps can be
 selected by adding flags.
 
+You do need to ensure that the package is checked in a suitable locale
+if it contains non-ASCII characters.  Such packages are likely to fail
+some of the checks in a @code{C} locale, and @command{R CMD check} will
+warn if it spots the problem.  You should be able to check any package
+in a UTF-8 locale (if one is available).  Beware that although a
+@code{C} locale is rarely used at a console, it may be the default if
+logging in remotely or for batch jobs.
+
 @node Building packages, Customizing checking and building, Checking packages, Checking and building packages
 @subsection Building packages
 @cindex Building packages
@@ -1435,11 +1443,10 @@ you will need to set it in the environment.
 @end quotation
 
 @quotation Note to Windows users
-@code{R CMD check} and @code{R CMD build} work well under Windows
-NT4/2000/XP/2003 but may not work correctly on Windows 95/98/ME because
-of problems with some versions of Perl on those limited OSes.
-Experiences vary.  To use them you will need to have installed the files
-for building source packages (which is the default).
+@code{R CMD check} and @code{R CMD build} need you to have installed the
+files for building source packages (which is the default), as well as
+the Windows toolset (see the ``R Installation and Administration''
+manual).
 @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages
