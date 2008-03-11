@@ -24,42 +24,41 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         stop("'quote' must be 'TRUE', 'FALSE' or numeric")
     ## quote column names unless quote == FALSE (see help).
     quoteC <- if(is.logical(quote)) quote else TRUE
+    qset <- is.logical(quote) && quote
 
     if(!is.data.frame(x) && !is.matrix(x)) x <- data.frame(x)
 
-    makeRownames <- is.logical(row.names) && !is.na(row.names) &&
-                    row.names==TRUE
-    makeColnames <- is.logical(col.names) && !is.na(col.names) &&
-                    col.names==TRUE
+    makeRownames <- isTRUE(row.names)
+    makeColnames <- isTRUE(col.names)
     if(is.matrix(x)) {
         ## fix up dimnames as as.data.frame would
         p <- ncol(x)
         d <- dimnames(x)
         if(is.null(d)) d <- list(NULL, NULL)
-        if (is.null(d[[1]]) && makeRownames) d[[1]] <- seq_len(nrow(x))
-        if(is.null(d[[2]]) && p > 0 && makeColnames)
-            d[[2]] <-  paste("V", 1:p, sep="")
-        if(is.logical(quote) && quote)
+        if(is.null(d[[1]]) && makeRownames) d[[1]] <- seq_len(nrow(x))
+        if(is.null(d[[2]]) && makeColnames && p > 0)
+            d[[2]] <- paste("V", 1:p, sep="")
+        if(qset)
             quote <- if(is.character(x)) seq_len(p) else numeric(0)
-    } else {
-        qset <- FALSE
-        if(is.logical(quote) && quote) {
-            quote <- if(length(x)) which(unlist(lapply(x, function(x) is.character(x) || is.factor(x)))) else numeric(0)
-            qset <- TRUE
-        }
-        ## fix up embedded matrix columns into separate cols
-        ismat <- sapply(x, function(z) length(dim(z)) == 2 &&  dim(z)[2] > 1)
-        if(any(ismat)) {
+    } else { ## data.frame
+        if(qset)
+            quote <- if(length(x))
+                which(unlist(lapply(x, function(x)
+                                    is.character(x) || is.factor(x))))
+            else numeric(0)
+        ## fix up embedded matrix columns into separate cols:
+        if(any(sapply(x, function(z) length(dim(z)) == 2 && dim(z)[2] > 1))) {
             c1 <- names(x)
-            x <- as.matrix(x)
-            if(qset) {
-                c2 <- colnames(x)
-                ord <- match(c1, c2, 0)
-                quote <- ord[quote]; quote <- quote[quote > 0]
-            }
+	    x <- as.matrix(x, rownames.force = makeRownames)
+	    d <- dimnames(x)
+	    if(qset) {
+		ord <- match(c1, d[[2]], 0)
+		quote <- ord[quote]; quote <- quote[quote > 0]
+	    }
         }
-        d <- list(if (makeRownames==TRUE) row.names(x) else NULL,
-                  if (makeColnames==TRUE) names(x) else NULL)
+        else
+            d <- list(if(makeRownames) row.names(x),
+                      if(makeColnames) names(x))
         p <- ncol(x)
     }
     nocols <- p==0
