@@ -19,8 +19,8 @@
 \alias{packageHasNamespace}
 \alias{parseNamespaceFile}
 \alias{registerS3method}
-\alias{setNamespaceInfo}
 \alias{registerS3methods}
+\alias{setNamespaceInfo}
 \alias{.__S3MethodsTable__.}
 \alias{.mergeExportMethods}
 \alias{.mergeImportMethods}
@@ -30,6 +30,7 @@ asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo(ns, which)
 importIntoEnv(impenv, impnames, expenv, expnames)
 isBaseNamespace(ns)
+isNamespace(ns)
 namespaceExport(ns, vars)
 namespaceImport(self, \dots)
 namespaceImportFrom(self, ns, vars, generics, packages)
