@@ -73,7 +73,7 @@ fm4 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
            subset = state == "treated")
 summary(fm4)
 ## add fitted lines to the plot
-conc <- seq(0, 1.2, len = 101)
+conc <- seq(0, 1.2, length.out = 101)
 lines(conc, predict(fm1, list(conc = conc)), lty = 1, col = 1)
 lines(conc, predict(fm2, list(conc = conc)), lty = 2, col = 2)
 legend(0.8, 120, levels(Puromycin$state),

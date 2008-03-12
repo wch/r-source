@@ -79,13 +79,13 @@ require(graphics)
 
 nus <- c(0:5, 10, 20)
 
-x <- seq(0, 4, len = 501)
+x <- seq(0, 4, length.out = 501)
 plot(x, x, ylim = c(0, 6), ylab = "", type = "n",
      main = "Bessel Functions  I_nu(x)")
 for(nu in nus) lines(x, besselI(x, nu=nu), col = nu+2)
 legend(0, 6, legend = paste("nu=", nus), col = nus+2, lwd = 1)
 
-x <- seq(0, 40, len=801); yl <- c(-.8, .8)
+x <- seq(0, 40, length.out = 801); yl <- c(-.8, .8)
 plot(x, x, ylim = yl, ylab = "", type = "n",
      main = "Bessel Functions  J_nu(x)")
 for(nu in nus) lines(x, besselJ(x, nu=nu), col = nu+2)
@@ -93,7 +93,7 @@ legend(32,-.18, legend = paste("nu=", nus), col = nus+2, lwd = 1)
 
 ## Negative nu's :
 xx <- 2:7
-nu <- seq(-10, 9, len = 2001)
+nu <- seq(-10, 9, length.out = 2001)
 op <- par(lab = c(16, 5, 7))
 matplot(nu, t(outer(xx, nu, besselI)), type = "l", ylim = c(-50, 200),
         main = expression(paste("Bessel ", I[nu](x), " for fixed ", x,

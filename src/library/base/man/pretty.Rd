@@ -82,14 +82,14 @@ pretty(pi)
 
 add.names <- function(v) { names(v) <- paste(v); v}
 utils::str(lapply(add.names(-10:20), pretty))
-utils::str(lapply(add.names(0:20),   pretty, min = 0))
-sapply(    add.names(0:20),   pretty, min = 4)
+utils::str(lapply(add.names(0:20),   pretty, min.n = 0))
+sapply(    add.names(0:20),   pretty, min.n = 4)
 
 pretty(1.234e100)
 pretty(1001.1001)
 pretty(1001.1001, shrink = .2)
 for(k in -7:3)
   cat("shrink=", formatC(2^k, width=9),":",
-      formatC(pretty(1001.1001, shrink = 2^k), width=6),"\n")
+      formatC(pretty(1001.1001, shrink.sml = 2^k), width=6),"\n")
 }
 \keyword{dplot}

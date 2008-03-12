@@ -102,9 +102,9 @@ str(ls)
 str(args) #- more useful than  args(args) !
 str(freeny)
 str(str)
-str(.Machine, digits = 20)
+str(.Machine, digits.d = 20)
 str( lsfit(1:9,1:9))
-str( lsfit(1:9,1:9), max = 1)
+str( lsfit(1:9,1:9), max.level = 1)
 str( lsfit(1:9,1:9), width = 60, strict.width = "cut")
 str( lsfit(1:9,1:9), width = 60, strict.width = "wrap")
 op <- options(); str(op) # save first;

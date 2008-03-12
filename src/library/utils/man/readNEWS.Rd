@@ -49,9 +49,9 @@ NEWStrA <- readNEWS(chop = "keepAll")
 object.size(NEWStr)
 object.size(NEWStrA) ## (no chopping) ==> about double the size
 
-str(NEWStr, max = 3)
+str(NEWStr, max.level = 3)
 
-str(NEWStr[[c("2.3", "2.3.1")]], max=2, vec.len=1)
+str(NEWStr[[c("2.3", "2.3.1")]], max.level=2, vec.len=1)
 
 NEWStr [[c("2.3", "2.3.1", "NEW FEATURES")]]
 NEWStrA[[c("2.4", "2.4.0", "NEW FEATURES")]]

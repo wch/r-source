@@ -37,7 +37,7 @@
 \examples{
 require(stats)
 basis <- ns(women$height, df = 5)
-newX <- seq(58, 72, len = 51)
+newX <- seq(58, 72, length.out = 51)
 # evaluate the basis at the new data
 predict(basis, newX)
 }

@@ -52,7 +52,7 @@ require(graphics)
 splineDesign(knots = 1:10, x = 4:7)
 
 knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)# 10 => 10-4 = 6 Basis splines
-x <- seq(min(knots)-1, max(knots)+1, length=501)
+x <- seq(min(knots)-1, max(knots)+1, length.out=501)
 bb <- splineDesign(knots, x=x, outer.ok = TRUE)
 
 plot(range(x), c(0,1), type="n", xlab="x", ylab="",

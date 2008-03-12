@@ -24,10 +24,10 @@ plot(age, birthw, col=as.numeric(sex), main="Dobson's Birth Weight Data")
 lines(lowess(age[sex=='F'], birthw[sex=='F']), col=1)
 lines(lowess(age[sex=='M'], birthw[sex=='M']), col=2)
 
-summary(l1 <- lm(birthw ~ sex + age), cor=TRUE)
-summary(l0 <- lm(birthw ~ sex + age -1), cor=TRUE)
+summary(l1 <- lm(birthw ~ sex + age), correlation=TRUE)
+summary(l0 <- lm(birthw ~ sex + age -1), correlation=TRUE)
 anova(l1,l0)
-summary(li <- lm(birthw ~ sex + sex:age -1), cor=TRUE)
+summary(li <- lm(birthw ~ sex + sex:age -1), correlation=TRUE)
 anova(li,l0)
 
 summary(zi <- glm(birthw ~ sex + age, family=gaussian()))
@@ -135,5 +135,6 @@ city  <- gl(3, 4, 12, labels=c("London","Manchester","Newcastle"))
 cbind(group, blood, city, counts) # gives internal codes for the factors
 
 summary(z1 <- glm(counts ~ group*(city + blood), family=poisson()))
-summary(z2 <- glm(counts ~ group*city + blood, family=poisson()), corr = TRUE)
+summary(z2 <- glm(counts ~ group*city + blood, family=poisson()),
+        correlation = TRUE)
 anova(z2, z1, test = "Chisq")

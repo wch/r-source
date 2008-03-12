@@ -40,7 +40,7 @@ periodicSpline(obj1, obj2, knots, period = 2*pi, ord = 4)
 }
 \examples{
 require(graphics); require(stats)
-xx <- seq( -pi, pi, len = 16 )[-1]
+xx <- seq( -pi, pi, length.out = 16 )[-1]
 yy <- sin( xx )
 frm <- data.frame( xx, yy )
 ( pispl <- periodicSpline( xx, yy, period = 2 * pi ) )
@@ -49,6 +49,6 @@ stopifnot(all.equal(pispl, pispl2))# pispl and pispl2 are the same
 
 plot( pispl )          # displays over one period
 points( yy ~ xx, col = "brown")
-plot( predict( pispl, seq(-3*pi, 3*pi, len = 101) ), type = "l" )
+plot( predict( pispl, seq(-3*pi, 3*pi, length.out = 101) ), type = "l" )
 }
 \keyword{models}

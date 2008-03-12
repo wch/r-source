@@ -107,7 +107,7 @@ seq(length.out= )
   \code{\link{col}}.
 }
 \examples{
-seq(0, 1, length=11)
+seq(0, 1, length.out=11)
 seq(stats::rnorm(20))
 seq(1, 9, by = 2) # match
 seq(1, 9, by = pi)# stay below

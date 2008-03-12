@@ -38,7 +38,7 @@ n <- length(dr <- c(VADeaths))
 nam <- names(VADeaths)
 d.VAD <- data.frame(
  Drate = dr,
- age = rep(ordered(rownames(VADeaths)),length=n),
+ age = rep(ordered(rownames(VADeaths)),length.out=n),
  gender= gl(2,5,n, labels= c("M", "F")),
  site =  gl(2,10,  labels= c("rural", "urban")))
 coplot(Drate ~ as.numeric(age) | gender * site, data = d.VAD,

@@ -48,7 +48,7 @@ par(opar)
 ## An example of polynomial regression
 plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
     las = 1, xlim = c(0, 25))
-d <- seq(0, 25, len = 200)
+d <- seq(0, 25, length.out = 200)
 for(degree in 1:4) {
   fm <- lm(dist ~ poly(speed, degree), data = cars)
   assign(paste("cars", degree, sep="."), fm)

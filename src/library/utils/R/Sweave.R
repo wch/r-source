@@ -639,7 +639,7 @@ RweaveLatexWritedoc <- function(object, chunk)
                                 object$styfile,
                                 "}\n\\\\begin{document}", sep=""),
                                 chunk[which])
-            linesout <- linesout[c(1:which, which, seq(from=which+1, len=length(linesout)-which))]
+            linesout <- linesout[c(1:which, which, seq(from=which+1, length.out=length(linesout)-which))]
             object$havesty <- TRUE
         }
     }

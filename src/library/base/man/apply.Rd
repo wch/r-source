@@ -87,12 +87,12 @@ stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))
 
 ## Example with different lengths for each call
 z <- array(1:24, dim=2:4)
-zseq <- apply(z, 1:2, function(x) seq(length=max(x)))
+zseq <- apply(z, 1:2, function(x) seq_len(max(x)))
 zseq         ## a 2 x 3 matrix
 typeof(zseq) ## list
 dim(zseq) ## 2 3
 zseq[1,]
-apply(z, 3, function(x) seq(length=max(x)))
+apply(z, 3, function(x) seq_len(max(x)))
 # a list without a dim attribute
 }
 \keyword{iteration}

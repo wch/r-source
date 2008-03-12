@@ -33,7 +33,7 @@ xyVector(x, y)
 \examples{
 require(stats); require(graphics)
 ispl <- interpSpline( weight ~ height, women )
-weights <- predict( ispl, seq( 55, 75, len = 51 ))
+weights <- predict( ispl, seq( 55, 75, length.out = 51 ))
 class( weights )
 plot( weights, type = "l", xlab = "height", ylab = "weight" )
 points( women$height, women$weight )

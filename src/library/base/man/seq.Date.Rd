@@ -43,7 +43,7 @@
 ## first days of years
 seq(as.Date("1910/1/1"), as.Date("1999/1/1"), "years")
 ## by month
-seq(as.Date("2000/1/1"), by="month", length=12)
+seq(as.Date("2000/1/1"), by="month", length.out=12)
 ## quarters
 seq(as.Date("2000/1/1"), as.Date("2003/1/1"), by="3 months")
 

@@ -45,7 +45,7 @@ plot(height ~ age, data = Loblolly, subset = Seed == 329,
 fm1 <- nls(height ~ SSasymp(age, Asym, R0, lrc),
            data = Loblolly, subset = Seed == 329)
 summary(fm1)
-age <- seq(0, 30, len = 101)
+age <- seq(0, 30, length.out = 101)
 lines(age, predict(fm1, list(age = age)))
 }
 \keyword{datasets}
