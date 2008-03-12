@@ -1,0 +1,603 @@
+# German translation of src/library/tools/po/R-tools.pot
+# Copyright (C) 2008 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.6.2\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-08-22 12:25\n"
+"PO-Revision-Date: 2008-03-09 11:51+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R Core <r-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+
+msgid "argument 'package' must be of length 1"
+msgstr "Argument 'package' muss Länge 1 haben"
+
+msgid "you must specify 'package' or 'dir'"
+msgstr "'package' oder 'dir' muss angegeben werden"
+
+msgid "directory '%s' does not exist"
+msgstr "Verzeichnis '%s' exisitiert nicht"
+
+msgid "neither code nor data objects found"
+msgstr "weder Code noch Datenobjekte gefunden"
+
+msgid "Undocumented code objects:"
+msgstr "Undokumentierte Code-Objekte:"
+
+msgid "Undocumented data sets:"
+msgstr "Undokumentierte Datansätze:"
+
+msgid "Undocumented S4 classes:"
+msgstr "Undokumentierte S4 Klassen:"
+
+msgid "Undocumented S4 methods:"
+msgstr "Undokumentierte S4 Methoden:"
+
+msgid "Prototyped non-primitives:"
+msgstr "Nicht-Primitive mit Prototypen:"
+
+msgid "Undocumented %s:"
+msgstr "Undokumentierte %s:"
+
+msgid "directory '%s' does not contain R code"
+msgstr "Verzeichnis '%s' enthält keinen R Code"
+
+msgid "directory '%s' does not contain Rd sources"
+msgstr "Verze<chnis '%s' enthält keine Rd Quellen"
+
+msgid "Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr "Funktionen bzw. Methoden mit Anleitung im Dokuobjekt '%s' jedoch nicht im Code"
+
+msgid "Data sets with usage in documentation object '%s' but not in code:"
+msgstr "Datensätze mit Anleitung im Dokuobjekt '%s', jedoch nicht im Code"
+
+msgid "Argument names in code not in docs:"
+msgstr "Argumentnamen im Code (ohne Doku):"
+
+msgid "Argument names in docs not in code:"
+msgstr "Argumentnamen in Doku (ohne Code):"
+
+msgid "Mismatches in argument names (first 3):"
+msgstr "Nichtpassende Argumentnamen (die ersten 3):"
+
+msgid "Mismatches in argument names:"
+msgstr "Nichtpassende Argumentnamen:"
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr "Unpassende Standardargumente (<die ersten 3):"
+
+msgid "Mismatches in argument default values:"
+msgstr "Unpassende Standardargumente"
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr "Unpassende Kodierung aus dem Dokuobjekt '%s'"
+
+msgid "Code: %s"
+msgstr "Code: %s"
+
+msgid "Docs: %s"
+msgstr "Doku: %s"
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr "S4 Klassendoku passt nicht zum Dokuobjekt '%s':"
+
+msgid "Slots for class '%s'"
+msgstr "Slots für Klasse '%s'"
+
+msgid "name"
+msgstr "Name"
+
+msgid "code"
+msgstr "Code"
+
+msgid "docs"
+msgstr "Doku"
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr "Datendoku passt nicht zum Dokuobjekt '%s':"
+
+msgid "Variables in data frame '%s'"
+msgstr "Variablen im Dataframe '%s'"
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr "Undokumentierte Argumente im Dokuobjekt '%s'"
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr "Doppelte Einträge zu \\argument im Dokuobjekt '%s'"
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr "Dokumentierte Objekte kommen in \\usage des Dokuobjekts '%s' nicht vor"
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr "Objekte kommen bei \\usage, aber nicht unter \\alias im Dokuobjekt '%s' vor"
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr "Ungültige \\usage Zeile im Dokuobjekt '%s' gefunden:"
+
+msgid "S3 methods shown with full name in documentation object '%s':"
+msgstr "S3 Methoden mit vollem Namen im Dokuobjekt '%s' gezeigt: "
+
+msgid "unable to create"
+msgstr "kann nicht erzeugen"
+
+msgid "unable to write code files"
+msgstr "kann keine Codedateien schreiben"
+
+msgid "you must specify 'package', 'dir' or 'file'"
+msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
+
+msgid "file '%s' does not exist"
+msgstr "Datei '%s' exisitert nicht"
+
+msgid "parse error in file '%s'"
+msgstr "Parsingfehler in Datei '%s'"
+
+msgid "Foreign function calls without 'PACKAGE' argument:"
+msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
+
+msgid "declared S3 method '%s' not found"
+msgstr "angekündigte S3 Methode '%s' nicht gefunden"
+
+msgid "cannot check R code installed as image"
+msgstr "kann R-Code, der als Image installiert ist, nicht überprüfen"
+
+msgid "parse error in examples from file '%s'"
+msgstr "Parsingfehler bei den Beispielen aus Datei '%s'"
+
+msgid "File '%s':"
+msgstr "Datei '%s':"
+
+msgid "found T/F in %s"
+msgstr "T/F in %s gedunden"
+
+msgid "Packages required but not available:"
+msgstr "Benötigte, aber nicht verfügbare Pakete:"
+
+msgid "Former standard packages required but now defunct:"
+msgstr "Ehemalige Standardpakete benötigt, die es nicht mehr gibt:"
+
+msgid "Vignette dependencies not required:"
+msgstr "nicht benötigte Vignettenabhängigkeiten "
+
+msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr "Abhängigkeiten einer Vignette (\\VignetteDepens[] Einträge) müssen in den DESCRIPTION-Feldern Depends/Sugggests/Imports enthalten sein"
+
+msgid "Namespace dependencies not required:"
+msgstr "Nicht benötigte Namensraumabhängigkeiten:"
+
+msgid "Package Rd sources were installed without preserving Rd file names."
+msgstr "Rd Quellen des Paketes wurden ohne Sicherung der Rd Dateinamen installiert."
+
+msgid "Please reinstall using a current version of R."
+msgstr "Bitte mit einer aktuellen Version von R neu installieren"
+
+msgid "Rd files with syntax errors:"
+msgstr "Rd Dateien mit Syntaxfehlern:"
+
+msgid "Rd files with likely Rd problems:"
+msgstr "Rd-Dateien, wahrscheinlich mit Rd-Problemen:"
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr "unbenutzter top-level Text in Datei '%s':"
+
+msgid "Following section '%s'"
+msgstr "Folgender Abscnitt '%s'"
+
+msgid "Rd files with unknown encoding:"
+msgstr "Rd-Dateien mit unbekannter Kodierung:"
+
+msgid "Rd files with invalid non-ASCII metadata:"
+msgstr "Rd-Dateien mit unzulässigen nicht-ASCII Metadaten:"
+
+msgid "Rd files with non-ASCII section titles:"
+msgstr "Rd-Dateien mit nicht-ASCII Abschnittsüberschriften:"
+
+msgid "Rd files with missing or empty '\\name':"
+msgstr "Rd-Dateien mit fehlendem oder leerem '\\name'"
+
+msgid "Rd files with missing or empty '\\title':"
+msgstr "Rd-Dateien mit fehlendem oder leerem '\\title'"
+
+msgid "Rd files without '%s':"
+msgstr "Rd-Dateien ohne '%s':"
+
+msgid "These entries are required in an Rd file."
+msgstr "Diese Einträge werden in einer Rd-Datei verlangt"
+
+msgid "Rd files with duplicate '%s':"
+msgstr "Rd-Dateien mit doppeltem '%s':"
+
+msgid "These entries must be unique in an Rd file."
+msgstr "Diese Einträge dürfenin einer Rd-Datei nur ein Mal vorkommen"
+
+msgid "Rd files with unknown sections:"
+msgstr "Rd-Dateien mit unbekannten Abschnitten:"
+
+msgid "Rd files with non-standard keywords:"
+msgstr "Rd-Dateien mit nicht-standard Schlüsselwörtern:"
+
+msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
+msgstr "Jeder '\\keyword'-Eintrag sollte ein Standardschlüsselwort (aus der Datei 'KEYWORDS' im R Doku Verzeichnis) angeben"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd-Dateien mit doppeltem Alias '%s':"
+
+msgid "Found invalid multi-byte character data."
+msgstr "Unzulässige multi-byte Zeichenkettendaten gefunden"
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr "kann nicht rekodieren, da iconv nicht verfügbar"
+
+msgid "Try running R in a single-byte locale."
+msgstr "Versuchen sie R in eine Lokalisierung mit 1-Byte-Zeichen auszuführen"
+
+msgid "Malformed package name"
+msgstr "ungeeigneter Paketname"
+
+msgid "Invalid package name."
+msgstr "unzulässiger Paketname"
+
+msgid "This is the name of a base package."
+msgstr "Dies ist der Name eines Basispakets"
+
+msgid "This name was used for a base package and is remapped by library()."
+msgstr "Dieser Name wurde für ein Basispaket genutzt und wird durch library() umgeleitet"
+
+msgid "Unknown encoding"
+msgstr "Unbekannte Kodierung"
+
+msgid "Fields with non-ASCII tags:"
+msgstr "Felder mit nicht-ASCII Marken:"
+
+msgid "All field tags must be ASCII."
+msgstr "Alle Feldmarken müssen ASCII sein"
+
+msgid "Fields with non-ASCII values:"
+msgstr "Felder mit nicht-ASCII Werten:"
+
+msgid "These fields must have ASCII values."
+msgstr "Diese Felder müssen ASCII Werte haben."
+
+msgid "Required fields missing:"
+msgstr "Benötigte Felder fehlen:"
+
+msgid "Malformed package version."
+msgstr "Falsch formatierte 'paket version'."
+
+msgid "Malformed maintainer field."
+msgstr "Falsch formatiertes 'maintainer' Feld"
+
+msgid "Malformed Depends or Suggests or Imports or Enhances field."
+msgstr "Falsch formatiertes Feld für 'Depends', 'Suggests', 'Imports' oder 'Enhances'."
+
+msgid "Offending entries:"
+msgstr "Problematische Einträge:"
+
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr "Einträge müssen Paketnamen sein, optional gefolgt von '<=', '>=' oder Leerraum,s owie einer gültigen Versionsnummer in Klammern "
+
+msgid "Entries with infeasible comparison operator:"
+msgstr "Einträgen mit falschen Vergleichsoperator:"
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr "Nur die Operatoren '<=' und '>=' sind zulässig."
+
+msgid "Entries with infeasible version number:"
+msgstr "Einträge mit unbrauchbarer Versionsnummer:"
+
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr "Versionsnummern müssen Folgen von mindestens zwei nicht-negativen, ganzen Zahlen , getrennt durch einen '.' oder einen '-', sein"
+
+msgid "Package name and namespace differ."
+msgstr "Paketname und Namensraum unterscheiden sich"
+
+msgid "Invalid Priority field."
+msgstr "Unzulässiges Feld für 'Priority'"
+
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
+msgstr "Pakete mit Prioritäten 'base', 'recommended' oder 'defunct-base' müssen R bereits bekannt sein"
+
+msgid "See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual."
+msgstr "Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R packages' im 'Writing R Extension' Handbuch"
+
+msgid "Encoding '%s' is not portable"
+msgstr "Kodierung '%s' ist nicht portabel"
+
+msgid "Unknown encoding with non-ASCII data"
+msgstr "Unbekannte Kodierung mit nicht-ASCII Daten"
+
+msgid "Non-portable flags in variable '%s':"
+msgstr "Nicht portierbare Flags in der Variablen '%s'"
+
+msgid "Missing link(s) in documentation object '%s':"
+msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
+
+msgid "found %s"
+msgstr "'%s' gefunden"
+
+msgid "package 'methods' is used but not declared"
+msgstr "Paket 'methods' wird benutzt, wurde aber nicht angemeldet"
+
+msgid "'::' or ':::' imports not declared from:"
+msgstr "'::' oder ':::' importieren unangemeldet aus:"
+
+msgid "'library' or 'require' calls not declared from:"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "Argument 'lines' muss ein Charaktervektor sein"
+
+msgid "argument 'file' must be a character string or connection"
+msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
+
+msgid "missing/empty \\name field in '%s'"
+msgstr "fehlendes oder leeres \\name Feld in '%s'"
+
+msgid "Rd files must have a non-empty \\name."
+msgstr "Rd-Dateien müssen einen nicht-leeren \\name Eintrag besitzen"
+
+msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
+msgstr "Siehe Kapitel 'Writing R documentation' im Handbuch 'Writing R Extensions'"
+
+msgid "missing/empty \\title field in '%s'"
+msgstr "fehlendes bzw. leeres \\title Feld in '%s'"
+
+msgid "Rd files must have a non-empty \\title."
+msgstr "Rd-Dateien dürfen kein leeres \\title Feld haben"
+
+msgid "argument 'outFile' must be a character string or connection"
+msgstr "Argument 'outfile' muss eine Zeichenkette oder eine Verbindung sein"
+
+msgid "directory '%s' does not contain Rd objects"
+msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
+
+msgid "unterminated section '%s'"
+msgstr "unbeendeter Abschnitt '%s'"
+
+msgid "incomplete section 'section{%s}'"
+msgstr "unvollständiger Abschnitt 'section[%s]'"
+
+msgid "unterminated section 'section{%s}'"
+msgstr "unbeendeter Abschnitt 'section[%s]'"
+
+msgid "argument 'txt' must be a character string"
+msgstr "Argument 'txt' muss eine Zeichenkette sein"
+
+msgid "unmatched \\item name in '\\item{%s'"
+msgstr "kein passender \\item Name in '\\item[%s'"
+
+msgid "no \\item description for item '%s'"
+msgstr "keine \\item Beschreibung für Item '%s'"
+
+msgid "unmatched \\item description for item '%s'"
+msgstr "keine passende \\item Beschreibung für Item '%s'"
+
+msgid "unclosed \\link"
+msgstr "nicht abgeschlossener \\link"
+
+msgid "unclosed \\%s"
+msgstr "nicht geschlossener \\%s"
+
+msgid "Rd syntax errors found"
+msgstr "Rd Syntaxfehler aufgetreten"
+
+msgid "Syntax error in documentation object '%s':"
+msgstr "Syntaxfehler im Dokuobjekt '%s':"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
+
+msgid "unable to create temp directory"
+msgstr "kann kein temp Verzeichnis erzeugen"
+
+msgid "--- running texi2dvi on vignettes"
+msgstr "--- führe texi2dvi auf Vignetten aus"
+
+msgid "processing vignette '%s' failed with diagnostics:\n%s"
+msgstr "Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n%s"
+
+msgid "running 'make' failed"
+msgstr "Ausführen von 'make ' fehlgeschlagen"
+
+msgid "cannot read index information in file '%s'"
+msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
+
+msgid "argument 'vignette' must be of length 1"
+msgstr "Argument 'vignette' muss Länge 1 haben"
+
+msgid "file '%s' not found"
+msgstr "Datei '%s' nicht gefunden"
+
+msgid "Invalid DESCRIPTION file"
+msgstr "Unzulässige DESCRIPTION Datei"
+
+msgid "*** someone has corrupted the Built field in package '%s' ***"
+msgstr "**+ jemand hat das 'Built' Feld im Paket '%s' beschädigt ***"
+
+msgid "cannot open directory '%s'"
+msgstr "kann Verzeichnis '%s' nicht öffnen"
+
+msgid "WARNING: 'Depends' entry has multiple dependencies:"
+msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten:"
+
+msgid ","
+msgstr ","
+
+msgid "only the first will be used"
+msgstr "nur die erste wird genutzt"
+
+msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr "Warnung: nutzlose Abhängigkeit von 'R' ohne Versionsangabe ignoriert"
+
+msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr "kann lokalisationsabhängige Sortierung nicht mit LC_COLLATE abschalten"
+
+msgid "duplicated files in '%s' field:"
+msgstr "doppelte Dateien in Feld '%s':"
+
+msgid "files in '%s' field missing from '%s':"
+msgstr "fehlende  Dateien im '%s' Feld von '%s':"
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr "fehlende Dateien in '%s' im Feld '%s':"
+
+msgid "unable to create '%s'"
+msgstr "kann '%s' nicht erzeugen"
+
+msgid "unable to re-encode '%s'"
+msgstr "kann '%s' nicht rekodieren"
+
+msgid "unable to copy INDEX to '%s'"
+msgstr "kann INDEX nicht nach '%s' kopieren"
+
+msgid "cannot create directory '%s'"
+msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+
+msgid "processing '"
+msgstr "Bearbeiten von'"
+
+msgid "'"
+msgstr "'"
+
+msgid "file '%s' was not created"
+msgstr "Datein '%s' wurde nicht erzeugt"
+
+msgid "cannot copy '%s' to '%s'"
+msgstr "kann '%s' nicht nach '%s' kopieren"
+
+msgid "missing 'DESCRIPTION.in' for package '%s'"
+msgstr "'DESCRIPTION.in' fehlt für Paket '%s'"
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr "Warnung: 'Depends' Feld in 'DESCRIPTION' falsch gebildet"
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr "Fehler: dies ist R Version %s, Paket '%s' benötigt R %s %s"
+
+msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+msgstr "Fehler: dies ist R Version %s, Bündel '%s' benötigt R %s %s"
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr "Fehler: Dies ist R Version %s, benötigt wird R %s %s"
+
+msgid "there is no package called '%s'"
+msgstr "es gibt kein Paket names '%s'"
+
+msgid "name space must not be loaded."
+msgstr "Namensraum darf nicht geladen werden"
+
+msgid "package '%s' has no .rda file"
+msgstr "Paket  '%s' enthält keine .rda Datei"
+
+msgid "package seems to be using lazy loading for data already"
+msgstr "Paket scheint für Daten bereits lazyloading zu nutzen"
+
+msgid "object(s) %s are created by more than one data call"
+msgstr "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+msgid "source list must have names for all elements"
+msgstr "Quellenliste muss Namen für alle Elemente besitzen"
+
+msgid "source must be an environment or a list"
+msgstr "Quelle muss eine Umgebung oder eine Liste sein"
+
+msgid "this cannot be used for package 'base'"
+msgstr "dies kann für Paket 'base' nicht benutzt werden"
+
+msgid "package contains no R code"
+msgstr "Paket enthält keine R Kode"
+
+msgid "package seems to be using lazy loading already"
+msgstr "Paket nutzt lazs loading anscheinend bereits"
+
+msgid "cannot update HTML package index"
+msgstr "kann HTML Paketindex nicht aktualisieren"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr "'DESCRIPTION' hat ein 'Encoding' Feld und rekodieren ist nicht möglich"
+
+msgid "cannot create HTML package index"
+msgstr "kann den HTML Paketindex nicht erzeugen"
+
+msgid "argument 'pkg' must be of length 1"
+msgstr "Argument 'pkg' muss Länge 1 haben"
+
+msgid "package '%s' was not found"
+msgstr "Paket '%s' nicht gefunden"
+
+msgid "bad operand"
+msgstr "ungeeigneter Operator"
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr "Abhängigkeiten von Paket '%s' auf minimale Menge reduziert."
+
+msgid "argument '%s' must be a character string or connection"
+msgstr "Argument '%s' muss eine Zeichenkette oder eine Verbindung sein"
+
+msgid "unimplemented encoding"
+msgstr "nicht implementierte Kodierung"
+
+msgid "test '%s' is not available"
+msgstr "Test '%s' nicht verfügbar"
+
+msgid "no or more than one match"
+msgstr "keine oder mehr als eine Übereinstimmung"
+
+msgid "argument 'x' must be a character vector"
+msgstr "Argument 'x' muss eine Charaktervektor sein"
+
+msgid "argument 'delim' must specify two characters"
+msgstr "Argument 'delim' muss zwei Charakter spezifizieren"
+
+msgid "only Rd syntax is currently supported"
+msgstr "momentan nur Rd Syntax unterstützt"
+
+msgid "running 'texi2dvi' on '%s' failed"
+msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen"
+
+msgid "unable to run %s on '%s'"
+msgstr "kann %s nicht für '%s' ausführen"
+
+msgid "file '%s' is not in valid DCF format"
+msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
+
+msgid "cannot source package code"
+msgstr "kann Paketquelltet nicht einlesen"
+
+msgid "Call sequence:"
+msgstr "Aufrufsequenz:"
+
+msgid "Processing packages:"
+msgstr "Bearbeitete Pakete:"
+
+msgid "done"
+msgstr "fertig"
+
+msgid "parsing '%s'"
+msgstr "parse '%s'"
+
+msgid        "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] "Warnung in Datei '%s'"
+msgstr[1] "Warnungen in Datei '%s'"
+
+msgid        "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] "Evtl. globales 'T' oder 'F' in der folgenden Funktion gefunden:"
+msgstr[1] "Evtl. globales 'T' oder 'F' in den folgenden Funktionen gefunden:"
+
+msgid        "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural "Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] "Evtl. globales 'T' oder 'F' in folgender Rd Beispieldatei gefunden:"
+msgstr[1] "Evtl. globales 'T' oder 'F' in folgenden Rd Beispieldateien gefunden:"
