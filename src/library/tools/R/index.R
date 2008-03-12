@@ -20,8 +20,8 @@
 ## Currently indices are represented as 2-column character matrices.
 ## To 'merge' indices in the sense of using the values from index B for
 ## all keys in index A also present in index B, we currently use
-##   idx <- match(indA[ , 1L], indB[ , 1L], 0)
-##   indA[which(idx != 0), 2L] <- indB[idx, 2L]
+##   idx <- match(indA[ , 1L], indB[ , 1L], 0L)
+##   indA[which(idx != 0L), 2L] <- indB[idx, 2L]
 ## which could be abstracted into a function .mergeIndexEntries().
 ## </NOTE>
 
@@ -46,12 +46,12 @@ function(dataDir, contents)
              domain = NA)
     ## dataFiles <- list_files_with_type(dataDir, "data")
     dataTopics <- list_data_in_pkg(dataDir=dataDir)
-    if(!length(dataTopics)) return(matrix("", 0, 2))
+    if(!length(dataTopics)) return(matrix("", 0L, 2L))
     names(dataTopics) <- paste(names(dataTopics), "/", sep="")
     datasets <- unlist(dataTopics)
     ## it is possible to have topics that create no object:
     ## BioC's makecdfenv did.
-    if(!length(datasets)) return(matrix("", 0, 2))
+    if(!length(datasets)) return(matrix("", 0L, 2L))
     names(datasets) <- sub("/[^/]*$", "", names(datasets))
     datasets <- sort(datasets)
     dataIndex <- cbind(datasets, "")
@@ -59,8 +59,8 @@ function(dataDir, contents)
     if(length(datasets) && NROW(contents)) {
         aliasIndices <-
             rep(1 : NROW(contents), sapply(contents$Aliases, length))
-        idx <- match(datasets, unlist(contents$Aliases), 0)
-        dataIndex[which(idx != 0), 2L] <-
+        idx <- match(datasets, unlist(contents$Aliases), 0L)
+        dataIndex[which(idx != 0L), 2L] <-
             contents[aliasIndices[idx], "Title"]
     }
     if(length(datasets))
@@ -93,7 +93,7 @@ function(demoDir)
              domain = NA)
     demoFiles <- list_files_with_type(demoDir, "demo")
     demoTopics <- unique(basename(file_path_sans_ext(demoFiles)))
-    if(!length(demoTopics)) return(matrix("", 0, 2))
+    if(!length(demoTopics)) return(matrix("", 0L, 2L))
     demoIndex <- cbind(demoTopics, "")
     if(file_test("-f", INDEX <- file.path(demoDir, "00Index"))) {
         demoEntries <- tryCatch(read.00Index(INDEX),
@@ -103,8 +103,8 @@ function(demoDir)
                              INDEX),
                     domain = NA)
         else {
-            idx <- match(demoTopics, demoEntries[ , 1L], 0)
-            demoIndex[which(idx != 0), 2L] <- demoEntries[idx, 2L]
+            idx <- match(demoTopics, demoEntries[ , 1L], 0L)
+            demoIndex[which(idx != 0L), 2L] <- demoEntries[idx, 2L]
         }
     }
     dimnames(demoIndex) <- NULL
@@ -142,11 +142,11 @@ function(demoDir)
 print.check_demo_index <-
 function(x, ...)
 {
-    if(length(x$missing_from_index) > 0) {
+    if(length(x$missing_from_index) > 0L) {
         writeLines("Demos with missing or empty index information:")
         print(x$missing_from_index)
     }
-    if(length(x$missing_from_demos) > 0) {
+    if(length(x$missing_from_demos) > 0L) {
         writeLines("Demo index entries without corresponding demo:")
         print(x$missing_from_demos)
     }
@@ -163,9 +163,10 @@ function(contents, packageName)
     ## As from 2.3.0 the installation directory is no longer recorded,
     ## but the format is kept for back-compatibility.
 
-    dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), ncol = 3)
+    dbAliases <- dbConcepts <- dbKeywords <-
+        matrix(character(), ncol = 3L)
 
-    if((nr <- NROW(contents)) > 0) {
+    if((nr <- NROW(contents)) > 0L) {
         ## IDs are used for indexing the Rd objects in the help.search
         ## db.
         IDs <- seq_len(nr)
@@ -198,30 +199,30 @@ function(contents, packageName)
         ## package the object comes from.  The latter is useful when
         ## subscripting the help.search db according to package.
         dbBase <- cbind(packageName, "", IDs, base,
-                        topic = sapply(aliases, "[", 1), encoding)
+                        topic = sapply(aliases, "[", 1L), encoding)
         ## If there are no aliases at all, cbind() below would give
-        ## matrix(packageName, nc = 1).  (Of course, Rd objects without
-        ## aliases are useless ...)
-        if(length(tmp <- unlist(aliases)) > 0)
+        ## matrix(packageName, ncol = 1L).  (Of course, Rd objects
+        ## without aliases are useless ...)
+        if(length(tmp <- unlist(aliases)) > 0L)
             dbAliases <-
                 cbind(tmp, rep.int(IDs, sapply(aliases, length)),
                       packageName)
         ## And similarly if there are no keywords at all.
-        if(length(tmp <- unlist(keywords)) > 0)
+        if(length(tmp <- unlist(keywords)) > 0L)
             dbKeywords <-
                 cbind(tmp, rep.int(IDs, sapply(keywords, length)),
                       packageName)
         ## Finally, concepts are a feature added in R 1.8 ...
         if("Concepts" %in% colnames(contents)) {
             concepts <- contents[, "Concepts"]
-            if(length(tmp <- unlist(concepts)) > 0)
+            if(length(tmp <- unlist(concepts)) > 0L)
                 dbConcepts <-
                     cbind(tmp, rep.int(IDs, sapply(concepts, length)),
                           packageName)
         }
     }
     else {
-        dbBase <- matrix(character(), ncol = 7)
+        dbBase <- matrix(character(), ncol = 7L)
     }
 
     colnames(dbBase) <-
