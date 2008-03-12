@@ -20,7 +20,7 @@
  *  SYNOPSIS
  *
  *    #include <Rmath.h>
- *    double lgammafn_sign(double x, int *signgam);
+ *    double lgammafn_sign(double x, int *sgn);
  *    double lgammafn(double x);
  *
  *  DESCRIPTION
@@ -41,7 +41,7 @@
 
 #include "nmath.h"
 
-double lgammafn_sign(double x, int *signgam)
+double lgammafn_sign(double x, int *sgn)
 {
     double ans, y, sinpiy;
 
@@ -62,14 +62,14 @@ double lgammafn_sign(double x, int *signgam)
 #define dxrel 1.490116119384765696e-8
 #endif
 
-    if (signgam != NULL) *signgam = 1;
+    if (sgn != NULL) *sgn = 1;
 
 #ifdef IEEE_754
     if(ISNAN(x)) return x;
 #endif
 
     if (x < 0 && fmod(floor(-x), 2.) == 0)
-	if (signgam != NULL) *signgam = -1;
+	if (sgn != NULL) *sgn = -1;
 
     if (x <= 0 && x == trunc(x)) { /* Negative integer argument */
 	ML_ERROR(ME_RANGE, "lgamma");
