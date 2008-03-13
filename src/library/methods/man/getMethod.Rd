@@ -161,7 +161,7 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
 }
 \value{
   The call to \code{selectMethod} or \code{getMethod} returns a
-  \code{\link{MethodDefinition-class}} object, the selected method, if
+  \code{\linkS4class{MethodDefinition}} object, the selected method, if
   a unique selection exists.
   (This class extends \code{function}, so you can use the result
   directly as a function if that is what you want.)

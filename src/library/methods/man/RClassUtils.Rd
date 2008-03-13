@@ -286,7 +286,7 @@ setDataPart(object, value)
       directly or indirectly.
 
       This can be either a logical value or an object of class
-      \code{\link{SClassExtension-class}} containing various
+      \code{\linkS4class{SClassExtension}} containing various
       functions to test and/or coerce the relationship.
     }
 
@@ -313,7 +313,7 @@ setDataPart(object, value)
     \item{\code{metaNameUndo}}{
       As its name implies, this function undoes the
       name-mangling used to produce meta-data object names, and
-      returns a object of class \code{\link{ObjectsWithPackage-class}}.
+      returns a object of class \code{\linkS4class{ObjectsWithPackage}}.
     }
 
     \item{\code{requireMethods}:}{

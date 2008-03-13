@@ -273,8 +273,8 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
     \item{\code{asMethodDefinition}:}{
-      Turn a function definition into a
-      \code{\link{MethodDefinition-class}} object, corresponding to the
+      Turn a function definition into an object of class
+      \code{\linkS4class{MethodDefinition}}, corresponding to the
       given \code{signature} (by default generates a default method
       with empty signature).  The definition is sealed according to
       the \code{sealed} argument.
@@ -291,8 +291,8 @@ addNextMethod(method, f, mlist, optional, envir)
     \item{\code{makeGeneric}:}{
       Makes a generic function object corresponding to the given
       function name, optional definition and optional default method.
-      Other arguments supply optional elements for the slots of
-      \code{\link{genericFunction-class}}.
+      Other arguments supply optional elements for the slots of class
+      \code{\linkS4class{genericFunction}}.
     }
 
     \item{\code{makeStandardGeneric}:}{

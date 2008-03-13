@@ -37,11 +37,12 @@ getClassDef(Class, where, package)
 }
 \value{
   The object defining the class.  This is an object of class
-  \code{"classRepEnvironment"}.  However, \emph{do not} deal with the
-  contents of the object directly unless you are very sure you know what
-  you're doing.  Even then, it is nearly always better practice to use
-  functions such as \code{\link{setClass}} and \code{\link{setIs}}.
-  Messing up a class object will cause great confusion.
+  \code{\linkS4class{classRepresentation}}.  However, \emph{do not} deal
+  with the contents of the object directly unless you are very sure you
+  know what you're doing.  Even then, it is nearly always better
+  practice to use functions such as \code{\link{setClass}} and
+  \code{\link{setIs}}.  Messing up a class object will cause great
+  confusion.
 }
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the

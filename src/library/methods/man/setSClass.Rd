@@ -7,8 +7,8 @@
 \alias{makeClassRepresentation}
 \title{Create a Class Definition}
 \description{
-  Constructs a \code{\link{classRepresentation-class}} object to
-  describe a particular class.  Mostly a utility function, but you can
+  Constructs an object of class \code{\linkS4class{classRepresentation}}
+  to describe a particular class.  Mostly a utility function, but you can
   call it to create a class definition without assigning it, as
   \code{\link{setClass}} would do.
 }

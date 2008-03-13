@@ -41,7 +41,8 @@
   the current information will be obtainable in the future.
 }
 \seealso{ Function \code{\link{linearizeMlist}} for the computation,
-  and \code{\link{MethodsList-class}} for the original, recursive form.
+  and class \code{\linkS4class{MethodsList}} for the original, recursive
+  form.
 }
 
 \keyword{classes}

@@ -46,7 +46,7 @@
 
     \item{.Object = "traceable"}{
       Objects of a class that extends \code{traceable} are used to
-      implement debug tracing (see \link{traceable-class} and
+      implement debug tracing (see class \linkS4class{traceable} and
       \code{\link{trace}}).
 
       The \code{initialize} method for these classes takes special
@@ -104,7 +104,7 @@
   able to set slots specifically.  If you want \code{x} to override the
   slot information, the beginning of your method definition might look
   something like this:
-  
+
   \preformatted{
     function(.Object, x, ...) \{
       Object <- callNextMethod(.Object, ...)

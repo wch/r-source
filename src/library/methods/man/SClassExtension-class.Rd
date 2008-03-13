@@ -52,7 +52,7 @@
 }
 \seealso{
   \code{\link{is}},
-  \code{\link{as}}, and
-  \code{\link{classRepresentation-class}}.
+  \code{\link{as}}, and the
+  \code{\linkS4class{classRepresentation}} class.
 }
 \keyword{classes}

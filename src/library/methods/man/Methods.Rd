@@ -105,7 +105,7 @@ the full list of superclasses for this class.
 The superclass list is included in the definition of the class that is
 cached during the R session.
 Each element of the list describes the nature of the relationship (see
-\link{SClassExtension-class} for details).
+\linkS4class{SClassExtension} for details).
 Included in the element is a \code{distance} slot giving a numeric
 distance between the two classes.
 The distance currently is the path length for the relationship:

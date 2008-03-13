@@ -56,8 +56,8 @@ isClassUnion(Class)
 
   The different behavior for class unions is made possible because the
   class definition object for class unions has itself a special class,
-  \code{"ClassUnionRepresentation"}, an extension of
-  \code{"classRepresentation"} (see \link{classRepresentation-class}).
+  \code{"ClassUnionRepresentation"}, an extension of class
+  \code{\linkS4class{classRepresentation}}.
   }
 
 \references{

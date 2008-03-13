@@ -10,7 +10,7 @@
 \title{Class "signature" For Method Definitions}
 \description{This class represents the mapping of some of the formal
   arguments of a function onto the names of some classes.  It is used as
-  one of two slots in the \code{\link{MethodDefinition-class}}.
+  one of two slots in the \code{\linkS4class{MethodDefinition}} class.
 }
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("signature",
@@ -36,6 +36,7 @@ Class \code{"vector"}, by class "character".
   }
 }
 \seealso{
- \code{\link{MethodDefinition-class}} for the use of this class }
+  class \code{\linkS4class{MethodDefinition}} for the use of this class.
+}
 
 \keyword{classes}

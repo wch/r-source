@@ -35,8 +35,8 @@
 }
 \seealso{
   Function \code{\link{MethodsListSelect}} uses the objects;
-  see \code{\link{MethodsList-class}} for the non-empty methods list
-  objects.
+  see the class \code{\linkS4class{MethodsList}} for the non-empty
+  methods list objects.
 }
 \keyword{classes}
 \keyword{internal}

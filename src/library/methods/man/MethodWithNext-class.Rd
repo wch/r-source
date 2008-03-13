@@ -24,9 +24,9 @@
     \item{\code{target}:}{Object of class \code{"signature"}, from class
       \code{"MethodDefinition"}}
     \item{\code{defined}:}{Object of class \code{"signature"}, from
-      class \code{"MethodDefinition"}} 
+      class \code{"MethodDefinition"}}
       \item{\code{generic}:}{Object of class \code{"character"}; the function
-        for which the method was created. }  
+        for which the method was created. }
   }
 }
 \section{Extends}{
@@ -45,7 +45,7 @@
   }
 }
 
-\seealso{  \code{\link{callNextMethod}}, and 
- \code{\link{MethodDefinition-class}}. }
-
+\seealso{  \code{\link{callNextMethod}}, and
+  class \code{\linkS4class{MethodDefinition}}.
+}
 \keyword{classes}

@@ -30,7 +30,7 @@
         signature for which a method was found.  If the method was
         inherited, this will not be identical to \code{target}. }
       \item{\code{generic}:}{Object of class \code{"character"}; the function
-        for which the method was created. }  
+        for which the method was created. }
   }
 }
 \section{Extends}{
@@ -46,11 +46,11 @@
   the method was originally specified (that is, the one that appeared
   in some call to \code{\link{setMethod}}).
 }
-\seealso{class \code{\link{MethodsList-class}} for the objects
+\seealso{class \code{\linkS4class{MethodsList}} for the objects
   defining sets of methods associated with a particular generic
   function.  The individual method definitions stored in these objects
   are from class \code{MethodDefinition}, or an extension.
-  \code{\link{MethodWithNext-class}} for an extension used by
+  Class \code{\linkS4class{MethodWithNext}} for an extension used by
   \code{\link{callNextMethod}}.
 }
 \keyword{classes}

@@ -12,8 +12,8 @@
   class of R objects, usually referred to as an S4 class, to
   distinguish them from the informal S3 classes.
   This document gives an overview of S4 classes; for
-  details of the  class representation objects themselves, see
-  \code{class?classRepresentation} (\code{\link{classRepresentation-class}}).
+  details of the class representation objects, see help for the class
+  \code{\linkS4class{classRepresentation}}.}
 }
 \details{
   When a class is defined, an object is stored that contains the
@@ -65,7 +65,7 @@
       without necessarily restricting how the behavior is implemented.
       Virtual class definitions may if you want include
       slots (to provide some common behavior without fully defining
-      the object---see \link{traceable-class} for an example).
+      the object---see the class \code{\linkS4class{traceable}} for an example).
 
       A simple and useful form of virtual class is the \emph{class
         union}, a virtual class that is defined in a call to
@@ -120,12 +120,11 @@
 
       The information about the relation between a class and a
       particular superclass is encoded as an object of class
-      \code{"SClassExtension"} (see \link{SClassExtension-class}).  A
-      list of such objects for the superclasses (and sometimes for the
-      subclasses) is included in the metadata object defining the
-      class.  If you need to compute with these objects (for example,
-      to compare the distances), call the function
-      \code{\link{extends}} with argument \code{fullInfo=TRUE}.
+      \code{\linkS4class{SClassExtension}}).  A list of such objects for
+      the superclasses (and sometimes for the subclasses) is included in
+      the metadata object defining the class.  If you need to compute
+      with these objects (for example, to compare the distances), call
+      the function \code{\link{extends}} with argument \code{fullInfo=TRUE}.
 
     }
     \item{Objects:}{

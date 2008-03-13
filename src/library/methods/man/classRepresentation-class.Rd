@@ -20,7 +20,7 @@
       corresponding slot names.}
     \item{\code{contains}:}{A named list of the classes this class
       \sQuote{contains}; the elements of the list are objects of
-      \code{\link{SClassExtension-class}}. The list may be only the
+      \code{\linkS4class{SClassExtension}}. The list may be only the
       direct extensions or all the currently known extensions (see the
       details).}
     \item{\code{virtual}:}{Logical flag, set to \code{TRUE} if this is
@@ -38,10 +38,10 @@
       which the class belongs.  Nearly always the package on which the
       metadata for the class is stored, but in operations such as
       constructing inheritance information, the internal package name
-      rules.} 
+      rules.}
     \item{\code{subclasses}:}{A named list of the classes known to
-      extend this class'; the elements of the list are objects of
-      \code{\link{SClassExtension-class}}.  The list is currently only
+      extend this class'; the elements of the list are objects of class
+      \code{\linkS4class{SClassExtension}}.  The list is currently only
       filled in when completing the class definition (see the details).}
     \item{\code{versionKey}:}{Object of class \code{"externalptr"};
       eventually will perhaps hold some versioning information, but not
