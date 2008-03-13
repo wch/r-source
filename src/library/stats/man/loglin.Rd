@@ -74,6 +74,11 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   Assuming that there are no structural zeros, both the Likelihood
   Ratio Test and Pearson test statistics have an asymptotic chi-squared
   distribution with \code{df} degrees of freedom.
+
+  Note that the IPF steps are applied to the factors in the order given
+  in \code{margin}.  Hence if the model is decomposable and the order
+  given in \code{margin} is a running intersection property ordering
+  then IPF will converge in one iteration.
     
   Package \pkg{MASS} contains \code{loglm}, a front-end to \code{loglin}
   which allows the log-linear model to be specified and fitted in a
