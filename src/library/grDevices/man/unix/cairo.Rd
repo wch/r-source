@@ -9,12 +9,12 @@
 \alias{cairo_ps}
 \title{Cairo-based SVG, PDF and PostScript Graphics Devices}
 \description{
-  Graphics devices for SVG and PDF and PostScript graphics files.
+  Graphics devices for SVG, PDF and PostScript graphics files.
 }
 \usage{
-svg(filename = "Rplot\%03d.svg",
-    width = 480, height = 480, units = "px", res = 72,
-    pointsize = 12, bg = "white", antialias)
+svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
+    width = 7, height = 7, pointsize = 12,
+    onefile = FALSE, bg = "white", antialias)
 
 cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
@@ -31,14 +31,9 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     than \code{PATH_MAX} characters long, and may be truncated if not.
     See \code{\link{postscript}} for further details.)  Tilde expansion
     is performed where supported by the platform.}
-  \item{width}{the width of the device.}
-  \item{height}{the height of the device.}
-  \item{units}{The units in which \code{height} and \code{width} are
-    given.  Can be \code{px} (pixels), \code{in} (inches),
-    \code{cm} or \code{mm}.}
-  \item{res}{The resolution used to convert points and other
-    device-size units to pixels.}
-  \item{pointsize}{the default pointsize of plotted text.}
+  \item{width}{the width of the device in inches.}
+  \item{height}{the height of the device in inches.}
+  \item{pointsize}{the default pointsize of plotted text (in big points).}
   \item{onefile}{should all plots appear in one file or in separate files?}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
@@ -47,18 +42,15 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
-  See \url{http://www.w3.org/Graphics/SVG/}.  Cairo currently produces
-  SVG version 1.1.
+  See \url{http://www.w3.org/Graphics/SVG/}.  The output is SVG version
+  1.1 for \code{onefile = FALSE} (the default), otherwise SVG 1.2.  (Very few
+  SVG viewers are capable of displaying multi-page SVG files.)
   
   Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
-  and not vector graphics.  This can occasionally be useful (bitmaps of
-  very complex plots can be more compact, and a much wider range of
-  characters can be rendered), but the more usual vector format is
-  normally much preferred.  A resolution of 72dpi is used.  On the other
+  and not vector graphics: a resolution of 72dpi is used.  On the other
   hand, they can (on suitable platforms) include a much wider range of
-  UTF-8 glyphs, and embed the fonts used.
-  They are experimental (until tne cairo support is better).
+  UTF-8 glyphs, and embed the fonts used.  They are somewhat experimental.
   
   \R can be compiled without support for any of these
   devices: this will be reported if you attempt to use them on a system
@@ -67,12 +59,16 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
-  \code{file} (or set \code{onefile=TRUE}, the file will contain the
+  \code{file} (or set \code{onefile=TRUE}) the file will contain the
   last page plotted.
 
   %http://lwn.net/Articles/256590/
   The \code{cairo_ps} output is not yet encapsulated (that is coming in
   cairo 1.6).
+
+  There is full support of transparency, but using this is one of the
+  things liable to trigger bitmap output (and will always do so for
+  \code{cairo_ps}).
 }
 
 \value{
@@ -92,10 +88,10 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   graphics devices set out in the \dQuote{R Internals Manual}.
 
   \itemize{
-    \item The default device size is in pixels (\code{svg}) or inches..
+    \item The default device size is in pixels (\code{svg}) or inches.
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
-    \item Line widths in 1/96 inch..
+    \item Line widths are multiples of 1/96 inch.
     \item Circle radii have a minumum of 1/72 inch.
     \item Colours are interpreted by the viewing application.
   }

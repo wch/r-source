@@ -221,24 +221,19 @@ bmp <- function(filename = "Rplot%03d.bmp",
                       0L, 0L, "", 0, 0))
 }
 
-svg <- function(filename = "Rplot%03d.svg",
-                width = 480, height = 480, units = "px", res = 72,
-                pointsize = 12, bg = "white", antialias)
+svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
+                width = 7, height = 7, pointsize = 12,
+                onefile = FALSE, bg = "white", antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    units <- match.arg(units, c("in", "px", "cm", "mm"))
-    height <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     new <- list()
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     } else antialias <- 1
-    .Internal(cairo(filename, 4L, width, height, pointsize, bg,
-                    NA_integer_, antialias, 0L))
+    .Internal(cairo(filename, 4L, 72*width, 72*height, pointsize, bg,
+                    NA_integer_, antialias, onefile))
 }
 
 cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
