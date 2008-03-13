@@ -13,23 +13,26 @@
   Graphics devices for JPEG, PNG or TIFF format bitmap files.
 }
 \usage{
-bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480, units = "px",
+bmp(filename = "Rplot\%03d.bmp",
+    width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white", res = NA, \dots,
-    type = c("Cairo", "Xlib"), antialias)
+    type = c("cairo", "Xlib"), antialias)
 
-jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
+jpeg(filename = "Rplot\%03d.jpeg",
+     width = 480, height = 480, units = "px",
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots,
-     type = c("Cairo", "Xlib"), antialias)
+     type = c("cairo", "Xlib"), antialias)
 
-png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
+png(filename = "Rplot\%03d.png",
+    width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots,
-    type = c("Cairo", "Xlib", "dCairo"), antialias)
+    type = c("cairo", "Xlib", "cairo1"), antialias)
 
-tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
-     pointsize = 12,
+tiff(filename = "Rplot\%03d.tiff",
+     width = 480, height = 480, units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
      bg = "white", res = NA,  \dots,
-     type = c("Cairo", "Xlib"), antialias)
+     type = c("cairo", "Xlib"), antialias)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -58,11 +61,12 @@ tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
     the underlying \code{\link{X11}} device, such as \code{gamma} and
     \code{fonts}.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"Cairo"} or \code{"dCairo"}.  The latter
+    prior to \R 2.7.0) or \code{"cairo"} or \code{"cairo1"}.  The latter
     two will only be available if the system was compiled with support
-    for Cairo -- otherwise \code{"Xlib"} will be used.  The default is
-    set by \code{\link{X11.options}}.}
-  \item{antialias}{for \code{type = "Cairo"}, giving the type of
+    for cairo -- otherwise \code{"Xlib"} will be used.  The default is
+    set by \code{\link{X11.options}} -- the \sQuote{out of the box}
+    default is \code{"cairo"} where available.}
+  \item{antialias}{for \code{type = "cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
     default is set by \code{\link{X11.options}}.}
 }
@@ -78,23 +82,22 @@ tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
   which is their main virtue over PNG.   
 
   \code{png} supports transparent backgrounds: use \code{bg =
-    "transparent"}.  Not all PNG viewers render files with transparency
-  correctly.  When transparency is in use  in the \code{type = "Xlib"}
+  "transparent"}.  Not all PNG viewers render files with transparency
+  correctly.  When transparency is in use in the \code{type = "Xlib"}
   variant a very light grey is used as the background and so appear as
   transparent if used in the plot. This allows opaque white to be used,
-  as in the example.  The \code{type = "Cairo"} variant allows
-  semi-transparent colours, including on a transparent or
-  semi-transparent background.
+  as in the example.  The \code{type = "cairo"} and \code{type =
+  "cairo1"} variants allows semi-transparent colours, including on a
+  transparent or semi-transparent background.
 
-  \code{tiff(type = "Cairo")} supports semi-transparent colours,
+  \code{tiff(type = "cairo")} supports semi-transparent colours,
   including on a transparent or semi-transparent background.
 
   \R can be compiled without support for each of these devices: this
   will be reported if you attempt to use them on a system where they are
   not supported.  For \code{type = "Xlib"} they may not be usable unless
-  the X11 display is available to the owner of the \R process.  With
-  cairo version 1.0, \code{type = "Cairo"} is unavailable (but
-  \code{type="dCairo"} works).
+  the X11 display is available to the owner of the \R process.  
+  \code{type = "cairo"} requires cairo 1.2 or later.
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
@@ -107,12 +110,13 @@ tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
 
   \code{png} will use a palette if there are less than 256 colours on
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
-  file if \code{type = "Cairo"} and non-opaque colours are used).
+  file if \code{type = "cairo"} and non-opaque colours are used).
 
-  \code{png(type = "dCairo"} uses cairo directly to output the file --
+  \code{png(type = "cairo1"} uses cairo directly to output the file --
   the resolution is not recorded and the PNG format used is chosen by
   cairo (and undocumented -- it is currently 32-bit RGBA, that is with
-  an alpha channel whether used or not).
+  an alpha channel whether used or not).  It is included for use on
+  platforms with cairo 1.0 (where \code{type = "cairo"} is not available).
 }
 
 \value{
@@ -142,7 +146,7 @@ tiff(filename = "Rplot\%03d.tiff",width = 480, height = 480, units = "px",
   \code{\link{Devices}}, \code{\link{dev.print}}
 
   \code{\link{capabilities}} to see if these devices are
-  supported by this build of \R, and if \code{type = "Cairo"} is supported.
+  supported by this build of \R, and if \code{type = "cairo"} is supported.
 
   \code{\link{bitmap}} provides an alternative way to generate PNG and
   JPEG plots that does not depend on accessing the X11 display but does

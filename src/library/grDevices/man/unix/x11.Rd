@@ -55,9 +55,10 @@ X11.options(\dots, reset = FALSE)
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"Cairo"} or \code{"nbCairo"}.  The
+    prior to \R 2.7.0) or \code{"cairo"} or \code{"nbcairo"}.  The
     latter two will only be available if the system was compiled with
-    support for cairo.}
+    support for cairo.  Default \code{"cairo"} where available, otherwise
+    \code{"Xlib"}.}
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
@@ -76,7 +77,7 @@ X11.options(\dots, reset = FALSE)
 
   Option \code{type} selects between two separate devices: \R can be
   built with support for neither, \code{type = "Xlib"} or both.  Where
-  both are available, \code{type = "Cairo"} offers
+  both are available, types \code{"cairo"} and \code{"nbcairo"} offer
   \itemize{
     \item
     antialiasing of text and lines.
@@ -91,8 +92,8 @@ X11.options(\dots, reset = FALSE)
   }
   but can be slower (and will be much slower on a slow X11 connection as
   all the rendering is done on the machine running \R rather than in the
-  X server).  \code{type = "nbCairo"} is the same device without
-  buffering, and will run faster on a mchine with a slow X11 connection
+  X server).  \code{type = "nbcairo"} is the same device without
+  buffering, and will run faster on a machine with a slow X11 connection
   (although still not as fast as \code{type = "Xlib"}) -- also,
   \code{\link{savePlot}} is not supported.
 }
