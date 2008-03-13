@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-03-04
+@set FAQ_DATE @value{FAQ_YEAR}-03-13
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2198,6 +2198,8 @@ Functions for computing the NPMLE for censored and truncated data.
 @c @item InfNet
 @c Function that simulates an epidemic in a network of contacts.
 @c </COMMENT>
+@item Iso
+Functions to perform isotonic regression.
 @item JADE
 JADE and ICA performance criteria.
 @item JLLprod
@@ -3091,9 +3093,12 @@ Climate analysis and downscaling for monthly and daily data.
 @item climatol
 Functions to fill missing data in climatological (monthly) series and to
 test their homogeneity, plus functions to draw wind-rose and
-Walter&Lieth diagrams. 
-@item clines
-Calculates Contour Lines.
+Walter&Lieth diagrams.
+@c <COMMENT>
+@c Archived on 2007-03-13 as requested by the maintainer.
+@c @item clines
+@c Calculates Contour Lines.
+@c </COMMENT>
 @item clinfun
 Utilities for clinical study design and data analyses.
 @item clue
@@ -3664,6 +3669,9 @@ intercept.
 L1 regularization path for Generalized Linear Models.
 @item glpk
 Interface to the @acronym{GNU} Linear Programming Kit (GLPK).
+@item gmaps
+Wrapper and auxiliary functions for the @strong{maps} package to work
+with the grid graphics system.
 @item gmodels
 Various functions to manipulate models.
 @item gmp
@@ -3853,6 +3861,8 @@ The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes.
 @item its
 An S4 class for handling irregular time series.
+@item jit
+Just-in-time compiler.
 @item kappalab
 The ``laboratory for capacities'', an S4 tool box for capacity (or
 non-additive measure, fuzzy measure) and integral manipulation on a
@@ -5003,6 +5013,8 @@ more.
 @item spBayes
 Fit Gaussian models with potentially complex hierarchical error
 structures by Markov chain Monte Carlo (MCMC).
+@item space
+Sparse PArtial Correlation Estimation.
 @item spam
 SPArse Matrix algebra.
 @item spatclus
