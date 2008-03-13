@@ -2208,7 +2208,7 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     }
 #else
     if(useCairo) {
-	warning(_("type=\"Cairo\" is not supported on this build -- using \"Xlib\""));
+	warning(_("type=\"cairo\" is not supported on this build -- using \"Xlib\""));
 	useCairo = FALSE;
     }
 #endif
@@ -2701,7 +2701,7 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error(_("type=\"Cairo\" is not supported on this build"));
+    error(_("savePlot() is not supported on this build"));
     return R_NilValue;
 }
 #endif
@@ -3128,7 +3128,7 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #if CAIRO_VERSION < 10200
     if (type == 2)
-	error(_("'type = \"Cairo\"' requires cairo >= 1.2 : try 'type = \"dCairo\"'"));
+	error(_("'type = \"xairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"));
     else if (type != 5)
 	error(_("device '%s' requires cairo >= 1.2"), devtable[type]);
 #endif
