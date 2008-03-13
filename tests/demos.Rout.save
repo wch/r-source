@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-02-20 r44548)
+R version 2.7.0 Under development (unstable) (2008-03-12 r44742)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -61,8 +61,8 @@ Type 'q()' to quit R.
 +     "\n\t starting with 'is.' :\t  ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1163 
-Number of functions in base:	 1134 
+Number of base objects:		 1164 
+Number of functions in base:	 1135 
 	 starting with 'is.' :	   48 
 
 > ## 0.14  : 31
@@ -1348,5 +1348,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > devAskNewPage(oask)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.672 0.063 1.865 0 0 
+Time elapsed:  1.629 0.067 1.698 0 0 
 > 
