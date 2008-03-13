@@ -13,7 +13,7 @@
   distinguish them from the informal S3 classes.
   This document gives an overview of S4 classes; for
   details of the class representation objects, see help for the class
-  \code{\linkS4class{classRepresentation}}.}
+  \code{\linkS4class{classRepresentation}}.
 }
 \details{
   When a class is defined, an object is stored that contains the
