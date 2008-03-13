@@ -3128,7 +3128,7 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #if CAIRO_VERSION < 10200
     if (type == 2)
-	error(_("'type = \"xairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"));
+	error(_("'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"));
     else if (type != 5)
 	error(_("device '%s' requires cairo >= 1.2"), devtable[type]);
 #endif
