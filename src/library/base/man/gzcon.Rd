@@ -44,13 +44,14 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
 }
 \seealso{\code{\link{gzfile}}}
 \examples{
-\dontrun{## Uncompress a data file from a URL
+\donttest{## Uncompress a data file from a URL
 z <- gzcon(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch12.dat.gz"))
 # read.table can only read from a text-mode connection.
 raw <- textConnection(readLines(z))
 close(z)
 dat <- read.table(raw)
 close(raw)
+dat[1:4, ]
 }
 
 ## gzfile and gzcon can inter-work.
@@ -63,12 +64,13 @@ readLines(zz <- gzcon(file("ex.gz", "rb")))
 close(zz)
 unlink("ex.gz")
 
-zz <- gzcon(file("ex.gz", "wb"))
+% Cygwin seems to require a different name
+zz <- gzcon(file("ex2.gz", "wb"))
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(zz <- gzfile("ex.gz"))
+readLines(zz <- gzfile("ex2.gz"))
 close(zz)
-unlink("ex.gz")
+unlink("ex2.gz")
 }
 \keyword{file}
 \keyword{connection}
