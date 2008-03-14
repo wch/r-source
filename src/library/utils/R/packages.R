@@ -19,7 +19,7 @@ available.packages <-
              fields = NULL)
 {
     requiredFields <-
-        tools:::.get_standard_repository_db_fields()
+        c(tools:::.get_standard_repository_db_fields(), "Path")
     if (is.null(fields))
 	fields <- requiredFields
     else {
@@ -90,8 +90,10 @@ available.packages <-
                                 dimnames=list(NULL, missingFields))
                 res0 <- cbind(res0, toadd)
             }
-            res0 <- cbind(res0[, fields, drop = FALSE],
-                          Repository = repos)
+            rp <- rep.int(repos, nrow(res0))
+            path <- res0[, "Path"]
+            rp[!is.na(path)] <- paste(repos, path[!is.na(path)], sep="/")
+            res0 <- cbind(res0[, fields, drop = FALSE], Repository = rp)
             res <- rbind(res, res0)
         }
     }
