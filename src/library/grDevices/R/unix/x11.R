@@ -74,11 +74,11 @@ X11 <- function(display = "", width, height, pointsize, gamma,
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
-    if(capabilities("cairo")) {
-        if(d$type == "cairo") type <- 1
-        else if(d$type == "nbcairo") type <- 2
-        else type <- 0;
-    } else type = 0;
+    type <-
+	if(capabilities("cairo"))
+	    switch(d$type, "cairo" = 1, "nbcairo" = 2, # otherwise:
+		   0)
+	else 0
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                   NA_integer_, d$xpos, d$ypos, d$title, type, d$antialias))
