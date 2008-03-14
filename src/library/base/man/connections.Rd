@@ -416,12 +416,13 @@ cat("abc\ndef\n", file=Tfile)
 readLines(Tfile)
 close(Tfile)
 
-if(capabilities("fifo")) {
-  zz <- fifo("foo-fifo", "w+")
-  writeLines("abc", zz)
-  print(readLines(zz))
-  close(zz)
-  unlink("foo-fifo")
+\donttest{
+## fifo example -- may fail, e.g. on Cygwin, even with OS support for fifos
+zz <- fifo("foo-fifo", "w+")
+writeLines("abc", zz)
+readLines(zz)
+close(zz)
+unlink("foo-fifo")
 }
 
 #ifdef unix
