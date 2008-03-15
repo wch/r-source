@@ -522,7 +522,7 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("cannot create file '%s', reason '%s'"), 
 		    CHAR(STRING_ELT(fn, i)), strerror(errno));
 #else
-            warning(_("cannot create file '%s'"), name);
+            warning(_("cannot create file '%s'"), CHAR(STRING_ELT(fn, i)));
 #endif
 	}
     }
@@ -546,7 +546,12 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef Win32
 		(_wremove(filenameToWchar(STRING_ELT(f, i), TRUE)) == 0);
 #else
-		(remove(R_ExpandFileName(translateChar(STRING_ELT(f, i)))) == 0);
+	        (remove(R_ExpandFileName(translateChar(STRING_ELT(f, i)))) == 0);
+#endif
+#ifdef HAVE_STRERROR
+	    if(!LOGICAL(ans)[i])
+	        warning(_("cannot remove file '%s', reason '%s'"), 
+			CHAR(STRING_ELT(f, i)), strerror(errno));
 #endif
 	} else LOGICAL(ans)[i] = FALSE;
     }
@@ -601,6 +606,14 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    strcpy(to, p);
 	    /* Rprintf("linking %s to %s\n", from, to); */
             LOGICAL(ans)[i] = symlink(from, to) == 0;
+	    if(!LOGICAL(ans)[i]) {
+#ifdef HAVE_STRERROR
+		warning(_("cannot symlink '%s' to '%s', reason '%s'"), 
+			from, to, strerror(errno));
+#else
+		warning(_("cannot symlink '%s' to '%s'"), from, to);
+#endif
+	    }
 	}
     }
     UNPROTECT(1);
@@ -624,6 +637,7 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     char from[PATH_MAX], to[PATH_MAX];
     const char *p;
+    int res;
 #endif
 
     checkArity(op, args);
@@ -654,7 +668,16 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (strlen(p) >= PATH_MAX - 1)
 	error(_("expanded destination name too long"));
     strncpy(to, p, PATH_MAX - 1);
-    return rename(from, to) == 0 ? mkTrue() : mkFalse();
+    res = rename(from, to);
+    if(res) {
+#ifdef HAVE_STRERROR
+	warning(_("cannot rename file '%s' to '%s', reason '%s'"), 
+		from, to, strerror(errno));
+#else
+	warning(_("cannot rename file '%s' to '%s'"), from, to);
+#endif
+    }
+    return res == 0 ? mkTrue() : mkFalse();
 #endif
 }
 

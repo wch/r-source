@@ -1,6 +1,6 @@
 % File src/library/base/man/unlink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{unlink}
@@ -21,9 +21,10 @@
   If \code{recursive = FALSE} directories are not deleted,
   not even empty ones.
 
-  \code{\link{file.remove}} can only remove files, but gives more
-  detailed error information.
-
+#ifdef unix
+  On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
+#endif  
+  
   Wildcard expansion is done by the internal code of
   \code{\link{Sys.glob}}.
 #ifdef unix

@@ -65,7 +65,15 @@ Sys.umask(mode = "0000")
 
   \code{file.remove} attempts to remove the files named in its
   argument.
-
+#ifdef unix
+  On most platforms \sQuote{file} includes \emph{empty} directories,
+  symbolic links, fifos and sockets.
+#endif
+#ifdef windows
+  Unlike on Unix-alikes, \sQuote{file} here means a regular file and
+  not, say, an empty directory.
+#endif
+  
   \code{file.rename} attempts to rename a single file.
 
   \code{file.append} attempts to append the files named by its
