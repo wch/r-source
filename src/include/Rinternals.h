@@ -792,6 +792,7 @@ SEXP R_Unserialize(R_inpstream_t ips);
 /* slot management (in attrib.c) */
 SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
+int R_has_slot(SEXP obj, SEXP name);
 
 /* class definition, new objects */
 SEXP R_do_MAKE_CLASS(const char *what);
