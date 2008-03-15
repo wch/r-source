@@ -144,6 +144,10 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     char *outbuf;
     size_t inb, outb, res;
 
+    if(!strlen(CHAR(fn))) {
+	wcscpy(filename, L"");
+	return filename;
+    }
     if(IS_LATIN1(fn)) from = "latin1";
     if(IS_UTF8(fn)) from = "UTF-8";
     obj = Riconv_open("UCS-2LE", from);

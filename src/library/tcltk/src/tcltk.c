@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2007  The R Development Core Team
+ *  Copyright (C) 2000--2008  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -321,7 +321,7 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
    MBCS-supporting environment.  In which case, could convert to
    UTF-8 and not UCS-2 on Windows. */
 #ifdef Win32
-extern wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
+extern wchar_t *wtransChar(SEXP x);
 #endif
 
 SEXP RTcl_ObjFromCharVector(SEXP args)
@@ -349,7 +349,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 	Tcl_DStringInit(&s_ds);
 	s = Tcl_ExternalToUtfDString(encoding,
 #ifdef Win32
-				     (char *) filenameToWchar(STRING_ELT(val, 0), FALSE), 
+				     (char *) wtransChar(STRING_ELT(val, 0)), 
 #else
 				     translateChar(STRING_ELT(val, 0)), 
 #endif
@@ -362,7 +362,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 	    Tcl_DStringInit(&s_ds);
 	    s = Tcl_ExternalToUtfDString(encoding, 
 #ifdef Win32
-					 (char *) filenameToWchar(STRING_ELT(val, i), FALSE),
+					 (char *) wtransChar(STRING_ELT(val, i)),
 #else
 					 translateChar(STRING_ELT(val, i)),
 #endif
