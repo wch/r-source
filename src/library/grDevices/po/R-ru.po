@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-02-23 21:23\n"
+"POT-Creation-Date: 2008-03-15 17:03\n"
 "PO-Revision-Date: 2007-09-18 00:12-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -290,7 +290,7 @@ msgid "no such device"
 msgstr "нет такого устройства"
 
 #, fuzzy
-msgid "can only copy from 'X11(type=\"Cairo\")' devices"
+msgid "can only copy from 'X11(type=\"cairo\")' devices"
 msgstr "могу копировать лишь с 'windows'-устройств"
 
 msgid "invalid value for 'rescale"

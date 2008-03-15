@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-11 08:06+0000\n"
+"POT-Creation-Date: 2008-03-15 17:02+0000\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -93,7 +93,7 @@ msgstr ""
 #: src/gnuwin32/extra.c:323 src/gnuwin32/extra.c:347 src/gnuwin32/extra.c:355
 #: src/gnuwin32/extra.c:386 src/gnuwin32/extra.c:405 src/gnuwin32/extra.c:440
 #: src/gnuwin32/extra.c:615 src/gnuwin32/extra.c:699 src/gnuwin32/extra.c:702
-#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1294 src/main/apply.c:192
+#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1295 src/main/apply.c:192
 #: src/main/apply.c:194 src/main/apply.c:197 src/main/array.c:75
 #: src/main/array.c:1027 src/main/array.c:1160 src/main/array.c:1162
 #: src/main/array.c:1163 src/main/attrib.c:193 src/main/builtin.c:158
@@ -147,15 +147,15 @@ msgstr ""
 #: src/main/paste.c:313 src/main/paste.c:318 src/main/paste.c:323
 #: src/main/paste.c:328 src/main/paste.c:331 src/main/paste.c:339
 #: src/main/paste.c:487 src/main/paste.c:492 src/main/platform.c:289
-#: src/main/platform.c:291 src/main/platform.c:293 src/main/platform.c:951
-#: src/main/platform.c:957 src/main/platform.c:1012 src/main/platform.c:1060
-#: src/main/platform.c:1063 src/main/platform.c:1066 src/main/platform.c:1069
-#: src/main/platform.c:1072 src/main/platform.c:1159 src/main/platform.c:1162
-#: src/main/platform.c:1314 src/main/platform.c:1317 src/main/platform.c:1351
-#: src/main/platform.c:1354 src/main/platform.c:1391 src/main/platform.c:1430
-#: src/main/platform.c:1432 src/main/platform.c:1490 src/main/platform.c:1581
-#: src/main/platform.c:1630 src/main/platform.c:1834 src/main/platform.c:1872
-#: src/main/platform.c:1983 src/main/platform.c:2011 src/main/plot.c:2913
+#: src/main/platform.c:291 src/main/platform.c:293 src/main/platform.c:983
+#: src/main/platform.c:989 src/main/platform.c:1044 src/main/platform.c:1092
+#: src/main/platform.c:1095 src/main/platform.c:1098 src/main/platform.c:1101
+#: src/main/platform.c:1104 src/main/platform.c:1191 src/main/platform.c:1194
+#: src/main/platform.c:1346 src/main/platform.c:1349 src/main/platform.c:1383
+#: src/main/platform.c:1386 src/main/platform.c:1423 src/main/platform.c:1462
+#: src/main/platform.c:1464 src/main/platform.c:1522 src/main/platform.c:1613
+#: src/main/platform.c:1662 src/main/platform.c:1866 src/main/platform.c:1910
+#: src/main/platform.c:2021 src/main/platform.c:2049 src/main/plot.c:2913
 #: src/main/plot.c:4046 src/main/plot.c:4050 src/main/plot.c:4053
 #: src/main/plot3d.c:2466 src/main/plot3d.c:2470 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2483 src/main/plot3d.c:2487
@@ -175,7 +175,7 @@ msgstr ""
 #: src/main/scan.c:1773 src/main/scan.c:1774 src/main/scan.c:1775
 #: src/main/scan.c:1776 src/main/seq.c:352 src/main/seq.c:356
 #: src/main/seq.c:374 src/main/seq.c:378 src/main/seq.c:384 src/main/seq.c:392
-#: src/main/sysutils.c:559 src/main/sysutils.c:561 src/main/sysutils.c:563
+#: src/main/sysutils.c:564 src/main/sysutils.c:566 src/main/sysutils.c:568
 #: src/main/unique.c:586 src/main/unique.c:833 src/main/unique.c:893
 #: src/main/unique.c:900 src/main/util.c:566 src/main/util.c:569
 #: src/modules/internet/internet.c:277 src/modules/internet/internet.c:283
@@ -185,10 +185,10 @@ msgstr ""
 #: src/modules/lapack/Lapack.c:717 src/modules/lapack/Lapack.c:774
 #: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2659
 #: src/modules/X11/devX11.c:2662 src/modules/X11/devX11.c:2665
-#: src/modules/X11/devX11.c:2698 src/modules/X11/devX11.c:3093
-#: src/modules/X11/devX11.c:3098 src/modules/X11/devX11.c:3102
-#: src/modules/X11/devX11.c:3106 src/modules/X11/devX11.c:3110
-#: src/modules/X11/devX11.c:3121 src/modules/X11/devX11.c:3125
+#: src/modules/X11/devX11.c:2698 src/modules/X11/devX11.c:3095
+#: src/modules/X11/devX11.c:3100 src/modules/X11/devX11.c:3104
+#: src/modules/X11/devX11.c:3108 src/modules/X11/devX11.c:3112
+#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3127
 #: src/unix/sys-std.c:1180 src/unix/sys-std.c:1203
 #, c-format
 msgid "invalid '%s' argument"
@@ -239,28 +239,28 @@ msgstr "'loadhistory' só pode ser utilizado no Rgui e Rterm"
 msgid "invalid timestamp"
 msgstr "etiqueta de tempo inválida"
 
-#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1477
-#: src/gnuwin32/extra.c:1653 src/gnuwin32/extra.c:1656
-#: src/gnuwin32/extra.c:1659 src/main/character.c:844 src/main/colors.c:365
+#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1478
+#: src/gnuwin32/extra.c:1654 src/gnuwin32/extra.c:1657
+#: src/gnuwin32/extra.c:1660 src/main/character.c:844 src/main/colors.c:365
 #: src/main/connections.c:2658 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:585 src/main/datetime.c:651 src/main/datetime.c:867
 #: src/main/dotcode.c:199 src/main/errors.c:857 src/main/errors.c:888
 #: src/main/errors.c:989 src/main/errors.c:1014 src/main/errors.c:1019
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2031 src/main/plot.c:278 src/main/plot.c:472
+#: src/main/platform.c:2069 src/main/plot.c:278 src/main/plot.c:472
 #: src/main/plot.c:477 src/main/plot.c:2054 src/main/plot.c:2061
 #: src/main/plot.c:3126 src/main/plot.c:3128 src/main/plot.c:3130
 #: src/main/plot.c:3287 src/main/plot3d.c:1399 src/main/plot3d.c:2544
 #: src/main/plot3d.c:2548 src/main/plot3d.c:2550 src/main/seq.c:154
 #: src/main/seq.c:245 src/main/seq.c:248 src/main/sort.c:790
 #: src/main/sort.c:890 src/main/source.c:172 src/main/summary.c:977
-#: src/main/sysutils.c:225 src/main/util.c:881 src/main/util.c:886
+#: src/main/sysutils.c:230 src/main/util.c:881 src/main/util.c:886
 #: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2564
 #: src/modules/X11/devX11.c:2591 src/modules/X11/devX11.c:2596
 #: src/modules/X11/devX11.c:2601 src/modules/X11/devX11.c:2611
 #: src/modules/X11/devX11.c:2616 src/modules/X11/devX11.c:2620
-#: src/modules/X11/devX11.c:3114 src/unix/sys-std.c:1276
+#: src/modules/X11/devX11.c:3116 src/unix/sys-std.c:1276
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valor de '%s' inválido"
@@ -288,78 +288,78 @@ msgstr "Seleção: "
 msgid "Select one"
 msgstr "Seleção: "
 
-#: src/gnuwin32/extra.c:914
+#: src/gnuwin32/extra.c:916
 msgid "argument must be a character vector or a raw vector"
 msgstr "argumento deve ser um vetor de caracteres ou um vetor simples"
 
-#: src/gnuwin32/extra.c:951 src/main/connections.c:1582
+#: src/gnuwin32/extra.c:952 src/main/connections.c:1582
 msgid "Unable to open the clipboard"
 msgstr "impossível abrir a área de transferência "
 
-#: src/gnuwin32/extra.c:956 src/main/connections.c:1586
+#: src/gnuwin32/extra.c:957 src/main/connections.c:1586
 msgid "Unable to write to the clipboard"
 msgstr "impossível escrever na área de transferência"
 
-#: src/gnuwin32/extra.c:975 src/gnuwin32/extra.c:1005
+#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1006
 msgid "'path' must be a character vector"
 msgstr "'path' deve ser um vetor de caracteres"
 
-#: src/gnuwin32/extra.c:1050 src/gnuwin32/extra.c:1129
+#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1130
 msgid "'default' must be a character string"
 msgstr "'default' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1052 src/gnuwin32/extra.c:1131
+#: src/gnuwin32/extra.c:1053 src/gnuwin32/extra.c:1132
 msgid "'default' is overlong"
 msgstr "'default' muito longo"
 
-#: src/gnuwin32/extra.c:1061 src/gnuwin32/extra.c:1135
+#: src/gnuwin32/extra.c:1062 src/gnuwin32/extra.c:1136
 msgid "'caption' must be a character string"
 msgstr "'caption' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1063
+#: src/gnuwin32/extra.c:1064
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve ser um valor lógico"
 
-#: src/gnuwin32/extra.c:1065
+#: src/gnuwin32/extra.c:1066
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve ser um valor inteiro"
 
-#: src/gnuwin32/extra.c:1217
+#: src/gnuwin32/extra.c:1218
 msgid "'title' must be a character string"
 msgstr "'title' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1234
+#: src/gnuwin32/extra.c:1235
 #, fuzzy
 msgid "'text' must be a character string"
 msgstr "'title' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1264
+#: src/gnuwin32/extra.c:1265
 msgid "'which' must be length 1"
 msgstr "'which' deve ter comprimento 1"
 
-#: src/gnuwin32/extra.c:1296 src/gnuwin32/extra.c:1298
-#: src/gnuwin32/extra.c:1338
+#: src/gnuwin32/extra.c:1297 src/gnuwin32/extra.c:1299
+#: src/gnuwin32/extra.c:1339
 msgid "invalid device"
 msgstr "dispositivo inválido"
 
-#: src/gnuwin32/extra.c:1299
+#: src/gnuwin32/extra.c:1300
 msgid "requires SDI mode"
 msgstr "modo SDI requerido"
 
-#: src/gnuwin32/extra.c:1332
+#: src/gnuwin32/extra.c:1333
 msgid "invalid graphical device number"
 msgstr "número de dispositivo gráfico inválido"
 
-#: src/gnuwin32/extra.c:1342
+#: src/gnuwin32/extra.c:1343
 msgid "bad device"
 msgstr "dispositivo defeituoso "
 
-#: src/gnuwin32/extra.c:1663
+#: src/gnuwin32/extra.c:1664
 #, fuzzy, c-format
 msgid "Registry key '%s' not found"
 msgstr "objeto '%s' não encontrado"
 
-#: src/gnuwin32/extra.c:1727 src/gnuwin32/extra.c:1735
+#: src/gnuwin32/extra.c:1728 src/gnuwin32/extra.c:1736
 msgid "invalid input in Rmbstowcs"
 msgstr "entrada inválida em Rmbstowcs"
 
@@ -1561,11 +1561,11 @@ msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE' não é suportado nessa plataforma"
 
 #: src/main/character.c:3178 src/main/character.c:3192
-#: src/main/platform.c:1323 src/main/platform.c:1366
+#: src/main/platform.c:1355 src/main/platform.c:1398
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/character.c:3188 src/main/platform.c:1362
+#: src/main/character.c:3188 src/main/platform.c:1394
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "erro de leitura"
@@ -1996,11 +1996,11 @@ msgstr "arquivo '%s' parece não ter sido comprimido por bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "alocação de conexão bzfile falhou"
 
-#: src/main/connections.c:1538 src/modules/X11/devX11.c:3235
+#: src/main/connections.c:1538 src/modules/X11/devX11.c:3237
 msgid "memory allocation to copy clipboard failed"
 msgstr "alocação de memória para cópia da área de transferência falhou"
 
-#: src/main/connections.c:1543 src/modules/X11/devX11.c:3223
+#: src/main/connections.c:1543 src/modules/X11/devX11.c:3225
 msgid "clipboard cannot be opened or contains no text"
 msgstr "área de transferência não pode ser aberta ou não contem texto"
 
@@ -5000,11 +5000,11 @@ msgstr "especificação de nome de arquivo inválido"
 msgid "write error during file append"
 msgstr "erro na escrita durante acréscimo a arquivo"
 
-#: src/main/platform.c:447 src/main/platform.c:531 src/main/platform.c:566
+#: src/main/platform.c:447 src/main/platform.c:540 src/main/platform.c:580
 msgid "invalid first filename"
 msgstr "primeiro nome de arquivo inválido"
 
-#: src/main/platform.c:449 src/main/platform.c:568
+#: src/main/platform.c:449 src/main/platform.c:582
 msgid "invalid second filename"
 msgstr "segundo nome de arquivo inválido"
 
@@ -5016,100 +5016,145 @@ msgstr "nada para acrescentar"
 msgid "'outFile' must be a single file"
 msgstr "'outFile' deve ser um único arquivo"
 
-#: src/main/platform.c:508 src/main/platform.c:694
+#: src/main/platform.c:509 src/main/platform.c:726
 msgid "invalid filename argument"
 msgstr "argumento nome de arquivo inválido"
 
-#: src/main/platform.c:570
+#: src/main/platform.c:522
+#, fuzzy, c-format
+msgid "cannot create file '%s', reason '%s'"
+msgstr "não foi possível criar fifo '%s', motivo '%s'"
+
+#: src/main/platform.c:525
+#, fuzzy, c-format
+msgid "cannot create file '%s'"
+msgstr "não foi possível criar fifo '%s'"
+
+#: src/main/platform.c:553
+#, fuzzy, c-format
+msgid "cannot remove file '%s', reason '%s'"
+msgstr "não foi possível abrir o arquivo '%s', motivo '%s'"
+
+#: src/main/platform.c:584
 msgid "nothing to link"
 msgstr "nada para vincular"
 
-#: src/main/platform.c:600
+#: src/main/platform.c:611
+#, fuzzy, c-format
+msgid "cannot symlink '%s' to '%s', reason '%s'"
+msgstr "não foi possível abrir o arquivo '%s', motivo '%s'"
+
+#: src/main/platform.c:614
+#, fuzzy, c-format
+msgid "cannot symlink '%s' to '%s'"
+msgstr "não foi possível abrir o arquivo '%s', motivo '%s'"
+
+#: src/main/platform.c:622
 msgid "symlinks are not supported on this platform"
 msgstr "links simbólicos não são suportados nessa plataforma"
 
-#: src/main/platform.c:622
+#: src/main/platform.c:645
 msgid "'source' must be a single string"
 msgstr "'source' deve ser uma única string"
 
-#: src/main/platform.c:624
+#: src/main/platform.c:647
 msgid "'destination' must be a single string"
 msgstr "'destination' deve ser uma única string"
 
-#: src/main/platform.c:628
+#: src/main/platform.c:651
 #, fuzzy
 msgid "missing values are not allowed"
 msgstr "valores ausentes onde lógicos esperados"
 
-#: src/main/platform.c:632 src/main/platform.c:642
+#: src/main/platform.c:655 src/main/platform.c:665
 msgid "expanded source name too long"
 msgstr "nome da origem extendido muito longo"
 
-#: src/main/platform.c:636 src/main/platform.c:646
+#: src/main/platform.c:659 src/main/platform.c:669
 msgid "expanded destination name too long"
 msgstr "nome do destino extendido muito longo"
 
-#: src/main/platform.c:858
+#: src/main/platform.c:674
+#, fuzzy, c-format
+msgid "cannot rename file '%s' to '%s', reason '%s'"
+msgstr "não foi possível criar fifo '%s', motivo '%s'"
+
+#: src/main/platform.c:677
+#, fuzzy, c-format
+msgid "cannot rename file '%s' to '%s'"
+msgstr "não foi possível abrir o arquivo '%s', motivo '%s'"
+
+#: src/main/platform.c:890
 msgid "directory/folder path name too long"
 msgstr "caminho de diretório/pasta muito longo"
 
-#: src/main/platform.c:860
+#: src/main/platform.c:892
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
 msgstr "list.files: '%s' não é um diretório legível"
 
-#: src/main/platform.c:967
+#: src/main/platform.c:999
 msgid "invalid 'pattern' regular expression"
 msgstr "expressão regular inválida em 'pattern'"
 
-#: src/main/platform.c:994
+#: src/main/platform.c:1026
 msgid "unable to determine R home location"
 msgstr "não foi possível determinar a localização do diretório inicial do R"
 
-#: src/main/platform.c:1130
+#: src/main/platform.c:1162
 msgid "file choice cancelled"
 msgstr "escolha de arquivo cancelada"
 
-#: src/main/platform.c:1132
+#: src/main/platform.c:1164
 msgid "file name too long"
 msgstr "nome de arquivo muito longo"
 
-#: src/main/platform.c:1184
+#: src/main/platform.c:1216
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() não está implementado nesse sistema"
 
-#: src/main/platform.c:1462
+#: src/main/platform.c:1494
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "espeficação de 'LC_NUMERIC' pode fazer o R funcionar de forma estranha"
 
-#: src/main/platform.c:1496
+#: src/main/platform.c:1528
 #, fuzzy, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "SO informa que a requisição não pode ser cumprida"
 
-#: src/main/platform.c:1789
+#: src/main/platform.c:1821
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/platform.c:1795
+#: src/main/platform.c:1827
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "resolução de máquina '%s' impossível em nsl()"
 
-#: src/main/platform.c:1802
+#: src/main/platform.c:1834
 msgid "unknown format returned by gethostbyname"
 msgstr "formato desconhecido retornado por gethostbyname"
 
-#: src/main/platform.c:1811
+#: src/main/platform.c:1843
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/main/platform.c:1857 src/main/platform.c:1896
+#: src/main/platform.c:1889 src/main/platform.c:1934
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:2038
+#: src/main/platform.c:1893
+#, fuzzy, c-format
+msgid "cannot create dir '%s', reason '%s'"
+msgstr "não foi possível criar fifo '%s', motivo '%s'"
+
+#: src/main/platform.c:1895
+#, fuzzy, c-format
+msgid "cannot create dir '%s'"
+msgstr "não foi possível criar fifo '%s'"
+
+#: src/main/platform.c:2076
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
@@ -6737,100 +6782,105 @@ msgstr ""
 msgid "cannot determine file modification time of '%s'"
 msgstr "não é possível determinar a data de modificação do arquivo '%s'"
 
-#: src/main/sysutils.c:151
+#: src/main/sysutils.c:155
 #, fuzzy
 msgid "unsupported conversion in 'filenameToWchar'"
 msgstr "conversão não suportada"
 
-#: src/main/sysutils.c:159
+#: src/main/sysutils.c:163
 #, fuzzy
 msgid "file name conversion problem"
 msgstr "nome de arquivo muito longo"
 
-#: src/main/sysutils.c:223
+#: src/main/sysutils.c:164
+#, fuzzy
+msgid "file name conversion problem -- name too long?"
+msgstr "nome de arquivo muito longo"
+
+#: src/main/sysutils.c:228
 msgid "invalid filename pattern"
 msgstr "padrão de nome de arquivo inválido"
 
-#: src/main/sysutils.c:227
+#: src/main/sysutils.c:232
 msgid "no 'pattern'"
 msgstr "'pattern' não especificado"
 
-#: src/main/sysutils.c:229
+#: src/main/sysutils.c:234
 msgid "no 'tempdir'"
 msgstr "'tempdir' não especificado"
 
-#: src/main/sysutils.c:315 src/main/sysutils.c:318 src/main/sysutils.c:409
-#: src/main/sysutils.c:411 src/main/sysutils.c:447
+#: src/main/sysutils.c:320 src/main/sysutils.c:323 src/main/sysutils.c:414
+#: src/main/sysutils.c:416 src/main/sysutils.c:452
 msgid "wrong type for argument"
 msgstr "argumento de tipo inválido"
 
-#: src/main/sysutils.c:413
+#: src/main/sysutils.c:418
 #, fuzzy
 msgid "wrong length for argument"
 msgstr "comprimento errado para argumento 'mode'"
 
-#: src/main/sysutils.c:434
+#: src/main/sysutils.c:439
 #, fuzzy
 msgid "'Sys.setenv' is not available on this system"
 msgstr "'outenv' não está disponível nesse sistema"
 
-#: src/main/sysutils.c:479
+#: src/main/sysutils.c:484
 msgid "this system cannot unset environment variables: setting to \"\""
 msgstr ""
 
-#: src/main/sysutils.c:490
+#: src/main/sysutils.c:495
 #, fuzzy
 msgid "'Sys.unsetenv' is not available on this system"
 msgstr "'outenv' não está disponível nesse sistema"
 
-#: src/main/sysutils.c:557
+#: src/main/sysutils.c:562
 msgid "'x' must be a character vector"
 msgstr "'x' deve ser um vetor de caracteres"
 
-#: src/main/sysutils.c:576 src/main/sysutils.c:721 src/main/sysutils.c:729
-#: src/main/sysutils.c:809 src/main/sysutils.c:863 src/main/sysutils.c:871
-#: src/main/sysutils.c:878
+#: src/main/sysutils.c:581 src/main/sysutils.c:726 src/main/sysutils.c:734
+#: src/main/sysutils.c:814 src/main/sysutils.c:868 src/main/sysutils.c:876
+#: src/main/sysutils.c:883
 msgid "unsupported conversion"
 msgstr "conversão não suportada"
 
-#: src/main/sysutils.c:642 src/main/sysutils.c:1160 src/main/sysutils.c:1167
-#: src/main/sysutils.c:1173
+#: src/main/sysutils.c:647 src/main/sysutils.c:1165 src/main/sysutils.c:1172
+#: src/main/sysutils.c:1178
 msgid "'iconv' is not available on this system"
 msgstr "'iconv' não está disponível nesse sistema"
 
-#: src/main/sysutils.c:650 src/main/sysutils.c:711 src/main/sysutils.c:803
-#: src/main/sysutils.c:858
+#: src/main/sysutils.c:655 src/main/sysutils.c:716 src/main/sysutils.c:808
+#: src/main/sysutils.c:863
 #, fuzzy, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "csduplicated não chamado dentro de uma STRSXP"
 
-#: src/main/sysutils.c:894
+#: src/main/sysutils.c:899
 #, fuzzy
 msgid "invalid input in wtransChar"
 msgstr "entrada UTF-8 inválida em readChar()"
 
-#: src/main/sysutils.c:1284
+#: src/main/sysutils.c:1289
 msgid "cannot mkdir R_TempDir"
 msgstr "não é possível criar um diretório em R_TempDir"
 
-#: src/main/sysutils.c:1288 src/main/sysutils.c:1295 src/main/sysutils.c:1298
+#: src/main/sysutils.c:1293 src/main/sysutils.c:1300 src/main/sysutils.c:1303
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr ""
 
-#: src/main/sysutils.c:1307
+#: src/main/sysutils.c:1312
 msgid "cannot allocate R_TempDir"
 msgstr "não é possível alocar R_TempDir"
 
-#: src/main/sysutils.c:1326
+#: src/main/sysutils.c:1331
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "'tempdir' inválido em R_tmpnam"
 
-#: src/main/sysutils.c:1341
+#: src/main/sysutils.c:1346
 msgid "cannot find unused tempfile name"
 msgstr ""
 "não foi possivel encontrar um nome não utilizado para arquivo temporário."
 
-#: src/main/sysutils.c:1366
+#: src/main/sysutils.c:1371
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() não está implementado nesses sistema"
 
@@ -7561,8 +7611,9 @@ msgid "could not open file '%s'"
 msgstr "não foi possível abrir o arquivo PNG '%s'"
 
 #: src/modules/X11/devX11.c:2211
-msgid "type=\"Cairo\" is not supported on this build -- using \"Xlib\""
-msgstr ""
+#, fuzzy
+msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
+msgstr "nsl() não é suportado nessa plataforma"
 
 #: src/modules/X11/devX11.c:2509
 msgid "invalid string argument"
@@ -7602,39 +7653,39 @@ msgstr ""
 
 #: src/modules/X11/devX11.c:2704
 #, fuzzy
-msgid "type=\"Cairo\" is not supported on this build"
+msgid "savePlot() is not supported on this build"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/modules/X11/devX11.c:2741 src/modules/X11/devX11.c:2908
-#: src/modules/X11/devX11.c:2919
+#: src/modules/X11/devX11.c:2741 src/modules/X11/devX11.c:2910
+#: src/modules/X11/devX11.c:2921
 #, fuzzy
 msgid "unimplemented cairo-based device"
 msgstr "predicativo não implementado"
 
-#: src/modules/X11/devX11.c:3129
-msgid "'type = \"Cairo\"' requires cairo >= 1.2 : try 'type = \"dCairo\"'"
+#: src/modules/X11/devX11.c:3131
+msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3131
+#: src/modules/X11/devX11.c:3133
 #, c-format
 msgid "device '%s' requires cairo >= 1.2"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3143
+#: src/modules/X11/devX11.c:3145
 #, fuzzy, c-format
 msgid "unable to start device '%s'"
 msgstr "não foi possível iniciar o dispositivo %s"
 
-#: src/modules/X11/devX11.c:3155
+#: src/modules/X11/devX11.c:3157
 #, fuzzy
 msgid "cairo-based devices are not supported on this build"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/modules/X11/devX11.c:3186
+#: src/modules/X11/devX11.c:3188
 msgid "unable to contact X11 display"
 msgstr "não foi possível abrir conexão com o dispositivo X11"
 
-#: src/modules/X11/devX11.c:3254
+#: src/modules/X11/devX11.c:3256
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "não foi possível alocar memória para estrutura do tipo X11Routines"
 
