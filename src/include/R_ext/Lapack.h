@@ -27,6 +27,13 @@
 #include <R_ext/Complex.h>	/* for Rcomplex */
 #include <R_ext/BLAS.h>
 
+/*
+  LAPACK function names are [zds]<name>(), where d denotes the real
+  version of the function, z the complex version and
+  s the symmetric (and real) version. Only the d<name> functions are
+  documented.
+*/
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -2462,7 +2469,7 @@ F77_NAME(dlamc2)(int *beta, int *t, int *rnd,
 	double *eps, int *emin, double *rmin, int *emax,
 	double *rmax);
 
-La_extern void
+La_extern double
 F77_NAME(dlamc3)(double *a, double *b);
 
 La_extern void
