@@ -366,6 +366,10 @@ NEW FEATURES
 	rows; in particular for a data frame with automatic row names.
 	(Suggestion from Martin Morgan.)
 
+    o	file.create() has a new argument 'showWarnings' (default TRUE)
+    	to show an informative warning when creation fails, and
+    	dir.create() warns under more error conditions.
+
 
 DEPRECATED & DEFUNCT
 

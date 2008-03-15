@@ -76,8 +76,8 @@ function(..., fsep=.Platform$file.sep)
 
 file.exists <- function(...) .Internal(file.exists(c(...)))
 
-file.create <- function(...)
-    .Internal(file.create(c(...)))
+file.create <- function(..., showWarnings =  TRUE)
+    .Internal(file.create(c(...), showWarnings))
 
 file.choose <- function(new=FALSE) .Internal(file.choose(new))
 

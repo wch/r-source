@@ -8,7 +8,7 @@
 \concept{directory}
 \title{File and Directory Manipulation}
 \usage{
-file.create(\dots)
+file.create(\dots, showWarnings = TRUE)
 file.exists(\dots)
 file.remove(\dots)
 file.rename(from, to)
@@ -144,6 +144,11 @@ Sys.umask(mode = "0000")
   operation succeeded for each of the files attempted.
 
   \code{dir.create} will return failure if the directory already exists.
+
+  If \code{showWarnings = TRUE}, \code{file.create} and
+  \code{dir.create} will give a warning for an unexpected failure
+  (e.g. not for a missing value nor for an already existing component for
+  \code{dir.create(recursive = TRUE)}).
 
   Using a missing value for a file or path name will always be regarded
   as a failure.

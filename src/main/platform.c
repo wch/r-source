@@ -501,20 +501,29 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
     FILE *fp;
-    int i, n;
+    int i, n, show;
+
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
         error(_("invalid filename argument"));
+    show = asLogical(CADR(args));
+    if (show == NA_LOGICAL) show = 0;
     n = length(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	LOGICAL(ans)[i] = 0;
-	if (STRING_ELT(fn, i) != NA_STRING &&
-	    (fp = RC_fopen(STRING_ELT(fn, i), "w", TRUE))
-	    != NULL) {
+	if (STRING_ELT(fn, i) == NA_STRING) continue;
+	if ((fp = RC_fopen(STRING_ELT(fn, i), "w", TRUE)) != NULL) {
 	    LOGICAL(ans)[i] = 1;
 	    fclose(fp);
+	} else if (show) {
+#ifdef HAVE_STRERROR
+	    warning(_("cannot create file '%s', reason '%s'"), 
+		    CHAR(STRING_ELT(fn, i)), strerror(errno));
+#else
+            warning(_("cannot create file '%s'"), name);
+#endif
 	}
     }
     UNPROTECT(1);
@@ -1852,10 +1861,16 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	    *p = '/';
 	}
     }
-     res = mkdir(dir, mode);
+    res = mkdir(dir, mode);
     if (show && res && errno == EEXIST)
 	warning(_("'%s' already exists"), dir);
 end:
+    if (show && res && errno != EEXIST)
+#ifdef HAVE_STRERROR
+	warning(_("cannot create dir '%s', reason '%s'"), dir, strerror(errno));
+#else
+        warning(_("cannot create dir '%s'"), dir);
+#endif
     return ScalarLogical(res == 0);
 }
 #else /* Win32 */
