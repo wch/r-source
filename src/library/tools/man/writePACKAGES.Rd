@@ -1,6 +1,6 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
@@ -13,7 +13,7 @@
 \usage{
 write_PACKAGES(dir, fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
-               verbose = FALSE, unpacked = FALSE)
+               verbose = FALSE, unpacked = FALSE, subdirs = FALSE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -39,6 +39,8 @@ write_PACKAGES(dir, fields = NULL,
     processed?}
   \item{unpacked}{a logical indicating whether the package contents are
     available in unpacked form or not (default).}
+  \item{subdirs}{either logical (to indicate if subdirectories should be
+    included) or a character vector of subdirectories to include.}
 }
 \details{
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read

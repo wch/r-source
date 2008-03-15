@@ -1778,10 +1778,23 @@ of the fields are needed.  The simplest way to set up such a file is to
 use function @code{write_PACKAGES} in the @pkg{tools} package, and its
 help explains which fields are needed.  Optionally there can also be
 a @file{PACKAGES.gz} file, a @command{gzip}-compressed version of
-@file{PACKAGES}.
+@file{PACKAGES}---as this will be downloaded in preference to
+@file{PACKAGES} it should be included for large repositories.
 
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
+
+As from @R{} 2.7.0 a repository can contain subdirectories, when the
+descriptions in the @file{PACKAGES} file of packages in subdirectories
+must include a line of the form
+
+@example
+Path: @var{path/to/subdirectory}
+@end example
+
+The @code{write_PACKAGES} utility in package @pkg{tools} can help
+prepare the @file{PACKAGES} and @file{PACKAGES.gz} files.
+
 
 @node Internationalization, Choosing between 32- and 64-bit builds, Add-on packages, Top
 @chapter Internationalization and Localization

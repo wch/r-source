@@ -465,6 +465,11 @@ UTILITIES
 	the DESCRIPTION file contains an Encoding field, that is used
 	for the default encoding.
 
+    o	available.packages() (and hence install.packages etc) now
+    	supports subdirectories in a repository, and
+    	tools::write_PACKAGES() can now produce PACKAGES files
+    	including subdirectories.
+
 
 C-LEVEL FACILITIES
 
@@ -556,7 +561,7 @@ BUG FIXES
 	variables to be printed without using the column names, unlike
 	what happens in S-PLUS (Tim Hesterberg, PR#10730).
 
-    o	xspline() and grid::grid.xpline() work in device coordinates
+    o	xspline() and grid::grid.xspline() work in device coordinates
 	and now correct for anisotropy in the device coordinate
 	system.
 
@@ -566,7 +571,7 @@ BUG FIXES
 	'graphics input' mode by e.g. a change of cursor.
 
     o	Locales without encoding specification and non-UTF-8 locales
-	now work properly on Mac OS X. Note that locales without
+	now work properly on Mac OS X.  Note that locales without
 	encoding specification always use UTF-8 encoding in Mac OS X
 	(except for specials "POSIX" and "C") - this is different from
 	other operating systems.
@@ -594,11 +599,11 @@ BUG FIXES
 	dirname() and unlink() now treat an NA filename as a
 	non-existent file and not the file "NA".
 
-    o	r<foo>(), the random number generators, are now more consistent in
-	warning when NA's (specifically NaN's) are generated.
+    o	r<foo>(), the random number generators, are now more consistent
+	in warning when NA's (specifically NaN's) are generated.
 
-    o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN; similar
-	sensible changes are applied to rlnorm(), rexp(), etc.
+    o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN;
+	similar sensible changes are applied to rlnorm(), rexp(), etc.
 
 
 

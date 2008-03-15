@@ -17,41 +17,56 @@
 write_PACKAGES <-
 function(dir, fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
-         verbose = FALSE, unpacked = FALSE)
+         verbose = FALSE, unpacked = FALSE, subdirs = FALSE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
     type <- match.arg(type)
+    nfields <- 0
+    out <- file(file.path(dir, "PACKAGES"), "wt")
+    outgz <- gzfile(file.path(dir, "PACKAGES.gz"), "wt")
 
-    desc <- .build_repository_package_db(dir, fields, type, verbose,
-                                         unpacked)
+    paths <- ""
+    if(is.logical(subdirs) && subdirs) {
+        owd <- setwd(dir)
+        paths <- unique(dirname(list.files(".", recursive=TRUE)))
+        setwd(owd)
+        paths <- c("", paths[paths != "."])
+    } else if(is.character(subdirs)) paths <- c("", subdirs)
 
-    if(length(desc)) {
-        fields <- names(desc[[1]])
-        desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
-        colnames(desc) <- fields
-        ## bundles do not have a Package entry in the DESCRIPTION,
-        ## hence replace non-existing Package entries by Bundle entries
-        noPack <- is.na(desc[,"Package"])
-        desc[noPack, "Package"] <- desc[noPack, "Bundle"]
+    for(path in paths) {
+        this <- if(nzchar(path)) file.path(dir, path) else dir
+        desc <- .build_repository_package_db(this, fields, type, verbose,
+                                             unpacked)
 
-        ## Writing PACKAGES file from matrix desc linewise in order to
-        ## omit NA entries appropriately:
-        out <- file(file.path(dir, "PACKAGES"), "wt")
-        outgz <- gzfile(file.path(dir, "PACKAGES.gz"), "wt")
-        for(i in seq_len(nrow(desc))){
-            desci <- desc[i, !(is.na(desc[i, ]) | (desc[i, ] == "")),
-                          drop = FALSE]
-            write.dcf(desci, file = out)
-            cat("\n", file = out)
-            write.dcf(desci, file = outgz)
-            cat("\n", file = outgz)
+        if(length(desc)) {
+            fields <- names(desc[[1]])
+            desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
+            colnames(desc) <- fields
+            ## bundles do not have a Package entry in the DESCRIPTION,
+            ## hence replace non-existing Package entries by Bundle entries
+            noPack <- is.na(desc[,"Package"])
+            desc[noPack, "Package"] <- desc[noPack, "Bundle"]
+
+            ## Writing PACKAGES file from matrix desc linewise in order to
+            ## omit NA entries appropriately:
+            for(i in seq_len(nrow(desc))){
+                desci <- desc[i, !(is.na(desc[i, ]) | (desc[i, ] == "")),
+                              drop = FALSE]
+                write.dcf(desci, file = out)
+                if(nzchar(path)) cat("Path: ", path, "\n", sep="", file = out)
+                cat("\n", file = out)
+                write.dcf(desci, file = outgz)
+                if(nzchar(path)) cat("Path: ", path, "\n", sep="", file = outgz)
+                cat("\n", file = outgz)
+            }
+            nfields <- nfields + nrow(desc)
         }
-        close(out)
-        close(outgz)
-        invisible(nrow(desc))
     }
-    else invisible(0)
+
+    close(out)
+    close(outgz)
+    invisible(nfields)
 }
 
 .build_repository_package_db <-
