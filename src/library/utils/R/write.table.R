@@ -29,7 +29,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     if(!is.data.frame(x) && !is.matrix(x)) x <- data.frame(x)
 
     makeRownames <- isTRUE(row.names)
-    makeColnames <- isTRUE(col.names)
+    ## need col names if col.names is TRUE or NA
+    makeColnames <- is.logical(col.names) && !identical(FALSE, col.names)
     if(is.matrix(x)) {
         ## fix up dimnames as as.data.frame would
         p <- ncol(x)
