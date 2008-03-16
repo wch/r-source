@@ -570,6 +570,9 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	else sub = translateChar(STRING_ELT(CADDDR(args), 0));
 	from = CHAR(STRING_ELT(CADR(args), 0)); /* ASCII */
 	to = CHAR(STRING_ELT(CADDR(args), 0));
+	/* some iconv's allow "UTF8", but libiconv does not */
+	if(streql(from, "UTF8")) from = "UTF-8";
+	if(streql(to, "UTF8")) to = "UTF-8";
 	/* Should we do something about marked CHARSXPs in 'from = ""'? */
 	if(streql(to, "UTF-8")) isUTF8 = TRUE;
 	if(streql(to, "latin1") || streql(to, "ISO_8859-1")

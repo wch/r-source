@@ -370,6 +370,9 @@ NEW FEATURES
     	to show an informative warning when creation fails, and
     	dir.create() warns under more error conditions.
 
+    o	iconv() now accepts "UTF8" on all platforms (many did, but not
+    	e.g. libiconv as used on Windows).
+
 
 DEPRECATED & DEFUNCT
 
