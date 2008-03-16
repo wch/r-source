@@ -79,6 +79,8 @@ X11 <- function(display = "", width, height, pointsize, gamma,
 	    switch(d$type, "cairo" = 1, "nbcairo" = 2, # otherwise:
 		   0)
 	else 0
+    ## Aargh -- trkplot has a trapdoor and does not set type.
+    if (display == "XImage") type <- 0
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                   NA_integer_, d$xpos, d$ypos, d$title, type, d$antialias))
