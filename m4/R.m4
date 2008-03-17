@@ -2207,24 +2207,36 @@ if test -z "${TCLTK_CPPFLAGS}"; then
     found_tcl_h=no
     if test -n "${TCL_CONFIG}"; then
       . ${TCL_CONFIG}
-      ## Look for tcl.h in
-      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
-      ##   ${TCL_PREFIX}/include
-      ## Also look in
-      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic
-      ## to deal with current FreeBSD layouts.  These also link the real
-      ## thing to the version subdir, but the link cannot be used as it
-      ## fails to include 'tclDecls.h' which is not linked.  Hence we
-      ## must look for the real thing first.  Argh ...
-      for dir in \
-          ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic \
-          ${TCL_PREFIX}/include/tcl${TCL_VERSION} \
-          ${TCL_PREFIX}/include; do 
-        AC_CHECK_HEADER([${dir}/tcl.h],
-                        [TCLTK_CPPFLAGS="-I${dir}"
-                         found_tcl_h=yes
-                         break])
-      done
+      ## TCL_INCLUDE_SPEC (if set) is what we want.
+      if test -n ${TCL_INCLUDE_SPEC} ; then
+        r_save_CPPFLAGS="${CPPFLAGS}"
+	CPPFLAGS="${CPPFLAGS} ${TCL_INCLUDE_SPEC}"
+	AC_CHECK_HEADER([tcl.h], 
+			[TCLTK_CPPFLAGS="${TCL_INCLUDE_SPEC}"
+			 found_tcl_h=yes
+			 break])
+	CPPFLAGS="${r_save_CPPFLAGS}"
+      fi
+      if test "${found_tcl_h}" = no; then
+	## Look for tcl.h in
+	##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
+	##   ${TCL_PREFIX}/include
+	## Also look in
+	##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic
+	## to deal with current FreeBSD layouts.  These also link the real
+	## thing to the version subdir, but the link cannot be used as it
+	## fails to include 'tclDecls.h' which is not linked.  Hence we
+	## must look for the real thing first.  Argh ...
+	for dir in \
+	    ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic \
+	    ${TCL_PREFIX}/include/tcl${TCL_VERSION} \
+	    ${TCL_PREFIX}/include; do 
+	  AC_CHECK_HEADER([${dir}/tcl.h],
+			  [TCLTK_CPPFLAGS="-I${dir}"
+			   found_tcl_h=yes
+			   break])
+	done
+      fi
     fi
     if test "${found_tcl_h}" = no; then
       _R_HEADER_TCL
@@ -2240,32 +2252,44 @@ if test -z "${TCLTK_CPPFLAGS}"; then
     found_tk_h=no
     if test -n "${TK_CONFIG}"; then
       . ${TK_CONFIG}
-      ## Look for tk.h in
-      ##   ${TK_PREFIX}/include/tk${TK_VERSION}
-      ##   ${TK_PREFIX}/include
-      ## Also look in
-      ##   ${TK_PREFIX}/include/tcl${TK_VERSION}
-      ## to compensate for Debian madness ...
-      ## Also look in
-      ##   ${TK_PREFIX}/include/tk${TK_VERSION}/generic
-      ## to deal with current FreeBSD layouts.  See above for details.
-      ##
-      ## As the AC_CHECK_HEADER test tries including the header file and
-      ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
-      ## for the check.
-      r_save_CPPFLAGS="${CPPFLAGS}"
-      CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
-      for dir in \
-          ${TK_PREFIX}/include/tk${TK_VERSION}/generic \
-          ${TK_PREFIX}/include/tk${TK_VERSION} \
-          ${TK_PREFIX}/include/tcl${TK_VERSION} \
-          ${TK_PREFIX}/include; do 
-        AC_CHECK_HEADER([${dir}/tk.h],
-                        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${dir}"
-                         found_tk_h=yes
-                         break])
-      done
-      CPPFLAGS="${r_save_CPPFLAGS}"
+      ## TK_INCLUDE_SPEC (if set) is what we want.
+      if test -n ${TK_INCLUDE_SPEC} ; then
+        r_save_CPPFLAGS="${CPPFLAGS}"
+	CPPFLAGS="${CPPFLAGS} ${TCLTK_CPPFLAGS} ${TK_XINCLUDES} ${TK_INCLUDE_SPEC}"
+	AC_CHECK_HEADER([tk.h], 
+		        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_INCLUDE_SPEC}"
+			 found_tk_h=yes
+			 break])
+	CPPFLAGS="${r_save_CPPFLAGS}"
+      fi
+      if test "${found_tk_h}" = no; then
+	## Look for tk.h in
+	##   ${TK_PREFIX}/include/tk${TK_VERSION}
+	##   ${TK_PREFIX}/include
+	## Also look in
+	##   ${TK_PREFIX}/include/tcl${TK_VERSION}
+	## to compensate for Debian madness ...
+	## Also look in
+	##   ${TK_PREFIX}/include/tk${TK_VERSION}/generic
+	## to deal with current FreeBSD layouts.  See above for details.
+	##
+	## As the AC_CHECK_HEADER test tries including the header file and
+	## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
+	## for the check.
+	r_save_CPPFLAGS="${CPPFLAGS}"
+	CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
+	for dir in \
+	    ${TK_PREFIX}/include/tk${TK_VERSION}/generic \
+	    ${TK_PREFIX}/include/tk${TK_VERSION} \
+	    ${TK_PREFIX}/include/tcl${TK_VERSION} \
+	    ${TK_PREFIX}/include; do 
+	  AC_CHECK_HEADER([${dir}/tk.h],
+			  [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${dir}"
+			   found_tk_h=yes
+			   break])
+	done
+	CPPFLAGS="${r_save_CPPFLAGS}"
+      fi
     fi
     if test "${found_tk_h}" = no; then
       _R_HEADER_TK

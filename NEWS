@@ -414,6 +414,10 @@ INSTALLATION
     o	Tcl/Tk >= 8.3 (released in 2000) is now required to build
 	package tcltk.
 
+    o	configure first tries TCL_INCLUDE_SPEC and TK_INCLUDE_SPEC
+    	when looking for Tcl/Tk headers.  (The existing scheme did
+    	not work for the ActiveTcl package on Mac OS X.)
+
     o	The Windows build only supports Windows 2000 or later (XP,
 	Vista, Server 2003 and Server 2008).
 
