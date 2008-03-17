@@ -42,7 +42,8 @@ factorial(x)
 lfactorial(x)
 }
 \arguments{
-  \item{a, b, x, n}{numeric vectors.}
+  \item{a, b}{non-negative numeric vectors.}
+  \item{x, n}{numeric vectors.}
   \item{k, deriv}{integer vectors.}
 }
 \details{
@@ -52,15 +53,20 @@ lfactorial(x)
     B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
   The formal definition is
   \deqn{B(a, b) = \int_0^1 t^{a-1} (1-t)^{b-1} dt}{integral_0^1 t^(a-1) (1-t)^(b-1) dt}
-  (Abramowitz and Stegun section 6.2.1, page 258).
+  (Abramowitz and Stegun section 6.2.1, page 258).  Note that it is only
+  defined in \R for non-negative \code{a} and \code{b}, and is infinite
+  if either is zero.
 
   The functions \code{gamma} and \code{lgamma} return the gamma function
-  \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
+  \eqn{\Gamma(x)} and the natural logarithm of \emph{the absolute value of} the
   gamma function.  The gamma function is defined by
   (Abramowitz and Stegun section 6.1.1, page 255)
   \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral_0^Inf t^(a-1) exp(-t) dt}
-  \code{factorial(x)} is \eqn{x!} and identical to
-  \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
+  for all real \code{x} except zero and negative integers (when
+  \code{NaN} is returned).
+  \code{factorial(x)} (\eqn{x!} for non-negative integer \code{x})
+  is defined to be \code{gamma(x+1)} and \code{lfactorial} to be
+  \code{lgamma(x+1)}.
 
   The functions \code{digamma} and \code{trigamma} return the first and second
   derivatives of the logarithm of the gamma function.
@@ -79,6 +85,7 @@ lfactorial(x)
   defined for all real numbers \eqn{n} and integer \eqn{k}.  For \eqn{k
     \ge 1}{k >= 1} as \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
+  Non-integer values of \code{k} are rounded to an integer, with a warning.
   \cr \code{choose(*,k)} uses direct arithmetic (instead of
   \code{[l]gamma} calls) for small \code{k}, for speed and accuracy
   reasons.  Note the function \code{\link[utils]{combn}} (package
