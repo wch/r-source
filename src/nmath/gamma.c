@@ -31,6 +31,7 @@
  *
  *    This function is a translation into C of a Fortran subroutine
  *    by W. Fullerton of Los Alamos Scientific Laboratory.
+ *    (e.g. http://www.netlib.org/slatec/fnlib/gamma.f)
  *
  *    The accuracy of this routine compares (very) favourably
  *    with those of the Sun Microsystems portable mathematical
@@ -103,19 +104,19 @@ double gammafn(double x)
 	gammalims(&xmin, &xmax);/*-> ./gammalims.c */
 	xsml = exp(fmax2(log(DBL_MIN), -log(DBL_MAX)) + 0.01);
 	/*   = exp(.01)*DBL_MIN = 2.247e-308 for IEEE */
-	dxrel = sqrt(1/DBL_EPSILON);/*was (1/d1mach(4)) */
+	dxrel = sqrt(DBL_EPSILON);/*was sqrt(d1mach(4)) */
     }
 #else
 /* For IEEE double precision DBL_EPSILON = 2^-52 = 2.220446049250313e-16 :
  * (xmin, xmax) are non-trivial, see ./gammalims.c
  * xsml = exp(.01)*DBL_MIN
- * dxrel = sqrt(1/DBL_EPSILON) = 2 ^ 26
+ * dxrel = sqrt(DBL_EPSILON) = 2 ^ -26
 */
 # define ngam 22
 # define xmin -170.5674972726612
 # define xmax  171.61447887182298
 # define xsml 2.2474362225598545e-308
-# define dxrel 67108864.
+# define dxrel 1.490116119384765696e-8
 #endif
 
     if(ISNAN(x)) return x;
