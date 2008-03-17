@@ -46,7 +46,8 @@ expm1(x)
 }
 \value{
   A vector of the same length as \code{x} containing the transformed
-  values.  \code{log(0)} gives \code{-Inf}.
+  values.  \code{log(0)} gives \code{-Inf}, and negative values give
+  \code{NaN}.
 }
 \note{
   \code{log} and \code{logb} are the same thing in \R, but \code{logb}
@@ -78,6 +79,14 @@ expm1(x)
   the other hand, if you only set a method for the \code{Math} group
   generic then \code{base} argument of \code{log} will be ignored for
   your class.
+}
+\source{
+  \code{log1p} and \code{expm1} may be taken from the operating system,
+  but if not available there are based on the Fortran subroutine
+  \code{dlnrel} by W. Fullerton of Los Alamos Scientific Laboratory (see
+  \url{http://www.netlib.org/slatec/fnlib/dlnrel.f} and (for small x) a
+  single Newton step for the solution of \code{log1p(y) = x}
+  respectively.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

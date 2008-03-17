@@ -95,6 +95,18 @@ lfactorial(x)
   functions are generic: methods can be defined for them individually or
   via the \code{\link[base:groupGeneric]{Math}} group generic.
 }
+\source{
+  \code{gamma}, \code{lgamma}, \code{beta} and \code{lbeta} are based on
+  C translations of Fortran subroutines by W. Fullerton of Los Alamos
+  Scientific Laboratory (now available as part of SLATEC).
+
+  \code{digamma}, \code{trigamma} and \code{psigamma} are based on
+
+  Amos, D. E. (1983). A portable Fortran subroutine for
+  derivatives of the psi function, Algorithm 610,
+  \emph{ACM Transactions on Mathematical Software} \bold{9(4)}, 494--502.
+
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
