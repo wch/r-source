@@ -142,7 +142,7 @@ write.csv <- function(...)
     Call <- match.call(expand.dots = TRUE)
     for(argname in c("col.names", "sep", "dec", "qmethod"))
         if(!is.null(Call[[argname]]))
-            warning(gettextf("attempt to change '%s' ignored", argname),
+            warning(gettextf("attempt to set '%s' ignored", argname),
                     domain = NA)
     rn <- eval.parent(Call$row.names)
     Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
@@ -158,7 +158,7 @@ write.csv2 <- function(...)
     Call <- match.call(expand.dots = TRUE)
     for(argname in c("col.names", "sep", "dec", "qmethod"))
         if(!is.null(Call[[argname]]))
-            warning(gettextf("attempt to change '%s' ignored", argname),
+            warning(gettextf("attempt to set '%s' ignored", argname),
                     domain = NA)
     rn <- eval.parent(Call$row.names)
     Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
