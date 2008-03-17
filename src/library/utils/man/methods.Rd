@@ -54,7 +54,10 @@ methods(generic.function, class)
   The original \code{methods} function was written by Martin Maechler.
 }
 \seealso{
-  \code{\link{S3Methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}
+  \code{\link{S3Methods}}, \code{\link[base]{class}},
+  \code{\link{getS3method}}.
+
+  For S4, \code{\link[methods]{showMethods}}, \code{\link[methods]{Methods}}.
 }
 \references{
   Chambers, J. M. (1992)
@@ -74,6 +77,9 @@ methods("+")     # binary operator
 methods("Math")  # group generic
 require(graphics)
 methods("axis")  # looks like it has methods, but not generic
-\dontrun{methods(print)   # over 100
-}}
+\dontrun{
+methods(print)   # over 100
+}
+## --> help(showMethods) for related examples
+}
 \keyword{methods}

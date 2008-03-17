@@ -102,10 +102,17 @@ showMethods("plot", classes = "track")
 Function "plot":
 x = ANY, y = track
 x = track, y = missing
-x = track, y = ANY}
+x = track, y = ANY
+
+require("Matrix")# a CRAN package with much S4 functionality
+showMethods("%*%")# many!
+    methods(class = "Matrix")# nothing
+showMethods(class = "Matrix")# everything
+}%end{dontrun}
 
 %% FIXME: This should be an example of showing methods from a loaded,
-%% but not attached namespace. Except it doesn't work
+%% but not attached namespace. Except it doesn't work.
+%% Much simpler situation of attach()ing when needed:
 not.there <- !any("package:stats4" == search())
 if(not.there) library(stats4)
 showMethods(classes = "mle")
