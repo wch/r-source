@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-15 17:02+0000\n"
+"POT-Creation-Date: 2008-03-17 09:05+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -6668,49 +6668,49 @@ msgstr "本系统没有'Sys.unsetenv'这个功能"
 msgid "'x' must be a character vector"
 msgstr "'x'必需是字符矢量"
 
-#: src/main/sysutils.c:581 src/main/sysutils.c:726 src/main/sysutils.c:734
-#: src/main/sysutils.c:814 src/main/sysutils.c:868 src/main/sysutils.c:876
-#: src/main/sysutils.c:883
+#: src/main/sysutils.c:584 src/main/sysutils.c:729 src/main/sysutils.c:737
+#: src/main/sysutils.c:817 src/main/sysutils.c:871 src/main/sysutils.c:879
+#: src/main/sysutils.c:886
 msgid "unsupported conversion"
 msgstr "不支持这种转换"
 
-#: src/main/sysutils.c:647 src/main/sysutils.c:1165 src/main/sysutils.c:1172
-#: src/main/sysutils.c:1178
+#: src/main/sysutils.c:650 src/main/sysutils.c:1168 src/main/sysutils.c:1175
+#: src/main/sysutils.c:1181
 msgid "'iconv' is not available on this system"
 msgstr "'iconv'本系统没有这个功能"
 
-#: src/main/sysutils.c:655 src/main/sysutils.c:716 src/main/sysutils.c:808
-#: src/main/sysutils.c:863
+#: src/main/sysutils.c:658 src/main/sysutils.c:719 src/main/sysutils.c:811
+#: src/main/sysutils.c:866
 #, fuzzy, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "csduplicated不能调用在STRSXP上"
 
-#: src/main/sysutils.c:899
+#: src/main/sysutils.c:902
 #, fuzzy
 msgid "invalid input in wtransChar"
 msgstr "readChar()的UTF-8输入有错"
 
-#: src/main/sysutils.c:1289
+#: src/main/sysutils.c:1292
 msgid "cannot mkdir R_TempDir"
 msgstr "无法执行mkdir R_TempDir"
 
-#: src/main/sysutils.c:1293 src/main/sysutils.c:1300 src/main/sysutils.c:1303
+#: src/main/sysutils.c:1296 src/main/sysutils.c:1303 src/main/sysutils.c:1306
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "无法设制R_SESSION_TMPDIR "
 
-#: src/main/sysutils.c:1312
+#: src/main/sysutils.c:1315
 msgid "cannot allocate R_TempDir"
 msgstr "无法分配R_TempDir"
 
-#: src/main/sysutils.c:1331
+#: src/main/sysutils.c:1334
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam里的'tempdir'不对"
 
-#: src/main/sysutils.c:1346
+#: src/main/sysutils.c:1349
 msgid "cannot find unused tempfile name"
 msgstr "临时文件名都用完了"
 
-#: src/main/sysutils.c:1371
+#: src/main/sysutils.c:1374
 msgid "proc.time() is not implemented on this system"
 msgstr "本系统没有实现proc.time()这一功能"
 

@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-15 17:02+0000\n"
-"PO-Revision-Date: 2008-03-15 17:02+0000\n"
+"POT-Creation-Date: 2008-03-17 09:05+0000\n"
+"PO-Revision-Date: 2008-03-17 09:05+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -6702,48 +6702,48 @@ msgstr "‘Sys.unsetenv’ is not available on this system"
 msgid "'x' must be a character vector"
 msgstr "‘x’ must be a character vector"
 
-#: src/main/sysutils.c:581 src/main/sysutils.c:726 src/main/sysutils.c:734
-#: src/main/sysutils.c:814 src/main/sysutils.c:868 src/main/sysutils.c:876
-#: src/main/sysutils.c:883
+#: src/main/sysutils.c:584 src/main/sysutils.c:729 src/main/sysutils.c:737
+#: src/main/sysutils.c:817 src/main/sysutils.c:871 src/main/sysutils.c:879
+#: src/main/sysutils.c:886
 msgid "unsupported conversion"
 msgstr "unsupported conversion"
 
-#: src/main/sysutils.c:647 src/main/sysutils.c:1165 src/main/sysutils.c:1172
-#: src/main/sysutils.c:1178
+#: src/main/sysutils.c:650 src/main/sysutils.c:1168 src/main/sysutils.c:1175
+#: src/main/sysutils.c:1181
 msgid "'iconv' is not available on this system"
 msgstr "‘iconv’ is not available on this system"
 
-#: src/main/sysutils.c:655 src/main/sysutils.c:716 src/main/sysutils.c:808
-#: src/main/sysutils.c:863
+#: src/main/sysutils.c:658 src/main/sysutils.c:719 src/main/sysutils.c:811
+#: src/main/sysutils.c:866
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "‘%s’ must be called on a CHARSXP"
 
-#: src/main/sysutils.c:899
+#: src/main/sysutils.c:902
 msgid "invalid input in wtransChar"
 msgstr "invalid input in wtransChar"
 
-#: src/main/sysutils.c:1289
+#: src/main/sysutils.c:1292
 msgid "cannot mkdir R_TempDir"
 msgstr "cannot mkdir R_TempDir"
 
-#: src/main/sysutils.c:1293 src/main/sysutils.c:1300 src/main/sysutils.c:1303
+#: src/main/sysutils.c:1296 src/main/sysutils.c:1303 src/main/sysutils.c:1306
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "unable to set R_SESSION_TMPDIR"
 
-#: src/main/sysutils.c:1312
+#: src/main/sysutils.c:1315
 msgid "cannot allocate R_TempDir"
 msgstr "cannot allocate R_TempDir"
 
-#: src/main/sysutils.c:1331
+#: src/main/sysutils.c:1334
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "invalid ‘tempdir’ in R_tmpnam"
 
-#: src/main/sysutils.c:1346
+#: src/main/sysutils.c:1349
 msgid "cannot find unused tempfile name"
 msgstr "cannot find unused tempfile name"
 
-#: src/main/sysutils.c:1371
+#: src/main/sysutils.c:1374
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() is not implemented on this system"
 

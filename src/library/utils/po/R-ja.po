@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-17 09:06\n"
 "PO-Revision-Date: 2007-09-11 22:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -892,7 +892,8 @@ msgstr " 不正な 'col.names' 指定です "
 msgid "appending column names to file"
 msgstr " ファイルに列名を加えます "
 
-msgid "attempt to change '%s' ignored"
+#, fuzzy
+msgid "attempt to set '%s' ignored"
 msgstr " '%s' への変更の試みは無視されました "
 
 msgid "'unzip' must be a single character string"
