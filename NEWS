@@ -617,6 +617,14 @@ BUG FIXES
     o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN;
 	similar sensible changes are applied to rlnorm(), rexp(), etc.
 
+    o	[l]choose() now warns when rounding non-integer 'k' instead of
+    	doing so silently.  (May help confused users such as PR#10766.)
+
+    o	gamma() was warning incorrectly for most negative values as being
+    	too near a negative integer.  This also affected other
+    	functions making use of its C-level implementation.
+
+
 
 
 	**************************************************
