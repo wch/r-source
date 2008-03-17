@@ -26,6 +26,9 @@ apply <- function(X, MARGIN, FUN, ...)
     ds <- 1:dl
     if(length(oldClass(X)) > 0)
 	X <- if(dl == 2) as.matrix(X) else as.array(X)
+    ## now recompute things as coercion can change dims
+    ## (e.g. when a data frame contains a matrix).
+    d <- dim(X)
     dn <- dimnames(X)
 
     ## Extract the margins and associated dimnames
