@@ -40,7 +40,7 @@ quartz.options(\dots, reset = FALSE)
     \code{"transparent"}.}
   \item{dpi}{resolution of the output.  The default (\code{NA_real_})
     for an on-screen display defaults to the resolution of
-    the main screen, adn to 72 dpi otherwise.  See \sQuote{Details}.}
+    the main screen, and to 72 dpi otherwise.  See \sQuote{Details}.}
   \item{\dots}{Any of the arguments to \code{quartz} except \code{file}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
 }
