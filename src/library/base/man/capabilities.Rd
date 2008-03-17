@@ -27,9 +27,14 @@ capabilities(what = NULL)
       X11 module if not already loaded, and checks that the default
       display can be contacted unless a \code{X11} device has already
       been used.}
+#ifdef unix
     \item{aqua}{Are the \code{R.app} GUI components and the
       \code{\link{quartz}} function operational?  Only on some Mac OS X
       builds.}
+#endif
+#ifdef windows
+    \item{aqua}{\code{FALSE} except on Mac OS X.}
+#endif
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions
