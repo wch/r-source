@@ -27,6 +27,9 @@ capabilities(what = NULL)
       X11 module if not already loaded, and checks that the default
       display can be contacted unless a \code{X11} device has already
       been used.}
+    \item{aqua}{Are the \code{R.app} GUI components and the
+      \code{\link{quartz}} function operational?  Only on some Mac OS X
+      builds.}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions
@@ -50,10 +53,11 @@ capabilities(what = NULL)
     \item{cairo}{applies to Unix-alikes -- always \code{FALSE}.}
 #endif
 #ifdef unix
-    \item{cairo}{is there support \code{type="Cairo"} in
-      \code{\link{X11}}, \code{\link{png}} and \code{\link{jpeg}}, and
+    \item{cairo}{is there support for \code{type="Cairo"} in
+      \code{\link{X11}}, \code{\link{png}},\code{\link{jpeg}},
+      \code{\link{tiff}} and \code{\link{bmp}}, and
       for the \code{\link{svg}}, \code{\link{cairo_pdf}} and
-      \code{\link{cairo_pdf}} devices?}
+      \code{\link{cairo_ps}} devices?}
 #endif    
 }
 \seealso{\code{\link{.Platform}}}

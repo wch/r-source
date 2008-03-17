@@ -1680,8 +1680,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 	        break;
 	    }
 #endif
-    PROTECT(ans = allocVector(LGLSXP, 13));
-    PROTECT(ansnames = allocVector(STRSXP, 13));
+    PROTECT(ans = allocVector(LGLSXP, 14));
+    PROTECT(ansnames = allocVector(STRSXP, 14));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1719,6 +1719,13 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 # else
     LOGICAL(ans)[i++] = TRUE;
 # endif
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("aqua"));
+#ifdef HAVE_AQUA
+    LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif

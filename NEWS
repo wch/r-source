@@ -25,7 +25,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	being in device units (pixels) rather than in points.
 
     o	Packages which include graphics devices need to be re-installed
-	for this version of R.
+	for this version of R, with updated versions.
 
 
 NEW FEATURES
@@ -373,6 +373,10 @@ NEW FEATURES
     o	iconv() now accepts "UTF8" on all platforms (many did, but not
     	e.g. libiconv as used on Windows).
 
+    o	There are new capabilities "aqua" (for the AQUA GUI and quartz()
+    	device on Mac OS X) and "cairo" (for cairo-based graphics
+    	devices).
+
 
 DEPRECATED & DEFUNCT
 
@@ -486,7 +490,8 @@ C-LEVEL FACILITIES
     o	Graphics devices can now select to be sent text in UTF-8, even
 	if the current locale is not UTF-8 (and so enable text entered
 	in UTF-8 to be plotted).  This is used by postscript(), pdf()
-	and the windows() family of devices.
+	and the windows() family of devices, as well as the new
+	cairo-based devices.
 
     o	There is a new description of the interface for graphics
 	devices in the 'R Internals' manual, and several new entry

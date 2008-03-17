@@ -16,23 +16,23 @@
 bmp(filename = "Rplot\%03d.bmp",
     width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white", res = NA, \dots,
-    type = c("cairo", "Xlib"), antialias)
+    type = c("cairo", "Xlib", "quartz"), antialias)
 
 jpeg(filename = "Rplot\%03d.jpeg",
      width = 480, height = 480, units = "px",
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots,
-     type = c("cairo", "Xlib"), antialias)
+     type = c("cairo", "Xlib", "quartz"), antialias)
 
 png(filename = "Rplot\%03d.png",
     width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots,
-    type = c("cairo", "Xlib", "cairo1"), antialias)
+    type = c("cairo", "Xlib", "cairo1", "quartz"), antialias)
 
 tiff(filename = "Rplot\%03d.tiff",
      width = 480, height = 480, units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
      bg = "white", res = NA,  \dots,
-     type = c("cairo", "Xlib"), antialias)
+     type = c("cairo", "Xlib", "quartz"), antialias)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -61,11 +61,12 @@ tiff(filename = "Rplot\%03d.tiff",
     the underlying \code{\link{X11}} device, such as \code{gamma} and
     \code{fonts}.}
   \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"cairo"} or \code{"cairo1"}.  The latter
-    two will only be available if the system was compiled with support
-    for cairo -- otherwise \code{"Xlib"} will be used.  The default is
-    set by \code{\link{X11.options}} -- the \sQuote{out of the box}
-    default is \code{"cairo"} where available.}
+    prior to \R 2.7.0) or \code{"quartz"} or \code{"cairo"} or
+     \code{"cairo1"}.  The latter two will only be available if the
+     system was compiled with support for cairo -- otherwise
+     \code{"Xlib"} will be used.  The default is set by
+     \code{\link{X11.options}} -- the \sQuote{out of the box} default is
+     \code{"cairo"} where available.}
   \item{antialias}{for \code{type = "cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
     default is set by \code{\link{X11.options}}.}
@@ -97,7 +98,9 @@ tiff(filename = "Rplot\%03d.tiff",
   will be reported if you attempt to use them on a system where they are
   not supported.  For \code{type = "Xlib"} they may not be usable unless
   the X11 display is available to the owner of the \R process.  
-  \code{type = "cairo"} requires cairo 1.2 or later.
+  \code{type = "cairo"} requires cairo 1.2 or later.  \code{type =
+  "quartz"} uses the \code{\link{quartz}} device and so is only
+  available where that is (on some Mac OS X) builds.
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
@@ -112,7 +115,7 @@ tiff(filename = "Rplot\%03d.tiff",
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
   file if \code{type = "cairo"} and non-opaque colours are used).
 
-  \code{png(type = "cairo1"} uses cairo directly to output the file --
+  \code{png(type = "cairo1")} uses cairo directly to output the file --
   the resolution is not recorded and the PNG format used is chosen by
   cairo (and undocumented -- it is currently 32-bit RGBA, that is with
   an alpha channel whether used or not).  It is included for use on
@@ -135,9 +138,8 @@ tiff(filename = "Rplot\%03d.tiff",
 \note{
   For \code{type = "Xlib"} these devices are based on the \code{\link{X11}}
   device.  The colour model used will be that set up by
-  \code{X11.options} at the time the first \code{X11},
-  \code{jpeg} or \code{png} device was opened (or the first after all
-  such devices have been closed).
+  \code{X11.options} at the time the first Xlib-based devices was opened
+  (or the first after all such devices have been closed).
 }
 
 \author{Guido Masarotto and Brian Ripley}
@@ -170,6 +172,8 @@ tiff(filename = "Rplot\%03d.tiff",
     minimum one.
     \item Colours are interpreted by the viewing application.
   }
+
+  For \code{type = "quartz"} see the help for \code{\link{quartz}}.
 }
 
 \examples{

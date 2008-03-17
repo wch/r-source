@@ -92,7 +92,8 @@ x11 <- X11
 png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px",
                 pointsize = 12, bg = "white", res = NA, ...,
-                type = c("cairo", "Xlib", "cairo1"), antialias)
+                type = c("cairo", "Xlib", "cairo1", "quartz"),
+                antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -103,7 +104,7 @@ png <- function(filename = "Rplot%03d.png",
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     new <- list(...)
-    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "cairo", "cairo1"))
+    if(!missing(type)) new$type <- match.arg(type)
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
@@ -111,7 +112,13 @@ png <- function(filename = "Rplot%03d.png",
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     ## do these separately so can remove from X11 module in due course
-    if (d$type == "cairo" && capabilities("cairo"))
+    if(d$type == "quartz" && capabilities("aqua")) {
+        width <- width/ifelse(is.na(res), 72, res);
+        height <- height/ifelse(is.na(res), 72, res);
+        invisible(.External(CQuartz, "png", filename, width, height,
+                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+                            if(is.na(res)) NULL else res))
+    } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 2L, width, height, pointsize, bg,
                         res, d$antialias, 100L))
     else if (d$type == "cairo1" && capabilities("cairo"))
@@ -128,7 +135,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                  width = 480, height = 480, units = "px",
                  pointsize = 12, quality = 75,
                  bg = "white", res = NA, ...,
-                 type = c("cairo", "Xlib"), antialias)
+                 type = c("cairo", "Xlib", "quartz"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -139,7 +146,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     new <- list(...)
-    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "cairo"))
+    if(!missing(type)) new$type <- match.arg(type)
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
@@ -147,7 +154,13 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     ## do this separately so can remove from X11 module in due course
-    if (d$type == "cairo" && capabilities("cairo"))
+    if(d$type == "quartz" && capabilities("aqua")) {
+        width <- width/ifelse(is.na(res), 72, res);
+        height <- height/ifelse(is.na(res), 72, res);
+        invisible(.External(CQuartz, "jpeg", filename, width, height,
+                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+                            if(is.na(res)) NULL else res))
+    } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 3L, width, height, pointsize, bg,
                         res, d$antialias, quality))
     else
@@ -161,7 +174,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
                  width = 480, height = 480, units = "px", pointsize = 12,
                  compression = c("none", "rle", "lzw", "jpeg", "zip"),
                  bg = "white", res = NA, ...,
-                 type = c("cairo", "Xlib"), antialias)
+                 type = c("cairo", "Xlib", "quartz"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -172,7 +185,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     new <- list(...)
-    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "cairo"))
+    if(!missing(type)) new$type <- match.arg(type)
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
@@ -181,7 +194,13 @@ tiff <- function(filename = "Rplot%03d.tiff",
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
-    if (d$type == "cairo" && capabilities("cairo"))
+    if(d$type == "quartz" && capabilities("aqua")) {
+        width <- width/ifelse(is.na(res), 72, res);
+        height <- height/ifelse(is.na(res), 72, res);
+        invisible(.External(CQuartz, "tiff", filename, width, height,
+                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+                            if(is.na(res)) NULL else res))
+    } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 8L, width, height, pointsize, bg,
                         res, d$antialias, comp))
     else
@@ -194,7 +213,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
 bmp <- function(filename = "Rplot%03d.bmp",
                 width = 480, height = 480, units = "px", pointsize = 12,
                 bg = "white", res = NA, ...,
-                type = c("cairo", "Xlib"), antialias)
+                type = c("cairo", "Xlib", "quartz"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
@@ -205,14 +224,20 @@ bmp <- function(filename = "Rplot%03d.bmp",
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     new <- list(...)
-    if(!missing(type)) new$type <- match.arg(type, c("Xlib", "cairo"))
+    if(!missing(type)) new$type <- match.arg(type)
     if(!missing(antialias)) {
         new$antialias <- pmatch(antialias,
                                 c("default", "none", "gray", "subpixel"))
         if(is.na(new$antialias)) stop("invalid value for 'antialias'")
     }
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
-    if (d$type == "cairo" && capabilities("cairo"))
+    if(d$type == "quartz" && capabilities("aqua")) {
+        width <- width/ifelse(is.na(res), 72, res);
+        height <- height/ifelse(is.na(res), 72, res);
+        invisible(.External(CQuartz, "bmp", filename, width, height,
+                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+                            if(is.na(res)) NULL else res))
+    } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 9L, width, height, pointsize, bg,
                         res, d$antialias, 100L))
     else
