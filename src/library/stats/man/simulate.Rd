@@ -66,7 +66,7 @@ fitted(mod1)
 stopifnot(identical(S2, simulate(mod1, nsim = 200, seed = sseed)))
 
 ## To be sure about the proper RNGkind, e.g., after
-RNGversion("1.0.0")
+RNGversion("2.7.0")
 ## first set the RNG kind, then simulate
 do.call(RNGkind, attr(sseed, "kind"))
 identical(S2, simulate(mod1, nsim = 200, seed = sseed))

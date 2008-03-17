@@ -2,7 +2,6 @@
 ### _and_ must work (no Recommended packages, please)
 
 postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
-RNGversion("1.6.2")
 
 ## force standard handling for data frames
 options(stringsAsFactors=TRUE)

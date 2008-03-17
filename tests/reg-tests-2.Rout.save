@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-02-04 r44319)
+R version 2.7.0 Under development (unstable) (2008-03-17 r44777)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -19,10 +19,6 @@ Type 'q()' to quit R.
 > ### _and_ must work (no Recommended packages, please)
 > 
 > postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
-> RNGversion("1.6.2")
-Warning message:
-In RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") :
-  Buggy version of Kinderman-Ramage generator used.
 > 
 > ## force standard handling for data frames
 > options(stringsAsFactors=TRUE)
@@ -360,7 +356,7 @@ There were 22 warnings (use warnings() to see them)
 'data.frame':	10 obs. of  3 variables:
  $ x  : num  1 1 1 1 1 1 1 1 1 1
  $ y  : num  1 2 3 4 5 6 7 8 9 10
- $ fac: Factor w/ 2 levels "A","C": 1 1 2 2 2 2 2 2 2 1
+ $ fac: Factor w/ 3 levels "A","B","C": 1 3 2 3 3 1 2 3 2 2
 > (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
 NULL data frame with 10 rows
 > (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
@@ -961,14 +957,14 @@ $B$subset
 > x <- c(round(runif(10), 2), 10000)
 > summary(x)
      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    0.000     0.050     0.550   909.400     0.675 10000.000 
+    0.060     0.320     0.630   909.600     0.905 10000.000 
 > summary(data.frame(x))
        x            
- Min.   :    0.000  
- 1st Qu.:    0.050  
- Median :    0.550  
- Mean   :  909.423  
- 3rd Qu.:    0.675  
+ Min.   :    0.060  
+ 1st Qu.:    0.320  
+ Median :    0.630  
+ Mean   :  909.592  
+ 3rd Qu.:    0.905  
  Max.   :10000.000  
 > ## Comments:
 > ## All entries show all 3 digits after the decimal point now.
@@ -1332,7 +1328,7 @@ lm(formula = y ~ x)
 
 Coefficients:
 (Intercept)        xTRUE  
-     0.1230       0.3170  
+   -0.05293     -0.20018  
 
 > DF <- data.frame(x, y)
 > lm(y ~ x, data=DF)
@@ -1342,7 +1338,7 @@ lm(formula = y ~ x, data = DF)
 
 Coefficients:
 (Intercept)        xTRUE  
-     0.1230       0.3170  
+   -0.05293     -0.20018  
 
 > options(contrasts=c("contr.helmert", "contr.poly"))
 > model.matrix(y ~ x)
@@ -1370,7 +1366,7 @@ lm(formula = y ~ x, data = DF)
 
 Coefficients:
 (Intercept)           x1  
-     0.2814       0.1585  
+    -0.1530      -0.1001  
 
 > z <- 1:10
 > lm(y ~ x*z)
@@ -1380,7 +1376,7 @@ lm(formula = y ~ x * z)
 
 Coefficients:
 (Intercept)           x1            z         x1:z  
-    0.49064     -0.68273     -0.02433      0.15074  
+  -0.088089    -0.508170    -0.005102     0.073733  
 
 > lm(y ~ x*z - 1)
 
@@ -1388,8 +1384,8 @@ Call:
 lm(formula = y ~ x * z - 1)
 
 Coefficients:
-  xFALSE     xTRUE         z      x1:z  
- 1.17337  -0.19209  -0.02433   0.15074  
+   xFALSE      xTRUE          z       x1:z  
+ 0.420081  -0.596259  -0.005102   0.073733  
 
 > options(oldCon)
 > 
@@ -1583,27 +1579,27 @@ Eye:Sex   3    11.76 190.64
 +     set.seed(77, type)
 +     runif(100); print(runif(4))
 + }
-[1] "Wichmann-Hill"          "Buggy Kinderman-Ramage"
+[1] "Wichmann-Hill" "Inversion"    
 [1] 0.8308841 0.4640221 0.9460082 0.8764644
 [1] 0.12909876 0.07294851 0.45594560 0.68884911
 [1] 0.4062450 0.7188432 0.6241738 0.2511611
-[1] "Marsaglia-Multicarry"   "Buggy Kinderman-Ramage"
+[1] "Marsaglia-Multicarry" "Inversion"           
 [1] 0.3479705 0.9469351 0.2489207 0.7329251
 [1] 0.5041512 0.3617873 0.1469184 0.3798119
 [1] 0.14388128 0.04196294 0.36214015 0.86053575
-[1] "Super-Duper"            "Buggy Kinderman-Ramage"
+[1] "Super-Duper" "Inversion"  
 [1] 0.2722510 0.9230240 0.3971743 0.8284474
 [1] 0.5706241 0.1806023 0.9633860 0.8434444
 [1] 0.09356585 0.41081124 0.38635627 0.72993396
-[1] "Mersenne-Twister"       "Buggy Kinderman-Ramage"
+[1] "Mersenne-Twister" "Inversion"       
 [1] 0.5999890 0.3328235 0.4886130 0.9544738
 [1] 0.5993679 0.4516818 0.1368254 0.7261788
 [1] 0.09594961 0.31235651 0.81244335 0.72330846
-[1] "Knuth-TAOCP"            "Buggy Kinderman-Ramage"
+[1] "Knuth-TAOCP" "Inversion"  
 [1] 0.9445502 0.3366297 0.6296881 0.5914161
 [1] 0.9213954 0.5468138 0.8817100 0.4442237
 [1] 0.8016962 0.9226080 0.1473484 0.8827707
-[1] "Knuth-TAOCP-2002"       "Buggy Kinderman-Ramage"
+[1] "Knuth-TAOCP-2002" "Inversion"       
 [1] 0.9303634 0.2812239 0.1085806 0.8053228
 [1] 0.2916627 0.9085017 0.7958965 0.1980655
 [1] 0.05247575 0.28290867 0.20930324 0.16794887
