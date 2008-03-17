@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/quartz.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
@@ -79,9 +79,6 @@ quartz.options(\dots, reset = FALSE)
   will be substituted by the device number.
 
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}.
-
-  Line widths as controlled by \code{par(lwd=)} are in multiples of a
-  point (1/72 inch) and values < 1 are silently converted to 1.
 }
 \section{Conventions}{
   Currently a place-holder!
@@ -93,9 +90,11 @@ quartz.options(\dots, reset = FALSE)
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
-    \item Line widths are in points, minimum one.
-    \item Circle radii?
-    \item Colour interpretation?
+    \item Line widths are real-valued in big points and no minimum is
+    set by \R.
+    \item Circle radii are real-valued and no minimum is set by \R.
+    \item Colour interpretation is by the viewer, including the screen
+    display.
   }
 }
 \seealso{
