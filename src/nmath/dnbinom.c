@@ -4,7 +4,7 @@
  *    October 23, 2000 and Feb, 2001.
  *
  *  Merge in to R:
- *	Copyright (C) 2000--2001, The R Core Development Team
+ *	Copyright (C) 2000--2008, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,21 +33,21 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double dnbinom(double x, double n, double p, int give_log)
+double dnbinom(double x, double size, double prob, int give_log)
 { 
-    double prob;
+    double ans, p;
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(n) || ISNAN(p))
-        return x + n + p;
+    if (ISNAN(x) || ISNAN(size) || ISNAN(prob))
+        return x + size + prob;
 #endif
 
-    if (p <= 0 || p > 1 || n <= 0) ML_ERR_return_NAN;
+    if (prob <= 0 || prob > 1 || size <= 0) ML_ERR_return_NAN;
     R_D_nonint_check(x);
     if (x < 0 || !R_FINITE(x)) return R_D__0;
     x = R_D_forceint(x);
 
-    prob = dbinom_raw(n, x+n, p, 1-p, give_log);
-    p = ((double)n)/(n+x);
-    return((give_log) ? log(p) + prob : p * prob);
+    ans = dbinom_raw(size, x+size, prob, 1-prob, give_log);
+    p = ((double)size)/(size+x);
+    return((give_log) ? log(p) + ans : p * ans);
 }

@@ -29,10 +29,10 @@
 
 #include "nmath.h"
 
-double rlnorm(double logmean, double logsd)
+double rlnorm(double meanlog, double sdlog)
 {
-    if(ISNAN(logmean) || !R_FINITE(logsd) || logsd < 0.)
+    if(ISNAN(meanlog) || !R_FINITE(sdlog) || sdlog < 0.)
 	ML_ERR_return_NAN;
 
-    return exp(rnorm(logmean, logsd));
+    return exp(rnorm(meanlog, sdlog));
 }

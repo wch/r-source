@@ -26,53 +26,53 @@
  *	The density function of the non-central F distribution ---
  *  obtained by differentiating the corresp. cumulative distribution function
  *  using dnbeta.
- *  For n1 < 2, since the F density has a singularity as x -> Inf.
+ *  For df1 < 2, since the F density has a singularity as x -> Inf.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
-double dnf(double x, double n1, double n2, double ncp, int give_log)
+double dnf(double x, double df1, double df2, double ncp, int give_log)
 {
     double y, z, f;
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(n1) || ISNAN(n2) || ISNAN(ncp))
-	return x + n2 + n1 + ncp;
+    if (ISNAN(x) || ISNAN(df1) || ISNAN(df2) || ISNAN(ncp))
+	return x + df2 + df1 + ncp;
 #endif
 
     /* want to compare dnf(ncp=0) behavior with df() one, hence *NOT* :
      * if (ncp == 0)
-     *   return df(x, n1, n2, give_log); */
+     *   return df(x, df1, df2, give_log); */
 
-    if (n1 <= 0. || n2 <= 0. || ncp < 0) ML_ERR_return_NAN;
+    if (df1 <= 0. || df2 <= 0. || ncp < 0) ML_ERR_return_NAN;
     if (x < 0.)	 return(R_D__0);
     if (!R_FINITE(ncp)) /* ncp = +Inf -- FIXME?: in some cases, limit exists */
 	ML_ERR_return_NAN;
 
-    /* This is not correct for  n1 == 2, ncp > 0 - and seems unneeded:
-     *  if (x == 0.) return(n1 > 2 ? R_D__0 : (n1 == 2 ? R_D__1 : ML_POSINF));
+    /* This is not correct for  df1 == 2, ncp > 0 - and seems unneeded:
+     *  if (x == 0.) return(df1 > 2 ? R_D__0 : (df1 == 2 ? R_D__1 : ML_POSINF));
      */
-    if (!R_FINITE(n1) && !R_FINITE(n2)) { /* both +Inf */
+    if (!R_FINITE(df1) && !R_FINITE(df2)) { /* both +Inf */
 	/* PR: not sure about this (taken from  ncp==0)  -- FIXME ? */
 	if(x == 1.) return ML_POSINF;
 	/* else */  return R_D__0;
     }
-    if (!R_FINITE(n2)) /* i.e.  = +Inf */
-	return n1* dnchisq(x*n1, n1, ncp, give_log);
-    /*	 ==  dngamma(x, n1/2, 2./n1, ncp, give_log)  -- but that does not exist */
-    if (n1 > 1e14 && ncp < 1e7) {
-	/* includes n1 == +Inf: code below is inaccurate there */
-	f = 1 + ncp/n1; /* assumes  ncp << n1 [ignores 2*ncp^(1/2)/n1*x term] */
-	z = dgamma(1./x/f, n2/2, 2./n2, give_log);
+    if (!R_FINITE(df2)) /* i.e.  = +Inf */
+	return df1* dnchisq(x*df1, df1, ncp, give_log);
+    /*	 ==  dngamma(x, df1/2, 2./df1, ncp, give_log)  -- but that does not exist */
+    if (df1 > 1e14 && ncp < 1e7) {
+	/* includes df1 == +Inf: code below is inaccurate there */
+	f = 1 + ncp/df1; /* assumes  ncp << df1 [ignores 2*ncp^(1/2)/df1*x term] */
+	z = dgamma(1./x/f, df2/2, 2./df2, give_log);
 	return give_log ? z - 2*log(x) - log(f) : z / (x*x) / f;
     }
 
-    y = (n1 / n2) * x;
-    z = dnbeta(y/(1 + y), n1 / 2., n2 / 2., ncp, give_log);
+    y = (df1 / df2) * x;
+    z = dnbeta(y/(1 + y), df1 / 2., df2 / 2., ncp, give_log);
     return  give_log ?
-	z + log(n1) - log(n2) - 2 * log1p(y) :
-	z * (n1 / n2) /(1 + y) / (1 + y);
+	z + log(df1) - log(df2) - 2 * log1p(y) :
+	z * (df1 / df2) /(1 + y) / (1 + y);
 }
 
 

@@ -8154,9 +8154,11 @@ random-variate routines.
 @cindex Random numbers in C
 
 Note that these argument sequences are (apart from the names and that
-@code{rnorm} has no @var{n}) exactly the same as the corresponding @R{}
+@code{rnorm} has no @var{n}) mainly the same as the corresponding @R{}
 functions of the same name, so the documentation of the @R{} functions
-can be used.
+can be used.  Note that the exponential and gamma distributions are
+parametrized by @code{scale} rather than @code{rate}.
+
 
 For reference, the following table gives the basic name (to be prefixed
 by @samp{d}, @samp{p}, @samp{q} or @samp{r} apart from the exceptions
@@ -8166,26 +8168,30 @@ distributions.
 @quotation
 @multitable @columnfractions .28 .22 .30
 @item beta @tab @code{beta} @tab @code{a}, @code{b}
-@item non-central beta @tab @code{nbeta} @tab @code{a}, @code{b}, @code{lambda}
+@item non-central beta @tab @code{nbeta} @tab @code{a}, @code{b}, @code{ncp}
+@c in R shape1, shape2, ncp
 @item binomial @tab @code{binom} @tab @code{n}, @code{p}
 @item Cauchy @tab @code{cauchy} @tab @code{location}, @code{scale}
 @item chi-squared @tab @code{chisq} @tab @code{df}
-@item non-central chi-squared @tab @code{nchisq} @tab @code{df}, @code{lambda}
-@item exponential @tab @code{exp} @tab @code{scale}
+@item non-central chi-squared @tab @code{nchisq} @tab @code{df}, @code{ncp}
+@item exponential @tab @code{exp} @tab @code{scale} (and @strong{not} @code{rate})
 @item F @tab @code{f} @tab @code{n1}, @code{n2}
 @item non-central F @tab @code{nf} @tab @code{n1}, @code{n2}, @code{ncp}
 @item gamma @tab @code{gamma} @tab @code{shape}, @code{scale}
 @item geometric @tab @code{geom} @tab @code{p}
 @item hypergeometric @tab @code{hyper} @tab @code{NR}, @code{NB}, @code{n}
+@c in R m, n, k
 @item logistic @tab @code{logis} @tab @code{location}, @code{scale}
 @item lognormal @tab @code{lnorm} @tab @code{logmean}, @code{logsd}
-@item negative binomial @tab @code{nbinom} @tab @code{n}, @code{p}
+@item negative binomial @tab @code{nbinom} @tab @code{size}, @code{prob}
 @item normal @tab @code{norm} @tab @code{mu}, @code{sigma}
 @item Poisson @tab @code{pois} @tab @code{lambda}
 @item Student's t @tab @code{t} @tab @code{n}
 @item non-central t @tab @code{nt} @tab @code{df}, @code{delta}
 @item Studentized range @tab @code{tukey} (*) @tab @code{rr}, @code{cc}, @code{df}
+@c in R nranges, nmeans, df
 @item uniform @tab @code{unif} @tab @code{a}, @code{b}
+@c in R min, max
 @item Weibull @tab @code{weibull} @tab @code{shape}, @code{scale}
 @item Wilcoxon rank sum @tab @code{wilcox} @tab @code{m}, @code{n}
 @item Wilcoxon signed rank @tab @code{signrank} @tab @code{n}
@@ -8198,10 +8204,6 @@ functions available, and none of the non-central distributions have
 @samp{r} functions.  After a call to @code{dwilcox}, @code{pwilcox} or
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
 similarly for the signed rank functions.
-
-The argument names are not all quite the same as the @R{} ones.
-@c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
-@c {don't want to change the R function argument names} -- <<
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
@@ -8221,8 +8223,9 @@ The argument names are not all quite the same as the @R{} ones.
 @deftypefunx double tetragamma (double @var{x})
 @deftypefunx double pentagamma (double @var{x})
 @deftypefunx double psigamma (double @var{x}, double @var{deriv})
-The Gamma function, its natural logarithm and first four derivatives and
-the n-th derivative of Psi, the digamma function.
+The Gamma function, the natural logarithm of its absolute value and
+first four derivatives and the n-th derivative of Psi, the digamma
+function.
 @end deftypefun
 
 @findex beta
@@ -8238,8 +8241,8 @@ The (complete) Beta function and its natural logarithm.
 @deftypefun double choose (double @var{n}, double @var{k})
 @deftypefunx double lchoose (double @var{n}, double @var{k})
 The number of combinations of @var{k} items chosen from from @var{n} and
-its natural logarithm.  @var{n} and @var{k} are rounded to the nearest
-integer.
+its natural logarithm.  @var{k} is rounded to the nearest integer (with
+a warning if needed).
 @end deftypefun
 
 @findex bessel_i

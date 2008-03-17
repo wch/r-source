@@ -3,15 +3,15 @@
  *  original  (C) 1992	     Royal Statistical Society
  *
  *  Computes the noncentral chi-squared distribution function with
- *  positive real degrees of freedom f and nonnegative noncentrality
- *  parameter theta.  pnchisq_raw is based on
+ *  positive real degrees of freedom df and nonnegative noncentrality
+ *  parameter ncp.  pnchisq_raw is based on
  *
  *    Ding, C. G. (1992)
  *    Algorithm AS275: Computing the non-central chi-squared
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2007  The R Development Core Team
+ *  Copyright (C) 2000-2008  The R Development Core Team
  *  Copyright (C) 2003-2006  The R Foundation
  */
 
@@ -26,20 +26,21 @@
  * bad precision & non-convergence in some cases (x ~= f, both LARGE)
  */
 
-double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
+
+double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
 {
     double ans;
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
-	return x + f + theta;
-    if (!R_FINITE(f) || !R_FINITE(theta))
+    if (ISNAN(x) || ISNAN(df) || ISNAN(ncp))
+	return x + df + ncp;
+    if (!R_FINITE(df) || !R_FINITE(ncp))
 	ML_ERR_return_NAN;
 #endif
 
-    if (f < 0. || theta < 0.) ML_ERR_return_NAN;
+    if (df < 0. || ncp < 0.) ML_ERR_return_NAN;
 
-    ans = pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
-    if(lower_tail || theta < 80) return log_p ? log(ans) : ans;
+    ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
+    if(lower_tail || ncp < 80) return log_p ? log(ans) : ans;
     else {
 	if(ans < 1e-10) ML_ERROR(ME_PRECISION, "pnchisq");
 	ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */

@@ -44,10 +44,10 @@
 
 #include "nmath.h"
 
-double rnbinom(double n /* size */, double p /* prob */)
+double rnbinom(double size, double prob)
 {
-    if(!R_FINITE(n) || !R_FINITE(p) || n <= 0 || p <= 0 || p > 1)
-	/* p = 1 is ok, PR#1218 */
+    if(!R_FINITE(size) || !R_FINITE(prob) || size <= 0 || prob <= 0 || prob > 1)
+	/* prob = 1 is ok, PR#1218 */
 	ML_ERR_return_NAN;
-    return (p == 1) ? 0 : rpois(rgamma(n, (1 - p) / p));
+    return (prob == 1) ? 0 : rpois(rgamma(size, (1 - prob) / prob));
 }

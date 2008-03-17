@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka and the R Development Core Team
- *  Copyright (C) 2000-2007 The R Development Core Team
+ *  Copyright (C) 2000-2008 The R Development Core Team
  *  based on AS243 (C) 1989 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -47,10 +47,10 @@
  *	make CFLAGS='-DDEBUG_pnt -g -I/usr/local/include -I../include'
 
  * -- Feb.3, 1999; M.Maechler:
-	- For 't > delta > 20' (or so)	the result is completely WRONG!
+	- For 't > ncp > 20' (or so)	the result is completely WRONG!
  */
 
-double pnt(double t, double df, double delta, int lower_tail, int log_p)
+double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 {
     double albeta, b, del, errbd, lambda, rxb, tt, x;
     LDOUBLE a, geven, godd, p, q, s, tnc, xeven, xodd;
@@ -62,15 +62,15 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     const static double errmax = 1.e-12;
 
     if (df <= 0.0) ML_ERR_return_NAN;
-    if(delta == 0.0) return pt(t, df, lower_tail, log_p);
+    if(ncp == 0.0) return pt(t, df, lower_tail, log_p);
 
     if(!R_FINITE(t))
 	return (t < 0) ? R_DT_0 : R_DT_1;
     if (t >= 0.) {
-	negdel = FALSE; tt = t;	 del = delta;
+	negdel = FALSE; tt = t;	 del = ncp;
     }
     else {
-	negdel = TRUE;	tt = -t; del = -delta;
+	negdel = TRUE;	tt = -t; del = -ncp;
     }
 
     if (df > 4e5 || del*del > 2*M_LN2*(-(DBL_MIN_EXP))) {
@@ -89,7 +89,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     x = t * t;
     x = x / (x + df);/* in [0,1) */
 #ifdef DEBUG_pnt
-    REprintf("pnt(t=%7g, df=%7g, delta=%7g) ==> x= %10g:",t,df,delta, x);
+    REprintf("pnt(t=%7g, df=%7g, ncp=%7g) ==> x= %10g:",t,df,ncp, x);
 #endif
     if (x > 0.) {/* <==>  t != 0 */
 	lambda = del * del;
@@ -101,7 +101,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 
 	    /*========== really use an other algorithm for this case !!! */
 	    ML_ERROR(ME_UNDERFLOW, "pnt");
-	    ML_ERROR(ME_RANGE, "pnt"); /* |delta| too large */
+	    ML_ERROR(ME_RANGE, "pnt"); /* |ncp| too large */
 	    return R_DT_0;
 	}
 #ifdef DEBUG_pnt
@@ -135,7 +135,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	    tnc += p * xodd + q * xeven;
 	    s -= p;
 	    /* R 2.4.0 added test for rounding error here. */
-	    if(s < -1.e-10) { /* happens e.g. for (t,df,delta)=(40,10,38.5), after 799 it.*/
+	    if(s < -1.e-10) { /* happens e.g. for (t,df,ncp)=(40,10,38.5), after 799 it.*/
 		ML_ERROR(ME_PRECISION, "pnt");
 #ifdef DEBUG_pnt
 		REprintf("s = %#14.7g < 0 !!! ---> non-convergence!!\n", s);

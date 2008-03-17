@@ -20,7 +20,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double qnbeta(double p, double a, double b, double lambda, 
+double qnbeta(double p, double a, double b, double ncp, 
 	      int lower_tail, int log_p)
 {
     const static double accu = 1e-15;
@@ -29,12 +29,12 @@ double qnbeta(double p, double a, double b, double lambda,
     double ux, lx, nx, pp;
 
 #ifdef IEEE_754
-    if (ISNAN(p) || ISNAN(a) || ISNAN(b) || ISNAN(lambda))
-	return p + a + b + lambda;
+    if (ISNAN(p) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
+	return p + a + b + ncp;
 #endif
     if (!R_FINITE(a)) ML_ERR_return_NAN;
 
-    if (lambda < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
+    if (ncp < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
@@ -46,17 +46,17 @@ double qnbeta(double p, double a, double b, double lambda,
     if(p > 1 - DBL_EPSILON) return 1.0;
     pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
     for(ux = 0.5;
-	ux < 1 - DBL_EPSILON && pnbeta(ux, a, b, lambda, TRUE, FALSE) < pp;
+	ux < 1 - DBL_EPSILON && pnbeta(ux, a, b, ncp, TRUE, FALSE) < pp;
 	ux = 0.5*(1+ux));
     pp = p * (1 - Eps);
     for(lx = 0.5;
-	lx > DBL_MIN && pnbeta(lx, a, b, lambda, TRUE, FALSE) > pp;
+	lx > DBL_MIN && pnbeta(lx, a, b, ncp, TRUE, FALSE) > pp;
 	lx *= 0.5);
 
     /* 2. interval (lx,ux)  halving : */
     do {
 	nx = 0.5 * (lx + ux);
-	if (pnbeta(nx, a, b, lambda, TRUE, FALSE) > p) ux = nx; else lx = nx;
+	if (pnbeta(nx, a, b, ncp, TRUE, FALSE) > p) ux = nx; else lx = nx;
     }
     while ((ux - lx) / nx > accu);
 

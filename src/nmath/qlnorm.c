@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-8 The R Development Core Team
  *  Copyright (C) 2005 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -26,13 +26,13 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double qlnorm(double p, double logmean, double logsd, int lower_tail, int log_p)
+double qlnorm(double p, double meanlog, double sdlog, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(p) || ISNAN(logmean) || ISNAN(logsd))
-	return p + logmean + logsd;
+    if (ISNAN(p) || ISNAN(meanlog) || ISNAN(sdlog))
+	return p + meanlog + sdlog;
 #endif
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
-    return exp(qnorm(p, logmean, logsd, lower_tail, log_p));
+    return exp(qnorm(p, meanlog, sdlog, lower_tail, log_p));
 }

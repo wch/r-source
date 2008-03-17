@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998	Ross Ihaka
- *  Copyright (C) 2000, 2005 The R Development Core Team
+ *  Copyright (C) 2000-8 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,25 +25,25 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double pnf(double x, double n1, double n2, double ncp,
+double pnf(double x, double df1, double df2, double ncp,
 	   int lower_tail, int log_p)
 
 {
     double y;
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(n1) || ISNAN(n2) || ISNAN(ncp))
-	return x + n2 + n1 + ncp;
+    if (ISNAN(x) || ISNAN(df1) || ISNAN(df2) || ISNAN(ncp))
+	return x + df2 + df1 + ncp;
 #endif
-    if (n1 <= 0. || n2 <= 0. || ncp < 0) ML_ERR_return_NAN;
+    if (df1 <= 0. || df2 <= 0. || ncp < 0) ML_ERR_return_NAN;
     if (!R_FINITE(ncp)) ML_ERR_return_NAN;
-    if (!R_FINITE(n1) && !R_FINITE(n2)) /* both +Inf */
+    if (!R_FINITE(df1) && !R_FINITE(df2)) /* both +Inf */
 	ML_ERR_return_NAN;
 
     R_P_bounds_01(x, 0., ML_POSINF);
 
-    if (n2 > 1e8) /* avoid problems with +Inf and loss of accuracy */
-	return pnchisq(x * n1, n1, ncp, lower_tail, log_p);
+    if (df2 > 1e8) /* avoid problems with +Inf and loss of accuracy */
+	return pnchisq(x * df1, df1, ncp, lower_tail, log_p);
 
-    y = (n1 / n2) * x;
-    return pnbeta(y/(1 + y), n1 / 2., n2 / 2., ncp, lower_tail, log_p);
+    y = (df1 / df2) * x;
+    return pnbeta(y/(1 + y), df1 / 2., df2 / 2., ncp, lower_tail, log_p);
 }

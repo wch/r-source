@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-8 The R Development Core Team
  *  Copyright (C) 2005 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -26,24 +26,24 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double qf(double p, double n1, double n2, int lower_tail, int log_p)
+double qf(double p, double df1, double df2, int lower_tail, int log_p)
 {
 #ifdef IEEE_754
-    if (ISNAN(p) || ISNAN(n1) || ISNAN(n2))
-	return p + n1 + n2;
+    if (ISNAN(p) || ISNAN(df1) || ISNAN(df2))
+	return p + df1 + df2;
 #endif
-    if (n1 <= 0. || n2 <= 0.) ML_ERR_return_NAN;
+    if (df1 <= 0. || df2 <= 0.) ML_ERR_return_NAN;
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
     /* fudge the extreme DF cases -- qbeta doesn't do this well */
 
-    if (n2 > 4e5)
-	return qchisq(p, n1, lower_tail, log_p) / n1;
+    if (df2 > 4e5)
+	return qchisq(p, df1, lower_tail, log_p) / df1;
 
-    if (n1 > 4e5)
-	return 1/qchisq(p, n2, !lower_tail, log_p) * n2;
+    if (df1 > 4e5)
+	return 1/qchisq(p, df2, !lower_tail, log_p) * df2;
 
-    p = (1. / qbeta(R_DT_CIv(p), n2/2, n1/2, TRUE, FALSE) - 1.) * (n2 / n1);
+    p = (1. / qbeta(R_DT_CIv(p), df2/2, df1/2, TRUE, FALSE) - 1.) * (df2 / df1);
     return ML_VALID(p) ? p : ML_NAN;
 }

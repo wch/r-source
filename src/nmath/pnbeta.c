@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000-2007 The R Development Core Team
+ *  Copyright (C) 2000-2008 The R Development Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
@@ -7,7 +7,7 @@
  *  original (C) Royal Statistical Society 1987, 1990, 1995
  *
  *  Returns the cumulative probability of x for the non-central
- *  beta distribution with parameters a, b and non-centrality lambda.
+ *  beta distribution with parameters a, b and non-centrality ncp.
  *
  *  Auxiliary routines required:
  *	lgamma - log-gamma function
@@ -17,7 +17,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double pnbeta(double x, double a, double b, double lambda,
+double pnbeta(double x, double a, double b, double ncp,
 	      int lower_tail, int log_p)
 {
 
@@ -32,15 +32,15 @@ double pnbeta(double x, double a, double b, double lambda,
 
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(lambda))
-	return x + a + b + lambda;
+    if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
+	return x + a + b + ncp;
 #endif
 
-    if (lambda < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
+    if (ncp < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
 
     R_P_bounds_01(x, 0., 1.);
 
-    c = lambda / 2.;
+    c = ncp / 2.;
 
 	/* initialize the series */
 

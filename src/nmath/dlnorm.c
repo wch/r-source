@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-8 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,22 +25,22 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double dlnorm(double x, double logmean, double logsd, int give_log)
+double dlnorm(double x, double meanlog, double sdlog, int give_log)
 {
     double y;
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
-	return x + logmean + logsd;
+    if (ISNAN(x) || ISNAN(meanlog) || ISNAN(sdlog))
+	return x + meanlog + sdlog;
 #endif
-    if(logsd <= 0) ML_ERR_return_NAN;
+    if(sdlog <= 0) ML_ERR_return_NAN;
 
     if(x <= 0) return R_D__0;
 
-    y = (log(x) - logmean) / logsd;
+    y = (log(x) - meanlog) / sdlog;
     return (give_log ?
-	    -(M_LN_SQRT_2PI   + 0.5 * y * y + log(x * logsd)) :
-	    M_1_SQRT_2PI * exp(-0.5 * y * y)  /	 (x * logsd));
+	    -(M_LN_SQRT_2PI   + 0.5 * y * y + log(x * sdlog)) :
+	    M_1_SQRT_2PI * exp(-0.5 * y * y)  /	 (x * sdlog));
     /* M_1_SQRT_2PI = 1 / sqrt(2 * pi) */
 
 }
