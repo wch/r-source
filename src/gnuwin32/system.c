@@ -499,8 +499,9 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 			if (del) DeleteFileW(wfn);
 		    }
 		    else {
-			snprintf(buf, 1024, _("Unable to open file '%s'"),
-				 file[i]);
+			snprintf(buf, 1024, 
+				 _("Unable to open file '%s': %s"),
+				 file[i], strerror(errno));
 			warning(buf);
 		    }
 		} else {
@@ -950,7 +951,9 @@ int cmdlineoptions(int ac, char **av)
 		if(strcmp(*av, "-")) {
 		    ifp = R_fopen(*av, "r");
 		    if(!ifp) {
-			snprintf(s, 1024, _("cannot open file '%s'"), *av);
+			snprintf(s, 1024, 
+				 _("cannot open file '%s': %s"), 
+				 *av, strerror(errno));
 			R_Suicide(s);
 		    }
 		}
@@ -960,7 +963,9 @@ int cmdlineoptions(int ac, char **av)
 		if(strcmp((*av)+7, "-")) {
 		    ifp = R_fopen( (*av)+7, "r");
 		    if(!ifp) {
-			snprintf(s, 1024, _("cannot open file '%s'"), (*av)+7);
+			snprintf(s, 1024, 
+				 _("cannot open file '%s': %s"), 
+				 (*av)+7, strerror(errno));
 			R_Suicide(s);
 		    }
 		}

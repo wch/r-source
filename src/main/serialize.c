@@ -2105,11 +2105,23 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
 	error(_("not a proper raw vector"));
 #ifdef HAVE_WORKING_FTELL
     /* Windows' ftell returns position 0 with "ab" */
-    if ((fp = R_fopen(CHAR(STRING_ELT(file, 0)), "ab")) == NULL)
-	error(_("file open failed"));
+    if ((fp = R_fopen(CHAR(STRING_ELT(file, 0)), "ab")) == NULL) {
+#ifdef HAVE_STRERROR
+	error( _("cannot open file '%s': %s"), CHAR(STRING_ELT(file, 0)),
+	       strerror(errno));
 #else
-    if ((fp = R_fopen(CHAR(STRING_ELT(file, 0)), "r+b")) == NULL)
-	 error(_("file open failed"));
+	error( _("cannot open file '%s'"), CHAR(STRING_ELT(file, 0)));
+#endif
+    }
+#else
+    if ((fp = R_fopen(CHAR(STRING_ELT(file, 0)), "r+b")) == NULL) {
+#ifdef HAVE_STRERROR
+	error( _("cannot open file '%s': %s"), CHAR(STRING_ELT(file, 0)),
+	       strerror(errno));
+#else
+	error( _("cannot open file '%s'"), CHAR(STRING_ELT(file, 0)));
+#endif
+    }
     fseek(fp, 0, SEEK_END);
 #endif
 
@@ -2186,8 +2198,13 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 
     if(icache >= 0) {
 	strcpy(names[icache], cfile);
-	if ((fp = R_fopen(cfile, "rb")) == NULL)
-	    error(_("open failed on %s"), cfile);
+	if ((fp = R_fopen(cfile, "rb")) == NULL) {
+#ifdef HAVE_STRERROR
+	    error(_("cannot open file '%s': %s"), cfile, strerror(errno));
+#else
+	    error(_("cannot open file '%s'"), cfile);
+#endif
+	}
 	if (fseek(fp, 0, SEEK_END) != 0) {
 	    fclose(fp);
 	    error(_("seek failed on %s"), cfile);
@@ -2205,8 +2222,13 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 	if (filelen != in) error(_("read failed on %s"), cfile);
 	memcpy(RAW(val), ptr[icache]+offset, len);
     } else {
-	if ((fp = R_fopen(cfile, "rb")) == NULL)
-	    error(_("open failed on %s"), cfile);
+	if ((fp = R_fopen(cfile, "rb")) == NULL) {
+#ifdef HAVE_STRERROR
+	    error(_("cannot open file '%s': %s"), cfile, strerror(errno));
+#else
+	    error(_("cannot open file '%s'"), cfile);
+#endif
+	}
 	if (fseek(fp, offset, SEEK_SET) != 0) {
 	    fclose(fp);
 	    error(_("seek failed on %s"), cfile);

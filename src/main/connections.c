@@ -500,13 +500,13 @@ static Rboolean file_open(Rconnection con)
 #ifdef HAVE_FDOPEN
 	fp = fdopen(0, con->mode);
 #else
-        warning(_("cannot open file '%s', reason '%s'"), name,
+        warning(_("cannot open file '%s': %s"), name,
 		"fdopen is not supported on this platform");
 #endif
     }
     if(!fp) {
 #ifdef HAVE_STRERROR
-	warning(_("cannot open file '%s', reason '%s'"), name, strerror(errno));
+	warning(_("cannot open file '%s': %s"), name, strerror(errno));
 #else
         warning(_("cannot open file '%s'"), name);
 #endif
@@ -987,7 +987,7 @@ static Rboolean pipe_open(Rconnection con)
 	fp = R_popen(con->description, mode);
     if(!fp) {
 #ifdef HAVE_STRERROR
-        warning(_("cannot open pipe() cmd '%s', reason '%s'"), con->description,
+        warning(_("cannot open pipe() cmd '%s': %s"), con->description,
                         strerror(errno));
 #else
 	warning(_("cannot open pipe() cmd '%s'"), con->description);

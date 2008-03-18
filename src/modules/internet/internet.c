@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-6   The R Development Core Team.
+ *  Copyright (C) 2000-8   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -327,9 +327,24 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	/* Use binary transfers */
 	in = R_fopen(R_ExpandFileName(url+nh), (mode[2] == 'b') ? "rb" : "r");
-	if(!in) error(_("cannot open URL '%s'"), url);
+	if(!in) {
+#ifdef HAVE_STRERROR
+	    error(_("cannot open URL '%s', reason '%s'"), 
+		  url, strerror(errno));
+#else
+	    error(_("cannot open URL '%s'"), url);
+#endif
+	}
+
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error(_("cannot open destfile '%s'"), file);
+	if(!out) {
+#ifdef HAVE_STRERROR
+	    error(_("cannot open destfile '%s', reason '%s'"), 
+		  file, strerror(errno));
+#else
+	    error(_("cannot open destfile '%s'"), file);
+#endif
+	}
 	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0) {
 	    size_t res = fwrite(buf, 1, n, out);
 	    if(res != n) error(_("write failed"));
@@ -352,7 +367,14 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error(_("cannot open destfile '%s'"), file);
+	if(!out) {
+#ifdef HAVE_STRERROR
+	    error(_("cannot open destfile '%s', reason '%s'"), 
+		  file, strerror(errno));
+#else
+	    error(_("cannot open destfile '%s'"), file);
+#endif
+	}
 
 	R_Busy(1);
 	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
@@ -434,7 +456,14 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error(_("cannot open destfile '%s'"), file);
+	if(!out) {
+#ifdef HAVE_STRERROR
+	    error(_("cannot open destfile '%s', reason '%s'"), 
+		  file, strerror(errno));
+#else
+	    error(_("cannot open destfile '%s'"), file);
+#endif
+	}
 
 	R_Busy(1);
 	if(!quiet) REprintf(_("trying URL '%s'\n"), url);

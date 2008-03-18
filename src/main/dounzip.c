@@ -100,7 +100,11 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 	fout = R_fopen(outname, "wb");
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
+#ifdef HAVE_STRERROR
+	    error(_("cannot open file '%s': %s"), outname, strerror(errno));
+#else
 	    error(_("cannot open file '%s'"), outname);
+#endif
 	    return 3;		/* not reached */
 	}
 	while (1) {
