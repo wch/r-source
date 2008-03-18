@@ -517,8 +517,8 @@ par(\dots, no.readonly = FALSE)
       \code{"e"}, \code{"s"}, \code{"d"}.  The styles are generally
       controlled by the range of data or \code{xlim}, if given.
       Style \code{"r"} (regular) first extends the data range by 4
-      percent and then finds an axis with pretty labels that fits within
-      the range.
+      percent at each end and then finds an axis with pretty labels
+      that fits within the extended range.
       Style \code{"i"} (internal) just finds an axis with pretty labels
       that fits within the original data range.
       Style \code{"s"} (standard) finds an axis with pretty labels
