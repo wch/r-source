@@ -1,6 +1,6 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.7.0 Under development (unstable) (2008-03-18 r44795)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 1300
+[1] 1333
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -64,9 +64,9 @@ Type 'q()' to quit R.
 > 
 > ## check graceful failure:
 > try(zz <- url("http://foo.bar", "r"))
-Error in url("http://foo.bar", "r") : unable to open connection
+Error in url("http://foo.bar", "r") : cannot open the connection
 In addition: Warning message:
-In url("http://foo.bar", "r") : unable to resolve 'foo.bar' 
+In url("http://foo.bar", "r") : unable to resolve 'foo.bar'
 > 
 > # and via read.table, test http and ftp.
 > 
