@@ -28,12 +28,13 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h" /* for R_fopen */
+#include <Defn.h>
+#include <Fileio.h> /* for R_fopen */
 #include "unzip.h"
 #ifdef HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
+#include <errno.h>
 
 #ifdef Win32
 #include <io.h> /* for mkdir */

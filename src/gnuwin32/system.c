@@ -500,7 +500,7 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 		    }
 		    else {
 			snprintf(buf, 1024, 
-				 _("Unable to open file '%s': %s"),
+				 _("cannot open file '%s': %s"),
 				 file[i], strerror(errno));
 			warning(buf);
 		    }

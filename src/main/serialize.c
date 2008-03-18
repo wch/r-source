@@ -31,6 +31,7 @@
 #include <Fileio.h>
 #include <Rversion.h>
 #include <R_ext/RS.h>           /* for CallocCharBuf, Free */
+#include <errno.h>
 
 /* From time to time changes in R, such as the addition of a new SXP,
  * may require changes in the save file format.  Here are some

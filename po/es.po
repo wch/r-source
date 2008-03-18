@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:05+0000\n"
+"POT-Creation-Date: 2008-03-18 19:43+0000\n"
 "PO-Revision-Date: 2008-01-21 17:24+0000\n"
 "Last-Translator: Laura Pla <laurapla@yahoo.com>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -133,8 +133,8 @@ msgstr "problemas al mostrar  '%s'"
 #: src/main/context.c:510 src/main/datetime.c:649 src/main/datetime.c:724
 #: src/main/datetime.c:726 src/main/datetime.c:730 src/main/datetime.c:863
 #: src/main/datetime.c:865 src/main/datetime.c:1011 src/main/debug.c:208
-#: src/main/deparse.c:335 src/main/devices.c:634 src/main/dounzip.c:184
-#: src/main/dounzip.c:190 src/main/envir.c:1462 src/main/envir.c:1465
+#: src/main/deparse.c:335 src/main/devices.c:634 src/main/dounzip.c:189
+#: src/main/dounzip.c:195 src/main/envir.c:1462 src/main/envir.c:1465
 #: src/main/envir.c:1554 src/main/envir.c:1559 src/main/envir.c:1625
 #: src/main/envir.c:1641 src/main/envir.c:1647 src/main/envir.c:1738
 #: src/main/envir.c:1746 src/main/envir.c:1753 src/main/envir.c:1767
@@ -154,17 +154,17 @@ msgstr "problemas al mostrar  '%s'"
 #: src/main/platform.c:1346 src/main/platform.c:1349 src/main/platform.c:1383
 #: src/main/platform.c:1386 src/main/platform.c:1423 src/main/platform.c:1462
 #: src/main/platform.c:1464 src/main/platform.c:1522 src/main/platform.c:1613
-#: src/main/platform.c:1662 src/main/platform.c:1866 src/main/platform.c:1910
-#: src/main/platform.c:2021 src/main/platform.c:2049 src/main/plot.c:2913
+#: src/main/platform.c:1662 src/main/platform.c:1873 src/main/platform.c:1917
+#: src/main/platform.c:2028 src/main/platform.c:2056 src/main/plot.c:2913
 #: src/main/plot.c:4046 src/main/plot.c:4050 src/main/plot.c:4053
 #: src/main/plot3d.c:2466 src/main/plot3d.c:2470 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2483 src/main/plot3d.c:2487
 #: src/main/print.c:177 src/main/print.c:183 src/main/print.c:205
 #: src/main/print.c:211 src/main/print.c:217 src/main/random.c:468
 #: src/main/random.c:472 src/main/random.c:474 src/main/random.c:476
-#: src/main/saveload.c:1971 src/main/saveload.c:1974 src/main/saveload.c:1977
-#: src/main/saveload.c:2092 src/main/saveload.c:2258 src/main/saveload.c:2263
-#: src/main/saveload.c:2266 src/main/saveload.c:2357 src/main/saveload.c:2407
+#: src/main/saveload.c:1972 src/main/saveload.c:1975 src/main/saveload.c:1978
+#: src/main/saveload.c:2099 src/main/saveload.c:2271 src/main/saveload.c:2276
+#: src/main/saveload.c:2279 src/main/saveload.c:2370 src/main/saveload.c:2420
 #: src/main/scan.c:707 src/main/scan.c:874 src/main/scan.c:887
 #: src/main/scan.c:891 src/main/scan.c:893 src/main/scan.c:904
 #: src/main/scan.c:931 src/main/scan.c:934 src/main/scan.c:980
@@ -178,9 +178,9 @@ msgstr "problemas al mostrar  '%s'"
 #: src/main/sysutils.c:564 src/main/sysutils.c:566 src/main/sysutils.c:568
 #: src/main/unique.c:586 src/main/unique.c:833 src/main/unique.c:893
 #: src/main/unique.c:900 src/main/util.c:566 src/main/util.c:569
-#: src/modules/internet/internet.c:277 src/modules/internet/internet.c:283
-#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:292
-#: src/modules/internet/internet.c:296 src/modules/lapack/Lapack.c:151
+#: src/modules/internet/internet.c:278 src/modules/internet/internet.c:284
+#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:293
+#: src/modules/internet/internet.c:297 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:621
 #: src/modules/lapack/Lapack.c:717 src/modules/lapack/Lapack.c:774
 #: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2659
@@ -249,7 +249,7 @@ msgstr "etiqueta inválida"
 #: src/main/errors.c:989 src/main/errors.c:1014 src/main/errors.c:1019
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2069 src/main/plot.c:278 src/main/plot.c:472
+#: src/main/platform.c:2076 src/main/plot.c:278 src/main/plot.c:472
 #: src/main/plot.c:477 src/main/plot.c:2054 src/main/plot.c:2061
 #: src/main/plot.c:3126 src/main/plot.c:3128 src/main/plot.c:3130
 #: src/main/plot.c:3287 src/main/plot3d.c:1399 src/main/plot3d.c:2544
@@ -399,7 +399,7 @@ msgstr "Imposible crear pipe"
 msgid "Impossible to create thread/pipe"
 msgstr "Imposible crear thread/pipe"
 
-#: src/gnuwin32/run.c:504 src/main/dounzip.c:320
+#: src/gnuwin32/run.c:504 src/main/dounzip.c:325
 msgid "seek not enabled for this connection"
 msgstr "búsqueda no habilitada para esta conexión"
 
@@ -442,73 +442,71 @@ msgstr "codificación'%s' no reconocida"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ERROR: entrada no válida para codificación>\n"
 
-#: src/gnuwin32/system.c:502
-#, c-format
-msgid "Unable to open file '%s'"
-msgstr "No se puede abrir el archivo '%s'"
+#: src/gnuwin32/system.c:503 src/gnuwin32/system.c:955
+#: src/gnuwin32/system.c:967 src/main/connections.c:503
+#: src/main/connections.c:509 src/main/dounzip.c:105 src/main/saveload.c:1984
+#: src/main/serialize.c:2111 src/main/serialize.c:2120
+#: src/main/serialize.c:2204 src/main/serialize.c:2228 src/unix/system.c:314
+#: src/unix/system.c:329
+#, fuzzy, c-format
+msgid "cannot open file '%s': %s"
+msgstr "no fue posible abrir el archivo '%s'"
 
-#: src/gnuwin32/system.c:516
+#: src/gnuwin32/system.c:517
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): archivo '%s' no existe\n"
 
-#: src/gnuwin32/system.c:917
+#: src/gnuwin32/system.c:918
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ATENCIÓN: falta el argumento max-mem-size\n"
 
-#: src/gnuwin32/system.c:923
+#: src/gnuwin32/system.c:924
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ATENCIÓN: valor de --max-mem-size =E9 no válido: ignorado\n"
 
-#: src/gnuwin32/system.c:925
+#: src/gnuwin32/system.c:926
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "ATENCIÓN: --max-mem-size=%lu'%c': demasiado grande e ignorada\n"
 
-#: src/gnuwin32/system.c:930
+#: src/gnuwin32/system.c:931
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "ATENCIÓN: max-mem-size =%4.1fM demasiado pequeña e ignorada\n"
 
-#: src/gnuwin32/system.c:934
+#: src/gnuwin32/system.c:935
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "ATENCIÓN: max-mem-size =%4.1fM demasiado grande y tomada como 3Gb\n"
 
-#: src/gnuwin32/system.c:953 src/gnuwin32/system.c:963
-#: src/main/connections.c:511 src/main/dounzip.c:103
-#: src/modules/X11/devX11.c:2680 src/unix/system.c:308 src/unix/system.c:317
-#, c-format
-msgid "cannot open file '%s'"
-msgstr "no fue posible abrir el archivo '%s'"
-
-#: src/gnuwin32/system.c:973 src/unix/system.c:335
+#: src/gnuwin32/system.c:978 src/unix/system.c:353
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "ATENCION: se omite entrada de  '-e %s' (muy larga)\n"
 
-#: src/gnuwin32/system.c:977 src/unix/system.c:349
+#: src/gnuwin32/system.c:982 src/unix/system.c:367
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATENCIÓN: opción desconocida '%s'\n"
 
-#: src/gnuwin32/system.c:998 src/unix/system.c:353
+#: src/gnuwin32/system.c:1003 src/unix/system.c:371
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTO '%s' __ignorado__\n"
 
 # Fijate si asi se entiende. Lo deje como estaba
-#: src/gnuwin32/system.c:1004 src/unix/system.c:360
+#: src/gnuwin32/system.c:1009 src/unix/system.c:378
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "no es posible especificar la longitud de un objeto que no es un vector"
 
-#: src/gnuwin32/system.c:1025 src/unix/system.c:409
+#: src/gnuwin32/system.c:1030 src/unix/system.c:427
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "se debe especificar '--save', '--no-save' o '--vanilla'"
 
-#: src/gnuwin32/system.c:1030
+#: src/gnuwin32/system.c:1035
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -1229,8 +1227,8 @@ msgstr "tamaño del vector especificado es muy grande"
 #: src/main/envir.c:2715 src/main/envir.c:2743 src/main/envir.c:2763
 #: src/main/envir.c:2785 src/main/envir.c:2819 src/main/envir.c:2839
 #: src/main/envir.c:3146 src/main/envir.c:3150 src/main/eval.c:3523
-#: src/main/objects.c:180 src/main/objects.c:186 src/main/saveload.c:2088
-#: src/main/saveload.c:2354 src/main/saveload.c:2404 src/main/serialize.c:2233
+#: src/main/objects.c:180 src/main/objects.c:186 src/main/saveload.c:2095
+#: src/main/saveload.c:2367 src/main/saveload.c:2417 src/main/serialize.c:2256
 msgid "use of NULL environment is defunct"
 msgstr "no es posible usar un ambiente NULL"
 
@@ -1854,10 +1852,13 @@ msgstr "string de caracteres inválidos en la conversión de salida"
 msgid "invalid input found on input connection '%s'"
 msgstr "entrada inválida encontrada en la conexión de entrada '%s'"
 
-#: src/main/connections.c:503 src/main/connections.c:509
+#: src/main/connections.c:511 src/main/dounzip.c:107 src/main/saveload.c:1986
+#: src/main/serialize.c:2114 src/main/serialize.c:2123
+#: src/main/serialize.c:2206 src/main/serialize.c:2230
+#: src/modules/X11/devX11.c:2680 src/unix/system.c:317 src/unix/system.c:333
 #, c-format
-msgid "cannot open file '%s', reason '%s'"
-msgstr "no fue posible abrir el archivo '%s', motivo '%s'"
+msgid "cannot open file '%s'"
+msgstr "no fue posible abrir el archivo '%s'"
 
 #: src/main/connections.c:615
 msgid "connection is not open for reading"
@@ -1931,18 +1932,25 @@ msgstr ""
 #: src/main/connections.c:939 src/main/connections.c:1099
 #: src/main/connections.c:1293 src/main/connections.c:1479
 #: src/main/connections.c:2298 src/main/connections.c:2352
-#: src/main/connections.c:2402 src/main/connections.c:3985
-msgid "unable to open connection"
-msgstr "no fue posible abrir la conexión"
+#: src/main/connections.c:2402 src/main/connections.c:2663
+#: src/main/connections.c:2753 src/main/connections.c:2904
+#: src/main/connections.c:3105 src/main/connections.c:3406
+#: src/main/connections.c:3497 src/main/connections.c:3695
+#: src/main/connections.c:3985 src/main/dcf.c:56 src/main/deparse.c:300
+#: src/main/deparse.c:373 src/main/saveload.c:2286 src/main/saveload.c:2363
+#: src/main/scan.c:948 src/main/scan.c:1054 src/main/scan.c:1548
+#: src/main/scan.c:1756 src/main/source.c:193
+msgid "cannot open the connection"
+msgstr "no se puede abrir la conexión"
 
 #: src/main/connections.c:956
 msgid "fifo connections are not available on this system"
 msgstr "la conexión fifo no está disponible en este sistema"
 
 #: src/main/connections.c:990
-#, c-format
-msgid "cannot open pipe() cmd '%s', reason '%s'"
-msgstr "no fue posible abrir el comando pipe() '%s', motivo '%s'"
+#, fuzzy, c-format
+msgid "cannot open pipe() cmd '%s': %s"
+msgstr "no fue posible abrir el comando pipe() '%s'"
 
 #: src/main/connections.c:993
 #, c-format
@@ -2107,7 +2115,7 @@ msgid "cannot close messages sink connection"
 msgstr "no se puede cerrar el mensaje de conexión sink"
 
 #: src/main/connections.c:2512 src/main/connections.c:4009
-#: src/main/serialize.c:1646 src/main/serialize.c:1654
+#: src/main/serialize.c:1647 src/main/serialize.c:1655
 msgid "connection is not open"
 msgstr "la conexión no está abierta"
 
@@ -2116,20 +2124,10 @@ msgid "Line longer than buffer size"
 msgstr "Línea más larga que el tamaño del buffer"
 
 #: src/main/connections.c:2656 src/main/connections.c:2901
-#: src/main/connections.c:3394 src/main/dcf.c:53 src/main/saveload.c:2346
-#: src/main/serialize.c:1648
+#: src/main/connections.c:3394 src/main/dcf.c:53 src/main/saveload.c:2359
+#: src/main/serialize.c:1649
 msgid "cannot read from this connection"
 msgstr "no se puede leer desde esta conexión"
-
-#: src/main/connections.c:2663 src/main/connections.c:2753
-#: src/main/connections.c:2904 src/main/connections.c:3105
-#: src/main/connections.c:3406 src/main/connections.c:3497
-#: src/main/connections.c:3695 src/main/dcf.c:56 src/main/deparse.c:300
-#: src/main/deparse.c:373 src/main/saveload.c:2273 src/main/saveload.c:2350
-#: src/main/scan.c:948 src/main/scan.c:1054 src/main/scan.c:1548
-#: src/main/scan.c:1756 src/main/source.c:193
-msgid "cannot open the connection"
-msgstr "no se puede abrir la conexión"
 
 #: src/main/connections.c:2675 src/main/connections.c:2694
 msgid "cannot allocate buffer in readLines"
@@ -2146,7 +2144,7 @@ msgstr "muy pocas líneas leídas en readLines"
 
 #: src/main/connections.c:2749 src/main/connections.c:3092
 #: src/main/connections.c:3453 src/main/connections.c:4010
-#: src/main/scan.c:1752 src/main/serialize.c:1656
+#: src/main/scan.c:1752 src/main/serialize.c:1657
 msgid "cannot write to this connection"
 msgstr "no es posible escribir en esa conexión"
 
@@ -2159,7 +2157,7 @@ msgid "null terminator not found: breaking string at 10000 chars"
 msgstr ""
 "terminador nulo no encontrado: partiendo string después de 10000 caracteres"
 
-#: src/main/connections.c:2882 src/main/saveload.c:2347
+#: src/main/connections.c:2882 src/main/saveload.c:2360
 msgid "can only read from a binary connection"
 msgstr "sólo se puede leer desde una conexión binaria"
 
@@ -2267,8 +2265,8 @@ msgstr ""
 "file(\"\") permite solamente open = \"w+\" y open = \"w+b\": se usó la "
 "primera opción"
 
-#: src/main/connections.c:3972 src/modules/internet/internet.c:112
-#: src/modules/internet/internet.c:513
+#: src/main/connections.c:3972 src/modules/internet/internet.c:113
+#: src/modules/internet/internet.c:543
 msgid "unsupported URL scheme"
 msgstr "esquema de URL sin soporte"
 
@@ -2748,75 +2746,75 @@ msgstr "conteo de valor de retorno inválido en call_R"
 msgid "mode '%s' is not supported in call_R"
 msgstr "el modo '%s' no es soportado en call_R"
 
-#: src/main/dounzip.c:174
+#: src/main/dounzip.c:179
 msgid "invalid zip name argument"
 msgstr "argumento zip inválido"
 
-#: src/main/dounzip.c:177 src/main/dounzip.c:247
+#: src/main/dounzip.c:182 src/main/dounzip.c:252
 msgid "zip path is too long"
 msgstr "el path de zip es demasiado largo"
 
-#: src/main/dounzip.c:193
+#: src/main/dounzip.c:198
 msgid "'destination' is too long"
 msgstr "'destination' es demasiado largo"
 
-#: src/main/dounzip.c:196
+#: src/main/dounzip.c:201
 msgid "'destination' does not exist"
 msgstr "'destination' no existe"
 
-#: src/main/dounzip.c:206
+#: src/main/dounzip.c:211
 msgid "requested file not found in the zip file"
 msgstr "el archivo requerido no fue encontrado en el archivo zip"
 
-#: src/main/dounzip.c:209
+#: src/main/dounzip.c:214
 msgid "zip file is corrupt"
 msgstr "el archivo zip está corrupto"
 
-#: src/main/dounzip.c:212
+#: src/main/dounzip.c:217
 msgid "CRC error in zip file"
 msgstr "error CRC en el archivo zip"
 
-#: src/main/dounzip.c:216
+#: src/main/dounzip.c:221
 msgid "internal error in unz code"
 msgstr "error interno en el código unz"
 
-#: src/main/dounzip.c:219
+#: src/main/dounzip.c:224
 msgid "write error in extracting from zip file"
 msgstr "error de escritura al extraer del archivo zip"
 
-#: src/main/dounzip.c:222
+#: src/main/dounzip.c:227
 #, c-format
 msgid "error %d in extracting from zip file"
 msgstr "error %d al extraer del archivo zip"
 
-#: src/main/dounzip.c:242
+#: src/main/dounzip.c:247
 msgid "unz connections can only be opened for reading"
 msgstr "las conecciones unz sólo pueden ser abiertas para lectura"
 
-#: src/main/dounzip.c:253
+#: src/main/dounzip.c:258
 msgid "invalid description of unz connection"
 msgstr "descripción inválida de conexión unz"
 
-#: src/main/dounzip.c:259
+#: src/main/dounzip.c:264
 #, c-format
 msgid "cannot open zip file '%s'"
 msgstr "no se puede abrir el archivo zip '%s'"
 
-#: src/main/dounzip.c:263
+#: src/main/dounzip.c:268
 #, c-format
 msgid "cannot locate file '%s' in zip file '%s'"
 msgstr "no se puede localizar el archivo '%s' en el archivo zip '%s'"
 
-#: src/main/dounzip.c:307
+#: src/main/dounzip.c:312
 msgid "printing not enabled for this connection"
 msgstr "impresión no habilitada para esta conexión"
 
-#: src/main/dounzip.c:314
+#: src/main/dounzip.c:319
 msgid "write not enabled for this connection"
 msgstr "no esta permitido escribir en esta conexión"
 
-#: src/main/dounzip.c:334 src/main/dounzip.c:338 src/main/dounzip.c:344
-#: src/main/dounzip.c:361
+#: src/main/dounzip.c:339 src/main/dounzip.c:343 src/main/dounzip.c:349
+#: src/main/dounzip.c:366
 msgid "allocation of unz connection failed"
 msgstr "la localización de la conexión unz falló"
 
@@ -3607,12 +3605,12 @@ msgstr "nombre de archivo inválido"
 msgid "unable to open 'file'"
 msgstr "imposible abrir 'file'"
 
-#: src/main/eval.c:3624 src/main/saveload.c:1963
+#: src/main/eval.c:3624 src/main/saveload.c:1964
 msgid "'file' must be non-empty string"
 msgstr "'file' debe ser un string no vacío"
 
-#: src/main/eval.c:3626 src/main/saveload.c:1965 src/main/saveload.c:2250
-#: src/main/serialize.c:1789
+#: src/main/eval.c:3626 src/main/saveload.c:1966 src/main/saveload.c:2263
+#: src/main/serialize.c:1790
 msgid "'ascii' must be logical"
 msgstr "'ascii' debe ser un valor lógico"
 
@@ -5131,39 +5129,39 @@ msgstr ""
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "el sistema operativo informa que un pedido no puede ser cumplido"
 
-#: src/main/platform.c:1821
+#: src/main/platform.c:1828
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' debe ser un vector de caracteres de longitud 1"
 
-#: src/main/platform.c:1827
+#: src/main/platform.c:1834
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "solución de máquina '%s' imposible en nsl()"
 
-#: src/main/platform.c:1834
+#: src/main/platform.c:1841
 msgid "unknown format returned by gethostbyname"
 msgstr "formato desconocido retornado por gethostbyname"
 
-#: src/main/platform.c:1843
+#: src/main/platform.c:1850
 msgid "nsl() is not supported on this platform"
 msgstr "esta plataforma no soporta nsl()"
 
-#: src/main/platform.c:1889 src/main/platform.c:1934
+#: src/main/platform.c:1896 src/main/platform.c:1941
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' ya existe"
 
-#: src/main/platform.c:1893
+#: src/main/platform.c:1900
 #, fuzzy, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "no fue posible crear fifo '%s', motivo '%s'"
 
-#: src/main/platform.c:1895
+#: src/main/platform.c:1902
 #, fuzzy, c-format
 msgid "cannot create dir '%s'"
 msgstr "no fue posible crear fifo '%s'"
 
-#: src/main/platform.c:2076
+#: src/main/platform.c:2083
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "esta plataforma no soporta nsl()"
@@ -5796,253 +5794,258 @@ msgstr "comparaciones de estos tipoo no están implementadas"
 msgid "invalid comparison with complex values"
 msgstr "comparación con valores complejos es inválida"
 
-#: src/main/saveload.c:198 src/main/saveload.c:203 src/main/saveload.c:212
-#: src/main/saveload.c:221 src/main/saveload.c:230 src/main/saveload.c:239
-#: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1404
-#: src/main/saveload.c:1409 src/main/saveload.c:1453 src/main/saveload.c:1521
-#: src/main/saveload.c:1530 src/main/serialize.c:329 src/main/serialize.c:336
-#: src/main/serialize.c:1952 src/main/serialize.c:1960
+#: src/main/saveload.c:199 src/main/saveload.c:204 src/main/saveload.c:213
+#: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
+#: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1405
+#: src/main/saveload.c:1410 src/main/saveload.c:1454 src/main/saveload.c:1522
+#: src/main/saveload.c:1531 src/main/serialize.c:330 src/main/serialize.c:337
+#: src/main/serialize.c:1953 src/main/serialize.c:1961
 msgid "read error"
 msgstr "error de lectura"
 
-#: src/main/saveload.c:330
+#: src/main/saveload.c:331
 msgid "a I read error occurred"
 msgstr " ocurrió un error de lectura en I "
 
-#: src/main/saveload.c:340
+#: src/main/saveload.c:341
 msgid "a R read error occurred"
 msgstr "ocurrió un error de lectura en R "
 
-#: src/main/saveload.c:350
+#: src/main/saveload.c:351
 msgid "a C read error occurred"
 msgstr " ocurrió un error de lectura en C "
 
-#: src/main/saveload.c:360
+#: src/main/saveload.c:361
 msgid "a S read error occurred"
 msgstr " ocurrió un error de lectura en S "
 
-#: src/main/saveload.c:385 src/main/saveload.c:393 src/main/saveload.c:401
-#: src/main/saveload.c:1617 src/main/saveload.c:1625
+#: src/main/saveload.c:386 src/main/saveload.c:394 src/main/saveload.c:402
+#: src/main/saveload.c:1618 src/main/saveload.c:1626
 msgid "a read error occurred"
 msgstr "ocurrió un error de lectura "
 
-#: src/main/saveload.c:465
+#: src/main/saveload.c:466
 msgid "unresolved node during restore"
 msgstr "nodo no resuelto durante restauración"
 
-#: src/main/saveload.c:486
+#: src/main/saveload.c:487
 #, c-format
 msgid "restore compatibility error - no version %d compatibility"
 msgstr ""
 "error de compatibilidad de restauración - sin compatibilidad con versión %d"
 
-#: src/main/saveload.c:570 src/main/saveload.c:637
+#: src/main/saveload.c:571 src/main/saveload.c:638
 msgid "bad SEXP type in data file"
 msgstr "tipo SEXP defectuoso en archivo de datos"
 
-#: src/main/saveload.c:584
+#: src/main/saveload.c:585
 msgid "mismatch on types"
 msgstr "incompatibilidad de tipos"
 
-#: src/main/saveload.c:698
+#: src/main/saveload.c:699
 msgid "cannot save file position while restoring data"
 msgstr "no es posible guardar posición de archivo mientras se restauran datos"
 
-#: src/main/saveload.c:711
+#: src/main/saveload.c:712
 msgid "cannot restore file position while restoring data"
 msgstr ""
 "no es posible restaurar posición de archivo mientras se restauran datos "
 
-#: src/main/saveload.c:943
+#: src/main/saveload.c:944
 msgid "base namespace is not preserved in version 1 workspaces"
 msgstr ""
 "espacio de nombres no está preservado en áreas de trabajo de la versión 1"
 
-#: src/main/saveload.c:945
+#: src/main/saveload.c:946
 msgid "cannot save namespace in version 1 workspaces"
 msgstr ""
 "no es posible guardar nombres de espacio en áreas de trabajo de la versión 1"
 
-#: src/main/saveload.c:947
+#: src/main/saveload.c:948
 msgid ""
 "cannot save environment with locked/active bindingsin version 1 workspaces"
 msgstr ""
 "no es posible guardar ambiente con vínculos bloqueados/activos en áreas de "
 "trabajo de la versión 1"
 
-#: src/main/saveload.c:971
+#: src/main/saveload.c:972
 msgid "cannot save weak references in version 1 workspaces"
 msgstr ""
 "no es posible guardar referencias débiles en áreas de trabajo de la versión 1"
 
-#: src/main/saveload.c:1049
+#: src/main/saveload.c:1050
 msgid "NewWriteVec called with non-vector type"
 msgstr "NewWriteVec llamado con un tipo no vectorial"
 
-#: src/main/saveload.c:1112
+#: src/main/saveload.c:1113
 msgid "cannot save byte code objects in version 1 workspaces"
 msgstr ""
 "no es posible guardar objetos de tipo códigos de byte en áreas de trabajo de "
 "la versión 1"
 
-#: src/main/saveload.c:1114
+#: src/main/saveload.c:1115
 #, c-format
 msgid "NewWriteItem: unknown type %i"
 msgstr "NewWriteItem: tipo desconocido %i"
 
-#: src/main/saveload.c:1244
+#: src/main/saveload.c:1245
 msgid "NewReadVec called with non-vector type"
 msgstr "NewReadVec llamado con un tipo no vectorial"
 
-#: src/main/saveload.c:1309
+#: src/main/saveload.c:1310
 msgid "cannot read byte code objects from version 1 workspaces"
 msgstr ""
 "no es posible leer objetos de tipo códigos de byte a partir de áreas de "
 "trabajo de la versión 1"
 
-#: src/main/saveload.c:1311
+#: src/main/saveload.c:1312
 #, c-format
 msgid "NewReadItem: unknown type %i"
 msgstr "NewReadItem: tipo desconocido %i"
 
-#: src/main/saveload.c:1463
+#: src/main/saveload.c:1464
 msgid "out of memory reading ascii string"
 msgstr "memoria insuficiente en lectura de string ascii"
 
-#: src/main/saveload.c:1588
+#: src/main/saveload.c:1589
 msgid "a binary read error occurred"
 msgstr "ocurrió un error de lectura binario"
 
-#: src/main/saveload.c:1603 src/main/saveload.c:1704
+#: src/main/saveload.c:1604 src/main/saveload.c:1705
 msgid "out of memory reading binary string"
 msgstr " memoria insuficiente en lectura de string binario"
 
-#: src/main/saveload.c:1608
+#: src/main/saveload.c:1609
 msgid "a binary string read error occurred"
 msgstr "ocurrió un error de lectura de string binario"
 
-#: src/main/saveload.c:1668
+#: src/main/saveload.c:1669
 msgid "an xdr integer data write error occurred"
 msgstr "ocurrió un error de escritura de un entero xdr "
 
-#: src/main/saveload.c:1675
+#: src/main/saveload.c:1676
 msgid "an xdr integer data read error occurred"
 msgstr " ocurrió un error de lectura de un entero xdr "
 
-#: src/main/saveload.c:1690 src/main/saveload.c:1709
+#: src/main/saveload.c:1691 src/main/saveload.c:1710
 msgid "an xdr string data write error occurred"
 msgstr " ocurrió un error de escritura de string xdr "
 
-#: src/main/saveload.c:1717
+#: src/main/saveload.c:1718
 msgid "an xdr real data write error occurred"
 msgstr " ocurrió un error de escritura de un real xdr "
 
-#: src/main/saveload.c:1724
+#: src/main/saveload.c:1725
 msgid "an xdr real data read error occurred"
 msgstr " ocurrió un error de lectura de un real xdr "
 
-#: src/main/saveload.c:1731
+#: src/main/saveload.c:1732
 msgid "an xdr complex data write error occurred"
 msgstr " ocurrió un error de escritura de un complejo xdr"
 
-#: src/main/saveload.c:1738
+#: src/main/saveload.c:1739
 msgid "an xdr complex data read error occurred"
 msgstr " ocurrió un error de lectura de un complejo xdr"
 
-#: src/main/saveload.c:1806 src/main/serialize.c:1608
-#: src/main/serialize.c:2121 src/modules/internet/internet.c:335
-#: src/modules/internet/internet.c:385 src/modules/internet/internet.c:470
+#: src/main/saveload.c:1807 src/main/serialize.c:1609
+#: src/main/serialize.c:2134 src/modules/internet/internet.c:351
+#: src/modules/internet/internet.c:408 src/modules/internet/internet.c:500
 msgid "write failed"
 msgstr "falló escritura"
 
-#: src/main/saveload.c:1932
+#: src/main/saveload.c:1933
 msgid "restore file may be empty -- no data loaded"
 msgstr "el archivo de restauración  puede estar vacío - ningún dato cargado"
 
-#: src/main/saveload.c:1934
+#: src/main/saveload.c:1935
 msgid "restore file may be from a newer version of R -- no data loaded"
 msgstr ""
 "el archivo de restauración puede ser de una versión  más nueva de R - ningún "
 "dato cargado"
 
-#: src/main/saveload.c:1936
+#: src/main/saveload.c:1937
 msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr ""
 "número mágico de archivo de restauración inválido (el archivo puede estar "
 "dañado) -- ningún dato recargado"
 
-#: src/main/saveload.c:1961 src/main/saveload.c:2244
+#: src/main/saveload.c:1962 src/main/saveload.c:2257
 msgid "first argument must be a character vector"
 msgstr "el primer argumento debe ser un vector de caracteres"
 
-#: src/main/saveload.c:1981 src/main/saveload.c:2097 src/unix/edit.c:122
-msgid "unable to open file"
-msgstr "no es posible abrir el archivo"
-
-#: src/main/saveload.c:1997 src/main/saveload.c:2306 src/main/serialize.c:2251
+#: src/main/saveload.c:2004 src/main/saveload.c:2319 src/main/serialize.c:2274
 #, c-format
 msgid "object '%s' not found"
 msgstr "objeto '%s' no encontrado"
 
-#: src/main/saveload.c:2031
+#: src/main/saveload.c:2038
 msgid "not a valid named list"
 msgstr "no es una lista de nombres válida"
 
-#: src/main/saveload.c:2038 src/main/saveload.c:2058
+#: src/main/saveload.c:2045 src/main/saveload.c:2065
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
 msgstr ""
 
-#: src/main/saveload.c:2046
+#: src/main/saveload.c:2053
 msgid "loaded data is not in pair list form"
 msgstr "los datos cargados no están en forma de lista pareada"
 
-#: src/main/saveload.c:2081
+#: src/main/saveload.c:2088
 msgid "first argument must be a file name"
 msgstr "el primer argumento debe ser un nombre de archivo"
 
-#: src/main/saveload.c:2129 src/main/saveload.c:2155
+#: src/main/saveload.c:2104 src/unix/edit.c:122
+msgid "unable to open file"
+msgstr "no es posible abrir el archivo"
+
+#: src/main/saveload.c:2136 src/main/saveload.c:2162
 msgid "XDR write failed"
 msgstr "escritura XDR falló"
 
-#: src/main/saveload.c:2142 src/main/saveload.c:2167
+#: src/main/saveload.c:2149 src/main/saveload.c:2174
 msgid "XDR read failed"
 msgstr "lectura XDR falló"
 
-#: src/main/saveload.c:2178
-#, c-format
-msgid "cannot save data -- unable to open %s"
+#: src/main/saveload.c:2186
+#, fuzzy, c-format
+msgid "cannot save data -- unable to open '%s': %s"
 msgstr "no es posible guardar los datos -- no fue posible abrir %s"
 
-#: src/main/saveload.c:2260 src/main/serialize.c:1801
+#: src/main/saveload.c:2189
+#, fuzzy, c-format
+msgid "cannot save data -- unable to open '%s'"
+msgstr "no es posible guardar los datos -- no fue posible abrir %s"
+
+#: src/main/saveload.c:2273 src/main/serialize.c:1802
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "no es posible guardar  para conexiones en formato de versión %d"
 
-#: src/main/saveload.c:2270 src/main/serialize.c:2237
+#: src/main/saveload.c:2283 src/main/serialize.c:2260
 msgid "bad environment"
 msgstr "ambiente inválido"
 
-#: src/main/saveload.c:2274
+#: src/main/saveload.c:2287
 msgid "connection not open for writing"
 msgstr "conexión no abierta para escritura"
 
-#: src/main/saveload.c:2282
+#: src/main/saveload.c:2295
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "no es posible guardar en formato XDR para una conexión de modo texto"
 
-#: src/main/saveload.c:2292 src/main/serialize.c:1716
-#: src/main/serialize.c:1730 src/main/serialize.c:1850
-#: src/main/serialize.c:1872
+#: src/main/saveload.c:2305 src/main/serialize.c:1717
+#: src/main/serialize.c:1731 src/main/serialize.c:1851
+#: src/main/serialize.c:1873
 msgid "error writing to connection"
 msgstr "error al escribir en una conexión"
 
-#: src/main/saveload.c:2362
+#: src/main/saveload.c:2375
 #, fuzzy
 msgid "no input is available"
 msgstr "no hay disponible mecanismos de historia"
 
-#: src/main/saveload.c:2382
+#: src/main/saveload.c:2395
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6198,89 +6201,89 @@ msgstr "'a' e 'b' deben ser finitos"
 msgid "argument must be non-negative"
 msgstr "argumento debe ser un entorno"
 
-#: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
+#: src/main/serialize.c:224 src/main/serialize.c:254 src/main/serialize.c:277
 msgid "unknown or inappropriate output format"
 msgstr "formato de salida inapropiado o desconocido"
 
-#: src/main/serialize.c:511
+#: src/main/serialize.c:512
 msgid "binary format is deprecated; using xdr instead"
 msgstr "formato binario es obsoleto; usando xdr en su lugar"
 
-#: src/main/serialize.c:519
+#: src/main/serialize.c:520
 msgid "must specify ascii, binary, or xdr format"
 msgstr "formato debe ser de tipo ascii, binario o xdr"
 
-#: src/main/serialize.c:520
+#: src/main/serialize.c:521
 msgid "unknown output format"
 msgstr "formato de salida desconocido"
 
-#: src/main/serialize.c:551
+#: src/main/serialize.c:552
 msgid "unknown input format"
 msgstr "formato de entrada desconocido"
 
-#: src/main/serialize.c:556
+#: src/main/serialize.c:557
 msgid "input format does not match specified format"
 msgstr "formato de entrada no coincide con formato especificado"
 
-#: src/main/serialize.c:747
+#: src/main/serialize.c:748
 msgid "no restore method available"
 msgstr "ningún método de recuperación disponible"
 
-#: src/main/serialize.c:778
+#: src/main/serialize.c:779
 msgid "names in persistent strings are currently ignored"
 msgstr "nombres en strings persistentes son actualmente ignorados"
 
-#: src/main/serialize.c:831
+#: src/main/serialize.c:832
 #, c-format
 msgid "'%s' may not be available when loading"
 msgstr "'%s' puede no estar disponible en el proceso de carga"
 
-#: src/main/serialize.c:838
+#: src/main/serialize.c:839
 msgid "namespaces may not be available when loading"
 msgstr "espacios de nombres pueden no estar disponibles en el proceso de carga"
 
-#: src/main/serialize.c:943
+#: src/main/serialize.c:944
 msgid "this version of R cannot write byte code objects"
 msgstr "esta versióno de R no puede escribir objetos con código byte"
 
-#: src/main/serialize.c:952
+#: src/main/serialize.c:953
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem: tipo %i desconocido"
 
-#: src/main/serialize.c:1122
+#: src/main/serialize.c:1123
 #, c-format
 msgid "version %d not supported"
 msgstr "versión %d no mantenida"
 
-#: src/main/serialize.c:1150
+#: src/main/serialize.c:1151
 msgid "reference index out of range"
 msgstr "índice de referencia fuera de límites"
 
-#: src/main/serialize.c:1180
+#: src/main/serialize.c:1181
 msgid "names in persistent strings are not supported yet"
 msgstr "nombres en strings persistentes no disponibles todavía"
 
-#: src/main/serialize.c:1382
+#: src/main/serialize.c:1383
 msgid "this version of R cannot read byte code objects"
 msgstr "esta versión de R no puede leer objetos con código byte"
 
-#: src/main/serialize.c:1385
+#: src/main/serialize.c:1386
 msgid "this version of R cannot read class references"
 msgstr "esta versión de R no puede leer referencias de clases"
 
-#: src/main/serialize.c:1387
+#: src/main/serialize.c:1388
 msgid "this version of R cannot read generic function references"
 msgstr "esta versión de R no puede leer referencias de funciones genéricas"
 
-#: src/main/serialize.c:1398
+#: src/main/serialize.c:1399
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 "ReadItem: tipo desconocido en %i, tal vez escrito con una versión posterio "
 "de R"
 
-#: src/main/serialize.c:1532
+#: src/main/serialize.c:1533
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
@@ -6289,7 +6292,7 @@ msgstr ""
 "no puede leerse espacio de trabajo no liberado, versión %d escrita por R "
 "experimental %d.%d.%d"
 
-#: src/main/serialize.c:1536
+#: src/main/serialize.c:1537
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6298,83 +6301,74 @@ msgstr ""
 "no puede leerse espacio de trabajo versión %d escrita por R %d.%d.%d; "
 "necesita R %d.%d.%d más reciente"
 
-#: src/main/serialize.c:1615
+#: src/main/serialize.c:1616
 #, fuzzy
 msgid "read failed"
 msgstr "lectura XDR falló"
 
-#: src/main/serialize.c:1678
+#: src/main/serialize.c:1679
 #, fuzzy
 msgid "error reading from ascii connection"
 msgstr "error al leer desde conexión"
 
-#: src/main/serialize.c:1680
+#: src/main/serialize.c:1681
 #, fuzzy
 msgid "unexpected format in ascii connection"
 msgstr "no se puede leer desde esta conexión"
 
-#: src/main/serialize.c:1685 src/main/serialize.c:1699
+#: src/main/serialize.c:1686 src/main/serialize.c:1700
 msgid "error reading from connection"
 msgstr "error al leer desde conexión"
 
-#: src/main/serialize.c:1740
+#: src/main/serialize.c:1741
 msgid "only ascii format can be written to text mode connections"
 msgstr "solo formato ascii puede ser escrito en conexiones de modo texto"
 
-#: src/main/serialize.c:1754
+#: src/main/serialize.c:1755
 msgid "only ascii format can be read from text mode connections"
 msgstr "solo formato ascii puede ser leido de conexiones de modo texto"
 
-#: src/main/serialize.c:1799
+#: src/main/serialize.c:1800
 msgid "bad version value"
 msgstr "valor de versión inválido"
 
-#: src/main/serialize.c:1920 src/main/serialize.c:1942
-#: src/main/serialize.c:2003
+#: src/main/serialize.c:1921 src/main/serialize.c:1943
+#: src/main/serialize.c:2004
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:1924
+#: src/main/serialize.c:1925
 msgid "cannot allocate buffer"
 msgstr "no puede asignarse buffer"
 
-#: src/main/serialize.c:2103 src/main/serialize.c:2166
+#: src/main/serialize.c:2104 src/main/serialize.c:2179
 msgid "not a proper file name"
 msgstr "nombre de archivo no válido"
 
-#: src/main/serialize.c:2105
+#: src/main/serialize.c:2106
 msgid "not a proper raw vector"
 msgstr "no es un vector crudo (raw)"
 
-#: src/main/serialize.c:2109 src/main/serialize.c:2112
-msgid "file open failed"
-msgstr "falló apertura de archivo"
-
-#: src/main/serialize.c:2122
+#: src/main/serialize.c:2135
 msgid "could not determine file position"
 msgstr "no se pudo determinar posición del archivo"
 
-#: src/main/serialize.c:2168
+#: src/main/serialize.c:2181
 msgid "bad offset/length argument"
 msgstr "argumento fuera de rango o longitud inválida"
 
-#: src/main/serialize.c:2190 src/main/serialize.c:2209
-#, c-format
-msgid "open failed on %s"
-msgstr "falla de apertura en %s"
-
-#: src/main/serialize.c:2193 src/main/serialize.c:2201
-#: src/main/serialize.c:2212
+#: src/main/serialize.c:2211 src/main/serialize.c:2219
+#: src/main/serialize.c:2235
 #, c-format
 msgid "seek failed on %s"
 msgstr "falla de búsqueda en %s"
 
-#: src/main/serialize.c:2205 src/main/serialize.c:2216
+#: src/main/serialize.c:2223 src/main/serialize.c:2239
 #, c-format
 msgid "read failed on %s"
 msgstr "falla de lectura en %s"
 
-#: src/main/serialize.c:2239
+#: src/main/serialize.c:2262
 msgid "bad variable names"
 msgstr "nombres de variables incorrectos"
 
@@ -7123,65 +7117,76 @@ msgstr "Deben existir al menos cuatro puntos control"
 msgid "There must be at least three control points"
 msgstr "debe haber un primer argumento"
 
-#: src/modules/internet/internet.c:185 src/modules/internet/internet.c:189
-#: src/modules/internet/internet.c:195 src/modules/internet/internet.c:207
+#: src/modules/internet/internet.c:186 src/modules/internet/internet.c:190
+#: src/modules/internet/internet.c:196 src/modules/internet/internet.c:208
 msgid "allocation of url connection failed"
 msgstr "fallo de asignación de la conexión url"
 
-#: src/modules/internet/internet.c:279
+#: src/modules/internet/internet.c:280
 msgid "only first element of 'url' argument used"
 msgstr "solo se utilizó el primer elemento del argumento 'url'"
 
-#: src/modules/internet/internet.c:285
+#: src/modules/internet/internet.c:286
 msgid "only first element of 'destfile' argument used"
 msgstr "solo se utilizó el primer elemento del argumento 'destfile'"
 
-#: src/modules/internet/internet.c:310
+#: src/modules/internet/internet.c:311
 msgid "Download progress"
 msgstr "Descarga en progreso"
 
-#: src/modules/internet/internet.c:330 src/modules/internet/internet.c:424
-#: src/modules/internet/internet.c:509
+#: src/modules/internet/internet.c:333
+#, fuzzy, c-format
+msgid "cannot open URL '%s', reason '%s'"
+msgstr "no fue posible abrir el archivo '%s', motivo '%s'"
+
+#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:447
+#: src/modules/internet/internet.c:539
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "no fue posible abrir la URL '%s'"
 
-#: src/modules/internet/internet.c:332 src/modules/internet/internet.c:355
-#: src/modules/internet/internet.c:437
+#: src/modules/internet/internet.c:343 src/modules/internet/internet.c:373
+#: src/modules/internet/internet.c:462
+#, fuzzy, c-format
+msgid "cannot open destfile '%s', reason '%s'"
+msgstr "no fue posible abrir el archivo '%s', motivo '%s'"
+
+#: src/modules/internet/internet.c:346 src/modules/internet/internet.c:376
+#: src/modules/internet/internet.c:465
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "no fue posible abrir el archivo destino '%s'"
 
-#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:440
+#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:470
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "probando la URL '%s'\n"
 
-#: src/modules/internet/internet.c:365 src/modules/internet/internet.c:447
+#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:477
 msgid "opened URL\n"
 msgstr "URL abierta\n"
 
-#: src/modules/internet/internet.c:420 src/modules/internet/internet.c:505
+#: src/modules/internet/internet.c:443 src/modules/internet/internet.c:535
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "longitud bajada %d != longitud informada %d"
 
-#: src/modules/internet/internet.c:537 src/modules/internet/internet.c:772
+#: src/modules/internet/internet.c:567 src/modules/internet/internet.c:802
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "no fue posible abrir: el status HTTP fue '%d %s'"
 
-#: src/modules/internet/internet.c:716 src/modules/internet/internet.c:879
+#: src/modules/internet/internet.c:746 src/modules/internet/internet.c:909
 msgid "InternetOpenUrl timed out"
 msgstr "Tiempo límite agotado en InternetOpenUrl"
 
-#: src/modules/internet/internet.c:743 src/modules/internet/internet.c:757
-#: src/modules/internet/internet.c:901 src/modules/internet/internet.c:910
+#: src/modules/internet/internet.c:773 src/modules/internet/internet.c:787
+#: src/modules/internet/internet.c:931 src/modules/internet/internet.c:940
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "fallo en InternetOpenUrl: '%s'"
 
-#: src/modules/internet/internet.c:814
+#: src/modules/internet/internet.c:844
 msgid "Internet read timed out"
 msgstr "Tiempo límite de lectura de Internet agotado"
 
@@ -7771,7 +7776,7 @@ msgstr ""
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): precisión perdida en resultado\n"
 
-#: src/nmath/pnchisq.c:218
+#: src/nmath/pnchisq.c:219
 #, c-format
 msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..): no converge en %d iteraciones"
@@ -7896,11 +7901,13 @@ msgid "re-encoding is not available on this system"
 msgstr "recodificación no está disponible en este sistema"
 
 #: src/unix/sys-std.c:1116
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cannot open file '%s', reason '%s'\n"
+"Cannot open file '%s': %s\n"
 "\n"
-msgstr "no fue posible abrir el archivo '%s', motivo '%s'\n"
+msgstr ""
+"no fue posible abrir el archivo '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:1119
 #, c-format
@@ -7949,22 +7956,22 @@ msgstr "'intern=TRUE' no está implementado en esta plataforma"
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() no está implementado en este sistema"
 
-#: src/unix/system.c:247
+#: src/unix/system.c:251
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ATENCIÓN: --gui o -g sin especificación es ignorado"
 
-#: src/unix/system.c:269
+#: src/unix/system.c:273
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ATENCIÓN: interface gráfica desconocida '%s', usando X11\n"
 
-#: src/unix/system.c:272
+#: src/unix/system.c:276
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ATENCIÓN: interface gráfica '%s' desconocida, usando ninguna\n"
 
-#: src/unix/system.c:442
+#: src/unix/system.c:460
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATENCIÓN: Solamente editando el primero de los archivos de lista"
 
@@ -7985,6 +7992,27 @@ msgstr "módulo X11 no puede ser cargado"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
+
+#, fuzzy
+#~ msgid "Unable to open file '%s': %s"
+#~ msgstr "No se puede abrir el archivo '%s'"
+
+#~ msgid "unable to open connection"
+#~ msgstr "no fue posible abrir la conexión"
+
+#~ msgid "cannot open pipe() cmd '%s', reason '%s'"
+#~ msgstr "no fue posible abrir el comando pipe() '%s', motivo '%s'"
+
+#~ msgid "file open failed"
+#~ msgstr "falló apertura de archivo"
+
+#~ msgid "open failed on %s"
+#~ msgstr "falla de apertura en %s"
+
+#~ msgid ""
+#~ "Cannot open file '%s', reason '%s'\n"
+#~ "\n"
+#~ msgstr "no fue posible abrir el archivo '%s', motivo '%s'\n"
 
 #, fuzzy
 #~ msgid "unable to start device jpeg"

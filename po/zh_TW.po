@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:05+0000\n"
+"POT-Creation-Date: 2008-03-18 19:43+0000\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -133,8 +133,8 @@ msgstr ""
 #: src/main/context.c:510 src/main/datetime.c:649 src/main/datetime.c:724
 #: src/main/datetime.c:726 src/main/datetime.c:730 src/main/datetime.c:863
 #: src/main/datetime.c:865 src/main/datetime.c:1011 src/main/debug.c:208
-#: src/main/deparse.c:335 src/main/devices.c:634 src/main/dounzip.c:184
-#: src/main/dounzip.c:190 src/main/envir.c:1462 src/main/envir.c:1465
+#: src/main/deparse.c:335 src/main/devices.c:634 src/main/dounzip.c:189
+#: src/main/dounzip.c:195 src/main/envir.c:1462 src/main/envir.c:1465
 #: src/main/envir.c:1554 src/main/envir.c:1559 src/main/envir.c:1625
 #: src/main/envir.c:1641 src/main/envir.c:1647 src/main/envir.c:1738
 #: src/main/envir.c:1746 src/main/envir.c:1753 src/main/envir.c:1767
@@ -154,17 +154,17 @@ msgstr ""
 #: src/main/platform.c:1346 src/main/platform.c:1349 src/main/platform.c:1383
 #: src/main/platform.c:1386 src/main/platform.c:1423 src/main/platform.c:1462
 #: src/main/platform.c:1464 src/main/platform.c:1522 src/main/platform.c:1613
-#: src/main/platform.c:1662 src/main/platform.c:1866 src/main/platform.c:1910
-#: src/main/platform.c:2021 src/main/platform.c:2049 src/main/plot.c:2913
+#: src/main/platform.c:1662 src/main/platform.c:1873 src/main/platform.c:1917
+#: src/main/platform.c:2028 src/main/platform.c:2056 src/main/plot.c:2913
 #: src/main/plot.c:4046 src/main/plot.c:4050 src/main/plot.c:4053
 #: src/main/plot3d.c:2466 src/main/plot3d.c:2470 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2483 src/main/plot3d.c:2487
 #: src/main/print.c:177 src/main/print.c:183 src/main/print.c:205
 #: src/main/print.c:211 src/main/print.c:217 src/main/random.c:468
 #: src/main/random.c:472 src/main/random.c:474 src/main/random.c:476
-#: src/main/saveload.c:1971 src/main/saveload.c:1974 src/main/saveload.c:1977
-#: src/main/saveload.c:2092 src/main/saveload.c:2258 src/main/saveload.c:2263
-#: src/main/saveload.c:2266 src/main/saveload.c:2357 src/main/saveload.c:2407
+#: src/main/saveload.c:1972 src/main/saveload.c:1975 src/main/saveload.c:1978
+#: src/main/saveload.c:2099 src/main/saveload.c:2271 src/main/saveload.c:2276
+#: src/main/saveload.c:2279 src/main/saveload.c:2370 src/main/saveload.c:2420
 #: src/main/scan.c:707 src/main/scan.c:874 src/main/scan.c:887
 #: src/main/scan.c:891 src/main/scan.c:893 src/main/scan.c:904
 #: src/main/scan.c:931 src/main/scan.c:934 src/main/scan.c:980
@@ -178,9 +178,9 @@ msgstr ""
 #: src/main/sysutils.c:564 src/main/sysutils.c:566 src/main/sysutils.c:568
 #: src/main/unique.c:586 src/main/unique.c:833 src/main/unique.c:893
 #: src/main/unique.c:900 src/main/util.c:566 src/main/util.c:569
-#: src/modules/internet/internet.c:277 src/modules/internet/internet.c:283
-#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:292
-#: src/modules/internet/internet.c:296 src/modules/lapack/Lapack.c:151
+#: src/modules/internet/internet.c:278 src/modules/internet/internet.c:284
+#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:293
+#: src/modules/internet/internet.c:297 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:621
 #: src/modules/lapack/Lapack.c:717 src/modules/lapack/Lapack.c:774
 #: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2659
@@ -248,7 +248,7 @@ msgstr "時間截記不正確"
 #: src/main/errors.c:989 src/main/errors.c:1014 src/main/errors.c:1019
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2069 src/main/plot.c:278 src/main/plot.c:472
+#: src/main/platform.c:2076 src/main/plot.c:278 src/main/plot.c:472
 #: src/main/plot.c:477 src/main/plot.c:2054 src/main/plot.c:2061
 #: src/main/plot.c:3126 src/main/plot.c:3128 src/main/plot.c:3130
 #: src/main/plot.c:3287 src/main/plot3d.c:1399 src/main/plot3d.c:2544
@@ -400,7 +400,7 @@ msgstr "無法建立管道"
 msgid "Impossible to create thread/pipe"
 msgstr "無法建立執行緒/管道"
 
-#: src/gnuwin32/run.c:504 src/main/dounzip.c:320
+#: src/gnuwin32/run.c:504 src/main/dounzip.c:325
 msgid "seek not enabled for this connection"
 msgstr "這個連結上不能使用搜索"
 
@@ -443,72 +443,70 @@ msgstr "編碼 '%s' 無法確認"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<錯誤: 編碼中的輸入不正確> "
 
-#: src/gnuwin32/system.c:502
-#, c-format
-msgid "Unable to open file '%s'"
+#: src/gnuwin32/system.c:503 src/gnuwin32/system.c:955
+#: src/gnuwin32/system.c:967 src/main/connections.c:503
+#: src/main/connections.c:509 src/main/dounzip.c:105 src/main/saveload.c:1984
+#: src/main/serialize.c:2111 src/main/serialize.c:2120
+#: src/main/serialize.c:2204 src/main/serialize.c:2228 src/unix/system.c:314
+#: src/unix/system.c:329
+#, fuzzy, c-format
+msgid "cannot open file '%s': %s"
 msgstr "無法開啟檔案 '%s'"
 
-#: src/gnuwin32/system.c:516
+#: src/gnuwin32/system.c:517
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): 檔案 '%s' 不存在\n"
 
-#: src/gnuwin32/system.c:917
+#: src/gnuwin32/system.c:918
 msgid "WARNING: no max-mem-size given\n"
 msgstr "警告: max-mem-size 沒有定義\n"
 
-#: src/gnuwin32/system.c:923
+#: src/gnuwin32/system.c:924
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "警告: --max-mem-size 值不正確: 忽略不用\n"
 
-#: src/gnuwin32/system.c:925
+#: src/gnuwin32/system.c:926
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "警告: --max-mem-size=%lu'%c': 太大，忽略不用\n"
 
-#: src/gnuwin32/system.c:930
+#: src/gnuwin32/system.c:931
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "警告: max-mem-size=%4.1fM 太小，忽略不用\n"
 
-#: src/gnuwin32/system.c:934
+#: src/gnuwin32/system.c:935
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "警告: max-mem-size=%4.1fM 太大，視為 3Gb\n"
 
-#: src/gnuwin32/system.c:953 src/gnuwin32/system.c:963
-#: src/main/connections.c:511 src/main/dounzip.c:103
-#: src/modules/X11/devX11.c:2680 src/unix/system.c:308 src/unix/system.c:317
-#, c-format
-msgid "cannot open file '%s'"
-msgstr "無法開啟檔案 '%s'"
-
-#: src/gnuwin32/system.c:973 src/unix/system.c:335
+#: src/gnuwin32/system.c:978 src/unix/system.c:353
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:977 src/unix/system.c:349
+#: src/gnuwin32/system.c:982 src/unix/system.c:367
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 沒有 '%s' 這樣的選項\n"
 
-#: src/gnuwin32/system.c:998 src/unix/system.c:353
+#: src/gnuwin32/system.c:1003 src/unix/system.c:371
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引數「%s」忽略不用\n"
 
-#: src/gnuwin32/system.c:1004 src/unix/system.c:360
+#: src/gnuwin32/system.c:1009 src/unix/system.c:378
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "不能設定非向量的長度"
 
-#: src/gnuwin32/system.c:1025 src/unix/system.c:409
+#: src/gnuwin32/system.c:1030 src/unix/system.c:427
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "您必須指定 '--save'、'--no-save' 或 '--vanilla' 其中的一個"
 
-#: src/gnuwin32/system.c:1030
+#: src/gnuwin32/system.c:1035
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "無法建立「reader thread」；您必須釋放一些系統資源"
@@ -1212,8 +1210,8 @@ msgstr "指定的向量大小太大"
 #: src/main/envir.c:2715 src/main/envir.c:2743 src/main/envir.c:2763
 #: src/main/envir.c:2785 src/main/envir.c:2819 src/main/envir.c:2839
 #: src/main/envir.c:3146 src/main/envir.c:3150 src/main/eval.c:3523
-#: src/main/objects.c:180 src/main/objects.c:186 src/main/saveload.c:2088
-#: src/main/saveload.c:2354 src/main/saveload.c:2404 src/main/serialize.c:2233
+#: src/main/objects.c:180 src/main/objects.c:186 src/main/saveload.c:2095
+#: src/main/saveload.c:2367 src/main/saveload.c:2417 src/main/serialize.c:2256
 msgid "use of NULL environment is defunct"
 msgstr "NULL 環境的使用已經廢止"
 
@@ -1826,10 +1824,13 @@ msgstr "輸出轉換字串不正確"
 msgid "invalid input found on input connection '%s'"
 msgstr "輸入連結 '%s' 中的輸入不正確"
 
-#: src/main/connections.c:503 src/main/connections.c:509
+#: src/main/connections.c:511 src/main/dounzip.c:107 src/main/saveload.c:1986
+#: src/main/serialize.c:2114 src/main/serialize.c:2123
+#: src/main/serialize.c:2206 src/main/serialize.c:2230
+#: src/modules/X11/devX11.c:2680 src/unix/system.c:317 src/unix/system.c:333
 #, c-format
-msgid "cannot open file '%s', reason '%s'"
-msgstr "無法開啟檔案 '%s'，原因是 '%s'"
+msgid "cannot open file '%s'"
+msgstr "無法開啟檔案 '%s'"
 
 #: src/main/connections.c:615
 msgid "connection is not open for reading"
@@ -1901,8 +1902,15 @@ msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
 #: src/main/connections.c:939 src/main/connections.c:1099
 #: src/main/connections.c:1293 src/main/connections.c:1479
 #: src/main/connections.c:2298 src/main/connections.c:2352
-#: src/main/connections.c:2402 src/main/connections.c:3985
-msgid "unable to open connection"
+#: src/main/connections.c:2402 src/main/connections.c:2663
+#: src/main/connections.c:2753 src/main/connections.c:2904
+#: src/main/connections.c:3105 src/main/connections.c:3406
+#: src/main/connections.c:3497 src/main/connections.c:3695
+#: src/main/connections.c:3985 src/main/dcf.c:56 src/main/deparse.c:300
+#: src/main/deparse.c:373 src/main/saveload.c:2286 src/main/saveload.c:2363
+#: src/main/scan.c:948 src/main/scan.c:1054 src/main/scan.c:1548
+#: src/main/scan.c:1756 src/main/source.c:193
+msgid "cannot open the connection"
 msgstr "無法開啟連結"
 
 #: src/main/connections.c:956
@@ -1910,9 +1918,9 @@ msgid "fifo connections are not available on this system"
 msgstr "本系統沒有先進先出連結這個功能"
 
 #: src/main/connections.c:990
-#, c-format
-msgid "cannot open pipe() cmd '%s', reason '%s'"
-msgstr "無法開啟 pipe() 命令 '%s'，原因是 '%s'"
+#, fuzzy, c-format
+msgid "cannot open pipe() cmd '%s': %s"
+msgstr "無法開啟 pipe() 命令 '%s'"
 
 #: src/main/connections.c:993
 #, c-format
@@ -2079,7 +2087,7 @@ msgid "cannot close messages sink connection"
 msgstr "無法關閉訊息匯集連結"
 
 #: src/main/connections.c:2512 src/main/connections.c:4009
-#: src/main/serialize.c:1646 src/main/serialize.c:1654
+#: src/main/serialize.c:1647 src/main/serialize.c:1655
 msgid "connection is not open"
 msgstr "連結沒有開啟"
 
@@ -2088,20 +2096,10 @@ msgid "Line longer than buffer size"
 msgstr "列長大於緩衝區"
 
 #: src/main/connections.c:2656 src/main/connections.c:2901
-#: src/main/connections.c:3394 src/main/dcf.c:53 src/main/saveload.c:2346
-#: src/main/serialize.c:1648
+#: src/main/connections.c:3394 src/main/dcf.c:53 src/main/saveload.c:2359
+#: src/main/serialize.c:1649
 msgid "cannot read from this connection"
 msgstr "無法從此連結讀取"
-
-#: src/main/connections.c:2663 src/main/connections.c:2753
-#: src/main/connections.c:2904 src/main/connections.c:3105
-#: src/main/connections.c:3406 src/main/connections.c:3497
-#: src/main/connections.c:3695 src/main/dcf.c:56 src/main/deparse.c:300
-#: src/main/deparse.c:373 src/main/saveload.c:2273 src/main/saveload.c:2350
-#: src/main/scan.c:948 src/main/scan.c:1054 src/main/scan.c:1548
-#: src/main/scan.c:1756 src/main/source.c:193
-msgid "cannot open the connection"
-msgstr "無法開啟連結"
 
 #: src/main/connections.c:2675 src/main/connections.c:2694
 msgid "cannot allocate buffer in readLines"
@@ -2118,7 +2116,7 @@ msgstr "readLines 讀的列數不夠"
 
 #: src/main/connections.c:2749 src/main/connections.c:3092
 #: src/main/connections.c:3453 src/main/connections.c:4010
-#: src/main/scan.c:1752 src/main/serialize.c:1656
+#: src/main/scan.c:1752 src/main/serialize.c:1657
 msgid "cannot write to this connection"
 msgstr "無法寫入此連結"
 
@@ -2130,7 +2128,7 @@ msgstr "忽略檔案末端不完整的字串"
 msgid "null terminator not found: breaking string at 10000 chars"
 msgstr "沒有 null 終止符: 字串截斷於 10000 個位元組"
 
-#: src/main/connections.c:2882 src/main/saveload.c:2347
+#: src/main/connections.c:2882 src/main/saveload.c:2360
 msgid "can only read from a binary connection"
 msgstr "無法讀取二進位連結"
 
@@ -2231,8 +2229,8 @@ msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
 
-#: src/main/connections.c:3972 src/modules/internet/internet.c:112
-#: src/modules/internet/internet.c:513
+#: src/main/connections.c:3972 src/modules/internet/internet.c:113
+#: src/modules/internet/internet.c:543
 msgid "unsupported URL scheme"
 msgstr "不支援這種 URL 方案"
 
@@ -2709,75 +2707,75 @@ msgstr "call_R 的回傳值數目不正確"
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R 不支援 '%s' 型式"
 
-#: src/main/dounzip.c:174
+#: src/main/dounzip.c:179
 msgid "invalid zip name argument"
 msgstr "zip 名稱引數不正確"
 
-#: src/main/dounzip.c:177 src/main/dounzip.c:247
+#: src/main/dounzip.c:182 src/main/dounzip.c:252
 msgid "zip path is too long"
 msgstr "zip 路徑太長"
 
-#: src/main/dounzip.c:193
+#: src/main/dounzip.c:198
 msgid "'destination' is too long"
 msgstr "'destination' 太長"
 
-#: src/main/dounzip.c:196
+#: src/main/dounzip.c:201
 msgid "'destination' does not exist"
 msgstr "'destination' 不存在"
 
-#: src/main/dounzip.c:206
+#: src/main/dounzip.c:211
 msgid "requested file not found in the zip file"
 msgstr "您所要求的檔案在 zip 檔案中沒有"
 
-#: src/main/dounzip.c:209
+#: src/main/dounzip.c:214
 msgid "zip file is corrupt"
 msgstr "zip 檔案有損壞"
 
-#: src/main/dounzip.c:212
+#: src/main/dounzip.c:217
 msgid "CRC error in zip file"
 msgstr "zip 檔案出現 CRC 錯誤"
 
-#: src/main/dounzip.c:216
+#: src/main/dounzip.c:221
 msgid "internal error in unz code"
 msgstr "unz 程式碼中有內部錯誤"
 
-#: src/main/dounzip.c:219
+#: src/main/dounzip.c:224
 msgid "write error in extracting from zip file"
 msgstr "抽取 zip 檔案時出了寫入錯誤"
 
-#: src/main/dounzip.c:222
+#: src/main/dounzip.c:227
 #, c-format
 msgid "error %d in extracting from zip file"
 msgstr "從 zip 檔案中解開 %d 時發生錯誤"
 
-#: src/main/dounzip.c:242
+#: src/main/dounzip.c:247
 msgid "unz connections can only be opened for reading"
 msgstr "unz 連結可讀不可寫"
 
-#: src/main/dounzip.c:253
+#: src/main/dounzip.c:258
 msgid "invalid description of unz connection"
 msgstr "unz 連結的描述不正確"
 
-#: src/main/dounzip.c:259
+#: src/main/dounzip.c:264
 #, c-format
 msgid "cannot open zip file '%s'"
 msgstr "無法開啟 zip 檔案 '%s'"
 
-#: src/main/dounzip.c:263
+#: src/main/dounzip.c:268
 #, c-format
 msgid "cannot locate file '%s' in zip file '%s'"
 msgstr "找不到在 zip 檔案 '%2$s' 中的 %1$s 檔案"
 
-#: src/main/dounzip.c:307
+#: src/main/dounzip.c:312
 msgid "printing not enabled for this connection"
 msgstr "此連結無法列印"
 
-#: src/main/dounzip.c:314
+#: src/main/dounzip.c:319
 msgid "write not enabled for this connection"
 msgstr "無法寫入這個連結"
 
-#: src/main/dounzip.c:334 src/main/dounzip.c:338 src/main/dounzip.c:344
-#: src/main/dounzip.c:361
+#: src/main/dounzip.c:339 src/main/dounzip.c:343 src/main/dounzip.c:349
+#: src/main/dounzip.c:366
 msgid "allocation of unz connection failed"
 msgstr "指派 unz 連結失敗"
 
@@ -3565,12 +3563,12 @@ msgstr "不當的檔案名稱"
 msgid "unable to open 'file'"
 msgstr "無法開啟 'file'"
 
-#: src/main/eval.c:3624 src/main/saveload.c:1963
+#: src/main/eval.c:3624 src/main/saveload.c:1964
 msgid "'file' must be non-empty string"
 msgstr "'file' 必須是非空字串"
 
-#: src/main/eval.c:3626 src/main/saveload.c:1965 src/main/saveload.c:2250
-#: src/main/serialize.c:1789
+#: src/main/eval.c:3626 src/main/saveload.c:1966 src/main/saveload.c:2263
+#: src/main/serialize.c:1790
 msgid "'ascii' must be logical"
 msgstr "'ascii' 必須是邏輯值"
 
@@ -5049,39 +5047,39 @@ msgstr "正在設定 'LC_NUMERIC' 可能會使得 R 的運作異常"
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "作業系統回報無法實現執行請求"
 
-#: src/main/platform.c:1821
+#: src/main/platform.c:1828
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' 必須是長度為 1 的字元向量"
 
-#: src/main/platform.c:1827
+#: src/main/platform.c:1834
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() 無法分辨主機 '%s'"
 
-#: src/main/platform.c:1834
+#: src/main/platform.c:1841
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname 回傳了錯誤的格式"
 
-#: src/main/platform.c:1843
+#: src/main/platform.c:1850
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支援 nsl()"
 
-#: src/main/platform.c:1889 src/main/platform.c:1934
+#: src/main/platform.c:1896 src/main/platform.c:1941
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' 已存在"
 
-#: src/main/platform.c:1893
+#: src/main/platform.c:1900
 #, fuzzy, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "無法建立先進先出 '%s'，原因是 '%s'"
 
-#: src/main/platform.c:1895
+#: src/main/platform.c:1902
 #, fuzzy, c-format
 msgid "cannot create dir '%s'"
 msgstr "無法建立先進先出 '%s'"
 
-#: src/main/platform.c:2076
+#: src/main/platform.c:2083
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "本平台不支援 nsl()"
@@ -5712,237 +5710,242 @@ msgstr "這些類型的比較還沒有實作"
 msgid "invalid comparison with complex values"
 msgstr "不能與複數值進行比較"
 
-#: src/main/saveload.c:198 src/main/saveload.c:203 src/main/saveload.c:212
-#: src/main/saveload.c:221 src/main/saveload.c:230 src/main/saveload.c:239
-#: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1404
-#: src/main/saveload.c:1409 src/main/saveload.c:1453 src/main/saveload.c:1521
-#: src/main/saveload.c:1530 src/main/serialize.c:329 src/main/serialize.c:336
-#: src/main/serialize.c:1952 src/main/serialize.c:1960
+#: src/main/saveload.c:199 src/main/saveload.c:204 src/main/saveload.c:213
+#: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
+#: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1405
+#: src/main/saveload.c:1410 src/main/saveload.c:1454 src/main/saveload.c:1522
+#: src/main/saveload.c:1531 src/main/serialize.c:330 src/main/serialize.c:337
+#: src/main/serialize.c:1953 src/main/serialize.c:1961
 msgid "read error"
 msgstr "讀取錯誤"
 
-#: src/main/saveload.c:330
+#: src/main/saveload.c:331
 msgid "a I read error occurred"
 msgstr "發生了 I 類別讀取錯誤"
 
-#: src/main/saveload.c:340
+#: src/main/saveload.c:341
 msgid "a R read error occurred"
 msgstr "發生了 R 類別讀取錯誤"
 
-#: src/main/saveload.c:350
+#: src/main/saveload.c:351
 msgid "a C read error occurred"
 msgstr "發生了 C 類別讀取錯誤"
 
-#: src/main/saveload.c:360
+#: src/main/saveload.c:361
 msgid "a S read error occurred"
 msgstr "發生了 S 類別讀取錯誤"
 
-#: src/main/saveload.c:385 src/main/saveload.c:393 src/main/saveload.c:401
-#: src/main/saveload.c:1617 src/main/saveload.c:1625
+#: src/main/saveload.c:386 src/main/saveload.c:394 src/main/saveload.c:402
+#: src/main/saveload.c:1618 src/main/saveload.c:1626
 msgid "a read error occurred"
 msgstr "發生了讀取錯誤"
 
-#: src/main/saveload.c:465
+#: src/main/saveload.c:466
 msgid "unresolved node during restore"
 msgstr "復原時遇到了無法解析的節點"
 
-#: src/main/saveload.c:486
+#: src/main/saveload.c:487
 #, c-format
 msgid "restore compatibility error - no version %d compatibility"
 msgstr "復原相容錯誤：沒有同版本 %d 相容的功能"
 
-#: src/main/saveload.c:570 src/main/saveload.c:637
+#: src/main/saveload.c:571 src/main/saveload.c:638
 msgid "bad SEXP type in data file"
 msgstr "資料檔案中 SEXP 類型發生錯誤"
 
-#: src/main/saveload.c:584
+#: src/main/saveload.c:585
 msgid "mismatch on types"
 msgstr "類型不符合"
 
-#: src/main/saveload.c:698
+#: src/main/saveload.c:699
 msgid "cannot save file position while restoring data"
 msgstr "復原資料的時候無法儲存檔案位置"
 
-#: src/main/saveload.c:711
+#: src/main/saveload.c:712
 msgid "cannot restore file position while restoring data"
 msgstr "復原資料的時候無法復原檔案位置"
 
-#: src/main/saveload.c:943
+#: src/main/saveload.c:944
 msgid "base namespace is not preserved in version 1 workspaces"
 msgstr "1 號版本工作空間不能保留基本名稱空間"
 
-#: src/main/saveload.c:945
+#: src/main/saveload.c:946
 msgid "cannot save namespace in version 1 workspaces"
 msgstr "1 號版本工作空間無法儲存名稱空間"
 
-#: src/main/saveload.c:947
+#: src/main/saveload.c:948
 msgid ""
 "cannot save environment with locked/active bindingsin version 1 workspaces"
 msgstr "1 號版本工作空間不能儲存鎖住的或是仍在用的繫結"
 
-#: src/main/saveload.c:971
+#: src/main/saveload.c:972
 msgid "cannot save weak references in version 1 workspaces"
 msgstr "1 號版本工作空間無法儲存弱型參考"
 
-#: src/main/saveload.c:1049
+#: src/main/saveload.c:1050
 msgid "NewWriteVec called with non-vector type"
 msgstr "NewWriteVec 不適用於非向量類型"
 
-#: src/main/saveload.c:1112
+#: src/main/saveload.c:1113
 msgid "cannot save byte code objects in version 1 workspaces"
 msgstr "1 號版本工作空間無法儲存位元組碼目的物件"
 
-#: src/main/saveload.c:1114
+#: src/main/saveload.c:1115
 #, c-format
 msgid "NewWriteItem: unknown type %i"
 msgstr "NewWriteItem: 不明類型 %i"
 
-#: src/main/saveload.c:1244
+#: src/main/saveload.c:1245
 msgid "NewReadVec called with non-vector type"
 msgstr "NewReadVec 不適用於非向量類型"
 
-#: src/main/saveload.c:1309
+#: src/main/saveload.c:1310
 msgid "cannot read byte code objects from version 1 workspaces"
 msgstr "無法從 1 號版本工作空間中讀取位元組碼目的物件"
 
-#: src/main/saveload.c:1311
+#: src/main/saveload.c:1312
 #, c-format
 msgid "NewReadItem: unknown type %i"
 msgstr "NewReadItem: 不明類型 %i"
 
-#: src/main/saveload.c:1463
+#: src/main/saveload.c:1464
 msgid "out of memory reading ascii string"
 msgstr "讀取 ascii 字串時記憶體不足"
 
-#: src/main/saveload.c:1588
+#: src/main/saveload.c:1589
 msgid "a binary read error occurred"
 msgstr "二進位讀取時發生了錯誤"
 
-#: src/main/saveload.c:1603 src/main/saveload.c:1704
+#: src/main/saveload.c:1604 src/main/saveload.c:1705
 msgid "out of memory reading binary string"
 msgstr "讀取二進位字串時記憶體不足"
 
-#: src/main/saveload.c:1608
+#: src/main/saveload.c:1609
 msgid "a binary string read error occurred"
 msgstr "讀取二進位字串時發生了錯誤"
 
-#: src/main/saveload.c:1668
+#: src/main/saveload.c:1669
 msgid "an xdr integer data write error occurred"
 msgstr "發生了 xdr 整數資料寫入錯誤"
 
-#: src/main/saveload.c:1675
+#: src/main/saveload.c:1676
 msgid "an xdr integer data read error occurred"
 msgstr "發生了 xdr 整數資料讀取錯誤"
 
-#: src/main/saveload.c:1690 src/main/saveload.c:1709
+#: src/main/saveload.c:1691 src/main/saveload.c:1710
 msgid "an xdr string data write error occurred"
 msgstr "發生了 xdr 字串資料寫入錯誤"
 
-#: src/main/saveload.c:1717
+#: src/main/saveload.c:1718
 msgid "an xdr real data write error occurred"
 msgstr "發生了 xdr 實數資料寫入錯誤"
 
-#: src/main/saveload.c:1724
+#: src/main/saveload.c:1725
 msgid "an xdr real data read error occurred"
 msgstr "發生了 xdr 實數資料讀取錯誤"
 
-#: src/main/saveload.c:1731
+#: src/main/saveload.c:1732
 msgid "an xdr complex data write error occurred"
 msgstr "發生了 xdr 複數資料寫入錯誤"
 
-#: src/main/saveload.c:1738
+#: src/main/saveload.c:1739
 msgid "an xdr complex data read error occurred"
 msgstr "發生了 xdr 複數資料讀取錯誤"
 
-#: src/main/saveload.c:1806 src/main/serialize.c:1608
-#: src/main/serialize.c:2121 src/modules/internet/internet.c:335
-#: src/modules/internet/internet.c:385 src/modules/internet/internet.c:470
+#: src/main/saveload.c:1807 src/main/serialize.c:1609
+#: src/main/serialize.c:2134 src/modules/internet/internet.c:351
+#: src/modules/internet/internet.c:408 src/modules/internet/internet.c:500
 msgid "write failed"
 msgstr "寫入失敗"
 
-#: src/main/saveload.c:1932
+#: src/main/saveload.c:1933
 msgid "restore file may be empty -- no data loaded"
 msgstr "復原檔案可能是空的 -- 沒有載入任何資料"
 
-#: src/main/saveload.c:1934
+#: src/main/saveload.c:1935
 msgid "restore file may be from a newer version of R -- no data loaded"
 msgstr "復原檔案可能是由比本 R 版本要新的 R 所儲存的 -- 沒有載入任何資料"
 
-#: src/main/saveload.c:1936
+#: src/main/saveload.c:1937
 msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr "復原檔案魔術數字發生錯誤 (檔案可能有損壞)-- 沒有載入任何資料"
 
-#: src/main/saveload.c:1961 src/main/saveload.c:2244
+#: src/main/saveload.c:1962 src/main/saveload.c:2257
 msgid "first argument must be a character vector"
 msgstr "第一引數必須是字元向量"
 
-#: src/main/saveload.c:1981 src/main/saveload.c:2097 src/unix/edit.c:122
-msgid "unable to open file"
-msgstr "無法開啟檔案"
-
-#: src/main/saveload.c:1997 src/main/saveload.c:2306 src/main/serialize.c:2251
+#: src/main/saveload.c:2004 src/main/saveload.c:2319 src/main/serialize.c:2274
 #, c-format
 msgid "object '%s' not found"
 msgstr "找不到目的物件 '%s'"
 
-#: src/main/saveload.c:2031
+#: src/main/saveload.c:2038
 msgid "not a valid named list"
 msgstr "不是有效的具名串列"
 
-#: src/main/saveload.c:2038 src/main/saveload.c:2058
+#: src/main/saveload.c:2045 src/main/saveload.c:2065
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
 msgstr ""
 
-#: src/main/saveload.c:2046
+#: src/main/saveload.c:2053
 msgid "loaded data is not in pair list form"
 msgstr "載入資料不是成雙的串列形式"
 
-#: src/main/saveload.c:2081
+#: src/main/saveload.c:2088
 msgid "first argument must be a file name"
 msgstr "第一引數必須是檔案名稱"
 
-#: src/main/saveload.c:2129 src/main/saveload.c:2155
+#: src/main/saveload.c:2104 src/unix/edit.c:122
+msgid "unable to open file"
+msgstr "無法開啟檔案"
+
+#: src/main/saveload.c:2136 src/main/saveload.c:2162
 msgid "XDR write failed"
 msgstr "XDR 寫入失敗"
 
-#: src/main/saveload.c:2142 src/main/saveload.c:2167
+#: src/main/saveload.c:2149 src/main/saveload.c:2174
 msgid "XDR read failed"
 msgstr "XDR 讀取失敗"
 
-#: src/main/saveload.c:2178
-#, c-format
-msgid "cannot save data -- unable to open %s"
+#: src/main/saveload.c:2186
+#, fuzzy, c-format
+msgid "cannot save data -- unable to open '%s': %s"
 msgstr "無法儲存資料 -- 無法開啟 %s"
 
-#: src/main/saveload.c:2260 src/main/serialize.c:1801
+#: src/main/saveload.c:2189
+#, fuzzy, c-format
+msgid "cannot save data -- unable to open '%s'"
+msgstr "無法儲存資料 -- 無法開啟 %s"
+
+#: src/main/saveload.c:2273 src/main/serialize.c:1802
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "不可使用版本 %d 的格式來儲存連結"
 
-#: src/main/saveload.c:2270 src/main/serialize.c:2237
+#: src/main/saveload.c:2283 src/main/serialize.c:2260
 msgid "bad environment"
 msgstr "不當的環境"
 
-#: src/main/saveload.c:2274
+#: src/main/saveload.c:2287
 msgid "connection not open for writing"
 msgstr "無法開啟連結來進行寫入"
 
-#: src/main/saveload.c:2282
+#: src/main/saveload.c:2295
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "不能將XDR格式儲存到文字狀態連結"
 
-#: src/main/saveload.c:2292 src/main/serialize.c:1716
-#: src/main/serialize.c:1730 src/main/serialize.c:1850
-#: src/main/serialize.c:1872
+#: src/main/saveload.c:2305 src/main/serialize.c:1717
+#: src/main/serialize.c:1731 src/main/serialize.c:1851
+#: src/main/serialize.c:1873
 msgid "error writing to connection"
 msgstr "連結寫入發生了錯誤"
 
-#: src/main/saveload.c:2362
+#: src/main/saveload.c:2375
 msgid "no input is available"
 msgstr "沒有可用的輸入"
 
-#: src/main/saveload.c:2382
+#: src/main/saveload.c:2395
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6095,87 +6098,87 @@ msgstr "'a' 和 'b' 的值必須是有限的"
 msgid "argument must be non-negative"
 msgstr "引數必須是環境物件"
 
-#: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
+#: src/main/serialize.c:224 src/main/serialize.c:254 src/main/serialize.c:277
 msgid "unknown or inappropriate output format"
 msgstr "不明或不適當的輸出格式"
 
-#: src/main/serialize.c:511
+#: src/main/serialize.c:512
 msgid "binary format is deprecated; using xdr instead"
 msgstr "二進位格式不再使用，替之用 xdr 格式"
 
-#: src/main/serialize.c:519
+#: src/main/serialize.c:520
 msgid "must specify ascii, binary, or xdr format"
 msgstr "必須設定 ascii、binary 或 xdr 格式之一"
 
-#: src/main/serialize.c:520
+#: src/main/serialize.c:521
 msgid "unknown output format"
 msgstr "不明的輸出格式"
 
-#: src/main/serialize.c:551
+#: src/main/serialize.c:552
 msgid "unknown input format"
 msgstr "不明的輸入格式"
 
-#: src/main/serialize.c:556
+#: src/main/serialize.c:557
 msgid "input format does not match specified format"
 msgstr "輸入格式與設定的格式不符合"
 
-#: src/main/serialize.c:747
+#: src/main/serialize.c:748
 msgid "no restore method available"
 msgstr "沒有復原的方法"
 
-#: src/main/serialize.c:778
+#: src/main/serialize.c:779
 msgid "names in persistent strings are currently ignored"
 msgstr "固有字串中的名稱現在不用"
 
-#: src/main/serialize.c:831
+#: src/main/serialize.c:832
 #, c-format
 msgid "'%s' may not be available when loading"
 msgstr "載入時 '%s' 也許不能用"
 
-#: src/main/serialize.c:838
+#: src/main/serialize.c:839
 msgid "namespaces may not be available when loading"
 msgstr "載入時名稱空間也許不能用"
 
-#: src/main/serialize.c:943
+#: src/main/serialize.c:944
 msgid "this version of R cannot write byte code objects"
 msgstr "本 R 版本無法寫入位元組碼目的物件"
 
-#: src/main/serialize.c:952
+#: src/main/serialize.c:953
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem：不明的類型 %i"
 
-#: src/main/serialize.c:1122
+#: src/main/serialize.c:1123
 #, c-format
 msgid "version %d not supported"
 msgstr "版本 %d 不支援"
 
-#: src/main/serialize.c:1150
+#: src/main/serialize.c:1151
 msgid "reference index out of range"
 msgstr "參照索引超出範圍"
 
-#: src/main/serialize.c:1180
+#: src/main/serialize.c:1181
 msgid "names in persistent strings are not supported yet"
 msgstr "目前不支援固有字串中的名稱"
 
-#: src/main/serialize.c:1382
+#: src/main/serialize.c:1383
 msgid "this version of R cannot read byte code objects"
 msgstr "本 R 版本無法讀取位元組碼目的物件"
 
-#: src/main/serialize.c:1385
+#: src/main/serialize.c:1386
 msgid "this version of R cannot read class references"
 msgstr "本 R 版本無法讀取類別參照"
 
-#: src/main/serialize.c:1387
+#: src/main/serialize.c:1388
 msgid "this version of R cannot read generic function references"
 msgstr "本 R 版本無法讀取一般功能參照"
 
-#: src/main/serialize.c:1398
+#: src/main/serialize.c:1399
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 
-#: src/main/serialize.c:1532
+#: src/main/serialize.c:1533
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
@@ -6184,7 +6187,7 @@ msgstr ""
 "無法從由 R 實驗版本 %2$d.%3$d.%4$d 所寫入之尚未被釋放的工作空間版本 %1$d 中讀"
 "取資料"
 
-#: src/main/serialize.c:1536
+#: src/main/serialize.c:1537
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6193,83 +6196,74 @@ msgstr ""
 "無法從由 R 版本 %2$d.%3$d.%4$d 所寫入之工作空間版本 %1$d 中讀取資料；需要 R "
 "版本 %5$d.%6$d.%7$d 或更新"
 
-#: src/main/serialize.c:1615
+#: src/main/serialize.c:1616
 #, fuzzy
 msgid "read failed"
 msgstr "XDR 讀取失敗"
 
-#: src/main/serialize.c:1678
+#: src/main/serialize.c:1679
 #, fuzzy
 msgid "error reading from ascii connection"
 msgstr "從連結讀取時發生了錯誤"
 
-#: src/main/serialize.c:1680
+#: src/main/serialize.c:1681
 #, fuzzy
 msgid "unexpected format in ascii connection"
 msgstr "無法從此連結讀取"
 
-#: src/main/serialize.c:1685 src/main/serialize.c:1699
+#: src/main/serialize.c:1686 src/main/serialize.c:1700
 msgid "error reading from connection"
 msgstr "從連結讀取時發生了錯誤"
 
-#: src/main/serialize.c:1740
+#: src/main/serialize.c:1741
 msgid "only ascii format can be written to text mode connections"
 msgstr "只有 ascii 格式才能對文字狀態的連結進行寫入"
 
-#: src/main/serialize.c:1754
+#: src/main/serialize.c:1755
 msgid "only ascii format can be read from text mode connections"
 msgstr "只有 ascii 格式才能從文字狀態的連結讀取"
 
-#: src/main/serialize.c:1799
+#: src/main/serialize.c:1800
 msgid "bad version value"
 msgstr "不當的版本值"
 
-#: src/main/serialize.c:1920 src/main/serialize.c:1942
-#: src/main/serialize.c:2003
+#: src/main/serialize.c:1921 src/main/serialize.c:1943
+#: src/main/serialize.c:2004
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:1924
+#: src/main/serialize.c:1925
 msgid "cannot allocate buffer"
 msgstr "無法指派緩衝區"
 
-#: src/main/serialize.c:2103 src/main/serialize.c:2166
+#: src/main/serialize.c:2104 src/main/serialize.c:2179
 msgid "not a proper file name"
 msgstr "檔案名稱不正確"
 
-#: src/main/serialize.c:2105
+#: src/main/serialize.c:2106
 msgid "not a proper raw vector"
 msgstr "非適當純量向量"
 
-#: src/main/serialize.c:2109 src/main/serialize.c:2112
-msgid "file open failed"
-msgstr "開啟檔案失敗"
-
-#: src/main/serialize.c:2122
+#: src/main/serialize.c:2135
 msgid "could not determine file position"
 msgstr "無法確定檔案位置"
 
-#: src/main/serialize.c:2168
+#: src/main/serialize.c:2181
 msgid "bad offset/length argument"
 msgstr "不當的位移/長度引數"
 
-#: src/main/serialize.c:2190 src/main/serialize.c:2209
-#, c-format
-msgid "open failed on %s"
-msgstr "開啟 %s 失敗"
-
-#: src/main/serialize.c:2193 src/main/serialize.c:2201
-#: src/main/serialize.c:2212
+#: src/main/serialize.c:2211 src/main/serialize.c:2219
+#: src/main/serialize.c:2235
 #, c-format
 msgid "seek failed on %s"
 msgstr "搜索 %s 失敗"
 
-#: src/main/serialize.c:2205 src/main/serialize.c:2216
+#: src/main/serialize.c:2223 src/main/serialize.c:2239
 #, c-format
 msgid "read failed on %s"
 msgstr "讀取 %s 失敗"
 
-#: src/main/serialize.c:2239
+#: src/main/serialize.c:2262
 msgid "bad variable names"
 msgstr "不當的變數名稱"
 
@@ -7008,65 +7002,76 @@ msgstr "至少必須有四個控制點"
 msgid "There must be at least three control points"
 msgstr "至少必須有三個控制點"
 
-#: src/modules/internet/internet.c:185 src/modules/internet/internet.c:189
-#: src/modules/internet/internet.c:195 src/modules/internet/internet.c:207
+#: src/modules/internet/internet.c:186 src/modules/internet/internet.c:190
+#: src/modules/internet/internet.c:196 src/modules/internet/internet.c:208
 msgid "allocation of url connection failed"
 msgstr "url 連結指派失敗"
 
-#: src/modules/internet/internet.c:279
+#: src/modules/internet/internet.c:280
 msgid "only first element of 'url' argument used"
 msgstr "只用 'url' 引數的第一個元素"
 
-#: src/modules/internet/internet.c:285
+#: src/modules/internet/internet.c:286
 msgid "only first element of 'destfile' argument used"
 msgstr "只用 'destfile' 引數的第一個元素"
 
-#: src/modules/internet/internet.c:310
+#: src/modules/internet/internet.c:311
 msgid "Download progress"
 msgstr "正在下載"
 
-#: src/modules/internet/internet.c:330 src/modules/internet/internet.c:424
-#: src/modules/internet/internet.c:509
+#: src/modules/internet/internet.c:333
+#, fuzzy, c-format
+msgid "cannot open URL '%s', reason '%s'"
+msgstr "無法開啟檔案 '%s'，原因是 '%s'"
+
+#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:447
+#: src/modules/internet/internet.c:539
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "無法開啟 URL '%s'"
 
-#: src/modules/internet/internet.c:332 src/modules/internet/internet.c:355
-#: src/modules/internet/internet.c:437
+#: src/modules/internet/internet.c:343 src/modules/internet/internet.c:373
+#: src/modules/internet/internet.c:462
+#, fuzzy, c-format
+msgid "cannot open destfile '%s', reason '%s'"
+msgstr "無法開啟檔案 '%s'，原因是 '%s'"
+
+#: src/modules/internet/internet.c:346 src/modules/internet/internet.c:376
+#: src/modules/internet/internet.c:465
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "無法開啟 destfile '%s'"
 
-#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:440
+#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:470
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "試開URL '%s'\n"
 
-#: src/modules/internet/internet.c:365 src/modules/internet/internet.c:447
+#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:477
 msgid "opened URL\n"
 msgstr "開啟了 URL\n"
 
-#: src/modules/internet/internet.c:420 src/modules/internet/internet.c:505
+#: src/modules/internet/internet.c:443 src/modules/internet/internet.c:535
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "下載的長度 %d != 報告的長度 %d"
 
-#: src/modules/internet/internet.c:537 src/modules/internet/internet.c:772
+#: src/modules/internet/internet.c:567 src/modules/internet/internet.c:802
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "無法開啟: HTTP 狀態是 '%d%s'"
 
-#: src/modules/internet/internet.c:716 src/modules/internet/internet.c:879
+#: src/modules/internet/internet.c:746 src/modules/internet/internet.c:909
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl 已經逾時"
 
-#: src/modules/internet/internet.c:743 src/modules/internet/internet.c:757
-#: src/modules/internet/internet.c:901 src/modules/internet/internet.c:910
+#: src/modules/internet/internet.c:773 src/modules/internet/internet.c:787
+#: src/modules/internet/internet.c:931 src/modules/internet/internet.c:940
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl 失敗: '%s'"
 
-#: src/modules/internet/internet.c:814
+#: src/modules/internet/internet.c:844
 msgid "Internet read timed out"
 msgstr "網際網路讀取逾時"
 
@@ -7642,7 +7647,7 @@ msgstr "bessel_y(%g): ncalc (=%ld)!= nb (=%ld); alpha=%g. 引數在範圍外?\n"
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): 結果的精確度有損害\n"
 
-#: src/nmath/pnchisq.c:218
+#: src/nmath/pnchisq.c:219
 #, c-format
 msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..): %d 次循環後還沒有聚合。"
@@ -7756,12 +7761,12 @@ msgid "re-encoding is not available on this system"
 msgstr "本系統沒有重新編碼這個功能"
 
 #: src/unix/sys-std.c:1116
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cannot open file '%s', reason '%s'\n"
+"Cannot open file '%s': %s\n"
 "\n"
 msgstr ""
-"無法開啟檔案 '%s'，原因是 '%s'\n"
+"無法開啟檔案 '%s'\n"
 "\n"
 
 #: src/unix/sys-std.c:1119
@@ -7810,22 +7815,22 @@ msgstr "本平臺沒有實作 'intern=TRUE' 此一功能"
 msgid "Sys.info() is not implemented on this system"
 msgstr "本系統沒有實作 Sys.info() 此一功能"
 
-#: src/unix/system.c:247
+#: src/unix/system.c:251
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui 或 -g 選項沒有值，因此忽略不用"
 
-#: src/unix/system.c:269
+#: src/unix/system.c:273
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: 沒有這種 gui '%s', 使用 X11\n"
 
-#: src/unix/system.c:272
+#: src/unix/system.c:276
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: 沒有這種 gui '%s', 因此什麼都不用\n"
 
-#: src/unix/system.c:442
+#: src/unix/system.c:460
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: 只修改檔案串列中的第一個元素"
 
@@ -7846,6 +7851,29 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "無法使用 X11"
+
+#, fuzzy
+#~ msgid "Unable to open file '%s': %s"
+#~ msgstr "無法開啟檔案 '%s'"
+
+#~ msgid "unable to open connection"
+#~ msgstr "無法開啟連結"
+
+#~ msgid "cannot open pipe() cmd '%s', reason '%s'"
+#~ msgstr "無法開啟 pipe() 命令 '%s'，原因是 '%s'"
+
+#~ msgid "file open failed"
+#~ msgstr "開啟檔案失敗"
+
+#~ msgid "open failed on %s"
+#~ msgstr "開啟 %s 失敗"
+
+#~ msgid ""
+#~ "Cannot open file '%s', reason '%s'\n"
+#~ "\n"
+#~ msgstr ""
+#~ "無法開啟檔案 '%s'，原因是 '%s'\n"
+#~ "\n"
 
 #, fuzzy
 #~ msgid "unable to start device jpeg"
