@@ -14,8 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-gammaCody <- function(x) .Internal(gammaCody(x))
-
 besselI <- function(x, nu, expon.scaled = FALSE)
 {
     .Internal(besselI(x,nu, 1+ as.logical(expon.scaled)))

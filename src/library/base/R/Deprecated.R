@@ -41,3 +41,12 @@ Sys.putenv <- function(...) {
     Sys.setenv(...)
 }
 ## </entry>
+
+## <entry>
+## Deprecated in 2.7.0
+gammaCody <- function(x)
+{
+    .Deprecated("gamma")
+    .Internal(gammaCody(x))
+}
+## </entry>

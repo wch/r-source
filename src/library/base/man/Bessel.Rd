@@ -1,6 +1,6 @@
 % File src/library/base/man/Bessel.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Bessel}
@@ -11,22 +11,17 @@
 \alias{besselJ}
 \alias{besselK}
 \alias{besselY}
-\alias{gammaCody}
 \usage{
 besselI(x, nu, expon.scaled = FALSE)
 besselK(x, nu, expon.scaled = FALSE)
 besselJ(x, nu)
 besselY(x, nu)
-gammaCody(x)
 }
 \description{
   Bessel Functions of integer and fractional order, of first
   and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
   Modified Bessel functions (of first and third kind),
   \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}.
-
-  \code{gammaCody} is the \eqn{(\Gamma)} function from the Specfun
-  package and originally used in the Bessel code.
 }
 \arguments{
   \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
@@ -44,19 +39,16 @@ gammaCody(x)
   \code{expon.scale=TRUE}) values of the corresponding Bessel function.
 }
 \details{
-  The underlying C code stems from \emph{Netlib}
-  (\url{http://www.netlib.org/specfun/r[ijky]besl}).
-
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
   or \eqn{e^{x} K_{\nu}(x)}{exp(x) K(x;nu)} are returned.
 
-  \code{gammaCody} may be somewhat faster but less precise and/or robust
-  than \R's standard \code{\link{gamma}}.  It is here for experimental
-  purpose mainly, and \emph{may be defunct very soon}.
-
-  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from the
-  reference below are applied (which is probably suboptimal), unless for
+  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from Abramowitz \&
+  Stegun  are applied (which is probably suboptimal), except for
   \code{besselK} which is symmetric in \code{nu}.
+}
+\source{
+  The C code is a translation of Fortran routines from
+  \url{http://www.netlib.org/specfun/r[ijky]besl}.
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)

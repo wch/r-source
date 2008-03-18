@@ -412,6 +412,8 @@ DEPRECATED & DEFUNCT
 	single-byte locales) and font=5 (base) or fontface=5 (grid) did
 	the job it was intended to do more reliably.
 
+    o	gammaCody() is now formally deprecated.
+
 
 INSTALLATION
 
