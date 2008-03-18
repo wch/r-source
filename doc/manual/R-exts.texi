@@ -9634,7 +9634,7 @@ appropriately.
 These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having
 @code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and
-MacOS X.} when @code{R_initialize_R} is called, to values appropriate to
+MacOS X.} when @code{Rf_initialize_R} is called, to values appropriate to
 the main thread.  Stack-checking can be disabled by seting
 @code{R_CStackLimit = (uintptr_t)-1}, but it is better to if possible
 set appropriate values.  (What these are and how to determine them are
