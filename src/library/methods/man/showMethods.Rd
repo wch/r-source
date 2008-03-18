@@ -105,7 +105,7 @@ x = track, y = missing
 x = track, y = ANY
 
 require("Matrix")# a CRAN package with much S4 functionality
-showMethods("%*%")# many!
+showMethods("\%*\%")# many!
     methods(class = "Matrix")# nothing
 showMethods(class = "Matrix")# everything
 }%end{dontrun}
