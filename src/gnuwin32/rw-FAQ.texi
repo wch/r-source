@@ -137,7 +137,7 @@ release.
 @section How do I install R for Windows?
 
 Versions of R as from 2.7.0 will only run on Windows 2000 or later.  (R
-2.6.1 was the last version for Windows 95. 98, ME and NT4.)  There is no
+2.6.2 was the last version for Windows 95. 98, ME and NT4.)  There is no
 specific version for x64 Windows, but the standard 32-bit version works
 well enough.  We only test on versions of Windows currently supported by
 Microsoft, mainly on XP, Vista x64 and Windows Server 2003.
@@ -194,7 +194,8 @@ Run the program @file{bin\md5check.exe}.
 This compares checksums on all the installed files with those put into
 the installer, and will report any changed or missing files.
 
-(It only works if R was installed from the Inno Setup installer.)
+(It only works if R was installed from the Inno Setup installer, and not
+the MSI installer.)
 
 @node Can I customize the installation?, How do I run it?, How do I check an installation?, Installation and Usage
 @section Can I customize the installation?
@@ -381,10 +382,7 @@ path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 
 @noindent
 The purpose of @code{2>&1} is to redirect warnings and errors to the
-same file as normal output, and users of Windows 95/98/ME's default
-@code{command.com} `shell' will need to omit it.  (That program has no
-means to redirect @file{stderr}, and @command{Rterm.exe} sends warnings and
-errors to the normal output file on such systems.)
+same file as normal output.
 
 
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
@@ -509,8 +507,7 @@ Windows registry:
     home directory.
 @end itemize
 If you do not have administrative privileges on the machine while running
-the installer, then the entries are created under the @code{HKEY_CURRENT_USER}
-root.
+the installer, then the entries are created under @code{HKEY_CURRENT_USER}.
 
 If you tick the second option (`Associate R with .RData files') and have
 administrative privileges, then entries are created under
@@ -643,9 +640,7 @@ may want to experiment with disabling it.
 
 It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
-issues, but changes in user experiences.)  As there are many settings
-that system administrators can change, it is clear that only a tiny
-fraction of possibilities will have been explored.
+issues, but changes in user experiences.)
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
@@ -733,9 +728,9 @@ running under Administrator privileges when updating those.
 
 Another issue with Vista is that the standard POSIX ways that R uses
 (e.g.@: in @code{file.info} and @code{file.access}) to look at file
-permissions no longer work reliably.  @code{file.access} has been
-re-written for R 2.5.1 to work with Windows NT-based security and
-the new version seems much more reliable with Vista.
+permissions no longer work reliably.  @code{file.access} was re-written
+for R 2.5.1 to work with Windows NT-based security and the new version
+seems much more reliable with Vista.
 
 On suitably recent hardware Vista can prevent the execution of code
 from data areas via `Data Execution Prevention' (from a tab in
@@ -886,18 +881,13 @@ the shortcut you use to start R, or setting it in the @file{Rconsole} file.
 for example, in the console and to annotate graphs.  Similar comments
 apply to any non-Western European language.
 
-This is possible by setting suitable fonts in the @file{Rconsole} and
-@file{Rdevga} configuration files (see Q3.2 and the next Q).  You can
-specify additional fonts in @file{Rdevga}, and use them by
-
-@example
-par(font=, font.lab=, font.main=, font.sub=)
-@end example
-
-Nineteen fonts are specified (as 1 to 19) by default: you can add to these
-(up to 13 more) or replace them.  Also, you can make use of font
-families in a way similar to other graphics devices: see the examples
-for @code{windowsFonts}.
+With suitable fonts, this should just work.  You will need to set MS
+Mincho or MS Gothic as the console font to ensure that single- and
+double-width characters are handled correctly.  The default graphics
+fonts for the @code{windows()} graphics device can handle most common
+Japanese characters, but more specialized fonts may need to be set.
+(See Q3.5 for how to set fonts: the console font can also be set from
+the `GUI preferences' meny item.)
 
 In addition, the Hershey vector fonts (see @code{?Hershey},
 @code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
@@ -910,15 +900,15 @@ see its help page (which also applies to @code{pdf}).
 @section I don't see characters with accents at the R console, for example in ?text.
 
 You need to specify a font in @file{Rconsole} (see Q3.5) that supports
-the encoding in use, in Western European languages Latin-1.  The default
-font, @code{Courier New}, does on our systems, as does @code{FixedSys}.
-This may be a problem in other locales, especially for non-Western
-European languages.
+the encoding in use, in Western European languages Latin-1.  This used
+to be a problem in earlier versions of Windows, but now it is hard to
+find a font which does not.
 
 Support for these characters within @command{Rterm} depends on the
 environment (the terminal window and shell, including locale and
 codepage settings) within which it is run as well as the font used by
-the terminal window.
+the terminal window.  Those are usually on legacy DOS settings and need
+to altered.
 
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated.
@@ -1117,7 +1107,7 @@ the Tcl/Tk support files installed (but they can be).  Note that you do
 need 8.5.x and not 8.4.x.  (If you build R from the sources yourself you
 can configure it to use 8.4.x.)
 
-Several ackage authors have often suggested using ActiveTcl
+Several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
 Tcl/Tk extensions.  This could be used by setting (for a default install)
 
@@ -1128,8 +1118,7 @@ MT_TCLTK=c:/Tcl/bin
 @noindent
 @strong{but} current versions (e.g.@: 8.5.1.0) do not contain any extra
 extensions.  Some extensions can be copied over from an ActiveTcl
-install of Tcl/Tk 8.4 (e.g.@: to the @file{Tcl} folder in the R
-installation).
+install of Tcl/Tk 8.4 or downloaded via the @code{Teacup} facility.
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
@@ -1180,7 +1169,7 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 @section Help is not shown for some of the packages
 
 Is this for Compiled HTML help (the default)?  If a help viewer appears
-but says the page cannot be displayed, this may be due to a 2006 Windows
+but says the page cannot be displayed, this may be due to a Windows
 security patch (@url{http://support.microsoft.com/kb/896358}).  Either
 apply the workarounds given at that URL or choose another form of help
 as the default (on installation or by editing
@@ -1277,7 +1266,7 @@ either in the call to @code{windows} or as options: see @code{?windows}.
 
 On one of our systems, the screen height was reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
-modes.  In fact it is a 21" monitor and 400mm x 300mm!
+modes.  In fact it was a 21" monitor and 400mm x 300mm!
 
 @node How do I move focus to a graphics window or the console?, What does TAB completion do?, Circles appear as ovals on screen, Windows Features
 @section How do I move focus to a graphics window or the console?
@@ -1679,7 +1668,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2007-04-13
+@set LASTEDIT 2008-03-19
 @ifhtml
 @html
 <hr WIDTH="100%">
