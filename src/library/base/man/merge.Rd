@@ -49,7 +49,8 @@ merge(x, y, \dots)
   \code{0} specifies the row names.  The rows in the two data frames
   that match on the specified columns are extracted, and joined
   together.  If there is more than one match, all possible matches
-  contribute one row each.
+  contribute one row each.  For the precise meaning of \sQuote{match},
+  see \code{\link{match}}.
 
   If \code{by} or both \code{by.x} and \code{by.y} are of length 0 (a
   length zero vector or \code{NULL}), the result, \code{r}, is the
