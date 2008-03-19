@@ -48,42 +48,43 @@
 tkwidget(parent, type, ...)
 
 tkbutton(parent, ...)
-ttkbutton(parent, ...)
 tkcanvas(parent, ...)
 tkcheckbutton(parent, ...)
-ttkcheckbutton(parent, ...)
-ttkcombobox(parent, ...)
 tkentry(parent, ...)
 ttkentry(parent, ...)
 tkframe(parent, ...)
-ttkframe(parent, ...)
-ttkimage(parent, ...)
 tklabel(parent, ...)
-ttklabel(parent, ...)
-ttklabelframe(parent, ...)
 tklistbox(parent, ...)
 tkmenu(parent, ...)
 tkmenubutton(parent, ...)
-ttkmenubutton(parent, ...)
 tkmessage(parent, ...)
+tkradiobutton(parent, ...)
+tkscale(parent, ...)
+tkscrollbar(parent, ...)
+tktext(parent, ...)
+tktoplevel(parent = .TkRoot, ...)
+
+ttkbutton(parent, ...)
+ttkcheckbutton(parent, ...)
+ttkcombobox(parent, ...)
+ttkframe(parent, ...)
+ttkimage(parent, ...)
+ttklabel(parent, ...)
+ttklabelframe(parent, ...)
+ttkmenubutton(parent, ...)
 ttknotebook(parent, ...)
 ttkpanedwindow(parent, ...)
 ttkprogressbar(parent, ...)
-tkradiobutton(parent, ...)
 ttkradiobutton(parent, ...)
-tkscale(parent, ...)
-tkscrollbar(parent, ...)
 ttkscrollbar(parent, ...)
 ttkseparator(parent, ...)
 ttksizegrip(parent, ...)
-tktext(parent, ...)
-tktoplevel(parent=.TkRoot, ...)
 ttktreeview(parent, ...)
 }
 \arguments{
-  \item{parent}{ Parent of widget window }
-  \item{type}{string describing the type of widget desired}
-  \item{\dots}{handled via \code{.Tcl.args}}
+  \item{parent}{Parent of widget window.}
+  \item{type}{string describing the type of widget desired.}
+  \item{\dots}{handled via \code{\link{.Tcl.args}}.}
 }
 \details{
   These functions create Tk widgets.  \code{tkwidget} creates a widget of
