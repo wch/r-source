@@ -36,9 +36,10 @@ X11.options(\dots, reset = FALSE)
     RGB values (see \code{\link{hsv}}).  By default 1 (default
     correction).}
   \item{bg}{color.  The default background color.  Default
-    code{"transparent"}.}
+    \code{"transparent"}.}
   \item{canvas}{color.  The color of the canvas, which is visible only
-    when the background color is transparent.  Default \code{"white"}.}
+    when the background color is transparent.  Should be a solid color
+    (and any alpha value will be ignored).  Default \code{"white"}.}
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
