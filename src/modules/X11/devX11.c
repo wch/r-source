@@ -1132,9 +1132,9 @@ static String x_fallback_resources[] = {
 
 Rboolean
 X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
-	    double w, double h, double gamma_fac, X_COLORTYPE colormodel,
-	    int maxcube, int bgcolor, int canvascolor, int res,
-	    int xpos, int ypos)
+	 double w, double h, double gamma_fac, X_COLORTYPE colormodel,
+	 int maxcube, int bgcolor, int canvascolor, int res,
+	 int xpos, int ypos)
 {
     /* if we have to bail out with "error", then must free(dd) and free(xd) */
     /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
@@ -2229,8 +2229,8 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     /*	Start the Device Driver and Hardcopy.  */
 
     if (!X11_Open(dd, xd, disp_name, width, height,
-		     gamma_fac, colormodel, maxcube, bgcolor,
-		     canvascolor, res, xpos, ypos)) {
+		  gamma_fac, colormodel, maxcube, bgcolor,
+		  canvascolor, res, xpos, ypos)) {
 	free(xd);
 	return FALSE;
     }
