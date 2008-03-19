@@ -58,7 +58,7 @@ quartz.options(\dots, reset = FALSE)
   types produce output files and utilize the \code{file} argument.
   \code{type = "pdf"} gives PDF output. The following bitmap formats may
   be supported (on OS X 10.4 and later): \code{"png"}, \code{"jpeg"},
-  \code{"tif"], \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe Photoshop),
+  \code{"tif"}, \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe Photoshop),
   \code{"bmp"} (Windows bitmap), \code{"sgi"} and \code{"pict"}.  (The
   availability of some formats is OS-version-dependent.)
 % psd seems not to work.
