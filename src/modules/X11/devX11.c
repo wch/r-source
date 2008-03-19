@@ -2611,8 +2611,8 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' value"), "title");
     title = CHAR(STRING_ELT(sc, 0));
     args = CDR(args);
-    useCairo = asLogical(CAR(args));
-    if (useCairo == NA_LOGICAL)
+    useCairo = asInteger(CAR(args));
+    if (useCairo == NA_INTEGER)
 	errorcall(call, _("invalid '%s' value"), "useCairo");
     args = CDR(args);
     antialias = asInteger(CAR(args));
