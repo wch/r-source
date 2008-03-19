@@ -382,6 +382,12 @@ NEW FEATURES
         alternatives (see ?findMethods), and direct use of the mangled
         names for the objects is now deprecated.
 
+   o  Creating new class and method definitions in an environment that
+       could not be identified (as package, namespace or global)
+       previously generated an error.  It now results in creating and
+       using an artificial package name from the current date/time, with a
+       warning.  See ?getPackageName.
+
 
 DEPRECATED & DEFUNCT
 

@@ -16,14 +16,16 @@
 
 ## utilities to manage package names
 
-getPackageName <- function(where = topenv(parent.frame())) {
+getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
     pkg <- ""
-    if(exists(".packageName", where, inherits = FALSE))
+    hasNameSaved <- exists(".packageName", where, inherits = FALSE)
+    if(hasNameSaved)
         pkg <- get(".packageName", where)
     else  if(identical(where, 1) || identical(as.environment(where), topenv(parent.frame())))
         pkg <- Sys.getenv("R_PACKAGE_NAME")
+    env <- as.environment(where)
+    envName <- environmentName(env)
     if(!nzchar(pkg)) {
-        env <- as.environment(where)
         if(identical(env, .GlobalEnv))
             pkg <- ".GlobalEnv"
         else if(identical(env, .BaseNamespaceEnv))
@@ -37,6 +39,8 @@ getPackageName <- function(where = topenv(parent.frame())) {
                         pkg <- db; break
                     }
             }
+            else if(nzchar(environmentName(env)))
+                pkg <- environmentName(env)
             else
                 pkg <- as.character(where)
             if(identical(substr(pkg, 1, 8), "package:"))
@@ -53,11 +57,19 @@ getPackageName <- function(where = topenv(parent.frame())) {
 #              warning("The package name \"", pkg, "\" was inferred, but not found in that package")
 #         }
     }
+    if(!nzchar(pkg) && create) {
+        pkg <- as.character(Sys.time())
+        warning(gettextf("Created a package name, \"%s\", when none found", pkg),
+                domain = NA)
+        assign(pkg, env, envir = .PackageEnvironments)
+        if(!(hasNameSaved || environmentIsLocked(env)))
+            setPackageName(pkg, env)
+    }
     pkg
 }
 
 setPackageName <- function(pkg, env)
-    assign(".packageName", pkg, env)
+    assign(".packageName", pkg, envir = env)
 
 ##FIXME:  rather than an attribute, the className should have a formal class
 ## (but there may be bootstrap problems)

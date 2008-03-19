@@ -1486,7 +1486,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## real version of .requirePackage
 ..requirePackage <- function(package, mustFind = TRUE) {
     value <- package
-    if(is.character(package)) {
+    if(nzchar(package)) {
         if(package %in% loadedNamespaces())
             value <- getNamespace(package)
         else {
@@ -1506,7 +1506,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     if(exists(".packageName", topEnv, inherits=TRUE) &&
        .identC(package, get(".packageName", topEnv)))
         return(topEnv) # kludge for source'ing package code
-    if(!require(package, character.only = TRUE)) {
+    if(nzchar(package) && require(package, character.only = TRUE)) {}
+    else {
         if(mustFind)
           stop(gettextf("unable to find required package \"%s\"", package),
                domain = NA)
