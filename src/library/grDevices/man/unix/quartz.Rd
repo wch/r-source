@@ -7,15 +7,15 @@
 \alias{quartz}
 \alias{quartz.options}
 
-\title{MacOS X Quartz device}
+\title{MacOS X Quartz Device}
 \description{
   \code{quartz} starts a graphics device driver for the Mac OS X System.
-  It supports both on-screen and off-screen operations with the former
-  being the default.
+  It supports plotting both to the screen (the default) and to various
+  graphics file formats.
 }
 \usage{
 quartz(title, width, height, pointsize, family, fontsmooth, antialias,
-       type, file = NULL, bg, dpi)
+       type, file = NULL, bg, canvas, dpi)
 
 quartz.options(\dots, reset = FALSE)
 }
@@ -30,14 +30,16 @@ quartz.options(\dots, reset = FALSE)
   \item{family}{this is the family name of the font
     that will be used by the device.  Default \code{"Helvetica"}.}
   \item{fontsmooth}{logical specifying if fonts should be
-    smoothed. Default \code{TRUE}.}
-  \item{antialias}{whether to use antialiasing. Default \code{TRUE}.}
+    smoothed. Default \code{TRUE}.  Currently unused.}
+  \item{antialias}{whether to use antialiasing.  Default \code{TRUE}.
+    Currently unused.}
   \item{type}{the type of output to use.  See \sQuote{Details} for
-    more information.}
+    more information.  Default \code{"native"}.}
   \item{file}{an optional target for the graphics device.  See
     \sQuote{Details} for more information.}
   \item{bg}{background color to use for the device.  Default
     \code{"transparent"}.}
+  \item{canvas}{canvas color to use for the device.  Default \code{"white"}.}
   \item{dpi}{resolution of the output.  The default (\code{NA_real_})
     for an on-screen display defaults to the resolution of
     the main screen, and to 72 dpi otherwise.  See \sQuote{Details}.}
@@ -49,24 +51,31 @@ quartz.options(\dots, reset = FALSE)
   by \code{quartz.options}: the \sQuote{Arguments} section gives the
   \sQuote{factory-fresh} defaults.
 
-  The Quartz graphics device supports a variety of output
-  types.  On-screen output types are \code{"native"} (picks the best
-  possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and higher)
+  The Quartz graphics device supports a variety of output types.
+  On-screen output types are code{""} or \code{"native"} (picks the best
+  possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and later)
   and \code{"Carbon"} (Mac OS X 10.3 and earlier).   Off-screen output
-  types produce output files and utilize the \code{file} argument. The
-  following bitmap formats may be supported: \code{"png"},
-  \code{"jpeg"}, \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe
-  Photoshop), \code{"bmp"} (Windows bitmap), \code{"sgi"} and
-  \code{"pict"}.  The availability of some formats is
-  OS-version-dependent.  To reproduce the default of older Quartz
-  devices on-screen, set \code{dpi = 72} (for a permanent solution set
-  \code{quartz.options(dpi = 72)}.
+  types produce output files and utilize the \code{file} argument.
+  \code{type = "pdf"} gives PDF output. The following bitmap formats may
+  be supported (on OS X 10.4 and later): \code{"png"}, \code{"jpeg"},
+  \code{"tif"], \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe Photoshop),
+  \code{"bmp"} (Windows bitmap), \code{"sgi"} and \code{"pict"}.  (The
+  availability of some formats is OS-version-dependent.)
+% psd seems not to work.
 
-  The \code{file} argument is used for off-screen drawing. The actual
+  To reproduce the default of older Quartz devices on-screen, set
+  \code{dpi = 72} (for a permanent solution set
+  \code{quartz.options(dpi = 72)}).
+
+  The \code{file} argument is used for off-screen drawing.  The actual
   file is only created when the device is closed (e.g. using
-  \code{dev.off()}). Currently the output file is created on close
-  and thus only the last page will be emitted. (This may change in the
-  future.)
+  \code{dev.off()}).  For the bitmap devices, the page number is
+  substituted if a C integer format is included in the character string,
+  e.g. \code{Rplot\%03d.png}.  (The result must be less than
+  \code{PATH_MAX} characters long, and may be truncated if not. See
+  \code{\link{postscript}} for further details.)  If a \code{file} argument is
+  not supplied, the default is \code{Rplots.pdf} or
+  \code{Rplot\%03d.\var{type}}.
 
   If a device-independent \R graphics font family is specified
   (e.g., via \code{par(family=)} in the graphics package),
@@ -76,7 +85,8 @@ quartz.options(\dots, reset = FALSE)
 
   \code{title} can be used for on-screen output.  It must be a single
   character string with an optional integer printf-style format that
-  will be substituted by the device number.
+  will be substituted by the device number.  It is also optionally used
+  (without a format) to give a title to a PDF file.
 
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}.
 }
@@ -89,16 +99,17 @@ quartz.options(\dots, reset = FALSE)
   \itemize{
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
-    \item The default font family is Helvetica.
-    \item Line widths are real-valued in big points and no minimum is
-    set by \R.
-    \item Circle radii are real-valued and no minimum is set by \R.
+    \item The default font family is Arial.
+    \item Line widths are a mutliple of 1/96 inch with no minimum set by \R.
+    \item Circle radii are real-valued with no minimum set by \R.
     \item Colour interpretation is by the viewer, including the screen
     display.
   }
 }
 \seealso{
-  \code{\link{quartzFonts}},
-  \code{\link{Devices}}.
+  \code{\link{quartzFonts}}, \code{\link{Devices}}.
+
+  \code{\link{png}} for way to access the bitmap types of this device
+  via \R's standard bitmap devices.
 }
 \keyword{device}

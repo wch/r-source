@@ -39,8 +39,7 @@ tiff(filename = "Rplot\%03d.tiff",
     The page number is substituted if a C integer format is included in
     the character string, as in the default.  (The result must be less
     than \code{PATH_MAX} characters long, and may be truncated if not.
-    See \code{\link{postscript}} for further details.  This is not yet
-    supported for \code{type="quartz"}.)  Tilde expansion
+    See \code{\link{postscript}} for further details.)  Tilde expansion
     is performed where supported by the platform.}
   \item{width}{the width of the device.}
   \item{height}{the height of the device.}
@@ -102,7 +101,7 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{type = "cairo"} requires cairo 1.2 or later.  \code{type =
   "quartz"} uses the \code{\link{quartz}} device and so is only
   available where that is (on some Mac OS X) builds.  It is at present
-  experimental, and only supports one plot per device call.
+  experimental.
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As

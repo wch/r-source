@@ -117,7 +117,7 @@ png <- function(filename = "Rplot%03d.png",
         height <- height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "png", filename, width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
-                            if(is.na(res)) NULL else res))
+                            "white", if(is.na(res)) NULL else res))
     } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 2L, width, height, pointsize, bg,
                         res, d$antialias, 100L))
@@ -159,7 +159,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
         height <- height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "jpeg", filename, width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
-                            if(is.na(res)) NULL else res))
+                            "white", if(is.na(res)) NULL else res))
     } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 3L, width, height, pointsize, bg,
                         res, d$antialias, quality))
@@ -199,7 +199,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
         height <- height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "tiff", filename, width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
-                            if(is.na(res)) NULL else res))
+                            "white", if(is.na(res)) NULL else res))
     } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 8L, width, height, pointsize, bg,
                         res, d$antialias, comp))
@@ -236,7 +236,7 @@ bmp <- function(filename = "Rplot%03d.bmp",
         height <- height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "bmp", filename, width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
-                            if(is.na(res)) NULL else res))
+                            "white", if(is.na(res)) NULL else res))
     } else if (d$type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 9L, width, height, pointsize, bg,
                         res, d$antialias, 100L))

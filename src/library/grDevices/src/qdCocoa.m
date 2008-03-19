@@ -577,5 +577,6 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParamet
         [QuartzCocoaView quartzWindowWithRect: rect andInfo: dev];
     }
     [[dev->view window] makeKeyAndOrderFront: dev->view];
+    /* FIXME: at this point we should paint the canvas colour */
     return TRUE;
 }

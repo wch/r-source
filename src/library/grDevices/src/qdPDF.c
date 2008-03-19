@@ -27,6 +27,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/QuartzDevice.h>
+#define _(String) (String)
 
 typedef struct {
     CGContextRef context;
@@ -38,12 +39,12 @@ typedef struct {
 
 static QuartzFunctions_t *qf;
 
-CGContextRef QuartzPDF_GetCGContext(QuartzDesc_t dev,void *userInfo) 
+CGContextRef QuartzPDF_GetCGContext(QuartzDesc_t dev,void *userInfo)
 {
     return ((QuartzPDFDevice*)userInfo)->context;
 }
 
-void QuartzPDF_NewPage(QuartzDesc_t dev, void *userInfo, int flags) 
+void QuartzPDF_NewPage(QuartzDesc_t dev, void *userInfo, int flags)
 {
     QuartzPDFDevice *qpd = (QuartzPDFDevice*) userInfo;
     if (qpd->context) { /* hopefully that's true */
@@ -66,7 +67,7 @@ void QuartzPDF_Close(QuartzDesc_t dev, void *userInfo)
     free(qpd);
 }
 
-Rboolean 
+Rboolean
 QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
     double *dpi = par->dpi;
@@ -74,30 +75,33 @@ QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
     double width = par->width, height = par->height;
     Rboolean ret = FALSE;
     /* DPI is ignored, because PDF is resolution independent.
-       More precisely 72dpi is used to guatantee that PDF and GE 
+       More precisely 72dpi is used to guarantee that PDF and GE
        coordinates are the same */
-    dpi=mydpi;
-    
+    dpi = mydpi;
+
     if (!qf) qf = fn;
-    
+
     size_t w = dpi[0] * width;
     size_t h = dpi[1] * height;
     size_t rb= (w*8*4+7)/8; /* Bytes per row */
     size_t s = h * rb;
     QuartzDesc_t qd;
     QuartzPDFDevice *dev = malloc(sizeof(QuartzPDFDevice) + s);
-    
+
+    if(!par->file || ! *par->file) par->file = "Rplots.pdf";
+
     if (par->file && *par->file) {
         CGRect bbox;
         CFStringRef path = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) par->file, strlen(par->file), kCFStringEncodingUTF8, FALSE);
         if (!path || !(dev->url = CFURLCreateWithFileSystemPath (NULL, path, kCFURLPOSIXPathStyle, false))) {
+	    warning(_("cannot open file '%s'"), par->file);
             free(dev);
             return ret;
         }
         dev->bbox = CGRectMake(0, 0, width*72.0, height*72.0);
         CFRelease(path);
         CFDictionaryRef ai = 0;
-        { /* optional PDF auxiliary info - we could support more ... */ 
+        { /* optional PDF auxiliary info - we could support more ... */
             int numK = 1;
             CFStringRef keys[2], values[2];
             keys[0] = kCGPDFContextCreator;
@@ -121,7 +125,7 @@ QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
         /* we need to flip the y coordinates */
         CGContextTranslateCTM(dev->context, 0.0, height*dpi[1]);
         CGContextScaleCTM(dev->context, 1.0, -1.0);
-	
+
 	QuartzBackend_t qdef = {
 	    sizeof(qdef), width, height,
 	    dpi[0]/72.0, dpi[1]/72.0, par->pointsize,
@@ -135,7 +139,7 @@ QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 	    NULL,	/* par */
 	    NULL
 	};
-	
+
 	if (!qf->Create(dd, &qdef))
             QuartzPDF_Close(NULL,dev);
         else {
@@ -143,6 +147,7 @@ QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
             qf->ResetContext(qd);
         }
     }
+
     return ret;
 }
 

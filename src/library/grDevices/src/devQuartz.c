@@ -72,8 +72,8 @@ const quartz_module_t quartz_modules[] = {
     { "sgi",     "com.sgi.sgi-image",         QBE_BITMAP  },
     { "pict",    "com.apple.pict",            QBE_BITMAP  },
     { 0, 0, 0} };
-    
-    
+
+
 
 /* for compatibility with OS X <10.5 */
 #ifndef CGFLOAT_DEFINED
@@ -98,6 +98,7 @@ typedef struct QuartzSpecific_s {
     int           async;           /* asynchronous drawing (i.e. context was
                                       not ready for an operation) */
     int           bg;              /* background color */
+    int           canvas;          /* background color */
     int           antialias,smooth;/* smoothing flags (only aa makes any sense) */
     int           flags;           /* additional QDFLAGs */
     int           redraw;          /* redraw flag is set when replaying
@@ -106,10 +107,10 @@ typedef struct QuartzSpecific_s {
     pDevDesc      dev;             /* device structure holding this one */
 
     void*         userInfo;        /* pointer to a module-dependent space */
-    
+
     /* callbacks - except for getCGContext all others are optional */
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void *userInfo);
-    int          (*locatePoint)(QuartzDesc_t dev, void *userInfo, double*x, double*y);
+    int          (*locatePoint)(QuartzDesc_t dev, void *userInfo, double *x, double *y);
     void         (*close)(QuartzDesc_t dev, void *userInfo);
     void         (*newPage)(QuartzDesc_t dev, void *userInfo, int flags);
     void         (*state)(QuartzDesc_t dev,  void *userInfo,  int state);
@@ -133,9 +134,11 @@ specify the conversion factor between pixels and points.
 We are *not* using R's scaling facilities, because R doesn't work with
 non-square pixels (e.g. circles become ellipses).
 
-FIXME: yes it does -- ipr is a two-element array. 
+FIXME: yes it does -- ipr is a two-element array.
  -- not entirely, because it uses text (e.g. "o") as symbols which is rendered
  in 1:1 aspect ratio and thus is squished on displays with non-square pixels
+(That being a bug in Quartz, then!)
+
 Actually, dp not points are used.
 */
 
@@ -153,7 +156,7 @@ void QuartzDevice_ResetContext(QuartzDesc_t desc) {
     qd->gstate = 0;
     qd->dirty = 0;
     if (qd->getCGContext) {
-        CGContextRef ctx = qd->getCGContext(qd,qd->userInfo);
+        CGContextRef ctx = qd->getCGContext(qd, qd->userInfo);
         if (ctx) {
             CGContextSetAllowsAntialiasing(ctx, qd->antialias);
             CGContextSetShouldSmoothFonts(ctx, qd->smooth);
@@ -231,10 +234,10 @@ void QuartzDevice_Kill(QuartzDesc_t desc) {
 
 int   QuartzDesc_GetFontSmooth(QuartzDesc_t desc) { return ((QuartzDesc*) desc)->smooth; }
 void  QuartzDesc_SetFontSmooth(QuartzDesc_t desc,int fs) {
-    QuartzDesc *qd = (QuartzDesc*) desc;	
+    QuartzDesc *qd = (QuartzDesc*) desc;
     qd->smooth = fs;
     if(qd->getCGContext)
-        CGContextSetShouldSmoothFonts( qd->getCGContext(qd,qd->userInfo), fs);
+        CGContextSetShouldSmoothFonts( qd->getCGContext(qd, qd->userInfo), fs);
 }
 
 int   QuartzDevice_GetBackground(QuartzDesc_t desc) { return ((QuartzDesc*) desc)->bg; }
@@ -243,7 +246,7 @@ static void   QuartzDevice_Update(QuartzDesc_t desc)
 {
     QuartzDesc *qd = (QuartzDesc*) desc;
     pDevDesc dev= qd->dev;
-    
+
     /* pre-scaling happens in Quartz (using CTM), so scales should not be
        reflected in R measurements. We tell R to use 72dpi which corresponds
        to plotting in pt coordinates */
@@ -285,7 +288,7 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc, void* snap)
     pGEDevDesc gd  = GEgetDevice(ndevNumber(qd->dev));
     if(NULL == snap) return; /*Aw, hell no!*/
     PROTECT((SEXP)snap);
-    if(R_NilValue == VECTOR_ELT(snap,0)) 
+    if(R_NilValue == VECTOR_ELT(snap,0))
         warning("Tried to restore an empty snapshot?");
     qd->redraw = 1;
     GEplaySnapshot((SEXP)snap, gd);
@@ -296,7 +299,6 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc, void* snap)
 
 #pragma mark RGD API Function Prototypes
 
-static Rboolean RQuartz_Open(pDevDesc, QuartzDesc*, char*, double, double, int);
 static void     RQuartz_Close(pDevDesc);
 static void     RQuartz_Activate(pDevDesc);
 static void     RQuartz_Deactivate(pDevDesc);
@@ -316,17 +318,17 @@ static void     RQuartz_MetricInfo(int, const pGEcontext , double*, double*, dou
 
 #pragma mark Quartz device implementation
 
-void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def) 
+void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 {
     pDevDesc dev = _dev;
 
-    dev->startfill = R_RGB(255,255,255);
-    dev->startcol  = R_RGB(0,0,0);
+    dev->startfill = def->bg;  /* R_RGB(255, 255, 255); should be bg */
+    dev->startcol  = R_RGB(0, 0, 0);
     dev->startps   = def->pointsize;
     dev->startfont = 1;
     dev->startlty  = LTY_SOLID;
     dev->startgamma= 1;
-    
+
     /* Set up some happy pointers */
     dev->close        = RQuartz_Close;
     dev->activate     = RQuartz_Activate;
@@ -345,22 +347,22 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->mode         = RQuartz_Mode;
     dev->metricInfo   = RQuartz_MetricInfo;
     dev->hasTextUTF8  = FALSE;
-    
+
     dev->left = 0;
     dev->top  = 0;
-    
-    
+
+
     /* Magic numbers from on high. */
     dev->xCharOffset = 0.4900;
     dev->yCharOffset = 0.3333;
     dev->yLineBias   = 0.20; /* This is .2 for PS/PDF devices... */
-    
+
     dev->canClip       = TRUE;
     dev->canHAdj       = 2;
     dev->canChangeGamma= TRUE;
-    dev->displayListOn = TRUE;       
-    
-    QuartzDesc *qd = calloc(1,sizeof(QuartzDesc));
+    dev->displayListOn = TRUE;
+
+    QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
     qd->height     = def->height;
     qd->userInfo   = def->userInfo;
@@ -375,19 +377,20 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     qd->tscale     = 1.0;
     qd->ps         = def->pointsize;
     qd->bg         = def->bg;
+    qd->canvas     = def->canvas;
     qd->antialias  = /* FIXME: aa as a flag */ 1;
     qd->flags      = def->flags;
     qd->gstate     = 0;
-    
+
     dev->deviceSpecific = qd;
     qd->dev             = dev;
-    
+
     QuartzDevice_Update(qd);
-    
+
     dev->right = def->width*72.0;
     dev->bottom= def->height*72.0;
     qd->clipRect = CGRectMake(0, 0, dev->right, dev->bottom);
-    
+
     qd->dirty = 0;
     qd->redraw= 0;
     qd->async = 0;
@@ -444,7 +447,7 @@ extern void CGFontGetGlyphsForUnichars(CGFontRef, const UniChar[], const CGGlyph
 
 
 #define DEVDESC pDevDesc dd
-#define CTXDESC const pGEcontext gc,pDevDesc dd
+#define CTXDESC const pGEcontext gc, pDevDesc dd
 
 #define DEVSPEC QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific; CGContextRef ctx = xd->getCGContext(xd, xd->userInfo)
 #define DRAWSPEC QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific; CGContextRef ctx = xd->getCGContext(xd, xd->userInfo); xd->dirty = 1
@@ -453,7 +456,7 @@ extern void CGFontGetGlyphsForUnichars(CGFontRef, const UniChar[], const CGGlyph
 
 CFStringRef RQuartz_FindFont(int fontface, char *fontfamily)
 {
-    SEXP ns,env,db,names;
+    SEXP ns, env, db, names;
     PROTECT_INDEX index;
     CFStringRef fontName = CFSTR("");
     PROTECT(ns = R_FindNamespace(ScalarString(mkChar("grDevices"))));
@@ -466,9 +469,9 @@ CFStringRef RQuartz_FindFont(int fontface, char *fontfamily)
         int i;
         for(i = 0; i < length(names); i++)
             if(0 == strcmp(fontfamily, CHAR(STRING_ELT(names, i)))) break;
-        if(i<length(names))
-            fontName = CFStringCreateWithCString(kCFAllocatorDefault, 
-						 CHAR(STRING_ELT(VECTOR_ELT(db,i) ,fontface)),
+        if(i < length(names))
+            fontName = CFStringCreateWithCString(kCFAllocatorDefault,
+						 CHAR(STRING_ELT(VECTOR_ELT(db, i), fontface - 1)), /* FIXED was fontface */
 						 kCFStringEncodingUTF8);
     }
     UNPROTECT(4);
@@ -479,30 +482,31 @@ CGFontRef RQuartz_Font(CTXDESC)
 {
     int fontface = gc->fontface;
     CFMutableStringRef fontName = CFStringCreateMutable(kCFAllocatorDefault, 0);
-    if((gc->fontface == 5) || (strcmp(gc->fontfamily,"symbol") == 0)) 
+    if((gc->fontface == 5) || (strcmp(gc->fontfamily,"symbol") == 0))
         CFStringAppend(fontName,CFSTR("Symbol"));
     else {
-        CFStringRef font = RQuartz_FindFont(gc->fontface,gc->fontfamily);
+        CFStringRef font = RQuartz_FindFont(gc->fontface, gc->fontfamily);
         if(CFStringGetLength(font) > 0) {
             fontface = 1; /* This is handled by the lookup process */
-            CFStringAppend(fontName,font);
+            CFStringAppend(fontName, font);
         }
         CFRelease(font);
     }
-    if(CFStringGetLength(fontName) == 0) 
+    if(CFStringGetLength(fontName) == 0)
         CFStringAppend(fontName, CFSTR("Arial"));
-    /* FIXME: what about bold italic? */
-    if(fontface==2 || fontface == 4)
+    if(fontface == 2)
         CFStringAppend(fontName, CFSTR(" Bold"));
-    if(fontface==3)
+    if(fontface == 3)
         CFStringAppend(fontName, CFSTR(" Italic"));
-    CGFontRef  font    = CGFontCreateWithFontName(fontName);
-    if(font == 0) {
+    if(fontface == 4) /* FIXED: was using bold */
+        CFStringAppend(fontName, CFSTR(" Bold Italic"));
+    CGFontRef  font = CGFontCreateWithFontName(fontName);
+    if(font == NULL) {
         /* Fall back on ATS */
         ATSFontRef tmp = ATSFontFindFromName(fontName, kATSOptionFlagsDefault);
         font = CGFontCreateWithPlatformFont(&tmp);
     }
-    if(NULL == font) CFShow(fontName);
+    if(font == NULL) CFShow(fontName);  /* FIXME needs warning message */
     CFRelease(fontName);
     return font;
 }
@@ -512,26 +516,26 @@ CGFontRef RQuartz_Font(CTXDESC)
 #define RQUARTZ_LINE   (1<<2)
 #define RQUARTZ_FONT   (1<<3)
 
-void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) { 
+void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
     if(flags & RQUARTZ_FILL) {
         int fill = gc->fill;
-	/* FIXME: surely 255? */
-        CGContextSetRGBFillColor(ctx, R_RED(fill)/256.0, R_GREEN(fill)/256.0, R_BLUE(fill)/256.0, R_ALPHA(fill)/256.0);
+	/* FIXED: was 256.0 */
+        CGContextSetRGBFillColor(ctx, R_RED(fill)/255.0, R_GREEN(fill)/255.0, R_BLUE(fill)/255.0, R_ALPHA(fill)/255.0);
     }
     if(flags & RQUARTZ_STROKE) {
         int stroke = gc->col;
-        CGContextSetRGBStrokeColor(ctx, R_RED(stroke)/256.0, R_GREEN(stroke)/256.0, R_BLUE(stroke)/256.0, R_ALPHA(stroke)/256.0);
+        CGContextSetRGBStrokeColor(ctx, R_RED(stroke)/255.0, R_GREEN(stroke)/255.0, R_BLUE(stroke)/255.0, R_ALPHA(stroke)/255.0);
     }
     if(flags & RQUARTZ_LINE) {
         CGFloat dashlist[8];
         int   i, ndash = 0;
         int   lty = gc->lty;
-	/* FIXME: units for lwd -- 1/96" preferred */
-        CGContextSetLineWidth(ctx, gc->lwd);
-        
-        float lwd = gc->lwd * 0.75;
-        for(i=0;i<8 && lty;i++) {
-            dashlist[ndash++] = (lwd >= 1 ? lwd : 1) * (lty&15);
+	/* FIXED: units for lwd -- 1/96" preferred */
+	float lwd = gc->lwd * 0.75;
+        CGContextSetLineWidth(ctx, lwd);
+
+        for(i = 0; i < 8 && lty; i++) {
+            dashlist[ndash++] = (lwd >= 1 ? lwd : 1) * (lty & 15);
             lty >>= 4;
         }
         CGContextSetLineDash(ctx, 0, dashlist, ndash);
@@ -562,11 +566,8 @@ void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
 #define NOCTX { xd->async = 1; return; }
 #define NOCTXR(V) { xd->async = 1; return(V); }
 
-static Rboolean RQuartz_Open(DEVDESC, QuartzDesc *xd, char *display, double width, double height, int bg) {
-    return TRUE;
-}
 
-static void RQuartz_Close(DEVDESC) 
+static void RQuartz_Close(DEVDESC)
 {
     XD;
     if (xd->close) xd->close(xd, xd->userInfo);
@@ -584,7 +585,7 @@ static void RQuartz_Deactivate(DEVDESC)
     if (xd->state) xd->state(xd, xd->userInfo, 0);
 }
 
-static void RQuartz_Size(double*left, double*right, double*bottom, double*top, DEVDESC)
+static void RQuartz_Size(double *left, double *right, double *bottom, double *top, DEVDESC)
 {
     XD;
     *left = *top = 0;
@@ -592,7 +593,7 @@ static void RQuartz_Size(double*left, double*right, double*bottom, double*top, D
     *bottom = QuartzDevice_GetHeight(xd) * 72.0;
 }
 
-static void RQuartz_NewPage(CTXDESC) 
+static void RQuartz_NewPage(CTXDESC)
 {
     {
         DRAWSPEC;
@@ -602,13 +603,25 @@ static void RQuartz_NewPage(CTXDESC)
     { /* we have to re-fetch the status *after* newPage since it may have changed it */
         DRAWSPEC;
         if (!ctx) NOCTX;
-        SET(RQUARTZ_FILL);
         {
-            CGRect bounds = CGRectMake(0, 0, 
-				       QuartzDevice_GetWidth(xd) * 72.0, 
+            CGRect bounds = CGRectMake(0, 0,
+				       QuartzDevice_GetWidth(xd) * 72.0,
 				       QuartzDevice_GetHeight(xd) * 72.0);
-            if(R_ALPHA(xd->bg) == 255 && R_ALPHA(gc->fill) == 255)
-                CGContextClearRect(ctx, bounds);
+	    /* FIXED: this made no sense.
+	       if(R_ALPHA(xd->bg) == 255 && R_ALPHA(gc->fill) == 255) */
+	    /* The logic should be to paint the canvas then gc->fill.
+	       FIXME: Should be canvas be used on all devices?
+	     */
+	    if (!R_OPAQUE(gc->fill)) {
+		/* First paint the canvas colour, then the fill. */
+		int savefill = gc->fill;
+		CGContextClearRect(ctx, bounds);
+		gc->fill = xd->canvas;
+		SET(RQUARTZ_FILL);
+		CGContextFillRect(ctx, bounds);
+		gc->fill = savefill;
+	    }
+	    SET(RQUARTZ_FILL); /* this will fill with gc->fill */
             CGContextFillRect(ctx, bounds);
         }
     }
@@ -697,7 +710,7 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     float aScale   = (gc->cex * gc->ps * xd->tscale) / CGFontGetUnitsPerEm(font);
     UniChar *buffer;
     CGGlyph   *glyphs;
-    
+
     int Free = 0, len, i;
     float width = 0.0;
     CFStringRef str = text2unichar(gc, dd, text, &buffer, &Free);
@@ -707,9 +720,9 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     CGFontGetGlyphsForUnichars(font, buffer, glyphs, len);
     int      *advances = malloc(sizeof(int) * len);
     CGSize   *g_adv    = malloc(sizeof(CGSize) * len);
-    
+
     CGFontGetGlyphAdvances(font, glyphs, len, advances);
-    for(i =0 ; i < len; i++) { 
+    for(i =0 ; i < len; i++) {
 	width += advances[i] * aScale;
 	g_adv[i] = CGSizeMake(aScale * advances[i] * cos(-0.0174532925*rot), aScale*advances[i]*sin(-0.0174532925 * rot));
     }
@@ -761,33 +774,33 @@ static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
     CGContextStrokePath(ctx);
 }
 
-static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC) 
+static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
 {
-    if (n < 2) return; 
+    if (n < 2) return;
     int i;
     DRAWSPEC;
     if (!ctx) NOCTX;
-    SET(RQUARTZ_STROKE | RQUARTZ_LINE);       
+    SET(RQUARTZ_STROKE | RQUARTZ_LINE);
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x[0], y[0]);
-    for(i = 1 ; i < n; i++) 
+    for(i = 1 ; i < n; i++)
 	CGContextAddLineToPoint(ctx, x[i], y[i]);
     CGContextStrokePath(ctx);
 }
 
-static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC) 
+static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
 {
-    if (n < 2) return; 
+    if (n < 2) return;
     int i;
     DRAWSPEC;
     if (!ctx) NOCTX;
-    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);  
+    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x[0], y[0]);
-    for(i = 1; i < n; i++) 
+    for(i = 1; i < n; i++)
 	CGContextAddLineToPoint(ctx, x[i], y[i]);
     CGContextClosePath(ctx);
-    CGContextDrawPath(ctx, kCGPathFillStroke);       
+    CGContextDrawPath(ctx, kCGPathFillStroke);
 }
 
 static void RQuartz_Mode(int mode, DEVDESC)
@@ -801,12 +814,12 @@ static void RQuartz_Mode(int mode, DEVDESC)
         if (xd->sync)
             xd->sync(xd, xd->userInfo);
         else
-            CGContextSynchronize(ctx); 
+            CGContextSynchronize(ctx);
     }
 }
 
-static void 
-RQuartz_MetricInfo(int c, const pGEcontext gc, 
+static void
+RQuartz_MetricInfo(int c, const pGEcontext gc,
 		   double *ascent, double *descent, double *width,
 		   pDevDesc dd)
 {
@@ -878,7 +891,7 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
 /* disabled for now until we get to test in on 10.3 #include "qdCarbon.h" */
 
 /* current fake */
-Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd, QuartzFunctions_t *fn, QuartzParameters_t *par) 
+Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
     return FALSE;
 }
@@ -895,18 +908,22 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create)
 	R_GE_checkVersionOrDie(R_GE_version);
         R_CheckDeviceAvailable();
         {
+	    const char *devname = "quartz_off_screen";
 	    /* FIXME: check this allocation */
             pDevDesc dev    = calloc(1, sizeof(NewDevDesc));
-    
+
             if (!dev)
                 return -1;
-            
+
             if (!q_create(dev, &qfn, par)) {
                 vmaxset(vmax);
                 free(dev);
                 return -2;
             }
-            gsetVar(install(".Device"), mkString("quartz"), R_BaseEnv);
+	    if(streql(par->type, "") || streql(par->type, "native")
+	       || streql(par->type, "cocoa") || streql(par->type, "carbon"))
+		devname = "quartz";
+            gsetVar(install(".Device"), mkString(devname), R_BaseEnv);
             pGEDevDesc dd = GEcreateDevDesc(dev);
             GEaddDevice(dd);
             GEinitDisplayList(dd);
@@ -916,19 +933,17 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create)
     return 0;
 }
 
-/* ARGS: type, file, width, height, ps, family, antialias, fontsm, title, bg, dpi */
-SEXP Quartz(SEXP args) 
+/* ARGS: type, file, width, height, ps, family, antialias, fontsm,
+   title, bg, canvas, dpi */
+SEXP Quartz(SEXP args)
 {
-    SEXP tmps, bgs;
+    SEXP tmps, bgs, canvass;
     double   width, height, ps;
     Rboolean antialias, smooth, autorefresh = TRUE, succ = FALSE;
-    int      quartzpos, bg, module = 0;
+    int      quartzpos, bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
-    const char    *type;
-    const char    *file;
-    const char    *family;
-    const char    *title;
-    
+    const char *type, *mtype, *file, *family, *title;
+
     char    *vmax = vmaxget();
     /* Get function arguments */
     args = CDR(args); /* Skip the call */
@@ -938,20 +953,26 @@ SEXP Quartz(SEXP args)
         type  = CHAR(STRING_ELT(CAR(args), 0));
     args = CDR(args);
     /* we may want to support connections at some point, but not yet ... */
-    if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) < 1)
-        file = 0;
+    tmps = CAR(args);    args = CDR(args);
+    if (isNull(tmps)) 
+	file = NULL;
+    else if (isString(tmps) && LENGTH(tmps) >= 1)
+        file  = CHAR(STRING_ELT(tmps, 0));
     else
-        file  = CHAR(STRING_ELT(CAR(args),0));
-    args = CDR(args);
+        error(_("invalid 'file' argument"));
     width     = ARG(asReal,args);
     height    = ARG(asReal,args);
     ps        = ARG(asReal,args);
-    family    = CHAR(STRING_ELT(CAR(args), 0));args = CDR(args);
+    family    = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     antialias = ARG(asLogical,args);
     smooth    = ARG(asLogical,args);
-    title     = CHAR(STRING_ELT(CAR(args), 0));args = CDR(args);
+    title     = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    /* partially FIXED: used bgs, added canvas */
     bgs       = CAR(args); args = CDR(args);
-    /* FIXME: we should process bgs here ... somehow ... */
+    bg        = RGBpar(bgs, 0);
+    /* Should canvas be forced to be opaque? */
+    canvass   = CAR(args); args = CDR(args);
+    canvas    = RGBpar(canvass, 0) | 0xff000000; /* force opaque */
     tmps      = CAR(args); args = CDR(args);
     if (!isNull(tmps)) {
         tmps = coerceVector(tmps, REALSXP);
@@ -969,13 +990,14 @@ SEXP Quartz(SEXP args)
 
     if (ISNAN(width) || ISNAN(height) || width <= 0.0 || height <= 0.0)
         error(_("invalid Quartz device size"));
-    
+
     if (type) {
         const quartz_module_t *m = quartz_modules;
+	mtype = type;
         while (m->type) {
             if (!strcasecmp(type, m->type)) {
                 module = m->qbe;
-                if (m->subst) type = m->subst;
+                if (m->subst) mtype = m->subst;
                 break;
             }
             m++;
@@ -983,35 +1005,34 @@ SEXP Quartz(SEXP args)
     }
     if (!strncasecmp(type, "bitmap:", 7)) {
         module = QBE_BITMAP;
-        type = type + 7;
+        mtype = mtype + 7;
     }
-    
-    bg        = 0xffffffff;
+
     quartzpos = 1;
-    
+
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	pDevDesc dev = calloc(1,sizeof(NewDevDesc));
-    
+	pDevDesc dev = calloc(1, sizeof(NewDevDesc));
+
 	if (!dev)
 	    error(_("Unable to create device description."));
 
 	QuartzParameters_t qpar = {
 	    sizeof(qpar),
-	    type, file, title,
+	    mtype, file, title,
 	    -1.0, -1.0, width, height, ps,
 	    family,
-	    antialias?QPFLAG_ANTIALIAS:0,
-	    -1,
-	    bg, 0xffffff,
+	    antialias ? QPFLAG_ANTIALIAS: 0,
+	    -1, /* connection */
+	    bg, canvas,
 	    dpi
 	};
-	
+
 	/* re-routed code has the first shot */
 	if (ptr_QuartzBackend)
 	    succ = ptr_QuartzBackend(dev, &qfn, &qpar);
-	
+
 	if (!succ) { /* try internal modules next */
 	    switch (module) {
             case QBE_COCOA:
@@ -1028,17 +1049,27 @@ SEXP Quartz(SEXP args)
                 succ = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_BITMAP:
-                succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
+		/* we need to set up the default file name here, where we
+		   know the original type name. */
+		if (file == NULL) {
+		    static char deffile[30];
+		    snprintf(deffile, 30, "%s.%s", "Rplot%03d", type);
+		    qpar.file = deffile;
+		}
+		succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
                 break;
 	    }
 	}
-                    
+
 	if(!succ) {
 	    vmaxset(vmax);
 	    free(dev);
 	    error(_("Unable to create Quartz device target, given type may not be supported."));
 	}
-	gsetVar(install(".Device"), mkString("quartz"), R_BaseEnv);
+	const char *devname = "quartz_off_screen";
+	if(streql(type, "") || streql(type, "native") || streql(type, "cocoa") 
+	   || streql(type, "carbon")) devname = "quartz";
+ 	gsetVar(install(".Device"), mkString(devname), R_BaseEnv);
 	pGEDevDesc dd = GEcreateDevDesc(dev);
 	GEaddDevice(dd);
 	GEinitDisplayList(dd);
@@ -1047,18 +1078,18 @@ SEXP Quartz(SEXP args)
     return R_NilValue;
 }
 
-#else 
+#else
 /* --- no AQUA support = no Quartz --- */
 
 #include "grDevices.h"
 
-SEXP Quartz(SEXP args) 
+SEXP Quartz(SEXP args)
 {
     warning(_("Quartz device is not available on this platform."));
     return R_NilValue;
 }
 
-void *getQuartzAPI() 
+void *getQuartzAPI()
 {
     return NULL;
 }

@@ -60,7 +60,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(devga, 16),
     EXTDEF(savePlot, 3),
 #else
-    EXTDEF(Quartz, -1),
+    EXTDEF(Quartz, 12),
 #endif
     {NULL, NULL, 0}
 };
