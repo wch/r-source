@@ -14,7 +14,7 @@
 \alias{getVirtual}
 \title{Old functions to access slots in a class definition }
 \description{
-Expect these functions to become deprecated in the near future.
+ \bold{These functions are deprecated.}
 
  They do nothing but access a slot in a class definition, and don't
  even do this consistently  with the right name (they date back to the

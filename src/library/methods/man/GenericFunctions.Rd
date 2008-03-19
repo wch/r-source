@@ -150,7 +150,7 @@ callGeneric(\dots)
     the first \code{length(signature)} formal arguments of the
     function. }
 
-  \item{file}{ The file on which to dump method definitions. }
+  \item{file}{ The file or connection on which to dump method definitions. }
 
   \item{def}{ The function object defining the method; if omitted, the
     current method definition corresponding to the signature. }
@@ -299,6 +299,36 @@ mustDie(standardGeneric(""))
 mustDie(standardGeneric("notAGenericFunction"))
 mustDie(standardGeneric("show"))  # a generic, but not called from its body
 }
+
+## method dumping ------------------------------------
+
+setClass("A", representation(a="numeric"))
+setMethod("plot", "A", function(x,y,...){ cat("A meth\n") })
+dumpMethod("plot","A", file="")
+\dontrun{
+setMethod("plot", "A",
+function (x, y, ...)
+{
+    cat("AAAAA\n")
+}
+)
+}%dont
+tmp <- tempfile()
+dumpMethod("plot","A", file=tmp)
+## now remove, and see if we can parse the dump
+stopifnot(removeMethod("plot", "A"))
+source(tmp)
+stopifnot(is(getMethod("plot", "A"), "MethodDefinition"))
+
+## same with dumpMethods() :
+setClass("B", contains="A")
+setMethod("plot", "B", function(x,y,...){ cat("B ...\n") })
+dumpMethods("plot", file=tmp)
+stopifnot(removeMethod("plot", "A"),
+          removeMethod("plot", "B"))
+source(tmp)
+stopifnot(is(getMethod("plot", "A"), "MethodDefinition"),
+          is(getMethod("plot", "B"), "MethodDefinition"))
 }
 \keyword{programming}
 \keyword{classes}

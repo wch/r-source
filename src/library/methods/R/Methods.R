@@ -181,13 +181,14 @@ isGeneric <-
         return(FALSE)
     gen <- fdef@generic # the name with package attribute
     if(missing(f) || .identC(gen, f)) {
-         if(getName)
-           gen
-         else 
-           TRUE
-     }
+	if(getName)
+	    gen
+	else
+	    TRUE
+    }
     else {
-        warning(gettextf("function \"%s\" appears to be a generic function, but with generic name \"%s\"", f, gen), domain = NA)
+        warning(gettextf("function \"%s\" appears to be a generic function, but with generic name \"%s\"",
+                         f, gen), domain = NA)
         FALSE
     }
 }
@@ -245,7 +246,7 @@ getMethods <-
 
     function(f, where = topenv(parent.frame()))
 {
-    nowhere <- missing(where) 
+    nowhere <- missing(where)
     if(is.character(f))
         fdef <- getGeneric(f, where = where)
     else if(is(f, "genericFunction")) {
@@ -434,7 +435,8 @@ setMethod <-
           setGeneric(f) #  turn on this generic and cache it.
     }
     if(isSealedMethod(f, signature, fdef, where=where))
-        stop(gettextf("the method for function \"%s\" and signature %s is sealed and cannot be re-defined", f, .signatureString(fdef, signature)), domain = NA)
+        stop(gettextf("the method for function \"%s\" and signature %s is sealed and cannot be re-defined",
+                      f, .signatureString(fdef, signature)), domain = NA)
     signature <- matchSignature(signature, fdef, where)
     switch(typeof(definition),
            closure = {
@@ -473,7 +475,8 @@ setMethod <-
            "NULL" = {
 
            },
-           stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"", class(definition)), domain = NA)
+           stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"",
+                         class(definition)), domain = NA)
            )
     fenv <- environment(fdef)
     ## check length against active sig. length, reset if necessary in .addToMetaTable
@@ -626,19 +629,58 @@ dumpMethod <-
   ## Dump the method for this generic function and signature.
   ## The resulting source file will recreate the method.
   function(f, signature=character(), file = defaultDumpName(f, signature),
-           where = -1,
+           where = topenv(parent.frame()),
            def = getMethod(f, signature, where=where, optional = TRUE))
 {
     if(!is.function(def))
         def <- getMethod(f, character(), where=where, optional = TRUE)
-    if(file != "")
-        sink(file)
+
+    ## sink() handling as general as possible -- unbelievably unpretty coding:
+    closeit <- TRUE ; isSTDOUT <- FALSE
+    if (is.character(file)) {
+        if(!(isSTDOUT <- file == "")) ## stdout() -- no sink() needed
+            file <- file(file, "w")
+    }
+    else if (inherits(file, "connection")) {
+	if (!isOpen(file)) open(file, "w") else closeit <- FALSE
+    } else stop("'file' must be a character string or a connection")
+    if(!isSTDOUT){ sink(file); on.exit({sink(); if(closeit) close(file)}) }
+
     cat("setMethod(\"", f, "\", ", deparse(signature), ",\n", sep="")
-    dput(def)
+    dput(def@.Data)
     cat(")\n", sep="")
-    if(file != "")
-        sink()
-    file
+    if(!isSTDOUT) { on.exit(); sink(); if(closeit) close(file) }
+    invisible(file)
+}
+
+dumpMethods <- function(f, file = "", signature = character(), methods,
+                        where = topenv(parent.frame()) )
+{
+    ## Dump all the methods for this generic.
+    ##
+    ## If `signature' is supplied only the methods matching this initial signature
+    ## are dumped.
+    if(missing(methods))
+        methods <- getMethods(f, where = where)@methods
+
+    ## sink() handling as general as possible -- unbelievably unpretty coding:
+    closeit <- TRUE ; isSTDOUT <- FALSE
+    if (is.character(file)) {
+        if(!(isSTDOUT <- file == "")) ## stdout() -- no sink() needed
+            file <- file(file, "w")
+    }
+    else if (inherits(file, "connection")) {
+	if (!isOpen(file)) open(file, "w") else closeit <- FALSE
+    } else stop("'file' must be a character string or a connection")
+    if(!isSTDOUT){ sink(file); on.exit({sink(); if(closeit) close(file)}) }
+
+    for(what in names(methods)) {
+        el <- methods[[what]]
+        if(is.function(el))
+            dumpMethod(f, c(signature, what), file = "", def = el)
+        else
+            dumpMethods(f, "", c(signature, what), el, where)
+    }
 }
 
 
@@ -670,7 +712,7 @@ selectMethod <-
 	if(is.null(method)) {
 	    methods <-
 		if(any(useInherited)) {
-		    allmethods <- .getMethodsTable(fdef, fenv, FALSE, TRUE)
+		    allmethods <- .getMethodsTable(fdef, fenv, check=FALSE, inherited=TRUE)
 		    ## look in the supplied (usually standard) table, cache w. inherited
 		    .findInheritedMethods(signature, fdef,
 					  mtable = allmethods, table = mlist,
@@ -678,7 +720,7 @@ selectMethod <-
 					  verbose = verbose)
 		    ##MM: TODO? allow 'excluded' to be passed
 		}
-		else list() # just look in the direct table
+		## else list() : just look in the direct table
 
 	    if(length(methods) > 0)
 		return(methods[[1]])
@@ -785,29 +827,6 @@ existsMethod <-
     }
 }
 
-dumpMethods <-
-  ## Dump all the methods for this generic.
-  ##
-  ## If `signature' is supplied only the methods matching this initial signature
-  ## are dumped.  (This feature is not found in S-Plus:  don't use it if you want
-  ## compatibility.)
-  function(f, file = "", signature = character(), methods, where = topenv(parent.frame()) )
-{
-    if(missing(methods))
-        methods <-  getMethods(f, where = where) # TODO: change this to findMethods()
-    if(file != "")
-        sink(file)
-    on.exit(if(file!="")
-            sink())
-    for(what in names(methods)) {
-        el <- methods[[what]]
-        if(is.function(el))
-            dumpMethod(f, c(signature, what), file = "", def = el)
-        else
-            dumpMethods(f, "", c(signature, what), el, where)
-    }
-}
-
 signature <-
   ## A named list of classes to be matched to arguments of a generic function.
   ## It is recommended to supply signatures to `setMethod' via a call to `signature',
@@ -855,7 +874,8 @@ showMethods <-
     if(is(f, "function"))
         f <- as.character(substitute(f))
     if(!is(f, "character"))
-        stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\")", class(f)), domain = NA)
+        stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\")",
+                      class(f)), domain = NA)
     if(length(f)==0) {
         f <- if(missing(where)) getGenerics() else getGenerics(where)
     }
@@ -893,10 +913,12 @@ showMethods <-
     invisible(printTo)
 }
 
-## this should be made obsolete:  asserted that it is no longer called in this pacakage
+## this should be made obsolete:  asserted that it is no longer called in this package
 removeMethodsObject <-
     function(f, where = topenv(parent.frame()))
 {
+    .Deprecated()# (for 2.7.0) -- defunct for 2.8.0
+
     fdef <- getGeneric(f, where=where)
     if(!is(fdef, "genericFunction")) {
       warning(gettextf(
@@ -942,7 +964,7 @@ removeMethods <-
         return(FALSE)
     }
 
-    methods <- getMethodsForDispatch(fdef) 
+    methods <- getMethodsForDispatch(fdef)
     default <- getMethod(fdef, "ANY", optional = TRUE)
     fMetaName <- .TableMetaName(fdef@generic, fdef@package)
     oldMetaName <- methodsPackageMetaName("M",fdef@generic, fdef@package)
@@ -975,8 +997,8 @@ removeMethods <-
     all <- all && base::all(value) # leave methods on any locked packages
     # now find and reset the generic function
     for(i in seq_along(allWhere)) {
-        db <- as.environment(allWhere[[i]])    
-        if(doGeneric && isGeneric(f, db)) { 
+        db <- as.environment(allWhere[[i]])
+        if(doGeneric && isGeneric(f, db)) {
             ## restore the original function if one was used as default
             if(all && is(default, "derivedDefaultMethod")) {
                 default <- as(default, "function") # strict, removes slots
@@ -1000,7 +1022,11 @@ removeMethods <-
 }
 
 
-resetGeneric <- function(f, fdef = getGeneric(f, where = where), mlist = getMethodsForDispatch(fdef), where = topenv(parent.frame()), deflt = finalDefaultMethod(mlist)) {
+resetGeneric <- function(f, fdef = getGeneric(f, where = where),
+			 mlist = getMethodsForDispatch(fdef),
+			 where = topenv(parent.frame()),
+			 deflt = finalDefaultMethod(mlist))
+{
     if(!is(fdef, "genericFunction")) {
             stop(gettextf("error in updating generic function \"%s\"; the function definition is not a generic function (class \"%s\")", f, class(fdef)),
                  domain = NA)
@@ -1109,7 +1135,9 @@ initMethodDispatch <- function(where = topenv(parent.frame()))
     .Call("R_initMethodDispatch", as.environment(where),
           PACKAGE = "methods")# C-level initialization
 
-isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where), where = topenv(parent.frame())) {
+isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where),
+			   where = topenv(parent.frame()))
+{
     ## look for the generic to see if it is a primitive
     fGen <- getFunction(f, TRUE, FALSE, where = where)
     if(!is.primitive(fGen)) {
@@ -1392,7 +1420,7 @@ findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
     }
     else
       what <- names(formals(args(methods[[1]]))) # uses the hack that args() returns a function if its argument is a primitve!
-    if(target) 
+    if(target)
       sigs <- strsplit(names(methods), "#", fixed = TRUE)
     else {
         anySig <- rep("ANY", length(what))
@@ -1429,7 +1457,7 @@ hasMethods <- function(f, where,package) {
             else
               stop(gettextf("f does not correspond to  a generic function and package not specified"), domain = NA)
         }
-    }  
+    }
     what <- .TableMetaName(f, package)
     testEv <- function(ev)
       exists(what, envir = ev, inherits = FALSE) && (length(objects(get(what, envir = ev), all.names = TRUE)) > 0)

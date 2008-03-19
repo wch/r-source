@@ -28,7 +28,7 @@
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
-\alias{removeMethodsObject}
+\alias{removeMethodsObject}%deprecated (2.7.0)
 \alias{findUnique}
 \alias{MethodAddCoerce}
 \alias{.saveImage}
@@ -78,7 +78,7 @@ conformMethod(signature, mnames, fnames, f= , fdef)
 
 matchSignature(signature, fun, where)
 
-removeMethodsObject(f, where)
+removeMethodsObject(f, where) # is deprecated
 
 findUnique(what, message, where)
 
@@ -189,7 +189,8 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
     \item{\code{removeMethodsObject}:}{
-      remove the metadata object containing methods for \code{f}.
+      remove the metadata object containing methods for \code{f}.  Is
+      deprecated.
     }
 
     \item{\code{findUnique}:}{

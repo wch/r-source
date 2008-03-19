@@ -403,6 +403,7 @@ DEPRECATED & DEFUNCT
 
     o	Several S4 class definition utilities, get*(), have been said
 	to be deprecated since R 1.8.0; these are now formally deprecated.
+	Ditto for removeMethodsObject().
 
     o	Use of the graphics headers Rgraphics.h and Rdevices.h is
 	deprecated, and these will be unavailable in R 2.8.0.
@@ -633,6 +634,8 @@ BUG FIXES
     o	gamma() was warning incorrectly for most negative values as being
     	too near a negative integer.  This also affected other
     	functions making use of its C-level implementation.
+
+    o	dumpMethod() and dumpMethods() now work again.
 
 
 
