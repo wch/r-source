@@ -1028,13 +1028,12 @@ classMetaName <-
   function(name)
   methodsPackageMetaName("C", name)
 
-##FIXME:  C code should take multiple strings in name so the paste() call in
-## mlistMetaName, etc. could be avoided.
+##FIXME:  C code should take multiple strings in name so paste() calls could  be avoided.
 methodsPackageMetaName <-
   ## a name mangling device to simulate the meta-data in S4
-  function(prefix, name)
+  function(prefix, name, package = "")
   ## paste(".", prefix, name, sep="__") # too slow
-    .Call("R_methodsPackageMetaName", prefix, name, PACKAGE = "methods")
+    .Call("R_methodsPackageMetaName", prefix, name, package, PACKAGE = "methods")
 
 
 

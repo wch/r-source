@@ -7,10 +7,8 @@
 \alias{getMethod}
 \alias{findMethod}
 \alias{existsMethod}
-\alias{getMethods}
 \alias{selectMethod}
 \alias{hasMethod}
-\alias{MethodsListSelect}
 \title{ Get or Test for the Definition of a Method }
 \description{
   The functions \code{getMethod} and \code{selectMethod} get the
@@ -30,8 +28,6 @@ getMethod(f, signature=character(), where, optional = FALSE,
 
 findMethod(f, signature, where)
 
-getMethods(f, where)
-
 existsMethod(f, signature = character(), where)
 
 hasMethod(f, signature=character(), where)
@@ -39,9 +35,6 @@ hasMethod(f, signature=character(), where)
 selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
              mlist = if (!is.null(fdef)) getMethodsForDispatch(fdef),
              fdef = getGeneric(f, !optional), verbose = FALSE)
-
-MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
-                  useInherited, fdef, resetAllowed)
 
 }
 \arguments{
@@ -75,15 +68,8 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     (Unlikely to be used, except internally in the package source.)}
   \item{verbose}{logical indicating if method selection should print
     some info about its progress.}
-  \item{env}{The environment in which argument evaluations are done in
-    \code{MethodsListSelect}.  Currently must be supplied, but should
-    usually be \code{sys.frame(sys.parent())} when calling the function
-    explicitly for debugging purposes.}
-  \item{fEnv, finalDefault, evalArgs, useInherited, resetAllowed}{ Internal-use
-    arguments for the function's environment, the method to use as
-    the overall default, whether to evaluate arguments, which
-    arguments should use inheritance, and whether the cached methods
-    are allowed to be reset.}
+  \item{useInherited}{ Internal-use
+    argument: should method selection use inheritance.}
 }
 \details{
   The \code{signature} argument specifies classes, in an extended
@@ -140,24 +126,6 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   defined explicitly in a particular environment, use the function
   \code{\link{getMethodsMetaData}} instead.
 
-  The function \code{MethodsListSelect} performs a full search
-  (including all inheritance and group generic information: see the
-  \link{Methods} documentation page for details on how this works).
-  The call returns a possibly revised methods list object,
-  incorporating any method found as part of the \code{allMethods}
-  slot.
-
-  Normally you won't call \code{MethodsListSelect} directly, but it is
-  possible to use it for debugging purposes (only for distinctly
-  advanced users!).
-
-  Note that the statement that \code{MethodsListSelect} corresponds to the
-  selection done by the evaluator is a fact, not an assertion, in the
-  sense that the evaluator code constructs and executes a call to
-  \code{MethodsListSelect} when it does not already have a cached method
-  for this generic function and signature.  (The value returned is
-  stored by the evaluator so that the search is not required next
-  time.)
 }
 \value{
   The call to \code{selectMethod} or \code{getMethod} returns a

@@ -21,7 +21,7 @@ function (clName, filename = NULL, type = "class",
     classesInSig <- function(g, where) {
     ## given a generic g, obtain list of all classes
     ## named among its signatures
-	mlist <- getMethods(g, where)
+	mlist <- getMethods(g, where) # TODO: change this to findMethods()
 	if(is.null(mlist))
 	    return(NULL)
 	tmp <- listFromMlist(mlist)
@@ -51,7 +51,7 @@ function (clName, filename = NULL, type = "class",
     sigsList <- function (g, where)
     ## given a generic g, obtain list with one element per signature
     {
-	tmp <- listFromMlist(getMethods(g, where))
+	tmp <- listFromMlist(getMethods(g, where)) # TODO: change this to findMethods()
 	if (length(tmp[[1]])) tmp[[1]] # else NULL
     }
     slotClassWithSource <- function(clname) {

@@ -22,12 +22,18 @@
 \alias{loadMethod,ANY-method}
 \alias{loadMethod,MethodDefinition-method}
 \alias{loadMethod,MethodWithNext-method}
+\alias{MethodsListSelect}
 \title{MethodsList Objects}
 \description{
   These functions create and manipulate \code{MethodsList} objects, the
-  objects used in R to store methods for dispatch.  You should not call
-  any of these functions from code that you want to port to S-Plus.
-  Instead, use the functions described in the references.
+  objects formerly used in R to store methods for dispatch.  Use of
+  these objects is no longer required, and while not yet formally
+  deprecated, will rarely be a good idea.  Where methods dispatch is
+  to be studied, see \code{\link{selectMethod}}.  For computations
+  that iterate over methods or over method signatures, see
+  \code{\link{findMethods}}, which returns a linearized methods list
+  to hold method definitions, usually more convenient for iteration
+  than the recursive \code{MethodsList} objects.
 }
 \usage{
 MethodsList(.ArgName, ...)
@@ -54,6 +60,9 @@ finalDefaultMethod(mlist, fname = "NULL")
 mergeMethods(m1, m2, genericLabel)
 
 loadMethod(method, fname, envir)
+
+MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
+                  useInherited, fdef, resetAllowed)
 
 }
 
@@ -165,6 +174,17 @@ loadMethod(method, fname, envir)
       Any methods defined for \code{loadMethod} must return the function
       definition to be used for this call; typically, this is just the
       \code{method} argument.
+    }
+
+  \item{\code{MethodsListSelect}}{
+      The function \code{MethodsListSelect} performs a full search
+      (including all inheritance and group generic information: see the
+      \link{Methods} documentation page for details on how this works).
+      The call returns a possibly revised methods list object,
+      incorporating any method found as part of the \code{allMethods}
+      slot.  This search was used by the evaluator when methods lists
+      were the metadata for methods dispatch.  This function is now deprecated.
+
     }
   }
 }

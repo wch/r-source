@@ -61,6 +61,7 @@
         assign("makeGeneric", .makeGeneric, envir = where)
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
+        assign(".addToMetaTable", ..addToMetaTable, envir = where)
         .makeBasicFuns(where)
         rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
            ..mergeClassDefSlots, envir = where)
@@ -73,7 +74,6 @@
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)
         assign(".requirePackage", ..requirePackage, envir = where)
-        assign(".addToMetaTable", ..addToMetaTable, envir = where)
         ## initialize implicit generics for base package
         ## Note that this is done before making a non-vacuous implicitGeneric()
         ## so that non-default signatures are allowed in setGeneric()

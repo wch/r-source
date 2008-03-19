@@ -377,6 +377,11 @@ NEW FEATURES
     	device on Mac OS X) and "cairo" (for cairo-based graphics
     	devices).
 
+    o  The "MethodsList" objects originally used for method selection
+        are being phased out.  New utilities provide simpler
+        alternatives (see ?findMethods), and direct use of the mangled
+        names for the objects is now deprecated.
+
 
 DEPRECATED & DEFUNCT
 
@@ -413,6 +418,9 @@ DEPRECATED & DEFUNCT
 	the job it was intended to do more reliably.
 
     o	gammaCody() is now formally deprecated.
+
+    o  two low-level functions using MethodsList metadata objects
+        (mlistMetaName() and getAllMethods()) are deprecated.
 
 
 INSTALLATION

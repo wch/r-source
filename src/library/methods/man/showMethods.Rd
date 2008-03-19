@@ -14,13 +14,14 @@
 showMethods(f = character(), where = topenv(parent.frame()),
             classes = NULL, includeDefs = FALSE,
             inherited = !includeDefs,
-            showEmpty, printTo = stdout())
+            showEmpty, printTo = stdout(), fdef =)
 }
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions
     will be shown that match the other arguments. }
-  \item{where}{Used only when \code{f} is missing, or length 0, to
-    determine which generic functions to examine.  If \code{where} is
+  \item{where}{Where to find the generic function, if not supplied as an argument.
+ When \code{f} is missing, or length 0, this also
+    determines which generic functions to examine.  If \code{where} is
     supplied, only the generic functions returned by
     \code{getGenerics(where)} are eligible for printing.  If
     \code{where} is also missing, all the cached generic functions are
@@ -46,6 +47,7 @@ showMethods(f = character(), where = topenv(parent.frame()),
     returned as the value of the call to \code{showMethod}.  See
     \code{\link{show}}.
   }
+  \item{fdef}{Optionally, the generic function definition to use; if missing, one is found, looking in \code{where} if that is specified.  See also comment on details below.}
 }
 \details{
   The name and package of the generic are followed by the list of
@@ -53,6 +55,8 @@ showMethods(f = character(), where = topenv(parent.frame()),
   criteria determined by the various arguments.  Note that the package
   refers to the source of the generic function.  Individual methods
   for that generic can come from other packages as well.
+
+When more than one generic function is involved, either as specified or because \code{f} was missing, the functions are found and \code{showMethods} is recalled for each, including the generic as the argument \code{fdef}.  In complicated situations, this can avoid some anomalous results.
 }
 \value{
   If \code{printTo} is \code{FALSE}, the character vector that would

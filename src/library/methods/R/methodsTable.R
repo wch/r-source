@@ -152,7 +152,7 @@
     ## also Called from cacheMethod (from as(),
   ## as<-())
   fenv <- environment(fdef)
-  if(!exists(".AllMTable", envir = fenv, inherits = FALSE))
+  if(missing(table) && !exists(".AllMTable", envir = fenv, inherits = FALSE))
     .setupMethodsTables(fdef)
   sig <- .matchSigLength(sig, fdef, fenv, TRUE)
   label <- .sigLabel(sig)
@@ -195,7 +195,9 @@
 }
 
 ### the tag associated with a method signature.
-### Should eventually use the same C code as dispatch, for consistency
+### Should perhaps use the same C code as dispatch, for consistency,
+### however, that code breaks out early in the collapse loop if no match.
+### This code is not used for quick matching, so efficiency less critical.
 .sigLabel <- function(sig)
   ## TODO:  should include package; i.e., class:package#class:...
   ## BUT:  not until defined, target slots have classes with package attribute
@@ -426,37 +428,38 @@
 # add objects to the generic function's environment that allow
 # table-based dispatch of methods
 .setupMethodsTables <- function(generic,
-                               initialize = !exists(".Methods", envir = env, inherits = FALSE)) {
-  env <- environment(generic)
-  if(initialize)
-    mlist <- generic@default
-  else
-    mlist <- get(".Methods", envir = env, inherits = FALSE)
-  if(initialize || !exists(".SigLength", envir = env, inherits = FALSE)) {
-      nsig <- 1
-      ## check that groups of generics agree on .SigLength; otherwise
-      ## labels won't match
-     for(gp in generic@group) {
-         gpDef <- getGeneric(gp)
-         if(is(gpDef, "genericFunction")) {
-             .getMethodsTable(gpDef) # force initialization
-             nsig <- max(nsig, get(".SigLength", envir = environment(gpDef)))
-         }
-     }
-      assign(".SigLength", nsig, envir = env)
-  }
-  argSyms <- lapply(generic@signature, as.name)
-  assign(".SigArgs", argSyms, envir = env)
-  mtable <- .mlistAddToTable(generic, mlist)
-  assign(".MTable", mtable, envir = env)
-  .resetInheritedMethods(env, mtable)
-  if(is(generic, "groupGenericFunction")) {
-      for(gp in generic@groupMembers) {
-          gpDef <- getGeneric(gp)
-          if(is(gpDef, "genericFunction"))
+                                initialize = !exists(".MTable", envir = env, inherits = FALSE)) {
+    env <- environment(generic)
+    if(initialize || !exists(".SigLength", envir = env, inherits = FALSE)) {
+        nsig <- 1
+        ## check that groups of generics agree on .SigLength; otherwise
+        ## labels won't match
+        for(gp in generic@group) {
+            gpDef <- getGeneric(gp)
+            if(is(gpDef, "genericFunction")) {
+                .getMethodsTable(gpDef) # force initialization
+                nsig <- max(nsig, get(".SigLength", envir = environment(gpDef)))
+            }
+        }
+        assign(".SigLength", nsig, envir = env)
+    }
+    argSyms <- lapply(generic@signature, as.name)
+    assign(".SigArgs", argSyms, envir = env)
+    if(initialize) {
+        mlist <- generic@default # either a list with the default or an empty list
+        mtable <- .mlistAddToTable(generic, mlist) # by default, adds to an empty table
+        assign(".MTable", mtable, envir = env)
+    } # else the current .MTable 
+    else
+      mtable <- getMethodsForDispatch(generic)
+    .resetInheritedMethods(env, mtable)
+    if(is(generic, "groupGenericFunction")) {
+        for(gp in generic@groupMembers) {
+            gpDef <- getGeneric(gp)
+            if(is(gpDef, "genericFunction"))
               .getMethodsTable(gpDef) # force initialization w. group methods
-      }
-  }
+        }
+    }
 }
 
 .updateMethodsInTable <- function(generic, where, attach) {
@@ -475,12 +478,6 @@
       warning(gettextf(
               "Couldn't find methods table for \"%s\", package \"%s\" may be out of date",
                        generic@generic, generic@package), domain=NA)
-      metaName <- mlistMetaName(generic)
-      if(exists(metaName, envir = env, inherits = FALSE))
-        .mlistAddToTable(generic, get(metaName, envir = env), mtable, attach)
-      else
-        warning("Methods list for generic \"", generic@generic,
-                "\" not found")
     }
   }
   if(length(generic@group)>0) {
@@ -753,7 +750,7 @@ outerLabels <- function(labels, new) {
 
 # the real version
 ..addToMetaTable <- function(fdef, signature, definition, where,
-                             nSig = .getGenericSigLength(fdef, fenv)) {
+                             nSig = .getGenericSigLength(fdef)) {
     # TODO:  nSig should be a slot in the table
   tname <- .TableMetaName(fdef@generic, fdef@package)
   where <- as.environment(where)
@@ -766,7 +763,7 @@ outerLabels <- function(labels, new) {
     table <- new.env(TRUE, environment(fdef))
     assign(tname, table, envir = where)
   }
-  assign(.sigLabel(signature), definition, envir = table)
+  .cacheMethodInTable(fdef, signature, definition, table)
 }
 
 .makeGenericTables <- function(where) {
@@ -797,7 +794,11 @@ outerLabels <- function(labels, new) {
 }
 
 .removeMethodsMetaTable <- function(generic, where) {
-    rm(list=.TableMetaName(generic@generic, generic@package), pos = where)
+    ## does not warn if none exists, on the theory that a generic may be created
+    ## but no methods defined to create a table.  The use of implicitGeneric's is an example.
+    tname <- .TableMetaName(generic@generic, generic@package)
+    if(exists(tname, where, inherits = FALSE))
+      rm(list=tname, pos = where)
 }
 
 .getGenericSigArgs <- function(fdef, env = environment(fdef), check = TRUE) {
@@ -843,4 +844,92 @@ listFromMethods <- function(generic, where, table) {
       sigs <- as.list(names)
     new("LinearMethodsList", classes=sigs, methods=methods,
         arguments = .getGenericSigArgs(fdef, fev), generic = fdef)
+}
+
+.makeMlist1 <- function(arg, objects, j = 1) {
+    mnames <- character(length(objects))
+    for(i in seq(along=objects)) {
+        what <- objects[[i]]
+        if(is.primitive(what))
+          sig <- "ANY"
+        else
+          sig <- what@defined
+        mnames[[i]] <- (if(length(sig) < j) "ANY" else sig[[j]])
+    }
+    names(objects) <- mnames
+    new("MethodsList", argument = arg, methods = objects, allMethods = objects)
+}
+
+.makeMlist2 <- function(args, objects, j = 1) {
+    ## make a list according to  argument j, convert these as needed
+    mlists <- list()
+    for(what in objects) {
+        if(is.primitive(what))
+          sig <- NULL
+        else
+          sig <- what@defined
+        if(length(sig) <= j)
+          arg1 = arg2 = "ANY"
+        else {
+            arg1 = sig[[j]]
+            arg2 = sig[[j+1]]
+        }
+        x = list(what)
+        el = mlists[[arg1, exact = TRUE]]
+        mlists[[arg1]] <- (if(is.null(el)) x else c(el, x))
+    }
+    jNext <- j+1
+    if(jNext < length(args))
+      for(i in seq(along = mlists))
+          mlists[[i]] <- .makeMlist2(args, mlists[[i]], jNext)
+    else {
+        arg2 = as.name(args[[jNext]])
+        for(i in seq(along = mlists))
+          mlists[[i]] <- .makeMlist1(arg2, mlists[[i]], jNext)
+    }
+    new("MethodsList", argument = as.name(args[[1]]), methods = mlists, allMethods = mlists)
+}
+
+.makeMlistFromTable <- function(generic, where = NULL) {
+    .getAll <- function(what, table) {
+        value <- list(length(what))
+        for(i in seq(along = what))
+          value[[i]] <- get(what[[i]], envir = table)
+        value
+    }
+    if(is.null(where))
+      table <- get(".MTable", envir = environment(generic), inherits = FALSE)
+    else {
+        where <- as.environment(where)
+        what <-  .TableMetaName(generic@generic, generic@package)
+        if(exists(what, envir = where, inherits= FALSE))
+          table <- get(what, envir = where)
+        else
+          table <- new.env()
+    }
+    value <- new("MethodsList", argument = generic@default@argument)
+    allNames <- objects(table, all.names = TRUE)
+    if(length(allNames) == 0)
+      return(value)
+    argNames <- generic@signature
+    ## USES THE PATTERN OF class#class#.... in the methods tables
+    nargs <- nchar(unique(gsub("[^#]","", allNames)))+1
+    if(length(nargs) > 1) {
+        warning("Something weird:  inconsistent number of args in methods table strings:", paste(nargs,collapse = ", ")," (using the largest value)")
+        nargs <- max(nargs)
+    }
+    length(argNames) <- nargs # the number of args used
+    if(nargs == 1)
+        .makeMlist1(as.name(argNames[[1]]), .getAll(allNames, table))
+    else 
+      .makeMlist2(argNames, .getAll(allNames, table))
+ }
+
+## assign a methods meta-data table, by default (and usually) the table
+## from the generic function with the initial methods, if any.
+.assignMethodsTableMetaData  <- function(name, generic, where, table) {
+    what <-  .TableMetaName(generic@generic, generic@package)
+    if(missing(table))
+      table <- get(".MTable", envir = environment(generic), inherits = FALSE)
+    assign(what, table, envir = as.environment(where))
 }

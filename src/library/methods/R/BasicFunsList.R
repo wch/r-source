@@ -163,18 +163,18 @@ genericForPrimitive <- function(f, where = topenv(parent.frame())) {
     ans
 }
 
-setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
-                                   methods = getMethods(value)) {
-    env <- .findBasicFuns(where)
-    funs <- get(".BasicFunsList", envir = env)
-    if(is.null(elNamed(funs, f)))
-        stop(gettextf("\"%s\" is not one of the basic functions", f), domain = NA)
-    elNamed(funs, f) <- value
-    assign(".BasicFunsList", funs, envir = env)
-    if(is(methods, "MethodsList") && is.primitive(get(f, "package:base")))
-        setPrimitiveMethods(f, finalDefaultMethod(methods), "set", value, methods)
-    f
-}
+## setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
+##                                    methods = getMethods(value)) {
+##     env <- .findBasicFuns(where)
+##     funs <- get(".BasicFunsList", envir = env)
+##     if(is.null(elNamed(funs, f)))
+##         stop(gettextf("\"%s\" is not one of the basic functions", f), domain = NA)
+##     elNamed(funs, f) <- value
+##     assign(".BasicFunsList", funs, envir = env)
+##     if(is(methods, "MethodsList") && is.primitive(get(f, "package:base")))
+##         setPrimitiveMethods(f, finalDefaultMethod(methods), "set", value, methods)
+##     f
+## }
 
 .findBasicFuns <- function(where) {
     allWhere <- .findAll(".BasicFunsList", where = where)

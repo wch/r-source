@@ -106,7 +106,7 @@ completeExtends(ClassDef, class2, extensionDef, where)
 
 classMetaName(name)
 
-methodsPackageMetaName(prefix, name)
+methodsPackageMetaName(prefix, name, package = "")
 
 metaNameUndo(strings, prefix = "M", searchForm = FALSE)
 

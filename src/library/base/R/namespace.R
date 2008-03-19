@@ -450,6 +450,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                    methods:::.getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
             expTables <- character()
+            expMLists <- character()
             if(length(allGenerics) > 0) {
                 expMethods <-
                     unique(c(expMethods,
@@ -461,7 +462,10 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   paste(expMethods[missingMethods],
                                         collapse = ", ")),
                          domain = NA)
-                mlistPattern <- methods:::mlistMetaName()
+                ## Deprecated note:  the mlistPattern objects are deprecated in 2.7.0
+                ## and will disappear later.  For now, deal with them if they exist
+                ## but don't complain if they do not.
+                mlistPattern <- methods:::methodsPackageMetaName("M","")
                 allMethodLists <-
                     unique(c(methods:::.getGenerics(ns, mlistPattern),
                              methods:::.getGenerics(parent.env(ns),
@@ -493,23 +497,20 @@ loadNamespace <- function (package, lib.loc = NULL,
                        exists(mi, envir = ns, mode = "function",
                               inherits = FALSE))
                         exports <- c(exports, mi)
-                    pattern <- paste(mlistPattern, mi, ":", sep="")
-                    ii <- grep(pattern, allMethodLists, fixed = TRUE)
+                    pattern <- paste(tPrefix, mi, ":", sep="")
+                    ii <- grep(pattern, allMethodTables, fixed = TRUE)
                     if(length(ii) > 0) {
 			if(length(ii) > 1) {
-			    warning("Multiple methods lists found for '",
+			    warning("Multiple methods tables found for '",
 				    mi, "'", call. = FALSE)
 			    ii <- ii[1]
 			}
-                        expMethods[[i]] <- allMethodLists[ii]
-                        if(exists(allMethodTables[[ii]], envir = ns))
-                            expTables <- c(expTables, allMethodTables[[ii]])
-                        else
-                            warning("No methods table for \"", mi, "\"")
-                    }
+                        expTables[[i]] <- allMethodTables[ii]
+                        if(exists(allMethodLists[[ii]], envir = ns))
+                            expMLists <- c(expMLists, allMethodLists[[ii]])
+                     }
                     else { ## but not possible?
                       warning(gettextf("Failed to find metadata object for \"%s\"", mi))
-                      expMethods[[i]] <- methods:::mlistMetaName(mi, ns)
                     }
                 }
             }
@@ -518,7 +519,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                               package,
                               paste(expMethods, collapse = ", ")),
                      domain = NA)
-            exports <- c(exports, expClasses, expMethods, expTables)
+            exports <- c(exports, expClasses,  expTables, expMLists)
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)
@@ -782,6 +783,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages) {
 		    delete <- c(delete, ii)
 		if(!missing(generics)) {
 		    genName <- generics[[i]]
+                    if(i > length(generics) || !nzchar(genName))
+                      {warning("got invalid index for importing ",mlname); next}
 		    fdef <- methods:::getGeneric(genName,
                                                  where = impenv,
                                                  package = packages[[i]])
@@ -907,7 +910,7 @@ namespaceExport <- function(ns, vars) {
 
 .mergeExportMethods <- function(new, ns) {
 ##    if(!.isMethodsDispatchOn()) return(FALSE)
-    mm <- methods:::mlistMetaName()
+    mm <- methods:::methodsPackageMetaName("M","")
     newMethods <- new[substr(new, 1, nchar(mm, type = "c")) == mm]
     nsimports <- parent.env(ns)
     for(what in newMethods) {

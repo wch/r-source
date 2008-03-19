@@ -754,16 +754,21 @@ static const char *class_string(SEXP obj)
 
 /* internal version of paste(".", prefix, name, sep="__"),
    for speed so few checks */
-SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
+SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name, SEXP pkg)
 {
-    char str[201];
-    const char *prefixString, *nameString;
+    char str[501];
+    const char *prefixString, *nameString, *pkgString;
 
     prefixString = check_single_string(prefix, TRUE,
 				       "The internal prefix (e.g., \"C\") for a meta-data object");
     nameString = check_single_string(name, FALSE,
 				     "The name of the object (e.g,. a class or generic function) to find in the meta-data");
-    snprintf(str, 200, ".__%s__%s", prefixString, nameString);
+    pkgString = check_single_string(pkg, FALSE,
+				   "The name of the package for a meta-data object");
+    if(*pkgString)
+      snprintf(str, 500, ".__%s__%s:%s", prefixString, nameString, pkgString);
+    else
+      snprintf(str, 500, ".__%s__%s", prefixString, nameString);
     return mkString(str);
 }
 

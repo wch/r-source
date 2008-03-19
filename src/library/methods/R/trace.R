@@ -437,25 +437,17 @@ trySilent <- function(expr) {
         hasFunction <- FALSE
     if(hasFunction) {
         ## find the generic in the corresponding namespace
-        metaName <- mlistMetaName(fdef)
         where2 <- findFunction(what, where = environment(fdef))[[1]] # must find it?
-        unlockBinding(metaName, where)
         unlockBinding(what, where)
         setMethod(what, signature, method, where = where)
         lockBinding(what, where)
-        lockBinding(metaName, where)
         ## assign in the package namespace as well
         unlockBinding(what, where2)
-        unlockBinding(metaName, where2) # FIXME:  look for sig. ?
         setMethod(what, signature, method, where = where2)
-        lockBinding(metaName, where2)
         lockBinding(what, where2)
     }
     else {
-        metaName <- mlistMetaName(what)
-        unlockBinding(metaName, where)
         setMethod(what, signature, method, where = where)
-        lockBinding(metaName, where)
     }
 }
 

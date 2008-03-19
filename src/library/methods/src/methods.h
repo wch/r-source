@@ -36,7 +36,7 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package);
 SEXP R_get_slot(SEXP obj, SEXP name);
 SEXP R_identC(SEXP e1, SEXP e2);
 SEXP R_initMethodDispatch(SEXP envir);
-SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name);
+SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name, SEXP pkg);
 SEXP R_methods_test_MAKE_CLASS(SEXP className);
 SEXP R_methods_test_NEW(SEXP className);
 SEXP R_missingArg(SEXP symbol, SEXP ev);

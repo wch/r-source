@@ -20,7 +20,6 @@
 \alias{makeStandardGeneric}
 \alias{generic.skeleton}
 \alias{defaultDumpName}
-\alias{getAllMethods}
 \alias{doPrimitiveMethod}
 \alias{conformMethod}
 \alias{getGeneric}
@@ -29,7 +28,6 @@
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
-\alias{mlistMetaName}
 \alias{removeMethodsObject}
 \alias{findUnique}
 \alias{MethodAddCoerce}
@@ -63,7 +61,6 @@ getGroupMembers(group, recursive = FALSE, character = TRUE)
 
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
-mlistMetaName (name, package)
 
 makeGeneric(f, fdef, fdefault, group=list(), valueClass=character(),
             package, signature = NULL, genericFunction = NULL)
@@ -73,8 +70,6 @@ makeStandardGeneric(f, fdef)
 generic.skeleton(name, fdef, fdefault)
 
 defaultDumpName(generic, signature)
-
-getAllMethods(f, fdef, where)
 
 doPrimitiveMethod(name, def, call= sys.call(sys.parent()),
                   ev = sys.frame(sys.parent(2)))
@@ -281,11 +276,11 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
     \item{\code{addNextMethod}:}{
-      A generic function that finds the next method in \code{mlist}
-      corresponding the method definition \code{method}  and adds the
-      method to the methods list, which it then returns.  It uses
-      methods defined suitably for ordinary methods and for methods with
-      calls to \code{\link{callNextMethod}}.
+      A generic function that finds the next method for
+      the signature of the method definition \code{method}  and caches
+      that method in the method definition (promoting the class to
+      \code{"MethodWithNext"}.  Note that argument \code{mlist} is
+      obsolete and not used.
     }
 
     \item{\code{makeGeneric}:}{
@@ -325,40 +320,6 @@ addNextMethod(method, f, mlist, optional, envir)
       the default name to be used for dumping a method.
     }
 
-    \item{\code{getAllMethods}:}{
-      A generic function (with methods) representing the merge of all
-      the methods defined for this generic starting from environment
-      \code{where}, including all parent environments.  By default,
-      uses the global environment (and therefore all packages on the
-      search list).  This function exists largely
-      to re-compute the full set of methods when a change to the
-      available methods occurs.  Since all such recomputations are
-      supposed to be automatic, direct calls to \code{getAllMethods}
-      should not be needed.
-
-      If the generic \code{f} has a group generic, methods for this
-      group generic (and further generations of group generics, if any)
-      are also merged.
-
-      The merging rule is as follows: each generic is merged across
-      packages, and the group generics are then merged, finally adding
-      the directly defined methods of \code{f}.
-
-      The effect of the merging rule is that any method directly defined
-      for \code{f} on any included package overrides a method for the
-      same signature defined for the group generic; similarly for the
-      group generic and its group, if any, etc.
-
-      For \code{f} or for a specific group generic, methods override in
-      the order of the packages being searched.  A method for a
-      particular signature on a particular package overrides any methods
-      for the same signature on packages later on in the list of
-      packages being searched.
-
-      The slot \code{"allMethods"} of the merged methods list is set to
-      a copy of the methods slot; this is the slot where inherited
-      methods are stored.
-    }
 
     \item{\code{doPrimitiveMethod}:}{
       do a primitive call to builtin function \code{name} the definition

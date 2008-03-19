@@ -118,7 +118,7 @@
                   method
               }, where = envir)
     setGeneric("addNextMethod", function(method, f = "<unknown>",
-                                         mlist = getMethods(f), optional = FALSE, envir)
+                                         mlist, optional = FALSE, envir)
                standardGeneric("addNextMethod"), where = envir)
     setMethod("addNextMethod", "MethodDefinition",
 	      function(method, f, mlist, optional, envir) {

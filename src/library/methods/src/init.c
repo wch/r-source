@@ -35,7 +35,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(R_get_slot, 2),
     CALLDEF(R_identC, 2),
     CALLDEF(R_initMethodDispatch, 1),
-    CALLDEF(R_methodsPackageMetaName, 2),
+    CALLDEF(R_methodsPackageMetaName, 3),
     CALLDEF(R_methods_test_MAKE_CLASS, 1),
     CALLDEF(R_methods_test_NEW, 1),
     CALLDEF(R_missingArg, 2),

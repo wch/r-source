@@ -584,13 +584,16 @@ promptMethods <- function(f, filename = NULL, methods)
     escape <- function(txt) gsub("%", "\\\\%", txt)
     packageString <- ""
 
+    fdef <- getGeneric(f)
+    if(!isGenericFunction(fdef))
+      stop(gettextf("No generic function found corresponding to \"%s\"", f), domain = NA)
     if(missing(methods)) {
-        where <- find(mlistMetaName(f))
+        where <- find(.TableMetaName(fdef@generic, fdef@generic))
         if(length(where) == 0)
-            stop(gettextf("no methods found for generic \"%s\"", f), domain = NA)
-        where <- where[1]
-        methods <- getMethods(f, where)
-        if(where != 1)
+            stop(gettextf("no methods found for generic \"%s\"", fdef@generic), domain = NA)
+        where <- as.environment(where[1])
+        methods <- getMethods(f, where)  #TODO: change this & below to findMethods()
+        if(where != .GlobalEnv)
             packageString <-
                 paste0("in Package `", getPackageName(where), "'")
         ## (We want the '`' for LaTeX, as we currently cannot have
