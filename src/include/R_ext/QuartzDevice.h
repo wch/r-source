@@ -17,14 +17,14 @@
  *  http://www.r-project.org/Licenses/
  *
  *---------------------------------------------------------------------
- *  This header file constitutes the (inofficial) API to the Quartz
- *  device. Being inofficial, the API may change at any point without
+ *  This header file constitutes the (unofficial) API to the Quartz
+ *  device. Being unofficial, the API may change at any point without
  *  warning.
  *
  *  Quartz is a general device-independent way of drawing in Mac OS X,
  *  therefore the Quartz device modularizes the actual drawing target
  *  implementation into separate modules (e.g. Carbon and Cocoa for
- *  on-screen display and Bitmap for off-screen drawing). The API
+ *  on-screen display and PDF, Bitmap for off-screen drawing). The API
  *  below is used by the modules to talk to the Quartz device without
  *  having to know anything about R graphics device API.
  *
@@ -43,10 +43,12 @@
  *    (CGContextRef) for drawing. A device can temporarily return NULL
  *    (e.g. if the context is not available immediately) and replay
  *    the display list later to catch up.
+ *
  *  - interactive devices can use QuartzDevice_SetScaledSize to resize
  *    the device (no context is necessary), then prepare the context
  *    (call QuartzDevice_ResetContext if a new context was created)
  *    and finally re-draw using QuartzDevice_ReplayDisplayList.
+ *
  *  - snapshots can be created either off the current display list
  *    (last=0) or off the last known one (last=1). NewPage callback
  *    can only use last=1 as there is no display list during that
@@ -56,6 +58,7 @@
  *    (the declaration doesn't use SEXP as to not depend on
  *    Rinternals.h) and must be protected or preserved immediately
  *    (i.e. the Quartz device does NOT protect them).
+ *
  *  - dirty flag: the dirty flag is not used internally by the Quartz
  *    device, but can be useful for the modules to determine whether
  *    the current graphics is a restored copy or in-progress
@@ -65,6 +68,7 @@
  *    (i.e. outside of restore/replay) set the flag. Most common use
  *    is to determine whether restored snapshots have been
  *    subsequently modified.
+ *
  *  - history: currently the history management is not used by any
  *    modules and as such is untested and strictly experimental. It
  *    may be removed in the future as it is not clear whether it makes
@@ -98,13 +102,13 @@ typedef struct QuartzBackend_s {
     int    bg, canvas;
     int    flags;
     void*  userInfo;
-    CGContextRef (*getCGContext)(QuartzDesc_t dev,void*userInfo); /* Get the context for this device */
-    int          (*locatePoint)(QuartzDesc_t dev,void*userInfo,double*x,double*y);
-    void         (*close)(QuartzDesc_t dev,void*userInfo);
-    void         (*newPage)(QuartzDesc_t dev,void*userInfo, int flags);
-    void         (*state)(QuartzDesc_t dev,void*userInfo, int state);
-    void*        (*par)(QuartzDesc_t dev,void*userInfo,void*par);
-    void         (*sync)(QuartzDesc_t dev,void*userInfo);
+    CGContextRef (*getCGContext)(QuartzDesc_t dev, void*userInfo); /* Get the context for this device */
+    int          (*locatePoint)(QuartzDesc_t dev, void*userInfo, double*x, double*y);
+    void         (*close)(QuartzDesc_t dev, void*userInfo);
+    void         (*newPage)(QuartzDesc_t dev, void*userInfo, int flags);
+    void         (*state)(QuartzDesc_t dev, void*userInfo, int state);
+    void*        (*par)(QuartzDesc_t dev, void*userInfo, void*par);
+    void         (*sync)(QuartzDesc_t dev, void*userInfo);
 } QuartzBackend_t;
 
 #define QPFLAG_ANTIALIAS 0x0100
@@ -159,11 +163,15 @@ typedef struct QuartzFunctons_s {
      Note: it inhibits sync calls during repaint,
      the caller is responsible for calling sync if needed.
      Dirty flag is kept unmodified */
-    void*  (*GetSnapshot)(QuartzDesc_t desc, int last);    /* create a (replayable) snapshot of the device contents. when last is set then the last stored display list is used, otherwise a new snapshot is created */
-    void   (*RestoreSnapshot)(QuartzDesc_t desc,void* snapshot); /* restore a snapshot. also clears the dirty flag */
+    void*  (*GetSnapshot)(QuartzDesc_t desc, int last);    
+    /* create a (replayable) snapshot of the device contents. 
+       when 'last' is set then the last stored display list is used, 
+       otherwise a new snapshot is created */
+    void   (*RestoreSnapshot)(QuartzDesc_t desc,void* snapshot);
+    /* restore a snapshot. also clears the dirty flag */
 
     int    (*GetAntialias)(QuartzDesc_t desc);    /* get anti-alias flag */
-    void   (*SetAntialias)(QuartzDesc_t desc,int aa); /* set anti-alias flag */
+    void   (*SetAntialias)(QuartzDesc_t desc, int aa); /* set anti-alias flag */
 
     int    (*GetBackground)(QuartzDesc_t desc);   /* get background color */
 } QuartzFunctions_t;
@@ -175,7 +183,8 @@ QuartzFunctions_t *getQuartzFunctions();
 typedef int (*quartz_create_fn_t)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
 /* grDevices currently supply following constructors:
-   QuartzCocoa_DeviceCreate, QuartzCarbon_DeviceCreate, QuartzBitmap_DeviceCreate, QuartzPDF_DeviceCreate */
+   QuartzCocoa_DeviceCreate, QuartzCarbon_DeviceCreate,
+   QuartzBitmap_DeviceCreate, QuartzPDF_DeviceCreate */
 
 /* embedded Quartz support hook (defined in unix/aqua.c):
      dd = should be passed-through to QuartzDevice_Create

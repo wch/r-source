@@ -40,48 +40,50 @@ typedef struct {
 
 static QuartzFunctions_t *qf;
 
-CGContextRef QuartzBitmap_GetCGContext(QuartzDesc_t dev,void *userInfo) {
-    return ((QuartzBitmapDevice*)userInfo)->bitmap;
+CGContextRef QuartzBitmap_GetCGContext(QuartzDesc_t dev, void *userInfo)
+{
+    return ((QuartzBitmapDevice*) userInfo)->bitmap;
 }
 
-void QuartzBitmap_Close(QuartzDesc_t dev,void *userInfo) {
-    QuartzBitmapDevice *qbd = (QuartzBitmapDevice*)userInfo;
+void QuartzBitmap_Close(QuartzDesc_t dev,void *userInfo)
+{
+    QuartzBitmapDevice *qbd = (QuartzBitmapDevice*) userInfo;
     
     if(qbd->path && qbd->uti) {
         /* On 10.4+ we can employ the CGImageDestination API to create a
            variety of different bitmap formats */
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
-        CFStringRef pathString = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)qbd->path,strlen(qbd->path),kCFStringEncodingUTF8,FALSE);
+        CFStringRef pathString = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) qbd->path, strlen(qbd->path), kCFStringEncodingUTF8, FALSE);
         CFURLRef path;
         if(CFStringFind(pathString,CFSTR("://"),0).location != kCFNotFound) {
-            CFStringRef pathEscaped= CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,pathString,NULL,NULL,kCFStringEncodingUTF8);
-            path = CFURLCreateWithString(kCFAllocatorDefault,pathEscaped,NULL);
+            CFStringRef pathEscaped= CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, pathString, NULL, NULL, kCFStringEncodingUTF8);
+            path = CFURLCreateWithString(kCFAllocatorDefault, pathEscaped, NULL);
             CFRelease(pathEscaped);
         } else {
-            path = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault,(const UInt8*)qbd->path,strlen(qbd->path),FALSE);
+            path = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*) qbd->path, strlen(qbd->path), FALSE);
         }
         CFRelease(pathString);
         
         CFStringRef scheme = CFURLCopyScheme(path);
-       	CFStringRef type  = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)qbd->uti,strlen(qbd->uti),kCFStringEncodingUTF8,FALSE);
+       	CFStringRef type  = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) qbd->uti, strlen(qbd->uti), kCFStringEncodingUTF8, FALSE);
     	CGImageRef image = CGBitmapContextCreateImage(qbd->bitmap);
-        if(CFStringCompare(scheme,CFSTR("file"),0) == 0) {
-            CGImageDestinationRef dest = CGImageDestinationCreateWithURL(path,type,1,NULL);
-            CGImageDestinationAddImage(dest,image,NULL);
+        if(CFStringCompare(scheme,CFSTR("file"), 0) == 0) {
+            CGImageDestinationRef dest = CGImageDestinationCreateWithURL(path, type, 1, NULL);
+            CGImageDestinationAddImage(dest, image, NULL);
             CGImageDestinationFinalize(dest);
             CFRelease(dest);
-        } else if(CFStringCompare(scheme,CFSTR("clipboard"),0) == 0) {
+        } else if(CFStringCompare(scheme, CFSTR("clipboard"), 0) == 0) {
             //Copy our image into data
-            CFMutableDataRef      data = CFDataCreateMutable(kCFAllocatorDefault,0);
-            CGImageDestinationRef dest = CGImageDestinationCreateWithData(data,type,1,NULL);
-            CGImageDestinationAddImage(dest,image,NULL);
+            CFMutableDataRef      data = CFDataCreateMutable(kCFAllocatorDefault, 0);
+            CGImageDestinationRef dest = CGImageDestinationCreateWithData(data, type, 1, NULL);
+            CGImageDestinationAddImage(dest, image, NULL);
             CGImageDestinationFinalize(dest);
             CFRelease(dest);
             PasteboardRef pb = NULL;
-            if(noErr == PasteboardCreate(kPasteboardClipboard,&pb)) {
+            if(noErr == PasteboardCreate(kPasteboardClipboard, &pb)) {
                 PasteboardClear(pb);
                 PasteboardSyncFlags syncFlags = PasteboardSynchronize(pb);
-                PasteboardPutItemFlavor(pb,(PasteboardItemID)1,type,data,0);
+                PasteboardPutItemFlavor(pb, (PasteboardItemID) 1, type, data, 0);
             }
             CFRelease(data);
         } else
@@ -99,7 +101,8 @@ void QuartzBitmap_Close(QuartzDesc_t dev,void *userInfo) {
     free(qbd);
 }
 
-Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par) {
+Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
+{
     /* In the case of a zero length string we default to PNG presently. This 
        should probably be an option somewhere. */
     double *dpi = par->dpi;
@@ -114,8 +117,8 @@ Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParame
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
     /* We'll gladly support any image destination type */
     CFArrayRef  types = CGImageDestinationCopyTypeIdentifiers();
-    CFStringRef mine  = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)type,strlen(type),kCFStringEncodingUTF8,FALSE);
-    if(CFArrayContainsValue(types,CFRangeMake(0,CFArrayGetCount(types)),mine)) {
+    CFStringRef mine  = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) type, strlen(type), kCFStringEncodingUTF8, FALSE);
+    if(CFArrayContainsValue(types,CFRangeMake(0, CFArrayGetCount(types)), mine)) {
         size_t w = dpi[0] * width;
         size_t h = dpi[1] * height;
         size_t rb= (w*8*4+7)/8; /* Bytes per row */
@@ -148,7 +151,7 @@ Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParame
 	
 	
 	if (!qf->Create(dd, &qdef))
-            QuartzBitmap_Close(NULL,dev);
+            QuartzBitmap_Close(NULL, dev);
         else {
             ret = TRUE;
             qf->ResetContext(qd);

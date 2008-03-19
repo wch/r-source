@@ -38,12 +38,14 @@ typedef struct {
 
 static QuartzFunctions_t *qf;
 
-CGContextRef QuartzPDF_GetCGContext(QuartzDesc_t dev,void *userInfo) {
+CGContextRef QuartzPDF_GetCGContext(QuartzDesc_t dev,void *userInfo) 
+{
     return ((QuartzPDFDevice*)userInfo)->context;
 }
 
-void QuartzPDF_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
-    QuartzPDFDevice *qpd = (QuartzPDFDevice*)userInfo;
+void QuartzPDF_NewPage(QuartzDesc_t dev, void *userInfo, int flags) 
+{
+    QuartzPDFDevice *qpd = (QuartzPDFDevice*) userInfo;
     if (qpd->context) { /* hopefully that's true */
         if (qpd->page) CGContextEndPage(qpd->context);
         CGContextBeginPage(qpd->context, &qpd->bbox);
@@ -51,24 +53,29 @@ void QuartzPDF_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
     qpd->page++;
 }
 
-void QuartzPDF_Close(QuartzDesc_t dev,void *userInfo) {
-    QuartzPDFDevice *qpd = (QuartzPDFDevice*)userInfo;
+void QuartzPDF_Close(QuartzDesc_t dev, void *userInfo)
+{
+    QuartzPDFDevice *qpd = (QuartzPDFDevice*) userInfo;
 
     if (qpd->context) { /* hopefully that's true */
         if (qpd->page) CGContextEndPage(qpd->context);
         CGContextRelease(qpd->context);
     }
     /* Free ourselves */
-    if (qpd->url)    CFRelease(qpd->url);
+    if (qpd->url) CFRelease(qpd->url);
     free(qpd);
 }
 
-Rboolean QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par) {
+Rboolean 
+QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
+{
     double *dpi = par->dpi;
     double mydpi[2] = { 72.0, 72.0 };
     double width = par->width, height = par->height;
     Rboolean ret = FALSE;
-    /* DPI is ignored, because PDF is resolution independent. More precisely 72dpi is used to guatantee that PDF and GE coordinates are the same */
+    /* DPI is ignored, because PDF is resolution independent.
+       More precisely 72dpi is used to guatantee that PDF and GE 
+       coordinates are the same */
     dpi=mydpi;
     
     if (!qf) qf = fn;
@@ -82,7 +89,7 @@ Rboolean QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameter
     
     if (par->file && *par->file) {
         CGRect bbox;
-        CFStringRef path = CFStringCreateWithBytes(kCFAllocatorDefault,(UInt8*)par->file,strlen(par->file),kCFStringEncodingUTF8,FALSE);
+        CFStringRef path = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) par->file, strlen(par->file), kCFStringEncodingUTF8, FALSE);
         if (!path || !(dev->url = CFURLCreateWithFileSystemPath (NULL, path, kCFURLPOSIXPathStyle, false))) {
             free(dev);
             return ret;
@@ -100,7 +107,7 @@ Rboolean QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameter
                 values[numK] = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) par->title, strlen(par->title), kCFStringEncodingUTF8, FALSE);
                 numK++;
             }
-            ai = CFDictionaryCreate(0, (void*)keys, (void*)values, numK, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+            ai = CFDictionaryCreate(0, (void*) keys, (void*) values, numK, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
             while (numK) CFRelease(values[--numK]);
         }
         if (!(dev->context = CGPDFContextCreateWithURL(dev->url, &dev->bbox, ai))) {
@@ -116,7 +123,8 @@ Rboolean QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameter
         CGContextScaleCTM(dev->context, 1.0, -1.0);
 	
 	QuartzBackend_t qdef = {
-	    sizeof(qdef), width, height, dpi[0]/72.0, dpi[1]/72.0, par->pointsize,
+	    sizeof(qdef), width, height,
+	    dpi[0]/72.0, dpi[1]/72.0, par->pointsize,
 	    par->bg, par->canvas, par->flags,
 	    dev,
 	    QuartzPDF_GetCGContext,
