@@ -10,7 +10,7 @@
 \description{The following graphics devices are currently available:
   \itemize{
 #ifdef windows
-    \item \code{\link{windows}} The graphics driver for Windows (on screen,
+    \item \code{\link{windows}} The graphics device for Windows (on screen,
     to printer and to Windows metafile).
 #endif
     \item \code{\link{postscript}} Writes PostScript graphics commands to
@@ -29,9 +29,10 @@
     \code{GhostScript} (if available).
   }
 #ifdef unix
-  The following devices will be available if \R was compiled to use them:
+  The following devices will be functional if \R was compiled to use
+  them (they exist but will return with a warning on other systems):
   \itemize{
-    \item \code{\link{X11}} The graphics driver for the X11 Window system
+    \item \code{\link{X11}} The graphics device for the X11 Window system
     \item \code{\link{bmp}} Windows bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
     \item \code{\link{png}} PNG bitmap device
@@ -39,8 +40,10 @@
     \item \code{\link{cairo_pdf}}, \code{cairo_ps} PDF and PostScript
     devices based on cairo graphics.
 
-    \item \code{\link{quartz}} The graphics driver for the Mac OS X
-    native Quartz 2d graphics system.
+    \item \code{\link{quartz}} The graphics device for the Mac OS X
+    native Quartz 2d graphics system.  (This is only functional on Mac
+    OS X, but unlike \R < 2.7.0 can be used from the command line and
+    not just from the GUI console.)
   }
 #endif
 }

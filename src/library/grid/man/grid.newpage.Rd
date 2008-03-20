@@ -17,6 +17,12 @@ grid.newpage(recording = TRUE)
     operation should be saved onto the Grid display list.}
 }
 \details{
+  The new page is painted with the fill colour
+  (\code{\link{gpar}("fill")}), which is often transparent.  For devices
+  with a \emph{canvas} colour (the on-screen devices \code{X11},
+  \code{windows} and \code{quartz}), the page is first painted with the
+  canvas colour and then the background colour.
+
   There is a hook called \code{"grid.newpage"} (see \code{\link{setHook}})
   which is used in the testing code to annotate the new page.  The hook
   function(s) are called with no argument.  (If the value is a character

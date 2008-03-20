@@ -56,8 +56,8 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
     \code{"Times"}.  Any other value is replaced by
     \code{"Helvetica"}, with a warning.}
   \item{pointsize}{the default point size to be used.}
-  \item{bg}{the default background color to be used.}
-  \item{fg}{the default foreground color to be used.}
+  \item{bg}{the initial background color to be used.}
+  \item{fg}{the initial foreground color to be used.}
   \item{pagecentre}{logical: should the device region be centred on the
     page?}
 }
@@ -77,11 +77,11 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   \code{cex = 1} corresponds to a square of side 1/72 inch.  
 
   Windows users can make use of WinFIG
-  (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}).
+  (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}, shareware).
 }
 \note{
   Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this
-  will be partially remedied, but the XFig file format does not allow as
+  may be partially remedied, but the XFig file format does not allow as
   general line textures as the \R model.  Unimplemented line textures
   are displayed as \emph{dash-double-dotted}.
 
@@ -96,7 +96,7 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
     border on all sides.
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
-    \item Line widths are integers, multiples of 1/96 inch.
+    \item Line widths are integers, multiples of 5/432 inch.
     \item Circle radii are multiples of 1/1200 inch.
     \item Colours are interpreted by the viewing/printing application.
   }

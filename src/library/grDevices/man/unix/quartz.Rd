@@ -38,11 +38,11 @@ quartz.options(\dots, reset = FALSE)
   \item{file}{an optional target for the graphics device. The default,
     \code{NULL}, selects a default name where one is needed.  See
     \sQuote{Details} for more information.}
-  \item{bg}{background color to use for the device.  Default
-    \code{"transparent"}. An opaque colour such as \code{"white"} will
-    normally be required on off-screen devices that support transparency
+  \item{bg}{the initial background colour to use for the device.  Default
+    \code{"transparent"}.  An opaque colour such as \code{"white"} will
+    normally be required on off-screen types that support transparency
     such as \code{"png}" and \code{"tiff"}.}
-  \item{canvas}{canvas color to use for an on-screen device.  Default
+  \item{canvas}{canvas colour to use for an on-screen device.  Default
     \code{"white"}, and will be forced to be an opaque colour.}
   \item{dpi}{resolution of the output.  The default (\code{NA_real_})
     for an on-screen display defaults to the resolution of
@@ -56,7 +56,7 @@ quartz.options(\dots, reset = FALSE)
   \sQuote{factory-fresh} defaults.
 
   The Quartz graphics device supports a variety of output types.
-  On-screen output types are code{""} or \code{"native"} (picks the best
+  On-screen output types are \code{""} or \code{"native"} (picks the best
   possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and later)
   and \code{"Carbon"} (not currently implemented -- potentially
   Mac OS X 10.3 and earlier).   Off-screen output
@@ -78,8 +78,8 @@ quartz.options(\dots, reset = FALSE)
   substituted if a C integer format is included in the character string,
   e.g. \code{Rplot\%03d.png}.  (The result must be less than
   \code{PATH_MAX} characters long, and may be truncated if not. See
-  \code{\link{postscript}} for further details.)  If a \code{file} argument is
-  not supplied, the default is \code{Rplots.pdf} or
+  \code{\link{postscript}} for further details.)  If a \code{file}
+  argument is not supplied, the default is \code{Rplots.pdf} or
   \code{Rplot\%03d.\var{type}}.
 
   If a device-independent \R graphics font family is specified
@@ -88,16 +88,23 @@ quartz.options(\dots, reset = FALSE)
   (see \code{quartzFonts}) to convert the R graphics font family
   to a Quartz-specific font family description.
 
+  On-screen devices are launched with a semi-transparent canvas.  Once a
+  new plot is created, the canvas is first painted with the
+  \code{canvas} colour and then the current background colour (which can
+  be transparent or semi-transparent).  Off-screen devices have no
+  canvas colour, and so start with a transparent background where
+  possible (e.g. \code{type="png"} and \code{type="tiff"}) -- otherwise
+  it appears that a solid white canvas is assumed in the Quartz code.
+
   \code{title} can be used for on-screen output.  It must be a single
   character string with an optional integer printf-style format that
   will be substituted by the device number.  It is also optionally used
   (without a format) to give a title to a PDF file.
 
-  Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}.
+  Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}
+  for on-scren devices and to \code{"quartz_off_screen"} otherwise.
 }
 \section{Conventions}{
-  Currently a place-holder!
-  
   This section describes the implementation of the conventions for
   graphics devices set out in the \dQuote{R Internals Manual}.
 
@@ -105,7 +112,7 @@ quartz.options(\dots, reset = FALSE)
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
     \item The default font family is Arial.
-    \item Line widths are a mutliple of 1/96 inch with no minimum set by \R.
+    \item Line widths are a multiple of 1/96 inch with no minimum set by \R.
     \item Circle radii are real-valued with no minimum set by \R.
     \item Colour interpretation is by the viewer, including the screen
     display.

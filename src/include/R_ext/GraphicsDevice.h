@@ -121,11 +121,10 @@ struct _NewDevDesc {
      ********************************************************/
     /* These are things that the device must set up when it is created.
      * The graphics system can modify them and track current values,
-     * but some devices want to know what the original setting was.
      */
     double startps;
-    int startcol;
-    int startfill;
+    int startcol;  /* sets par("fg"), par("col") and gpar("col") */
+    int startfill; /* sets par("bg") and gpar("fill") */
     int startlty;
     int startfont;
     double startgamma;

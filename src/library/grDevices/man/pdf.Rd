@@ -53,9 +53,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   }
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.  Defaults to \code{"default"}.}
-  \item{bg}{the default background color to be used.  Defaults to
+  \item{bg}{the initial background color to be used.  Defaults to
     \code{"transparent"}.}
-  \item{fg}{the default foreground color to be used.  Defaults to
+  \item{fg}{the initial foreground color to be used.  Defaults to
    \code{"black"}.}
   \item{pointsize}{the default point size to be used.  Strictly
     speaking, in bp, that is 1/72 of an inch, but approximately in
@@ -145,6 +145,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   want the default behaviour of \code{\link{postscript}} use
   \code{pdf(paper="a4r", width=0, height=0)} to centre the device region
   on a landscape A4 page with 0.25 inch margins.
+
+  When the background colour is fully transparent (as is the initial
+  default value), the PDF produced does not paint the background.
+  Almost all PDF viewers will use a white canvas so the visual effect is
+  if the background were white.  This will not be the case when printing
+  onto coloured paper, though.
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for

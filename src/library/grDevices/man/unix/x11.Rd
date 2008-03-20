@@ -32,13 +32,13 @@ X11.options(\dots, reset = FALSE)
     \sQuote{Resources}.}
   \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
   \item{gamma}{the gamma correction factor.  This value is used
-    to help ensure that the colors perceived are linearly related to
+    to help ensure that the colours perceived are linearly related to
     RGB values (see \code{\link{hsv}}).  By default 1 (default
     correction).}
-  \item{bg}{color.  The default background color.  Default
+  \item{bg}{colour, the initial background colour.  Default
     \code{"transparent"}.}
-  \item{canvas}{color.  The color of the canvas, which is visible only
-    when the background color is transparent.  Should be a solid color
+  \item{canvas}{colour.  The colour of the canvas, which is visible only
+    when the background colour is transparent.  Should be a solid colour
     (and any alpha value will be ignored).  Default \code{"white"}.}
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
@@ -64,7 +64,7 @@ X11.options(\dots, reset = FALSE)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
-    and \code{maxcubesize} (see section \sQuote{Color Rendering}).}
+    and \code{maxcubesize} (see section \sQuote{Colour Rendering}).}
 }
 \details{
   The defaults for all of the arguments of \code{X11} are set by
@@ -162,18 +162,18 @@ X11.options(\dots, reset = FALSE)
   which specifies a 900 x 900 pixel window at the top right of the screen.
 }
 
-\section{Color Rendering}{
+\section{Colour Rendering}{
   X11 supports several \sQuote{visual} types, and nowadays almost all
   systems support \sQuote{truecolor} which \code{X11} will use by
-  default.  This uses a direct specification of any RGB color up to the
-  depth supported (usually 8 bits per color).  Other visuals make use
-  of a palette to support fewer colors, only grays or even only
+  default.  This uses a direct specification of any RGB colour up to the
+  depth supported (usually 8 bits per colour).  Other visuals make use
+  of a palette to support fewer colours, only grays or even only
   black/white.  The palette is shared between all X11 clients, so it can
-  be necessary to limit the number of colors used by \R.
+  be necessary to limit the number of colours used by \R.
 
   Cairo-based devices support only \sQuote{truecolor} visuals.
 
-  The default for \code{type="Xlib"} is to use the best possible color
+  The default for \code{type="Xlib"} is to use the best possible colour
   model for the visual of the X11 server.  This can be overridden by the
   \code{colortype} argument of \code{X11.options}.  \bold{Note:} All
   \code{X11} and \code{type = "Xlib"} \code{\link{bmp}}, \code{jpeg},
@@ -185,21 +185,21 @@ X11.options(\dots, reset = FALSE)
   The colortype types are tried in the order \code{"true"},
   \code{"pseudo"}, \code{"gray"} and \code{"mono"} (black or white
   only).  The values \code{"pseudo"} and \code{"pseudo.cube"} provide
-  color strategies for a pseudocolor visual.  The first strategy
-  provides on-demand color allocation which produces exact colors until
-  the color resources of the display are exhausted (when plotting will
-  fail).  The second allocates (if possible) a standard color cube, and
-  requested colors are approximated by the closest value in the cube.
+  colour strategies for a pseudocolor visual.  The first strategy
+  provides on-demand colour allocation which produces exact colours until
+  the colour resources of the display are exhausted (when plotting will
+  fail).  The second allocates (if possible) a standard colour cube, and
+  requested colours are approximated by the closest value in the cube.
 
   With \code{colortype} equal to \code{"pseudo.cube"} or \code{"gray"}
   successively smaller palettes are tried until one is completely
   allocated.  If allocation of the smallest attempt fails the device will
   revert to \code{"mono"}.  For \code{"gray"} the search starts at 256
   grays for a display with depth greater than 8, otherwise with half
-  the available colors.  For \code{"pseudo.cube"} the maximum cube size
+  the available colours.  For \code{"pseudo.cube"} the maximum cube size
   is set by \code{X11.options(maxcolorsize=)} and defaults to
   256.  With that setting the largest cube tried is 4 levels each for
-  RGB, using 64 colors in the palette.
+  RGB, using 64 colours in the palette.
 }
 \section{Anti-aliasing}{
   Anti-aliasing is only supported for cairo-based devices, and applies to

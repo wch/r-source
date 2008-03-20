@@ -54,7 +54,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and
     vertically.  Default \code{NA_real_}, which means to take the
     value from Windows.}
-  \item{bg}{color.  The default background color.  Default
+  \item{bg}{color.  The initial background color.  Default
     \code{"transparent"}.}
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.  Should be a solid color
@@ -140,9 +140,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   colour.  The device region is coloured in the canvas colour.  This is
   over-painted by the background colour of a plot when a new page is
   called for, but that background colour can be transparent (and is by
-  default).  The difference between setting the canvas colour and the
-  background colour is that when the device is copied the background
-  colour is copied but the canvas colour is not.
+  default).  One difference between setting the canvas colour and the
+  background colour is that when a plot is saved the background
+  colour is copied but the canvas colour is not.  The argument \code{bg}
+  sets the initial value of \code{\link{par}("bg")} in base graphics and
+  \code{\link{gpar}("fill"}} in grid graphics
 
   Recorded plot histories are of class \code{"SavedPlots"}.  They have a
   \code{print} method, and a subset method.  As the individual plots are

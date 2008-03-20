@@ -65,10 +65,10 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \pkg{grDevices} if the path does not contain a path separator.  An
     extension \code{".enc"} can be omitted.
   }
-  \item{bg}{the default background color to be used.  If
-    \code{"transparent"} (or an equivalent specification), no background
+  \item{bg}{the initial background color to be used.  If
+    \code{"transparent"} (or any other non-opaque colour), no background
     is painted.  Defaults to \code{"transparent"}.}
-  \item{fg}{the default foreground color to be used.  Defaults to
+  \item{fg}{the initial foreground color to be used.  Defaults to
     \code{"black"}.}
   \item{width, height}{the width and height of the graphics region in
     inches.  Default to t\code{0}.
@@ -152,6 +152,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{cex = 1} corresponds to a square of side 1/72 inch, which is
   also the \sQuote{pixel} size assumed for graphics parameters such as
   \code{"cra"}.
+
+  When the background colour is fully transparent (as is the initial
+  default value), the PostScript produced does not paint the
+  background. Almost all PostScript viewers will use a white canvas so
+  the visual effect is if the background were white.  This will not be
+  the case when printing onto coloured paper, though.
 }
 
 \section{Families}{

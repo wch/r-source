@@ -359,8 +359,8 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 
     dev->canClip       = TRUE;
     dev->canHAdj       = 2;
-    dev->canChangeGamma= TRUE;
-    dev->displayListOn = TRUE;
+    dev->canChangeGamma= FALSE;
+    dev->displayListOn = TRUE; /* FIXME: depend on type */
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;

@@ -19,6 +19,12 @@ frame()
   plots when a multi-figure region is in use.
 }
 \details{
+  The new page is painted with the background colour
+  (\code{\link{par}("bg")}), which is often transparent.  For devices
+  with a \emph{canvas} colour (the on-screen devices \code{X11},
+  \code{windows} and \code{quartz}), the window is first painted with the
+  canvas colour and then the background colour.
+  
   There is a hook called \code{"plot.new"} (see \code{\link{setHook}})
   called immediately after advancing the frame, which is used in the
   testing code to annotate the new page.  The hook function(s) are
