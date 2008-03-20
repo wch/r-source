@@ -426,8 +426,8 @@ DEPRECATED & DEFUNCT
 
     o	gammaCody() is now formally deprecated.
 
-    o   two low-level functions using MethodsList metadata objects
-        (mlistMetaName() and getAllMethods()) are deprecated.
+    o	Two low-level functions using MethodsList metadata objects
+    	(mlistMetaName() and getAllMethods()) are deprecated.
 
 
 INSTALLATION
@@ -519,7 +519,7 @@ C-LEVEL FACILITIES
 	notably for (reciprocal) condition number estimation of complex
 	matrices.
 
-    o	Experimental  R_has_slot() utility supplementing R_do_slot()
+    o	Experimental utility R_has_slot supplementing R_do_slot.
 
 
 BUG FIXES
@@ -635,16 +635,16 @@ BUG FIXES
 	similar sensible changes are applied to rlnorm(), rexp(), etc.
 
     o	[l]choose() now warns when rounding non-integer 'k' instead of
-    	doing so silently.  (May help confused users such as PR#10766.)
+	doing so silently.  (May help confused users such as PR#10766.)
 
     o	gamma() was warning incorrectly for most negative values as being
-    	too near a negative integer.  This also affected other
-    	functions making use of its C-level implementation.
+	too near a negative integer.  This also affected other
+	functions making use of its C-level implementation.
 
     o	dumpMethod() and dumpMethods() now work again.
 
     o	package.skeleton() now also works for code_files with only
-    	metadata (e.g. S4 setClass) definitions.
+	metadata (e.g. S4 setClass) definitions.
 
 
 
