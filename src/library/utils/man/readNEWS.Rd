@@ -55,6 +55,11 @@ str(NEWStr[[c("2.3", "2.3.1")]], max.level=2, vec.len=1)
 
 NEWStr [[c("2.3", "2.3.1", "NEW FEATURES")]]
 NEWStrA[[c("2.4", "2.4.0", "NEW FEATURES")]]
+
+# Check the current NEWS file
+
+stopifnot(checkNEWS())
+
 }
 \keyword{file}
 \keyword{documentation}
