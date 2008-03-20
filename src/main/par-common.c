@@ -135,9 +135,10 @@
     else if(streql(what, "gamma")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
-	if (dd->dev->canChangeGamma)
+	if (dd->dev->canChangeGamma) {
 	    R_DEV__(gamma) = x;
-	else
+	    warning("changing 'gamma' is deprecated");
+	} else
 	    warning(_("'gamma' cannot be modified on this device"));
     }
     else if (streql(what, "lab")) {

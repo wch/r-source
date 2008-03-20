@@ -431,6 +431,9 @@ DEPRECATED & DEFUNCT
     o	Two low-level functions using MethodsList metadata objects
     	(mlistMetaName() and getAllMethods()) are deprecated.
 
+    o	Setting par(gamma=) is now deprecated, and the windows()
+    	device (the only known example) no longer allows it.
+
 
 INSTALLATION
 

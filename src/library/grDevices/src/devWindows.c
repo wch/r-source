@@ -2891,7 +2891,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     /* Device capabilities */
     dd->canClip= TRUE;
     dd->canHAdj = 1; /* 0, 0.5, 1 */
-    dd->canChangeGamma = TRUE;
+    dd->canChangeGamma = FALSE;
 
     /* initialise device description (most of the work */
     /* has been done in GA_Open) */
