@@ -5108,3 +5108,17 @@ R <- list(try(rnorm(2, numeric())),
 options(op)
 stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
                  "(converted from warning) NAs produced\n"))
+## was inconsistent in R < 2.7.0
+
+## package.skeleton() with metadata-only code
+(cwd <- getwd())
+tDir <- tempdir(); dir.create(tDir)
+tmp <- tempfile(tmpdir = tDir)
+writeLines('setClass("foo", contains="numeric")', tmp)
+setwd(tDir)
+package.skeleton("myTst", code_files = tmp) # with two warnings
+stopifnot(1 == grep("setClass",
+          readLines(list.files("myTst/R", full.names=TRUE))))
+setwd(cwd)
+unlink(tDir, recursive=TRUE)
+## failed for several reasons in R < 2.7.0

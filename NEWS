@@ -374,19 +374,19 @@ NEW FEATURES
     	e.g. libiconv as used on Windows).
 
     o	There are new capabilities "aqua" (for the AQUA GUI and quartz()
-    	device on Mac OS X) and "cairo" (for cairo-based graphics
-    	devices).
+	device on Mac OS X) and "cairo" (for cairo-based graphics
+	devices).
 
-    o  The "MethodsList" objects originally used for method selection
-        are being phased out.  New utilities provide simpler
-        alternatives (see ?findMethods), and direct use of the mangled
-        names for the objects is now deprecated.
+    o	The "MethodsList" objects originally used for method selection
+	are being phased out.  New utilities provide simpler
+	alternatives (see ?findMethods), and direct use of the mangled
+	names for the objects is now deprecated.
 
-   o  Creating new class and method definitions in an environment that
-       could not be identified (as package, namespace or global)
-       previously generated an error.  It now results in creating and
-       using an artificial package name from the current date/time, with a
-       warning.  See ?getPackageName.
+    o	Creating new class and method definitions in an environment that
+	could not be identified (as package, namespace or global)
+	previously generated an error.	It now results in creating and
+	using an artificial package name from the current date/time, with a
+	warning.  See ?getPackageName.
 
 
 DEPRECATED & DEFUNCT
@@ -426,7 +426,7 @@ DEPRECATED & DEFUNCT
 
     o	gammaCody() is now formally deprecated.
 
-    o  two low-level functions using MethodsList metadata objects
+    o   two low-level functions using MethodsList metadata objects
         (mlistMetaName() and getAllMethods()) are deprecated.
 
 
@@ -642,6 +642,9 @@ BUG FIXES
     	functions making use of its C-level implementation.
 
     o	dumpMethod() and dumpMethods() now work again.
+
+    o	package.skeleton() now also works for code_files with only
+    	metadata (e.g. S4 setClass) definitions.
 
 
 

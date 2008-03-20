@@ -26,8 +26,10 @@ package.skeleton <-
 	    stop(gettextf("cannot create directory '%s'", path), domain = NA)
     }
 
+    if(!is.logical(namespace) || length(namespace) != 1)
+        stop("'namespace' must be a single logical")
     if(!is.character(code_files))
-        stop("'code_files' should be a character vector")
+        stop("'code_files' must be a character vector")
     use_code_files <- length(code_files) > 0
 
     if(missing(list)) {
@@ -36,14 +38,11 @@ package.skeleton <-
             for(cf in code_files)
                 sys.source(cf, envir = environment)
         }
-        list <- ls(environment)
+	## all.names: crucial for metadata
+	list <- ls(environment, all.names=TRUE)
     }
-
     if(!is.character(list))
-	stop("'list' should be a character vector naming R objects")
-
-    if(!is.logical(namespace) || (length(namespace) != 1))
-        stop("'namespace' should be a single logical")
+	stop("'list' must be a character vector naming R objects")
 
     ## we need to test in the C locale
     curLocale <- Sys.getlocale("LC_CTYPE")
@@ -51,13 +50,13 @@ package.skeleton <-
     if(Sys.setlocale("LC_CTYPE", "C") != "C")
         warning("cannot turn off locale-specific chars via LC_CTYPE")
 
-    have <- sapply(list, exists, envir = environment)
+    have <- unlist(lapply(list, exists, envir = environment))
     if(any(!have))
-	warning(sprintf(ngettext(sum(!have),
-				 "object '%s' not found",
-				 "objects '%s' not found"),
-			paste(sQuote(list[!have]), collapse=", ")),
-		domain = NA)
+        warning(sprintf(ngettext(sum(!have),
+                                 "object '%s' not found",
+                                 "objects '%s' not found"),
+                        paste(sQuote(list[!have]), collapse=", ")),
+                domain = NA)
     list <- list[have]
     if(!length(list))
 	stop("no R objects specified or available")
@@ -170,6 +169,20 @@ package.skeleton <-
     } else {
         message("Copying code files ...")
         file.copy(code_files, code_dir)
+        ## Only "abc.R"-like files are really ok:
+	R_files <- tools::list_files_with_type(code_dir, "code",
+					       full.names = FALSE,
+					       OS_subdirs = "")
+	wrong <- code_files[is.na(match(code_files, R_files))]
+	if(length(wrong)) {
+            bn <- basename(wrong)
+	    warning("Invalid file name(s) for R code in ", code_dir,":\n",
+		    strwrap(paste(sQuote(bn), collapse = ", "), indent=2),
+		    "\n are now renamed to 'z<name>.R'")
+	    file.rename(from = file.path(code_dir, bn),
+			to = file.path(code_dir,
+			paste("z", sub("(\\.[^.]*)?$", ".R", bn), sep="")))
+        }
     }
 
     ## Make help file skeletons in 'man'
