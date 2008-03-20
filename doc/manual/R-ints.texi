@@ -2751,17 +2751,14 @@ low coverage apart from a few monospaced fonts in a few sizes (which are
 not suitable for graph annotation), and where glyphs are missing what is
 plotted is often quite unsatisfactory.
 
-The approach being taken experimentally for @R 2.7.0 (not yet in the
-trunk) is to make use of more modern toolkits, namely @code{cairo} for
-rendering and @code{Pango} for font management---because these are
-associated with @code{Gtk+2} they are widely available.  Cairo supports
-translucent colours and alpha-blending (@emph{via} @code{Xrender}), and
-anti-aliasing for the display of lines and text.  Pango's font
-management is based on @code{fontconfig} and somewhat mysterious, but
-it seems mainly to use Type 1 and TrueType fonts on the machine running
-@R{} and send grayscale bitmaps to cairo.  It does pay to check the
-results carefully: a Solaris cairo implementation had several incorrect
-glyphs for the symbol font.
+The approach being taken for @R 2.7.0 is to make use of more modern
+toolkits, namely @code{cairo} for rendering and @code{Pango} for font
+management---because these are associated with @code{Gtk+2} they are
+widely available.  Cairo supports translucent colours and alpha-blending
+(@emph{via} @code{Xrender}), and anti-aliasing for the display of lines
+and text.  Pango's font management is based on @code{fontconfig} and
+somewhat mysterious, but it seems mainly to use Type 1 and TrueType
+fonts on the machine running @R{} and send grayscale bitmaps to cairo.
 
 
 @node windows(),  , X11(), Specific devices
@@ -2862,7 +2859,8 @@ introduced the idea of referring to colours by character strings, either
 in the forms @samp{#RRGGBB} or @samp{#RRGGBBAA} (representing the bytes
 in hex) as given by function @code{rgb()} or via names: the 657 known
 names are given in the character vector @code{colors} and in a table in
-file @file{colors.c}.
+file @file{colors.c}.  Note that semi-transparent colours are not
+`premultiplied', so 50% transparent white is @samp{#ffffff80}.
 
 What is not clear is how the RGB values are to be mapped to display
 colours in the graphics device.  There is a proposal
