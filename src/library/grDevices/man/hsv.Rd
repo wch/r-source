@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/hsv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{hsv}
@@ -34,7 +34,8 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
 }
 \section{Gamma correction}{
   For each color, \eqn{(r,g,b)} in RGB space (with all values in \eqn{[0,1]}),
-  the final color corresponds to \eqn{(r^{\gamma}, g^{\gamma}, b^{\gamma})}.
+  the final color corresponds to
+  \eqn{(r^{\gamma}, g^{\gamma}, b^{\gamma})}{r^gamma, g^gamma, b^gamma)}.
 }
 \seealso{
   \code{\link{hcl}} for a perceptually based version of \code{hsv()},
