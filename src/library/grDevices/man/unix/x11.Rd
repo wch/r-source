@@ -95,7 +95,7 @@ X11.options(\dots, reset = FALSE)
   all the rendering is done on the machine running \R rather than in the
   X server).  \code{type = "nbcairo"} is the same device without
   buffering, and will run faster on a machine with a slow X11 connection
-  (although still not as fast as \code{type = "Xlib"}) -- also,
+  (although still not as quite as fast as \code{type = "Xlib"}) -- also,
   \code{\link{savePlot}} is not supported.
 }
 \section{X11 Fonts}{

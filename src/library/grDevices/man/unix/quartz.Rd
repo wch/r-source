@@ -35,11 +35,15 @@ quartz.options(\dots, reset = FALSE)
     Currently unused.}
   \item{type}{the type of output to use.  See \sQuote{Details} for
     more information.  Default \code{"native"}.}
-  \item{file}{an optional target for the graphics device.  See
+  \item{file}{an optional target for the graphics device. The default,
+    \code{NULL}, selects a default name where one is needed.  See
     \sQuote{Details} for more information.}
   \item{bg}{background color to use for the device.  Default
-    \code{"transparent"}.}
-  \item{canvas}{canvas color to use for the device.  Default \code{"white"}.}
+    \code{"transparent"}. An opaque colour such as \code{"white"} will
+    normally be required on off-screen devices that support transparency
+    such as \code{"png}" and \code{"tiff"}.}
+  \item{canvas}{canvas color to use for an on-screen device.  Default
+    \code{"white"}, and will be forced to be an opaque colour.}
   \item{dpi}{resolution of the output.  The default (\code{NA_real_})
     for an on-screen display defaults to the resolution of
     the main screen, and to 72 dpi otherwise.  See \sQuote{Details}.}
@@ -54,14 +58,15 @@ quartz.options(\dots, reset = FALSE)
   The Quartz graphics device supports a variety of output types.
   On-screen output types are code{""} or \code{"native"} (picks the best
   possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and later)
-  and \code{"Carbon"} (Mac OS X 10.3 and earlier).   Off-screen output
+  and \code{"Carbon"} (not currently implemented -- potentially
+  Mac OS X 10.3 and earlier).   Off-screen output
   types produce output files and utilize the \code{file} argument.
   \code{type = "pdf"} gives PDF output. The following bitmap formats may
   be supported (on OS X 10.4 and later): \code{"png"}, \code{"jpeg"},
-  \code{"tif"}, \code{"tiff"}, \code{"gif"}, \code{"psd"} (Adobe Photoshop),
-  \code{"bmp"} (Windows bitmap), \code{"sgi"} and \code{"pict"}.  (The
-  availability of some formats is OS-version-dependent.)
-% psd seems not to work.
+  \code{"jpg"}, \code{"jpeg2000"}, \code{"tif"}, \code{"tiff"},
+  \code{"gif"}, \code{"psd"} (Adobe Photoshop), \code{"bmp"} (Windows
+  bitmap), \code{"sgi"} and \code{"pict"}.  (The availability of some
+  formats is OS-version-dependent.)
 
   To reproduce the default of older Quartz devices on-screen, set
   \code{dpi = 72} (for a permanent solution set
