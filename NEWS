@@ -407,6 +407,8 @@ DEPRECATED & DEFUNCT
 	["double" will follow shortly:	the S4 class for a REALSXP is
 	"numeric".]
 
+    o	gpar(gamma=) in the grid package is now defunct.
+
     o	Several S4 class definition utilities, get*(), have been said
 	to be deprecated since R 1.8.0; these are now formally deprecated.
 	Ditto for removeMethodsObject().

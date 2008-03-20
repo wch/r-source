@@ -57,10 +57,11 @@ validGP <- function(gpars) {
   numnotnull("cex")
   numnotnull("lwd")
   numnotnull("lex")
-  # gamma deprecated
-  if ("gamma" %in% names(gpars))
-    warning("'gamma' gpar is deprecated")
-  numnotnull("gamma")
+  # gamma defunct in 2.7.0
+  if ("gamma" %in% names(gpars)) {
+    warning("'gamma' gpar is defunct")
+    gpars$gamma <- NULL
+  }
   numnotnull("alpha")
   # col and fill are converted in C code
   # BUT still want to check length > 0
@@ -185,9 +186,11 @@ set.gpar <- function(gp) {
   if (!is.gpar(gp))
     stop("Argument must be a 'gpar' object")
   temp <- grid.Call("L_getGPar")
-  # gamma deprecated
-  if ("gamma" %in% names(gp))
-      warning("'gamma' gpar is deprecated")
+  # gamma defunct in 2.7.0
+  if ("gamma" %in% names(gp)) {
+      warning("'gamma' gpar is defunct")
+      gp$gamma <- NULL
+  }
   # Special case "cex" (make it cumulative)
   if (match("cex", names(gp), nomatch=0))
     tempcex <- temp$cex * gp$cex
@@ -222,8 +225,10 @@ get.gpar <- function(names=NULL) {
         !all(names %in% .grid.gpar.names))
       stop("Must specify only valid 'gpar' names")
     # gamma deprecated
-    if ("gamma" %in% names)
-      warning("'gamma' gpar is deprecated")
+    if ("gamma" %in% names) {
+      warning("'gamma' gpar is defunct")
+      names <- names[-match("gamma", names)]
+    }
     result <- unclass(grid.Call("L_getGPar"))[names]
   }
   class(result) <- "gpar"

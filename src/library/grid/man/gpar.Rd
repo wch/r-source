@@ -98,7 +98,7 @@ get.gpar(names = NULL)
   not always make sense -- for example, viewports will only take
   notice of the first parameter value.)
 
-  The \code{gamma} parameter is deprecated.
+  The \code{gamma} parameter is defunct since \R 2.7.0.
 
   \code{get.gpar()} returns all current graphical parameter settings.
 }
