@@ -16,8 +16,10 @@
 
 
 .known_interactive.devices <-
-    c("X11", "X11cairo", "quartz", "windows", "GTK", "JavaGD", "CairoWin", "CairoX11")
-dev.interactive <- function(orNone = FALSE) {
+    c("X11", "X11cairo", "quartz", "windows", "JavaGD", "CairoWin", "CairoX11")
+
+dev.interactive <- function(orNone = FALSE)
+{
     iDevs <- .known_interactive.devices
     interactive() &&
     (.Device %in% iDevs ||

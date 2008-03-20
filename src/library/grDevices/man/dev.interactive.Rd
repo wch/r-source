@@ -26,11 +26,11 @@ deviceIsInteractive(name = NULL)
 }
 \details{
   The \code{X11} (Unix), \code{windows} (Windows) and \code{quartz}
-  (MacOS X) are regarded as interactive, together with \code{GTK}
-  (available in package \pkg{gtkDevice}), \code{JavaGD} (from the
-  package of the same name) and \code{CairoWin} and \code{CairoX11}
-  (from package \pkg{Cairo}).  Packages can add their devices to the list
-  by calling \code{deviceIsInteractive}.
+  (MacOS X, on-screen types only) are regarded as interactive, together
+  with \code{JavaGD} (from the package of the same name) and
+  \code{CairoWin} and \code{CairoX11} (from package \pkg{Cairo}).
+  Packages can add their devices to the list by calling
+  \code{deviceIsInteractive}.
 }
 \value{
   \code{dev.interactive()} returns a logical, \code{TRUE} if and only if an
