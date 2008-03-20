@@ -67,7 +67,7 @@ const quartz_module_t quartz_modules[] = {
     { "tiff",    "public.tiff",               QBE_BITMAP  },
     { "tif",     "public.tiff",               QBE_BITMAP  },
     { "gif",     "com.compuserve.gif",        QBE_BITMAP  },
-    { "psd",     "com.adobe.photoshop.image", QBE_BITMAP  },
+    { "psd",     "com.adobe.photoshop-image", QBE_BITMAP  },
     { "bmp",     "com.microsoft.bmp",         QBE_BITMAP  },
     { "sgi",     "com.sgi.sgi-image",         QBE_BITMAP  },
     { "pict",    "com.apple.pict",            QBE_BITMAP  },

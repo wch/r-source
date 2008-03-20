@@ -110,8 +110,8 @@ void QuartzBitmap_Close(QuartzDesc_t dev, void *userInfo)
 {
     QuartzBitmapDevice *qbd = (QuartzBitmapDevice*) userInfo;
 
-    /* FIXME: do this only if device is used? */
-    QuartzBitmap_Output(dev, qbd);
+    /* FIXME: do this only if device is dirty? */
+    if (qbd->page) QuartzBitmap_Output(dev, qbd);
 
     /* Free ourselves */
     if (qbd->bitmap) CFRelease(qbd->bitmap);
