@@ -42,12 +42,12 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 
   Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
   some devices: at the time of writing on the \code{\link{pdf}},
-  \code{windows}, \code{quartz} and \code{X11(type="Cairo")} devices and
-  associated bitmap devices (\code{jpeg}, \code{png} and \code{bitmap}).
-  They are supported by several third-party devices such as those in
-  packages \pkg{Cairo}, \pkg{cairoDevice} and \pkg{JavaGD}.  On most of
-  these devices the actual alpha values used are multiples of 1/255, and
-  few of these devices fully support semi-transparent backgrounds.
+  \code{windows}, \code{quartz} and \code{X11(type="cairo")} devices and
+  associated bitmap devices (\code{jpeg}, \code{png}, \code{bmp},
+  \code{tiff} and \code{bitmap}). They are supported by several
+  third-party devices such as those in packages \pkg{Cairo},
+  \pkg{cairoDevice} and \pkg{JavaGD}.  Only some of these
+  devices support semi-transparent backgrounds.
 
   Most other graphics devices plot semi-transparent colors as fully
   transparent, usually with a warning when first encountered.
