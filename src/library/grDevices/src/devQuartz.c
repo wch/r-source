@@ -387,8 +387,14 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 
     QuartzDevice_Update(qd);
 
+    /* FIXME:
+       width/height are in bp, but windows dimensions need to be pixels,
+       at least for bitmap devices.  Comment out until others have been tested.
+    dev->right = def->width*72.0*def->scalex;;
+    dev->bottom= def->height*72.0*def->scaley;;
+     */
     dev->right = def->width*72.0;
-    dev->bottom= def->height*72.0;
+    dev->bottom= def->height*72.0;;
     qd->clipRect = CGRectMake(0, 0, dev->right, dev->bottom);
 
     qd->dirty = 0;
@@ -612,7 +618,7 @@ static void RQuartz_NewPage(CTXDESC)
 	    /* The logic should be to paint the canvas then gc->fill.
 	       FIXME: Should be canvas be used on all devices?
 	     */
-	    if (!R_OPAQUE(gc->fill)) {
+	    if (R_ALPHA(xd->canvas) >0 && !R_OPAQUE(gc->fill)) {
 		/* First paint the canvas colour, then the fill. */
 		int savefill = gc->fill;
 		CGContextClearRect(ctx, bounds);
@@ -970,7 +976,6 @@ SEXP Quartz(SEXP args)
     /* partially FIXED: used bgs, added canvas */
     bgs       = CAR(args); args = CDR(args);
     bg        = RGBpar(bgs, 0);
-    /* Should canvas be forced to be opaque? */
     canvass   = CAR(args); args = CDR(args);
     canvas    = RGBpar(canvass, 0) | 0xff000000; /* force opaque */
     tmps      = CAR(args); args = CDR(args);
@@ -1046,6 +1051,7 @@ SEXP Quartz(SEXP args)
                 succ = QuartzCarbon_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_PDF:
+		qpar.canvas = 0; /* so not used */
                 succ = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_BITMAP:
@@ -1056,6 +1062,7 @@ SEXP Quartz(SEXP args)
 		    snprintf(deffile, 30, "%s.%s", "Rplot%03d", type);
 		    qpar.file = deffile;
 		}
+		qpar.canvas = 0; /* so not used */
 		succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
                 break;
 	    }
