@@ -359,7 +359,7 @@ NEW FEATURES
 	file formatting.
 
     o	New bindings ttk*() in package tcltk for the 'themed widgets'
-	of Tk 8.5.  The tcltk demos have use of these widgets where
+	of Tk 8.5.  The tcltk demos make use of these widgets where
 	available.
 
     o	write.table(d, row.names=FALSE) is faster when 'd' has millions of
@@ -387,6 +387,9 @@ NEW FEATURES
 	previously generated an error.	It now results in creating and
 	using an artificial package name from the current date/time, with a
 	warning.  See ?getPackageName.
+
+    o	Unix-alikes now give a warning on startup if locale settings
+	fail.  (The Windows port has long done so.)
 
 
 DEPRECATED & DEFUNCT

@@ -666,10 +666,8 @@ void setup_Rmainloop(void)
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
-#ifdef Win32
-    char deferred_warnings[4][250];
+    char deferred_warnings[6][250];
     int ndeferred_warnings = 0;
-#endif
 
     InitConnections(); /* needed to get any output at all */
 
@@ -705,19 +703,30 @@ void setup_Rmainloop(void)
 	/* Windows does not have LC_MESSAGES */
     }
 #else /* not Win32 */
-    setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
-    setlocale(LC_COLLATE, "");/*- alphabetically sorting */
-    setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
-    setlocale(LC_MONETARY, "");/*- currency units */
+    if(!setlocale(LC_CTYPE, ""))
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		 "Setting LC_CTYPE failed\n");
+    if(!setlocale(LC_COLLATE, ""))
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		 "Setting LC_COLLATE failed\n");
+    if(!setlocale(LC_TIME, ""))
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		 "Setting LC_TIME failed\n");
 #ifdef ENABLE_NLS
-    setlocale(LC_MESSAGES,""); /* language for messages */
+    if(!setlocale(LC_MESSAGES, ""))
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		 "Setting LC_MESSAGES failed\n");
 #endif
     /* NB: we do not set LC_NUMERIC */
 #ifdef LC_PAPER
-    setlocale(LC_PAPER,"");
+    if(!setlocale(LC_PAPER, ""))
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		 "Setting LC_PAPER failed\n");
 #endif
 #ifdef LC_MEASUREMENT
-    setlocale(LC_MEASUREMENT,"");
+    if(!setlocale(LC_MEASUREMENT, ""))
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		 "Setting LC_MEASUREMENT failed\n");
 #endif
 #endif /* not Win32 */
 #ifdef ENABLE_NLS
@@ -925,13 +934,11 @@ void setup_Rmainloop(void)
 	UNPROTECT(1);
     }
     /* gc_inhibit_torture = 0; */
-#ifdef Win32
     {
 	int i;
 	for(i = 0 ; i < ndeferred_warnings; i++)
 	    warning(deferred_warnings[i]);
     }
-#endif
     if (R_CollectWarnings) {
 	REprintf(_("During startup - "));
 	PrintWarnings();
