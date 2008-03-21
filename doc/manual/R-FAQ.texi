@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-03-13
+@set FAQ_DATE @value{FAQ_YEAR}-03-21
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1897,6 +1897,8 @@ Components of Canadian monetary aggregates.
 Facilities for the use of R to write CGI scripts.
 @item CORREP
 Multivariate correlation estimation.
+@item COZIGAM
+Constrained Zero-Inflated Generalized Additive Model.
 @item CPE
 Concordance probability estimates in survival analysis.
 @c <COMMENT>
@@ -4321,6 +4323,8 @@ mixed-effects modelling using differential equations.
 @c @item nlrq
 @c Nonlinear quantile regression routines.  @emph{Defunct}.
 @c </COMMENT>
+@item nlrwr
+Non-linear regression with R.
 @item nls2
 Non-linear regression with brute force.
 @item nlstools
@@ -4673,6 +4677,8 @@ reparameterized and marginalized posterior sampling (RAMPS) algorithm.
 Random number generator based on AES cipher.
 @item random
 True random numbers using random.org.
+@item randomLCA
+Random effects Latent Class Analysis.
 @item randomSurvivalForest
 Ishwaran and Kogalur's random survival forest.
 @item randomForest
@@ -5351,6 +5357,8 @@ Export data to @LaTeX{} and @HTML{} tables.
 Extensible time series.
 @item yaImpute
 Performs popular nearest neighbor routines.
+@item yaml
+Methods to convert R to YAML and back.
 @item yest
 Gaussian independence models.
 @item zicounts
