@@ -9282,6 +9282,10 @@ cleaned up when @R{} is shut down.
 @code{R_Interactive} (defined in @file{Rinterface.h}) subsequently to
 change this.
 
+Note that @R{} expects to be run with the locale category
+@samp{LC_NUMERIC} set to its default value of @code{C}, and so should
+not be embedded into an application which changes that.
+
 @menu
 * Compiling against the R library::  
 * Setting R callbacks::         
@@ -9302,7 +9306,7 @@ R CMD config --ldflags
 @end example
 
 If @R{} is installed, @code{pkg-config} is available and
-sub-architectures have not be used, alternatives for a shared @R{}
+sub-architectures have not been used, alternatives for a shared @R{}
 library are
 
 @example
@@ -9542,7 +9546,8 @@ Running X11 windows such as the graphics device and data editor, and
 interacting with them (e.g., using @code{locator()}).
 
 @item
-Supporting Tcl/Tk events for the @pkg{tcltk} package.
+Supporting Tcl/Tk events for the @pkg{tcltk} package (for at least the
+X11 version of Tk).
 
 @item
 Preparing input.
