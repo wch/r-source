@@ -1554,9 +1554,20 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	for (n = 0; n < ndigits; n++) ans /= 10.0;
 	expn += ndigits;
     }
-    n = (expn < 0) ? - expn : expn;
-    for (fac = 1.0; n; n >>= 1, p10 *= p10) if (n & 1) fac *= p10;
-    ans = (expn < 0) ? ans/fac : ans*fac;
+    if (expn < -307) { /* use underflow, not overflow */
+	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10) 
+	    if (n & 1) fac /= p10;
+	ans *= fac;	
+    } else if (expn < 0) { /* positive powers are exact */
+	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10) 
+	    if (n & 1) fac *= p10;
+	ans /= fac;
+    } else {
+	for (n = expn, fac = 1.0; n; n >>= 1, p10 *= p10)
+	    if (n & 1) fac *= p10;
+	ans *= fac;
+    }
+
 
 done:
     if (endptr) *endptr = (char *) p;
