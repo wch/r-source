@@ -1,6 +1,6 @@
 % File src/library/base/man/NumericConstants.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{NumericConstants}
@@ -21,7 +21,7 @@
   a non-empty sequence from \code{0-9 a-f A-F} which is interpreted as a
   hexadecimal number (\code{"double"}, not \code{"integer"}).
 
-  Decimal constants consists of a nonempty sequence of digits possibly
+  Decimal constants consist of a nonempty sequence of digits possibly
   containing a period (the decimal point), optionally followed by a
   decimal exponent.  A decimal exponent consists of an \code{E} or
   \code{e} followed by an optional plus or minus sign followed by a
@@ -39,7 +39,7 @@
   which have other representations of digits.
   The \sQuote{decimal separator} is always a period and never a comma.
 
-  Note that a leading plus or minus is not part of numeric constant but
+  Note that a leading plus or minus is not part of a numeric constant but
   a unary operator applied to the constant.
 }
 \seealso{

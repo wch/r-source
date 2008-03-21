@@ -1484,3 +1484,92 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
     if(n >= 32 && n < 256) return s2u[n-32];
     else return 0;
 }
+
+double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
+{
+    double ans = 0.0, p10 = 10.0, fac = 1.0;
+    int n, expn = 0, sign = 1, ndigits = 0;
+    const char *p = str;
+
+    /* optional whitespace */
+    while (isspace(*p)) p++;
+
+    if (NA && strncmp(p, "NA", 2) == 0){
+	ans = NA_REAL; 
+	p += 2;
+	goto done;
+    } else if (strncmp(p, "NaN", 3) == 0) {
+	ans = R_NaN;
+	p += 3;
+	goto done;
+    } else if (strncmp(p, "Inf", 3) == 0) {
+	ans = R_PosInf; 
+	p += 3;
+	goto done;
+    } else if (strncmp(p, "-Inf", 4) == 0) {
+	ans = R_NegInf;
+	p += 4;
+	goto done;
+    }
+
+    /* optional sign */
+    switch (*p) {
+    case '-': sign = -1;
+    case '+': p++;
+    default: ;
+    }
+
+    /* R does not allow exponents on hex numbers */
+    if(strlen(p) > 2 && p[0] == '0' && (p[1] == 'x' || p[1] == 'X')) {
+	/* This will overflow to Inf if appropriate */
+	for(p += 2; p; p++) {
+	    if('0' <= *p && *p <= '9') ans = 16*ans + (*p -'0');
+	    else if('a' <= *p && *p <= 'f') ans = 16*ans + (*p -'a' + 10);
+	    else if('A' <= *p && *p <= 'F') ans = 16*ans + (*p -'A' + 10);
+	    else break;
+	}
+	goto done;
+    }
+
+    for ( ; *p >= '0' && *p <= '9'; p++, ndigits++) ans = 10*ans + (*p - '0');
+    if (*p == dec)
+	for (p++; *p >= '0' && *p <= '9'; p++, ndigits++, expn--)
+	    ans = 10*ans + (*p - '0');
+    if (ndigits == 0) goto done; /* maybe throw an error? */
+
+
+    if (*p == 'e' || *p == 'E') {
+	int expsign = 1;
+	switch(*++p) {
+	case '-': expsign = -1;
+	case '+': p++;
+	default: ;
+	}
+	for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
+	expn += expsign * n;
+    }
+
+    /* avoid unnecessary underflow for large negative exponents */
+    if (expn + ndigits < -300) {
+	for (n = 0; n < ndigits; n++) ans /= 10.0;
+	expn += ndigits;
+    }
+    n = (expn < 0) ? - expn : expn;
+    for (fac = 1.0; n; n >>= 1, p10 *= p10) if (n & 1) fac *= p10;
+    ans = (expn < 0) ? ans/fac : ans*fac;
+
+done:
+    if (endptr) *endptr = (char *) p;
+    return sign * ans;
+}
+
+double R_strtod(const char *str, char **endptr)
+{
+    return R_strtod4(str, endptr, '.', FALSE);
+}
+
+double R_atof(const char *str)
+{
+    return R_strtod4(str, NULL, '.', FALSE);
+}
+

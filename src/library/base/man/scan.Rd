@@ -171,6 +171,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \code{na.strings} contains \code{""} when they are regarded as missing
   values.
 
+  For the formats allowed for numeric fields, see \link{NumericConstants}.
+
   If \code{sep} is the default (\code{""}), the character \code{\\}
   in a quoted string escapes the following character, so quotes may be
   included in the string by escaping them.

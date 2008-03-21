@@ -77,59 +77,6 @@ void attribute_hidden CoercionWarning(int warn)
 	warning(_("out-of-range values treated as 0 in coercion to raw"));
 }
 
-/* allows integers including hex representations */
-static double R_strtol(const char *nptr, char **endptr)
-{
-    double ret = 0, sign = +1;
-    const char *p = nptr;
-
-    if(strlen(p) >= 2 && p[0] == '0' && (p[1] == 'x' || p[1] == 'X')) {
-	/* a hex number */
-	p +=2;
-	for(; p; p++) {
-	    if('0' <= *p && *p <= '9') ret = 16*ret + (*p -'0');
-	    else if('a' <= *p && *p <= 'f') ret = 16*ret + (*p -'a' + 10);
-	    else if('A' <= *p && *p <= 'F') ret = 16*ret + (*p -'A' + 10);
-	    else goto done;
-	}
-    }
-
-    for(p = nptr; p; p++) {
-	if(*p == '+') continue;
-	if(*p == '-') { sign = -1; continue;}
-	if('0' <= *p && *p <= '9') ret = 10*ret + (*p -'0');
-	else goto done;
-    }
-
-done:
-    if(endptr) *endptr = (char *)p;
-    return sign*ret;
-}
-
-/* used in X11 module */
-double R_strtod(const char *c, char **end)
-{
-    double x;
-
-    if (strncmp(c, "NA", 2) == 0){
-	x = NA_REAL; *end = (char *)c + 2; /* coercion for -Wall */
-    }
-    else if (strncmp(c, "NaN", 3) == 0) {
-	x = R_NaN; *end = (char *)c + 3;
-    }
-    else if (strncmp(c, "Inf", 3) == 0) {
-	x = R_PosInf; *end = (char *)c + 3;
-    }
-    else if (strncmp(c, "-Inf", 4) == 0) {
-	x = R_NegInf; *end = (char *)c + 4;
-    }
-    else if (!strncmp(c, "0x", 2) || !strncmp(c, "0x", 2)) {
-	x = R_strtol(c, end);
-    } else
-        x = strtod(c, end);
-    return x;
-}
-
 int attribute_hidden
 LogicalFromInteger(int x, int *warn)
 {

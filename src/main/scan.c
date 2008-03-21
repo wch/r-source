@@ -145,53 +145,10 @@ static int Strtoi(const char *nptr, int base)
     return(res);
 }
 
-/* Like R_strtod, but allow NA to be a failure if NA arg is false */
-static double Rs_strtod(const char *c, char **end, Rboolean NA)
-{
-    double x;
-
-    if (NA && strncmp(c, "NA", 2) == 0){
-	x = NA_REAL; *end = (char *)c + 2; /* coercion for -Wall */
-    }
-    else if (strncmp(c, "NaN", 3) == 0) {
-	x = R_NaN; *end = (char *)c + 3;
-    }
-    else if (strncmp(c, "Inf", 3) == 0) {
-	x = R_PosInf; *end = (char *)c + 3;
-    }
-    else if (strncmp(c, "-Inf", 4) == 0) {
-	x = R_NegInf; *end = (char *)c + 4;
-    }
-    else
-        x = strtod(c, end);
-    return x;
-}
-
 static double
 Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d)
 {
-    if (d->decchar == '.')
-	return Rs_strtod(nptr, endptr, NA);
-    else {
-	/* jump through some hoops... This is a kludge!
-	   Should most likely use regexps instead */
-
-	char *end;
-	double x;
-	int i;
-
-	strncpy(d->convbuf, nptr, 100);
-	for ( i = 0 ; i < 100 ; i++ )
-	    /* switch '.' and decchar around */
-	    if (d->convbuf[i] == d->decchar)
-		d->convbuf[i] = '.';
-	    else if (d->convbuf[i] == '.')
-		d->convbuf[i] = d->decchar;
-	x = Rs_strtod(d->convbuf, &end, NA);
-	if(endptr)
-  	   *endptr = (char *) nptr + (end - d->convbuf);
-	return x;
-    }
+    return R_strtod4(nptr, endptr, d->decchar, NA);
 }
 
 static Rcomplex
@@ -204,25 +161,22 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
     x = Strtod(nptr, &endp, NA, d);
     if (isBlankString(endp)) {
 	z.r = x; z.i = 0;
-    }
-    else if (*endp == 'i')  {
+    } else if (*endp == 'i')  {
 	z.r = 0; z.i = x;
 	endp++;
-    }
-    else {
+    } else {
 	s = endp;
 	y = Strtod(s, &endp, NA, d);
 	if (*endp == 'i') {
 	    z.r = x; z.i = y;
 	    endp++;
-	}
-	else {
+	} else {
 	    z.r = 0; z.i = 0;
 	    endp = (char *) nptr; /* -Wall */
 	}
     }
     *endptr = endp;
-    return(z);
+    return z;
 }
 
 static Rbyte

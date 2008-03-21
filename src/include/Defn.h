@@ -1174,6 +1174,9 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
 int Seql(SEXP a, SEXP b);
 int Scollate(SEXP a, SEXP b);
 
+double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA);
+double R_strtod(const char *str, char **endptr);
+double R_atof(const char *str);
 
 /* unix/sys-std.c, main/options.c */
 void set_rl_word_breaks(const char *str);

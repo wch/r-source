@@ -1614,36 +1614,14 @@ static int KeywordLookup(const char *s)
     return 0;
 }
 
-
 static SEXP mkFloat(const char *s)
 {
-    double f;
-    if(strlen(s) > 2 && (s[1] == 'x' || s[1] == 'X')) {
-	double ret = 0; const char *p = s + 2;
-	for(; p; p++) {
-	    if('0' <= *p && *p <= '9') ret = 16*ret + (*p -'0');
-	    else if('a' <= *p && *p <= 'f') ret = 16*ret + (*p -'a' + 10);
-	    else if('A' <= *p && *p <= 'F') ret = 16*ret + (*p -'A' + 10);
-	    else break;
-	}	
-	f = ret;
-    } else f = atof(s);
-    return ScalarReal(f);
+    return ScalarReal(R_atof(s));
 }
 
 static SEXP mkInt(const char *s)
 {
-    double f;
-    if(strlen(s) > 2 && (s[1] == 'x' || s[1] == 'X')) {
-	double ret = 0; const char *p = s + 2;
-	for(; p; p++) {
-	    if('0' <= *p && *p <= '9') ret = 16*ret + (*p -'0');
-	    else if('a' <= *p && *p <= 'f') ret = 16*ret + (*p -'a' + 10);
-	    else if('A' <= *p && *p <= 'F') ret = 16*ret + (*p -'A' + 10);
-	    else break;
-	}	
-	f = ret;
-    } else f = atof(s);
+    double f = R_atof(s);  /* or R_strtol? */
     return ScalarInteger((int) f);
 }
 
@@ -1651,7 +1629,7 @@ static SEXP mkComplex(const char *s)
 {
     SEXP t = R_NilValue;
     double f;
-    f = atof(s); /* make certain the value is legitimate. */
+    f = R_atof(s); /* FIXME: make certain the value is legitimate. */
 
     if(GenerateCode) {
        t = allocVector(CPLXSXP, 1);
@@ -1751,7 +1729,7 @@ static void yyerror(char *s)
     	/* Edit the error message */    
     	expecting = strstr(s + sizeof yyunexpected -1, yyexpecting);
     	if (expecting) *expecting = '\0';
-    	for (i=0; yytname_translations[i]; i += 2) {
+    	for (i = 0; yytname_translations[i]; i += 2) {
     	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
     	    	sprintf(R_ParseErrorMsg, _("unexpected %s"), 
     	    	    i/2 < YYENGLISH ? _(yytname_translations[i+1])
@@ -1899,8 +1877,8 @@ static int NumericValue(int c)
     YYTEXT_PUSH('\0', yyp);
     /* Make certain that things are okay. */
     if(c == 'L') {
-	double a = atof(yytext);
-	int b = (int) atof(yytext); 
+	double a = R_atof(yytext);
+	int b = (int) a; 
 	/* We are asked to create an integer via the L, so we check that the 
 	   double and int values are the same. If not, this is a problem and we
 	   will not lose information and so use the numeric value.
@@ -1923,8 +1901,7 @@ static int NumericValue(int c)
 	if(GenerateCode && seendot == 1 && seenexp == 0) 
 	    warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
 	yylval = GenerateCode ? mkInt(yytext) : R_NilValue;
-    }
-    else {
+    } else {
 	if(c != 'L')
 	    xxungetc(c);
 	yylval = GenerateCode ? mkFloat(yytext) : R_NilValue;

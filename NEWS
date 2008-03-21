@@ -391,6 +391,11 @@ NEW FEATURES
     o	Unix-alikes now give a warning on startup if locale settings
 	fail.  (The Windows port has long done so.)
 
+    o	Parsing and scanning of numerical constants is now done by R's
+    	own C code.  This ensures cross-platform consistency, and
+    	mitigates the effects of setting LC_NUMERIC (within base R it
+    	only applies to output -- packages may differ).
+
 
 DEPRECATED & DEFUNCT
 
