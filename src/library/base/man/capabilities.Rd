@@ -30,7 +30,9 @@ capabilities(what = NULL)
 #ifdef unix
     \item{aqua}{Are the \code{R.app} GUI components and the
       \code{\link{quartz}} function operational?  Only on some Mac OS X
-      builds.}
+      builds.  Note that this is distinct from
+      \code{.Platform$GUI == "AQUA"}, which is true when using the Mac
+      \code{R.app} console.}
 #endif
 #ifdef windows
     \item{aqua}{\code{FALSE} except on Mac OS X.}

@@ -20,7 +20,8 @@
 {
     op <- options()
     extras <- if(.Platform$OS.type == "windows")
-        list(windowsTimeouts = c(100L,500L)) else list()
+        list(windowsTimeouts = c(100L,500L)) else
+    list(bitmapType = if(capabilities("aqua")) "quartz" else if(capabilities("cairo")) "cairo" else "Xlib")
     defdev <- Sys.getenv("R_DEFAULT_DEVICE")
     if(!nzchar(defdev)) defdev <- "pdf"
     device <- if(interactive()) {
@@ -29,8 +30,8 @@
         else {
             if(.Platform$OS.type == "windows") "windows"
             else if (.Platform$GUI == "AQUA") "quartz"
-            else if (!is.null(Sys.info) && (Sys.info()["sysname"] == "Darwin")
-                     && (Sys.getenv("DISPLAY") != "")) "X11"
+            ## FIXME Why does this need special-casing?
+            else if ((Sys.info()["sysname"] == "Darwin") && (Sys.getenv("DISPLAY") != "")) "X11"
             else if (Sys.getenv("DISPLAY") != "")
                 switch(.Platform$GUI, "Tk" = "X11",
                        "X11" = "X11", "GNOME" = "X11", defdev)

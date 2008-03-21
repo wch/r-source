@@ -313,7 +313,9 @@ NEW FEATURES
 	On Unix-alikes, devices jpeg() and png() also accept
 	type = "cairo", and with that option do not need a running
 	X server.  The meaning of capabilities("jpeg") and
-	capabilities("png") has changed to reflect this.
+	capabilities("png") has changed to reflect this.  On MacOS X,
+	there is a further type = "quartz" -- the default type is
+	selected by the new option "bitmapType".
 
 	Where cairo is supported, there is a svg() device to write SVG
 	files, and cairo_pdf() and cairo_ps() to write (possibly

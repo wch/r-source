@@ -65,8 +65,9 @@ tiff(filename = "Rplot\%03d.tiff",
      \code{"cairo1"}.  The latter two will only be available if the
      system was compiled with support for cairo -- otherwise
      \code{"Xlib"} will be used.  The default is set by
-     \code{\link{X11.options}} -- the \sQuote{out of the box} default is
-     \code{"cairo"} where available.}
+     \code{\link{getOption}("bitmapType")} -- the \sQuote{out of thebox}
+     default is \code{"quartz"} or \code{"cairo"} where available,
+     otherwise \code{"Xlib"}.}
   \item{antialias}{for \code{type = "cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
     default is set by \code{\link{X11.options}}.}

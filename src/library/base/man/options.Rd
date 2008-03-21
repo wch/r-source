@@ -346,9 +346,14 @@ getOption(x)
       Honoured at least on \code{X11} and \code{windows} devices.}
 
     \item{\code{device.ask.default}:}{logical.  The default for
-      \code{\link{par}("ask")} and \code{\link{grid.prompt}} when a
-      device is opened.}
+      \code{\link{devAskNewPage}("ask")} when a device is opened.}
 
+#ifdef unix
+    \item{\code{bitmapType}:}{character.  The default type for the
+      bitmap devices such as \code{\link{png}}.  Defaults to
+      \code{"cairo"} on systems where that is available, or to
+      \code{"quartz"} on Mac OS X where that is available.}
+#endif
 #ifdef windows
     \item{\code{windowsTimeout}:}{integer vector of length 2
       representing two times in milliseconds.  These control the
