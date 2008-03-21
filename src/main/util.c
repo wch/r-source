@@ -1520,7 +1520,6 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
         goto done;
     }
 
-    /* R does not allow exponents on hex numbers */
     if(strlen(p) > 2 && p[0] == '0' && (p[1] == 'x' || p[1] == 'X')) {
 	/* This will overflow to Inf if appropriate */
 	for(p += 2; p; p++) {
@@ -1528,6 +1527,26 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	    else if('a' <= *p && *p <= 'f') ans = 16*ans + (*p -'a' + 10);
 	    else if('A' <= *p && *p <= 'F') ans = 16*ans + (*p -'A' + 10);
 	    else break;
+	}
+	if (*p == 'p' || *p == 'P') {
+	    int expsign = 1;
+	    double p2 = 2.0;
+	    switch(*++p) {
+	    case '-': expsign = -1;
+	    case '+': p++;
+	    default: ;
+	    }
+	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
+	    expn += expsign * n;
+	    if (expn < 0) {
+		for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2) 
+		    if (n & 1) fac *= p2;
+		ans /= fac;
+	    } else {
+		for (n = expn, fac = 1.0; n; n >>= 1, p2 *= p2)
+		    if (n & 1) fac *= p2;
+		ans *= fac;
+	    }
 	}
 	goto done;
     }

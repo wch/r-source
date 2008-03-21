@@ -10,16 +10,23 @@
   How \R parses numeric constants.
 }
 \details{
-  \R parses numeric constants in its input in a very similar way to C
+  \R parses numeric constants in its input in a very similar way to C99
   floating-point constants.
 
   \code{\link{Inf}} and \code{\link{NaN}} are numeric constants (with
-  \code{\link{typeof}(.) "double"}).  All other numeric constants start
-  with a digit or period.
+  \code{\link{typeof}(.) "double"}).  These are recognized ignoring case,
+  as is \code{infinity} as an alternative to \code{Inf}.
+  \code{\link{NA_real_}} and \code{\link{NA_integer_}} are constants of
+  types \code{"double"} and \code{"integer"} representing missing
+  values.  All other numeric constants start with a digit or period.
 
   Hexadecimal constants start with \code{0x} or \code{0X} followed by
-  a non-empty sequence from \code{0-9 a-f A-F} which is interpreted as a
-  hexadecimal number (\code{"double"}, not \code{"integer"}).
+  a nonempty sequence from \code{0-9 a-f A-F} which is interpreted as a
+  hexadecimal number, optionally followed by a binary exponent.  A binary
+  exponent consists of an \code{P} or \code{p} followed by an optional
+  plus or minus sign followed by a non-empty sequence of (decimal)
+  digits, and indicates multiplication by a power of two.  Thus
+  \code{0x123p456} is \eqn{291 \times 2^{456}}{291 * 2^456}.
 
   Decimal constants consist of a nonempty sequence of digits possibly
   containing a period (the decimal point), optionally followed by a
@@ -36,11 +43,11 @@
   contains a \code{"."}).
 
   Only the ASCII digits 0--9 are recognized as digits, even in languages
-  which have other representations of digits.
-  The \sQuote{decimal separator} is always a period and never a comma.
+  which have other representations of digits.  The \sQuote{decimal
+    separator} is always a period and never a comma.
 
-  Note that a leading plus or minus is not part of a numeric constant but
-  a unary operator applied to the constant.
+  Note that a leading plus or minus is not regarded by the parser as
+  part of a numeric constant but as a unary operator applied to the constant.
 }
 \seealso{
   \code{\link{Syntax}}.

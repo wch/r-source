@@ -398,6 +398,10 @@ NEW FEATURES
     	mitigates the effects of setting LC_NUMERIC (within base R it
     	only applies to output -- packages may differ).
 
+	The format accepted is more general than before and includes
+	binary exponents in hexadecimal constants: see
+	?NumericConstants for details.
+
 
 DEPRECATED & DEFUNCT
 
