@@ -1494,29 +1494,30 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
     /* optional whitespace */
     while (isspace(*p)) p++;
 
-    if (NA && strncmp(p, "NA", 2) == 0){
-	ans = NA_REAL; 
-	p += 2;
-	goto done;
-    } else if (strncmp(p, "NaN", 3) == 0) {
-	ans = R_NaN;
-	p += 3;
-	goto done;
-    } else if (strncmp(p, "Inf", 3) == 0) {
-	ans = R_PosInf; 
-	p += 3;
-	goto done;
-    } else if (strncmp(p, "-Inf", 4) == 0) {
-	ans = R_NegInf;
-	p += 4;
-	goto done;
-    }
-
     /* optional sign */
     switch (*p) {
     case '-': sign = -1;
     case '+': p++;
     default: ;
+    }
+
+    if (NA && strncmp(p, "NA", 2) == 0){
+	ans = NA_REAL; 
+	p += 2;
+	goto done;
+    } else if (strncasecmp(p, "NaN", 3) == 0) {
+	ans = R_NaN;
+	p += 3;
+	goto done;
+    } else if (strncasecmp(p, "Inf", 3) == 0) {
+	ans = R_PosInf; 
+	p += 3;
+	goto done;
+    /* C99 specifies this */
+    } else if (strncasecmp(p, "infinity", 8) == 0) {
+        ans = R_PosInf;
+        p += 8;
+        goto done;
     }
 
     /* R does not allow exponents on hex numbers */
