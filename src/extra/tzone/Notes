@@ -18,8 +18,8 @@ depend on the architecture.  There are some comments about whether
 time_t is signed, which it is on all sensible platforms.)
 
 To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
-Copy the current version of tzdataXXX.tar.gz to this directory and run
+Copy the current version of tzdataXXXXx.tar.gz to this directory and run
 
-make -f Make.zi VERSION=2007k
+make -f Make.zi VERSION=2008a
 
 for the appropriate version.
