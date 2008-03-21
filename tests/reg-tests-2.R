@@ -797,14 +797,14 @@ relrange <- function(x) {
 x <- c(0.12345678912345678,
        0.12345678912345679,
        0.12345678912345676)
-relrange(x) ## 1.0125
+# relrange(x) ## 1.0125, but depends on strtod
 plot(x) # `extra horizontal' ;  +- ok on Solaris; label off on Linux
 
 y <- c(0.9999563255363383973418,
        0.9999563255363389524533,
        0.9999563255363382863194)
 ## The relative range number:
-relrange(y) ## 3.000131
+# relrange(y) ## 3.000131, but depends on strtod
 plot(y)# once gave infinite loop on Solaris [TL];  y-axis too long
 
 ## Comments: The whole issue was finally deferred to main/graphics.c l.1944

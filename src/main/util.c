@@ -1487,7 +1487,7 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
 
 double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 {
-    double ans = 0.0, p10 = 10.0, fac = 1.0;
+    LDOUBLE ans = 0.0, p10 = 10.0, fac = 1.0;
     int n, expn = 0, sign = 1, ndigits = 0;
     const char *p = str;
 
@@ -1571,7 +1571,7 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 
 done:
     if (endptr) *endptr = (char *) p;
-    return sign * ans;
+    return sign * (double) ans;
 }
 
 double R_strtod(const char *str, char **endptr)
