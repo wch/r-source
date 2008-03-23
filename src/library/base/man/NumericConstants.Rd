@@ -18,7 +18,9 @@
   as is \code{infinity} as an alternative to \code{Inf}.
   \code{\link{NA_real_}} and \code{\link{NA_integer_}} are constants of
   types \code{"double"} and \code{"integer"} representing missing
-  values.  All other numeric constants start with a digit or period.
+  values.  All other numeric constants start with a digit or period and
+  are either a decimal or hexadecimal constant optionally followed by
+  \code{L}.
 
   Hexadecimal constants start with \code{0x} or \code{0X} followed by
   a nonempty sequence from \code{0-9 a-f A-F} which is interpreted as a
@@ -34,6 +36,9 @@
   \code{e} followed by an optional plus or minus sign followed by a
   non-empty sequence of digits, and indicates multiplication by a power
   of ten.
+
+  Values which are too large or too small to be representable will
+  overflow to \code{Inf} or underflow to \code{0.0}.
 
   A numeric constant immediately followed by \code{i} is regarded as an
   imaginary \link{complex} number.

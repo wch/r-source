@@ -171,7 +171,16 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \code{na.strings} contains \code{""} when they are regarded as missing
   values.
 
-  For the formats allowed for numeric fields, see \link{NumericConstants}.
+  The allowed input for a numeric field is optional whitespace followed
+  either \code{NA} or an optional sign followed by a decimal or
+  hexadecimal constant (see \link{NumericConstants}), or \code{NaN},
+  \code{Inf} or \code{infinity} (ignoring case).  Out-of-range values
+  are recorded as \code{Inf}, \code{-Inf} or \code{0}.
+
+  For an integer field the allowed input is optional whitespace,
+  followed by either \code{NA} or an optional sign and one or more
+  digits (\code{0-9}): all out-of-range values are converted to
+  \code{NA_integer_}.
 
   If \code{sep} is the default (\code{""}), the character \code{\\}
   in a quoted string escapes the following character, so quotes may be
