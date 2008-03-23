@@ -1,6 +1,6 @@
 % File src/library/base/man/match.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{match}
@@ -16,7 +16,7 @@
   for its left operand.
 }
 \usage{
-match(x, table, nomatch = NA_integer_, incomparables = FALSE)
+match(x, table, nomatch = NA_integer_, incomparables = NULL)
 
 x \%in\% table
 }
@@ -27,8 +27,8 @@ x \%in\% table
     found.  Note that it is coerced to \code{integer}.}
   \item{incomparables}{a vector of values that cannot be matched.  Any
     value in \code{x} matching a value in this vector is assigned the
-    \code{nomatch} value.  Currently, \code{FALSE} is the only possible
-    value, meaning that all values can be matched.}
+    \code{nomatch} value.  For historical reasons, \code{FALSE} is
+    equivalent to \code{NULL}.}
 }
 \value{
   A vector of the same length as \code{x}.
@@ -51,7 +51,8 @@ x \%in\% table
   Factors, raw vectors and lists are converted to character vectors, and
   then \code{x} and \code{table} are coerced to a common type (the later
   of the two types in R's ordering, logical < integer < numeric <
-  complex < character) before matching.
+  complex < character) before matching.  If \code{incomparables} has
+  positive length it is coerced to the common type.
 
   Matching for lists is potentially very slow and best avoided except in
   simple cases.

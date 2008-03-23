@@ -1,6 +1,6 @@
 % File src/library/base/man/merge.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{merge}
@@ -20,7 +20,7 @@ merge(x, y, \dots)
 
 \method{merge}{data.frame}(x, y, by = intersect(names(x), names(y)),
       by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
-      sort = TRUE, suffixes = c(".x",".y"), \dots)
+      sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL, \dots)
 }
 \arguments{
   \item{x, y}{data frames, or objects to be coerced to one.}
@@ -39,6 +39,8 @@ merge(x, y, \dots)
     columns?}
   \item{suffixes}{character(2) specifying the suffixes to be used for
     making non-\code{by} \code{names()} unique.}
+  \item{incomparables}{values which cannot be matched.  See
+    \code{\link{match}}.}
   \item{\dots}{arguments to be passed to or from methods.}
 }
 \details{
@@ -67,6 +69,14 @@ merge(x, y, \dots)
 
   The complexity of the algorithm used is proportional to the length of
   the answer.
+
+  % Terminology follows http://en.wikipedia.org/wiki/Join_(SQL)
+  In SQL database terminology, the default value of \code{all = FALSE}
+  gives a \emph{natural join}, a special case of an \emph{inner
+  join}. Specifying \code{all.x = TRUE} gives a \emph{left (outer)
+  join}, \code{all.y = TRUE} a \emph{right (outer) join}, and both
+  (\code{all=TRUE} a \emph{(full) outer join}.  DBMSes do not match
+  \code{NULL} records, equivalent to \code{incomparables = NA} in \R.
 }
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
@@ -109,6 +119,14 @@ stopifnot(as.character(m1[,1]) == as.character(m2[,1]),
 
 ## "R core" is missing from authors and appears only here :
 merge(authors, books, by.x = "surname", by.y = "name", all = TRUE)
+
+## example of using 'incomparables'
+x <- data.frame(k1=c(NA,NA,3,4,5), k2=c(1,NA,NA,4,5), data=1:5)
+y <- data.frame(k1=c(NA,2,NA,4,5), k2=c(NA,NA,3,4,5), data=1:5)
+merge(x, y, by=c("k1","k2")) # NA's match
+merge(x, y, by=c("k1","k2"), incomparables=NA)
+merge(x, y, by="k1") # NA's match, so 6 rows
+merge(x, y, by="k2", incomparables=NA) # 2 rows
 }
 \keyword{array}
 \keyword{manip}

@@ -386,9 +386,9 @@ NEW FEATURES
 
     o	Creating new class and method definitions in an environment that
 	could not be identified (as package, namespace or global)
-	previously generated an error.	It now results in creating and
-	using an artificial package name from the current date/time, with a
-	warning.  See ?getPackageName.
+	previously generated an error. It now results in creating and
+	using an artificial package name from the current date/time,
+	with a warning.  See ?getPackageName.
 
     o	Unix-alikes now give a warning on startup if locale settings
 	fail.  (The Windows port has long done so.)
@@ -401,6 +401,9 @@ NEW FEATURES
 	The format accepted is more general than before and includes
 	binary exponents in hexadecimal constants: see
 	?NumericConstants for details.
+
+    o	The 'incomparables' argument to duplicated(), unique() and
+	match() is now implemented, and passed to match() from merge().
 
 
 DEPRECATED & DEFUNCT

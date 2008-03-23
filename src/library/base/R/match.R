@@ -14,14 +14,11 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-match <- function(x, table, nomatch = NA_integer_, incomparables = FALSE)
-{
-    if(!is.logical(incomparables) || incomparables)
-        .NotYetUsed("incomparables != FALSE")
+match <- function(x, table, nomatch = NA_integer_, incomparables = NULL)
     .Internal(match(if(is.factor(x)) as.character(x) else x,
                     if(is.factor(table)) as.character(table) else table,
-                    nomatch))
-}
+                    nomatch, incomparables))
+
 
 match.call <-
     function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)
