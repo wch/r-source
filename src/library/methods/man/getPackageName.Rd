@@ -17,6 +17,7 @@
 }
 \usage{
 getPackageName(where, create = TRUE)
+setPackageName(pkg, env)
 
 packageSlot(object)
 packageSlot(object) <- value
@@ -27,7 +28,11 @@ packageSlot(object) <- value
   \item{object}{object providing a character string name, plus the
     package in which this object is to be found.}
   \item{value}{the name of the package.}
-    \item{create}{flag, should a package name be created if none can be inferred.  If ]\code{TRUE} and no non-empty package name is found, the current date and time are used as a package name, and a warning is issued. }
+    \item{create}{flag, should a package name be created if none can be inferred.  If ]\code{TRUE} and no non-empty package name is found, the current date and time are used as a package name, and a warning is issued. The created name is stored in the environment if that environment is not locked. }
+
+      \item{pkg, env}}{make the string in \code{pkg} the internal
+        package name for all computations that set class and method
+        definitions in environment \code{env}.}
 }
 \details{
   Package names are normally installed during loading of the package,
@@ -36,11 +41,16 @@ packageSlot(object) <- value
   \code{.packageName} but don't trust this for the future.)
 }
 \value{
-  \code{packageName} return the character-string name of the package
+  \code{packageName} returns the character-string name of the package
   (without the extraneous \code{"package:"} found in the search list).
 
   \code{packageSlot} returns or sets the package name slot (currently
   an attribute, not a formal slot, but this will likely change).
+
+  \code{setPackageName} can be used to establish a package name in an
+  environment that would otherwise not have one.  You should do this
+  if you want to create classes and/or methods in an arbitrary
+  environment (see the example below).  On the other hand, you should \emph{}
 }
 
 \seealso{ \code{\link{search}} }

@@ -257,15 +257,21 @@ getMethods <-
         stop(gettextf("invalid argument \"f\", expected a function or its name, got an object of class \"%s\"",
                       class(f)), domain = NA)
     if(!is.null(fdef)) {
-        if(nowhere)
-          value <- .makeMlistFromTable(fdef)
+        if(nowhere) {
+            if(is(fdef, "genericFunction"))
+              value <- .makeMlistFromTable(fdef)
+            else
+              value <- NULL
+        }
         else
           value <- getMethodsMetaData(f, where = where)
         if(is.null(value))              # return empty methods list
             new("MethodsList", argument = fdef@default@argument)
         else
             value
-    } # else NULL
+    }
+    else
+      NULL
 }
 
 getMethodsForDispatch <- function(fdef)
@@ -1193,25 +1199,24 @@ implicitGeneric <- function(...) NULL
 ### table.  This is the reccomended approach and is required if you
 ### want the saved generic to include any non-default methods.
 ###
-### Otherwise, a generic is temporarily created by a call to
-### setGeneric(), and then saved.
-###
-### Unless restore is FALSE,  the generic will be removed by a call
-### to removeMethods(), which will leave the nongeneric (== the
-### default method) as the function.  It's currently an error if there
-### is no such default, because the nongeneric was supposed to be in
-### this same package/environment.  The case keepGeneric=TRUE is used
-### by the methods package to establish implicit generics for
-### functions in the base package, without owning a version of these.
   {
+      if(!nzchar(name))
+        stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
+      if(!missing(generic) && is(generic, "genericFunction") && !.identC(name, generic@generic))
+        stop(gettextf('generic function supplied was not created for \"%s\"', name), domain = NA)
       createGeneric <- (missing(generic) || !is(generic, "genericFunction")) && !isGeneric(name, where)
       if(createGeneric) {
           fdefault <- getFunction(name, where = where, mustFind = FALSE)
           if(is.null(fdefault))
             return(NULL)  # no implicit generic
           fdefault <- .derivedDefaultMethod(fdefault)
-          if(is.primitive(fdefault))
-            package <- "base"
+          if(is.primitive(fdefault)) {
+              value <- genericForPrimitive(name)
+              if(!missing(generic) && !identical(value, generic))
+                stop(gettextf('"%s" is a primitive function; its generic form cannot be redefined',name), domain = NA)
+              generic <- value
+              package <- "base"
+               }
           else
             package <- getPackageName(environment(fdefault))
           ## look for a group

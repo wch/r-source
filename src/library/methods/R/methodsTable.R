@@ -897,16 +897,18 @@ listFromMethods <- function(generic, where, table) {
           value[[i]] <- get(what[[i]], envir = table)
         value
     }
-    if(is.null(where))
-      table <- get(".MTable", envir = environment(generic), inherits = FALSE)
+    if(is.null(where)) {
+        what <- ".MTable"
+        where <- environment(generic)
+    }
     else {
         where <- as.environment(where)
         what <-  .TableMetaName(generic@generic, generic@package)
-        if(exists(what, envir = where, inherits= FALSE))
-          table <- get(what, envir = where)
-        else
-          table <- new.env()
     }
+    if(exists(what, envir = where, inherits= FALSE))
+        table <- get(what, envir = where)
+    else
+        table <- new.env()
     value <- new("MethodsList", argument = generic@default@argument)
     allNames <- objects(table, all.names = TRUE)
     if(length(allNames) == 0)

@@ -41,6 +41,9 @@
             stop(gettextf("Must supply either a generic function or a function as default for \"#s\"",
                           f),
                  domain = NA)
+          else if(is.primitive(fdefault)) {
+              return(genericForPrimitive(f))
+          }
           fdef <- fdefault
           body(fdef) <- substitute(standardGeneric(NAME), list(NAME = f))
       }
@@ -1262,7 +1265,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 }
 
 .identC <- function(c1 = NULL, c2 = NULL) {
-    ## are the two objects identical class references?
+    ## are the two objects identical class or genric function string names?
     .Call("R_identC", c1, c2, PACKAGE="methods")
 }
 

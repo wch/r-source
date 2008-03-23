@@ -40,6 +40,8 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
            where = topenv(parent.frame()))
       ## find the object as a function.
 {
+    if(!nzchar(name))
+      stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
     found <- FALSE
     where <- as.environment(where)
     f <- NULL

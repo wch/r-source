@@ -668,6 +668,14 @@ BUG FIXES
     o	package.skeleton() now also works for code_files with only
 	metadata (e.g. S4 setClass) definitions.
 
+    o  some methods package utilities (implicitGeneric, makeGeneric)
+        will be more robust in dealing with primitive functions (not a
+        useful idea to call them with primitives, though)
+
+    o  making a MethodsList from a function with no methods table
+        will return an empty list, rather than cause an error
+        (questionably a bug, but caused some obscure failures).
+
 
 
 
