@@ -74,8 +74,13 @@ Rboolean StringFalse(const char *);
 Rboolean StringTrue(const char *);
 Rboolean isBlankString(const char *);
 
-double 	R_strtod(const char *c, char **end);
-char *  R_tmpnam(const char *prefix, const char *tempdir);
+/* These two are guaranteed to use '.' as the decimal point,
+   and to accept "NA".
+ */
+double R_atof(const char *str);
+double R_strtod(const char *c, char **end);
+
+char *R_tmpnam(const char *prefix, const char *tempdir);
 
 void	hsv2rgb(double h, double s, double v,
 		double *r, double *g, double *b);

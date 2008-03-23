@@ -75,10 +75,13 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   used in \code{Sys.setlocale("LC_ALL", locale = foo)} on the same
   machine.
 }
+% assume this just affects strtod/atof, scanf/printf and friends,
+% as seems to be the case in glibc.
 \section{Warning}{
   Setting \code{"LC_NUMERIC"} may cause \R to function
-  anomalously, so gives a warning.  (The known problems are with
-  input conversion in locales with \code{,} as the decimal point.)
+  anomalously, so gives a warning.  As from \R 2.7.0 input conversions
+  in \R itself are unaffected, but the reading and writing of ASCII
+  \code{\link{save}} files will be, as may packages.
 #ifdef unix
   Setting it temporarily to produce graphical or text output may work
   well enough, but \code{\link{options}(OutDec)} is often preferable.

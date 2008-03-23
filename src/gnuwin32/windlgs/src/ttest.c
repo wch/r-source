@@ -1,6 +1,6 @@
 #include <R.h> /* for R_ProcessEvents */
 #include "ga.h"
-#include <stdlib.h> /* atof */
+#include <R_ext/Utils.h> /* R_atof */
 #include <ctype.h> /* tolower */
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h> /* for Sleep */
@@ -88,7 +88,7 @@ void menu_ttest(char **vars, int ints[], double level[])
     ints[1] =  ischecked(paired);
     ints[2] =  ischecked(varequal);
     ints[3] = done;
-    level[0] = atof(GA_gettext(lvl));
+    level[0] = R_atof(GA_gettext(lvl));
     hide(win);
     delobj(bApply);
     delobj(win);
