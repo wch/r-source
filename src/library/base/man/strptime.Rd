@@ -100,11 +100,14 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant OSes will ignore leap
       seconds).}
+    % see http://en.wikipedia.org/wiki/Week_number#Week_number
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
-      the first Sunday as day 1 of week 1.}
+      Sunday as the first day 1 of the week (and typically with the
+      first Sunday of the year as day 1 of week 1).  The US convention.}
     \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
     \item{\code{\%W}}{Week of the year as decimal number (00--53) using
-      the first Monday as day 1 of week 1.}
+      Monday as the first day of week (and typically with the
+      first Monday of the year as day 1 of week 1). The UK convention.}
     \item{\code{\%x}}{Date, locale-specific.}
     \item{\code{\%X}}{Time, locale-specific.}
     \item{\code{\%y}}{Year without century (00--99). If you use this on
@@ -118,7 +121,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       string (empty if not available).}
 #endif
 #ifdef windows
-    \item{\code{\%z}, \code{\%Z}}{(output only.) Time zone as a character
+    \item{\code{\%z}, \code{\%Z}}{(output only.)  Time zone as a character
       string (empty if not available).  For \code{\%z} this differs
       from POSIX.}
 #endif
@@ -157,7 +160,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
     \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
     \item{\code{\%u}}{Weekday as a decimal number (1--7, Monday is 1).}
-    \item{\code{\%V}}{Week of the year as decimal number (00--53).
+    \item{\code{\%V}}{Week of the year as decimal number (00--53) as
+      defined in ISO 8601.
       If the week (starting on Monday) containing 1 January has four or
       more days in the new year, then it is considered week 1.  Otherwise, it
       is the last week of the previous year, and the next week is week
