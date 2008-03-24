@@ -20,7 +20,7 @@
 ### along with R; if not, a copy is available at
 ### http://www.r-project.org/Licenses/
 
-AC_PREREQ(2.60)
+AC_PREREQ(2.61)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -30,7 +30,7 @@ m4_define([R_VERSION],
           m4_bpatsubst(m4_esyscmd([cat VERSION]),
                        [\([0-9.]*\)\(\w\|\W\)*],
                        [\1]))
-AC_INIT([R], R_VERSION, [r-bugs@R-project.org], [R])
+AC_INIT([R],[R_VERSION],[r-bugs@R-project.org],[R])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
 
@@ -181,8 +181,7 @@ AC_SUBST(config_opts)
 
 ## Allow the user to specify support for R profiling.
 AC_ARG_ENABLE([R-profiling],
-[AC_HELP_STRING([--enable-R-profiling],
-                [attempt to compile support for Rprof() @<:@yes@:>@])],
+[AS_HELP_STRING([--enable-R-profiling],[attempt to compile support for Rprof() @<:@yes@:>@])],
 [if test "${enableval}" = no; then
   want_R_profiling=no
 elif test "${enableval}" = yes; then
@@ -194,8 +193,7 @@ fi],
 
 ## Allow the user to specify support for memory profiling.
 AC_ARG_ENABLE([memory-profiling],
-[AC_HELP_STRING([--enable-memory-profiling],
-                [attempt to compile support for Rmemprof(), tracemem() @<:@no@:>@])],
+[AS_HELP_STRING([--enable-memory-profiling],[attempt to compile support for Rmemprof(), tracemem() @<:@no@:>@])],
 [if test "${enableval}" = no; then
   want_memory_profiling=no
 elif test "${enableval}" = yes; then
@@ -207,8 +205,7 @@ fi],
 
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
-[AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
-                [MacOS X only: build R framework (if possible), and specify
+[AS_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],[MacOS X only: build R framework (if possible), and specify
                  its installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
 [want_R_framework=yes])
@@ -248,20 +245,18 @@ AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
 ## given explicitly ...
 ## </NOTE>
 AC_ARG_ENABLE([R-shlib],
-[AC_HELP_STRING([--enable-R-shlib],
-                [build the shared/dynamic library 'libR' @<:@no@:>@])],
+[AS_HELP_STRING([--enable-R-shlib],[build the shared/dynamic library 'libR' @<:@no@:>@])],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 
 AC_ARG_ENABLE([R-static-lib],
-[AC_HELP_STRING([--enable-R-static-lib],
-                [build the static library 'libR.a' @<:@no@:>@])],
+[AS_HELP_STRING([--enable-R-static-lib],[build the static library 'libR.a' @<:@no@:>@])],
 [want_R_static="${enableval}"],
 [want_R_static="no"])
 if test "x${want_R_static}" = xyes; then
   if test "x${want_R_shlib}" = xyes; then
-    AC_WARN([--enable-R-static-lib conflicts with --enable-R-shlib and will be ignored])
+    AC_MSG_WARN([--enable-R-static-lib conflicts with --enable-R-shlib and will be ignored])
     want_R_static=no
   fi
 fi
@@ -269,8 +264,7 @@ AM_CONDITIONAL(WANT_R_STATIC, [test "x${want_R_static}" = xyes])
 
 ## Build separate shared library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],
-[AC_HELP_STRING([--enable-BLAS-shlib],
-                [build BLAS into a shared library @<:@perhaps@:>@])],
+[AS_HELP_STRING([--enable-BLAS-shlib],[build BLAS into a shared library @<:@perhaps@:>@])],
 [use_blas_shlib="${enableval}"],
 [use_blas_shlib="unset"])
 
@@ -282,8 +276,7 @@ fi
 
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE([maintainer-mode],
-[AC_HELP_STRING([--enable-maintainer-mode],
-                [enable make rules and dependencies not useful (and
+[AS_HELP_STRING([--enable-maintainer-mode],[enable make rules and dependencies not useful (and
                  maybe confusing) to the casual installer @<:@no@:>@])],
 [use_maintainer_mode="${enableval}"],
 [use_maintainer_mode=no])
@@ -291,8 +284,7 @@ AM_CONDITIONAL(MAINTAINER_MODE, [test "x${use_maintainer_mode}" = xyes])
 
 ## Enable testing the write barrier.
 AC_ARG_ENABLE([strict-barrier],
-[AC_HELP_STRING([--enable-strict-barrier],
-                [provoke compile error on write barrier violation
+[AS_HELP_STRING([--enable-strict-barrier],[provoke compile error on write barrier violation
                  @<:@no@:>@])],
 [use_strict_barrier="${enableval}"],
 [use_strict_barrier=no])
@@ -303,8 +295,7 @@ if test x"${use_strict_barrier}" = xyes; then
 fi
 
 AC_ARG_ENABLE([mbcs],
-[AC_HELP_STRING([--enable-mbcs],
-                [enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
+[AS_HELP_STRING([--enable-mbcs],[enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
 [want_mbcs_support="${enableval}"],
 [want_mbcs_support=yes])
 
@@ -313,30 +304,27 @@ AC_ARG_ENABLE([mbcs],
 
 ## BLAS.
 AC_ARG_WITH([blas],
-[AC_HELP_STRING([--with-blas],
-                [use system BLAS library (if available), or specify it @<:@no@:>@])],
+[AS_HELP_STRING([--with-blas],[use system BLAS library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
 # default is "no" except on MacOS X
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
-[AC_HELP_STRING([--with-lapack],
-                [use system LAPACK library (if available), or specify it @<:@no@:>@])],
+[AS_HELP_STRING([--with-lapack],[use system LAPACK library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
 # default is "no" except on MacOS X
 
 ## Readline.
 AC_ARG_WITH([readline],
-[AC_HELP_STRING([--with-readline], [use readline library @<:@yes@:>@])],
+[AS_HELP_STRING([--with-readline],[use readline library @<:@yes@:>@])],
 [R_ARG_USE(readline)],
 [use_readline=yes])
 
 ## Aqua.
 AC_ARG_WITH([aqua],
-[AC_HELP_STRING([--with-aqua],
-                [MacOS X only: use Aqua (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-aqua],[MacOS X only: use Aqua (if available) @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_aqua=no
 else
@@ -346,8 +334,7 @@ fi],
 
 ## Tcl/Tk.
 AC_ARG_WITH([tcltk],
-[AC_HELP_STRING([--with-tcltk],
-                [use Tcl/Tk (if available), or specify its library dir @<:@yes@:>@])],
+[AS_HELP_STRING([--with-tcltk],[use Tcl/Tk (if available), or specify its library dir @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_tcltk=no
 elif test "${withval}" = yes; then
@@ -359,20 +346,17 @@ else
 fi],
 [want_tcltk=yes])
 AC_ARG_WITH([tcl-config],
-[AC_HELP_STRING([--with-tcl-config=TCL_CONFIG],
-                [specify location of tclConfig.sh @<:@@:>@])],
+[AS_HELP_STRING([--with-tcl-config=TCL_CONFIG],[specify location of tclConfig.sh @<:@@:>@])],
 [TCL_CONFIG="${withval}"],
 [TCL_CONFIG=""])
 AC_ARG_WITH([tk-config],
-[AC_HELP_STRING([--with-tk-config=TK_CONFIG],
-                [specify location of tkConfig.sh @<:@@:>@])],
+[AS_HELP_STRING([--with-tk-config=TK_CONFIG],[specify location of tkConfig.sh @<:@@:>@])],
 [TK_CONFIG="${withval}"],
 [TK_CONFIG=""])
 
 ## Cairo etc
 AC_ARG_WITH([cairo],
-[AC_HELP_STRING([--with-cairo],
-                [use cairo (and pango) if available @<:@yes@:>@])],
+[AS_HELP_STRING([--with-cairo],[use cairo (and pango) if available @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_cairo=no
 else
@@ -381,35 +365,29 @@ fi], [want_cairo=yes])
 
 ## other libraries
 AC_ARG_WITH([libpng],
-[AC_HELP_STRING([--with-libpng],
-                [use libpng library (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-libpng],[use libpng library (if available) @<:@yes@:>@])],
 [R_ARG_USE(libpng)],
 [use_libpng=yes])
 AC_ARG_WITH([jpeglib],
-[AC_HELP_STRING([--with-jpeglib],
-                [use jpeglib library (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-jpeglib],[use jpeglib library (if available) @<:@yes@:>@])],
 [R_ARG_USE(jpeglib)],
 [use_jpeglib=yes])
 AC_ARG_WITH([system-zlib],
-[AC_HELP_STRING([--with-system-zlib],
-                [use system zlib library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(zlib)],
 [use_system_zlib=no])
 AC_ARG_WITH([system-bzlib],
-[AC_HELP_STRING([--with-system-bzlib],
-                [use system bzlib library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(bzlib)],
 [use_system_bzlib=no])
 AC_ARG_WITH([system-pcre],
-[AC_HELP_STRING([--with-system-pcre],
-                [use system PCRE library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(pcre)],
 [use_system_pcre=no])
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
-[AC_HELP_STRING([--with-valgrind-instrumentation],
-                [Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
+[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
 [valgrind_level=${withval}],
 [valgrind_level=0])
 
@@ -417,8 +395,7 @@ AC_ARG_WITH([valgrind-instrumentation],
 ## Completely disable using libtool for building shlibs until libtool
 ## fully supports Fortran and C++.
 ## AC_ARG_WITH([libtool],
-## [AC_HELP_STRING([--with-libtool],
-##                 [use libtool for building shared libraries @<:@yes@:>@])],
+## [AS_HELP_STRING([--with-libtool],[use libtool for building shared libraries @<:@yes@:>@])],
 ## [use_libtool="${withval}"],
 ## [use_libtool=yes])
 ## </FIXME>
@@ -426,15 +403,13 @@ AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 
 ## Recommended R packages.
 AC_ARG_WITH([recommended-packages],
-[AC_HELP_STRING([--with-recommended-packages],
-                [use/install recommended R packages @<:@yes@:>@])],
+[AS_HELP_STRING([--with-recommended-packages],[use/install recommended R packages @<:@yes@:>@])],
 [R_ARG_USE(recommended_packages)],
 [use_recommended_packages=yes])
 
 ## Iconv.
 AC_ARG_WITH([iconv],
-[AC_HELP_STRING([--with-iconv],
-                [use iconv library @<:@yes@:>@])],
+[AS_HELP_STRING([--with-iconv],[use iconv library @<:@yes@:>@])],
 [R_ARG_USE(iconv)],
 [use_iconv=yes])
 
