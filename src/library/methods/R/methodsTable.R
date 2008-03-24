@@ -931,7 +931,14 @@ listFromMethods <- function(generic, where, table) {
 ## from the generic function with the initial methods, if any.
 .assignMethodsTableMetaData  <- function(name, generic, where, table) {
     what <-  .TableMetaName(generic@generic, generic@package)
-    if(missing(table))
-      table <- get(".MTable", envir = environment(generic), inherits = FALSE)
+    if(missing(table)) {
+        if(exists(".MTable", envir = environment(generic), inherits = FALSE))
+          table <- get(".MTable", envir = environment(generic), inherits = FALSE)
+        else {
+            ## TEMPORARY
+            traceback(sys.calls())
+          stop(gettextf("Invalid generic \"%s\", package \"%s\"; no methods table found", generic@generic, generic@package), domain = NA)
+        }
+      }
     assign(what, table, envir = as.environment(where))
 }
