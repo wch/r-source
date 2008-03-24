@@ -744,6 +744,13 @@ BUG FIXES
 
     o	bzip2 has been updated to 1.0.5 (security fix).
 
+    o setAs() now catches 2 arguments in the method definition, if
+       they don't match the arguments of coerce().
+
+   o  methods with missing arguments in the definition are handled
+       correctly  when non-signature arguments exist, and check for
+       conflicting local names in the method definition.
+
 
 
 		CHANGES IN R VERSION 2.6.2

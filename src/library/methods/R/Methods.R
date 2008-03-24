@@ -461,7 +461,7 @@ setMethod <-
                }
                if(!identical(mnames, fnames)) {
                    ## omitted classes in method => "missing"
-                   fullSig <- conformMethod(signature, mnames, fnames, f, fdef)
+                   fullSig <- conformMethod(signature, mnames, fnames, f, fdef, definition)
                    if(!identical(fullSig, signature)) {
                        formals(definition, envir = environment(definition)) <- formals(fdef)
                        signature <- fullSig

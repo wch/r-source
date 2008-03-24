@@ -74,7 +74,7 @@ defaultDumpName(generic, signature)
 doPrimitiveMethod(name, def, call= sys.call(sys.parent()),
                   ev = sys.frame(sys.parent(2)))
 
-conformMethod(signature, mnames, fnames, f= , fdef)
+conformMethod(signature, mnames, fnames, f= , fdef, method)
 
 matchSignature(signature, fun, where)
 
@@ -312,9 +312,10 @@ addNextMethod(method, f, mlist, optional, envir)
       method omits some of the formal arguments of the function but: (1)
       the non-omitted arguments are a subset of the function arguments,
       appearing in the same order; (2) there are no arguments to the
-      method that are not arguments to the function; and (3) the omitted
+      method that are not arguments to the function;  (3) the omitted
       formal arguments do not appear as explicit classes in the
-      signature.
+      signature; and (4) the omitted arguments are not used as local
+      names or function names in the body of the method.
     }
 
     \item{\code{defaultDumpName}:}{

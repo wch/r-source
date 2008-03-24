@@ -217,9 +217,8 @@ setAs <-
         if(!is.na(match("strict", args))) args <- args[-match("strict", args)]
         if(length(args) == 1)
             def <- substituteFunctionArgs(def, "from", functionName = "coerce")
-        else if(length(args) == 2)
-            def <- substituteFunctionArgs(def, c("from", "to"), functionName = "coerce")
-        else stop(gettextf("'as' method must have one or two arguments, plus optional 'strict'; got (%s)",
+        else  if(length(args) != 2 || !identical(args, c("from", "to")))
+               stop(gettextf("'as' method should have one argument, or match the arguments of coerce(): got  (%s)",
                            paste(formalArgs(def), collapse = ", ")),
                   domain = NA)
         method <- as.list(coerce@.Data) # the function def'n, just to get arguments correct
