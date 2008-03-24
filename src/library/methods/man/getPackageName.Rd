@@ -29,9 +29,9 @@ packageSlot(object) <- value
     package in which this object is to be found.}
   \item{value}{the name of the package.}
    \item{create}{flag, should a package name be created if none can be
-%     inferred}  If \code{TRUE} and no non-empty package name is found,
-%     the current date and time are used as a package name, and a
-%     warning is issued. The created name is stored in the environment
+     inferred?  If \code{TRUE} and no non-empty package name is found,
+     the current date and time are used as a package name, and a
+     warning is issued. The created name is stored in the environment
      if that environment is not locked.}
   \item{pkg, env}{make the string in \code{pkg} the internal
     package name for all computations that set class and method
