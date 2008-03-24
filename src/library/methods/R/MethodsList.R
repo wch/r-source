@@ -585,28 +585,26 @@ promptMethods <- function(f, filename = NULL, methods)
     packageString <- ""
 
     fdef <- getGeneric(f)
-    if(!isGenericFunction(fdef))
-      stop(gettextf("No generic function found corresponding to \"%s\"", f), domain = NA)
+    if(!isGeneric(f, fdef=fdef))
+	stop(gettextf("No generic function found corresponding to \"%s\"", f),
+	     domain = NA)
     if(missing(methods)) {
-        where <- find(.TableMetaName(fdef@generic, fdef@generic))
-        if(length(where) == 0)
-            stop(gettextf("no methods found for generic \"%s\"", fdef@generic), domain = NA)
-        where <- as.environment(where[1])
-        methods <- getMethods(f, where)  #TODO: change this & below to findMethods()
-        if(where != .GlobalEnv)
-            packageString <-
-                paste0("in Package `", getPackageName(where), "'")
-        ## (We want the '`' for LaTeX, as we currently cannot have
-        ## \sQuote{} inside a \title.)
+	methods <- findMethods(fdef)
+	## try making  packageString
+	where <- .genEnv(fdef, topenv(parent.frame()))
+	if(!identical(where, .GlobalEnv))
+	    packageString <-
+		paste0("in Package `", getPackageName(where), "'")
+	## (We want the '`' for LaTeX, as we currently cannot have
+	## \sQuote{} inside a \title.)
     }
-
-    object <- linearizeMlist(methods, FALSE)
-    methods <- object@methods; n <- length(methods)
-    args <- object@arguments
-    signatures <- object@classes
+    fullName <- utils:::topicName("methods", f)
+    n <- length(methods)
     labels <- character(n)
     aliases <- character(n)
-    fullName <- utils:::topicName("methods", f)
+    args <- lapply(methods, ## formals(args(.)) also works for primitives
+		   function(m) names(formals(args(m))))
+    signatures <- findMethodSignatures(methods = methods)
     for(i in seq_len(n)) {
         sigi <- paste("\"", signatures[[i]], "\"", sep ="")
         labels[[i]] <-
