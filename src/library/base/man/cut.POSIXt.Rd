@@ -24,10 +24,10 @@
     intervals which \code{x} is to be cut into \emph{or} an
     interval specification, one of \code{"sec"}, \code{"min"},
     \code{"hour"}, \code{"day"}, \code{"DSTday"}, \code{"week"},
-    \code{"month"} or \code{"year"}, optionally preceded by an integer
-    and a space, or followed by \code{"s"}.  For \code{"Date"} objects
-    only \code{"day"}, \code{"week"}, \code{"month"} and \code{"year"}
-    are allowed.
+    \code{"month"}, \code{"quarter"} or \code{"year"}, optionally
+    preceded by an integer and a space, or followed by \code{"s"}.
+    For \code{"Date"} objects only \code{"day"}, \code{"week"},
+    \code{"month"}, \code{"quarter"} and \code{"year"} are allowed.
   }
   \item{labels}{
     labels for the levels of the resulting category.  By default,
@@ -43,6 +43,10 @@
 \details{
   Using both \code{right = TRUE} and \code{include.lowest = TRUE}
   will include both ends of the range of dates.
+
+  Using \code{breaks = "quarter"} will create intervals of 3 calendar
+  months, with the intervals beginning on January 1, April 1,
+  July 1 or October 1, based upon \code{min(x)} as appropriate.
 }
 \value{
   A factor is returned, unless \code{labels = FALSE} which returns

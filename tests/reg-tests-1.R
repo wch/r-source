@@ -5025,7 +5025,7 @@ stopifnot(p > 0.001)
 ## was about 0.0005 in 2.6.1 patched
 
 
-## tests of problems fixed by Marc Schwarz's patch for
+## tests of problems fixed by Marc Schwartz's patch for
 ## cut/hist for Dates and POSIXt
 Dates <- seq(as.Date("2005/01/01"), as.Date("2009/01/01"), "day")
 months <- format(Dates, format = "%m")
@@ -5036,20 +5036,32 @@ ty <- as.vector(table(years))
 stopifnot(identical(hist(Dates, "month", plot = FALSE)$counts, mn))
 # Test cut.Date() for months
 stopifnot(identical(as.vector(table(cut(Dates, "month"))), mn))
+# Test cut.Date() for 3 months
+stopifnot(identical(as.vector(table(cut(Dates, "3 months"))),
+                    as.integer(colSums(matrix(c(mn, 0, 0), nrow = 3)))))
 # Test hist.Date() for years
 stopifnot(identical(hist(Dates, "year", plot = FALSE)$counts, ty))
 # Test cut.Date() for years
 stopifnot(identical(as.vector(table(cut(Dates, "years"))),ty))
+# Test cut.Date() for 3 years
+stopifnot(identical(as.vector(table(cut(Dates, "3 years"))),
+                    as.integer(colSums(matrix(c(ty, 0), nrow = 3)))))
 
 Dtimes <- as.POSIXlt(Dates)
 # Test hist.POSIXt() for months
 stopifnot(identical(hist(Dtimes, "month", plot = FALSE)$counts, mn))
 # Test cut.POSIXt() for months
 stopifnot(identical(as.vector(table(cut(Dtimes, "month"))), mn))
+# Test cut.POSIXt() for 3 months
+stopifnot(identical(as.vector(table(cut(Dtimes, "3 months"))),
+                    as.integer(colSums(matrix(c(mn, 0, 0), nrow = 3)))))
 # Test hist.POSIXt() for years
 stopifnot(identical(hist(Dtimes, "year", plot = FALSE)$counts, ty))
 # Test cut.POSIXt() for years
 stopifnot(identical(as.vector(table(cut(Dtimes, "years"))), ty))
+# Test cut.POSIXt() for 3 years
+stopifnot(identical(as.vector(table(cut(Dtimes, "3 years"))),
+                    as.integer(colSums(matrix(c(ty, 0), nrow = 3)))))
 ## changed in 2.6.2
 
 
