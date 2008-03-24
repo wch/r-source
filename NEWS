@@ -371,11 +371,11 @@ NEW FEATURES
 	(Suggestion from Martin Morgan.)
 
     o	file.create() has a new argument 'showWarnings' (default TRUE)
-    	to show an informative warning when creation fails, and
-    	dir.create() warns under more error conditions.
+	to show an informative warning when creation fails, and
+	dir.create() warns under more error conditions.
 
     o	iconv() now accepts "UTF8" on all platforms (many did, but not
-    	e.g. libiconv as used on Windows).
+	e.g. libiconv as used on Windows).
 
     o	There are new capabilities "aqua" (for the AQUA GUI and quartz()
 	device on Mac OS X) and "cairo" (for cairo-based graphics
@@ -396,9 +396,9 @@ NEW FEATURES
 	fail.  (The Windows port has long done so.)
 
     o	Parsing and scanning of numerical constants is now done by R's
-    	own C code.  This ensures cross-platform consistency, and
-    	mitigates the effects of setting LC_NUMERIC (within base R it
-    	only applies to output -- packages may differ).
+	own C code.  This ensures cross-platform consistency, and
+	mitigates the effects of setting LC_NUMERIC (within base R it
+	only applies to output -- packages may differ).
 
 	The format accepted is more general than before and includes
 	binary exponents in hexadecimal constants: see
@@ -448,10 +448,10 @@ DEPRECATED & DEFUNCT
     o	gammaCody() is now formally deprecated.
 
     o	Two low-level functions using MethodsList metadata objects
-    	(mlistMetaName() and getAllMethods()) are deprecated.
+	(mlistMetaName() and getAllMethods()) are deprecated.
 
     o	Setting par(gamma=) is now deprecated, and the windows()
-    	device (the only known example) no longer allows it.
+	device (the only known example) no longer allows it.
 
 
 INSTALLATION
@@ -460,8 +460,8 @@ INSTALLATION
 	package tcltk.
 
     o	configure first tries TCL_INCLUDE_SPEC and TK_INCLUDE_SPEC
-    	when looking for Tcl/Tk headers.  (The existing scheme did
-    	not work for the ActiveTcl package on Mac OS X.)
+	when looking for Tcl/Tk headers.  (The existing scheme did
+	not work for the ActiveTcl package on Mac OS X.)
 
     o	The Windows build only supports Windows 2000 or later (XP,
 	Vista, Server 2003 and Server 2008).
@@ -517,10 +517,10 @@ UTILITIES
 	the DESCRIPTION file contains an Encoding field, that is used
 	for the default encoding.
 
-    o	available.packages() (and hence install.packages etc) now
-    	supports subdirectories in a repository, and
-    	tools::write_PACKAGES() can now produce PACKAGES files
-    	including subdirectories.
+    o	available.packages() (and hence install.packages() etc) now
+	supports subdirectories in a repository, and
+	tools::write_PACKAGES() can now produce PACKAGES files
+	including subdirectories.
 
 
 C-LEVEL FACILITIES
@@ -670,13 +670,13 @@ BUG FIXES
     o	package.skeleton() now also works for code_files with only
 	metadata (e.g. S4 setClass) definitions.
 
-    o  some methods package utilities (implicitGeneric, makeGeneric)
-        will be more robust in dealing with primitive functions (not a
-        useful idea to call them with primitives, though)
+    o	Some methods package utilities (implicitGeneric(), makeGeneric())
+	will be more robust in dealing with primitive functions (not a
+	useful idea to call them with primitives, though)
 
-    o  making a MethodsList from a function with no methods table
-        will return an empty list, rather than cause an error
-        (questionably a bug, but caused some obscure failures).
+    o	Making a MethodsList from a function with no methods table will
+	return an empty list, rather than cause an error (questionably
+	a bug, but caused some obscure failures).
 
 
 
@@ -735,6 +735,8 @@ BUG FIXES
 
     o	source(echo=TRUE) would skip lines consisting entirely of the
 	letter t. (PR#10923)
+
+    o	bzip2 has been updated to 1.0.5 (security fix).
 
 
 
