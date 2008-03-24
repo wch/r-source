@@ -54,6 +54,8 @@ BUG FIXES
     o	source(echo=TRUE) would skip lines consisting entirely of the
     	letter t. (PR#10923)
 
+    o	bzip2 has been updated to 1.0.5 (security fix).
+
 
 
 		CHANGES IN R VERSION 2.6.2

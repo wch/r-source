@@ -8,8 +8,8 @@
    This file is part of bzip2/libbzip2, a program and library for
    lossless, block-sorting data compression.
 
-   bzip2/libbzip2 version 1.0.4 of 20 December 2006
-   Copyright (C) 1996-2006 Julian Seward <jseward@bzip.org>
+   bzip2/libbzip2 version 1.0.5 of 10 December 2007
+   Copyright (C) 1996-2007 Julian Seward <jseward@bzip.org>
 
    Please read the WARNING, DISCLAIMER and PATENTS sections in the 
    README file.
@@ -20,22 +20,6 @@
 
 
 #include "bzlib_private.h"
-
-#ifndef __cplusplus
-  R_INLINE
-#endif
-static Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
-{
-   Int32 nb, na, mid;
-   nb = 0;
-   na = 256;
-   do {
-      mid = (nb + na) >> 1;
-      if (indx >= cftab[mid]) nb = mid; else na = mid;
-   }
-   while (na - nb != 1);
-   return nb;
-}
 
 
 /*---------------------------------------------------*/
