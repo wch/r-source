@@ -20469,8 +20469,6 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
-ltout=`./libtool --config | grep '^shlibpath_var='`
-eval "${ltout}"
 
 ## Export LD_LIBRARY_PATH or equivalent.
 if eval "test -z \"\${${shlibpath_var}}\""; then
@@ -20481,12 +20479,8 @@ fi
 eval "export ${shlibpath_var}"
 
 ## record how to strip shared/dynamic libraries.
-ltout=`./libtool --config | grep '^striplib='`
-eval "${ltout}"
 
 ## record how to strip static libraries.
-ltout=`./libtool --config | grep '^old_striplib='`
-eval "${ltout}"
 stripstaticlib=${old_striplib}
 
 
@@ -27112,7 +27106,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27115: \"$ac_link\") >&5
+(eval echo $as_me:27109: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27195,7 +27189,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27198: \"$ac_link\") >&5
+(eval echo $as_me:27192: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -47260,11 +47254,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47263: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47257: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:47267: \$? = $ac_status" >&5
+   echo "$as_me:47261: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -47359,11 +47353,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47362: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47356: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:47366: \$? = $ac_status" >&5
+   echo "$as_me:47360: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -47411,11 +47405,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47414: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47408: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:47418: \$? = $ac_status" >&5
+   echo "$as_me:47412: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

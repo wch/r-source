@@ -618,8 +618,6 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
-ltout=`./libtool --config | grep '^shlibpath_var='`
-eval "${ltout}"
 AC_SUBST(shlibpath_var)
 ## Export LD_LIBRARY_PATH or equivalent.
 if eval "test -z \"\${${shlibpath_var}}\""; then
@@ -630,12 +628,8 @@ fi
 eval "export ${shlibpath_var}"
 
 ## record how to strip shared/dynamic libraries.
-ltout=`./libtool --config | grep '^striplib='`
-eval "${ltout}"
 AC_SUBST(striplib)
 ## record how to strip static libraries.
-ltout=`./libtool --config | grep '^old_striplib='`
-eval "${ltout}"
 stripstaticlib=${old_striplib}
 AC_SUBST(stripstaticlib)
 
