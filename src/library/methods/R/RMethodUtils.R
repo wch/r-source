@@ -100,6 +100,7 @@
       }
       value@default <- methods
       assign(".Methods", methods, envir = ev)
+      .setupMethodsTables(value, TRUE)
       value@skeleton <- generic.skeleton(f, fdef, fdefault)
       value
   }
