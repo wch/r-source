@@ -27,8 +27,9 @@
     a vector of cut points \emph{or} number giving the number of
     intervals which \code{x} is to be cut into \emph{or} an
     interval specification, one of \code{"days"}, \code{"weeks"},
-    \code{"months"} or \code{"years"}, plus \code{"secs"}, \code{"mins"},
-    \code{"hours"} for date-time objects.
+    \code{"months"}, \code{"quarters"} or \code{"years"},
+    plus \code{"secs"}, \code{"mins"}, \code{"hours"} for
+    date-time objects.
  }
   \item{\dots}{graphical parameters, or arguments to
     \code{\link{hist.default}} such as \code{include.lowest},
@@ -43,6 +44,11 @@
   \item{start.on.monday}{logical. If \code{breaks = "weeks"}, should the
     week start on Mondays or Sundays?}
   \item{format}{for the x-axis labels. See \code{\link{strptime}}.}
+}
+\details{
+  Using \code{breaks = "quarters"} will create intervals of 3 calendar
+  months, with the intervals beginning on January 1, April 1,
+  July 1 or October 1, based upon \code{min(x)} as appropriate.
 }
 \value{
   An object of class \code{"histogram"}: see \code{\link{hist}}.

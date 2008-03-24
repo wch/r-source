@@ -667,7 +667,7 @@ cut.POSIXt <-
 	valid <-
 	    pmatch(by2[length(by2)],
 		   c("secs", "mins", "hours", "days", "weeks",
-		     "months", "years", "DSTdays"))
+		     "months", "years", "DSTdays", "quarters"))
 	if(is.na(valid)) stop("invalid specification of 'breaks'")
 	start <- as.POSIXlt(min(x, na.rm=TRUE))
 	incr <- 1
@@ -680,21 +680,33 @@ cut.POSIXt <-
 		start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
 	    incr <- 7*86400
 	}
-        if(valid == 8) incr <- 25*3600
-	if(valid == 6) {
+    if(valid == 8) incr <- 25*3600
+    if(valid == 6) {
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        end <- as.POSIXlt(end + (31 * 86400))
+        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        end <- as.POSIXlt(end + (31 * step * 86400))
         end$mday <- 1
-        breaks <- seq(start, end, "months")
+        breaks <- seq(start, end, breaks)
     } else if(valid == 7) {
         start$mon <- 0
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        end <- as.POSIXlt(end + (366 * 86400))
+        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        end <- as.POSIXlt(end + (366 * step* 86400))
         end$mon <- 0
         end$mday <- 1
-        breaks <- seq(start, end, "years")
+        breaks <- seq(start, end, breaks)
+    } else if(valid == 9) {
+        qtr <- rep(c(0, 3, 6, 9), each = 3)
+        start$mon <- qtr[start$mon + 1]
+        start$mday <- 1
+        end <- as.POSIXlt(max(x, na.rm = TRUE))
+        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        end <- as.POSIXlt(end + (93 * step * 86400))
+        end$mon <- qtr[end$mon + 1]
+        end$mday <- 1
+        breaks <- seq(start, end, paste(step * 3, "months"))
     } else {
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
 	    maxx <- max(x, na.rm = TRUE)
