@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
-"PO-Revision-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
+"PO-Revision-Date: 2008-03-24 15:34\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -90,11 +90,11 @@ msgstr "‘%s’ is not a valid abbreviation of an RNG"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "‘normal.kind’ must be a character string of length 1."
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Buggy version of Kinderman-Ramage generator used."
-
 msgid "'%s' is not a valid choice"
 msgstr "‘%s’ is not a valid choice"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Buggy version of Kinderman-Ramage generator used."
 
 msgid "malformed version string"
 msgstr "malformed version string"
@@ -1033,17 +1033,11 @@ msgstr "in ‘%s’ classes for export not defined: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "in ‘%s’ methods for export not found: %s"
 
-msgid "Multiple methods lists found for '"
-msgstr "Multiple methods lists found for '"
+msgid "Multiple methods tables found for '"
+msgstr "Multiple methods tables found for '"
 
 msgid "'"
 msgstr "'"
-
-msgid "No methods table for \""
-msgstr "No methods table for \""
-
-msgid "\""
-msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
 msgstr "Failed to find metadata object for “%s”"
@@ -1089,6 +1083,9 @@ msgstr "cannot import into a sealed name space"
 
 msgid "invalid import target"
 msgstr "invalid import target"
+
+msgid "got invalid index for importing"
+msgstr "got invalid index for importing"
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr "Found methods to import for function “%s” but not the generic itself"

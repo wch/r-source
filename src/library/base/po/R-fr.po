@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-09-16 17:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -74,11 +74,11 @@ msgstr "'%s' n'est pas une abbréviation valide d'un RNG"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind' doit être une chaîne de caractères de longueur 1."
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "La version boggée du générateur Kinderman-Ramage est utilisée."
-
 msgid "'%s' is not a valid choice"
 msgstr "'%s' n'est pas un choix correct."
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "La version boggée du générateur Kinderman-Ramage est utilisée."
 
 msgid "malformed version string"
 msgstr "chaîne de caractères de version incorrecte"
@@ -1081,17 +1081,12 @@ msgstr "classes à exporter non définies dans '%s' : %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "méthodes à exporter non trouvées dans '%s' : %s"
 
-msgid "Multiple methods lists found for '"
-msgstr ""
+#, fuzzy
+msgid "Multiple methods tables found for '"
+msgstr "Pas de table de méthodes pour \""
 
 msgid "'"
 msgstr ""
-
-msgid "No methods table for \""
-msgstr "Pas de table de méthodes pour \""
-
-msgid "\""
-msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
 msgstr "Objet métadonnées introuvable pour \"%s\""
@@ -1140,6 +1135,9 @@ msgstr "impossible d'importer vers un espace de noms verouillé"
 
 msgid "invalid import target"
 msgstr "cible d'importation incorrecte"
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
@@ -1564,6 +1562,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "\""
+#~ msgstr "\""
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "non defini pour des objets \"POSIXt\""

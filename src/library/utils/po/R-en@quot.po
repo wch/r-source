@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:06\n"
-"PO-Revision-Date: 2008-03-17 09:06\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
+"PO-Revision-Date: 2008-03-24 15:35\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -466,14 +466,14 @@ msgstr "only numeric indices can be used"
 msgid "cannot create directory '%s'"
 msgstr "cannot create directory ‘%s’"
 
-msgid "'code_files' should be a character vector"
-msgstr "‘code_files’ should be a character vector"
+msgid "'namespace' must be a single logical"
+msgstr "‘namespace’ must be a single logical"
 
-msgid "'list' should be a character vector naming R objects"
-msgstr "‘list’ should be a character vector naming R objects"
+msgid "'code_files' must be a character vector"
+msgstr "‘code_files’ must be a character vector"
 
-msgid "'namespace' should be a single logical"
-msgstr "‘namespace’ should be a single logical"
+msgid "'list' must be a character vector naming R objects"
+msgstr "‘list’ must be a character vector naming R objects"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr "cannot turn off locale-specific chars via LC_CTYPE"
@@ -501,6 +501,18 @@ msgstr "Saving functions and data ..."
 
 msgid "Copying code files ..."
 msgstr "Copying code files ..."
+
+msgid "Invalid file name(s) for R code in"
+msgstr "Invalid file name(s) for R code in"
+
+msgid ":"
+msgstr ":"
+
+msgid ","
+msgstr ","
+
+msgid "are now renamed to 'z<name>.R'"
+msgstr "are now renamed to ‘z<name>.R’"
 
 msgid "Making help files ..."
 msgstr "Making help files ..."
@@ -763,9 +775,6 @@ msgstr "invalid format"
 msgid "last record incomplete, %d lines discarded"
 msgstr "last record incomplete, %d lines discarded"
 
-msgid "'file' must be a character string or connection"
-msgstr "‘file’ must be a character string or connection"
-
 msgid "transfer failure"
 msgstr "transfer failure"
 
@@ -774,6 +783,9 @@ msgstr "HTTPUserAgent"
 
 msgid "option must be a length one character vector or NULL"
 msgstr "option must be a length one character vector or NULL"
+
+msgid "'file' must be a character string or connection"
+msgstr "‘file’ must be a character string or connection"
 
 msgid "empty beginning of file"
 msgstr "empty beginning of file"
@@ -826,9 +838,6 @@ msgstr "invalid options('str') -- using defaults instead"
 
 msgid "invalid components in options('str'):"
 msgstr "invalid components in options('str'):"
-
-msgid ","
-msgstr ","
 
 msgid "'object' does not have valid levels()"
 msgstr "‘object’ does not have valid levels()"

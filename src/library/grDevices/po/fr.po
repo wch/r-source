@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-03 19:13+0000\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2007-04-13 12:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -425,21 +425,26 @@ msgstr "impossible de démarrer le périphérique pdf"
 msgid "unable to start device PicTeX"
 msgstr "impossible de démarrer le périphérique PicTeX"
 
-#: devQuartz.c:939
+#: devQuartz.c:968
+#, fuzzy
+msgid "invalid 'file' argument"
+msgstr "argument chaîne de caractère incorrect"
+
+#: devQuartz.c:997
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "périphérique incorrect dans savePlot"
 
-#: devQuartz.c:966
+#: devQuartz.c:1024
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "impossible de démarrer le périphérique PostScript"
 
-#: devQuartz.c:1007
+#: devQuartz.c:1074
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1024
+#: devQuartz.c:1095
 #, fuzzy
 msgid "Quartz device is not available on this platform."
 msgstr "Périphérique Quartz non disponible sur cette architecture"
@@ -624,11 +629,17 @@ msgstr "impossible de démarrer périphérique devWindows"
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'utilisation récursive de getGraphicsEvent n'est pas supportée"
 
+#: qdBitmap.c:92
+msgid "Not a supported scheme, no image data written"
+msgstr ""
+
+#: qdPDF.c:97
+#, fuzzy, c-format
+msgid "cannot open file '%s'"
+msgstr "impossible de lire fichier afm '%s'"
+
 #~ msgid "can't find any fonts"
 #~ msgstr "aucune police n'est trouvée"
-
-#~ msgid "invalid string argument"
-#~ msgstr "argument chaîne de caractère incorrect"
 
 #~ msgid "invalid width or height in quartz"
 #~ msgstr "largeur ou hauteur incorrecte dans quartz"

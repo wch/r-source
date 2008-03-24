@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -75,12 +75,12 @@ msgstr "'%s' non è una abbreviazione valida di un RNG"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
 
+msgid "'%s' is not a valid choice"
+msgstr "'%s' non è una scelta valida"
+
 msgid "Buggy version of Kinderman-Ramage generator used."
 msgstr ""
 "Stai usando una versione non funzionante del generatore di Kinderman-Ramage."
-
-msgid "'%s' is not a valid choice"
-msgstr "'%s' non è una scelta valida"
 
 msgid "malformed version string"
 msgstr "versione stringa mal composta"
@@ -1070,16 +1070,10 @@ msgstr "in '%s', classi da esportare non definite: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "in '%s', metodi da esportare non trovati: %s"
 
-msgid "Multiple methods lists found for '"
+msgid "Multiple methods tables found for '"
 msgstr ""
 
 msgid "'"
-msgstr ""
-
-msgid "No methods table for \""
-msgstr ""
-
-msgid "\""
 msgstr ""
 
 msgid "Failed to find metadata object for \"%s\""
@@ -1127,6 +1121,9 @@ msgstr "non posso importare in un namespace sigillato"
 
 msgid "invalid import target"
 msgstr "destinazione per importazione non valida"
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""

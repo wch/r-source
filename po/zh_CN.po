@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-18 19:43+0000\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -164,19 +164,19 @@ msgstr "在显示'%s'时出了问题"
 #: src/main/saveload.c:1972 src/main/saveload.c:1975 src/main/saveload.c:1978
 #: src/main/saveload.c:2099 src/main/saveload.c:2271 src/main/saveload.c:2276
 #: src/main/saveload.c:2279 src/main/saveload.c:2370 src/main/saveload.c:2420
-#: src/main/scan.c:707 src/main/scan.c:874 src/main/scan.c:887
-#: src/main/scan.c:891 src/main/scan.c:893 src/main/scan.c:904
-#: src/main/scan.c:931 src/main/scan.c:934 src/main/scan.c:980
-#: src/main/scan.c:1019 src/main/scan.c:1023 src/main/scan.c:1033
-#: src/main/scan.c:1242 src/main/scan.c:1518 src/main/scan.c:1530
-#: src/main/scan.c:1534 src/main/scan.c:1540 src/main/scan.c:1768
-#: src/main/scan.c:1769 src/main/scan.c:1771 src/main/scan.c:1772
-#: src/main/scan.c:1773 src/main/scan.c:1774 src/main/scan.c:1775
-#: src/main/scan.c:1776 src/main/seq.c:352 src/main/seq.c:356
+#: src/main/scan.c:661 src/main/scan.c:828 src/main/scan.c:841
+#: src/main/scan.c:845 src/main/scan.c:847 src/main/scan.c:858
+#: src/main/scan.c:885 src/main/scan.c:888 src/main/scan.c:934
+#: src/main/scan.c:973 src/main/scan.c:977 src/main/scan.c:987
+#: src/main/scan.c:1196 src/main/scan.c:1472 src/main/scan.c:1484
+#: src/main/scan.c:1488 src/main/scan.c:1494 src/main/scan.c:1722
+#: src/main/scan.c:1723 src/main/scan.c:1725 src/main/scan.c:1726
+#: src/main/scan.c:1727 src/main/scan.c:1728 src/main/scan.c:1729
+#: src/main/scan.c:1730 src/main/seq.c:352 src/main/seq.c:356
 #: src/main/seq.c:374 src/main/seq.c:378 src/main/seq.c:384 src/main/seq.c:392
 #: src/main/sysutils.c:564 src/main/sysutils.c:566 src/main/sysutils.c:568
-#: src/main/unique.c:586 src/main/unique.c:833 src/main/unique.c:893
-#: src/main/unique.c:900 src/main/util.c:566 src/main/util.c:569
+#: src/main/unique.c:701 src/main/unique.c:948 src/main/unique.c:1008
+#: src/main/unique.c:1015 src/main/util.c:566 src/main/util.c:569
 #: src/modules/internet/internet.c:278 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:293
 #: src/modules/internet/internet.c:297 src/modules/lapack/Lapack.c:151
@@ -513,7 +513,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr "数学函数中用了非数值变元"
 
 #: src/include/Errormsg.h:35 src/main/builtin.c:851 src/main/devices.c:411
-#: src/main/scan.c:1467
+#: src/main/scan.c:1421
 msgid "invalid argument"
 msgstr "变元不对"
 
@@ -1182,7 +1182,7 @@ msgstr "矢量size设得太大了"
 
 #: src/main/builtin.c:69 src/main/builtin.c:93 src/main/builtin.c:102
 #: src/main/builtin.c:292 src/main/builtin.c:320 src/main/builtin.c:357
-#: src/main/builtin.c:366 src/main/coerce.c:1413 src/main/connections.c:2190
+#: src/main/builtin.c:366 src/main/coerce.c:1360 src/main/connections.c:2190
 #: src/main/engine.c:2739 src/main/envir.c:910 src/main/envir.c:1004
 #: src/main/envir.c:1460 src/main/envir.c:1552 src/main/envir.c:1619
 #: src/main/envir.c:1731 src/main/envir.c:2376 src/main/envir.c:2429
@@ -1255,7 +1255,7 @@ msgid "cannot set length of non-vector"
 msgstr "不能设非矢量的长度"
 
 #: src/main/builtin.c:853 src/main/builtin.c:857 src/main/character.c:333
-#: src/main/coerce.c:2477
+#: src/main/coerce.c:2424
 msgid "invalid value"
 msgstr "值不对"
 
@@ -1263,7 +1263,7 @@ msgstr "值不对"
 msgid "missing value for 'length'"
 msgstr "'length'不能是遗漏值"
 
-#: src/main/builtin.c:883 src/main/coerce.c:2240 src/main/coerce.c:2281
+#: src/main/builtin.c:883 src/main/coerce.c:2187 src/main/coerce.c:2228
 msgid "... used in an incorrect context"
 msgstr "... 的上下文用得不对"
 
@@ -1534,102 +1534,102 @@ msgstr "强制改变时丢弃了虚数部分"
 msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "在强制改变成原始值时，任何溢位值当作零来处理"
 
-#: src/main/coerce.c:434
+#: src/main/coerce.c:381
 #, c-format
 msgid "invalid data of mode \"%s\" (too short)"
 msgstr "状态为\"%s\"的数据有错(太短了)"
 
-#: src/main/coerce.c:962
+#: src/main/coerce.c:909
 #, fuzzy, c-format
 msgid "'pairlist' object cannot be coerced to type '%s'"
 msgstr "'pairlist'对象不能被强制改变成%s"
 
-#: src/main/coerce.c:1070
+#: src/main/coerce.c:1017
 #, fuzzy, c-format
 msgid "(list) object cannot be coerced to type '%s'"
 msgstr "(串列)对象不能强制改变成%s"
 
-#: src/main/coerce.c:1152
+#: src/main/coerce.c:1099
 msgid "environments cannot be coerced to other types"
 msgstr "环境不能被强制改变成其他种类"
 
-#: src/main/coerce.c:1409
+#: src/main/coerce.c:1356
 msgid "list argument expected"
 msgstr "需要串列变元"
 
-#: src/main/coerce.c:1417 src/main/eval.c:3520 src/main/eval.c:3527
+#: src/main/coerce.c:1364 src/main/eval.c:3520 src/main/eval.c:3527
 msgid "invalid environment"
 msgstr "环境不对"
 
-#: src/main/coerce.c:1421
+#: src/main/coerce.c:1368
 msgid "argument must have length at least 1"
 msgstr "变元的长度至少要为一"
 
-#: src/main/coerce.c:1446
+#: src/main/coerce.c:1393
 msgid "invalid body for function"
 msgstr "函数定义本体不对"
 
-#: src/main/coerce.c:1465
+#: src/main/coerce.c:1412
 msgid "invalid length 0 argument"
 msgstr "长度为零的变元是不对的"
 
-#: src/main/coerce.c:1480
+#: src/main/coerce.c:1427
 msgid "invalid argument list"
 msgstr "变元串列不对"
 
-#: src/main/coerce.c:1757
+#: src/main/coerce.c:1704
 msgid "type \"single\" unimplemented in R"
 msgstr "\"single\"种类目前在R里还没有实现"
 
-#: src/main/coerce.c:1759
+#: src/main/coerce.c:1706
 msgid "unimplemented predicate"
 msgstr "没有实现的谓词"
 
-#: src/main/coerce.c:1898 src/main/coerce.c:1996
+#: src/main/coerce.c:1845 src/main/coerce.c:1943
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s()不适用于类别为'%s'的非串列或非矢量"
 
-#: src/main/coerce.c:2161
+#: src/main/coerce.c:2108
 #, fuzzy
 msgid "'what' must be a character string or a function"
 msgstr "第一个变元必需是字符串或函数"
 
-#: src/main/coerce.c:2167
+#: src/main/coerce.c:2114
 msgid "'envir' must be an environment"
 msgstr "'envir'必需是环境"
 
-#: src/main/coerce.c:2320
+#: src/main/coerce.c:2267
 msgid "invalid environment specified"
 msgstr "环境设定有错"
 
-#: src/main/coerce.c:2399
+#: src/main/coerce.c:2346
 msgid "invalid replacement object to be a class string"
 msgstr "字符串类别的替换对象不对"
 
-#: src/main/coerce.c:2417
+#: src/main/coerce.c:2364
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr "只有在对象有这一类别的情况下才能设\"%s\"；不应该有\"%s\""
 
-#: src/main/coerce.c:2433
+#: src/main/coerce.c:2380
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr "除非维度的长度为二(目前是%d)，否则不能设为矩阵类别"
 
-#: src/main/coerce.c:2439
+#: src/main/coerce.c:2386
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr "除非维度的长度大于零，否则不能设为\"array\"类别"
 
-#: src/main/coerce.c:2468
+#: src/main/coerce.c:2415
 msgid "'value' must be non-null character string"
 msgstr "'value'必需为非空字符"
 
-#: src/main/coerce.c:2481
+#: src/main/coerce.c:2428
 msgid "invalid to change the storage mode of a factor"
 msgstr "不能改变因子的存储方式"
 
@@ -1878,8 +1878,8 @@ msgstr "fifo(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现�
 #: src/main/connections.c:3497 src/main/connections.c:3695
 #: src/main/connections.c:3985 src/main/dcf.c:56 src/main/deparse.c:300
 #: src/main/deparse.c:373 src/main/saveload.c:2286 src/main/saveload.c:2363
-#: src/main/scan.c:948 src/main/scan.c:1054 src/main/scan.c:1548
-#: src/main/scan.c:1756 src/main/source.c:193
+#: src/main/scan.c:902 src/main/scan.c:1008 src/main/scan.c:1502
+#: src/main/scan.c:1710 src/main/source.c:193
 msgid "cannot open the connection"
 msgstr "无法打开链结"
 
@@ -2084,7 +2084,7 @@ msgstr "readLines读的行数不够"
 
 #: src/main/connections.c:2749 src/main/connections.c:3092
 #: src/main/connections.c:3453 src/main/connections.c:4010
-#: src/main/scan.c:1752 src/main/serialize.c:1657
+#: src/main/scan.c:1706 src/main/serialize.c:1657
 msgid "cannot write to this connection"
 msgstr "无法写入此链结"
 
@@ -3644,124 +3644,124 @@ msgstr "标记种类不对"
 msgid "contextstack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/gram.y:1737
+#: src/main/gram.y:1715
 msgid "input"
 msgstr "输入"
 
-#: src/main/gram.y:1738
+#: src/main/gram.y:1716
 msgid "end of input"
 msgstr "输入结束"
 
-#: src/main/gram.y:1739
+#: src/main/gram.y:1717
 msgid "string constant"
 msgstr "字符常量"
 
-#: src/main/gram.y:1740
+#: src/main/gram.y:1718
 msgid "numeric constant"
 msgstr "数值量"
 
-#: src/main/gram.y:1741
+#: src/main/gram.y:1719
 msgid "symbol"
 msgstr "符号"
 
-#: src/main/gram.y:1742
+#: src/main/gram.y:1720
 msgid "assignment"
 msgstr "任务"
 
-#: src/main/gram.y:1743
+#: src/main/gram.y:1721
 msgid "end of line"
 msgstr "行尾"
 
-#: src/main/gram.y:1756 src/main/gram.y:1762
+#: src/main/gram.y:1734 src/main/gram.y:1740
 #, c-format
 msgid "unexpected %s"
 msgstr "意外的%s"
 
-#: src/main/gram.y:1772
+#: src/main/gram.y:1750
 #, fuzzy, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "重复正式变元"
 
-#: src/main/gram.y:1784
+#: src/main/gram.y:1762
 #, fuzzy, c-format
 msgid "input buffer overflow at line %d"
 msgstr "输入缓冲区上溢"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1901
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr "整数文字%sL里有小数点；转用数值"
 
-#: src/main/gram.y:1913
+#: src/main/gram.y:1903
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "同L一起修饰的%s是非整数值; 转用数值"
 
-#: src/main/gram.y:1924
+#: src/main/gram.y:1914
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "整数文字%sL里含多余的小数点"
 
-#: src/main/gram.y:1948
+#: src/main/gram.y:1937
 #, fuzzy, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "无法分配内存(GEregister)"
 
-#: src/main/gram.y:2057
+#: src/main/gram.y:2046
 #, fuzzy, c-format
 msgid "\\uxxxx sequences not supported (line %d)"
 msgstr "不支持\\uxxxx这样的序列"
 
-#: src/main/gram.y:2076 src/main/gram.y:2089
+#: src/main/gram.y:2065 src/main/gram.y:2078
 #, fuzzy, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "\\u{xxxx}顺序不对"
 
-#: src/main/gram.y:2091
+#: src/main/gram.y:2080
 #, fuzzy, c-format
 msgid "invalid \\uxxxx sequence (line %d)"
 msgstr "\\uxxxx 顺序不对"
 
-#: src/main/gram.y:2100
+#: src/main/gram.y:2089
 #, fuzzy, c-format
 msgid "\\Uxxxxxxxx sequences not supported (line %d)"
 msgstr "不支持\\uxxxx这样的序列"
 
-#: src/main/gram.y:2120 src/main/gram.y:2126
+#: src/main/gram.y:2109 src/main/gram.y:2115
 #, fuzzy, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "\\U{xxxxxxxx}顺序不对"
 
-#: src/main/gram.y:2128
+#: src/main/gram.y:2117
 #, fuzzy, c-format
 msgid "invalid \\Uxxxxxxxx sequence (line %d)"
 msgstr "\\U{xxxxxxxx}顺序不对"
 
-#: src/main/gram.y:2170
+#: src/main/gram.y:2159
 #, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "不认识字符串里'\\%c'这样的逸出号"
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2210
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 1000 chars)"
 msgstr ""
 
-#: src/main/gram.y:2230
+#: src/main/gram.y:2219
 #, c-format
 msgid "unrecognized escape removed from \"%s\""
 msgid_plural "unrecognized escapes removed from \"%s\""
 msgstr[0] "从\"%s\"里删除了不认识的逸出号"
 
-#: src/main/gram.y:2339
+#: src/main/gram.y:2328
 #, fuzzy, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr "代码源里的函数功能嵌套太深"
 
-#: src/main/gram.y:2728 src/main/gram.y:2735 src/main/gram.y:2741
-#: src/main/gram.y:2748
+#: src/main/gram.y:2717 src/main/gram.y:2724 src/main/gram.y:2730
+#: src/main/gram.y:2737
 #, fuzzy, c-format
 msgid "contextstack overflow at line %d"
 msgstr "整数堆叠上溢"
@@ -3922,65 +3922,65 @@ msgstr "错误: 本R版本不支持系统命令.\n"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "错误：C堆叠上溢\n"
 
-#: src/main/main.c:803
+#: src/main/main.c:812
 msgid "unable to open the base package\n"
 msgstr "无法打开基本程序包\n"
 
-#: src/main/main.c:863
+#: src/main/main.c:872
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: 本R版本不支持UTF-8语言环境\n"
 
-#: src/main/main.c:865
+#: src/main/main.c:874
 #, fuzzy
 msgid "WARNING: multibyte locales are not supported in this build of R\n"
 msgstr "警告: 本R版本不支持UTF-8语言环境\n"
 
-#: src/main/main.c:888
+#: src/main/main.c:897
 msgid "unable to restore saved data in .RData\n"
 msgstr "无法用.Rdata来復原保存数据\n"
 
-#: src/main/main.c:936
+#: src/main/main.c:943
 msgid "During startup - "
 msgstr "在启动过程中 - "
 
-#: src/main/main.c:1140
+#: src/main/main.c:1147
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:1144
+#: src/main/main.c:1151
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:1149
+#: src/main/main.c:1156
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:1157
+#: src/main/main.c:1164
 msgid "unrecognized value of 'save'"
 msgstr "没有这种'save'值"
 
-#: src/main/main.c:1160
+#: src/main/main.c:1167
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'不对, 假設为零"
 
-#: src/main/main.c:1165
+#: src/main/main.c:1172
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'不对, 假設为FALSE"
 
-#: src/main/main.c:1196
+#: src/main/main.c:1203
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫元素分配空间"
 
-#: src/main/main.c:1274
+#: src/main/main.c:1281
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1382
+#: src/main/main.c:1389
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'时产生了警告信息\n"
 
-#: src/main/main.c:1440
+#: src/main/main.c:1447
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没有回覆逻辑值"
 
@@ -4769,7 +4769,7 @@ msgstr "'%s'的值不对"
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr ""
 
-#: src/main/par-common.c:141
+#: src/main/par-common.c:142
 msgid "'gamma' cannot be modified on this device"
 msgstr ""
 
@@ -5899,84 +5899,84 @@ msgid ""
 "connection"
 msgstr "在通过联结进行输入时，文件头没有魔号"
 
-#: src/main/scan.c:508
+#: src/main/scan.c:462
 #, c-format
 msgid "scan() expected '%s', got '%s'"
 msgstr "scan()需要'%s', 而不是'%s'"
 
-#: src/main/scan.c:694
+#: src/main/scan.c:648
 msgid "empty 'what' specified"
 msgstr "'what'设定不能是空的"
 
-#: src/main/scan.c:745
+#: src/main/scan.c:699
 #, c-format
 msgid "line %d did not have %d elements"
 msgstr "%d行没有%d元素"
 
-#: src/main/scan.c:797
+#: src/main/scan.c:751
 msgid "number of items read is not a multiple of the number of columns"
 msgstr "读取的项目数必需是列数的倍数"
 
-#: src/main/scan.c:889
+#: src/main/scan.c:843
 msgid "invalid 'strip.white' length"
 msgstr "'strip.white'的长度不对"
 
-#: src/main/scan.c:900
+#: src/main/scan.c:854
 msgid "invalid 'sep' value: must be one byte"
 msgstr "'sep'值不对: 大小只能为一拜"
 
-#: src/main/scan.c:912
+#: src/main/scan.c:866
 msgid "invalid decimal separator: must be one byte"
 msgstr "十进位分隔符不对: 大小只能为一拜"
 
-#: src/main/scan.c:917
+#: src/main/scan.c:871
 msgid "invalid decimal separator"
 msgstr "十进位分隔符不对"
 
-#: src/main/scan.c:926 src/main/scan.c:1042 src/main/scan.c:1527
+#: src/main/scan.c:880 src/main/scan.c:996 src/main/scan.c:1481
 msgid "invalid quote symbol set"
 msgstr "引号符号集不对"
 
-#: src/main/scan.c:1098 src/main/scan.c:1116
+#: src/main/scan.c:1052 src/main/scan.c:1070
 msgid "string terminated by newline or EOF"
 msgstr "字符串结尾要用新行或EOF"
 
-#: src/main/scan.c:1238
+#: src/main/scan.c:1192
 msgid "the first argument must be of mode character"
 msgstr "第一变元的状态必需是字符"
 
-#: src/main/scan.c:1469
+#: src/main/scan.c:1423
 #, c-format
 msgid "Selection: "
 msgstr "选择: "
 
-#: src/main/scan.c:1557 src/main/scan.c:1569
+#: src/main/scan.c:1511 src/main/scan.c:1523
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "'readTableHead'无法分配缓冲区"
 
-#: src/main/scan.c:1579
+#: src/main/scan.c:1533
 msgid "\\ followed by EOF"
 msgstr "\\ 后面跟着EOF"
 
-#: src/main/scan.c:1623 src/main/scan.c:1626
+#: src/main/scan.c:1577 src/main/scan.c:1580
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "readTableHeader在读取'%s'时遇到了不完全的最后一行"
 
-#: src/main/scan.c:1749
+#: src/main/scan.c:1703
 msgid "'file' is not a connection"
 msgstr "'file'不是链结"
 
-#: src/main/scan.c:1782
+#: src/main/scan.c:1736
 msgid "'dec' must be a single character"
 msgstr "'dec'必需为单节字符"
 
-#: src/main/scan.c:1809
+#: src/main/scan.c:1763
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "数据框损坏了--列的长度%d不等于行的数目"
 
-#: src/main/scan.c:1855
+#: src/main/scan.c:1809
 msgid "corrupt matrix -- dims not not match length"
 msgstr "矩阵损坏了--dims同长度不相等"
 
@@ -6708,57 +6708,57 @@ msgstr "临时文件名都用完了"
 msgid "proc.time() is not implemented on this system"
 msgstr "本系统没有实现proc.time()这一功能"
 
-#: src/main/unique.c:282
+#: src/main/unique.c:289
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr "雜亂定址法的长度%d太大了"
 
-#: src/main/unique.c:363
+#: src/main/unique.c:386 src/main/unique.c:414
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated'只适用于矢量"
 
-#: src/main/unique.c:402
+#: src/main/unique.c:453
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s()只适用于矢量"
 
-#: src/main/unique.c:515
+#: src/main/unique.c:659
 msgid "'match' requires vector arguments"
 msgstr "'match'需要矢量变元"
 
-#: src/main/unique.c:590 src/main/unique.c:703
+#: src/main/unique.c:705 src/main/unique.c:818
 msgid "argument is not of mode character"
 msgstr "变元不是字符状态"
 
-#: src/main/unique.c:795
+#: src/main/unique.c:910
 msgid "... used in a situation where it doesn't exist"
 msgstr "... 用在它不存在的地方了"
 
-#: src/main/unique.c:886
+#: src/main/unique.c:1001
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "找不到调用'match.call'的闭合"
 
-#: src/main/unique.c:1043
+#: src/main/unique.c:1158
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "rowsum()里出现了非数值矩阵：这不应该发生"
 
-#: src/main/unique.c:1077
+#: src/main/unique.c:1192
 msgid "non-numeric data frame in rowsum"
 msgstr "rowsum里不能有非数值数据框"
 
-#: src/main/unique.c:1103
+#: src/main/unique.c:1218
 msgid "this cannot happen"
 msgstr "这不应该发生"
 
-#: src/main/unique.c:1157
+#: src/main/unique.c:1272
 msgid "'names' must be a character vector"
 msgstr "'names'必需是字符矢量"
 
-#: src/main/unique.c:1161
+#: src/main/unique.c:1276
 msgid "'sep' must be a character string"
 msgstr "'sep'必需是字符串"
 
-#: src/main/unique.c:1240
+#: src/main/unique.c:1355
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated不能调用在STRSXP上"
 

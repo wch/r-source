@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:06\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2007-09-11 22:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -459,15 +459,18 @@ msgstr " 数値的添字だけが使えます "
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を作成できません "
 
-msgid "'code_files' should be a character vector"
+#, fuzzy
+msgid "'namespace' must be a single logical"
+msgstr " 'namespace' は単一の論理値でなければなりません "
+
+#, fuzzy
+msgid "'code_files' must be a character vector"
 msgstr " 'code_files' は文字ベクトルでなければなりません "
 
-msgid "'list' should be a character vector naming R objects"
+#, fuzzy
+msgid "'list' must be a character vector naming R objects"
 msgstr ""
 " 'list' は R オブジェクトの名前を与える文字ベクトルでなければなりません "
-
-msgid "'namespace' should be a single logical"
-msgstr " 'namespace' は単一の論理値でなければなりません "
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr " LC_CTYPE 経由でロケール固有の文字を使用停止にできません "
@@ -495,6 +498,18 @@ msgstr " 関数とデータを保存中 ... "
 
 msgid "Copying code files ..."
 msgstr " コードファイルをコピー中 ... "
+
+msgid "Invalid file name(s) for R code in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "are now renamed to 'z<name>.R'"
+msgstr ""
 
 msgid "Making help files ..."
 msgstr " ヘルプファイルを作成中 ... "
@@ -770,9 +785,6 @@ msgstr " 不正な書式 "
 msgid "last record incomplete, %d lines discarded"
 msgstr " 最後の記録が不完全で、%d 行が捨て去られました "
 
-msgid "'file' must be a character string or connection"
-msgstr " 'file' は文字列か NULL でなければなりません "
-
 msgid "transfer failure"
 msgstr " 移行(transfer)の失敗 "
 
@@ -781,6 +793,9 @@ msgstr " HTTPUserAgent "
 
 msgid "option must be a length one character vector or NULL"
 msgstr " オプションは長さ１の文字列か NULL でなければなりません "
+
+msgid "'file' must be a character string or connection"
+msgstr " 'file' は文字列か NULL でなければなりません "
 
 msgid "empty beginning of file"
 msgstr " ファイルの先頭が空です "
@@ -835,9 +850,6 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr " 不正な options('str') -- 代わりに既定値を使います "
 
 msgid "invalid components in options('str'):"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

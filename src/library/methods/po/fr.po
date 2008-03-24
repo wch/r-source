@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: methods 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53+0100\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2007-04-13 12:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "pas de méthode directe ou héritée pour la fonction '%s' dans cet appel"
 
-#: methods_list_dispatch.c:482 methods_list_dispatch.c:911
+#: methods_list_dispatch.c:482 methods_list_dispatch.c:916
 msgid "invalid object (non-function) used as method"
 msgstr ""
 "objet incorrect (autre chose qu'une fonction) utilisé dans cette méthode"
@@ -143,7 +143,7 @@ msgstr ""
 "de classe \"%s\" est renvoyé"
 
 #: methods_list_dispatch.c:568 methods_list_dispatch.c:579
-#: methods_list_dispatch.c:867
+#: methods_list_dispatch.c:872
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
@@ -207,12 +207,12 @@ msgstr ""
 "'%s' doit être une chaîne de caractères unique (un objet de classe \"%s\" "
 "est renvoyé)"
 
-#: methods_list_dispatch.c:836
+#: methods_list_dispatch.c:841
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr "Impossible de trouver la fonction générique pour la primitive \"%s\""
 
-#: methods_list_dispatch.c:843
+#: methods_list_dispatch.c:848
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -221,7 +221,7 @@ msgstr ""
 "Une fonction générique ou une primitive était attendue pour le dispatching, "
 "un objet de classe \"%s\" est renvoyé à la place"
 
-#: methods_list_dispatch.c:855
+#: methods_list_dispatch.c:860
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

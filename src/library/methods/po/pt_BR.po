@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-30 08:53+0100\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2005-12-17 10:49-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -80,7 +80,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "nenhum método direto ou obtido por herança para a função '%s' nessa chamada"
 
-#: methods_list_dispatch.c:482 methods_list_dispatch.c:911
+#: methods_list_dispatch.c:482 methods_list_dispatch.c:916
 msgid "invalid object (non-function) used as method"
 msgstr "objeto inválido (não-função) usado como método"
 
@@ -140,7 +140,7 @@ msgstr ""
 "o dispachamento deve ser um ambiente R; foi obtido um objeto de classe \"%s\""
 
 #: methods_list_dispatch.c:568 methods_list_dispatch.c:579
-#: methods_list_dispatch.c:867
+#: methods_list_dispatch.c:872
 #, fuzzy, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
@@ -199,12 +199,12 @@ msgstr "'%s' deve ser uma string não-vazia; foi obtida uma string vazia"
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' deve ser uma string única (foi obtido um objeto da classe \"%s\")"
 
-#: methods_list_dispatch.c:836
+#: methods_list_dispatch.c:841
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:843
+#: methods_list_dispatch.c:848
 #, fuzzy, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -213,7 +213,7 @@ msgstr ""
 "ambiente inválido na verificação de argumento faltante, '%s',  no "
 "despachamento dos métodos: foi especificado um objeto de classe \"%s\""
 
-#: methods_list_dispatch.c:855
+#: methods_list_dispatch.c:860
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

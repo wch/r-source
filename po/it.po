@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-18 19:43+0000\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -171,19 +171,19 @@ msgstr ""
 #: src/main/saveload.c:1972 src/main/saveload.c:1975 src/main/saveload.c:1978
 #: src/main/saveload.c:2099 src/main/saveload.c:2271 src/main/saveload.c:2276
 #: src/main/saveload.c:2279 src/main/saveload.c:2370 src/main/saveload.c:2420
-#: src/main/scan.c:707 src/main/scan.c:874 src/main/scan.c:887
-#: src/main/scan.c:891 src/main/scan.c:893 src/main/scan.c:904
-#: src/main/scan.c:931 src/main/scan.c:934 src/main/scan.c:980
-#: src/main/scan.c:1019 src/main/scan.c:1023 src/main/scan.c:1033
-#: src/main/scan.c:1242 src/main/scan.c:1518 src/main/scan.c:1530
-#: src/main/scan.c:1534 src/main/scan.c:1540 src/main/scan.c:1768
-#: src/main/scan.c:1769 src/main/scan.c:1771 src/main/scan.c:1772
-#: src/main/scan.c:1773 src/main/scan.c:1774 src/main/scan.c:1775
-#: src/main/scan.c:1776 src/main/seq.c:352 src/main/seq.c:356
+#: src/main/scan.c:661 src/main/scan.c:828 src/main/scan.c:841
+#: src/main/scan.c:845 src/main/scan.c:847 src/main/scan.c:858
+#: src/main/scan.c:885 src/main/scan.c:888 src/main/scan.c:934
+#: src/main/scan.c:973 src/main/scan.c:977 src/main/scan.c:987
+#: src/main/scan.c:1196 src/main/scan.c:1472 src/main/scan.c:1484
+#: src/main/scan.c:1488 src/main/scan.c:1494 src/main/scan.c:1722
+#: src/main/scan.c:1723 src/main/scan.c:1725 src/main/scan.c:1726
+#: src/main/scan.c:1727 src/main/scan.c:1728 src/main/scan.c:1729
+#: src/main/scan.c:1730 src/main/seq.c:352 src/main/seq.c:356
 #: src/main/seq.c:374 src/main/seq.c:378 src/main/seq.c:384 src/main/seq.c:392
 #: src/main/sysutils.c:564 src/main/sysutils.c:566 src/main/sysutils.c:568
-#: src/main/unique.c:586 src/main/unique.c:833 src/main/unique.c:893
-#: src/main/unique.c:900 src/main/util.c:566 src/main/util.c:569
+#: src/main/unique.c:701 src/main/unique.c:948 src/main/unique.c:1008
+#: src/main/unique.c:1015 src/main/util.c:566 src/main/util.c:569
 #: src/modules/internet/internet.c:278 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:293
 #: src/modules/internet/internet.c:297 src/modules/lapack/Lapack.c:151
@@ -534,7 +534,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr "Argomento non numerico in una funzione matematica"
 
 #: src/include/Errormsg.h:35 src/main/builtin.c:851 src/main/devices.c:411
-#: src/main/scan.c:1467
+#: src/main/scan.c:1421
 msgid "invalid argument"
 msgstr "argomento non valido"
 
@@ -1237,7 +1237,7 @@ msgstr "dimensione troppo grande per il vettore indicato"
 
 #: src/main/builtin.c:69 src/main/builtin.c:93 src/main/builtin.c:102
 #: src/main/builtin.c:292 src/main/builtin.c:320 src/main/builtin.c:357
-#: src/main/builtin.c:366 src/main/coerce.c:1413 src/main/connections.c:2190
+#: src/main/builtin.c:366 src/main/coerce.c:1360 src/main/connections.c:2190
 #: src/main/engine.c:2739 src/main/envir.c:910 src/main/envir.c:1004
 #: src/main/envir.c:1460 src/main/envir.c:1552 src/main/envir.c:1619
 #: src/main/envir.c:1731 src/main/envir.c:2376 src/main/envir.c:2429
@@ -1313,7 +1313,7 @@ msgid "cannot set length of non-vector"
 msgstr "impossibile impostare lunghezza di un oggetto non vector"
 
 #: src/main/builtin.c:853 src/main/builtin.c:857 src/main/character.c:333
-#: src/main/coerce.c:2477
+#: src/main/coerce.c:2424
 #, fuzzy
 msgid "invalid value"
 msgstr "valore '%s' non valido"
@@ -1323,7 +1323,7 @@ msgstr "valore '%s' non valido"
 msgid "missing value for 'length'"
 msgstr "length<- valore mancante in 'length'"
 
-#: src/main/builtin.c:883 src/main/coerce.c:2240 src/main/coerce.c:2281
+#: src/main/builtin.c:883 src/main/coerce.c:2187 src/main/coerce.c:2228
 msgid "... used in an incorrect context"
 msgstr "...usato in un contesto sbagliato"
 
@@ -1602,81 +1602,81 @@ msgstr "parti immaginarie eliminate durante la conversione"
 msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "valori fuori range trattati come 0 durante la conversione"
 
-#: src/main/coerce.c:434
+#: src/main/coerce.c:381
 #, c-format
 msgid "invalid data of mode \"%s\" (too short)"
 msgstr "dato in modalità \"%s\" non valido (troppo corto)"
 
-#: src/main/coerce.c:962
+#: src/main/coerce.c:909
 #, fuzzy, c-format
 msgid "'pairlist' object cannot be coerced to type '%s'"
 msgstr "l'oggetto 'pairlist' non può essere convertito in '%s'"
 
-#: src/main/coerce.c:1070
+#: src/main/coerce.c:1017
 #, fuzzy, c-format
 msgid "(list) object cannot be coerced to type '%s'"
 msgstr "oggetto (list) non può essere converito in '%s'"
 
-#: src/main/coerce.c:1152
+#: src/main/coerce.c:1099
 msgid "environments cannot be coerced to other types"
 msgstr ""
 "gli environment non possono essere trasformati in altri tipi di oggetti"
 
-#: src/main/coerce.c:1409
+#: src/main/coerce.c:1356
 msgid "list argument expected"
 msgstr "richiesto argomento di tipo list"
 
-#: src/main/coerce.c:1417 src/main/eval.c:3520 src/main/eval.c:3527
+#: src/main/coerce.c:1364 src/main/eval.c:3520 src/main/eval.c:3527
 msgid "invalid environment"
 msgstr "environment non valido"
 
-#: src/main/coerce.c:1421
+#: src/main/coerce.c:1368
 msgid "argument must have length at least 1"
 msgstr "l'argomento deve avere almeno lunghezza 1"
 
-#: src/main/coerce.c:1446
+#: src/main/coerce.c:1393
 msgid "invalid body for function"
 msgstr "corpo funzione non valido"
 
-#: src/main/coerce.c:1465
+#: src/main/coerce.c:1412
 msgid "invalid length 0 argument"
 msgstr "argomento di lunghezza 0 non valido"
 
-#: src/main/coerce.c:1480
+#: src/main/coerce.c:1427
 msgid "invalid argument list"
 msgstr "argomento di tipo list non valido"
 
-#: src/main/coerce.c:1757
+#: src/main/coerce.c:1704
 msgid "type \"single\" unimplemented in R"
 msgstr "tipo \"single\" non implementato in R"
 
-#: src/main/coerce.c:1759
+#: src/main/coerce.c:1706
 msgid "unimplemented predicate"
 msgstr "predicato non implementato"
 
-#: src/main/coerce.c:1898 src/main/coerce.c:1996
+#: src/main/coerce.c:1845 src/main/coerce.c:1943
 #, fuzzy, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() applicato a una non-(lista o vettore)"
 
-#: src/main/coerce.c:2161
+#: src/main/coerce.c:2108
 #, fuzzy
 msgid "'what' must be a character string or a function"
 msgstr "il primo argomento deve essere una stringa di caratteri o una funzione"
 
-#: src/main/coerce.c:2167
+#: src/main/coerce.c:2114
 msgid "'envir' must be an environment"
 msgstr "'envir' deve essere un environment"
 
-#: src/main/coerce.c:2320
+#: src/main/coerce.c:2267
 msgid "invalid environment specified"
 msgstr "environment specificato non valido"
 
-#: src/main/coerce.c:2399
+#: src/main/coerce.c:2346
 msgid "invalid replacement object to be a class string"
 msgstr "oggetto sostitutivo non valido per essere di classe stringa"
 
-#: src/main/coerce.c:2417
+#: src/main/coerce.c:2364
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1684,7 +1684,7 @@ msgstr ""
 "\"%s\" può essere impostato come classe se l'oggetto è di questo tipo; ho "
 "trovato \"%s\""
 
-#: src/main/coerce.c:2433
+#: src/main/coerce.c:2380
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1693,19 +1693,19 @@ msgstr ""
 "non è possibile impostare la classe a matrix  se l'attributo dimensione non "
 "ha lunghezza 2 (era %d)"
 
-#: src/main/coerce.c:2439
+#: src/main/coerce.c:2386
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "non è possibile impostare la classe ad \"array\"  se l'attributo dimensione "
 "non ha lunghezza > 0"
 
-#: src/main/coerce.c:2468
+#: src/main/coerce.c:2415
 #, fuzzy
 msgid "'value' must be non-null character string"
 msgstr "'name' deve essere un character non nullo"
 
-#: src/main/coerce.c:2481
+#: src/main/coerce.c:2428
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
@@ -1954,8 +1954,8 @@ msgstr ""
 #: src/main/connections.c:3497 src/main/connections.c:3695
 #: src/main/connections.c:3985 src/main/dcf.c:56 src/main/deparse.c:300
 #: src/main/deparse.c:373 src/main/saveload.c:2286 src/main/saveload.c:2363
-#: src/main/scan.c:948 src/main/scan.c:1054 src/main/scan.c:1548
-#: src/main/scan.c:1756 src/main/source.c:193
+#: src/main/scan.c:902 src/main/scan.c:1008 src/main/scan.c:1502
+#: src/main/scan.c:1710 src/main/source.c:193
 msgid "cannot open the connection"
 msgstr "non posso aprire questa connessione"
 
@@ -2162,7 +2162,7 @@ msgstr "troppo poche righe lette in readLines"
 
 #: src/main/connections.c:2749 src/main/connections.c:3092
 #: src/main/connections.c:3453 src/main/connections.c:4010
-#: src/main/scan.c:1752 src/main/serialize.c:1657
+#: src/main/scan.c:1706 src/main/serialize.c:1657
 msgid "cannot write to this connection"
 msgstr "non posso scrivere su questa connessione"
 
@@ -3752,127 +3752,127 @@ msgstr "tipo tag non corretto"
 msgid "contextstack overflow"
 msgstr "overflow del node stack"
 
-#: src/main/gram.y:1737
+#: src/main/gram.y:1715
 msgid "input"
 msgstr ""
 
-#: src/main/gram.y:1738
+#: src/main/gram.y:1716
 msgid "end of input"
 msgstr ""
 
-#: src/main/gram.y:1739
+#: src/main/gram.y:1717
 msgid "string constant"
 msgstr ""
 
-#: src/main/gram.y:1740
+#: src/main/gram.y:1718
 #, fuzzy
 msgid "numeric constant"
 msgstr "argomento non numerico"
 
-#: src/main/gram.y:1741
+#: src/main/gram.y:1719
 #, fuzzy
 msgid "symbol"
 msgstr "non è un simbolo"
 
-#: src/main/gram.y:1742
+#: src/main/gram.y:1720
 msgid "assignment"
 msgstr ""
 
-#: src/main/gram.y:1743
+#: src/main/gram.y:1721
 msgid "end of line"
 msgstr ""
 
-#: src/main/gram.y:1756 src/main/gram.y:1762
+#: src/main/gram.y:1734 src/main/gram.y:1740
 #, fuzzy, c-format
 msgid "unexpected %s"
 msgstr "necessaria formula"
 
-#: src/main/gram.y:1772
+#: src/main/gram.y:1750
 #, fuzzy, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "Argomento formale ripetuto"
 
-#: src/main/gram.y:1784
+#: src/main/gram.y:1762
 #, fuzzy, c-format
 msgid "input buffer overflow at line %d"
 msgstr "overflow buffer di input"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1901
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr ""
 
-#: src/main/gram.y:1913
+#: src/main/gram.y:1903
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
 
-#: src/main/gram.y:1924
+#: src/main/gram.y:1914
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr ""
 
-#: src/main/gram.y:1948
+#: src/main/gram.y:1937
 #, fuzzy, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "non è possibile allocare memoria (in GEregister)"
 
-#: src/main/gram.y:2057
+#: src/main/gram.y:2046
 #, fuzzy, c-format
 msgid "\\uxxxx sequences not supported (line %d)"
 msgstr "'onMouseDown' non supportata"
 
-#: src/main/gram.y:2076 src/main/gram.y:2089
+#: src/main/gram.y:2065 src/main/gram.y:2078
 #, fuzzy, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "sequenza \\u{xxxx} non valida"
 
-#: src/main/gram.y:2091
+#: src/main/gram.y:2080
 #, fuzzy, c-format
 msgid "invalid \\uxxxx sequence (line %d)"
 msgstr "sequenza \\uxxxx non valida"
 
-#: src/main/gram.y:2100
+#: src/main/gram.y:2089
 #, fuzzy, c-format
 msgid "\\Uxxxxxxxx sequences not supported (line %d)"
 msgstr "'onMouseDown' non supportata"
 
-#: src/main/gram.y:2120 src/main/gram.y:2126
+#: src/main/gram.y:2109 src/main/gram.y:2115
 #, fuzzy, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "sequenza \\U{xxxxxxxx} non valida"
 
-#: src/main/gram.y:2128
+#: src/main/gram.y:2117
 #, fuzzy, c-format
 msgid "invalid \\Uxxxxxxxx sequence (line %d)"
 msgstr "sequenza \\U{xxxxxxxx} non valida"
 
-#: src/main/gram.y:2170
+#: src/main/gram.y:2159
 #, fuzzy, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "il primo argomento deve essere una stringa di tipo character"
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2210
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 1000 chars)"
 msgstr ""
 
-#: src/main/gram.y:2230
+#: src/main/gram.y:2219
 #, fuzzy, c-format
 msgid "unrecognized escape removed from \"%s\""
 msgid_plural "unrecognized escapes removed from \"%s\""
 msgstr[0] "valore sconosciuto di 'save'"
 msgstr[1] "valore sconosciuto di 'save'"
 
-#: src/main/gram.y:2339
+#: src/main/gram.y:2328
 #, fuzzy, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr "le funzioni sono annidate troppo in profondità nel codice sorgente"
 
-#: src/main/gram.y:2728 src/main/gram.y:2735 src/main/gram.y:2741
-#: src/main/gram.y:2748
+#: src/main/gram.y:2717 src/main/gram.y:2724 src/main/gram.y:2730
+#: src/main/gram.y:2737
 #, fuzzy, c-format
 msgid "contextstack overflow at line %d"
 msgstr "overflow dello stack interi"
@@ -4036,68 +4036,68 @@ msgstr "error: comandi 'system' non supportati in questa versione di R.\n"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "overflow dello stack interi"
 
-#: src/main/main.c:803
+#: src/main/main.c:812
 msgid "unable to open the base package\n"
 msgstr "impossibile aprire pacchetto base\n"
 
-#: src/main/main.c:863
+#: src/main/main.c:872
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "ATTENZIONE: locale UTF-8 non supportati in questa distribuzione di R\n"
 
-#: src/main/main.c:865
+#: src/main/main.c:874
 #, fuzzy
 msgid "WARNING: multibyte locales are not supported in this build of R\n"
 msgstr "ATTENZIONE: locale UTF-8 non supportati in questa distribuzione di R\n"
 
-#: src/main/main.c:888
+#: src/main/main.c:897
 msgid "unable to restore saved data in .RData\n"
 msgstr "impossibile ripristinare i dati registrati in .RData\n"
 
-#: src/main/main.c:936
+#: src/main/main.c:943
 msgid "During startup - "
 msgstr "Durante l'avvio - "
 
-#: src/main/main.c:1140
+#: src/main/main.c:1147
 msgid "cannot quit from browser"
 msgstr "non posso uscire dal browser"
 
-#: src/main/main.c:1144
+#: src/main/main.c:1151
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "si ci aspetta una tra \"yes\", \"no\", \"ask\" o \"default\"."
 
-#: src/main/main.c:1149
+#: src/main/main.c:1156
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" in modalità non interattiva: viene usata la linea di comando di "
 "default"
 
-#: src/main/main.c:1157
+#: src/main/main.c:1164
 msgid "unrecognized value of 'save'"
 msgstr "valore sconosciuto di 'save'"
 
-#: src/main/main.c:1160
+#: src/main/main.c:1167
 msgid "invalid 'status', 0 assumed"
 msgstr "valore 'status' non valido, uso 0"
 
-#: src/main/main.c:1165
+#: src/main/main.c:1172
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "argomento 'runLast' non valido, uso FALSE"
 
-#: src/main/main.c:1196
+#: src/main/main.c:1203
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 "non posso allocare spazio per l'elemento di callback di livello superiore"
 
-#: src/main/main.c:1274
+#: src/main/main.c:1281
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "indice negativo passato a R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1382
+#: src/main/main.c:1389
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "messaggio di avviso dal processo callback di livello superiore '%s'\n"
 
-#: src/main/main.c:1440
+#: src/main/main.c:1447
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 "il processo callback di livello superiore restituisce un valore non logico"
@@ -4912,7 +4912,7 @@ msgstr "valore non valido per 'n'"
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr ""
 
-#: src/main/par-common.c:141
+#: src/main/par-common.c:142
 msgid "'gamma' cannot be modified on this device"
 msgstr ""
 
@@ -6058,86 +6058,86 @@ msgid ""
 "connection"
 msgstr ""
 
-#: src/main/scan.c:508
+#: src/main/scan.c:462
 #, c-format
 msgid "scan() expected '%s', got '%s'"
 msgstr "scan() richiede '%s', invece risulta '%s'"
 
-#: src/main/scan.c:694
+#: src/main/scan.c:648
 msgid "empty 'what' specified"
 msgstr "specificato 'what' vuoto"
 
-#: src/main/scan.c:745
+#: src/main/scan.c:699
 #, c-format
 msgid "line %d did not have %d elements"
 msgstr "la riga %d non ha %d elementi"
 
-#: src/main/scan.c:797
+#: src/main/scan.c:751
 msgid "number of items read is not a multiple of the number of columns"
 msgstr "il numero di elementi letti non è un multiplo del numero di colonne"
 
-#: src/main/scan.c:889
+#: src/main/scan.c:843
 msgid "invalid 'strip.white' length"
 msgstr "lunghezza 'strip.white' non valida"
 
-#: src/main/scan.c:900
+#: src/main/scan.c:854
 msgid "invalid 'sep' value: must be one byte"
 msgstr "valore 'sep' non valido: deve essere di un byte"
 
-#: src/main/scan.c:912
+#: src/main/scan.c:866
 msgid "invalid decimal separator: must be one byte"
 msgstr "separatore decimali non valido: deve essere un byte"
 
-#: src/main/scan.c:917
+#: src/main/scan.c:871
 msgid "invalid decimal separator"
 msgstr "separatore decimali non valido"
 
-#: src/main/scan.c:926 src/main/scan.c:1042 src/main/scan.c:1527
+#: src/main/scan.c:880 src/main/scan.c:996 src/main/scan.c:1481
 msgid "invalid quote symbol set"
 msgstr "simbolo di quote impostato non valido"
 
-#: src/main/scan.c:1098 src/main/scan.c:1116
+#: src/main/scan.c:1052 src/main/scan.c:1070
 msgid "string terminated by newline or EOF"
 msgstr "stringa terminata con un 'a capo' o EOF"
 
-#: src/main/scan.c:1238
+#: src/main/scan.c:1192
 msgid "the first argument must be of mode character"
 msgstr "il primo argomento deve essere in modalità carattere"
 
-#: src/main/scan.c:1469
+#: src/main/scan.c:1423
 #, c-format
 msgid "Selection: "
 msgstr "Selezione: "
 
-#: src/main/scan.c:1557 src/main/scan.c:1569
+#: src/main/scan.c:1511 src/main/scan.c:1523
 #, fuzzy
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "impossibile allocare il buffer in readTableHead"
 
-#: src/main/scan.c:1579
+#: src/main/scan.c:1533
 msgid "\\ followed by EOF"
 msgstr "\\ seguito da EOF (End Of File)"
 
-#: src/main/scan.c:1623 src/main/scan.c:1626
+#: src/main/scan.c:1577 src/main/scan.c:1580
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "riga finale incompleta trovata da readTableHeader in '%s'"
 
-#: src/main/scan.c:1749
+#: src/main/scan.c:1703
 msgid "'file' is not a connection"
 msgstr "'file' non è una connessione"
 
-#: src/main/scan.c:1782
+#: src/main/scan.c:1736
 msgid "'dec' must be a single character"
 msgstr "'dec' deve un singolo carattere"
 
-#: src/main/scan.c:1809
+#: src/main/scan.c:1763
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "data frame danneggiato - la lunghezza della colonna %d non coincide con nrows"
 
-#: src/main/scan.c:1855
+#: src/main/scan.c:1809
 msgid "corrupt matrix -- dims not not match length"
 msgstr "matrice danneggiata - le dimensioni non concordano con la lunghezza"
 
@@ -6896,58 +6896,58 @@ msgstr "non è stato possibile trovare un nome tempfile non ancora utilizzato"
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() non è implementata su questo sistema"
 
-#: src/main/unique.c:282
+#: src/main/unique.c:289
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr "la lunghezza %d è troppo lunga per l'indirizzamento"
 
-#: src/main/unique.c:363
+#: src/main/unique.c:386 src/main/unique.c:414
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated' si applica a non vettori"
 
-#: src/main/unique.c:402
+#: src/main/unique.c:453
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s() si applica solo a vettori"
 
-#: src/main/unique.c:515
+#: src/main/unique.c:659
 msgid "'match' requires vector arguments"
 msgstr "'match' richiede argomenti vettoriali"
 
-#: src/main/unique.c:590 src/main/unique.c:703
+#: src/main/unique.c:705 src/main/unique.c:818
 msgid "argument is not of mode character"
 msgstr "l'argomento non è in modalità carattere"
 
-#: src/main/unique.c:795
+#: src/main/unique.c:910
 msgid "... used in a situation where it doesn't exist"
 msgstr "... usato in un contesto dove non esiste"
 
-#: src/main/unique.c:886
+#: src/main/unique.c:1001
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 
-#: src/main/unique.c:1043
+#: src/main/unique.c:1158
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr ""
 "matrice di tipo differente da numeric in rowsum(): questo non deve accadere"
 
-#: src/main/unique.c:1077
+#: src/main/unique.c:1192
 msgid "non-numeric data frame in rowsum"
 msgstr "data frame non numeri in rowsum"
 
-#: src/main/unique.c:1103
+#: src/main/unique.c:1218
 msgid "this cannot happen"
 msgstr "questo non deve accadere"
 
-#: src/main/unique.c:1157
+#: src/main/unique.c:1272
 msgid "'names' must be a character vector"
 msgstr "'names' deve essere un vettore di tipo character"
 
-#: src/main/unique.c:1161
+#: src/main/unique.c:1276
 msgid "'sep' must be a character string"
 msgstr "'sep' deve essere una stringa di tipo character"
 
-#: src/main/unique.c:1240
+#: src/main/unique.c:1355
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated non chiamato su un STRSXP"
 

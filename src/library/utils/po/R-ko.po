@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:06\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -470,14 +470,16 @@ msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 작성할수 없습니다"
 
 #, fuzzy
-msgid "'code_files' should be a character vector"
+msgid "'namespace' must be a single logical"
+msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
+
+#, fuzzy
+msgid "'code_files' must be a character vector"
 msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
 
-msgid "'list' should be a character vector naming R objects"
+#, fuzzy
+msgid "'list' must be a character vector naming R objects"
 msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
-
-msgid "'namespace' should be a single logical"
-msgstr ""
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr ""
@@ -504,6 +506,18 @@ msgid "Saving functions and data ..."
 msgstr ""
 
 msgid "Copying code files ..."
+msgstr ""
+
+msgid "Invalid file name(s) for R code in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "are now renamed to 'z<name>.R'"
 msgstr ""
 
 #, fuzzy
@@ -782,10 +796,6 @@ msgstr "무효의 format입니다"
 msgid "last record incomplete, %d lines discarded"
 msgstr "마지막 불완전한 레코드 ,%d 라인이 없어져버렸습니다"
 
-#, fuzzy
-msgid "'file' must be a character string or connection"
-msgstr "'package'는 문자열이나 NULL이어야만 합니다"
-
 msgid "transfer failure"
 msgstr "전송이 실패했습니다"
 
@@ -794,6 +804,10 @@ msgstr ""
 
 #, fuzzy
 msgid "option must be a length one character vector or NULL"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
+
+#, fuzzy
+msgid "'file' must be a character string or connection"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "empty beginning of file"
@@ -845,9 +859,6 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr ""
 
 msgid "invalid components in options('str'):"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

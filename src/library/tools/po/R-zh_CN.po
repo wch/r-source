@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -581,6 +581,10 @@ msgstr "程辑包'%s'的从属被减低成最小集."
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "变元'%s'必需是字符串或联结"
+
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr "变元'document'必需是字符串或联结"
 
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"

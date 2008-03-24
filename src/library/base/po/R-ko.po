@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -68,11 +68,11 @@ msgstr "'%s' RNG의 유효한 생략명이 아닙니다"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
-
 msgid "'%s' is not a valid choice"
 msgstr "'%s'는 유효한 선택이 아닙니다"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
 
 msgid "malformed version string"
 msgstr "'%s'는 유효한 선택이 아닙니다"
@@ -1060,16 +1060,10 @@ msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
 msgid "in '%s' methods for export not found: %s"
 msgstr "'%s'에는 export를 위한 메소드는 검색되지 않습니다"
 
-msgid "Multiple methods lists found for '"
+msgid "Multiple methods tables found for '"
 msgstr ""
 
 msgid "'"
-msgstr ""
-
-msgid "No methods table for \""
-msgstr ""
-
-msgid "\""
 msgstr ""
 
 msgid "Failed to find metadata object for \"%s\""
@@ -1119,6 +1113,9 @@ msgstr "밀폐된 name 공간에는 import할수가 없지 않습니다"
 
 msgid "invalid import target"
 msgstr "무효인 import target입니다"
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""

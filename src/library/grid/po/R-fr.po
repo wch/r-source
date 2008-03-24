@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-04-13 12:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -91,7 +91,8 @@ msgstr ""
 msgid "gpar element '%s' must not be length 0"
 msgstr "l'élément '%s' de 'gpar' doit être de longueur unitaire"
 
-msgid "'gamma' gpar is deprecated"
+#, fuzzy
+msgid "'gamma' gpar is defunct"
 msgstr "'gamma' est obsolète dans 'gpar'"
 
 msgid "Invalid 'linemitre' value"

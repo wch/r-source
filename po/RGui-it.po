@@ -156,10 +156,9 @@ msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: pulisci console.\n"
 
 #: console.c:2118
-#, fuzzy
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
-"     Ctrl+O: attiva/disattiva modalità sovrascrittura: inizialmente "
+"     Ctrl+O o INS: attiva/disattiva modalità sovrascrittura: inizialmente "
 "inattiva.\n"
 
 #: console.c:2119

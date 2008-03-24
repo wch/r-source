@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,10 +68,10 @@ msgstr ""
 msgid "'normal.kind' must be a character string of length 1."
 msgstr ""
 
-msgid "Buggy version of Kinderman-Ramage generator used."
+msgid "'%s' is not a valid choice"
 msgstr ""
 
-msgid "'%s' is not a valid choice"
+msgid "Buggy version of Kinderman-Ramage generator used."
 msgstr ""
 
 msgid "malformed version string"
@@ -989,16 +989,10 @@ msgstr ""
 msgid "in '%s' methods for export not found: %s"
 msgstr ""
 
-msgid "Multiple methods lists found for '"
+msgid "Multiple methods tables found for '"
 msgstr ""
 
 msgid "'"
-msgstr ""
-
-msgid "No methods table for \""
-msgstr ""
-
-msgid "\""
 msgstr ""
 
 msgid "Failed to find metadata object for \"%s\""
@@ -1044,6 +1038,9 @@ msgid "cannot import into a sealed name space"
 msgstr ""
 
 msgid "invalid import target"
+msgstr ""
+
+msgid "got invalid index for importing"
 msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"

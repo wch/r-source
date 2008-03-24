@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:06\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2007-09-18 00:46-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -457,14 +457,17 @@ msgstr "можно использовать только числовые индексы"
 msgid "cannot create directory '%s'"
 msgstr "не могу создать папку '%s'"
 
-msgid "'code_files' should be a character vector"
+#, fuzzy
+msgid "'namespace' must be a single logical"
+msgstr "'namepace' должно быть простым логическим значением"
+
+#, fuzzy
+msgid "'code_files' must be a character vector"
 msgstr "'code_files' должны быть текстовым вектором"
 
-msgid "'list' should be a character vector naming R objects"
+#, fuzzy
+msgid "'list' must be a character vector naming R objects"
 msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
-
-msgid "'namespace' should be a single logical"
-msgstr "'namepace' должно быть простым логическим значением"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr "не могу выключить специфичные для локали символы через LC_CTYPE"
@@ -492,6 +495,18 @@ msgstr "Сохраняю функции и данные..."
 
 msgid "Copying code files ..."
 msgstr "Копирую файлы с кодом..."
+
+msgid "Invalid file name(s) for R code in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "are now renamed to 'z<name>.R'"
+msgstr ""
 
 msgid "Making help files ..."
 msgstr "Делаю файлы помощи..."
@@ -754,9 +769,6 @@ msgstr "неправильный формат"
 msgid "last record incomplete, %d lines discarded"
 msgstr "последняя запись неполная, %d строк не обработано"
 
-msgid "'file' must be a character string or connection"
-msgstr "'file' должен быть текстовой строкой строка или соединением"
-
 msgid "transfer failure"
 msgstr "передача не удалась"
 
@@ -765,6 +777,9 @@ msgstr "HTTPUserAgent"
 
 msgid "option must be a length one character vector or NULL"
 msgstr "'option' должна быть длиной с один текстовый вектор или NULL"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' должен быть текстовой строкой строка или соединением"
 
 msgid "empty beginning of file"
 msgstr "пустое начало файла"
@@ -817,9 +832,6 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr "неправильная options('str') -- использую вместо нее умолчания"
 
 msgid "invalid components in options('str'):"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

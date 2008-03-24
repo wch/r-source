@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-09-11 16:22+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -69,11 +69,11 @@ msgstr " '%s' は RNG の有効な省略名ではありません "
 msgid "'normal.kind' must be a character string of length 1."
 msgstr " 'normal.kind' は長さ 1 の文字列でなければなりません "
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
-
 msgid "'%s' is not a valid choice"
 msgstr " '%s' は有効な選択ではありません "
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
 
 msgid "malformed version string"
 msgstr " 正しい書式のバージョン文字列ではありません "
@@ -1050,17 +1050,12 @@ msgstr " '%s' 中にはエクスポートのためのクラスは見付かりま
 msgid "in '%s' methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートのためのメソッドは見付かりません： %s "
 
-msgid "Multiple methods lists found for '"
+#, fuzzy
+msgid "Multiple methods tables found for '"
 msgstr " 複数のメソッドリストが以下に見付かりました ' "
 
 msgid "'"
 msgstr "’ "
-
-msgid "No methods table for \""
-msgstr " 以下に対するメソッドテーブルがありません \" "
-
-msgid "\""
-msgstr " \" "
 
 msgid "Failed to find metadata object for \"%s\""
 msgstr " \"%s\" に対する metadata オブジェクトを見付けることができません "
@@ -1109,6 +1104,9 @@ msgstr " 封印された名前空間にはインポートできません "
 
 msgid "invalid import target"
 msgstr " 無効なインポート対象です "
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
@@ -1526,6 +1524,12 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "No methods table for \""
+#~ msgstr " 以下に対するメソッドテーブルがありません \" "
+
+#~ msgid "\""
+#~ msgstr " \" "
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr " POSIXt オブジェクトに対しては定義されていません "

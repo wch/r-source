@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:06\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -445,14 +445,17 @@ msgstr "只能用数值的指标"
 msgid "cannot create directory '%s'"
 msgstr "无法产生'%s'目录"
 
-msgid "'code_files' should be a character vector"
+#, fuzzy
+msgid "'namespace' must be a single logical"
+msgstr "'namespace'必需是单独逻辑值"
+
+#, fuzzy
+msgid "'code_files' must be a character vector"
 msgstr "'code_files'必需是字符向量"
 
-msgid "'list' should be a character vector naming R objects"
+#, fuzzy
+msgid "'list' must be a character vector naming R objects"
 msgstr "'list'必需是为R对象取名的字符向量"
-
-msgid "'namespace' should be a single logical"
-msgstr "'namespace'必需是单独逻辑值"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr "无法通过LC_CTYPE关闭与地点有关的字符"
@@ -480,6 +483,18 @@ msgstr "保存函数和数据…"
 
 msgid "Copying code files ..."
 msgstr "拷贝程序文件…"
+
+msgid "Invalid file name(s) for R code in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "are now renamed to 'z<name>.R'"
+msgstr ""
 
 msgid "Making help files ..."
 msgstr "制造帮助文件…"
@@ -736,9 +751,6 @@ msgstr "格式不对"
 msgid "last record incomplete, %d lines discarded"
 msgstr "最后一个记录不完全，%d行略不不用"
 
-msgid "'file' must be a character string or connection"
-msgstr "'file'的值必需是字符串或联结"
-
 msgid "transfer failure"
 msgstr "转移时出了错"
 
@@ -747,6 +759,9 @@ msgstr "HTTPUserAgent"
 
 msgid "option must be a length one character vector or NULL"
 msgstr "选项的值必需是字符串或NULL"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file'的值必需是字符串或联结"
 
 msgid "empty beginning of file"
 msgstr "空白的文件开头"
@@ -798,9 +813,6 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr "options('str')不对，使用默认值"
 
 msgid "invalid components in options('str'):"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

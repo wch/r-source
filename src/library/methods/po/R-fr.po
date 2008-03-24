@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-04-13 12:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -30,9 +30,6 @@ msgid ""
 msgstr ""
 "les méthodes ne sont peut-être pas définies pour la fonction primitive \"%s"
 "\" dans cette version de R"
-
-msgid "\"%s\" is not one of the basic functions"
-msgstr "\"%s\" n'est pas une des fonctions de base"
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -219,6 +216,9 @@ msgstr ""
 msgid "no method defined for function \"%s\" and signature %s"
 msgstr "pas de méthode définie pour la fonction \"%s\" et la signature %s"
 
+msgid "'file' must be a character string or a connection"
+msgstr ""
+
 msgid "No method found for signature %s"
 msgstr "aucune méthode trouvée pour la signature %s"
 
@@ -265,20 +265,14 @@ msgstr ""
 "\"%s\" n'est pas une fonction générique dans \"%s\" ; Les méthodes ne sont "
 "pas éliminées"
 
-msgid ""
-"cannot restore previous version of \"%s\" in locked environment/package \"%s"
-"\""
+#, fuzzy
+msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr ""
 "impossible de rétablir la version précédente de \"%s\" dans l'environnement/"
 "le package \"%s\" verrouillé"
 
 msgid "restoring default function definition of \"%s\""
 msgstr "rétablissement de la définition par défaut de la fonction \"%s\""
-
-msgid "cannot reset \"%s\", the definition is not a generic function object"
-msgstr ""
-"impossible de rétablir \"%s\", la définition n'est pas un objet fonction "
-"générique"
 
 msgid ""
 "error in updating generic function \"%s\"; the function definition is not a "
@@ -305,14 +299,21 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr ""
 "'callGeneric' doit être appelé depuis une fonction générique ou une méthode"
 
+msgid "expected a non-empty character string for argument name"
+msgstr ""
+
+#, fuzzy
+msgid "generic function supplied was not created for \"%s\""
+msgstr "aucune fonction générique n'est trouvée pour \"%s\""
+
+#, fuzzy
+msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
+msgstr "\"class\" est un nom de slot réservé et ne peut être redéfini"
+
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr ""
-
-#, fuzzy
-msgid "No nongeneric version of function \"%s\" exists to be restored"
-msgstr "aucune fonction \"%s\" non générique n'est trouvée"
 
 #, fuzzy
 msgid "Must provide an environment table; got class \"%s\""
@@ -324,6 +325,27 @@ msgstr ""
 msgid ""
 "Implicit generic exists for \"%s\", but will be overriden by explicit call "
 "to setGeneric()"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument \"f\" must be a generic function or a single character string; got "
+"an object of class \"%s\""
+msgstr ""
+"l'argument 'classDef' doit être une chaîne de caractères ou une "
+"représentation de classe ; Un objet de classe \"%s\" est obtenu"
+
+#, fuzzy
+msgid "non-generic function given to findMethods()"
+msgstr "aucune fonction \"%s\" non générique n'est trouvée"
+
+msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgstr ""
+
+msgid "\""
+msgstr "\""
+
+msgid "f does not correspond to  a generic function and package not specified"
 msgstr ""
 
 msgid ""
@@ -416,6 +438,10 @@ msgid ""
 msgstr ""
 "dans la signature de méthode pour la fonction \"%s\", il y a des noms "
 "d'arguments incorrects dans cette signature : %s"
+
+#, fuzzy
+msgid "No generic function found corresponding to \"%s\""
+msgstr "aucune fonction générique n'est trouvée pour \"%s\""
 
 msgid "no methods found for generic \"%s\""
 msgstr "aucune méthode trouvée pour la fonction générique \"%s\""
@@ -740,20 +766,6 @@ msgstr ""
 "appel incorrect dans le dispatcheur de méthodes vers \"%s\" (pas de méthode "
 "par défaut)"
 
-msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
-msgstr ""
-"\"%s\" depuis \"%s\" n'est pas une fonction générique ; Aucune méthode n'est "
-"disponible"
-
-msgid ""
-"invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
-"'genericFunction object' or a primitive function, got an object of class \"%s"
-"\""
-msgstr ""
-"'fdef' erroné pour \"%s\" dans 'getAllMethods' ; Un objet 'genericFunction' "
-"ou une fonction primitive étaient attendus, un objet de classe \"%s\" est "
-"obtenu"
-
 msgid "formal arguments in method and function do not appear in the same order"
 msgstr ""
 "les arguments formels n'apparaissent pas dans le même ordre dans la méthode "
@@ -801,6 +813,9 @@ msgstr ""
 
 msgid "no generic function found for \"%s\""
 msgstr "aucune fonction générique n'est trouvée pour \"%s\""
+
+msgid "Empty function name in .getGeneric"
+msgstr ""
 
 msgid ""
 "the methods object name for \"%s\" must include the name of the package that "
@@ -913,6 +928,11 @@ msgstr "\"%s\" n'est pas une fonction générique (ou elle n'est pas visible)"
 
 msgid "invalid element in the groupMembers slot (class \"%s\")"
 msgstr "élément incorrect dans le slot 'groupMembers' (classe \"%s\")"
+
+msgid ""
+"\" is not a known action (warn, stop, once, ignore); no action recorded for "
+"function \""
+msgstr ""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
@@ -1241,9 +1261,6 @@ msgstr "Mauvais objet trouvé comme méthode (\""
 msgid "\"), expected a method, got an object of class \""
 msgstr "\"), une méthode est attendue et un objet est fourni de classe \""
 
-msgid "\""
-msgstr "\""
-
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
 "Table de méthodes incorrecte ou non définie pour la fonction générique \""
@@ -1287,12 +1304,6 @@ msgstr ""
 "Impossible de trouver la table des méthodes pour \"%s\", le package \"%s\" "
 "est sans doute périmé"
 
-msgid "Methods list for generic \""
-msgstr "Liste des méthodes pour la fonction générique \""
-
-msgid "\" not found"
-msgstr "\" non trouvée"
-
 msgid "Failed to find expected group generic function:"
 msgstr "Impossible de trouver la fonction générique du groupe attendu :"
 
@@ -1328,6 +1339,15 @@ msgstr ""
 "La fonction générique \"%s\" est introuvable pour initialiser les méthodes "
 "en cache"
 
+msgid "Something weird:  inconsistent number of args in methods table strings:"
+msgstr ""
+
+msgid "(using the largest value)"
+msgstr ""
+
+msgid "Invalid generic \"%s\", package \"%s\"; no methods table found"
+msgstr ""
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1352,6 +1372,10 @@ msgid ""
 msgstr ""
 "l'argument 'Classes' doit être un vecteur contenant deux classes ; un "
 "argument de longueur %d est obtenu à la place"
+
+#, fuzzy
+msgid "Created a package name, \"%s\", when none found"
+msgstr "ceci n'est pas un nom de package : \"%s\""
 
 msgid "no definition of class \"%s\" found"
 msgstr "aucune définition de la classe \"%s\" n'est trouvée"
@@ -1478,6 +1502,38 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#~ msgid "\"%s\" is not one of the basic functions"
+#~ msgstr "\"%s\" n'est pas une des fonctions de base"
+
+#~ msgid "cannot reset \"%s\", the definition is not a generic function object"
+#~ msgstr ""
+#~ "impossible de rétablir \"%s\", la définition n'est pas un objet fonction "
+#~ "générique"
+
+#, fuzzy
+#~ msgid "No nongeneric version of function \"%s\" exists to be restored"
+#~ msgstr "aucune fonction \"%s\" non générique n'est trouvée"
+
+#~ msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
+#~ msgstr ""
+#~ "\"%s\" depuis \"%s\" n'est pas une fonction générique ; Aucune méthode "
+#~ "n'est disponible"
+
+#~ msgid ""
+#~ "invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
+#~ "'genericFunction object' or a primitive function, got an object of class "
+#~ "\"%s\""
+#~ msgstr ""
+#~ "'fdef' erroné pour \"%s\" dans 'getAllMethods' ; Un objet "
+#~ "'genericFunction' ou une fonction primitive étaient attendus, un objet de "
+#~ "classe \"%s\" est obtenu"
+
+#~ msgid "Methods list for generic \""
+#~ msgstr "Liste des méthodes pour la fonction générique \""
+
+#~ msgid "\" not found"
+#~ msgstr "\" non trouvée"
 
 #~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
 #~ msgstr ".UsingMethodsTable : 'onOff'doit être TRUE ou FALSE"

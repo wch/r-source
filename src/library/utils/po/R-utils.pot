@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-17 09:06\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -404,13 +404,13 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr ""
 
-msgid "'code_files' should be a character vector"
+msgid "'namespace' must be a single logical"
 msgstr ""
 
-msgid "'list' should be a character vector naming R objects"
+msgid "'code_files' must be a character vector"
 msgstr ""
 
-msgid "'namespace' should be a single logical"
+msgid "'list' must be a character vector naming R objects"
 msgstr ""
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
@@ -438,6 +438,18 @@ msgid "Saving functions and data ..."
 msgstr ""
 
 msgid "Copying code files ..."
+msgstr ""
+
+msgid "Invalid file name(s) for R code in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "are now renamed to 'z<name>.R'"
 msgstr ""
 
 msgid "Making help files ..."
@@ -671,9 +683,6 @@ msgstr ""
 msgid "last record incomplete, %d lines discarded"
 msgstr ""
 
-msgid "'file' must be a character string or connection"
-msgstr ""
-
 msgid "transfer failure"
 msgstr ""
 
@@ -681,6 +690,9 @@ msgid "HTTPUserAgent"
 msgstr ""
 
 msgid "option must be a length one character vector or NULL"
+msgstr ""
+
+msgid "'file' must be a character string or connection"
 msgstr ""
 
 msgid "empty beginning of file"
@@ -729,9 +741,6 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr ""
 
 msgid "invalid components in options('str'):"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "'object' does not have valid levels()"

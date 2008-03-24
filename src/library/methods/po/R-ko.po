@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -25,10 +25,6 @@ msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr ""
 "메소드는 R의 버전으로 최초의 함수 '%s' 때문애 정해지지 않을지도 모릅니다"
-
-#, fuzzy
-msgid "\"%s\" is not one of the basic functions"
-msgstr "'%s'는 basic 함수중에 하나가 아닙니다"
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -224,6 +220,9 @@ msgstr ""
 msgid "no method defined for function \"%s\" and signature %s"
 msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
+msgid "'file' must be a character string or a connection"
+msgstr ""
+
 #, fuzzy
 msgid "No method found for signature %s"
 msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
@@ -272,18 +271,12 @@ msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr "'%s'는 '%s'의 일반적인 함수가 아닙니다; 제거되지 않는 메소드입니다"
 
 #, fuzzy
-msgid ""
-"cannot restore previous version of \"%s\" in locked environment/package \"%s"
-"\""
+msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr "락(lock)된 환경/패키지에 '%s'의 전 버전을 회복 할수가 없는 '%s'입니다"
 
 #, fuzzy
 msgid "restoring default function definition of \"%s\""
 msgstr "'%s'의 default 함수 정의를 회복시킵니다"
-
-#, fuzzy
-msgid "cannot reset \"%s\", the definition is not a generic function object"
-msgstr "'%s'를 reset 할수 없는 generic 함수 오브젝트가 아닙니다"
 
 #, fuzzy
 msgid ""
@@ -313,14 +306,21 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr ""
 "'callGeneric'는 generic 함수 또는 메소드로부터 호출되지 않으면 안됩니다"
 
+msgid "expected a non-empty character string for argument name"
+msgstr ""
+
+#, fuzzy
+msgid "generic function supplied was not created for \"%s\""
+msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
+
+#, fuzzy
+msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
+msgstr "\"class\"는 예약의 slot명이어서 다시 정의 될 수가 없습니다"
+
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr ""
-
-#, fuzzy
-msgid "No nongeneric version of function \"%s\" exists to be restored"
-msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
 
 #, fuzzy
 msgid "Must provide an environment table; got class \"%s\""
@@ -332,6 +332,28 @@ msgstr ""
 msgid ""
 "Implicit generic exists for \"%s\", but will be overriden by explicit call "
 "to setGeneric()"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument \"f\" must be a generic function or a single character string; got "
+"an object of class \"%s\""
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
+
+#, fuzzy
+msgid "non-generic function given to findMethods()"
+msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
+
+msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "f does not correspond to  a generic function and package not specified"
 msgstr ""
 
 msgid ""
@@ -422,6 +444,10 @@ msgid ""
 msgstr ""
 "함수를 위해서 메소드 기호에서 '%s'는 기호으로 무효인 인수명을 지정합니다\n"
 ":%s"
+
+#, fuzzy
+msgid "No generic function found corresponding to \"%s\""
+msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
 #, fuzzy
 msgid "no methods found for generic \"%s\""
@@ -741,20 +767,6 @@ msgstr "특별한 함수\"%s\"에 generic적으로 작성합니다"
 msgid "invalid call in method dispatch to \"%s\" (no default method)"
 msgstr "'%s'(디폴트 메소드는 없습니다)에서 메소드 dispatch는 무효의 호출입니다"
 
-#, fuzzy
-msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
-msgstr ""
-"'%s'로부터 '%s'는 non-generic 함수입니다; 이용할 수 있는 메소드가 아닙니다"
-
-#, fuzzy
-msgid ""
-"invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
-"'genericFunction object' or a primitive function, got an object of class \"%s"
-"\""
-msgstr ""
-"'getAllMethods'의 '%s' 때문에 무효인 'def' 입니다; 'gerericFunction' 또는\n"
-"최초의 함수를 예측해 클래스'%s'에 오브젝트를 얻었습니다"
-
 msgid "formal arguments in method and function do not appear in the same order"
 msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
@@ -795,6 +807,9 @@ msgstr "메소드는 최초의 함수 '%s'때문에 정해질수가 없습니다
 #, fuzzy
 msgid "no generic function found for \"%s\""
 msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
+
+msgid "Empty function name in .getGeneric"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -904,6 +919,11 @@ msgstr "'%s'는 일반적인 함수(또는 여기서 보이지 않습니다)가 
 
 msgid "invalid element in the groupMembers slot (class \"%s\")"
 msgstr "groupMembers slot (클래스 \"%s\")의 무효인 요소입니다"
+
+msgid ""
+"\" is not a known action (warn, stop, once, ignore); no action recorded for "
+"function \""
+msgstr ""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"는 밀폐된 클래스 정의를 가져, 다시 정의를 될수가 없습니다"
@@ -1232,9 +1252,6 @@ msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 �
 msgid "\"), expected a method, got an object of class \""
 msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
-msgid "\""
-msgstr ""
-
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
 
@@ -1273,14 +1290,6 @@ msgid ""
 "Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
 msgstr ""
 
-#, fuzzy
-msgid "Methods list for generic \""
-msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
-
-#, fuzzy
-msgid "\" not found"
-msgstr "검색되지 않는 오브젝트 '%s' 입니다"
-
 msgid "Failed to find expected group generic function:"
 msgstr ""
 
@@ -1309,6 +1318,15 @@ msgstr ""
 msgid "Could not find generic function \"%s\" to initialize cached methods"
 msgstr ""
 
+msgid "Something weird:  inconsistent number of args in methods table strings:"
+msgstr ""
+
+msgid "(using the largest value)"
+msgstr ""
+
+msgid "Invalid generic \"%s\", package \"%s\"; no methods table found"
+msgstr ""
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1333,6 +1351,10 @@ msgid ""
 msgstr ""
 "인수 'Classes'는 2개 클래스의 벡터이어야만 합니다;\n"
 "길이 %d의 인수를 얻었습니다"
+
+#, fuzzy
+msgid "Created a package name, \"%s\", when none found"
+msgstr "패키지명이 아닙니다:'%s'"
 
 msgid "no definition of class \"%s\" found"
 msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
@@ -1443,6 +1465,41 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid "\"%s\" is not one of the basic functions"
+#~ msgstr "'%s'는 basic 함수중에 하나가 아닙니다"
+
+#, fuzzy
+#~ msgid "cannot reset \"%s\", the definition is not a generic function object"
+#~ msgstr "'%s'를 reset 할수 없는 generic 함수 오브젝트가 아닙니다"
+
+#, fuzzy
+#~ msgid "No nongeneric version of function \"%s\" exists to be restored"
+#~ msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
+
+#, fuzzy
+#~ msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
+#~ msgstr ""
+#~ "'%s'로부터 '%s'는 non-generic 함수입니다; 이용할 수 있는 메소드가 아닙니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
+#~ "'genericFunction object' or a primitive function, got an object of class "
+#~ "\"%s\""
+#~ msgstr ""
+#~ "'getAllMethods'의 '%s' 때문에 무효인 'def' 입니다; 'gerericFunction' 또"
+#~ "는\n"
+#~ "최초의 함수를 예측해 클래스'%s'에 오브젝트를 얻었습니다"
+
+#, fuzzy
+#~ msgid "Methods list for generic \""
+#~ msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
+
+#, fuzzy
+#~ msgid "\" not found"
+#~ msgstr "검색되지 않는 오브젝트 '%s' 입니다"
 
 #, fuzzy
 #~ msgid "Package \"%s\" is not loaded"

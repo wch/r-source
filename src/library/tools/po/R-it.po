@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -604,6 +604,11 @@ msgstr "le sue dipendenze sono state ridotte ad un insieme minimale."
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "l'argomento '%s' deve essere una stringa carattere o una connessione"
+
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr ""
+"argomento 'file' deve essere una stringa di caratteri o una connessione"
 
 msgid "unimplemented encoding"
 msgstr ""

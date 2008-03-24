@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-03 19:13+0000\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2007-09-18 00:14-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -428,21 +428,26 @@ msgstr "не могу запустить устройство pdf"
 msgid "unable to start device PicTeX"
 msgstr "не могу запустить устройство PicTeX"
 
-#: devQuartz.c:939
+#: devQuartz.c:968
+#, fuzzy
+msgid "invalid 'file' argument"
+msgstr "неправильный строковый аргумент"
+
+#: devQuartz.c:997
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "неправильное устройство в savePlot"
 
-#: devQuartz.c:966
+#: devQuartz.c:1024
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "не могу запустить устройство PostScript"
 
-#: devQuartz.c:1007
+#: devQuartz.c:1074
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1024
+#: devQuartz.c:1095
 #, fuzzy
 msgid "Quartz device is not available on this platform."
 msgstr "Устройство Quartz на этой платформе недоступно"
@@ -623,11 +628,17 @@ msgstr "не могу запустить устройство devWindows"
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 
+#: qdBitmap.c:92
+msgid "Not a supported scheme, no image data written"
+msgstr ""
+
+#: qdPDF.c:97
+#, fuzzy, c-format
+msgid "cannot open file '%s'"
+msgstr "не могу загрузить afm-файл '%s'"
+
 #~ msgid "can't find any fonts"
 #~ msgstr "не могу найти никаких шрифтов"
-
-#~ msgid "invalid string argument"
-#~ msgstr "неправильный строковый аргумент"
 
 #~ msgid "invalid width or height in quartz"
 #~ msgstr "неправильная ширина или высота в quartz"

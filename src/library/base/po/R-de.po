@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-10-11 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -73,11 +73,11 @@ msgstr "'%s' ist keine gültige Abkürzung für einen RNG"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind' muss eine Zeichenkette der Länge 1 sein."
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Fehlerhafte Version des Kinderman-Ramage Generators benutzt."
-
 msgid "'%s' is not a valid choice"
 msgstr "'%s' ist keine gültige Wahl"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Fehlerhafte Version des Kinderman-Ramage Generators benutzt."
 
 msgid "malformed version string"
 msgstr "falsch aufgebaute Versionszeichenkette"
@@ -1040,17 +1040,12 @@ msgstr "in '%s' sind Klassen nicht für den Export definiert: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "in '%s' sind Methoden nicht für den Export definiert: %s"
 
-msgid "Multiple methods lists found for '"
+#, fuzzy
+msgid "Multiple methods tables found for '"
 msgstr "Multiple Methodenlisten gefunden für '"
 
 msgid "'"
 msgstr "'"
-
-msgid "No methods table for \""
-msgstr "Keine Methodentabelle für\""
-
-msgid "\""
-msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
 msgstr "Konnte Metadatenobjekt für \"%s\" nicht finden"
@@ -1097,6 +1092,9 @@ msgstr "kann nicht in einen versiegelten Namensraum importieren"
 
 msgid "invalid import target"
 msgstr "ungültiges Ziel für Import"
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
@@ -1509,6 +1507,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "No methods table for \""
+#~ msgstr "Keine Methodentabelle für\""
+
+#~ msgid "\""
+#~ msgstr "\""
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "nicht definiert für \"POSIXt\" Objekte"

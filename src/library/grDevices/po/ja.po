@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-03 19:13+0000\n"
+"POT-Creation-Date: 2008-03-24 15:34+0000\n"
 "PO-Revision-Date: 2007-09-11 16:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -433,21 +433,26 @@ msgstr " pdf デバイスを開始できませんでした "
 msgid "unable to start device PicTeX"
 msgstr " PicTeX デバイスを開始できませんでした "
 
-#: devQuartz.c:939
+#: devQuartz.c:968
+#, fuzzy
+msgid "invalid 'file' argument"
+msgstr " 不正な文字列引数 "
+
+#: devQuartz.c:997
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr " savePlot 中に不正なデバイス "
 
-#: devQuartz.c:966
+#: devQuartz.c:1024
 #, fuzzy
 msgid "Unable to create device description."
 msgstr " ポストスクリプトデバイスを開始できませんでした "
 
-#: devQuartz.c:1007
+#: devQuartz.c:1074
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1024
+#: devQuartz.c:1095
 #, fuzzy
 msgid "Quartz device is not available on this platform."
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "
@@ -628,11 +633,17 @@ msgstr " devWindows デバイスを開始できません "
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr " getGraphicsEvent の再帰的な使用はサポートされていません "
 
+#: qdBitmap.c:92
+msgid "Not a supported scheme, no image data written"
+msgstr ""
+
+#: qdPDF.c:97
+#, fuzzy, c-format
+msgid "cannot open file '%s'"
+msgstr " afm ファイル '%s' をロードできませんでした "
+
 #~ msgid "can't find any fonts"
 #~ msgstr " いかなるフォントも見付かりません "
-
-#~ msgid "invalid string argument"
-#~ msgstr " 不正な文字列引数 "
 
 #~ msgid "invalid width or height in quartz"
 #~ msgstr " quartz デバイスの幅か高さが不正です "

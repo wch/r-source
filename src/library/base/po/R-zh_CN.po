@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -73,11 +73,11 @@ msgstr "'%s'不是正当的RNG缩写"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind'必需是字符串，而且其长度只能为一。"
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Kinderman-Ramage任意数产生器可能有虫。"
-
 msgid "'%s' is not a valid choice"
 msgstr "%s'不是正当的选择"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Kinderman-Ramage任意数产生器可能有虫。"
 
 msgid "malformed version string"
 msgstr "版本字串格式有错"
@@ -1022,17 +1022,12 @@ msgstr "用于出口的'%s'类别不存在：%s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
 
-msgid "Multiple methods lists found for '"
+#, fuzzy
+msgid "Multiple methods tables found for '"
 msgstr "存在多个方法串列，目标为'"
 
 msgid "'"
 msgstr "'"
-
-msgid "No methods table for \""
-msgstr "没有方法列表于"
-
-msgid "\""
-msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
 msgstr "找不到关于\"%s\"的隐喻数据对象"
@@ -1078,6 +1073,9 @@ msgstr "不能进口到已经封闭了的名字空间"
 
 msgid "invalid import target"
 msgstr "进口目标有错"
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr "\"%s\"函数有可进口方法，但找不到函数用的方法"
@@ -1479,6 +1477,12 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "No methods table for \""
+#~ msgstr "没有方法列表于"
+
+#~ msgid "\""
+#~ msgstr "\""
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "对\"POSIXt\"对象不适用"

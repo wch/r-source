@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-09-18 00:27-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -33,9 +33,6 @@ msgid ""
 msgstr ""
 "методы не могут быть определены для элементарной функции \"%s\" в этой "
 "версии R"
-
-msgid "\"%s\" is not one of the basic functions"
-msgstr "\"%s\" не является одной из основных функций"
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -216,6 +213,9 @@ msgstr ""
 msgid "no method defined for function \"%s\" and signature %s"
 msgstr "не определено метода для функции \"%s\" идентификатора %s"
 
+msgid "'file' must be a character string or a connection"
+msgstr ""
+
 msgid "No method found for signature %s"
 msgstr "Не найдено метода для идентификатора %s"
 
@@ -261,19 +261,14 @@ msgstr ""
 msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr "\"%s\" не является общей функцией в \"%s\"; методы не удалены"
 
-msgid ""
-"cannot restore previous version of \"%s\" in locked environment/package \"%s"
-"\""
+#, fuzzy
+msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr ""
 "не могу восстановить предыдущую версию \"%s\" в заблокированном окружении/"
 "пакете \"%s\""
 
 msgid "restoring default function definition of \"%s\""
 msgstr "восстанавливаю определение по умолчанию для функции \"%s\""
-
-msgid "cannot reset \"%s\", the definition is not a generic function object"
-msgstr ""
-"не могу сбросить \"%s\", определение не является объектом общей функции"
 
 msgid ""
 "error in updating generic function \"%s\"; the function definition is not a "
@@ -298,16 +293,25 @@ msgstr ""
 msgid "'callGeneric' must be called from a generic function or method"
 msgstr "'callGeneric' должна быть вызвана из общей функции или метода"
 
+msgid "expected a non-empty character string for argument name"
+msgstr ""
+
+#, fuzzy
+msgid "generic function supplied was not created for \"%s\""
+msgstr "не найдено общей функции для \"%s\""
+
+#, fuzzy
+msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
+msgstr ""
+"\"class\" является зарезервированным названием слота и не может быть "
+"переопределено"
+
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr ""
 "\"%s\" в настоящее время не является общей функцией: определите ее первой, "
 "чтобы создать не умалчиваемую подразумеваемую форму"
-
-msgid "No nongeneric version of function \"%s\" exists to be restored"
-msgstr ""
-"Не обнаружено не общей версии функции \"%s\" для того чтобы ее восстановить"
 
 msgid "Must provide an environment table; got class \"%s\""
 msgstr "Нужно указать таблицу окружения; получен класс \"%s\""
@@ -323,6 +327,27 @@ msgid ""
 msgstr ""
 "Подразумеваемая общая функция для \"%s\" существует, но будет переписана "
 "четким вызовом setGeneric()"
+
+#, fuzzy
+msgid ""
+"argument \"f\" must be a generic function or a single character string; got "
+"an object of class \"%s\""
+msgstr ""
+"аргумент 'classDef' должен быть строкой либо представлением класса; получен "
+"объект класса \"%s\""
+
+#, fuzzy
+msgid "non-generic function given to findMethods()"
+msgstr "обнаружена не общая функция \"%s\""
+
+msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgstr ""
+
+msgid "\""
+msgstr "\""
+
+msgid "f does not correspond to  a generic function and package not specified"
+msgstr ""
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -408,6 +433,10 @@ msgid ""
 msgstr ""
 "в идентификаторе метода для функции \"%s\" неверные имена аргументов в "
 "идентификаторе: %s"
+
+#, fuzzy
+msgid "No generic function found corresponding to \"%s\""
+msgstr "не найдено общей функции для \"%s\""
 
 msgid "no methods found for generic \"%s\""
 msgstr "не найдено методов для общей функции \"%s\""
@@ -714,18 +743,6 @@ msgstr "создаю общую для специальной функции \"%s\""
 msgid "invalid call in method dispatch to \"%s\" (no default method)"
 msgstr "неверный вызов в методе оправки к \"%s\" (нет метода по умолчанию)"
 
-msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
-msgstr "\"%s\" из \"%s\" не является общей функции; нет доступных методов"
-
-msgid ""
-"invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
-"'genericFunction object' or a primitive function, got an object of class \"%s"
-"\""
-msgstr ""
-"неверный 'fdef' для \"%s\" в 'getAllMethods'; ожидалась либо "
-"'genericFunction object' либо элементарная функция, получен объект класса \"%"
-"s\""
-
 msgid "formal arguments in method and function do not appear in the same order"
 msgstr ""
 "формальные аргументы в методе и функции появляются не в одинаковом порядке"
@@ -770,6 +787,9 @@ msgstr "методы не могут быть определены для элементарной функции \"%s\""
 
 msgid "no generic function found for \"%s\""
 msgstr "не найдено общей функции для \"%s\""
+
+msgid "Empty function name in .getGeneric"
+msgstr ""
 
 msgid ""
 "the methods object name for \"%s\" must include the name of the package that "
@@ -874,6 +894,11 @@ msgstr "\"%s\" не является общей функцией (либо не видна здесь)"
 
 msgid "invalid element in the groupMembers slot (class \"%s\")"
 msgstr "неверный элемент в groupMembers слоте (класс \"%s\")"
+
+msgid ""
+"\" is not a known action (warn, stop, once, ignore); no action recorded for "
+"function \""
+msgstr ""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
@@ -1183,9 +1208,6 @@ msgstr "неверный объект в таблице методов (\""
 msgid "\"), expected a method, got an object of class \""
 msgstr "\"), ожидался метод, получен объект класса \""
 
-msgid "\""
-msgstr "\""
-
 msgid "Invalid or unset methods table in generic function \""
 msgstr "неверная или неустановленная таблица методов в общей функции \""
 
@@ -1225,12 +1247,6 @@ msgid ""
 msgstr ""
 "Не могу найти таблицу методов для \"%s\", пакет \"%s\" может быть устаревшим"
 
-msgid "Methods list for generic \""
-msgstr "Список методов для общей \""
-
-msgid "\" not found"
-msgstr "\" не найдено"
-
 msgid "Failed to find expected group generic function:"
 msgstr "Не могу найти ожидаемую групповую общую функцию:"
 
@@ -1260,6 +1276,15 @@ msgid "Could not find generic function \"%s\" to initialize cached methods"
 msgstr ""
 "Не могу найти общую функцию \"%s\" для инициализации кэшированных методов"
 
+msgid "Something weird:  inconsistent number of args in methods table strings:"
+msgstr ""
+
+msgid "(using the largest value)"
+msgstr ""
+
+msgid "Invalid generic \"%s\", package \"%s\"; no methods table found"
+msgstr ""
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1283,6 +1308,10 @@ msgid ""
 msgstr ""
 "аргумент 'Classes' должен быть вектором двух классов; получен аргумент длины "
 "%d"
+
+#, fuzzy
+msgid "Created a package name, \"%s\", when none found"
+msgstr "не является именем пакета: \"%s\""
 
 msgid "no definition of class \"%s\" found"
 msgstr "не найдено определение класса \"%s\""
@@ -1401,6 +1430,36 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
+
+#~ msgid "\"%s\" is not one of the basic functions"
+#~ msgstr "\"%s\" не является одной из основных функций"
+
+#~ msgid "cannot reset \"%s\", the definition is not a generic function object"
+#~ msgstr ""
+#~ "не могу сбросить \"%s\", определение не является объектом общей функции"
+
+#~ msgid "No nongeneric version of function \"%s\" exists to be restored"
+#~ msgstr ""
+#~ "Не обнаружено не общей версии функции \"%s\" для того чтобы ее "
+#~ "восстановить"
+
+#~ msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
+#~ msgstr "\"%s\" из \"%s\" не является общей функции; нет доступных методов"
+
+#~ msgid ""
+#~ "invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
+#~ "'genericFunction object' or a primitive function, got an object of class "
+#~ "\"%s\""
+#~ msgstr ""
+#~ "неверный 'fdef' для \"%s\" в 'getAllMethods'; ожидалась либо "
+#~ "'genericFunction object' либо элементарная функция, получен объект класса "
+#~ "\"%s\""
+
+#~ msgid "Methods list for generic \""
+#~ msgstr "Список методов для общей \""
+
+#~ msgid "\" not found"
+#~ msgstr "\" не найдено"
 
 #~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
 #~ msgstr ".UsingMethodsTables: 'onOff' не является TRUE либо FALSE"

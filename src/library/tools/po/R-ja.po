@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2007-09-11 23:05+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -615,6 +615,10 @@ msgstr " パッケージ '%s' は最小のセットに縮小された依存関�
 
 msgid "argument '%s' must be a character string or connection"
 msgstr " 引数 '%s' は文字列かコネクションでなければなりません "
+
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません "
 
 msgid "unimplemented encoding"
 msgstr " 実装されていないエンコード "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-11 23:16\n"
+"POT-Creation-Date: 2008-03-24 15:35\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -603,6 +603,10 @@ msgstr "그 의존성을 최소 set으로 감소했습니다"
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "인수 '%s'는 문자열 또는 connection이어야만합니다"
+
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr "인수'file'는 문자열 또는 connection이어야만 합니다"
 
 msgid "unimplemented encoding"
 msgstr ""

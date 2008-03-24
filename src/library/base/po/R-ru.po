@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-06 16:52\n"
+"POT-Creation-Date: 2008-03-24 15:34\n"
 "PO-Revision-Date: 2007-09-18 00:11-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -77,11 +77,11 @@ msgstr "'%s' не является правильным сокращением RNG"
 msgid "'normal.kind' must be a character string of length 1."
 msgstr "'normal.kind' должен быть текстовой строкой длины 1."
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Использована ошибочная версия генератора Kinderman-Ramage."
-
 msgid "'%s' is not a valid choice"
 msgstr "'%s' не является правильным выбором"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Использована ошибочная версия генератора Kinderman-Ramage."
 
 msgid "malformed version string"
 msgstr "неправильно сформирована строка версии"
@@ -1035,17 +1035,12 @@ msgstr "в '%s' классы для экспорта не определены: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
 
-msgid "Multiple methods lists found for '"
+#, fuzzy
+msgid "Multiple methods tables found for '"
 msgstr "Множественные списки методов найдены для '"
 
 msgid "'"
 msgstr "'"
-
-msgid "No methods table for \""
-msgstr "Нет таблицы методов для \""
-
-msgid "\""
-msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
 msgstr "Не удалось найти объект метаданных для \"%s\""
@@ -1091,6 +1086,9 @@ msgstr "не могу импортировать во включенное пространство имен"
 
 msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
+
+msgid "got invalid index for importing"
+msgstr ""
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr "Найдены методы импорта для функции \"%s\", но они сами не общие"
@@ -1513,6 +1511,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "No methods table for \""
+#~ msgstr "Нет таблицы методов для \""
+
+#~ msgid "\""
+#~ msgstr "\""
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "не определен для объектов POSIXt"
