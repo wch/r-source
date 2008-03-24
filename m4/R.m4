@@ -2916,7 +2916,7 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ## R_ZLIB
 ## ------
 ## Try finding zlib library and headers.
-## We check that both are installed, and that the header >= 1.2.1
+## We check that both are installed, and that the header >= 1.2.3
 ## and that gzeof is in the library (which suggests the library
 ## is also recent enough).
 AC_DEFUN([R_ZLIB],
@@ -2950,7 +2950,7 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 ## Set shell variable r_cv_header_zlib_h to 'yes' if a recent enough
 ## zlib.h is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_ZLIB],
-[AC_CACHE_CHECK([if zlib version >= 1.2.1],
+[AC_CACHE_CHECK([if zlib version >= 1.2.3],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
@@ -2958,7 +2958,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
-  exit(strcmp(ZLIB_VERSION, "1.2.1") < 0);
+  exit(strcmp(ZLIB_VERSION, "1.2.3") < 0);
 #else
   exit(1);
 #endif
@@ -3006,7 +3006,7 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-AC_CACHE_CHECK([if PCRE version >= 4.0], [r_cv_have_pcre4],
+AC_CACHE_CHECK([if PCRE version >= 7.6], [r_cv_have_pcre76],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3017,23 +3017,29 @@ AC_CACHE_CHECK([if PCRE version >= 4.0], [r_cv_have_pcre4],
 #endif
 int main() {
 #ifdef PCRE_MAJOR
-  exit(PCRE_MAJOR<4);
+#if PCRE_MAJOR > 7
+  exit(0);
+#elif PCRE_MAJOR > 6 && PCRE_MAJOR >= 6
+  exit(0);
+#else
+  exit(1);
+#endif
 #else
   exit(1);
 #endif
 }
-]])], [r_cv_have_pcre4=yes], [r_cv_have_pcre4=no], [r_cv_have_pcre4=no])])
+]])], [r_cv_have_pcre76=yes], [r_cv_have_pcre76=no], [r_cv_have_pcre76=no])])
 fi
-if test "x${r_cv_have_pcre4}" = xyes; then
+if test "x${r_cv_have_pcre76}" = xyes; then
   LIBS="-lpcre ${LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
-if test "x${r_cv_have_pcre4}" = xyes; then
+if test "x${r_cv_have_pcre76}" = xyes; then
   AC_MSG_RESULT([no])
 else
   AC_MSG_RESULT([yes])
 fi
-AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre4}" != xyes])
+AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre76}" != xyes])
 ])# R_PCRE
 
 ## R_BZLIB
@@ -3048,6 +3054,21 @@ AC_DEFUN([R_BZLIB],
     AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
   fi
 else
+  have_bzlib=no
+fi
+if test "x${have_bzlib}" = xyes; then
+AC_CACHE_CHECK([if bzip2 version >= 1.0.5], [r_cv_have_bzlib],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef HAVE_BZLIB_H
+#include <bzlib.h>
+#endif
+int main() {
+    char *ver = BZ2_bzlibVersion();
+    exit(strcmp(ver, "1.0.5") < 0);
+}
+]])], [r_cv_have_bzlib=yes], [r_cv_have_bzlib=no], [r_cv_have_bzlib=no])])
+fi
+if test "x${r_cv_have_bzlib}" = xno; then
   have_bzlib=no
 fi
 AC_MSG_CHECKING([whether bzip2 support needs to be compiled])
