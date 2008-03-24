@@ -790,6 +790,10 @@
 /* Define if you have 32 bit ints. */
 #define INT_32_BITS 1
 
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#define LT_OBJDIR ".libs/"
+
 /* Define if mktime sets errno. */
 #define MKTIME_SETS_ERRNO 1
 
@@ -803,7 +807,7 @@
 #define NVALGRIND 1
 
 /* Define if using GNU-style Objective C runtime. */
-/* #undef OBJC_GNU_RUNTIME */
+#define OBJC_GNU_RUNTIME 1
 
 /* Define if using NeXT/Apple-style Objective C runtime. */
 /* #undef OBJC_NEXT_RUNTIME */
@@ -923,11 +927,11 @@
 /* #undef USE_BUILTIN_RINT */
 
 /* Define if the POSIX multithreading library can be used. */
-/* #define USE_POSIX_THREADS 1 */
+/* #undef USE_POSIX_THREADS */
 
 /* Define if references to the POSIX multithreading library should be made
    weak. */
-/* #define USE_POSIX_THREADS_WEAK 1 */
+/* #undef USE_POSIX_THREADS_WEAK */
 
 /* Define if the GNU Pth multithreading library can be used. */
 /* #undef USE_PTH_THREADS */
