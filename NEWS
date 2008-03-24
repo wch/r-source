@@ -359,6 +359,8 @@ NEW FEATURES
 
     o	New function checkNEWS() that detects common errors in NEWS
 	file formatting.
+	
+    o	readNEWS() has been moved to the tools package.
 
     o	New bindings ttk*() in package tcltk for the 'themed widgets'
 	of Tk 8.5.  The tcltk demos make use of these widgets where

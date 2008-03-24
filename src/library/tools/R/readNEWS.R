@@ -1,4 +1,4 @@
-#  File src/library/utils/R/readNEWS.R
+#  File src/library/tools/R/readNEWS.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
