@@ -16,7 +16,7 @@ WINDOWS VERSIONS
 
     o	Versions of Windows older than 2000 are no longer supported
 	(specifically, 95, 98, ME, NT4).  Windows 2000 is minimally
-	tested, but those tests are successful.
+	tested, but those tests were successful.
 
 
 GUI CHANGES
@@ -40,10 +40,9 @@ INTERNATIONALIZATION
 	with the encoding declared.  This is likely to throw an error
 	if it is used later in the session, but it can be printed, and
 	used for e.g. plotting on the windows() device.  So "\u03b2"
-	gives a Greek letter beta (as distinct from mathematical
-	symbol), and "\u2642" a 'male sign'.  Such strings will be
-	printed as e.g. <U+2642> except in the Rgui console (see
-	below).
+	gives a Greek small beta and "\u2642" a 'male sign'.  Such
+	strings will be printed as e.g. <U+2642> except in the Rgui
+	console (see below).
 	
     o	Rgui has been re-written to work internally in Unicode.  This
 	means that copy and paste will be done in Unicode, and should
@@ -64,8 +63,7 @@ INTERNATIONALIZATION
 	character string in R is marked (see ?Encoding) as UTF-8, it
 	can be plotted (for a suitable font) even if it is not a valid
 	character in the current locale.  Thus one way to plot a Greek
-	beta (Unicode point U+03B2) is text(x, y, intToUtf8(0x03b2L)).
-	Another is to use "\u03b2".
+	beta (Unicode point U+03B2) is text(x, y, "\u03b2").
 
 	The postscript() and pdf() devices handle UTF-8-encoded
 	strings provided the characters used are in both the output
@@ -88,8 +86,8 @@ INTERNATIONALIZATION
 	system() and unlink() have been converted to use Unicode
 	filenames.
 
-	Pathnames you select (choose.files, choose.dir, file.choose)
-	are returned in UTF-8.
+	Pathnames you select (by choose.files(), choose.dir() and
+	file.choose()) are returned in UTF-8.
 
 	list.files() still works with the native charsets as we do not
 	have a Unicode regexp engine.  (The code for grep uses wide
@@ -97,7 +95,7 @@ INTERNATIONALIZATION
 
     o	Collating (e.g. <) and sorting is done in UTF-8 where one of
 	the items is in UTF-8.  It seems that MSVCRT's collation
-	order is different in widechar and in ASCII, so this
+	order can be different in widechar and in ASCII, so this
 	can lead to inconsistencies.
 
     o	If readLines() or scan() is passed an unopened connection with
@@ -107,12 +105,12 @@ INTERNATIONALIZATION
 
 TIME ZONES
 
-    o	This version of R no longer makes use of Windows' bug-ridden
-	concept of time zones but replaces it by Arthur Olson's
-	public-domain tz database (which is widely used, including on
-	Linux, Mac OS X, Solaris, AIX, FreeBSD and by Java and Tcl).
-	This means that time zones should now be referred to by their
-	'standard' names, and output correctly (e.g. not the incorrect
+    o	This version of R no longer makes use of Windows' flawed concept
+	of time zones but replaces it by Arthur Olson's public-domain
+	tz database (which is widely used, including on Linux, Mac OS
+	X, Solaris, AIX, FreeBSD and by Java and Tcl).  This means
+	that time zones should now be referred to by their 'standard'
+	names, and will be output correctly (e.g. not the incorrect
 	'GMT Daylight Time' for 'British Summer Time' used by
 	Windows).
 
@@ -127,12 +125,12 @@ TIME ZONES
 
     o	Since the Windows C runtime does not think that times prior to
 	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
-	used for the time zones pre-1970.  Now the database is used for
-	1902-1969 (and nowhere had DST prior to 1902 and the time
-	offset is assumed to be the same as in 1902) and so the
-	results are reliable from the onset of standard time (second
-	half of the nineteenth century) until the near future (since
-	legislators change time zones with little notice).
+	used for the time zones pre-1970.  Now the database is
+	available for 1902-1969 (and nowhere had DST prior to 1902 and
+	the time offset is assumed to be the same as in 1902) and so
+	the results are reliable from the onset of standard time
+	(second half of the nineteenth century) until the near future
+	(since legislators change time zones with little notice).
 
 
 PACKAGE INSTALLATION
@@ -221,9 +219,10 @@ BUILDING R
     o	We now presume version 2.7.0 of Rtools.exe, in which gcc is
 	version 4.2.1.
 
-    o	We now assume Tcl/Tk version 8.5.x (included in version 2.7.0
-	of Rtools.exe).  Earlier versions can be selected in MkRules.
-	The distribution will include the BWidget and Tktable extensions.
+    o	We now assume Tcl/Tk version 8.5.x (included in version 2.7.0 of
+	Rtools.exe).  Earlier versions can be selected in MkRules.
+	The distribution in the binary installer includes the BWidget
+	and Tktable extensions.
 
 
 BUG FIXES
@@ -259,9 +258,9 @@ INSTALLER
 WORKAROUNDS
 
     o	We set some environment variables to work around hangs in Rgui
-	when packages (e.g. tseries) use Fortran WRITE calls.  The
-	Fortran output will be written to a file named 'fort.6' in the
-	working directory.
+	when packages (e.g. the then current version of tseries) use
+	Fortran WRITE calls.  The Fortran output will be written to a
+	file named 'fort.6' in the working directory.
 
     o	Browsing for a directory in choose.dir() and the Rgui
 	'Change Dir...' menu item now works around Vista's confusion
