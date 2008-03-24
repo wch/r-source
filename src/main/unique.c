@@ -643,16 +643,24 @@ SEXP match4(SEXP itable, SEXP ix, int nmatch, SEXP incomp)
 
 SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int nomatch;
+    int nomatch, nargs = length(args);
     SEXP incomp;
 
-    checkArity(op, args);
+    /* checkArity(op, args); too many packages have captured 3 from R < 2.7.0 */
+    if (nargs < 3 || nargs > 4)
+	error("%d arguments passed to .Internal(%s) which requires %d",
+	      length(args), PRIMNAME(op), PRIMARITY(op));
+    if (nargs == 3)
+	warning("%d arguments passed to .Internal(%s) which requires %d",
+		length(args), PRIMNAME(op), PRIMARITY(op));
 
     if ((!isVector(CAR(args)) && !isNull(CAR(args)))
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
     nomatch = asInteger(CADDR(args));
+    if (nargs < 4) return match(CADR(args), CAR(args), nomatch);
+
     incomp = CADDDR(args);
 
     if(length(incomp) && /* S has FALSE to mean empty */
