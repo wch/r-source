@@ -398,8 +398,8 @@ AC_ARG_WITH([valgrind-instrumentation],
 ## [AS_HELP_STRING([--with-libtool],[use libtool for building shared libraries @<:@yes@:>@])],
 ## [use_libtool="${withval}"],
 ## [use_libtool=yes])
+## AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 ## </FIXME>
-AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 
 ## Recommended R packages.
 AC_ARG_WITH([recommended-packages],
@@ -516,7 +516,7 @@ R_MISSING_PROG(AUTOHEADER, autoheader)
 AC_PROG_AWK
 AC_PROG_EGREP
 AC_PROG_LN_S
-AC_PROG_RANLIB
+## AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
 R_PROG_INSTALL
@@ -575,7 +575,7 @@ AC_SUBST(R_DEFS)
 ## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
 ## Fortran 77 compiler and sets F77 accordingly.)
 AC_DISABLE_STATIC
-AC_PROG_LIBTOOL
+LT_INIT
 AC_SUBST(LIBTOOL_DEPS)
 
 ## cross-compiling

@@ -483,6 +483,8 @@ INSTALLATION
 	version for the appropriate architecture (e.g. x86_64 or
 	i386).
 
+    o	libtool has been updated to version 2.2.
+
 
 UTILITIES
 
