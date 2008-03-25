@@ -31,7 +31,6 @@ extern "C" {
 /* This misuses the NewDevDesc interface to pass its own pointers */
 #define R_USE_PROTOTYPES 0
 #include <R_ext/GraphicsEngine.h>
-#include <Rdevices.h>
 
 /* exported functions for implementation */
 
