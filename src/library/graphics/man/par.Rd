@@ -37,7 +37,6 @@
 \concept{font.main}
 \concept{font.sub}
 \concept{font}
-\concept{gamma}
 \concept{lab}
 \concept{las}
 \concept{lend}
@@ -123,7 +122,7 @@ par(\dots, no.readonly = FALSE)
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
   may only be used in queries and cannot be set.  (\code{"cin"},
   \code{"cra"}, \code{"csi"}, \code{"cxy"} and \code{"din"} are always
-  read-only, and \code{"gamma"} is on most devices.)
+  read-only.)
 
   There are several parameters can only be set by a call to \code{par()}:
   \itemize{
@@ -310,13 +309,6 @@ par(\dots, no.readonly = FALSE)
     \item{\code{font.lab}}{The font to be used for x and y labels.}
     \item{\code{font.main}}{The font to be used for plot main titles.}
     \item{\code{font.sub}}{The font to be used for plot sub-titles.}
-    \item{\code{gamma}}{the gamma correction, see argument \code{gamma}
-      to \code{\link{hsv}}.  Tnis was deprecated in \R 2.7.0.
-      This is only accepted as a setting if the current device
-      has support for changing the gamma correction: no current device
-      does. (\code{X11} and \code{windows} have support for setting the
-      gamma correction when opening the first device, but not for
-      changing it.)}
     \item{\code{lab}}{A numerical vector of the form \code{c(x, y, len)}
       which modifies the default way that axes are annotated.  The values of
       \code{x} and \code{y} give the (approximate) number of tickmarks

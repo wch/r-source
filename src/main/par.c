@@ -89,7 +89,6 @@ ParTable  [] = {
     { "font.lab",	 0 },
     { "font.main",	 0 },
     { "font.sub",	 0 },
-    { "gamma",		 0 },
     { "lab",		 0 },
     { "las",		 0 },
     { "lend",		 0 },
@@ -130,6 +129,7 @@ ParTable  [] = {
     { "yaxt",		 0 },
     { "ylog",		 1 },
     /* Obsolete pars */
+    { "gamma",		-2},
     { "type",		-2},
     { "tmag",           -2},
     /* Non-pars that might get passed to Specify2 */
@@ -884,10 +884,6 @@ static SEXP Query(const char *what, pGEDevDesc dd)
 	value = allocVector(INTSXP, 1);
 	INTEGER(value)[0] = dpptr(dd)->fontaxis;
     }
-    else if (streql(what, "gamma")) {
-	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->gamma;
-    }
     else if (streql(what, "lab")) {
 	value = allocVector(INTSXP, 3);
 	INTEGER(value)[0] = dpptr(dd)->lab[0];
@@ -1184,16 +1180,13 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden Rg_readonlypars(void)
 {
     SEXP result;
-    Rboolean canChangeGamma = GEcurrentDevice()->dev->canChangeGamma;
-    int nreadonly = canChangeGamma ? 5 : 6;
 
-    PROTECT(result = allocVector(STRSXP, nreadonly));
+    PROTECT(result = allocVector(STRSXP, 5));
     SET_STRING_ELT(result, 0, mkChar("cin"));
     SET_STRING_ELT(result, 1, mkChar("cra"));
     SET_STRING_ELT(result, 2, mkChar("csi"));
     SET_STRING_ELT(result, 3, mkChar("cxy"));
     SET_STRING_ELT(result, 4, mkChar("din"));
-    if (!canChangeGamma) SET_STRING_ELT(result, 5, mkChar("gamma"));
     UNPROTECT(1);
     return result;
 }

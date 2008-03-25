@@ -154,3 +154,8 @@ unix <- function(call, intern = FALSE) .Defunct("system")
 ## </entry>
 
 
+## <entry>
+## Deprecated in 2.7.0
+## Defunct in 2.8.0
+gammaCody <- function(x) .Defunct("gamma")
+## </entry>

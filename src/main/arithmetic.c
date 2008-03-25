@@ -980,8 +980,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    if (PRIMVAL(op) != 46 &&
-	DispatchGroup("Math", call, op, args, env, &s))
+    if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
 
     if (isComplex(CAR(args)))
@@ -1021,7 +1020,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	   removed in 2.0.0
 	*/
 
-    case 46: return MATH1(Rf_gamma_cody);
+	/* case 46: return MATH1(Rf_gamma_cody); removed in 2.8.0 */
 
     default:
 	errorcall(call, _("unimplemented real function of 1 argument"));

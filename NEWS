@@ -1,6 +1,39 @@
 			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       2.8 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.0
+
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+
+NEW FEATURES
+
+
+DEPRECATED & DEFUNCT
+
+    o	Use in packages of the graphics headers Rdevices.h 
+	is defunct. [Rgraphics.h to follow.]
+
+    o	options("par.ask.default") is defunct in favour of
+	"device.ask.default".
+
+    o	The 'device-independent' family "symbol" is defunct: use
+	font=5 (base) or fontface=5 (grid) instead.
+
+    o	gammaCody() is defunct.
+
+    o	par("gamma") is defunct.
+
+
+
+	**************************************************
+	*						 *
 	*	       2.7 SERIES NEWS			 *
 	*						 *
 	**************************************************

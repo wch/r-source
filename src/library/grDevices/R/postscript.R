@@ -138,9 +138,8 @@ guessEncoding <- function(family)
 {
     # Three special families have special encodings, regardless of locale
     if (!missing(family) &&
-        family %in% c("symbol", "ComputerModern", "ComputerModernItalic")) {
+        family %in% c("ComputerModern", "ComputerModernItalic")) {
         switch(family,
-               "symbol" = "AdobeSym.enc",
                "ComputerModern" = "TeXtext.enc",
                "ComputerModernItalic" = "TeXtext.enc")
     }  else {
@@ -648,11 +647,6 @@ postscriptFonts(# Default Serif font is Times
                   c("Courier.afm", "Courier-Bold.afm",
                     "Courier-Oblique.afm", "Courier-BoldOblique.afm",
                     "Symbol.afm")),
-                # Default Symbol font is Symbol
-                # Deprecated: remove in R 2.8.0
-                symbol=Type1Font("Symbol",
-                  c("Symbol.afm", "Symbol.afm", "Symbol.afm", "Symbol.afm",
-                    "Symbol.afm"), encoding="AdobeSym.enc"),
                 # Remainder are standard Adobe fonts that
                 # should be present on PostScript devices
                 AvantGarde=Type1Font("AvantGarde",

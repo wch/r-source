@@ -375,10 +375,7 @@ X11Fonts(# Default Serif font is Times
          # Default Sans Serif font is Helvetica
          sans=X11Font("-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
          # Default Monospace font is Courier
-         mono=X11Font("-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
-         # Default Symbol font is Symbol
-         # Deprecated: remove in 2.8.0
-         symbol=X11Font("-*-symbol-%s-%s-*-*-%d-*-*-*-*-*-*-*"))
+         mono=X11Font("-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"))
 
 savePlot <- function(filename = paste("Rplot", type, sep="."),
                      type = c("png", "jpeg", "tiff", "bmp"),

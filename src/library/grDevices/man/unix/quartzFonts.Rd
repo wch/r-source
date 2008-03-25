@@ -40,11 +40,9 @@ quartzFonts(...)
   mappings and to define new mappings.  The \code{quartzFont}
   function can be used to create a new mapping.
 
-  Default mappings are provided for four
-  device-independent font family names: \code{"sans"} for a
-  sans-serif font,
-  \code{"serif"} for a serif font, \code{"mono"} for a monospaced font,
-  and \code{"symbol"} for a symbol font.
+  Default mappings are provided for three device-independent font family
+  names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
+  font and \code{"mono"} for a monospaced font.
 }
 \seealso{
   \code{\link{quartz}}

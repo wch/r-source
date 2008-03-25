@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -50,6 +50,7 @@
 \alias{symbol.C}
 \alias{symbol.For}
 \alias{unix}
+\alias{gammaCody}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -127,6 +128,9 @@ symbol.For(name)
 % Removed in 2.5.0
 unix(call, intern = FALSE)
 % </Removed 2.5.0>
+% Removed in 2.8.0
+gammaCody(x)
+% </Removed 2.8.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -213,6 +217,12 @@ unix(call, intern = FALSE)
 
   \code{unix} was a \emph{deprecated} (since the 1990s) alternative to
   \code{\link{system}}, available for backwards compatibility.
+  
+  \code{gammaCody} is the \eqn{(\Gamma)} function from the Specfun
+  package used at C level in the Bessel code.  It may be
+  somewhat faster but less precise and/or robust than \R's standard
+  \code{\link{gamma}}.  Re R-level interface  was here for experimental
+  purposes.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
