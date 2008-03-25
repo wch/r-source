@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2007    Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2008    Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-void Rprintf(char *, ...);
-void REprintf(char *, ...);
+void Rprintf(const char *, ...);
+void REprintf(const char *, ...);
 void Rvprintf(const char *, va_list);
 void REvprintf(const char *, va_list);
 
