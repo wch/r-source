@@ -9475,7 +9475,7 @@ It needs to be quite complex:
 
 @example
 #include <Rinterface.h>
-#include <Rdevices.h>    /* for KillAllDevices */
+#include <Rembedded.h>    /* for Rf_KillAllDevices */
 
 void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @{
@@ -9503,7 +9503,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
     R_CleanTempDir();
 
     /* close all the graphics devices */
-    if(saveact != SA_SUICIDE) KillAllDevices();
+    if(saveact != SA_SUICIDE) Rf_KillAllDevices();
     fpu_setup(FALSE);
 
     exit(status);
