@@ -746,9 +746,8 @@ BUG FIXES
 
     o setAs() now catches 2 arguments in the method definition, if
        they don't match the arguments of coerce().
-
    
-   o  methods with missing arguments in the definition are handled
+    o  methods with missing arguments in the definition are handled
        correctly  when non-signature arguments exist, and check for
        conflicting local names in the method definition..
 
