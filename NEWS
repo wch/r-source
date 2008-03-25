@@ -534,6 +534,9 @@ C-LEVEL FACILITIES
     o	Both the Unix and Windows interfaces for embedding now make
 	use of 'const char *' declarations where appropriate.
 
+    o	Rprintf() and REprintf() now use 'const' for their format
+	argument -- this should reduce warnings when called from C++.
+
     o	Graphics devices can now select to be sent text in UTF-8, even
 	if the current locale is not UTF-8 (and so enable text entered
 	in UTF-8 to be plotted).  This is used by postscript(), pdf()
