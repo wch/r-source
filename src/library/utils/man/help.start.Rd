@@ -28,8 +28,8 @@ help.start(update = TRUE, gui = "irrelevant",
     URL as its only argument.
   }
 #ifdef unix  
-  \item{remote}{A character giving a valid URL for the \file{\$R\_HOME}
-    directory on a remote location.}
+  \item{remote}{A character giving a valid URL for the
+    \file{\var{R\_HOME}} directory on a remote location.}
 #endif
 #ifdef windows  
   \item{update}{logical: should this attempt to update the indices to

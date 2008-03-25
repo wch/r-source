@@ -50,7 +50,7 @@
   defaults.  It returns no useful value.
 }
 \details{
-  There are system copies of these files in \file{R\_HOME\\etc}.  Users
+  There are system copies of these files in \file{\var{R\_HOME}\\etc}.  Users
   can have personal copies of the files: these are looked for in the
   location given by the environment variable \env{R\_USER}. The system
   files are read only if a corresponding personal file is not found.

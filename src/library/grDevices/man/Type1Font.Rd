@@ -47,12 +47,12 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
     provide this.}
 }
 \details{
-  For \code{Type1Fonts}, if four \code{.afm} files are supplied the
+  For \code{Type1Fonts}, if four \file{.afm} files are supplied the
   fifth is taken to be \code{"Symbol.afm"}.  Relative paths are taken
-  relative to the directory \file{R\_HOME/library/grDevices/afm}.
+  relative to the directory \file{\var{R\_HOME}/library/grDevices/afm}.
   The fifth (symbol) font must be in \code{AdobeSym} encoding.
   However, the glyphs in the first four fonts are referenced by name
-  and any encoding given within the \code{.afm} files is not used.
+  and any encoding given within the \file{.afm} files is not used.
 
   Glyphs in CID-keyed fonts are accessed by ID (number) and not by name.
   The CMap file maps encoded strings (usually in a MBCS) to IDs, so
