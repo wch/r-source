@@ -391,12 +391,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 
     QuartzDevice_Update(qd);
 
-    /* FIXED:
-       width/height are in bp, but window dimensions need to be pixels
-       for bitmap devices.  So adjust later.
-       dev->right = def->width*72.0*def->scalex;
-       dev->bottom= def->height*72.0*def->scaley;
-    */
+    /* Re-set for bitmap devices later */
      dev->right = def->width*72.0;
      dev->bottom= def->height*72.0;;
 
@@ -482,7 +477,7 @@ CFStringRef RQuartz_FindFont(int fontface, char *fontfamily)
             if(0 == strcmp(fontfamily, CHAR(STRING_ELT(names, i)))) break;
         if(i < length(names))
             fontName = CFStringCreateWithCString(kCFAllocatorDefault,
-						 CHAR(STRING_ELT(VECTOR_ELT(db, i), fontface - 1)), /* FIXED was fontface */
+						 CHAR(STRING_ELT(VECTOR_ELT(db, i), fontface - 1)),
 						 kCFStringEncodingUTF8);
     }
     UNPROTECT(4);
@@ -493,9 +488,7 @@ CGFontRef RQuartz_Font(CTXDESC)
 {
     int fontface = gc->fontface;
     CFMutableStringRef fontName = CFStringCreateMutable(kCFAllocatorDefault, 0);
-    /* FIXME: remove "symbol" family in 2.8.0 (and use of Symbol
-       encoding here is inconsistent with other devices (but saner) */
-    if((gc->fontface == 5) || (strcmp(gc->fontfamily, "symbol") == 0))
+     if((gc->fontface == 5) || (strcmp(gc->fontfamily, "symbol") == 0))
         CFStringAppend(fontName,CFSTR("Symbol"));
     else {
         CFStringRef font = RQuartz_FindFont(gc->fontface, gc->fontfamily);
@@ -505,14 +498,14 @@ CGFontRef RQuartz_Font(CTXDESC)
         }
         CFRelease(font);
     }
-    /* FIXME: the default is Arial, but family="sans" is Helvetica */
+    /* the default is Arial, but family="sans" is Helvetica */
     if(CFStringGetLength(fontName) == 0)
         CFStringAppend(fontName, CFSTR("Arial"));
     if(fontface == 2)
         CFStringAppend(fontName, CFSTR(" Bold"));
     if(fontface == 3)
         CFStringAppend(fontName, CFSTR(" Italic"));
-    if(fontface == 4) /* FIXED: was using bold */
+    if(fontface == 4)
         CFStringAppend(fontName, CFSTR(" Bold Italic"));
     CGFontRef  font = CGFontCreateWithFontName(fontName);
     if(font == NULL) {
@@ -533,7 +526,6 @@ CGFontRef RQuartz_Font(CTXDESC)
 void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
     if(flags & RQUARTZ_FILL) {
         int fill = gc->fill;
-	/* FIXED: was 256.0 */
         CGContextSetRGBFillColor(ctx, R_RED(fill)/255.0, R_GREEN(fill)/255.0, R_BLUE(fill)/255.0, R_ALPHA(fill)/255.0);
     }
     if(flags & RQUARTZ_STROKE) {
@@ -544,7 +536,6 @@ void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
         CGFloat dashlist[8];
         int   i, ndash = 0;
         int   lty = gc->lty;
-	/* FIXED: units for lwd -- 1/96" preferred */
 	float lwd = gc->lwd * 0.75;
         CGContextSetLineWidth(ctx, lwd);
 
@@ -659,8 +650,6 @@ static void RQuartz_Clip(double x0, double x1, double y0, double y1, DEVDESC)
 static CFStringRef text2unichar(CTXDESC, const char *text, UniChar **buffer, int *free)
 {
     CFStringRef str;
-    /* FIXME: remove "symbol" family in 2.8.0 (and use of Symbol
-       encoding here is inconsistent with other devices (but saner) */
     if(gc->fontface == 5 || strcmp(gc->fontfamily, "symbol") == 0)
         str = CFStringCreateWithCString(NULL, text, kCFStringEncodingMacSymbol);
     else {
