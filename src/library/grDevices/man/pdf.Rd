@@ -90,12 +90,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   straightforward to use mappings to the font families that can be
   assumed to be available in any PDF viewer: \code{"Times"}
   (equivalently \code{"serif"}), \code{"Helvetica"} (equivalently
-  \code{"sans"}), \code{"Courier"} (equivalently \code{"mono"}) and
-  \code{"Symbol"} (equivalently \code{"symbol"}).  Other families may be
-  specified, but it is the user's responsibility to ensure that these
-  fonts are available on the system and third-party software, e.g.,
-  Ghostscript, may be required to embed the fonts so that the PDF can be
-  included in other documents (e.g., LaTeX): see
+  \code{"sans"}) and \code{"Courier"} (equivalently \code{"mono"}).
+  Other families may be specified, but it is the user's responsibility
+  to ensure that these fonts are available on the system and third-party
+  software, e.g., Ghostscript, may be required to embed the fonts so
+  that the PDF can be included in other documents (e.g., LaTeX): see
   \code{\link{embedFonts}}.  The URW-based families described for
   \code{\link{postscript}} can be used with viewers
 #ifdef unix
