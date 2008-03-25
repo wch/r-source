@@ -282,7 +282,7 @@ doPrimitiveMethod <-
 }
 
 conformMethod <-
-  function(signature, mnames, fnames, f = "<unspecified>", fdef, method)
+    function(signature, mnames, fnames, f = "<unspecified>", fdef, method)
 {
     fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
@@ -297,14 +297,18 @@ conformMethod <-
     missingFnames <- fnames[omitted]
     foundNames <- missingFnames %in% all.names(body(method), unique = TRUE)
     if(any(foundNames))
-        stop(gettextf("%s function arguments omitted from method arguments, (%s), were found in method definition", label, paste(missingFnames[foundNames], collapse = ", ")),
+        warnings(gettextf("%s function arguments omitted from method arguments, (%s), were found in method definition",
+                      label, paste(missingFnames[foundNames], collapse = ", ")),
              domain = NA)
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
         bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
-        stop(label, gettextf("formal arguments omitted in the method definition cannot be in the signature (%s)", paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", ")), domain = NA)
+        stop(label, gettextf("formal arguments omitted in the method definition cannot be in the signature (%s)",
+                             paste(fnames[bad], " = \"", signature[bad], "\"",
+                                   sep = "", collapse = ", ")), domain = NA)
     }
     else if(!all(signature[omitted] == "missing")) {
-        .message(label, gettextf("expanding the signature to include omitted arguments in definition: %s", paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
+        .message(label, gettextf("expanding the signature to include omitted arguments in definition: %s",
+                                 paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
         omitted <- seq(along = omitted)[omitted] # logical index will extend signature!
         signature[omitted] <- "missing"
     }
