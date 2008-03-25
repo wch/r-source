@@ -294,12 +294,14 @@ conformMethod <-
     if(!all(diff(seq_along(fnames)[!omitted]) > 0))
         stop(label, "formal arguments in method and function do not appear in the same order")
     signature <- c(signature, rep("ANY", length(fsig)-length(signature)))
-    missingFnames <- fnames[omitted]
-    foundNames <- missingFnames %in% all.names(body(method), unique = TRUE)
-    if(any(foundNames))
-        warnings(gettextf("%s function arguments omitted from method arguments, (%s), were found in method definition",
-                      label, paste(missingFnames[foundNames], collapse = ", ")),
-             domain = NA)
+    ### FIXME:  the test below is too broad, with all.names().  Would be nice to have a test
+    ### for something like assigning to one of the omitted arguments.
+##     missingFnames <- fnames[omitted]
+##     foundNames <- missingFnames %in% all.names(body(method), unique = TRUE)
+##     if(any(foundNames))
+##         warning(gettextf("%s function arguments omitted from method arguments, (%s), were found in method definition",
+##                       label, paste(missingFnames[foundNames], collapse = ", ")),
+##              domain = NA)
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
         bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
         stop(label, gettextf("formal arguments omitted in the method definition cannot be in the signature (%s)",
