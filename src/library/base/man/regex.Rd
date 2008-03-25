@@ -37,7 +37,7 @@
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
   = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.5}
+  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.6}
   implementation of the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
@@ -200,13 +200,13 @@
   \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit} switches
   to the PCRE library that \sQuote{implements regular expression pattern
   matching using the same syntax and semantics as Perl 5.6 or later,
-  with just a few differences}.  It adds some features planned for Perl 5.10.
+  with just a few differences}.  It adds some features from Perl 5.10.
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 7.5 as described here
-  (version \eqn{\ge}{>=} 4.0 is required if \R is configured to use the
+  from the sources within \R, the PCRE version is 7.6 as described here
+  (version \eqn{\ge}{>=} 7.6 is required if \R is configured to use the
   system's PCRE library).
 
   Perl regular expressions are computed byte-by-byte rather than
