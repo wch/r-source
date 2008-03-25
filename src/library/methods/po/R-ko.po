@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-03-25 09:08\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -449,10 +449,6 @@ msgstr ""
 msgid "No generic function found corresponding to \"%s\""
 msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
-#, fuzzy
-msgid "no methods found for generic \"%s\""
-msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
-
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr ""
 "skip 하고 있는 메소드는 예상외의 클래스 \"%s\"의 요소 %s로 리스트합니다"
@@ -769,6 +765,11 @@ msgstr "'%s'(디폴트 메소드는 없습니다)에서 메소드 dispatch는 �
 
 msgid "formal arguments in method and function do not appear in the same order"
 msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
+
+msgid ""
+"%s function arguments omitted from method arguments, (%s), were found in "
+"method definition"
+msgstr ""
 
 msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
@@ -1101,8 +1102,10 @@ msgstr ""
 "class \"%s\"는 클래스 결합입니다: 'coerce' 클래스 결합과의한 관계가\n"
 "의미가 없습니다"
 
+#, fuzzy
 msgid ""
-"'as' method must have one or two arguments, plus optional 'strict'; got (%s)"
+"'as' method should have one argument, or match the arguments of coerce(): "
+"got  (%s)"
 msgstr ""
 "'as' 메소드는 1개 또는 2개의 인수를 가지고 있어야만 합니다, 'strict' 옵셥을 "
 "더합니다;(%s) 얻습니다"
@@ -1324,9 +1327,6 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr ""
 
-msgid "Invalid generic \"%s\", package \"%s\"; no methods table found"
-msgstr ""
-
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1465,6 +1465,10 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid "no methods found for generic \"%s\""
+#~ msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
 
 #, fuzzy
 #~ msgid "\"%s\" is not one of the basic functions"

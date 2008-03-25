@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-03-25 09:08\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -372,9 +372,6 @@ msgstr "在函数'%s'里的方法标记中标记的变元名字不对: %s"
 msgid "No generic function found corresponding to \"%s\""
 msgstr "为'%s'找不到同屬函数"
 
-msgid "no methods found for generic \"%s\""
-msgstr "同屬'%s'里不存在任何方法"
-
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr "因为其类别\"%2$s\"没有定义，忽略%1$s这一方法串列單元"
 
@@ -634,6 +631,11 @@ msgstr "给'%s'进行方法分配时的调用出了错(没有默認方法)"
 
 msgid "formal arguments in method and function do not appear in the same order"
 msgstr "方法里的正式变元和函数两都的顺序不同"
+
+msgid ""
+"%s function arguments omitted from method arguments, (%s), were found in "
+"method definition"
+msgstr ""
 
 msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
@@ -908,8 +910,10 @@ msgid ""
 "meaningful"
 msgstr "类别\"%s\"是类别併集：类别併集的'coerce'关系在这里没有意义"
 
+#, fuzzy
 msgid ""
-"'as' method must have one or two arguments, plus optional 'strict'; got (%s)"
+"'as' method should have one argument, or match the arguments of coerce(): "
+"got  (%s)"
 msgstr "'as'方法必需有一或两个变元，以及'strict'这一选项；得到的却是(%s)"
 
 msgid ""
@@ -1101,9 +1105,6 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr ""
 
-msgid "Invalid generic \"%s\", package \"%s\"; no methods table found"
-msgstr ""
-
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1226,6 +1227,9 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid "no methods found for generic \"%s\""
+#~ msgstr "同屬'%s'里不存在任何方法"
 
 #~ msgid "\"%s\" is not one of the basic functions"
 #~ msgstr "'%s'不是基本函数"

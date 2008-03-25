@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-03-25 09:08\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -452,10 +452,6 @@ msgstr ""
 msgid "No generic function found corresponding to \"%s\""
 msgstr "nenhuma função genérica '%s' encontrada"
 
-#, fuzzy
-msgid "no methods found for generic \"%s\""
-msgstr "nenhum método encontrado para a genérica '%s'"
-
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr ""
 "pulando o elemento %s da lista de métodos por ser de classe inesperada \"%s\""
@@ -756,6 +752,11 @@ msgid "formal arguments in method and function do not appear in the same order"
 msgstr ""
 
 msgid ""
+"%s function arguments omitted from method arguments, (%s), were found in "
+"method definition"
+msgstr ""
+
+msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
 msgstr ""
@@ -1019,7 +1020,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"'as' method must have one or two arguments, plus optional 'strict'; got (%s)"
+"'as' method should have one argument, or match the arguments of coerce(): "
+"got  (%s)"
 msgstr ""
 
 msgid ""
@@ -1219,9 +1221,6 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr ""
 
-msgid "Invalid generic \"%s\", package \"%s\"; no methods table found"
-msgstr ""
-
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1349,6 +1348,10 @@ msgstr[0] ""
 msgstr[1] ""
 "na assinatura do método da função '%s' nomes de argumentos inválidos na "
 "assinatura: %s"
+
+#, fuzzy
+#~ msgid "no methods found for generic \"%s\""
+#~ msgstr "nenhum método encontrado para a genérica '%s'"
 
 #, fuzzy
 #~ msgid "\"%s\" is not one of the basic functions"
