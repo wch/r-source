@@ -18,7 +18,7 @@ DISTFILES = Makefile.in README \
 	codeset.m4 \
 	gettext.m4 gettext-lib.m4 \
 	java.m4 \
-	libtool.m4
+	libtool.m4 ltoptions.m4 ltsugar.m4 ltversion.m4 lt~obsolete.m4
 
 all: Makefile R
 

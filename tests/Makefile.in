@@ -65,6 +65,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
+	  reg-plot-latin1.ps.save \
 	  reg-win.R encodings.R utf8-regex.R \
 	  errormsgs.R errormsgs.Rout.save \
 	gct-foot.R \
