@@ -17,7 +17,7 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
   \item{delim}{a character vector of length 2 giving the start and end
     delimiters.  Future versions might allow for arbitrary regular
     expressions.}
-  \item{syntax}{currently, always the string \samp{"Rd"} indicating Rd
+  \item{syntax}{currently, always the string \code{"Rd"} indicating Rd
     syntax (i.e., \samp{\%} starts a comment extending till the end of
     the line, and \samp{\\} escapes).  Future versions might know about
     other syntaxes, perhaps via \sQuote{syntax tables} allowing to

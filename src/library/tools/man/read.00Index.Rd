@@ -9,8 +9,8 @@
 \description{
   Read item/description information from 00Index-style files.  Such
   files are description lists rendered in tabular form, and currently
-  used for the \file{INDEX} and \file{demo/00Index} files of
-  add-on packages.
+  used for the \file{INDEX} and \file{demo/00Index} files of add-on
+  packages.
 }
 \usage{
 read.00Index(file)
@@ -24,7 +24,7 @@ read.00Index(file)
     function call.}
 }
 \value{
-  a character matrix with 2 columns named \code{"Item"} and
+  A character matrix with 2 columns named \code{"Item"} and
   \code{"Description"} which hold the items and descriptions.
 }
 \seealso{

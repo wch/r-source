@@ -7,7 +7,7 @@
 \alias{texi2dvi}
 \title{Compile LaTeX Files}
 \description{
-  Run latex and bibtex until all cross-references are
+  Run \code{latex} and \code{bibtex} until all cross-references are
   resolved and create either a dvi or PDF file.
 }
 \usage{

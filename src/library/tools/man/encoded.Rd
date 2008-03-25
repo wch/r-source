@@ -22,10 +22,10 @@ encoded_text_to_latex(x,
 }
 \details{
   Non-ASCII characters in \code{x} are replaced by an appropriate LaTeX
-  escape sequence, or \code{?} if there is no appropriate sequence.
+  escape sequence, or \samp{?} if there is no appropriate sequence.
 
   Even if there is an appropriate sequence, it may not be supported by
-  the font in use.  Hyphen is mapped to \code{\-}.
+  the font in use.  Hyphen is mapped to \samp{\\-}.
 }
 \value{
   A character vector of the same length as \code{x}.
