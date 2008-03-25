@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-25 14:53+0000\n"
 "PO-Revision-Date: 2007-04-13 12:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -425,28 +425,28 @@ msgstr "impossible de démarrer le périphérique pdf"
 msgid "unable to start device PicTeX"
 msgstr "impossible de démarrer le périphérique PicTeX"
 
-#: devQuartz.c:968
+#: devQuartz.c:977
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "argument chaîne de caractère incorrect"
 
-#: devQuartz.c:997
+#: devQuartz.c:1005
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "périphérique incorrect dans savePlot"
 
-#: devQuartz.c:1024
+#: devQuartz.c:1032
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "impossible de démarrer le périphérique PostScript"
 
-#: devQuartz.c:1074
+#: devQuartz.c:1086
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1095
+#: devQuartz.c:1107
 #, fuzzy
-msgid "Quartz device is not available on this platform."
+msgid "Quartz device is not available on this platform"
 msgstr "Périphérique Quartz non disponible sur cette architecture"
 
 #: devWindows.c:275 devWindows.c:319 devWindows.c:388

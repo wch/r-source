@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 13:33\n"
+"POT-Creation-Date: 2008-03-25 14:53\n"
 "PO-Revision-Date: 2007-11-29 12:14\n"
 "Last-Translator: Dr. Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -746,6 +746,9 @@ msgid ""
 "method definition"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
@@ -758,9 +761,6 @@ msgstr "erweitere Signatur um ausgelassene Argumente in Definition: %s"
 
 msgid "= \"missing\""
 msgstr "= \"missing\""
-
-msgid ","
-msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "

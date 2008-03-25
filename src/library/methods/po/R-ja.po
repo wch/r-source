@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 13:33\n"
+"POT-Creation-Date: 2008-03-25 14:53\n"
 "PO-Revision-Date: 2007-09-11 22:40+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -721,6 +721,9 @@ msgid ""
 "method definition"
 msgstr ""
 
+msgid ","
+msgstr " , "
+
 msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
@@ -733,9 +736,6 @@ msgstr " シグナチャを定義中で使われなかった引数を含むよ�
 
 msgid "= \"missing\""
 msgstr " = \"missing\" "
-
-msgid ","
-msgstr " , "
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
