@@ -348,7 +348,9 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->locator      = RQuartz_Locator;
     dev->mode         = RQuartz_Mode;
     dev->metricInfo   = RQuartz_MetricInfo;
-    dev->hasTextUTF8  = FALSE;
+    dev->hasTextUTF8  = TRUE;
+    dev->textUTF8     = RQuartz_Text;
+    dev->strWidthUTF8 = RQuartz_StrWidth;
 
     dev->left = 0;
     dev->top  = 0;
@@ -653,15 +655,18 @@ static void RQuartz_Clip(double x0, double x1, double y0, double y1, DEVDESC)
     CGContextClipToRect(ctx, xd->clipRect);
 }
 
-/* FIXME: better to let the engine do this */
-static CFStringRef text2unichar(CTXDESC,const char *text,UniChar **buffer,int *free)
+/* non-symbol text is sent in UTF-8 */
+static CFStringRef text2unichar(CTXDESC, const char *text, UniChar **buffer, int *free)
 {
     CFStringRef str;
+    /* FIXME: remove "symbol" family in 2.8.0 (and use of Symbol
+       encoding here is inconsistent with other devices (but saner) */
     if(gc->fontface == 5 || strcmp(gc->fontfamily, "symbol") == 0)
         str = CFStringCreateWithCString(NULL, text, kCFStringEncodingMacSymbol);
     else {
         str = CFStringCreateWithCString(NULL, text, kCFStringEncodingUTF8);
-        /* Try fallback Latin1 encoding if UTF8 doesn't work. */
+        /* Try fallback Latin1 encoding if UTF8 doesn't work 
+	   -- should no longer be needed. */
         if(!str)
             CFStringCreateWithCString(NULL, text, kCFStringEncodingISOLatin1);
     }
