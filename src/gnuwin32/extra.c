@@ -1000,6 +1000,7 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n = LENGTH(paths);
     char tmp[MAX_PATH];
     wchar_t wtmp[MAX_PATH];
+    DWORD res;
 
     checkArity(op, args);
     if(!isString(paths))
@@ -1010,14 +1011,18 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	el = STRING_ELT(paths, i);
 	if(getCharEnc(el) == CE_UTF8) {
 	    int ienc = 0;
-	    GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
-	    wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+	    res = GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
+	    if (res)
+		wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+	    else 
+		strcpy(tmp, translateChar(el));
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
 	    SET_STRING_ELT(ans, i, mkCharEnc(tmp, ienc));
 	} else {
-	    GetShortPathName(translateChar(el), tmp, MAX_PATH);
+	    res = GetShortPathName(translateChar(el), tmp, MAX_PATH);
+	    if (res == 0) strcpy(tmp, translateChar(el));
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);

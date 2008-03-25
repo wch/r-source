@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/shortPathName.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{shortPathName}
@@ -18,7 +18,9 @@ shortPathName(path)
   \item{path}{character vector of file paths.}
 }
 \value{
-  A character vector.  The path separator will be \code{\\}.
+  A character vector.  The path separator will be \code{\\}.  If the
+  file does not exist, the supplied path will be returned with slashes
+  replaced by backslashes.
 }
 \seealso{
   \code{\link{normalizePath}}.

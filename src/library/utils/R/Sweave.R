@@ -356,9 +356,10 @@ RweaveLatexSetup <-
     output <- file(output, open="w+")
 
     if(stylepath){
-        styfile <- file.path(R.home("share"), "texmf", "Sweave")
-        if(.Platform$OS.type == "windows")
-            styfile <- gsub("\\\\", "/", styfile)
+        styfile <- if(.Platform$OS.type == "windows")
+            file.path(gsub("\\\\", "/", shortPathName(file.path(R.home("share"), "texmf"))), "Sweave")
+        else
+            file.path(R.home("share"), "texmf", "Sweave")
         if(length(grep(" ", styfile)))
             warning(gettextf("path to '%s' contains spaces,\n", styfile),
                     gettext("this may cause problems when running LaTeX"),
@@ -636,8 +637,8 @@ RweaveLatexWritedoc <- function(object, chunk)
  	if (length(which)) {
             chunk[which] <- sub(begindoc,
                                 paste("\\\\usepackage{",
-                                object$styfile,
-                                "}\n\\\\begin{document}", sep=""),
+                                      object$styfile,
+                                      "}\n\\\\begin{document}", sep=""),
                                 chunk[which])
             linesout <- linesout[c(1:which, which, seq(from=which+1, length.out=length(linesout)-which))]
             object$havesty <- TRUE
