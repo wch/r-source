@@ -209,6 +209,8 @@ OTHERS
 
     o	savePlot() no longer automatically adds an extension to the filename.
 
+    o	When Sweave() adds its style file, it now uses shortPathName()
+	on the path so that there are no spaces.
 
 BUILDING R
 
