@@ -540,6 +540,15 @@ stopifnot(Inf == qgamma(1, sh))
 stopifnot(0   == qgamma(0, sh))
 ## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
 
+## In extreme left tail {PR#11030}
+qg <- qgamma(10:123*1e-12, shape=19)
+qg2<- qgamma(1:100 * 1e-9, shape=11)
+stopifnot(diff(qg, diff=2) < -6e-6,
+          diff(qg2,diff=2) < -6e-6,
+          All.eq(qg  [1], 2.35047385139143),
+          All.eq(qg2[30], 1.11512318734547))
+## was non-continuous in R 2.6.2 and earlier
+
 f2 <- c(0.5, 1:4)
 stopifnot(df(0, 1, f2) == Inf,
           df(0, 2, f2) == 1,
