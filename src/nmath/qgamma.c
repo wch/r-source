@@ -189,12 +189,12 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	p2 = p_ - pgamma_raw(p1, alpha, /*lower_tail*/TRUE, /*log_p*/FALSE);
 #ifdef DEBUG_qgamma
 	if(i == 1) REprintf(" Ph.II iter; ch=%g, p2=%g\n", ch, p2);
-	if(i >= 2) REprintf("     it=%d,  ch=%g, p2=%g\n", i, p2);
+	if(i >= 2) REprintf("     it=%d,  ch=%g, p2=%g\n", i, ch, p2);
 #endif
 #ifdef IEEE_754
-	if(!R_FINITE(p2))
+	if(!R_FINITE(p2) || ch <= 0)
 #else
-	if(errno != 0)
+	if(errno != 0 || ch <= 0)
 #endif
 	    { ch = ch0; max_it_Newton = 27; goto END; }/*was  return ML_NAN;*/
 
@@ -210,6 +210,9 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	ch += t*(1+0.5*t*s1-b*c*(s1-b*(s2-b*(s3-b*(s4-b*(s5-b*s6))))));
 	if(fabs(q - ch) < EPS2*ch)
 	    goto END;
+	if(fabs(q - ch) > 0.1*ch0) {/* diverging? */
+	    if(ch < q) ch = 0.9 * q; else ch = 1.1 * q;
+	}
     }
 /* no convergence in MAXIT iterations -- but we add Newton now... */
 #ifdef DEBUG_q
@@ -232,42 +235,53 @@ END:
    */
     x = 0.5*scale*ch;
 
-    if(max_it_Newton)
-	p_ = pgamma(x, alpha, scale, lower_tail, log_p);
-    for(i = 1; i <= max_it_Newton; i++) {
-	p1 = p_ - p;
-#ifdef DEBUG_qgamma
-	if(i == 1) REprintf("\n it=%d: p=%g, x = %g, p.=%g; p1:=D{p}=%g\n",
-			   i, p, x, p_, p1);
-	if(i >= 2) REprintf("         it=%d,  d{p}=%g\n",    i, p1);
-#endif
-	if(fabs(p1) < fabs(EPS_N * p))
-	    break;
-	/* else */
-	if((g = dgamma(x, alpha, scale, log_p)) == R_D__0) {
-#ifdef DEBUG_q
-	    if(i == 1) REprintf("no final Newton step because dgamma(*)== 0!\n");
-#endif
-	    break;
+    if(max_it_Newton) {
+	/* always use log scale */
+	if (!log_p) {
+	    p = log(p);
+	    log_p = TRUE;
 	}
-	/* else :
-	 * delta x = f(x)/f'(x);
-	 * if(log_p) f(x) := log P(x) - p; f'(x) = d/dx log P(x) = P' / P
-	 * ==> f(x)/f'(x) = f*P / P' = f*exp(p_) / P' (since p_ = log P(x))
-	 */
-	t = log_p ? p1*exp(p_ - g) : p1/g ;/* = "delta x" */
-	t = lower_tail ? x - t : x + t;
-	p_ = pgamma (t, alpha, scale, lower_tail, log_p);
-	if (fabs(p_ - p) > fabs(p1) ||
-	    (i > 1 && fabs(p_ - p) == fabs(p1)) /* <- against flip-flop */) {
-	    /* no improvement */
-#ifdef DEBUG_q
-	    if(i == 1 && max_it_Newton > 1)
-                REprintf("no Newton step done since delta{p} >= last delta\n");
+	p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+	for(i = 1; i <= max_it_Newton; i++) {
+	    p1 = p_ - p;
+#ifdef DEBUG_qgamma
+	    if(i == 1) REprintf("\n it=%d: p=%g, x = %g, p.=%g; p1:=D{p}=%g\n",
+				i, p, x, p_, p1);
+	    if(i >= 2) REprintf("         it=%d,  d{p}=%g\n",    i, p1);
 #endif
-	    break;
-	} /* else : */
-	x = t;
+	    if(fabs(p1) < fabs(EPS_N * p))
+		break;
+	    /* else */
+	    if((g = dgamma(x, alpha, scale, log_p)) == R_D__0) {
+#ifdef DEBUG_q
+		if(i == 1) REprintf("no final Newton step because dgamma(*)== 0!\n");
+#endif
+		break;
+	    }
+	    /* else :
+	     * delta x = f(x)/f'(x);
+	     * if(log_p) f(x) := log P(x) - p; f'(x) = d/dx log P(x) = P' / P
+	     * ==> f(x)/f'(x) = f*P / P' = f*exp(p_) / P' (since p_ = log P(x))
+	     */
+	    t = log_p ? p1*exp(p_ - g) : p1/g ;/* = "delta x" */
+	    t = lower_tail ? x - t : x + t;
+	    p_ = pgamma (t, alpha, scale, lower_tail, log_p);
+	    if (fabs(p_ - p) > fabs(p1) ||
+		(i > 1 && fabs(p_ - p) == fabs(p1)) /* <- against flip-flop */) {
+		/* no improvement */
+#ifdef DEBUG_q
+		if(i == 1 && max_it_Newton > 1)
+		    REprintf("no Newton step done since delta{p} >= last delta\n");
+#endif
+		break;
+	    } /* else : */
+	    /* control step length: this could have started at
+	       tbe initial approximation */
+	    if(t > 1.1*x) t = 1.1*x;
+	    if(t < 0.9*x) t = 0.9*x;
+	    x = t;
+	}
     }
+
     return x;
 }
