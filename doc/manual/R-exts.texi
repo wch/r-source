@@ -328,8 +328,8 @@ text field intended for human readers, but not for automatic processing
 (such as extracting the email addresses of all listed contributors).
 
 The @samp{Maintainer} field should give a @emph{single} name with a
-@emph{valid} email address in angle brackets (for sending bug reports
-etc.).  It should not end in a period or comma.
+@emph{valid} (RFC 2822) email address in angle brackets (for sending bug
+reports etc.).  It should not end in a period or comma.
 
 The optional @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
@@ -1256,7 +1256,7 @@ package, nor of the defunct standard packages (@samp{ctest}, @samp{eda},
 @samp{lqs}, @samp{mle}, @samp{modreg}, @samp{mva}, @samp{nls},
 @samp{stepfun} and @samp{ts}) which are handled specially by
 @code{library}.  Another check is that all packages mentioned in
-@code{library} or @code{requires} or from which the @file{NAMESPACE}
+@code{library} or @code{require}s or from which the @file{NAMESPACE}
 file imports or are called @emph{via} @code{::} or @code{:::} are listed
 (in @samp{Depends}, @samp{Imports}, @samp{Suggests} or @samp{Contains}):
 this is not an exhaustive check of the actual imports.
@@ -1356,9 +1356,10 @@ The code in package vignettes (@pxref{Writing package vignettes}) is
 executed.
 
 @item
-If a working @command{latex} program is available, the @file{.dvi}
-version of the package's manual is created (to check that the Rd files
-can be converted successfully).
+If a working @command{pdflatex} or @command{latex} program is available,
+the @file{.pdf} or @file{.dvi} version, respectively, of the package's
+manual is created (to check that the Rd files can be converted
+successfully).
 @end enumerate
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
@@ -1366,12 +1367,12 @@ of the @R{} package checker.  A subset of the checking steps can be
 selected by adding flags.
 
 You do need to ensure that the package is checked in a suitable locale
-if it contains non-ASCII characters.  Such packages are likely to fail
-some of the checks in a @code{C} locale, and @command{R CMD check} will
-warn if it spots the problem.  You should be able to check any package
-in a UTF-8 locale (if one is available).  Beware that although a
-@code{C} locale is rarely used at a console, it may be the default if
-logging in remotely or for batch jobs.
+if it contains non-@acronym{ASCII} characters.  Such packages are likely
+to fail some of the checks in a @code{C} locale, and @command{R CMD
+check} will warn if it spots the problem.  You should be able to check
+any package in a UTF-8 locale (if one is available).  Beware that
+although a @code{C} locale is rarely used at a console, it may be the
+default if logging in remotely or for batch jobs.
 
 @node Building packages, Customizing checking and building, Checking packages, Checking and building packages
 @subsection Building packages
@@ -1474,10 +1475,10 @@ Default: false.
 If true, weave package vignettes in the process of checking them.
 Default: true.
 @item $R_check_latex_vignettes
-If true (and @code{$R_check_weave_vignettes} is also true), @LaTeX{}
-package vignettes in the process of checking them: this will show up
-@code{Sweave} source errors, including missing source files.
-Default: true.
+If true (and @code{$R_check_weave_vignettes} is also true),
+@command{latex} package vignettes in the process of checking them: this
+will show up @code{Sweave} source errors, including missing source
+files.  Default: true.
 @item $R_check_subdirs_nocase
 If true, check the case of directories such as @file{R} and @file{man}.
 Default: false.
@@ -1603,17 +1604,17 @@ run from the directory containing @file{mypkg} as a subdirectory.)
 
 @enumerate
 @item
-Run @code{R CMD check} to check that the package will install and will
-runs its examples, and that the documentation is complete and can be
-processed.  If the package contains code that needs to be compiled, try
-to enable a reasonable amount of diagnostic messaging (``warnings'')
-when compiling, such as e.g.@: @option{-Wall -pedantic} for tools from
-GCC, the Gnu Compiler Collection.  (If @R{} was not configured
-accordingly, one can achieve this e.g.@: via @code{PKG_CFLAGS} and
-related variables.)
+Run @code{R CMD build} to make the release @file{.tar.gz} file.
 
 @item
-Run @code{R CMD build} to make the release @file{.tar.gz} file.
+Run @code{R CMD check} on the @file{.tar.gz} file to check that the
+package will install and will run its examples, and that the
+documentation is complete and can be processed.  If the package contains
+code that needs to be compiled, try to enable a reasonable amount of
+diagnostic messaging (``warnings'') when compiling, such as e.g.@:
+@option{-Wall -pedantic} for tools from GCC, the Gnu Compiler
+Collection.  (If @R{} was not configured accordingly, one can achieve
+this e.g.@: via @code{PKG_CFLAGS} and related variables.)
 @end enumerate
 
 @noindent
@@ -1626,54 +1627,14 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
 
 @example
-@uref{ftp://cran.R-project.org/incoming/}
+@uref{ftp://CRAN.R-project.org/incoming/}
 @end example
 
 @noindent
 (note: use @code{ftp} and not @code{sftp} to connect to this server) and
-send a message to @email{cran@@r-project.org}
-about it.  The @acronym{CRAN} maintainers will run these tests before
-putting a submission in the main archive.
-
-Note that the fully qualified name of the @file{.tar.gz} file must be of
-the form
-
-@quotation
-@file{@var{package}_@var{version}@r{[}_@var{engine}@r{[}_@var{type}@r{]]}},
-@end quotation
-
-@noindent
-where the @samp{[ ]} indicates that the enclosed component is optional,
-@var{package} and @var{version} are the corresponding entries in file
-@file{DESCRIPTION}, @var{engine} gives the S engine the package is
-targeted for and defaults to @samp{R}, and @var{type} indicated whether
-the file contains source or binaries for a certain platform, and
-defaults to @samp{source}.  I.e.,
-
-@example
-@group
-OOP_0.1-3.tar.gz
-OOP_0.1-3_R.tar.gz
-OOP_0.1-3_R_source.tar.gz
-@end group
-@end example
-
-@noindent
-are all equivalent and indicate an @R{} source package, whereas
-
-@example
-OOP_0.1-3_Splus6_sparc-sun-solaris.tar.gz
-@end example
-
-@noindent
-is a binary package for installation under Splus6 on the given
-platform.
-
-This naming scheme has been adopted to ensure usability of code across S
-engines.  @R{} code and utilities operating on package @file{.tar.gz} files
-can only be assumed to work provided that this naming scheme is
-respected.  Of course, @code{R CMD build} automatically creates valid
-file names.
+send a message to @email{CRAN@@R-project.org} about it.  The
+@acronym{CRAN} maintainers will run these tests before putting a
+submission in the main archive.
 
 Note that @acronym{CRAN} generally does not accept submissions of
 precompiled binaries due to security reasons.
@@ -2314,7 +2275,7 @@ CMD check} checks for.
 @node Encoding issues,  , Writing portable packages, Writing portable packages
 @subsection Encoding issues
 
-Care is needed if your package contains non-ASCII text, and in
+Care is needed if your package contains non-@acronym{ASCII} text, and in
 particular if it is intended to be used in more than one locale.  It is
 possible to mark the encoding used in the @file{DESCRIPTION} file and in
 @file{.Rd} files, as discussed elsewhere in this manual.  What was not
@@ -2323,16 +2284,16 @@ strings in @R{}: if you want your package to work with earlier versions
 of @R{} please consult the advice in the @R{} 2.4.x version of this
 manual.
 
-First, consider carefully if you really need non-ASCII text.  Most
+First, consider carefully if you really need non-@acronym{ASCII} text.  Most
 users of @R{} will only be able to view correctly text in their native
 language group (e.g.@: Western European, Eastern European, Simplified
-Chinese) and ASCII.  Other characters may not be rendered at all,
+Chinese) and @acronym{ASCII}.  Other characters may not be rendered at all,
 rendered incorrectly, or cause your @R{} code to give an error.
-For documentation, marking the encoding and including ASCII
+For documentation, marking the encoding and including @acronym{ASCII}
 transliterations is likely to do a reasonable job.
 
 Function @code{showNonASCII} in package @pkg{tools} can help in
-finding non-ASCII bytes in files.
+finding non-@acronym{ASCII} bytes in files.
 
 
 The most favourable circumstance is using UTF-8-encoded text in a
@@ -3662,7 +3623,7 @@ even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
 @samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside verbatim
 environments (since they may disappear in fonts designed to render
 text).  (Function @code{showNonASCII} in package @pkg{tools} can help
-in finding non-ASCII bytes in the files.)
+in finding non-@acronym{ASCII} bytes in the files.)
 
 For convenience, encoding names @samp{latin1} and @samp{latin2} are
 always recognized: these and @samp{UTF-8} are likely to work fairly
@@ -7570,8 +7531,8 @@ UTF-8).
 
 @R{} can be built without @code{iconv} (although this is very much
 discouraged) in which case these functions exist but do no translation:
-such a build of @R{} is in any case not suitable for handling non-ASCII
-data.
+such a build of @R{} is in any case not suitable for handling
+non-@acronym{ASCII} data.
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
