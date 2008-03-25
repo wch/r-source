@@ -31,7 +31,7 @@ debugger(dump = last.dump)
   the last error message as returned by \code{\link{geterrmessage}}.
 
   When dumping to file, \code{dumpto} gives the name of the dumped
-  object and the file name has \code{.rda} appended.
+  object and the file name has \file{.rda} appended.
 
   A dump object of class \code{"dump.frames"} can be examined
   by calling \code{debugger}. This will give the error message and a

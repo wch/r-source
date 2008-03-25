@@ -39,9 +39,9 @@
   add \code{cpp} flags and to add libraries to the link step) and for
   details of some of its quirks.
 
-  Items in \code{files} with extensions \code{.c}, \code{.cpp},
-  \code{.cc}, \code{.C}, \code{.f}, \code{.f90}, \code{.f95} and \code{.m},
-  are regarded as source files, and those with extension \code{.o} as
+  Items in \code{files} with extensions \file{.c}, \file{.cpp},
+  \file{.cc}, \file{.C}, \file{.f}, \file{.f90}, \file{.f95} and \file{.m},
+  are regarded as source files, and those with extension \file{.o} as
   object files.  All other items are passed to the linker.
 
   If there is an exports file \file{dllname-win.def} in the current

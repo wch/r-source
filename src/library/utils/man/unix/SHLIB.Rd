@@ -34,15 +34,15 @@
   add \code{cpp} flags and to add libraries to the link step) and for
   details of some of its quirks.
 
-  Items in \code{files} with extensions \code{.c}, \code{.cpp},
-  \code{.cc}, \code{.C}, \code{.f}, \code{.f90}, \code{f95}, \code{.m},
-  \code{.M} and \code{.mm} are regarded as source files, and those with
-  extension \code{.o} as object files.  All other items are passed to
+  Items in \code{files} with extensions \file{.c}, \file{.cpp},
+  \file{.cc}, \file{.C}, \file{.f}, \file{.f90}, \file{.f95}, \file{.m},
+  \file{.M} and \file{.mm} are regarded as source files, and those with
+  extension \file{.o} as object files.  All other items are passed to
   the linker.
 }
 \note{
   Some binary distributions of \R have \code{SHLIB} in a separate
-  bundle, e.g. an \code{R-devel} RPM.
+  bundle, e.g., an \code{R-devel} RPM.
 }
 \seealso{
   \code{\link{COMPILE}},
