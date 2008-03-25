@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 09:08\n"
+"POT-Creation-Date: 2008-03-25 13:33\n"
 "PO-Revision-Date: 2007-04-13 12:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -643,29 +643,6 @@ msgstr "pas de slot '.Data' defini pour la classe \"%s\""
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "la classe \"%s\" n'a pas de partie de données définie (un slot .Data)"
 
-#, fuzzy
-msgid ""
-"trying to change the argument list of %s with %d arguments to have arguments "
-"(%s)"
-msgstr ""
-"tentative de modification de la liste d'arguments d'une fonction ayant %d "
-"arguments vers %d arguments"
-
-#, fuzzy
-msgid ""
-"get rid of variables in definition %s (%s); they conflict with the needed "
-"change to argument names (%s)"
-msgstr ""
-"débarrassez-vous des variables dans la définition (%s) ; Elles entrent en "
-"conflit avec le changement requis des noms d'arguments (%s)"
-
-#, fuzzy
-msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "les arguments dans la définition sont changés de (%s) vers (%s)"
-
-msgid ","
-msgstr ","
-
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
@@ -787,6 +764,9 @@ msgstr ""
 
 msgid "= \"missing\""
 msgstr "\"manquant\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
@@ -1503,6 +1483,26 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "trying to change the argument list of %s with %d arguments to have "
+#~ "arguments (%s)"
+#~ msgstr ""
+#~ "tentative de modification de la liste d'arguments d'une fonction ayant %d "
+#~ "arguments vers %d arguments"
+
+#, fuzzy
+#~ msgid ""
+#~ "get rid of variables in definition %s (%s); they conflict with the needed "
+#~ "change to argument names (%s)"
+#~ msgstr ""
+#~ "débarrassez-vous des variables dans la définition (%s) ; Elles entrent en "
+#~ "conflit avec le changement requis des noms d'arguments (%s)"
+
+#, fuzzy
+#~ msgid "arguments in definition %s changed from (%s) to (%s)"
+#~ msgstr "les arguments dans la définition sont changés de (%s) vers (%s)"
 
 #~ msgid "no methods found for generic \"%s\""
 #~ msgstr "aucune méthode trouvée pour la fonction générique \"%s\""

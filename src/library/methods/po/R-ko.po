@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 09:08\n"
+"POT-Creation-Date: 2008-03-25 13:33\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -652,28 +652,6 @@ msgstr "클래스 \"%s\"때문에 정해지는 '.Data' slot이 아닙니다"
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "클래스 \"%s\"는 데이터 일부(.Data slot)를 정해지지 않습니다"
 
-#, fuzzy
-msgid ""
-"trying to change the argument list of %s with %d arguments to have arguments "
-"(%s)"
-msgstr ""
-"인수(%s) 때문에 %d 인수와 함수의 논의 리스트를 %d인수와 변경하려고 합니다"
-
-#, fuzzy
-msgid ""
-"get rid of variables in definition %s (%s); they conflict with the needed "
-"change to argument names (%s)"
-msgstr ""
-"정의(%s)에서 변수를 제거 해주십시오;그것들은 인수명(%s)에의 \n"
-"필요하게 되는 변경과 모순됩니다 "
-
-#, fuzzy
-msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "(%s)에서(%s)부터 변경되어진 정의 인수입니다"
-
-msgid ","
-msgstr ","
-
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
@@ -781,6 +759,9 @@ msgstr "포함한 기호를 확대하는 것은 명확함으로 인수를 생략
 
 msgid "= \"missing\""
 msgstr "=\\\"이상하다\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
@@ -1465,6 +1446,25 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "trying to change the argument list of %s with %d arguments to have "
+#~ "arguments (%s)"
+#~ msgstr ""
+#~ "인수(%s) 때문에 %d 인수와 함수의 논의 리스트를 %d인수와 변경하려고 합니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "get rid of variables in definition %s (%s); they conflict with the needed "
+#~ "change to argument names (%s)"
+#~ msgstr ""
+#~ "정의(%s)에서 변수를 제거 해주십시오;그것들은 인수명(%s)에의 \n"
+#~ "필요하게 되는 변경과 모순됩니다 "
+
+#, fuzzy
+#~ msgid "arguments in definition %s changed from (%s) to (%s)"
+#~ msgstr "(%s)에서(%s)부터 변경되어진 정의 인수입니다"
 
 #, fuzzy
 #~ msgid "no methods found for generic \"%s\""

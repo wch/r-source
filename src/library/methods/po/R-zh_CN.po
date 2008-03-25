@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 09:08\n"
+"POT-Creation-Date: 2008-03-25 13:33\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -536,22 +536,6 @@ msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "类别\"%s\"没有数据部分(.Data 槽)"
 
 msgid ""
-"trying to change the argument list of %s with %d arguments to have arguments "
-"(%s)"
-msgstr "无法将带%d变元函数%s的变元串列改成带(%s) 变元"
-
-msgid ""
-"get rid of variables in definition %s (%s); they conflict with the needed "
-"change to argument names (%s)"
-msgstr "删除定义(%s)里的变量；它们与需要改变的变元名字(%s)有矛盾"
-
-msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "定义%s里的变元从(%s)改为(%s)"
-
-msgid ","
-msgstr ","
-
-msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
 msgstr "正确的方法必需的带一个变元的函数，收到的却是类别为\"%s\"的对象"
@@ -647,6 +631,9 @@ msgstr "在定义里扩展标记来包括进忽略了的变元：%s"
 
 msgid "= \"missing\""
 msgstr "= \"missing\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
@@ -1227,6 +1214,19 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid ""
+#~ "trying to change the argument list of %s with %d arguments to have "
+#~ "arguments (%s)"
+#~ msgstr "无法将带%d变元函数%s的变元串列改成带(%s) 变元"
+
+#~ msgid ""
+#~ "get rid of variables in definition %s (%s); they conflict with the needed "
+#~ "change to argument names (%s)"
+#~ msgstr "删除定义(%s)里的变量；它们与需要改变的变元名字(%s)有矛盾"
+
+#~ msgid "arguments in definition %s changed from (%s) to (%s)"
+#~ msgstr "定义%s里的变元从(%s)改为(%s)"
 
 #~ msgid "no methods found for generic \"%s\""
 #~ msgstr "同屬'%s'里不存在任何方法"
