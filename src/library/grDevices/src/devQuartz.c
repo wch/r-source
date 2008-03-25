@@ -39,9 +39,11 @@
 #endif
 
 #include <CoreFoundation/CoreFoundation.h>
+/* FIXME: unused at present
 #include <Carbon/Carbon.h>
+*/
 
-#define QBE_NATIVE   1  /* either R.app or Cocoa or Carbon depending on the OS X version */
+#define QBE_NATIVE   1  /* either Cocoa or Carbon depending on the OS X version */
 #define QBE_COCOA    2  /* internal Cocoa */
 #define QBE_CARBON   3  /* internal Carbon */
 #define QBE_BITMAP   4  /* bitmap file creating */
@@ -233,7 +235,7 @@ void QuartzDevice_Kill(QuartzDesc_t desc) {
 }
 
 int   QuartzDesc_GetFontSmooth(QuartzDesc_t desc) { return ((QuartzDesc*) desc)->smooth; }
-void  QuartzDesc_SetFontSmooth(QuartzDesc_t desc,int fs) {
+void  QuartzDesc_SetFontSmooth(QuartzDesc_t desc, int fs) {
     QuartzDesc *qd = (QuartzDesc*) desc;
     qd->smooth = fs;
     if(qd->getCGContext)
@@ -322,7 +324,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 {
     pDevDesc dev = _dev;
 
-    dev->startfill = def->bg;  /* R_RGB(255, 255, 255); should be bg */
+    dev->startfill = def->bg;
     dev->startcol  = R_RGB(0, 0, 0);
     dev->startps   = def->pointsize;
     dev->startfont = 1;
@@ -360,7 +362,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->canClip       = TRUE;
     dev->canHAdj       = 2;
     dev->canChangeGamma= FALSE;
-    dev->displayListOn = TRUE; /* FIXME: depend on type */
+    dev->displayListOn = TRUE; /* reset later depending on type */
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
@@ -387,14 +389,15 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 
     QuartzDevice_Update(qd);
 
-    /* FIXME:
-       width/height are in bp, but windows dimensions need to be pixels,
-       at least for bitmap devices.  Comment out until others have been tested.
-    dev->right = def->width*72.0*def->scalex;;
-    dev->bottom= def->height*72.0*def->scaley;;
-     */
-    dev->right = def->width*72.0;
-    dev->bottom= def->height*72.0;;
+    /* FIXED:
+       width/height are in bp, but window dimensions need to be pixels
+       for bitmap devices.  So adjust later.
+       dev->right = def->width*72.0*def->scalex;
+       dev->bottom= def->height*72.0*def->scaley;
+    */
+     dev->right = def->width*72.0;
+     dev->bottom= def->height*72.0;;
+
     qd->clipRect = CGRectMake(0, 0, dev->right, dev->bottom);
 
     qd->dirty = 0;
@@ -488,7 +491,9 @@ CGFontRef RQuartz_Font(CTXDESC)
 {
     int fontface = gc->fontface;
     CFMutableStringRef fontName = CFStringCreateMutable(kCFAllocatorDefault, 0);
-    if((gc->fontface == 5) || (strcmp(gc->fontfamily,"symbol") == 0))
+    /* FIXME: remove "symbol" family in 2.8.0 (and use of Symbol
+       encoding here is inconsistent with other devices (but saner) */
+    if((gc->fontface == 5) || (strcmp(gc->fontfamily, "symbol") == 0))
         CFStringAppend(fontName,CFSTR("Symbol"));
     else {
         CFStringRef font = RQuartz_FindFont(gc->fontface, gc->fontfamily);
@@ -498,6 +503,7 @@ CGFontRef RQuartz_Font(CTXDESC)
         }
         CFRelease(font);
     }
+    /* FIXME: the default is Arial, but family="sans" is Helvetica */
     if(CFStringGetLength(fontName) == 0)
         CFStringAppend(fontName, CFSTR("Arial"));
     if(fontface == 2)
@@ -611,15 +617,13 @@ static void RQuartz_NewPage(CTXDESC)
         if (!ctx) NOCTX;
         {
             CGRect bounds = CGRectMake(0, 0,
-				       QuartzDevice_GetWidth(xd) * 72.0,
-				       QuartzDevice_GetHeight(xd) * 72.0);
-	    /* FIXED: this made no sense.
-	       if(R_ALPHA(xd->bg) == 255 && R_ALPHA(gc->fill) == 255) */
-	    /* The logic should be to paint the canvas then gc->fill.
-	       FIXME: Should be canvas be used on all devices?
+				       QuartzDevice_GetScaledWidth(xd) * 72.0,
+				       QuartzDevice_GetScaledHeight(xd) * 72.0);
+	    /* The logic is to paint the canvas then gc->fill.
+	       (The canvas colour is set to 0 on non-screen devices.)
 	     */
 	    if (R_ALPHA(xd->canvas) >0 && !R_OPAQUE(gc->fill)) {
-		/* First paint the canvas colour, then the fill. */
+		/* Paint the canvas colour. */
 		int savefill = gc->fill;
 		CGContextClearRect(ctx, bounds);
 		gc->fill = xd->canvas;
@@ -973,7 +977,6 @@ SEXP Quartz(SEXP args)
     antialias = ARG(asLogical,args);
     smooth    = ARG(asLogical,args);
     title     = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
-    /* partially FIXED: used bgs, added canvas */
     bgs       = CAR(args); args = CDR(args);
     bg        = RGBpar(bgs, 0);
     canvass   = CAR(args); args = CDR(args);
@@ -1053,6 +1056,7 @@ SEXP Quartz(SEXP args)
             case QBE_PDF:
 		qpar.canvas = 0; /* so not used */
                 succ = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
+		dev->displayListOn = FALSE;
                 break;
             case QBE_BITMAP:
 		/* we need to set up the default file name here, where we
@@ -1064,7 +1068,10 @@ SEXP Quartz(SEXP args)
 		}
 		qpar.canvas = 0; /* so not used */
 		succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
-                break;
+		dev->displayListOn = FALSE;
+		dev->right = width * dpi[0];
+		dev->bottom = height * dpi[1];
+		break;
 	    }
 	}
 
@@ -1092,7 +1099,7 @@ SEXP Quartz(SEXP args)
 
 SEXP Quartz(SEXP args)
 {
-    warning(_("Quartz device is not available on this platform."));
+    warning(_("Quartz device is not available on this platform"));
     return R_NilValue;
 }
 
