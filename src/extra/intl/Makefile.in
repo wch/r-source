@@ -18,7 +18,7 @@ HEADERS = \
   gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h eval-plural.h \
   localcharset.h xsize.h printf-args.h printf-args.c printf-parse.h \
   wprintf-parse.h printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c \
-  libgnuintl.h.in lock.h intl-exports.c tsearch.c
+  libgnuintl.h.in lock.h intl-exports.c tsearch.c tsearch.h
 
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
