@@ -3071,6 +3071,8 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
     return R_NilValue;    
 }
 
+extern SEXP Rf_CreateAtVector(double*, double*, int, Rboolean);
+
 SEXP L_pretty(SEXP scale) {
     double min = numeric(scale, 0);
     double max = numeric(scale, 1);
@@ -3104,7 +3106,7 @@ SEXP L_pretty(SEXP scale) {
     /* FIXME:  "log" flag hard-coded to FALSE because we do not
      * have log scales yet
      */
-    return CreateAtVector(axp, usr, n, FALSE);
+    return Rf_CreateAtVector(axp, usr, n, FALSE);
 }
 
 /* 

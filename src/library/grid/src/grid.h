@@ -20,7 +20,6 @@
 
 #include <Rconfig.h>
 #include <Rinternals.h>
-#include <Rgraphics.h>  /* CreateAtVector */
 #include <Rmath.h>
 
 #include <R_ext/Constants.h>

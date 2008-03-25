@@ -17,8 +17,8 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	Use in packages of the graphics headers Rdevices.h 
-	is defunct. [Rgraphics.h to follow.]
+    o	Use in packages of the graphics headers Rdevices.h and
+	Rgraphics.h is defunct.
 
     o	options("par.ask.default") is defunct in favour of
 	"device.ask.default".
