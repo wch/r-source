@@ -33,7 +33,8 @@ DEPRECATED & DEFUNCT
     o	'methods' package functions getAccess(), getAllMethods(),
 	getClassName(), getClassPackage(), getExtends(),
 	getProperties(), getPrototype(), getSubclasses, getVirtual(),
-	mlistMetaName(), and removeMethodsObject() are defunct.
+	mlistMetaName(), removeMethodsObject() and seemsS4Object() are
+	defunct.
 
 
 

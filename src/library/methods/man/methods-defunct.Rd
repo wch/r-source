@@ -34,6 +34,8 @@ getVirtual(ClassDef)
 getAllMethods(f, fdef, where)
 mlistMetaName (name, package)
 removeMethodsObject(f, where)
+
+seemsS4Object(object)
 % </Removed 2.8.0>
 }
 \details{
@@ -66,6 +68,9 @@ removeMethodsObject(f, where)
 
   \code{removeMethodsObject} removed the metadata object containing
   methods for \code{f}.
+
+  \code{seemsS4Object} was similar to \code{\link{isS4}} and superseded
+  by the introduction of the S4 bit in \R 2.4.0.
 }
 
 \seealso{

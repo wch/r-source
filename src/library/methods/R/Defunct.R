@@ -37,9 +37,12 @@ getSubclasses <- function (ClassDef) .Defunct()
 
 getVirtual <- function (ClassDef) .Defunct()
 
-## Deprecated in 2.7.0, refunct in 2.8.0
+## Deprecated in 2.7.0, defunct in 2.8.0
 getAllMethods <- function(f, fdef, where = topenv(parent.frame())) .Defunct()
 
 mlistMetaName <- function(name = "", package = "") .Defunct()
 
 removeMethodsObject <- function(f, where = topenv(parent.frame())) .Defunct()
+
+seemsS4Object <- function(object) .Defunct("isS4")
+
