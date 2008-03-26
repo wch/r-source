@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
- *  Copyright (C) 2004 The R Foundation
+ *  Copyright (C) 2000--2008 The R Development Core Team
+ *  Copyright (C) 2004--2008 The R Foundation
  *  based on AS 91 (C) 1979 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -278,7 +278,7 @@ END:
 	    /* control step length: this could have started at
 	       tbe initial approximation */
 	    if(t > 1.1*x) t = 1.1*x;
-	    if(t < 0.9*x) t = 0.9*x;
+	    else if(t < 0.9*x) t = 0.9*x;
 	    x = t;
 	}
     }

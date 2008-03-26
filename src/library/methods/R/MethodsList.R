@@ -41,8 +41,7 @@ MethodsList <-
     value
 }
 
-makeMethodsList <-
-  function(object, level=1)
+makeMethodsList <- function(object, level=1)
 {
     mnames <- allNames(object)
     value <- new("MethodsList")
@@ -54,7 +53,8 @@ makeMethodsList <-
     }
     if(any(duplicated(mnames)))
         stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
-             level, paste("\"", unique(mnames[duplicated(mnames)]), "\"", collapse=", ")), domain = NA)
+             level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
+                          collapse=", ")), domain = NA)
     for(i in seq_along(object)) {
         eli <- el(object, i)
         if(is(eli, "function")
@@ -63,7 +63,8 @@ makeMethodsList <-
                 is(eli, "named"))
             el(object, i) <- Recall(eli, NULL, level+1)
         else
-            stop(gettextf("element %d at level %d (class \"%s\") cannot be interpreted as a function or named list", i, level, class(eli)), domain = NA)
+            stop(gettextf("element %d at level %d (class \"%s\") cannot be interpreted as a function or named list",
+                          i, level, class(eli)), domain = NA)
     }
     slot(value, "methods") <- object
     value
@@ -333,24 +334,22 @@ MethodsListSelect <-
     value
 }
 
-emptyMethodsList <-
-  function(mlist, thisClass = "ANY", sublist = list()) {
+emptyMethodsList <- function(mlist, thisClass = "ANY", sublist = list()) {
     sublist[thisClass] <- list(NULL)
     new("EmptyMethodsList", argument = mlist@argument, sublist = sublist)
-  }
+}
 
-insertMethodInEmptyList <-
-  function(mlist, def) {
+insertMethodInEmptyList <- function(mlist, def) {
     value <- new("MethodsList", argument = mlist@argument)
     sublist <- mlist@sublist
     submethods <- sublist[[1]]
     if(is.null(submethods))
-      sublist[[1]] <- def
+        sublist[[1]] <- def
     else
-      sublist[[1]] <- Recall(submethods, def)
+        sublist[[1]] <- Recall(submethods, def)
     value@allMethods <- sublist
     value
-  }
+}
 
 
 
@@ -602,17 +601,16 @@ promptMethods <- function(f, filename = NULL, methods)
     n <- length(methods)
     labels <- character(n)
     aliases <- character(n)
-    args <- lapply(methods, ## formals(args(.)) also works for primitives
-		   function(m) names(formals(args(m))))
-    signatures <- findMethodSignatures(methods = methods)
+    signatures <- findMethodSignatures(methods = methods, target=TRUE)
+    args <- colnames(signatures) # the *same* for all
     for(i in seq_len(n)) {
-        sigi <- paste("\"", signatures[[i]], "\"", sep ="")
-        labels[[i]] <-
-            paste(args[[i]], sigi, collapse = ", ", sep = " = ")
-        aliases[[i]] <-
-            paste0("\\alias{",
-                   utils:::topicName("method", c(f, signatures[[i]])),
-                   "}")
+	sigi <- paste("\"", signatures[i,], "\"", sep ="")
+	labels[[i]] <-
+	    paste(args, sigi, collapse = ", ", sep = " = ")
+	aliases[[i]] <-
+	    paste0("\\alias{",
+		   utils:::topicName("method", c(f, signatures[i,])),
+		   "}")
     }
     text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
     text <- c("\\section{Methods}{\n\\describe{", text, "}}")
