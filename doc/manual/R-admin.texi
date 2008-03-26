@@ -3688,8 +3688,8 @@ in @file{config.site} or on the @command{configure} command line.
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using @command{gcc}@tie{}3/@command{g77},
-@command{gcc}@tie{}4/@command{gfortran} and the (free) Sun Studio 11/12
-compilers.  Sun packages for @R{} are available from
+@command{gcc}@tie{}4/@command{gfortran} and the (zero cost) Sun Studio
+11/12 compilers.  Sun packages for @R{} are available from
 @uref{http://www.sunfreeware.com/} for both architectures.  (Recent Sun
 machines are Opterons (@cputype{x86-64}) rather than @cputype{x86}, but
 32-bit @cputype{x86} executables are the default.)
@@ -3738,7 +3738,7 @@ be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
-For the Sun Studio compilers a little juggling of paths is needed to
+For the Sun Studio compilers a little juggling of paths was needed to
 ensure GNU @code{libiconv} is used rather than the Solaris @code{iconv}:
 we used
 
@@ -3773,7 +3773,8 @@ higher performance: Sun recommend
 
 By default the Sun Studio compilers do not conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
-use @code{-xlibmieee} to ensure this.
+use @code{-xlibmieee} to ensure this.  Also, errors have been reported
+on @cputype{x86_64} if @code{-xc99} is omitted.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
@@ -3793,7 +3794,7 @@ There is limited support for @cputype{x86-64} builds in the pre-built
 GNU software repositories, with 64-bit libraries (which are in
 @file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
 @command{gcc} support libraries).  The Sun Studio compilers do support
-64-bit builds via @code{-xarch=amd64}.
+64-bit builds via @code{-xarch=amd64} (or, for version 12, @code{-m64}).
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -3820,7 +3821,7 @@ equally old compiler versions.
 Sun packages for @R{} are available from
 @uref{http://www.sunfreeware.com/} for both Sparc and @cputype{x86}.
 
-@R{} 2.5.1 was built successfully on Sparc Solaris 8 (aka Solaris 2.8
+@R{} 2.6.2 was built successfully on Sparc Solaris 8 (aka Solaris 2.8
 aka SunOS 5.8) using @command{gcc}@tie{}3/@command{g77},
 @command{gcc}@tie{}4/@command{gfortran} and the `Sun ONE Studio 7
 Compiler Suite' (aka Forte@tie{}7).
