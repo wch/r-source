@@ -19,51 +19,27 @@
 
 ## The above comment is there since May 2003, R 1.8.0
 ## similarly in the help file ../man/oldGet.Rd
-## Finally (2008-02) made deprecated formally for 2.7.0
-"getAccess" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@access
-}
+## Finally (2008-02) made deprecated formally for 2.7.0, defunct in 2.8.0
 
-"getClassName" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@className
-}
+getAccess <- function (ClassDef) .Defunct()
 
-"getClassPackage" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@package
-}
+getClassName <- function (ClassDef) .Defunct()
 
-"getExtends" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@contains
-}
+getClassPackage <- function (ClassDef) .Defunct()
 
-"getProperties" <-
-function (ClassDef)  {
-    .Deprecated()
-    ClassDef@slots
-}
+getExtends <- function (ClassDef) .Defunct()
 
-"getPrototype" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@prototype
-}
+getProperties <- function (ClassDef)  .Defunct()
 
-"getSubclasses" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@subclasses
-}
+getPrototype <- function (ClassDef) .Defunct()
 
-"getVirtual" <-
-function (ClassDef) {
-    .Deprecated()
-    ClassDef@virtual
-}
+getSubclasses <- function (ClassDef) .Defunct()
+
+getVirtual <- function (ClassDef) .Defunct()
+
+## Deprecated in 2.7.0, refunct in 2.8.0
+getAllMethods <- function(f, fdef, where = topenv(parent.frame())) .Defunct()
+
+mlistMetaName <- function(name = "", package = "") .Defunct()
+
+removeMethodsObject <- function(f, where = topenv(parent.frame())) .Defunct()
