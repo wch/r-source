@@ -407,7 +407,7 @@ NEW FEATURES
 
     o	New function checkNEWS() that detects common errors in NEWS
 	file formatting.
-	
+
     o	readNEWS() has been moved to the tools package.
 
     o	New bindings ttk*() in package tcltk for the 'themed widgets'
@@ -523,7 +523,7 @@ INSTALLATION
 	considered when selecting a browser.
 
     o	xdg-open (the freedesktop.org interface to
-	kfmclient/gnome-open/...)  is onsidered as a possible browser,
+	kfmclient/gnome-open/...) is considered as a possible browser,
 	after real browsers such as firefox, mozilla and opera.
 
     o	The search for tclConfig.sh and tkConfig.sh now only looks in
@@ -737,13 +737,15 @@ BUG FIXES
 
     o	setAs() now catches 2 arguments in the method definition, if
 	they do not match the arguments of coerce().
-   
+
     o	Methods with missing arguments in the definition are handled
 	correctly  when non-signature arguments exist, and check for
 	conflicting local names in the method definition.
 
     o	qgamma() and qchisq() could be inaccurate for small p,
-    	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.  
+    	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.
+
+    o	dbeta(.., ncp) is now more accurate for large ncp.
 
 
 

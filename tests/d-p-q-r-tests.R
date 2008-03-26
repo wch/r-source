@@ -570,6 +570,8 @@ stopifnot(All.eq(a, dbeta(0, 1, a, ncp=0)),
 	  All.eq(exp(16 * log(2) + dbeta(0:16/16, 5,1, log=TRUE)), db.x)
           )
 ## the first gave 0, the 2nd NaN in R <= 2.3.0; others use 'TRUE' values
+stopifnot(all.equal(dbeta(0.8, 0.5, 5, ncp=1000),# was way too small in R <= 2.6.2
+		    3.001852308909e-35))
 
 ## df(*, ncp):
 x <- seq(0, 10, length=101)
