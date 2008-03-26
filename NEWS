@@ -720,7 +720,14 @@ BUG FIXES
 	return an empty list, rather than cause an error (questionably
 	a bug, but caused some obscure failures).
 
-    o	qgamma() and qchisq() could be inaccuarate for small p,
+    o	setAs() now catches 2 arguments in the method definition, if
+	they do not match the arguments of coerce().
+   
+    o	Methods with missing arguments in the definition are handled
+	correctly  when non-signature arguments exist, and check for
+	conflicting local names in the method definition.
+
+    o	qgamma() and qchisq() could be inaccurate for small p,
     	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.  
 
 
@@ -782,13 +789,6 @@ BUG FIXES
 	letter t. (PR#10923)
 
     o	bzip2 has been updated to 1.0.5 (security fix).
-
-    o	setAs() now catches 2 arguments in the method definition, if
-	they do not match the arguments of coerce().
-   
-    o	Methods with missing arguments in the definition are handled
-	correctly  when non-signature arguments exist, and check for
-	conflicting local names in the method definition.
 
 
 
