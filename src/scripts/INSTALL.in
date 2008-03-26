@@ -201,9 +201,8 @@ use_zip_help=
 configure_args=
 configure_vars=
 with_package_versions=false
-save=false
 fake=false
-lazy="auto"
+lazy=true
 lazy_data=false
 lock=true
 libs_only=false
@@ -795,7 +794,11 @@ do_install_source () {
   fi
   parse_description_field SaveImage
   if test "$value" != "missing" ; then
-    save=${value}
+    if ${value}; then
+      warning "'SaveImage' is defunct: ignored, and please remove it"
+    else
+      warning "'SaveImage' is defunct: please remove it"
+    fi
   fi
 
   parse_description_field LazyLoad
@@ -806,21 +809,6 @@ do_install_source () {
   fi
   if test ! -d R ; then
     thislazy=false
-  fi
-  if ${save}; then
-    warning "true value of 'SaveImage' is defunct: using 'LazyLoad: yes' instead"
-    thislazy=true
-  fi
-  ## This test is designed to fail if a loader is used.
-  ## Beware: the wc format is not portable -- some systems give
-  ## size in a left-space-padded first field, and some do not pad.
-  if test "x$thislazy" = "xauto" ; then
-    Rcodesize=`cat "${R_PACKAGE_DIR}/R/${pkg_name}" | wc -c`
-    if test ${Rcodesize} -gt 25000 ; then
-      thislazy=true
-    else
-      thislazy=false
-    fi
   fi
   if ${thislazy}; then
     message "preparing package for lazy loading"

@@ -15,6 +15,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 NEW FEATURES
 
 
+PACKAGE INSTALLATION
+
+    o	LazyLoad: yes is now the default, so packages wanted to avoid
+	lazy loading must set LazyLoad: no (or an equivalent value).
+
+
 DEPRECATED & DEFUNCT
 
     o	Use in packages of the graphics headers Rdevices.h and
@@ -35,6 +41,9 @@ DEPRECATED & DEFUNCT
 	getProperties(), getPrototype(), getSubclasses, getVirtual(),
 	mlistMetaName(), removeMethodsObject() and seemsS4Object() are
 	defunct.
+
+    o	In package installation, SaveImage: yes is now ignored, and
+	any use of the field will give a warning.
 
 
 

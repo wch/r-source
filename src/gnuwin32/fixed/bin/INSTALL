@@ -321,20 +321,15 @@ foreach $pkg (@ARGV){
 
 	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
 
-	my $lazyload = -1;
+	my $lazyload = 1;
 	my $tmp = parse_description_field("LazyLoad");
 	$lazyload = $tmp if($tmp >= 0);
-
-	my $tmp = parse_description_field("SaveImage");
-	if($tmp == 1) {
-	    warn "WARNING: true value of 'SaveImage' is defunct: using 'LazyLoad: yes' instead\n";
-	    $lazyload = 1;
-	}
+	print "*** lazyload is $lazyload ***\n" if $opt_debug;
 
 	my $lazydata = 0;
 	my $tmp = parse_description_field("LazyData");
 	$lazydata = $tmp if($tmp >= 0);
-	print "*** lazydata is $lazydata ***\n" if($opt_debug);
+	print "*** lazydata is $lazydata ***\n" if $opt_debug;
 
 	my $opt = "";
 	if($opt_auto_zip || $opt_build) {
@@ -380,24 +375,6 @@ foreach $pkg (@ARGV){
 	}
 	$opt = $opt . " DPKG=$dpkg";
 	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
-	## need to do the lazyload computations here, since installation
-	## of S4-using packages could fail without.
-	if($lazyload == -1) {
-	    if(! -d "$pkgdir/$pkgname/R") {
-		$lazyload = 0;
-	    } else {
-		$res = system("make --no-print-directory -C $pkgdir/$pkgname -f $R_HOME/src/gnuwin32/MakePkg PKG=$pkgname RLIB=$library RHOME=$R_HOME BUILD=$BUILD Rcode0");
-		if($res==0 && $lazyload == -1) { # choose based on code size
-		    my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
-		    $codesize =~ / *([0-9]+)/;
-		    $codesize = $1;
-		    print "*** codesize is $codesize ***\n" if $opt_debug;
-		if($codesize > 25000) {$lazyload = 1;} else {$lazyload = 0;}
-		    system("rm -f $library/$decpkgname/R/$pkgname");
-		}
-	    }
-	}
-	print "*** lazyload is $lazyload ***\n" if $opt_debug;
 	$opt = $opt . " $pkgname-LAZY=true" if $lazyload > 0;
 #	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $opt $helpflags $makecmd-$pkgname\n";
     	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $opt $helpflags $makecmd-$pkgname");
