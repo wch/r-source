@@ -1108,7 +1108,6 @@ Warning messages:
 > stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6),# (1.50 | 1.65)e-8
 +           All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
 +           )
-There were 50 or more warnings (use warnings() to see the first 50)
 > 
 > ## qt(p ~ 0, df=1) - PR#9804
 > p <- 10^(-10:-20)
