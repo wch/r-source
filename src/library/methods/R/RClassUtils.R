@@ -1035,7 +1035,11 @@ methodsPackageMetaName <-
   ## paste(".", prefix, name, sep="__") # too slow
     .Call("R_methodsPackageMetaName", prefix, name, package, PACKAGE = "methods")
 
-
+## a  non-exported regexp that matches  methods metanames
+## This is quite general and matches all patterns that could be generated
+## by calling methodsPackageMetaName() with a sequence of capital Latin letters
+## Used by package.skeleton in utils
+.methodsPackageMetaNamePattern <- "^[.]__[A-Z]+__"
 
 requireMethods <-
   ## Require a subclass to implement methods for the generic functions, for this signature.

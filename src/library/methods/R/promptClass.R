@@ -81,35 +81,39 @@ function (clName, filename = NULL, type = "class",
 
     if(is.null(filename))
 	filename <- paste0(utils:::topicName(type, clName), ".Rd")
-    whereClass <- find(classMetaName(clName))
-    if(length(whereClass) == 0)
-	stop(gettextf("no definition of class \"%s\" found", clName),
-	     domain = NA)
-    else if(length(whereClass) > 1) {
-	if(identical(where, topenv(parent.frame()))) {
-	    whereClass <- whereClass[[1]]
-	    warning(gettextf("multiple definitions of \"%s\" found; using the one on %s",
-                             clName, whereClass), domain = NA)
-	}
-	else {
-	    if(exists(classMetaName(clName), where, inherits = FALSE))
-		whereClass <- where
-	    else
-		stop(gettextf("no definition of class \"%s\" in the specified position, %s, definition(s) on : %s",
-			      clName, where,
-			      paste(whereClass, collapse = ", ")),
-		     domain = NA)
-	}
+    if(!missing(where) && !is.na(match(clName, getClasses(where))))
+      whereClass <- where
+    else {
+        whereClass <- find(classMetaName(clName))
+        if(length(whereClass) == 0)
+          stop(gettextf("no definition of class \"%s\" found", clName),
+               domain = NA)
+        else if(length(whereClass) > 1) {
+            if(identical(where, topenv(parent.frame()))) {
+                whereClass <- whereClass[[1]]
+                warning(gettextf("multiple definitions of \"%s\" found; using the one on %s",
+                                 clName, whereClass), domain = NA)
+            }
+            else {
+                if(exists(classMetaName(clName), where, inherits = FALSE))
+                  whereClass <- where
+                else
+                  stop(gettextf("no definition of class \"%s\" in the specified position, %s, definition(s) on : %s",
+                                clName, where,
+                                paste(whereClass, collapse = ", ")),
+                       domain = NA)
+            }
+        }
     }
     fullName <- utils:::topicName("class", clName)
-    clDef <- getClass(clName)
+    clDef <- getClass(clName, where = whereClass)
     .name <- paste0("\\name{", fullName, "}")
     .type <- paste0("\\docType{", type, "}")
     .alias <- paste0("\\alias{", fullName, "}")
     .title <- paste0("\\title{Class \"", clName, "\" ~~~ }")
     .desc <- paste0("\\description{", "	 ~~ A concise (1-5 lines) description of what the class is.  ~~",
 	"}")
-    slotclasses <- getSlots(getClass(clName))
+    slotclasses <- getSlots(clDef)
     slotnames <- names(slotclasses)
     slotclasses <- as.character(slotclasses)
     nslots <- length(slotclasses)

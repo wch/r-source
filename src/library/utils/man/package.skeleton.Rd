@@ -8,7 +8,7 @@
 \title{Create a Skeleton for a New Source Package}
 \description{
   \code{package.skeleton} automates some of the setup for a new source
-  package.  It creates directories, saves functions and data to
+  package.  It creates directories, saves functions, data, and R code files to
   appropriate places, and creates skeleton help files and a
   \file{Read-and-delete-me} file describing further steps in packaging. 
 }
@@ -19,28 +19,47 @@ package.skeleton(name = "anRpackage", list,
                  code_files = character())
 }
 \arguments{
-  \item{name}{character string: the directory name for your package.}
+  \item{name}{character string: the package name and directory name for your package.}
   \item{list}{character vector naming the \R objects to put in the
-    package.  Defaults to the non-hidden files in \code{environment}
-    (those whose name does not start with \code{.}).}
-  \item{environment}{an environment where objects are looked for
-    (unless \code{code_files} is used).}
+    package.  Usually, at most one of \code{list},
+    \code{environment}, or \code{code_files} will be supplied.  See details.}
+  \item{environment}{an environment where objects are looked for.
+    See details.}
   \item{path}{path to put the package directory in.}
   \item{force}{If \code{FALSE} will not overwrite an existing
     directory.}
   \item{namespace}{a logical indicating whether to add a name space for
-    the package.}
+    the package.  If \code{TRUE}, a \code{NAMESPACE} file is created
+    to export all objects whose names begin with a letter, plus all S4
+  methods and classes.}
   \item{code_files}{a character vector with the paths to R code files to
-    build the package around.  Used only if \code{list} is missing.}
+    build the package around.  See details.}
 }
 \value{
   Used for its side-effects.
 }
 \details{
+  The arguments \code{list},
+    \code{environment}, and \code{code_files} provide alternative ways
+    to initialize the package.  If \code{code_files} is supplied, the
+    files so named will be sourced to form the environment then used
+    to generate the package skeleton.  Otherwise, the environment
+    supplied should already contain all the objects to be used.
+    If \code{code_files} is missing, \code{list} defaults to the non-hidden files in \code{environment}
+    (those whose name does not start with \code{.}).
+
+    Stubs of help files are generated for functions, data objects, and
+    S4 classes and methods, using the \code{\link{prompt}},
+    \code{\link{promptClass}},  and \code{\link{promptMethods}} functions.
+
   The package sources are placed in subdirectory \code{name} of
-  \code{path}.
+  \code{path}.  If \code{code_files} is supplied, these files are
+  copied; otherwise, objects will be dumped into individual source
+  files.
+  The file names in \code{code_files} should  have suffix \code{".R"} and
+  be in the current working directory.
   
-  This tries to create filenames valid for all OSes known to run R.
+   The  filenames created for source and documentation try to be valid for all OSes known to run R.
   Invalid characters are replaced by \samp{\_}, invalid names are
   preceded by \samp{zz}, and finally the converted names are made unique
   by \code{\link{make.unique}(sep = "_")}.  This can be done for code
@@ -48,10 +67,6 @@ package.skeleton(name = "anRpackage", list,
   Also, the code and help files should have names starting with an ASCII
   letter or digit, and this is checked and if necessary \code{z}
   prepended.
-
-  If \code{code_files} are given, these are copied over to the package
-  code directory (so that non-function code objects are not converted to
-  data sets), and the corresponding help files are generated.
 
   When you are done, delete the \file{Read-and-delete-me} file, as it
   should not be distributed.
@@ -65,7 +80,7 @@ package.skeleton(name = "anRpackage", list,
   \code{\link{INSTALL}} and \code{\link{install.packages}}.
 }
 \seealso{
-  \code{\link{prompt}}
+  \code{\link{prompt}},  \code{\link{promptClass}},  and \code{\link{promptMethods}}.
 }
 
 \examples{
