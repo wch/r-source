@@ -32,16 +32,16 @@ checkVignettes(package, dir, lib.loc = NULL,
     search for \code{package}.}
   \item{tangle}{Perform a tangle and \code{\link{source}} the extracted code?}
   \item{weave}{Perform a weave?}
-  \item{latex}{logical: if \code{tangle = weave = latex = TRUE} and there
-    is no \code{Makefile} in the vignettes directory, run the tangled
-    files through \code{pdflatex}.}
+  \item{latex}{logical: if \code{tangle}, \code{weave} and \code{latex}
+    are \code{TRUE} and there is no \file{Makefile} in the vignettes
+    directory, run the tangled files through \code{pdflatex}.}
   \item{workdir}{Directory used as working directory while checking the
     vignettes. If \code{"tmp"} then a temporary directory is created,
     this is the default.  If \code{"src"} then the directory containing
     the vignettes itself is used, if \code{"cur"} then the current
     working directory of \R is used.}
-  \item{keepfiles}{Delete file in temporary directory? This option is
-    ignored when \code{workdir!="tmp"}.}
+  \item{keepfiles}{Delete file in temporary directory?  This option is
+    ignored when \code{workdir != "tmp"}.}
 }
 \value{
   An object of class \code{"checkVignettes"} which is a list with the

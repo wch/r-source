@@ -121,7 +121,7 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
             to <- file.path(tempdir(), ".R", "library", link)
             file.symlink(from, to)
             if(!packages) next
-            title <- packageDescription(i, lib.loc = lib, field = "Title",
+            title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                         encoding = ifelse(useUTF8,"UTF-8",""))
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',

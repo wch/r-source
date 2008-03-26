@@ -34,7 +34,7 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
   \code{contourLines} draws nothing, but returns a set of contour lines.
   
   There is currently no documentation about the algorithm.
-  The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
+  The source code is in \file{\var{R\_HOME}/src/main/plot3d.c}.
 }
 \value{
   A list of contours.

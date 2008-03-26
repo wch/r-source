@@ -23,7 +23,7 @@ R.home(component="home")
   The \R home directory is the top-level directory of the \R
   installation being run.
 
-  The \R home directory is often referred to as \code{R_HOME},
+  The \R home directory is often referred to as \var{R\_HOME},
   and is the value of an environment variable of that name in an \R
   session.
 #ifdef unix

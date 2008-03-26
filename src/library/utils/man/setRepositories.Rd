@@ -28,9 +28,9 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
 }
 \details{
   The default list of known repositories is stored in the file
-  \file{R\_HOME/etc/repositories}.
+  \file{\var{R\_HOME}/etc/repositories}.
   That file can be edited for a site, or a user can have a personal copy
-  in \file{HOME/.R/repositories} which will take precedence.
+  in \file{\var{HOME}/.R/repositories} which will take precedence.
 
   The items that are preselected are those that are currently in
   \code{options("repos")} plus those marked as default in the

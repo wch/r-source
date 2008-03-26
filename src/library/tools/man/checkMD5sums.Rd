@@ -7,7 +7,7 @@
 \alias{checkMD5sums}
 \title{Check and Create MD5 Checksum Files}
 \description{
-  \code{checkMD5sums} checks the files against a file \code{MD5}.
+  \code{checkMD5sums} checks the files against a file \file{MD5}.
 }
 \usage{
 checkMD5sums(package, dir)
