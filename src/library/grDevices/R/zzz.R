@@ -30,11 +30,9 @@
         else {
             if(.Platform$OS.type == "windows") "windows"
             else if (.Platform$GUI == "AQUA") "quartz"
-            ## FIXME Why does this need special-casing?
-            else if ((Sys.info()["sysname"] == "Darwin") && (Sys.getenv("DISPLAY") != "")) "X11"
             else if (Sys.getenv("DISPLAY") != "")
-                switch(.Platform$GUI, "Tk" = "X11",
-                       "X11" = "X11", "GNOME" = "X11", defdev)
+                switch(.Platform$GUI, "Tk" = "X11", "X11" = "X11",
+                       "GNOME" = "X11", defdev)
             else defdev
         }
     } else defdev
