@@ -210,7 +210,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	ch += t*(1+0.5*t*s1-b*c*(s1-b*(s2-b*(s3-b*(s4-b*(s5-b*s6))))));
 	if(fabs(q - ch) < EPS2*ch)
 	    goto END;
-	if(fabs(q - ch) > 0.1*ch0) {/* diverging? */
+	if(fabs(q - ch) > 0.1*ch) {/* diverging? -- also forces ch > 0 */
 	    if(ch < q) ch = 0.9 * q; else ch = 1.1 * q;
 	}
     }
