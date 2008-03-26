@@ -19,7 +19,7 @@ NEW FEATURES
 
 PACKAGE INSTALLATION
 
-    o	LazyLoad: yes is now the default, so packages wanted to avoid
+    o	LazyLoad: yes is now the default, so packages wanting to avoid
 	lazy loading must set LazyLoad: no (or an equivalent value).
 
 
