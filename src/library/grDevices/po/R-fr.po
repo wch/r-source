@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-03-15 17:03\n"
-"PO-Revision-Date: 2007-04-13 12:15+0100\n"
+"PO-Revision-Date: 2008-03-26 17:38+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,9 +73,8 @@ msgstr "'to.ref.white' en désaccord avec la définition de"
 msgid "color spaces use different reference whites."
 msgstr "les espaces de couleurs utilisent différents blancs de référence."
 
-#, fuzzy
 msgid "'name' must be a character vector"
-msgstr "'file' doit être une chaîne de caractère non vide"
+msgstr "'name' doit être un vecteur de type chaîne de caractère"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "impossible de fermer le périphérique 1 (périphérique null)"
@@ -104,7 +103,6 @@ msgstr "seul un périphérique écran peut être imprimé"
 msgid "need to specify one of 'width' and 'height'"
 msgstr "il faut spécifier 'width' ou 'height'"
 
-#, fuzzy
 msgid "can only print from a screen device"
 msgstr "seul un périphérique écran peut être imprimé"
 
@@ -118,30 +116,28 @@ msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.displaylist() appelé sans périphérique graphique ouvert"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr ""
+msgstr "paramètres incorrects por 'getOption(\"device\")'"
 
 msgid "no suitable unused file name for pdf()"
-msgstr ""
+msgstr "pas de nom de fichier utilisable pour pdf()"
 
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr ""
+msgstr "deV.new() : utilisation de pdf(file=\"%s\")"
 
 msgid "no suitable unused file name for postscript()"
-msgstr ""
+msgstr "pas de nom de fichier utilisable disponible pour postscript()"
 
 msgid "dev.new(): using postscript(file=\"%s\")"
-msgstr ""
+msgstr "dev.new() : utilisation de postscript(file=\"%s\")"
 
-#, fuzzy
 msgid "device '%s' not found"
-msgstr "le périphérique '%s' n'est pas disponible"
+msgstr "le périphérique '%s' est introuvable"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr ""
-"'name.opt' doit être une chaîne de caractère ou le nom d'une liste existante"
+msgstr "'name.opt' doit être une chaîne de caractère ou le nom d'une liste existante"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "impossible de réinitialiser '%s' car il n'existe pas"
@@ -153,7 +149,7 @@ msgid "NOT changing"
 msgstr "NE change(nt) PAS"
 
 msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr ""
+msgstr "l'argument 'append' est là pour raison de compatibilité descendante mais sera ignoré"
 
 msgid "unknown family '%s'"
 msgstr "famille inconnue '%s'"
@@ -161,9 +157,8 @@ msgstr "famille inconnue '%s'"
 msgid "invalid 'family' argument"
 msgstr "argument 'family' incorrect"
 
-#, fuzzy
 msgid "invalid 'file'"
-msgstr "argument 'family' incorrect"
+msgstr "argument 'file' incorrect"
 
 msgid "invalid PDF version"
 msgstr "version de PDF incorrecte"
@@ -223,12 +218,10 @@ msgid "argument is not of class \"recordedplot\""
 msgstr "l'argument n'est pas de classe \"recordedplot\""
 
 msgid "loading snapshot from pre-2.0.0 R version"
-msgstr ""
-"chargement d'un instantané graphique à partir d'une version de R pre-2.0.0"
+msgstr "chargement d'un instantané graphique à partir d'une version de R pre-2.0.0"
 
 msgid "loading snapshot from different R version"
-msgstr ""
-"chargement d'un instantané graphique à partir d'une version de R différente"
+msgstr "chargement d'un instantané graphique à partir d'une version de R différente"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' doit indiquer une étendue des valeurs, donc être de longueur 2"
@@ -260,9 +253,8 @@ msgstr "le périphérique '%s' n'est pas disponible"
 msgid "Available devices are %s"
 msgstr "Les périphériques disponibles sont %s"
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr "Type de police incorrect"
+msgstr "'title' incorrect"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "police Quartz incorrecte : doit être 4 chaînes de caractères"
@@ -271,18 +263,16 @@ msgid "invalid arguments in quartzFonts (must be font names)"
 msgstr "arguments incorrects dans quartzFonts (il faut des noms de police)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
-msgstr ""
-"arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
+msgstr "arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
 
 msgid "invalid value for 'antialias'"
-msgstr ""
+msgstr "valeur incorrecte pour 'antialias'"
 
-#, fuzzy
 msgid "invalid 'filename'"
-msgstr "argument 'family' incorrect"
+msgstr "argument 'filename' incorrect"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
-msgstr ""
+msgstr "'res' doit être spécifié à moins que 'units = \"px\""
 
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"
@@ -290,17 +280,14 @@ msgstr "spécification de police X11 incorrecte :"
 msgid "no such device"
 msgstr "aucun périphérique ne correspond"
 
-#, fuzzy
 msgid "can only copy from 'X11(type=\"cairo\")' devices"
-msgstr "il n'est possible de copier qu'à partir d'un périphérique 'windows'"
+msgstr "il n'est possible de copier qu'à partir de périphériques 'X11(type=\"cairo\")'"
 
 msgid "invalid value for 'rescale"
-msgstr ""
+msgstr "valeur incorrecte pour 'rescale'"
 
 msgid "can only bring windows devices to the front"
-msgstr ""
-"seules les fenêtres des périphériques graphiques peuvent être amenées au "
-"premier plan"
+msgstr "seules les fenêtres des périphériques graphiques peuvent être amenées au premier plan"
 
 msgid "can only copy from 'windows' devices"
 msgstr "il n'est possible de copier qu'à partir d'un périphérique 'windows'"
@@ -315,8 +302,7 @@ msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "arguments incorrects dans 'windowsFonts' (il faut des noms de police)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"arguments incorrects dans 'windowsFonts' (les arguments doivent être nommés)"
+msgstr "arguments incorrects dans 'windowsFonts' (les arguments doivent être nommés)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -343,7 +329,3 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
 
-#~ msgid "quartz() device interactivity reduced without an event loop manager"
-#~ msgstr ""
-#~ "interactivité réduite (sans gestion des événements) dans les "
-#~ "périphériques quartz()"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-25 14:53+0000\n"
+"POT-Creation-Date: 2008-03-26 21:50+0000\n"
 "PO-Revision-Date: 2007-09-11 16:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -433,26 +433,26 @@ msgstr " pdf デバイスを開始できませんでした "
 msgid "unable to start device PicTeX"
 msgstr " PicTeX デバイスを開始できませんでした "
 
-#: devQuartz.c:977
+#: devQuartz.c:966
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr " 不正な文字列引数 "
 
-#: devQuartz.c:1005
+#: devQuartz.c:994
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr " savePlot 中に不正なデバイス "
 
-#: devQuartz.c:1032
+#: devQuartz.c:1021
 #, fuzzy
 msgid "Unable to create device description."
 msgstr " ポストスクリプトデバイスを開始できませんでした "
 
-#: devQuartz.c:1086
+#: devQuartz.c:1075
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1107
+#: devQuartz.c:1096
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 14:53\n"
+"POT-Creation-Date: 2008-03-26 21:50\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -745,14 +745,6 @@ msgid "formal arguments in method and function do not appear in the same order"
 msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
 msgid ""
-"%s function arguments omitted from method arguments, (%s), were found in "
-"method definition"
-msgstr ""
-
-msgid ","
-msgstr ","
-
-msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
 msgstr "메소드 정의에서 생략된 형식상의 인수는 기호(%s)에 있을 수 없습니다"
@@ -762,6 +754,9 @@ msgstr "포함한 기호를 확대하는 것은 명확함으로 인수를 생략
 
 msgid "= \"missing\""
 msgstr "=\\\"이상하다\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "

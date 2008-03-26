@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-26 21:49+0000\n"
 "PO-Revision-Date: 2007-09-18 00:00-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -97,7 +97,7 @@ msgstr "проблема при отображении '%s'"
 #: src/gnuwin32/extra.c:323 src/gnuwin32/extra.c:347 src/gnuwin32/extra.c:355
 #: src/gnuwin32/extra.c:386 src/gnuwin32/extra.c:405 src/gnuwin32/extra.c:440
 #: src/gnuwin32/extra.c:615 src/gnuwin32/extra.c:699 src/gnuwin32/extra.c:702
-#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1295 src/main/apply.c:192
+#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1300 src/main/apply.c:192
 #: src/main/apply.c:194 src/main/apply.c:197 src/main/array.c:75
 #: src/main/array.c:1027 src/main/array.c:1160 src/main/array.c:1162
 #: src/main/array.c:1163 src/main/attrib.c:193 src/main/builtin.c:158
@@ -243,9 +243,9 @@ msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 msgid "invalid timestamp"
 msgstr "неправильная временная метка"
 
-#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1478
-#: src/gnuwin32/extra.c:1654 src/gnuwin32/extra.c:1657
-#: src/gnuwin32/extra.c:1660 src/main/character.c:844 src/main/colors.c:365
+#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1483
+#: src/gnuwin32/extra.c:1659 src/gnuwin32/extra.c:1662
+#: src/gnuwin32/extra.c:1665 src/main/character.c:844 src/main/colors.c:365
 #: src/main/connections.c:2658 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:585 src/main/datetime.c:651 src/main/datetime.c:867
 #: src/main/dotcode.c:199 src/main/errors.c:857 src/main/errors.c:888
@@ -301,65 +301,65 @@ msgstr "Не могу открыть буфер обмена"
 msgid "Unable to write to the clipboard"
 msgstr "Не могу записать в буфер обмена"
 
-#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1006
+#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1007
 msgid "'path' must be a character vector"
 msgstr "'path' должен быть текстовым вектором"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1130
+#: src/gnuwin32/extra.c:1056 src/gnuwin32/extra.c:1135
 msgid "'default' must be a character string"
 msgstr "'default' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1053 src/gnuwin32/extra.c:1132
+#: src/gnuwin32/extra.c:1058 src/gnuwin32/extra.c:1137
 msgid "'default' is overlong"
 msgstr "'default' слишком длинный"
 
-#: src/gnuwin32/extra.c:1062 src/gnuwin32/extra.c:1136
+#: src/gnuwin32/extra.c:1067 src/gnuwin32/extra.c:1141
 msgid "'caption' must be a character string"
 msgstr "'caption' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1064
+#: src/gnuwin32/extra.c:1069
 msgid "'multi' must be a logical value"
 msgstr "'multi' должен быть логическим значением"
 
-#: src/gnuwin32/extra.c:1066
+#: src/gnuwin32/extra.c:1071
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' должен быть целым числом"
 
-#: src/gnuwin32/extra.c:1218
+#: src/gnuwin32/extra.c:1223
 msgid "'title' must be a character string"
 msgstr "'title' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1235
+#: src/gnuwin32/extra.c:1240
 msgid "'text' must be a character string"
 msgstr "'text' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1265
+#: src/gnuwin32/extra.c:1270
 msgid "'which' must be length 1"
 msgstr "'which' должен быть единичной длины"
 
-#: src/gnuwin32/extra.c:1297 src/gnuwin32/extra.c:1299
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1302 src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1344
 msgid "invalid device"
 msgstr "неправильное устройство"
 
-#: src/gnuwin32/extra.c:1300
+#: src/gnuwin32/extra.c:1305
 msgid "requires SDI mode"
 msgstr "требует SDI-вида"
 
-#: src/gnuwin32/extra.c:1333
+#: src/gnuwin32/extra.c:1338
 msgid "invalid graphical device number"
 msgstr "неправильный номер графического устройства"
 
-#: src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1348
 msgid "bad device"
 msgstr "плохое устройство"
 
-#: src/gnuwin32/extra.c:1664
+#: src/gnuwin32/extra.c:1669
 #, fuzzy, c-format
 msgid "Registry key '%s' not found"
 msgstr "объект '%s' не найден"
 
-#: src/gnuwin32/extra.c:1728 src/gnuwin32/extra.c:1736
+#: src/gnuwin32/extra.c:1733 src/gnuwin32/extra.c:1741
 msgid "invalid input in Rmbstowcs"
 msgstr "неправильный ввод в Rmbstowcs"
 
@@ -2229,7 +2229,7 @@ msgstr ""
 "второе"
 
 #: src/main/connections.c:3972 src/modules/internet/internet.c:113
-#: src/modules/internet/internet.c:543
+#: src/modules/internet/internet.c:555
 msgid "unsupported URL scheme"
 msgstr "не поддерживаемая схема URL"
 
@@ -5876,7 +5876,7 @@ msgstr "произошла ошибка чтения комплексных xdr-данных"
 
 #: src/main/saveload.c:1807 src/main/serialize.c:1609
 #: src/main/serialize.c:2134 src/modules/internet/internet.c:351
-#: src/modules/internet/internet.c:408 src/modules/internet/internet.c:500
+#: src/modules/internet/internet.c:410 src/modules/internet/internet.c:508
 msgid "write failed"
 msgstr "запись не удалась"
 
@@ -7035,54 +7035,54 @@ msgstr "Процент скачивания"
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "не могу открыть файл '%s' по причине '%s'"
 
-#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:447
-#: src/modules/internet/internet.c:539
+#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:453
+#: src/modules/internet/internet.c:551
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "не могу открыть URL '%s'"
 
 #: src/modules/internet/internet.c:343 src/modules/internet/internet.c:373
-#: src/modules/internet/internet.c:462
+#: src/modules/internet/internet.c:468
 #, fuzzy, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "не могу открыть файл '%s' по причине '%s'"
 
 #: src/modules/internet/internet.c:346 src/modules/internet/internet.c:376
-#: src/modules/internet/internet.c:465
+#: src/modules/internet/internet.c:471
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "не могу открыть файл назначения '%s'"
 
-#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:470
+#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:476
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "пробую URL '%s'\n"
 
-#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:477
+#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:483
 msgid "opened URL\n"
 msgstr "открытие URL\n"
 
-#: src/modules/internet/internet.c:443 src/modules/internet/internet.c:535
+#: src/modules/internet/internet.c:449 src/modules/internet/internet.c:547
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "скачанный размер %d != сообщенному размеру %d"
 
-#: src/modules/internet/internet.c:567 src/modules/internet/internet.c:802
+#: src/modules/internet/internet.c:579 src/modules/internet/internet.c:814
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "не могу открыть: статус HTTP был '%d %s'"
 
-#: src/modules/internet/internet.c:746 src/modules/internet/internet.c:909
+#: src/modules/internet/internet.c:758 src/modules/internet/internet.c:921
 msgid "InternetOpenUrl timed out"
 msgstr "тайм-аут 'InternetOpenUrl'"
 
-#: src/modules/internet/internet.c:773 src/modules/internet/internet.c:787
-#: src/modules/internet/internet.c:931 src/modules/internet/internet.c:940
+#: src/modules/internet/internet.c:785 src/modules/internet/internet.c:799
+#: src/modules/internet/internet.c:943 src/modules/internet/internet.c:952
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "'InternetOpenUrl' не удалось: '%s'"
 
-#: src/modules/internet/internet.c:844
+#: src/modules/internet/internet.c:856
 msgid "Internet read timed out"
 msgstr "тайм-аут чтения из Internet"
 

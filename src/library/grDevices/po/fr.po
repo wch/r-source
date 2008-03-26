@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-25 14:53+0000\n"
-"PO-Revision-Date: 2007-04-13 12:14+0100\n"
+"POT-Creation-Date: 2008-03-26 21:50+0000\n"
+"PO-Revision-Date: 2008-03-26 17:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -203,6 +203,8 @@ msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
+"la semi-transparence n'est pas supportée sur ce périphérique : reporté "
+"seulement une fois par page"
 
 #: devPS.c:3454
 msgid "printing via file = \"\" is not implemented in this version"
@@ -252,14 +254,16 @@ msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "encodage inconnu '%s' dans 'mbcsToSbcs'"
 
 #: devPS.c:4027
-#, fuzzy, c-format
+#, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr "erreur de conversion dans 'mbcsToSbcs'"
+msgstr ""
+"erreur de conversion de '%s' dans 'mbcsToSbcs' : le point est substitué pour "
+"<%02x>"
 
 #: devPS.c:4103
-#, fuzzy, c-format
+#, c-format
 msgid "failed open converter to encoding '%s'"
-msgstr "erreur dans la conversion du texte vers l'encodage '%s'"
+msgstr "erreur d'ouverture du convertisseur vers l'encodage '%s'"
 
 #: devPS.c:4121 devPS.c:5010 devPS.c:6807
 #, c-format
@@ -376,7 +380,7 @@ msgstr "la version du PDF est augmentée à 1.3"
 #: devPS.c:6306
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
-msgstr "impossible douvrir le fichier en argument de 'pdf' '%s'"
+msgstr "impossible d'ouvrir le fichier en argument de 'pdf' '%s'"
 
 #: devPS.c:6362
 msgid "unable to increase page limit: please shutdown the pdf device"
@@ -425,27 +429,25 @@ msgstr "impossible de démarrer le périphérique pdf"
 msgid "unable to start device PicTeX"
 msgstr "impossible de démarrer le périphérique PicTeX"
 
-#: devQuartz.c:977
-#, fuzzy
+#: devQuartz.c:966
 msgid "invalid 'file' argument"
-msgstr "argument chaîne de caractère incorrect"
+msgstr "argument 'file' incorrect"
 
-#: devQuartz.c:1005
-#, fuzzy
+#: devQuartz.c:994
 msgid "invalid Quartz device size"
-msgstr "périphérique incorrect dans savePlot"
+msgstr "taille de périphérique Quartz incorrecte"
 
-#: devQuartz.c:1032
-#, fuzzy
+#: devQuartz.c:1021
 msgid "Unable to create device description."
-msgstr "impossible de démarrer le périphérique PostScript"
+msgstr "impossible une description du périphérique."
 
-#: devQuartz.c:1086
+#: devQuartz.c:1075
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
+"Impossible de créer le périphérique cible Quartz, le type fourni n'est peut-"
+"être pas supporté."
 
-#: devQuartz.c:1107
-#, fuzzy
+#: devQuartz.c:1096
 msgid "Quartz device is not available on this platform"
 msgstr "Périphérique Quartz non disponible sur cette architecture"
 
@@ -460,7 +462,7 @@ msgstr "Aucun périphérique disponible pour copier la fenêtre graphique"
 #: devWindows.c:328 devWindows.c:397
 #, c-format
 msgid "'%%' is not allowed in file name"
-msgstr ""
+msgstr "'%%' n'est pas autorisé dans le nom du fichier"
 
 #: devWindows.c:539
 msgid "Invalid font specification"
@@ -508,9 +510,8 @@ msgid "filename too long in jpeg() call"
 msgstr "nom de fichier trop long dans l'appel à jpeg()"
 
 #: devWindows.c:1801
-#, fuzzy
 msgid "filename too long in tiff() call"
-msgstr "nom de fichier trop long dans l'appel %s()"
+msgstr "nom de fichier trop long dans l'appel tiff()"
 
 #: devWindows.c:1831
 msgid "filename too long in win.metafile() call"
@@ -531,10 +532,10 @@ msgstr ""
 "Mémoire insuffisante pour modifier la taille. Le périphérique va être fermé"
 
 #: devWindows.c:2059
-#, fuzzy
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr ""
-"Mémoire insuffisante pour modifier la taille. Le périphérique va être fermé"
+"Mémoire insuffisante pour modifier la taille. L'\"alpha blending\" est "
+"désactivé"
 
 #: devWindows.c:2088
 msgid "A clipboard metafile can store only one figure."
@@ -554,23 +555,20 @@ msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'option 'windowsTimeouts' doit être un entier"
 
 #: devWindows.c:2931
-#, fuzzy
 msgid "invalid device number in 'savePlot'"
-msgstr "numéro de périphérique incorrect dans savePlot"
+msgstr "numéro de périphérique incorrect dans 'savePlot'"
 
 #: devWindows.c:2933
-#, fuzzy
 msgid "invalid device in 'savePlot'"
-msgstr "périphérique incorrect dans savePlot"
+msgstr "périphérique incorrect dans 'savePlot'"
 
 #: devWindows.c:2936
 msgid "invalid filename argument in savePlot"
 msgstr "argument nom de fichier incorrect dans savePlot"
 
 #: devWindows.c:2940
-#, fuzzy
 msgid "invalid type argument in 'savePlot'"
-msgstr "type d'argument incorrect dans savePlot"
+msgstr "type d'argument incorrect dans 'savePlot'"
 
 #: devWindows.c:2967
 msgid "unknown type in savePlot"
@@ -590,19 +588,16 @@ msgid "Impossible to open "
 msgstr "Impossible d'ouvrir "
 
 #: devWindows.c:3202
-#, fuzzy
 msgid "invalid 'width' or 'height' in devWindows"
-msgstr "largeur ou hauteur incorrecte dans devWindows"
+msgstr "'width' ou 'height' incorrecte dans devWindows"
 
 #: devWindows.c:3207
-#, fuzzy
 msgid "invalid value of 'record' in devWindows"
-msgstr "valeur incorrecte de 'recording' dans devWindows"
+msgstr "valeur incorrecte de 'record' dans devWindows"
 
 #: devWindows.c:3211
-#, fuzzy
 msgid "invalid value of 'rescale' in devWindows"
-msgstr "valeur incorrecte de 'resize' dans devWindows"
+msgstr "valeur incorrecte de 'rescale' dans devWindows"
 
 #: devWindows.c:3219
 msgid "invalid value of 'canvas' in devWindows"
@@ -617,9 +612,8 @@ msgid "invalid value of 'bg' in devWindows"
 msgstr "valeur incorrecte de 'bg' dans devWindows"
 
 #: devWindows.c:3243
-#, fuzzy
 msgid "invalid value of 'title' in devWindows"
-msgstr "valeur incorrecte de 'resize' dans devWindows"
+msgstr "valeur incorrecte de 'title' dans devWindows"
 
 #: devWindows.c:3258
 msgid "unable to start device devWindows"
@@ -631,22 +625,9 @@ msgstr "l'utilisation récursive de getGraphicsEvent n'est pas supportée"
 
 #: qdBitmap.c:92
 msgid "Not a supported scheme, no image data written"
-msgstr ""
+msgstr "Le schéma n'est pas supporté, aucune donnée d'image n'est écrite"
 
 #: qdPDF.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s'"
-msgstr "impossible de lire fichier afm '%s'"
-
-#~ msgid "can't find any fonts"
-#~ msgstr "aucune police n'est trouvée"
-
-#~ msgid "invalid width or height in quartz"
-#~ msgstr "largeur ou hauteur incorrecte dans quartz"
-
-#~ msgid "unable to start device Quartz"
-#~ msgstr "impossible de démarrer le périphérique Quartz"
-
-#~ msgid "Font family not found in Quartz font database"
-#~ msgstr ""
-#~ "Famille de police introuvable dans la base de données des polices Quartz"
+msgstr "impossible d'ouvrir le fichier '%s'"

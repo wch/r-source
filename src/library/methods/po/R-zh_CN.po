@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 14:53\n"
+"POT-Creation-Date: 2008-03-26 21:50\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -617,14 +617,6 @@ msgid "formal arguments in method and function do not appear in the same order"
 msgstr "方法里的正式变元和函数两都的顺序不同"
 
 msgid ""
-"%s function arguments omitted from method arguments, (%s), were found in "
-"method definition"
-msgstr ""
-
-msgid ","
-msgstr ","
-
-msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
 msgstr "方法定义里所忽略的正式变元不能存在于标记(%s) 里"
@@ -634,6 +626,9 @@ msgstr "在定义里扩展标记来包括进忽略了的变元：%s"
 
 msgid "= \"missing\""
 msgstr "= \"missing\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
