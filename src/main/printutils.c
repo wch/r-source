@@ -655,7 +655,7 @@ char *Rsprintf(char *format, ...)
 }
 #endif
 
-void Rprintf(char *format, ...)
+void Rprintf(const char *format, ...)
 {
     va_list(ap);
 
@@ -669,7 +669,7 @@ void Rprintf(char *format, ...)
   anything unless you're sure it won't
   cause problems
 */
-void REprintf(char *format, ...)
+void REprintf(const char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
