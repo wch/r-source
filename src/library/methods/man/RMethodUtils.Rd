@@ -1,6 +1,6 @@
 % File src/library/methods/man/RMethodUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RMethodUtils}
@@ -28,7 +28,6 @@
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
-\alias{removeMethodsObject}%deprecated (2.7.0)
 \alias{findUnique}
 \alias{MethodAddCoerce}
 \alias{.saveImage}
@@ -47,7 +46,7 @@
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
-\title{RMethodUtils}
+\title{Method Utilities}
 \description{
   Utility functions to support the definition and use of formal
   methods.  Most of these functions will not normally be called directly
@@ -77,8 +76,6 @@ doPrimitiveMethod(name, def, call= sys.call(sys.parent()),
 conformMethod(signature, mnames, fnames, f= , fdef, method)
 
 matchSignature(signature, fun, where)
-
-removeMethodsObject(f, where) # is deprecated
 
 findUnique(what, message, where)
 
@@ -186,11 +183,6 @@ addNextMethod(method, f, mlist, optional, envir)
       explicitly defined.  Only modifies the method if an explicit
       coerce is required to coerce from \code{thisClass} to
       \code{methodClass}.
-    }
-
-    \item{\code{removeMethodsObject}:}{
-      remove the metadata object containing methods for \code{f}.  Is
-      deprecated.
     }
 
     \item{\code{findUnique}:}{

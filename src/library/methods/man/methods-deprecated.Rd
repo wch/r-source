@@ -1,15 +1,14 @@
 % File src/library/methods/man/methods-deprecated.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{methods-deprecated}
 \alias{methods-deprecated}
 \alias{getAllMethods}
 \alias{mlistMetaName}
-%------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
+\alias{removeMethodsObject}
 \title{Deprecated Functions in Methods package}
-%------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
@@ -17,14 +16,19 @@
 \usage{
 getAllMethods(f, fdef, where)
 mlistMetaName (name, package)
+removeMethodsObject(f, where)
 }
 \section{Summary of Functions}{
-
   \describe{
     \item{\code{getAllMethods}:}{
-        This function replicates the behavior of \code{\link{getMethods}}, which should be called instead to obtain approximately the old behavior of \code{getAllMethods}.  However, a better substitution is to use \code{\link{findMethods}}, which returns a simpler structure.
+      This function replicates the behavior of
+      \code{\link{getMethods}}, which should be called instead to obtain
+      approximately the old behavior of \code{getAllMethods}.  However, a
+      better substitution is to use \code{\link{findMethods}}, which
+      returns a simpler structure.
 
-        (The following is the original description, which has not been accurate since approximately version 2.5.0 of R.
+      (The following is the original description, which has not been
+      accurate since approximately version 2.5.0 of \R.) 
 
       A generic function (with methods) representing the merge of all
       the methods defined for this generic starting from environment
@@ -61,11 +65,18 @@ mlistMetaName (name, package)
     }
 
     \item{\code{mlistMetaName}:}{Utility to  return the mangled
-      name for the object that stored the \code{MethodsList} representation of the methods for a particular generic function, typically in the environment of a package.
-These objects are no longer used, and will likely not be generated starting in version 2.8.0 of R.
-}
+      name for the object that stored the \code{MethodsList}
+      representation of the methods for a particular generic function,
+      typically in the environment of a package.
+    
+      These objects are no longer used, and will likely not be generated
+      starting in version 2.8.0 of \R.
+    }
 
-}
+    \item{\code{removeMethodsObject}:}{
+      remove the metadata object containing methods for \code{f}.
+    }
+  }
 }
 
 \details{
@@ -73,7 +84,6 @@ These objects are no longer used, and will likely not be generated starting in v
   available at \code{help("oldName-deprecated")} (note the quotes).
   Functions in packages other than the methods package are listed in
   \code{help("pkg-deprecated")}.
-
 }
 \seealso{
   \code{\link{Deprecated}}
