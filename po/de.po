@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-26 21:51+0000\n"
 "PO-Revision-Date: 2007-09-16 15:15+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -92,7 +92,7 @@ msgstr "Problem bei der Anzeige von '%s'"
 #: src/gnuwin32/extra.c:323 src/gnuwin32/extra.c:347 src/gnuwin32/extra.c:355
 #: src/gnuwin32/extra.c:386 src/gnuwin32/extra.c:405 src/gnuwin32/extra.c:440
 #: src/gnuwin32/extra.c:615 src/gnuwin32/extra.c:699 src/gnuwin32/extra.c:702
-#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1295 src/main/apply.c:192
+#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1300 src/main/apply.c:192
 #: src/main/apply.c:194 src/main/apply.c:197 src/main/array.c:75
 #: src/main/array.c:1027 src/main/array.c:1160 src/main/array.c:1162
 #: src/main/array.c:1163 src/main/attrib.c:193 src/main/builtin.c:158
@@ -238,9 +238,9 @@ msgstr "'loadhistory' kann nur im Rgui und im Rterm benutzt werden"
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
-#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1478
-#: src/gnuwin32/extra.c:1654 src/gnuwin32/extra.c:1657
-#: src/gnuwin32/extra.c:1660 src/main/character.c:844 src/main/colors.c:365
+#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1483
+#: src/gnuwin32/extra.c:1659 src/gnuwin32/extra.c:1662
+#: src/gnuwin32/extra.c:1665 src/main/character.c:844 src/main/colors.c:365
 #: src/main/connections.c:2658 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:585 src/main/datetime.c:651 src/main/datetime.c:867
 #: src/main/dotcode.c:199 src/main/errors.c:857 src/main/errors.c:888
@@ -296,65 +296,65 @@ msgstr "kann die Zwischenablage nicht öffnen"
 msgid "Unable to write to the clipboard"
 msgstr "kann nicht in die Zwischenablage schreiben"
 
-#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1006
+#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1007
 msgid "'path' must be a character vector"
 msgstr "'path' muss eine Charaktervektor sein"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1130
+#: src/gnuwin32/extra.c:1056 src/gnuwin32/extra.c:1135
 msgid "'default' must be a character string"
 msgstr "'default' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1053 src/gnuwin32/extra.c:1132
+#: src/gnuwin32/extra.c:1058 src/gnuwin32/extra.c:1137
 msgid "'default' is overlong"
 msgstr "'default' ist zu lang"
 
-#: src/gnuwin32/extra.c:1062 src/gnuwin32/extra.c:1136
+#: src/gnuwin32/extra.c:1067 src/gnuwin32/extra.c:1141
 msgid "'caption' must be a character string"
 msgstr "'caption' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1064
+#: src/gnuwin32/extra.c:1069
 msgid "'multi' must be a logical value"
 msgstr "'multi' muss ein boolescher Wert sein"
 
-#: src/gnuwin32/extra.c:1066
+#: src/gnuwin32/extra.c:1071
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' muss ein ganzzahliger Wert sein"
 
-#: src/gnuwin32/extra.c:1218
+#: src/gnuwin32/extra.c:1223
 msgid "'title' must be a character string"
 msgstr "'title' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1235
+#: src/gnuwin32/extra.c:1240
 msgid "'text' must be a character string"
 msgstr "'text' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1265
+#: src/gnuwin32/extra.c:1270
 msgid "'which' must be length 1"
 msgstr "'which' muss Länge 1 haben"
 
-#: src/gnuwin32/extra.c:1297 src/gnuwin32/extra.c:1299
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1302 src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1344
 msgid "invalid device"
 msgstr "ungültiges Device"
 
-#: src/gnuwin32/extra.c:1300
+#: src/gnuwin32/extra.c:1305
 msgid "requires SDI mode"
 msgstr "verlangt SDI Modus"
 
-#: src/gnuwin32/extra.c:1333
+#: src/gnuwin32/extra.c:1338
 msgid "invalid graphical device number"
 msgstr "ungültige Grafikdevicenummer"
 
-#: src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1348
 msgid "bad device"
 msgstr "unbrauchbares Device"
 
-#: src/gnuwin32/extra.c:1664
+#: src/gnuwin32/extra.c:1669
 #, fuzzy, c-format
 msgid "Registry key '%s' not found"
 msgstr "Objekt '%s' nicht gefunden"
 
-#: src/gnuwin32/extra.c:1728 src/gnuwin32/extra.c:1736
+#: src/gnuwin32/extra.c:1733 src/gnuwin32/extra.c:1741
 msgid "invalid input in Rmbstowcs"
 msgstr "ungültige Eingabe in Rmbstowcs"
 
@@ -819,40 +819,40 @@ msgstr "ungültiger unärer Operator"
 msgid "NAs produced by integer overflow"
 msgstr "NAs durch Ganzzahlüberlauf erzeugt"
 
-#: src/main/arithmetic.c:1027
+#: src/main/arithmetic.c:1026
 msgid "unimplemented real function of 1 argument"
 msgstr "nicht implementierte reelle Funktion (1 Argument)"
 
-#: src/main/arithmetic.c:1039 src/main/complex.c:845 src/main/complex.c:917
+#: src/main/arithmetic.c:1038 src/main/complex.c:845 src/main/complex.c:917
 msgid "unimplemented complex function"
 msgstr "nicht implementierte komplexe Funktion"
 
-#: src/main/arithmetic.c:1288 src/main/arithmetic.c:1670
-#: src/main/arithmetic.c:1852 src/main/arithmetic.c:1974
+#: src/main/arithmetic.c:1287 src/main/arithmetic.c:1669
+#: src/main/arithmetic.c:1851 src/main/arithmetic.c:1973
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "nicht implementierte reelle Funktion von %d numerischen Argumenten"
 
-#: src/main/arithmetic.c:1310
+#: src/main/arithmetic.c:1309
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr "%d Argumente an 'atan' übergeben, das aber 1 braucht"
 
-#: src/main/arithmetic.c:1337
+#: src/main/arithmetic.c:1336
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 "%d Argumente an '%s' üergeben, welches aber 1 oder 2 Argumente benötigt"
 
-#: src/main/arithmetic.c:1356
+#: src/main/arithmetic.c:1355
 msgid "invalid second argument of length 0"
 msgstr "unültiges zweites Argument der Länge 0"
 
-#: src/main/arithmetic.c:1415
+#: src/main/arithmetic.c:1414
 msgid "invalid argument 'base' of length 0"
 msgstr "unültiges Argument 'base' mit Länge 0"
 
-#: src/main/arithmetic.c:1423
+#: src/main/arithmetic.c:1422
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d arguments an 'log' üergeben, das 1 oder 2 braucht"
@@ -2229,7 +2229,7 @@ msgstr ""
 "Ersteres wird verwendet"
 
 #: src/main/connections.c:3972 src/modules/internet/internet.c:113
-#: src/modules/internet/internet.c:543
+#: src/modules/internet/internet.c:555
 msgid "unsupported URL scheme"
 msgstr "nicht unterstütztes URL Schema"
 
@@ -4302,31 +4302,31 @@ msgstr "Komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "Variablen des Typs '%s' sind in Modellmatrizen nicht erlaubt"
 
-#: src/main/names.c:960
+#: src/main/names.c:959
 msgid "string argument required"
 msgstr "Zeichenkettenargument benötigt"
 
-#: src/main/names.c:968
+#: src/main/names.c:967
 msgid "no such primitive function"
 msgstr "keine solche primitive Funktion"
 
-#: src/main/names.c:1082
+#: src/main/names.c:1081
 msgid "attempt to use zero-length variable name"
 msgstr "Versuch einen Variablennamen der Länge 0 zu nutzen"
 
-#: src/main/names.c:1084
+#: src/main/names.c:1083
 msgid "symbol print-name too long"
 msgstr "Print-Name eines Symbols zu lang"
 
-#: src/main/names.c:1113
+#: src/main/names.c:1112
 msgid "invalid .Internal() argument"
 msgstr "ungültiges Argument für .Internal()"
 
-#: src/main/names.c:1116
+#: src/main/names.c:1115
 msgid "invalid internal function"
 msgstr "ungültige interne Funktion"
 
-#: src/main/names.c:1118
+#: src/main/names.c:1117
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "keine interne Funktion \"%s\""
@@ -4838,12 +4838,8 @@ msgstr ""
 msgid "invalid value for '%s'"
 msgstr "ungültiger Wert für '%s'"
 
-#: src/main/options.c:558 src/main/options.c:572
+#: src/main/options.c:558 src/main/options.c:571
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
-msgstr ""
-
-#: src/main/par-common.c:142
-msgid "'gamma' cannot be modified on this device"
 msgstr ""
 
 #: src/main/par.c:169
@@ -4890,31 +4886,31 @@ msgstr "Wert für nc in \"mfg\" ist falsch und wird ignoriert"
 msgid "calling par(new=TRUE) with no plot"
 msgstr "par(new) ohne plot aufgerufen"
 
-#: src/main/par.c:700 src/main/par.c:1117
+#: src/main/par.c:700 src/main/par.c:1113
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "Grafikparameter \"%s\" ist veraltet"
 
-#: src/main/par.c:704 src/main/par.c:1121
+#: src/main/par.c:704 src/main/par.c:1117
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" ist kein Grafikparameter"
 
-#: src/main/par.c:1175
+#: src/main/par.c:1171
 msgid "invalid argument passed to par()"
 msgstr "ungültiges Argument an par() übergeben"
 
-#: src/main/par.c:1234
+#: src/main/par.c:1227
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "zu viele Zeilen in layout, höchstens %d zulässig"
 
-#: src/main/par.c:1240
+#: src/main/par.c:1233
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "zu viele Spalten in layout, höchstens %d zulässig"
 
-#: src/main/par.c:1242
+#: src/main/par.c:1235
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "zu viele Zellen in layout, höchstens %d zulässig"
@@ -5884,7 +5880,7 @@ msgstr "xdr Lesefehler bei complex aufgetreten"
 
 #: src/main/saveload.c:1807 src/main/serialize.c:1609
 #: src/main/serialize.c:2134 src/modules/internet/internet.c:351
-#: src/modules/internet/internet.c:408 src/modules/internet/internet.c:500
+#: src/modules/internet/internet.c:410 src/modules/internet/internet.c:508
 msgid "write failed"
 msgstr "Schreibfehler"
 
@@ -7045,54 +7041,54 @@ msgstr "Downloadfortschritt"
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "kann Datei '%s' nicht öffnen. Grund '%s'"
 
-#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:447
-#: src/modules/internet/internet.c:539
+#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:453
+#: src/modules/internet/internet.c:551
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "kann URL '%s' nicht öffnen"
 
 #: src/modules/internet/internet.c:343 src/modules/internet/internet.c:373
-#: src/modules/internet/internet.c:462
+#: src/modules/internet/internet.c:468
 #, fuzzy, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "kann Datei '%s' nicht öffnen. Grund '%s'"
 
 #: src/modules/internet/internet.c:346 src/modules/internet/internet.c:376
-#: src/modules/internet/internet.c:465
+#: src/modules/internet/internet.c:471
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "kann Zieldatei '%s' nicht öffnen"
 
-#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:470
+#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:476
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "versuche URL '%s'\n"
 
-#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:477
+#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:483
 msgid "opened URL\n"
 msgstr "URL geöffnet\n"
 
-#: src/modules/internet/internet.c:443 src/modules/internet/internet.c:535
+#: src/modules/internet/internet.c:449 src/modules/internet/internet.c:547
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "heruntergeladene Länge %d != angegebener Länge %d"
 
-#: src/modules/internet/internet.c:567 src/modules/internet/internet.c:802
+#: src/modules/internet/internet.c:579 src/modules/internet/internet.c:814
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "Öffnen fehlgeschlagen: HTTP Status war '%d %s'"
 
-#: src/modules/internet/internet.c:746 src/modules/internet/internet.c:909
+#: src/modules/internet/internet.c:758 src/modules/internet/internet.c:921
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl Time-Out"
 
-#: src/modules/internet/internet.c:773 src/modules/internet/internet.c:787
-#: src/modules/internet/internet.c:931 src/modules/internet/internet.c:940
+#: src/modules/internet/internet.c:785 src/modules/internet/internet.c:799
+#: src/modules/internet/internet.c:943 src/modules/internet/internet.c:952
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl fehlgeschlagen: '%s'"
 
-#: src/modules/internet/internet.c:844
+#: src/modules/internet/internet.c:856
 msgid "Internet read timed out"
 msgstr "Lesen vom Internet: Time-Out"
 

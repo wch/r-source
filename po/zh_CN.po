@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-26 21:51+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -92,7 +92,7 @@ msgstr "在显示'%s'时出了问题"
 #: src/gnuwin32/extra.c:323 src/gnuwin32/extra.c:347 src/gnuwin32/extra.c:355
 #: src/gnuwin32/extra.c:386 src/gnuwin32/extra.c:405 src/gnuwin32/extra.c:440
 #: src/gnuwin32/extra.c:615 src/gnuwin32/extra.c:699 src/gnuwin32/extra.c:702
-#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1295 src/main/apply.c:192
+#: src/gnuwin32/extra.c:707 src/gnuwin32/extra.c:1300 src/main/apply.c:192
 #: src/main/apply.c:194 src/main/apply.c:197 src/main/array.c:75
 #: src/main/array.c:1027 src/main/array.c:1160 src/main/array.c:1162
 #: src/main/array.c:1163 src/main/attrib.c:193 src/main/builtin.c:158
@@ -238,9 +238,9 @@ msgstr "'loadhistory'只能在Rgui和Rterm有用"
 msgid "invalid timestamp"
 msgstr "时间标签不对"
 
-#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1478
-#: src/gnuwin32/extra.c:1654 src/gnuwin32/extra.c:1657
-#: src/gnuwin32/extra.c:1660 src/main/character.c:844 src/main/colors.c:365
+#: src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:1483
+#: src/gnuwin32/extra.c:1659 src/gnuwin32/extra.c:1662
+#: src/gnuwin32/extra.c:1665 src/main/character.c:844 src/main/colors.c:365
 #: src/main/connections.c:2658 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:585 src/main/datetime.c:651 src/main/datetime.c:867
 #: src/main/dotcode.c:199 src/main/errors.c:857 src/main/errors.c:888
@@ -296,65 +296,65 @@ msgstr "无法打开裁剪板"
 msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
-#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1006
+#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:1007
 msgid "'path' must be a character vector"
 msgstr "'path'必需为字符矢量"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1130
+#: src/gnuwin32/extra.c:1056 src/gnuwin32/extra.c:1135
 msgid "'default' must be a character string"
 msgstr "'default'必需为字符串"
 
-#: src/gnuwin32/extra.c:1053 src/gnuwin32/extra.c:1132
+#: src/gnuwin32/extra.c:1058 src/gnuwin32/extra.c:1137
 msgid "'default' is overlong"
 msgstr "'default'太长了"
 
-#: src/gnuwin32/extra.c:1062 src/gnuwin32/extra.c:1136
+#: src/gnuwin32/extra.c:1067 src/gnuwin32/extra.c:1141
 msgid "'caption' must be a character string"
 msgstr "'caption'必需为字符串"
 
-#: src/gnuwin32/extra.c:1064
+#: src/gnuwin32/extra.c:1069
 msgid "'multi' must be a logical value"
 msgstr "'multi'必需为逻辑值"
 
-#: src/gnuwin32/extra.c:1066
+#: src/gnuwin32/extra.c:1071
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'必需为正数"
 
-#: src/gnuwin32/extra.c:1218
+#: src/gnuwin32/extra.c:1223
 msgid "'title' must be a character string"
 msgstr "'title'必需为字符串"
 
-#: src/gnuwin32/extra.c:1235
+#: src/gnuwin32/extra.c:1240
 msgid "'text' must be a character string"
 msgstr "'text'必需为字符串"
 
-#: src/gnuwin32/extra.c:1265
+#: src/gnuwin32/extra.c:1270
 msgid "'which' must be length 1"
 msgstr "'which'的长度必需为一"
 
-#: src/gnuwin32/extra.c:1297 src/gnuwin32/extra.c:1299
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1302 src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1344
 msgid "invalid device"
 msgstr "设备不对"
 
-#: src/gnuwin32/extra.c:1300
+#: src/gnuwin32/extra.c:1305
 msgid "requires SDI mode"
 msgstr "必需用SDI方式"
 
-#: src/gnuwin32/extra.c:1333
+#: src/gnuwin32/extra.c:1338
 msgid "invalid graphical device number"
 msgstr "图形设备号不对"
 
-#: src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1348
 msgid "bad device"
 msgstr "设备有错"
 
-#: src/gnuwin32/extra.c:1664
+#: src/gnuwin32/extra.c:1669
 #, fuzzy, c-format
 msgid "Registry key '%s' not found"
 msgstr "找不到对象'%s'"
 
-#: src/gnuwin32/extra.c:1728 src/gnuwin32/extra.c:1736
+#: src/gnuwin32/extra.c:1733 src/gnuwin32/extra.c:1741
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 
@@ -813,39 +813,39 @@ msgstr "一进列运算符不对"
 msgid "NAs produced by integer overflow"
 msgstr "整数上溢产生了NA"
 
-#: src/main/arithmetic.c:1027
+#: src/main/arithmetic.c:1026
 msgid "unimplemented real function of 1 argument"
 msgstr "一变元的实数函数目前还没有实现"
 
-#: src/main/arithmetic.c:1039 src/main/complex.c:845 src/main/complex.c:917
+#: src/main/arithmetic.c:1038 src/main/complex.c:845 src/main/complex.c:917
 msgid "unimplemented complex function"
 msgstr "目前没有实现复数功能"
 
-#: src/main/arithmetic.c:1288 src/main/arithmetic.c:1670
-#: src/main/arithmetic.c:1852 src/main/arithmetic.c:1974
+#: src/main/arithmetic.c:1287 src/main/arithmetic.c:1669
+#: src/main/arithmetic.c:1851 src/main/arithmetic.c:1973
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值变元的实数函数目前没有实现"
 
-#: src/main/arithmetic.c:1310
+#: src/main/arithmetic.c:1309
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr "给了'atan'%d个变元，但它最多只能用一个变元"
 
-#: src/main/arithmetic.c:1337
+#: src/main/arithmetic.c:1336
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "给了%d个变元到'%s'，但它最多只能用两个变元"
 
-#: src/main/arithmetic.c:1356
+#: src/main/arithmetic.c:1355
 msgid "invalid second argument of length 0"
 msgstr "第二变元长度为零是不对的"
 
-#: src/main/arithmetic.c:1415
+#: src/main/arithmetic.c:1414
 msgid "invalid argument 'base' of length 0"
 msgstr "不能有长度为零的'base'变元"
 
-#: src/main/arithmetic.c:1423
+#: src/main/arithmetic.c:1422
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "给了'log'%d个变元，但它最多只能用两个变元"
@@ -2197,7 +2197,7 @@ msgid ""
 msgstr "file(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现在使用前者"
 
 #: src/main/connections.c:3972 src/modules/internet/internet.c:113
-#: src/modules/internet/internet.c:543
+#: src/modules/internet/internet.c:555
 msgid "unsupported URL scheme"
 msgstr "不支持这种URL方案"
 
@@ -4250,31 +4250,31 @@ msgstr "模型矩阵里目前不能有复数"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "模型矩阵里不能有种类为'%s'的变元"
 
-#: src/main/names.c:960
+#: src/main/names.c:959
 msgid "string argument required"
 msgstr "需要字符串变元"
 
-#: src/main/names.c:968
+#: src/main/names.c:967
 msgid "no such primitive function"
 msgstr "没有这种原始函数"
 
-#: src/main/names.c:1082
+#: src/main/names.c:1081
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零长度变数名"
 
-#: src/main/names.c:1084
+#: src/main/names.c:1083
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1113
+#: src/main/names.c:1112
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1116
+#: src/main/names.c:1115
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1118
+#: src/main/names.c:1117
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"
@@ -4765,12 +4765,8 @@ msgstr ""
 msgid "invalid value for '%s'"
 msgstr "'%s'的值不对"
 
-#: src/main/options.c:558 src/main/options.c:572
+#: src/main/options.c:558 src/main/options.c:571
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
-msgstr ""
-
-#: src/main/par-common.c:142
-msgid "'gamma' cannot be modified on this device"
 msgstr ""
 
 #: src/main/par.c:169
@@ -4817,31 +4813,31 @@ msgstr "\"mfg\"里的nc值不对，略过不用"
 msgid "calling par(new=TRUE) with no plot"
 msgstr "不绘图就不能调用par(new=)"
 
-#: src/main/par.c:700 src/main/par.c:1117
+#: src/main/par.c:700 src/main/par.c:1113
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "图形参数\"%s\"已过期不用了"
 
-#: src/main/par.c:704 src/main/par.c:1121
+#: src/main/par.c:704 src/main/par.c:1117
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"不是图形参数"
 
-#: src/main/par.c:1175
+#: src/main/par.c:1171
 msgid "invalid argument passed to par()"
 msgstr "传给par()的参数错误"
 
-#: src/main/par.c:1234
+#: src/main/par.c:1227
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout里的行数太多, 极限为%d"
 
-#: src/main/par.c:1240
+#: src/main/par.c:1233
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout里的列数太多, 极限为%d"
 
-#: src/main/par.c:1242
+#: src/main/par.c:1235
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout里的元素太多, 极限为%d"
@@ -5802,7 +5798,7 @@ msgstr "xdr复数数据读取错误"
 
 #: src/main/saveload.c:1807 src/main/serialize.c:1609
 #: src/main/serialize.c:2134 src/modules/internet/internet.c:351
-#: src/modules/internet/internet.c:408 src/modules/internet/internet.c:500
+#: src/modules/internet/internet.c:410 src/modules/internet/internet.c:508
 msgid "write failed"
 msgstr "书写失败"
 
@@ -6949,54 +6945,54 @@ msgstr "正在下载"
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "无法打开文件'%s'，原因是'%s'"
 
-#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:447
-#: src/modules/internet/internet.c:539
+#: src/modules/internet/internet.c:336 src/modules/internet/internet.c:453
+#: src/modules/internet/internet.c:551
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "无法打开URL'%s'"
 
 #: src/modules/internet/internet.c:343 src/modules/internet/internet.c:373
-#: src/modules/internet/internet.c:462
+#: src/modules/internet/internet.c:468
 #, fuzzy, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "无法打开文件'%s'，原因是'%s'"
 
 #: src/modules/internet/internet.c:346 src/modules/internet/internet.c:376
-#: src/modules/internet/internet.c:465
+#: src/modules/internet/internet.c:471
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "无法打开destfile'%s'"
 
-#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:470
+#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:476
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "试开URL’%s'\n"
 
-#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:477
+#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:483
 msgid "opened URL\n"
 msgstr "打开了URL\n"
 
-#: src/modules/internet/internet.c:443 src/modules/internet/internet.c:535
+#: src/modules/internet/internet.c:449 src/modules/internet/internet.c:547
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "下载的长度%d不等于报告的长度%d"
 
-#: src/modules/internet/internet.c:567 src/modules/internet/internet.c:802
+#: src/modules/internet/internet.c:579 src/modules/internet/internet.c:814
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "无法打开: HTTP状态是'%d%s'"
 
-#: src/modules/internet/internet.c:746 src/modules/internet/internet.c:909
+#: src/modules/internet/internet.c:758 src/modules/internet/internet.c:921
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl超时"
 
-#: src/modules/internet/internet.c:773 src/modules/internet/internet.c:787
-#: src/modules/internet/internet.c:931 src/modules/internet/internet.c:940
+#: src/modules/internet/internet.c:785 src/modules/internet/internet.c:799
+#: src/modules/internet/internet.c:943 src/modules/internet/internet.c:952
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl失败:’%s'"
 
-#: src/modules/internet/internet.c:844
+#: src/modules/internet/internet.c:856
 msgid "Internet read timed out"
 msgstr "互联网读取超时"
 

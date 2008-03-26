@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 09:08\n"
+"POT-Creation-Date: 2008-03-26 21:52\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -211,15 +211,6 @@ msgid ""
 "first argument should be the name(s) of generic functions (got object of "
 "class \"%s\")"
 msgstr "第一个变元应当为同屬函数的名称(现在却是类别为\"%s\"的对象)"
-
-msgid ""
-"No generic function found for \"%s\"; no action taken in removeMethodsObject"
-msgstr "找不到为\"%s\"设的同属函数；因此removeMethodsObject没有效果"
-
-msgid ""
-"the environment/package \"%s\" is locked; cannot remove methods data for \"%s"
-"\""
-msgstr "环境/程輯包'%s'被锁住了； 无法为'%s'删除方法信息"
 
 msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr "'%s'不是在'%s'里的同屬函数；因此方法没有被删除掉"
@@ -536,22 +527,6 @@ msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "类别\"%s\"没有数据部分(.Data 槽)"
 
 msgid ""
-"trying to change the argument list of %s with %d arguments to have arguments "
-"(%s)"
-msgstr "无法将带%d变元函数%s的变元串列改成带(%s) 变元"
-
-msgid ""
-"get rid of variables in definition %s (%s); they conflict with the needed "
-"change to argument names (%s)"
-msgstr "删除定义(%s)里的变量；它们与需要改变的变元名字(%s)有矛盾"
-
-msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "定义%s里的变元从(%s)改为(%s)"
-
-msgid ","
-msgstr ","
-
-msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
 msgstr "正确的方法必需的带一个变元的函数，收到的却是类别为\"%s\"的对象"
@@ -633,11 +608,6 @@ msgid "formal arguments in method and function do not appear in the same order"
 msgstr "方法里的正式变元和函数两都的顺序不同"
 
 msgid ""
-"%s function arguments omitted from method arguments, (%s), were found in "
-"method definition"
-msgstr ""
-
-msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
 msgstr "方法定义里所忽略的正式变元不能存在于标记(%s) 里"
@@ -647,6 +617,9 @@ msgstr "在定义里扩展标记来包括进忽略了的变元：%s"
 
 msgid "= \"missing\""
 msgstr "= \"missing\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
@@ -673,16 +646,6 @@ msgstr "为'%s'找不到同屬函数"
 
 msgid "Empty function name in .getGeneric"
 msgstr ""
-
-msgid ""
-"the methods object name for \"%s\" must include the name of the package that "
-"contains the generic function, but no generic function of this name was found"
-msgstr ""
-"'%s'的方法对象名字必需有包含了同屬函数的程輯包的名字，但有这个名字的同屬函数"
-"却不存在"
-
-msgid "no way to associate a generic function with an object of class \"%s\""
-msgstr "无法将同屬函数与类别为\"%s\"的对象联系起来"
 
 msgid ""
 "Package \"%s\" seems to have out-of-date methods; need to reinstall from "
@@ -1227,6 +1190,41 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid ""
+#~ "No generic function found for \"%s\"; no action taken in "
+#~ "removeMethodsObject"
+#~ msgstr "找不到为\"%s\"设的同属函数；因此removeMethodsObject没有效果"
+
+#~ msgid ""
+#~ "the environment/package \"%s\" is locked; cannot remove methods data for "
+#~ "\"%s\""
+#~ msgstr "环境/程輯包'%s'被锁住了； 无法为'%s'删除方法信息"
+
+#~ msgid ""
+#~ "trying to change the argument list of %s with %d arguments to have "
+#~ "arguments (%s)"
+#~ msgstr "无法将带%d变元函数%s的变元串列改成带(%s) 变元"
+
+#~ msgid ""
+#~ "get rid of variables in definition %s (%s); they conflict with the needed "
+#~ "change to argument names (%s)"
+#~ msgstr "删除定义(%s)里的变量；它们与需要改变的变元名字(%s)有矛盾"
+
+#~ msgid "arguments in definition %s changed from (%s) to (%s)"
+#~ msgstr "定义%s里的变元从(%s)改为(%s)"
+
+#~ msgid ""
+#~ "the methods object name for \"%s\" must include the name of the package "
+#~ "that contains the generic function, but no generic function of this name "
+#~ "was found"
+#~ msgstr ""
+#~ "'%s'的方法对象名字必需有包含了同屬函数的程輯包的名字，但有这个名字的同屬函"
+#~ "数却不存在"
+
+#~ msgid ""
+#~ "no way to associate a generic function with an object of class \"%s\""
+#~ msgstr "无法将同屬函数与类别为\"%s\"的对象联系起来"
 
 #~ msgid "no methods found for generic \"%s\""
 #~ msgstr "同屬'%s'里不存在任何方法"

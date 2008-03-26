@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 09:08\n"
+"POT-Creation-Date: 2008-03-26 21:52\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -258,18 +258,6 @@ msgid ""
 msgstr ""
 "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
 "especificado objeto de classe \"%s\""
-
-msgid ""
-"No generic function found for \"%s\"; no action taken in removeMethodsObject"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"the environment/package \"%s\" is locked; cannot remove methods data for \"%s"
-"\""
-msgstr ""
-"o ambiente/pacote '%s' está bloqueado; não é possível remover dados de "
-"métodos para '%s'"
 
 #, fuzzy
 msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
@@ -651,29 +639,6 @@ msgstr "nenhum slot '.Data' definido para a classe \"%s\""
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "classe \"%s\" não tem uma parte de dados (um slot .Data) definida"
 
-#, fuzzy
-msgid ""
-"trying to change the argument list of %s with %d arguments to have arguments "
-"(%s)"
-msgstr ""
-"tentando mudar a lista de argumentos de uma função com %d argumentos para "
-"ter argumentos (%s)"
-
-#, fuzzy
-msgid ""
-"get rid of variables in definition %s (%s); they conflict with the needed "
-"change to argument names (%s)"
-msgstr ""
-"tire as variáveis da definição (%s); elas conflitam com as mudanças "
-"necessárias dos nomes de argumentos (%s)"
-
-#, fuzzy
-msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "argumentos nã definição mudaram de (%s) para (%s)"
-
-msgid ","
-msgstr ","
-
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
@@ -752,11 +717,6 @@ msgid "formal arguments in method and function do not appear in the same order"
 msgstr ""
 
 msgid ""
-"%s function arguments omitted from method arguments, (%s), were found in "
-"method definition"
-msgstr ""
-
-msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
 msgstr ""
@@ -766,6 +726,9 @@ msgstr ""
 
 msgid "= \"missing\""
 msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
@@ -792,14 +755,6 @@ msgid "no generic function found for \"%s\""
 msgstr "nenhuma função genérica '%s' encontrada"
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
-
-msgid ""
-"the methods object name for \"%s\" must include the name of the package that "
-"contains the generic function, but no generic function of this name was found"
-msgstr ""
-
-msgid "no way to associate a generic function with an object of class \"%s\""
 msgstr ""
 
 msgid ""
@@ -1348,6 +1303,34 @@ msgstr[0] ""
 msgstr[1] ""
 "na assinatura do método da função '%s' nomes de argumentos inválidos na "
 "assinatura: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "the environment/package \"%s\" is locked; cannot remove methods data for "
+#~ "\"%s\""
+#~ msgstr ""
+#~ "o ambiente/pacote '%s' está bloqueado; não é possível remover dados de "
+#~ "métodos para '%s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "trying to change the argument list of %s with %d arguments to have "
+#~ "arguments (%s)"
+#~ msgstr ""
+#~ "tentando mudar a lista de argumentos de uma função com %d argumentos para "
+#~ "ter argumentos (%s)"
+
+#, fuzzy
+#~ msgid ""
+#~ "get rid of variables in definition %s (%s); they conflict with the needed "
+#~ "change to argument names (%s)"
+#~ msgstr ""
+#~ "tire as variáveis da definição (%s); elas conflitam com as mudanças "
+#~ "necessárias dos nomes de argumentos (%s)"
+
+#, fuzzy
+#~ msgid "arguments in definition %s changed from (%s) to (%s)"
+#~ msgstr "argumentos nã definição mudaram de (%s) para (%s)"
 
 #, fuzzy
 #~ msgid "no methods found for generic \"%s\""

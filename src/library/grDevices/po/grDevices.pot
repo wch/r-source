@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-26 21:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -417,24 +417,24 @@ msgstr ""
 msgid "unable to start device PicTeX"
 msgstr ""
 
-#: devQuartz.c:968
+#: devQuartz.c:977
 msgid "invalid 'file' argument"
 msgstr ""
 
-#: devQuartz.c:997
+#: devQuartz.c:1005
 msgid "invalid Quartz device size"
 msgstr ""
 
-#: devQuartz.c:1024
+#: devQuartz.c:1032
 msgid "Unable to create device description."
 msgstr ""
 
-#: devQuartz.c:1074
+#: devQuartz.c:1086
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1095
-msgid "Quartz device is not available on this platform."
+#: devQuartz.c:1107
+msgid "Quartz device is not available on this platform"
 msgstr ""
 
 #: devWindows.c:275 devWindows.c:319 devWindows.c:388

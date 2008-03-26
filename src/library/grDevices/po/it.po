@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-26 21:52+0000\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -424,28 +424,28 @@ msgstr "impossibile aprire dispositivo pdf"
 msgid "unable to start device PicTeX"
 msgstr "impossibile aprire dispositivo PicTeX"
 
-#: devQuartz.c:968
+#: devQuartz.c:977
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "argomento stringa non valido"
 
-#: devQuartz.c:997
+#: devQuartz.c:1005
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "dispositivo non valido in savePlot"
 
-#: devQuartz.c:1024
+#: devQuartz.c:1032
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "impossibile aprire dispositivo PostScript"
 
-#: devQuartz.c:1074
+#: devQuartz.c:1086
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1095
+#: devQuartz.c:1107
 #, fuzzy
-msgid "Quartz device is not available on this platform."
+msgid "Quartz device is not available on this platform"
 msgstr "Il dispositivo Quartz non è disponibile per questa piattaforma"
 
 #: devWindows.c:275 devWindows.c:319 devWindows.c:388

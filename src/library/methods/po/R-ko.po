@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-25 09:08\n"
+"POT-Creation-Date: 2008-03-26 21:52\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -253,18 +253,6 @@ msgstr ""
 "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 이름"
 "이어야만\n"
 "합니다"
-
-msgid ""
-"No generic function found for \"%s\"; no action taken in removeMethodsObject"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"the environment/package \"%s\" is locked; cannot remove methods data for \"%s"
-"\""
-msgstr ""
-"환경/패키지 '%s'는 락(lock)이 되었습니다; '%s'에 때문에 메소드 데이터를 \n"
-"제거할 수 없습니다"
 
 #, fuzzy
 msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
@@ -652,28 +640,6 @@ msgstr "클래스 \"%s\"때문에 정해지는 '.Data' slot이 아닙니다"
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "클래스 \"%s\"는 데이터 일부(.Data slot)를 정해지지 않습니다"
 
-#, fuzzy
-msgid ""
-"trying to change the argument list of %s with %d arguments to have arguments "
-"(%s)"
-msgstr ""
-"인수(%s) 때문에 %d 인수와 함수의 논의 리스트를 %d인수와 변경하려고 합니다"
-
-#, fuzzy
-msgid ""
-"get rid of variables in definition %s (%s); they conflict with the needed "
-"change to argument names (%s)"
-msgstr ""
-"정의(%s)에서 변수를 제거 해주십시오;그것들은 인수명(%s)에의 \n"
-"필요하게 되는 변경과 모순됩니다 "
-
-#, fuzzy
-msgid "arguments in definition %s changed from (%s) to (%s)"
-msgstr "(%s)에서(%s)부터 변경되어진 정의 인수입니다"
-
-msgid ","
-msgstr ","
-
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
@@ -767,11 +733,6 @@ msgid "formal arguments in method and function do not appear in the same order"
 msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
 msgid ""
-"%s function arguments omitted from method arguments, (%s), were found in "
-"method definition"
-msgstr ""
-
-msgid ""
 "formal arguments omitted in the method definition cannot be in the signature "
 "(%s)"
 msgstr "메소드 정의에서 생략된 형식상의 인수는 기호(%s)에 있을 수 없습니다"
@@ -781,6 +742,9 @@ msgstr "포함한 기호를 확대하는 것은 명확함으로 인수를 생략
 
 msgid "= \"missing\""
 msgstr "=\\\"이상하다\""
+
+msgid ","
+msgstr ","
 
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
@@ -811,18 +775,6 @@ msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
 msgid "Empty function name in .getGeneric"
 msgstr ""
-
-#, fuzzy
-msgid ""
-"the methods object name for \"%s\" must include the name of the package that "
-"contains the generic function, but no generic function of this name was found"
-msgstr ""
-"'%s' 메소드 오브젝트 이름은 generic 메소드를 포함한 패키지의 이름을 \n"
-"포함하지 않으면 안됩니다, 그러나 이 이름의 generic인 함수가 없습니다"
-
-msgid "no way to associate a generic function with an object of class \"%s\""
-msgstr ""
-"메소드는 인수 generic 함수를 클래스 \"%s\" 오브젝트와 묶는 방법이 아닙니다"
 
 msgid ""
 "Package \"%s\" seems to have out-of-date methods; need to reinstall from "
@@ -1465,6 +1417,47 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "the environment/package \"%s\" is locked; cannot remove methods data for "
+#~ "\"%s\""
+#~ msgstr ""
+#~ "환경/패키지 '%s'는 락(lock)이 되었습니다; '%s'에 때문에 메소드 데이터를 \n"
+#~ "제거할 수 없습니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "trying to change the argument list of %s with %d arguments to have "
+#~ "arguments (%s)"
+#~ msgstr ""
+#~ "인수(%s) 때문에 %d 인수와 함수의 논의 리스트를 %d인수와 변경하려고 합니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "get rid of variables in definition %s (%s); they conflict with the needed "
+#~ "change to argument names (%s)"
+#~ msgstr ""
+#~ "정의(%s)에서 변수를 제거 해주십시오;그것들은 인수명(%s)에의 \n"
+#~ "필요하게 되는 변경과 모순됩니다 "
+
+#, fuzzy
+#~ msgid "arguments in definition %s changed from (%s) to (%s)"
+#~ msgstr "(%s)에서(%s)부터 변경되어진 정의 인수입니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "the methods object name for \"%s\" must include the name of the package "
+#~ "that contains the generic function, but no generic function of this name "
+#~ "was found"
+#~ msgstr ""
+#~ "'%s' 메소드 오브젝트 이름은 generic 메소드를 포함한 패키지의 이름을 \n"
+#~ "포함하지 않으면 안됩니다, 그러나 이 이름의 generic인 함수가 없습니다"
+
+#~ msgid ""
+#~ "no way to associate a generic function with an object of class \"%s\""
+#~ msgstr ""
+#~ "메소드는 인수 generic 함수를 클래스 \"%s\" 오브젝트와 묶는 방법이 아닙니다"
 
 #, fuzzy
 #~ msgid "no methods found for generic \"%s\""

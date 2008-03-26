@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2008-03-26 21:52+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -421,28 +421,28 @@ msgstr "无法启动pdf装置"
 msgid "unable to start device PicTeX"
 msgstr "无法启动PicTeX装置"
 
-#: devQuartz.c:968
+#: devQuartz.c:977
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "字符串变元不对"
 
-#: devQuartz.c:997
+#: devQuartz.c:1005
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "savePlot装置出错"
 
-#: devQuartz.c:1024
+#: devQuartz.c:1032
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "无法启动PostScript装置"
 
-#: devQuartz.c:1074
+#: devQuartz.c:1086
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1095
+#: devQuartz.c:1107
 #, fuzzy
-msgid "Quartz device is not available on this platform."
+msgid "Quartz device is not available on this platform"
 msgstr "这个平台上没有石英装置"
 
 #: devWindows.c:275 devWindows.c:319 devWindows.c:388
