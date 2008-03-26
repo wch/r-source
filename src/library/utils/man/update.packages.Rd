@@ -40,7 +40,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
 download.packages(pkgs, destdir, available = NULL,
                   repos = getOption("repos"),
                   contriburl = contrib.url(repos, type),
-                  method, type = getOption("pkgType"))
+                  method, type = getOption("pkgType"), \dots)
 
 install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
@@ -48,7 +48,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 		 installWithVers = FALSE, dependencies = NA,
                  type = getOption("pkgType"),
                  configure.args = character(0),
-                 clean = FALSE)
+                 clean = FALSE, \dots)
 
 contrib.url(repos, type = getOption("pkgType"))
 }
@@ -146,7 +146,11 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{install.packages}.
 
     (for \code{new.packages}).  Arguments such as \code{destdir}
-    and \code{dependencies} to be passed to \code{install.packages}.}
+    and \code{dependencies} to be passed to \code{install.packages}.
+
+    (for \code{install.packages} and \code{download.packages}) arguments
+    to be passed to \code{\link{download.file}}.
+  }
   \item{type}{character, indicating the type of package to download and
     install.
 #ifdef unix

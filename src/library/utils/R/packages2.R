@@ -20,7 +20,7 @@ install.packages <-
              method, available = NULL, destdir = NULL,
              installWithVers = FALSE, dependencies = NA,
              type = getOption("pkgType"), configure.args = character(0),
-             clean = FALSE)
+             clean = FALSE, ...)
 {
     if (is.logical(clean) && clean)
         clean <- "--clean"
@@ -159,7 +159,7 @@ install.packages <-
                                method = method, available = available,
                                destdir = destdir,
                                installWithVers = installWithVers,
-                               dependencies = dependencies)
+                               dependencies = dependencies, ...)
             return(invisible())
         }
     } else {
@@ -170,7 +170,7 @@ install.packages <-
                                method = method, available = available,
                                destdir = destdir,
                                installWithVers = installWithVers,
-                               dependencies = dependencies)
+                               dependencies = dependencies, ...)
             return(invisible())
         }
 
@@ -304,7 +304,7 @@ install.packages <-
 
     foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
-                                   type = "source")
+                                   type = "source", ...)
 
     ## at this point pkgs may contain duplicates,
     ## the same pkg in different libs

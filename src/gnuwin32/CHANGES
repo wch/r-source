@@ -212,19 +212,23 @@ OTHERS
     o	When Sweave() adds its style file, it now uses shortPathName()
 	on the path so that there are no spaces.
 
+    o	The progress bar in download.file() is now supressed by
+    	quiet=TRUE (as it has long been on Unix).
+
+
 BUILDING R
 
     o	Support for the ACML BLAS has been withdrawn (there is no
 	version of ACML 4.0.0 for gcc under Windows, and none at all
 	for gfortran).
 
-    o	We now presume version 2.7.0 of Rtools.exe, in which gcc is
+    o	We assume version 2.7.0 of Rtools.exe, in which gcc is
 	version 4.2.1.
 
-    o	We now assume Tcl/Tk version 8.5.x (included in version 2.7.0 of
+    o	We assume Tcl/Tk version 8.5.x (included in version 2.7.0 of
 	Rtools.exe).  Earlier versions can be selected in MkRules.
-	The distribution in the binary installer includes the BWidget
-	and Tktable extensions.
+	The distribution in Rtools (and hence in the binary installer)
+	includes the BWidget and Tktable extensions.
 
 
 BUG FIXES

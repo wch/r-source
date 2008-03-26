@@ -25,7 +25,7 @@
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = FALSE)
+             installWithVers = FALSE, dependencies = FALSE, ...)
 {
     unpackPkg <- function(pkg, pkgname, lib, installWithVers = FALSE)
     {
@@ -264,7 +264,7 @@
 
     foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
-                                   type = "win.binary")
+                                   type = "win.binary", ...)
 
     if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))

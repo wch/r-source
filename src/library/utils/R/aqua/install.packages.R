@@ -21,7 +21,7 @@
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type="mac.binary"),
              method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = FALSE)
+             installWithVers = FALSE, dependencies = FALSE, ...)
 {
     link.html.help<-function(verbose = FALSE, ...)
     {
@@ -205,7 +205,7 @@
 
     foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
-                                   type = "mac.binary")
+                                   type = "mac.binary", ...)
 
     if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
