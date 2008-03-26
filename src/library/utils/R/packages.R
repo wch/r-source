@@ -455,7 +455,7 @@ remove.packages <- function(pkgs, lib, version) {
 download.packages <- function(pkgs, destdir, available = NULL,
                               repos = getOption("repos"),
                               contriburl = contrib.url(repos, type),
-                              method, type = getOption("pkgType"))
+                              method, type = getOption("pkgType"), ...)
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
@@ -512,7 +512,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 url <- paste(repos, fn, sep="/")
                 destfile <- file.path(destdir, fn)
 
-                res <- try(download.file(url, destfile, method, mode="wb"))
+                res <- try(download.file(url, destfile, method, mode="wb", ...))
                 if(!inherits(res, "try-error") && res == 0)
                     retval <- rbind(retval, c(p, destfile))
                 else
