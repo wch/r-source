@@ -16,6 +16,7 @@
 \alias{getPrototype}
 \alias{getSubclasses}
 \alias{getVirtual}
+\alias{seemsS4Object}
 \title{Defunct Functions in the Methods Package}
 \description{
   Defunct functions in package \pkg{methods}.
