@@ -222,24 +222,6 @@ defaultDumpName <-
 }
 
 
-getAllMethods <-
-  ## THIS FUNCTION IS DEPRECATED AS OF 2.7.0
-  ## It has not returned what its documentation claims at least since method
-  ## tables were introduced.  It is now defined in terms of tables, roughly equivalen
-  ## to getMethods()
-  function(f, fdef, where = topenv(parent.frame())) {
-      .methodsDeprecated("getAllMethods", "(it has not returned what its documentation claimed for several versions):  See the current documentation and use getMethods() or preferrably findMethods() instead")
-      if(missing(fdef)) {
-          if(missing(where))
-            .makeMlistFromTable(getGeneric(f))
-          else
-            getMethodsMetaData(f, where = where)
-      }
-      else
-        .makeMlistFromTable(fdef)
-  }
-
-
 mergeMethods <-
   ## merge the methods in the second MethodsList object into the first,
   ## and return the merged result.
@@ -614,13 +596,13 @@ getGroup <-
     else
         group
 }
-    
-getMethodsMetaData <- 
+
+getMethodsMetaData <-
 function(f, where = topenv(parent.frame())) {
 ## For 2.8.0?    .methodsDeprecated("getMethodsMetaData", "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives")
     fdef <- getGeneric(f, where = where)
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
-    if (exists(mname, where = where, inherits = missing(where))) 
+    if (exists(mname, where = where, inherits = missing(where)))
         get(mname, where)
 }
 
@@ -630,7 +612,7 @@ assignMethodsMetaData <-
   ## either disappear or deal only with primitives & groups in l
   function(f, value, fdef, where, deflt = finalDefaultMethod(value)) {
       where <- as.environment(where)
-      mname <- methodsPackageMetaName("M",fdef@generic, fdef@package) 
+      mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
       if(exists(mname, envir = where, inherits = FALSE) && bindingIsLocked(mname, where))
         {} # may be called from trace() with locked binding; ignore
       else
@@ -641,54 +623,6 @@ assignMethodsMetaData <-
         cacheGenericsMetaData(f, fdef, where = where, package = fdef@package)
   }
 
-mlistMetaName <-
-  ## name mangling to simulate metadata for a methods definition.
-  function(name = "", package = "") {
-  .methodsDeprecated("mlistMetaName", "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives; see ?mlistMetaName")
-      if(is.character(name) && is.character(package)) ## all legit. calls satisfy this
-        return(methodsPackageMetaName("M", name, package))
-      .methodsDeprecated("mlistMetaName", "Should be called with name, package as character string data (and will be deprecated entirely in the future)")
-      if(!is.character(package)) { # find the generic starting from envir. or search list
-          fdef <- getGeneric(name, where = package)
-          if(is.null(fdef))
-              package <- ""
-          else
-              package <- fdef@package
-      }
-      else # delay finding the generic until we need it
-          fdef <- NULL
-      if(is(name, "genericFunction"))
-          methodsPackageMetaName("M", name@generic, name@package)
-      else if(missing(name))
-          methodsPackageMetaName("M","")
-      else if(is.character(name)) {
-          if(!nzchar(package)) {
-              pkg <- packageSlot(name)
-              if(!is.null(pkg))
-                package <- pkg
-          }
-          if(length(name) > 1 && !identical(package, "")) {
-              value <- name
-              name <- paste(name, package, sep=":")
-              for(i in seq_along(value))
-                  value[[i]] = methodsPackageMetaName("M", name[[i]], package)
-          }
-          else if(nzchar(package))
-             return(methodsPackageMetaName("M", paste(name, package, sep=":")))
-          else {
-              if(is.null(fdef)) {
-                  if(nzchar(package))
-                    return(methodsPackageMetaName("M",paste(name,package, sep=":")))
-                  fdef <- getGeneric(name)
-                  if(!is(fdef, "genericFunction"))
-                        stop(gettextf("the methods object name for \"%s\" must include the name of the package that contains the generic function, but no generic function of this name was found", name), domain = NA)
-                  }
-          }
-          methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
-      }
-      else
-          stop(gettextf("no way to associate a generic function with an object of class \"%s\"", class(name)), domain = NA)
-  }
 
 ## utility for getGenerics to return package(s)
 .packageForGeneric <- function(object) {

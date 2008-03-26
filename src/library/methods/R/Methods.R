@@ -919,30 +919,6 @@ showMethods <-
     invisible(printTo)
 }
 
-## this should be made obsolete:  asserted that it is no longer called in this package
-removeMethodsObject <-
-    function(f, where = topenv(parent.frame()))
-{
-    .Deprecated()# (for 2.7.0) -- defunct for 2.8.0
-
-    fdef <- getGeneric(f, where=where)
-    if(!is(fdef, "genericFunction")) {
-      warning(gettextf(
-    "No generic function found for \"%s\"; no action taken in removeMethodsObject", f))
-      return(FALSE)
-  }
-  what <- methodsPackageMetaName("M", f, fdef@package)
-  if(!exists(what, where, inherits = FALSE))
-      return(FALSE)
-  where <- as.environment(where)
-  if(environmentIsLocked(where)) {
-      warning(gettextf("the environment/package \"%s\" is locked; cannot remove methods data for \"%s\"",
-                       getPackageName(where), f), domain = NA)
-      return(FALSE)
-  }
-  rm(list = what, pos = where)
-  TRUE
-}
 
 
 removeMethods <-

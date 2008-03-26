@@ -18,7 +18,7 @@ NEW FEATURES
 DEPRECATED & DEFUNCT
 
     o	Use in packages of the graphics headers Rdevices.h and
-	Rgraphics.h is defunct.
+	Rgraphics.h is defunct: they are no longer installed.
 
     o	options("par.ask.default") is defunct in favour of
 	"device.ask.default".
@@ -29,6 +29,11 @@ DEPRECATED & DEFUNCT
     o	gammaCody() is defunct.
 
     o	par("gamma") is defunct.
+
+    o	'methods' package functions getAccess(), getAllMethods(),
+	getClassName(), getClassPackage(), getExtends(),
+	getProperties(), getPrototype(), getSubclasses, getVirtual(),
+	mlistMetaName(), and removeMethodsObject() are defunct.
 
 
 
