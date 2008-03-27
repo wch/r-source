@@ -1392,22 +1392,6 @@ SEXP R_pseudo_null() {
 /* the @ operator, and its assignment form.  Processed much like $
    (see do_subset3) but without S3-style methods.
 */
-#ifdef noSlotCheck
-SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP  nlist, object, ans;
-
-    nlist = CADR(args);
-    PROTECT(object = eval(CAR(args), env));
-    ans = R_do_slot(object, nlist);
-    UNPROTECT(1);
-    return ans;
-}
-
-#else
-
-static Rboolean can_test_S4Object = FALSE; /* turning this to TRUE will throw
-   error or warning on all packages that have not been reinstalled for current R 2.3 */
 SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans, klass;
@@ -1421,28 +1405,20 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid type or length for slot name"));
     if(isString(nlist)) nlist = install(translateChar(STRING_ELT(nlist, 0)));
     PROTECT(object = eval(CAR(args), env));
-    if(can_test_S4Object && !IS_S4_OBJECT(object)) {
+    if(!s_dot_Data) init_slot_handling();
+    if(nlist != s_dot_Data && !IS_S4_OBJECT(object)) {
 	klass = getAttrib(object, R_ClassSymbol);
 	if(length(klass) == 0)
 	    error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
 		  CHAR(PRINTNAME(nlist)),
 		  CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
-	else {
-	    if(isString(klass) &&
-	       streql(CHAR(STRING_ELT(klass, 0)), "classRepresentation")) {
-		warning("Class representations out of date--package(s) need to be reinstalled");
-		can_test_S4Object = FALSE; /* turn tests off to avoid repeated warnings */
-	    }
-	    else
-		error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
-		      CHAR(PRINTNAME(nlist)),
-		      translateChar(STRING_ELT(klass, 0)));
-	}
+	else
+	    error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
+		  CHAR(PRINTNAME(nlist)),
+		  translateChar(STRING_ELT(klass, 0)));
     }
 
     ans = R_do_slot(object, nlist);
     UNPROTECT(1);
     return ans;
 }
-
-#endif

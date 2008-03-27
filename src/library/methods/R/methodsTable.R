@@ -182,7 +182,7 @@
            "\"), expected a method, got an object of class \"",
            class(method), "\"")
     if(length(label) < n) {
-      label@.Data  <- ifelse(seqN>length(label), anyLabel, label@.Data)
+      label@.Data  <- ifelse(seqN > length(label), anyLabel, label@.Data)
       label@names <- signames
       method@defined <- method@target <- label
     }
@@ -449,7 +449,7 @@
         mlist <- generic@default # either a list with the default or an empty list
         mtable <- .mlistAddToTable(generic, mlist) # by default, adds to an empty table
         assign(".MTable", mtable, envir = env)
-    } # else the current .MTable 
+    } # else the current .MTable
     else
       mtable <- getMethodsForDispatch(generic)
     .resetInheritedMethods(env, mtable)
@@ -522,7 +522,7 @@
                               classes = NULL, showEmpty = TRUE, printTo = stdout())
 {
     cf <- function(...) cat(file = printTo, sep = "", ...)
-    sigString <- function(sig) paste(sig@names, "=\"", as.character(sig), "\"",
+    sigString <- function(sig) paste(names(sig), "=\"", as.character(sig), "\"",
 				     sep = "", collapse = ", ")
     qs <- function(what) paste('"', what, '"', collapse = ", ", sep = "")
     doFun <- function(func, pkg) cf("Function: ", func, " (package ", pkg, ")\n")
@@ -923,7 +923,7 @@ listFromMethods <- function(generic, where, table) {
     length(argNames) <- nargs # the number of args used
     if(nargs == 1)
         .makeMlist1(as.name(argNames[[1]]), .getAll(allNames, table))
-    else 
+    else
       .makeMlist2(argNames, .getAll(allNames, table))
  }
 

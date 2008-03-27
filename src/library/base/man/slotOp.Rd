@@ -19,11 +19,15 @@ object@name
 }
 \details{
   This operator supports the formal classes of package \pkg{methods}, and
-  is disabled unless the \pkg{methods} is loaded.
-  See \code{\link[methods]{slot}} for further details.
+  is disabled unless the \pkg{methods} is loaded.  See
+  \code{\link[methods]{slot}} for further details.
 
-  Currently there is no checking that the object is an instance of a
-  formal (S4) class, nor that \code{name} is a slot name.
+  As from \R 2.7.0 it is checked that \code{object} is an S4 object (see
+  \code{\link{isS4}}).  If \code{name} is not a slot name, an error is
+  thrown.  (There is an exception for name \code{.Data} for internal use only.)
+}
+\value{
+  The current contents of the slot.
 }
 \seealso{
   \code{\link{Extract}},
