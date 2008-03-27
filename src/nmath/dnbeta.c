@@ -78,23 +78,32 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     if(ncp == 0)
 	return dbeta(x, a, b, give_log);
 
-    term = dbeta(x, a, b, /* log = */ FALSE);
+    term = dbeta(x, a, b, /* log = */ TRUE);
     if(!R_FINITE(term)) /* in particular, if term = +Inf */
-	return R_D_val(term);
+	return R_D_exp(term);
     ncp2 = 0.5 * ncp;
+    /* FIXME: prevent underflow in term *and* weight-- probably should
+     * work in log scale and *rescale* when needed ..*/
+    term   = exp(term);
     weight = exp(- ncp2);
-    sum	 = weight * term;
-    psum = weight;
-    for(k = 1; k <= maxiter; k++) {
-	weight *= (ncp2 / k);
-	term *= x * (a + b) / a;
-	sum  += weight * term;
-	psum += weight;
-	a += 1;
-	if(1 - psum < eps) break;
-    }
-    if(1 - psum >= eps) { /* not converged */
-	ML_ERROR(ME_PRECISION, "dnbeta");
+    sum = weight * term;
+    if(sum == 0.) {
+	if(term != 0.) /* (x = {0,1} gives true 0 for a,b>=1) */
+	    ML_ERROR(ME_UNDERFLOW, "dnbeta");
+    } else {
+	psum = weight;
+	for(k = 1; k <= maxiter; k++) {
+	    double c1, c2, t;
+	    weight *= (c1 = (ncp2 / k));
+	    term   *= (c2 = x * (a + b) / a);
+	    sum  += (t = weight * term);
+	    psum += weight;
+	    a += 1;
+	    if(c1*c2 < 1 && psum + eps > 1 && t < eps * sum)
+		break;
+	    else if(k == maxiter) /* not converged */
+		ML_ERROR(ME_NOCONV, "dnbeta");
+	}
     }
     return R_D_val(sum);
 }
