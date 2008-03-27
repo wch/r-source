@@ -240,6 +240,11 @@ BUG FIXES
     o	If windows(ypinch=) was specified, the width value was used
 	for the height.
 
+    o	The Graphapp computation for keyboard accelerators for menus was
+	not always working, at least on Windows XP -- this affected
+	e.g. Alt-M plus 'i' for 'List search path', where 's' was
+	being underlined.  (PR#11036)
+
 
 
 	**************************************************
