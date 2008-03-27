@@ -137,6 +137,7 @@ Quote <- get("quote" , mode = "function")
   function(...) {
       ## the junk below is just til cat honors fill=TRUE on a single string.
       text <- paste(..., collapse="", sep="")
+      lines <- character()
       pos <- max(2 * getOption("width") %/% 3, 20)
       while(nchar(text, "c") > pos) {
           line <- substr(text, 1, pos)
@@ -150,10 +151,11 @@ Quote <- get("quote" , mode = "function")
               line <- paste(line, substr(text, 1, word -1), sep="")
               text <- substr(text, word+1, nchar(text, "c"))
           }
-          cat(line, "\n")
+          lines <- c(lines, line)
       }
       if(nzchar(text))
-          cat(text, "\n")
+          lines <- c(lines, text)
+      message(paste(lines, collapse="\n"))
   }
 
 hasArg <- function(name) {

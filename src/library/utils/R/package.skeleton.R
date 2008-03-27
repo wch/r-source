@@ -32,9 +32,12 @@ package.skeleton <-
         stop("'code_files' must be a character vector")
     use_code_files <- length(code_files) > 0
 
+    envIsMissing <- missing(environment) # before R clobbers this information
+
     if(missing(list)) {
         if(use_code_files) {
             environment <- new.env()
+            methods::setPackageName(name, environment)
             for(cf in code_files)
                 sys.source(cf, envir = environment)
         }
@@ -43,6 +46,18 @@ package.skeleton <-
     }
     if(!is.character(list))
 	stop("'list' must be a character vector naming R objects")
+    if(use_code_files || !envIsMissing) {
+        classesList <- getClasses(environment)
+        classes0 <- .fixPackageFileNames(classesList)
+        names(classes0) <- classesList
+        methodsList <- getGenerics(environment)
+        methods0 <- .fixPackageFileNames(methodsList)
+        names(methods0) <- methodsList
+    }
+    else { # nobody should  specify classes or methods as object names!
+        classesList <- methodsList <- character()
+    }
+    usingS4 <- length(classesList) > 0 || length(methodsList) > 0
 
     ## we need to test in the C locale
     curLocale <- Sys.getlocale("LC_CTYPE")
@@ -84,18 +99,29 @@ package.skeleton <-
 	"Maintainer: Who to complain to <yourfault@somewhere.net>\n",
 	"Description: More about what it does (maybe more than one line)\n",
 	"License: What license is it under?\n",
+	"Lazyload: yes\n",
+	if(usingS4) "Depends: methods\n",
 	file = description, sep = "")
     close(description)
 
     ## NAMESPACE
     ## <NOTE>
-    ## For the time being, we export all non-internal objects we come up
-    ## with.  S3 methods, or S4 classes and methods are not handled.
+    ## For the time being, we export all non-internal objects using the pattern
+    ## of names beginning with alpha.  All S4 methods and classes are exported.
+    ## S3 methods will be exported if the function's name would be exported.
     ## </NOTE>
     if(namespace) {
         message("Creating NAMESPACE ...")
         out <- file(file.path(dir, "NAMESPACE"), "wt")
         writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
+        if(length(methodsList)>0) {
+            cat("exportMethods(\n    ", file = out)
+            cat(paste('"', methodsList, '"', sep="", collapse = ",\n    "), "\n)\n", file = out)
+        }
+        if(length(classesList)>0) {
+            cat("exportClasses(\n    ", file = out)
+            cat(paste('"', classesList, '"', sep="", collapse = ",\n     "), "\n)\n", file = out)
+        }
         close(out)
     }
 
@@ -103,18 +129,18 @@ package.skeleton <-
     message("Creating Read-and-delete-me ...")
     out <- file(file.path(dir, "Read-and-delete-me"), "wt")
     msg <-
-    c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
-      if(namespace)
-      "* Edit the exports in 'NAMESPACE', and add necessary imports.",
-      "* Put any C/C++/Fortran code in 'src'.",
-      if(namespace)
-      "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'."
-      else
-      "* If you have compiled code, add a .First.lib() function in 'R' to load the shared library.",
-      "* Run R CMD build to build the package tarball.",
-      "* Run R CMD check to check the package tarball.",
-      "",
-      "Read \"Writing R Extensions\" for more information.")
+        c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
+          if(namespace)
+          "* Edit the exports in 'NAMESPACE', and add necessary imports.",
+          "* Put any C/C++/Fortran code in 'src'.",
+          if(namespace)
+          "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'."
+          else
+          "* If you have compiled code, add a .First.lib() function in 'R' to load the shared library.",
+          "* Run R CMD build to build the package tarball.",
+          "* Run R CMD check to check the package tarball.",
+          "",
+          "Read \"Writing R Extensions\" for more information.")
     writeLines(strwrap(msg, exdent = 2), out)
     close(out)
 
@@ -123,27 +149,8 @@ package.skeleton <-
     if(length(internalObjInds))
 	list <- list[-internalObjInds]
 
-    if(!use_code_files) {
-        ## Some object names may not be valid file names, especially
-        ## replacement function names.  And if we start changing them
-        ## they may collide.
-        ## <NOTE>
-        ## If we use given code files, we could still check whether
-        ## these file are valid across platforms ...
-        ## </NOTE>
-        list0 <- gsub("[[:cntrl:]\"*/:<>?\\|]", "_", list)
-        wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",
-                      list0)
-        if(length(wrong))
-            list0[wrong] <- paste("zz", list0[wrong], sep="")
-        ok <- grep("^[[:alnum:]]", list0)
-        if(length(ok) < length(list0))
-            list0[-ok] <- paste("z", list0[-ok], sep="")
-        ## now on Windows lower/uppercase will collide too
-        list1 <- tolower(list0)
-        list2 <- make.unique(list1, sep="_")
-        changed <- (list2 != list1)
-        list0[changed] <- list2[changed]
+    if(use_code_files) {
+        list0 <- .fixPackageFileNames(list)
     } else {
         list0 <- list
     }
@@ -155,16 +162,16 @@ package.skeleton <-
         if(length(internalObjInds))
             dump(internalObjs,
                  file = file.path(code_dir,
-                                  sprintf("%s-internal.R", name)))
+                 sprintf("%s-internal.R", name)))
         for(item in list){
             if(is.function(get(item, envir = environment)))
                 dump(item,
                      file = file.path(code_dir,
-                                      sprintf("%s.R", list0[item])))
-            else # we cannot guarantee this is a valid file name
+                     sprintf("%s.R", list0[item])))
+            else       # we cannot guarantee this is a valid file name
                 try(save(list = item,
                          file = file.path(data_dir,
-                                          sprintf("%s.rda", item))))
+                         sprintf("%s.rda", item))))
         }
     } else {
         message("Copying code files ...")
@@ -187,38 +194,68 @@ package.skeleton <-
 
     ## Make help file skeletons in 'man'
     message("Making help files ...")
-    if(length(internalObjInds)) {
-	Rdfile <- file(file.path(docs_dir,
-                                 sprintf("%s-internal.Rd", name)),
-                       "wt")
-	cat("\\name{", name, "-internal}\n",
-	    "\\title{Internal ", name, " objects}\n",
-	    file = Rdfile, sep = "")
-	for(item in internalObjs) {
-	    cat("\\alias{", item, "}\n", file = Rdfile, sep = "")
-	}
-	cat("\\description{Internal ", name, " objects.}\n",
-	    "\\details{These are not to be called by the user.}\n",
-	    "\\keyword{internal}",
-	    file = Rdfile, sep = "")
-	close(Rdfile)
+    if(!namespace && length(internalObjInds)) {
+        notNeeded <- grep(methods:::.methodsPackageMetaNamePattern, internalObjs)
+        notNeeded <- c(notNeeded, match(".packageName", internalObjs, 0))
+        if(length(notNeeded) < length(internalObjs)) {
+            internalObjs <- internalObjs[-notNeeded]
+            Rdfile <- file(file.path(docs_dir,
+                                     sprintf("%s-internal.Rd", name)),
+                           "wt")
+            cat("\\name{", name, "-internal}\n",
+                "\\title{Internal ", name, " objects}\n",
+                file = Rdfile, sep = "")
+            for(item in internalObjs) {
+                cat("\\alias{", item, "}\n", file = Rdfile, sep = "")
+            }
+            cat("\\description{Internal ", name, " objects.}\n",
+                "\\details{These are not to be called by the user.}\n",
+                "\\keyword{internal}",
+                file = Rdfile, sep = "")
+            close(Rdfile)
+        }
     }
     ## Suppress partially inappropriate messages from prompt().
     yy <- try(suppressMessages({
-        promptPackage(name,
-                      filename =
-                      file.path(docs_dir,
-                                sprintf("%s-package.Rd", name)),
-                      lib.loc = path)
-        sapply(list,
-               function(item) {
-                   prompt(get(item, envir = environment),
-                          name = item,
-                          filename =
-                          file.path(docs_dir,
-                                    sprintf("%s.Rd", list0[item])))
-               })
+	promptPackage(name,
+		      filename =
+		      file.path(docs_dir,
+				sprintf("%s-package.Rd", name)),
+		      lib.loc = path)
+	sapply(list,
+	       function(item) {
+		   prompt(get(item, envir = environment),
+			  name = item,
+			  filename =
+			  file.path(docs_dir,
+				    sprintf("%s.Rd", list0[item])))
+	       })
+	sapply(classesList,
+	       function(item) {
+		   methods::promptClass(item,
+					filename =
+					file.path(docs_dir,
+						  sprintf("%s-class.Rd", classes0[item])),
+					where = environment)
+	       })
+	sapply(methodsList,
+	       function(item) {
+		   methods::promptMethods(item,
+					  filename =
+					  file.path(docs_dir,
+						    sprintf("%s-methods.Rd", methods0[item])),
+					  findMethods(item, where = environment))
+	       })
     }))
+    ## don't document generic functions from other packages
+    for(item in methodsList) {
+        if(exists(item, envir = environment, inherits = FALSE)) {
+            ff <- get(item, envir = environment)
+            if(is(ff, "genericFunction") && !identical(ff@package, name)) # don't document
+                system(paste("rm ", file.path(docs_dir,
+                                              sprintf("%s.Rd", list0[item]))))
+        }
+    }
     if(inherits(yy, "try-error"))
 	stop(yy)
 
@@ -232,4 +269,29 @@ package.skeleton <-
     message(gettextf("Further steps are described in '%s'.",
                      file.path(dir, "Read-and-delete-me")),
             domain = NA)
+}
+
+.fixPackageFileNames <- function(list) {
+        ## Some object names may not be valid file names, especially
+        ## replacement function names.  And if we start changing them
+        ## they may collide.
+        ## <NOTE>
+        ## If we use given code files, we could still check whether
+        ## these file are valid across platforms ...
+        ## </NOTE>
+        if(length(list) == 0) return(list)
+        list0 <- gsub("[[:cntrl:]\"*/:<>?\\|]", "_", list)
+        wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",
+                      list0)
+        if(length(wrong))
+            list0[wrong] <- paste("zz", list0[wrong], sep="")
+        ok <- grep("^[[:alnum:]]", list0)
+        if(length(ok) < length(list0))
+            list0[-ok] <- paste("z", list0[-ok], sep="")
+        ## now on Windows lower/uppercase will collide too
+        list1 <- tolower(list0)
+        list2 <- make.unique(list1, sep="_")
+        changed <- (list2 != list1)
+        list0[changed] <- list2[changed]
+        list0
 }

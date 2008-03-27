@@ -5124,13 +5124,17 @@ stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
 
 ## package.skeleton() with metadata-only code
 (cwd <- getwd())
-tDir <- tempdir(); dir.create(tDir)
+tDir <- tempdir()
 tmp <- tempfile(tmpdir = tDir)
-writeLines('setClass("foo", contains="numeric")', tmp)
+writeLines(c('setClass("foo", contains="numeric")',
+             'setMethod("show", "foo",',
+             '          function(object) cat("I am a \\"foo\\"\\n"))'),
+           tmp)
 setwd(tDir)
-package.skeleton("myTst", code_files = tmp) # with two warnings
+if(file.exists("myTst")) unlink("myTst", recursive=TRUE)
+package.skeleton("myTst", code_files = tmp, namespace=TRUE)# with a file name warning
 stopifnot(1 == grep("setClass",
-          readLines(list.files("myTst/R", full.names=TRUE))))
+	  readLines(list.files("myTst/R", full.names=TRUE))),
+	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
 setwd(cwd)
-unlink(tDir, recursive=TRUE)
 ## failed for several reasons in R < 2.7.0
