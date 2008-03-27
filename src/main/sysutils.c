@@ -1192,7 +1192,7 @@ const char *translateCharUTF8(SEXP x)
     return CHAR(x);
 }
 
-const char *reEnc(const char *x, int ce_in, int ce_out)
+const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
 {
     return x;
 }
