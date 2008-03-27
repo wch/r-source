@@ -105,6 +105,14 @@
       value
   }
 
+## stripped down version of asS4 in base, which can't be used until the methods
+## namespace is available
+.asS4 <- function (object) 
+{
+    .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
+}
+
+
 ## the bootstrap version: "#----" brackets lines that replace parts of the real version
 makeGeneric <-
       function(f, fdef,
@@ -121,7 +129,7 @@ makeGeneric <-
           fdef <- .ValidateValueClass(fdef, f, valueClass)
       group <- .asGroupArgument(group)
 ###--------
-      value <- fdef
+      value <- .asS4(fdef)
       if(is.null(genericFunction))
           class(value) <- .classNameFromMethods("standardGeneric")
       else
