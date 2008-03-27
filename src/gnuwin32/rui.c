@@ -1124,7 +1124,7 @@ int setupui(void)
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mls = newmenuitem(G_("List objects"), 0, menuls));
     MCHECK(mrm = newmenuitem(G_("Remove all objects"), 0, menurm));
-    MCHECK(msearch = newmenuitem(G_("List &search path"), 0, menusearch));
+    MCHECK(msearch = newmenuitem(G_("List search &path"), 0, menusearch));
 
     pmenu = (PkgMenuItems) malloc(sizeof(struct structPkgMenuItems));
     RguiPackageMenu(pmenu);

@@ -139,6 +139,12 @@ static void set_search_string(char *search, const char *name, int key)
 	if (! string_diff(name, "Exit")) search[dest++] = 'x';
 	if (! string_diff(name, "?")) search[dest++] = '?';
 
+	if(MB_CUR_MAX == 1) {
+	    /* If there is an '&' in the string, use the next letter first */
+	    char *p = strchr(name, '&');
+	    if (p && *(p+1)) search[dest++] = *(p+1);
+	}
+
 	/* add the accelerator key if it is in the name string */
 	if (key) {
 		key = toupper(key);
@@ -196,21 +202,21 @@ static int find_shortcut(object me, char *search)
 	    int mb_len;
 	    mbstate_t mb_st;
 	    mbs_init(mb_st);
-	    mb_len = Rf_mbrtowc(NULL,search + source,MB_CUR_MAX,&mb_st);
-	    if ( mb_len > 1 ){
-	      source += mb_len-1;
+	    mb_len = Rf_mbrtowc(NULL, search + source, MB_CUR_MAX, &mb_st);
+	    if ( mb_len > 1 ) {
+	      source += mb_len - 1;
 	    } else   
 		/* for each character in the search string */
 		/* look through every sibling object */
 
 		for (obj = first; obj; obj = obj->next)
 		{
-			if (obj == me) /* at end of list, success! */
-				return search[source];
+		    if (obj == me) /* at end of list, success! */
+			return search[source];
 
-			/* use uppercase comparisons */
-			if (obj->shortcut == toupper(search[source]))
-				break; /* can't use this shortcut */
+		    /* use uppercase comparisons */
+		    if (obj->shortcut == toupper(search[source]))
+			break; /* can't use this shortcut */
 
 		}
 	}
@@ -243,23 +249,25 @@ static void setmenustring(object obj, char *buf, const char *name, int key)
 		    int i;
 		    mbstate_t mb_st;
 		    mbs_init(mb_st);
-		    mb_len = Rf_mbrtowc(NULL,name + source,MB_CUR_MAX,&mb_st);
-		    if ( mb_len > 1 ){
-		      for ( i=0 ; i<mb_len ; i++){
-			buf[dest++] = name[source+i];
-		      }
+		    mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX, &mb_st);
+		    if ( mb_len > 1 ) {
+			for (i = 0 ; i < mb_len ; i++)
+			    buf[dest++] = name[source+i];
 			source += mb_len-1;
-		    } else   
+		    } else if(name[source] == '&') {
+			/* skip it */
+		    } else
 			buf[dest++] = name[source];
 		  }
 		buf[dest++] = '&';
 		for (; name[source]; source++)
 			buf[dest++] = name[source];
 	}
-	else /* no shortcut key, just copy the name string */
+	else /* no shortcut key, just copy the name string except '&' */
 	{
-		for (source=0; name[source]; source++)
-			buf[dest++] = name[source];
+	    for (source = 0; name[source]; source++)
+		if(MB_CUR_MAX == 1 && name[source] != '&')
+		    buf[dest++] = name[source];
 	}
 
 	if (key) {
