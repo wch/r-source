@@ -33,7 +33,7 @@ package.skeleton <-
     use_code_files <- length(code_files) > 0
 
     envIsMissing <- missing(environment) # before R clobbers this information
-    
+
     if(missing(list)) {
         if(use_code_files) {
             environment <- new.env()
@@ -54,9 +54,10 @@ package.skeleton <-
         methods0 <- .fixPackageFileNames(methodsList)
         names(methods0) <- methodsList
     }
-    else {  # nobody should  specify classes or methods as object names!
+    else { # nobody should  specify classes or methods as object names!
         classesList <- methodsList <- character()
     }
+    usingS4 <- length(classesList) > 0 || length(methodsList) > 0
 
     ## we need to test in the C locale
     curLocale <- Sys.getlocale("LC_CTYPE")
@@ -98,6 +99,8 @@ package.skeleton <-
 	"Maintainer: Who to complain to <yourfault@somewhere.net>\n",
 	"Description: More about what it does (maybe more than one line)\n",
 	"License: What license is it under?\n",
+	"Lazyload: yes\n",
+	if(usingS4) "Depends: methods\n",
 	file = description, sep = "")
     close(description)
 
@@ -126,18 +129,18 @@ package.skeleton <-
     message("Creating Read-and-delete-me ...")
     out <- file(file.path(dir, "Read-and-delete-me"), "wt")
     msg <-
-    c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
-      if(namespace)
-      "* Edit the exports in 'NAMESPACE', and add necessary imports.",
-      "* Put any C/C++/Fortran code in 'src'.",
-      if(namespace)
-      "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'."
-      else
-      "* If you have compiled code, add a .First.lib() function in 'R' to load the shared library.",
-      "* Run R CMD build to build the package tarball.",
-      "* Run R CMD check to check the package tarball.",
-      "",
-      "Read \"Writing R Extensions\" for more information.")
+        c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
+          if(namespace)
+          "* Edit the exports in 'NAMESPACE', and add necessary imports.",
+          "* Put any C/C++/Fortran code in 'src'.",
+          if(namespace)
+          "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'."
+          else
+          "* If you have compiled code, add a .First.lib() function in 'R' to load the shared library.",
+          "* Run R CMD build to build the package tarball.",
+          "* Run R CMD check to check the package tarball.",
+          "",
+          "Read \"Writing R Extensions\" for more information.")
     writeLines(strwrap(msg, exdent = 2), out)
     close(out)
 
@@ -159,16 +162,16 @@ package.skeleton <-
         if(length(internalObjInds))
             dump(internalObjs,
                  file = file.path(code_dir,
-                                  sprintf("%s-internal.R", name)))
+                 sprintf("%s-internal.R", name)))
         for(item in list){
             if(is.function(get(item, envir = environment)))
                 dump(item,
                      file = file.path(code_dir,
-                                      sprintf("%s.R", list0[item])))
-            else # we cannot guarantee this is a valid file name
+                     sprintf("%s.R", list0[item])))
+            else       # we cannot guarantee this is a valid file name
                 try(save(list = item,
                          file = file.path(data_dir,
-                                          sprintf("%s.rda", item))))
+                         sprintf("%s.rda", item))))
         }
     } else {
         message("Copying code files ...")
@@ -214,43 +217,43 @@ package.skeleton <-
     }
     ## Suppress partially inappropriate messages from prompt().
     yy <- try(suppressMessages({
-        promptPackage(name,
-                      filename =
-                      file.path(docs_dir,
-                                sprintf("%s-package.Rd", name)),
-                      lib.loc = path)
-        sapply(list,
-               function(item) {
-                   prompt(get(item, envir = environment),
-                          name = item,
-                          filename =
-                          file.path(docs_dir,
-                                    sprintf("%s.Rd", list0[item])))
-               })
-        sapply(classesList,
-               function(item) {
-                   methods::promptClass(item,
-                             filename =
-                              file.path(docs_dir,
-                                    sprintf("%s-class.Rd", classes0[item])),
-                              where = environment)
-               })
-        sapply(methodsList,
-               function(item) {
-                   methods::promptMethods(item,
-                             filename =
-                              file.path(docs_dir,
-                                    sprintf("%s-methods.Rd", methods0[item])),
-                              findMethods(item, where = environment))
-               })
+	promptPackage(name,
+		      filename =
+		      file.path(docs_dir,
+				sprintf("%s-package.Rd", name)),
+		      lib.loc = path)
+	sapply(list,
+	       function(item) {
+		   prompt(get(item, envir = environment),
+			  name = item,
+			  filename =
+			  file.path(docs_dir,
+				    sprintf("%s.Rd", list0[item])))
+	       })
+	sapply(classesList,
+	       function(item) {
+		   methods::promptClass(item,
+					filename =
+					file.path(docs_dir,
+						  sprintf("%s-class.Rd", classes0[item])),
+					where = environment)
+	       })
+	sapply(methodsList,
+	       function(item) {
+		   methods::promptMethods(item,
+					  filename =
+					  file.path(docs_dir,
+						    sprintf("%s-methods.Rd", methods0[item])),
+					  findMethods(item, where = environment))
+	       })
     }))
     ## don't document generic functions from other packages
     for(item in methodsList) {
         if(exists(item, envir = environment, inherits = FALSE)) {
             ff <- get(item, envir = environment)
             if(is(ff, "genericFunction") && !identical(ff@package, name)) # don't document
-              system(paste("rm ", file.path(docs_dir,
-                                    sprintf("%s.Rd", list0[item]))))
+                system(paste("rm ", file.path(docs_dir,
+                                              sprintf("%s.Rd", list0[item]))))
         }
     }
     if(inherits(yy, "try-error"))

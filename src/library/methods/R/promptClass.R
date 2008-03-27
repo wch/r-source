@@ -38,7 +38,7 @@ function (clName, filename = NULL, type = "class",
     ## obtain list of all generics with cl in
     ## one of its signatures
 	allgen <- getGenerics(where = where)
-	o <- sapply(allgen, classesInSig, where = where)
+	o <- sapply(allgen, classesInSig, where = where, simplify = FALSE)
 	genl <- NULL
 	nmok <- names(o)
 	for (i in seq_along(o)) {
