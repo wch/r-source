@@ -89,7 +89,19 @@ static SEXP insertString(char *str, LocalData *l)
     return mkCharEnc(str, 0);
 }
 
-#define Rspace(c) (c == ' ' || c == '\t' || c == '\n' || c == '\r')
+static R_INLINE Rboolean Rspace(unsigned int c)
+{
+    if (c == ' ' || c == '\t' || c == '\n' || c == '\r') return TRUE;
+#ifdef Win32
+    /* 0xa0 is NBSP in all 8-bit Windows locales */
+    if(!mbcslocale && c == 0xa0) return TRUE;
+#else
+     /* 0xa0 is NBSP in Latin-1 */
+    if(known_to_be_latin1 && c == 0xa0) return TRUE;
+#endif
+    return FALSE;
+}
+
 
 /* used by readline() and menu() */
 static int ConsoleGetchar(void)

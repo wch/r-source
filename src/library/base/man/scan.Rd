@@ -163,8 +163,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   \sQuote{White space} is defined for the purposes of this function as
   one or more contiguous characters from the set space, horizontal tab,
-  carriage return and line feed.  It does not include form feed,
-  vertical tab or other non-ASCII space characters.
+  carriage return and line feed.  It does not include form feed or
+  vertical tab, but in Latin-1 and Windows 8-bit locales 'space'
+  includes non-breaking space.
 
   Empty numeric fields are always regarded as missing values.
   Empty character fields are scanned as empty character vectors, unless
