@@ -118,7 +118,7 @@ void UNSET_LATIN1(SEXP x);
 int IS_UTF8(SEXP x);
 void SET_UTF8(SEXP x);
 void UNSET_UTF8(SEXP x);
-int ENC_KNWON(SEXP x);
+int ENC_KNOWN(SEXP x);
 #endif
 /* macros and declarations for managing CHARSXP cache */
 #ifdef USE_CHAR_HASHING
