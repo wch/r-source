@@ -14,8 +14,6 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	package.skeleton() now handles S4 classes and methods,
-        producing documentation and NAMESPACE exports if requested.
 
 
 PACKAGE INSTALLATION
@@ -53,7 +51,7 @@ DEPRECATED & DEFUNCT
 BUG FIXES
 
     o	@ now gives an error (and not just a warning) if it is being
-	applied to an S4 object.
+	applied to a non-S4 object.
 
 
 
@@ -290,7 +288,7 @@ NEW FEATURES
 	one.
 
     o	Extensions to condition number computation for matrices, notably
-	complex ones are provided ... currently via experimental .rcond().
+	complex ones are provided, both in kappa() and the new rcond().
 
     o	sprintf() now does all the conversions needed in a first pass if
 	length(fmt) == 1, and so can be many times faster.

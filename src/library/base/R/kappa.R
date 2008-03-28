@@ -16,22 +16,14 @@
 
 kappa <- function(z, ...) UseMethod("kappa")
 
-
-### FIXMEs :
-
-### 1)  The condition number is defined WRT to a *norm* !!
-
-###     for exact=TRUE we use the "2-Norm"
-
-### 2)  The  m |--> QR(m)  way is *not* equivalent to using Lapack's *gecon()
-
-## ===> use new argument  'norm = c("2","1","I{nf}")' ,
-##       and/or   'method = c("qr","direct")
-
 ## Note that  all 4 Lapack version now work in the following
-.rcond <- function(x, norm = c("1","I","O"), triangular = FALSE) {
+rcond <- function(x, norm = c("O","I","1"), triangular = FALSE, ...) {
     norm <- match.arg(norm)
     stopifnot(is.matrix(x))
+    if({d <- dim(x); d[1] != d[2]})## non-square matrix -- use QR
+        return(rcond(qr.R(qr(if(d[1] < d[2]) t(x) else x)), norm=norm, ...))
+
+    ## x = square matrix :
     if(is.complex(x)) {
         if(triangular)
             .Call("La_ztrcon", x, norm, PACKAGE="base")
@@ -45,25 +37,25 @@ kappa <- function(z, ...) UseMethod("kappa")
     }
 }
 
-## Further note that  dtrcon ("1") differs quite a bit
-## from Linpack's dtrco, which also says to compute the
-## 1-norm reciprocal condition
-
-kappa.lm <- function(z, ...)
+kappa.default <- function(z, exact = FALSE,
+                          norm = NULL, method = c("qr", "direct"), ...)
 {
-    kappa.qr(z$qr, ...)
-}
-
-kappa.default <- function(z, exact = FALSE, ...)
-{
+    method <- match.arg(method)
     z <- as.matrix(z)
-    if(exact) {
-	s <- svd(z, nu=0, nv=0)$d
-	max(s)/min(s[s > 0])
-    } else if(is.qr(z)) kappa.qr(z)
-    else if(nrow(z) < ncol(z)) kappa.qr(qr(t(z)))
-    else kappa.qr(qr(z))
+    norm <- if(!is.null(norm)) match.arg(norm, c("2", "1","O", "I")) else "2"
+    if(exact && norm == "2") {
+        s <- svd(z, nu=0, nv=0)$d
+        max(s)/min(s[s > 0])
+    }
+    else { ## exact = FALSE or norm in "1", "O", "I"
+        d <- dim(z)
+        if(method == "qr" || d[1] != d[2])
+            kappa.qr(qr(if(d[1] < d[2]) t(z) else z), norm=norm, ...)
+        else kappa.tri(z, exact=FALSE, norm=norm, ...)
+    }
 }
+
+kappa.lm <- function(z, ...) kappa.qr(z$qr, ...)
 
 kappa.qr <- function(z, ...)
 {
@@ -73,22 +65,36 @@ kappa.qr <- function(z, ...)
     kappa.tri(R, ...)
 }
 
-kappa.tri <- function(z, exact = FALSE, ...)
+kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 {
-    if(exact) kappa.default(z, exact = TRUE)
+    if(exact) {
+        stopifnot(is.null(norm) || identical("2", norm))
+        kappa.default(z, exact = TRUE) ## using "2 - norm" !
+    }
     else {
 	p <- nrow(z)
 	if(p != ncol(z)) stop("triangular matrix should be square")
-### FIXME: use Lapack's "ztrcon" when z is complex
-
-        ## Note: Linpack's  dtrco  *differs*  from Lapack's dtrcon() !!
-	1 / .Fortran("dtrco",
-		     as.double(z),
-		     p,
-		     p,
-		     k = double(1),
-		     double(p),
-		     as.integer(1),
-                     PACKAGE="base")$k
+	if(is.null(norm)) norm <- "1"
+	if(is.complex(z))
+	    1/.Call("La_ztrcon", z, norm, PACKAGE="base")
+	else if(LINPACK) {
+	    if(norm == "I") # instead of "1" / "O"
+		z <- t(z)
+	    ##	dtrco  *differs* from Lapack's dtrcon() quite a bit
+	    ## even though dtrco's doc also say to compute the
+	    ## 1-norm reciprocal condition
+	    1 / .Fortran("dtrco",
+			 as.double(z),
+			 p,
+			 p,
+			 k = double(1),
+			 double(p),
+			 as.integer(1),
+			 PACKAGE="base")$k
+	}
+	else { ## Lapack
+	    storage.mode(z) <- "double"
+	    1/.Call("La_dtrcon", z, norm, PACKAGE="base")
+	}
     }
 }
