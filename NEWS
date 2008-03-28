@@ -52,7 +52,8 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	@ now checks it is being applied to an S4 object.
+    o	@ now gives an error (and not just a warning) if it is being
+	applied to an S4 object.
 
 
 
@@ -735,7 +736,8 @@ BUG FIXES
     o	dumpMethod() and dumpMethods() now work again.
 
     o	package.skeleton() now also works for code_files with only
-	metadata (e.g. S4 setClass) definitions.
+	metadata (e.g. S4 setClass) definitions; it handles S4 classes and
+	methods, producing documentation and NAMESPACE exports if requested.
 
     o	Some methods package utilities (implicitGeneric(), makeGeneric())
 	will be more robust in dealing with primitive functions (not a
@@ -758,6 +760,9 @@ BUG FIXES
     o	dbeta(.., ncp) is now more accurate for large ncp.
 
     o	coerce() is now a proper S4 object and so prints correctly.
+
+    o	@ now checks it is being applied to an S4 object, and if not
+    	gives a warning (which will become an error in 2.8.0).
 
 
 
