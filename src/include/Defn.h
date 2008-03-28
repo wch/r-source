@@ -105,10 +105,8 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 #ifdef USE_RINTERNALS
 # define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
 # define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
-# define UNSET_LATIN1(x) (((x)->sxpinfo.gp) &= ~LATIN1_MASK)
 # define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 # define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
-# define UNSET_UTF8(x) (((x)->sxpinfo.gp) &= ~UTF8_MASK)
 # define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
 #else
 /* Needed only for write-barrier testing */
@@ -118,7 +116,7 @@ void UNSET_LATIN1(SEXP x);
 int IS_UTF8(SEXP x);
 void SET_UTF8(SEXP x);
 void UNSET_UTF8(SEXP x);
-int ENC_KNWON(SEXP x);
+int ENC_KNOWN(SEXP x);
 #endif
 /* macros and declarations for managing CHARSXP cache */
 #ifdef USE_CHAR_HASHING

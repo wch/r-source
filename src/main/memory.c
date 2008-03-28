@@ -2860,8 +2860,6 @@ int  attribute_hidden (IS_LATIN1)(SEXP x) { return IS_LATIN1(x); }
 int  attribute_hidden (IS_UTF8)(SEXP x) { return IS_UTF8(x); }
 void attribute_hidden (SET_LATIN1)(SEXP x) { SET_LATIN1(x); }
 void attribute_hidden (SET_UTF8)(SEXP x) { SET_UTF8(x); }
-void attribute_hidden (UNSET_LATIN1)(SEXP x) { UNSET_LATIN1(x); }
-void attribute_hidden (UNSET_UTF8)(SEXP x) { UNSET_UTF8(x); }
 int  attribute_hidden (ENC_KNOWN)(SEXP x) { return ENC_KNOWN(x); }
 
 /*******************************************/
