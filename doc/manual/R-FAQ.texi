@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-03-21
+@set FAQ_DATE @value{FAQ_YEAR}-03-28
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2841,6 +2841,8 @@ Another Multidimensional Analysis Package.
 Simple and Canonical Correspondence Analysis.
 @item analogue
 Analogue methods for palaeoecology.
+@item anapuce
+Tools for microarray data analysis.
 @item animation
 Demonstrate animations in statistics.
 @item anm
@@ -2893,6 +2895,8 @@ Functions and data sets for a lecture in ``Advanced Statistics using
 R''.
 @item aws
 Functions to perform adaptive weights smoothing.
+@item backfitRichards
+Backfitted independent values of Richards curves.
 @item backtest
 Exploring portfolio-based hypotheses about financial instruments.
 @item bayesSurv
@@ -3175,6 +3179,8 @@ data.
 Efficient estimation of covariance and (partial) correlation.
 @item corrgram
 Plot a correlogram.
+@item corrperm
+Permutation tests of correlation with repeated measurements.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
 @item coxphf
@@ -3242,6 +3248,9 @@ tail trees.
 @item depmix
 Dependent Mixture Models: fit (multi-group) mixtures of latent Markov
 models on mixed categorical and continuous (time series) data.
+@item depmixS4
+Dependent Mixture Models: fit latent (hidden) Markov models on mixed
+categorical and continuous (time series) data.
 @item desirability
 Desirabiliy function optimization and ranking.
 @item dglm
@@ -3375,6 +3384,8 @@ distributions, hierarchical clustering by e-distances.
 @item ensembleBMA
 Probabilistic forecasting using Bayesian Model Averaging of ensembles
 using a mixture of normal distributions.
+@item epiR
+Functions for analyzing epidemiological data.
 @item epibasix
 Elementary functions for epidemiological analysis.
 @item epicalc
@@ -3526,6 +3537,8 @@ Forward search approach to robust analysis in linear and generalized
 linear regression models.
 @item fpc
 Fixed point clusters, clusterwise regression and discriminant plots.
+@item fpca
+Restricted MLE for Functional Principal Components Analysis.
 @item fracdiff
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
@@ -3653,6 +3666,8 @@ An implementation of the Grammar of Graphics in R.
 Univariate and multivariate generalized hyperbolic distributions.
 @item giRaph
 Data structures and algorithms for computations on graphs.
+@item gibbs.met
+Naive Gibbs sampling with Metropolis steps.
 @item glasso
 Graphical lasso.
 @item gld
@@ -4361,6 +4376,8 @@ number of observations that need to be removed such that the reduced
 data set has no longer overlap.
 @item np
 Nonparametric kernel smoothing methods for mixed datatypes.
+@item nplplot
+Plotting non-parametric LOD scores from multiple input files.
 @item npmc
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
@@ -4470,6 +4487,8 @@ Perturbation analysis for evaluating collinearity.
 Poisson-Gamma Additive Models.
 @item pgirmess
 Functions for analysis and display of ecological and spatial data.
+@item phangorn
+Phylogenetic analysis in R.
 @item pheno
 Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets.
@@ -4768,6 +4787,8 @@ Interface between R and GGobi.
 The GSC (Geological Survey of Canada) applied geochemistry EDA package.
 @item rhosp
 Side effect risks in hospital: simulation and estimation.
+@item richards
+Richards curves.
 @item rimage
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
@@ -4820,8 +4841,11 @@ Functions for robust location and scatter estimation and robust
 regression with high breakdown point.
 @item rrp
 Random Recursive Partitioning.
-@item rsbml
-R support for SBML (Systems Biology Markup Language), using libsbml.
+@c <COMMENT>
+@c Moved to the Archive on 2008-03-25 as requested by the maintainer.
+@c @item rsbml
+@c R support for SBML (Systems Biology Markup Language), using libsbml.
+@c </COMMENT>
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
@@ -4968,6 +4992,8 @@ Import Structure files and deduce similarity coefficients from them.
 SIMulation of ECOLogical (and other) dynamic systems.
 @item simex
 SIMEX and MCSIMEX algorithms for measurement error models.
+@item similarityRichards
+Similarity of Richards curves.
 @item simpleboot
 Simple bootstrap routines.
 @item skewt
