@@ -77,10 +77,14 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	The default width and height for pdf() and bitmap() have been
 	changed to 7 (inches) to match the screen devices.
 
+    o	Most users of the X11() device will see a new device that has
+	different fonts, anti-aliasing of lines and fonts, and
+	supports semi-transparent colours.
+
     o	Considerable efforts have been made to make the default output
 	from graphics devices as similar as possible (and in
 	particular close to that from postscript/pdf).	Many devices
-	were misinterpreting 'pointsize' in some ways, for example as
+	were misinterpreting 'pointsize' in some way, for example as
 	being in device units (pixels) rather than in points.
 
     o	Packages which include graphics devices need to be re-installed
@@ -88,8 +92,6 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 
 NEW FEATURES
-
-    o	identify() recycles its 'labels' argument if necessary.
 
     o	New function as.octmode() to create objects such as file
 	permissions.
@@ -134,11 +136,6 @@ NEW FEATURES
 
     o	The parser limit on string size has been removed.
 
-    o	stripchart() is now a generic function, with default and
-	formula methods defined.  Additional graphics parameters may
-	be included in the call.  Formula handling is now
-	similar to boxplot().
-
     o	new.packages() now knows about the front-end package gnomeGUI
 	(which does not install into a library).
 
@@ -174,30 +171,8 @@ NEW FEATURES
 	not numeric, logical, character or factor) are now converted
 	to character (instead of numeric).
 
-    o	ps.options() now warns on unused option 'append'.
-
-	xfig() no longer takes default arguments from ps.options().
-	(This was not documented prior to 2.6.1 patched.)
-
-	pdf() now takes defaults from the new function pdf.options()
-	rather that from ps.options() (and the latter was not
-	documented prior to 2.6.1 patched).
-
-	The defaults for all arguments other than 'file' in
-	postscript() and pdf() can now be set by ps.options() or
-	pdf.options()
-
-    o	New functions setEPS() and setPS() as wrappers to ps.options()
-	to set appropriate defaults for figures for inclusion in other
-	documents and for spooling to a printer respectively.
-
     o	Rd conversion to 'example' now quotes aliases which contain
 	spaces.
-
-    o	The default graphics devices in interactive and
-	non-interactive sessions are now configurable via environment
-	variables R_INTERACTIVE_DEVICE and R_DEFAULT_DEVICE
-	respectively.
 
     o	The [dpq]signrank() functions now typically use considerably
 	less memory than previously, thanks to a patch from Ivo
@@ -213,29 +188,8 @@ NEW FEATURES
     o	paste() now sets the encoding on the result under some
 	circumstances (see ?paste).
 
-    o	New function dev.new() to launch a new copy of the default
-	graphics device (and taking care if it is "pdf" or
-	"postscript" not to trample on the file of an already running
-	copy).
-
-    o	New function dev.copy2pdf(), the analogue of dev.copy2eps().
-
-    o	dev.interactive() no longer treats a graphics device as
-	interactive if it has a display list (but devices can still
-	register themselves on the list of interactive devices).
-
-    o	plot.formula() only prompts between plots for interactive
-	devices (it used to prompt for all devices).
-
     o	New function browseVignettes() lists available vignettes in an
 	HTML browser with links to PDF, Rnw, and R files.
-
-    o	The X11() and windows() graphics devices have a new argument
-	'title' to set the window title.
-
-    o	X11() now has the defaults for all of its arguments set by the
-	new function X11.options(), inter alia replacing options
-	"gamma", "colortype" and "X11fonts".
 
     o	The apse code used by agrep() has been updated to version
 	0.16, with various bug fixes.
@@ -272,14 +226,6 @@ NEW FEATURES
 
     o	intToUtf8() now marks the Encoding of its output.
 
-    o	The meaning of numeric 'pch' has been extended where MBCSes are
-	supported.  Now negative integer values indicate Unicode
-	points, integer values in 32-127 represent ASCII characters,
-	and 128-255 are valid only in single-byte locales.
-	(Previously what happened with negative pch values was
-	undocumented: they were replaced by the current setting of
-	par("pch").)
-
     o	The src/extra/intl sources have been updated to those from
 	gettext 0.17.
 
@@ -301,11 +247,6 @@ NEW FEATURES
     o	New flag --interactive on Unix-alikes forces the session to be
 	interactive (as --ess does on Windows).
 
-    o	Graphics devices can say if they can rotate text well
-	(e.g. postscript() and PDF() can) and if so the device's
-	native text becomes the default for contour labels rather than
-	using Hershey fonts.
-
     o	x[<zero-length>] <- NULL is always a no-op: previously
 	type-checking was done on the replacement value and so this
 	failed, whereas we now assume NULL can be promoted to any
@@ -324,28 +265,6 @@ NEW FEATURES
 	example code that should be run by example() but not tested
 	(e.g. because it might fail in some locales).
 
-    o	strwidth() and strheight() gain 'font' and 'vfont' arguments and
-	accept in-line pars such as 'family' in the same way as text()
-	does.  (PR#776)
-
-    o	The setting of the line spacing (par("cra")[2]) on the X11() and
-	windows() device is now comparable with postscript() etc, and
-	roughly 20% smaller than before (it used to depend on the
-	locale for X11).  (So is the pictex() device, now 20% larger.)
-	This affects the margin size in plots, and should result in
-	better-looking plots.
-
-    o	There is a per-device setting for whether new frames need
-	confirmation. This is controlled by either par("ask") or
-	grid.prompt() and affects all subsequent plots on the device
-	using base or grid graphics.
-
-    o	example(ask=TRUE) now applies to grid graphics (e.g. from
-	lattice) as well as to base graphics.
-
-    o	option("device.ask.default") replaces "par.ask.default" now it
-	applies also to grid.prompt().
-
     o	readChar() gains an argument 'useBytes' to allow it to read a
 	fixed number of bytes in an MBCS locale.
 
@@ -357,45 +276,8 @@ NEW FEATURES
     o	New function Sys.umask(), a wrapper for 'umask' on platforms
 	which support it.
 
-    o	There is a new version of the X11() device based on cairo
-	graphics which is selected by type = "cairo", and is available
-	on machines with cairo installed and preferably pango (which
-	most machines with gtk+ >= 2.8 will have). This version
-	supports translucent colours and normally does a better job of
-	font selection so it has been possible to display (e.g.)
-	English, Polish, Russian and Japanese text on a single X11()
-	window.
-
-	There is a companion function, savePlot(), to save the current
-	plot to a PNG file.
-
-	On Unix-alikes, devices jpeg() and png() also accept
-	type = "cairo", and with that option do not need a running
-	X server.  The meaning of capabilities("jpeg") and
-	capabilities("png") has changed to reflect this.  On MacOS X,
-	there is a further type = "quartz" -- the default type is
-	selected by the new option "bitmapType".
-
-	Where cairo is supported, there is a svg() device to write SVG
-	files, and cairo_pdf() and cairo_ps() to write (possibly
-	bitmap) PDF and postscript files via cairo.
-
-	Some features require cairo >= 1.2, and some which are
-	nominally supported under 1.2 seem to need 1.4 to work
-	correctly.
-
-    o	There are new bmp() and tiff() devices.
-
     o	The function is() now works with S3 inheritance; that is, with
 	objects having multiple strings in the class attribute.
-
-    o	New function devSize() to report the size of the current
-	graphics device surface (in inches or device units).  This
-	gives the same information as par("din"), but independent of
-	the graphics subsystem.
-
-    o	New graphics function clip() to set the clipping region (in
-	user coordinates).
 
     o	deparse() gains a new argument 'nlines' to limit the number of
 	lines of output, and this is used internally to make several
@@ -403,9 +285,6 @@ NEW FEATURES
 
     o	print(<data.frame>)'s new argument 'row.names' allows to suppress
 	printing rownames.
-
-    o	New functions grconvertX() and grconvertY() to convert between
-	coordinate systems in base graphics.
 
     o	print() and str() now also "work" for 'logLik' vectors longer than
 	one.
@@ -445,9 +324,9 @@ NEW FEATURES
 	alternatives (see ?findMethods), and direct use of the mangled
 	names for the objects is now deprecated.
 
-    o	Creating new class and method definitions in an environment that
-	could not be identified (as package, namespace or global)
-	previously generated an error. It now results in creating and
+    o	Creating new S4 class and method definitions in an environment
+	that could not be identified (as package, namespace or global)
+	previously generated an error.  It now results in creating and
 	using an artificial package name from the current date/time,
 	with a warning.  See ?getPackageName.
 
@@ -465,6 +344,134 @@ NEW FEATURES
 
     o	The 'incomparables' argument to duplicated(), unique() and
 	match() is now implemented, and passed to match() from merge().
+
+
+GRAPHICS CHANGES
+
+    o	The default graphics devices in interactive and
+	non-interactive sessions are now configurable via environment
+	variables R_INTERACTIVE_DEVICE and R_DEFAULT_DEVICE
+	respectively.
+
+    o	New function dev.new() to launch a new copy of the default
+	graphics device (and taking care if it is "pdf" or
+	"postscript" not to trample on the file of an already running
+	copy).
+
+    o	New function dev.copy2pdf(), the analogue of dev.copy2eps().
+
+    o	dev.interactive() no longer treats a graphics device as
+	interactive if it has a display list (but devices can still
+	register themselves on the list of interactive devices).
+
+    o	The X11() and windows() graphics devices have a new argument
+	'title' to set the window title.
+
+    o	X11() now has the defaults for all of its arguments set by the
+	new function X11.options(), inter alia replacing options
+	"gamma", "colortype" and "X11fonts".
+
+    o	ps.options() now warns on unused option 'append'.
+
+	xfig() no longer takes default arguments from ps.options().
+	(This was not documented prior to 2.6.1 patched.)
+
+	pdf() now takes defaults from the new function pdf.options()
+	rather that from ps.options() (and the latter was not
+	documented prior to 2.6.1 patched).
+
+	The defaults for all arguments other than 'file' in
+	postscript() and pdf() can now be set by ps.options() or
+	pdf.options()
+
+    o	New functions setEPS() and setPS() as wrappers to ps.options()
+	to set appropriate defaults for figures for inclusion in other
+	documents and for spooling to a printer respectively.
+
+    o	The meaning of numeric 'pch' has been extended where MBCSes are
+	supported.  Now negative integer values indicate Unicode
+	points, integer values in 32-127 represent ASCII characters,
+	and 128-255 are valid only in single-byte locales.
+	(Previously what happened with negative pch values was
+	undocumented: they were replaced by the current setting of
+	par("pch").)
+
+    o	Graphics devices can say if they can rotate text well
+	(e.g. postscript() and PDF() can) and if so the device's
+	native text becomes the default for contour labels rather than
+	using Hershey fonts.
+    o	The setting of the line spacing (par("cra")[2]) on the X11() and
+	windows() devices is now comparable with postscript() etc, and
+	roughly 20% smaller than before (it used to depend on the
+	locale for X11).  (So is the pictex() device, now 20% larger.)
+	This affects the margin size in plots, and should result in
+	better-looking plots.
+
+    o	There is a per-device setting for whether new frames need
+	confirmation. This is controlled by either par("ask") or
+	grid.prompt() and affects all subsequent plots on the device
+	using base or grid graphics.
+
+    o	There is a new version of the X11() device based on cairo
+	graphics which is selected by type = "cairo", and is available
+	on machines with cairo installed and preferably pango (which
+	most machines with gtk+ >= 2.8 will have).  This version
+	supports translucent colours and normally does a better job of
+	font selection so it has been possible to display (e.g.)
+	English, Polish, Russian and Japanese text on a single X11()
+	window.  It is the default where available.
+
+	There is a companion function, savePlot(), to save the current
+	plot to a PNG file.
+
+	On Unix-alikes, devices jpeg() and png() also accept
+	type = "cairo", and with that option do not need a running
+	X server.  The meaning of capabilities("jpeg") and
+	capabilities("png") has changed to reflect this.  On MacOS X,
+	there is a further type = "quartz".  The default type is
+	selected by the new option "bitmapType", and is "quartz" or
+	"cairo" where available.
+
+	Where cairo is supported, there is a svg() device to write SVG
+	files, and cairo_pdf() and cairo_ps() devices to write
+	(possibly bitmap) PDF and postscript files via cairo.
+
+	Some features require cairo >= 1.2, and some which are
+	nominally supported under 1.2 seem to need 1.4 to work
+	correctly.
+
+    o	There are new bmp() and tiff() devices.
+
+    o	New function devSize() to report the size of the current
+	graphics device surface (in inches or device units).  This
+	gives the same information as par("din"), but independent of
+	the graphics subsystem.
+
+    o	New base graphics function clip() to set the clipping region (in
+	user coordinates).
+
+    o	New functions grconvertX() and grconvertY() to convert between
+	coordinate systems in base graphics.
+
+    o	identify() recycles its 'labels' argument if necessary.
+
+    o	stripchart() is now a generic function, with default and
+	formula methods defined.  Additional graphics parameters may
+	be included in the call.  Formula handling is now
+	similar to boxplot().
+
+    o	strwidth() and strheight() gain 'font' and 'vfont' arguments and
+	accept in-line pars such as 'family' in the same way as text()
+	does.  (PR#776)
+
+    o	example(ask=TRUE) now applies to grid graphics (e.g. from
+	lattice) as well as to base graphics.
+
+    o	option("device.ask.default") replaces "par.ask.default" now it
+	applies also to grid.prompt().
+
+    o	plot.formula() only prompts between plots for interactive
+	devices (it used to prompt for all devices).
 
 
 DEPRECATED & DEFUNCT
