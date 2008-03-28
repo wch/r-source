@@ -106,7 +106,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   it is phyiscally about 114 dpi.
 
   If the \code{filename} is omitted (or specified as \code{""} for a
-  \code{win.metafile} device, the output is copied to the clipboard
+  \code{win.metafile} device), the output is copied to the clipboard
   when the device is closed.
 
   If a screen device is re-sized, the default behaviour (\code{"R"}) is
@@ -144,7 +144,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   background colour is that when a plot is saved the background
   colour is copied but the canvas colour is not.  The argument \code{bg}
   sets the initial value of \code{\link{par}("bg")} in base graphics and
-  \code{\link{gpar}("fill"}} in grid graphics
+  \code{\link{gpar}("fill")} in grid graphics
 
   Recorded plot histories are of class \code{"SavedPlots"}.  They have a
   \code{print} method, and a subset method.  As the individual plots are
