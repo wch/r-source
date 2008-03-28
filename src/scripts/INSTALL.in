@@ -502,6 +502,7 @@ do_install_source () {
       fi
       return
     fi
+    return
   fi
   if test "$Type" = "Translation" ; then
     message "Installing *Translation* package '${pkg_name}' ..."
