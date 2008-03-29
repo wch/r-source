@@ -43,16 +43,25 @@ static char rhomebuf[MAX_PATH];
   } \
   *p = '\0'
 
-/* get R_HOME from the module path: used in Rgui and Rterm */
-char *getRHOME(void)
+/* get R_HOME from the module path: used in RSetReg */
+char *getRHOMElong(void)
 {
     DWORD nc;
     char *p;
-    int hasspace = 0;
 
     nc = GetModuleFileName(NULL, rhomebuf, MAX_PATH);
     GOBACKONESLASH;
     GOBACKONESLASH;
+    return (rhomebuf);
+}
+
+/* get no-spaces version of R_HOME from the module path: used in Rgui and Rterm */
+char *getRHOME(void)
+{
+    char *p;
+    int hasspace = 0;
+
+    getRHOMElong();
     /* make sure no spaces in path */
     for (p = rhomebuf; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
