@@ -711,6 +711,7 @@ static double RQuartz_StrWidth(const char *text, CTXDESC)
         }
     }
 }
+#define      DEG2RAD 0.01745329251994329576
 
 static void RQuartz_Text(double x, double y, const char *text, double rot, double hadj, CTXDESC)
 {
@@ -739,14 +740,14 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     CGFontGetGlyphAdvances(font, glyphs, len, advances);
     for(i =0 ; i < len; i++) {
 	width += advances[i] * aScale;
-	g_adv[i] = CGSizeMake(aScale * advances[i] * cos(-0.0174532925*rot), aScale*advances[i]*sin(-0.0174532925 * rot));
+	g_adv[i] = CGSizeMake(aScale * advances[i] * cos(-DEG2RAD*rot), aScale*advances[i]*sin(-DEG2RAD * rot));
     }
     free(advances);
     CGContextSetTextMatrix(ctx,
 			   CGAffineTransformConcat(CGAffineTransformMakeScale(1.0, -1.0),
-						   CGAffineTransformMakeRotation(-0.0174532925 * rot)));
-    double ax = (width * hadj) * cos(-0.0174532925 * rot);
-    double ay = (width * hadj) * sin(-0.0174532925 * rot);
+						   CGAffineTransformMakeRotation(-DEG2RAD * rot)));
+    double ax = (width * hadj) * cos(-DEG2RAD * rot);
+    double ay = (width * hadj) * sin(-DEG2RAD * rot);
     /*      double h  = CGFontGetXHeight(CGContextGetFont(ctx))*aScale; */
     CGContextSetTextPosition(ctx, x - ax, y - ay);
     /*      Rprintf("%s,%.2f %.2f (%.2f,%.2f) (%d,%f)\n",text,hadj,width,ax,ay,CGFontGetUnitsPerEm(CGContextGetFont(ctx)),CGContextGetFontSize(ctx));       */
