@@ -629,8 +629,11 @@ useMTable <- function(onOff = NA)
                              check = TRUE, inherited = FALSE)
 {
     name <- if(inherited) ".AllMTable" else ".MTable"
-    if(check && !exists(name, envir = env, inherits = FALSE))
-      .setupMethodsTables(fdef)
+    if(check && !exists(name, envir = env, inherits = FALSE)) {
+        .setupMethodsTables(fdef)
+        if(!exists(name, envir = env, inherits = FALSE))
+         stop("Invalid methods table request")
+    }
     get(name, envir = env)
 }
 
@@ -934,4 +937,9 @@ listFromMethods <- function(generic, where, table) {
     if(missing(table))
           table <- .copyEnv(.getMethodsTable(generic))
     assign(what, table, envir = as.environment(where))
+}
+
+.getMethodsTableMetaData <-  function(name, generic, where) {
+    what <-  .TableMetaName(generic@generic, generic@package)
+    
 }

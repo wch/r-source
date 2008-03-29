@@ -1096,15 +1096,20 @@ callGeneric <- function(...)
         fname <- as.name(f)
         if(nargs() == 0) {
             call[[1]] <- as.name(fname) # in case called from .local
-        ## exapnd the ... if this is  a locally modified argument list.
-        ## This is a somewhat ambiguous case and may not do what the
-        ## user expects.  Not clear there is a single solution.  Should we warn?
-            call <- match.call(fdef, call, expand.dots = localArgs)
-            anames <- names(call)
-            matched <- !is.na(match(anames, names(formals(fdef))))
-            for(i in seq_along(anames))
-                if(matched[[i]])
+            ## if ... appears as an arg name, must be a nested callGeneric()
+            ##  or callNextMethod?  If so, leave alone so "..." will be evaluated
+            if("..." %in% names(call)) {  }
+            else {
+                ## exapnd the ... if this is  a locally modified argument list.
+                ## This is a somewhat ambiguous case and may not do what the
+                ## user expects.  Not clear there is a single solution.  Should we warn?
+                call <- match.call(fdef, call, expand.dots = localArgs)
+                anames <- names(call)
+                matched <- !is.na(match(anames, names(formals(fdef))))
+                for(i in seq_along(anames))
+                  if(matched[[i]])
                     call[[i]] <- as.name(anames[[i]])
+            }
         }
         else {
             call <- substitute(fname(...))
