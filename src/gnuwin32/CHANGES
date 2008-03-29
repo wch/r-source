@@ -218,6 +218,9 @@ OTHERS
     o	RSetReg now uses full pathnames, the same as the regular
     	installer.
 
+    o	Font Consolas has been added to the console fonts listed in the
+	GUI preferences widget.
+
 
 BUILDING R
 

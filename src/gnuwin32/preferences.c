@@ -67,7 +67,7 @@ static int cmatch(const char *col, const char **list)
 
 static const char *StyleList[] = {"normal", "bold", "italic", NULL};
 static const char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "32", "36", NULL};
-static const char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", "BatangChe", "DotumChe", "GulimChe", "MingLiU", "MS Gothic", "MS Mincho", "NSimSun", NULL};
+static const char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Consolas", "Terminal", "BatangChe", "DotumChe", "GulimChe", "MingLiU", "MS Gothic", "MS Mincho", "NSimSun", NULL};
 
 
 static window wconfig;
