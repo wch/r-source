@@ -247,6 +247,9 @@ BUG FIXES
 	not always working, at least on Windows XP -- this affected
 	e.g. Alt-M plus 'i' for 'List search path', where 's' was
 	being underlined.  (PR#11036)
+	
+    o	The winDialogString() dialog now releases CPU cycles while
+    	waiting for input. (PR#11045)
 
 
 
