@@ -171,11 +171,6 @@ int intersect(LRect r1, LRect r2)
     return result;
 }
 
-/* FIXME:  Nicked this from Graphics.h
- * Should export it instead.
- */
-#define      DEG2RAD 0.01745329251994329576
-
 /* Calculate the bounding rectangle for a string.
  * x and y assumed to be in INCHES.
  */
