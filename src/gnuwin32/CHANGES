@@ -215,7 +215,7 @@ OTHERS
     o	The progress bar in download.file() is now supressed by
     	quiet=TRUE (as it has long been on Unix).
     	
-    o	RSetReg now uses a full pathnames, the same as the regular
+    o	RSetReg now uses full pathnames, the same as the regular
     	installer.
 
 
