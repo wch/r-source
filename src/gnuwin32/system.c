@@ -240,7 +240,7 @@ ThreadedReadConsole(const char *prompt, char *buf, int len, int addtohistory)
   thist = addtohistory;
   SetEvent(EhiWakeUp);
   while (1) {
-    WaitMessage();
+    if (!peekevent()) WaitMessage();
     if (lineavailable) break;
     doevent();
     if(R_tcldo) R_tcldo();

@@ -2698,7 +2698,7 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 
     while (!xd->clicked) {
 	SH;
-        WaitMessage();
+        if (!peekevent()) WaitMessage();
 	R_ProcessEvents();
     }
 
@@ -3308,7 +3308,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	SH;
-        WaitMessage();
+        if (!peekevent()) WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
     dev->onExit(dev);
@@ -3341,7 +3341,7 @@ static SEXP GA_getEvent(SEXP eventRho, const char* prompt)
     dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->eventResult || xd->eventResult == R_NilValue) {
 	SH;
-        WaitMessage();
+        if (!peekevent()) WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
     dd->dev->onExit(dd->dev);
