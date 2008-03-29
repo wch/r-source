@@ -711,7 +711,6 @@ static double RQuartz_StrWidth(const char *text, CTXDESC)
         }
     }
 }
-#define      DEG2RAD 0.01745329251994329576
 
 static void RQuartz_Text(double x, double y, const char *text, double rot, double hadj, CTXDESC)
 {

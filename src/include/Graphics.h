@@ -33,9 +33,6 @@
 
 typedef unsigned int rcolor;
 
-/* colors.c, engine.c, graphics.c, plot3d.c  */
-#define	DEG2RAD 0.01745329251994329576
-
 /* base.c, graphics.c, par.c */
 #define MAX_LAYOUT_ROWS 50
 #define MAX_LAYOUT_COLS 50
