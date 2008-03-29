@@ -77,7 +77,8 @@ points(x, \dots)
     \item \code{26:31}: unused (and ignored).
     \item \code{32:127}: ASCII characters.
     \item \code{128:255} native characters \emph{only in a
-      single-byte locale and for the symbol font}.
+      single-byte locale and for the symbol font}.  (\code{128:159} are
+    only used on Windows.)
     \item \code{-32 \dots} Unicode point (where supported).
   }
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
@@ -102,7 +103,7 @@ points(x, \dots)
   \code{pch=128:255} give the corresponding character (if any) in
   the locale's character set.  Where supported by the OS, negative
   values specify a Unicode point, so e.g. \code{-0x2642L}
-  is a \sQuote{male sign}.
+  is a \sQuote{male sign} and \code{-0x20ACL} is the Euro.
 
   A character string consisting of a single character is converted to an
   integer: \code{32:127} for ASCII characters, and usually to the
@@ -119,7 +120,8 @@ points(x, \dots)
   If the symbol font (\code{\link{par}(font = 5)}) is used, numerical
   values should be used for \code{pch}: the range is
   \code{c(32:126, 160:254)} in all locales (but \code{240} is not
-  defined and \code{160}, Euro, may not be present).
+  defined (used for \sQuote{apple} on Mac OS) and \code{160}, Euro, may
+  not be present).
 }
 \note{
   A single-byte encoding may include the characters in
@@ -185,21 +187,24 @@ pchShow()
 pchShow(c("o","O","0"), cex = 2.5)
 pchShow(NULL, cex = 4, cextext = 0, main = NULL)
 
-\dontrun{
+\donttest{
 ## ------------ test code for various pch specifications -------------
 # Try this in various font families (including Hershey)
 # and locales.  Use sign=-1 asserts we want Latin-1.
 # Standard cases in a MBCS locale will not plot the top half.
-TestChars <- function(sign=1, ...)
+TestChars <- function(sign=1, font=1, ...)
 {
+   if(font == 5) { sign <- 1; r <- c(32:126, 160:254)
+   } else if (l10n_info()$MBCS) r <- 32:126 else r <- 32:255
+   if (sign == -1) r <- c(32:126, 160:255)
    par(pty="s")
    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="",
         xaxs="i", yaxs="i")
    grid(17, 17, lty=1)
-   for(i in c(32:255)) try(points(i\%\%16, i\%/\%16, pch=sign*i, ...))
+   for(i in r) try(points(i\%\%16, i\%/\%16, pch=sign*i, font=font,...))
 }
 TestChars()
-TestChars(sign=-1)
-TestChars(font=5)
+try(TestChars(sign=-1)) # needs MBCS support
+TestChars(font=5) # Euro might be at 160.  Mac OS has apple at 240.
 }}
 \keyword{aplot}
