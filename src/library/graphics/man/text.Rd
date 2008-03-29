@@ -90,12 +90,13 @@ text(x, \dots)
   and \code{"\300"} is aleph.
 }
 \section{Euro symbol}{
-  The Euro symbol was introduced relatively recently, and may not be
+  The Euro symbol was introduced relatively recently and may not be
   available in older fonts.  In recent versions of Adobe symbol fonts it
   is character 160, so \code{text(x, y, "\xA0", font = 5)} may work.
   People using Western European locales on Unix-alikes can probably
   select ISO-8895-15 (Latin-9) which has the Euro as character 165: this
   can also be used for \code{\link{postscript}} and \code{\link{pdf}}.
+  It is \code{\u20ac} in Unicode, which can be used in UTF-8 locales.
 #ifdef unix
 
   The Euro should be rendered correctly by \code{\link{X11}} in UTF-8
@@ -105,8 +106,9 @@ text(x, \dots)
 #endif
 #ifdef windows
 
-  In all the European Windows encodings the Euro is symbol 128, although
-  not all fonts support it.  It is not in the symbol font used for
+  In all the European Windows encodings the Euro is symbol 128 and
+  \code{\u20ac} will work in all locales: however not all fonts will
+  include it.  It is not in the symbol font used for
   \code{\link{windows}} and related devices, including the Windows printer.
 #endif
 }
