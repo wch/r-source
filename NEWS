@@ -486,9 +486,9 @@ DEPRECATED & DEFUNCT
 	to package 'utils': the former no longer exists as a separate
 	package in the R distribution.
 
-    o	The S4 pseudo-class "single" has been removed.
-	["double" is deprecated, but remains until a bug in the 
-	Matrix package is fixed.]
+    o	The S4 pseudo-classes "single" and double have been removed.
+	(The S4 class for a REALSXP is "numeric": for back-compatibility
+	as(x, "double") coerces to "numeric".)
 
     o	gpar(gamma=) in the grid package is now defunct.
 

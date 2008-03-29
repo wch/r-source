@@ -509,7 +509,6 @@ newBasic <-
                "character" =,
                "complex" =,
                "integer" =,
-               "double" =,
                "raw" =,
                "list" =  as.vector(c(...), Class),
                "expression" = eval(substitute(expression(...))),
