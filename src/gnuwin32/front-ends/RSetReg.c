@@ -24,7 +24,7 @@
 
 #define REG_KEY_NAME "Software\\R-core\\R"
 
-extern char *getRHOME(void); /* in ../rhome.c */
+extern char *getRHOMElong(void); /* in ../rhome.c */
 
 int main (int argc, char **argv)
 {
@@ -64,7 +64,7 @@ int main (int argc, char **argv)
 	    status = 1;
 	}
     } else {
-    	RHome = getRHOME();
+    	RHome = getRHOMElong();
 	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_KEY_NAME, 0, 
 			       KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
 	    /* failed to open key, so try to create it */
