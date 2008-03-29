@@ -1331,14 +1331,20 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    if (length == -1)
 		PROTECT(s = NA_STRING);
 	    else if (length < 1000) {
+		int enc = CE_NATIVE;
 		cbuf = alloca(length+1);
 		InString(stream, cbuf, length);
 		cbuf[length] = '\0';
-                PROTECT(s = mkCharEnc(cbuf, levs & (LATIN1_MASK | UTF8_MASK)));
+		if (levs & UTF8_MASK) enc = CE_UTF8;
+		else if (levs & LATIN1_MASK) enc = CE_LATIN1;
+                PROTECT(s = mkCharCE(cbuf, enc));
 	    } else {
-                cbuf = CallocCharBuf(length);
+ 		int enc = CE_NATIVE;
+		cbuf = CallocCharBuf(length);
 		InString(stream, cbuf, length);
-                PROTECT(s = mkCharEnc(cbuf, levs & (LATIN1_MASK | UTF8_MASK)));
+ 		if (levs & UTF8_MASK) enc = CE_UTF8;
+		else if (levs & LATIN1_MASK) enc = CE_LATIN1;
+                PROTECT(s = mkCharCE(cbuf, enc));
                 Free(cbuf);
 	    }
 	    break;
@@ -1404,7 +1410,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	if (TYPEOF(s) == CHARSXP) {
 	    /* With the CHARSXP cache maintained through the ATTRIB
 	       field that field has already been filled in by the
-	       mkChar/mkCharEnc call above, so we need to leave it
+	       mkChar/mkCharCE call above, so we need to leave it
 	       alone.  If there is an attribute (as there might be if
 	       the serialized data was created by an older version) we
 	       read and ignore the value. */

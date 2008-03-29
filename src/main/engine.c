@@ -1349,7 +1349,7 @@ void GERect(double x0, double y0, double x1, double y1,
    0 means totally outside clip region
    1 means totally inside clip region
    2 means intersects clip region */
-static int clipTextCode(double x, double y, const char *str, int enc,
+static int clipTextCode(double x, double y, const char *str, cetype_t enc,
 			double width, double height, double rot, double hadj,
 			const pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
@@ -1384,7 +1384,7 @@ static int clipTextCode(double x, double y, const char *str, int enc,
     return clipRectCode(left, bottom, right, top, toDevice, dd);
 }
 
-static void clipText(double x, double y, const char *str, int enc,
+static void clipText(double x, double y, const char *str, cetype_t enc,
 		     double width, double height, double rot, double hadj,
 		     const pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
@@ -1539,7 +1539,7 @@ static int VFontFaceCode(int familycode, int fontface) {
  */
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
-void GEText(double x, double y, const char * const str, int enc,
+void GEText(double x, double y, const char * const str, cetype_t enc,
 	    double xc, double yc, double rot,
 	    const pGEcontext gc, pGEDevDesc dd)
 {
@@ -1561,7 +1561,8 @@ void GEText(double x, double y, const char * const str, int enc,
 	if(str && *str) {
 	    const char *s;
 	    char *sb;
-	    int i, n, enc2;
+	    int i, n;
+	    cetype_t enc2;
 	    double xoff, yoff, hadj;
 	    double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 	    double xleft, ybottom;
@@ -2300,7 +2301,7 @@ void GEMetricInfo(int c, const pGEcontext gc,
  * GEStrWidth
  ****************************************************************
  */
-double GEStrWidth(const char *str, int enc, const pGEcontext gc, pGEDevDesc dd)
+double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc dd)
 {
     /*
      * If the fontfamily is a Hershey font family, call R_GE_VStrWidth
@@ -2320,7 +2321,7 @@ double GEStrWidth(const char *str, int enc, const pGEcontext gc, pGEDevDesc dd)
 	    const char *s;
 	    char *sb;
 	    double wdash;
-	    int enc2;
+	    cetype_t enc2;
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
 	    if(enc2 != CE_SYMBOL)
@@ -2356,7 +2357,7 @@ double GEStrWidth(const char *str, int enc, const pGEcontext gc, pGEDevDesc dd)
  * the string only through the number of lines of text (via embedded
  * \n) and we assume they are never part of an mbc.
  */
-double GEStrHeight(const char *str, int enc, const pGEcontext gc, pGEDevDesc dd)
+double GEStrHeight(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc dd)
 {
     /*
      * If the fontfamily is a Hershey font family, call R_GE_VStrHeight

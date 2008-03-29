@@ -618,6 +618,10 @@ C-LEVEL FACILITIES
 
     o	Experimental utility R_has_slot supplementing R_do_slot.
 
+    o	There is a new public interface to the encoding info stored on
+	CHARSXPs, getCharCE and mkCharCE using the enumeration type
+	cetype_t.
+
 
 BUG FIXES
 

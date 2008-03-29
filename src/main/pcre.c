@@ -200,11 +200,11 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
     const unsigned char *tables;
     Rboolean use_UTF8 = FALSE;
 
-    if (getCharEnc(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-    if (getCharEnc(STRING_ELT(rep, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    if (getCharCE(STRING_ELT(rep, 0)) == CE_UTF8) use_UTF8 = TRUE;
     n = LENGTH(vec);
     for (i = 0; i < n; i++)
-	if (getCharEnc(STRING_ELT(vec, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	if (getCharCE(STRING_ELT(vec, 0)) == CE_UTF8) use_UTF8 = TRUE;
 
     if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
@@ -365,7 +365,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	    if (useBytes)
 		SET_STRING_ELT(ans, i, mkChar(cbuf));
 	    else if (use_UTF8) {
-		SET_STRING_ELT(ans, i, mkCharEnc(cbuf, UTF8_MASK));
+		SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 	    } else
 		SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
             Free(cbuf);
@@ -404,9 +404,9 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 
     n = LENGTH(text);
     if (!useBytes) {
-	if (getCharEnc(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < n; i++)
-	    if (getCharEnc(STRING_ELT(text, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	    if (getCharCE(STRING_ELT(text, 0)) == CE_UTF8) use_UTF8 = TRUE;
     }
 
     if (use_UTF8) {

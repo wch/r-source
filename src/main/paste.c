@@ -153,10 +153,10 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	ienc = 0;
 	if(anyKnown && allKnown) {
-	    if(known_to_be_latin1) ienc = LATIN1_MASK;
-	    if(known_to_be_utf8) ienc = UTF8_MASK;
+	    if(known_to_be_latin1) ienc = CE_LATIN1;
+	    if(known_to_be_utf8) ienc = CE_UTF8;
 	}
-	SET_STRING_ELT(ans, i, mkCharEnc(cbuf, ienc));
+	SET_STRING_ELT(ans, i, mkCharCE(cbuf, ienc));
     }
 
     /* Now collapse, if required. */
@@ -189,11 +189,11 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
         UNPROTECT(1);
 	ienc = 0;
 	if(anyKnown && allKnown) {
-	    if(known_to_be_latin1) ienc = LATIN1_MASK;
-	    if(known_to_be_utf8) ienc = UTF8_MASK;
+	    if(known_to_be_latin1) ienc = CE_LATIN1;
+	    if(known_to_be_utf8) ienc = CE_UTF8;
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkCharEnc(cbuf, ienc));
+	SET_STRING_ELT(ans, 0, mkCharCE(cbuf, ienc));
     }
     R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);

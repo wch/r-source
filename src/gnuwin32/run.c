@@ -123,7 +123,7 @@ static char * expandcmd(const char *cmd)
 
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
-static HANDLE pcreate(const char* cmd, int enc, const char *finput,
+static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
 		      int newconsole, int visible, int inpipe)
 {
     DWORD ret;
@@ -282,7 +282,7 @@ char *runerror(void)
    finput is either NULL or the name of a file from which to
      redirect stdin for the child.
  */
-int runcmd(const char *cmd, int enc, int wait, int visible, const char *finput)
+int runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *finput)
 {
     HANDLE p;
     int ret;
@@ -306,7 +306,7 @@ int runcmd(const char *cmd, int enc, int wait, int visible, const char *finput)
    io = 0 to read stdout from pipe, 1 to write to pipe,
    2 to read stdout and stderr from pipe.
  */
-rpipe * rpipeOpen(const char *cmd, int enc, int visible, 
+rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible, 
 		  const char *finput, int io)
 {
     rpipe *r;
@@ -607,7 +607,8 @@ Rconnection newWpipe(const char *description, int ienc, const char *mode)
 	error(_("allocation of pipe connection failed"));
     }
     
-/* We always use COMSPEC here, not R_SHELL or SHELL, for compatibility with Rterm.
+/* We always use COMSPEC here, not R_SHELL or SHELL,
+   for compatibility with Rterm.
    We also use /c for the same reason.
 */
    

@@ -775,8 +775,8 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 static SEXP mkChar2(const char *name)
 {
     if(!strIsASCII(name)) {
-	if(known_to_be_latin1) return mkCharEnc(name, LATIN1_MASK);
-	else if(known_to_be_utf8) return mkCharEnc(name, UTF8_MASK);
+	if(known_to_be_latin1) return mkCharCE(name, CE_LATIN1);
+	else if(known_to_be_utf8) return mkCharCE(name, CE_UTF8);
     }
     return mkChar(name);
 }
@@ -1963,13 +1963,16 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
 /* NB: cnt includes the terminator */
 #ifdef Win32
     s = alloca(cnt*4); /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
+    R_CheckStack();
+    memset(s, 0, cnt*4);
 #else
     s = alloca(cnt*6); /* max 6 bytes per wchar_t */
-#endif
     R_CheckStack();
+    memset(s, 0, cnt*6);
+#endif
     wcstoutf8(s, wcs, cnt);
     PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkCharEnc(s, UTF8_MASK));
+    SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));
     UNPROTECT(1);
     return t;
 }

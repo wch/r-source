@@ -402,7 +402,7 @@ static const char *trChar(SEXP x)
     /* Long strings will be rare, and few per cat() call so we
        can afford to be profligate here: translateChar is */
     if (n < 100) p = buf; else p = R_alloc(n+7, 1);
-    if (WinUTF8out && getCharEnc(x) == CE_UTF8) {
+    if (WinUTF8out && getCharCE(x) == CE_UTF8) {
 	strcpy(p, UTF8in); strcat(p, CHAR(x)); strcat(p, UTF8out);
 	return p;
     } else

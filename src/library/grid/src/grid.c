@@ -2810,7 +2810,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 			GEText(xx[i], yy[i], 
 			       CHAR(STRING_ELT(txt, i % LENGTH(txt))),
 			       (gc.fontface == 5) ? CE_SYMBOL :
-			       getCharEnc(STRING_ELT(txt, i % LENGTH(txt))),
+			       getCharCE(STRING_ELT(txt, i % LENGTH(txt))),
 			       REAL(hjust)[i % LENGTH(hjust)], 
 			       REAL(vjust)[i % LENGTH(vjust)], 
 			       numeric(rot, i % LENGTH(rot)) + 
