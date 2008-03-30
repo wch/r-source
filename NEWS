@@ -714,6 +714,9 @@ BUG FIXES
     o	@ now checks it is being applied to an S4 object, and if not
     	gives a warning (which will become an error in 2.8.0).
 
+    o	dump() and friends now warn that all S4 objects (even those
+    	based on vectors) are not source()able, with a stronger wording.
+
 
 
 
