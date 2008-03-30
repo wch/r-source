@@ -7550,7 +7550,13 @@ Only the @code{CE_UTF8} and @code{CE_LATIN1} are marked on
 @code{CHARSXPs} (and so @code{Rf_getCharCE} will only return one of the
 first three), and these should only be used on non-@acronym{ASCII}
 strings.  Value @code{CE_SYMBOL} is used internally to indicate Adobe
-Symbol encoding.  Function
+Symbol encoding.  Value @code{CE_ANY} is used to indicate a character
+string that will not need re-encoding -- this is used for character
+strings known to be in @acronym{ASCII}, and can also be used as an input
+parameter where the intention is that the string is treated as a series
+of bytes.
+
+Function
 
 @findex reEnc
 @example
@@ -7564,7 +7570,7 @@ returns a string allocated by @code{R_alloc}.  This can translate from
 @code{subst} controls what to do with untranslatable characters or
 invalid input: this is done byte-by-byte with @code{1} indicates to
 output hex of the form @code{<a0>}, and @code{2} to replace by @code{.},
-with any other value causing the byte to be produce no output.
+with any other value causing the byte to produce no output.
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
