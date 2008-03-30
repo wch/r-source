@@ -196,12 +196,12 @@ void textRect(double x, double y, SEXP text, int i,
 	const char* string = CHAR(STRING_ELT(text, i % LENGTH(text)));
 	w = fromDeviceWidth(GEStrWidth(string,
 				       (gc->fontface == 5) ? CE_SYMBOL :
-				       getCharEnc(STRING_ELT(text, i % LENGTH(text))),
+				       getCharCE(STRING_ELT(text, i % LENGTH(text))),
 				       gc, dd),
 			    GE_INCHES, dd);
 	h = fromDeviceHeight(GEStrHeight(string,
 					 (gc->fontface == 5) ? CE_SYMBOL :
-					 getCharEnc(STRING_ELT(text, i % LENGTH(text))),
+					 getCharCE(STRING_ELT(text, i % LENGTH(text))),
 					 gc, dd),
 			     GE_INCHES, dd);
     }

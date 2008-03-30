@@ -211,12 +211,12 @@ void GPolyline(int, double*, double*, int, pGEDev);
 /* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, pGEDev);
 /* Return the height of the specified string in the specified units: */
-double GStrHeight(const char *, int, GUnit, pGEDev);
+double GStrHeight(const char *, cetype_t, GUnit, pGEDev);
 /* Return the width of the specified string in the specified units */
-double GStrWidth(const char *, int, GUnit, pGEDev);
+double GStrWidth(const char *, cetype_t, GUnit, pGEDev);
 /* Draw the specified text at location (x,y) with the specified
  * rotation and justification: */
-void GText(double, double, int, const char *, int, double, double, double,
+void GText(double, double, int, const char *, cetype_t, double, double, double,
 	   pGEDev);
 
 /* No longer exist
@@ -249,7 +249,7 @@ void GBox(int, pGEDev);
 void GPretty(double*, double*, int*); /* used in plot3d.c */
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
-void GMtext(const char *, int, int, double, int, double, int, double, pGEDev);
+void GMtext(const char *, cetype_t, int, double, int, double, int, double, pGEDev);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, pGEDev);
 

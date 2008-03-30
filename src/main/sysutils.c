@@ -335,7 +335,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, w = _wenviron; *w != NULL; i++, w++) {
 	    wcstombs(buf, *w, N); buf[N-1] = '\0';
-	    SET_STRING_ELT(ans, i, mkCharEnc(buf, UTF8_MASK));
+	    SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
 	}
 #else
 	char **e;
@@ -357,7 +357,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 		char *buf = alloca(N); 
 		R_CheckStack();
 		wcstombs(buf, w, N); buf[N-1] = '\0'; /* safety */
-		SET_STRING_ELT(ans, j, mkCharEnc(buf, UTF8_MASK));
+		SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
 	    }
 #else
 	    char *s = getenv(translateChar(STRING_ELT(CAR(args), j)));
@@ -365,8 +365,8 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
 		SEXP tmp;
-		if(known_to_be_latin1) tmp = mkCharEnc(s, LATIN1_MASK);
-		else if(known_to_be_utf8) tmp = mkCharEnc(s, UTF8_MASK);
+		if(known_to_be_latin1) tmp = mkCharCE(s, CE_LATIN1);
+		else if(known_to_be_utf8) tmp = mkCharCE(s, CE_UTF8);
 		else tmp = mkChar(s);
 		SET_STRING_ELT(ans, j, tmp);
 	    }
@@ -633,8 +633,8 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(has_nul) {
 		    si = mkCharLen(cbuff.data, nout);
 		} else {
-		    if(isLatin1) si = mkCharEnc(cbuff.data, LATIN1_MASK);
-		    else if(isUTF8) si = mkCharEnc(cbuff.data, UTF8_MASK);
+		    if(isLatin1) si = mkCharCE(cbuff.data, CE_LATIN1);
+		    else if(isUTF8) si = mkCharCE(cbuff.data, CE_UTF8);
 		    else si = mkChar(cbuff.data);
 		}
 		SET_STRING_ELT(ans, i, si);
@@ -652,7 +652,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-int getCharEnc(SEXP x)
+cetype_t getCharCE(SEXP x)
 {
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "getEncChar");
@@ -711,7 +711,7 @@ const char *translateChar(SEXP x)
     char *outbuf, *p;
     size_t inb, outb, res;
 #ifdef SUPPORT_MBCS
-    int ienc = getCharEnc(x);
+    cetype_t ienc = getCharCE(x);
 #endif
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
@@ -913,7 +913,7 @@ top_of_loop:
 
 extern void *Rf_AdobeSymbol2utf8(char* work, const char *c0, int nwork); /* from util.c */
 
-const char *reEnc(const char *x, int ce_in, int ce_out, int subst)
+const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
 {
     void * obj;
     const char *inbuf;

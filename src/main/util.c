@@ -656,7 +656,7 @@ SEXP static intern_getwd(void)
 	    wcstoutf8(buf, wbuf, PATH_MAX+1);
 	    R_UTF8fixslash(buf);
 	    rval = allocVector(STRSXP, 1);
-	    SET_STRING_ELT(rval, 0, mkCharEnc(buf, UTF8_MASK));
+	    SET_STRING_ELT(rval, 0, mkCharCE(buf, CE_UTF8));
 	}
     }
 #elif defined(HAVE_GETCWD)
@@ -740,7 +740,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
 	    wcstoutf8(sp, p, wcslen(p) + 1);
-	    SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
+	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
     }
     UNPROTECT(1);
@@ -820,7 +820,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		p[1] = L'\0';
 	    }
 	    wcstoutf8(sp, buf, wcslen(buf)+1);
-	    SET_STRING_ELT(ans, i, mkCharEnc(sp, UTF8_MASK));
+	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
     }
     UNPROTECT(1);
@@ -956,13 +956,13 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < n; i++) {
 	int ienc = 0;
 	this = CHAR(STRING_ELT(enc, i % m)); /* ASCII */
-	if(streql(this, "latin1")) ienc = LATIN1_MASK;
-	else if(streql(this, "UTF-8")) ienc = UTF8_MASK;
+	if(streql(this, "latin1")) ienc = CE_LATIN1;
+	else if(streql(this, "UTF-8")) ienc = CE_UTF8;
 	tmp = STRING_ELT(x, i);
 	if (! ((ienc == LATIN1_MASK && IS_LATIN1(tmp)) ||
 	       (ienc == UTF8_MASK && IS_UTF8(tmp)) ||
 	       (ienc == 0 && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
-	    SET_STRING_ELT(x, i, mkCharEnc(CHAR(tmp), ienc));
+	    SET_STRING_ELT(x, i, mkCharCE(CHAR(tmp), ienc));
     }
     UNPROTECT(1);
     return x;
@@ -972,10 +972,10 @@ SEXP attribute_hidden markKnown(const char *s, SEXP ref)
 {
     int ienc = 0;
     if(ENC_KNOWN(ref)) {
-	if(known_to_be_latin1) ienc = LATIN1_MASK;
-	if(known_to_be_utf8) ienc = UTF8_MASK;
+	if(known_to_be_latin1) ienc = CE_LATIN1;
+	if(known_to_be_utf8) ienc = CE_UTF8;
     }
-    return mkCharEnc(s, ienc);
+    return mkCharCE(s, ienc);
 }
 
 Rboolean strIsASCII(const char *str)
@@ -1387,7 +1387,7 @@ static int Rstrcoll(const char *s1, const char *s2)
 
 int Scollate(SEXP a, SEXP b)
 {
-    if(getCharEnc(a) == CE_UTF8 || getCharEnc(b) == CE_UTF8)
+    if(getCharCE(a) == CE_UTF8 || getCharCE(b) == CE_UTF8)
 	return Rstrcoll(translateCharUTF8(a), translateCharUTF8(b));
     else 
 	return strcoll(translateChar(a), translateChar(b));

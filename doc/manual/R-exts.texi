@@ -7534,6 +7534,38 @@ discouraged) in which case these functions exist but do no translation:
 such a build of @R{} is in any case not suitable for handling
 non-@acronym{ASCII} data.
 
+@findex getCharCE
+@findex mkCharCE
+As from @R{} 2.7.0 there is a public interface to the encoding marked on
+@code{CHARXSXPs} @emph{via}
+
+@example
+typedef enum @{CE_NATIVE, CE_UTF8, CE_LATIN1, CE_SYMBOL, CE_ANY@} cetype_t;
+cetype_t getCharCE(SEXP);
+SEXP mkCharCE(const char *, cetype_t);
+@end example
+
+@noindent
+Only the @code{CE_UTF8} and @code{CE_LATIN1} are marked on
+@code{CHARSXPs} (and so @code{Rf_getCharCE} will only return one of the
+first three), and these should only be used on non-@acronym{ASCII}
+strings.  Value @code{CE_SYMBOL} is used internally to indicate Adobe
+Symbol encoding.  Function
+
+@findex reEnc
+@example
+const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
+@end example
+
+@noindent
+can be used to re-encode character strings: like @code{translateChar} it
+returns a string allocated by @code{R_alloc}.  This can translate from
+@code{CE_SYMBOL} to @code{CE_UTF8}, but not conversely.  Argument
+@code{subst} controls what to do with untranslatable characters or
+invalid input: this is done byte-by-byte with @code{1} indicates to
+output hex of the form @code{<a0>}, and @code{2} to replace by @code{.},
+with any other value causing the byte to be produce no output.
+
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
 
