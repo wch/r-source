@@ -1,6 +1,6 @@
 % File src/library/base/man/dput.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dput}
@@ -32,7 +32,8 @@ dget(file)
 
   Deparsing an object is difficult, and not always possible.  With the
   default \code{control}, \code{dput()} attempts to deparse in a way
-  that is readable, but for more complex or unusual objects, not likely
+  that is readable, but for more complex or unusual objects (see
+  \code{\link{dump}}, not likely
   to be parsed as identical to the original.  Use \code{control = "all"}
   for the most complete deparsing; use \code{control = NULL} for the
   simplest deparsing, not even including attributes.
