@@ -586,7 +586,7 @@ getGeneric <-
 
 .copyEnv <- function(env) {
     value <- new.env(TRUE, parent.env(env))
-    for(what in objects(env))
+    for(what in objects(env, all.names = TRUE))
       assign(what, get(what, envir = env), envir = value)
     value
 }

@@ -927,11 +927,11 @@ listFromMethods <- function(generic, where, table) {
       .makeMlist2(argNames, .getAll(allNames, table))
  }
 
-## assign a methods meta-data table, by default (and usually) the table
+## assign a methods meta-data table, by default (and usually) a copy of the table
 ## from the generic function with the initial methods, if any.
 .assignMethodsTableMetaData  <- function(name, generic, where, table) {
     what <-  .TableMetaName(generic@generic, generic@package)
     if(missing(table))
-          table <- .getMethodsTable(generic)
+          table <- .copyEnv(.getMethodsTable(generic))
     assign(what, table, envir = as.environment(where))
 }
