@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.loess.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{predict.loess}
@@ -15,7 +15,8 @@
 \arguments{
  \item{object}{an object fitted by \code{loess}.}
  \item{newdata}{an optional data frame in which to look for variables with
-    which to predict.  If missing, the original data points are used.}
+    which to predict, or a matrix or vector containing exactly the variables
+    needs for prediction.  If missing, the original data points are used.}
  \item{se}{should standard errors be computed?}
  \item{\dots}{arguments passed to or from other methods.}
 }
@@ -43,7 +44,7 @@
   will be an array of the appropriate dimensions.
 }
 \author{
-  B.D. Ripley, based on the \code{cloess} package of Cleveland,
+  B. D. Ripley, based on the \code{cloess} package of Cleveland,
   Grosse and Shyu.
 }
 \note{
