@@ -41,7 +41,8 @@
 #endif
 #include <windows.h>
 #include "rui.h"
-
+#undef ERROR
+#include <R_ext/RS.h> /* for Calloc */
 
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -362,6 +363,111 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return (R_NilValue);
 }
+
+
+typedef struct {
+    window wprog;
+    progressbar pb;
+    label lab;
+    int width;
+    double min, max, val;
+} winprogressbar;
+
+static void pbarFinalizer(SEXP ptr)
+{
+    winprogressbar *pbar;
+
+    if(TYPEOF(ptr) != EXTPTRSXP) return;
+    pbar = R_ExternalPtrAddr(ptr);
+    if(!pbar) return;
+    hide(pbar->wprog);
+    if(pbar-> lab) del(pbar->lab);
+    del(pbar->pb);
+    del(pbar->wprog);
+    Free(pbar);
+    R_ClearExternalPtr(ptr); /* not really needed */
+}
+
+
+/* winProgressBar(width, title, label, min, max, initial) */
+SEXP do_winprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP tmp, ptr;
+    int width, iv;
+    double d;
+    const char *title, *label;
+    winprogressbar *pbar;
+    Rboolean haveLabel;
+    
+    checkArity(op, args);
+
+    pbar = Calloc(1, winprogressbar);
+    width = asInteger(CAR(args)); args = CDR(args);
+    if(width == NA_INTEGER || width < 0) width = 200;
+    tmp = CAR(args); args = CDR(args);
+    if(!isString(tmp) || length(tmp) < 1 || STRING_ELT(tmp, 0) == NA_STRING)
+	errorcall(call, "invalid '%s' argument", "title");
+    title = translateChar(STRING_ELT(tmp, 0));
+    tmp = CAR(args); args = CDR(args);
+    if(!isString(tmp) || length(tmp) < 1 || STRING_ELT(tmp, 0) == NA_STRING)
+	errorcall(call, "invalid '%s' argument", "Label");
+    label = translateChar(STRING_ELT(tmp, 0));
+    haveLabel = strlen(label) > 0;
+    d = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(d)) errorcall(call, "invalid '%s' argument", "min");
+    pbar->min = d;
+    d = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(d)) errorcall(call, "invalid '%s' argument", "max");
+    pbar->max = d;
+    d = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(d)) errorcall(call, "invalid '%s' argument", "initial");
+    pbar->val = d;
+
+    pbar->width = width;
+    pbar->wprog = newwindow(title, rect(0, 0, width+40, haveLabel ? 100: 80),
+			    Titlebar | Centered);
+    setbackground(pbar->wprog, dialog_bg());
+    if(haveLabel)
+	pbar->lab = newlabel(label, rect(10, 15, width+20, 25), AlignCenter);
+    pbar->pb = newprogressbar(rect(20, haveLabel ? 50 : 30, width, 20), 
+			      0, width, 1, 1);
+    iv = pbar->width * (pbar->val - pbar->min)/(pbar->max - pbar->min);
+    setprogressbar(pbar->pb, iv);
+    show(pbar->wprog);
+    ptr = R_MakeExternalPtr(pbar, install("winProgressBar"), R_NilValue);
+    R_RegisterCFinalizerEx(ptr, pbarFinalizer, TRUE);
+    
+    return ptr;
+}
+
+SEXP do_closewinprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    pbarFinalizer(CAR(args));
+    return R_NilValue;
+}
+
+SEXP do_setwinprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ptr = CAR(args);
+    winprogressbar *pbar;
+    double value;
+
+    checkArity(op, args);
+    pbar = R_ExternalPtrAddr(ptr);
+    value = pbar->val;
+    if(!isNull(CADR(args))) {
+	int iv;
+	double val = asReal(CADR(args));
+	if (!R_FINITE(val) || val < pbar->min || val > pbar->max)
+	    errorcall(call, "invalid '%s' argument", "value");
+	iv = pbar->width * (val - pbar->min)/(pbar->max - pbar->min);
+	setprogressbar(pbar->pb, iv);
+	pbar->val = val;
+    }
+    return ScalarInteger(value);
+}
+
 
 
 void Rwin_fpset(void)

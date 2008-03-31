@@ -77,6 +77,9 @@ SEXP do_winmenunames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_wingetmenuitems(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winprogressbar(SEXP, SEXP, SEXP, SEXP);
+SEXP do_closewinprogressbar(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setwinprogressbar(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);

@@ -221,6 +221,9 @@ OTHERS
     o	Font Consolas has been added to the console fonts listed in the
 	GUI preferences widget.
 
+    o	New widget winProgressBar() (based on the progress bar used by
+	download.file()).
+
 
 BUILDING R
 

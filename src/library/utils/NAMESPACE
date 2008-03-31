@@ -115,5 +115,7 @@ export(DLL.version, Filters, choose.dir, choose.files,
        readRegistry, setStatusBar, setWindowTitle, shortPathName,
        win.version, winDialog, winDialogString, winMenuAdd,
        winMenuAddItem, winMenuDel, winMenuDelItem, winMenuNames,
-       winMenuItems, writeClipboard, zip.unpack)
+       winMenuItems, writeClipboard, zip.unpack,
+       winProgressBar, getWinProgressBar, setWinProgressBar)
+S3method(close, winProgressBar)
 }

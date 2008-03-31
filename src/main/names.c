@@ -589,6 +589,9 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"loadRconsole", do_loadRconsole,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.which", 	do_syswhich,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"readRegistry",do_readRegistry,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"winProgressBar",do_winprogressbar,0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"closeWinProgressBar",do_closewinprogressbar,0,111,1,	{PP_FUNCALL, PREC_FN,	0}},
+{"setWinProgressBar",do_setwinprogressbar,0,11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
