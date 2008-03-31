@@ -569,6 +569,10 @@ C-LEVEL FACILITIES
 	CHARSXPs, getCharCE and mkCharCE using the enumeration type
 	cetype_t.
 
+    o	A new header 'R_ext/Visibility' contains some definitions for
+	controlling the visibility of entry points, and how to control
+	visibility is now documented in 'Writing R Extensions'.
+
 
 BUG FIXES
 

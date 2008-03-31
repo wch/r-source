@@ -30,6 +30,7 @@
 #include "stats.h"
 #include "ts.h"
 #include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
 
 static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
@@ -204,11 +205,7 @@ static const R_FortranMethodDef FortEntries[] = {
     {NULL, NULL, 0}
 };
 
-void
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-__attribute__ ((visibility ("default")))
-#endif
-R_init_stats(DllInfo *dll)
+void attribute_visible R_init_stats(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
     R_useDynamicSymbols(dll, FALSE);

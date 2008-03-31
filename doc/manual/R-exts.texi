@@ -1986,7 +1986,7 @@ useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
 @end example
 
 @noindent
-which makes the @R{} variables corresponding to the Fortran symbols
+which makes the @R{} variables corresponding to the FORTRAN symbols
 @code{F_bkde} and so on, and so avoid clashes with @R{} code in the name
 space.
 
@@ -5311,6 +5311,7 @@ arguments, and also make it available to @R{} programmers under a different
 name.  In the future, registration may be used to implement a form of
 ``secure'' or limited native access.
 
+@findex R_registerRoutines
 To register routines with @R{}, one calls the C routine
 @code{R_registerRoutines}.  This is typically done when the DLL is first
 loaded within the initialization routine @code{R_init_@var{dll name}}
@@ -7589,6 +7590,7 @@ with any other value causing the byte to produce no output.
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
+* Controlling visibility::      
 * Standalone Mathlib::          
 * Organization of header files::  
 @end menu
@@ -8780,7 +8782,7 @@ or generate an error and so not return to your code.
 @cindex Version information from C
 @findex R_Version
 
-The header files define @code{USING_R}, which should be used to test if
+The header files define @code{USING_R}, which can be used to test if
 the code is indeed being used with @R{}.
 
 Header file @file{Rconfig.h} (included by @file{R.h}) is used to define
@@ -8794,8 +8796,8 @@ Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
 integer, plus a macro @code{R_Version} to do the encoding.  This can be
 used to test if the version of @R{} is late enough, or to include
-back-compatibility features.  For protection against earlier versions of
-@R{} which did not have this macro, use a construction such as
+back-compatibility features.  For protection against very old versions
+of @R{} which did not have this macro, use a construction such as
 
 @example
 @group
@@ -8810,7 +8812,7 @@ More detailed information is available in the macros @code{R_MAJOR},
 header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @samp{9.0}).
 
-@node Inlining C functions, Standalone Mathlib, Platform and version information, The R API
+@node Inlining C functions, Controlling visibility, Platform and version information, The R API
 @section Inlining C functions
 @findex R_INLINE
 
@@ -8832,11 +8834,70 @@ static R_INLINE int ind_2(int l, int j)
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably: see
 @uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
-configure code has checked is that  @code{R_INLINE} can be used in a
+configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
 packages making extensive use of inlining include their own configure code.
 
-@node Standalone Mathlib, Organization of header files, Inlining C functions, The R API
+@node Controlling visibility, Standalone Mathlib, Inlining C functions, The R API
+@section Controlling visibility
+@cindex Visibility
+
+Header @file{R_ext/Visibility} has some definitions for controlling the
+visibility of entry points.  These are only effective when
+@samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
+is configured and recorded in header @file{Rconfig.h} (included by
+@file{R_ext/Visibility.h}).  It is generally defined on modern
+Unix-alikes with a recent compiler (e.g.@: @code{gcc4}), but not
+supported on Windows.  Minimizing the visibility of symbols in a shared
+library will both speed up its loading (unlikely to be significant) and
+reduce the possibility of linking to the wrong entry points of the same
+name.
+
+C/C++ entry points prefixed by @code{attribute_hidden} will not be
+visible in the shared object.  There is no comparable mechanism for
+FORTRAN entry points, but there is a more comprehensive scheme used by,
+for example package @pkg{stats}.  Most compilers which allow control of
+visibility will allow control of visibility for all symbols via a flag,
+and where known the flag is encapsulated in the macros
+@samp{C_VISIBILITY} and @code{F77_VISIBILITY} for C and FORTRAN
+compilers.  These are defined in @file{etc/Makeconf} and so available
+for normal compilation of package code.  For example,
+@file{src/Makevars} could include
+
+@example
+PKG_CFLAGS=$(C_VISIBILITY)
+PKG_FFLAGS=$(F77_VISIBILITY)
+@end example
+
+This would end up with @strong{no} visible entry points, which would be
+pointless.  However, the effect of the flags can be overridden by using
+the @code{attribute_visible} prefix.  A shared object which registers
+its entry points needs only for have one visible entry point, its
+initializer, so for example package @pkg{stats} has
+
+@example
+void attribute_visible R_init_stats(DllInfo *dll)
+@{
+    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+...
+@}
+@end example
+
+The visibility mechanism is not available on Windows, but there is an
+equally effective way to control which entry points are visible, by
+supply a definitions file
+@file{@var{pkgnme}/src/@var{pkgname}-win.def}: only entry points
+listed in that file will be visible.  Again using @pkg{stats} as an
+example, it has
+
+@example
+LIBRARY stats.dll
+EXPORTS
+ R_init_stats
+@end example
+
+@node Standalone Mathlib, Organization of header files, Controlling visibility, The R API
 @section Using these functions in your own C code
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
@@ -8923,6 +8984,7 @@ packages
 @code{download.file}
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
 @item @file{R_ext/RStartup.h} @tab for add-on front-ends
+@item @file{R_ext/Visibility.h} @tab definitions controlling visibility
 @item @file{R_ext/eventloop.h} @tab for add-on front-ends and for
 packages that need to share in the @R{} event loops (on all platforms)
 @end multitable
