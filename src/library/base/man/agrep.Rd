@@ -1,6 +1,6 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
@@ -14,7 +14,7 @@
 }
 \usage{
 agrep(pattern, x, ignore.case = FALSE, value = FALSE,
-      max.distance = 0.1)
+      max.distance = 0.1, useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{a non-empty character string to be matched (\emph{not}
@@ -41,6 +41,8 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
     If \code{all} is missing, it is set to 10\%, the other components
     default to \code{all}.  The component names can be abbreviated.
   }
+  \item{useBytes}{logical. in a multibyte locale, should the comparison
+    be character-by-chracter (the default) or byte-by-byte.}
 }
 \details{
   The Levenshtein edit distance is used as measure of approximateness:
@@ -51,7 +53,8 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   developed by Jarkko Hietaniemi (also used in the Perl String::Approx
   module), modified to work with multibyte character sets.  To save
   space it only supports the first 65536 characters of UTF-8 (where all
-  the characters for human languages lie).
+  the characters for human languages lie).  Note that it can be quite
+  slow in UTF-8, and \code{useBytes = TRUE} will be much faster.
 }
 \value{
   Either a vector giving the indices of the elements that yielded a

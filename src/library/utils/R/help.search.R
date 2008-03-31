@@ -349,7 +349,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     searchFun <- function(x) {
 	if(agrep)
 	    agrep(pattern, x, ignore.case = ignore.case,
-		  max.distance = max.distance)
+		  max.distance = max.distance, useBytes = TRUE)
 	else
 	    grep(pattern, x, ignore.case = ignore.case)
     }
