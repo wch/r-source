@@ -236,10 +236,10 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
     if(is.null(newdata) && !se)
 	return(fitted(object))
 
-    if(is.null(newdata)) newx <- object$x
-    else {
-        newx <- as.matrix(model.frame(delete.response(terms(object)), newdata))
-    }
+    newx <- if(is.null(newdata)) object$x
+    else if(is.data.frame(newdata))
+        as.matrix(model.frame(delete.response(terms(object)), newdata))
+    else as.matrix(newdata)
     res <- predLoess(object$y, object$x, newx, object$s, object$weights,
 		     object$pars$robust, object$pars$span, object$pars$degree,
 		     object$pars$normalize, object$pars$parametric,
