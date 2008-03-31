@@ -6971,10 +6971,9 @@ and evaluating, consider the following fragment of
     SEXP s, t;
     PROTECT(t = s = allocList(3));
     SET_TYPEOF(s, LANGSXP);
-    CAR(t) = install("print"); t = CDR(t);
-    CAR(t) = CAR(a); t = CDR(t);
-    CAR(t) = allocVector(INTSXP, 1);
-    INTEGER(CAR(t))[0] = digits;
+    SETCAR(t, install("print")); t = CDR(t);
+    SETCAR(t,  CAR(a)); t = CDR(t);
+    SETCAR(t, ScalarInteger(digits));
     SET_TAG(t, install("digits"));
     eval(s, env);
     UNPROTECT(1);
