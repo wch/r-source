@@ -1,6 +1,6 @@
 % File src/library/stats/man/loess.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{loess}
@@ -17,7 +17,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 \arguments{
   \item{formula}{a \link{formula} specifying the numeric response and
     one to four numeric predictors (best specified via an interaction,
-    but can also be specified additively). Will be coerced to a formula
+    but can also be specified additively).  Will be coerced to a formula
     if necessary.}
   \item{data}{an optional data frame, list or environment (or object
     coercible by \code{\link{as.data.frame}} to a data frame) containing
@@ -62,40 +62,40 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   Fitting is done locally.  That is, for the fit at point \eqn{x}, the
   fit is made using points in a neighbourhood of \eqn{x}, weighted by
   their distance from \eqn{x} (with differences in \sQuote{parametric}
-  variables being ignored when computing the distance). The size of the
+  variables being ignored when computing the distance).  The size of the
   neighbourhood is controlled by \eqn{\alpha} (set by \code{span} or
   \code{enp.target}).  For \eqn{\alpha < 1}, the neighbourhood includes
   proportion \eqn{\alpha} of the points, and these have tricubic weighting
   (proportional to \eqn{(1 - \mathrm{(dist/maxdist)}^3)^3}{(1 -
-    (dist/maxdist)^3)^3}. For \eqn{\alpha > 1}, all points are used, with
+    (dist/maxdist)^3)^3}.  For \eqn{\alpha > 1}, all points are used, with
   the \sQuote{maximum distance} assumed to be
   \eqn{\alpha^{1/p}}{alpha^1/p} times the actual maximum distance for
   \eqn{p} explanatory variables.
 
-  For the default family, fitting is by (weighted) least squares. For
+  For the default family, fitting is by (weighted) least squares.  For
   \code{family="symmetric"} a few iterations of an M-estimation
-  procedure with Tukey's biweight are used. Be aware that as the initial
+  procedure with Tukey's biweight are used.  Be aware that as the initial
   value is the least-squares fit, this need not be a very resistant fit.
 
   It can be important to tune the control list to achieve acceptable
-  speed. See \code{\link{loess.control}} for details.
+  speed.  See \code{\link{loess.control}} for details.
 }
 \value{
   An object of class \code{"loess"}.
 }
 \references{
-  W.S. Cleveland, E. Grosse and W.M. Shyu (1992) Local regression
+  W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression
   models. Chapter 8 of \emph{Statistical Models in S} eds J.M. Chambers
   and T.J. Hastie, Wadsworth & Brooks/Cole.
 }
 \author{
-  B.D. Ripley, based on the \code{cloess} package of Cleveland,
+  B. D. Ripley, based on the \code{cloess} package of Cleveland,
   Grosse and Shyu available at \url{http://www.netlib.org/a/}.
 }
 \note{
   As this is based on the \code{cloess} package available at
   \code{netlib}, it is similar to but not identical to the \code{loess}
-  function of S. In particular, conditioning is not implemented.
+  function of S.  In particular, conditioning is not implemented.
 
   The memory usage of this implementation of \code{loess} is roughly
   quadratic in the number of points, with 1000 points taking about 10Mb.

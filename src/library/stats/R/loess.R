@@ -238,13 +238,7 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 
     if(is.null(newdata)) newx <- object$x
     else {
-	vars <- as.character(attr(delete.response(terms(object)),
-				  "variables"))[-1]
-	newx <- if(length(vars) > 1 || NCOL(newdata) > 1) {
-	    if(any(!match(vars, colnames(newdata), FALSE)))
-		stop("'newdata' does not contain the variables needed")
-	    as.matrix(newdata[, vars, drop=FALSE])
-	} else as.matrix(newdata)
+        newx <- as.matrix(model.frame(delete.response(terms(object)), newdata))
     }
     res <- predLoess(object$y, object$x, newx, object$s, object$weights,
 		     object$pars$robust, object$pars$span, object$pars$degree,

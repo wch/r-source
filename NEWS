@@ -343,6 +343,9 @@ NEW FEATURES
     o	The 'incomparables' argument to duplicated(), unique() and
 	match() is now implemented, and passed to match() from merge().
 
+    o	predict.loess() now works when loess() was fitted with
+	transformed explanatory variables, e.g, loess(y ~ log(x) + log(z)).
+
 
 GRAPHICS CHANGES
 
@@ -395,9 +398,10 @@ GRAPHICS CHANGES
 	par("pch").)
 
     o	Graphics devices can say if they can rotate text well
-	(e.g. postscript() and PDF() can) and if so the device's
+	(e.g. postscript() and pdf() can) and if so the device's
 	native text becomes the default for contour labels rather than
 	using Hershey fonts.
+
     o	The setting of the line spacing (par("cra")[2]) on the X11() and
 	windows() devices is now comparable with postscript() etc, and
 	roughly 20% smaller than before (it used to depend on the
@@ -406,7 +410,7 @@ GRAPHICS CHANGES
 	better-looking plots.
 
     o	There is a per-device setting for whether new frames need
-	confirmation. This is controlled by either par("ask") or
+	confirmation.  This is controlled by either par("ask") or
 	grid.prompt() and affects all subsequent plots on the device
 	using base or grid graphics.
 

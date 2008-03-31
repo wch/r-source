@@ -5138,3 +5138,16 @@ stopifnot(1 == grep("setClass",
 	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
 setwd(cwd)
 ## failed for several reasons in R < 2.7.0
+
+
+## predict.loess with transformed variables
+y <- 1:100 + rnorm(100)
+od <- data.frame(x=1:100, z=1:100 + rnorm(100, 10))
+nd <- data.frame(x=1:100, z=11:110)
+fit <- loess(y ~ log(x) + log(z), od)
+p1 <- predict(fit, nd) # failed in 2.6.x
+fit.log <- loess(y ~ x + z, log(od))
+p2 <- predict(fit.log, log(nd))
+stopifnot(identical(p1,p2))
+
+
