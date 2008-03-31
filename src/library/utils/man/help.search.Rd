@@ -87,6 +87,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   
   Note that currently the aliases in the matching help files are not
   displayed.
+
+  Matching by \code{agrep} is by bytes even in multi-byte locales:
+  character-by-character matching will be too slow with a thousand or
+  more packages.
 }
 \value{
   The results are returned in a list object of class \code{"hsearch"},

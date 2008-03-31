@@ -2603,7 +2603,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     int i, j, n, nmatches, nc;
-    int igcase_opt, value_opt, max_distance_opt;
+    int igcase_opt, value_opt, max_distance_opt, useBytes;
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
     apse_t *aps;
     const char *str;
@@ -2624,9 +2624,12 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     max_insertions_opt = (apse_size_t)asInteger(CAR(args));
     args = CDR(args);
     max_substitutions_opt = (apse_size_t)asInteger(CAR(args));
+    args = CDR(args);
+    useBytes = asLogical(CAR(args));
 
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (value_opt == NA_INTEGER) value_opt = 0;
+    if (useBytes == NA_INTEGER) useBytes = 0;
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec)) error(R_MSG_IA);
 
@@ -2634,12 +2637,12 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     str = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_MBCS
     if (mbcslocale) {
-	useMBCS = !strIsASCII(str);
+	useMBCS = !strIsASCII(str) && !useBytes;
 	if (!useMBCS) {
 	    for (i = 0 ; i < LENGTH(vec) ; i++) {
 		if (STRING_ELT(vec, i) == NA_STRING) continue;
 		if (!strIsASCII(translateChar(STRING_ELT(vec, i)))) {
-		    useMBCS = TRUE;
+		    useMBCS = !useBytes;
 		    break;
 		}
 	    }

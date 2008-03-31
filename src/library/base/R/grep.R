@@ -55,7 +55,8 @@ function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
                        ignore.case, extended, perl, fixed, useBytes))
 
 agrep <-
-function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
+function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
+         useBytes = FALSE)
 {
     pattern <- as.character(pattern)
     if(!is.character(x)) x <- as.character(x)
@@ -116,5 +117,5 @@ function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
     }
 
     .Internal(agrep(pattern, x, ignore.case, value, max.distance,
-                    max.deletions, max.insertions, max.substitutions))
+                    max.deletions, max.insertions, max.substitutions, useBytes))
 }
