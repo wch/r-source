@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-03-19 r44802)
+R version 2.8.0 Under development (unstable) (2008-03-30 r44996)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -589,9 +589,9 @@ Class \code{"\linkS4class{vector}"}, by class "numeric", distance 2.
 showClass("c1")
 }
 \keyword{classes}
-A shell of class documentation has been written to the 
+A shell of class documentation has been written to the
 connection 'stdout'.
- 
+
 > 
 > ## '!' changed signature from 'e1' to 'x' in 2.6.0
 > setClass("foo", "logical")
@@ -622,8 +622,8 @@ Creating a new generic function for "as.vector" in ".GlobalEnv"
 [1] "as.vector"
 > ## whereas this fails in R versions earlier than 2.6.0:
 > setMethod("as.vector", "foo", function(x) unclass(x))# gives message
-In method for function "as.vector": expanding the signature 
-to include omitted arguments in definition: mode = "missing" 
+In method for function "as.vector": expanding the signature
+to include omitted arguments in definition: mode = "missing"
 [1] "as.vector"
 > 
 > ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
@@ -653,4 +653,40 @@ to include omitted arguments in definition: mode = "missing"
 > stopifnot(!isVirtualClass("dCMat"),
 + 	  length(slotNames(new("dCMat"))) == 3)
 > 
+> 
+> ## Passing "..." arguments in nested callGeneric()s
+> setClass("m1", contains="matrix")
+[1] "m1"
+> setClass("m2", contains="m1")
+[1] "m2"
+> setClass("m3", contains="m2")
+[1] "m3"
+> ##
+> setGeneric("foo", function(x, ...) standardGeneric("foo"))
+[1] "foo"
+> setMethod("foo", signature(x = "m1"),
++ 	  function(x, ...) cat(" <m1> ", format(match.call()),"\n"))
+[1] "foo"
+> setMethod("foo", signature(x = "m2"),
++ 	  function(x, ...) {
++ 	      cat(" <m2> ", format(match.call()),"\n")
++ 	      x <- as(x, "m1"); callGeneric()
++ 	  })
+[1] "foo"
+> setMethod("foo", signature(x = "m3"),
++ 	  function(x, ...) {
++ 	      cat(" <m3> ", format(match.call()),"\n")
++ 	      x <- as(x, "m2"); callGeneric()
++ 	  })
+[1] "foo"
+> foo(new("m1"), bla = TRUE)
+ <m1>  foo(x = new("m1"), bla = TRUE) 
+> foo(new("m2"), bla = TRUE)
+ <m2>  foo(x = new("m2"), bla = TRUE) 
+ <m1>  foo(x = x, bla = TRUE) 
+> foo(new("m3"), bla = TRUE)
+ <m3>  foo(x = new("m3"), bla = TRUE) 
+ <m2>  foo(x = x, bla = TRUE) 
+ <m1>  foo(x = x, bla = TRUE) 
+> ## The last one used to loose 'bla = TRUE' {the "..."} when it got to m1
 > 

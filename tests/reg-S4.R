@@ -342,3 +342,26 @@ setClass("dCMat", contains = c("dMat", "CMat"))
 stopifnot(!isVirtualClass("dCMat"),
 	  length(slotNames(new("dCMat"))) == 3)
 
+
+## Passing "..." arguments in nested callGeneric()s
+setClass("m1", contains="matrix")
+setClass("m2", contains="m1")
+setClass("m3", contains="m2")
+##
+setGeneric("foo", function(x, ...) standardGeneric("foo"))
+setMethod("foo", signature(x = "m1"),
+	  function(x, ...) cat(" <m1> ", format(match.call()),"\n"))
+setMethod("foo", signature(x = "m2"),
+	  function(x, ...) {
+	      cat(" <m2> ", format(match.call()),"\n")
+	      x <- as(x, "m1"); callGeneric()
+	  })
+setMethod("foo", signature(x = "m3"),
+	  function(x, ...) {
+	      cat(" <m3> ", format(match.call()),"\n")
+	      x <- as(x, "m2"); callGeneric()
+	  })
+foo(new("m1"), bla = TRUE)
+foo(new("m2"), bla = TRUE)
+foo(new("m3"), bla = TRUE)
+## The last one used to loose 'bla = TRUE' {the "..."} when it got to m1
