@@ -46,3 +46,26 @@ winMenuNames <- function() .Internal(winMenuNames())
 
 winMenuItems <- function(menuname) .Internal(winMenuItems(menuname))
 
+winProgressBar <- function(title = "R progress bar", label = "",
+                           min = 0, max = 1, initial = 0, width = 300)
+{
+    res <- .Internal(winProgressBar(width, title, label, min, max, initial))
+    structure(list(pb=res), class = "winProgressBar")
+}
+
+close.winProgressBar <- function(con, ...)
+    .Internal(closeWinProgressBar(con$pb))
+
+setWinProgressBar <- function(pb, value)
+{
+    if(!inherits(pb, "winProgressBar"))
+       stop("'pb' is not from class \"winProgressBar\"")
+    invisible(.Internal(setWinProgressBar(pb$pb, value)))
+}
+
+getWinProgressBar <- function(pb)
+{
+    if(!inherits(pb, "winProgressBar"))
+       stop("'pb' is not from class \"winProgressBar\"")
+    .Internal(setWinProgressBar(pb$pb, NULL))
+}
