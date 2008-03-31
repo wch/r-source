@@ -901,7 +901,7 @@ namespaceExport <- function(ns, vars) {
         undef <- undef[! sapply(undef, exists, envir = ns)]
         if (length(undef) != 0) {
             undef <- do.call("paste", as.list(c(undef, sep = ", ")))
-            stop("undefined exports :", undef)
+            stop("undefined exports: ", undef)
         }
         if(.isMethodsDispatchOn()) .mergeExportMethods(new, ns)
         addExports(ns, new)
