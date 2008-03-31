@@ -3360,7 +3360,7 @@ SEXP mkCharCE(const char *name, cetype_t enc)
 {
     SEXP cval, chain;
     unsigned int hashcode;
-    int len = strlen(name);
+    int len = strlen(name), need_enc;
 
     switch(enc){
     case CE_NATIVE:
@@ -3373,7 +3373,12 @@ SEXP mkCharCE(const char *name, cetype_t enc)
         error("unknown encoding: %d", enc);
     }
 
-    if (enc && strIsASCII(name)) enc = 0;
+    if (enc && strIsASCII(name)) enc = CE_NATIVE;
+    switch(enc) {
+    case CE_UTF8: need_enc = UTF8_MASK; break;
+    case CE_LATIN1: need_enc = LATIN1_MASK; break;
+    default: need_enc = 0;
+    }
 
     /* hashcode = char_hash(name) % char_hash_size; */
     hashcode = char_hash(name) & char_hash_mask;
@@ -3386,9 +3391,7 @@ SEXP mkCharCE(const char *name, cetype_t enc)
 #ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	if (TYPEOF(val) != CHARSXP) break; /* sanity check */
 #endif
-	/* If we had USE_RINTERNALS we could do the two in one step */
-	if ((enc == CE_UTF8) == IS_UTF8(val) &&
-	    (enc == CE_LATIN1) == IS_LATIN1(val) &&
+	if (need_enc == ENC_KNOWN(val) &&
 	    LENGTH(val) == len &&  /* quick pretest */
 	    strcmp(CHAR(val), name) == 0) {
             cval = val;
