@@ -72,12 +72,12 @@ control newtoolbar(int height)
     c->toolbar = newwindow("TOOLBAR", rect(0, 0, 100, height),
 			   ChildWindow | Border);
     if (c->toolbar) {
-        DWORD wcol = GetSysColor(COLOR_MENU);
+	DWORD wcol = GetSysColor(COLOR_MENU);
 	hide(c->toolbar);
 	setbackground(c->toolbar,
-                      rgb( (wcol >> 0) &  0x000000FFL,
-                           (wcol >> 8) &  0x000000FFL,
-                           (wcol >> 16) &  0x000000FFL));
+		      rgb( (wcol >> 0) &  0x000000FFL,
+			   (wcol >> 8) &  0x000000FFL,
+			   (wcol >> 16) &  0x000000FFL));
     }
     addto(c);
     return (control) c->toolbar;
@@ -90,12 +90,12 @@ control newtoolbar(int height)
    (c) image is changed not copied.
 */
 button newtoolbutton(image img, rect r, actionfn fn) {
-   DWORD wcol = GetSysColor(COLOR_MENU);
-   rgb    col = rgb( (wcol >> 0) &  0x000000FFL,
-                     (wcol >> 8) &  0x000000FFL,
-                     (wcol >> 16) &  0x000000FFL);
-   img->cmap[img->pixels[0]] = col;
-   return newimagebutton(img, r, fn);
+    DWORD wcol = GetSysColor(COLOR_MENU);
+    rgb    col = rgb( (wcol >> 0) &  0x000000FFL,
+		      (wcol >> 8) &  0x000000FFL,
+		      (wcol >> 16) &  0x000000FFL);
+    img->cmap[img->pixels[0]] = col;
+    return newimagebutton(img, r, fn);
 }
 
 
@@ -122,7 +122,7 @@ int ggetkeystate()
 /* Extra text editing functions for R, Chris Jackson */
 #include <richedit.h>
 
-/* Move the editor caret position lines down. 
+/* Move the editor caret position lines down.
    If lines is negative moves caret up.
    Stops at the top or the bottom if lines is too big or small.
 */
@@ -207,8 +207,8 @@ long getpastelength()
     char *text;
     long pastelen;
     if ( OpenClipboard(NULL) &&
-         (hglb = GetClipboardData(CF_TEXT)) &&
-         (text = (char *)GlobalLock(hglb))) {
+	 (hglb = GetClipboardData(CF_TEXT)) &&
+	 (text = (char *)GlobalLock(hglb))) {
 	pastelen = strlen(text);
 	GlobalUnlock(hglb);
 	CloseClipboard();
@@ -222,27 +222,27 @@ long getpastelength()
 
 void textselectionex(control obj, long *start, long *end)
 {
-	CHARRANGE sel;
-	if (! obj)
-		return;
-	if ((obj->kind != FieldObject) && (obj->kind != TextboxObject))
-		return;
-	sendmessage(obj->handle, EM_EXGETSEL, 0, &sel);
-	*start = sel.cpMin;
-	*end = sel.cpMax;
+    CHARRANGE sel;
+    if (! obj)
+	return;
+    if ((obj->kind != FieldObject) && (obj->kind != TextboxObject))
+	return;
+    sendmessage(obj->handle, EM_EXGETSEL, 0, &sel);
+    *start = sel.cpMin;
+    *end = sel.cpMax;
 }
 
 void selecttextex(control obj, long start, long end)
 {
-	CHARRANGE sel;
-	long length;
+    CHARRANGE sel;
+    long length;
 
-	if (! obj)
-		return;
-	if ((obj->kind != FieldObject) && (obj->kind != TextboxObject))
-		return;
-	length = GetWindowTextLength(obj->handle);
-	sel.cpMin = (start < 0) ? length : start;
-	sel.cpMax = (end < 0) ? length : end;
-	sendmessage(obj->handle, EM_EXSETSEL, 0, &sel);
+    if (! obj)
+	return;
+    if ((obj->kind != FieldObject) && (obj->kind != TextboxObject))
+	return;
+    length = GetWindowTextLength(obj->handle);
+    sel.cpMin = (start < 0) ? length : start;
+    sel.cpMax = (end < 0) ? length : end;
+    sendmessage(obj->handle, EM_EXSETSEL, 0, &sel);
 }
