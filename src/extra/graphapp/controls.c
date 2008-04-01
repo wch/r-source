@@ -685,11 +685,14 @@ void *_getextradata(control obj)
  */
 void settext(control obj, const char *text)
 {
+         char *old_text;
+
 	if (! obj)
 		return;
 	if (! text)
 		text = "";
-	if (strcmp(GA_gettext(obj), text) == 0)
+	old_text = GA_gettext(obj);
+	if (old_text && strcmp(old_text, text) == 0)
 		return; /* no changes to be made */
 	if (obj->text) {
 		/* discard prior information */
