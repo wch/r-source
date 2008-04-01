@@ -81,7 +81,7 @@ extern "C" {
 #include <commdlg.h>
 
 #ifdef __MWERKS__
-	/* Metrowerks Codewarrior Cross-Platform C/C++ Compiler */
+    /* Metrowerks Codewarrior Cross-Platform C/C++ Compiler */
 	#define COMPILER 32
 #endif
 
@@ -178,8 +178,8 @@ extern "C" {
 
 	#define RadiogroupObject  0x2006
 
-        #define PrinterObject     0x0030
-        #define MetafileObject    0x0050
+	#define PrinterObject     0x0030
+	#define MetafileObject    0x0050
 
 /*
  *  Object information structures.
@@ -187,75 +187,75 @@ extern "C" {
 
 struct objinfo
 {
-	int 	kind;	/* what kind of object is it? */
-	int 	refcount; /* equals zero after del() */
-	HANDLE	handle;	/* handle to associated Windows object */
-        object  menubar,popup,toolbar;
-        char    status[256];
-	object	next;	/* next object in the list */
-	object	prev;	/* previous object in the list */
-	object	parent;	/* object's parent/container */
-	object	child;	/* first born */
+    int	kind;	/* what kind of object is it? */
+    int	refcount; /* equals zero after del() */
+    HANDLE	handle;	/* handle to associated Windows object */
+    object  menubar,popup,toolbar;
+    char    status[256];
+    object	next;	/* next object in the list */
+    object	prev;	/* previous object in the list */
+    object	parent;	/* object's parent/container */
+    object	child;	/* first born */
 
-	actionfn die;	/* private object destructor */
+    actionfn die;	/* private object destructor */
 
-	rect	rect;	/* rectangle size */
-	int 	depth;	/* pixel depth */
+    rect	rect;	/* rectangle size */
+    int	depth;	/* pixel depth */
 
-	drawstate drawstate; /* private drawstate */
-	image	img;	/* associated image */
+    drawstate drawstate; /* private drawstate */
+    image	img;	/* associated image */
 
-	int 	id;	/* a unique id number */
-	long	state;	/* enabled/visible/armed etc */
-	long	flags;	/* kind of window/child control */
-	void *	data;	/* data supplied by user */
-	char *	text;	/* text associated with the object */
-	rgb 	fg;	/* foreground colour */
-	rgb 	bg;	/* background colour */
+    int	id;	/* a unique id number */
+    long	state;	/* enabled/visible/armed etc */
+    long	flags;	/* kind of window/child control */
+    void *	data;	/* data supplied by user */
+    char *	text;	/* text associated with the object */
+    rgb	fg;	/* foreground colour */
+    rgb	bg;	/* background colour */
 
-	actionfn action; /* button/checkbox action */
-	actionfn dble ; /* listbox double-click action */
-	intfn 	hit;	/* menuitem/scrollbar action */
-	int 	value;	/* current argument to hit() */
-	int 	key;	/* menuitem key equivalent */
-	int 	shortcut; /* menu shortcut key */
-	int 	max;	/* scrollbar maximum value */
-	int 	size;	/* scrollbar page size */
-	int 	xmax;	/* scrollbar maximum value */
-	int 	xsize;	/* scrollbar page size */
+    actionfn action; /* button/checkbox action */
+    actionfn dble ; /* listbox double-click action */
+    intfn	hit;	/* menuitem/scrollbar action */
+    int	value;	/* current argument to hit() */
+    int	key;	/* menuitem key equivalent */
+    int	shortcut; /* menu shortcut key */
+    int	max;	/* scrollbar maximum value */
+    int	size;	/* scrollbar page size */
+    int	xmax;	/* scrollbar maximum value */
+    int	xsize;	/* scrollbar page size */
 
-	callinfo *call;	/* window/control call-backs */
-	void *	extra;	/* for extra internal data */
-	WNDPROC	winproc; /* control's normal event handler */
+    callinfo *call;	/* window/control call-backs */
+    void *	extra;	/* for extra internal data */
+    WNDPROC	winproc; /* control's normal event handler */
 
-	#if USE_NATIVE_CONTROLS
-	HBRUSH  bgbrush; /* background brush */
-	#endif
-  };
+#if USE_NATIVE_CONTROLS
+    HBRUSH  bgbrush; /* background brush */
+#endif
+};
 
 struct callinfo
 {
-	actionfn die;		/* user-defined destructor */
-	actionfn close;		/* window close function */
+    actionfn die;		/* user-defined destructor */
+    actionfn close;		/* window close function */
 
-	drawfn	redraw;		/* draw the window/control */
-	drawfn	resize;		/* window/control was resized */
+    drawfn	redraw;		/* draw the window/control */
+    drawfn	resize;		/* window/control was resized */
 
-	keyfn	keydown;	/* normal key pressed */
-	keyfn	keyaction;	/* function/arrow key pressed */
+    keyfn	keydown;	/* normal key pressed */
+    keyfn	keyaction;	/* function/arrow key pressed */
 
-	mousefn	mousedown;	/* mouse button was clicked */
-	mousefn	mouseup;	/* mouse button was released */
-	mousefn	mousemove;	/* mouse was moved */
-	mousefn	mousedrag;	/* mouse dragged (button is down) */
-	mousefn	mouserepeat;	/* mouse-down timer auto repeat */
+    mousefn	mousedown;	/* mouse button was clicked */
+    mousefn	mouseup;	/* mouse button was released */
+    mousefn	mousemove;	/* mouse was moved */
+    mousefn	mousedrag;	/* mouse dragged (button is down) */
+    mousefn	mouserepeat;	/* mouse-down timer auto repeat */
 
-	dropfn drop;		/* drag-and-drop function */
+    dropfn drop;		/* drag-and-drop function */
 
-        imfn    im;             /* input method function */
-    
-	actionfn focus;
-  };
+    imfn    im;             /* input method function */
+
+    actionfn focus;
+};
 
 
 /*  Useful definitions.  */
@@ -416,9 +416,9 @@ extern HWND hwndClient;
 #if defined(R_DLL_BUILD)
   extern
 #else
-  extern  __declspec(dllimport) 
+  extern  __declspec(dllimport)
 #endif
-    unsigned int localeCP; /* from Defn.h */
+  unsigned int localeCP; /* from Defn.h */
   extern int    app_initialised;
   extern char * app_name;
 
@@ -432,8 +432,8 @@ extern HWND hwndClient;
   UINT WINAPI app_timer_procedure(HWND, UINT, UINT, DWORD);
   extern WNDPROC app_control_proc;
 
-  extern int 	menus_active;
-  extern int 	active_windows;
+  extern int	menus_active;
+  extern int	active_windows;
   extern intptr_t child_id;
 
   extern window  current_window;
@@ -454,10 +454,9 @@ extern HWND hwndClient;
   extern drawstruct app_drawstate;
 
   extern drawstate current;	/* global colour, font &c */
-  extern int 	keystate;	/* state of Shift, Ctrl, Alt */
+  extern int	keystate;	/* state of Shift, Ctrl, Alt */
 
-
-static inline RECT *rect2RECT(rect *r) {return (RECT *)r;}
+  static inline RECT *rect2RECT(rect *r) {return (RECT *)r;}
 
 #ifdef __cplusplus
 }

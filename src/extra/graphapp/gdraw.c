@@ -33,7 +33,7 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
 /* Some of the ideas in haveAlpha are borrowed from Cairo */
-typedef BOOL 
+typedef BOOL
 (WINAPI *alpha_blend_t) (HDC, int, int, int, int, HDC, int, int, int, int,
 			 BLENDFUNCTION);
 
@@ -43,7 +43,7 @@ static int haveAlpha(void)
 {
     static int haveAlphaBlend = -1;
 
-    if(haveAlphaBlend < 0) {    
+    if(haveAlphaBlend < 0) {
 	/* AlphaBlend is in msimg32.dll.  */
 	HMODULE msimg32 = LoadLibrary("msimg32");
 	if (msimg32) {
@@ -224,7 +224,7 @@ void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
 }
 
 void gdrawpolyline(drawing d, int width, int style, rgb c,
-                   point p[], int n, int closepath, int fast,
+		   point p[], int n, int closepath, int fast,
 		   int lend, int ljoin, float lmitre)
 {
     int tmpx, tmpy, tmp;
@@ -250,8 +250,8 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	SetROP2(dc, R2_COPYPEN);
 	npieces = 0;
 	BeginPath(dc);
-        MoveToEx(dc, p[0].x, p[0].y, NULL);
-        for (i = 1; i < n ; i++) {
+	MoveToEx(dc, p[0].x, p[0].y, NULL);
+	for (i = 1; i < n ; i++) {
 	    LineTo(dc, p[i].x, p[i].y);
 	    npieces++;
 	    if (npieces > 1000) {
@@ -261,7 +261,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 		BeginPath(dc);
 	    }
 	}
-        if (closepath) LineTo(dc, p[0].x, p[0].y);
+	if (closepath) LineTo(dc, p[0].x, p[0].y);
 	EndPath(dc);
 	StrokePath(dc);
 	SelectObject(dc, GetStockObject(NULL_PEN));
@@ -285,7 +285,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	MoveToEx(dc, p[0].x, p[0].y, NULL);
 	npieces = 0;
 	BeginPath(dc);
-        for (i = 1; i < n; i++) {
+	for (i = 1; i < n; i++) {
 	    LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper,
 		    (LPARAM) &a);
 	    if ((p[i].x != a.curx) || (p[i].y != a.cury)) {
@@ -305,12 +305,12 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 		npieces = 0;
 		BeginPath(dc);
 	    }
-        }
-        if (closepath) {
+	}
+	if (closepath) {
 	    LineDDA(p[n-1].x, p[n-1].y, p[0].x, p[0].y, gLineHelper,
 		    (LPARAM) &a);
 	    if (a.on) LineTo(dc,p[0].x,p[0].y);
-        }
+	}
 	EndPath(dc);
 	StrokePath(dc);
 	SelectObject(dc, GetStockObject(NULL_PEN));
@@ -591,7 +591,7 @@ void gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj)
 }
 
 /* widechar version */
-void gwdrawstr1(drawing d, font f, rgb c, point p, 
+void gwdrawstr1(drawing d, font f, rgb c, point p,
 		const wchar_t *wc, int cnt, double hadj)
 {
     HFONT old;
@@ -664,7 +664,7 @@ int gstrwidth1(drawing d, font f, const char *s, int enc)
 {
     rect r;
     if (enc == CE_UTF8) {
-	wchar_t *wc; 
+	wchar_t *wc;
 	int n = strlen(s);
 	wc = alloca((n+1) * sizeof(wchar_t));
 	Rf_utf8towcs(wc, s, n+1);
@@ -710,7 +710,7 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 	if (*width > size.cy) *width = size.cy;
     } else if (c == 0) {
 	*descent = tm.tmDescent ;
-        *ascent = tm.tmHeight - *descent - extra ;
+	*ascent = tm.tmHeight - *descent - extra ;
 	*width = tm.tmMaxCharWidth ;
     } else if ((first <= c) && (c <= last)) {
 	SIZE size;
@@ -824,19 +824,19 @@ font gnewfont(drawing d, const char *face, int style, int size,
     if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
-        lf.lfCharSet = DEFAULT_CHARSET;
+	lf.lfCharSet = DEFAULT_CHARSET;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
     if ((strlen(face) > 1) && (face[0] == 'T') && (face[1] == 'T')) {
-        const char *pf;
-        lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
-        for (pf = &face[2]; isspace(*pf) ; pf++);
-        strncpy(lf.lfFaceName, pf, LF_FACESIZE-1);
+	const char *pf;
+	lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
+	for (pf = &face[2]; isspace(*pf) ; pf++);
+	strncpy(lf.lfFaceName, pf, LF_FACESIZE-1);
     }
     else {
-        lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
-        strncpy(lf.lfFaceName, face, LF_FACESIZE-1);
+	lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
+	strncpy(lf.lfFaceName, face, LF_FACESIZE-1);
     }
     if (style & Italic)
 	lf.lfItalic = 1;
@@ -922,4 +922,3 @@ void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for 
     TopmostDialogs &= !MB_TOPMOST;
     apply_to_list(c->parent->child, setMessageBoxTopmost);
 }
-

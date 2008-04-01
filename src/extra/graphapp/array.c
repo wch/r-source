@@ -48,130 +48,127 @@ char *	memjoin(char *a, char *b);
 
 char * memalloc(long size)
 {
-	long *block;
-	char *a;
-	long i, datasize;
-        TRACEAR("alloc");
-	datasize = (((size + 4) >> 2) << 2);
-	#ifdef COMPILER
-	  #if (COMPILER <= 16)
-		if ((sizeof(long)+datasize) >= (1<<16))
-			return NULL;
-	  #endif
-	#endif
-	block = (long *) malloc(sizeof(long) + datasize);
-	if (block == NULL)
-		return NULL;
-	block[0] = size;
-	a = (char *) & block[1];
-	for (i=0; i<datasize; i++)
-		a[i] = '\0';
-	return a;
+    long *block;
+    char *a;
+    long i, datasize;
+    TRACEAR("alloc");
+    datasize = (((size + 4) >> 2) << 2);
+#ifdef COMPILER
+#if (COMPILER <= 16)
+    if ((sizeof(long)+datasize) >= (1<<16))
+	return NULL;
+#endif
+#endif
+    block = (long *) malloc(sizeof(long) + datasize);
+    if (block == NULL)
+	return NULL;
+    block[0] = size;
+    a = (char *) & block[1];
+    for (i=0; i<datasize; i++)
+	a[i] = '\0';
+    return a;
 }
 
 char * memrealloc(char *a, long new_size)
 {
-	long *block;
-	long i, size, oldsize, newsize;
-        TRACEAR("realloc");
-	if (new_size <= 0) {
-		memfree(a);
-		return NULL;
-	}
+    long *block;
+    long i, size, oldsize, newsize;
+    TRACEAR("realloc");
+    if (new_size <= 0) {
+	memfree(a);
+	return NULL;
+    }
 
-	if (a == NULL) {
-		block = NULL;
-		size = 0;
-	}
-	else {
-		block = ((long*)a) - 1;
-		size = block[0];
-	}
+    if (a == NULL) {
+	block = NULL;
+	size = 0;
+    }
+    else {
+	block = ((long*)a) - 1;
+	size = block[0];
+    }
 
-	oldsize = size ? (((size + 4) >> 2) << 2) : 0;
-	newsize = (((new_size + 4) >> 2) << 2);
+    oldsize = size ? (((size + 4) >> 2) << 2) : 0;
+    newsize = (((new_size + 4) >> 2) << 2);
 
-	if ( newsize != oldsize ) {
-		#ifdef COMPILER
-		  #if (COMPILER <= 16)
-			if ((sizeof(long)+newsize) >= (1<<16))
-				return NULL;
-		  #endif
-		#endif
-		block = (long *) realloc(block, sizeof(long) + newsize);
-		if (block == NULL)
-			return NULL;
-		a = (char *) & block[1];
-		for (i=oldsize; i<newsize; i++)
-			a[i] = '\0';
-	}
+    if ( newsize != oldsize ) {
+#ifdef COMPILER
+#if (COMPILER <= 16)
+	if ((sizeof(long)+newsize) >= (1<<16))
+	    return NULL;
+#endif
+#endif
+	block = (long *) realloc(block, sizeof(long) + newsize);
+	if (block == NULL)
+	    return NULL;
+	a = (char *) & block[1];
+	for (i=oldsize; i<newsize; i++)
+	    a[i] = '\0';
+    }
 
-	block[0] = new_size;
-	return a;
+    block[0] = new_size;
+    return a;
 }
 
 long memlength(char *a)
 {
-	return (a) ? ((long*)(a)-1)[0] : 0;
+    return (a) ? ((long*)(a)-1)[0] : 0;
 }
 
 void memfree(char *a)
 {
-	if (a) free((long*)(a)-1);
+    if (a) free((long*)(a)-1);
 }
 
 char * memexpand(char *a, long extra)
 {
-	long *block;
-	long i, size, oldsize, newsize;
-        TRACEAR("exp");
-	if (extra == 0)
-		return a;
-
-	if (a == NULL) {
-		block = NULL;
-		size = 0;
-	}
-	else {
-		block = ((long*)a) - 1;
-		size = block[0];
-	}
-
-	oldsize = size ? (((size + 4) >> 2) << 2) : 0;
-	newsize = (((size + extra + 4) >> 2) << 2);
-
-	if ( newsize != oldsize ) {
-		#ifdef COMPILER
-		  #if (COMPILER <= 16)
-			if ((sizeof(long)+newsize) >= (1<<16))
-				return NULL;
-		  #endif
-		#endif
-		block = (long *) realloc(block, sizeof(long) + newsize);
-		if (block == NULL)
-			return NULL;
-		a = (char *) & block[1];
-		for (i=oldsize; i<newsize; i++)
-			a[i] = '\0';
-	}
-
-	block[0] = size + extra;
+    long *block;
+    long i, size, oldsize, newsize;
+    TRACEAR("exp");
+    if (extra == 0)
 	return a;
+
+    if (a == NULL) {
+	block = NULL;
+	size = 0;
+    }
+    else {
+	block = ((long*)a) - 1;
+	size = block[0];
+    }
+
+    oldsize = size ? (((size + 4) >> 2) << 2) : 0;
+    newsize = (((size + extra + 4) >> 2) << 2);
+
+    if ( newsize != oldsize ) {
+#ifdef COMPILER
+#if (COMPILER <= 16)
+	if ((sizeof(long)+newsize) >= (1<<16))
+	    return NULL;
+#endif
+#endif
+	block = (long *) realloc(block, sizeof(long) + newsize);
+	if (block == NULL)
+	    return NULL;
+	a = (char *) & block[1];
+	for (i=oldsize; i<newsize; i++)
+	    a[i] = '\0';
+    }
+
+    block[0] = size + extra;
+    return a;
 }
 
 char * memjoin(char *a, char *b)
 {
-	long i, size, extra;
+    long i, size, extra;
 
-	size = memlength(a);
-	extra = memlength(b);
-	a = memexpand(a, extra);
-	if (a) {
-		for (i=0; i<extra; i++)
-			a[i+size] = b[i];
-	}
-	return a;
+    size = memlength(a);
+    extra = memlength(b);
+    a = memexpand(a, extra);
+    if (a) {
+	for (i=0; i<extra; i++)
+	    a[i+size] = b[i];
+    }
+    return a;
 }
-
-
-

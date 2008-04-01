@@ -28,37 +28,37 @@
  *  Windows implementation globals.
  */
 
-	PROTECTED char * app_name = "GraphApp";
-	PROTECTED int    app_initialised = 0;
-	PROTECTED HANDLE this_instance = NULL;
-	PROTECTED HANDLE prev_instance = NULL;
+PROTECTED char * app_name = "GraphApp";
+PROTECTED int    app_initialised = 0;
+PROTECTED HANDLE this_instance = NULL;
+PROTECTED HANDLE prev_instance = NULL;
 
 /*
  *  Functions defined in this file.
  */
-	static void setappname(char *title);
-	static void getappname(HANDLE Instance);
+static void setappname(char *title);
+static void getappname(HANDLE Instance);
 
-	int initapp(int argc, char **argv);
-	void exitapp(void);
-	void gabeep(void);
+int initapp(int argc, char **argv);
+void exitapp(void);
+void gabeep(void);
 
 /*
  *  Initialise application. Returns zero on failure.
  */
 int initapp(int argc, char **argv)
 {
-	if (! app_initialised)
-	{
-		app_initialised = 1;
-		init_objects();
-		init_events();
-		init_fonts();
-		init_cursors();
-		init_contexts();
-		init_menus();
-	}
-	return (argc < 1) ? 1 : argc;
+    if (! app_initialised)
+    {
+	app_initialised = 1;
+	init_objects();
+	init_events();
+	init_fonts();
+	init_cursors();
+	init_contexts();
+	init_menus();
+    }
+    return (argc < 1) ? 1 : argc;
 }
 
 /*
@@ -67,12 +67,12 @@ int initapp(int argc, char **argv)
 PROTECTED
 void app_cleanup(void)
 {
-	if (app_initialised) {
-		app_initialised = 0;
-		finish_contexts();
-		finish_objects();
-		finish_events();
-	}
+    if (app_initialised) {
+	app_initialised = 0;
+	finish_contexts();
+	finish_objects();
+	finish_events();
+    }
 }
 
 /*
@@ -83,9 +83,9 @@ void app_cleanup(void)
  */
 void exitapp(void)
 {
-	app_cleanup();
-	active_windows = 0;
-	exit(0);
+    app_cleanup();
+    active_windows = 0;
+    exit(0);
 }
 
 /*
@@ -93,14 +93,14 @@ void exitapp(void)
  */
 int execapp(char *app)
 {
-	#ifdef __MSDOS__
-		if (WinExec(app, SW_SHOW) < 32)
-			return 0;
-	#else
-		if (system(app) != 0)
-			return 0;
-	#endif
-	return 1;
+#ifdef __MSDOS__
+    if (WinExec(app, SW_SHOW) < 32)
+	return 0;
+#else
+    if (system(app) != 0)
+	return 0;
+#endif
+    return 1;
 }
 
 
@@ -110,7 +110,7 @@ int execapp(char *app)
  */
 void gabeep(void)
 {
-	MessageBeep(MB_ICONASTERISK);
+    MessageBeep(MB_ICONASTERISK);
 }
 
 /*
@@ -118,19 +118,19 @@ void gabeep(void)
  */
 static void setappname(char *title)
 {
-	int len;
-	char c;
+    int len;
+    char c;
 
-	if (title[0] == '\0')
-		return;
-	for (len=1; (c=title[len]) != '\0'; len++)
-		title[len] = tolower(c);
-	if ((len-=4)<0)
-		len = 0;
-	if (! string_diff(title+len, ".exe"))
-		title[len] = '\0';
+    if (title[0] == '\0')
+	return;
+    for (len=1; (c=title[len]) != '\0'; len++)
+	title[len] = tolower(c);
+    if ((len-=4)<0)
+	len = 0;
+    if (! string_diff(title+len, ".exe"))
+	title[len] = '\0';
 
-	app_name = new_string(title);
+    app_name = new_string(title);
 }
 
 /*
@@ -138,13 +138,13 @@ static void setappname(char *title)
  */
 static void getappname(HANDLE Instance)
 {
-	char exename[MAX_PATH];
-	char title[MAX_PATH];
+    char exename[MAX_PATH];
+    char title[MAX_PATH];
 
-	/* find out executable name */
-	GetModuleFileName(Instance, exename, sizeof(exename));
-	GetFileTitle(exename, title, sizeof(title));
-	setappname(title);
+    /* find out executable name */
+    GetModuleFileName(Instance, exename, sizeof(exename));
+    GetFileTitle(exename, title, sizeof(title));
+    setappname(title);
 }
 
 #if 0
@@ -155,13 +155,13 @@ static void getappname(HANDLE Instance)
  */
 void app_init_printf(void)
 {
- 	#ifdef __BORLANDC__
- 		#if __BORLANDC__ <= 0x410
- 		_InitEasyWin();
- 		#endif
- 	#else
- 	printf(" ");
- 	#endif
+#ifdef __BORLANDC__
+#if __BORLANDC__ <= 0x410
+    _InitEasyWin();
+#endif
+#else
+    printf(" ");
+#endif
 }
 #endif
 
@@ -173,16 +173,16 @@ void app_init_printf(void)
 
 void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow)
 {
- 	/*
-	 *  Save some variables for later.
-	 */
-	this_instance = Instance;
-	/* prev_instance = PrevInstance; is always NULL */
+    /*
+     *  Save some variables for later.
+     */
+    this_instance = Instance;
+    /* prev_instance = PrevInstance; is always NULL */
 
-	/*
-	 *  Initialise the graphical interface.
-	 */
-	initapp(0, NULL);
-	getappname(Instance);
+    /*
+     *  Initialise the graphical interface.
+     */
+    initapp(0, NULL);
+    getappname(Instance);
 }
 

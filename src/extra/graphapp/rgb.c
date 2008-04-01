@@ -1415,4 +1415,3 @@ rgb dialog_bg()
 {
     return myGetSysColor(COLOR_BTNFACE);
 }
-

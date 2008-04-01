@@ -5,7 +5,7 @@
  *  Version 2.4 (c) Lachlan Patrick 1996-1998.
  *  This header file is designed to be platform-independent.
  *
- *  Copyright 2006-8 	The R Foundation
+ *  Copyright 2006-8	The R Foundation
  *
  */
 
@@ -87,33 +87,33 @@ typedef struct imagedata *image;
 
 struct point
 {
-	int x, y;
+    int x, y;
 };
 
 struct rect
 {
-	int x, y;		/* top-left point inside rect */
-	int width, height;	/* width and height of rect */
+    int x, y;		/* top-left point inside rect */
+    int width, height;	/* width and height of rect */
 };
 
 struct drawstruct
 {
-	drawing	dest;
-	rgb 	hue;
-	int 	mode;
-	point	p;
-	int 	linewidth;
-	font	fnt;
-	cursor	crsr;
+    drawing	dest;
+    rgb	hue;
+    int	mode;
+    point	p;
+    int	linewidth;
+    font	fnt;
+    cursor	crsr;
 };
 
 struct imagedata {
-	int     depth;
-	int     width;
-	int     height;
-	int     cmapsize;
-	rgb *   cmap;
-	byte *  pixels;
+    int     depth;
+    int     width;
+    int     height;
+    int     cmapsize;
+    rgb *   cmap;
+    byte *  pixels;
 };
 
 /*
@@ -136,10 +136,10 @@ typedef void (*imfn)(control c, font *f, point *xy);
  *  Mouse buttons state (bit-fields).
  */
 
-#define NoButton    	0x0000
-#define LeftButton  	0x0001
+#define NoButton	0x0000
+#define LeftButton	0x0001
 #define MiddleButton	0x0002
-#define RightButton 	0x0004
+#define RightButton	0x0004
 
 /*
  *  ANSI character codes.
@@ -148,17 +148,17 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define BELL	0x07
 #define BKSP	0x08
 #define VTAB	0x0B
-#define FF  	0x0C
-#define ESC 	0x1B
+#define FF	0x0C
+#define ESC	0x1B
 
 /*
  *  Edit-key codes.
  */
 
-#define INS 	0x2041
-#define DEL 	0x2326
+#define INS	0x2041
+#define DEL	0x2326
 #define HOME	0x21B8
-#define END 	0x2198
+#define END	0x2198
 #define PGUP	0x21DE
 #define PGDN	0x21DF
 #define ENTER	0x2324
@@ -168,7 +168,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
  */
 
 #define LEFT	0x2190
-#define UP  	0x2191
+#define UP	0x2191
 #define RIGHT	0x2192
 #define DOWN	0x2193
 
@@ -662,15 +662,15 @@ typedef void (*imfn)(control c, font *f, point *xy);
  *  General functions.
  */
 
-int 	initapp(int argc, char *argv[]);
+int	initapp(int argc, char *argv[]);
 void	exitapp(void);
 
 void	drawall(void);
-int 	peekevent(void);
-int 	doevent(void);
+int	peekevent(void);
+int	doevent(void);
 void	mainloop(void);
 
-int 	execapp(char *cmd);
+int	execapp(char *cmd);
 
 /*void	beep(void);*/
 
@@ -703,11 +703,11 @@ rect	rdiv(rect r, int i);
 rect	growr(rect r, int w, int h);
 rect	insetr(rect r, int i);
 rect	rcenter(rect r1, rect r2);
-int 	ptinr(point p, rect r);
-int 	rinr(rect r1, rect r2);
-int 	rxr(rect r1, rect r2);
-int 	equalpt(point p1, point p2);
-int 	equalr(rect r1, rect r2);
+int	ptinr(point p, rect r);
+int	rinr(rect r1, rect r2);
+int	rxr(rect r1, rect r2);
+int	equalpt(point p1, point p2);
+int	equalr(rect r1, rect r2);
 rect	clipr(rect r1, rect r2);
 rect	rcanon(rect r);
 
@@ -726,7 +726,7 @@ void	setrgb(rgb c);
 #define	setcolour(c) setrgb(c)
 
 /* changed to avoid clashes with w32api 2.0 */
-#define gaRed 		0x00FF0000UL
+#define gaRed		0x00FF0000UL
 #define gaGreen		0x0000FF00UL
 #define gaBlue		0x000000FFUL
 
@@ -783,9 +783,9 @@ void	setdrawmode(int mode);
 #define DnandS	 0x07
 #define DandS	 0x08
 #define DxnorS	 0x09
-#define D   	 0x0A
+#define D	 0x0A
 #define DornotS	 0x0B
-#define S   	 0x0C
+#define S	 0x0C
 #define notDorS	 0x0D
 #define DorS	 0x0E
 #define Ones	 0x0F
@@ -801,7 +801,7 @@ void	copyrect(drawing src, point dp, rect sr);
 void	texturerect(drawing src, rect r);
 void	invertrect(rect r);
 
-rgb 	getpixel(point p);
+rgb	getpixel(point p);
 void	setpixel(point p, rgb c);
 
 /*
@@ -831,10 +831,10 @@ void	fillpolygon(point *p, int n);
 font	newfont(const char *name, int style, int size);
 void	setfont(font f);
 
-int 	fontwidth(font f);
-int 	fontheight(font f);
-int 	fontascent(font f);
-int 	fontdescent(font f);
+int	fontwidth(font f);
+int	fontheight(font f);
+int	fontascent(font f);
+int	fontdescent(font f);
 
 #define	getascent(f)	fontascent(f)
 #define	getdescent(f)	fontdescent(f)
@@ -843,10 +843,10 @@ int	strwidth(font f, const char *s);
 point	strsize(font f, const char *s);
 rect	strrect(font f, const char *s);
 
-int 	drawstr(point p, const char *str);
+int	drawstr(point p, const char *str);
 int	textheight(int width, const char *text);
 const char *drawtext(rect r, int alignment, const char *text);
-int 	gprintf(const char *fmt, ...);
+int	gprintf(const char *fmt, ...);
 
 /*
  *  Text styles and alignments.
@@ -880,12 +880,12 @@ int 	gprintf(const char *fmt, ...);
  */
 
 drawing	currentdrawing(void);
-rgb 	currentrgb(void);
+rgb	currentrgb(void);
 #define	currentcolor() currentrgb()
 #define	currentcolour() currentrgb()
-int 	currentmode(void);
+int	currentmode(void);
 point	currentpoint(void);
-int 	currentlinewidth(void);
+int	currentlinewidth(void);
 font	currentfont(void);
 cursor	currentcursor(void);
 
@@ -893,10 +893,10 @@ cursor	currentcursor(void);
  *  Find current keyboard state.
  */
 
-int 	getkeystate(void);
+int	getkeystate(void);
 
-#define AltKey  	0x0001
-#define CmdKey  	0x0001
+#define AltKey	0x0001
+#define CmdKey	0x0001
 #define CtrlKey		0x0002
 #define OptionKey	0x0002
 #define ShiftKey	0x0004
@@ -926,7 +926,7 @@ byte *	getpixels(image img);
 
 void	setpalette(image img, int length, rgb cmap[]);
 rgb *	getpalette(image img);
-int 	getpalettesize(image img);
+int	getpalettesize(image img);
 
 image	scaleimage(image src, rect dr, rect sr);
 image	convert32to8(image img);
@@ -964,22 +964,22 @@ rect    GetCurrentWinPos(window obj);
 #define Resize			0x00000080L
 #define Maximize		0x00000100L
 #define Minimize		0x00000200L
-#define HScrollbar      	0x00000400L
-#define VScrollbar      	0x00000800L
+#define HScrollbar	0x00000400L
+#define VScrollbar	0x00000800L
 #define CanvasSize		0x00200000L
 
 #define Modal			0x00001000L
 #define Floating		0x00002000L
 #define Centered		0x00004000L
-#define Centred 		0x00004000L
+#define Centred		0x00004000L
 
 #define Workspace		0x00010000L
 #define Document		0x00020000L
-#define ChildWindow     	0x00040000L
+#define ChildWindow	0x00040000L
 
-#define TrackMouse      	0x00080000L
+#define TrackMouse	0x00080000L
 
-#define UsePalette      	0x00100000L
+#define UsePalette	0x00100000L
 
 #define StandardWindow	(Titlebar|Closebox|Resize|Maximize|Minimize)
 
@@ -987,17 +987,17 @@ rect    GetCurrentWinPos(window obj);
  *  Functions which work for bitmaps, windows and controls.
  */
 
-int 	objdepth(objptr obj);
+int	objdepth(objptr obj);
 rect	objrect(objptr obj);
-int 	objwidth(objptr obj);
-int 	objheight(objptr obj);
+int	objwidth(objptr obj);
+int	objheight(objptr obj);
 void	delobj(objptr obj);
 
 #define	getdepth(obj)	objdepth((objptr)(obj))
 #define	getrect(obj)	objrect((objptr)(obj))
 #define	getwidth(obj)	objwidth((objptr)(obj))
 #define	getheight(obj)	objheight((objptr)(obj))
-#define	del(obj)    	delobj((objptr)(obj))
+#define	del(obj)	delobj((objptr)(obj))
 
 /*
  *  Setting window and control callback functions.
@@ -1037,19 +1037,19 @@ void	resize(control c, rect r);
 
 void	show(control c);
 void	hide(control c);
-int 	isvisible(control c);
+int	isvisible(control c);
 
 void	enable(control c);
 void	disable(control c);
-int 	isenabled(control c);
+int	isenabled(control c);
 
 void	check(control c);
 void	uncheck(control c);
-int 	ischecked(control c);
+int	ischecked(control c);
 
 void	highlight(control c);
 void	unhighlight(control c);
-int 	ishighlighted(control c);
+int	ishighlighted(control c);
 
 void	flashcontrol(control c);
 void	activatecontrol(control c);
@@ -1067,12 +1067,12 @@ void	settextfont(control c, font f);
 font	gettextfont(control c);
 
 void	setforeground(control c, rgb fg);
-rgb 	getforeground(control c);
+rgb	getforeground(control c);
 void	setbackground(control c, rgb bg);
-rgb 	getbackground(control c);
+rgb	getbackground(control c);
 
 void	setvalue(control c, int value);
-int 	getvalue(control c);
+int	getvalue(control c);
 void	setdata(control c, void *data);
 void *	getdata(control c);
 
@@ -1083,8 +1083,8 @@ window	parentwindow(control c);
  */
 
 #define Visible		0x0001L
-#define Enabled 	0x0002L
-#define Checked 	0x0004L
+#define Enabled	0x0002L
+#define Checked	0x0004L
 #define Highlighted	0x0008L
 #define Armed           0x0010L
 #define Focus           0x0020L
@@ -1122,9 +1122,9 @@ listbox	  newlistbox(const char *list[], rect r, scrollfn fn, actionfn dble);
 listbox	  newdroplist(const char *list[], rect r, scrollfn fn);
 listbox	  newdropfield(const char *list[], rect r, scrollfn fn);
 listbox	  newmultilist(const char *list[], rect r, scrollfn fn, actionfn dble);
-int 	  isselected(listbox b, int index);
+int	  isselected(listbox b, int index);
 void	  setlistitem(listbox b, int index);
-int 	  getlistitem(listbox b);
+int	  getlistitem(listbox b);
 void	  changelistbox(listbox b, const char *new_list[]);
 
 progressbar newprogressbar(rect r, int pmin, int pmax, int incr, int smooth);
@@ -1161,9 +1161,9 @@ void  textselection(textbox t, long *start, long *end);
 
 void	apperror(const char *errstr);
 void	askok(const char *info);
-int 	askokcancel(const char *question);
-int 	askyesno(const char *question);
-int 	askyesnocancel(const char *question);
+int	askokcancel(const char *question);
+int	askyesno(const char *question);
+int	askyesnocancel(const char *question);
 char *	askstring(const char *question, const char *default_string);
 char *	askpassword(const char *question, const char *default_string);
 char *	askfilename(const char *title, const char *default_name);
@@ -1175,9 +1175,9 @@ char *	askUserPass(const char *title);
  *  Time functions.
  */
 
-int 	settimer(unsigned millisec);
+int	settimer(unsigned millisec);
 void	settimerfn(timerfn timeout, void *data);
-int 	setmousetimer(unsigned millisec);
+int	setmousetimer(unsigned millisec);
 void	delay(unsigned millisec);
 long	currenttime(void);
 
@@ -1221,7 +1221,7 @@ LibExtern cursor	TextCursor;	/* insert text */
 LibExtern cursor	HandCursor;	/* hand pointer */
 LibExtern cursor	CrossCursor;	/* cross pointer */
 LibExtern font		SystemFont;	/* system font */
-LibExtern font		Times;  	/* times roman font (serif) */
+LibExtern font		Times;	/* times roman font (serif) */
 LibExtern font		Helvetica;	/* helvetica font (sans serif) */
 LibExtern font		Courier;	/* courier font (fixed width) */
 

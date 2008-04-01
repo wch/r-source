@@ -29,18 +29,18 @@
 #include "graphapp.h"
 
 /* renamed functions */
-void 	gamainloop(void);
-void 	gabeep(void);
+void	gamainloop(void);
+void	gabeep(void);
 
-#define DblClick  	0x0010/* added for buttons.c*/
+#define DblClick	0x0010/* added for buttons.c*/
 
 
 /* windows.c */
-#define Border      	0x10100000L
+#define Border	0x10100000L
 void	app_cleanup(void);
-int 	ismdi(void);
+int	ismdi(void);
 int	isiconic(window w);
-rect 	screen_coords(control c);
+rect	screen_coords(control c);
 
 /* gmenus.c */
 typedef struct {
@@ -56,29 +56,29 @@ typedef struct {
 #define ENDSUBMENU {"#ENDSUBMENU", 0, 0}
 #define MDIMENU {"#MDIMENU", 0, 0}
 #define LASTMENUITEM {0, 0, 0}
-menu 	newmdimenu(void);
+menu	newmdimenu(void);
 typedef menu popup;
-popup 	newpopup(actionfn fn);
+popup	newpopup(actionfn fn);
 menubar gmenubar(actionfn fn, MenuItem []);
-popup 	gpopup(actionfn fn, MenuItem []);
-void 	gchangepopup(window w, popup p);
+popup	gpopup(actionfn fn, MenuItem []);
+void	gchangepopup(window w, popup p);
 /* next is limited to current window... */
-void 	gchangemenubar(menubar mb);
+void	gchangemenubar(menubar mb);
 
 
 /* tooltips.c */
-int 	addtooltip(control c, const char *tp);
+int	addtooltip(control c, const char *tp);
 
 /* status.c */
-int 	addstatusbar(void);
-int 	delstatusbar(void);
-void 	setstatus(const char *text);
+int	addstatusbar(void);
+int	delstatusbar(void);
+void	setstatus(const char *text);
 
 /* dialogs.c */
-void 	setuserfilter(const char *);
+void	setuserfilter(const char *);
 void    askchangedir(void);
 char *	askcdstring(const char *question, const char *default_string);
-char *	askfilesavewithdir(const char *title, const char *default_name, 
+char *	askfilesavewithdir(const char *title, const char *default_name,
 			   const char *dir);
 char *  askfilenames(const char *title, const char *default_name, int multi,
 		     const char *filters, int filterindex, char *strbuf,
@@ -90,7 +90,7 @@ rgb     nametorgb(const char *colourname);
 const char *  rgbtoname(rgb in);
 int     rgbtonum(rgb in);
 rgb     myGetSysColor(int);
-rgb 	dialog_bg(void);
+rgb	dialog_bg(void);
 
 
 /* clipboard.c */
@@ -143,7 +143,7 @@ void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
 		   int lend, int ljoin, float lmitre);
 void  gfillellipse(drawing d, rgb fill, rect r);
 void  gdrawpolyline(drawing d, int width, int style, rgb c,
-                    point *p, int n, int closepath, int fast,
+		    point *p, int n, int closepath, int fast,
 		    int lend, int ljoin, float lmitre);
 #define gdrawpolygon(d,w,s,c,p,n,f,e,j,m) gdrawpolyline(d,w,s,c,p,n,1,f,e,j,m)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
@@ -154,7 +154,7 @@ point gstrsize(drawing d, font f, const char *s);
 int   gstrwidth(drawing d ,font f, const char *s);
 void  gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-font  gnewfont(drawing d, const char *face, int style, int size, 
+font  gnewfont(drawing d, const char *face, int style, int size,
 	       double rot, int usePoints);
 int   ghasfixedwidth(font f);
 field newfield_no_border(const char *text, rect r);
@@ -164,7 +164,7 @@ int gwcswidth(drawing d, font f, const wchar_t *s);
 
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-void gwdrawstr1(drawing d, font f, rgb c, point p, const wchar_t *s, int cnt, 
+void gwdrawstr1(drawing d, font f, rgb c, point p, const wchar_t *s, int cnt,
 		double hadj);
 int   gstrwidth1(drawing d ,font f, const char *s, int enc);
 
@@ -178,8 +178,8 @@ int   deviceheightmm(drawing dev);
 int   devicepixelsx(drawing dev);
 int   devicepixelsy(drawing dev);
 
-int  	isTopmost(window w);
-void 	BringToTop(window w, int stay); /* stay=0 for regular, 1 for topmost, 2 for toggle */
+int	isTopmost(window w);
+void	BringToTop(window w, int stay); /* stay=0 for regular, 1 for topmost, 2 for toggle */
 void *	getHandle(window w);
 
 /* gbuttons.c */
@@ -187,15 +187,15 @@ void *	getHandle(window w);
 #define HWINSB 0
 #define VWINSB 1
 #define CONTROLSB 2
-void 	gchangescrollbar(scrollbar sb, int which, int where, int max,
+void	gchangescrollbar(scrollbar sb, int which, int where, int max,
 			 int pagesize, int disablenoscroll);
-void 	gsetcursor(drawing d, cursor c);
+void	gsetcursor(drawing d, cursor c);
 control newtoolbar(int height);
 button  newtoolbutton(image img, rect r, actionfn fn);
-void 	scrolltext(textbox c, int lines);
-int 	ggetkeystate(void);
+void	scrolltext(textbox c, int lines);
+int	ggetkeystate(void);
 
-void 	scrollcaret(textbox c, int lines);
+void	scrollcaret(textbox c, int lines);
 void    gsetmodified(textbox c, int modified);
 int     ggetmodified(textbox c);
 int getlinelength(textbox c);
@@ -214,11 +214,10 @@ int modeless_active(void);
 
 
 /* menus.c */
-void 	remove_menu_item(menuitem obj);
+void	remove_menu_item(menuitem obj);
 
 /* events.c */
 void toolbar_show(void);
 void toolbar_hide(void);
 
 #endif /* __GA__VERSION */
-

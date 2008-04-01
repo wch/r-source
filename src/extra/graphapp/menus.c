@@ -30,7 +30,7 @@
  *  menuitems are added to the current_menu.
  */
 
-/* Copyright (C) 2004 	The R Foundation
+/* Copyright (C) 2004	The R Foundation
 
    Change for R - Chris Jackson.  Enabled menu shortcut keys, don't
    execute shortcut if menu item is grayed out */
@@ -62,8 +62,8 @@ size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 PROTECTED
 void init_menus(void)
 {
-	if (this_instance != 0)
-		hAccel = LoadAccelerators(this_instance, "ACCELS");
+    if (this_instance != 0)
+	hAccel = LoadAccelerators(this_instance, "ACCELS");
 }
 
 /*
@@ -72,19 +72,19 @@ void init_menus(void)
  */
 static int find_menu_position(menu parent, char *name)
 {
-	menu m, first;
-	int which = 0;
+    menu m, first;
+    int which = 0;
 
-	first = m = parent->child;
-	if (first) {
-		do {
-			if (strcmp(m->text, name) == 0)
-				break;
-			which ++;
-			m = m->next;
-		} while (m != first);
-	}
-	return which;
+    first = m = parent->child;
+    if (first) {
+	do {
+	    if (strcmp(m->text, name) == 0)
+		break;
+	    which ++;
+	    m = m->next;
+	} while (m != first);
+    }
+    return which;
 }
 
 /*
@@ -92,18 +92,18 @@ static int find_menu_position(menu parent, char *name)
  */
 static void private_delmenu(menu m)
 {
-	window w = parentwindow(m);
-	if (m->kind == MenuitemObject)
-		RemoveMenu(m->parent->handle, m->id, MF_BYCOMMAND);
-	else if (m->kind == MenuObject) {
-		DeleteMenu(m->parent->handle,
-			find_menu_position(m->parent, m->text),
-			MF_BYPOSITION);
-	}
-	else
-		DestroyMenu(m->handle);
-	if (w)
-		DrawMenuBar(w->handle);
+    window w = parentwindow(m);
+    if (m->kind == MenuitemObject)
+	RemoveMenu(m->parent->handle, m->id, MF_BYCOMMAND);
+    else if (m->kind == MenuObject) {
+	DeleteMenu(m->parent->handle,
+		   find_menu_position(m->parent, m->text),
+		   MF_BYPOSITION);
+    }
+    else
+	DestroyMenu(m->handle);
+    if (w)
+	DrawMenuBar(w->handle);
 }
 
 /*
@@ -115,9 +115,9 @@ char *Rf_strchr(const char *s, int c); /* from util.c, MBCS-aware */
 
 static int find_char(int ch, const char *str)
 {
-	char *p;
-	p = Rf_strchr(str, ch);
-	if(!p) return -1; else return p - str;
+    char *p;
+    p = Rf_strchr(str, ch);
+    if(!p) return -1; else return p - str;
 }
 
 /*
@@ -129,59 +129,59 @@ static int find_char(int ch, const char *str)
  */
 static void set_search_string(char *search, const char *name, int key)
 {
-	int source;
-	int dest = 0;
-	int mb_len;
-	mbstate_t mb_st;
+    int source;
+    int dest = 0;
+    int mb_len;
+    mbstate_t mb_st;
 
-	/* handle a couple of special cases first */
-	if (! string_diff(name, "Cut"))  search[dest++] = 't';
-	if (! string_diff(name, "Exit")) search[dest++] = 'x';
-	if (! string_diff(name, "?")) search[dest++] = '?';
+    /* handle a couple of special cases first */
+    if (! string_diff(name, "Cut"))  search[dest++] = 't';
+    if (! string_diff(name, "Exit")) search[dest++] = 'x';
+    if (! string_diff(name, "?")) search[dest++] = '?';
 
-	if(MB_CUR_MAX == 1) {
-	    /* If there is an '&' in the string, use the next letter first */
-	    char *p = strchr(name, '&');
-	    if (p && *(p+1)) search[dest++] = *(p+1);
-	}
+    if(MB_CUR_MAX == 1) {
+	/* If there is an '&' in the string, use the next letter first */
+	char *p = strchr(name, '&');
+	if (p && *(p+1)) search[dest++] = *(p+1);
+    }
 
-	/* add the accelerator key if it is in the name string */
-	if (key) {
-		key = toupper(key);
-		if (find_char(key, name) >= 0)
-			search[dest++] = (char) key;
-		else {
-			key = tolower(key);
-			if (find_char(key, name) >= 0)
-				search[dest++] = (char) key;
-		}
+    /* add the accelerator key if it is in the name string */
+    if (key) {
+	key = toupper(key);
+	if (find_char(key, name) >= 0)
+	    search[dest++] = (char) key;
+	else {
+	    key = tolower(key);
+	    if (find_char(key, name) >= 0)
+		search[dest++] = (char) key;
 	}
-	/* add the uppercase letters */
-	for (source=0; name[source]; source++) {
-		mbs_init(mb_st);
-	        mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX,&mb_st);
-	        if (mb_len > 1) source += mb_len-1;
-	        else
-		if (isupper(name[source])) search[dest++] = name[source];
-	}
-	/* add the digits */
-	for (source=0; name[source]; source++) {
-                mbs_init(mb_st);
-	        mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX,&mb_st);
-	        if (mb_len > 1) source += mb_len-1;
-	        else
-		if (isdigit(name[source])) search[dest++] = name[source];
-	}
-	/* add the lowercase letters */
-	for (source=0; name[source]; source++) {
-                mbs_init(mb_st);
-	        mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX,&mb_st);
-	        if (mb_len > 1) source += mb_len-1;
-	        else
-		    if (islower(name[source])) search[dest++] = name[source];
-	}
-	/* end the search string */
-	search[dest] = '\0';
+    }
+    /* add the uppercase letters */
+    for (source=0; name[source]; source++) {
+	mbs_init(mb_st);
+	mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX,&mb_st);
+	if (mb_len > 1) source += mb_len-1;
+	else
+	    if (isupper(name[source])) search[dest++] = name[source];
+    }
+    /* add the digits */
+    for (source=0; name[source]; source++) {
+	mbs_init(mb_st);
+	mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX,&mb_st);
+	if (mb_len > 1) source += mb_len-1;
+	else
+	    if (isdigit(name[source])) search[dest++] = name[source];
+    }
+    /* add the lowercase letters */
+    for (source=0; name[source]; source++) {
+	mbs_init(mb_st);
+	mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX,&mb_st);
+	if (mb_len > 1) source += mb_len-1;
+	else
+	    if (islower(name[source])) search[dest++] = name[source];
+    }
+    /* end the search string */
+    search[dest] = '\0';
 }
 
 /*
@@ -192,36 +192,36 @@ static void set_search_string(char *search, const char *name, int key)
  */
 static int find_shortcut(object me, char *search)
 {
-	int source;
-	object first, obj;
+    int source;
+    object first, obj;
 
-	first = me->parent->child;
+    first = me->parent->child;
 
-	for (source = 0; search[source]; source++)
-	{
-	    int mb_len;
-	    mbstate_t mb_st;
-	    mbs_init(mb_st);
-	    mb_len = Rf_mbrtowc(NULL, search + source, MB_CUR_MAX, &mb_st);
-	    if ( mb_len > 1 ) {
-	      source += mb_len - 1;
-	    } else   
-		/* for each character in the search string */
-		/* look through every sibling object */
+    for (source = 0; search[source]; source++)
+    {
+	int mb_len;
+	mbstate_t mb_st;
+	mbs_init(mb_st);
+	mb_len = Rf_mbrtowc(NULL, search + source, MB_CUR_MAX, &mb_st);
+	if ( mb_len > 1 ) {
+	    source += mb_len - 1;
+	} else
+	    /* for each character in the search string */
+	    /* look through every sibling object */
 
-		for (obj = first; obj; obj = obj->next)
-		{
-		    if (obj == me) /* at end of list, success! */
-			return search[source];
+	    for (obj = first; obj; obj = obj->next)
+	    {
+		if (obj == me) /* at end of list, success! */
+		    return search[source];
 
-		    /* use uppercase comparisons */
-		    if (obj->shortcut == toupper(search[source]))
-			break; /* can't use this shortcut */
+		/* use uppercase comparisons */
+		if (obj->shortcut == toupper(search[source]))
+		    break; /* can't use this shortcut */
 
-		}
-	}
+	    }
+    }
 
-	return 0;
+    return 0;
 }
 
 /*
@@ -231,52 +231,52 @@ static int find_shortcut(object me, char *search)
  */
 static void setmenustring(object obj, char *buf, const char *name, int key)
 {
-	char search[256];
-	int ch, where, source, dest = 0;
-	char *extra = "\tCtrl+";
+    char search[256];
+    int ch, where, source, dest = 0;
+    char *extra = "\tCtrl+";
 
-	set_search_string(search, name, key);
-	ch = find_shortcut(obj, search);
+    set_search_string(search, name, key);
+    ch = find_shortcut(obj, search);
 
-	if (ch) /* found a valid shortcut key */
+    if (ch) /* found a valid shortcut key */
+    {
+	obj->shortcut = toupper(ch); /* case-insensitive */
+	where = find_char(ch, name);
+
+	for (source=0; source < where; source++)
 	{
-		obj->shortcut = toupper(ch); /* case-insensitive */
-		where = find_char(ch, name);
-
-		for (source=0; source < where; source++)
-		  {
-		    int mb_len;
-		    int i;
-		    mbstate_t mb_st;
-		    mbs_init(mb_st);
-		    mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX, &mb_st);
-		    if ( mb_len > 1 ) {
-			for (i = 0 ; i < mb_len ; i++)
-			    buf[dest++] = name[source+i];
-			source += mb_len-1;
-		    } else if(name[source] == '&') {
-			/* skip it */
-		    } else
-			buf[dest++] = name[source];
-		  }
-		buf[dest++] = '&';
-		for (; name[source]; source++)
-			buf[dest++] = name[source];
+	    int mb_len;
+	    int i;
+	    mbstate_t mb_st;
+	    mbs_init(mb_st);
+	    mb_len = Rf_mbrtowc(NULL, name + source, MB_CUR_MAX, &mb_st);
+	    if ( mb_len > 1 ) {
+		for (i = 0 ; i < mb_len ; i++)
+		    buf[dest++] = name[source+i];
+		source += mb_len-1;
+	    } else if(name[source] == '&') {
+		/* skip it */
+	    } else
+		buf[dest++] = name[source];
 	}
-	else /* no shortcut key, just copy the name string except '&' */
-	{
-	    for (source = 0; name[source]; source++)
-		if(MB_CUR_MAX == 1 && name[source] != '&')
-		    buf[dest++] = name[source];
-	}
+	buf[dest++] = '&';
+	for (; name[source]; source++)
+	    buf[dest++] = name[source];
+    }
+    else /* no shortcut key, just copy the name string except '&' */
+    {
+	for (source = 0; name[source]; source++)
+	    if(MB_CUR_MAX == 1 && name[source] != '&')
+		buf[dest++] = name[source];
+    }
 
-	if (key) {
-		for (source=0; extra[source]; source++)
-			buf[dest++] = extra[source];
-		buf[dest++] = key;
-	}
+    if (key) {
+	for (source=0; extra[source]; source++)
+	    buf[dest++] = extra[source];
+	buf[dest++] = key;
+    }
 
-	buf[dest] = '\0';
+    buf[dest] = '\0';
 }
 
 /*
@@ -284,27 +284,27 @@ static void setmenustring(object obj, char *buf, const char *name, int key)
  */
 menubar newmenubar(actionfn adjust_menus)
 {
-	object obj;
-	HMENU hm;
+    object obj;
+    HMENU hm;
 
-	if (! current_window) {
-		current_window = simple_window();
-		show(current_window);
-	}
+    if (! current_window) {
+	current_window = simple_window();
+	show(current_window);
+    }
 
-	hm = CreateMenu();
-	obj = new_object(MenubarObject, hm, current_window);
-	if (obj) {
-                current_window->menubar = obj;
-                obj->menubar = NULL;
-		obj->die = private_delmenu;
-		obj->id = id++;
-		obj->action = adjust_menus;
-		obj->text = new_string("Menubar");
-		current_menubar = obj;
-		SetMenu(current_window->handle, hm);
-	}
-	return (menubar) obj;
+    hm = CreateMenu();
+    obj = new_object(MenubarObject, hm, current_window);
+    if (obj) {
+	current_window->menubar = obj;
+	obj->menubar = NULL;
+	obj->die = private_delmenu;
+	obj->id = id++;
+	obj->action = adjust_menus;
+	obj->text = new_string("Menubar");
+	current_menubar = obj;
+	SetMenu(current_window->handle, hm);
+    }
+    return (menubar) obj;
 }
 
 BOOL myAppendMenu(HMENU h, UINT flags, UINT_PTR id, LPCTSTR name)
@@ -320,89 +320,89 @@ BOOL myAppendMenu(HMENU h, UINT flags, UINT_PTR id, LPCTSTR name)
 
 menu newsubmenu(menu parent, const char *name)
 {
-	object obj;
-	HMENU hm;
-	UINT flags = MF_POPUP;
-	char str[256];
-	if (! parent) {
-		if (! current_menubar)
-			current_menubar = newmenubar(NULL);
-		parent = current_menubar;
-	}
+    object obj;
+    HMENU hm;
+    UINT flags = MF_POPUP;
+    char str[256];
+    if (! parent) {
+	if (! current_menubar)
+	    current_menubar = newmenubar(NULL);
+	parent = current_menubar;
+    }
 
-	if (! parent)
-		return NULL;
-	if (! name)
-		name = "";
-	if (name[0] == '\t') {
-		name += 1;
-		flags |= MF_HELP;
-	}
+    if (! parent)
+	return NULL;
+    if (! name)
+	name = "";
+    if (name[0] == '\t') {
+	name += 1;
+	flags |= MF_HELP;
+    }
 
-	if (parent->kind == WindowObject)
-           hm = CreatePopupMenu();
-        else
-           hm = CreateMenu();
-	obj = new_object(MenuObject, hm, parent);
-	if (obj) {
-		obj->die = private_delmenu;
-		obj->id = id++;
-		obj->text = new_string(name);
-		setmenustring(obj, str, name, 0);
-		name = str;
-		current_menu = obj;
-	}
-	if (parent->kind != WindowObject)
-             myAppendMenu(parent->handle, flags, (UINT_PTR) hm, name);
-	if (parent == current_menubar)
-		DrawMenuBar(current_menubar->parent->handle);
+    if (parent->kind == WindowObject)
+	hm = CreatePopupMenu();
+    else
+	hm = CreateMenu();
+    obj = new_object(MenuObject, hm, parent);
+    if (obj) {
+	obj->die = private_delmenu;
+	obj->id = id++;
+	obj->text = new_string(name);
+	setmenustring(obj, str, name, 0);
+	name = str;
+	current_menu = obj;
+    }
+    if (parent->kind != WindowObject)
+	myAppendMenu(parent->handle, flags, (UINT_PTR) hm, name);
+    if (parent == current_menubar)
+	DrawMenuBar(current_menubar->parent->handle);
 
-	return (menu) obj;
+    return (menu) obj;
 }
 
 menu newmenu(const char *name)
 {
-	return newsubmenu(current_menubar, name);
+    return newsubmenu(current_menubar, name);
 }
 
 
 menuitem newmenuitem(const char *name, int key, menufn fn)
 {
-	object obj;
-	UINT flags;
-	char str[256];
+    object obj;
+    UINT flags;
+    char str[256];
 
-	if (! current_menu)
-		current_menu = newmenu("Special");
-	if (! current_menu)
-		return NULL;
-	if (! name)
-		name = "-"; /* separator */
+    if (! current_menu)
+	current_menu = newmenu("Special");
+    if (! current_menu)
+	return NULL;
+    if (! name)
+	name = "-"; /* separator */
 
-	key = toupper(key); /* make it uppercase */
+    key = toupper(key); /* make it uppercase */
 
-	obj = new_object(MenuitemObject, 0, current_menu);
-	if (obj) {
-		obj->die = private_delmenu;
-		obj->id = id++;
-		obj->key = key;
-		obj->action = fn;
-		obj->value = 0;
-		obj->text = new_string(name);
-		obj->state |= Enabled;
+    obj = new_object(MenuitemObject, 0, current_menu);
+    if (obj) {
+	obj->die = private_delmenu;
+	obj->id = id++;
+	obj->key = key;
+	obj->action = fn;
+	obj->value = 0;
+	obj->text = new_string(name);
+	obj->state |= Enabled;
 
-		if (name[0] == '-') {
-			flags = MF_SEPARATOR;
-			name = NULL;
-		} else {
-			flags = MF_STRING;
-			setmenustring(obj, str, name, key);
-			name = str;
-		}
-
-		myAppendMenu(current_menu->handle, flags, obj->id, name);
+	if (name[0] == '-') {
+	    flags = MF_SEPARATOR;
+	    name = NULL;
+	} else {
+	    flags = MF_STRING;
+	    setmenustring(obj, str, name, key);
+	    name = str;
 	}
-	return (menuitem) obj;
+
+	myAppendMenu(current_menu->handle, flags, obj->id, name);
+    }
+    return (menuitem) obj;
 }
 
 /*
@@ -412,23 +412,23 @@ menuitem newmenuitem(const char *name, int key, menufn fn)
 PROTECTED
 object parent_menubar(object obj)
 {
-	while (obj) {
-		if (obj->kind == MenubarObject)
-			break;
-		obj = obj->parent;
-	}
-	return obj;
+    while (obj) {
+	if (obj->kind == MenubarObject)
+	    break;
+	obj = obj->parent;
+    }
+    return obj;
 }
 
 PROTECTED
 object parent_menu(object obj)
 {
-	while (obj) {
-		if (obj->kind == MenuObject)
-			break;
-		obj = obj->parent;
-	}
-	return obj;
+    while (obj) {
+	if (obj->kind == MenuObject)
+	    break;
+	obj = obj->parent;
+    }
+    return obj;
 }
 #endif
 
@@ -442,13 +442,13 @@ object parent_menu(object obj)
 PROTECTED
 void adjust_menu(WPARAM wParam)
 {
-	object obj;
-	obj = find_by_handle((HANDLE)wParam);
-	if (obj) {
-		activatecontrol(obj);
-		if (obj->kind == MenubarObject)
-			DrawMenuBar(obj->parent->handle);
-	}
+    object obj;
+    obj = find_by_handle((HANDLE)wParam);
+    if (obj) {
+	activatecontrol(obj);
+	if (obj->kind == MenubarObject)
+	    DrawMenuBar(obj->parent->handle);
+    }
 }
 
 /*
@@ -459,11 +459,11 @@ void adjust_menu(WPARAM wParam)
 PROTECTED
 void handle_menu_id (WPARAM wParam)
 {
-	object obj;
+    object obj;
 
-	obj = find_by_id(wParam);
-	if (obj)
-		activatecontrol(obj);
+    obj = find_by_id(wParam);
+    if (obj)
+	activatecontrol(obj);
 }
 
 /*
@@ -475,18 +475,18 @@ void handle_menu_id (WPARAM wParam)
 
 static void adjust_menus_top_down(object obj)
 {
-	/* Recursively step up the list. */
-	if (! obj)
-		return;
-	adjust_menus_top_down(obj->parent);
+    /* Recursively step up the list. */
+    if (! obj)
+	return;
+    adjust_menus_top_down(obj->parent);
 
-	/* Adjust menubar then child menus as we descend. */
-	if (obj->kind == MenubarObject) {
-		activatecontrol(obj);
-		DrawMenuBar(obj->parent->handle);
-	}
-	else if (obj->kind == MenuObject)
-		activatecontrol(obj);
+    /* Adjust menubar then child menus as we descend. */
+    if (obj->kind == MenubarObject) {
+	activatecontrol(obj);
+	DrawMenuBar(obj->parent->handle);
+    }
+    else if (obj->kind == MenuObject)
+	activatecontrol(obj);
 }
 
 /* Only search for the key within the menus of the focused window.
@@ -498,10 +498,10 @@ int handle_menu_key(WPARAM wParam)
     object win, obj;
     win = find_by_handle(GetFocus());
     if (win) {
-    	if (win->kind != WindowObject)
+	if (win->kind != WindowObject)
 	    win = win->parent;
-    	obj = find_by_key(win, wParam);
-        if (obj) {
+	obj = find_by_key(win, wParam);
+	if (obj) {
 	    adjust_menus_top_down(obj);
 	    if (isenabled(obj)) /* Don't do menu actions which are greyed out. CJ */
 		activatecontrol(obj);

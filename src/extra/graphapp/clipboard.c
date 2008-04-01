@@ -66,19 +66,19 @@ int copystringtoclipboard(const char *str)
     int ll = strlen(str) + 1;
 
     if (!(hglb = GlobalAlloc(GHND, ll))){
-        R_ShowMessage(G_("Insufficient memory: cell not copied to the clipboard"));
+	R_ShowMessage(G_("Insufficient memory: cell not copied to the clipboard"));
 	return 1;
     }
     if (!(s = (char *)GlobalLock(hglb))){
-        R_ShowMessage(G_("Insufficient memory: cell not copied to the clipboard"));
+	R_ShowMessage(G_("Insufficient memory: cell not copied to the clipboard"));
 	return 1;
     }
     strcpy(s, str);
     GlobalUnlock(hglb);
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-        R_ShowMessage(G_("Unable to open the clipboard"));
-        GlobalFree(hglb);
-        return 1;
+	R_ShowMessage(G_("Unable to open the clipboard"));
+	GlobalFree(hglb);
+	return 1;
     }
     SetClipboardData(CF_TEXT, hglb);
     CloseClipboard();
@@ -91,11 +91,11 @@ int getstringfromclipboard(char * str, int n)
     char *pc;
 
     if ( OpenClipboard(NULL) &&
-         (hglb = GetClipboardData(CF_TEXT)) &&
-         (pc = (char *)GlobalLock(hglb))) {
+	 (hglb = GetClipboardData(CF_TEXT)) &&
+	 (pc = (char *)GlobalLock(hglb))) {
 	strncpy(str, pc, n);
 	str[n+1] = '\0';
-        GlobalUnlock(hglb);
+	GlobalUnlock(hglb);
 	CloseClipboard();
 	return 0;
     } else return 1;

@@ -20,9 +20,9 @@
 /*
  *  metafile newmetafile(char *name,rect r)
  *     return a metafile object of 'nominal' size (r.width)x(r.height)
- *     in 0.01mm. Use drawto(...)/drawXXX/gdrawXXX to draw to the 
+ *     in 0.01mm. Use drawto(...)/drawXXX/gdrawXXX to draw to the
  *     metafile. If "name"=="" metafile is in memory.
- *     
+ *
  *  del(metafile)  finalizes/closes the metafile. Closed in memory
  *     metafile are saved to the clipboard.
  *
@@ -78,19 +78,19 @@ metafile newmetafile(const char *name, double width, double height)
     RECT wr;
     static double cppix=-1, ppix, cppiy, ppiy;
 
-    /* 
+    /*
      * In theory, (cppix=ppix) and (cppiy=ppiy). However, we
      * use the ratio to adjust the 'reference dimension'
      * in case.... ("Importing graph in MsWord" thread)
-    */
+     */
     if (cppix < 0) {
-       cppix = 25.40 * devicewidth(NULL) / devicewidthmm(NULL);
-       ppix  = 100 * devicepixelsx(NULL);
-       cppiy = 25.40 * deviceheight(NULL) / deviceheightmm(NULL);
-       ppiy = 100 * devicepixelsy(NULL);
+	cppix = 25.40 * devicewidth(NULL) / devicewidthmm(NULL);
+	ppix  = 100 * devicepixelsx(NULL);
+	cppiy = 25.40 * deviceheight(NULL) / deviceheightmm(NULL);
+	ppiy = 100 * devicepixelsy(NULL);
     }
-    /* This is all very peculiar. We would really like to create 
-       a metafile measured in some sensible units, but it seems 
+    /* This is all very peculiar. We would really like to create
+       a metafile measured in some sensible units, but it seems
        we get it in units of 0.01mm *on the current screen* with
        horizontal and vertical resolution set for that screen.
        And of course Windows is famous for getting screen sizes wrong.
@@ -102,7 +102,7 @@ metafile newmetafile(const char *name, double width, double height)
     wr.bottom = (ppiy * height) / cppiy ;
 
     /* Here the size is in 0.01mm units */
-    hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, 
+    hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr,
 			    "GraphApp\0\0");
     if ( !hDC ) {
 	R_ShowMessage(_("Unable to create metafile"));

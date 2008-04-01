@@ -26,7 +26,7 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Copyright (C) 2004 	The R Foundation
+/* Copyright (C) 2004	The R Foundation
 
       Changes for R:  allow 32 contexts not 4
       Remove assumption that current->dest is non-NULL
@@ -38,68 +38,68 @@
  *  Private library variables.
  */
 
-	PROTECTED drawstruct app_drawstate =
-		{
-			NULL,	/* drawing destination */
-			Black,	/* colour */
-			S,  	/* drawing mode */
-			{0,0},	/* point */
-			1,  	/* line width */
-			NULL,	/* font */
-			NULL,	/* cursor */
-		};
+PROTECTED drawstruct app_drawstate =
+{
+    NULL,	/* drawing destination */
+    Black,	/* colour */
+    S,	/* drawing mode */
+    {0,0},	/* point */
+    1,	/* line width */
+    NULL,	/* font */
+    NULL,	/* cursor */
+};
 
-	PROTECTED drawstate current = & app_drawstate;
-	PROTECTED HDC       dc;	/* shared DC variable */
-	PROTECTED HPEN      the_pen   = 0;
-	PROTECTED HBRUSH    the_brush = 0;
+PROTECTED drawstate current = & app_drawstate;
+PROTECTED HDC       dc;	/* shared DC variable */
+PROTECTED HPEN      the_pen   = 0;
+PROTECTED HBRUSH    the_brush = 0;
 
-	PROTECTED COLORREF win_rgb  = 0L;
+PROTECTED COLORREF win_rgb  = 0L;
 
 /*
  *  Private drawing context variables.
  */
 
-	static	rgb 	prev_pixval	= Black;
-	static	int 	prev_width	= 1;
+static	rgb	prev_pixval	= Black;
+static	int	prev_width	= 1;
 
-	static	bitmap	grey_bitmap	= NULL;
+static	bitmap	grey_bitmap	= NULL;
 
-	static rgb grey_cmap [] = {
-		0x00000000UL,
-		0x00FFFFFFUL,
-	};
-	static byte grey_pixels [] = {
-	  0, 1, 0, 1, 0, 1, 0, 1,
-	  1, 0, 1, 0, 1, 0, 1, 0,
-	  0, 1, 0, 1, 0, 1, 0, 1,
-	  1, 0, 1, 0, 1, 0, 1, 0,
-	  0, 1, 0, 1, 0, 1, 0, 1,
-	  1, 0, 1, 0, 1, 0, 1, 0,
-	  0, 1, 0, 1, 0, 1, 0, 1,
-	  1, 0, 1, 0, 1, 0, 1, 0,
-	};
-	static imagedata grey_imagedata = {
-		8,	/* depth */
-		8,	/* width */
-		8,	/* height */
-		2,	/* cmapsize */
-		grey_cmap,
-		grey_pixels
-	};
-	static image grey_image = & grey_imagedata;
+static rgb grey_cmap [] = {
+    0x00000000UL,
+    0x00FFFFFFUL,
+};
+static byte grey_pixels [] = {
+    0, 1, 0, 1, 0, 1, 0, 1,
+    1, 0, 1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 1, 0, 1,
+    1, 0, 1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 1, 0, 1,
+    1, 0, 1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 1, 0, 1,
+    1, 0, 1, 0, 1, 0, 1, 0,
+};
+static imagedata grey_imagedata = {
+    8,	/* depth */
+    8,	/* width */
+    8,	/* height */
+    2,	/* cmapsize */
+    grey_cmap,
+    grey_pixels
+};
+static image grey_image = & grey_imagedata;
 
 /*
  *  Private context list structure
  */
-	typedef struct contextinfo  contextinfo;
+typedef struct contextinfo  contextinfo;
 
-	struct contextinfo
-	{
-		object	obj;	/* back pointer to drawing object */
-		HDC 	dc; 	/* handle to DC used when drawing */
-		HGDIOBJ old_bitmap; /* bitmap returned by SelectObject() */
-	};
+struct contextinfo
+{
+    object	obj;	/* back pointer to drawing object */
+    HDC	dc;	/* handle to DC used when drawing */
+    HGDIOBJ old_bitmap; /* bitmap returned by SelectObject() */
+};
 
 /*
  *  The constant MAX_CONTEXTS controls how large the
@@ -108,11 +108,11 @@
  *  number should be at least 2,  since bitblt needs
  *  two contexts for source and destination bitmaps.
  */
-	#define MAX_CONTEXTS 32
+#define MAX_CONTEXTS 32
 
-	static contextinfo context[MAX_CONTEXTS];
-	static int num_contexts = 0;
-	static int empty_slot = 0;
+static contextinfo context[MAX_CONTEXTS];
+static int num_contexts = 0;
+static int empty_slot = 0;
 
 /*
  *  Create a pen and a brush for use in drawing.
@@ -120,12 +120,12 @@
 static void create_pen_and_brush(rgb c, unsigned long winrgb,
 		int width, int depth)
 {
-	the_pen = CreatePen(PS_INSIDEFRAME, width, winrgb);
+    the_pen = CreatePen(PS_INSIDEFRAME, width, winrgb);
 
-	if ((depth == 1) && (c == Grey))
-		the_brush = CreatePatternBrush(grey_bitmap->handle);
-	else
-		the_brush = CreateSolidBrush(winrgb);
+    if ((depth == 1) && (c == Grey))
+	the_brush = CreatePatternBrush(grey_bitmap->handle);
+    else
+	the_brush = CreateSolidBrush(winrgb);
 }
 
 /*
@@ -134,8 +134,8 @@ static void create_pen_and_brush(rgb c, unsigned long winrgb,
  */
 static void delete_pen_and_brush(void)
 {
-	DeleteObject(the_pen);
-	DeleteObject(the_brush);
+    DeleteObject(the_pen);
+    DeleteObject(the_brush);
 }
 
 /*
@@ -144,37 +144,37 @@ static void delete_pen_and_brush(void)
 PROTECTED
 void init_contexts(void)
 {
-	grey_bitmap = imagetobitmap(grey_image);
-	grey_bitmap->text = new_string("grey_bitmap");
+    grey_bitmap = imagetobitmap(grey_image);
+    grey_bitmap->text = new_string("grey_bitmap");
 
-	current = & app_drawstate;
-	app_drawstate.fnt = SystemFont;
-	app_drawstate.crsr = ArrowCursor;
+    current = & app_drawstate;
+    app_drawstate.fnt = SystemFont;
+    app_drawstate.crsr = ArrowCursor;
 
-	create_pen_and_brush(Black, Black, 1, 0);
+    create_pen_and_brush(Black, Black, 1, 0);
 }
 
 static void free_context(contextinfo *c)
 {
-	if (! c->dc)
-		return; /* already been deleted */
+    if (! c->dc)
+	return; /* already been deleted */
 
-	SelectObject(c->dc, GetStockObject(NULL_PEN));
-	SelectObject(c->dc, GetStockObject(NULL_BRUSH));
+    SelectObject(c->dc, GetStockObject(NULL_PEN));
+    SelectObject(c->dc, GetStockObject(NULL_BRUSH));
 
-	if (c->obj->kind & ControlObject)
-		ReleaseDC(c->obj->handle, c->dc);
-	else if (c->obj->kind == BitmapObject) {
-		SelectObject(c->dc, c->old_bitmap);
-		DeleteDC(c->dc);
-	}
+    if (c->obj->kind & ControlObject)
+	ReleaseDC(c->obj->handle, c->dc);
+    else if (c->obj->kind == BitmapObject) {
+	SelectObject(c->dc, c->old_bitmap);
+	DeleteDC(c->dc);
+    }
 
-	if (dc == c->dc)
-		dc = 0;
+    if (dc == c->dc)
+	dc = 0;
 
-	c->dc = 0;
-	c->obj = NULL;
-	c->old_bitmap = 0;
+    c->dc = 0;
+    c->obj = NULL;
+    c->old_bitmap = 0;
 }
 
 /*
@@ -183,21 +183,21 @@ static void free_context(contextinfo *c)
 PROTECTED
 void add_context(object obj, HDC dc, HGDIOBJ old)
 {
-	contextinfo *c;
+    contextinfo *c;
 
-	/* Clear a spot for the new DC if the array is full. */
-	if (num_contexts == MAX_CONTEXTS) {
-		c = & context[empty_slot];
-		free_context(c);
-		empty_slot = (empty_slot+1) % MAX_CONTEXTS;
-	} else {
-		c = & context[num_contexts];
-		num_contexts++;
-	}
-	/* Add this context to the list. */
-	c->obj = obj;
-	c->dc = dc;
-	c->old_bitmap = old;
+    /* Clear a spot for the new DC if the array is full. */
+    if (num_contexts == MAX_CONTEXTS) {
+	c = & context[empty_slot];
+	free_context(c);
+	empty_slot = (empty_slot+1) % MAX_CONTEXTS;
+    } else {
+	c = & context[num_contexts];
+	num_contexts++;
+    }
+    /* Add this context to the list. */
+    c->obj = obj;
+    c->dc = dc;
+    c->old_bitmap = old;
 }
 
 /*
@@ -207,39 +207,39 @@ void add_context(object obj, HDC dc, HGDIOBJ old)
 PROTECTED
 HDC get_context(object obj)
 {
-	int i;
-	HDC dc;
-	HGDIOBJ old;
+    int i;
+    HDC dc;
+    HGDIOBJ old;
 
-	/* Determine if a DC for this object already exists. */
-	for (i = 0; i < num_contexts; i++) {
-		if (context[i].obj == obj)
-			return context[i].dc;
-	}
+    /* Determine if a DC for this object already exists. */
+    for (i = 0; i < num_contexts; i++) {
+	if (context[i].obj == obj)
+	    return context[i].dc;
+    }
 
-	/* Use GetDC or CreateCompatibleDC to return a DC. */
-	if (obj->kind & ControlObject) {
-		dc = GetDC(obj->handle);
-		add_context(obj, dc, 0);
-	}
-	else if (obj->kind == BitmapObject) {
-		dc = CreateCompatibleDC(0);
-		old = SelectObject(dc, obj->handle);
-		add_context(obj, dc, old);
-	}
-	else {
-		return NULL;
+    /* Use GetDC or CreateCompatibleDC to return a DC. */
+    if (obj->kind & ControlObject) {
+	dc = GetDC(obj->handle);
+	add_context(obj, dc, 0);
+    }
+    else if (obj->kind == BitmapObject) {
+	dc = CreateCompatibleDC(0);
+	old = SelectObject(dc, obj->handle);
+	add_context(obj, dc, old);
+    }
+    else {
+	return NULL;
 	/* apperror("Cannot find DC for non-drawable object."); */
-	}
+    }
 
-	/* We only select in the brush or pen we need, when we
-	 * need it. Thus at all other times, they are NULL.
-	 * This ensures we can delete objects when we want, and
-	 * also makes correct context possible. */
-	SelectObject(dc, GetStockObject(NULL_PEN));
-	SelectObject(dc, GetStockObject(NULL_BRUSH));
+    /* We only select in the brush or pen we need, when we
+     * need it. Thus at all other times, they are NULL.
+     * This ensures we can delete objects when we want, and
+     * also makes correct context possible. */
+    SelectObject(dc, GetStockObject(NULL_PEN));
+    SelectObject(dc, GetStockObject(NULL_BRUSH));
 
-	return dc;
+    return dc;
 }
 
 /*
@@ -250,18 +250,18 @@ HDC get_context(object obj)
 PROTECTED
 void remove_context(object obj)
 {
-	int i;
-	contextinfo *c;
+    int i;
+    contextinfo *c;
 
-	for (i = 0; i < num_contexts; i++) {
-		c = & context[i];
-		if (c->obj == obj) {
-			c->obj = NULL;
-			c->dc = 0;
-			c->old_bitmap = 0;
-			empty_slot = i;
-		}
+    for (i = 0; i < num_contexts; i++) {
+	c = & context[i];
+	if (c->obj == obj) {
+	    c->obj = NULL;
+	    c->dc = 0;
+	    c->old_bitmap = 0;
+	    empty_slot = i;
 	}
+    }
 }
 
 /*
@@ -270,19 +270,19 @@ void remove_context(object obj)
 PROTECTED
 void del_context(object obj)
 {
-	int i;
-	contextinfo *c;
+    int i;
+    contextinfo *c;
 
-	for (i = 0; i < num_contexts; i++) {
-		c = & context[i];
-		if (c->obj == obj) {
-			free_context(c);
-			c->obj = NULL;
-			c->dc = 0;
-			c->old_bitmap = 0;
-			empty_slot = i;
-		}
+    for (i = 0; i < num_contexts; i++) {
+	c = & context[i];
+	if (c->obj == obj) {
+	    free_context(c);
+	    c->obj = NULL;
+	    c->dc = 0;
+	    c->old_bitmap = 0;
+	    empty_slot = i;
 	}
+    }
 }
 
 /*
@@ -291,18 +291,18 @@ void del_context(object obj)
 PROTECTED
 void del_all_contexts(void)
 {
-	int i;
-	contextinfo *c;
+    int i;
+    contextinfo *c;
 
-	for (i = 0; i < num_contexts; i++) {
-		c = & context[i];
-		free_context(c);
-		c->obj = NULL;
-		c->dc = 0;
-		c->old_bitmap = 0;
-	}
-	num_contexts = 0;
-	empty_slot = 0;
+    for (i = 0; i < num_contexts; i++) {
+	c = & context[i];
+	free_context(c);
+	c->obj = NULL;
+	c->dc = 0;
+	c->old_bitmap = 0;
+    }
+    num_contexts = 0;
+    empty_slot = 0;
 }
 
 /*
@@ -311,9 +311,9 @@ void del_all_contexts(void)
 PROTECTED
 void finish_contexts(void)
 {
-	del_all_contexts();
-	DeleteObject(the_pen);
-	DeleteObject(the_brush);
+    del_all_contexts();
+    DeleteObject(the_pen);
+    DeleteObject(the_brush);
 }
 
 /*
@@ -322,62 +322,62 @@ void finish_contexts(void)
  */
 static unsigned long set_win_rgb(rgb c, int width)
 {
-	int r, g, b;
-	long luminance;
-	int depth;
-	unsigned long winrgb;
+    int r, g, b;
+    long luminance;
+    int depth;
+    unsigned long winrgb;
 
-	if (current->mode == Ones)
-		c = White;
-	else if (current->mode == Zeros)
-		c = Black;
+    if (current->mode == Ones)
+	c = White;
+    else if (current->mode == Zeros)
+	c = Black;
 
-	r = (int) ((c >> 16) & 0x000000FFL);
-	g = (int) ((c >>  8) & 0x000000FFL);
-	b = (int) ((c >>  0) & 0x000000FFL);
+    r = (int) ((c >> 16) & 0x000000FFL);
+    g = (int) ((c >>  8) & 0x000000FFL);
+    b = (int) ((c >>  0) & 0x000000FFL);
 
-	if (current->dest) depth = getdepth(current->dest);
-	else depth = 2;  /* set default minimal depth if no current window */
+    if (current->dest) depth = getdepth(current->dest);
+    else depth = 2;  /* set default minimal depth if no current window */
 
-	if (depth <= 2)	/* map to black or white, or grey if c == Grey */
-	{
-		luminance = (r*3 + g*5 + b) / 9;
-		if (luminance > 0x0087)		r = g = b = 0x00FF;
-		else if (luminance <= 0x0077)	r = g = b = 0x0000;
-		else				r = g = b = 0x0080;
-		c = rgb(r,g,b);
-	}
+    if (depth <= 2)	/* map to black or white, or grey if c == Grey */
+    {
+	luminance = (r*3 + g*5 + b) / 9;
+	if (luminance > 0x0087)		r = g = b = 0x00FF;
+	else if (luminance <= 0x0077)	r = g = b = 0x0000;
+	else				r = g = b = 0x0080;
+	c = rgb(r,g,b);
+    }
 
-	winrgb = RGB(r, g, b);
+    winrgb = RGB(r, g, b);
 
-	/* Has a colour or width change occured? */
-	if ((c != prev_pixval) || (width != prev_width))
-	{
-		prev_pixval = c;
-		prev_width = width;
+    /* Has a colour or width change occured? */
+    if ((c != prev_pixval) || (width != prev_width))
+    {
+	prev_pixval = c;
+	prev_width = width;
 
-		/* delete any old objects */
-		delete_pen_and_brush();
+	/* delete any old objects */
+	delete_pen_and_brush();
 
-		/* set up new objects */
-		create_pen_and_brush(c, winrgb, width, depth);
-	}
-	return winrgb;
+	/* set up new objects */
+	create_pen_and_brush(c, winrgb, width, depth);
+    }
+    return winrgb;
 }
 
 void setcursor(cursor c)
 {
-	decrease_refcount(current->crsr);
-	current->crsr = c;
-	if (c) SetCursor((HCURSOR) c->handle);
-	increase_refcount(c);
+    decrease_refcount(current->crsr);
+    current->crsr = c;
+    if (c) SetCursor((HCURSOR) c->handle);
+    increase_refcount(c);
 }
 
 void setfont(font f)
 {
-	decrease_refcount(current->fnt);
-	current->fnt = f;
-	increase_refcount(f);
+    decrease_refcount(current->fnt);
+    current->fnt = f;
+    increase_refcount(f);
 }
 
 /*
@@ -386,7 +386,7 @@ void setfont(font f)
  */
 void setdrawmode(int mode)
 {
-	current->mode = mode & 0x0F; /* must be between 0x00 and 0x0F */
+    current->mode = mode & 0x0F; /* must be between 0x00 and 0x0F */
 }
 
 /*
@@ -394,8 +394,8 @@ void setdrawmode(int mode)
  */
 void setrgb(rgb hue)
 {
-	current->hue = hue;
-	win_rgb = set_win_rgb(hue, current->linewidth);
+    current->hue = hue;
+    win_rgb = set_win_rgb(hue, current->linewidth);
 }
 
 /*
@@ -403,10 +403,10 @@ void setrgb(rgb hue)
  */
 void setlinewidth(int width)
 {
-	if (width < 1)
-		width = 1;
-	current->linewidth = width;
-	win_rgb = set_win_rgb(current->hue, current->linewidth);
+    if (width < 1)
+	width = 1;
+    current->linewidth = width;
+    win_rgb = set_win_rgb(current->hue, current->linewidth);
 }
 
 /*
@@ -414,13 +414,13 @@ void setlinewidth(int width)
  */
 void addto(object obj)
 {
-	if (! obj)
-		return;
-	switch (obj->kind) {
-		case WindowObject:	current_window = obj;	break;
-		case MenubarObject:	current_menubar = obj;	break;
-		case MenuObject:	current_menu = obj;	break;
-	}
+    if (! obj)
+	return;
+    switch (obj->kind) {
+    case WindowObject:	current_window = obj;	break;
+    case MenubarObject:	current_menubar = obj;	break;
+    case MenuObject:	current_menu = obj;	break;
+    }
 }
 
 /*
@@ -428,24 +428,24 @@ void addto(object obj)
  */
 void drawto(drawing d)
 {
-	if (! d) {
-		current = & app_drawstate;
-		current->dest = NULL;
-		return;
-	}
+    if (! d) {
+	current = & app_drawstate;
+	current->dest = NULL;
+	return;
+    }
 
-	dc = get_context(d);
+    dc = get_context(d);
 
-	if (d->drawstate) {
-		/* Change the current drawing state to this one. */
-		current = d->drawstate;
-		current->dest = d;
-		win_rgb = set_win_rgb(current->hue, current->linewidth);
-	}
-	else {
-		/* Otherwise just use the current drawing state. */
-		current->dest = d;
-	}
+    if (d->drawstate) {
+	/* Change the current drawing state to this one. */
+	current = d->drawstate;
+	current->dest = d;
+	win_rgb = set_win_rgb(current->hue, current->linewidth);
+    }
+    else {
+	/* Otherwise just use the current drawing state. */
+	current->dest = d;
+    }
 }
 
 /*
@@ -453,14 +453,14 @@ void drawto(drawing d)
  */
 void setdrawstate(drawstate s)
 {
-	if (! s)
-		return;
-	moveto(s->p);
-	setdrawmode(s->mode);
-	setcursor(s->crsr);
-	setfont(s->fnt);
-	setlinewidth(s->linewidth);
-	setrgb(s->hue);
+    if (! s)
+	return;
+    moveto(s->p);
+    setdrawmode(s->mode);
+    setcursor(s->crsr);
+    setfont(s->fnt);
+    setlinewidth(s->linewidth);
+    setrgb(s->hue);
 }
 
 /*
@@ -468,10 +468,10 @@ void setdrawstate(drawstate s)
  */
 void restoredrawstate(drawstate s)
 {
-	if (! s)
-		return;
-	setdrawstate(s);
-	discard(s);
+    if (! s)
+	return;
+    setdrawstate(s);
+    discard(s);
 }
 
 /*
@@ -479,12 +479,12 @@ void restoredrawstate(drawstate s)
  */
 void resetdrawstate(void)
 {
-	setrgb(Black);
-	setlinewidth(1);
-	setcursor(ArrowCursor);
-	moveto(pt(0,0));
-	setfont(SystemFont);
-	setdrawmode(S);
+    setrgb(Black);
+    setlinewidth(1);
+    setcursor(ArrowCursor);
+    moveto(pt(0,0));
+    setfont(SystemFont);
+    setdrawmode(S);
 }
 
 /*
@@ -492,14 +492,14 @@ void resetdrawstate(void)
  */
 drawstate copydrawstate(void)
 {
-	drawstate s = NULL;
+    drawstate s = NULL;
 
-	if (current) {
-		s = create(drawstruct);
-		if (s)
-			*s = *current;
-	}
-	return s;
+    if (current) {
+	s = create(drawstruct);
+	if (s)
+	    *s = *current;
+    }
+    return s;
 }
 
 /*
@@ -507,11 +507,11 @@ drawstate copydrawstate(void)
  */
 
 drawing	currentdrawing(void)    { return current->dest; }
-rgb 	currentrgb(void)        { return current->hue; }
-int 	currentmode(void)       { return current->mode; }
+rgb	currentrgb(void)        { return current->hue; }
+int	currentmode(void)       { return current->mode; }
 point	currentpoint(void)      { return current->p; }
-int 	currentlinewidth(void)  { return current->linewidth; }
+int	currentlinewidth(void)  { return current->linewidth; }
 font	currentfont(void)       { return current->fnt; }
 cursor	currentcursor(void)     { return current->crsr; }
 
-int 	getkeystate(void)       { return keystate; }
+int	getkeystate(void)       { return keystate; }
