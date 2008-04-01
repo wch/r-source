@@ -8886,7 +8886,7 @@ void attribute_visible R_init_stats(DllInfo *dll)
 
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by
-supply a definitions file
+supplying a definitions file
 @file{@var{pkgnme}/src/@var{pkgname}-win.def}: only entry points
 listed in that file will be visible.  Again using @pkg{stats} as an
 example, it has
