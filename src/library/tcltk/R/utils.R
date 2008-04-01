@@ -86,3 +86,68 @@ tk_select.list <-
     if(!multiple && !length(ans.select_list)) ans.select_list <- ""
     ans.select_list
 }
+
+tkProgressBar <- function(title = "R progress bar", label = "",
+                          min = 0, max = 1, initial = 0, width = 300)
+{
+    have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
+    if(!have_ttk)
+        if(as.character(tclRequire("BWidget")) == "FALSE")
+            stop("either Tk >= 8.5 or BWidget is required")
+
+    .win <- tktoplevel()
+    .val <- initial
+    .tkval <- tclVar(0)
+    .killed <- FALSE
+
+    tkwm.geometry(.win, sprintf("%dx80", width+40))
+    tkwm.title(.win, title)
+    fn <- tkfont.create(family="helvetica", size=12)
+
+    .lab <- tklabel(.win, text=label, font = fn)
+    tkpack(.lab, side="top")
+    tkpack(tklabel(.win, text="", font = fn), side="bottom")
+
+    pBar <- if(have_ttk) ttkprogressbar(.win, length=width, variable=.tkval) else tkwidget(.win, "ProgressBar", width=width, variable=.tkval)
+    tkpack(pBar, side="bottom")
+
+    getVal <- function() .val
+    up <- function(value) {
+        if(!is.finite(value) || value < min || value > max) return()
+        .val <<- value
+        tclvalue(.tkval) <<- 100*(value - min)/(max - min)
+    }
+    kill <- function() if(!.killed) {tkdestroy(.win); .killed <<- TRUE}
+    title <- function(title) tkwm.title(.win, title)
+    lab <- function(label) tkconfigure(.lab, text=label)
+    tkbind(.win, "<Destroy>", kill)
+    up(initial)
+
+    structure(list(getVal=getVal, up=up, title=title, label=lab, kill=kill),
+              class = "tkProgressBar")
+}
+
+getTkProgressBar <- function(pb)
+{
+    if(!inherits(pb, "winProgressBar"))
+       stop("'pb' is not from class \"tkProgressBar\"")
+    pb$getVal()
+}
+
+setTkProgressBar <- function(pb, value, title = NULL, label = NULL)
+{
+    if(!inherits(pb, "winProgressBar"))
+       stop("'pb' is not from class \"tkProgressBar\"")
+    oldval <- pb$getVal()
+    pb$up(value)
+    if(!is.null(title)) pb$title(title)
+    if(!is.null(label)) pb$label(label)
+    tcl("update", "idletasks")
+    invisible(oldval)
+}
+
+close.tkProgressBar <- function(con, ...)
+{
+    con$kill()
+    invisible(NULL)
+}
