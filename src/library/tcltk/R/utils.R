@@ -129,14 +129,14 @@ tkProgressBar <- function(title = "R progress bar", label = "",
 
 getTkProgressBar <- function(pb)
 {
-    if(!inherits(pb, "winProgressBar"))
+    if(!inherits(pb, "tkProgressBar"))
        stop("'pb' is not from class \"tkProgressBar\"")
     pb$getVal()
 }
 
 setTkProgressBar <- function(pb, value, title = NULL, label = NULL)
 {
-    if(!inherits(pb, "winProgressBar"))
+    if(!inherits(pb, "tkProgressBar"))
        stop("'pb' is not from class \"tkProgressBar\"")
     oldval <- pb$getVal()
     pb$up(value)
