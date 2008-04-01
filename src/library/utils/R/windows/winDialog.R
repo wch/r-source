@@ -56,16 +56,16 @@ winProgressBar <- function(title = "R progress bar", label = "",
 close.winProgressBar <- function(con, ...)
     .Internal(closeWinProgressBar(con$pb))
 
-setWinProgressBar <- function(pb, value)
+setWinProgressBar <- function(pb, value, title=NULL, label=NULL)
 {
     if(!inherits(pb, "winProgressBar"))
        stop("'pb' is not from class \"winProgressBar\"")
-    invisible(.Internal(setWinProgressBar(pb$pb, value)))
+    invisible(.Internal(setWinProgressBar(pb$pb, value, title, label)))
 }
 
 getWinProgressBar <- function(pb)
 {
     if(!inherits(pb, "winProgressBar"))
        stop("'pb' is not from class \"winProgressBar\"")
-    .Internal(setWinProgressBar(pb$pb, NULL))
+    .Internal(setWinProgressBar(pb$pb, NULL, NULL, NULL))
 }

@@ -459,11 +459,22 @@ SEXP do_setwinprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isNull(CADR(args))) {
 	int iv;
 	double val = asReal(CADR(args));
-	if (!R_FINITE(val) || val < pbar->min || val > pbar->max)
-	    errorcall(call, "invalid '%s' argument", "value");
-	iv = pbar->width * (val - pbar->min)/(pbar->max - pbar->min);
-	setprogressbar(pbar->pb, iv);
-	pbar->val = val;
+	SEXP title = CADDR(args), label = CADDDR(args);
+	if (R_FINITE(val) && val >= pbar->min && val <= pbar->max) {
+	    iv = pbar->width * (val - pbar->min)/(pbar->max - pbar->min);
+	    setprogressbar(pbar->pb, iv);
+	    pbar->val = val;
+	}
+	if (!isNull(title)) {
+	    SEXP ctxt = STRING_ELT(title, 0);
+	    if (ctxt != NA_STRING)
+		settext(pbar->wprog, translateChar(ctxt));
+	}
+	if(pbar->lab && !isNull(label)) {
+	    SEXP clab = STRING_ELT(label, 0);
+	    if (clab != NA_STRING)
+		settext(pbar->lab, translateChar(clab));
+	}
     }
     return ScalarInteger(value);
 }
