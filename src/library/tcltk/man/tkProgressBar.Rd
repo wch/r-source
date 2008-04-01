@@ -44,8 +44,9 @@ setTkProgressBar(pb, value, title=NULL, label=NULL)
 }
 
 \note{
-  This widget requires \bold{either} Tk version 8.5 or \bold{or} the
-  \pkg{BWidget} Tcl/Tk extension.
+  This widget currently requires \bold{either} Tk version 8.5 or
+  \bold{or} the \pkg{BWidget} Tcl/Tk extension for a graphic display --
+  otherwise it will use a percentage.
 }
 
 \value{

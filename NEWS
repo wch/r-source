@@ -15,7 +15,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 NEW FEATURES
 
     o	New function tkProgressBar() in package tcltk.  This currently
-    	requires Tk >= 8.5 or the BWidget extension.
+    	works best with Tk >= 8.5 or the BWidget extension.
 
 
 PACKAGE INSTALLATION
