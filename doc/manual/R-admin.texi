@@ -1182,7 +1182,7 @@ make the manuals) @command{makeinfo} version 4.7 or later (part of GNU
 @code{texinfo}) as well as @file{texinfo.tex}.
 
 You also need the R source (@file{R-@value{VERSIONno}.tar.gz}),
-@file{R_Tcl.zip} and @file{iconv.dll} (see above).
+the Tcl/Tk support files and @file{iconv.dll} (see above).
 
 Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, unpack
 @file{R_Tcl.zip} at the top level and put @file{iconv.dll} in
