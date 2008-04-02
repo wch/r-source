@@ -5,6 +5,7 @@ exportPattern("^.Tcl")
 exportPattern("^.Tk")
 export(addTclPath, as.tclObj, is.tclObj, is.tkwin)
 export(tclfile.dir, tclfile.tail)
+export(getTkProgressBar, setTkProgressBar)
 
 S3method("$", tclvar)
 S3method("$<-", tclvar)
@@ -29,3 +30,6 @@ S3method("tclvalue", tclObj)
 S3method("tclvalue", tclVar)
 S3method("tclvalue<-", default)
 S3method("tclvalue<-", tclVar)
+
+S3method(close, tkProgressBar)
+
