@@ -33,7 +33,7 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
         membersDefined <- sapply(members, isClass, where = as.environment(where))
         if(!all(membersDefined))
             stop(gettextf("the member classes must be defined: not true of %s",
-                          paste(dQuote(as(members, "character")), collapse=", ")), domain = NA)
+                          paste(dQuote(as(members[!membersDefined], "character")), collapse=", ")), domain = NA)
     }
     def <- new("ClassUnionRepresentation",
                makeClassRepresentation(name, package = getPackageName(where), where = where))
