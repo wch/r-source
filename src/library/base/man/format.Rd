@@ -99,7 +99,8 @@ format(x, \dots)
   needed to display all the elements to at least the \code{digit}
   significant digits.  However, if all the elements then have trailing
   zeroes, the number of decimal places is reduced until at least one
-  element has a non-zero final digit.
+  element has a non-zero final digit; see also the argument
+  documentation for \code{big.*}, \code{small.*} etc, above.
 
   Raw vectors are converted to their 2-digit hexadecimal representation
   by \code{\link{as.character}}.
@@ -131,8 +132,8 @@ format(x, \dots)
   formatted.
 
   \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
-  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}},
-  \code{\link{encodeString}}.
+  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{prettyNum}},
+  \code{\link{toString}}, \code{\link{encodeString}}.
 }
 \examples{
 format(1:10)
