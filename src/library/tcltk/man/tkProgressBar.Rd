@@ -54,7 +54,7 @@ setTkProgressBar(pb, value, title = NULL, label = NULL)
 }
 
 \seealso{
-  \code{\link{txtProgressPar}}  
+  \code{\link{txtProgressBPar}}  
 #ifdef windows
 
   \code{\link{winProgressBar}} for a version using Windows native
