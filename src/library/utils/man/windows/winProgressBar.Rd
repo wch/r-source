@@ -1,4 +1,4 @@
-% File src/library/utils/man/windows/winDialog.Rd
+% File src/library/utils/man/windows/winProgressBar.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2008 R Core Development Team
 % Distributed under GPL 2 or later
@@ -17,7 +17,7 @@ winProgressBar(title = "R progress bar", label = "",
                min = 0, max = 1, initial = 0, width = 300)
 
 getWinProgressBar(pb)
-setWinProgressBar(pb, value, title=NULL, label=NULL)
+setWinProgressBar(pb, value, title = NULL, label = NULL)
 \method{close}{winProgressBar}(con, \dots)
 }
 \arguments{
@@ -46,11 +46,13 @@ setWinProgressBar(pb, value, title=NULL, label=NULL)
 \value{
   For \code{winProgressBar} an object of class \code{"winProgressBar"}.
 
-  For \code{getWinProgressBar} and \code{setWinProgressBar} a
+  For \code{getWinProgressBar} and \code{setWinProgressBar}, a
   length-one numeric vector giving the previous value (invisibly for
   \code{setWinProgressBar}).
 }
-
+\seealso{
+  \code{\link{txtProgressBar}}, \code{\link{tkProgressBar}}
+}
 \examples{\donttest{% popups are irritating
 pb <- winProgressBar("test progress bar", "Some information in \%",
                      0, 100, 50)

@@ -29,6 +29,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        write.csv2, write.socket, write.table, wsbrowser, xedit,
        xemacs, zip.file.extract)
 
+export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 
 S3method("[", getAnywhere)
 S3method("[", roman)
@@ -38,6 +39,7 @@ S3method(as.character, roman)
 S3method(as.person, default)
 S3method(as.personList, default)
 S3method(as.personList, person)
+S3method(close, txtProgressBar)
 S3method(edit, data.frame)
 S3method(edit, default)
 S3method(edit, matrix)

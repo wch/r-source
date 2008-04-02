@@ -17,7 +17,7 @@ tkProgressBar(title = "R progress bar", label = "",
               min = 0, max = 1, initial = 0, width = 300)
 
 getTkProgressBar(pb)
-setTkProgressBar(pb, value, title=NULL, label=NULL)
+setTkProgressBar(pb, value, title = NULL, label = NULL)
 \method{close}{tkProgressBar}(con, \dots)
 }
 \arguments{
@@ -52,9 +52,18 @@ setTkProgressBar(pb, value, title=NULL, label=NULL)
 \value{
   For \code{tkProgressBar} an object of class \code{"tkProgressBar"}.
 
-  For \code{getTkProgressBar} and \code{setTkProgressBar} a
+  For \code{getTkProgressBar} and \code{setTkProgressBar}, a
   length-one numeric vector giving the previous value (invisibly for
   \code{setTkProgressBar}).
+}
+
+\seealso{
+  \code{\link{txtProgressPar}}  
+#ifdef windows
+
+  \code{\link{winProgressBar}} for a version using Windows native
+  controls (which this also does for Tk >= 8.5).
+#endif
 }
 
 \examples{\donttest{% popups are irritating

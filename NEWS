@@ -17,6 +17,8 @@ NEW FEATURES
     o	New function tkProgressBar() in package tcltk.  This currently
     	works best with Tk >= 8.5 or the BWidget extension.
 
+	New function txtProgressBar() providing a text-mode progress bar.
+
 
 PACKAGE INSTALLATION
 
