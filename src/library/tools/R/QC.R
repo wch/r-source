@@ -225,7 +225,7 @@ function(package, dir, lib.loc = NULL)
         ## </NOTE>
         .make_S4_method_siglist <- function(g) {
             mlist <- .get_S4_methods_list(g, code_env)
-            sigs <- .make_siglist(mlist$classes)
+            sigs <- .make_siglist(mlist)
             if(length(sigs))
                 paste(g, ",", sigs, sep = "")
             else
@@ -556,10 +556,10 @@ function(package, dir, lib.loc = NULL,
             lapply(.get_S4_generics_really_in_env(code_env),
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
-                       sigs <- .make_siglist(mlist$classes)
+                       sigs <- .make_siglist(mlist)
                        if(!length(sigs)) return()
                        nm <- sprintf("\\S4method{%s}{%s}", f, sigs)
-                       args <- lapply(mlist$methods,
+                       args <- lapply(mlist,
                                       get_formals_from_method_definition)
                        names(args) <- nm
                        functions_in_code <<-
@@ -1876,7 +1876,7 @@ function(package, dir, file, lib.loc = NULL,
             ## call is from inside a function (e.g., InitMethods()).
             for(f in .get_S4_generics_really_in_env(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
-                exprs <- c(exprs, lapply(mlist$methods, body))
+                exprs <- c(exprs, lapply(mlist, body))
             }
         }
     }
@@ -2275,12 +2275,12 @@ function(package, dir, lib.loc = NULL)
             sapply(S4_generics,
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
-                       ind <- !as.logical(sapply(mlist$methods,
+                       ind <- !as.logical(sapply(mlist,
                                                  .check_last_formal_arg))
                        if(!any(ind))
                            character()
                        else {
-                           sigs <- .make_siglist(mlist$classes[ind])
+                           sigs <- .make_siglist(mlist[ind])
                            sprintf("\\S4method{%s}{%s}", f, sigs)
                        }
                    })
@@ -4091,7 +4091,7 @@ function(package, dir, lib.loc = NULL)
             ## This may find things twice.
             for(f in .get_S4_generics_really_in_env(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
-                exprs <- c(exprs, lapply(mlist$methods, body))
+                exprs <- c(exprs, lapply(mlist, body))
             }
         }
     }
@@ -4419,8 +4419,11 @@ function()
 
 .get_S4_generics_really_in_env <-
 function(env)
+{
+    env <- as.environment(env)
     Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
            methods::getGenerics(env))
+}
 
 ### ** .get_S4_methods_list
 
@@ -4432,36 +4435,18 @@ function(g, env)
     ## methods as well as methods inherited from the "appropriate"
     ## parent environment of 'env' or the associated name space env.
 
-    ## It was suggested that in 2.5.0 or later, we can use
-    ##   methods::listFromMethods(g, env)
-    ## instead of what we use below.  Not quite, compare e.g. the
-    ## difference we get for S4 generic coerce() and package methods:
-    ##    env <- as.environment("package:methods")
-    ##    mlist1 <- linearizeMlist(getMethodsMetaData("coerce", env))
-    ##    mlist2 <- listFromMethods("coerce", env)
-    ##    sigs1 <- tools:::.make_signatures(mlist1@classes)
-    ##    sigs2 <- tools:::.make_signatures(mlist2@classes)
-    ##    setdiff(sigs2, sigs1)
-    ## ???
+    env <- as.environment(env)
+    mlist <- methods::findMethods(g, env)
 
-    mlist <- methods::getMethodsMetaData(g, env)
+    ## First, derived default methods.    
+    if(any(ind <- as.logical(sapply(mlist, methods::is,
+                                    "derivedDefaultMethod"))))
+        mlist <- mlist[!ind]
 
-    ## First, derived default methods.
-    has_derived_default <-
-        methods::is(methods::finalDefaultMethod(mlist),
-                    "derivedDefaultMethod")
-    mlist <- methods::linearizeMlist(mlist, FALSE)
-    classes <- methods::slot(mlist, "classes")
-    methods <- methods::slot(mlist, "methods")
-    ind <- as.logical(lapply(classes,
-                             function(x)
-                             identical(all(x == "ANY"), TRUE)))
-    if(any(ind) && has_derived_default) {
-        classes <- classes[!ind]
-        methods <- methods[!ind]
-    }
-
-    ## Second, inherited methods.
+    ## Second, "inherited" methods.
+    ## Note that for packages with a namespace, the table in the
+    ## namespace is meant to be only the methods in the package, so we
+    ## might simply use findMethods() on the namespace instead.
     package <- sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
     ## (Ugly, but why not?)
     penv <- if(length(package) && nzchar(package)) {
@@ -4476,19 +4461,12 @@ function(g, env)
         parent.env(penv)
     else
         parent.env(env)
-    if((g %in% .get_S4_generics_really_in_env(penv))
-       && !is.null(mlist_from_penv <-
-                   methods::getMethodsMetaData(g, penv))) {
-        mlist_from_penv <-
-            methods::linearizeMlist(mlist_from_penv, FALSE)
-        classes_from_penv <- methods::slot(mlist_from_penv, "classes")
-        ind <- is.na(match(.make_signatures(classes),
-                           .make_signatures(classes_from_penv)))
-        classes <- classes[ind]
-        methods <- methods[ind]
-    }
-    ## Could now create a 'LinearMethodsList' object ...
-    list(classes = classes, methods = methods)
+    if((g %in% tools:::.get_S4_generics_really_in_env(penv))
+       && length(mlist_from_penv <- methods::findMethods(g, penv)))
+        mlist <- mlist[is.na(match(names(mlist),
+                                   names(mlist_from_penv)))]
+
+    mlist
 }
 
 ### ** .is_call_from_replacement_function_usage
@@ -4506,7 +4484,11 @@ function(x)
 
 .make_siglist <-
 function(x)
-    as.character(sapply(x, paste, collapse = ","))
+{
+    ## Argument 'x' should be a named list of methods as obtained by
+    ## methods::findMethods() or .get_S4_methods_list().
+    gsub("#", ",", names(x), fixed = TRUE)
+}
 
 ### ** .make_signatures
 
