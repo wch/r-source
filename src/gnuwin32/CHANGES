@@ -224,6 +224,9 @@ OTHERS
     o	New widget winProgressBar() (based on the progress bar used by
 	download.file()).
 
+    o	The download progress bar now shows the percentage done in the
+    	title bar (and hence in the Windows task bar).
+
 
 BUILDING R
 
