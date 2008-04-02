@@ -14,10 +14,6 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	New function tkProgressBar() in package tcltk.
-
-	New function txtProgressBar() providing a text-mode progress bar.
-
 
 PACKAGE INSTALLATION
 
@@ -477,6 +473,9 @@ GRAPHICS CHANGES
 
     o	plot.formula() only prompts between plots for interactive
 	devices (it used to prompt for all devices).
+
+    o	Progress-bar functions txtProgressBar(), tkProgressBar() in
+ 	package tcltk and winProgressBar() (Windows only).
 
 
 DEPRECATED & DEFUNCT
