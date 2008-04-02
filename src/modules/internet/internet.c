@@ -251,6 +251,7 @@ typedef struct {
     progressbar pb;
     label l_url;
     RCNTXT cntxt;
+    int pc;
 } winprogressbar;
 
 static winprogressbar pbar = {NULL, NULL, NULL};
@@ -271,6 +272,10 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP scmd, sfile, smode, sheaders, agentFun;
     const char *url, *file, *mode, *headers;
     int quiet, status = 0, cacheOK;
+#ifdef Win32
+    char pbuf[30];
+    int pc;
+#endif
 
     checkArity(op, args);
     scmd = CAR(args); args = CDR(args);
@@ -309,10 +314,11 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
     if (!quiet && !pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
-		      Titlebar | Centered);
+			       Titlebar | Centered);
 	setbackground(pbar.wprog, dialog_bg());
 	pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), AlignCenter);
 	pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, 1024, 1024, 1);
+	pbar.pc = 0;
     }
 #endif
     if(strncmp(url, "file://", 7) == 0) {
@@ -416,6 +422,14 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 			setprogressbarrange(pbar.pb, 0, guess);
 		    }
 		    setprogressbar(pbar.pb, nbytes);
+		    if (total > 0) {
+			pc = 0.499 + 100.0*nbytes/total;
+			if (pc > pbar.pc) {
+			    snprintf(pbuf, 30, "%d%% done", pc);
+			    settext(pbar.wprog, pbuf);
+			    pbar.pc = pc;
+			}
+		    }
 		}
 #else
 		if(!quiet) {
@@ -514,6 +528,14 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 			setprogressbarrange(pbar.pb, 0, guess);
 		    }
 		    setprogressbar(pbar.pb, nbytes);
+		    if (total > 0) {
+			pc = 0.499 + 100.0*nbytes/total;
+			if (pc > pbar.pc) {
+			    snprintf(pbuf, 30, "%d%% done", pc);
+			    settext(pbar.wprog, pbuf);
+			    pbar.pc = pc;
+			}
+		    }
 		}
 #else
 		if(!quiet) {
