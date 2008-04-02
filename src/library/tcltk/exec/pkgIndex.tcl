@@ -42,3 +42,9 @@ package ifneeded ::Utility::expand 1.0 [subst {
     source [file join $dir util-expand.tcl]
 }]
 #	expand
+
+
+package ifneeded PBar 1.0 [list tclPkgSetup $dir PBar 1.0 {
+    {progressbar.tcl source {
+	PBar ProgressBar ProgressBar::create ProgressBar::use
+}   }   }]

@@ -40,15 +40,11 @@ setTkProgressBar(pb, value, title = NULL, label = NULL)
   was created).  Missing (\code{\link{NA}}) and out-of-range values of
   \code{value} will be (silently) ignored.
   
-  The progress bar should be \code{close}d when finished with. 
-}
+  The progress bar should be \code{close}d when finished with.
 
-\note{
-  This widget currently requires \bold{either} Tk version 8.5 or
-  \bold{or} the \pkg{BWidget} Tcl/Tk extension for a graphic display --
-  otherwise it will use a percentage.
+  This will use the \code{ttk::progressbar} widget for Tk version 8.5 or
+  later, otherwise \R's copy of BWidget's \code{progressbar}.
 }
-
 \value{
   For \code{tkProgressBar} an object of class \code{"tkProgressBar"}.
 

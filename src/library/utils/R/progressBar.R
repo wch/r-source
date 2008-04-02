@@ -10,7 +10,7 @@ txtProgressBar <-
     nw <- nchar(char, "w")
     if(is.na(width)) {
         width <- getOption("width")
-        if(style == 2) width <- width - 10
+        if(style == 3) width <- width - 10
         width <- trunc(width/nw)
     }
 

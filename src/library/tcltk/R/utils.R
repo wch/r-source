@@ -92,8 +92,7 @@ tkProgressBar <- function(title = "R progress bar", label = "",
 {
     useText <- FALSE
     have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
-    if(!have_ttk && as.character(tclRequire("BWidget")) == "FALSE")
-        useText <- TRUE
+    if(!have_ttk && as.character(tclRequire("PBar")) == "FALSE") useText <- TRUE
 
 
     .win <- tktoplevel()
@@ -105,6 +104,7 @@ tkProgressBar <- function(title = "R progress bar", label = "",
     fn <- tkfont.create(family="helvetica", size=12)
 
     if(useText) {
+        ## currently unused
         .lab <- tklabel(.win, text=label, font=fn, padx=20)
         tkpack(.lab, side = "left")
         fn2 <- tkfont.create(family="helvetica", size=16)
