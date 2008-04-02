@@ -79,7 +79,6 @@
         ## so that non-default signatures are allowed in setGeneric()
         .initImplicitGenerics(where)
         assign("implicitGeneric", .implicitGeneric, envir = where)
-        ## .makeGenericTables(where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()
         cat("done\n")
