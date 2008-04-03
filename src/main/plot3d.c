@@ -1353,7 +1353,7 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     int method;
     Rboolean drawLabels;
     double labcex;
-    pGEDevDesc dd = CurrentDevice();
+    pGEDevDesc dd = GEcurrentDevice();
     SEXP result = R_NilValue;
 
     GCheckState(dd);
@@ -1650,7 +1650,7 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     rcolor *col;
     int i, j, k, npt, nx, ny, nz, nc, ncol, colsave, xpdsave;
     double px[8], py[8], pz[8];
-    pGEDevDesc dd = CurrentDevice();
+    pGEDevDesc dd = GEcurrentDevice();
 
     GCheckState(dd);
 
@@ -1767,7 +1767,7 @@ SEXP attribute_hidden do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     unsigned *c;
     int i, j, nx, ny, nc, xpdsave;
     rcolor colsave;
-    pGEDevDesc dd = CurrentDevice();
+    pGEDevDesc dd = GEcurrentDevice();
 
     GCheckState(dd);
 
@@ -1909,7 +1909,7 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
     int i, j, k, n, nx1, ny1, icol, nv;
     unsigned int newcol, r, g, b;
     pGEDevDesc dd;
-    dd = CurrentDevice();
+    dd = GEcurrentDevice();
     nx1 = nx - 1;
     ny1 = ny - 1;
     n = nx1 * ny1;
@@ -2549,7 +2549,7 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((tickType == NA_INTEGER) || (tickType < 1) || (tickType > 2))
 	error(_("invalid '%s' value"), "ticktype");
 
-    dd = CurrentDevice();
+    dd = GEcurrentDevice();
 
     GNewPlot(GRecording(call, dd));
 

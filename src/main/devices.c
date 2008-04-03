@@ -162,23 +162,10 @@ pGEDevDesc GEcurrentDevice(void)
     return R_Devices[R_CurrentDevice];
 }
 
-/* FIXME: remove in due course */
-pGEDev Rf_CurrentDevice(void)
-{
-    return (pGEDev) GEcurrentDevice();
-}
-
 pGEDevDesc GEgetDevice(int i)
 {
     return R_Devices[i];
 }
-
-/* FIXME: remove in due course */
-DevDesc* Rf_GetDevice(int i)
-{
-    return (pGEDev) R_Devices[i];
-}
-
 
 int curDevice(void)
 {
@@ -236,15 +223,6 @@ int GEdeviceNumber(pGEDevDesc dd)
     return 0;
 }
 
-/* FIXME when KillDevice is removed */
-static int deviceNumber(pGEDev dd)
-{
-    int i;
-    for (i = 1; i < R_MaxDevices; i++)
-	if (R_Devices[i] == dd) return i;
-    return 0;
-}
-
 /* This should be called if you have a pointer to a NewDevDesc
  * and you want to find the corresponding device number
  */
@@ -255,14 +233,6 @@ int ndevNumber(pDevDesc dd)
 	if (R_Devices[i] != NULL && R_Devices[i]->dev == dd)
 	    return i;
     return 0;
-}
-
-
-/* FIXME: remove in due course.
-   Incorrectly declared old version */
-int Rf_devNumber(pGEDev dd)
-{
-    return ndevNumber((pDevDesc ) dd);
 }
 
 int selectDevice(int devNum)
@@ -349,12 +319,6 @@ void removeDevice(int devNum, Rboolean findNext)
 	GEdestroyDevDesc(g);
 	R_Devices[devNum] = NULL;
     }
-}
-
-/* FIXME; remove in due course */
-void Rf_KillDevice(pGEDev dd)
-{
-    removeDevice(deviceNumber(dd), TRUE);
 }
 
 void GEkillDevice(pGEDevDesc gdd)
@@ -545,14 +509,6 @@ void GEaddDevice2(pGEDevDesc gdd, const char *name)
     gsetVar(install(".Device"), mkString(name), R_BaseEnv);
     GEaddDevice(gdd);
     GEinitDisplayList(gdd);    
-}
-
-
-
-/* FIXME; remove in due course */
-void Rf_addDevice(pGEDev dd)
-{
-    GEaddDevice(dd);
 }
 
 Rboolean Rf_GetOptionDeviceAsk(void); /* from options.c */

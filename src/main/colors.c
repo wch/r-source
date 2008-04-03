@@ -26,7 +26,7 @@
 #endif
 
 #include <Defn.h>
-#include <Graphics.h>  /* for dpptr, CurrentDevice : FIXME */
+#include <Graphics.h>  /* for dpptr */
 #include <Colors.h>
 #include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
@@ -387,7 +387,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; !bg_needed && i < n; i++) 
     	bg_needed = isdigit((int)CHAR(STRING_ELT(colors, i))[0]);
     if (bg_needed)
-    	bg = dpptr(CurrentDevice())->bg;
+    	bg = dpptr(GEcurrentDevice())->bg;
     else
     	bg = R_TRANWHITE;	
 

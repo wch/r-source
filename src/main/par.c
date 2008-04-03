@@ -1129,7 +1129,7 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    dd = CurrentDevice();
+    dd = GEcurrentDevice();
     new_spec = 0;
     args = CAR(args);
     nargs = length(args);
@@ -1218,7 +1218,7 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    dd = CurrentDevice();
+    dd = GEcurrentDevice();
 
     /* num.rows: */
     nrow = dpptr(dd)->numrows = gpptr(dd)->numrows =
