@@ -29,7 +29,7 @@ function(file)
                       file),
              domain = NA)
 
-    y <- matrix("", nrow = 0, ncol = 2)
+    y <- matrix("", nrow = 0L, ncol = 2L)
     x <- paste(readLines(file), collapse = "\n")
 
     ## <FIXME>
@@ -56,24 +56,24 @@ function(file)
     ## lines.
     for(chunk in unlist(strsplit(x, "\n[ \t\n]*\n"))) {
         entries <- tryCatch({
-            if(regexpr("(   |\t)", chunk) == -1)
+            if(regexpr("(   |\t)", chunk) == -1L)
                 NULL
             else {
                 ## Combine entries with continuation lines.
                 chunk <- gsub("\n[ \t]+", "\t", chunk)
                 ## Split into lines and then according to whitespace.
                 x <- strsplit(unlist(strsplit(chunk, "\n")), "[ \t]")
-                cbind(unlist(lapply(x, "[[", 1)),
+                cbind(unlist(lapply(x, "[[", 1L)),
                       unlist(lapply(x, function(t) {
-                          paste(t[-c(1, which(!nzchar(t)))], collapse = " ")
+                          paste(t[-c(1L, which(!nzchar(t)))],
+                                collapse = " ")
                       })))
             }
         },
                             error = .identity)
-        if(!inherits(entries, "error") && NCOL(entries) == 2)
+        if(!inherits(entries, "error") && NCOL(entries) == 2L)
             y <- rbind(y, entries)
     }
     colnames(y) <- c("Item", "Description")
     y
 }
-
