@@ -1797,9 +1797,10 @@ function(package, dir, file, lib.loc = NULL,
                                                                "code"))))
             stop("unable to write code files")
     }
-    else if(missing(file)) {
+    else if(!missing(file))
+        enc <- NA
+    else
         stop("you must specify 'package', 'dir' or 'file'")
-    }
 
     if(missing(package) && !file_test("-f", file))
         stop(gettextf("file '%s' does not exist", file),
@@ -1886,7 +1887,7 @@ function(package, dir, file, lib.loc = NULL,
 	    con <- file(file, encoding=enc)
             on.exit(close(con))
 	} else con <- file
-        exprs <- try(parse(file = con, n = -1))
+        exprs <- try(parse(file = con, n = -1L))
         if(inherits(exprs, "try-error"))
             stop(gettextf("parse error in file '%s'", file),
                  domain = NA)
