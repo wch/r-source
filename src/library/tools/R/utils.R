@@ -210,7 +210,12 @@ function(file, pdf = FALSE, clean = FALSE,
     if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
 
     if(nzchar(texi2dvi)) {
+        ignore.stderr <- FALSE
         pdf <- if(pdf) "--pdf" else ""
+        if(is.numeric(quiet)) {
+            ignore.stderr <- quiet >= 2
+            quiet <- quiet >= 1
+        }
         clean <- if(clean) "--clean" else ""
         if(quiet) {
             quiet <- "--quiet"
@@ -218,13 +223,17 @@ function(file, pdf = FALSE, clean = FALSE,
         } else {
             extra <- quiet <- ""
         }
-        if(system( paste(shQuote(texi2dvi), quiet, pdf, clean,
-                         shQuote(file), extra) ))
+        cat("ABC", ignore.stderr, "\n")
+        if(system(paste(shQuote(texi2dvi), quiet, pdf, clean,
+                        shQuote(file), extra),
+                  ignore.stderr = ignore.stderr))
             stop(gettextf("running 'texi2dvi' on '%s' failed", file),
                  domain = NA)
     } else {
         ## do not have texi2dvi
         ## needed at least on Windows except for MiKTeX
+        ## Note that this does not do anything about running quietly,
+        ## but it probably not used (too much) anymore.
         texfile <- shQuote(file)
         base <- file_path_sans_ext(file)
         idxfile <- paste(base, ".idx", sep="")
@@ -840,11 +849,10 @@ function(dfile)
     if(!file_test("-f", dfile))
         stop(gettextf("file '%s' does not exist", dfile),
              domain = NA)
-    db <- try(read.dcf(dfile)[1, ], silent = TRUE)
-    if(inherits(db, "try-error"))
-        stop(gettextf("file '%s' is not in valid DCF format", dfile),
-             domain = NA)
-    db
+    tryCatch(read.dcf(dfile)[1L, ],
+             error = function(e)
+             stop(gettextf("file '%s' is not in valid DCF format", dfile),
+                  domain = NA, call. = FALSE))
 }
 
 ### ** .source_assignments

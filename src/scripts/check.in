@@ -2272,11 +2272,11 @@ sub check_pkg {
 	}
 
 	## Can we run the code in the vignettes?
-	if($opt_install && $opt_vignettes && -d "$pkgdir/inst/doc") {
+	if($opt_install && $opt_vignettes) {
 	    ## copy the inst directory to check directory
 	    ## so we can work in place.
 	    mkpath("inst/doc");
-	    dircopy("$pkgdir/inst/doc", "inst/doc");
+	    dircopy($vignette_dir, "inst/doc");
 
 	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
 	    ## Should checking the vignettes assume the system default
@@ -2292,18 +2292,14 @@ sub check_pkg {
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
 	    if(scalar(@out) > 0) {
-		if($out[0] =~ /^--- running/) {
-		    @out = grep(!/\.(jpg|pdf|png)$/, @out);
-		    if (scalar(@out) > 1) {
-			$log->note() unless($any);
-			$any++;
-			$log->print(join("\n", @out) . "\n");
-		    }
-		} else {
+		if(grep(/^\*\*\* (Tangle|Weave|Source|PDFLaTeX) Errors \*\*\*$/,
+			@out)) {
 		    $log->warning() unless($any);
-		    $any++;
-		    $log->print(join("\n", @out) . "\n");
+		} else {
+		    $log->note() unless($any);
 		}
+		$any++;
+		$log->print(join("\n", @out) . "\n");
 	    }
 	}
 
