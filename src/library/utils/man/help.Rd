@@ -121,7 +121,7 @@ type?topic
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
   \code{latex}.  You need to customize the file
-  \file{\var{R\_HOME}/bin/helpPRINT.bat} which contains an example.
+  \file{\var{\link[base:Rhome]{R\_HOME}}/bin/helpPRINT.bat} which contains an example.
 #endif
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.

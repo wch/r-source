@@ -164,7 +164,7 @@ getOption(x)
     \item{\code{pager}:}{the command used for displaying text files by
       \code{\link{file.show}}.
 #ifdef unix
-      Defaults to \file{\var{R\_HOME}/bin/pager}, which selects a pager
+      Defaults to \file{\var{\link[base:Rhome]{R\_HOME}}/bin/pager}, which selects a pager
       via the \env{PAGER} environment variable (and that usually
       defaults to \code{less}).
 #endif

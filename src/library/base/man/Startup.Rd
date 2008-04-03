@@ -29,7 +29,7 @@
   searches for site and user files to process for setting environment
   variables.  The name of the site file is the one pointed to by the
   environment variable \env{R\_ENVIRON}; if this is unset or empty,
-  \file{\var{R\_HOME}/etc/Renviron.site} is used (if it exists, which it
+  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site} is used (if it exists, which it
   does not in a \sQuote{factory-fresh} installation).
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
@@ -42,7 +42,7 @@
   line option \option{--no-site-file} was given.  The name of this file
   is taken from the value of the \env{R\_PROFILE} environment variable.
   If this variable is unset, the default is
-  \file{\var{R\_HOME}/etc/Rprofile.site}, which is used if it exists
+  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Rprofile.site}, which is used if it exists
 #ifdef unix
   (which it does not in a \sQuote{factory-fresh} installation).
 #endif
@@ -126,15 +126,15 @@
 }
 \note{
 #ifdef unix
-  The file \file{\var{R\_HOME}/etc/Renviron} is always read very early in
+  The file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} is always read very early in
   the start-up processing.  It contains environment variables set by \R
   in the configure process.  Values in that file can be overridden in
   site or user environment files: do not change
-  \file{\var{R\_HOME}/etc/Renviron} itself.  Note that this is distinct from
-  \file{\var{R\_HOME}/etc/Renviron.site}.
+  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} itself.  Note that this is distinct from
+  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
-  Unix versions of \R have a file \file{\var{R\_HOME}/etc/Renviron}
+  Unix versions of \R have a file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.

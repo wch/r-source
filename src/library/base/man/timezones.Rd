@@ -103,10 +103,10 @@ Sys.timezone()
 
   As from \R 2.7.0, \R under Windows uses the Olson database.  The
   current version of the database will be given in file
-  \file{\var{R\_HOME}/share/zoneinfo/VERSION}.  Environment variable
+  \file{\var{\link[base:Rhome]{R\_HOME}}/share/zoneinfo/VERSION}.  Environment variable
   \env{TZDIR} can be used to point to a later \file{zoneinfo} directory.
   A file listing most known time zones can be found at
-  \file{\var{R\_HOME}/share/zoneinfo/zone.tab} (see \sQuote{Examples}).
+  \file{\var{\link[base:Rhome]{R\_HOME}}/share/zoneinfo/zone.tab} (see \sQuote{Examples}).
 
   An attempt is made (once only per session) to map Windows' idea of
   the current time zone to a location, following

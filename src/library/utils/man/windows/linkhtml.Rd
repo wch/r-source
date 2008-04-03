@@ -55,12 +55,12 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   logical showing if they succeeded.
   
   The files
-  \file{\var{R\_HOME}\\doc\\html\\packages.html} and
-  \file{\var{R\_HOME}\\doc\\html\\search\\index.txt} are (re-)created by
+  \file{\var{\link[base:Rhome]{R\_HOME}}\\doc\\html\\packages.html} and
+  \file{\var{\link[base:Rhome]{R\_HOME}}\\doc\\html\\search\\index.txt} are (re-)created by
   \code{make.packages.html} and \code{make.search.html} respectively.
 }
 \note{
-  You will need write permission in the \file{\var{R\_HOME}\\doc\\html}
+  You will need write permission in the \file{\var{\link[base:Rhome]{R\_HOME}}\\doc\\html}
   directory to use any of the first three functions, and in the
   appropriate library trees to use the last two.
 }

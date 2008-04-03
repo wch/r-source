@@ -17,7 +17,7 @@ licence()
 \details{
   \R is distributed under the terms of the GNU GENERAL PUBLIC LICENSE
   Version 2, June 1991.  A copy of this license is in file
-  \file{\var{R\_HOME}/COPYING} and can be viewed by
+  \file{\var{\link[base:Rhome]{R\_HOME}}/COPYING} and can be viewed by
   \code{RShowDoc("COPYING")}. 
 
   A small number of files (the API header files) are distributed under
