@@ -10,8 +10,8 @@
 
 <h1>R-@FULLVERSION@ build for Windows</h1>
 
-<p>This directory contains a Windows binary build of the @DATE@ 
-snapshot of R (which will soon become R-@RVER@).</p>
+<p>This directory contains a Windows binary build of the @DATE@
+r@SVNREVISION@ snapshot of R (which will soon become R-@RVER@).</p>
 
 <p>This is a test version of R. <strong>It may contain
 bugs, so please watch results carefully as you use it</strong>.  

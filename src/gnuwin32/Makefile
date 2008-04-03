@@ -29,6 +29,8 @@ FULLVERSION=`cat ../../VERSION`
 
 DATE = $(shell date +%F)
 
+SVNREVISION=`sed -e 1s/Revision:.// -e q <$(RHOME)/SVN-REVISION`
+
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
@@ -613,18 +615,25 @@ crandir:
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
+	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/index.in > cran/index.html
+	echo index.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
+	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rdevel.in > cran/rdevel.html
+	echo rdevel.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
+	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rpatched.in > cran/rpatched.html	  
+	echo rpatched.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
+	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rtest.in > cran/rtest.html	  	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 	(cd cran;\
