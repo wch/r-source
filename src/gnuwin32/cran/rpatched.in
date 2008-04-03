@@ -11,7 +11,7 @@
 <h1>R-@FULLVERSION@ build for Windows</h1>
 
 <p>This directory contains a Windows binary build of R including
-patches up to @DATE@.</p>
+patches up to @DATE@ (r@SVNREVISION@).</p>
 
 <p>This is not an official release of R. Please check bugs
 in this version against the official release before reporting them. </p>

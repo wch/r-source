@@ -10,7 +10,8 @@
 
 <h1>R-@RVER@ for Windows</h1>
 
-<p>This directory contains a Windows binary distribution of R-@RVER@.</p>
+<p>This directory contains a Windows binary distribution of R-@RVER@ 
+(r@SVNREVISION@).</p>
 
 <p>Patches to this release are incorporated in the <a
 href="rpatched.html">r-patched snapshot build</a>.</p>
