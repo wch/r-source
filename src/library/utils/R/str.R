@@ -422,7 +422,8 @@ str.default <-
 	    else if(iSurv)
 		le <- length(object <- as.character(object))
 	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
-			    all(ob == signif(ob, digits.d)))) {
+#			    all(ob == signif(ob, digits.d)))) {
+			    all(abs(ob - signif(ob, digits.d)) <= 9e-16*ao))) {
 		if(!iSurv || di.[2] == 2)
 		    ## use integer-like length
 		    v.len <- iv.len
