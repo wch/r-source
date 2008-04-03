@@ -31,7 +31,7 @@
   environment variable \env{R\_ENVIRON}; if this is unset or empty,
   \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site} is used (if it exists, which it
   does not in a \sQuote{factory-fresh} installation).
-  The name of the user can be specified by the \env{R\_ENVIRON\_USER}
+  The name of the user file can be specified by the \env{R\_ENVIRON\_USER}
   environment variable; if this is unset, the user files searched for are
   \file{.Renviron} in the current or in the user's home directory (in
   that order).
@@ -58,7 +58,7 @@
   executed: see the examples.
 
   Then, unless \option{--no-init-file} was given, \R searches for a user
-  profile.  The name of this file can be specified by the
+  profile file.  The name of this file can be specified by the
   \env{R\_PROFILE\_USER} environment variable.  If this is unset, a file
   called \file{.Rprofile} in the current directory or in the user's
   home directory (in that order) is searched for.  The user profile is
