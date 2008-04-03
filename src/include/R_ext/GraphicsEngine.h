@@ -455,6 +455,10 @@ void GEonExit(void);
 void GEnullDevice(void);
 
 
+/* From plot.c, used by grid/src/grid.c */
+#define CreateAtVector		Rf_CreateAtVector
+SEXP CreateAtVector(double*, double*, int, Rboolean);
+
 #ifdef __cplusplus
 }
 #endif
