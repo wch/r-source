@@ -52,7 +52,7 @@ NEW FEATURES
 	arguments (days or seconds since some epoch) provided the
 	'origin' argument is specified.
 
-    o	New higher-order function Negate().
+    o	New higher-order functions Find(), Negate() and Position().
 
     o	In addition to warning when 'pkgs' is not found,
 	install.packages() now reports if it finds a valid package
@@ -289,6 +289,8 @@ NEW FEATURES
     o	predict.loess() now works when loess() was fitted with
 	transformed explanatory variables, e.g, loess(y ~ log(x) + log(z)).
 
+    o	identity() convenience function to be used for programming.
+	
 
 GRAPHICS CHANGES
 

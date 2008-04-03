@@ -114,3 +114,26 @@ function(f, ...)
 Negate <-
 function(f)
     function(...) ! match.fun(f)(...)
+
+Position <-
+function(f, x, right = FALSE, nomatch = NA_integer_)
+{
+    ind <- which(as.logical(sapply(x, f)))
+    if(len <- length(ind))
+        ind[if(right) len else 1L]
+    else
+        nomatch
+}
+
+Find <-
+function(f, x, right = FALSE, nomatch = NULL)
+{
+    if((pos <- Position(f, x, right, nomatch = 0L)) > 0L)
+        x[[pos]]
+    else
+        nomatch
+}
+
+identity <-
+function(x)
+    x
