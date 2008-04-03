@@ -22,7 +22,7 @@ format.default <-
 	     width = NULL, na.encode = TRUE, scientific = NA,
 	     big.mark = "", big.interval = 3,
 	     small.mark = "", small.interval = 5, decimal.mark = ".",
-	     zero.print = NULL, ...)
+	     zero.print = NULL, drop0trailing = FALSE, ...)
 {
     justify <- match.arg(justify)
     adj <- match(justify, c("left", "right", "centre", "none")) - 1
@@ -36,7 +36,8 @@ format.default <-
 		      scientific = scientific,
 		      big.mark = big.mark, big.interval = big.interval,
 		      small.mark = small.mark, small.interval = small.interval,
-		      decimal.mark = decimal.mark, zero.print = zero.print, ...)
+		      decimal.mark = decimal.mark, zero.print = zero.print,
+		      drop0trailing = drop0trailing, ...)
 	sapply(res, paste, collapse = ", ")
     } else {
 	switch(mode(x),
@@ -52,7 +53,7 @@ format.default <-
 			 small.mark = small.mark,
 			 small.interval = small.interval,
 			 decimal.mark = decimal.mark,
-			 zero.print = zero.print,
+			 zero.print = zero.print, drop0trailing = drop0trailing,
 			 preserve.width = if (trim) "individual" else "common")
 	       )
     }
@@ -99,7 +100,8 @@ formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL,
 		     big.mark = "", big.interval = 3,
 		     small.mark = "", small.interval = 5,
-		     decimal.mark = ".", preserve.width = "individual")
+		     decimal.mark = ".", preserve.width = "individual",
+                     zero.print = NULL, drop0trailing = FALSE)
 {
     format.char <- function (x, width, flag)
     {
@@ -149,15 +151,20 @@ formatC <- function (x, digits = NULL, width = NULL,
 	digits <- if (mode == "integer") 2 else 4
     else if(digits < 0)
 	digits <- 6
-    if (digits > 50) {
-        warning("'digits' reduced to 50")
-        digits <- 50
+    else {
+	maxDigits <- { if(format != "f") 50 else
+		       ceiling(-(.Machine$double.neg.ulp.digits +
+				 .Machine$double.min.exp) / log2(10)) }
+	if (digits > maxDigits) {
+	    warning("'digits' reduced to ", maxDigits)
+	    digits <- maxDigits
+	}
     }
     if(is.null(width))	width <- digits + 1
     else if (width == 0) width <- digits
     i.strlen <-
 	pmax(abs(width),
-	     if(format == "fg"||format == "f") {
+	     if(format == "fg" || format == "f") {
 		 xEx <- as.integer(floor(log10(abs(x+ifelse(x==0,1,0)))))
 		 as.integer(x < 0 | flag!="") + digits +
 		     if(format == "f") {
@@ -174,7 +181,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     nf <- strsplit(flag, "")[[1]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
        stop("'flag' can contain only '0+- #'")
-    attr(x, "Csingle") <- NULL	# avoid intepreting as.single
+    attr(x, "Csingle") <- NULL	# avoid interpreting as.single
     r <- .C("str_signif",
 	    x = x,
 	    n = n,
@@ -188,10 +195,12 @@ formatC <- function (x, digits = NULL, width = NULL,
     if (some.special)
 	r[!Ok] <- format.char(rQ, width=width, flag=flag)
 
-    if(big.mark != "" || small.mark != "" || decimal.mark != ".")
+    if(big.mark != "" || small.mark != "" || decimal.mark != "." ||
+       !is.null(zero.print) || drop0trailing)
 	r <- prettyNum(r, big.mark = big.mark, big.interval = big.interval,
 		       small.mark = small.mark, small.interval = small.interval,
-		       decimal.mark = decimal.mark, preserve.width = preserve.width)
+		       decimal.mark = decimal.mark, preserve.width = preserve.width,
+                       zero.print = zero.print, drop0trailing = drop0trailing)
 
     if (!is.null(x.atr <- attributes(x)))
 	attributes(r) <- x.atr
@@ -267,13 +276,13 @@ prettyNum <-
 	     small.mark = "", small.interval = 5,
 	     decimal.mark = ".",
 	     preserve.width = c("common", "individual", "none"),
-	     zero.print = NULL, ...)
+	     zero.print = NULL, drop0trailing = FALSE, ...)
 {
     if(!is.character(x))
 	x <- sapply(x, format, ...)
     ## be fast in trivial case (when all options have their default):
     nMark <- big.mark== "" && small.mark== "" && decimal.mark== "."
-    nZero <- is.null(zero.print) ##d0 && !drop0trailing
+    nZero <- is.null(zero.print) && !drop0trailing
     if(nMark && nZero)
 	return(x)
 
@@ -291,8 +300,7 @@ prettyNum <-
 	substr(x[i0],ind0, ind0+nz-1) <- zero.print
 	substr(x[i0],ind0+nz, nc) <- " "
     }
-    ##d0 if(nMark && !drop0trailing)# zero.print was only non-default
-    if(nMark)# zero.print was only non-default
+    if(nMark && !drop0trailing)# zero.print was only non-default
 	return(x)
 
     ## else
@@ -301,8 +309,8 @@ prettyNum <-
     P0 <- function(...) paste(..., sep="")
     revStr <- function(cc)
 	sapply(lapply(strsplit(cc,NULL), rev), paste, collapse="")
-    B. <- sapply(x.sp, "[", 1)	    # Before "."
-    A. <- sapply(x.sp, "[", 2)	    # After  "." ; empty == NA
+    B. <- sapply(x.sp, `[`, 1)	    # Before "."
+    A. <- sapply(x.sp, `[`, 2)	    # After  "." ; empty == NA
     if(any(iN <- is.na(A.))) A.[iN] <- ""
 
     if(nzchar(big.mark) &&
@@ -317,6 +325,14 @@ prettyNum <-
        ) { ## add 'small.mark' in decimals after "."  -- but *not* trailing
 	A.[i.sml] <- gsub(P0("([0-9]{",small.interval,"}\\B)"),
 			  P0("\\1",small.mark), A.[i.sml])
+    }
+    if(drop0trailing) {
+## Actually it may make sense:
+## 	if(preserve.width == "common" && length(x) > 1)
+## 	    warning("Dubious 'drop0trailing = TRUE' when 'preserve.width' is \"common\"")
+	A.[!iN] <- sub("(e[+-])?0+$", '', A.[!iN]) # also drop "e+00"
+	## iN := TRUE for those A.[]  which are ""
+	iN <- !nzchar(A.)
     }
     ## extraneous trailing dec.marks: paste(B., A., sep = decimal.mark)
     A. <- P0(B., c(decimal.mark, "")[iN+ 1L], A.)

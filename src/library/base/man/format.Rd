@@ -21,7 +21,7 @@ format(x, \dots)
        width = NULL, na.encode = TRUE, scientific = NA,
        big.mark = "",   big.interval = 3,
      small.mark = "", small.interval = 5,
-   decimal.mark = ".", zero.print = NULL, \dots)
+   decimal.mark = ".", zero.print = NULL, drop0trailing = FALSE, \dots)
 
 \method{format}{data.frame}(x, \dots, justify = "none")
 
@@ -59,8 +59,8 @@ format(x, \dots)
   \item{\dots}{further arguments passed to or from other methods.}
 
   \item{big.mark, big.interval, small.mark,
-    small.interval, decimal.mark, zero.print}{%
-    used for prettying longer decimal sequences, passed to
+    small.interval, decimal.mark, zero.print, drop0trailing}{%
+    used for prettying (longish) decimal sequences, passed to
     \code{\link{prettyNum}}: that help page explains the details.}
 }
 \details{
