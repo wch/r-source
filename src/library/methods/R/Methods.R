@@ -1248,7 +1248,7 @@ setGenericImplicit <- function(name, where = topenv(parent.frame()), restore = T
                          name), domain = NA)
         return(FALSE)
     }
-    generic <- getGeneric(name, where)
+    generic <- getGeneric(name, where = where)
     if(restore)
         removeMethods(name, where)
     else
@@ -1369,7 +1369,10 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
         f <- fdef@generic
     }
     else if(is.character(f) && length(f) == 1) {
-        fdef <- getGeneric(f, where)
+        fdef <- if(missing(where))
+            getGeneric(f)
+        else 
+            getGeneric(f, where = where)
     }
     else if(!is(f, "function"))
         stop(gettextf("argument \"f\" must be a generic function or a single character string; got an object of class \"%s\"", class(f)), domain = NA)
