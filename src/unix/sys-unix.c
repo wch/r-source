@@ -64,10 +64,8 @@ FILE *R_OpenInitFile(void)
 
     fp = NULL;
     if (LoadInitFile) {
-	if(p && strlen(p)) {
-	    fp = R_fopen(R_ExpandFileName(p), "r");
-	    return fp;
-	}
+	if(p && strlen(p))
+	    return R_fopen(R_ExpandFileName(p), "r");
 	if((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
 	if((home = getenv("HOME")) == NULL)

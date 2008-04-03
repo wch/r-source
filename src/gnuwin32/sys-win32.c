@@ -40,11 +40,13 @@ extern UImode  CharacterMode;
 
 FILE *R_OpenInitFile(void)
 {
-    char  buf[256];
+    char  buf[256], *p = getenv("R_PROFILE_USER");
     FILE *fp;
 
     fp = NULL;
     if (LoadInitFile) {
+	if(p && strlen(p))
+	    return R_fopen(R_ExpandFileName(p), "r");
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
 	sprintf(buf, "%s/.Rprofile", getenv("R_USER"));
