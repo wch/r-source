@@ -766,25 +766,6 @@ outerLabels <- function(labels, new) {
   .cacheMethodInTable(fdef, signature, definition, table)
 }
 
-.makeGenericTables <- function(where) {
-  generics <- .getGenerics(where)
-  mtables <- .getGenerics(where, FALSE)
-  for(i in seq_along(generics)) {
-    name <- generics[[i]]
-    mtable <- get(mtables[[i]], envir = where)
-    generic <- .getGeneric(name, where = where)
-    if(is.null(generic)) {
-      warning(gettextf(
-       "Could not find generic function \"%s\" to initialize cached methods",
-                       name), domain=NA)
-      next
-    }
-    table <- .getMethodsTable(generic)
-    .mergeMethodsTable(generic, table, mtable)
-    assign(.TableMetaName(generic@generic, generic@package), table, envir = where)
-  }
-}
-
 .assignMethodsMetaTable <- function(mlist, generic, where, overwrite = TRUE) {
     tname <- .TableMetaName(generic@generic, generic@package)
     if(overwrite || !exists(tname, envir = where, inherits = FALSE)) {
@@ -934,4 +915,14 @@ listFromMethods <- function(generic, where, table) {
     if(missing(table))
           table <- .copyEnv(.getMethodsTable(generic))
     assign(what, table, envir = as.environment(where))
+}
+
+.getMethodsTableMetaData <-  function(generic, where, optional = FALSE) {
+    what <-  .TableMetaName(generic@generic, generic@package)
+    if(exists(what, envir = where, inherits = FALSE))
+      get(what, envir = where )
+    else if(optional)
+      NULL
+    else
+      stop(gettextf("No methods table for generic \"%s\" from package \"%s\" in package \"%s\"", generic@generic, generic@package, getPackageName(where)), domain = NA)
 }
