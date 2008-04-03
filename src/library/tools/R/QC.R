@@ -292,7 +292,7 @@ function(x, ...)
         ## We avoid markup for indicating S4 methods, hence need to
         ## special-case output for these ...
         if(tag == "S4 methods")
-            writeLines(strwrap(x[[i]], indent = 2, exdent = 4))
+            writeLines(strwrap(x[[i]], indent = 2L, exdent = 4L))
         else
             .pretty_print(x[[i]])
     }
@@ -859,11 +859,11 @@ function(x, ...)
         if(length(nms <- nfc %w/o% nfd))
             writeLines(c(gettext("  Argument names in code not in docs:"),
                          strwrap(paste(nms, collapse = " "),
-                                 indent = 4, exdent = 4)))
+                                 indent = 4L, exdent = 4L)))
         if(length(nms <- nfd %w/o% nfc))
             writeLines(c(gettext("  Argument names in docs not in code:"),
                          strwrap(paste(nms, collapse = " "),
-                                 indent = 4, exdent = 4)))
+                                 indent = 4L, exdent = 4L)))
         len <- min(length(nfc), length(nfd))
         if(len) {
             len <- seq_len(len)
@@ -925,9 +925,9 @@ function(x, ...)
             ffd <- xfname[[i]][["docs"]]
             writeLines(c(xfname[[i]][["name"]],
                          strwrap(gettextf("Code: %s", format_args(ffc)),
-                                 indent = 2, exdent = 17),
+                                 indent = 2L, exdent = 17L),
                          strwrap(gettextf("Docs: %s", format_args(ffd)),
-                                 indent = 2, exdent = 17)))
+                                 indent = 2L, exdent = 17L)))
             summarize_mismatches(ffc, ffd)
         }
         writeLines("")
@@ -1070,10 +1070,10 @@ function(x, ...)
         writeLines(c(gettextf("Slots for class '%s'", docObj[["name"]]),
                      strwrap(gettextf("Code: %s",
                                       format_args(docObj[["code"]])),
-                             indent = 2, exdent = 8),
+                             indent = 2L, exdent = 8L),
                      strwrap(gettextf("Docs: %s",
                                       format_args(docObj[["docs"]])),
-                             indent = 2, exdent = 8)))
+                             indent = 2L, exdent = 8L)))
         writeLines("")
     }
     invisible(x)
@@ -1242,10 +1242,10 @@ function(x, ...)
                               docObj[["name"]]),
                      strwrap(gettextf("Code: %s",
                                    format_args(docObj[["code"]])),
-                             indent = 2, exdent = 8),
+                             indent = 2L, exdent = 8L),
                      strwrap(gettextf("Docs: %s",
                                    format_args(docObj[["docs"]])),
-                             indent = 2, exdent = 8)))
+                             indent = 2L, exdent = 8L)))
         writeLines("")
     }
     invisible(x)
@@ -1887,10 +1887,13 @@ function(package, dir, file, lib.loc = NULL,
 	    con <- file(file, encoding=enc)
             on.exit(close(con))
 	} else con <- file
-        exprs <- try(parse(file = con, n = -1L))
-        if(inherits(exprs, "try-error"))
-            stop(gettextf("parse error in file '%s'", file),
-                 domain = NA)
+        exprs <-
+            tryCatch(parse(file = con, n = -1L),
+                     error = function(e)
+                     stop(gettextf("parse error in file '%s':\n%s",
+                                   file,
+                                   .massage_file_parse_error_message(conditionMessage(e))),
+                               domain = NA, call. = FALSE))
     }
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
     class(bad_exprs) <- "checkFF"
@@ -2149,10 +2152,10 @@ function(x, ...)
     for(entry in x) {
         writeLines(c(paste(names(entry)[1L], ":", sep = ""),
                      strwrap(format_args(entry[[1L]]),
-                             indent = 2, exdent = 11),
+                             indent = 2L, exdent = 11L),
                      paste(names(entry)[2L], ":", sep = ""),
                      strwrap(format_args(entry[[2L]]),
-                             indent = 2, exdent = 11),
+                             indent = 2L, exdent = 11L),
                      ""))
     }
     invisible(x)
@@ -2369,19 +2372,19 @@ function(package, dir, file, lib.loc = NULL)
                 for(i in seq_along(e)) Recall(e[[i]], e)
             }
         }
-        if(missing(txt)) {
-            exprs <- try(parse(file = file, n = -1))
-            if(inherits(exprs, "try-error"))
-                stop(gettextf("parse error in file '%s'", file),
-                     domain = NA)
-        }
-        else {
-            exprs <- try(parse(text = txt))
-            if(inherits(exprs, "try-error"))
-                stop(gettextf("parse error in examples from file '%s'",
-                              file),
-                     domain = NA)
-        }
+        exprs <- if(missing(txt))
+            tryCatch(parse(file = file, n = -1L),
+                     error = function(e)
+                     stop(gettextf("parse error in file '%s':\n",
+                                   file,
+                                   .massage_file_parse_error_message(conditionMessage(e))),
+                          domain = NA, call. = FALSE))
+        else
+            tryCatch(parse(text = txt),
+                     error = function(e)
+                     stop(gettextf("parse error in examples from file '%s':\n",
+                                   file, conditionMessage(e)),
+                          domain = NA, call. = FALSE))
         for(i in seq_along(exprs))
             find_bad_exprs(exprs[[i]], NULL)
         matches
@@ -2421,7 +2424,7 @@ function(x, ...)
             writeLines(strwrap(gettextf("found T/F in %s",
                                         paste(deparse(xfname[[i]]),
                                               collapse = "")),
-                               exdent = 4))
+                               exdent = 4L))
         }
         writeLines("")
     }
@@ -2774,7 +2777,7 @@ function(x, ...)
         bad <- x$files_with_surely_bad_Rd
         for(i in seq_along(bad)) {
             writeLines(c(paste("  ", names(bad)[i], ":", sep = ""),
-                         strwrap(bad[[i]], indent = 4, exdent = 4)))
+                         strwrap(bad[[i]], indent = 4L, exdent = 4L)))
         }
         writeLines("")
     }
@@ -2836,7 +2839,7 @@ function(x, ...)
         bad <- split(bad[, 2L], bad[, 1L])
         for(i in seq_along(bad)) {
             writeLines(c(paste(" ", paste(names(bad)[i], ":", sep = "")),
-                         strwrap(bad[[i]], indent = 4, exdent = 6),
+                         strwrap(bad[[i]], indent = 4L, exdent = 6L),
                          ""))
         }
     }
@@ -2883,7 +2886,7 @@ function(x, ...)
             writeLines(strwrap(paste(names(bad)[i], ": ",
                                      paste(bad[[i]], collapse = " "),
                                      "\n", sep = ""),
-                               indent = 2, exdent = 4))
+                               indent = 2L, exdent = 4L))
         }
         writeLines("")
     }
@@ -2896,7 +2899,7 @@ function(x, ...)
             writeLines(strwrap(paste(names(bad)[i], ": ",
                                      paste(bad[[i]], collapse = " "),
                                      "\n", sep = ""),
-                               indent = 2, exdent = 4))
+                               indent = 2L, exdent = 4L))
         }
         msg <-
         gettext("Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory).")
@@ -2923,7 +2926,7 @@ function(x, ...)
             ind <- sapply(tags, length) == 1L
             if(any(ind))
                 writeLines(strwrap(paste(tags[ind], collapse = " "),
-                                   indent = 4, exdent = 4))
+                                   indent = 4L, exdent = 4L))
             if(any(!ind)) {
                 ## For the time being, these should be user-defined
                 ## sections with tags 'section' and the section title.
@@ -3269,7 +3272,7 @@ function(x, ...)
        && identical(as.logical(Sys.getenv("_R_CHECK_LICENSE_")),
                     TRUE)) {
         writeLines(c(gettext("Non-standard license specification:"),
-                     strwrap(x$license, indent = 2, exdent = 2),
+                     strwrap(x$license, indent = 2L, exdent = 2L),
                      if(length(x$bad_pointers))
                      gettextf("Invalid license file pointers: %s",
                               paste(x$bad_pointers, collapse = " ")),
@@ -3497,7 +3500,7 @@ print.check_code_usage_in_package <-
 function(x, ...)
 {
     if(length(x) > 0L)
-        writeLines(strwrap(x, indent = 0, exdent = 2))
+        writeLines(strwrap(x, indent = 0L, exdent = 2L))
     invisible(x)
 }
 
@@ -3936,7 +3939,7 @@ function(dir) {
             writeLines(strwrap(gettextf("found %s",
                                         paste(deparse(xfname[[i]]),
                                               collapse = "")),
-                               indent = 2, exdent = 4))
+                               indent = 2L, exdent = 4L))
         }
     }
 
@@ -4103,10 +4106,13 @@ function(package, dir, lib.loc = NULL)
 	    con <- file(file, encoding=enc)
             on.exit(close(con))
         } else con <- file
-        exprs <- try(parse(file = con, n = -1))
-        if(inherits(exprs, "try-error"))
-            stop(gettextf("parse error in file '%s'", file),
-                 domain = NA)
+        exprs <-
+            tryCatch(parse(file = con, n = -1L),
+                     error = function(e)
+                     stop(gettextf("parse error in file '%s':\n%s",
+                                   file,
+                                   .massage_file_parse_error_message(conditionMessage(e))),
+                               domain = NA, call. = FALSE))
     }
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
@@ -4502,6 +4508,12 @@ function(cls)
     sub("(#ANY)*$", "", unlist(lapply(cls, paste, collapse = "#")))
 }
 
+### ** .massage_file_parse_error_message
+
+.massage_file_parse_error_message <-
+function(x)
+    sub("^[^:]+:[[:space:]]*", "", x)
+
 ### ** .package_env
 
 .package_env <-
@@ -4515,19 +4527,20 @@ function(package_name)
 .parse_text_as_much_as_possible <-
 function(txt)
 {
-    exprs <- try(parse(text = txt), silent = TRUE)
-    if(!inherits(exprs, "try-error")) return(exprs)
+    exprs <- tryCatch(parse(text = txt), error = .identity)
+    if(!inherits(exprs, "error")) return(exprs)
     exprs <- expression()
     lines <- unlist(strsplit(txt, "\n"))
     bad_lines <- character()
     while((n <- length(lines)) > 0L) {
-        i <- 1; txt <- lines[1L]
-        while(inherits(yy <- try(parse(text = txt), silent = TRUE),
-                       "try-error")
+        i <- 1L; txt <- lines[1L]
+        while(inherits(yy <- tryCatch(parse(text = txt),
+                                      error = .identity),
+                       "error")
               && (i < n)) {
-            i <- i + 1; txt <- paste(txt, lines[i], collapse = "\n")
+            i <- i + 1L; txt <- paste(txt, lines[i], collapse = "\n")
         }
-        if(inherits(yy, "try-error")) {
+        if(inherits(yy, "error")) {
             bad_lines <- c(bad_lines, lines[1L])
             lines <- lines[-1L]
         }
@@ -4570,7 +4583,7 @@ function(txt)
 function(x)
 {
     writeLines(strwrap(paste(x, collapse = " "),
-                       indent = 2, exdent = 2))
+                       indent = 2L, exdent = 2L))
 }
 
 ### ** .transform_S3_method_markup

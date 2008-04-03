@@ -857,8 +857,9 @@ function(txt, cmd, FUN)
 .apply_Rd_filter_to_Rd_db <-
 function(db, FUN, ...)
 {
-    db <- lapply(db, function(t) try(FUN(t, ...), silent = TRUE))
-    idx <- as.logical(sapply(db, inherits, "try-error"))
+    db <- lapply(db,
+                 function(t) tryCatch(FUN(t, ...), error = .identity))
+    idx <- as.logical(sapply(db, inherits, "error"))
     if(any(idx)) {
 	msg <- gettext("Rd syntax errors found")
 	for(i in which(idx))
@@ -866,7 +867,7 @@ function(db, FUN, ...)
 		c(msg,
 		  gettextf("Syntax error in documentation object '%s':",
 			   names(db)[i]),
-		  db[[i]])
+		  conditionMessage(db[[i]]))
 	stop(paste(msg, collapse = "\n"), call. = FALSE, domain = NA)
     }
     db
