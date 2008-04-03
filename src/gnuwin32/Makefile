@@ -617,19 +617,16 @@ crandir:
 	  -e "s/@DATE@/$(DATE)/g" \
 	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/index.in > cran/index.html
-	echo index.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
 	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rdevel.in > cran/rdevel.html
-	echo rdevel.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
 	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rpatched.in > cran/rpatched.html	  
-	echo rpatched.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
