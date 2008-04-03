@@ -59,17 +59,21 @@ extern Rboolean LoadInitFile;
 attribute_hidden
 FILE *R_OpenInitFile(void)
 {
-    char buf[256], *home;
+    char buf[256], *home, *p = getenv("R_PROFILE_USER");
     FILE *fp;
 
     fp = NULL;
     if (LoadInitFile) {
-	if ((fp = R_fopen(".Rprofile", "r")))
+	if(p && strlen(p)) {
+	    fp = R_fopen(R_ExpandFileName(p), "r");
 	    return fp;
-	if ((home = getenv("HOME")) == NULL)
+	}
+	if((fp = R_fopen(".Rprofile", "r")))
+	    return fp;
+	if((home = getenv("HOME")) == NULL)
 	    return NULL;
 	sprintf(buf, "%s/.Rprofile", home);
-	if ((fp = R_fopen(buf, "r")))
+	if((fp = R_fopen(buf, "r")))
 	    return fp;
     }
     return fp;

@@ -255,7 +255,12 @@ void process_site_Renviron ()
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
 void process_user_Renviron()
 {
-    const char *s;
+    const char *s = getenv("R_ENVIRON_USER");
+
+    if(s && strlen(s)) {
+	process_Renviron(R_ExpandFileName(s));
+	return;
+    }
 
     if(process_Renviron(".Renviron")) return;
 #ifdef Unix

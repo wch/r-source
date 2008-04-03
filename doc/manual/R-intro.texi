@@ -4033,7 +4033,8 @@ users control over their workspace and allows for different startup
 procedures in different working directories.  If no @file{.Rprofile}
 file is found in the startup directory, then @R{} looks for a
 @file{.Rprofile} file in the user's home directory and uses that (if it
-exists).
+exists).  If the environment variable @env{R_PROFILE_USER} is set, the
+file it points to is used instead of the @file{.Rprofile} files.
 
 Any function named @code{.First()} in either of the two profile files or
 in the @file{.RData} image has a special status.  It is automatically
@@ -4043,7 +4044,7 @@ below alters the prompt to @code{$} and sets up various other useful
 things that can then be taken for granted in the rest of the session.
 
 Thus, the sequence in which files are executed is, @file{Rprofile.site},
-@file{.Rprofile}, @file{.RData} and then @code{.First()}.  A definition
+the user profile, @file{.RData} and then @code{.First()}.  A definition
 in later files will mask definitions in earlier files.
 
 @example
@@ -6797,13 +6798,15 @@ Unless @option{--no-environ} was given, @R{} searches for user and site
 files to process for setting environment variables.  The name of the
 site file is the one pointed to by the environment variable
 @env{R_ENVIRON}; if this is unset, @file{$R_HOME/etc/Renviron.site} is
-used (if it exists).  The user file searched for is @file{.Renviron}
-in the current or in the user's home directory (in that order).  These
-files should contain lines of the form @samp{@var{name}=@var{value}}.
-(See @code{help(Startup)} for a precise description.)  Variables you
-might want to set include @env{R_PAPERSIZE} (the default paper size),
-@env{R_PRINTCMD} (the default print command) and @env{R_LIBS} (specifies
-the list of @R{} library trees searched for add-on packages).
+used (if it exists).  The user file is the one pointed to by the
+environment variable @env{R_ENVIRON_USER} if this is set; otherwise,
+files @file{.Renviron} in the current or in the user's home directory
+(in that order) are searched for.  These files should contain lines of
+the form @samp{@var{name}=@var{value}}.  (See @code{help("Startup")} for
+a precise description.)  Variables you might want to set include
+@env{R_PAPERSIZE} (the default paper size), @env{R_PRINTCMD} (the
+default print command) and @env{R_LIBS} (specifies the list of @R{}
+library trees searched for add-on packages).
 
 @item
 Then @R{} searches for the site-wide startup profile unless the command
@@ -6813,9 +6816,11 @@ that variable is unset, the default @file{$R_HOME/etc/Rprofile.site} is
 used if this exists.
 
 @item
-Then, unless @option{--no-init-file} was given, @R{} searches for a file
-called @file{.Rprofile} in the current directory or in the user's home
-directory (in that order) and sources it.
+Then, unless @option{--no-init-file} was given, @R{} searches for a user
+profile and sources it.  The name of this file is taken from the
+environment variable @env{R_PROFILE_USER}; if unset, a file called
+@file{.Rprofile} in the current directory or in the user's home
+directory (in that order) is searched for.
 
 @item
 It also loads a saved image from @file{.RData} if there is one (unless

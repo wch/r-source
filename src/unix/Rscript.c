@@ -89,7 +89,7 @@ void usage(void)
     fprintf(stderr, "  --save              Do save workspace at the end of the session\n");
     fprintf(stderr, "  --no-environ        Don't read the site and user environment files\n");
     fprintf(stderr, "  --no-site-file      Don't read the site-wide Rprofile\n");
-    fprintf(stderr, "  --no-init-file      Don't read the .Rprofile or ~/.Rprofile files\n");
+    fprintf(stderr, "  --no-init-file      Don't read the user R profile\n");
     fprintf(stderr, "  --restore           Do restore previously saved objects at startup\n");
     fprintf(stderr, "  --vanilla           Combine --no-save, --no-restore, --no-site-file\n");
     fprintf(stderr, "                        --no-init-file and --no-environ\n");

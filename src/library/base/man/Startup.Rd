@@ -31,8 +31,10 @@
   environment variable \env{R\_ENVIRON}; if this is unset or empty,
   \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site} is used (if it exists, which it
   does not in a \sQuote{factory-fresh} installation).
-  The user files searched for are \file{.Renviron} in the current or in
-  the user's home directory (in that order).
+  The name of the user can be specified by the \env{R\_ENVIRON\_USER}
+  environment variable; if this is unset, the user files searched for are
+  \file{.Renviron} in the current or in the user's home directory (in
+  that order).
 #ifdef windows
   (See \sQuote{See also} for how the home directory is found on Windows.)
 #endif
@@ -55,10 +57,12 @@
   is normally advisable to use \code{\link{local}} if code needs to be
   executed: see the examples.
 
-  Then, unless \option{--no-init-file} was given, \R searches for a file
+  Then, unless \option{--no-init-file} was given, \R searches for a user
+  profile.  The name of this file can be specified by the
+  \env{R\_PROFILE\_USER} environment variable.  If this is unset, a file
   called \file{.Rprofile} in the current directory or in the user's
-  home directory (in that order) and sources it into the user
-  workspace.
+  home directory (in that order) is searched for.  The user profile is
+  sourced into the user workspace.
 
   Note that when the site and user profile files are sourced only the
   \pkg{base} package is loaded, so objects in other packages need to be
@@ -126,15 +130,17 @@
 }
 \note{
 #ifdef unix
-  The file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} is always read very early in
-  the start-up processing.  It contains environment variables set by \R
-  in the configure process.  Values in that file can be overridden in
-  site or user environment files: do not change
-  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} itself.  Note that this is distinct from
+  The file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} is
+  always read very early in the start-up processing.  It contains
+  environment variables set by \R in the configure process.  Values in
+  that file can be overridden in site or user environment files: do not
+  change \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} itself.
+  Note that this is distinct from
   \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
-  Unix versions of \R have a file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron}
+  Unix versions of \R have a file
+  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.
