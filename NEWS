@@ -20,6 +20,10 @@ NEW FEATURES
     o	Experimental setTimeLimit() function to set limits on the CPU
 	and.or elapsed time for each top-level computation.
 
+    o	The user environment and profile files can now be specified via
+    	environment variables 'R_ENVIRON_USER' and 'R_PROFILE_USER',
+    	respectively.
+
 
 PACKAGE INSTALLATION
 
