@@ -31,7 +31,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{mode}{character.  The mode with which to write the file. Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
-    \code{"ab"}.  Only used for the \code{"internal"} method.}
+    \code{"ab"}.  Only used for the \code{"internal"} method.
+#ifdef windows
+    (See also \sQuote{Details}.}
+#endif
+  }
 
   \item{cacheOK}{logical.  Is a server-side cached value acceptable?
     Implemented for the \code{"internal"} and \code{"wget"} methods.}
@@ -89,6 +93,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   full width of the bar is the known length.  Otherwise the initial
   width represents 100Kbytes and is doubled whenever the current width
   is exceeded.
+
+  If \code{mode} is not supplied and \code{url} ends in one of
+  \code{.gz}, \code{.bz2}, \code{.tgz} or \code{.zip} a binary transfer
+  is done.
 
   There is an alternative method if you have Internet Explorer 4 or
   later installed.   You can use the flag \option{--internet2}, when

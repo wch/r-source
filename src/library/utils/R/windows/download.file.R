@@ -24,6 +24,7 @@ download.file <- function(url, destfile, method,
     else
         match.arg(method, c("auto", "internal", "wget", "lynx"))
 
+    if(missing(mode) & length(grep("\\.(gz|bz2|tgz|zip)$", url))) mode <- "wb"
     if(method == "auto") {
         if(capabilities("http/ftp"))
             method <- "internal"
