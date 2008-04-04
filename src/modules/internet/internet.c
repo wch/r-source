@@ -428,7 +428,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
-			    snprintf(pbuf, 30, "%d%% done", pc);
+			    snprintf(pbuf, 30, "%d%% downloaded", pc);
 			    settext(pbar.wprog, pbuf);
 			    pbar.pc = pc;
 			}
@@ -537,7 +537,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
-			    snprintf(pbuf, 30, "%d%% done", pc);
+			    snprintf(pbuf, 30, "%d%% downloaded", pc);
 			    settext(pbar.wprog, pbuf);
 			    pbar.pc = pc;
 			}

@@ -33,7 +33,7 @@ memory.limit(size = NA)
   Windows are limited to 2Gb.  The minimum is currently 32Mb.
 
   If 32-bit \R is run on some 64-bit versions of Windows the maximum
-  value of obtainable memory is 4GB.
+  value of obtainable memory is just under 4GB.
 
   Memory limits can only be increased.
 }
