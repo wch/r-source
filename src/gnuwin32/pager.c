@@ -81,7 +81,7 @@ static xbuf file2xbuf(const char *name, int enc, int del)
 	wchar_t wfn[MAX_PATH+1];
 	Rf_utf8towcs(wfn, name, MAX_PATH+1);
 	f = CreateFileW(wfn, GENERIC_READ, FILE_SHARE_READ,
-			NULL, OPEN_EXISTING, 0, NULL);	
+			NULL, OPEN_EXISTING, 0, NULL);
     } else
 	f = CreateFile(name, GENERIC_READ, FILE_SHARE_READ,
 		       NULL, OPEN_EXISTING, 0, NULL);
@@ -107,9 +107,9 @@ static xbuf file2xbuf(const char *name, int enc, int del)
 	if (*q == '\t')
 	    dim += TABSIZE;
 	else if (*q == '\n') {
-            dim++;
+	    dim++;
 	    ms++;
-        }
+	}
     }
     free(p);
     if ((xb = newxbuf(dim + 1, ms + 1, 1)))
@@ -144,12 +144,12 @@ void pagerbclose(control m)
 {
     show(RConsole);
     if (!pagerMultiple) {
-        hide(pagerInstance);
+	hide(pagerInstance);
 	del(pagerInstance);
 	pagerInstance = pagerBar = NULL;
     }
     else {
-        hide(m);
+	hide(m);
 	del(m);
     }
 }
@@ -182,14 +182,14 @@ static void pagerpaste(control m)
     control c = getdata(m);
 
     if (CharacterMode != RGui) {
-        R_ShowMessage(G_("No RGui console to paste to"));
-        return;
+	R_ShowMessage(G_("No RGui console to paste to"));
+	return;
     }
     if (!consolecancopy(c)) {
-        R_ShowMessage(G_("No selection"));
-        return;
+	R_ShowMessage(G_("No selection"));
+	return;
     } else {
-        consolecopy(c);
+	consolecopy(c);
     }
     if (consolecanpaste(RConsole)) {
 	consolepaste(RConsole);
@@ -202,14 +202,14 @@ static void pagerpastecmds(control m)
     control c = getdata(m);
 
     if (CharacterMode != RGui) {
-        R_ShowMessage(G_("No RGui console to paste to"));
-        return;
+	R_ShowMessage(G_("No RGui console to paste to"));
+	return;
     }
     if (!consolecancopy(c)) {
-        R_ShowMessage(G_("No selection"));
-        return;
+	R_ShowMessage(G_("No selection"));
+	return;
     } else {
-        consolecopy(c);
+	consolecopy(c);
     }
     if (consolecanpaste(RConsole)) {
 	consolepastecmds(RConsole);
@@ -262,7 +262,7 @@ static void pagerupdateview(void)
     show(c);
 }
 
-static int pageraddfile(const char *wtitle, 
+static int pageraddfile(const char *wtitle,
 			const char *filename, int enc,
 			int deleteonexit)
 {
@@ -275,8 +275,8 @@ static int pageraddfile(const char *wtitle,
 	return 0;
     }
     if (pagerActualKept == PAGERMAXKEPT) {
-        pagerActualKept -= 1;
-        xbufdel(pagerXbuf[pagerActualKept]);
+	pagerActualKept -= 1;
+	xbufdel(pagerXbuf[pagerActualKept]);
     }
     if(pagerActualKept > 0)
 	pagerRow[0] = FV;
@@ -318,30 +318,30 @@ static void pagermenuact(control m)
     control c = getdata(m);
     ConsoleData p = getdata(c);
     if (consolecancopy(c)) {
-        enable(p->mcopy);
-        enable(p->mpopcopy);
-        if (CharacterMode == RGui) {
+	enable(p->mcopy);
+	enable(p->mpopcopy);
+	if (CharacterMode == RGui) {
 	    enable(p->mpaste);
 	    enable(p->mpastecmds);
 	    enable(p->mpoppaste);
 	    enable(p->mpoppastecmds);
 	}
     } else {
-        disable(p->mcopy);
-        disable(p->mpopcopy);
-        disable(p->mpaste);
-        disable(p->mpastecmds);
-        disable(p->mpoppaste);
-        disable(p->mpoppastecmds);
+	disable(p->mcopy);
+	disable(p->mpopcopy);
+	disable(p->mpaste);
+	disable(p->mpastecmds);
+	disable(p->mpoppaste);
+	disable(p->mpoppastecmds);
     }
     if (ismdi())
-    	disable(PagerPopup[5].m);
+	disable(PagerPopup[5].m);
     else {
-    	enable(PagerPopup[5].m);
-    	if (isTopmost(c))
-    	    check(PagerPopup[5].m);
-    	else
-    	    uncheck(PagerPopup[5].m);
+	enable(PagerPopup[5].m);
+	if (isTopmost(c))
+	    check(PagerPopup[5].m);
+	else
+	    uncheck(PagerPopup[5].m);
     }
 }
 
@@ -363,14 +363,14 @@ static pager pagercreate(void)
     if (!p) return NULL;
 
 /*    if (ismdi()) {
-	x = y = w = h = 0;
-    }
-    else {
-	w = WIDTH ;
-	h = HEIGHT;
-	x = (devicewidth(NULL) - w) / 2;
-	y = (deviceheight(NULL) - h) / 2 ;
-	} */
+      x = y = w = h = 0;
+      }
+      else {
+      w = WIDTH ;
+      h = HEIGHT;
+      x = (devicewidth(NULL) - w) / 2;
+      y = (deviceheight(NULL) - h) / 2 ;
+      } */
     w = WIDTH ;
     h = HEIGHT;
     /* centre a single pager, randomly place each of multiple pagers */
@@ -404,8 +404,8 @@ static pager pagercreate(void)
 			  Document | StandardWindow | Menubar |
 			  VScrollbar | HScrollbar | TrackMouse);
     if (!c) {
-         freeConsoleData(p);
-         return NULL;
+	freeConsoleData(p);
+	return NULL;
     }
     setdata(c, p);
     if(h == 0) HEIGHT = getheight(c);
@@ -420,37 +420,37 @@ static pager pagercreate(void)
     setbackground(c, consolebg);
 #ifdef USE_MDI
     if (ismdi()) {
-        int btsize = 24;
-        rect r = rect(2, 2, btsize, btsize);
-        control tb, bt;
-        addto(c);
-        MCHECK(tb = newtoolbar(btsize + 4));
+	int btsize = 24;
+	rect r = rect(2, 2, btsize, btsize);
+	control tb, bt;
+	addto(c);
+	MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
-        addto(tb);
-        MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
-        MCHECK(addtooltip(bt, G_("Open script")));
+	addto(tb);
+	MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
+	MCHECK(addtooltip(bt, G_("Open script")));
 	gsetcursor(bt, ArrowCursor);
 	/* wants NULL as data, not the pager */
-        r.x += (btsize + 6) ;	
-        MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
-        MCHECK(addtooltip(bt, G_("Paste to console")));
+	r.x += (btsize + 6) ;
+	MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
+	MCHECK(addtooltip(bt, G_("Paste to console")));
 	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
-        r.x += (btsize + 6) ;
-        MCHECK(bt = newtoolbutton(copy1_image, r, pagerpastecmds));
-        MCHECK(addtooltip(bt, G_("Paste commands to console")));
+	setdata(bt, (void *) c);
+	r.x += (btsize + 6) ;
+	MCHECK(bt = newtoolbutton(copy1_image, r, pagerpastecmds));
+	MCHECK(addtooltip(bt, G_("Paste commands to console")));
 	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
-        r.x += (btsize + 6) ;
-        MCHECK(bt = newtoolbutton(print_image, r, pagerprint));
-        MCHECK(addtooltip(bt, G_("Print")));
+	setdata(bt, (void *) c);
+	r.x += (btsize + 6) ;
+	MCHECK(bt = newtoolbutton(print_image, r, pagerprint));
+	MCHECK(addtooltip(bt, G_("Print")));
 	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
-        r.x += (btsize + 6) ;
-        MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
-        MCHECK(addtooltip(bt, G_("Return focus to Console")));
+	setdata(bt, (void *) c);
+	r.x += (btsize + 6) ;
+	MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
+	MCHECK(addtooltip(bt, G_("Return focus to Console")));
 	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
+	setdata(bt, (void *) c);
     }
 #endif
     addto(c);
@@ -511,20 +511,20 @@ static pager pagercreate(void)
     return(c);
 }
 
-static pager newpager1win(const char *wtitle, 
+static pager newpager1win(const char *wtitle,
 			  const char *filename, int enc,
 			  int deleteonexit)
 {
     if (!pagerInstance && !(pagerInstance = pagercreate())) {
-        R_ShowMessage(G_("Unable to create pager window"));
-        return NULL;
+	R_ShowMessage(G_("Unable to create pager window"));
+	return NULL;
     }
     if (!pageraddfile(wtitle, filename, enc, deleteonexit)) return NULL;
     pagerupdateview();
     return pagerInstance;
 }
 
-static pager newpagerNwin(const char *wtitle, 
+static pager newpagerNwin(const char *wtitle,
 			  const char *filename, int enc,
 			  int deleteonexit)
 {
@@ -545,7 +545,7 @@ static pager newpagerNwin(const char *wtitle,
     return c;
 }
 
-pager newpager(const char *title, 
+pager newpager(const char *title,
 	       const char *filename, int enc,
 	       const char *header, int deleteonexit)
 {
@@ -561,13 +561,12 @@ pager newpager(const char *title,
 	strcat(wtitle, header);
     }
     if (!pagerMultiple)
-        c = newpager1win(wtitle, filename, enc, deleteonexit);
+	c = newpager1win(wtitle, filename, enc, deleteonexit);
     else
-        c = newpagerNwin(wtitle, filename, enc, deleteonexit);
+	c = newpagerNwin(wtitle, filename, enc, deleteonexit);
     if (c) {
 	haveusedapager++;
 	BringToTop(c, 0);
     }
     return c;
 }
-

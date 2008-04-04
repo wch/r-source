@@ -35,13 +35,13 @@ static char rhomebuf[MAX_PATH];
 /* <MBCS-FIXME> We can't just use Rf_strchr as this is called
    from front-ends */
 #define GOBACKONESLASH \
-  p = strrchr(rhomebuf,'\\'); \
-  if (!p) { \
-    MessageBox(NULL, "Installation problem", "Terminating", \
-		MB_TASKMODAL | MB_ICONSTOP | MB_OK);\
-   exit(1); \
-  } \
-  *p = '\0'
+    p = strrchr(rhomebuf,'\\'); \
+    if (!p) { \
+	MessageBox(NULL, "Installation problem", "Terminating", \
+		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);\
+	exit(1); \
+    } \
+    *p = '\0'
 
 /* get R_HOME from the module path: used in RSetReg */
 char *getRHOMElong(void)
@@ -80,7 +80,7 @@ char *get_R_HOME(void)
 
     /* First try the C environment space */
     if(getenv("R_HOME")) {
-        strncpy(rhomebuf, getenv("R_HOME"), MAX_PATH);
+	strncpy(rhomebuf, getenv("R_HOME"), MAX_PATH);
 	return (rhomebuf);
     }
 

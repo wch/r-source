@@ -86,7 +86,7 @@ typedef struct {
     int oldWIDTH, oldHEIGHT;
     int nboxchars;
     char labform[6];
-    int xScrollbarScale, yScrollbarScale;    
+    int xScrollbarScale, yScrollbarScale;
     SEXP work, names, lens;
     PROTECT_INDEX wpi, npi, lpi;
     menuitem de_mvw;
@@ -233,7 +233,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     DE->crow = 1;
     DE->colmin = 1;
     DE->rowmin = 1;
-    PROTECT(DE->ssNA_STRING = duplicate(NA_STRING)); 
+    PROTECT(DE->ssNA_STRING = duplicate(NA_STRING));
     nprotect++;
     DE->bwidth = 0;
     DE->hwidth = 5;
@@ -244,7 +244,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     nprotect++;
 
     if (isNull(tnames)) {
-	PROTECT_WITH_INDEX(DE->names = allocVector(STRSXP, DE->xmaxused), 
+	PROTECT_WITH_INDEX(DE->names = allocVector(STRSXP, DE->xmaxused),
 			   &DE->npi);
 	for(i = 0; i < DE->xmaxused; i++) {
 	    sprintf(clab, "var%d", i);
@@ -352,7 +352,7 @@ static void setcellwidths(DEstruct DE)
     for (i = 2; i < 100; i++) { /* 100 on-screen columns cannot occur */
 	dw = BOXW(i + DE->colmin - 1);
 	if((w += dw) > DE->p->w ||
-	    (!DE->isEditor && i > DE->xmaxused - DE->colmin + 1)
+	   (!DE->isEditor && i > DE->xmaxused - DE->colmin + 1)
 	    ) {
 	    DE->nwide = i;
 	    DE->windowWidth = w - dw;
@@ -416,7 +416,7 @@ static void doHscroll(DEstruct DE, int oldcol)
 /* find_coords finds the coordinates of the upper left corner of the
    given cell on the screen: row and col are on-screen coords */
 
-static void find_coords(DEstruct DE, 
+static void find_coords(DEstruct DE,
 			int row, int col, int *xcoord, int *ycoord)
 {
     int i, w;
@@ -555,7 +555,7 @@ static CellType get_col_type(DEstruct DE, int col)
 /* whichcol is absolute col no, col is position on screen */
 static void drawcol(DEstruct DE, int whichcol)
 {
-    int i, src_x, src_y, len, col = whichcol - DE->colmin + 1, 
+    int i, src_x, src_y, len, col = whichcol - DE->colmin + 1,
 	bw = BOXW(whichcol);
     const char *clab;
     SEXP tmp;
@@ -570,7 +570,7 @@ static void drawcol(DEstruct DE, int whichcol)
     clab = get_col_name(DE, whichcol);
     printstring(DE, clab, strlen(clab), 0, col, 0);
 
-   if (DE->xmaxused >= whichcol) {
+    if (DE->xmaxused >= whichcol) {
 	tmp = VECTOR_ELT(DE->work, whichcol - 1);
 	if (!isNull(tmp)) {
 	    len = min(DE->rowmax, INTEGER(DE->lens)[whichcol - 1]);
@@ -589,7 +589,7 @@ static void drawrow(DEstruct DE, int whichrow)
     SEXP tvec;
 
     find_coords(DE, row, 0, &src_x, &src_y);
-    cleararea(DE, src_x, src_y, DE->windowWidth, DE->box_h, 
+    cleararea(DE, src_x, src_y, DE->windowWidth, DE->box_h,
 	      (whichrow > 0) ? DE->p->bg : bbg);
     drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
@@ -686,7 +686,7 @@ static void jumppage(DEstruct DE, int dir)
     case RIGHT:
 	oldcol = DE->colmin;
 	wcol = DE->colmin + DE->ccol + 1; /* column to be selected */
-        /* There may not be room to fit the next column in */
+	/* There may not be room to fit the next column in */
 	w = DE->p->w - DE->boxw[0] - BOXW(DE->colmax + 1);
 	for (i = DE->colmax; i >= oldcol; i--) {
 	    w -= BOXW(i);
@@ -749,7 +749,7 @@ static Rboolean getccol(DEstruct DE)
     }
     if (isNull(VECTOR_ELT(DE->work, wcol - 1))) {
 	newcol = TRUE;
-	SET_VECTOR_ELT(DE->work, wcol - 1, 
+	SET_VECTOR_ELT(DE->work, wcol - 1,
 		       ssNewVector(DE, REALSXP, max(100, wrow)));
 	INTEGER(DE->lens)[wcol - 1] = 0;
     }
@@ -779,7 +779,7 @@ static Rboolean getccol(DEstruct DE)
 static void closerect(DEstruct DE)
 {
     SEXP cvec;
-    int wcol = DE->ccol + DE->colmin - 1, wrow = DE->rowmin + DE->crow - 1, 
+    int wcol = DE->ccol + DE->colmin - 1, wrow = DE->rowmin + DE->crow - 1,
 	wrow0;
     Rboolean newcol;
 
@@ -841,7 +841,7 @@ static void closerect(DEstruct DE)
 
 /* This version will only display BUFSIZE chars, but the maximum col width
    will not allow that many */
-static void printstring(DEstruct DE, const char *ibuf, int buflen, 
+static void printstring(DEstruct DE, const char *ibuf, int buflen,
 			int row, int col, int left)
 {
     int x_pos, y_pos, bw, fw, bufw;
@@ -873,7 +873,7 @@ static void clearrect(DEstruct DE)
     int x_pos, y_pos;
 
     find_coords(DE, DE->crow, DE->ccol, &x_pos, &y_pos);
-    cleararea(DE, x_pos, y_pos, BOXW(DE->ccol+DE->colmin-1), 
+    cleararea(DE, x_pos, y_pos, BOXW(DE->ccol+DE->colmin-1),
 	      DE->box_h, DE->p->bg);
 }
 
@@ -954,7 +954,7 @@ static void handlechar(DEstruct DE, const char *text)
     printstring(DE, DE->buf, DE->clength, DE->crow, DE->ccol, 1);
     return;
 
- donehc:
+donehc:
     bell();
 }
 
@@ -974,7 +974,7 @@ static void printlabs(DEstruct DE)
     }
 }
 
-              /* ================ GraphApp-specific ================ */
+	      /* ================ GraphApp-specific ================ */
 
 static void bell(void)
 {
@@ -993,13 +993,13 @@ static void clearwindow(DEstruct DE)
 }
 
 
-static void drawrectangle(DEstruct DE, 
+static void drawrectangle(DEstruct DE,
 			  int xpos, int ypos, int width, int height,
 			  int lwd, int fore)
 {
     /* only used on screen, so always fast */
     gdrawrect(DE->de, lwd, 0, (fore==1)? DE->p->ufg: DE->p->bg,
-	      rect(xpos, ypos, width, height), 1, PS_ENDCAP_SQUARE, 
+	      rect(xpos, ypos, width, height), 1, PS_ENDCAP_SQUARE,
 	      PS_JOIN_BEVEL, 10);
 }
 
@@ -1060,7 +1060,7 @@ static void de_normalkeyin(control c, int k)
     } else if(k == '\b') {
 	moveback(DE);
     } else if(k == '\n' || k == '\r') {
-	    advancerect(DE, DOWN);
+	advancerect(DE, DOWN);
     } else if(k == '\t') {
 	if (st & ShiftKey) advancerect(DE, LEFT);
 	else advancerect(DE, RIGHT);
@@ -1212,7 +1212,7 @@ static void de_mousedown(control c, int buttons, point xy)
 	    if((w += BOXW(i+DE->colmin-1)) > xw) {
 		wcol = i;
 		break;
-	}
+	    }
 
 	/* see if we selected a line */
 	w = DE->bwidth;
@@ -1241,10 +1241,10 @@ static void de_mousedown(control c, int buttons, point xy)
 		bell();
 	    }
 	} else if (wrow > DE->nhigh - 1 || wcol > DE->nwide - 1) {
-		/* off the grid */
-		highlightrect(DE);
-		bell();
-		return;
+	    /* off the grid */
+	    highlightrect(DE);
+	    bell();
+	    return;
 	} else if (buttons & DblClick) {
 	    int x, y, bw;
 	    const char *prev;
@@ -1314,7 +1314,7 @@ static void deredraw(DEstruct DE)
     gfillrect(DE->de, bbg, rect(0, 0, DE->boxw[0], DE->windowHeight));
 
     for (i = 1; i < DE->nhigh; i++)
-	drawrectangle(DE, 0, DE->hwidth + i * DE->box_h, DE->boxw[0], 
+	drawrectangle(DE, 0, DE->hwidth + i * DE->box_h, DE->boxw[0],
 		      DE->box_h, 1, 1);
     if(DE->isEditor) {
 	DE->colmax = DE->colmin + (DE->nwide - 2);
@@ -1325,7 +1325,7 @@ static void deredraw(DEstruct DE)
     }
     printlabs(DE);
     for (i = DE->colmin; i <= DE->colmax; i++) drawcol(DE,i);
-    gfillrect(DE->de, DE->p->bg, rect(DE->windowWidth+1, DE->hwidth, 
+    gfillrect(DE->de, DE->p->bg, rect(DE->windowWidth+1, DE->hwidth,
 				      DE->p->w - DE->windowWidth-1,
 				      DE->p->h - DE->hwidth));
     highlightrect(DE);
@@ -1440,13 +1440,13 @@ static void popupclose(control c)
     tvec = VECTOR_ELT(DE->work, popupcol - 1);
     if(ischecked(rb_num) && !isnumeric) {
 	if (isNull(tvec))
-	    SET_VECTOR_ELT(DE->work, popupcol - 1, 
+	    SET_VECTOR_ELT(DE->work, popupcol - 1,
 			   ssNewVector(DE, REALSXP, 100));
 	else
 	    SET_VECTOR_ELT(DE->work, popupcol - 1, coerceVector(tvec, REALSXP));
     } else if(ischecked(rb_char) && isnumeric) {
 	if (isNull(tvec))
-	    SET_VECTOR_ELT(DE->work, popupcol - 1, 
+	    SET_VECTOR_ELT(DE->work, popupcol - 1,
 			   ssNewVector(DE, STRSXP, 100));
 	else
 	    SET_VECTOR_ELT(DE->work, popupcol - 1, coerceVector(tvec, STRSXP));
@@ -1545,7 +1545,7 @@ static void de_sbf(control c, int pos)
 	DE->colmin = min(DE->xmaxused, -pos*DE->xScrollbarScale);
     } else {
 	DE->rowmin = 1 + pos*DE->yScrollbarScale;
-	if(DE->rowmin > DE->ymaxused - DE->nhigh + 2) 
+	if(DE->rowmin > DE->ymaxused - DE->nhigh + 2)
 	    DE->rowmin = max(1,DE->ymaxused - DE->nhigh + 2);
     }
     drawwindow(DE);
@@ -1589,8 +1589,8 @@ static void de_popup_vw(DEstruct DE)
     char blah[25];
 
     devw = newwindow(G_("Cell width(s)"),
-		      rect(0, 0, 250, 60),
-		      Titlebar | Centered | Closebox | Modal);
+		     rect(0, 0, 250, 60),
+		     Titlebar | Centered | Closebox | Modal);
     setdata(devw, DE);
     setclose(devw, vw_close);
     setbackground(devw, bbg);
@@ -1632,7 +1632,7 @@ static void deresize(console c, rect r)
     if (((DE->p->w  == r.width) &&
 	 (DE->p->h == r.height)) ||
 	(r.width == 0) || (r.height == 0) ) /* minimize */
-        return;;
+	return;;
     DE->p->w = r.width;
     DE->p->h = r.height;
 }
@@ -1667,14 +1667,14 @@ static void depopupact(control m)
 {
     DEstruct DE = getdata(m);
     /* use this to customize the menu */
-    
+
     if (ismdi())
-    	disable(DePopup[6].m);
+	disable(DePopup[6].m);
     else {
-    	if (isTopmost(DE->de))
-    	    check(DePopup[6].m);
-    	else
-    	    uncheck(DePopup[6].m);
+	if (isTopmost(DE->de))
+	    check(DePopup[6].m);
+	else
+	    uncheck(DePopup[6].m);
     }
 }
 
@@ -1690,9 +1690,9 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
     menuitem m;
 
     DE->p = newconsoledata((consolefn) ? consolefn : FixedFont,
-		       pagerrow, pagercol, 0, 0,
-		       consolefg, consoleuser, consolebg,
-		       DATAEDITOR, 0);
+			   pagerrow, pagercol, 0, 0,
+			   consolefg, consoleuser, consolebg,
+			   DATAEDITOR, 0);
     if (!DE->p) return NULL;
 
     w = DE->p->w ;
@@ -1709,8 +1709,8 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
 			       Document | StandardWindow | Menubar |
 			       VScrollbar | HScrollbar | TrackMouse);
     if (!c) {
-         freeConsoleData(DE->p);
-         return NULL;
+	freeConsoleData(DE->p);
+	return NULL;
     }
     setdata(c, DE);
     if(h == 0) DE->p->h = getheight(c);
@@ -1723,10 +1723,10 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
     setbackground(c, consolebg);
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
 	/* blank toolbar to stop windows jumping around */
-        int btsize = 24;
-        control tb;
-        addto(c);
-        MCHECK(tb = newtoolbar(btsize + 4));
+	int btsize = 24;
+	control tb;
+	addto(c);
+	MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
     }
     if(DE->isEditor) {
@@ -1753,13 +1753,13 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
 	MCHECK(m = newmenuitem(G_("Delete\tDEL"), 0, de_delete));
 	setdata(m, DE);
 	MCHECK(m = newmenuitem("-", 0, NULL));
-	MCHECK(m = DE->de_mvw = newmenuitem(G_("Cell widths ..."), 0, 
+	MCHECK(m = DE->de_mvw = newmenuitem(G_("Cell widths ..."), 0,
 					    menudecellwidth));
 	setdata(m, DE);
 	MCHECK(m = newmenu(G_("Help")));
 	MCHECK(newmenuitem(G_("Data editor"), 0, menudehelp));
     }
-    
+
     setdata(c, DE); /* Why the repeat? */
     setresize(c, deresize);
     setredraw(c, de_redraw);
@@ -1818,7 +1818,7 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     DE->crow = 1;
     DE->colmin = 1;
     DE->rowmin = 1;
-    PROTECT(DE->ssNA_STRING = duplicate(NA_STRING)); 
+    PROTECT(DE->ssNA_STRING = duplicate(NA_STRING));
     nprotect++;
     DE->bwidth = 0;
     DE->hwidth = 5;

@@ -95,7 +95,7 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(NULL != pGNSI) pGNSI(&si); else GetSystemInfo(&si);
 	if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 	    type = " x64";
-	
+
 	if(osvi.wServicePackMajor > 0)
 	    sprintf(ver,
 		    "Windows %s%s (build %d) Service Pack %d",
@@ -398,7 +398,7 @@ SEXP do_winprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *title, *label;
     winprogressbar *pbar;
     Rboolean haveLabel;
-    
+
     checkArity(op, args);
 
     pbar = Calloc(1, winprogressbar);
@@ -429,14 +429,14 @@ SEXP do_winprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
     setbackground(pbar->wprog, dialog_bg());
     if(haveLabel)
 	pbar->lab = newlabel(label, rect(10, 15, width+20, 25), AlignCenter);
-    pbar->pb = newprogressbar(rect(20, haveLabel ? 50 : 30, width, 20), 
+    pbar->pb = newprogressbar(rect(20, haveLabel ? 50 : 30, width, 20),
 			      0, width, 1, 1);
     iv = pbar->width * (pbar->val - pbar->min)/(pbar->max - pbar->min);
     setprogressbar(pbar->pb, iv);
     show(pbar->wprog);
     ptr = R_MakeExternalPtr(pbar, install("winProgressBar"), R_NilValue);
     R_RegisterCFinalizerEx(ptr, pbarFinalizer, TRUE);
-    
+
     return ptr;
 }
 
@@ -537,7 +537,7 @@ SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     stamp = CAR(args);
     if (!isString(stamp))
-    	errorcall(call, _("invalid timestamp"));
+	errorcall(call, _("invalid timestamp"));
     if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
 	for (i = 0; i < LENGTH(stamp); i++)
 	    gl_histadd(translateChar(STRING_ELT(stamp, i)));
@@ -566,7 +566,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     OSVERSIONINFOEX osvi;
-    char ver[256], buf[1000]; 
+    char ver[256], buf[1000];
     wchar_t name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
     DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
 
@@ -662,16 +662,16 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef LEA_MALLOC
 struct mallinfo {
-  int arena;    /* non-mmapped space allocated from system */
-  int ordblks;  /* number of free chunks */
-  int smblks;   /* number of fastbin blocks */
-  int hblks;    /* number of mmapped regions */
-  int hblkhd;   /* space in mmapped regions */
-  int usmblks;  /* maximum total allocated space */
-  int fsmblks;  /* space available in freed fastbin blocks */
-  int uordblks; /* total allocated space */
-  int fordblks; /* total free space */
-  int keepcost; /* top-most, releasable (via malloc_trim) space */
+    int arena;    /* non-mmapped space allocated from system */
+    int ordblks;  /* number of free chunks */
+    int smblks;   /* number of fastbin blocks */
+    int hblks;    /* number of mmapped regions */
+    int hblkhd;   /* space in mmapped regions */
+    int usmblks;  /* maximum total allocated space */
+    int fsmblks;  /* space available in freed fastbin blocks */
+    int uordblks; /* total allocated space */
+    int fordblks; /* total free space */
+    int keepcost; /* top-most, releasable (via malloc_trim) space */
 };
 extern unsigned int R_max_memory;
 
@@ -906,14 +906,14 @@ SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if(OpenClipboard(NULL)) {
-    	size = CountClipboardFormats();
-    	PROTECT(ans = allocVector(INTSXP, size));
-    	for (j = 0; j < size; j++) {
-    	    format = EnumClipboardFormats(format);
-    	    INTEGER(ans)[j] = format;
-    	}
-    	UNPROTECT(1);
-    	CloseClipboard();
+	size = CountClipboardFormats();
+	PROTECT(ans = allocVector(INTSXP, size));
+	for (j = 0; j < size; j++) {
+	    format = EnumClipboardFormats(format);
+	    INTEGER(ans)[j] = format;
+	}
+	UNPROTECT(1);
+	CloseClipboard();
     }
     return ans;
 }
@@ -958,13 +958,13 @@ static SEXP splitClipboardText(const char *s, int ienc)
 	    SET_STRING_ELT(ans, nl++, mkCharCE(line, ienc));
 	    q = line;
 	    *q = '\0';
-	} else if(CRLF && *p == '\r') 
+	} else if(CRLF && *p == '\r')
 	    ;
 	else *q++ = *p;
     }
     if (!last) {
 	*q = '\0';
-	SET_STRING_ELT(ans, nl, mkCharCE(line, ienc));	
+	SET_STRING_ELT(ans, nl, mkCharCE(line, ienc));
     }
     R_chk_free(line);
     UNPROTECT(1);
@@ -983,9 +983,9 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     raw = asLogical(CADR(args));
 
     if(OpenClipboard(NULL)) {
-    	if(IsClipboardFormatAvailable(format) &&
-    	   	(hglb = GetClipboardData(format)) &&
-    	   	(pc = (const char *) GlobalLock(hglb))) {
+	if(IsClipboardFormatAvailable(format) &&
+	   (hglb = GetClipboardData(format)) &&
+	   (pc = (const char *) GlobalLock(hglb))) {
 	    if(raw) {
 		Rbyte *pans;
 		size = GlobalSize(hglb);
@@ -1030,23 +1030,23 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(text) == RAWSXP) raw = TRUE;
     else if(!isString(text))
-    	errorcall(call, _("argument must be a character vector or a raw vector"));
+	errorcall(call, _("argument must be a character vector or a raw vector"));
 
     n = length(text);
     if(n > 0) {
-    	int len = 1;
-    	if(raw) len = n;
-	else if (format == CF_UNICODETEXT) 
-    	    for(i = 0; i < n; i++) 
+	int len = 1;
+	if(raw) len = n;
+	else if (format == CF_UNICODETEXT)
+	    for(i = 0; i < n; i++)
 		len += 2 * (wcslen(wtransChar(STRING_ELT(text, i))) + 2);
 	else
-    	    for(i = 0; i < n; i++) 
+	    for(i = 0; i < n; i++)
 		len += strlen(translateChar(STRING_ELT(text, i))) + 2;
 
 	if ( (hglb = GlobalAlloc(GHND, len)) &&
 	     (s = (char *)GlobalLock(hglb)) ) {
 	    if(raw)
-	    	for(i = 0; i < n; i++) *s++ = RAW(text)[i];
+		for(i = 0; i < n; i++) *s++ = RAW(text)[i];
 	    else if (format == CF_UNICODETEXT) {
 		wchar_t *wp, *ws = (wchar_t *) s;
 		for(i = 0; i < n; i++) {
@@ -1090,13 +1090,13 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if(!isString(paths))
-       errorcall(call, _("'path' must be a character vector"));
+	errorcall(call, _("'path' must be a character vector"));
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	el = STRING_ELT(paths, i);
 	if(getCharCE(el) == CE_UTF8) {
-	    GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH, 
+	    GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH,
 			     wtmp, &wtmp2);
 	    GetLongPathNameW(wtmp, wlongpath, MAX_PATH);
 	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
@@ -1121,7 +1121,7 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if(!isString(paths))
-       errorcall(call, _("'path' must be a character vector"));
+	errorcall(call, _("'path' must be a character vector"));
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
@@ -1130,7 +1130,7 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    res = GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
 	    if (res)
 		wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
-	    else 
+	    else
 		strcpy(tmp, translateChar(el));
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
@@ -1175,10 +1175,10 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     strcpy(path, R_ExpandFileName(p));
     R_fixbackslash(path);
 /*    temp = Rf_strchr(path,'/');
-    while (temp) {
-	*temp = '\\';
-	temp = strchr(temp,'/');
-	}*/
+      while (temp) {
+      *temp = '\\';
+      temp = strchr(temp,'/');
+      }*/
     if(length(caption) != 1 )
 	errorcall(call, _("'caption' must be a character string"));
     if(multi == NA_LOGICAL)
@@ -1201,7 +1201,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     *list = '\0'; /* no initialization */
     askfilenames(translateChar(STRING_ELT(caption, 0)), path,
 		 multi, cfilters, filterindex,
-                 list, 65500, NULL);  /* list declared larger to protect against overwrites */
+		 list, 65500, NULL);  /* list declared larger to protect against overwrites */
 
     if(!multi) {
 	/* only one filename possible */
@@ -1221,8 +1221,8 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	strncpy(path,list,sizeof(path));
 	pathlen = strlen(path);
 	if (path[pathlen-1] == '\\') path[--pathlen] = '\0';
-    	temp = list;
-    	for (i = 0; i < count-1; i++) {
+	temp = list;
+	for (i = 0; i < count-1; i++) {
 	    temp += strlen(temp) + 1;
 	    if (Rf_strchr(temp,':') || *temp == '\\' || *temp == '/')
 		SET_STRING_ELT(ans, i, mkCharUTF8(temp));
@@ -1256,7 +1256,7 @@ SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isString(caption) || length(caption) != 1 )
 	errorcall(call, _("'caption' must be a character string"));
     p = askcdstring(translateChar(STRING_ELT(caption, 0)), path);
-    
+
     PROTECT(ans = allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, p ? mkCharUTF8(p): NA_STRING);
     UNPROTECT(1);
@@ -1293,8 +1293,8 @@ SEXP getWindowTitle(void)
 	else res = GA_gettext(RConsole);
 	break;
     case RTerm:
-    	GetConsoleTitle(buf, 512);
-    	buf[511] = '\0';
+	GetConsoleTitle(buf, 512);
+	buf[511] = '\0';
 	res = buf;
 	break;
     default:
@@ -1391,7 +1391,7 @@ SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (handle)
 	return R_MakeExternalPtr(handle,R_NilValue,R_NilValue);
     else
-    	return R_NilValue;
+	return R_NilValue;
 }
 
 #include "devWindows.h"
@@ -1451,7 +1451,7 @@ menu getGraphMenu(const char* menuname)
     menuname = menuname + 6;
     devnum = atoi(menuname);
     if(devnum < 1 || devnum > R_MaxDevices)
-    	error(_("invalid graphical device number"));
+	error(_("invalid graphical device number"));
 
     while (('0' <= *menuname) && (*menuname <= '9')) menuname++;
 
@@ -1504,14 +1504,14 @@ int winAccessW(const wchar_t *path, int mode)
 
 	/* get size */
 	GetFileSecurityW(path,
-			OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
-			| DACL_SECURITY_INFORMATION, 0, 0, &size);
+			 OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
+			 | DACL_SECURITY_INFORMATION, 0, 0, &size);
 	error = GetLastError();
 	if (error != ERROR_INSUFFICIENT_BUFFER) return -1;
 	sdPtr = (SECURITY_DESCRIPTOR *) alloca(size);
 	if(!GetFileSecurityW(path,
-			    OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
-			    | DACL_SECURITY_INFORMATION, sdPtr, size, &size))
+			     OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
+			     | DACL_SECURITY_INFORMATION, sdPtr, size, &size))
 	    return -1;
 	/*
 	 * Perform security impersonation of the user and open the
@@ -1564,7 +1564,8 @@ char *getDLLVersion(void)
 const static struct {
     const char * reg;
     HKEY key;
-} KeyTable[] = {
+} 
+KeyTable[] = {
     { "HCC", HKEY_CURRENT_CONFIG },
     { "HCR", HKEY_CLASSES_ROOT },
     { "HCU", HKEY_CURRENT_USER },
@@ -1573,13 +1574,13 @@ const static struct {
     { "HU" , HKEY_USERS },
     {NULL, NULL}
 };
-    
+
 const char *formatError(DWORD res)
 {
     static char buf[1000], *p;
     FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		  NULL, res, 
-		  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+		  NULL, res,
+		  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		  buf, 1000, NULL);
     p = buf+strlen(buf) -1;
     if(*p == '\n') *p = '\0';
@@ -1605,7 +1606,7 @@ static SEXP mkCharUcs(wchar_t *name)
     int n = wcslen(name), N = 3*n+1;
     char *buf;
     buf = alloca(N);
-    R_CheckStack();    
+    R_CheckStack();
     wcstombs(buf, name, N); buf[N-1] = '\0';
     return mkCharCE(buf, CE_UTF8);
 }
@@ -1809,27 +1810,27 @@ size_t Rmbrtowc(wchar_t *wc, const char *s)
     w = wc ? wc: &local;
 
     if (byte == 0) {
-        *w = (wchar_t) 0;
-        return 0;
+	*w = (wchar_t) 0;
+	return 0;
     } else if (byte < 0xC0) {
-        *w = (wchar_t) byte;
-        return 1;
+	*w = (wchar_t) byte;
+	return 1;
     } else if (byte < 0xE0) {
 	if(strlen(s) < 2) return -2;
-        if ((s[1] & 0xC0) == 0x80) {
-            *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
-            return 2;
-        } else return -1;
+	if ((s[1] & 0xC0) == 0x80) {
+	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+	    return 2;
+	} else return -1;
     } else if (byte < 0xF0) {
 	if(strlen(s) < 3) return -2;
-        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
-            *w = (wchar_t) (((byte & 0x0F) << 12)
-                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+	    *w = (wchar_t) (((byte & 0x0F) << 12)
+			    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
 	    byte = *w;
 	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
 	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
-            return 3;
-        } else return -1;
+	    return 3;
+	} else return -1;
     }
     return -2;
 #else

@@ -86,8 +86,8 @@ static void editor_set_title(editor c, const char *title)
     wtitle[EDITORMAXTITLE] = '\0';
     strcpy(p->title, wtitle);
     if (strlen(wtitle) + strlen(G_("R Editor")) + 3 < EDITORMAXTITLE) {
-    	strcat(wtitle, " - ");
-    	strcat(wtitle, G_("R Editor"));
+	strcat(wtitle, " - ");
+	strcat(wtitle, G_("R Editor"));
     }
     settext(c, wtitle);
 }
@@ -116,7 +116,7 @@ static void editor_load_file(editor c, const char *name, int enc)
 	    buffer[bufsize] = '\0';
 	}
 	else {
-	    snprintf(tmp, MAX_PATH+50, G_("Could not read from file '%s'"), 
+	    snprintf(tmp, MAX_PATH+50, G_("Could not read from file '%s'"),
 		     name);
 	    askok(tmp);
 	}
@@ -147,7 +147,8 @@ static void editor_save_file(editor c, const char *name)
     }
 }
 
-static void editorsaveas(editor c) {
+static void editorsaveas(editor c)
+{
     textbox t = getdata(c);
     EditorData p = getdata(t);
     char *current_name = (p->file ? p->filename : "");
@@ -224,7 +225,7 @@ static void editorprint(control m)
 	if ( linep + fh >= rr ) { /* new page */
 	    if (page > 1) nextpage(lpr);
 	    sprintf(msg, "Page %d", page++);
-  	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top),
+	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top),
 		     msg);
 	    linep = top + 2*fh;
 	}
@@ -236,7 +237,7 @@ static void editorprint(control m)
 	linebuf = realloc(linebuf, (j+1)*sizeof(char));
 	strncpy(linebuf, &contents[istartline], j);
 	linebuf[j] = '\0';
-  	gdrawstr(lpr, f, Black, pt(left, linep), linebuf);
+	gdrawstr(lpr, f, Black, pt(left, linep), linebuf);
 	linep += fh;
 	++i;
     }
@@ -359,8 +360,8 @@ void menueditoropen(control m)
 {
     editor c = getdata(m);
     char *default_name = "";
-    /* It really is not clear what is meant here: seems to assume an 
-       editor window but is called from elsewhere, hopefully with NULL 
+    /* It really is not clear what is meant here: seems to assume an
+       editor window but is called from elsewhere, hopefully with NULL
        (since 2.1.1 patched). */
     if (c) {
 	textbox t = getdata(c);
@@ -459,20 +460,20 @@ static Rboolean busy_running = FALSE;
 static void editorrun(textbox t)
 {
     if (!busy_running) {
-        long start=0, end=0;
-    	if (CharacterMode != RGui) {
-    	    R_ShowMessage(G_("No RGui console to paste to"));
-    	    return;
-    	}
-    	busy_running = TRUE;
-    	textselectionex(t, &start, &end);
-    	if (start >= end)
+	long start=0, end=0;
+	if (CharacterMode != RGui) {
+	    R_ShowMessage(G_("No RGui console to paste to"));
+	    return;
+	}
+	busy_running = TRUE;
+	textselectionex(t, &start, &end);
+	if (start >= end)
 	    editorrunline(t);
-    	else {
+	else {
 	    editorrunselection(t, start, end);
 	    selecttextex(t, end, end); /* move insertion point to end of selection after running */
-    	}
-    	busy_running = FALSE;
+	}
+	busy_running = FALSE;
     }
 }
 
@@ -501,12 +502,12 @@ static void editormenuact(control m)
     EditorData p = getdata(t);
     textselectionex(t, &start, &end);
     if (start < end) {
-        enable(p->mcut);
-        enable(p->mcopy);
-        enable(p->mdelete);
-        enable(p->mpopcut);
-        enable(p->mpopcopy);
-        enable(p->mpopdelete);
+	enable(p->mcut);
+	enable(p->mcopy);
+	enable(p->mdelete);
+	enable(p->mpopcut);
+	enable(p->mpopcopy);
+	enable(p->mpopdelete);
     }
     else {
 	disable(p->mcut);
@@ -546,8 +547,8 @@ static void editorcontrolkeydown(textbox t, int key)
 static void editorasciikeydown(textbox t, int key)
 {
     /* check whether the text limit is about to be exceeded and
-     increase it if necessary.  Ugh - this callback is called after
-     the text is inserted, so we make space for two characters */
+       increase it if necessary.  Ugh - this callback is called after
+       the text is inserted, so we make space for two characters */
     checklimittext(t, 2);
 }
 
@@ -704,8 +705,8 @@ static editor neweditor(void)
     MCHECK(m = newmenuitem(G_("Close script"), 0, menueditorclose));
     setdata(m, c);
     /* MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem(G_("Exit"), 0, closeconsole));
-    setdata(m, c); */
+       MCHECK(m = newmenuitem(G_("Exit"), 0, closeconsole));
+       setdata(m, c); */
     MCHECK(newmenu(G_("Edit")));
     MCHECK(m = newmenuitem(G_("Undo"), 'Z', editorundo));
     setdata(m, t);
@@ -771,7 +772,7 @@ void editorsetfont(font f)
     textbox t;
     for (i = 0; i < neditors; i++) {
 	t = getdata(REditors[i]);
- 	ismod = ggetmodified(t);
+	ismod = ggetmodified(t);
 	/* Don't change the modification flag when changing font  */
 	settextfont(t, f);
 	gsetmodified(t, ismod);
@@ -821,12 +822,12 @@ int Rgui_Edit(const char *filename, int enc, const char *title,
 	editor_set_title(c, G_("Untitled"));
     }
     show(c);
-    
+
     p = getdata(getdata(c));
     p->stealconsole = modal;
     if (modal) {
-    	fix_editor_up = TRUE;
-    	eventloop(c);
+	fix_editor_up = TRUE;
+	eventloop(c);
     }
     return 0;
 }

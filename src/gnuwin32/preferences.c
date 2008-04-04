@@ -136,12 +136,12 @@ void getDefaults(Gui gui)
     gui->pointsize = 10;
     strcpy(gui->language, "");
     gui->buffered = 1;
-    
+
 #ifdef USE_MDI
     gui->toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
     gui->statusbar = ((RguiMDI & RW_STATUSBAR) != 0);
     gui->MDI = ((RguiMDI & RW_MDI) != 0);
-    
+
     gui->MDIsize = rect(0, 0, 0, 0);
 #endif
 }
@@ -161,7 +161,7 @@ void getActive(Gui gui)
 	    strcpy(gui->language, p ? p : "");
 	}
 
-    /* Font, pointsize, style */
+	/* Font, pointsize, style */
 
 	gui->tt_font = FALSE;
 	{
@@ -180,7 +180,7 @@ void getActive(Gui gui)
 	else if (fontsty & Bold) strcpy(gui->style, "Bold");
 	else strcpy(gui->style, "normal");
 
-    /* Console size, set widthonresize */
+	/* Console size, set widthonresize */
 	gui->crows = ROWS;
 	gui->ccols = COLS;
 	r = GetCurrentWinPos(RConsole);
@@ -191,29 +191,29 @@ void getActive(Gui gui)
 	gui->cbl = p->lbuf->ms;
 	gui->buffered = consolebuffered;
 
-    /* Pager size */
+	/* Pager size */
 	gui->prows = pagerrow;
 	gui->pcols = pagercol;
 
-    /* Graphics window */
+	/* Graphics window */
 	gui->grx = Rwin_graphicsx;
 	gui->gry = Rwin_graphicsy;
 
-    /* Font colours */
+	/* Font colours */
 	gui->bg = consolebg;
 	gui->fg = consolefg;
 	gui->user = consoleuser;
 	gui->hlt = pagerhighlight;
 
-    /* MDIsize is not currently a choice in the dialog, only in the Rconsole file, so is not set here */
+	/* MDIsize is not currently a choice in the dialog, only in the Rconsole file, so is not set here */
     } else
-    	getDefaults(gui);
+	getDefaults(gui);
 }
 
 static int has_changed(Gui a, Gui b)
 {
-    return !a || 
-        a->MDI != b->MDI ||
+    return !a ||
+	a->MDI != b->MDI ||
 	a->toolbar != b->toolbar ||
 	a->statusbar != b->statusbar ||
 	a->pagerMultiple != b->pagerMultiple ||
@@ -272,8 +272,8 @@ void applyGUI(Gui newGUI)
     int havenewfont = 0;
     struct structGUI curGUI;
 
-    getActive(&curGUI);    
-    
+    getActive(&curGUI);
+
     if(!has_changed(&curGUI, newGUI)) return;
 
     if(newGUI->MDI != curGUI.MDI || newGUI->toolbar != curGUI.toolbar ||
@@ -284,9 +284,9 @@ void applyGUI(Gui newGUI)
 	char *buf = malloc(50);
 	askok(G_("The language for menus cannot be changed on a\n running console.\n\nSave the preferences and restart Rgui to apply to menus.\n"));
 	sprintf(buf, "LANGUAGE=%s", newGUI->language);
-	putenv(buf);	
+	putenv(buf);
     }
-    
+
 
 /*  Set a new font? */
     if(strcmp(newGUI->font, curGUI.font) ||
@@ -315,12 +315,12 @@ void applyGUI(Gui newGUI)
 	    consolefn = FixedFont;
 	}
 	/* if (!ghasfixedwidth(consolefn)) {
-	    sprintf(msg,
-		    G_("Font %s-%d-%d has variable width.\nUsing system fixed font"),
-		    fontname, fontsty, pointsize);
-	    R_ShowMessage(msg);
-	    consolefn = FixedFont;
-	    } */
+	   sprintf(msg,
+	   G_("Font %s-%d-%d has variable width.\nUsing system fixed font"),
+	   fontname, fontsty, pointsize);
+	   R_ShowMessage(msg);
+	   consolefn = FixedFont;
+	   } */
 	p->f = consolefn;
 	FH = fontheight(p->f);
 	FW = fontwidth(p->f);
@@ -349,7 +349,7 @@ void applyGUI(Gui newGUI)
     drawconsole(RConsole, r);
     pagerhighlight = newGUI->hlt;
 
-    if(haveusedapager && 
+    if(haveusedapager &&
        (newGUI->prows != curGUI.prows || newGUI->pcols != curGUI.pcols))
 	askok(G_("Changes in pager size will not apply to any open pagers"));
     pagerrow = newGUI->prows;
@@ -367,7 +367,7 @@ void applyGUI(Gui newGUI)
 
     setWidthOnResize = newGUI->setWidthOnResize;
     consolebuffered = newGUI->buffered;
-    
+
     Rwin_graphicsx = newGUI->grx;
     Rwin_graphicsy = newGUI->gry;
 }
@@ -474,13 +474,13 @@ static void save(button b)
 static void load(button b) /* button callback */
 {
     char *optf, buf[256];
-    struct structGUI newGUI;    
+    struct structGUI newGUI;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
-    strcpy(buf, getenv("R_USER"));    
+    strcpy(buf, getenv("R_USER"));
     optf = askfilenamewithdir(G_("Select 'Rconsole' file"), "Rconsole", buf);
     if(!optf) return;
-    
+
     getChoices(&newGUI);
     if (loadRconsole(&newGUI, optf)) {
 	cleanup();
@@ -491,10 +491,10 @@ static void load(button b) /* button callback */
 int loadRconsole(Gui gui, const char *optf)
 {
     int ok, done, cfgerr;
-    char *opt[2];    
-    
+    char *opt[2];
+
     if (!optopenfile(optf)) {
-	return 0; 	/* this should not happen unless there are permission problems, etc */
+	return 0; /* this should not happen unless there are permission problems, etc */
     }
     cfgerr = 0;
     while ((ok = optread(opt, '='))) {
@@ -519,8 +519,8 @@ int loadRconsole(Gui gui, const char *optf)
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "style")) {
-		strcpy(gui->style, opt[1]); 
- 		done = 1;
+		strcpy(gui->style, opt[1]);
+		done = 1;
 	    }
 	    if (!strcmp(opt[0], "rows")) {
 		gui->crows = atoi(opt[1]);
@@ -614,7 +614,7 @@ int loadRconsole(Gui gui, const char *optf)
 		y *= sign;
 
 		gui->MDIsize = rect(x, y, w, h);
-		
+
 		done = 1;
 	    }
 #endif
@@ -654,20 +654,20 @@ int loadRconsole(Gui gui, const char *optf)
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "language")) {
-		strcpy(gui->language, opt[1]); 
- 		done = 1;
+		strcpy(gui->language, opt[1]);
+		done = 1;
 	    }
 	    if (!strcmp(opt[0], "buffered")) {
 		if (!strcmp(opt[1], "yes"))
 		    gui->buffered = 1;
 		else if (!strcmp(opt[1], "no"))
-		    gui->buffered = 0;		
- 		done = 1;
+		    gui->buffered = 0;
+		done = 1;
 	    }
 	} else if (ok == 3) { /* opt[1] == "" */
 	    if (!strcmp(opt[0], "language")) {
-		strcpy(gui->language, opt[1]); 
- 		done = 1;
+		strcpy(gui->language, opt[1]);
+		done = 1;
 	    }
 	}
 	if (!done) {
@@ -695,7 +695,7 @@ static void cancel(button b)
 
 static void ok(button b)
 {
-    do_apply(); 
+    do_apply();
     cleanup();
     show(RConsole);
 }
@@ -715,12 +715,12 @@ static void cSDI(button b)
 static void showDialog(Gui gui)
 {
     char buf[100];
-        
+
     wconfig = newwindow(G_("Rgui Configuration Editor"), rect(0, 0, 550, 450),
 			Titlebar | Centered | Modal);
     setbackground(wconfig, dialog_bg());
     l_mdi = newlabel("Single or multiple windows",
-		      rect(10, 10, 140, 20), AlignLeft);
+		     rect(10, 10, 140, 20), AlignLeft);
     rb_mdi = newradiobutton("MDI", rect(150, 10 , 70, 20), cMDI);
     rb_sdi = newradiobutton("SDI", rect(220, 10 , 70, 20), cSDI);
 
@@ -741,7 +741,7 @@ static void showDialog(Gui gui)
     rb_swin = newradiobutton("single window", rect(150, 60 , 150, 20), NULL);
     if(gui->pagerMultiple) check(rb_mwin); else check(rb_swin);
 
-    l_lang = newlabel("Language for menus\nand messages", 
+    l_lang = newlabel("Language for menus\nand messages",
 		      rect(320, 40, 130, 40), AlignLeft);
     f_lang = newfield(gui->language, rect(450, 45, 60, 20));
 
@@ -801,7 +801,7 @@ static void showDialog(Gui gui)
 
 /* Graphics window */
     l_grx = newlabel("Graphics windows: initial left",
-		    rect(10, 260, 190, 20), AlignLeft);
+		     rect(10, 260, 190, 20), AlignLeft);
     sprintf(buf, "%d", gui->grx);
     f_grx = newfield(buf, rect(200, 260, 40, 20));
     l_gry = newlabel("top", rect(270, 260, 30, 20), AlignLeft);
@@ -835,8 +835,8 @@ static void showDialog(Gui gui)
 
 void Rgui_configure()
 {
-    struct structGUI curGUI;  
-    
+    struct structGUI curGUI;
+
     getActive(&curGUI);
     showDialog(&curGUI);
 }

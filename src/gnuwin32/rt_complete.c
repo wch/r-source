@@ -46,9 +46,9 @@ static int gl_tab(char *buf, int offset, int *loc)
     len = strlen(buf);
     count = 8 - (offset + *loc) % 8;
     for (i=len; i >= *loc; i--)
-        buf[i+count] = buf[i];
+	buf[i+count] = buf[i];
     for (i=0; i < count; i++)
-        buf[*loc+i] = ' ';
+	buf[*loc+i] = ' ';
     i = *loc;
     *loc = i + count;
     return i;
@@ -64,12 +64,12 @@ static int rt_completion(char *buf, int offset, int *loc)
     ParseStatus status;
 
     if(!completion_available) return gl_tab(buf, offset, loc);
-    
+
     if(completion_available < 0) {
 	char *p = getenv("R_COMPLETION");
 	if(p && strcmp(p, "FALSE") == 0) {
 	    completion_available = 0;
-	    return gl_tab(buf, offset, loc);   
+	    return gl_tab(buf, offset, loc);
 	}
 	/* First check if namespace is loaded */
 	if(findVarInFrame(R_NamespaceRegistry, install("utils"))
@@ -115,7 +115,7 @@ static int rt_completion(char *buf, int offset, int *loc)
     for(i = 0; i < length(cmdexpr); i++)
 	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
     UNPROTECT(2);
-    
+
     /* ans has the form list(addition, possible), where 'addition' is
        unique additional text if any, and 'possible' is a character
        vector holding possible completions if any (already formatted
