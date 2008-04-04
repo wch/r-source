@@ -265,5 +265,10 @@ reg.finalizer <- function(e, f, onexit = FALSE)
 Encoding <- function(x) .Internal(Encoding(x))
 `Encoding<-` <- function(x, value) .Internal(setEncoding(x, value))
 
+setTimeLimit <- function(cpu = Inf, elapsed = Inf, transient = FALSE)
+    .Internal(setTimeLimit(cpu, elapsed, transient))
+setSessionTimeLimit <- function(cpu = Inf, elapsed = Inf)
+    .Internal(setSessionTimeLimit(cpu, elapsed))
+
 ## base has no S4 generics
 .noGenerics <- TRUE

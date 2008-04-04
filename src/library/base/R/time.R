@@ -16,6 +16,11 @@
 
 system.time <- function(expr, gcFirst = TRUE)
 {
+    ppt <- function(y) {
+        if(!is.na(y[4])) y[1] <- y[1] + y[4]
+        if(!is.na(y[5])) y[2] <- y[2] + y[5]
+        y[1:3]
+    }
     if(!exists("proc.time")) return(rep(NA_real_, 5))
     loc.frame <- parent.frame()
     if(gcFirst)  gc(FALSE)
@@ -23,7 +28,7 @@ system.time <- function(expr, gcFirst = TRUE)
     time <- proc.time()
     ## need on.exit after 'time' has been set:
     ## on some systems proc.time throws an error.
-    on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
+    on.exit(cat("Timing stopped at:", ppt(proc.time() - time), "\n"))
     eval(expr, envir = loc.frame)
     new.time <- proc.time()
     on.exit()

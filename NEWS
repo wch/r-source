@@ -17,11 +17,14 @@ NEW FEATURES
     o	format(), formatC() and prettyNum() gain a new argument
 	'drop0trailing' which can be used to suppress trailing "0"s.
 
+    o	Experimental setTimeLimit() function to set limits on the CPU
+	and.or elapsed time for each top-level computation.
+
 
 PACKAGE INSTALLATION
 
     o	LazyLoad: yes is now the default, so packages wanting to avoid
-	lazy loading must set LazyLoad: no (or an equivalent value) in
+	lazy loading must set 'LazyLoad: no' (or an equivalent value) in
 	the DESCRIPTION file.
 
 

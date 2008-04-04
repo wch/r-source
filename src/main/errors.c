@@ -123,9 +123,31 @@ void R_CheckUserInterrupt(void)
     R_ProcessEvents();
 #else
     R_PolledEvents();
+    /* the same code is in R_ProcessEvents on Windows */
+    if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
+	double cpu, data[5];
+	R_getProcTime(data);
+	cpu = data[0] + data[1] + data[3] + data[4];
+	if (elapsedLimit > 0.0 && data[2] > elapsedLimit) {
+	    cpuLimit = elapsedLimit = -1;
+	    if (elapsedLimit2 > 0.0 && data[2] > elapsedLimit2) {
+		elapsedLimit2 = -1.0;
+		error(_("reached session elapsed time limit"));
+	    } else
+		error(_("reached elapsed time limit"));
+	}
+	if (cpuLimit > 0.0 && cpu > cpuLimit) {
+	    cpuLimit = elapsedLimit = -1;
+	    if (cpuLimit2 > 0.0 && cpu > cpuLimit2) {
+		cpuLimit2 = -1.0;
+		error(_("reached session CPU time limit"));
+	    } else
+		error(_("reached CPU time limit"));
+	}
+    }
     if (R_interrupts_pending)
 	onintr();
-#endif /* Win32 */
+#endif /* Aqua or Win32 */
 }
 
 void onintr()

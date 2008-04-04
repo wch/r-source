@@ -701,6 +701,15 @@ extern int Rf_initEmbeddedR(int argc, char **argv);
 
 extern char	*R_GUIType	INI_as("unknown");
 
+extern double cpuLimit			INI_as(-1.0);
+extern double cpuLimit2			INI_as(-1.0);
+extern double cpuLimitValue		INI_as(-1.0);
+extern double elapsedLimit		INI_as(-1.0);
+extern double elapsedLimit2		INI_as(-1.0);
+extern double elapsedLimitValue		INI_as(-1.0);
+
+void resetTimeLimits(void);
+
 #ifdef BYTECODE
 #define R_BCNODESTACKSIZE 10000
 extern0 SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;

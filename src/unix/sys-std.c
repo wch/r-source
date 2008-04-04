@@ -1288,6 +1288,8 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
         Timeout = (int) (R_wait_usec ? R_MIN(tm, R_wait_usec) : tm);
 	what = R_checkActivity(Timeout, 1);
 
+	/* For polling, elapsed time limit ... */
+	R_CheckUserInterrupt();
 	/* Time up? */
 #ifdef HAVE_GETTIMEOFDAY
 	gettimeofday(&tv, NULL);
