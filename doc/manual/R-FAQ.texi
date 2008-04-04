@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-03-28
+@set FAQ_DATE @value{FAQ_YEAR}-04-03
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -1425,8 +1425,7 @@ startup file @file{@env{$@w{R_HOME}}/library/base/R/Rprofile}.  Then, it
 searches for a site-wide startup profile unless the command line option
 @option{--no-site-file} was given.  The name of this file is taken from
 the value of the @env{R_PROFILE} environment variable.  If that variable
-is unset, the default is @file{@env{$R_HOME}/etc/Rprofile.site}
-(@file{@env{$R_HOME}/etc/Rprofile} in versions prior to 1.4.0).  This
+is unset, the default is @file{@env{$R_HOME}/etc/Rprofile.site}.  This
 code is loaded in package @strong{base}.  Then, unless
 @option{--no-init-file} was given, R searches for a file called
 @file{.Rprofile} in the current directory or in the user's home
@@ -2007,6 +2006,8 @@ Estimation of the effective dimension reduction (EDR) space.
 Evolutionary Monte Carlo (EMC) algorithm.
 @item EMCC
 Evolutionary Monte Carlo (EMC) methods for clustering.
+@item EMD
+Empirical mode decomposition and Hilbert spectral analysis.
 @item EMV
 Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
@@ -2070,6 +2071,8 @@ Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
 @item FunCluster
 Functional profiling of cDNA microarray expression data.
+@item FunNet
+Functional analysis of gene co-expression networks.
 @item G1DBN
 Dynamic Bayesian Network inference using 1st order conditional
 dependencies.
@@ -2368,6 +2371,9 @@ Propensity Score Analysis Graphics.
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
+@item Peaks
+Spectrum manipulation: background estimation, Markov smoothing,
+deconvolution and peaks search functions.
 @item PearsonICA
 Independent component analysis using score functions from the Pearson
 system.
@@ -2498,6 +2504,8 @@ engine in R.
 An interface to ScaLAPACK functions from R.
 @item RSVGTipsDevice
 An R @acronym{SVG} graphics device with dynamic tips and hyperlinks.
+@item RSeqMeth
+analysis of Sequenom EpiTYPER data.
 @item RSvgDevice
 A graphics device for R that uses the new w3.org @XML{} standard for
 Scalable Vector Graphics.
@@ -2767,6 +2775,8 @@ Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item VaR
 Methods for calculation of Value at Risk (VaR).
+@item WINRPACK
+Reads in WIN pickfile and waveform files.
 @item WWGbook
 Functions and datasets for the book ``Linear Mixed Models: A Practical
 Guide Using Statistical Software'' by B. West, K. Welch, and A. Galecki,
@@ -3322,6 +3332,9 @@ Dynamic Time Warping algorithms.
 Time series regression.
 @item dynamicGraph
 Interactive graphical tool for manipulating graphs.
+@item dynamicTreeCut
+Methods for detection of clusters in hierarchical clustering
+dendrograms.
 @item dynlm
 Dynamic linear models and time series regression.
 @item e1071
@@ -4207,8 +4220,13 @@ Mode estimation and Chernoff distribution.
 Multiscale analysis for density functions.
 @item modeltools
 A collection of tools to deal with statistical models.
+@item moduleColor
+Methods for color labeling, calculation of eigengenes, and merging of
+closely related modules.
 @item mokken
 Mokken Scale Analysis for test and questionnaire data.
+@item mombf
+Moment and inverse moment Bayes factors.
 @item moments
 Moments, skewness, kurtosis and related tests.
 @item monomvn
@@ -4315,6 +4333,8 @@ a Gibbs sampler.
 @c @item netCDF
 @c Read data from netCDF files.
 @c </COMMENT>
+@item netmodels
+Tools for the study of scale free and small world networks.
 @item network
 Tools to create and modify network objects, which can represent a range
 of relational data types.
@@ -4376,6 +4396,9 @@ number of observations that need to be removed such that the reduced
 data set has no longer overlap.
 @item np
 Nonparametric kernel smoothing methods for mixed datatypes.
+@item npde
+Normalized prediction distribution errors for nonlinear mixed-effect
+models.
 @item nplplot
 Plotting non-parametric LOD scores from multiple input files.
 @item npmc
@@ -6277,9 +6300,9 @@ R_LIBS="~/lib/R:/usr/local/lib/R-contrib"
 @end example
 
 @noindent
-your @file{~/.Renviron} file.  (Note that no @code{export} statement is
-needed or allowed in this file; see the on-line help for @code{Startup}
-for more information.)
+your environment (e.g., @file{~/.Renviron}) file.  (Note that no
+@code{export} statement is needed or allowed in this file; see the
+on-line help for @code{Startup} for more information.)
 
 @node How can add-on packages be used?, How can add-on packages be removed?, How can add-on packages be installed?, R Add-On Packages
 @section How can add-on packages be used?
