@@ -227,6 +227,9 @@ OTHERS
     o	The download progress bar now shows the percentage done in the
     	title bar (and hence in the Windows task bar).
 
+    o	download.file() now selects mode="wb" if 'mode' is not
+    	supplied and the file extension on the url looks like a binary file.
+
 
 BUILDING R
 
