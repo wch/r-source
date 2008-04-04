@@ -123,40 +123,24 @@ void R_setStartTime(void)
     StartTime = GetTickCount();
 }
 
-/*
-typedef struct _FILETIME {
-    DWORD dwLowDateTime;
-    DWORD dwHighDateTime;
-} FILETIME;
-*/
-
 void R_getProcTime(double *data)
 {
     DWORD elapsed;
     double kernel, user;
-    OSVERSIONINFO verinfo;
+
     /* This is in msec, but to clock-tick accuracy,
        said to be 10ms on NT and 55ms on Win95 */
     elapsed = (GetTickCount() - StartTime) / 10;
 
-    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-    GetVersionEx(&verinfo);
-    switch(verinfo.dwPlatformId) {
-    case VER_PLATFORM_WIN32_NT:
-	/* These are in units of 100ns, but with an accuracy only
-	   in clock ticks.  So we round to 0.01s */
-	GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User);
-	user = 1e-5 * ((double) User.dwLowDateTime +
-		       (double) User.dwHighDateTime * 4294967296.0);
-	user = floor(user)/100.0;
-	kernel = 1e-5 * ((double) Kernel.dwLowDateTime +
-			 (double) Kernel.dwHighDateTime * 4294967296.0);
-	kernel = floor(kernel)/100.0;
-	break;
-    default:
-	user = R_NaReal;
-	kernel = R_NaReal;
-    }
+    /* These are in units of 100ns, but with an accuracy only
+       in clock ticks.  So we round to 0.01s */
+    GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User);
+    user = 1e-5 * ((double) User.dwLowDateTime +
+		   (double) User.dwHighDateTime * 4294967296.0);
+    user = floor(user)/100.0;
+    kernel = 1e-5 * ((double) Kernel.dwLowDateTime +
+		     (double) Kernel.dwHighDateTime * 4294967296.0);
+    kernel = floor(kernel)/100.0;
     data[0] = user;
     data[1] = kernel;
     data[2] = (double) elapsed / 100.0;
