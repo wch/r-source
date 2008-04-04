@@ -49,7 +49,7 @@ struct structConsoleData {
     int   sel, mx0, my0, mx1, my1;	/* selection */
     xbuf  lbuf;			/* lines buffer */
     int   firstkey, numkeys;	/* keys buffer */
-    char *kbuf;
+    wchar_t *kbuf;
     int   already;              /* number of keys in buffer to be processed
 				   before clipb. */
     wchar_t *clp;                 /* data from the clipboard */

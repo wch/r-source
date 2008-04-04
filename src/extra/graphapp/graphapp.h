@@ -956,30 +956,31 @@ rect    GetCurrentWinPos(window obj);
  *  Window creation flags.
  */
 
-#define SimpleWindow		0x00000000L
+#define SimpleWindow	0x00000000L
 
-#define Menubar			0x00000010L
-#define Titlebar		0x00000020L
-#define Closebox		0x00000040L
-#define Resize			0x00000080L
-#define Maximize		0x00000100L
-#define Minimize		0x00000200L
+#define Menubar		0x00000010L
+#define Titlebar	0x00000020L
+#define Closebox	0x00000040L
+#define Resize		0x00000080L
+#define Maximize	0x00000100L
+#define Minimize	0x00000200L
 #define HScrollbar	0x00000400L
 #define VScrollbar	0x00000800L
-#define CanvasSize		0x00200000L
+#define CanvasSize	0x00200000L
 
-#define Modal			0x00001000L
-#define Floating		0x00002000L
-#define Centered		0x00004000L
+#define Modal		0x00001000L
+#define Floating	0x00002000L
+#define Centered	0x00004000L
 #define Centred		0x00004000L
 
-#define Workspace		0x00010000L
-#define Document		0x00020000L
+#define Workspace	0x00010000L
+#define Document	0x00020000L
 #define ChildWindow	0x00040000L
 
 #define TrackMouse	0x00080000L
 
 #define UsePalette	0x00100000L
+#define UseUnicode	0x00200000L
 
 #define StandardWindow	(Titlebar|Closebox|Resize|Maximize|Minimize)
 

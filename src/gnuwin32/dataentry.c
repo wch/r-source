@@ -1071,6 +1071,19 @@ static void de_normalkeyin(control c, int k)
 
 }
 
+static void de_im(control c, font *f, point *pt)
+{
+    DEstruct DE = getdata(c);
+    int x, y;
+
+    drawelt(DE, DE->crow, DE->ccol);
+    gsetcursor(DE->de, ArrowCursor);
+    find_coords(DE, DE->crow, DE->ccol, &x, &y);
+    pt->x = x + DE->text_xoffset + DE->clength * fontwidth(consolefn);
+    pt->y = y - DE->text_yoffset - 1;
+    *f = consolefn;
+}
+
 static void de_ctrlkeyin(control c, int key)
 {
     int st, i;
@@ -1756,6 +1769,7 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
     setkeyaction(c, de_ctrlkeyin);
     if(DE->isEditor) {
 	setkeydown(c, de_normalkeyin);
+	setim(c, de_im);
 	setmousedown(c, de_mousedown);
 	setmouseup(c, de_mouseup);
     }
