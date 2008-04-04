@@ -70,7 +70,7 @@ function(file)
                       })))
             }
         },
-                            error = .identity)
+                            error = identity)
         if(!inherits(entries, "error") && NCOL(entries) == 2L)
             y <- rbind(y, entries)
     }

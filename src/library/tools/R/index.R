@@ -96,8 +96,7 @@ function(demoDir)
     if(!length(demoTopics)) return(matrix("", 0L, 2L))
     demoIndex <- cbind(demoTopics, "")
     if(file_test("-f", INDEX <- file.path(demoDir, "00Index"))) {
-        demoEntries <- tryCatch(read.00Index(INDEX),
-                                error = .identity)
+        demoEntries <- tryCatch(read.00Index(INDEX), error = identity)
         if(inherits(demoEntries, "error"))
             warning(gettextf("cannot read index information in file '%s'",
                              INDEX),

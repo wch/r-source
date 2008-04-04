@@ -2640,7 +2640,7 @@ function(db, def_enc = FALSE)
     names(db_aliases) <- names(db)
 
     for(f in names(db)) {
-        x <- tryCatch(Rd_parse(text = db[[f]]), error = .identity)
+        x <- tryCatch(Rd_parse(text = db[[f]]), error = identity)
 
         if(inherits(x, "error")) {
             files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
@@ -3305,7 +3305,7 @@ function(dir)
                                 shQuote(file.path(R.home("share"),
                                                   "make", "check.mk"))),
                         intern = TRUE, ignore.stderr = TRUE),
-                 error = .identity)
+                 error = identity)
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
@@ -4527,7 +4527,7 @@ function(package_name)
 .parse_text_as_much_as_possible <-
 function(txt)
 {
-    exprs <- tryCatch(parse(text = txt), error = .identity)
+    exprs <- tryCatch(parse(text = txt), error = identity)
     if(!inherits(exprs, "error")) return(exprs)
     exprs <- expression()
     lines <- unlist(strsplit(txt, "\n"))
@@ -4535,7 +4535,7 @@ function(txt)
     while((n <- length(lines)) > 0L) {
         i <- 1L; txt <- lines[1L]
         while(inherits(yy <- tryCatch(parse(text = txt),
-                                      error = .identity),
+                                      error = identity),
                        "error")
               && (i < n)) {
             i <- i + 1L; txt <- paste(txt, lines[i], collapse = "\n")

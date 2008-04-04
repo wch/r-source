@@ -223,7 +223,6 @@ function(file, pdf = FALSE, clean = FALSE,
         } else {
             extra <- quiet <- ""
         }
-        cat("ABC", ignore.stderr, "\n")
         if(system(paste(shQuote(texi2dvi), quiet, pdf, clean,
                         shQuote(file), extra),
                   ignore.stderr = ignore.stderr))
@@ -523,12 +522,6 @@ local({
 function()
     c("Package", "Version", "Priority", "Bundle",
       "Contains", "Depends", "Imports", "Suggests")
-
-### ** .identity
-
-.identity <-
-function(x)
-    x
 
 ### ** .is_ASCII
 
@@ -981,7 +974,7 @@ function(expr)
                                                collapse = "\n"),
                                          call. = FALSE)
                                 }),
-                   error = .identity,
+                   error = identity,
                    finally = {
                        sink(type = "message")
                        sink(type = "output")

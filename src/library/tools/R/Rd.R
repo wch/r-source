@@ -858,7 +858,7 @@ function(txt, cmd, FUN)
 function(db, FUN, ...)
 {
     db <- lapply(db,
-                 function(t) tryCatch(FUN(t, ...), error = .identity))
+                 function(t) tryCatch(FUN(t, ...), error = identity))
     idx <- as.logical(sapply(db, inherits, "error"))
     if(any(idx)) {
 	msg <- gettext("Rd syntax errors found")
