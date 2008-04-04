@@ -404,11 +404,14 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
 		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbar(pbar.pb, 0);
+		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
 		begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
 			     R_NilValue, R_NilValue, R_NilValue);
 		pbar.cntxt.cend = &doneprogressbar;
 		pbar.cntxt.cenddata = &pbar;
+		pbar.pc = 0;
 	    }
 #endif
 	    while ((len = in_R_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
@@ -507,6 +510,8 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
 		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbar(pbar.pb, 0);
+		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
 
 		/* set up a context which will close progressbar on error. */
@@ -514,6 +519,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 			     R_NilValue, R_NilValue, R_NilValue);
 		pbar.cntxt.cend = &doneprogressbar;
 		pbar.cntxt.cenddata = &pbar;
+		pbar.pc = 0;
 	    }
 	    
 #endif
