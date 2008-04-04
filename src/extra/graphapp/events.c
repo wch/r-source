@@ -500,9 +500,35 @@ static long handle_message(HWND hwnd, UINT message,
 	handle_keyup(LOWORD(wParam));
 	break;
 
-    case WM_CHAR:
+    case WM_CHAR: /* SBCS Only */
 	handle_char(obj, LOWORD(wParam));
 	return 0;
+
+    case WM_IME_COMPOSITION: /* DBCS Only */
+	if (lParam & GCS_RESULTSTR){ /* is fixed multibyte string */
+	    HIMC            himc = ImmGetContext(hwnd);
+	    wchar_t         buf[80];
+	    wchar_t         *p;
+	    int             i;
+	    int             len;
+
+	    if(obj->flags & UseUnicode){
+		/* len is byte */
+		len = ImmGetCompositionStringW(himc, GCS_RESULTSTR, NULL,0);
+		if(NULL ==(p=( len > sizeof(buf)-1)?calloc(len,sizeof(char)):buf)){
+		    len=sizeof(buf);
+		    p=buf;
+		}
+		ImmGetCompositionStringW(himc,GCS_RESULTSTR, p, len);
+		ImmReleaseContext(hwnd,himc);
+		for(i=0;i<(len/sizeof(wchar_t));i++){
+		    handle_char(obj, p[i]);
+		}
+		if(p!=buf) free(p);
+		return 0;
+	    }
+	}
+	break;
 
     case WM_SETFOCUS:
 	handle_focus(obj, 1);
@@ -609,7 +635,7 @@ static long handle_message(HWND hwnd, UINT message,
 	    COMPOSITIONFORM cf;
 
 	    himc = ImmGetContext(hwnd);
-	    obj->call->im(obj, &f, (point *) &cf.ptCurrentPos);
+	    obj->call->im(obj, &f, (void *) &cf.ptCurrentPos);
 	    GetObject(f->handle, sizeof(LOGFONT), &lf);
 	    ImmSetCompositionFont(himc, &lf);
 		cf.dwStyle = CFS_POINT;
