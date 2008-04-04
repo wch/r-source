@@ -49,18 +49,24 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     } else if(d < 1.1*60*60*24*365) { # months
         class(z) <- c("POSIXt", "POSIXct")
         zz <- as.POSIXlt(z)
-        zz$mday <- 1; zz$isdst <- zz$hour <- zz$min <- zz$sec <- 0
+        zz$mday <- zz$wday <- zz$yday <- 1
+        zz$isdst <- -1; zz$hour <- zz$min <- zz$sec <- 0
         zz$mon <- pretty(zz$mon)
-        m <- length(zz$mon)
+        m <- length(zz$mon); M <- 2*m
         m <- rep.int(zz$year[1], m)
         zz$year <- c(m, m+1)
+        zz <- lapply(zz, function(x) rep(x, length = M))
+        class(zz) <- c("POSIXt", "POSIXlt")
         z <- as.POSIXct(zz)
         if(missing(format)) format <- "%b"
     } else { # years
         class(z) <- c("POSIXt", "POSIXct")
         zz <- as.POSIXlt(z)
-        zz$mday <- 1; zz$isdst <- zz$mon <- zz$hour <- zz$min <- zz$sec <- 0
-        zz$year <- pretty(zz$year)
+        zz$mday <- zz$wday <- zz$yday <- 1
+        zz$isdst <- -1; zz$mon <- zz$hour <- zz$min <- zz$sec <- 0
+        zz$year <- pretty(zz$year); M <- length(zz$year)
+        zz <- lapply(zz, function(x) rep(x, length = M))
+        class(zz) <- c("POSIXt", "POSIXlt")
         z <- as.POSIXct(zz)
         if(missing(format)) format <- "%Y"
     }
