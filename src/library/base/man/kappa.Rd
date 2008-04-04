@@ -1,6 +1,7 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
+% Copyright 2008 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{kappa}
@@ -23,13 +24,15 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 \alias{kappa.qr}
 \alias{kappa.tri}
 \arguments{
-  \item{z}{A matrix or a the result of \code{\link{qr}} or a fit from a class
+  \item{z,x}{A matrix or a the result of \code{\link{qr}} or a fit from a class
     inheriting from \code{"lm"}.}
   \item{exact}{logical. Should the result be exact?}
   \item{norm}{character string, specifying the matrix norm wrt to which
     the condition number is to be computed.  \code{"O"}, the default,
     means the \bold{O}ne- or 1-norm.  The (currently only) other
     possible value is \code{"I"} for the infinity norm.}
+  \item{method}{character string, specifying the method to be used;
+    \code{"qr"} is default for back-compatibility, mainly.}
   \item{triangular}{logical.  If true, the matrix used is just the lower
     triangular part of \code{z}.}
   \item{LINPACK}{logical.  If true and \code{z} is not complex, the
