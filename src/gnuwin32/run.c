@@ -140,7 +140,7 @@ static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
     sa.lpSecurityDescriptor = NULL;
     sa.bInheritHandle = TRUE;
 
-    if (!(ecmd = expandcmd(cmd))) /* error message already set */ 
+    if (!(ecmd = expandcmd(cmd))) /* error message already set */
 	return NULL;
     hTHIS = GetCurrentProcess();
     if (finput && finput[0]) {
@@ -181,7 +181,7 @@ static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
 	case 1:
 	    wsi.wShowWindow = SW_SHOWDEFAULT;
 	    break;
-	}	
+	}
     } else {
 	si.cb = sizeof(si);
 	si.lpReserved = NULL;
@@ -211,19 +211,19 @@ static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
 	    break;
 	}
     }
-    
+
 
     if(enc == CE_UTF8) {
 	int n = strlen(ecmd); /* max no of chars */
 	wcmd = (wchar_t *) alloca(2 * (n+1));
 	Rf_utf8towcs(wcmd, ecmd, n+1);
 	ret = CreateProcessW(NULL, wcmd, &sa, &sa, TRUE,
-			     (newconsole && (visible == 1)) ? 
+			     (newconsole && (visible == 1)) ?
 			     CREATE_NEW_CONSOLE : 0,
 			     NULL, NULL, &wsi, &pi);
-    } else 
+    } else
 	ret = CreateProcess(NULL, ecmd, &sa, &sa, TRUE,
-			    (newconsole && (visible == 1)) ? 
+			    (newconsole && (visible == 1)) ?
 			    CREATE_NEW_CONSOLE : 0,
 			    NULL, NULL, &si, &pi);
 
@@ -306,7 +306,7 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *fin
    io = 0 to read stdout from pipe, 1 to write to pipe,
    2 to read stdout and stderr from pipe.
  */
-rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible, 
+rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 		  const char *finput, int io)
 {
     rpipe *r;
@@ -585,7 +585,7 @@ Rconnection newWpipe(const char *description, int ienc, const char *mode)
     Rconnection new;
     char *command;
     int len;
-    
+
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of pipe connection failed"));
     new->class = (char *) malloc(strlen("pipe") + 1);
@@ -594,31 +594,31 @@ Rconnection newWpipe(const char *description, int ienc, const char *mode)
 	error(_("allocation of pipe connection failed"));
     }
     strcpy(new->class, "pipe");
-    
+
     len = strlen(getenv("COMSPEC")) + strlen(description) + 5;
     command = (char *) malloc(len);
-    if (command) 
-    	new->description = (char *) malloc(len);
+    if (command)
+	new->description = (char *) malloc(len);
     else
-        new->description = NULL;
-        
+	new->description = NULL;
+
     if(!new->description) {
-    	free(command); free(new->class); free(new);
+	free(command); free(new->class); free(new);
 	error(_("allocation of pipe connection failed"));
     }
-    
-/* We always use COMSPEC here, not R_SHELL or SHELL,
-   for compatibility with Rterm.
-   We also use /c for the same reason.
-*/
-   
+
+    /* We always use COMSPEC here, not R_SHELL or SHELL,
+       for compatibility with Rterm.
+       We also use /c for the same reason.
+    */
+
     strcpy(command, getenv("COMSPEC"));
     strcat(command, " /c ");
     strcat(command, description);
-    
+
     init_con(new, command, ienc, mode);
     free(command);
-    
+
     new->open = &Wpipe_open;
     new->close = &Wpipe_close;
     new->destroy = &Wpipe_destroy;

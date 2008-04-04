@@ -173,7 +173,7 @@ dos_wglob(const wchar_t *pattern, int flags,
     pglob->gl_flags = flags & ~GLOB_MAGCHAR;
     pglob->gl_errfunc = errfunc;
     pglob->gl_matchc = 0;
-    
+
     bufnext = patbuf;
     bufend = bufnext + MAXPATHLEN - 1;
 #ifdef DOSISH
@@ -210,7 +210,7 @@ dos_wglob(const wchar_t *pattern, int flags,
 		    c != '-' && c != '{' && c != '}' &&
 		    c != '~' && c != '\\') {
 #else
-	        if ((c = *patnext++) == BG_EOS) {
+		if ((c = *patnext++) == BG_EOS) {
 #endif
 		    c = BG_QUOTE;
 		    --patnext;
@@ -218,7 +218,7 @@ dos_wglob(const wchar_t *pattern, int flags,
 		*bufnext++ = c | M_PROTECT;
 	    } else
 		*bufnext++ = c;
-        } else
+	} else
 	    while (bufnext < bufend && (c = *patnext++) != BG_EOS)
 		*bufnext++ = c;
     *bufnext = BG_EOS;
@@ -830,7 +830,7 @@ match(register wchar_t *name, register wchar_t *pat, register wchar_t *patend, i
 	    k = *name++;
 	    if (nocase ? (towlower(k) != towlower(c)) : (k != c))
 		return(0);
-		      break;
+	    break;
 	}
     }
     return(*name == BG_EOS);

@@ -19,9 +19,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
-         /* See ../unix/system.txt for a description of functions */
+	 /* See ../unix/system.txt for a description of functions */
 
-        /* Windows analogue of unix/sys-unix.c: often rather similar */
+	/* Windows analogue of unix/sys-unix.c: often rather similar */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -71,10 +71,10 @@ const char *R_ExpandFileName(const char *s)
     if(isalpha(s[1])) return s;
     if(HaveHOME < 0) {
 	HaveHOME = 0;
- 	p = getenv("R_USER"); /* should be set so the rest is a safety measure */
+	p = getenv("R_USER"); /* should be set so the rest is a safety measure */
 	if(p && strlen(p) && strlen(p) < PATH_MAX) {
 	    strcpy(UserHOME, p);
-	    HaveHOME = 1; 
+	    HaveHOME = 1;
 	} else {
 	    p = getenv("HOME");
 	    if(p && strlen(p) && strlen(p) < PATH_MAX) {
@@ -125,11 +125,11 @@ void R_setStartTime(void)
 
 /*
 typedef struct _FILETIME {
-    DWORD dwLowDateTime; 
-    DWORD dwHighDateTime; 
-} FILETIME; 
+    DWORD dwLowDateTime;
+    DWORD dwHighDateTime;
+} FILETIME;
 */
- 
+
 void R_getProcTime(double *data)
 {
     DWORD elapsed;
@@ -146,10 +146,10 @@ void R_getProcTime(double *data)
 	/* These are in units of 100ns, but with an accuracy only
 	   in clock ticks.  So we round to 0.01s */
 	GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User);
-	user = 1e-5 * ((double) User.dwLowDateTime + 
+	user = 1e-5 * ((double) User.dwLowDateTime +
 		       (double) User.dwHighDateTime * 4294967296.0);
 	user = floor(user)/100.0;
-	kernel = 1e-5 * ((double) Kernel.dwLowDateTime + 
+	kernel = 1e-5 * ((double) Kernel.dwLowDateTime +
 			 (double) Kernel.dwHighDateTime * 4294967296.0);
 	kernel = floor(kernel)/100.0;
 	break;
@@ -166,7 +166,7 @@ void R_getProcTime(double *data)
 
 double R_getClockIncrement(void)
 {
-  return 1.0 / 100.0;
+    return 1.0 / 100.0;
 }
 #endif /* _R_HAVE_TIMING_ */
 
@@ -220,7 +220,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
     }
     if (flag < 2) {
-	ll = runcmd(CHAR(STRING_ELT(CAR(args), 0)), 
+	ll = runcmd(CHAR(STRING_ELT(CAR(args), 0)),
 		    getCharCE(STRING_ELT(CAR(args), 0)),
 		    flag, vis,
 		    CHAR(STRING_ELT(CADDR(args), 0)));
@@ -230,7 +230,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int m = 0;
 	if(flag == 2 /* show on console */ || CharacterMode == RGui) m = 2;
 	if(ignore_stderr) m = 0;
-	fp = rpipeOpen(CHAR(STRING_ELT(CAR(args), 0)), 
+	fp = rpipeOpen(CHAR(STRING_ELT(CAR(args), 0)),
 		       getCharCE(STRING_ELT(CAR(args), 0)),
 		       vis, CHAR(STRING_ELT(CADDR(args), 0)), m);
 	if (!fp) {

@@ -213,43 +213,43 @@ GuiReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 /* 'Reader thread' main function */
 static void __cdecl ReaderThread(void *unused)
 {
-  while(1) {
-    WaitForSingleObject(EhiWakeUp,INFINITE);
-    tlen = InThreadReadConsole(tprompt,tbuf,tlen,thist);
-    lineavailable = 1;
-    PostThreadMessage(mainThreadId, 0, 0, 0);
-  }
+    while(1) {
+	WaitForSingleObject(EhiWakeUp,INFINITE);
+	tlen = InThreadReadConsole(tprompt,tbuf,tlen,thist);
+	lineavailable = 1;
+	PostThreadMessage(mainThreadId, 0, 0, 0);
+    }
 }
 
 static int
 ThreadedReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 {
-  sighandler_t oldint,oldbreak;
-  /*
-   *   SIGINT/SIGBREAK when ESS is waiting for output are a real pain:
-   *   they get processed after user hit <return>.
-   *   The '^C\n' in raw Rterm is nice. But, do we really need it ?
-  */
-  oldint = signal(SIGINT, SIG_IGN);
-  oldbreak = signal(SIGBREAK, SIG_IGN);
-  mainThreadId = GetCurrentThreadId();
-  lineavailable = 0;
-  tprompt = prompt;
-  tbuf = buf;
-  tlen = len;
-  thist = addtohistory;
-  SetEvent(EhiWakeUp);
-  while (1) {
-    if (!peekevent()) WaitMessage();
-    if (lineavailable) break;
-    doevent();
-    if(R_tcldo) R_tcldo();
-  }
-  lineavailable = 0;
-  /* restore handler  */
-  signal(SIGINT,oldint);
-  signal(SIGBREAK,oldbreak);
-  return tlen;
+    sighandler_t oldint,oldbreak;
+    /*
+     *   SIGINT/SIGBREAK when ESS is waiting for output are a real pain:
+     *   they get processed after user hit <return>.
+     *   The '^C\n' in raw Rterm is nice. But, do we really need it ?
+     */
+    oldint = signal(SIGINT, SIG_IGN);
+    oldbreak = signal(SIGBREAK, SIG_IGN);
+    mainThreadId = GetCurrentThreadId();
+    lineavailable = 0;
+    tprompt = prompt;
+    tbuf = buf;
+    tlen = len;
+    thist = addtohistory;
+    SetEvent(EhiWakeUp);
+    while (1) {
+	if (!peekevent()) WaitMessage();
+	if (lineavailable) break;
+	doevent();
+	if(R_tcldo) R_tcldo();
+    }
+    lineavailable = 0;
+    /* restore handler  */
+    signal(SIGINT,oldint);
+    signal(SIGBREAK,oldbreak);
+    return tlen;
 }
 
 
@@ -311,9 +311,6 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
 static void
 GuiWriteConsole(const char *buf,int len)
 {
-/*    char *p;
-
-    for (p = buf; *p; p++) if (*p == '\001') *p = EOF; */
     if (RConsole) consolewrites(RConsole, buf);
     else MessageBox(NULL, buf, "Console not found", MB_OK | MB_ICONEXCLAMATION);
 }
@@ -499,13 +496,13 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 			if (del) DeleteFileW(wfn);
 		    }
 		    else {
-			snprintf(buf, 1024, 
+			snprintf(buf, 1024,
 				 _("cannot open file '%s': %s"),
 				 file[i], strerror(errno));
 			warning(buf);
 		    }
 		} else {
-                    /* Quote path if necessary */
+		    /* Quote path if necessary */
 		    if(pager[0] != '"' && Rf_strchr(pager, ' '))
 			snprintf(buf, 1024, "\"%s\" \"%s\"", pager, file[i]);
 		    else
@@ -655,9 +652,9 @@ void R_SetWin32(Rstart Rp)
     putenv(UserRHome);
 
     /* Rterm and Rgui set CharacterMode during startup, then set Rp->CharacterMode
-       from it in cmdlineoptions().  Rproxy never calls cmdlineoptions, so we need the 
+       from it in cmdlineoptions().  Rproxy never calls cmdlineoptions, so we need the
        line below */
-       
+
     CharacterMode = Rp->CharacterMode;
     switch(CharacterMode) {
     case RGui:
@@ -696,7 +693,7 @@ static void Putenv(const char *str)
     if(!buf) R_ShowMessage("allocation failure in reading Renviron");
     strcpy(buf, str);
     putenv(buf);
-   /* no free here: storage remains in use */
+    /* no free here: storage remains in use */
 }
 
 
@@ -711,7 +708,7 @@ static void env_command_line(int *pac, char **argv)
 	++av;
 	if(strcmp(*av, "-e") == 0) {
 	    hadE = TRUE;
-	    argv[newac++] = *av; 
+	    argv[newac++] = *av;
 	    continue;
 	}
 	if(!hadE && **av != '-' && Rf_strchr(*av, '='))
@@ -727,17 +724,17 @@ char *PrintUsage(void)
 {
     static char msg[5000];
     char msg0[] =
-"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --encoding=enc        Specify encoding to be used for stdin\n  --save                Do save workspace at the end of the session\n  --no-save             Don't save it\n",
+	"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --encoding=enc        Specify encoding to be used for stdin\n  --save                Do save workspace at the end of the session\n  --no-save             Don't save it\n",
 	msg1[] =
-"  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved objects at startup\n  --no-restore-data     Don't restore previously saved objects\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
+	"  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved objects at startup\n  --no-restore-data     Don't restore previously saved objects\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
 	msg2[] =
-"  --vanilla             Combine --no-save, --no-restore, --no-site-file,\n                          --no-init-file and --no-environ\n  --min-vsize=N         Set vector heap min to N bytes; '4M' = 4 MegaB\n  --max-vsize=N         Set vector heap max to N bytes;\n  --min-nsize=N         Set min number of cons cells to N\n  --max-nsize=N         Set max number of cons cells to N\n",
+	"  --vanilla             Combine --no-save, --no-restore, --no-site-file,\n                          --no-init-file and --no-environ\n  --min-vsize=N         Set vector heap min to N bytes; '4M' = 4 MegaB\n  --max-vsize=N         Set vector heap max to N bytes;\n  --min-nsize=N         Set min number of cons cells to N\n  --max-nsize=N         Set max number of cons cells to N\n",
 	msg2b[] =
-"  --max-mem-size=N      Set limit for memory to be used by R\n  --max-ppsize=N        Set max size of protect stack to N\n",
+	"  --max-mem-size=N      Set limit for memory to be used by R\n  --max-ppsize=N        Set max size of protect stack to N\n",
 	msg3[] =
-"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
+	"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
 	msg4[] =
-"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file";
+	"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file";
     if(CharacterMode == RTerm)
 	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
     else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
@@ -757,14 +754,14 @@ void R_setupHistory(void)
     char *p;
 
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-        R_HistoryFile = ".Rhistory";
+	R_HistoryFile = ".Rhistory";
     R_HistorySize = 512;
     if ((p = getenv("R_HISTSIZE"))) {
-        value = R_Decode2Long(p, &ierr);
-        if (ierr != 0 || value < 0)
-            R_ShowMessage("WARNING: invalid R_HISTSIZE ignored;");
-        else
-            R_HistorySize = value;
+	value = R_Decode2Long(p, &ierr);
+	if (ierr != 0 || value < 0)
+	    R_ShowMessage("WARNING: invalid R_HISTSIZE ignored;");
+	else
+	    R_HistorySize = value;
     }
 }
 
@@ -803,13 +800,13 @@ int cmdlineoptions(int ac, char **av)
        we get all the name=value pairs. Otherwise these will
        have been removed by the time we get to call
        R_common_command_line().
-     */
+    */
     R_set_command_line_arguments(ac, av);
 
 
     /* set defaults for R_max_memory. This is set here so that
        embedded applications get no limit */
-    {    
+    {
 	MEMORYSTATUSEX ms;
 	ms.dwLength = sizeof(MEMORYSTATUSEX);
 	GlobalMemoryStatusEx(&ms); /* Win2k or later */
@@ -828,7 +825,7 @@ int cmdlineoptions(int ac, char **av)
     Rp->CharacterMode = CharacterMode;
     for (i = 1; i < ac; i++)
 	if (!strcmp(av[i], "--no-environ") || !strcmp(av[i], "--vanilla"))
-		Rp->NoRenviron = TRUE;
+	    Rp->NoRenviron = TRUE;
 
     Rp->CallBack = R_DoNothing;
     /* Here so that --ess and similar can change */
@@ -837,7 +834,7 @@ int cmdlineoptions(int ac, char **av)
 	if (isatty(0) && isatty(1)) {
 	    Rp->R_Interactive = TRUE;
 	    Rp->ReadConsole = ThreadedReadConsole;
-            InThreadReadConsole = CharReadConsole;
+	    InThreadReadConsole = CharReadConsole;
 	} else {
 	    Rp->R_Interactive = FALSE;
 	    Rp->ReadConsole = FileReadConsole;
@@ -846,7 +843,7 @@ int cmdlineoptions(int ac, char **av)
 	   so don't use that on those OSes */
 	{
 	    OSVERSIONINFO verinfo;
-    	    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	    GetVersionEx(&verinfo);
 	    switch(verinfo.dwPlatformId) {
 	    case VER_PLATFORM_WIN32_WINDOWS:
@@ -858,7 +855,7 @@ int cmdlineoptions(int ac, char **av)
 	}
 	R_Consolefile = stderr; /* used for errors */
 	R_Outputfile = stdout;  /* used for sink-able output */
-        Rp->WriteConsole = TermWriteConsole;
+	Rp->WriteConsole = TermWriteConsole;
 	Rp->ShowMessage = char_message;
 	Rp->YesNoCancel = char_YesNoCancel;
 	Rp->Busy = CharBusy;
@@ -873,7 +870,7 @@ int cmdlineoptions(int ac, char **av)
 
     pR_ShowMessage = Rp->ShowMessage; /* used here */
     TrueWriteConsole = Rp->WriteConsole;
-    /* Rp->WriteConsole is guaranteed to be set above, 
+    /* Rp->WriteConsole is guaranteed to be set above,
        so we know WriteConsoleEx is not used */
     R_CallBackHook = Rp->CallBack;
 
@@ -901,7 +898,7 @@ int cmdlineoptions(int ac, char **av)
 /* Assert that we are interactive even if input is from a file */
 		Rp->R_Interactive = TRUE;
 		Rp->ReadConsole = ThreadedReadConsole;
-                InThreadReadConsole = FileReadConsole;
+		InThreadReadConsole = FileReadConsole;
 	    } else if (!strcmp(*av, "--internet2")) {
 		UseInternet2 = TRUE;
 	    } else if (!strcmp(*av, "--mdi")) {
@@ -928,12 +925,12 @@ int cmdlineoptions(int ac, char **av)
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K': 'G'));
 		    R_ShowMessage(s);
 		} else if (value < 32 * Mega) {
-		    sprintf(s, _("WARNING: --max-mem-size=%4.1fM: too small and ignored\n"), 
+		    sprintf(s, _("WARNING: --max-mem-size=%4.1fM: too small and ignored\n"),
 			    value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
 		} else if (value > Virtual) {
-		    sprintf(s, _("WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"), 
-			    value/(1024.0 * 1024.0), 
+		    sprintf(s, _("WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"),
+			    value/(1024.0 * 1024.0),
 			    (unsigned int) (Virtual/(1024.0 * 1024.0)));
 		    R_max_memory = Virtual;
 		    R_ShowMessage(s);
@@ -951,8 +948,8 @@ int cmdlineoptions(int ac, char **av)
 		if(strcmp(*av, "-")) {
 		    ifp = R_fopen(*av, "r");
 		    if(!ifp) {
-			snprintf(s, 1024, 
-				 _("cannot open file '%s': %s"), 
+			snprintf(s, 1024,
+				 _("cannot open file '%s': %s"),
 				 *av, strerror(errno));
 			R_Suicide(s);
 		    }
@@ -963,8 +960,8 @@ int cmdlineoptions(int ac, char **av)
 		if(strcmp((*av)+7, "-")) {
 		    ifp = R_fopen( (*av)+7, "r");
 		    if(!ifp) {
-			snprintf(s, 1024, 
-				 _("cannot open file '%s': %s"), 
+			snprintf(s, 1024,
+				 _("cannot open file '%s': %s"),
 				 (*av)+7, strerror(errno));
 			R_Suicide(s);
 		    }
@@ -977,7 +974,7 @@ int cmdlineoptions(int ac, char **av)
 		} else {
 		    snprintf(s, 1024, _("WARNING: '-e %s' omitted as input is too long\n"), *av);
 		    R_ShowMessage(s);
-		}   
+		}
 	    } else {
 		snprintf(s, 1024, _("WARNING: unknown option '%s'\n"), *av);
 		R_ShowMessage(s);
@@ -1030,9 +1027,9 @@ int cmdlineoptions(int ac, char **av)
 	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 
     if (InThreadReadConsole &&
-        (!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
+	(!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
 	 (_beginthread(ReaderThread, 0, NULL) == -1)))
-      R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
+	R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
 
     R_setupHistory();
     return 0;

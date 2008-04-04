@@ -52,15 +52,13 @@ int optopenfile(const char *fname)
     return 1;
 }
 
-
-
 char *
 optfile(void)
 {
     return optfl;
 }
 
-int 
+int
 optline(void)
 {
     return optln;

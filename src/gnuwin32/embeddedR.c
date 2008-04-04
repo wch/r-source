@@ -86,14 +86,14 @@ int Rf_initialize_R(int argc, char **argv)
 
     snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     if(strncmp(getDLLVersion(), Rversion, 25) != 0) {
-        fprintf(stderr, "Error: R.DLL version does not match\n");
+	fprintf(stderr, "Error: R.DLL version does not match\n");
 	exit(1);
     }
 
     R_setStartTime();
     R_DefParams(Rp);
     if((RHome = get_R_HOME()) == NULL) {
-	fprintf(stderr, 
+	fprintf(stderr,
 		"R_HOME must be set in the environment or Registry\n");
 	exit(2);
     }
@@ -120,7 +120,7 @@ int Rf_initialize_R(int argc, char **argv)
     GA_initapp(0, 0);
     R_LoadRconsole = FALSE;
     readconsolecfg();
- 
+
     return 0;
 }
 

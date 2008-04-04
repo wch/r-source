@@ -52,7 +52,7 @@ int setDLLSearchPath(const char *path)
     int res = 0; /* failure */
     PSDD p = (PSDD) -1;
     static char wd[MAX_PATH] = "";  /* stored real current directory */
-    
+
     if(p == (PSDD) -1)
 	p = (PSDD) GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
 				  "SetDllDirectoryA");
@@ -74,10 +74,10 @@ int setDLLSearchPath(const char *path)
 #include <Rdynpriv.h>
 
 
-        /* Inserts the specified DLL at the head of the DLL list */
-        /* Returns 1 if the library was successfully added */
-        /* and returns 0 if the library table is full or */
-        /* or if LoadLibrary fails for some reason. */
+	/* Inserts the specified DLL at the head of the DLL list */
+	/* Returns 1 if the library was successfully added */
+	/* and returns 0 if the library table is full or */
+	/* or if LoadLibrary fails for some reason. */
 
 static void fixPath(char *path)
 {
@@ -85,7 +85,7 @@ static void fixPath(char *path)
     for(p = path; *p != '\0'; p++) if(*p == '\\') *p = '/';
 }
 
-static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now, 
+static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now,
 			       const char *search);
 static DL_FUNC getRoutine(DllInfo *info, char const *name);
 static void R_deleteCachedSymbols(DllInfo *dll);
@@ -126,7 +126,7 @@ static void R_deleteCachedSymbols(DllInfo *dll)
 }
 
 #ifndef _MCW_EM
-_CRTIMP unsigned int __cdecl 
+_CRTIMP unsigned int __cdecl
 _controlfp (unsigned int unNew, unsigned int unMask);
 _CRTIMP unsigned int __cdecl _clearfp (void);
 /* Control word masks for unMask */
@@ -136,7 +136,7 @@ _CRTIMP unsigned int __cdecl _clearfp (void);
 #define	_MCW_PC		0x00030000	/* Precision */
 #endif
 
-HINSTANCE R_loadLibrary(const char *path, int asLocal, int now, 
+HINSTANCE R_loadLibrary(const char *path, int asLocal, int now,
 			const char *search)
 {
     HINSTANCE tdlh;
@@ -198,4 +198,3 @@ static void GetFullDLLPath(SEXP call, char *buf, const char *path)
     /* fix slashes to allow inconsistent usage later */
     for (p = buf; *p; p++) if (*p == '\\') *p = '/';
 }
-

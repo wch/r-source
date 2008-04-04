@@ -51,9 +51,9 @@ extern void R_Suicide(char *s);
 
 char *getRUser()
 {
-   /*
-    * try R_USER then HOME then Windows homes then working directory
-    */
+    /*
+     * try R_USER then HOME then Windows homes then working directory
+     */
     char *p, *q;
 
     if ((p = getenv("R_USER"))) {
@@ -77,4 +77,3 @@ char *getRUser()
     if (*p == '/' || *p == '\\') *p = '\0';
     return RUser;
 }
-
