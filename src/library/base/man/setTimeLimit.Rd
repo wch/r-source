@@ -25,16 +25,22 @@ setSessionTimeLimit(cpu = Inf, elapsed = Inf)
   (unless \code{transient = TRUE} to subsequent top-level computations.
 
   \code{setSessionTimeLimit} sets limits for the rest of the
-  session. Once a session limit is reached it is reset to \code{Inf}.
+  session.  Once a session limit is reached it is reset to \code{Inf}.
 
   Setting any limit has a small overhead -- well under 1\% on the
   systems measured.
+
+  Time limits are checked whenever a user interrupt could occur.
+  This will happen frequently in \R code and during \code{\link{Sys.sleep}},
+  but only at points in compiled C and Foreign code identified by the
+  code author.
   
 #ifdef unix
   \sQuote{Total cpu time} includes that used by child processes where
   the latter is reported.
 
-  It is possible to build \R without support for
+  It is possible (but very unusual) to build \R without support for
   \code{\link{proc.time}}, in which case these functions have no effect.
+#endif
 }
 \keyword{ utilities }
