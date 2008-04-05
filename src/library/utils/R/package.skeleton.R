@@ -252,8 +252,7 @@ package.skeleton <-
         if(exists(item, envir = environment, inherits = FALSE)) {
             ff <- get(item, envir = environment)
             if(is(ff, "genericFunction") && !identical(ff@package, name)) # don't document
-                system(paste("rm ", file.path(docs_dir,
-                                              sprintf("%s.Rd", list0[item]))))
+                file.remove(file.path(docs_dir, sprintf("%s.Rd", list0[item])))
         }
     }
     if(inherits(yy, "try-error"))
