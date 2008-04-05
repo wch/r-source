@@ -133,6 +133,43 @@ TIME ZONES
 	(since legislators change time zones with little notice).
 
 
+GRAPHICS DEVICE CHANGES
+
+    o	Options "graphics.record", "windowsBuffered", "xpinch" and
+	"ypinch" have been replaced by a function windows.options() to
+	set the defaults for the arguments of the windows() device.
+
+    o	The windows() device has a new argument 'title' to set the
+	title of the window.
+
+    o	The windows() device no longer sizes the window to allow for
+	scrollbars that might be needed for rescale="fixed", which
+	means the default size really is 7 inches square and not 7.177
+	inches.
+
+    o	Saving a graphics window containing semi-transparent colours
+	to BMP, JPEG or PNG now works.
+
+    o	The bmp(), jpeg() and png() devices support semi-transparent
+	colours.  See ?png for use with transparent backgrounds.
+
+	Specifying 'res' to these devices now scales the text size and
+	line width.
+
+    o	Drawing circles is now done with an integer diameter rather
+	than radius and so can be more accurate for small circles.
+	You can see this in the pairs plot and coplot examples in
+	demo(graphics) which on a 96dpi system use diameter 5 rather
+	than radius 2.
+
+    o	There is a new tiff() graphics device, and an option to save to
+	TIFF from the graphics device menu and in savePlot().  (The
+	only advantage of (simple) TIFF over PNG is that some journals
+	are unable to cope with formats from as recently as 1996.)
+
+    o	savePlot() no longer automatically adds an extension to the filename.
+
+
 PACKAGE INSTALLATION
 
     o	Using PKG_C[XX]FLAGS instead of PKG_CPPFLAGS for -I and -D
@@ -165,18 +202,6 @@ OTHERS
 	variable GSC if R_GSCMD is unset.  (This is the variable used
 	by ps2pdf and similar batch files.)
 
-    o	Options "graphics.record", "windowsBuffered", "xpinch" and
-	"ypinch" have been replaced by a function windows.options() to
-	set the defaults for the arguments of the windows() device.
-
-    o	The windows() device has a new argument 'title' to set the
-	title of the window.
-
-    o	The windows() device no longer sizes the window to allow for
-	scrollbars that might be needed for rescale="fixed", which
-	means the default size really is 7 inches square and not 7.177
-	inches.
-
     o	loadRconsole() may now be used in Rterm and embedded R
 	(where it affects graphics windows and pagers).  Embedded R
 	no longer reads the Rconsole file on startup.
@@ -186,28 +211,6 @@ OTHERS
 	arguent 'numeric = TRUE'.
 
     o	New function readRegistry() to read registry hives.
-
-    o	Saving a graphics window containing semi-transparent colours
-	to BMP, JPEG or PNG now works.
-
-    o	The bmp(), jpeg() and png() devices support semi-transparent
-	colours.  See ?png for use with transparent backgrounds.
-
-	Specifying 'res' to these devices now scales the text size and
-	line width.
-
-    o	Drawing circles is now done with an integer diameter rather
-	than radius and so can be more accurate for small circles.
-	You can see this in the pairs plot and coplot examples in
-	demo(graphics) which on a 96dpi system use diameter 5 rather
-	than radius 2.
-
-    o	There is a new tiff() graphics device, and an option to save to
-	TIFF from the graphics device menu and in savePlot().  (The
-	only advantage of (simple) TIFF over PNG is that some journals
-	are unable to cope with formats from as recently as the 1990s.)
-
-    o	savePlot() no longer automatically adds an extension to the filename.
 
     o	When Sweave() adds its style file, it now uses shortPathName()
 	on the path so that there are no spaces.
