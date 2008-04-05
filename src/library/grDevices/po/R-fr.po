@@ -291,7 +291,6 @@ msgstr ""
 "il n'est possible de copier qu'à partir de périphériques 'X11(type=\"cairo"
 "\")'"
 
-#, fuzzy
 msgid "invalid value for 'rescale'"
 msgstr "valeur incorrecte pour 'rescale'"
 

@@ -353,7 +353,6 @@ msgstr "Seul FALSE a un sens pour 'inherited', lorsque 'where' est fourni ("
 msgid "\""
 msgstr "\""
 
-#, fuzzy
 msgid "f does not correspond to a generic function and package not specified"
 msgstr ""
 "f ne correspond pas à une fonction générique et le package n'est pas spécifié"
