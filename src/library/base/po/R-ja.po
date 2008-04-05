@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-04-05 10:48\n"
 "PO-Revision-Date: 2007-09-11 16:22+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1121,7 +1121,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed name space"
 msgstr " 封印された名前空間のエクスポートへ加えることができません "
 
-msgid "undefined exports :"
+#, fuzzy
+msgid "undefined exports:"
 msgstr " 未定義のエクスポートです： "
 
 msgid "package '%s' has no NAMESPACE file"

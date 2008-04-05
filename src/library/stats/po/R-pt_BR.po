@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1343,9 +1343,6 @@ msgstr "especificado paramétrico para todos os preditores"
 msgid "first argument must be a \"loess\" object"
 msgstr "primeiro argumento deve ser um objeto \"loess\""
 
-msgid "'newdata' does not contain the variables needed"
-msgstr "'newdata' não contem as variáveis necessárias"
-
 msgid "no models to compare"
 msgstr "nenhum modelo para comparar"
 
@@ -2306,6 +2303,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parâmetro %s não ocorre na fórmula do modelo"
 msgstr[1] "parâmetros %s não ocorrem na fórmula do modelo"
+
+#~ msgid "'newdata' does not contain the variables needed"
+#~ msgstr "'newdata' não contem as variáveis necessárias"
 
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr "diagonal tem elementos não finitos"

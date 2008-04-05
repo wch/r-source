@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50\n"
+"POT-Creation-Date: 2008-04-05 10:49\n"
 "PO-Revision-Date: 2008-03-26 17:25+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -353,7 +353,8 @@ msgstr "Seul FALSE a un sens pour 'inherited', lorsque 'where' est fourni ("
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to  a generic function and package not specified"
+#, fuzzy
+msgid "f does not correspond to a generic function and package not specified"
 msgstr ""
 "f ne correspond pas à une fonction générique et le package n'est pas spécifié"
 
@@ -1319,11 +1320,6 @@ msgstr ", funs ="
 msgid "; gnames ="
 msgstr "; gnames ="
 
-msgid "Could not find generic function \"%s\" to initialize cached methods"
-msgstr ""
-"La fonction générique \"%s\" est introuvable pour initialiser les méthodes "
-"en cache"
-
 msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
 "Quelque chose d'étrange s'est produit : nombre d'arguments inconsistent pour "
@@ -1331,6 +1327,13 @@ msgstr ""
 
 msgid "(using the largest value)"
 msgstr "(utilisation d'une value importante)"
+
+#, fuzzy
+msgid ""
+"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+msgstr ""
+"Impossible de trouver la table des méthodes pour \"%s\", le package \"%s\" "
+"est sans doute périmé"
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1484,6 +1487,11 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
+#~ msgstr ""
+#~ "La fonction générique \"%s\" est introuvable pour initialiser les "
+#~ "méthodes en cache"
 
 #~ msgid ""
 #~ "%s function arguments omitted from method arguments, (%s), were found in "

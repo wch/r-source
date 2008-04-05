@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:02\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2005-11-05 16:50-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -89,6 +89,9 @@ msgid "OK"
 msgstr ""
 
 msgid "Cancel"
+msgstr ""
+
+msgid "'pb' is not from class \"tkProgressBar\""
 msgstr ""
 
 msgid "Loading Tcl/Tk interface ..."

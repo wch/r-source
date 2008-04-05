@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-04-05 10:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -293,9 +293,8 @@ msgstr "执行数据框下标赋值时是不允许遗漏值的"
 msgid "non-existent rows not allowed"
 msgstr "不能有不存在的行"
 
-#, fuzzy
 msgid "column name \"\" cannot match any column"
-msgstr "列名比列数多"
+msgstr "对不上\"\"这个列名"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "新的列会在旧的列里留下洞"
@@ -360,9 +359,8 @@ msgstr "只适用于全数值数据框"
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
 
-#, fuzzy
 msgid "'origin' must be supplied"
-msgstr "'from'一定得给值"
+msgstr "'origin'一定得给值"
 
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "不知如何将'%s'转换成\"Date\""
@@ -446,27 +444,23 @@ msgstr "不知如何将'%s'转换成\"POSIXlt\"类别"
 msgid "wrong class"
 msgstr "类别不对"
 
-#, fuzzy
 msgid "binary '+' is not defined for \"POSIXt\" objects"
-msgstr "二进列+法不适用于\"POSIXt\" 的对象"
+msgstr "二进列'+'法不适用于\"POSIXt\" 的对象"
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "只能从POSIXt对象那儿减"
 
-#, fuzzy
 msgid "unary '-' is not defined for \"POSIXt\" objects"
-msgstr "一进列的-法对\"POSIXt\"对象不适用"
+msgstr "一进列的'-'法对\"POSIXt\"对象不适用"
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "只能从POSIXt对象那儿减数值"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"POSIXt\" objects"
-msgstr "一进列的-法对\"POSIXt\"对象不适用"
+msgstr "一进列'%s'对\"POSIXt\"对象不适用"
 
-#, fuzzy
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr "对\"POSIXt\"对象不适用"
+msgstr "'%s'对\"POSIXt\"对象不适用"
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "'tzone'的屬性相互有矛盾"
@@ -480,13 +474,11 @@ msgstr "数值转换需要显式单元"
 msgid "invalid units specified"
 msgstr "单元设定不对"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr "对\"difftime\"对象不适用"
+msgstr "一进列'%s'对\"difftime\"对象不适用"
 
-#, fuzzy
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr "对\"difftime\"对象不适用"
+msgstr "'%s'对\"difftime\"对象不适用"
 
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr "*法的两个变元不能同时都是\"difftime\" 对象"
@@ -606,17 +598,14 @@ msgstr "鏈結时没有可以读的文件"
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
 
-#, fuzzy
 msgid "'x' must be have length 1"
-msgstr "'input'的长度一定得为一"
+msgstr "'x'的长度一定得为一"
 
-#, fuzzy
 msgid "invalid digits"
-msgstr "'digits'的值不对"
+msgstr "数字无效"
 
-#, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
-msgstr "不能强迫变表"
+msgstr "不能强迫把'x'改变成'octmode'"
 
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为一"
@@ -682,9 +671,8 @@ msgstr "匹配位距的組成部分不存在，因此忽略不计"
 msgid "'max.distance' components must be non-negative"
 msgstr "'max.distance'的组成部分不能有负值"
 
-#, fuzzy
 msgid "triangular matrix should be square"
-msgstr "矩阵必需的正方形的"
+msgstr "三角矩阵必需的正方形的"
 
 msgid "'object' must be a list"
 msgstr "'object'必需是串列"
@@ -1022,9 +1010,8 @@ msgstr "用于出口的'%s'类别不存在：%s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
 
-#, fuzzy
 msgid "Multiple methods tables found for '"
-msgstr "存在多个方法串列，目标为'"
+msgstr "存在多个方法串列为'"
 
 msgid "'"
 msgstr "'"
@@ -1075,7 +1062,7 @@ msgid "invalid import target"
 msgstr "进口目标有错"
 
 msgid "got invalid index for importing"
-msgstr ""
+msgstr "进口输入时得到的索引无效"
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr "\"%s\"函数有可进口方法，但找不到函数用的方法"
@@ -1086,7 +1073,8 @@ msgstr "没有在环境/程辑包'%s': %s里找到所要求的'methods'对象"
 msgid "cannot add to exports of a sealed name space"
 msgstr "不能在封闭名字空间里的出口加入"
 
-msgid "undefined exports :"
+#, fuzzy
+msgid "undefined exports:"
 msgstr "出口不存在："
 
 msgid "package '%s' has no NAMESPACE file"
@@ -1176,9 +1164,8 @@ msgstr "'k'值太大"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "因为产生了主轴，需要大一点的'ncol'值"
 
-#, fuzzy
 msgid "'x' must be an atomic vector"
-msgstr "'x'必需为矢量"
+msgstr "'x'必需为原子矢量"
 
 msgid "invalid 'rle' structure"
 msgstr "'rle'结构有错"
@@ -1411,13 +1398,11 @@ msgstr "版本设定不对"
 msgid "wrong argument"
 msgstr "变元不对"
 
-#, fuzzy
 msgid "invalid value"
-msgstr "'n'的值有错"
+msgstr "无效值"
 
-#, fuzzy
 msgid "not defined for numeric_version objects"
-msgstr "对package_version对象没有定义"
+msgstr "对numeric_version对象没有定义"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"

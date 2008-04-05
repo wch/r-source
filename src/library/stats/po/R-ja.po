@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2007-09-12 00:31+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1311,9 +1311,6 @@ msgstr " すべての予測子がパラメトリックと指定されました "
 msgid "first argument must be a \"loess\" object"
 msgstr " 最初の引数は \"loess\" オブジェクトでなければなりません "
 
-msgid "'newdata' does not contain the variables needed"
-msgstr " 'newdata' は必要とされる変数を含んでいません "
-
 msgid "no models to compare"
 msgstr " 比較すべきモデルがありません "
 
@@ -2233,6 +2230,9 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません "
+
+#~ msgid "'newdata' does not contain the variables needed"
+#~ msgstr " 'newdata' は必要とされる変数を含んでいません "
 
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr " 対角成分に有限でない要素があります "

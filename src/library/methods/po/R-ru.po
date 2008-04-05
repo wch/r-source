@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50\n"
+"POT-Creation-Date: 2008-04-05 10:49\n"
 "PO-Revision-Date: 2007-09-18 00:27-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -346,7 +346,7 @@ msgstr ""
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to  a generic function and package not specified"
+msgid "f does not correspond to a generic function and package not specified"
 msgstr ""
 
 msgid ""
@@ -1254,15 +1254,17 @@ msgstr ", funs ="
 msgid "; gnames ="
 msgstr "; gnames ="
 
-msgid "Could not find generic function \"%s\" to initialize cached methods"
-msgstr ""
-"Не могу найти общую функцию \"%s\" для инициализации кэшированных методов"
-
 msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
 
 msgid "(using the largest value)"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+msgstr ""
+"Не могу найти таблицу методов для \"%s\", пакет \"%s\" может быть устаревшим"
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1409,6 +1411,10 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
+
+#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
+#~ msgstr ""
+#~ "Не могу найти общую функцию \"%s\" для инициализации кэшированных методов"
 
 #~ msgid ""
 #~ "trying to change the argument list of %s with %d arguments to have "

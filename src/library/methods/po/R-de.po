@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50\n"
+"POT-Creation-Date: 2008-04-05 10:49\n"
 "PO-Revision-Date: 2007-11-29 12:14\n"
 "Last-Translator: Dr. Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -349,7 +349,7 @@ msgstr ""
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to  a generic function and package not specified"
+msgid "f does not correspond to a generic function and package not specified"
 msgstr ""
 
 msgid ""
@@ -1277,16 +1277,17 @@ msgstr ", funs ="
 msgid "; gnames ="
 msgstr ": gnames ="
 
-msgid "Could not find generic function \"%s\" to initialize cached methods"
-msgstr ""
-"Konnte keine generische Funktion \"%s\" finden, um die gepufferten Methoden "
-"zu initialisieren"
-
 msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
 
 msgid "(using the largest value)"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+msgstr ""
+"Konnte keine Methodentabelle für \"%s\" finden, Paket \"%s\" evtl. veraltet"
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1436,6 +1437,11 @@ msgstr[0] ""
 "in der Methodensignatur für Funktion \"%s\" keine Definition für Klasse: %s"
 msgstr[1] ""
 "in der Methodensignatur für Funktion \"%s\" keine Definition für Klassen: %s"
+
+#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
+#~ msgstr ""
+#~ "Konnte keine generische Funktion \"%s\" finden, um die gepufferten "
+#~ "Methoden zu initialisieren"
 
 #~ msgid ""
 #~ "trying to change the argument list of %s with %d arguments to have "

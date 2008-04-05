@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50\n"
+"POT-Creation-Date: 2008-04-05 10:49\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -357,7 +357,7 @@ msgstr ""
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to  a generic function and package not specified"
+msgid "f does not correspond to a generic function and package not specified"
 msgstr ""
 
 msgid ""
@@ -1187,13 +1187,14 @@ msgstr ""
 msgid "; gnames ="
 msgstr ""
 
-msgid "Could not find generic function \"%s\" to initialize cached methods"
-msgstr ""
-
 msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
 
 msgid "(using the largest value)"
+msgstr ""
+
+msgid ""
+"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr ""
 
 msgid ""

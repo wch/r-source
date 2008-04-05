@@ -256,7 +256,7 @@ msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x'和'y'要么是一，要么有相等的列数"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr ""
+msgstr "'pch'的缺省值比列的数目要小，因此再循环使用"
 
 msgid "missing values in contingency table"
 msgstr "列联表里有缺少值"
@@ -375,9 +375,8 @@ msgstr "画图方法不对"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at'的长度必需同组数目%d相等"
 
-#, fuzzy
 msgid "formula missing or incorrect"
-msgstr "要么是缺少'formula'，要么是它的设定不对"
+msgstr "要么是缺少公式，要么是公式设定不对"
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number'的长度必需同'x'和'y'的长度相同"
@@ -401,3 +400,4 @@ msgstr[0] "boxplot%2$d里没有画离群值(%1$s)"
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个变元"
+

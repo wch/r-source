@@ -2,7 +2,7 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2007.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
@@ -49,9 +49,8 @@ msgid "Non-finite control point in Xspline"
 msgstr "用Xspline时不能有无限值的控制点"
 
 #: grid.c:2988
-#, fuzzy
 msgid "invalid plotting symbol"
-msgstr "layout.pos.col的值不对"
+msgstr "图画符号值不对"
 
 #: grid.c:3068
 msgid "Unable to clip to rotated rectangle"

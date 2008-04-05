@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2007-09-18 00:33-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1317,9 +1317,6 @@ msgstr "указан параметрический для всех предикторов"
 msgid "first argument must be a \"loess\" object"
 msgstr "первый аргумент должен быть объектом \"loess\""
 
-msgid "'newdata' does not contain the variables needed"
-msgstr "'newdata' не содержит нужных переменных"
-
 msgid "no models to compare"
 msgstr "нет моделей для сравнения"
 
@@ -2259,6 +2256,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "'newdata' does not contain the variables needed"
+#~ msgstr "'newdata' не содержит нужных переменных"
 
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr "диагональ имеет не-конечные элементы"

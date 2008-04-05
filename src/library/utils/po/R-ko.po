@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -660,6 +660,9 @@ msgstr ""
 "'%s' 라는\n"
 " 이름의 오브젝트가 없습니다"
 
+msgid "'pb' is not from class \"txtProgressBar\""
+msgstr ""
+
 msgid "cannot determine a usable name"
 msgstr "사용 가능한 이름을 결정할 수 없습니다"
 
@@ -1026,6 +1029,9 @@ msgstr "갱신하는 HTML 패키지 기술입니다"
 
 msgid "cannot update '%s'"
 msgstr "'%s'를 갱신할 수 없습니다"
+
+msgid "'pb' is not from class \"winProgressBar\""
+msgstr ""
 
 msgid "this function is intended to work with the Aqua GUI"
 msgstr "이 함수는 Aqua GUI로 작업하도록 의도됩니다"

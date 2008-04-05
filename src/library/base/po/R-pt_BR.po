@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-04-05 10:48\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1133,7 +1133,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed name space"
 msgstr "não é possível adicionar à exportação de um espaço de nomes selado"
 
-msgid "undefined exports :"
+#, fuzzy
+msgid "undefined exports:"
 msgstr "exportações não definidas:"
 
 msgid "package '%s' has no NAMESPACE file"

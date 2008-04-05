@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -254,9 +254,8 @@ msgstr "'vec'必需由小到大排序"
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'必需大于等于一"
 
-#, fuzzy
 msgid "'order.max' must be < 'n.used'"
-msgstr "'order.max'必需大于等于一"
+msgstr "'order.max'必需小于'n.used'"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "'object'和'newdata'里的序列数目不同"
@@ -512,9 +511,8 @@ msgstr "要么同时设定'x'和'y'，要么只设定矩阵式的'x'"
 msgid "'x' is empty"
 msgstr "'x'是空的"
 
-#, fuzzy
 msgid "both 'x' and 'y' must be non-empty"
-msgstr "'x'和'w'的长度必需相等"
+msgstr "'x'和'w'不能是空的"
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr "不知如何處理'pairwise.complete.obs'"
@@ -523,7 +521,7 @@ msgid "'V' is not a square numeric matrix"
 msgstr "'V'不是正方形的数值矩阵"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
-msgstr ""
+msgstr "diag(.)内有0或NA值；无限值的可靠性不高"
 
 msgid "not enough finite observations"
 msgstr "有限值的观察量不够"
@@ -1085,9 +1083,8 @@ msgstr "参数值不对"
 msgid "a limit is missing"
 msgstr "極限有遺漏"
 
-#, fuzzy
 msgid "missing values not allowed"
-msgstr "'poly'里不能有遺漏值"
+msgstr "不能有遺漏值"
 
 msgid "'r' is less than 1"
 msgstr "'r'小于一"
@@ -1280,9 +1277,6 @@ msgstr "所有従属変数都被设定为参数"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "第一个变元必需为\"loess\"对象"
-
-msgid "'newdata' does not contain the variables needed"
-msgstr "'newdata'不包含需要的变量"
 
 msgid "no models to compare"
 msgstr "没有可用来比较的模型"
@@ -1487,10 +1481,10 @@ msgid "lower < upper  is not fulfilled"
 msgstr "没有满足lower小于upper这个条件"
 
 msgid "f.lower = f(lower) is NA"
-msgstr ""
+msgstr "f.lower = f(lower)的值为NA"
 
 msgid "f.upper = f(upper) is NA"
-msgstr ""
+msgstr "f.upper = f(upper)的值为NA "
 
 msgid "f() values at end points not of opposite sign"
 msgstr "位于极点边的f()值之正负号不相反"
@@ -1916,9 +1910,8 @@ msgstr "覆蓋機率在值域[0,1) 外"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
 
-#, fuzzy
 msgid "'spline' requires n >= 1"
-msgstr "'approx'需要n大于等于一"
+msgstr "'spline'需要n大于等于一"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv'必需在零和三之间"
@@ -2182,6 +2175,9 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "'newdata' does not contain the variables needed"
+#~ msgstr "'newdata'不包含需要的变量"
 
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr "矩阵对角含无限值"

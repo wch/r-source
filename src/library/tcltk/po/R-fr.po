@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-12-15 16:02\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
 "PO-Revision-Date: 2008-03-26 10:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
+msgid "'pb' is not from class \"tkProgressBar\""
+msgstr ""
+
 msgid "Loading Tcl/Tk interface ..."
 msgstr "Chargement de Tcl/Tk..."
 
@@ -102,4 +105,3 @@ msgstr "Tcl/Tk n'est pas supporté sur ce système"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
-
