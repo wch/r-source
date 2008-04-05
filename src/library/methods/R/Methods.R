@@ -1371,7 +1371,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
     else if(is.character(f) && length(f) == 1) {
         fdef <- if(missing(where))
             getGeneric(f)
-        else 
+        else
             getGeneric(f, where = where)
     }
     else if(!is(f, "function"))
@@ -1463,7 +1463,7 @@ hasMethods <- function(f, where,package) {
             else if( length(ff <- findFunction(f, where = where)) == 1)
                 package <- getPackageName(ff[[1]])
             else
-              stop(gettextf("f does not correspond to  a generic function and package not specified"), domain = NA)
+              stop(gettextf("f does not correspond to a generic function and package not specified"), domain = NA)
         }
     }
     what <- .TableMetaName(f, package)
