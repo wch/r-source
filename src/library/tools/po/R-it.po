@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -143,7 +143,10 @@ msgstr "specificare 'package', 'dir' o 'file'"
 msgid "file '%s' does not exist"
 msgstr "il file '%s' non esiste"
 
-msgid "parse error in file '%s'"
+#, fuzzy
+msgid ""
+"parse error in file '%s':\n"
+"%s"
 msgstr "errore analisi file '%s'"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -155,7 +158,12 @@ msgstr "il metodo S3 '%s' è dichiarato ma non trovato"
 msgid "cannot check R code installed as image"
 msgstr "impossibile verificare codice R installato come immagine"
 
-msgid "parse error in examples from file '%s'"
+#, fuzzy
+msgid "parse error in file '%s':"
+msgstr "errore analisi file '%s'"
+
+#, fuzzy
+msgid "parse error in examples from file '%s':"
 msgstr "errore di analisi negli esempi del file '%s'"
 
 msgid "File '%s':"
@@ -449,10 +457,6 @@ msgstr "campo \\name mancante/vuoto nei file Rd"
 msgid "unable to create temp directory"
 msgstr "impossibile creare directory temporanea"
 
-#, fuzzy
-msgid "--- running texi2dvi on vignettes"
-msgstr "esecuzione texi2dvi su '%s' fallita"
-
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -461,9 +465,6 @@ msgstr ""
 #, fuzzy
 msgid "running 'make' failed"
 msgstr "esecuzione di make fallita"
-
-msgid "cannot read index information in file '%s'"
-msgstr "non posso leggere le informazioni dell'indice nel file '%s'"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "l'argomento 'vignette' deve avere lunghezza 1"
@@ -516,6 +517,11 @@ msgstr "impossibile creare '%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "impossibile copiare INDEX su"
 
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+
 msgid "cannot create directory '%s'"
 msgstr "impossibile creare directory '%s'"
 
@@ -524,6 +530,11 @@ msgid "processing '"
 msgstr "analizzo '%s'"
 
 msgid "'"
+msgstr ""
+
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
 msgstr ""
 
 msgid "file '%s' was not created"
@@ -546,6 +557,9 @@ msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
+
+msgid "cannot read index information in file '%s'"
+msgstr "non posso leggere le informazioni dell'indice nel file '%s'"
 
 msgid "there is no package called '%s'"
 msgstr "non esiste un pacchetto chiamato '%s'"
@@ -673,6 +687,10 @@ msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "--- running texi2dvi on vignettes"
+#~ msgstr "esecuzione texi2dvi su '%s' fallita"
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr "impossibile eseguire pdflatex su '%s'"

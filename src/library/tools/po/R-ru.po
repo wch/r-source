@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2007-09-18 00:42-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -142,7 +142,10 @@ msgstr "Вы должны задать 'package', 'dir' или 'file'"
 msgid "file '%s' does not exist"
 msgstr "файл '%s' не существует"
 
-msgid "parse error in file '%s'"
+#, fuzzy
+msgid ""
+"parse error in file '%s':\n"
+"%s"
 msgstr "ошибка разбора в файле '%s'"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -154,7 +157,12 @@ msgstr "заявленный S3-метод '%s' не найден"
 msgid "cannot check R code installed as image"
 msgstr "не могу проверить код R, установленный как 'image'"
 
-msgid "parse error in examples from file '%s'"
+#, fuzzy
+msgid "parse error in file '%s':"
+msgstr "ошибка разбора в файле '%s'"
+
+#, fuzzy
+msgid "parse error in examples from file '%s':"
 msgstr "ошибка разбора в примерах из файла '%s'"
 
 msgid "File '%s':"
@@ -447,9 +455,6 @@ msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 msgid "unable to create temp directory"
 msgstr "не могу создать временную папку"
 
-msgid "--- running texi2dvi on vignettes"
-msgstr "--- запуск 'texi2dvi' на очерки"
-
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -459,9 +464,6 @@ msgstr ""
 
 msgid "running 'make' failed"
 msgstr "не удался запуск 'make'"
-
-msgid "cannot read index information in file '%s'"
-msgstr "не могу прочитать индексную информацию из файла '%s'"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "аргумент 'vignette' должен быть единичной длины"
@@ -514,6 +516,14 @@ msgstr "не могу перекодировать '%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "не могу скопировать 'INDEX' в '%s'"
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"выполнение очерка '%s' не удалось с диагностикой:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "Не могу создать папку '%s'"
 
@@ -522,6 +532,14 @@ msgstr "обрабытываю '"
 
 msgid "'"
 msgstr "'"
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"выполнение очерка '%s' не удалось с диагностикой:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "файл '%s' не создан"
@@ -543,6 +561,9 @@ msgstr "ОШИБКА: это R версии %s, а набор '%s' требует R %s %s"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
+
+msgid "cannot read index information in file '%s'"
+msgstr "не могу прочитать индексную информацию из файла '%s'"
 
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
@@ -667,6 +688,9 @@ msgstr[1] ""
 "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
 msgstr[2] ""
 "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+
+#~ msgid "--- running texi2dvi on vignettes"
+#~ msgstr "--- запуск 'texi2dvi' на очерки"
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr "Не могу запустить 'pdflatex' на '%s'"

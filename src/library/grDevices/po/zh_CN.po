@@ -249,14 +249,14 @@ msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "'mbcsToSbcs'不存在'%s'这样的编码"
 
 #: devPS.c:4027
-#, fuzzy, c-format
+#, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr "'mbcsToSbcs'中转换出错"
+msgstr "'mbcsToSbcs'里转换'%s'出错：<%02x>代替了dot"
 
 #: devPS.c:4103
-#, fuzzy, c-format
+#, c-format
 msgid "failed open converter to encoding '%s'"
-msgstr "文字转换到编码'%s'时出了错"
+msgstr "编码'%s'时文字转换器出了错"
 
 #: devPS.c:4121 devPS.c:5010 devPS.c:6807
 #, c-format
@@ -422,26 +422,22 @@ msgid "unable to start device PicTeX"
 msgstr "无法启动PicTeX装置"
 
 #: devQuartz.c:977
-#, fuzzy
 msgid "invalid 'file' argument"
-msgstr "字符串变元不对"
+msgstr "'file'变元不对"
 
 #: devQuartz.c:1005
-#, fuzzy
 msgid "invalid Quartz device size"
-msgstr "savePlot装置出错"
+msgstr "石英装置大小不对"
 
 #: devQuartz.c:1032
-#, fuzzy
 msgid "Unable to create device description."
-msgstr "无法启动PostScript装置"
+msgstr "无法建立设备描述文件"
 
 #: devQuartz.c:1086
 msgid "Unable to create Quartz device target, given type may not be supported."
-msgstr ""
+msgstr "无法建立石英装置，可能不支持所提供的种类"
 
 #: devQuartz.c:1107
-#, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "这个平台上没有石英装置"
 
@@ -456,7 +452,7 @@ msgstr "没有装置来拷贝图形窗"
 #: devWindows.c:328 devWindows.c:397
 #, c-format
 msgid "'%%' is not allowed in file name"
-msgstr ""
+msgstr "文件名字中不能有'%%'"
 
 #: devWindows.c:539
 msgid "Invalid font specification"
@@ -503,9 +499,8 @@ msgid "filename too long in jpeg() call"
 msgstr "jpeg()調用中的文本名字太长"
 
 #: devWindows.c:1801
-#, fuzzy
 msgid "filename too long in tiff() call"
-msgstr "%s()調用里的文本名字太长"
+msgstr "tiff()調用里的文本名字太长"
 
 #: devWindows.c:1831
 msgid "filename too long in win.metafile() call"
@@ -546,23 +541,20 @@ msgid "option 'windowsTimeouts' should be integer"
 msgstr "'windowsTimeouts'选择项必需是整数"
 
 #: devWindows.c:2931
-#, fuzzy
 msgid "invalid device number in 'savePlot'"
-msgstr "savePlot里的装置数目出了错"
+msgstr "'savePlot'里的装置数目出了错"
 
 #: devWindows.c:2933
-#, fuzzy
 msgid "invalid device in 'savePlot'"
-msgstr "savePlot装置出错"
+msgstr "'savePlot'装置出错"
 
 #: devWindows.c:2936
 msgid "invalid filename argument in savePlot"
 msgstr "savePlot文本名字变元不对"
 
 #: devWindows.c:2940
-#, fuzzy
 msgid "invalid type argument in 'savePlot'"
-msgstr "savePlot类别变元不对"
+msgstr "'savePlot'类别变元不对"
 
 #: devWindows.c:2967
 msgid "unknown type in savePlot"
@@ -582,19 +574,16 @@ msgid "Impossible to open "
 msgstr "无法打开"
 
 #: devWindows.c:3202
-#, fuzzy
 msgid "invalid 'width' or 'height' in devWindows"
-msgstr "devWindows的宽度或长度不对"
+msgstr "devWindows的'width'或'height'值不对"
 
 #: devWindows.c:3207
-#, fuzzy
 msgid "invalid value of 'record' in devWindows"
-msgstr "devWindows的'recording'值不对"
+msgstr "devWindows的'record'值不对"
 
 #: devWindows.c:3211
-#, fuzzy
 msgid "invalid value of 'rescale' in devWindows"
-msgstr "devWindows的'resize'值不对 in devWindows"
+msgstr "devWindows的'rescale'值不对"
 
 #: devWindows.c:3219
 msgid "invalid value of 'canvas' in devWindows"
@@ -609,9 +598,8 @@ msgid "invalid value of 'bg' in devWindows"
 msgstr "devWindows的'bg'值不对"
 
 #: devWindows.c:3243
-#, fuzzy
 msgid "invalid value of 'title' in devWindows"
-msgstr "devWindows的'resize'值不对 in devWindows"
+msgstr "devWindows的'title'值不对"
 
 #: devWindows.c:3258
 msgid "unable to start device devWindows"
@@ -623,12 +611,12 @@ msgstr "不支持getGraphicsEvent的遞迴使用"
 
 #: qdBitmap.c:92
 msgid "Not a supported scheme, no image data written"
-msgstr ""
+msgstr "不支持这个规划，因此没有写任何图象数据"
 
 #: qdPDF.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s'"
-msgstr "无法载入afm文本'%s'"
+msgstr "无法打开'%s'文件"
 
 #~ msgid "can't find any fonts"
 #~ msgstr "找不到任何字体"

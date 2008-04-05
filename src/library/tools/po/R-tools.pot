@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,7 +131,7 @@ msgstr ""
 msgid "file '%s' does not exist"
 msgstr ""
 
-msgid "parse error in file '%s'"
+msgid "parse error in file '%s':\n%s"
 msgstr ""
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -143,7 +143,10 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr ""
 
-msgid "parse error in examples from file '%s'"
+msgid "parse error in file '%s':"
+msgstr ""
+
+msgid "parse error in examples from file '%s':"
 msgstr ""
 
 msgid "File '%s':"
@@ -407,16 +410,10 @@ msgstr ""
 msgid "unable to create temp directory"
 msgstr ""
 
-msgid "--- running texi2dvi on vignettes"
-msgstr ""
-
 msgid "processing vignette '%s' failed with diagnostics:\n%s"
 msgstr ""
 
 msgid "running 'make' failed"
-msgstr ""
-
-msgid "cannot read index information in file '%s'"
 msgstr ""
 
 msgid "argument 'vignette' must be of length 1"
@@ -467,6 +464,9 @@ msgstr ""
 msgid "unable to copy INDEX to '%s'"
 msgstr ""
 
+msgid "running Stangle on vignette '%s' failed with message:\n%s"
+msgstr ""
+
 msgid "cannot create directory '%s'"
 msgstr ""
 
@@ -474,6 +474,9 @@ msgid "processing '"
 msgstr ""
 
 msgid "'"
+msgstr ""
+
+msgid "running Sweave on vignette '%s' failed with message:\n%s"
 msgstr ""
 
 msgid "file '%s' was not created"
@@ -495,6 +498,9 @@ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
+
+msgid "cannot read index information in file '%s'"
 msgstr ""
 
 msgid "there is no package called '%s'"

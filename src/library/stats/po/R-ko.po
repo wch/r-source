@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:05\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1345,9 +1345,6 @@ msgstr "모든 예측자가 parametric과 지정되었습니다"
 msgid "first argument must be a \"loess\" object"
 msgstr "최초의 인수는\"loess\" 오브젝트가 아니면 되지 않습니다"
 
-msgid "'newdata' does not contain the variables needed"
-msgstr "'newdata'는 필요로 하는 변수를 포함하고 있지 않습니다"
-
 msgid "no models to compare"
 msgstr "비교해야할 모델이 없습니다"
 
@@ -2301,6 +2298,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "'newdata' does not contain the variables needed"
+#~ msgstr "'newdata'는 필요로 하는 변수를 포함하고 있지 않습니다"
 
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr "대각 성분에 유한하지 않는 요소가 있습니다"

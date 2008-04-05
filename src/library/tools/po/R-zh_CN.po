@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -137,7 +137,10 @@ msgstr "你必需设定'package', 'dir'或'file'三个中的一个"
 msgid "file '%s' does not exist"
 msgstr "不存在'%s'这一文件"
 
-msgid "parse error in file '%s'"
+#, fuzzy
+msgid ""
+"parse error in file '%s':\n"
+"%s"
 msgstr "文件'%s'里句法分析有错"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -149,7 +152,12 @@ msgstr "找不到公布了的S3方法'%s'"
 msgid "cannot check R code installed as image"
 msgstr "因为影像安装无法检查R编码"
 
-msgid "parse error in examples from file '%s'"
+#, fuzzy
+msgid "parse error in file '%s':"
+msgstr "文件'%s'里句法分析有错"
+
+#, fuzzy
+msgid "parse error in examples from file '%s':"
 msgstr "文件'%s'中的例子在进行句法分析时出了错"
 
 msgid "File '%s':"
@@ -238,9 +246,8 @@ msgstr ""
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
 
-#, fuzzy
 msgid "Rd files with empty sections:"
-msgstr "Rd文件内有未知名的段:"
+msgstr "Rd文件内有空的段:"
 
 msgid "Found invalid multi-byte character data."
 msgstr "遇到了错误多字节字符数据."
@@ -338,13 +345,13 @@ msgid "Unknown encoding with non-ASCII data"
 msgstr "没有这样的编码，带非ASCII数据:"
 
 msgid "Non-standard license specification:"
-msgstr ""
+msgstr "非标准执照规格"
 
 msgid "Invalid license file pointers: %s"
-msgstr ""
+msgstr "执照文件指示器无效：%s"
 
 msgid "Verifiable as open source: %s"
-msgstr ""
+msgstr "可验证开放源码：%s"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -433,9 +440,6 @@ msgstr "Rd文件里缺少或有空白的\\name域"
 msgid "unable to create temp directory"
 msgstr "无法建立temp目录"
 
-msgid "--- running texi2dvi on vignettes"
-msgstr "---在标头上调用texi2dvi失败"
-
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -445,9 +449,6 @@ msgstr ""
 
 msgid "running 'make' failed"
 msgstr "调用'make'失败"
-
-msgid "cannot read index information in file '%s'"
-msgstr "无法从文件'%s'中读取索引信息"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "变元'vignette'的长度必需为一"
@@ -498,6 +499,14 @@ msgstr "无法重新编码'%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "无法拷贝索引至'%s'"
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"处理标头'%s'失败，诊断信息为:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
@@ -506,6 +515,14 @@ msgstr "处理 '"
 
 msgid "'"
 msgstr "'"
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"处理标头'%s'失败，诊断信息为:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "无法产生文件'%s'"
@@ -527,6 +544,9 @@ msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
+
+msgid "cannot read index information in file '%s'"
+msgstr "无法从文件'%s'中读取索引信息"
 
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
@@ -582,9 +602,8 @@ msgstr "程辑包'%s'的从属被减低成最小集."
 msgid "argument '%s' must be a character string or connection"
 msgstr "变元'%s'必需是字符串或联结"
 
-#, fuzzy
 msgid "'file' must be a character string or connection"
-msgstr "变元'document'必需是字符串或联结"
+msgstr "变元'file'必需是字符串或联结"
 
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"
@@ -596,7 +615,7 @@ msgid "no or more than one match"
 msgstr "没有成对的，或多于一双"
 
 msgid "'iconv' is required"
-msgstr ""
+msgstr "需要'iconv'"
 
 msgid "argument 'x' must be a character vector"
 msgstr "变元'x'必需是字符矢量"
@@ -643,6 +662,9 @@ msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
+
+#~ msgid "--- running texi2dvi on vignettes"
+#~ msgstr "---在标头上调用texi2dvi失败"
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr "无法在'%s'上调用pdflatex"

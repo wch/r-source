@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2007-09-11 23:05+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -145,7 +145,10 @@ msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりま�
 msgid "file '%s' does not exist"
 msgstr " ファイル '%s' が存在しません "
 
-msgid "parse error in file '%s'"
+#, fuzzy
+msgid ""
+"parse error in file '%s':\n"
+"%s"
 msgstr " ファイル '%s' 中に構文解析エラー "
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -157,7 +160,12 @@ msgstr " 宣言された S3 メソッド '%s' が見付かりません "
 msgid "cannot check R code installed as image"
 msgstr " イメージとしてインストールされた R コードはチェックできません "
 
-msgid "parse error in examples from file '%s'"
+#, fuzzy
+msgid "parse error in file '%s':"
+msgstr " ファイル '%s' 中に構文解析エラー "
+
+#, fuzzy
+msgid "parse error in examples from file '%s':"
 msgstr " ファイル '%s' の例中に構文解析エラー "
 
 msgid "File '%s':"
@@ -462,9 +470,6 @@ msgstr ""
 msgid "unable to create temp directory"
 msgstr " 仮ディレクトリを生成することが出来ません "
 
-msgid "--- running texi2dvi on vignettes"
-msgstr " --- texi2dvi をビニエットに対して実行中 "
-
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -474,9 +479,6 @@ msgstr ""
 
 msgid "running 'make' failed"
 msgstr " make の実行に失敗しました "
-
-msgid "cannot read index information in file '%s'"
-msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
 msgid "argument 'vignette' must be of length 1"
 msgstr " 引数 'vignette' は長さ1でなければなりません "
@@ -527,6 +529,14 @@ msgstr " '%s' 再エンコード出来ません "
 msgid "unable to copy INDEX to '%s'"
 msgstr " INDEX を '%s' にコピーすることが出来ません "
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s "
+
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を生成することが出来ません "
 
@@ -535,6 +545,14 @@ msgstr " 以下を処理中 ' "
 
 msgid "'"
 msgstr " , "
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s "
 
 msgid "file '%s' was not created"
 msgstr " ファイル '%s' は生成されませんでした "
@@ -560,6 +578,9 @@ msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
+
+msgid "cannot read index information in file '%s'"
+msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
 msgid "there is no package called '%s'"
 msgstr " '%s' というパッケージが見当たりません "
@@ -678,6 +699,9 @@ msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] ""
 " 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました: "
+
+#~ msgid "--- running texi2dvi on vignettes"
+#~ msgstr " --- texi2dvi をビニエットに対して実行中 "
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr " pdflatex を '%s' に対して実行出来ません "

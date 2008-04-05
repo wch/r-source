@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-04-05 11:07\n"
 "PO-Revision-Date: 2007-09-18 00:11-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -645,7 +645,8 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
-msgid "'digits' reduced to 50"
+#, fuzzy
+msgid "'digits' reduced to"
 msgstr "'digits' сокращено до 50"
 
 msgid "'flag' can contain only '0+- #'"
@@ -1099,7 +1100,8 @@ msgstr "запрошенные объекты 'methods' не найдены в окружении/пакете '%s': %s"
 msgid "cannot add to exports of a sealed name space"
 msgstr "не могу добавить к экспорту из включенного пространства имен"
 
-msgid "undefined exports :"
+#, fuzzy
+msgid "undefined exports:"
 msgstr "неопределенный экспорт:"
 
 msgid "package '%s' has no NAMESPACE file"

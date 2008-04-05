@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.2\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2008-03-09 11:51+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -140,7 +140,10 @@ msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
 msgid "file '%s' does not exist"
 msgstr "Datei '%s' exisitert nicht"
 
-msgid "parse error in file '%s'"
+#, fuzzy
+msgid ""
+"parse error in file '%s':\n"
+"%s"
 msgstr "Parsingfehler in Datei '%s'"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -152,7 +155,12 @@ msgstr "angekündigte S3 Methode '%s' nicht gefunden"
 msgid "cannot check R code installed as image"
 msgstr "kann R-Code, der als Image installiert ist, nicht überprüfen"
 
-msgid "parse error in examples from file '%s'"
+#, fuzzy
+msgid "parse error in file '%s':"
+msgstr "Parsingfehler in Datei '%s'"
+
+#, fuzzy
+msgid "parse error in examples from file '%s':"
 msgstr "Parsingfehler bei den Beispielen aus Datei '%s'"
 
 msgid "File '%s':"
@@ -447,9 +455,6 @@ msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
 msgid "unable to create temp directory"
 msgstr "kann kein temp Verzeichnis erzeugen"
 
-msgid "--- running texi2dvi on vignettes"
-msgstr "--- führe texi2dvi auf Vignetten aus"
-
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -459,9 +464,6 @@ msgstr ""
 
 msgid "running 'make' failed"
 msgstr "Ausführen von 'make ' fehlgeschlagen"
-
-msgid "cannot read index information in file '%s'"
-msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "Argument 'vignette' muss Länge 1 haben"
@@ -512,6 +514,14 @@ msgstr "kann '%s' nicht rekodieren"
 msgid "unable to copy INDEX to '%s'"
 msgstr "kann INDEX nicht nach '%s' kopieren"
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "kann  Verzeichnis '%s' nicht erzeugen"
 
@@ -520,6 +530,14 @@ msgstr "Bearbeiten von'"
 
 msgid "'"
 msgstr "'"
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "Datein '%s' wurde nicht erzeugt"
@@ -541,6 +559,9 @@ msgstr "Fehler: dies ist R Version %s, Bündel '%s' benötigt R %s %s"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "Fehler: Dies ist R Version %s, benötigt wird R %s %s"
+
+msgid "cannot read index information in file '%s'"
+msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket names '%s'"
@@ -661,3 +682,6 @@ msgid_plural ""
 msgstr[0] "Evtl. globales 'T' oder 'F' in folgender Rd Beispieldatei gefunden:"
 msgstr[1] ""
 "Evtl. globales 'T' oder 'F' in folgenden Rd Beispieldateien gefunden:"
+
+#~ msgid "--- running texi2dvi on vignettes"
+#~ msgstr "--- führe texi2dvi auf Vignetten aus"

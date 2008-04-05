@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:35\n"
+"POT-Creation-Date: 2008-04-05 11:08\n"
 "PO-Revision-Date: 2007-09-11 22:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -648,6 +648,9 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr " 表示すべき '%s' という名前のオブジェクトがありません "
 
+msgid "'pb' is not from class \"txtProgressBar\""
+msgstr ""
+
 msgid "cannot determine a usable name"
 msgstr " 利用可能な名前を決定することができません "
 
@@ -1008,6 +1011,9 @@ msgstr " HTML パッケージ記述を更新 "
 
 msgid "cannot update '%s'"
 msgstr " '%s' を更新出来ません "
+
+msgid "'pb' is not from class \"winProgressBar\""
+msgstr ""
 
 msgid "this function is intended to work with the Aqua GUI"
 msgstr " この関数は Aqua GUI で使うことを意図しています "

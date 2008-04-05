@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:52\n"
+"POT-Creation-Date: 2008-04-05 11:07\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -186,7 +186,7 @@ msgid "no method defined for function \"%s\" and signature %s"
 msgstr "函数'%s'和标记%s没有设定方法"
 
 msgid "'file' must be a character string or a connection"
-msgstr ""
+msgstr "'file'必需是字符串或联结"
 
 msgid "No method found for signature %s"
 msgstr "标记'%s'里不存在任何方法"
@@ -215,9 +215,8 @@ msgstr "第一个变元应当为同屬函数的名称(现在却是类别为\"%s\
 msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr "'%s'不是在'%s'里的同屬函数；因此方法没有被删除掉"
 
-#, fuzzy
 msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
-msgstr "无法将锁住环境/程輯包'%2$s'里的前版本'%1$s'重存"
+msgstr "无法将锁住环境/程輯包'%2$s'里的'%1$s'方法删除"
 
 msgid "restoring default function definition of \"%s\""
 msgstr "重存'%s'的默認函数定义"
@@ -242,15 +241,13 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr "'callGeneric'只能由同屬函数或方法来調用"
 
 msgid "expected a non-empty character string for argument name"
-msgstr ""
+msgstr "变元的名字应该是非空字符串"
 
-#, fuzzy
 msgid "generic function supplied was not created for \"%s\""
-msgstr "为'%s'找不到同屬函数"
+msgstr "为\"%s\"找不到同屬函数"
 
-#, fuzzy
 msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
-msgstr "\"class\"是为保留槽名，不可以重新被定义"
+msgstr "\"%s\" 是基元函数；其同属形式是不能被重新定义的"
 
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
@@ -268,26 +265,24 @@ msgid ""
 "to setGeneric()"
 msgstr "\"%s\"有隐含同属，但明确调用用setGeneric()会将之置換"
 
-#, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
 msgstr ""
-"变元'classDef'要么是个字串要么是个类别表现；现在得到的却是类别为\"%s\"的目标"
+"变元\"f\"要么是同屬函数要么是单一字符串；现在得到的却是类别为\"%s\"的目标对象"
 "对象"
 
-#, fuzzy
 msgid "non-generic function given to findMethods()"
-msgstr "找不到'%s'这一非同屬函数"
+msgstr "findMethods()没有非同屬函数"
 
 msgid "Only FALSE meaningful for inherited, when where is supplied (got"
-msgstr ""
+msgstr "FALSE只对于继承类别有意义，当提供where时(得到了"
 
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to  a generic function and package not specified"
-msgstr ""
+msgid "f does not correspond to a generic function and package not specified"
+msgstr "f不对应同属函数，也没有指定程序包"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -359,9 +354,8 @@ msgid ""
 "signature: %s"
 msgstr "在函数'%s'里的方法标记中标记的变元名字不对: %s"
 
-#, fuzzy
 msgid "No generic function found corresponding to \"%s\""
-msgstr "为'%s'找不到同屬函数"
+msgstr "为\"%s\"找不到同屬函数"
 
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr "因为其类别\"%2$s\"没有定义，忽略%1$s这一方法串列單元"
@@ -645,7 +639,7 @@ msgid "no generic function found for \"%s\""
 msgstr "为'%s'找不到同屬函数"
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
+msgstr ".getGeneric里不能有空的函数名字"
 
 msgid ""
 "Package \"%s\" seems to have out-of-date methods; need to reinstall from "
@@ -668,13 +662,11 @@ msgid ""
 msgstr ""
 "'%s'同屬函数的程序部分調用'standardGeneric'来分配给一个不同的名字('%s')!"
 
-#, fuzzy
 msgid "the supplied generic function definition for"
-msgstr "必需为\"#s\"提供一个作默认用的同属函数或函数"
+msgstr "所提供的同属函数定义是为"
 
-#, fuzzy
 msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
-msgstr "所提供的同屬函数定义没有調用'standardGeneric'；因此无法分配任何方法!"
+msgstr "好象没有調用'standardGeneric'；因此无法分配任何方法!"
 
 msgid ""
 "internal error: Bad methods list object in fixing methods for primitive "
@@ -728,7 +720,7 @@ msgstr "groupMembers槽里的單元不对(类别为\"%s\")"
 msgid ""
 "\" is not a known action (warn, stop, once, ignore); no action recorded for "
 "function \""
-msgstr ""
+msgstr "\"没有这样的作用(警告，停止，一次，忽视) ；函数没有记录作用"
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
@@ -873,11 +865,10 @@ msgid ""
 "meaningful"
 msgstr "类别\"%s\"是类别併集：类别併集的'coerce'关系在这里没有意义"
 
-#, fuzzy
 msgid ""
 "'as' method should have one argument, or match the arguments of coerce(): "
 "got  (%s)"
-msgstr "'as'方法必需有一或两个变元，以及'strict'这一选项；得到的却是(%s)"
+msgstr "'as'方法必需有一个变元，或同coerce()相对应，得到的却是(%s)"
 
 msgid ""
 "a 'replace' method definition in 'setAs' must be a function of two "
@@ -1041,6 +1032,10 @@ msgstr "找不到团体同属函数："
 msgid "Invalid group generic function in search for inherited method (class \""
 msgstr "在找继承方法时出现的同属函数不对"
 
+#, fuzzy
+msgid "Invalid methods table request"
+msgstr "方法子串列有错"
+
 msgid "Trying to check signature length of group generic \""
 msgstr "检查团体同属的标记长度"
 
@@ -1059,14 +1054,16 @@ msgstr ", funs ="
 msgid "; gnames ="
 msgstr "; gnames ="
 
-msgid "Could not find generic function \"%s\" to initialize cached methods"
-msgstr "找不到用于初始贮藏方法的同属函数\"%s\" "
-
 msgid "Something weird:  inconsistent number of args in methods table strings:"
-msgstr ""
+msgstr "好象有点不对：方法表字符里变元数目有矛盾"
 
 msgid "(using the largest value)"
-msgstr ""
+msgstr "(用最大值)"
+
+#, fuzzy
+msgid ""
+"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+msgstr "\"%s\"找不到方法列表，\"%s\"程序包可能过时了"
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1086,9 +1083,8 @@ msgid ""
 "length %d"
 msgstr "变元'classes'必需是包含两个类别的矢量；现在得到的是长度为%d的变元"
 
-#, fuzzy
 msgid "Created a package name, \"%s\", when none found"
-msgstr "不程輯包名: '%s'"
+msgstr "建立了程輯包名: '%s'，因为没有找到其它名字"
 
 msgid "no definition of class \"%s\" found"
 msgstr "类别\"%s\"的定义不存在"
@@ -1178,13 +1174,11 @@ msgstr "\"被锁住了；在新的类别上用基本环境"
 msgid "not a package name: \"%s\""
 msgstr "不程輯包名: '%s'"
 
-#, fuzzy
 msgid "apparently bad method or class metadata in saved environment;"
-msgstr ""
-"保存了的环境中出现了不良方法或类别元数据；请移动文件或删除这些类别/方法"
+msgstr "保存的环境中出现了不良方法或类别元数据；"
 
 msgid "move the file or remove the class/method"
-msgstr ""
+msgstr "移动文件或删除类别/方法"
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
@@ -1202,6 +1196,21 @@ msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 #~ msgstr "环境/程輯包'%s'被锁住了； 无法为'%s'删除方法信息"
 
 #~ msgid ""
+#~ "the methods object name for \"%s\" must include the name of the package "
+#~ "that contains the generic function, but no generic function of this name "
+#~ "was found"
+#~ msgstr ""
+#~ "'%s'的方法对象名字必需有包含了同屬函数的程輯包的名字，但有这个名字的同屬函"
+#~ "数却不存在"
+
+#~ msgid ""
+#~ "no way to associate a generic function with an object of class \"%s\""
+#~ msgstr "无法将同屬函数与类别为\"%s\"的对象联系起来"
+
+#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
+#~ msgstr "找不到用于初始贮藏方法的同属函数\"%s\" "
+
+#~ msgid ""
 #~ "trying to change the argument list of %s with %d arguments to have "
 #~ "arguments (%s)"
 #~ msgstr "无法将带%d变元函数%s的变元串列改成带(%s) 变元"
@@ -1213,18 +1222,6 @@ msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 
 #~ msgid "arguments in definition %s changed from (%s) to (%s)"
 #~ msgstr "定义%s里的变元从(%s)改为(%s)"
-
-#~ msgid ""
-#~ "the methods object name for \"%s\" must include the name of the package "
-#~ "that contains the generic function, but no generic function of this name "
-#~ "was found"
-#~ msgstr ""
-#~ "'%s'的方法对象名字必需有包含了同屬函数的程輯包的名字，但有这个名字的同屬函"
-#~ "数却不存在"
-
-#~ msgid ""
-#~ "no way to associate a generic function with an object of class \"%s\""
-#~ msgstr "无法将同屬函数与类别为\"%s\"的对象联系起来"
 
 #~ msgid "no methods found for generic \"%s\""
 #~ msgstr "同屬'%s'里不存在任何方法"

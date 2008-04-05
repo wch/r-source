@@ -87,9 +87,8 @@ msgstr ""
 msgid "gpar element '%s' must not be length 0"
 msgstr "gpar成分'%s'的长度不能为零"
 
-#, fuzzy
 msgid "'gamma' gpar is defunct"
-msgstr "'gamma'gpar已经不再有用"
+msgstr "'gamma' gpar已经不再有用"
 
 msgid "Invalid 'linemitre' value"
 msgstr "'linemitre'的值不对"
@@ -482,3 +481,4 @@ msgstr "至少要设定'y'或'yscale'两个中的一个"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:52\n"
-"PO-Revision-Date: 2008-03-26 21:52\n"
+"POT-Creation-Date: 2008-04-05 11:07\n"
+"PO-Revision-Date: 2008-04-05 11:07\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -331,8 +331,8 @@ msgstr "Only FALSE meaningful for inherited, when where is supplied (got"
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to  a generic function and package not specified"
-msgstr "f does not correspond to  a generic function and package not specified"
+msgid "f does not correspond to a generic function and package not specified"
+msgstr "f does not correspond to a generic function and package not specified"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -1184,6 +1184,9 @@ msgid "Invalid group generic function in search for inherited method (class \""
 msgstr ""
 "Invalid group generic function in search for inherited method (class \""
 
+msgid "Invalid methods table request"
+msgstr "Invalid methods table request"
+
 msgid "Trying to check signature length of group generic \""
 msgstr "Trying to check signature length of group generic \""
 
@@ -1202,15 +1205,16 @@ msgstr ", funs ="
 msgid "; gnames ="
 msgstr "; gnames ="
 
-msgid "Could not find generic function \"%s\" to initialize cached methods"
-msgstr "Could not find generic function “%s” to initialize cached methods"
-
 msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
 "Something weird:  inconsistent number of args in methods table strings:"
 
 msgid "(using the largest value)"
 msgstr "(using the largest value)"
+
+msgid ""
+"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+msgstr "No methods table for generic “%s” from package “%s” in package “%s”"
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "

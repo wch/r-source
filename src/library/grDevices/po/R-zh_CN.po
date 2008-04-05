@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-15 17:03\n"
+"POT-Creation-Date: 2008-04-05 11:07\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -103,7 +103,6 @@ msgstr "只可以从屏幕装置打印"
 msgid "need to specify one of 'width' and 'height'"
 msgstr "至少需要设定'width'和'height'中的一个"
 
-#, fuzzy
 msgid "can only print from a screen device"
 msgstr "只可以从屏幕装置打印"
 
@@ -117,23 +116,22 @@ msgid "dev.displaylist() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.displaylist()的"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr ""
+msgstr "'getOption(\"device\")'的设定不对"
 
 msgid "no suitable unused file name for pdf()"
-msgstr ""
+msgstr "没有合适的文件名字给pdf()来用"
 
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr ""
+msgstr "dev.new():用pdf(file=\"%s\")"
 
 msgid "no suitable unused file name for postscript()"
-msgstr ""
+msgstr "没有合适的文件名字给postscript()来用"
 
 msgid "dev.new(): using postscript(file=\"%s\")"
-msgstr ""
+msgstr "dev.new():用postscript(file=\"%s\")"
 
-#, fuzzy
 msgid "device '%s' not found"
-msgstr "没有'%s'这样的装置"
+msgstr "没有'%s'这个装置"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'里的变元不对(需要有带名变元)"
@@ -151,7 +149,7 @@ msgid "NOT changing"
 msgstr "不更换"
 
 msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr ""
+msgstr "'append'不后向相容，因此略过不用"
 
 msgid "unknown family '%s'"
 msgstr "没有'%s'这样的系列"
@@ -159,9 +157,8 @@ msgstr "没有'%s'这样的系列"
 msgid "invalid 'family' argument"
 msgstr "'family'变元不对"
 
-#, fuzzy
 msgid "invalid 'file'"
-msgstr "'family'变元不对"
+msgstr "'file'不对"
 
 msgid "invalid PDF version"
 msgstr "PDF版本不对"
@@ -256,9 +253,8 @@ msgstr "没有'%s'这样的装置"
 msgid "Available devices are %s"
 msgstr "可用的装置是%s"
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr "字体种类不对"
+msgstr "'title'不对"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "石英字体不对： 必需有四条字符串"
@@ -270,11 +266,10 @@ msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "石英字体里的变元不对(需要带名变元)"
 
 msgid "invalid value for 'antialias'"
-msgstr ""
+msgstr "'antialias'的值不对"
 
-#, fuzzy
 msgid "invalid 'filename'"
-msgstr "'family'变元不对"
+msgstr "'filename'不对"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "除非'units = \"px\"'，否则必需设定'res'"
@@ -285,12 +280,11 @@ msgstr "X11字体设置出了错:"
 msgid "no such device"
 msgstr "没有这样的装置"
 
-#, fuzzy
 msgid "can only copy from 'X11(type=\"cairo\")' devices"
-msgstr "只能从'devices'拷贝装置"
+msgstr "只能从'X11(type=\"cairo\")'装置拷贝"
 
-msgid "invalid value for 'rescale"
-msgstr ""
+msgid "invalid value for 'rescale'"
+msgstr "'rescale'不对"
 
 msgid "can only bring windows devices to the front"
 msgstr "只能把窗户装置带到前方去"
