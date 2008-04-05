@@ -37,10 +37,13 @@ optim <- function(par, fn, gr = NULL, ...,
                 type = 1,
                 lmm = 5, factr = 1e7, pgtol = 0,
                 tmax = 10, temp = 10.0)
+    nmsC <- names(con)
     if (method == "Nelder-Mead") con$maxit <- 500
     if (method == "SANN") con$maxit <- 10000
 
     con[(namc <- names(control))] <- control
+    if(length(noNms <- namc[!namc %in% nmsC]) > 0)
+        warning("unknown names in control: ", paste(noNms,collapse=", "))
     if(con$trace < 0)
         warning("read the documentation for 'trace' more carefully")
     if (method == "L-BFGS-B" &&
