@@ -73,7 +73,7 @@ windows <- function(width, height, pointsize,
                          name.opt = ".Windows.Options",
 			 reset = FALSE, assign.opt = FALSE)
     rescale <- pmatch(old$rescale, c("R", "fit", "fixed"))
-    if(is.na(rescale)) stop("invalid value for 'rescale")
+    if(is.na(rescale)) stop("invalid value for 'rescale'")
     invisible(.External(Cdevga, "", old$width, old$height, old$pointsize,
                         old$record, rescale, old$xpinch, old$ypinch,
                         old$canvas, old$gamma, old$xpos, old$ypos,
