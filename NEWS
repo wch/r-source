@@ -19,7 +19,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	changed to 7 (inches) to match the screen devices.
 
     o	Most users of the X11() device will see a new device that has
-	different fonts, anti-aliasing of lines and fonts, and
+	different fonts, anti-aliasing of lines and fonts and
 	supports semi-transparent colours.
 
     o	Considerable efforts have been made to make the default output
@@ -289,6 +289,9 @@ NEW FEATURES
     o	predict.loess() now works when loess() was fitted with
 	transformed explanatory variables, e.g, loess(y ~ log(x) + log(z)).
 
+    o	Progress-bar functions txtProgressBar(), tkProgressBar() in
+ 	package tcltk and winProgressBar() (Windows only).
+
     o	identity() convenience function to be used for programming.
 	
 
@@ -419,9 +422,6 @@ GRAPHICS CHANGES
 
     o	plot.formula() only prompts between plots for interactive
 	devices (it used to prompt for all devices).
-
-    o	Progress-bar functions txtProgressBar(), tkProgressBar() in
- 	package tcltk and winProgressBar() (Windows only).
 
 
 DEPRECATED & DEFUNCT
