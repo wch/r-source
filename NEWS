@@ -359,7 +359,7 @@ NEW FEATURES
  	package tcltk and winProgressBar() (Windows only).
 
     o	identity() convenience function to be used for programming.
-	
+
 
 GRAPHICS CHANGES
 
@@ -797,6 +797,9 @@ BUG FIXES
 
     o	dump() and friends now warn that all S4 objects (even those
     	based on vectors) are not source()able, with a stronger wording.
+
+    o	optim(*, control = list(...)) now warns when '...' contains
+	unexpected names, instead of silently ignoring them.
 
 
 
