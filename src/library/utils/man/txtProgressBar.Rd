@@ -60,9 +60,7 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 \note{
   Using \code{style} 2 or 3 or reducing the value with \code{style = 1}
   uses \code{\r} to return to the left margin -- the interpretation of
-  carriage return is up to the terminal or console in which \R is
-  running.  (Carriage return was interpreted as a line feed in the Mac
-  OS GUI at the time of writing.)
+  carriage return is up to the terminal or console in which \R is running.
 }
 \seealso{
 #ifdef windows
