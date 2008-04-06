@@ -211,8 +211,9 @@ NEW FEATURES
 	1970s).
 
     o	On platforms where we can detect that mktime sets errno
-	(e.g. Solaris but not glibc), "1969-12-31 23:59:59" is
-	converted to POSIXct as -1 and not NA.
+	(e.g. Solaris and the code used on Windows but not Linux nor
+	Mac OS X), 1969-12-31 23:59:59 GMT is converted from POSIXlt
+	to POSIXct as -1 and not NA.
 
     o	spline() gets an 'xout' argument, analogously to approx().
 
@@ -300,7 +301,8 @@ NEW FEATURES
 	complex ones are provided, both in kappa() and the new rcond().
 
     o	sprintf() now does all the conversions needed in a first pass if
-	length(fmt) == 1, and so can be many times faster.
+	length(fmt) == 1, and so can be many times faster if called
+	with long vector arguments.
 
     o	New function checkNEWS() that detects common errors in NEWS
 	file formatting.
@@ -359,6 +361,9 @@ NEW FEATURES
  	package tcltk and winProgressBar() (Windows only).
 
     o	identity() convenience function to be used for programming.
+
+    o	optim(*, control = list(...)) now warns when '...' contains
+	unexpected names, instead of silently ignoring them.
 
 
 GRAPHICS CHANGES
@@ -453,8 +458,7 @@ GRAPHICS CHANGES
 	(possibly bitmap) PDF and postscript files via cairo.
 
 	Some features require cairo >= 1.2, and some which are
-	nominally supported under 1.2 seem to need 1.4 to work
-	correctly.
+	nominally supported under 1.2 seem to need 1.4 to work well.
 
     o	There are new bmp() and tiff() devices.
 
@@ -478,12 +482,12 @@ GRAPHICS CHANGES
 
     o	strwidth() and strheight() gain 'font' and 'vfont' arguments and
 	accept in-line pars such as 'family' in the same way as text()
-	does.  (PR#776)
+	does.  (Longstanding wish of PR#776)
 
     o	example(ask=TRUE) now applies to grid graphics (e.g. from
 	lattice) as well as to base graphics.
 
-    o	option("device.ask.default") replaces "par.ask.default" now it
+    o	Option "device.ask.default" replaces "par.ask.default" now it
 	applies also to grid.prompt().
 
     o	plot.formula() only prompts between plots for interactive
@@ -522,10 +526,11 @@ DEPRECATED & DEFUNCT
     o	options("par.ask.default") is deprecated in favour of
 	"device.ask.default".
 
-    o	The 'device-independent' family "symbol" is deprecated as it
-	was highly locale-dependent (it only did something useful in
-	single-byte locales) and font=5 (base) or fontface=5 (grid) did
-	the job it was intended to do more reliably.
+    o	The 'device-independent' family "symbol" is deprecated as it was
+	highly locale- and device-dependent (it only did something
+	useful in single-byte locales on most devices) and font=5
+	(base) or fontface=5 (grid) did the job it was intended to do
+	more reliably.
 
     o	gammaCody() is now formally deprecated.
 
@@ -561,9 +566,9 @@ INSTALLATION
 	after real browsers such as firefox, mozilla and opera.
 
     o	The search for tclConfig.sh and tkConfig.sh now only looks in
-	containing directories $(LIBnn) in the hope of finding the
-	version for the appropriate architecture (e.g. x86_64 or
-	i386).
+	directories with names containing $(LIBnn) in the hope of
+	finding the version for the appropriate architecture
+	(e.g. x86_64 or i386).
 
     o	libtool has been updated to version 2.2.
 
@@ -616,19 +621,19 @@ C-LEVEL FACILITIES
     o	Both the Unix and Windows interfaces for embedding now make
 	use of 'const char *' declarations where appropriate.
 
-    o	Rprintf() and REprintf() now use 'const' for their format
+    o	Rprintf() and REprintf() now use 'const char *' for their format
 	argument -- this should reduce warnings when called from C++.
+
+    o	There is a new description of the interface for graphics
+	devices in the 'R Internals' manual, and several new entry
+	points.	 The API has been updated to version R_GE_version = 5,
+	and graphics devices will need to be updated accordingly.
 
     o	Graphics devices can now select to be sent text in UTF-8, even
 	if the current locale is not UTF-8 (and so enable text entered
 	in UTF-8 to be plotted).  This is used by postscript(), pdf()
 	and the windows() family of devices, as well as the new
 	cairo-based devices.
-
-    o	There is a new description of the interface for graphics
-	devices in the 'R Internals' manual, and several new entry
-	points.	 The API has been updated to version R_GE_version = 5,
-	and graphics devices will need to be updated accordingly.
 
     o	More Lapack routines are available (and declared in R_Ext/Lapack.h),
 	notably for (reciprocal) condition number estimation of complex
@@ -640,7 +645,7 @@ C-LEVEL FACILITIES
 	CHARSXPs, getCharCE and mkCharCE using the enumeration type
 	cetype_t.
 
-    o	A new header 'R_ext/Visibility' contains some definitions for
+    o	A new header 'R_ext/Visibility.h' contains some definitions for
 	controlling the visibility of entry points, and how to control
 	visibility is now documented in 'Writing R Extensions'.
 
@@ -653,9 +658,9 @@ BUG FIXES
 
     o	co[rv](use = "complete.obs") now always gives an error if there
 	are no complete cases: they used to give NA if
-	method = "pearson" but an error for the other two methods.  (Note
-	that this is pretty arbitrary, but zero-length vectors always
-	give an error so it is at least consistent.)
+	method = "pearson" but an error for the other two methods.
+	(Note that this is pretty arbitrary, but zero-length vectors
+	always give an error so it is at least consistent.)
 
 	cor(use="pair") used to give diagonal 1 even if the variable
 	was completely missing for the rank methods but NA for the
@@ -755,7 +760,7 @@ BUG FIXES
 	in warning when NA's (specifically NaN's) are generated.
 
     o	rnorm(n, mu = Inf) now returns rep(Inf, n) instead of NaN;
-	similar sensible changes are applied to rlnorm(), rexp(), etc.
+	similar changes are applied to rlnorm(), rexp(), etc.
 
     o	[l]choose() now warns when rounding non-integer 'k' instead of
 	doing so silently.  (May help confused users such as PR#10766.)
@@ -781,7 +786,7 @@ BUG FIXES
     o	setAs() now catches 2 arguments in the method definition, if
 	they do not match the arguments of coerce().
 
-    o	Methods with missing arguments in the definition are handled
+    o	S4 methods with missing arguments in the definition are handled
 	correctly  when non-signature arguments exist, and check for
 	conflicting local names in the method definition.
 
@@ -797,9 +802,6 @@ BUG FIXES
 
     o	dump() and friends now warn that all S4 objects (even those
     	based on vectors) are not source()able, with a stronger wording.
-
-    o	optim(*, control = list(...)) now warns when '...' contains
-	unexpected names, instead of silently ignoring them.
 
 
 
