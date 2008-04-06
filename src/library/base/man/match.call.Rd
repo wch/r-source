@@ -25,7 +25,7 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
 \details{
   \sQuote{function} on this help page means an interpreted function
   (also known as a \sQuote{closure}):  \code{match.call} does not support
-  with primitive functions (where argument matching is normally
+  primitive functions (where argument matching is normally
   positional).
 
   \code{match.call} is most commonly used in two circumstances:
