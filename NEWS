@@ -375,6 +375,12 @@ NEW FEATURES
     	used in R < 2.7.0 (and so it is safe to use the additional
     	operators in examples like  'R (>= 2.0.0), R (< 2.7.0), MASS').
 
+    o   pairwise.t.test() and pairwise.wilcox.test() now more explicitly
+        allow paired tests. In the former case it is now flagged as an 
+        error if both 'paired' and 'pool.SD' are set TRUE (formerly,
+        'paired' was silently ignored), and one-sided tests are generated
+        according to 'alternative' also if 'pool.SD' is TRUE.
+
 
 GRAPHICS CHANGES
 
