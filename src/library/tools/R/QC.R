@@ -2496,6 +2496,7 @@ function(dir)
 
     ## Are all namespace dependencies listed as package dependencies?
     if(file_test("-f", file.path(dir, "NAMESPACE"))) {
+        reqs <- .get_namespace_package_depends(dir)
         ## <FIXME>
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
