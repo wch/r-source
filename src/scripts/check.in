@@ -2292,7 +2292,7 @@ sub check_pkg {
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
 	    if(scalar(@out) > 0) {
-		if(grep(/^\*\*\* (Tangle|Weave|Source|PDFLaTeX) Errors \*\*\*$/,
+		if(grep(/^\*\*\* (Tangle|Weave|Source) Errors \*\*\*$/,
 			@out)) {
 		    $log->warning() unless($any);
 		} else {
