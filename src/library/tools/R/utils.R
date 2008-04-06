@@ -330,6 +330,40 @@ function(v, env, last = NA, default = NA) {
     default
 }
 
+### ** .get_BibTeX_errors_from_blg_file
+
+.get_BibTeX_errors_from_blg_file <-
+function(con)
+{
+    ## Get BibTeX error info, using non-header lines until the first
+    ## warning or summary, hoping for the best ...
+    lines <- readLines(con, warn = FALSE)
+    ## How can we find out for sure that there were errors?  Try
+    ## guessing ...
+    really_has_errors <-
+        (length(grep("^---", lines)) ||
+         regexpr("error message", lines[length(lines)]) > -1L)
+    pos <- grep("^(Warning|You)", lines)
+    if(!really_has_errors || !length(pos) ) return(character())
+    ind <- seq.int(from = 3L, length.out = pos[1L] - 3L)
+    lines[ind]
+}
+    
+### ** .get_LaTeX_errors_from_log_file
+
+.get_LaTeX_errors_from_log_file <-
+function(con, n = 4L)
+{
+    ## Get (La)TeX lines with error plus n (default 4) lines of trailing
+    ## context.
+    lines <- readLines(con, warn = FALSE)
+    pos <- grep("^!", lines)
+    if(!length(pos)) character()
+    ## Error chunk extends to at most the next error line.
+    mapply(function(from, to) paste(lines[from : to], collapse = "\n"),
+           pos, pmin(pos + n, c(pos[-1L], length(lines)) - 1L))
+}
+
 ### ** .get_contains_from_package_db
 
 .get_contains_from_package_db <-

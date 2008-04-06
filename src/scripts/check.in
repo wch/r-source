@@ -2372,15 +2372,17 @@ sub check_pkg {
             }
 	    $log->result("OK");
 	    if($HAVE_LATEX) {
-		my $cmd;
+		my ($cmd, $fmt);
 		if($HAVE_PDFLATEX) {
 		    $cmd = "${R::Vars::PDFLATEX}";
 		    $cmd_name = "pdflatex";
+		    $fmt = "pdf";
 		} else {
 		    $cmd = "${R::Vars::LATEX}";
 		    $cmd_name = "latex";
+		    $fmt = "dvi";
 		}
-		$log->checking("${pkgname}-manual.tex using $cmd_name");
+		$log->checking("${pkgname}-manual.tex using ${cmd_name}");
 		## <NOTE>
 		## We use \nonstopmode{} so that LaTeX really gives an
 	        ## error (and returns) if something is wrong, and all
@@ -2413,28 +2415,19 @@ sub check_pkg {
 		## </NOTE>
 		if(R_system($cmd)) {
 		    $log->error();
-		    if($HAVE_PDFLATEX) {
-			$log->print("LaTeX errors when creating PDF version.\n");
-		    } else {
-			$log->print("LaTeX errors when creating DVI version.\n");
-		    }
+		    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    ## If possible, indicate the problems found.
-		    ## GNU grep rather usefully has a '-A' option for
-		    ## controlling the number of lines of trailing
-		    ## context after matching lines (not POSIX; maybe
-		    ## sed could do this?).  Not sure how to do this in
-		    ## Perl.  For the time being, try 'grep -A', and
-		    ## give no additional info if this fails.
-		    my $out = R_tempfile("gout");
-		    my $cmd = "grep -A4 '^!' ${pkgname}-manual.log";
-		    $cmd .= " > ${out} 2>/dev/null";
-		    if(!R_system($cmd)) {
-			$log->print("LaTeX errors found:\n\n");
-			$log->print(join("\n", &read_lines("${out}")) .
-				    "\n");
+		    if(-f "${pkgname}-manual.log") {
+			my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${pkgname}-manual.log\"))";
+			my @out = R_runR($Rcmd, "${R_opts} --quiet",
+					 "R_DEFAULT_PACKAGES=NULL");
+			@out = grep(!/^\>/, @out);
+			if(scalar(@out) > 0) {
+			    $log->print("LaTeX errors found:\n");
+			    $log->print(join("\n", @out) . "\n");
+			}
 		    }
-		    unlink($out);
 		    exit(1);
 		}
 		$log->result("OK");
@@ -2443,12 +2436,14 @@ sub check_pkg {
 	else { # no latex dir
 	    if($HAVE_LATEX) {
 		my $Rd2dvi_opts = "--batch --no-preview";
+		my $fmt;
 		if($HAVE_PDFLATEX) {
-		    $log->checking("PDF version of manual");
 		    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
+		    $fmt = "pdf";
 		} else {
-		    $log->checking("DVI version of manual");
+		    $fmt = "dvi";
 		}
+		$log->checking("\U$fmt\E version of manual");
 		my $cmd;
 		if($WINDOWS) {
 		    $cmd = join(" ",
@@ -2462,17 +2457,28 @@ sub check_pkg {
 				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
 				 "$pkgdir"));
 		}
+		## <NOTE>
+		## This is identical to the latex_dir case: maybe merge
+		## eventually?
 		if(R_system($cmd)) {
 		    $log->error();
-		    if($HAVE_PDFLATEX) {
-			$log->print("LaTeX errors when creating PDF version.\n");
-		    } else {
-			$log->print("LaTeX errors when creating DVI version.\n");
-		    }
+		    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
+		    ## If possible, indicate the problems found.
+		    if(-f "${pkgname}-manual.log") {
+			my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${pkgname}-manual.log\"))";
+			my @out = R_runR($Rcmd, "${R_opts} --quiet",
+					 "R_DEFAULT_PACKAGES=NULL");
+			@out = grep(!/^\>/, @out);
+			if(scalar(@out) > 0) {
+			    $log->print("LaTeX errors found:\n");
+			    $log->print(join("\n", @out) . "\n");
+			}
+		    }
 		    exit(1);
 		}
 		$log->result("OK");
+		## </NOTE>
 	    }
 	}
     }
@@ -2487,13 +2493,12 @@ sub check_pkg {
 	my $Rd2dvi_opts = "--batch --no-preview --only-meta";
 	my $ext;
 	if($HAVE_PDFLATEX) {
-	    $log->checking("PDF version of DESCRIPTION");
 	    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
 	    $ext = "pdf";
 	} else {
-	    $log->checking("DVI version of DESCRIPTION");
 	    $ext = "dvi";
 	}
+	$log->checking("\U$ext\E version of DESCRIPTION");	
 	my $cmd = join(" ",
 		       (&shell_quote_file_path("${R::Vars::R_EXE}"),
 			"CMD Rd2dvi $Rd2dvi_opts",
@@ -2512,7 +2517,7 @@ sub check_pkg {
 	    ## directly call the code for converting DESCRIPTION files
 	    ## to LaTeX.
 	    $log->warning();
-	    $log->print("Problems when creating DVI version of DESCRIPTION.");
+	    $log->print("Problems when creating \U$ext\E version of DESCRIPTION.");
 	}
 	else {
 	    $log->result("OK");
