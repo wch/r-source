@@ -735,6 +735,8 @@ BUG FIXES
     o	dump() and friends now warn that all S4 objects (even those
     	based on vectors) are not source()able, with a stronger wording.
 
+    o	read.dcf(all = TRUE) was leaking connections.
+
 
 
 
