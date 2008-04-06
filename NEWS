@@ -299,6 +299,12 @@ NEW FEATURES
     o	optim(*, control = list(...)) now warns when '...' contains
 	unexpected names, instead of silently ignoring them.
 
+    o   pairwise.t.test() and pairwise.wilcox.test() now more explicitly
+        allow paired tests. In the former case it is now flagged as an 
+        error if both 'paired' and 'pool.SD' are set TRUE (formerly,
+        'paired' was silently ignored), and one-sided tests are generated
+        according to 'alternative' also if 'pool.SD' is TRUE.
+
 
 GRAPHICS CHANGES
 

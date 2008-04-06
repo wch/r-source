@@ -15,11 +15,15 @@
 #  http://www.r-project.org/Licenses/
 
 pairwise.t.test <-
-function(x, g, p.adjust.method = p.adjust.methods, pool.sd = TRUE, ...)
+function(x, g, p.adjust.method = p.adjust.methods, pool.sd = !paired,
+         paired = FALSE, alternative = c("two.sided", "less", "greater"), ...)
 {
+    if (paired & pool.sd)
+        stop("Pooling of SD is incompatible with paired tests")
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
     g <- factor(g)
     p.adjust.method <- match.arg(p.adjust.method)
+    alternative <- match.arg(alternative)
     if (pool.sd)
     {
         METHOD <- "t tests with pooled SD"
@@ -33,14 +37,20 @@ function(x, g, p.adjust.method = p.adjust.methods, pool.sd = TRUE, ...)
             dif <- xbar[i] - xbar[j]
             se.dif <- pooled.sd * sqrt(1/n[i] + 1/n[j])
             t.val <- dif/se.dif
-            2 * pt(-abs(t.val), total.degf)
+            if (alternative == "two.sided")
+                2 * pt(-abs(t.val), total.degf)
+            else
+                pt(t.val, total.degf,
+                   lower.tail=(alternative == "less"))
         }
     } else {
-        METHOD <- "t tests with non-pooled SD"
+        METHOD <- if (paired) "paired t tests"
+        else "t tests with non-pooled SD"
         compare.levels <- function(i, j) {
             xi <- x[as.integer(g) == i]
             xj <- x[as.integer(g) == j]
-            t.test(xi, xj, ...)$p.value
+            t.test(xi, xj, paired=paired,
+                   alternative=alternative, ...)$p.value
         }
     }
     PVAL <- pairwise.table(compare.levels, levels(g), p.adjust.method)
@@ -52,12 +62,13 @@ function(x, g, p.adjust.method = p.adjust.methods, pool.sd = TRUE, ...)
 
 
 pairwise.wilcox.test <-
-function(x, g, p.adjust.method = p.adjust.methods, ...)
+function(x, g, p.adjust.method = p.adjust.methods, paired=FALSE, ...)
 {
     p.adjust.method <- match.arg(p.adjust.method)
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
     g <- factor(g)
-    METHOD <- "Wilcoxon rank sum test"
+    METHOD <- if (paired) "Wilcoxon signed rank test"
+        else "Wilcoxon rank sum test"
     compare.levels <- function(i, j) {
         xi <- x[as.integer(g) == i]
         xj <- x[as.integer(g) == j]

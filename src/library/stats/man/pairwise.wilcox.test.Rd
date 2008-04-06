@@ -12,14 +12,23 @@
 }
 \usage{
 pairwise.wilcox.test(x, g, p.adjust.method = p.adjust.methods,
-                     \dots)
+                      paired=FALSE, \dots)
 }
 \arguments{
-  \item{x}{ Response vector }
-  \item{g}{ Grouping vector or factor }
-  \item{p.adjust.method}{ Method for adjusting p values (see
-    \code{\link{p.adjust}}) }
-  \item{\dots}{Additional arguments to pass to \code{\link{wilcox.test}}.}
+  \item{x}{ response vector. }
+  \item{g}{ grouping vector or factor. }
+  \item{p.adjust.method}{ method for adjusting p values (see
+    \code{\link{p.adjust}}). }
+  \item{paired}{a logical indicating whether you want a paired test.}
+  \item{\dots}{additional arguments to pass to \code{\link{wilcox.test}}.}
+}
+\details{
+  Extra arguments that are passed on to \code{wilcox.test} may or may
+  not be sensible in this context. In particular,
+  only the lower triangle of the matrix of possible comparisons is being
+  calculated, so setting \code{alternative} to anything other than
+  \code{"two.sided"} requires that the levels of \code{g} are ordered
+  sensibly.
 }
 \value{
   Object of class \code{"pairwise.htest"}
