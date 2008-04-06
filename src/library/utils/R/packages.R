@@ -105,9 +105,13 @@ available.packages <-
         .checkRversion <- function(x) {
             if(is.na(xx <- x["Depends"])) return(TRUE)
             xx <- tools:::.split_dependencies(xx)
-            if(length(z <- xx[["R", exact=TRUE]]) > 1)
-                eval(parse(text=paste("currentR", z$op, "z$version")))
-            else TRUE
+            ## R < 2.7.0 picked up only the first
+            zs <- xx[names(xx) == "R"]
+            r <- TRUE
+            for(z in zs)
+                if(length(z) > 1)
+                    r <- r & eval(parse(text=paste("currentR", z$op, "z$version")))
+            r
         }
         res <- res[apply(res, 1, .checkRversion), , drop=FALSE]
     }

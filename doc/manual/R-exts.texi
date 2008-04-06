@@ -337,12 +337,13 @@ format conforming to the ISO standard.
 
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
-optionally followed by a comparison operator (currently only @samp{>=}
-and @samp{<=} are supported), whitespace and a valid version number in
-parentheses.  (List package names even if they are part of a bundle.)
-You can also use the special package name @samp{R} if your package
-depends on a certain version of @R{}.  E.g., if the package works only with
-@R{} version 2.4.0 or newer, include @samp{R (>= 2.4.0)} in the
+optionally followed by a comment in parentheses.  The comment should
+contain a comparison operator (only @samp{>=} and @samp{<=} were
+supported prior to @R{} 2.7.0), whitespace and a valid version number).
+(List @emph{package} names even if they are part of a bundle.)  You can
+also use the special package name @samp{R} if your package depends on a
+certain version of @R{}.  E.g., if the package works only with @R{}
+version 2.4.0 or newer, include @samp{R (>= 2.4.0)} in the
 @samp{Depends} field.  Both @code{library} and the @R{} package checking
 facilities use this field, hence it is an error to use improper syntax
 or misuse the @samp{Depends} field for comments on other software that
@@ -354,6 +355,11 @@ and the list of packages which is specified will be attached (after
 checking version dependencies) before the current package, both when
 @code{library} is called and when saving an image of the package's code
 or preparing for lazy-loading.
+
+As from @R{} 2.7.0 a package (or @samp{R}) can appear more than once in
+the @samp{Depends}, but only the first occurrence will be used in
+earlier versions of R.  (Thus it is portable to use comparison operators
+@samp{<}, @samp{>}, @samp{==} and @samp{!=} in mentions after the first.)
 
 The optional @samp{Imports} field lists packages whose name spaces are
 imported from but which do not need to be attached.  Name spaces

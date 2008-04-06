@@ -3068,7 +3068,8 @@ function(dfile)
             }
             if(nzchar(sub(dep_regexp, "\\2", dep))) {
                 ## If not just a valid package name ...
-                if(!sub(dep_regexp, "\\3", dep) %in% c("<=", ">="))
+                if(!sub(dep_regexp, "\\3", dep) %in%
+                   c("<=", ">=", "<", ">", "==", "!="))
                     bad_dep_op <- c(bad_dep_op, dep)
                 else if(regexpr(sprintf("^%s$",
                                         valid_package_version_regexp),
@@ -4445,7 +4446,7 @@ function(g, env)
     env <- as.environment(env)
     mlist <- methods::findMethods(g, env)
 
-    ## First, derived default methods.    
+    ## First, derived default methods.
     if(any(ind <- as.logical(sapply(mlist, methods::is,
                                     "derivedDefaultMethod"))))
         mlist <- mlist[!ind]
