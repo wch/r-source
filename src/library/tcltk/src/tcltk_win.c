@@ -42,15 +42,15 @@ static void _R_tcldo(void)
 }
 
 /* import from src/gnuwin32/system.c */
-extern __declspec(dllimport) void (* R_tcldo)();
-static void (* old_R_tcldo)();
+extern void set_R_Tcldo(void *ptr);
+extern void unset_R_Tcldo(void *ptr);
 
 void tcltk_start(void)
 {
     HWND active = GetForegroundWindow(); /* ActiveTCL steals the focus */
+
     tcltk_init(); /* won't return on error */
-    old_R_tcldo = R_tcldo;
-    R_tcldo = &_R_tcldo;
+    set_R_Tcldo(&_R_tcldo);
     _R_tcldo();  /* one call to trigger the focus stealing bug */
     SetForegroundWindow(active); /* and fix it */
 }
@@ -59,5 +59,5 @@ void tcltk_end(void)
 {
     Tcl_DeleteInterp(RTcl_interp);
     Tcl_Finalize();
-    R_tcldo = old_R_tcldo;
+    unset_R_Tcldo(&_R_tcldo);
 }
