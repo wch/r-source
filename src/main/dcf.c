@@ -75,9 +75,10 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     lastm = -1; /* index of the field currently being recorded */
     blank_skip = TRUE;
     while(Rconn_getline(con, line, MAXELTSIZE) >= 0) {
-	if(strlen(line) == 0 || regexec(&blankline, line, 0, 0, 0) == 0) {
-	    /* A blank line.  The first one after a record
-	       ends a new record, subsequent ones are skipped */
+	if(strlen(line) == 0 ||
+	   regexec(&blankline, line, 0, 0, 0) == 0) {
+	    /* A blank line.  The first one after a record ends a new
+	     * record, subsequent ones are skipped */
 	    if(!blank_skip) {
 		k++;
 		if(k > nret - 1){
@@ -87,19 +88,23 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		    UNPROTECT_PTR(retval);
 		    retval = retval2;
 		}
+		blank_skip = TRUE;
+		lastm = -1;
+		field_skip = FALSE;
 	    }
-	    blank_skip = TRUE;
 	} else {
-	    /* starting a new record */
 	    blank_skip = FALSE;
-	    /* remove trailing whitespace */
+	    /* Remove trailing whitespace. */
 	    if(regexec(&trailblank, line, 1, regmatch, 0) == 0)
 		line[regmatch[0].rm_so] = '\0';
-
-	    /* A continuation line.  Are we currently recording?
-	       Or are we skipping a field?  Or is this an error? */
-	    if( (lastm >= 0 || field_skip) &&
-		regexec(&contline, line, 1, regmatch, 0) == 0) {
+	    if(regexec(&contline, line, 1, regmatch, 0) == 0) {
+		/* A continuation line: wrong if at the beginning of a
+		   record. */
+		if(lastm == -1 && !field_skip) {
+		    line[20] = '\0';
+		    warning("Found continuation line starting '%s ...' at begin of record.", line);
+		    continue;
+		}
 		if(lastm >= 0) {
 		    need = strlen(CHAR(STRING_ELT(retval,
 						  lastm + nwhat*k))) + 2;
