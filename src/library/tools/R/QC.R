@@ -135,8 +135,8 @@ function(package, dir, lib.loc = NULL)
     ## There was a time when packages contained code or data (or both).
     ## But not anymore ...
     if(!missing(package)
-       && (length(code_objs) == 0L)
-       && (length(data_objs) == 0L)
+       && (!length(code_objs))
+       && (!length(data_objs))
        && getOption("verbose"))
         message("neither code nor data objects found")
 
@@ -663,7 +663,7 @@ function(package, dir, lib.loc = NULL,
                                 function(e) as.character(e[[2L]]))
             data_sets_in_usages <- c(data_sets_in_usages, data_sets)
             data_sets <- data_sets %w/o% data_sets_in_code
-            if(length(data_sets) > 0L)
+            if(length(data_sets))
                 data_sets_in_usages_not_in_code[[docObj]] <- data_sets
             exprs <- exprs[!ind]
         }
@@ -705,7 +705,7 @@ function(package, dir, lib.loc = NULL,
         }
 
         bad_functions <- do.call("c", bad_functions)
-        if(length(bad_functions) > 0L)
+        if(length(bad_functions))
             bad_doc_objects[[docObj]] <- bad_functions
 
         ## Determine functions with a \usage entry in the documentation
@@ -728,7 +728,7 @@ function(package, dir, lib.loc = NULL,
         bad_functions <-
             functions %w/o% c(objects_in_code_or_namespace,
                               functions_to_be_ignored)
-        if(length(bad_functions) > 0L)
+        if(length(bad_functions))
             functions_in_usages_not_in_code[[docObj]] <- bad_functions
 
         functions_in_usages <- c(functions_in_usages, functions)
@@ -819,7 +819,7 @@ function(x, ...)
 
     functions_in_usages_not_in_code <-
         attr(x, "functions_in_usages_not_in_code")
-    if(length(functions_in_usages_not_in_code) > 0L) {
+    if(length(functions_in_usages_not_in_code)) {
         for(fname in names(functions_in_usages_not_in_code)) {
             writeLines(gettextf("Functions/methods with usage in documentation object '%s' but not in code:",
                                 fname))
@@ -830,7 +830,7 @@ function(x, ...)
 
     data_sets_in_usages_not_in_code <-
         attr(x, "data_sets_in_usages_not_in_code")
-    if(length(data_sets_in_usages_not_in_code) > 0L) {
+    if(length(data_sets_in_usages_not_in_code)) {
         for(fname in names(data_sets_in_usages_not_in_code)) {
             writeLines(gettextf("Data sets with usage in documentation object '%s' but not in code:",
                                 fname))
@@ -839,12 +839,12 @@ function(x, ...)
         }
     }
 
-    if(length(x) == 0L)
+    if(!length(x))
         return(invisible(x))
     has_only_names <- is.character(x[[1L]][[1L]][["code"]])
 
     format_args <- function(s) {
-        if(length(s) == 0L)
+        if(!length(s))
             "function()"
         else if(has_only_names)
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
@@ -1060,7 +1060,7 @@ function(package, lib.loc = NULL)
 print.codocClasses <-
 function(x, ...)
 {
-    if (length(x) == 0L)
+    if(!length(x))
         return(invisible(x))
     format_args <- function(s) paste(s, collapse = " ")
     for (docObj in names(x)) {
@@ -1376,7 +1376,7 @@ function(package, dir, lib.loc = NULL)
             arg_names_in_usage %w/o% arg_names_in_arg_list
         arg_names_in_arg_list_missing_in_usage <-
             arg_names_in_arg_list %w/o% arg_names_in_usage
-        if(length(arg_names_in_arg_list_missing_in_usage) > 0L) {
+        if(length(arg_names_in_arg_list_missing_in_usage)) {
             usage_text <- db_usage_texts[[docObj]]
             bad_args <- character()
             ## In the case of 'over-documented' arguments, try to be
@@ -1384,7 +1384,7 @@ function(package, dir, lib.loc = NULL)
             ## syntactically valid names of do not match the \usage text
             ## (modulo word boundaries).
             bad <- regexpr("^[[:alnum:]._]+$",
-                           arg_names_in_arg_list_missing_in_usage) == -1
+                           arg_names_in_arg_list_missing_in_usage) == -1L
             if(any(bad)) {
                 bad_args <- arg_names_in_arg_list_missing_in_usage[bad]
                 arg_names_in_arg_list_missing_in_usage <-
@@ -1430,10 +1430,10 @@ function(package, dir, lib.loc = NULL)
         else
             functions_not_in_aliases <- character()
 
-        if((length(arg_names_in_usage_missing_in_arg_list) > 0L)
+        if((length(arg_names_in_usage_missing_in_arg_list))
            || any(duplicated(arg_names_in_arg_list))
-           || (length(arg_names_in_arg_list_missing_in_usage) > 0L)
-           || (length(functions_not_in_aliases) > 0L))
+           || (length(arg_names_in_arg_list_missing_in_usage))
+           || (length(functions_not_in_aliases)))
             bad_doc_objects[[docObj]] <-
                 list(missing = arg_names_in_usage_missing_in_arg_list,
                      duplicated =
@@ -1453,25 +1453,25 @@ function(x, ...)
 {
     for(doc_obj in names(x)) {
         arg_names_in_usage_missing_in_arg_list <- x[[doc_obj]][["missing"]]
-        if(length(arg_names_in_usage_missing_in_arg_list) > 0L) {
+        if(length(arg_names_in_usage_missing_in_arg_list)) {
             writeLines(gettextf("Undocumented arguments in documentation object '%s'",
                                 doc_obj))
             .pretty_print(unique(arg_names_in_usage_missing_in_arg_list))
         }
         duplicated_args_in_arg_list <- x[[doc_obj]][["duplicated"]]
-        if(length(duplicated_args_in_arg_list) > 0L) {
+        if(length(duplicated_args_in_arg_list)) {
             writeLines(gettextf("Duplicated \\argument entries in documentation object '%s':",
                                 doc_obj))
             .pretty_print(duplicated_args_in_arg_list)
         }
         arg_names_in_arg_list_missing_in_usage <- x[[doc_obj]][["overdoc"]]
-        if(length(arg_names_in_arg_list_missing_in_usage) > 0L) {
+        if(length(arg_names_in_arg_list_missing_in_usage)) {
             writeLines(gettextf("Documented arguments not in \\usage in documentation object '%s':",
                                 doc_obj))
             .pretty_print(unique(arg_names_in_arg_list_missing_in_usage))
         }
         functions_not_in_aliases <- x[[doc_obj]][["unaliased"]]
-        if(length(functions_not_in_aliases) > 0L) {
+        if(length(functions_not_in_aliases)) {
             writeLines(gettextf("Objects in \\usage without \\alias in documentation object '%s':",
                                 doc_obj))
             .pretty_print(unique(functions_not_in_aliases))
@@ -1702,8 +1702,8 @@ function(package, dir, lib.loc = NULL)
                    intersect(functions, methods_in_package[[g]]),
                    simplify = FALSE)
 
-        if((length(methods_with_generic) > 0L) ||
-           (length(methods_with_full_name > 0L)))
+        if((length(methods_with_generic)) ||
+           (length(methods_with_full_name)))
             bad_doc_objects[[docObj]] <-
                 list(withGeneric  = methods_with_generic,
                      withFullName = methods_with_full_name)
@@ -1730,7 +1730,7 @@ function(x, ...) {
         ## (but of course it does not print that nicely anymore),
         ## </NOTE>
         methods_with_full_name <- x[[docObj]][["withFullName"]]
-        if(length(methods_with_full_name > 0L)) {
+        if(length(methods_with_full_name)) {
             writeLines(gettextf("S3 methods shown with full name in documentation object '%s':",
                                 docObj))
             .pretty_print(methods_with_full_name)
@@ -1906,7 +1906,7 @@ function(package, dir, file, lib.loc = NULL,
 print.checkFF <-
 function(x, ...)
 {
-    if(length(x) > 0L) {
+    if(length(x)) {
         writeLines(gettextf("Foreign function calls without 'PACKAGE' argument:"))
         for(i in seq_along(x)) {
             writeLines(paste(deparse(x[[i]][[1L]]),
@@ -2065,20 +2065,20 @@ function(package, dir, lib.loc = NULL)
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
         ## error in current S-PLUS versions.)
-        if(length(grep("\\.formula$", m)) > 0L) {
+        if(length(grep("\\.formula$", m))) {
             if(gArgs[1L] != "...") gArgs <- gArgs[-1L]
             mArgs <- mArgs[-1L]
         }
         dotsPos <- which(gArgs == "...")
-        ipos <- if(length(dotsPos) > 0L)
-            seq.int(from = 1, length.out = dotsPos[1L] - 1)
+        ipos <- if(length(dotsPos))
+            seq.int(from = 1L, length.out = dotsPos[1L] - 1L)
         else
             seq_along(gArgs)
 
         ## careful, this could match multiply in incorrect funs.
         dotsPos <- which(mArgs == "...")
-        if(length(dotsPos) > 0L)
-            ipos <- ipos[seq.int(from = 1, length.out = dotsPos[1L] - 1)]
+        if(length(dotsPos))
+            ipos <- ipos[seq.int(from = 1L, length.out = dotsPos[1L] - 1L)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0L
         margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
@@ -2301,7 +2301,7 @@ function(package, dir, lib.loc = NULL)
 print.checkReplaceFuns <-
 function(x, ...)
 {
-    if(length(x) > 0L) .pretty_print(unclass(x))
+    if(length(x)) .pretty_print(unclass(x))
     invisible(x)
 }
 
@@ -2393,7 +2393,7 @@ function(package, dir, file, lib.loc = NULL)
     bad_exprs <- list()
     for(file in code_files) {
         exprs <- find_TnF_in_code(file)
-        if(length(exprs) > 0L) {
+        if(length(exprs)) {
             exprs <- list(exprs)
             names(exprs) <- file
             bad_exprs <- c(bad_exprs, exprs)
@@ -2404,7 +2404,7 @@ function(package, dir, file, lib.loc = NULL)
                      collapse = "\n")
         txt <- .get_Rd_example_code(txt)
         exprs <- find_TnF_in_code(file, txt)
-        if(length(exprs) > 0L) {
+        if(length(exprs)) {
             exprs <- list(exprs)
             names(exprs) <- file
             bad_exprs <- c(bad_exprs, exprs)
@@ -2683,7 +2683,7 @@ function(db, def_enc = FALSE)
                      mandatory_tags[regexpr("^[[:space:]]*$",
                                             x$data$vals[match(mandatory_tags,
                                                               tags, NA)])
-                                    > -1]),
+                                    > -1L]),
               if(!length(x$meta$aliases)) "alias")
         ## R-exts says that the only requirement for this page is that
         ## it includes \docType{package}, all other "content" being
@@ -2827,8 +2827,8 @@ function(x, ...)
         for(i in seq_along(ind)) {
             writeLines(c(paste(" ", paste(names(ind)[i], ":", sep = "")),
                          paste("   ",
-                               apply(bad[ind[[i]], -1, drop = FALSE],
-                                     1, paste, collapse = " "))))
+                               apply(bad[ind[[i]], -1L, drop = FALSE],
+                                     1L, paste, collapse = " "))))
         }
         writeLines("")
     }
@@ -3039,7 +3039,7 @@ function(dfile)
     if(!is.na(val <- db["Version"])
        && !is_base_package
        && (regexpr(sprintf("^%s$", valid_package_version_regexp),
-                   val) == -1))
+                   val) == -1L))
         out$bad_version <- val
     if(!is.na(val <- db["Maintainer"])
        && (regexpr(.valid_maintainer_field_regexp, val) == -1L))
@@ -3346,7 +3346,7 @@ function(dir)
 print.check_make_vars <-
 function(x, ...)
 {
-    if(length(x) > 0L) {
+    if(length(x)) {
         for(i in seq_along(x)) {
             writeLines(c(gettextf("Non-portable flags in variable '%s':",
                                   names(x)[i]),
@@ -3500,7 +3500,7 @@ function(package, lib.loc = NULL)
 print.check_code_usage_in_package <-
 function(x, ...)
 {
-    if(length(x) > 0L)
+    if(length(x))
         writeLines(strwrap(x, indent = 0L, exdent = 2L))
     invisible(x)
 }
@@ -3541,7 +3541,7 @@ function(package, dir, lib.loc = NULL)
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
 
     ## Take the targets from the non-anchored xrefs.
-    db <- db[db[, 2L] == "", -2, drop = FALSE]
+    db <- db[db[, 2L] == "", -2L, drop = FALSE]
 
     ## The bad ones:
     db <- db[! db[, 1L] %in% unlist(aliases), , drop = FALSE]
@@ -3551,7 +3551,7 @@ function(package, dir, lib.loc = NULL)
 print.check_Rd_xrefs <-
 function(x, ...)
 {
-    if(length(x) > 0L) {
+    if(length(x)) {
         for(i in seq_along(x)) {
             writeLines(gettextf("Missing link(s) in documentation object '%s':",
                                 names(x)[i]))
@@ -3585,7 +3585,7 @@ function(pkgDir)
     }
     check_one <- function(x)
     {
-        if(length(x) == 0L) return()
+        if(!length(x)) return()
         ## avoid as.list methods
         if(is.list(x)) lapply(unclass(x), check_one)
         if(is.character(x)) lapply(unclass(x), check_charsxp)
@@ -3638,7 +3638,8 @@ print.check_package_datasets <- function(x, ...)
 
 ### * .check_package_subdirs
 
-.check_package_subdirs <- function(dir, doDelete = FALSE)
+.check_package_subdirs <-
+function(dir, doDelete = FALSE)
 {
     OS_subdirs <- c("unix", "windows")
 
@@ -4132,11 +4133,11 @@ function(package, dir, lib.loc = NULL)
 print.check_packages_used <-
 function(x, ...)
 {
-    if(length(x$imports) > 0L) {
+    if(length(x$imports)) {
         writeLines(gettext("'::' or ':::' imports not declared from:"))
         .pretty_print(x$imports)
     }
-    if(length(x$others) > 0L) {
+    if(length(x$others)) {
         writeLines(gettext("'library' or 'require' calls not declared from:"))
         .pretty_print(x$others)
     }
@@ -4291,7 +4292,9 @@ function(dir)
            })
 }
 
-print.check_T_and_F <- function(x, ...) {
+print.check_T_and_F <-
+function(x, ...)
+{
     if(length(x$bad_closures)) {
         msg <- ngettext(length(x$bad_closures),
                         "Found possibly global 'T' or 'F' in the following function:",
@@ -4533,7 +4536,7 @@ function(txt)
     exprs <- expression()
     lines <- unlist(strsplit(txt, "\n"))
     bad_lines <- character()
-    while((n <- length(lines)) > 0L) {
+    while((n <- length(lines))) {
         i <- 1L; txt <- lines[1L]
         while(inherits(yy <- tryCatch(parse(text = txt),
                                       error = identity),

@@ -97,10 +97,10 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
     patt <- paste("\\.(", paste(exts, collapse="|"), ")$", sep = "")
     files <- grep(patt, files, value = TRUE)
     if(full.names)
-        files <- if(length(files) > 0L)
+        files <- if(length(files))
             file.path(dir, files)
         else
-            character(0)
+            character()
     files
 }
 
@@ -381,7 +381,7 @@ function(nsInfo)
     ## parseNamespaceFile(), as a 3-column character matrix with the
     ## names of the generic, class and method (as a function).
     S3_methods_list <- nsInfo$S3methods
-    if(!length(S3_methods_list)) return(matrix(character(), ncol = 3))
+    if(!length(S3_methods_list)) return(matrix(character(), ncol = 3L))
     idx <- is.na(S3_methods_list[, 3L])
     S3_methods_list[idx, 3L] <-
         paste(S3_methods_list[idx, 1L],
@@ -774,7 +774,7 @@ function(package)
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package, exact = TRUE]] # 'st' matched 'stats'
-    if(!length(thisPkg)) character(0) else thisPkg
+    if(!length(thisPkg)) character() else thisPkg
 }
 
 ### ** .package_apply
@@ -866,8 +866,8 @@ function(file, envir, enc = NA)
         con <- file(file, encoding = enc)
         on.exit(close(con))
     } else con <- file
-    exprs <- parse(n = -1, file = con)
-    if(length(exprs) == 0L)
+    exprs <- parse(n = -1L, file = con)
+    if(!length(exprs))
         return(invisible())
     for(e in exprs) {
         if(e[[1L]] == assignmentSymbolLM || e[[1L]] == assignmentSymbolEq)
@@ -908,7 +908,8 @@ function(dir, env, meta = character())
 
 ### * .split_dependencies
 
-.split_dependencies <- function(x)
+.split_dependencies <-
+function(x)
 {
     ## given one or more Depends: or Suggests: fields from DESCRIPTION
     ## return a named list of list (name, [op, version])
@@ -921,7 +922,8 @@ function(dir, env, meta = character())
 
 ### * .split_op_version
 
-.split_op_version <- function(x)
+.split_op_version <-
+function(x)
 {
     ## given a single piece of dependency
     ## return a list of components (name, [op, version])
@@ -991,7 +993,7 @@ function(expr)
 function(args, msg)
 {
     len <- length(args)
-    if(len == 0L)
+    if(!len)
         character()
     else if(len == 1L)
         paste("argument", sQuote(args), msg)
