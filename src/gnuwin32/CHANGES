@@ -255,13 +255,13 @@ BUG FIXES
 	on screen, the font size was not rescaled to take account of
 	the initial shrink factor.
 
-    o	If windows(ypinch=) was specified, the width value was used
-	for the height.
+    o	If windows(ypinch=) was specified, the 'width' argument's value
+	was used for the height.
 
     o	The Graphapp computation for keyboard accelerators for menus was
-	not always working, at least on Windows XP -- this affected
-	e.g. Alt-M plus 'i' for 'List search path', where 's' was
-	being underlined.  (PR#11036)
+	not always working correctly, at least on Windows XP -- this
+	affected e.g. Alt-M plus 'i' for 'List search path', where the
+	second 's' was being underlined.  (PR#11036)
 	
     o	The winDialogString() dialog now releases CPU cycles while
     	waiting for input. (PR#11045)
