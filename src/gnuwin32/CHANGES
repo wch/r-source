@@ -194,6 +194,11 @@ PACKAGE INSTALLATION
 	installed.  Packages attempting to use the former private 
 	entry points in R.dll will need to be modified to include
 	$(ZLIB_LIBS) in PKG_LIBS.
+	
+    o	A new menu entry, "Install source package from local
+	folder...", has been added.  This uses the R toolset
+	(available as described in Writing R Extensions) to install a
+	package from source.
 
 
 OTHERS
