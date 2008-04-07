@@ -33,6 +33,7 @@
  BZ2_hbAssignCodes
  BZ2_hbCreateDecodeTables
  BZ2_hbMakeCodeLengths
+ BZ2_indexIntoF
  BZ2_rNums
  CPFun
  ConsoleAcceptCmd
@@ -51,18 +52,18 @@
  LOCK_BINDING
  La_chol
  La_chol2inv
+ La_dgecon
  La_dgeqp3
  La_dgesv
- La_dgecon
  La_dtrcon
  La_rg
  La_rg_cmplx
  La_rs
  La_rs_cmplx
  La_svd_cmplx
+ La_zgecon
  La_zgeqp3
  La_zgesv
- La_zgecon
  La_ztrcon
  LoadInitFile
  MDIset
@@ -185,6 +186,7 @@
  R_XDREncodeInteger
  R_Zero_Hack
  R_binary
+ R_check_locale
  R_compress1
  R_cpolyroot
  R_current_trace_state
@@ -224,7 +226,6 @@
  R_seemsOldStyleS4Object
  R_serialize
  R_serializeb
- R_signgam
  R_subset3_dflt
  R_syscall
  R_sysframe
@@ -301,7 +302,6 @@
  Rf_copyMostAttribNoTs
  Rf_d1mach
  Rf_deparse1s
- Rf_dpSavedptr
  Rf_dpptr
  Rf_evalList
  Rf_evalListKeepMissing
@@ -355,6 +355,8 @@
  Rf_yylval
  Rf_yynerrs
  Rf_yyparse
+ Rg_contourDef
+ Rg_readonlypars
  RgetMDIsize
  RguiCommonHelp
  RguiPackageMenu
@@ -395,8 +397,6 @@
  WinCheckUTF8
  WinUTF8out
  WrongArgCount
- _dist_code
- _length_code
  _nl_explode_name
  _nl_find_domain
  _nl_find_msg
@@ -426,14 +426,7 @@
  _pcre_valid_utf8
  _pcre_was_newline
  _pcre_xclass
- _tr_align
- _tr_flush_block
- _tr_init
- _tr_stored_block
- _tr_tally
  _vsnprintf
- adler32
- adler32_combine
  applyGUI
  apse_create
  apse_destroy
@@ -460,9 +453,6 @@
  complex_math1
  complex_math2
  complex_unary
- compress
- compress2
- compressBound
  compute_identical
  comqr2_
  comqr_
@@ -505,22 +495,10 @@
  consolex
  consoley
  corth_
- crc32
- crc32_combine
  csduplicated
  csroot_
  dbinom_raw
  dblep0_
- deflateBound
- deflateCopy
- deflateInit2_
- deflateParams
- deflatePrime
- deflateReset
- deflateSetDictionary
- deflateSetHeader
- deflateTune
- deflate_copyright
  deleditordata
  det_ge_real
  do_AT
@@ -596,6 +574,7 @@
  do_clearpushback
  do_clip
  do_close
+ do_closewinprogressbar
  do_cmathfuns
  do_col2RGB
  do_colon
@@ -608,6 +587,7 @@
  do_complex
  do_contour
  do_contourLines
+ do_convertXY
  do_countfields
  do_cov
  do_cum
@@ -628,6 +608,7 @@
  do_devoff
  do_devprev
  do_devset
+ do_devsize
  do_dfltStop
  do_dfltWarn
  do_dim
@@ -875,6 +856,7 @@
  do_readClipboard
  do_readDCF
  do_readLines
+ do_readRegistry
  do_readbin
  do_readchar
  do_readln
@@ -966,6 +948,7 @@
  do_syssleep
  do_system
  do_systime
+ do_sysumask
  do_syswhich
  do_tempdir
  do_tempfile
@@ -1002,6 +985,7 @@
  do_winmenuadd
  do_winmenudel
  do_winmenunames
+ do_winprogressbar
  do_winver
  do_writeClipboard
  do_writebin
@@ -1037,7 +1021,6 @@
  getParseFilename
  getTZinfo
  getWindowTitle
- get_crc_table
  get_current_mem
  get_duplicate_counter
  getline
@@ -1050,44 +1033,11 @@
  gl_setwidth
  gl_strwidth
  gl_tab_hook
- gzclearerr
- gzclose
- gzdirect
- gzdopen
- gzeof
- gzerror
- gzflush
- gzgetc
- gzgets
- gzopen
- gzputc
- gzputs
- gzread
- gzrewind
- gzseek
- gzsetparams
- gztell
- gzungetc
- gzwrite
  haveusedapager
  helpmenuact
  hqr_
  htribk_
  htridi_
- inflateBack
- inflateBackEnd
- inflateBackInit_
- inflateCopy
- inflateGetHeader
- inflateInit2_
- inflatePrime
- inflateReset
- inflateSetDictionary
- inflateSync
- inflateSyncPoint
- inflate_copyright
- inflate_fast
- inflate_table
  internal_shellexec
  intpr0_
  invalidate_cached_recodings
@@ -1100,8 +1050,6 @@
  libintl_dcigettext
  libintl_dcngettext
  libintl_dngettext
- libintl_fprintf
- libintl_fwprintf
  libintl_gettext_extract_plural
  libintl_gettext_free_exp
  libintl_gettext_germanic_plural
@@ -1112,21 +1060,7 @@
  libintl_nl_default_default_domain
  libintl_nl_default_dirname
  libintl_nl_domain_bindings
- libintl_printf
- libintl_snprintf
- libintl_sprintf
- libintl_swprintf
  libintl_textdomain
- libintl_vasnprintf
- libintl_vasnwprintf
- libintl_vfprintf
- libintl_vfwprintf
- libintl_vprintf
- libintl_vsnprintf
- libintl_vsprintf
- libintl_vswprintf
- libintl_vwprintf
- libintl_wprintf
  loadRconsole
  locale_charset
  mallinfo
@@ -1248,7 +1182,6 @@
  trio_vprintf
  tzname
  tzset
- uncompress
  unregisterBase
  utf8clen
  wgl_hist_init
@@ -1288,10 +1221,4 @@
  xdr_wrapstring
  xdrstdio_create
  yylloc
- zError
- z_errmsg
  z_prec_r
- zcalloc
- zcfree
- zlibCompileFlags
- zlibVersion
