@@ -300,6 +300,16 @@ menuInstallLocal <- function()
                      .libPaths()[1], repos = NULL)
 }
 
+menuInstallLocalDir <- function()
+{
+    folder <- choose.dir(getwd(), caption = "Select package folder")
+    if (!is.na(folder)) {
+    	folder <- gsub("\\\\", "/", folder)
+    	install.packages(folder, .libPaths()[1], type = "source", 
+    	                 repos = NULL)
+    }
+}
+
 ### the following function supports .install.winbinaries()
 
 zip.unpack <- function(zipname, dest)
