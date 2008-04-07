@@ -372,8 +372,7 @@ NEW FEATURES
 
 	There can be multiple mentions of R or a package in the Depends
     	field in a DESCRIPTION file: only the first mention will be
-    	used in R < 2.7.0 (and so it is safe to use the additional
-    	operators in examples like  'R (>= 2.0.0), R (< 2.7.0), MASS').
+    	used in R < 2.7.0.
 
     o   pairwise.t.test() and pairwise.wilcox.test() now more explicitly
         allow paired tests. In the former case it is now flagged as an 
