@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Alexey Shipunov <dactylorhiza at gmail> 2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
-"PO-Revision-Date: 2007-09-18 00:33-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
+"PO-Revision-Date: 2008-04-07 00:26-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -263,9 +263,8 @@ msgstr "'vec' должен быть сортирован не по уменьшению"
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' должен быть >= 1"
 
-#, fuzzy
 msgid "'order.max' must be < 'n.used'"
-msgstr "'order.max' должен быть >= 1"
+msgstr "'order.max' должен быть < 'n.used'"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "количество серий в 'object' и 'newdata' не совпадают"
@@ -525,9 +524,8 @@ msgstr "укажите и 'x', и 'y' или матрице-подобный 'x'"
 msgid "'x' is empty"
 msgstr "'x' пусто"
 
-#, fuzzy
 msgid "both 'x' and 'y' must be non-empty"
-msgstr "длины 'x' и 'w' должны соответствовать"
+msgstr "длины 'x' и 'y' должны быть непусты"
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr "не могу обработать 'pairwise.complete.obs'"
@@ -536,7 +534,7 @@ msgid "'V' is not a square numeric matrix"
 msgstr "'V' не является квадратной числовой матрицей"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
-msgstr ""
+msgstr "у diag(.) 0 или NA вхождений; не-конечный результат сомнителен"
 
 msgid "not enough finite observations"
 msgstr "недостаточно конечных наблюдений"
@@ -1111,9 +1109,8 @@ msgstr "неправильные значения параметра"
 msgid "a limit is missing"
 msgstr "предел пропущен"
 
-#, fuzzy
 msgid "missing values not allowed"
-msgstr "пропущенные значения не разрешены в 'poly'"
+msgstr "пропущенные значения не разрешены"
 
 msgid "'r' is less than 1"
 msgstr "'r' < 1"
@@ -1525,10 +1522,10 @@ msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper не выполнено"
 
 msgid "f.lower = f(lower) is NA"
-msgstr ""
+msgstr "f.lower = f(lower) -- это NA"
 
 msgid "f.upper = f(upper) is NA"
-msgstr ""
+msgstr "f.upper = f(upper) -- это NA"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "f() значений на концевых точках не противоположного знака"
@@ -1632,6 +1629,10 @@ msgstr "недостаточно групп"
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr "границы можно использовать только в методе L-BFGS-B"
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr "неизвестное именованное ядро"
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr "читайте документацию по 'trace' внимательнее"
 
@@ -1642,6 +1643,9 @@ msgstr ""
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr "one-diml-оптимизация Nelder-Mead ненадежна: используйте 'optimize'"
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr "'x' должен иметь 2 колонки"
@@ -1964,9 +1968,8 @@ msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 "spline: первое и последнее значения y различны -- использую y[1] для обоих"
 
-#, fuzzy
 msgid "'spline' requires n >= 1"
-msgstr "'approx' требует n >= 1"
+msgstr "'spline' требует n >= 1"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' должно быть между 0 и 3"

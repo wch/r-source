@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.2\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
-"PO-Revision-Date: 2008-03-09 11:51+0100\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
+"PO-Revision-Date: 2008-04-06 19:24+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -250,9 +250,8 @@ msgstr ""
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-Dateien mit doppeltem Alias '%s':"
 
-#, fuzzy
 msgid "Rd files with empty sections:"
-msgstr "Rd-Dateien mit unbekannten Abschnitten:"
+msgstr "Rd-Dateien mit leeren Abschnitten:"
 
 msgid "Found invalid multi-byte character data."
 msgstr "Unzulässige multi-byte Zeichenkettendaten gefunden"
@@ -359,13 +358,13 @@ msgid "Unknown encoding with non-ASCII data"
 msgstr "Unbekannte Kodierung mit nicht-ASCII Daten"
 
 msgid "Non-standard license specification:"
-msgstr ""
+msgstr "Nicht-Standard Lizenzspezifikation:"
 
 msgid "Invalid license file pointers: %s"
-msgstr ""
+msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
 msgid "Verifiable as open source: %s"
-msgstr ""
+msgstr "Verifizierbar als Open Source: %s"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
@@ -480,13 +479,15 @@ msgstr "**+ jemand hat das 'Built' Feld im Paket '%s' beschädigt ***"
 msgid "cannot open directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht öffnen"
 
-msgid "WARNING: 'Depends' entry has multiple dependencies:"
+#, fuzzy
+msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten:"
 
 msgid ","
 msgstr ","
 
-msgid "only the first will be used"
+#, fuzzy
+msgid "only the first will be used in R < 2.7.0"
 msgstr "nur die erste wird genutzt"
 
 msgid ""
@@ -617,7 +618,6 @@ msgstr "Abhängigkeiten von Paket '%s' auf minimale Menge reduziert."
 msgid "argument '%s' must be a character string or connection"
 msgstr "Argument '%s' muss eine Zeichenkette oder eine Verbindung sein"
 
-#, fuzzy
 msgid "'file' must be a character string or connection"
 msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
 
@@ -631,7 +631,7 @@ msgid "no or more than one match"
 msgstr "keine oder mehr als eine Übereinstimmung"
 
 msgid "'iconv' is required"
-msgstr ""
+msgstr "'iconv' wird benötigt"
 
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss eine Charaktervektor sein"

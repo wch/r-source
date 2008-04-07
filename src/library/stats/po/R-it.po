@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1675,6 +1675,10 @@ msgstr "gruppi insufficienti"
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr "bounds si può usare solo con il metodo L-BFGS-B"
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr "nome kernel sconosciuto"
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr "leggere la documentazione di 'trace' più attentamente"
 
@@ -1688,6 +1692,9 @@ msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr ""
 "ottimizzazione uni-dimensionale di Nelder-Mead non attendibile: usare "
 "optimize"
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr "'x' deve avere 2 colonne"

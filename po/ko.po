@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:04+0100\n"
+"POT-Creation-Date: 2008-04-07 08:27+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -184,12 +184,12 @@ msgstr ""
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:621
 #: src/modules/lapack/Lapack.c:717 src/modules/lapack/Lapack.c:774
-#: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2659
-#: src/modules/X11/devX11.c:2662 src/modules/X11/devX11.c:2665
-#: src/modules/X11/devX11.c:2698 src/modules/X11/devX11.c:3095
-#: src/modules/X11/devX11.c:3100 src/modules/X11/devX11.c:3104
-#: src/modules/X11/devX11.c:3108 src/modules/X11/devX11.c:3112
-#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3127
+#: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2658
+#: src/modules/X11/devX11.c:2661 src/modules/X11/devX11.c:2664
+#: src/modules/X11/devX11.c:2697 src/modules/X11/devX11.c:3094
+#: src/modules/X11/devX11.c:3099 src/modules/X11/devX11.c:3103
+#: src/modules/X11/devX11.c:3107 src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3122 src/modules/X11/devX11.c:3126
 #: src/unix/sys-std.c:1180 src/unix/sys-std.c:1203
 #, c-format
 msgid "invalid '%s' argument"
@@ -258,11 +258,11 @@ msgstr "태그가 부적절합니다"
 #: src/main/seq.c:245 src/main/seq.c:248 src/main/sort.c:790
 #: src/main/sort.c:890 src/main/source.c:172 src/main/summary.c:977
 #: src/main/sysutils.c:230 src/main/util.c:881 src/main/util.c:886
-#: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2564
-#: src/modules/X11/devX11.c:2591 src/modules/X11/devX11.c:2596
-#: src/modules/X11/devX11.c:2601 src/modules/X11/devX11.c:2611
-#: src/modules/X11/devX11.c:2616 src/modules/X11/devX11.c:2620
-#: src/modules/X11/devX11.c:3116 src/unix/sys-std.c:1276
+#: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2563
+#: src/modules/X11/devX11.c:2590 src/modules/X11/devX11.c:2595
+#: src/modules/X11/devX11.c:2600 src/modules/X11/devX11.c:2610
+#: src/modules/X11/devX11.c:2615 src/modules/X11/devX11.c:2619
+#: src/modules/X11/devX11.c:3115 src/unix/sys-std.c:1276
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 부적절합니다"
@@ -431,39 +431,39 @@ msgstr "최초의 인수에는 문자열으로 예측되어 있습니다"
 msgid "character string expected as third argument"
 msgstr "세번째 인수에는 문자열으로 예측되어 있습니다"
 
-#: src/gnuwin32/system.c:98 src/main/errors.c:135
+#: src/gnuwin32/system.c:115 src/main/errors.c:135
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:100 src/main/errors.c:137
+#: src/gnuwin32/system.c:117 src/main/errors.c:137
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:106 src/main/errors.c:143
+#: src/gnuwin32/system.c:123 src/main/errors.c:143
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:108 src/main/errors.c:145
+#: src/gnuwin32/system.c:125 src/main/errors.c:145
 msgid "reached CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128
+#: src/gnuwin32/system.c:145
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr "치명적 에러입니다: %s\n"
 
-#: src/gnuwin32/system.c:306 src/unix/sys-std.c:830
+#: src/gnuwin32/system.c:323 src/unix/sys-std.c:830
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "'%s'라고하는 인코딩은 인식할수가 없습니다"
 
-#: src/gnuwin32/system.c:312 src/unix/sys-std.c:836
+#: src/gnuwin32/system.c:329 src/unix/sys-std.c:836
 #, fuzzy, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<에러: 인코딩에서 부적절한 입력>"
 
-#: src/gnuwin32/system.c:521 src/gnuwin32/system.c:973
-#: src/gnuwin32/system.c:985 src/main/connections.c:503
+#: src/gnuwin32/system.c:538 src/gnuwin32/system.c:990
+#: src/gnuwin32/system.c:1002 src/main/connections.c:503
 #: src/main/connections.c:509 src/main/dounzip.c:105 src/main/saveload.c:1984
 #: src/main/serialize.c:2117 src/main/serialize.c:2126
 #: src/main/serialize.c:2210 src/main/serialize.c:2234 src/unix/system.c:314
@@ -472,60 +472,60 @@ msgstr "<에러: 인코딩에서 부적절한 입력>"
 msgid "cannot open file '%s': %s"
 msgstr "파일 '%s'를 열수가 없습니다"
 
-#: src/gnuwin32/system.c:535
+#: src/gnuwin32/system.c:552
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): 파일'%s'는 존재하지 않습니다\n"
 
-#: src/gnuwin32/system.c:936
+#: src/gnuwin32/system.c:953
 msgid "WARNING: no max-mem-size given\n"
 msgstr "경고: max-mem-size가 주어지고 있지 않습니다\n"
 
-#: src/gnuwin32/system.c:942
+#: src/gnuwin32/system.c:959
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "경고:  --max-mem-size 값이 부적절해서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:944
+#: src/gnuwin32/system.c:961
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "경고:  --max-mem-size=%lu'%c'는 너무 커서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:949
+#: src/gnuwin32/system.c:966
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:953
+#: src/gnuwin32/system.c:970
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:996 src/unix/system.c:353
+#: src/gnuwin32/system.c:1013 src/unix/system.c:353
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1000 src/unix/system.c:367
+#: src/gnuwin32/system.c:1017 src/unix/system.c:367
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "경고: 알수 없는 '%s'옵션입니다\n"
 
-#: src/gnuwin32/system.c:1021 src/unix/system.c:371
+#: src/gnuwin32/system.c:1038 src/unix/system.c:371
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "인수'%s'는 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:1027 src/unix/system.c:378
+#: src/gnuwin32/system.c:1044 src/unix/system.c:378
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "벡터가 non-Vector이지만 길이는 설정할수 없습니다"
 
-#: src/gnuwin32/system.c:1048 src/unix/system.c:427
+#: src/gnuwin32/system.c:1065 src/unix/system.c:427
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'-- save', '--no-save', '--vanilia' 어느쪽이든을 지정해 주십시오"
 
-#: src/gnuwin32/system.c:1053
+#: src/gnuwin32/system.c:1070
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -1871,7 +1871,7 @@ msgstr "입력 연결'%s'에 부적절한 입력이 있었습니다"
 #: src/main/connections.c:511 src/main/dounzip.c:107 src/main/saveload.c:1986
 #: src/main/serialize.c:2120 src/main/serialize.c:2129
 #: src/main/serialize.c:2212 src/main/serialize.c:2236
-#: src/modules/X11/devX11.c:2680 src/unix/system.c:317 src/unix/system.c:333
+#: src/modules/X11/devX11.c:2679 src/unix/system.c:317 src/unix/system.c:333
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "파일 '%s'를 열수가 없습니다"
@@ -2019,11 +2019,11 @@ msgstr "파일'%s'는 bzip2으로 압축되어있지 않은것 같습니다"
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile 접속의 할당에 실패했습니다"
 
-#: src/main/connections.c:1539 src/modules/X11/devX11.c:3237
+#: src/main/connections.c:1539 src/modules/X11/devX11.c:3236
 msgid "memory allocation to copy clipboard failed"
 msgstr "clipboard의 복사로 메모리 확보에 실패했습니다"
 
-#: src/main/connections.c:1544 src/modules/X11/devX11.c:3225
+#: src/main/connections.c:1544 src/modules/X11/devX11.c:3224
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard를 열수가 없거나, 내용이 없습니다"
 
@@ -2454,7 +2454,7 @@ msgstr "editor %s의 실행에 관계되어 문제가 발생하였습니다"
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "비어있지 않는 POSIXlt 구조에는 길이 0의 요소가 있습니다"
 
-#: src/main/dcf.c:63 src/main/dcf.c:115 src/main/dcf.c:168
+#: src/main/dcf.c:63 src/main/dcf.c:120 src/main/dcf.c:173
 msgid "could not allocate memory for 'read.dcf'"
 msgstr "'read.dcf'에 위한 메모리를 할당할수가 없었습니다"
 
@@ -2874,12 +2874,12 @@ msgid "no graphics system to unregister"
 msgstr "등록을 해제 할수 있는 graphics 시스템이 없습니다"
 
 #: src/main/engine.c:441 src/main/engine.c:446 src/main/engine.c:454
-#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:994
+#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:993
 msgid "invalid line end"
 msgstr "행 마지막이 부적절합니다"
 
 #: src/main/engine.c:506 src/main/engine.c:511 src/main/engine.c:519
-#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1012
+#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1011
 msgid "invalid line join"
 msgstr "행을 정리되지 않습니다"
 
@@ -5203,7 +5203,7 @@ msgstr "논리적인 플롯 심벌로서는 NA만이 허용되어지고 있습�
 msgid "invalid plotting symbol"
 msgstr "플롯 기호가 부적절합니다"
 
-#: src/main/plot.c:204 src/modules/X11/devX11.c:1513
+#: src/main/plot.c:204 src/modules/X11/devX11.c:1512
 msgid "invalid font specification"
 msgstr "폰트의 지정이 부적절합니다"
 
@@ -7533,7 +7533,7 @@ msgstr ""
 "에러: X11는 추가의 graphics colors를 준비 할수가 없습니다\n"
 "X11를  colortype=\"pseudo.cube\" 또는  \"grey\"로 사용하는것을 생각해주십시오"
 
-#: src/modules/X11/devX11.c:860
+#: src/modules/X11/devX11.c:859
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
@@ -7541,201 +7541,201 @@ msgstr ""
 "어떠한 X11 font도 검색해낼 수 업었습니다<\n"
 "폰트 패스가 올바른지 어떤지를 체크 합시다"
 
-#: src/modules/X11/devX11.c:924
+#: src/modules/X11/devX11.c:923
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr "X11는 font size %d를 사용했습니다(%d 가 요구 되었습니다만)"
 
-#: src/modules/X11/devX11.c:958
+#: src/modules/X11/devX11.c:957
 #, fuzzy, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
 msgstr "size %d의 X11폰트를  로드할수가 없습니다"
 
-#: src/modules/X11/devX11.c:967
+#: src/modules/X11/devX11.c:966
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1077
+#: src/modules/X11/devX11.c:1076
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11 프로토콜 에러:  %s"
 
-#: src/modules/X11/devX11.c:1094
+#: src/modules/X11/devX11.c:1093
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 치명적인 I/O에러입니다. 작업을 보존해 R를 종료해주십시오"
 
-#: src/modules/X11/devX11.c:1152
+#: src/modules/X11/devX11.c:1151
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "Xlib가 서포트 하지 않는 locale입니다: 몇개의 X 기능은 C locale로 동작합니다"
 
-#: src/modules/X11/devX11.c:1153
+#: src/modules/X11/devX11.c:1152
 msgid "X cannot set locale modifiers"
 msgstr "x는 locale 변경을 설정할수가 없습니다"
 
-#: src/modules/X11/devX11.c:1157
+#: src/modules/X11/devX11.c:1156
 msgid "no png support in this version of R"
 msgstr "이 R의 버전에는 png의 서포트는 없습니다"
 
-#: src/modules/X11/devX11.c:1163
+#: src/modules/X11/devX11.c:1162
 msgid "filename too long in png() call"
 msgstr "png() 함수의 호출로 파일명이 너무 깁니다"
 
-#: src/modules/X11/devX11.c:1167
+#: src/modules/X11/devX11.c:1166
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "PNG 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1179
+#: src/modules/X11/devX11.c:1178
 msgid "no jpeg support in this version of R"
 msgstr "이 R의 이 버전에 jpeg의 서포트는 없습니다"
 
-#: src/modules/X11/devX11.c:1189
+#: src/modules/X11/devX11.c:1188
 msgid "filename too long in jpeg() call"
 msgstr "jpeg() 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1193
+#: src/modules/X11/devX11.c:1192
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "JPEG 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1205
+#: src/modules/X11/devX11.c:1204
 #, fuzzy
 msgid "no tiff support in this version of R"
 msgstr "이 R의 버전에는 png의 서포트는 없습니다"
 
-#: src/modules/X11/devX11.c:1213
+#: src/modules/X11/devX11.c:1212
 #, fuzzy
 msgid "filename too long in tiff() call"
 msgstr "png() 함수의 호출로 파일명이 너무 깁니다"
 
-#: src/modules/X11/devX11.c:1225
+#: src/modules/X11/devX11.c:1224
 #, fuzzy
 msgid "filename too long in bmp() call"
 msgstr "png() 함수의 호출로 파일명이 너무 깁니다"
 
-#: src/modules/X11/devX11.c:1229
+#: src/modules/X11/devX11.c:1228
 #, fuzzy, c-format
 msgid "could not open BMP file '%s'"
 msgstr "PNG 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1250
+#: src/modules/X11/devX11.c:1249
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "X11 디스플레이 '%s'에 connection를 열수가 없습니다"
 
-#: src/modules/X11/devX11.c:1270
+#: src/modules/X11/devX11.c:1269
 msgid "jpeg() does not support transparency: using white bg"
 msgstr ""
 "jpeg 함수는 투명성을 서포트 하고 있지 않았습니다\n"
 "(bg에 흰색을 사용합니다)"
 
-#: src/modules/X11/devX11.c:1383
+#: src/modules/X11/devX11.c:1382
 msgid "unable to create X11 window"
 msgstr "X11 윈도우를 만들 수가 없습니다"
 
-#: src/modules/X11/devX11.c:1477
+#: src/modules/X11/devX11.c:1476
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1482
+#: src/modules/X11/devX11.c:1481
 msgid "unable to create pixmap"
 msgstr "pixmap를 작성할수가 없습니다"
 
-#: src/modules/X11/devX11.c:1553
+#: src/modules/X11/devX11.c:1552
 msgid "font family not found in X11 font database"
 msgstr "font family가 X11 폰트 데이타베이스에 있지 않습니다"
 
-#: src/modules/X11/devX11.c:1596
+#: src/modules/X11/devX11.c:1595
 #, fuzzy, c-format
 msgid "invalid use of %d < 0 in '%s'"
 msgstr "'n'의 값이 부적절합니다"
 
-#: src/modules/X11/devX11.c:1745 src/modules/X11/devX11.c:2813
+#: src/modules/X11/devX11.c:1744 src/modules/X11/devX11.c:2812
 #, fuzzy, c-format
 msgid "could not open file '%s'"
 msgstr "PNG 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:2211
+#: src/modules/X11/devX11.c:2210
 #, fuzzy
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
 msgstr "이 플랫폼에서 nsl함수는 서포트 되어있지 않습니다"
 
-#: src/modules/X11/devX11.c:2509
+#: src/modules/X11/devX11.c:2508
 msgid "invalid string argument"
 msgstr "문자열수가 부적절합니다"
 
-#: src/modules/X11/devX11.c:2535
+#: src/modules/X11/devX11.c:2534
 #, c-format
 msgid "unable to start device %s"
 msgstr "디바이스'%s'를 개시 할수가 없습니다"
 
-#: src/modules/X11/devX11.c:2560
+#: src/modules/X11/devX11.c:2559
 #, fuzzy
 msgid "invalid 'width' or 'height'"
 msgstr "폭 또는 높이가 부적절합니다"
 
-#: src/modules/X11/devX11.c:2567
+#: src/modules/X11/devX11.c:2566
 msgid "invalid colortype passed to X11 driver"
 msgstr "부적절한 colortype은 X11 드라이버에 패스해졌습니다"
 
-#: src/modules/X11/devX11.c:2581
+#: src/modules/X11/devX11.c:2580
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "알수 없는 X11 color/colour model입니다(단색을 사용합니다)"
 
-#: src/modules/X11/devX11.c:2667
+#: src/modules/X11/devX11.c:2666
 #, fuzzy
 msgid "no plot on device to save"
 msgstr "보존해야할 히스토리가 없습니다"
 
-#: src/modules/X11/devX11.c:2669
+#: src/modules/X11/devX11.c:2668
 #, fuzzy
 msgid "not an open X11cairo device"
 msgstr "열려있는 디바이스가 너무 많습니다"
 
-#: src/modules/X11/devX11.c:2693 src/modules/X11/devX11.c:2695
+#: src/modules/X11/devX11.c:2692 src/modules/X11/devX11.c:2694
 #, c-format
 msgid "type = \"%s\" requires cairo >= 1.2: try \"png\""
 msgstr ""
 
-#: src/modules/X11/devX11.c:2704
+#: src/modules/X11/devX11.c:2703
 #, fuzzy
 msgid "savePlot() is not supported on this build"
 msgstr "이 플랫폼에서 nsl함수는 서포트 되어있지 않습니다"
 
-#: src/modules/X11/devX11.c:2741 src/modules/X11/devX11.c:2910
-#: src/modules/X11/devX11.c:2921
+#: src/modules/X11/devX11.c:2740 src/modules/X11/devX11.c:2909
+#: src/modules/X11/devX11.c:2920
 #, fuzzy
 msgid "unimplemented cairo-based device"
 msgstr "실제 적용 되지 않는 [술어]입니다"
 
-#: src/modules/X11/devX11.c:3131
+#: src/modules/X11/devX11.c:3130
 msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3133
+#: src/modules/X11/devX11.c:3132
 #, c-format
 msgid "device '%s' requires cairo >= 1.2"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3145
+#: src/modules/X11/devX11.c:3144
 #, fuzzy, c-format
 msgid "unable to start device '%s'"
 msgstr "디바이스'%s'를 개시 할수가 없습니다"
 
-#: src/modules/X11/devX11.c:3157
+#: src/modules/X11/devX11.c:3156
 #, fuzzy
 msgid "cairo-based devices are not supported on this build"
 msgstr "이 플랫폼에서 nsl함수는 서포트 되어있지 않습니다"
 
-#: src/modules/X11/devX11.c:3188
+#: src/modules/X11/devX11.c:3187
 msgid "unable to contact X11 display"
 msgstr "X11 디스플레이에 접속 할수가 없습니다"
 
-#: src/modules/X11/devX11.c:3256
+#: src/modules/X11/devX11.c:3255
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines 구조에 메모리를 할당할수가 없습니다"
 

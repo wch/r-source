@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:04+0100\n"
+"POT-Creation-Date: 2008-04-07 08:27+0100\n"
 "PO-Revision-Date: 2008-01-21 17:24+0000\n"
 "Last-Translator: Laura Pla <laurapla@yahoo.com>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -183,12 +183,12 @@ msgstr "problemas al mostrar  '%s'"
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:621
 #: src/modules/lapack/Lapack.c:717 src/modules/lapack/Lapack.c:774
-#: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2659
-#: src/modules/X11/devX11.c:2662 src/modules/X11/devX11.c:2665
-#: src/modules/X11/devX11.c:2698 src/modules/X11/devX11.c:3095
-#: src/modules/X11/devX11.c:3100 src/modules/X11/devX11.c:3104
-#: src/modules/X11/devX11.c:3108 src/modules/X11/devX11.c:3112
-#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3127
+#: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2658
+#: src/modules/X11/devX11.c:2661 src/modules/X11/devX11.c:2664
+#: src/modules/X11/devX11.c:2697 src/modules/X11/devX11.c:3094
+#: src/modules/X11/devX11.c:3099 src/modules/X11/devX11.c:3103
+#: src/modules/X11/devX11.c:3107 src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3122 src/modules/X11/devX11.c:3126
 #: src/unix/sys-std.c:1180 src/unix/sys-std.c:1203
 #, c-format
 msgid "invalid '%s' argument"
@@ -257,11 +257,11 @@ msgstr "etiqueta inválida"
 #: src/main/seq.c:245 src/main/seq.c:248 src/main/sort.c:790
 #: src/main/sort.c:890 src/main/source.c:172 src/main/summary.c:977
 #: src/main/sysutils.c:230 src/main/util.c:881 src/main/util.c:886
-#: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2564
-#: src/modules/X11/devX11.c:2591 src/modules/X11/devX11.c:2596
-#: src/modules/X11/devX11.c:2601 src/modules/X11/devX11.c:2611
-#: src/modules/X11/devX11.c:2616 src/modules/X11/devX11.c:2620
-#: src/modules/X11/devX11.c:3116 src/unix/sys-std.c:1276
+#: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2563
+#: src/modules/X11/devX11.c:2590 src/modules/X11/devX11.c:2595
+#: src/modules/X11/devX11.c:2600 src/modules/X11/devX11.c:2610
+#: src/modules/X11/devX11.c:2615 src/modules/X11/devX11.c:2619
+#: src/modules/X11/devX11.c:3115 src/unix/sys-std.c:1276
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valor de '%s' no válido"
@@ -427,39 +427,39 @@ msgstr "string de caracteres esperado como primer argumento"
 msgid "character string expected as third argument"
 msgstr "string de caracteres esperado como tercer argumento"
 
-#: src/gnuwin32/system.c:98 src/main/errors.c:135
+#: src/gnuwin32/system.c:115 src/main/errors.c:135
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:100 src/main/errors.c:137
+#: src/gnuwin32/system.c:117 src/main/errors.c:137
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:106 src/main/errors.c:143
+#: src/gnuwin32/system.c:123 src/main/errors.c:143
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:108 src/main/errors.c:145
+#: src/gnuwin32/system.c:125 src/main/errors.c:145
 msgid "reached CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128
+#: src/gnuwin32/system.c:145
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr "Error fatal: %s\n"
 
-#: src/gnuwin32/system.c:306 src/unix/sys-std.c:830
+#: src/gnuwin32/system.c:323 src/unix/sys-std.c:830
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "codificación'%s' no reconocida"
 
-#: src/gnuwin32/system.c:312 src/unix/sys-std.c:836
+#: src/gnuwin32/system.c:329 src/unix/sys-std.c:836
 #, fuzzy, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ERROR: entrada no válida para codificación>\n"
 
-#: src/gnuwin32/system.c:521 src/gnuwin32/system.c:973
-#: src/gnuwin32/system.c:985 src/main/connections.c:503
+#: src/gnuwin32/system.c:538 src/gnuwin32/system.c:990
+#: src/gnuwin32/system.c:1002 src/main/connections.c:503
 #: src/main/connections.c:509 src/main/dounzip.c:105 src/main/saveload.c:1984
 #: src/main/serialize.c:2117 src/main/serialize.c:2126
 #: src/main/serialize.c:2210 src/main/serialize.c:2234 src/unix/system.c:314
@@ -468,61 +468,61 @@ msgstr "<ERROR: entrada no válida para codificación>\n"
 msgid "cannot open file '%s': %s"
 msgstr "no fue posible abrir el archivo '%s'"
 
-#: src/gnuwin32/system.c:535
+#: src/gnuwin32/system.c:552
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): archivo '%s' no existe\n"
 
-#: src/gnuwin32/system.c:936
+#: src/gnuwin32/system.c:953
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ATENCIÓN: falta el argumento max-mem-size\n"
 
-#: src/gnuwin32/system.c:942
+#: src/gnuwin32/system.c:959
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ATENCIÓN: valor de --max-mem-size =E9 no válido: ignorado\n"
 
-#: src/gnuwin32/system.c:944
+#: src/gnuwin32/system.c:961
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "ATENCIÓN: --max-mem-size=%lu'%c': demasiado grande e ignorada\n"
 
-#: src/gnuwin32/system.c:949
+#: src/gnuwin32/system.c:966
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "ATENCIÓN: max-mem-size =%4.1fM demasiado pequeña e ignorada\n"
 
-#: src/gnuwin32/system.c:953
+#: src/gnuwin32/system.c:970
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "ATENCIÓN: max-mem-size =%4.1fM demasiado grande y tomada como 3Gb\n"
 
-#: src/gnuwin32/system.c:996 src/unix/system.c:353
+#: src/gnuwin32/system.c:1013 src/unix/system.c:353
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "ATENCION: se omite entrada de  '-e %s' (muy larga)\n"
 
-#: src/gnuwin32/system.c:1000 src/unix/system.c:367
+#: src/gnuwin32/system.c:1017 src/unix/system.c:367
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATENCIÓN: opción desconocida '%s'\n"
 
-#: src/gnuwin32/system.c:1021 src/unix/system.c:371
+#: src/gnuwin32/system.c:1038 src/unix/system.c:371
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTO '%s' __ignorado__\n"
 
 # Fijate si asi se entiende. Lo deje como estaba
-#: src/gnuwin32/system.c:1027 src/unix/system.c:378
+#: src/gnuwin32/system.c:1044 src/unix/system.c:378
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "no es posible especificar la longitud de un objeto que no es un vector"
 
-#: src/gnuwin32/system.c:1048 src/unix/system.c:427
+#: src/gnuwin32/system.c:1065 src/unix/system.c:427
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "se debe especificar '--save', '--no-save' o '--vanilla'"
 
-#: src/gnuwin32/system.c:1053
+#: src/gnuwin32/system.c:1070
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -1871,7 +1871,7 @@ msgstr "entrada inválida encontrada en la conexión de entrada '%s'"
 #: src/main/connections.c:511 src/main/dounzip.c:107 src/main/saveload.c:1986
 #: src/main/serialize.c:2120 src/main/serialize.c:2129
 #: src/main/serialize.c:2212 src/main/serialize.c:2236
-#: src/modules/X11/devX11.c:2680 src/unix/system.c:317 src/unix/system.c:333
+#: src/modules/X11/devX11.c:2679 src/unix/system.c:317 src/unix/system.c:333
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "no fue posible abrir el archivo '%s'"
@@ -2020,11 +2020,11 @@ msgstr "el archivo '%s' parece no haber sido comprimido por bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "falla en la asignación de la conección bzfile"
 
-#: src/main/connections.c:1539 src/modules/X11/devX11.c:3237
+#: src/main/connections.c:1539 src/modules/X11/devX11.c:3236
 msgid "memory allocation to copy clipboard failed"
 msgstr "falla en la asignación de memoria para copiar en el portapapeles"
 
-#: src/main/connections.c:1544 src/modules/X11/devX11.c:3225
+#: src/main/connections.c:1544 src/modules/X11/devX11.c:3224
 msgid "clipboard cannot be opened or contains no text"
 msgstr "no fue posible abrir el portapapeles o no contiene texto"
 
@@ -2450,7 +2450,7 @@ msgstr "problema al ejecutar el editor %s"
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "componente de longitud cero en estructura POSIXlt no vacía"
 
-#: src/main/dcf.c:63 src/main/dcf.c:115 src/main/dcf.c:168
+#: src/main/dcf.c:63 src/main/dcf.c:120 src/main/dcf.c:173
 msgid "could not allocate memory for 'read.dcf'"
 msgstr "no se puede asignar memoria para 'read.dcf'"
 
@@ -2867,12 +2867,12 @@ msgid "no graphics system to unregister"
 msgstr "ningún sistema gráfico para desregistrar"
 
 #: src/main/engine.c:441 src/main/engine.c:446 src/main/engine.c:454
-#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:994
+#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:993
 msgid "invalid line end"
 msgstr "final de línea inválido"
 
 #: src/main/engine.c:506 src/main/engine.c:511 src/main/engine.c:519
-#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1012
+#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1011
 msgid "invalid line join"
 msgstr "unión de línea inválida"
 
@@ -5190,7 +5190,7 @@ msgstr "solamente NA pertimido como símbolo de gráfico lógico"
 msgid "invalid plotting symbol"
 msgstr "símbolo de gráfico inválido"
 
-#: src/main/plot.c:204 src/modules/X11/devX11.c:1513
+#: src/main/plot.c:204 src/modules/X11/devX11.c:1512
 msgid "invalid font specification"
 msgstr "especificación de fuente no válida"
 
@@ -7535,7 +7535,7 @@ msgstr ""
 "Error: X11 no puede asignar colores gráficos adicionales.\n"
 "Considere usar X11 con colortype=\"pseudo.cube\" o \"gray\""
 
-#: src/modules/X11/devX11.c:860
+#: src/modules/X11/devX11.c:859
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
@@ -7543,198 +7543,198 @@ msgstr ""
 "no fue posible encontrar ninguna fuente X11\n"
 "Verifique que el directorio de fuentes es correcto."
 
-#: src/modules/X11/devX11.c:924
+#: src/modules/X11/devX11.c:923
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr "X11 usa fuentes de tamaño %d cuando %d fue pedido"
 
-#: src/modules/X11/devX11.c:958
+#: src/modules/X11/devX11.c:957
 #, fuzzy, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
 msgstr "fuente X11 de tamaño %d no puede ser cargada"
 
-#: src/modules/X11/devX11.c:967
+#: src/modules/X11/devX11.c:966
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1077
+#: src/modules/X11/devX11.c:1076
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "Error de protocolo X11: %s"
 
-#: src/modules/X11/devX11.c:1094
+#: src/modules/X11/devX11.c:1093
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "Error fatal de E/S: por favor guarde su trabajo y cancele R"
 
-#: src/modules/X11/devX11.c:1152
+#: src/modules/X11/devX11.c:1151
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "locale no soportado por Xlib: algunas operaciones X operarán en locale C "
 
-#: src/modules/X11/devX11.c:1153
+#: src/modules/X11/devX11.c:1152
 msgid "X cannot set locale modifiers"
 msgstr "X no puede ajustar modificadores locales"
 
-#: src/modules/X11/devX11.c:1157
+#: src/modules/X11/devX11.c:1156
 msgid "no png support in this version of R"
 msgstr "no hay soporte png en esta versión de R"
 
-#: src/modules/X11/devX11.c:1163
+#: src/modules/X11/devX11.c:1162
 msgid "filename too long in png() call"
 msgstr "nombre de archivo muy largo en la llamada png()"
 
-#: src/modules/X11/devX11.c:1167
+#: src/modules/X11/devX11.c:1166
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "no fue posible abrir el archivo PNG '%s'"
 
-#: src/modules/X11/devX11.c:1179
+#: src/modules/X11/devX11.c:1178
 msgid "no jpeg support in this version of R"
 msgstr "no se soporta jpeg en esta versión de R"
 
-#: src/modules/X11/devX11.c:1189
+#: src/modules/X11/devX11.c:1188
 msgid "filename too long in jpeg() call"
 msgstr "nombre de archivo muy largo en llamda jpeg()"
 
-#: src/modules/X11/devX11.c:1193
+#: src/modules/X11/devX11.c:1192
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "no fue posible abrir el archivo JPEG '%s'"
 
-#: src/modules/X11/devX11.c:1205
+#: src/modules/X11/devX11.c:1204
 #, fuzzy
 msgid "no tiff support in this version of R"
 msgstr "no hay soporte png en esta versión de R"
 
-#: src/modules/X11/devX11.c:1213
+#: src/modules/X11/devX11.c:1212
 #, fuzzy
 msgid "filename too long in tiff() call"
 msgstr "nombre de archivo muy largo en la llamada png()"
 
-#: src/modules/X11/devX11.c:1225
+#: src/modules/X11/devX11.c:1224
 #, fuzzy
 msgid "filename too long in bmp() call"
 msgstr "nombre de archivo muy largo en la llamada png()"
 
-#: src/modules/X11/devX11.c:1229
+#: src/modules/X11/devX11.c:1228
 #, fuzzy, c-format
 msgid "could not open BMP file '%s'"
 msgstr "no fue posible abrir el archivo PNG '%s'"
 
-#: src/modules/X11/devX11.c:1250
+#: src/modules/X11/devX11.c:1249
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "no fue posible abrir la conexión con el dispositivo X11 '%s'"
 
-#: src/modules/X11/devX11.c:1270
+#: src/modules/X11/devX11.c:1269
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg() no soporta transparencia: usando fondo blanco"
 
-#: src/modules/X11/devX11.c:1383
+#: src/modules/X11/devX11.c:1382
 msgid "unable to create X11 window"
 msgstr "no fue posible abrir la ventana X11"
 
-#: src/modules/X11/devX11.c:1477
+#: src/modules/X11/devX11.c:1476
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' son valores de pixeles improbables"
 
-#: src/modules/X11/devX11.c:1482
+#: src/modules/X11/devX11.c:1481
 msgid "unable to create pixmap"
 msgstr "imposible crear mapa de pixeles"
 
-#: src/modules/X11/devX11.c:1553
+#: src/modules/X11/devX11.c:1552
 msgid "font family not found in X11 font database"
 msgstr "familia de fuente no encontrada en la base de X11"
 
-#: src/modules/X11/devX11.c:1596
+#: src/modules/X11/devX11.c:1595
 #, fuzzy, c-format
 msgid "invalid use of %d < 0 in '%s'"
 msgstr "valor inválido para 'n'"
 
-#: src/modules/X11/devX11.c:1745 src/modules/X11/devX11.c:2813
+#: src/modules/X11/devX11.c:1744 src/modules/X11/devX11.c:2812
 #, fuzzy, c-format
 msgid "could not open file '%s'"
 msgstr "no fue posible abrir el archivo PNG '%s'"
 
-#: src/modules/X11/devX11.c:2211
+#: src/modules/X11/devX11.c:2210
 #, fuzzy
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
 msgstr "esta plataforma no soporta nsl()"
 
-#: src/modules/X11/devX11.c:2509
+#: src/modules/X11/devX11.c:2508
 msgid "invalid string argument"
 msgstr "argumento string no válido"
 
-#: src/modules/X11/devX11.c:2535
+#: src/modules/X11/devX11.c:2534
 #, c-format
 msgid "unable to start device %s"
 msgstr "no fue posible iniciar el dispositivo %s"
 
-#: src/modules/X11/devX11.c:2560
+#: src/modules/X11/devX11.c:2559
 msgid "invalid 'width' or 'height'"
 msgstr "'width' o 'height' no válidos"
 
-#: src/modules/X11/devX11.c:2567
+#: src/modules/X11/devX11.c:2566
 msgid "invalid colortype passed to X11 driver"
 msgstr "tipo de color no válido pasado al driver X11"
 
-#: src/modules/X11/devX11.c:2581
+#: src/modules/X11/devX11.c:2580
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "modo de color X11 desconocido -- usando modo monocromático"
 
-#: src/modules/X11/devX11.c:2667
+#: src/modules/X11/devX11.c:2666
 #, fuzzy
 msgid "no plot on device to save"
 msgstr "no hay historia disponible para guardar"
 
-#: src/modules/X11/devX11.c:2669
+#: src/modules/X11/devX11.c:2668
 #, fuzzy
 msgid "not an open X11cairo device"
 msgstr "demasiados dispositivos abiertos"
 
-#: src/modules/X11/devX11.c:2693 src/modules/X11/devX11.c:2695
+#: src/modules/X11/devX11.c:2692 src/modules/X11/devX11.c:2694
 #, c-format
 msgid "type = \"%s\" requires cairo >= 1.2: try \"png\""
 msgstr ""
 
-#: src/modules/X11/devX11.c:2704
+#: src/modules/X11/devX11.c:2703
 #, fuzzy
 msgid "savePlot() is not supported on this build"
 msgstr "esta plataforma no soporta nsl()"
 
-#: src/modules/X11/devX11.c:2741 src/modules/X11/devX11.c:2910
-#: src/modules/X11/devX11.c:2921
+#: src/modules/X11/devX11.c:2740 src/modules/X11/devX11.c:2909
+#: src/modules/X11/devX11.c:2920
 #, fuzzy
 msgid "unimplemented cairo-based device"
 msgstr "predicado no implementado"
 
-#: src/modules/X11/devX11.c:3131
+#: src/modules/X11/devX11.c:3130
 msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3133
+#: src/modules/X11/devX11.c:3132
 #, c-format
 msgid "device '%s' requires cairo >= 1.2"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3145
+#: src/modules/X11/devX11.c:3144
 #, fuzzy, c-format
 msgid "unable to start device '%s'"
 msgstr "no fue posible iniciar el dispositivo %s"
 
-#: src/modules/X11/devX11.c:3157
+#: src/modules/X11/devX11.c:3156
 #, fuzzy
 msgid "cairo-based devices are not supported on this build"
 msgstr "esta plataforma no soporta nsl()"
 
-#: src/modules/X11/devX11.c:3188
+#: src/modules/X11/devX11.c:3187
 msgid "unable to contact X11 display"
 msgstr "no fue posible abrir conexión con el dispositivo X11"
 
-#: src/modules/X11/devX11.c:3256
+#: src/modules/X11/devX11.c:3255
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "no fue posible asignar memoria para estrutura de tipo X11Routines"
 

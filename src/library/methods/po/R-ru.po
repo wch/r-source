@@ -1,17 +1,18 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Garkovenko <garkovenko@gmail.com>
+# Alexey Garkovenko <garkovenko@gmail.com> 2007
+# Alexey Shipunov <dactylorhiza at gmail.com> 2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 11:07\n"
-"PO-Revision-Date: 2007-09-18 00:27-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2008-04-07 00:23-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
@@ -214,7 +215,7 @@ msgid "no method defined for function \"%s\" and signature %s"
 msgstr "не определено метода для функции \"%s\" идентификатора %s"
 
 msgid "'file' must be a character string or a connection"
-msgstr ""
+msgstr "'file' должен быть текстовой строкой или соединением"
 
 msgid "No method found for signature %s"
 msgstr "Не найдено метода для идентификатора %s"
@@ -248,11 +249,9 @@ msgstr ""
 msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr "\"%s\" не является общей функцией в \"%s\"; методы не удалены"
 
-#, fuzzy
 msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr ""
-"не могу восстановить предыдущую версию \"%s\" в заблокированном окружении/"
-"пакете \"%s\""
+"не могу удалить методы \"%s\" в заблокированном окружении/пакете \"%s\""
 
 msgid "restoring default function definition of \"%s\""
 msgstr "восстанавливаю определение по умолчанию для функции \"%s\""
@@ -281,17 +280,13 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr "'callGeneric' должна быть вызвана из общей функции или метода"
 
 msgid "expected a non-empty character string for argument name"
-msgstr ""
+msgstr "ожидаю непустую текстовую строку для имени аргумента"
 
-#, fuzzy
 msgid "generic function supplied was not created for \"%s\""
-msgstr "не найдено общей функции для \"%s\""
+msgstr "указанная для \"%s\" общая функция не создана"
 
-#, fuzzy
 msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
-msgstr ""
-"\"class\" является зарезервированным названием слота и не может быть "
-"переопределено"
+msgstr "\"class\" является примитивной функцией и не может быть переопределен"
 
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
@@ -315,26 +310,26 @@ msgstr ""
 "Подразумеваемая общая функция для \"%s\" существует, но будет переписана "
 "четким вызовом setGeneric()"
 
-#, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
 msgstr ""
-"аргумент 'classDef' должен быть строкой либо представлением класса; получен "
-"объект класса \"%s\""
+"аргумент \"f\" должен быть общей функцией или одной текстовой строкой; "
+"получен объект класса \"%s\""
 
-#, fuzzy
 msgid "non-generic function given to findMethods()"
-msgstr "обнаружена не общая функция \"%s\""
+msgstr "не общая функция отдана findMethods()"
 
 msgid "Only FALSE meaningful for inherited, when where is supplied (got"
 msgstr ""
+"Только FALSE имеет значение для унаследованного, когда поддержано "
+"'where' (получен"
 
 msgid "\""
 msgstr "\""
 
 msgid "f does not correspond to a generic function and package not specified"
-msgstr ""
+msgstr "f не соответствует общей функции и пакет не указан"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -421,9 +416,8 @@ msgstr ""
 "в идентификаторе метода для функции \"%s\" неверные имена аргументов в "
 "идентификаторе: %s"
 
-#, fuzzy
 msgid "No generic function found corresponding to \"%s\""
-msgstr "не найдено общей функции для \"%s\""
+msgstr "Нет общей функции, соответствующей \"%s\""
 
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr "пропускаю элемент списка методов %s непредвиденного класса \"%s\""
@@ -756,7 +750,7 @@ msgid "no generic function found for \"%s\""
 msgstr "не найдено общей функции для \"%s\""
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
+msgstr "Пустое имя функции в .getGeneric"
 
 msgid ""
 "Package \"%s\" seems to have out-of-date methods; need to reinstall from "
@@ -783,16 +777,11 @@ msgstr ""
 "тело общей функции для \"%s\" вызывает 'standardGeneric' для отправки под "
 "другим именем (\"%s\")!"
 
-#, fuzzy
 msgid "the supplied generic function definition for"
-msgstr ""
-"Надо определить либо общую функцию, либо функцию по умолчанию для \"#s\""
+msgstr "указанное определение общей функции для"
 
-#, fuzzy
 msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
-msgstr ""
-"предоставленное определение общей функции, похоже не вызвало "
-"'standardGeneric'; методы не будут переданы!"
+msgstr "похоже, не вызвано 'standardGeneric'; методы не будут переданы!"
 
 msgid ""
 "internal error: Bad methods list object in fixing methods for primitive "
@@ -856,6 +845,8 @@ msgid ""
 "\" is not a known action (warn, stop, once, ignore); no action recorded for "
 "function \""
 msgstr ""
+"\" не относится к известным акциям (warn, stop, once, ignore); акция для "
+"функции не записана \""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
@@ -1021,13 +1012,12 @@ msgstr ""
 "класс \"%s\" является объединением классов: отношения 'coerce' для "
 "объединения классов являются бессмысленным"
 
-#, fuzzy
 msgid ""
 "'as' method should have one argument, or match the arguments of coerce(): "
 "got  (%s)"
 msgstr ""
-"метод 'as' должен иметь один или два аргумента, плюс необязательный "
-"'strict'; получено (%s)"
+"метод 'as' должен иметь один аргумент, или соответствовать аргументам coerce"
+"(): получено (%s)"
 
 msgid ""
 "a 'replace' method definition in 'setAs' must be a function of two "
@@ -1237,15 +1227,17 @@ msgstr "; gnames ="
 
 msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
+"Что-то не так: несоответствующее количество аргументов в строках таблицы "
+"методов:"
 
 msgid "(using the largest value)"
-msgstr ""
+msgstr "(использую наибольшее значение)"
 
-#, fuzzy
 msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr ""
-"Не могу найти таблицу методов для \"%s\", пакет \"%s\" может быть устаревшим"
+"Не могу найти таблицу методов для общего \"%s\" из пакета \"%s\" в пакете \"%"
+"s\""
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1271,9 +1263,8 @@ msgstr ""
 "аргумент 'Classes' должен быть вектором двух классов; получен аргумент длины "
 "%d"
 
-#, fuzzy
 msgid "Created a package name, \"%s\", when none found"
-msgstr "не является именем пакета: \"%s\""
+msgstr "Создано имя пакета, \"%s\", в то время как ни одного не найдено"
 
 msgid "no definition of class \"%s\" found"
 msgstr "не найдено определение класса \"%s\""
@@ -1374,14 +1365,11 @@ msgstr "\" заблокировано; использую основное окружение для нового класса"
 msgid "not a package name: \"%s\""
 msgstr "не является именем пакета: \"%s\""
 
-#, fuzzy
 msgid "apparently bad method or class metadata in saved environment;"
-msgstr ""
-"очевидно плохой метод или метаданные класса в сохраненном окружении; "
-"переместите файл либо удалите класс/метод"
+msgstr "очевидно плохой метод или метаданные класса в сохраненном окружении;"
 
 msgid "move the file or remove the class/method"
-msgstr ""
+msgstr "переместить файл или удалить класс/метод"
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
@@ -1392,10 +1380,6 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
-
-#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
-#~ msgstr ""
-#~ "Не могу найти общую функцию \"%s\" для инициализации кэшированных методов"
 
 #~ msgid ""
 #~ "No generic function found for \"%s\"; no action taken in "
@@ -1410,6 +1394,22 @@ msgstr[2] ""
 #~ msgstr ""
 #~ "окружение/пакет \"%s\" заблокировано; не могу удалить данные методов для "
 #~ "\"%s\""
+
+#~ msgid ""
+#~ "the methods object name for \"%s\" must include the name of the package "
+#~ "that contains the generic function, but no generic function of this name "
+#~ "was found"
+#~ msgstr ""
+#~ "имя объекта методов для \"%s\" должно включать имя пакета, содержащего "
+#~ "общую функцию, но общей функции с таким именем не найдено"
+
+#~ msgid ""
+#~ "no way to associate a generic function with an object of class \"%s\""
+#~ msgstr "нет способа ассоциировать общую функцию с объектом класса \"%s\""
+
+#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
+#~ msgstr ""
+#~ "Не могу найти общую функцию \"%s\" для инициализации кэшированных методов"
 
 #~ msgid ""
 #~ "trying to change the argument list of %s with %d arguments to have "
@@ -1427,18 +1427,6 @@ msgstr[2] ""
 
 #~ msgid "arguments in definition %s changed from (%s) to (%s)"
 #~ msgstr "аргументы в определении %s изменены с (%s) на (%s)"
-
-#~ msgid ""
-#~ "the methods object name for \"%s\" must include the name of the package "
-#~ "that contains the generic function, but no generic function of this name "
-#~ "was found"
-#~ msgstr ""
-#~ "имя объекта методов для \"%s\" должно включать имя пакета, содержащего "
-#~ "общую функцию, но общей функции с таким именем не найдено"
-
-#~ msgid ""
-#~ "no way to associate a generic function with an object of class \"%s\""
-#~ msgstr "нет способа ассоциировать общую функцию с объектом класса \"%s\""
 
 #~ msgid "no methods found for generic \"%s\""
 #~ msgstr "не найдено методов для общей функции \"%s\""

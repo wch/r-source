@@ -1,22 +1,24 @@
 # Русский перевод для R GUI
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Copyright (C) 2008 Alexey Shipunov <dactylorhiza at gmail>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:03+0100\n"
-"PO-Revision-Date: 2007-09-17 20:36-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
-"Language-Team: Russian\n"
+"POT-Creation-Date: 2008-04-07 08:27+0100\n"
+"PO-Revision-Date: 2008-04-06 22:58-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
+"Language-Team: Russian <dactylorhiza at gmail>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
 
 #: console.c:1072 console.c:1114
 msgid "Not enough memory"
@@ -360,9 +362,8 @@ msgid "Data editor"
 msgstr "Редактор данных"
 
 #: editor.c:88 editor.c:90
-#, fuzzy
 msgid "R Editor"
-msgstr "Редактор"
+msgstr "Редактор R"
 
 #: editor.c:119
 #, c-format
@@ -869,7 +870,6 @@ msgid "Remove all objects"
 msgstr "Удалить все объекты"
 
 #: rui.c:1128
-#, fuzzy
 msgid "List search &path"
 msgstr "Отразить путь поиска"
 
@@ -926,7 +926,7 @@ msgstr "меню не найдено"
 msgid "menu or item does not exist"
 msgstr "меню или пункт меню не существует"
 
-#: system.c:416
+#: system.c:433
 msgid "Save workspace image?"
 msgstr "Сохранить рабочее пространство?"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
 "PO-Revision-Date: 2008-03-26 10:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -493,13 +493,15 @@ msgstr "*** quelqu'un a corrompu le champ 'Built' dans le package '%s' ***"
 msgid "cannot open directory '%s'"
 msgstr "impossible d'ouvrir le répertoire '%s'"
 
-msgid "WARNING: 'Depends' entry has multiple dependencies:"
+#, fuzzy
+msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "AVIS : l'entrée 'Depends' a des dépendances multiples :"
 
 msgid ","
 msgstr ","
 
-msgid "only the first will be used"
+#, fuzzy
+msgid "only the first will be used in R < 2.7.0"
 msgstr "seule la première sera utilisée"
 
 msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1588,6 +1588,10 @@ msgstr "组个数不够"
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr "只有在用L-BFGS-B方法时才能定优化界限"
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr "没有这样的内核名"
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr "请小心阅读'trace'说明书"
 
@@ -1597,6 +1601,9 @@ msgstr "L-BFGS-B方法用'factr'(和'pgtol') ，而不是'reltol'和'abstol'"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr "用Nelder-Mead方法来算一维优化不很可靠，用optimize"
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr "'x'必需有两列"

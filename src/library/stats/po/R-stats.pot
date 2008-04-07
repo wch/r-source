@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1550,6 +1550,9 @@ msgstr ""
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr ""
 
+msgid "unknown names in control:"
+msgstr ""
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr ""
 
@@ -1557,6 +1560,9 @@ msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'absto
 msgstr ""
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
+msgstr ""
+
+msgid "Pooling of SD is incompatible with paired tests"
 msgstr ""
 
 msgid "'x' must have 2 columns"

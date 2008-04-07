@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Alexey Shipunov <dactylorhiza at gmail.com> 2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-03-26 21:52+0000\n"
-"PO-Revision-Date: 2007-09-18 00:14-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2008-04-07 00:03-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -256,14 +256,14 @@ msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "неизвестная кодировка '%s' в 'mbcsToSbcs'"
 
 #: devPS.c:4027
-#, fuzzy, c-format
+#, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr "ошибка конвертации в 'mbcsToSbcs'"
+msgstr "ошибка конвертации '%s' в 'mbcsToSbcs': точка заменена на <%02x>"
 
 #: devPS.c:4103
-#, fuzzy, c-format
+#, c-format
 msgid "failed open converter to encoding '%s'"
-msgstr "не удалась конверсия текста в кодировку '%s'"
+msgstr "не удалась конверсия в кодировку '%s'"
 
 #: devPS.c:4121 devPS.c:5010 devPS.c:6807
 #, c-format
@@ -429,26 +429,24 @@ msgid "unable to start device PicTeX"
 msgstr "не могу запустить устройство PicTeX"
 
 #: devQuartz.c:977
-#, fuzzy
 msgid "invalid 'file' argument"
-msgstr "неправильный строковый аргумент"
+msgstr "неправильный аргумент 'file'"
 
 #: devQuartz.c:1005
-#, fuzzy
 msgid "invalid Quartz device size"
-msgstr "неправильное устройство в savePlot"
+msgstr "неправильный размер устройства Quartz"
 
 #: devQuartz.c:1032
-#, fuzzy
 msgid "Unable to create device description."
-msgstr "не могу запустить устройство PostScript"
+msgstr "Не могу создать описание устройства."
 
 #: devQuartz.c:1086
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
+"Не могу создать целевое устройство Quartz, указанный тип не может быть "
+"поддержан."
 
 #: devQuartz.c:1107
-#, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "Устройство Quartz на этой платформе недоступно"
 
@@ -463,7 +461,7 @@ msgstr "Нет устройства, чтобы скопировать окно графики"
 #: devWindows.c:328 devWindows.c:397
 #, c-format
 msgid "'%%' is not allowed in file name"
-msgstr ""
+msgstr "'%%' в имени файла не разрешается"
 
 #: devWindows.c:539
 msgid "Invalid font specification"
@@ -510,9 +508,8 @@ msgid "filename too long in jpeg() call"
 msgstr "слишком длинное имя файла в вызове jpeg()"
 
 #: devWindows.c:1801
-#, fuzzy
 msgid "filename too long in tiff() call"
-msgstr "слишком длинное имя файла в вызове %s()"
+msgstr "слишком длинное имя файла в вызове tiff()"
 
 #: devWindows.c:1831
 msgid "filename too long in win.metafile() call"
@@ -553,23 +550,20 @@ msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
 #: devWindows.c:2931
-#, fuzzy
 msgid "invalid device number in 'savePlot'"
-msgstr "неправильный номер устройства в savePlot"
+msgstr "неправильный номер устройства в 'savePlot'"
 
 #: devWindows.c:2933
-#, fuzzy
 msgid "invalid device in 'savePlot'"
-msgstr "неправильное устройство в savePlot"
+msgstr "неправильное устройство в 'savePlot'"
 
 #: devWindows.c:2936
 msgid "invalid filename argument in savePlot"
 msgstr "неправильный аргумент имени файла в savePlot"
 
 #: devWindows.c:2940
-#, fuzzy
 msgid "invalid type argument in 'savePlot'"
-msgstr "неправильный тип аргумента в savePlot"
+msgstr "неправильный тип аргумента в 'savePlot'"
 
 #: devWindows.c:2967
 msgid "unknown type in savePlot"
@@ -589,19 +583,16 @@ msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
 #: devWindows.c:3202
-#, fuzzy
 msgid "invalid 'width' or 'height' in devWindows"
-msgstr "неправильная ширина или длина в devWindows"
+msgstr "неправильная 'width' или 'height' в devWindows"
 
 #: devWindows.c:3207
-#, fuzzy
 msgid "invalid value of 'record' in devWindows"
-msgstr "неправильное значение 'recording' в devWindows"
+msgstr "неправильное значение 'record' в devWindows"
 
 #: devWindows.c:3211
-#, fuzzy
 msgid "invalid value of 'rescale' in devWindows"
-msgstr "неправильное значение 'resize' в devWindows"
+msgstr "неправильное значение 'rescale' в devWindows"
 
 #: devWindows.c:3219
 msgid "invalid value of 'canvas' in devWindows"
@@ -616,9 +607,8 @@ msgid "invalid value of 'bg' in devWindows"
 msgstr "неправильное значение 'bg' в devWindows"
 
 #: devWindows.c:3243
-#, fuzzy
 msgid "invalid value of 'title' in devWindows"
-msgstr "неправильное значение 'resize' в devWindows"
+msgstr "неправильное значение 'title' в devWindows"
 
 #: devWindows.c:3258
 msgid "unable to start device devWindows"
@@ -630,12 +620,12 @@ msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 
 #: qdBitmap.c:92
 msgid "Not a supported scheme, no image data written"
-msgstr ""
+msgstr "Схема не поддерживается, данные изображения не записаны"
 
 #: qdPDF.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s'"
-msgstr "не могу загрузить afm-файл '%s'"
+msgstr "не могу открыть файл '%s'"
 
 #~ msgid "can't find any fonts"
 #~ msgstr "не могу найти никаких шрифтов"

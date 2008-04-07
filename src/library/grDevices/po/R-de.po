@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/grDevices/po/R-grDevices.pot
-# Copyright (C) 2005-2007 The R Foundation
+# Copyright (C) 2005-2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
-"PO-Revision-Date: 2007-10-15 14:54+0200\n"
+"POT-Creation-Date: 2008-04-05 10:49\n"
+"PO-Revision-Date: 2008-04-06 18:19+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,6 @@ msgstr "kann nur aus Screen-Device drucken"
 msgid "need to specify one of 'width' and 'height'"
 msgstr "entweder 'width' oder 'heigth' müssen angegeben werden"
 
-#, fuzzy
 msgid "can only print from a screen device"
 msgstr "kann nur aus Screen-Device drucken"
 
@@ -117,23 +116,22 @@ msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.displaylist() ohne geöffnetes Grafik-Device aufgerufen"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr ""
+msgstr "unzulässige einstellung für 'getOption(\"device\")'"
 
 msgid "no suitable unused file name for pdf()"
-msgstr ""
+msgstr "kein passender ungenutzter Dateiname für pdf()"
 
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr ""
+msgstr "dev.new(): nutze pdf(file=\"%s\")"
 
 msgid "no suitable unused file name for postscript()"
-msgstr ""
+msgstr "kein passender unbenutzter Dateiname für postscript()"
 
 msgid "dev.new(): using postscript(file=\"%s\")"
-msgstr ""
+msgstr "dev.new(): nutze postscript(file=\"%s\")"
 
-#, fuzzy
 msgid "device '%s' not found"
-msgstr "Device '%s' steht nicht zur Verfügung"
+msgstr "Device '%s' nicht gefunden"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt"
@@ -152,7 +150,7 @@ msgid "NOT changing"
 msgstr "NICHT ändernd"
 
 msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr ""
+msgstr "Argument 'append' dient der Rückwärtskompatibilität und wird ignoriert"
 
 msgid "unknown family '%s'"
 msgstr "unbekannte Familie '%s'"
@@ -160,9 +158,8 @@ msgstr "unbekannte Familie '%s'"
 msgid "invalid 'family' argument"
 msgstr "ungültiges 'family' Argument"
 
-#, fuzzy
 msgid "invalid 'file'"
-msgstr "ungültiges 'family' Argument"
+msgstr "ungültiges 'file' Argument"
 
 msgid "invalid PDF version"
 msgstr "ungültige PDF Version"
@@ -257,9 +254,8 @@ msgstr "Device '%s' steht nicht zur Verfügung"
 msgid "Available devices are %s"
 msgstr "Verfügbar Devices sind %s"
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr "ungültiger Zeichensatztyp"
+msgstr "unzulässiger 'title'"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "ungültiger Quartz Zeichensatz: müssen 4 Zeichenketten sein"
@@ -271,11 +267,10 @@ msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "ungültige Argumente in quartzFonts (benötigt benannte Argumente)"
 
 msgid "invalid value for 'antialias'"
-msgstr ""
+msgstr "unzulässiger Wert für 'antialias'"
 
-#, fuzzy
 msgid "invalid 'filename'"
-msgstr "ungültiges 'family' Argument"
+msgstr "unzulässiges 'filename' Argument"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' muss angegeben werden, außer 'units = \"px\"'"
@@ -286,12 +281,11 @@ msgstr "ungültige X11 Zeichensatzspezifikation"
 msgid "no such device"
 msgstr "kein solches Device"
 
-#, fuzzy
 msgid "can only copy from 'X11(type=\"cairo\")' devices"
-msgstr "kann nur aus 'windows' Devices kopieren"
+msgstr "kann nur aus 'X11(type=\"cairo\")' Devices kopieren"
 
 msgid "invalid value for 'rescale'"
-msgstr ""
+msgstr "unzulässiger Wert für 'rescale'"
 
 msgid "can only bring windows devices to the front"
 msgstr "kann nur windows-Devices nach Vorne bringen"

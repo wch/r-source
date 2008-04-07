@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1675,6 +1675,10 @@ msgstr "충분하지 않는 group입니다"
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr "bounds는 L-BFGS-B method이라고 하는것만 사용할 수가 없습니다"
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr "알수 없는 이름의 kernel입니다"
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace'에 대한 해설을 보다 주의 깊게 읽어 주십시오"
 
@@ -1688,6 +1692,9 @@ msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr ""
 "Nelder-Mead method에 의한 1 차원 최적화는 인정 할수가 없습니다: optimize를 사"
 "용해 주십시오"
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr "'x'는 2개의 열을 가지지 않으면 안됩니다"

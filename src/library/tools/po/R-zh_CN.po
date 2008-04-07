@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -465,13 +465,15 @@ msgstr "***程辑包'%s'里的Built域坏了***"
 msgid "cannot open directory '%s'"
 msgstr "无法打开目录'%s'"
 
-msgid "WARNING: 'Depends' entry has multiple dependencies:"
+#, fuzzy
+msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "警告：'Depends'项有多个從屬项"
 
 msgid ","
 msgstr ","
 
-msgid "only the first will be used"
+#, fuzzy
+msgid "only the first will be used in R < 2.7.0"
 msgstr "只能用第一个"
 
 msgid ""

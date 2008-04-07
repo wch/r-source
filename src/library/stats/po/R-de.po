@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.2\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
-"PO-Revision-Date: 2008-02-29 15:58+0100\n"
+"POT-Creation-Date: 2008-04-07 08:28\n"
+"PO-Revision-Date: 2008-04-06 19:16+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -1115,9 +1115,8 @@ msgstr "unzulässige Parameterwerte"
 msgid "a limit is missing"
 msgstr "es fehlt eine Grenze"
 
-#, fuzzy
 msgid "missing values not allowed"
-msgstr "fehlende Werte in 'poly' nicht zugelassen"
+msgstr "fehlende Werte nicht zugelassen"
 
 msgid "'r' is less than 1"
 msgstr "'r' ist kleiner als 1"
@@ -1636,6 +1635,10 @@ msgstr "nicht genügend Gruppen"
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr "Grenzen können nur mit der Methode L-BFGS-B benutzt werden"
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr "unbekannter, benannter Kernel"
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr "bitte die Dokumentation zu 'trace' genauer lesen"
 
@@ -1649,6 +1652,9 @@ msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr ""
 "eindimensionale Optimierung mit Nelder-Mead ist unzuverlässig: nutze "
 "'optimize'"
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr "'x' muss 2 Spalten haben"

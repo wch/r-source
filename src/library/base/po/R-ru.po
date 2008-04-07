@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Alexey Shipunov <dactylorhiza at gmail> 2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 11:07\n"
-"PO-Revision-Date: 2007-09-18 00:11-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2008-04-06 23:46-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -298,9 +298,8 @@ msgstr ""
 msgid "non-existent rows not allowed"
 msgstr "несуществующие строки не разрешены"
 
-#, fuzzy
 msgid "column name \"\" cannot match any column"
-msgstr "больше имен, чем колонок"
+msgstr "имя колонки \"\" не соответствует ни одной из колонок"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "новые колонки создадут дыры после существующих колонок"
@@ -366,9 +365,8 @@ msgstr "определено только для таблиц данных со всеми числовыми переменными"
 msgid "character string is not in a standard unambiguous format"
 msgstr "текстовая строка не относится к стандартному однозначному формату"
 
-#, fuzzy
 msgid "'origin' must be supplied"
-msgstr "должен быть указан 'from'"
+msgstr "надо указать 'origin'"
 
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "не знаю как конвертировать '%s' в класс \"Date\""
@@ -453,27 +451,23 @@ msgstr "не знаю как конвертировать '%s' в класс \"POSIXlt\""
 msgid "wrong class"
 msgstr "неправильный класс"
 
-#, fuzzy
 msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr "бинарный '+' не определен для объектов \"POSIXt\""
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "Могу лишь вычитать из объектов 'POSIXt'"
 
-#, fuzzy
 msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr "унарный '-' не определен для объектов \"POSIXt\""
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "могу вычитать лишь числа из объектов 'POSIXt'"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"POSIXt\" objects"
 msgstr "унарный '-' не определен для объектов \"POSIXt\""
 
-#, fuzzy
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr "не определен для объектов \"POSIXt\""
+msgstr "'%s' не определен для объектов \"POSIXt\""
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "противоречивые атрибуты 'tzone'"
@@ -487,13 +481,11 @@ msgstr "для числовой конверсии нужно прямо указать единицы"
 msgid "invalid units specified"
 msgstr "неправильное указание единиц"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr "не определен для объектов \"difftime\""
+msgstr "унарный '%s' не определен для объектов \"difftime\""
 
-#, fuzzy
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr "не определен для объектов \"difftime\""
+msgstr "'%s' не определен для объектов \"difftime\""
 
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr "оба аргумента * не могут быть объектами \"difftime\""
@@ -614,17 +606,14 @@ msgstr "нет файлов для ссылки с"
 msgid "no files/directory to link to"
 msgstr "нет файлов/папок для ссылки на"
 
-#, fuzzy
 msgid "'x' must be have length 1"
-msgstr "'input' должен иметь длину 1"
+msgstr "'x' должен иметь длину 1"
 
-#, fuzzy
 msgid "invalid digits"
-msgstr "неправильные 'digits'"
+msgstr "неправильное количество знаков после запятой"
 
-#, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
-msgstr "не могу преобразовать в таблицу"
+msgstr "'x' нельзя преобразовать в 'octmode'"
 
 msgid "'package' must be of length 1"
 msgstr "'пакет' должен быть длиной 1"
@@ -691,9 +680,8 @@ msgstr "компоненты расстояния с неизвестным соответствием пропущены"
 msgid "'max.distance' components must be non-negative"
 msgstr "компоненты 'max.distance' должны быть неотрицательными"
 
-#, fuzzy
 msgid "triangular matrix should be square"
-msgstr "матрица должна быть квадратной"
+msgstr "треугольная матрица должна быть квадратной"
 
 msgid "'object' must be a list"
 msgstr "'object' должен быть списком"
@@ -1036,9 +1024,8 @@ msgstr "в '%s' классы для экспорта не определены: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
 
-#, fuzzy
 msgid "Multiple methods tables found for '"
-msgstr "Множественные списки методов найдены для '"
+msgstr "Множественные таблицы методов найдены для '"
 
 msgid "'"
 msgstr "'"
@@ -1089,7 +1076,7 @@ msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
 
 msgid "got invalid index for importing"
-msgstr ""
+msgstr "получен неправильный индекс для импорта"
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr "Найдены методы импорта для функции \"%s\", но они сами не общие"
@@ -1100,9 +1087,8 @@ msgstr "запрошенные объекты 'methods' не найдены в окружении/пакете '%s': %s"
 msgid "cannot add to exports of a sealed name space"
 msgstr "не могу добавить к экспорту из включенного пространства имен"
 
-#, fuzzy
 msgid "undefined exports:"
-msgstr "неопределенный экспорт:"
+msgstr "неопределенные экспорты:"
 
 msgid "package '%s' has no NAMESPACE file"
 msgstr "у пакета '%s' нет файла NAMESPACE"
@@ -1192,9 +1178,8 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
 
-#, fuzzy
 msgid "'x' must be an atomic vector"
-msgstr "'x' должен быть вектором"
+msgstr "'x' должен быть атомарным вектором"
 
 msgid "invalid 'rle' structure"
 msgstr "неправильная структура 'rle'"
@@ -1395,7 +1380,7 @@ msgid "'bin' must be numeric or a factor"
 msgstr "'bin' должен быть числом или фактором"
 
 msgid "arguments must have same length"
-msgstr "аргументs должны иметь одинаковую длину"
+msgstr "аргументы должны иметь одинаковую длину"
 
 msgid "handler must be a function"
 msgstr "обработчик должен быть функцией"
@@ -1430,13 +1415,11 @@ msgstr "неправильное указание версии"
 msgid "wrong argument"
 msgstr "неправильный аргумент"
 
-#, fuzzy
 msgid "invalid value"
-msgstr "неправильное значение 'n'"
+msgstr "неправильное значение"
 
-#, fuzzy
 msgid "not defined for numeric_version objects"
-msgstr "не определено для объектов package_version"
+msgstr "не определено для объектов numeric_version"
 
 msgid "argument to 'which' is not logical"
 msgstr "аргумент 'which' не является логическим"

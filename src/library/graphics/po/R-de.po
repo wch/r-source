@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/graphics/po/R-graphics.pot
-# Copyright (C) 2005-2007 The R Foundation
+# Copyright (C) 2005-2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-02-08 14:26\n"
-"PO-Revision-Date: 2007-10-12 14:45+0200\n"
+"PO-Revision-Date: 2008-04-06 18:10+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -265,7 +265,7 @@ msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x' und 'y' müssen entweder 1 oder die selbe Spaltenanzahl haben"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr ""
+msgstr "Standard 'pch' ist kürzer als Anzahl der Spalten und wird deshalb recycelt"
 
 msgid "missing values in contingency table"
 msgstr "fehlende Werte in Kontingenztabelle"
@@ -386,7 +386,6 @@ msgstr "ungültige Plot-Methode"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' muss die selbe Länge haben wie die Anzahl %d der Gruppen"
 
-#, fuzzy
 msgid "formula missing or incorrect"
 msgstr "'formula' fehlt oder fehlerhaft"
 

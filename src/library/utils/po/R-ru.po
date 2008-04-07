@@ -1,31 +1,29 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Alexey Shipunov <dactylorhiza at gmail> 2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
-"PO-Revision-Date: 2007-09-18 00:46-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2008-04-05 10:50\n"
+"PO-Revision-Date: 2008-04-07 00:39-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
 msgstr ""
-"RShowDoc() должен быть использован с аргументом-текстовой строкой, "
-"указывающим на\n"
+"RShowDoc() должен быть использован с аргументом-текстовой строкой, указывающим на\n"
 "   файл документации"
 
 msgid "no documentation for '%s' found in package '%s'"
@@ -102,17 +100,17 @@ msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
 msgstr ""
+"Использую <code> %s </code> \n"
+" для перечисления миниатюр во всех <strong>доступных</strong> пакетах."
 
-#, fuzzy
 msgid "No vignettes found by"
-msgstr "миниатюра '%s' *не* найдена"
+msgstr "Не найдено миниатюр в"
 
 msgid "call"
-msgstr ""
+msgstr "вызов"
 
-#, fuzzy
 msgid "'file' must be NULL, a character string or a connection"
-msgstr "'file' должен быть текстовой строкой строка или соединением"
+msgstr "'file' должен быть NULL, текстовой строкой или соединением"
 
 msgid "bad argument"
 msgstr "неправильный аргумент"
@@ -142,7 +140,7 @@ msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' должен быть функцией или NULL"
 
 msgid "Can't handle S4 methods yet"
-msgstr ""
+msgstr "Покуда не могу работать с методами S4"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package' должен быть текстовой строкой или NULL"
@@ -205,9 +203,7 @@ msgid "Enter an environment number, or 0 to exit"
 msgstr "Введите номер окружения или 0 для выхода"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr ""
-"восстановление вызвано неинтерактивно; рамки сброшены, используйте debugger"
-"(), чтобы их просмотреть"
+msgstr "восстановление вызвано неинтерактивно; рамки сброшены, используйте debugger(), чтобы их просмотреть"
 
 msgid "No suitable frames for recover()"
 msgstr "Нет подходящих рамок для recover()"
@@ -247,10 +243,10 @@ msgid "invalid input matrix"
 msgstr "неправильная вводная матрица"
 
 msgid "class(es) of 'name' will be discarded"
-msgstr ""
+msgstr "класс(ы) у \"name' будут пропущены"
 
 msgid "cannot edit NULL row names"
-msgstr ""
+msgstr "не могу редактировать NULL-имена строк"
 
 msgid "no help file found for '%s'"
 msgstr "в '%s' не найдено файла помощи"
@@ -277,12 +273,10 @@ msgid "'form' must be a two-sided formula"
 msgstr "'form' должен быть двусторонней формулой"
 
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr ""
-"'form' должен быть двусторонней формулой с одним термином на каждой стороне"
+msgstr "'form' должен быть двусторонней формулой с одним термином на каждой стороне"
 
-#, fuzzy
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr "'option' должна быть длиной с один текстовый вектор или NULL"
+msgstr "'topic' должен быть именем, текстовой строкой единичной длины или зарезервированным словом"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
@@ -290,12 +284,8 @@ msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
 msgid "you could try 'help.search(\"%s\")'"
 msgstr "можете попробовать 'help.search(\"%s\")'"
 
-msgid ""
-"Help for topic '%s' is not in any loaded package but can be found in the "
-"following packages:"
-msgstr ""
-"Справки по '%s' нет в загруженных пакетах, но она может быть найдена в "
-"следующих пакетах:"
+msgid "Help for topic '%s' is not in any loaded package but can be found in the following packages:"
+msgstr "Справки по '%s' нет в загруженных пакетах, но она может быть найдена в следующих пакетах:"
 
 msgid "Package"
 msgstr "Пакет"
@@ -391,8 +381,7 @@ msgstr "удаляю все вхождения с неправильными многобайтными данными"
 msgid "saving the database ..."
 msgstr "Сохраняю базу данных..."
 
-msgid ""
-"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgid "no information in the data base for package '%s': need 'rebuild = TRUE'?"
 msgstr "в базе данных нет информации о пакете '%s': надо 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
@@ -404,9 +393,8 @@ msgstr "соответствует %d объект(ам)."
 msgid "no package '%s' was found"
 msgstr "не найден пакет '%s'"
 
-#, fuzzy
 msgid "metadata of package '%s' is corrupt"
-msgstr "файл DESCRIPTION пакета '%s' поврежден"
+msgstr "метаданные пакета '%s' повреждены"
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "файл DESCRIPTION пакета '%s' поврежден"
@@ -424,8 +412,7 @@ msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Введите пункт из меню или 0 для выхода"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
-msgstr ""
-"'%s' -- это формальная общая функция; не похоже, что найдутся методы S3"
+msgstr "'%s' -- это формальная общая функция; не похоже, что найдутся методы S3"
 
 msgid "no function '%s' is visible"
 msgstr "не видна функция '%s'"
@@ -457,15 +444,12 @@ msgstr "можно использовать только числовые индексы"
 msgid "cannot create directory '%s'"
 msgstr "не могу создать папку '%s'"
 
-#, fuzzy
 msgid "'namespace' must be a single logical"
 msgstr "'namepace' должно быть простым логическим значением"
 
-#, fuzzy
 msgid "'code_files' must be a character vector"
 msgstr "'code_files' должны быть текстовым вектором"
 
-#, fuzzy
 msgid "'list' must be a character vector naming R objects"
 msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
 
@@ -497,16 +481,16 @@ msgid "Copying code files ..."
 msgstr "Копирую файлы с кодом..."
 
 msgid "Invalid file name(s) for R code in"
-msgstr ""
+msgstr "Неправильное имя файла(ов) для кода R в"
 
 msgid ":"
-msgstr ""
+msgstr ":"
 
 msgid ","
-msgstr ""
+msgstr ","
 
 msgid "are now renamed to 'z<name>.R'"
-msgstr ""
+msgstr "теперь переименован в 'z<name>.R'"
 
 msgid "Making help files ..."
 msgstr "Делаю файлы помощи..."
@@ -548,8 +532,7 @@ msgid "download of package '%s' failed"
 msgstr "скачивание пакета '%s' не удалось"
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr ""
-"--- Пожалуйста, выберите зеркало CRAN для использования в этой сессии ---"
+msgstr "--- Пожалуйста, выберите зеркало CRAN для использования в этой сессии ---"
 
 msgid "trying to use CRAN without setting a mirror"
 msgstr "пробую использовать CRAN без установки зеркала"
@@ -589,7 +572,7 @@ msgid ""
 "'%s'\n"
 "to install packages into?"
 msgstr ""
-"Не хотите ли Вы созджать персональную библиотеку\n"
+"Не хотите ли Вы создать персональную библиотеку\n"
 "'%s'\n"
 "для того чтобы инсталлировать пакеты в нее?"
 
@@ -639,7 +622,7 @@ msgid "no object named '%s' to show"
 msgstr "нет объекта с именем '%s' для показа"
 
 msgid "'pb' is not from class \"txtProgressBar\""
-msgstr ""
+msgstr "'pb' не из класса \"txtProgressBar\""
 
 msgid "cannot determine a usable name"
 msgstr "не могу определить имя, которое можно использовать"
@@ -665,8 +648,7 @@ msgstr "заголовок пакета"
 msgid "A concise (1-5 lines) description of the package"
 msgstr "Краткое содержание (1-5 строк) описания пакета"
 
-msgid ""
-"An overview of how to use the package, including the most important functions"
+msgid "An overview of how to use the package, including the most important functions"
 msgstr "Обзор того, как использовать пакет, включая наиболее важные функции"
 
 msgid "The author and/or maintainer of the package"
@@ -681,24 +663,14 @@ msgstr "Необязательные ссылки на другие страницы руководства, например"
 msgid "simple examples of the most important functions"
 msgstr "простые примеры для наиболее важных функций"
 
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
-"Необязательно: другие стандартные ключевые слова, по одному на строку, из "
-"файла KEYWORDS в папке с документацией по R"
+msgid "Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"
+msgstr "Необязательно: другие стандартные ключевые слова, по одному на строку, из файла KEYWORDS в папке с документацией по R"
 
-msgid ""
-"no documentation of type '%s' and topic '%s' (or error in processing help)"
-msgstr ""
-"нет документации на тип '%s' и разделу '%s' (или ошибка в обработке помощи)"
+msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgstr "нет документации на тип '%s' и разделу '%s' (или ошибка в обработке помощи)"
 
-msgid ""
-"the object of class \"%s\" in the function call '%s' could not be used as a "
-"documentation topic"
-msgstr ""
-"объект класса \"%s\" в вызове функции '%s' нельзя использовать как раздел "
-"документации"
+msgid "the object of class \"%s\" in the function call '%s' could not be used as a documentation topic"
+msgstr "объект класса \"%s\" в вызове функции '%s' нельзя использовать как раздел документации"
 
 msgid "no methods for '%s' and no documentation for it as a function"
 msgstr "для '%s' нет методов и нет документации как по функции"
@@ -796,12 +768,8 @@ msgstr "relist() требует объектов, преобразованных из списка рекурсивно."
 msgid "The flesh argument does not contain a skeleton attribute."
 msgstr "Аргумент 'flesh' не содержит атрибута 'skeleton'."
 
-msgid ""
-"Either ensure you unlist a relistable object, or specify the skeleton "
-"separately."
-msgstr ""
-"Либо убедитесь в том, что Вы преобразовали из списка объект, который можно "
-"восстановить, либо определите 'skeleton' отдельно."
+msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
+msgstr "Либо убедитесь в том, что Вы преобразовали из списка объект, который можно восстановить, либо определите 'skeleton' отдельно."
 
 msgid "cannot coerce 'x' to roman"
 msgstr "не могу перевести 'x' в римскую"
@@ -809,9 +777,8 @@ msgstr "не могу перевести 'x' в римскую"
 msgid "Invalid roman numeral(s): %s"
 msgstr "Неправильные римские номер(а): %s"
 
-#, fuzzy
 msgid "no valid packages were specified"
-msgstr "не указаны пакеты"
+msgstr "правильные пакеты не указаны"
 
 msgid "invalid 'socket' argument"
 msgstr "неправильный аргумент 'socket'"
@@ -835,7 +802,7 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr "неправильная options('str') -- использую вместо нее умолчания"
 
 msgid "invalid components in options('str'):"
-msgstr ""
+msgstr "неправильные компоненты в options('str'):"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' не имеет правильных levels()"
@@ -889,9 +856,8 @@ msgstr "неправильное указание 'col.names'"
 msgid "appending column names to file"
 msgstr "добавление имен колонок к файлу"
 
-#, fuzzy
 msgid "attempt to set '%s' ignored"
-msgstr "попытка изменить '%s' пропущена"
+msgstr "попытка установить '%s' пропущена"
 
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' должен быть одной текстовой строкой"
@@ -906,7 +872,7 @@ msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
 
 msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr ""
+msgstr "Использую нелинкованный HTML-файл: гиперссылки могут быть неправильными"
 
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") не установлены"
@@ -914,19 +880,11 @@ msgstr "options(\"browser\") не установлены"
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "неправильное имя броузера, проверьте options(\"browser\")."
 
-msgid ""
-"Changing the default browser (as specified by the 'browser' option) to the "
-"given browser so that it gets used for all future help requests."
-msgstr ""
-"Изменяю броузер по умолчанию (который указан в опции 'browser') на заданный "
-"броузер, что отразится на всех следующих запросах помощи."
+msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
+msgstr "Изменяю броузер по умолчанию (который указан в опции 'browser') на заданный броузер, что отразится на всех следующих запросах помощи."
 
-msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
-msgstr ""
-"Если '%s' уже запущен, он *not* перезагрузился, и Вы должны перейти в его "
-"окно."
+msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr "Если '%s' уже запущен, он *not* перезагрузился, и Вы должны перейти в его окно."
 
 msgid "Otherwise, be patient ..."
 msgstr "Если нет, ждите..."
@@ -995,7 +953,7 @@ msgid "cannot update '%s'"
 msgstr "не могу обновить '%s'"
 
 msgid "'pb' is not from class \"winProgressBar\""
-msgstr ""
+msgstr "'pb' не из класса \"winProgressBar\""
 
 msgid "this function is intended to work with the Aqua GUI"
 msgstr "эта функция предназначена для работы с Aqua GUI"
@@ -1008,9 +966,9 @@ msgstr "не могу удалить прежнюю установку пакета"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "класс удален из колонки %s"
+msgstr[1] "классы удалены из колонок %s"
+msgstr[2] "классы удалены из колонок %s"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1050,28 +1008,23 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr "не могу обновить HTML-индекс пакетов"
-
 #~ msgid "cannot update HTML search index"
 #~ msgstr "не могу обновить HTML-индекс поиска"
-
 #~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 #~ msgstr "'format' должен быть \"normal\" или \"short\". Использую \"normal\""
-
 #~ msgid "wrong 'sortby' specified. Using sortby=\"score\""
 #~ msgstr "Указан неправильный 'sortby'. Использую sortby=\"score\""
-
 #~ msgid ""
 #~ "wrong restriction specified.\n"
 #~ "Using '%s'"
 #~ msgstr ""
 #~ "Указано неправильное ограничение.\n"
 #~ "Использую '%s'"
-
 #~ msgid "Unable to create temporary directory '%s'"
 #~ msgstr "Не могу создать временную папку '%s'"
-
 #~ msgid "dependency '%s' is not available"
 #~ msgid_plural "dependencies '%s' are not available"
 #~ msgstr[0] "зависимость '%s' недоступна"
 #~ msgstr[1] "зависимости '%s' недоступны"
 #~ msgstr[2] "зависимости '%s' недоступны"
+

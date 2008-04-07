@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:03+0100\n"
+"POT-Creation-Date: 2008-04-07 08:27+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -945,7 +945,7 @@ msgstr "menu não encontrado"
 msgid "menu or item does not exist"
 msgstr "menu ou item não existe"
 
-#: system.c:416
+#: system.c:433
 msgid "Save workspace image?"
 msgstr "Salvar imagem da área de trabalho?"
 
