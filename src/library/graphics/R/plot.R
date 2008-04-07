@@ -67,8 +67,8 @@ plot.default <-
     plot.xy(xy, type, ...)
     panel.last
     if (axes) {
-	localAxis(x, side = 1, ...)
-	localAxis(y, side = 2, ...)
+	localAxis(xy$x, side = 1, ...)
+	localAxis(xy$y, side = 2, ...)
     }
     if (frame.plot) localBox(...)
     if (ann) localTitle(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)

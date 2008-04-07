@@ -508,6 +508,9 @@ GRAPHICS CHANGES
     o	plot.formula() only prompts between plots for interactive
 	devices (it used to prompt for all devices).
 
+    o	When plot.default() is called with y=NULL it now calls Axis()
+    	with the 'y' it constructs rather than use the default axis.
+
 
 DEPRECATED & DEFUNCT
 
