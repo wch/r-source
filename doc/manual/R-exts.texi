@@ -358,8 +358,8 @@ or preparing for lazy-loading.
 
 As from @R{} 2.7.0 a package (or @samp{R}) can appear more than once in
 the @samp{Depends}, but only the first occurrence will be used in
-earlier versions of R.  (Thus it is portable to use comparison operators
-@samp{<}, @samp{>}, @samp{==} and @samp{!=} in mentions after the first.)
+earlier versions of R.  (Unfortunately all occurrences will be checked,
+so only @samp{>=} and @samp{<=} can be used.)
 
 The optional @samp{Imports} field lists packages whose name spaces are
 imported from but which do not need to be attached.  Name spaces
