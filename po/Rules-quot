@@ -45,4 +45,4 @@ en@boldquot.insert-header: insert-header.sin
 
 mostlyclean: mostlyclean-quot
 mostlyclean-quot:
-	rm -f *.insert-header
+	@rm -f *.insert-header
