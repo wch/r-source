@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:50\n"
+"POT-Creation-Date: 2008-04-07 08:26\n"
 "PO-Revision-Date: 2007-09-12 00:31+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1625,6 +1625,10 @@ msgstr " 十分なグループがありません "
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr " bounds は L-BFGS-B 法でしか使用することができません "
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr " 未知の名前のカーネルです "
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr " 'trace' に対する解説をより注意深く読んでください "
 
@@ -1638,6 +1642,9 @@ msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr ""
 " Nelder-Mead 法による一次元最適化は信頼できません: optimize を使用してくださ"
 "い "
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr " 'x' は 2 つの列を持たなければなりません "

@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/graphics/po/R-grid.pot
-# Copyright (C) 2005-2007 The R Foundation
+# Copyright (C) 2005-2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-03-24 15:34\n"
-"PO-Revision-Date: 2007-10-30 15:00+0200\n"
+"PO-Revision-Date: 2008-04-06 18:20+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -87,7 +87,6 @@ msgstr ""
 msgid "gpar element '%s' must not be length 0"
 msgstr "gpar element '%s' darf nicht Länge 0 haben"
 
-#, fuzzy
 msgid "'gamma' gpar is defunct"
 msgstr "gpar 'gamma' ist veraltet"
 

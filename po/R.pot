@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:46+0100\n"
+"POT-Creation-Date: 2008-04-07 08:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,12 +182,12 @@ msgstr ""
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:621
 #: src/modules/lapack/Lapack.c:717 src/modules/lapack/Lapack.c:774
-#: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2659
-#: src/modules/X11/devX11.c:2662 src/modules/X11/devX11.c:2665
-#: src/modules/X11/devX11.c:2698 src/modules/X11/devX11.c:3095
-#: src/modules/X11/devX11.c:3100 src/modules/X11/devX11.c:3104
-#: src/modules/X11/devX11.c:3108 src/modules/X11/devX11.c:3112
-#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3127
+#: src/modules/lapack/Lapack.c:1026 src/modules/X11/devX11.c:2658
+#: src/modules/X11/devX11.c:2661 src/modules/X11/devX11.c:2664
+#: src/modules/X11/devX11.c:2697 src/modules/X11/devX11.c:3094
+#: src/modules/X11/devX11.c:3099 src/modules/X11/devX11.c:3103
+#: src/modules/X11/devX11.c:3107 src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3122 src/modules/X11/devX11.c:3126
 #: src/unix/sys-std.c:1180 src/unix/sys-std.c:1203
 #, c-format
 msgid "invalid '%s' argument"
@@ -255,11 +255,11 @@ msgstr ""
 #: src/main/seq.c:245 src/main/seq.c:248 src/main/sort.c:790
 #: src/main/sort.c:890 src/main/source.c:172 src/main/summary.c:977
 #: src/main/sysutils.c:230 src/main/util.c:881 src/main/util.c:886
-#: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2564
-#: src/modules/X11/devX11.c:2591 src/modules/X11/devX11.c:2596
-#: src/modules/X11/devX11.c:2601 src/modules/X11/devX11.c:2611
-#: src/modules/X11/devX11.c:2616 src/modules/X11/devX11.c:2620
-#: src/modules/X11/devX11.c:3116 src/unix/sys-std.c:1276
+#: src/main/util.c:893 src/main/util.c:896 src/modules/X11/devX11.c:2563
+#: src/modules/X11/devX11.c:2590 src/modules/X11/devX11.c:2595
+#: src/modules/X11/devX11.c:2600 src/modules/X11/devX11.c:2610
+#: src/modules/X11/devX11.c:2615 src/modules/X11/devX11.c:2619
+#: src/modules/X11/devX11.c:3115 src/unix/sys-std.c:1276
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
@@ -1783,7 +1783,7 @@ msgstr ""
 #: src/main/connections.c:511 src/main/dounzip.c:107 src/main/saveload.c:1986
 #: src/main/serialize.c:2120 src/main/serialize.c:2129
 #: src/main/serialize.c:2212 src/main/serialize.c:2236
-#: src/modules/X11/devX11.c:2680 src/unix/system.c:317 src/unix/system.c:333
+#: src/modules/X11/devX11.c:2679 src/unix/system.c:317 src/unix/system.c:333
 #, c-format
 msgid "cannot open file '%s'"
 msgstr ""
@@ -1929,11 +1929,11 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr ""
 
-#: src/main/connections.c:1539 src/modules/X11/devX11.c:3237
+#: src/main/connections.c:1539 src/modules/X11/devX11.c:3236
 msgid "memory allocation to copy clipboard failed"
 msgstr ""
 
-#: src/main/connections.c:1544 src/modules/X11/devX11.c:3225
+#: src/main/connections.c:1544 src/modules/X11/devX11.c:3224
 msgid "clipboard cannot be opened or contains no text"
 msgstr ""
 
@@ -2749,12 +2749,12 @@ msgid "no graphics system to unregister"
 msgstr ""
 
 #: src/main/engine.c:441 src/main/engine.c:446 src/main/engine.c:454
-#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:994
+#: src/main/engine.c:461 src/main/engine.c:475 src/modules/X11/devX11.c:993
 msgid "invalid line end"
 msgstr ""
 
 #: src/main/engine.c:506 src/main/engine.c:511 src/main/engine.c:519
-#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1012
+#: src/main/engine.c:526 src/main/engine.c:540 src/modules/X11/devX11.c:1011
 msgid "invalid line join"
 msgstr ""
 
@@ -5004,7 +5004,7 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: src/main/plot.c:204 src/modules/X11/devX11.c:1513
+#: src/main/plot.c:204 src/modules/X11/devX11.c:1512
 msgid "invalid font specification"
 msgstr ""
 
@@ -7232,194 +7232,194 @@ msgid ""
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
 
-#: src/modules/X11/devX11.c:860
+#: src/modules/X11/devX11.c:859
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
 msgstr ""
 
-#: src/modules/X11/devX11.c:924
+#: src/modules/X11/devX11.c:923
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr ""
 
-#: src/modules/X11/devX11.c:958
+#: src/modules/X11/devX11.c:957
 #, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
 msgstr ""
 
-#: src/modules/X11/devX11.c:967
+#: src/modules/X11/devX11.c:966
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1077
+#: src/modules/X11/devX11.c:1076
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1094
+#: src/modules/X11/devX11.c:1093
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1152
+#: src/modules/X11/devX11.c:1151
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1153
+#: src/modules/X11/devX11.c:1152
 msgid "X cannot set locale modifiers"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1157
+#: src/modules/X11/devX11.c:1156
 msgid "no png support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1163
+#: src/modules/X11/devX11.c:1162
 msgid "filename too long in png() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1167
+#: src/modules/X11/devX11.c:1166
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1179
+#: src/modules/X11/devX11.c:1178
 msgid "no jpeg support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1189
+#: src/modules/X11/devX11.c:1188
 msgid "filename too long in jpeg() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1193
+#: src/modules/X11/devX11.c:1192
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1205
+#: src/modules/X11/devX11.c:1204
 msgid "no tiff support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1213
+#: src/modules/X11/devX11.c:1212
 msgid "filename too long in tiff() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1225
+#: src/modules/X11/devX11.c:1224
 msgid "filename too long in bmp() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1229
+#: src/modules/X11/devX11.c:1228
 #, c-format
 msgid "could not open BMP file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1250
+#: src/modules/X11/devX11.c:1249
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1270
+#: src/modules/X11/devX11.c:1269
 msgid "jpeg() does not support transparency: using white bg"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1383
+#: src/modules/X11/devX11.c:1382
 msgid "unable to create X11 window"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1477
+#: src/modules/X11/devX11.c:1476
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1482
+#: src/modules/X11/devX11.c:1481
 msgid "unable to create pixmap"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1553
+#: src/modules/X11/devX11.c:1552
 msgid "font family not found in X11 font database"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1596
+#: src/modules/X11/devX11.c:1595
 #, c-format
 msgid "invalid use of %d < 0 in '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1745 src/modules/X11/devX11.c:2813
+#: src/modules/X11/devX11.c:1744 src/modules/X11/devX11.c:2812
 #, c-format
 msgid "could not open file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2211
+#: src/modules/X11/devX11.c:2210
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
 msgstr ""
 
-#: src/modules/X11/devX11.c:2509
+#: src/modules/X11/devX11.c:2508
 msgid "invalid string argument"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2535
+#: src/modules/X11/devX11.c:2534
 #, c-format
 msgid "unable to start device %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2560
+#: src/modules/X11/devX11.c:2559
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2567
+#: src/modules/X11/devX11.c:2566
 msgid "invalid colortype passed to X11 driver"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2581
+#: src/modules/X11/devX11.c:2580
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2667
+#: src/modules/X11/devX11.c:2666
 msgid "no plot on device to save"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2669
+#: src/modules/X11/devX11.c:2668
 msgid "not an open X11cairo device"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2693 src/modules/X11/devX11.c:2695
+#: src/modules/X11/devX11.c:2692 src/modules/X11/devX11.c:2694
 #, c-format
 msgid "type = \"%s\" requires cairo >= 1.2: try \"png\""
 msgstr ""
 
-#: src/modules/X11/devX11.c:2704
+#: src/modules/X11/devX11.c:2703
 msgid "savePlot() is not supported on this build"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2741 src/modules/X11/devX11.c:2910
-#: src/modules/X11/devX11.c:2921
+#: src/modules/X11/devX11.c:2740 src/modules/X11/devX11.c:2909
+#: src/modules/X11/devX11.c:2920
 msgid "unimplemented cairo-based device"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3131
+#: src/modules/X11/devX11.c:3130
 msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3133
+#: src/modules/X11/devX11.c:3132
 #, c-format
 msgid "device '%s' requires cairo >= 1.2"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3145
+#: src/modules/X11/devX11.c:3144
 #, c-format
 msgid "unable to start device '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3157
+#: src/modules/X11/devX11.c:3156
 msgid "cairo-based devices are not supported on this build"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3188
+#: src/modules/X11/devX11.c:3187
 msgid "unable to contact X11 display"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3256
+#: src/modules/X11/devX11.c:3255
 msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 

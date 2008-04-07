@@ -1,32 +1,36 @@
 # Русский перевод для R GUI
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Copyright (C) 2008 Alexey Shipunov <dactylorhiza at gmail>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:50+0100\n"
-"PO-Revision-Date: 2007-09-17 20:36-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
-"Language-Team: Russian\n"
+"PO-Revision-Date: 2008-04-06 22:58-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
+"Language-Team: Russian <dactylorhiza at gmail>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
 
-#: console.c:1072 console.c:1114
+#: console.c:1072
+#: console.c:1114
 msgid "Not enough memory"
 msgstr "Недостаточно памяти"
 
-#: console.c:1161 console.c:1165
+#: console.c:1161
+#: console.c:1165
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Недостаточно памяти: текст не скопирован в буфер обмена"
 
-#: console.c:1201 ../extra/graphapp/clipboard.c:53
+#: console.c:1201
+#: ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Не могу открыть буфер обмена"
@@ -35,7 +39,9 @@ msgstr "Не могу открыть буфер обмена"
 msgid "Insufficient memory. Please close the console"
 msgstr "Недостаточно памяти. Пожалуйста, закройте консоль"
 
-#: console.c:1820 console.c:1874 preferences.c:312
+#: console.c:1820
+#: console.c:1874
+#: preferences.c:312
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -109,11 +115,8 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: удалить предыдущий символ;\n"
 
 #: console.c:2091
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr ""
-"     Ctrl+Del или Ctrl+K: удалить текст от текущего символа до конца "
-"строки.\n"
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Del или Ctrl+K: удалить текст от текущего символа до конца строки.\n"
 
 #: console.c:2092
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -124,24 +127,16 @@ msgid "  Copy and paste.\n"
 msgstr "  Копирование и вставка:\n"
 
 #: console.c:2094
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     Использовать мышь (с нажатой левой кнопкой) для выделения текста.\n"
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Использовать мышь (с нажатой левой кнопкой) для выделения текста.\n"
 
 #: console.c:2095
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr ""
-"     Использовать Shift+Del (или Ctrl+C) для копирования выделения в буфер\n"
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     Использовать Shift+Del (или Ctrl+C) для копирования выделения в буфер\n"
 
 #: console.c:2096
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
-msgstr ""
-"     Shift+Ins (или Ctrl+V или Ctrl+Y) для вставки содержимого буфера (если "
-"есть)  \n"
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     Shift+Ins (или Ctrl+V или Ctrl+Y) для вставки содержимого буфера (если есть)  \n"
 
 #: console.c:2097
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -203,7 +198,10 @@ msgstr "Стандартные клавиши Windows можно использовать для перехода к\n"
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "окну графики (Ctrl+Tab или Ctrl+F6 в MDI, Alt+Tab в SDI)"
 
-#: dataentry.c:221 dataentry.c:1803 dataentry.c:1806 dataentry.c:1837
+#: dataentry.c:221
+#: dataentry.c:1803
+#: dataentry.c:1806
+#: dataentry.c:1837
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
@@ -215,7 +213,8 @@ msgstr "неправильный тип данных"
 msgid "Data Editor"
 msgstr "Редактор данных"
 
-#: dataentry.c:282 dataentry.c:1846
+#: dataentry.c:282
+#: dataentry.c:1846
 msgid "invalid device"
 msgstr "неправильное устройство"
 
@@ -223,11 +222,13 @@ msgstr "неправильное устройство"
 msgid "dataentry: internal memory problem"
 msgstr "редактор данных: проблемы с памятью"
 
-#: dataentry.c:634 dataentry.c:1174
+#: dataentry.c:634
+#: dataentry.c:1174
 msgid "dataentry: internal memory error"
 msgstr "редактор данных: ошибка памяти"
 
-#: dataentry.c:757 dataentry.c:770
+#: dataentry.c:757
+#: dataentry.c:770
 msgid "internal type error in dataentry"
 msgstr "внутренняя ошибка в редакторе данных"
 
@@ -305,7 +306,10 @@ msgstr ""
 "  Right-click меню для копирования, вставки и подбора ширины колонки\n"
 "\n"
 
-#: dataentry.c:1649 dataentry.c:1759 editor.c:746 rui.c:1135
+#: dataentry.c:1649
+#: dataentry.c:1759
+#: editor.c:746
+#: rui.c:1135
 msgid "Help"
 msgstr "Справка"
 
@@ -321,21 +325,32 @@ msgstr "Вставить в выделенную ячейку"
 msgid "Autosize column"
 msgstr "Автоподбор ширины колонки"
 
-#: dataentry.c:1655 pager.c:310 rui.c:838
+#: dataentry.c:1655
+#: pager.c:310
+#: rui.c:838
 #: ../library/grDevices/src/devWindows.c:1616
 msgid "Stay on top"
 msgstr "Расположить сверху"
 
-#: dataentry.c:1657 dataentry.c:1744 pager.c:312 pager.c:475
+#: dataentry.c:1657
+#: dataentry.c:1744
+#: pager.c:312
+#: pager.c:475
 msgid "Close"
 msgstr "Закрыть"
 
-#: dataentry.c:1742 editor.c:692 pager.c:467 rui.c:1067
+#: dataentry.c:1742
+#: editor.c:692
+#: pager.c:467
+#: rui.c:1067
 #: ../library/grDevices/src/devWindows.c:1556
 msgid "File"
 msgstr "Файл"
 
-#: dataentry.c:1748 editor.c:710 pager.c:477 rui.c:1088
+#: dataentry.c:1748
+#: editor.c:710
+#: pager.c:477
+#: rui.c:1088
 msgid "Edit"
 msgstr "Правка"
 
@@ -359,10 +374,10 @@ msgstr "Ширина ячеек..."
 msgid "Data editor"
 msgstr "Редактор данных"
 
-#: editor.c:88 editor.c:90
-#, fuzzy
+#: editor.c:88
+#: editor.c:90
 msgid "R Editor"
-msgstr "Редактор"
+msgstr "Редактор R"
 
 #: editor.c:119
 #, c-format
@@ -378,7 +393,9 @@ msgstr "Не могу сохранить файл '%s'"
 msgid "Save script as"
 msgstr "Сохранить скрипт как"
 
-#: editor.c:465 pager.c:185 pager.c:205
+#: editor.c:465
+#: pager.c:185
+#: pager.c:205
 msgid "No RGui console to paste to"
 msgstr "Нет графического консоля для вставки"
 
@@ -411,50 +428,68 @@ msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     Нажмите на панели кнопку \"Запустить строку или блок\"\n"
 
 #: editor.c:576
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
-msgstr ""
-"В результате выбранные команды скопируются на консоль и запустятся там.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgstr "В результате выбранные команды скопируются на консоль и запустятся там.\n"
 
 #: editor.c:577
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
 msgstr "Если выделения нет, будет запущена текущая строка, а курсор\n"
 
 #: editor.c:578
 msgid "the cursor by one line.\n"
 msgstr "переместится на строку вниз.\n"
 
-#: editor.c:590 editor.c:665 editor.c:726
+#: editor.c:590
+#: editor.c:665
+#: editor.c:726
 msgid "Run line or selection"
 msgstr "Запустить строку или блок"
 
-#: editor.c:592 editor.c:711
+#: editor.c:592
+#: editor.c:711
 msgid "Undo"
 msgstr "Отменить"
 
-#: editor.c:594 editor.c:714
+#: editor.c:594
+#: editor.c:714
 msgid "Cut"
 msgstr "Вырезать"
 
-#: editor.c:595 editor.c:716 pager.c:305 pager.c:478 rui.c:828 rui.c:1032
+#: editor.c:595
+#: editor.c:716
+#: pager.c:305
+#: pager.c:478
+#: rui.c:828
+#: rui.c:1032
 #: rui.c:1089
 msgid "Copy"
 msgstr "Копировать"
 
-#: editor.c:596 editor.c:718 rui.c:829 rui.c:1036 rui.c:1090
+#: editor.c:596
+#: editor.c:718
+#: rui.c:829
+#: rui.c:1036
+#: rui.c:1090
 msgid "Paste"
 msgstr "Вставить"
 
-#: editor.c:597 editor.c:720
+#: editor.c:597
+#: editor.c:720
 msgid "Delete"
 msgstr "Удалить"
 
-#: editor.c:599 editor.c:722 pager.c:308 pager.c:484 rui.c:835 rui.c:1094
+#: editor.c:599
+#: editor.c:722
+#: pager.c:308
+#: pager.c:484
+#: rui.c:835
+#: rui.c:1094
 msgid "Select all"
 msgstr "Выделить все"
 
-#: editor.c:657 pager.c:431 rui.c:1020
+#: editor.c:657
+#: pager.c:431
+#: rui.c:1020
 msgid "Open script"
 msgstr "Открыть скрипт"
 
@@ -462,7 +497,9 @@ msgstr "Открыть скрипт"
 msgid "Save script"
 msgstr "Сохранить скрипт"
 
-#: editor.c:669 pager.c:451 ../library/grDevices/src/devWindows.c:1524
+#: editor.c:669
+#: pager.c:451
+#: ../library/grDevices/src/devWindows.c:1524
 msgid "Return focus to Console"
 msgstr "Вернуть фокус в консоль"
 
@@ -470,16 +507,22 @@ msgstr "Вернуть фокус в консоль"
 msgid "Print script"
 msgstr "Печатать скрипт"
 
-#: editor.c:674 pager.c:446 rui.c:1048
+#: editor.c:674
+#: pager.c:446
+#: rui.c:1048
 #: ../library/grDevices/src/devWindows.c:1518
 msgid "Print"
 msgstr "Печать"
 
-#: editor.c:693 pager.c:468 rui.c:1069
+#: editor.c:693
+#: pager.c:468
+#: rui.c:1069
 msgid "New script"
 msgstr "Новый скрипт"
 
-#: editor.c:695 pager.c:469 rui.c:1070
+#: editor.c:695
+#: pager.c:469
+#: rui.c:1070
 msgid "Open script..."
 msgstr "Открыть скрипт..."
 
@@ -491,7 +534,9 @@ msgstr "Сохранить"
 msgid "Save as..."
 msgstr "Сохранить как..."
 
-#: editor.c:702 pager.c:470 rui.c:1083
+#: editor.c:702
+#: pager.c:470
+#: rui.c:1083
 #: ../library/grDevices/src/devWindows.c:1619
 msgid "Print..."
 msgstr "Печать..."
@@ -500,7 +545,8 @@ msgstr "Печать..."
 msgid "Close script"
 msgstr "Закрыть скрипт"
 
-#: editor.c:724 rui.c:1095
+#: editor.c:724
+#: rui.c:1095
 msgid "Clear console"
 msgstr "Очистить консоль"
 
@@ -516,7 +562,8 @@ msgstr "Найти..."
 msgid "Replace..."
 msgstr "Заменить..."
 
-#: editor.c:736 rui.c:1099
+#: editor.c:736
+#: rui.c:1099
 msgid "GUI preferences..."
 msgstr "Настройки интерфейса..."
 
@@ -540,13 +587,19 @@ msgstr "Не могу открыть файл для чтения"
 msgid "Untitled"
 msgstr "Безымянный"
 
-#: extra.c:862 ../extra/graphapp/dialogs.c:484 ../extra/graphapp/dialogs.c:603
+#: extra.c:862
+#: ../extra/graphapp/dialogs.c:484
+#: ../extra/graphapp/dialogs.c:603
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:863 ../extra/graphapp/dialogs.c:464 ../extra/graphapp/dialogs.c:482
-#: ../extra/graphapp/dialogs.c:488 ../extra/graphapp/dialogs.c:587
-#: ../extra/graphapp/dialogs.c:601 ../extra/graphapp/dialogs.c:607
+#: extra.c:863
+#: ../extra/graphapp/dialogs.c:464
+#: ../extra/graphapp/dialogs.c:482
+#: ../extra/graphapp/dialogs.c:488
+#: ../extra/graphapp/dialogs.c:587
+#: ../extra/graphapp/dialogs.c:601
+#: ../extra/graphapp/dialogs.c:607
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -558,23 +611,33 @@ msgstr "Ошибка открытия файла"
 msgid "Insufficient memory to display file in internal pager"
 msgstr "Не хватает памяти для отражения файла во внутреннем просмотрщике"
 
-#: pager.c:177 pager.c:189 pager.c:209 rui.c:228 rui.c:255
+#: pager.c:177
+#: pager.c:189
+#: pager.c:209
+#: rui.c:228
+#: rui.c:255
 msgid "No selection"
 msgstr "Нет выделения"
 
-#: pager.c:306 pager.c:436 pager.c:480
+#: pager.c:306
+#: pager.c:436
+#: pager.c:480
 msgid "Paste to console"
 msgstr "Вставить на консоль"
 
-#: pager.c:307 pager.c:441 pager.c:482
+#: pager.c:307
+#: pager.c:441
+#: pager.c:482
 msgid "Paste commands to console"
 msgstr "Вставить команды на консоль"
 
-#: pager.c:472 rui.c:1084
+#: pager.c:472
+#: rui.c:1084
 msgid "Save to File..."
 msgstr "Сохранить в файл..."
 
-#: pager.c:487 rui.c:1102
+#: pager.c:487
+#: rui.c:1102
 msgid "View"
 msgstr "Вид"
 
@@ -655,7 +718,8 @@ msgstr "Загрузить историю команд из"
 msgid "Save history in"
 msgstr "Сохранить историю команд в"
 
-#: rui.c:237 rui.c:246
+#: rui.c:237
+#: rui.c:246
 msgid "No text available"
 msgstr "Нет доступного текста"
 
@@ -692,11 +756,13 @@ msgstr "Подсказать команды"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Можно перетащить только файлы .R, .Rdata и .rda"
 
-#: rui.c:830 rui.c:1091
+#: rui.c:830
+#: rui.c:1091
 msgid "Paste commands only"
 msgstr "Вставить только команды"
 
-#: rui.c:831 rui.c:1040
+#: rui.c:831
+#: rui.c:1040
 msgid "Copy and paste"
 msgstr "Копировать и вставить"
 
@@ -704,7 +770,8 @@ msgstr "Копировать и вставить"
 msgid "Clear window"
 msgstr "Очистить окно"
 
-#: rui.c:837 rui.c:1116
+#: rui.c:837
+#: rui.c:1116
 msgid "Buffered output"
 msgstr "Буферизованный вывод"
 
@@ -744,7 +811,8 @@ msgstr "ЧаВО по R"
 msgid "FAQ on R for &Windows"
 msgstr "ЧаВО по R для Windows"
 
-#: rui.c:925 rui.c:928
+#: rui.c:925
+#: rui.c:928
 msgid "Manuals (in PDF)"
 msgstr "Руководства (в PDF)"
 
@@ -869,7 +937,6 @@ msgid "Remove all objects"
 msgstr "Удалить все объекты"
 
 #: rui.c:1128
-#, fuzzy
 msgid "List search &path"
 msgstr "Отразить путь поиска"
 
@@ -902,15 +969,19 @@ msgstr "базовое меню не существует"
 msgid "failed to allocate menu"
 msgstr "не получилось разместить меню"
 
-#: rui.c:1354 rui.c:1478
+#: rui.c:1354
+#: rui.c:1478
 msgid "menu + item is limited to 1000 bytes"
 msgstr "меню + пункт меню ограничены: 1000 знаков"
 
-#: rui.c:1362 rui.c:1445
+#: rui.c:1362
+#: rui.c:1445
 msgid "menu does not exist"
 msgstr "меню не существует"
 
-#: rui.c:1380 rui.c:1403 rui.c:1408
+#: rui.c:1380
+#: rui.c:1403
+#: rui.c:1408
 msgid "failed to allocate char storage"
 msgstr "не получилось разместить хранилище знаков"
 
@@ -930,11 +1001,13 @@ msgstr "меню или пункт меню не существует"
 msgid "Save workspace image?"
 msgstr "Сохранить рабочее пространство?"
 
-#: ../extra/graphapp/clipboard.c:69 ../extra/graphapp/clipboard.c:73
+#: ../extra/graphapp/clipboard.c:69
+#: ../extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "Мало памяти: ячейки не скопировались в буфер"
 
-#: ../extra/graphapp/dialogs.c:125 ../extra/graphapp/dialogs.c:142
+#: ../extra/graphapp/dialogs.c:125
+#: ../extra/graphapp/dialogs.c:142
 #: ../extra/graphapp/dialogs.c:159
 msgid "Question"
 msgstr "Вопрос"
@@ -956,7 +1029,8 @@ msgstr "Пользователь"
 msgid "Password"
 msgstr "Пароль"
 
-#: ../extra/graphapp/dialogs.c:762 ../extra/graphapp/dialogs.c:768
+#: ../extra/graphapp/dialogs.c:762
+#: ../extra/graphapp/dialogs.c:768
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" не найден"
@@ -1177,65 +1251,48 @@ msgstr "Следующая страница: щелкните или нажмите ENTER "
 
 #~ msgid "Png files (*.png)"
 #~ msgstr "PNG-файлы (*.png)"
-
 #~ msgid "Windows bitmap files (*.bmp)"
 #~ msgstr "Растровые файлы Windows (*.bmp)"
 
 #, fuzzy
 #~ msgid "TIFF files (*.tiff,*tif)"
 #~ msgstr "Файлы PDF (*.pdf)"
-
 #~ msgid "Jpeg files (*.jpeg,*jpg)"
 #~ msgstr "Файлы JPEG (*.jpeg, *.jpg)"
-
 #~ msgid "Metafile..."
 #~ msgstr "Метафайл..."
-
 #~ msgid "Postscript..."
 #~ msgstr "PostScript..."
-
 #~ msgid "PDF..."
 #~ msgstr "PDF..."
-
 #~ msgid "Png..."
 #~ msgstr "PNG..."
-
 #~ msgid "Bmp..."
 #~ msgstr "BMP..."
 
 #, fuzzy
 #~ msgid "TIFF..."
 #~ msgstr "PDF..."
-
 #~ msgid "Jpeg"
 #~ msgstr "JPEG..."
-
 #~ msgid "Choose a folder"
 #~ msgstr "Выбрать папку"
-
 #~ msgid "Browse"
 #~ msgstr "Просмотр"
-
 #~ msgid "Load image"
 #~ msgstr "Загрузить образ"
-
 #~ msgid "Save image"
 #~ msgstr "Сохранить образ"
-
 #~ msgid "Apply"
 #~ msgstr "Применить"
-
 #~ msgid "Save..."
 #~ msgstr "Сохранить..."
-
 #~ msgid "Load..."
 #~ msgstr "Загрузить..."
-
 #~ msgid "75% quality..."
 #~ msgstr "Качество 75%..."
-
 #~ msgid "100% quality..."
 #~ msgstr "Качество 100%..."
-
 #~ msgid "Select working directory"
 #~ msgstr "Выбрать рабочую папку"
+

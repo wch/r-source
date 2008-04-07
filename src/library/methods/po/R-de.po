@@ -1,15 +1,15 @@
-# Translation of src//src/library/methods/po/R-methods.pot
-# to german
-# Copyright (C) 2005-2007 The R Foundation
+# Translation of src/library/methods/po/R-methods.pot
+# to German
+# Copyright (C) 2005-2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.1\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:49\n"
-"PO-Revision-Date: 2007-11-29 12:14\n"
-"Last-Translator: Dr. Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
+"PO-Revision-Date: 2008-04-06 19:08+0200\n"
+"Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -218,7 +218,7 @@ msgid "no method defined for function \"%s\" and signature %s"
 msgstr "keine Methode für Funktion \"%s\" und Signatur %s definiert"
 
 msgid "'file' must be a character string or a connection"
-msgstr ""
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "No method found for signature %s"
 msgstr "Keine Methode für Signatur %s gefunden"
@@ -264,11 +264,8 @@ msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr ""
 "\"%s\" ist keine generische Funktion in \"%s\"; Methoden nicht entfernt"
 
-#, fuzzy
 msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
-msgstr ""
-"kann vorhergehende Version von \"%s\" in gesicherter/m Umgebung/Paket \"%s\" "
-"nicht wiederherstellen"
+msgstr "kann methoden von \"%s\" aus gesicherter/m Umgebung/Paket \"%s\" nicht entfernen"
 
 msgid "restoring default function definition of \"%s\""
 msgstr "stelle Standardfunktionsdefinitionen für \"%s\" wieder her"
@@ -299,16 +296,13 @@ msgstr ""
 "werden"
 
 msgid "expected a non-empty character string for argument name"
-msgstr ""
+msgstr "erwarte nicht-leere Zeichenkette als Argumentnamen"
 
-#, fuzzy
 msgid "generic function supplied was not created for \"%s\""
-msgstr "keine generische Funktion für \"%s\" gefunden"
+msgstr "angegebene generische Funktion für \"%s\" nicht gefunden"
 
-#, fuzzy
 msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
-msgstr ""
-"\"class\" ist ein reservierter Slotname und kann nicht umdefiniert werden"
+msgstr "\"%s\" ist eine primitive, generische Funktion und kann nicht umdefiniert werden"
 
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
@@ -331,26 +325,24 @@ msgstr ""
 "Es existiert eine implizite Generische für \"%s\", wird aber durch "
 "expliziten Aufruf von setGeneric() überschrieben"
 
-#, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
 msgstr ""
-"Argument 'classDef' muss eine Zeichenkette oder eine Klassenrepresentation "
-"sein; bekam ein Objekt aus Klasse \"%s\""
+"Argument \"f\" muss eine generische Funktion oder eine Zeichenkette sein;\n"
+" bekam ein Objekt aus Klasse \"%s\""
 
-#, fuzzy
 msgid "non-generic function given to findMethods()"
-msgstr "keine nicht-generische Funktion \"%s\" gefunden"
+msgstr "nicht-generische Funktion an findMethods() übergeben"
 
 msgid "Only FALSE meaningful for inherited, when where is supplied (got"
-msgstr ""
+msgstr "Nur FALSE sinnvoll für Vererbung, wenn Ort angegeben (bekam"
 
 msgid "\""
 msgstr "\""
 
 msgid "f does not correspond to a generic function and package not specified"
-msgstr ""
+msgstr "f Korrespondiert nicht mit einer generischen Funktion und Paket nicht angegeben"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -441,7 +433,6 @@ msgstr ""
 "in der Methodensignatur für Funktion \"%s\" unzulässige Argumentnamen in der "
 "Signatur %s"
 
-#, fuzzy
 msgid "No generic function found corresponding to \"%s\""
 msgstr "keine generische Funktion für \"%s\" gefunden"
 
@@ -786,7 +777,7 @@ msgid "no generic function found for \"%s\""
 msgstr "keine generische Funktion für \"%s\" gefunden"
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
+msgstr "Leerer Funktionsname in .getGeneric"
 
 msgid ""
 "the methods object name for \"%s\" must include the name of the package that "
@@ -896,6 +887,8 @@ msgid ""
 "\" is not a known action (warn, stop, once, ignore); no action recorded for "
 "function \""
 msgstr ""
+"\" ist keine bekannte Aktion (warn, stop, once, ignore); keine Aktion aufgenommen für\n"
+"function \""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
@@ -1062,13 +1055,12 @@ msgstr ""
 "Klasse \"%s\" ist eine Klassenvereinigung; 'coerce' Relationen in eine "
 "Klassenvereinigung ergeben keinen Sinn"
 
-#, fuzzy
 msgid ""
 "'as' method should have one argument, or match the arguments of coerce(): "
 "got  (%s)"
 msgstr ""
-"'as' Methode muss ein oder zwei Argumente haben, zusätzlich optional "
-"'strict'; bekam (%s)"
+"'as' Methode sollte ein Argument haben oder mit coerce() übereinstimmen:\n"
+" bekam (%s)"
 
 msgid ""
 "a 'replace' method definition in 'setAs' must be a function of two "
@@ -1278,16 +1270,14 @@ msgid "; gnames ="
 msgstr ": gnames ="
 
 msgid "Something weird:  inconsistent number of args in methods table strings:"
-msgstr ""
+msgstr "Seltsam: inkonsistente Anzahl Methoden in den Methodentabellenzeichenketten:"
 
 msgid "(using the largest value)"
-msgstr ""
+msgstr "(nutze größten Wert)"
 
-#, fuzzy
 msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
-msgstr ""
-"Konnte keine Methodentabelle für \"%s\" finden, Paket \"%s\" evtl. veraltet"
+msgstr "keine Methodentabelle für generische \"%s\" aus  Paket \"%s\" in paket \"%s\""
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1313,9 +1303,8 @@ msgstr ""
 "Argument 'Classes' muss ein Vektor aus zwei Klassen sein: bekam Argument der "
 "Länge %d"
 
-#, fuzzy
 msgid "Created a package name, \"%s\", when none found"
-msgstr "kein Paketname: \"%s\""
+msgstr "Erzeuge Paketnamen, \"%s\", da keinen gefunden"
 
 msgid "no definition of class \"%s\" found"
 msgstr "keine Definition der Klasse \"%s\" gefunden"
@@ -1421,14 +1410,11 @@ msgstr "\" ist gesichert; nutze die Basisumgebung für die neue Klasse"
 msgid "not a package name: \"%s\""
 msgstr "kein Paketname: \"%s\""
 
-#, fuzzy
 msgid "apparently bad method or class metadata in saved environment;"
-msgstr ""
-"anscheinend unbrauchbare Methoden- oder Klassenmetadaten in gespeicherter "
-"Umgebung; bitte Datei verschieben oder Klasse bzw. Methode entfernen"
+msgstr "anscheinend unbrauchbare Methode oder Klassenmetadaten in gespeicherter Umgebung"
 
 msgid "move the file or remove the class/method"
-msgstr ""
+msgstr "verschiebe die Datei oder entferne die Klasse/Methode"
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""

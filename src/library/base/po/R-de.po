@@ -1,14 +1,14 @@
-# Translation of R-base.po to german
-# Copyright (C) 2005 The R Foundation
+# Translation of src/library/base/R-base.pot to German
+# Copyright (C) 2005-2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:48\n"
-"PO-Revision-Date: 2007-10-11 18:00+02:00\n"
+"PO-Revision-Date: 2008-04-06 18:07+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 msgid "'%s' is defunct."
-msgstr "'%s' ist außer Funktion."
+msgstr "'%s' ist nicht mehr gültig."
 
 msgid "Use '%s' instead."
 msgstr "Benutzen Sie stattdessen '%s'"
@@ -297,7 +297,7 @@ msgid "non-existent rows not allowed"
 msgstr "nicht existierende Zeilen sind nicht erlaubt"
 
 msgid "column name \"\" cannot match any column"
-msgstr ""
+msgstr "Spaltenname \"\" passt nicht auf jede Spalte"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "neue Spalten würden hinter den existierenden Spalten Lücken erzeugen"
@@ -365,9 +365,8 @@ msgstr "nur für einen data frame definiert, mit nur nummerischen Variablen"
 msgid "character string is not in a standard unambiguous format"
 msgstr "Zeichenkette ist nicht in einem eindeutigen Standardformat"
 
-#, fuzzy
 msgid "'origin' must be supplied"
-msgstr "'from' muss angegeben werden"
+msgstr "'origin' muss angegeben werden"
 
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "weiss nicht, wie '%s' in Klasse \"Date\" umgewandelt wird"
@@ -453,27 +452,23 @@ msgstr "weiss nicht, wie '%s' in Klasse \"POSIXlt\" umgewandelt wird"
 msgid "wrong class"
 msgstr "falsche Klasse"
 
-#, fuzzy
 msgid "binary '+' is not defined for \"POSIXt\" objects"
-msgstr "binäres + ist für \"POSIXt\" Objekte nicht definiert"
+msgstr "binäres '+' ist für \"POSIXt\" Objekte nicht definiert"
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "kann von POSIXt Objekten nur subtrahieren"
 
-#, fuzzy
 msgid "unary '-' is not defined for \"POSIXt\" objects"
-msgstr "unäres - ist für \"POSIXt\" Objekte nicht definiert"
+msgstr "unäres '-' ist für \"POSIXt\" Objekte nicht definiert"
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "kann nur Zahlen von \"POSIXt\" Objekten subtrahieren"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"POSIXt\" objects"
-msgstr "unäres - ist für \"POSIXt\" Objekte nicht definiert"
+msgstr "unäres '%s' ist für \"POSIXt\" Objekte nicht definiert"
 
-#, fuzzy
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr "nicht definiert für \"POSIXt\" Objekte"
+msgstr "'%s' nicht definiert für \"POSIXt\" Objekte"
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "'tzone' Attribute sind inkonsistent"
@@ -487,13 +482,11 @@ msgstr "benötige explizite Einheiten für nummerische Konversion"
 msgid "invalid units specified"
 msgstr "ungültige Einheiten spezifiziert"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr "nicht definiert für \"difftime\" Objekte"
+msgstr "unäres '%s' nicht definiert für \"difftime\" Objekte"
 
-#, fuzzy
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr "nicht definiert für \"difftime\" Objekte"
+msgstr "'%s' nicht definiert für \"difftime\" Objekte"
 
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr "es können nicht beide Argumente von * \"difftime\" Objekte sein"
@@ -616,17 +609,14 @@ msgstr "keine Dateien, um davon zu linken"
 msgid "no files/directory to link to"
 msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
 
-#, fuzzy
 msgid "'x' must be have length 1"
-msgstr "'input' muss Länge 1 haben"
+msgstr "'x' muss Länge 1 haben"
 
-#, fuzzy
 msgid "invalid digits"
 msgstr "ungültige 'digits'"
 
-#, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
-msgstr "kann nicht in eine Tabelle umwandeln"
+msgstr "'x' kann nicht in 'octmode' umgewandelt werden"
 
 msgid "'package' must be of length 1"
 msgstr "'package' muss Länge 1 haben"
@@ -693,9 +683,8 @@ msgstr "unbekannte Komponenten in der match-distance Matrix ignoriert"
 msgid "'max.distance' components must be non-negative"
 msgstr "'max.distance' Komponenten dürfen nicht negativ sein"
 
-#, fuzzy
 msgid "triangular matrix should be square"
-msgstr "Matrix sollte quadratisch sein"
+msgstr "Dreiecks-Matrix sollte quadratisch sein"
 
 msgid "'object' must be a list"
 msgstr "'object' muss eine Liste sein"
@@ -1040,9 +1029,8 @@ msgstr "in '%s' sind Klassen nicht für den Export definiert: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "in '%s' sind Methoden nicht für den Export definiert: %s"
 
-#, fuzzy
 msgid "Multiple methods tables found for '"
-msgstr "Multiple Methodenlisten gefunden für '"
+msgstr "Multiple Methodentabellen gefunden für '"
 
 msgid "'"
 msgstr "'"
@@ -1094,7 +1082,7 @@ msgid "invalid import target"
 msgstr "ungültiges Ziel für Import"
 
 msgid "got invalid index for importing"
-msgstr ""
+msgstr "ungültigen Index für Import bekommen "
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
@@ -1107,7 +1095,6 @@ msgstr "verlangte 'methods' Objekte nicht gefunden in Umgebung/Paket '%s': %s"
 msgid "cannot add to exports of a sealed name space"
 msgstr "kann keine Exporte von versiegeltem Namensraum hinzufügen"
 
-#, fuzzy
 msgid "undefined exports:"
 msgstr "nicht definierte Exporte :"
 
@@ -1198,9 +1185,8 @@ msgstr "'k' ist zu groß"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 
-#, fuzzy
 msgid "'x' must be an atomic vector"
-msgstr "'x' muss ein Vektor sein"
+msgstr "'x' muss ein atomarer Vektor sein"
 
 msgid "invalid 'rle' structure"
 msgstr "ungültige 'rle' Struktur"

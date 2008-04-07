@@ -1,17 +1,17 @@
 # Russian translation of R package
 # Русский перевод пакета R
 #
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2007
+# Alexey Shipunov <dactylorhiza at gmail> 2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-02-08 14:26\n"
-"PO-Revision-Date: 2007-09-18 00:11-0800\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2008-04-06 23:48-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -19,8 +19,7 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a' отвергнут в пользу 'reg'"
@@ -65,12 +64,10 @@ msgid "'height' must be a vector or a matrix"
 msgstr "'height' должен быть вектором или матрицей"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr ""
-"Не могу затенять линии в столбиках, если используется логарифмическая шкала"
+msgstr "Не могу затенять линии в столбиках, если используется логарифмическая шкала"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr ""
-"Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
+msgstr "Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
 msgstr "Ошибка логарифмической шкалы: 'xlim' <= 0"
@@ -94,9 +91,7 @@ msgid "invalid boxplot widths"
 msgstr "неправильные ширины у ящиков-с-усами"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr ""
-"некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать "
-"notch=FALSE"
+msgstr "некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' должна определять в точности две переменные"
@@ -108,8 +103,7 @@ msgid "explanatory variable should be numeric"
 msgstr "независимая переменная должна быть числовой"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
-"ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
+msgstr "ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
 
 msgid "no 'z' matrix specified"
 msgstr "не указана матрица 'z'"
@@ -202,8 +196,7 @@ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-"некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
+msgstr "некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
 msgstr "Неправильные AREAS на графике -- используйте лучше freq=FALSE"
@@ -233,9 +226,7 @@ msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "размерность z не является произведением length(x)(-1) на length(y)(-1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr ""
-"'respect' должен быть логическим или матрицей с той же размерностью, что и "
-"'mat'"
+msgstr "'respect' должен быть логическим или матрицей с той же размерностью, что и 'mat'"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -269,11 +260,10 @@ msgid "'x' and 'y' must have same number of rows"
 msgstr "'x' и 'y' должны иметь одинаковое количество строк"
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
-msgstr ""
-"'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
+msgstr "'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr ""
+msgstr "умалчиваемое значение 'pch' меньше количества колонок и поэтому повторяется"
 
 msgid "missing values in contingency table"
 msgstr "пропущенные значения в таблице сопряженности"
@@ -357,8 +347,7 @@ msgid "a 2-way table has to be specified"
 msgstr "надо указать двумерную таблицу"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr ""
-"ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
+msgstr "ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x' должен быть матрицей или таблицей данных"
@@ -393,9 +382,8 @@ msgstr "неправильный метод рисования"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' должен иметь длина длину равную числу %d групп"
 
-#, fuzzy
 msgid "formula missing or incorrect"
-msgstr "'formula' пропущена или неправильная"
+msgstr "формула пропущена или неправильная"
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' должен иметь ту же длину, что и 'x' и 'y'"
@@ -426,3 +414,4 @@ msgstr[2] "аргументы %s не для использования"
 
 #~ msgid "argument 'col' is deprecated in favour of 'boxfill'"
 #~ msgstr "аргумент 'col' не одобряется, пользуйтесь 'boxfill'"
+

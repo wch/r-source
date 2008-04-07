@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:50\n"
+"POT-Creation-Date: 2008-04-07 08:26\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1672,6 +1672,10 @@ msgstr "número de grupos insuficiente"
 msgid "bounds can only be used with method L-BFGS-B"
 msgstr "limites só podem ser usados com o método L-BFGS-B"
 
+#, fuzzy
+msgid "unknown names in control:"
+msgstr "kernel nomeado desconhecido"
+
 msgid "read the documentation for 'trace' more carefully"
 msgstr "leia a documentação de 'trace' com mais cuidado"
 
@@ -1683,6 +1687,9 @@ msgstr ""
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr ""
 "optimização unidimensional por Nelder-Mead não é confiável: use optimize"
+
+msgid "Pooling of SD is incompatible with paired tests"
+msgstr ""
 
 msgid "'x' must have 2 columns"
 msgstr "'x' deve ter 2 colunas"
