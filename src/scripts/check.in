@@ -2445,6 +2445,7 @@ sub check_pkg {
 		}
 		$log->checking("\U$fmt\E version of manual");
 		my $cmd;
+		my $build_dir = R_tempfile("Rd2dvi");
 		if($WINDOWS) {
 		    $cmd = join(" ",
 				("Rcmd.exe Rd2dvi $Rd2dvi_opts",
@@ -2454,31 +2455,34 @@ sub check_pkg {
 		    $cmd = join(" ",
 				(&shell_quote_file_path("${R::Vars::R_EXE}"),
 				 "CMD Rd2dvi --batch --no-preview",
+				 "--build-dir=${build_dir} --no-clean",
 				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
 				 "$pkgdir"));
 		}
-		## <NOTE>
-		## This is identical to the latex_dir case: maybe merge
-		## eventually?
 		if(R_system($cmd)) {
 		    $log->error();
 		    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    ## If possible, indicate the problems found.
-		    if(-f "${pkgname}-manual.log") {
-			my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${pkgname}-manual.log\"))";
-			my @out = R_runR($Rcmd, "${R_opts} --quiet",
-					 "R_DEFAULT_PACKAGES=NULL");
-			@out = grep(!/^\>/, @out);
-			if(scalar(@out) > 0) {
-			    $log->print("LaTeX errors found:\n");
-			    $log->print(join("\n", @out) . "\n");
+		    if(!$WINDOWS) {
+			my $latex_log = &file_path($build_dir, "Rd2.log");
+			## Note that Rd2dvi works on 'Rd2.tex'.
+			if(-f $latex_log) {
+			    my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${latex_log}\"))";
+			    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+					     "R_DEFAULT_PACKAGES=NULL");
+			    @out = grep(!/^\>/, @out);
+			    if(scalar(@out) > 0) {
+				$log->print("LaTeX errors found:\n");
+				$log->print(join("\n", @out) . "\n");
+			    }
 			}
+			rmtree($build_dir);			
 		    }
 		    exit(1);
 		}
+		rmtree($build_dir) if(!$WINDOWS);
 		$log->result("OK");
-		## </NOTE>
 	    }
 	}
     }
@@ -2490,7 +2494,7 @@ sub check_pkg {
     ## reference manual, as the above does not use makeindex.
     
     if($opt_latex && $ENV{"_R_CHECK_RD2DVI_DESCRIPTION_"}) {
-	my $Rd2dvi_opts = "--batch --no-preview --only-meta";
+	my $Rd2dvi_opts = "--batch --no-preview --no-clean --only-meta";
 	my $ext;
 	if($HAVE_PDFLATEX) {
 	    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
@@ -2498,32 +2502,37 @@ sub check_pkg {
 	} else {
 	    $ext = "dvi";
 	}
+	my $build_dir = R_tempfile("Rd2dvi");
 	$log->checking("\U$ext\E version of DESCRIPTION");	
 	my $cmd = join(" ",
 		       (&shell_quote_file_path("${R::Vars::R_EXE}"),
 			"CMD Rd2dvi $Rd2dvi_opts",
+			"--build-dir=${build_dir}",
 			"-o ${pkgname}-header.${ext} >/dev/null 2>&1",
 			"$pkgdir"));
 	if(R_system($cmd)) {
-	    ## This is certainly not perfect.
-	    ## R CMD Rd2dvi builds in a "random" subdirectory of the
-	    ## current working directory (.Rd2dvi${$}).  We could try
-	    ## keeping this (using --no-clean), getting the log file and
-	    ## then cleaning up.
-	    ## But in the very few cases this causes a problem, we can
-	    ## simply run R CMD Rd2dvi --no-clean on the whole package
-	    ## sources.
-	    ## Ideally, we would improve/refactor Rd2dvi so that we can
-	    ## directly call the code for converting DESCRIPTION files
-	    ## to LaTeX.
 	    $log->warning();
 	    $log->print("Problems when creating \U$ext\E version of DESCRIPTION.");
+	    ## If possible, indicate the problems found.
+	    my $latex_log = &file_path($build_dir, "Rd2.log");
+	    ## Note that Rd2dvi works on 'Rd2.tex'.
+	    if(-f $latex_log) {
+		my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${latex_log}\"))";
+		my @out = R_runR($Rcmd, "${R_opts} --quiet",
+				 "R_DEFAULT_PACKAGES=NULL");
+		@out = grep(!/^\>/, @out);
+		if(scalar(@out) > 0) {
+		    $log->print("LaTeX errors found:\n");
+		    $log->print(join("\n", @out) . "\n");
+		}
+	    }
 	}
 	else {
 	    $log->result("OK");
 	}
+	rmtree($build_dir);
     }
-	
+
 }
 
 

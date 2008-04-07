@@ -49,6 +49,7 @@ The output papersize is set by the environment variable R_PAPERSIZE.
 Report bugs to <r-bugs@r-project.org>."
 
 start_dir=`pwd`
+build_dir=".Rd2dvi${$}"
 
 batch=false
 clean=true
@@ -103,6 +104,8 @@ while test -n "${1}"; do
       OSdir=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     --encoding=*)
       enc=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+    --build-dir=*)
+      build_dir=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     -V|--verbose)
       verbose=${echo} ;;
     --|*)
@@ -241,7 +244,6 @@ if test -f ${output}; then
   ${echo} "file '${output}' exists; please remove first"
   exit 1
 fi
-build_dir=.Rd2dvi${$}
 if test -d ${build_dir}; then
   rm -rf ${build_dir} || echo "cannot write to build dir" && exit 2
 fi
