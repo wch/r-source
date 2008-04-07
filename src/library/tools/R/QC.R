@@ -3065,7 +3065,8 @@ function(dfile)
             }
             if(nzchar(sub(dep_regexp, "\\2", dep))) {
                 ## If not just a valid package name ...
-                if(!sub(dep_regexp, "\\3", dep) %in% c("<=", ">="))
+                if(!sub(dep_regexp, "\\3", dep) %in%
+                   c("<=", ">=", "<", ">", "==", "!="))
                     bad_dep_op <- c(bad_dep_op, dep)
                 else if(regexpr(sprintf("^%s$",
                                         valid_package_version_regexp),

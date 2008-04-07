@@ -119,14 +119,14 @@ function(db, verbose = FALSE)
     ## might perhaps have multiple entries
     Depends <- .split_dependencies(db[names(db) %in% "Depends"])
     if("R" %in% names(Depends)) {
-        if(verbose && sum("R" == names(Depends)) > 1) {
-            entries <- Depends["R" == names(Depends)]
-            entries <- lapply(entries, function(x)
-                paste(lapply(x, as.character), collapse="")
-            )
-            message("WARNING: 'Depends' entry has multiple dependencies: ",
+        Rdeps2 <- Depends["R" == names(Depends)]
+        names(Rdeps2) <- NULL
+        if(verbose && length(Rdeps2)> 1L) {
+            entries <- lapply(Rdeps2, function(x)
+                paste(lapply(x, as.character), collapse=""))
+            message("WARNING: 'Depends' entry has multiple dependencies on R: ",
                     paste(unlist(entries), collapse=', '),
-                    "\n\tonly the first will be used")
+                    "\n\tonly the first will be used in R < 2.7.0")
         }
         Rdeps <- Depends[["R", exact = TRUE]] # the first one
         Depends <- Depends[names(Depends) != "R"]
@@ -134,11 +134,12 @@ function(db, verbose = FALSE)
         if(verbose && length(Rdeps) == 1)
              message("WARNING: omitting pointless dependence on 'R' without a version requirement")
         if(length(Rdeps) <= 1) Rdeps <- NULL
-    } else Rdeps <- NULL
+    } else Rdeps2 <- Rdeps <- NULL
     Rdeps <- as.vector(Rdeps)
     Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
     Imports <- .split_dependencies(db[names(db) %in% "Imports"])
-    structure(list(DESCRIPTION = db, Built = Built, Rdepends = Rdeps,
+    structure(list(DESCRIPTION = db, Built = Built,
+                   Rdepends = Rdeps, Rdepends2 = Rdeps2,
                    Depends = Depends, Suggests = Suggests,
                    Imports = Imports),
               class = "packageDescription2")
@@ -478,7 +479,7 @@ function(dir, outDir)
             sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
         setwd(cwd)
     }
-    
+
     if(!hasHtmlIndex)
         .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
 
@@ -764,34 +765,37 @@ function(dir)
 {
     if(missing(dir)) dir <- "."
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
-    depends <- .split_description(meta, verbose = TRUE)$Rdepends
+    deps <- .split_description(meta, verbose = TRUE)$Rdepends2
     status <- 0
-    ## .split_description will have ensured that this is NULL or
-    ## of length 3.
-    if(length(depends) > 1) {
-        ## .check_package_description will insist on these operators
-        if(!depends$op %in% c("<=", ">="))
-            message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
-        else
-            status <- !do.call(depends$op,
-                               list(getRversion(), depends$version))
-        if(status != 0) {
-            package <- Sys.getenv("R_PACKAGE_NAME")
-            if(!nzchar(package))
-                package <- meta["Package"]
-            if(nzchar(package))
-                msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
-                                getRversion(), package,
-                                depends$op, depends$version)
-            else if (nzchar(bundle <-  meta["Bundle"]) && !is.na(bundle))
-                msg <- gettextf("ERROR: this R is version %s, bundle '%s' requires R %s %s",
-                                getRversion(), bundle,
-                                depends$op, depends$version)
+    current <- getRversion()
+    for(depends in deps) {
+        ## .split_description will have ensured that this is NULL or
+        ## of length 3.
+        if(length(depends) > 1L) {
+            ## .check_package_description will insist on these operators
+            if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!="))
+                message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
             else
-                msg <- gettextf("ERROR: this R is version %s, required is R %s %s",
-                                getRversion(),
-                                depends$op, depends$version)
-            message(strwrap(msg, exdent = 2))
+                status <- !do.call(depends$op,
+                                   list(current, depends$version))
+            if(status != 0) {
+                package <- Sys.getenv("R_PACKAGE_NAME")
+                if(!nzchar(package))
+                    package <- meta["Package"]
+                if(nzchar(package))
+                    msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
+                                    current, package,
+                                    depends$op, depends$version)
+                else if (nzchar(bundle <-  meta["Bundle"]) && !is.na(bundle))
+                    msg <- gettextf("ERROR: this R is version %s, bundle '%s' requires R %s %s",
+                                    current, bundle,
+                                    depends$op, depends$version)
+                else
+                    msg <- gettextf("ERROR: this R is version %s, required is R %s %s",
+                                    current, depends$op, depends$version)
+                message(strwrap(msg, exdent = 2L))
+                break
+            }
         }
     }
     q(status = status)

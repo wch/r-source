@@ -299,11 +299,21 @@ NEW FEATURES
     o	optim(*, control = list(...)) now warns when '...' contains
 	unexpected names, instead of silently ignoring them.
 
-    o   pairwise.t.test() and pairwise.wilcox.test() now more explicitly
-        allow paired tests. In the former case it is now flagged as an 
-        error if both 'paired' and 'pool.SD' are set TRUE (formerly,
-        'paired' was silently ignored), and one-sided tests are generated
-        according to 'alternative' also if 'pool.SD' is TRUE.
+    o	Dependence specifications for R or packages in the Depends
+    	field in a DESCRIPTION file can now make use of operators 
+	< > == and != (in addition to <= and >=): such packages will
+	be loadable into R >= 2.0.0 but not installable in R < 2.7.0.
+
+	There can be multiple mentions of R or a package in the Depends
+	field in a DESCRIPTION file: only the first mention will be
+	used in R < 2.7.0 (and so it is safe to use the additional
+	operators in examples like  'R (>= 2.0.0), R (< 2.7.0), MASS').
+
+    o	pairwise.t.test() and pairwise.wilcox.test() now more explicitly
+	allow paired tests. In the former case it is now flagged as an
+	error if both 'paired' and 'pool.SD' are set TRUE (formerly,
+	'paired' was silently ignored), and one-sided tests are generated
+	according to 'alternative' also if 'pool.SD' is TRUE.
 
 
 GRAPHICS CHANGES
