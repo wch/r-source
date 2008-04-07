@@ -39,9 +39,6 @@
 #endif
 
 #include <CoreFoundation/CoreFoundation.h>
-/* FIXME: unused at present
-#include <Carbon/Carbon.h>
-*/
 
 #define QBE_NATIVE   1  /* either Cocoa or Carbon depending on the OS X version */
 #define QBE_COCOA    2  /* internal Cocoa */
@@ -364,7 +361,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->canClip       = TRUE;
     dev->canHAdj       = 2;
     dev->canChangeGamma= FALSE;
-    dev->displayListOn = TRUE; /* reset later depending on type */
+    dev->displayListOn = (def->flags & QDFLAG_DISPLAY_LIST) ? TRUE : FALSE;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
@@ -393,7 +390,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 
     /* Re-set for bitmap devices later */
      dev->right = def->width*72.0;
-     dev->bottom= def->height*72.0;;
+     dev->bottom= def->height*72.0;
 
     qd->clipRect = CGRectMake(0, 0, dev->right, dev->bottom);
 
@@ -1052,7 +1049,6 @@ SEXP Quartz(SEXP args)
             case QBE_PDF:
 		qpar.canvas = 0; /* so not used */
                 succ = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
-		dev->displayListOn = FALSE;
                 break;
             case QBE_BITMAP:
 		/* we need to set up the default file name here, where we
@@ -1064,9 +1060,6 @@ SEXP Quartz(SEXP args)
 		}
 		qpar.canvas = 0; /* so not used */
 		succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
-		dev->displayListOn = FALSE;
-		dev->right = width * dpi[0];
-		dev->bottom = height * dpi[1];
 		break;
 	    }
 	}
