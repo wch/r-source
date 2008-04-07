@@ -357,7 +357,7 @@ function(primitive = TRUE) # primitive means 'include primitives'
 .get_namespace_package_depends <-
 function(dir)
 {
-    nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+    nsInfo <- .check_namespace(dir)
     depends <- c(sapply(nsInfo$imports, "[[", 1L),
                  sapply(nsInfo$importClasses, "[[", 1L),
                  sapply(nsInfo$importMethods, "[[", 1L))

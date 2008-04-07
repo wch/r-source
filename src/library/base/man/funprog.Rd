@@ -17,7 +17,7 @@
   \code{Filter} extracts the elements of a vector for which a predicate
   (logical) function gives true.  \code{Find} and \code{Position} give
   the first or last such element and its position in the vector,
-  respectively.  code{Map} applies a function to the corresponding
+  respectively.  \code{Map} applies a function to the corresponding
   elements of given vectors.  \code{Negate} creates the negation of a
   given function.
 }
