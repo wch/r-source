@@ -5504,12 +5504,11 @@ msgstr "行標記不够"
 msgid "too few column labels"
 msgstr "列標記不够"
 
-# needs %d
 #: src/main/printarray.c:522
-#, fuzzy, c-format
+#, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"
-msgstr[0] "[到达getOption(\"max.print\") -- 略过最后一行]]\n"
+msgstr[0] "[到达getOption(\"max.print\") -- 略过%d行]]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
