@@ -183,7 +183,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{\link{pdfFonts}}, \code{\link{pdf.options}},
   \code{\link{embedFonts}},
   \code{\link{Devices}},
-  \code{\link{postscript}}
+  \code{\link{postscript}}.
+#ifdef unix
+  \code{\link{cairo_pdf}} and (on Mac OS X only) \code{\link{quartz}}
+  for other devices that can produce PDF.
+#endif
 
   More details of font families and encodings and especially handling
   text in a non-Latin-1 encoding and embedding fonts can be found in

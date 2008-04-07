@@ -337,6 +337,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{\link{Devices}},
   {\code{\link{check.options}} which is called from both
     \code{\link{ps.options}} and \code{postscript}}.
+#ifdef unix
+  \code{\link{cairo_ps}} for another device that can produce PostScript.
+#endif
 
   More details of font families and encodings and especially handling
   text in a non-Latin-1 encoding and embedding fonts can be found in
