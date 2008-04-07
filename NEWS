@@ -742,6 +742,8 @@ BUG FIXES
     o	qgamma() and qchisq() could be inaccurate for small p,
     	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.
 
+    o	dbeta(.., ncp) is now more accurate for large ncp.
+
     o	coerce() is now a proper S4 object and so prints correctly.
 
     o	@ now checks it is being applied to an S4 object, and if not
