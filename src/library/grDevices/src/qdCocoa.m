@@ -553,7 +553,7 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParamet
 
     QuartzBackend_t qdef = {
 	sizeof(qdef), width, height, scalex, scaley, par->pointsize,
-	par->bg, par->canvas, par->flags | QDFLAG_INTERACTIVE,
+	par->bg, par->canvas, par->flags | QDFLAG_INTERACTIVE | QDFLAG_DISPLAY_LIST,
 	dev,
 	QuartzCocoa_GetCGContext,
 	QuartzCocoa_Locator,

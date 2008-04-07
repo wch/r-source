@@ -87,8 +87,8 @@ extern "C" {
 #define QNPF_REDRAW 0x0001 /* is set when NewPage really means re-draw of an existing page */
 
 /* flags passed to QuartzDevice_Create (as fs parameter) */
-#define QDFLAG_HISTORY     0x0001
-#define QDFLAG_INTERACTIVE 0x0002 
+#define QDFLAG_DISPLAY_LIST 0x0001
+#define QDFLAG_INTERACTIVE  0x0002 
 	
 /* for CGContextRef */
 #include <ApplicationServices/ApplicationServices.h>
