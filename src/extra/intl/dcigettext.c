@@ -1549,6 +1549,7 @@ guess_category_value (int category, const char *categoryname)
   if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
   if(strcmp(locale, "cht") == 0) locale = "zh_TW";
   if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
+  if(strcmp(locale, "german") == 0) locale = "de_DE";
   /* Vista has got a lot pickier, so e.g. 'LC_ALL=ru' does not work */
   if(strncmp(locale, "de", 2) == 0) locale = "de_DE";
   if(strcmp(locale, "esp") == 0) locale = "es_ES";
