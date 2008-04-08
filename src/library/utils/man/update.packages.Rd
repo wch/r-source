@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{update.packages}
@@ -63,7 +63,7 @@ contrib.url(repos, type = getOption("pkgType"))
     Can be \code{NULL} to install from local \file{.tar.gz} files.
 #endif
 #ifdef windows
-    Can be \code{NULL} to install from local \file{.zip} files.
+    Can be \code{NULL} to install from local files.
 #endif
   }
   \item{contriburl}{URL(s) of the contrib sections of the
@@ -74,7 +74,7 @@ contrib.url(repos, type = getOption("pkgType"))
     Can also be \code{NULL} to install from local \file{.tar.gz} files.
 #endif
 #ifdef windows
-    Can also be \code{NULL} to install from local \file{.zip} files.
+    Can also be \code{NULL} to install from local files.
 #endif
   }
   \item{method}{Download method, see \code{\link{download.file}}.}
@@ -82,7 +82,9 @@ contrib.url(repos, type = getOption("pkgType"))
     current versions should be downloaded from the repositories.
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
-    \file{.zip} files.
+    \file{.zip} files containing binary builds of packages.  With
+    suitable tools installed (see the \sQuote{Details} below) source directories
+    or \file{.tar.gz} archives may also be installed.
 #endif
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
@@ -161,7 +163,7 @@ contrib.url(repos, type = getOption("pkgType"))
 #ifdef windows
     Possible values are \code{"win.binary"} (the default) and
     \code{"source"} (for which suitable tools need to be installed: see
-    the \sQuote{rw-FAQ}).  Value \code{"mac.binary"} can be used to
+    the \sQuote{Details}).  Value \code{"mac.binary"} can be used to
     explore and download Mac OS X binaries.
 #endif
   }
@@ -250,12 +252,6 @@ contrib.url(repos, type = getOption("pkgType"))
   Note section.
 #endif
   
-%  The first argument can be an unquoted name, as in
-%  \code{install.packages(nlme)}.
-#ifdef windows
-  Argument \code{pkgs} can also be a character vector of file names of
-  zip files if \code{repos = NULL}. The zip files are then unpacked directly.
-#endif
 #ifdef unix
   If a repository is used (rather than local \file{.tar.gz} files),
   an attempt is made to install the packages in an order that respects
@@ -276,6 +272,14 @@ contrib.url(repos, type = getOption("pkgType"))
   If \code{repos} or \code{contriburl} is a vector of length greater than
   one, the newest version of the package compatible with this version of \R
   is fetched from the first repository on the list within which it is found.
+#ifdef windows
+
+  In order to install packages with \code{type="source"} on Windows,
+  you will need to have installed the Rtools collection as described
+  in the \sQuote{rw-FAQ}.  You must have the \code{PATH} set up as
+  required by the Rtools, and if you are installing from local source
+  files, the paths to them should not contain spaces.
+#endif
 }
 \value{
   For \code{available.packages}, a matrix

@@ -195,6 +195,9 @@ PACKAGE INSTALLATION
 	entry points in R.dll will need to be modified to include
 	$(ZLIB_LIBS) in PKG_LIBS.
 
+    o	install.packages() now handles type="source", repos=NULL
+        installs.
+
 
 OTHERS
 
