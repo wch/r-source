@@ -13,7 +13,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
-Copyright (C) 2000-2006 The R Core Development Team.
+Copyright (C) 2000-2008 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty." 
 
@@ -27,6 +27,10 @@ Unless specified via option '--output', the basename of the output file
 equals the basename of argument 'files' if this specifies a package
 (bundle) or a single file, and 'Rd2' otherwise.
 
+The Rd sources are assumed to be ASCII unless they contain \encoding
+declarations (which take priority) or --encoding is supplied or if using
+package sources, if the package DESCRIPTION file has an Encoding field.
+
 Options:
   -h, --help		print short help message and exit
   -v, --version		print Rd2dvi version info and exit
@@ -34,6 +38,7 @@ Options:
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
+      --encoding=enc    use 'enc' as the default encoding
       --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'
   -o, --output=FILE	write output to FILE
@@ -49,22 +54,28 @@ TEXINPUTS=.\;${R_HOME}/share/texmf\;${TEXINPUTS}
 export TEXINPUTS
 
 start_dir=`pwd`
+# pid is always 1000 on Windows sh.exe
+#build_dir=".Rd2dvi${$}"
+build_dir=".Rd2dvi$"
 
 batch=false
 clean=true
 debug=false
+only_meta=false
 out_ext="dvi"
 output=""
 preview=${xdvi-xdvi.bat}
 verbose=false
+enc=unknown
 OSdir=windows
+echo=echo
 
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
-      echo "${usage}"; exit 0 ;;
+      ${echo} "${usage}"; exit 0 ;;
     -v|--version)
-      echo "${version}"; exit 0 ;;
+      ${echo} "${version}"; exit 0 ;;
     --batch)
       batch=true ;;
     --debug)
@@ -79,21 +90,27 @@ while test -n "${1}"; do
       R_RD4DVI=${R_RD4PDF-"times,hyper"};
       R_LATEXCMD=${PDFLATEX-pdflatex} ;;
     --title=*)
-      title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      title=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     -o)
-      if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED-sed} 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
-	echo "ERROR: option '${1}' requires an argument"
+	${echo} "ERROR: option '${1}' requires an argument"
 	exit 1
       fi
       ;;
+    --only-meta)
+      only_meta=true ;;
     --output=*)
-      output=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      output=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     --OS=*|--os=*)
-      OSdir=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      OSdir=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+    --encoding=*)
+      enc=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+    --build-dir=*)
+      build_dir=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
     -V|--verbose)
-      verbose=echo ;;
+      verbose=${echo} ;;
     --|*)
       break ;;
   esac
@@ -123,20 +140,24 @@ Rdconv_dir_or_files_to_LaTeX () {
   shift
 
   if test -d ${1}; then
-    files=`ls ${1}/*.[Rr]d`
-    if test -d ${1}/${OSdir}; then
-      files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
+    if ${only_meta}; then
+      files=
+    else  
+      files=`ls ${1}/*.[Rr]d`
+      if test -d ${1}/${OSdir}; then
+        files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
+      fi
+      files=`LC_ALL=C ${echo} ${files} | sort`
     fi
-    files=`LC_ALL=C echo ${files} | sort`
   else
     files="${@}"
   fi
 
-  echo "Converting Rd files to LaTeX ..."
+  ${only_meta} || echo "Converting Rd files to LaTeX ..."
 
   for f in ${files}; do
-    echo ${f}
-    ${R_CMD} Rdconv -t latex ${f} >> ${out}
+    ${echo} ${f}
+    ${R_CMD} Rdconv -t latex --encoding=${enc} ${f} >> ${out}
   done
 
 }
@@ -147,21 +168,25 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
   
-  fields=`sed '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
-  echo "\\begin{description}"
-  echo "\\raggedright{}"
-  for f in `echo "${fields}" | sed '/Package/d; /Bundle/d;'`; do
+  fields=`${SED-sed} '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
+  ${echo} "\\begin{description}"
+  ${echo} "\\raggedright{}"
+  for f in `${echo} "${fields}" | ${SED-sed} '/Package/d; /Bundle/d;'`; do
     text=`get_dcf_field ${f} ${1} | \
       tr '\n' ' ' | \
-      sed "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g"`
-    echo "\\item[${f}] \\AsIs{${text}}"
+      ${SED-sed} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
+                  s/\\\\\\\\/\\\\\\\\textbackslash /g
+                  s/{/\\\\\\\\{/g
+		  s/}/\\\\\\\\}/g"`
+    ${echo} "\\item[${f}] \\AsIs{${text}}"
   done
-  echo "\\end{description}"
+  ${echo} "\\end{description}"
 }
 
 is_bundle=no
 is_base_package=no
 file_sed='s/[_$]/\\&/g'
+pkg_enc=
 
 toc="\\Rdcontents{\\R{} topics documented:}"
 if test -d "${1}"; then
@@ -178,6 +203,7 @@ if test -d "${1}"; then
       title=${title-"Package \`${package_name}'"}
       dir=${1}/man
     fi
+    pkg_enc=`get_dcf_field Encoding "${1}/DESCRIPTION"`
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
   elif test -f ${1}/DESCRIPTION.in && \
        test -n "`grep '^Priority: *base' ${1}/DESCRIPTION.in`"; then
@@ -193,7 +219,7 @@ if test -d "${1}"; then
     else
       dir=${1}
     fi
-    subj0=`echo ${dir} | sed -e ${file_sed}`
+    subj0=`${echo} ${dir} | ${SED-sed} -e ${file_sed}`
     subj="all in \\file{${subj0}}"
   fi
 else
@@ -204,27 +230,31 @@ else
     toc=
     if test -z "${output}"; then
       output=`basename "${1}"`
-      output="`echo ${output} | sed 's/[Rr]d$//'`${out_ext}"
+      output="`echo ${output} | ${SED-sed} 's/[Rr]d$//'`${out_ext}"
     fi
   fi
-  subj0=`echo ${1} | sed -e ${file_sed}`
+  subj0=`${echo} ${1} | ${SED-sed} -e ${file_sed}`
   subj="\\file{${subj0}}${subj}"
 fi
 ## substitution went wrong under ash
 title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
 title=${title-$title1}
 
+if test "${enc}"="unknown"; then
+  if test -n "$pkg_enc"; then
+    enc=${pkg_enc}
+    ${verbose} "using package encoding ${enc}" 
+  fi
+fi
+
 ## Prepare for building the documentation.
 if test -z "${output}"; then
   output="Rd2.${out_ext}"
 fi
 if test -f ${output}; then
-  echo "file '${output}' exists; please remove first"
+  ${echo} "file '${output}' exists; please remove first"
   exit 1
 fi
-# pid is always 1000 on Windows sh.exe
-#build_dir=.Rd2dvi${$}
-build_dir=.Rd2dvi
 if test -d ${build_dir}; then
   rm -rf ${build_dir} || echo "cannot write to build dir" && exit 2
 fi
@@ -264,7 +294,7 @@ EOF
       R_version=`cat ${1}/../../../VERSION`
     fi
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION.in | \
-      sed "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
+      ${SED-sed} "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
   fi
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
@@ -286,7 +316,7 @@ fi
   
 ## Rd2.tex part 2: body
 if test "${is_bundle}" = no; then
-  echo ${toc} >> ${build_dir}/Rd2.tex
+  ${only_meta} || ${echo} ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
@@ -297,16 +327,16 @@ else
 \\pagenumbering{arabic}
 EOF
   for p in ${bundle_pkgs}; do
-    echo "Bundle package: '${p}'"
-    echo "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
+    ${echo} "Bundle package: '${p}'"
+    ${echo} "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
     if test -f ${1}/${p}/DESCRIPTION.in; then
       Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
         >> ${build_dir}/Rd2.tex
     fi
     Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
-    echo "\\clearpage{}" >> ${build_dir}/Rd2.tex
+    ${echo} "\\clearpage{}" >> ${build_dir}/Rd2.tex
   done
-  echo "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
+  ${echo} "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
 fi
 
 ## Rd2.tex part 3: footer
@@ -317,18 +347,19 @@ EOF
 
 ## Look for encodings
 ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
-  sed -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
+  ${SED-sed} -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
 ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
-  sed -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
-  tr '\na-z0-9' ',a-z0-9' | sed -e s/,$//`
+  ${SED-sed} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
+  tr '\na-z0-9' ',a-z0-9' | ${SED-sed} -e s/,$//`
+#echo "ENCS is ${ENCS}"
 
 ## substitute for the encodings used
 mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
 if test -z "${ENCS}"; then
-  sed -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
+  ${SED-sed} -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 else
-  sed -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
+  ${SED-sed} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 fi
 
@@ -353,14 +384,14 @@ if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 fi
 cd ${start_dir}
-echo "Saving output to '${output}' ..."
+${echo} "Saving output to '${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
 if ${clean}; then
   rm -rf ${build_dir}
 else
-  echo "You may want to clean up by 'rm -rf ${build_dir}'"
+  ${echo} "You may want to clean up by 'rm -rf ${build_dir}'"
 fi
 ${preview} ${output}
 exit ${status}

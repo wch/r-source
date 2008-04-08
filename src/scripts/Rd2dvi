@@ -338,7 +338,7 @@ ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
 ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
   ${SED-sed} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
   tr '\na-z0-9' ',a-z0-9' | ${SED-sed} -e s/,$//`
-echo "ENCS is ${ENCS}"
+#echo "ENCS is ${ENCS}"
 
 ## substitute for the encodings used
 mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
