@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
-"PO-Revision-Date: 2007-09-11 16:22+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2008-04-08 11:41\n"
+"PO-Revision-Date: 2008-04-04 15:20+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -292,9 +292,8 @@ msgstr " データフレームの添字による代入では、欠損値は許�
 msgid "non-existent rows not allowed"
 msgstr " 存在しない行は許されません "
 
-#, fuzzy
 msgid "column name \"\" cannot match any column"
-msgstr "列数よりも多くの列名があります "
+msgstr "列の名前\"\"はどの列にもマッチしません "
 
 msgid "new columns would leave holes after existing columns"
 msgstr " 新しい列は既存の列に穴を開けるかも知れません "
@@ -362,9 +361,8 @@ msgstr " すべてが数値変数のデータフレームに対してだけ定�
 msgid "character string is not in a standard unambiguous format"
 msgstr " 文字列は標準的な曖昧さのない書式にはなっていません "
 
-#, fuzzy
 msgid "'origin' must be supplied"
-msgstr " 'from' を指定しなければなりません "
+msgstr " 'origin' を指定しなければなりません "
 
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr " '%s' をクラス \"Date\" へ変換する仕方が分かりません "
@@ -450,27 +448,23 @@ msgstr " '%s' をクラス \"POSIXlt\" へ変換する方法が分かりませ�
 msgid "wrong class"
 msgstr " 間違ったクラスです "
 
-#, fuzzy
 msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr " \"POSIXt\" オブジェクトには二項演算 + は定義されていません "
 
 msgid "Can only subtract from POSIXt objects"
 msgstr " POSIXt オブジェクトからしか引けません "
 
-#, fuzzy
 msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr " 単項演算 - は \"POSIXt\" オブジェクトに対しては定義されていません "
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr " POSIXt オブジェクトからは数値しか引くことができません "
 
-#, fuzzy
 msgid "unary '%s' not defined for \"POSIXt\" objects"
-msgstr " 単項演算 - は \"POSIXt\" オブジェクトに対しては定義されていません "
+msgstr " 単項演算 '%s' は \"POSIXt\" オブジェクトに対しては定義されていません "
 
-#, fuzzy
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr " \"POSIXt\" オブジェクトに対しては定義されていません "
+msgstr " '%s'は \"POSIXt\" オブジェクトに対しては定義されていません "
 
 msgid "'tzone' attributes are inconsistent"
 msgstr " 'tzone' 属性は整合性がありません "
@@ -484,13 +478,12 @@ msgstr " 数値変換の為に必要な明示的なユニットがありませ�
 msgid "invalid units specified"
 msgstr " 無効なユニット指定です "
 
-#, fuzzy
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr " \"difftime\" オブジェクトに対しては定義されていません "
+msgstr ""
+"単項演算 '%s' は \"difftime\" オブジェクトに対しては定義されていません "
 
-#, fuzzy
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr " \"difftime\" オブジェクトに対しては定義されていません "
+msgstr " '%s' は \"difftime\" オブジェクトに対しては定義されていません "
 
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr ""
@@ -618,17 +611,14 @@ msgstr " リンクすべきファイルがありません "
 msgid "no files/directory to link to"
 msgstr " リンクすべきファイルもしくはディレクトリがありません "
 
-#, fuzzy
 msgid "'x' must be have length 1"
-msgstr " 'input' は長さ 1 でなければなりません "
+msgstr " 'x' は長さ 1 でなければなりません "
 
-#, fuzzy
 msgid "invalid digits"
-msgstr " 無効な 'digits' です "
+msgstr " 無効な桁数です "
 
-#, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
-msgstr " テーブルに強制変換できません "
+msgstr " 'x' は 'octmode' に強制変換できません "
 
 msgid "'package' must be of length 1"
 msgstr " 'package' は長さ 1 でなければなりません "
@@ -698,9 +688,8 @@ msgstr " 未知の一致距離成分は無視されました "
 msgid "'max.distance' components must be non-negative"
 msgstr " 'max.distance' 成分は非負でなければなりません "
 
-#, fuzzy
 msgid "triangular matrix should be square"
-msgstr " 正方行列であるべきです "
+msgstr " 三角行列は正方行列であるべきです "
 
 msgid "'object' must be a list"
 msgstr " 'object' はリストでなければなりません "
@@ -1051,9 +1040,8 @@ msgstr " '%s' 中にはエクスポートのためのクラスは見付かりま
 msgid "in '%s' methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートのためのメソッドは見付かりません： %s "
 
-#, fuzzy
 msgid "Multiple methods tables found for '"
-msgstr " 複数のメソッドリストが以下に見付かりました ' "
+msgstr " 複数のメソッドテーブルが以下に見付かりました ' "
 
 msgid "'"
 msgstr "’ "
@@ -1107,7 +1095,7 @@ msgid "invalid import target"
 msgstr " 無効なインポート対象です "
 
 msgid "got invalid index for importing"
-msgstr ""
+msgstr "インポートに対する不正なインデックスです "
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
@@ -1217,7 +1205,6 @@ msgstr " 'k' は大きすぎます "
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr " ピボット操作が起きたので、より大きな 'ncol' 値が必要です "
 
-#, fuzzy
 msgid "'x' must be an atomic vector"
 msgstr " 'x' はベクトルでなければなりません "
 
@@ -1457,13 +1444,11 @@ msgstr " 無効なバージョンの指定です "
 msgid "wrong argument"
 msgstr " 間違った引数です "
 
-#, fuzzy
 msgid "invalid value"
-msgstr " 無効な 'n' 値です "
+msgstr " 無効な値です "
 
-#, fuzzy
 msgid "not defined for numeric_version objects"
-msgstr " package_version オブジェクトに対しては定義されていません "
+msgstr " numeric_version オブジェクトに対しては定義されていません "
 
 msgid "argument to 'which' is not logical"
 msgstr " 'which' への引数は論理値ではありません "
@@ -1481,11 +1466,11 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr " 'input' は文字ベクトルまたは NULL でなければなりません "
 
-msgid "'cmd' could not be run"
-msgstr " 'cmd' を実行できませんでした "
+msgid "'%s' could not be run"
+msgstr " '%s' を実行できませんでした "
 
-msgid "'cmd' execution failed with error code %d"
-msgstr " 'cmd' の実行は失敗しました(エラーコード %d) "
+msgid "'%s' execution failed with error code %d"
+msgstr " '%s' の実行は失敗しました(エラーコード %d) "
 
 msgid "cannot find name space environment"
 msgstr " 名前空間環境を見つけられません "

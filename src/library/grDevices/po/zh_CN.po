@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:52+0000\n"
+"POT-Creation-Date: 2008-04-08 11:41+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -421,23 +421,23 @@ msgstr "无法启动pdf装置"
 msgid "unable to start device PicTeX"
 msgstr "无法启动PicTeX装置"
 
-#: devQuartz.c:977
+#: devQuartz.c:965
 msgid "invalid 'file' argument"
 msgstr "'file'变元不对"
 
-#: devQuartz.c:1005
+#: devQuartz.c:993
 msgid "invalid Quartz device size"
 msgstr "石英装置大小不对"
 
-#: devQuartz.c:1032
+#: devQuartz.c:1020
 msgid "Unable to create device description."
 msgstr "无法建立设备描述文件"
 
-#: devQuartz.c:1086
+#: devQuartz.c:1070
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr "无法建立石英装置，可能不支持所提供的种类"
 
-#: devQuartz.c:1107
+#: devQuartz.c:1091
 msgid "Quartz device is not available on this platform"
 msgstr "这个平台上没有石英装置"
 
@@ -609,7 +609,7 @@ msgstr "无法启动devWindows装置"
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "不支持getGraphicsEvent的遞迴使用"
 
-#: qdBitmap.c:92
+#: qdBitmap.c:91
 msgid "Not a supported scheme, no image data written"
 msgstr "不支持这个规划，因此没有写任何图象数据"
 

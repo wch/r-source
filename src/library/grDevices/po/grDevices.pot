@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:52+0000\n"
+"POT-Creation-Date: 2008-04-08 11:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -417,23 +417,23 @@ msgstr ""
 msgid "unable to start device PicTeX"
 msgstr ""
 
-#: devQuartz.c:977
+#: devQuartz.c:965
 msgid "invalid 'file' argument"
 msgstr ""
 
-#: devQuartz.c:1005
+#: devQuartz.c:993
 msgid "invalid Quartz device size"
 msgstr ""
 
-#: devQuartz.c:1032
+#: devQuartz.c:1020
 msgid "Unable to create device description."
 msgstr ""
 
-#: devQuartz.c:1086
+#: devQuartz.c:1070
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1107
+#: devQuartz.c:1091
 msgid "Quartz device is not available on this platform"
 msgstr ""
 
@@ -605,7 +605,7 @@ msgstr ""
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr ""
 
-#: qdBitmap.c:92
+#: qdBitmap.c:91
 msgid "Not a supported scheme, no image data written"
 msgstr ""
 

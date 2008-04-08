@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
-"PO-Revision-Date: 2007-09-11 16:32+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2008-04-05 10:49\n"
+"PO-Revision-Date: 2008-04-04 14:57+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -100,9 +100,8 @@ msgstr " スクリーンデバイスからしかプリントすることが出�
 msgid "need to specify one of 'width' and 'height'"
 msgstr " 'width' と 'height' のどちらか一つを指定する必要があります "
 
-#, fuzzy
 msgid "can only print from a screen device"
-msgstr " スクリーンデバイスからしかプリントすることが出来ません "
+msgstr " スクリーンデバイスからは印刷しか出来ません "
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
@@ -117,23 +116,22 @@ msgstr ""
 "た "
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr ""
+msgstr " 'getOption(\"device\")'の設定が不正です "
 
 msgid "no suitable unused file name for pdf()"
-msgstr ""
+msgstr " pdf()に適した未使用のファイル名がありません "
 
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr ""
+msgstr " dev.new(): pdf(file=\"%s\")を使用します "
 
 msgid "no suitable unused file name for postscript()"
-msgstr ""
+msgstr " postscript()に適した未使用のファイル名がありません "
 
 msgid "dev.new(): using postscript(file=\"%s\")"
-msgstr ""
+msgstr " dev.new(): postscript(file=\"%s\")を使用します "
 
-#, fuzzy
 msgid "device '%s' not found"
-msgstr " デバイス '%s' は有効ではありません "
+msgstr " デバイス '%s' が見つかりません "
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr " '%s' 中に不正な引数があります（名前付き引数が必要です） "
@@ -151,7 +149,7 @@ msgid "NOT changing"
 msgstr " 変更しません "
 
 msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr ""
+msgstr " 上位互換のための引数 'append' は無視されます "
 
 msgid "unknown family '%s'"
 msgstr " フォントファミリー'%s'は未知です "
@@ -159,9 +157,8 @@ msgstr " フォントファミリー'%s'は未知です "
 msgid "invalid 'family' argument"
 msgstr " 不正な 'family' 引数です "
 
-#, fuzzy
 msgid "invalid 'file'"
-msgstr " 不正な 'family' 引数です "
+msgstr " 不正な 'file' です "
 
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
@@ -256,9 +253,8 @@ msgstr " デバイス '%s' は有効ではありません "
 msgid "Available devices are %s"
 msgstr " 利用可能なデバイスは %s です "
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr " 不正なフォント型です "
+msgstr " 不正な 'title' です "
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr " 不正な Quartz font です: 4 つの文字列でなければなりません "
@@ -270,11 +266,10 @@ msgid "invalid arguments in quartzFonts (need named args)"
 msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です） "
 
 msgid "invalid value for 'antialias'"
-msgstr ""
+msgstr " 'antialias'の値が不正です "
 
-#, fuzzy
 msgid "invalid 'filename'"
-msgstr " 不正な 'family' 引数です "
+msgstr " 不正な 'filename' 引数です "
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があります "
@@ -285,12 +280,11 @@ msgstr " 不正な X11 フォントの指定方法です "
 msgid "no such device"
 msgstr " そのようなデバイスはありません "
 
-#, fuzzy
 msgid "can only copy from 'X11(type=\"cairo\")' devices"
-msgstr " 'windows' デバイスからしかコピーできません "
+msgstr " 'X11(type=\"cairo\")' デバイスからしかコピーできません "
 
 msgid "invalid value for 'rescale'"
-msgstr ""
+msgstr " 'rescale' の値が不正です "
 
 msgid "can only bring windows devices to the front"
 msgstr " windows デバイスしか正面にもってくることが出来ません "
