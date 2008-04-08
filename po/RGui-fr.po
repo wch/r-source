@@ -883,7 +883,6 @@ msgid "Remove all objects"
 msgstr "Effacer tous les objets"
 
 #: rui.c:1128
-#, fuzzy
 msgid "List search &path"
 msgstr "Lister les chemins de recherche"
 

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:50+0100\n"
-"PO-Revision-Date: 2007-09-11 03:38+0900 \n"
-"Last-Translator: freeparis2 <freeparis2@gmail.com> \n"
+"PO-Revision-Date: 2008-04-04 00:59+0900 \n"
+"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=CP932 \n"
@@ -365,9 +365,8 @@ msgid "Data editor"
 msgstr " データエディタ "
 
 #: editor.c:88 editor.c:90
-#, fuzzy
 msgid "R Editor"
-msgstr " エディタ "
+msgstr " Rエディタ "
 
 #: editor.c:119
 #, c-format
@@ -406,7 +405,7 @@ msgstr ""
 
 #: editor.c:573
 msgid "     Press Ctrl-R\n"
-msgstr "      Ctrl+R を押してください \n"
+msgstr "     Ctrl+R を押してください \n"
 
 #: editor.c:574
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
@@ -787,12 +786,10 @@ msgid "About"
 msgstr " R について "
 
 #: rui.c:1024
-#, fuzzy
 msgid "Load workspace"
 msgstr " 作業スペースの読み込み... "
 
 #: rui.c:1028
-#, fuzzy
 msgid "Save workspace"
 msgstr " 作業スペースの保存... "
 
@@ -881,7 +878,6 @@ msgid "Remove all objects"
 msgstr " 全てのオブジェクトの消去 "
 
 #: rui.c:1128
-#, fuzzy
 msgid "List search &path"
 msgstr " search パスの一覧 "
 
@@ -999,9 +995,8 @@ msgid "Windows bitmap file"
 msgstr " Windows ビットマップファイル "
 
 #: ../library/grDevices/src/devWindows.c:872
-#, fuzzy
 msgid "TIFF file"
-msgstr " PDF ファイル "
+msgstr " TIFF ファイル "
 
 #: ../library/grDevices/src/devWindows.c:875
 msgid "Jpeg file"
@@ -1188,6 +1183,10 @@ msgstr " ページ変更を確認するまで待機中... "
 #: ../library/grDevices/src/devWindows.c:3307
 msgid "Click or hit ENTER for next page"
 msgstr " クリックまたは ENTER キーを押すと次のページに移ります "
+
+#, fuzzy
+#~ msgid "Install source package from local folder..."
+#~ msgstr " ローカルにある zip ファイルからのパッケージのインストール... "
 
 #~ msgid "Png files (*.png)"
 #~ msgstr " Png ファイル (*.png) "

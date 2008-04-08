@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50+0000\n"
-"PO-Revision-Date: 2007-09-11 16:37+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2008-04-08 11:23+0100\n"
+"PO-Revision-Date: 2008-04-04 15:22+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -258,14 +258,14 @@ msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr " 'mbcsToSbcs' 中に未知のエンコーディング '%s' があります "
 
 #: devPS.c:4027
-#, fuzzy, c-format
+#, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr " 'mbcsToSbcs'　中で変換に失敗 "
+msgstr " 'mbcsToSbcs' 中の '%s' で変換に失敗: <%02x>をドットで置き換えました "
 
 #: devPS.c:4103
-#, fuzzy, c-format
+#, c-format
 msgid "failed open converter to encoding '%s'"
-msgstr " テキストをエンコーディング '%s' に変換することに失敗しました "
+msgstr " エンコーディング '%s' へのコンバータを開けませんでした "
 
 #: devPS.c:4121 devPS.c:5010 devPS.c:6807
 #, c-format
@@ -433,27 +433,23 @@ msgstr " pdf デバイスを開始できませんでした "
 msgid "unable to start device PicTeX"
 msgstr " PicTeX デバイスを開始できませんでした "
 
-#: devQuartz.c:966
-#, fuzzy
+#: devQuartz.c:963
 msgid "invalid 'file' argument"
-msgstr " 不正な文字列引数 "
+msgstr " 不正な 'file' 引数 "
 
-#: devQuartz.c:994
-#, fuzzy
+#: devQuartz.c:991
 msgid "invalid Quartz device size"
-msgstr " savePlot 中に不正なデバイス "
+msgstr " 不正なQuarts デバイスサイズ "
 
-#: devQuartz.c:1021
-#, fuzzy
+#: devQuartz.c:1018
 msgid "Unable to create device description."
-msgstr " ポストスクリプトデバイスを開始できませんでした "
+msgstr " デバイスの内容を作成できませんでした "
 
-#: devQuartz.c:1075
+#: devQuartz.c:1068
 msgid "Unable to create Quartz device target, given type may not be supported."
-msgstr ""
+msgstr "Quartzデバイスを作成できません。与えられた型はサポートされていません "
 
-#: devQuartz.c:1096
-#, fuzzy
+#: devQuartz.c:1089
 msgid "Quartz device is not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "
 
@@ -468,7 +464,7 @@ msgstr " グラフィックスウィンドをコピーするのに使えるデ�
 #: devWindows.c:328 devWindows.c:397
 #, c-format
 msgid "'%%' is not allowed in file name"
-msgstr ""
+msgstr " '%%' はファイル名には利用できません "
 
 #: devWindows.c:539
 msgid "Invalid font specification"
@@ -515,9 +511,8 @@ msgid "filename too long in jpeg() call"
 msgstr " 呼出し jpeg() 中に長すぎるファイル名 "
 
 #: devWindows.c:1801
-#, fuzzy
 msgid "filename too long in tiff() call"
-msgstr " 呼出し %s() 中に長すぎるファイル名  "
+msgstr " 呼出し tiff() 中に長すぎるファイル名  "
 
 #: devWindows.c:1831
 msgid "filename too long in win.metafile() call"
@@ -558,12 +553,10 @@ msgid "option 'windowsTimeouts' should be integer"
 msgstr " オプション 'windowsTimeouts' は整数でなければなりません "
 
 #: devWindows.c:2931
-#, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr " savePlot　中に不正なデバイス番号 "
 
 #: devWindows.c:2933
-#, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr " savePlot 中に不正なデバイス "
 
@@ -572,7 +565,6 @@ msgid "invalid filename argument in savePlot"
 msgstr " savePlot 中に不正なファイル名引数 "
 
 #: devWindows.c:2940
-#, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr " savePlot　に不正な型の引数 "
 
@@ -594,19 +586,16 @@ msgid "Impossible to open "
 msgstr " オープンできません "
 
 #: devWindows.c:3202
-#, fuzzy
 msgid "invalid 'width' or 'height' in devWindows"
 msgstr " devWindows 中に不正な幅か高さ "
 
 #: devWindows.c:3207
-#, fuzzy
 msgid "invalid value of 'record' in devWindows"
-msgstr " devWindows 中の 'recording' の値が不正です "
+msgstr " devWindows 中の 'record' の値が不正です "
 
 #: devWindows.c:3211
-#, fuzzy
 msgid "invalid value of 'rescale' in devWindows"
-msgstr " devWindows 中の 'resize' の値が不正です "
+msgstr " devWindows 中の 'rescale' の値が不正です "
 
 #: devWindows.c:3219
 msgid "invalid value of 'canvas' in devWindows"
@@ -621,9 +610,8 @@ msgid "invalid value of 'bg' in devWindows"
 msgstr " devWindows 中の 'bg' の値が不正です "
 
 #: devWindows.c:3243
-#, fuzzy
 msgid "invalid value of 'title' in devWindows"
-msgstr " devWindows 中の 'resize' の値が不正です "
+msgstr " devWindows 中の 'title' の値が不正です "
 
 #: devWindows.c:3258
 msgid "unable to start device devWindows"
@@ -633,14 +621,15 @@ msgstr " devWindows デバイスを開始できません "
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr " getGraphicsEvent の再帰的な使用はサポートされていません "
 
-#: qdBitmap.c:92
+#: qdBitmap.c:91
 msgid "Not a supported scheme, no image data written"
 msgstr ""
+"サポートされていないスキーム(scheme)なのでイメージデータは書き出されません "
 
 #: qdPDF.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s'"
-msgstr " afm ファイル '%s' をロードできませんでした "
+msgstr " ファイル '%s' を開けません "
 
 #~ msgid "can't find any fonts"
 #~ msgstr " いかなるフォントも見付かりません "

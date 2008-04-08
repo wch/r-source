@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:48\n"
+"POT-Creation-Date: 2008-04-08 11:23\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1492,10 +1492,12 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' e 'target' devono essere vettori di caratteri"
 
-msgid "'cmd' could not be run"
+#, fuzzy
+msgid "'%s' could not be run"
 msgstr "'cmd' non può essere eseguito"
 
-msgid "'cmd' execution failed with error code %d"
+#, fuzzy
+msgid "'%s' execution failed with error code %d"
 msgstr "l'esecuzione di 'cmd' non è fallita con errore"
 
 msgid "cannot find name space environment"

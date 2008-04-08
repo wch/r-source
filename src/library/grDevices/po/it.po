@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50+0000\n"
+"POT-Creation-Date: 2008-04-08 11:23+0100\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -424,26 +424,26 @@ msgstr "impossibile aprire dispositivo pdf"
 msgid "unable to start device PicTeX"
 msgstr "impossibile aprire dispositivo PicTeX"
 
-#: devQuartz.c:966
+#: devQuartz.c:963
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "argomento stringa non valido"
 
-#: devQuartz.c:994
+#: devQuartz.c:991
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "dispositivo non valido in savePlot"
 
-#: devQuartz.c:1021
+#: devQuartz.c:1018
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "impossibile aprire dispositivo PostScript"
 
-#: devQuartz.c:1075
+#: devQuartz.c:1068
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1096
+#: devQuartz.c:1089
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "Il dispositivo Quartz non è disponibile per questa piattaforma"
@@ -625,7 +625,7 @@ msgstr "impossibile aprire devWindows"
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'uso ricorsivo di getGraphicsEvent non è ammesso"
 
-#: qdBitmap.c:92
+#: qdBitmap.c:91
 msgid "Not a supported scheme, no image data written"
 msgstr ""
 

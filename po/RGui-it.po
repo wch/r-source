@@ -878,9 +878,8 @@ msgid "Remove all objects"
 msgstr "Rimuovi tutti gli oggetti"
 
 #: rui.c:1128
-#, fuzzy
 msgid "List search &path"
-msgstr "Elenca percor&si di ricerca"
+msgstr "Elenca &percorsi di ricerca"
 
 #: rui.c:1136
 msgid "Console"

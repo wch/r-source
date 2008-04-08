@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-07 08:26\n"
-"PO-Revision-Date: 2007-09-12 00:31+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2008-04-04 14:59+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -255,9 +255,8 @@ msgstr " 'vec' は非減少順にソートされていなければなりませ�
 msgid "'order.max' must be >= 1"
 msgstr " 'order.max' は 1 以上でなければなりません "
 
-#, fuzzy
 msgid "'order.max' must be < 'n.used'"
-msgstr " 'order.max' は 1 以上でなければなりません "
+msgstr " 'order.max' は 'n.used' より小さくなければなりません "
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr " 'object' 中の系列の数と 'newdata' が一致しません "
@@ -517,9 +516,8 @@ msgstr " 'x' to 'y' の両方を与えるか、行列形の 'x' を与えてく�
 msgid "'x' is empty"
 msgstr " x は空です "
 
-#, fuzzy
 msgid "both 'x' and 'y' must be non-empty"
-msgstr " 'x' と 'w' の長さは一致しなければなりません "
+msgstr " 'x' と 'y' は空ではいけません "
 
 msgid "cannot handle 'pairwise.complete.obs'"
 msgstr " 'pairwise.complete.obs' を扱うことができません "
@@ -528,7 +526,7 @@ msgid "'V' is not a square numeric matrix"
 msgstr " 'V'は数値正方行列ではありません "
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
-msgstr ""
+msgstr " diag(.)が0またはNAを含んでいます; 有限でない結果は疑問です "
 
 msgid "not enough finite observations"
 msgstr " 有限な観測値が十分にありません "
@@ -1112,9 +1110,8 @@ msgstr " 無効なパラメータ値です "
 msgid "a limit is missing"
 msgstr " 限界がありません "
 
-#, fuzzy
 msgid "missing values not allowed"
-msgstr " 欠測値は 'poly' では許されません "
+msgstr " 欠測値は許されません "
 
 msgid "'r' is less than 1"
 msgstr " 'r' は 1 未満です "
@@ -1518,10 +1515,10 @@ msgid "lower < upper  is not fulfilled"
 msgstr " lower < upper になっていません "
 
 msgid "f.lower = f(lower) is NA"
-msgstr ""
+msgstr " f.lower=f(lower)がNAです "
 
 msgid "f.upper = f(upper) is NA"
-msgstr ""
+msgstr " f.upper = f(upper) がNAです "
 
 msgid "f() values at end points not of opposite sign"
 msgstr " f() の端点での値が異なった符号を持ちません "
@@ -1966,9 +1963,8 @@ msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 " spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します "
 
-#, fuzzy
 msgid "'spline' requires n >= 1"
-msgstr " 'approx' は n > = 1 であることを必要とします "
+msgstr " 'spline' は n > = 1 であることを必要とします "
 
 msgid "'deriv' must be between 0 and 3"
 msgstr " 'deriv' は 0 と 3 の間になければなりません "

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:49\n"
-"PO-Revision-Date: 2007-09-11 22:40+0900 \n"
+"PO-Revision-Date: 2008-04-05 19:59+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -212,7 +212,7 @@ msgstr ""
 "ん "
 
 msgid "'file' must be a character string or a connection"
-msgstr ""
+msgstr " 'file' は文字列かコネクションでなければなりません "
 
 msgid "No method found for signature %s"
 msgstr " シグネチャ(signature) %s に対するメソッドが見付かりませんでした "
@@ -259,11 +259,9 @@ msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
 msgstr ""
 " 総称的関数でない \"%s\" が \"%s\" 中にあります；メソッドは取り除かれません "
 
-#, fuzzy
 msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr ""
-" \"%s\" (ロックされた環境/パッケージ \"%s\" 中の)の以前のバージョンを回復でき"
-"ません "
+" \"%s\" (ロックされた環境/パッケージ \"%s\" 中の)のメソッドを削除できません "
 
 msgid "restoring default function definition of \"%s\""
 msgstr " \"%s\" の既定の関数定義を回復しています "
@@ -292,15 +290,13 @@ msgid "'callGeneric' must be called from a generic function or method"
 msgstr " 'callGeneric' は総称的関数かメソッドから呼び出されなくてはなりません "
 
 msgid "expected a non-empty character string for argument name"
-msgstr ""
+msgstr " 引数の名前には空ではない文字列が必要です "
 
-#, fuzzy
 msgid "generic function supplied was not created for \"%s\""
-msgstr " \"%s\" に対する総称的関数は見付かりません "
+msgstr " 与えられた総称的関数は \"%s\" に対して作成できません "
 
-#, fuzzy
 msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
-msgstr " \"class\" は予約済みのスロット名であり、再定義出来ません "
+msgstr " \"%s\"はプリミティブな関数のため、その総称的関数は再定義できません "
 
 msgid ""
 "\"%s\" is not currently a generic:  define it first to create a non-default "
@@ -324,26 +320,26 @@ msgstr ""
 " \"%s\" に対する暗黙の総称が存在しますが、setGeneric() の明示的な呼出しにより"
 "上書きされます "
 
-#, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
 msgstr ""
-" 引数 'classDef' は文字列かクラス表現でなければなりません；クラス \"%s\" のオ"
-"ブジェクトでした "
+"クラス \"%s\" のオブジェクトを得ましたが、引数 'f' は総称的関数か単一の文字列"
+"でなければなりません; "
 
-#, fuzzy
 msgid "non-generic function given to findMethods()"
-msgstr " 総称的でない関数 \"%s\" が見付かりません "
+msgstr " findMethods() に総称的でない関数が与えられました "
 
 msgid "Only FALSE meaningful for inherited, when where is supplied (got"
 msgstr ""
+" where が与えられた時は、継承に対しては FALSE だけが意味を持ちます(以下が与え"
+"られました "
 
 msgid "\""
 msgstr " \" "
 
 msgid "f does not correspond to a generic function and package not specified"
-msgstr ""
+msgstr " f は総称的関数に対応しませんし、パッケージも指定されていません "
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -430,7 +426,6 @@ msgid ""
 msgstr ""
 " 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：%s "
 
-#, fuzzy
 msgid "No generic function found corresponding to \"%s\""
 msgstr " \"%s\" に対する総称的関数は見付かりません "
 
@@ -760,7 +755,7 @@ msgid "no generic function found for \"%s\""
 msgstr " \"%s\" に対する総称的関数は見付かりません "
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
+msgstr " .getGeneric の中に空の関数名 "
 
 msgid ""
 "the methods object name for \"%s\" must include the name of the package that "
@@ -799,16 +794,13 @@ msgstr ""
 " \"%s\" に対する総称的関数の本体は異なった名前 ('%s') を割り当てるため "
 "'standardGeneric' を呼び出しています! "
 
-#, fuzzy
 msgid "the supplied generic function definition for"
-msgstr ""
-" \"#s\" に対する既定値として、総称的関数か関数をあたえる必要があります "
+msgstr " 以下に対する提供された総称的関数定義"
 
-#, fuzzy
 msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
 msgstr ""
-" 与えられた総称的関数定義は  'standardGeneric' を呼び出すようには見えません；"
-"如何なるメソッドも割り当てられません！ "
+" 'standardGeneric' を呼び出すようには見えません；如何なるメソッドも割り当てら"
+"れません！ "
 
 msgid ""
 "internal error: Bad methods list object in fixing methods for primitive "
@@ -869,6 +861,8 @@ msgid ""
 "\" is not a known action (warn, stop, once, ignore); no action recorded for "
 "function \""
 msgstr ""
+"” は既知のアクション(warn, stop, once, ignore)ではありません； 以下の関数に対"
+"してはいかなるアクションも記録されていません "
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
@@ -1034,13 +1028,12 @@ msgstr ""
 " クラス \"%s\" はクラスのユニオンです：クラスユニオンに対する 'coerce' 関係は"
 "無意味です "
 
-#, fuzzy
 msgid ""
 "'as' method should have one argument, or match the arguments of coerce(): "
 "got  (%s)"
 msgstr ""
-" 'as' メソッドは一つか二つの引数と、加えてオプションの 'strict'、を持たなけれ"
-"ばなりません； (%s) でした "
+" 'as' メソッドはひとつの引数を持つか、coerce()の引数に対応している必要があり"
+"ます: (%s) "
 
 msgid ""
 "a 'replace' method definition in 'setAs' must be a function of two "
@@ -1250,10 +1243,10 @@ msgid "; gnames ="
 msgstr " ; gnames = "
 
 msgid "Something weird:  inconsistent number of args in methods table strings:"
-msgstr ""
+msgstr "なにかおかしい: メソッドテーブル文字列中に矛盾した数の引数があります: "
 
 msgid "(using the largest value)"
-msgstr ""
+msgstr " (最大の値を使います) "
 
 #, fuzzy
 msgid ""
@@ -1286,9 +1279,8 @@ msgstr ""
 " 引数 'Classes' は二つのクラスのベクトルでなければなりません；長さ %d の引数"
 "でした "
 
-#, fuzzy
 msgid "Created a package name, \"%s\", when none found"
-msgstr " パッケージ名ではありません: '%s' "
+msgstr " パッケージ名 %s を作成しましたが、見つかりません "
 
 msgid "no definition of class \"%s\" found"
 msgstr " クラス \"%s\" の定義はありません "
@@ -1390,14 +1382,12 @@ msgstr " \" はロックされています； base 環境を新しいクラス�
 msgid "not a package name: \"%s\""
 msgstr " パッケージ名ではありません: '%s' "
 
-#, fuzzy
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
-" 保存された環境中に誤ったメソッドもしくはクラスメタデータがあるようです； "
-"ファイルを移動するかクラス/メソッドを取り除いてください "
+" 保存された環境中に誤ったメソッドもしくはクラスメタデータがあるようです; "
 
 msgid "move the file or remove the class/method"
-msgstr ""
+msgstr "ファイルを移動するか、クラスまたはメソッドを削除してください "
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""

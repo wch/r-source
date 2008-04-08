@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:50\n"
-"PO-Revision-Date: 2007-09-11 22:47+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2008-04-04 15:18+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -93,17 +93,17 @@ msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
 msgstr ""
+"すべての<strong>利用可能な/strong>パッケージのvignetteのリストを表示するには"
+"<code>%s</code>を使ってください "
 
-#, fuzzy
 msgid "No vignettes found by"
-msgstr " ビニエット '%s' が見付かりません "
+msgstr " ビニエット(vignette)が見付かりません "
 
 msgid "call"
-msgstr ""
+msgstr " call "
 
-#, fuzzy
 msgid "'file' must be NULL, a character string or a connection"
-msgstr " 'file' は文字列か NULL でなければなりません "
+msgstr " 'file' はconnectionか文字列か NULL でなければなりません "
 
 msgid "bad argument"
 msgstr " 誤った引数 "
@@ -136,7 +136,7 @@ msgid "'FUN' must be a function or NULL"
 msgstr " 'FUN' は関数か NULL でなければなりません "
 
 msgid "Can't handle S4 methods yet"
-msgstr ""
+msgstr "S4メソッドはまだ扱えません "
 
 msgid "'package' must be a character string or NULL"
 msgstr " 'package' は文字列か NULL でなければなりません "
@@ -243,10 +243,10 @@ msgid "invalid input matrix"
 msgstr " 不正な入力行列 "
 
 msgid "class(es) of 'name' will be discarded"
-msgstr ""
+msgstr " 'name'のクラスは破棄されます "
 
 msgid "cannot edit NULL row names"
-msgstr ""
+msgstr " NULLの行の名前は編集できません "
 
 msgid "no help file found for '%s'"
 msgstr " '%s' に対するヘルプファイルが見つかりません "
@@ -276,9 +276,8 @@ msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 " \"form\" は両辺にそれぞれ一つの項を持つ両辺項公式でなければなりません "
 
-#, fuzzy
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr " オプションは長さ１の文字列か NULL でなければなりません "
+msgstr " 'topic'は名前、長さ１の文字列、または予約語でなければなりません "
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -404,9 +403,8 @@ msgstr " %d 個のオブジェクトがマッチしました "
 msgid "no package '%s' was found"
 msgstr " パッケージ '%s' は見付かりません "
 
-#, fuzzy
 msgid "metadata of package '%s' is corrupt"
-msgstr " パッケージ '%s' に対する DESCRIPTION ファイルは壊れています "
+msgstr " パッケージ '%s' のメタデータは壊れています "
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr " パッケージ '%s' に対する DESCRIPTION ファイルは壊れています "
@@ -459,15 +457,12 @@ msgstr " 数値的添字だけが使えます "
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を作成できません "
 
-#, fuzzy
 msgid "'namespace' must be a single logical"
 msgstr " 'namespace' は単一の論理値でなければなりません "
 
-#, fuzzy
 msgid "'code_files' must be a character vector"
 msgstr " 'code_files' は文字ベクトルでなければなりません "
 
-#, fuzzy
 msgid "'list' must be a character vector naming R objects"
 msgstr ""
 " 'list' は R オブジェクトの名前を与える文字ベクトルでなければなりません "
@@ -500,16 +495,16 @@ msgid "Copying code files ..."
 msgstr " コードファイルをコピー中 ... "
 
 msgid "Invalid file name(s) for R code in"
-msgstr ""
+msgstr " Rコードに不正なファイル名 "
 
 msgid ":"
-msgstr ""
+msgstr " : "
 
 msgid ","
-msgstr ""
+msgstr " , "
 
 msgid "are now renamed to 'z<name>.R'"
-msgstr ""
+msgstr " の名前は 'z<name>.R' に変更されました "
 
 msgid "Making help files ..."
 msgstr " ヘルプファイルを作成中 ... "
@@ -696,7 +691,7 @@ msgid ""
 "R documentation directory"
 msgstr ""
 " オプションとして、R ドキュメントのディレクトリ中の KEYWORDS ファイルからの、"
-"一行に一つの他の標準キーワード　 "
+"一行に一つの他の標準キーワード "
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
@@ -816,8 +811,8 @@ msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
 "separately."
 msgstr ""
-"再リスト化可能なオブジェクトを非リスト化したのか確認するか、スケルトンを別個"
-"に指定してください。 "
+" 再リスト化可能なオブジェクトを非リスト化したのか確認するか、スケルトンを別"
+"個  に指定してください。 "
 
 msgid "cannot coerce 'x' to roman"
 msgstr " 'x' をローマンに変換できません "
@@ -825,9 +820,8 @@ msgstr " 'x' をローマンに変換できません "
 msgid "Invalid roman numeral(s): %s"
 msgstr " 不正なローマ数字です: %s "
 
-#, fuzzy
 msgid "no valid packages were specified"
-msgstr " 如何なるパッケージも指定されませんでした "
+msgstr " 有効なパッケージが指定されませんでした "
 
 msgid "invalid 'socket' argument"
 msgstr " 不正な 'socket' 引数 "
@@ -853,7 +847,7 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr " 不正な options('str') -- 代わりに既定値を使います "
 
 msgid "invalid components in options('str'):"
-msgstr ""
+msgstr " options('str')の中に不正な要素があります "
 
 msgid "'object' does not have valid levels()"
 msgstr " 'object' は有効な levels() を持ちません "
@@ -907,7 +901,6 @@ msgstr " 不正な 'col.names' 指定です "
 msgid "appending column names to file"
 msgstr " ファイルに列名を加えます "
 
-#, fuzzy
 msgid "attempt to set '%s' ignored"
 msgstr " '%s' への変更の試みは無視されました "
 
@@ -924,7 +917,7 @@ msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
 
 msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr ""
+msgstr " リンクなしHTMLを使います: ハイパーリンクは壊れています "
 
 msgid "options(\"browser\") not set"
 msgstr " options(\"browser\") が設定されていません "
@@ -1026,11 +1019,11 @@ msgstr " パッケージの以前のインストールを取り除けません "
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
-msgstr[0] ""
+msgstr[0] " 列 %s からクラスが切り捨てられたクラス "
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
-msgstr[0] "オブジェクト '%s' が見付かりません "
+msgstr[0] " オブジェクト '%s' が見付かりません "
 
 msgid "'lib' element '%s'  is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"

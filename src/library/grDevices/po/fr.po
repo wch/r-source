@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-26 21:50+0000\n"
+"POT-Creation-Date: 2008-04-08 11:23+0100\n"
 "PO-Revision-Date: 2008-03-26 17:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -429,25 +429,25 @@ msgstr "impossible de démarrer le périphérique pdf"
 msgid "unable to start device PicTeX"
 msgstr "impossible de démarrer le périphérique PicTeX"
 
-#: devQuartz.c:966
+#: devQuartz.c:963
 msgid "invalid 'file' argument"
 msgstr "argument 'file' incorrect"
 
-#: devQuartz.c:994
+#: devQuartz.c:991
 msgid "invalid Quartz device size"
 msgstr "taille de périphérique Quartz incorrecte"
 
-#: devQuartz.c:1021
+#: devQuartz.c:1018
 msgid "Unable to create device description."
 msgstr "impossible une description du périphérique."
 
-#: devQuartz.c:1075
+#: devQuartz.c:1068
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 "Impossible de créer le périphérique cible Quartz, le type fourni n'est peut-"
 "être pas supporté."
 
-#: devQuartz.c:1096
+#: devQuartz.c:1089
 msgid "Quartz device is not available on this platform"
 msgstr "Périphérique Quartz non disponible sur cette architecture"
 
@@ -623,7 +623,7 @@ msgstr "impossible de démarrer périphérique devWindows"
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'utilisation récursive de getGraphicsEvent n'est pas supportée"
 
-#: qdBitmap.c:92
+#: qdBitmap.c:91
 msgid "Not a supported scheme, no image data written"
 msgstr "Le schéma n'est pas supporté, aucune donnée d'image n'est écrite"
 
