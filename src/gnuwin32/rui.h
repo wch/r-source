@@ -55,7 +55,7 @@ struct structHelpMenuItems {
 typedef struct structHelpMenuItems *HelpMenuItems;
 
 struct structPkgMenuItems {
-  menuitem mpkgl, mpkgm, mpkgi, mpkgil, mpkgid, mpkgu,
+  menuitem mpkgl, mpkgm, mpkgi, mpkgil, mpkgu,
     mrepos;
 };
 typedef struct structPkgMenuItems *PkgMenuItems;
