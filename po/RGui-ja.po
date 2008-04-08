@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:27+0100\n"
-"PO-Revision-Date: 2007-09-11 03:38+0900 \n"
-"Last-Translator: freeparis2 <freeparis2@gmail.com> \n"
+"POT-Creation-Date: 2008-04-08 11:37+0100\n"
+"PO-Revision-Date: 2008-04-04 00:59+0900 \n"
+"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=CP932 \n"
@@ -310,7 +310,7 @@ msgstr ""
 "えます \n"
 " \n"
 
-#: dataentry.c:1649 dataentry.c:1759 editor.c:746 rui.c:1135
+#: dataentry.c:1649 dataentry.c:1759 editor.c:746 rui.c:1141
 msgid "Help"
 msgstr " ヘルプ "
 
@@ -326,7 +326,7 @@ msgstr " 選択中のセルにペースト "
 msgid "Autosize column"
 msgstr " セルサイズの自動調節 "
 
-#: dataentry.c:1655 pager.c:310 rui.c:838
+#: dataentry.c:1655 pager.c:310 rui.c:846
 #: ../library/grDevices/src/devWindows.c:1616
 msgid "Stay on top"
 msgstr " ウィンドウを常にトップに置く "
@@ -335,12 +335,12 @@ msgstr " ウィンドウを常にトップに置く "
 msgid "Close"
 msgstr " 閉じる "
 
-#: dataentry.c:1742 editor.c:692 pager.c:467 rui.c:1067
+#: dataentry.c:1742 editor.c:692 pager.c:467 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1556
 msgid "File"
 msgstr " ファイル "
 
-#: dataentry.c:1748 editor.c:710 pager.c:477 rui.c:1088
+#: dataentry.c:1748 editor.c:710 pager.c:477 rui.c:1094
 msgid "Edit"
 msgstr " 編集 "
 
@@ -365,9 +365,8 @@ msgid "Data editor"
 msgstr " データエディタ "
 
 #: editor.c:88 editor.c:90
-#, fuzzy
 msgid "R Editor"
-msgstr " エディタ "
+msgstr " Rエディタ "
 
 #: editor.c:119
 #, c-format
@@ -406,7 +405,7 @@ msgstr ""
 
 #: editor.c:573
 msgid "     Press Ctrl-R\n"
-msgstr "      Ctrl+R を押してください \n"
+msgstr "     Ctrl+R を押してください \n"
 
 #: editor.c:574
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
@@ -447,12 +446,12 @@ msgstr " やり直し "
 msgid "Cut"
 msgstr " カット "
 
-#: editor.c:595 editor.c:716 pager.c:305 pager.c:478 rui.c:828 rui.c:1032
-#: rui.c:1089
+#: editor.c:595 editor.c:716 pager.c:305 pager.c:478 rui.c:836 rui.c:1038
+#: rui.c:1095
 msgid "Copy"
 msgstr " コピー "
 
-#: editor.c:596 editor.c:718 rui.c:829 rui.c:1036 rui.c:1090
+#: editor.c:596 editor.c:718 rui.c:837 rui.c:1042 rui.c:1096
 msgid "Paste"
 msgstr " ペースト "
 
@@ -460,11 +459,11 @@ msgstr " ペースト "
 msgid "Delete"
 msgstr " 消去 "
 
-#: editor.c:599 editor.c:722 pager.c:308 pager.c:484 rui.c:835 rui.c:1094
+#: editor.c:599 editor.c:722 pager.c:308 pager.c:484 rui.c:843 rui.c:1100
 msgid "Select all"
 msgstr " 全て選択 "
 
-#: editor.c:657 pager.c:431 rui.c:1020
+#: editor.c:657 pager.c:431 rui.c:1026
 msgid "Open script"
 msgstr " スクリプトを開く "
 
@@ -480,16 +479,16 @@ msgstr " コンソールに戻る "
 msgid "Print script"
 msgstr " スクリプトを印刷する "
 
-#: editor.c:674 pager.c:446 rui.c:1048
+#: editor.c:674 pager.c:446 rui.c:1054
 #: ../library/grDevices/src/devWindows.c:1518
 msgid "Print"
 msgstr " 印刷 "
 
-#: editor.c:693 pager.c:468 rui.c:1069
+#: editor.c:693 pager.c:468 rui.c:1075
 msgid "New script"
 msgstr " 新しいスクリプト "
 
-#: editor.c:695 pager.c:469 rui.c:1070
+#: editor.c:695 pager.c:469 rui.c:1076
 msgid "Open script..."
 msgstr " スクリプトを開く... "
 
@@ -501,7 +500,7 @@ msgstr " 保存 "
 msgid "Save as..."
 msgstr " 別名で保存... "
 
-#: editor.c:702 pager.c:470 rui.c:1083
+#: editor.c:702 pager.c:470 rui.c:1089
 #: ../library/grDevices/src/devWindows.c:1619
 msgid "Print..."
 msgstr " 印刷... "
@@ -510,7 +509,7 @@ msgstr " 印刷... "
 msgid "Close script"
 msgstr " スクリプトを閉じる "
 
-#: editor.c:724 rui.c:1095
+#: editor.c:724 rui.c:1101
 msgid "Clear console"
 msgstr " コンソール画面を消去 "
 
@@ -526,7 +525,7 @@ msgstr " 検索... "
 msgid "Replace..."
 msgstr " 置換... "
 
-#: editor.c:736 rui.c:1099
+#: editor.c:736 rui.c:1105
 msgid "GUI preferences..."
 msgstr " GUI プリファレンス... "
 
@@ -580,11 +579,11 @@ msgstr " コンソールにペースト "
 msgid "Paste commands to console"
 msgstr " コマンドをコンソールにペースト "
 
-#: pager.c:472 rui.c:1084
+#: pager.c:472 rui.c:1090
 msgid "Save to File..."
 msgstr " ファイルを保存... "
 
-#: pager.c:487 rui.c:1102
+#: pager.c:487 rui.c:1108
 msgid "View"
 msgstr " 閲覧 "
 
@@ -682,259 +681,261 @@ msgstr " '%s' が見つかりません "
 msgid "Are you sure?"
 msgstr " 本気ですか? "
 
-#: rui.c:522
+#: rui.c:528
 msgid "Help on"
 msgstr " ヘルプ "
 
-#: rui.c:573
+#: rui.c:579
 msgid "Search help"
 msgstr " ヘルプの検索 "
 
-#: rui.c:588
+#: rui.c:594
 msgid "Search for words in help list archives and documentation"
 msgstr " ヘルプリストアーカイブとドキュメンテーションを検索をする "
 
-#: rui.c:603
+#: rui.c:609
 msgid "Apropos"
 msgstr " オブジェクトの検索 "
 
-#: rui.c:824
+#: rui.c:832
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr " .R, .RData そして .rda ファイルのみドラッグ＆ドロップができます "
 
-#: rui.c:830 rui.c:1091
+#: rui.c:838 rui.c:1097
 msgid "Paste commands only"
 msgstr " コマンドのみペースト "
 
-#: rui.c:831 rui.c:1040
+#: rui.c:839 rui.c:1046
 msgid "Copy and paste"
 msgstr " コピー＆ペースト "
 
-#: rui.c:833
+#: rui.c:841
 msgid "Clear window"
 msgstr " ウインドウの消去 "
 
-#: rui.c:837 rui.c:1116
+#: rui.c:845 rui.c:1122
 msgid "Buffered output"
 msgstr " バッファに出力 "
 
-#: rui.c:877
+#: rui.c:885
 msgid "Packages"
 msgstr " パッケージ "
 
-#: rui.c:878
+#: rui.c:886
 msgid "Load package..."
 msgstr " パッケージの読み込み... "
 
-#: rui.c:880
+#: rui.c:888
 msgid "Set CRAN mirror..."
 msgstr " CRAN ミラーサイトの設定... "
 
-#: rui.c:882
+#: rui.c:890
 msgid "Select repositories..."
 msgstr " ダウンロードサイトの選択... "
 
-#: rui.c:884
+#: rui.c:892
 msgid "Install package(s)..."
 msgstr " パッケージのインストール... "
 
-#: rui.c:886
+#: rui.c:894
 msgid "Update packages..."
 msgstr " パッケージの更新... "
 
-#: rui.c:889
+#: rui.c:897
 msgid "Install package(s) from local zip files..."
 msgstr " ローカルにある zip ファイルからのパッケージのインストール... "
 
-#: rui.c:917
+#: rui.c:900
+#, fuzzy
+msgid "Install source package from local folder..."
+msgstr " ローカルにある zip ファイルからのパッケージのインストール... "
+
+#: rui.c:923
 msgid "FAQ on R"
 msgstr " R の FAQ "
 
-#: rui.c:919
+#: rui.c:925
 msgid "FAQ on R for &Windows"
 msgstr " Windows 版 R の FAQ "
 
-#: rui.c:925 rui.c:928
+#: rui.c:931 rui.c:934
 msgid "Manuals (in PDF)"
 msgstr " マニュアル (PDF) "
 
-#: rui.c:955
+#: rui.c:961
 msgid "R functions (text)..."
 msgstr " R の関数 (テキスト)... "
 
-#: rui.c:957
+#: rui.c:963
 msgid "Html help"
 msgstr " Html ヘルプ "
 
-#: rui.c:959
+#: rui.c:965
 msgid "Search help..."
 msgstr " ヘルプの検索 "
 
-#: rui.c:964
+#: rui.c:970
 msgid "Apropos..."
 msgstr " オブジェクトの検索 "
 
-#: rui.c:966
+#: rui.c:972
 msgid "R Project home page"
 msgstr " R Project ホームページ "
 
-#: rui.c:967
+#: rui.c:973
 msgid "CRAN home page"
 msgstr " CRAN ホームページ "
 
-#: rui.c:969
+#: rui.c:975
 msgid "About"
 msgstr " R について "
 
-#: rui.c:1024
-#, fuzzy
+#: rui.c:1030
 msgid "Load workspace"
 msgstr " 作業スペースの読み込み... "
 
-#: rui.c:1028
-#, fuzzy
+#: rui.c:1034
 msgid "Save workspace"
 msgstr " 作業スペースの保存... "
 
-#: rui.c:1044
+#: rui.c:1050
 msgid "Stop current computation"
 msgstr " 現在の計算を中断 "
 
-#: rui.c:1068
+#: rui.c:1074
 msgid "Source R code..."
 msgstr " R コードのソースを読み込み... "
 
-#: rui.c:1071
+#: rui.c:1077
 msgid "Display file(s)..."
 msgstr " ファイルの表示... "
 
-#: rui.c:1073
+#: rui.c:1079
 msgid "Load Workspace..."
 msgstr " 作業スペースの読み込み... "
 
-#: rui.c:1074
+#: rui.c:1080
 msgid "Save Workspace..."
 msgstr " 作業スペースの保存... "
 
-#: rui.c:1076
+#: rui.c:1082
 msgid "Load History..."
 msgstr " 履歴の読み込み... "
 
-#: rui.c:1078
+#: rui.c:1084
 msgid "Save History..."
 msgstr " 履歴の保存... "
 
-#: rui.c:1081
+#: rui.c:1087
 msgid "Change dir..."
 msgstr " ディレクトリの変更... "
 
-#: rui.c:1086
+#: rui.c:1092
 msgid "Exit"
 msgstr " 終了 "
 
-#: rui.c:1093
+#: rui.c:1099
 msgid "Copy and Paste"
 msgstr " コピー＆ペースト "
 
-#: rui.c:1097
+#: rui.c:1103
 msgid "Data editor..."
 msgstr " データエディタ... "
 
-#: rui.c:1103
+#: rui.c:1109
 msgid "Toolbar"
 msgstr " ツールバー "
 
-#: rui.c:1104
+#: rui.c:1110
 msgid "Statusbar"
 msgstr " ステータスバー "
 
-#: rui.c:1109
+#: rui.c:1115
 msgid "Misc"
 msgstr " その他 "
 
-#: rui.c:1110
+#: rui.c:1116
 msgid "Stop current computation           \tESC"
 msgstr " 現在の計算を中断           \tESC "
 
-#: rui.c:1112
+#: rui.c:1118
 msgid "Stop all computations"
 msgstr " 全ての計算を中断 "
 
-#: rui.c:1114
+#: rui.c:1120
 msgid "Break to debugger"
 msgstr " 実行を中断してデバッガーを起動 "
 
-#: rui.c:1117
+#: rui.c:1123
 msgid "Word completion"
 msgstr " 単語の補完"
 
-#: rui.c:1119
+#: rui.c:1125
 msgid "Filename completion"
 msgstr " ファイル名の補完"
 
-#: rui.c:1126
+#: rui.c:1132
 msgid "List objects"
 msgstr " オブジェクトの一覧 "
 
-#: rui.c:1127
+#: rui.c:1133
 msgid "Remove all objects"
 msgstr " 全てのオブジェクトの消去 "
 
-#: rui.c:1128
-#, fuzzy
+#: rui.c:1134
 msgid "List search &path"
 msgstr " search パスの一覧 "
 
-#: rui.c:1136
+#: rui.c:1142
 msgid "Console"
 msgstr " コンソール "
 
-#: rui.c:1174
+#: rui.c:1180
 msgid "Select file"
 msgstr " ファイルを選択 "
 
-#: rui.c:1217
+#: rui.c:1223
 msgid "'mname' is limited to 1000 bytes"
 msgstr " 'mname' は1000バイト分までに制限されています "
 
-#: rui.c:1259
+#: rui.c:1265
 #, c-format
 msgid "menu %s does not exist"
 msgstr " メニュー %s は存在しません "
 
-#: rui.c:1312
+#: rui.c:1318
 msgid "'menu' is limited to 500 bytes"
 msgstr " 'menu' は半角英数字で 500 文字までに制限されています "
 
-#: rui.c:1322
+#: rui.c:1328
 msgid "base menu does not exist"
 msgstr " base メニューが存在しません "
 
-#: rui.c:1337
+#: rui.c:1343
 msgid "failed to allocate menu"
 msgstr " メニューの割り当てに失敗しました "
 
-#: rui.c:1354 rui.c:1478
+#: rui.c:1360 rui.c:1484
 msgid "menu + item is limited to 1000 bytes"
 msgstr " menu + item は半角英数字で 1000 文字までに制限されています "
 
-#: rui.c:1362 rui.c:1445
+#: rui.c:1368 rui.c:1451
 msgid "menu does not exist"
 msgstr " メニューは存在しません "
 
-#: rui.c:1380 rui.c:1403 rui.c:1408
+#: rui.c:1386 rui.c:1409 rui.c:1414
 msgid "failed to allocate char storage"
 msgstr " char storage の割り当てに失敗しました "
 
-#: rui.c:1416
+#: rui.c:1422
 msgid "failed to allocate menuitem"
 msgstr " メニューアイテムの割り当てに失敗しました "
 
-#: rui.c:1468
+#: rui.c:1474
 msgid "menu not found"
 msgstr " メニューが見つかりません "
 
-#: rui.c:1486
+#: rui.c:1492
 msgid "menu or item does not exist"
 msgstr " メニューまたはアイテムが存在しません "
 
@@ -999,9 +1000,8 @@ msgid "Windows bitmap file"
 msgstr " Windows ビットマップファイル "
 
 #: ../library/grDevices/src/devWindows.c:872
-#, fuzzy
 msgid "TIFF file"
-msgstr " PDF ファイル "
+msgstr " TIFF ファイル "
 
 #: ../library/grDevices/src/devWindows.c:875
 msgid "Jpeg file"

@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-04-07 08:27+0100\n"
-"PO-Revision-Date: 2007-09-11 17:09+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2008-04-04 18:31+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -62,9 +62,8 @@ msgid "cannot get working directory"
 msgstr " 作業ディレクトリを得ることができません "
 
 #: src/gnuwin32/extra.c:65 src/gnuwin32/extra.c:577
-#, fuzzy
 msgid "unsupported version of Windows"
-msgstr " サポートされていない変換です "
+msgstr " このバージョンのWindowsはサポートされていません "
 
 #: src/gnuwin32/extra.c:127 src/gnuwin32/extra.c:149 src/gnuwin32/extra.c:183
 msgid "R_HOME not set"
@@ -353,9 +352,9 @@ msgid "bad device"
 msgstr " 不正な装置です "
 
 #: src/gnuwin32/extra.c:1786
-#, fuzzy, c-format
+#, c-format
 msgid "Registry key '%s' not found"
-msgstr " オブジェクト '%s' がありません "
+msgstr " レジストリキー '%s' がありません "
 
 #: src/gnuwin32/extra.c:1850 src/gnuwin32/extra.c:1858
 msgid "invalid input in Rmbstowcs"
@@ -452,9 +451,9 @@ msgid "encoding '%s' is not recognised"
 msgstr " '%s' というエンコーディングは認識できません "
 
 #: src/gnuwin32/system.c:329 src/unix/sys-std.c:836
-#, fuzzy, c-format
+#, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
-msgstr " <エラー : エンコーディングに関して不正な入力がありました> \n"
+msgstr " <エラー : エンコーディング '%s' からの変換に失敗しました> \n"
 
 #: src/gnuwin32/system.c:538 src/gnuwin32/system.c:990
 #: src/gnuwin32/system.c:1002 src/main/connections.c:503
@@ -462,9 +461,9 @@ msgstr " <エラー : エンコーディングに関して不正な入力があ�
 #: src/main/serialize.c:2117 src/main/serialize.c:2126
 #: src/main/serialize.c:2210 src/main/serialize.c:2234 src/unix/system.c:314
 #: src/unix/system.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s': %s"
-msgstr " ファイル '%s' を開くことができません "
+msgstr " ファイル '%s' を開くことができません: %s "
 
 #: src/gnuwin32/system.c:552
 #, c-format
@@ -563,9 +562,8 @@ msgid "object is not subsettable"
 msgstr " オブジェクトは部分代入可能ではありません "
 
 #: src/include/Errormsg.h:44
-#, fuzzy
 msgid "invalid 'mode' argument"
-msgstr " 'how' 引数が不正です "
+msgstr " 'mode' 引数が不正です "
 
 #: src/include/Errormsg.h:45
 #, c-format
@@ -941,9 +939,8 @@ msgid "allocArray: too many elements specified by 'dims'"
 msgstr " allocArray：'dims' によって指定された要素数が多すぎます "
 
 #: src/main/array.c:386
-#, fuzzy
 msgid "a matrix-like object is required as argument to 'row/col'"
-msgstr " 'row/col' への引数としては行列風のオブジェクトがひつようとされます "
+msgstr " 'row/col' への引数としては行列風のオブジェクトが必要とされます "
 
 #: src/main/array.c:597
 msgid "requires numeric matrix/vector arguments"
@@ -1081,9 +1078,8 @@ msgid "dims [product %d] do not match the length of object [%d]"
 msgstr " dims [product %d] はオブジェクト  [%d] の長さに整合しません "
 
 #: src/main/attrib.c:1009
-#, fuzzy
 msgid "attributes must be a list or NULL"
-msgstr " 属性はリストの中になければなりません "
+msgstr " 属性はリストもしくはNULLでなければなりません "
 
 #: src/main/attrib.c:1014
 msgid "attributes must be named"
@@ -1152,9 +1148,8 @@ msgstr ""
 "ようとしました "
 
 #: src/main/base.c:270
-#, fuzzy
 msgid "Event GE_ScalePS requires a single numeric value"
-msgstr " イベント UpdatePS は単一の数値を必用とします "
+msgstr " イベント GE_ScalePS は単一の数値を必要とします "
 
 #: src/main/bind.c:270 src/main/bind.c:305 src/main/bind.c:353
 #: src/main/bind.c:421 src/main/bind.c:451
@@ -1200,14 +1195,12 @@ msgid "vector size cannot be NA"
 msgstr " ベクトルのサイズは NA ではありえません "
 
 #: src/main/builtin.c:51
-#, fuzzy
 msgid "vector size cannot be NA/NaN"
-msgstr " ベクトルのサイズは NA ではありえません "
+msgstr " ベクトルのサイズは NAやNaNではありえません "
 
 #: src/main/builtin.c:52
-#, fuzzy
 msgid "vector size cannot be infinite"
-msgstr " ベクトルのサイズは負ではありえません "
+msgstr " ベクトルのサイズは∞ではありえません "
 
 #: src/main/builtin.c:53
 msgid "vector size cannot be negative"
@@ -1364,6 +1357,9 @@ msgid ""
 "\t'%s'\n"
 "\tat '%s'\n"
 msgstr ""
+"PCREパターンのコンパイルエラー\n"
+" \t'%s' \n"
+" \tat '%s' \n"
 
 #: src/main/character.c:488 src/main/character.c:516
 #, c-format
@@ -1377,12 +1373,14 @@ msgid ""
 "PCRE pattern study error\n"
 "\t'%s'\n"
 msgstr ""
+"PCREパターンの学習エラー\n"
+" \t'%s' \n"
 
 #: src/main/character.c:515 src/main/character.c:1121
 #: src/main/character.c:1358 src/main/character.c:1598
-#, fuzzy, c-format
+#, c-format
 msgid "regcomp error:  '%s'"
-msgstr " \"%s\" の読み込みエラーです "
+msgstr " regcompのエラー: '%s' "
 
 #: src/main/character.c:798
 msgid "the first argument must be a character vector"
@@ -1398,13 +1396,12 @@ msgstr " 名前が文字列ではありません "
 
 #: src/main/character.c:1085 src/main/character.c:1568 src/main/pcre.c:234
 #: src/main/pcre.c:429
-#, fuzzy
 msgid ""
 "ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n"
 "  in UTF-8 locales only works caselessly for ASCII patterns"
 msgstr ""
 "UTF-8 ロケールにおける ignore.case = TRUE, perl = TRUE \n"
-"ASCII パターンに対してのみ大小文字によらず動作します "
+"はASCII パターンに対してのみ大小文字によらず動作します "
 
 #: src/main/character.c:1100 src/main/character.c:1577
 #: src/main/character.c:1994 src/main/pcre.c:434
@@ -1457,18 +1454,16 @@ msgid "invalid (NA) arguments."
 msgstr " 引数が不正(NA)です "
 
 #: src/main/character.c:2431
-#, fuzzy
 msgid "invalid UTF-8 string 'old'"
-msgstr " 'old' は不正なマルチバイト文字です "
+msgstr " 'old' は不正なUTF-8文字です "
 
 #: src/main/character.c:2437
 msgid "invalid multibyte string 'old'"
 msgstr " 'old' は不正なマルチバイト文字です "
 
 #: src/main/character.c:2450
-#, fuzzy
 msgid "invalid UTF-8 string 'new'"
-msgstr " 'new' は不正なマルチバイト文字です "
+msgstr " 'new' は不正なUTF-8文字列です "
 
 #: src/main/character.c:2456
 msgid "invalid multibyte string 'new'"
@@ -1581,12 +1576,12 @@ msgid "invalid data of mode \"%s\" (too short)"
 msgstr " 不正なモード \"%s\" のデータです（短すぎます） "
 
 #: src/main/coerce.c:909
-#, fuzzy, c-format
+#, c-format
 msgid "'pairlist' object cannot be coerced to type '%s'"
 msgstr " 'pairlist' オブジェクトは '%s' には変換できません "
 
 #: src/main/coerce.c:1017
-#, fuzzy, c-format
+#, c-format
 msgid "(list) object cannot be coerced to type '%s'"
 msgstr "  (list)オブジェクトは '%s' に変換できません "
 
@@ -1632,9 +1627,8 @@ msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr " %s() は型 '%s' のベクトル、リスト以外に適用されます "
 
 #: src/main/coerce.c:2108
-#, fuzzy
 msgid "'what' must be a character string or a function"
-msgstr " 最初の引数は、文字列または関数でなければならない "
+msgstr " 'what'は、文字列または関数でなければならない "
 
 #: src/main/coerce.c:2114
 msgid "'envir' must be an environment"
@@ -1699,16 +1693,14 @@ msgid "alpha level %d, not in 0:255"
 msgstr " αの水準 %d が0:255にありません "
 
 #: src/main/colors.c:135
-#, fuzzy
 msgid "invalid hsv color"
-msgstr " hcl カラーが不正です "
+msgstr " hsv カラーが不正です "
 
 #: src/main/colors.c:247
 msgid "invalid hcl color"
 msgstr " hcl カラーが不正です "
 
 #: src/main/colors.c:298
-#, fuzzy
 msgid "invalid 'names' vector"
 msgstr " 不正な名前ベクトルです "
 
@@ -1749,21 +1741,20 @@ msgid "invalid RGB specification"
 msgstr " RGB の指定が不正です "
 
 #: src/main/colors.c:1374
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color name '%s'"
-msgstr " 色の名前が不正です "
+msgstr " 色の名前　'%s' が不正です "
 
 #: src/main/colors.c:1383
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color specification '%s'"
-msgstr " 色の指定が不正です "
+msgstr " 色の指定 '%s' が不正です "
 
 #: src/main/colors.c:1503
 msgid "supplied color is not numeric nor character"
 msgstr " 与えられた色は数字も文字でもありません "
 
 #: src/main/colors.c:1535
-#, fuzzy
 msgid "Invalid color specification"
 msgstr " 色の指定が不正です "
 
@@ -1935,9 +1926,9 @@ msgid "fifo connections are not available on this system"
 msgstr " このシステムでは fifo コネクションは利用できません "
 
 #: src/main/connections.c:990
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open pipe() cmd '%s': %s"
-msgstr " pipe() コマンド ’%s' を開くことができません "
+msgstr " pipe() コマンド ’%s' を開くことができません : %s "
 
 #: src/main/connections.c:993
 #, c-format
@@ -1949,9 +1940,9 @@ msgid "pipe connections are not available on this system"
 msgstr " このシステムではパイプコネクションは利用できません "
 
 #: src/main/connections.c:1139
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr "圧縮されたファイル '%s' を開くことができません, 理由は '%s' です "
 
 #: src/main/connections.c:1142
 #, c-format
@@ -1972,9 +1963,10 @@ msgid "allocation of gzfile connection failed"
 msgstr " gzfile 接続の割り当てに失敗しました "
 
 #: src/main/connections.c:1331
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr ""
+" bzip2により圧縮されたファイル '%s' を開くことができません, 理由は '%s' です "
 
 #: src/main/connections.c:1334
 #, c-format
@@ -2190,17 +2182,16 @@ msgstr " readChart 関数への不正な UTF-8 入力です "
 
 #: src/main/connections.c:3410
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
-msgstr ""
+msgstr "UTF-8以外のマルチバイトロケールではバイト型でのみ読み込み可能です "
 
 #: src/main/connections.c:3472
 msgid "'object' is too short"
 msgstr " 'object' が短すぎます "
 
 #: src/main/connections.c:3506
-#, fuzzy
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr ""
-" writeChar: 文字列中に今ある以上の文字が要求されています－ゼロで埋めます "
+" writeChar: 文字列中に今ある以上のバイト数が要求されています－ゼロで埋めます "
 
 #: src/main/connections.c:3530
 msgid ""
@@ -2380,7 +2371,7 @@ msgstr " 'use' (計算法)が不正です "
 
 #: src/main/cov.c:457 src/main/cov.c:474
 msgid "no complete element pairs"
-msgstr ""
+msgstr " 完全な要素のペアがありません "
 
 #: src/main/cov.c:509
 msgid "the standard deviation is zero"
@@ -2476,6 +2467,8 @@ msgstr " 式の文字列化(deparse)が不完全かも知れません "
 #: src/main/deparse.c:240
 msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr ""
+"R 2.7.0より以前のバージョンで文字列化(deparse)された式はsource()できないかも"
+"しれません "
 
 #: src/main/deparse.c:312 src/main/deparse.c:384 src/main/deparse.c:390
 msgid "wrote too few characters"
@@ -2545,18 +2538,16 @@ msgid "too many open devices"
 msgstr " 開いたデバイスが多すぎます "
 
 #: src/main/devices.c:529
-#, fuzzy
 msgid "not enough memory to allocate device (in GEcreateDevDesc)"
-msgstr " addDevice において，デバイス割り当てに十分なメモリがありません "
+msgstr " (GEcreateDevDesc内で)デバイス割り当てに十分なメモリがありません "
 
 #: src/main/devices.c:575
 msgid "Hit <Return> to see next plot: "
 msgstr " 次の図を見るためには<Return>キーを押して下さい:  "
 
 #: src/main/devices.c:606
-#, fuzzy
 msgid "cannot obtain size for the null device"
-msgstr " アクティブまたはデフォルトデバイスがありません "
+msgstr "未定義(null)のデバイスに対してサイズを得ることができません "
 
 #: src/main/dotcode.c:109 src/main/dotcode.c:139
 msgid "NULL value passed as symbol address"
@@ -2856,9 +2847,9 @@ msgid "no graphics device is active"
 msgstr " 有効なグラフィックスデバイスがありません "
 
 #: src/main/engine.c:1920
-#, fuzzy, c-format
+#, c-format
 msgid "pch value '%d' is invalid in this locale"
-msgstr " 'pattern' は現在のロケールでは不正です "
+msgstr " pchの値 '%d' は現在のロケールでは不正です "
 
 #: src/main/engine.c:2176
 #, c-format
@@ -3221,7 +3212,7 @@ msgid "Execution halted\n"
 msgstr " 実行が停止されました \n"
 
 #: src/main/errors.c:978
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' arguemnt"
 msgstr " '%s' 引数が不正です "
 
@@ -3689,38 +3680,37 @@ msgid "invalid 'onKeybd' callback"
 msgstr " 'onKeybd' のコールバックが不正です "
 
 #: src/main/gram.y:122
-#, fuzzy, c-format
+#, c-format
 msgid "EOF whilst reading MBCS char at line %d"
-msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました "
+msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました(%d行) "
 
 #: src/main/gram.y:125 src/main/gram.y:133
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte character in mbcs_get_next at line %d"
-msgstr " mbcs_get_next 中に不正なマルチバイト文字列があります "
+msgstr " mbcs_get_next 中に不正なマルチバイト文字列があります (%d行) "
 
 #: src/main/gram.y:136
 msgid "EOF whilst reading MBCS char"
 msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました "
 
 #: src/main/gram.y:392
-#, fuzzy, c-format
+#, c-format
 msgid "function is too long to keep source (at line %d)"
-msgstr " 関数が長すぎるのでソースを保持できません "
+msgstr " 関数が長すぎるのでソースを保持できません  (%d行) "
 
 #: src/main/gram.y:847
-#, fuzzy, c-format
+#, c-format
 msgid "unable to allocate space for source line %d"
-msgstr " メモリ確保ができません (GEregister) "
+msgstr "ソースコードに対してメモリ確保ができません  (%d行) "
 
 #: src/main/gram.y:957
-#, fuzzy, c-format
+#, c-format
 msgid "incorrect tag type at line %d"
-msgstr " tag の型が正しくありません "
+msgstr " tag の型が正しくありません  (%d行) "
 
 #: src/main/gram.y:1479
-#, fuzzy
 msgid "contextstack overflow"
-msgstr " ノードスタックが溢れました "
+msgstr "コンテクストスタックが溢れました "
 
 #: src/main/gram.y:1715
 msgid "input"
@@ -3756,14 +3746,14 @@ msgid "unexpected %s"
 msgstr " 予想外の %s です "
 
 #: src/main/gram.y:1750
-#, fuzzy, c-format
+#, c-format
 msgid "Repeated formal argument '%s' on line %d"
-msgstr " 仮引数が繰り返されています  "
+msgstr " 仮引数 '%s' が繰り返されています   (%d行) "
 
 #: src/main/gram.y:1762
-#, fuzzy, c-format
+#, c-format
 msgid "input buffer overflow at line %d"
-msgstr " 入力バッファが溢れました "
+msgstr " 入力バッファが溢れました  (%d行) "
 
 #: src/main/gram.y:1901
 #, c-format
@@ -3781,39 +3771,39 @@ msgid "integer literal %sL contains unnecessary decimal point"
 msgstr " 整数リテラル %sL は不要な小数点を含んでいます "
 
 #: src/main/gram.y:1937
-#, fuzzy, c-format
+#, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr " メモリ確保ができません (GEregister) "
+msgstr "文字列が長すぎるためメモリ確保ができません  (%d行) "
 
 #: src/main/gram.y:2049
-#, fuzzy, c-format
+#, c-format
 msgid "\\uxxxx sequences not supported (line %d)"
-msgstr " \\uxxxx シーケンスはサポートされません "
+msgstr " \\uxxxx シーケンスはサポートされません   (%d行) "
 
 #: src/main/gram.y:2068 src/main/gram.y:2081
-#, fuzzy, c-format
+#, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
-msgstr " 不正な \\u{xxxx} 系列です "
+msgstr " 不正な \\u{xxxx} 系列です  (%d行) "
 
 #: src/main/gram.y:2083
-#, fuzzy, c-format
+#, c-format
 msgid "invalid \\uxxxx sequence (line %d)"
-msgstr " 不正な \\uxxxx 系列です "
+msgstr " 不正な \\uxxxx 系列です  (%d行) "
 
 #: src/main/gram.y:2092
-#, fuzzy, c-format
+#, c-format
 msgid "\\Uxxxxxxxx sequences not supported (line %d)"
-msgstr " \\uxxxx シーケンスはサポートされません "
+msgstr " \\uxxxx シーケンスはサポートされません  (%d行) "
 
 #: src/main/gram.y:2112 src/main/gram.y:2118
-#, fuzzy, c-format
+#, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
-msgstr " 不正な \\U{xxxxxxxx} 系列です "
+msgstr " 不正な \\U{xxxxxxxx} 系列です  (%d行) "
 
 #: src/main/gram.y:2120
-#, fuzzy, c-format
+#, c-format
 msgid "invalid \\Uxxxxxxxx sequence (line %d)"
-msgstr " 不正な \\U{xxxxxxxx} 系列です "
+msgstr " 不正な \\U{xxxxxxxx} 系列です  (%d行) "
 
 #: src/main/gram.y:2162
 #, c-format
@@ -3826,6 +3816,8 @@ msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 1000 chars)"
 msgstr ""
+" このロケール以外のUnicodeエスケープを含む文字列が長すぎます(最大1000文字で"
+"す) (%d行) "
 
 #: src/main/gram.y:2222
 #, c-format
@@ -3834,20 +3826,20 @@ msgid_plural "unrecognized escapes removed from \"%s\""
 msgstr[0] " \"%s\" から認識されないエスケープを取り除きました "
 
 #: src/main/gram.y:2331
-#, fuzzy, c-format
+#, c-format
 msgid "functions nested too deeply in source code at line %d"
-msgstr "ソースコードにおいて関数が過度にネストしています "
+msgstr "ソースコードにおいて関数が過度にネストしています  (%d行) "
 
 #: src/main/gram.y:2720 src/main/gram.y:2727 src/main/gram.y:2733
 #: src/main/gram.y:2740
-#, fuzzy, c-format
+#, c-format
 msgid "contextstack overflow at line %d"
-msgstr " 整数スタックが溢れました "
+msgstr "コンテクストスタックが溢れました  (%d行) "
 
 #: src/main/graphics.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "bad units specified in '%s'"
-msgstr " %s に不正な unit が指定されました。報告して下さい！ "
+msgstr " %s に不正な unit が指定されました。 "
 
 #: src/main/graphics.c:1781 src/main/graphics.c:1803
 msgid "attempt to plot on null device"
@@ -3914,9 +3906,8 @@ msgid "invalid argument to GBox"
 msgstr " GBox の引数が不正です "
 
 #: src/main/graphics.c:3332
-#, fuzzy
 msgid "Metric information not available for this device"
-msgstr " このコネクションでは切りつめは有効ではありません "
+msgstr "このデバイスに対してメトリック情報は利用できません "
 
 #: src/main/internet.c:89
 msgid "internet routines cannot be accessed in module"
@@ -3986,7 +3977,7 @@ msgstr " 単項演算子 '!' が2つの引数で呼び出されました "
 #: src/main/logic.c:389
 #, c-format
 msgid "coercing argument of type '%s' to logical"
-msgstr ""
+msgstr " '%s'型の引数を論理型に変換します "
 
 #: src/main/main.c:50
 msgid "dummy - do not translate"
@@ -4010,9 +4001,9 @@ msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr " 警告: UTF-8 ロケールは，このビルドの R ではサポートされていません \n"
 
 #: src/main/main.c:877
-#, fuzzy
 msgid "WARNING: multibyte locales are not supported in this build of R\n"
-msgstr " 警告: UTF-8 ロケールは，このビルドの R ではサポートされていません \n"
+msgstr ""
+" 警告: マルチバイトロケールは，このビルドの R ではサポートされていません \n"
 
 #: src/main/main.c:900
 msgid "unable to restore saved data in .RData\n"
@@ -4146,9 +4137,9 @@ msgid "cannot allocate vector of length %d"
 msgstr " 長さ %d のベクトルを割り当てることができません "
 
 #: src/main/memory.c:1943
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
-msgstr " ベクトル割り当てにおいて，型か長さ (%d/%d) が不正です "
+msgstr " ベクトル割り当てにおいて，型か長さ (%s か %d) が不正です "
 
 #: src/main/memory.c:2011
 #, c-format
@@ -4679,9 +4670,9 @@ msgid "'maxiter' must be positive"
 msgstr " 'maxiter' は正数でなくてはなりません "
 
 #: src/main/optimize.c:229 src/main/optimize.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "NA value for '%s' is not allowed"
-msgstr " '...' の中の値は promise ではありません "
+msgstr " '%s' に対してNAは認められません "
 
 #: src/main/optimize.c:378
 msgid "non-finite value supplied by 'nlm'"
@@ -4818,40 +4809,38 @@ msgstr " 提供された勾配は不正な長さかモードであったので�
 
 #: src/main/options.c:111 src/main/options.c:159
 msgid "corrupted options list"
-msgstr ""
+msgstr "オプションリストが間違っています "
 
 #: src/main/options.c:121
-#, fuzzy
 msgid "invalid printing width, used 80"
-msgstr " 文字列の部分的マッチが不正です "
+msgstr " 表示の幅が不正です: 80にします "
 
 #: src/main/options.c:132
 msgid "invalid printing digits, used 7"
-msgstr ""
+msgstr " 表示の桁数が不正です: 7にします "
 
 #: src/main/options.c:144
 msgid "invalid value for \"device.ask.default\", using FALSE"
-msgstr ""
+msgstr " \"device.ask.default\"に対して不正な値: FALSEを使います "
 
 #: src/main/options.c:357
-#, fuzzy
 msgid "list argument has no valid names"
-msgstr " 引数は有効なモデルではありません "
+msgstr " 引数リストは有効な名前ではありません "
 
 #: src/main/options.c:385
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'width' parameter, allowed %d...%d"
-msgstr " 'trans' のパラメータが不正です "
+msgstr " 'width'パラメータが不正です: %d...%dが認められています "
 
 #: src/main/options.c:392
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'digits' parameter, allowed %d...%d"
-msgstr " 'trans' のパラメータが不正です "
+msgstr " 'trans' のパラメータが不正です : %d...%dが認められています "
 
 #: src/main/options.c:399
 #, c-format
 msgid "'expressions' parameter invalid, allowed %d...%d"
-msgstr ""
+msgstr " 'expression' パラメータが不正です: %d...%dが認められています "
 
 #: src/main/options.c:406 src/main/options.c:414 src/main/options.c:420
 #: src/main/options.c:428 src/main/options.c:435 src/main/options.c:440
@@ -4867,7 +4856,7 @@ msgstr " '%s' の値が不正です "
 
 #: src/main/options.c:558 src/main/options.c:571
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
-msgstr ""
+msgstr " \"par.ask.default\"は\"device.ask.default\"で置き換えられました "
 
 #: src/main/par.c:169
 #, c-format
@@ -4909,9 +4898,8 @@ msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr " \"mfg\" の中の nc の値は不正で無視されます "
 
 #: src/main/par.c:518
-#, fuzzy
 msgid "calling par(new=TRUE) with no plot"
-msgstr " プロットなしで par(new=) を呼び出しました "
+msgstr " プロットなしで par(new=TRUE) を呼び出しました "
 
 #: src/main/par.c:700 src/main/par.c:1113
 #, c-format
@@ -4991,37 +4979,37 @@ msgid "invalid filename argument"
 msgstr " ファイル名引数が不正です "
 
 #: src/main/platform.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create file '%s', reason '%s'"
-msgstr " fifo '%s' を作れません, 理由は'%s'です "
+msgstr " fife '%s' を作れません, 理由は'%s'です "
 
 #: src/main/platform.c:524
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create file '%s'"
-msgstr " fifo '%s' を作れません "
+msgstr " fife '%s' を作れません "
 
 #: src/main/platform.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "cannot remove file '%s', reason '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " ファイル '%s' を削除できません, 理由は '%s' です "
 
 #: src/main/platform.c:583
 msgid "nothing to link"
 msgstr " リンクすべきものがありません "
 
 #: src/main/platform.c:610
-#, fuzzy, c-format
+#, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " '%s'に対するシンボリックリンク'%s'を作成できません, 理由は '%s' です "
 
 #: src/main/platform.c:613
-#, fuzzy, c-format
+#, c-format
 msgid "cannot symlink '%s' to '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " '%s'に対するシンボリックリンク'%s'を作成できません "
 
 #: src/main/platform.c:621
 msgid "symlinks are not supported on this platform"
-msgstr " このプラットフォームでは symlink はサポートされていません "
+msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
 
 #: src/main/platform.c:644
 msgid "'source' must be a single string"
@@ -5032,9 +5020,8 @@ msgid "'destination' must be a single string"
 msgstr " 'destination' は単一の文字列でなければなりません "
 
 #: src/main/platform.c:650
-#, fuzzy
 msgid "missing values are not allowed"
-msgstr " 論理値が必要なところが欠損値です "
+msgstr " 欠損値は認められていません "
 
 #: src/main/platform.c:654 src/main/platform.c:664
 msgid "expanded source name too long"
@@ -5045,14 +5032,14 @@ msgid "expanded destination name too long"
 msgstr " 展開された destination 名が長すぎます "
 
 #: src/main/platform.c:673
-#, fuzzy, c-format
+#, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
-msgstr " fifo '%s' を作れません, 理由は'%s'です "
+msgstr " ファイル名を '%s' から '%s' に変更できません, 理由は'%s'です "
 
 #: src/main/platform.c:676
-#, fuzzy, c-format
+#, c-format
 msgid "cannot rename file '%s' to '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " ファイル名を '%s' から '%s' に変更できません "
 
 #: src/main/platform.c:889
 msgid "directory/folder path name too long"
@@ -5116,19 +5103,18 @@ msgid "'%s' already exists"
 msgstr " '%s' はすでに存在します "
 
 #: src/main/platform.c:1899
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create dir '%s', reason '%s'"
-msgstr " fifo '%s' を作れません, 理由は'%s'です "
+msgstr "ディレクトリ '%s' を作れません, 理由は'%s'です "
 
 #: src/main/platform.c:1901
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create dir '%s'"
-msgstr " fifo '%s' を作れません "
+msgstr "ディレクトリ '%s' を作れません "
 
 #: src/main/platform.c:2082
-#, fuzzy
 msgid "insufficient OS support on this platform"
-msgstr " このプラットフォームでは nsl 関数はサポートされていません "
+msgstr " このプラットフォームではOSのサポートが不十分です "
 
 #: src/main/plot.c:111
 msgid "only NA allowed in logical plotting symbol"
@@ -5147,9 +5133,9 @@ msgid "invalid 'vfont' value [typeface]"
 msgstr " 'vfont' の値が不正です [typeface] "
 
 #: src/main/plot.c:305
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
-msgstr " 'vfont' の値が不正です [fontindex] "
+msgstr " 'vfont' の値が不正です [typeface = %d, fontindex = %d] "
 
 #: src/main/plot.c:379
 msgid "invalid graphics parameter"
@@ -5331,10 +5317,10 @@ msgstr " 引数の長さが違います "
 
 #: src/main/plot.c:3138
 msgid "more 'labels' than points"
-msgstr ""
+msgstr "点の数より'labels'の数が多い "
 
 #: src/main/plot.c:3191
-#, fuzzy, c-format
+#, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr " 警告：%.2f インチ内に点はありません \n"
 
@@ -5520,44 +5506,36 @@ msgid "invalid viewing parameters"
 msgstr " 不正な viewing パラメータです "
 
 #: src/main/plotmath.c:316
-#, fuzzy
 msgid "invalid `which' in TeX"
-msgstr " 'which' の指定が不正です "
+msgstr " Texの中の 'which' の指定が不正です "
 
 #: src/main/plotmath.c:343
-#, fuzzy
 msgid "invalid math style encountered"
-msgstr " 軸の番号 %d が不正です "
+msgstr " 数式スタイルが不正です "
 
 #: src/main/plotmath.c:1331 src/main/plotmath.c:1480 src/main/plotmath.c:2779
-#, fuzzy
 msgid "invalid mathematical annotation"
-msgstr " 内部関数が不正です "
+msgstr "数式の注釈が不正です "
 
 #: src/main/plotmath.c:1785
-#, fuzzy
 msgid "invalid accent"
-msgstr " 引数が不正です "
+msgstr " accentが不正です "
 
 #: src/main/plotmath.c:2079
-#, fuzzy
 msgid "invalid group delimiter"
-msgstr " 'x' の限界値が不正です "
+msgstr "区切り(delimiter)が不正です "
 
 #: src/main/plotmath.c:2106 src/main/plotmath.c:2252
-#, fuzzy
 msgid "invalid group specification"
-msgstr " フォントの指定が不正です "
+msgstr "グループの指定が不正です "
 
 #: src/main/plotmath.c:2177
-#, fuzzy
 msgid "group is incomplete"
-msgstr " ディスプレイリストが不完全に再描画されました "
+msgstr "グループが不完全です "
 
 #: src/main/plotmath.c:3266
-#, fuzzy
 msgid "Metric information not available for this family/device"
-msgstr " このコネクションでは切りつめは有効ではありません "
+msgstr " このfamily/deviceに対してメトリック情報は利用できません "
 
 #: src/main/print.c:140 src/main/print.c:189
 msgid "invalid 'na.print' specification"
@@ -5964,12 +5942,12 @@ msgid "XDR read failed"
 msgstr " XDR 書式での読み込みに失敗しました "
 
 #: src/main/saveload.c:2186
-#, fuzzy, c-format
+#, c-format
 msgid "cannot save data -- unable to open '%s': %s"
-msgstr " データをセーブできません -- %s を開けません "
+msgstr " データをセーブできません -- %s を開けません : %s "
 
 #: src/main/saveload.c:2189
-#, fuzzy, c-format
+#, c-format
 msgid "cannot save data -- unable to open '%s'"
 msgstr " データをセーブできません -- %s を開けません "
 
@@ -6461,13 +6439,10 @@ msgid "reference to non-existent argument %d"
 msgstr " 存在しない引数 %d を参照しました "
 
 #: src/main/sprintf.c:146
-#, fuzzy
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr ""
-" 各々の変換指定では最大で1つのアスタリスク `*'  がサポートされています "
+msgstr "それぞれの変換で指定できるアスタリスク'*'は最大でひとつです。 "
 
 #: src/main/sprintf.c:156
-#, fuzzy
 msgid "argument for '*' conversion specification must be a number"
 msgstr " `*' 変換指定に対する引数は数値でなければなりません "
 
@@ -6496,9 +6471,9 @@ msgid "use format %s for character objects"
 msgstr " 文字オブジェクトには %s 書式を使ってください "
 
 #: src/main/sprintf.c:302
-#, fuzzy, c-format
+#, c-format
 msgid "likely truncation of character string to %d characters"
-msgstr " 文字列は丸められた可能性があります "
+msgstr " 文字列は%d文字に丸められた可能性があります "
 
 #: src/main/sprintf.c:311
 msgid "unsupported type"
@@ -6728,18 +6703,16 @@ msgid "cannot determine file modification time of '%s'"
 msgstr " '%s' のファイル変更時刻を確定できません "
 
 #: src/main/sysutils.c:155
-#, fuzzy
 msgid "unsupported conversion in 'filenameToWchar'"
-msgstr " サポートされていない変換です "
+msgstr " 'filenameToWchar'の中でサポートされていない変換です "
 
 #: src/main/sysutils.c:163
 msgid "file name conversion problem"
 msgstr " ファイル名変換に問題があります "
 
 #: src/main/sysutils.c:164
-#, fuzzy
 msgid "file name conversion problem -- name too long?"
-msgstr " ファイル名変換に問題があります "
+msgstr " ファイル名変換に問題があります  -- 名前が長すぎませんか? "
 
 #: src/main/sysutils.c:228
 msgid "invalid filename pattern"
@@ -6793,14 +6766,13 @@ msgstr " このシステムでは 'iconv' が使えません "
 
 #: src/main/sysutils.c:658 src/main/sysutils.c:719 src/main/sysutils.c:811
 #: src/main/sysutils.c:866
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be called on a CHARSXP"
-msgstr " csduplicated は STRSXP に対して呼び出されていません "
+msgstr " '%s'はCHARSXP上で呼び出されなければなりません "
 
 #: src/main/sysutils.c:902
-#, fuzzy
 msgid "invalid input in wtransChar"
-msgstr " readChart 関数への不正な UTF-8 入力です "
+msgstr " wtransCharへの不正な入力です "
 
 #: src/main/sysutils.c:1292
 msgid "cannot mkdir R_TempDir"
@@ -6932,9 +6904,8 @@ msgid "'all.y' must be TRUE or FALSE"
 msgstr " 'all.y' は TRUEまたは FALSE でなければなりません "
 
 #: src/main/util.c:689
-#, fuzzy
 msgid "missing value is invalid"
-msgstr " パラメータに欠損値があります "
+msgstr " 欠損値は不正です "
 
 #: src/main/util.c:698 src/main/util.c:707
 msgid "cannot change working directory"
@@ -6964,24 +6935,24 @@ msgid "'value' must be of positive length"
 msgstr " 'value' は正の長さを持たないといけません "
 
 #: src/main/util.c:1078 src/main/util.c:1086
-#, fuzzy, c-format
+#, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
-msgstr " Rmbstowcs  への入力が不正です "
+msgstr " 'utf8towcs'中に不正な入力'%s'があります "
 
 #: src/main/util.c:1168
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte string at '%s'"
-msgstr " %d は不正なマルチバイト文字です "
+msgstr " %sに不正なマルチバイト文字があります "
 
 #: src/main/util.c:1208
-#, fuzzy, c-format
+#, c-format
 msgid "invalid input '%s' in mbcsToLatin1: omitted"
-msgstr " mbcsToLatin1  への入力が不正です "
+msgstr " mbcsToLatin1 での入力 '%s' が不正です: 省略されました "
 
 #: src/main/util.c:1214
-#, fuzzy, c-format
+#, c-format
 msgid "allocation failure in '%s'"
-msgstr " GVTextで割り当てに失敗しました "
+msgstr " %sの割り当てに失敗しました "
 
 #: src/main/util.c:1334
 msgid "error message truncated to 255 chars"
@@ -6998,11 +6969,11 @@ msgid ""
 "Type 'license()' or 'licence()' for distribution details.\n"
 "\n"
 msgstr ""
-" Rはフリーソフトウェアであり、「完全に無保証」です。 \n"
+"Rはフリーソフトウェアであり、「完全に無保証」です。 \n"
 " 一定の条件に従えば、自由にこれを再配布することができます。 \n"
 "配布条件の詳細に関しては、'license()'あるいは'licence()'と入力してくださ"
 "い。 \n"
-" \n"
+"\n"
 
 #: src/main/version.c:42
 msgid ""
@@ -7011,10 +6982,10 @@ msgid ""
 "'citation()' on how to cite R or R packages in publications.\n"
 "\n"
 msgstr ""
-" Rは多くの貢献者による共同プロジェクトです。 \n"
-" 詳しくは'contributors()'と入力してください。 \n"
+"Rは多くの貢献者による共同プロジェクトです。 \n"
+"詳しくは'contributors()'と入力してください。 \n"
 "また、RやRのパッケージを出版物で引用する際の形式については \n"
-" 'citation()'と入力してください。 \n"
+"'citation()'と入力してください。 \n"
 " \n"
 
 #: src/main/version.c:45
@@ -7024,11 +6995,11 @@ msgid ""
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
-" 'demo()'と入力すればデモをみることができます。 \n"
-" 'help()'とすればオンラインヘルプが出ます。 \n"
-" 'help.start()'でHTMLブラウザによるヘルプがみられます。 \n"
-" 'q()'と入力すればRを終了します。 \n"
-" \n"
+"'demo()'と入力すればデモをみることができます。 \n"
+"'help()'とすればオンラインヘルプが出ます。 \n"
+"'help.start()'でHTMLブラウザによるヘルプがみられます。 \n"
+"'q()'と入力すればRを終了します。 \n"
+"\n"
 
 #: src/main/vfonts.c:54
 msgid "vfont routines cannot be accessed in module"
@@ -7077,9 +7048,9 @@ msgid "Download progress"
 msgstr " ダウンロード実行中です "
 
 #: src/modules/internet/internet.c:339
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open URL '%s', reason '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr "URL '%s' を開くことができません, 理由は '%s' です "
 
 #: src/modules/internet/internet.c:342 src/modules/internet/internet.c:470
 #: src/modules/internet/internet.c:579
@@ -7089,9 +7060,9 @@ msgstr " URL '%s' を開けません "
 
 #: src/modules/internet/internet.c:349 src/modules/internet/internet.c:379
 #: src/modules/internet/internet.c:485
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open destfile '%s', reason '%s'"
-msgstr " ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr "目標ファイル '%s' を開くことができません, 理由は '%s' です "
 
 #: src/modules/internet/internet.c:352 src/modules/internet/internet.c:382
 #: src/modules/internet/internet.c:488
@@ -7228,19 +7199,20 @@ msgid "allocation of socket connection failed"
 msgstr " ソケット接続の割り当てに失敗しました "
 
 #: src/modules/lapack/Lapack.c:43 src/modules/lapack/Lapack.c:62
-#, fuzzy, c-format
+#, c-format
 msgid "argument type[1]='%s' must be a character string of string length 1"
-msgstr " 引数は長さ1の文字ベクトルでなくてはなりません "
+msgstr " type[1]='%s'の引数は長さ1の文字ベクトルでなくてはなりません "
 
 #: src/modules/lapack/Lapack.c:51
 #, c-format
 msgid "argument type[1]='%s' must be one of 'M','1','O','I','F' or 'E'"
 msgstr ""
+" type[1]='%s'の引数は'M','1','O','I','F', 'E' のいずれかでなければなりません "
 
 #: src/modules/lapack/Lapack.c:68
 #, c-format
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
-msgstr ""
+msgstr " type[1]='%s'の引数は'1','O', 'I'　のいずれかでなければなりません "
 
 #: src/modules/lapack/Lapack.c:83 src/modules/lapack/Lapack.c:660
 msgid "'jobu' and 'jobv' must be character strings"
@@ -7266,59 +7238,55 @@ msgstr " 'method' は文字列でなければなりません "
 #: src/modules/lapack/Lapack.c:1071
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr " エラーコード %d がLapack ルーチン '%s' から返されました "
 
 #: src/modules/lapack/Lapack.c:149 src/modules/lapack/Lapack.c:235
 #: src/modules/lapack/Lapack.c:715 src/modules/lapack/Lapack.c:768
 msgid "'x' must be a square numeric matrix"
-msgstr " 'x' は正方行列でなければなりません "
+msgstr " 'x' は数値の正方行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:312 src/modules/lapack/Lapack.c:356
 #: src/modules/lapack/Lapack.c:398 src/modules/lapack/Lapack.c:447
-#, fuzzy
 msgid "'norm' must be a character string"
-msgstr " 'msg1' は文字列でなければなりません "
+msgstr " 'norm' は文字列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:319 src/modules/lapack/Lapack.c:364
-#, fuzzy
 msgid "'A' must be a numeric matrix"
-msgstr " 'a' は数値行列でなければなりません "
+msgstr " 'A' は数値行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:339
-#, fuzzy, c-format
+#, c-format
 msgid "error [%d] from Lapack 'dgetrf()'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr " Lapack ルーチン dgetrf()' からエラー[%d] が返されました "
 
 #: src/modules/lapack/Lapack.c:345
-#, fuzzy, c-format
+#, c-format
 msgid "error [%d] from Lapack 'dgecon()'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr " Lapack ルーチン dgecon()' からエラー[%d] が返されました "
 
 #: src/modules/lapack/Lapack.c:370 src/modules/lapack/Lapack.c:404
 #: src/modules/lapack/Lapack.c:453
-#, fuzzy
 msgid "'A' must be a *square* matrix"
-msgstr " 'a' は正方行列でなければなりません "
+msgstr " 'A' は正方行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:384
-#, fuzzy, c-format
+#, c-format
 msgid "error [%d] from Lapack 'dtrcon()'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr "Lapack ルーチン dtrcon()' からエラー[%d] が返されました "
 
 #: src/modules/lapack/Lapack.c:400 src/modules/lapack/Lapack.c:449
-#, fuzzy
 msgid "'A' must be a complex matrix"
-msgstr " 'a' は複素行列でなければなりません "
+msgstr " 'A は複素行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:422
-#, fuzzy, c-format
+#, c-format
 msgid "error [%d] from Lapack 'zgetrf()'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr "Lapack ルーチン 'zgetrf()' からエラー[%d] が返されました "
 
 #: src/modules/lapack/Lapack.c:430
-#, fuzzy, c-format
+#, c-format
 msgid "error [%d] from Lapack 'zgecon()'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr "Lapack ルーチン 'zgecon()' からエラー[%d] が返されました "
 
 #: src/modules/lapack/Lapack.c:434 src/modules/lapack/Lapack.c:468
 #: src/modules/lapack/Lapack.c:512 src/modules/lapack/Lapack.c:562
@@ -7329,9 +7297,9 @@ msgid "Fortran complex functions are not available on this platform"
 msgstr " Fortran の複素数関数はこのプラットフォームでは使用できません "
 
 #: src/modules/lapack/Lapack.c:465
-#, fuzzy, c-format
+#, c-format
 msgid "error [%d] from Lapack 'ztrcon()'"
-msgstr " Lapack ルーチン '%2$s' からエラーコード %1$d が返されました "
+msgstr "Lapack ルーチン 'ztrcon()' からエラー[%d] が返されました "
 
 #: src/modules/lapack/Lapack.c:483 src/modules/lapack/Lapack.c:526
 msgid "'a' must be a complex matrix"
@@ -7462,9 +7430,9 @@ msgid "X11 used font size %d when %d was requested"
 msgstr " X11 はフォントサイズ %d を使いました（%d が要求されたのですが） "
 
 #: src/modules/X11/devX11.c:957
-#, fuzzy, c-format
+#, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
-msgstr " サイズ %d のX11 フォントが読み込めません "
+msgstr "X11フォント%s (サイズ %d, フェイス%d)が読み込めません "
 
 #: src/modules/X11/devX11.c:966
 msgid ""
@@ -7520,24 +7488,21 @@ msgid "could not open JPEG file '%s'"
 msgstr " JPEGファイル '%s' を開けませんでした "
 
 #: src/modules/X11/devX11.c:1204
-#, fuzzy
 msgid "no tiff support in this version of R"
-msgstr " この R のバージョンには png のサポートはありません "
+msgstr " この R のバージョンには tiff のサポートはありません "
 
 #: src/modules/X11/devX11.c:1212
-#, fuzzy
 msgid "filename too long in tiff() call"
-msgstr " png 関数の呼び出しでファイル名が長すぎます "
+msgstr " tiff 関数の呼び出しでファイル名が長すぎます "
 
 #: src/modules/X11/devX11.c:1224
-#, fuzzy
 msgid "filename too long in bmp() call"
-msgstr " png 関数の呼び出しでファイル名が長すぎます "
+msgstr " bmp() の呼び出しでファイル名が長すぎます "
 
 #: src/modules/X11/devX11.c:1228
-#, fuzzy, c-format
+#, c-format
 msgid "could not open BMP file '%s'"
-msgstr " PNGファイル '%s' を開けませんでした "
+msgstr "BMPファイル '%s' を開けませんでした "
 
 #: src/modules/X11/devX11.c:1249
 #, c-format
@@ -7566,19 +7531,19 @@ msgid "font family not found in X11 font database"
 msgstr " フォントファミリーが X11 フォントデータベースにありません "
 
 #: src/modules/X11/devX11.c:1595
-#, fuzzy, c-format
+#, c-format
 msgid "invalid use of %d < 0 in '%s'"
-msgstr " '%s' の値が不正です "
+msgstr " %d < 0 は '%s' では不正です "
 
 #: src/modules/X11/devX11.c:1744 src/modules/X11/devX11.c:2812
-#, fuzzy, c-format
+#, c-format
 msgid "could not open file '%s'"
-msgstr " PNGファイル '%s' を開けませんでした "
+msgstr " ファイル '%s' を開けませんでした "
 
 #: src/modules/X11/devX11.c:2210
-#, fuzzy
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
-msgstr " このプラットフォームでは nsl 関数はサポートされていません "
+msgstr ""
+" type=\"cairo\"はこのビルドではサポートされていません -- \"Xlib\"を使います "
 
 #: src/modules/X11/devX11.c:2508
 msgid "invalid string argument"
@@ -7602,49 +7567,47 @@ msgid "unknown X11 color/colour model -- using monochrome"
 msgstr " 未知のX11カラーモデルです（モノクロを使用します） "
 
 #: src/modules/X11/devX11.c:2666
-#, fuzzy
 msgid "no plot on device to save"
-msgstr " 保存すべき履歴がありません "
+msgstr "デバイス上に保存すべきプロットがありません "
 
 #: src/modules/X11/devX11.c:2668
-#, fuzzy
 msgid "not an open X11cairo device"
-msgstr " 開いたデバイスが多すぎます "
+msgstr "X11cairoデバイスを開けません "
 
 #: src/modules/X11/devX11.c:2692 src/modules/X11/devX11.c:2694
 #, c-format
 msgid "type = \"%s\" requires cairo >= 1.2: try \"png\""
 msgstr ""
+" type = \"%s\" は cairo >= 1.2 を必要とします: \"png\" を試してみてください "
 
 #: src/modules/X11/devX11.c:2703
-#, fuzzy
 msgid "savePlot() is not supported on this build"
-msgstr " このプラットフォームでは nsl 関数はサポートされていません "
+msgstr " このビルドではsavePlot()はサポートされていません "
 
 #: src/modules/X11/devX11.c:2740 src/modules/X11/devX11.c:2909
 #: src/modules/X11/devX11.c:2920
-#, fuzzy
 msgid "unimplemented cairo-based device"
-msgstr " 未実装の「述語」です "
+msgstr " cairo上のデバイスは実装されていません "
 
 #: src/modules/X11/devX11.c:3130
 msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
 msgstr ""
+" 'type = \"cairo\"' は cairo >= 1.2 を必要とします: 'type = \"cairo1\"' を試"
+"してみてください "
 
 #: src/modules/X11/devX11.c:3132
 #, c-format
 msgid "device '%s' requires cairo >= 1.2"
-msgstr ""
+msgstr " デバイス '%s' は cairo >= 1.2 を必要とします "
 
 #: src/modules/X11/devX11.c:3144
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start device '%s'"
 msgstr " デバイス '%s' を開始できません "
 
 #: src/modules/X11/devX11.c:3156
-#, fuzzy
 msgid "cairo-based devices are not supported on this build"
-msgstr " このプラットフォームでは nsl 関数はサポートされていません "
+msgstr " cairo上のデバイスはこのビルドでは実装されていません "
 
 #: src/modules/X11/devX11.c:3187
 msgid "unable to contact X11 display"
@@ -7838,12 +7801,12 @@ msgid "re-encoding is not available on this system"
 msgstr " このシステムでは再エンコーディングできません "
 
 #: src/unix/sys-std.c:1116
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
 "\n"
 msgstr ""
-" ファイル '%s' を開くことができません \n"
+" ファイル '%s' を開くことができません : %s \n"
 " \n"
 
 #: src/unix/sys-std.c:1119
@@ -7930,6 +7893,9 @@ msgstr " X11 モジュールをロードできません "
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
+
+#~ msgid "'gamma' cannot be modified on this device"
+#~ msgstr "このデバイス上で'gamma'を変更することはできません "
 
 #, fuzzy
 #~ msgid "Unable to open file '%s': %s"

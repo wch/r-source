@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:27+0100\n"
+"POT-Creation-Date: 2008-04-08 11:37+0100\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -301,7 +301,7 @@ msgstr ""
 "을 할수 있습니다\n"
 "\n"
 
-#: dataentry.c:1649 dataentry.c:1759 editor.c:746 rui.c:1135
+#: dataentry.c:1649 dataentry.c:1759 editor.c:746 rui.c:1141
 msgid "Help"
 msgstr "도움"
 
@@ -317,7 +317,7 @@ msgstr "선택한 셀을 붇여넣기"
 msgid "Autosize column"
 msgstr "셀 사이즈의 자동조절"
 
-#: dataentry.c:1655 pager.c:310 rui.c:838
+#: dataentry.c:1655 pager.c:310 rui.c:846
 #: ../library/grDevices/src/devWindows.c:1616
 msgid "Stay on top"
 msgstr "윈도우즈를 항상 맨 앞에 툽니다"
@@ -326,12 +326,12 @@ msgstr "윈도우즈를 항상 맨 앞에 툽니다"
 msgid "Close"
 msgstr "닫는다"
 
-#: dataentry.c:1742 editor.c:692 pager.c:467 rui.c:1067
+#: dataentry.c:1742 editor.c:692 pager.c:467 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1556
 msgid "File"
 msgstr "파일"
 
-#: dataentry.c:1748 editor.c:710 pager.c:477 rui.c:1088
+#: dataentry.c:1748 editor.c:710 pager.c:477 rui.c:1094
 msgid "Edit"
 msgstr "편집"
 
@@ -437,12 +437,12 @@ msgstr "재시도 합니다"
 msgid "Cut"
 msgstr "잘림(cut)"
 
-#: editor.c:595 editor.c:716 pager.c:305 pager.c:478 rui.c:828 rui.c:1032
-#: rui.c:1089
+#: editor.c:595 editor.c:716 pager.c:305 pager.c:478 rui.c:836 rui.c:1038
+#: rui.c:1095
 msgid "Copy"
 msgstr "복사"
 
-#: editor.c:596 editor.c:718 rui.c:829 rui.c:1036 rui.c:1090
+#: editor.c:596 editor.c:718 rui.c:837 rui.c:1042 rui.c:1096
 msgid "Paste"
 msgstr "붙여넣기"
 
@@ -450,11 +450,11 @@ msgstr "붙여넣기"
 msgid "Delete"
 msgstr "삭제"
 
-#: editor.c:599 editor.c:722 pager.c:308 pager.c:484 rui.c:835 rui.c:1094
+#: editor.c:599 editor.c:722 pager.c:308 pager.c:484 rui.c:843 rui.c:1100
 msgid "Select all"
 msgstr "전부 선택합니다"
 
-#: editor.c:657 pager.c:431 rui.c:1020
+#: editor.c:657 pager.c:431 rui.c:1026
 msgid "Open script"
 msgstr "스크립트(script)를 열기"
 
@@ -470,16 +470,16 @@ msgstr "Console으로 돌아가다"
 msgid "Print script"
 msgstr "스크립트(script)를 인쇄하다"
 
-#: editor.c:674 pager.c:446 rui.c:1048
+#: editor.c:674 pager.c:446 rui.c:1054
 #: ../library/grDevices/src/devWindows.c:1518
 msgid "Print"
 msgstr "인쇄"
 
-#: editor.c:693 pager.c:468 rui.c:1069
+#: editor.c:693 pager.c:468 rui.c:1075
 msgid "New script"
 msgstr "새로운 스크립트"
 
-#: editor.c:695 pager.c:469 rui.c:1070
+#: editor.c:695 pager.c:469 rui.c:1076
 msgid "Open script..."
 msgstr "스크립트를... 열다"
 
@@ -491,7 +491,7 @@ msgstr "저장"
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
-#: editor.c:702 pager.c:470 rui.c:1083
+#: editor.c:702 pager.c:470 rui.c:1089
 #: ../library/grDevices/src/devWindows.c:1619
 msgid "Print..."
 msgstr "인쇄..."
@@ -500,7 +500,7 @@ msgstr "인쇄..."
 msgid "Close script"
 msgstr "스크립트를 닫다"
 
-#: editor.c:724 rui.c:1095
+#: editor.c:724 rui.c:1101
 msgid "Clear console"
 msgstr "console를 소거"
 
@@ -516,7 +516,7 @@ msgstr "검색..."
 msgid "Replace..."
 msgstr "치환..."
 
-#: editor.c:736 rui.c:1099
+#: editor.c:736 rui.c:1105
 msgid "GUI preferences..."
 msgstr "GUI 선택..."
 
@@ -571,11 +571,11 @@ msgstr "console에 붇여넣기"
 msgid "Paste commands to console"
 msgstr "명령어를 console에 붙여넣기"
 
-#: pager.c:472 rui.c:1084
+#: pager.c:472 rui.c:1090
 msgid "Save to File..."
 msgstr "파일을 저장..."
 
-#: pager.c:487 rui.c:1102
+#: pager.c:487 rui.c:1108
 msgid "View"
 msgstr "열람"
 
@@ -673,260 +673,264 @@ msgstr "'%s'는 검색되지 않았습니다"
 msgid "Are you sure?"
 msgstr "당연합니까?"
 
-#: rui.c:522
+#: rui.c:528
 msgid "Help on"
 msgstr "도움"
 
-#: rui.c:573
+#: rui.c:579
 msgid "Search help"
 msgstr "탐색 도움"
 
-#: rui.c:588
+#: rui.c:594
 msgid "Search for words in help list archives and documentation"
 msgstr "단어를 탐색하는 보관와 문서 리스트 하는것을 지원합니다"
 
-#: rui.c:603
+#: rui.c:609
 msgid "Apropos"
 msgstr "오브젝트의 검색"
 
-#: rui.c:824
+#: rui.c:832
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr ".R, RData 그리고 rda 파일만 drag-and-drop를 할수 있습니다"
 
-#: rui.c:830 rui.c:1091
+#: rui.c:838 rui.c:1097
 msgid "Paste commands only"
 msgstr "명령어만 붙여넣기"
 
-#: rui.c:831 rui.c:1040
+#: rui.c:839 rui.c:1046
 msgid "Copy and paste"
 msgstr "복사 그리고  붙여넣기"
 
-#: rui.c:833
+#: rui.c:841
 msgid "Clear window"
 msgstr "윈도우의 삭제"
 
-#: rui.c:837 rui.c:1116
+#: rui.c:845 rui.c:1122
 msgid "Buffered output"
 msgstr "버퍼에 출력"
 
-#: rui.c:877
+#: rui.c:885
 msgid "Packages"
 msgstr "패키지"
 
-#: rui.c:878
+#: rui.c:886
 msgid "Load package..."
 msgstr "패키지 불러오기..."
 
-#: rui.c:880
+#: rui.c:888
 msgid "Set CRAN mirror..."
 msgstr "CRAN 밀러 사이트의 설정..."
 
-#: rui.c:882
+#: rui.c:890
 msgid "Select repositories..."
 msgstr "다운로드 사이트의 선택..."
 
-#: rui.c:884
+#: rui.c:892
 msgid "Install package(s)..."
 msgstr "package(s) 인스톨..."
 
-#: rui.c:886
+#: rui.c:894
 msgid "Update packages..."
 msgstr "패키지 갱신"
 
-#: rui.c:889
+#: rui.c:897
 msgid "Install package(s) from local zip files..."
 msgstr "로컬(local)에 있는 zip 파일부터 package(s)를 인스톨..."
 
-#: rui.c:917
+#: rui.c:900
+#, fuzzy
+msgid "Install source package from local folder..."
+msgstr "로컬(local)에 있는 zip 파일부터 package(s)를 인스톨..."
+
+#: rui.c:923
 msgid "FAQ on R"
 msgstr "R의  FAQ"
 
-#: rui.c:919
+#: rui.c:925
 msgid "FAQ on R for &Windows"
 msgstr "\"&윈도우즈판 R의 FAQ"
 
-#: rui.c:925 rui.c:928
+#: rui.c:931 rui.c:934
 msgid "Manuals (in PDF)"
 msgstr "메뉴얼 (PDF)"
 
-#: rui.c:955
+#: rui.c:961
 msgid "R functions (text)..."
 msgstr "R의 함수 (텍스트)..."
 
-#: rui.c:957
+#: rui.c:963
 msgid "Html help"
 msgstr "Html 도움"
 
-#: rui.c:959
+#: rui.c:965
 msgid "Search help..."
 msgstr "검색 도움..."
 
-#: rui.c:964
+#: rui.c:970
 msgid "Apropos..."
 msgstr "오브젝트의 검색..."
 
-#: rui.c:966
+#: rui.c:972
 msgid "R Project home page"
 msgstr "R 프로젝트 홈페이지"
 
-#: rui.c:967
+#: rui.c:973
 msgid "CRAN home page"
 msgstr "CRAN 홈페이지"
 
-#: rui.c:969
+#: rui.c:975
 msgid "About"
 msgstr "R에 대해서"
 
-#: rui.c:1024
+#: rui.c:1030
 #, fuzzy
 msgid "Load workspace"
 msgstr "Workspace의 로드..."
 
-#: rui.c:1028
+#: rui.c:1034
 #, fuzzy
 msgid "Save workspace"
 msgstr "Workspace의 저장..."
 
-#: rui.c:1044
+#: rui.c:1050
 msgid "Stop current computation"
 msgstr "현재의 계산을 중단"
 
-#: rui.c:1068
+#: rui.c:1074
 msgid "Source R code..."
 msgstr "R 코드의 Source..."
 
-#: rui.c:1071
+#: rui.c:1077
 msgid "Display file(s)..."
 msgstr "파일files(s)의 표시..."
 
-#: rui.c:1073
+#: rui.c:1079
 msgid "Load Workspace..."
 msgstr "Workspace의 로드..."
 
-#: rui.c:1074
+#: rui.c:1080
 msgid "Save Workspace..."
 msgstr "Workspace의 저장..."
 
-#: rui.c:1076
+#: rui.c:1082
 msgid "Load History..."
 msgstr "이력의  불러오기..."
 
-#: rui.c:1078
+#: rui.c:1084
 msgid "Save History..."
 msgstr "이력을 보존..."
 
-#: rui.c:1081
+#: rui.c:1087
 msgid "Change dir..."
 msgstr "디렉토리 변경..."
 
-#: rui.c:1086
+#: rui.c:1092
 msgid "Exit"
 msgstr "종료"
 
-#: rui.c:1093
+#: rui.c:1099
 msgid "Copy and Paste"
 msgstr "복사 그리고 붙여넣기"
 
-#: rui.c:1097
+#: rui.c:1103
 msgid "Data editor..."
 msgstr "자료 에디터..."
 
-#: rui.c:1103
+#: rui.c:1109
 msgid "Toolbar"
 msgstr ""
 
-#: rui.c:1104
+#: rui.c:1110
 msgid "Statusbar"
 msgstr ""
 
-#: rui.c:1109
+#: rui.c:1115
 msgid "Misc"
 msgstr "기타"
 
-#: rui.c:1110
+#: rui.c:1116
 msgid "Stop current computation           \tESC"
 msgstr "현재의 계산을 중단 \\tESC"
 
-#: rui.c:1112
+#: rui.c:1118
 #, fuzzy
 msgid "Stop all computations"
 msgstr "현재의 계산을 중단"
 
-#: rui.c:1114
+#: rui.c:1120
 msgid "Break to debugger"
 msgstr "실행을 중단하고 디버거를 기동"
 
-#: rui.c:1117
+#: rui.c:1123
 msgid "Word completion"
 msgstr ""
 
-#: rui.c:1119
+#: rui.c:1125
 msgid "Filename completion"
 msgstr ""
 
-#: rui.c:1126
+#: rui.c:1132
 msgid "List objects"
 msgstr "오브젝트의 일람"
 
-#: rui.c:1127
+#: rui.c:1133
 msgid "Remove all objects"
 msgstr "모든 오브젝트의 삭제"
 
-#: rui.c:1128
-#, fuzzy
+#: rui.c:1134
 msgid "List search &path"
 msgstr "\"&검색 경로의 일람"
 
-#: rui.c:1136
+#: rui.c:1142
 msgid "Console"
 msgstr "콘솔화면"
 
-#: rui.c:1174
+#: rui.c:1180
 msgid "Select file"
 msgstr "파일을 선택"
 
-#: rui.c:1217
+#: rui.c:1223
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'nname'은 반각영숫자으로 1000문자까지 제한되어지고 있습니다"
 
-#: rui.c:1259
+#: rui.c:1265
 #, c-format
 msgid "menu %s does not exist"
 msgstr "메뉴 %s는 존재하지 않는다"
 
-#: rui.c:1312
+#: rui.c:1318
 msgid "'menu' is limited to 500 bytes"
 msgstr " '메뉴'이(가) 500문자만 제한됩니다"
 
-#: rui.c:1322
+#: rui.c:1328
 msgid "base menu does not exist"
 msgstr "메뉴는 존재하지 않는다"
 
-#: rui.c:1337
+#: rui.c:1343
 msgid "failed to allocate menu"
 msgstr "메뉴의 할당한것에 실패했습니다"
 
-#: rui.c:1354 rui.c:1478
+#: rui.c:1360 rui.c:1484
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menu + item이(가) 반각영숫자으로 1000문자까지 제한되어져 있습니다"
 
-#: rui.c:1362 rui.c:1445
+#: rui.c:1368 rui.c:1451
 msgid "menu does not exist"
 msgstr "메뉴는 존재하지 않는다"
 
-#: rui.c:1380 rui.c:1403 rui.c:1408
+#: rui.c:1386 rui.c:1409 rui.c:1414
 msgid "failed to allocate char storage"
 msgstr "문자 저장의 할당에 실패했습니다"
 
-#: rui.c:1416
+#: rui.c:1422
 msgid "failed to allocate menuitem"
 msgstr "menuitem의 할당한것에 실패했습니다"
 
-#: rui.c:1468
+#: rui.c:1474
 msgid "menu not found"
 msgstr "메뉴가 검색되지 못했습니다"
 
-#: rui.c:1486
+#: rui.c:1492
 msgid "menu or item does not exist"
 msgstr "menu 또는 item는 존재하지 않습니다"
 
