@@ -301,7 +301,7 @@ NEW FEATURES
     o	If a NEWS file is present in the root of a source package, it
 	is installed (analogously to LICENSE, LICENCE and COPYING).
 
-   o	Rd conversion to 'example' now quotes aliases which contain
+    o	Rd conversion to 'example' now quotes aliases which contain
 	spaces.
 
     o	The handling of DST on dates outside the range 1902-2037 has
