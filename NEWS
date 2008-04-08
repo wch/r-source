@@ -25,7 +25,7 @@ NEW FEATURES
     	respectively.
 
     o	optim(.., method="SANN", .., trace=TRUE) is now customizable via
-	'REPORT' control argument, thanks to code proposals by Thomas Petzold.
+	'REPORT' control argument, thanks to code proposals by Thomas Petzoldt.
 
 
 
