@@ -40,7 +40,7 @@ optim(par, fn, gr = NULL, \dots,
 }
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
-  
+
   By default this function performs minimization, but it will maximize
   if \code{control$fnscale} is negative.
 
@@ -133,9 +133,10 @@ optim(par, fn, gr = NULL, \dots,
       for the \code{"Nelder-Mead"} method. \code{alpha} is the reflection
       factor (default 1.0), \code{beta} the contraction factor (0.5) and
       \code{gamma} the expansion factor (2.0).}
-    \item{\code{REPORT}}{The frequency of reports for the \code{"BFGS"}
-      and \code{"L-BFGS-B"} methods if \code{control$trace} is positive.
-      Defaults to every 10 iterations.}
+    \item{\code{REPORT}}{The frequency of reports for the \code{"BFGS"},
+      \code{"L-BFGS-B"} and \code{"SANN"} methods if \code{control$trace}
+      is positive. Defaults to every 10 iterations for \code{"BFGS"} and
+      \code{"L-BFGS-B"}, or every 100 temperatures for \code{"SANN"}.}
     \item{\code{type}}{for the conjugate-gradients method. Takes value
       \code{1} for the Fletcher--Reeves update, \code{2} for
       Polak--Ribiere and \code{3} for Beale--Sorenson.}
@@ -267,7 +268,7 @@ plot(fw, -50, 50, n=1000, main = "optim() minimising 'wild function'")
 res <- optim(50, fw, method="SANN",
              control=list(maxit=20000, temp=20, parscale=20))
 res
-## Now improve locally
+## Now improve locally {typically only by a small bit}:
 (r2 <- optim(res$par, fw, method="BFGS"))
 points(r2$par, r2$value, pch = 8, col = "red", cex = 2)
 
@@ -293,9 +294,9 @@ genseq <- function(sq) {  # Generate new candidate sequence
 sq <- c(1,2:NROW(eurodistmat),1)  # Initial sequence
 distance(sq)
 
-set.seed(2222) # chosen to get a good soln quickly
+set.seed(123) # chosen to get a good soln relatively quickly
 res <- optim(sq, distance, genseq, method="SANN",
-             control = list(maxit=6000, temp=2000, trace=TRUE))
+             control = list(maxit=30000, temp=2000, trace=TRUE, REPORT=500))
 res  # Near optimum distance around 12842
 
 loc <- cmdscale(eurodist)

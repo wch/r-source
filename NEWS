@@ -24,6 +24,10 @@ NEW FEATURES
     	environment variables 'R_ENVIRON_USER' and 'R_PROFILE_USER',
     	respectively.
 
+    o	optim(.., method="SANN", .., trace=TRUE) is now customizable via
+	'REPORT' control argument, thanks to code proposals by Thomas Petzold.
+
+
 
 PACKAGE INSTALLATION
 
@@ -366,7 +370,7 @@ NEW FEATURES
 	?NumericConstants for details.
 
     o	Dependence specifications for R or packages in the Depends
-	field in a DESCRIPTION file can now make use of operators 
+	field in a DESCRIPTION file can now make use of operators
 	< > == and != (in addition to <= and >=): such packages will
 	not be installable nor loadable in R < 2.7.0.
 

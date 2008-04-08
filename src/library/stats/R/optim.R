@@ -31,7 +31,7 @@ optim <- function(par, fn, gr = NULL, ...,
     ## Defaults :
     con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, length(par)),
                 ndeps = rep.int(1e-3, length(par)),
-                maxit = 100, abstol = -Inf, reltol=sqrt(.Machine$double.eps),
+                maxit = 100L, abstol = -Inf, reltol=sqrt(.Machine$double.eps),
                 alpha = 1.0, beta = 0.5, gamma = 2.0,
                 REPORT = 10,
                 type = 1,
@@ -39,13 +39,17 @@ optim <- function(par, fn, gr = NULL, ...,
                 tmax = 10, temp = 10.0)
     nmsC <- names(con)
     if (method == "Nelder-Mead") con$maxit <- 500
-    if (method == "SANN") con$maxit <- 10000
-
+    if (method == "SANN") {
+	con$maxit <- 10000
+	con$REPORT <- 100
+    }
     con[(namc <- names(control))] <- control
     if(length(noNms <- namc[!namc %in% nmsC]) > 0)
         warning("unknown names in control: ", paste(noNms,collapse=", "))
     if(con$trace < 0)
         warning("read the documentation for 'trace' more carefully")
+    else if (method == "SANN" && con$trace && as.integer(con$REPORT) == 0)
+	stop("'trace != 0' needs 'REPORT >= 1'")
     if (method == "L-BFGS-B" &&
         any(!is.na(match(c("reltol","abstol"), namc))))
         warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
