@@ -162,6 +162,8 @@ install.packages <-
                                dependencies = dependencies, ...)
             return(invisible())
         }
+        # Avoid problems with backslashes in INSTALL.  Will mess up UNC names.
+        pkgs <- gsub("\\\\", "/", pkgs)        
     } else {
         if(type == "mac.binary") {
             if(!length(grep("darwin", R.version$platform)))
