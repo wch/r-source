@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-08 17:51+0100\n"
+"POT-Creation-Date: 2008-04-09 16:21+0100\n"
 "PO-Revision-Date: 2008-04-04 00:59+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -934,7 +934,7 @@ msgstr " メニューが見つかりません "
 msgid "menu or item does not exist"
 msgstr " メニューまたはアイテムが存在しません "
 
-#: system.c:433
+#: system.c:435
 msgid "Save workspace image?"
 msgstr " 作業スペースを保存しますか? "
 

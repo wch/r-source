@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:27+0100\n"
+"POT-Creation-Date: 2008-04-09 16:21+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -97,9 +97,9 @@ msgstr "在显示'%s'时出了问题"
 #: src/main/array.c:1163 src/main/attrib.c:193 src/main/builtin.c:158
 #: src/main/builtin.c:504 src/main/builtin.c:520 src/main/builtin.c:697
 #: src/main/character.c:121 src/main/character.c:124 src/main/character.c:167
-#: src/main/character.c:3088 src/main/character.c:3092
-#: src/main/character.c:3155 src/main/character.c:3159
-#: src/main/character.c:3221 src/main/connections.c:907
+#: src/main/character.c:3086 src/main/character.c:3090
+#: src/main/character.c:3153 src/main/character.c:3157
+#: src/main/character.c:3219 src/main/connections.c:907
 #: src/main/connections.c:913 src/main/connections.c:916
 #: src/main/connections.c:920 src/main/connections.c:1066
 #: src/main/connections.c:1078 src/main/connections.c:1083
@@ -163,15 +163,15 @@ msgstr "在显示'%s'时出了问题"
 #: src/main/saveload.c:1972 src/main/saveload.c:1975 src/main/saveload.c:1978
 #: src/main/saveload.c:2099 src/main/saveload.c:2271 src/main/saveload.c:2276
 #: src/main/saveload.c:2279 src/main/saveload.c:2370 src/main/saveload.c:2420
-#: src/main/scan.c:673 src/main/scan.c:840 src/main/scan.c:853
-#: src/main/scan.c:857 src/main/scan.c:859 src/main/scan.c:870
-#: src/main/scan.c:897 src/main/scan.c:900 src/main/scan.c:946
-#: src/main/scan.c:985 src/main/scan.c:989 src/main/scan.c:999
-#: src/main/scan.c:1208 src/main/scan.c:1484 src/main/scan.c:1496
-#: src/main/scan.c:1500 src/main/scan.c:1506 src/main/scan.c:1734
-#: src/main/scan.c:1735 src/main/scan.c:1737 src/main/scan.c:1738
-#: src/main/scan.c:1739 src/main/scan.c:1740 src/main/scan.c:1741
-#: src/main/scan.c:1742 src/main/seq.c:352 src/main/seq.c:356
+#: src/main/scan.c:674 src/main/scan.c:842 src/main/scan.c:855
+#: src/main/scan.c:859 src/main/scan.c:861 src/main/scan.c:872
+#: src/main/scan.c:899 src/main/scan.c:902 src/main/scan.c:948
+#: src/main/scan.c:987 src/main/scan.c:991 src/main/scan.c:1001
+#: src/main/scan.c:1210 src/main/scan.c:1486 src/main/scan.c:1498
+#: src/main/scan.c:1502 src/main/scan.c:1508 src/main/scan.c:1736
+#: src/main/scan.c:1737 src/main/scan.c:1739 src/main/scan.c:1740
+#: src/main/scan.c:1741 src/main/scan.c:1742 src/main/scan.c:1743
+#: src/main/scan.c:1744 src/main/seq.c:352 src/main/seq.c:356
 #: src/main/seq.c:374 src/main/seq.c:378 src/main/seq.c:384 src/main/seq.c:392
 #: src/main/sysutils.c:564 src/main/sysutils.c:566 src/main/sysutils.c:568
 #: src/main/unique.c:701 src/main/unique.c:948 src/main/unique.c:1008
@@ -421,39 +421,39 @@ msgstr "第一个变元应当是字符串"
 msgid "character string expected as third argument"
 msgstr "第三个变元应当是字符串"
 
-#: src/gnuwin32/system.c:115 src/main/errors.c:135
+#: src/gnuwin32/system.c:117 src/main/errors.c:135
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:117 src/main/errors.c:137
+#: src/gnuwin32/system.c:119 src/main/errors.c:137
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:123 src/main/errors.c:143
+#: src/gnuwin32/system.c:125 src/main/errors.c:143
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:125 src/main/errors.c:145
+#: src/gnuwin32/system.c:127 src/main/errors.c:145
 msgid "reached CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:145
+#: src/gnuwin32/system.c:147
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr "致命错误:%s\n"
 
-#: src/gnuwin32/system.c:323 src/unix/sys-std.c:830
+#: src/gnuwin32/system.c:325 src/unix/sys-std.c:830
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "编码'%s'不存在"
 
-#: src/gnuwin32/system.c:329 src/unix/sys-std.c:836
+#: src/gnuwin32/system.c:331 src/unix/sys-std.c:836
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<错误: 无法将编码'%s'重新进行编码>\n"
 
-#: src/gnuwin32/system.c:538 src/gnuwin32/system.c:990
-#: src/gnuwin32/system.c:1002 src/main/connections.c:503
+#: src/gnuwin32/system.c:540 src/gnuwin32/system.c:992
+#: src/gnuwin32/system.c:1004 src/main/connections.c:503
 #: src/main/connections.c:509 src/main/dounzip.c:105 src/main/saveload.c:1984
 #: src/main/serialize.c:2117 src/main/serialize.c:2126
 #: src/main/serialize.c:2210 src/main/serialize.c:2234 src/unix/system.c:314
@@ -462,59 +462,59 @@ msgstr "<错误: 无法将编码'%s'重新进行编码>\n"
 msgid "cannot open file '%s': %s"
 msgstr "无法打开文件'%s': %s"
 
-#: src/gnuwin32/system.c:552
+#: src/gnuwin32/system.c:554
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show():不存在'%s'这个文件\n"
 
-#: src/gnuwin32/system.c:953
+#: src/gnuwin32/system.c:955
 msgid "WARNING: no max-mem-size given\n"
 msgstr "警告: 没有设定max-mem-size\n"
 
-#: src/gnuwin32/system.c:959
+#: src/gnuwin32/system.c:961
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "警告: --max-mem-size值不对: 略过不用\n"
 
-#: src/gnuwin32/system.c:961
+#: src/gnuwin32/system.c:963
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "警告: --max-mem-size=%lu%c: 太大，略过不用\n"
 
-#: src/gnuwin32/system.c:966
+#: src/gnuwin32/system.c:968
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "警告: --max-mem-size=%4.1fM太小，略过不用\n"
 
-#: src/gnuwin32/system.c:970
+#: src/gnuwin32/system.c:972
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "警告: --max-mem-size=%4.0fM太大，当作%uM来用\n"
 
-#: src/gnuwin32/system.c:1013 src/unix/system.c:353
+#: src/gnuwin32/system.c:1015 src/unix/system.c:353
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "警告: 因为太长了，'-e %s'这个输入略过不用\n"
 
-#: src/gnuwin32/system.c:1017 src/unix/system.c:367
+#: src/gnuwin32/system.c:1019 src/unix/system.c:367
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 没有'%s'这样的选项\n"
 
-#: src/gnuwin32/system.c:1038 src/unix/system.c:371
+#: src/gnuwin32/system.c:1040 src/unix/system.c:371
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "变元’%s’略过不用\n"
 
-#: src/gnuwin32/system.c:1044 src/unix/system.c:378
+#: src/gnuwin32/system.c:1046 src/unix/system.c:378
 msgid "cannot use -e with -f or --file"
 msgstr "-e选项不能同时和-f或--file一起出现"
 
-#: src/gnuwin32/system.c:1065 src/unix/system.c:427
+#: src/gnuwin32/system.c:1067 src/unix/system.c:427
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "你必需选用'--save'，’--no-save'或'--vanilla'其中的一个"
 
-#: src/gnuwin32/system.c:1070
+#: src/gnuwin32/system.c:1072
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "无法建立‘reader thread’，系统资源不够"
@@ -528,7 +528,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr "数学函数中用了非数值变元"
 
 #: src/include/Errormsg.h:35 src/main/builtin.c:851 src/main/devices.c:375
-#: src/main/scan.c:1433
+#: src/main/scan.c:1435
 msgid "invalid argument"
 msgstr "变元不对"
 
@@ -794,72 +794,72 @@ msgstr "第一个变元不是矩阵"
 msgid "probable complete loss of accuracy in modulus"
 msgstr "系数精确度很可能完全损失"
 
-#: src/main/arithmetic.c:298
+#: src/main/arithmetic.c:303
 msgid "operator needs one or two arguments"
 msgstr "运算符需要一个或两个变元"
 
-#: src/main/arithmetic.c:315
+#: src/main/arithmetic.c:320
 msgid "non-numeric argument to binary operator"
 msgstr "二进列运算符中有非数值变元"
 
-#: src/main/arithmetic.c:374 src/main/relop.c:127
+#: src/main/arithmetic.c:379 src/main/relop.c:127
 msgid "non-conformable arrays"
 msgstr "非整合陈列"
 
-#: src/main/arithmetic.c:417
+#: src/main/arithmetic.c:422
 msgid "non-conformable time-series"
 msgstr "非整合时间系列"
 
-#: src/main/arithmetic.c:439 src/main/logic.c:119 src/main/relop.c:72
+#: src/main/arithmetic.c:444 src/main/logic.c:119 src/main/relop.c:72
 #: src/main/relop.c:165
 msgid "longer object length is not a multiple of shorter object length"
 msgstr "长的对象长度不是短的对象长度的整倍数"
 
-#: src/main/arithmetic.c:508
+#: src/main/arithmetic.c:513
 msgid "invalid argument to unary operator"
 msgstr "一进列运算符的变元不对"
 
-#: src/main/arithmetic.c:532 src/main/arithmetic.c:551
+#: src/main/arithmetic.c:537 src/main/arithmetic.c:556
 msgid "invalid unary operator"
 msgstr "一进列运算符不对"
 
-#: src/main/arithmetic.c:598
+#: src/main/arithmetic.c:603
 msgid "NAs produced by integer overflow"
 msgstr "整数上溢产生了NA"
 
-#: src/main/arithmetic.c:1026
+#: src/main/arithmetic.c:1031
 msgid "unimplemented real function of 1 argument"
 msgstr "一变元的实数函数目前还没有实现"
 
-#: src/main/arithmetic.c:1038 src/main/complex.c:845 src/main/complex.c:917
+#: src/main/arithmetic.c:1043 src/main/complex.c:845 src/main/complex.c:917
 msgid "unimplemented complex function"
 msgstr "目前没有实现复数功能"
 
-#: src/main/arithmetic.c:1287 src/main/arithmetic.c:1669
-#: src/main/arithmetic.c:1851 src/main/arithmetic.c:1973
+#: src/main/arithmetic.c:1292 src/main/arithmetic.c:1674
+#: src/main/arithmetic.c:1856 src/main/arithmetic.c:1978
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值变元的实数函数目前没有实现"
 
-#: src/main/arithmetic.c:1309
+#: src/main/arithmetic.c:1314
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr "给了'atan'%d个变元，但它最多只能用一个变元"
 
-#: src/main/arithmetic.c:1336
+#: src/main/arithmetic.c:1341
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "给了%d个变元到'%s'，但它最多只能用两个变元"
 
-#: src/main/arithmetic.c:1355
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr "第二变元长度为零是不对的"
 
-#: src/main/arithmetic.c:1414
+#: src/main/arithmetic.c:1419
 msgid "invalid argument 'base' of length 0"
 msgstr "不能有长度为零的'base'变元"
 
-#: src/main/arithmetic.c:1422
+#: src/main/arithmetic.c:1427
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "给了'log'%d个变元，但它最多只能用两个变元"
@@ -1513,20 +1513,20 @@ msgstr "变元'x'不能含NA值"
 msgid "argument 'x' must be an integer vector"
 msgstr "变元'x'必需是整数矢量"
 
-#: src/main/character.c:3083
+#: src/main/character.c:3081
 msgid "strtrim() requires a character vector"
 msgstr "strtrim()需要字符矢量"
 
-#: src/main/character.c:3162
+#: src/main/character.c:3160
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "本平台不支持'dirmark = TRUE'"
 
-#: src/main/character.c:3174 src/main/character.c:3188
+#: src/main/character.c:3172 src/main/character.c:3186
 #: src/main/platform.c:1354 src/main/platform.c:1397
 msgid "internal out-of-memory condition"
 msgstr "内部出现了内存不够情况"
 
-#: src/main/character.c:3184 src/main/platform.c:1393
+#: src/main/character.c:3182 src/main/platform.c:1393
 #, c-format
 msgid "read error on '%s'"
 msgstr "读取'%s'时出了错"
@@ -1887,8 +1887,8 @@ msgstr "fifo(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现�
 #: src/main/connections.c:3498 src/main/connections.c:3696
 #: src/main/connections.c:3987 src/main/dcf.c:56 src/main/deparse.c:303
 #: src/main/deparse.c:376 src/main/saveload.c:2286 src/main/saveload.c:2363
-#: src/main/scan.c:914 src/main/scan.c:1020 src/main/scan.c:1514
-#: src/main/scan.c:1722 src/main/source.c:193
+#: src/main/scan.c:916 src/main/scan.c:1022 src/main/scan.c:1516
+#: src/main/scan.c:1724 src/main/source.c:193
 msgid "cannot open the connection"
 msgstr "无法打开链结"
 
@@ -2093,7 +2093,7 @@ msgstr "readLines读的行数不够"
 
 #: src/main/connections.c:2750 src/main/connections.c:3093
 #: src/main/connections.c:3454 src/main/connections.c:4012
-#: src/main/scan.c:1718 src/main/serialize.c:1663
+#: src/main/scan.c:1720 src/main/serialize.c:1663
 msgid "cannot write to this connection"
 msgstr "无法写入此链结"
 
@@ -3640,119 +3640,119 @@ msgstr "读MBCS字节时遇到EOF"
 msgid "function is too long to keep source (at line %d)"
 msgstr "函数太长，无法保留其代码(%d行)"
 
-#: src/main/gram.y:847
+#: src/main/gram.y:851
 #, c-format
 msgid "unable to allocate space for source line %d"
 msgstr "无法为%d行源代码分配内存"
 
-#: src/main/gram.y:957
+#: src/main/gram.y:961
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "%d行的标记种类不对"
 
-#: src/main/gram.y:1479
+#: src/main/gram.y:1483
 msgid "contextstack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/gram.y:1715
+#: src/main/gram.y:1719
 msgid "input"
 msgstr "输入"
 
-#: src/main/gram.y:1716
+#: src/main/gram.y:1720
 msgid "end of input"
 msgstr "输入结束"
 
-#: src/main/gram.y:1717
+#: src/main/gram.y:1721
 msgid "string constant"
 msgstr "字符常量"
 
-#: src/main/gram.y:1718
+#: src/main/gram.y:1722
 msgid "numeric constant"
 msgstr "数值量"
 
-#: src/main/gram.y:1719
+#: src/main/gram.y:1723
 msgid "symbol"
 msgstr "符号"
 
-#: src/main/gram.y:1720
+#: src/main/gram.y:1724
 msgid "assignment"
 msgstr "任务"
 
-#: src/main/gram.y:1721
+#: src/main/gram.y:1725
 msgid "end of line"
 msgstr "行尾"
 
-#: src/main/gram.y:1734 src/main/gram.y:1740
+#: src/main/gram.y:1738 src/main/gram.y:1744
 #, c-format
 msgid "unexpected %s"
 msgstr "意外的%s"
 
-#: src/main/gram.y:1750
+#: src/main/gram.y:1754
 #, fuzzy, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "%d行上有重复正式变元"
 
-#: src/main/gram.y:1762
+#: src/main/gram.y:1766
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "%d行输入缓冲区上溢"
 
-#: src/main/gram.y:1901
+#: src/main/gram.y:1905
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr "整数文字%sL里有小数点；转用数值"
 
-#: src/main/gram.y:1903
+#: src/main/gram.y:1907
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "同L一起修饰的%s是非整数值; 转用数值"
 
-#: src/main/gram.y:1914
+#: src/main/gram.y:1918
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "整数文字%sL里含多余的小数点"
 
-#: src/main/gram.y:1937
+#: src/main/gram.y:1941
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d行无法为长字符串分配内存"
 
-#: src/main/gram.y:2049
+#: src/main/gram.y:2053
 #, c-format
 msgid "\\uxxxx sequences not supported (line %d)"
 msgstr "不支持\\uxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2068 src/main/gram.y:2081
+#: src/main/gram.y:2072 src/main/gram.y:2085
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "\\u{xxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2083
+#: src/main/gram.y:2087
 #, c-format
 msgid "invalid \\uxxxx sequence (line %d)"
 msgstr "\\uxxxx 顺序不对(%d行)"
 
-#: src/main/gram.y:2092
+#: src/main/gram.y:2096
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported (line %d)"
 msgstr "不支持\\uxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2112 src/main/gram.y:2118
+#: src/main/gram.y:2116 src/main/gram.y:2122
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "\\U{xxxxxxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2120
+#: src/main/gram.y:2124
 #, c-format
 msgid "invalid \\Uxxxxxxxx sequence (line %d)"
 msgstr "\\Uxxxxxxxx顺序不对(%d行)"
 
-#: src/main/gram.y:2162
+#: src/main/gram.y:2166
 #, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "不认识字符串里'\\%c'这样的逸出号"
 
-#: src/main/gram.y:2213
+#: src/main/gram.y:2217
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3761,19 +3761,19 @@ msgstr ""
 "%d行字符串里包含了不属于目前语言环境的Unicode转义字符太长了(最多只能有1000个"
 "字符)"
 
-#: src/main/gram.y:2222
+#: src/main/gram.y:2226
 #, c-format
 msgid "unrecognized escape removed from \"%s\""
 msgid_plural "unrecognized escapes removed from \"%s\""
 msgstr[0] "从\"%s\"里删除了不认识的逸出号"
 
-#: src/main/gram.y:2331
+#: src/main/gram.y:2335
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr "%d行代码源里的函数功能嵌套太深"
 
-#: src/main/gram.y:2720 src/main/gram.y:2727 src/main/gram.y:2733
-#: src/main/gram.y:2740
+#: src/main/gram.y:2724 src/main/gram.y:2731 src/main/gram.y:2737
+#: src/main/gram.y:2744
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d行上下文堆叠上溢"
@@ -4503,11 +4503,11 @@ msgstr "optim梯度长度被评估为%d，而不是%d"
 msgid "candidate point in optim evaluated to length %d not %d"
 msgstr "optim候选点长度被评估为%d，而不是%d"
 
-#: src/main/optim.c:223 src/main/optim.c:409
+#: src/main/optim.c:223 src/main/optim.c:410
 msgid "'fn' is not a function"
 msgstr "'fn'不是函数"
 
-#: src/main/optim.c:239 src/main/optim.c:415
+#: src/main/optim.c:239 src/main/optim.c:416
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale'的长度不对"
 
@@ -4515,55 +4515,60 @@ msgstr "'parscale'的长度不对"
 msgid "'maxit' is not an integer"
 msgstr "'maxit'不是整数"
 
-#: src/main/optim.c:271
+#: src/main/optim.c:272
 msgid "'tmax' is not an integer"
 msgstr "'tmax'不是整数"
 
-#: src/main/optim.c:273 src/main/optim.c:290 src/main/optim.c:315
-#: src/main/optim.c:345 src/main/optim.c:423
+#: src/main/optim.c:274 src/main/optim.c:291 src/main/optim.c:316
+#: src/main/optim.c:346 src/main/optim.c:424
 msgid "'gr' is not a function"
 msgstr "'gr'不是函数"
 
-#: src/main/optim.c:296 src/main/optim.c:321 src/main/optim.c:351
-#: src/main/optim.c:429
+#: src/main/optim.c:297 src/main/optim.c:322 src/main/optim.c:352
+#: src/main/optim.c:430
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps'长度不对"
 
-#: src/main/optim.c:381
+#: src/main/optim.c:382
 msgid "unknown 'method'"
 msgstr "没有这样的'method'"
 
-#: src/main/optim.c:512
+#: src/main/optim.c:513
 msgid "REPORT must be > 0 (method = \"BFGS\")"
 msgstr "REPORT必需大于零 (method = \"BFGS\")"
 
-#: src/main/optim.c:523
+#: src/main/optim.c:524
 msgid "initial value in 'vmmin' is not finite"
 msgstr "'vmmin'的初始值不能为无穷大"
 
-#: src/main/optim.c:671
+#: src/main/optim.c:672
 msgid "function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
-#: src/main/optim.c:865
+#: src/main/optim.c:866
 msgid "unknown 'type' in CG method of optim"
 msgstr "optim的CG方法中没有这种'type'"
 
-#: src/main/optim.c:878
+#: src/main/optim.c:879
 msgid "Function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
-#: src/main/optim.c:933
+#: src/main/optim.c:934
 msgid "unknown type in CG method of optim"
 msgstr "optim的CG方法中没有这一种类"
 
-#: src/main/optim.c:1026
+#: src/main/optim.c:1027
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
 msgstr "REPORT必需大于零 (method = \"L-BFGS-B\")"
 
-#: src/main/optim.c:1050
+#: src/main/optim.c:1051
 msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr "L-BFGS-B不能有'fn'的无限值"
+
+#: src/main/optim.c:1106
+#, fuzzy
+msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
+msgstr "REPORT必需大于零 (method = \"BFGS\")"
 
 #: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
 msgid "NA replaced by maximum positive value"
@@ -5891,84 +5896,84 @@ msgid ""
 "connection"
 msgstr "在通过联结进行输入时，文件头没有魔号"
 
-#: src/main/scan.c:474
+#: src/main/scan.c:475
 #, c-format
 msgid "scan() expected '%s', got '%s'"
 msgstr "scan()需要'%s', 而不是'%s'"
 
-#: src/main/scan.c:660
+#: src/main/scan.c:661
 msgid "empty 'what' specified"
 msgstr "'what'设定不能是空的"
 
-#: src/main/scan.c:711
+#: src/main/scan.c:712
 #, c-format
 msgid "line %d did not have %d elements"
 msgstr "%d行没有%d元素"
 
-#: src/main/scan.c:763
+#: src/main/scan.c:765
 msgid "number of items read is not a multiple of the number of columns"
 msgstr "读取的项目数必需是列数的倍数"
 
-#: src/main/scan.c:855
+#: src/main/scan.c:857
 msgid "invalid 'strip.white' length"
 msgstr "'strip.white'的长度不对"
 
-#: src/main/scan.c:866
+#: src/main/scan.c:868
 msgid "invalid 'sep' value: must be one byte"
 msgstr "'sep'值不对: 大小只能为一拜"
 
-#: src/main/scan.c:878
+#: src/main/scan.c:880
 msgid "invalid decimal separator: must be one byte"
 msgstr "十进位分隔符不对: 大小只能为一拜"
 
-#: src/main/scan.c:883
+#: src/main/scan.c:885
 msgid "invalid decimal separator"
 msgstr "十进位分隔符不对"
 
-#: src/main/scan.c:892 src/main/scan.c:1008 src/main/scan.c:1493
+#: src/main/scan.c:894 src/main/scan.c:1010 src/main/scan.c:1495
 msgid "invalid quote symbol set"
 msgstr "引号符号集不对"
 
-#: src/main/scan.c:1064 src/main/scan.c:1082
+#: src/main/scan.c:1066 src/main/scan.c:1084
 msgid "string terminated by newline or EOF"
 msgstr "字符串结尾要用新行或EOF"
 
-#: src/main/scan.c:1204
+#: src/main/scan.c:1206
 msgid "the first argument must be of mode character"
 msgstr "第一变元的状态必需是字符"
 
-#: src/main/scan.c:1435
+#: src/main/scan.c:1437
 #, c-format
 msgid "Selection: "
 msgstr "选择: "
 
-#: src/main/scan.c:1523 src/main/scan.c:1535
+#: src/main/scan.c:1525 src/main/scan.c:1537
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "'readTableHead'无法分配缓冲区"
 
-#: src/main/scan.c:1545
+#: src/main/scan.c:1547
 msgid "\\ followed by EOF"
 msgstr "\\ 后面跟着EOF"
 
-#: src/main/scan.c:1589 src/main/scan.c:1592
+#: src/main/scan.c:1591 src/main/scan.c:1594
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "readTableHeader在读取'%s'时遇到了不完全的最后一行"
 
-#: src/main/scan.c:1715
+#: src/main/scan.c:1717
 msgid "'file' is not a connection"
 msgstr "'file'不是链结"
 
-#: src/main/scan.c:1748
+#: src/main/scan.c:1750
 msgid "'dec' must be a single character"
 msgstr "'dec'必需为单节字符"
 
-#: src/main/scan.c:1775
+#: src/main/scan.c:1777
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "数据框损坏了--列的长度%d不等于行的数目"
 
-#: src/main/scan.c:1821
+#: src/main/scan.c:1823
 msgid "corrupt matrix -- dims not not match length"
 msgstr "矩阵损坏了--dims同长度不相等"
 

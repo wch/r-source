@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-08 17:51+0100\n"
+"POT-Creation-Date: 2008-04-09 16:21+0100\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -929,7 +929,7 @@ msgstr "메뉴가 검색되지 못했습니다"
 msgid "menu or item does not exist"
 msgstr "menu 또는 item는 존재하지 않습니다"
 
-#: system.c:433
+#: system.c:435
 msgid "Save workspace image?"
 msgstr "workspace(imaga)를 보존하겠습니까?"
 

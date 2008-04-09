@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-08 17:51+0100\n"
+"POT-Creation-Date: 2008-04-09 16:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -874,7 +874,7 @@ msgstr ""
 msgid "menu or item does not exist"
 msgstr ""
 
-#: system.c:433
+#: system.c:435
 msgid "Save workspace image?"
 msgstr ""
 
