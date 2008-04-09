@@ -162,8 +162,18 @@ install.packages <-
                                dependencies = dependencies, ...)
             return(invisible())
         }
-        # Avoid problems with backslashes in INSTALL.  Will mess up UNC names.
-        pkgs <- gsub("\\\\", "/", pkgs)        
+        ## Avoid problems with spaces in pathnames.
+        have_spaces <- grep(" ", pkgs)
+        if(length(have_spaces)) {
+            ## we want the short name for the directory,
+            ## but not for a .tar.gz, and package names never contain spaces.
+            p <- pkgs[have_spaces]
+            dirs <- shortPathName(dirname(p))
+            pkgs[have_spaces] <- file.path(dirs, basename(p))
+        }
+        ## Avoid problems with backslashes
+        ## -- will mess up UNC names, but they don't work
+        pkgs <- gsub("\\\\", "/", pkgs)
     } else {
         if(type == "mac.binary") {
             if(!length(grep("darwin", R.version$platform)))
