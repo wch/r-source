@@ -1545,20 +1545,100 @@ guess_category_value (int category, const char *categoryname)
     }
 #  ifdef WIN32
   /* Need to translate some Windows locale names */
-  if(strcmp(locale, "chs") == 0) locale = "zh_CN";
-  if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
-  if(strcmp(locale, "cht") == 0) locale = "zh_TW";
-  if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
-  if(strcmp(locale, "german") == 0) locale = "de_DE";
-  /* Vista has got a lot pickier, so e.g. 'LC_ALL=ru' does not work */
-  if(strncmp(locale, "de", 2) == 0) locale = "de_DE";
-  if(strcmp(locale, "esp") == 0) locale = "es_ES";
-  if(strncmp(locale, "fr", 2) == 0) locale = "fr_FR";
-  if(strncmp(locale, "it", 2) == 0) locale = "it_IT";
-  if(strncmp(locale, "ko", 2) == 0) locale = "ko_KO";
-  if(strcmp(locale, "jpn") == 0) locale = "ja_JP";
-  if(strncmp(locale, "rus", 3) == 0) locale = "ru_RU";
-  if(strcmp(locale, "spanish") == 0) locale = "es_ES";
+  const static struct {
+      const char * const win;
+      const char * const unix;
+  } FullNames[] = {
+      {"belgian", "nl_BE"},
+      {"czech", "cs_CZ"},
+      {"chinese", "zh_TW"},
+      {"chinese-simplified", "zh_CN"},
+      {"chinese-traditional", "zh_TW"},
+      {"danish", "da_DA"},
+      {"dutch", "nl_NL"},
+      {"finnish", "fi_FI"},
+      {"german", "de_DE"},
+      {"german-austrian", "de_AT"},
+      {"german-swiss", "de_CH"},
+      {"greek", "el_GR"},
+      {"hungarian", "hu_HU"},
+      {"icelandic", "is_IS"},
+      {"norwegian", "nb_NO"},
+      {"polish", "pl_PL"},
+      {"portuguese-brazlian", "pt_BR"},
+      {"russian", "ru_RU"},
+      {"slovak", "sk_SK"},
+      {"spanish", "es_ES"},
+      {"spanish-mexican", "es_MX"},
+      {"spanish-modern", "es_ES"},
+      {"swedish", "sv_SE"},
+      {"turkish", "tr_TR"},
+      {"chs", "zh_CN"},
+      {"csy", "cs_CZ"},
+      {"dan", "da_DA"},
+      {"dea", "de_AT"},
+      {"des", "de_CH"},
+      {"deu", "de_DE"},
+      {"esp", "es_ES"},
+      {"esm", "es_MX"},
+      {"esn", "es_ES"},
+      {"ell", "el_GR"},
+      {"fin", "fi_FI"},
+      {"fra", "fr_FR"},
+      {"frb", "fr_BE"},
+      {"frc", "fr_CA"},
+      {"frs", "fr_CH"},
+      {"hun", "hu_HU"},
+      {"isl", "is_IS"},
+      {"jpn", "ja_JP"},
+      {"nlb", "nl_BE"},
+      {"nld", "nl_NL"},
+      {"nor", "nb_NO"},
+      {"non", "nn_NO"},
+      {"plk", "pl_PL"},
+      {"ptb", "pt_BR"},
+      {"rus", "ru_RU"},
+      {"sky", "sk_SK"},
+      {"sve", "sv_SE"},
+      {"trk", "tr_TR"},
+      {NULL, ""}
+  };
+  
+  /* Two-letter abbreviations of full names work on XP, but not on Vista */
+  const static struct {
+      const char * const win;
+      const char * const unix;
+  } Abb2Names[] = {
+      {"ch", "zh_TW"},
+      {"cz", "cs_CZ"},
+      {"de", "de_DE"},
+      {"fr", "fr_FR"},
+      {"ge", "de_DE"},
+      {"gr", "el_GR"},
+      {"ic", "is_IS"},
+      {"it", "it_IT"},
+      {"ja", "ja_JP"},
+      {"ko", "ko_KO"},
+      {"no", "nb_NO"},
+      {"po", "pl_PL"},
+      {"sl", "sk_SK"},
+      {"sp", "es_ES"},
+      {"sw", "sv_SE"},
+      {NULL, ""}
+  };
+  
+  int i;
+  for (i = 0; FullNames[i].win; i++)
+      if (strcmp(locale, FullNames[i].win) == 0) {
+	  locale = FullNames[i].unix;
+	  break;
+      }
+  if (strlen(locale) < 3 || locale[2] != '_')
+      for (i = 0; Abb2Names[i].win; i++)
+	  if (strncmp(locale, Abb2Names[i].win, 2) == 0) {
+	      locale = Abb2Names[i].unix;
+	      break;
+	  }
 #  endif
 # endif
 #endif
