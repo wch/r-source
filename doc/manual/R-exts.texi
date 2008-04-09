@@ -6371,14 +6371,11 @@ needing an element representing the same string.  As of @R{} 2.6.0, @R{}
 maintains a global cache of @code{CHARSXP}s so that there is only ever
 one @code{CHARSXP} representing a given string in memory.
 
-@findex mkChar
-@findex mkCharLen
 You can obtain a @code{CHARSXP} by calling @code{mkChar} and providing a
 nul-terminated C-style string.  This function will return a pre-existing
 @code{CHARSXP} if one with a matching string already exists, otherwise
 it will create a new one and add it to the cache before returning it to
-you.   The variant @code{mkCharLen} can be used to create a
-@code{CHARSXP} from a buffer possibly containing nuls.
+you.
 
 Currently, it is still possible to create @code{CHARSXP}s using
 @code{allocVector} or @code{allocString}; @code{CHARSXP}s created in
@@ -7580,18 +7577,6 @@ returns a string allocated by @code{R_alloc}.  This can translate from
 invalid input: this is done byte-by-byte with @code{1} indicates to
 output hex of the form @code{<a0>}, and @code{2} to replace by @code{.},
 with any other value causing the byte to produce no output.
-
-@findex mkCharLenCE
-@R{} 2.8.0 added
-
-@example
-SEXP mkCharLenCE(const char *, int, cetype_t);
-@end example
-
-@noindent
-to create marked character strings of a given length (possibly with
-embedded nuls).
-
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code

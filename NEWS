@@ -25,12 +25,8 @@ NEW FEATURES
     	respectively.
 
     o	optim(.., method="SANN", .., trace=TRUE) is now customizable via
-	the 'REPORT' control argument, thanks to code proposals by
-	Thomas Petzoldt.
+	'REPORT' control argument, thanks to code proposals by Thomas Petzoldt.
 
-    o	The parser and scan() now accept strings with embedded nuls
-	such as "a\0b" -- previous versions of R terminated scanning
-	at the first nul.
 
 
 PACKAGE INSTALLATION
@@ -63,12 +59,6 @@ DEPRECATED & DEFUNCT
 
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.
-
-
-C-LEVEL FACILITIES
-
-    o	CHARSXPs with embedded nuls are now cached, and can be
-    	created	by mkCharLen and mkCharLenCE (with a declared encoding).
 
 
 BUG FIXES
@@ -833,10 +823,6 @@ BUG FIXES
     	based on vectors) are not source()able, with a stronger wording.
 
     o	read.dcf(all = TRUE) was leaking connections.
-
-    o	scan() with a non-default separator could skip nul bytes,
-	including those entered as \0 with allowEscapes=TRUE.  This
-	was different from the default separator.
 
     o	determinant(matrix(,0,0)) now returns a correct "det" result.
 

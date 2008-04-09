@@ -642,7 +642,6 @@ typedef enum {
 
 cetype_t Rf_getCharCE(SEXP);
 SEXP Rf_mkCharCE(const char *, cetype_t);
-SEXP Rf_mkCharLenCE(const char *, int, cetype_t);
 const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
 
 				/* return(.) NOT reached : for -Wall */
@@ -923,7 +922,6 @@ int R_system(const char *);
 #define mkChar			Rf_mkChar
 #define mkCharCE		Rf_mkCharCE
 #define mkCharLen		Rf_mkCharLen
-#define mkCharLenCE		Rf_mkCharLenCE
 #define mkString		Rf_mkString
 #define namesgets		Rf_namesgets
 #define ncols			Rf_ncols

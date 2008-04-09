@@ -3026,9 +3026,9 @@ static size_t inttomb(char *s, const int wc)
 
 SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, x = CAR(args);
+    SEXP ans, c, x = CAR(args);
     int i, nc = LENGTH(x), multiple, len, used;
-    char buf[10], *tmp;
+    char buf[10];
 
     checkArity(op, args);
     if (!isInteger(x))
@@ -3047,15 +3047,17 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
         for (i = 0, len = 0; i < nc; i++)
             len += inttomb(NULL, INTEGER(x)[i]);
-	tmp = alloca(len);
-	R_CheckStack();
+        PROTECT(ans = allocVector(STRSXP, 1));
+        /* String is not necessarily 0-terminated and may contain nuls
+           so don't use mkChar */
+        c = allocString(len); /* adds zero terminator */
         for (i = 0, len = 0; i < nc; i++) {
             used = inttomb(buf, INTEGER(x)[i]);
-            strncpy(tmp + len, buf, used);
+            strncpy(CHAR_RW(c) + len, buf, used);
+	    SET_UTF8(c);
             len += used;
         }
-        PROTECT(ans = allocVector(STRSXP, 1));
-        SET_STRING_ELT(ans, 0, mkCharLenCE(tmp, len, CE_UTF8));
+        SET_STRING_ELT(ans, 0, c);
     }
     UNPROTECT(1);
     return ans;
