@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:23+0100\n"
+"POT-Creation-Date: 2008-04-09 16:12+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -808,23 +808,23 @@ msgstr "l'argomento non è di tipo matrix"
 msgid "probable complete loss of accuracy in modulus"
 msgstr "possibile perdita totale di precisione in modulo"
 
-#: src/main/arithmetic.c:298
+#: src/main/arithmetic.c:303
 msgid "operator needs one or two arguments"
 msgstr "l'operatore necessita di uno o due argomenti"
 
-#: src/main/arithmetic.c:315
+#: src/main/arithmetic.c:320
 msgid "non-numeric argument to binary operator"
 msgstr "argomento non numerico trasformato in operatore binario"
 
-#: src/main/arithmetic.c:374 src/main/relop.c:127
+#: src/main/arithmetic.c:379 src/main/relop.c:127
 msgid "non-conformable arrays"
 msgstr "array incompatibili"
 
-#: src/main/arithmetic.c:417
+#: src/main/arithmetic.c:422
 msgid "non-conformable time-series"
 msgstr "Serie storiche non compatibili"
 
-#: src/main/arithmetic.c:439 src/main/logic.c:119 src/main/relop.c:72
+#: src/main/arithmetic.c:444 src/main/logic.c:119 src/main/relop.c:72
 #: src/main/relop.c:165
 #, fuzzy
 msgid "longer object length is not a multiple of shorter object length"
@@ -832,52 +832,52 @@ msgstr ""
 "la lunghezza dell'oggetto più lungo\n"
 "\tnon è un multipla di quella del più piccolo"
 
-#: src/main/arithmetic.c:508
+#: src/main/arithmetic.c:513
 msgid "invalid argument to unary operator"
 msgstr "argomento non valido per l'operatore"
 
-#: src/main/arithmetic.c:532 src/main/arithmetic.c:551
+#: src/main/arithmetic.c:537 src/main/arithmetic.c:556
 msgid "invalid unary operator"
 msgstr "operatore non valido"
 
-#: src/main/arithmetic.c:598
+#: src/main/arithmetic.c:603
 msgid "NAs produced by integer overflow"
 msgstr "si è prodotto un NA per overflow di interi"
 
-#: src/main/arithmetic.c:1027
+#: src/main/arithmetic.c:1032
 msgid "unimplemented real function of 1 argument"
 msgstr "funzione reale (di un argomento) non implementata"
 
-#: src/main/arithmetic.c:1039 src/main/complex.c:845 src/main/complex.c:917
+#: src/main/arithmetic.c:1044 src/main/complex.c:845 src/main/complex.c:917
 msgid "unimplemented complex function"
 msgstr "funzione complessa non implementata"
 
-#: src/main/arithmetic.c:1288 src/main/arithmetic.c:1670
-#: src/main/arithmetic.c:1852 src/main/arithmetic.c:1974
+#: src/main/arithmetic.c:1293 src/main/arithmetic.c:1675
+#: src/main/arithmetic.c:1857 src/main/arithmetic.c:1979
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "funzione reale di %d argomenti numerici non implementata"
 
-#: src/main/arithmetic.c:1310
+#: src/main/arithmetic.c:1315
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr "%d argomenti passati alla funzione 'atan' che ne richiede 1"
 
-#: src/main/arithmetic.c:1337
+#: src/main/arithmetic.c:1342
 #, fuzzy, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d argomenti passati a 'log' che ne richiede 1 o 2"
 
-#: src/main/arithmetic.c:1356
+#: src/main/arithmetic.c:1361
 msgid "invalid second argument of length 0"
 msgstr "secondo argomento di lunghezza 0 non valido"
 
-#: src/main/arithmetic.c:1415
+#: src/main/arithmetic.c:1420
 #, fuzzy
 msgid "invalid argument 'base' of length 0"
 msgstr "secondo argomento di lunghezza 0 non valido"
 
-#: src/main/arithmetic.c:1423
+#: src/main/arithmetic.c:1428
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d argomenti passati a 'log' che ne richiede 1 o 2"

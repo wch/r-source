@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:23+0100\n"
+"POT-Creation-Date: 2008-04-09 16:12+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -776,72 +776,72 @@ msgstr ""
 msgid "probable complete loss of accuracy in modulus"
 msgstr ""
 
-#: src/main/arithmetic.c:298
+#: src/main/arithmetic.c:303
 msgid "operator needs one or two arguments"
 msgstr ""
 
-#: src/main/arithmetic.c:315
+#: src/main/arithmetic.c:320
 msgid "non-numeric argument to binary operator"
 msgstr ""
 
-#: src/main/arithmetic.c:374 src/main/relop.c:127
+#: src/main/arithmetic.c:379 src/main/relop.c:127
 msgid "non-conformable arrays"
 msgstr ""
 
-#: src/main/arithmetic.c:417
+#: src/main/arithmetic.c:422
 msgid "non-conformable time-series"
 msgstr ""
 
-#: src/main/arithmetic.c:439 src/main/logic.c:119 src/main/relop.c:72
+#: src/main/arithmetic.c:444 src/main/logic.c:119 src/main/relop.c:72
 #: src/main/relop.c:165
 msgid "longer object length is not a multiple of shorter object length"
 msgstr ""
 
-#: src/main/arithmetic.c:508
+#: src/main/arithmetic.c:513
 msgid "invalid argument to unary operator"
 msgstr ""
 
-#: src/main/arithmetic.c:532 src/main/arithmetic.c:551
+#: src/main/arithmetic.c:537 src/main/arithmetic.c:556
 msgid "invalid unary operator"
 msgstr ""
 
-#: src/main/arithmetic.c:598
+#: src/main/arithmetic.c:603
 msgid "NAs produced by integer overflow"
 msgstr ""
 
-#: src/main/arithmetic.c:1027
+#: src/main/arithmetic.c:1032
 msgid "unimplemented real function of 1 argument"
 msgstr ""
 
-#: src/main/arithmetic.c:1039 src/main/complex.c:845 src/main/complex.c:917
+#: src/main/arithmetic.c:1044 src/main/complex.c:845 src/main/complex.c:917
 msgid "unimplemented complex function"
 msgstr ""
 
-#: src/main/arithmetic.c:1288 src/main/arithmetic.c:1670
-#: src/main/arithmetic.c:1852 src/main/arithmetic.c:1974
+#: src/main/arithmetic.c:1293 src/main/arithmetic.c:1675
+#: src/main/arithmetic.c:1857 src/main/arithmetic.c:1979
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr ""
 
-#: src/main/arithmetic.c:1310
+#: src/main/arithmetic.c:1315
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr ""
 
-#: src/main/arithmetic.c:1337
+#: src/main/arithmetic.c:1342
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 
-#: src/main/arithmetic.c:1356
+#: src/main/arithmetic.c:1361
 msgid "invalid second argument of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1415
+#: src/main/arithmetic.c:1420
 msgid "invalid argument 'base' of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1423
+#: src/main/arithmetic.c:1428
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
