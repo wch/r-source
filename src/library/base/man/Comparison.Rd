@@ -42,7 +42,8 @@ x != y
   \code{S} and \code{T}, and collation is not necessarily
   character-by-character -- in Danish \code{aa} sorts as a single
   letter, after \code{z}.  Some platforms may not respect the locale and
-  always sort in ASCII.
+  always sort in ASCII.  (String comparison is always for the part of the
+  string up to the first nul if there are embedded nuls.)
 
   At least one of \code{x} and \code{y} must be an atomic vector, but if
   the other is a list \R attempts to coerce it to the type of the atomic
