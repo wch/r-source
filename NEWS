@@ -754,6 +754,10 @@ BUG FIXES
 
     o	read.dcf(all = TRUE) was leaking connections.
 
+    o	scan() with a non-default separator could skip nul bytes,
+	including those entered as \0 with allowEscapes=TRUE.  This
+	was different from the default separator.
+
 
 
 

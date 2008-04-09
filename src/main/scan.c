@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2007   The R Development Core Team.
+ *  Copyright (C) 1998-2008   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -392,7 +392,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			}
 		/* CSV style quoted string handling */
 		if ((type == STRSXP || type == NILSXP)
-		    && strchr(d->quoteset, c)) {
+		    && c != 0 && strchr(d->quoteset, c)) {
 		    quote = c;
 		inquote:
 		    while ((c = scanchar(TRUE, d)) != R_EOF && c != quote) {
