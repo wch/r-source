@@ -300,7 +300,7 @@ NEW FEATURES
 	?NumericConstants for details.
 
     o	Dependence specifications for R or packages in the Depends
-	field in a DESCRIPTION file can now make use of operators 
+	field in a DESCRIPTION file can now make use of operators
 	< > == and != (in addition to <= and >=): such packages will
 	not be installable nor loadable in R < 2.7.0.
 
@@ -757,6 +757,8 @@ BUG FIXES
     o	scan() with a non-default separator could skip nul bytes,
 	including those entered as \0 with allowEscapes=TRUE.  This
 	was different from the default separator.
+
+    o	determinant(matrix(,0,0)) now returns a correct "det" result.
 
 
 

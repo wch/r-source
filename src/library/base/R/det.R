@@ -20,23 +20,24 @@
 ##        (which is necessary for keeping the sign when taking log ..)
 ## S-plus v 6.x has incorporated the Matrix pkg det as determinant
 
-det = function(x, ...)
+det <- function(x, ...)
 {
-    z = determinant(x, logarithm = TRUE, ...)
+    z <- determinant(x, logarithm = TRUE, ...)
     c(z$sign * exp(z$modulus))
 }
 
-determinant = function(x, logarithm = TRUE, ...) UseMethod("determinant")
+determinant <- function(x, logarithm = TRUE, ...) UseMethod("determinant")
 
-determinant.matrix = function(x, logarithm = TRUE, ...)
+determinant.matrix <- function(x, logarithm = TRUE, ...)
 {
     if ((n <- ncol(x)) != nrow(x))
         stop("'x' must be a square matrix")
     if (n < 1)
-        return(list(modulus = double(0), sign = as.integer(1),
-                    logarithm = logarithm))
+	return(structure(list(modulus = structure(double(0), logarithm = logarithm),
+			      sign = 1L),
+			 class = "det"))
     if (is.complex(x))
         stop("determinant not currently defined for complex matrices")
-    storage.mode(x) = "double"
+    storage.mode(x) <- "double"
     .Call("det_ge_real", x, logarithm, PACKAGE = "base")
 }
