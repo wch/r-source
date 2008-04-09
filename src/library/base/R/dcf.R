@@ -71,7 +71,12 @@ function(file, fields = NULL, all = FALSE)
     ## Try to find out about invalid things: mostly, lines which do not
     ## start with blanks but have no ':' ...
     ind <- grep("^[^[:blank:]][^:]*$", lines)
-    if(length(ind)) stop("Invalid DCF format.")
+    if(length(ind)) {
+        lines <- strtrim(lines[ind], 0.7 * getOption("width"))
+        stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
+                      paste("  ", lines, sep = "", collapse = "\n")),
+             domain = NA)
+    }
 
     line_is_not_empty <- regexpr("^[[:space:]]*$", lines) < 0L
     nums <- cumsum(diff(c(FALSE, line_is_not_empty) > 0L) > 0L)
@@ -90,8 +95,13 @@ function(file, fields = NULL, all = FALSE)
     line_has_tag <- regexpr("^[^[:blank:]][^:]*:", lines) > -1L
 
     ## Check that records start with tag lines.
-    if(!all(line_has_tag[which(diff(nums) > 0L) + 1L]))
-        stop("Invalid DCF format.")
+    ind <- which(!line_has_tag[which(diff(nums) > 0L) + 1L])
+    if(length(ind)) {
+        lines <- strtrim(lines[ind], 0.7 * getOption("width"))        
+        stop(gettextf("Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s",
+                      paste("  ", lines, sep = "", collapse = "\n")),
+             domain = NA)
+    }
 
     ## End positions of field entries.
     pos <- cumsum(rle(cumsum(line_has_tag))$lengths)
