@@ -274,11 +274,10 @@ contrib.url(repos, type = getOption("pkgType"))
   is fetched from the first repository on the list within which it is found.
 #ifdef windows
 
-  In order to install packages with \code{type="source"} on Windows,
+  In order to install packages with \code{type = "source"} on Windows,
   you will need to have installed the Rtools collection as described
   in the \sQuote{rw-FAQ}.  You must have the \code{PATH} set up as
-  required by the Rtools, and if you are installing from local source
-  files, the paths to them should not contain spaces.
+  required by the Rtools.
 #endif
 }
 \value{
