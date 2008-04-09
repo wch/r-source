@@ -6371,11 +6371,15 @@ needing an element representing the same string.  As of @R{} 2.6.0, @R{}
 maintains a global cache of @code{CHARSXP}s so that there is only ever
 one @code{CHARSXP} representing a given string in memory.
 
+@findex mkChar
+@findex mkCharLen
 You can obtain a @code{CHARSXP} by calling @code{mkChar} and providing a
 nul-terminated C-style string.  This function will return a pre-existing
 @code{CHARSXP} if one with a matching string already exists, otherwise
 it will create a new one and add it to the cache before returning it to
-you.
+you.   The variant @code{mkCharLen} can be used to create a
+@code{CHARSXP} from a buffer possibly containing nuls -- as from @R{}
+2.8.0 these are also cached.
 
 Currently, it is still possible to create @code{CHARSXP}s using
 @code{allocVector} or @code{allocString}; @code{CHARSXP}s created in
@@ -8892,7 +8896,7 @@ void attribute_visible R_init_stats(DllInfo *dll)
 
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by
-supply a definitions file
+supplying a definitions file
 @file{@var{pkgnme}/src/@var{pkgname}-win.def}: only entry points
 listed in that file will be visible.  Again using @pkg{stats} as an
 example, it has
