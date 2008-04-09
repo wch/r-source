@@ -283,7 +283,8 @@ const static struct {
     { L"Wallis Standard Time", "Pacific/Wallis" },
     { L"Yekaterinburg Standard Time", "Asia/Yekaterinburg" },
     { L"Yerevan Standard Time", "Asia/Yerevan" },
-    { L"Yukon Standard Time", "America/Yakutat" }
+    { L"Yukon Standard Time", "America/Yakutat" },
+    { NULL,  "" }
 };
 
 #define WIN32_LEAN_AND_MEAN 1
