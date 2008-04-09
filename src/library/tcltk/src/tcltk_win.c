@@ -41,9 +41,10 @@ static void _R_tcldo(void)
     (void) R_ToplevelExec(TclSpinLoop, NULL);
 }
 
-/* import from src/gnuwin32/system.c */
-extern void set_R_Tcldo(void *ptr);
-extern void unset_R_Tcldo(void *ptr);
+/* import from src/gnuwin32/system.c -- private, so in no header */
+typedef void (*DO_FUNC)();
+extern void set_R_Tcldo(DO_FUNC ptr);
+extern void unset_R_Tcldo(DO_FUNC ptr);
 
 void tcltk_start(void)
 {
