@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2007   The R Development Core Team.
+ *  Copyright (C) 1998-2008   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -80,13 +80,13 @@ typedef struct {
     char convbuf[100];
 } LocalData;
 
-static SEXP insertString(char *str, LocalData *l)
+static SEXP insertString(char *str, int len, LocalData *l)
 {
     if (!strIsASCII(str)) {
-        if (l->con->UTF8out || l->isUTF8) return mkCharCE(str, CE_UTF8);
-        else if (l->isLatin1) return mkCharCE(str, CE_LATIN1);
+	if (l->con->UTF8out || l->isUTF8) return mkCharLenCE(str, len, CE_UTF8);
+	else if (l->isLatin1) return mkCharLenCE(str, len, CE_LATIN1);
     }
-    return mkChar(str);
+    return mkCharLen(str, len);
 }
 
 static R_INLINE Rboolean Rspace(unsigned int c)
@@ -313,7 +313,7 @@ static void scan_cleanup(void *data)
  */
 static char *
 fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
-	   R_StringBuffer *buffer)
+	   R_StringBuffer *buffer, int *nbytes)
 {
 /* The basic reader function, called from scanVector() and scanFrame().
    Reads into _buffer_	which later will be read out by extractItem().
@@ -392,7 +392,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			}
 		/* CSV style quoted string handling */
 		if ((type == STRSXP || type == NILSXP)
-		    && strchr(d->quoteset, c)) {
+		    && c != 0 && strchr(d->quoteset, c)) {
 		    quote = c;
 		inquote:
 		    while ((c = scanchar(TRUE, d)) != R_EOF && c != quote) {
@@ -448,6 +448,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
     }
     *bufp = '\0';
     *bch = filled;
+    *nbytes = m;
     return buffer->data;
 }
 
@@ -474,7 +475,7 @@ static R_INLINE void expected(char *what, char *got, LocalData *d)
     error(_("scan() expected '%s', got '%s'"), what, got);
 }
 
-static void extractItem(char *buffer, SEXP ans, int i, LocalData *d)
+static void extractItem(char *buffer, SEXP ans, int i, int nbytes, LocalData *d)
 {
     char *endp;
     switch(TYPEOF(ans)) {
@@ -520,7 +521,7 @@ static void extractItem(char *buffer, SEXP ans, int i, LocalData *d)
 	if (isNAstring(buffer, 1, d))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else
-	    SET_STRING_ELT(ans, i, insertString(buffer, d));
+	    SET_STRING_ELT(ans, i, insertString(buffer, nbytes, d));
 	break;
     case RAWSXP:
 	if (isNAstring(buffer, 0, d))
@@ -540,7 +541,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 		       int flush, SEXP stripwhite, int blskip, LocalData *d)
 {
     SEXP ans, bns;
-    int blocksize, c, i, n, linesread, nprev,strip, bch;
+    int blocksize, c, i, n, linesread, nprev,strip, bch, nbytes;
     char *buffer;
     R_StringBuffer strBuf = {NULL, 0, MAXELTSIZE};
 
@@ -578,14 +579,14 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	    PROTECT(ans);
 	    copyVector(ans, bns);
 	}
-	buffer = fillBuffer(type, strip, &bch, d, &strBuf);
+	buffer = fillBuffer(type, strip, &bch, d, &strBuf, &nbytes);
 	if (nprev == n && strlen(buffer)==0 &&
 	    ((blskip && bch =='\n') || bch == R_EOF)) {
 	    if (d->ttyflag || bch == R_EOF)
 		break;
 	}
 	else {
-	    extractItem(buffer, ans, n, d);
+	    extractItem(buffer, ans, n, nbytes, d);
 	    if (++n == maxitems) {
 		if (d->ttyflag && bch != '\n') { /* MBCS-safe */
 		    while ((c = scanchar(FALSE, d)) != '\n')
@@ -651,7 +652,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 {
     SEXP ans, new, old, w;
     char *buffer = NULL;
-    int blksize, c, i, ii, j, n, nc, linesread, colsread, strip, bch;
+    int blksize, c, i, ii, j, n, nc, linesread, colsread, strip, bch, nbytes;
     int badline, nstring = 0;
     R_StringBuffer buf = {NULL, 0, MAXELTSIZE};
 
@@ -700,7 +701,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		if (fill) {
 		    buffer[0] = '\0';
 		    for (ii = colsread; ii < nc; ii++) {
-			extractItem(buffer, VECTOR_ELT(ans, ii), n, d);
+			extractItem(buffer, VECTOR_ELT(ans, ii), n, nbytes, d);
 		    }
 		    n++;
 		    ii = 0;
@@ -729,7 +730,8 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    }
 	}
 
-	buffer = fillBuffer(TYPEOF(VECTOR_ELT(ans, ii)), strip, &bch, d, &buf);
+	buffer = fillBuffer(TYPEOF(VECTOR_ELT(ans, ii)),
+			    strip, &bch, d, &buf, &nbytes);
 	if (colsread == 0 &&
 	    strlen(buffer) == 0 &&
 	    ((blskip && bch =='\n') || bch == R_EOF)) {
@@ -737,7 +739,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		break;
 	}
 	else {
-	    extractItem(buffer, VECTOR_ELT(ans, ii), n, d);
+	    extractItem(buffer, VECTOR_ELT(ans, ii), n, nbytes, d);
 	    ii++;
 	    colsread++;
 	    if (length(stripwhite) == length(what))
@@ -763,7 +765,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    warning(_("number of items read is not a multiple of the number of columns"));
 	buffer[0] = '\0';	/* this is an NA */
 	for (ii = colsread; ii < nc; ii++) {
-	    extractItem(buffer, VECTOR_ELT(ans, ii), n, d);
+	    extractItem(buffer, VECTOR_ELT(ans, ii), n, nbytes, d);
 	}
 	n++;
     }

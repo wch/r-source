@@ -427,8 +427,13 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		cnt = LENGTH(s);
 	    } else {
 		p = translateChar(s);
-		cnt = strlen(p);
-		i = Rstrwid(p, cnt, CE_NATIVE, quote);
+		if(p == CHAR(s)) {
+		    i = Rstrlen(s, quote);
+		    cnt = LENGTH(s);
+		} else { /* drop anything after embedded nul */
+		    cnt = strlen(p);
+		    i = Rstrwid(p, cnt, CE_NATIVE, quote);
+		}
 		ienc = CE_NATIVE;
 	    }
 	} else
