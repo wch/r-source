@@ -4368,6 +4368,10 @@ eight hex digits.
 A single quote may also be embedded directly in a double-quote delimited
 string and vice versa.
 
+Currently the inclusion of @code{\0} in a string constant terminates the
+constant: further characters up to the closing quote are scanned by
+ignored.  This is likely to change in the near future.
+
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers
 
