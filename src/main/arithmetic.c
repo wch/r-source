@@ -202,8 +202,13 @@ double R_pow(double x, double y) /* = x ^ y */
 	/* y < 0 */ return(R_PosInf);
     }
     if (R_FINITE(x) && R_FINITE(y))
-/* work around a bug in May 2007 snapshots of gcc pre-4.3.0 */
-#if __GNUC__ == 4 && __GNUC_MINOR__ == 3
+/* work around a bug in May 2007 snapshots of gcc pre-4.3.0, also
+   present in the release version.  If compiled with, say, -g -O3
+   on x86_64 Linux this compiles to a call to sqrtsd and gives
+   100^0.5 as 3.162278.  -g is needed, as well as -O2 or higher.
+   example(pbirthday) will fail.
+ */
+#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3
 	return (y == 2.0) ? x*x : pow(x, y);
 #else
 	return (y == 2.0) ? x*x : ((y == 0.5) ? sqrt(x) : pow(x, y));
