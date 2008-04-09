@@ -436,7 +436,9 @@ QuartzFunctions_t *getQuartzAPI() {
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
 #define CGFontCreateWithFontName CGFontCreateWithName
 #define CGFontGetGlyphBBoxes CGFontGetGlyphBoundingBoxes
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_4 /* 10.4 has Unichars, 10.3 doesn't */
 #define CGFontGetGlyphsForUnichars CGFontGetGlyphsForUnicodes
+#endif
 /* and some missing declarations */
 extern CGFontRef CGFontCreateWithName(CFStringRef);
 extern bool CGFontGetGlyphAdvances(CGFontRef font, const CGGlyph glyphs[], size_t count, int advances[]);
