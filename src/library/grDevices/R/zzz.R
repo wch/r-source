@@ -43,6 +43,10 @@
     if(any(toset)) options(op.grDevices[toset])
 }
 
+.onUnload <- function(libpath)
+    library.dynam.unload("grDevices", libpath)
+
+
 ### Used by text, mtext, strwidth, strheight, title, axis,
 ### L_text and L_textBounds, all of which
 ### coerce SYMSXPs and LANGSXPs to EXPRSXPs
