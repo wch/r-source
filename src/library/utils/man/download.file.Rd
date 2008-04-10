@@ -33,7 +33,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.
 #ifdef windows
-    (See also \sQuote{Details}.}
+    (See also \sQuote{Details}.)
 #endif
   }
 
