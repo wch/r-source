@@ -63,6 +63,19 @@ static object frontwindow = NULL; /* the window receiving events */
 
 static UINT uFindReplaceMsg; // message identifier for FINDMSGSTRING
 
+
+/* Surrogate Pairs MACRO */
+#define SURROGATE_PAIRS_HI_MIN  ((uint16_t)0xd800)
+#define SURROGATE_PAIRS_HI_MAX  ((uint16_t)0xdbff)
+#define SURROGATE_PAIRS_LO_MIN  ((uint16_t)0xdc00)
+#define SURROGATE_PAIRS_LO_MAX  ((uint16_t)0xdfff)
+#define SURROGATE_PAIRS_BIT_SZ  ((uint32_t)10)
+#define SURROGATE_PAIRS_MASK    (((uint16_t)1 << SURROGATE_PAIRS_BIT_SZ)-1)
+#define IsSurrogatePairsHi(_h)  (SURROGATE_PAIRS_HI_MIN == \
+		      ((uint16_t)(_h) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
+#define IsSurrogatePairsLo(_l)  (SURROGATE_PAIRS_LO_MIN == \
+		      ((uint16_t)(_l) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
+
 /*
  *  Call the relevent mouse handler function.
  */
@@ -564,8 +577,15 @@ static long handle_message(HWND hwnd, UINT message,
 		}
 		ImmGetCompositionStringW(himc,GCS_RESULTSTR, p, len);
 		ImmReleaseContext(hwnd,himc);
+		/* Surrogate Pairs Block */
 		for(i = 0; i < (len/sizeof(wchar_t)); i++)
-		    handle_char(obj, p[i]);
+		    if(IsSurrogatePairsHi(p[i]) &&
+		       i+1 < (len/sizeof(wchar_t)) &&
+		       IsSurrogatePairsLo(p[i+1]) ) {
+			handle_char(obj, L'?');
+			handle_char(obj, L'?');
+			i++;
+		    } else handle_char(obj, p[i]);
 		if(p != buf) free(p);
 		return 0;
 	    }
