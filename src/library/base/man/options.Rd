@@ -360,7 +360,8 @@ getOption(x)
       double-buffering of \code{\link{windows}} devices when that is
       enabled: the first is the delay after plotting finishes
       (default 100) and the second is the update interval during
-      continuous plotting (default 500).}
+      continuous plotting (default 500).  The values at the time the
+      device is opened are used.}
 #endif
   }
 }
