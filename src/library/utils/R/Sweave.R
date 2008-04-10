@@ -356,10 +356,9 @@ RweaveLatexSetup <-
     output <- file(output, open="w+")
 
     if(stylepath){
-        styfile <- if(.Platform$OS.type == "windows")
-            file.path(gsub("\\\\", "/", shortPathName(file.path(R.home("share"), "texmf"))), "Sweave")
-        else
-            file.path(R.home("share"), "texmf", "Sweave")
+        styfile <- file.path(R.home("share"), "texmf", "Sweave")
+        if(.Platform$OS.type == "windows")
+            styfile <- gsub("\\\\", "/", styfile)
         if(length(grep(" ", styfile)))
             warning(gettextf("path to '%s' contains spaces,\n", styfile),
                     gettext("this may cause problems when running LaTeX"),
