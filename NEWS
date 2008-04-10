@@ -464,13 +464,13 @@ GRAPHICS CHANGES
 	using base or grid graphics.
 
     o	There is a new version of the X11() device based on cairo
-	graphics which is selected by type = "cairo", and is available
-	on machines with cairo installed and preferably pango (which
-	most machines with gtk+ >= 2.8 will have).  This version
-	supports translucent colours and normally does a better job of
-	font selection so it has been possible to display (e.g.)
-	English, Polish, Russian and Japanese text on a single X11()
-	window.  It is the default where available.
+	graphics which is selected by type "cairo" or "nbcairo", and
+	is available on machines with cairo installed and preferably
+	pango (which most machines with gtk+ >= 2.8 will have).  This
+	version supports translucent colours and normally does a
+	better job of font selection so it has been possible to
+	display (e.g.)  English, Polish, Russian and Japanese text on
+	a single X11() window.  It is the default where available.
 
 	There is a companion function, savePlot(), to save the current
 	plot to a PNG file.
@@ -483,9 +483,9 @@ GRAPHICS CHANGES
 	selected by the new option "bitmapType", and is "quartz" or
 	"cairo" where available.
 
-	Where cairo is supported, there is a svg() device to write SVG
-	files, and cairo_pdf() and cairo_ps() devices to write
-	(possibly bitmap) PDF and postscript files via cairo.
+	Where cairo 1.2 or later is supported, there is a svg() device
+	to write SVG files, and cairo_pdf() and cairo_ps() devices to
+	write (possibly bitmap) PDF and postscript files via cairo.
 
 	Some features require cairo >= 1.2, and some which are
 	nominally supported under 1.2 seem to need 1.4 to work well.

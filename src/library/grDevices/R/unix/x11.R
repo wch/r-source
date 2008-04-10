@@ -386,7 +386,7 @@ savePlot <- function(filename = paste("Rplot", type, sep="."),
     devcur <- match(device, devlist, NA)
     if(is.na(devcur)) stop("no such device")
     devname <- names(devlist)[devcur]
-    if(devname != "X11cairo")
+    if(!devname %in% c("X11cairo", "X11cairo_nob"))
         stop("can only copy from 'X11(type=\"cairo\")' devices")
     .Internal(savePlot(filename, type, device))
 }

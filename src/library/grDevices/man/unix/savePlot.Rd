@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
@@ -16,24 +16,26 @@ savePlot(filename = paste("Rplot", type, sep="."),
 }
 \arguments{
   \item{filename}{filename to save to.}
-  \item{type}{file type: only \code{png} will be accepted for cairo
+  \item{type}{file type: only \code{"png"} will be accepted for cairo
     version 1.0.}
   \item{device}{the device to save from.}
 }
 \details{
-  Only \code{X11} devices of type \code{type = "Cairo"} are supported.
+  Only \code{X11} devices of types \code{"cairo"} and \code{"nbcairo"}
+  are supported.
 
-  This works by copying the backing image surface to a file.  For PNG
+  This works by copying the image surface to a file.  For PNG
   will always be a 24-bit per pixel PNG \sQuote{DirectClass} file, for
   JPEG the quality is 75\% and for TIFF there is no compression.
 
-  All transparency information is discarded: if the plot has
-  \code{bg = "transparent"} (the default) this is regarded as opaque white.
+  At present the plot is saved after rendering onto the canvas (default
+  opaque white), so for the default \code{bg = "transparent"} the
+  effective background colour is the canvas colour.
 }
 \value{
   Invisible \code{NULL}.
 }
 \seealso{
-  \code{\link{X11}}, \code{\link{dev.print}}
+  \code{\link{X11}}, \code{\link{dev.copy}}, \code{\link{dev.print}}
 }
 \keyword{utilities}

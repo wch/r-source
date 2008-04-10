@@ -86,6 +86,8 @@
 
 static void Cairo_update(pX11Desc xd)
 {
+    /* We could first paint the canvas colour and 
+       then the backing surface. */
     if(xd->xcc) {
 	cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 	cairo_paint(xd->xcc);
