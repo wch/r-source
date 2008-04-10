@@ -840,6 +840,9 @@ BUG FIXES
 
     o	determinant(matrix(,0,0)) now returns a correct "det" result.
 
+    o	Name space 'grDevices' was not unloading its DLL when the
+	name space was unloaded.
+
 
 
 
