@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-04-03
+@set FAQ_DATE @value{FAQ_YEAR}-04-10
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 6
@@ -2270,6 +2270,8 @@ Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
 @item MCPAN
 Multiple comparisons using normal approximation.
+@item MCPMod
+Design and analysis of dose-finding studies.
 @item MChtest
 Monte Carlo hypothesis tests.
 @item MEMSS
@@ -2540,6 +2542,8 @@ Loglinear models in capture-recapture experiments.
 @item Rcmdr
 A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
+@item RcmdrPlugin.Export
+Graphically export objects to @LaTeX{} or @HTML{}.
 @item RcmdrPlugin.FactoMineR
 Rcmdr plug-in for the @strong{FactoMineR} package.
 @item RcmdrPlugin.HH
@@ -3076,6 +3080,10 @@ Change in length of hospital stay (LOS).
 Discrete linear Chebyshev approximation.
 @item chemCal
 Calibration functions for analytical chemistry.
+@item chemometrics
+Companion to the book ``Introduction to Multivariate Statistical
+Analysis in Chemometrics'' by K. Varmuza and P. Filzmoser, CRC Press, to
+appear.
 @item choplump
 Choplump tests (permutation tests for comparing two groups with some
 positive but many zero responses).
@@ -3569,6 +3577,9 @@ Features and strings for nonparametric regression.
 Exact calculation of fuzzy decision rules for multiple testing.
 @item fuzzyRankTests
 Fuzzy rank tests and confidence intervals.
+@item fxregime
+Frankel-Wei regression and structural change tools for estimating,
+testing, dating and monitoring (de facto) exchange rate regimes.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
 @item gRain
@@ -3891,6 +3902,8 @@ The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes.
 @item its
 An S4 class for handling irregular time series.
+@item ivivc
+In vitro in vivo correlation (IVIVC) modeling.
 @item jit
 Just-in-time compiler.
 @item kappalab
@@ -3930,6 +3943,8 @@ classifier will consist of a classification tree with one such
 Nearest-neighbor classification with categorical variables.
 @item knnflex
 A more flexible @math{k}-NN.
+@item knorm
+Microarray data from multiple biologically interrelated experiments.
 @item kohonen
 Supervised and unsupervised self-organising maps.
 @item ks
@@ -4538,6 +4553,8 @@ Separate calibration linking methods.
 Linear models for panel data.
 @item plotAndPlayGTK
 A @acronym{GUI} for interactive plots using GTK.
+@item plotSEMM
+Graphing nonlinear latent variable interactions in SEMM.
 @item plotrix
 Various useful functions for enhancing plots.
 @item plugdensity
@@ -7149,15 +7166,23 @@ squares resulting from dropping single terms.
 @node How do I produce PNG graphics in batch mode?, How can I get command line editing to work?, Why does the output from anova() depend on the order of factors in the model?, R Miscellanea
 @section How do I produce PNG graphics in batch mode?
 
-Under Unix, the @code{png()} device uses the X11 driver, which is a
-problem in batch mode or for remote operation.  If you have Ghostscript
-you can use @code{bitmap()}, which produces a PostScript file then
-converts it to any bitmap format supported by Ghostscript.  On some
-installations this produces ugly output, on others it is perfectly
-satisfactory.  In theory one could also use Xvfb from
-@url{http://www.x.org/Downloads.html, X.Org}, which is an X11 server
-that does not require a screen; and the @strong{GDD} package from
-@CRAN{}, which produces PNG, JPEG and GIF bitmaps without X11.
+Under a Unix-alike, if your installation supports the
+@code{type="cairo"} option to the @code{png()} device there should be no
+problems, and the default settings should just work.  This option is not
+available for versions of R prior to 2.7.0, or without support for
+cairo.  From R 2.7.0 @code{png()} by default uses the Quartz device
+on Mac OS X, and that too works in batch mode.
+
+Earlier versions of the @code{png()} device uses the X11 driver, which is 
+a problem in batch mode or for remote operation.  If you have Ghostscript 
+you can use @code{bitmap()}, which produces a PostScript or PDF file then 
+converts it to any bitmap format supported by Ghostscript.  On some 
+installations this produces ugly output, on others it is perfectly 
+satisfactory.  Many systems now come with Xvfb from 
+@url{http://www.x.org/Downloads.html, X.Org} (possibly as an optional 
+install), which is an X11 server that does not require a screen; and there 
+is the @strong{GDD} package from @CRAN{}, which produces PNG, JPEG and GIF 
+bitmaps without X11.
 
 @node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
 @section How can I get command line editing to work?
