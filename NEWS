@@ -39,6 +39,10 @@ PACKAGE INSTALLATION
 	lazy loading must set 'LazyLoad: no' (or an equivalent value) in
 	the DESCRIPTION file.
 
+    o	R CMD INSTALL will now fail if it finds a non-executable
+    	configure script in the package -- this usually indicates a
+    	file system with insufficient permissions.
+
 
 DEPRECATED & DEFUNCT
 
@@ -842,6 +846,9 @@ BUG FIXES
 
     o	Name space 'grDevices' was not unloading its DLL when the
 	name space was unloaded.
+
+    o	getNativeSymbolInfo() was unaware of non-registered Fortran
+    	names, because one of the C support routines ignored them.
 
 
 

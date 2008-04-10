@@ -484,11 +484,16 @@ do_install_source () {
     if ${preclean}; then
       ${MAKE} clean
     fi
-    if ${use_configure} && test -x ./configure ; then
-      eval ${configure_vars} ./configure ${configure_args}
-      if test ${?} -ne 0; then
-	error "configuration failed for package '${pkg_name}'"
-	do_exit_on_error
+    if ${use_configure}; then
+      if test -x ./configure ; then
+	eval ${configure_vars} ./configure ${configure_args}
+	if test ${?} -ne 0; then
+	  error "configuration failed for package '${pkg_name}'"
+	  do_exit_on_error
+	fi
+      elif test -f ./configure ; then
+	error "'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
+        do_exit_on_error
       fi
     fi
     if test -f ./Makefile ; then
@@ -570,10 +575,15 @@ do_install_source () {
     fi
   fi
 
-  if ${use_configure} && test -x ./configure ; then
-    eval ${configure_vars} ./configure ${configure_args}
-    if test ${?} -ne 0; then
-      error "configuration failed for package '${pkg_name}'"
+  if ${use_configure}; then
+    if test -x ./configure ; then
+      eval ${configure_vars} ./configure ${configure_args}
+      if test ${?} -ne 0; then
+	error "configuration failed for package '${pkg_name}'"
+	do_exit_on_error
+      fi
+    elif test -f ./configure ; then
+      error "'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
       do_exit_on_error
     fi
   fi
