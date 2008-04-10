@@ -2624,8 +2624,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strncmp(display, "tiff::", 6)) devname = "TIFF";
     else if (!strncmp(display, "bmp::", 5)) devname = "BMP";
     else if (!strcmp(display, "XImage")) devname = "XImage";
-    else if (useCairo == 1) devname = "X11cairo";
-    else if (useCairo == 2) devname = "X11cairo_nob";
+    else if (useCairo) devname = "X11cairo";
     else devname = "X11";
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel,

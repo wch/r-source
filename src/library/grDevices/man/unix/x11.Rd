@@ -91,12 +91,11 @@ X11.options(\dots, reset = FALSE)
     plot in many languages on a single figure (and this will work even
     in non-UTF-8 locales).  The output should be locale-independent.
   }
-  but can be slower (and will be much slower on a slow X11 connection as
-  all the rendering is done on the machine running \R rather than in the
-  X server).  \code{type = "nbcairo"} is the same device without
-  buffering, and will run faster on a machine with a slow X11 connection
-  (although still not as quite as fast as \code{type = "Xlib"}) -- also,
-  \code{\link{savePlot}} is not supported.
+  \code{type = "nbcairo"} is the same device as \code{type="cairo"}
+  without buffering: which is faster will depend on the the X11
+  connection.  Both will be slower than \code{type = "Xlib"}, especially
+  on a slow X11 connection as all the rendering is done on the machine
+  running \R rather than in the X server.
 }
 \section{X11 Fonts}{
   This section applies only to \code{type = "Xlib"}.
@@ -171,7 +170,8 @@ X11.options(\dots, reset = FALSE)
   black/white.  The palette is shared between all X11 clients, so it can
   be necessary to limit the number of colours used by \R.
 
-  Cairo-based devices support only \sQuote{truecolor} visuals.
+  Cairo-based devices currently support only \sQuote{truecolor}
+  visuals. (Cairo 1.6 will support other visuals.)
 
   The default for \code{type="Xlib"} is to use the best possible colour
   model for the visual of the X11 server.  This can be overridden by the
