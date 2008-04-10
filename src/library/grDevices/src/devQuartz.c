@@ -436,20 +436,30 @@ QuartzFunctions_t *getQuartzAPI() {
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
 #define CGFontCreateWithFontName CGFontCreateWithName
 #define CGFontGetGlyphBBoxes CGFontGetGlyphBoundingBoxes
-#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_4 /* 10.4 has Unichars, 10.3 doesn't */
-#define CGFontGetGlyphsForUnichars CGFontGetGlyphsForUnicodes
-#endif
+/* The following is a real pain. We have to work around bugs in CoreGraphics
+   and Apple's dyloader simultaneously so a 10.4 binary runs on 10.5 as well. */
+typedef void (*RQFontGetGlyphsForUnichars_t)(CGFontRef a, const UniChar b[], CGGlyph c[], size_t d);
+static RQFontGetGlyphsForUnichars_t RQFontGetGlyphsForUnichars;
+#include <dlfcn.h> /* dynamically find the right entry point on initialization */
+__attribute__((constructor)) static void RQ_init() {
+    void *r;
+    if ((r = dlsym(RTLD_NEXT, "CGFontGetGlyphsForUnichars")) || (r = dlsym(RTLD_NEXT, "CGFontGetGlyphsForUnicodes")) ||
+	(r = dlsym(RTLD_DEFAULT, "CGFontGetGlyphsForUnichars")) || (r = dlsym(RTLD_DEFAULT, "CGFontGetGlyphsForUnicodes")))
+	RQFontGetGlyphsForUnichars = (RQFontGetGlyphsForUnichars_t) r;
+    else
+	error("Cannot load CoreGraphics"); /* this should never be reached but I suppose it's better than a hidden segfault */
+}
+#define CGFontGetGlyphsForUnichars RQFontGetGlyphsForUnichars
 /* and some missing declarations */
 extern CGFontRef CGFontCreateWithName(CFStringRef);
 extern bool CGFontGetGlyphAdvances(CGFontRef font, const CGGlyph glyphs[], size_t count, int advances[]);
 extern int CGFontGetUnitsPerEm(CGFontRef font);
 extern bool CGFontGetGlyphBBoxes(CGFontRef font, const CGGlyph glyphs[], size_t count, CGRect bboxes[]);
+#else
+extern void CGFontGetGlyphsForUnichars(CGFontRef, const UniChar[], CGGlyph[], size_t);
 #endif
 
-/* These are internal (GlyphsForUnichars didn't used to be... Anyway...) */
 extern CGFontRef CGContextGetFont(CGContextRef);
-extern void CGFontGetGlyphsForUnichars(CGFontRef, const UniChar[], const CGGlyph[], size_t);
-
 
 #define DEVDESC pDevDesc dd
 #define CTXDESC const pGEcontext gc, pDevDesc dd
@@ -947,7 +957,7 @@ SEXP Quartz(SEXP args)
     Rboolean antialias, smooth, autorefresh = TRUE, succ = FALSE;
     int      quartzpos, bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
-    const char *type, *mtype, *file, *family, *title;
+    const char *type, *mtype = 0, *file, *family, *title;
 
     char    *vmax = vmaxget();
     /* Get function arguments */
@@ -1005,10 +1015,11 @@ SEXP Quartz(SEXP args)
             }
             m++;
         }
-    }
-    if (!strncasecmp(type, "bitmap:", 7)) {
-        module = QBE_BITMAP;
-        mtype = mtype + 7;
+
+	if (!strncasecmp(type, "bitmap:", 7)) {
+	    module = QBE_BITMAP;
+	    mtype = mtype + 7;
+	}
     }
 
     quartzpos = 1;
