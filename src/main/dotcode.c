@@ -745,7 +745,7 @@ SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     const char *sym, *type="", *pkg = "";
     int val = 1, nargs = length(args);
-    R_RegisteredNativeSymbol symbol = {R_FORTRAN_SYM, {NULL}, NULL};
+    R_RegisteredNativeSymbol symbol = {R_ANY_SYM, {NULL}, NULL};
 
     if (nargs < 1) error(_("no arguments supplied"));
     if (nargs > 3) error(_("too many arguments"));
@@ -767,12 +767,7 @@ SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if(strcmp(type, "Call") == 0) symbol.type = R_CALL_SYM;
 	else if(strcmp(type, "External") == 0) symbol.type = R_EXTERNAL_SYM;
     }
-    if(strlen(type)) {
-	if(!(R_FindSymbol(sym, pkg, &symbol))) val = 0;
-    } else {
-	if (!(R_FindSymbol(sym, pkg, NULL)) && 
-	    !(R_FindSymbol(sym, pkg, &symbol))) val = 0;
-    }
+    if(!(R_FindSymbol(sym, pkg, &symbol))) val = 0;
     return ScalarLogical(val);
 }
 
