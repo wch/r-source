@@ -558,7 +558,10 @@ static long handle_message(HWND hwnd, UINT message,
 
     case WM_CHAR: /* SBCS Only */
 	if(obj->flags & UseUnicode) return 0;
-	else {handle_char(obj, LOWORD(wParam)); return 0;}
+	else {
+	    handle_char(obj, LOWORD(wParam)); 
+	    return 0;
+	}
 
     case WM_IME_COMPOSITION: /* DBCS Only */
 	if (lParam & GCS_RESULTSTR) { /* is fixed multibyte string */

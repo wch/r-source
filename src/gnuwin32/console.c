@@ -1523,7 +1523,12 @@ static wchar_t consolegetc(control c)
 	    p->clp = NULL;
 	}
     } else {
-	ch = p->kbuf[p->firstkey];
+	ch = (unsigned char) p->kbuf[p->firstkey];
+	if(ch >= 128 && !mbcslocale) {
+	    char tmp[2] = " ";
+	    tmp[0] = ch;
+	    mbrtowc(&ch, tmp, 2, NULL);
+	}
 	p->firstkey = (p->firstkey + 1) % NKEYS;
 	p->numkeys--;
 	if (p->already) p->already--;
