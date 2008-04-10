@@ -72,9 +72,9 @@ static UINT uFindReplaceMsg; // message identifier for FINDMSGSTRING
 #define SURROGATE_PAIRS_BIT_SZ  ((uint32_t)10)
 #define SURROGATE_PAIRS_MASK    (((uint16_t)1 << SURROGATE_PAIRS_BIT_SZ)-1)
 #define IsSurrogatePairsHi(_h)  (SURROGATE_PAIRS_HI_MIN == \
-                      ((uint16_t)(_h) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
+		      ((uint16_t)(_h) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
 #define IsSurrogatePairsLo(_l)  (SURROGATE_PAIRS_LO_MIN == \
-                      ((uint16_t)(_l) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
+		      ((uint16_t)(_l) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
 
 /*
  *  Call the relevent mouse handler function.
@@ -577,16 +577,15 @@ static long handle_message(HWND hwnd, UINT message,
 		}
 		ImmGetCompositionStringW(himc,GCS_RESULTSTR, p, len);
 		ImmReleaseContext(hwnd,himc);
-                /* Surrogate Pairs Block */
+		/* Surrogate Pairs Block */
 		for(i = 0; i < (len/sizeof(wchar_t)); i++)
 		    if(IsSurrogatePairsHi(p[i]) &&
-		       i+1<(len/sizeof(wchar_t)) &&
-		       IsSurrogatePairsLo(p[i+1])){
-		        handle_char(obj, L'?');
-		        handle_char(obj, L'?');
+		       i+1 < (len/sizeof(wchar_t)) &&
+		       IsSurrogatePairsLo(p[i+1]) ) {
+			handle_char(obj, L'?');
+			handle_char(obj, L'?');
 			i++;
-		    }else
-		        handle_char(obj, p[i]);
+		    } else handle_char(obj, p[i]);
 		if(p != buf) free(p);
 		return 0;
 	    }
