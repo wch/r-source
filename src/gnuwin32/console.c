@@ -56,9 +56,9 @@ extern void R_ProcessEvents(void);
 #define SURROGATE_PAIRS_BIT_SZ  ((uint32_t)10)
 #define SURROGATE_PAIRS_MASK    (((uint16_t)1 << SURROGATE_PAIRS_BIT_SZ)-1)
 #define IsSurrogatePairsHi(_h)  (SURROGATE_PAIRS_HI_MIN == \
-                      ((uint16_t)(_h) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
+		      ((uint16_t)(_h) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
 #define IsSurrogatePairsLo(_l)  (SURROGATE_PAIRS_LO_MIN == \
-                      ((uint16_t)(_l) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
+		      ((uint16_t)(_l) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
 
 extern char *alloca(size_t);
 
@@ -1080,14 +1080,13 @@ void consolepaste(control c)
 	   int i;
 	   p->clp = new;
 	   /* Surrogate Pairs Block */
-	   for ( i=0; i<wcslen(pc); i++)
-	       if ( IsSurrogatePairsHi(pc[i]) &&
-                    i+1<wcslen(pc)            &&
-                    IsSurrogatePairsLo(pc[i+1])){
-		   pc[i]=L'?';
-		   pc[i+1]=L'?';
-                   i++;
-               }
+	   for (i = 0; i < wcslen(pc); i++)
+	       if (IsSurrogatePairsHi(pc[i]) && i+1 < wcslen(pc) &&
+		    IsSurrogatePairsLo(pc[i+1]) ) {
+		   pc[i] = L'?';
+		   pc[i+1] = L'?';
+		   i++;
+	       }
 	   wcscat(p->clp, pc);
 	}
 	else {
