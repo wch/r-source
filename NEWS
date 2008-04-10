@@ -763,6 +763,9 @@ BUG FIXES
     o	Name space 'grDevices' was not unloading its DLL when the
 	name space was unloaded.
 
+    o	getNativeSymbolInfo() was unaware of non-registered Fortran
+    	names, because one of the C support routines ignored them.
+
 
 
 

@@ -166,16 +166,17 @@ DL_FUNC R_dlsym(DllInfo *dll, char const *name,
 void attribute_hidden
 InitDynload()
 {
-   DllInfo *dll;
-   int which = addDLL(strdup("base"), "base", NULL);
-   dll = &LoadedDLL[which];
-   R_init_base(dll);
-   InitFunctionHashing();
+    DllInfo *dll;
+    int which = addDLL(strdup("base"), "base", NULL);
+    dll = &LoadedDLL[which];
+    R_init_base(dll);
+    InitFunctionHashing();
 }
 
 /* returns DllInfo used by the embedding application.
    the underlying "(embedding)" entry is created if not present */
-DllInfo *R_getEmbeddingDllInfo() {
+DllInfo *R_getEmbeddingDllInfo()
+{
     DllInfo *dll = R_getDllInfo("(embedding)");
     if (dll == NULL) {
 	int which = addDLL(strdup("(embedding)"), "(embedding)", NULL);
@@ -196,11 +197,11 @@ getBaseDllInfo()
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
 {
-  Rboolean old;
-  old = info->useDynamicLookup;
-  info->useDynamicLookup = value;
+    Rboolean old;
+    old = info->useDynamicLookup;
+    info->useDynamicLookup = value;
 
-  return(old);
+    return(old);
 }
 
 static void 
@@ -343,9 +344,9 @@ R_addFortranRoutine(DllInfo *info,
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
-       R_setPrimitiveArgTypes(croutine, sym);
+	R_setPrimitiveArgTypes(croutine, sym);
     if(croutine->styles)
-       R_setArgStyles(croutine, sym);
+	R_setArgStyles(croutine, sym);
 }
 
 static void
@@ -368,9 +369,9 @@ R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
-       R_setPrimitiveArgTypes(croutine, sym);
+	R_setPrimitiveArgTypes(croutine, sym);
     if(croutine->styles)
-       R_setArgStyles(croutine, sym);
+	R_setArgStyles(croutine, sym);
 
 }
 
@@ -449,8 +450,7 @@ R_callDLLUnload(DllInfo *dllInfo)
 
     snprintf(buf, 1024, "R_unload_%s", dllInfo->name);
     f = (DllInfoUnloadCall) R_dlsym(dllInfo, buf, &symbol);
-    if(f)
-       f(dllInfo);
+    if(f) f(dllInfo);
 
     return(TRUE);
 }
@@ -470,7 +470,7 @@ static int DeleteDLL(const char *path)
 	}
     }
     return 0;
- found:
+found:
 #ifdef CACHE_DLL_SYM
     if(R_osDynSymbol->deleteCachedSymbols)
         R_osDynSymbol->deleteCachedSymbols(&LoadedDLL[loc]);
@@ -625,7 +625,7 @@ addDLL(char *dpath, char *DLLname, HINSTANCE handle)
     if(name == NULL) {
 	strcpy(DLLerror, _("could not allocate space for 'name'"));
 	if(handle)
-	   R_osDynSymbol->closeLibrary(handle);
+	    R_osDynSymbol->closeLibrary(handle);
 	free(dpath);
 	return 0;
     }
@@ -775,11 +775,9 @@ R_dlsym(DllInfo *info, char const *name,
     DL_FUNC f;
 
     f = R_getDLLRegisteredSymbol(info, name, symbol);
-    if(f)
-	return(f);
+    if(f) return(f);
 
-    if(info->useDynamicLookup == FALSE)
-	return(NULL);
+    if(info->useDynamicLookup == FALSE) return(NULL);
 
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
     snprintf(buf, MAXIDSIZE+1, "%s", name);
@@ -789,18 +787,31 @@ R_dlsym(DllInfo *info, char const *name,
 
 #ifdef HAVE_F77_UNDERSCORE
     if(symbol && symbol->type == R_FORTRAN_SYM) {
-	buf[strlen(buf)+1] = '\0';
 	buf[strlen(buf)] = '_';
+	buf[strlen(buf)+1] = '\0'; /* but snprintf zeroed the buffer ... */
     }
 #endif
 #ifdef HAVE_F77_EXTRA_UNDERSCORE
     if(strchr(name, '_') && symbol && symbol->type == R_FORTRAN_SYM) {
-	buf[strlen(buf)+1] = '\0';
 	buf[strlen(buf)] = '_';
+	buf[strlen(buf)+1] = '\0';
     }
 #endif
 
-    return (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
+    f = (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
+    if (!f && symbol && symbol->type == R_ANY_SYM) {
+#ifdef HAVE_F77_UNDERSCORE
+	    buf[strlen(buf)] = '_';
+	    buf[strlen(buf)+1] = '\0';
+#endif
+#ifdef HAVE_F77_EXTRA_UNDERSCORE
+	    buf[strlen(buf)] = '_';
+	    buf[strlen(buf)+1] = '\0';
+#endif
+	f = (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
+    }
+    
+    return f;
 }
 
 	/* R_FindSymbol checks whether one of the libraries */
@@ -826,9 +837,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
     if(R_osDynSymbol->lookupCachedSymbol)
 	fcnptr = R_osDynSymbol->lookupCachedSymbol(name, pkg, all);
 
-    if(fcnptr)
-	return(fcnptr);
-
+    if(fcnptr) return(fcnptr);
 
     /* The following is not legal ANSI C. */
     /* It is only meant to be used in systems supporting */
@@ -924,10 +933,10 @@ int R_moduleCdynload(const char *module, int local, int now)
     if(!p) return 0;
 #ifdef R_ARCH
     snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s%s%s", p, FILESEP, FILESEP,
-	    R_ARCH, FILESEP, module, SHLIB_EXT);
+	     R_ARCH, FILESEP, module, SHLIB_EXT);
 #else
     snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", p, FILESEP, FILESEP,
-            module, SHLIB_EXT);
+	     module, SHLIB_EXT);
 #endif
     res = AddDLL(dllpath, local, now, "");
     if(!res)
@@ -945,14 +954,14 @@ int R_moduleCdynload(const char *module, int local, int now)
 static SEXP
 Rf_MakeNativeSymbolRef(DL_FUNC f)
 {                     
-  SEXP ref, klass;
+    SEXP ref, klass;
 
-  PROTECT(ref = R_MakeExternalPtrFn(f, Rf_install("native symbol"),
-				    R_NilValue));
-  PROTECT(klass = mkString("NativeSymbol"));
-  setAttrib(ref, R_ClassSymbol, klass);
-  UNPROTECT(2);
-  return(ref);
+    PROTECT(ref = R_MakeExternalPtrFn(f, Rf_install("native symbol"),
+				      R_NilValue));
+    PROTECT(klass = mkString("NativeSymbol"));
+    setAttrib(ref, R_ClassSymbol, klass);
+    UNPROTECT(2);
+    return(ref);
 }
 
 static void 
@@ -967,25 +976,25 @@ freeRegisteredNativeSymbolCopy(SEXP ref)
 static SEXP
 Rf_MakeRegisteredNativeSymbol(R_RegisteredNativeSymbol *symbol)
 {                     
-  SEXP ref, klass;
-  R_RegisteredNativeSymbol *copy;
-  copy = (R_RegisteredNativeSymbol *) malloc(1 * sizeof(R_RegisteredNativeSymbol));
-  if(!copy) {
-     error(_("cannot allocate memory for registered native symbol (%d bytes)"),
-	     (int) sizeof(R_RegisteredNativeSymbol));
-  }
-  *copy = *symbol;
+    SEXP ref, klass;
+    R_RegisteredNativeSymbol *copy;
+    copy = (R_RegisteredNativeSymbol *) malloc(1 * sizeof(R_RegisteredNativeSymbol));
+    if(!copy) {
+	error(_("cannot allocate memory for registered native symbol (%d bytes)"),
+	      (int) sizeof(R_RegisteredNativeSymbol));
+    }
+    *copy = *symbol;
 
-  PROTECT(ref = R_MakeExternalPtr(copy, 
-				  Rf_install("registered native symbol"),
-				  R_NilValue));
-  R_RegisterCFinalizer(ref, freeRegisteredNativeSymbolCopy);
+    PROTECT(ref = R_MakeExternalPtr(copy, 
+				    Rf_install("registered native symbol"),
+				    R_NilValue));
+    R_RegisterCFinalizer(ref, freeRegisteredNativeSymbolCopy);
 
-  PROTECT(klass = mkString("RegisteredNativeSymbol"));
-  setAttrib(ref, R_ClassSymbol, klass);
+    PROTECT(klass = mkString("RegisteredNativeSymbol"));
+    setAttrib(ref, R_ClassSymbol, klass);
 
-  UNPROTECT(2);
-  return(ref);
+    UNPROTECT(2);
+    return(ref);
 }
 
 
@@ -1084,23 +1093,22 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
     name = translateChar(STRING_ELT(sname, 0));
 
     if(length(spackage)) {
-	if(TYPEOF(spackage) == STRSXP) {
+	if(TYPEOF(spackage) == STRSXP)
 	    package = translateChar(STRING_ELT(spackage, 0));
-	}
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
 		R_ExternalPtrTag(spackage) == Rf_install("DLLInfo")) {
-	    f = R_dlsym((DllInfo *)R_ExternalPtrAddr(spackage), name, &symbol);
+	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);
 	    package = NULL;
-	} else {
+	} else
 	    error(_("must pass package name or DllInfo reference"));
-	}
     }
 
     if(package)
-      f = R_FindSymbol(name, package, &symbol);
+	f = R_FindSymbol(name, package, &symbol);
 
     if(f)
-      sym = createRSymbolObject(sname, f, &symbol, LOGICAL(withRegistrationInfo)[0]);
+	sym = createRSymbolObject(sname, f, &symbol, 
+				  LOGICAL(withRegistrationInfo)[0]);
 
     return(sym);
 }
@@ -1108,16 +1116,16 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 SEXP attribute_hidden
 R_getDllTable()
 {
-	int i;
-	SEXP ans;
+    int i;
+    SEXP ans;
 
-	PROTECT(ans = allocVector(VECSXP, CountDLL));
-	for(i = 0; i < CountDLL; i++) {
-		SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
-	}
-	setAttrib(ans, R_ClassSymbol, mkString("DLLInfoList"));
-	UNPROTECT(1);
-	return(ans);
+    PROTECT(ans = allocVector(VECSXP, CountDLL));
+    for(i = 0; i < CountDLL; i++) {
+	SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
+    }
+    setAttrib(ans, R_ClassSymbol, mkString("DLLInfoList"));
+    UNPROTECT(1);
+    return(ans);
 }
 
 static SEXP
@@ -1141,8 +1149,8 @@ createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol,
 
     SET_VECTOR_ELT(sym, 1, 
                    withRegistrationInfo && symbol && symbol->symbol.c && symbol->dll 
-                     ? Rf_MakeRegisteredNativeSymbol(symbol)  
-                     : Rf_MakeNativeSymbolRef(f));
+		   ? Rf_MakeRegisteredNativeSymbol(symbol)  
+		   : Rf_MakeNativeSymbolRef(f));
     SET_STRING_ELT(names, 1, mkChar("address"));
     if(symbol->dll)
 	SET_VECTOR_ELT(sym, 2, Rf_MakeDLLInfo(symbol->dll));
@@ -1253,21 +1261,18 @@ R_getRoutineSymbols(NativeSymbolType type, DllInfo *info)
 SEXP attribute_hidden
 R_getRegisteredRoutines(SEXP dll)
 {
-
     DllInfo *info;
     SEXP ans, snames;
     int i;
     const char * const names[] = {".C", ".Call", ".Fortran", ".External"};
 
     if(TYPEOF(dll) != EXTPTRSXP &&
-       R_ExternalPtrTag(dll) != Rf_install("DLLInfo")) {
+       R_ExternalPtrTag(dll) != Rf_install("DLLInfo"))
 	error(_("R_getRegisteredRoutines() expects a DllInfo reference"));
-    }
 
     info = (DllInfo *) R_ExternalPtrAddr(dll);
-    if(!info) {
-	error(_("NULL value passed for DllInfo"));
-    }
+    if(!info) error(_("NULL value passed for DllInfo"));
+
 
     PROTECT(ans = allocVector(VECSXP, 4));
 
@@ -1277,9 +1282,8 @@ R_getRegisteredRoutines(SEXP dll)
     SET_VECTOR_ELT(ans, 3, R_getRoutineSymbols(R_EXTERNAL_SYM, info));
 
     PROTECT(snames = allocVector(STRSXP, 4));
-    for(i = 0; i < 4; i++) {
+    for(i = 0; i < 4; i++)
 	SET_STRING_ELT(snames, i, mkChar(names[i]));
-    }
     setAttrib(ans, R_NamesSymbol, snames);
     UNPROTECT(2);
     return(ans);
@@ -1293,13 +1297,12 @@ void InitFunctionHashing()
 
 attribute_hidden
 DL_FUNC R_FindSymbol(char const *name, char const *pkg,
-                       R_RegisteredNativeSymbol *symbol)
+		     R_RegisteredNativeSymbol *symbol)
 {
     int i;
-    for(i=0 ; CFunTab[i].name ; i++)
-	if(!strcmp(name, CFunTab[i].name))
-	    return CFunTab[i].func;
-    return (DL_FUNC)0;
+    for(i = 0; CFunTab[i].name; i++)
+	if(!strcmp(name, CFunTab[i].name)) return CFunTab[i].func;
+    return (DL_FUNC) 0;
 }
 
 SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
