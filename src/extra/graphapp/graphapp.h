@@ -423,6 +423,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define isiconic		GA_isiconic
 #define ismdi			GA_ismdi
 #define isselected		GA_isselected
+#define isUnicodeWindow		GA_isUnicodeWindow
 #define isvisible		GA_isvisible
 #define lineto			GA_lineto
 #define load_gif		GAI_load_gif
