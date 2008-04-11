@@ -218,6 +218,18 @@ function(file, pdf = FALSE, clean = FALSE,
         } else {
             extra <- quiet <- ""
         }
+        if(.Platform$OS.type == "windows") {
+            ## look for MiKTeX (which this almost certainly is)
+            ## and set the path to R's style files.
+            ## -I works in MiKTeX >= 2.4, at least
+            ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
+            if(length(grep("MiKTeX", ver[1]))) {
+                ## could use shortPathName here
+                stypath <-  shQuote(gsub("\\\\", "/",
+                                         file.path(R.home("share"), "texmf")))
+                clean <- paste(clean, "-I", stypath)
+            }
+        }
         if(system( paste(shQuote(texi2dvi), quiet, pdf, clean,
                          shQuote(file), extra) ))
             stop(gettextf("running 'texi2dvi' on '%s' failed", file),
