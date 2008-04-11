@@ -476,6 +476,7 @@ static long handle_message(HWND hwnd, UINT message,
 {
     object obj;
     WPARAM upDown;
+    static unsigned short altnpad = 0;
 
     /* Find the library object associated with the hwnd. */
     obj = find_by_handle(hwnd);
@@ -503,6 +504,14 @@ static long handle_message(HWND hwnd, UINT message,
 	PostMessage(hwnd, WM_VSCROLL, upDown, 0);
 	PostMessage(hwnd, WM_VSCROLL, upDown, 0);
 	break;
+
+    case WM_SYSKEYDOWN:
+        if(obj->flags & UseUnicode)
+	    if(VK_NUMPAD0 <= LOWORD(wParam) && LOWORD(wParam) <= VK_NUMPAD9) {
+	        altnpad *= 10;
+		altnpad += LOWORD(wParam) & 0xf;
+	    }
+        break;
 
     case WM_KEYDOWN: /* record state of shift and control keys */
 	handle_keydown(LOWORD(wParam));
@@ -553,6 +562,11 @@ static long handle_message(HWND hwnd, UINT message,
 	break;
 
     case WM_KEYUP: /* record state of shift and control keys */
+        if(obj->flags & UseUnicode)
+	    if(LOWORD(wParam) == VK_MENU && altnpad) {
+	        handle_char(obj, altnpad);
+		altnpad = 0;
+	    } 
 	handle_keyup(LOWORD(wParam));
 	break;
 
