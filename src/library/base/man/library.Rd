@@ -263,11 +263,10 @@ detach(pos = match(paste("package", pkg, sep=":"), search()))
 
 require(nonexistent)        # FALSE
 \dontrun{
-## Suppose a package needs to call a shared library named 'fooEXT',
+## Suppose a package needs to call a DLL named 'fooEXT',
 ## where 'EXT' is the system-specific extension.  Then you should use
-.First.lib <- function(lib, pkg) {
+.First.lib <- function(lib, pkg)
   library.dynam("foo", pkg, lib)
-}
 
 ## if you want to mask as little as possible, use
 library(mypkg, pos = "package:base")

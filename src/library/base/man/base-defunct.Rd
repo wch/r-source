@@ -161,9 +161,9 @@ gammaCody(x)
   some notes on \url{http://developer.r-project.org}.
 
   \code{.Dyn.libs} and \code{.lib.loc} were internal variables used for
-  storing and manipulating the information about packages with dynloaded
-  shared libs, and the known \R library trees.  These are now dynamic
-  variables which one can get or set using \code{\link{.dynLibs}} and
+  storing and manipulating the information about packages with DLLs, and
+  the known \R library trees.  These are now dynamic variables which one
+  can get or set using \code{\link{.dynLibs}} and
   \code{\link{.libPaths}}, respectively.
 
   \code{Machine()} and \code{Platform()} were functions returning the

@@ -1,6 +1,6 @@
 % File src/library/base/man/getNativeSymbolInfo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getNativeSymbolInfo}
@@ -12,23 +12,20 @@
 }
 \description{
   This finds and returns as comprehensive a description of one or more
-  dynamically loaded or \sQuote{exported} built-in native
-  symbols. For each name, it returns information about the
-  name of the symbol, the library in which it is located
-  and, if available, the number of arguments it expects
-  and by which interface it should be called (i.e
-  \code{\link{.Call}},   \code{\link{.C}},
-  \code{\link{.Fortran}},  or \code{\link{.External}}).
-  Additionally, it returns the address of the symbol and this
-  can be passed to other C routines which can invoke.
-  Specifically, this provides a way to explicitly share
-  symbols between different dynamically loaded package libraries.
-  Also, it provides a way to query where symbols were resolved,
-  and aids diagnosing strange behavior associated with dynamic
-  resolution.
+  dynamically loaded or \sQuote{exported} built-in native symbols.  For
+  each name, it returns information about the name of the symbol, the
+  library in which it is located and, if available, the number of
+  arguments it expects and by which interface it should be called (i.e
+  \code{\link{.Call}}, \code{\link{.C}}, \code{\link{.Fortran}}, or
+  \code{\link{.External}}). Additionally, it returns the address of the
+  symbol and this can be passed to other C routines which can
+  invoke. Specifically, this provides a way to explicitly share symbols
+  between different dynamically loaded package libraries. Also, it
+  provides a way to query where symbols were resolved, and aids
+  diagnosing strange behavior associated with dynamic resolution.
 
-  This is now vectorized in the \code{name} argument so can process
-  multiple symbols in a single call. The result is a list that can be
+  This is vectorized in the \code{name} argument so can process
+  multiple symbols in a single call.  The result is a list that can be
   indexed by the given symbol names.
 }
 \usage{
@@ -41,8 +38,8 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
     supplied as-is, not wrapped in \code{symbol.For}.
   }
   \item{PACKAGE}{an optional argument that specifies to which
-    dynamically loaded library we restrict the search for this symbol.
-    If this is \code{"base"}, we search in the R executable itself.}
+    DLL we restrict the search for this symbol.  If this is
+    \code{"base"}, we search in the \R executable itself.}
   \item{unlist}{a logical value which controls how the result is
     returned if the function is called with the name of a single symbol.
     If \code{unlist} is \code{TRUE} and the number of symbol names in
@@ -63,7 +60,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
 \details{
   This uses the same mechanism for resolving symbols as is used
   in all the native interfaces (\code{\link{.Call}}, etc.).
-  If the symbol has been explicitly registered by the shared library
+  If the symbol has been explicitly registered by the DLL
   in which it is contained, information about the number of arguments
   and the interface by which it should be called will be returned.
   Otherwise, a generic native symbol object is returned.
@@ -93,7 +90,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
       \item{name}{the short form of the library name which can be used
 	as the value of the \code{PACKAGE} argument in
 	the different native interface functions.}
-      \item{path}{the fully qualified name of the shared library file.}
+      \item{path}{the fully qualified name of the DLL.}
       \item{dynamicLookup}{a logical value indicating whether dynamic
 	resolution is used when looking for symbols in this library,
 	or only registered routines can be located.}
