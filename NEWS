@@ -648,6 +648,10 @@ UTILITIES
 	tools::write_PACKAGES() can now produce PACKAGES files
 	including subdirectories.
 
+    o	The default for 'stylepath' in Sweave's (default) RweaveLatex
+	driver can be set by the environment variable
+	SWEAVE_STYLEPATH_DEFAULT: see ?RweaveLatex.
+
 
 C-LEVEL FACILITIES
 

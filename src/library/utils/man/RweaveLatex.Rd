@@ -17,8 +17,7 @@ RweaveLatex()
 RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
                  debug = FALSE, echo = TRUE, eval = TRUE,
                  keep.source = FALSE, split = FALSE,
-                 stylepath = TRUE,
-                 pdf = TRUE, eps = TRUE)
+                 stylepath, pdf = TRUE, eps = TRUE)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
@@ -31,15 +30,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
   \item{debug}{If \code{TRUE}, input and output of all code
     chunks is copied to the console.}
-  \item{stylepath}{If \code{TRUE}, a hard path to the file \file{Sweave.sty}
-    installed with this package is set, if \code{FALSE}, only
-    \code{\\usepackage\{Sweave\}} is written. The hard path makes the
-    TeX file less
-    portable, but avoids the problem of installing the current
-    version of \file{Sweave.sty} to some place in your TeX input path.
-    The argument is ignored if a \code{\\usepackage\{Sweave\}} is
-    already present in the Sweave source file.
-  }
+  \item{stylepath}{See \sQuote{Details}.}
   \item{echo}{set default for option \code{echo}, see details below.}
   \item{eval}{set default for option \code{eval}, see details below.}
   \item{keep.source}{set default for option \code{keep.source}, see
@@ -48,8 +39,27 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \item{pdf}{set default for option \code{pdf}, see details below.}
   \item{eps}{set default for option \code{eps}, see details below.}
 }
+\details{
+  The LaTeX file generated needs to contain
+  \code{\\usepackage\{Sweave\}}, and if this is not present in the
+  Sweave source file, it is inserted by the \code{RweaveLatex} driver.
+  If \code{stylepath = TRUE}, a hard-coded path to the file
+  \file{Sweave.sty} in the \R installation is set in place of \code{Sweave}.
+  The hard-coded path makes the TeX file less portable, but avoids the
+  problem of installing the current version of \file{Sweave.sty} to some
+  place in your TeX input path.  However, TeX may not be able to
+  process the hard-coded path if it contains spaces (as it often will
+  under Windows) or TeX special characters.
+
+  The default in \R prior to 2.7.0 was \code{stylepath = TRUE}.  In
+  2.7.x it is taken from the environment variable
+  \env{SWEAVE_STYLEPATH_DEFAULT}, or \code{TRUE} it that is unset or
+  empty.  If set, it should be exactly \code{TRUE} or \code{FALSE}: any
+  other values are taken as \code{FALSE}.  The default is likely to
+  change in later versions of \R.
+}
 \section{Supported Options}{
-  RweaveLatex supports the following options for code chunks (the values
+  \code{RweaveLatex} supports the following options for code chunks (the values
   in parentheses show the default values):
   \describe{
     \item{echo:}{logical (\code{TRUE}). Include S code in the
