@@ -342,19 +342,22 @@ RweaveLatex <- function()
 RweaveLatexSetup <-
     function(file, syntax,
              output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
-             eval=TRUE, keep.source=FALSE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
+             eval=TRUE, keep.source=FALSE, split=FALSE,
+             stylepath, pdf=TRUE, eps=TRUE)
 {
-    if(is.null(output)){
+    if(is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
         output <- paste(prefix.string, "tex", sep=".")
-    }
-    else{
-        prefix.string <- basename(sub("\\.tex$", "", output))
-    }
+    } else prefix.string <- basename(sub("\\.tex$", "", output))
+
     if(!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks ...\n", sep="")
     output <- file(output, open="w+")
 
+    if(missing(stylepath)) {
+        p <- as.vector(Sys.getenv("SWEAVE_STYLEPATH_DEFAULT"))
+        stylepath <- if(length(p) >= 1 && nzchar(p[1])) identical(p, "TRUE") else TRUE
+    }
     if(stylepath){
         styfile <- file.path(R.home("share"), "texmf", "Sweave")
         if(.Platform$OS.type == "windows")
@@ -363,9 +366,7 @@ RweaveLatexSetup <-
             warning(gettextf("path to '%s' contains spaces,\n", styfile),
                     gettext("this may cause problems when running LaTeX"),
                     domain = NA)
-    }
-    else
-        styfile <- "Sweave"
+    } else styfile <- "Sweave"
 
     options <- list(prefix=TRUE, prefix.string=prefix.string,
                     engine="R", print=FALSE, eval=eval,
