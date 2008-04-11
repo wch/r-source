@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -30,8 +30,8 @@
     character string, giving the file name \bold{ext}ension of
     \bold{dyn}amically loadable \bold{lib}raries, e.g., \code{".dll"} on
     Windows and \code{".so"} or \code{".sl"} on Unix-alikes.  (Note for
-    MacOS X users: these are shared objects as loaded by
-    \code{\link{dyn.load}} and not dylibs.)
+    Mac OS X users: these are shared objects as loaded by
+    \code{\link{dyn.load}} and not dylibs: see \code{\link{dyn.load}}.)
   }
   \item{GUI}{
     character string, giving the type of GUI in use, or \code{"unknown"}

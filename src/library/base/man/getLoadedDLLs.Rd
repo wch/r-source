@@ -1,6 +1,6 @@
 % File src/library/base/man/getLoadedDLLs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getLoadedDLLs}
@@ -10,9 +10,8 @@
 \alias{$.DLLInfo}    
 \title{Get DLLs Loaded in Current Session}
 \description{
-  This function provides a way to get a list of all the Dynamically
-  Loadable Libraries (DLLs) that are currently loaded in the current \R
-  session.
+  This function provides a way to get a list of all the DLLs (see
+  \code{\link{dyn.load}} that are currently loaded in the \R session.
 }
 \usage{
 getLoadedDLLs()
@@ -27,15 +26,13 @@ getLoadedDLLs()
   has the following entries.
   
   \item{name}{the abbreviated name.}
-  \item{path}{the fully qualified name of the file which was dynamically
-        loaded.}
+  \item{path}{the fully qualified name of the loaded DLL.}
   \item{dynamicLookup}{a logical value indicating whether R uses only
     the registration information to resolve symbols or whether it
     searches the entire symbol table of the DLL.}
   \item{handle}{a reference to the C-level data structure that
     provides access to the contents of the DLL.
-    This is an object of class \code{"DLLHandle}".
-    }
+    This is an object of class \code{"DLLHandle}".}
 
   Note that the class \code{DLLInfo} has an overloaded method for
   \code{$} which can be used to resolve native symbols within that

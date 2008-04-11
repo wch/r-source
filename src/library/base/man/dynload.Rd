@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -9,8 +9,8 @@
 \alias{is.loaded}
 \title{Foreign Function Interface}
 \description{
-  Load or unload shared libraries, and test whether a C function or
-  Fortran subroutine is available.
+  Load or unload DLLs (also known as shared objects), and test whether a
+  C function or Fortran subroutine is available.
 }
 \usage{
 dyn.load(x, local = TRUE, now = TRUE, ...)
@@ -19,13 +19,13 @@ dyn.unload(x)
 is.loaded(symbol, PACKAGE = "", type = "")
 }
 \arguments{
-  \item{x}{a character string giving the pathname to a shared library or
-    DLL.}
+  \item{x}{a character string giving the pathname to a DLL, also known
+    as a dynamic shared object. (See \sQuote{Details} for what these
+    terms mean.)}
   \item{local}{a logical value controlling whether the symbols in the
-    shared library are stored in their own local table and not shared
-    across shared libraries,
-    or added to the global symbol table.  Whether this has any effect is
-    system-dependent.
+    DLL are stored in their own local table and not shared
+    across DLLs, or added to the global symbol table.  Whether this has
+    any effect is system-dependent.
 #ifdef windows
     It is ignored on Windows.
 #endif
@@ -57,20 +57,26 @@ is.loaded(symbol, PACKAGE = "", type = "")
   default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
-  See
-  \sQuote{See Also} and the \emph{Writing R Extensions} and
-  \emph{R Installation and Administration} manuals for how to
-  create and install 
-  a suitable shared library.  Note that unlike some versions of
-  S-PLUS, \code{dyn.load} does not load an object (\file{.o}) file but a
-  shared library or DLL.
+  The objects \code{dyn.load} loads are called \sQuote{dynamically
+    loadable libraries} (abbreviated to \sQuote{DLL} on all platforms
+  except Mac OS X, which unfortunately uses the term for a different
+  sort of sobject.  On Unix-alikes they are also called \sQuote{dynamic
+    shared objects} (\sQuote{DSO}), or \sQuote{shared objects} for
+  short.  (The POSIX standards use \sQuote{executable object file}, but
+  no one else does.)
 
-  Unfortunately a very few platforms (Compaq Tru64) do not handle the
-  \code{PACKAGE} argument correctly, and may incorrectly find symbols
-  linked into \R.
-  
+  See \sQuote{See Also} and the \emph{Writing R Extensions} and \emph{R
+  Installation and Administration} manuals for how to create and install
+  a suitable DLL.  Note that unlike some versions of S-PLUS,
+  \code{dyn.load} does not load an object (\file{.o}) file but a shared
+  object or DLL.
+
+  Unfortunately a very few platforms (e.g. Compaq Tru64) do not handle
+  the \code{PACKAGE} argument correctly, and may incorrectly find
+  symbols linked into \R.
+
   The additional arguments to \code{dyn.load} mirror the different
-  aspects of the mode argument to the dlopen() routine on UNIX
+  aspects of the mode argument to the \code{dlopen()} routine on POSIX
   systems. They are available so that users can exercise greater control
   over the loading process for an individual library.  In general, the
   defaults values are appropriate and you should override them only if
@@ -117,29 +123,29 @@ is.loaded(symbol, PACKAGE = "", type = "")
 #ifdef windows
 
   External code must not change the floating point control word, but
-  many DLLs do so.  Common changes are to set it to use 53 bit 
-  precision instead of R's default 64 bit precision, or to unmask 
-  some exceptions.  \code{dyn.load} detects such changes, 
-  and restores R's control word to its default value of hex 8001F.  
+  many DLLs do so.  Common changes are to set it to use 53 bit
+  precision instead of R's default 64 bit precision, or to unmask
+  some exceptions.  \code{dyn.load} detects such changes,
+  and restores R's control word to its default value of hex 8001F.
   This may cause the DLL to malfunction; if so, it should be rewritten
   to save and restore the control word itself.  If \code{warn.FPU}
-  is set to \code{TRUE} using the \code{\link{options}} function, 
+  is set to \code{TRUE} using the \code{\link{options}} function,
   a warning will be printed.  (If the warning says
-  that the control word was changed from some other value than 8001F, 
-  please report the circumstances to the Windows maintainers:  
+  that the control word was changed from some other value than 8001F,
+  please report the circumstances to the Windows maintainers:
   that probably indicates an internal bug.)
 #endif
 }
 \value{
   The function \code{dyn.load} is used for its side effect which links
-  the specified shared library to the executing \R image.  Calls to
-  \code{.C}, \code{.Call}, \code{.Fortran} and \code{.External} can
-  then be used to execute compiled C functions or Fortran subroutines
-  contained in the library. The return value of \code{dyn.load} is
-  an object of class \code{DLLInfo}. See \code{\link{getLoadedDLLs}}
-  for information about this class.
+  the specified DLL to the executing \R image.  Calls to \code{.C},
+  \code{.Call}, \code{.Fortran} and \code{.External} can then be used to
+  execute compiled C functions or Fortran subroutines contained in the
+  library.  The return value of \code{dyn.load} is an object of class
+  \code{DLLInfo}.  See \code{\link{getLoadedDLLs}} for information about
+  this class.
 
-  The function \code{dyn.unload} unlinks the shared library.
+  The function \code{dyn.unload} unlinks the DLL.
 
   \code{is.loaded} checks if the symbol name is loaded and hence
   available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
@@ -153,17 +159,17 @@ is.loaded(symbol, PACKAGE = "", type = "")
   and \strong{not} (as in S) that remapped by defunct functions
   \code{symbol.C} or \code{symbol.For}.
 
-  The creation of shared libraries and the runtime linking of them into
-  executing programs is very platform dependent.  In recent years there
-  has been some simplification in the process because the C subroutine
-  call \code{dlopen} has become the standard for doing this under UNIX.
-  Under UNIX \code{dyn.load} uses the \code{dlopen} mechanism and should
-  work on all platforms which support it.  On Windows it uses the
-  standard mechanisms for loading DLLs.
+  The creation of DLLs and the runtime linking of them into executing
+  programs is very platform dependent.  In recent years there has been
+  some simplification in the process because the C subroutine call
+  \code{dlopen} has become the POSIX standard for doing this. Under
+  Unix-alikes \code{dyn.load} uses the \code{dlopen} mechanism and
+  should work on all platforms which support it.  On Windows it uses the
+  standard mechanism (\code{LoadLibrary} for loading DLLs.
 
-  The original code for loading DLLs in UNIX was provided by Heiner
-  Schwarte.  The compatibility code for HP-UX was provided by Luke
-  Tierney.
+  The original code for loading DLLs in Unix-alikes was provided by
+  Heiner Schwarte.  The compatibility code for HP-UX was provided by
+  Luke Tierney.
 }
 #ifdef windows
 \section{Windows}{
@@ -202,8 +208,9 @@ is.loaded(symbol, PACKAGE = "", type = "")
 }
 #endif
 \section{Warning}{
-  Do not use \code{dyn.unload} on a shared object loaded by
+  Do not use \code{dyn.unload} on a DLL loaded by
   \code{\link{library.dynam}}: use \code{\link{library.dynam.unload}}.
+  This is needed for system houskeeping.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -214,13 +221,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{\link{library.dynam}} to be used inside a package's
   \code{\link{.First.lib}} initialization.
 
-#ifdef unix
-  \code{\link{SHLIB}} for how to create suitable shared objects.
-#endif
-#ifdef windows
   \code{\link{SHLIB}} for how to create suitable DLLs.
-#endif
-  
+
   \code{\link{.C}},
   \code{\link{.Fortran}},
   \code{\link{.External}},

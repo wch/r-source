@@ -51,7 +51,7 @@ detach(name, pos = 2, version, unload = FALSE)
   If a package has a namespace, detaching it does not by default unload
   the namespace (and may not even with \code{unload=TRUE}), and
   detaching will not in general unload any dynamically loaded compiled
-  code.  Further, registered S3 methods from the namespace will not be
+  code (DLLs).  Further, registered S3 methods from the namespace will not be
   removed.  If you use \code{\link{library}} on a package whose name
   space is loaded, it attaches the exports of the loaded name space.
   So detaching and re-attaching a package may not refresh some

@@ -58,12 +58,11 @@
 
   Anything needed for the functioning of the name space should be
   handled at load/unload times by the \code{.onLoad} and
-  \code{.onUnload} hooks.  For example, shared libraries can be loaded
-  (unless done by a \code{useDynLib} directive in the \file{NAMESPACE}
-  file) and initialized in \code{.onLoad} and unloaded in
-  \code{.onUnload}.  Use \code{.onAttach} only for actions that are
-  needed only when the package becomes visible to the user, for example
-  a start-up message.
+  \code{.onUnload} hooks.  For example, DLLs can be loaded (unless done
+  by a \code{useDynLib} directive in the \file{NAMESPACE} file) and
+  initialized in \code{.onLoad} and unloaded in \code{.onUnload}.  Use
+  \code{.onAttach} only for actions that are needed only when the
+  package becomes visible to the user, for example a start-up message.
 
   If a package was installed with \code{--with-package-versions}, the
   \code{pkgname} supplied will be something like \code{tree_1.0-16}.
