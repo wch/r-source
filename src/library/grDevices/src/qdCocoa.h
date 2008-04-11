@@ -32,7 +32,7 @@ void QuartzCocoa_SetupEventLoop(int flags, unsigned long latency);
 int  QuartzCocoa_SetLatency(unsigned long latency);
 
 /* this is the designated creator, used by the Quartz dispatcher */
-Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
+QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
 #ifdef __OBJC__
 

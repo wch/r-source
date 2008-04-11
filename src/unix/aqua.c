@@ -32,6 +32,9 @@
 
 #if defined(HAVE_AQUA)
 
+/* tell QuartzDevice to insert definitions for us (to maintain consistency) */
+#define IN_AQUA_C 1
+
 #include <R_ext/GraphicsEngine.h> 
 #include <R_ext/Rdynload.h>
 #include <R_ext/QuartzDevice.h>
@@ -46,13 +49,7 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
 
 DL_FUNC ptr_R_ProcessEvents, ptr_CocoaSystem;
 
-/* deprecated pointers, not used anymore */
-DL_FUNC ptr_CocoaInnerQuartzDevice, ptr_CocoaGetQuartzParameters;
-
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
-
-/* new quartz hook */
-Rboolean (*ptr_QuartzBackend)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
 static QuartzFunctions_t* qfn;
 
@@ -69,28 +66,6 @@ QuartzFunctions_t *getQuartzFunctions(void) {
 	}
 	return fn();
     }
-}
-
-/* obsolete Quartz Cocoa call */
-Rboolean CocoaInnerQuartzDevice(pDevDesc dd,char *display,
-				double width,double height,
-				double pointsize,char *family,
-				Rboolean antialias,
-				Rboolean autorefresh,int quartzpos,
-				int bg){
-    return (Rboolean)ptr_CocoaInnerQuartzDevice(dd, display,
-						width, height,
-						pointsize, family,
-						antialias,
-						autorefresh, quartzpos,
-						bg);
-}
-
-void CocoaGetQuartzParameters(double *width, double *height, double *ps, 
-			      char *family, Rboolean *antialias, 
-			      Rboolean *autorefresh, int *quartzpos){
-    ptr_CocoaGetQuartzParameters(width, height, ps, family, antialias,
-				 autorefresh, quartzpos);
 }
 
 void R_ProcessEvents(void);

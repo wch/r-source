@@ -119,7 +119,7 @@ void QuartzBitmap_Close(QuartzDesc_t dev, void *userInfo)
     free(qbd);
 }
 
-Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
+QuartzDesc_t QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
     /* In the case of a zero length string we default to PNG presently. This
        should probably be an option somewhere. */
@@ -127,9 +127,9 @@ Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParame
     double width = par->width, height = par->height;
     const char *type = par->type;
     double mydpi[2] = { 72.0, 72.0 }; /* fall-back to 72dpi if none was specified */
+    QuartzDesc_t ret = NULL;
     if (!qf) qf = fn;
     if(!type || strlen(type) == 0) type = "public.png";
-    Rboolean ret = FALSE;
     if (!dpi) dpi=mydpi;
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
@@ -169,14 +169,13 @@ Rboolean QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParame
 	};
 
 
-	if (!(qd = qf->Create(dd, &qdef)))
+	if (!(ret = qf->Create(dd, &qdef)))
             QuartzBitmap_Close(NULL, dev);
         else {
-            ret = TRUE;
 	    /* since this device is non-resizable we set the size right away (as opposed to on-display) */
-	    qf->SetSize(qd, width, height);
+	    qf->SetSize(ret, width, height);
 	    /* tell Quartz to prepare our new context */
-            qf->ResetContext(qd);
+            qf->ResetContext(ret);
         }
     }
     CFRelease(mine);

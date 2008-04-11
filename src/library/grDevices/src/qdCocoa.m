@@ -22,6 +22,7 @@
  */
 
 #include "qdCocoa.h"
+#include "qdPDF.h"  /* we use qdPDF for clipboard export and Save As */
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -43,20 +44,34 @@ struct sQuartzCocoaDevice {
     CGContextRef    context; /* window drawing context */
     NSRect          bounds;  /* set along with context */
     BOOL            closing;
+    BOOL            pdfMode; /* this flag is set when printing, bypassing CGLayer to avoid rasterization */
     int             inLocator;
     double          locator[2]; /* locaton click position (x,y) */
     BOOL            inHistoryRecall;
     int             inHistory;
     SEXP            history[histsize];
     int             histptr;
-    const char *title;
+    const char     *title;
+    QuartzParameters_t pars; /* initial parameters */
 };
 
 static QuartzFunctions_t *qf;
 
-/* --- QuartzCocoa view class --- */
+#pragma mark --- QuartzCocoaView class ---
 
 @implementation QuartzCocoaView
+
+/* we define them manually so we don't have to deal with GraphicsDevice/GraphicsEngine issues */
+#define R_RED(col)      (((col)    )&255)
+#define R_GREEN(col)    (((col)>> 8)&255)
+#define R_BLUE(col)     (((col)>>16)&255)
+#define R_ALPHA(col)    (((col)>>24)&255)
+
+- (NSColor *) canvasColor
+{
+    int canvas = ci->pars.canvas;
+    return [NSColor colorWithCalibratedRed: R_RED(canvas)/255.0 green:R_GREEN(canvas)/255.0 blue:R_BLUE(canvas)/255.0 alpha:R_ALPHA(canvas)/255.0];
+}
 
 + (QuartzCocoaView*) quartzWindowWithRect: (NSRect) rect andInfo: (void*) info
 {
@@ -65,7 +80,8 @@ static QuartzFunctions_t *qf;
                                                    styleMask: NSTitledWindowMask|NSClosableWindowMask|
         NSMiniaturizableWindowMask|NSResizableWindowMask//|NSTexturedBackgroundWindowMask
                                                      backing:NSBackingStoreBuffered defer:NO];
-    [window setBackgroundColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.5]];
+    NSColor *canvasColor = [view canvasColor];
+    [window setBackgroundColor:canvasColor ? canvasColor : [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.5]];
     [window setOpaque:NO];
 
     [window autorelease];
@@ -74,22 +90,82 @@ static QuartzFunctions_t *qf;
     [window setInitialFirstResponder: view];
     /* [window setAcceptsMouseMovedEvents:YES]; not neeed now, maybe later */
     [window setTitle: [NSString stringWithUTF8String: ((QuartzCocoaDevice*)info)->title]];
-
+    
     {
-        NSMenu *menu;
+        NSMenu *menu, *mainMenu;
         NSMenuItem *menuItem;
-        BOOL soleMenu = (![NSApp mainMenu]); /* soleMenu is set if we have no menu at all, so we have to create it. Otherwise we are loading into an application that has already some menu, so we need only our specific stuff. */
-        
-        if (soleMenu) [NSApp setMainMenu:[[NSMenu alloc] init]];
+	/* soleMenu is set if we have no menu at all, so we have to create it. Otherwise we are loading into an application that has already some menu, so we need only our specific stuff. */
+        BOOL soleMenu = ([NSApp mainMenu] == NULL);
 
-        if ([[NSApp mainMenu] indexOfItemWithTitle:@"Quartz"]<0) {
+        if (soleMenu) [NSApp setMainMenu:[[NSMenu alloc] init]];
+	mainMenu = [NSApp mainMenu];
+
+	/* File menu is tricky - it may have a different name in different localizations. Hence we use a trick - the File menu should be first and have the <Cmd><W> shortcut for "Close Window" by convenience */
+	BOOL hasFileMenu = NO;
+	if (!soleMenu) { /* in the case of a soleMenu we already know that we don't have it. Otherwise look for it. */
+	    if (!hasFileMenu && [mainMenu indexOfItemWithTitle:@"File"]) hasFileMenu = YES; /* first shot is cheap - it will succeed if we added the menu ourself */
+	    if (!hasFileMenu && [mainMenu numberOfItems] > 0 && (menuItem = [mainMenu itemAtIndex:0]) && (menu = [menuItem submenu])) { /* potentially a File menu */
+		int i = 0, n = [menu numberOfItems];
+		while (i < n) {
+		    NSString *ke = [[menu itemAtIndex: i++] keyEquivalent];
+		    if (ke && [ke isEqualToString:@"w"]) { hasFileMenu = YES; break; }
+		}
+	    }
+	}
+	if (!hasFileMenu) { /* No file menu? Add it. */
+            menu = [[NSMenu alloc] initWithTitle:@"File"];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Close Window" action:@selector(performClose:) keyEquivalent:@"w"]; [menu addItem:menuItem]; [menuItem release];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Save" action:@selector(saveDocument:) keyEquivalent:@"s"]; [menu addItem:menuItem]; [menuItem release];
+	    [menu addItem:[NSMenuItem separatorItem]];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Page Setup…" action:@selector(runPageLayout:) keyEquivalent:@"P"]; [menu addItem:menuItem]; [menuItem release];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Print" action:@selector(printDocument:) keyEquivalent:@"p"]; [menu addItem:menuItem]; [menuItem release];   
+	    
+            menuItem = [[NSMenuItem alloc] initWithTitle:[menu title] action:nil keyEquivalent:@""]; /* the "Quartz" item in the main menu */
+            [menuItem setSubmenu:menu];
+	    [mainMenu insertItem: menuItem atIndex:0];
+	}
+
+	/* same trick for Edit */
+	BOOL hasEditMenu = NO;
+	if (!soleMenu) { /* in the case of a soleMenu we already know that we don't have it. Otherwise look for it. */
+	    if (!hasEditMenu && [mainMenu indexOfItemWithTitle:@"Edit"]) hasEditMenu = YES; /* first shot is cheap - it will succeed if we added the menu ourself */
+	    if (!hasEditMenu && [mainMenu numberOfItems] > 1 && (menuItem = [mainMenu itemAtIndex:1]) && (menu = [menuItem submenu])) { /* potentially a Edit menu */
+		int i = 0, n = [menu numberOfItems];
+		while (i < n) {
+		    NSString *ke = [[menu itemAtIndex: i++] keyEquivalent];
+		    if (ke && [ke isEqualToString:@"c"]) { hasEditMenu = YES; break; }
+		}
+	    }
+	}
+	if (!hasEditMenu) { /* We really use just Copy, but we add some more to be consistent with other apps */
+            menu = [[NSMenu alloc] initWithTitle:@"Edit"];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Undo" action:@selector(undo:) keyEquivalent:@"z"]; [menu addItem:menuItem]; [menuItem release];   
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Redo" action:@selector(redo:) keyEquivalent:@"Z"]; [menu addItem:menuItem]; [menuItem release];   
+	    [menu addItem:[NSMenuItem separatorItem]];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Copy" action:@selector(copy:) keyEquivalent:@"c"]; [menu addItem:menuItem]; [menuItem release];   
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Paste" action:@selector(paste:) keyEquivalent:@"v"]; [menu addItem:menuItem]; [menuItem release];   
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(delete:) keyEquivalent:@""]; [menu addItem:menuItem]; [menuItem release];   
+	    [menu addItem:[NSMenuItem separatorItem]];
+	    menuItem = [[NSMenuItem alloc] initWithTitle:@"Activate" action:@selector(activateQuartzDevice:) keyEquivalent:@"A"]; [menu addItem:menuItem]; [menuItem release];   
+	    
+            menuItem = [[NSMenuItem alloc] initWithTitle:[menu title] action:nil keyEquivalent:@""]; /* the "Quartz" item in the main menu */
+            [menuItem setSubmenu:menu];
+	    if ([mainMenu numberOfItems] > 0)
+		[mainMenu insertItem: menuItem atIndex:1];
+	    else /* this should never be the case because we have added "File" menu, but just in case something goes wrong ... */
+		[mainMenu addItem: menuItem];
+	}
+	
+        if ([mainMenu indexOfItemWithTitle:@"Quartz"] < 0) { /* Quartz menu - if it doesn't exist, add it */
             unichar leftArrow = NSLeftArrowFunctionKey, rightArrow = NSRightArrowFunctionKey;
             menu = [[NSMenu alloc] initWithTitle:@"Quartz"];
             menuItem = [[NSMenuItem alloc] initWithTitle:@"Back" action:@selector(historyBack:) keyEquivalent:[NSString stringWithCharacters:&leftArrow length:1]]; [menu addItem:menuItem]; [menuItem release];
             menuItem = [[NSMenuItem alloc] initWithTitle:@"Forward" action:@selector(historyForward:) keyEquivalent:[NSString stringWithCharacters:&rightArrow length:1]]; [menu addItem:menuItem]; [menuItem release];
             menuItem = [[NSMenuItem alloc] initWithTitle:@"Clear History" action:@selector(historyFlush:) keyEquivalent:@"L"]; [menu addItem:menuItem]; [menuItem release];
-            menuItem = [[NSMenuItem alloc] initWithTitle:@"History" action:nil keyEquivalent:@""];
+	    
+            menuItem = [[NSMenuItem alloc] initWithTitle:[menu title] action:nil keyEquivalent:@""]; /* the "Quartz" item in the main menu */
             [menuItem setSubmenu:menu];
+
             if (soleMenu)
                 [[NSApp mainMenu] addItem:menuItem];
             else {
@@ -137,6 +213,63 @@ static QuartzFunctions_t *qf;
 
 - (BOOL)isFlipped { return YES; } /* R uses flipped coordinates */
 
+- (IBAction) activateQuartzDevice:(id) sender
+{
+    if (qf && ci && ci-> qd) qf->Activate(ci->qd);
+}
+
+- (IBAction) copy: (id) sender
+{
+    /* currently we use qdPDF to create the PDF for the clipboard.
+       Now that we have pdfMode we could use it instead, saving some memory ... */
+    NSPasteboard *pb = [NSPasteboard generalPasteboard];
+    QuartzParameters_t qpar = ci->pars;
+    qpar.file = 0;
+    qpar.connection = 0;
+    CFMutableDataRef data = CFDataCreateMutable(NULL, 0);
+    if (!data) { NSBeep(); return; } /* cannot copy */
+    qpar.parv = data;
+    qpar.flags = 0;
+    qpar.width = qf->GetWidth(ci->qd);
+    qpar.height = qf->GetHeight(ci->qd);
+    /* replay our snapshot and close the PDF device */
+    QuartzDesc_t qd = Quartz_C(&qpar, QuartzPDF_DeviceCreate, NULL);
+    if (qd == NULL) {
+	CFRelease(data);
+	NSBeep();
+	return;
+    }
+    void *ss = qf->GetSnapshot(ci->qd, 0);
+    qf->RestoreSnapshot(qd, ss);
+    qf->Kill(qd);
+    /* the result should be in the data by now */
+    [pb declareTypes: [NSArray arrayWithObjects: NSPDFPboardType, nil ] owner:nil];
+    [pb setData: (NSMutableData*) data forType:NSPDFPboardType];
+    CFRelease(data);
+}
+
+- (IBAction)printDocument:(id)sender
+{
+    NSPrintInfo *printInfo;
+    NSPrintOperation *printOp;
+    
+    printInfo = [[NSPrintInfo alloc] initWithDictionary: [[NSPrintInfo sharedPrintInfo] dictionary]];
+    [printInfo setHorizontalPagination: NSFitPagination];
+    [printInfo setVerticalPagination: NSAutoPagination];
+    [printInfo setVerticallyCentered:NO];
+    
+    ci->pdfMode = YES;
+    @try {
+	printOp = [NSPrintOperation printOperationWithView:self 
+						 printInfo:printInfo];
+	[printOp setShowsPrintPanel:YES];
+	[printOp setShowsProgressPanel:NO];
+	[printOp runOperation];
+    }
+    @catch (NSException *ex) {}
+    ci->pdfMode = NO;
+}
+
 - (void)drawRect:(NSRect)aRect
 {
     CGRect rect;
@@ -144,6 +277,12 @@ static QuartzFunctions_t *qf;
     ci->context = ctx;
     ci->bounds = [self bounds];        
     rect = CGRectMake(0.0, 0.0, ci->bounds.size.width, ci->bounds.size.height);
+    
+    if (ci->pdfMode) {
+	qf->ReplayDisplayList(ci->qd);
+	return;
+    }
+
     /* Rprintf("drawRect, ctx=%p, bounds=(%f x %f)\n", ctx, ci->bounds.size.width, ci->bounds.size.height); */
     if (!ci->layer) {
         CGSize size = CGSizeMake(ci->bounds.size.width, ci->bounds.size.height);
@@ -272,10 +411,12 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
     }
 }
 
+#if 0
 - (void)keyDown:(NSEvent *)theEvent
 {
-    /* Rprintf("keyCode=%d\n", [theEvent keyCode]); */
+    Rprintf("keyCode=%d\n", [theEvent keyCode]);
 }
+#endif
 
 - (void)viewDidEndLiveResize
 {
@@ -294,6 +435,8 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
 }
 
 @end
+
+#pragma mark --- Cocoa event loop ---
 
 /* --- Cocoa event loop
    This EL is enabled upon the first use of Quartz or alternatively using
@@ -407,24 +550,44 @@ int QuartzCocoa_SetLatency(unsigned long latency) {
     return (el_obj)?YES:NO;
 }
 
+#pragma mark --- R Quartz interface ---
+
 /*----- R Quartz interface ------*/
 
 static int cocoa_initialized = 0;
 static NSAutoreleasePool *global_pool = 0;
 
-static void initialize_cocoa() {  
+static void initialize_cocoa() {
+    /* check embedding parameters to see if Rapp (or other Cocoa app) didn't do the work for us */
+    int eflags = 0;
+    if (qf) {
+	int *p_eflags = (int*) qf->GetParameter(NULL, QuartzParam_EmbeddingFlags);
+	if (p_eflags) eflags = p_eflags[0];
+    }
+    if ((eflags & QP_Flags_CFLoop) && (eflags & QP_Flags_Cocoa) && (eflags & QP_Flags_Front)) {
+	cocoa_initialized = 1;
+	return;
+    }
+
     NSApplicationLoad();
     global_pool = [[NSAutoreleasePool alloc] init];
+    if (eflags & QP_Flags_CFLoop) {
+	cocoa_initialized = 1;
+	return;
+    }
 
     if (!ptr_R_ProcessEvents)
         QuartzCocoa_SetupEventLoop(QCF_SET_PEPTR|QCF_SET_FRONT, 100);
+
     
     [NSApplication sharedApplication];
     cocoa_process_events();
+    cocoa_initialized = 1;
 }
 
 static CGContextRef QuartzCocoa_GetCGContext(QuartzDesc_t dev, void *userInfo) {
-    return ((QuartzCocoaDevice*)userInfo)->layerContext;
+    QuartzCocoaDevice *qd = (QuartzCocoaDevice*)userInfo;
+    return qd->pdfMode ? qd->context : qd->layerContext;
 }
 
 static void QuartzCocoa_Close(QuartzDesc_t dev,void *userInfo) {
@@ -448,7 +611,11 @@ static void QuartzCocoa_Close(QuartzDesc_t dev,void *userInfo) {
             i++;
         }
     }
-	
+
+    if (ci->pars.family) free((void*)ci->pars.family);
+    if (ci->pars.title) free((void*)ci->pars.title);
+    if (ci->pars.file) free((void*)ci->pars.file);
+
     /* close the window (if it's not already closing) */
     if (ci && ci->view && !ci->closing)
         [[ci->view window] close];
@@ -463,7 +630,7 @@ static int QuartzCocoa_Locator(QuartzDesc_t dev, void* userInfo, double *x, doub
     ci->inLocator = YES;
     [[ci->view window] invalidateCursorRectsForView: ci->view];
     
-    while (ci->inLocator) {
+    while (ci->inLocator && !ci->closing) {
         NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                             untilDate:[NSDate dateWithTimeIntervalSinceNow:0.2]
                                                inMode:NSDefaultRunLoopMode 
@@ -472,13 +639,18 @@ static int QuartzCocoa_Locator(QuartzDesc_t dev, void* userInfo, double *x, doub
     }
     [[ci->view window] invalidateCursorRectsForView: ci->view];
     *x = ci->locator[0];
-    *y = ci->locator[1];
+    *y = ci->bounds.size.height - ci->locator[1];
     return (*x >= 0.0)?TRUE:FALSE;
 }
 
 static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
     QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
     if (!ci) return;
+    if (ci->pdfMode) {
+	if (ci->context)
+	    qf->ResetContext(dev);
+	return;
+    }
     if ((flags&QNPF_REDRAW)==0) { /* no redraw -> really new page */
         QuartzCocoa_SaveHistory(ci, 1);
         ci->inHistory = -1;
@@ -499,7 +671,7 @@ static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
 
 static void QuartzCocoa_Sync(QuartzDesc_t dev,void *userInfo) {
     QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
-    if (!ci || !ci->view) return;
+    if (!ci || !ci->view || ci->pdfMode) return;
     [ci->view setNeedsDisplay: YES];
 }
 
@@ -513,9 +685,9 @@ static void QuartzCocoa_State(QuartzDesc_t dev, void *userInfo, int state) {
     [[ci->view window] setTitle: title];
 }
 
-Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
+QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
-    void *qd;
+    QuartzDesc_t qd;
     double *dpi = par->dpi, width = par->width, height = par->height;
     double mydpi[2] = { 72.0, 72.0 };
     double scalex = 1.0, scaley = 1.0;
@@ -528,7 +700,7 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParamet
 	CGGetOnlineDisplayList(255, NULL, &dcount);
 	if (dcount < 1) {
 	    warning("No displays are available");
-	    return FALSE;
+	    return NULL;
 	}
     }
 
@@ -565,8 +737,16 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParamet
     };
     
     qd = qf->Create(dd, &qdef);
-    if (!qd) return FALSE;
+    if (!qd) return NULL;
     dev->qd = qd;
+    
+    /* copy parameters for later */
+    memcpy(&dev->pars, par, (par->size < sizeof(QuartzParameters_t))? par->size : sizeof(QuartzParameters_t));
+    if (par->size > sizeof(QuartzParameters_t)) dev->pars.size = sizeof(QuartzParameters_t);
+    if (par->family) dev->pars.family = strdup(par->family);
+    if (par->title) dev->pars.title = strdup(par->title);
+    if (par->file) dev->pars.file = strdup(par->file);
+    
     /* we cannot substitute the device number as it is not yet known at this point */
     dev->title = strdup(par->title);
     {
@@ -577,6 +757,5 @@ Rboolean QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParamet
         [QuartzCocoaView quartzWindowWithRect: rect andInfo: dev];
     }
     [[dev->view window] makeKeyAndOrderFront: dev->view];
-    /* FIXME: at this point we should paint the canvas colour */
-    return TRUE;
+    return qd;
 }
