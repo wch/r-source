@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -241,6 +241,12 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   Using \code{scan} on an open connection to read partial lines can lose
   chars: use an explicit separator to avoid this.
+
+  Having \code{nul} bytes in fields may lead to interpretation of the
+  field being terminated at the \code{nul} (so they are fine in
+  character fields).  \R 2.8.0 handles these better than earlier
+  versions, but they not normally present in text files -- see
+  \code{\link{readBin}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
