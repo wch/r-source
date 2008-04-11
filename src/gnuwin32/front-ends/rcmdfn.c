@@ -243,7 +243,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	putenv(RHOME);
 
 	/* currently used by Rd2dvi and by perl Vars.pm (with default) */
-	strcpy(RSHARE, "R_START_DIR=");
+	strcpy(RSHARE, "R_SHARE_DIR=");
 	strcat(RSHARE, RHome); strcat(RSHARE, "/share");
 	putenv(RSHARE);
 
