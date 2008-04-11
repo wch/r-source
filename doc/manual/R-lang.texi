@@ -4369,8 +4369,8 @@ A single quote may also be embedded directly in a double-quote delimited
 string and vice versa.
 
 Currently the inclusion of @code{\0} in a string constant terminates the
-constant: further characters up to the closing quote are scanned by
-ignored.  This is likely to change in the near future.
+constant: further characters up to the closing quote are scanned but
+ignored.  (This will change in @R{} 2.8.0.)
 
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers
