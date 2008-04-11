@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -53,7 +53,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
   The default in \R prior to 2.7.0 was \code{stylepath = TRUE}.  In
   2.7.x it is taken from the environment variable
-  \env{SWEAVE_STYLEPATH_DEFAULT}, or \code{TRUE} it that is unset or
+  \env{SWEAVE\_STYLEPATH\_DEFAULT}, or \code{TRUE} it that is unset or
   empty.  If set, it should be exactly \code{TRUE} or \code{FALSE}: any
   other values are taken as \code{FALSE}.  The default is likely to
   change in later versions of \R.
