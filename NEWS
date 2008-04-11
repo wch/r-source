@@ -75,6 +75,13 @@ C-LEVEL FACILITIES
     	created	by mkCharLen and mkCharLenCE (with a declared encoding).
 
 
+UTILITIES
+
+    o	The default for 'stylepath' in Sweave's (default) RweaveLatex
+	driver is now FALSE rather than TRUE if
+	SWEAVE_STYLEPATH_DEFAULT is unset : see ?RweaveLatex.
+
+
 BUG FIXES
 
     o	@ now gives an error (and not just a warning) if it is being

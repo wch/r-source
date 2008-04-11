@@ -356,7 +356,7 @@ RweaveLatexSetup <-
 
     if(missing(stylepath)) {
         p <- as.vector(Sys.getenv("SWEAVE_STYLEPATH_DEFAULT"))
-        stylepath <- if(length(p) >= 1 && nzchar(p[1])) identical(p, "TRUE") else TRUE
+        stylepath <- if(length(p) >= 1 && nzchar(p[1])) identical(p, "TRUE") else FALSE
     }
     if(stylepath){
         styfile <- file.path(R.home("share"), "texmf", "Sweave")
