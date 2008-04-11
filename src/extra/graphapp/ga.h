@@ -39,6 +39,7 @@ void	gabeep(void);
 #define Border	0x10100000L
 void	app_cleanup(void);
 int	ismdi(void);
+int	isUnicodeWindow(control c);
 int	isiconic(window w);
 rect	screen_coords(control c);
 
