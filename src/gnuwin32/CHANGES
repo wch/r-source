@@ -247,6 +247,10 @@ OTHERS
     o	download.file() now selects mode="wb" if 'mode' is not
     	supplied and the file extension on the url looks like a binary file.
 
+    o	tools::texi2dvi() detects the use of MikTeX's texi2dvi and
+    	uses its '-I path' argument to add the path to R's style files
+    	(such as Sweave.sty) to the input search path.
+
 
 BUILDING R
 

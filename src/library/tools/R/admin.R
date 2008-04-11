@@ -562,8 +562,9 @@ function(dir, outDir, keep.source = FALSE)
     setwd(buildDir)
 
     ## Argh.  We need to ensure that vignetteDir is in TEXINPUTS and
-    ## BIBINPUTS.  Note that this does not work with MiKTeX.
-    envSep <- if(.Platform$OS.type == "windows") ";" else ":"
+    ## BIBINPUTS.  Note that this does not work with MiKTeX, but the
+    ## use of 'texi2dvi -I' as from R 2.7.0 suffices.
+    envSep <- .Platform$path.sep
     ## (Yes, it would be nice to have envPath() similar to file.path().)
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
@@ -579,7 +580,8 @@ function(dir, outDir, keep.source = FALSE)
         message("processing '", basename(srcfile), "'")
         texfile <- paste(base, ".tex", sep = "")
         tryCatch(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
-                               quiet = TRUE, keep.source = keep.source),
+                               quiet = TRUE, keep.source = keep.source,
+                               stylepath = FALSE),
                  error = function(e)
                  stop(gettextf("running Sweave on vignette '%s' failed with message:\n%s",
                                srcfile, conditionMessage(e)),
