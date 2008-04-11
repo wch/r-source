@@ -4,7 +4,7 @@ R_HOME = ../..
 
 all: $(R_HOME)/bin/massage-Examples \
 	 $(R_HOME)/bin/build $(R_HOME)/bin/check $(R_HOME)/bin/Rdconv \
-	 $(R_HOME)/bin/Sd2Rd $(R_HOME)/bin/Rprof
+	 $(R_HOME)/bin/Sd2Rd $(R_HOME)/bin/Rprof $(R_HOME)/bin/Rd2dvi.sh
 
 $(R_HOME)/bin/massage-Examples: $(R_HOME)/share/perl/massage-Examples.pl
 	@$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
@@ -23,3 +23,7 @@ $(R_HOME)/bin/Rdconv: Rdconv.in
 
 $(R_HOME)/bin/Rprof: Rprof.in
 	@$(SED) -e 1d $< > $@
+
+$(R_HOME)/bin/Rd2dvi.sh: Rd2dvi
+	@$(SED) -e 1d $< > $@
+

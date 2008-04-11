@@ -12,7 +12,10 @@
 		CHANGES IN R VERSION 2.8.0
 
 
-NONE YET
+OTHERS
+
+    o	The default previewer for 'Rcmd Rd2dvi' is now 'yap'.
+
 
 
 

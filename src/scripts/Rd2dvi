@@ -49,7 +49,6 @@ The output papersize is set by the environment variable R_PAPERSIZE.
 Report bugs to <r-bugs@r-project.org>."
 
 start_dir=`pwd`
-build_dir=".Rd2dvi${$}"
 
 batch=false
 clean=true
@@ -57,15 +56,29 @@ debug=false
 only_meta=false
 out_ext="dvi"
 output=""
-preview=xdvi
 verbose=false
 enc=unknown
-OSdir=${R_OSTYPE-"unix"}
 
 : ${R_SHARE_DIR}=${R_HOME}/share
-## Need a `safe' echo which does not interpret backslash-escaped
-## characters in SysV style.
-echo="sh ${R_SHARE_DIR}/sh/echo.sh"
+
+if test "${R_OSTYPE}" = "windows"; then
+  build_dir=".Rd2dvi$"
+  echo=echo
+  preview=${xdvi-yap}
+  OSdir=windows
+  # These are set by R CMD on Unix but not on Windows
+  R_PAPERSIZE=${R_PAPERSIZE-a4}
+  export R_PAPERSIZE
+  TEXINPUTS=.\;${R_HOME}/share/texmf\;${TEXINPUTS}
+  export TEXINPUTS
+else
+  build_dir=".Rd2dvi${$}"
+  ## Need a `safe' echo which does not interpret backslash-escaped
+  ## characters in SysV style.
+  echo="sh ${R_SHARE_DIR}/sh/echo.sh"
+  preview=${xdvi-xdvi}
+  OSdir=${R_OSTYPE-"unix"}
+fi
 
 while test -n "${1}"; do
   case ${1} in
@@ -227,7 +240,11 @@ else
   subj0=`${echo} ${1} | ${SED-sed} -e ${file_sed}`
   subj="\\file{${subj0}}${subj}"
 fi
-title=${title-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
+
+
+## substitution went wrong under ash
+title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
+title=${title-$title1}
 
 if test "${enc}"="unknown"; then
   if test -n "$pkg_enc"; then
@@ -357,13 +374,23 @@ fi
 status=0
 ## <FIXME>
 
+
+R_TEXOPTS=
+if test "${OS_TYPE}" = "windows"; then
+  miktex=`latex --version | grep ^MiKTeX | wc -l`
+  if test "${miktex}" = "1"; then
+    R_TEXOPTS=--include-directory=${R_HOME}/share/texmf
+  fi
+fi
+
+
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD-latex} Rd2 || status=1
+${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2 || status=1
 ${R_MAKEINDEXCMD-makeindex} Rd2
-${R_LATEXCMD-latex} Rd2
+${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
-  ${R_LATEXCMD-latex} Rd2
+  ${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 fi
 cd ${start_dir}
 ${echo} "Saving output to '${output}' ..."
