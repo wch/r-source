@@ -1,5 +1,9 @@
 ##
-## Rdiff -- Diff 'without R version'
+## Rdiff -- diff 'without R version'
+
+## Copyright (C) 2000-2008 The R Core Development Team.
+## This is free software; see the GNU General Public License version 2
+## or later for copying conditions.  There is NO warranty.
 
 ## Usage:
 ##   R CMD Rdiff from-file to-file exitstatus
@@ -9,9 +13,15 @@ ffile=${1}
 tfile=${2}
 exitstatus=${3}
 
+## Windows Rtools kit has grep but not egrep
+EGREP=${EGREP-'grep -E'}
+SED=${SED-sed}
+
 ## sed scripts to get rid of the startup message
 scriptold='/^R : Copyright /,/quit R.$/{d;}'
 scriptnew='/^R version /,/quit R.$/{d;}'
+
+## turn Windows' directional single quotes into ASCII quote
 s1="s/‘/'/g"
 s2="s/’/'/g"
 
@@ -41,10 +51,10 @@ fi
 
 tmpfile=${TMPDIR-/tmp}/${bfile}-d.${$}
 
-sed -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" ${ffile} | grep -E -v "${pattern}" > ${tmpfile}
+${SED} -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
 ## some packages ship .Rout.save with CRLF endings
-(tr -d '\r' <  ${tfile} | sed -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" | \
-  grep -E -v "${pattern}" | \
+(tr -d '\r' <  ${tfile} | ${SED} -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" | \
+  ${EGREP} -v "${pattern}" | \
   diff -bw ${tmpfile} - ) && exitstatus=0
 
 rm -f ${tmpfile}

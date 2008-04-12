@@ -376,13 +376,12 @@ status=0
 
 
 R_TEXOPTS=
-if test "${OS_TYPE}" = "windows"; then
+if test "${R_OSTYPE}" = "windows"; then
   miktex=`latex --version | grep ^MiKTeX | wc -l`
   if test "${miktex}" = "1"; then
     R_TEXOPTS=--include-directory=${R_HOME}/share/texmf
   fi
 fi
-
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
