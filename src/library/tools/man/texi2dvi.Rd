@@ -1,6 +1,6 @@
 % File src/library/tools/man/texi2dvi.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
@@ -30,11 +30,14 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 }
 \details{
   Despite the name, this is used in \R to compile LaTeX files,
-  specifically those generated from vignettes.
+  specifically those generated from vignettes.  As from \R 2.8.0 it
+  ensures that the \file{\var{\link{R\_HOME}}/share/texmf} directory is
+  in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave}
+  and \file{Rd} will be found.
 #ifdef windows
   
-  Most Windows TeX installations do not have a \code{texi2dvi} executable,
-  but MiKTeX does.
+  MiKTeX has a \code{texi2dvi} executable, but no other Windows TeX
+  installation that we know of does.
 #endif
 }
 \author{Achim Zeileis}

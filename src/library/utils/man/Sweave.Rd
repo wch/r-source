@@ -95,6 +95,9 @@ options(device.ask.default=FALSE)
 ## create a LaTeX file
 Sweave(testfile)
 
+## This can be compiled to PDF by
+\dontrun{tools::texi2dvi("Sweave-test-1.tex", pdf=TRUE)}
+
 ## create an S source file from the code chunks
 Stangle(testfile)
 ## which can be simply sourced

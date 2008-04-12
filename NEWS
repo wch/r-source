@@ -80,6 +80,8 @@ UTILITIES
     o	The default for 'stylepath' in Sweave's (default) RweaveLatex
 	driver is now FALSE rather than TRUE if
 	SWEAVE_STYLEPATH_DEFAULT is unset : see ?RweaveLatex.
+	To support this, tools::texi2dvi adds the R 'texmf' directory
+	to the input search path (even on MiKTeX).
 
 
 BUG FIXES

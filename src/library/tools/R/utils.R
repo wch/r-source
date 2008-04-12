@@ -223,6 +223,13 @@ function(file, pdf = FALSE, clean = FALSE,
         } else {
             extra <- quiet <- ""
         }
+
+        ## Append R_HOME/share/temxf to the input path
+        texinputs <- Sys.getenv("TEXINPUTS")
+	if(nzchar(texinputs)) on.exit(Sys.setenv(TEXINPUTS=texinputs))
+        Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
+        ntexinputs <- if(nzchar(texinputs)) paste(texinputs, Rtexmf, sep=.Platform$path.sep) else Rtexmf
+        Sys.setenv(TEXINPUTS = ntexinputs)
         if(.Platform$OS.type == "windows") {
             ## look for MiKTeX (which this almost certainly is)
             ## and set the path to R's style files.
@@ -235,6 +242,7 @@ function(file, pdf = FALSE, clean = FALSE,
                 clean <- paste(clean, "-I", stypath)
             }
         }
+
         ## print(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file), extra))
         if(system(paste(shQuote(texi2dvi), quiet, pdf, clean,
                         shQuote(file), extra),

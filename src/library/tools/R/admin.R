@@ -563,18 +563,18 @@ function(dir, outDir, keep.source = FALSE)
 
     ## Argh.  We need to ensure that vignetteDir is in TEXINPUTS and
     ## BIBINPUTS.  Note that this does not work with MiKTeX, but the
-    ## use of 'texi2dvi -I' as from R 2.7.0 suffices.
+    ## use of 'texi2dvi -I' as from R 2.7.0 suffices for now.
     envSep <- .Platform$path.sep
     ## (Yes, it would be nice to have envPath() similar to file.path().)
+    ## FIXME: this sets TEXINPUTS and BIBINPUTS if unset, and empty
+    ## final fields have a special meaning
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
     Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
     on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
             add = TRUE)
-    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, Sys.getenv("TEXINPUTS"),
-               sep = envSep),
-               BIBINPUTS = paste(vignetteDir, Rtexmf, Sys.getenv("BIBINPUTS"),
-               sep = envSep))
+    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs, sep = envSep),
+               BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
 
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
