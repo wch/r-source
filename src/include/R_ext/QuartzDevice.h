@@ -56,8 +56,9 @@
  *    thus can be extended by further painting (yet the original saved
  *    copy is not influenced). Also note that all snapshots are SEXPs
  *    (the declaration doesn't use SEXP as to not depend on
- *    Rinternals.h) and must be protected or preserved immediately
- *    (i.e. the Quartz device does NOT protect them).
+ *    Rinternals.h) therefore must be protected or preserved immediately
+ *    (i.e. the Quartz device does NOT protect them - except in the
+ *    call to RestoreSnapshot).
  *
  *  - dirty flag: the dirty flag is not used internally by the Quartz
  *    device, but can be useful for the modules to determine whether
@@ -79,9 +80,19 @@
 #ifndef R_EXT_QUARTZDEVICE_H_
 #define R_EXT_QUARTZDEVICE_H_
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif   
+ 
+#if HAVE_AQUA
+#include <ApplicationServices/ApplicationServices.h>
+#else
+    typedef void* CGContextRef;
+#endif
 
 /* flags passed to the newPage callback */
 #define QNPF_REDRAW 0x0001 /* is set when NewPage really means re-draw of an existing page */
@@ -90,9 +101,6 @@ extern "C" {
 #define QDFLAG_DISPLAY_LIST 0x0001
 #define QDFLAG_INTERACTIVE  0x0002 
 	
-/* for CGContextRef */
-#include <ApplicationServices/ApplicationServices.h>
-
 typedef void* QuartzDesc_t;
 
 typedef struct QuartzBackend_s {
@@ -107,7 +115,7 @@ typedef struct QuartzBackend_s {
     void         (*close)(QuartzDesc_t dev, void*userInfo);
     void         (*newPage)(QuartzDesc_t dev, void*userInfo, int flags);
     void         (*state)(QuartzDesc_t dev, void*userInfo, int state);
-    void*        (*par)(QuartzDesc_t dev, void*userInfo, void*par);
+    void*        (*par)(QuartzDesc_t dev, void*userInfo, int set, const char *key, void *value);
     void         (*sync)(QuartzDesc_t dev, void*userInfo);
 } QuartzBackend_t;
 
@@ -174,13 +182,22 @@ typedef struct QuartzFunctons_s {
     void   (*SetAntialias)(QuartzDesc_t desc, int aa); /* set anti-alias flag */
 
     int    (*GetBackground)(QuartzDesc_t desc);   /* get background color */
+    void   (*Activate)(QuartzDesc_t desc);        /* activate/select the device */
+    /* get/set Quartz-specific parameters. desc can be NULL for global parameters */
+    void*  (*SetParameter)(QuartzDesc_t desc, const char *key, void *value);
+    void*  (*GetParameter)(QuartzDesc_t desc, const char *key);
 } QuartzFunctions_t;
+
+#define QuartzParam_EmbeddingFlags "embeddeding flags" /* value: int[1] */
+#define QP_Flags_CFLoop 0x0001  /* drives application event loop */
+#define QP_Flags_Cocoa  0x0002  /* Cocoa is fully initialized */
+#define QP_Flags_Front  0x0004  /* is front application */
 
 /* from unix/aqua.c - loads grDevices if necessary and returns NULL on failure */
 QuartzFunctions_t *getQuartzFunctions();
 
 /* type of a Quartz contructor */
-typedef int (*quartz_create_fn_t)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
+typedef QuartzDesc_t (*quartz_create_fn_t)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
 /* grDevices currently supply following constructors:
    QuartzCocoa_DeviceCreate, QuartzCarbon_DeviceCreate,
@@ -190,11 +207,14 @@ typedef int (*quartz_create_fn_t)(void *dd, QuartzFunctions_t *fn, QuartzParamet
      dd = should be passed-through to QuartzDevice_Create
      fn = Quartz API functions
      par = parameters (see above) */
-extern Rboolean (*ptr_QuartzBackend)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
+#ifndef IN_AQUA_C
+    extern
+#endif
+    QuartzDesc_t (*ptr_QuartzBackend)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);
 
 /* C version of the Quartz call (experimental)
    returns 0 on success, error code on failure */
-int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create);
+QuartzDesc_t Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int *errorCode);
 
 #ifdef __cplusplus
 }

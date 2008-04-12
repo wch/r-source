@@ -40,6 +40,8 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 
+#define DEVQUARTZ_VERSION 1 /* first public Quartz API version */
+
 #define QBE_NATIVE   1  /* either Cocoa or Carbon depending on the OS X version */
 #define QBE_COCOA    2  /* internal Cocoa */
 #define QBE_CARBON   3  /* internal Carbon */
@@ -113,7 +115,7 @@ typedef struct QuartzSpecific_s {
     void         (*close)(QuartzDesc_t dev, void *userInfo);
     void         (*newPage)(QuartzDesc_t dev, void *userInfo, int flags);
     void         (*state)(QuartzDesc_t dev,  void *userInfo,  int state);
-    void*        (*par)(QuartzDesc_t dev, void *userInfo,  void *par);
+    void*        (*par)(QuartzDesc_t dev, void *userInfo, int set, const char *key, void *value);
     void         (*sync)(QuartzDesc_t dev, void *userInfo);
 } QuartzDesc;
 
@@ -255,6 +257,15 @@ static void   QuartzDevice_Update(QuartzDesc_t desc)
     dev->ipr[1] = 1.0/72.0;
 }
 
+void QuartzDevice_Activate(QuartzDesc_t desc)
+{
+    QuartzDesc *qd = (QuartzDesc*) desc;
+    if (qd) {
+	int n = ndevNumber(qd->dev);
+	selectDevice(n);
+    }
+}
+
 void QuartzDevice_ReplayDisplayList(QuartzDesc_t desc)
 {
     QuartzDesc *qd = (QuartzDesc*) desc;
@@ -294,6 +305,37 @@ void QuartzDevice_RestoreSnapshot(QuartzDesc_t desc, void* snap)
     qd->redraw = 0;
     qd->dirty = 0; /* we reset the dirty flag */
     UNPROTECT(1);
+}
+
+static int quartz_embedding = 0;
+
+static void* QuartzDevice_SetParameter(QuartzDesc_t desc, const char *key, void *value)
+{
+    if (desc) { /* backend-specific? pass it on */
+	QuartzDesc *qd = (QuartzDesc*) desc;
+	return (qd->par) ? qd->par(qd, qd->userInfo, 1, key, value) : NULL;
+    } else { /* global? try to handle it */
+	if (key) {
+	    if (!streql(key, QuartzParam_EmbeddingFlags)) {
+		if (value) quartz_embedding = ((int*)value)[0];
+		return &quartz_embedding;
+	    }
+	}
+    }
+    return NULL;
+}
+
+static void*  QuartzDevice_GetParameter(QuartzDesc_t desc, const char *key)
+{
+    if (desc) { /* backend-specific? pass it on */
+	QuartzDesc *qd = (QuartzDesc*) desc;
+	return (qd->par) ? qd->par(qd, qd->userInfo, 0, key, NULL) : NULL;
+    } else { /* global? try to handle it */
+	if (key) {
+	    if (!streql(key, QuartzParam_EmbeddingFlags)) return &quartz_embedding;
+	}
+    }
+    return NULL;
 }
 
 #pragma mark RGD API Function Prototypes
@@ -425,7 +467,10 @@ static QuartzFunctions_t qfn = {
     QuartzDevice_RestoreSnapshot,
     QuartzDevice_GetAntialias,
     QuartzDevice_SetAntialias,
-    QuartzDevice_GetBackground
+    QuartzDevice_GetBackground,
+    QuartzDevice_Activate,
+    QuartzDevice_SetParameter,
+    QuartzDevice_GetParameter
 };
 
 QuartzFunctions_t *getQuartzAPI() {
@@ -904,20 +949,24 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
 /* disabled for now until we get to test in on 10.3 #include "qdCarbon.h" */
 
 /* current fake */
-Rboolean QuartzCarbon_DeviceCreate(pDevDesc dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
+QuartzDesc_t QuartzCarbon_DeviceCreate(pDevDesc dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
-    return FALSE;
+    return NULL;
 }
 
 #define ARG(HOW,WHAT) HOW(CAR(WHAT));WHAT = CDR(WHAT)
 
 /* C version of the Quartz call (experimental)
-   returns 0 on success, error code on failure */
-int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create)
+   Quartz descriptor on success, NULL on failure. if errorCode is not NULL, it will contain the error code on exit */
+QuartzDesc_t Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int *errorCode)
 {
-    if (!q_create || !par) return -3;
+    if (!q_create || !par) {
+	if (errorCode) errorCode[0] = -4;
+	return NULL;
+    }
     {
         char    *vmax = vmaxget();
+	QuartzDesc_t qd = NULL;
 	R_GE_checkVersionOrDie(R_GE_version);
         R_CheckDeviceAvailable();
         {
@@ -925,13 +974,15 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create)
 	    /* FIXME: check this allocation */
             pDevDesc dev    = calloc(1, sizeof(NewDevDesc));
 
-            if (!dev)
-                return -1;
-
-            if (!q_create(dev, &qfn, par)) {
+            if (!dev) {
+		if (errorCode) errorCode[0] = -2;
+		return NULL;
+	    }
+            if (!(qd = q_create(dev, &qfn, par))) {
                 vmaxset(vmax);
                 free(dev);
-                return -2;
+		if (errorCode) errorCode[0] = -3;
+		return NULL;
             }
 	    if(streql(par->type, "") || streql(par->type, "native")
 	       || streql(par->type, "cocoa") || streql(par->type, "carbon"))
@@ -942,8 +993,8 @@ int Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create)
             GEinitDisplayList(dd);
             vmaxset(vmax);
         }
+	return qd;
     }
-    return 0;
 }
 
 /* ARGS: type, file, width, height, ps, family, antialias, fontsm,
@@ -952,10 +1003,11 @@ SEXP Quartz(SEXP args)
 {
     SEXP tmps, bgs, canvass;
     double   width, height, ps;
-    Rboolean antialias, smooth, autorefresh = TRUE, succ = FALSE;
+    Rboolean antialias, smooth;
     int      quartzpos, bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
-    const char *type, *mtype = 0, *file, *family, *title;
+    const char *type, *mtype = 0, *file = 0, *family, *title;
+    QuartzDesc_t qd = NULL;
 
     char    *vmax = vmaxget();
     /* Get function arguments */
@@ -1043,23 +1095,23 @@ SEXP Quartz(SEXP args)
 
 	/* re-routed code has the first shot */
 	if (ptr_QuartzBackend)
-	    succ = ptr_QuartzBackend(dev, &qfn, &qpar);
+	    qd = ptr_QuartzBackend(dev, &qfn, &qpar);
 
-	if (!succ) { /* try internal modules next */
+	if (qd == NULL) { /* try internal modules next */
 	    switch (module) {
             case QBE_COCOA:
-                succ = QuartzCocoa_DeviceCreate(dev, &qfn, &qpar);
+                qd = QuartzCocoa_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_NATIVE:
                 /* native is essentially cocoa with carbon fall-back */
-                succ = QuartzCocoa_DeviceCreate(dev, &qfn, &qpar);
-                if (succ) break;
+                qd = QuartzCocoa_DeviceCreate(dev, &qfn, &qpar);
+                if (qd) break;
             case QBE_CARBON:
-                succ = QuartzCarbon_DeviceCreate(dev, &qfn, &qpar);
+                qd = QuartzCarbon_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_PDF:
 		qpar.canvas = 0; /* so not used */
-                succ = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
+                qd = QuartzPDF_DeviceCreate(dev, &qfn, &qpar);
                 break;
             case QBE_BITMAP:
 		/* we need to set up the default file name here, where we
@@ -1070,12 +1122,12 @@ SEXP Quartz(SEXP args)
 		    qpar.file = deffile;
 		}
 		qpar.canvas = 0; /* so not used */
-		succ = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
+		qd = QuartzBitmap_DeviceCreate(dev, &qfn, &qpar);
 		break;
 	    }
 	}
 
-	if(!succ) {
+	if (qd == NULL) {
 	    vmaxset(vmax);
 	    free(dev);
 	    error(_("Unable to create Quartz device target, given type may not be supported."));
@@ -1092,15 +1144,90 @@ SEXP Quartz(SEXP args)
     return R_NilValue;
 }
 
+#include <mach/mach.h>
+#include <servers/bootstrap.h>
+
+/* even as of Darwin 9 there is no entry for bootstrap_info in bootrap headers */
+extern kern_return_t bootstrap_info(mach_port_t , /* bootstrap port */
+                                    name_array_t*, mach_msg_type_number_t*,  /* service */
+                                    name_array_t*, mach_msg_type_number_t*,  /* server */
+                                    bool_array_t*, mach_msg_type_number_t*); /* active */
+
+/* returns 1 if window server session service
+ (com.apple.windowserver.session) is present in the boostrap
+ namespace. returns 0 if an error occurred or the service is not
+ present. For all practical purposes this returns 1 only if run
+ interactively via LS. Although ssh to a machine that has a running
+ session for the same user will allow a WS connection, this function
+ will still return 0 in that case.
+ NOTE: on Mac OS X 10.5 we are currently NOT searching the parent
+ namespaces. This is currently OK, because the session service will
+ be registered in the session namespace which is the last in the
+ chain. However, this could change in the future.
+ */
+static int has_wss() {
+    int res = 0;
+    kern_return_t kr;
+    mach_port_t self = mach_task_self();
+    mach_port_t bport = MACH_PORT_NULL;
+    kr = task_get_bootstrap_port(self, &bport);
+    if (kr == KERN_SUCCESS) {
+	kern_return_t           kr;
+	name_array_t            serviceNames;
+	mach_msg_type_number_t  serviceNameCount;
+	name_array_t            serverNames;
+	mach_msg_type_number_t  serverNameCount;
+	bool_array_t            active;
+	mach_msg_type_number_t  activeCount;
+	
+	serviceNames  = NULL;
+	serverNames   = NULL;
+	active        = NULL;
+	
+	kr = bootstrap_info(bport, 
+			    &serviceNames, &serviceNameCount, 
+			    &serverNames, &serverNameCount, 
+			    &active, &activeCount);
+	if (kr == KERN_SUCCESS) {
+	    unsigned int i = 0;
+	    while (i < serviceNameCount) {
+		if (!strcmp(serviceNames[i], "com.apple.windowserver.session")) {
+		    res = 1;
+		    break;
+		}
+		i++;
+	    }
+	}
+    }
+    if (bport != MACH_PORT_NULL)
+	mach_port_deallocate(mach_task_self(), bport);
+    return res;
+}
+
+SEXP makeQuartzDefault() {
+    return ScalarLogical(has_wss());
+}
+
 #else
 /* --- no AQUA support = no Quartz --- */
 
 #include "grDevices.h"
+#include <R_ext/QuartzDevice.h>
 
 SEXP Quartz(SEXP args)
 {
     warning(_("Quartz device is not available on this platform"));
     return R_NilValue;
+}
+
+SEXP makeQuartzDefault() {
+    return ScalarLogical(FALSE);
+}
+
+QuartzDesc_t Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int *errorCode)
+{
+    if (errorCode) errorCode[0] = -1;
+    return NULL;
 }
 
 void *getQuartzAPI()

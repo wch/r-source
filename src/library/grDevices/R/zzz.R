@@ -33,7 +33,8 @@
             else if (Sys.getenv("DISPLAY") != "")
                 switch(.Platform$GUI, "Tk" = "X11", "X11" = "X11",
                        "GNOME" = "X11", defdev)
-            else defdev
+            else if (.Call("makeQuartzDefault")) "quartz"
+	    else defdev
         }
     } else defdev
 
