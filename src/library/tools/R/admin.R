@@ -563,23 +563,23 @@ function(dir, outDir, keep.source = FALSE)
 
     ## Argh.
     ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
-    ## (Actually, we don't at present.)
-    ## Note that this does not work with MiKTeX, but the
-    ## use of 'texi2dvi -I' as from R 2.7.0 suffices for now.
+    ## Note that this does not work with MiKTeX, but the use of
+    ## 'texi2dvi -I' as from R 2.7.0 suffices for now since build == src.
     envSep <- .Platform$path.sep
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
+    on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
+            add = TRUE)
     Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
     if(nzchar(texinputs))
         Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs),
                    sep = envSep)
     else
         Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, sep = envSep))
-    on.exit(Sys.setenv(TEXINPUTS = texinputs), add = TRUE)
-    if(nzchar(bibinputs)) {
+    if(nzchar(bibinputs))
         Sys.setenv(BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
-        on.exit(Sys.setenv(BIBINPUTS = bibinputs), add = TRUE)
-    }
+    else
+        Sys.setenv(BIBINPUTS = vignetteDir)
 
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
