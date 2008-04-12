@@ -69,6 +69,8 @@ Variables:
                 into a shared library 
   FC            Fortran 9x compiler command
   FCFLAGS       Fortran 9x compiler flags
+  FCPICFLAGS    special flags for compiling Fortran 9x code to be turned
+                into a shared library 
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -94,6 +96,8 @@ Variables:
                 object files from a C or Fortran compiler only 
   SHLIB_LDFLAGS
                 special flags used by SHLIB_LD
+  SHLIB_FCLD, SHLIB_FCLDFLAGS
+                ditto when using Fortran 9x
   TCLTK_CPPFLAGS
                 flags needed for finding the tcl.h and tk.h headers
   TCLTK_LIBS    flags needed for linking against the Tcl and Tk libraries
@@ -124,7 +128,6 @@ fi
 
 if test "${R_OSTYPE}" = "windows"; then
   MAKE=make
-  R_HOME=${R_HOME}
   R_DOC_DIR=${R_HOME}/doc
   R_INCLUDE_DIR=${R_HOME}/include
   R_SHARE_DIR=${R_HOME}/share
@@ -191,9 +194,9 @@ ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
-ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS"
+ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
-ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
+ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn"
 
