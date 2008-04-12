@@ -38,9 +38,9 @@ Options:
   -h, --help            print short help message and exit
   -v, --version         print 'config' version info and exit
       --cppflags        print pre-processor flags required to compile
-                        a program using R as a shared library
+                        a program using R as a library
       --ldflags         print linker flags needed for linking against
-                        the R shared library
+                        the R library
 
 Variables:
   BLAS_LIBS     flags needed for linking against external BLAS libraries 
@@ -65,6 +65,8 @@ Variables:
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
                 into a shared library 
+  FC            Fortran 9x compiler command
+  FCFLAGS       Fortran 9x compiler flags
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -128,6 +130,7 @@ makefiles="-f ${R_HOME}/etc${R_ARCH}/Makeconf -f ${R_SHARE_DIR}/make/config.mk"
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 LIBR=`eval $query VAR=LIBR`
+STATIC_LIBR=`eval $query VAR=STATIC_LIBR`
 
 var=
 while test -n "${1}"; do
@@ -138,7 +141,11 @@ while test -n "${1}"; do
       echo "${version}"; exit 0 ;;
     --cppflags)
       if test -z "${LIBR}"; then
-        echo "R was not built as a shared library" >&2
+        if test -z "${STATIC_LIBR}"; then
+          echo "R was not built as a library" >&2
+	else
+          echo "-I${R_INCLUDE_DIR} -I${R_INCLUDE_DIR}${R_ARCH}"
+        fi
       else
         echo "-I${R_INCLUDE_DIR}"
       fi
@@ -146,7 +153,11 @@ while test -n "${1}"; do
       ;;
     --ldflags)
       if test -z "${LIBR}"; then
-        echo "R was not built as a shared library" >&2
+        if test -z "${STATIC_LIBR}"; then
+          echo "R was not built as a library" >&2
+	else
+          echo "${STATIC_LIBR}"
+        fi
       else
         echo "${LIBR}"
       fi

@@ -67,6 +67,8 @@ Variables:
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
                 into a shared library 
+  FC            Fortran 9x compiler command
+  FCFLAGS       Fortran 9x compiler flags
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -174,7 +176,7 @@ ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
-ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS GC FCFLAGS"
+ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
