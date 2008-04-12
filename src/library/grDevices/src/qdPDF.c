@@ -87,8 +87,6 @@ QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 
     if (!qf) qf = fn;
 
-    size_t w = dpi[0] * width;
-    size_t h = dpi[1] * height;
     QuartzPDFDevice *dev = calloc(1, sizeof(QuartzPDFDevice));
 
     if ((!par->file || ! *par->file)) par->file = "Rplots.pdf";

@@ -1005,10 +1005,10 @@ SEXP Quartz(SEXP args)
 {
     SEXP tmps, bgs, canvass;
     double   width, height, ps;
-    Rboolean antialias, smooth, autorefresh = TRUE;
+    Rboolean antialias, smooth;
     int      quartzpos, bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
-    const char *type, *mtype = 0, *file, *family, *title;
+    const char *type, *mtype = 0, *file = 0, *family, *title;
     QuartzDesc_t qd = NULL;
 
     char    *vmax = vmaxget();

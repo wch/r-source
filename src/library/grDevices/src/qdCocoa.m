@@ -218,6 +218,38 @@ static QuartzFunctions_t *qf;
     if (qf && ci && ci-> qd) qf->Activate(ci->qd);
 }
 
+- (BOOL) writeAsPDF: (NSString*) fileName
+{
+    QuartzParameters_t qpar = ci->pars;
+    qpar.file = [fileName UTF8String];
+    qpar.connection = 0;
+	qpar.parv = NULL;
+    qpar.flags = 0;
+    qpar.width = qf->GetWidth(ci->qd);
+    qpar.height = qf->GetHeight(ci->qd);
+    QuartzDesc_t qd = Quartz_C(&qpar, QuartzPDF_DeviceCreate, NULL);
+    if (qd == NULL) return NO;
+    void *ss = qf->GetSnapshot(ci->qd, 0);
+    qf->RestoreSnapshot(qd, ss);
+    qf->Kill(qd);
+	return YES;
+}
+
+- (IBAction) saveDocumentAs: (id) sender
+{
+	NSSavePanel *sp = [NSSavePanel savePanel];
+	[sp setRequiredFileType:@"pdf"];
+	[sp setTitle:@"Save Quartz To PDF File"];
+	int answer = [sp runModalForDirectory:nil file:@"Rplot.pdf"];
+	if(answer == NSOKButton)
+		if (![self writeAsPDF:[sp filename]]) NSBeep();
+}
+
+- (IBAction) saveDocument: (id) sender
+{
+	[self saveDocumentAs:sender];
+}
+
 - (IBAction) copy: (id) sender
 {
     /* currently we use qdPDF to create the PDF for the clipboard.

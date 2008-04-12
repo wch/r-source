@@ -83,7 +83,7 @@ void QuartzBitmap_Output(QuartzDesc_t dev, QuartzBitmapDevice *qbd)
             PasteboardRef pb = NULL;
             if(PasteboardCreate(kPasteboardClipboard, &pb) == noErr) {
                 PasteboardClear(pb);
-                PasteboardSyncFlags syncFlags = PasteboardSynchronize(pb);
+                PasteboardSynchronize(pb);
                 PasteboardPutItemFlavor(pb, (PasteboardItemID) 1, type, data, 0);
             }
             CFRelease(data);
