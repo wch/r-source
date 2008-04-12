@@ -571,7 +571,12 @@ stopifnot(All.eq(a, dbeta(0, 1, a, ncp=0)),
           )
 ## the first gave 0, the 2nd NaN in R <= 2.3.0; others use 'TRUE' values
 stopifnot(all.equal(dbeta(0.8, 0.5, 5, ncp=1000),# was way too small in R <= 2.6.2
-		    3.001852308909e-35))
+		    3.001852308909e-35),
+	  all.equal(1, integrate(dbeta, 0,1, 0.8, 0.5, ncp=1000)$value,
+		    tol=1e-4),
+          all.equal(1, integrate(dbeta, 0,1, 0.5, 200, ncp=720)$value),
+          all.equal(1, integrate(dbeta, 0,1, 125, 200, ncp=2000)$value)
+          )
 
 ## df(*, ncp):
 x <- seq(0, 10, length=101)

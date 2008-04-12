@@ -45,12 +45,8 @@
  *
  *      B(a+k+1,b)   = (a+k)/(a+b+k) * B(a+k,b)
  *
- *    The summation of the series continues until
- *
- *		psum = p(0) + ... + p(k)
- *
- *    is close to 1.  Here we continue until 1 - psum < epsilon,
- *    with epsilon set close to the relative machine precision.
+ * The new algorithm first determines for which k the k-th term is maximal,
+ * and then sums outwards to both sides from the 'mid'.
  */
 
 #include "nmath.h"
@@ -58,11 +54,11 @@
 
 double dnbeta(double x, double a, double b, double ncp, int give_log)
 {
-    const static double eps = 1.e-14;
-    const int maxiter = 10000; /* was 200 */
+    const static double eps = 1.e-15;
 
-    double k, ncp2;
-    LDOUBLE psum, sum, term, weight;
+    int kMax;
+    double k, ncp2, dx2, d, D;
+    LDOUBLE sum, term, p_k, q;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
@@ -78,32 +74,49 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     if(ncp == 0)
 	return dbeta(x, a, b, give_log);
 
-    term = dbeta(x, a, b, /* log = */ TRUE);
-    if(!R_FINITE(term)) /* in particular, if term = +Inf */
-	return R_D_exp(term);
+    /* New algorithm, starting with *largest* term : */
     ncp2 = 0.5 * ncp;
-    /* FIXME: prevent underflow in term *and* weight-- probably should
-     * work in log scale and *rescale* when needed ..*/
-    term   = exp(term);
-    weight = exp(- ncp2);
-    sum = weight * term;
-    if(sum == 0.) {
-	if(term != 0.) /* (x = {0,1} gives true 0 for a,b>=1) */
-	    ML_ERROR(ME_UNDERFLOW, "dnbeta");
+    dx2 = ncp2*x;
+    d = (dx2 - a - 1)/2;
+    D = d*d + dx2 * (a + b) - a;
+    if(D <= 0) {
+	kMax = 0;
     } else {
-	psum = weight;
-	for(k = 1; k <= maxiter; k++) {
-	    double c1, c2, t;
-	    weight *= (c1 = (ncp2 / k));
-	    term   *= (c2 = x * (a + b) / a);
-	    sum  += (t = weight * term);
-	    psum += weight;
-	    a += 1;
-	    if(c1*c2 < 1 && psum + eps > 1 && t < eps * sum)
-		break;
-	    else if(k == maxiter) /* not converged */
-		ML_ERROR(ME_NOCONV, "dnbeta");
-	}
+	D = ceil(d + sqrt(D));
+	kMax = (D > 0) ? (int)D : 0;
     }
-    return R_D_val(sum);
+
+    /* The starting "middle term" --- first look at it's log scale: */
+    term = dbeta(x, a + kMax, b, /* log = */ TRUE);
+    p_k = dpois_raw(kMax, ncp2,              TRUE);
+    if(x == 0. || !R_FINITE(term) || !R_FINITE(p_k)) /* if term = +Inf */
+	return R_D_exp(p_k + term);
+
+    /* Now if s_k := p_k * t_k  {here = exp(p_k + term)} would underflow,
+     * we should rather scale everything and re-scale at the end:*/
+
+    p_k += term; /* = log(p_k) + log(t_k) == log(s_k) -- used at end to rescale */
+    /* mid = 1 = the rescaled value, instead of  mid = exp(p_k); */
+
+    /* Now sum from the inside out */
+    sum = term = 1. /* = mid term */;
+    /* middle to the left */
+    k = kMax;
+    while(k > 0 && term > sum * eps) {
+	k--;
+	q = /* 1 / r_k = */ (k+1)*(k+a) / (k+a+b) / dx2;
+	term *= q;
+	sum += term;
+    }
+    /* middle to the right */
+    term = 1.;
+    k = kMax;
+    do {
+	q = /* r_{old k} = */ dx2 * (k+a+b) / (k+a) / (k+1);
+	k++;
+	term *= q;
+	sum += term;
+    } while (term > sum * eps);
+
+    return R_D_exp(p_k + log(sum));
 }
