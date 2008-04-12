@@ -209,6 +209,13 @@ function(file, pdf = FALSE, clean = FALSE,
 
     if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
 
+    ## Prepend R_HOME/share/texmf to the input path
+    ## We need to ensure a trailing colon here
+    texinputs <- Sys.getenv("TEXINPUTS")
+    on.exit(Sys.setenv(TEXINPUTS=texinputs))
+    Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
+    Sys.setenv(TEXINPUTS = paste(Rtexmf, texinputs, sep=.Platform$path.sep))
+
     if(nzchar(texi2dvi)) {
         ignore.stderr <- FALSE
         pdf <- if(pdf) "--pdf" else ""
@@ -224,12 +231,6 @@ function(file, pdf = FALSE, clean = FALSE,
             extra <- quiet <- ""
         }
 
-        ## Append R_HOME/share/temxf to the input path
-        texinputs <- Sys.getenv("TEXINPUTS")
-	if(nzchar(texinputs)) on.exit(Sys.setenv(TEXINPUTS=texinputs))
-        Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
-        ntexinputs <- if(nzchar(texinputs)) paste(texinputs, Rtexmf, sep=.Platform$path.sep) else Rtexmf
-        Sys.setenv(TEXINPUTS = ntexinputs)
         if(.Platform$OS.type == "windows") {
             ## look for MiKTeX (which this almost certainly is)
             ## and set the path to R's style files.

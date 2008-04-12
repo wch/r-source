@@ -551,9 +551,10 @@ function(dir, outDir, keep.source = FALSE)
         return(invisible())
 
     ## For the time being, the primary use of this function is to
-    ## install (and build) vignettes in base packages.  Hence, we build
-    ## in a subdir of the current directory rather than a temp dir: this
-    ## allows inspection of problems and automatic cleanup via Make.
+    ## build and install vignettes in base packages (which means grid).
+    ## Hence, we build in a subdir of the current directory rather than
+    ## a temp dir:
+    ## this allows inspection of problems and automatic cleanup via Make.
     cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
     if(!file_test("-d", buildDir) && !dir.create(buildDir))
@@ -564,22 +565,15 @@ function(dir, outDir, keep.source = FALSE)
     ## Argh.
     ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
     ## Note that this does not work with MiKTeX, but the use of
-    ## 'texi2dvi -I' as from R 2.7.0 suffices for now since build == src.
+    ## 'texi2dvi -I' as from R 2.7.0 suffices for now.
     envSep <- .Platform$path.sep
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
     on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
             add = TRUE)
     Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
-    if(nzchar(texinputs))
-        Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs),
-                   sep = envSep)
-    else
-        Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, sep = envSep))
-    if(nzchar(bibinputs))
-        Sys.setenv(BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
-    else
-        Sys.setenv(BIBINPUTS = vignetteDir)
+    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs), sep = envSep)
+    Sys.setenv(BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
 
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
