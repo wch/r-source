@@ -568,11 +568,12 @@ function(dir, outDir, keep.source = FALSE)
     ## (Yes, it would be nice to have envPath() similar to file.path().)
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
+    Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
     on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
             add = TRUE)
-    Sys.setenv(TEXINPUTS = paste(vignetteDir, Sys.getenv("TEXINPUTS"),
+    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, Sys.getenv("TEXINPUTS"),
                sep = envSep),
-               BIBINPUTS = paste(vignetteDir, Sys.getenv("BIBINPUTS"),
+               BIBINPUTS = paste(vignetteDir, Rtexmf, Sys.getenv("BIBINPUTS"),
                sep = envSep))
 
     for(srcfile in vignetteFiles[!upToDate]) {
