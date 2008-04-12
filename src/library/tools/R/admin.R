@@ -561,20 +561,25 @@ function(dir, outDir, keep.source = FALSE)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
-    ## Argh.  We need to ensure that vignetteDir is in TEXINPUTS and
-    ## BIBINPUTS.  Note that this does not work with MiKTeX, but the
+    ## Argh.
+    ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
+    ## (Actually, we don't at present.)
+    ## Note that this does not work with MiKTeX, but the
     ## use of 'texi2dvi -I' as from R 2.7.0 suffices for now.
     envSep <- .Platform$path.sep
-    ## (Yes, it would be nice to have envPath() similar to file.path().)
-    ## FIXME: this sets TEXINPUTS and BIBINPUTS if unset, and empty
-    ## final fields have a special meaning
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
     Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
-    on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
-            add = TRUE)
-    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs, sep = envSep),
-               BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
+    if(nzchar(texinputs))
+        Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs),
+                   sep = envSep)
+    else
+        Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, sep = envSep))
+    on.exit(Sys.setenv(TEXINPUTS = texinputs), add = TRUE)
+    if(nzchar(bibinputs)) {
+        Sys.setenv(BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
+        on.exit(Sys.setenv(BIBINPUTS = bibinputs), add = TRUE)
+    }
 
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
