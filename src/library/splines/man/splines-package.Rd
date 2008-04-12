@@ -23,7 +23,7 @@ For a complete list of functions, use \code{library(help="splines")}.
 }
 \author{
 Douglas M. Bates \email{bates@stat.wisc.edu} and William N. Venables
-\email{Bill.Venables@cmis.csiro.au}
+\email{Bill.Venables@csiro.au}
 
 Maintainer: R Core Team \email{R-core@r-project.org}
 }
