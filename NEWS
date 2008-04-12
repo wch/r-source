@@ -853,7 +853,8 @@ BUG FIXES
 	including those entered as \0 with allowEscapes=TRUE.  This
 	was different from the default separator.
 
-    o	determinant(matrix(,0,0)) now returns a correct "det" result.
+    o	determinant(matrix(,0,0)) now returns a correct "det" result;
+	also value 1 or 0 depending on 'logarithm', rather than numeric(0).
 
     o	Name space 'grDevices' was not unloading its DLL when the
 	name space was unloaded.

@@ -33,7 +33,9 @@ determinant.matrix <- function(x, logarithm = TRUE, ...)
     if ((n <- ncol(x)) != nrow(x))
         stop("'x' must be a square matrix")
     if (n < 1)
-	return(structure(list(modulus = structure(double(0), logarithm = logarithm),
+	return(structure(list(modulus =
+			      structure(if(logarithm) 0 else 1,
+					logarithm = logarithm),
 			      sign = 1L),
 			 class = "det"))
     if (is.complex(x))
