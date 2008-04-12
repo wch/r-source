@@ -32,6 +32,7 @@ AWK=${AWK-'@AWK@'}
 EGREP=${EGREP-'@EGREP@'}
 MAKE=${MAKE-'@MAKE@'}
 PERL=${PERL-'@PERL@'}
+SED=${SED-'@SED@'}
 TAR=${TAR-'@TAR@'}
 LN_S='@LN_S@'
 
