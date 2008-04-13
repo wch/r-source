@@ -529,6 +529,8 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+extern wchar_t *wtransChar(SEXP x);
+
 SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stamp;
@@ -538,9 +540,13 @@ SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     stamp = CAR(args);
     if (!isString(stamp))
 	errorcall(call, _("invalid timestamp"));
-    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
-	for (i = 0; i < LENGTH(stamp); i++)
+    if (CharacterMode == RGui) {   
+	for (i = 0; i < LENGTH(stamp); i++) 
+	    wgl_histadd(wtransChar(STRING_ELT(stamp, i)));
+    } else if (R_Interactive && CharacterMode == RTerm) {
+    	for (i = 0; i < LENGTH(stamp); i++)
 	    gl_histadd(translateChar(STRING_ELT(stamp, i)));
+    }
     return R_NilValue;
 }
 
@@ -1012,8 +1018,6 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     return ans;
 }
-
-extern wchar_t *wtransChar(SEXP x);
 
 SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
