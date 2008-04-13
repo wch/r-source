@@ -121,6 +121,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   unexpectedly if \code{x} is a \code{character} vector not resulting from
   something like \code{format(<number>)}: in particular it assumes that
   a period is a decimal mark.
+
+  Character inputs with embedded nul bytes will be truncated at the first nul.
 }
 \author{
   \code{formatC} was originally written by Bill Dunlap, later much

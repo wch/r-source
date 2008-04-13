@@ -109,6 +109,8 @@ gettextf(fmt, \dots, domain = NULL)
 
   There is a limit of 8192 bytes on elements of \code{fmt} and also on
   strings included by a \code{\%s} conversion specification.
+
+  Character inputs with embedded nul bytes will be truncated at the first nul.
 }
 
 \value{

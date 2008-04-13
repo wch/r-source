@@ -103,6 +103,8 @@ format(x, \dots)
 
   Raw vectors are converted to their 2-digit hexadecimal representation
   by \code{\link{as.character}}.
+
+  Character inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   An object of similar structure to \code{x} containing character
