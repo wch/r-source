@@ -3,6 +3,10 @@
 	*	 Windows-specific changes to R		 *
 	*	 See the file NEWS for changes that	 *
 	*        affect all versions of R.		 *
+	**************************************************
+
+
+	**************************************************
 	*						 *
 	*	       2.8 SERIES NEWS			 *
 	*						 *
@@ -12,9 +16,9 @@
 		CHANGES IN R VERSION 2.8.0
 
 
-OTHERS
+NONE YET
 
-    o	The default previewer for 'Rcmd Rd2dvi' is now 'yap'.
+    o	Dummy
 
 
 
@@ -253,6 +257,10 @@ OTHERS
     o	tools::texi2dvi() detects the use of MikTeX's texi2dvi and
     	uses its '-I path' argument to add the path to R's style files
     	(such as Sweave.sty) to the input search path.
+
+    o	R CMD Rd2dvi defaults to 'yap' as the previewer (rather than
+	xdvi.bat) -- as before this is set by the environment variable
+	'xdvi'.
 
 
 BUILDING R
