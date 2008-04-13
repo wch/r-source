@@ -562,19 +562,6 @@ function(dir, outDir, keep.source = FALSE)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
-    ## Argh.
-    ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
-    ## Note that this does not work with MiKTeX, but the use of
-    ## 'texi2dvi -I' as from R 2.7.0 suffices for now.
-    envSep <- .Platform$path.sep
-    texinputs <- Sys.getenv("TEXINPUTS")
-    bibinputs <- Sys.getenv("BIBINPUTS")
-    on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
-            add = TRUE)
-    Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
-    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, texinputs), sep = envSep)
-    Sys.setenv(BIBINPUTS = paste(vignetteDir, bibinputs, sep = envSep))
-
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         message("processing '", basename(srcfile), "'")
@@ -588,9 +575,10 @@ function(dir, outDir, keep.source = FALSE)
                       domain = NA, call. = FALSE))
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
+        ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
         ## <FIXME>
         ## What if this fails?
-        texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
+        texi2dvi(texfile, pdf = TRUE, quiet = TRUE, texinputs = vignetteDir)
         ## </FIXME>
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")

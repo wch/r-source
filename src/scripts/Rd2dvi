@@ -75,11 +75,7 @@ if test "${R_OSTYPE}" = "windows"; then
   : ${R_PAPERSIZE=a4}
   export R_PAPERSIZE
   # This is for e.g. TexLive: MiKTeX is handled by R_TEXOPTS
-  if test -n "${TEXINPUTS}"; then
-    TEXINPUTS=".\;${R_HOME}/share/texmf\;${TEXINPUTS}"
-  else
-    TEXINPUTS=".\;${R_HOME}/share/texmf"
-  fi
+  TEXINPUTS=".\;${R_HOME}/share/texmf\;${TEXINPUTS}"
   export TEXINPUTS
 else
   build_dir=".Rd2dvi${$}"

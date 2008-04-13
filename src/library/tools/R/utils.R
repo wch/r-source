@@ -202,19 +202,32 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 ### ** texi2dvi
 
 texi2dvi <-
-function(file, pdf = FALSE, clean = FALSE,
-         quiet = TRUE, texi2dvi = getOption("texi2dvi"))
+function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
+         texi2dvi = getOption("texi2dvi"), texinputs = NULL)
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
     if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
 
-    ## Prepend R_HOME/share/texmf to the input path
+    envSep <- .Platform$path.sep
+    Rtexmf <- file.path(R.home(), "share", "texmf")
+    texinputs <- paste(c(texinputs, Rtexmf), collapse = envSep)
+    ## not clear if this is needed, but works
+    if(.Platform$OS.type == "windows") texinputs <- gsub("\\\\", "/", texinputs)
+
     ## We need to ensure a trailing colon here
-    texinputs <- Sys.getenv("TEXINPUTS")
-    on.exit(Sys.setenv(TEXINPUTS=texinputs))
-    Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
-    Sys.setenv(TEXINPUTS = paste(Rtexmf, texinputs, sep=.Platform$path.sep))
+    otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
+    if(is.na(otexinputs)) {
+        on.exit(Sys.unsetenv("TEXINPUTS"))
+        otexinputs <- ""
+    } else on.exit(Sys.setenv(TEXINPUTS = otexinputs))
+    Sys.setenv(TEXINPUTS = paste(texinputs, otexinputs, sep = envSep))
+    bibinputs <- Sys.getenv("BIBINPUTS", unset = NA)
+    if(is.na(bibinputs)) {
+        on.exit(Sys.unsetenv("BIBINPUTS"))
+        bibinputs <- ""
+    } else on.exit(Sys.setenv(BIBINPUTS = bibinputs))
+    Sys.setenv(BIBINPUTS = paste(texinputs, bibinputs, sep = envSep))
 
     if(nzchar(texi2dvi)) {
         ignore.stderr <- FALSE
@@ -237,24 +250,23 @@ function(file, pdf = FALSE, clean = FALSE,
             ## -I works in MiKTeX >= 2.4, at least
             ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
             if(length(grep("MiKTeX", ver[1]))) {
-                ## could use shortPathName here
-                stypath <-  shQuote(gsub("\\\\", "/",
-                                         file.path(R.home("share"), "texmf")))
-                clean <- paste(clean, "-I", stypath)
+                paths <- paste ("-I", shQuote(texinputs))
+                clean <- paste(clean, paste(paths, collapse = " "))
             }
         }
 
-        ## print(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file), extra))
+        print(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file), extra))
         if(system(paste(shQuote(texi2dvi), quiet, pdf, clean,
                         shQuote(file), extra),
                   ignore.stderr = ignore.stderr))
             stop(gettextf("running 'texi2dvi' on '%s' failed", file),
                  domain = NA)
     } else {
-        ## do not have texi2dvi
-        ## needed at least on Windows except for MiKTeX
+        ## Do not have texi2dvi
+        ## Needed at least on Windows except for MiKTeX
         ## Note that this does not do anything about running quietly,
-        ## but it probably not used (too much) anymore.
+        ## nor cleaning, but it probably not used much anymore.
+
         texfile <- shQuote(file)
         base <- file_path_sans_ext(file)
         idxfile <- paste(base, ".idx", sep="")

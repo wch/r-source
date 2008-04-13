@@ -32,6 +32,9 @@ NEW FEATURES
 	such as "a\0b" -- previous versions of R terminated scanning
 	at the first nul.
 
+    o	tools::texi2dvi() has a new argument 'texinputs' to allow the
+	TeX and bibtex input paths to be specified (even on MiKTeX).
+
 
 PACKAGE INSTALLATION
 
@@ -81,7 +84,7 @@ UTILITIES
 	driver is now FALSE rather than TRUE if
 	SWEAVE_STYLEPATH_DEFAULT is unset : see ?RweaveLatex.
 	To support this, tools::texi2dvi adds the R 'texmf' directory
-	to the input search path (even on MiKTeX).
+	to the input search path.
 
 
 BUG FIXES
