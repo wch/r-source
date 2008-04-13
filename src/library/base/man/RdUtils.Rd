@@ -37,7 +37,18 @@
 
   \code{Rd2dvi} and \code{Rd2txt} are user-level programs
   for producing DVI/PDF output or pretty text output from Rd sources.
-
+  \code{Rd2dvi} will make use of environment variables
+#ifdef unix
+  \env{R\_PAPERSIZE} (set by \code{R CMD}, with a default set when \R was
+  installed) and \env{xdvi} (the DVI previewer, default \code{xdvi}).
+#endif
+#ifdef windows
+  \env{R\_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
+  previewer, default \code{yap} as from \R 2.8.0).
+#endif
+  (Valid values for \env{R\_PAPERSIZE} are \code{a4}, \code{letter},
+  \code{legal} and \code{executive}.)
+  
   \code{Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
   format.
 

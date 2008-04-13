@@ -47,11 +47,16 @@ Options:
   -V, --verbose		report on what is done
 
 The output papersize is set by the environment variable R_PAPERSIZE.
+The DVI previewer is set by enviroment variable xdvi, defaults to yap.
 
 Report bugs to <r-bugs@r-project.org>."
 
+# This is for e.g. TexLive: MiKTeX is handled by R_TEXOPTS
 TEXINPUTS=.\;${R_HOME}/share/texmf\;${TEXINPUTS}
 export TEXINPUTS
+## set by R CMD on unix
+: ${R_LATEXCMD=latex}
+: ${SED=sed}
 
 start_dir=`pwd`
 # pid is always 1000 on Windows sh.exe
@@ -64,7 +69,7 @@ debug=false
 only_meta=false
 out_ext="dvi"
 output=""
-preview=${xdvi-xdvi.bat}
+preview=${xdvi-yap}
 verbose=false
 enc=unknown
 OSdir=windows
@@ -90,9 +95,9 @@ while test -n "${1}"; do
       R_RD4DVI=${R_RD4PDF-"times,hyper"};
       R_LATEXCMD=${PDFLATEX-pdflatex} ;;
     --title=*)
-      title=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+      title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     -o)
-      if test -n "`echo ${2} | ${SED-sed} 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
 	${echo} "ERROR: option '${1}' requires an argument"
@@ -102,13 +107,13 @@ while test -n "${1}"; do
     --only-meta)
       only_meta=true ;;
     --output=*)
-      output=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+      output=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --OS=*|--os=*)
-      OSdir=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+      OSdir=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --encoding=*)
-      enc=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+      enc=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --build-dir=*)
-      build_dir=`echo "${1}" | ${SED-sed} -e 's/[^=]*=//'` ;;
+      build_dir=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     -V|--verbose)
       verbose=${echo} ;;
     --|*)
@@ -168,13 +173,13 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
   
-  fields=`${SED-sed} '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
+  fields=`${SED} '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
   ${echo} "\\begin{description}"
   ${echo} "\\raggedright{}"
-  for f in `${echo} "${fields}" | ${SED-sed} '/Package/d; /Bundle/d;'`; do
+  for f in `${echo} "${fields}" | ${SED} '/Package/d; /Bundle/d;'`; do
     text=`get_dcf_field ${f} ${1} | \
       tr '\n' ' ' | \
-      ${SED-sed} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
+      ${SED} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
                   s/\\\\\\\\/\\\\\\\\textbackslash /g
                   s/{/\\\\\\\\{/g
 		  s/}/\\\\\\\\}/g"`
@@ -219,7 +224,7 @@ if test -d "${1}"; then
     else
       dir=${1}
     fi
-    subj0=`${echo} ${dir} | ${SED-sed} -e ${file_sed}`
+    subj0=`${echo} ${dir} | ${SED} -e ${file_sed}`
     subj="all in \\file{${subj0}}"
   fi
 else
@@ -230,12 +235,14 @@ else
     toc=
     if test -z "${output}"; then
       output=`basename "${1}"`
-      output="`echo ${output} | ${SED-sed} 's/[Rr]d$//'`${out_ext}"
+      output="`echo ${output} | ${SED} 's/[Rr]d$//'`${out_ext}"
     fi
   fi
-  subj0=`${echo} ${1} | ${SED-sed} -e ${file_sed}`
+  subj0=`${echo} ${1} | ${SED} -e ${file_sed}`
   subj="\\file{${subj0}}${subj}"
 fi
+
+
 ## substitution went wrong under ash
 title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
 title=${title-$title1}
@@ -294,7 +301,7 @@ EOF
       R_version=`cat ${1}/../../../VERSION`
     fi
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION.in | \
-      ${SED-sed} "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
+      ${SED} "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
   fi
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
@@ -347,19 +354,19 @@ EOF
 
 ## Look for encodings
 ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
-  ${SED-sed} -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
+  ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
 ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
-  ${SED-sed} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
-  tr '\na-z0-9' ',a-z0-9' | ${SED-sed} -e s/,$//`
+  ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
+  tr '\na-z0-9' ',a-z0-9' | ${SED} -e s/,$//`
 #echo "ENCS is ${ENCS}"
 
 ## substitute for the encodings used
 mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
 if test -z "${ENCS}"; then
-  ${SED-sed} -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
+  ${SED} -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 else
-  ${SED-sed} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
+  ${SED} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 fi
 
@@ -377,11 +384,12 @@ fi
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2 || status=1
+  # This is for e.g. TexLive: MiKTeX is handled by R_TEXOPTS
+${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
 ${R_MAKEINDEXCMD-makeindex} Rd2
-${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
+${R_LATEXCMD} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
-  ${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
+  ${R_LATEXCMD} ${R_TEXOPTS} Rd2
 fi
 cd ${start_dir}
 ${echo} "Saving output to '${output}' ..."
