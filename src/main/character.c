@@ -271,7 +271,7 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
 	for (i = sa; i <= so; i++) {
 	    in +=  utf8clen(str[in]);
-	    out += utf8clen(str[in]);
+	    out += utf8clen(buf[out]);
 	    if (!str[in]) break;
 	}
 	if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
