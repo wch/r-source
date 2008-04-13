@@ -1337,14 +1337,14 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		cbuf[length] = '\0';
 		if (levs & UTF8_MASK) enc = CE_UTF8;
 		else if (levs & LATIN1_MASK) enc = CE_LATIN1;
-                PROTECT(s = mkCharCE(cbuf, enc));
+                PROTECT(s = mkCharLenCE(cbuf, length, enc));
 	    } else {
  		int enc = CE_NATIVE;
 		cbuf = CallocCharBuf(length);
 		InString(stream, cbuf, length);
  		if (levs & UTF8_MASK) enc = CE_UTF8;
 		else if (levs & LATIN1_MASK) enc = CE_LATIN1;
-                PROTECT(s = mkCharCE(cbuf, enc));
+                PROTECT(s = mkCharLenCE(cbuf, length, enc));
                 Free(cbuf);
 	    }
 	    break;

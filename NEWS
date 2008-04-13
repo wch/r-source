@@ -868,6 +868,8 @@ BUG FIXES
     o	getNativeSymbolInfo() was unaware of non-registered Fortran
     	names, because one of the C support routines ignored them.
 
+    o	load() again reads correctly character strings with embedded nuls.
+
 
 
 

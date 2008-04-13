@@ -50,7 +50,8 @@ substring(text, first, last = 1000000) <- value
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.
 
-  Inputs with embedded nul bytes will be truncated at the first nul.
+  Currently the extraction function handles strings with embedded nuls
+  whereas the replacement function does not.
 }
 \value{
   For \code{substr}, a character vector of the same length and with the
