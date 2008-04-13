@@ -4368,7 +4368,7 @@ eight hex digits.
 A single quote may also be embedded directly in a double-quote delimited
 string and vice versa.
 
-In versions of @R{} prior to 2.7.0, the inclusion of a `nul' (@code{\0})
+In versions of @R{} prior to 2.8.0, the inclusion of a `nul' (@code{\0})
 in a string constant terminated the constant: further characters up to
 the closing quote are scanned by ignored.
 

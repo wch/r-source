@@ -542,7 +542,6 @@ CGFontRef RQuartz_Font(CTXDESC)
 {
     int fontface = gc->fontface;
     CFMutableStringRef fontName = CFStringCreateMutable(kCFAllocatorDefault, 0);
-    /* removed "symbol" family in 2.8.0  */
     if((gc->fontface == 5))
         CFStringAppend(fontName,CFSTR("Symbol"));
     else {
@@ -705,7 +704,6 @@ static void RQuartz_Clip(double x0, double x1, double y0, double y1, DEVDESC)
 static CFStringRef text2unichar(CTXDESC, const char *text, UniChar **buffer, int *free)
 {
     CFStringRef str;
-    /* remove "symbol" family in 2.8.0  */
     if(gc->fontface == 5)
         str = CFStringCreateWithCString(NULL, text, kCFStringEncodingMacSymbol);
     else {
