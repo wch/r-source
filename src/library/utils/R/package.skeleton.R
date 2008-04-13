@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 package.skeleton <-
-    function(name = "anRpackage", list, environment = .GlobalEnv,
+    function(name = "anRpackage", list = character(), environment = .GlobalEnv,
 	     path = ".", force = FALSE, namespace = FALSE,
              code_files = character())
 {
