@@ -7533,7 +7533,7 @@ with @code{R_alloc} which thus persists to the end of the
 @code{.Call}/@code{.External} call unless @code{vmaxset} is used.
 
 As from @R{} 2.7.0 there is a similar function @code{translateCharUTF8}
-which converts to UTF-8: this has the advatanage that a faithful
+which converts to UTF-8: this has the advantage that a faithful
 translation is almost always possible (whereas only a few languages can
 be represented in the encoding of the current locale unless that is
 UTF-8).
