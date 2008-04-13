@@ -31,6 +31,8 @@ make.unique(names, sep = ".")
     
   If character vector \code{A} is already unique, then
   \code{make.unique(c(A, B))} preserves \code{A}.
+
+  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \author{Thomas P Minka}
 \seealso{

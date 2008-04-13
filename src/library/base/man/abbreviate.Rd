@@ -42,6 +42,9 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 
   If \code{use.classes} is \code{FALSE} then the only distinction is to
   be between letters and space.  This has NOT been implemented.
+  
+  Elements of \code{names.arg} with embedded nul bytes will be truncated
+  at the first nul.
 }
 \value{
   A character vector containing abbreviations for the strings in its

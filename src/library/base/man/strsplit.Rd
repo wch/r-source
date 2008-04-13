@@ -84,6 +84,8 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   (non-empty) string, the first element of the output is \code{""}, but
   if there is a match at the end of the string, the output is the same
   as with the match removed. 
+
+  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \section{Warning}{
   The standard regular expression code has been reported to be very slow
