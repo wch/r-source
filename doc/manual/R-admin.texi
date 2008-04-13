@@ -301,10 +301,11 @@ make check
 
 @noindent
 Failures are not necessarily problems as they might be caused by missing
-functionality, but you should look carefully at any reported
-discrepancies.  (Some non-fatal failures are expected in locales that
-do not support Latin-1, in particular in true @code{C} locales and
-non-UTF-8 non-European locales.)
+functionality,@footnote{for example, if you configured @R{} with
+@option{--without-iconv} or @option{--without-recommended}.} but you
+should look carefully at any reported discrepancies.  (Some non-fatal
+errors are expected in locales that do not support Latin-1, in
+particular in true @code{C} locales and non-UTF-8 non-European locales.)
 
 To re-run the tests including those successfully run you would need
 
