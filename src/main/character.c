@@ -242,7 +242,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    ienc = getCharCE(el);
 	    ss = CHAR(el);
-	    slen = strlen(ss);
+	    slen = strlen(ss); /* FIXME -- should handle embedded nuls */
 	    buf = R_AllocStringBuffer(slen+1, &cbuff);
 	    if (start < 1) start = 1;
 	    if (start > stop || start > slen) {
@@ -275,8 +275,6 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	    if (!str[in]) break;
 	}
 	if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
-	printf("buf = %s\n", buf);
-	printf("str, in = %s, %d\n", str, in);
 	memcpy(buf, str, in);
     } else if (ienc == CE_LATIN1) {
 	memcpy(buf + sa - 1, str, so - sa + 1);
