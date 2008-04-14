@@ -954,14 +954,14 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(x);
     n = LENGTH(x);
     for(i = 0; i < n; i++) {
-	int ienc = 0;
+	cetype_t ienc = CE_NATIVE;
 	this = CHAR(STRING_ELT(enc, i % m)); /* ASCII */
 	if(streql(this, "latin1")) ienc = CE_LATIN1;
 	else if(streql(this, "UTF-8")) ienc = CE_UTF8;
 	tmp = STRING_ELT(x, i);
-	if (! ((ienc == LATIN1_MASK && IS_LATIN1(tmp)) ||
-	       (ienc == UTF8_MASK && IS_UTF8(tmp)) ||
-	       (ienc == 0 && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
+	if (! ((ienc == CE_LATIN1 && IS_LATIN1(tmp)) ||
+	       (ienc == CE_UTF8 && IS_UTF8(tmp)) ||
+	       (ienc == CE_NATIVE && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
 	    SET_STRING_ELT(x, i, mkCharCE(CHAR(tmp), ienc));
     }
     UNPROTECT(1);
