@@ -37,14 +37,17 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   ensures that the \file{\var{\link{R\_HOME}}/share/texmf} directory is
   in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave}
   and \file{Rd} will be found.  The search path used is first the
-  elements of \code{texinputs}, then \file{\var{R\_HOME}/share/texmf}
-  and finally the existing \env{TEXINPUTS} or \env{BIBINPUTS} setting.
+  existing \env{TEXINPUTS} setting (or the current directory if unset),
+  then elements of \code{texinputs}, then
+  \file{\var{R\_HOME}/share/texmf} and finally the default
+  path. Analogous changes are made to \env{BIBINPUTS} and
+  \env{BSTINPUTS}settings.
 #ifdef windows
   
-  MiKTeX has a \code{texi2dvi} executable, but no other Windows TeX
-  installation that we know of does, so emulation is used on TeXLive
+  MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
+  installation that we know of does, so emulation is used on e.g. TeXLive
   installations.
 #endif
 }
-\author{Achim Zeileis}
+\author{Achim Zeileis and R-core}
 \keyword{utilities}

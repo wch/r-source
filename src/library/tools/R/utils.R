@@ -211,23 +211,29 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     envSep <- .Platform$path.sep
     Rtexmf <- file.path(R.home(), "share", "texmf")
-    texinputs <- paste(c(texinputs, Rtexmf), collapse = envSep)
+    ## "" forces use of default paths.
+    texinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
     ## not clear if this is needed, but works
     if(.Platform$OS.type == "windows") texinputs <- gsub("\\\\", "/", texinputs)
 
-    ## We need to ensure a trailing colon here
     otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
     if(is.na(otexinputs)) {
         on.exit(Sys.unsetenv("TEXINPUTS"))
-        otexinputs <- ""
+        otexinputs <- "."
     } else on.exit(Sys.setenv(TEXINPUTS = otexinputs))
-    Sys.setenv(TEXINPUTS = paste(texinputs, otexinputs, sep = envSep))
+    Sys.setenv(TEXINPUTS = paste(otexinputs, texinputs, sep = envSep))
     bibinputs <- Sys.getenv("BIBINPUTS", unset = NA)
     if(is.na(bibinputs)) {
-        on.exit(Sys.unsetenv("BIBINPUTS"))
-        bibinputs <- ""
-    } else on.exit(Sys.setenv(BIBINPUTS = bibinputs))
-    Sys.setenv(BIBINPUTS = paste(texinputs, bibinputs, sep = envSep))
+        on.exit(Sys.unsetenv("BIBINPUTS"), add = TRUE)
+        bibinputs <- "."
+    } else on.exit(Sys.setenv(BIBINPUTS = bibinputs, add = TRUE))
+    Sys.setenv(BIBINPUTS = paste(bibinputs, texinputs, sep = envSep))
+    bstinputs <- Sys.getenv("BSTINPUTS", unset = NA)
+    if(is.na(bstinputs)) {
+        on.exit(Sys.unsetenv("BSTINPUTS"), add = TRUE)
+        bstinputs <- "."
+    } else on.exit(Sys.setenv(BSTINPUTS = bstinputs), add = TRUE)
+    Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(nzchar(texi2dvi)) {
         ignore.stderr <- FALSE
@@ -255,7 +261,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             }
         }
 
-        print(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file), extra))
+        ## print(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file), extra))
         if(system(paste(shQuote(texi2dvi), quiet, pdf, clean,
                         shQuote(file), extra),
                   ignore.stderr = ignore.stderr))
