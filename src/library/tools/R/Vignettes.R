@@ -24,14 +24,15 @@ function(package, dir, lib.loc = NULL,
          workdir = c("tmp", "src", "cur"),
          keepfiles = FALSE)
 {
-    vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
+    vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(NULL)
 
     workdir <- match.arg(workdir)
     wd <- getwd()
     if(workdir == "tmp") {
         tmpd <- tempfile("Sweave")
-        if(!dir.create(tmpd)) stop("unable to create temp directory ", tmpd)
+        if(!dir.create(tmpd))
+            stop("unable to create temp directory ", tmpd)
         setwd(tmpd)
     }
     else {
@@ -102,9 +103,9 @@ print.checkVignettes <-
 function(x, ...)
 {
     mycat <- function(y, title) {
-        if(length(y)>0){
-            cat("\n", title, "\n\n", sep="")
-            for(k in 1:length(y)){
+        if(length(y) > 0L){
+            cat("\n", title, "\n\n", sep = "")
+            for(k in seq_along(y)) {
                 cat("File", names(y)[k], ":\n")
                 cat(as.character(y[[k]]), "\n")
             }
@@ -128,7 +129,7 @@ function(package, dir, lib.loc = NULL)
 {
     ## Argument handling.
     if(!missing(package)) {
-        if(length(package) != 1)
+        if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         docdir <- file.path(.find.package(package, lib.loc), "doc")
         ## Using package installed in @code{dir} ...
@@ -172,7 +173,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE)
     origfiles <- list.files()
     have.makefile <- "makefile" %in% tolower(origfiles)
 
-    pdfs <- character(0)
+    pdfs <- character()
     for(f in vigns$docs) {
         f <- basename(f)
         bf <- sub("\\..[^\\.]*$", "", f)
@@ -213,7 +214,9 @@ function(lines, tag)
     .strip_whitespace(gsub(meta_RE, "\\1", meta))
 }
 
-vignetteInfo <- function(file) {
+vignetteInfo <-
+function(file)
+{
     lines <- readLines(file, warn = FALSE)
     ## <FIXME>
     ## Can only proceed with lines with are valid in the current
@@ -221,19 +224,19 @@ vignetteInfo <- function(file) {
     lines[is.na(nchar(lines, "c", TRUE))] <- ""
     ## </FIXME>
     ## \VignetteIndexEntry
-    title <- c(.get_vignette_metadata(lines, "IndexEntry"), "")[1]
+    title <- c(.get_vignette_metadata(lines, "IndexEntry"), "")[1L]
     ## \VignetteDepends
     depends <- .get_vignette_metadata(lines, "Depends")
-    if(length(depends) > 0)
+    if(length(depends))
         depends <- unlist(strsplit(depends[1], ", *"))
     ## \VignetteKeyword and old-style \VignetteKeywords
     keywords <- .get_vignette_metadata(lines, "Keywords")
-    keywords <- if(length(keywords) == 0) {
+    keywords <- if(!length(keywords)) {
         ## No old-style \VignetteKeywords entries found.
         .get_vignette_metadata(lines, "Keyword")
     }
     else
-        unlist(strsplit(keywords[1], ", *"))
+        unlist(strsplit(keywords[1L], ", *"))
     list(file = file, title = title, depends = depends,
          keywords = keywords)
 }
@@ -248,7 +251,7 @@ function(vignetteDir)
     vignetteFiles <-
         path.expand(list_files_with_type(vignetteDir, "vignette"))
 
-    if(length(vignetteFiles) == 0) {
+    if(!length(vignetteFiles)) {
         out <- data.frame(File = character(),
                           Title = character(),
                           PDF = character(),
@@ -258,8 +261,8 @@ function(vignetteDir)
         return(out)
     }
 
-    contents <- vector("list", length = length(vignetteFiles) * 4)
-    dim(contents) <- c(length(vignetteFiles), 4)
+    contents <- vector("list", length = length(vignetteFiles) * 4L)
+    dim(contents) <- c(length(vignetteFiles), 4L)
     for(i in seq_along(vignetteFiles))
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
@@ -322,7 +325,7 @@ function(vignetteDir)
 print.check_vignette_index <-
 function(x, ...)
 {
-    if(length(x) > 0) {
+    if(length(x)) {
         writeLines(paste("Vignettes with missing or empty",
                          "\\VignetteIndexEntry:"))
         print(basename(file_path_sans_ext(unclass(x))), ...)

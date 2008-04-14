@@ -54,7 +54,7 @@ function(dir, outDir)
         "i386-pc-mingw32"
     else
         R.version$platform
-    if (length(grep("-apple-darwin",R.version$platform)) > 0 &&
+    if (length(grep("-apple-darwin",R.version$platform)) > 0L &&
         nzchar(Sys.getenv("R_ARCH")))
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
     Built <-
@@ -104,7 +104,7 @@ function(db, verbose = FALSE)
 {
     if(!is.na(Built <- db["Built"])) {
         Built <- as.list(strsplit(Built, "; ")[[1L]])
-        if(length(Built) != 4) {
+        if(length(Built) != 4L) {
             warning(gettextf("*** someone has corrupted the Built field in package '%s' ***",
                              db["Package"]),
                     domain = NA,
@@ -131,9 +131,9 @@ function(db, verbose = FALSE)
         Rdeps <- Depends[["R", exact = TRUE]] # the first one
         Depends <- Depends[names(Depends) != "R"]
         ## several packages have 'Depends: R', which is a noop.
-        if(verbose && length(Rdeps) == 1)
+        if(verbose && length(Rdeps) == 1L)
              message("WARNING: omitting pointless dependence on 'R' without a version requirement")
-        if(length(Rdeps) <= 1) Rdeps <- NULL
+        if(length(Rdeps) <= 1L) Rdeps <- NULL
     } else Rdeps2 <- Rdeps <- NULL
     Rdeps <- as.vector(Rdeps)
     Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
@@ -453,7 +453,7 @@ function(dir, outDir)
     if(!length(list_files_with_type(vignetteDir, "vignette"))) {
         ## we don't want to write an index if the directory is in fact empty
         files <- list.files(vignetteDir, all.files = TRUE) # includes . and ..
-        if((length(files) > 2) && !hasHtmlIndex)
+        if((length(files) > 2L) && !hasHtmlIndex)
             .writeVignetteHtmlIndex(packageName, htmlIndex)
         return(invisible())
     }

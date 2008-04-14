@@ -1,5 +1,9 @@
 ##
-## Rdiff -- Diff 'without R version'
+## Rdiff -- diff 'without R version'
+
+## Copyright (C) 2000-2008 The R Core Development Team.
+## This is free software; see the GNU General Public License version 2
+## or later for copying conditions.  There is NO warranty.
 
 ## Usage:
 ##   R CMD Rdiff from-file to-file exitstatus
