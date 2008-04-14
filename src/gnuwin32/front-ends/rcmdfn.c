@@ -76,7 +76,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
        set R_SHARE_DIR as env variable
        set PATH to include R_HOME\bin
        set PERL5LIB to %R_SHARE_DIR%/perl;%Perl5LIB%
-       set TEXINPUTS to .;%R_SHARE_DIR%/texmf;%TEXINPUTS%
+       set TEXINPUTS to .;%TEXINPUTS%;%R_HOME%/share/texmf
        set HOME if unset
        launch %R_HOME%\bin\$*
      */
@@ -275,6 +275,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	putenv(PERL5LIB);
 
 	strcpy(TEXINPUTS, "TEXINPUTS=.;");
+        if ( (p = getenv("TEXINPUTS")) ) {
+	    strcat(TEXINPUTS, p); 
+	    strcat(TEXINPUTS, ";");
+	}
 	strcat(TEXINPUTS, RHome); strcat(TEXINPUTS, "\\share\\texmf;");
 	if ( (p = getenv("TEXINPUTS")) ) strcat(TEXINPUTS, p);
 	putenv(TEXINPUTS);

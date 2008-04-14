@@ -99,6 +99,8 @@ BUG FIXES
     o	@ now gives an error (and not just a warning) if it is being
 	applied to a non-S4 object.
 
+    o   R CMD appends (not prepends) R's texmf path to TEXINPUTS.
+
 
 
 

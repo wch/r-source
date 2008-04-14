@@ -20,8 +20,12 @@ else
   export PERLLIB
 fi
 
-## Add 'share/texmf' to TeX's input search path.
-TEXINPUTS=".:${R_SHARE_DIR}/texmf:${TEXINPUTS}"
+## Append 'share/texmf' to TeX's input search path.
+if test -n "$TEXINPUTS}"; then
+  TEXINPUTS=".:${R_SHARE_DIR}/texmf:"
+else
+  TEXINPUTS=".:${TEXINPUTS}:${R_SHARE_DIR}/texmf:"
+fi
 export TEXINPUTS
 
 . "${R_HOME}/etc${R_ARCH}/Renviron"
