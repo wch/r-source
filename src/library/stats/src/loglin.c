@@ -18,8 +18,8 @@
 #undef max
 #undef min
 #undef abs
-#define	max(a, b) 		((a) < (b) ? (b) : (a))
-#define	min(a, b) 		((a) > (b) ? (b) : (a))
+#define	max(a, b)		((a) < (b) ? (b) : (a))
+#define	min(a, b)		((a) > (b) ? (b) : (a))
 #define	abs(x)			((x) >= 0 ? (x) : -(x))
 
 static void collap(int *nvar, double *x, double *y, int *locy,
@@ -396,7 +396,7 @@ L50:
 }
 
 /* Auxiliary routine to get rid of limitations on the number of factors
-   in the model. 
+   in the model.
 
    Changed to use R_alloc to avoid memory leak if routine was
    interrupted.

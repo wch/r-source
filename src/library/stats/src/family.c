@@ -8,13 +8,13 @@ static const double THRESH = 30.;
 static const double MTHRESH = -30.;
 static const double INVEPS = 1/DOUBLE_EPS;
 
-/** 
+/**
  * Evaluate x/(1 - x). An inline function is used so that x is
- * evaluated once only. 
- * 
+ * evaluated once only.
+ *
  * @param x input in the range (0, 1)
- * 
- * @return x/(1 - x) 
+ *
+ * @return x/(1 - x)
  */
 static R_INLINE double x_d_omx(double x) {
     if (x < 0 || x > 1)
@@ -22,13 +22,13 @@ static R_INLINE double x_d_omx(double x) {
     return x/(1 - x);
 }
 
-/** 
+/**
  * Evaluate x/(1 + x). An inline function is used so that x is
  * evaluated once only. [but inlining is optional!]
- * 
+ *
  * @param x input
- * 
- * @return x/(1 + x) 
+ *
+ * @return x/(1 + x)
  */
 static R_INLINE double x_d_opx(double x) {return x/(1 + x);}
 
@@ -129,4 +129,3 @@ SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt)
     UNPROTECT(nprot);
     return ans;
 }
-

@@ -5,8 +5,8 @@
 
 /* Speed up by `inlining' these (as macros) [since R version 1.2] : */
 #if 1
-#define il(n,x)	(int)floor((n - 1) * x) 
-#define iu(n,x)	(int) ceil((n - 1) * x) 
+#define il(n,x)	(int)floor((n - 1) * x)
+#define iu(n,x)	(int) ceil((n - 1) * x)
 
 #else
 static int il(int n, double x)
@@ -20,12 +20,12 @@ static int iu(int n, double x)
 }
 #endif
 
-/* FIXME : We really do want a C API for median(x) 
- * -----   and even  quantile(x, alpha) ! */ 
+/* FIXME : We really do want a C API for median(x)
+ * -----   and even  quantile(x, alpha) ! */
 
 static void line(double *x, double *y, /* input (x[i],y[i])s */
 		 double *z, double *w, /* work and output: resid. & fitted */
-		 /* all the above of length */ int n, 
+		 /* all the above of length */ int n,
 		 double coef[2])
 {
     int i, j, k;
@@ -85,7 +85,7 @@ static void line(double *x, double *y, /* input (x[i],y[i])s */
     coef[1] = slope;
 }
 
-void tukeyline(double *x, double *y, double *z, double *w, int *n, 
+void tukeyline(double *x, double *y, double *z, double *w, int *n,
 	       double *coef)
 {
     line(x, y, z, w, *n, coef);

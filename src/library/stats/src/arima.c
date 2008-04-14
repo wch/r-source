@@ -52,7 +52,7 @@ extern double atanh(double x);
 
    No checking here!
  */
-SEXP 
+SEXP
 KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast)
 {
@@ -83,7 +83,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     mm = (double *) R_alloc(p * p, sizeof(double));
     if(lop) {
 	PROTECT(ans = allocVector(VECSXP, 3));
-	SET_VECTOR_ELT(ans, 1, resid = allocVector(REALSXP, n));	
+	SET_VECTOR_ELT(ans, 1, resid = allocVector(REALSXP, n));
 	SET_VECTOR_ELT(ans, 2, states = allocMatrix(REALSXP, n, p));
     }
     for (l = 0; l < n; l++) {
@@ -147,7 +147,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     }
 
     if(lop) {
-	SET_VECTOR_ELT(ans, 0, res=allocVector(REALSXP, 2));	
+	SET_VECTOR_ELT(ans, 0, res=allocVector(REALSXP, 2));
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
 	UNPROTECT(1);
 	if (!LOGICAL(fast)[0])
@@ -162,13 +162,13 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     }
 }
 
-SEXP 
+SEXP
 KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	     SEXP sV, SEXP sh, SEXP sPn, SEXP sUP)
 {
     SEXP ssa, ssP, ssPn, res, states = R_NilValue, sN;
     int n = LENGTH(sy), p = LENGTH(sa);
-    double *y = REAL(sy), *Z = REAL(sZ), *a, *P, 
+    double *y = REAL(sy), *Z = REAL(sZ), *a, *P,
 	*T = REAL(sT), *V = REAL(sV), h = asReal(sh), *Pnew;
     double resid0, gain, tmp, *anew, *mm, *M;
     double *at, *rt, *Pt, *gains, *resids, *Mt, *L, gn, *Nt;
@@ -185,9 +185,9 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     PROTECT(ssa = duplicate(sa)); a = REAL(ssa);
     PROTECT(ssP = duplicate(sP)); P = REAL(ssP);
     PROTECT(ssPn = duplicate(sPn)); Pnew = REAL(ssPn);
-    
+
     PROTECT(res = allocVector(VECSXP, 2));
-    SET_VECTOR_ELT(res, 0, states = allocMatrix(REALSXP, n, p)); 
+    SET_VECTOR_ELT(res, 0, states = allocMatrix(REALSXP, n, p));
     at = REAL(states);
     SET_VECTOR_ELT(res, 1, sN = allocVector(REALSXP, n*p*p));
     Nt = REAL(sN);
@@ -263,19 +263,19 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     for (l = n - 1; l >= 0; l--) {
 	if (!ISNAN(gains[l])) {
 	    gn = 1/gains[l];
-	    for (i = 0; i < p; i++) 
+	    for (i = 0; i < p; i++)
 		rt[l + n * i] = Z[i] * resids[l] * gn;
 	} else {
 	    for (i = 0; i < p; i++) rt[l + n * i] = 0.0;
 	    gn = 0.0;
 	}
-	
+
 	if (var) {
 	    for (i = 0; i < p; i++)
 		for (j = 0; j < p; j++)
 		    Nt[l + n*i + n*p*j] = Z[i] * Z[j] * gn;
 	}
-	
+
 	if (l < n - 1) {
 	    /* compute r_{t-1} */
 	    for (i = 0; i < p; i++)
@@ -301,20 +301,20 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 			for (k = 0; k < p; k++)
 			    tmp += L[k + p * i] * Nt[l + 1 + n*k + n*p*j];
 			mm[i + p * j] = tmp;
-		    }    
+		    }
 		for (i = 0; i < p; i++)
 		    for (j = 0; j < p; j++) {
 			tmp = 0.0;
 			for (k = 0; k < p; k++)
 			    tmp += mm[i + p * k] * L[k + p * j];
 			Nt[l + n*i + n*p*j] += tmp;
-		    }    
+		    }
 	    }
 	}
 
 	for (i = 0; i < p; i++) {
 	    tmp = 0.0;
-	    for (j = 0; j < p; j++) 
+	    for (j = 0; j < p; j++)
 		tmp += Pt[l + n*i + n*p*j] * rt[l + n * j];
 	    at[l + n*i] += tmp;
 	}
@@ -340,8 +340,8 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     return res;
 }
 
-SEXP 
-KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV, 
+SEXP
+KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
 	   SEXP sh, SEXP fast)
 {
     SEXP res, forecasts, se;
@@ -432,7 +432,7 @@ static void partrans(int p, double *raw, double *new)
 
 SEXP ARIMA_undoPars(SEXP sin, SEXP sarma)
 {
-    int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2], 
+    int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2],
 	i, v, n = LENGTH(sin);
     double *params, *in = REAL(sin);
     SEXP res = allocVector(REALSXP, n);
@@ -449,7 +449,7 @@ SEXP ARIMA_undoPars(SEXP sin, SEXP sarma)
 SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans)
 {
     int *arma = INTEGER(sarma), trans = asLogical(strans);
-    int mp = arma[0], mq = arma[1], msp = arma[2], msq = arma[3], 
+    int mp = arma[0], mq = arma[1], msp = arma[2], msq = arma[3],
 	ns = arma[4], i, j, p = mp + ns * msp, q = mq + ns * msq, v;
     double *in = REAL(sin), *params = REAL(sin), *phi, *theta;
     SEXP res, sPhi, sTheta;
@@ -515,7 +515,7 @@ static void invpartrans(int p, double *phi, double *new)
 
 SEXP ARIMA_Invtrans(SEXP in, SEXP sarma)
 {
-    int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2], 
+    int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2],
 	i, v, n = LENGTH(in);
     SEXP y = allocVector(REALSXP, n);
     double *raw = REAL(in), *new = REAL(y);
@@ -530,7 +530,7 @@ SEXP ARIMA_Invtrans(SEXP in, SEXP sarma)
 #define eps 1e-3
 SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma)
 {
-    int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2], 
+    int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2],
 	i, j, v, n = LENGTH(in);
     SEXP y = allocMatrix(REALSXP, n, n);
     double *raw = REAL(in), *A = REAL(y), w1[100], w2[100], w3[100];
@@ -555,7 +555,7 @@ SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma)
 	for(i = 0; i < msp; i++) {
 	    w1[i] += eps;
 	    partrans(msp, w1, w3);
-	    for(j = 0; j < msp; j++) 
+	    for(j = 0; j < msp; j++)
 		A[i + v + (j+v)*n] = (w3[j] - w2[j])/eps;
 	    w1[i] -= eps;
 	}
@@ -564,12 +564,12 @@ SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma)
 }
 
 
-SEXP 
+SEXP
 ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 	   SEXP sa, SEXP sP, SEXP sPn, SEXP sUP, SEXP giveResid)
 {
     SEXP res, nres, sResid = R_NilValue;
-    int  n = LENGTH(sy), rd = LENGTH(sa), p = LENGTH(sPhi), 
+    int  n = LENGTH(sy), rd = LENGTH(sa), p = LENGTH(sPhi),
 	q = LENGTH(sTheta), d = LENGTH(sDelta), r = rd - d;
     double *y = REAL(sy), *a = REAL(sa), *P = REAL(sP), *Pnew = REAL(sPn);
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *delta = REAL(sDelta);
@@ -711,14 +711,14 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 
 /* do differencing here */
 /* arma is p, q, sp, sq, ns, d, sd */
-SEXP 
+SEXP
 ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
 	  SEXP sncond, SEXP giveResid)
 {
     SEXP res, sResid = R_NilValue;
     double ssq = 0.0, *y = REAL(sy), tmp;
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *w, *resid;
-    int n = LENGTH(sy), *arma = INTEGER(sarma), p = LENGTH(sPhi), 
+    int n = LENGTH(sy), *arma = INTEGER(sarma), p = LENGTH(sPhi),
 	q = LENGTH(sTheta), ncond = asInteger(sncond);
     int l, i, j, ns, nu = 0;
     Rboolean useResid = asLogical(giveResid);
@@ -855,9 +855,9 @@ SEXP getQ0(SEXP sPhi, SEXP sTheta)
     }
     if (p > 0) {
 /*      The set of equations s * vec(P0) = vec(v) is solved for
-        vec(P0).  s is generated row by row in the array xnext.  The
-        order of elements in P is changed, so as to bring more leading
-        zeros into the rows of s. */
+	vec(P0).  s is generated row by row in the array xnext.  The
+	order of elements in P is changed, so as to bring more leading
+	zeros into the rows of s. */
 
 	for (i = 0; i < nrbar; i++) rbar[i] = 0.0;
 	for (i = 0; i < np; i++) {

@@ -50,7 +50,7 @@ void F77_NAME(lowesa)(double*, int*, int*, int*, int*, double*, double*);
 void F77_NAME(lowesb)(double*, double*, double*, double*, int*, int*, int*,
 		      int*, double*);
 void F77_NAME(lowesc)(int*, double*, double*, double*, double*, double*);
-void F77_NAME(lowesd)(int*, int*, int*, int*, double*, int*, int*, 
+void F77_NAME(lowesd)(int*, int*, int*, int*, double*, int*, int*,
 		      double*, int*, int*, int*);
 void F77_NAME(lowese)(int*, int*, int*, double*, int*, double*, double*);
 void F77_NAME(lowesf)(double*, double*, double*, int*, int*, int*, double*,

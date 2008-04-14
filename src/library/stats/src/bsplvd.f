@@ -59,12 +59,12 @@ c     order  before  bsplvb  is called to put values for the next
 c     higher order on top of it.
       ideriv = mhigh
       do 15 m=2,mhigh
-         jp1mid = 1
-         do 11 j=ideriv,k
-            dbiatx(j,ideriv) = dbiatx(jp1mid,1)
+	 jp1mid = 1
+	 do 11 j=ideriv,k
+	    dbiatx(j,ideriv) = dbiatx(jp1mid,1)
    11       jp1mid = jp1mid + 1
-         ideriv = ideriv - 1
-         call bsplvb(t,lent,kp1-ideriv,2,x,left,dbiatx)
+	 ideriv = ideriv - 1
+	 call bsplvb(t,lent,kp1-ideriv,2,x,left,dbiatx)
    15    continue
 c
 c     at this point,  b(left-k+i, k+1-j)(x) is in  dbiatx(i,j) for
@@ -75,30 +75,30 @@ c     rate their b-repr. by differencing, then evaluate at  x.
 c
       jlow = 1
       do 20 i=1,k
-         do 19 j=jlow,k
+	 do 19 j=jlow,k
    19       a(j,i) = 0d0
-         jlow = i
+	 jlow = i
    20    a(i,i) = 1d0
 c     at this point, a(.,j) contains the b-coeffs for the j-th of the
 c     k  b-splines of interest here.
 c
       do 40 m=2,mhigh
-         kp1mm = kp1 - m
-         fkp1mm = dble(kp1mm)
-         il = left
-         i = k
+	 kp1mm = kp1 - m
+	 fkp1mm = dble(kp1mm)
+	 il = left
+	 i = k
 c
 c        for j=1,...,k, construct b-coeffs of  (m-1)st  derivative of
 c        b-splines from those for preceding derivative by differencing
 c        and store again in  a(.,j) . the fact that  a(i,j) = 0  for
 c        i < j  is used.sed.
-         do 25 ldummy=1,kp1mm
-            factor = fkp1mm/(t(il+kp1mm) - t(il))
+	 do 25 ldummy=1,kp1mm
+	    factor = fkp1mm/(t(il+kp1mm) - t(il))
 c           the assumption that t(left) < t(left+1) makes denominator
 c           in  factor  nonzero.
-            do 24 j=1,i
+	    do 24 j=1,i
    24          a(i,j) = (a(i,j) - a(i-1,j))*factor
-            il = il - 1
+	    il = il - 1
    25       i = i - 1
 c
 c        for i=1,...,k, combine b-coeffs a(.,i) with b-spline values
@@ -108,10 +108,10 @@ c        dbiatx(i,m). storage of this value over the value of a b-spline
 c        of order m there is safe since the remaining b-spline derivat-
 c        ive of the same order do not use this value due to the fact
 c        that  a(j,i) = 0  for j < i .
-         do 40 i=1,k
-            sum = 0.d0
-            jlow = max0(i,m)
-            do 35 j=jlow,k
+	 do 40 i=1,k
+	    sum = 0.d0
+	    jlow = max0(i,m)
+	    do 35 j=jlow,k
    35          sum = a(j,i)*dbiatx(j,m) + sum
    40       dbiatx(i,m) = sum
    99 return
@@ -130,7 +130,7 @@ c
 c******  i n p u t  ******
 c  t.....knot sequence, of length  left + jout  , assumed to be nonde-
 c        creasing.
-c    a s s u m p t i o n  :  t(left)  <  t(left + 1) 
+c    a s s u m p t i o n  :  t(left)  <  t(left + 1)
 c    d i v i s i o n  b y  z e r o  will result if  t(left) = t(left+1)
 c
 c  jhigh,
@@ -150,7 +150,7 @@ c        are, on entry, as they were on exit at the previous call.
 c           in particular, if  jhigh = 0, then  jout = j+1, i.e., just
 c        the next column of b-spline values is generated.
 c
-c  w a r n i n g . . .  the restriction   jout <= jmax (= 20)  is 
+c  w a r n i n g . . .  the restriction   jout <= jmax (= 20)  is
 c        imposed arbitrarily by the dimension statement for  deltal and
 c        deltar  below, but is  n o w h e r e  c h e c k e d  for .
 c
@@ -171,14 +171,14 @@ c                       x - t(i)               t(i+j+1) - x
 c     b(i,j+1)(x)  =  ----------- b(i,j)(x) + --------------- b(i+1,j)(x)
 c                     t(i+j)-t(i)             t(i+j+1)-t(i+1)
 c
-c  is used (repeatedly) to generate the 
-c  (j+1)-vector  b(left-j,j+1)(x),...,b(left,j+1)(x)  
-c  from the j-vector  b(left-j+1,j)(x),...,b(left,j)(x), 
+c  is used (repeatedly) to generate the
+c  (j+1)-vector  b(left-j,j+1)(x),...,b(left,j+1)(x)
+c  from the j-vector  b(left-j+1,j)(x),...,b(left,j)(x),
 c  storing the new values in  biatx  over the old.  the facts that
 c            b(i,1) = 1         if  t(i) <= x < t(i+1)
 c  and that
 c            b(i,j)(x) = 0  unless  t(i) <= x < t(i+j)
-c  are used. the particular organization of the calculations follows 
+c  are used. the particular organization of the calculations follows
 c  algorithm (8)  in chapter x of the text.
 c
 
@@ -200,23 +200,22 @@ C Local Variables
       save j,deltal,deltar
       data j/1/
 c
-                                        go to (10,20), index
+					go to (10,20), index
    10 j = 1
       biatx(1) = 1d0
       if (j .ge. jhigh)                 go to 99
 c
    20    jp1 = j + 1
-         deltar(j) = t(left+j) - x
-         deltal(j) = x - t(left+1-j)
-         saved = 0d0
-         do 26 i=1,j
-            term = biatx(i)/(deltar(i) + deltal(jp1-i))
-            biatx(i) = saved + deltar(i)*term
+	 deltar(j) = t(left+j) - x
+	 deltal(j) = x - t(left+1-j)
+	 saved = 0d0
+	 do 26 i=1,j
+	    term = biatx(i)/(deltar(i) + deltal(jp1-i))
+	    biatx(i) = saved + deltar(i)*term
    26       saved = deltal(jp1-i)*term
-         biatx(jp1) = saved
-         j = jp1
-         if (j .lt. jhigh)              go to 20
+	 biatx(jp1) = saved
+	 j = jp1
+	 if (j .lt. jhigh)              go to 20
 c
    99                                   return
       end
-

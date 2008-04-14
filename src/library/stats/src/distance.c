@@ -194,7 +194,7 @@ static double R_minkowski(double *x, int nr, int nc, int i1, int i2, double p)
 enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY, MINKOWSKI };
 /* == 1,2,..., defined by order in the R function dist */
 
-void R_distance(double *x, int *nr, int *nc, double *d, int *diag, 
+void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p)
 {
     int dc, i, j, ij;
@@ -227,6 +227,6 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
     ij = 0;
     for(j = 0 ; j <= *nr ; j++)
 	for(i = j+dc ; i < *nr ; i++)
-	    d[ij++] = (*method != MINKOWSKI) ? 
+	    d[ij++] = (*method != MINKOWSKI) ?
 		distfun(x, *nr, *nc, i, j) : R_minkowski(x, *nr, *nc, i, j, *p);
 }

@@ -61,7 +61,7 @@ static void array_op(Array arr1, Array arr2, char op, Array ans);
 static void scalar_op(Array arr, double s, char op, Array ans);
 
 static void transpose_matrix(Array mat, Array ans);
-static void matrix_prod(Array mat1, Array mat2, int trans1, int trans2, 
+static void matrix_prod(Array mat1, Array mat2, int trans1, int trans2,
 			Array ans);
 
 
@@ -452,7 +452,7 @@ static void qr_solve(Array x, Array y, Array coef)
     work  = (double *) R_alloc(2*NCOL(x), sizeof(double));
 
     for(i = 0; i < NCOL(x); i++)
-        pivot[i] = i+1;
+	pivot[i] = i+1;
 
     xt = make_zero_matrix(NCOL(x), NROW(x));
     transpose_matrix(x,xt);
@@ -461,17 +461,17 @@ static void qr_solve(Array x, Array y, Array coef)
     p = NCOL(x);
 
     F77_CALL(dqrdc2)(VECTOR(xt), &n, &n, &p, &tol, &rank,
-                       qraux, pivot, work);
+		       qraux, pivot, work);
 
     if (rank != p)
-        error(_("Singular matrix in qr_solve"));
+	error(_("Singular matrix in qr_solve"));
 
     yt = make_zero_matrix(NCOL(y), NROW(y));
     coeft = make_zero_matrix(NCOL(coef), NROW(coef));
     transpose_matrix(y, yt);
 
     F77_CALL(dqrcf)(VECTOR(xt), &NROW(x), &rank, qraux,
-        yt.vec, &NCOL(y), coeft.vec, &info);
+	yt.vec, &NCOL(y), coeft.vec, &info);
 
     transpose_matrix(coeft,coef);
 
@@ -499,18 +499,18 @@ static double ldet(Array x)
     copy_array(x, xtmp);
 
     for(i = 0; i < NCOL(x); i++)
-        pivot[i] = i+1;
+	pivot[i] = i+1;
 
     p = n = NROW(x);
 
     F77_CALL(dqrdc2)(VECTOR(xtmp), &n, &n, &p, &tol, &rank,
-                       qraux, pivot, work);
+		       qraux, pivot, work);
 
     if (rank != p)
-        error(_("Singular matrix in ldet"));
+	error(_("Singular matrix in ldet"));
 
     for (i = 0, ll=0.0; i < rank; i++) {
-         ll += log(fabs(MATRIX(xtmp)[i][i]));
+	 ll += log(fabs(MATRIX(xtmp)[i][i]));
     }
 
     vmaxset(vmax);
@@ -523,12 +523,12 @@ static double ldet(Array x)
 /* Burg's algorithm for autoregression estimation
 
    multi_burg  is the interface to R. It also handles model selection
-               using AIC
+	       using AIC
 
    burg        implements the main part of the algorithm
 
    burg2       estimates the partial correlation coefficient. This
-               requires iteration in the multivariate case.
+	       requires iteration in the multivariate case.
 
    Notation
 
@@ -552,7 +552,7 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
 
 void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 	double *pacf, double *var, double *aic, int *porder, int *useaic,
-        int *vmethod)
+	int *vmethod)
 {
     int i, j, m, omax = *pomax, n = *pn, nser=*pnser, order=*porder;
     int dim1[3];
@@ -567,8 +567,8 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 	A[i] = make_zero_array(dim1, 3);
 	B[i] = make_zero_array(dim1, 3);
     }
-    P = make_array(pacf, dim1, 3); 
-    V = make_array(var, dim1, 3); 
+    P = make_array(pacf, dim1, 3);
+    V = make_array(var, dim1, 3);
 
     xarr = make_matrix(x, nser, n);
     resid_f = make_zero_matrix(nser, n);
@@ -586,14 +586,14 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 	aic[i] = n * ldet(subarray(V,i)) + 2 * i * nser * nser;
     }
     if (*useaic) {
-        order = 0;
-        aicmin = aic[0];
-        for (i = 1; i <= omax; i++) {
+	order = 0;
+	aicmin = aic[0];
+	for (i = 1; i <= omax; i++) {
 	    if (aic[i] < aicmin) {
 		aicmin = aic[i];
 		order = i;
 	    }
-        }
+	}
     }
     else order = omax;
     *porder = order;
@@ -616,7 +616,7 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 	}
     }
     copy_array(resid_f, xarr);
-     
+
 }
 
 
@@ -655,56 +655,56 @@ static void burg0(int omax, Array resid_f, Array resid_b, Array *A, Array *B,
 
     for (m = 0; m < omax; m++) {
 
-        for(i = 0; i < nser; i++) {
-            for (j = n - 1; j > m; j--) {
-                MATRIX(resid_b)[i][j] = MATRIX(resid_b)[i][j-1];
-            }
-            MATRIX(resid_f)[i][m] = 0.0;
-            MATRIX(resid_b)[i][m] = 0.0;
-        }
-        matrix_prod(resid_f, resid_f, 0, 1, ss_ff);
-        matrix_prod(resid_b, resid_b, 0, 1, ss_bb);
-        matrix_prod(resid_f, resid_b, 0, 1, ss_fb);
-    
-        burg2(ss_ff, ss_bb, ss_fb, E, KA, KB);		/* Update K */
+	for(i = 0; i < nser; i++) {
+	    for (j = n - 1; j > m; j--) {
+		MATRIX(resid_b)[i][j] = MATRIX(resid_b)[i][j-1];
+	    }
+	    MATRIX(resid_f)[i][m] = 0.0;
+	    MATRIX(resid_b)[i][m] = 0.0;
+	}
+	matrix_prod(resid_f, resid_f, 0, 1, ss_ff);
+	matrix_prod(resid_b, resid_b, 0, 1, ss_bb);
+	matrix_prod(resid_f, resid_b, 0, 1, ss_fb);
 
-        for (i = 0; i <= m + 1; i++) {
+	burg2(ss_ff, ss_bb, ss_fb, E, KA, KB);		/* Update K */
 
-            matrix_prod(KA, subarray(B[m], m + 1 - i), 0, 0, tmp); 
-            array_op(subarray(A[m], i), tmp, '-', subarray(A[m+1], i));
+	for (i = 0; i <= m + 1; i++) {
 
-            matrix_prod(KB, subarray(A[m], m + 1 - i), 0, 0, tmp); 
-            array_op(subarray(B[m], i), tmp, '-', subarray(B[m+1], i));
+	    matrix_prod(KA, subarray(B[m], m + 1 - i), 0, 0, tmp);
+	    array_op(subarray(A[m], i), tmp, '-', subarray(A[m+1], i));
 
-        }
-       
-        matrix_prod(KA, resid_b, 0, 0, resid_f_tmp);
-        matrix_prod(KB, resid_f, 0, 0, resid_b_tmp);
-        array_op(resid_f, resid_f_tmp, '-', resid_f);
-        array_op(resid_b, resid_b_tmp, '-', resid_b);
+	    matrix_prod(KB, subarray(A[m], m + 1 - i), 0, 0, tmp);
+	    array_op(subarray(B[m], i), tmp, '-', subarray(B[m+1], i));
 
-        if (vmethod == 1) {
+	}
+
+	matrix_prod(KA, resid_b, 0, 0, resid_f_tmp);
+	matrix_prod(KB, resid_f, 0, 0, resid_b_tmp);
+	array_op(resid_f, resid_f_tmp, '-', resid_f);
+	array_op(resid_b, resid_b_tmp, '-', resid_b);
+
+	if (vmethod == 1) {
 	    matrix_prod(KA, KB, 0, 0, tmp);
 	    array_op(id, tmp, '-', tmp);
 	    matrix_prod(tmp, E, 0, 0, E);
-        }
-        else if (vmethod == 2) {
+	}
+	else if (vmethod == 2) {
 	    matrix_prod(resid_f, resid_f, 0, 1, E);
 	    matrix_prod(resid_b, resid_b, 0, 1, tmp);
 	    array_op(E, tmp, '+', E);
 	    scalar_op(E, 2.0*(n - m - 1), '/', E);
-        }
-        else error(_("Invalid vmethod"));
+	}
+	else error(_("Invalid vmethod"));
 
-        copy_array(E, subarray(V,m+1));
-        copy_array(KA, subarray(P,m+1));
+	copy_array(E, subarray(V,m+1));
+	copy_array(KA, subarray(P,m+1));
     }
 }
 
 
 static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
    Array KA, Array KB)
-/* 
+/*
    Estimate partial correlation by minimizing (1/2)*log(det(s)) where
    "s" is the the sum of the forward and backward prediction errors.
 
@@ -762,75 +762,75 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
 
     for(iter = 0; iter < BURG_MAX_ITER; iter++)
     {
-        /* Forward and backward partial correlation coefficients */
-        transpose_matrix(theta, tmp);
-        qr_solve(E, tmp, tmp);
-        transpose_matrix(tmp, KA);
+	/* Forward and backward partial correlation coefficients */
+	transpose_matrix(theta, tmp);
+	qr_solve(E, tmp, tmp);
+	transpose_matrix(tmp, KA);
 
-        qr_solve(E, theta, tmp);
-        transpose_matrix(tmp, KB);
- 
-        /* Sum of forward and backward prediction errors ... */
-        set_array_to_zero(s);
- 
-        /* Forward */
-        array_op(s, ss_ff, '+', s);
-        matrix_prod(KA, ss_bf, 0, 0, tmp);
-        array_op(s, tmp, '-', s);
-        transpose_matrix(tmp, tmp);
-        array_op(s, tmp, '-', s);
-        matrix_prod(ss_bb, KA, 0, 1, tmp);
-        matrix_prod(KA, tmp, 0, 0, tmp);
-        array_op(s, tmp, '+', s);
-   
-        /* Backward */
-        array_op(s, ss_bb, '+', s);
-        matrix_prod(KB, ss_fb, 0, 0, tmp);
-        array_op(s, tmp, '-', s);
-        transpose_matrix(tmp, tmp);	
-        array_op(s, tmp, '-', s);
-        matrix_prod(ss_ff, KB, 0, 1, tmp);
-        matrix_prod(KB, tmp, 0, 0, tmp);
-        array_op(s, tmp, '+', s);
-        
-        matrix_prod(s, f, 0, 0, d1);
-        matrix_prod(e, s, 1, 0, tmp);
-        array_op(d1, tmp, '+', d1);
+	qr_solve(E, theta, tmp);
+	transpose_matrix(tmp, KB);
 
-        /*matrix_prod(g,s,0,0,sg);*/
-        matrix_prod(s,g,0,0,sg);
-        matrix_prod(s,h,0,0,sh);
- 
-        for (i = 0; i < nser; i++) {
-            for (j = 0; j < nser; j++) {
+	/* Sum of forward and backward prediction errors ... */
+	set_array_to_zero(s);
+
+	/* Forward */
+	array_op(s, ss_ff, '+', s);
+	matrix_prod(KA, ss_bf, 0, 0, tmp);
+	array_op(s, tmp, '-', s);
+	transpose_matrix(tmp, tmp);
+	array_op(s, tmp, '-', s);
+	matrix_prod(ss_bb, KA, 0, 1, tmp);
+	matrix_prod(KA, tmp, 0, 0, tmp);
+	array_op(s, tmp, '+', s);
+
+	/* Backward */
+	array_op(s, ss_bb, '+', s);
+	matrix_prod(KB, ss_fb, 0, 0, tmp);
+	array_op(s, tmp, '-', s);
+	transpose_matrix(tmp, tmp);
+	array_op(s, tmp, '-', s);
+	matrix_prod(ss_ff, KB, 0, 1, tmp);
+	matrix_prod(KB, tmp, 0, 0, tmp);
+	array_op(s, tmp, '+', s);
+
+	matrix_prod(s, f, 0, 0, d1);
+	matrix_prod(e, s, 1, 0, tmp);
+	array_op(d1, tmp, '+', d1);
+
+	/*matrix_prod(g,s,0,0,sg);*/
+	matrix_prod(s,g,0,0,sg);
+	matrix_prod(s,h,0,0,sh);
+
+	for (i = 0; i < nser; i++) {
+	    for (j = 0; j < nser; j++) {
 		MATRIX(D1)[nser*i+j][0] = MATRIX(d1)[i][j];
-                for (k = 0; k < nser; k++)
-                    for (l = 0; l < nser; l++) {
-                        MATRIX(D2)[nser*i+j][nser*k+l] = 
+		for (k = 0; k < nser; k++)
+		    for (l = 0; l < nser; l++) {
+			MATRIX(D2)[nser*i+j][nser*k+l] =
 			    (i == k) * MATRIX(sg)[j][l] +
-			    MATRIX(sh)[i][k] * (j == l); 
-                    }
-            }
-        }
+			    MATRIX(sh)[i][k] * (j == l);
+		    }
+	    }
+	}
 
-        copy_array(THETA, THETAOLD);
-        qr_solve(D2, D1, THETA);
+	copy_array(THETA, THETAOLD);
+	qr_solve(D2, D1, THETA);
 
-        for (i = 0; i < vector_length(theta); i++)
-            VECTOR(theta)[i] = VECTOR(THETA)[i];
+	for (i = 0; i < vector_length(theta); i++)
+	    VECTOR(theta)[i] = VECTOR(THETA)[i];
 
-        matrix_prod(D2, THETA, 0, 0, TMP);
+	matrix_prod(D2, THETA, 0, 0, TMP);
 
-        array_op(THETAOLD, THETA, '-', THETADIFF);
-        matrix_prod(D2, THETADIFF, 0, 0, TMP);
-        matrix_prod(THETADIFF, TMP, 1, 0, obj);
-        if (VECTOR(obj)[0] < BURG_TOL)
-            break;
+	array_op(THETAOLD, THETA, '-', THETADIFF);
+	matrix_prod(D2, THETADIFF, 0, 0, TMP);
+	matrix_prod(THETADIFF, TMP, 1, 0, obj);
+	if (VECTOR(obj)[0] < BURG_TOL)
+	    break;
 
     }
 
     if (iter == BURG_MAX_ITER)
-        error(_("Burg's algorithm failed to find partial correlation"));
+	error(_("Burg's algorithm failed to find partial correlation"));
 }
 
 /* Whittle's algorithm for autoregression estimation
@@ -838,7 +838,7 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
    multi_yw  is the interface to R. It also handles model selection using AIC
 
    whittle,whittle2     implement Whittle's recursion for solving the multivariate
-                        Yule-Walker equations.
+			Yule-Walker equations.
 
    Notation
 
@@ -850,11 +850,11 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
 */
 
 void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
-	      double *pacf, double *var, double *aic, int *porder, 
+	      double *pacf, double *var, double *aic, int *porder,
 	      int *puseaic);
 static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
 		    Array v_forward, Array p_back, Array v_back);
-static void whittle2 (Array acf, Array Aold, Array Bold, int lag, 
+static void whittle2 (Array acf, Array Aold, Array Bold, int lag,
 		      char *direction, Array A, Array K, Array E);
 
 
@@ -891,14 +891,14 @@ void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
 	aic[m] = n * ldet(subarray(v_forward,m)) + 2 * m * nser * nser;
     }
     if (*useaic) {
-        order = 0;
-        aicmin = aic[0];
-        for (m = 0; m <= omax; m++) {
+	order = 0;
+	aicmin = aic[0];
+	for (m = 0; m <= omax; m++) {
 	    if (aic[m] < aicmin) {
 		aicmin = aic[m];
 		order = m;
 	    }
-        }
+	}
     }
     else order = omax;
     *porder = order;
@@ -916,7 +916,7 @@ static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
     Array EA, EB;	/* prediction variance */
     Array KA, KB;	/* partial correlation coefficient */
     Array id, tmp;
-   
+
     vmax = vmaxget();
 
     KA = make_zero_matrix(nser, nser);
@@ -934,15 +934,15 @@ static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
 
     for (lag = 1; lag <= nlag; lag++) {
 
-        whittle2(acf, A[lag-1], B[lag-1], lag, "forward", A[lag], KA, EB);
-        whittle2(acf, B[lag-1], A[lag-1], lag, "back", B[lag], KB, EA);
-        
-        copy_array(EA, subarray(v_forward,lag-1));
-        copy_array(EB, subarray(v_back,lag-1));
+	whittle2(acf, A[lag-1], B[lag-1], lag, "forward", A[lag], KA, EB);
+	whittle2(acf, B[lag-1], A[lag-1], lag, "back", B[lag], KB, EA);
 
-        copy_array(KA, subarray(p_forward,lag));
-        copy_array(KB, subarray(p_back,lag));
-        
+	copy_array(EA, subarray(v_forward,lag-1));
+	copy_array(EB, subarray(v_back,lag-1));
+
+	copy_array(KA, subarray(p_forward,lag));
+	copy_array(KB, subarray(p_back,lag));
+
     }
 
     tmp = make_zero_matrix(nser,nser);
@@ -955,7 +955,7 @@ static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
 
 }
 
-static void whittle2 (Array acf, Array Aold, Array Bold, int lag, 
+static void whittle2 (Array acf, Array Aold, Array Bold, int lag,
 		      char *direction, Array A, Array K, Array E)
 {
 
@@ -980,11 +980,11 @@ static void whittle2 (Array acf, Array Aold, Array Bold, int lag,
        matrix_prod(subarray(acf,i), subarray(Bold,i), d, 1, tmp);
        array_op(E, tmp, '+', E);
     }
-    qr_solve(E, beta, K);       
-    transpose_matrix(K,K); 
+    qr_solve(E, beta, K);
+    transpose_matrix(K,K);
     for (i = 1; i <= lag; i++) {
-        matrix_prod(K, subarray(Bold,lag - i), 0, 0, tmp);
-        array_op(subarray(Aold,i), tmp, '-', subarray(A,i));
+	matrix_prod(K, subarray(Bold,lag - i), 0, 0, tmp);
+	array_op(subarray(Aold,i), tmp, '-', subarray(A,i));
     }
 
     vmaxset(vmax);

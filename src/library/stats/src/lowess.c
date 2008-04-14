@@ -237,7 +237,7 @@ void clowess(double *x, double *y, int n,
 
 	if (iter > nsteps)
 	    break;
-	/* Note: The following code, biweight_{6 MAD|Ri|} 
+	/* Note: The following code, biweight_{6 MAD|Ri|}
 	   is also used in stl(), loess and several other places.
 	   --> should provide API here (MM) */
 	for(i = 0 ; i < n ; i++)
@@ -252,7 +252,7 @@ void clowess(double *x, double *y, int n,
 	    m2 = n-m1-1;
 	    rPsort(rw, n, m2);
 	    cmad = 3.*(rw[m1]+rw[m2]);
-	} 
+	}
 	else { /* n odd */
 	    cmad = 6.*rw[m1];
 	}

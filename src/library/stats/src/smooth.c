@@ -35,7 +35,7 @@ static int imed3(double u, double v, double w)
 {
     /* Return (Index-1) of  median(u,v,w) , i.e.,
        -1 : u
-        0 : v
+	0 : v
 	1 : w
      */
     if((u <= v && v <= w) ||
@@ -53,7 +53,7 @@ static Rboolean sm_3(double *x, double *y, int n, int end_rule)
     Rboolean chg = FALSE;
 
     for(i = 1; i < n-1; i++) {
- 	j = imed3(x[i-1], x[i], x[i+1]);
+	j = imed3(x[i-1], x[i], x[i+1]);
 	y[i] = x[i + j];
 	chg = chg || j;
     }
@@ -88,7 +88,7 @@ static Rboolean sm_3(double *x, double *y, int n, int end_rule)
 static int sm_3R(double *x, double *y, double *z, int n, int end_rule)
 {
     /* y[] := "3R"(x) ; 3R = Median of three, repeated until convergence */
-    int i, iter; 
+    int i, iter;
     Rboolean chg;
 
     iter = chg = sm_3(x, y, n, sm_COPY_ENDRULE);
@@ -126,7 +126,7 @@ static Rboolean sptest(double *x, int i)
 static Rboolean sm_split3(double *x, double *y, int n, Rboolean do_ends)
 {
     /* y[] := S(x[])  where S() = "sm_split3"  */
-    int i, j; 
+    int i, j;
     Rboolean chg = FALSE;
 
     for(i=0; i < n; i++)

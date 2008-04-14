@@ -292,10 +292,10 @@ wentouttwo(int k, double *window, int *outlist, int *nrlist, int print_level)
 
 /* For Printing `diagnostics' : */
 #define Rm_PR(_F_,_A_)		for(j = 0; j <= 2*k; j++) Rprintf(_F_, _A_)
-#define RgPRINT_j(A_J) 		Rm_PR("%6g", A_J); Rprintf("\n")
-#define RdPRINT_j(A_J) 		Rm_PR("%6d", A_J); Rprintf("\n")
+#define RgPRINT_j(A_J)		Rm_PR("%6g", A_J); Rprintf("\n")
+#define RdPRINT_j(A_J)		Rm_PR("%6d", A_J); Rprintf("\n")
 
-#define R_PRINT_4vec() 							\
+#define R_PRINT_4vec()							\
 	Rprintf(" %9s: ","j");        RdPRINT_j(j);			\
 	Rprintf(" %9s: ","window []");RgPRINT_j(window[j]);		\
 	Rprintf(" %9s: "," nrlist[]");RdPRINT_j(nrlist[j]);		\

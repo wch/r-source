@@ -26,12 +26,12 @@ burg(int *pn, double*x, int *pp, double *coefs, double *var1, double *var2)
 {
     int i, j, n=*pn, p, pmax=*pp, t;
     double d, phii, *u, *v, *u0, sum;
-    
+
     u = (double *) R_alloc(n, sizeof(double));
     v = (double *) R_alloc(n, sizeof(double));
     u0 = (double *) R_alloc(n, sizeof(double));
 
-    for(i = 0; i < pmax*pmax; i++) 
+    for(i = 0; i < pmax*pmax; i++)
 	coefs[i] = 0.0;
     sum = 0.0;
     for(t = 0; t < n; t++) {
@@ -48,9 +48,9 @@ burg(int *pn, double*x, int *pp, double *coefs, double *var1, double *var2)
 	}
 	phii = 2*sum/d;
 	coefs[pmax*(p-1) + (p-1)] = phii;
-	if(p > 1) 
-	    for(j = 1; j < p; j++) 
-		coefs[p-1 + pmax*(j-1)] = 
+	if(p > 1)
+	    for(j = 1; j < p; j++)
+		coefs[p-1 + pmax*(j-1)] =
 		    coefs[p-2 + pmax*(j-1)] - phii* coefs[p-2 + pmax*(p-j-1)];
 	/* update u and v */
 	for(t = 0; t < n; t++)
