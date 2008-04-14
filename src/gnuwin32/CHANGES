@@ -295,9 +295,9 @@ BUG FIXES
     o	The winDialogString() dialog now releases CPU cycles while
     	waiting for input. (PR#11045)
 
-    o	R CMD now sets TEXINPUTS to .;%R_HOME%/share/texmf;%TEXINPUTS%
+    o	R CMD now sets TEXINPUTS to .;%R_HOME%/share/texmf;%TEXINPUTS%;
 	by exact analogy with Unix-alikes (that is, including the
-	current directory before R's texmf directory
+	current directory before R's texmf directory).
 
 
 
