@@ -245,6 +245,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* currently used by Rd2dvi and by perl Vars.pm (with default) */
 	strcpy(RSHARE, "R_SHARE_DIR=");
 	strcat(RSHARE, RHome); strcat(RSHARE, "/share");
+	for (p = RSHARE; *p; p++) if (*p == '\\') *p = '/';
 	putenv(RSHARE);
 
 	snprintf(Rversion, 25, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
