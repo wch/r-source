@@ -123,7 +123,7 @@ par(\dots, no.readonly = FALSE)
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
   may only be used in queries and cannot be set.  (\code{"cin"},
   \code{"cra"}, \code{"csi"}, \code{"cxy"} and \code{"din"} are always
-  read-only, and \code{"gamma"} is on most devices.)
+  read-only, and \code{"gamma"} is on all current devices.)
 
   There are several parameters can only be set by a call to \code{par()}:
   \itemize{
