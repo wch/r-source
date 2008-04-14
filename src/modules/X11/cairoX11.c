@@ -117,6 +117,7 @@ static void CairoColor(unsigned int col, pX11Desc xd)
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
+    double lwd = gc->lwd;
     cairo_line_cap_t lcap = CAIRO_LINE_CAP_SQUARE;
     cairo_line_join_t ljoin = CAIRO_LINE_JOIN_ROUND;
     switch(gc->lend){
@@ -129,7 +130,7 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     case GE_MITRE_JOIN: ljoin = CAIRO_LINE_JOIN_MITER; break;
     case GE_BEVEL_JOIN: ljoin = CAIRO_LINE_JOIN_BEVEL; break;
     } 
-    cairo_set_line_width(cc, gc->lwd * xd->lwdscale);
+    cairo_set_line_width(cc, (lwd > 0.01 ? lwd : 0.01) * xd->lwdscale);
     cairo_set_line_cap(cc, lcap);
     cairo_set_line_join(cc, ljoin);
     cairo_set_miter_limit(cc, gc->lmitre);

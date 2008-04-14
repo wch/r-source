@@ -169,7 +169,7 @@ tiff(filename = "Rplot\%03d.tiff",
     \item Font sizes are in big points interpreted at \code{res} dpi.
     \item The default font family is Helvetica.
     \item Line widths in 1/96 inch, minimum one pixel for \code{type =
-      "Xlib"}.
+      "Xlib"}, 0.01 for \code{type = "cairo"}.
     \item For \code{type = "Xlib"} circle radii are in pixels with
     minimum one.
     \item Colours are interpreted by the viewing application.
