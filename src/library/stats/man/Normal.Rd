@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -13,6 +13,8 @@
 \concept{error function}
 \concept{erf}
 \concept{erfc}
+\concept{erfinv}
+\concept{erfcinv}
 \title{The Normal Distribution}
 \description{
   Density, distribution function, quantile function and random
@@ -20,10 +22,10 @@
   and standard deviation equal to \code{sd}.
 }
 \usage{
-dnorm(x, mean=0, sd=1, log = FALSE)
-pnorm(q, mean=0, sd=1, lower.tail = TRUE, log.p = FALSE)
-qnorm(p, mean=0, sd=1, lower.tail = TRUE, log.p = FALSE)
-rnorm(n, mean=0, sd=1)
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+rnorm(n, mean = 0, sd = 1)
 }
 \arguments{
   \item{x,q}{vector of quantiles.}
@@ -114,5 +116,8 @@ erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1
 ## (see Abramowitz and Stegun 29.2.29)
 ## and the so-called 'complementary error function'
 erfc <- function(x) 2 * pnorm(x * sqrt(2), lower = FALSE)
+## and the inverses
+erfinv <- function (x) qnorm((1 + x)/2)/sqrt(2)
+erfcinv <- function (x) qnorm(x/2, lower = FALSE)/sqrt(2)
 }
 \keyword{distribution}
