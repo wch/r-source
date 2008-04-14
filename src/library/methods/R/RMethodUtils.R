@@ -107,7 +107,7 @@
 
 ## stripped down version of asS4 in base, which can't be used until the methods
 ## namespace is available
-.asS4 <- function (object) 
+.asS4 <- function (object)
 {
     .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
 }
@@ -622,13 +622,13 @@ getGroup <-
     else
         group
 }
-    
-getMethodsMetaData <- 
+
+getMethodsMetaData <-
 function(f, where = topenv(parent.frame())) {
 ## For 2.8.0?    .methodsDeprecated("getMethodsMetaData", "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives")
     fdef <- getGeneric(f, where = where)
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
-    if (exists(mname, where = where, inherits = missing(where))) 
+    if (exists(mname, where = where, inherits = missing(where)))
         get(mname, where)
 }
 
@@ -638,7 +638,7 @@ assignMethodsMetaData <-
   ## either disappear or deal only with primitives & groups in l
   function(f, value, fdef, where, deflt = finalDefaultMethod(value)) {
       where <- as.environment(where)
-      mname <- methodsPackageMetaName("M",fdef@generic, fdef@package) 
+      mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
       if(exists(mname, envir = where, inherits = FALSE) && bindingIsLocked(mname, where))
         {} # may be called from trace() with locked binding; ignore
       else
