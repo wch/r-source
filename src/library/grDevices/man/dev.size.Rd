@@ -18,7 +18,8 @@ dev.size(units = c("in", "cm", "px"))
 }
 \value{
   A two-element numeric vector giving width and height of the current
-  device.  It is an error to request the size of the null device.
+  device; a new device is opened if there is none, similarly to
+  \code{\link{dev.new}()}.
 }
 \seealso{
   The size information in inches can be obtained by
@@ -26,6 +27,6 @@ dev.size(units = c("in", "cm", "px"))
   independent of the graphics sub-system in use.
 }
 \examples{
-try(dev.size("cm")) # error if no device active
+dev.size("cm")
 }
 \keyword{ dplot }
