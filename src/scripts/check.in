@@ -110,8 +110,7 @@ my $R_check_all_non_ISO_C =
 my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
 
-## This needs texi2dvi.  We provide a script for Unix-alikes, but it
-## does not work under Windows.  MiKTeX has a binary texi2dvi, but other
+## This needs texi2dvi.  MiKTeX has a binary texi2dvi, but other
 ## Windows' LaTeX distributions do not.
 my $check_latex_vignettes_default;
 if($WINDOWS) { 
@@ -218,8 +217,8 @@ if($opt_latex) {
     open(TEXFILE,
 	 "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
       or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
-    print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
-	"test\\end\{document\}\n";
+    print TEXFILE "\\nonstopmode\\documentclass\n\{article\}\n\\begin\{document\}\n" .
+	"test\n\\end\{document\}\n";
     close(TEXFILE);
     chdir($R::Vars::TMPDIR);
     if(R_system("${R::Vars::PDFLATEX} Rtextest$$ > Rtextest$$.out")) {
@@ -235,8 +234,8 @@ if($opt_latex) {
 	open(TEXFILE,
 	     "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
 	  or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
-	print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
-	    "test\\end\{document\}\n";
+	print TEXFILE "\\nonstopmode\\documentclass\n\{article\}\n\\begin\{document\}\n" .
+	    "test\n\\end\{document\}\n";
 	close(TEXFILE);
 	chdir($R::Vars::TMPDIR);
 	if(R_system("${R::Vars::LATEX} Rtextest$$ > Rtextest$$.out")) {
