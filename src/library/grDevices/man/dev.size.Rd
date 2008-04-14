@@ -10,10 +10,10 @@
   Find the dimensions of the device surface of the current device.
 }
 \usage{
-dev.size(units = c("in", "px"))
+dev.size(units = c("in", "cm", "px"))
 }
 \arguments{
-  \item{units}{the units in which to return the value -- inches of
+  \item{units}{the units in which to return the value -- inches, cm, or
     pixels (device units).}
 }
 \value{
@@ -22,8 +22,10 @@ dev.size(units = c("in", "px"))
 }
 \seealso{
   The size information in inches can be obtained by
-  \code{\link{par}("din")}, but this provides a way to access it
+  \code{\link[graphics]{par}("din")}, but this provides a way to access it
   independent of the graphics sub-system in use.
 }
-
+\examples{
+try(dev.size("cm")) # error if no device active
+}
 \keyword{ dplot }
