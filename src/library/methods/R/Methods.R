@@ -1100,7 +1100,7 @@ callGeneric <- function(...)
             ##  or callNextMethod?  If so, leave alone so "..." will be evaluated
             if("..." %in% names(call)) {  }
             else {
-                ## exapnd the ... if this is  a locally modified argument list.
+                ## expand the ... if this is  a locally modified argument list.
                 ## This is a somewhat ambiguous case and may not do what the
                 ## user expects.  Not clear there is a single solution.  Should we warn?
                 call <- match.call(fdef, call, expand.dots = localArgs)
