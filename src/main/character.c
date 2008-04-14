@@ -264,7 +264,8 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 static void 
 substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 {
-    /* Replace the substring buf[sa:so] by str[] */
+    /* Replace the substring buf[sa:so] by str[], 
+       or as much as str provides */
     int i, in = 0, out = 0;
 
     if (ienc == CE_UTF8) {
@@ -277,7 +278,9 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
 	memcpy(buf, str, in);
     } else if (ienc == CE_LATIN1) {
-	memcpy(buf + sa - 1, str, so - sa + 1);
+	in = strlen(str);
+	out = so - sa + 1;
+	memcpy(buf + sa - 1, str, (in < out) ? in : out);
     } else {
 #ifdef SUPPORT_MBCS
 	/* This cannot work for stateful encodings */
