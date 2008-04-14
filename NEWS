@@ -746,7 +746,8 @@ BUG FIXES
     o	qgamma() and qchisq() could be inaccurate for small p,
     	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.
 
-    o	dbeta(.., ncp) is now more accurate for large ncp.
+    o	dbeta(.., ncp) is now more accurate for large ncp, and typically no
+	longer underflows for give.log = TRUE.
 
     o	coerce() is now a proper S4 object and so prints correctly.
 
@@ -762,7 +763,8 @@ BUG FIXES
 	including those entered as \0 with allowEscapes=TRUE.  This
 	was different from the default separator.
 
-    o	determinant(matrix(,0,0)) now returns a correct "det" result.
+    o	determinant(matrix(,0,0)) now returns a correct "det" result;
+	also value 1 or 0 depending on 'logarithm', rather than numeric(0).
 
     o	Name space 'grDevices' was not unloading its DLL when the
 	name space was unloaded.
