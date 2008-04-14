@@ -303,9 +303,10 @@ checkIntFormat <- function(s)
 
 devAskNewPage <- function(ask=NULL) .Internal(devAskNewPage(ask))
 
-dev.size <- function(units = c("in", "px"))
+dev.size <- function(units = c("in", "cm", "px"))
 {
     units <- match.arg(units)
     size <- .Internal(dev.size())
-    if(units == "in") size * par("cin")/par("cra") else size
+    if(units == "px") size else size * graphics::par("cin")/graphics::par("cra") *
+        if(units == "cm") 2.54 else 1
 }
