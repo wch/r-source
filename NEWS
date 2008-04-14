@@ -89,6 +89,10 @@ UTILITIES
 	To support this, tools::texi2dvi adds the R 'texmf' directory
 	to the input search path.
 
+    o	R CMD Rd2dvi now previews PDF output (as was documented) if
+    	R_PDFVIEWER is set (as it will normally be on a Unix-aloke but
+    	not on Windows).
+
 
 BUG FIXES
 

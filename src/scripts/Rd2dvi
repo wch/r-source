@@ -40,12 +40,13 @@ Options:
       --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'
   -o, --output=FILE	write output to FILE
-      --pdf		generate PDF output (without preview)
+      --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
 
 The output papersize is set by the environment variable R_PAPERSIZE.
-The DVI previewer is set by enviroment variable xdvi.
+The DVI previewer is set by the environment variable xdvi.
+The PDF previewer is set by the environment variable R_PDFVIEWER.
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -103,9 +104,17 @@ while test -n "${1}"; do
       preview=false ;;
     --pdf)
       out_ext="pdf";
-      preview=false;
-      R_RD4DVI=${R_RD4PDF-"times,hyper"};
-      R_LATEXCMD=${PDFLATEX-pdflatex} ;;
+      ## allow for --no-preview --pdf
+      if test "${preview}" != "false"; then
+	if test -n "${R_PDFVIEWER}"; then
+	    preview=${R_PDFVIEWER}
+	else
+	    preview=false
+	fi
+      fi
+      R_RD4DVI=${R_RD4PDF-"times,hyper"}
+      R_LATEXCMD=${PDFLATEX-pdflatex}
+      ;;
     --title=*)
       title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     -o)

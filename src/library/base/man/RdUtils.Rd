@@ -1,6 +1,6 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
@@ -40,21 +40,22 @@
   \code{Rd2dvi} will make use of environment variables
 #ifdef unix
   \env{R\_PAPERSIZE} (set by \code{R CMD}, with a default set when \R was
-  installed) and \env{xdvi} (the DVI previewer, default \code{xdvi}).
+  installed) and \env{xdvi} (the DVI previewer, default \code{xdvi}),
 #endif
 #ifdef windows
   \env{R\_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
-  previewer, default \code{yap} as from \R 2.8.0).
+  previewer, default \code{yap} as from \R 2.8.0),
 #endif
-  (Valid values for \env{R\_PAPERSIZE} are \code{a4}, \code{letter},
-  \code{legal} and \code{executive}.)
-  
+  and \env{R\_PDFVIEWER} (the PDF previwer).  (Valid values for
+  \env{R\_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
+  \code{executive}.)
+
   \code{Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
   format.
 
   Use
   \code{R CMD foo --help}
-  to obtain usage information on utility \code{foo}.  
+  to obtain usage information on utility \code{foo}.
 }
 \note{
   Conversion to S version 3/4 formats is rough: there are some
