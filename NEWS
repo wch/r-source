@@ -35,6 +35,9 @@ NEW FEATURES
     o	tools::texi2dvi() has a new argument 'texinputs' to allow the
 	TeX and bibtex input paths to be specified (even on MiKTeX).
 
+    o	substr(), substr<-() and Encoding<-() now handle character
+	strings with embedded nuls.
+
 
 PACKAGE INSTALLATION
 

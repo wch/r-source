@@ -623,21 +623,12 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 
 	    if(res != -1 && inb == 0) {
-		/* we can currently only put the result in the CHARSXP
-		   cache if it does not contain nuls. */
-		Rboolean has_nul = FALSE;
-		char *p = cbuff.data;
+		cetype_t ienc = CE_NATIVE;
 
 		nout = cbuff.bufsize - 1 - outb;
-		for(j = 0; j < nout; j++) if(!*p++) {has_nul = TRUE; break;}
-		if(has_nul) {
-		    si = mkCharLen(cbuff.data, nout);
-		} else {
-		    if(isLatin1) si = mkCharCE(cbuff.data, CE_LATIN1);
-		    else if(isUTF8) si = mkCharCE(cbuff.data, CE_UTF8);
-		    else si = mkChar(cbuff.data);
-		}
-		SET_STRING_ELT(ans, i, si);
+		if(isLatin1) ienc = CE_LATIN1;
+		else if(isUTF8) ienc = CE_UTF8;
+		SET_STRING_ELT(ans, i, mkCharLenCE(cbuff.data, nout, ienc));
 	    }
 	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}

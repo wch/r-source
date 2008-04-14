@@ -49,9 +49,10 @@ substring(text, first, last = 1000000) <- value
   the current locale (see \code{\link{Encoding}} if the corresponding
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.
-
-  Currently the extraction function handles strings with embedded nuls
-  whereas the replacement function does not.
+  
+  Strings with embedded nuls are handled completely unless the input and
+  \code{value} are indifferent encodings, when they are truncated at the
+  first nul.
 }
 \value{
   For \code{substr}, a character vector of the same length and with the

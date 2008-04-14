@@ -249,6 +249,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (start < 1) start = 1;
 	    if (start > stop || start > slen) {
 		buf[0] = '\0';
+		slen = 0;
 	    } else {
 		if (stop > slen) stop = slen;
 		slen = substr(buf, ss, ienc, start, stop);
@@ -263,24 +264,26 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-static void 
-substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
+static int
+substrset(char *buf, int blen, const char *const str, int slen, 
+	  cetype_t ienc, int sa, int so)
 {
     /* Replace the substring buf[sa:so] by str[], 
        or as much as str provides */
-    int i, in = 0, out = 0;
+    int i, in = 0, out = 0, adj = 0;
 
     if (ienc == CE_UTF8) {
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
 	for (i = sa; i <= so; i++) {
 	    in +=  utf8clen(str[in]);
 	    out += utf8clen(buf[out]);
-	    if (!str[in]) break;
+	    if (in >= slen) break;
 	}
-	if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
+	if (in != out) memmove(buf+in, buf+out, blen-out+1);
+	adj = in - out;
 	memcpy(buf, str, in);
     } else if (ienc == CE_LATIN1) {
-	in = strlen(str);
+	in = slen;
 	out = so - sa + 1;
 	memcpy(buf + sa - 1, str, (in < out) ? in : out);
     } else {
@@ -292,18 +295,20 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	    for (i = sa; i <= so; i++) {
 		in += Mbrtowc(NULL, str+in, MB_CUR_MAX, NULL);
 		out += Mbrtowc(NULL, buf+out, MB_CUR_MAX, NULL);
-		if (!str[in]) break;
+		if (in >= slen) break;
 	    }
-	    if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
+	    if (in != out) memmove(buf+in, buf+out, blen-out+1);
+	    adj = in - out;
 	    memcpy(buf, str, in);
 	} else
 #endif
 	{
-	    in = strlen(str);
+	    in = slen;
 	    out = so - sa + 1;
 	    memcpy(buf + sa - 1, str, (in < out) ? in : out);
 	}
     }
+    return blen + adj;
 }
 
 SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -345,32 +350,34 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    ienc = getCharCE(el);
 	    ss = CHAR(el);
-	    slen = strlen(ss);
+	    slen = LENGTH(el);
 	    if (start < 1) start = 1;
 	    if (stop > slen) stop = slen; /* SBCS optimization */
 	    if (start > stop) {
 		/* just copy element across */
 		SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    } else {
-		int ienc2 = ienc;
+		int ienc2 = ienc, vlen, olen;
 		v_ss = CHAR(v_el);
+		vlen = LENGTH(v_el);
 		/* is the value in the same encoding? */
 		venc = getCharCE(v_el);
 		if (venc != ienc && !strIsASCII(v_ss)) {
 		    ss = translateChar(el);
 		    slen = strlen(ss);
 		    v_ss = translateChar(v_el);
+		    vlen = strlen(v_ss);
 		    ienc2 = CE_NATIVE;
 		}
 #ifdef SUPPORT_MBCS
 		/* might expand under MBCS */
-		buf = R_AllocStringBuffer(slen+strlen(v_ss), &cbuff);
+		buf = R_AllocStringBuffer(slen+vlen, &cbuff);
 #else
 		buf = R_AllocStringBuffer(slen, &cbuff);
 #endif
-		strcpy(buf, ss);
-		substrset(buf, v_ss, ienc2, start, stop);
-		SET_STRING_ELT(s, i, mkCharCE(buf, ienc2));
+		memcpy(buf, ss, slen+1);
+		olen = substrset(buf, slen, v_ss, vlen, ienc2, start, stop);
+		SET_STRING_ELT(s, i, mkCharLenCE(buf, olen, ienc2));
 	    }
 	}
 	R_FreeStringBufferL(&cbuff);
