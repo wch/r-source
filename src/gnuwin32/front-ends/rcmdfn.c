@@ -68,24 +68,25 @@ void rcmdusage (char *RCMD)
 	    "for usage information for each command.\n\n");
 }
 
+extern int process_Renviron(const char *filename);
 #define CMD_LEN 10000
 int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
        find R_HOME, set as env variable
-       set R_SHARE_DIR as env variable
        set PATH to include R_HOME\bin
-       set PERL5LIB to %R_SHARE_DIR%/perl;%Perl5LIB%
-       set TEXINPUTS to .;%TEXINPUTS%;%R_HOME%/share/texmf
+       set TMPDIR if unset
        set HOME if unset
+       set R_CMD (depends on how this was launched), R_VERSION
+       read R_HOME\etc\Rcmd_environ
        launch %R_HOME%\bin\$*
      */
     int i, iused, status = 0;
-    char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], BUFFER[10000],
-	RHOME[MAX_PATH], *p, cmd[CMD_LEN], Rversion[25], HOME[MAX_PATH + 10],
-	RSHARE[MAX_PATH];
+    char *RHome, BUFFER[10000],
+	RHOME[MAX_PATH], *p, cmd[CMD_LEN], Rversion[25], HOME[MAX_PATH + 10];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
+    char env_path[MAX_PATH];
 
     if(!strncmp(argv[0]+len-4, "Rcmd", 4) ||
        !strncmp(argv[0]+len-4, "rcmd", 4) ||
@@ -242,16 +243,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
 	putenv(RHOME);
 
-	/* currently used by Rd2dvi and by perl Vars.pm (with default) */
-	strcpy(RSHARE, "R_SHARE_DIR=");
-	strcat(RSHARE, RHome); strcat(RSHARE, "/share");
-	putenv(RSHARE);
-
 	snprintf(Rversion, 25, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
 	putenv(Rversion);
 
 	putenv("R_CMD=R CMD");
-	putenv("R_OSTYPE=windows");
 
 	strcpy(BUFFER, "PATH=");
 	strcat(BUFFER, RHome); strcat(BUFFER, "\\bin;");
@@ -269,25 +264,15 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	        putenv("TMPDIR=c:/TEMP");
 	}
 
-	strcpy(PERL5LIB, "PERL5LIB=");
-	strcat(PERL5LIB, RHome); strcat(PERL5LIB, "\\share\\perl;");
-	if ( (p = getenv("PERL5LIB")) ) strcat(PERL5LIB, p);
-	putenv(PERL5LIB);
-
-	strcpy(TEXINPUTS, "TEXINPUTS=.;");
-        if ( (p = getenv("TEXINPUTS")) ) {
-	    strcat(TEXINPUTS, p); 
-	    strcat(TEXINPUTS, ";");
-	}
-	strcat(TEXINPUTS, RHome); strcat(TEXINPUTS, "\\share\\texmf;");
-	if ( (p = getenv("TEXINPUTS")) ) strcat(TEXINPUTS, p);
-	putenv(TEXINPUTS);
-
 	if( !getenv("HOME") ) {
 	    strcpy(HOME, "HOME=");
 	    strcat(HOME, getRUser());
 	    putenv(HOME);
 	}
+
+	strcpy(env_path, RHome); strcat(env_path, "/etc/rcmd_environ");
+	process_Renviron(env_path);
+
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {

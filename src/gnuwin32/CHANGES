@@ -16,9 +16,10 @@
 		CHANGES IN R VERSION 2.8.0
 
 
-NONE YET
+OTHER
 
-    o	Dummy
+    o	Rcmd sets many more enviroment variables, all those set by
+	R CMD under a Unix-alike which make sense.
 
 
 

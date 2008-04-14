@@ -7104,7 +7104,7 @@ a break to the debugger during command line processing.
 
 In Windows with @code{R CMD} you may also specify your own @file{*.bat}
 or @file{*.exe} file instead of one of the built-in commands.  It will
-be run with the following environment variables set appropriately:
+be run with several environment variables set appropriately, including
 @env{R_HOME}, @env{R_VERSION}, @env{R_CMD}, @env{R_OSTYPE}, @env{PATH},
 @env{PERL5LIB}, and @env{TEXINPUTS}.  For example, if you already have
 @file{latex.exe} on your path, then
@@ -7114,7 +7114,7 @@ R CMD latex.exe mydoc
 @end example
 @noindent
 will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
-@file{share/texmf} macros added to @env{TEXINPUTS}.
+@file{share/texmf} macros appended to @env{TEXINPUTS}.
 
 @node Invoking R under Mac OS X, Scripting with R, Invoking R under Windows, Invoking R
 @appendixsec Invoking R under Mac OS X

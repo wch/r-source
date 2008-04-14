@@ -72,9 +72,9 @@ Rgui.exe: graphappmain.o  rgui.o rgico.o
 
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o
+Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
-R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o
+R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 

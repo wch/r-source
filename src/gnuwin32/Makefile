@@ -452,7 +452,7 @@ distclean: clean clean-recommended
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
-	../../etc/Rprofile.site ../../etc/rgb.txt \
+	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
 	../../share/make/wintests.mk \
 	../../tests/*.Rout ../../tests/*.Rout.fail
 	$(RM) -r ../../share/zoneinfo

@@ -1,0 +1,39 @@
+## from R.sh
+R_SHARE_DIR=${R_HOME}/share
+R_INCLUDE_DIR=${R_HOME}/include
+R_DOC_DIR=${R_HOME}/doc
+R_ARCH=
+
+## from Rcmd
+R_OSTYPE=windows
+PERL5LIB=${R_SHARE_DIR}/perl;${PERL5LIB}
+TEXINPUTS=.;${TEXINPUTS};${R_SHARE_DIR}/texmf;
+
+## from etc/Renviron
+R_PLAFORM='i386-pc-mingw32'
+R_PAPERSIZE_USER=${R_PAPERSIZE}
+R_PAPERSIZE=${R_PAPERSIZE-'a4'}
+## Default TeXMF stuff
+R_LATEXCMD=${R_LATEXCMD-${LATEX-'latex'}}
+R_DVIPSCMD=${R_DVIPSCMD-${DVIPS-'dvips'}}
+R_MAKEINDEXCMD=${R_MAKEINDEX-${MAKEINDEX-'makeindex'}}
+R_RD4DVI=${R_RD4DVI-'ae'}
+R_RD4PDF=${R_RD4PDF-'times,hyper'}
+## Default zip/unzip commands
+R_UNZIPCMD=${R_UNZIPCMD-'unzip'}
+R_ZIPCMD=${R_ZIPCMD-'zip'}
+## Default browser
+#R_BROWSER=${R_BROWSER-''}
+## Default editor
+#EDITOR=${EDITOR-${VISUAL-vi}}
+## Default pager
+#PAGER=${PAGER-''}
+## Default PDF viewer
+#R_PDFVIEWER=${R_PDFVIEWER-''}
+## Use configure values
+AWK=gawk
+GREP='grep -E'
+#MAKE=${MAKE-make'}
+#PERL=${PERL-perl}
+SED=${SED-sed}
+#TAR=${TAR-tar}
