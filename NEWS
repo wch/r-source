@@ -99,6 +99,9 @@ UTILITIES
     	R_PDFVIEWER is set (as it will normally be on a Unix-aloke but
     	not on Windows).
 
+    o	R CMD build tries harder to clean up the inst/doc directory
+    	from the remants of earlier builds.
+
 
 BUG FIXES
 
