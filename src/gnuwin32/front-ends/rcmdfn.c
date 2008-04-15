@@ -41,6 +41,22 @@ static int pwait(HANDLE p)
     return ret;
 }
 
+# include <sys/stat.h>
+
+#if !defined(S_IFDIR) && defined(__S_IFDIR)
+# define S_IFDIR __S_IFDIR
+#endif
+
+static int isDir(char *path)
+{
+    struct stat sb;
+    int isdir = 0;
+    if(path[0] && stat(path, &sb) == 0) 
+	isdir = (sb.st_mode & S_IFDIR) > 0;
+    return isdir;
+}
+
+
 void rcmdusage (char *RCMD)
 {
     fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
@@ -73,7 +89,7 @@ extern int process_Renviron(const char *filename);
 int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
-       find R_HOME, set as env variable
+       find R_HOME, set as env variable (with / as separator)
        set PATH to include R_HOME\bin
        set TMPDIR if unset
        set HOME if unset
@@ -253,15 +269,22 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	strcat(BUFFER, getenv("PATH"));
 	putenv(BUFFER);
 
-	if ( (p = getenv("TMPDIR")) && strlen(p)) {
+	if ( (p = getenv("TMPDIR")) && isDir(p)) {
 	    /* TMPDIR is already set */
 	} else {
-	    if ( (p = getenv("TEMP")) && strlen(p)) {
-	        strcpy(BUFFER, "TMPDIR=");
-	        strcat(BUFFER, p);
-	        putenv(BUFFER);
-	    } else
-	        putenv("TMPDIR=c:/TEMP");
+	    if ( (p = getenv("TEMP")) && isDir(p)) {
+		strcpy(BUFFER, "TMPDIR=");
+		strcat(BUFFER, p);
+		putenv(BUFFER);
+	    } else if ( (p = getenv("TMP")) && isDir(p)) {
+		strcpy(BUFFER, "TMPDIR=");
+		strcat(BUFFER, p);
+		putenv(BUFFER);
+	    } else {
+		strcpy(BUFFER, "TMPDIR=");
+		strcat(BUFFER, getRUser());
+		putenv(BUFFER);
+	    }
 	}
 
 	if( !getenv("HOME") ) {

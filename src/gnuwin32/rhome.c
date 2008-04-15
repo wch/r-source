@@ -55,7 +55,9 @@ char *getRHOMElong(void)
     return (rhomebuf);
 }
 
-/* get no-spaces version of R_HOME from the module path: used in Rgui and Rterm */
+/* get no-spaces version of R_HOME from the module path: 
+   used in Rgui, Rterm and Rcmd
+*/
 char *getRHOME(void)
 {
     char *p;

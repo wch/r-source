@@ -21,6 +21,10 @@ OTHER
     o	Rcmd sets many more enviroment variables, all those set by
 	R CMD under a Unix-alike which make sense.
 
+    o	Rcmd now follows a similar strategy to R when finding a valid
+	TMPDIR setting: it tries TMPDIR, TMP, TEMP and R_USER looking
+	for a directory -- the last will succeed as it does for R.
+
 
 
 
