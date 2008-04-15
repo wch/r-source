@@ -51,6 +51,7 @@ The PDF previewer is set by the environment variable R_PDFVIEWER.
 Report bugs to <r-bugs@r-project.org>."
 
 start_dir=`pwd`
+build_dir=".Rd2dvi${$}"
 
 batch=false
 clean=true
@@ -61,31 +62,17 @@ output=""
 verbose=false
 enc=unknown
 
-## set by R on unix
-: ${R_SHARE_DIR=${R_HOME}/share}
-## set by R CMD on unix
-: ${R_LATEXCMD=latex}
-: ${SED=sed}
-
 if test "${R_OSTYPE}" = "windows"; then
-  build_dir=".Rd2dvi"
   echo=echo
   preview=${xdvi-yap}
   OSdir=windows
-  # Next two are set by R CMD on Unix but not on Windows
-  : ${R_PAPERSIZE=a4}
-  export R_PAPERSIZE
-  # This is for e.g. TexLive: MiKTeX is handled by R_TEXOPTS
-  TEXINPUTS=".\;${R_HOME}/share/texmf\;${TEXINPUTS}"
-  export TEXINPUTS
 else
-  build_dir=".Rd2dvi${$}"
   ## Need a `safe' echo which does not interpret backslash-escaped
   ## characters in SysV style.
   ## FIXME: R_SHARE_DIR might contain a space.
   echo="sh ${R_SHARE_DIR}/sh/echo.sh"
   preview=${xdvi-xdvi}
-  OSdir=${R_OSTYPE-"unix"}
+  OSdir=unix
 fi
 
 while test -n "${1}"; do
