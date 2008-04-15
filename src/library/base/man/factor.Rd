@@ -182,7 +182,7 @@ factor(letters[1:20], labels="letter")
 
 class(ordered(4:1)) # "ordered", inheriting from "factor"
 
-## suppose you want "NA" as a level, and to allowing missing values.
+## suppose you want "NA" as a level, and to allow missing values.
 (x <- factor(c(1, 2, "NA"), exclude = ""))
 is.na(x)[2] <- TRUE
 x  # [1] 1    <NA> NA, <NA> used because NA is a level.
