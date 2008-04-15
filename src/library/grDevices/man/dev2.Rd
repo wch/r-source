@@ -14,7 +14,7 @@
 dev.copy(device, \dots, which = dev.next())
 dev.print(device = postscript, \dots)
 dev.copy2eps(\dots)
-dev.copy2pdf(\dots)
+dev.copy2pdf(\dots, out.type = "pdf")
 dev.control(displaylist = c("inhibit", "enable"))
 }
 \arguments{
@@ -26,6 +26,15 @@ dev.control(displaylist = c("inhibit", "enable"))
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}
   \item{which}{A device number specifying the device to copy to.}
+#ifdef unix
+  \item{out.type}{The name of the output device: can be \code{"pdf"}, or
+    \code{"quartz"} (some Mac OS X builds) or \code{"cairo"} (some
+    Unix-alikes, see \code{\link{cairo_pdf}}).}
+#endif
+#ifdef windows
+  \item{out.type}{The name of the output device: only \code{"pdf"} is
+    allowed on Windows.)
+#endif
   \item{displaylist}{A character string: the only valid values are
     \code{"inhibit"} and \code{"enable"}.}
 }
@@ -43,7 +52,7 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{device} and then shuts the new device.
 
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
-  EPSF output file, in portrait orientation (\code{horizontal = FALSE}).
+  EPSF output file in portrait orientation (\code{horizontal = FALSE}).
   \code{dev.copy2pdf} is the analogue for PDF output.
 
   \code{dev.control} allows the user to control the recording of
@@ -63,17 +72,25 @@ dev.control(displaylist = c("inhibit", "enable"))
 \details{
   Note that these functions copy the \emph{device region} and not a
   plot: the background colour of the device surface is part of what is
-  copied. Most screen devices default to a transparent background, which
+  copied.  Most screen devices default to a transparent background, which
   is probably not what is needed when copying to a device such as
   \code{\link{png}}.
   
-  For \code{dev.copy2eps} and \code{dev.copy2pdf},  \code{width} and
+  For \code{dev.copy2eps} and \code{dev.copy2pdf}, \code{width} and
   \code{height} are taken from the current device unless otherwise
   specified.  If just one of \code{width} and \code{height} is
   specified, the other is adjusted to preserve the aspect ratio of the
   device being copied.  The default file name is \code{Rplot.eps} or
   \code{Rplot.pdf}, and can be overridden by specifying a \code{file}
   argument.
+
+  Copying to devices such as \code{\link{postscript}} and
+  \code{\link{pdf}} which need font families pre-specified needs extra
+  care -- \R is unaware of which families were used in a plot and so
+  they will need to manually specified by the \code{fonts} argument
+  passed as part of \code{\dots}.  Similarly, if the device to be copied
+  from was opened with a \code{family} argument, a suitable
+  \code{family} argument will need to be included in \code{\dots}.
 
 #ifdef unix
   The default for \code{dev.print} is to produce and print a postscript

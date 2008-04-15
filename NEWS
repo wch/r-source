@@ -30,13 +30,19 @@ NEW FEATURES
 
     o	The parser and scan() now accept strings with embedded nuls
 	such as "a\0b" -- previous versions of R terminated scanning
-	at the first nul.
+	at the first (actual or escaped) nul.
 
     o	tools::texi2dvi() has a new argument 'texinputs' to allow the
 	TeX and bibtex input paths to be specified (even on MiKTeX).
 
     o	substr(), substr<-() and Encoding<-() now handle character
 	strings with embedded nuls.
+
+    o	setEPS() and setPS() gain '...' to allow other arguments to be
+    	passed to ps.options(), including overriding 'width' and 'height'.
+
+    o	dev.copy2pdf() gains an 'out.type' argument to allow it to be
+	used with cairo_pdf() or quartz(type = "pdf").
 
 
 PACKAGE INSTALLATION

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/ps.options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ps.options}
@@ -20,8 +20,8 @@
 \usage{
 ps.options(\dots, reset = FALSE, override.check = FALSE)
 
-setEPS()
-setPS()
+setEPS(\dots)
+setPS(\dots)
 }
 \arguments{
   \item{\dots}{arguments \code{onefile}, \code{family}, \code{title},
@@ -29,7 +29,9 @@ setPS()
     \code{encoding}, \code{bg}, \code{fg}, \code{width}, \code{height},
     \code{horizontal}, \code{pointsize},  \code{paper},
     \code{pagecentre}, \code{print.it}, \code{command} and
-    \code{colormodel} can be supplied.}
+    \code{colormodel} can be supplied.  \code{onefile},
+    \code{horizontal} and \code{paper} are \emph{ignored}
+    for \code{setEPS} and \code{setPS}.}
   \item{reset}{logical: should the defaults be reset to their
     \sQuote{factory-fresh} values?}
   \item{override.check}{logical argument passed to
@@ -45,9 +47,9 @@ setPS()
 
   \code{setEPS} and \code{setPS} are wrappers to set defaults
   appropriate for figures for inclusion in documents (the default size
-  is 7 inches square) and for spooling to a PostScript printer
-  respectively.  For historical reasons the latter is the ultimate
-  default.
+  is 7 inches square unless \code{width} or \code{height} is supplied)
+  and for spooling to a PostScript printer respectively.  For historical
+  reasons the latter is the ultimate default.
 }
 \value{
   A named list of all the previous defaults.  If \code{\dots} or

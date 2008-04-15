@@ -110,13 +110,25 @@ ps.options <- function(..., reset = FALSE, override.check = FALSE)
     if(reset || l... > 0) invisible(old) else old
 }
 
-setEPS <- function()
-    ps.options(onefile = FALSE, horizontal = FALSE, paper = "special",
-               width = 7, height = 7)
+setEPS <- function(...)
+{
+    dots <- list(...)
+    args <- list(width = 7, height = 7)
+    args[names(dots)] <- dots
+    force <- list(onefile = FALSE, horizontal = FALSE, paper = "special")
+    args[names(force)] <- force
+    do.call("ps.options", args)
+}
 
-setPS <- function()
-    ps.options(onefile = TRUE, horizontal = TRUE, paper = "default",
-               width = 0, height = 0)
+setPS <- function(...)
+{
+    dots <- list(...)
+    args <- list(width = 0, height = 0)
+    args[names(dots)] <- dots
+    force <- list(onefile = TRUE, horizontal = TRUE, paper = "default")
+    args[names(force)] <- force
+    do.call("ps.options", args)
+}
 
 pdf.options <- function(..., reset=FALSE)
 {

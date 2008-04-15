@@ -202,8 +202,9 @@ dev.copy2eps <- function(...)
     dev.set(current.device)
 }
 
-dev.copy2pdf <- function(...)
+dev.copy2pdf <- function(..., out.type = "pdf")
 {
+    out.type <- match.arg(out.type, c("pdf", "quartz", "cairo"))
     current.device <- dev.cur()
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
@@ -211,11 +212,19 @@ dev.copy2pdf <- function(...)
         stop("can only print from a screen device")
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")
-    oc$device <- pdf
-    ## the defaults in pdf are all customizable, so we override
-    ## even those which are the ultimate defaults.
-    oc$onefile <- FALSE
-    if(is.null(oc$paper)) oc$paper <- "special"
+    if(out.type == "quartz" && capabilities("aqua")) {
+        oc$device <- quartz
+        oc$type <- "pdf"
+    } else if(out.type == "cairo" && capabilities("cairo")) {
+        oc$device <- cairo_pdf
+        oc$onefile <- FALSE # future-proofing
+    } else {
+        oc$device <- pdf
+        ## the defaults in pdf() are all customizable, so we override
+        ## even those which are the ultimate defaults.
+        oc$onefile <- FALSE
+        if(is.null(oc$paper)) oc$paper <- "special"
+    }
     din <- dev.size("in"); w <- din[1]; h <- din[2]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
