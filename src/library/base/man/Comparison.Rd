@@ -42,8 +42,9 @@ x != y
   \code{S} and \code{T}, and collation is not necessarily
   character-by-character -- in Danish \code{aa} sorts as a single
   letter, after \code{z}.  Some platforms may not respect the locale and
-  always sort in ASCII.  (String comparison is always for the part of the
-  string up to the first nul if there are embedded nuls.)
+  always sort in numerical order of the bytes in an 8-bit locale, or in
+  Unicode point order for a UTF-8 locale (and may not sort in the same
+  order for the same language in different character sets).
 
   At least one of \code{x} and \code{y} must be an atomic vector, but if
   the other is a list \R attempts to coerce it to the type of the atomic
@@ -70,7 +71,7 @@ x != y
   character strings before comparison.
 }
 \value{
-  A vector of logicals indicating the result of the element by element
+  A logical vector indicating the result of the element by element
   comparison.  The elements of shorter vectors are recycled as
   necessary.
 
@@ -86,7 +87,7 @@ x != y
 
   For numerical and complex values, remember \code{==} and \code{!=} do
   not allow for the finite representation of fractions, nor for rounding
-  error. Using \code{\link{all.equal}} with \code{identical} is almost
+  error.  Using \code{\link{all.equal}} with \code{identical} is almost
   always preferable.  See the examples.
 }
 \section{S4 methods}{
