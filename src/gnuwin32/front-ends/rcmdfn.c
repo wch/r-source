@@ -77,7 +77,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
        set PATH to include R_HOME\bin
        set PERL5LIB to %R_SHARE_DIR%/perl;%Perl5LIB%
        set TEXINPUTS to .;%R_SHARE_DIR%/texmf;%TEXINPUTS%
+       set TMPDIR if unset
        set HOME if unset
+       set R_CMD (depends on how this was launched), R_VERSION, R_OSTYPE
        launch %R_HOME%\bin\$*
      */
     int i, iused, status = 0;
