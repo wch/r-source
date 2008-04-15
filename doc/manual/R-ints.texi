@@ -2058,8 +2058,8 @@ in an @R{} package is described in
 `Writing R Extensions',
 @end ifclear
 and the standard packages included with @R{} have (with an exception in
-@pkg{grDevices}) been internationalized in the same way as other
-packages.
+@pkg{grDevices} for the menus of the @code{windows()} device) been
+internationalized in the same way as other packages.
 
 @menu
 * R code::                      
@@ -2317,7 +2317,7 @@ of a would-be writer of a graphics device.
 @node Device structures, Device capabilities, Graphics devices, Graphics devices
 @subsection Device structures
 
-There are three types used internally which are pointers to structures
+There are two types used internally which are pointers to structures
 related to graphics devices.
 
 The @code{NewDevDesc} type@footnote{`new' in @R 1.4.0 and scheduled to
@@ -2361,11 +2361,6 @@ possible for the device to find the @code{GEDevDesc} which points to its
 convenience function @code{desc2GEDesc} to do so.} visible to the engine
 and not to the device.  Type @code{pGEDevDesc} is a pointer to this
 type.
-
-The third type is @code{pGEDev} which is an opaque pointer to a
-@code{GEDevDesc} structure.  (In earlier code you will also find
-@code{DevDesc *}, which in post-1.4.0 versions of @R{} was,
-confusinngly, also an opaque pointer to a @code{GEDevDesc} structure.)
 
 The graphics engine maintains an array of devices, as pointers to
 @code{GEDevDesc} structures.  The array is of size 64 but the first
@@ -2430,7 +2425,9 @@ The following `capabilities' can be defined for the device's
 
 @itemize
 @item canChangeGamma --
-@code{Rboolean}: can the display gamma be adjusted?
+@code{Rboolean}: can the display gamma be adjusted?  This is not true
+for any current device, and as from @R{} 2.8.0 there is no user-level
+function to change gamma.  So @samp{FALSE} is the only useful value.
 @item canHadj --
 @code{integer}: can the device do horizontal adjustment of text
 @emph{via} the @code{text} callback, and if so, how precisely? 0 = no
@@ -2458,7 +2455,7 @@ as other text?  Requires @code{textUTF8 = TRUE}.
 @subsection Handling text
 
 Handling text is probably the hardest task for a graphics device, and
-the design allows for the device to optionally indicate that they have
+the design allows for the device to optionally indicate that it has
 additional capabilities.  (If the device does not, these will if
 possible be handled in the graphics engine.)
 
@@ -2885,10 +2882,6 @@ graphics operations.  This code then calls functions with names starting
 with @code{G} and declared in header @file{Rgraphics.h} in file
 @file{graphics.c}, which in turn call the graphics engine (whose
 functions almost all have names starting with @code{GE}).
-
-Again for historical reasons, @file{Rgraphics.h} is a public header, but
-it is almost unused outside @R{} and it is intended to withdraw it by
-@R{} 2.8.0.
 
 A large part of the infrastructure of the base graphics subsystem are
 the graphics parameters (as set/read by @code{par()}).  These are stored
