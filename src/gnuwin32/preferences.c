@@ -434,7 +434,7 @@ static void save(button b)
     fprintf(fp, "# should options(width=) be set to the console width?\n");
     fprintf(fp, "setwidthonresize = %s\n\n",
 	    ischecked(c_resize) ? "yes" : "no");
-    fprintf(fp, "# memory limits for the console scrolling buffer, in bytes and lines\n");
+    fprintf(fp, "# memory limits for the console scrolling buffer, in chars and lines\n");
     fprintf(fp, "bufbytes = %s\nbuflines = %s\n\n",
 	    gettext(f_cbb), gettext(f_cbl));
     fprintf(fp, "# Initial position of the console (pixels, relative to the workspace for MDI)\n");
@@ -780,7 +780,7 @@ static void showDialog(Gui gui)
 			   rect(20, 175, 200, 20), NULL);
     if(gui->setWidthOnResize) check(c_resize);
 
-    l_cbb = newlabel("buffer bytes", rect(270, 175, 70, 20), AlignLeft);
+    l_cbb = newlabel("buffer chars", rect(270, 175, 70, 20), AlignLeft);
     sprintf(buf, "%d", gui->cbb);
     f_cbb = newfield(buf, rect(350, 175, 60, 20));
     l_cbl = newlabel("lines", rect(430, 175, 50, 20), AlignLeft);
