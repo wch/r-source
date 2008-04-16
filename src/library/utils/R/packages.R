@@ -595,7 +595,8 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
 setRepositories <-
     function(graphics = getOption("menu.graphics"), ind = NULL)
 {
-    if(!interactive()) stop("cannot set repositories non-interactively")
+    if(is.null(ind) && !interactive())
+        stop("cannot set repositories non-interactively")
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
     if(!file.exists(p))
         p <- file.path(R.home("etc"), "repositories")

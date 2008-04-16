@@ -100,7 +100,7 @@ UTILITIES
     	not on Windows).
 
     o	R CMD build tries harder to clean up the inst/doc directory
-    	from the remants of earlier builds.
+    	from the remnants of earlier builds.
 
 
 BUG FIXES

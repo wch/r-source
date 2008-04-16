@@ -35,6 +35,9 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   The items that are preselected are those that are currently in
   \code{options("repos")} plus those marked as default in the
   list of known repositories.
+
+  This function requires the \R session to be interactive unless
+  \code{ind} is supplied.
 }
 \value{
   This function is invoked mainly for its side effect of updating
