@@ -131,14 +131,12 @@ xbuf newxbuf(xlong dim, xint ms, xint shift)
 /* reallocate increased buffer sizes and update pointers */
 void xbufgrow(xbuf p, xlong dim, xint ms)
 {
-    void *ret, *ret2;
-    int i, change;
-
     if(dim > p->dim) {
-	ret = realloc(p->b, (dim + 1)*sizeof(wchar_t));
+	wchar_t *ret = (wchar_t *) realloc(p->b, (dim + 1)*sizeof(wchar_t));
 	if(ret) {
-	    change = (uintptr_t) ret - (uintptr_t) p->b;
-	    p->b = (wchar_t *) ret;
+	    int i, change;
+	    change = ret - p->b;
+	    p->b = ret;
 	    p->av += change;
 	    p->free += change;
 	    for (i = 0; i < p->ns; i++)  p->s[i] += change;
@@ -146,12 +144,12 @@ void xbufgrow(xbuf p, xlong dim, xint ms)
 	}
     }
     if(ms > p->ms) {
-	ret = realloc(p->s, ms * sizeof(char *));
+	wchar_t **ret = (wchar_t **) realloc(p->s, ms * sizeof(wchar_t *));
 	if(ret) {
-	    ret2 = realloc(p->user, ms * sizeof(int));
+	    int *ret2 = (int *) realloc(p->user, ms * sizeof(int));
 	    if(ret2) {
-		p->s = (wchar_t **) ret;
-		p->user = (int *) ret2;
+		p->s = ret;
+		p->user = ret2;
 		p->ms = ms;
 	    }
 	}

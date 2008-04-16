@@ -157,16 +157,6 @@ setupui
 for rgui/rterm/Rscript
 
 
-crc32
-deflate
-deflateEnd
-deflateInit2_
-deflateReset
-inflateReset
-
-for Rbitmap.dll
-
-
 Rf_mbrtowc
 Rf_strchr
 localeCP
