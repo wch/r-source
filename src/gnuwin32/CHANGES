@@ -267,6 +267,12 @@ OTHERS
 	xdvi.bat) -- as before this is set by the environment variable
 	'xdvi'.
 
+    o	The size of the Rgui buffer is now set in characters not bytes
+	(the difference only matters in CJK locales), but for
+	backwards compatibility the entry in Rconsole is still called
+	'bufbytes'.  The default has been increased to 250,000 chars
+	(0.5Mb).
+
 
 BUILDING R
 

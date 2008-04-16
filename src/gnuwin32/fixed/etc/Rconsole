@@ -30,8 +30,9 @@ pgcolumns = 80
 # should options(width=) be set to the console width?
 setwidthonresize = yes
 
-# memory limits for the console scrolling buffer, in bytes and lines
-bufbytes = 65000
+# memory limits for the console scrolling buffer, in chars and lines
+# NB: bufbytes is in bytes for R < 2.7.0, chars thereafter.
+bufbytes = 250000
 buflines = 8000
 
 # Initial position of the console (pixels, relative to the workspace for MDI)

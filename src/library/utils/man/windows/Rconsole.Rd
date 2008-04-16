@@ -65,10 +65,10 @@
 }
 \section{Chinese/Japanese/Korean}{
   Users of these languages will need to select a suitable font for the
-  console (perhaps \code{FixedSys} or \code{MS Mincho}) and for the
-  graphics device (\code{Arial} can be replaced by \code{Arial Unicode MS}).
-
-  Which fonts are available depends on the version of Windows.
+  console (perhaps \code{MS Mincho}) and for the graphics device
+  (although the default \code{Arial} has many CJK characters).  It is
+  essential that the font selected for the console has double-width CJK
+  characters -- many monospaced fonts do not.
 }
 \note{
   The \code{GUI preferences} item on the \code{Edit} menu brings up an
