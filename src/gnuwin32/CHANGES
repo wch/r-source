@@ -120,9 +120,7 @@ INTERNATIONALIZATION
 	chars internally but does not provide an interface.)
 
     o	Collating (e.g. <) and sorting is done in UTF-8 where one of
-	the items is in UTF-8.  It seems that MSVCRT's collation
-	order can be different in widechar and in ASCII, so this
-	can lead to inconsistencies.
+	the items is in UTF-8.
 
     o	If readLines() or scan() is passed an unopened connection with
 	a non-default 'encoding' argument, it will re-encode to UTF-8
