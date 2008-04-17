@@ -1654,13 +1654,13 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void xypoints(SEXP call, SEXP args, int *n)
 {
-    int k=0;/* -Wall */
+    int k=0,/* -Wall */ kmin;
 
     if (!isNumeric(CAR(args)))
 	error(_("invalid first argument"));
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     k = LENGTH(CAR(args));
-    *n = k;
+    *n = k; kmin = k;
     args = CDR(args);
 
     if (!isNumeric(CAR(args)))
@@ -1668,6 +1668,7 @@ static void xypoints(SEXP call, SEXP args, int *n)
     k = LENGTH(CAR(args));
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     if (k > *n) *n = k;
+    if (k < kmin) kmin = k;
     args = CDR(args);
 
     if (!isNumeric(CAR(args)))
@@ -1675,6 +1676,7 @@ static void xypoints(SEXP call, SEXP args, int *n)
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     k = LENGTH(CAR(args));
     if (k > *n) *n = k;
+    if (k < kmin) kmin = k;
     args = CDR(args);
 
     if (!isNumeric(CAR(args)))
@@ -1682,7 +1684,11 @@ static void xypoints(SEXP call, SEXP args, int *n)
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     k = LENGTH(CAR(args));
     if (k > *n) *n = k;
+    if (k < kmin) kmin = k;
     args = CDR(args);
+
+    if (*n > 0 && kmin == 0)
+	error(_("cannot mix zero-length and non-zero-length coordinates"));
 }
 
 
