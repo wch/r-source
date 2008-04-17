@@ -281,8 +281,8 @@
   }
   else
       fromGroup <- rep(FALSE, length(methods))
-  if(verbose) cat("*", length(methods), "preliminary methods:",
-		  substr(deparse(names(methods)), 2, 1e6), "\n")
+  if(verbose) cat(sprintf("* %d preliminary methods:", length(methods)),
+		  strwrap(paste(names(methods), collapse=", ")), sep="\n  ")
   ## remove default if its not the only method
   if(length(methods) > 1 && !returnAll) {
       defaultLabel <- paste(rep("ANY", nargs), collapse = "#")
