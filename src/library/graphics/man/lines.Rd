@@ -27,9 +27,10 @@ lines(x, \dots)
     and \code{lmitre}.}
 }
 \details{
-  The coordinates can be passed to \code{lines} in a plotting structure
-  (a list with \code{x} and \code{y} components), a time series,
-  etc. See \code{\link{xy.coords}}.
+  The coordinates can be passed in a plotting structure
+  (a list with \code{x} and \code{y} components), a two-column matrix, a
+  time series, \dots.  See \code{\link{xy.coords}}.  If supplied
+  separately, they must be of the same length.
 
   The coordinates can contain \code{NA} values. If a point contains
   \code{NA} in either its \code{x} or \code{y} value, it is omitted from

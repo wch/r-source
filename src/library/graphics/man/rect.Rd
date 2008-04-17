@@ -44,9 +44,10 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   The positions supplied, i.e., \code{xleft, \dots},
   are relative to the current plotting region.  If the x-axis goes from
   100 to 200 then \code{xleft} must be larger than 100 and \code{xright}
-  must be less than 200.
+  must be less than 200.  The position vectors will be recycled to the
+  length of the longest.
 
-  It is a primitive function used in \code{\link{hist}},
+  It is a graphics primitive used in \code{\link{hist}},
   \code{\link{barplot}}, \code{\link{legend}}, etc.
 }
 \seealso{

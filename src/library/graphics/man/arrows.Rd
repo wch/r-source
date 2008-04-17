@@ -30,7 +30,8 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
 }
 \details{
   For each \code{i}, an arrow is drawn between the point \code{(x0[i],
-    y0[i])} and the point \code{(x1[i],y1[i])}.
+    y0[i])} and the point \code{(x1[i],y1[i])}.  The coordinate vectors
+  will be recycled to the length of the longest.
 
   If \code{code=1} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
   \code{code=2} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If

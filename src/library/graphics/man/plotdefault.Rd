@@ -20,7 +20,7 @@
   \item{x, y}{the \code{x} and \code{y} arguments provide the x and y
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
-    for details.}
+    for details.  If supplied separately, they must be of the same length.}
   \item{type}{1-character string giving the type of plot desired.  The
     following values are possible, for details, see \code{\link{plot}}:
     \code{"p"} for points, \code{"l"} for lines,

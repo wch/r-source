@@ -26,7 +26,8 @@ segments(x0, y0, x1, y1,
 }
 \details{
   For each \code{i}, a line segment is drawn between the point
-  \code{(x0[i], y0[i])} and the point \code{(x1[i], y1[i])}.
+  \code{(x0[i], y0[i])} and the point \code{(x1[i], y1[i])}.  The
+  coordinate vectors will be recycled to the length of the longest.
 
   The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
   vectors of length greater than one and will be recycled if necessary.
