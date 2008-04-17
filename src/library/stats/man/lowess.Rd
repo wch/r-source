@@ -17,7 +17,8 @@ lowess(x, y = NULL, f = 2/3, iter = 3,
 \alias{lowess}
 \arguments{
   \item{x, y}{vectors giving the coordinates of the points in the scatter plot.
-    Alternatively a single plotting structure can be specified.}
+    Alternatively a single plotting structure can be specified -- see
+    \code{\link{xy.coords}}.}
   \item{f}{the smoother span. This gives the proportion of points in
     the plot which influence the smooth at each value.
     Larger values give more smoothness.}

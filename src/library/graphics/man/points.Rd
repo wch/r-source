@@ -28,7 +28,8 @@ points(x, \dots)
 \details{
   The coordinates can be passed in a plotting structure
   (a list with \code{x} and \code{y} components), a two-column matrix, a
-  time series, \dots.  See \code{\link{xy.coords}}.
+  time series, \dots.  See \code{\link{xy.coords}}.  If supplied
+  separately, they must be of the same length.
 
   Graphical parameters commonly used are
   \describe{
