@@ -1,6 +1,6 @@
 % File src/library/base/man/by.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{by}
@@ -34,7 +34,8 @@ by(data, INDICES, FUN, \dots)
   (This was the long-term behaviour, but only documented since \R 2.7.0.)
 }
 \value{
-  A list of class \code{"by"}, giving the results for each subset.
+  An object of class \code{"by"}, giving the results for each subset.
+  This is a list or array (see \code{\link{tapply}}).
 }
 \seealso{\code{\link{tapply}}}
 
