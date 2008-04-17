@@ -5151,3 +5151,8 @@ p2 <- predict(fit.log, log(nd))
 stopifnot(identical(p1,p2))
 
 
+## wishlist PR#11192
+plot(1:10)
+segments(1, 1, 10, 10, col='green')
+segments(numeric(0), numeric(0), numeric(0), numeric(0), col='green')
+## last was error in R < 2.8.0

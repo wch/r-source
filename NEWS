@@ -46,6 +46,9 @@ NEW FEATURES
 
     o	by() gains a 'simplify' argument, passed to tapply().
 
+    o	segments(), arrows() and rect() allow zero-length
+	coordinates.  (Wish of PR#11192)
+
 
 PACKAGE INSTALLATION
 
