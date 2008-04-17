@@ -889,6 +889,7 @@ BUG FIXES
     	names, because one of the C support routines ignored them.
 
     o	load() again reads correctly character strings with embedded nuls.
+	(This was broken in 2.6.x, but worked in earlier versions.)
 
 
 
