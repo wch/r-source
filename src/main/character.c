@@ -90,11 +90,11 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	error(_("nchar() requires a character vector"));
+	error(_("'%s' requires a character vector"), "nzchar()");
     len = LENGTH(x);
     PROTECT(ans = allocVector(LGLSXP, len));
     for (i = 0; i < len; i++)
-	LOGICAL(ans)[i] = length(STRING_ELT(x, i)) > 0;
+	LOGICAL(ans)[i] = LENGTH(STRING_ELT(x, i)) > 0;
     UNPROTECT(2);
     return ans;
 }
@@ -114,7 +114,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	error(_("nchar() requires a character vector"));
+	error(_("'%s' requires a character vector"), "nchar()");
     len = LENGTH(x);
     stype = CADR(args);
     if (!isString(stype) || LENGTH(stype) != 1)
@@ -134,7 +134,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (strncmp(type, "bytes", ntype) == 0) {
 	    /* This case counts embedded nuls */
-	    INTEGER(s)[i] = length(sxi);
+	    INTEGER(s)[i] = LENGTH(sxi);
 	} else if (strncmp(type, "chars", ntype) == 0) {
 #ifdef SUPPORT_MBCS
 	    if (mbcslocale) {
