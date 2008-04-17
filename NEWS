@@ -44,6 +44,8 @@ NEW FEATURES
     o	dev.copy2pdf() gains an 'out.type' argument to allow it to be
 	used with cairo_pdf() or quartz(type = "pdf").
 
+    o	by() gains a 'simplify' argument, passed to tapply().
+
 
 PACKAGE INSTALLATION
 

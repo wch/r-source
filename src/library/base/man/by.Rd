@@ -1,6 +1,6 @@
 % File src/library/base/man/by.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{by}
@@ -14,7 +14,7 @@
   \code{\link{tapply}} applied to data frames.
 }
 \usage{
-by(data, INDICES, FUN, \dots)
+by(data, INDICES, FUN, \dots, simplify = TRUE)
 }
 \arguments{
  \item{data}{an \R object, normally a data frame, possibly a matrix.}
@@ -22,6 +22,7 @@ by(data, INDICES, FUN, \dots)
    \code{nrow(data)}.}
  \item{FUN}{a function to be applied to data frame subsets of \code{data}.}
  \item{\dots}{further arguments to \code{FUN}.}
+ \item{simplify}{logical: see \code{\link{tapply}}.}
 }
 \details{
   A data frame is split by row into data frames
@@ -34,7 +35,9 @@ by(data, INDICES, FUN, \dots)
   (This was the long-term behaviour, but only documented since \R 2.7.0.)
 }
 \value{
-  A list of class \code{"by"}, giving the results for each subset.
+  An object of class \code{"by"}, giving the results for each subset.
+  This is always a list if \code{simplify} is false, otherwise a list or
+  array (see \code{\link{tapply}}).
 }
 \seealso{\code{\link{tapply}}}
 

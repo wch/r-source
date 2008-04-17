@@ -14,15 +14,15 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-by <- function(data, INDICES, FUN, ...) UseMethod("by")
+by <- function(data, INDICES, FUN, ..., simplify = TRUE) UseMethod("by")
 
 ## prior to 2.7.0 this promoted vectors to data frames, but
 ## the data frame method dropped to a single column.
-by.default <- function(data, INDICES, FUN, ...)
+by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
 {
     dd <- as.data.frame(data)
     if(length(dim(data)))
-        by(dd, INDICES, FUN, ...)
+        by(dd, INDICES, FUN, ..., simplify = simplify)
     else {
         if(!is.list(INDICES)) {        # record the names for print.by
             IND <- vector("list", 1)
@@ -31,14 +31,15 @@ by.default <- function(data, INDICES, FUN, ...)
         } else IND <- INDICES
         FUNx <- function(x) FUN(dd[x,], ...)
         nd <- nrow(dd)
-        ans <- eval(substitute(tapply(1:nd, IND, FUNx)), dd)
+        ans <- eval(substitute(tapply(1:nd, IND, FUNx, simplify = simplify)),
+                    dd)
         attr(ans, "call") <- match.call()
         class(ans) <- "by"
         ans
     }
 }
 
-by.data.frame <- function(data, INDICES, FUN, ...)
+by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE)
 {
     if(!is.list(INDICES)) { # record the names for print.by
         IND <- vector("list", 1)
@@ -47,7 +48,7 @@ by.data.frame <- function(data, INDICES, FUN, ...)
     } else IND <- INDICES
     FUNx <- function(x) FUN(data[x,, drop=FALSE], ...) # (PR#10506)
     nd <- nrow(data)
-    ans <- eval(substitute(tapply(1:nd, IND, FUNx)), data)
+    ans <- eval(substitute(tapply(1:nd, IND, FUNx, simplify = simplify)), data)
     attr(ans, "call") <- match.call()
     class(ans) <- "by"
     ans
