@@ -312,6 +312,7 @@ function(object, filename = NULL, name = NULL)
 promptPackage <-
 function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 {
+    ## Most of this should not be translated -- PR#11191
     ## need to do this as packageDescription and library(help=) have
     ## different conventions
     if (is.null(lib.loc)) lib.loc <- .libPaths()
@@ -356,7 +357,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
         insert1("title", desc$Title)
 	insert1("description", desc$Description)
 	insert1("author", c(desc$Author, "",
-                            paste(gettext("Maintainer:"),desc$Maintainer)))
+                            paste(identity("Maintainer:"),desc$Maintainer)))
 
 	desc <- desc[!(names(desc) %in%
                        c("Title", "Description", "Author", "Maintainer"))]
@@ -364,39 +365,39 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
 
 	if (!is.null(info$info[[2]]))
-	    insert1("details",  c("", gettext("Index:"), "\\preformatted{",
+	    insert1("details",  c("", identity("Index:"), "\\preformatted{",
 	                          info$info[[2]], "}"))
 	if (!is.null(info$info[[3]]))
 	    insert1("details",
                     c("",
-        gettext("Further information is available in the following vignettes:"),
+        identity("Further information is available in the following vignettes:"),
                       tabular(paste0("\\code{", info$info[[3]][,1], "}"),
                               info$info[[3]][,2])))
     }
 
     if (!final) {
-        insert2("title", gettext("package title"))
+        insert2("title", identity("package title"))
         insert2("description",
-                gettext("A concise (1-5 lines) description of the package"))
+                identity("A concise (1-5 lines) description of the package"))
         insert2("details",
-                strwrap(gettext("An overview of how to use the package, including the most important functions")))
+                strwrap(identity("An overview of how to use the package, including the most important functions")))
         insert2("author",
-                gettext("The author and/or maintainer of the package"))
+                identity("The author and/or maintainer of the package"))
         Rdtxt$references <-
             c("\\references{",
               paste("~~",
-                    gettext("Literature or other references for background information"),
+                    identity("Literature or other references for background information"),
                     "~~"),
               "}")
         Rdtxt$seealso <- c("\\seealso{", "}")
         insert2("seealso",
-                c(gettext("Optional links to other man pages, e.g."),
+                c(identity("Optional links to other man pages, e.g."),
                   "\\code{\\link[<pkg>:<pkg>-package]{<pkg>}}"))
         Rdtxt$examples <- c("\\examples{","}")
         insert2("examples",
-                gettext("simple examples of the most important functions"))
+                identity("simple examples of the most important functions"))
         insert2("keywords",
-                strwrap(gettext("Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory")))
+                strwrap(identity("Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory")))
     }
 
     if(is.na(filename)) return(Rdtxt)
