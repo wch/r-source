@@ -48,6 +48,9 @@ NEW FEATURES
     o	segments(), arrows() and rect() allow zero-length
 	coordinates.  (Wish of PR#11192)
 
+    o	Adobe Symbol has been added to the encodings in
+	tools::charset_to_Encoding.
+
 
 PACKAGE INSTALLATION
 
