@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-04-10
+@set FAQ_DATE @value{FAQ_YEAR}-04-18
 @set REL_YEAR 2008
 @set REL_MAJOR 2
-@set REL_MINOR 6
-@set REL_PATCHLEVEL 2
+@set REL_MINOR 7
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -472,7 +472,7 @@ Murdoch} and @email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 For most installations the Windows installer program will be the easiest
 tool to use.
 
-See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R
+See the @url{http://CRAN.R-project.org/bin/windows/base@/rw-FAQ.html, ``R
 for Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
@@ -2435,6 +2435,8 @@ ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
 @item RDieHarder
 R interface to the dieharder random number generator test suite.
+@item RExcelInstaller
+Integration of R and Excel under MS Windows.
 @item RFA
 Regional Frequency Analysis.
 @item RFOC
@@ -3035,6 +3037,8 @@ Loadable CAIRO/GTK device driver.
 Statistical tool for calibration of plate based bioassays.
 @item calibrate
 Calibration of biplot axes.
+@item candisc
+Generalized canonical discriminant analysis.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
@@ -3679,6 +3683,8 @@ Data for topographic and geologic mapping.
 Mesh generation and surface tesselation, based on the Qhull library.
 @item geozoo
 Definition of geometric objects and display via @strong{rggobi}.
+@item getopt
+C-like getopt behavior for R scripts.
 @item ggm
 Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
@@ -4332,6 +4338,8 @@ Nonparametric Estimate of FDR Based on Bernstein polynomials.
 Non-graphical solution to the Cattell Scree Test.
 @item ncdf
 Interface to Unidata netCDF data files.
+@item ncf
+Spatial nonparametric covariance functions.
 @item ncomplete
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
@@ -4353,8 +4361,13 @@ Tools for the study of scale free and small world networks.
 @item network
 Tools to create and modify network objects, which can represent a range
 of relational data types.
+@item networksis
+Simulate bipartite graphs with fixed marginals through sequential
+importance sampling.
 @item neural
 RBF and MLP neural networks with graphical user interface.
+@item neuralnet
+Training of neural networks.
 @c <COMMENT>
 @c Renamed to allelic on 2006-05-24 as requested by the maintainer.
 @c @item newallelic
@@ -4381,6 +4394,8 @@ Non-linear regression with brute force.
 Tools for nonlinear regression diagnostics.
 @item nlt
 A nondecimated lifting transform for signal denoising.
+@item nlts
+(Non)linear time series analysis.
 @item nltm
 NonLinear Transformation Models for survival analysis.
 @item nnet
