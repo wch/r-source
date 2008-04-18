@@ -887,7 +887,9 @@ double-width characters are handled correctly.  The default graphics
 fonts for the @code{windows()} graphics device can handle most common
 Japanese characters, but more specialized fonts may need to be set.
 (See Q3.5 for how to set fonts: the console font can also be set from
-the `GUI preferences' meny item.)
+the `GUI preferences' meny item.)  The help for @code{windowsFonts} has
+examples of selecting Japanese fonts for the @code{windows()} family of
+devices.
 
 In addition, the Hershey vector fonts (see @code{?Hershey},
 @code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
