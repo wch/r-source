@@ -2536,7 +2536,7 @@ The device structure has an integer element @code{canHadj}, which
 indicates if the device can do horizontal alignment of text.  If this is
 one, argument @samp{hadj} to @code{text} will be called as @code{0 ,0.5,
 1} to indicate left-, centre- and right-alignment at the indicated
-position.  It it is two, continuous values in the range @code{[0, 1]}
+position.  If it is two, continuous values in the range @code{[0, 1]}
 are assumed to be supported.
 
 A new capability in @R{} 2.7.0 (graphics API version 4) is
@@ -2665,7 +2665,7 @@ These conventions are less clear-cut for bitmap devices, especially
 where the bitmap format does not have a design resolution.
 
 The interpretation of the line texture (@code{par("lty"}) is described
-in the header @file{} and in the help for @code{par}: note that the
+in the header @file{GraphicsEngine.h} and in the help for @code{par}: note that the
 `scale' of the pattern should be proportional to the line width (at
 least for widths above the default).
 
