@@ -457,7 +457,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c2 = STRING_ELT(s2, i % n2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
- 	    else if (c1 == c2)  /* This will pretest all cached strings */
+ 	    else if (c1 == c2)   /* FIXME: Seql does this test too */
 		LOGICAL(ans)[i] = 1;
 	    else
 		if (Seql(c1, c2))
@@ -472,7 +472,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c2 = STRING_ELT(s2, i % n2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
 		LOGICAL(ans)[i] = NA_LOGICAL;
- 	    else if (c1 == c2)
+ 	    else if (c1 == c2) /* FIXME: Seql does this test too */
 		LOGICAL(ans)[i] = 0;
  	    else
 		if (Seql(c1, c2))
