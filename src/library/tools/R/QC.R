@@ -4427,7 +4427,8 @@ function()
 function(env)
 {
     env <- as.environment(env)
-    Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
+    Filter(function(g) exists(g, envir = env, inherits=FALSE) &&
+	   methods::is(get(g, envir = env), "genericFunction"),
            methods::getGenerics(env))
 }
 
