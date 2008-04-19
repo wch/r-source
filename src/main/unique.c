@@ -135,7 +135,7 @@ static int chash(SEXP x, int indx, HashData *d)
 static int shash(SEXP x, int indx, HashData *d)
 {
     unsigned int k;
-    const char *p = translateChar(STRING_ELT(x, indx));
+    const char *p = translateChar0(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
 	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
@@ -194,9 +194,11 @@ static int sequal(SEXP x, int i, SEXP y, int j)
 	return 0;
     /* Look at the lengths, as that is some check for embedded nuls. */
     if (LENGTH(STRING_ELT(x, i)) != LENGTH(STRING_ELT(y, j))) return 0;
-    /* Finally look at the contents if necessary */
-    return !strcmp(translateChar(STRING_ELT(x, i)),
-		   translateChar(STRING_ELT(y, j)));
+    /* Finally look at the contents if necessary.
+       This could confuse nul and \0, but the lengths will usually be
+       different. */
+    return !strcmp(translateChar0(STRING_ELT(x, i)),
+		   translateChar0(STRING_ELT(y, j)));
 }
 
 static int rawhash(SEXP x, int indx, HashData *d)
@@ -461,7 +463,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0))
 	dup = duplicated3(x, incomp, asLogical(CADDR(args)));
-    else 
+    else
 	dup = duplicated(x, asLogical(CADDR(args)));
 
     if (PRIMVAL(op) == 0) /* "duplicated()" : */
@@ -716,11 +718,11 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, n_input));
     ians = INTEGER(ans);
     for (i = 0; i < n_input; i++) {
-	in[i] = translateChar(STRING_ELT(input, i));
+	in[i] = translateChar0(STRING_ELT(input, i));
 	ians[i] = 0;
     }
     for (j = 0; j < n_target; j++)
-	tar[j] = translateChar(STRING_ELT(target, j));
+	tar[j] = translateChar0(STRING_ELT(target, j));
 
     /* First pass, exact matching */
     if(no_dups) {
@@ -824,12 +826,12 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     ians = INTEGER(ans);
 
     for (i = 0; i < n_input; i++) {
-	ss = translateChar(STRING_ELT(input, i));
+	ss = translateChar0(STRING_ELT(input, i));
 	temp = strlen(ss);
 	imatch = NA_INTEGER;
 	perfect = FALSE;
 	for (j = 0; j < n_target; j++) {
-	    st = translateChar(STRING_ELT(target, j));
+	    st = translateChar0(STRING_ELT(target, j));
 	    k = strncmp(ss, st, temp);
 	    if (k == 0) {
 		if (strlen(st) == temp) {

@@ -619,6 +619,7 @@ SEXPTYPE Rf_str2type(const char *);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
 const char * Rf_translateChar(SEXP);
+const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);
 const char * Rf_type2char(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
@@ -951,6 +952,7 @@ int R_system(const char *);
 #define StringBlank		Rf_StringBlank
 #define substitute		Rf_substitute
 #define translateChar		Rf_translateChar
+#define translateChar0		Rf_translateChar0
 #define translateCharUTF8      	Rf_translateCharUTF8
 #define type2char		Rf_type2char
 #define type2str		Rf_type2str

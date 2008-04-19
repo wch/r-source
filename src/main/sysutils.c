@@ -98,7 +98,7 @@ static char * fixmode(const char *mode)
     fixedmode[4] = '\0';
     strncpy(fixedmode, mode, 4);
     if (!strpbrk(fixedmode, "bt")) {
-    	strcat(fixedmode, "t");
+	strcat(fixedmode, "t");
     }
     return fixedmode;
 }
@@ -109,7 +109,7 @@ static wchar_t * wcfixmode(const wchar_t *mode)
     wcfixedmode[4] = L'\0';
     wcsncpy(wcfixedmode, mode, 4);
     if (!wcspbrk(wcfixedmode, L"bt")) {
-    	wcscat(wcfixedmode, L"t");
+	wcscat(wcfixedmode, L"t");
     }
     return wcfixedmode;
 }
@@ -194,7 +194,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
  *  SYSTEM INFORMATION
  */
 
-          /* The location of the R system files */
+	  /* The location of the R system files */
 
 char *R_HomeDir(void)
 {
@@ -225,9 +225,9 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     pattern = CAR(args); n1 = length(pattern);
     tempdir = CADR(args); n2 = length(tempdir);
     if (!isString(pattern))
-        error(_("invalid filename pattern"));
+	error(_("invalid filename pattern"));
     if (!isString(tempdir))
-        error(_("invalid '%s' value"), "tempdir");
+	error(_("invalid '%s' value"), "tempdir");
     if (n1 < 1)
 	error(_("no 'pattern'"));
     if (n2 < 1)
@@ -277,8 +277,8 @@ int R_system(const char *command)
 #ifdef HAVE_AQUA
     char *cmdcpy;
     if(useaqua) {
-        /* FIXME, is Cocoa's interface not const char*? */
-        cmdcpy = acopy_string(command);
+	/* FIXME, is Cocoa's interface not const char*? */
+	cmdcpy = acopy_string(command);
 	val = ptr_CocoaSystem(cmdcpy);
     }
     else
@@ -354,7 +354,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
 		int n = wcslen(w), N = 3*n+1; /* UCS-2 maps to <=3 UTF-8 */
-		char *buf = alloca(N); 
+		char *buf = alloca(N);
 		R_CheckStack();
 		wcstombs(buf, w, N); buf[N-1] = '\0'; /* safety */
 		SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
@@ -449,7 +449,7 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(vars = CAR(args)))
-        error(_("wrong type for argument"));
+	error(_("wrong type for argument"));
     n = LENGTH(vars);
 
 #if defined(HAVE_UNSETENV) || defined(HAVE_PUTENV_UNSET) || defined(HAVE_PUTENV_UNSET2)
@@ -497,7 +497,7 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++)
-        LOGICAL(ans)[i] = !getenv(translateChar(STRING_ELT(vars, i)));
+	LOGICAL(ans)[i] = !getenv(translateChar(STRING_ELT(vars, i)));
     UNPROTECT(1);
     return ans;
 }
@@ -591,7 +591,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
 	    /* First initialize output */
 	    Riconv (obj, NULL, NULL, &outbuf, &outb);
-        next_char:
+	next_char:
 	    /* Then convert input  */
 	    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
 	    *outbuf = '\0';
@@ -614,7 +614,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 			goto top_of_loop;
 		    }
-		    memcpy(outbuf, sub, j = strlen(sub)); 
+		    memcpy(outbuf, sub, j = strlen(sub));
 		    outbuf += j;
 		    outb -= j;
 		}
@@ -684,7 +684,7 @@ size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
     /* here libiconv has const char **, glibc has char ** for inbuf */
-    return iconv((iconv_t) cd, (ICONV_CONST char **) inbuf, inbytesleft, 
+    return iconv((iconv_t) cd, (ICONV_CONST char **) inbuf, inbytesleft,
 		 outbuf, outbytesleft);
 }
 
@@ -695,6 +695,7 @@ int Riconv_close (void *cd)
 
 static void *latin1_obj = NULL, *utf8_obj=NULL, *ucsmb_obj=NULL;
 
+/* This version truncates at the first nul, if it translates */
 const char *translateChar(SEXP x)
 {
     void * obj;
@@ -728,12 +729,12 @@ const char *translateChar(SEXP x)
 	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
 	    utf8_obj = obj;
 	}
-	obj = utf8_obj;	
+	obj = utf8_obj;
     }
 
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
-    inbuf = ans; inb = strlen(inbuf);
+    inbuf = ans; inb = strlen(inbuf); /* truncates at the first nul */
     outbuf = cbuff.data; outb = cbuff.bufsize - 1;
     /* First initialize output */
     Riconv (obj, NULL, NULL, &outbuf, &outb);
@@ -765,7 +766,7 @@ next_char:
 # ifndef Win32
 		} else {
 		    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
-		    outbuf += 12; outb -= 12;		
+		    outbuf += 12; outb -= 12;
 		}
 # endif
 	    } else {
@@ -780,6 +781,116 @@ next_char:
 	    outbuf += 4; outb -= 4;
 	    inbuf++; inb--;
 	}
+	goto next_char;
+    }
+    *outbuf = '\0';
+    res = strlen(cbuff.data) + 1;
+    p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
+
+/* This version maps embedded nuls to '\0' */
+const char *translateChar0(SEXP x)
+{
+    void * obj;
+    const char *inbuf, *ans = CHAR(x);
+    char *outbuf, *p;
+    size_t inb, outb, res, lenx, tot;
+#ifdef SUPPORT_MBCS
+    cetype_t ienc = getCharCE(x);
+#endif
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "translateChar0");
+    if(x == NA_STRING) return ans;
+
+    lenx = LENGTH(x);
+    for(inbuf = ans, inb = 0; inb < lenx; inb++)
+	if(!*inbuf++) break;
+    /* bail out if no embedded zeroes */
+    if (inb == lenx) return translateChar(x);
+
+    if(IS_LATIN1(x)) {
+	if(!latin1_obj) {
+	    obj = Riconv_open("", "latin1");
+	    /* should never happen */
+	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+	    latin1_obj = obj;
+	}
+	obj = latin1_obj;
+    } else {
+	if(!utf8_obj) {
+	    obj = Riconv_open("", "UTF-8");
+	    /* should never happen */
+	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+	    utf8_obj = obj;
+	}
+	obj = utf8_obj;
+    }
+
+    R_AllocStringBuffer(0, &cbuff);
+top_of_loop:
+    inbuf = ans; inb = strlen(inbuf); tot = inb;
+    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
+    /* First initialize output */
+    Riconv (obj, NULL, NULL, &outbuf, &outb);
+next_char:
+    /* Then convert input  */
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+    if(res == -1 && errno == E2BIG) {
+	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	goto top_of_loop;
+    } else if(res == -1 && errno == EILSEQ) {
+	if(outb < 13) {
+	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	    goto top_of_loop;
+	}
+#ifdef SUPPORT_MBCS
+	if (ienc == CE_UTF8) {
+	    /* if starting in UTF-8, use \uxxxx */
+	    /* This must be the first byte */
+	    int clen;
+	    wchar_t wc;
+	    clen = utf8toucs(&wc, inbuf);
+	    if(clen > 0 && inb >= clen) {
+		inbuf += clen; inb -= clen;
+# ifndef Win32
+		if((unsigned int) wc < 65536) {
+# endif
+		    snprintf(outbuf, 9, "<U+%04X>", (unsigned int) wc);
+		    outbuf += 8; outb -= 8;
+# ifndef Win32
+		} else {
+		    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
+		    outbuf += 12; outb -= 12;
+		}
+# endif
+	    } else {
+		snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+		outbuf += 4; outb -= 4;
+		inbuf++; inb--;
+	    }
+	} else
+#endif
+	{
+	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+	    outbuf += 4; outb -= 4;
+	    inbuf++; inb--;
+	}
+	goto next_char;
+    }
+    tot -= inb;
+    if(tot < lenx) {
+	if(outb < 3) {
+	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	    goto top_of_loop;
+	}
+	snprintf(outbuf, 3, "\\0");
+	outbuf += 2; outb -= 2;
+	inbuf++; inb = strlen(inbuf); tot += inb + 1;
 	goto next_char;
     }
     *outbuf = '\0';
@@ -917,13 +1028,13 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     /* We can only encode from Symbol to UTF-8 */
-    if(ce_in == ce_out || ce_out == CE_SYMBOL || 
+    if(ce_in == ce_out || ce_out == CE_SYMBOL ||
        ce_in == CE_ANY || ce_out == CE_ANY) return x;
     if(ce_in == CE_SYMBOL) {
 	if(ce_out == CE_UTF8) {
 	    int nc = 3*strlen(x)+1; /* all in BMP */
 	    p = R_alloc(nc, 1);
- 	    Rf_AdobeSymbol2utf8(p, x, nc);
+	    Rf_AdobeSymbol2utf8(p, x, nc);
 	    return p;
 	} else return x;
     }
@@ -933,14 +1044,14 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return x;
 
     if(strIsASCII(x)) return x;
-    
+
     switch(ce_in) {
 #ifdef Win32
-    case CE_NATIVE: 
+    case CE_NATIVE:
 	{
 	    /* Looks like CP1252 is treated as Latin-1 by iconv */
 	    sprintf(buf, "CP%d", localeCP);
-	    fromcode = buf; 
+	    fromcode = buf;
 	    break;
 	}
     case CE_LATIN1: fromcode = "CP1252"; break;
@@ -958,7 +1069,7 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     case CE_UTF8:   tocode = "UTF-8"; break;
     default: return x;
     }
-    
+
     obj = Riconv_open(tocode, fromcode);
     if(obj == (void *)(-1)) return x;
     R_AllocStringBuffer(0, &cbuff);
@@ -983,7 +1094,7 @@ next_char:
 	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 	    outbuf += 4; outb -= 4;
 	    inbuf++; inb--;
-	    goto next_char; 
+	    goto next_char;
 	    break;
 	case 2: /* substitute . */
 	    if(outb < 1) {
@@ -991,11 +1102,11 @@ next_char:
 		goto top_of_loop;
 	    }
 	    *outbuf++ = '.'; inbuf++; outb--; inb--;
-	    goto next_char; 
+	    goto next_char;
 	    break;
 	default: /* skip byte */
 	    inbuf++; inb--;
-	    goto next_char; 
+	    goto next_char;
 	}
     }
     Riconv_close(obj);
@@ -1014,9 +1125,9 @@ invalidate_cached_recodings(void)
     utf8_obj = NULL;
     ucsmb_obj = NULL;
 #ifdef Win32
-    latin1_wobj = NULL; 
+    latin1_wobj = NULL;
     utf8_wobj=NULL;
-#endif    
+#endif
 }
 
 
@@ -1037,9 +1148,9 @@ size_t ucstomb(char *s, const unsigned int wc)
     char    *outbuf = buf;
     size_t   outbytesleft = sizeof(buf);
     size_t   status;
-    
+
     if(wc == 0) {*s = '\0'; return 1;}
-    
+
     memset(buf, 0, sizeof(buf));
     memset(wcs, 0, sizeof(wcs));
     wcs[0] = wc;
@@ -1051,28 +1162,28 @@ size_t ucstomb(char *s, const unsigned int wc)
 	    /* locale set fuzzy case */
 	    strncpy(tocode, locale2charset(NULL), sizeof(tocode));
 	    if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
-		return (size_t)(-1); 
+		return (size_t)(-1);
 #else
 	    return (size_t)(-1);
 #endif
 	}
 	ucsmb_obj = cd;
     }
-    
+
     status = Riconv(ucsmb_obj, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
 
     if (status == (size_t) -1) {
-        switch(errno){
-        case EINVAL:
-            return (size_t) -2;
-        case EILSEQ:
-            return (size_t) -1;
-        case E2BIG:
-            break;
-        default:
-            errno = EILSEQ;
-            return (size_t) -1;
-        }
+	switch(errno) {
+	case EINVAL:
+	    return (size_t) -2;
+	case EILSEQ:
+	    return (size_t) -1;
+	case E2BIG:
+	    break;
+	default:
+	    errno = EILSEQ;
+	    return (size_t) -1;
+	}
     }
     buf[MB_CUR_MAX] = '\0'; /* safety measure */
     strcpy(s, buf);
@@ -1091,24 +1202,24 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
     char    *outbuf = (char *) wcs;
     size_t   outbytesleft = sizeof(buf);
     size_t   status;
-    
+
     if(s[0] == 0) {*wc = 0; return 1;}
-    
+
     if((void *)(-1) == (cd = Riconv_open(UNICODE, ""))) return (size_t)(-1);
     status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
 
     if (status == (size_t) -1) {
-        switch(errno){
-        case EINVAL:
-            return (size_t) -2;
-        case EILSEQ:
-            return (size_t) -1;
-        case E2BIG:
-            break;
-        default:
-            errno = EILSEQ;
-            return (size_t) -1;
-        }
+	switch(errno) {
+	case EINVAL:
+	    return (size_t) -2;
+	case EILSEQ:
+	    return (size_t) -1;
+	case E2BIG:
+	    break;
+	default:
+	    errno = EILSEQ;
+	    return (size_t) -1;
+	}
     }
     *wc = wcs[0];
     return (size_t) 1;
@@ -1125,28 +1236,28 @@ size_t ucstoutf8(char *s, const unsigned int wc)
     char    *outbuf = buf;
     size_t   outbytesleft = sizeof(buf);
     size_t   status;
-    
+
     if(wc == 0) {*s = '\0'; return 1;}
-    
+
     memset(buf, 0, sizeof(buf));
     wcs[0] = wc; wcs[1] = 0;
 
-    if((void *)(-1) == (cd = Riconv_open("UTF-8", UNICODE))) 
-	return (size_t)(-1); 
+    if((void *)(-1) == (cd = Riconv_open("UTF-8", UNICODE)))
+	return (size_t)(-1);
     status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
 
     if (status == (size_t) -1) {
-        switch(errno){
-        case EINVAL:
-            return (size_t) -2;
-        case EILSEQ:
-            return (size_t) -1;
-        case E2BIG:
-            break;
-        default:
-            errno = EILSEQ;
-            return (size_t) -1;
-        }
+	switch(errno) {
+	case EINVAL:
+	    return (size_t) -2;
+	case EILSEQ:
+	    return (size_t) -1;
+	case E2BIG:
+	    break;
+	default:
+	    errno = EILSEQ;
+	    return (size_t) -1;
+	}
     }
     *outbuf = '\0';
     strcpy(s, buf);
@@ -1161,7 +1272,7 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 }
 
 size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
-               char **outbuf, size_t *outbytesleft)
+	       char **outbuf, size_t *outbytesleft)
 {
     error(_("'iconv' is not available on this system"));
     return 0;
@@ -1175,6 +1286,12 @@ int Riconv_close (void * cd)
 
 const char *translateChar(SEXP x)
 {
+    return CHAR(x);
+}
+
+const char *translateChar0(SEXP x)
+{
+    /* FIXME -- escape embedded nuls */
     return CHAR(x);
 }
 
@@ -1290,10 +1407,10 @@ void attribute_hidden InitTempDir()
 	    char * buf = (char *) malloc((strlen(tmp) + 20) * sizeof(char));
 	    if(buf) {
 		sprintf(buf, "R_SESSION_TMPDIR=%s", tmp);
-		if(putenv(buf)) 
+		if(putenv(buf))
 		    errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
 		/* no free here: storage remains in use */
-	    } else 
+	    } else
 		errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
 	}
 # endif
@@ -1331,7 +1448,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 #else
 	sprintf(tm, "%s%s%s%x%x", tmp1, filesep, prefix, rand(), rand());
 #endif
-        if(!R_FileExists(tm)) {
+	if(!R_FileExists(tm)) {
 	    done = 1;
 	    break;
 	}
@@ -1374,7 +1491,7 @@ void attribute_hidden resetTimeLimits()
     R_getProcTime(data);
 
     elapsedLimit = (elapsedLimitValue > 0) ? data[2] + elapsedLimitValue : -1.0;
-    if (elapsedLimit2 > 0.0 && 
+    if (elapsedLimit2 > 0.0 &&
 	(elapsedLimit <= 0.0 || elapsedLimit2 < elapsedLimit))
 	elapsedLimit = elapsedLimit2;
 
@@ -1431,11 +1548,11 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
     elapsed = asReal(CADR(args));
     R_getProcTime(data);
 
-    if (R_FINITE(cpu) && cpu > 0) 
+    if (R_FINITE(cpu) && cpu > 0)
 #ifdef Win32
 	cpuLimit2 = cpu + data[0] + data[1];
 #else
-        cpuLimit2 = cpu + data[0] + data[1] + data[3] + data[4];
+	cpuLimit2 = cpu + data[0] + data[1] + data[3] + data[4];
 #endif
     else cpuLimit2 = -1;
 

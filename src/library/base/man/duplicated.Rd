@@ -60,8 +60,9 @@ duplicated(x, incomparables = FALSE, \dots)
   \code{NA_real_}.
 
   Strings with embedded nuls of the same length will be considered
-  equal if they agree when truncated at the first nul.
+  equal if they agree when the nuls are replaced by \code{\\0}.
 }
+
 \section{Warning}{
   Using this for lists is potentially slow, especially if the elements
   are not atomic vectors (see \code{\link{vector}}) or differ only

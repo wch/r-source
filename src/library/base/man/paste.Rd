@@ -1,6 +1,6 @@
 % File src/library/base/man/paste.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{paste}
@@ -37,7 +37,7 @@ paste(\dots, sep = " ", collapse = NULL)
   are then concatenated into a single string, with the elements being
   separated by the value of \code{collapse}.
 
-  Character inputs with embedded nul bytes will be truncated at the first nul.
+  Character inputs with embedded nul bytes have nuls converted to \code{\\0}.
 }
 \value{
   A character vector of the concatenated values.  This will be of length

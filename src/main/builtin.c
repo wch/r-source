@@ -400,16 +400,17 @@ static const char *trChar(SEXP x)
     static char buf[106];
     int n = strlen(CHAR(x));
     /* Long strings will be rare, and few per cat() call so we
-       can afford to be profligate here: translateChar is */
+       can afford to be profligate here: translateChar0 is */
     if (n < 100) p = buf; else p = R_alloc(n+7, 1);
     if (WinUTF8out && getCharCE(x) == CE_UTF8) {
+	/* FIXME for embedded nuls */
 	strcpy(p, UTF8in); strcat(p, CHAR(x)); strcat(p, UTF8out);
 	return p;
     } else
-	return translateChar(x);
+	return translateChar0(x);
 }
 #else
-# define trChar(x) translateChar(x)
+# define trChar(x) translateChar0(x)
 #endif
 
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
@@ -551,7 +552,6 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (labs != R_NilValue && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
 		Rprintf("%s ", trChar(STRING_ELT(labs, nlines % lablen)));
-		/* FIXME -- Rstrlen allows for embedded nuls, double-width chars */
 		width += Rstrlen(STRING_ELT(labs, nlines % lablen), 0) + 1;
 		nlines++;
 	    }
