@@ -81,7 +81,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
-    	error(_("invalid first argument"));
+	error(_("invalid first argument"));
     else
 	name = install(translateChar(STRING_ELT(CAR(args), 0)));
     args = CDR(args);
@@ -103,7 +103,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 	aenv = R_BaseEnv;
     } else
     if (!isEnvironment(aenv))
-    	errorcall(call, R_MSG_IA);
+	errorcall(call, R_MSG_IA);
 
     defineVar(name, mkPROMISE(expr, eenv), aenv);
     return R_NilValue;
@@ -118,7 +118,7 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     names = CAR(args); args = CDR(args);
     if (!isString(names))
-    	error(_("invalid first argument"));
+	error(_("invalid first argument"));
     values = CAR(args); args = CDR(args);
     expr = CAR(args); args = CDR(args);
     eenv = CAR(args); args = CDR(args);
@@ -287,7 +287,7 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = CADR(args);
 
     if (TYPEOF(CAR(args)) == CLOSXP
-        && (isEnvironment(env) || isNull(env))) {
+	&& (isEnvironment(env) || isNull(env))) {
 	if (isNull(env))
 	    error(_("use of NULL environment is defunct"));
 	if(NAMED(s) > 1) {
@@ -324,12 +324,12 @@ SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'enclos' must be an environment"));
 
     if( hash ) {
-        args = CDR(args);
-        PROTECT(size = coerceVector(CAR(args), INTSXP));
-        if (INTEGER(size)[0] == NA_INTEGER || INTEGER(size)[0] <= 0)
-            error(_("'size' must be a positive integer"));
+	args = CDR(args);
+	PROTECT(size = coerceVector(CAR(args), INTSXP));
+	if (INTEGER(size)[0] == NA_INTEGER || INTEGER(size)[0] <= 0)
+	    error(_("'size' must be a positive integer"));
 	ans = R_NewHashedEnv(enclos, size);
-        UNPROTECT(1);
+	UNPROTECT(1);
     } else
 	ans = NewEnvironment(R_NilValue, R_NilValue, enclos);
     return ans;
@@ -343,7 +343,7 @@ SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(CAR(args)) )
 	error( _("argument is not an environment"));
     if( CAR(args) == R_EmptyEnv )
-    	error(_("the empty environment has no parent"));
+	error(_("the empty environment has no parent"));
     return( ENCLOS(CAR(args)) );
 }
 
@@ -360,7 +360,7 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(env) )
 	error(_("argument is not an environment"));
     if( env == R_EmptyEnv )
-    	error(_("can not set parent of the empty environment"));
+	error(_("can not set parent of the empty environment"));
     parent = CADR(args);
     if (isNull(parent)) {
 	error(_("use of NULL environment is defunct"));
@@ -418,7 +418,7 @@ static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
     *width = 0;
     if (labels != R_NilValue) {
 	Rprintf("%s ", EncodeString(STRING_ELT(labels, ntot % lablen),
-	  	                    1, 0, Rprt_adj_left));
+				    1, 0, Rprt_adj_left));
 	*width += Rstrlen(STRING_ELT(labels, ntot % lablen), 0) + 1;
     }
 }
@@ -456,8 +456,8 @@ static void cat_cleanup(void *data)
     int changedcon = pci->changedcon;
 
     con->fflush(con);
-    if(!wasopen) con->close(con);  /**** do this second? */
     if(changedcon) switch_stdout(-1, 0);
+    if(!wasopen) con->close(con);
 #ifdef Win32
     WinUTF8out = FALSE;
 #endif
@@ -551,13 +551,14 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (labs != R_NilValue && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
 		Rprintf("%s ", trChar(STRING_ELT(labs, nlines % lablen)));
+		/* FIXME -- Rstrlen allows for embedded nuls, double-width chars */
 		width += Rstrlen(STRING_ELT(labs, nlines % lablen), 0) + 1;
 		nlines++;
 	    }
 	    if (isString(s))
 		p = trChar(STRING_ELT(s, 0));
-            else if (isSymbol(s)) /* length 1 */
-                p = CHAR(PRINTNAME(s));
+	    else if (isSymbol(s)) /* length 1 */
+		p = CHAR(PRINTNAME(s));
 	    else if (isVectorAtomic(s)) {
 		/* Not a string, as that is covered above.
 		   Thus the maximum size is about 60.
@@ -689,7 +690,7 @@ SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* vector(mode="logical", length=0) */
 SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_len_t len /*, i*/;
+    R_len_t len;
     SEXP s;
     SEXPTYPE mode;
     checkArity(op, args);
@@ -721,18 +722,10 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (mode == INTSXP || mode == LGLSXP)
 	memset(INTEGER(s), 0, len*sizeof(int));
-        /*for (i = 0; i < len; i++) INTEGER(s)[i] = 0; */
     else if (mode == REALSXP)
 	memset(REAL(s), 0, len*sizeof(double));
-	/*for (i = 0; i < len; i++) REAL(s)[i] = 0.;*/
     else if (mode == CPLXSXP)
 	memset(COMPLEX(s), 0, len*sizeof(Rcomplex));
-    /*
-	for (i = 0; i < len; i++) {
-	    COMPLEX(s)[i].r = 0.;
-	    COMPLEX(s)[i].i = 0.;
-	}
-    */
     else if (mode == RAWSXP)
 	memset(RAW(s), 0, len);
     /* other cases: list/expression have "NULL", ok */
@@ -923,4 +916,3 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return x;
 }
-
