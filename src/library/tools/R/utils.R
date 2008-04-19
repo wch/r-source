@@ -171,6 +171,9 @@ showNonASCII <-
 function(x)
 {
     if(!capabilities("iconv")) stop("'iconv' is required")
+    ## All that is needed here is an 8-bit encoding that includes ASCII.
+    ## The only one we guarantee to exist is 'latin1'.
+    ## The default sub=NA is faster.
     ind <- is.na(iconv(x, "latin1", "ASCII"))
     if(any(ind))
         cat(paste(which(ind), ": ",
