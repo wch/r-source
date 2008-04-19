@@ -2821,7 +2821,7 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP v) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP) 
 	error("value of 'SET_CXTAIL' must be a char or NULL, not a '%s'", 
-	      type2char(TYPEOF(x)));
+	      type2char(TYPEOF(v)));
 #endif
     /*CHECK_OLD_TO_NEW(x, v); *//* not needed since not properly traced */
     ATTRIB(x) = v;
