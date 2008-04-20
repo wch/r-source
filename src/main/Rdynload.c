@@ -788,22 +788,20 @@ R_dlsym(DllInfo *info, char const *name,
 
 #ifdef HAVE_F77_UNDERSCORE
     if(symbol && symbol->type == R_FORTRAN_SYM) {
-#ifdef HAVE_F77_EXTRA_UNDERSCORE
-	strcat(buf, "__");
-#elif HAVE_F77_UNDERSCORE
 	strcat(buf, "_");
-#endif
+# ifdef HAVE_F77_EXTRA_UNDERSCORE
+	if(strchr(name, '_')) strcat(buf, "_");
+# endif
     }
 #endif
 
     f = (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
 #ifdef HAVE_F77_UNDERSCORE
     if (!f && symbol && symbol->type == R_ANY_SYM) {
-#ifdef HAVE_F77_EXTRA_UNDERSCORE
-	strcat(buf, "__");
-#elif HAVE_F77_UNDERSCORE
 	strcat(buf, "_");
-#endif
+# ifdef HAVE_F77_EXTRA_UNDERSCORE
+	if(strchr(name, '_')) strcat(buf, "_");
+# endif
 	f = (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
     }
 #endif
