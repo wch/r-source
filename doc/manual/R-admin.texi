@@ -635,6 +635,9 @@ destination.  In this case @code{prefix} (and so on) should reflect
 the final destination, and @env{DESTDIR} should be used: see
 @uref{http://www.gnu.org/prep/standards/html_node/DESTDIR.html}
 
+Parallel makes are supported for making @R{} only, not for installation
+nor for checking.
+
 
 @node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
 @section Uninstallation
@@ -3096,6 +3099,9 @@ variable @code{MAKE} at configure time, for example
 @example
 ./configure MAKE=gmake
 @end example
+
+Note the comment above about using a parallel @command{make}: this works
+for building @R{} but not for installing nor checking.
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on Unix
 @section Using FORTRAN
