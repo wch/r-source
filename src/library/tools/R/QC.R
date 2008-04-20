@@ -3385,6 +3385,12 @@ function(package, lib.loc = NULL)
             assign("nsl", function(hostname) {}, envir = compat)
             assign("X11Font", function(font) {}, envir = compat)
             assign("X11Fonts", function(...) {}, envir = compat)
+            assign("cairo_pdf",
+                   function(filename =
+                            if (onefile) "Rplots.pdf" else "Rplot%03d.pdf",
+                            width = 7, height = 7, pointsize = 12,
+                            onefile = FALSE, bg = "white", antialias) {},
+                   envir = compat)
             assign("quartz",
                    function(display = "", width = 5, height = 5,
                             pointsize = 12, family = "Helvetica",
@@ -4434,7 +4440,7 @@ function(env)
 {
     env <- as.environment(env)
 #    Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
-    Filter(function(g) exists(g, envir = env, inherits=FALSE) && 
+    Filter(function(g) exists(g, envir = env, inherits=FALSE) &&
 	   methods::is(get(g, envir = env), "genericFunction"),
            methods::getGenerics(env))
 }
