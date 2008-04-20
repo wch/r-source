@@ -29,10 +29,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
-    in one file.  If false, generate a file name containing the page
-    number for each page.  Defaults to  \code{TRUE}.}
+    in one file.  If false, generate a file wiht name containing the page
+    number for each page.  Defaults to \code{TRUE}.}
   \item{family}{the font family to be used, see
-    \code{\link{postscript}}.  Defaults to \code{"Helvetica"}. }
+    \code{\link{postscript}}.  Defaults to \code{"Helvetica"}.}
   \item{title}{title string to embed as the \code{/Title} field in the
     file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying \R graphics font family
@@ -40,7 +40,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{NULL}.}
   \item{version}{a string describing the PDF version that will be
     required to view the output.  This is a minimum, and will be
-    increased (with a warning) if necessary.  Defaults to \code{"1.1"}. }
+    increased (with a warning) if necessary.  Defaults to \code{"1.4"},
+    but see \sQuote{Details}.}
   \item{paper}{the target paper size.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} (or \code{"us"}) and
     \code{"executive"} (and these can be capitalized), or \code{"a4r"}
@@ -132,9 +133,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   produced.  The version must be at least 1.4 for semi-transparent
   output to be understood, and at least 1.3 if CID fonts are to be used:
   if these features are used the version number will be increased (with
-  a warning).  Specifying a low version number (as the default) is
-  useful if you want to produce PDF output that can be viewed on older
-  or non-Adobe PDF viewers.  (PDF 1.4 requires Acrobat 5 or later.)
+  a warning).  Specifying a low version number is useful if you want to
+  produce PDF output that can be viewed on older or non-Adobe PDF
+  viewers.  (PDF 1.4 requires Acrobat 5 or later.)
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with

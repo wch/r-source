@@ -62,6 +62,9 @@ NEW FEATURES
 	with broken viewers) and 'colormodel'.	It now only references
 	the ZapfDingbats font if it is used.
 
+	The default PDF version is now 1.4, since viewers that do not
+	accept that are now rare.
+
 
 PACKAGE INSTALLATION
 
