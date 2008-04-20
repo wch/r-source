@@ -58,7 +58,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(PicTeX, 6),
     EXTDEF(PostScript, 16),
     EXTDEF(XFig, 11),
-    EXTDEF(PDF, 13),
+    EXTDEF(PDF, 15),
 #ifdef WIN32
     EXTDEF(devga, 16),
     EXTDEF(savePlot, 3),

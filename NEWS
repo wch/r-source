@@ -58,6 +58,10 @@ NEW FEATURES
     o	Adobe Symbol has been added to the encodings in
 	tools::charset_to_Encoding.
 
+    o	pdf() has new arguments 'useDingbats' (set to FALSE for use
+	with broken viewers) and 'colormodel'.	It now only references
+	the ZapfDingbats font if it is used.
+
 
 PACKAGE INSTALLATION
 

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pdf.options}
@@ -20,9 +20,10 @@ pdf.options(\dots, reset = FALSE)
 }
 \arguments{
   \item{\dots}{arguments \code{width}, \code{height}, \code{onefile},
-    \code{family}, \code{title}, \code{fonts}, \code{paper}, \code{encoding},
-    \code{pointsize}, \code{bg}, \code{fg} and \code{pagecentre}
-    can be supplied.}
+    \code{family}, \code{title}, \code{fonts}, \code{paper},
+    \code{encoding}, \code{pointsize}, \code{bg}, \code{fg},
+    \code{pagecentre}, \code{useDingbats} and \code{colormodel} can be
+    supplied.}
   \item{reset}{logical: should the defaults be reset to their
     \sQuote{factory-fresh} values?}
 }

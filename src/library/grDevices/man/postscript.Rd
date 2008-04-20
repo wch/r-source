@@ -108,7 +108,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"rgb"}, \code{"rgb-nogray"},
-    \code{"gray"} and \code{"cmyk"}. Defaults to \code{"rgb"}.}
+    \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"rgb"}.}
 }
 \details{
   All arguments except \code{file} default to values given by

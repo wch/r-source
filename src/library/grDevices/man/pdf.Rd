@@ -17,7 +17,8 @@
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
-    paper, encoding, bg, fg, pointsize, pagecentre)
+    paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
+    useDingbats)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -63,6 +64,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{pagecentre}{logical: should the device region be centred on the
     page? -- is only relevant for \code{paper != "special"}.  Defaults
     to true.}
+  \item{colormodel}{a character string describing the color model:
+    currently allowed values are \code{"rgb"}, \code{"gray"} and
+    \code{"cmyk"}.  Defaults to \code{"rgb"}.}
+  \item{useDingbats}{logical.  Should small circles be rendered
+    \emph{via} the Dingbats font?  Defaults to true, which produces
+    smaller and better output -- this is provided for those who insist
+    on using broken PDF viewers.}
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -150,6 +158,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Almost all PDF viewers will use a white canvas so the visual effect is
   if the background were white.  This will not be the case when printing
   onto coloured paper, though.
+}
+\section{Color models}{
+  The default color model is RGB, and model \code{"gray"} maps RGB
+  colors to greyscale using perceived luminosity (biased towards green).
+  \code{"cmyk"} outputs in CMYK colorspace. Nothing in \R specifies the
+  interpretation of the RGB or CMYK color spaces, and the simplest
+  possible conversion to CMYK is used
+  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for

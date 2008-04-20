@@ -2902,7 +2902,8 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	    k = fmin2(k, m);
 	    k = fmin2(k, y);
 	    if(k == 1.0) c = m = y = 0.0;
-	    else {c /= (1.-k); m /= (1.-k); y /= (1.-k);}
+	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
+	    /* else {c /= (1.-k); m /= (1.-k); y /= (1.-k);} */
 	    if(c == 0) fprintf(fp, "0");
 	    else if (c == 1) fprintf(fp, "1");
 	    else fprintf(fp, "%.4f", c);
@@ -5135,6 +5136,8 @@ typedef struct {
     int startstream; /* position of start of current stream */
     Rboolean inText;
     char title[1024];
+    char colormodel[30];
+    Rboolean dingbats;
 
     /*
      * Fonts and encodings used on the device
@@ -5272,7 +5275,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		const char *bg, const char *fg, double width, double height,
 		double ps, int onefile, int pagecentre,
 		const char *title, SEXP fonts,
-		int versionMajor, int versionMinor)
+		int versionMajor, int versionMinor,
+		const char *colormodel, int dingbats)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5321,7 +5325,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
     memset(pd->fontUsed, 0, 100*sizeof(Rboolean));
-    pd->fontUsed[1] = TRUE; /* Dingbats */
+    strncpy(pd->colormodel, colormodel, 30);
+    pd->dingbats = (dingbats != 0);
 
     pd->width = width;
     pd->height = height;
@@ -5759,10 +5764,26 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	     */
 	    fprintf(pd->pdffp, "/GS%i gs\n", colAlphaIndex(alpha, pd));
 	}
-	fprintf(pd->pdffp, "%.3f %.3f %.3f RG\n",
-		R_RED(color)/255.0,
-		R_GREEN(color)/255.0,
-		R_BLUE(color)/255.0);
+	if(streql(pd->colormodel, "gray")) {
+	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
+		b = R_BLUE(color)/255.0;
+	    /* weights from http://www.faqs.org/faqs/graphics/colorspace-faq/ */
+	    fprintf(pd->pdffp, "%.3f G\n", (0.213*r+0.715*g+0.072*b));
+	} else if(streql(pd->colormodel, "cmyk")) {
+	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
+		b = R_BLUE(color)/255.0;
+	    double c = 1.0-r, m=1.0-g, y=1.0-b, k=c;
+	    k = fmin2(k, m);
+	    k = fmin2(k, y);
+	    if(k == 1.0) c = m = y = 0.0;
+	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
+	    fprintf(pd->pdffp, "%.3f %.3f %.3f %.3f K\n", c, m, y, k);
+	} else
+	    fprintf(pd->pdffp, "%.3f %.3f %.3f RG\n",
+		    R_RED(color)/255.0,
+		    R_GREEN(color)/255.0,
+		    R_BLUE(color)/255.0);
+
 	pd->current.col = color;
     }
 }
@@ -5780,10 +5801,25 @@ static void PDF_SetFill(int color, pDevDesc dd)
 	     */
 	    fprintf(pd->pdffp, "/GS%i gs\n", fillAlphaIndex(alpha, pd));
 	}
-	fprintf(pd->pdffp, "%.3f %.3f %.3f rg\n",
-		   R_RED(color)/255.0,
-		   R_GREEN(color)/255.0,
-		   R_BLUE(color)/255.0);
+	if(streql(pd->colormodel, "gray")) {
+	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
+		b = R_BLUE(color)/255.0;
+	    fprintf(pd->pdffp, "%.3f G\n", (0.213*r+0.715*g+0.072*b));
+	} else if(streql(pd->colormodel, "cmyk")) {
+	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
+		b = R_BLUE(color)/255.0;
+	    double c = 1.0-r, m=1.0-g, y=1.0-b, k=c;
+	    k = fmin2(k, m);
+	    k = fmin2(k, y);
+	    if(k == 1.0) c = m = y = 0.0;
+	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
+	    fprintf(pd->pdffp, "%.3f %.3f %.3f %.3f k\n", c, m, y, k);
+	} else
+	    fprintf(pd->pdffp, "%.3f %.3f %.3f rg\n",
+		    R_RED(color)/255.0,
+		    R_GREEN(color)/255.0,
+		    R_BLUE(color)/255.0);
+    
 	pd->current.fill = color;
     }
 }
@@ -5986,11 +6022,6 @@ static void PDF_startfile(PDFDesc *pd)
     /* Object 4 will be at the end */
 
     ++pd->nobjs;
-
-    /* Object 5 is Dingbats, used for (small) circles */
-
-    pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "5 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F1\n/BaseFont /ZapfDingbats\n>>\nendobj\n");
 }
 
 static const char *Base14[] =
@@ -6044,9 +6075,8 @@ static void PDF_endfile(PDFDesc *pd)
 
     pd->pos[4] = (int) ftell(pd->pdffp);
     /* fonts */
-    /* Dingbats always first */
     fprintf(pd->pdffp,
-	    "4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font << /F1 5 0 R ");
+	    "4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font <<");
     /* Count how many encodings will be included
      * fonts come after encodings */
     nenc = 0;
@@ -6059,7 +6089,11 @@ static void PDF_endfile(PDFDesc *pd)
     }
     /* Should be a default text font at least, plus possibly others */
     tempnobj = pd->nobjs + nenc;
-    nfonts = 2; /* /F1 is dingbats */
+
+    /* Dingbats always F1 */
+    if(pd->fontUsed[1]) fprintf(pd->pdffp, " /F1 %d 0 R ", ++tempnobj);
+
+    nfonts = 2;
     if (pd->fonts) {
 	type1fontlist fontlist = pd->fonts;
 	while (fontlist) {
@@ -6109,6 +6143,12 @@ static void PDF_endfile(PDFDesc *pd)
     /*
      * Write out objects representing the fonts
      */
+
+    if (pd->fontUsed[1]) {
+	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F1\n/BaseFont /ZapfDingbats\n>>\nendobj\n", pd->nobjs);
+    }
+
 
     nfonts = 2;
     if (pd->fonts) {
@@ -6461,11 +6501,12 @@ static void PDF_Circle(double x, double y, double r,
 	}
     }
     if (code) {
-	if (semiTransparent(gc->col) || semiTransparent(gc->fill) || r > 10) {
+	if (semiTransparent(gc->col) || semiTransparent(gc->fill) 
+	    || r > 10  || !pd->dingbats) {
 	    /*
 	     * Due to possible bug in Acrobat Reader for rendering
 	     * semi-transparent text, only ever draw Bezier curves
-	     * regardless of circle size.  Otherwise use use font up to 20pt
+	     * regardless of circle size.  Otherwise use font up to 20pt
 	     */
 	    {
 		/* Use four Bezier curves, hand-fitted to quadrants */
@@ -6487,6 +6528,7 @@ static void PDF_Circle(double x, double y, double r,
 		}
 	    }
 	} else {
+	    pd->fontUsed[1] = TRUE;
 	    /* Use char 108 in Dingbats, which is a solid disc
 	       afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
 	       so diameter = 0.722 * size
@@ -7243,6 +7285,8 @@ SEXP XFig(SEXP args)
  *  fonts
  *  versionMajor
  *  versionMinor
+ *  colormodel
+ *  useDingbats
  */
 
 SEXP PDF(SEXP args)
@@ -7250,10 +7294,10 @@ SEXP PDF(SEXP args)
     pGEDevDesc gdd;
     char *vmax;
     const char *file, *paper, *encoding, *family = NULL /* -Wall */,
-	*bg, *fg, *title, call[] = "PDF";
+	*bg, *fg, *title, call[] = "PDF", *colormodel;
     const char *afms[5];
     double height, width, ps;
-    int i, onefile, pagecentre, major, minor;
+    int i, onefile, pagecentre, major, minor, dingbats;
     SEXP fam, fonts;
 
     vmax = vmaxget();
@@ -7282,7 +7326,10 @@ SEXP PDF(SEXP args)
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
     major = asInteger(CAR(args)); args = CDR(args);
-    minor = asInteger(CAR(args));
+    minor = asInteger(CAR(args)); args = CDR(args);
+    colormodel = CHAR(asChar(CAR(args))); args = CDR(args);
+    dingbats = asLogical(CAR(args));
+    if (dingbats == NA_LOGICAL) dingbats = 1;
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -7292,7 +7339,8 @@ SEXP PDF(SEXP args)
 	    return 0;
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
-			    title, fonts, major, minor)) {
+			    title, fonts, major, minor, colormodel,
+			    dingbats)) {
 	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}
