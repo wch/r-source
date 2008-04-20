@@ -43,9 +43,9 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
 
   If the final line is incomplete (no final EOL marker) the behaviour
   depends on whether the connection is blocking or not.  For a blocking
-  text-mode connection (or a non-text-mode connection) the line
-  will be accepted, with a warning.  For a non-blocking text-mode
-  connection the incomplete line is pushed back, silently.
+  text-mode connection the line will be accepted, with a warning.  For a
+  non-blocking text-mode connection the incomplete line is pushed back,
+  silently.  For other connections it is silently discarded.
 
   Whatever mode the connection is opened in, any of LF, CRLF or CR will
   be accepted as the EOL marker for a line.
