@@ -2215,8 +2215,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
 	CPPFLAGS="${CPPFLAGS} ${TCL_INCLUDE_SPEC}"
 	AC_CHECK_HEADER([tcl.h], 
 			[TCLTK_CPPFLAGS="${TCL_INCLUDE_SPEC}"
-			 found_tcl_h=yes
-			 break])
+			 found_tcl_h=yes])
 	CPPFLAGS="${r_save_CPPFLAGS}"
       fi
       if test "${found_tcl_h}" = no; then
@@ -2260,8 +2259,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
 	CPPFLAGS="${CPPFLAGS} ${TCLTK_CPPFLAGS} ${TK_XINCLUDES} ${TK_INCLUDE_SPEC}"
 	AC_CHECK_HEADER([tk.h], 
 		        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_INCLUDE_SPEC}"
-			 found_tk_h=yes
-			 break])
+			 found_tk_h=yes])
 	CPPFLAGS="${r_save_CPPFLAGS}"
       fi
       if test "${found_tk_h}" = no; then
