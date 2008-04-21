@@ -6378,7 +6378,7 @@ nul-terminated C-style string.  This function will return a pre-existing
 @code{CHARSXP} if one with a matching string already exists, otherwise
 it will create a new one and add it to the cache before returning it to
 you.   The variant @code{mkCharLen} can be used to create a
-@code{CHARSXP} from a buffer possibly containing nuls.
+@code{CHARSXP} from part of a buffer and will ensure null-termination.
 
 Currently, it is still possible to create @code{CHARSXP}s using
 @code{allocVector}; @code{CHARSXP}s created in this way will not be
@@ -7589,8 +7589,7 @@ SEXP mkCharLenCE(const char *, int, cetype_t);
 @end example
 
 @noindent
-to create marked character strings of a given length (possibly with
-embedded nuls).
+to create marked character strings of a given length.
 
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top

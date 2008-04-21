@@ -3381,6 +3381,8 @@ static Rboolean IsASCII(const char *str, int len)
     return TRUE;
 }
 
+/* Because allocCharscp allocates len+1 bytes and zeros the last,
+   this will always zero-terminate */
 SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 {
     SEXP cval, chain;

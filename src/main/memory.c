@@ -1860,8 +1860,8 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
    This ensures only validity of list-like
    SEXPTYPES (as the elements must be initialized).  Initializing of
    other vector types is done in do_makevector 
-   [That comment seems outdated -- CHARSXP, STRSXP, VECSXP, EXPRSXP
-   are initialized.]
+   [That comment seems outdated -- STRSXP, VECSXP, EXPRSXP
+   are initialized and CHARSXP are nul-terminated.]
 */
 
 #define intCHARSXP 73
