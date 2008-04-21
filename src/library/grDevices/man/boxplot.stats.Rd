@@ -46,14 +46,14 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
   The two \sQuote{hinges} are versions of the first and third quartile,
   i.e., close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
   the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
-  differ for even \eqn{n}. Where the quartiles only equal observations
+  differ for even \eqn{n}.  Whereas the quartiles only equal observations
   for \code{n \%\% 4 == 1} (\eqn{n\equiv 1 \bmod 4}{n = 1 mod 4}),
   the hinges do so \emph{additionally} for \code{n \%\% 4 == 2}
   (\eqn{n\equiv 2 \bmod 4}{n = 2 mod 4}), and are in the middle of
   two observations otherwise.
 
   The notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
-  This seems to be based on same calculations as the formula with 1.57 in
+  This seems to be based on the same calculations as the formula with 1.57 in
   Chambers \emph{et al.} (1983, p. 62), given in McGill \emph{et al.}
   (1978, p. 16).  They are based on asymptotic normality of the median
   and roughly equal sample sizes for the two medians being compared, and
