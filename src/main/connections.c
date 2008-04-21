@@ -2817,7 +2817,7 @@ static SEXP readOneString(Rconnection con)
 	}
     }
     if(pos == 10000)
-	warning(_("null terminator not found: breaking string at 10000 chars"));
+	warning(_("null terminator not found: breaking string at 10000 bytes"));
     return mkChar(buf);
 }
 
