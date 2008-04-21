@@ -3230,7 +3230,24 @@ SEXP mkChar(const char *name)
 #ifndef USE_CHAR_HASHING
 SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 {
-    SEXP c = allocCharsxp(len);
+    int slen = strlen(name);
+    SEXP c;
+    if (slen < len) {
+	/* This is tricky: we want to make a reasonable job of
+	   representing this string, and EncodeString() is the most
+	   comprehensive */
+	c = allocCharsxp(len);
+	memcpy(CHAR_RW(c), name, len);
+	switch(enc) {
+	case CE_UTF8: SET_UTF8(c); break;
+	case CE_LATIN1: SET_LATIN1(c); break;
+	default: break;
+	}
+	warning(_("truncating string with embedded nuls: '%s'"), 
+		EncodeString(c, 0, 0, Rprt_adj_none));
+	len = slen;
+    }
+    c = allocCharsxp(len);
     memcpy(CHAR_RW(c), name, len);
     if (enc && strIsASCII(name)) enc = 0;
     switch(enc) {
@@ -3368,7 +3385,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 {
     SEXP cval, chain;
     unsigned int hashcode;
-    int need_enc;
+    int need_enc, slen = strlen(name);
 
     switch(enc){
     case CE_NATIVE:
@@ -3379,6 +3396,22 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	break;
     default:
         error("unknown encoding: %d", enc);
+    }
+    if (slen < len) {
+	SEXP c;
+	/* This is tricky: we want to make a reasonable job of
+	   representing this string, and EncodeString() is the most
+	   comprehensive */
+	c = allocCharsxp(len);
+	memcpy(CHAR_RW(c), name, len);
+	switch(enc) {
+	case CE_UTF8: SET_UTF8(c); break;
+	case CE_LATIN1: SET_LATIN1(c); break;
+	default: break;
+	}
+	warning(_("truncating string with embedded nuls: '%s'"), 
+		EncodeString(c, 0, 0, Rprt_adj_none));
+	len = slen;
     }
 
     if (enc && IsASCII(name, len)) enc = CE_NATIVE;

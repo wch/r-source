@@ -55,8 +55,6 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   space it only supports the first 65536 characters of UTF-8 (where all
   the characters for human languages lie).  Note that it can be quite
   slow in UTF-8, and \code{useBytes = TRUE} will be much faster.
-
-  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   Either a vector giving the indices of the elements that yielded a

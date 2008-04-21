@@ -49,8 +49,6 @@ substring(text, first, last = 1000000) <- value
   the current locale (see \code{\link{Encoding}} if the corresponding
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.
-
-  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   For \code{substr}, a character vector of the same length and with the

@@ -32,8 +32,6 @@ charmatch(x, table, nomatch = NA_integer_)
   returned and if no match is found then \code{nomatch} is returned.
 
   \code{NA} values are treated as the string constant \code{"NA"}.
-
-  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   An integer vector of the same length as \code{x}, giving the

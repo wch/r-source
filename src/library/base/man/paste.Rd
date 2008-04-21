@@ -36,8 +36,6 @@ paste(\dots, sep = " ", collapse = NULL)
   If a value is specified for \code{collapse}, the values in the result
   are then concatenated into a single string, with the elements being
   separated by the value of \code{collapse}.
-
-  Character inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   A character vector of the concatenated values.  This will be of length

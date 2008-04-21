@@ -41,8 +41,6 @@ casefold(x, upper = FALSE)
 
   \code{casefold} is a wrapper for \code{tolower} and \code{toupper}
   provided for compatibility with S-PLUS.
-
-  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   A character vector of the same length and with the same attributes as

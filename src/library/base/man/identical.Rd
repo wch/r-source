@@ -50,9 +50,8 @@ identical(x, y)
   \code{\link{NA_real_}}, but all \code{NaN}s are equal (and all \code{NA}
   of the same type are equal).
 
-  Comparison of character strings allows for embedded \code{nul}
-  characters.  Comparison of attributes view them as a set (and not a
-  vector, so order is not tested).
+  Comparison of attributes view them as a set (and not a vector, so
+  order is not tested).
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}

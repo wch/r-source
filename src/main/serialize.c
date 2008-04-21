@@ -2066,11 +2066,8 @@ SEXP attribute_hidden R_unserialize(SEXP icon, SEXP fun)
     hook = fun != R_NilValue ? CallHook : NULL;
 
     if (TYPEOF(icon) == STRSXP && LENGTH(icon) > 0) {
-        struct membuf_st mbs;
-	void *data = (void *)CHAR(STRING_ELT(icon, 0)); /* FIXME, is this right? */
-	int length = LENGTH(STRING_ELT(icon, 0));
-	InitMemInPStream(&in, &mbs, data,  length, hook, fun);
-	return R_Unserialize(&in);
+	/* was the format in R < 2.4.0, removed in R 2.8.0 */
+	error("character vectors are no longer accepted by unserialize()");
     } else if (TYPEOF(icon) == RAWSXP) {
         struct membuf_st mbs;
 	void *data = RAW(icon);

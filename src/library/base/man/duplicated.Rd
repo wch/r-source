@@ -58,9 +58,6 @@ duplicated(x, incomparables = FALSE, \dots)
 
   Missing values are regarded as equal, but \code{NaN} is not equal to
   \code{NA_real_}.
-
-  Strings with embedded nuls of the same length will be considered
-  equal if they agree when truncated at the first nul.
 }
 \section{Warning}{
   Using this for lists is potentially slow, especially if the elements

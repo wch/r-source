@@ -30,7 +30,8 @@ intToUtf8(x, multiple = FALSE)
   \code{intToUtf8} converts a vector of (numeric) UTF-8 code points
   either to a single character string or a character vector of single
   characters.  (Note that a single character string could contain
-  embedded nuls.)  The \code{\link{Encoding}} is declared as
+  embedded nuls, in which case it will be truncated at the first nul,
+  with a warning.)  The \code{\link{Encoding}} is declared as
   \code{"UTF-8"}.
 }
 \examples{\dontrun{

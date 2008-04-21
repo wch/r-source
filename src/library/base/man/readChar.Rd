@@ -53,10 +53,8 @@ writeChar(object, con,
   should be returned.  
 
   Character strings containing ASCII \code{nul}(s) will be read
-  correctly by \code{readChar} and appear with embedded nuls in the
-  character vector returned.  \code{writeChar} can write strings with
-  embedded \code{nul}s, and for such strings inteprets \code{nchar} as
-  the number of bytes to be written.
+  correctly by \code{readChar} but truncated at the first
+  \code{nul} with a warning.
   
   If the character length requested for \code{readChar} is longer than
   the data available on the connection, what is available is

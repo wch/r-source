@@ -25,8 +25,8 @@ unserialize(connection, refhook = NULL)
 \arguments{
   \item{object}{\R object to serialize.}
   \item{connection}{an open connection or (for \code{serialize})
-    \code{NULL} or (for \code{unserialize}) a raw vector or a length-one
-    character vector (see \sQuote{Details}).}
+    \code{NULL} or (for \code{unserialize}) a raw vector
+    (see \sQuote{Details}).}
   \item{file}{a connection or the name of the file where the R object
     is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
@@ -51,8 +51,7 @@ unserialize(connection, refhook = NULL)
   across separate calls to \code{serialize}.
 
   \code{unserialize} reads an object (as written by \code{serialize})
-  from \code{connection} or a raw vector or (for compatibility with
-  earlier versions of \code{serialize}) a length-one character vector.
+  from \code{connection} or a raw vector.
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
@@ -89,9 +88,6 @@ unserialize(connection, refhook = NULL)
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
-## test earlier interface as a length-one character vector
-y <- rawToChar(x)
-unserialize(y)
 }
 \keyword{internal}
 \keyword{file}

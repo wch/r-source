@@ -58,12 +58,6 @@ x != y
   coerced to the type of the other, the (decreasing) order of precedence
   being character, complex, numeric, integer, logical and raw.
 
-  When comparisons are made between character strings, parts of the
-  strings after embedded \code{nul} characters are ignored.  (This is
-  necessary as the position of \code{nul} in the collation sequence is
-  undefined, and we want one of \code{<}, \code{==} and \code{>} to be
-  true for any comparison.)
-
   Missing values (\code{\link{NA}}) and \code{\link{NaN}} values are
   regarded as non-comparable even to themselves, so comparisons
   involving them will always result in \code{NA}.  Missing values can

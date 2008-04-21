@@ -60,8 +60,6 @@ iconvlist()
 
   As from \R 2.7.0 \code{"UTF8"} will be accepted as meaning the (more
   correct) \code{"UTF-8"}.
-
-  Inputs \code{x} with embedded nul bytes will be handled completely.
 }
 \value{
   A character vector of the same length and the same attributes as

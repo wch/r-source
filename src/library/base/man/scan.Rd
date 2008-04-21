@@ -243,10 +243,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   chars: use an explicit separator to avoid this.
 
   Having \code{nul} bytes in fields may lead to interpretation of the
-  field being terminated at the \code{nul} (so they are fine in
-  character fields).  \R 2.8.0 handles these better than earlier
-  versions, but they not normally present in text files -- see
-  \code{\link{readBin}}.
+  field being terminated at the \code{nul}.  They not normally present
+  in text files -- see \code{\link{readBin}} and \code{\link{readChar}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

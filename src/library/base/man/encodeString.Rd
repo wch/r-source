@@ -1,6 +1,6 @@
 % File src/library/base/man/encodeString.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{encodeString}
@@ -33,8 +33,8 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 \details{
   This escapes backslash and the control characters \code{\a} (bell),
   \code{\b} (backspace), \code{\f} (formfeed), \code{\n} (line feed),
-  \code{\r} (carriage return), \code{\t} (tab), \code{\v} (vertical tab)
-  and \code{\0} (nul) as well as any non-printable characters in a
+  \code{\r} (carriage return), \code{\t} (tab) and \code{\v} (vertical tab)
+  as well as any non-printable characters in a
   single-byte locale, which are printed in octal notation
   (\code{\xyz} with leading zeroes).
 #ifdef unix

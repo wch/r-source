@@ -93,8 +93,6 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 
   PCRE only supports caseless matching for a non-ASCII pattern in a
   UTF-8 locale (and not for \code{useBytes = TRUE} in any locale).
-
-  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
