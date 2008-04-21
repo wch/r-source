@@ -59,7 +59,7 @@ unique(x, incomparables = FALSE, \dots)
   \code{NA_real_}.
 
   Strings with embedded nuls of the same length will be considered
-  equal if they agree when the nuls are replaced by \code{\\0}.
+  equal if they agree when truncated at the first nul.
 }
 \value{
   For a vector, an object of the same type of \code{x}, but with only

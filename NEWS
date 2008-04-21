@@ -37,13 +37,6 @@ NEW FEATURES
 
     o	Encoding<-() now handles character strings with embedded nuls.
 
-    	cat() and paste() now handle character strings with embedded
-    	nuls, rendering them as '\0'.
-
-	duplicated(), charmatch(), match(), pmatch() and unique() try
-	harder not to regard strings with embedded nuls as equal when
-	they are not.  [Currently only on systems with iconv.]
-
     o	setEPS() and setPS() gain '...' to allow other arguments to be
     	passed to ps.options(), including overriding 'width' and 'height'.
 

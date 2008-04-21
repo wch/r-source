@@ -49,8 +49,7 @@ pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
 
   \code{NA} values are treated as if they were the string constant \code{"NA"}.
 
-  Inputs with embedded nul bytes will be handled with nuls replaced by
-  \code{\\0}.
+  Inputs with embedded nul bytes will be truncated at the first nul.
 }
 \value{
   An integer vector (possibly including \code{NA} if \code{nomatch =

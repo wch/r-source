@@ -62,8 +62,7 @@ x \%in\% table
   For real and complex values, \code{NaN} values are regarded
   as matching any other \code{NaN} value, but not matching \code{NA}.
 
-  Strings with embedded nuls of the same length will be considered
-  to match if they match when the nuls are replaced by \code{\\0}.
+  Character inputs with embedded nul bytes will be truncated at the first nul.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

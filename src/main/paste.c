@@ -131,8 +131,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0)
-		pwidth += strlen(translateChar0(STRING_ELT(VECTOR_ELT(x, j),
-							   i % k)));
+		pwidth += strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j),
+							  i % k)));
 	}
 	pwidth += (nx - 1) * sepw;
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
@@ -140,18 +140,18 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
-		s = translateChar0(cs);
+		s = translateChar(cs);
                 strcpy(buf, s);
 		buf += strlen(s);
-		allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs) > 0));
-		anyKnown = anyKnown || (ENC_KNOWN(cs) > 0);
+		allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
+		anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 	    }
 	    if (j != nx - 1 && sepw != 0) {
 	        strcpy(buf, csep);
 		buf += sepw;
 	    }
 	}
-	ienc = CE_NATIVE;
+	ienc = 0;
 	if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
 	    if(known_to_be_utf8) ienc = CE_UTF8;
@@ -163,7 +163,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {
 	sep = STRING_ELT(collapse, 0);
-	csep = translateChar0(sep);
+	csep = translateChar(sep);
 	sepw = strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
 	allKnown = anyKnown || strIsASCII(csep);
@@ -187,7 +187,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i))> 0);
 	}
         UNPROTECT(1);
-	ienc = CE_NATIVE;
+	ienc = 0;
 	if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
 	    if(known_to_be_utf8) ienc = CE_UTF8;
