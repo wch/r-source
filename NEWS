@@ -135,6 +135,8 @@ BUG FIXES
 
     o   R CMD appends (not prepends) R's texmf path to TEXINPUTS.
 
+    o	Encoding<- on NA_character_ converted it to "NA".
+
 
 
 
