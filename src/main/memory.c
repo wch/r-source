@@ -1012,7 +1012,8 @@ static Rboolean isCFinalizer(SEXP fun)
 
 static SEXP MakeCFinalizer(R_CFinalizer_t cfun)
 {
-    SEXP s = allocString(sizeof(R_CFinalizer_t));
+    /* FIXME: use RAWSXP here */
+    SEXP s = allocCharsxp(sizeof(R_CFinalizer_t));
     *((R_CFinalizer_t *) CHAR(s)) = cfun;
     return s;
     /*return R_MakeExternalPtr((void *) cfun, R_NilValue, R_NilValue);*/
@@ -1855,11 +1856,13 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 /* All vector objects  must be a multiple of sizeof(ALIGN) */
 /* bytes so that alignment is preserved for all objects */
 
-/* allocString is now a macro */
-
-/* Allocate a vector object.  This ensures only validity of list-like
+/* Allocate a vector object (and also list-like objects).
+   This ensures only validity of list-like
    SEXPTYPES (as the elements must be initialized).  Initializing of
-   other vector types is done in do_makevector */
+   other vector types is done in do_makevector 
+   [That comment seems outdated -- CHARSXP, STRSXP, VECSXP, EXPRSXP
+   are initialized.]
+*/
 
 SEXP allocVector(SEXPTYPE type, R_len_t length)
 {
@@ -2052,22 +2055,21 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 #if VALGRIND_LEVEL > 1
 	VALGRIND_MAKE_READABLE(STRING_PTR(s), actual_size);
 #endif
-	for (i = 0; i < length; i++){
+	for (i = 0; i < length; i++)
 	    data[i] = R_BlankString;
-	}
     }
-    else if (type == CHARSXP){
+    else if (type == CHARSXP) {
 #if VALGRIND_LEVEL > 0
  	VALGRIND_MAKE_WRITABLE(CHAR(s), actual_size);
 #endif
 	CHAR_RW(s)[length] = 0;
     }
-    else if (type == REALSXP){
+    else if (type == REALSXP) {
 #if VALGRIND_LEVEL > 0
 	VALGRIND_MAKE_WRITABLE(REAL(s), actual_size);
 #endif
     }
-    else if (type == INTSXP){
+    else if (type == INTSXP) {
 #if VALGRIND_LEVEL > 0
 	VALGRIND_MAKE_WRITABLE(INTEGER(s), actual_size);
 #endif
@@ -2075,6 +2077,13 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     /* <FIXME> why not valgrindify LGLSXP, CPLXSXP and RAWSXP? */
     return s;
 }
+
+/* For future hiding of allocVector(CHARSXP) */
+SEXP attribute_hidden allocCharsxp(R_len_t len)
+{
+    return allocVector(CHARSXP, len);
+}
+
 
 SEXP allocList(int n)
 {

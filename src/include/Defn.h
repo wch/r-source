@@ -761,6 +761,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
+# define allocCharsxp		Rf_allocCharsxp
 # define begincontext		Rf_begincontext
 # define check_stack_balance	Rf_check_stack_balance
 # define CheckFormals		Rf_CheckFormals
@@ -949,6 +950,7 @@ SEXP Rf_EnsureString(SEXP);
 
 /* Other Internally Used Functions */
 
+SEXP Rf_allocCharsxp(R_len_t);
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 void Rf_checkArityCall(SEXP, SEXP, SEXP);

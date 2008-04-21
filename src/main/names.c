@@ -1048,7 +1048,7 @@ void InitNames()
     /* Note: we don't want NA_STRING to be in the CHARSXP cache, so that
        mkChar("NA") is distinct from NA_STRING */
     /* NA_STRING */
-    NA_STRING = allocString(strlen("NA"));
+    NA_STRING = allocCharsxp(strlen("NA"));
     strcpy(CHAR_RW(NA_STRING), "NA");
     R_print.na_string = NA_STRING;
     /* R_BlankString */

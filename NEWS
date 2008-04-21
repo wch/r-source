@@ -65,6 +65,10 @@ NEW FEATURES
 	The default PDF version is now 1.4, since viewers that do not
 	accept that are now rare.
 
+    o	The behaviour of readLines() for incomplete final lines on
+    	non-text-mode connections has been changed to be like blocking
+    	rather than non-blocking text-mode connections.
+
 
 PACKAGE INSTALLATION
 
@@ -100,6 +104,9 @@ DEPRECATED & DEFUNCT
 
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.
+
+    o	The C macro 'allocString' has been removed -- use 'mkChar', 
+	or 'allocVector' directly if really necessary.
 
 
 C-LEVEL FACILITIES
@@ -623,6 +630,9 @@ DEPRECATED & DEFUNCT
 
     o	Setting par(gamma=) is now deprecated, and the windows()
 	device (the only known example) no longer allows it.
+
+    o	The C macro 'allocString' will be removed in 2.8.0 -- use
+	'mkChar', or 'allocVector' directly if really necessary.
 
 
 INSTALLATION
