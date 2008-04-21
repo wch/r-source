@@ -280,7 +280,6 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	in = strlen(str);
 	out = so - sa + 1;
 	memcpy(buf + sa - 1, str, (in < out) ? in : out);
-	memcpy(buf + sa - 1, str, so - sa + 1);
     } else {
 #ifdef SUPPORT_MBCS
 	/* This cannot work for stateful encodings */
