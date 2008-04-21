@@ -3381,7 +3381,7 @@ static Rboolean IsASCII(const char *str, int len)
     return TRUE;
 }
 
-/* Because allocCharscp allocates len+1 bytes and zeros the last,
+/* Because allocCharsxp allocates len+1 bytes and zeros the last,
    this will always zero-terminate */
 SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 {
@@ -3401,18 +3401,20 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
     }
     if (slen < len) {
 	SEXP c;
-	/* This is tricky: we want to make a reasonable job of
-	   representing this string, and EncodeString() is the most
-	   comprehensive */
-	c = allocCharsxp(len);
-	memcpy(CHAR_RW(c), name, len);
-	switch(enc) {
-	case CE_UTF8: SET_UTF8(c); break;
-	case CE_LATIN1: SET_LATIN1(c); break;
-	default: break;
+	if (R_WarnEscapes) {
+	    /* This is tricky: we want to make a reasonable job of
+	       representing this string, and EncodeString() is the most
+	       comprehensive */
+	    c = allocCharsxp(len);
+	    memcpy(CHAR_RW(c), name, len);
+	    switch(enc) {
+	    case CE_UTF8: SET_UTF8(c); break;
+	    case CE_LATIN1: SET_LATIN1(c); break;
+	    default: break;
+	    }
+	    warning(_("truncating string with embedded nuls: '%s'"), 
+		    EncodeString(c, 0, 0, Rprt_adj_none));
 	}
-	warning(_("truncating string with embedded nuls: '%s'"), 
-		EncodeString(c, 0, 0, Rprt_adj_none));
 	len = slen;
     }
 
