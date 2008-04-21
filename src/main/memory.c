@@ -1004,24 +1004,24 @@ static void CheckFinalizers(void)
    use EXTPTRSXP's but these only hold a void *, and function pointers
    are not guaranteed to be compatible with a void *.  There should be
    a cleaner way of doing this, but this will do for now. --LT */
+/* Changed to RAWSXP in 2.8.0 */
 static Rboolean isCFinalizer(SEXP fun)
 {
-    return TYPEOF(fun) == CHARSXP;
+    return TYPEOF(fun) == RAWSXP;
     /*return TYPEOF(fun) == EXTPTRSXP;*/
 }
 
 static SEXP MakeCFinalizer(R_CFinalizer_t cfun)
 {
-    /* FIXME: use RAWSXP here */
-    SEXP s = allocCharsxp(sizeof(R_CFinalizer_t));
-    *((R_CFinalizer_t *) CHAR(s)) = cfun;
+    SEXP s = allocVector(RAWSXP, sizeof(R_CFinalizer_t));
+    *((R_CFinalizer_t *) RAW(s)) = cfun;
     return s;
     /*return R_MakeExternalPtr((void *) cfun, R_NilValue, R_NilValue);*/
 }
 
 static R_CFinalizer_t GetCFinalizer(SEXP fun)
 {
-    return *((R_CFinalizer_t *) CHAR(fun));
+    return *((R_CFinalizer_t *) RAW(fun));
     /*return (R_CFinalizer_t) R_ExternalPtrAddr(fun);*/
 }
 
@@ -1864,6 +1864,8 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
    are initialized.]
 */
 
+#define intCHARSXP 73
+
 SEXP allocVector(SEXPTYPE type, R_len_t length)
 {
     SEXP s;     /* For the generational collector it would be safer to
@@ -1885,6 +1887,8 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	actual_size=length;
 	break;
     case CHARSXP:
+	warning("use of allocVector(CHARSXP ...) is deprecated\n");
+    case intCHARSXP:
 	size = BYTE2VEC(length + 1);
 	actual_size=length+1;
 	break;
@@ -2058,7 +2062,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	for (i = 0; i < length; i++)
 	    data[i] = R_BlankString;
     }
-    else if (type == CHARSXP) {
+    else if (type == CHARSXP || type == intCHARSXP) {
 #if VALGRIND_LEVEL > 0
  	VALGRIND_MAKE_WRITABLE(CHAR(s), actual_size);
 #endif
@@ -2081,7 +2085,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 /* For future hiding of allocVector(CHARSXP) */
 SEXP attribute_hidden allocCharsxp(R_len_t len)
 {
-    return allocVector(CHARSXP, len);
+    return allocVector(intCHARSXP, len);
 }
 
 

@@ -95,6 +95,7 @@ checked against the current version of the source code.
 * The write barrier::           
 * Serialization Formats::       
 * Encodings for CHARSXPs::      
+* The CHARSXP cache::           
 * Warnings and errors::         
 * S4 objects::                  
 * Memory allocators::           
@@ -1175,7 +1176,7 @@ doubles formatted with @code{%.16g} (plus @code{NA}, @code{Inf} and
 standard escapes (e.g.@: @code{\t} and @code{\013} for non-printing and
 non-ASCII bytes.
 
-@node Encodings for CHARSXPs, Warnings and errors, Serialization Formats, R Internal Structures
+@node Encodings for CHARSXPs, The CHARSXP cache, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
 Character data in @R{} are stored in the sexptype @code{CHARSXP}.  Until
@@ -1258,8 +1259,31 @@ autoprinting.
 Windows if the encoding is declared explicitly on an unopened
 connection passed to those functions.
 
+@node The CHARSXP cache, Warnings and errors, Encodings for CHARSXPs, R Internal Structures
+@section The CHARSXP cache
 
-@node Warnings and errors, S4 objects, Encodings for CHARSXPs, R Internal Structures
+@findex mkChar
+A global cache for @code{CHARSXP}s created by @code{mkChar} was
+introduced in @R{} 2.6.0 -- the cache ensures that most @code{CHARSXP}s
+with the same contents share storage (`contents' including any declared
+encoding). Not all @code{CHARSXP}s are part of the cache -- notably
+@samp{NA_STRING} is not.
+
+In @R{} 2.6.x and 2.7.x character strings created by @code{mkCharLen}
+were not part of the cache: these were intended to be those containing
+embedded nuls.  As from @R{} 2.8.0 the cache can handle any content,
+including embedded nuls.
+
+There are a few other ways in which @code{CHARSXP}s could or can escape
+the cache.  @code{CHARSXP}s reloaded from the @code{save} formats of
+@R{} prior to 0.99.0 are not cached (since the code used is frozen and
+few examples still exist). Prior to @R{} 2.8.0, @code{CHARSXP}s were
+used to hold the finalizer function of a C finalizer (uncached) -- now
+@code{RAWSXP}s are used.  Finally, user code could create
+@code{CHARSXP}s via @code{allocString} (removed in @R 2.8.0) and
+@code{allocVector(CHARSXP ...)} (deprecated in @R 2.8.0).
+
+@node Warnings and errors, S4 objects, The CHARSXP cache, R Internal Structures
 @section Warnings and errors
 
 @findex warning

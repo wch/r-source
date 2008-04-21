@@ -108,6 +108,8 @@ DEPRECATED & DEFUNCT
     o	The C macro 'allocString' has been removed -- use 'mkChar', 
 	or 'allocVector' directly if really necessary.
 
+    o	Use of allocVector(CHARSXP ...) is deprecated and gives a warning.
+
 
 C-LEVEL FACILITIES
 
