@@ -1,6 +1,6 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
@@ -44,7 +44,8 @@
 #endif
 #ifdef windows
   \env{R\_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
-  previewer, default \code{yap} as from \R 2.8.0).
+  previewer, default \code{xdvi.bat} (but will be \code{yap} as
+  from \R 2.8.0).
 #endif
   (Valid values for \env{R\_PAPERSIZE} are \code{a4}, \code{letter},
   \code{legal} and \code{executive}.)

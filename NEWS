@@ -489,6 +489,9 @@ DEPRECATED & DEFUNCT
     o	Setting par(gamma=) is now deprecated, and the windows()
 	device (the only known example) no longer allows it.
 
+    o	The C macro 'allocString' will be removed in 2.8.0 -- use
+	'mkChar', or 'allocVector' directly if really necessary.
+
 
 INSTALLATION
 
@@ -773,6 +776,7 @@ BUG FIXES
     	names, because one of the C support routines ignored them.
 
     o	load() again reads correctly character strings with embedded nuls.
+	(This was broken in 2.6.x, but worked in earlier versions.)
 
 
 
