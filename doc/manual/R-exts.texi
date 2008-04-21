@@ -6382,7 +6382,7 @@ you.   The variant @code{mkCharLen} can be used to create a
 2.8.0 these are also cached.
 
 Currently, it is still possible to create @code{CHARSXP}s using
-@code{allocVector} or @code{allocString}; @code{CHARSXP}s created in
+@code{allocVector}; @code{CHARSXP}s created in
 this way will not be captured by the global @code{CHARSXP} cache and
 this should be avoided.  In the future, all @code{CHARSXP}s will be
 captured by the cache and this will allow further optimizations, for
