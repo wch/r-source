@@ -1374,7 +1374,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sxy, sx, sy, pch, cex, col, bg, lty, lwd;
     double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
     int i, n, npch, ncex, ncol, nbg, nlwd, type=0, start=0, thispch;
-    rcolor thiscol;
+    rcolor thiscol, thisbg;
     void *vmax = NULL /* -Wall */;
 
     SEXP originalArgs = args;
@@ -1627,17 +1627,21 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
-		if (R_FINITE( (thiscex = REAL(cex)[i % ncex]) )
-		    && (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER
-		    && !R_TRANSPARENT(thiscol = INTEGER(col)[i % ncol]))
-		{
-		    gpptr(dd)->cex = thiscex * gpptr(dd)->cexbase;
-		    gpptr(dd)->col = thiscol;
-		    if(nlwd > 1 && R_FINITE((thislwd = REAL(lwd)[i % nlwd])))
-			gpptr(dd)->lwd = thislwd;
-		    gpptr(dd)->bg = INTEGER(bg)[i % nbg];
-		    GSymbol(xx, yy, DEVICE, thispch, dd);
-		}
+		if (R_FINITE( (thiscex = REAL(cex)[i % ncex]) ) && 
+                    (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER) {
+                    thiscol = INTEGER(col)[i % ncol];
+                    thisbg = INTEGER(bg)[i % nbg];
+                    if (!(R_TRANSPARENT(thiscol) && 
+                          R_TRANSPARENT(thisbg))) {
+                        gpptr(dd)->cex = thiscex * gpptr(dd)->cexbase;
+                        gpptr(dd)->col = thiscol;
+                        if(nlwd > 1 && 
+                           R_FINITE((thislwd = REAL(lwd)[i % nlwd])))
+                            gpptr(dd)->lwd = thislwd;
+                        gpptr(dd)->bg = thisbg;
+                        GSymbol(xx, yy, DEVICE, thispch, dd);
+                    }
+                }
 	    }
 	}
     }

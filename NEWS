@@ -126,6 +126,13 @@ BUG FIXES
 
     o   R CMD appends (not prepends) R's texmf path to TEXINPUTS.
 
+    o   Plotting symbols with separate border and fill colours
+        (e.g., plot(pch=21)) now work with transparent 'col', but 
+        opaque or semitransparent 'bg'. 
+        
+        Previously, if 'col' was transparent then 'bg' was ignored
+        and nothing was drawn.
+
 
 
 
