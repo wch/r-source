@@ -100,7 +100,7 @@ DEPRECATED & DEFUNCT
 	that was a format prior to R 2.4.0 which needs embedded nulls
 	in character strings.
 
-    o	The C macro 'allocString' has been removed -- use 'mkChar', 
+    o	The C macro 'allocString' has been removed -- use 'mkChar',
 	or 'allocVector' directly if really necessary.
 
     o	Use of allocVector(CHARSXP ...) is deprecated and gives a warning.
@@ -918,6 +918,9 @@ BUG FIXES
 
     o	load() again reads correctly character strings with embedded nuls.
 	(This was broken in 2.6.x, but worked in earlier versions.)
+
+    o	diag(matrix(x,0,0)) now returns a 0-length vector of correct mode,
+	instead of always numeric.
 
 
 
