@@ -9,6 +9,16 @@
 		CHANGES IN R VERSION 2.7.0 patched
 
 
+DEPRECATED & DEFUNCT
+
+
+    o	The use of unserialize() on character strings is deprecated:
+	that was a format used in R < 2.4.0.
+
+    o	The C macro 'allocString' is deprecated -- use 'mkChar',
+	or 'allocVector' directly if really necessary.
+
+
 BUG FIXES
 
     o	Encoding<- on NA_character_ converted it to "NA".

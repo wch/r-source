@@ -51,8 +51,9 @@ unserialize(connection, refhook = NULL)
   across separate calls to \code{serialize}.
 
   \code{unserialize} reads an object (as written by \code{serialize})
-  from \code{connection} or a raw vector or (for compatibility with
-  earlier versions of \code{serialize}) a length-one character vector.
+  from \code{connection} or a raw vector or (\emph{deprecated}, for
+  compatibility with earlier versions of \code{serialize}) a length-one
+  character vector.
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
@@ -89,9 +90,6 @@ unserialize(connection, refhook = NULL)
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
-## test earlier interface as a length-one character vector
-y <- rawToChar(x)
-unserialize(y)
 }
 \keyword{internal}
 \keyword{file}
